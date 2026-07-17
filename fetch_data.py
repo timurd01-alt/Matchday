@@ -24,7 +24,8 @@ from collections import defaultdict
 from provider_adapters import (ProviderError, BallDontLieAdapter,
                                CollegeBasketballDataAdapter,
                                CollegeFootballDataAdapter,
-                               SportsDataIOAdapter, SportmonksAdapter)
+                               SportsDataIOAdapter, SportmonksAdapter,
+                               APISportsAdapter)
 
 # Windows terminals default to a legacy codec that crashes on characters like the
 # checkmark or accented player names. Force UTF-8 so background prints never crash.
@@ -95,7 +96,7 @@ COMPETITIONS = {
     # standings/player endpoints stay hidden when unavailable.
     "NFL": {"label": "NFL", "sport": "football", "fd": None, "odds": "americanfootball_nfl",
             "outright": "americanfootball_nfl_super_bowl_winner", "espn": "nfl", "tournament": False,
-            "source": "balldontlie", "has_draws": False},
+            "source": "apisports", "has_draws": False},
     "EPL": {"label": "Premier League", "sport": "soccer", "fd": "PL", "odds": "soccer_epl",
             "outright": "soccer_epl_winner", "espn": "eng.1", "tournament": False,
             "source": "fd", "has_draws": True, "league_zones": {"ucl": 4, "uel": 1, "rel": 3}},
@@ -125,7 +126,7 @@ COMPETITIONS = {
             "source": "sportsdataio", "has_draws": False},
     "NBA": {"label": "NBA", "sport": "basketball", "fd": None, "odds": "basketball_nba",
             "outright": "basketball_nba_championship_winner", "espn": "nba", "tournament": False,
-            "source": "balldontlie", "has_draws": False},
+            "source": "apisports", "has_draws": False},
 }
 try:
     from config_keys import COMPETITION as _COMP
@@ -170,6 +171,7 @@ ESPN_NEWS = f"https://site.api.espn.com/apis/site/v2/sports/{COMP['sport']}/{COM
 OUTRIGHTS_CACHE_MIN = 60
 NEWS_CACHE_MIN = 20
 BALLDONTLIE_CACHE_MIN = 10
+APISPORTS_CACHE_MIN = 30  # api-sports.io free tier caps at 100 req/day per sport
 COLLEGE_CACHE_MIN = 480  # eight-hour cache keeps both college feeds within a shared free-key quota
 NEWS_TERMS = {
     "WC": "FIFA World Cup", "UCL": "UEFA Champions League",
@@ -2471,6 +2473,39 @@ def fetch_balldontlie_bundle():
     return adapter, matches, st, tables
 
 
+def fetch_apisports_bundle():
+    """Fetch NFL/NBA schedules+standings via API-Sports (api-sports.io).
+
+    Same account/key as API_FOOTBALL_KEY — no separate signup needed.
+    """
+    adapter = APISportsAdapter(API_FOOTBALL_KEY, COMP_KEY)
+    cache_file = f"apisports_games_{COMP_KEY.lower()}_cache.json"
+    matches = None
+    try:
+        if os.path.exists(cache_file) and time.time() - os.path.getmtime(cache_file) < APISPORTS_CACHE_MIN * 60:
+            with open(cache_file, encoding="utf-8") as handle:
+                matches = json.load(handle)
+            DIAG.append("API-Sports fixtures: local cache")
+    except Exception:
+        matches = None
+    if matches is None:
+        try:
+            matches = adapter.schedule()
+            tmp = cache_file + ".tmp"
+            with open(tmp, "w", encoding="utf-8") as handle:
+                json.dump(matches, handle, ensure_ascii=False)
+            os.replace(tmp, cache_file)
+        except ProviderError:
+            if not os.path.exists(cache_file):
+                raise
+            with open(cache_file, encoding="utf-8") as handle:
+                matches = json.load(handle)
+            DIAG.append("API-Sports fixtures: stale cache after provider limit/error")
+    st, tables = adapter.standings()
+    DIAG.append(f"API-Sports fixtures: {len(matches)} loaded")
+    return adapter, matches, st, tables
+
+
 def fetch_college_bundle():
     """Fetch licensed college data with a quota-safe, resilient local cache."""
     if COMP_KEY == "NCAAF":
@@ -2618,11 +2653,14 @@ def build():
     DIAG.clear()
     print("Fetching fixtures…")
     sports_adapter = None
-    if COMP.get("source") in {"sportsdataio", "balldontlie", "cfbd", "cbbd"}:
+    if COMP.get("source") in {"sportsdataio", "balldontlie", "cfbd", "cbbd", "apisports"}:
         raw = []
         if COMP.get("source") == "balldontlie":
             sports_adapter, matches, st, sports_tables = fetch_balldontlie_bundle()
             provider_name = "BALLDONTLIE"
+        elif COMP.get("source") == "apisports":
+            sports_adapter, matches, st, sports_tables = fetch_apisports_bundle()
+            provider_name = "API-Sports"
         elif COMP.get("source") in {"cfbd", "cbbd"}:
             sports_adapter, matches, st, sports_tables = fetch_college_bundle()
             provider_name = "CollegeFootballData" if COMP_KEY == "NCAAF" else "CollegeBasketballData"
@@ -2690,7 +2728,7 @@ def build():
         code_map[norm(m["home"]["name"])] = m["home"]["code"]
         code_map[norm(m["away"]["name"])] = m["away"]["code"]
     title = None
-    if COMP.get("source") in {"sportsdataio", "balldontlie", "cfbd", "cbbd"} and COMP.get("outright"):
+    if COMP.get("source") in {"sportsdataio", "balldontlie", "cfbd", "cbbd", "apisports"} and COMP.get("outright"):
         print("Fetching championship odds (team strength)…")
         title = fetch_outrights(code_map)
         apply_market_strength(title)
@@ -2723,7 +2761,7 @@ def build():
                  for g in sorted(groups)]
     if not standings and COMP["sport"] == "soccer":
         standings = build_league_table(st, name_map, code_map, COMP.get("league_zones"))
-    if not standings and COMP.get("source") in {"sportsdataio", "balldontlie", "cfbd", "cbbd"}:
+    if not standings and COMP.get("source") in {"sportsdataio", "balldontlie", "cfbd", "cbbd", "apisports"}:
         standings = sports_tables
     bracketology = None
     if COMP_KEY in ("NCAAF", "NCAAM") and COMP.get("source") in {"sportsdataio", "cfbd", "cbbd"}:

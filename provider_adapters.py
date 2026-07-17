@@ -599,6 +599,168 @@ class BallDontLieAdapter:
         return {}
 
 
+class APISportsAdapter:
+    """API-Sports (api-sports.io) adapter for NBA and NFL.
+
+    Same account/key family as API_FOOTBALL_KEY — the free plan covers every
+    API-Sports product, so no separate signup or key is needed. NBA's
+    /standings doesn't expose points-for/against, so goal-difference for
+    that sport stays 0; win/loss/record are still real.
+    """
+
+    BASES = {"NBA": "https://v2.nba.api-sports.io", "NFL": "https://v1.american-football.api-sports.io"}
+    NFL_LEAGUE_ID = 1
+    # API-Sports' NFL game/standings payloads have no team "code" field
+    # (unlike NBA, which does), so map the 32 fixed team names ourselves.
+    NFL_CODES = {
+        "Buffalo Bills": "BUF", "Miami Dolphins": "MIA", "New England Patriots": "NE", "New York Jets": "NYJ",
+        "Baltimore Ravens": "BAL", "Cincinnati Bengals": "CIN", "Cleveland Browns": "CLE", "Pittsburgh Steelers": "PIT",
+        "Houston Texans": "HOU", "Indianapolis Colts": "IND", "Jacksonville Jaguars": "JAX", "Tennessee Titans": "TEN",
+        "Denver Broncos": "DEN", "Kansas City Chiefs": "KC", "Las Vegas Raiders": "LV", "Los Angeles Chargers": "LAC",
+        "Dallas Cowboys": "DAL", "New York Giants": "NYG", "Philadelphia Eagles": "PHI", "Washington Commanders": "WAS",
+        "Chicago Bears": "CHI", "Detroit Lions": "DET", "Green Bay Packers": "GB", "Minnesota Vikings": "MIN",
+        "Atlanta Falcons": "ATL", "Carolina Panthers": "CAR", "New Orleans Saints": "NO", "Tampa Bay Buccaneers": "TB",
+        "Arizona Cardinals": "ARI", "Los Angeles Rams": "LAR", "San Francisco 49ers": "SF", "Seattle Seahawks": "SEA",
+    }
+
+    def __init__(self, api_key, competition, getter=None, today=None):
+        if not api_key:
+            raise ProviderError("missing API_FOOTBALL_KEY")
+        if competition not in self.BASES:
+            raise ProviderError(f"unsupported API-Sports competition: {competition}")
+        self.key = api_key
+        self.competition = competition
+        self.base = self.BASES[competition]
+        self.getter = getter or _get_json
+        self.today = today or dt.date.today()
+        self.season = _current_season("nba" if competition == "NBA" else "nfl", self.today)
+
+    def _get(self, path, params=None):
+        url = self.base + path
+        if params:
+            url += "?" + urllib.parse.urlencode(params)
+        return self.getter(url, {"x-apisports-key": self.key, "User-Agent": "Matchday/1.0"})
+
+    def _games(self, season):
+        params = ({"league": self.NFL_LEAGUE_ID, "season": season} if self.competition == "NFL"
+                  else {"season": season})
+        payload = self._get("/games", params)
+        rows = payload.get("response") if isinstance(payload, dict) else []
+        return rows or []
+
+    def schedule(self):
+        # NBA/NFL seasons are named by their starting year; between a season
+        # ending and the next one being scheduled, both the current and prior
+        # guess can come up empty, so walk back a couple of years.
+        rows = self._games(self.season) or self._games(self.season - 1) or self._games(self.season - 2)
+        matches = [self._match(row) for row in rows]
+        matches = [m for m in matches if m]
+        matches.sort(key=lambda m: m.get("kickoff") or "")
+        return matches
+
+    @staticmethod
+    def _status(text):
+        key = str(text or "").strip().lower()
+        if "final" in key or "finished" in key:
+            return "FINISHED"
+        if any(tok in key for tok in ("progress", "quarter", "half", "live", " play")):
+            return "LIVE"
+        return "UPCOMING"
+
+    def _code(self, team, name):
+        return team.get("code") or (self.NFL_CODES.get(name) if self.competition == "NFL" else None) or _short_code(name)
+
+    def _match(self, row):
+        if self.competition == "NFL":
+            game, teams, scores = row.get("game") or {}, row.get("teams") or {}, row.get("scores") or {}
+            home_t, away_t = teams.get("home") or {}, teams.get("away") or {}
+            status = self._status((game.get("status") or {}).get("long"))
+            ts = (game.get("date") or {}).get("timestamp")
+            kickoff = (dt.datetime.fromtimestamp(ts, dt.timezone.utc).isoformat().replace("+00:00", "Z")
+                       if ts else _iso_utc((game.get("date") or {}).get("date")))
+            home_score = (scores.get("home") or {}).get("total")
+            away_score = (scores.get("away") or {}).get("total")
+            week = game.get("week")
+            stage = f"Week {week}" if week and str(week).isdigit() else str(week or game.get("stage") or "Regular Season")
+            venue = (game.get("venue") or {}).get("name") or ""
+            gid = game.get("id")
+        else:
+            teams, scores = row.get("teams") or {}, row.get("scores") or {}
+            home_t, away_t = teams.get("home") or {}, teams.get("visitors") or {}
+            status = self._status((row.get("status") or {}).get("long"))
+            kickoff = _iso_utc((row.get("date") or {}).get("start"))
+            home_score = (scores.get("home") or {}).get("points")
+            away_score = (scores.get("visitors") or {}).get("points")
+            stage = "Regular Season" if row.get("stage") in (1, "1", None) else "Postseason"
+            venue = (row.get("arena") or {}).get("name") or ""
+            gid = row.get("id")
+        if not home_t.get("name") or not away_t.get("name"):
+            return None
+        return {
+            "id": f"apis-{self.competition.lower()}-{gid}", "provider_id": gid,
+            "stage": stage, "venue": venue, "kickoff": kickoff, "status": status, "minute": None,
+            "score": {"home": _number(home_score, None), "away": _number(away_score, None)},
+            "home": {"name": str(home_t.get("name") or ""), "code": str(self._code(home_t, home_t.get("name") or "")),
+                     "pts": None, "gd": None, "form": "", "pos": None, "group": None},
+            "away": {"name": str(away_t.get("name") or ""), "code": str(self._code(away_t, away_t.get("name") or "")),
+                     "pts": None, "gd": None, "form": "", "pos": None, "group": None},
+            "markets": {}, "lineups": None, "h2h": [], "injuries": {"home": [], "away": []},
+            "data_source": "API-Sports",
+        }
+
+    def _standings_rows(self):
+        for season in (self.season, self.season - 1, self.season - 2):
+            params = ({"league": self.NFL_LEAGUE_ID, "season": season} if self.competition == "NFL"
+                      else {"league": "standard", "season": season})
+            payload = self._get("/standings", params)
+            rows = payload.get("response") if isinstance(payload, dict) else []
+            if rows:
+                return rows
+        return []
+
+    def standings(self):
+        grouped = {}
+        for row in self._standings_rows():
+            team = row.get("team") or {}
+            name = team.get("name")
+            if not name:
+                continue
+            if self.competition == "NFL":
+                w = int(_number(row.get("won"), 0)); l = int(_number(row.get("lost"), 0))
+                ties = int(_number(row.get("ties"), 0))
+                pf = _number((row.get("points") or {}).get("for"), 0)
+                pa = _number((row.get("points") or {}).get("against"), 0)
+                group = row.get("division") or row.get("conference") or "NFL"
+            else:
+                w = int(_number((row.get("win") or {}).get("home"), 0)) + int(_number((row.get("win") or {}).get("away"), 0))
+                l = int(_number((row.get("loss") or {}).get("home"), 0)) + int(_number((row.get("loss") or {}).get("away"), 0))
+                ties, pf, pa = 0, 0, 0
+                group = ((row.get("conference") or {}).get("name") or "NBA").title()
+            code = self._code(team, name)
+            played = w + l + ties
+            win_pct = w / max(1, played)
+            item = {"name": str(name), "code": str(code), "pos": None, "pld": played,
+                    "w": w, "d": ties, "l": l, "gf": pf, "ga": pa, "gd": pf - pa,
+                    "pts": w * 3 + ties, "form": "",
+                    "record": f"{w}-{l}" + (f"-{ties}" if ties else ""),
+                    "win_pct": win_pct, "league_win_pct": win_pct, "qual": ""}
+            grouped.setdefault(group, []).append(item)
+        tables, model = [], {}
+        for group, teams in grouped.items():
+            teams.sort(key=lambda x: (-x["win_pct"], -x["gd"], x["name"]))
+            for i, t in enumerate(teams, 1):
+                t["pos"] = i
+                model[t["name"].lower()] = {**t, "group": group}
+            tables.append({"group": group, "teams": teams})
+        return model, sorted(tables, key=lambda x: x["group"])
+
+    def attach_availability(self, matches):
+        return 0
+
+    def leaders(self):
+        return {}
+
+
 class SportmonksAdapter:
     BASE = "https://api.sportmonks.com/v3/football"
 
