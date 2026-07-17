@@ -1,0 +1,676 @@
+"""Licensed-provider adapters for Matchday.
+
+The adapters deliberately return Matchday's existing JSON shapes.  Provider
+payloads stay isolated here so changing vendors never requires a UI rewrite.
+"""
+
+from __future__ import annotations
+
+import datetime as dt
+import json
+import math
+import urllib.parse
+import urllib.request
+
+
+class ProviderError(RuntimeError):
+    pass
+
+
+def _get_json(url, headers=None, timeout=25):
+    req = urllib.request.Request(url, headers=headers or {"User-Agent": "Matchday/1.0"})
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as response:
+            return json.loads(response.read().decode("utf-8"))
+    except Exception as exc:
+        raise ProviderError(str(exc)) from exc
+
+
+def _number(value, default=0):
+    try:
+        number = float(value)
+        return int(number) if number.is_integer() else number
+    except (TypeError, ValueError):
+        return default
+
+
+def _iso_utc(value):
+    if not value:
+        return None
+    text = str(value).strip().replace("Z", "+00:00")
+    try:
+        parsed = dt.datetime.fromisoformat(text)
+        if parsed.tzinfo is None:
+            # SportsDataIO league feeds document unqualified game times as ET.
+            parsed = parsed.replace(tzinfo=dt.timezone(dt.timedelta(hours=-5)))
+        return parsed.astimezone(dt.timezone.utc).isoformat().replace("+00:00", "Z")
+    except ValueError:
+        return str(value)
+
+
+def _current_season(code, today=None):
+    today = today or dt.date.today()
+    # Basketball and hockey seasons are identified by their starting year.
+    if code in {"nba", "nhl", "cbb"} and today.month <= 6:
+        return today.year - 1
+    return today.year
+
+
+SPORTSDATA_CODES = {
+    "NFL": "nfl", "NCAAF": "cfb", "NCAAM": "cbb",
+    "NBA": "nba", "MLB": "mlb", "NHL": "nhl",
+}
+
+
+def _short_code(name):
+    words = [word for word in str(name or "").replace("-", " ").split() if word]
+    return "".join(word[0] for word in words[:4]).upper() or str(name or "")[:4].upper()
+
+
+class SportsDataIOAdapter:
+    BASE = "https://api.sportsdata.io/v3"
+
+    def __init__(self, api_key, competition, getter=None):
+        if not api_key:
+            raise ProviderError("missing SPORTSDATAIO_KEY")
+        if competition not in SPORTSDATA_CODES:
+            raise ProviderError(f"unsupported SportsDataIO competition: {competition}")
+        self.key = api_key
+        self.competition = competition
+        self.code = SPORTSDATA_CODES[competition]
+        self.getter = getter or _get_json
+        self.season = _current_season(self.code)
+        self._teams = None
+
+    def _get(self, resource):
+        return self._get_product("scores", resource)
+
+    def _get_product(self, product, resource):
+        url = f"{self.BASE}/{self.code}/{product}/json/{resource}"
+        return self.getter(url, {"Ocp-Apim-Subscription-Key": self.key,
+                                 "User-Agent": "Matchday/1.0"})
+
+    def teams(self):
+        if self._teams is not None:
+            return self._teams
+        rows = self._get("Teams")
+        out = {}
+        for row in rows if isinstance(rows, list) else []:
+            code = row.get("Key") or row.get("Team") or row.get("Abbreviation")
+            name = row.get("FullName") or row.get("Name") or row.get("School") or code
+            if code:
+                out[str(code)] = str(name)
+        self._teams = out
+        return out
+
+    def schedule(self):
+        resource = (f"Schedules/{self.season}" if self.code == "nfl"
+                    else f"Games/{self.season}")
+        rows = self._get(resource)
+        team_names = self.teams()
+        matches = [self._match(row, team_names) for row in rows if isinstance(row, dict)]
+        matches = [match for match in matches if match]
+        matches.sort(key=lambda match: match.get("kickoff") or "")
+        return matches
+
+    def _match(self, row, team_names):
+        home_code = row.get("HomeTeam") or row.get("HomeTeamKey") or row.get("HomeTeamName")
+        away_code = row.get("AwayTeam") or row.get("AwayTeamKey") or row.get("AwayTeamName")
+        home_name = (row.get("HomeTeamName") or row.get("HomeTeamFullName") or
+                     team_names.get(str(home_code), home_code))
+        away_name = (row.get("AwayTeamName") or row.get("AwayTeamFullName") or
+                     team_names.get(str(away_code), away_code))
+        if not home_name or not away_name:
+            return None
+        raw_status = str(row.get("Status") or "Scheduled").lower()
+        if raw_status in {"inprogress", "in progress", "halftime", "delayed", "suspended"}:
+            status = "LIVE"
+        elif raw_status in {"final", "f/ot", "f/so", "completed", "closed"}:
+            status = "FINISHED"
+        else:
+            status = "UPCOMING"
+        home_score = row.get("HomeScore", row.get("HomeTeamRuns"))
+        away_score = row.get("AwayScore", row.get("AwayTeamRuns"))
+        week = row.get("Week") or row.get("Round") or row.get("Day")
+        clock = row.get("TimeRemaining") or row.get("TimeRemainingMinutes")
+        period = row.get("Quarter") or row.get("Period") or row.get("Inning")
+        minute = ""
+        if status == "LIVE":
+            minute = " ".join(str(x) for x in (period, clock) if x not in (None, ""))
+        venue = (row.get("StadiumDetails") or {}).get("Name") if isinstance(row.get("StadiumDetails"), dict) else None
+        venue = venue or row.get("StadiumName") or row.get("Venue") or ""
+        game_id = row.get("GameID") or row.get("GlobalGameID") or row.get("ScoreID")
+        return {
+            "id": f"sdio-{self.code}-{game_id}",
+            "provider_id": game_id,
+            "stage": f"Week {week}" if week not in (None, "") and self.code in {"nfl", "cfb"} else str(row.get("SeasonTypeName") or ""),
+            "venue": venue,
+            "kickoff": _iso_utc(row.get("DateTimeUTC") or row.get("DateTime") or row.get("Day")),
+            "status": status, "minute": minute or None,
+            "score": {"home": _number(home_score, None), "away": _number(away_score, None)},
+            "home": {"name": str(home_name), "code": str(home_code or ""), "pts": None, "gd": None,
+                     "form": "", "pos": None, "group": None},
+            "away": {"name": str(away_name), "code": str(away_code or ""), "pts": None, "gd": None,
+                     "form": "", "pos": None, "group": None},
+            "markets": {}, "lineups": None, "h2h": [],
+            "injuries": {"home": [], "away": []}, "data_source": "SportsDataIO",
+        }
+
+    def standings(self):
+        resource = (f"Standings/{self.season}" if self.code in {"nfl", "nba", "mlb", "nhl"}
+                    else f"TeamSeasonStats/{self.season}")
+        rows = self._get(resource)
+        model, grouped = {}, {}
+        for row in rows if isinstance(rows, list) else []:
+            name = row.get("Name") or row.get("TeamName") or row.get("School") or row.get("Team")
+            if not name:
+                continue
+            code = row.get("Team") or row.get("Key") or row.get("TeamKey") or ""
+            conference = row.get("Conference") or row.get("ConferenceName") or "League"
+            division = row.get("Division") or row.get("DivisionName") or ""
+            group = " ".join(str(x) for x in (conference, division) if x).strip() or "League"
+            wins = int(_number(row.get("Wins"), 0)); losses = int(_number(row.get("Losses"), 0))
+            ties = int(_number(row.get("Ties"), 0)); played = wins + losses + ties
+            pf = _number(row.get("PointsFor", row.get("RunsScored", row.get("GoalsFor"))), 0)
+            pa = _number(row.get("PointsAgainst", row.get("RunsAgainst", row.get("GoalsAgainst"))), 0)
+            avg_pf = _number(row.get("PointsPerGameFor", row.get("RunsPerGame", row.get("GoalsPerGame"))), 0)
+            avg_pa = _number(row.get("PointsPerGameAgainst", row.get("OpponentRunsPerGame", row.get("OpponentGoalsPerGame"))), 0)
+            if not avg_pf and played: avg_pf = pf / played
+            if not avg_pa and played: avg_pa = pa / played
+            win_pct = _number(row.get("Percentage", row.get("WinPercentage")), wins / max(1, played))
+            if win_pct > 1: win_pct /= 100
+            conf_w = int(_number(row.get("ConferenceWins"), wins))
+            conf_l = int(_number(row.get("ConferenceLosses"), losses))
+            conf_pct = conf_w / max(1, conf_w + conf_l)
+            streak_n = int(_number(row.get("Streak"), 0))
+            form = (("W " * min(5, streak_n)) if streak_n > 0 else ("L " * min(5, abs(streak_n)))).strip()
+            diff = pf - pa
+            gd_model = round(diff if abs(diff) <= 20 else diff / 10.0, 1)
+            pts_model = round((wins * 3 + ties) * 14.0 / max(1, played), 1) if played else 0
+            pos = int(_number(row.get("ConferenceRank", row.get("DivisionRank", row.get("Rank"))), 0)) or None
+            item = {"name": str(name), "code": str(code), "pos": pos, "pld": played,
+                    "w": wins, "d": ties, "l": losses, "gf": pf, "ga": pa, "gd": diff,
+                    "pts": wins * 3 + ties, "form": form,
+                    "record": f"{wins}-{losses}" + (f"-{ties}" if ties else ""),
+                    "win_pct": win_pct, "league_win_pct": conf_pct,
+                    "avg_pf": round(avg_pf, 2), "avg_pa": round(avg_pa, 2), "qual": ""}
+            grouped.setdefault(group, []).append(item)
+            model[str(name).lower()] = {"group": group, "pld": played, "w": wins, "d": ties,
+                "l": losses, "gf": pf, "ga": pa, "gd": gd_model, "pts": pts_model,
+                "form": form, "pos": pos, "win_pct": win_pct, "league_win_pct": conf_pct,
+                "avg_pf": avg_pf, "avg_pa": avg_pa}
+        payload = []
+        for group, teams in grouped.items():
+            teams.sort(key=lambda x: (x["pos"] or 999, -x["pts"], -x["gd"]))
+            for index, team in enumerate(teams, 1):
+                team["pos"] = team["pos"] or index
+            payload.append({"group": group, "teams": teams})
+        return model, sorted(payload, key=lambda x: x["group"])
+
+    def rankings(self, standings_payload):
+        if self.competition not in {"NCAAF", "NCAAM"}:
+            return [], None
+        teams = [dict(team) for group in standings_payload for team in group.get("teams", [])]
+        teams.sort(key=lambda x: (-float(x.get("win_pct") or 0), -float(x.get("gd") or 0), -(x.get("w") or 0)))
+        ranks = [{"rank": i, "name": team["name"], "code": team.get("code") or "",
+                  "record": team.get("record") or ""} for i, team in enumerate(teams[:25], 1)]
+        return ranks, self._cfp_projection(ranks) if self.competition == "NCAAF" else None
+
+    def attach_availability(self, matches):
+        """Attach licensed injury/availability labels when the feed includes them."""
+        resources = ["Injuries"]
+        if self.code == "nfl":
+            weeks = [int(match.get("stage", "").replace("Week ", "")) for match in matches
+                     if str(match.get("stage") or "").startswith("Week ")
+                     and str(match.get("stage") or "").replace("Week ", "").isdigit()]
+            if weeks:
+                resources = [f"Injuries/{self.season}/{max(weeks)}"]
+        rows = self._get_product("stats", resources[0])
+        by_team = {}
+        for row in rows if isinstance(rows, list) else []:
+            team = str(row.get("Team") or row.get("TeamKey") or "")
+            name = row.get("Name") or row.get("PlayerName") or ""
+            status = row.get("InjuryStatus") or row.get("Status") or "Unavailable"
+            if team and name:
+                by_team.setdefault(team.lower(), []).append(f"{name} ({status})")
+        attached = 0
+        for match in matches:
+            for side in ("home", "away"):
+                code = str((match.get(side) or {}).get("code") or "").lower()
+                people = by_team.get(code) or []
+                if people:
+                    match.setdefault("injuries", {"home": [], "away": []})[side] = people[:12]
+                    attached += len(people[:12])
+        return attached
+
+    def leaders(self):
+        """Return sport-native season leaders from licensed player stats."""
+        definitions = {
+            "NFL": [("PassingYards", "Passing yards", False), ("PassingTouchdowns", "Passing TDs", False),
+                    ("RushingYards", "Rushing yards", False), ("ReceivingYards", "Receiving yards", False)],
+            "NCAAF": [("PassingYards", "Passing yards", False), ("PassingTouchdowns", "Passing TDs", False),
+                      ("RushingYards", "Rushing yards", False), ("ReceivingYards", "Receiving yards", False)],
+            "NBA": [("Points", "Points per game", True), ("Rebounds", "Rebounds per game", True),
+                    ("Assists", "Assists per game", True), ("BlockedShots", "Blocks per game", True)],
+            "NCAAM": [("Points", "Points per game", True), ("Rebounds", "Rebounds per game", True),
+                      ("Assists", "Assists per game", True), ("BlockedShots", "Blocks per game", True)],
+            "MLB": [("HomeRuns", "Home runs", False), ("BattingAverage", "Batting average", False),
+                    ("RunsBattedIn", "Runs batted in", False), ("PitchingStrikeouts", "Strikeouts", False)],
+            "NHL": [("Points", "Points", False), ("Goals", "Goals", False),
+                    ("Assists", "Assists", False), ("GoaltendingSavePercentage", "Save percentage", False)],
+        }
+        wanted = definitions.get(self.competition) or []
+        if not wanted:
+            return {}
+        rows = self._get_product("stats", f"PlayerSeasonStats/{self.season}")
+        categories = []
+        for field, label, per_game in wanted:
+            ranked = []
+            for row in rows if isinstance(rows, list) else []:
+                value = _number(row.get(field), 0)
+                games = max(1, int(_number(row.get("Games", row.get("GamesPlayed")), 1)))
+                value = value / games if per_game else value
+                name = row.get("Name") or row.get("PlayerName") or ""
+                if name and value:
+                    ranked.append((float(value), str(name)))
+            ranked.sort(reverse=True)
+            leaders = [{"name": name, "value": round(value, 1) if per_game else value}
+                       for value, name in ranked[:3]]
+            if leaders:
+                categories.append({"key": field, "label": label, "abbr": "", "leaders": leaders})
+        return {"season": self.season, "source": "SportsDataIO", "categories": categories} if categories else {}
+
+    @staticmethod
+    def _cfp_projection(ranks):
+        if len(ranks) < 12:
+            return None
+        def match(a, b):
+            return {"home": f"({a['rank']}) {a['name']}", "away": f"({b['rank']}) {b['name']}",
+                    "score": {"home": None, "away": None}, "status": "UPCOMING", "kickoff": None}
+        first = [match(ranks[4], ranks[11]), match(ranks[5], ranks[10]),
+                 match(ranks[6], ranks[9]), match(ranks[7], ranks[8])]
+        byes = [{"home": f"({team['rank']}) {team['name']}", "away": "First-round winner",
+                 "score": {"home": None, "away": None}, "status": "UPCOMING", "kickoff": None}
+                for team in ranks[:4]]
+        return [{"round": "CFP First Round (model projection)", "matches": first},
+                {"round": "CFP Quarter-finals (model projection)", "matches": byes}]
+
+
+class CollegeFootballDataAdapter:
+    BASE = "https://api.collegefootballdata.com"
+
+    def __init__(self, api_key, getter=None, today=None):
+        if not api_key:
+            raise ProviderError("missing CFBD_KEY")
+        self.key, self.getter = api_key, getter or _get_json
+        self.today = today or dt.date.today()
+        self.season = self.today.year
+        self._games = []
+        self._cached_rankings = None
+
+    def _get(self, path, params=None):
+        url = self.BASE + path
+        if params:
+            url += "?" + urllib.parse.urlencode(params)
+        return self.getter(url, {"Authorization": f"Bearer {self.key}", "User-Agent": "Matchday/1.0"})
+
+    def schedule(self):
+        rows = self._get("/games", {"year": self.season, "seasonType": "regular", "classification": "fbs"})
+        self._games = rows if isinstance(rows, list) else []
+        matches = []
+        now = dt.datetime.now(dt.timezone.utc)
+        for row in self._games:
+            home, away = row.get("homeTeam"), row.get("awayTeam")
+            if not home or not away:
+                continue
+            kickoff = _iso_utc(row.get("startDate"))
+            try:
+                kickoff_dt = dt.datetime.fromisoformat(str(kickoff).replace("Z", "+00:00"))
+            except Exception:
+                kickoff_dt = now + dt.timedelta(days=1)
+            if row.get("completed"):
+                status = "FINISHED"
+            elif kickoff_dt <= now and row.get("homePoints") is not None:
+                status = "LIVE"
+            else:
+                status = "UPCOMING"
+            matches.append({
+                "id": f"cfbd-{row.get('id')}", "provider_id": row.get("id"),
+                "stage": f"Week {row.get('week')}" if row.get("week") else str(row.get("seasonType") or "Regular Season").title(),
+                "venue": row.get("venue") or "", "kickoff": kickoff, "status": status,
+                "minute": "Live" if status == "LIVE" else None,
+                "score": {"home": _number(row.get("homePoints"), None), "away": _number(row.get("awayPoints"), None)},
+                "home": {"name": home, "code": _short_code(home), "pts": None, "gd": None, "form": "", "pos": None, "group": row.get("homeConference")},
+                "away": {"name": away, "code": _short_code(away), "pts": None, "gd": None, "form": "", "pos": None, "group": row.get("awayConference")},
+                "markets": {}, "lineups": None, "h2h": [], "injuries": {"home": [], "away": []},
+                "data_source": "CollegeFootballData",
+            })
+        matches.sort(key=lambda match: match.get("kickoff") or "")
+        return matches
+
+    def standings(self):
+        rows = self._get("/records", {"year": self.season, "classification": "fbs"})
+        if not rows and self.season > 2000:
+            rows = self._get("/records", {"year": self.season - 1, "classification": "fbs"})
+        scoring = {}
+        for game in self._games:
+            if not game.get("completed"):
+                continue
+            for team_key, opp_key, pts_key, opp_pts_key in (("homeTeam", "awayTeam", "homePoints", "awayPoints"), ("awayTeam", "homeTeam", "awayPoints", "homePoints")):
+                name = game.get(team_key)
+                if name:
+                    rec = scoring.setdefault(name, [0, 0]);rec[0] += _number(game.get(pts_key), 0);rec[1] += _number(game.get(opp_pts_key), 0)
+        model, grouped = {}, {}
+        for row in rows if isinstance(rows, list) else []:
+            name, group = row.get("team"), row.get("conference") or "FBS"
+            total, conf = row.get("total") or {}, row.get("conferenceGames") or {}
+            if not name or str(row.get("classification") or "fbs").lower() != "fbs":
+                continue
+            w, l, ties = int(total.get("wins") or 0), int(total.get("losses") or 0), int(total.get("ties") or 0)
+            pld = int(total.get("games") or (w + l + ties)); pf, pa = scoring.get(name, [0, 0]); diff = pf - pa
+            item = {"name": name, "code": _short_code(name), "pos": None, "pld": pld, "w": w, "d": ties, "l": l,
+                    "gf": pf, "ga": pa, "gd": diff, "pts": w * 3 + ties, "form": "", "record": f"{w}-{l}" + (f"-{ties}" if ties else ""),
+                    "win_pct": w / max(1, pld), "league_win_pct": int(conf.get("wins") or 0) / max(1, int(conf.get("games") or 0)), "qual": ""}
+            grouped.setdefault(group, []).append(item)
+            model[name.lower()] = {**item, "group": group}
+        tables = []
+        for group, teams in grouped.items():
+            teams.sort(key=lambda x: (-x["win_pct"], -x["gd"], x["name"]))
+            for index, team in enumerate(teams, 1): team["pos"] = index
+            tables.append({"group": group, "teams": teams})
+        return model, sorted(tables, key=lambda x: x["group"])
+
+    def rankings(self, standings_payload):
+        if self._cached_rankings is not None:
+            return self._cached_rankings
+        payload = self._get("/rankings", {"year": self.season, "seasonType": "regular"})
+        def collect(rows):
+            found = []
+            for week in rows if isinstance(rows, list) else []:
+                for poll in week.get("polls") or []:
+                    priority = 0 if "playoff" in str(poll.get("poll") or "").lower() else 1 if "ap top" in str(poll.get("poll") or "").lower() else 2
+                    found.append((int(week.get("season") or 0), int(week.get("week") or 0), -priority, poll))
+            return found
+        candidates = collect(payload)
+        if not candidates and self.season > 2000:
+            candidates = collect(self._get("/rankings", {"year": self.season - 1, "seasonType": "postseason"}))
+        if candidates:
+            poll = sorted(candidates, reverse=True, key=lambda x: x[:3])[0][3]
+            ranks = [{"rank": int(row.get("rank") or 0), "name": row.get("school") or "", "code": _short_code(row.get("school")), "record": ""}
+                     for row in (poll.get("ranks") or [])[:25] if row.get("school")]
+        else:
+            ranks = []
+        self._cached_rankings = (ranks, SportsDataIOAdapter._cfp_projection(ranks) if len(ranks) >= 12 else None)
+        return self._cached_rankings
+
+    def attach_availability(self, matches): return 0
+    def leaders(self): return {}
+
+
+class CollegeBasketballDataAdapter:
+    BASE = "https://api.collegebasketballdata.com"
+
+    def __init__(self, api_key, getter=None, today=None):
+        if not api_key:
+            raise ProviderError("missing CBBD_KEY")
+        self.key, self.getter = api_key, getter or _get_json
+        self.today = today or dt.date.today()
+        self.season = self.today.year
+        self._games = []
+        self._d1_teams = set()
+
+    def _get(self, path, params=None):
+        url = self.BASE + path
+        if params: url += "?" + urllib.parse.urlencode(params)
+        return self.getter(url, {"Authorization": f"Bearer {self.key}", "User-Agent": "Matchday/1.0"})
+
+    def schedule(self):
+        team_rows = self._get("/teams")
+        self._d1_teams = {str(row.get("school")) for row in team_rows if row.get("school") and row.get("conference")}
+        # The endpoint deliberately caps responses at 3,000 rows. Four bounded
+        # season windows retrieve the complete Division I schedule without loss.
+        windows = ((f"{self.season - 1}-10-01T00:00:00Z", f"{self.season - 1}-12-01T00:00:00Z"),
+                   (f"{self.season - 1}-12-01T00:00:00Z", f"{self.season}-02-01T00:00:00Z"),
+                   (f"{self.season}-02-01T00:00:00Z", f"{self.season}-04-01T00:00:00Z"),
+                   (f"{self.season}-04-01T00:00:00Z", f"{self.season}-05-16T00:00:00Z"))
+        by_id = {}
+        for start, end in windows:
+            chunk = self._get("/games", {"season": self.season, "startDateRange": start, "endDateRange": end})
+            for row in chunk if isinstance(chunk, list) else []:
+                by_id[str(row.get("id"))] = row
+        rows = list(by_id.values())
+        self._games = [row for row in rows if row.get("homeTeam") in self._d1_teams or row.get("awayTeam") in self._d1_teams] if isinstance(rows, list) else []
+        matches = []
+        for row in self._games:
+            home, away = row.get("homeTeam"), row.get("awayTeam")
+            if not home or not away: continue
+            raw = str(row.get("status") or "").lower()
+            status = "FINISHED" if raw == "final" else "LIVE" if raw in {"in_progress", "live", "halftime"} else "UPCOMING"
+            matches.append({"id": f"cbbd-{row.get('id')}", "provider_id": row.get("id"), "stage": str(row.get("seasonType") or "Regular Season").replace("_", " ").title(),
+                "venue": row.get("venue") or "", "kickoff": _iso_utc(row.get("startDate")), "status": status, "minute": raw if status == "LIVE" else None,
+                "score": {"home": _number(row.get("homePoints"), None), "away": _number(row.get("awayPoints"), None)},
+                "home": {"name": home, "code": _short_code(home), "pts": None, "gd": None, "form": "", "pos": None, "group": row.get("homeConference")},
+                "away": {"name": away, "code": _short_code(away), "pts": None, "gd": None, "form": "", "pos": None, "group": row.get("awayConference")},
+                "markets": {}, "lineups": None, "h2h": [], "injuries": {"home": [], "away": []}, "data_source": "CollegeBasketballData"})
+        matches.sort(key=lambda match: match.get("kickoff") or "")
+        return matches
+
+    def standings(self):
+        records = {}
+        for game in self._games:
+            if str(game.get("status") or "").lower() != "final": continue
+            hp, ap = _number(game.get("homePoints"), 0), _number(game.get("awayPoints"), 0)
+            for name, group, pf, pa in ((game.get("homeTeam"), game.get("homeConference"), hp, ap), (game.get("awayTeam"), game.get("awayConference"), ap, hp)):
+                if not name or name not in self._d1_teams: continue
+                rec = records.setdefault(name, {"group": group or "Division I", "w": 0, "l": 0, "pf": 0, "pa": 0})
+                rec["w" if pf > pa else "l"] += 1;rec["pf"] += pf;rec["pa"] += pa
+        model, grouped = {}, {}
+        for name, rec in records.items():
+            pld = rec["w"] + rec["l"]; diff = rec["pf"] - rec["pa"]
+            item = {"name": name, "code": _short_code(name), "pos": None, "pld": pld, "w": rec["w"], "d": 0, "l": rec["l"],
+                    "gf": rec["pf"], "ga": rec["pa"], "gd": diff, "pts": rec["w"] * 3, "form": "", "record": f"{rec['w']}-{rec['l']}",
+                    "win_pct": rec["w"] / max(1, pld), "league_win_pct": rec["w"] / max(1, pld), "qual": ""}
+            grouped.setdefault(rec["group"], []).append(item);model[name.lower()] = {**item, "group": rec["group"]}
+        tables=[]
+        for group, teams in grouped.items():
+            teams.sort(key=lambda x:(-x["win_pct"],-x["gd"],x["name"]));
+            for i, team in enumerate(teams,1): team["pos"]=i
+            tables.append({"group":group,"teams":teams})
+        return model, sorted(tables,key=lambda x:x["group"])
+
+    def rankings(self, standings_payload):
+        teams=[dict(team) for group in standings_payload for team in group.get("teams",[])];teams.sort(key=lambda x:(-x["win_pct"],-x["gd"],x["name"]))
+        return ([{"rank":i,"name":team["name"],"code":team.get("code") or "","record":team.get("record") or ""} for i,team in enumerate(teams[:25],1)],None)
+    def attach_availability(self, matches): return 0
+    def leaders(self): return {}
+
+
+class BallDontLieAdapter:
+    """Free-tier adapter for real NBA, NFL and MLB schedules/scores.
+
+    BALLDONTLIE's free plan exposes games but not standings or player-stat
+    endpoints.  Those unsupported sections intentionally return empty values
+    instead of being filled with trial or inferred data.
+    """
+
+    BASE = "https://api.balldontlie.io"
+    CODES = {"NBA": "nba", "NFL": "nfl", "MLB": "mlb"}
+
+    def __init__(self, api_key, competition, getter=None, today=None):
+        if not api_key:
+            raise ProviderError("missing BALLDONTLIE_KEY")
+        if competition not in self.CODES:
+            raise ProviderError(f"unsupported BALLDONTLIE competition: {competition}")
+        self.key = api_key
+        self.competition = competition
+        self.code = self.CODES[competition]
+        self.getter = getter or _get_json
+        self.today = today or dt.date.today()
+        self.season = _current_season(self.code, self.today)
+
+    def _get(self, path, params=None):
+        pairs = []
+        for key, value in (params or {}).items():
+            if isinstance(value, (list, tuple)):
+                pairs.extend((key, item) for item in value)
+            elif value is not None:
+                pairs.append((key, value))
+        url = f"{self.BASE}{path}"
+        if pairs:
+            url += "?" + urllib.parse.urlencode(pairs)
+        return self.getter(url, {"Authorization": self.key, "User-Agent": "Matchday/1.0"})
+
+    def schedule(self):
+        # A bounded date window keeps the free 5 req/min tier useful.  NFL and
+        # NBA need a longer horizon during their off-seasons; MLB plays daily.
+        back = 7
+        forward = {"NFL": 150, "NBA": 130, "MLB": 14}[self.competition]
+        dates = [(self.today + dt.timedelta(days=offset)).isoformat()
+                 for offset in range(-back, forward + 1)]
+        rows, cursor = [], None
+        for _ in range(4):
+            params = {"dates[]": dates, "per_page": 100, "cursor": cursor}
+            payload = self._get(f"/{self.code}/v1/games", params)
+            page = payload.get("data") if isinstance(payload, dict) else []
+            rows.extend(page or [])
+            cursor = (payload.get("meta") or {}).get("next_cursor") if isinstance(payload, dict) else None
+            if not cursor:
+                break
+        matches = [self._match(row) for row in rows if isinstance(row, dict)]
+        matches = [match for match in matches if match]
+        matches.sort(key=lambda match: match.get("kickoff") or "")
+        return matches
+
+    @staticmethod
+    def _team(row, side):
+        team = row.get(side) if isinstance(row.get(side), dict) else {}
+        name = (team.get("full_name") or team.get("display_name") or
+                row.get(f"{side}_name") or team.get("name"))
+        return {
+            "name": str(name or ""),
+            "code": str(team.get("abbreviation") or ""),
+            "pts": None, "gd": None, "form": "", "pos": None, "group": None,
+        }
+
+    def _match(self, row):
+        away_key = "visitor_team" if self.competition in {"NBA", "NFL"} else "away_team"
+        home, away = self._team(row, "home_team"), self._team(row, away_key)
+        if not home["name"] or not away["name"]:
+            return None
+        raw_status = str(row.get("status") or "").strip()
+        status_key = raw_status.lower().replace("_", " ")
+        if "final" in status_key or status_key in {"completed", "closed", "post"}:
+            status = "FINISHED"
+        elif any(token in status_key for token in ("progress", "quarter", "inning", "halftime", "live")):
+            status = "LIVE"
+        else:
+            status = "UPCOMING"
+        if self.competition == "MLB":
+            home_score = (row.get("home_team_data") or {}).get("runs")
+            away_score = (row.get("away_team_data") or {}).get("runs")
+            minute = f"{row.get('period') or ''} {row.get('display_clock') or ''}".strip()
+        else:
+            home_score = row.get("home_team_score")
+            away_score = row.get("visitor_team_score")
+            minute = str(row.get("time") or raw_status or "") if status == "LIVE" else ""
+        if self.competition == "NFL" and row.get("week") not in (None, ""):
+            stage = f"Week {row['week']}"
+        elif row.get("postseason"):
+            stage = "Postseason"
+        else:
+            stage = str(row.get("season_type") or "Regular Season").replace("_", " ").title()
+        return {
+            "id": f"bdl-{self.code}-{row.get('id')}", "provider_id": row.get("id"),
+            "stage": stage, "venue": row.get("venue") or "",
+            "kickoff": _iso_utc(row.get("datetime") or row.get("date")),
+            "status": status, "minute": minute or None,
+            "score": {"home": _number(home_score, None), "away": _number(away_score, None)},
+            "home": home, "away": away, "markets": {}, "lineups": None, "h2h": [],
+            "injuries": {"home": [], "away": []}, "data_source": "BALLDONTLIE",
+        }
+
+    def standings(self):
+        return {}, []
+
+    def attach_availability(self, matches):
+        return 0
+
+    def leaders(self):
+        return {}
+
+
+class SportmonksAdapter:
+    BASE = "https://api.sportmonks.com/v3/football"
+
+    def __init__(self, api_key, getter=None):
+        if not api_key:
+            raise ProviderError("missing SPORTMONKS_KEY")
+        self.key = api_key
+        self.getter = getter or _get_json
+
+    def _get(self, path, params=None):
+        query = dict(params or {})
+        query["api_token"] = self.key
+        return self.getter(f"{self.BASE}{path}?{urllib.parse.urlencode(query)}",
+                           {"User-Agent": "Matchday/1.0"})
+
+    def enrich(self, matches, name_match):
+        dates = sorted({str(match.get("kickoff") or "")[:10] for match in matches
+                        if match.get("status") in {"LIVE", "FINISHED", "UPCOMING"}
+                        and str(match.get("kickoff") or "")[:10]})
+        attached = 0
+        for day in dates[-10:]:
+            payload = self._get(f"/fixtures/date/{day}", {
+                "include": "participants;scores;statistics.type;lineups.player;events;sidelined.player"
+            })
+            for fixture in payload.get("data") or []:
+                participants = fixture.get("participants") or []
+                home = next((p for p in participants if (p.get("meta") or {}).get("location") == "home"), None)
+                away = next((p for p in participants if (p.get("meta") or {}).get("location") == "away"), None)
+                if not home or not away:
+                    continue
+                match = next((m for m in matches if name_match(home.get("name"), m["home"]["name"])
+                              and name_match(away.get("name"), m["away"]["name"])), None)
+                if not match:
+                    continue
+                self._attach_fixture(match, fixture, home.get("id"), away.get("id"))
+                attached += 1
+        return attached
+
+    def _attach_fixture(self, match, fixture, home_id, away_id):
+        stats = {"home": {}, "away": {}, "source": "Sportmonks", "fixture_id": fixture.get("id")}
+        stat_map = {"shots-total": "shots", "shots-on-target": "shots_on_target",
+                    "ball-possession": "possession", "corners": "corners", "fouls": "fouls",
+                    "offsides": "offsides", "saves": "saves", "yellowcards": "yellow_cards",
+                    "redcards": "red_cards"}
+        for row in fixture.get("statistics") or []:
+            participant = row.get("participant_id")
+            side = "home" if participant == home_id else "away" if participant == away_id else None
+            type_row = row.get("type") or {}
+            key = stat_map.get(str(type_row.get("code") or type_row.get("name") or "").lower().replace(" ", "-"))
+            if side and key:
+                stats[side][key] = _number((row.get("data") or {}).get("value", row.get("value")), 0)
+        if stats["home"] and stats["away"]:
+            match["stats_extra"] = stats
+            match["stats"] = stats
+
+        lineups = fixture.get("lineups") or []
+        sides = {"home": [], "away": []}
+        for row in lineups:
+            participant = row.get("team_id") or row.get("participant_id")
+            side = "home" if participant == home_id else "away" if participant == away_id else None
+            player = row.get("player") or {}
+            if side and row.get("type_id") in (None, 11) and (row.get("formation_position") or row.get("position_id")):
+                sides[side].append({"n": row.get("jersey_number") or "",
+                                    "name": player.get("display_name") or player.get("name") or "", "out": False})
+        if len(sides["home"]) >= 7 and len(sides["away"]) >= 7:
+            match["lineups"] = {"home": {"formation": "", "xi": sides["home"][:11]},
+                                "away": {"formation": "", "xi": sides["away"][:11]}, "subs": []}
+
+        for row in fixture.get("sidelined") or []:
+            participant = row.get("participant_id") or row.get("team_id")
+            side = "home" if participant == home_id else "away" if participant == away_id else None
+            player = row.get("player") or {}
+            if side and player.get("name"):
+                reason = row.get("category") or row.get("reason") or "unavailable"
+                match.setdefault("injuries", {"home": [], "away": []})[side].append(f"{player['name']} ({reason})")

@@ -1,0 +1,13 @@
+{
+  "name": "Matchday Terminal",
+  "short_name": "Matchday",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#070a0f",
+  "theme_color": "#ffb02e",
+  "icons": [
+    { "src": "./icon-180.png?v=3", "sizes": "180x180", "type": "image/png", "purpose": "any maskable" },
+    { "src": "./icon-512.png?v=3", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

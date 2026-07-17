@@ -1,0 +1,1 @@
+UI-only model dashboard patch. Replace only index.html. It does not edit fetch_data.py, config_keys.py, data.json, app.py, odds keys, API keys, or the prediction formula. The Model tab becomes a command-center view with filters, KPI cards, compact pick board, and quick reads.

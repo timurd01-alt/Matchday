@@ -1,0 +1,1 @@
+UI-only patch. Replace only index.html. Model Command Center now separates completed/past-kickoff games into an Archive pile. Active filters no longer show past-game odds. No data, API keys, fetcher, launcher, odds formula, or model formula were changed.

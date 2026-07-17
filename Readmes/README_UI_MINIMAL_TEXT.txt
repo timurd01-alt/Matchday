@@ -1,0 +1,1 @@
+UI-only patch. Replace index.html only. It removes explanatory/system helper sentences from Groups, Bracket, Thirds, News, Odds, Model, Stats, and Updates screens. No data/API/fetcher/launcher changes.

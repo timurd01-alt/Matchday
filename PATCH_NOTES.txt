@@ -1,0 +1,10 @@
+Matchday Terminal stability build
+
+Changed:
+- Removed --disable-software-rasterizer from WebView2 flags.
+- Added dynamic local port fallback if 8000 is busy.
+- Waits for the local server before opening WebView.
+- Opens only the main app by default; use --mini for the mini widget.
+- Added browser fallback: python app.py --browser.
+- Fixed negative prediction percentages and normalized probability bars.
+- Made start_app.bat show the console so errors are visible.

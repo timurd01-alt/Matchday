@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Matchday Terminal</title>
+<meta name="theme-color" content="#070a0f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Matchday">
+<link rel="icon" href="./favicon.ico?v=4" sizes="any">
+<link rel="shortcut icon" href="./matchday.ico?v=4">
+<link rel="icon" type="image/png" sizes="180x180" href="./icon-180.png?v=4">
+<link rel="icon" type="image/png" sizes="512x512" href="./icon-512.png?v=4">
+<link rel="apple-touch-icon" href="./icon-180.png?v=4">
+<link rel="manifest" href="./manifest.json?v=4">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<section class="welcomeGate" id="welcomeGate" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
+  <div class="welcomeNoise" aria-hidden="true"></div>
+  <div class="welcomeShell">
+    <div class="welcomeBrand">
+      <div class="welcomeEyebrow"><span class="welcomeDot"></span> MATCHDAY TERMINAL <span class="welcomeBeta">BETA</span></div>
+      <img src="logo.png?v=4" class="welcomeLogo" alt="Matchday">
+      <h1 id="welcomeTitle">Know the match.<br><span>See the tension.</span></h1>
+      <p class="welcomeLead">Live scores, accountable model reads, and the market context behind every prediction.</p>
+      <div class="welcomeDevNote" role="note">
+        <span>Still in development</span>
+        <p>You&rsquo;re using an early version of Matchday. Some data and features may change as we improve it with real feedback.</p>
+      </div>
+      <div class="welcomeActions">
+        <button class="welcomeEnter" type="button" onclick="enterMatchday()">Enter Matchday <span aria-hidden="true">→</span></button>
+        <span>Analytics only · no tips · no ads</span>
+        <a class="welcomeLegalLink" href="legal.html">Legal, privacy &amp; data sources</a>
+      </div>
+    </div>
+    <aside class="welcomePreview" aria-label="Matchday preview">
+      <div class="welcomePreviewTop"><span>IN FOCUS</span><span id="welcomeFeedState">LIVE FEED</span></div>
+      <div class="welcomeNext" id="welcomeNext"><div class="welcomeLoading">Loading today’s slate…</div></div>
+      <div class="welcomeProof">
+        <div><b>01</b><span>Model vs market</span><small>Probability, not certainty.</small></div>
+        <div><b>02</b><span>Locked in public</span><small>Picks never rewritten.</small></div>
+        <div><b>03</b><span>Every sport</span><small>One calm live terminal.</small></div>
+      </div>
+    </aside>
+  </div>
+</section>
+<div class="app" id="app">
+  <div class="livestrip"><span class="ls-brand"><span class="pip"></span>Matchday<span id="compName" style="color:var(--muted);font-weight:600;text-transform:none;letter-spacing:0"></span></span><select id="sportSel" class="sportSel" onchange="changeSport(this.value)" aria-label="Sport"><option value="">All sports</option><option value="wc">World Cup</option><option value="ucl">Champions League</option><option value="epl">Premier League</option><option value="laliga">La Liga</option><option value="seriea">Serie A</option><option value="bundesliga">Bundesliga</option><option value="ligue1">Ligue 1</option><option value="nfl">NFL</option><option value="ncaaf">College Football</option><option value="ncaam">Men's College Basketball</option><option value="nba">NBA</option></select><div id="strip" class="ls-next">loading…</div><a class="legalLink" href="legal.html">Legal</a></div>
+  <nav class="sidebar" id="nav">
+    <button class="navbtn" data-v="matches" aria-pressed="true"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14" rx="2"/><line x1="8" y1="3" x2="8" y2="7"/><line x1="16" y1="3" x2="16" y2="7"/><line x1="4" y1="10" x2="20" y2="10"/></svg><span class="lbl">Matches</span></button><button class="navbtn" data-v="results" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h10"/><circle cx="19" cy="18" r="2"/></svg><span class="lbl">Results</span></button><button class="navbtn" data-v="tott" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M12 3l2.5 5 5.5.8-4 3.9 1 5.5-5-2.6-5 2.6 1-5.5-4-3.9 5.5-.8z"/></svg><span class="lbl">Team of Tournament</span></button>
+    <button class="navbtn" data-v="groups" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/><path d="M8 4v16"/></svg><span class="lbl">Groups</span></button>
+    <button class="navbtn" data-v="title" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M7 4h10v4a5 5 0 0 1-10 0V4z"/><path d="M5 6H3v2a3 3 0 0 0 3 3M19 6h2v2a3 3 0 0 1-3 3M9 21h6M12 17v4"/></svg><span class="lbl">Forecast</span></button>
+    <button class="navbtn" data-v="edge" aria-pressed="false"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg><span class="lbl">Model</span></button>
+    <button class="navbtn" data-v="score" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg><span class="lbl">Scorecard</span></button>
+    <button class="navbtn" data-v="bracket" aria-pressed="false"><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="12" r="2.5"/><path d="M8.5 6H13c1 0 2 .8 2 2v2M8.5 18H13c1 0 2-.8 2-2v-2"/></svg><span class="lbl">Bracket</span></button>
+    <button class="navbtn" data-v="third" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M7 4h10l-1 6a4 4 0 0 1-8 0L7 4Z"/><path d="M9 20h6"/><path d="M12 14v6"/><path d="M5 7H3c0 3 2 5 5 5"/><path d="M19 7h2c0 3-2 5-5 5"/></svg><span class="lbl">Thirds</span></button>
+    <button class="navbtn" data-v="news" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 5h13v14H4z"/><path d="M17 8h3v9a2 2 0 0 1-2 2"/><line x1="7" y1="9" x2="14" y2="9"/><line x1="7" y1="13" x2="14" y2="13"/><line x1="7" y1="17" x2="11" y2="17"/></svg><span class="lbl">News</span></button><button class="navbtn" data-v="community" aria-pressed="false"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="10" r="2.2"/><path d="M4 19c0-3 2.2-5 5-5s5 2 5 5"/><path d="M15 19c0-2 1-3.5 3-3.5s3 1.5 3 3.5"/></svg><span class="lbl">Community</span></button>
+    <button class="navbtn" data-v="status" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 12h4l2-6 4 12 2-6h4"/><circle cx="12" cy="12" r="9"/></svg><span class="lbl">Status</span></button>
+
+    <button class="navbtn" data-v="updates" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 5h10l4 4v10H4z"/><path d="M14 5v4h4"/><path d="M7 13h10"/><path d="M7 16h7"/><path d="M7 10h3"/></svg><span class="lbl">Updates</span></button>
+    <button class="navbtn" data-v="customize" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M12 15.5A3.5 3.5 0 1 0 12 8a3.5 3.5 0 0 0 0 7.5Z"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2 3.4-.2-.1a1.7 1.7 0 0 0-2 .2 1.7 1.7 0 0 0-.8 1.7V22H9.2v-.2a1.7 1.7 0 0 0-.8-1.7 1.7 1.7 0 0 0-2-.2l-.2.1-2-3.4.1-.1A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.5-1H3v-4h.1a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1 2-3.4.2.1a1.7 1.7 0 0 0 2-.2 1.7 1.7 0 0 0 .8-1.7V2h5.6v.2a1.7 1.7 0 0 0 .8 1.7 1.7 1.7 0 0 0 2 .2l.2-.1 2 3.4-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.5 1h.1v4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg><span class="lbl">Customize</span></button>
+  </nav>
+  <main class="content"><div id="banner"></div><div id="alertBar" class="alertBar" style="display:none"></div><div class="view" id="view-matches" style="display:grid"><div class="empty">Loading…</div></div><div class="view" id="view-groups"></div><div class="view" id="view-title"></div><div class="view" id="view-edge"></div><div class="view" id="view-score"></div><div class="view" id="view-bracket"></div><div class="view" id="view-third"></div><div class="view" id="view-news"></div><div class="view" id="view-status"></div><div class="view" id="view-updates"></div><div class="view" id="view-results"></div><div class="view" id="view-tott"></div><div class="view" id="view-community"></div><div class="view" id="view-customize"></div></main>
+  <aside class="insight" id="insight"></aside>
+</div>
+<script src="translations.js?v=20260717h"></script>
+<script src="app-1-core.js?v=20260717g"></script>
+<script src="app-2-views.js?v=20260717g"></script>
+<script src="app-3-panels.js?v=20260717g"></script>
+<script src="app-4-features.js?v=20260717g"></script>
+
+</body>
+</html>

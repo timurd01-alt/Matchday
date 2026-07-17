@@ -1,0 +1,1 @@
+UI-only patch. Replace only index.html. It hides FINISHED and stale UPCOMING matches from the main Fixtures view unless 'show completed / past matches' is enabled. It also prevents past kickoff fixtures from appearing as Next in the top strip/right panel. No API keys, data fetcher, odds, model logic, or launcher are changed.

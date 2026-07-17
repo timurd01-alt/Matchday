@@ -1,0 +1,17 @@
+# never publish credentials or personal data
+config_keys.py
+config_keys*.py
+data.json
+data_*.json
+odds_open*.json
+picks_log*.json
+title_open*.json
+api_football_box_cache*.json
+*_cache.json
+player_db_*.json
+ratings*.json
+.browser-profile/
+__pycache__/
+*.pyc
+.ci_fetch_state.json
+_site/
