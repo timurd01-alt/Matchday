@@ -54,12 +54,6 @@ jobs:
           BALLDONTLIE_KEY = "${{ secrets.BALLDONTLIE_KEY }}"
           EOF
 
-      - name: Seed World Cup player database if missing (one-time backfill)
-        run: |
-          if [ ! -s player_db_wc.json ]; then
-            python backfill_players.py --wc
-          fi
-
       - name: Fetch one adaptive round for all sports
         run: python multi_fetch.py --once
 
