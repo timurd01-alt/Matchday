@@ -36,6 +36,25 @@ SOON_EVERY = 60 * 60
 NEAR_EVERY = 6 * 3600
 DORMANT_EVERY = 12 * 3600
 
+# When a sport's provider changes in code, a cached data_<key>.json from the
+# old one still looks "recently fetched" to the interval check below and
+# never gets refreshed. Force a refetch whenever the on-disk file's actual
+# source doesn't match what the sport is currently configured to use.
+EXPECTED_SOURCE = {"nfl": "API-Sports", "nba": "API-Sports"}
+
+
+def _stale_source(key):
+    expected = EXPECTED_SOURCE.get(key)
+    if not expected:
+        return False
+    try:
+        with open(f"data_{key}.json", encoding="utf-8") as f:
+            matches = json.load(f).get("matches") or []
+        got = (matches[0] or {}).get("data_source", "") if matches else ""
+        return expected not in got
+    except Exception:
+        return True
+
 
 def _interval_for(key):
     """Decide the refetch interval from the sport's own data file."""
@@ -127,7 +146,7 @@ def run_once(state_path=".ci_fetch_state.json"):
         last_fetched = {}
     print(f"Multi-sport fetcher (one-shot): {', '.join(k for k, _ in SPORTS)}")
     due = [(k, f) for k, f in SPORTS if not os.path.exists(f"data_{k}.json")
-           or time.time() - last_fetched.get(k, 0) >= _interval_for(k)]
+           or _stale_source(k) or time.time() - last_fetched.get(k, 0) >= _interval_for(k)]
     for i, (key, flag) in enumerate(due):
         ok = _run_one(key, flag)
         if ok:
