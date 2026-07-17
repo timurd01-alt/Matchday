@@ -1,0 +1,81 @@
+name: Refresh data and deploy
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Restore fetch state (picks, odds, ratings, CI cadence)
+        uses: actions/cache@v4
+        with:
+          path: |
+            .ci_fetch_state.json
+            picks_log*.json
+            odds_open*.json
+            ratings*.json
+            title_open*.json
+            *_cache.json
+            player_db_*.json
+          key: matchday-fetch-state-${{ github.run_id }}
+          restore-keys: matchday-fetch-state-
+
+      - name: Write private keys from secrets (never committed)
+        run: |
+          cat > config_keys.py <<EOF
+          CFBD_KEY = "${{ secrets.CFBD_KEY }}"
+          CBBD_KEY = "${{ secrets.CBBD_KEY }}"
+          FOOTBALL_DATA_KEY = "${{ secrets.FOOTBALL_DATA_KEY }}"
+          ODDS_API_KEY = "${{ secrets.ODDS_API_KEY }}"
+          API_FOOTBALL_KEY = "${{ secrets.API_FOOTBALL_KEY }}"
+          SPORTSDATAIO_KEY = "${{ secrets.SPORTSDATAIO_KEY }}"
+          BALLDONTLIE_KEY = "${{ secrets.BALLDONTLIE_KEY }}"
+          EOF
+
+      - name: Fetch one adaptive round for all sports
+        run: python multi_fetch.py --once
+
+      - name: Assemble public site (curated allowlist only)
+        run: |
+          rm -f config_keys.py
+          mkdir -p _site
+          cp index.html styles.css translations.js legal.html manifest.json _site/
+          cp app-1-core.js app-2-views.js app-3-panels.js app-4-features.js _site/
+          cp favicon.ico favicon-16.png favicon-32.png matchday.ico _site/
+          cp icon-180.png icon-192.png icon-512.png logo.png _site/
+          cp data.json _site/ 2>/dev/null || true
+          cp data_*.json _site/ 2>/dev/null || true
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
