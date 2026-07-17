@@ -1,6 +1,6 @@
 
 const $=s=>document.querySelector(s);let DATA={matches:[],news:[],standings:[]},BYID={},VIEW='matches',LAST_OK=false,LAST_ERROR='',LOAD_TIMER=null,NEWS_FILTER='all';
-const DEFAULT_SETTINGS={accent:'orange',density:'normal',panel:'glass',defaultView:'matches',refresh:60,showInsight:true,showFinished:false,showDetails:false,favoriteTeam:''};
+const DEFAULT_SETTINGS={accent:'green',density:'normal',panel:'glass',defaultView:'matches',refresh:60,showInsight:true,showFinished:false,showDetails:false,favoriteTeam:''};
 let SETTINGS={...DEFAULT_SETTINGS};try{SETTINGS={...DEFAULT_SETTINGS,...JSON.parse(localStorage.getItem('matchday.settings')||'{}')}}catch(e){}
 // Refresh cadence is product-controlled so visitors cannot accidentally create
 // excessive polling or make the dashboard feel stale.
