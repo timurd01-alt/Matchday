@@ -126,7 +126,8 @@ def run_once(state_path=".ci_fetch_state.json"):
     except Exception:
         last_fetched = {}
     print(f"Multi-sport fetcher (one-shot): {', '.join(k for k, _ in SPORTS)}")
-    due = [(k, f) for k, f in SPORTS if time.time() - last_fetched.get(k, 0) >= _interval_for(k)]
+    due = [(k, f) for k, f in SPORTS if not os.path.exists(f"data_{k}.json")
+           or time.time() - last_fetched.get(k, 0) >= _interval_for(k)]
     for i, (key, flag) in enumerate(due):
         ok = _run_one(key, flag)
         if ok:

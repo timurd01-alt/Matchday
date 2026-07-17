@@ -31,6 +31,8 @@ jobs:
         with:
           path: |
             .ci_fetch_state.json
+            data.json
+            data_*.json
             picks_log*.json
             odds_open*.json
             ratings*.json
@@ -63,8 +65,8 @@ jobs:
           cp app-1-core.js app-2-views.js app-3-panels.js app-4-features.js _site/
           cp favicon.ico favicon-16.png favicon-32.png matchday.ico _site/
           cp icon-180.png icon-192.png icon-512.png logo.png _site/
-          cp data.json _site/ 2>/dev/null || true
-          cp data_*.json _site/ 2>/dev/null || true
+          cp data.json _site/
+          cp data_*.json _site/
 
       - uses: actions/upload-pages-artifact@v3
         with:
