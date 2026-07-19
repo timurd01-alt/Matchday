@@ -108,7 +108,7 @@ function renderCommunity(){const host=$('#view-community');const fullDb=btmGrade
     h+=`<div class="h2hbar"><div class="h2hitem"><b>${Math.round(withModel/g.length*100)}%</b><span>of your picks matched the model</span></div><div class="h2hitem"><b>${splitWins}/${split.length||0}</b><span>you won when you went your own way</span></div><div class="h2hitem"><b>${s.n?Math.round((s.you-s.model)/s.n*100):0>0?'+':''}${s.you-s.model}</b><span>your net record vs the model</span></div></div>`;
   }
   const badges=btmBadges(s,db);
-  if(badges.length)h+=`<div class="seclbl" style="margin-top:16px">Badges</div><div class="fchips">`+badges.map(b=>`<span class="fchip pos" title="${esc(b[1])}">${esc(b[0])}</span>`).join('')+`</div>`;
+  if(badges.length)h+=`<div class="seclbl" style="margin-top:16px">Badges</div><div class="fchips">`+badges.map(b=>`<span class="fchip good" title="${esc(b[1])}">${esc(b[0])}</span>`).join('')+`</div>`;
   // personal analytics
   const an=btmAnalytics(db);
   if(an){
