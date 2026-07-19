@@ -1835,23 +1835,32 @@ def _save_picks(p):
     except Exception as e:
         DIAG.append(f"picks save failed: {e}")
 
+def _market_fields(pr, mk):
+    """Derive the market-comparison fields for a pick from current market odds.
+    Shared by the initial lock and the later backfill (odds often aren't fetched
+    yet when a pick first locks, since fetch_odds() is gated to near kickoff)."""
+    market_pick = market_pct = value_side = value_edge = value_mkt = None
+    if mk.get("home_pct") is not None:
+        trio = {"h": mk["home_pct"], "d": mk["draw_pct"], "a": mk["away_pct"]}
+        market_pick = max(trio, key=trio.get); market_pct = trio[market_pick]
+        # parallel value signal: biggest model-vs-market gap, if it clears +6
+        edges = {k: (pr.get("model") or {}).get(k, 0) - trio[k] for k in trio}
+        vs = max(edges, key=edges.get)
+        if edges[vs] >= 6:
+            value_side, value_edge, value_mkt = vs, round(edges[vs]), trio[vs]
+    return market_pick, market_pct, value_side, value_edge, value_mkt
+
+
 def update_scorecard(matches):
     """Lock a pick the first time we see an upcoming match; grade it once finished.
-    Picks are never rewritten after they're logged — that's the whole point."""
+    Picks themselves are never rewritten — but market comparison fields backfill
+    once odds appear, since a pick often locks well before its 24h odds window."""
     picks = _load_picks(); dirty = False
     for m in matches:
         mid = str(m.get("id"))
         pr = m.get("prediction"); mk = (m.get("markets") or {}).get("1x2") or {}
         if m.get("status") == "UPCOMING" and pr and mid not in picks:
-            market_pick = market_pct = value_side = value_edge = value_mkt = None
-            if mk.get("home_pct") is not None:
-                trio = {"h": mk["home_pct"], "d": mk["draw_pct"], "a": mk["away_pct"]}
-                market_pick = max(trio, key=trio.get); market_pct = trio[market_pick]
-                # parallel value signal: biggest model-vs-market gap, if it clears +6
-                edges = {k: (pr.get("model") or {}).get(k, 0) - trio[k] for k in trio}
-                vs = max(edges, key=edges.get)
-                if edges[vs] >= 6:
-                    value_side, value_edge, value_mkt = vs, round(edges[vs]), trio[vs]
+            market_pick, market_pct, value_side, value_edge, value_mkt = _market_fields(pr, mk)
             upset = pr.get("upset") or {}
             probs = pr.get("adjusted") or pr.get("blend") or pr.get("model") or {}
             picks[mid] = {"home": m["home"]["name"], "away": m["away"]["name"],
@@ -1885,6 +1894,20 @@ def update_scorecard(matches):
                           "box_score_available": bool(m.get("stats_extra") or m.get("stats")),
                           "damp_pct": pr.get("damp_pct"), "mkt_pull": pr.get("mkt_pull"),
                           "model_ver": "v3-upset", "result": None}
+            dirty = True
+        elif (m.get("status") == "UPCOMING" and mid in picks and picks[mid].get("result") is None
+              and picks[mid].get("market_pick") is None and mk.get("home_pct") is not None):
+            # odds weren't available when this pick locked (fetch_odds() only runs
+            # within 24h of kickoff) — backfill the market-comparison fields now
+            # that they exist. The pick itself (side/confidence) never changes.
+            rec = picks[mid]
+            market_pick, market_pct, value_side, value_edge, value_mkt = _market_fields(pr or {}, mk)
+            rec["market_pick"] = market_pick; rec["market_pct"] = market_pct
+            rec["pick_mkt"] = ({"h": mk.get("home_pct"), "d": mk.get("draw_pct"), "a": mk.get("away_pct")}.get(rec.get("pick"))
+                                if mk.get("home_pct") is not None else None)
+            rec["value_side"] = value_side; rec["value_edge"] = value_edge; rec["value_mkt"] = value_mkt
+            rec["value_name"] = ({"h": rec["home"], "a": rec["away"], "d": "Draw"}.get(value_side) if value_side else None)
+            rec["market_snapshot"] = {"h": mk.get("home_pct"), "d": mk.get("draw_pct"), "a": mk.get("away_pct")}
             dirty = True
         elif (m.get("status") == "FINISHED" and mid in picks and picks[mid].get("result") is not None
               and (m.get("score") or {}).get("reg")):
@@ -2710,7 +2733,23 @@ def build():
     except Exception as e:
         DIAG.append(f"odds prune skipped: {e}")
     print("Fetching odds…")
-    odds = fetch_odds(); merged = 0; fuzzy = 0
+    ODDS_WINDOW_HOURS = 24  # conserve the Odds API's monthly quota — only worth
+                            # spending a call once a match is imminent
+    now_utc = datetime.datetime.now(datetime.timezone.utc)
+    def _due_for_odds(m):
+        if m.get("status") == "LIVE":
+            return True
+        try:
+            ko = datetime.datetime.fromisoformat(str(m.get("kickoff") or "").replace("Z", "+00:00"))
+        except Exception:
+            return False
+        return (ko - now_utc).total_seconds() <= ODDS_WINDOW_HOURS * 3600
+    if any(_due_for_odds(m) for m in matches):
+        odds = fetch_odds()
+    else:
+        odds = {}
+        DIAG.append(f"odds: skipped — nothing within {ODDS_WINDOW_HOURS}h (conserving quota)")
+    merged = 0; fuzzy = 0
     for m in matches:
         rec, how = find_odds(odds, m["home"]["name"], m["away"]["name"])
         if rec:
