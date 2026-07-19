@@ -1,10 +1,12 @@
-// Matchday Leaderboard — serverless function (Path A: near-$0)
-// Works on Vercel/Netlify/Cloudflare-style function runtimes with a hosted
-// Postgres/KV. This example uses a generic SQL client; swap `db` for your host's.
+// Matchday Leaderboard — serverless function (Vercel + hosted Postgres)
+// Deployed as /api/leaderboard via Vercel's zero-config /api convention.
 // Two routes on one function via ?action=  (score | leaderboard)
 //
-// ENV you set in the host dashboard:
-//   DATABASE_URL   — your hosted Postgres connection string
+// ENV you set in the Vercel dashboard:
+//   DATABASE_URL   — your hosted Postgres connection string (use the
+//                    POOLED one — serverless functions open many short-lived
+//                    connections and a free-tier Postgres has a low direct
+//                    connection cap)
 //
 // Table (run once in your DB console):
 //   CREATE TABLE scores(
@@ -16,7 +18,7 @@
 //     updated   BIGINT NOT NULL
 //   );
 
-import { Client } from "pg"; // your host may provide its own; adjust import
+import { Client } from "pg";
 
 const RATE = new Map(); // in-memory rate limiter (per warm instance)
 

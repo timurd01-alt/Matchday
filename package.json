@@ -1,0 +1,7 @@
+{
+  "name": "matchday-leaderboard",
+  "private": true,
+  "dependencies": {
+    "pg": "^8.11.0"
+  }
+}
