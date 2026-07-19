@@ -54,6 +54,31 @@ jobs:
           BALLDONTLIE_KEY = "${{ secrets.BALLDONTLIE_KEY }}"
           EOF
 
+      - name: ONE-TIME seed merge (remove after this runs successfully)
+        run: |
+          python - <<'EOF'
+          import json, os
+          seed_path = "seed_picks_log_wc.json"
+          if os.path.exists(seed_path):
+              with open(seed_path, encoding="utf-8") as f:
+                  seed = json.load(f)
+              try:
+                  with open("picks_log_wc.json", encoding="utf-8") as f:
+                      current = json.load(f)
+              except Exception:
+                  current = {}
+              added = 0
+              for mid, pick in seed.items():
+                  if mid not in current:
+                      current[mid] = pick
+                      added += 1
+              with open("picks_log_wc.json", "w", encoding="utf-8") as f:
+                  json.dump(current, f, ensure_ascii=False, indent=1)
+              print(f"seed merge: added {added} of {len(seed)} picks (rest already present)")
+          else:
+              print("seed merge: no seed file, skipping")
+          EOF
+
       - name: Fetch one adaptive round for all sports
         run: python multi_fetch.py --once
 
