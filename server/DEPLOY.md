@@ -22,9 +22,11 @@ zero-config convention for serverless functions)
    connection cap.
 2. In that database's SQL console, run the `CREATE TABLE` block from the
    top of `api/leaderboard.js`.
-3. Import this GitHub repo as a new Vercel project. `vercel.json` at the
-   repo root scopes the build to just the API function, so the rest of the
-   (Python/static-site) repo is left alone. Confirm the env var name Vercel
+3. Import this GitHub repo as a new Vercel project. No `vercel.json` is
+   needed — Vercel auto-detects any file under `/api` as a serverless
+   function with zero config; the rest of the (Python/static-site) repo is
+   just deployed alongside as static files, harmlessly. Confirm the env
+   var name Vercel
    set for the connection string matches `DATABASE_URL` — rename in the
    Vercel dashboard, or the code, if they differ.
 4. Deploy. Your function URL looks like
