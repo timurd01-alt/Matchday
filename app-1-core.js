@@ -38,13 +38,13 @@ let MATCH_VISIBLE=FIXTURE_PAGE_SIZE,RESULT_VISIBLE=FIXTURE_PAGE_SIZE;
 // ---- per-sport sidebar (data-driven, follows the SELECTION) ---------------
 // Each sport declares exactly which views exist for it, in order.
 const NAV_DEF={
-  all:         ['matches','results','community','news','status','updates','customize'],
-  soccer_cup:  ['matches','results','groups','title','edge','score','bracket','third','tott','community','news','status','updates','customize'],
-  soccer_club: ['matches','results','groups','title','edge','score','bracket','tott','community','news','status','updates','customize'],
-  us_sport:    ['matches','results','groups','title','edge','score','community','news','status','updates','customize'],
-  college:     ['matches','results','groups','bracket','title','edge','score','community','news','status','updates','customize'],
-  college_basketball:['matches','results','groups','bracket','title','edge','score','community','news','status','updates','customize'],
-  soccer_league:['matches','results','groups','title','edge','score','tott','community','news','status','updates','customize']
+  all:         ['matches','results','community','sandbox','news','status','updates','customize'],
+  soccer_cup:  ['matches','results','groups','title','edge','score','bracket','third','tott','community','sandbox','news','status','updates','customize'],
+  soccer_club: ['matches','results','groups','title','edge','score','bracket','tott','community','sandbox','news','status','updates','customize'],
+  us_sport:    ['matches','results','groups','title','edge','score','community','sandbox','news','status','updates','customize'],
+  college:     ['matches','results','groups','bracket','title','edge','score','community','sandbox','news','status','updates','customize'],
+  college_basketball:['matches','results','groups','bracket','title','edge','score','community','sandbox','news','status','updates','customize'],
+  soccer_league:['matches','results','groups','title','edge','score','tott','community','sandbox','news','status','updates','customize']
 };
 const SPORT_KIND={'':'all',wc:'soccer_cup',ucl:'soccer_club',epl:'soccer_league',laliga:'soccer_league',seriea:'soccer_league',bundesliga:'soccer_league',ligue1:'soccer_league',nfl:'us_sport',ncaaf:'college',ncaam:'college_basketball',nba:'us_sport',mlb:'us_sport',nhl:'us_sport'};
 function currentSportKey(){const m=(DATA_FILE||'').match(/data_(\w+)\.json/);return m?m[1]:'';}
