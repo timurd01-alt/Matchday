@@ -710,12 +710,15 @@ body.modalOpen{overflow:hidden}.matchModal{position:fixed;inset:0;z-index:99;dis
 .modalBody .detailGrid.v4Detail .detailTop{display:grid!important;grid-template-columns:1fr!important;gap:16px!important;min-width:0}
 .modalBody .detailGrid.v4Detail .detailLow{display:grid!important;grid-template-columns:1fr!important;gap:16px!important;margin-top:16px;min-width:0}
 .modalBody .detailGrid.v4Detail .readCard{min-width:0!important;overflow:hidden!important}
-/* The single-column fix above solved real crowding on narrow screens, but
-   .matchSheet caps at 1120px wide -- on anything wide enough to actually
-   fit two healthy columns, go back to side-by-side instead of stacking
-   short cards (e.g. the odds tracker) under tall ones and wasting width. */
+/* Model read stays full-width at every size, matching the v4 redesign's
+   original intent above -- an earlier attempt to put it side-by-side with
+   the odds tracker on wide screens looked reasonable for a near-empty odds
+   card, but a fully-populated one (line movement, book spread, totals line)
+   is not short, and squeezing both into half-width columns cramped the
+   model read instead of freeing space. Only Stats/Lineups go side-by-side
+   on wide screens -- those two are comparable in size, so splitting them
+   doesn't create the same squeeze. */
 @media(min-width:900px){
-  .modalBody .detailGrid.v4Detail .detailTop{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;align-items:start}
   .modalBody .detailGrid.v4Detail .detailLow{grid-template-columns:minmax(420px,1.1fr) minmax(380px,1fr)!important;align-items:start}
 }
 .modelReadCard{padding:0!important;border-color:rgba(58,209,122,.28)!important;background:transparent!important}
@@ -1295,6 +1298,7 @@ body.modalOpen{overflow:hidden}.matchModal{position:fixed;inset:0;z-index:99;dis
   .tottRow{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
   .tottCard{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 16px;text-align:center;min-width:110px;transition:border-color .15s ease}
   .tottCard:hover{border-color:rgba(58,209,122,.4)}
+  .tottEmpty{text-align:center;color:var(--faint);font-size:.74rem;font-family:var(--mono);border:1px dashed var(--line);border-radius:10px;padding:12px;background:rgba(255,255,255,.012)}
   .tottName{font-family:"Archivo",sans-serif;font-weight:700;font-size:.92rem;color:var(--text)}
   .tottTeam{font-family:var(--mono);font-size:.64rem;color:var(--muted);margin:3px 0 6px}
   .tottStat{font-family:var(--mono);font-size:.72rem;color:var(--win);font-weight:700}
@@ -1397,3 +1401,27 @@ body.modalOpen{overflow:hidden}.matchModal{position:fixed;inset:0;z-index:99;dis
 .simWinner{background:rgba(58,209,122,.12);border-color:rgba(58,209,122,.35)}
 .simWinner b{color:var(--win)}
 .bmTeam small{color:var(--faint);font-weight:600;margin-left:4px}
+
+.sandboxPickers{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:14px}
+.sandboxPickers select{background:var(--bg2);color:var(--text);border:1px solid var(--line);border-radius:9px;padding:9px 12px;font-family:"Archivo",sans-serif;font-weight:700;font-size:.86rem;cursor:pointer;min-width:190px;outline:none;transition:border-color .15s ease}
+.sandboxPickers select:hover{border-color:var(--signal)}
+.sandboxPickers select:focus-visible{border-color:var(--signal);box-shadow:0 0 0 2px rgba(58,209,122,.25)}
+.sandboxPickers select option{background:var(--bg2);color:var(--text)}
+.sandboxVs{color:var(--faint);font-family:var(--mono);font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;font-weight:700}
+
+/* ---- guided tour (first-visit walkthrough) ---- */
+.tourOverlay{position:fixed;inset:0;z-index:500}
+.tourBackdrop{position:fixed;inset:0;background:rgba(2,5,10,.72)}
+.tourHighlight{position:relative;z-index:501;border-radius:10px;box-shadow:0 0 0 4px var(--signal),0 0 34px 8px rgba(58,209,122,.4)}
+.tourCard{position:fixed;z-index:502;width:min(320px,calc(100vw - 24px));background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line2);border-radius:16px;padding:18px 20px;box-shadow:0 24px 70px rgba(0,0,0,.55)}
+.tourStepNum{font-family:var(--mono);font-size:.62rem;letter-spacing:.12em;color:var(--signal);font-weight:800;text-transform:uppercase}
+.tourCard h3{font-family:"Archivo",sans-serif;font-size:1.15rem;margin:8px 0 6px}
+.tourCard p{color:var(--muted);font-size:.86rem;line-height:1.5;margin:0 0 16px}
+.tourActions{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.tourSkip{background:none;border:none;color:var(--faint);font-size:.74rem;cursor:pointer;padding:6px 0}
+.tourSkip:hover{color:var(--muted)}
+.tourNav{display:flex;gap:8px}
+.tourBack,.tourNextBtn{border-radius:9px;padding:8px 14px;font-family:"Archivo",sans-serif;font-weight:700;font-size:.8rem;cursor:pointer}
+.tourBack{background:none;border:1px solid var(--line2);color:var(--text)}
+.tourNextBtn{border:1px solid var(--signal);background:var(--signal);color:#090c10}
+@media(max-width:520px){.tourCard{padding:15px 16px}}

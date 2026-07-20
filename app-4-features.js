@@ -181,6 +181,7 @@ function _v10OfficialEdge(m,op){
   if(!Number.isFinite(mk)||op.confidence==null)return null;
   return Math.round(Number(op.confidence)-mk);
 }
+function _totalsUnit(){return SANDBOX_TWO_WAY.has(String(DATA.comp_key||'').toLowerCase())?'points':'goals';}
 function edgeBreakdown(m){
   const pr=m?.prediction, x=(m?.markets||{})['1x2']||{};
   if(!pr)return '';
@@ -208,11 +209,12 @@ function edgeBreakdown(m){
   const tot=(m?.markets||{}).totals;
   const modelTot=(m?.prediction||{}).totals;
   if(tot){
-    let goalsLine=`Goals market: over ${tot.line} ${tot.over_pct}%, under ${tot.line} ${tot.under_pct}%.`;
+    const unit=_totalsUnit();
+    let goalsLine=`${unit==='goals'?'Goals':'Points'} market: over ${tot.line} ${tot.over_pct}%, under ${tot.line} ${tot.under_pct}%.`;
     if(modelTot&&modelTot.pick)goalsLine+=` Model expects ${modelTot.expected} — leans ${modelTot.pick}.`;
     bits.push(goalsLine);
   }else if(modelTot&&modelTot.expected!=null){
-    bits.push(`Model expects ${modelTot.expected} goals — no market line yet.`);
+    bits.push(`Model expects ${modelTot.expected} ${_totalsUnit()} — no market line yet.`);
   }
   return bits.join(' ');
 }
@@ -451,8 +453,9 @@ function _v12OutcomeCard(m,op){
   const tot=(m?.markets||{}).totals||{};
   const modelTot=(m?.prediction||{}).totals;
   const drawNote=dp>=30?'high draw pressure':dp>=25?'moderate draw pressure':'low draw pressure';
+  const unit=_totalsUnit();
   const goalNote=tot.under_pct!=null?`Under ${esc(tot.line||2.5)}: ${esc(tot.under_pct)}%${modelTot&&modelTot.pick?` (model: ${esc(modelTot.pick)})`:''}`
-    :(modelTot&&modelTot.expected!=null?`Model expects ${esc(modelTot.expected)} goals`:'No goals market yet');
+    :(modelTot&&modelTot.expected!=null?`Model expects ${esc(modelTot.expected)} ${unit}`:`No ${unit} market yet`);
   const marketLabel=marketPct!=null?`${marketPct}%`:'—';
   const edgeLabel=edge!=null?`${edge>0?'+':''}${edge} pts`:'—';
   const risk=op?.blocked?`Upset gate blocked · ${esc(op.gateReason||'market gap too wide')}`:`${drawNote} · ${goalNote}`;

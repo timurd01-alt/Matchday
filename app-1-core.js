@@ -111,7 +111,84 @@ function enterMatchday(){
   try{sessionStorage.setItem('matchday.welcome.entered','1');localStorage.setItem('matchday.heroSeen','1')}catch(e){}
   const gate=$('#welcomeGate');if(gate)gate.hidden=true;document.body.classList.remove('welcomeOpen');
   renderCurrent();const main=document.querySelector('.content');if(main)main.focus?.();
+  if(!tourSeen())setTimeout(startTour,650);
 }
+
+// ---- guided tour (first-visit walkthrough) --------------------------------
+const TOUR_STEPS=[
+  {target:'#sportSel',title:'Start here',body:'Pick a competition to unlock the full toolkit — live predictions, model accuracy tracking, brackets and more. "All sports" just shows a combined feed across everything.'},
+  {target:'.navbtn[data-v="matches"]',title:'Matches',body:'Every fixture, live scores, and the model’s pick shown right next to the market’s.'},
+  {target:'.navbtn[data-v="edge"]',title:'Model',body:'See exactly why the model favors a side — points, form, ratings, injuries and more, broken down factor by factor.'},
+  {target:'.navbtn[data-v="score"]',title:'Scorecard',body:'Every locked pick, tracked in public. Nothing gets rewritten after the fact — good calls or bad ones.'},
+  {target:'.navbtn[data-v="sandbox"]',title:'Sandbox',body:'Build a hypothetical matchup between any two teams and see what the model thinks, on the spot.'},
+  {target:'.navbtn[data-v="bracket"]',title:'Bracket',body:'Simulate an entire knockout bracket round by round, using the model’s own predictions.'},
+  {target:'.navbtn[data-v="community"]',title:'Community',body:'Set a handle, make your own picks, and see how you stack up against the model on the leaderboard.'},
+  {target:'.navbtn[data-v="customize"]',title:'Customize',body:'Tune the accent color, layout density, language, and your favorite team here. You can replay this tour anytime from this tab.'}
+];
+let TOUR_I=0;
+function tourSeen(){try{return localStorage.getItem('matchday.tourSeen')==='1'}catch(e){return true}}
+function tourMarkSeen(){try{localStorage.setItem('matchday.tourSeen','1')}catch(e){}}
+function tourVisibleSteps(){return TOUR_STEPS.filter(s=>{const el=document.querySelector(s.target);return el&&el.offsetParent!==null;});}
+function startTour(){
+  const steps=tourVisibleSteps();
+  if(!steps.length)return;
+  window._tourSteps=steps;TOUR_I=0;
+  document.body.classList.add('tourOpen');
+  tourRenderStep();
+}
+function tourEnd(){
+  tourMarkSeen();
+  document.body.classList.remove('tourOpen');
+  document.querySelectorAll('.tourHighlight').forEach(el=>el.classList.remove('tourHighlight'));
+  const ov=$('#tourOverlay');if(ov)ov.remove();
+}
+function tourNext(){
+  const steps=window._tourSteps||[];
+  if(TOUR_I>=steps.length-1){tourEnd();return;}
+  TOUR_I++;tourRenderStep();
+}
+function tourBack(){if(TOUR_I<=0)return;TOUR_I--;tourRenderStep();}
+function tourRenderStep(){
+  const steps=window._tourSteps||[];
+  const step=steps[TOUR_I];if(!step){tourEnd();return;}
+  document.querySelectorAll('.tourHighlight').forEach(el=>el.classList.remove('tourHighlight'));
+  const target=document.querySelector(step.target);
+  if(!target){tourNext();return;}
+  target.classList.add('tourHighlight');
+  target.scrollIntoView({block:'center',inline:'center',behavior:'smooth'});
+  let ov=$('#tourOverlay');
+  if(!ov){ov=document.createElement('div');ov.id='tourOverlay';ov.className='tourOverlay';document.body.appendChild(ov);}
+  const last=TOUR_I===steps.length-1;
+  ov.innerHTML=`<div class="tourBackdrop" onclick="tourEnd()"></div>
+    <div class="tourCard" role="dialog" aria-modal="true" aria-label="Guided tour">
+      <div class="tourStepNum">${TOUR_I+1} / ${steps.length}</div>
+      <h3>${esc(step.title)}</h3>
+      <p>${esc(step.body)}</p>
+      <div class="tourActions">
+        <button class="tourSkip" type="button" onclick="tourEnd()">Skip tour</button>
+        <div class="tourNav">
+          ${TOUR_I>0?'<button class="tourBack" type="button" onclick="tourBack()">Back</button>':''}
+          <button class="tourNextBtn" type="button" onclick="tourNext()">${last?'Done':'Next'}</button>
+        </div>
+      </div>
+    </div>`;
+  tourPositionCard(target,ov.querySelector('.tourCard'));
+}
+function tourPositionCard(target,card){
+  const r=target.getBoundingClientRect();
+  const cw=card.offsetWidth||300,ch=card.offsetHeight||160;
+  const vw=window.innerWidth,vh=window.innerHeight;
+  let left=r.right+16,top=r.top+r.height/2-ch/2;
+  if(left+cw>vw-12){
+    left=Math.max(12,Math.min(vw-cw-12,r.left));
+    top=r.bottom+14;
+    if(top+ch>vh-12)top=Math.max(12,r.top-ch-14);
+  }
+  top=Math.max(12,Math.min(vh-ch-12,top));
+  left=Math.max(12,Math.min(vw-cw-12,left));
+  card.style.left=left+'px';card.style.top=top+'px';
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.body.classList.contains('tourOpen'))tourEnd();});
 function renderWelcome(){
   const gate=$('#welcomeGate');if(!gate)return;
   const dismissed=welcomeDismissed();gate.hidden=dismissed;document.body.classList.toggle('welcomeOpen',!dismissed);if(dismissed)return;
@@ -460,11 +537,59 @@ function renderAlerts(){const bar=$('#alertBar');if(!bar)return;const a=computeA
 // All persistence flows through these two seams. Tier 2 swaps their bodies to
 // also hit a server; nothing else in the feature changes.
 // ---- Tier 2 leaderboard (dormant until LEADERBOARD_URL is set) -----------
-const LEADERBOARD_URL = ""; // <-- paste your deployed server URL here to go live
+const LEADERBOARD_URL = "https://matchday-lake-omega.vercel.app/api/leaderboard";
 function deviceId(){let id;try{id=localStorage.getItem('matchday.device')}catch(e){}
   if(!id){id='mdx-'+Math.random().toString(36).slice(2)+Date.now().toString(36);try{localStorage.setItem('matchday.device',id)}catch(e){}}return id;}
 function myHandle(){try{return localStorage.getItem('matchday.handle')||''}catch(e){return ''}}
-function setHandle(v){try{localStorage.setItem('matchday.handle',v.slice(0,24))}catch(e){};renderCommunity();}
+// ---- Community identity: assigned real-player names, never free text ------
+// A free-text handle on a shared public board is an open door for offensive
+// or trolling names. Rather than moderate input, there's no input at all --
+// everyone is assigned a real player's name (their favorite team's, when we
+// have live data for it; a curated pool otherwise), with exactly one
+// reshuffle allowed if they don't like the draw.
+const US_SPORT_NAME_POOL={
+  nfl:['Patrick Mahomes','Josh Allen','Christian McCaffrey','Justin Jefferson','Myles Garrett','CeeDee Lamb','Micah Parsons','Tyreek Hill','Nick Bosa',"Ja'Marr Chase"],
+  nba:['Nikola Jokic','Luka Doncic','Shai Gilgeous-Alexander','Giannis Antetokounmpo','Jayson Tatum','Anthony Edwards','Victor Wembanyama','Devin Booker','Tyrese Haliburton','Anthony Davis'],
+  ncaaf:['Arch Manning','Carson Beck','Dylan Raiola','Jeremiah Smith','Ryan Williams'],
+  ncaam:['Cooper Flagg','Ace Bailey','Cameron Boozer','Darryn Peterson'],
+};
+const GENERAL_NAME_POOL=[].concat(...Object.values(US_SPORT_NAME_POOL));
+function _handlePool(){
+  const sportKey=String(DATA?.comp_key||'').toLowerCase();
+  const scorers=(DATA?.scorers||[]).map(s=>s.name).filter(Boolean);
+  if(favoriteTeam()&&scorers.length){
+    const teamOnes=(DATA.scorers||[]).filter(s=>isFavoriteTeam(s.team)).map(s=>s.name).filter(Boolean);
+    if(teamOnes.length>=3)return teamOnes;
+  }
+  if(scorers.length>=5)return scorers;
+  return US_SPORT_NAME_POOL[sportKey]||GENERAL_NAME_POOL;
+}
+function _drawHandle(exclude){
+  const pool=_handlePool();
+  const options=exclude?pool.filter(n=>n!==exclude):pool;
+  const name=(options.length?options:GENERAL_NAME_POOL)[Math.floor(Math.random()*(options.length||GENERAL_NAME_POOL.length))]||'Anonymous Player';
+  const tag=Math.floor(1000+Math.random()*9000); // disambiguates two users drawing the same player
+  return `${name} #${tag}`;
+}
+function assignHandle(){
+  const h=_drawHandle();
+  try{localStorage.setItem('matchday.handle',h);localStorage.setItem('matchday.handleAssigned','1');localStorage.setItem('matchday.handleReshuffled','0')}catch(e){}
+  return h;
+}
+function canReshuffleHandle(){try{return localStorage.getItem('matchday.handleReshuffled')!=='1'}catch(e){return false}}
+function reshuffleHandle(){
+  if(!canReshuffleHandle())return;
+  const base=myHandle().replace(/\s#\d+$/,'');
+  const h=_drawHandle(base);
+  try{localStorage.setItem('matchday.handle',h);localStorage.setItem('matchday.handleReshuffled','1')}catch(e){}
+  renderCommunity();
+}
+function ensureHandle(){
+  try{
+    const assigned=localStorage.getItem('matchday.handleAssigned')==='1';
+    if(!myHandle()||!assigned)assignHandle(); // first-time visitor, or force-migrates an old free-text handle
+  }catch(e){}
+}
 async function pushScore(){ // called after grading; no-op until URL set + handle chosen
   if(!LEADERBOARD_URL||!myHandle())return;
   const s=btmStats(btmLoad());
@@ -482,6 +607,7 @@ function btmScoped(db){const scope=communityScope();if(scope==='ALL')return db;
   const picks={};Object.entries(db.picks||{}).forEach(([id,p])=>{if(String(p.comp||'WC').toUpperCase()===scope)picks[id]=p;});
   return {...db,picks};}
 function submitPick(matchId,pick){ // <-- Tier 2: also POST to server here
+  ensureHandle();
   const db=btmLoad();db.picks=db.picks||{};
   if(db.picks[matchId])return false; // one locked pick per match, like the model
   const m=(DATA.matches||[]).find(x=>String(x.id)===String(matchId));if(!m)return false;

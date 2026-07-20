@@ -96,7 +96,7 @@ COMPETITIONS = {
     # standings/player endpoints stay hidden when unavailable.
     "NFL": {"label": "NFL", "sport": "football", "fd": None, "odds": "americanfootball_nfl",
             "outright": "americanfootball_nfl_super_bowl_winner", "espn": "nfl", "tournament": False,
-            "source": "apisports", "has_draws": False},
+            "source": "balldontlie", "has_draws": False},
     "EPL": {"label": "Premier League", "sport": "soccer", "fd": "PL", "odds": "soccer_epl",
             "outright": "soccer_epl_winner", "espn": "eng.1", "tournament": False,
             "source": "fd", "has_draws": True, "league_zones": {"ucl": 4, "uel": 1, "rel": 3}},
@@ -126,7 +126,7 @@ COMPETITIONS = {
             "source": "sportsdataio", "has_draws": False},
     "NBA": {"label": "NBA", "sport": "basketball", "fd": None, "odds": "basketball_nba",
             "outright": "basketball_nba_championship_winner", "espn": "nba", "tournament": False,
-            "source": "apisports", "has_draws": False},
+            "source": "balldontlie", "has_draws": False},
 }
 try:
     from config_keys import COMPETITION as _COMP
@@ -2019,10 +2019,13 @@ def build_team_of_tournament(matches, scorers, standings):
     for role, cap in caps.items():
         xi += [p for p in ranked if p["role"] == role][:cap]
     bench = [p for p in ranked if p not in xi][:5]
-    # fill missing DEF/GK from the player DB via clean sheets (real defensive data)
+    # fill missing DEF/GK from the player DB via clean sheets, when we actually
+    # have lineup history to draw on (we don't have a lineup data source right
+    # now — no free/ToS-compliant provider gives us starting XIs — so this stays
+    # dormant until one exists, rather than faking defensive data we don't have)
     db = _load_player_db()
+    backfilled = 0
     if db.get("players"):
-        have = {p["role"]: sum(1 for q in xi if q["role"] == p["role"]) for p in xi}
         pool = sorted(db["players"].values(),
                       key=lambda r: (-r.get("clean_sheets", 0), -r.get("starts", 0)))
         xi_names = {norm(p["name"] or "") for p in xi}
@@ -2036,11 +2039,16 @@ def build_team_of_tournament(matches, scorers, standings):
                            "goals": 0, "assists": 0, "played": r.get("starts", 0),
                            "role": role, "score": r.get("clean_sheets", 0),
                            "cs": r.get("clean_sheets", 0)})
-                xi_names.add(norm(r["name"])); need -= 1
+                xi_names.add(norm(r["name"])); need -= 1; backfilled += 1
     DIAG.append(f"team of tournament: {len(xi)} players "
                 f"({', '.join(sorted(set(p['role'] for p in xi)))})")
-    return {"xi": xi, "bench": bench, "v": 2,
-            "note": "Attack ranked by goals, assists and team strength. Defence and goalkeeper ranked by clean sheets from accumulated lineups — real defensive data, honestly sourced."}
+    note = "Attack ranked by goals, assists and team strength."
+    note += (" Defence and goalkeeper ranked by clean sheets from accumulated lineups."
+              if backfilled else
+              " Defenders and keepers only appear once one registers a goal or assist this"
+              " tournament — we don't have a lineup data source to rank them by clean sheets"
+              " yet, so we don't fake it.")
+    return {"xi": xi, "bench": bench, "v": 2, "note": note}
 
 def fetch_scorers():
     try:
@@ -2708,6 +2716,47 @@ def fetch_sportsdataio_bundle():
     return adapter, matches, st, tables
 
 
+def compute_us_sport_standings(matches):
+    """Derive win-loss(-tie) records, point differential and recent form
+    directly from finished game results. Used when the provider's free tier
+    doesn't expose a standings endpoint (BallDontLie) -- same `pts = wins*3 +
+    ties` scale the API-Sports adapter used, so predict()'s strength formula
+    behaves the same regardless of which provider is actually active. No
+    division/conference breakdown is available from game results alone, so
+    this returns one flat ranked table rather than grouped ones."""
+    T = defaultdict(lambda: {"name": "", "w": 0, "l": 0, "t": 0, "pf": 0, "pa": 0, "results": []})
+    for m in matches:
+        if m.get("status") != "FINISHED":
+            continue
+        sc = m.get("score") or {}
+        hs, as_ = sc.get("home"), sc.get("away")
+        if hs is None or as_ is None:
+            continue
+        for side, pf, pa in ((m["home"], hs, as_), (m["away"], as_, hs)):
+            key = norm(side.get("name"))
+            if not key:
+                continue
+            r = T[key]
+            r["name"] = side.get("name")
+            r["pf"] += pf; r["pa"] += pa
+            if pf > pa: r["w"] += 1; res = "W"
+            elif pf < pa: r["l"] += 1; res = "L"
+            else: r["t"] += 1; res = "T"
+            r["results"].append((m.get("kickoff") or "", res))
+    model = {}
+    for key, r in T.items():
+        r["results"].sort(key=lambda x: x[0])
+        played = r["w"] + r["l"] + r["t"]
+        model[key] = {"name": r["name"], "code": "", "pld": played, "w": r["w"], "l": r["l"], "d": r["t"],
+                      "gf": r["pf"], "ga": r["pa"], "gd": r["pf"] - r["pa"], "pts": r["w"] * 3 + r["t"],
+                      "form": " ".join(res for _, res in r["results"][-5:]), "group": "", "pos": None}
+    ranked = sorted(model.values(), key=lambda rec: (-rec["w"] / max(1, rec["pld"]), -rec["gd"]))
+    for i, rec in enumerate(ranked, 1):
+        rec["pos"] = i
+    tables = [{"group": "", "teams": ranked}] if ranked else []
+    return model, tables
+
+
 def fetch_balldontlie_bundle():
     """Fetch real free-tier schedules/scores without paid-only substitutions."""
     adapter = BallDontLieAdapter(BALLDONTLIE_KEY, COMP_KEY)
@@ -2734,9 +2783,10 @@ def fetch_balldontlie_bundle():
             with open(cache_file, encoding="utf-8") as handle:
                 matches = json.load(handle)
             DIAG.append("BALLDONTLIE fixtures: stale cache after provider limit/error")
-    st, tables = adapter.standings()
+    st, tables = compute_us_sport_standings(matches)
     DIAG.append(f"BALLDONTLIE fixtures: {len(matches)} in free-tier display window")
-    DIAG.append("BALLDONTLIE standings/leaders: unavailable on free tier")
+    DIAG.append(f"BALLDONTLIE standings: computed from {sum(r['pld'] for r in st.values())} team-games "
+                f"(no standings endpoint on free tier, so derived from final scores)")
     return adapter, matches, st, tables
 
 

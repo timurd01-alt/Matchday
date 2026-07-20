@@ -40,7 +40,7 @@ DORMANT_EVERY = 12 * 3600
 # old one still looks "recently fetched" to the interval check below and
 # never gets refreshed. Force a refetch whenever the on-disk file's actual
 # source doesn't match what the sport is currently configured to use.
-EXPECTED_SOURCE = {"nfl": "API-Sports", "nba": "API-Sports"}
+EXPECTED_SOURCE = {"nfl": "BALLDONTLIE", "nba": "BALLDONTLIE"}
 
 
 def _stale_source(key):
