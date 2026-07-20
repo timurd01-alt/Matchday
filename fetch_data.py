@@ -1992,6 +1992,89 @@ def update_player_db(matches):
     return db
 
 
+def build_weekly_awards(matches):
+    """Four storylines from the last 7 days of finished results -- a "come
+    back Monday to see what happened" hook for Community, built entirely
+    from data every match already carries (score, prediction, upset
+    profile). No new data source, no manual curation."""
+    now = datetime.datetime.now(datetime.timezone.utc)
+    window = now - datetime.timedelta(days=7)
+
+    def _dt(iso):
+        try:
+            return datetime.datetime.fromisoformat(str(iso or "").replace("Z", "+00:00"))
+        except Exception:
+            return None
+
+    recent = []
+    for m in matches:
+        if m.get("status") != "FINISHED":
+            continue
+        ko = _dt(m.get("kickoff"))
+        sc = m.get("score") or {}
+        if not ko or ko < window or sc.get("home") is None or sc.get("away") is None:
+            continue
+        recent.append(m)
+    if not recent:
+        return None
+
+    def _margin(m):
+        sc = m["score"]
+        return abs((sc.get("home") or 0) - (sc.get("away") or 0))
+
+    def _side_name(m, side):
+        return {"h": m["home"]["name"], "a": m["away"]["name"], "d": "Draw"}.get(side)
+
+    # biggest upset: the actual winner was the pre-match underdog, ranked
+    # by how unlikely the model/market thought that winner was
+    upsets = []
+    for m in recent:
+        up = (m.get("prediction") or {}).get("upset") or {}
+        winner = (m.get("score") or {}).get("winner")
+        if winner and winner != "d" and up.get("candidate") and winner == up["candidate"]:
+            upsets.append((up.get("score") or 0, m, up))
+    biggest_upset = None
+    if upsets:
+        upsets.sort(key=lambda x: -x[0])
+        score, m, up = upsets[0]
+        biggest_upset = {"home": m["home"]["name"], "away": m["away"]["name"],
+                          "score_line": f"{m['score']['home']}-{m['score']['away']}",
+                          "winner": up.get("candidate_name"), "upset_score": score,
+                          "market_pct": up.get("market_dog_pct")}
+
+    # model's best call / biggest miss this week, from graded predictions
+    hits, misses = [], []
+    for m in recent:
+        pr = m.get("prediction") or {}
+        winner = (m.get("score") or {}).get("winner")
+        if not winner or not pr.get("pick"):
+            continue
+        row = (pr.get("edge") or 0, pr.get("confidence") or 0, m, pr, winner)
+        (hits if pr["pick"] == winner else misses).append(row)
+    best_call = None
+    if hits:
+        hits.sort(key=lambda x: -(x[0] or 0))
+        edge, conf, m, pr, _ = hits[0]
+        best_call = {"home": m["home"]["name"], "away": m["away"]["name"],
+                      "pick": pr.get("pick_name"), "confidence": conf, "edge": edge}
+    biggest_miss = None
+    if misses:
+        misses.sort(key=lambda x: -x[1])
+        edge, conf, m, pr, winner = misses[0]
+        biggest_miss = {"home": m["home"]["name"], "away": m["away"]["name"],
+                         "pick": pr.get("pick_name"), "confidence": conf,
+                         "actual": _side_name(m, winner)}
+
+    closest = min(recent, key=_margin)
+    closest_match = {"home": closest["home"]["name"], "away": closest["away"]["name"],
+                      "score_line": f"{closest['score']['home']}-{closest['score']['away']}",
+                      "margin": _margin(closest)}
+
+    return {"window_days": 7, "matches_considered": len(recent),
+            "biggest_upset": biggest_upset, "best_call": best_call,
+            "biggest_miss": biggest_miss, "closest_match": closest_match}
+
+
 def build_team_of_tournament(matches, scorers, standings):
     """Honest impact XI from real data: players ranked by goals, assists and team
     strength, grouped by their REAL positions (from football-data). Lines we have
@@ -3181,6 +3264,7 @@ def build():
                "title_odds": title, "news": news, "news_scope": COMP_KEY, "bracket": bracket, "bracketology": bracketology,
                "third_race": third, "standings": standings, "scorers": scorers, "leaders": leaders, "team_of_tournament": build_team_of_tournament(matches, scorers, standings), "scorecard": scorecard,
                "advancement": compute_advancement(matches, st, name_map, code_map),
+               "weekly_awards": build_weekly_awards(matches),
                "diagnostics": [_scrub(x) for x in DIAG]}
     for out in (OUT_FILE, f"data_{COMP_KEY.lower()}.json"):
         tmp = out + ".tmp"

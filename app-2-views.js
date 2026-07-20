@@ -87,12 +87,28 @@ function btmSeason(db){
     model:a.filter(p=>p.model_hit).length,total:a.length,current:+i===now}));
   return rows.sort((a,b)=>b.n-a.n);
 }
+function renderWeeklyAwards(){
+  const wa=DATA.weekly_awards;
+  if(!wa)return '';
+  const cards=[];
+  if(wa.biggest_upset){const u=wa.biggest_upset;
+    cards.push({label:'Biggest upset',title:`${esc(u.winner)} won`,sub:`${esc(u.home)} ${esc(u.score_line)} ${esc(u.away)}${u.market_pct!=null?` · market gave them ${u.market_pct}%`:''}`});}
+  if(wa.best_call){const b=wa.best_call;
+    cards.push({label:"Model's best call",title:esc(b.pick),sub:`${esc(b.home)} v ${esc(b.away)} · ${b.confidence}% confidence${b.edge?` · +${b.edge} vs market`:''}`});}
+  if(wa.biggest_miss){const b=wa.biggest_miss;
+    cards.push({label:"Model's biggest miss",title:`Picked ${esc(b.pick)}`,sub:`${esc(b.home)} v ${esc(b.away)} · ${b.confidence}% confidence · ${esc(b.actual)} won instead`});}
+  if(wa.closest_match){const c=wa.closest_match;
+    cards.push({label:'Nail-biter of the week',title:`${esc(c.home)} ${esc(c.score_line)} ${esc(c.away)}`,sub:c.margin===0?'as close as it gets':`won by ${c.margin}`});}
+  if(!cards.length)return '';
+  return `<div class="seclbl" style="margin-top:4px">Weekly awards</div><div class="status-grid weeklyAwards">${cards.map(c=>`<div class="statuscard info"><span class="slbl">${c.label}</span><div class="sval" style="font-size:1rem">${c.title}</div><div class="hint">${c.sub}</div></div>`).join('')}</div>`;
+}
 function renderCommunity(){ensureHandle();const host=$('#view-community');const fullDb=btmGrade();const db=btmScoped(fullDb);const s=btmStats(db);
   const scopeName=communityScope()==='ALL'?'All sports':(DATA.competition||DATA.comp_key||'This sport');
   const open=(DATA.matches||[]).filter(m=>m.status==='UPCOMING'&&m.markets&&m.markets['1x2']&&m.prediction).sort((a,b)=>(a.kickoff||'').localeCompare(b.kickoff||''));
   const picks=db.picks||{};
   let h=`<div class="vhead">Community &middot; ${esc(scopeName)}</div>
   <div class="banner"><b>Lock your pick before kickoff.</b> ${communityScope()==='ALL'?'Your combined record across every sport is shown here.':'This record and its picks belong only to '+esc(scopeName)+'.'} You, the model and the market are graded side by side.</div>
+  ${renderWeeklyAwards()}
   <div class="status-grid">
    <div class="statuscard ${s.you>=s.model&&s.n?'ok':'info'}"><span class="slbl">Your record</span><div class="sval">${s.you}/${s.n||0}</div><div class="hint">${s.n?Math.round(s.you/s.n*100)+'% correct':'no graded picks yet'}</div></div>
    <div class="statuscard info"><span class="slbl">Model record</span><div class="sval">${s.model}/${s.n||0}</div><div class="hint">the opponent you are chasing</div></div>

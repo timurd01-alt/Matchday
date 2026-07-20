@@ -192,6 +192,8 @@ body.modalOpen{overflow:hidden}.matchModal{position:fixed;inset:0;z-index:99;dis
   .ls-badge.live{color:#0a0d12;background:var(--live)}
   .ls-badge.ok{color:var(--win);background:rgba(58,209,122,.13)}
   .ls-badge.sample{color:var(--loss);background:rgba(255,93,108,.13)}
+  .ls-streak{flex:0 0 auto;display:inline-flex;align-items:center;gap:3px;font-family:var(--mono);font-size:.68rem;font-weight:800;color:#ffb02e;background:rgba(255,176,46,.12);border:1px solid rgba(255,176,46,.3);border-radius:999px;padding:2px 9px 2px 7px;cursor:pointer;white-space:nowrap}
+  .ls-streak:hover{background:rgba(255,176,46,.2)}
   /* --- modal dashboard layout --- */
   .modalBody{padding:16px 18px 22px}
   .modalBody .detailGrid{gap:16px}
