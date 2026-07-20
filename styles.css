@@ -710,6 +710,14 @@ body.modalOpen{overflow:hidden}.matchModal{position:fixed;inset:0;z-index:99;dis
 .modalBody .detailGrid.v4Detail .detailTop{display:grid!important;grid-template-columns:1fr!important;gap:16px!important;min-width:0}
 .modalBody .detailGrid.v4Detail .detailLow{display:grid!important;grid-template-columns:1fr!important;gap:16px!important;margin-top:16px;min-width:0}
 .modalBody .detailGrid.v4Detail .readCard{min-width:0!important;overflow:hidden!important}
+/* The single-column fix above solved real crowding on narrow screens, but
+   .matchSheet caps at 1120px wide -- on anything wide enough to actually
+   fit two healthy columns, go back to side-by-side instead of stacking
+   short cards (e.g. the odds tracker) under tall ones and wasting width. */
+@media(min-width:900px){
+  .modalBody .detailGrid.v4Detail .detailTop{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;align-items:start}
+  .modalBody .detailGrid.v4Detail .detailLow{grid-template-columns:minmax(420px,1.1fr) minmax(380px,1fr)!important;align-items:start}
+}
 .modelReadCard{padding:0!important;border-color:rgba(58,209,122,.28)!important;background:transparent!important}
 .analystPanel{min-width:0;width:100%;padding:18px;border-radius:14px;background:radial-gradient(circle at 0% 0%,rgba(58,209,122,.16),transparent 36%),linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.012));border:1px solid var(--line)}
 .analystPanel,.analystPanel *{word-break:normal!important;overflow-wrap:normal!important;hyphens:none!important}
