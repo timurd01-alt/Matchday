@@ -206,7 +206,14 @@ function edgeBreakdown(m){
     if(f.length)bits.push(`${team.name} form: ${f.join(' ')} · GD ${Number(team.gd||0)>0?'+':''}${team.gd??0}.`);
   }
   const tot=(m?.markets||{}).totals;
-  if(tot)bits.push(`Goals market: over ${tot.line} ${tot.over_pct}%, under ${tot.line} ${tot.under_pct}%.`);
+  const modelTot=(m?.prediction||{}).totals;
+  if(tot){
+    let goalsLine=`Goals market: over ${tot.line} ${tot.over_pct}%, under ${tot.line} ${tot.under_pct}%.`;
+    if(modelTot&&modelTot.pick)goalsLine+=` Model expects ${modelTot.expected} — leans ${modelTot.pick}.`;
+    bits.push(goalsLine);
+  }else if(modelTot&&modelTot.expected!=null){
+    bits.push(`Model expects ${modelTot.expected} goals — no market line yet.`);
+  }
   return bits.join(' ');
 }
 function _v6UpsetBox(m){
@@ -374,8 +381,10 @@ function _v12OutcomeCard(m,op){
   const edge=op?_v10OfficialEdge(m,op):null;
   const edgeCls=edge==null?'edgeFlat':edge>0?'edgePos':edge<0?'edgeNeg':'edgeFlat';
   const tot=(m?.markets||{}).totals||{};
+  const modelTot=(m?.prediction||{}).totals;
   const drawNote=dp>=30?'high draw pressure':dp>=25?'moderate draw pressure':'low draw pressure';
-  const goalNote=tot.under_pct!=null?`Under ${esc(tot.line||2.5)}: ${esc(tot.under_pct)}%`:'No goals market yet';
+  const goalNote=tot.under_pct!=null?`Under ${esc(tot.line||2.5)}: ${esc(tot.under_pct)}%${modelTot&&modelTot.pick?` (model: ${esc(modelTot.pick)})`:''}`
+    :(modelTot&&modelTot.expected!=null?`Model expects ${esc(modelTot.expected)} goals`:'No goals market yet');
   const marketLabel=marketPct!=null?`${marketPct}%`:'—';
   const edgeLabel=edge!=null?`${edge>0?'+':''}${edge} pts`:'—';
   const risk=op?.blocked?`Upset gate blocked · ${esc(op.gateReason||'market gap too wide')}`:`${drawNote} · ${goalNote}`;

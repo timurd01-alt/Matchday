@@ -311,7 +311,15 @@ function matchStory(m){const pr=m.prediction;if(!pr)return '';
   if(up.triggered)bullets.push(`<li>Upset gate: OPEN — backing ${esc(up.candidate_name)} as the pick</li>`);
   else if(up.radar&&up.market_gate===false)bullets.push(`<li>Upset radar: ${esc(up.candidate_name)} is underpriced by the market but the gap is too wide to back outright</li>`);
   else if(up.radar)bullets.push(`<li>Upset radar: model rates ${esc(up.candidate_name)} ${up.upset_edge>0?'+'+up.upset_edge:up.upset_edge} vs the market</li>`);
-  const goals=(m.markets&&m.markets.totals)?`<li>Market leans ${m.markets.totals.over_pct>=m.markets.totals.under_pct?'over':'under'} ${esc(m.markets.totals.line)} goals</li>`:'';
+  const tot=(m.prediction||{}).totals||null;
+  let goals='';
+  if(m.markets&&m.markets.totals){
+    const mktLean=m.markets.totals.over_pct>=m.markets.totals.under_pct?'over':'under';
+    const extra=(tot&&tot.pick)?(tot.pick===mktLean?` · model agrees (${tot.expected} expected)`:` · model leans ${tot.pick} instead (${tot.expected} expected)`):'';
+    goals=`<li>Market leans ${mktLean} ${esc(m.markets.totals.line)} goals${extra}</li>`;
+  } else if(tot&&tot.expected!=null){
+    goals=`<li>Model expects ${tot.expected} goals — no market line yet</li>`;
+  }
   return `<div class="storyCard"><div class="storyTag">Match Story</div><p class="storyLead">${lead}</p>${(bullets.length||goals)?`<ul class="storyWhy">${bullets.join('')}${goals}</ul>`:''}</div>`;}
 function details(m){
   return `<div class="detailGrid v4Detail">${matchStory(m)}<div class="detailTop"><div class="readCard modelReadCard">${modelBlock(m)}</div><div class="readCard forecastMarketCard">${marketPanel(m)}</div></div><div class="detailLow">${statsPanel(m)}${lineupsPanel(m)}</div></div>`;

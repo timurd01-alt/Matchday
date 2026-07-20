@@ -990,6 +990,40 @@ def predict(home, away, markets, m=None):
             "mkt_pull": mkt_pull, "upset": upset}
 
 
+def predict_totals(home, away, markets):
+    """Expected combined goals/points from each side's own scoring and
+    conceding rate this season, shown independently alongside the market's
+    over/under line (not blended into it) -- same "show our work, don't
+    just parrot the market" spirit as the 1X2 model. A deliberately simple
+    heuristic, matching predict()'s style, rather than a full Poisson/normal
+    distribution model.
+    """
+    def rate(side, key):
+        pld = side.get("pld") or 0
+        val = side.get(key)
+        return (val / pld) if (pld and val is not None) else None
+    h_gf, h_ga = rate(home, "gf"), rate(home, "ga")
+    a_gf, a_ga = rate(away, "gf"), rate(away, "ga")
+    if None in (h_gf, h_ga, a_gf, a_ga):
+        return None  # not enough games played yet to estimate scoring rates
+    exp_total = round((h_gf + a_ga) / 2 + (a_gf + h_ga) / 2, 2)
+    result = {"expected": exp_total}
+    mk = markets.get("totals")
+    if mk and mk.get("line") is not None:
+        line = float(mk["line"])
+        gap = exp_total - line
+        # scale by the gap RELATIVE to the line, not an absolute goal/point
+        # count, so this behaves consistently for soccer (~2.5 line) and
+        # high-scoring sports (~220 line) alike
+        rel_gap = (gap / line) if line else 0
+        over_pct = max(15, min(85, round(50 + rel_gap * 150)))
+        result.update({"line": line, "gap": round(gap, 2),
+                        "pick": "over" if over_pct >= 50 else "under",
+                        "over_pct": over_pct, "under_pct": 100 - over_pct,
+                        "market_over_pct": mk.get("over_pct"), "market_under_pct": mk.get("under_pct")})
+    return result
+
+
 # -------- ESPN lineups + live subs + injuries (keyless) ------------------
 def _bucket(abbr):
     a = (abbr or "").upper()
@@ -2699,6 +2733,7 @@ def build():
                 if rec:  # hydrate the model's inputs from real standings
                     t["pts"], t["gd"], t["form"] = rec["pts"], rec["gd"], rec["form"]
                     t["group"], t["pos"] = rec["group"], rec.get("pos")
+                    t["gf"], t["ga"], t["pld"] = rec.get("gf", 0), rec.get("ga", 0), rec.get("pld", 0)
         for table in sports_tables:
             for team in table.get("teams") or []:
                 if team.get("name"):
@@ -2775,6 +2810,7 @@ def build():
     # predictions run AFTER all stats/lineups so the model can use them this run
     for m in matches:
         m["prediction"] = predict(m["home"], m["away"], m["markets"], m)
+        m["prediction"]["totals"] = predict_totals(m["home"], m["away"], m["markets"])
     print(f"  merged odds onto {merged} fixtures ({fuzzy} via name-variant match) · predictions on all {len(matches)}")
 
     print("Fetching title odds + news…")
