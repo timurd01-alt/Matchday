@@ -93,6 +93,10 @@ jobs:
           cp data.json _site/
           cp data_*.json _site/
 
+      - name: Stamp asset URLs with this commit's SHA (cache-busting)
+        run: |
+          sed -i "s/__BUILD__/${GITHUB_SHA::8}/g" _site/index.html
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
