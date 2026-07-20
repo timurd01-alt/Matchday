@@ -1,0 +1,108 @@
+{
+  "_note": "Champions League 2026-27 ratings. fifa_rank = UEFA club coefficient rank (approx). squad_value_m / star_value_m = EUR millions, ESTIMATES as of July 2026 — verify against Transfermarkt club pages and refine. 21 of 29 direct qualifiers are confirmed by name; the last 7 league-phase clubs arrive via qualifying (late August) — add them then.",
+  "Real Madrid": {
+    "fifa_rank": 1,
+    "squad_value_m": 1300,
+    "star_value_m": 200
+  },
+  "Manchester City": {
+    "fifa_rank": 2,
+    "squad_value_m": 1250,
+    "star_value_m": 200
+  },
+  "Bayern Munich": {
+    "fifa_rank": 3,
+    "squad_value_m": 950,
+    "star_value_m": 140
+  },
+  "Paris Saint-Germain": {
+    "fifa_rank": 4,
+    "squad_value_m": 1100,
+    "star_value_m": 150
+  },
+  "Liverpool": {
+    "fifa_rank": 5,
+    "squad_value_m": 1050,
+    "star_value_m": 150
+  },
+  "Inter Milan": {
+    "fifa_rank": 6,
+    "squad_value_m": 700,
+    "star_value_m": 110
+  },
+  "Borussia Dortmund": {
+    "fifa_rank": 7,
+    "squad_value_m": 550,
+    "star_value_m": 100
+  },
+  "Barcelona": {
+    "fifa_rank": 8,
+    "squad_value_m": 1000,
+    "star_value_m": 200
+  },
+  "Arsenal": {
+    "fifa_rank": 9,
+    "squad_value_m": 1200,
+    "star_value_m": 150
+  },
+  "Atletico Madrid": {
+    "fifa_rank": 10,
+    "squad_value_m": 600,
+    "star_value_m": 100
+  },
+  "Manchester United": {
+    "fifa_rank": 13,
+    "squad_value_m": 800,
+    "star_value_m": 120
+  },
+  "RB Leipzig": {
+    "fifa_rank": 15,
+    "squad_value_m": 500,
+    "star_value_m": 80
+  },
+  "Feyenoord": {
+    "fifa_rank": 20,
+    "squad_value_m": 250,
+    "star_value_m": 40
+  },
+  "PSV Eindhoven": {
+    "fifa_rank": 22,
+    "squad_value_m": 280,
+    "star_value_m": 45
+  },
+  "FC Porto": {
+    "fifa_rank": 18,
+    "squad_value_m": 350,
+    "star_value_m": 60
+  },
+  "Galatasaray": {
+    "fifa_rank": 25,
+    "squad_value_m": 300,
+    "star_value_m": 60
+  },
+  "Shakhtar Donetsk": {
+    "fifa_rank": 28,
+    "squad_value_m": 200,
+    "star_value_m": 40
+  },
+  "Aston Villa": {
+    "fifa_rank": 24,
+    "squad_value_m": 600,
+    "star_value_m": 80
+  },
+  "Villarreal": {
+    "fifa_rank": 21,
+    "squad_value_m": 300,
+    "star_value_m": 50
+  },
+  "Real Betis": {
+    "fifa_rank": 30,
+    "squad_value_m": 250,
+    "star_value_m": 40
+  },
+  "Nice": {
+    "fifa_rank": 35,
+    "squad_value_m": 220,
+    "star_value_m": 35
+  }
+}

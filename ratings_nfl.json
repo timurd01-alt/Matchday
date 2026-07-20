@@ -1,0 +1,163 @@
+{
+  "_note": "NFL 2026 season ratings. fifa_rank = power-ranking ESTIMATE (July 2026, pre-season \u2014 refine as the season starts). squad/star values intentionally 0: the salary cap makes market values meaningless in the NFL; team strength comes from standings + rank. Edit with update_ratings.py --set.",
+  "Kansas City Chiefs": {
+    "fifa_rank": 1,
+    "squad_value_m": 0,
+    "star_value_m": 0
+  },
+  "Buffalo Bills": {
+    "fifa_rank": 2,
+    "squad_value_m": 0,
+    "star_value_m": 0
+  },
+  "Detroit Lions": {
+    "fifa_rank": 3,
+    "squad_value_m": 0,
+    "star_value_m": 0
+  },
+  "Philadelphia Eagles": {
+    "fifa_rank": 4,
+    "squad_value_m": 0,
+    "star_value_m": 0
+  },
+  "Baltimore Ravens": {
+    "fifa_rank": 5,
+    "squad_value_m": 0,
+    "star_value_m": 0
+  },
+  "San Francisco 49ers": {
+    "fifa_rank": 6,
+    "squad_value_m": 0,
+    "star_value_m": 0
+  },
+  "Green Bay Packers": {
+    "fifa_rank": 7,
+    "squad_value_m": 0,
+    "star_value_m": 0
+  },
+  "Cincinnati Bengals": {
+    "fifa_rank": 8,
+    "squad_value_m": 0,
+    "star_value_m": 0
+  },
+  "Los Angeles Rams": {
+    "fifa_rank": 9,
+    "squad_value_m": 0,
+    "star_value_m": 0
+  },
+  "Houston Texans": {
+    "fifa_rank": 10,
+    "squad_value_m": 0,
+    "star_value_m": 0
+  },
+  "Dallas Cowboys": {
+    "fifa_rank": 11,
+    "squad_value_m": 0,
+    "star_value_m": 0
+  },
+  "Miami Dolphins": {
+    "fifa_rank": 12,
+    "squad_value_m": 0,
+    "star_value_m": 0
+  },
+  "Los Angeles Chargers": {
+    "fifa_rank": 13,
+    "squad_value_m": 0,
+    "star_value_m": 0
+  },
+  "Minnesota Vikings": {
+    "fifa_rank": 14,
+    "squad_value_m": 0,
+    "star_value_m": 0
+  },
+  "Pittsburgh Steelers": {
+    "fifa_rank": 15,
+    "squad_value_m": 0,
+    "star_value_m": 0
+  },
+  "Seattle Seahawks": {
+    "fifa_rank": 16,
+    "squad_value_m": 0,
+    "star_value_m": 0
+  },
+  "Tampa Bay Buccaneers": {
+    "fifa_rank": 17,
+    "squad_value_m": 0,
+    "star_value_m": 0
+  },
+  "Atlanta Falcons": {
+    "fifa_rank": 18,
+    "squad_value_m": 0,
+    "star_value_m": 0
+  },
+  "Jacksonville Jaguars": {
+    "fifa_rank": 19,
+    "squad_value_m": 0,
+    "star_value_m": 0
+  },
+  "Chicago Bears": {
+    "fifa_rank": 20,
+    "squad_value_m": 0,
+    "star_value_m": 0
+  },
+  "Indianapolis Colts": {
+    "fifa_rank": 21,
+    "squad_value_m": 0,
+    "star_value_m": 0
+  },
+  "Arizona Cardinals": {
+    "fifa_rank": 22,
+    "squad_value_m": 0,
+    "star_value_m": 0
+  },
+  "Denver Broncos": {
+    "fifa_rank": 23,
+    "squad_value_m": 0,
+    "star_value_m": 0
+  },
+  "Cleveland Browns": {
+    "fifa_rank": 24,
+    "squad_value_m": 0,
+    "star_value_m": 0
+  },
+  "New York Jets": {
+    "fifa_rank": 25,
+    "squad_value_m": 0,
+    "star_value_m": 0
+  },
+  "Washington Commanders": {
+    "fifa_rank": 26,
+    "squad_value_m": 0,
+    "star_value_m": 0
+  },
+  "New Orleans Saints": {
+    "fifa_rank": 27,
+    "squad_value_m": 0,
+    "star_value_m": 0
+  },
+  "Las Vegas Raiders": {
+    "fifa_rank": 28,
+    "squad_value_m": 0,
+    "star_value_m": 0
+  },
+  "New England Patriots": {
+    "fifa_rank": 29,
+    "squad_value_m": 0,
+    "star_value_m": 0
+  },
+  "New York Giants": {
+    "fifa_rank": 30,
+    "squad_value_m": 0,
+    "star_value_m": 0
+  },
+  "Tennessee Titans": {
+    "fifa_rank": 31,
+    "squad_value_m": 0,
+    "star_value_m": 0
+  },
+  "Carolina Panthers": {
+    "fifa_rank": 32,
+    "squad_value_m": 0,
+    "star_value_m": 0
+  }
+}

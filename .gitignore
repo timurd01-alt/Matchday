@@ -9,7 +9,9 @@ title_open*.json
 api_football_box_cache*.json
 *_cache.json
 player_db_*.json
-ratings*.json
+ratings*.backup.json
+ratings_elo.json
+ratings_h2h.json
 .browser-profile/
 __pycache__/
 *.pyc

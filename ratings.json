@@ -1,0 +1,243 @@
+{
+  "_note": "Public-rating inputs. fifa_rank = FIFA World Ranking position (June 2026). squad_value_m = Transfermarkt squad values, June 2026 (top ~30 teams verified from published Transfermarkt lists; smaller nations remain estimates). star_value_m = most valuable player, EUR millions (verified for top squads). Edit freely; the model reads this file on every fetch.",
+  "Argentina": {
+    "fifa_rank": 1,
+    "squad_value_m": 808,
+    "star_value_m": 90
+  },
+  "Spain": {
+    "fifa_rank": 2,
+    "squad_value_m": 1220,
+    "star_value_m": 200
+  },
+  "France": {
+    "fifa_rank": 3,
+    "squad_value_m": 1520,
+    "star_value_m": 200
+  },
+  "England": {
+    "fifa_rank": 4,
+    "squad_value_m": 1360,
+    "star_value_m": 180
+  },
+  "Portugal": {
+    "fifa_rank": 5,
+    "squad_value_m": 1010,
+    "star_value_m": 140
+  },
+  "Brazil": {
+    "fifa_rank": 6,
+    "squad_value_m": 928,
+    "star_value_m": 170
+  },
+  "Netherlands": {
+    "fifa_rank": 7,
+    "squad_value_m": 754,
+    "star_value_m": 75
+  },
+  "Belgium": {
+    "fifa_rank": 8,
+    "squad_value_m": 548,
+    "star_value_m": 70
+  },
+  "Germany": {
+    "fifa_rank": 9,
+    "squad_value_m": 947,
+    "star_value_m": 100
+  },
+  "Croatia": {
+    "fifa_rank": 10,
+    "squad_value_m": 387,
+    "star_value_m": 75
+  },
+  "Morocco": {
+    "fifa_rank": 12,
+    "squad_value_m": 448,
+    "star_value_m": 70
+  },
+  "Colombia": {
+    "fifa_rank": 13,
+    "squad_value_m": 302,
+    "star_value_m": 80
+  },
+  "Mexico": {
+    "fifa_rank": 14,
+    "squad_value_m": 190,
+    "star_value_m": 35
+  },
+  "Uruguay": {
+    "fifa_rank": 16,
+    "squad_value_m": 359,
+    "star_value_m": 130
+  },
+  "United States": {
+    "fifa_rank": 17,
+    "squad_value_m": 386,
+    "star_value_m": 60
+  },
+  "Japan": {
+    "fifa_rank": 18,
+    "squad_value_m": 271,
+    "star_value_m": 60
+  },
+  "Senegal": {
+    "fifa_rank": 19,
+    "squad_value_m": 478,
+    "star_value_m": 50
+  },
+  "Iran": {
+    "fifa_rank": 21,
+    "squad_value_m": 60,
+    "star_value_m": 15
+  },
+  "South Korea": {
+    "fifa_rank": 22,
+    "squad_value_m": 180,
+    "star_value_m": 40
+  },
+  "Ecuador": {
+    "fifa_rank": 24,
+    "squad_value_m": 369,
+    "star_value_m": 110
+  },
+  "Austria": {
+    "fifa_rank": 25,
+    "squad_value_m": 239,
+    "star_value_m": 35
+  },
+  "Australia": {
+    "fifa_rank": 26,
+    "squad_value_m": 90,
+    "star_value_m": 20
+  },
+  "Turkey": {
+    "fifa_rank": 27,
+    "squad_value_m": 474,
+    "star_value_m": 90
+  },
+  "Switzerland": {
+    "fifa_rank": 20,
+    "squad_value_m": 333,
+    "star_value_m": 30
+  },
+  "Norway": {
+    "fifa_rank": 28,
+    "squad_value_m": 590,
+    "star_value_m": 200
+  },
+  "Canada": {
+    "fifa_rank": 30,
+    "squad_value_m": 194,
+    "star_value_m": 45
+  },
+  "Panama": {
+    "fifa_rank": 33,
+    "squad_value_m": 40,
+    "star_value_m": 12
+  },
+  "Egypt": {
+    "fifa_rank": 34,
+    "squad_value_m": 180,
+    "star_value_m": 45
+  },
+  "Sweden": {
+    "fifa_rank": 35,
+    "squad_value_m": 406,
+    "star_value_m": 120
+  },
+  "Algeria": {
+    "fifa_rank": 36,
+    "squad_value_m": 254,
+    "star_value_m": 30
+  },
+  "Scotland": {
+    "fifa_rank": 38,
+    "squad_value_m": 168,
+    "star_value_m": 30
+  },
+  "Czechia": {
+    "fifa_rank": 40,
+    "squad_value_m": 186,
+    "star_value_m": 25
+  },
+  "Paraguay": {
+    "fifa_rank": 43,
+    "squad_value_m": 152,
+    "star_value_m": 25
+  },
+  "Ivory Coast": {
+    "fifa_rank": 44,
+    "squad_value_m": 522,
+    "star_value_m": 35
+  },
+  "Tunisia": {
+    "fifa_rank": 47,
+    "squad_value_m": 90,
+    "star_value_m": 15
+  },
+  "Qatar": {
+    "fifa_rank": 51,
+    "squad_value_m": 25,
+    "star_value_m": 8
+  },
+  "Uzbekistan": {
+    "fifa_rank": 55,
+    "squad_value_m": 60,
+    "star_value_m": 30
+  },
+  "Iraq": {
+    "fifa_rank": 57,
+    "squad_value_m": 30,
+    "star_value_m": 8
+  },
+  "Saudi Arabia": {
+    "fifa_rank": 58,
+    "squad_value_m": 30,
+    "star_value_m": 15
+  },
+  "South Africa": {
+    "fifa_rank": 60,
+    "squad_value_m": 60,
+    "star_value_m": 12
+  },
+  "Congo DR": {
+    "fifa_rank": 56,
+    "squad_value_m": 130,
+    "star_value_m": 35
+  },
+  "Jordan": {
+    "fifa_rank": 64,
+    "squad_value_m": 20,
+    "star_value_m": 8
+  },
+  "Bosnia-Herzegovina": {
+    "fifa_rank": 72,
+    "squad_value_m": 120,
+    "star_value_m": 30
+  },
+  "Cape Verde Islands": {
+    "fifa_rank": 71,
+    "squad_value_m": 40,
+    "star_value_m": 12
+  },
+  "Ghana": {
+    "fifa_rank": 74,
+    "squad_value_m": 231,
+    "star_value_m": 60
+  },
+  "New Zealand": {
+    "fifa_rank": 86,
+    "squad_value_m": 35,
+    "star_value_m": 12
+  },
+  "Haiti": {
+    "fifa_rank": 88,
+    "squad_value_m": 35,
+    "star_value_m": 15
+  },
+  "Curaçao": {
+    "fifa_rank": 90,
+    "squad_value_m": 30,
+    "star_value_m": 10
+  }
+}

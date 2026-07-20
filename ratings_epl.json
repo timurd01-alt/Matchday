@@ -1,0 +1,53 @@
+{
+ "_note": "Premier League 2026-27. fifa_rank = strength order ESTIMATE; big-club values reuse July 2026 verified figures, rest are estimates. Refine with update_ratings.py.",
+ "Arsenal FC": {
+  "fifa_rank": 1,
+  "squad_value_m": 1200,
+  "star_value_m": 150
+ },
+ "Manchester City FC": {
+  "fifa_rank": 2,
+  "squad_value_m": 1250,
+  "star_value_m": 200
+ },
+ "Liverpool FC": {
+  "fifa_rank": 3,
+  "squad_value_m": 1050,
+  "star_value_m": 150
+ },
+ "Manchester United FC": {
+  "fifa_rank": 4,
+  "squad_value_m": 800,
+  "star_value_m": 120
+ },
+ "Aston Villa FC": {
+  "fifa_rank": 5,
+  "squad_value_m": 600,
+  "star_value_m": 80
+ },
+ "Chelsea FC": {
+  "fifa_rank": 6,
+  "squad_value_m": 950,
+  "star_value_m": 120
+ },
+ "Newcastle United FC": {
+  "fifa_rank": 7,
+  "squad_value_m": 650,
+  "star_value_m": 90
+ },
+ "Tottenham Hotspur FC": {
+  "fifa_rank": 8,
+  "squad_value_m": 700,
+  "star_value_m": 90
+ },
+ "Brighton & Hove Albion FC": {
+  "fifa_rank": 9,
+  "squad_value_m": 500,
+  "star_value_m": 60
+ },
+ "Bournemouth AFC": {
+  "fifa_rank": 10,
+  "squad_value_m": 350,
+  "star_value_m": 50
+ }
+}

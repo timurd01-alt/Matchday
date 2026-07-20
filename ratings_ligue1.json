@@ -1,0 +1,43 @@
+{
+ "_note": "Ligue 1 2026-27. PSG/Nice verified; rest estimates.",
+ "Paris Saint-Germain FC": {
+  "fifa_rank": 1,
+  "squad_value_m": 1100,
+  "star_value_m": 150
+ },
+ "OGC Nice": {
+  "fifa_rank": 2,
+  "squad_value_m": 220,
+  "star_value_m": 35
+ },
+ "Olympique de Marseille": {
+  "fifa_rank": 3,
+  "squad_value_m": 300,
+  "star_value_m": 50
+ },
+ "AS Monaco FC": {
+  "fifa_rank": 4,
+  "squad_value_m": 350,
+  "star_value_m": 60
+ },
+ "Olympique Lyonnais": {
+  "fifa_rank": 5,
+  "squad_value_m": 280,
+  "star_value_m": 45
+ },
+ "LOSC Lille": {
+  "fifa_rank": 6,
+  "squad_value_m": 260,
+  "star_value_m": 45
+ },
+ "RC Lens": {
+  "fifa_rank": 7,
+  "squad_value_m": 220,
+  "star_value_m": 35
+ },
+ "Stade Rennais FC 1901": {
+  "fifa_rank": 8,
+  "squad_value_m": 230,
+  "star_value_m": 35
+ }
+}

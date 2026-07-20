@@ -1,0 +1,43 @@
+{
+ "_note": "La Liga 2026-27. Same sourcing as EPL file.",
+ "FC Barcelona": {
+  "fifa_rank": 1,
+  "squad_value_m": 1000,
+  "star_value_m": 200
+ },
+ "Real Madrid CF": {
+  "fifa_rank": 2,
+  "squad_value_m": 1300,
+  "star_value_m": 200
+ },
+ "Club Atlético de Madrid": {
+  "fifa_rank": 3,
+  "squad_value_m": 600,
+  "star_value_m": 100
+ },
+ "Villarreal CF": {
+  "fifa_rank": 4,
+  "squad_value_m": 300,
+  "star_value_m": 50
+ },
+ "Real Betis Balompié": {
+  "fifa_rank": 5,
+  "squad_value_m": 250,
+  "star_value_m": 40
+ },
+ "Athletic Club": {
+  "fifa_rank": 6,
+  "squad_value_m": 300,
+  "star_value_m": 50
+ },
+ "Real Sociedad de Fútbol": {
+  "fifa_rank": 7,
+  "squad_value_m": 320,
+  "star_value_m": 50
+ },
+ "Sevilla FC": {
+  "fifa_rank": 8,
+  "squad_value_m": 250,
+  "star_value_m": 40
+ }
+}

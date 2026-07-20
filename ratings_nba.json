@@ -1,0 +1,153 @@
+{
+ "_note": "NBA 2026-27 ratings. fifa_rank = power-ranking ESTIMATE (July 2026 offseason \u2014 refine as the season shapes up). Salary-cap parity: squad/star values stay 0; strength comes from standings + rank. Edit with update_ratings.py --set.",
+ "Oklahoma City Thunder": {
+  "fifa_rank": 1,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Boston Celtics": {
+  "fifa_rank": 2,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Cleveland Cavaliers": {
+  "fifa_rank": 3,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Denver Nuggets": {
+  "fifa_rank": 4,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "New York Knicks": {
+  "fifa_rank": 5,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Houston Rockets": {
+  "fifa_rank": 6,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Minnesota Timberwolves": {
+  "fifa_rank": 7,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Los Angeles Lakers": {
+  "fifa_rank": 8,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Indiana Pacers": {
+  "fifa_rank": 9,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Golden State Warriors": {
+  "fifa_rank": 10,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Milwaukee Bucks": {
+  "fifa_rank": 11,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Memphis Grizzlies": {
+  "fifa_rank": 12,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Los Angeles Clippers": {
+  "fifa_rank": 13,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Detroit Pistons": {
+  "fifa_rank": 14,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Orlando Magic": {
+  "fifa_rank": 15,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Dallas Mavericks": {
+  "fifa_rank": 16,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "San Antonio Spurs": {
+  "fifa_rank": 17,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Philadelphia 76ers": {
+  "fifa_rank": 18,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Miami Heat": {
+  "fifa_rank": 19,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Sacramento Kings": {
+  "fifa_rank": 20,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Atlanta Hawks": {
+  "fifa_rank": 21,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Phoenix Suns": {
+  "fifa_rank": 22,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Chicago Bulls": {
+  "fifa_rank": 23,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Toronto Raptors": {
+  "fifa_rank": 24,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Portland Trail Blazers": {
+  "fifa_rank": 25,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Brooklyn Nets": {
+  "fifa_rank": 26,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "New Orleans Pelicans": {
+  "fifa_rank": 27,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Charlotte Hornets": {
+  "fifa_rank": 28,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Utah Jazz": {
+  "fifa_rank": 29,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Washington Wizards": {
+  "fifa_rank": 30,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ }
+}

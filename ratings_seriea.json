@@ -1,0 +1,43 @@
+{
+ "_note": "Serie A 2026-27. Inter verified; rest estimates.",
+ "FC Internazionale Milano": {
+  "fifa_rank": 1,
+  "squad_value_m": 700,
+  "star_value_m": 110
+ },
+ "SSC Napoli": {
+  "fifa_rank": 2,
+  "squad_value_m": 550,
+  "star_value_m": 80
+ },
+ "Juventus FC": {
+  "fifa_rank": 3,
+  "squad_value_m": 600,
+  "star_value_m": 90
+ },
+ "AC Milan": {
+  "fifa_rank": 4,
+  "squad_value_m": 500,
+  "star_value_m": 80
+ },
+ "Atalanta BC": {
+  "fifa_rank": 5,
+  "squad_value_m": 450,
+  "star_value_m": 70
+ },
+ "AS Roma": {
+  "fifa_rank": 6,
+  "squad_value_m": 400,
+  "star_value_m": 60
+ },
+ "SS Lazio": {
+  "fifa_rank": 7,
+  "squad_value_m": 300,
+  "star_value_m": 50
+ },
+ "ACF Fiorentina": {
+  "fifa_rank": 8,
+  "squad_value_m": 280,
+  "star_value_m": 45
+ }
+}

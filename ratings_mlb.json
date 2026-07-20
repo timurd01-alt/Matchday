@@ -1,0 +1,153 @@
+{
+ "_note": "MLB 2026. fifa_rank = power-ranking ESTIMATE; values 0 (baseball has no useful market-value signal). Refine with update_ratings.py.",
+ "Los Angeles Dodgers": {
+  "fifa_rank": 1,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "New York Yankees": {
+  "fifa_rank": 2,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Philadelphia Phillies": {
+  "fifa_rank": 3,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Atlanta Braves": {
+  "fifa_rank": 4,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Baltimore Orioles": {
+  "fifa_rank": 5,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Houston Astros": {
+  "fifa_rank": 6,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Texas Rangers": {
+  "fifa_rank": 7,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Seattle Mariners": {
+  "fifa_rank": 8,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "New York Mets": {
+  "fifa_rank": 9,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Milwaukee Brewers": {
+  "fifa_rank": 10,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "San Diego Padres": {
+  "fifa_rank": 11,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Arizona Diamondbacks": {
+  "fifa_rank": 12,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Minnesota Twins": {
+  "fifa_rank": 13,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Cleveland Guardians": {
+  "fifa_rank": 14,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Boston Red Sox": {
+  "fifa_rank": 15,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Chicago Cubs": {
+  "fifa_rank": 16,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Detroit Tigers": {
+  "fifa_rank": 17,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Kansas City Royals": {
+  "fifa_rank": 18,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Tampa Bay Rays": {
+  "fifa_rank": 19,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "St. Louis Cardinals": {
+  "fifa_rank": 20,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Cincinnati Reds": {
+  "fifa_rank": 21,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "San Francisco Giants": {
+  "fifa_rank": 22,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Toronto Blue Jays": {
+  "fifa_rank": 23,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Pittsburgh Pirates": {
+  "fifa_rank": 24,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Los Angeles Angels": {
+  "fifa_rank": 25,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Washington Nationals": {
+  "fifa_rank": 26,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Athletics": {
+  "fifa_rank": 27,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Miami Marlins": {
+  "fifa_rank": 28,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Colorado Rockies": {
+  "fifa_rank": 29,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Chicago White Sox": {
+  "fifa_rank": 30,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ }
+}

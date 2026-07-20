@@ -1,0 +1,43 @@
+{
+ "_note": "Bundesliga 2026-27. Bayern/Dortmund/Leipzig verified; rest estimates.",
+ "FC Bayern München": {
+  "fifa_rank": 1,
+  "squad_value_m": 950,
+  "star_value_m": 140
+ },
+ "Borussia Dortmund": {
+  "fifa_rank": 2,
+  "squad_value_m": 550,
+  "star_value_m": 100
+ },
+ "RB Leipzig": {
+  "fifa_rank": 3,
+  "squad_value_m": 500,
+  "star_value_m": 80
+ },
+ "Bayer 04 Leverkusen": {
+  "fifa_rank": 4,
+  "squad_value_m": 450,
+  "star_value_m": 70
+ },
+ "Eintracht Frankfurt": {
+  "fifa_rank": 5,
+  "squad_value_m": 350,
+  "star_value_m": 60
+ },
+ "VfB Stuttgart": {
+  "fifa_rank": 6,
+  "squad_value_m": 320,
+  "star_value_m": 50
+ },
+ "SC Freiburg": {
+  "fifa_rank": 7,
+  "squad_value_m": 250,
+  "star_value_m": 40
+ },
+ "VfL Wolfsburg": {
+  "fifa_rank": 8,
+  "squad_value_m": 240,
+  "star_value_m": 40
+ }
+}

@@ -1,0 +1,163 @@
+{
+ "_note": "NHL 2026-27. fifa_rank = power-ranking ESTIMATE; values 0 (salary cap). Refine with update_ratings.py.",
+ "Florida Panthers": {
+  "fifa_rank": 1,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Edmonton Oilers": {
+  "fifa_rank": 2,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Dallas Stars": {
+  "fifa_rank": 3,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Colorado Avalanche": {
+  "fifa_rank": 4,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Carolina Hurricanes": {
+  "fifa_rank": 5,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Vegas Golden Knights": {
+  "fifa_rank": 6,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Toronto Maple Leafs": {
+  "fifa_rank": 7,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "New York Rangers": {
+  "fifa_rank": 8,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Winnipeg Jets": {
+  "fifa_rank": 9,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Tampa Bay Lightning": {
+  "fifa_rank": 10,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Vancouver Canucks": {
+  "fifa_rank": 11,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Nashville Predators": {
+  "fifa_rank": 12,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Boston Bruins": {
+  "fifa_rank": 13,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Los Angeles Kings": {
+  "fifa_rank": 14,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "New Jersey Devils": {
+  "fifa_rank": 15,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Minnesota Wild": {
+  "fifa_rank": 16,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Ottawa Senators": {
+  "fifa_rank": 17,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Detroit Red Wings": {
+  "fifa_rank": 18,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Washington Capitals": {
+  "fifa_rank": 19,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "St. Louis Blues": {
+  "fifa_rank": 20,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Calgary Flames": {
+  "fifa_rank": 21,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Utah Hockey Club": {
+  "fifa_rank": 22,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Buffalo Sabres": {
+  "fifa_rank": 23,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Seattle Kraken": {
+  "fifa_rank": 24,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Pittsburgh Penguins": {
+  "fifa_rank": 25,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "New York Islanders": {
+  "fifa_rank": 26,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Philadelphia Flyers": {
+  "fifa_rank": 27,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Columbus Blue Jackets": {
+  "fifa_rank": 28,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Montreal Canadiens": {
+  "fifa_rank": 29,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Anaheim Ducks": {
+  "fifa_rank": 30,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "Chicago Blackhawks": {
+  "fifa_rank": 31,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "San Jose Sharks": {
+  "fifa_rank": 32,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ }
+}
