@@ -156,9 +156,10 @@ function renderCommunity(){ensureHandle();const host=$('#view-community');const 
 
 /* ===== Matchup Sandbox — hypothetical same-competition matchups ===========
    Client-side port of predict()/predict_totals()'s standings-based strength
-   calc (points/goal-diff/form/home-advantage only — no injuries, ratings,
-   or market data, since there's no real scheduled game to attach any of
-   that to). Runs entirely in the browser against DATA.standings. */
+   calc (points/goal-diff/form/preseason class rating/home-advantage --
+   no injuries or market data, since there's no real scheduled game to
+   attach any of that to). Runs entirely in the browser against
+   DATA.standings, or DATA.matches when standings are empty (preseason). */
 const SANDBOX_TWO_WAY=new Set(['nfl','ncaaf','ncaam','mlb','nhl','nba']);
 function sandboxTeams(){
   const fromStandings=(DATA.standings||[]).flatMap(g=>g.teams||[]);
@@ -174,7 +175,7 @@ function sandboxTeams(){
 }
 function sandboxStrength(team,adv){
   const fp=String(team.form||'').split(' ').filter(Boolean).reduce((s,r)=>s+({W:3,D:1,L:0}[r]||0),0);
-  return Math.max(0.1,1.0+(team.pts||0)*0.6+(team.gd||0)*0.25+fp*0.5+adv);
+  return Math.max(0.1,1.0+(team.pts||0)*0.6+(team.gd||0)*0.25+fp*0.5+(team.rating||0)+adv);
 }
 function sandboxExpectedTotal(home,away){
   const rate=(side,key)=>{const pld=side.pld||0,val=side[key];return(!pld||val==null||val===0)?null:val/pld;};
@@ -218,7 +219,7 @@ function renderSandbox(){
       resultHtml=`<div class="analystBox probMatrixCard" style="margin-top:16px"><div class="analystBoxTitle">Model read</div>
         <div class="probMatrix"><div class="probTiles">${tiles.map(([side,label,pct])=>_v12ProbTile(label,pct,side,side===r.pick)).join('')}</div></div>
         <p class="probContextLine">${esc(pickName)} favored at ${r.probs[r.pick]}%${r.expected!=null?` · model expects ${r.expected} combined ${r.twoWay?'points':'goals'}`:''}.</p>
-        <p class="small" style="color:var(--faint);margin-top:8px">Hypothetical matchup — uses each team's current points, goal/point difference, and recent form only. No injuries, ratings, or live market data, since there's no real game to price.</p>
+        <p class="small" style="color:var(--faint);margin-top:8px">Hypothetical matchup — uses each team's current points, goal/point difference, recent form, and preseason class/power rating. No injuries or live market data, since there's no real game to price.</p>
         </div>`;
     }
   } else if(sel.home===sel.away){

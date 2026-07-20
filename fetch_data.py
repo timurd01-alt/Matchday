@@ -414,7 +414,8 @@ def build_matches(raw, st):
                     "group": pretty_group(s.get("group")), "pos": s.get("pos"),
                     "pld": s.get("pld", 0), "w": s.get("w", 0), "d": s.get("d", 0), "l": s.get("l", 0),
                     "gf": s.get("gf", 0), "ga": s.get("ga", 0), "gd": s.get("gd", 0),
-                    "pts": s.get("pts", 0), "form": s.get("form", "")}
+                    "pts": s.get("pts", 0), "form": s.get("form", ""),
+                    "rating": round(rating_boost(t.get("name")), 2)}
 
         out.append({"id": str(m.get("id")),
                     "stage": pretty_group(m.get("group")) or (m.get("stage", "") or "").replace("_", " ").title(),
@@ -1678,7 +1679,8 @@ def build_league_table(st, name_map, code_map, zones=None):
         rows.append({"name": name_map.get(t, t.title()), "code": code_map.get(t, ""),
                      "pld": r["pld"], "w": r["w"], "d": r["d"], "l": r["l"],
                      "gf": r["gf"], "ga": r["ga"], "gd": r["gd"], "pts": r["pts"],
-                     "form": r.get("form", ""), "pos": None, "_official": r.get("pos"), "qual": ""})
+                     "form": r.get("form", ""), "pos": None, "_official": r.get("pos"), "qual": "",
+                     "rating": round(rating_boost(name_map.get(t, t)), 2)})
     if not rows:
         return []
     rows.sort(key=lambda x: ((x.get("_official") or 99), -x["pts"], -x["gd"], -x["gf"], x["name"]))
@@ -3020,6 +3022,11 @@ def build():
                     t["pts"], t["gd"], t["form"] = rec["pts"], rec["gd"], rec["form"]
                     t["group"], t["pos"] = rec["group"], rec.get("pos")
                     t["gf"], t["ga"], t["pld"] = rec.get("gf", 0), rec.get("ga", 0), rec.get("pld", 0)
+                # class/power-rating signal, independent of standings -- lets the
+                # Sandbox (and predict() when pts/gd/form are still 0 preseason)
+                # differentiate teams by real preseason strength instead of
+                # going flat until games start being played
+                t["rating"] = round(rating_boost(t["name"]), 2)
         for table in sports_tables:
             for team in table.get("teams") or []:
                 if team.get("name"):
@@ -3126,7 +3133,8 @@ def build():
             groups[gkey].append({
                 "name": name_map.get(t, t.title()), "code": code_map.get(t, ""),
                 "pos": r.get("pos"), "pld": r["pld"], "w": r["w"], "d": r["d"], "l": r["l"],
-                "gf": r["gf"], "ga": r["ga"], "gd": r["gd"], "pts": r["pts"], "form": r["form"]})
+                "gf": r["gf"], "ga": r["ga"], "gd": r["gd"], "pts": r["pts"], "form": r["form"],
+                "rating": round(rating_boost(name_map.get(t, t)), 2)})
     third_in = {norm(x.get("team")) for x in third if x.get("in")} or None
     third_out = {norm(x.get("team")) for x in third if not x.get("in")} if third else None
     def _annotate(teams):
