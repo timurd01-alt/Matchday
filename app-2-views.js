@@ -160,7 +160,18 @@ function renderCommunity(){ensureHandle();const host=$('#view-community');const 
    or market data, since there's no real scheduled game to attach any of
    that to). Runs entirely in the browser against DATA.standings. */
 const SANDBOX_TWO_WAY=new Set(['nfl','ncaaf','ncaam','mlb','nhl','nba']);
-function sandboxTeams(){return (DATA.standings||[]).flatMap(g=>g.teams||[]);}
+function sandboxTeams(){
+  const fromStandings=(DATA.standings||[]).flatMap(g=>g.teams||[]);
+  if(fromStandings.length)return fromStandings;
+  // Preseason / before any games are played, standings are legitimately
+  // empty -- fall back to the team list from scheduled fixtures so the
+  // picker still works. sandboxStrength() already handles missing
+  // pts/gd/form gracefully (falls back to a neutral base), so this just
+  // produces a toss-up until real results start coming in.
+  const seen=new Map();
+  (DATA.matches||[]).forEach(m=>{[m.home,m.away].forEach(t=>{if(t&&t.name&&!seen.has(t.name))seen.set(t.name,t)})});
+  return [...seen.values()];
+}
 function sandboxStrength(team,adv){
   const fp=String(team.form||'').split(' ').filter(Boolean).reduce((s,r)=>s+({W:3,D:1,L:0}[r]||0),0);
   return Math.max(0.1,1.0+(team.pts||0)*0.6+(team.gd||0)*0.25+fp*0.5+adv);
@@ -187,7 +198,12 @@ function sandboxPick(side,name){window.__sandboxSel=window.__sandboxSel||{};wind
 function renderSandbox(){
   const host=$('#view-sandbox');
   const teams=sandboxTeams();
-  if(teams.length<2){host.innerHTML=`<div class="vhead">Matchup Sandbox</div><div class="empty">Pick a specific sport (not "All sports") to build a matchup — standings aren't loaded for a merged view.</div>`;return;}
+  if(teams.length<2){
+    const msg=String(DATA.comp_key||'').toUpperCase()==='ALL'
+      ?'Pick a specific sport (not "All sports") to build a matchup — standings aren\'t loaded for a merged view.'
+      :'No teams to build a matchup with yet — check back once fixtures are scheduled for this sport.';
+    host.innerHTML=`<div class="vhead">Matchup Sandbox</div><div class="empty">${msg}</div>`;return;
+  }
   const sorted=teams.slice().sort((a,b)=>a.name.localeCompare(b.name));
   const sel=window.__sandboxSel=window.__sandboxSel||{home:sorted[0]?.name,away:sorted[1]?.name};
   const buildOpts=selected=>sorted.map(t=>`<option value="${esc(t.name)}"${t.name===selected?' selected':''}>${esc(t.name)}</option>`).join('');
