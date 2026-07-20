@@ -154,6 +154,70 @@ function renderCommunity(){const host=$('#view-community');const fullDb=btmGrade
     if(!board||!board.length){el.innerHTML='No ranked players yet — be the first with 10+ graded picks.';return;}
     el.className='';el.innerHTML=board.map((r,i)=>`<div class="lbrow"><span class="lbrk">${i+1}</span><span class="lbname">${esc(r.handle)}</span><span class="lbrec">${r.hits}/${r.graded}</span><span class="lbpct">${Math.round(r.hits/r.graded*100)}%</span></div>`).join('');});}
 }
+
+/* ===== Matchup Sandbox — hypothetical same-competition matchups ===========
+   Client-side port of predict()/predict_totals()'s standings-based strength
+   calc (points/goal-diff/form/home-advantage only — no injuries, ratings,
+   or market data, since there's no real scheduled game to attach any of
+   that to). Runs entirely in the browser against DATA.standings. */
+const SANDBOX_TWO_WAY=new Set(['nfl','ncaaf','ncaam','mlb','nhl','nba']);
+function sandboxTeams(){return (DATA.standings||[]).flatMap(g=>g.teams||[]);}
+function sandboxStrength(team,adv){
+  const fp=String(team.form||'').split(' ').filter(Boolean).reduce((s,r)=>s+({W:3,D:1,L:0}[r]||0),0);
+  return Math.max(0.1,1.0+(team.pts||0)*0.6+(team.gd||0)*0.25+fp*0.5+adv);
+}
+function sandboxExpectedTotal(home,away){
+  const rate=(side,key)=>{const pld=side.pld||0,val=side[key];return(!pld||val==null||val===0)?null:val/pld;};
+  const hgf=rate(home,'gf'),hga=rate(home,'ga'),agf=rate(away,'gf'),aga=rate(away,'ga');
+  if([hgf,hga,agf,aga].some(v=>v==null))return null;
+  return Math.round((((hgf+aga)/2)+((agf+hga)/2))*100)/100;
+}
+function sandboxRun(homeName,awayName){
+  const teams=sandboxTeams();
+  const home=teams.find(t=>t.name===homeName),away=teams.find(t=>t.name===awayName);
+  if(!home||!away)return null;
+  const twoWay=SANDBOX_TWO_WAY.has(String(DATA.comp_key||'').toLowerCase());
+  const sh=sandboxStrength(home,1.2),sa=sandboxStrength(away,0.0);
+  const draw=twoWay?0:0.26,tot=sh+sa;
+  const probs={h:Math.round(sh/tot*(1-draw)*100),a:Math.round(sa/tot*(1-draw)*100),d:Math.round(draw*100)};
+  const outcomes=twoWay?['h','a']:['h','d','a'];
+  const pick=outcomes.reduce((best,k)=>probs[k]>probs[best]?k:best,outcomes[0]);
+  return {home,away,probs,pick,twoWay,expected:sandboxExpectedTotal(home,away)};
+}
+function sandboxPick(side,name){window.__sandboxSel=window.__sandboxSel||{};window.__sandboxSel[side]=name;renderSandbox();}
+function renderSandbox(){
+  const host=$('#view-sandbox');
+  const teams=sandboxTeams();
+  if(teams.length<2){host.innerHTML=`<div class="vhead">Matchup Sandbox</div><div class="empty">Pick a specific sport (not "All sports") to build a matchup — standings aren't loaded for a merged view.</div>`;return;}
+  const sorted=teams.slice().sort((a,b)=>a.name.localeCompare(b.name));
+  const sel=window.__sandboxSel=window.__sandboxSel||{home:sorted[0]?.name,away:sorted[1]?.name};
+  const buildOpts=selected=>sorted.map(t=>`<option value="${esc(t.name)}"${t.name===selected?' selected':''}>${esc(t.name)}</option>`).join('');
+  let resultHtml='';
+  if(sel.home&&sel.away&&sel.home!==sel.away){
+    const r=sandboxRun(sel.home,sel.away);
+    if(r){
+      const tiles=[['h',r.home.code||r.home.name,r.probs.h]];
+      if(!r.twoWay)tiles.push(['d','Draw',r.probs.d]);
+      tiles.push(['a',r.away.code||r.away.name,r.probs.a]);
+      const pickName=r.pick==='d'?'Draw':(r.pick==='h'?r.home.name:r.away.name);
+      resultHtml=`<div class="analystBox probMatrixCard" style="margin-top:16px"><div class="analystBoxTitle">Model read</div>
+        <div class="probMatrix"><div class="probTiles">${tiles.map(([side,label,pct])=>_v12ProbTile(label,pct,side,side===r.pick)).join('')}</div></div>
+        <p class="probContextLine">${esc(pickName)} favored at ${r.probs[r.pick]}%${r.expected!=null?` · model expects ${r.expected} combined ${r.twoWay?'points':'goals'}`:''}.</p>
+        <p class="small" style="color:var(--faint);margin-top:8px">Hypothetical matchup — uses each team's current points, goal/point difference, and recent form only. No injuries, ratings, or live market data, since there's no real game to price.</p>
+        </div>`;
+    }
+  } else if(sel.home===sel.away){
+    resultHtml=`<div class="empty" style="margin-top:16px">Pick two different teams.</div>`;
+  }
+  host.innerHTML=`<div class="vhead">Matchup Sandbox</div>
+    <div class="banner"><b>Build any matchup.</b> Pick two ${esc(DATA.competition||'')} teams and see what the model — using this season's real standings — thinks.</div>
+    <div class="sandboxPickers" style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:14px">
+      <select id="sandboxHome" onchange="sandboxPick('home',this.value)">${buildOpts(sel.home)}</select>
+      <span style="color:var(--faint)">vs</span>
+      <select id="sandboxAway" onchange="sandboxPick('away',this.value)">${buildOpts(sel.away)}</select>
+    </div>
+    ${resultHtml}`;
+}
 function renderTOTT(){const host=$('#view-tott');const t=DATA.team_of_tournament;
   if(!t||!t.xi||!t.xi.length){host.innerHTML=`<div class="vhead">Team of the Tournament</div><div class="empty">Builds once players have goals and assists logged. Check back after more matches.</div>`;return;}
   if(t.v!==2){host.innerHTML=`<div class="vhead">Team of the Tournament</div><div class="banner"><b>Positions need a rebuild.</b> This XI was generated before the real-position fix — run one fetch and players will group by their actual positions (no more strikers in goal).</div>`;return;}
