@@ -660,6 +660,27 @@ def compute_rest(matches):
                 played[k] = m["kickoff"]
 
 
+def compute_split_form(matches):
+    """Last-5 form, split by venue. Overall `form` mixes home and away
+    results, which hides teams that are much stronger at home than on the
+    road (or vice versa) -- this derives the split from the same match
+    list every provider already fills in, so it needs no new data source."""
+    hist = defaultdict(list)
+    for m in sorted(matches, key=lambda x: x.get("kickoff") or ""):
+        if m.get("status") != "FINISHED": continue
+        win = (m.get("score") or {}).get("winner")
+        if win not in ("h", "a", "d"): continue
+        hn, an = norm(m["home"]["name"]), norm(m["away"]["name"])
+        hist[hn].append(("H", "W" if win == "h" else "D" if win == "d" else "L"))
+        hist[an].append(("A", "W" if win == "a" else "D" if win == "d" else "L"))
+    out = {}
+    for name, log in hist.items():
+        home_res = [r for s, r in log if s == "H"][-5:]
+        away_res = [r for s, r in log if s == "A"][-5:]
+        out[name] = {"form_home": " ".join(home_res), "form_away": " ".join(away_res)}
+    return out
+
+
 def rating_parts(name):
     """Class factors broken out, for attribution."""
     r = _load_ratings().get(norm(name or "")) or {}
@@ -668,6 +689,156 @@ def rating_parts(name):
     star_n = min(10.0, r.get("star_value_m", 25) / 20.0)
     w = FACTOR_WEIGHTS
     return {"fifa": fifa_n*w["fifa"], "value": val_n*w["squad_value"], "star": star_n*w["star"]}
+
+
+# ---- in-house Elo (self-training, sport-agnostic) -----------------------
+# One shared store across every competition: club names never collide with
+# national-team or US-sport names, and it's actually correct for club
+# soccer, since a team's Champions League form should carry into its
+# league Elo. Starts at a neutral 1500 for any unseen team and only
+# updates from finished results, so it self-corrects over the season
+# instead of relying on a preseason snapshot like FIFA rank/squad value do.
+ELO_FILE = "ratings_elo.json"
+ELO_K = 24
+ELO_HOME_ADV = 60          # rating-point home edge, used only in the expected-score calc
+ELO_FULL_TRUST_GAMES = 15  # games tracked before Elo counts at full weight
+_ELO = None
+
+def _load_elo():
+    global _ELO
+    if _ELO is None:
+        try:
+            with open(ELO_FILE, encoding="utf-8") as f:
+                _ELO = json.load(f)
+        except Exception:
+            _ELO = {}
+        _ELO.setdefault("teams", {})
+        _ELO.setdefault("seen", {})
+    return _ELO
+
+def _save_elo():
+    try:
+        tmp = ELO_FILE + ".tmp"
+        with open(tmp, "w", encoding="utf-8") as f:
+            json.dump(_ELO, f, ensure_ascii=False, indent=1)
+        os.replace(tmp, ELO_FILE)
+    except Exception as e:
+        DIAG.append(f"elo: save failed ({e})")
+
+def update_elo(matches):
+    """Fold newly-finished results into each team's rating. Idempotent —
+    tracks processed match ids so a re-fetch of an already-finished match
+    (common with the hourly cron) never double-counts it."""
+    store = _load_elo()
+    teams, seen = store["teams"], store["seen"]
+    updated = 0
+    for m in matches:
+        if m.get("status") != "FINISHED": continue
+        win = (m.get("score") or {}).get("winner")
+        if win not in ("h", "a", "d"): continue
+        mid = m.get("id")
+        if not mid or mid in seen: continue
+        hn, an = norm(m["home"]["name"]), norm(m["away"]["name"])
+        rh = teams.setdefault(hn, {"r": 1500.0, "n": 0})
+        ra = teams.setdefault(an, {"r": 1500.0, "n": 0})
+        exp_h = 1 / (1 + 10 ** ((ra["r"] - (rh["r"] + ELO_HOME_ADV)) / 400))
+        actual_h = 1.0 if win == "h" else 0.0 if win == "a" else 0.5
+        delta = ELO_K * (actual_h - exp_h)
+        rh["r"] += delta; ra["r"] -= delta
+        rh["n"] += 1; ra["n"] += 1
+        seen[mid] = True
+        updated += 1
+    if updated:
+        DIAG.append(f"elo: updated {updated} result(s), {len(teams)} teams tracked")
+        _save_elo()
+
+def elo_strength(name):
+    """Strength points from Elo, plus a 0..1 confidence that ramps up with
+    games tracked -- a brand-new team contributes nothing and the model
+    leans on FIFA rank/squad value/market strength instead, exactly like
+    it does today."""
+    rec = _load_elo()["teams"].get(norm(name or ""))
+    if not rec or rec.get("n", 0) < 1:
+        return 0.0, 0.0
+    conf = min(1.0, rec["n"] / ELO_FULL_TRUST_GAMES)
+    pts = (rec["r"] - 1500.0) / 60.0
+    return pts, conf
+
+
+# ---- head-to-head history (self-training, sport-agnostic) ---------------
+H2H_FILE = "ratings_h2h.json"
+H2H_FULL_TRUST_MEETINGS = 6
+_H2H = None
+
+def _load_h2h():
+    global _H2H
+    if _H2H is None:
+        try:
+            with open(H2H_FILE, encoding="utf-8") as f:
+                _H2H = json.load(f)
+        except Exception:
+            _H2H = {}
+        _H2H.setdefault("pairs", {})
+        _H2H.setdefault("seen", {})
+    return _H2H
+
+def _save_h2h():
+    try:
+        tmp = H2H_FILE + ".tmp"
+        with open(tmp, "w", encoding="utf-8") as f:
+            json.dump(_H2H, f, ensure_ascii=False, indent=1)
+        os.replace(tmp, H2H_FILE)
+    except Exception as e:
+        DIAG.append(f"h2h: save failed ({e})")
+
+def _pair_key(a, b):
+    return "|".join(sorted([a, b]))
+
+def update_h2h(matches):
+    """Record each finished result into a persistent per-pair meeting log,
+    capped to the most recent 10. Starts empty for a fresh pair and
+    accumulates for as long as the site stays live -- same self-training
+    shape as Elo."""
+    store = _load_h2h()
+    pairs, seen = store["pairs"], store["seen"]
+    updated = 0
+    for m in matches:
+        if m.get("status") != "FINISHED": continue
+        win = (m.get("score") or {}).get("winner")
+        if win not in ("h", "a", "d"): continue
+        mid = m.get("id")
+        if not mid or mid in seen: continue
+        hn, an = norm(m["home"]["name"]), norm(m["away"]["name"])
+        log = pairs.setdefault(_pair_key(hn, an), [])
+        log.append({"date": m.get("kickoff") or "", "home": hn, "winner": win})
+        log.sort(key=lambda r: r.get("date") or "")
+        pairs[_pair_key(hn, an)] = log[-10:]
+        seen[mid] = True
+        updated += 1
+    if updated:
+        DIAG.append(f"h2h: recorded {updated} result(s), {len(pairs)} pairs tracked")
+        _save_h2h()
+
+def h2h_strength(home_name, away_name):
+    """How much `home_name` has historically outperformed `away_name` in
+    this exact matchup: a small capped nudge (comparable in size to the
+    rest-days factor, not a dominant one -- H2H is a weak-to-moderate
+    predictor at best and easily confounded with general team quality),
+    plus a 0..1 confidence that ramps up with meetings recorded."""
+    hn, an = norm(home_name or ""), norm(away_name or "")
+    log = _load_h2h()["pairs"].get(_pair_key(hn, an)) or []
+    if not log:
+        return 0.0, 0.0
+    score = 0.0
+    for rec in log:
+        w = rec.get("winner")
+        if w == "d": continue
+        rec_home_is_hn = (rec.get("home") == hn)
+        hn_won = (w == "h") == rec_home_is_hn
+        score += 1.0 if hn_won else -1.0
+    conf = min(1.0, len(log) / H2H_FULL_TRUST_MEETINGS)
+    pts = max(-1.0, min(1.0, score / len(log))) * 0.8
+    return pts, conf
 
 
 def _clamp(v, lo, hi):
@@ -807,7 +978,14 @@ def _upset_adjustment(home, away, markets, m, why, blend, two_way=False):
     upset_score = int(round(_clamp(raw_score, 0, 100)))
     mk = (markets or {}).get("1x2") or {}
     market_gap_pct = None
-    market_gate = True
+    # Default closed, not open: with no market to check the underdog pick
+    # against, the only thing allowed to flip the pick to the dog is real
+    # box-score dominance (strong_box_override below). Odds are now gated to
+    # within 24h of kickoff to save quota, so "no market yet" is the common
+    # case for most of a match's display life, not a rare edge case -- an
+    # open-by-default gate here would mean the model's riskiest calls (upset
+    # picks) go out with no safety check most of the time.
+    market_gate = False
     box_score_edge = 0.0
     if mk and mk.get("home_pct") is not None and mk.get("away_pct") is not None:
         market_side = "h" if float(mk.get("home_pct") or 0) >= float(mk.get("away_pct") or 0) else "a"
@@ -904,19 +1082,44 @@ def _upset_adjustment(home, away, markets, m, why, blend, two_way=False):
     }
 
 
+FORM_RECENCY_WEIGHTS = [0.5, 0.65, 0.8, 0.9, 1.0]  # oldest -> most recent, within the last-5 window
+
+def _weighted_form_score(form_str):
+    """Recency-weighted W/D/L score: a result from 5 games ago counts less
+    than one from last week. Scaled so a run of identical results matches
+    the old flat sum exactly (5 wins -> 15, same as before), so this is a
+    drop-in replacement rather than a re-tuning of the `form` weight."""
+    games = (form_str or "").split()
+    if not games: return 0.0
+    weights = FORM_RECENCY_WEIGHTS[-len(games):]
+    vals = [{"W": 3, "D": 1, "L": 0}.get(r, 0) for r in games]
+    wsum = sum(weights) or 1.0
+    return sum(v*w for v, w in zip(vals, weights)) / wsum * len(games)
+
+
 def predict(home, away, markets, m=None):
     two_way = not COMP.get("has_draws", True)
     def parts(s, adv):
         if not s: return {"base": 1.0, "adv": adv}
-        fp = sum({"W": 3, "D": 1, "L": 0}.get(r, 0) for r in (s.get("form", "").split()))
+        form_str = (s.get("form_home") if adv else s.get("form_away")) or s.get("form", "")
+        fp = _weighted_form_score(form_str)
         rest = s.get("rest_days")
         rp = rating_parts(s.get("name"))
+        elo_pts, elo_conf = elo_strength(s.get("name"))
         return {"base": 1.0, "pts": (s.get("pts") or 0)*0.6, "gd": (s.get("gd") or 0)*0.25,
                 "form": fp*0.5, "adv": adv,
                 "fifa": rp["fifa"], "value": rp["value"], "star": rp["star"],
+                "elo": elo_pts*elo_conf,
                 "rest": 0.0 if rest is None else max(-0.6, min(0.45, (rest - 4) * 0.15))}
     ph, pa = parts(home, 1.2), parts(away, 0.0)
     sh, sa = max(0.1, sum(ph.values())), max(0.1, sum(pa.values()))
+    # H2H is inherently pairwise (depends on both teams at once), so unlike
+    # the other factors it can't be split into independent home/away parts
+    # -- applied directly as a small capped nudge from the home side's
+    # perspective, same asymmetric-adjustment pattern as injuries below.
+    h2h_pts, h2h_conf = h2h_strength(home.get("name"), away.get("name"))
+    h2h_adj = h2h_pts * h2h_conf
+    sh += h2h_adj
     # Injury/availability nudge: reduce a team's strength when key players are
     # OUT. Deliberately small and capped — the market already prices injuries, and
     # we blend 50/50 with it, so this only needs to catch the rare case the odds
@@ -946,6 +1149,8 @@ def predict(home, away, markets, m=None):
     if inj_h or inj_a:
         # positive = injuries hurt away more (helps home), matching other factors' sign
         why["injuries"] = round(inj_a - inj_h, 2)
+    if h2h_adj:
+        why["h2h"] = round(h2h_adj, 2)
     # Anomaly: one-off knockouts and extreme conditions are less predictable.
     # Take the LARGER effect, never stack — the market's odds already price
     # much of this in, and we blend with them, so stacking over-corrects.
@@ -2837,6 +3042,19 @@ def build():
         print("Fetching championship odds (team strength)…")
         title = fetch_outrights(code_map)
         apply_market_strength(title)
+
+    # train the self-updating factors (Elo, H2H) on this run's finished
+    # results, and derive home/away split form -- all from the same
+    # `matches` list every provider already fills in, before predictions run
+    update_elo(matches)
+    update_h2h(matches)
+    split_form = compute_split_form(matches)
+    for m in matches:
+        for side_key in ("home", "away"):
+            rec = split_form.get(norm(m[side_key].get("name")))
+            if rec:
+                m[side_key]["form_home"] = rec["form_home"]
+                m[side_key]["form_away"] = rec["form_away"]
 
     # predictions run AFTER all stats/lineups so the model can use them this run
     for m in matches:
