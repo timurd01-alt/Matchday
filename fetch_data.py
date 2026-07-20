@@ -1001,7 +1001,12 @@ def predict_totals(home, away, markets):
     def rate(side, key):
         pld = side.get("pld") or 0
         val = side.get(key)
-        return (val / pld) if (pld and val is not None) else None
+        # a literal 0 total over real games played means the data source
+        # doesn't provide this stat (no team goes a whole season scoreless),
+        # not that the team is genuinely averaging zero -- treat as missing
+        if not pld or val is None or val == 0:
+            return None
+        return val / pld
     h_gf, h_ga = rate(home, "gf"), rate(home, "ga")
     a_gf, a_ga = rate(away, "gf"), rate(away, "ga")
     if None in (h_gf, h_ga, a_gf, a_ga):
@@ -2559,6 +2564,32 @@ def fetch_apisports_bundle():
                 matches = json.load(handle)
             DIAG.append("API-Sports fixtures: stale cache after provider limit/error")
     st, tables = adapter.standings()
+    if COMP_KEY == "NBA":
+        # NBA's /standings endpoint doesn't expose points-for/against (unlike
+        # NFL's), so the adapter leaves gf/ga at 0 -- derive real per-team
+        # scoring averages from finished games instead, same approach the
+        # CFBD/CBBD adapters already use.
+        agg = {}
+        for row in matches:
+            if row.get("status") != "FINISHED":
+                continue
+            sc = row.get("score") or {}
+            hs, as_ = sc.get("home"), sc.get("away")
+            if hs is None or as_ is None:
+                continue
+            for name, gf, ga in ((row["home"]["name"], hs, as_), (row["away"]["name"], as_, hs)):
+                a = agg.setdefault(name.lower(), {"gf": 0, "ga": 0, "pld": 0})
+                a["gf"] += gf; a["ga"] += ga; a["pld"] += 1
+        for key, rec in st.items():
+            a = agg.get(key)
+            if a and a["pld"]:
+                rec["gf"], rec["ga"] = a["gf"], a["ga"]
+        for table in tables:
+            for team in table.get("teams") or []:
+                a = agg.get((team.get("name") or "").lower())
+                if a and a["pld"]:
+                    team["gf"], team["ga"] = a["gf"], a["ga"]
+        DIAG.append(f"API-Sports NBA: derived real gf/ga for {sum(1 for a in agg.values() if a['pld'])} teams from finished games")
     DIAG.append(f"API-Sports fixtures: {len(matches)} loaded")
     return adapter, matches, st, tables
 
