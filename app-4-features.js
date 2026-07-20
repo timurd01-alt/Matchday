@@ -353,15 +353,83 @@ function _v14RenderBracketology(host,b){
   const regions=Object.entries(b.regions||{}).map(([name,teams])=>`<section class="regionCard"><div class="regionHead"><h3>${esc(name)}</h3><span>projected region</span></div><div class="regionSeeds">${(teams||[]).map(t=>`<div class="regionSeed ${t.bid==='First Four'?'playin':''}"><b>${esc(t.seed||'—')}</b><div><strong>${esc(t.name||'')}</strong><span>${esc(t.record||'')} · ${esc(t.bid||'At-large')}</span></div><em>${esc(t.model_score??'—')}</em></div>`).join('')}</div></section>`).join('');
   host.innerHTML=`<div class="bracketologyShell"><header class="bracketologyHero"><div><span class="bracketologyEyebrow">Matchday model · ${esc(b.version||'beta')}</span><h2>Bracketology</h2><p>${esc(b.source_note||'Independent field projection from raw team results.')}</p></div><div class="bracketologyKpis"><div><span>Projected field</span><b>${esc(b.field_size||'—')}</b></div><div><span>Automatic bids</span><b>${(b.first_four||[]).filter(g=>g.kind==='Automatic bids').length? 'conference leaders':'—'}</b></div></div></header><div class="methodStrip"><b>Current beta formula</b><span>${esc(b.methodology||'')}</span><em>Not yet historically calibrated</em></div><section class="firstFourSection"><div class="bracketologySectionHead"><h3>First Four</h3><span>lowest automatic and at-large lines</span></div><div class="firstFourGrid">${firstFour||'<div class="bracketologyEmpty">First Four projection unavailable.</div>'}</div></section><div class="bubbleGrid"><section><div class="bracketologySectionHead"><h3>Last Four Byes</h3><span>inside the field</span></div>${_v14BubbleRows(b.last_four_byes)}</section><section><div class="bracketologySectionHead"><h3>First Four Out</h3><span>first teams outside</span></div>${_v14BubbleRows(b.first_four_out)}</section><section><div class="bracketologySectionHead"><h3>Next Four Out</h3><span>bubble watch</span></div>${_v14BubbleRows(b.next_four_out)}</section></div><div class="regionGrid">${regions}</div><p class="bracketologyFoot">This is a Matchday projection, not the NCAA selection committee's bracket. Data providers supply raw records and scores; the selection and seeding shown here are calculated locally.</p></div>`;
 }
+/* ===== Bracket Simulator — cascading model picks, clickable overrides ===== */
+function bracketSimPredict(homeName,awayName){
+  if(!homeName||!awayName||homeName==='TBD'||awayName==='TBD')return null;
+  const r=typeof sandboxRun==='function'?sandboxRun(homeName,awayName):null;
+  if(!r)return null;
+  return {winner:r.probs.h>=r.probs.a?homeName:awayName,pct:Math.max(r.probs.h,r.probs.a)};
+}
+function bracketSimCascade(){
+  const slots=_projectedSlots32();
+  const overrides=window.__bracketSim||(window.__bracketSim={});
+  const codeOf=name=>(sandboxTeams().find(t=>t.name===name)||{}).code||'';
+  let current=[];
+  for(let i=0;i<16;i++){
+    const a=slots[i*2]||_slotTBD(`Seed ${i*2+1}`),b=slots[i*2+1]||_slotTBD(`Seed ${i*2+2}`);
+    const key=`R32#${i}`,pred=bracketSimPredict(a.team,b.team);
+    current.push({key,home:a.team,homeCode:a.code,away:b.team,awayCode:b.code,
+      winner:overrides[key]||(pred?pred.winner:null),pred});
+  }
+  const rounds=[{round:'Round of 32',matches:current}];
+  for(const rn of ['Round of 16','Quarter-finals','Semi-finals']){
+    const next=[];
+    for(let i=0;i<current.length/2;i++){
+      const a=current[i*2],b=current[i*2+1];
+      const home=a?.winner,away=b?.winner;
+      const key=`${rn}#${i}`,pred=bracketSimPredict(home,away);
+      next.push({key,home,homeCode:codeOf(home),away,awayCode:codeOf(away),
+        winner:overrides[key]||(pred?pred.winner:null),pred});
+    }
+    rounds.push({round:rn,matches:next});
+    current=next;
+  }
+  const sf=current;
+  const finalHome=sf[0]?.winner,finalAway=sf[1]?.winner;
+  const finalKey='Final#0',finalPred=bracketSimPredict(finalHome,finalAway);
+  rounds.push({round:'Final',matches:[{key:finalKey,home:finalHome,homeCode:codeOf(finalHome),away:finalAway,awayCode:codeOf(finalAway),
+    winner:overrides[finalKey]||(finalPred?finalPred.winner:null),pred:finalPred}]});
+  return rounds;
+}
+function bracketSimMatchByKey(key){
+  for(const r of bracketSimCascade())for(const m of r.matches)if(m.key===key)return m;
+  return null;
+}
+function bracketSimPick(key,side){
+  const m=bracketSimMatchByKey(key);
+  if(!m)return;
+  window.__bracketSim=window.__bracketSim||{};
+  window.__bracketSim[key]=side==='home'?m.home:m.away;
+  renderBracket();
+}
+function bracketSimReset(){window.__bracketSim={};renderBracket();}
+function _bracketSimCard(m){
+  const clickable=m.home&&m.away&&m.home!=='TBD'&&m.away!=='TBD';
+  const row=(name,code,side)=>{
+    const label=esc(name||'TBD');
+    const won=m.winner&&name&&m.winner===name;
+    return `<div class="bmTeam ${won?'simWinner':''} ${clickable?'simClickable':''}" ${clickable?`onclick="bracketSimPick('${m.key}','${side}')"`:''}><span>${label}${code?` <small>${esc(code)}</small>`:''}</span>${won?'<b>&#10003;</b>':''}</div>`;
+  };
+  const note=m.pred?`${m.pred.pct}% model` : (clickable?'no standings data':'');
+  return `<div class="brMini simMatch"><div class="bmMeta"><span>${esc(note)}</span></div>${row(m.home,m.homeCode,'home')}${row(m.away,m.awayCode,'away')}</div>`;
+}
+function renderBracketSim(host,toggle){
+  const rounds=bracketSimCascade();
+  const cols=rounds.map(r=>`<section class="brCol"><div class="roundTitle">${esc(r.round)}</div>${r.matches.map(_bracketSimCard).join('')}</section>`).join('');
+  host.innerHTML=`<div class="bracketStageHeader"><div class="vhead">Bracket Simulator</div><div class="bracketLegend">${toggle}<button class="btmbtn" onclick="bracketSimReset()">Reset to model picks</button></div></div><div class="bracketWideHint"><span>Click a team to override the model's pick for that match — it cascades through the rest of the bracket.</span></div><div class="bracketWideShell"><div class="bracketWideBoard">${cols}</div></div>`;
+}
 function renderBracket(){
   const host=$('#view-bracket');
   if(!host)return;
   if(DATA.comp_key==='NCAAM'&&DATA.bracketology){_v14RenderBracketology(host,DATA.bracketology);return}
+  const mode=window.__bracketMode||'view';
+  const toggle=`<button class="btmbtn" onclick="window.__bracketMode='${mode==='view'?'simulate':'view'}';renderBracket();">${mode==='view'?'Simulate the bracket':'Back to bracket view'}</button>`;
+  if(mode==='simulate'){renderBracketSim(host,toggle);return;}
   const official=Array.isArray(DATA.bracket)&&DATA.bracket.some(r=>(r.matches||[]).length);
   const rounds=typeof _completeRounds==='function'?_completeRounds():projectedRounds();
   const names=['Round of 32','Round of 16','Quarter-finals','Semi-finals','Final','Third-place playoff'];
   const projectedCount=(()=>{try{return Math.min(getProjectedSlots().length,32)}catch(e){return 0}})();
-  host.innerHTML=`<div class="bracketStageHeader"><div class="vhead">Tournament bracket</div><div class="bracketLegend">${official?'Official + projected paths':'Projected bracket'}</div></div><div class="bracketWideHint"><span><b>${projectedCount}</b> projected qualifiers · cards stay readable instead of shrinking</span><span>Scroll sideways to see the full path →</span></div><div class="bracketWideShell"><div class="bracketWideBoard">${names.map(n=>_v11RoundCol(rounds,n)).join('')}</div></div>`;
+  host.innerHTML=`<div class="bracketStageHeader"><div class="vhead">Tournament bracket</div><div class="bracketLegend">${toggle}${official?'Official + projected paths':'Projected bracket'}</div></div><div class="bracketWideHint"><span><b>${projectedCount}</b> projected qualifiers · cards stay readable instead of shrinking</span><span>Scroll sideways to see the full path →</span></div><div class="bracketWideShell"><div class="bracketWideBoard">${names.map(n=>_v11RoundCol(rounds,n)).join('')}</div></div>`;
 }
 
 

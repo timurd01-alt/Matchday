@@ -1381,3 +1381,11 @@ body.modalOpen{overflow:hidden}.matchModal{position:fixed;inset:0;z-index:99;dis
 
 /* Legal center links remain visible without competing with live-match context. */
 .welcomeLegalLink,.legalLink{color:var(--muted);font-family:var(--mono);font-size:.64rem;text-decoration:none}.welcomeLegalLink:hover,.welcomeLegalLink:focus-visible,.legalLink:hover,.legalLink:focus-visible{color:var(--signal);text-decoration:underline}.legalLink{margin-left:auto;white-space:nowrap}.welcomeLegalLink{width:100%;margin-top:-8px}@media(max-width:700px){.legalLink{display:none}}
+
+/* Bracket Simulator — clickable team rows, highlighted picked winner */
+.simMatch{min-height:auto}
+.simClickable{cursor:pointer;transition:background .12s ease,border-color .12s ease}
+.simClickable:hover{background:var(--panel2);border-color:var(--line2)}
+.simWinner{background:rgba(58,209,122,.12);border-color:rgba(58,209,122,.35)}
+.simWinner b{color:var(--win)}
+.bmTeam small{color:var(--faint);font-weight:600;margin-left:4px}
