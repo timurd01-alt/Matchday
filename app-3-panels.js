@@ -268,7 +268,7 @@ function _v4MarketPct(m,side){
   return null;
 }
 function _v4FactorRows(pr){
-  const labels={class:'team class',pts:'points',gd:'goal diff',form:'form',adv:'home field',rest:'rest'};
+  const labels={class:'team class',pts:'points',gd:'goal diff',form:'form',adv:'home field',rest:'rest',elo:'elo rating',h2h:'head-to-head',injuries:'injuries'};
   const rows=[];
   if(pr&&pr.why){
     Object.entries(pr.why).filter(([k,v])=>labels[k]&&Math.abs(Number(v)||0)>=0.3)

@@ -710,17 +710,12 @@ body.modalOpen{overflow:hidden}.matchModal{position:fixed;inset:0;z-index:99;dis
 .modalBody .detailGrid.v4Detail .detailTop{display:grid!important;grid-template-columns:1fr!important;gap:16px!important;min-width:0}
 .modalBody .detailGrid.v4Detail .detailLow{display:grid!important;grid-template-columns:1fr!important;gap:16px!important;margin-top:16px;min-width:0}
 .modalBody .detailGrid.v4Detail .readCard{min-width:0!important;overflow:hidden!important}
-/* Model read stays full-width at every size, matching the v4 redesign's
-   original intent above -- an earlier attempt to put it side-by-side with
-   the odds tracker on wide screens looked reasonable for a near-empty odds
-   card, but a fully-populated one (line movement, book spread, totals line)
-   is not short, and squeezing both into half-width columns cramped the
-   model read instead of freeing space. Only Stats/Lineups go side-by-side
-   on wide screens -- those two are comparable in size, so splitting them
-   doesn't create the same squeeze. */
-@media(min-width:900px){
-  .modalBody .detailGrid.v4Detail .detailLow{grid-template-columns:minmax(420px,1.1fr) minmax(380px,1fr)!important;align-items:start}
-}
+/* Every card in the modal stays full-width at every size, matching the v4
+   redesign's original intent above -- both attempts to split panels
+   side-by-side on wide screens (Model read/Odds tracker, then Stats/
+   Lineups) ended up squeezing a taller card into a half-width column
+   instead of freeing space. Lineups specifically needs real room for a
+   pitch-formation layout, not half a row. */
 .modelReadCard{padding:0!important;border-color:rgba(58,209,122,.28)!important;background:transparent!important}
 .analystPanel{min-width:0;width:100%;padding:18px;border-radius:14px;background:radial-gradient(circle at 0% 0%,rgba(58,209,122,.16),transparent 36%),linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.012));border:1px solid var(--line)}
 .analystPanel,.analystPanel *{word-break:normal!important;overflow-wrap:normal!important;hyphens:none!important}

@@ -456,10 +456,22 @@ function _v12OutcomeCard(m,op){
   const unit=_totalsUnit();
   const goalNote=tot.under_pct!=null?`Under ${esc(tot.line||2.5)}: ${esc(tot.under_pct)}%${modelTot&&modelTot.pick?` (model: ${esc(modelTot.pick)})`:''}`
     :(modelTot&&modelTot.expected!=null?`Model expects ${esc(modelTot.expected)} ${unit}`:`No ${unit} market yet`);
-  const marketLabel=marketPct!=null?`${marketPct}%`:'—';
-  const edgeLabel=edge!=null?`${edge>0?'+':''}${edge} pts`:'—';
+  // Without a market yet, "market on pick" / "model edge" have nothing to
+  // show -- swap in the class-rating and Elo edges (from the pick's own
+  // perspective; why values are stored home-minus-away) instead of a pair
+  // of blank dashes. Both are always present in why{} once a pick exists.
+  const why=(m?.prediction||{}).why||{};
+  const sideSign=side==='a'?-1:1;
+  const pts=v=>`${v>0?'+':''}${v.toFixed(1)} pts`;
+  const hasMarket=marketPct!=null;
+  const compareLabel1=hasMarket?'Market on pick':'Class edge';
+  const compareVal1=hasMarket?`${marketPct}%`:(why.class!=null?pts(why.class*sideSign):'—');
+  const compareLabel2=hasMarket?'Model edge':'Elo edge';
+  const eloEdge=why.elo!=null?why.elo*sideSign:null;
+  const compareCls2=hasMarket?edgeCls:(eloEdge==null?'edgeFlat':eloEdge>0?'edgePos':eloEdge<0?'edgeNeg':'edgeFlat');
+  const compareVal2=hasMarket?(edge!=null?`${edge>0?'+':''}${edge} pts`:'—'):(eloEdge!=null?pts(eloEdge):'—');
   const risk=op?.blocked?`Upset gate blocked · ${esc(op.gateReason||'market gap too wide')}`:`${drawNote} · ${goalNote}`;
-  return `<div class="analystBox probMatrixCard"><div class="analystBoxTitle">Probability check</div><div class="probMatrix"><div class="probTiles">${_v12ProbTile(m?.home?.code||m?.home?.name||'Home',hp,'h',side==='h')}${_v12ProbTile('Draw',dp,'d',side==='d')}${_v12ProbTile(m?.away?.code||m?.away?.name||'Away',ap,'a',side==='a')}</div><div class="probCompareGrid"><div class="probCompareItem"><span>Official side</span><b>${esc(op?.name||'No pick')}</b></div><div class="probCompareItem"><span>Market on pick</span><b>${esc(marketLabel)}</b></div><div class="probCompareItem ${edgeCls}"><span>Model edge</span><b>${esc(edgeLabel)}</b></div></div><p class="probContextLine">${risk}</p></div></div>`;
+  return `<div class="analystBox probMatrixCard"><div class="analystBoxTitle">Probability check</div><div class="probMatrix"><div class="probTiles">${_v12ProbTile(m?.home?.code||m?.home?.name||'Home',hp,'h',side==='h')}${_v12ProbTile('Draw',dp,'d',side==='d')}${_v12ProbTile(m?.away?.code||m?.away?.name||'Away',ap,'a',side==='a')}</div><div class="probCompareGrid"><div class="probCompareItem"><span>Official side</span><b>${esc(op?.name||'No pick')}</b></div><div class="probCompareItem"><span>${compareLabel1}</span><b>${esc(compareVal1)}</b></div><div class="probCompareItem ${compareCls2}"><span>${compareLabel2}</span><b>${esc(compareVal2)}</b></div></div><p class="probContextLine">${risk}</p></div></div>`;
 }
 function modelBlock(m){
   const pr=m?.prediction;
