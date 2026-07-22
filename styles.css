@@ -1432,3 +1432,29 @@ body.modalOpen{overflow:hidden}.matchModal{position:fixed;inset:0;z-index:99;dis
 .tourBack{background:none;border:1px solid var(--line2);color:var(--text)}
 .tourNextBtn{border:1px solid var(--signal);background:var(--signal);color:#090c10}
 @media(max-width:520px){.tourCard{padding:15px 16px}}
+
+/* ---- Team Stats modal ---- */
+.teamSheet{grid-template-rows:auto 1fr}
+.tpHead{position:relative;padding:20px 20px 16px;border-bottom:1px solid var(--line);background:radial-gradient(circle at 18% 0%,rgba(76,194,255,.10),transparent 42%),var(--glass)}
+.tpCode{font-family:var(--mono);font-size:.72rem;color:var(--signal);letter-spacing:.08em;font-weight:700}
+.tpName{font-family:"Archivo",sans-serif;font-weight:700;font-size:clamp(1.5rem,3.4vw,2.3rem);line-height:1;margin-top:4px}
+.tpMeta{font-family:var(--mono);font-size:.74rem;color:var(--muted);margin-top:8px}
+.tpBody{overflow:auto;padding:18px 20px 24px}
+.tpStatGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin-bottom:16px}
+.tpStat{background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:11px 13px}
+.tpStatLbl{display:block;font-family:var(--mono);font-size:.6rem;text-transform:uppercase;letter-spacing:.07em;color:var(--faint);font-weight:700;margin-bottom:4px}
+.tpStat b{font-family:"Archivo",sans-serif;font-size:1.25rem}
+.tpFormRow{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.tpFormLbl{font-family:var(--mono);font-size:.68rem;color:var(--muted);min-width:88px}
+.tpFormDots{display:flex;gap:4px}
+.tpDot{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:6px;font-family:var(--mono);font-size:.62rem;font-weight:800;color:var(--muted);background:var(--bg2);border:1px solid var(--line)}
+.tpDot.W{color:#07110b;background:var(--win);border-color:var(--win)}
+.tpDot.L{color:#fff;background:var(--loss);border-color:var(--loss)}
+.tpDot.D{color:var(--text);background:var(--line2)}
+.tpNext{margin:12px 0;padding:11px 13px;border:1px solid var(--line);border-left:3px solid var(--signal);border-radius:10px;background:rgba(0,0,0,.15);font-size:.86rem}
+.tpSeclbl{font-family:var(--mono);font-size:.62rem;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);font-weight:700;margin:16px 0 8px}
+.tpRecentRow{display:grid;grid-template-columns:26px 1fr auto auto;gap:10px;align-items:center;padding:7px 0;border-top:1px solid var(--line);font-size:.84rem}
+.tpRecentRow:first-of-type{border-top:none}
+.tpFaint{color:var(--faint);font-family:var(--mono);font-size:.68rem}
+.teamClickable{cursor:pointer}
+.teamClickable:hover{color:var(--signal)}

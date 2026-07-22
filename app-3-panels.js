@@ -65,6 +65,71 @@ function scheduleNextLoad(){if(LOAD_TIMER)clearTimeout(LOAD_TIMER);LOAD_TIMER=se
 /* removed duplicate (renderNews) */
 /* dedup */
 function ensureMatchModal(){let modal=document.getElementById('matchModal');if(modal)return modal;modal=document.createElement('div');modal.id='matchModal';modal.className='matchModal';modal.addEventListener('click',e=>{if(e.target===modal)closeMatchModal()});document.body.appendChild(modal);return modal}
+
+/* ===== Team Stats — compiled per-team profile, one page per team =========
+   Every number here is data the app already collects (standings, form,
+   class/Elo rating, split form, schedule) -- no new data source. No
+   individual player stats: only soccer's top-20 scorers are ever
+   available, and NFL/NBA have no free player-stat access at all, so a
+   "per player" page would be mostly empty for most players. */
+function ensureTeamModal(){let modal=document.getElementById('teamModal');if(modal)return modal;modal=document.createElement('div');modal.id='teamModal';modal.className='matchModal teamModal';modal.addEventListener('click',e=>{if(e.target===modal)closeTeamModal()});document.body.appendChild(modal);return modal}
+function closeTeamModal(){const modal=document.getElementById('teamModal');if(modal)modal.classList.remove('show');document.body.classList.remove('modalOpen')}
+function computeTeamProfile(name){
+  const key=teamKey(name);
+  let standRec=null;
+  (DATA.standings||[]).forEach(g=>(g.teams||[]).forEach(t=>{if(teamKey(t.name)===key)standRec=t;}));
+  const matches=(DATA.matches||[]).filter(m=>teamKey(m.home?.name)===key||teamKey(m.away?.name)===key);
+  let side=null;
+  for(const m of matches){side=(teamKey(m.home?.name)===key)?m.home:(teamKey(m.away?.name)===key?m.away:null);if(side)break;}
+  const rec=standRec||side||{name};
+  const finished=matches.filter(m=>m.status==='FINISHED').sort((a,b)=>(b.kickoff||'').localeCompare(a.kickoff||''));
+  const next=matches.filter(isVisibleUpcoming).sort((a,b)=>(a.kickoff||'').localeCompare(b.kickoff||''))[0];
+  return {
+    name: rec.name||name, code: rec.code||side?.code||'',
+    pos: rec.pos??null, pld: rec.pld??side?.pld??0, w: rec.w??null, d: rec.d??null, l: rec.l??null,
+    gf: rec.gf??side?.gf??0, ga: rec.ga??side?.ga??0, gd: rec.gd??side?.gd??0,
+    pts: rec.pts??side?.pts??0, form: rec.form||side?.form||'',
+    formHome: side?.form_home||'', formAway: side?.form_away||'',
+    rating: side?.rating??rec.rating??null,
+    next, recent: finished.slice(0,5)
+  };
+}
+function teamProfileHTML(p){
+  const twoWay=SANDBOX_TWO_WAY.has(String(DATA.comp_key||'').toLowerCase());
+  const formRow=(label,str)=>str?`<div class="tpFormRow"><span class="tpFormLbl">${esc(label)}</span><span class="tpFormDots">${str.trim().split(' ').map(r=>`<i class="tpDot ${r}">${esc(r)}</i>`).join('')}</span></div>`:'';
+  const recentRows=(p.recent||[]).map(m=>{
+    const home=teamKey(m.home.name)===teamKey(p.name);
+    const opp=home?m.away:m.home;
+    const gf=home?m.score?.home:m.score?.away, ga=home?m.score?.away:m.score?.home;
+    const res=gf>ga?'W':gf<ga?'L':'D';
+    return `<div class="tpRecentRow"><i class="tpDot ${res}">${res}</i><span>${home?'vs':'@'} ${esc(opp.code||opp.name)}</span><b>${gf}-${ga}</b><span class="tpFaint">${esc(dt(m.kickoff).split(', ').pop()||'')}</span></div>`;
+  }).join('');
+  const nextLine=p.next?`<div class="tpNext"><span class="tpFaint">Next</span> ${teamKey(p.next.home.name)===teamKey(p.name)?'vs':'@'} <b>${esc(teamKey(p.next.home.name)===teamKey(p.name)?p.next.away.code||p.next.away.name:p.next.home.code||p.next.home.name)}</b> · ${kickIn(p.next.kickoff)}</div>`:'';
+  const record=(p.w!=null)?`${p.w}-${p.l}${!twoWay&&p.d!=null?`-${p.d}`:''}`:'—';
+  return `<div class="tpHead"><button class="modalClose" onclick="closeTeamModal()" aria-label="Close">×</button>
+    <div class="tpCode">${esc(p.code)}</div><div class="tpName">${esc(p.name)}</div>
+    <div class="tpMeta">${p.pos?`#${p.pos} · `:''}${p.pld} played · record ${record}</div></div>
+    <div class="tpBody">
+      <div class="tpStatGrid">
+        <div class="tpStat"><span class="tpStatLbl">Points</span><b>${p.pts}</b></div>
+        <div class="tpStat"><span class="tpStatLbl">Goal/point diff</span><b>${p.gd>0?'+':''}${p.gd}</b></div>
+        <div class="tpStat"><span class="tpStatLbl">For</span><b>${p.gf}</b></div>
+        <div class="tpStat"><span class="tpStatLbl">Against</span><b>${p.ga}</b></div>
+        <div class="tpStat"><span class="tpStatLbl">Class rating</span><b>${p.rating!=null?p.rating.toFixed(1):'—'}</b></div>
+      </div>
+      ${formRow('Overall form',p.form)}
+      ${formRow('Home form',p.formHome)}
+      ${formRow('Away form',p.formAway)}
+      ${nextLine}
+      ${recentRows?`<div class="tpSeclbl">Recent results</div>${recentRows}`:''}
+    </div>`;
+}
+function openTeamModal(name){
+  const p=computeTeamProfile(name);
+  const modal=ensureTeamModal();
+  modal.innerHTML=`<section class="matchSheet teamSheet" role="dialog" aria-modal="true">${teamProfileHTML(p)}</section>`;
+  modal.classList.add('show');document.body.classList.add('modalOpen');
+}
 /* modalModel removed */
 /* removed duplicate (openMatchModal) */
 function closeMatchModal(){const modal=document.getElementById('matchModal');if(modal)modal.classList.remove('show');document.body.classList.remove('modalOpen')}
@@ -213,8 +278,8 @@ function oddsTier(p,i){p=Number(p)||0;if(i<3)return'hot';if(p>=7)return'live';if
 function oddsTierText(p,i){p=Number(p)||0;if(i<3)return'Contender';if(p>=7)return'In range';if(p>=3)return'Chaser';return'Long shot'}
 function oddsCode(x){return x.code||codeForTeam(x.team||'',x.code||'')||''}
 /* dedup */
-function _v15RenderLeagueTable(st,host){const seen=new Set(),teams=[];(st||[]).forEach(g=>(g.teams||[]).forEach(t=>{const key=String(t.name||t.code||'').toLowerCase();if(key&&!seen.has(key)){seen.add(key);teams.push(t)}}));teams.sort((a,b)=>(Number(a.pos)||999)-(Number(b.pos)||999)||(Number(b.pts)||0)-(Number(a.pts)||0)||(Number(b.gd)||0)-(Number(a.gd)||0));host.innerHTML=`<div class="vhead">Table</div><div class="tablewrap leagueTableWrap"><div class="groupHead">${esc(DATA.competition||'League table')}<span>${teams.length} clubs · full table</span></div><table class="gtable"><thead><tr><th>Team</th><th>P</th><th>W</th><th>D</th><th>L</th><th>GF</th><th>GA</th><th>GD</th><th>Pts</th><th>Form</th></tr></thead><tbody>${teams.map((t,i)=>{const q=t.qual?`<span class="qbadge ${esc(t.qual.status||'')}" title="${esc(t.qual.note||'')}">${esc(t.qual.status||t.qual.note||'')}</span>`:'';return `<tr><td><div class="gteam"><span class="pos">${t.pos||i+1}</span><span class="code">${esc(t.code||'')}</span>${esc(t.name||'')} ${q}</div></td><td>${t.pld??'—'}</td><td>${t.w??'—'}</td><td>${t.d??'—'}</td><td>${t.l??'—'}</td><td>${t.gf??'—'}</td><td>${t.ga??'—'}</td><td>${t.gd??'—'}</td><td><b>${t.pts??'—'}</b></td><td class="form">${esc(t.form||'')}</td></tr>`}).join('')}</tbody></table></div>`}
-function renderGroups(){const st=deriveStandings(),host=$('#view-groups'),sc=DATA.scorers||[];if(!st.length){host.innerHTML=`<div class="vhead">${DATA.comp_key==='NCAAM'?'Conferences':navProfile()==='soccer_league'?'Table':'Groups'}</div><div class="empty">No group data found yet.</div>`;return}if(navProfile()==='soccer_league'){_v15RenderLeagueTable(st,host);return}if(DATA.comp_key==='NCAAM'){host.innerHTML=`<div class="vhead">Conferences</div>`+st.map(g=>`<div class="tablewrap"><div class="groupHead">${esc(g.group)}<span>${g.group==='Top 25'?'national poll':'raw season records'}</span></div><table class="gtable ncaamTable"><thead><tr><th>Team</th><th>Record</th><th>Win%</th><th>PF/G</th><th>PA/G</th><th>Diff</th><th>Streak</th></tr></thead><tbody>${(g.teams||[]).map(t=>`<tr><td><div class="gteam"><span class="pos">${t.pos||''}</span><span class="code">${esc(t.code||'')}</span>${esc(t.name||'')}</div></td><td><b>${esc(t.record||`${t.w??'—'}-${t.l??'—'}`)}</b></td><td>${t.win_pct!=null?(Number(t.win_pct)*100).toFixed(1)+'%':'—'}</td><td>${t.avg_pf!=null&&Number(t.avg_pf)?Number(t.avg_pf).toFixed(1):'—'}</td><td>${t.avg_pa!=null&&Number(t.avg_pa)?Number(t.avg_pa).toFixed(1):'—'}</td><td>${t.gd!=null?esc(t.gd):'—'}</td><td class="form">${esc(t.form||'—')}</td></tr>`).join('')}</tbody></table></div>`).join('');return}host.innerHTML=`<div class="vhead">Groups</div>`+st.map(g=>`<div class="tablewrap"><div class="groupHead">${esc(g.group)}<span>Top 2 · 3rd</span></div><table class="gtable"><thead><tr><th>Team</th><th>P</th><th>W</th><th>D</th><th>L</th><th>GF</th><th>GA</th><th>GD</th><th>Pts</th><th>Form</th></tr></thead><tbody>${(g.teams||[]).map(t=>{const fl=uiFlag(t.code);const q=t.qual?`<span class="qbadge ${esc(t.qual.status)}" title="${esc(t.qual.note)}">${esc(t.qual.note)}</span>`:'';return `<tr class="${t.pos<=2?'qual':t.pos===3?'third':''}"><td><div class="gteam"><span class="pos">${t.pos||''}</span>${fl?`<span class="flagIcon">${fl}</span>`:''}<span class="code">${esc(t.code||'')}</span>${esc(t.name)} ${t.live?'<span class="liveMark">*</span>':''}${q}</div></td><td>${t.pld}</td><td>${t.w}</td><td>${t.d}</td><td>${t.l}</td><td>${t.gf}</td><td>${t.ga}</td><td>${t.gd}</td><td><b>${t.pts}</b></td><td class="form">${esc(t.form||'')}</td></tr>`}).join('')}</tbody></table></div>`).join('')}
+function _v15RenderLeagueTable(st,host){const seen=new Set(),teams=[];(st||[]).forEach(g=>(g.teams||[]).forEach(t=>{const key=String(t.name||t.code||'').toLowerCase();if(key&&!seen.has(key)){seen.add(key);teams.push(t)}}));teams.sort((a,b)=>(Number(a.pos)||999)-(Number(b.pos)||999)||(Number(b.pts)||0)-(Number(a.pts)||0)||(Number(b.gd)||0)-(Number(a.gd)||0));host.innerHTML=`<div class="vhead">Table</div><div class="tablewrap leagueTableWrap"><div class="groupHead">${esc(DATA.competition||'League table')}<span>${teams.length} clubs · full table</span></div><table class="gtable"><thead><tr><th>Team</th><th>P</th><th>W</th><th>D</th><th>L</th><th>GF</th><th>GA</th><th>GD</th><th>Pts</th><th>Form</th></tr></thead><tbody>${teams.map((t,i)=>{const q=t.qual?`<span class="qbadge ${esc(t.qual.status||'')}" title="${esc(t.qual.note||'')}">${esc(t.qual.status||t.qual.note||'')}</span>`:'';return `<tr><td><div class="gteam teamClickable" data-team="${esc(t.name||'')}" onclick="openTeamModal(this.dataset.team)"><span class="pos">${t.pos||i+1}</span><span class="code">${esc(t.code||'')}</span>${esc(t.name||'')} ${q}</div></td><td>${t.pld??'—'}</td><td>${t.w??'—'}</td><td>${t.d??'—'}</td><td>${t.l??'—'}</td><td>${t.gf??'—'}</td><td>${t.ga??'—'}</td><td>${t.gd??'—'}</td><td><b>${t.pts??'—'}</b></td><td class="form">${esc(t.form||'')}</td></tr>`}).join('')}</tbody></table></div>`}
+function renderGroups(){const st=deriveStandings(),host=$('#view-groups'),sc=DATA.scorers||[];if(!st.length){host.innerHTML=`<div class="vhead">${DATA.comp_key==='NCAAM'?'Conferences':navProfile()==='soccer_league'?'Table':'Groups'}</div><div class="empty">No group data found yet.</div>`;return}if(navProfile()==='soccer_league'){_v15RenderLeagueTable(st,host);return}if(DATA.comp_key==='NCAAM'){host.innerHTML=`<div class="vhead">Conferences</div>`+st.map(g=>`<div class="tablewrap"><div class="groupHead">${esc(g.group)}<span>${g.group==='Top 25'?'national poll':'raw season records'}</span></div><table class="gtable ncaamTable"><thead><tr><th>Team</th><th>Record</th><th>Win%</th><th>PF/G</th><th>PA/G</th><th>Diff</th><th>Streak</th></tr></thead><tbody>${(g.teams||[]).map(t=>`<tr><td><div class="gteam teamClickable" data-team="${esc(t.name||'')}" onclick="openTeamModal(this.dataset.team)"><span class="pos">${t.pos||''}</span><span class="code">${esc(t.code||'')}</span>${esc(t.name||'')}</div></td><td><b>${esc(t.record||`${t.w??'—'}-${t.l??'—'}`)}</b></td><td>${t.win_pct!=null?(Number(t.win_pct)*100).toFixed(1)+'%':'—'}</td><td>${t.avg_pf!=null&&Number(t.avg_pf)?Number(t.avg_pf).toFixed(1):'—'}</td><td>${t.avg_pa!=null&&Number(t.avg_pa)?Number(t.avg_pa).toFixed(1):'—'}</td><td>${t.gd!=null?esc(t.gd):'—'}</td><td class="form">${esc(t.form||'—')}</td></tr>`).join('')}</tbody></table></div>`).join('');return}host.innerHTML=`<div class="vhead">Groups</div>`+st.map(g=>`<div class="tablewrap"><div class="groupHead">${esc(g.group)}<span>Top 2 · 3rd</span></div><table class="gtable"><thead><tr><th>Team</th><th>P</th><th>W</th><th>D</th><th>L</th><th>GF</th><th>GA</th><th>GD</th><th>Pts</th><th>Form</th></tr></thead><tbody>${(g.teams||[]).map(t=>{const fl=uiFlag(t.code);const q=t.qual?`<span class="qbadge ${esc(t.qual.status)}" title="${esc(t.qual.note)}">${esc(t.qual.note)}</span>`:'';return `<tr class="${t.pos<=2?'qual':t.pos===3?'third':''}"><td><div class="gteam teamClickable" data-team="${esc(t.name||'')}" onclick="openTeamModal(this.dataset.team)"><span class="pos">${t.pos||''}</span>${fl?`<span class="flagIcon">${fl}</span>`:''}<span class="code">${esc(t.code||'')}</span>${esc(t.name)} ${t.live?'<span class="liveMark">*</span>':''}${q}</div></td><td>${t.pld}</td><td>${t.w}</td><td>${t.d}</td><td>${t.l}</td><td>${t.gf}</td><td>${t.ga}</td><td>${t.gd}</td><td><b>${t.pts}</b></td><td class="form">${esc(t.form||'')}</td></tr>`}).join('')}</tbody></table></div>`).join('')}
 /* dedup */
 function openMatchModal(id){const m=BYID[id]||(DATA.matches||[]).find(x=>String(x.id)===String(id));if(!m)return;const modal=ensureMatchModal();const hmeta=t=>`${t?.pos?`#${t.pos} · `:''}${t?.pts??0} pts${t?.form?` · ${esc(t.form)}`:''}`;modal.innerHTML=`<section class="matchSheet" role="dialog" aria-modal="true"><div class="modalHero"><button class="modalClose" onclick="closeMatchModal()" aria-label="Close">×</button><div class="modalStage">${esc(m.stage||'Fixture')} · ${esc(m.status||'')}</div><div class="modalFixture"><div class="modalTeam"><div class="modalCode">${teamFlagHTML(m.home)}${esc(m.home?.code||'HOME')}</div><div class="modalName">${esc(m.home?.name||'Home')}</div><div class="modalMeta">${hmeta(m.home)}</div></div><div class="modalScore"><div class="bigScore">${scoreText(m).replace(/<[^>]+>/g,'')}</div><div class="modalStatus">${m.status==='LIVE'?`LIVE ${m.minute||''}'`:kickIn(m.kickoff)}</div></div><div class="modalTeam away"><div class="modalCode">${esc(m.away?.code||'AWAY')}${teamFlagHTML(m.away,true)}</div><div class="modalName">${esc(m.away?.name||'Away')}</div><div class="modalMeta">${hmeta(m.away)}</div></div></div></div><div class="modalBody">${details(m)}</div></section>`;modal.classList.add('show');document.body.classList.add('modalOpen')}
 
