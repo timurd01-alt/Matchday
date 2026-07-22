@@ -56,6 +56,28 @@ def _stale_source(key):
         return True
 
 
+# Same problem, more general: whenever a new field gets added to every match
+# (e.g. "watchability"), a cached data_<key>.json from before that change
+# still looks "recently fetched" to the interval check below and never picks
+# up the new field until its normal cadence happens to come due -- which,
+# for a DORMANT sport, can be up to 12h away. Force a refetch once, right
+# away, whenever the on-disk data is missing a field the current code
+# expects every match to carry.
+REQUIRED_MATCH_FIELDS = ["watchability"]
+
+
+def _missing_fields(key):
+    try:
+        with open(f"data_{key}.json", encoding="utf-8") as f:
+            matches = json.load(f).get("matches") or []
+        if not matches:
+            return False
+        sample = matches[0] or {}
+        return any(field not in sample for field in REQUIRED_MATCH_FIELDS)
+    except Exception:
+        return True
+
+
 def _interval_for(key):
     """Decide the refetch interval from the sport's own data file."""
     path = f"data_{key}.json"
@@ -146,7 +168,7 @@ def run_once(state_path=".ci_fetch_state.json"):
         last_fetched = {}
     print(f"Multi-sport fetcher (one-shot): {', '.join(k for k, _ in SPORTS)}")
     due = [(k, f) for k, f in SPORTS if not os.path.exists(f"data_{k}.json")
-           or _stale_source(k) or time.time() - last_fetched.get(k, 0) >= _interval_for(k)]
+           or _stale_source(k) or _missing_fields(k) or time.time() - last_fetched.get(k, 0) >= _interval_for(k)]
     for i, (key, flag) in enumerate(due):
         ok = _run_one(key, flag)
         if ok:

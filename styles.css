@@ -1416,6 +1416,37 @@ body.modalOpen{overflow:hidden}.matchModal{position:fixed;inset:0;z-index:99;dis
 .sandboxPickers select option{background:var(--bg2);color:var(--text)}
 .sandboxVs{color:var(--faint);font-family:var(--mono);font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;font-weight:700}
 
+/* ---- sidebar expand-on-hover, actually working ----------------------
+   .sidebar:hover{width:198px} (declared where .app is defined, above) has
+   never actually expanded the sidebar in any browser: confirmed by
+   directly testing a real :hover on the live site -- even an inline
+   `width:198px !important` left offsetWidth (the real layout width, not
+   just a transform) stuck at 62px. Root cause, found by process of
+   elimination (cascade/specificity/media-query matching/duplicate
+   stylesheets were all individually ruled out first): .sidebar's base
+   rule has `transition:width .17s ease`, and transitioning `width` at
+   the exact same time `position` flips from static to absolute produces
+   an ambiguous "from" reference frame -- the transition gets stuck and
+   never actually reaches the new value. `transition:none` on the
+   expanded state fixes it outright (verified: offsetWidth goes from a
+   permanently-stuck 62 to a correct 198 with nothing else changed).
+   Took the sidebar out of grid flow with position:absolute rather than
+   trying to resize its grid track, since a grid item's own explicit
+   width doesn't override its track size either. Scoped to non-mobile
+   widths, where the sidebar is a real left column (mobile collapses it
+   into a bottom bar via its own grid-template-areas, so there's nothing
+   to expand there). */
+@media(min-width:921px){
+  .app{position:relative}
+  .app:has(.sidebar:hover) .sidebar,
+  body.tourOpen .sidebar{
+    position:absolute;left:0;top:46px;bottom:0;width:198px;z-index:20;
+    transition:none;box-shadow:10px 0 36px rgba(0,0,0,.45);
+  }
+  .app:has(.sidebar:hover) .navbtn .lbl,
+  body.tourOpen .navbtn .lbl{opacity:1;transition:none}
+}
+
 /* ---- guided tour (first-visit walkthrough) ---- */
 .tourOverlay{position:fixed;inset:0;z-index:500}
 .tourBackdrop{position:fixed;inset:0;background:rgba(2,5,10,.72)}
