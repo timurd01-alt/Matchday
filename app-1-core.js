@@ -615,10 +615,12 @@ async function pushScore(){ // called after grading; no-op until URL set + handl
   try{await fetch(LEADERBOARD_URL+'?action=score',{method:'POST',headers:{'Content-Type':'application/json'},
     body:JSON.stringify({deviceId:deviceId(),handle:myHandle(),hits:s.you,graded:s.n,streak:s.streak})});}catch(e){}
 }
-async function fetchLeaderboard(){
+async function fetchLeaderboard(period){
   if(!LEADERBOARD_URL)return null;
-  try{const r=await fetch(LEADERBOARD_URL+'?action=leaderboard');const d=await r.json();return d.ok?d.board:null;}catch(e){return null;}
+  try{const r=await fetch(LEADERBOARD_URL+'?action=leaderboard&period='+(period||'all'));const d=await r.json();return d.ok?d.board:null;}catch(e){return null;}
 }
+function lbPeriod(){try{return localStorage.getItem('matchday.lbPeriod')||'all'}catch(e){return 'all'}}
+function setLbPeriod(p){try{localStorage.setItem('matchday.lbPeriod',p)}catch(e){};renderCommunity();}
 function btmLoad(){try{return JSON.parse(localStorage.getItem('matchday.btm')||'{}')}catch(e){return {}}}
 function btmSave(o){try{localStorage.setItem('matchday.btm',JSON.stringify(o))}catch(e){}}
 function communityScope(){const k=String(DATA?.comp_key||'ALL').toUpperCase();return k==='ALL'?'ALL':k;}

@@ -17,12 +17,31 @@
 //     streak    INT  NOT NULL,
 //     updated   BIGINT NOT NULL
 //   );
+//
+// One-time migration for periodic (weekly/monthly) leaderboards — safe to
+// run even with existing rows, all new columns default to 0:
+//   ALTER TABLE scores
+//     ADD COLUMN week_start BIGINT NOT NULL DEFAULT 0,
+//     ADD COLUMN week_base_hits INT NOT NULL DEFAULT 0,
+//     ADD COLUMN week_base_graded INT NOT NULL DEFAULT 0,
+//     ADD COLUMN month_start BIGINT NOT NULL DEFAULT 0,
+//     ADD COLUMN month_base_hits INT NOT NULL DEFAULT 0,
+//     ADD COLUMN month_base_graded INT NOT NULL DEFAULT 0;
 
 import { Client } from "pg";
 
 const RATE = new Map(); // in-memory rate limiter (per warm instance)
 
 function badWord(s){ return /[<>{}$]/.test(s || ""); } // crude injection/junk guard
+
+// Synchronized period boundaries (same instant for every user, so "this
+// week" resets together instead of on a per-user rolling clock). Week =
+// 7-day chunks since epoch; month = 30-day chunks (approximate, not
+// calendar months, but simple and good enough for a casual leaderboard).
+function periodStart(days){
+  const ms = days * 86400000;
+  return Math.floor(Date.now() / ms) * ms;
+}
 
 export default async function handler(req, res){
   // CORS so the app (any origin) can call it
@@ -37,12 +56,29 @@ export default async function handler(req, res){
     const action = (req.query.action || "").toString();
 
     if (action === "leaderboard") {
-      // GUARDRAIL 3: minimum sample to appear
+      const period = (req.query.period || "all").toString();
+      if (period === "week" || period === "month") {
+        const start = periodStart(period === "week" ? 7 : 30);
+        const baseHits = period === "week" ? "week_base_hits" : "month_base_hits";
+        const baseGraded = period === "week" ? "week_base_graded" : "month_base_graded";
+        const startCol = period === "week" ? "week_start" : "month_start";
+        // GUARDRAIL 3 (period-scoped): a smaller in-period minimum than the
+        // all-time gate, since a single week has far fewer graded picks
+        // to draw from than a full history.
+        const r = await db.query(
+          `SELECT handle, (hits - ${baseHits}) AS hits, (graded - ${baseGraded}) AS graded, streak ` +
+          `FROM scores WHERE ${startCol} = $1 AND (graded - ${baseGraded}) >= 3 ` +
+          `ORDER BY ((hits - ${baseHits})::float / NULLIF(graded - ${baseGraded}, 0)) DESC, (graded - ${baseGraded}) DESC LIMIT 100`,
+          [start]
+        );
+        return res.status(200).json({ ok: true, board: r.rows, period });
+      }
+      // GUARDRAIL 3 (all-time): minimum sample to appear
       const r = await db.query(
         "SELECT handle, hits, graded, streak FROM scores WHERE graded >= 10 " +
         "ORDER BY (hits::float / NULLIF(graded,0)) DESC, graded DESC LIMIT 100"
       );
-      return res.status(200).json({ ok: true, board: r.rows });
+      return res.status(200).json({ ok: true, board: r.rows, period: "all" });
     }
 
     if (action === "score" && req.method === "POST") {
@@ -65,15 +101,43 @@ export default async function handler(req, res){
       if (now - last < 60000) return res.status(429).json({ ok:false, error:"slow down" });
       RATE.set(deviceId, now);
 
+      const prev = await db.query(
+        "SELECT graded, week_start, week_base_hits, week_base_graded, " +
+        "month_start, month_base_hits, month_base_graded FROM scores WHERE device_id=$1",
+        [deviceId]
+      );
+      const row = prev.rows[0];
+
       // reject graded jumping by an implausible amount vs stored value
-      const prev = await db.query("SELECT graded FROM scores WHERE device_id=$1", [deviceId]);
-      if (prev.rows[0] && G - prev.rows[0].graded > 50)
+      if (row && G - row.graded > 50)
         return res.status(400).json({ ok:false, error:"graded jump too large" });
 
+      // Roll the period baseline forward whenever the synchronized boundary
+      // has moved on since this device's last write -- snapshot the
+      // CURRENT cumulative hits/graded as the new "zero point", so
+      // (hits - base) reads 0 right at the reset and grows through the
+      // period from there. A brand-new device gets a fresh baseline too.
+      // NOTE: pg returns BIGINT columns as strings, not numbers -- must
+      // convert before comparing, or this "===" never matches and the
+      // baseline resets on every single write.
+      const curWeek = periodStart(7), curMonth = periodStart(30);
+      const rowWeekStart = row ? Number(row.week_start) : null;
+      const rowMonthStart = row ? Number(row.month_start) : null;
+      const weekStart = rowWeekStart === curWeek ? rowWeekStart : curWeek;
+      const weekBaseHits = rowWeekStart === curWeek ? row.week_base_hits : H;
+      const weekBaseGraded = rowWeekStart === curWeek ? row.week_base_graded : G;
+      const monthStart = rowMonthStart === curMonth ? rowMonthStart : curMonth;
+      const monthBaseHits = rowMonthStart === curMonth ? row.month_base_hits : H;
+      const monthBaseGraded = rowMonthStart === curMonth ? row.month_base_graded : G;
+
       await db.query(
-        "INSERT INTO scores(device_id,handle,hits,graded,streak,updated) VALUES($1,$2,$3,$4,$5,$6) " +
-        "ON CONFLICT(device_id) DO UPDATE SET handle=$2,hits=$3,graded=$4,streak=$5,updated=$6",
-        [deviceId, handle.slice(0,24), H, G, S, now]
+        "INSERT INTO scores(device_id,handle,hits,graded,streak,updated," +
+        "week_start,week_base_hits,week_base_graded,month_start,month_base_hits,month_base_graded) " +
+        "VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12) " +
+        "ON CONFLICT(device_id) DO UPDATE SET handle=$2,hits=$3,graded=$4,streak=$5,updated=$6," +
+        "week_start=$7,week_base_hits=$8,week_base_graded=$9,month_start=$10,month_base_hits=$11,month_base_graded=$12",
+        [deviceId, handle.slice(0,24), H, G, S, now,
+         weekStart, weekBaseHits, weekBaseGraded, monthStart, monthBaseHits, monthBaseGraded]
       );
       return res.status(200).json({ ok: true });
     }

@@ -174,6 +174,16 @@ body.modalOpen{overflow:hidden}.matchModal{position:fixed;inset:0;z-index:99;dis
   .btmrow{display:flex;gap:8px;margin-bottom:9px}
   .btmbtn{flex:1;background:var(--bg2);color:var(--text);border:1px solid var(--line);border-radius:9px;padding:10px;font-family:var(--mono);font-size:.78rem;font-weight:700;cursor:pointer;transition:border-color .15s,background .15s}
   .btmbtn:hover:not(:disabled){border-color:var(--signal)}
+  .lbTabs{display:flex;gap:6px;margin-bottom:10px}
+  .lbTab{background:var(--bg2);color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:6px 13px;font-family:var(--mono);font-size:.7rem;font-weight:700;cursor:pointer;transition:border-color .15s,color .15s}
+  .lbTab:hover{color:var(--text)}
+  .lbTab.on{color:#090c10;background:var(--signal);border-color:var(--signal)}
+  .lbrow{display:grid;grid-template-columns:34px 1fr auto auto;gap:10px;align-items:center;padding:9px 12px;border-bottom:1px solid var(--line);font-size:.84rem}
+  .lbrow:last-child{border-bottom:none}
+  .lbrk{font-family:var(--mono);color:var(--faint);font-weight:700}
+  .lbname{font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .lbrec{font-family:var(--mono);color:var(--muted);font-size:.76rem}
+  .lbpct{font-family:var(--mono);font-weight:700;color:var(--signal)}
   .btmbtn.locked{background:rgba(58,209,122,.14);border-color:var(--signal);color:var(--signal)}
   .btmbtn:disabled{cursor:default;opacity:.6}
   .btmbtn.locked:disabled{opacity:1}

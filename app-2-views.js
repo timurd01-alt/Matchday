@@ -159,15 +159,22 @@ function renderCommunity(){ensureHandle();const host=$('#view-community');const 
   // leaderboard section (only when configured)
   if(LEADERBOARD_URL){
     const hn=myHandle();
+    const period=lbPeriod();
+    const tab=(p,label)=>`<button class="lbTab ${p===period?'on':''}" onclick="setLbPeriod('${p}')">${label}</button>`;
     h+=`<div class="seclbl" style="margin-top:20px">Global leaderboard</div>`;
-    h+=`<div class="btmmeta" style="margin-bottom:8px">You appear as <b>${esc(hn)}</b> — assigned automatically so the board stays free of offensive names.${canReshuffleHandle()?` <button class="btmbtn" style="margin-left:8px;padding:3px 9px;font-size:.72rem" onclick="reshuffleHandle()">Reshuffle (1 left)</button>`:''}</div><div id="lbBoard" class="empty">Loading board…</div>`;
+    h+=`<div class="btmmeta" style="margin-bottom:8px">You appear as <b>${esc(hn)}</b> — assigned automatically so the board stays free of offensive names.${canReshuffleHandle()?` <button class="btmbtn" style="margin-left:8px;padding:3px 9px;font-size:.72rem" onclick="reshuffleHandle()">Reshuffle (1 left)</button>`:''}</div>`;
+    h+=`<div class="lbTabs">${tab('all','All time')}${tab('week','This week')}${tab('month','This month')}</div>`;
+    h+=`<div id="lbBoard" class="empty">Loading board…</div>`;
   } else {
     h+=`<div class="seclbl" style="margin-top:20px">Global leaderboard</div><div class="empty">Coming soon — compete with other players once the shared board goes live.</div>`;
   }
   host.innerHTML=h;
-  if(LEADERBOARD_URL&&myHandle()){fetchLeaderboard().then(board=>{const el=$('#lbBoard');if(!el)return;
-    if(!board||!board.length){el.innerHTML='No ranked players yet — be the first with 10+ graded picks.';return;}
-    el.className='';el.innerHTML=board.map((r,i)=>`<div class="lbrow"><span class="lbrk">${i+1}</span><span class="lbname">${esc(r.handle)}</span><span class="lbrec">${r.hits}/${r.graded}</span><span class="lbpct">${Math.round(r.hits/r.graded*100)}%</span></div>`).join('');});}
+  if(LEADERBOARD_URL&&myHandle()){fetchLeaderboard(lbPeriod()).then(board=>{const el=$('#lbBoard');if(!el)return;
+    const empties={all:'No ranked players yet — be the first with 10+ graded picks.',
+      week:'No one has 3+ graded picks this week yet — check back soon.',
+      month:'No one has 3+ graded picks this month yet — check back soon.'};
+    if(!board||!board.length){el.innerHTML=empties[lbPeriod()]||empties.all;return;}
+    el.className='';el.innerHTML=board.map((r,i)=>`<div class="lbrow"><span class="lbrk">${i+1}</span><span class="lbname">${esc(r.handle)}</span><span class="lbrec">${r.hits}/${r.graded}</span><span class="lbpct">${r.graded?Math.round(r.hits/r.graded*100):0}%</span></div>`).join('');});}
 }
 
 /* ===== Matchup Sandbox — hypothetical same-competition matchups ===========
