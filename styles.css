@@ -1489,3 +1489,26 @@ body.modalOpen{overflow:hidden}.matchModal{position:fixed;inset:0;z-index:99;dis
 .tpFaint{color:var(--faint);font-family:var(--mono);font-size:.68rem}
 .teamClickable{cursor:pointer}
 .teamClickable:hover{color:var(--signal)}
+
+/* The expanded model read uses one deliberate tall column instead of three
+   mismatched cards in a row, which removes the two dead areas underneath. */
+@media (min-width:1101px){
+  .analystGrid.upsetGrid{
+    grid-template-columns:minmax(0,1.06fr) minmax(300px,.94fr);
+    grid-template-areas:
+      "probability radar"
+      "drivers radar";
+    align-items:stretch!important;
+  }
+  .analystGrid.upsetGrid>.probMatrixCard{
+    grid-area:probability;
+    align-self:stretch!important;
+  }
+  .analystGrid.upsetGrid>.upsetBox{
+    grid-area:radar;
+    height:100%;
+  }
+  .analystGrid.upsetGrid>.analystBox:not(.probMatrixCard):not(.upsetBox){
+    grid-area:drivers;
+  }
+}
