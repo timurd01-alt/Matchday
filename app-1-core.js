@@ -248,16 +248,35 @@ function enhanceMatchCards(host){
   });
 }
 const MARQUEE_COUNT=16;
+const MARQUEE_PER_COMP=3;
 function watchabilityFixtureSort(a,b){return Number(isFavoriteMatch(b))-Number(isFavoriteMatch(a))||(Number(b.watchability)||0)-(Number(a.watchability)||0)||fixtureSort(a,b)}
+// From a watchability-sorted list, take the top MARQUEE_COUNT but cap how
+// many can come from any single competition, so the merged "All sports"
+// board doesn't fill up with just soccer (7 rated leagues vs. 1-2 per US
+// sport). Favorite-team matches always pass, ignoring the cap. Two passes:
+// first fill respecting the cap, then top up from the leftovers if the cap
+// left us short of MARQUEE_COUNT.
+function marqueeSelect(sorted){
+  const perComp={},picked=[],overflow=[];
+  for(const m of sorted){
+    if(picked.length>=MARQUEE_COUNT)break;
+    const c=m._comp||m.competition||'OTHER';
+    if(isFavoriteMatch(m)||(perComp[c]||0)<MARQUEE_PER_COMP){perComp[c]=(perComp[c]||0)+1;picked.push(m);}
+    else overflow.push(m);
+  }
+  for(const m of overflow){if(picked.length>=MARQUEE_COUNT)break;picked.push(m);}
+  return picked;
+}
 function renderMatches(){const M=DATA.matches||[];
   // "All sports" merges every competition's fixtures into one list (often
   // 1000+ matches) -- instead of dumping everything, rank by a
   // watchability score (team class rating, how close the model's own
   // probabilities are, upset potential, knockout stakes) and show the
-  // biggest games. Picking a specific sport still shows its full schedule.
+  // biggest games, capped per competition so no one sport dominates.
+  // Picking a specific sport still shows its full schedule.
   const isAll=String(DATA.comp_key||'ALL').toUpperCase()==='ALL';
   const active=M.filter(m=>!isCompleteOrPast(m)).sort(isAll?watchabilityFixtureSort:favoriteFixtureSort);
-  const capped=isAll?active.slice(0,MARQUEE_COUNT):active;
+  const capped=isAll?marqueeSelect(active):active;
   const shown=capped.slice(0,MATCH_VISIBLE),remaining=Math.max(0,capped.length-shown.length);
   const missing=DATA._missing?`<div class="banner" style="grid-column:1/-1"><b>No ${esc(DATA.competition||'this sport')} data yet.</b> Fetch it once its season is available — run the matching start file (e.g. start_ucl.bat) or keep an eye out when the season begins.</div>`:'';
   const marqueeNote=isAll&&active.length>MARQUEE_COUNT?`<div class="banner" style="grid-column:1/-1"><b>Marquee matchups.</b> The ${MARQUEE_COUNT} biggest games across every sport right now, ranked by team strength, competitiveness and upset potential. Pick a specific sport above for its full schedule.</div>`:'';
