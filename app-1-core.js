@@ -250,21 +250,32 @@ function enhanceMatchCards(host){
 const MARQUEE_COUNT=16;
 const MARQUEE_PER_COMP=3;
 function watchabilityFixtureSort(a,b){return Number(isFavoriteMatch(b))-Number(isFavoriteMatch(a))||(Number(b.watchability)||0)-(Number(a.watchability)||0)||fixtureSort(a,b)}
-// From a watchability-sorted list, take the top MARQUEE_COUNT but cap how
-// many can come from any single competition, so the merged "All sports"
-// board doesn't fill up with just soccer (7 rated leagues vs. 1-2 per US
-// sport). Favorite-team matches always pass, ignoring the cap. Two passes:
-// first fill respecting the cap, then top up from the leftovers if the cap
-// left us short of MARQUEE_COUNT.
-function marqueeSelect(sorted){
-  const perComp={},picked=[],overflow=[];
-  for(const m of sorted){
-    if(picked.length>=MARQUEE_COUNT)break;
-    const c=m._comp||m.competition||'OTHER';
-    if(isFavoriteMatch(m)||(perComp[c]||0)<MARQUEE_PER_COMP){perComp[c]=(perComp[c]||0)+1;picked.push(m);}
-    else overflow.push(m);
+// Marquee selection for the merged "All sports" board. A pure global
+// watchability ranking buries whole sports: soccer's team ratings sit on a
+// higher numeric scale than the US sports', so its ~5 leagues at 90+ fill
+// every slot before NFL (tops ~82) or college football (~62) get a look.
+// Instead, round-robin by competition -- take each active competition's
+// TOP game first, then everyone's 2nd, then 3rd -- so every sport with
+// games showing gets its marquee matchup surfaced, capped at
+// MARQUEE_PER_COMP each. Within each round, higher watchability goes first
+// so the very biggest games still lead. Favorite-team matches are pinned
+// to the very front regardless.
+function marqueeSelect(active){
+  const favs=active.filter(isFavoriteMatch);
+  const byComp={};
+  active.forEach(m=>{if(isFavoriteMatch(m))return;const c=m._comp||m.competition||'OTHER';(byComp[c]||=[]).push(m);});
+  Object.values(byComp).forEach(list=>list.sort((a,b)=>(Number(b.watchability)||0)-(Number(a.watchability)||0)));
+  const picked=[...favs];const seen=new Set(favs);
+  for(let round=0;round<MARQUEE_PER_COMP&&picked.length<MARQUEE_COUNT;round++){
+    // order this round's competitions by their round-th game's watchability,
+    // so the strongest leagues still appear earlier within each pass
+    const contenders=Object.values(byComp).filter(list=>list[round])
+      .sort((a,b)=>(Number(b[round].watchability)||0)-(Number(a[round].watchability)||0));
+    for(const list of contenders){
+      if(picked.length>=MARQUEE_COUNT)break;
+      const m=list[round];if(seen.has(m))continue;picked.push(m);seen.add(m);
+    }
   }
-  for(const m of overflow){if(picked.length>=MARQUEE_COUNT)break;picked.push(m);}
   return picked;
 }
 function renderMatches(){const M=DATA.matches||[];
