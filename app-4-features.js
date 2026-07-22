@@ -181,7 +181,7 @@ function _v10OfficialEdge(m,op){
   if(!Number.isFinite(mk)||op.confidence==null)return null;
   return Math.round(Number(op.confidence)-mk);
 }
-function _totalsUnit(){return SANDBOX_TWO_WAY.has(String(DATA.comp_key||'').toLowerCase())?'points':'goals';}
+function _totalsUnit(m){return SANDBOX_TWO_WAY.has(String(m?._comp||DATA.comp_key||'').toLowerCase())?'points':'goals';}
 function edgeBreakdown(m){
   const pr=m?.prediction, x=(m?.markets||{})['1x2']||{};
   if(!pr)return '';
@@ -209,12 +209,12 @@ function edgeBreakdown(m){
   const tot=(m?.markets||{}).totals;
   const modelTot=(m?.prediction||{}).totals;
   if(tot){
-    const unit=_totalsUnit();
+    const unit=_totalsUnit(m);
     let goalsLine=`${unit==='goals'?'Goals':'Points'} market: over ${tot.line} ${tot.over_pct}%, under ${tot.line} ${tot.under_pct}%.`;
     if(modelTot&&modelTot.pick)goalsLine+=` Model expects ${modelTot.expected} — leans ${modelTot.pick}.`;
     bits.push(goalsLine);
   }else if(modelTot&&modelTot.expected!=null){
-    bits.push(`Model expects ${modelTot.expected} ${_totalsUnit()} — no market line yet.`);
+    bits.push(`Model expects ${modelTot.expected} ${_totalsUnit(m)} — no market line yet.`);
   }
   return bits.join(' ');
 }
@@ -453,7 +453,7 @@ function _v12OutcomeCard(m,op){
   const tot=(m?.markets||{}).totals||{};
   const modelTot=(m?.prediction||{}).totals;
   const drawNote=dp>=30?'high draw pressure':dp>=25?'moderate draw pressure':'low draw pressure';
-  const unit=_totalsUnit();
+  const unit=_totalsUnit(m);
   const goalNote=tot.under_pct!=null?`Under ${esc(tot.line||2.5)}: ${esc(tot.under_pct)}%${modelTot&&modelTot.pick?` (model: ${esc(modelTot.pick)})`:''}`
     :(modelTot&&modelTot.expected!=null?`Model expects ${esc(modelTot.expected)} ${unit}`:`No ${unit} market yet`);
   // Without a market yet, "market on pick" / "model edge" have nothing to
@@ -473,6 +473,58 @@ function _v12OutcomeCard(m,op){
   const risk=op?.blocked?`Upset gate blocked · ${esc(op.gateReason||'market gap too wide')}`:`${drawNote} · ${goalNote}`;
   return `<div class="analystBox probMatrixCard"><div class="analystBoxTitle">Probability check</div><div class="probMatrix"><div class="probTiles">${_v12ProbTile(m?.home?.code||m?.home?.name||'Home',hp,'h',side==='h')}${_v12ProbTile('Draw',dp,'d',side==='d')}${_v12ProbTile(m?.away?.code||m?.away?.name||'Away',ap,'a',side==='a')}</div><div class="probCompareGrid"><div class="probCompareItem"><span>Official side</span><b>${esc(op?.name||'No pick')}</b></div><div class="probCompareItem"><span>${compareLabel1}</span><b>${esc(compareVal1)}</b></div><div class="probCompareItem ${compareCls2}"><span>${compareLabel2}</span><b>${esc(compareVal2)}</b></div></div><p class="probContextLine">${risk}</p></div></div>`;
 }
+function _v15Num(v){
+  if(v===null||v===undefined||v==='')return null;
+  const n=Number(v);return Number.isFinite(n)?n:null;
+}
+function _v15Record(team){
+  const p=_v15Num(team?.pld),w=_v15Num(team?.w),d=_v15Num(team?.d),l=_v15Num(team?.l);
+  if(!p||w==null||l==null)return null;
+  return d==null?`${w}-${l}`:`${w}-${d}-${l}`;
+}
+function _v15Rate(team,key){
+  const p=_v15Num(team?.pld),v=_v15Num(team?.[key]);
+  return p&&v!=null&&v>0?Number(v/p).toFixed(1):null;
+}
+function _v15Form(team){
+  const vals=String(team?.form||'').trim().split(/[\s,]+/).filter(v=>/^[WDL]$/i.test(v)).slice(-5);
+  return vals.length?vals.map(v=>`<i class="profileFormDot ${v.toUpperCase()}">${v.toUpperCase()}</i>`).join(''):null;
+}
+function _v15CompareRow(label,home,away,html){
+  if(home==null&&away==null)return '';
+  const val=v=>v==null?'—':html?v:esc(v);
+  return `<div class="profileCompareRow"><b>${val(home)}</b><span>${esc(label)}</span><b>${val(away)}</b></div>`;
+}
+function _v15MatchProfile(m,op){
+  const pr=m?.prediction||{},probs=_v4ModelProbs(m)||{},side=op?.side||'';
+  const ordered=['h','d','a'].map(k=>_v15Num(probs[k])).filter(v=>v!=null).sort((a,b)=>b-a);
+  const separation=ordered.length>1?Math.max(0,Math.round(ordered[0]-ordered[1])):null;
+  const base=pr.base_blend||pr.model||{};
+  const basePick=_v15Num(base[side]),official=_v15Num(op?.confidence);
+  const adjustment=basePick!=null&&official!=null?Math.round(official-basePick):null;
+  const unit=_totalsUnit(m);
+  const expected=_v15Num(pr?.totals?.expected);
+  const hScored=_v15Rate(m?.home,'gf'),aScored=_v15Rate(m?.away,'gf');
+  const scoringBaseline=expected!=null?expected:(hScored!=null&&aScored!=null?Number(hScored)+Number(aScored):null);
+  const totalLabel=expected!=null?'Expected total':'Scoring baseline';
+  const homeOut=Array.isArray(m?.injuries?.home)?m.injuries.home.length:0;
+  const awayOut=Array.isArray(m?.injuries?.away)?m.injuries.away.length:0;
+  const kpis=[
+    ['Model separation',separation!=null?`${separation} pts`:'—'],
+    ['Probability adjustment',adjustment!=null?`${adjustment>0?'+':''}${adjustment} pts`:'—'],
+    [totalLabel,scoringBaseline!=null?`${Number(scoringBaseline).toFixed(1)} ${unit}`:'Not modeled'],
+    ['Listed absences',`${homeOut+awayOut}`]
+  ].map(([label,value])=>`<div class="profileKpi"><span>${esc(label)}</span><b>${esc(value)}</b></div>`).join('');
+  const rows=[
+    _v15CompareRow('Record',_v15Record(m?.home),_v15Record(m?.away)),
+    _v15CompareRow('Rank',_v15Num(m?.home?.pos)!=null?`#${m.home.pos}`:null,_v15Num(m?.away?.pos)!=null?`#${m.away.pos}`:null),
+    _v15CompareRow(`Avg ${unit} scored`,hScored,aScored),
+    _v15CompareRow(`Avg ${unit} allowed`,_v15Rate(m?.home,'ga'),_v15Rate(m?.away,'ga')),
+    _v15CompareRow('Recent form',_v15Form(m?.home),_v15Form(m?.away),true),
+    _v15CompareRow('Listed absences',String(homeOut),String(awayOut))
+  ].join('');
+  return `<div class="analystBox matchProfileCard"><div class="analystBoxTitle">Match profile</div><div class="profileKpis">${kpis}</div><div class="profileCompareHead"><b>${esc(m?.home?.code||m?.home?.name||'Home')}</b><span>team comparison</span><b>${esc(m?.away?.code||m?.away?.name||'Away')}</b></div><div class="profileCompareRows">${rows}</div></div>`;
+}
 function modelBlock(m){
   const pr=m?.prediction;
   if(!pr)return '<section class="analystPanel"><div class="analystTop"><div class="analystTitle">Model read</div></div><div class="emptyForecast">No model pick yet.</div></section>';
@@ -481,7 +533,7 @@ function modelBlock(m){
   const summary=edgeBreakdown(m)||`${op.name} is the official model side${op.confidence!=null?` at ${op.confidence}%`:''}.`;
   const base=op.blocked?`<small>Raw upset trigger: ${esc(op.rawName)}</small>`:(pr.base_pick&&pr.base_pick!==op.side?`<small>Base favorite: ${esc(pr.base_pick_name||_v4PickSideLabel(m,pr.base_pick))}</small>`:'');
   const gate=op.blocked?`<div class="upsetGateNotice"><b>Upset watch only:</b> ${esc(op.candidateName)} was flagged by volatility, but ${esc(op.gateReason)}. The official pick remains ${esc(op.name)}.</div>`:'';
-  return `<section class="analystPanel"><div class="analystTop"><div class="analystTitle">Model read</div><div class="analystBadge ${op.blocked?'gate':''}">${op.blocked?'upset gate':'official probabilities'}</div></div><div class="analystHero"><div class="analystMain"><div class="analystLabel">Official pick</div><div class="analystPick">${esc(op.name)}</div><p class="analystNote">${esc(op.note)}</p>${gate}</div><div class="analystConfidence"><b>${esc(op.confidence??'—')}%</b><span>official probability</span><small>${esc(marketText)}</small>${base}</div></div><div class="analystGrid upsetGrid">${_v12OutcomeCard(m,op)}${_v6UpsetBox(m)}<div class="analystBox"><div class="analystBoxTitle">Main drivers</div><div class="factorRows">${_v4FactorRows(pr)}</div></div></div><p class="analystSummary">${esc(summary)}</p></section>`;
+  return `<section class="analystPanel"><div class="analystTop"><div class="analystTitle">Model read</div><div class="analystBadge ${op.blocked?'gate':''}">${op.blocked?'upset gate':'official probabilities'}</div></div><div class="analystHero"><div class="analystMain"><div class="analystLabel">Official pick</div><div class="analystPick">${esc(op.name)}</div><p class="analystNote">${esc(op.note)}</p>${gate}</div><div class="analystConfidence"><b>${esc(op.confidence??'—')}%</b><span>official probability</span><small>${esc(marketText)}</small>${base}</div></div><div class="analystGrid upsetGrid"><div class="modelReadColumn">${_v12OutcomeCard(m,op)}${_v15MatchProfile(m,op)}</div><div class="modelReadColumn">${_v6UpsetBox(m)}<div class="analystBox driversBox"><div class="analystBoxTitle">Main drivers</div><div class="factorRows">${_v4FactorRows(pr)}</div></div></div></div><p class="analystSummary">${esc(summary)}</p></section>`;
 }
 
 applySettings();applySportNav();setView(SETTINGS.defaultView||'matches');load();

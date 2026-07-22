@@ -1490,25 +1490,32 @@ body.modalOpen{overflow:hidden}.matchModal{position:fixed;inset:0;z-index:99;dis
 .teamClickable{cursor:pointer}
 .teamClickable:hover{color:var(--signal)}
 
-/* The expanded model read uses one deliberate tall column instead of three
-   mismatched cards in a row, which removes the two dead areas underneath. */
+/* Expanded model read: two independent content columns keep unlike card
+   heights from creating empty grid cells, while the profile uses the space. */
 @media (min-width:1101px){
   .analystGrid.upsetGrid{
-    grid-template-columns:minmax(0,1.06fr) minmax(300px,.94fr);
-    grid-template-areas:
-      "probability radar"
-      "drivers radar";
-    align-items:stretch!important;
-  }
-  .analystGrid.upsetGrid>.probMatrixCard{
-    grid-area:probability;
-    align-self:stretch!important;
-  }
-  .analystGrid.upsetGrid>.upsetBox{
-    grid-area:radar;
-    height:100%;
-  }
-  .analystGrid.upsetGrid>.analystBox:not(.probMatrixCard):not(.upsetBox){
-    grid-area:drivers;
+    grid-template-columns:minmax(0,1.06fr) minmax(300px,.94fr)!important;
+    align-items:start!important;
   }
 }
+.modelReadColumn{display:grid;gap:14px;align-content:start;min-width:0}
+.matchProfileCard{padding:12px!important}
+.profileKpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:12px}
+.profileKpi{min-width:0;padding:10px;background:rgba(255,255,255,.025);border:1px solid var(--line);border-radius:10px}
+.profileKpi span{display:block;color:var(--faint);font-family:var(--mono);font-size:.56rem;font-weight:800;letter-spacing:.055em;text-transform:uppercase;line-height:1.25;margin-bottom:5px}
+.profileKpi b{display:block;color:var(--text);font-family:"Archivo",sans-serif;font-size:.92rem;line-height:1.15;white-space:normal}
+.profileCompareHead,.profileCompareRow{display:grid;grid-template-columns:minmax(0,1fr) minmax(88px,.72fr) minmax(0,1fr);gap:10px;align-items:center}
+.profileCompareHead{padding:7px 10px;color:var(--muted);font-family:var(--mono);font-size:.62rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;border-bottom:1px solid var(--line2)}
+.profileCompareHead b:last-child,.profileCompareRow b:last-child{text-align:right}
+.profileCompareHead span,.profileCompareRow span{text-align:center;color:var(--faint)}
+.profileCompareRows{padding:0 10px}
+.profileCompareRow{min-height:34px;border-bottom:1px solid var(--line)}
+.profileCompareRow:last-child{border-bottom:0}
+.profileCompareRow b{font-family:var(--mono);font-size:.72rem;color:var(--text);font-weight:800;min-width:0}
+.profileCompareRow>span{font-family:var(--mono);font-size:.58rem;text-transform:uppercase;letter-spacing:.045em}
+.profileFormDot{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:5px;margin-right:3px;font-style:normal;font-size:.58rem;background:var(--line);color:var(--muted)}
+.profileFormDot.W{background:rgba(58,209,122,.16);color:var(--win)}
+.profileFormDot.L{background:rgba(255,92,106,.15);color:var(--loss)}
+.profileFormDot.D{background:rgba(125,145,170,.14);color:var(--muted)}
+@media(max-width:1100px){.modelReadColumn{gap:14px}}
+@media(max-width:620px){.profileKpis{grid-template-columns:repeat(2,minmax(0,1fr))}.profileCompareHead,.profileCompareRow{grid-template-columns:minmax(0,1fr) 80px minmax(0,1fr);gap:6px}.profileCompareRows{padding:0 4px}}
