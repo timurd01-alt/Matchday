@@ -1235,6 +1235,27 @@ def predict_totals(home, away, markets):
     return result
 
 
+def compute_watchability(m):
+    """0-100 'how big a game is this' score, built entirely from data the
+    match already carries -- team class/power rating (are real names
+    playing), how close the model's own probabilities are (competitive
+    vs. a foregone conclusion), upset drama, and knockout/playoff stakes.
+    No new data source; used to surface marquee matchups on the All
+    Sports screen instead of every fixture from every sport at once."""
+    pr = m.get("prediction") or {}
+    adj = pr.get("adjusted") or pr.get("blend") or {}
+    home_r = (m.get("home") or {}).get("rating")
+    away_r = (m.get("away") or {}).get("rating")
+    quality = min(100.0, (home_r + away_r) * 6) if home_r is not None and away_r is not None else 0.0
+    vals = sorted((float(adj.get(k) or 0) for k in ("h", "d", "a") if k in adj), reverse=True)
+    closeness = max(0.0, 100.0 - (vals[0] - vals[1]) * 2) if len(vals) >= 2 else 0.0
+    upset_score = float((pr.get("upset") or {}).get("score") or 0)
+    stage = (m.get("stage") or "").lower()
+    stakes = 100.0 if stage and not stage.startswith("group") else 0.0
+    score = quality * 0.4 + closeness * 0.35 + upset_score * 0.15 + stakes * 0.1
+    return round(min(100.0, max(0.0, score)), 1)
+
+
 # -------- ESPN lineups + live subs + injuries (keyless) ------------------
 def _bucket(abbr):
     a = (abbr or "").upper()
@@ -3200,6 +3221,7 @@ def build():
     for m in matches:
         m["prediction"] = predict(m["home"], m["away"], m["markets"], m)
         m["prediction"]["totals"] = predict_totals(m["home"], m["away"], m["markets"])
+        m["watchability"] = compute_watchability(m)
     print(f"  merged odds onto {merged} fixtures ({fuzzy} via name-variant match) · predictions on all {len(matches)}")
 
     print("Fetching title odds + news…")

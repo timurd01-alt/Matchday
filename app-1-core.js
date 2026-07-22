@@ -247,13 +247,23 @@ function enhanceMatchCards(host){
     head.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();openMatchModal(card.dataset.id);setFinishedLabel()}});
   });
 }
+const MARQUEE_COUNT=16;
+function watchabilityFixtureSort(a,b){return Number(isFavoriteMatch(b))-Number(isFavoriteMatch(a))||(Number(b.watchability)||0)-(Number(a.watchability)||0)||fixtureSort(a,b)}
 function renderMatches(){const M=DATA.matches||[];
-  const active=M.filter(m=>!isCompleteOrPast(m)).sort(favoriteFixtureSort);
-  const shown=active.slice(0,MATCH_VISIBLE),remaining=Math.max(0,active.length-shown.length);
+  // "All sports" merges every competition's fixtures into one list (often
+  // 1000+ matches) -- instead of dumping everything, rank by a
+  // watchability score (team class rating, how close the model's own
+  // probabilities are, upset potential, knockout stakes) and show the
+  // biggest games. Picking a specific sport still shows its full schedule.
+  const isAll=String(DATA.comp_key||'ALL').toUpperCase()==='ALL';
+  const active=M.filter(m=>!isCompleteOrPast(m)).sort(isAll?watchabilityFixtureSort:favoriteFixtureSort);
+  const capped=isAll?active.slice(0,MARQUEE_COUNT):active;
+  const shown=capped.slice(0,MATCH_VISIBLE),remaining=Math.max(0,capped.length-shown.length);
   const missing=DATA._missing?`<div class="banner" style="grid-column:1/-1"><b>No ${esc(DATA.competition||'this sport')} data yet.</b> Fetch it once its season is available — run the matching start file (e.g. start_ucl.bat) or keep an eye out when the season begins.</div>`:'';
-  const html=missing+landingHero()+`<div class="vhead">${t('Fixtures')}</div>`+
+  const marqueeNote=isAll&&active.length>MARQUEE_COUNT?`<div class="banner" style="grid-column:1/-1"><b>Marquee matchups.</b> The ${MARQUEE_COUNT} biggest games across every sport right now, ranked by team strength, competitiveness and upset potential. Pick a specific sport above for its full schedule.</div>`:'';
+  const html=missing+landingHero()+marqueeNote+`<div class="vhead">${isAll?'Marquee matchups':t('Fixtures')}</div>`+
     (shown.length?shown.map(cardHTML).join(''):`<div class="empty" style="grid-column:1/-1">No live or upcoming matches to show.</div>`)+
-    (remaining?`<div class="fixturePager"><span>Showing ${shown.length} of ${active.length} fixtures</span><button class="actionbtn" onclick="MATCH_VISIBLE+=FIXTURE_PAGE_SIZE;renderMatches()">Load ${Math.min(FIXTURE_PAGE_SIZE,remaining)} more</button></div>`:'');
+    (remaining?`<div class="fixturePager"><span>Showing ${shown.length} of ${capped.length} fixtures</span><button class="actionbtn" onclick="MATCH_VISIBLE+=FIXTURE_PAGE_SIZE;renderMatches()">Load ${Math.min(FIXTURE_PAGE_SIZE,remaining)} more</button></div>`:'');
   $('#view-matches').innerHTML=html;enhanceMatchCards($('#view-matches'));}
 function renderResults(){const M=DATA.matches||[];
   const past=M.filter(isCompleteOrPast).sort((a,b)=>Number(isFavoriteMatch(b))-Number(isFavoriteMatch(a))||(b.kickoff||'').localeCompare(a.kickoff||''));
