@@ -1,6 +1,6 @@
 
 const $=s=>document.querySelector(s);let DATA={matches:[],news:[],standings:[]},BYID={},VIEW='matches',LAST_OK=false,LAST_ERROR='',LOAD_TIMER=null,NEWS_FILTER='all';
-const DEFAULT_SETTINGS={accent:'green',density:'normal',panel:'glass',defaultView:'matches',refresh:60,showInsight:true,showFinished:false,showDetails:false,favoriteTeam:''};
+const DEFAULT_SETTINGS={accent:'green',density:'normal',panel:'glass',defaultView:'matches',refresh:60,showInsight:true,showFinished:false,showDetails:false,favoriteTeam:'',alertsKickoff:true,alertsLive:true,alertsUpset:true,alertsModel:true,alertsData:true};
 let SETTINGS={...DEFAULT_SETTINGS};try{SETTINGS={...DEFAULT_SETTINGS,...JSON.parse(localStorage.getItem('matchday.settings')||'{}')}}catch(e){}
 // Refresh cadence is product-controlled so visitors cannot accidentally create
 // excessive polling or make the dashboard feel stale.
@@ -61,12 +61,14 @@ function applySportNav(){
       l.textContent=labels[b.dataset.v]||t(en);}});
   if(!allowed.includes(VIEW))setView('matches');
 }
-function changeSport(v){DATA_FILE=v?('data_'+v+'.json'):'';MATCH_VISIBLE=FIXTURE_PAGE_SIZE;RESULT_VISIBLE=FIXTURE_PAGE_SIZE;try{localStorage.setItem('matchday.sport',DATA_FILE)}catch(e){};applySportNav();load(true);}
+function loadingBoardHTML(){return '<div class="loadingBoard" aria-label="Loading matches"><span></span><span></span><span></span><span></span></div>'}
+function showMatchLoading(){const host=$('#view-matches');if(host)host.innerHTML=loadingBoardHTML()}
+function changeSport(v){DATA_FILE=v?('data_'+v+'.json'):'';MATCH_VISIBLE=FIXTURE_PAGE_SIZE;RESULT_VISIBLE=FIXTURE_PAGE_SIZE;try{localStorage.setItem('matchday.sport',DATA_FILE)}catch(e){};applySportNav();showMatchLoading();load(true);}
 
 const COLORS={orange:'#ffb02e',blue:'#4cc2ff',green:'#3ad17a',red:'#ff4d5e',purple:'#b16cff'};
 function saveSettings(){localStorage.setItem('matchday.settings',JSON.stringify(SETTINGS))}
 function applySettings(){document.documentElement.style.setProperty('--signal',COLORS[SETTINGS.accent]||COLORS.orange);document.body.classList.toggle('compact',SETTINGS.density==='compact');document.body.classList.toggle('spacious',SETTINGS.density==='spacious');$('#app').classList.toggle('flat',SETTINGS.panel==='flat');$('#app').classList.toggle('noinsight',!SETTINGS.showInsight);document.body.classList.toggle('hideStats',!SETTINGS.showDetails)}
-function updateSetting(k,v){if(k==='refresh')return;if(k==='showInsight'||k==='showDetails'||k==='showFinished')v=!!v;SETTINGS[k]=v;saveSettings();applySettings();renderCurrent();if(k==='favoriteTeam'&&typeof renderInsight==='function')renderInsight();scheduleNextLoad()}
+function updateSetting(k,v){if(k==='refresh')return;if(k==='showInsight'||k==='showDetails'||k==='showFinished'||k.startsWith('alerts'))v=!!v;SETTINGS[k]=v;saveSettings();applySettings();renderCurrent();if(k==='favoriteTeam'&&typeof renderInsight==='function')renderInsight();if(k.startsWith('alerts'))renderAlerts();scheduleNextLoad()}
 function resetSettings(){SETTINGS={...DEFAULT_SETTINGS};saveSettings();applySettings();setView(SETTINGS.defaultView);scheduleNextLoad()}
 function esc(s){return String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
 function uiLocale(){return({es:'es',fr:'fr',de:'de',pt:'pt-BR',ru:'ru'})[LANG]||undefined}
@@ -81,6 +83,15 @@ function isCompleteOrPast(m){return m?.status==='FINISHED'||isStaleUpcoming(m)}
 function isVisibleUpcoming(m){return m?.status==='UPCOMING'&&!isStaleUpcoming(m)}
 function fixtureSort(a,b){const o={LIVE:0,UPCOMING:1,FINISHED:2};return (o[a.status]??9)-(o[b.status]??9)||(a.kickoff||'').localeCompare(b.kickoff||'')}
 function teamKey(name){return String(name||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim()}
+function teamInitials(team){
+  const code=String(team?.code||'').replace(/[^A-Za-z0-9]/g,'').slice(0,3).toUpperCase();
+  if(code)return code;
+  const words=String(team?.name||'Team').replace(/\b(fc|cf|afc|sc|club|united)\b/ig,' ').trim().split(/\s+/).filter(Boolean);
+  return (words.length>1?words.slice(0,3).map(w=>w[0]).join(''):words[0]?.slice(0,3)||'TM').toUpperCase();
+}
+function teamHue(team){let h=0;for(const ch of String(team?.name||team?.code||'team'))h=(h*31+ch.charCodeAt(0))%360;return h}
+function teamMarkHTML(team,extra=''){return `<span class="teamMark ${esc(extra)}" style="--team-hue:${teamHue(team)}" aria-hidden="true">${esc(teamInitials(team))}</span>`}
+function metricHelp(label,copy){return `<span class="metricHelp" tabindex="0" role="note" aria-label="${esc(label)}: ${esc(copy)}" data-tip="${esc(copy)}">?</span>`}
 function favoriteTeam(){return String(SETTINGS.favoriteTeam||'').trim()}
 function favoriteNewsTerm(){return teamKey(favoriteTeam()).replace(/\b(fc|afc|cf|sc|football club)\b/g,'').replace(/\s+/g,' ').trim()}
 function isFavoriteTeam(name){const fav=teamKey(favoriteTeam());return !!fav&&teamKey(name)===fav}
@@ -217,7 +228,7 @@ function heroMarquee(){
 function landingHero(){
   const sc=DATA.scorecard;
   const slim=heroSeen();
-  const rec=sc&&sc.graded?`<span class="heroRec"><b>${sc.model_hits}-${sc.graded-sc.model_hits}</b> record</span>${sc.brier!=null?`<span class="heroRec">Brier <b>${sc.brier}</b></span>`:''}${sc.clv_avg!=null?`<span class="heroRec">CLV <b>${sc.clv_avg>0?'+':''}${sc.clv_avg}</b></span>`:''}`:`<span class="heroRec faintline">record builds as picks grade</span>`;
+  const rec=sc&&sc.graded?`<span class="heroRec"><b>${sc.model_hits}-${sc.graded-sc.model_hits}</b> record</span>${sc.brier!=null?`<span class="heroRec">Brier ${metricHelp('Brier score','Measures probability accuracy. Lower is better.')} <b>${sc.brier}</b></span>`:''}${sc.clv_avg!=null?`<span class="heroRec">CLV ${metricHelp('Closing line value','How the recorded probability compares with the final market snapshot.')} <b>${sc.clv_avg>0?'+':''}${sc.clv_avg}</b></span>`:''}`:`<span class="heroRec faintline">record builds as picks grade</span>`;
   if(slim)return `<div class="heroSlim">${rec}<span class="heroSlimLink" onclick="setView('score')">full scorecard →</span></div>`;
   return `<div class="heroBand">
     <img src="logo.png?v=4" class="heroLogo" alt="Matchday">
@@ -323,6 +334,26 @@ function renderThird(){const host=$('#view-third'),third=getThirdRace();if(!thir
 /* removed duplicate (renderNews) */
 
 const SYSTEM_UPDATES=[
+  {date:'Build 0722G',tag:'Fix',title:'News layout, clickable top bar, and a market-outage notice',items:[
+    'The News tab now flows into a multi-column grid on wider screens instead of one full-width column stacked like a phone.',
+    'The live score and "Next" fixture in the top bar are now clickable — tap them to jump straight to the expanded match view.',
+    'When our monthly betting-market data quota runs out, a clear banner now explains that market comparisons are paused (model predictions keep working) instead of markets silently vanishing.']},
+  {date:'Build 0722F',tag:'New',title:'Watchability index picks the marquee matchups',items:[
+    'The "All sports" screen no longer dumps every fixture — it ranks games by a watchability score (team strength, how close the model rates it, upset potential, knockout stakes) and shows the biggest ones.',
+    'Balanced across sports: it takes the top game from each active competition first, so college football, NFL and others surface alongside soccer instead of being buried.',
+    'Some sports (NBA, college basketball) have no games until their seasons start — they\'ll join automatically once schedules publish.']},
+  {date:'Build 0722E',tag:'New',title:'Team Stats profiles',items:[
+    'Click any team in the Standings/Groups table to open a compiled profile: points, goal/point difference, scoring rates, class rating, home/away form and recent results.']},
+  {date:'Build 0722D',tag:'New',title:'Weekly & monthly leaderboards',items:[
+    'The community leaderboard now has "This week" and "This month" views alongside all-time, so new players aren\'t permanently buried behind early adopters — each period resets on its own.']},
+  {date:'Build 0722C',tag:'New',title:'Pick streak + Weekly awards',items:[
+    'A flame streak counter now rides in the top bar once you string together 2+ correct Beat-the-Model picks.',
+    'The Community tab shows weekly awards — biggest upset, the model\'s best call and biggest miss, and the closest game — drawn from the last 7 days of real results.']},
+  {date:'Build 0722B',tag:'UI',title:'Expanded match view fills its space',items:[
+    'The expanded model read now includes a Match profile card (records, scoring rates, form, absences) and lays out as two balanced columns on wide screens instead of leaving empty gaps.']},
+  {date:'Build 0722A',tag:'Fix',title:'Sidebar glitch + model-read detail',items:[
+    'Fixed a sidebar flicker during normal use (nav labels were flashing in clipped on hover).',
+    'The Elo and head-to-head factors added recently now actually appear in the "Main drivers" list, and the market-comparison cells show class/Elo edges instead of blank dashes when no market line exists yet.']},
   {date:'Build 0720F',tag:'Fix',title:'Predictions were flat/identical for every match — root cause fixed',items:[
     'Team power-rating files (public FIFA-rank/squad-value/preseason-strength data) were accidentally excluded from every deploy — every team fell back to the same default, so picks came down to home-field advantage alone. They\'re now correctly shipped with every build.',
     'The Matchup Sandbox had the same problem — it now uses the same class/power-rating signal, so picking a strong team against a weak one actually moves the percentages.',
@@ -566,7 +597,7 @@ const SYSTEM_UPDATES=[
   ]}
 ];
 function markUpdatesRead(){localStorage.setItem('matchday.updates.lastSeen',new Date().toISOString());renderSystemUpdates()}
-function renderSystemUpdates(){const host=$('#view-updates');const seen=localStorage.getItem('matchday.updates.lastSeen');const latest='build 0720F';host.innerHTML=`<div class="updatesShell"><div class="updatesHero"><section class="updatesIntro"><h2>System updates</h2><span class="safePill">UI</span></section><aside class="buildCard"><div class="tiny">Current build</div><div class="build">${esc(latest)}</div><div class="hint">Last viewed: ${seen?esc(ago(seen)):'not marked yet'}</div><div class="updateActions"><button class="miniBtn" onclick="markUpdatesRead()">Mark as read</button><button class="miniBtn" onclick="setView('status')">Open Status</button></div></aside></div><section class="timeline"><div class="timelineHead"><h3>Release notes</h3><span>${SYSTEM_UPDATES.length} entries</span></div>${SYSTEM_UPDATES.map(u=>`<article class="updateItem"><div class="updateDate">${esc(u.date)}</div><div><div class="updateTitle"><span>${esc(u.title)}</span><span class="updateBadge">${esc(u.tag)}</span></div><ul>${u.items.map(i=>`<li>${esc(i)}</li>`).join('')}</ul></div></article>`).join('')}</section></div>`}
+function renderSystemUpdates(){const host=$('#view-updates');const seen=localStorage.getItem('matchday.updates.lastSeen');const latest='build 0722G';host.innerHTML=`<div class="updatesShell"><div class="updatesHero"><section class="updatesIntro"><h2>System updates</h2><span class="safePill">UI</span></section><aside class="buildCard"><div class="tiny">Current build</div><div class="build">${esc(latest)}</div><div class="hint">Last viewed: ${seen?esc(ago(seen)):'not marked yet'}</div><div class="updateActions"><button class="miniBtn" onclick="markUpdatesRead()">Mark as read</button><button class="miniBtn" onclick="setView('status')">Open Status</button></div></aside></div><section class="timeline"><div class="timelineHead"><h3>Release notes</h3><span>${SYSTEM_UPDATES.length} entries</span></div>${SYSTEM_UPDATES.map(u=>`<article class="updateItem"><div class="updateDate">${esc(u.date)}</div><div><div class="updateTitle"><span>${esc(u.title)}</span><span class="updateBadge">${esc(u.tag)}</span></div><ul>${u.items.map(i=>`<li>${esc(i)}</li>`).join('')}</ul></div></article>`).join('')}</section></div>`}
 
 function renderStatus(){const host=$('#view-status'),M=DATA.matches||[],st=deriveStandings(),third=getThirdRace();const live=M.filter(m=>m.status==='LIVE').length,up=M.filter(m=>m.status==='UPCOMING').length,fin=M.filter(m=>m.status==='FINISHED').length;const next=M.filter(isVisibleUpcoming).sort((a,b)=>(a.kickoff||'').localeCompare(b.kickoff||''))[0];host.innerHTML=`<div class="vhead">App Status</div><div class="hint" style="margin-bottom:10px">menu profile: <b>${navProfile()}</b> · sport file: <b>${DATA_FILE||'all (merged)'}</b></div><div class="status-grid"><div class="statuscard ${LAST_OK?'ok':'warn'}"><span class="slbl">Data file</span><div class="sval">${LAST_OK?'loaded':'not loaded'}</div><div class="hint">${LAST_ERROR?esc(LAST_ERROR):'Loaded'}</div></div><div class="statuscard info"><span class="slbl">Source</span><div class="sval">${esc(DATA.source_note||'unknown')}</div><div class="hint">${esc(DATA.standings_mode||'')}</div></div><div class="statuscard info"><span class="slbl">Updated</span><div class="sval">${DATA.updated?ago(DATA.updated):'unknown'}</div><div class="hint">${esc(DATA.updated||'—')}</div></div><div class="statuscard info"><span class="slbl">Matches</span><div class="sval">${M.length}</div><div class="hint">${live} live · ${up} upcoming · ${fin} finished</div></div><div class="statuscard info"><span class="slbl">Groups</span><div class="sval">${st.length}</div><div class="hint">${third.length} third-place teams tracked</div></div><div class="statuscard info"><span class="slbl">News Items</span><div class="sval">${(DATA.news||[]).length}</div><div class="hint">${newsSources().filter(s=>s!=='all').join(' · ')}</div></div></div><div class="btnline"><button class="actionbtn" onclick="load(true)">Reload Data Now</button><button class="actionbtn" onclick="setView('groups')">Open Groups</button><button class="actionbtn" onclick="setView('third')">Open Thirds</button><button class="actionbtn" onclick="setView('updates')">System Updates</button></div>`}
 function lopt(v,label,cur){return `<option value="${v}" ${v===cur?'selected':''}>${label}</option>`}
@@ -592,6 +623,78 @@ function computeAlerts(){const out=[];const now=Date.now();
 function renderAlerts(){const bar=$('#alertBar');if(!bar)return;const a=computeAlerts();
   if(!a.length){bar.style.display='none';return;}
   bar.style.display='';bar.innerHTML=a.map(x=>`<span class="alertPill ${x.t}" onclick="openMatchModal('${x.id}')">${x.t==='upset'?'&#9889; ':x.t==='live'?'&#128308; ':'&#9203; '}${x.txt}</span>`).join('');}
+// Alert center, probability movement, and alert preferences. These override
+// the original compact alert renderer above while retaining its watchlist API.
+let MATCH_SIGNAL_CHANGES={},MODEL_HISTORY={},LAST_SIGNAL_CAPTURE='';
+function _signalId(m){return `${m?._comp||DATA.comp_key||'sport'}:${m?.id||''}`}
+function _alertReadJSON(key,fallback){try{return JSON.parse(localStorage.getItem(key)||JSON.stringify(fallback))}catch(e){return fallback}}
+function captureMatchSignals(matches){
+  const previous=_alertReadJSON('matchday.signalSnapshot',{}),next={},history=_alertReadJSON('matchday.modelHistory',{}),now=Date.now();
+  MATCH_SIGNAL_CHANGES={};
+  (matches||[]).filter(m=>m?.prediction&&m.status!=='FINISHED').slice(0,220).forEach(m=>{
+    const id=_signalId(m),op=typeof _v10OfficialPick==='function'?_v10OfficialPick(m):null;
+    const confidence=Number(op?.confidence??m.prediction?.confidence),market=Number(op?.marketPct);
+    next[id]={confidence:Number.isFinite(confidence)?confidence:null,market:Number.isFinite(market)?market:null,status:m.status,score:`${m.score?.home??''}-${m.score?.away??''}`,at:now};
+    const old=previous[id];
+    if(old&&Number.isFinite(old.confidence)&&Number.isFinite(confidence)){
+      const delta=Math.round(confidence-old.confidence);
+      if(Math.abs(delta)>=3)MATCH_SIGNAL_CHANGES[id]={delta,previous:old.confidence,current:confidence};
+    }
+    const points=Array.isArray(history[id])?history[id]:[];
+    if(Number.isFinite(confidence)&&(!points.length||points[points.length-1].p!==confidence))points.push({t:now,p:confidence});
+    history[id]=points.slice(-8);
+  });
+  MODEL_HISTORY=history;
+  try{localStorage.setItem('matchday.signalSnapshot',JSON.stringify(next));localStorage.setItem('matchday.modelHistory',JSON.stringify(history))}catch(e){}
+}
+function captureSignalsIfFresh(){const token=`${DATA.comp_key||''}:${DATA.updated||''}:${(DATA.matches||[]).length}`;if(token!==LAST_SIGNAL_CAPTURE){LAST_SIGNAL_CAPTURE=token;captureMatchSignals(DATA.matches||[])}}
+function probabilityMovement(m){return MATCH_SIGNAL_CHANGES[_signalId(m)]||null}
+function probabilitySparkline(m){
+  const points=MODEL_HISTORY[_signalId(m)]||[];if(points.length<2)return '';
+  const vals=points.map(x=>Number(x.p)).filter(Number.isFinite),lo=Math.min(...vals),hi=Math.max(...vals),span=Math.max(1,hi-lo);
+  const coords=vals.map((v,i)=>`${Math.round(i/(vals.length-1)*54)+1},${Math.round(17-(v-lo)/span*14)}`).join(' ');
+  const delta=Math.round(vals[vals.length-1]-vals[0]),cls=delta>0?'up':delta<0?'down':'flat';
+  return `<span class="probTrend ${cls}" title="Model probability movement: ${delta>0?'+':''}${delta} points"><svg viewBox="0 0 56 20" aria-hidden="true"><polyline points="${coords}"/></svg><b>${delta>0?'+':''}${delta}</b></span>`;
+}
+function _alertEnabled(type){const map={soon:'alertsKickoff',live:'alertsLive',upset:'alertsUpset',model:'alertsModel',market:'alertsModel',data:'alertsData'};return SETTINGS[map[type]]!==false}
+function _alertIcon(type){return ({upset:'&#9889;',live:'&#9679;',soon:'&#9203;',model:'&#8597;',market:'&#8644;',data:'&#9888;'})[type]||'&#8226;'}
+function _alertKey(a){return `${a.t}:${a.id||'app'}:${a.txt}`}
+function _alertSeen(){return new Set(_alertReadJSON('matchday.alertsSeen',[]))}
+function computeAlerts(){
+  const out=[],now=Date.now(),watchedNames=new Set(wlLoad()),updated=Date.parse(DATA.updated||'');
+  if(_alertEnabled('data')&&Number.isFinite(updated)&&(now-updated)>180*60000)out.push({t:'data',txt:`Match data was last updated ${ago(DATA.updated)}.`,id:''});
+  (DATA.matches||[]).forEach(m=>{
+    const watched=watchedNames.has(m.home?.name)||watchedNames.has(m.away?.name)||isFavoriteMatch(m),up=m.prediction?.upset;
+    if(_alertEnabled('upset')&&m.status==='LIVE'&&up&&up.radar)out.push({t:'upset',txt:`${up.candidate_name||'Underdog'} is on the live upset radar.`,id:m.id});
+    if(!watched)return;
+    if(_alertEnabled('live')&&m.status==='LIVE')out.push({t:'live',txt:`${m.home?.code||m.home?.name} ${m.score?.home??0}-${m.score?.away??0} ${m.away?.code||m.away?.name} is live.`,id:m.id});
+    if(_alertEnabled('soon')&&m.status==='UPCOMING'&&m.kickoff){const mins=Math.round((new Date(m.kickoff)-now)/60000);if(mins>0&&mins<=90)out.push({t:'soon',txt:`${m.home?.name} v ${m.away?.name} starts in ${mins}m.`,id:m.id});}
+    const change=probabilityMovement(m);
+    if(_alertEnabled('model')&&change)out.push({t:'model',txt:`${m.prediction?.pick_name||'Model pick'} moved ${change.delta>0?'+':''}${change.delta} probability points.`,id:m.id});
+    if(_alertEnabled('market')&&m.prediction&&typeof _v10OfficialPick==='function'){
+      const op=_v10OfficialPick(m),edge=_v10OfficialEdge(m,op);
+      if(edge!=null&&Math.abs(edge)>=8)out.push({t:'market',txt:`Model and market differ by ${Math.abs(edge)} points on ${op.name}.`,id:m.id});
+    }
+  });
+  return out.filter((a,i,list)=>list.findIndex(b=>_alertKey(b)===_alertKey(a))===i).slice(0,12);
+}
+function openAlertMatch(id){toggleAlertCenter(false);if(id)openMatchModal(id)}
+function markAlertsRead(alerts=computeAlerts()){try{localStorage.setItem('matchday.alertsSeen',JSON.stringify(alerts.map(_alertKey).slice(-80)))}catch(e){}renderAlerts()}
+function toggleAlertCenter(force){
+  const panel=$('#alertCenter'),bell=$('#alertBell');if(!panel)return;
+  const open=force===undefined?panel.hidden:!!force;panel.hidden=!open;bell?.setAttribute('aria-expanded',String(open));
+  if(open){markAlertsRead(computeAlerts());panel.querySelector('.alertCenterClose')?.focus()}
+}
+function renderAlerts(){
+  const bar=$('#alertBar'),panel=$('#alertCenter'),bell=$('#alertBell'),count=$('#alertCount'),alerts=computeAlerts(),seen=_alertSeen();
+  const unseen=alerts.filter(a=>!seen.has(_alertKey(a))).length;
+  if(count){count.textContent=unseen;count.hidden=!unseen}bell?.classList.toggle('hasAlerts',!!alerts.length);
+  if(bar){const urgent=alerts.filter(a=>a.t==='live'||a.t==='upset'||a.t==='model').slice(0,3);bar.style.display=urgent.length?'':'none';bar.innerHTML=urgent.map(a=>`<button class="alertPill ${a.t}" onclick="openAlertMatch('${esc(a.id)}')">${_alertIcon(a.t)} ${esc(a.txt)}</button>`).join('')}
+  if(panel)panel.innerHTML=`<div class="alertCenterHead"><div><span>Signal center</span><b>${alerts.length?`${alerts.length} active`:'All quiet'}</b></div><button class="alertCenterClose" onclick="toggleAlertCenter(false)" aria-label="Close alerts">&times;</button></div><div class="alertCenterList">${alerts.length?alerts.map(a=>`<button class="alertItem ${a.t}" onclick="openAlertMatch('${esc(a.id)}')"><i>${_alertIcon(a.t)}</i><span><b>${a.t==='soon'?'Kickoff':a.t==='market'?'Model vs market':a.t[0].toUpperCase()+a.t.slice(1)}</b><small>${esc(a.txt)}</small></span></button>`).join(''):`<div class="alertEmpty"><span>&#10003;</span><b>No active signals</b><p>Star a team to receive kickoff, live-score, model-movement and market-gap alerts.</p></div>`}</div><div class="alertCenterFoot"><button onclick="markAlertsRead()">Mark all read</button><button onclick="toggleAlertCenter(false);setView('customize')">Alert settings</button></div>`;
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#alertCenter')?.hidden)toggleAlertCenter(false)});
+document.addEventListener('click',e=>{const panel=$('#alertCenter');if(panel&&!panel.hidden&&!e.target.closest('#alertCenter,#alertBell'))toggleAlertCenter(false)});
+
 // ---- Beat the Model (local, server-ready) --------------------------------
 // All persistence flows through these two seams. Tier 2 swaps their bodies to
 // also hit a server; nothing else in the feature changes.

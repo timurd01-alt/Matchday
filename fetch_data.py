@@ -163,6 +163,14 @@ API_FOOTBALL_MAX_STATS = 18     # safety cap for the free daily request budget
 
 DIAG = []
 _ODDS_CACHE = {"t": 0.0, "data": {}}
+# Tracks whether the Odds API refused this run because its monthly quota is
+# spent (vs. a transient error), so the UI can honestly say markets are
+# temporarily unavailable instead of silently showing none. Reset per build.
+MARKET_STATE = {"quota_out": False}
+
+def _is_quota_error(exc):
+    s = str(exc).lower()
+    return "out_of_usage" in s or "usage quota" in s or "quota has been reached" in s
 _OUT_CACHE  = {"t": 0.0, "data": []}
 _NEWS_CACHE = {"t": 0.0, "data": []}
 OUTRIGHTS_URL = (f"https://api.the-odds-api.com/v4/sports/{COMP['outright']}/odds/"
@@ -472,7 +480,11 @@ def fetch_odds():
     try:
         events = _get(f"{ODDS_URL}&apiKey={ODDS_API_KEY}")
     except Exception as e:
-        DIAG.append(f"odds: FAILED — {e}")
+        if _is_quota_error(e):
+            MARKET_STATE["quota_out"] = True
+            DIAG.append("odds: FAILED — monthly quota exhausted")
+        else:
+            DIAG.append(f"odds: FAILED — {e}")
         return _ODDS_CACHE["data"] or out
     open_d = _load_open(); dirty = False
     for ev in events:
@@ -1647,7 +1659,12 @@ def fetch_outrights(code_map):
     try:
         events = _get(f"{OUTRIGHTS_URL}&apiKey={ODDS_API_KEY}")
     except Exception as e:
-        DIAG.append(f"title odds: FAILED — {e}"); return _OUT_CACHE["data"] or []
+        if _is_quota_error(e):
+            MARKET_STATE["quota_out"] = True
+            DIAG.append("title odds: FAILED — monthly quota exhausted")
+        else:
+            DIAG.append(f"title odds: FAILED — {e}")
+        return _OUT_CACHE["data"] or []
     agg = defaultdict(list)
     for ev in events:
         for bk in ev.get("bookmakers", []):
@@ -3100,6 +3117,7 @@ def compute_advancement(matches, st, name_map, code_map):
 
 def build():
     DIAG.clear()
+    MARKET_STATE["quota_out"] = False
     print("Fetching fixtures…")
     sports_adapter = None
     if COMP.get("source") in {"sportsdataio", "balldontlie", "cfbd", "cbbd", "apisports"}:
@@ -3287,6 +3305,7 @@ def build():
                "third_race": third, "standings": standings, "scorers": scorers, "leaders": leaders, "team_of_tournament": build_team_of_tournament(matches, scorers, standings), "scorecard": scorecard,
                "advancement": compute_advancement(matches, st, name_map, code_map),
                "weekly_awards": build_weekly_awards(matches),
+               "markets_quota_out": MARKET_STATE["quota_out"],
                "diagnostics": [_scrub(x) for x in DIAG]}
     for out in (OUT_FILE, f"data_{COMP_KEY.lower()}.json"):
         tmp = out + ".tmp"
