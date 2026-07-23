@@ -1,7 +1,8 @@
 import datetime as dt
 import unittest
 
-from provider_adapters import (BallDontLieAdapter, CollegeBasketballDataAdapter,
+from provider_adapters import (APISportsAdapter, BallDontLieAdapter,
+                               CollegeBasketballDataAdapter,
                                CollegeFootballDataAdapter, SportsDataIOAdapter,
                                SportmonksAdapter)
 
@@ -175,6 +176,81 @@ class SportmonksTests(unittest.TestCase):
         self.assertEqual(attached, 1)
         self.assertEqual(matches[0]["stats_extra"]["home"]["shots"], 12)
         self.assertEqual(matches[0]["stats_extra"]["source"], "Sportmonks")
+
+
+class APISportsTests(unittest.TestCase):
+    """The 6th provider adapter — previously the only one without tests.
+    Covers both product shapes: NBA (team `code` present, points in the
+    schedule) and NFL (no `code` field, so names map through NFL_CODES)."""
+
+    TODAY = dt.date(2026, 11, 2)
+
+    def _nba_getter(self, url, headers):
+        self.assertEqual(headers["x-apisports-key"], "test-key")
+        if "/games" in url:
+            return {"response": [{
+                "id": 501, "date": {"start": "2026-11-02T00:30:00.000Z"},
+                "status": {"long": "In Play"}, "stage": 1,
+                "arena": {"name": "Chase Center"},
+                "teams": {"home": {"name": "Golden State Warriors", "code": "GSW"},
+                          "visitors": {"name": "Phoenix Suns", "code": "PHX"}},
+                "scores": {"home": {"points": 58}, "visitors": {"points": 55}},
+            }]}
+        if "/standings" in url:
+            return {"response": [{
+                "team": {"name": "Golden State Warriors"},
+                "win": {"home": 6, "away": 4}, "loss": {"home": 1, "away": 1},
+                "conference": {"name": "western"},
+            }]}
+        return {"response": []}
+
+    def _nfl_getter(self, url, headers):
+        if "/standings" in url:
+            return {"response": [{
+                "team": {"name": "Kansas City Chiefs"},
+                "won": 11, "lost": 2, "ties": 0,
+                "points": {"for": 340, "against": 250}, "division": "AFC West",
+            }]}
+        return {"response": []}
+
+    def test_nba_schedule_normalizes_match_contract(self):
+        adapter = APISportsAdapter("test-key", "NBA", getter=self._nba_getter, today=self.TODAY)
+        match = adapter.schedule()[0]
+        self.assertEqual(match["id"], "apis-nba-501")
+        self.assertEqual(match["home"]["name"], "Golden State Warriors")
+        self.assertEqual(match["status"], "LIVE")               # "In Play" -> LIVE
+        self.assertEqual(match["score"], {"home": 58, "away": 55})
+        self.assertEqual(match["venue"], "Chase Center")
+        self.assertEqual(match["data_source"], "API-Sports")
+
+    def test_nba_standings_group_and_record(self):
+        adapter = APISportsAdapter("test-key", "NBA", getter=self._nba_getter, today=self.TODAY)
+        model, tables = adapter.standings()
+        gsw = model["golden state warriors"]
+        self.assertEqual(gsw["record"], "10-2")                 # (6+4)-(1+1)
+        self.assertEqual(gsw["pos"], 1)
+        self.assertEqual(tables[0]["group"], "Western")
+
+    def test_nfl_standings_maps_team_code_without_code_field(self):
+        adapter = APISportsAdapter("test-key", "NFL", getter=self._nfl_getter, today=self.TODAY)
+        model, tables = adapter.standings()
+        chiefs = model["kansas city chiefs"]
+        self.assertEqual(chiefs["code"], "KC")                  # from NFL_CODES map
+        self.assertEqual(chiefs["record"], "11-2")
+        self.assertEqual(chiefs["gd"], 90)                      # 340 - 250
+        self.assertEqual(tables[0]["group"], "AFC West")
+
+    def test_status_mapping(self):
+        self.assertEqual(APISportsAdapter._status("Final"), "FINISHED")
+        self.assertEqual(APISportsAdapter._status("In Play"), "LIVE")
+        self.assertEqual(APISportsAdapter._status("Scheduled"), "UPCOMING")
+
+    def test_missing_key_and_bad_competition_raise(self):
+        from provider_adapters import ProviderError
+        with self.assertRaises(ProviderError):
+            APISportsAdapter("", "NBA")
+        with self.assertRaises(ProviderError):
+            APISportsAdapter("test-key", "MLS")
 
 
 if __name__ == "__main__":
