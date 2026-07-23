@@ -33,12 +33,12 @@ class NameNormalizationTests(unittest.TestCase):
         self.assertTrue(fd._name_match("USA", "United States"))
         self.assertFalse(fd._name_match("Spain", "France"))
 
-    def test_name_match_empty_string_is_substring_of_everything(self):
-        # Documents a sharp edge: "" normalizes to "" which is a substring of
-        # any name, so an empty name matches anything. find_odds() guards
-        # against this by only comparing 2-name keys, but callers passing a
-        # blank team name would get spurious matches.
-        self.assertTrue(fd._name_match("", "Spain"))
+    def test_name_match_blank_name_never_matches(self):
+        # A blank/empty name normalizes to "" and must not match anything —
+        # otherwise it would be a substring of every team name.
+        self.assertFalse(fd._name_match("", "Spain"))
+        self.assertFalse(fd._name_match("Spain", ""))
+        self.assertFalse(fd._name_match("", ""))
 
 
 class FindOddsTests(unittest.TestCase):
@@ -93,12 +93,12 @@ class ProbabilityHelperTests(unittest.TestCase):
             self.assertEqual(sum(out.values()), 100, vals)
             self.assertTrue(all(v >= 0 for v in out.values()), vals)
 
-    def test_round_triplet_all_zero_input_is_degenerate(self):
-        # A known sharp edge: with no probability mass at all there is nothing
-        # to normalize, so the result does NOT sum to 100. The model never
-        # feeds all-zero triplets, but this pins the behavior so a future
-        # change is a conscious one.
-        self.assertEqual(sum(fd._round_triplet({"h": 0, "d": 0, "a": 0}).values()), 3)
+    def test_round_triplet_all_zero_input_falls_back_to_uniform(self):
+        # With no probability mass to normalize, fall back to a uniform
+        # split that still sums to 100 rather than a degenerate total.
+        out = fd._round_triplet({"h": 0, "d": 0, "a": 0})
+        self.assertEqual(sum(out.values()), 100)
+        self.assertEqual(out, {"h": 34, "d": 33, "a": 33})
 
     def test_temperature_scale_never_zeroes_a_side(self):
         out = fd._temperature_scale_pct({"h": 98, "d": 1, "a": 1}, temp=2.2)

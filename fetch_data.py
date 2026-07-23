@@ -318,6 +318,7 @@ def pair(a, b): return frozenset({norm(a), norm(b)})
 
 def _name_match(a, b):
     a, b = norm(a), norm(b)
+    if not a or not b: return False             # a blank name is not a match for anything
     if a == b: return True
     if a in b or b in a: return True            # "cape verde" ⊂ "cape verde islands"
     ta, tb = set(a.split()), set(b.split())
@@ -865,7 +866,9 @@ def _clamp(v, lo, hi):
 def _round_triplet(vals):
     """Round a pct triplet while keeping the total near 100."""
     raw = {k: max(0.0, float(vals.get(k, 0) or 0)) for k in ("h", "d", "a")}
-    total = sum(raw.values()) or 1.0
+    if sum(raw.values()) == 0:
+        return {"h": 34, "d": 33, "a": 33}   # no mass to infer -> uniform, still sums to 100
+    total = sum(raw.values())
     normed = {k: raw[k] / total * 100.0 for k in raw}
     rounded = {k: int(round(normed[k])) for k in raw}
     drift = 100 - sum(rounded.values())
