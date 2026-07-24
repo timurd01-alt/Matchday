@@ -384,10 +384,13 @@ class CollegeFootballDataAdapter:
             total, conf = row.get("total") or {}, row.get("conferenceGames") or {}
             if not name or str(row.get("classification") or "fbs").lower() != "fbs":
                 continue
-            w, l, ties = int(total.get("wins") or 0), int(total.get("losses") or 0), int(total.get("ties") or 0)
-            pld = int(total.get("games") or (w + l + ties)); pf, pa = scoring.get(name, [0, 0]); diff = pf - pa
-            item = {"name": name, "code": _short_code(name), "pos": None, "pld": pld, "w": w, "d": ties, "l": l,
-                    "gf": pf, "ga": pa, "gd": diff, "pts": w * 3 + ties, "form": "", "record": f"{w}-{l}" + (f"-{ties}" if ties else ""),
+            # College football has had mandatory overtime since 1996 -- a game
+            # cannot end level, so ties are never a real outcome here even if
+            # the provider's row carries a stale/legacy "ties" count.
+            w, l = int(total.get("wins") or 0), int(total.get("losses") or 0)
+            pld = int(total.get("games") or (w + l)); pf, pa = scoring.get(name, [0, 0]); diff = pf - pa
+            item = {"name": name, "code": _short_code(name), "pos": None, "pld": pld, "w": w, "d": 0, "l": l,
+                    "gf": pf, "ga": pa, "gd": diff, "pts": w * 3, "form": "", "record": f"{w}-{l}",
                     "win_pct": w / max(1, pld), "league_win_pct": int(conf.get("wins") or 0) / max(1, int(conf.get("games") or 0)), "qual": "",
                     "season_stale": stale}
             grouped.setdefault(group, []).append(item)

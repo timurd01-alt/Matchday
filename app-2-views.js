@@ -191,6 +191,10 @@ const SANDBOX_TWO_WAY=new Set(['nfl','ncaaf','ncaam','mlb','nhl','nba']);
 // backend fix for the same P4-loses-class-edge-to-a-stale-record bug.
 const SANDBOX_FULL_GAMES={nfl:10,ncaaf:10,nba:20,ncaam:18,mlb:30,nhl:20};
 function sandboxTeams(){
+  // "All sports" merges every competition's teams into one list with no
+  // shared standings -- never let the picker fall back to the merged match
+  // list here, or it'll happily build an NFL-vs-soccer-club matchup.
+  if(String(DATA.comp_key||'').toUpperCase()==='ALL')return [];
   const fromStandings=(DATA.standings||[]).flatMap(g=>g.teams||[]);
   if(fromStandings.length)return fromStandings;
   // Preseason / before any games are played, standings are legitimately

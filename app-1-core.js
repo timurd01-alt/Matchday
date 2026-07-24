@@ -74,7 +74,7 @@ const NAV_DEF={
 const SPORT_KIND={'':'all',wc:'soccer_cup',ucl:'soccer_club',epl:'soccer_league',laliga:'soccer_league',seriea:'soccer_league',bundesliga:'soccer_league',ligue1:'soccer_league',nfl:'us_sport',ncaaf:'college',ncaam:'college_basketball',nba:'us_sport',mlb:'us_sport',nhl:'us_sport'};
 function currentSportKey(){const m=(DATA_FILE||'').match(/data_(\w+)\.json/);return m?m[1]:'';}
 function navProfile(){return SPORT_KIND[currentSportKey()]||'all';}
-const NAV_LABELS={soccer_club:{groups:'League Phase'},us_sport:{groups:'Standings'},college:{groups:'Rankings',bracket:'CFP Bracket'},college_basketball:{groups:'Conferences',bracket:'Bracketology'},soccer_league:{groups:'Table',tott:'Team of the Season'}};
+const NAV_LABELS={soccer_club:{groups:'League Phase'},us_sport:{groups:'Standings'},college:{groups:'Top 25',bracket:'CFP Bracket'},college_basketball:{groups:'Conferences',bracket:'Bracketology'},soccer_league:{groups:'Table',tott:'Team of the Season'}};
 function applySportNav(){
   const prof=navProfile();
   const allowed=NAV_DEF[prof];

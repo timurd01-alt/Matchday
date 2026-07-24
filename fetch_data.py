@@ -3197,7 +3197,7 @@ def build():
                         "win_pct": row.get("win_pct"),
                         "qual": ({"status": f"CFP {r['rank']}", "note": "projected playoff seed (straight seeding)"} if COMP_KEY == "NCAAF" and r["rank"] <= 12 else "")}
             rank_rows = [_rank_row(r) for r in ranks]
-            standings = [{"group": "Matchday Top 25", "teams": rank_rows}] + (standings or [])
+            standings = [{"group": "Top 25", "teams": rank_rows}] + (standings or [])
         if COMP_KEY == "NCAAF" and proj and not bracket:
             bracket = proj
     if COMP_KEY == "NCAAM":
