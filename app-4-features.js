@@ -15,9 +15,11 @@ function _insightFocusHTML(focus){
 function _insightFocusPool(M){
   const primary=M.find(m=>m.status==='LIVE'&&isFavoriteMatch(m))||M.filter(m=>isFavoriteMatch(m)&&isVisibleUpcoming(m)).sort(fixtureSort)[0]||M.find(m=>m.status==='LIVE')||M.filter(isVisibleUpcoming).sort(fixtureSort)[0]||M.find(m=>isFavoriteMatch(m)&&m.status==='FINISHED')||M.find(m=>m.status==='FINISHED')||M[0];
   if(!primary)return [];
-  // rotate the primary focus alongside a few other live/upcoming games worth surfacing,
-  // ranked by watchability so the panel isn't stuck on one static match
-  const others=M.filter(m=>(m.status==='LIVE'||isVisibleUpcoming(m))&&m.id!==primary.id)
+  // rotate the primary focus alongside a few other live/upcoming games worth
+  // surfacing, ranked by watchability within a near-term window so a
+  // months-away fixture can't outrank this week's games
+  const candidates=M.filter(m=>(m.status==='LIVE'||isVisibleUpcoming(m))&&m.id!==primary.id);
+  const others=nearTermPool(candidates,4)
     .sort((a,b)=>(b.watchability||0)-(a.watchability||0)).slice(0,4);
   return [primary,...others];
 }

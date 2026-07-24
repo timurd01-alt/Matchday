@@ -255,9 +255,10 @@ function renderWelcome(){
   const soonest=[...live].sort(fixtureSort)[0],host=$('#welcomeNext');
   if(!host||!soonest)return;
   // most urgent kickoff shown first, then rotates through a small pool of
-  // the other featured games (by watchability) so the panel isn't static
-  const featured=[...live].sort((a,b)=>(b.watchability||0)-(a.watchability||0))
-    .filter(m=>m.id!==soonest.id).slice(0,4);
+  // the other featured games (by watchability, narrowed to a near-term
+  // window so a months-away fixture can't outrank this week's games)
+  const featured=nearTermPool(live.filter(m=>m.id!==soonest.id),4)
+    .sort((a,b)=>(b.watchability||0)-(a.watchability||0)).slice(0,4);
   const pool=[soonest,...featured];
   host.innerHTML=_welcomeCardHTML(soonest);
   runCarousel('welcome',pool,host,_welcomeCardHTML,4500);
@@ -312,6 +313,21 @@ function enhanceMatchCards(host){
 }
 const MARQUEE_COUNT=16;
 const MARQUEE_PER_COMP=3;
+// Watchability alone doesn't know or care how far away a game is -- an
+// off-season fixture months out can outscore something happening this week.
+// Narrow to the soonest reasonable window before ranking by watchability,
+// widening only if that window doesn't have enough candidates (e.g. every
+// active sport is between seasons at once).
+const NEAR_TERM_WINDOWS_DAYS=[14,30,60,120];
+function nearTermPool(matches,minCount){
+  const now=Date.now();
+  for(const days of NEAR_TERM_WINDOWS_DAYS){
+    const cutoff=now+days*86400000;
+    const within=matches.filter(m=>m.status==='LIVE'||(kickMs(m)&&kickMs(m)<=cutoff));
+    if(within.length>=minCount)return within;
+  }
+  return matches;
+}
 function watchabilityFixtureSort(a,b){return Number(isFavoriteMatch(b))-Number(isFavoriteMatch(a))||(Number(b.watchability)||0)-(Number(a.watchability)||0)||fixtureSort(a,b)}
 // Marquee selection for the merged "All sports" board. A pure global
 // watchability ranking buries whole sports: soccer's team ratings sit on a
@@ -325,8 +341,12 @@ function watchabilityFixtureSort(a,b){return Number(isFavoriteMatch(b))-Number(i
 // to the very front regardless.
 function marqueeSelect(active){
   const favs=active.filter(isFavoriteMatch);
+  // favorites stay eligible regardless of how far out they are; the
+  // watchability-ranked rest gets narrowed to a near-term window first, so a
+  // months-away fixture can't outrank something happening this week
+  const rest=nearTermPool(active.filter(m=>!isFavoriteMatch(m)),MARQUEE_COUNT);
   const byComp={};
-  active.forEach(m=>{if(isFavoriteMatch(m))return;const c=m._comp||m.competition||'OTHER';(byComp[c]||=[]).push(m);});
+  rest.forEach(m=>{const c=m._comp||m.competition||'OTHER';(byComp[c]||=[]).push(m);});
   Object.values(byComp).forEach(list=>list.sort((a,b)=>(Number(b.watchability)||0)-(Number(a.watchability)||0)));
   const picked=[...favs];const seen=new Set(favs);
   for(let round=0;round<MARQUEE_PER_COMP&&picked.length<MARQUEE_COUNT;round++){
@@ -775,7 +795,8 @@ function openAlertMatch(id){toggleAlertCenter(false);if(id)openMatchModal(id)}
 function markAlertsRead(alerts=computeSignalAlerts()){try{localStorage.setItem('matchday.alertsSeen',JSON.stringify(alerts.map(_alertKey).slice(-80)))}catch(e){}renderSignalAlerts()}
 function toggleAlertCenter(force){
   const panel=$('#alertCenter'),bell=$('#alertBell');if(!panel)return;
-  const open=force===undefined?panel.hidden:!!force;panel.hidden=!open;bell?.setAttribute('aria-expanded',String(open));
+  const open=force===undefined?panel.hidden:!!force;panel.hidden=!open;
+  if(bell){bell.setAttribute('aria-expanded',String(open));bell.setAttribute('aria-label',open?'Close alerts':'Open alerts')}
   if(open){markAlertsRead(computeSignalAlerts());panel.querySelector('.alertCenterClose')?.focus()}
 }
 function renderSignalAlerts(){
