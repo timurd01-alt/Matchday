@@ -30,11 +30,7 @@ SPORTS = [
 SPACING = 20          # seconds between two sports' fetches (quota safety)
 TICK = 15             # scheduler wake-up interval
 RETRY_AFTER_ERROR = 15 * 60
-
-# TEMPORARY: force these sports to refetch on the next run_once() regardless
-# of cadence, to verify the CFBD_KEY/CBBD_KEY secret update actually reaches
-# apply_recruiting_strength() live. Remove this line once confirmed.
-FORCE_REFETCH_ONCE = {"ncaaf", "ncaam"}
+FORCE_REFETCH_ONCE = set()
 
 LIVE_EVERY = 60
 SOON_EVERY = 60 * 60
