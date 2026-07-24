@@ -338,7 +338,25 @@ def find_odds(odds, home, away):
 
 
 def fetch_raw_matches():
-    return _get(f"{FD_BASE}/competitions/{COMP["fd"]}/matches", {"X-Auth-Token": FOOTBALL_DATA_KEY}).get("matches", [])
+    """Returns (matches, stale). `stale` is True only when the current
+    season's fixture list isn't published yet (deep off-season) and we fell
+    back to last season's completed matches -- same "show something honest
+    rather than nothing" pattern the CFBD/CBBD adapters use when their
+    records endpoint has no current-year rows yet. Skipped for one-off
+    tournaments (World Cup): there's no meaningful "last season" for those,
+    so an empty result stays empty rather than resurrecting the prior
+    edition's now-irrelevant field."""
+    matches = _get(f"{FD_BASE}/competitions/{COMP["fd"]}/matches", {"X-Auth-Token": FOOTBALL_DATA_KEY}).get("matches", [])
+    if matches or COMP.get("tournament"):
+        return matches, False
+    try:
+        prev_season = datetime.date.today().year - 1
+        matches = _get(f"{FD_BASE}/competitions/{COMP["fd"]}/matches?season={prev_season}",
+                        {"X-Auth-Token": FOOTBALL_DATA_KEY}).get("matches", [])
+    except Exception as e:
+        DIAG.append(f"raw matches: prior-season fallback failed ({_scrub(e)})")
+        matches = []
+    return matches, bool(matches)
 
 
 def _resolve_score(m):
@@ -3147,6 +3165,7 @@ def build():
     MARKET_STATE["quota_out"] = False
     print("Fetching fixtures…")
     sports_adapter = None
+    standings_stale = False  # only the football-data (soccer) branch below can set this
     if COMP.get("source") in {"sportsdataio", "balldontlie", "cfbd", "cbbd", "apisports"}:
         raw = []
         if COMP.get("source") == "balldontlie":
@@ -3200,7 +3219,8 @@ def build():
                 if team.get("name"):
                     name_map.setdefault(norm(team["name"]), team["name"])
     else:
-        raw = fetch_raw_matches(); print(f"  got {len(raw)} raw fixtures")
+        raw, standings_stale = fetch_raw_matches()
+        print(f"  got {len(raw)} raw fixtures" + (" (last season -- new fixtures not published yet)" if standings_stale else ""))
         st = compute_standings(raw)
         matches = build_matches(raw, st)
         training_matches = normalize_match_results(matches)
@@ -3387,6 +3407,7 @@ def build():
                "advancement": compute_advancement(matches, st, name_map, code_map),
                "weekly_awards": weekly_awards,
                "markets_quota_out": MARKET_STATE["quota_out"],
+               "standings_stale": standings_stale,
                "diagnostics": [_scrub(x) for x in DIAG]}
     for out in (OUT_FILE, f"data_{COMP_KEY.lower()}.json"):
         tmp = out + ".tmp"
