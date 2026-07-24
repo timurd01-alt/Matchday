@@ -16,5 +16,8 @@ ratings_h2h.json
 __pycache__/
 *.pyc
 .ci_fetch_state.json
+posts.json
+posts_state.json
+posts/*.html
 _site/
 node_modules/

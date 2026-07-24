@@ -1,9 +1,21 @@
 import datetime as dt
 import unittest
+import urllib.parse
+from unittest import mock
 
 from provider_adapters import (BallDontLieAdapter, CollegeBasketballDataAdapter,
-                               CollegeFootballDataAdapter, SportsDataIOAdapter,
-                               SportmonksAdapter)
+                               CollegeFootballDataAdapter, ProviderError,
+                               SportsDataIOAdapter, SportmonksAdapter, normalized_score)
+
+
+class ScoreNormalizationTests(unittest.TestCase):
+    def test_only_final_scores_receive_a_winner(self):
+        self.assertEqual(normalized_score(27, 20, True),
+                         {"home": 27, "away": 20, "winner": "h"})
+        self.assertEqual(normalized_score(20, 20, True),
+                         {"home": 20, "away": 20, "winner": "d"})
+        self.assertEqual(normalized_score(27, 20, False),
+                         {"home": 27, "away": 20})
 
 
 class SportsDataIOTests(unittest.TestCase):
@@ -87,10 +99,65 @@ class BallDontLieTests(unittest.TestCase):
                                     today=dt.date(2026, 7, 17))
         match = adapter.schedule()[0]
         self.assertEqual(match["status"], "FINISHED")
-        self.assertEqual(match["score"], {"home": 4, "away": 2})
+        self.assertEqual(match["score"], {"home": 4, "away": 2, "winner": "h"})
         self.assertEqual(match["data_source"], "BALLDONTLIE")
         self.assertEqual(adapter.standings(), ({}, []))
         self.assertEqual(adapter.leaders(), {})
+
+    def test_season_games_pages_through_results_and_drops_preseason(self):
+        calls = []
+
+        def paged_getter(url, headers):
+            self.assertEqual(headers["Authorization"], "test-key")
+            cursor = dict(urllib.parse.parse_qsl(urllib.parse.urlsplit(url).query)).get("cursor")
+            calls.append(cursor)
+            if cursor is None:
+                return {"data": [{
+                    "id": 1, "date": "2026-04-01T22:00:00.000Z", "season": 2026,
+                    "status": "STATUS_FINAL", "season_type": "preseason",
+                    "home_team": {"display_name": "Boston Red Sox"},
+                    "away_team": {"display_name": "New York Yankees"},
+                    "home_team_data": {"runs": 1}, "away_team_data": {"runs": 0},
+                }], "meta": {"next_cursor": "page2"}}
+            return {"data": [{
+                "id": 2, "date": "2026-05-01T22:00:00.000Z", "season": 2026,
+                "status": "STATUS_FINAL", "season_type": "regular",
+                "home_team": {"display_name": "Boston Red Sox"},
+                "away_team": {"display_name": "New York Yankees"},
+                "home_team_data": {"runs": 5}, "away_team_data": {"runs": 3},
+            }], "meta": {}}
+
+        adapter = BallDontLieAdapter("test-key", "MLB", getter=paged_getter,
+                                    today=dt.date(2026, 7, 17))
+        with mock.patch("provider_adapters.time.sleep") as sleep_mock:
+            games = adapter.season_games()
+        self.assertEqual(len(calls), 2)
+        sleep_mock.assert_called_once_with(BallDontLieAdapter.SEASON_PAGE_DELAY_SEC)
+        self.assertEqual(len(games), 1)
+        self.assertEqual(games[0]["score"], {"home": 5, "away": 3, "winner": "h"})
+
+    def test_season_games_keeps_partial_results_after_a_later_page_fails(self):
+        calls = []
+
+        def flaky_getter(url, headers):
+            cursor = dict(urllib.parse.parse_qsl(urllib.parse.urlsplit(url).query)).get("cursor")
+            calls.append(cursor)
+            if cursor is None:
+                return {"data": [{
+                    "id": 1, "date": "2026-05-01T22:00:00.000Z", "season": 2026,
+                    "status": "STATUS_FINAL", "season_type": "regular",
+                    "home_team": {"display_name": "Boston Red Sox"},
+                    "away_team": {"display_name": "New York Yankees"},
+                    "home_team_data": {"runs": 5}, "away_team_data": {"runs": 3},
+                }], "meta": {"next_cursor": "page2"}}
+            raise ProviderError("429 rate limited")
+
+        adapter = BallDontLieAdapter("test-key", "MLB", getter=flaky_getter,
+                                    today=dt.date(2026, 7, 17))
+        with mock.patch("provider_adapters.time.sleep"):
+            games = adapter.season_games()
+        self.assertEqual(len(calls), 2)
+        self.assertEqual(len(games), 1)
 
 
 class CollegeFootballDataTests(unittest.TestCase):
@@ -145,6 +212,7 @@ class CollegeBasketballDataTests(unittest.TestCase):
         model, tables = adapter.standings()
         ranks, _ = adapter.rankings(tables)
         self.assertEqual(match["status"], "FINISHED")
+        self.assertEqual(match["score"]["winner"], "h")
         self.assertEqual(match["data_source"], "CollegeBasketballData")
         self.assertEqual(model["duke"]["record"], "1-0")
         self.assertEqual(model["north carolina"]["record"], "0-1")

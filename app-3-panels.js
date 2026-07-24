@@ -15,7 +15,7 @@ h+=`<div class="seclbl" style="margin-top:16px">Pick log</div>`+(sc.picks||[]).m
 h+=`<div class="edisc">Picks lock at first sighting before kickoff and are never rewritten. Knockout games level at full time grade as draws — shootout winners aren't counted. Model output, not betting advice.</div>`;
 host.innerHTML=h}
 function highlightFavoriteRows(){if(!favoriteTeam())return;document.querySelectorAll('.gtable .gteam').forEach(cell=>{if(teamKey(cell.textContent).includes(teamKey(favoriteTeam())))cell.closest('tr')?.classList.add('favoriteTeamRow')})}
-function renderCurrent(){captureSignalsIfFresh();({matches:renderMatches,results:renderResults,tott:renderTOTT,groups:renderGroups,title:renderTitle,edge:renderEdge,score:renderScore,bracket:renderBracket,third:renderThird,news:renderNews,status:renderStatus,updates:renderSystemUpdates,community:renderCommunity,sandbox:renderSandbox,customize:renderCustomize}[VIEW]||renderMatches)();renderWelcome();highlightFavoriteRows();applyStaticI18n()}
+function renderCurrent(){captureSignalsIfFresh();({matches:renderMatches,results:renderResults,tott:renderTOTT,groups:renderGroups,title:renderTitle,edge:renderEdge,score:renderScore,bracket:renderBracket,third:renderThird,news:renderNews,insights:renderInsights,status:renderStatus,updates:renderSystemUpdates,community:renderCommunity,sandbox:renderSandbox,customize:renderCustomize}[VIEW]||renderMatches)();renderWelcome();highlightFavoriteRows();applyStaticI18n()}
 function renderStrip(){const M=DATA.matches||[],live=M.filter(m=>m.status==='LIVE'),next=M.filter(isVisibleUpcoming).sort((a,b)=>(a.kickoff||'').localeCompare(b.kickoff||''))[0];const parts=[];
 const isSample=(DATA.source_note||'').toLowerCase().includes('sample');
 parts.push(isSample?`<span class="ls-badge sample">${t("sample data")}</span>`:live.length?`<span class="ls-badge live">${t("live data")}</span>`:`<span class="ls-badge ok">${t("live feed")}</span>`);
@@ -291,7 +291,7 @@ function openMatchModal(id){const m=BYID[id]||(DATA.matches||[]).find(x=>String(
    It prevents vertical letters, cramped chips, and overlap. */
 function modelFactorCardsV3(pr){
   if(!pr)return'';
-  const labels={pts:'points',gd:'goal diff',form:'form',adv:'home',class:'class',rest:'rest'};
+  const labels={pts:'points',gd:'goal diff',record:'season record',margin:'scoring margin',rank:'poll rank',srs:'opponent-adjusted rating',form:'form',adv:'home',class:'class',rest:'rest',elo:'elo rating'};
   const cards=[];
   if(pr.why){
     Object.entries(pr.why)
@@ -336,7 +336,7 @@ function _v4MarketPct(m,side){
   return null;
 }
 function _v4FactorRows(pr){
-  const labels={class:'team class',pts:'points',gd:'goal diff',form:'form',adv:'home field',rest:'rest',elo:'elo rating',h2h:'head-to-head',injuries:'injuries'};
+  const labels={class:'team class',pts:'points',gd:'goal diff',record:'season record',margin:'scoring margin',rank:'poll rank',srs:'opponent-adjusted rating',form:'form',adv:'home field',rest:'rest',elo:'elo rating',h2h:'head-to-head',injuries:'injuries'};
   const rows=[];
   if(pr&&pr.why){
     Object.entries(pr.why).filter(([k,v])=>labels[k]&&Math.abs(Number(v)||0)>=0.3)
@@ -371,7 +371,7 @@ function matchStory(m){const pr=m.prediction;if(!pr)return '';
     lead=`<b>${pickName}</b> is the model's pick${conf?` at ${conf}%`:''}${conf&&conf>=60?' — a confident, clean call with no live upset threat':''}. ${esc(pr.note||'')}.`;
   }
   // why bullets from factor attribution (top 3 by magnitude)
-  const L={pts:'points on the table',gd:'tournament goal difference',form:'recent form',adv:'home-listing edge',class:'squad class and ranking',rest:'rest advantage'};
+  const L={pts:'points on the table',gd:'tournament goal difference',record:'season record',margin:'per-game scoring margin',rank:'poll rank',srs:'opponent-adjusted rating',elo:'Elo rating',form:'recent form',adv:'home-listing edge',class:'squad class and ranking',rest:'rest advantage'};
   const why=pr.why||{};
   const bullets=Object.entries(why).filter(([k,v])=>Math.abs(v)>=0.4&&L[k]).sort((a,b)=>Math.abs(b[1])-Math.abs(a[1])).slice(0,3)
     .map(([k,v])=>{const who=v>0?esc(m.home.name):esc(m.away.name);return `<li>${who} leads on ${L[k]}</li>`;});

@@ -239,9 +239,9 @@ function cardHTML(m){
   const live=m.status==='LIVE',stale=isStaleUpcoming(m),displayStatus=stale?'PAST / REFRESH':m.status;
   const x=(m.markets&&m.markets['1x2'])||{};const hfl=teamFlagHTML(m.home),afl=teamFlagHTML(m.away,true);
   const probTop=x.home_pct!=null?`<div class="prob"><div class="problbl"><span>${esc(m.home.code||m.home.name)}</span><span>Market read</span><span>${esc(m.away.code||m.away.name)}</span></div>${bar1x2(x.home_pct,x.draw_pct,x.away_pct)}</div>`:`<div class="prob"><div class="nomk">No market snapshot yet</div></div>`;
-  const pr=m.prediction;const op=pr?_v10OfficialPick(m):null;const edge=op?_v10OfficialEdge(m,op):null;
-  const pick=op?`<div class="pick ${edge!=null&&Math.abs(edge)>=6?'edge':''} ${op.blocked?'gate':''}"><span class="pl">Pick</span><span class="pn">${esc(op.name)}</span><span class="pc">${esc(op.confidence??'—')}%</span><span class="pnote">${esc(op.note||'')}</span></div>`:'';
-  return `<article class="card${live?' liveCard':''}${SETTINGS.showDetails?'':' compactCard'}" data-id="${esc(m.id)}"><div class="head" onclick="openMatchModal(this.closest('article').dataset.id)"><div class="metarow"><span class="stage">${esc(m.stage||'Fixture')}</span>${m._comp&&!DATA_FILE?`<span class="compTag">${esc(m._comp)}</span>`:''}<span class="wstar ${wlHas(m.home.name)||wlHas(m.away.name)?'on':''}" onclick="event.stopPropagation();wlToggle('${esc(m.home.name)}')" title="Watch">&#9733;</span>${m.weather?`<span class="wxchip"><b>${m.weather.temp_c}&deg;</b>${m.weather.wind_kph>=20?` ${m.weather.wind_kph}km/h`:''}${m.weather.rain_pct>=40?` &#9730;${m.weather.rain_pct}%`:''}</span>`:''}<span class="spacer"></span><span class="pill ${esc(displayStatus)}">${live?'<span class="blink"></span>':''}${esc(displayStatus)}</span></div><div class="fixture"><div class="side"><div class="tname">${hfl}${esc(m.home.name)}</div><div class="tsub"><span>${esc(m.home.code)}</span><span>${m.home.pos?`#${m.home.pos}`:''}</span><span>${m.home.pts??0} pts</span></div></div><div class="center"><div class="score">${scoreText(m)}</div>${live?`<div class="minute">${m.minute||''}'</div>`:`<div class="kick">${stale?'past kickoff':kickIn(m.kickoff)}</div>`}</div><div class="side away"><div class="tname">${esc(m.away.name)}${afl}</div><div class="tsub"><span>${esc(m.away.code)}</span><span>${m.away.pos?`#${m.away.pos}`:''}</span><span>${m.away.pts??0} pts</span></div></div></div>${probTop}${pick}<div class="expander"></div></div></article>`;
+  const pr=m.prediction;const op=pr?_v10OfficialPick(m):null;const edge=op?_v10OfficialEdge(m,op):null;const trend=probabilitySparkline(m);
+  const pick=op?`<div class="pick ${edge!=null&&Math.abs(edge)>=6?'edge':''} ${op.blocked?'gate':''}"><span class="pl">Pick</span><span class="pn">${esc(op.name)}</span><span class="pc">${esc(op.confidence??'—')}%</span><span class="pnote">${esc(op.note||'')}</span>${trend}</div>`:'';
+  return `<article class="card${live?' liveCard':''}${SETTINGS.showDetails?'':' compactCard'}" data-id="${esc(m.id)}"><div class="head" onclick="openMatchModal(this.closest('article').dataset.id)"><div class="metarow"><span class="stage">${esc(m.stage||'Fixture')}</span>${m._comp&&!DATA_FILE?`<span class="compTag">${esc(m._comp)}</span>`:''}<span class="wstar ${wlHas(m.home.name)||wlHas(m.away.name)?'on':''}" onclick="event.stopPropagation();wlToggle('${esc(m.home.name)}')" title="Watch">&#9733;</span>${m.weather?`<a class="wxchip" href="${esc(m.weather.source_url||'https://open-meteo.com/')}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" title="Weather data by Open-Meteo"><b>${m.weather.temp_c}&deg;</b>${m.weather.wind_kph>=20?` ${m.weather.wind_kph}km/h`:''}${m.weather.rain_pct>=40?` &#9730;${m.weather.rain_pct}%`:''}<small> Open-Meteo</small></a>`:''}<span class="spacer"></span><span class="pill ${esc(displayStatus)}">${live?'<span class="blink"></span>':''}${esc(displayStatus)}</span></div><div class="fixture"><div class="side"><div class="tname">${teamMarkHTML(m.home)}<span class="teamNameText">${hfl}${esc(m.home.name)}</span></div><div class="tsub"><span>${esc(m.home.code)}</span><span>${m.home.pos?`#${m.home.pos}`:''}</span><span>${m.home.pts??0} pts</span></div></div><div class="center"><div class="score">${scoreText(m)}</div>${live?`<div class="minute">${m.minute||''}'</div>`:`<div class="kick">${stale?'past kickoff':kickIn(m.kickoff)}</div>`}</div><div class="side away"><div class="tname"><span class="teamNameText">${esc(m.away.name)}${afl}</span>${teamMarkHTML(m.away,'away')}</div><div class="tsub"><span>${esc(m.away.code)}</span><span>${m.away.pos?`#${m.away.pos}`:''}</span><span>${m.away.pts??0} pts</span></div></div></div>${probTop}${pick}<div class="expander"></div></div></article>`;
 }
 function _modelRow(m){
   const pr=m.prediction||{},op=_v10OfficialPick(m),kind=_modelEdgeKind(pr),tag=_modelTag(m),arch=_modelIsArchived(m);
@@ -497,6 +497,7 @@ function _v15CompareRow(label,home,away,html){
 }
 function _v15MatchProfile(m,op){
   const pr=m?.prediction||{},probs=_v4ModelProbs(m)||{},side=op?.side||'';
+  const quality=pr.data_quality||{},sample=quality.games||{};
   const ordered=['h','d','a'].map(k=>_v15Num(probs[k])).filter(v=>v!=null).sort((a,b)=>b-a);
   const separation=ordered.length>1?Math.max(0,Math.round(ordered[0]-ordered[1])):null;
   const base=pr.base_blend||pr.model||{};
@@ -510,14 +511,15 @@ function _v15MatchProfile(m,op){
   const homeOut=Array.isArray(m?.injuries?.home)?m.injuries.home.length:0;
   const awayOut=Array.isArray(m?.injuries?.away)?m.injuries.away.length:0;
   const kpis=[
-    ['Model separation',separation!=null?`${separation} pts`:'—'],
-    ['Probability adjustment',adjustment!=null?`${adjustment>0?'+':''}${adjustment} pts`:'—'],
+    ['Model separation',separation!=null?`${separation} pts`:'—','Gap between the two most likely model outcomes.'],
+    ['Probability adjustment',adjustment!=null?`${adjustment>0?'+':''}${adjustment} pts`:'—','Difference between the raw model and the final official probability.'],
     [totalLabel,scoringBaseline!=null?`${Number(scoringBaseline).toFixed(1)} ${unit}`:'Not modeled'],
-    ['Listed absences',`${homeOut+awayOut}`]
-  ].map(([label,value])=>`<div class="profileKpi"><span>${esc(label)}</span><b>${esc(value)}</b></div>`).join('');
+    ['Data sample',sample.home!=null&&sample.away!=null?`${sample.home} / ${sample.away} games`:'Not reported',quality.note||'Current-season games available to the model.']
+  ].map(([label,value,help])=>`<div class="profileKpi"><span>${esc(label)}${help?metricHelp(label,help):''}</span><b>${esc(value)}</b></div>`).join('');
   const rows=[
     _v15CompareRow('Record',_v15Record(m?.home),_v15Record(m?.away)),
-    _v15CompareRow('Rank',_v15Num(m?.home?.pos)!=null?`#${m.home.pos}`:null,_v15Num(m?.away?.pos)!=null?`#${m.away.pos}`:null),
+    _v15CompareRow('Rank',_v15Num(m?.home?.model_rank??m?.home?.pos)!=null?`#${m.home.model_rank??m.home.pos}`:null,_v15Num(m?.away?.model_rank??m?.away?.pos)!=null?`#${m.away.model_rank??m.away.pos}`:null),
+    _v15CompareRow('Opponent-adjusted rating',_v15Num(m?.home?.srs)!=null?Number(m.home.srs).toFixed(1):null,_v15Num(m?.away?.srs)!=null?Number(m.away.srs).toFixed(1):null),
     _v15CompareRow(`Avg ${unit} scored`,hScored,aScored),
     _v15CompareRow(`Avg ${unit} allowed`,_v15Rate(m?.home,'ga'),_v15Rate(m?.away,'ga')),
     _v15CompareRow('Recent form',_v15Form(m?.home),_v15Form(m?.away),true),

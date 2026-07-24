@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Q&amp;A — How Matchday's Model Works</title>
+<meta name="description" content="Answers to how Matchday's predictions, confidence, edge, Elo, and opponent-adjusted ratings work, where the data comes from, and whether this is betting advice.">
+<link rel="canonical" href="https://timurd01-alt.github.io/Matchday/qa.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Matchday">
+<meta property="og:url" content="https://timurd01-alt.github.io/Matchday/qa.html">
+<meta property="og:title" content="Q&amp;A — How Matchday's Model Works">
+<meta property="og:description" content="Answers to how Matchday's predictions, confidence, edge, Elo, and opponent-adjusted ratings work, where the data comes from, and whether this is betting advice.">
+<meta name="theme-color" content="#070a0f">
+<link rel="icon" href="./favicon.ico" sizes="any">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#070a0f;--panel:#111822;--text:#eef2f8;--muted:#9ba8b8;--faint:#647184;--line:#263244;--signal:#3ad17a;--link:#76caff}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 10% 0,rgba(58,209,122,.1),transparent 30%),var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;line-height:1.65}.wrap{width:min(920px,calc(100% - 40px));margin:auto;padding:44px 0 76px}.back{color:var(--muted);font-family:"JetBrains Mono",monospace;font-size:.75rem;text-decoration:none}.back:hover{color:var(--signal)}.eyebrow{margin:44px 0 12px;color:var(--signal);font:700 .68rem "JetBrains Mono",monospace;letter-spacing:.14em}.brand{font-family:Archivo,sans-serif;font-size:clamp(2.2rem,6vw,4.5rem);letter-spacing:-.06em;line-height:.94;margin:0}.lead{max-width:700px;color:var(--muted);font-size:1.06rem;margin:18px 0 26px}.meta{display:flex;flex-wrap:wrap;gap:10px;color:var(--faint);font:500 .7rem "JetBrains Mono",monospace}.meta span{border:1px solid var(--line);border-radius:999px;padding:5px 9px}nav{display:flex;flex-wrap:wrap;gap:8px;margin:35px 0}nav a{border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:.76rem;padding:7px 11px;text-decoration:none}nav a:hover{border-color:var(--signal);color:var(--signal)}section{scroll-margin-top:20px;background:linear-gradient(145deg,rgba(21,31,43,.92),rgba(13,19,28,.92));border:1px solid var(--line);border-radius:16px;padding:clamp(22px,4vw,36px);margin:16px 0}h2{font:800 clamp(1.35rem,3vw,2rem) Archivo,sans-serif;letter-spacing:-.035em;line-height:1.08;margin:0 0 18px}h3{font:700 1rem Archivo,sans-serif;margin:0 0 6px}p,li{color:#c9d2de}p{margin:0 0 13px}a{color:var(--link)}.notice{border-left:3px solid var(--signal);background:rgba(58,209,122,.07);border-radius:7px;padding:12px 14px;color:#d8dde5}.notice strong{color:var(--signal)}.qa{display:grid;gap:22px}.q{border-bottom:1px solid var(--line);padding-bottom:20px}.q:last-child{border-bottom:0;padding-bottom:0}.small{color:var(--faint);font-size:.8rem}.foot{margin-top:28px;color:var(--faint);font-size:.75rem;text-align:center}@media(max-width:520px){.wrap{width:min(100% - 28px,920px);padding-top:26px}.eyebrow{margin-top:32px}section{border-radius:13px;padding:20px}}
+</style>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {"@type":"Question","name":"Who builds and runs Matchday?","acceptedAnswer":{"@type":"Answer","text":"Matchday is a passion project, currently built and run by one person rather than a company or a team. It's kept intentionally small, free, and focused on getting the model and the data right. If it ever grew a lot, that would mean rethinking how it's maintained and funded -- that's a problem for if and when it happens, not something the product is built around today."}},
+  {"@type":"Question","name":"Is Matchday betting advice?","acceptedAnswer":{"@type":"Answer","text":"No. Matchday shows model estimates and market context for analysis. It does not take bets, process wagers, or provide financial or gambling advice, and it is not affiliated with any bookmaker."}},
+  {"@type":"Question","name":"How does Matchday calculate a win probability?","acceptedAnswer":{"@type":"Answer","text":"It blends several factors depending on the sport: season record and points, recent form, scoring margin, home advantage, rest days, an Elo rating, an opponent-adjusted rating similar to strength of schedule, and where available a team class or poll rank. Each factor's pull toward one side is shown transparently in the match breakdown."}},
+  {"@type":"Question","name":"What does confidence mean?","acceptedAnswer":{"@type":"Answer","text":"Confidence is the model's estimated probability that its picked side wins, shown as a percentage. It is an estimate, not a guarantee, and games with limited current-season evidence are intentionally shown with more conservative confidence."}},
+  {"@type":"Question","name":"What does edge mean?","acceptedAnswer":{"@type":"Answer","text":"Edge is the gap between the model's probability for an outcome and the betting market's implied probability for the same outcome -- it highlights where the model and the market disagree most, not a recommendation to act on that disagreement."}},
+  {"@type":"Question","name":"What is Elo rating?","acceptedAnswer":{"@type":"Answer","text":"Elo is a rating that rises after wins and falls after losses, weighted by the strength of the opponent -- the same style of rating used in chess, adapted per sport and updated automatically after every graded result."}},
+  {"@type":"Question","name":"What is the opponent-adjusted rating?","acceptedAnswer":{"@type":"Answer","text":"It is a rating built only from a team's own results and the strength of who they played, correcting a team's raw scoring margin for whether their schedule has been easy or hard so far."}},
+  {"@type":"Question","name":"Why does the model sometimes disagree with the betting market?","acceptedAnswer":{"@type":"Answer","text":"The market can price in information the model does not see yet, like late injury news or sharp betting activity. The model can weigh things the market is slower to move on, like recent underlying performance. Disagreement is reported as edge, not treated as the market being wrong."}},
+  {"@type":"Question","name":"What is an upset flag?","acceptedAnswer":{"@type":"Answer","text":"It is Matchday's own signal that a game has above-average odds of the underdog winning, based on volatility factors that are tracked separately from the base win-probability prediction."}},
+  {"@type":"Question","name":"How does Matchday track its own accuracy?","acceptedAnswer":{"@type":"Answer","text":"Every pick is locked before kickoff and graded automatically once the game finishes; picks are never rewritten afterward. The Scorecard tab in the app shows the full hit rate, calibration by confidence band, and which factors have actually been predictive recently."}},
+  {"@type":"Question","name":"Where does Matchday's data come from?","acceptedAnswer":{"@type":"Answer","text":"Licensed and free-tier sports data providers per sport, plus a market-odds provider and public RSS news feeds. The full list of sources and their terms is on the Legal page."}},
+  {"@type":"Question","name":"Do I need an account, and is my data private?","acceptedAnswer":{"@type":"Answer","text":"No account is required. Personal settings like favorite team, watchlist, and appearance stay in your own browser's local storage rather than on a server. Full details are on the Legal page's privacy section."}},
+  {"@type":"Question","name":"How often does the data update?","acceptedAnswer":{"@type":"Answer","text":"On an automatic schedule that speeds up around live games and slows down when nothing is happening, so scores and predictions stay current without wasting API quota."}}
+ ]
+}
+</script>
+</head>
+<body>
+<main class="wrap">
+  <a class="back" href="index.html">&larr; Back to Matchday</a>
+  <p class="eyebrow">MATCHDAY TERMINAL · Q&amp;A</p>
+  <h1 class="brand">How the model<br>actually works.</h1>
+  <p class="lead">Plain answers to what confidence, edge, and the model's ratings mean, why it sometimes disagrees with the market, and where the underlying data comes from.</p>
+  <div class="meta"><span>Analytics only · not betting advice</span><span>No account required</span></div>
+  <nav aria-label="Q&amp;A sections"><a href="#model">The model</a><a href="#accuracy">Accuracy</a><a href="#data">Data &amp; privacy</a></nav>
+
+  <section id="model">
+    <h2>The model</h2>
+    <div class="qa">
+      <div class="q">
+        <h3>Who builds and runs Matchday?</h3>
+        <p>Matchday is a passion project, currently built and run by one person rather than a company or a team. It's kept intentionally small, free, and focused on getting the model and the data right. If it ever grew a lot, that would mean rethinking how it's maintained and funded — that's a problem for if and when it happens, not something the product is built around today.</p>
+      </div>
+      <div class="q">
+        <h3>Is Matchday betting advice?</h3>
+        <p>No. Matchday shows model estimates and market context for analysis. It does not take bets, process wagers, or provide financial or gambling advice, and it is not affiliated with any bookmaker.</p>
+      </div>
+      <div class="q">
+        <h3>How does Matchday calculate a win probability?</h3>
+        <p>It blends several factors depending on the sport: season record and points, recent form, scoring margin, home advantage, rest days, an Elo rating, an opponent-adjusted rating similar to strength of schedule, and where available a team class or poll rank. Each factor's pull toward one side is shown transparently in the match breakdown.</p>
+      </div>
+      <div class="q">
+        <h3>What does confidence mean?</h3>
+        <p>Confidence is the model's estimated probability that its picked side wins, shown as a percentage. It is an estimate, not a guarantee — games with limited current-season evidence are intentionally shown with more conservative confidence.</p>
+      </div>
+      <div class="q">
+        <h3>What does edge mean?</h3>
+        <p>Edge is the gap between the model's probability for an outcome and the betting market's implied probability for the same outcome. It highlights where the model and the market disagree most, not a recommendation to act on that disagreement.</p>
+      </div>
+      <div class="q">
+        <h3>What is Elo rating?</h3>
+        <p>Elo is a rating that rises after wins and falls after losses, weighted by the strength of the opponent — the same style of rating used in chess, adapted per sport and updated automatically after every graded result.</p>
+      </div>
+      <div class="q">
+        <h3>What is the opponent-adjusted rating?</h3>
+        <p>It is a rating built only from a team's own results and the strength of who they played, correcting a team's raw scoring margin for whether their schedule has been easy or hard so far.</p>
+      </div>
+      <div class="q">
+        <h3>Why does the model sometimes disagree with the betting market?</h3>
+        <p>The market can price in information the model does not see yet, like late injury news or sharp betting activity. The model can weigh things the market is slower to move on, like recent underlying performance. Disagreement is reported as edge, not treated as the market being wrong.</p>
+      </div>
+      <div class="q">
+        <h3>What is an upset flag?</h3>
+        <p>It is Matchday's own signal that a game has above-average odds of the underdog winning, based on volatility factors that are tracked separately from the base win-probability prediction.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="accuracy">
+    <h2>Accuracy</h2>
+    <div class="qa">
+      <div class="q">
+        <h3>How does Matchday track its own accuracy?</h3>
+        <p>Every pick is locked before kickoff and graded automatically once the game finishes; picks are never rewritten afterward. The Scorecard tab in the app shows the full hit rate, calibration by confidence band, and which factors have actually been predictive recently.</p>
+      </div>
+      <div class="q">
+        <h3>Why didn't a pick change even though the market moved?</h3>
+        <p>Picks lock once a match becomes upcoming and stay locked — only the market-comparison numbers around it keep updating. That's deliberate: a model that could quietly rewrite its own picks after seeing new information wouldn't have an honest track record.</p>
+      </div>
+    </div>
+    <div class="notice"><strong>See the receipts.</strong> The <a href="index.html">Matchday app's</a> Scorecard tab and the auto-generated model recaps linked from the Insights tab show this performance data directly, not just a claim.</div>
+  </section>
+
+  <section id="data">
+    <h2>Data &amp; privacy</h2>
+    <div class="qa">
+      <div class="q">
+        <h3>Where does Matchday's data come from?</h3>
+        <p>Licensed and free-tier sports data providers per sport, plus a market-odds provider and public RSS news feeds. The full list of sources and their terms is on the <a href="legal.html#sources">Legal page</a>.</p>
+      </div>
+      <div class="q">
+        <h3>Do I need an account, and is my data private?</h3>
+        <p>No account is required. Personal settings like favorite team, watchlist, and appearance stay in your own browser's local storage rather than on a server. Full details are on the <a href="legal.html#privacy">Legal page's privacy section</a>.</p>
+      </div>
+      <div class="q">
+        <h3>How often does the data update?</h3>
+        <p>On an automatic schedule that speeds up around live games and slows down when nothing is happening, so scores and predictions stay current without wasting API quota.</p>
+      </div>
+    </div>
+  </section>
+
+  <p class="foot">© 2026 Matchday Terminal. This page explains how the product works; see the <a href="legal.html">Legal page</a> for terms, privacy, and data-source notices.</p>
+</main>
+</body>
+</html>

@@ -39,6 +39,9 @@ jobs:
             title_open*.json
             *_cache.json
             player_db_*.json
+            posts.json
+            posts_state.json
+            posts/*.html
           key: matchday-fetch-state-${{ github.run_id }}
           restore-keys: matchday-fetch-state-
 
@@ -86,12 +89,16 @@ jobs:
         run: |
           rm -f config_keys.py
           mkdir -p _site
-          cp index.html styles.css translations.js legal.html manifest.json _site/
+          cp index.html styles.css translations.js legal.html qa.html manifest.json _site/
+          cp robots.txt sitemap.xml _site/
           cp app-1-core.js app-2-views.js app-3-panels.js app-4-features.js _site/
           cp favicon.ico favicon-16.png favicon-32.png matchday.ico _site/
           cp icon-180.png icon-192.png icon-512.png logo.png _site/
           cp data.json _site/
           cp data_*.json _site/
+          cp posts.json _site/ 2>/dev/null || echo '[]' > _site/posts.json
+          mkdir -p _site/posts
+          cp posts/*.html _site/posts/ 2>/dev/null || true
 
       - name: Stamp asset URLs with this commit's SHA (cache-busting)
         run: |

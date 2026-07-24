@@ -38,13 +38,13 @@ let MATCH_VISIBLE=FIXTURE_PAGE_SIZE,RESULT_VISIBLE=FIXTURE_PAGE_SIZE;
 // ---- per-sport sidebar (data-driven, follows the SELECTION) ---------------
 // Each sport declares exactly which views exist for it, in order.
 const NAV_DEF={
-  all:         ['matches','results','community','sandbox','news','status','updates','customize'],
-  soccer_cup:  ['matches','results','groups','title','edge','score','bracket','third','tott','community','sandbox','news','status','updates','customize'],
-  soccer_club: ['matches','results','groups','title','edge','score','bracket','tott','community','sandbox','news','status','updates','customize'],
-  us_sport:    ['matches','results','groups','title','edge','score','community','sandbox','news','status','updates','customize'],
-  college:     ['matches','results','groups','bracket','title','edge','score','community','sandbox','news','status','updates','customize'],
-  college_basketball:['matches','results','groups','bracket','title','edge','score','community','sandbox','news','status','updates','customize'],
-  soccer_league:['matches','results','groups','title','edge','score','tott','community','sandbox','news','status','updates','customize']
+  all:         ['matches','results','community','sandbox','news','insights','status','updates','customize'],
+  soccer_cup:  ['matches','results','groups','title','edge','score','bracket','third','tott','community','sandbox','news','insights','status','updates','customize'],
+  soccer_club: ['matches','results','groups','title','edge','score','bracket','tott','community','sandbox','news','insights','status','updates','customize'],
+  us_sport:    ['matches','results','groups','title','edge','score','community','sandbox','news','insights','status','updates','customize'],
+  college:     ['matches','results','groups','bracket','title','edge','score','community','sandbox','news','insights','status','updates','customize'],
+  college_basketball:['matches','results','groups','bracket','title','edge','score','community','sandbox','news','insights','status','updates','customize'],
+  soccer_league:['matches','results','groups','title','edge','score','tott','community','sandbox','news','insights','status','updates','customize']
 };
 const SPORT_KIND={'':'all',wc:'soccer_cup',ucl:'soccer_club',epl:'soccer_league',laliga:'soccer_league',seriea:'soccer_league',bundesliga:'soccer_league',ligue1:'soccer_league',nfl:'us_sport',ncaaf:'college',ncaam:'college_basketball',nba:'us_sport',mlb:'us_sport',nhl:'us_sport'};
 function currentSportKey(){const m=(DATA_FILE||'').match(/data_(\w+)\.json/);return m?m[1]:'';}
@@ -334,6 +334,16 @@ function renderThird(){const host=$('#view-third'),third=getThirdRace();if(!thir
 /* removed duplicate (renderNews) */
 
 const SYSTEM_UPDATES=[
+  {date:'Build 0724D',tag:'New',title:'Matchday now writes its own recaps, plus a Q&A page',items:[
+    'A new Insights tab publishes short, auto-generated recap posts per sport — hit rate, calibration, and the week\'s biggest storylines — built entirely from the model\'s own graded picks, not third-party content.',
+    'A new Q&A page explains what confidence, edge, Elo and the opponent-adjusted rating actually mean, and how the model is graded.']},
+  {date:'Build 0724C',tag:'Fix',title:'NFL/NBA/MLB predictions were only seeing last week\'s games',items:[
+    'Standings, the opponent-adjusted rating and Elo training for these sports now pull the full season instead of a rolling 7-day window, so records and model confidence reflect the real season instead of resetting to "early" on every refresh.']},
+  {date:'Build 0724B',tag:'Data',title:'Removed ESPN\'s unlicensed site feeds',items:[
+    'Deleted the dormant ESPN scoreboard/summary/rankings/standings/leaders code paths and the standalone backfill script that used them — Matchday has no licensed ESPN developer feed. ESPN headline links in News are unaffected.']},
+  {date:'Build 0724A',tag:'New',title:'Native prediction model for NFL, NBA, MLB, NHL, and college sports',items:[
+    'These sports now use sport-native factors — season record, scoring margin, rest, poll rank — plus a new opponent-adjusted rating, instead of being forced through soccer-shaped inputs.',
+    'Match results now carry a winner only once a game is actually final, closing a class of "phantom result" bugs.']},
   {date:'Build 0722G',tag:'Fix',title:'News layout, clickable top bar, and a market-outage notice',items:[
     'The News tab now flows into a multi-column grid on wider screens instead of one full-width column stacked like a phone.',
     'The live score and "Next" fixture in the top bar are now clickable — tap them to jump straight to the expanded match view.',
@@ -597,7 +607,7 @@ const SYSTEM_UPDATES=[
   ]}
 ];
 function markUpdatesRead(){localStorage.setItem('matchday.updates.lastSeen',new Date().toISOString());renderSystemUpdates()}
-function renderSystemUpdates(){const host=$('#view-updates');const seen=localStorage.getItem('matchday.updates.lastSeen');const latest='build 0722G';host.innerHTML=`<div class="updatesShell"><div class="updatesHero"><section class="updatesIntro"><h2>System updates</h2><span class="safePill">UI</span></section><aside class="buildCard"><div class="tiny">Current build</div><div class="build">${esc(latest)}</div><div class="hint">Last viewed: ${seen?esc(ago(seen)):'not marked yet'}</div><div class="updateActions"><button class="miniBtn" onclick="markUpdatesRead()">Mark as read</button><button class="miniBtn" onclick="setView('status')">Open Status</button></div></aside></div><section class="timeline"><div class="timelineHead"><h3>Release notes</h3><span>${SYSTEM_UPDATES.length} entries</span></div>${SYSTEM_UPDATES.map(u=>`<article class="updateItem"><div class="updateDate">${esc(u.date)}</div><div><div class="updateTitle"><span>${esc(u.title)}</span><span class="updateBadge">${esc(u.tag)}</span></div><ul>${u.items.map(i=>`<li>${esc(i)}</li>`).join('')}</ul></div></article>`).join('')}</section></div>`}
+function renderSystemUpdates(){const host=$('#view-updates');const seen=localStorage.getItem('matchday.updates.lastSeen');const latest='build 0724D';host.innerHTML=`<div class="updatesShell"><div class="updatesHero"><section class="updatesIntro"><h2>System updates</h2><span class="safePill">UI</span></section><aside class="buildCard"><div class="tiny">Current build</div><div class="build">${esc(latest)}</div><div class="hint">Last viewed: ${seen?esc(ago(seen)):'not marked yet'}</div><div class="updateActions"><button class="miniBtn" onclick="markUpdatesRead()">Mark as read</button><button class="miniBtn" onclick="setView('status')">Open Status</button></div></aside></div><section class="timeline"><div class="timelineHead"><h3>Release notes</h3><span>${SYSTEM_UPDATES.length} entries</span></div>${SYSTEM_UPDATES.map(u=>`<article class="updateItem"><div class="updateDate">${esc(u.date)}</div><div><div class="updateTitle"><span>${esc(u.title)}</span><span class="updateBadge">${esc(u.tag)}</span></div><ul>${u.items.map(i=>`<li>${esc(i)}</li>`).join('')}</ul></div></article>`).join('')}</section></div>`}
 
 function renderStatus(){const host=$('#view-status'),M=DATA.matches||[],st=deriveStandings(),third=getThirdRace();const live=M.filter(m=>m.status==='LIVE').length,up=M.filter(m=>m.status==='UPCOMING').length,fin=M.filter(m=>m.status==='FINISHED').length;const next=M.filter(isVisibleUpcoming).sort((a,b)=>(a.kickoff||'').localeCompare(b.kickoff||''))[0];host.innerHTML=`<div class="vhead">App Status</div><div class="hint" style="margin-bottom:10px">menu profile: <b>${navProfile()}</b> · sport file: <b>${DATA_FILE||'all (merged)'}</b></div><div class="status-grid"><div class="statuscard ${LAST_OK?'ok':'warn'}"><span class="slbl">Data file</span><div class="sval">${LAST_OK?'loaded':'not loaded'}</div><div class="hint">${LAST_ERROR?esc(LAST_ERROR):'Loaded'}</div></div><div class="statuscard info"><span class="slbl">Source</span><div class="sval">${esc(DATA.source_note||'unknown')}</div><div class="hint">${esc(DATA.standings_mode||'')}</div></div><div class="statuscard info"><span class="slbl">Updated</span><div class="sval">${DATA.updated?ago(DATA.updated):'unknown'}</div><div class="hint">${esc(DATA.updated||'—')}</div></div><div class="statuscard info"><span class="slbl">Matches</span><div class="sval">${M.length}</div><div class="hint">${live} live · ${up} upcoming · ${fin} finished</div></div><div class="statuscard info"><span class="slbl">Groups</span><div class="sval">${st.length}</div><div class="hint">${third.length} third-place teams tracked</div></div><div class="statuscard info"><span class="slbl">News Items</span><div class="sval">${(DATA.news||[]).length}</div><div class="hint">${newsSources().filter(s=>s!=='all').join(' · ')}</div></div></div><div class="btnline"><button class="actionbtn" onclick="load(true)">Reload Data Now</button><button class="actionbtn" onclick="setView('groups')">Open Groups</button><button class="actionbtn" onclick="setView('third')">Open Thirds</button><button class="actionbtn" onclick="setView('updates')">System Updates</button></div>`}
 function lopt(v,label,cur){return `<option value="${v}" ${v===cur?'selected':''}>${label}</option>`}
@@ -647,7 +657,7 @@ function captureMatchSignals(matches){
   MODEL_HISTORY=history;
   try{localStorage.setItem('matchday.signalSnapshot',JSON.stringify(next));localStorage.setItem('matchday.modelHistory',JSON.stringify(history))}catch(e){}
 }
-function captureSignalsIfFresh(){const token=`${DATA.comp_key||''}:${DATA.updated||''}:${(DATA.matches||[]).length}`;if(token!==LAST_SIGNAL_CAPTURE){LAST_SIGNAL_CAPTURE=token;captureMatchSignals(DATA.matches||[])}}
+function captureSignalsIfFresh(){const fingerprint=(DATA.matches||[]).slice(0,80).map(m=>`${m.id}:${m.prediction?.confidence??''}:${m.status}`).join('|');const token=`${DATA.comp_key||''}:${DATA.updated||''}:${fingerprint}`;if(token!==LAST_SIGNAL_CAPTURE){LAST_SIGNAL_CAPTURE=token;captureMatchSignals(DATA.matches||[])}}
 function probabilityMovement(m){return MATCH_SIGNAL_CHANGES[_signalId(m)]||null}
 function probabilitySparkline(m){
   const points=MODEL_HISTORY[_signalId(m)]||[];if(points.length<2)return '';
@@ -660,7 +670,7 @@ function _alertEnabled(type){const map={soon:'alertsKickoff',live:'alertsLive',u
 function _alertIcon(type){return ({upset:'&#9889;',live:'&#9679;',soon:'&#9203;',model:'&#8597;',market:'&#8644;',data:'&#9888;'})[type]||'&#8226;'}
 function _alertKey(a){return `${a.t}:${a.id||'app'}:${a.txt}`}
 function _alertSeen(){return new Set(_alertReadJSON('matchday.alertsSeen',[]))}
-function computeAlerts(){
+function computeSignalAlerts(){
   const out=[],now=Date.now(),watchedNames=new Set(wlLoad()),updated=Date.parse(DATA.updated||'');
   if(_alertEnabled('data')&&Number.isFinite(updated)&&(now-updated)>180*60000)out.push({t:'data',txt:`Match data was last updated ${ago(DATA.updated)}.`,id:''});
   (DATA.matches||[]).forEach(m=>{
@@ -679,19 +689,21 @@ function computeAlerts(){
   return out.filter((a,i,list)=>list.findIndex(b=>_alertKey(b)===_alertKey(a))===i).slice(0,12);
 }
 function openAlertMatch(id){toggleAlertCenter(false);if(id)openMatchModal(id)}
-function markAlertsRead(alerts=computeAlerts()){try{localStorage.setItem('matchday.alertsSeen',JSON.stringify(alerts.map(_alertKey).slice(-80)))}catch(e){}renderAlerts()}
+function markAlertsRead(alerts=computeSignalAlerts()){try{localStorage.setItem('matchday.alertsSeen',JSON.stringify(alerts.map(_alertKey).slice(-80)))}catch(e){}renderSignalAlerts()}
 function toggleAlertCenter(force){
   const panel=$('#alertCenter'),bell=$('#alertBell');if(!panel)return;
   const open=force===undefined?panel.hidden:!!force;panel.hidden=!open;bell?.setAttribute('aria-expanded',String(open));
-  if(open){markAlertsRead(computeAlerts());panel.querySelector('.alertCenterClose')?.focus()}
+  if(open){markAlertsRead(computeSignalAlerts());panel.querySelector('.alertCenterClose')?.focus()}
 }
-function renderAlerts(){
-  const bar=$('#alertBar'),panel=$('#alertCenter'),bell=$('#alertBell'),count=$('#alertCount'),alerts=computeAlerts(),seen=_alertSeen();
+function renderSignalAlerts(){
+  const bar=$('#alertBar'),panel=$('#alertCenter'),bell=$('#alertBell'),count=$('#alertCount'),alerts=computeSignalAlerts(),seen=_alertSeen();
   const unseen=alerts.filter(a=>!seen.has(_alertKey(a))).length;
   if(count){count.textContent=unseen;count.hidden=!unseen}bell?.classList.toggle('hasAlerts',!!alerts.length);
   if(bar){const urgent=alerts.filter(a=>a.t==='live'||a.t==='upset'||a.t==='model').slice(0,3);bar.style.display=urgent.length?'':'none';bar.innerHTML=urgent.map(a=>`<button class="alertPill ${a.t}" onclick="openAlertMatch('${esc(a.id)}')">${_alertIcon(a.t)} ${esc(a.txt)}</button>`).join('')}
   if(panel)panel.innerHTML=`<div class="alertCenterHead"><div><span>Signal center</span><b>${alerts.length?`${alerts.length} active`:'All quiet'}</b></div><button class="alertCenterClose" onclick="toggleAlertCenter(false)" aria-label="Close alerts">&times;</button></div><div class="alertCenterList">${alerts.length?alerts.map(a=>`<button class="alertItem ${a.t}" onclick="openAlertMatch('${esc(a.id)}')"><i>${_alertIcon(a.t)}</i><span><b>${a.t==='soon'?'Kickoff':a.t==='market'?'Model vs market':a.t[0].toUpperCase()+a.t.slice(1)}</b><small>${esc(a.txt)}</small></span></button>`).join(''):`<div class="alertEmpty"><span>&#10003;</span><b>No active signals</b><p>Star a team to receive kickoff, live-score, model-movement and market-gap alerts.</p></div>`}</div><div class="alertCenterFoot"><button onclick="markAlertsRead()">Mark all read</button><button onclick="toggleAlertCenter(false);setView('customize')">Alert settings</button></div>`;
 }
+computeAlerts=computeSignalAlerts;
+renderAlerts=renderSignalAlerts;
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#alertCenter')?.hidden)toggleAlertCenter(false)});
 document.addEventListener('click',e=>{const panel=$('#alertCenter');if(panel&&!panel.hidden&&!e.target.closest('#alertCenter,#alertBell'))toggleAlertCenter(false)});
 

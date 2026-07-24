@@ -181,6 +181,12 @@ def run_once(state_path=".ci_fetch_state.json"):
         print(f"  skipped (not due yet): {', '.join(skipped)}")
     with open(state_path, "w", encoding="utf-8") as f:
         json.dump(last_fetched, f)
+    try:
+        from generate_posts import regenerate_sitemap
+        n = regenerate_sitemap()
+        print(f"  sitemap: {n} URLs")
+    except Exception as e:
+        print(f"  sitemap regen skipped: {e}")
 
 
 if __name__ == "__main__":

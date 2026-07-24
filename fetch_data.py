@@ -25,7 +25,7 @@ from provider_adapters import (ProviderError, BallDontLieAdapter,
                                CollegeBasketballDataAdapter,
                                CollegeFootballDataAdapter,
                                SportsDataIOAdapter, SportmonksAdapter,
-                               APISportsAdapter)
+                               APISportsAdapter, normalized_score)
 
 # Windows terminals default to a legacy codec that crashes on characters like the
 # checkmark or accented player names. Force UTF-8 so background prints never crash.
@@ -152,8 +152,6 @@ COMP = COMPETITIONS[COMP_KEY]
 
 ODDS_URL = (f"https://api.the-odds-api.com/v4/sports/{COMP['odds']}/odds/"
             "?regions=eu&markets=h2h,totals&oddsFormat=decimal")
-ESPN_SB  = f"https://site.api.espn.com/apis/site/v2/sports/{COMP['sport']}/{COMP['espn']}/scoreboard?limit=300"
-ESPN_SUM = "https://site.api.espn.com/apis/site/v2/sports/" + COMP['sport'] + "/" + COMP['espn'] + "/summary?event={id}"
 UA = {"User-Agent": "Mozilla/5.0 (matchday-terminal)"}
 
 API_FOOTBALL_BASE = "https://v3.football.api-sports.io"
@@ -179,6 +177,7 @@ ESPN_NEWS = f"https://site.api.espn.com/apis/site/v2/sports/{COMP['sport']}/{COM
 OUTRIGHTS_CACHE_MIN = 60
 NEWS_CACHE_MIN = 20
 BALLDONTLIE_CACHE_MIN = 10
+BALLDONTLIE_SEASON_CACHE_MIN = 240  # season-to-date pull re-pages the whole season; cache for hours
 APISPORTS_CACHE_MIN = 30  # api-sports.io free tier caps at 100 req/day per sport
 COLLEGE_CACHE_MIN = 480  # eight-hour cache keeps both college feeds within a shared free-key quota
 NEWS_TERMS = {
@@ -648,7 +647,8 @@ def fetch_weather(matches):
                       key=lambda i: abs(datetime.datetime.fromisoformat(hours[i]).replace(tzinfo=datetime.timezone.utc) - ko))
             m["weather"] = {"temp_c": round(d["hourly"]["temperature_2m"][idx]),
                             "wind_kph": round(d["hourly"]["wind_speed_10m"][idx]),
-                            "rain_pct": d["hourly"]["precipitation_probability"][idx]}
+                            "rain_pct": d["hourly"]["precipitation_probability"][idx],
+                            "source": "Open-Meteo", "source_url": "https://open-meteo.com/"}
             hits += 1
         except Exception:
             continue
@@ -692,6 +692,64 @@ def compute_split_form(matches):
         away_res = [r for s, r in log if s == "A"][-5:]
         out[name] = {"form_home": " ".join(home_res), "form_away": " ".join(away_res)}
     return out
+
+
+def normalize_match_results(matches):
+    """Backfill the normalized winner on older cached provider payloads."""
+    for match in matches or []:
+        score = match.get("score") or {}
+        match["score"] = normalized_score(score.get("home"), score.get("away"),
+                                            match.get("status") == "FINISHED")
+    return matches
+
+
+SRS_MARGIN_CAP = {"NFL": 28, "NCAAF": 35, "NBA": 30, "NCAAM": 30,
+                  "MLB": 8, "NHL": 5}
+
+
+def compute_srs(matches):
+    """Opponent-adjusted rating derived only from provider-supplied results.
+
+    A capped scoring margin limits blowout leverage. Ratings are recentered on
+    zero after every iteration and shrunk toward neutral for small samples.
+    The calculation creates a model feature, not a redistributable raw feed.
+    """
+    games = []
+    cap = SRS_MARGIN_CAP.get(COMP_KEY, 20)
+    counts = defaultdict(int)
+    for match in matches or []:
+        if match.get("status") != "FINISHED":
+            continue
+        score = match.get("score") or {}
+        home_score, away_score = score.get("home"), score.get("away")
+        if home_score is None or away_score is None:
+            continue
+        home_name, away_name = norm(match["home"].get("name")), norm(match["away"].get("name"))
+        if not home_name or not away_name:
+            continue
+        margin = _clamp(float(home_score) - float(away_score), -cap, cap)
+        games.append((home_name, away_name, margin))
+        counts[home_name] += 1
+        counts[away_name] += 1
+    if not games:
+        return {}
+    ratings = {name: 0.0 for name in counts}
+    for _ in range(30):
+        totals = defaultdict(float)
+        seen = defaultdict(int)
+        for home_name, away_name, margin in games:
+            totals[home_name] += margin + ratings[away_name]
+            totals[away_name] += -margin + ratings[home_name]
+            seen[home_name] += 1
+            seen[away_name] += 1
+        updated = {name: totals[name] / max(1, seen[name]) for name in ratings}
+        center = sum(updated.values()) / max(1, len(updated))
+        ratings = {name: value - center for name, value in updated.items()}
+    # Twelve games is enough for a useful signal in the shortest schedules;
+    # longer seasons continue to stabilize naturally through more opponents.
+    return {name: {"rating": round(value * min(1.0, counts[name] / 12.0), 3),
+                   "games": counts[name]}
+            for name, value in ratings.items()}
 
 
 def rating_parts(name):
@@ -1112,6 +1170,16 @@ def _weighted_form_score(form_str):
 
 def predict(home, away, markets, m=None):
     two_way = not COMP.get("has_draws", True)
+    american = COMP["sport"] != "soccer"
+    american_cfg = {
+        "NFL": {"full": 10, "margin": 10.0, "home": 0.50, "rest": 7},
+        "NCAAF": {"full": 10, "margin": 14.0, "home": 0.45, "rest": 7},
+        "NBA": {"full": 20, "margin": 12.0, "home": 0.40, "rest": 2},
+        "NCAAM": {"full": 18, "margin": 10.0, "home": 0.45, "rest": 2},
+        "MLB": {"full": 30, "margin": 2.5, "home": 0.25, "rest": 1},
+        "NHL": {"full": 20, "margin": 1.5, "home": 0.25, "rest": 2},
+    }.get(COMP_KEY, {"full": 15, "margin": 10.0, "home": 0.35, "rest": 3})
+
     def parts(s, adv):
         if not s: return {"base": 1.0, "adv": adv}
         form_str = (s.get("form_home") if adv else s.get("form_away")) or s.get("form", "")
@@ -1119,12 +1187,45 @@ def predict(home, away, markets, m=None):
         rest = s.get("rest_days")
         rp = rating_parts(s.get("name"))
         elo_pts, elo_conf = elo_strength(s.get("name"))
+        if american:
+            pld = max(0, int(s.get("pld") or 0))
+            reliability = min(1.0, pld / float(american_cfg["full"]))
+            win_pct = s.get("win_pct")
+            if win_pct is None and pld:
+                win_pct = float(s.get("w") or 0) / pld
+            win_pct = 0.5 if win_pct is None else _clamp(win_pct, 0.0, 1.0)
+            gf, ga = s.get("gf"), s.get("ga")
+            margin = ((float(gf) - float(ga)) / pld
+                      if pld and gf is not None and ga is not None and (gf or ga) else 0.0)
+            form_games = len((form_str or "").split())
+            form_center = form_games * 1.5
+            srs_games = int(s.get("srs_games") or 0)
+            srs_conf = min(1.0, srs_games / 12.0)
+            # The legacy rating files are used only when the team name matches
+            # exactly. Unknown US teams receive no invented soccer-value prior.
+            known_rating = bool(_load_ratings().get(norm(s.get("name") or "")))
+            poll_rank = s.get("model_rank")
+            poll_prior = (max(0.0, 26.0 - float(poll_rank)) / 25.0 * 2.0
+                          if poll_rank else 0.0)
+            return {
+                "base": 8.0,
+                "record": (win_pct - 0.5) * 8.0 * reliability,
+                "margin": _clamp(margin / american_cfg["margin"], -1.5, 1.5) * 2.0 * reliability,
+                "form": (fp - form_center) * 0.22 * reliability if form_games else 0.0,
+                "adv": american_cfg["home"] if adv else 0.0,
+                "class": sum(rp.values()) if known_rating else 0.0,
+                "rank": poll_prior,
+                "srs": _clamp(float(s.get("srs") or 0) / american_cfg["margin"], -1.5, 1.5) * 2.4 * srs_conf,
+                "elo": elo_pts * elo_conf,
+                "rest": (0.0 if rest is None else
+                         _clamp((rest - american_cfg["rest"]) * 0.08, -0.35, 0.35)),
+            }
         return {"base": 1.0, "pts": (s.get("pts") or 0)*0.6, "gd": (s.get("gd") or 0)*0.25,
                 "form": fp*0.5, "adv": adv,
                 "fifa": rp["fifa"], "value": rp["value"], "star": rp["star"],
                 "elo": elo_pts*elo_conf,
                 "rest": 0.0 if rest is None else max(-0.6, min(0.45, (rest - 4) * 0.15))}
-    ph, pa = parts(home, 1.2), parts(away, 0.0)
+    ph, pa = parts(home, american_cfg["home"] if american else 1.2), parts(away, 0.0)
     sh, sa = max(0.1, sum(ph.values())), max(0.1, sum(pa.values()))
     # H2H is inherently pairwise (depends on both teams at once), so unlike
     # the other factors it can't be split into independent home/away parts
@@ -1158,7 +1259,8 @@ def predict(home, away, markets, m=None):
     # factor attribution: how much each factor tilts home-vs-away (strength pts)
     keys = set(ph) | set(pa)
     why = {k: round(ph.get(k, 0) - pa.get(k, 0), 2) for k in keys if k != "base"}
-    why["class"] = round(why.pop("fifa", 0) + why.pop("value", 0) + why.pop("star", 0), 2)
+    if not american:
+        why["class"] = round(why.pop("fifa", 0) + why.pop("value", 0) + why.pop("star", 0), 2)
     if inj_h or inj_a:
         # positive = injuries hurt away more (helps home), matching other factors' sign
         why["injuries"] = round(inj_a - inj_h, 2)
@@ -1201,11 +1303,24 @@ def predict(home, away, markets, m=None):
     elif upset.get("triggered"):
         note = "upset formula triggered — volatility makes the underdog playable"
     mkt_pull = (adjusted[pick] - model[pick]) if mk else 0
+    sample = {"home": int(home.get("pld") or 0), "away": int(away.get("pld") or 0)}
+    min_sample = min(sample.values())
+    quality_level = ("preseason" if min_sample == 0 else "early"
+                     if american and min_sample < american_cfg["full"] else "established")
+    signals = [key for key in ("record", "margin", "form", "rank", "srs", "elo", "rest", "injuries")
+               if abs(float(why.get(key) or 0)) > 0.001]
+    if mk:
+        signals.append("market")
+    data_quality = {"level": quality_level, "games": sample,
+                    "signals": signals, "market_available": bool(mk),
+                    "note": ("Limited current-season evidence; probability is intentionally conservative."
+                             if quality_level != "established" else
+                             "Current-season sample and opponent-adjusted results are available.")}
     return {"pick": pick, "pick_name": name, "confidence": adjusted[pick],
             "base_pick": base_pick, "base_pick_name": {"h": home.get("name"), "a": away.get("name"), "d": "Draw"}[base_pick],
             "model": model, "base_blend": raw_blend, "blend": adjusted, "adjusted": adjusted,
             "edge": edge, "note": note, "why": why, "damp_pct": round(damp*100),
-            "mkt_pull": mkt_pull, "upset": upset}
+            "mkt_pull": mkt_pull, "upset": upset, "data_quality": data_quality}
 
 
 def predict_totals(home, away, markets):
@@ -1266,42 +1381,6 @@ def compute_watchability(m):
     stakes = 100.0 if stage and not stage.startswith("group") else 0.0
     score = quality * 0.4 + closeness * 0.35 + upset_score * 0.15 + stakes * 0.1
     return round(min(100.0, max(0.0, score)), 1)
-
-
-# -------- ESPN lineups + live subs + injuries (keyless) ------------------
-def _bucket(abbr):
-    a = (abbr or "").upper()
-    if a.startswith("G"): return "GK"
-    if a.startswith("D"): return "DEF"
-    if a.startswith("F"): return "FWD"
-    return "MID"
-
-
-def _espn_side(roster):
-    starters = [p for p in roster if p.get("starter")]
-    order = {"GK": 0, "DEF": 1, "MID": 2, "FWD": 3}
-    starters.sort(key=lambda p: order[_bucket((p.get("position") or {}).get("abbreviation"))])
-    xi = []
-    for p in starters[:11]:
-        ath = p.get("athlete") or {}
-        nm = ath.get("lastName") or (ath.get("displayName") or "").split(" ")[-1]
-        out = bool(p.get("subbedOut") or p.get("subbed_out"))
-        xi.append({"n": p.get("jersey") or "", "name": nm, "out": out})
-    return xi
-
-
-def _espn_subs(d, home_name, away_name):
-    subs = []
-    for ev in (d.get("keyEvents") or d.get("commentary") or []):
-        typ = ((ev.get("type") or {}).get("text") or ev.get("playType") or "")
-        txt = (ev.get("text") or "")
-        if "substitut" in (typ + " " + txt).lower():
-            clk = ((ev.get("clock") or {}).get("displayValue")) or ""
-            tname = ((ev.get("team") or {}).get("displayName")) or ""
-            side = "home" if norm(tname) == norm(home_name) else ("away" if norm(tname) == norm(away_name) else "")
-            subs.append({"min": clk, "side": side, "text": (txt or "Substitution")[:70]})
-    return subs
-
 
 
 # -------- API-FOOTBALL : box-score team statistics ------------------------
@@ -1502,122 +1581,6 @@ def fetch_api_football_box_scores(matches):
     _save_box_cache(cache)
     DIAG.append(f"box stats(API-FOOTBALL): matched {matched}, attached {attached}, requests {date_requests}+{stat_requests}")
 
-
-
-ESPN_STAT_MAP = {
-    "totalShots": "shots", "shotsOnTarget": "shots_on_target",
-    "possessionPct": "possession", "wonCorners": "corners",
-    "foulsCommitted": "fouls", "offsides": "offsides", "saves": "saves",
-    "yellowCards": "yellow_cards", "redCards": "red_cards",
-}
-
-def _espn_stats(d, m):
-    """Parse the boxscore statistics block from an ESPN summary payload."""
-    teams = ((d.get("boxscore") or {}).get("teams")) or []
-    if not teams:
-        # fallback: header.competitions[].competitors[].statistics
-        comps = ((d.get("header") or {}).get("competitions")) or []
-        alt = []
-        for comp in comps:
-            for c in (comp.get("competitors") or []):
-                team = c.get("team") or {}
-                alt.append({"team": {"displayName": team.get("displayName") or team.get("name") or ""},
-                            "homeAway": c.get("homeAway"),
-                            "statistics": c.get("statistics") or []})
-        teams = alt
-    if not teams:
-        return None
-    out = {"home": {}, "away": {}, "source": "ESPN"}
-    got = 0
-    for t in teams:
-        tname = ((t.get("team") or {}).get("displayName")) or ""
-        side = ("home" if _name_match(tname, m["home"]["name"])
-                else "away" if _name_match(tname, m["away"]["name"])
-                else (t.get("homeAway") if t.get("homeAway") in ("home", "away") else ""))
-        if not side:
-            continue
-        for st in (t.get("statistics") or []):
-            key = ESPN_STAT_MAP.get(st.get("name"))
-            if key:
-                out[side][key] = _num_from_stat(st.get("displayValue"))
-        if out[side]:
-            got += 1
-    return out if got == 2 else None
-
-
-def fetch_espn(matches):
-    try:
-        today = datetime.date.today()
-        d1 = (today - datetime.timedelta(days=6)).strftime("%Y%m%d"); d2 = (today + datetime.timedelta(days=12)).strftime("%Y%m%d")
-        sb = _get(f"{ESPN_SB}&dates={d1}-{d2}", UA)
-    except Exception as e:
-        DIAG.append(f"lineups(ESPN): scoreboard FAILED — {e}"); return
-
-    pair_to_id = {}
-    for ev in sb.get("events", []):
-        comp = (ev.get("competitions") or [{}])[0]
-        names = {c.get("homeAway"): ((c.get("team") or {}).get("displayName"))
-                 for c in comp.get("competitors", [])}
-        if names.get("home") and names.get("away"):
-            pair_to_id[pair(names["home"], names["away"])] = ev.get("id")
-    DIAG.append(f"lineups(ESPN): scoreboard matched {len(pair_to_id)} fixtures")
-
-    soon = sorted([m for m in matches if m["status"] in ("LIVE", "UPCOMING")],
-                  key=lambda m: m["kickoff"] or "")[:14]
-    recent_fin = sorted([m for m in matches if m["status"] == "FINISHED"],
-                        key=lambda m: m["kickoff"] or "", reverse=True)[:20]
-    soon = soon + [m for m in recent_fin if m not in soon]
-    got = 0; stats_got = 0; stats_absent = 0; first = True
-    for m in soon:
-        eid = pair_to_id.get(pair(m["home"]["name"], m["away"]["name"]))
-        if not eid: continue
-        try:
-            d = _get(ESPN_SUM.format(id=eid), UA)
-        except Exception as e:
-            if first: DIAG.append(f"lineups(ESPN): summary FAILED — {e}"); first = False
-            continue
-        rosters = d.get("rosters") or []
-        if first:
-            _bx = d.get("boxscore") or {}
-            _keys = ",".join(sorted(d.keys()))[:120]
-            DIAG.append(f"lineups(ESPN): sample event -> {len(rosters)} rosters, "
-                        f"keyEvents={len(d.get('keyEvents') or [])}")
-            DIAG.append(f"box probe: payload keys=[{_keys}]")
-            DIAG.append(f"box probe: boxscore.teams={len((_bx.get('teams') or []))} "
-                        f"boxscore.players={len((_bx.get('players') or []))} "
-                        f"has boxscore={'boxscore' in d}")
-            first = False
-        hr = next((r for r in rosters if r.get("homeAway") == "home"), None)
-        ar = next((r for r in rosters if r.get("homeAway") == "away"), None)
-        if hr and ar and hr.get("roster") and ar.get("roster"):
-            hx, ax = _espn_side(hr["roster"]), _espn_side(ar["roster"])
-            if len(hx) >= 7 and len(ax) >= 7:
-                m["lineups"] = {
-                    "home": {"formation": hr.get("formation") or "", "xi": hx},
-                    "away": {"formation": ar.get("formation") or "", "xi": ax},
-                    "subs": _espn_subs(d, m["home"]["name"], m["away"]["name"]),
-                }
-                got += 1
-        for blk in (d.get("injuries") or []):
-            tn = norm((blk.get("team") or {}).get("displayName")); people = []
-            for it in blk.get("injuries", []):
-                ath = (it.get("athlete") or {}).get("displayName")
-                stt = (it.get("status") or (it.get("type") or {}).get("description") or "out")
-                if ath: people.append(f"{ath} ({stt})")
-            if people:
-                if tn == norm(m["home"]["name"]): m["injuries"]["home"] = people
-                elif tn == norm(m["away"]["name"]): m["injuries"]["away"] = people
-        if m["status"] in ("LIVE", "FINISHED") and not m.get("stats_extra"):
-            sx = _espn_stats(d, m)
-            if sx:
-                m["stats_extra"] = sx; stats_got += 1
-            else:
-                stats_absent += 1
-    DIAG.append(f"lineups(ESPN): attached to {got} fixtures")
-    total_fin = len([m for m in matches if m["status"] in ("LIVE","FINISHED")])
-    DIAG.append(f"box stats(ESPN): attached {stats_got}/{total_fin} recent"
-                + (f" · no stats block on {stats_absent}" if stats_absent else "")
-                + (" · none attached — check ESPN coverage for this competition" if stats_got==0 and total_fin else ""))
 
 
 # -------- The Odds API : tournament winner (outrights) -------------------
@@ -2389,7 +2352,8 @@ def update_scorecard(matches):
                and abs(float(p["factor_snapshot"].get(name, 0))) >= 0.5]
         favored = [p for p in rel if (float(p["factor_snapshot"].get(name, 0)) > 0) == (p.get("pick") == "h")]
         return {"n": len(favored), "hits": sum(1 for p in favored if p.get("model_hit"))} if favored else {"n": 0, "hits": 0}
-    signal_quality = {k: _signal(k) for k in ("class", "form", "gd", "rest", "pts")}
+    signal_quality = {k: _signal(k) for k in
+                      ("class", "form", "gd", "rest", "pts", "record", "margin", "rank", "srs", "elo")}
     # error review: recent misses with their captured evidence
     misses = [{"home": p.get("home"), "away": p.get("away"), "pick": p.get("pick"),
                "score": p.get("score"), "upset": (p.get("upset_snapshot") or {}).get("candidate"),
@@ -2454,187 +2418,6 @@ def qual_scenarios(teams, third_in=None, third_out=None):
     return teams
 
 
-
-
-def _espn_seed_chip(seed):
-    if not seed:
-        return ""
-    if COMP_KEY == "NBA":
-        if seed <= 6: return {"status": f"Seed {seed}", "note": "direct playoff seed"}
-        if seed <= 10: return {"status": "Play-in", "note": "seeds 7-10 enter the play-in tournament"}
-        return ""
-    if seed <= 7: return {"status": f"Seed {seed}", "note": "current playoff seed"}
-    return ""
-
-
-def fetch_espn_rankings():
-    """College rankings used as a public rating input and Top 25 display.
-
-    College football also receives a projected 12-team CFP path. NCAAM never
-    consumes an editorial bracket here; its field is built from raw team data.
-    """
-    url = (f"https://site.api.espn.com/apis/site/v2/sports/{COMP['sport']}/{COMP['espn']}/rankings")
-    try:
-        d = _get(url)
-    except Exception as e:
-        DIAG.append(f"rankings: FAILED — {e}")
-        return [], None
-    polls = d.get("rankings") or []
-    poll = next((p for p in polls if "CFP" in (p.get("name") or "").upper() or "PLAYOFF" in (p.get("name") or "").upper()), None)            or next((p for p in polls if "AP" in (p.get("name") or "").upper()), None)            or (polls[0] if polls else None)
-    if not poll:
-        DIAG.append("rankings: none published yet")
-        return [], None
-    ranks = []
-    for r in (poll.get("ranks") or [])[:25]:
-        team = r.get("team") or {}
-        ranks.append({"rank": r.get("current"), "name": team.get("displayName") or team.get("name") or "",
-                      "code": team.get("abbreviation") or "", "record": r.get("recordSummary") or ""})
-    DIAG.append(f"rankings: {poll.get('name')} — {len(ranks)} teams")
-    # self-maintaining ratings: rank feeds the model exactly like fifa_rank
-    try:
-        ratings = {"_note": f"Auto-refreshed each fetch from {poll.get('name')} — do not hand-edit ranks; "
-                            "they are overwritten. Unranked teams default to rank 40 in the model."}
-        for r in ranks:
-            if r["rank"] and r["name"]:
-                ratings[r["name"]] = {"fifa_rank": int(r["rank"]), "squad_value_m": 0, "star_value_m": 0}
-        with open(RATINGS_FILE, "w", encoding="utf-8") as f:
-            json.dump(ratings, f, indent=1, ensure_ascii=False)
-    except Exception as e:
-        DIAG.append(f"rankings->ratings write skipped: {e}")
-    # projected CFP bracket: straight seeding, seeds 1-4 byes, 5v12 6v11 7v10 8v9
-    bracket = None
-    if COMP_KEY == "NCAAF" and len(ranks) >= 12:
-        top = ranks[:12]
-        def mrow(a, b):
-            return {"home": f"({a['rank']}) {a['name']}", "away": f"({b['rank']}) {b['name']}",
-                    "score": {"home": None, "away": None}, "status": "UPCOMING", "kickoff": None}
-        first = [mrow(top[4], top[11]), mrow(top[5], top[10]), mrow(top[6], top[9]), mrow(top[7], top[8])]
-        byes = [{"home": f"({t['rank']}) {t['name']}", "away": "First-round winner",
-                 "score": {"home": None, "away": None}, "status": "UPCOMING", "kickoff": None} for t in top[:4]]
-        bracket = [{"round": "CFP First Round (projection)", "matches": first},
-                   {"round": "CFP Quarter-finals (projection)", "matches": byes},
-                   {"round": "Semi-finals (projection)", "matches": []},
-                   {"round": "Championship (projection)", "matches": []}]
-    return ranks, bracket
-
-
-LEADER_CATEGORY_KEYS = {
-    "NFL": ["passingYards", "passingTouchdowns", "rushingYards", "receivingYards"],
-    "NCAAF": ["passingYards", "passingTouchdowns", "rushingYards", "receivingYards"],
-    "NCAAM": ["pointsPerGame", "reboundsPerGame", "assistsPerGame", "blocksPerGame"],
-    "NBA": ["pointsPerGame", "reboundsPerGame", "assistsPerGame", "blocksPerGame"],
-    "MLB": ["homeRuns", "avg", "RBIs", "strikeouts"],
-    "NHL": ["points", "goals", "assists", "savePct"],
-}
-
-
-def fetch_espn_leaders():
-    """Return a compact, sport-native season-leader snapshot for the UI."""
-    wanted = LEADER_CATEGORY_KEYS.get(COMP_KEY)
-    if not wanted:
-        return {}
-    now_year = datetime.datetime.now(datetime.timezone.utc).year
-    for season in (now_year, now_year - 1):
-        url = (f"https://sports.core.api.espn.com/v2/sports/{COMP['sport']}"
-               f"/leagues/{COMP['espn']}/seasons/{season}/types/2/leaders"
-               "?lang=en&region=us")
-        try:
-            raw = _get(url, UA)
-        except Exception as e:
-            DIAG.append(f"espn leaders {season}: FAILED — {e}")
-            continue
-        categories = {c.get("name"): c for c in (raw.get("categories") or [])}
-        if not any((categories.get(key) or {}).get("leaders") for key in wanted):
-            DIAG.append(f"espn leaders {season}: no populated categories")
-            continue
-        out = []
-        for key in wanted:
-            category = categories.get(key) or {}
-            rows = []
-            for leader in (category.get("leaders") or [])[:3]:
-                ref = ((leader.get("athlete") or {}).get("$ref") or "").replace("http://", "https://")
-                if not ref:
-                    continue
-                try:
-                    athlete = _get(ref, UA)
-                except Exception:
-                    continue
-                name = athlete.get("displayName") or athlete.get("fullName")
-                if name:
-                    rows.append({"name": name, "value": leader.get("displayValue") or leader.get("value")})
-            if rows:
-                out.append({
-                    "key": key,
-                    "label": category.get("displayName") or key,
-                    "abbr": category.get("shortDisplayName") or category.get("abbreviation") or "",
-                    "leaders": rows,
-                })
-        if out:
-            DIAG.append(f"espn leaders: {len(out)} categories for {season}")
-            return {"season": season, "source": "ESPN", "categories": out}
-    return {}
-
-
-def fetch_espn_standings():
-    """Standings for ESPN-sourced sports (NFL, NBA, NCAAF). Returns
-    (st_for_model, standings_payload). Maps US-sport records onto the fields the
-    model reads: pts ~ wins*3+ties, gd ~ point differential scaled, form from streak."""
-    url = (f"https://site.api.espn.com/apis/v2/sports/{COMP['sport']}/{COMP['espn']}/standings")
-    try:
-        d = _get(url)
-    except Exception as e:
-        DIAG.append(f"espn standings: FAILED — {e}")
-        return {}, []
-    st, payload = {}, []
-    groups = d.get("children") or []
-    for conf in groups:
-        for div in (conf.get("children") or [conf]):
-            div_name = div.get("name") or conf.get("name") or "League"
-            rows = []
-            for e in ((div.get("standings") or {}).get("entries")) or []:
-                team = e.get("team") or {}
-                name = team.get("displayName") or ""
-                stats = {s.get("name"): s for s in (e.get("stats") or [])}
-                def val(k, default=0):
-                    v = (stats.get(k) or {}).get("value")
-                    return default if v is None else v
-                w, l, t = int(val("wins")), int(val("losses")), int(val("ties"))
-                diff = float(val("pointDifferential"))
-                win_pct = float(val("winPercent", (w / max(1, w + l + t))))
-                league_win_pct = float(val("leagueWinPercent", win_pct))
-                avg_pf = float(val("avgPointsFor", 0))
-                avg_pa = float(val("avgPointsAgainst", 0))
-                # ESPN reports per-game differential for NBA, season total for NFL —
-                # normalize both onto the model's soccer-like scale
-                gd_model = round(diff if abs(diff) <= 20 else diff / 10.0, 1)
-                seed = int(val("playoffSeat", 0) or val("playoffSeed", 0))
-                streak = float(val("streak"))
-                form = (("W " * min(5, int(abs(streak)))) if streak > 0
-                        else ("L " * min(5, int(abs(streak))))).strip()
-                key = norm(name)
-                pld = w + l + t
-                # normalize points to a ~14-game baseline so an 82-game NBA season
-                # and a 17-game NFL season feed the model on the same scale
-                pts_model = round((w * 3 + t) * 14.0 / max(1, pld), 1) if pld else 0
-                st[key] = {"group": div_name, "pld": pld, "w": w, "d": t, "l": l,
-                           "gf": int(val("pointsFor")), "ga": int(val("pointsAgainst")),
-                           "gd": gd_model, "pts": pts_model,
-                           "form": form, "pos": None, "win_pct": win_pct,
-                           "league_win_pct": league_win_pct, "avg_pf": avg_pf, "avg_pa": avg_pa}
-                rows.append({"name": name, "code": team.get("abbreviation") or "",
-                             "pos": None, "pld": w + l + t, "w": w, "d": t, "l": l,
-                             "gf": int(val("pointsFor")), "ga": int(val("pointsAgainst")),
-                             "gd": int(diff), "pts": w * 3 + t, "form": form,
-                             "record": f"{w}-{l}" + (f"-{t}" if t else ""),
-                             "win_pct": win_pct, "league_win_pct": league_win_pct,
-                             "avg_pf": avg_pf, "avg_pa": avg_pa,
-                             "qual": (_espn_seed_chip(seed))})
-            rows.sort(key=lambda x: (-x["pts"], -x["gd"]))
-            for i, r in enumerate(rows): r["pos"] = i + 1
-            if rows:
-                payload.append({"group": div_name, "teams": rows})
-    DIAG.append(f"espn standings: {sum(len(g['teams']) for g in payload)} teams in {len(payload)} divisions")
-    return st, payload
 
 
 def build_ncaam_bracketology(standings_payload):
@@ -2756,61 +2539,6 @@ def build_ncaam_bracketology(standings_payload):
     }
 
 
-def fetch_espn_fixtures():
-    """Fixture source for sports football-data doesn't carry (NFL, NBA, …).
-    Produces the same match shape the UI already reads."""
-    today = datetime.date.today()
-    if COMP_KEY == "NCAAM":
-        # This ESPN league accepts month/season dates but rejects date ranges.
-        # Pull the previous/current/next month so live and near-term games stay
-        # complete without requesting an entire 5,000+ game season.
-        events_by_id = {}
-        for offset in (-1, 0, 1):
-            anchor = (today.replace(day=15) + datetime.timedelta(days=32 * offset)).replace(day=1)
-            try:
-                month = _get(ESPN_SB + f"&groups=50&limit=1000&dates={anchor.strftime('%Y%m')}")
-                for ev in (month.get("events") or []):
-                    events_by_id[str(ev.get("id"))] = ev
-            except Exception as e:
-                DIAG.append(f"espn fixtures {anchor.strftime('%Y-%m')}: FAILED — {e}")
-        d = {"events": list(events_by_id.values())}
-    else:
-        d1 = (today - datetime.timedelta(days=8)).strftime("%Y%m%d")
-        d2 = (today + datetime.timedelta(days=30)).strftime("%Y%m%d")
-        try:
-            d = _get(ESPN_SB + f"&dates={d1}-{d2}")
-        except Exception as e:
-            DIAG.append(f"espn fixtures: FAILED — {e}"); return []
-    out = []
-    for ev in d.get("events", []):
-        comp = (ev.get("competitions") or [{}])[0]
-        home = away = None
-        for c in comp.get("competitors", []):
-            team = c.get("team") or {}
-            side = {"name": team.get("displayName"), "code": team.get("abbreviation") or "",
-                    "pts": None, "gd": None, "form": "", "pos": None, "group": None}
-            sc = c.get("score")
-            try: side["_score"] = int(sc) if sc not in (None, "") else None
-            except (TypeError, ValueError): side["_score"] = None
-            if c.get("homeAway") == "home": home = side
-            else: away = side
-        if not home or not away or not home["name"] or not away["name"]:
-            continue
-        st = ((ev.get("status") or {}).get("type") or {})
-        state = st.get("state")
-        status = "LIVE" if state == "in" else "FINISHED" if state == "post" else "UPCOMING"
-        minute = (ev.get("status") or {}).get("displayClock") if status == "LIVE" else None
-        wk = (ev.get("week") or {}).get("number")
-        out.append({"id": str(ev.get("id")), "stage": (f"Week {wk}" if wk else COMP["label"]),
-                    "venue": ((comp.get("venue") or {}).get("fullName") or ""),
-                    "kickoff": ev.get("date"), "status": status, "minute": minute,
-                    "score": {"home": home.pop("_score"), "away": away.pop("_score")},
-                    "home": home, "away": away, "markets": {}, "lineups": None,
-                    "h2h": [], "injuries": {"home": [], "away": []}})
-    DIAG.append(f"espn fixtures: {len(out)}")
-    return out
-
-
 def fetch_sportsdataio_bundle():
     """Fetch licensed US/college schedules and standings in Matchday shapes."""
     adapter = SportsDataIOAdapter(SPORTSDATAIO_KEY, COMP_KEY)
@@ -2906,10 +2634,44 @@ def fetch_balldontlie_bundle():
             with open(cache_file, encoding="utf-8") as handle:
                 matches = json.load(handle)
             DIAG.append("BALLDONTLIE fixtures: stale cache after provider limit/error")
-    st, tables = compute_us_sport_standings(matches)
+
+    # schedule()'s narrow window keeps the display list fresh but starves
+    # standings/SRS/Elo of real season sample size. Pull season-to-date
+    # results separately, cached for hours since a full pull re-pages
+    # through the whole season (see BallDontLieAdapter.season_games).
+    season_cache_file = f"balldontlie_season_{COMP_KEY.lower()}_cache.json"
+    season_matches = None
+    try:
+        if (os.path.exists(season_cache_file)
+                and time.time() - os.path.getmtime(season_cache_file) < BALLDONTLIE_SEASON_CACHE_MIN * 60):
+            with open(season_cache_file, encoding="utf-8") as handle:
+                season_matches = json.load(handle)
+            DIAG.append("BALLDONTLIE season-to-date: local cache")
+    except Exception:
+        season_matches = None
+    if season_matches is None:
+        try:
+            season_matches = adapter.season_games()
+            tmp = season_cache_file + ".tmp"
+            with open(tmp, "w", encoding="utf-8") as handle:
+                json.dump(season_matches, handle, ensure_ascii=False)
+            os.replace(tmp, season_cache_file)
+            DIAG.append(f"BALLDONTLIE season-to-date: fetched {len(season_matches)} finished games")
+        except ProviderError as e:
+            if os.path.exists(season_cache_file):
+                with open(season_cache_file, encoding="utf-8") as handle:
+                    season_matches = json.load(handle)
+                DIAG.append(f"BALLDONTLIE season-to-date: stale cache after provider limit/error — {_scrub(e)}")
+            else:
+                # Better a narrow-window standings table than none at all.
+                season_matches = matches
+                DIAG.append(f"BALLDONTLIE season-to-date: unavailable, using display window — {_scrub(e)}")
+
+    st, tables = compute_us_sport_standings(season_matches)
+    adapter._model_history = season_matches
     DIAG.append(f"BALLDONTLIE fixtures: {len(matches)} in free-tier display window")
-    DIAG.append(f"BALLDONTLIE standings: computed from {sum(r['pld'] for r in st.values())} team-games "
-                f"(no standings endpoint on free tier, so derived from final scores)")
+    DIAG.append(f"BALLDONTLIE standings: {sum(r['pld'] for r in st.values())} team-games from "
+                f"{len(season_matches)} season-to-date finished games (no standings endpoint on free tier)")
     return adapter, matches, st, tables
 
 
@@ -3008,6 +2770,10 @@ def fetch_college_bundle():
                 bundle = json.load(handle)
             DIAG.append(f"{provider_name}: stale cache after provider limit/error")
     all_matches = bundle.get("matches") or []
+    normalize_match_results(all_matches)
+    # Retain the complete licensed season only in memory for local aggregate
+    # model training; the public dashboard still receives the bounded window.
+    adapter._model_history = all_matches
     st = {norm(name): row for name, row in (bundle.get("standings_model") or {}).items()}
     tables = bundle.get("tables") or []
     adapter._cached_rankings = (bundle.get("rankings") or [], bundle.get("projection"))
@@ -3135,6 +2901,16 @@ def build():
             sports_adapter, matches, st, sports_tables = fetch_sportsdataio_bundle()
             provider_name = "SportsDataIO"
         print(f"  got {len(matches)} fixtures ({provider_name})")
+        training_matches = normalize_match_results(
+            getattr(sports_adapter, "_model_history", matches))
+        srs_ratings = compute_srs(training_matches) if COMP["sport"] != "soccer" else {}
+        rank_map = {}
+        if COMP_KEY == "NCAAF" and sports_adapter:
+            try:
+                provider_ranks, _ = sports_adapter.rankings(sports_tables)
+                rank_map = {norm(row.get("name")): row.get("rank") for row in provider_ranks}
+            except ProviderError as exc:
+                DIAG.append(f"{provider_name} rankings unavailable: {_scrub(exc)}")
         name_map = {}
         for m in matches:
             for t in (m["home"], m["away"]):
@@ -3144,6 +2920,14 @@ def build():
                     t["pts"], t["gd"], t["form"] = rec["pts"], rec["gd"], rec["form"]
                     t["group"], t["pos"] = rec["group"], rec.get("pos")
                     t["gf"], t["ga"], t["pld"] = rec.get("gf", 0), rec.get("ga", 0), rec.get("pld", 0)
+                    for field in ("w", "d", "l", "record", "win_pct", "avg_pf", "avg_pa"):
+                        if field in rec:
+                            t[field] = rec[field]
+                srs = srs_ratings.get(norm(t["name"]))
+                if srs:
+                    t["srs"], t["srs_games"] = srs["rating"], srs["games"]
+                if norm(t["name"]) in rank_map:
+                    t["model_rank"] = rank_map[norm(t["name"])]
                 # class/power-rating signal, independent of standings -- lets the
                 # Sandbox (and predict() when pts/gd/form are still 0 preseason)
                 # differentiate teams by real preseason strength instead of
@@ -3157,6 +2941,7 @@ def build():
         raw = fetch_raw_matches(); print(f"  got {len(raw)} raw fixtures")
         st = compute_standings(raw)
         matches = build_matches(raw, st)
+        training_matches = normalize_match_results(matches)
         name_map = {}
         for m in raw:
             for t in (m.get("homeTeam"), m.get("awayTeam")):
@@ -3225,9 +3010,9 @@ def build():
     # train the self-updating factors (Elo, H2H) on this run's finished
     # results, and derive home/away split form -- all from the same
     # `matches` list every provider already fills in, before predictions run
-    update_elo(matches)
-    update_h2h(matches)
-    split_form = compute_split_form(matches)
+    update_elo(training_matches)
+    update_h2h(training_matches)
+    split_form = compute_split_form(training_matches)
     for m in matches:
         for side_key in ("home", "away"):
             rec = split_form.get(norm(m[side_key].get("name")))
@@ -3283,6 +3068,14 @@ def build():
     if COMP_KEY == "NCAAM":
         bracketology = build_ncaam_bracketology(sports_tables)
     scorecard = update_scorecard(matches)
+    weekly_awards = build_weekly_awards(matches)
+    try:
+        from generate_posts import publish_recap_if_due
+        post = publish_recap_if_due(COMP_KEY, COMP["label"], scorecard, weekly_awards)
+        if post:
+            DIAG.append(f"posts: published '{post['title']}'")
+    except Exception as e:
+        DIAG.append(f"posts: skipped — {e}")
     update_player_db(matches)
     scorers = []
     if COMP.get("fd"):
@@ -3304,7 +3097,7 @@ def build():
                "title_odds": title, "news": news, "news_scope": COMP_KEY, "bracket": bracket, "bracketology": bracketology,
                "third_race": third, "standings": standings, "scorers": scorers, "leaders": leaders, "team_of_tournament": build_team_of_tournament(matches, scorers, standings), "scorecard": scorecard,
                "advancement": compute_advancement(matches, st, name_map, code_map),
-               "weekly_awards": build_weekly_awards(matches),
+               "weekly_awards": weekly_awards,
                "markets_quota_out": MARKET_STATE["quota_out"],
                "diagnostics": [_scrub(x) for x in DIAG]}
     for out in (OUT_FILE, f"data_{COMP_KEY.lower()}.json"):

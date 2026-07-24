@@ -26,7 +26,7 @@ KEYISH = re.compile(r"\b[a-f0-9]{32}\b|\b[A-Za-z0-9]{30,}\b")
 PLACEHOLDER = "PASTE_"
 
 # files you would share / publish (code), vs files that must stay private
-SHAREABLE = ["fetch_data.py", "app.py", "multi_fetch.py", "backfill_players.py",
+SHAREABLE = ["fetch_data.py", "app.py", "multi_fetch.py",
              "update_ratings.py", "index.html", "styles.css",
              "app-1-core.js", "app-2-views.js", "app-3-panels.js", "app-4-features.js",
              "translations.js"]

@@ -9,6 +9,7 @@ from __future__ import annotations
 import datetime as dt
 import json
 import math
+import time
 import urllib.parse
 import urllib.request
 
@@ -32,6 +33,21 @@ def _number(value, default=0):
         return int(number) if number.is_integer() else number
     except (TypeError, ValueError):
         return default
+
+
+def normalized_score(home, away, finished=False):
+    """Return Matchday's score contract, including a result only when final.
+
+    Keeping this normalization at the provider boundary lets every downstream
+    model learn from the same licensed game feed without calling another data
+    source or guessing the state of an unfinished game.
+    """
+    home_score = _number(home, None)
+    away_score = _number(away, None)
+    score = {"home": home_score, "away": away_score}
+    if finished and home_score is not None and away_score is not None:
+        score["winner"] = "h" if home_score > away_score else "a" if away_score > home_score else "d"
+    return score
 
 
 def _iso_utc(value):
@@ -147,7 +163,7 @@ class SportsDataIOAdapter:
             "venue": venue,
             "kickoff": _iso_utc(row.get("DateTimeUTC") or row.get("DateTime") or row.get("Day")),
             "status": status, "minute": minute or None,
-            "score": {"home": _number(home_score, None), "away": _number(away_score, None)},
+            "score": normalized_score(home_score, away_score, status == "FINISHED"),
             "home": {"name": str(home_name), "code": str(home_code or ""), "pts": None, "gd": None,
                      "form": "", "pos": None, "group": None},
             "away": {"name": str(away_name), "code": str(away_code or ""), "pts": None, "gd": None,
@@ -339,7 +355,7 @@ class CollegeFootballDataAdapter:
                 "stage": f"Week {row.get('week')}" if row.get("week") else str(row.get("seasonType") or "Regular Season").title(),
                 "venue": row.get("venue") or "", "kickoff": kickoff, "status": status,
                 "minute": "Live" if status == "LIVE" else None,
-                "score": {"home": _number(row.get("homePoints"), None), "away": _number(row.get("awayPoints"), None)},
+                "score": normalized_score(row.get("homePoints"), row.get("awayPoints"), status == "FINISHED"),
                 "home": {"name": home, "code": _short_code(home), "pts": None, "gd": None, "form": "", "pos": None, "group": row.get("homeConference")},
                 "away": {"name": away, "code": _short_code(away), "pts": None, "gd": None, "form": "", "pos": None, "group": row.get("awayConference")},
                 "markets": {}, "lineups": None, "h2h": [], "injuries": {"home": [], "away": []},
@@ -448,7 +464,7 @@ class CollegeBasketballDataAdapter:
             status = "FINISHED" if raw == "final" else "LIVE" if raw in {"in_progress", "live", "halftime"} else "UPCOMING"
             matches.append({"id": f"cbbd-{row.get('id')}", "provider_id": row.get("id"), "stage": str(row.get("seasonType") or "Regular Season").replace("_", " ").title(),
                 "venue": row.get("venue") or "", "kickoff": _iso_utc(row.get("startDate")), "status": status, "minute": raw if status == "LIVE" else None,
-                "score": {"home": _number(row.get("homePoints"), None), "away": _number(row.get("awayPoints"), None)},
+                "score": normalized_score(row.get("homePoints"), row.get("awayPoints"), status == "FINISHED"),
                 "home": {"name": home, "code": _short_code(home), "pts": None, "gd": None, "form": "", "pos": None, "group": row.get("homeConference")},
                 "away": {"name": away, "code": _short_code(away), "pts": None, "gd": None, "form": "", "pos": None, "group": row.get("awayConference")},
                 "markets": {}, "lineups": None, "h2h": [], "injuries": {"home": [], "away": []}, "data_source": "CollegeBasketballData"})
@@ -495,6 +511,15 @@ class BallDontLieAdapter:
 
     BASE = "https://api.balldontlie.io"
     CODES = {"NBA": "nba", "NFL": "nfl", "MLB": "mlb"}
+    # Rough regular-season start per sport, used only to bound season_games()'s
+    # date range. A day or two off just means a few preseason/spring-training
+    # rows get pulled in — schedule() filters those out by stage.
+    SEASON_START = {"NFL": (9, 1), "NBA": (10, 1), "MLB": (3, 20)}
+    # Keep season_games()'s pagination well under the free tier's 5 req/min
+    # limit -- this client has no automatic retry/backoff, and this call is
+    # cached for hours (see fetch_balldontlie_bundle), so pacing it slowly
+    # costs nothing in practice.
+    SEASON_PAGE_DELAY_SEC = 13
 
     def __init__(self, api_key, competition, getter=None, today=None):
         if not api_key:
@@ -541,6 +566,43 @@ class BallDontLieAdapter:
         matches.sort(key=lambda match: match.get("kickoff") or "")
         return matches
 
+    def season_games(self, max_pages=20):
+        """Season-to-date finished games, for standings/SRS/Elo training.
+
+        schedule()'s narrow date window is sized for keeping the free tier's
+        *display* list fresh; the free plan has no standings endpoint (see
+        class docstring), so recovering real win-loss records means paging
+        back through the whole season here instead of the last ~week.
+        """
+        month, day = self.SEASON_START.get(self.competition, (1, 1))
+        start = dt.date(self.season, month, day)
+        if start > self.today:
+            start = dt.date(self.season - 1, month, day)
+        dates = [(start + dt.timedelta(days=offset)).isoformat()
+                 for offset in range(0, max(0, (self.today - start).days) + 1)]
+        rows, cursor = [], None
+        for page in range(max_pages):
+            if page:
+                time.sleep(self.SEASON_PAGE_DELAY_SEC)
+            params = {"dates[]": dates, "per_page": 100, "cursor": cursor}
+            try:
+                payload = self._get(f"/{self.code}/v1/games", params)
+            except ProviderError:
+                if page == 0:
+                    raise
+                break
+            page_rows = payload.get("data") if isinstance(payload, dict) else []
+            rows.extend(page_rows or [])
+            cursor = (payload.get("meta") or {}).get("next_cursor") if isinstance(payload, dict) else None
+            if not cursor:
+                break
+        matches = [self._match(row) for row in rows if isinstance(row, dict)]
+        matches = [match for match in matches
+                   if match and not any(tag in (match.get("stage") or "").lower()
+                                         for tag in ("preseason", "spring"))]
+        matches.sort(key=lambda match: match.get("kickoff") or "")
+        return matches
+
     @staticmethod
     def _team(row, side):
         team = row.get(side) if isinstance(row.get(side), dict) else {}
@@ -584,7 +646,7 @@ class BallDontLieAdapter:
             "stage": stage, "venue": row.get("venue") or "",
             "kickoff": _iso_utc(row.get("datetime") or row.get("date")),
             "status": status, "minute": minute or None,
-            "score": {"home": _number(home_score, None), "away": _number(away_score, None)},
+            "score": normalized_score(home_score, away_score, status == "FINISHED"),
             "home": home, "away": away, "markets": {}, "lineups": None, "h2h": [],
             "injuries": {"home": [], "away": []}, "data_source": "BALLDONTLIE",
         }
@@ -699,7 +761,7 @@ class APISportsAdapter:
         return {
             "id": f"apis-{self.competition.lower()}-{gid}", "provider_id": gid,
             "stage": stage, "venue": venue, "kickoff": kickoff, "status": status, "minute": None,
-            "score": {"home": _number(home_score, None), "away": _number(away_score, None)},
+            "score": normalized_score(home_score, away_score, status == "FINISHED"),
             "home": {"name": str(home_t.get("name") or ""), "code": str(self._code(home_t, home_t.get("name") or "")),
                      "pts": None, "gd": None, "form": "", "pos": None, "group": None},
             "away": {"name": str(away_t.get("name") or ""), "code": str(self._code(away_t, away_t.get("name") or "")),
