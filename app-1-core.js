@@ -1,5 +1,30 @@
 
 const $=s=>document.querySelector(s);let DATA={matches:[],news:[],standings:[]},BYID={},VIEW='matches',LAST_OK=false,LAST_ERROR='',LOAD_TIMER=null,NEWS_FILTER='all';
+const CAROUSELS={};
+function prefersReducedMotion(){return !!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)}
+// Small rotating carousel used by the welcome preview and the insight panel's
+// "In focus" match -- cycles a fade-transitioned item every `intervalMs`,
+// pauses on hover, and never auto-rotates for prefers-reduced-motion users
+// (a single static item is shown instead, not a softened animation).
+function runCarousel(key,items,host,renderFn,intervalMs){
+  if(!host)return;
+  const prev=CAROUSELS[key];if(prev&&prev.timer)clearInterval(prev.timer);
+  if(!items||items.length<2){delete CAROUSELS[key];return}
+  const st=CAROUSELS[key]={idx:0,items,renderFn,timer:null};
+  st.advance=()=>{
+    const s=CAROUSELS[key];if(!s)return;
+    s.idx=(s.idx+1)%s.items.length;
+    host.classList.remove('carouselFade');void host.offsetWidth;
+    host.innerHTML=s.renderFn(s.items[s.idx]);
+    host.classList.add('carouselFade');
+  };
+  if(!prefersReducedMotion())st.timer=setInterval(st.advance,intervalMs);
+  if(!host.dataset.carouselBound){
+    host.addEventListener('mouseenter',()=>{const s=CAROUSELS[key];if(s&&s.timer){clearInterval(s.timer);s.timer=null}});
+    host.addEventListener('mouseleave',()=>{const s=CAROUSELS[key];if(s&&!s.timer&&s.items.length>1&&!prefersReducedMotion())s.timer=setInterval(s.advance,intervalMs)});
+    host.dataset.carouselBound='1';
+  }
+}
 const DEFAULT_SETTINGS={accent:'green',density:'normal',panel:'glass',defaultView:'matches',refresh:60,showInsight:true,showFinished:false,showDetails:false,favoriteTeam:'',alertsKickoff:true,alertsLive:true,alertsUpset:true,alertsModel:true,alertsData:true};
 let SETTINGS={...DEFAULT_SETTINGS};try{SETTINGS={...DEFAULT_SETTINGS,...JSON.parse(localStorage.getItem('matchday.settings')||'{}')}}catch(e){}
 // Refresh cadence is product-controlled so visitors cannot accidentally create
@@ -200,15 +225,25 @@ function tourPositionCard(target,card){
   card.style.left=left+'px';card.style.top=top+'px';
 }
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.body.classList.contains('tourOpen'))tourEnd();});
-function renderWelcome(){
-  const gate=$('#welcomeGate');if(!gate)return;
-  const dismissed=welcomeDismissed();gate.hidden=dismissed;document.body.classList.toggle('welcomeOpen',!dismissed);if(dismissed)return;
-  const matches=(DATA.matches||[]).filter(m=>m.status==='LIVE'||isVisibleUpcoming(m)).sort(fixtureSort),m=matches[0],host=$('#welcomeNext');
-  if(!host||!m)return;
+function _welcomeCardHTML(m){
   const pr=m.prediction||{},op=(typeof _v10OfficialPick==='function'&&m.prediction)?_v10OfficialPick(m):null;
   const pick=op?.name||pr.pick_name||'',model=op?.confidence??pr.confidence,market=op?.marketPct;
   const edge=model!=null&&market!=null?Math.round(Number(model)-Number(market)):null;
-  host.innerHTML=`<div class="welcomeMatchMeta"><span>${esc(m._comp||DATA.comp_key||m.stage||'NEXT')}</span><span class="${m.status==='LIVE'?'isLive':''}">${m.status==='LIVE'?'LIVE':kickIn(m.kickoff)}</span></div><div class="welcomeTeams"><div><small>${esc(m.home?.code||'HOME')}</small><b>${esc(m.home?.name||'Home')}</b></div><em>${m.status==='LIVE'?esc(scoreText(m).replace(/<[^>]+>/g,'')):'v'}</em><div class="away"><small>${esc(m.away?.code||'AWAY')}</small><b>${esc(m.away?.name||'Away')}</b></div></div>${pick?`<div class="welcomeSignal"><span>MODEL</span><b>${esc(pick)} ${model!=null?esc(model)+'%':''}</b>${market!=null?`<i>market ${esc(market)}%${edge!=null?` · ${edge>0?'+':''}${edge} pt`:''}</i>`:''}</div>`:''}`;
+  return `<div class="welcomeMatchMeta"><span>${esc(m._comp||DATA.comp_key||m.stage||'NEXT')}</span><span class="${m.status==='LIVE'?'isLive':''}">${m.status==='LIVE'?'LIVE':kickIn(m.kickoff)}</span></div><div class="welcomeTeams"><div><small>${esc(m.home?.code||'HOME')}</small><b>${esc(m.home?.name||'Home')}</b></div><em>${m.status==='LIVE'?esc(scoreText(m).replace(/<[^>]+>/g,'')):'v'}</em><div class="away"><small>${esc(m.away?.code||'AWAY')}</small><b>${esc(m.away?.name||'Away')}</b></div></div>${pick?`<div class="welcomeSignal"><span>MODEL</span><b>${esc(pick)} ${model!=null?esc(model)+'%':''}</b>${market!=null?`<i>market ${esc(market)}%${edge!=null?` · ${edge>0?'+':''}${edge} pt`:''}</i>`:''}</div>`:''}`;
+}
+function renderWelcome(){
+  const gate=$('#welcomeGate');if(!gate)return;
+  const dismissed=welcomeDismissed();gate.hidden=dismissed;document.body.classList.toggle('welcomeOpen',!dismissed);if(dismissed){runCarousel('welcome',null);return}
+  const live=(DATA.matches||[]).filter(m=>m.status==='LIVE'||isVisibleUpcoming(m));
+  const soonest=[...live].sort(fixtureSort)[0],host=$('#welcomeNext');
+  if(!host||!soonest)return;
+  // most urgent kickoff shown first, then rotates through a small pool of
+  // the other featured games (by watchability) so the panel isn't static
+  const featured=[...live].sort((a,b)=>(b.watchability||0)-(a.watchability||0))
+    .filter(m=>m.id!==soonest.id).slice(0,4);
+  const pool=[soonest,...featured];
+  host.innerHTML=_welcomeCardHTML(soonest);
+  runCarousel('welcome',pool,host,_welcomeCardHTML,4500);
   const state=$('#welcomeFeedState');if(state)state.textContent=(DATA.matches||[]).some(x=>x.status==='LIVE')?'LIVE NOW':'NEXT MATCH';
 }
 function heroMarquee(){
@@ -334,6 +369,12 @@ function renderThird(){const host=$('#view-third'),third=getThirdRace();if(!thir
 /* removed duplicate (renderNews) */
 
 const SYSTEM_UPDATES=[
+  {date:'Build 0724F',tag:'Fix',title:'Reliability fixes for NFL/NBA/MLB predictions',items:[
+    'Fixed a rare case where the season pull could get cut short by a rate limit and quietly cache an incomplete season for hours; it now retries and falls back cleanly instead of caching a lie.',
+    'The rest-days factor no longer silently drops across a bye week or break — it now checks the full season, not just the last week.']},
+  {date:'Build 0724E',tag:'UI',title:'A little more motion in the welcome screen and insight panel',items:[
+    'The welcome screen now rotates through a few of the day\'s most watchable games instead of showing just one static matchup.',
+    'The right-side insight panel does the same for its "In focus" match, pausing whenever you hover over it, and skips the animation entirely if your system prefers reduced motion.']},
   {date:'Build 0724D',tag:'New',title:'Matchday now writes its own recaps, plus a Q&A page',items:[
     'A new Insights tab publishes short, auto-generated recap posts per sport — hit rate, calibration, and the week\'s biggest storylines — built entirely from the model\'s own graded picks, not third-party content.',
     'A new Q&A page explains what confidence, edge, Elo and the opponent-adjusted rating actually mean, and how the model is graded.']},
@@ -607,7 +648,7 @@ const SYSTEM_UPDATES=[
   ]}
 ];
 function markUpdatesRead(){localStorage.setItem('matchday.updates.lastSeen',new Date().toISOString());renderSystemUpdates()}
-function renderSystemUpdates(){const host=$('#view-updates');const seen=localStorage.getItem('matchday.updates.lastSeen');const latest='build 0724D';host.innerHTML=`<div class="updatesShell"><div class="updatesHero"><section class="updatesIntro"><h2>System updates</h2><span class="safePill">UI</span></section><aside class="buildCard"><div class="tiny">Current build</div><div class="build">${esc(latest)}</div><div class="hint">Last viewed: ${seen?esc(ago(seen)):'not marked yet'}</div><div class="updateActions"><button class="miniBtn" onclick="markUpdatesRead()">Mark as read</button><button class="miniBtn" onclick="setView('status')">Open Status</button></div></aside></div><section class="timeline"><div class="timelineHead"><h3>Release notes</h3><span>${SYSTEM_UPDATES.length} entries</span></div>${SYSTEM_UPDATES.map(u=>`<article class="updateItem"><div class="updateDate">${esc(u.date)}</div><div><div class="updateTitle"><span>${esc(u.title)}</span><span class="updateBadge">${esc(u.tag)}</span></div><ul>${u.items.map(i=>`<li>${esc(i)}</li>`).join('')}</ul></div></article>`).join('')}</section></div>`}
+function renderSystemUpdates(){const host=$('#view-updates');const seen=localStorage.getItem('matchday.updates.lastSeen');const latest='build 0724F';host.innerHTML=`<div class="updatesShell"><div class="updatesHero"><section class="updatesIntro"><h2>System updates</h2><span class="safePill">UI</span></section><aside class="buildCard"><div class="tiny">Current build</div><div class="build">${esc(latest)}</div><div class="hint">Last viewed: ${seen?esc(ago(seen)):'not marked yet'}</div><div class="updateActions"><button class="miniBtn" onclick="markUpdatesRead()">Mark as read</button><button class="miniBtn" onclick="setView('status')">Open Status</button></div></aside></div><section class="timeline"><div class="timelineHead"><h3>Release notes</h3><span>${SYSTEM_UPDATES.length} entries</span></div>${SYSTEM_UPDATES.map(u=>`<article class="updateItem"><div class="updateDate">${esc(u.date)}</div><div><div class="updateTitle"><span>${esc(u.title)}</span><span class="updateBadge">${esc(u.tag)}</span></div><ul>${u.items.map(i=>`<li>${esc(i)}</li>`).join('')}</ul></div></article>`).join('')}</section></div>`}
 
 function renderStatus(){const host=$('#view-status'),M=DATA.matches||[],st=deriveStandings(),third=getThirdRace();const live=M.filter(m=>m.status==='LIVE').length,up=M.filter(m=>m.status==='UPCOMING').length,fin=M.filter(m=>m.status==='FINISHED').length;const next=M.filter(isVisibleUpcoming).sort((a,b)=>(a.kickoff||'').localeCompare(b.kickoff||''))[0];host.innerHTML=`<div class="vhead">App Status</div><div class="hint" style="margin-bottom:10px">menu profile: <b>${navProfile()}</b> · sport file: <b>${DATA_FILE||'all (merged)'}</b></div><div class="status-grid"><div class="statuscard ${LAST_OK?'ok':'warn'}"><span class="slbl">Data file</span><div class="sval">${LAST_OK?'loaded':'not loaded'}</div><div class="hint">${LAST_ERROR?esc(LAST_ERROR):'Loaded'}</div></div><div class="statuscard info"><span class="slbl">Source</span><div class="sval">${esc(DATA.source_note||'unknown')}</div><div class="hint">${esc(DATA.standings_mode||'')}</div></div><div class="statuscard info"><span class="slbl">Updated</span><div class="sval">${DATA.updated?ago(DATA.updated):'unknown'}</div><div class="hint">${esc(DATA.updated||'—')}</div></div><div class="statuscard info"><span class="slbl">Matches</span><div class="sval">${M.length}</div><div class="hint">${live} live · ${up} upcoming · ${fin} finished</div></div><div class="statuscard info"><span class="slbl">Groups</span><div class="sval">${st.length}</div><div class="hint">${third.length} third-place teams tracked</div></div><div class="statuscard info"><span class="slbl">News Items</span><div class="sval">${(DATA.news||[]).length}</div><div class="hint">${newsSources().filter(s=>s!=='all').join(' · ')}</div></div></div><div class="btnline"><button class="actionbtn" onclick="load(true)">Reload Data Now</button><button class="actionbtn" onclick="setView('groups')">Open Groups</button><button class="actionbtn" onclick="setView('third')">Open Thirds</button><button class="actionbtn" onclick="setView('updates')">System Updates</button></div>`}
 function lopt(v,label,cur){return `<option value="${v}" ${v===cur?'selected':''}>${label}</option>`}

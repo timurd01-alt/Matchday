@@ -1,6 +1,4 @@
-function renderInsight(){
-  const host=$('#insight'),M=DATA.matches||[];
-  const focus=M.find(m=>m.status==='LIVE'&&isFavoriteMatch(m))||M.filter(m=>isFavoriteMatch(m)&&isVisibleUpcoming(m)).sort(fixtureSort)[0]||M.find(m=>m.status==='LIVE')||M.filter(isVisibleUpcoming).sort(fixtureSort)[0]||M.find(m=>isFavoriteMatch(m)&&m.status==='FINISHED')||M.find(m=>m.status==='FINISHED')||M[0];
+function _insightFocusHTML(focus){
   let h=`<div class="seclbl">In focus</div>`;
   if(focus){
     h+=`<div class="ins-match">${esc(focus.home?.name||'Home')} <span class="evs">v</span> ${esc(focus.away?.name||'Away')}</div><div class="ins-sub">${focus.status==='LIVE'?`LIVE ${focus.minute||''}' · ${focus.score?.home??0}–${focus.score?.away??0}`:`${esc(focus.stage||'')} · ${kickIn(focus.kickoff)}`}</div>`;
@@ -12,9 +10,24 @@ function renderInsight(){
   }else{
     h+=`<div class="faintline">No match in focus yet.</div>`;
   }
+  return h;
+}
+function _insightFocusPool(M){
+  const primary=M.find(m=>m.status==='LIVE'&&isFavoriteMatch(m))||M.filter(m=>isFavoriteMatch(m)&&isVisibleUpcoming(m)).sort(fixtureSort)[0]||M.find(m=>m.status==='LIVE')||M.filter(isVisibleUpcoming).sort(fixtureSort)[0]||M.find(m=>isFavoriteMatch(m)&&m.status==='FINISHED')||M.find(m=>m.status==='FINISHED')||M[0];
+  if(!primary)return [];
+  // rotate the primary focus alongside a few other live/upcoming games worth surfacing,
+  // ranked by watchability so the panel isn't stuck on one static match
+  const others=M.filter(m=>(m.status==='LIVE'||isVisibleUpcoming(m))&&m.id!==primary.id)
+    .sort((a,b)=>(b.watchability||0)-(a.watchability||0)).slice(0,4);
+  return [primary,...others];
+}
+function renderInsight(){
+  const host=$('#insight'),M=DATA.matches||[];
+  const pool=_insightFocusPool(M);
   const n=diverseNews(6);
-  if(n.length)h+=`<div class="seclbl" style="margin-top:18px">Latest from multiple sources</div>`+n.map(a=>`<a class="ins-news" href="${esc(a.link||a.url||'#')}" target="_blank" rel="noopener"><span class="insSource">${esc(sourceName(a))}</span><br>${esc(a.headline||a.title||'Untitled')}</a>`).join('');
-  host.innerHTML=h;
+  const newsHTML=n.length?`<div class="seclbl" style="margin-top:18px">Latest from multiple sources</div>`+n.map(a=>`<a class="ins-news" href="${esc(a.link||a.url||'#')}" target="_blank" rel="noopener"><span class="insSource">${esc(sourceName(a))}</span><br>${esc(a.headline||a.title||'Untitled')}</a>`).join(''):'';
+  host.innerHTML=`<div id="insightFocus">${_insightFocusHTML(pool[0]||null)}</div>${newsHTML}`;
+  runCarousel('insight',pool,$('#insightFocus'),_insightFocusHTML,6000);
 }
 
 
