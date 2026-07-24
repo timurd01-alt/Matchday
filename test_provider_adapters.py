@@ -136,10 +136,41 @@ class BallDontLieTests(unittest.TestCase):
         self.assertEqual(len(games), 1)
         self.assertEqual(games[0]["score"], {"home": 5, "away": 3, "winner": "h"})
 
-    def test_season_games_keeps_partial_results_after_a_later_page_fails(self):
+    def test_season_games_recovers_from_a_single_transient_page_failure(self):
         calls = []
 
-        def flaky_getter(url, headers):
+        def flaky_once_getter(url, headers):
+            cursor = dict(urllib.parse.parse_qsl(urllib.parse.urlsplit(url).query)).get("cursor")
+            calls.append(cursor)
+            if cursor is None:
+                return {"data": [{
+                    "id": 1, "date": "2026-05-01T22:00:00.000Z", "season": 2026,
+                    "status": "STATUS_FINAL", "season_type": "regular",
+                    "home_team": {"display_name": "Boston Red Sox"},
+                    "away_team": {"display_name": "New York Yankees"},
+                    "home_team_data": {"runs": 5}, "away_team_data": {"runs": 3},
+                }], "meta": {"next_cursor": "page2"}}
+            if calls.count("page2") == 1:  # fail once on page 2, then succeed
+                raise ProviderError("429 rate limited")
+            return {"data": [{
+                "id": 2, "date": "2026-05-02T22:00:00.000Z", "season": 2026,
+                "status": "STATUS_FINAL", "season_type": "regular",
+                "home_team": {"display_name": "Cubs"}, "away_team": {"display_name": "Cardinals"},
+                "home_team_data": {"runs": 2}, "away_team_data": {"runs": 1},
+            }], "meta": {}}
+
+        adapter = BallDontLieAdapter("test-key", "MLB", getter=flaky_once_getter,
+                                    today=dt.date(2026, 7, 17))
+        with mock.patch("provider_adapters.time.sleep"):
+            games = adapter.season_games()
+        # one retry consumed on page 2, so the getter saw it 3 times total (page1, page2 fail, page2 retry)
+        self.assertEqual(len(calls), 3)
+        self.assertEqual(len(games), 2)
+
+    def test_season_games_raises_instead_of_caching_a_truncated_season(self):
+        calls = []
+
+        def always_fails_page2(url, headers):
             cursor = dict(urllib.parse.parse_qsl(urllib.parse.urlsplit(url).query)).get("cursor")
             calls.append(cursor)
             if cursor is None:
@@ -152,12 +183,13 @@ class BallDontLieTests(unittest.TestCase):
                 }], "meta": {"next_cursor": "page2"}}
             raise ProviderError("429 rate limited")
 
-        adapter = BallDontLieAdapter("test-key", "MLB", getter=flaky_getter,
+        adapter = BallDontLieAdapter("test-key", "MLB", getter=always_fails_page2,
                                     today=dt.date(2026, 7, 17))
         with mock.patch("provider_adapters.time.sleep"):
-            games = adapter.season_games()
-        self.assertEqual(len(calls), 2)
-        self.assertEqual(len(games), 1)
+            with self.assertRaises(ProviderError):
+                adapter.season_games()
+        # page 1 (once) + page 2 (initial attempt + one retry, both failing)
+        self.assertEqual(len(calls), 3)
 
 
 class CollegeFootballDataTests(unittest.TestCase):

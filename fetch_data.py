@@ -655,22 +655,40 @@ def fetch_weather(matches):
     if hits: DIAG.append(f"weather: {hits} matches")
 
 
-def compute_rest(matches):
-    """Days since each team's previous match, attached per fixture side."""
-    played = {}
-    for m in sorted(matches, key=lambda x: x.get("kickoff") or ""):
+def compute_rest(matches, training_matches=None):
+    """Days since each team's previous match, attached per fixture side.
+
+    Looks up each team's last-played date from training_matches (the full
+    season, when the caller has one) rather than `matches` itself -- a sport
+    with a narrow display window (BallDontLie's ~1-week lookback) would
+    otherwise silently lose the rest signal across a bye week or break,
+    since the actual previous game simply isn't in `matches` to find.
+    Falls back to `matches` when no wider list is available.
+    """
+    history = defaultdict(list)
+    for m in (training_matches if training_matches else matches):
+        if m.get("kickoff") and m.get("status") in ("FINISHED", "LIVE"):
+            for side in ("home", "away"):
+                k = norm(m[side].get("name"))
+                if k:
+                    history[k].append(m["kickoff"])
+    for kickoffs in history.values():
+        kickoffs.sort()
+    for m in matches:
+        kickoff = m.get("kickoff")
+        if not kickoff:
+            continue
         for side in ("home", "away"):
             t = m[side]; k = norm(t.get("name"))
-            prev = played.get(k)
-            if prev and m.get("kickoff"):
-                try:
-                    d1 = datetime.datetime.fromisoformat(prev.replace("Z", "+00:00"))
-                    d2 = datetime.datetime.fromisoformat(m["kickoff"].replace("Z", "+00:00"))
-                    t["rest_days"] = max(0, round((d2 - d1).total_seconds() / 86400))
-                except Exception:
-                    pass
-            if m.get("kickoff") and m.get("status") in ("FINISHED", "LIVE"):
-                played[k] = m["kickoff"]
+            prior = [ko for ko in history.get(k, ()) if ko < kickoff]
+            if not prior:
+                continue
+            try:
+                d1 = datetime.datetime.fromisoformat(prior[-1].replace("Z", "+00:00"))
+                d2 = datetime.datetime.fromisoformat(kickoff.replace("Z", "+00:00"))
+                t["rest_days"] = max(0, round((d2 - d1).total_seconds() / 86400))
+            except Exception:
+                pass
 
 
 def compute_split_form(matches):
@@ -2620,6 +2638,7 @@ def fetch_balldontlie_bundle():
             DIAG.append("BALLDONTLIE fixtures: local cache")
     except Exception:
         matches = None
+    schedule_fetched_live = matches is None
     if matches is None:
         try:
             matches = adapter.schedule()
@@ -2634,6 +2653,12 @@ def fetch_balldontlie_bundle():
             with open(cache_file, encoding="utf-8") as handle:
                 matches = json.load(handle)
             DIAG.append("BALLDONTLIE fixtures: stale cache after provider limit/error")
+
+    if schedule_fetched_live:
+        # Give the free tier's rate-limit window room to breathe before the
+        # much longer season-to-date pagination starts below -- schedule()
+        # just made several rapid requests of its own.
+        time.sleep(BallDontLieAdapter.SEASON_PAGE_DELAY_SEC)
 
     # schedule()'s narrow window keeps the display list fresh but starves
     # standings/SRS/Elo of real season sample size. Pull season-to-date
@@ -2948,7 +2973,7 @@ def build():
                 if t and t.get("name"): name_map[norm(t["name"])] = t["name"]
 
     DIAG.append(f"ratings: {len(_load_ratings())} teams loaded")
-    compute_rest(matches)
+    compute_rest(matches, training_matches)
     print("Fetching weather…")
     fetch_weather(matches)
     # prune odds-history entries that belong to no fixture in this competition

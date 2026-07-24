@@ -38,6 +38,27 @@ class ModelInputTests(unittest.TestCase):
         self.assertGreater(ratings["alpha"]["rating"], ratings["beta"]["rating"])
         self.assertGreater(ratings["beta"]["rating"], ratings["gamma"]["rating"])
 
+    def test_rest_days_uses_training_history_beyond_the_display_window(self):
+        # The team's only past game is 10 days before kickoff -- outside a
+        # narrow ~1-week display window, but present in the wider training set.
+        training = [{"kickoff": "2026-01-01T00:00:00Z", "status": "FINISHED",
+                     "home": {"name": "Alpha"}, "away": {"name": "Zeta"}}]
+        upcoming = {"kickoff": "2026-01-11T00:00:00Z", "status": "UPCOMING",
+                    "home": {"name": "Alpha"}, "away": {"name": "Beta"}}
+        matches = [upcoming]  # the Jan-1 game is NOT in the narrow display list
+        fetch_data.compute_rest(matches, training)
+        self.assertEqual(upcoming["home"]["rest_days"], 10)
+
+    def test_rest_days_falls_back_to_matches_when_no_training_set_given(self):
+        matches = [
+            {"kickoff": "2026-01-01T00:00:00Z", "status": "FINISHED",
+             "home": {"name": "Alpha"}, "away": {"name": "Zeta"}},
+            {"kickoff": "2026-01-05T00:00:00Z", "status": "UPCOMING",
+             "home": {"name": "Alpha"}, "away": {"name": "Beta"}},
+        ]
+        fetch_data.compute_rest(matches)
+        self.assertEqual(matches[1]["home"]["rest_days"], 4)
+
     def test_american_prediction_reports_sample_and_native_factors(self):
         home = {"name": "Test Alpha", "pld": 12, "w": 9, "l": 3,
                 "win_pct": .75, "gf": 960, "ga": 840, "form": "W W L W W",

@@ -573,6 +573,14 @@ class BallDontLieAdapter:
         *display* list fresh; the free plan has no standings endpoint (see
         class docstring), so recovering real win-loss records means paging
         back through the whole season here instead of the last ~week.
+
+        A page failure always raises (after one backed-off retry) rather than
+        returning whatever pages happened to load so far -- the caller caches
+        this result for hours, so silently accepting a partial season would
+        mean standings/SRS look confidently "established" while actually
+        being truncated to whatever loaded before a rate limit hit. Raising
+        lets the caller's existing stale-cache/narrow-window fallback take
+        over instead, which is honest about being incomplete.
         """
         month, day = self.SEASON_START.get(self.competition, (1, 1))
         start = dt.date(self.season, month, day)
@@ -585,12 +593,17 @@ class BallDontLieAdapter:
             if page:
                 time.sleep(self.SEASON_PAGE_DELAY_SEC)
             params = {"dates[]": dates, "per_page": 100, "cursor": cursor}
-            try:
-                payload = self._get(f"/{self.code}/v1/games", params)
-            except ProviderError:
-                if page == 0:
-                    raise
-                break
+            payload = None
+            for attempt in range(2):
+                try:
+                    payload = self._get(f"/{self.code}/v1/games", params)
+                    break
+                except ProviderError as exc:
+                    last_exc = exc
+                    if attempt == 0:
+                        time.sleep(self.SEASON_PAGE_DELAY_SEC * 3)
+            if payload is None:
+                raise ProviderError(f"season_games: page {page} failed after retry: {last_exc}")
             page_rows = payload.get("data") if isinstance(payload, dict) else []
             rows.extend(page_rows or [])
             cursor = (payload.get("meta") or {}).get("next_cursor") if isinstance(payload, dict) else None
