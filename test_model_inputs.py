@@ -76,6 +76,26 @@ class ModelInputTests(unittest.TestCase):
         self.assertIn("srs", prediction["why"])
         self.assertNotIn("gd", prediction["why"])
 
+    def test_season_stale_record_is_dampened_and_flagged_preseason(self):
+        # Regression: CollegeFootballDataAdapter.standings() falls back to
+        # last season's FINAL record when the new season has no games yet.
+        # That stale record used to get the same ~full reliability weight as
+        # an in-progress current-season sample, letting a P4 team's rough
+        # prior year swamp a real preseason talent edge (live MSU-vs-Toledo:
+        # Toledo got favored over Michigan State on a stale 4-8 alone).
+        fetch_data.COMP_KEY = "NCAAF"
+        fetch_data.COMP = dict(fetch_data.COMPETITIONS["NCAAF"])
+        base = {"pld": 12, "w": 4, "l": 8, "win_pct": 4 / 12, "gf": 0, "ga": 0, "form": ""}
+        fresh_home = {**base, "name": "Fresh Team"}
+        fresh_away = {**base, "name": "Fresh Opp", "w": 8, "l": 4, "win_pct": 8 / 12}
+        fresh_pred = fetch_data.predict(fresh_home, fresh_away, {})
+        stale_home = {**fresh_home, "season_stale": True}
+        stale_away = {**fresh_away, "season_stale": True}
+        stale_pred = fetch_data.predict(stale_home, stale_away, {})
+        self.assertLess(abs(stale_pred["why"]["record"]), abs(fresh_pred["why"]["record"]))
+        self.assertEqual(stale_pred["data_quality"]["level"], "preseason")
+        self.assertNotEqual(fresh_pred["data_quality"]["level"], "preseason")
+
 
 class RatingsLookupTests(unittest.TestCase):
     """Regression coverage for the club-suffix mismatch found live: ratings
@@ -130,6 +150,24 @@ class RatingsLookupTests(unittest.TestCase):
         drake = fetch_data._ratings_lookup("Drake")
         self.assertIsNotNone(drake)
         self.assertGreater(duke["squad_value_m"], drake["squad_value_m"])
+
+    def test_recruiting_and_market_strength_reach_the_full_class_scale(self):
+        # squad_value_m/star_value_m feed rating_boost()/rating_parts(), which
+        # cap out at 1500/200 respectively ("€1.5B squad -> 10", "€200M player
+        # -> 10"). The country's #1-talent team (share == 1.0) should land
+        # exactly on that ceiling, not undershoot it -- undershooting is what
+        # flattened the gap between a P4 team's talent and a G5 team's almost
+        # to nothing (the live MSU-vs-Toledo case).
+        fetch_data.COMP_KEY = "NCAAM"
+        fetch_data.COMP = dict(fetch_data.COMPETITIONS["NCAAM"])
+        fetch_data.apply_recruiting_strength({"Duke": 100.0})
+        top = fetch_data._ratings_lookup("Duke")
+        self.assertEqual(top["squad_value_m"], 1500)
+        self.assertEqual(top["star_value_m"], 200)
+        fetch_data.apply_market_strength([{"team": "Gonzaga", "pct": 30.0}])
+        market_top = fetch_data._ratings_lookup("Gonzaga")
+        self.assertEqual(market_top["squad_value_m"], 1500)
+        self.assertEqual(market_top["star_value_m"], 200)
 
     def test_recruiting_strength_is_refined_by_later_market_strength(self):
         # Market strength (real-time, live) should be able to overwrite a

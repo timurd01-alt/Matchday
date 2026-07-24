@@ -1647,3 +1647,53 @@ body.modalOpen{overflow:hidden}.matchModal{position:fixed;inset:0;z-index:99;dis
   .welcomeLeaving,.appRevealing,.welcomeMeter i,.viewEntering,.viewEntering>.card,.matchModal.show{animation:none!important}
   .heroSlimLink span{transition:none}
 }
+
+/* Dark, compact scrolling for competition views. Champions League exposes
+   the longest navigation and previously fell back to a bright native rail. */
+html{color-scheme:dark}
+*{
+  scrollbar-width:thin;
+  scrollbar-color:var(--line2) transparent;
+}
+*::-webkit-scrollbar{width:7px;height:7px}
+*::-webkit-scrollbar-track{background:transparent}
+*::-webkit-scrollbar-thumb{background:var(--line2);border:1px solid transparent;background-clip:padding-box;border-radius:999px}
+*::-webkit-scrollbar-thumb:hover{background:var(--muted);background-clip:padding-box}
+@media(min-width:701px){
+  .sidebar{
+    scrollbar-width:thin;
+    scrollbar-color:rgba(58,209,122,.5) rgba(7,10,15,.7);
+    overscroll-behavior-y:contain;
+  }
+  .sidebar::-webkit-scrollbar{width:5px}
+  .sidebar::-webkit-scrollbar-track{background:rgba(7,10,15,.7)}
+  .sidebar::-webkit-scrollbar-thumb{background:rgba(58,209,122,.46);border-radius:999px}
+  .sidebar:hover::-webkit-scrollbar-thumb{background:rgba(58,209,122,.72)}
+}
+@media(min-width:701px) and (max-height:820px){
+  .sidebar{padding-top:4px;padding-bottom:4px;gap:1px}
+  .sidebar .navGroup{gap:1px}
+  .sidebar .navGroup+.navGroup{margin-top:3px;padding-top:3px}
+  .sidebar .navbtn,.sidebar .navExternal{height:35px}
+}
+
+.bracketWideShell{
+  overscroll-behavior-x:contain;
+  scroll-snap-type:x proximity;
+  scrollbar-color:rgba(58,209,122,.64) rgba(7,10,15,.74);
+}
+.bracketWideShell::-webkit-scrollbar{height:8px}
+.bracketWideShell::-webkit-scrollbar-track{background:rgba(7,10,15,.74);border-radius:999px}
+.bracketWideShell::-webkit-scrollbar-thumb{background:rgba(58,209,122,.64);border:2px solid rgba(7,10,15,.74);border-radius:999px}
+.bracketWideShell::-webkit-scrollbar-thumb:hover{background:var(--signal)}
+.brWideRound{scroll-snap-align:start}
+.bracketScrollTools{display:flex;align-items:center;gap:6px;flex:0 0 auto}
+.bracketScrollTools>span{margin-right:2px;color:var(--faint);font-size:.6rem;text-transform:uppercase;letter-spacing:.08em;font-weight:800}
+.bracketScrollBtn{width:30px;height:30px;display:grid;place-items:center;border:1px solid var(--line2);border-radius:9px;background:var(--panel);color:var(--text);font:800 .9rem/1 var(--mono);cursor:pointer;transition:color .14s,border-color .14s,background .14s,transform .14s}
+.bracketScrollBtn:hover,.bracketScrollBtn:focus-visible{color:#071018;border-color:var(--signal);background:var(--signal);outline:none}
+.bracketScrollBtn:active{transform:scale(.94)}
+@media(max-width:620px){
+  .bracketWideHint{align-items:flex-start;flex-direction:column}
+  .bracketScrollTools{width:100%;justify-content:flex-end}
+}
+@media(prefers-reduced-motion:reduce){.bracketScrollBtn{transition:none}}

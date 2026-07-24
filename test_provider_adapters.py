@@ -222,6 +222,31 @@ class CollegeFootballDataTests(unittest.TestCase):
         self.assertEqual(tables[0]["group"], "Big Ten")
         self.assertEqual(ranks[0]["name"], "Michigan")
         self.assertIsNone(projection)
+        self.assertFalse(model["michigan"]["season_stale"])
+
+    def test_standings_flags_prior_season_fallback_as_stale(self):
+        # Regression: before the current season's games exist, CFBD's
+        # /records for the new year comes back empty and the adapter falls
+        # back to last season's FINAL record. That record used to be fed to
+        # the model with no indication it was a year old, which let a P4
+        # team's rough previous season dominate a true preseason matchup
+        # over its actual (much larger) recruiting-talent edge.
+        def getter(url, headers):
+            if "/games?" in url:
+                return []
+            if "/records?" in url and "year=2026" in url:
+                return []
+            if "/records?" in url and "year=2025" in url:
+                return [{"team": "Michigan State", "conference": "Big Ten", "classification": "fbs",
+                         "total": {"games": 12, "wins": 4, "losses": 8, "ties": 0},
+                         "conferenceGames": {"games": 9, "wins": 3, "losses": 6}}]
+            raise AssertionError(url)
+        adapter = CollegeFootballDataAdapter("shared-key", getter=getter,
+                                             today=dt.date(2026, 7, 17))
+        adapter.schedule()
+        model, tables = adapter.standings()
+        self.assertTrue(model["michigan state"]["season_stale"])
+        self.assertTrue(tables[0]["teams"][0]["season_stale"])
 
 
 class CollegeBasketballDataTests(unittest.TestCase):

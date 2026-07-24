@@ -184,6 +184,12 @@ function renderCommunity(){ensureHandle();const host=$('#view-community');const 
    attach any of that to). Runs entirely in the browser against
    DATA.standings, or DATA.matches when standings are empty (preseason). */
 const SANDBOX_TWO_WAY=new Set(['nfl','ncaaf','ncaam','mlb','nhl','nba']);
+// Same full-season game counts predict() uses server-side, so a team's
+// record/form don't get full-confidence weight off a handful of games --
+// and season_stale (provider had no current-season sample yet and fell
+// back to last season's final record) dents it further, matching the
+// backend fix for the same P4-loses-class-edge-to-a-stale-record bug.
+const SANDBOX_FULL_GAMES={nfl:10,ncaaf:10,nba:20,ncaam:18,mlb:30,nhl:20};
 function sandboxTeams(){
   const fromStandings=(DATA.standings||[]).flatMap(g=>g.teams||[]);
   if(fromStandings.length)return fromStandings;
@@ -197,8 +203,16 @@ function sandboxTeams(){
   return [...seen.values()];
 }
 function sandboxStrength(team,adv){
+  const compKey=String(DATA.comp_key||'').toLowerCase();
+  const american=SANDBOX_TWO_WAY.has(compKey);
   const fp=String(team.form||'').split(' ').filter(Boolean).reduce((s,r)=>s+({W:3,D:1,L:0}[r]||0),0);
-  return Math.max(0.1,1.0+(team.pts||0)*0.6+(team.gd||0)*0.25+fp*0.5+(team.rating||0)+adv);
+  let reliability=1;
+  if(american){
+    const full=SANDBOX_FULL_GAMES[compKey]||15;
+    reliability=Math.min(1,(team.pld||0)/full);
+    if(team.season_stale)reliability*=0.25;
+  }
+  return Math.max(0.1,1.0+(team.pts||0)*0.6*reliability+(team.gd||0)*0.25*reliability+fp*0.5*reliability+(team.rating||0)+adv);
 }
 function sandboxExpectedTotal(home,away){
   const rate=(side,key)=>{const pld=side.pld||0,val=side[key];return(!pld||val==null||val===0)?null:val/pld;};

@@ -1242,6 +1242,12 @@ def predict(home, away, markets, m=None):
         if american:
             pld = max(0, int(s.get("pld") or 0))
             reliability = min(1.0, pld / float(american_cfg["full"]))
+            if s.get("season_stale"):
+                # provider had no current-season games yet and fell back to
+                # last season's final record -- still a useful long-term prior
+                # (good programs tend to stay good), but it's a year old and
+                # shouldn't carry the same confidence as an in-progress sample
+                reliability *= 0.25
             win_pct = s.get("win_pct")
             if win_pct is None and pld:
                 win_pct = float(s.get("w") or 0) / pld
@@ -1357,7 +1363,8 @@ def predict(home, away, markets, m=None):
     mkt_pull = (adjusted[pick] - model[pick]) if mk else 0
     sample = {"home": int(home.get("pld") or 0), "away": int(away.get("pld") or 0)}
     min_sample = min(sample.values())
-    quality_level = ("preseason" if min_sample == 0 else "early"
+    any_stale = bool(home.get("season_stale") or away.get("season_stale"))
+    quality_level = ("preseason" if min_sample == 0 or any_stale else "early"
                      if american and min_sample < american_cfg["full"] else "established")
     signals = [key for key in ("record", "margin", "form", "rank", "srs", "elo", "rest", "injuries")
                if abs(float(why.get(key) or 0)) > 0.001]
@@ -1651,8 +1658,13 @@ def apply_recruiting_strength(team_scores):
     for name, score in team_scores.items():
         key = norm(name)
         share = max(0.0, score) / mx
-        val_m = round(share ** 0.7 * 1000)
-        star_m = round(share ** 0.7 * 110)
+        # scaled to the actual saturation points rating_boost()/rating_parts()
+        # use (squad_value_m 1500 -> 10, star_value_m 200 -> 10) so the nation's
+        # best-talent team reaches the true ceiling instead of undershooting it
+        # -- undershooting flattened the gap between a middling P4 team and a
+        # good G5 team almost to nothing.
+        val_m = round(share ** 0.7 * 1500)
+        star_m = round(share ** 0.7 * 200)
         rec = _ratings_lookup(name)
         if rec is None:
             rec = {"fifa_rank": 45, "squad_value_m": 0, "star_value_m": 0}
@@ -1683,8 +1695,10 @@ def apply_market_strength(outrights):
     for o in outrights:
         key = norm(o["team"])
         share = o["pct"] / mx
-        val_m = round(share ** 0.7 * 1000)
-        star_m = round(share ** 0.7 * 110)
+        # see apply_recruiting_strength: scaled to the actual 10/10 ceiling
+        # (squad_value_m 1500, star_value_m 200) instead of undershooting it
+        val_m = round(share ** 0.7 * 1500)
+        star_m = round(share ** 0.7 * 200)
         rec = _ratings_lookup(o["team"])
         if rec is None:
             rec = {"fifa_rank": 45, "squad_value_m": 0, "star_value_m": 0}
@@ -3023,7 +3037,7 @@ def build():
                     t["pts"], t["gd"], t["form"] = rec["pts"], rec["gd"], rec["form"]
                     t["group"], t["pos"] = rec["group"], rec.get("pos")
                     t["gf"], t["ga"], t["pld"] = rec.get("gf", 0), rec.get("ga", 0), rec.get("pld", 0)
-                    for field in ("w", "d", "l", "record", "win_pct", "avg_pf", "avg_pa"):
+                    for field in ("w", "d", "l", "record", "win_pct", "avg_pf", "avg_pa", "season_stale"):
                         if field in rec:
                             t[field] = rec[field]
                 srs = srs_ratings.get(norm(t["name"]))
@@ -3158,7 +3172,8 @@ def build():
                 "name": name_map.get(t, t.title()), "code": code_map.get(t, ""),
                 "pos": r.get("pos"), "pld": r["pld"], "w": r["w"], "d": r["d"], "l": r["l"],
                 "gf": r["gf"], "ga": r["ga"], "gd": r["gd"], "pts": r["pts"], "form": r["form"],
-                "rating": round(rating_boost(name_map.get(t, t)), 2)})
+                "rating": round(rating_boost(name_map.get(t, t)), 2),
+                "season_stale": bool(r.get("season_stale"))})
     third_in = {norm(x.get("team")) for x in third if x.get("in")} or None
     third_out = {norm(x.get("team")) for x in third if not x.get("in")} if third else None
     def _annotate(teams):

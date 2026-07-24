@@ -420,6 +420,15 @@ function bracketSimPick(key,side){
   renderBracket();
 }
 function bracketSimReset(){window.__bracketSim={};renderBracket();}
+function scrollBracket(direction){
+  const shell=$('#view-bracket .bracketWideShell');
+  if(!shell)return;
+  const reduceMotion=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  shell.scrollBy({left:direction*Math.max(300,shell.clientWidth*.72),behavior:reduceMotion?'auto':'smooth'});
+}
+function _bracketScrollControls(){
+  return `<div class="bracketScrollTools"><span>Browse rounds</span><button type="button" class="bracketScrollBtn" onclick="scrollBracket(-1)" aria-label="Scroll bracket left">&larr;</button><button type="button" class="bracketScrollBtn" onclick="scrollBracket(1)" aria-label="Scroll bracket right">&rarr;</button></div>`;
+}
 function _bracketSimCard(m){
   const clickable=m.home&&m.away&&m.home!=='TBD'&&m.away!=='TBD';
   const row=(name,code,side)=>{
@@ -433,7 +442,7 @@ function _bracketSimCard(m){
 function renderBracketSim(host,toggle){
   const rounds=bracketSimCascade();
   const cols=rounds.map(r=>`<section class="brCol"><div class="roundTitle">${esc(r.round)}</div>${r.matches.map(_bracketSimCard).join('')}</section>`).join('');
-  host.innerHTML=`<div class="bracketStageHeader"><div class="vhead">Bracket Simulator</div><div class="bracketLegend">${toggle}<button class="btmbtn" onclick="bracketSimReset()">Reset to model picks</button></div></div><div class="bracketWideHint"><span>Click a team to override the model's pick for that match — it cascades through the rest of the bracket.</span></div><div class="bracketWideShell"><div class="bracketWideBoard">${cols}</div></div>`;
+  host.innerHTML=`<div class="bracketStageHeader"><div class="vhead">Bracket Simulator</div><div class="bracketLegend">${toggle}<button class="btmbtn" onclick="bracketSimReset()">Reset to model picks</button></div></div><div class="bracketWideHint"><span>Click a team to override the model's pick for that match — it cascades through the rest of the bracket.</span>${_bracketScrollControls()}</div><div class="bracketWideShell"><div class="bracketWideBoard">${cols}</div></div>`;
 }
 function renderBracket(){
   const host=$('#view-bracket');
@@ -446,7 +455,7 @@ function renderBracket(){
   const rounds=typeof _completeRounds==='function'?_completeRounds():projectedRounds();
   const names=['Round of 32','Round of 16','Quarter-finals','Semi-finals','Final','Third-place playoff'];
   const projectedCount=(()=>{try{return Math.min(getProjectedSlots().length,32)}catch(e){return 0}})();
-  host.innerHTML=`<div class="bracketStageHeader"><div class="vhead">Tournament bracket</div><div class="bracketLegend">${toggle}${official?'Official + projected paths':'Projected bracket'}</div></div><div class="bracketWideHint"><span><b>${projectedCount}</b> projected qualifiers · cards stay readable instead of shrinking</span><span>Scroll sideways to see the full path →</span></div><div class="bracketWideShell"><div class="bracketWideBoard">${names.map(n=>_v11RoundCol(rounds,n)).join('')}</div></div>`;
+  host.innerHTML=`<div class="bracketStageHeader"><div class="vhead">Tournament bracket</div><div class="bracketLegend">${toggle}${official?'Official + projected paths':'Projected bracket'}</div></div><div class="bracketWideHint"><span><b>${projectedCount}</b> projected qualifiers · cards stay readable instead of shrinking</span>${_bracketScrollControls()}</div><div class="bracketWideShell"><div class="bracketWideBoard">${names.map(n=>_v11RoundCol(rounds,n)).join('')}</div></div>`;
 }
 
 

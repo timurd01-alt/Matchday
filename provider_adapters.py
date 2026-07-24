@@ -366,8 +366,10 @@ class CollegeFootballDataAdapter:
 
     def standings(self):
         rows = self._get("/records", {"year": self.season, "classification": "fbs"})
+        stale = False
         if not rows and self.season > 2000:
             rows = self._get("/records", {"year": self.season - 1, "classification": "fbs"})
+            stale = True  # this is last season's final record, not a current-season sample
         scoring = {}
         for game in self._games:
             if not game.get("completed"):
@@ -386,7 +388,8 @@ class CollegeFootballDataAdapter:
             pld = int(total.get("games") or (w + l + ties)); pf, pa = scoring.get(name, [0, 0]); diff = pf - pa
             item = {"name": name, "code": _short_code(name), "pos": None, "pld": pld, "w": w, "d": ties, "l": l,
                     "gf": pf, "ga": pa, "gd": diff, "pts": w * 3 + ties, "form": "", "record": f"{w}-{l}" + (f"-{ties}" if ties else ""),
-                    "win_pct": w / max(1, pld), "league_win_pct": int(conf.get("wins") or 0) / max(1, int(conf.get("games") or 0)), "qual": ""}
+                    "win_pct": w / max(1, pld), "league_win_pct": int(conf.get("wins") or 0) / max(1, int(conf.get("games") or 0)), "qual": "",
+                    "season_stale": stale}
             grouped.setdefault(group, []).append(item)
             model[name.lower()] = {**item, "group": group}
         tables = []
