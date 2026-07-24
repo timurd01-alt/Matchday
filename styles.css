@@ -1574,3 +1574,75 @@ body.modalOpen{overflow:hidden}.matchModal{position:fixed;inset:0;z-index:99;dis
 }
 @media(max-width:760px){.alertBell{right:12px}.legalLink{display:none}.alertCenter{right:8px;top:47px;width:calc(100vw - 16px)}.alertSettings{grid-column:auto}.alertSettingList{grid-template-columns:1fr}.teamMark{width:24px;height:24px;flex-basis:24px;border-radius:8px}.loadingBoard{grid-template-columns:1fr}.metricHelp::after{left:auto;right:-8px;transform:translateY(4px)}.metricHelp:hover::after,.metricHelp:focus::after{transform:none}}
 @media(prefers-reduced-motion:reduce){.alertCenter,.matchModal.show .matchSheet,.loadingBoard span{animation:none!important}.alertBell,.metricHelp::after{transition:none!important}}
+
+/* ===== UI clarity pass: shared rhythm, readable navigation, purposeful motion ===== */
+:root{--space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:24px;--space-6:32px;--space-7:48px}
+
+.navExternal{position:relative;display:flex;align-items:center;gap:15px;width:198px;height:44px;padding:0 19px;color:var(--muted);flex:0 0 auto;transition:color .14s,background .14s}
+.navExternal svg{width:22px;height:22px;flex:0 0 22px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.navExternal .lbl{font-size:.86rem;font-weight:600;white-space:nowrap;opacity:0}
+.navExternal:hover,.navExternal:focus-visible{color:var(--signal);background:rgba(255,255,255,.04)}
+.navExternal:focus-visible{outline:2px solid var(--signal);outline-offset:-2px}
+
+@media(min-width:1181px){
+  .app{grid-template-columns:112px minmax(0,1fr) clamp(288px,22vw,320px)}
+  .app.noinsight{grid-template-columns:112px minmax(0,1fr) 0}
+  .sidebar{width:112px;padding:8px 0;overflow-x:hidden;overflow-y:auto;scrollbar-width:thin}
+  .navbtn,.navExternal{width:112px;height:42px;padding:0 12px;gap:9px}
+  .navbtn svg,.navExternal svg{width:18px;height:18px;flex-basis:18px}
+  .navbtn .lbl,.navExternal .lbl{display:block;min-width:0;max-width:68px;opacity:1;font-size:.7rem;line-height:1.1;overflow:hidden;text-overflow:ellipsis}
+  .navGroup+.navGroup{margin-top:6px;padding-top:6px}
+  .navbtn[aria-pressed=true]::before{top:6px;bottom:6px}
+}
+
+@media(min-width:921px) and (max-width:1180px){
+  .navExternal{width:62px;padding:0 19px}
+}
+
+.viewIntro{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);padding:var(--space-3) var(--space-4);border:1px solid var(--line);border-left:3px solid var(--signal);border-radius:12px;background:linear-gradient(135deg,rgba(58,209,122,.07),var(--panel));margin-bottom:var(--space-1)}
+.viewIntro .vhead{margin:0 0 var(--space-1);font-size:1.12rem}
+.viewIntro p{max-width:700px;color:var(--muted);font-size:.78rem;line-height:1.45}
+.viewIntro>span{flex:0 0 auto;padding:5px 8px;border:1px solid var(--line2);border-radius:999px;color:var(--faint);font:700 .62rem/1 var(--mono);text-transform:uppercase;letter-spacing:.04em}
+.heroSlim{min-height:42px;padding:8px 12px;margin-bottom:0;gap:12px}
+.heroSlimLink{display:inline-flex;align-items:center;gap:7px;margin-left:auto;padding:5px 0;border:0;background:none;color:var(--signal);font:700 .68rem/1 var(--mono);cursor:pointer;white-space:nowrap}
+.heroSlimLink span{transition:transform .14s ease}.heroSlimLink:hover span{transform:translateX(4px)}
+.card .expander::before{content:"View matchup"}
+
+.welcomeMeter{height:4px;margin-top:10px;border-radius:999px;background:var(--bg2);overflow:hidden}
+.welcomeMeter i{display:block;width:var(--welcome-p);height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--signal),var(--home));animation:welcomeMeterIn .65s cubic-bezier(.2,.8,.2,1) both}
+@keyframes welcomeMeterIn{from{width:0}}
+.welcomeLeaving{pointer-events:none;animation:welcomeExit .24s cubic-bezier(.4,0,1,1) both!important}
+.appRevealing{animation:appReveal .26s cubic-bezier(.2,.8,.2,1) both}
+@keyframes welcomeExit{to{opacity:0;transform:scale(1.012)}}
+@keyframes appReveal{from{opacity:0;transform:scale(.995)}to{opacity:1;transform:none}}
+
+.viewEntering{animation:viewEnter .16s ease-out both}
+.viewEntering>.card{animation:cardEnter .2s ease-out both}
+.viewEntering>.card:nth-of-type(2){animation-delay:25ms}.viewEntering>.card:nth-of-type(3){animation-delay:50ms}.viewEntering>.card:nth-of-type(4){animation-delay:75ms}.viewEntering>.card:nth-of-type(5){animation-delay:100ms}.viewEntering>.card:nth-of-type(6){animation-delay:125ms}
+@keyframes viewEnter{from{opacity:.5;transform:translateY(5px)}to{opacity:1;transform:none}}
+@keyframes cardEnter{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+.matchModal.show{animation:modalBackdropIn .16s ease-out both}@keyframes modalBackdropIn{from{background:rgba(2,5,10,0);backdrop-filter:blur(0)}to{background:rgba(2,5,10,.72);backdrop-filter:blur(10px)}}
+
+@media(max-width:920px){
+  .navExternal{width:56px;padding:0 17px}
+  .navExternal .lbl{opacity:0}
+}
+
+@media(max-width:700px){
+  .sidebar{overscroll-behavior-x:contain}
+  .navGroup{height:64px;flex:0 0 auto;flex-direction:row;gap:0}
+  .navGroup+.navGroup{margin-top:0;padding-top:0;border-top:0;border-left:1px solid var(--line)}
+  .navbtn,.navExternal{width:76px;min-width:76px;height:64px;padding:7px 4px 6px;display:flex;flex-direction:column;justify-content:center;gap:4px}
+  .navbtn svg,.navExternal svg{width:21px;height:21px;flex-basis:21px}
+  .navbtn .lbl,.navExternal .lbl{display:block;max-width:70px;opacity:1;font-size:.58rem;line-height:1.1;overflow:hidden;text-overflow:ellipsis;text-align:center}
+  .viewIntro{align-items:flex-start;padding:11px 12px}
+  .viewIntro>span{display:none}
+  .viewIntro p{font-size:.74rem}
+  .heroSlim{align-items:flex-start;flex-wrap:wrap}
+  .heroSlimLink{width:100%;justify-content:space-between;margin-left:0;padding-top:7px;border-top:1px solid var(--line)}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .welcomeLeaving,.appRevealing,.welcomeMeter i,.viewEntering,.viewEntering>.card,.matchModal.show{animation:none!important}
+  .heroSlimLink span{transition:none}
+}

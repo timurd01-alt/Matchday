@@ -41,11 +41,11 @@ function translateUiText(source,dict){
 }
 function applyStaticI18n(){
   const dict=(LANG&&window.MD_I18N&&MD_I18N[LANG])||{};
-  document.querySelectorAll('.navbtn .lbl').forEach(el=>{const en=el.getAttribute('data-en')||el.textContent.trim();el.setAttribute('data-en',en);el.textContent=dict[en]||en;});
+  document.querySelectorAll('.navbtn .lbl,.navExternal .lbl').forEach(el=>{const en=el.getAttribute('data-en')||el.textContent.trim();el.setAttribute('data-en',en);el.textContent=dict[en]||en;});
   const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
   let node;
   while((node=walker.nextNode())){
-    if(node.parentElement?.closest('script,style,.nhead,.ndesc,.teamName,.modalName,.ins-match'))continue;
+    if(node.parentElement?.closest('script,style,.navbtn,.navExternal,.nhead,.ndesc,.teamName,.modalName,.ins-match'))continue;
     const raw=node.nodeValue||'',trimmed=raw.trim();if(!trimmed)continue;
     const en=node.__matchdayEnglish||trimmed;node.__matchdayEnglish=en;
     const translated=translateUiText(en,dict);
@@ -79,7 +79,7 @@ function applySportNav(){
   const prof=navProfile();
   const allowed=NAV_DEF[prof];
   const labels=NAV_LABELS[prof]||{};
-  document.querySelectorAll('.navbtn').forEach(b=>{
+  document.querySelectorAll('.navbtn[data-v]').forEach(b=>{
     b.style.display=allowed.includes(b.dataset.v)?'':'none';
     const l=b.querySelector('.lbl');
     if(l){const en=l.getAttribute('data-en')||l.textContent.trim();l.setAttribute('data-en',en);
@@ -88,7 +88,7 @@ function applySportNav(){
       // native tooltip is the only way to tell them apart on hover
       b.title=l.textContent;}});
   document.querySelectorAll('.navGroup').forEach(g=>{
-    g.hidden=!g.querySelector('.navbtn:not([style*="display: none"])');
+    g.hidden=!g.querySelector('.navbtn[data-v]:not([style*="display: none"]),.navExternal');
   });
   if(!allowed.includes(VIEW))setView('matches');
 }
@@ -151,9 +151,19 @@ function heroDismiss(){try{localStorage.setItem('matchday.heroSeen','1')}catch(e
 function welcomeDismissed(){try{return sessionStorage.getItem('matchday.welcome.entered')==='1'}catch(e){return false}}
 function enterMatchday(){
   try{sessionStorage.setItem('matchday.welcome.entered','1');localStorage.setItem('matchday.heroSeen','1')}catch(e){}
-  const gate=$('#welcomeGate');if(gate)gate.hidden=true;document.body.classList.remove('welcomeOpen');
-  renderCurrent();const main=document.querySelector('.content');if(main)main.focus?.();
-  if(!tourSeen())setTimeout(startTour,650);
+  const gate=$('#welcomeGate'),app=$('#app');
+  const finish=()=>{
+    if(gate){gate.hidden=true;gate.classList.remove('welcomeLeaving')}
+    document.body.classList.remove('welcomeOpen','welcomeExiting');
+    if(app)app.classList.remove('appRevealing');
+    renderCurrent();const main=document.querySelector('.content');if(main)main.focus?.();
+    if(!tourSeen())setTimeout(startTour,500);
+  };
+  if(!gate||prefersReducedMotion()){finish();return}
+  gate.classList.add('welcomeLeaving');
+  document.body.classList.remove('welcomeOpen');document.body.classList.add('welcomeExiting');
+  if(app)app.classList.add('appRevealing');
+  setTimeout(finish,260);
 }
 
 // ---- guided tour (first-visit walkthrough) --------------------------------
@@ -235,7 +245,8 @@ function _welcomeCardHTML(m){
   const pr=m.prediction||{},op=(typeof _v10OfficialPick==='function'&&m.prediction)?_v10OfficialPick(m):null;
   const pick=op?.name||pr.pick_name||'',model=op?.confidence??pr.confidence,market=op?.marketPct;
   const edge=model!=null&&market!=null?Math.round(Number(model)-Number(market)):null;
-  return `<div class="welcomeMatchMeta"><span>${esc(m._comp||DATA.comp_key||m.stage||'NEXT')}</span><span class="${m.status==='LIVE'?'isLive':''}">${m.status==='LIVE'?'LIVE':kickIn(m.kickoff)}</span></div><div class="welcomeTeams"><div><small>${esc(m.home?.code||'HOME')}</small><b>${esc(m.home?.name||'Home')}</b></div><em>${m.status==='LIVE'?esc(scoreText(m).replace(/<[^>]+>/g,'')):'v'}</em><div class="away"><small>${esc(m.away?.code||'AWAY')}</small><b>${esc(m.away?.name||'Away')}</b></div></div>${pick?`<div class="welcomeSignal"><span>MODEL</span><b>${esc(pick)} ${model!=null?esc(model)+'%':''}</b>${market!=null?`<i>market ${esc(market)}%${edge!=null?` · ${edge>0?'+':''}${edge} pt`:''}</i>`:''}</div>`:''}`;
+  const meter=model!=null?`<div class="welcomeMeter" aria-hidden="true"><i style="--welcome-p:${pct(model)}%"></i></div>`:'';
+  return `<div class="welcomeMatchMeta"><span>${esc(m._comp||DATA.comp_key||m.stage||'NEXT')}</span><span class="${m.status==='LIVE'?'isLive':''}">${m.status==='LIVE'?'LIVE':kickIn(m.kickoff)}</span></div><div class="welcomeTeams"><div><small>${esc(m.home?.code||'HOME')}</small><b>${esc(m.home?.name||'Home')}</b></div><em>${m.status==='LIVE'?esc(scoreText(m).replace(/<[^>]+>/g,'')):'v'}</em><div class="away"><small>${esc(m.away?.code||'AWAY')}</small><b>${esc(m.away?.name||'Away')}</b></div></div>${pick?`<div class="welcomeSignal"><span>MODEL</span><b>${esc(pick)} ${model!=null?esc(model)+'%':''}</b>${market!=null?`<i>market ${esc(market)}%${edge!=null?` · ${edge>0?'+':''}${edge} pt`:''}</i>`:''}</div>${meter}`:''}`;
 }
 function renderWelcome(){
   const gate=$('#welcomeGate');if(!gate)return;
@@ -269,8 +280,8 @@ function heroMarquee(){
 function landingHero(){
   const sc=DATA.scorecard;
   const slim=heroSeen();
-  const rec=sc&&sc.graded?`<span class="heroRec"><b>${sc.model_hits}-${sc.graded-sc.model_hits}</b> record</span>${sc.brier!=null?`<span class="heroRec">Brier ${metricHelp('Brier score','Measures probability accuracy. Lower is better.')} <b>${sc.brier}</b></span>`:''}${sc.clv_avg!=null?`<span class="heroRec">CLV ${metricHelp('Closing line value','How the recorded probability compares with the final market snapshot.')} <b>${sc.clv_avg>0?'+':''}${sc.clv_avg}</b></span>`:''}`:`<span class="heroRec faintline">record builds as picks grade</span>`;
-  if(slim)return `<div class="heroSlim">${rec}<span class="heroSlimLink" onclick="setView('score')">full scorecard →</span></div>`;
+  const rec=sc&&sc.graded?`<span class="heroRec"><b>${sc.model_hits}-${sc.graded-sc.model_hits}</b> record</span>${sc.brier!=null?`<span class="heroRec">Probability accuracy ${metricHelp('Brier score','Measures probability accuracy. Lower is better.')} <b>${sc.brier}</b></span>`:''}${sc.clv_avg!=null?`<span class="heroRec">Market movement ${metricHelp('Closing line value','How the recorded probability compares with the final market snapshot.')} <b>${sc.clv_avg>0?'+':''}${sc.clv_avg}</b></span>`:''}`:`<span class="heroRec faintline">Model record begins as completed picks are graded</span>`;
+  if(slim)return `<div class="heroSlim">${rec}<button class="heroSlimLink" type="button" onclick="setView('score')">Open scorecard <span aria-hidden="true">→</span></button></div>`;
   return `<div class="heroBand">
     <img src="logo.png?v=4" class="heroLogo" alt="Matchday">
     <div class="heroTitle">A transparent sports model.</div>
@@ -342,8 +353,10 @@ function renderMatches(){const M=DATA.matches||[];
   const capped=isAll?marqueeSelect(active):active;
   const shown=capped.slice(0,MATCH_VISIBLE),remaining=Math.max(0,capped.length-shown.length);
   const missing=DATA._missing?`<div class="banner" style="grid-column:1/-1"><b>No ${esc(DATA.competition||'this sport')} data yet.</b> Fetch it once its season is available — run the matching start file (e.g. start_ucl.bat) or keep an eye out when the season begins.</div>`:'';
-  const marqueeNote=isAll&&active.length>MARQUEE_COUNT?`<div class="banner" style="grid-column:1/-1"><b>Marquee matchups.</b> The ${MARQUEE_COUNT} biggest games across every sport right now, ranked by team strength, competitiveness and upset potential. Pick a specific sport above for its full schedule.</div>`:'';
-  const html=missing+landingHero()+marqueeNote+`<div class="vhead">${isAll?'Marquee matchups':t('Fixtures')}</div>`+
+  const intro=isAll
+    ?`<div class="viewIntro"><div><div class="vhead">Top matchups</div><p>The strongest and closest games across every sport. Choose a sport above to see its complete schedule.</p></div><span>${shown.length} featured</span></div>`
+    :`<div class="viewIntro"><div><div class="vhead">${t('Fixtures')}</div><p>Kickoff times, live scores, and the model read in one place.</p></div><span>${capped.length} games</span></div>`;
+  const html=missing+landingHero()+intro+
     (shown.length?shown.map(cardHTML).join(''):`<div class="empty" style="grid-column:1/-1">No live or upcoming matches to show.</div>`)+
     (remaining?`<div class="fixturePager"><span>Showing ${shown.length} of ${capped.length} fixtures</span><button class="actionbtn" onclick="MATCH_VISIBLE+=FIXTURE_PAGE_SIZE;renderMatches()">Load ${Math.min(FIXTURE_PAGE_SIZE,remaining)} more</button></div>`:'');
   $('#view-matches').innerHTML=html;enhanceMatchCards($('#view-matches'));}
@@ -375,6 +388,12 @@ function renderThird(){const host=$('#view-third'),third=getThirdRace();if(!thir
 /* removed duplicate (renderNews) */
 
 const SYSTEM_UPDATES=[
+  {date:'Build 0724N',tag:'Fix',title:'Made a silent model-data gap visible',items:[
+    'The NCAAF/NCAAM team-talent fix from earlier tonight tested correctly against a local key but is returning zero teams live in production — found by auditing real deployed data, not by re-testing locally. The code was silently treating "provider returned nothing" the same as "nothing to apply," so there was no trace of the gap anywhere. It now logs a clear diagnostic line instead, so this stops being invisible on future runs while the actual cause (a live-key/plan access question) gets sorted out.']},
+  {date:'Build 0724M',tag:'UI',title:'Clearer navigation, calmer spacing, and a real learning hub',items:[
+    'Desktop navigation now shows labels, mobile navigation stays in one reachable horizontal row, and Content remains accessible from the bottom navigation instead of disappearing on small screens.',
+    'The match board has one compact introduction instead of a repeated banner and heading, technical scorecard terms use plain-language labels first, and the welcome screen now hands off smoothly to the dashboard.',
+    'The Content page is now organized around starting points, model recaps, and sport-by-sport learning with direct links and more efficient spacing.']},
   {date:'Build 0724L',tag:'UI',title:'A livelier welcome screen',items:[
     'Two soft, slowly drifting color blobs behind the welcome screen instead of a static gradient, the headline and preview card now reveal in sequence rather than all at once, and the "Enter Matchday" button gets a periodic light sweep to draw the eye.',
     'All of it — the drift, the staggered reveal, the sweep, and the earlier featured-match rotation — turns off automatically for anyone with reduced-motion enabled at the OS level.']},
@@ -671,7 +690,7 @@ const SYSTEM_UPDATES=[
   ]}
 ];
 function markUpdatesRead(){localStorage.setItem('matchday.updates.lastSeen',new Date().toISOString());renderSystemUpdates()}
-function renderSystemUpdates(){const host=$('#view-updates');const seen=localStorage.getItem('matchday.updates.lastSeen');const latest='build 0724L';host.innerHTML=`<div class="updatesShell"><div class="updatesHero"><section class="updatesIntro"><h2>System updates</h2><span class="safePill">UI</span></section><aside class="buildCard"><div class="tiny">Current build</div><div class="build">${esc(latest)}</div><div class="hint">Last viewed: ${seen?esc(ago(seen)):'not marked yet'}</div><div class="updateActions"><button class="miniBtn" onclick="markUpdatesRead()">Mark as read</button><button class="miniBtn" onclick="setView('status')">Open Status</button></div></aside></div><section class="timeline"><div class="timelineHead"><h3>Release notes</h3><span>${SYSTEM_UPDATES.length} entries</span></div>${SYSTEM_UPDATES.map(u=>`<article class="updateItem"><div class="updateDate">${esc(u.date)}</div><div><div class="updateTitle"><span>${esc(u.title)}</span><span class="updateBadge">${esc(u.tag)}</span></div><ul>${u.items.map(i=>`<li>${esc(i)}</li>`).join('')}</ul></div></article>`).join('')}</section></div>`}
+function renderSystemUpdates(){const host=$('#view-updates');const seen=localStorage.getItem('matchday.updates.lastSeen');const latest='build 0724N';host.innerHTML=`<div class="updatesShell"><div class="updatesHero"><section class="updatesIntro"><h2>System updates</h2><span class="safePill">UI</span></section><aside class="buildCard"><div class="tiny">Current build</div><div class="build">${esc(latest)}</div><div class="hint">Last viewed: ${seen?esc(ago(seen)):'not marked yet'}</div><div class="updateActions"><button class="miniBtn" onclick="markUpdatesRead()">Mark as read</button><button class="miniBtn" onclick="setView('status')">Open Status</button></div></aside></div><section class="timeline"><div class="timelineHead"><h3>Release notes</h3><span>${SYSTEM_UPDATES.length} entries</span></div>${SYSTEM_UPDATES.map(u=>`<article class="updateItem"><div class="updateDate">${esc(u.date)}</div><div><div class="updateTitle"><span>${esc(u.title)}</span><span class="updateBadge">${esc(u.tag)}</span></div><ul>${u.items.map(i=>`<li>${esc(i)}</li>`).join('')}</ul></div></article>`).join('')}</section></div>`}
 
 function renderStatus(){const host=$('#view-status'),M=DATA.matches||[],st=deriveStandings(),third=getThirdRace();const live=M.filter(m=>m.status==='LIVE').length,up=M.filter(m=>m.status==='UPCOMING').length,fin=M.filter(m=>m.status==='FINISHED').length;const next=M.filter(isVisibleUpcoming).sort((a,b)=>(a.kickoff||'').localeCompare(b.kickoff||''))[0];host.innerHTML=`<div class="vhead">App Status</div><div class="hint" style="margin-bottom:10px">menu profile: <b>${navProfile()}</b> · sport file: <b>${DATA_FILE||'all (merged)'}</b></div><div class="status-grid"><div class="statuscard ${LAST_OK?'ok':'warn'}"><span class="slbl">Data file</span><div class="sval">${LAST_OK?'loaded':'not loaded'}</div><div class="hint">${LAST_ERROR?esc(LAST_ERROR):'Loaded'}</div></div><div class="statuscard info"><span class="slbl">Source</span><div class="sval">${esc(DATA.source_note||'unknown')}</div><div class="hint">${esc(DATA.standings_mode||'')}</div></div><div class="statuscard info"><span class="slbl">Updated</span><div class="sval">${DATA.updated?ago(DATA.updated):'unknown'}</div><div class="hint">${esc(DATA.updated||'—')}</div></div><div class="statuscard info"><span class="slbl">Matches</span><div class="sval">${M.length}</div><div class="hint">${live} live · ${up} upcoming · ${fin} finished</div></div><div class="statuscard info"><span class="slbl">Groups</span><div class="sval">${st.length}</div><div class="hint">${third.length} third-place teams tracked</div></div><div class="statuscard info"><span class="slbl">News Items</span><div class="sval">${(DATA.news||[]).length}</div><div class="hint">${newsSources().filter(s=>s!=='all').join(' · ')}</div></div></div><div class="btnline"><button class="actionbtn" onclick="load(true)">Reload Data Now</button><button class="actionbtn" onclick="setView('groups')">Open Groups</button><button class="actionbtn" onclick="setView('third')">Open Thirds</button><button class="actionbtn" onclick="setView('updates')">System Updates</button></div>`}
 function lopt(v,label,cur){return `<option value="${v}" ${v===cur?'selected':''}>${label}</option>`}

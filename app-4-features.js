@@ -551,4 +551,6 @@ function modelBlock(m){
   return `<section class="analystPanel"><div class="analystTop"><div class="analystTitle">Model read</div><div class="analystBadge ${op.blocked?'gate':''}">${op.blocked?'upset gate':'official probabilities'}</div></div><div class="analystHero"><div class="analystMain"><div class="analystLabel">Official pick</div><div class="analystPick">${esc(op.name)}</div><p class="analystNote">${esc(op.note)}</p>${gate}</div><div class="analystConfidence"><b>${esc(op.confidence??'—')}%</b><span>official probability</span><small>${esc(marketText)}</small>${base}</div></div><div class="analystGrid upsetGrid"><div class="modelReadColumn">${_v12OutcomeCard(m,op)}${_v15MatchProfile(m,op)}</div><div class="modelReadColumn">${_v6UpsetBox(m)}<div class="analystBox driversBox"><div class="analystBoxTitle">Main drivers</div><div class="factorRows">${_v4FactorRows(pr)}</div></div></div></div><p class="analystSummary">${esc(summary)}</p></section>`;
 }
 
-applySettings();applySportNav();setView(SETTINGS.defaultView||'matches');load();
+const requestedView=new URLSearchParams(window.location.search).get('view');
+const initialView=requestedView&&document.getElementById('view-'+requestedView)?requestedView:(SETTINGS.defaultView||'matches');
+applySettings();applySportNav();setView(initialView);load().then(()=>{if(requestedView&&document.getElementById('view-'+requestedView))setView(requestedView)});
