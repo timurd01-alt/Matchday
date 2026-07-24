@@ -163,6 +163,16 @@ function renderCommunity(){ensureHandle();const host=$('#view-community');const 
     const tab=(p,label)=>`<button class="lbTab ${p===period?'on':''}" onclick="setLbPeriod('${p}')">${label}</button>`;
     h+=`<div class="seclbl" style="margin-top:20px">Global leaderboard</div>`;
     h+=`<div class="btmmeta" style="margin-bottom:8px">You appear as <b>${esc(hn)}</b> — assigned automatically so the board stays free of offensive names.${canReshuffleHandle()?` <button class="btmbtn" style="margin-left:8px;padding:3px 9px;font-size:.72rem" onclick="reshuffleHandle()">Reshuffle (1 left)</button>`:''}</div>`;
+    h+=`<div class="btmmeta" style="margin-bottom:12px">
+      <div>Your name and record live only in this browser. Save this code to keep them if you clear your data or switch devices: <code>${esc(recoveryCode())}</code> <button class="btmbtn" style="padding:3px 9px;font-size:.72rem" onclick="copyRecoveryCode()">Copy</button> <span id="recoveryCopyStatus" class="faintline"></span></div>
+      <div style="margin-top:6px"><button class="btmbtn" style="padding:3px 9px;font-size:.72rem" onclick="toggleRestoreForm()">Already have a code?</button></div>
+      <div id="restoreIdentityForm" hidden style="margin-top:8px;display:flex;flex-wrap:wrap;gap:6px;align-items:center">
+        <input id="restoreCodeInput" type="text" placeholder="Your saved code" style="flex:1;min-width:160px">
+        <input id="restoreHandleInput" type="text" placeholder="Your old name (optional)" style="flex:1;min-width:160px">
+        <button class="btmbtn" onclick="restoreIdentity()">Restore</button>
+        <span id="restoreStatus" class="faintline"></span>
+      </div>
+    </div>`;
     h+=`<div class="lbTabs">${tab('all','All time')}${tab('week','This week')}${tab('month','This month')}</div>`;
     h+=`<div id="lbBoard" class="empty">Loading board…</div>`;
   } else {

@@ -821,9 +821,11 @@ document.addEventListener('click',e=>{const panel=$('#alertCenter');if(panel&&!p
 // also hit a server; nothing else in the feature changes.
 // ---- Tier 2 leaderboard (dormant until LEADERBOARD_URL is set) -----------
 const LEADERBOARD_URL = "https://matchday-lake-omega.vercel.app/api/leaderboard";
+let _SESSION_DEVICE=null,_SESSION_HANDLE=null; // in-memory fallback if localStorage writes silently fail (e.g. Safari private mode)
 function deviceId(){let id;try{id=localStorage.getItem('matchday.device')}catch(e){}
-  if(!id){id='mdx-'+Math.random().toString(36).slice(2)+Date.now().toString(36);try{localStorage.setItem('matchday.device',id)}catch(e){}}return id;}
-function myHandle(){try{return localStorage.getItem('matchday.handle')||''}catch(e){return ''}}
+  if(!id)id=_SESSION_DEVICE;
+  if(!id){id='mdx-'+Math.random().toString(36).slice(2)+Date.now().toString(36);_SESSION_DEVICE=id;try{localStorage.setItem('matchday.device',id)}catch(e){}}return id;}
+function myHandle(){try{return localStorage.getItem('matchday.handle')||_SESSION_HANDLE||''}catch(e){return _SESSION_HANDLE||''}}
 // ---- Community identity: assigned real-player names, never free text ------
 // A free-text handle on a shared public board is an open door for offensive
 // or trolling names. Rather than moderate input, there's no input at all --
@@ -856,6 +858,7 @@ function _drawHandle(exclude){
 }
 function assignHandle(){
   const h=_drawHandle();
+  _SESSION_HANDLE=h;
   try{localStorage.setItem('matchday.handle',h);localStorage.setItem('matchday.handleAssigned','1');localStorage.setItem('matchday.handleReshuffled','0')}catch(e){}
   return h;
 }
@@ -864,14 +867,57 @@ function reshuffleHandle(){
   if(!canReshuffleHandle())return;
   const base=myHandle().replace(/\s#\d+$/,'');
   const h=_drawHandle(base);
+  _SESSION_HANDLE=h;
   try{localStorage.setItem('matchday.handle',h);localStorage.setItem('matchday.handleReshuffled','1')}catch(e){}
   renderCommunity();
 }
+// Runs the "assign a random handle" draw at most once per page load. Without
+// this guard, a browser that silently fails localStorage writes (Safari
+// private mode allows the write call but doesn't persist it) would see
+// myHandle() come back empty on every single call and reroll a brand new
+// name each time the Community tab re-renders -- the exact "I keep losing
+// my name" bug. _SESSION_HANDLE now also covers that case so the name stays
+// stable for the rest of this visit even when storage never actually saves.
+let _HANDLE_ENSURED_THIS_LOAD=false;
 function ensureHandle(){
+  if(_HANDLE_ENSURED_THIS_LOAD)return;
+  _HANDLE_ENSURED_THIS_LOAD=true;
   try{
     const assigned=localStorage.getItem('matchday.handleAssigned')==='1';
     if(!myHandle()||!assigned)assignHandle(); // first-time visitor, or force-migrates an old free-text handle
-  }catch(e){}
+  }catch(e){
+    if(!myHandle())assignHandle();
+  }
+}
+// ---- Recovery: the device id IS the server-side identity key (handle is
+// just cosmetic and can be reshuffled) -- surfacing it as a code the user
+// can save and re-enter is the only way to guarantee continuity across a
+// cleared browser or a new device, short of a full login system.
+function recoveryCode(){return deviceId();}
+function copyRecoveryCode(){
+  const code=recoveryCode();
+  const done=()=>{const el=document.getElementById('recoveryCopyStatus');if(el){el.textContent='Copied';setTimeout(()=>{if(el)el.textContent='';},2000)}};
+  try{
+    if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(code).then(done,done);
+    else done();
+  }catch(e){done();}
+}
+function toggleRestoreForm(){
+  const el=document.getElementById('restoreIdentityForm');
+  if(el)el.hidden=!el.hidden;
+}
+function restoreIdentity(){
+  const codeEl=document.getElementById('restoreCodeInput'),handleEl=document.getElementById('restoreHandleInput');
+  const code=(codeEl?.value||'').trim(),handle=(handleEl?.value||'').trim();
+  const statusEl=document.getElementById('restoreStatus');
+  if(!code){if(statusEl)statusEl.textContent='Enter the code you saved.';return;}
+  _SESSION_DEVICE=code;
+  try{localStorage.setItem('matchday.device',code)}catch(e){}
+  if(handle){
+    _SESSION_HANDLE=handle;
+    try{localStorage.setItem('matchday.handle',handle);localStorage.setItem('matchday.handleAssigned','1');localStorage.setItem('matchday.handleReshuffled','1')}catch(e){}
+  }
+  renderCommunity();
 }
 async function pushScore(){ // called after grading; no-op until URL set + handle chosen
   if(!LEADERBOARD_URL||!myHandle())return;
