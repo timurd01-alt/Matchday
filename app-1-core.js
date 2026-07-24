@@ -83,7 +83,13 @@ function applySportNav(){
     b.style.display=allowed.includes(b.dataset.v)?'':'none';
     const l=b.querySelector('.lbl');
     if(l){const en=l.getAttribute('data-en')||l.textContent.trim();l.setAttribute('data-en',en);
-      l.textContent=labels[b.dataset.v]||t(en);}});
+      l.textContent=labels[b.dataset.v]||t(en);
+      // sidebar icons carry no visible label outside the guided tour, so a
+      // native tooltip is the only way to tell them apart on hover
+      b.title=l.textContent;}});
+  document.querySelectorAll('.navGroup').forEach(g=>{
+    g.hidden=!g.querySelector('.navbtn:not([style*="display: none"])');
+  });
   if(!allowed.includes(VIEW))setView('matches');
 }
 function loadingBoardHTML(){return '<div class="loadingBoard" aria-label="Loading matches"><span></span><span></span><span></span><span></span></div>'}
@@ -369,6 +375,9 @@ function renderThird(){const host=$('#view-third'),third=getThirdRace();if(!thir
 /* removed duplicate (renderNews) */
 
 const SYSTEM_UPDATES=[
+  {date:'Build 0724K',tag:'UI',title:'A sidebar that\'s easier to scan, and a more visible Content page',items:[
+    'The sidebar\'s 16 icons now sit in labeled groups (Games, Competition, Model, Content, Community, More) with dividers between them, and every icon has a hover tooltip — the sidebar has no visible text labels outside the guided tour, so there was previously no way to tell them apart without hovering blind.',
+    'The Content link in the top bar is now a filled accent button instead of a small text link, since that\'s a more effective spot for it than adding a 17th unlabeled sidebar icon.']},
   {date:'Build 0724J',tag:'Fix',title:'Team of the Tournament — fixed for good this time',items:[
     'Defenders and keepers were meant to stay hidden until Matchday has a real lineup data source, but stale entries left over from before ESPN lineups were removed kept silently reappearing anyway — a fix from July 20 addressed the symptom, not the cause. Now structurally gated off regardless of what the old data file contains, verified live against the actual stale file.']},
   {date:'Build 0724I',tag:'New',title:'NCAAF/NCAAM class ratings now cover the whole field',items:[
@@ -659,7 +668,7 @@ const SYSTEM_UPDATES=[
   ]}
 ];
 function markUpdatesRead(){localStorage.setItem('matchday.updates.lastSeen',new Date().toISOString());renderSystemUpdates()}
-function renderSystemUpdates(){const host=$('#view-updates');const seen=localStorage.getItem('matchday.updates.lastSeen');const latest='build 0724J';host.innerHTML=`<div class="updatesShell"><div class="updatesHero"><section class="updatesIntro"><h2>System updates</h2><span class="safePill">UI</span></section><aside class="buildCard"><div class="tiny">Current build</div><div class="build">${esc(latest)}</div><div class="hint">Last viewed: ${seen?esc(ago(seen)):'not marked yet'}</div><div class="updateActions"><button class="miniBtn" onclick="markUpdatesRead()">Mark as read</button><button class="miniBtn" onclick="setView('status')">Open Status</button></div></aside></div><section class="timeline"><div class="timelineHead"><h3>Release notes</h3><span>${SYSTEM_UPDATES.length} entries</span></div>${SYSTEM_UPDATES.map(u=>`<article class="updateItem"><div class="updateDate">${esc(u.date)}</div><div><div class="updateTitle"><span>${esc(u.title)}</span><span class="updateBadge">${esc(u.tag)}</span></div><ul>${u.items.map(i=>`<li>${esc(i)}</li>`).join('')}</ul></div></article>`).join('')}</section></div>`}
+function renderSystemUpdates(){const host=$('#view-updates');const seen=localStorage.getItem('matchday.updates.lastSeen');const latest='build 0724K';host.innerHTML=`<div class="updatesShell"><div class="updatesHero"><section class="updatesIntro"><h2>System updates</h2><span class="safePill">UI</span></section><aside class="buildCard"><div class="tiny">Current build</div><div class="build">${esc(latest)}</div><div class="hint">Last viewed: ${seen?esc(ago(seen)):'not marked yet'}</div><div class="updateActions"><button class="miniBtn" onclick="markUpdatesRead()">Mark as read</button><button class="miniBtn" onclick="setView('status')">Open Status</button></div></aside></div><section class="timeline"><div class="timelineHead"><h3>Release notes</h3><span>${SYSTEM_UPDATES.length} entries</span></div>${SYSTEM_UPDATES.map(u=>`<article class="updateItem"><div class="updateDate">${esc(u.date)}</div><div><div class="updateTitle"><span>${esc(u.title)}</span><span class="updateBadge">${esc(u.tag)}</span></div><ul>${u.items.map(i=>`<li>${esc(i)}</li>`).join('')}</ul></div></article>`).join('')}</section></div>`}
 
 function renderStatus(){const host=$('#view-status'),M=DATA.matches||[],st=deriveStandings(),third=getThirdRace();const live=M.filter(m=>m.status==='LIVE').length,up=M.filter(m=>m.status==='UPCOMING').length,fin=M.filter(m=>m.status==='FINISHED').length;const next=M.filter(isVisibleUpcoming).sort((a,b)=>(a.kickoff||'').localeCompare(b.kickoff||''))[0];host.innerHTML=`<div class="vhead">App Status</div><div class="hint" style="margin-bottom:10px">menu profile: <b>${navProfile()}</b> · sport file: <b>${DATA_FILE||'all (merged)'}</b></div><div class="status-grid"><div class="statuscard ${LAST_OK?'ok':'warn'}"><span class="slbl">Data file</span><div class="sval">${LAST_OK?'loaded':'not loaded'}</div><div class="hint">${LAST_ERROR?esc(LAST_ERROR):'Loaded'}</div></div><div class="statuscard info"><span class="slbl">Source</span><div class="sval">${esc(DATA.source_note||'unknown')}</div><div class="hint">${esc(DATA.standings_mode||'')}</div></div><div class="statuscard info"><span class="slbl">Updated</span><div class="sval">${DATA.updated?ago(DATA.updated):'unknown'}</div><div class="hint">${esc(DATA.updated||'—')}</div></div><div class="statuscard info"><span class="slbl">Matches</span><div class="sval">${M.length}</div><div class="hint">${live} live · ${up} upcoming · ${fin} finished</div></div><div class="statuscard info"><span class="slbl">Groups</span><div class="sval">${st.length}</div><div class="hint">${third.length} third-place teams tracked</div></div><div class="statuscard info"><span class="slbl">News Items</span><div class="sval">${(DATA.news||[]).length}</div><div class="hint">${newsSources().filter(s=>s!=='all').join(' · ')}</div></div></div><div class="btnline"><button class="actionbtn" onclick="load(true)">Reload Data Now</button><button class="actionbtn" onclick="setView('groups')">Open Groups</button><button class="actionbtn" onclick="setView('third')">Open Thirds</button><button class="actionbtn" onclick="setView('updates')">System Updates</button></div>`}
 function lopt(v,label,cur){return `<option value="${v}" ${v===cur?'selected':''}>${label}</option>`}
