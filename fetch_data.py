@@ -2159,6 +2159,18 @@ def build_weekly_awards(matches):
             "biggest_miss": biggest_miss, "closest_match": closest_match}
 
 
+# No compliant lineup provider is currently active -- ESPN's lineup fetch was
+# removed for licensing reasons, and Sportmonks (the only other lineup source
+# this codebase knows how to use) needs a key that isn't configured. Gate the
+# defense/keeper backfill on this explicitly rather than on the player DB
+# happening to be empty: a prior fix (2026-07-20) tried to make the backfill
+# "stay dormant" without a real lineup source, but stale entries from when
+# ESPN lineups WERE flowing kept silently feeding it anyway, since nothing
+# actually enforced the dormancy. Flip this only once update_player_db() has
+# a real, currently-fetching lineup source to draw on again.
+LINEUP_BACKFILL_ENABLED = False
+
+
 def build_team_of_tournament(matches, scorers, standings):
     """Honest impact XI from real data: players ranked by goals, assists and team
     strength, grouped by their REAL positions (from football-data). Lines we have
@@ -2188,13 +2200,13 @@ def build_team_of_tournament(matches, scorers, standings):
     for role, cap in caps.items():
         xi += [p for p in ranked if p["role"] == role][:cap]
     bench = [p for p in ranked if p not in xi][:5]
-    # fill missing DEF/GK from the player DB via clean sheets, when we actually
-    # have lineup history to draw on (we don't have a lineup data source right
-    # now — no free/ToS-compliant provider gives us starting XIs — so this stays
-    # dormant until one exists, rather than faking defensive data we don't have)
-    db = _load_player_db()
+    # Fill missing DEF/GK from the player DB via clean sheets -- but only when
+    # LINEUP_BACKFILL_ENABLED says a real lineup source is actually active.
+    # Never fall back to "the file happens to have entries in it": stale data
+    # from a since-removed provider must never silently resurface here.
+    db = _load_player_db() if LINEUP_BACKFILL_ENABLED else {}
     backfilled = 0
-    if db.get("players"):
+    if LINEUP_BACKFILL_ENABLED and db.get("players"):
         pool = sorted(db["players"].values(),
                       key=lambda r: (-r.get("clean_sheets", 0), -r.get("starts", 0)))
         xi_names = {norm(p["name"] or "") for p in xi}

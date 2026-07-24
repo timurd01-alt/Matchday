@@ -144,5 +144,42 @@ class RatingsLookupTests(unittest.TestCase):
         self.assertEqual(after["market_pct"], 25.0)
 
 
+class TeamOfTournamentBackfillTests(unittest.TestCase):
+    """Regression coverage for a bug that kept recurring: a prior fix tried
+    to make the DEF/GK backfill 'stay dormant' without a real lineup
+    provider, but only by relying on the player DB happening to be empty --
+    stale entries from when ESPN lineups used to flow kept silently feeding
+    it anyway. LINEUP_BACKFILL_ENABLED now makes that structurally
+    impossible regardless of what the DB file contains."""
+
+    def setUp(self):
+        self.old_key, self.old_comp = fetch_data.COMP_KEY, fetch_data.COMP
+        fetch_data.COMP_KEY = "WC"
+        fetch_data.COMP = dict(fetch_data.COMPETITIONS["WC"])
+        self.old_player_db_file = fetch_data.PLAYER_DB_FILE
+        fd_num, self.tmp_path = tempfile.mkstemp(suffix=".json")
+        with os.fdopen(fd_num, "w", encoding="utf-8") as f:
+            json.dump({"_matches": ["m1"], "players": {
+                "keeper one|team a": {"name": "Keeper One", "team": "Team A", "role": "GK",
+                                       "apps": 5, "starts": 5, "clean_sheets": 4},
+            }}, f)
+        fetch_data.PLAYER_DB_FILE = self.tmp_path
+
+    def tearDown(self):
+        fetch_data.COMP_KEY, fetch_data.COMP = self.old_key, self.old_comp
+        fetch_data.PLAYER_DB_FILE = self.old_player_db_file
+        os.unlink(self.tmp_path)
+
+    def test_stale_player_db_entries_never_backfill_while_disabled(self):
+        self.assertFalse(fetch_data.LINEUP_BACKFILL_ENABLED,
+                          "flip this back on only once a real lineup source is active")
+        scorers = [{"name": "Striker", "team": "Team B", "goals": 5, "assists": 1,
+                    "played": 3, "position": "Forward"}]
+        result = fetch_data.build_team_of_tournament([], scorers, [])
+        self.assertIsNotNone(result)
+        self.assertNotIn("Keeper One", [p["name"] for p in result["xi"]])
+        self.assertIn("don't fake it", result["note"])
+
+
 if __name__ == "__main__":
     unittest.main()
