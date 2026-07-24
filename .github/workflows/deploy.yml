@@ -89,7 +89,7 @@ jobs:
         run: |
           rm -f config_keys.py
           mkdir -p _site
-          cp index.html styles.css translations.js legal.html qa.html content.html manifest.json _site/
+          cp index.html styles.css content.css content.js article-links.js translations.js legal.html qa.html content.html manifest.json _site/
           cp tactics-soccer.html tactics-football.html tactics-basketball.html tactics-baseball.html tactics-hockey.html _site/
           cp robots.txt sitemap.xml _site/
           cp app-1-core.js app-2-views.js app-3-panels.js app-4-features.js _site/
@@ -103,7 +103,7 @@ jobs:
 
       - name: Stamp asset URLs with this commit's SHA (cache-busting)
         run: |
-          sed -i "s/__BUILD__/${GITHUB_SHA::8}/g" _site/index.html
+          sed -i "s/__BUILD__/${GITHUB_SHA::8}/g" _site/index.html _site/content.html _site/tactics-*.html
 
       - uses: actions/upload-pages-artifact@v3
         with:

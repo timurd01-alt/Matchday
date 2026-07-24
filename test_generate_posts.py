@@ -40,6 +40,8 @@ class RecapContentTests(unittest.TestCase):
         self.assertIn("Beta", text)  # biggest upset winner
         self.assertIn("not betting advice", text.lower())
         self.assertEqual(post["slug"], f"nfl-{datetime.date.today().isoformat()}")
+        self.assertEqual(post["record"], {"hits": 9, "graded": 13, "pct": 69})
+        self.assertEqual(post["highlights"]["best_call"]["pick"], "Gamma")
 
     def test_recap_survives_missing_awards_and_thin_calibration(self):
         thin = {"graded": 6, "model_hits": 4, "market_graded": 0, "market_hits": 0,
@@ -110,6 +112,11 @@ class RenderAndSitemapTests(unittest.TestCase):
         ld = json.loads(html[start:end])
         self.assertEqual(ld["@type"], "Article")
         self.assertEqual(ld["headline"], post["title"])
+        self.assertIn("View matchup", html)
+        self.assertIn("See model prediction", html)
+        self.assertIn("Open scorecard", html)
+        self.assertIn("Explore similar games", html)
+        self.assertIn("sport=nfl&amp;view=edge", html)
 
     def test_regenerate_sitemap_includes_base_pages_and_every_post(self):
         gp.publish_recap_if_due("NFL", "NFL", SCORECARD, AWARDS)

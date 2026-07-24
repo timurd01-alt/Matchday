@@ -16,7 +16,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="content.css?v=0724M">
+<link rel="stylesheet" href="content.css?v=__BUILD__">
+<script src="content.js?v=__BUILD__" defer></script>
 <script type="application/ld+json">
 {
  "@context": "https://schema.org",
@@ -37,8 +38,49 @@
     <p class="eyebrow">MATCHDAY TERMINAL · CONTENT &amp; LEARNING</p>
     <h1 class="brand">Understand the game.<br>Read the model.</h1>
     <p class="lead">Start with the essentials, review how the model actually performed, or go deeper into the tactics and decisions behind each sport.</p>
-    <nav class="jumpnav" aria-label="Browse content"><a href="#start">Start here</a><a href="#recaps">Model recaps</a><a href="#learn">Learn by sport</a></nav>
+    <nav class="jumpnav" aria-label="Browse content"><a href="#latest">Latest</a><a href="#brief">Daily brief</a><a href="#accountability">Accountability</a><a href="#learn">Learn</a></nav>
   </header>
+
+  <section id="latest">
+    <div class="sectionHead"><div><p class="kicker">UPDATED AS THE DATA CHANGES</p><h2>Latest</h2></div><p>Previews, finished-match recaps, and explainers in one searchable feed.</p></div>
+    <div class="contentTools">
+      <label class="contentSearch"><span class="srOnly">Search content</span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4 4"/></svg><input id="contentSearch" type="search" autocomplete="off" placeholder="Search teams, competitions, and topics"><kbd>/</kbd></label>
+      <div class="contentFilters" role="toolbar" aria-label="Filter content by sport">
+        <button class="filterBtn isActive" type="button" data-sport-filter="all" aria-pressed="true">All</button>
+        <button class="filterBtn" type="button" data-sport-filter="soccer" aria-pressed="false">Soccer</button>
+        <button class="filterBtn" type="button" data-sport-filter="nfl" aria-pressed="false">NFL</button>
+        <button class="filterBtn" type="button" data-sport-filter="ncaaf" aria-pressed="false">College Football</button>
+        <button class="filterBtn" type="button" data-sport-filter="basketball" aria-pressed="false">Basketball</button>
+        <button class="filterBtn" type="button" data-sport-filter="baseball" aria-pressed="false">Baseball</button>
+        <button class="filterBtn" type="button" data-sport-filter="hockey" aria-pressed="false">Hockey</button>
+      </div>
+      <div class="typeFilters" role="toolbar" aria-label="Filter by content type">
+        <button class="typeFilter isActive" type="button" data-type-filter="all" aria-pressed="true">Everything</button>
+        <button class="typeFilter typePreview" type="button" data-type-filter="preview" aria-pressed="false">Preview</button>
+        <button class="typeFilter typeRecap" type="button" data-type-filter="recap" aria-pressed="false">Recap</button>
+        <button class="typeFilter typeLearn" type="button" data-type-filter="learn" aria-pressed="false">Learn</button>
+      </div>
+    </div>
+    <div id="featuredStory" class="featured" aria-live="polite">
+      <div><small>MODEL ACCOUNTABILITY</small><h3>See what the model got right—and wrong.</h3><p>Published recaps appear here as soon as enough picks are graded. Nothing is rewritten after the result.</p><div class="featuredMeta"><span>Locked picks</span><span>Automatic grading</span></div></div>
+      <a class="featuredAction" href="index.html?view=insights">Open Insights &rarr;</a>
+    </div>
+    <div class="latestHead"><h3>Latest stories</h3><span id="contentCount">Loading current data…</span></div>
+    <div id="latestGrid" class="cards latestGrid" aria-live="polite"></div>
+    <div id="contentEmpty" class="contentEmpty" hidden><b>No stories match those filters</b><span>Try another sport, content type, or a broader search.</span></div>
+    <div id="freshnessLine" class="freshnessLine">Checking data freshness…</div>
+  </section>
+
+  <section id="brief">
+    <div class="sectionHead"><div><p class="kicker">THE MATCHDAY BRIEF</p><h2>Today, at a glance</h2></div><p>A newsletter-style read generated from current matches and locked results.</p></div>
+    <div id="briefGrid" class="briefGrid" aria-live="polite"></div>
+  </section>
+
+  <section id="accountability">
+    <div class="sectionHead"><div><p class="kicker">MODEL ACCOUNTABILITY</p><h2>The record, including the misses</h2></div><p>What worked, what failed, how probabilities moved, and what the model should learn next.</p></div>
+    <div id="accountabilityGrid" class="accountabilityGrid" aria-live="polite"></div>
+    <div class="accountabilityActions"><a href="index.html?view=score">Open full scorecard &rarr;</a><a href="qa.html#accuracy">How grading works &rarr;</a></div>
+  </section>
 
   <section id="start">
     <div class="sectionHead"><div><p class="kicker">NEW TO MATCHDAY</p><h2>Start here</h2></div><p>Three short reads that make the dashboard easier to understand.</p></div>
@@ -49,23 +91,15 @@
     </div>
   </section>
 
-  <section id="recaps">
-    <div class="sectionHead"><div><p class="kicker">ACCOUNTABILITY</p><h2>Model recaps</h2></div><p>Weekly results built from graded picks—hit rate, calibration, and the biggest lessons.</p></div>
-    <a class="featured" href="index.html?view=insights">
-      <div><small>LATEST RECAPS · IN THE DASHBOARD</small><h3>See what the model got right—and wrong.</h3><p>Browse every published recap by sport and date. Nothing is rewritten after the result.</p></div>
-      <span>Open Insights &rarr;</span>
-    </a>
-  </section>
-
   <section id="learn">
     <div class="sectionHead"><div><p class="kicker">DEEPER READING</p><h2>Learn by sport</h2></div><p>The factors that matter, explained in the language of the sport instead of generic model jargon.</p></div>
     <div class="cards sportGrid">
-      <a class="card" href="tactics-soccer.html"><small>Soccer · 8 min</small><b>Shape, pressing &amp; set pieces</b><span>Fixture congestion, draws, and the tactical details that move a match.</span><em>World Cup · UCL · Europe</em></a>
-      <a class="card" href="tactics-football.html"><small>Football · 7 min</small><b>Situation, schedule &amp; rest</b><span>Short weeks, opponent strength, and what changes in the college game.</span><em>NFL · College Football</em></a>
-      <a class="card" href="tactics-basketball.html"><small>Basketball · 7 min</small><b>Pace, spacing &amp; back-to-backs</b><span>How possessions, fatigue, and bracket context shape the read.</span><em>NBA · College Basketball</em></a>
-      <a class="card" href="tactics-baseball.html"><small>Baseball · 6 min</small><b>Patience over 162 games</b><span>Run differential, sample size, and what the model honestly cannot see.</span><em>MLB</em></a>
-      <a class="card" href="tactics-hockey.html"><small>Hockey · 6 min</small><b>Goalies, parity &amp; special teams</b><span>Why rotation and thin margins make apparent upsets routine.</span><em>NHL</em></a>
-      <a class="card referenceCard" href="qa.html#data"><small>Reference · 5 min</small><b>Data, privacy &amp; limitations</b><span>Where the numbers come from and what Matchday does not claim to know.</span><em>Read the reference &rarr;</em></a>
+      <a class="card guideCard" data-sports="soccer" href="tactics-soccer.html"><small><span class="typeBadge typeLearn">Learn</span> Soccer · 8 min</small><b>Shape, pressing &amp; set pieces</b><span>Fixture congestion, draws, and the tactical details that move a match.</span><em>Updated Jul 24 · World Cup · UCL · Europe</em></a>
+      <a class="card guideCard" data-sports="nfl ncaaf" href="tactics-football.html"><small><span class="typeBadge typeLearn">Learn</span> Football · 7 min</small><b>Situation, schedule &amp; rest</b><span>Short weeks, opponent strength, and what changes in the college game.</span><em>Updated Jul 24 · NFL · College Football</em></a>
+      <a class="card guideCard" data-sports="basketball" href="tactics-basketball.html"><small><span class="typeBadge typeLearn">Learn</span> Basketball · 7 min</small><b>Pace, spacing &amp; back-to-backs</b><span>How possessions, fatigue, and bracket context shape the read.</span><em>Updated Jul 24 · NBA · College Basketball</em></a>
+      <a class="card guideCard" data-sports="baseball" href="tactics-baseball.html"><small><span class="typeBadge typeLearn">Learn</span> Baseball · 6 min</small><b>Patience over 162 games</b><span>Run differential, sample size, and what the model honestly cannot see.</span><em>Updated Jul 24 · MLB</em></a>
+      <a class="card guideCard" data-sports="hockey" href="tactics-hockey.html"><small><span class="typeBadge typeLearn">Learn</span> Hockey · 6 min</small><b>Goalies, parity &amp; special teams</b><span>Why rotation and thin margins make apparent upsets routine.</span><em>Updated Jul 24 · NHL</em></a>
+      <a class="card referenceCard guideCard" data-sports="all" href="qa.html#data"><small><span class="typeBadge typeLearn">Learn</span> Reference · 5 min</small><b>Data, privacy &amp; limitations</b><span>Where the numbers come from and what Matchday does not claim to know.</span><em>Updated Jul 24 · Read the reference &rarr;</em></a>
     </div>
   </section>
 

@@ -154,6 +154,8 @@ def build_recap_post(comp_key, comp_label, scorecard, awards):
         "title": f"{comp_label} model recap — {today}",
         "date": today,
         "summary": f"The model went {hits}/{graded} ({pct}%) on graded {comp_label} picks.",
+        "record": {"hits": hits, "graded": graded, "pct": pct},
+        "highlights": awards or {},
         "body": paragraphs,
     }
 
@@ -163,12 +165,23 @@ def _esc(s):
             .replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace('"', "&quot;"))
 
 
-POST_CSS = """:root{--bg:#070a0f;--panel:#111822;--text:#eef2f8;--muted:#9ba8b8;--faint:#647184;--line:#263244;--signal:#3ad17a;--link:#76caff}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 10% 0,rgba(58,209,122,.1),transparent 30%),var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;line-height:1.65}.wrap{width:min(760px,calc(100% - 40px));margin:auto;padding:44px 0 76px}.back{color:var(--muted);font-family:"JetBrains Mono",monospace;font-size:.75rem;text-decoration:none}.back:hover{color:var(--signal)}.eyebrow{margin:36px 0 12px;color:var(--signal);font:700 .68rem "JetBrains Mono",monospace;letter-spacing:.14em}h1{font-family:Archivo,sans-serif;font-size:clamp(1.8rem,5vw,2.8rem);letter-spacing:-.04em;line-height:1.05;margin:0 0 10px}.meta{display:flex;flex-wrap:wrap;gap:10px;color:var(--faint);font:500 .7rem "JetBrains Mono",monospace;margin-bottom:26px}.meta span{border:1px solid var(--line);border-radius:999px;padding:5px 9px}p{color:#c9d2de;margin:0 0 16px;font-size:1.02rem}a{color:var(--link)}.notice{border-left:3px solid var(--signal);background:rgba(58,209,122,.07);border-radius:7px;padding:12px 14px;color:#d8dde5;font-size:.85rem;margin-top:30px}.foot{margin-top:34px;color:var(--faint);font-size:.75rem}"""
+POST_CSS = """:root{--bg:#070a0f;--panel:#111822;--text:#eef2f8;--muted:#9ba8b8;--faint:#647184;--line:#263244;--signal:#3ad17a;--link:#76caff}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 10% 0,rgba(58,209,122,.1),transparent 30%),var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;line-height:1.65}.wrap{width:min(760px,calc(100% - 40px));margin:auto;padding:44px 0 76px}.postNav{display:flex;align-items:center;justify-content:space-between;gap:16px}.postNav a{color:var(--muted);font-family:"JetBrains Mono",monospace;font-size:.75rem;text-decoration:none}.postNav a:hover{color:var(--signal)}.eyebrow{margin:36px 0 12px;color:var(--signal);font:700 .68rem "JetBrains Mono",monospace;letter-spacing:.14em}h1{font-family:Archivo,sans-serif;font-size:clamp(1.8rem,5vw,2.8rem);letter-spacing:-.04em;line-height:1.05;margin:0 0 10px}.meta{display:flex;flex-wrap:wrap;gap:10px;color:var(--faint);font:500 .7rem "JetBrains Mono",monospace;margin-bottom:26px}.meta span{border:1px solid var(--line);border-radius:999px;padding:5px 9px}p{color:#c9d2de;margin:0 0 16px;font-size:1.02rem}a{color:var(--link)}.articleActions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:28px 0}.articleActions a{padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:var(--panel);font:700 .7rem/1.25 "JetBrains Mono",monospace;text-decoration:none}.articleActions a:hover{border-color:var(--signal);color:var(--signal)}.notice{border-left:3px solid var(--signal);background:rgba(58,209,122,.07);border-radius:7px;padding:12px 14px;color:#d8dde5;font-size:.85rem;margin-top:30px}.foot{margin-top:34px;color:var(--faint);font-size:.75rem}@media(max-width:560px){.articleActions{grid-template-columns:1fr}}"""
+
+
+def _content_sport(comp_key):
+    key = str(comp_key or "").lower()
+    if key in {"wc", "ucl", "epl", "laliga", "seriea", "bundesliga", "ligue1"}:
+        return "soccer"
+    if key in {"ncaam", "nba"}:
+        return "basketball"
+    return {"nfl": "nfl", "ncaaf": "ncaaf", "mlb": "baseball", "nhl": "hockey"}.get(key, "all")
 
 
 def render_post_html(post):
     url = f"{BASE_URL}posts/{post['slug']}.html"
     title = f"{post['title']} · Matchday"
+    comp_key = str(post.get("comp") or "").lower()
+    content_sport = _content_sport(comp_key)
     ld = {
         "@context": "https://schema.org", "@type": "Article",
         "headline": post["title"], "datePublished": post["date"],
@@ -206,11 +219,17 @@ def render_post_html(post):
 </head>
 <body>
 <div class="wrap">
-<a class="back" href="../index.html">&larr; Back to Matchday</a>
+<nav class="postNav"><a href="../content.html">&larr; Back to Content</a><a href="../index.html">Dashboard</a></nav>
 <p class="eyebrow">MATCHDAY MODEL RECAP</p>
 <h1>{_esc(post['title'])}</h1>
 <div class="meta"><span>{_esc(post['date'])}</span><span>{_esc(post['comp_label'])}</span><span>Auto-generated</span></div>
 {body_html}
+<nav class="articleActions" aria-label="Continue exploring">
+<a href="../index.html?sport={_esc(comp_key)}&amp;view=matches">View matchup</a>
+<a href="../index.html?sport={_esc(comp_key)}&amp;view=edge">See model prediction</a>
+<a href="../index.html?sport={_esc(comp_key)}&amp;view=score">Open scorecard</a>
+<a href="../content.html?sport={_esc(content_sport)}#latest">Explore similar games</a>
+</nav>
 <div class="notice"><strong>Analytics only.</strong> Matchday does not offer betting advice. See the <a href="../qa.html">Q&amp;A page</a> for how predictions are built and the <a href="../legal.html">data sources and legal notice</a>.</div>
 <p class="foot"><a href="../index.html">Matchday</a> — live scores, odds and model-based predictions.</p>
 </div>
