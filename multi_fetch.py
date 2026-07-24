@@ -31,6 +31,11 @@ SPACING = 20          # seconds between two sports' fetches (quota safety)
 TICK = 15             # scheduler wake-up interval
 RETRY_AFTER_ERROR = 15 * 60
 
+# TEMPORARY: force these sports to refetch on the next run_once() regardless
+# of cadence, to verify the CFBD_KEY/CBBD_KEY secret update actually reaches
+# apply_recruiting_strength() live. Remove this line once confirmed.
+FORCE_REFETCH_ONCE = {"ncaaf", "ncaam"}
+
 LIVE_EVERY = 60
 SOON_EVERY = 60 * 60
 NEAR_EVERY = 6 * 3600
@@ -167,7 +172,7 @@ def run_once(state_path=".ci_fetch_state.json"):
     except Exception:
         last_fetched = {}
     print(f"Multi-sport fetcher (one-shot): {', '.join(k for k, _ in SPORTS)}")
-    due = [(k, f) for k, f in SPORTS if not os.path.exists(f"data_{k}.json")
+    due = [(k, f) for k, f in SPORTS if k in FORCE_REFETCH_ONCE or not os.path.exists(f"data_{k}.json")
            or _stale_source(k) or _missing_fields(k) or time.time() - last_fetched.get(k, 0) >= _interval_for(k)]
     for i, (key, flag) in enumerate(due):
         ok = _run_one(key, flag)
