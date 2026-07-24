@@ -2186,11 +2186,57 @@ def build_weekly_awards(matches):
 LINEUP_BACKFILL_ENABLED = False
 
 
-def build_team_of_tournament(matches, scorers, standings):
-    """Honest impact XI from real data: players ranked by goals, assists and team
-    strength, grouped by their REAL positions (from football-data). Lines we have
-    no data for (e.g. goalkeepers rarely score) are simply not shown — we never
-    relabel an attacker into a fake slot."""
+SQUAD_CACHE_FILE = f"squads_{COMP_KEY.lower()}.json"
+SQUAD_CACHE_HOURS = 24  # rosters barely move mid-season; keeps this cheap on the free tier
+
+def _load_squad_cache():
+    try:
+        with open(SQUAD_CACHE_FILE, encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return {}
+
+def _save_squad_cache(cache):
+    try:
+        tmp = SQUAD_CACHE_FILE + ".tmp"
+        with open(tmp, "w", encoding="utf-8") as f:
+            json.dump(cache, f, ensure_ascii=False, indent=1)
+        os.replace(tmp, SQUAD_CACHE_FILE)
+    except Exception as e:
+        DIAG.append(f"squad cache save failed: {e}")
+
+def fetch_team_squad(team_id, team_name):
+    """Real squad (name + position) for one team, via football-data's /teams
+    endpoint. Cached for a day per team id -- only called for a handful of
+    teams (the best defensive records), never the whole competition."""
+    cache = _load_squad_cache()
+    key = str(team_id)
+    entry = cache.get(key)
+    if entry and time.time() - entry.get("_fetched", 0) < SQUAD_CACHE_HOURS * 3600:
+        return entry.get("squad", [])
+    try:
+        d = _get(f"{FD_BASE}/teams/{team_id}", {"X-Auth-Token": FOOTBALL_DATA_KEY})
+    except Exception as e:
+        DIAG.append(f"squad fetch failed for {team_name}: {_scrub(e)}")
+        return entry.get("squad", []) if entry else []
+    squad = [{"name": p.get("name"), "position": p.get("position") or ""}
+             for p in (d.get("squad") or []) if p.get("name")]
+    cache[key] = {"squad": squad, "_fetched": time.time()}
+    _save_squad_cache(cache)
+    return squad
+
+def build_team_of_tournament(matches, scorers, standings, team_id_map=None):
+    """Honest impact XI from real data: attackers ranked by goals, assists and
+    team strength, grouped by their REAL positions (from football-data).
+
+    Defenders/keepers have no individual stat feed today -- update_player_db()
+    only fills in once a real lineup provider is configured (see
+    LINEUP_BACKFILL_ENABLED), which isn't currently true. Rather than leave
+    those lines empty until then, pull real named players from the actual
+    squads of this competition's best defensive teams (fewest goals conceded
+    per game, from real standings) and credit them with their team's
+    defensive record -- a real player, an honest team-level stat, never a
+    fabricated individual one."""
     if not scorers:
         return None
     def role_of(p):
@@ -2208,19 +2254,20 @@ def build_team_of_tournament(matches, scorers, standings):
         score = impact + (impact / pld) * 2.0 + rating_boost(s.get("team")) * 0.4
         ranked.append({"name": s.get("name"), "team": s.get("team"), "code": s.get("code"),
                        "goals": g, "assists": a, "played": s.get("played", 0),
-                       "role": role_of(s), "score": round(score, 1)})
+                       "role": role_of(s), "score": round(score, 1), "stat": f"{g}G {a}A"})
     ranked.sort(key=lambda x: -x["score"])
     caps = {"FWD": 3, "MID": 4, "DEF": 4, "GK": 1}
     xi = []
     for role, cap in caps.items():
         xi += [p for p in ranked if p["role"] == role][:cap]
     bench = [p for p in ranked if p not in xi][:5]
-    # Fill missing DEF/GK from the player DB via clean sheets -- but only when
-    # LINEUP_BACKFILL_ENABLED says a real lineup source is actually active.
-    # Never fall back to "the file happens to have entries in it": stale data
-    # from a since-removed provider must never silently resurface here.
-    db = _load_player_db() if LINEUP_BACKFILL_ENABLED else {}
+
+    # First choice: real individual clean-sheet data, but only once a real
+    # lineup source is actually active -- never fall back to "the file
+    # happens to have entries in it", since stale data from a since-removed
+    # provider must never silently resurface here.
     backfilled = 0
+    db = _load_player_db() if LINEUP_BACKFILL_ENABLED else {}
     if LINEUP_BACKFILL_ENABLED and db.get("players"):
         pool = sorted(db["players"].values(),
                       key=lambda r: (-r.get("clean_sheets", 0), -r.get("starts", 0)))
@@ -2234,12 +2281,50 @@ def build_team_of_tournament(matches, scorers, standings):
                 xi.append({"name": r["name"], "team": r["team"], "code": "",
                            "goals": 0, "assists": 0, "played": r.get("starts", 0),
                            "role": role, "score": r.get("clean_sheets", 0),
-                           "cs": r.get("clean_sheets", 0)})
+                           "cs": r.get("clean_sheets", 0),
+                           "stat": f"{r.get('clean_sheets', 0)} clean sheets"})
                 xi_names.add(norm(r["name"])); need -= 1; backfilled += 1
+
+    # Fallback while no lineup source is configured: real squad players from
+    # the best real defensive teams, credited with that team's record.
+    def_gk_need = sum(caps[r] for r in ("DEF", "GK")) - sum(1 for p in xi if p["role"] in ("DEF", "GK"))
+    if def_gk_need > 0 and team_id_map:
+        teams = [t for g in (standings or []) for t in (g.get("teams") or [])
+                 if (t.get("pld") or 0) >= 3 and t.get("name")]
+        teams.sort(key=lambda t: (t.get("ga", 0) / max(1, t.get("pld", 1))))
+        xi_names = {norm(p["name"] or "") for p in xi}
+        for t in teams[:4]:
+            if def_gk_need <= 0:
+                break
+            tid = team_id_map.get(norm(t["name"]))
+            if tid is None:
+                continue
+            ga_rate = round(t.get("ga", 0) / max(1, t.get("pld", 1)), 2)
+            squad = fetch_team_squad(tid, t["name"])
+            need_role = {"GK": caps["GK"] - sum(1 for p in xi if p["role"] == "GK"),
+                         "DEF": caps["DEF"] - sum(1 for p in xi if p["role"] == "DEF")}
+            for role in ("GK", "DEF"):
+                for p in squad:
+                    if need_role[role] <= 0:
+                        break
+                    if role_of(p) != role or norm(p.get("name") or "") in xi_names:
+                        continue
+                    xi.append({"name": p["name"], "team": t["name"], "code": t.get("code", ""),
+                               "goals": 0, "assists": 0, "role": role,
+                               "score": round(10 - ga_rate, 2),
+                               "stat": f"{ga_rate} GA/gm · {t['name']} D",
+                               "team_defense": True})
+                    xi_names.add(norm(p["name"])); need_role[role] -= 1
+                    def_gk_need -= 1; backfilled += 1
     DIAG.append(f"team of tournament: {len(xi)} players "
-                f"({', '.join(sorted(set(p['role'] for p in xi)))})")
+                f"({', '.join(sorted(set(p['role'] for p in xi)))}, {backfilled} DEF/GK backfilled)")
     note = "Attack ranked by goals, assists and team strength."
     note += (" Defence and goalkeeper ranked by clean sheets from accumulated lineups."
+              if any(p.get("cs") is not None for p in xi) else
+              " Defenders and keepers are real players from the best defensive teams' actual"
+              " squads, credited with that team's goals-conceded rate — we don't have"
+              " individual defensive stats yet (no lineup data source configured), so we"
+              " don't invent one."
               if backfilled else
               " Defenders and keepers only appear once one registers a goal or assist this"
               " tournament — we don't have a lineup data source to rank them by clean sheets"
@@ -3087,6 +3172,7 @@ def build():
                 rank_map = {norm(row.get("name")): row.get("rank") for row in provider_ranks}
             except ProviderError as exc:
                 DIAG.append(f"{provider_name} rankings unavailable: {_scrub(exc)}")
+        team_id_map = {}  # only football-data (below) exposes real team ids for squad lookups
         name_map = {}
         for m in matches:
             for t in (m["home"], m["away"]):
@@ -3119,9 +3205,13 @@ def build():
         matches = build_matches(raw, st)
         training_matches = normalize_match_results(matches)
         name_map = {}
+        team_id_map = {}
         for m in raw:
             for t in (m.get("homeTeam"), m.get("awayTeam")):
-                if t and t.get("name"): name_map[norm(t["name"])] = t["name"]
+                if t and t.get("name"):
+                    name_map[norm(t["name"])] = t["name"]
+                    if t.get("id") is not None:
+                        team_id_map[norm(t["name"])] = t["id"]
 
     DIAG.append(f"ratings: {len(_load_ratings())} teams loaded")
     compute_rest(matches, training_matches)
@@ -3293,7 +3383,7 @@ def build():
     payload = {"updated": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds"),
                "source_note": source_note, "competition": COMP["label"], "comp_key": COMP_KEY, "matches": matches,
                "title_odds": title, "news": news, "news_scope": COMP_KEY, "bracket": bracket, "bracketology": bracketology,
-               "third_race": third, "standings": standings, "scorers": scorers, "leaders": leaders, "team_of_tournament": build_team_of_tournament(matches, scorers, standings), "scorecard": scorecard,
+               "third_race": third, "standings": standings, "scorers": scorers, "leaders": leaders, "team_of_tournament": build_team_of_tournament(matches, scorers, standings, team_id_map), "scorecard": scorecard,
                "advancement": compute_advancement(matches, st, name_map, code_map),
                "weekly_awards": weekly_awards,
                "markets_quota_out": MARKET_STATE["quota_out"],
