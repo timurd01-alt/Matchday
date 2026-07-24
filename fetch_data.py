@@ -3188,11 +3188,15 @@ def build():
     if COMP_KEY in ("NCAAF", "NCAAM") and COMP.get("source") in {"sportsdataio", "cfbd", "cbbd"}:
         ranks, proj = sports_adapter.rankings(sports_tables) if sports_adapter else ([], None)
         if ranks:
-            rank_rows = [{"name": r["name"], "code": r["code"], "pos": r["rank"],
-                          "pld": None, "w": None, "d": None, "l": None, "gf": None, "ga": None,
-                          "gd": None, "pts": None, "form": "", "record": r["record"],
-                          "qual": ({"status": f"CFP {r['rank']}", "note": "projected playoff seed (straight seeding)"} if COMP_KEY == "NCAAF" and r["rank"] <= 12 else "")}
-                         for r in ranks]
+            def _rank_row(r):
+                row = st.get(norm(r["name"])) or {}
+                return {"name": r["name"], "code": r["code"], "pos": r["rank"],
+                        "pld": row.get("pld"), "w": row.get("w"), "d": row.get("d"), "l": row.get("l"),
+                        "gf": row.get("gf"), "ga": row.get("ga"), "gd": row.get("gd"), "pts": row.get("pts"),
+                        "form": row.get("form", ""), "record": r["record"] or row.get("record", ""),
+                        "win_pct": row.get("win_pct"),
+                        "qual": ({"status": f"CFP {r['rank']}", "note": "projected playoff seed (straight seeding)"} if COMP_KEY == "NCAAF" and r["rank"] <= 12 else "")}
+            rank_rows = [_rank_row(r) for r in ranks]
             standings = [{"group": "Matchday Top 25", "teams": rank_rows}] + (standings or [])
         if COMP_KEY == "NCAAF" and proj and not bracket:
             bracket = proj

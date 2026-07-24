@@ -413,9 +413,12 @@ class CollegeFootballDataAdapter:
         candidates = collect(payload)
         if not candidates and self.season > 2000:
             candidates = collect(self._get("/rankings", {"year": self.season - 1, "seasonType": "postseason"}))
+        records = {team.get("name"): team.get("record") or ""
+                   for group in (standings_payload or []) for team in group.get("teams", [])}
         if candidates:
             poll = sorted(candidates, reverse=True, key=lambda x: x[:3])[0][3]
-            ranks = [{"rank": int(row.get("rank") or 0), "name": row.get("school") or "", "code": _short_code(row.get("school")), "record": ""}
+            ranks = [{"rank": int(row.get("rank") or 0), "name": row.get("school") or "", "code": _short_code(row.get("school")),
+                      "record": records.get(row.get("school"), "")}
                      for row in (poll.get("ranks") or [])[:25] if row.get("school")]
         else:
             ranks = []
