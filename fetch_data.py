@@ -1643,6 +1643,7 @@ def apply_recruiting_strength(team_scores):
     partially overwritten by) apply_market_strength for whichever teams do
     have live market data."""
     if not team_scores:
+        DIAG.append("recruiting/talent strength: provider returned 0 teams (check plan/endpoint access)")
         return
     mx = max(team_scores.values(), default=0) or 1
     ratings = _load_ratings()
