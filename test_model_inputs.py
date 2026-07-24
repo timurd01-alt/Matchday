@@ -117,7 +117,31 @@ class RatingsLookupTests(unittest.TestCase):
         fetch_data.apply_market_strength([{"team": "Duke", "pct": 18.0}])
         rec = fetch_data._ratings_lookup("Duke")
         self.assertIsNotNone(rec)
-        self.assertGreater(rec["squad_value_m"], 0)
+
+    def test_apply_recruiting_strength_covers_teams_with_no_championship_odds(self):
+        # Recruiting/talent data covers the whole D1 field, unlike championship
+        # odds which only price a handful of contenders -- a mid-major with no
+        # title odds should still get a real, non-default rating from this.
+        fetch_data.COMP_KEY = "NCAAM"
+        fetch_data.COMP = dict(fetch_data.COMPETITIONS["NCAAM"])
+        self.assertIsNone(fetch_data._ratings_lookup("Drake"))
+        fetch_data.apply_recruiting_strength({"Duke": 70.0, "Drake": 12.0, "Directional State": 4.0})
+        duke = fetch_data._ratings_lookup("Duke")
+        drake = fetch_data._ratings_lookup("Drake")
+        self.assertIsNotNone(drake)
+        self.assertGreater(duke["squad_value_m"], drake["squad_value_m"])
+
+    def test_recruiting_strength_is_refined_by_later_market_strength(self):
+        # Market strength (real-time, live) should be able to overwrite a
+        # value recruiting strength already set for the same team.
+        fetch_data.COMP_KEY = "NCAAM"
+        fetch_data.COMP = dict(fetch_data.COMPETITIONS["NCAAM"])
+        fetch_data.apply_recruiting_strength({"Duke": 70.0, "Gonzaga": 40.0})
+        before = fetch_data._ratings_lookup("Duke")
+        self.assertNotIn("market_pct", before)
+        fetch_data.apply_market_strength([{"team": "Duke", "pct": 25.0}, {"team": "Gonzaga", "pct": 5.0}])
+        after = fetch_data._ratings_lookup("Duke")
+        self.assertEqual(after["market_pct"], 25.0)
 
 
 if __name__ == "__main__":

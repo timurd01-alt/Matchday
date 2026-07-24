@@ -1635,6 +1635,34 @@ def fetch_api_football_box_scores(matches):
 
 
 
+def apply_recruiting_strength(team_scores):
+    """Derive team strength from CFBD/CBBD's own recruiting-talent data --
+    same account/key already licensed for schedules and standings, no new
+    provider. Covers the whole D1 field, not just the handful of teams with
+    championship futures odds, which is why this runs before (and gets
+    partially overwritten by) apply_market_strength for whichever teams do
+    have live market data."""
+    if not team_scores:
+        return
+    mx = max(team_scores.values(), default=0) or 1
+    ratings = _load_ratings()
+    changed = 0
+    for name, score in team_scores.items():
+        key = norm(name)
+        share = max(0.0, score) / mx
+        val_m = round(share ** 0.7 * 1000)
+        star_m = round(share ** 0.7 * 110)
+        rec = _ratings_lookup(name)
+        if rec is None:
+            rec = {"fifa_rank": 45, "squad_value_m": 0, "star_value_m": 0}
+            ratings[key] = rec
+        rec["squad_value_m"] = val_m
+        rec["star_value_m"] = star_m
+        changed += 1
+    if changed:
+        DIAG.append(f"recruiting/talent strength: applied to {changed} teams")
+
+
 # -------- The Odds API : tournament winner (outrights) -------------------
 def apply_market_strength(outrights):
     """For sports without squad values (NFL/NBA/MLB/NHL/NCAAF/NCAAM), derive
@@ -3063,6 +3091,19 @@ def build():
     for m in matches:
         code_map[norm(m["home"]["name"])] = m["home"]["code"]
         code_map[norm(m["away"]["name"])] = m["away"]["code"]
+    if COMP_KEY == "NCAAF" and sports_adapter:
+        try:
+            print("Fetching team talent composite (CFBD)…")
+            apply_recruiting_strength(sports_adapter.talent())
+        except ProviderError as exc:
+            DIAG.append(f"{provider_name} talent unavailable: {_scrub(exc)}")
+    elif COMP_KEY == "NCAAM" and sports_adapter:
+        try:
+            print("Fetching recruiting ratings (CBBD)…")
+            apply_recruiting_strength(sports_adapter.recruiting())
+        except ProviderError as exc:
+            DIAG.append(f"{provider_name} recruiting unavailable: {_scrub(exc)}")
+
     title = None
     if COMP.get("source") in {"sportsdataio", "balldontlie", "cfbd", "cbbd", "apisports"} and COMP.get("outright"):
         print("Fetching championship odds (team strength)…")

@@ -422,6 +422,24 @@ class CollegeFootballDataAdapter:
     def attach_availability(self, matches): return 0
     def leaders(self): return {}
 
+    def talent(self):
+        """247Sports Team Talent Composite -- roster-quality coverage across
+        the full FBS field, not just the handful of teams with championship
+        futures odds. Same account/key as the rest of this adapter."""
+        rows = self._get("/talent", {"year": self.season})
+        out = {}
+        for row in rows if isinstance(rows, list) else []:
+            name, score = row.get("team"), row.get("talent")
+            if name and score:
+                out[str(name)] = float(score)
+        if not out and self.season > 2000:
+            rows = self._get("/talent", {"year": self.season - 1})
+            for row in rows if isinstance(rows, list) else []:
+                name, score = row.get("team"), row.get("talent")
+                if name and score:
+                    out[str(name)] = float(score)
+        return out
+
 
 class CollegeBasketballDataAdapter:
     BASE = "https://api.collegebasketballdata.com"
@@ -499,6 +517,24 @@ class CollegeBasketballDataAdapter:
         return ([{"rank":i,"name":team["name"],"code":team.get("code") or "","record":team.get("record") or ""} for i,team in enumerate(teams[:25],1)],None)
     def attach_availability(self, matches): return 0
     def leaders(self): return {}
+
+    def recruiting(self):
+        """Recruiting class rating, for roster-quality coverage across the
+        Division I field -- not just the teams with March Madness futures
+        odds. Same account/key as the rest of this adapter."""
+        rows = self._get("/recruiting/teams", {"year": self.season})
+        out = {}
+        for row in rows if isinstance(rows, list) else []:
+            name, score = row.get("team"), row.get("rating")
+            if name and score:
+                out[str(name)] = float(score)
+        if not out and self.season > 2000:
+            rows = self._get("/recruiting/teams", {"year": self.season - 1})
+            for row in rows if isinstance(rows, list) else []:
+                name, score = row.get("team"), row.get("rating")
+                if name and score:
+                    out[str(name)] = float(score)
+        return out
 
 
 class BallDontLieAdapter:
