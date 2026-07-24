@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://timurd01-alt.github.io/Matchday/sitemap.xml
+Sitemap: https://matchdayterminal.com/sitemap.xml

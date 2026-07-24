@@ -272,7 +272,7 @@ function loadPosts(){
 }
 function renderInsights(){
   const host=$('#view-insights');
-  host.innerHTML=`<div class="vhead">Insights</div><div class="banner"><b>Matchday's own recaps.</b> Auto-generated weekly from the model's own graded picks — hit rate, calibration, and this week's storylines. Not third-party news.</div><div id="insightsList" class="insightsList"><div class="empty">Loading…</div></div>`;
+  host.innerHTML=`<div class="vhead">Insights</div><div class="banner"><b>Matchday's own recaps.</b> Auto-generated weekly from the model's own graded picks — hit rate, calibration, and this week's storylines. Not third-party news. Want the tactics behind the numbers instead? See the <a href="content.html" style="color:inherit;text-decoration:underline">Content hub</a>.</div><div id="insightsList" class="insightsList"><div class="empty">Loading…</div></div>`;
   loadPosts().then(posts=>{
     const list=$('#insightsList');if(!list)return;
     if(!posts.length){list.innerHTML='<div class="empty">No recaps published yet — check back once this week\'s games are graded.</div>';return;}

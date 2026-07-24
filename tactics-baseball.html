@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Baseball Tactics &amp; Decisions — Matchday</title>
+<meta name="description" content="Why a 162-game season needs patience, run differential over time, and what Matchday's model honestly doesn't see about MLB.">
+<link rel="canonical" href="https://matchdayterminal.com/tactics-baseball.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Matchday">
+<meta property="og:url" content="https://matchdayterminal.com/tactics-baseball.html">
+<meta property="og:title" content="Baseball Tactics &amp; Decisions — Matchday">
+<meta property="og:description" content="Why a 162-game season needs patience, run differential over time, and what the model honestly doesn't see.">
+<meta name="theme-color" content="#070a0f">
+<link rel="icon" href="./favicon.ico" sizes="any">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#070a0f;--panel:#111822;--text:#eef2f8;--muted:#9ba8b8;--faint:#647184;--line:#263244;--signal:#3ad17a;--link:#76caff}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 10% 0,rgba(58,209,122,.1),transparent 30%),var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;line-height:1.65}.wrap{width:min(920px,calc(100% - 40px));margin:auto;padding:44px 0 76px}.back{color:var(--muted);font-family:"JetBrains Mono",monospace;font-size:.75rem;text-decoration:none}.back:hover{color:var(--signal)}.eyebrow{margin:44px 0 12px;color:var(--signal);font:700 .68rem "JetBrains Mono",monospace;letter-spacing:.14em}.brand{font-family:Archivo,sans-serif;font-size:clamp(2rem,5.4vw,3.6rem);letter-spacing:-.05em;line-height:.98;margin:0}.lead{max-width:700px;color:var(--muted);font-size:1.06rem;margin:18px 0 26px}.meta{display:flex;flex-wrap:wrap;gap:10px;color:var(--faint);font:500 .7rem "JetBrains Mono",monospace}.meta span{border:1px solid var(--line);border-radius:999px;padding:5px 9px}nav{display:flex;flex-wrap:wrap;gap:8px;margin:35px 0}nav a{border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:.76rem;padding:7px 11px;text-decoration:none}nav a:hover{border-color:var(--signal);color:var(--signal)}section{scroll-margin-top:20px;background:linear-gradient(145deg,rgba(21,31,43,.92),rgba(13,19,28,.92));border:1px solid var(--line);border-radius:16px;padding:clamp(22px,4vw,36px);margin:16px 0}h2{font:800 clamp(1.35rem,3vw,2rem) Archivo,sans-serif;letter-spacing:-.035em;line-height:1.08;margin:0 0 12px}h3{font:700 1rem Archivo,sans-serif;margin:22px 0 6px}p,li{color:#c9d2de}p{margin:0 0 13px}a{color:var(--link)}.notice{border-left:3px solid var(--signal);background:rgba(58,209,122,.07);border-radius:7px;padding:12px 14px;color:#d8dde5;margin-top:12px}.notice strong{color:var(--signal);display:block;font:800 .66rem "JetBrains Mono",monospace;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}.foot{margin-top:28px;color:var(--faint);font-size:.75rem;text-align:center}@media(max-width:520px){.wrap{width:min(100% - 28px,920px);padding-top:26px}.eyebrow{margin-top:32px}section{border-radius:13px;padding:20px}}
+</style>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "Article",
+ "headline": "Baseball Tactics & Decisions",
+ "author": {"@type": "Organization", "name": "Matchday"},
+ "publisher": {"@type": "Organization", "name": "Matchday"},
+ "mainEntityOfPage": "https://matchdayterminal.com/tactics-baseball.html",
+ "description": "Why a 162-game season needs patience, run differential over time, and what the model honestly doesn't see."
+}
+</script>
+</head>
+<body>
+<main class="wrap">
+  <a class="back" href="content.html">&larr; Back to Content</a>
+  <p class="eyebrow">MATCHDAY LEARN · BASEBALL</p>
+  <h1 class="brand">Tactics &amp; decisions: baseball</h1>
+  <p class="lead">MLB — what actually decides these games, and how the model reads it, including where it honestly falls short.</p>
+  <div class="meta"><span>General education + model notes</span><span>Analytics only · not betting advice</span></div>
+  <nav aria-label="Sections"><a href="#season">The long season</a><a href="#margin">Run differential</a><a href="#pitching">What the model doesn't see</a><a href="#home">Home advantage</a></nav>
+
+  <section id="season">
+    <h2>The long season</h2>
+    <p>162 games is a lot of baseball. It's long enough that randomness washes out over a full season in a way it doesn't in a 16-game NFL slate — but it also means a team's April record can be almost meaningless. A hot two-week stretch to open the season looks identical in the standings to a hot two-week stretch in July, but it carries far less information about who the team actually is.</p>
+    <div class="notice"><strong>How the model reads this</strong>Matchday explicitly flags prediction confidence as "early" versus "established" based on how many games a team has actually played, damping confidence during small-sample stretches rather than treating six games the same as sixty.</div>
+  </section>
+
+  <section id="margin">
+    <h2>Run differential over time</h2>
+    <p>A team's win-loss record can lag its true quality — a club that's 24-20 but has been outscored on the season is usually a worse bet going forward than a 22-22 team that's outscoring opponents comfortably. Run differential, tracked over enough games, tends to predict future performance better than the record alone, because close one-run games have a real element of luck that evens out slower than blowouts do.</p>
+    <div class="notice"><strong>How the model reads this</strong>Scoring margin — runs for minus runs against, per game — feeds the model directly, and the model's own opponent-adjusted rating layers division and interleague schedule strength on top, since not every team's 60 games so far have come against the same quality of opposition.</div>
+  </section>
+
+  <section id="pitching">
+    <h2>What the model honestly doesn't see</h2>
+    <p>Baseball is a pitching matchup sport in a way few others are — a team's record against left-handed starters can look completely different from its record against right-handers, and a single ace on the mound can flip a game's expected outcome more than almost any other single factor in team sports. That's genuinely hard to model well without individual pitcher data.</p>
+    <div class="notice"><strong>How the model reads this</strong>Matchday's MLB model does not currently track individual starting pitchers — it reads team-level results, not who's on the mound that day. That's a real, honest limitation worth knowing about, not something the model quietly papers over. Team-level scoring margin and the opponent-adjusted rating are still meaningful signals; they just don't know it's Tuesday's fifth starter instead of the ace.</p>
+  </section>
+
+  <section id="home">
+    <h2>Home advantage is smaller here</h2>
+    <p>Home-field advantage in baseball is real — travel, sleeping in your own bed, a groundskeeper who knows how to set up the infield dirt for your team's style — but it's smaller than in most other major sports. There's no crowd noise disrupting play calls the way there is in football, and pitching mostly neutralizes ballpark familiarity except in a handful of parks with unusual dimensions.</p>
+    <div class="notice"><strong>How the model reads this</strong>MLB's home-field weight is set lower than football's or basketball's, reflecting how much less the venue itself tends to swing baseball outcomes.</div>
+  </section>
+
+  <p class="foot">See also: the <a href="qa.html">Q&amp;A page</a> for what Elo, edge, and confidence mean generally, and the <a href="content.html">Content hub</a> for weekly model recaps.</p>
+</main>
+</body>
+</html>

@@ -114,7 +114,7 @@ class RenderAndSitemapTests(unittest.TestCase):
     def test_regenerate_sitemap_includes_base_pages_and_every_post(self):
         gp.publish_recap_if_due("NFL", "NFL", SCORECARD, AWARDS)
         n = gp.regenerate_sitemap()
-        self.assertEqual(n, 4)  # index, legal, qa, one post
+        self.assertEqual(n, 10)  # index, legal, qa, content hub, 5 tactics pages, one post
         with open("sitemap.xml", encoding="utf-8") as f:
             xml = f.read()
         self.assertIn("qa.html", xml)

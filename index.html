@@ -5,19 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Matchday — Live Scores, Odds &amp; Model Predictions</title>
 <meta name="description" content="Live scores, market odds, and transparent model-based predictions for soccer, NFL, NBA, MLB, NHL and college sports — one calm dashboard. Analytics only, not betting advice.">
-<link rel="canonical" href="https://timurd01-alt.github.io/Matchday/">
+<link rel="canonical" href="https://matchdayterminal.com/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Matchday">
-<meta property="og:url" content="https://timurd01-alt.github.io/Matchday/">
+<meta property="og:url" content="https://matchdayterminal.com/">
 <meta property="og:title" content="Matchday — Live Scores, Odds &amp; Model Predictions">
 <meta property="og:description" content="Live scores, market odds, and transparent model-based predictions for soccer, NFL, NBA, MLB, NHL and college sports — one calm dashboard.">
-<meta property="og:image" content="https://timurd01-alt.github.io/Matchday/icon-512.png">
+<meta property="og:image" content="https://matchdayterminal.com/icon-512.png">
 <meta property="og:image:width" content="512">
 <meta property="og:image:height" content="512">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Matchday — Live Scores, Odds &amp; Model Predictions">
 <meta name="twitter:description" content="Live scores, market odds, and transparent model-based predictions for soccer, NFL, NBA, MLB, NHL and college sports.">
-<meta name="twitter:image" content="https://timurd01-alt.github.io/Matchday/icon-512.png">
+<meta name="twitter:image" content="https://matchdayterminal.com/icon-512.png">
 <meta name="theme-color" content="#070a0f">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -37,7 +37,7 @@
   "@context": "https://schema.org",
   "@type": "WebApplication",
   "name": "Matchday",
-  "url": "https://timurd01-alt.github.io/Matchday/",
+  "url": "https://matchdayterminal.com/",
   "description": "Live scores, market odds, and transparent model-based predictions for soccer, NFL, NBA, MLB, NHL and college sports.",
   "applicationCategory": "SportsApplication",
   "operatingSystem": "Any",
@@ -78,7 +78,7 @@
 <button class="alertBell" id="alertBell" type="button" aria-label="Open alerts" aria-expanded="false" onclick="toggleAlertCenter()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg><span id="alertCount" hidden>0</span></button>
 <section class="alertCenter" id="alertCenter" aria-label="Alert center" hidden></section>
 <div class="app" id="app">
-  <div class="livestrip"><span class="ls-brand"><span class="pip"></span>Matchday<span id="compName" style="color:var(--muted);font-weight:600;text-transform:none;letter-spacing:0"></span></span><select id="sportSel" class="sportSel" onchange="changeSport(this.value)" aria-label="Sport"><option value="">All sports</option><option value="wc">World Cup</option><option value="ucl">Champions League</option><option value="epl">Premier League</option><option value="laliga">La Liga</option><option value="seriea">Serie A</option><option value="bundesliga">Bundesliga</option><option value="ligue1">Ligue 1</option><option value="nfl">NFL</option><option value="ncaaf">College Football</option><option value="ncaam">Men's College Basketball</option><option value="nba">NBA</option></select><div id="strip" class="ls-next">loading…</div><a class="legalLink" href="qa.html">Q&amp;A</a><a class="legalLink" href="legal.html">Legal</a></div>
+  <div class="livestrip"><span class="ls-brand"><span class="pip"></span>Matchday<span id="compName" style="color:var(--muted);font-weight:600;text-transform:none;letter-spacing:0"></span></span><select id="sportSel" class="sportSel" onchange="changeSport(this.value)" aria-label="Sport"><option value="">All sports</option><option value="wc">World Cup</option><option value="ucl">Champions League</option><option value="epl">Premier League</option><option value="laliga">La Liga</option><option value="seriea">Serie A</option><option value="bundesliga">Bundesliga</option><option value="ligue1">Ligue 1</option><option value="nfl">NFL</option><option value="ncaaf">College Football</option><option value="ncaam">Men's College Basketball</option><option value="nba">NBA</option></select><div id="strip" class="ls-next">loading…</div><a class="legalLink" href="content.html">Content</a><a class="legalLink" href="qa.html">Q&amp;A</a><a class="legalLink" href="legal.html">Legal</a></div>
   <nav class="sidebar" id="nav">
     <button class="navbtn" data-v="matches" aria-pressed="true"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14" rx="2"/><line x1="8" y1="3" x2="8" y2="7"/><line x1="16" y1="3" x2="16" y2="7"/><line x1="4" y1="10" x2="20" y2="10"/></svg><span class="lbl">Matches</span></button><button class="navbtn" data-v="results" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h10"/><circle cx="19" cy="18" r="2"/></svg><span class="lbl">Results</span></button><button class="navbtn" data-v="tott" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M12 3l2.5 5 5.5.8-4 3.9 1 5.5-5-2.6-5 2.6 1-5.5-4-3.9 5.5-.8z"/></svg><span class="lbl">Team of Tournament</span></button>
     <button class="navbtn" data-v="groups" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/><path d="M8 4v16"/></svg><span class="lbl">Groups</span></button>

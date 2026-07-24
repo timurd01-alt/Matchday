@@ -17,7 +17,7 @@ import datetime
 import json
 import os
 
-BASE_URL = "https://timurd01-alt.github.io/Matchday/"
+BASE_URL = "https://matchdayterminal.com/"
 POSTS_FILE = "posts.json"
 STATE_FILE = "posts_state.json"
 POSTS_DIR = "posts"
@@ -264,6 +264,12 @@ def regenerate_sitemap():
         (BASE_URL, "hourly", "1.0", None),
         (BASE_URL + "legal.html", "monthly", "0.3", None),
         (BASE_URL + "qa.html", "monthly", "0.5", None),
+        (BASE_URL + "content.html", "weekly", "0.5", None),
+        (BASE_URL + "tactics-soccer.html", "monthly", "0.5", None),
+        (BASE_URL + "tactics-football.html", "monthly", "0.5", None),
+        (BASE_URL + "tactics-basketball.html", "monthly", "0.5", None),
+        (BASE_URL + "tactics-baseball.html", "monthly", "0.5", None),
+        (BASE_URL + "tactics-hockey.html", "monthly", "0.5", None),
     ]
     for post in posts:
         urls.append((f"{BASE_URL}posts/{post['slug']}.html", "never", "0.6", post.get("date")))

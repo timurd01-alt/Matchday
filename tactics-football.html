@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>American Football Tactics &amp; Decisions — Matchday</title>
+<meta name="description" content="Situational football, strength of schedule, rest and short weeks, and what's different about the college game — plus how Matchday's model reads the NFL and NCAAF.">
+<link rel="canonical" href="https://matchdayterminal.com/tactics-football.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Matchday">
+<meta property="og:url" content="https://matchdayterminal.com/tactics-football.html">
+<meta property="og:title" content="American Football Tactics &amp; Decisions — Matchday">
+<meta property="og:description" content="Situational football, strength of schedule, rest and short weeks, and what's different about the college game.">
+<meta name="theme-color" content="#070a0f">
+<link rel="icon" href="./favicon.ico" sizes="any">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#070a0f;--panel:#111822;--text:#eef2f8;--muted:#9ba8b8;--faint:#647184;--line:#263244;--signal:#3ad17a;--link:#76caff}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 10% 0,rgba(58,209,122,.1),transparent 30%),var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;line-height:1.65}.wrap{width:min(920px,calc(100% - 40px));margin:auto;padding:44px 0 76px}.back{color:var(--muted);font-family:"JetBrains Mono",monospace;font-size:.75rem;text-decoration:none}.back:hover{color:var(--signal)}.eyebrow{margin:44px 0 12px;color:var(--signal);font:700 .68rem "JetBrains Mono",monospace;letter-spacing:.14em}.brand{font-family:Archivo,sans-serif;font-size:clamp(2rem,5.4vw,3.6rem);letter-spacing:-.05em;line-height:.98;margin:0}.lead{max-width:700px;color:var(--muted);font-size:1.06rem;margin:18px 0 26px}.meta{display:flex;flex-wrap:wrap;gap:10px;color:var(--faint);font:500 .7rem "JetBrains Mono",monospace}.meta span{border:1px solid var(--line);border-radius:999px;padding:5px 9px}nav{display:flex;flex-wrap:wrap;gap:8px;margin:35px 0}nav a{border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:.76rem;padding:7px 11px;text-decoration:none}nav a:hover{border-color:var(--signal);color:var(--signal)}section{scroll-margin-top:20px;background:linear-gradient(145deg,rgba(21,31,43,.92),rgba(13,19,28,.92));border:1px solid var(--line);border-radius:16px;padding:clamp(22px,4vw,36px);margin:16px 0}h2{font:800 clamp(1.35rem,3vw,2rem) Archivo,sans-serif;letter-spacing:-.035em;line-height:1.08;margin:0 0 12px}h3{font:700 1rem Archivo,sans-serif;margin:22px 0 6px}p,li{color:#c9d2de}p{margin:0 0 13px}a{color:var(--link)}.notice{border-left:3px solid var(--signal);background:rgba(58,209,122,.07);border-radius:7px;padding:12px 14px;color:#d8dde5;margin-top:12px}.notice strong{color:var(--signal);display:block;font:800 .66rem "JetBrains Mono",monospace;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}.foot{margin-top:28px;color:var(--faint);font-size:.75rem;text-align:center}@media(max-width:520px){.wrap{width:min(100% - 28px,920px);padding-top:26px}.eyebrow{margin-top:32px}section{border-radius:13px;padding:20px}}
+</style>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "Article",
+ "headline": "American Football Tactics & Decisions",
+ "author": {"@type": "Organization", "name": "Matchday"},
+ "publisher": {"@type": "Organization", "name": "Matchday"},
+ "mainEntityOfPage": "https://matchdayterminal.com/tactics-football.html",
+ "description": "Situational football, strength of schedule, rest and short weeks, and what's different about the college game."
+}
+</script>
+</head>
+<body>
+<main class="wrap">
+  <a class="back" href="content.html">&larr; Back to Content</a>
+  <p class="eyebrow">MATCHDAY LEARN · AMERICAN FOOTBALL</p>
+  <h1 class="brand">Tactics &amp; decisions: American football</h1>
+  <p class="lead">NFL and college football — what actually decides these games, and how the model reads it.</p>
+  <div class="meta"><span>General education + model notes</span><span>Analytics only · not betting advice</span></div>
+  <nav aria-label="Sections"><a href="#situational">Situational football</a><a href="#sos">Strength of schedule</a><a href="#rest">Rest &amp; short weeks</a><a href="#college">The college game</a><a href="#home">Home-field advantage</a></nav>
+
+  <section id="situational">
+    <h2>Situational football</h2>
+    <p>Down and distance dictate play-calling more than almost anything else in football. First-and-ten opens the whole playbook; third-and-long narrows it to a handful of pass concepts the defense can key on. Red-zone offense is its own discipline — the field compresses, and the difference between a team that scores touchdowns and one that settles for field goals inside the 20 is often the single biggest swing in a game's final margin.</p>
+    <p>None of that shows up as a discrete "play call" statistic most fans or models have easy access to. What it produces, over a full game and a full season, is points — and the gap between points scored and points allowed is one of the cleanest single numbers football has for "how good was this team, really."</p>
+    <div class="notice"><strong>How the model reads this</strong>Scoring margin — points for minus points against, per game — is a direct input to the model's strength estimate, separate from the win-loss record. A team winning close games and a team winning blowouts can have identical records but very different underlying performance, and margin is what tells them apart.</div>
+  </section>
+
+  <section id="sos">
+    <h2>Why record alone can mislead</h2>
+    <p>An 8-1 team that beat one good opponent and seven bad ones is not the same team as a 6-3 team that split games against playoff-caliber opponents. Strength of schedule is the difference — and it's easy to get backwards if you only look at the win column. A team's record tells you what happened; strength of schedule tells you how much that should count.</p>
+    <div class="notice"><strong>How the model reads this</strong>Matchday computes its own opponent-adjusted rating from results alone — not who a human committee thinks is good, but who a team actually beat and by how much, iteratively adjusted so beating a strong opponent counts for more than beating a weak one. It's capped so one blowout can't dominate the number, and it's shrunk toward neutral until a team has enough games played for the sample to mean something.</div>
+  </section>
+
+  <section id="rest">
+    <h2>Rest, byes, and short weeks</h2>
+    <p>A Thursday night game means a short week of preparation and recovery coming off a Sunday. A bye week means the opposite — extra time to heal and game-plan. Both are scheduling quirks that have nothing to do with which team is "better" on a neutral week, but they measurably affect performance, especially injury availability, on the field.</p>
+    <div class="notice"><strong>How the model reads this</strong>Days of rest since a team's last game is a direct, if modest, input — calibrated around football's normal weekly rhythm, so a team a few days short of a full week off gets a small penalty and a team coming off a bye gets a small boost.</div>
+  </section>
+
+  <section id="college">
+    <h2>What's different about the college game</h2>
+    <p>College football has no salary cap and no draft-based parity mechanism — roster talent varies enormously between programs, and it turns over every year as players graduate, transfer, or leave early for the NFL. That makes preseason polls and in-season rankings a genuinely useful signal in a way they aren't for pro leagues: they're a real-time aggregate judgment on roster quality from people who watch film on every team, updated weekly.</p>
+    <p>It also means college football is more volatile than the NFL. A team can be legitimately elite one year and mediocre the next simply because its best players left, in a way that almost never happens in a league with a salary cap and a draft designed to redistribute talent.</p>
+    <div class="notice"><strong>How the model reads this</strong>For college football specifically, the model pulls in the same AP/CFP-style poll rankings as a live, dedicated factor — separate from the record-and-margin signals every sport gets — because roster-quality judgment genuinely isn't fully recoverable from results alone this early in a season.</div>
+  </section>
+
+  <section id="home">
+    <h2>Home-field advantage</h2>
+    <p>Home-field advantage exists in football but it's smaller than in soccer — travel and crowd noise matter, but football's structured, huddle-based pace gives visiting offenses more time to communicate than a flowing sport like soccer does. College venues can be louder and more disruptive to an unfamiliar visiting team than most NFL stadiums, since student sections and regional rivalries add an edge pro crowds don't always match.</p>
+    <div class="notice"><strong>How the model reads this</strong>The NFL and college football home-field weights are set independently, both smaller than soccer's, reflecting the sport's own scoring environment rather than reusing a one-size-fits-all number.</div>
+  </section>
+
+  <p class="foot">See also: the <a href="qa.html">Q&amp;A page</a> for what Elo, edge, and confidence mean generally, and the <a href="content.html">Content hub</a> for weekly model recaps.</p>
+</main>
+</body>
+</html>

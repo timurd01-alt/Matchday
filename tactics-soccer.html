@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Soccer Tactics &amp; Decisions — Matchday</title>
+<meta name="description" content="Pressing, shape, set pieces, fixture congestion, and how Matchday's model reads soccer's three-way market — for the World Cup, Champions League, and Europe's top leagues.">
+<link rel="canonical" href="https://matchdayterminal.com/tactics-soccer.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Matchday">
+<meta property="og:url" content="https://matchdayterminal.com/tactics-soccer.html">
+<meta property="og:title" content="Soccer Tactics &amp; Decisions — Matchday">
+<meta property="og:description" content="Pressing, shape, set pieces, fixture congestion, and how Matchday's model reads soccer's three-way market.">
+<meta name="theme-color" content="#070a0f">
+<link rel="icon" href="./favicon.ico" sizes="any">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#070a0f;--panel:#111822;--text:#eef2f8;--muted:#9ba8b8;--faint:#647184;--line:#263244;--signal:#3ad17a;--link:#76caff}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 10% 0,rgba(58,209,122,.1),transparent 30%),var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;line-height:1.65}.wrap{width:min(920px,calc(100% - 40px));margin:auto;padding:44px 0 76px}.back{color:var(--muted);font-family:"JetBrains Mono",monospace;font-size:.75rem;text-decoration:none}.back:hover{color:var(--signal)}.eyebrow{margin:44px 0 12px;color:var(--signal);font:700 .68rem "JetBrains Mono",monospace;letter-spacing:.14em}.brand{font-family:Archivo,sans-serif;font-size:clamp(2rem,5.4vw,3.6rem);letter-spacing:-.05em;line-height:.98;margin:0}.lead{max-width:700px;color:var(--muted);font-size:1.06rem;margin:18px 0 26px}.meta{display:flex;flex-wrap:wrap;gap:10px;color:var(--faint);font:500 .7rem "JetBrains Mono",monospace}.meta span{border:1px solid var(--line);border-radius:999px;padding:5px 9px}nav{display:flex;flex-wrap:wrap;gap:8px;margin:35px 0}nav a{border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:.76rem;padding:7px 11px;text-decoration:none}nav a:hover{border-color:var(--signal);color:var(--signal)}section{scroll-margin-top:20px;background:linear-gradient(145deg,rgba(21,31,43,.92),rgba(13,19,28,.92));border:1px solid var(--line);border-radius:16px;padding:clamp(22px,4vw,36px);margin:16px 0}h2{font:800 clamp(1.35rem,3vw,2rem) Archivo,sans-serif;letter-spacing:-.035em;line-height:1.08;margin:0 0 12px}h3{font:700 1rem Archivo,sans-serif;margin:22px 0 6px}p,li{color:#c9d2de}p{margin:0 0 13px}a{color:var(--link)}.notice{border-left:3px solid var(--signal);background:rgba(58,209,122,.07);border-radius:7px;padding:12px 14px;color:#d8dde5;margin-top:12px}.notice strong{color:var(--signal);display:block;font:800 .66rem "JetBrains Mono",monospace;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}.foot{margin-top:28px;color:var(--faint);font-size:.75rem;text-align:center}@media(max-width:520px){.wrap{width:min(100% - 28px,920px);padding-top:26px}.eyebrow{margin-top:32px}section{border-radius:13px;padding:20px}}
+</style>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "Article",
+ "headline": "Soccer Tactics & Decisions",
+ "author": {"@type": "Organization", "name": "Matchday"},
+ "publisher": {"@type": "Organization", "name": "Matchday"},
+ "mainEntityOfPage": "https://matchdayterminal.com/tactics-soccer.html",
+ "description": "Pressing, shape, set pieces, fixture congestion, and how Matchday's model reads soccer's three-way market."
+}
+</script>
+</head>
+<body>
+<main class="wrap">
+  <a class="back" href="content.html">&larr; Back to Content</a>
+  <p class="eyebrow">MATCHDAY LEARN · SOCCER</p>
+  <h1 class="brand">Tactics &amp; decisions: soccer</h1>
+  <p class="lead">World Cup, Champions League, Premier League, La Liga, Serie A, Bundesliga, Ligue 1 — what actually decides these games, and how the model reads it.</p>
+  <div class="meta"><span>General education + model notes</span><span>Analytics only · not betting advice</span></div>
+  <nav aria-label="Sections"><a href="#shape">Shape &amp; pressing</a><a href="#setpieces">Set pieces &amp; depth</a><a href="#draws">The draw</a><a href="#congestion">Fixture congestion</a><a href="#home">Home advantage</a></nav>
+
+  <section id="shape">
+    <h2>Shape and pressing</h2>
+    <p>A formation like 4-3-3 or 4-2-3-1 isn't just a lineup — it's a claim about where a team wants the ball. A high press tries to win it back in the opponent's third, trading defensive risk for shorter routes to goal. A low block cedes territory to protect the box, betting on a smaller number of higher-quality chances. Neither is "correct"; the right shape depends on the squad's legs, the opponent's buildup patterns, and the stakes of the specific match.</p>
+    <p>Over a season, these choices don't show up in a play-by-play the model can see — they show up in results. A team that presses well concedes fewer clean look and racks up goal difference; a team whose low block holds tends to grind out 1-0s. Both strategies can produce points on the table, but they produce very different <em>shapes</em> of results.</p>
+    <div class="notice"><strong>How the model reads this</strong>Matchday doesn't watch shape directly — it reads the outcome. Points, goal difference, and recent form come straight from results, and Elo adjusts a team's rating up or down based on who they actually beat. A team whose tactics are working shows up as rising form and goal difference before most observers would call it a trend.</div>
+  </section>
+
+  <section id="setpieces">
+    <h2>Set pieces and squad depth</h2>
+    <p>A meaningful share of goals in any given season come from corners and free kicks — a well-drilled routine, a target forward who wins first contact, a keeper who's a genuine threat at the other end. This is one of the clearest places where individual quality (not system) decides matches, which is also why squad depth matters: a team missing its best set-piece taker or aerial threat to injury or rotation loses more than one player's minutes.</p>
+    <div class="notice"><strong>How the model reads this</strong>Squad quality feeds the model's "class" factor — built from public squad-value and player-quality data, kept separate from form and points so a strong team having a rough month doesn't get mistaken for a weak one. It's the model's proxy for depth and individual quality that raw results alone wouldn't fully capture yet.</div>
+  </section>
+
+  <section id="draws">
+    <h2>The draw is its own outcome</h2>
+    <p>Unlike most American sports, soccer's standard market has three outcomes, not two — home win, away win, or draw. That changes the shape of the prediction problem: a tight, cagey match between two evenly matched sides isn't just "hard to call," it's often genuinely more likely to end level than to break either way. Low-scoring, low-variance matchups push probability toward the draw column in a way that a two-outcome sport never has to model.</p>
+    <div class="notice"><strong>How the model reads this</strong>Matchday explicitly tracks draw pressure as its own signal — when the model favorite sits below roughly 46% and the expected goal environment looks low-scoring, that combination is flagged as part of the upset-radar logic rather than treated as noise around a coin flip.</div>
+  </section>
+
+  <section id="congestion">
+    <h2>Fixture congestion in continental competitions</h2>
+    <p>A club playing Champions League or Europa League football is often playing twice a week for months — domestic league, then a midweek continental fixture, then league again. Rotation becomes a tactical decision in itself: rest key players for a bigger game later, or risk fatigue compounding across a congested stretch. Squads with real depth absorb this better than squads leaning on a settled first XI.</p>
+    <div class="notice"><strong>How the model reads this</strong>Rest days between fixtures is a direct input — teams coming off a short turnaround get a small penalty, teams with a full week to prepare get a small boost, calibrated to soccer's normal weekly rhythm rather than a fixed number of days.</div>
+  </section>
+
+  <section id="home">
+    <h2>Home advantage</h2>
+    <p>Home advantage in soccer is real and well-documented — crowd noise affecting referee decisions, travel fatigue for the visitors, familiarity with the pitch — and it's larger, proportionally, than in most American sports. It's also not uniform: a raucous away end at a tightly-built ground matters more than a half-empty stadium.</p>
+    <div class="notice"><strong>How the model reads this</strong>Home advantage is a fixed weight added to the home side's strength score before anything else is layered on — sized specifically for soccer's scoring environment, distinct from the smaller home-field weights used for NFL, NBA, or MLB elsewhere on Matchday.</div>
+  </section>
+
+  <p class="foot">See also: the <a href="qa.html">Q&amp;A page</a> for what Elo, edge, and confidence mean generally, and the <a href="content.html">Content hub</a> for weekly model recaps.</p>
+</main>
+</body>
+</html>

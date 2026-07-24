@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://timurd01-alt.github.io/Matchday/</loc>
+    <loc>https://matchdayterminal.com/</loc>
     <changefreq>hourly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://timurd01-alt.github.io/Matchday/legal.html</loc>
+    <loc>https://matchdayterminal.com/legal.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://timurd01-alt.github.io/Matchday/qa.html</loc>
+    <loc>https://matchdayterminal.com/qa.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>

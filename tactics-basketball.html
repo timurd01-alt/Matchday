@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Basketball Tactics &amp; Decisions — Matchday</title>
+<meta name="description" content="Pace, spacing, back-to-backs, and how bracketology gets built from results instead of a committee — plus how Matchday's model reads the NBA and NCAAM.">
+<link rel="canonical" href="https://matchdayterminal.com/tactics-basketball.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Matchday">
+<meta property="og:url" content="https://matchdayterminal.com/tactics-basketball.html">
+<meta property="og:title" content="Basketball Tactics &amp; Decisions — Matchday">
+<meta property="og:description" content="Pace, spacing, back-to-backs, and how bracketology gets built from results instead of a committee.">
+<meta name="theme-color" content="#070a0f">
+<link rel="icon" href="./favicon.ico" sizes="any">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#070a0f;--panel:#111822;--text:#eef2f8;--muted:#9ba8b8;--faint:#647184;--line:#263244;--signal:#3ad17a;--link:#76caff}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 10% 0,rgba(58,209,122,.1),transparent 30%),var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;line-height:1.65}.wrap{width:min(920px,calc(100% - 40px));margin:auto;padding:44px 0 76px}.back{color:var(--muted);font-family:"JetBrains Mono",monospace;font-size:.75rem;text-decoration:none}.back:hover{color:var(--signal)}.eyebrow{margin:44px 0 12px;color:var(--signal);font:700 .68rem "JetBrains Mono",monospace;letter-spacing:.14em}.brand{font-family:Archivo,sans-serif;font-size:clamp(2rem,5.4vw,3.6rem);letter-spacing:-.05em;line-height:.98;margin:0}.lead{max-width:700px;color:var(--muted);font-size:1.06rem;margin:18px 0 26px}.meta{display:flex;flex-wrap:wrap;gap:10px;color:var(--faint);font:500 .7rem "JetBrains Mono",monospace}.meta span{border:1px solid var(--line);border-radius:999px;padding:5px 9px}nav{display:flex;flex-wrap:wrap;gap:8px;margin:35px 0}nav a{border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:.76rem;padding:7px 11px;text-decoration:none}nav a:hover{border-color:var(--signal);color:var(--signal)}section{scroll-margin-top:20px;background:linear-gradient(145deg,rgba(21,31,43,.92),rgba(13,19,28,.92));border:1px solid var(--line);border-radius:16px;padding:clamp(22px,4vw,36px);margin:16px 0}h2{font:800 clamp(1.35rem,3vw,2rem) Archivo,sans-serif;letter-spacing:-.035em;line-height:1.08;margin:0 0 12px}h3{font:700 1rem Archivo,sans-serif;margin:22px 0 6px}p,li{color:#c9d2de}p{margin:0 0 13px}a{color:var(--link)}.notice{border-left:3px solid var(--signal);background:rgba(58,209,122,.07);border-radius:7px;padding:12px 14px;color:#d8dde5;margin-top:12px}.notice strong{color:var(--signal);display:block;font:800 .66rem "JetBrains Mono",monospace;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}.foot{margin-top:28px;color:var(--faint);font-size:.75rem;text-align:center}@media(max-width:520px){.wrap{width:min(100% - 28px,920px);padding-top:26px}.eyebrow{margin-top:32px}section{border-radius:13px;padding:20px}}
+</style>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "Article",
+ "headline": "Basketball Tactics & Decisions",
+ "author": {"@type": "Organization", "name": "Matchday"},
+ "publisher": {"@type": "Organization", "name": "Matchday"},
+ "mainEntityOfPage": "https://matchdayterminal.com/tactics-basketball.html",
+ "description": "Pace, spacing, back-to-backs, and how bracketology gets built from results instead of a committee."
+}
+</script>
+</head>
+<body>
+<main class="wrap">
+  <a class="back" href="content.html">&larr; Back to Content</a>
+  <p class="eyebrow">MATCHDAY LEARN · BASKETBALL</p>
+  <h1 class="brand">Tactics &amp; decisions: basketball</h1>
+  <p class="lead">NBA and men's college basketball — what actually decides these games, and how the model reads it.</p>
+  <div class="meta"><span>General education + model notes</span><span>Analytics only · not betting advice</span></div>
+  <nav aria-label="Sections"><a href="#pace">Pace &amp; possessions</a><a href="#rest">Back-to-backs</a><a href="#depth">Depth &amp; spacing</a><a href="#bracket">Bracketology</a></nav>
+
+  <section id="pace">
+    <h2>Pace and possessions</h2>
+    <p>A team that plays fast — pushing the ball, taking early shots — generates more possessions per game than a team that walks it up and works the clock. More possessions means more scoring, for both teams, purely as a function of tempo rather than efficiency. That's why raw points-per-game can be misleading: a fast team can outscore a slow, efficient one on volume alone while actually being the worse team per possession.</p>
+    <div class="notice"><strong>How the model reads this</strong>Scoring margin — points for minus points against — is normalized against the number of games played rather than treated as a raw season total, so the comparison stays fair between a run-and-gun team and a grind-it-out one.</div>
+  </section>
+
+  <section id="rest">
+    <h2>Back-to-backs and the compressed schedule</h2>
+    <p>An 82-game NBA season packs games tightly enough that back-to-back nights — playing on zero days' rest — are routine, and they measurably affect performance: legs are heavier, rotations get shorter, and role players see more minutes than usual. College basketball's schedule is less extreme but still has its own dense stretches, especially during conference-tournament season.</p>
+    <div class="notice"><strong>How the model reads this</strong>Rest days is a direct input, calibrated tighter for basketball than for football — even a single extra day off is worth more here, reflecting how often these teams actually play.</div>
+  </section>
+
+  <section id="depth">
+    <h2>Depth, spacing, and modern efficiency</h2>
+    <p>The three-point shot changed how basketball is played at every level — spacing the floor opens driving lanes, and a team with several credible outside shooters is much harder to defend than one relying on a single star. Bench depth matters more than box scores usually show: foul trouble, injuries, and back-to-backs all lean on a team's second and third options, and a shallow roster degrades faster under that pressure than a deep one.</p>
+    <div class="notice"><strong>How the model reads this</strong>Team quality independent of the current record — the model's "class" signal — comes from market-implied strength (what betting markets price a team's championship odds at) for the NBA, and from a blend of hand-set preseason ratings and the opponent-adjusted rating for college, where there's no equivalent championship-futures market for most teams.</div>
+  </section>
+
+  <section id="bracket">
+    <h2>How Matchday builds its own bracketology</h2>
+    <p>Human tournament committees weigh things a pure numbers model doesn't have easy access to — eye-test quality, injury context, and subjective "resume" arguments. Matchday takes a different, more mechanical approach for men's college basketball: it doesn't ingest a human committee's bracket projections at all.</p>
+    <div class="notice"><strong>How the model reads this</strong>Matchday's projected field is built entirely from real season data — win percentage, conference win percentage, and scoring margin — rather than editorial rankings. It's a transparent, if simpler, standard: what does the data actually say a team has earned, not what a committee might decide.</div>
+  </section>
+
+  <p class="foot">See also: the <a href="qa.html">Q&amp;A page</a> for what Elo, edge, and confidence mean generally, and the <a href="content.html">Content hub</a> for weekly model recaps.</p>
+</main>
+</body>
+</html>

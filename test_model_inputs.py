@@ -1,3 +1,6 @@
+import json
+import os
+import tempfile
 import unittest
 
 import fetch_data
@@ -72,6 +75,49 @@ class ModelInputTests(unittest.TestCase):
         self.assertIn("margin", prediction["why"])
         self.assertIn("srs", prediction["why"])
         self.assertNotIn("gd", prediction["why"])
+
+
+class RatingsLookupTests(unittest.TestCase):
+    """Regression coverage for the club-suffix mismatch found live: ratings
+    files hand-written with short names ("Arsenal") never matched live
+    fixture data using official names ("Arsenal FC"), silently zeroing the
+    class factor for most club-soccer and all NCAAF/NCAAM matchups."""
+
+    def setUp(self):
+        self.old_key, self.old_comp = fetch_data.COMP_KEY, fetch_data.COMP
+        self.old_ratings_file, self.old_ratings = fetch_data.RATINGS_FILE, fetch_data._RATINGS
+        fetch_data.COMP_KEY = "UCL"
+        fetch_data.COMP = dict(fetch_data.COMPETITIONS["UCL"])
+        fd, self.tmp_path = tempfile.mkstemp(suffix=".json")
+        with os.fdopen(fd, "w", encoding="utf-8") as f:
+            json.dump({"Arsenal": {"fifa_rank": 5, "squad_value_m": 900, "star_value_m": 90},
+                       "Real Madrid": {"fifa_rank": 1, "squad_value_m": 1200, "star_value_m": 150}}, f)
+        fetch_data.RATINGS_FILE = self.tmp_path
+        fetch_data._RATINGS = None
+
+    def tearDown(self):
+        fetch_data.COMP_KEY, fetch_data.COMP = self.old_key, self.old_comp
+        fetch_data.RATINGS_FILE, fetch_data._RATINGS = self.old_ratings_file, self.old_ratings
+        os.unlink(self.tmp_path)
+
+    def test_official_suffixed_name_matches_a_short_ratings_entry(self):
+        self.assertIsNotNone(fetch_data._ratings_lookup("Arsenal FC"))
+        self.assertIsNotNone(fetch_data._ratings_lookup("Real Madrid CF"))
+
+    def test_prefixed_suffix_also_matches(self):
+        self.assertIsNotNone(fetch_data._ratings_lookup("FC Arsenal"))
+
+    def test_a_team_missing_from_the_file_entirely_still_reports_unknown(self):
+        self.assertIsNone(fetch_data._ratings_lookup("Some Club Not In The File FC"))
+
+    def test_apply_market_strength_creates_an_entry_for_a_college_team(self):
+        fetch_data.COMP_KEY = "NCAAM"
+        fetch_data.COMP = dict(fetch_data.COMPETITIONS["NCAAM"])
+        self.assertIsNone(fetch_data._ratings_lookup("Duke"))
+        fetch_data.apply_market_strength([{"team": "Duke", "pct": 18.0}])
+        rec = fetch_data._ratings_lookup("Duke")
+        self.assertIsNotNone(rec)
+        self.assertGreater(rec["squad_value_m"], 0)
 
 
 if __name__ == "__main__":

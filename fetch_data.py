@@ -577,10 +577,44 @@ def _load_ratings():
             DIAG.append(f"ratings: not loaded ({e})")
     return _RATINGS
 
+# Club-name suffixes/prefixes that provider feeds add or drop inconsistently
+# (football-data.org's official strings vs. the shorter names ratings files
+# are hand-written with) -- "Arsenal FC" vs "Arsenal", "FC Barcelona" vs
+# "Barcelona". norm() deliberately doesn't touch these (it's shared by
+# h2h/Elo pairing, where changing it has wider blast radius), so ratings
+# lookups get their own lenient fallback instead.
+_CLUB_SUFFIX_TOKENS = {"fc", "cf", "afc", "cfc", "sc", "ac", "ssc", "sd", "ud", "cd", "rc", "sv", "bc", "sk"}
+
+def _strip_club_suffix(key):
+    toks = key.split()
+    while toks and toks[-1] in _CLUB_SUFFIX_TOKENS: toks.pop()
+    while toks and toks[0] in _CLUB_SUFFIX_TOKENS: toks.pop(0)
+    return " ".join(toks)
+
+def _ratings_lookup(name):
+    """Find a team's ratings entry, tolerating club-suffix mismatches between
+    the live fixture name and however the ratings file happens to spell it."""
+    ratings = _load_ratings()
+    key = norm(name or "")
+    rec = ratings.get(key)
+    if rec is not None:
+        return rec
+    stripped = _strip_club_suffix(key)
+    if stripped != key and stripped:
+        rec = ratings.get(stripped)
+        if rec is not None:
+            return rec
+        for other_key, other_rec in ratings.items():
+            if other_key.startswith("_"):
+                continue
+            if _strip_club_suffix(other_key) == stripped:
+                return other_rec
+    return None
+
 def rating_boost(name):
     """Convert public ratings (FIFA rank, squad value, star value) into
     strength points. Unknown teams get neutral mid-pack defaults."""
-    r = _load_ratings().get(norm(name or "")) or {}
+    r = _ratings_lookup(name) or {}
     fifa_n = max(0.0, 10.0 - (r.get("fifa_rank", 45) - 1) * 0.18)   # rank 1 → 10, rank ~56 → 0
     val_n  = min(10.0, r.get("squad_value_m", 120) / 150.0)         # €1.5B squad → 10
     star_n = min(10.0, r.get("star_value_m", 25) / 20.0)            # €200M player → 10
@@ -772,7 +806,7 @@ def compute_srs(matches):
 
 def rating_parts(name):
     """Class factors broken out, for attribution."""
-    r = _load_ratings().get(norm(name or "")) or {}
+    r = _ratings_lookup(name) or {}
     fifa_n = max(0.0, 10.0 - (r.get("fifa_rank", 45) - 1) * 0.18)
     val_n  = min(10.0, r.get("squad_value_m", 120) / 150.0)
     star_n = min(10.0, r.get("star_value_m", 25) / 20.0)
@@ -1219,9 +1253,9 @@ def predict(home, away, markets, m=None):
             form_center = form_games * 1.5
             srs_games = int(s.get("srs_games") or 0)
             srs_conf = min(1.0, srs_games / 12.0)
-            # The legacy rating files are used only when the team name matches
-            # exactly. Unknown US teams receive no invented soccer-value prior.
-            known_rating = bool(_load_ratings().get(norm(s.get("name") or "")))
+            # Unknown teams (no ratings-file entry, even after the club-suffix
+            # fallback) receive no invented class prior rather than a default.
+            known_rating = bool(_ratings_lookup(s.get("name")))
             poll_rank = s.get("model_rank")
             poll_prior = (max(0.0, 26.0 - float(poll_rank)) / 25.0 * 2.0
                           if poll_rank else 0.0)
@@ -1603,12 +1637,16 @@ def fetch_api_football_box_scores(matches):
 
 # -------- The Odds API : tournament winner (outrights) -------------------
 def apply_market_strength(outrights):
-    """For sports without squad values (NFL/NBA/MLB/NHL/NCAAF), derive team
-    strength from championship odds — the market's own valuation of each team.
-    A 20%-title team is objectively strong; a 0.3% team is weak. This is the
-    honest equivalent of soccer squad values, sourced live from the odds you
-    already fetch. Writes into the in-memory ratings so predict() uses it."""
-    if COMP.get("source") not in {"sportsdataio", "balldontlie"} or not outrights:
+    """For sports without squad values (NFL/NBA/MLB/NHL/NCAAF/NCAAM), derive
+    team strength from championship odds — the market's own valuation of each
+    team. A 20%-title team is objectively strong; a 0.3% team is weak. This is
+    the honest equivalent of soccer squad values, sourced live from the odds
+    you already fetch. Writes into the in-memory ratings so predict() uses it.
+
+    Creates a fresh ratings entry when a team has none, rather than only
+    enriching a pre-existing one — college sports especially had no reliable
+    pre-seeded file to enrich in the first place (see _ratings_lookup)."""
+    if COMP.get("source") not in {"sportsdataio", "balldontlie", "cfbd", "cbbd"} or not outrights:
         return
     mx = max((o["pct"] for o in outrights), default=0) or 1
     ratings = _load_ratings()  # this is the live _RATINGS dict predict() reads
@@ -1618,17 +1656,16 @@ def apply_market_strength(outrights):
         share = o["pct"] / mx
         val_m = round(share ** 0.7 * 1000)
         star_m = round(share ** 0.7 * 110)
-        rec = ratings.get(key)
+        rec = _ratings_lookup(o["team"])
         if rec is None:
-            rec = next((v for k, v in ratings.items()
-                        if not k.startswith("_") and (key in k or k in key)), None)
-        if isinstance(rec, dict):
-            rec["squad_value_m"] = val_m
-            rec["star_value_m"] = star_m
-            rec["market_pct"] = o["pct"]
-            changed += 1
+            rec = {"fifa_rank": 45, "squad_value_m": 0, "star_value_m": 0}
+            ratings[key] = rec
+        rec["squad_value_m"] = val_m
+        rec["star_value_m"] = star_m
+        rec["market_pct"] = o["pct"]
+        changed += 1
     if changed:
-        DIAG.append(f"market strength: enriched {changed} teams from championship odds")
+        DIAG.append(f"market strength: applied to {changed} teams from championship odds")
 
 
 def fetch_outrights(code_map):
@@ -2930,7 +2967,7 @@ def build():
             getattr(sports_adapter, "_model_history", matches))
         srs_ratings = compute_srs(training_matches) if COMP["sport"] != "soccer" else {}
         rank_map = {}
-        if COMP_KEY == "NCAAF" and sports_adapter:
+        if COMP_KEY in ("NCAAF", "NCAAM") and sports_adapter:
             try:
                 provider_ranks, _ = sports_adapter.rankings(sports_tables)
                 rank_map = {norm(row.get("name")): row.get("rank") for row in provider_ranks}

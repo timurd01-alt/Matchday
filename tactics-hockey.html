@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Hockey Tactics &amp; Decisions — Matchday</title>
+<meta name="description" content="Special-teams swings, goalie rotation, and why parity makes upsets routine — plus how Matchday's model reads the NHL, including its one real injury-data source.">
+<link rel="canonical" href="https://matchdayterminal.com/tactics-hockey.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Matchday">
+<meta property="og:url" content="https://matchdayterminal.com/tactics-hockey.html">
+<meta property="og:title" content="Hockey Tactics &amp; Decisions — Matchday">
+<meta property="og:description" content="Special-teams swings, goalie rotation, and why parity makes upsets routine.">
+<meta name="theme-color" content="#070a0f">
+<link rel="icon" href="./favicon.ico" sizes="any">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#070a0f;--panel:#111822;--text:#eef2f8;--muted:#9ba8b8;--faint:#647184;--line:#263244;--signal:#3ad17a;--link:#76caff}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 10% 0,rgba(58,209,122,.1),transparent 30%),var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;line-height:1.65}.wrap{width:min(920px,calc(100% - 40px));margin:auto;padding:44px 0 76px}.back{color:var(--muted);font-family:"JetBrains Mono",monospace;font-size:.75rem;text-decoration:none}.back:hover{color:var(--signal)}.eyebrow{margin:44px 0 12px;color:var(--signal);font:700 .68rem "JetBrains Mono",monospace;letter-spacing:.14em}.brand{font-family:Archivo,sans-serif;font-size:clamp(2rem,5.4vw,3.6rem);letter-spacing:-.05em;line-height:.98;margin:0}.lead{max-width:700px;color:var(--muted);font-size:1.06rem;margin:18px 0 26px}.meta{display:flex;flex-wrap:wrap;gap:10px;color:var(--faint);font:500 .7rem "JetBrains Mono",monospace}.meta span{border:1px solid var(--line);border-radius:999px;padding:5px 9px}nav{display:flex;flex-wrap:wrap;gap:8px;margin:35px 0}nav a{border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:.76rem;padding:7px 11px;text-decoration:none}nav a:hover{border-color:var(--signal);color:var(--signal)}section{scroll-margin-top:20px;background:linear-gradient(145deg,rgba(21,31,43,.92),rgba(13,19,28,.92));border:1px solid var(--line);border-radius:16px;padding:clamp(22px,4vw,36px);margin:16px 0}h2{font:800 clamp(1.35rem,3vw,2rem) Archivo,sans-serif;letter-spacing:-.035em;line-height:1.08;margin:0 0 12px}h3{font:700 1rem Archivo,sans-serif;margin:22px 0 6px}p,li{color:#c9d2de}p{margin:0 0 13px}a{color:var(--link)}.notice{border-left:3px solid var(--signal);background:rgba(58,209,122,.07);border-radius:7px;padding:12px 14px;color:#d8dde5;margin-top:12px}.notice strong{color:var(--signal);display:block;font:800 .66rem "JetBrains Mono",monospace;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}.foot{margin-top:28px;color:var(--faint);font-size:.75rem;text-align:center}@media(max-width:520px){.wrap{width:min(100% - 28px,920px);padding-top:26px}.eyebrow{margin-top:32px}section{border-radius:13px;padding:20px}}
+</style>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "Article",
+ "headline": "Hockey Tactics & Decisions",
+ "author": {"@type": "Organization", "name": "Matchday"},
+ "publisher": {"@type": "Organization", "name": "Matchday"},
+ "mainEntityOfPage": "https://matchdayterminal.com/tactics-hockey.html",
+ "description": "Special-teams swings, goalie rotation, and why parity makes upsets routine."
+}
+</script>
+</head>
+<body>
+<main class="wrap">
+  <a class="back" href="content.html">&larr; Back to Content</a>
+  <p class="eyebrow">MATCHDAY LEARN · HOCKEY</p>
+  <h1 class="brand">Tactics &amp; decisions: hockey</h1>
+  <p class="lead">NHL — what actually decides these games, and how the model reads it.</p>
+  <div class="meta"><span>General education + model notes</span><span>Analytics only · not betting advice</span></div>
+  <nav aria-label="Sections"><a href="#special">Special teams</a><a href="#rest">Back-to-backs &amp; goalies</a><a href="#parity">Parity</a><a href="#injuries">Injury data</a></nav>
+
+  <section id="special">
+    <h2>Special teams swing games</h2>
+    <p>A power play converts a numbers advantage into goals; a penalty kill denies it. Over an 82-game season, teams with efficient special teams consistently outperform their 5-on-5 play alone would suggest — a single power-play goal can be the entire margin in a league where a large share of games are decided by one goal.</p>
+    <div class="notice"><strong>How the model reads this</strong>Scoring margin captures the downstream effect of special teams (and everything else) without needing to isolate the cause — a team that consistently wins the special-teams battle shows up as better goal differential, which feeds the model directly.</div>
+  </section>
+
+  <section id="rest">
+    <h2>Back-to-backs and goalie rotation</h2>
+    <p>NHL teams routinely play back-to-back nights, and it's common practice to start a backup goaltender on the second night to protect the starter's health over an 82-game grind. That's a real, planned quality drop at the sport's most influential position, on a schedule pattern that's largely predictable in advance.</p>
+    <div class="notice"><strong>How the model reads this</strong>Rest days is a direct input, calibrated for hockey's tight schedule — even one extra day matters here, similar to basketball.</div>
+  </section>
+
+  <section id="parity">
+    <h2>Why hockey upsets are routine</h2>
+    <p>Hockey has a flatter talent curve and more single-game variance than most major sports — a bad bounce off the end boards, a shot that clips a skate, a hot goaltender standing on his head for sixty minutes can single-handedly erase a real talent gap. That's part of what makes the sport exciting, and it's also why the NHL's regular-season standings are famously tighter than other leagues'.</p>
+    <div class="notice"><strong>How the model reads this</strong>The opponent-adjusted rating and Elo both help separate real quality from a single night's variance by looking at results over many games rather than any one outcome, which matters more in a sport this prone to single-game randomness.</div>
+  </section>
+
+  <section id="injuries">
+    <h2>NHL has Matchday's one real injury data source</h2>
+    <p>Missing a top-line center or a starting goaltender is one of the clearest, most direct signals in hockey — arguably more decisive than in most other sports, given how much a single elite goaltender can single-handedly change a team's odds.</p>
+    <div class="notice"><strong>How the model reads this</strong>The NHL is currently the only sport on Matchday with real, licensed player-availability data feeding the model's injuries factor. Every other American sport on the platform either has no accessible injury data at any usable tier, or the source hasn't been verified as compliant to use yet — worth knowing if you're comparing how much weight to put on an NHL prediction versus, say, an NFL one.</div>
+  </section>
+
+  <p class="foot">See also: the <a href="qa.html">Q&amp;A page</a> for what Elo, edge, and confidence mean generally, and the <a href="content.html">Content hub</a> for weekly model recaps.</p>
+</main>
+</body>
+</html>
