@@ -2262,6 +2262,65 @@ def fetch_scorers():
     return out
 
 
+PREGAME_LOCK_FILE = f"picks_freeze_{COMP_KEY.lower()}.json"
+PREGAME_LOCK_WINDOW_HOURS = 2
+
+def _load_pregame_locks():
+    try:
+        with open(PREGAME_LOCK_FILE, encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return {}
+
+def _save_pregame_locks(locks):
+    try:
+        tmp = PREGAME_LOCK_FILE + ".tmp"
+        with open(tmp, "w", encoding="utf-8") as f:
+            json.dump(locks, f, ensure_ascii=False, indent=1)
+        os.replace(tmp, PREGAME_LOCK_FILE)
+    except Exception as e:
+        DIAG.append(f"pregame pick lock save failed: {e}")
+
+def freeze_pregame_predictions(matches):
+    """Cement each match's displayed model pick once kickoff is within two
+    hours. Odds/injury data can still move the number right up until then,
+    but a pick that keeps flipping in the final pregame window -- or worse,
+    after kickoff, once the real result is already known -- reads as the
+    model changing its mind about something that already happened.
+
+    Once a match is locked, m["prediction"] (and everything the UI derives
+    from it -- side, confidence, upset read, totals) is replaced wholesale
+    with the frozen snapshot on every future run, through FINISHED. This
+    complements update_scorecard()'s separate picks log (which grades
+    accuracy from the very first time a match was seen) by freezing the
+    number actually shown on the live match card."""
+    locks = _load_pregame_locks()
+    now = datetime.datetime.now(datetime.timezone.utc)
+    seen, dirty = set(), False
+    for m in matches:
+        mid = str(m.get("id") or "")
+        if not mid or not m.get("prediction"):
+            continue
+        seen.add(mid)
+        locked = locks.get(mid)
+        if locked is not None:
+            m["prediction"] = locked
+            continue
+        try:
+            kickoff = datetime.datetime.fromisoformat(str(m.get("kickoff") or "").replace("Z", "+00:00"))
+            past_cutoff = (kickoff - now) <= datetime.timedelta(hours=PREGAME_LOCK_WINDOW_HOURS)
+        except Exception:
+            past_cutoff = False
+        if past_cutoff or m.get("status") in ("LIVE", "FINISHED"):
+            locks[mid] = m["prediction"]
+            dirty = True
+    for stale_id in set(locks) - seen:
+        del locks[stale_id]
+        dirty = True
+    if dirty:
+        _save_pregame_locks(locks)
+
+
 PICKS_FILE = f"picks_log_{COMP_KEY.lower()}.json"   # committed picks, per competition
 LEGACY_PICKS = "picks_log.json"
 
@@ -3154,6 +3213,10 @@ def build():
     for m in matches:
         m["prediction"] = predict(m["home"], m["away"], m["markets"], m)
         m["prediction"]["totals"] = predict_totals(m["home"], m["away"], m["markets"])
+    # cement the displayed pick once a match is within its pregame lock
+    # window, before watchability (or anything else) reads the prediction
+    freeze_pregame_predictions(matches)
+    for m in matches:
         m["watchability"] = compute_watchability(m)
     print(f"  merged odds onto {merged} fixtures ({fuzzy} via name-variant match) · predictions on all {len(matches)}")
 

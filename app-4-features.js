@@ -343,7 +343,10 @@ function _v11TeamRow(m,side){
   const win=_v11IsWin(m,side);
   const isPath=/^(Winner|Loser|Seed)\b|^TBD$/i.test(String(nm));
   let fl='';
-  try{fl=code?flagEmoji(code):''}catch(e){fl=''}
+  // uiFlag (not flagEmoji directly) -- it's gated to real soccer
+  // competitions, so a US college's initials (e.g. Ole Miss -> "OM")
+  // can't coincidentally render as a country flag (Oman).
+  try{fl=code?uiFlag(code):''}catch(e){fl=''}
   return `<div class="brWideTeam ${win?'win':''} ${isPath?'path':''}"><div class="brWideName">${slot?`<span class="brWideSlot">${esc(slot)}</span>`:''}${fl?`<span class="flag">${fl}</span>`:''}${code?`<span class="brWideCode">${esc(code)}</span>`:''}<span class="brWideText">${esc(nm)}</span></div><div class="brWideScore">${score!=null&&score!==''?esc(score):''}</div></div>`;
 }
 function _v11StatusText(m){
