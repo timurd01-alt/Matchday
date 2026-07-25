@@ -220,7 +220,9 @@ function _v6UpsetBox(m){
   const shownActive=!!u.triggered&&!op.blocked;
   const cls=_v6UpsetClass(u.score,shownActive);
   const status=op.blocked?'watch only · gate blocked':shownActive?'upset pick active':'watch only';
-  const reason=op.blocked?`${u.reason||'Volatility profile detected.'} · ${op.gateReason}.`:u.reason||'Volatility profile calculated from draw pressure, low-scoring profile, favorite softness, and team gap.';
+  const upsetTwoWay=_totalsUnit(m)==='points';
+  const fallbackReason=upsetTwoWay?'Volatility profile calculated from low-scoring profile, favorite softness, and team gap.':'Volatility profile calculated from draw pressure, low-scoring profile, favorite softness, and team gap.';
+  const reason=op.blocked?`${u.reason||'Volatility profile detected.'} · ${op.gateReason}.`:u.reason||fallbackReason;
   return `<div class="analystBox upsetBox"><div class="analystBoxTitle">Upset radar</div><div class="upsetHero"><div class="candidate"><span>candidate</span><b>${esc(u.candidate_name||'Underdog')}</b></div><div class="upsetScoreDial ${cls}"><b>${esc(u.score??'—')}</b><small>/100</small></div></div><div class="probLines"><div class="probLine"><span class="sideName">${esc(u.favorite_name||'Favorite')}</span><span class="probTrack"><i class="probFill h" style="width:${Math.max(3,Number(u.favorite_pct)||0)}%"></i></span><span class="pct">${esc(u.favorite_pct??'—')}%</span></div><div class="probLine"><span class="sideName">${esc(u.candidate_name||'Underdog')}</span><span class="probTrack"><i class="probFill a" style="width:${Math.max(3,Number(u.candidate_pct)||0)}%"></i></span><span class="pct">${esc(u.candidate_pct??'—')}%</span></div></div><div class="upsetMath"><span>Temp<b class="hot">T ${esc(u.temperature??'—')}</b></span><span>Variance<b>${esc(u.variance_pct??'—')}%</b></span><span>Low goals<b>${esc(u.low_goal_pct??'—')}%</b></span></div><p class="upsetReason">${esc(reason)}</p><span class="upsetTriggered ${op.blocked?'blocked':shownActive?'':'watch'}">${esc(status)}</span></div>`;
 }
 /* dedup */
@@ -461,8 +463,9 @@ function _v12OutcomeCard(m,op){
   const edgeCls=edge==null?'edgeFlat':edge>0?'edgePos':edge<0?'edgeNeg':'edgeFlat';
   const tot=(m?.markets||{}).totals||{};
   const modelTot=(m?.prediction||{}).totals;
-  const drawNote=dp>=30?'high draw pressure':dp>=25?'moderate draw pressure':'low draw pressure';
   const unit=_totalsUnit(m);
+  const twoWay=unit==='points';
+  const drawNote=twoWay?null:(dp>=30?'high draw pressure':dp>=25?'moderate draw pressure':'low draw pressure');
   const goalNote=tot.under_pct!=null?`Under ${esc(tot.line||2.5)}: ${esc(tot.under_pct)}%${modelTot&&modelTot.pick?` (model: ${esc(modelTot.pick)})`:''}`
     :(modelTot&&modelTot.expected!=null?`Model expects ${esc(modelTot.expected)} ${unit}`:`No ${unit} market yet`);
   // Without a market yet, "market on pick" / "model edge" have nothing to
@@ -479,17 +482,18 @@ function _v12OutcomeCard(m,op){
   const eloEdge=why.elo!=null?why.elo*sideSign:null;
   const compareCls2=hasMarket?edgeCls:(eloEdge==null?'edgeFlat':eloEdge>0?'edgePos':eloEdge<0?'edgeNeg':'edgeFlat');
   const compareVal2=hasMarket?(edge!=null?`${edge>0?'+':''}${edge} pts`:'—'):(eloEdge!=null?pts(eloEdge):'—');
-  const risk=op?.blocked?`Upset gate blocked · ${esc(op.gateReason||'market gap too wide')}`:`${drawNote} · ${goalNote}`;
-  return `<div class="analystBox probMatrixCard"><div class="analystBoxTitle">Probability check</div><div class="probMatrix"><div class="probTiles">${_v12ProbTile(m?.home?.code||m?.home?.name||'Home',hp,'h',side==='h')}${_v12ProbTile('Draw',dp,'d',side==='d')}${_v12ProbTile(m?.away?.code||m?.away?.name||'Away',ap,'a',side==='a')}</div><div class="probCompareGrid"><div class="probCompareItem"><span>Official side</span><b>${esc(op?.name||'No pick')}</b></div><div class="probCompareItem"><span>${compareLabel1}</span><b>${esc(compareVal1)}</b></div><div class="probCompareItem ${compareCls2}"><span>${compareLabel2}</span><b>${esc(compareVal2)}</b></div></div><p class="probContextLine">${risk}</p></div></div>`;
+  const risk=op?.blocked?`Upset gate blocked · ${esc(op.gateReason||'market gap too wide')}`:(drawNote?`${drawNote} · ${goalNote}`:goalNote);
+  return `<div class="analystBox probMatrixCard"><div class="analystBoxTitle">Probability check</div><div class="probMatrix"><div class="probTiles">${_v12ProbTile(m?.home?.code||m?.home?.name||'Home',hp,'h',side==='h')}${twoWay?'':_v12ProbTile('Draw',dp,'d',side==='d')}${_v12ProbTile(m?.away?.code||m?.away?.name||'Away',ap,'a',side==='a')}</div><div class="probCompareGrid"><div class="probCompareItem"><span>Official side</span><b>${esc(op?.name||'No pick')}</b></div><div class="probCompareItem"><span>${compareLabel1}</span><b>${esc(compareVal1)}</b></div><div class="probCompareItem ${compareCls2}"><span>${compareLabel2}</span><b>${esc(compareVal2)}</b></div></div><p class="probContextLine">${risk}</p></div></div>`;
 }
 function _v15Num(v){
   if(v===null||v===undefined||v==='')return null;
   const n=Number(v);return Number.isFinite(n)?n:null;
 }
-function _v15Record(team){
+function _v15Record(team,m){
   const p=_v15Num(team?.pld),w=_v15Num(team?.w),d=_v15Num(team?.d),l=_v15Num(team?.l);
   if(!p||w==null||l==null)return null;
-  return d==null?`${w}-${l}`:`${w}-${d}-${l}`;
+  const twoWay=SANDBOX_TWO_WAY.has(String(m?._comp||DATA.comp_key||'').toLowerCase());
+  return (d==null||twoWay)?`${w}-${l}`:`${w}-${d}-${l}`;
 }
 function _v15Rate(team,key){
   const p=_v15Num(team?.pld),v=_v15Num(team?.[key]);
@@ -526,7 +530,7 @@ function _v15MatchProfile(m,op){
     ['Data sample',sample.home!=null&&sample.away!=null?`${sample.home} / ${sample.away} games`:'Not reported',quality.note||'Current-season games available to the model.']
   ].map(([label,value,help])=>`<div class="profileKpi"><span>${esc(label)}${help?metricHelp(label,help):''}</span><b>${esc(value)}</b></div>`).join('');
   const rows=[
-    _v15CompareRow('Record',_v15Record(m?.home),_v15Record(m?.away)),
+    _v15CompareRow('Record',_v15Record(m?.home,m),_v15Record(m?.away,m)),
     _v15CompareRow('Rank',_v15Num(m?.home?.model_rank??m?.home?.pos)!=null?`#${m.home.model_rank??m.home.pos}`:null,_v15Num(m?.away?.model_rank??m?.away?.pos)!=null?`#${m.away.model_rank??m.away.pos}`:null),
     _v15CompareRow('Opponent-adjusted rating',_v15Num(m?.home?.srs)!=null?Number(m.home.srs).toFixed(1):null,_v15Num(m?.away?.srs)!=null?Number(m.away.srs).toFixed(1):null),
     _v15CompareRow(`Avg ${unit} scored`,hScored,aScored),
