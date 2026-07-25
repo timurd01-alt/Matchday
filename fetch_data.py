@@ -17,7 +17,7 @@ Run:  python fetch_data.py          (once)
       python fetch_data.py --loop   (auto: 45s while live, else 5 min)
 """
 
-import json, os, sys, time, datetime, re, unicodedata, urllib.request, urllib.error, urllib.parse, math
+import json, os, sys, time, datetime, re, unicodedata, urllib.request, urllib.error, urllib.parse, math, gzip, csv, io
 import xml.etree.ElementTree as ET
 from email.utils import parsedate_to_datetime
 from collections import defaultdict
@@ -929,6 +929,110 @@ def elo_strength(name):
     return pts, conf
 
 
+# ---- NFL advanced stats: nflverse play-by-play EPA -----------------------
+# https://github.com/nflverse/nflverse-data -- released under CC BY 4.0
+# (commercial use and redistribution permitted with attribution; see
+# legal.html). NFL only for now -- it's the sport nflverse actually covers.
+# Recomputed from scratch on every refresh instead of incrementally like
+# Elo: the season play-by-play export is a cumulative file, not a per-game
+# delta, so there's nothing to dedupe.
+NFLVERSE_EPA_FILE = "ratings_epa_nfl.json"
+NFLVERSE_PBP_URL = "https://github.com/nflverse/nflverse-data/releases/download/pbp/play_by_play_{season}.csv.gz"
+NFLVERSE_FULL_TRUST_PLAYS = 300  # roughly half a season of offensive snaps
+# nflverse's team codes match APISportsAdapter.NFL_CODES except the Rams
+NFLVERSE_CODE_FIXUPS = {"LA": "LAR"}
+_NFLVERSE_EPA = None
+
+def _get_bytes(url, headers=None):
+    req = urllib.request.Request(url, headers=headers or {})
+    with urllib.request.urlopen(req, timeout=60) as r:
+        return r.read()
+
+def fetch_nflverse_epa(season):
+    """Team offense EPA/play and defense EPA/play-allowed for the given
+    season, aggregated from nflverse's play-by-play export. Regular-season
+    run/pass snaps with a resolved EPA value only (no-plays, kneels,
+    spikes, and postseason are excluded)."""
+    code_to_name = {code: name for name, code in APISportsAdapter.NFL_CODES.items()}
+    raw = gzip.decompress(_get_bytes(NFLVERSE_PBP_URL.format(season=season), {"User-Agent": "Matchday/1.0"}))
+    reader = csv.DictReader(io.StringIO(raw.decode("utf-8", "replace")))
+    off, deff = defaultdict(lambda: [0.0, 0]), defaultdict(lambda: [0.0, 0])
+    for row in reader:
+        if row.get("season_type") != "REG" or row.get("play_type") not in ("pass", "run"):
+            continue
+        try:
+            epa = float(row.get("epa"))
+        except (TypeError, ValueError):
+            continue
+        pos, deft = row.get("posteam"), row.get("defteam")
+        if pos:
+            o = off[pos]; o[0] += epa; o[1] += 1
+        if deft:
+            d = deff[deft]; d[0] += epa; d[1] += 1
+    out = {}
+    for code in set(off) | set(deff):
+        name = code_to_name.get(NFLVERSE_CODE_FIXUPS.get(code, code))
+        if not name:
+            continue
+        o_sum, o_n = off.get(code, (0.0, 0))
+        d_sum, d_n = deff.get(code, (0.0, 0))
+        out[name] = {"off_epa": round(o_sum / o_n, 4) if o_n else 0.0,
+                     "def_epa": round(d_sum / d_n, 4) if d_n else 0.0,
+                     "plays": o_n + d_n}
+    return out
+
+def _load_nflverse_epa():
+    global _NFLVERSE_EPA
+    if _NFLVERSE_EPA is None:
+        try:
+            with open(NFLVERSE_EPA_FILE, encoding="utf-8") as f:
+                _NFLVERSE_EPA = json.load(f)
+        except Exception:
+            _NFLVERSE_EPA = {}
+    return _NFLVERSE_EPA
+
+def _save_nflverse_epa():
+    try:
+        tmp = NFLVERSE_EPA_FILE + ".tmp"
+        with open(tmp, "w", encoding="utf-8") as f:
+            json.dump(_NFLVERSE_EPA, f, ensure_ascii=False, indent=1)
+        os.replace(tmp, NFLVERSE_EPA_FILE)
+    except Exception as e:
+        DIAG.append(f"nflverse epa: save failed ({e})")
+
+def update_nflverse_epa():
+    """Refresh NFL team offense/defense EPA-per-play. Tries the current
+    season first, falling back to last season's final numbers before/just
+    after a new season starts (nflverse has nothing to publish yet)."""
+    global _NFLVERSE_EPA
+    this_year = datetime.date.today().year
+    for candidate in (this_year, this_year - 1):
+        try:
+            teams = fetch_nflverse_epa(candidate)
+        except Exception as e:
+            DIAG.append(f"nflverse epa {candidate}: fetch failed ({_scrub(e)})")
+            continue
+        if teams:
+            _NFLVERSE_EPA = {norm(name): rec for name, rec in teams.items()}
+            _save_nflverse_epa()
+            DIAG.append(f"nflverse epa: updated {len(teams)} teams from {candidate} season play-by-play")
+            return
+    DIAG.append("nflverse epa: no data available for current or prior season")
+
+def nflverse_epa_strength(name):
+    """Strength points from season-to-date net EPA/play (offense minus
+    what the defense allows), plus a 0..1 confidence that ramps up with
+    play count -- same shape as elo_strength, just fed by a different
+    self-updating signal."""
+    rec = _load_nflverse_epa().get(norm(name or ""))
+    if not rec or rec.get("plays", 0) < 1:
+        return 0.0, 0.0
+    conf = min(1.0, rec["plays"] / NFLVERSE_FULL_TRUST_PLAYS)
+    net_epa = rec.get("off_epa", 0.0) - rec.get("def_epa", 0.0)
+    pts = net_epa * 12.0  # EPA/play runs roughly +/-0.15; scaled to sit alongside srs/elo's point range
+    return pts, conf
+
+
 def power_rating(name):
     """Public-facing power rating for team profiles/standings/watchability.
     Curated preseason files (FIFA rank/squad value/recruiting talent) only
@@ -1360,7 +1464,7 @@ def predict(home, away, markets, m=None):
             poll_rank = s.get("model_rank")
             poll_prior = (max(0.0, 26.0 - float(poll_rank)) / 25.0 * 2.0
                           if poll_rank else 0.0)
-            return {
+            out = {
                 "base": 8.0,
                 "record": (win_pct - 0.5) * 8.0 * reliability,
                 "margin": _clamp(margin / american_cfg["margin"], -1.5, 1.5) * 2.0 * reliability,
@@ -1373,6 +1477,10 @@ def predict(home, away, markets, m=None):
                 "rest": (0.0 if rest is None else
                          _clamp((rest - american_cfg["rest"]) * 0.08, -0.35, 0.35)),
             }
+            if COMP_KEY == "NFL":
+                epa_pts, epa_conf = nflverse_epa_strength(s.get("name"))
+                out["epa"] = epa_pts * epa_conf
+            return out
         return {"base": 1.0, "pts": (s.get("pts") or 0)*0.6, "gd": (s.get("gd") or 0)*0.25,
                 "form": fp*0.5, "adv": adv,
                 "fifa": rp["fifa"], "value": rp["value"], "star": rp["star"],
@@ -1483,7 +1591,7 @@ def predict(home, away, markets, m=None):
     any_stale = bool(home.get("season_stale") or away.get("season_stale"))
     quality_level = ("preseason" if min_sample == 0 or any_stale else "early"
                      if american and min_sample < american_cfg["full"] else "established")
-    signals = [key for key in ("record", "margin", "form", "rank", "srs", "elo", "rest", "injuries")
+    signals = [key for key in ("record", "margin", "form", "rank", "srs", "elo", "epa", "rest", "injuries")
                if abs(float(why.get(key) or 0)) > 0.001]
     if mk:
         signals.append("market")
@@ -3751,6 +3859,12 @@ def build():
             apply_recruiting_strength(sports_adapter.recruiting())
         except ProviderError as exc:
             DIAG.append(f"{provider_name} recruiting unavailable: {_scrub(exc)}")
+    elif COMP_KEY == "NFL":
+        try:
+            print("Fetching advanced team EPA (nflverse)…")
+            update_nflverse_epa()
+        except Exception as exc:
+            DIAG.append(f"nflverse epa unavailable: {_scrub(exc)}")
 
     title = None
     if COMP.get("source") in {"sportsdataio", "balldontlie", "cfbd", "cbbd", "apisports"} and COMP.get("outright"):

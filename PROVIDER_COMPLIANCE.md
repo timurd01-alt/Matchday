@@ -50,6 +50,16 @@ Reviewed: 2026-07-25. This is an engineering checklist, not legal advice.
   before adding ads, subscriptions, or another commercial use.
 - **News RSS:** display only short headline metadata and link to the publisher.
   Do not copy article bodies or bypass publisher access controls.
+- **nflverse (nflverse-data on GitHub):** NFL advanced-stats signal (team
+  offense/defense EPA per play), released under
+  [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) -- commercial use
+  and redistribution are permitted with attribution, which is why this is the
+  one advanced-stats candidate that actually cleared review (2026-07-25) among
+  several considered; ESPN and MLB's undocumented Stats API/Baseball Savant
+  were excluded because their data carries no comparable license or is
+  restricted to personal/non-commercial use. Attribution lives in
+  `legal.html`. Recomputed from nflverse's season play-by-play export on
+  every NFL fetch -- no key, no rate limit, not a live feed.
 
 ## Recheck before release
 

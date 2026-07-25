@@ -428,5 +428,71 @@ class TeamOfTournamentBackfillTests(unittest.TestCase):
         self.assertIn("don't fake it", result["note"])
 
 
+class NflverseEpaTests(unittest.TestCase):
+    """Coverage for the nflverse play-by-play EPA signal: aggregation from
+    raw play rows, and that it only ever applies to NFL predictions."""
+
+    FAKE_ROWS = [
+        # two offensive snaps for KC (posteam) against BUF (defteam)
+        {"season_type": "REG", "play_type": "pass", "epa": "0.4", "posteam": "KC", "defteam": "BUF"},
+        {"season_type": "REG", "play_type": "run", "epa": "-0.2", "posteam": "KC", "defteam": "BUF"},
+        # one BUF offensive snap back the other way
+        {"season_type": "REG", "play_type": "pass", "epa": "0.1", "posteam": "BUF", "defteam": "KC"},
+        # excluded: postseason, non-run/pass, and unresolved epa
+        {"season_type": "POST", "play_type": "pass", "epa": "0.9", "posteam": "KC", "defteam": "BUF"},
+        {"season_type": "REG", "play_type": "no_play", "epa": "0.9", "posteam": "KC", "defteam": "BUF"},
+        {"season_type": "REG", "play_type": "pass", "epa": "NA", "posteam": "KC", "defteam": "BUF"},
+        # LA -> Rams code fixup
+        {"season_type": "REG", "play_type": "run", "epa": "0.3", "posteam": "LA", "defteam": "SF"},
+    ]
+
+    def setUp(self):
+        self.old_key, self.old_comp = fetch_data.COMP_KEY, fetch_data.COMP
+        self.old_epa = fetch_data._NFLVERSE_EPA
+        fetch_data._NFLVERSE_EPA = {fetch_data.norm("Kansas City Chiefs"):
+                                     {"off_epa": 0.15, "def_epa": -0.05, "plays": 600}}
+
+    def tearDown(self):
+        fetch_data.COMP_KEY, fetch_data.COMP = self.old_key, self.old_comp
+        fetch_data._NFLVERSE_EPA = self.old_epa
+
+    def _team(self, name, **overrides):
+        base = {"name": name, "pld": 8, "w": 4, "l": 4, "win_pct": .5, "gf": 200, "ga": 200, "form": ""}
+        return {**base, **overrides}
+
+    def _fake_csv_bytes(self):
+        import csv, gzip, io
+        buf = io.StringIO()
+        writer = csv.DictWriter(buf, fieldnames=["season_type", "play_type", "epa", "posteam", "defteam"])
+        writer.writeheader()
+        writer.writerows(self.FAKE_ROWS)
+        return gzip.compress(buf.getvalue().encode("utf-8"))
+
+    def test_aggregates_only_regular_season_run_pass_plays_with_resolved_epa(self):
+        with mock.patch.object(fetch_data, "_get_bytes", return_value=self._fake_csv_bytes()):
+            teams = fetch_data.fetch_nflverse_epa(2025)
+        kc = teams["Kansas City Chiefs"]
+        self.assertEqual(kc["plays"], 3)  # 2 offensive + 1 defensive, postseason/no_play/NA excluded
+        self.assertAlmostEqual(kc["off_epa"], (0.4 - 0.2) / 2)
+        self.assertAlmostEqual(kc["def_epa"], 0.1)
+        self.assertIn("Los Angeles Rams", teams)  # LA code resolved via NFLVERSE_CODE_FIXUPS
+
+    def test_unknown_team_has_no_signal(self):
+        self.assertEqual(fetch_data.nflverse_epa_strength("Nonexistent Team"), (0.0, 0.0))
+
+    def test_epa_signal_applies_to_nfl_predictions(self):
+        fetch_data.COMP_KEY = "NFL"
+        fetch_data.COMP = dict(fetch_data.COMPETITIONS["NFL"])
+        prediction = fetch_data.predict(self._team("Kansas City Chiefs"), self._team("Test Opponent"), {})
+        self.assertIn("epa", prediction["why"])
+        self.assertIn("epa", prediction["data_quality"]["signals"])
+
+    def test_epa_signal_is_absent_outside_nfl(self):
+        fetch_data.COMP_KEY = "NCAAF"
+        fetch_data.COMP = dict(fetch_data.COMPETITIONS["NCAAF"])
+        prediction = fetch_data.predict(self._team("Kansas City Chiefs"), self._team("Test Opponent"), {})
+        self.assertNotIn("epa", prediction["why"])
+
+
 if __name__ == "__main__":
     unittest.main()

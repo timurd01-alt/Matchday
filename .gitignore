@@ -12,6 +12,7 @@ player_db_*.json
 ratings*.backup.json
 ratings_elo.json
 ratings_h2h.json
+ratings_epa_nfl.json
 .browser-profile/
 __pycache__/
 *.pyc
