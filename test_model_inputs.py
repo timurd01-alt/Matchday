@@ -16,6 +16,14 @@ def finished(mid, home, away, hs, aps):
 
 
 class ModelInputTests(unittest.TestCase):
+    def test_market_weight_uses_depth_and_disagreement(self):
+        self.assertEqual(fetch_data._market_blend_weight(None), 0.0)
+        deep_tight = fetch_data._market_blend_weight({"books": 8, "spread": 4})
+        thin_split = fetch_data._market_blend_weight({"books": 1, "spread": 24})
+        self.assertGreater(deep_tight, thin_split)
+        self.assertGreaterEqual(thin_split, 0.30)
+        self.assertLessEqual(deep_tight, 0.60)
+
     def setUp(self):
         self.old_key = fetch_data.COMP_KEY
         self.old_comp = fetch_data.COMP

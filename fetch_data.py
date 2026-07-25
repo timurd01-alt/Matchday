@@ -890,12 +890,18 @@ def update_elo(matches):
     store = _load_elo()
     teams, seen = store["teams"], store["seen"]
     updated = 0
-    for m in matches:
+    # Provider ordering is not guaranteed. Elo is path-dependent, so always
+    # consume results chronologically to keep ratings reproducible.
+    ordered = sorted(matches, key=lambda m: (m.get("kickoff") or "", str(m.get("id") or "")))
+    for m in ordered:
         if m.get("status") != "FINISHED": continue
         win = (m.get("score") or {}).get("winner")
         if win not in ("h", "a", "d"): continue
-        mid = m.get("id")
-        if not mid or mid in seen: continue
+        mid = str(m.get("id") or "")
+        if not mid: continue
+        seen_key = f"{COMP_KEY}:{mid}"
+        # Honor legacy raw ids so an upgrade never double-trains old results.
+        if seen_key in seen or mid in seen: continue
         hn, an = norm(m["home"]["name"]), norm(m["away"]["name"])
         rh = teams.setdefault(hn, {"r": 1500.0, "n": 0})
         ra = teams.setdefault(an, {"r": 1500.0, "n": 0})
@@ -904,7 +910,7 @@ def update_elo(matches):
         delta = ELO_K * (actual_h - exp_h)
         rh["r"] += delta; ra["r"] -= delta
         rh["n"] += 1; ra["n"] += 1
-        seen[mid] = True
+        seen[seen_key] = True
         updated += 1
     if updated:
         DIAG.append(f"elo: updated {updated} result(s), {len(teams)} teams tracked")
@@ -977,18 +983,21 @@ def update_h2h(matches):
     store = _load_h2h()
     pairs, seen = store["pairs"], store["seen"]
     updated = 0
-    for m in matches:
+    ordered = sorted(matches, key=lambda m: (m.get("kickoff") or "", str(m.get("id") or "")))
+    for m in ordered:
         if m.get("status") != "FINISHED": continue
         win = (m.get("score") or {}).get("winner")
         if win not in ("h", "a", "d"): continue
-        mid = m.get("id")
-        if not mid or mid in seen: continue
+        mid = str(m.get("id") or "")
+        if not mid: continue
+        seen_key = f"{COMP_KEY}:{mid}"
+        if seen_key in seen or mid in seen: continue
         hn, an = norm(m["home"]["name"]), norm(m["away"]["name"])
         log = pairs.setdefault(_pair_key(hn, an), [])
         log.append({"date": m.get("kickoff") or "", "home": hn, "winner": win})
         log.sort(key=lambda r: r.get("date") or "")
         pairs[_pair_key(hn, an)] = log[-10:]
-        seen[mid] = True
+        seen[seen_key] = True
         updated += 1
     if updated:
         DIAG.append(f"h2h: recorded {updated} result(s), {len(pairs)} pairs tracked")
@@ -1283,6 +1292,29 @@ def _weighted_form_score(form_str):
     return sum(v*w for v, w in zip(vals, weights)) / wsum * len(games)
 
 
+def _market_blend_weight(market):
+    """How much to trust the consensus, based on evidence already collected.
+
+    A deep, tightly grouped market is a stronger prior than one or two books
+    disagreeing sharply. Keep the range deliberately narrow until the locked
+    scorecard has enough observations to learn these weights per sport.
+    """
+    if not market:
+        return 0.0
+    books = max(0, int(market.get("books") or 0))
+    spread = market.get("spread")
+    weight = 0.40 + min(books, 8) * 0.02
+    if spread is not None:
+        spread = float(spread)
+        if spread <= 8:
+            weight += 0.04
+        elif spread > 18:
+            weight -= 0.10
+        elif spread > 12:
+            weight -= 0.04
+    return round(_clamp(weight, 0.30, 0.60), 2)
+
+
 def predict(home, away, markets, m=None):
     two_way = not COMP.get("has_draws", True)
     american = COMP["sport"] != "soccer"
@@ -1404,8 +1436,11 @@ def predict(home, away, markets, m=None):
     tot = sh+sa
     model = {"h": round(sh/tot*(1-draw)*100), "a": round(sa/tot*(1-draw)*100), "d": round(draw*100)}
     mk = markets.get("1x2")
-    raw_blend = ({"h": round((model["h"]+mk["home_pct"])/2), "d": round((model["d"]+mk["draw_pct"])/2),
-              "a": round((model["a"]+mk["away_pct"])/2)} if mk else dict(model))
+    market_weight = _market_blend_weight(mk)
+    raw_blend = ({"h": round(model["h"]*(1-market_weight) + mk["home_pct"]*market_weight),
+                  "d": round(model["d"]*(1-market_weight) + mk["draw_pct"]*market_weight),
+                  "a": round(model["a"]*(1-market_weight) + mk["away_pct"]*market_weight)}
+                 if mk else dict(model))
     raw_blend = _round_triplet(raw_blend)
     regulation_probs, upset = _upset_adjustment(home, away, markets, m, why, raw_blend, two_way=two_way)
 
@@ -1454,6 +1489,9 @@ def predict(home, away, markets, m=None):
         signals.append("market")
     data_quality = {"level": quality_level, "games": sample,
                     "signals": signals, "market_available": bool(mk),
+                    "market_books": int((mk or {}).get("books") or 0),
+                    "market_spread": (mk or {}).get("spread"),
+                    "market_weight": market_weight,
                     "note": ("Limited current-season evidence; probability is intentionally conservative."
                              if quality_level != "established" else
                              "Current-season sample and opponent-adjusted results are available.")}
@@ -1466,7 +1504,8 @@ def predict(home, away, markets, m=None):
             "regulation_confidence": regulation_probs[regulation_pick],
             "regulation_probs": regulation_probs,
             "edge": edge, "note": note, "why": why, "damp_pct": round(damp*100),
-            "mkt_pull": mkt_pull, "upset": upset, "data_quality": data_quality}
+            "mkt_pull": mkt_pull, "market_weight": market_weight,
+            "upset": upset, "data_quality": data_quality}
 
 
 def predict_totals(home, away, markets):
