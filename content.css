@@ -75,3 +75,11 @@ section{scroll-margin-top:var(--s4);margin:var(--s6) 0}
   .foot{align-items:flex-start;flex-direction:column}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.hubHero,.card,.featured{animation:none}.card,.featured,.topbar a,.jumpnav a,.filterBtn,.typeFilter{transition:none}.card:hover,.card:focus-visible,.featured:hover{transform:none}}
+
+/* Filter motion is replayed only when the visible collection changes. */
+.contentMotion>*{animation:contentSwap .3s cubic-bezier(.2,.8,.2,1) both}
+.contentMotion>*:nth-child(2){animation-delay:28ms}.contentMotion>*:nth-child(3){animation-delay:56ms}.contentMotion>*:nth-child(4){animation-delay:84ms}.contentMotion>*:nth-child(5){animation-delay:112ms}.contentMotion>*:nth-child(6){animation-delay:140ms}
+.featuredSwap{animation:featuredSwap .36s cubic-bezier(.2,.8,.2,1) both}
+@keyframes contentSwap{from{opacity:0;transform:translateY(8px) scale(.992)}to{opacity:1;transform:none}}
+@keyframes featuredSwap{from{opacity:.45;transform:translateY(5px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.contentMotion>*,.featuredSwap{animation:none!important}}

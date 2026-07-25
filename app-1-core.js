@@ -749,17 +749,20 @@ function renderAlerts(){const bar=$('#alertBar');if(!bar)return;const a=computeA
   bar.style.display='';bar.innerHTML=a.map(x=>`<span class="alertPill ${x.t}" onclick="openMatchModal('${x.id}')">${x.t==='upset'?'&#9889; ':x.t==='live'?'&#128308; ':'&#9203; '}${x.txt}</span>`).join('');}
 // Alert center, probability movement, and alert preferences. These override
 // the original compact alert renderer above while retaining its watchlist API.
-let MATCH_SIGNAL_CHANGES={},MODEL_HISTORY={},LAST_SIGNAL_CAPTURE='';
+let MATCH_SIGNAL_CHANGES={},SCORE_SIGNAL_CHANGES={},LIVE_ENTRY_CHANGES={},MODEL_HISTORY={},LAST_SIGNAL_CAPTURE='';
 function _signalId(m){return `${m?._comp||DATA.comp_key||'sport'}:${m?.id||''}`}
 function _alertReadJSON(key,fallback){try{return JSON.parse(localStorage.getItem(key)||JSON.stringify(fallback))}catch(e){return fallback}}
 function captureMatchSignals(matches){
   const previous=_alertReadJSON('matchday.signalSnapshot',{}),next={},history=_alertReadJSON('matchday.modelHistory',{}),now=Date.now();
-  MATCH_SIGNAL_CHANGES={};
-  (matches||[]).filter(m=>m?.prediction&&m.status!=='FINISHED').slice(0,220).forEach(m=>{
+  MATCH_SIGNAL_CHANGES={};SCORE_SIGNAL_CHANGES={};LIVE_ENTRY_CHANGES={};
+  (matches||[]).filter(m=>m&&m.status!=='FINISHED').slice(0,220).forEach(m=>{
     const id=_signalId(m),op=typeof _v10OfficialPick==='function'?_v10OfficialPick(m):null;
     const confidence=Number(op?.confidence??m.prediction?.confidence),market=Number(op?.marketPct);
-    next[id]={confidence:Number.isFinite(confidence)?confidence:null,market:Number.isFinite(market)?market:null,status:m.status,score:`${m.score?.home??''}-${m.score?.away??''}`,at:now};
+    const score=`${m.score?.home??''}-${m.score?.away??''}`;
+    next[id]={confidence:Number.isFinite(confidence)?confidence:null,market:Number.isFinite(market)?market:null,status:m.status,score,at:now};
     const old=previous[id];
+    if(old&&m.status==='LIVE'&&old.score!==score)SCORE_SIGNAL_CHANGES[id]={previous:old.score,current:score};
+    if(old&&old.status!=='LIVE'&&m.status==='LIVE')LIVE_ENTRY_CHANGES[id]=true;
     if(old&&Number.isFinite(old.confidence)&&Number.isFinite(confidence)){
       const delta=Math.round(confidence-old.confidence);
       if(Math.abs(delta)>=3)MATCH_SIGNAL_CHANGES[id]={delta,previous:old.confidence,current:confidence};
@@ -771,7 +774,7 @@ function captureMatchSignals(matches){
   MODEL_HISTORY=history;
   try{localStorage.setItem('matchday.signalSnapshot',JSON.stringify(next));localStorage.setItem('matchday.modelHistory',JSON.stringify(history))}catch(e){}
 }
-function captureSignalsIfFresh(){const fingerprint=(DATA.matches||[]).slice(0,80).map(m=>`${m.id}:${m.prediction?.confidence??''}:${m.status}`).join('|');const token=`${DATA.comp_key||''}:${DATA.updated||''}:${fingerprint}`;if(token!==LAST_SIGNAL_CAPTURE){LAST_SIGNAL_CAPTURE=token;captureMatchSignals(DATA.matches||[])}}
+function captureSignalsIfFresh(){const fingerprint=(DATA.matches||[]).slice(0,80).map(m=>`${m.id}:${m.prediction?.confidence??''}:${m.status}:${m.score?.home??''}-${m.score?.away??''}`).join('|');const token=`${DATA.comp_key||''}:${DATA.updated||''}:${fingerprint}`;if(token!==LAST_SIGNAL_CAPTURE){LAST_SIGNAL_CAPTURE=token;captureMatchSignals(DATA.matches||[])}}
 function probabilityMovement(m){return MATCH_SIGNAL_CHANGES[_signalId(m)]||null}
 function probabilitySparkline(m){
   const points=MODEL_HISTORY[_signalId(m)]||[];if(points.length<2)return '';
@@ -813,7 +816,7 @@ function toggleAlertCenter(force){
 function renderSignalAlerts(){
   const bar=$('#alertBar'),panel=$('#alertCenter'),bell=$('#alertBell'),count=$('#alertCount'),alerts=computeSignalAlerts(),seen=_alertSeen();
   const unseen=alerts.filter(a=>!seen.has(_alertKey(a))).length;
-  if(count){count.textContent=unseen;count.hidden=!unseen}bell?.classList.toggle('hasAlerts',!!alerts.length);
+  if(count){count.textContent=unseen;count.hidden=!unseen}bell?.classList.toggle('hasAlerts',!!alerts.length);bell?.classList.toggle('hasUnseen',unseen>0);
   if(bar){const urgent=alerts.filter(a=>a.t==='live'||a.t==='upset'||a.t==='model').slice(0,3);bar.style.display=urgent.length?'':'none';bar.innerHTML=urgent.map(a=>`<button class="alertPill ${a.t}" onclick="openAlertMatch('${esc(a.id)}')">${_alertIcon(a.t)} ${esc(a.txt)}</button>`).join('')}
   if(panel)panel.innerHTML=`<div class="alertCenterHead"><div><span>Signal center</span><b>${alerts.length?`${alerts.length} active`:'All quiet'}</b></div><button class="alertCenterClose" onclick="toggleAlertCenter(false)" aria-label="Close alerts">&times;</button></div><div class="alertCenterList">${alerts.length?alerts.map(a=>`<button class="alertItem ${a.t}" onclick="openAlertMatch('${esc(a.id)}')"><i>${_alertIcon(a.t)}</i><span><b>${a.t==='soon'?'Kickoff':a.t==='market'?'Model vs market':a.t[0].toUpperCase()+a.t.slice(1)}</b><small>${esc(a.txt)}</small></span></button>`).join(''):`<div class="alertEmpty"><span>&#10003;</span><b>No active signals</b><p>Star a team to receive kickoff, live-score, model-movement and market-gap alerts.</p></div>`}</div><div class="alertCenterFoot"><button onclick="markAlertsRead()">Mark all read</button><button onclick="toggleAlertCenter(false);setView('customize')">Alert settings</button></div>`;
 }

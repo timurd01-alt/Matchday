@@ -90,6 +90,10 @@ class PublishGateTests(unittest.TestCase):
         self.assertIsNone(again)
         self.assertEqual(len(gp.load_posts()), 1)
 
+    def test_hidden_mlb_does_not_publish_public_recap(self):
+        self.assertIsNone(gp.publish_recap_if_due("MLB", "MLB", SCORECARD, AWARDS))
+        self.assertEqual(gp.load_posts(), [])
+
 
 class RenderAndSitemapTests(unittest.TestCase):
     def setUp(self):
@@ -107,6 +111,8 @@ class RenderAndSitemapTests(unittest.TestCase):
         self.assertIn("<title>", html)
         self.assertIn('rel="canonical"', html)
         self.assertIn('property="og:title"', html)
+        self.assertIn('property="og:image"', html)
+        self.assertIn('name="twitter:image"', html)
         start = html.index('<script type="application/ld+json">') + len('<script type="application/ld+json">')
         end = html.index("</script>", start)
         ld = json.loads(html[start:end])
@@ -121,13 +127,35 @@ class RenderAndSitemapTests(unittest.TestCase):
     def test_regenerate_sitemap_includes_base_pages_and_every_post(self):
         gp.publish_recap_if_due("NFL", "NFL", SCORECARD, AWARDS)
         n = gp.regenerate_sitemap()
-        self.assertEqual(n, 10)  # index, legal, qa, content hub, 5 tactics pages, one post
+        self.assertEqual(n, 9)  # index, legal, qa, content hub, 4 public tactics pages, one post
         with open("sitemap.xml", encoding="utf-8") as f:
             xml = f.read()
         self.assertIn("qa.html", xml)
         self.assertIn("posts/nfl-", xml)
+        self.assertNotIn("tactics-baseball.html", xml)
         import xml.etree.ElementTree as ET
         ET.fromstring(xml)  # raises if malformed
+
+    def test_public_content_feed_is_compact_and_excludes_mlb(self):
+        match = {
+            "id": "game-1", "kickoff": "2026-07-25T20:00:00Z", "status": "UPCOMING",
+            "home": {"name": "Alpha", "code": "ALP"}, "away": {"name": "Beta", "code": "BET"},
+            "score": {"home": None, "away": None, "winner": None, "reg": {}},
+            "prediction": {"pick": "h", "pick_name": "Alpha", "confidence": 61,
+                           "note": "Small lean", "why": {"elo": 4}, "private": "drop me"},
+            "watchability": 72, "news": ["large dashboard-only payload"],
+        }
+        for key in ("nfl", "mlb"):
+            with open(f"data_{key}.json", "w", encoding="utf-8") as f:
+                json.dump({"competition": key.upper(), "updated": "2026-07-25T12:00:00Z",
+                           "scorecard": SCORECARD, "matches": [match], "standings": ["drop me"]}, f)
+        self.assertEqual(gp.generate_public_content_feed(), 1)
+        with open(gp.CONTENT_FEED_FILE, encoding="utf-8") as f:
+            feed = json.load(f)
+        self.assertEqual([item["compKey"] for item in feed["datasets"]], ["nfl"])
+        public_match = feed["datasets"][0]["matches"][0]
+        self.assertNotIn("news", public_match)
+        self.assertNotIn("private", public_match["prediction"])
 
 
 if __name__ == "__main__":

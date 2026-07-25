@@ -2356,6 +2356,80 @@ def apply_locked_picks(matches):
 
 LOCK_WINDOW_HOURS = 2.0
 
+_KNOCKOUT_STAGE_MARKERS = (
+    "knockout", "playoff", "postseason", "round of", "last ",
+    "quarter", "semi", "final", "third place",
+)
+
+
+def _side_result(home_score, away_score):
+    if home_score is None or away_score is None:
+        return None
+    return "h" if home_score > away_score else "a" if away_score > home_score else "d"
+
+
+def _is_knockout_stage(stage):
+    label = " ".join(str(stage or "").strip().lower().replace("_", "-").split())
+    return bool(label) and any(marker in label for marker in _KNOCKOUT_STAGE_MARKERS)
+
+
+def _scorecard_results(match, locked_pick=None):
+    """Return separate (model, market) settlement results.
+
+    Tournament knockout model picks are graded by the team that ultimately wins
+    or advances after extra time or penalties. The 1X2 market comparison remains
+    settled on the regulation result. Neither result changes the stored score.
+    """
+    sc_obj = match.get("score") or {}
+    shown_home, shown_away = sc_obj.get("home"), sc_obj.get("away")
+    pens = sc_obj.get("pens") or {}
+
+    ultimate = sc_obj.get("winner")
+    if ultimate not in ("h", "d", "a"):
+        ultimate = _side_result(shown_home, shown_away)
+    if ultimate == "d" and pens.get("home") is not None and pens.get("away") is not None:
+        ultimate = _side_result(pens.get("home"), pens.get("away"))
+
+    stage = match.get("stage") or (locked_pick or {}).get("stage")
+    is_knockout = _is_knockout_stage(stage)
+    reg = sc_obj.get("reg") or {}
+    market_result = _side_result(reg.get("home"), reg.get("away"))
+    if market_result is None:
+        if is_knockout and COMP.get("has_draws"):
+            # Do not guess a soccer 1X2 settlement from an extra-time score.
+            market_result = (locked_pick or {}).get("market_result")
+        else:
+            # Non-draw moneylines (and ordinary final scores) settle on the winner.
+            market_result = ultimate
+    model_result = ultimate if is_knockout else (market_result or ultimate)
+    return model_result, market_result
+
+
+def _apply_scorecard_grade(rec, model_result, market_result):
+    """Apply model and 1X2 market grades without touching the score string."""
+    rec["result"] = model_result
+    rec["model_hit"] = (rec.get("pick") == model_result)
+    if market_result:
+        rec["market_result"] = market_result
+        rec["market_hit"] = (rec.get("market_pick") == market_result) if rec.get("market_pick") else None
+    else:
+        rec.setdefault("market_result", None)
+        rec.setdefault("market_hit", None)
+    if rec.get("upset_candidate"):
+        rec["upset_hit"] = (rec.get("upset_candidate") == model_result)
+    probs = rec.get("probs") or {}
+    if probs:
+        y = {"h": 1.0 if model_result == "h" else 0.0,
+             "d": 1.0 if model_result == "d" else 0.0,
+             "a": 1.0 if model_result == "a" else 0.0}
+        try:
+            rec["brier3"] = round(sum(((float(probs.get(k) or 0) / 100.0) - y[k]) ** 2 for k in ("h", "d", "a")), 3)
+            rec["log_loss"] = round(-math.log(max(0.001, float(probs.get(model_result) or 0) / 100.0)), 3)
+        except Exception:
+            pass
+    if rec.get("value_side") and market_result:
+        rec["value_hit"] = (rec.get("value_side") == market_result)
+
 def _hours_to_kickoff(m):
     """None if kickoff is missing/unparseable, else hours from now to kickoff
     (negative once kickoff has passed)."""
@@ -2433,56 +2507,36 @@ def update_scorecard(matches):
             rec["value_name"] = ({"h": rec["home"], "a": rec["away"], "d": "Draw"}.get(value_side) if value_side else None)
             rec["market_snapshot"] = {"h": mk.get("home_pct"), "d": mk.get("draw_pct"), "a": mk.get("away_pct")}
             dirty = True
-        elif (m.get("status") == "FINISHED" and mid in picks and picks[mid].get("result") is not None
-              and (m.get("score") or {}).get("reg")):
-            # one-time correction: regrade to the 90-minute market if the old rule differed
-            reg = m["score"]["reg"]
-            if reg.get("home") is not None:
-                res90 = ("h" if reg["home"] > reg["away"] else "a" if reg["away"] > reg["home"] else "d")
-                rec = picks[mid]
-                if rec.get("result") != res90:
-                    rec["result"] = res90
-                    rec["model_hit"] = (rec.get("pick") == res90)
-                    if rec.get("market_pick"):
-                        rec["market_hit"] = (rec.get("market_pick") == res90)
-                    DIAG.append(f"regraded to 90-min market: {rec.get('home','?')} v {rec.get('away','?')} -> {res90}")
+        elif m.get("status") == "FINISHED" and mid in picks and picks[mid].get("result") is not None:
+            # Keep previously graded picks aligned with the split settlement rule:
+            # ultimate winner for knockout model picks, regulation for 1X2 markets.
+            rec = picks[mid]
+            model_res, market_res = _scorecard_results(m, rec)
+            if model_res:
+                before = (rec.get("result"), rec.get("market_result"),
+                          rec.get("model_hit"), rec.get("market_hit"),
+                          rec.get("value_hit"), rec.get("upset_hit"))
+                _apply_scorecard_grade(rec, model_res, market_res)
+                after = (rec.get("result"), rec.get("market_result"),
+                         rec.get("model_hit"), rec.get("market_hit"),
+                         rec.get("value_hit"), rec.get("upset_hit"))
+                if before != after:
+                    DIAG.append(f"regraded model/market outcomes: {rec.get('home','?')} v {rec.get('away','?')} -> {model_res}/{market_res}")
                     dirty = True
         elif m.get("status") == "FINISHED" and mid in picks and picks[mid].get("result") is None:
             sc_obj = (m.get("score") or {})
             sh = sc_obj.get("home"); sa = sc_obj.get("away")
             if sh is None or sa is None:
                 continue
-            # 1X2 settles on the 90-minute result: level after regulation = DRAW wins,
-            # regardless of extra time or penalties (the market convention)
-            reg = sc_obj.get("reg") or {}
-            r9h = reg.get("home"); r9a = reg.get("away")
-            if r9h is not None and r9a is not None:
-                res = "h" if r9h > r9a else "a" if r9a > r9h else "d"
-            else:
-                res = sc_obj.get("winner") or ("h" if sh > sa else "a" if sa > sh else "d")
             rec = picks[mid]
+            model_res, market_res = _scorecard_results(m, rec)
+            if not model_res:
+                continue
             pens = sc_obj.get("pens")
             score_str = f"{sh}-{sa}" + (f" ({pens['home']}-{pens['away']} pens)" if pens else "")
-            # consistency guard: a shown scoreline that is NOT level cannot grade as a
-            # draw. Only a genuine pens/ET game (level in regulation) may be a draw.
-            if res == "d" and sh != sa and not pens:
-                res = "h" if sh > sa else "a"
-            rec["result"] = res; rec["score"] = score_str
-            rec["model_hit"] = (rec.get("pick") == res)
-            rec["market_hit"] = (rec.get("market_pick") == res) if rec.get("market_pick") else None
-            if rec.get("upset_candidate"):
-                rec["upset_hit"] = (rec.get("upset_candidate") == res)
-            probs = rec.get("probs") or {}
-            if probs:
-                y = {"h": 1.0 if res == "h" else 0.0, "d": 1.0 if res == "d" else 0.0, "a": 1.0 if res == "a" else 0.0}
-                try:
-                    rec["brier3"] = round(sum(((float(probs.get(k) or 0) / 100.0) - y[k]) ** 2 for k in ("h", "d", "a")), 3)
-                    rec["log_loss"] = round(-math.log(max(0.001, float(probs.get(res) or 0) / 100.0)), 3)
-                except Exception:
-                    pass
+            rec["score"] = score_str
+            _apply_scorecard_grade(rec, model_res, market_res)
             # closing-line value: did the market move toward our pick after we locked it?
-            if rec.get("value_side"):
-                rec["value_hit"] = (rec["value_side"] == res)
             close = (_load_open().get(pairkey(rec["home"], rec["away"])) or {}).get("last")
             if close and rec.get("pick_mkt") is not None and rec.get("pick") in ("h", "d", "a"):
                 rec["clv"] = round(close[rec["pick"]] - rec["pick_mkt"], 1)
@@ -2504,8 +2558,9 @@ def update_scorecard(matches):
                 _p["result"] = "h" if _h > _a else "a"
                 if "pick" in _p:
                     _p["model_hit"] = (_p.get("pick") == _p["result"])
-                if _p.get("market_pick"):
-                    _p["market_hit"] = (_p.get("market_pick") == _p["result"])
+                # A displayed ET score cannot reconstruct the 90-minute market
+                # settlement, so preserve the existing market grade here. Current
+                # fixtures are corrected above from their explicit regulation score.
                 healed = True
     if healed:
         _save_picks(picks)

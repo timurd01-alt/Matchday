@@ -90,16 +90,31 @@ jobs:
           rm -f config_keys.py
           mkdir -p _site
           cp index.html styles.css content.css content.js article-links.js translations.js legal.html qa.html content.html manifest.json _site/
-          cp tactics-soccer.html tactics-football.html tactics-basketball.html tactics-baseball.html tactics-hockey.html _site/
+          cp tactics-soccer.html tactics-football.html tactics-basketball.html tactics-hockey.html _site/
           cp robots.txt sitemap.xml _site/
           cp app-1-core.js app-2-views.js app-3-panels.js app-4-features.js _site/
           cp favicon.ico favicon-16.png favicon-32.png matchday.ico _site/
           cp icon-180.png icon-192.png icon-512.png logo.png _site/
           cp data.json _site/
-          cp data_*.json _site/
-          cp posts.json _site/ 2>/dev/null || echo '[]' > _site/posts.json
+          for data_file in data_wc.json data_ucl.json data_epl.json data_laliga.json data_seriea.json data_bundesliga.json data_ligue1.json data_nfl.json data_ncaaf.json data_ncaam.json data_nba.json data_nhl.json; do
+            [ ! -f "$data_file" ] || cp "$data_file" _site/
+          done
+          cp content-feed.json _site/
           mkdir -p _site/posts
-          cp posts/*.html _site/posts/ 2>/dev/null || true
+          python - <<'EOF'
+          import json, pathlib, shutil
+          public = {"wc", "ucl", "epl", "laliga", "seriea", "bundesliga", "ligue1", "nfl", "ncaaf", "ncaam", "nba", "nhl"}
+          try:
+              posts = json.loads(pathlib.Path("posts.json").read_text(encoding="utf-8"))
+          except Exception:
+              posts = []
+          posts = [post for post in posts if str(post.get("comp", "")).lower() in public]
+          pathlib.Path("_site/posts.json").write_text(json.dumps(posts, ensure_ascii=False, indent=1), encoding="utf-8")
+          for post in posts:
+              source = pathlib.Path("posts") / f"{post.get('slug') or post.get('id')}.html"
+              if source.is_file():
+                  shutil.copy2(source, pathlib.Path("_site/posts") / source.name)
+          EOF
 
       - name: Stamp asset URLs with this commit's SHA (cache-busting)
         run: |

@@ -5,16 +5,15 @@
     ['wc','World Cup','soccer'],['ucl','Champions League','soccer'],['epl','Premier League','soccer'],
     ['laliga','La Liga','soccer'],['seriea','Serie A','soccer'],['bundesliga','Bundesliga','soccer'],['ligue1','Ligue 1','soccer'],
     ['nfl','NFL','nfl'],['ncaaf','College Football','ncaaf'],['ncaam',"Men's College Basketball",'basketball'],
-    ['nba','NBA','basketball'],['mlb','MLB','baseball'],['nhl','NHL','hockey']
-  ].map(([key,label,sport])=>({key,label,sport,file:`data_${key}.json`}));
+    ['nba','NBA','basketball'],['nhl','NHL','hockey']
+  ].map(([key,label,sport])=>({key,label,sport}));
   const COMP_BY_KEY=Object.fromEntries(COMPETITIONS.map(comp=>[comp.key,comp]));
-  const SPORT_LABELS={all:'All sports',soccer:'Soccer',nfl:'NFL',ncaaf:'College Football',basketball:'Basketball',baseball:'Baseball',hockey:'Hockey'};
+  const SPORT_LABELS={all:'All sports',soccer:'Soccer',nfl:'NFL',ncaaf:'College Football',basketball:'Basketball',hockey:'Hockey'};
   const FACTOR_LABELS={adv:'home context',form:'recent form',margin:'scoring margin',rest:'rest advantage',record:'season record',elo:'team strength',class:'roster strength',srs:'schedule-adjusted rating',rank:'ranking',h2h:'head-to-head history'};
   const GUIDE_ITEMS=[
     {id:'learn-soccer',type:'learn',sports:['soccer'],compLabel:'Soccer',title:'Shape, pressing & set pieces',summary:'Fixture congestion, draws, and the tactical details that move a match.',updated:'2026-07-24T12:00:00Z',minutes:8,url:'tactics-soccer.html',topic:'World Cup UCL Europe tactics pressing set pieces'},
     {id:'learn-football',type:'learn',sports:['nfl','ncaaf'],compLabel:'Football',title:'Situation, schedule & rest',summary:'Short weeks, opponent strength, and what changes between the professional and college games.',updated:'2026-07-24T12:00:00Z',minutes:7,url:'tactics-football.html',topic:'NFL College Football rest schedule strength'},
     {id:'learn-basketball',type:'learn',sports:['basketball'],compLabel:'Basketball',title:'Pace, spacing & back-to-backs',summary:'How possessions, fatigue, and bracket context shape the read.',updated:'2026-07-24T12:00:00Z',minutes:7,url:'tactics-basketball.html',topic:'NBA college basketball pace spacing fatigue'},
-    {id:'learn-baseball',type:'learn',sports:['baseball'],compLabel:'Baseball',title:'Patience over 162 games',summary:'Run differential, sample size, and what the model honestly cannot see.',updated:'2026-07-24T12:00:00Z',minutes:6,url:'tactics-baseball.html',topic:'MLB baseball run differential sample size'},
     {id:'learn-hockey',type:'learn',sports:['hockey'],compLabel:'Hockey',title:'Goalies, parity & special teams',summary:'Why rotation and thin margins make apparent upsets routine.',updated:'2026-07-24T12:00:00Z',minutes:6,url:'tactics-hockey.html',topic:'NHL hockey goalies special teams'},
     {id:'learn-data',type:'learn',sports:['all'],compLabel:'Reference',title:'Data, privacy & limitations',summary:'Where the numbers come from and what Matchday does not claim to know.',updated:'2026-07-24T12:00:00Z',minutes:5,url:'qa.html#data',topic:'data privacy limitations model methodology'}
   ];
@@ -87,7 +86,7 @@
     if(!comp&&['edge','score'].includes(view)){
       const available=filteredDatasets();
       const best=view==='score'?[...available].sort((a,b)=>Number(b.scorecard?.graded||0)-Number(a.scorecard?.graded||0))[0]:available[0];
-      comp=best?.compKey||({soccer:'ucl',nfl:'nfl',ncaaf:'ncaaf',basketball:'nba',baseball:'mlb',hockey:'nhl'})[activeSport]||'ncaaf';
+      comp=best?.compKey||({soccer:'ucl',nfl:'nfl',ncaaf:'ncaaf',basketball:'nba',hockey:'nhl'})[activeSport]||'ncaaf';
     }
     const params=new URLSearchParams();if(comp)params.set('sport',comp);if(view)params.set('view',view);if(matchId)params.set('match',matchId);
     return `index.html?${params.toString()}`;
@@ -100,7 +99,7 @@
 
   function contextLinks(item){
     const firstSport=(item.sports||[]).find(value=>value!=='all');
-    const comp=item.comp||({soccer:'ucl',nfl:'nfl',ncaaf:'ncaaf',basketball:'nba',baseball:'mlb',hockey:'nhl'})[firstSport]||'';
+    const comp=item.comp||({soccer:'ucl',nfl:'nfl',ncaaf:'ncaaf',basketball:'nba',hockey:'nhl'})[firstSport]||'';
     const links=[];
     if(item.matchId)links.push(['View matchup',dashboardUrl(comp,'matches',item.matchId)]);
     links.push(['See model prediction',dashboardUrl(comp,'edge',item.matchId||'')]);
@@ -235,12 +234,17 @@
     host.innerHTML=`<div><div class="featuredLabel">${typeBadge(item.type)}<span class="storyStatus ${status.className}">${escapeHTML(status.label)}</span></div><h3>${escapeHTML(headline)}</h3><p>${escapeHTML(item.takeaway||item.summary)}</p><div class="featuredMeta"><span>${escapeHTML(item.compLabel)}</span><span>${escapeHTML(formattedDate(item.updated,true))}</span><span>${escapeHTML(item.minutes)} min read</span><span>${escapeHTML(timeAgo(item.dataUpdated||item.updated))}</span></div><nav class="featuredLinks" aria-label="Featured story actions">${links}</nav></div><a class="featuredAction" href="${escapeHTML(item.url)}">Read analysis &rarr;</a>`;
   }
 
-  function renderLatest(){
+  function replayMotion(element,className='contentMotion'){
+    if(!element)return;element.classList.remove(className);void element.offsetWidth;element.classList.add(className);
+  }
+
+  function renderLatest(animate=false){
     const list=filteredItems(),grid=byId('latestGrid'),empty=byId('contentEmpty'),count=byId('contentCount');
     if(grid)grid.innerHTML=list.map(storyCard).join('');
     if(empty)empty.hidden=!!list.length;
     if(count)count.textContent=list.length?`${list.length} ${list.length===1?'story':'stories'} shown`:'No matching stories';
     renderFeatured(list);
+    if(animate){replayMotion(grid);replayMotion(byId('featuredStory'),'featuredSwap')}
   }
 
   function filteredDatasets(){return activeSport==='all'?datasets:datasets.filter(dataset=>compMeta(dataset.compKey).sport===activeSport)}
@@ -328,19 +332,19 @@
     });
   }
 
-  function renderAll(){renderLatest();renderBrief();renderAccountability();renderFreshness();renderGuides()}
+  function renderAll(animate=false){renderLatest(animate);renderBrief();renderAccountability();renderFreshness();renderGuides();if(animate){replayMotion(byId('briefGrid'));replayMotion(byId('accountabilityGrid'))}}
 
   function setSport(filter,persist=true){
     activeSport=validSport(filter);
     if(persist)safeSet('matchday.content.sport',activeSport);
     document.querySelectorAll('[data-sport-filter]').forEach(button=>{const active=button.dataset.sportFilter===activeSport;button.classList.toggle('isActive',active);button.setAttribute('aria-pressed',String(active))});
-    renderAll();
+    renderAll(persist);
   }
 
   function setType(filter){
     activeType=['all','preview','recap','learn'].includes(filter)?filter:'all';
     document.querySelectorAll('[data-type-filter]').forEach(button=>{const active=button.dataset.typeFilter===activeType;button.classList.toggle('isActive',active);button.setAttribute('aria-pressed',String(active))});
-    renderLatest();
+    renderLatest(true);
   }
 
   async function fetchJSON(url){
@@ -348,9 +352,10 @@
   }
 
   async function loadContentData(){
-    const [postResult,...dataResults]=await Promise.allSettled([fetchJSON('posts.json'),...COMPETITIONS.map(comp=>fetchJSON(comp.file))]);
-    posts=postResult.status==='fulfilled'&&Array.isArray(postResult.value)?postResult.value:[];
-    datasets=dataResults.flatMap((result,index)=>result.status==='fulfilled'&&result.value?[{...result.value,compKey:String(result.value.comp_key||COMPETITIONS[index].key).toLowerCase()}]:[]);
+    const [postResult,feedResult]=await Promise.allSettled([fetchJSON('posts.json'),fetchJSON('content-feed.json')]);
+    posts=postResult.status==='fulfilled'&&Array.isArray(postResult.value)?postResult.value.filter(post=>COMP_BY_KEY[String(post?.comp||'').toLowerCase()]):[];
+    const feed=feedResult.status==='fulfilled'&&feedResult.value&&Array.isArray(feedResult.value.datasets)?feedResult.value.datasets:[];
+    datasets=feed.filter(dataset=>COMP_BY_KEY[String(dataset?.compKey||'').toLowerCase()]);
     storyItems=[...buildPreviewItems(),...buildMatchRecaps(),...buildPostItems(),...GUIDE_ITEMS];
     renderAll();
   }
@@ -358,10 +363,10 @@
   const params=new URLSearchParams(location.search),requestedSport=validSport(params.get('sport')||safeGet('matchday.content.sport','all'));
   document.querySelectorAll('[data-sport-filter]').forEach(button=>button.addEventListener('click',()=>setSport(button.dataset.sportFilter)));
   document.querySelectorAll('[data-type-filter]').forEach(button=>button.addEventListener('click',()=>setType(button.dataset.typeFilter)));
-  const search=byId('contentSearch');if(search)search.addEventListener('input',()=>{searchQuery=search.value;renderLatest()});
+  let searchTimer;const search=byId('contentSearch');if(search)search.addEventListener('input',()=>{searchQuery=search.value;clearTimeout(searchTimer);searchTimer=setTimeout(()=>renderLatest(true),90)});
   document.addEventListener('keydown',event=>{
     if(event.key==='/'&&!/input|textarea/i.test(document.activeElement?.tagName||'')){event.preventDefault();search?.focus()}
-    if(event.key==='Escape'&&document.activeElement===search&&search.value){search.value='';searchQuery='';renderLatest()}
+    if(event.key==='Escape'&&document.activeElement===search&&search.value){search.value='';searchQuery='';renderLatest(true)}
   });
   storyItems=[...GUIDE_ITEMS];
   setSport(requestedSport,false);

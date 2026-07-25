@@ -30,6 +30,66 @@ class ModelInputTests(unittest.TestCase):
         fetch_data.normalize_match_results(matches)
         self.assertEqual(matches[0]["score"]["winner"], "h")
 
+    def test_knockout_extra_time_uses_winner_but_market_uses_regulation(self):
+        match = {
+            "stage": "Quarter Finals",
+            "score": {
+                "home": 2, "away": 1, "winner": "h",
+                "reg": {"home": 1, "away": 1},
+            },
+        }
+        original_score = json.loads(json.dumps(match["score"]))
+        self.assertEqual(fetch_data._scorecard_results(match), ("h", "d"))
+        self.assertEqual(match["score"], original_score)
+
+    def test_knockout_penalties_use_shootout_winner_without_changing_score(self):
+        match = {
+            "stage": "Last 16",
+            "score": {
+                "home": 1, "away": 1, "winner": "h",
+                "reg": {"home": 1, "away": 1},
+                "pens": {"home": 4, "away": 3},
+            },
+        }
+        original_score = json.loads(json.dumps(match["score"]))
+        self.assertEqual(fetch_data._scorecard_results(match), ("h", "d"))
+        self.assertEqual(match["score"], original_score)
+
+    def test_group_stage_draw_uses_same_result_for_model_and_market(self):
+        match = {
+            "stage": "Group Stage",
+            "score": {
+                "home": 1, "away": 1, "winner": "d",
+                "reg": {"home": 1, "away": 1},
+            },
+        }
+        self.assertEqual(fetch_data._scorecard_results(match), ("d", "d"))
+
+    def test_model_and_market_hits_use_their_separate_knockout_results(self):
+        rec = {
+            "pick": "h", "market_pick": "d", "value_side": "d",
+            "probs": {"h": 55, "d": 30, "a": 15}, "score": "1-1 (4-3 pens)",
+        }
+        fetch_data._apply_scorecard_grade(rec, "h", "d")
+        self.assertEqual(rec["result"], "h")
+        self.assertEqual(rec["market_result"], "d")
+        self.assertTrue(rec["model_hit"])
+        self.assertTrue(rec["market_hit"])
+        self.assertTrue(rec["value_hit"])
+        self.assertEqual(rec["score"], "1-1 (4-3 pens)")
+
+    def test_missing_soccer_regulation_score_does_not_guess_market_settlement(self):
+        fetch_data.COMP["has_draws"] = True
+        match = {
+            "stage": "Final",
+            "score": {"home": 2, "away": 1, "winner": "h"},
+        }
+        self.assertEqual(fetch_data._scorecard_results(match), ("h", None))
+        rec = {"pick": "h", "market_pick": "d", "market_hit": True}
+        fetch_data._apply_scorecard_grade(rec, "h", None)
+        self.assertTrue(rec["model_hit"])
+        self.assertTrue(rec["market_hit"])
+
     def test_srs_adjusts_margin_for_opponent_strength(self):
         matches = [
             finished("one", "Alpha", "Beta", 80, 70),

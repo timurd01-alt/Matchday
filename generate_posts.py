@@ -21,9 +21,27 @@ BASE_URL = "https://matchdayterminal.com/"
 POSTS_FILE = "posts.json"
 STATE_FILE = "posts_state.json"
 POSTS_DIR = "posts"
+CONTENT_FEED_FILE = "content-feed.json"
+SOCIAL_IMAGE_URL = "https://matchdayterminal.com/icon-512.png"
 MIN_GRADED_FOR_FIRST_POST = 5
 MIN_NEW_GRADED_SINCE_LAST_POST = 5
 MIN_DAYS_SINCE_LAST_POST = 7
+
+PUBLIC_CONTENT_COMPETITIONS = (
+    ("wc", "World Cup", "soccer"),
+    ("ucl", "Champions League", "soccer"),
+    ("epl", "Premier League", "soccer"),
+    ("laliga", "La Liga", "soccer"),
+    ("seriea", "Serie A", "soccer"),
+    ("bundesliga", "Bundesliga", "soccer"),
+    ("ligue1", "Ligue 1", "soccer"),
+    ("nfl", "NFL", "nfl"),
+    ("ncaaf", "College Football", "ncaaf"),
+    ("ncaam", "Men's College Basketball", "basketball"),
+    ("nba", "NBA", "basketball"),
+    ("nhl", "NHL", "hockey"),
+)
+PUBLIC_CONTENT_KEYS = {key for key, _, _ in PUBLIC_CONTENT_COMPETITIONS}
 
 FACTOR_LABELS = {
     "class": "team class/power rating", "form": "recent form", "gd": "goal difference",
@@ -46,6 +64,10 @@ def _save_json(path, data):
     with open(tmp, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=1)
     os.replace(tmp, path)
+
+
+def _is_public_comp(comp_key):
+    return str(comp_key or "").lower() in PUBLIC_CONTENT_KEYS
 
 
 def load_posts():
@@ -174,7 +196,66 @@ def _content_sport(comp_key):
         return "soccer"
     if key in {"ncaam", "nba"}:
         return "basketball"
-    return {"nfl": "nfl", "ncaaf": "ncaaf", "mlb": "baseball", "nhl": "hockey"}.get(key, "all")
+    return {"nfl": "nfl", "ncaaf": "ncaaf", "nhl": "hockey"}.get(key, "all")
+
+
+def _compact_content_match(match):
+    """Keep only fields the public content hub renders.
+
+    The full competition files can be several megabytes. This projection keeps
+    the content page useful without shipping standings, news, rosters, or other
+    dashboard-only data to every reader.
+    """
+    prediction = match.get("prediction") or {}
+    score = match.get("score") or {}
+    return {
+        "id": match.get("id"),
+        "kickoff": match.get("kickoff"),
+        "status": match.get("status"),
+        "home": {"name": (match.get("home") or {}).get("name")},
+        "away": {"name": (match.get("away") or {}).get("name")},
+        "score": {key: score.get(key) for key in ("home", "away", "winner")},
+        "prediction": {
+            key: prediction.get(key)
+            for key in ("pick", "pick_name", "confidence", "note", "why")
+        } if prediction else None,
+        "watchability": match.get("watchability"),
+    }
+
+
+def generate_public_content_feed():
+    """Build one compact, MLB-free input file for the public content hub."""
+    datasets = []
+    for key, label, sport in PUBLIC_CONTENT_COMPETITIONS:
+        data = _load_json(f"data_{key}.json", None)
+        if not isinstance(data, dict):
+            continue
+        matches = [match for match in (data.get("matches") or [])
+                   if isinstance(match, dict) and match.get("prediction")]
+        active = sorted(
+            (match for match in matches if match.get("status") in {"LIVE", "UPCOMING"}),
+            key=lambda match: str(match.get("kickoff") or ""),
+        )[:12]
+        finished = sorted(
+            (match for match in matches if match.get("status") == "FINISHED"),
+            key=lambda match: str(match.get("kickoff") or ""), reverse=True,
+        )[:12]
+        datasets.append({
+            "compKey": key,
+            "competition": data.get("competition") or label,
+            "sport": sport,
+            "updated": data.get("updated"),
+            "scorecard": {
+                field: (data.get("scorecard") or {}).get(field)
+                for field in ("graded", "model_hits")
+            },
+            "matches": [
+                _compact_content_match(match)
+                for match in active + finished
+            ],
+        })
+    _save_json(CONTENT_FEED_FILE, {"datasets": datasets})
+    return len(datasets)
 
 
 def render_post_html(post):
@@ -186,9 +267,11 @@ def render_post_html(post):
         "@context": "https://schema.org", "@type": "Article",
         "headline": post["title"], "datePublished": post["date"],
         "author": {"@type": "Organization", "name": "Matchday"},
-        "publisher": {"@type": "Organization", "name": "Matchday"},
+        "publisher": {"@type": "Organization", "name": "Matchday",
+                      "logo": {"@type": "ImageObject", "url": SOCIAL_IMAGE_URL}},
         "mainEntityOfPage": url,
         "description": post["summary"],
+        "image": SOCIAL_IMAGE_URL,
     }
     body_html = "\n".join(f"<p>{_esc(p)}</p>" for p in post["body"])
     return f"""<!DOCTYPE html>
@@ -204,9 +287,15 @@ def render_post_html(post):
 <meta property="og:url" content="{url}">
 <meta property="og:title" content="{_esc(post['title'])}">
 <meta property="og:description" content="{_esc(post['summary'])}">
+<meta property="og:image" content="{SOCIAL_IMAGE_URL}">
+<meta property="og:image:width" content="512">
+<meta property="og:image:height" content="512">
+<meta property="og:image:alt" content="Matchday logo">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="{_esc(post['title'])}">
 <meta name="twitter:description" content="{_esc(post['summary'])}">
+<meta name="twitter:image" content="{SOCIAL_IMAGE_URL}">
+<meta name="twitter:image:alt" content="Matchday logo">
 <meta name="theme-color" content="#070a0f">
 <link rel="icon" href="../favicon.ico" sizes="any">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -241,12 +330,12 @@ def render_post_html(post):
 def publish_recap_if_due(comp_key, comp_label, scorecard, awards):
     """Called once per competition per fetch. Publishes at most one post per
     call, gated by should_publish's weekly-and-enough-new-results check."""
-    if not should_publish(comp_key, scorecard):
+    if not _is_public_comp(comp_key) or not should_publish(comp_key, scorecard):
         return None
     post = build_recap_post(comp_key, comp_label, scorecard, awards)
     if not post:
         return None
-    posts = load_posts()
+    posts = [post for post in load_posts() if _is_public_comp(post.get("comp"))]
     if any(p.get("id") == post["id"] for p in posts):
         return None  # already published today for this competition
     posts.insert(0, post)
@@ -263,7 +352,7 @@ def publish_recap_if_due(comp_key, comp_label, scorecard, awards):
 def rewrite_all_post_files():
     """Re-render every post's static HTML from posts.json — keeps pages in
     sync if the template changes, without needing to regenerate content."""
-    posts = load_posts()
+    posts = [post for post in load_posts() if _is_public_comp(post.get("comp"))]
     if not posts:
         return 0
     os.makedirs(POSTS_DIR, exist_ok=True)
@@ -278,7 +367,8 @@ def regenerate_sitemap():
     and every currently-published post. Called once after all competitions
     have had a chance to publish (see multi_fetch.py)."""
     rewrite_all_post_files()
-    posts = load_posts()
+    generate_public_content_feed()
+    posts = [post for post in load_posts() if _is_public_comp(post.get("comp"))]
     urls = [
         (BASE_URL, "hourly", "1.0", None),
         (BASE_URL + "legal.html", "monthly", "0.3", None),
@@ -287,7 +377,6 @@ def regenerate_sitemap():
         (BASE_URL + "tactics-soccer.html", "monthly", "0.5", None),
         (BASE_URL + "tactics-football.html", "monthly", "0.5", None),
         (BASE_URL + "tactics-basketball.html", "monthly", "0.5", None),
-        (BASE_URL + "tactics-baseball.html", "monthly", "0.5", None),
         (BASE_URL + "tactics-hockey.html", "monthly", "0.5", None),
     ]
     for post in posts:

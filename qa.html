@@ -11,6 +11,15 @@
 <meta property="og:url" content="https://matchdayterminal.com/qa.html">
 <meta property="og:title" content="Q&amp;A — How Matchday's Model Works">
 <meta property="og:description" content="Answers to how Matchday's predictions, confidence, edge, Elo, and opponent-adjusted ratings work, where the data comes from, and whether this is betting advice.">
+<meta property="og:image" content="https://matchdayterminal.com/icon-512.png">
+<meta property="og:image:width" content="512">
+<meta property="og:image:height" content="512">
+<meta property="og:image:alt" content="Matchday logo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Q&amp;A — How Matchday's Model Works">
+<meta name="twitter:description" content="How Matchday's predictions, confidence, edge, Elo, and opponent-adjusted ratings work.">
+<meta name="twitter:image" content="https://matchdayterminal.com/icon-512.png">
+<meta name="twitter:image:alt" content="Matchday logo">
 <meta name="theme-color" content="#070a0f">
 <link rel="icon" href="./favicon.ico" sizes="any">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -33,7 +42,7 @@
   {"@type":"Question","name":"What is the opponent-adjusted rating?","acceptedAnswer":{"@type":"Answer","text":"It is a rating built only from a team's own results and the strength of who they played, correcting a team's raw scoring margin for whether their schedule has been easy or hard so far."}},
   {"@type":"Question","name":"Why does the model sometimes disagree with the betting market?","acceptedAnswer":{"@type":"Answer","text":"The market can price in information the model does not see yet, like late injury news or sharp betting activity. The model can weigh things the market is slower to move on, like recent underlying performance. Disagreement is reported as edge, not treated as the market being wrong."}},
   {"@type":"Question","name":"What is an upset flag?","acceptedAnswer":{"@type":"Answer","text":"It is Matchday's own signal that a game has above-average odds of the underdog winning, based on volatility factors that are tracked separately from the base win-probability prediction."}},
-  {"@type":"Question","name":"How does Matchday track its own accuracy?","acceptedAnswer":{"@type":"Answer","text":"Every pick is locked before kickoff and graded automatically once the game finishes; picks are never rewritten afterward. The Scorecard tab in the app shows the full hit rate, calibration by confidence band, and which factors have actually been predictive recently."}},
+  {"@type":"Question","name":"How does Matchday track its own accuracy?","acceptedAnswer":{"@type":"Answer","text":"Every pick is locked before kickoff and graded automatically once the game finishes; picks are never rewritten afterward. In knockout games, the model pick is graded by the team that advances after extra time or penalties while the displayed score remains unchanged. Betting-market comparisons follow the market's own settlement rules. The Scorecard tab shows the full hit rate, calibration by confidence band, and which factors have actually been predictive recently."}},
   {"@type":"Question","name":"Where does Matchday's data come from?","acceptedAnswer":{"@type":"Answer","text":"Licensed and free-tier sports data providers per sport, plus a market-odds provider and public RSS news feeds. The full list of sources and their terms is on the Legal page."}},
   {"@type":"Question","name":"Do I need an account, and is my data private?","acceptedAnswer":{"@type":"Answer","text":"No account is required. Personal settings like favorite team, watchlist, and appearance stay in your own browser's local storage rather than on a server. Full details are on the Legal page's privacy section."}},
   {"@type":"Question","name":"How often does the data update?","acceptedAnswer":{"@type":"Answer","text":"On an automatic schedule that speeds up around live games and slows down when nothing is happening, so scores and predictions stay current without wasting API quota."}}
@@ -97,7 +106,7 @@
     <div class="qa">
       <div class="q">
         <h3>How does Matchday track its own accuracy?</h3>
-        <p>Every pick is locked before kickoff and graded automatically once the game finishes; picks are never rewritten afterward. The Scorecard tab in the app shows the full hit rate, calibration by confidence band, and which factors have actually been predictive recently.</p>
+        <p>Every pick is locked before kickoff and graded automatically once the game finishes; picks are never rewritten afterward. In knockout games, the model pick is graded by the team that advances after extra time or penalties while the displayed score remains unchanged. Betting-market comparisons follow the market's own settlement rules. The Scorecard tab shows the full hit rate, calibration by confidence band, and which factors have actually been predictive recently.</p>
       </div>
       <div class="q">
         <h3>Why didn't a pick change even though the market moved?</h3>
