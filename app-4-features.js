@@ -177,7 +177,9 @@ function _v10OfficialEdge(m,op){
   if(!Number.isFinite(mk)||op.confidence==null)return null;
   return Math.round(Number(op.confidence)-mk);
 }
-function _totalsUnit(m){return SANDBOX_TWO_WAY.has(String(m?._comp||DATA.comp_key||'').toLowerCase())?'points':'goals';}
+function _isTwoWay(m){return SANDBOX_TWO_WAY.has(String(m?._comp||DATA.comp_key||'').toLowerCase());}
+const US_SCORE_TERM={nfl:'points',nba:'points',ncaaf:'points',ncaam:'points',mlb:'runs',nhl:'goals'};
+function _totalsUnit(m){return US_SCORE_TERM[String(m?._comp||DATA.comp_key||'').toLowerCase()]||'goals';}
 function edgeBreakdown(m){
   const pr=m?.prediction, x=(m?.markets||{})['1x2']||{};
   if(!pr)return '';
@@ -206,7 +208,7 @@ function edgeBreakdown(m){
   const modelTot=(m?.prediction||{}).totals;
   if(tot){
     const unit=_totalsUnit(m);
-    let goalsLine=`${unit==='goals'?'Goals':'Points'} market: over ${tot.line} ${tot.over_pct}%, under ${tot.line} ${tot.under_pct}%.`;
+    let goalsLine=`${unit[0].toUpperCase()+unit.slice(1)} market: over ${tot.line} ${tot.over_pct}%, under ${tot.line} ${tot.under_pct}%.`;
     if(modelTot&&modelTot.pick)goalsLine+=` Model expects ${modelTot.expected} — leans ${modelTot.pick}.`;
     bits.push(goalsLine);
   }else if(modelTot&&modelTot.expected!=null){
@@ -220,7 +222,7 @@ function _v6UpsetBox(m){
   const shownActive=!!u.triggered&&!op.blocked;
   const cls=_v6UpsetClass(u.score,shownActive);
   const status=op.blocked?'watch only · gate blocked':shownActive?'upset pick active':'watch only';
-  const upsetTwoWay=_totalsUnit(m)==='points';
+  const upsetTwoWay=_isTwoWay(m);
   const fallbackReason=upsetTwoWay?'Volatility profile calculated from low-scoring profile, favorite softness, and team gap.':'Volatility profile calculated from draw pressure, low-scoring profile, favorite softness, and team gap.';
   const reason=op.blocked?`${u.reason||'Volatility profile detected.'} · ${op.gateReason}.`:u.reason||fallbackReason;
   return `<div class="analystBox upsetBox"><div class="analystBoxTitle">Upset radar</div><div class="upsetHero"><div class="candidate"><span>candidate</span><b>${esc(u.candidate_name||'Underdog')}</b></div><div class="upsetScoreDial ${cls}"><b>${esc(u.score??'—')}</b><small>/100</small></div></div><div class="probLines"><div class="probLine"><span class="sideName">${esc(u.favorite_name||'Favorite')}</span><span class="probTrack"><i class="probFill h" style="width:${Math.max(3,Number(u.favorite_pct)||0)}%"></i></span><span class="pct">${esc(u.favorite_pct??'—')}%</span></div><div class="probLine"><span class="sideName">${esc(u.candidate_name||'Underdog')}</span><span class="probTrack"><i class="probFill a" style="width:${Math.max(3,Number(u.candidate_pct)||0)}%"></i></span><span class="pct">${esc(u.candidate_pct??'—')}%</span></div></div><div class="upsetMath"><span>Temp<b class="hot">T ${esc(u.temperature??'—')}</b></span><span>Variance<b>${esc(u.variance_pct??'—')}%</b></span><span>Low goals<b>${esc(u.low_goal_pct??'—')}%</b></span></div><p class="upsetReason">${esc(reason)}</p><span class="upsetTriggered ${op.blocked?'blocked':shownActive?'':'watch'}">${esc(status)}</span></div>`;
@@ -464,7 +466,7 @@ function _v12OutcomeCard(m,op){
   const tot=(m?.markets||{}).totals||{};
   const modelTot=(m?.prediction||{}).totals;
   const unit=_totalsUnit(m);
-  const twoWay=unit==='points';
+  const twoWay=_isTwoWay(m);
   const drawNote=twoWay?null:(dp>=30?'high draw pressure':dp>=25?'moderate draw pressure':'low draw pressure');
   const goalNote=tot.under_pct!=null?`Under ${esc(tot.line||2.5)}: ${esc(tot.under_pct)}%${modelTot&&modelTot.pick?` (model: ${esc(modelTot.pick)})`:''}`
     :(modelTot&&modelTot.expected!=null?`Model expects ${esc(modelTot.expected)} ${unit}`:`No ${unit} market yet`);
