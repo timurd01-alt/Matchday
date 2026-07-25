@@ -379,8 +379,11 @@ class TeamOfTournamentBackfillTests(unittest.TestCase):
     to make the DEF/GK backfill 'stay dormant' without a real lineup
     provider, but only by relying on the player DB happening to be empty --
     stale entries from when ESPN lineups used to flow kept silently feeding
-    it anyway. LINEUP_BACKFILL_ENABLED now makes that structurally
-    impossible regardless of what the DB file contains."""
+    it anyway. LINEUP_BACKFILL_ENABLED makes that structurally impossible
+    regardless of what the DB file contains: real backfill only happens
+    while it's True (now that fetch_api_football_box_scores() is a real,
+    currently-fetching lineup source), and flipping it off must still gate
+    off backfill even with a populated DB file, exactly like before."""
 
     def setUp(self):
         self.old_key, self.old_comp = fetch_data.COMP_KEY, fetch_data.COMP
@@ -394,18 +397,24 @@ class TeamOfTournamentBackfillTests(unittest.TestCase):
                                        "apps": 5, "starts": 5, "clean_sheets": 4},
             }}, f)
         fetch_data.PLAYER_DB_FILE = self.tmp_path
+        self.scorers = [{"name": "Striker", "team": "Team B", "goals": 5, "assists": 1,
+                         "played": 3, "position": "Forward"}]
 
     def tearDown(self):
         fetch_data.COMP_KEY, fetch_data.COMP = self.old_key, self.old_comp
         fetch_data.PLAYER_DB_FILE = self.old_player_db_file
         os.unlink(self.tmp_path)
 
-    def test_stale_player_db_entries_never_backfill_while_disabled(self):
-        self.assertFalse(fetch_data.LINEUP_BACKFILL_ENABLED,
-                          "flip this back on only once a real lineup source is active")
-        scorers = [{"name": "Striker", "team": "Team B", "goals": 5, "assists": 1,
-                    "played": 3, "position": "Forward"}]
-        result = fetch_data.build_team_of_tournament([], scorers, [])
+    def test_real_player_db_entries_backfill_while_enabled(self):
+        with mock.patch.object(fetch_data, "LINEUP_BACKFILL_ENABLED", True):
+            result = fetch_data.build_team_of_tournament([], self.scorers, [])
+        self.assertIsNotNone(result)
+        self.assertIn("Keeper One", [p["name"] for p in result["xi"]])
+        self.assertIn("accumulated lineups", result["note"])
+
+    def test_same_player_db_entries_never_backfill_while_disabled(self):
+        with mock.patch.object(fetch_data, "LINEUP_BACKFILL_ENABLED", False):
+            result = fetch_data.build_team_of_tournament([], self.scorers, [])
         self.assertIsNotNone(result)
         self.assertNotIn("Keeper One", [p["name"] for p in result["xi"]])
         self.assertIn("don't fake it", result["note"])

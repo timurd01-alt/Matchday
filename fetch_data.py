@@ -158,6 +158,15 @@ API_FOOTBALL_BASE = "https://v3.football.api-sports.io"
 API_FOOTBALL_CACHE_FILE = f"api_football_box_cache_{COMP_KEY.lower()}.json"
 API_FOOTBALL_DAYS_BACK = 10     # recent finished matches to enrich with box scores
 API_FOOTBALL_MAX_STATS = 18     # safety cap for the free daily request budget
+# Lineups share the same free-plan request budget as box stats (100/day,
+# across every soccer competition using this key), so this gets its own
+# smaller, separate cap rather than doubling the existing one. Lineups are
+# also fetched for a different window than stats: they're posted shortly
+# before kickoff, so upcoming fixtures near kickoff matter here in a way
+# they don't for stats (which only exist once a game has actually started).
+API_FOOTBALL_LINEUP_DAYS_BACK = 2
+API_FOOTBALL_LINEUP_PRE_KICKOFF_HOURS = 2
+API_FOOTBALL_MAX_LINEUPS = 10
 
 DIAG = []
 _ODDS_CACHE = {"t": 0.0, "data": {}}
@@ -1538,10 +1547,11 @@ def _load_box_cache():
         if isinstance(d, dict):
             d.setdefault("dates", {})
             d.setdefault("stats", {})
+            d.setdefault("lineups", {})
             return d
     except Exception:
         pass
-    return {"dates": {}, "stats": {}}
+    return {"dates": {}, "stats": {}, "lineups": {}}
 
 
 def _save_box_cache(cache):
@@ -1611,6 +1621,32 @@ def _parse_af_stats(payload, m, fixture_id):
     return out
 
 
+def _parse_af_lineups(payload, m):
+    """API-FOOTBALL /fixtures/lineups -> the same {home,away,subs} shape the
+    Sportmonks adapter already produces, so the frontend pitch view doesn't
+    need to know which provider supplied it."""
+    rows = payload.get("response") or []
+    if len(rows) < 2:
+        return None
+    sides = {}
+    subs = []
+    for row in rows:
+        tname = ((row.get("team") or {}).get("name")) or ""
+        side = "home" if _name_match(tname, m["home"]["name"]) else ("away" if _name_match(tname, m["away"]["name"]) else "")
+        if not side:
+            continue
+        xi = [{"n": (p.get("player") or {}).get("number") or "",
+               "name": (p.get("player") or {}).get("name") or "", "out": False}
+              for p in (row.get("startXI") or []) if (p.get("player") or {}).get("name")]
+        if len(xi) < 7:
+            continue
+        sides[side] = {"formation": row.get("formation") or "", "xi": xi[:11]}
+        subs.extend((p.get("player") or {}).get("name") or "" for p in (row.get("substitutes") or []))
+    if "home" not in sides or "away" not in sides:
+        return None
+    return {"home": sides["home"], "away": sides["away"], "subs": [s for s in subs if s]}
+
+
 def _af_fixture_id_for_match(m, events):
     target = pair(m["home"]["name"], m["away"]["name"])
     # Exact pair first.
@@ -1632,12 +1668,28 @@ def _af_fixture_id_for_match(m, events):
     return None
 
 
-def fetch_api_football_box_scores(matches):
-    """Attach m['stats_extra'] for LIVE and recent FINISHED soccer matches.
+def _hours_until_kickoff(m, now):
+    try:
+        ko = datetime.datetime.fromisoformat((m.get("kickoff") or "").replace("Z", "+00:00"))
+        return (ko - now).total_seconds() / 3600.0
+    except Exception:
+        return None
 
-    API-FOOTBALL uses its own fixture ids, so we first fetch fixtures by date,
-    fuzzy-match the teams, then fetch /fixtures/statistics for matched fixtures.
-    Results are cached to protect the free daily request limit.
+
+def fetch_api_football_box_scores(matches):
+    """Attach m['stats_extra'] for LIVE/recent-FINISHED soccer matches, and
+    m['lineups'] for LIVE, near-kickoff UPCOMING, and very-recent FINISHED
+    matches -- the only currently-active lineup source, since Sportmonks
+    (the licensed alternative) needs a key that isn't configured and every
+    other provider adapter hardcodes lineups to None. Both share the same
+    free-plan request budget (100/day across every soccer competition using
+    this key), so lineups get their own smaller cap and shorter window
+    rather than doubling the existing stats budget.
+
+    API-FOOTBALL uses its own fixture ids, so we first fetch fixtures by date
+    (shared between stats and lineups to avoid duplicate requests), fuzzy-
+    match the teams, then fetch /fixtures/statistics and /fixtures/lineups
+    for matched fixtures. Results are cached to protect the daily limit.
     """
     if COMP.get("sport") != "soccer":
         return
@@ -1647,7 +1699,7 @@ def fetch_api_football_box_scores(matches):
 
     now = datetime.datetime.now(datetime.timezone.utc)
     today = now.date()
-    targets = []
+    stat_targets, lineup_targets = [], []
     for m in matches:
         status = m.get("status")
         mdate_s = _match_date_utc(m)
@@ -1659,10 +1711,16 @@ def fetch_api_football_box_scores(matches):
             continue
         age = (today - mdate).days
         if status == "LIVE" or (status == "FINISHED" and 0 <= age <= API_FOOTBALL_DAYS_BACK):
-            targets.append(m)
-    targets = sorted(targets, key=lambda x: x.get("kickoff") or "", reverse=True)[:API_FOOTBALL_MAX_STATS]
-    if not targets:
-        DIAG.append("box stats(API-FOOTBALL): no live/recent finished fixtures")
+            stat_targets.append(m)
+        hrs = _hours_until_kickoff(m, now)
+        if (status == "LIVE"
+                or (status == "FINISHED" and 0 <= age <= API_FOOTBALL_LINEUP_DAYS_BACK)
+                or (status == "UPCOMING" and hrs is not None and 0 <= hrs <= API_FOOTBALL_LINEUP_PRE_KICKOFF_HOURS)):
+            lineup_targets.append(m)
+    stat_targets = sorted(stat_targets, key=lambda x: x.get("kickoff") or "", reverse=True)[:API_FOOTBALL_MAX_STATS]
+    lineup_targets = sorted(lineup_targets, key=lambda x: x.get("kickoff") or "", reverse=True)[:API_FOOTBALL_MAX_LINEUPS]
+    if not stat_targets and not lineup_targets:
+        DIAG.append("box stats(API-FOOTBALL): no live/recent/upcoming fixtures")
         return
 
     cache = _load_box_cache()
@@ -1672,8 +1730,9 @@ def fetch_api_football_box_scores(matches):
     stat_requests = 0
     now_ts = time.time()
 
+    all_dates = {_match_date_utc(m) for m in (stat_targets + lineup_targets) if _match_date_utc(m)}
     events_by_date = {}
-    for d in sorted({_match_date_utc(m) for m in targets if _match_date_utc(m)}):
+    for d in sorted(all_dates):
         rec = (cache.get("dates") or {}).get(d)
         if rec and now_ts - float(rec.get("t") or 0) < 6 * 3600:
             events_by_date[d] = rec.get("events") or []
@@ -1688,7 +1747,7 @@ def fetch_api_football_box_scores(matches):
             DIAG.append(f"box stats(API-FOOTBALL): fixture date {d} FAILED — {_scrub(e)}")
             events_by_date[d] = rec.get("events") if rec else []
 
-    for m in targets:
+    for m in stat_targets:
         d = _match_date_utc(m)
         fid = _af_fixture_id_for_match(m, events_by_date.get(d) or [])
         if not fid:
@@ -1715,8 +1774,39 @@ def fetch_api_football_box_scores(matches):
             m["stats"] = stats
             attached += 1
 
+    lineup_matched = 0
+    lineup_attached = 0
+    lineup_requests = 0
+    for m in lineup_targets:
+        d = _match_date_utc(m)
+        fid = _af_fixture_id_for_match(m, events_by_date.get(d) or [])
+        if not fid:
+            continue
+        lineup_matched += 1
+        fid = str(fid)
+        lrec = (cache.get("lineups") or {}).get(fid)
+        # Lineups are announced once and don't change after kickoff, so a
+        # cache hit of any age is trusted for a FINISHED/LIVE match; only
+        # a still-UPCOMING fixture needs re-checking (lineups may not be
+        # posted yet on an earlier pass).
+        if lrec and (m.get("status") != "UPCOMING" or now_ts - float(lrec.get("t") or 0) < 900):
+            lineups = lrec.get("lineups")
+        else:
+            try:
+                payload = _api_football_get("/fixtures/lineups", {"fixture": fid})
+                lineups = _parse_af_lineups(payload, m)
+                cache.setdefault("lineups", {})[fid] = {"t": now_ts, "lineups": lineups}
+                lineup_requests += 1
+            except Exception as e:
+                DIAG.append(f"lineups(API-FOOTBALL): fixture {fid} FAILED — {_scrub(e)}")
+                lineups = lrec.get("lineups") if lrec else None
+        if lineups:
+            m["lineups"] = lineups
+            lineup_attached += 1
+
     _save_box_cache(cache)
     DIAG.append(f"box stats(API-FOOTBALL): matched {matched}, attached {attached}, requests {date_requests}+{stat_requests}")
+    DIAG.append(f"lineups(API-FOOTBALL): matched {lineup_matched}, attached {lineup_attached}, requests {lineup_requests}")
 
 
 
@@ -2258,16 +2348,22 @@ def build_weekly_awards(matches):
             "biggest_miss": biggest_miss, "closest_match": closest_match}
 
 
-# No compliant lineup provider is currently active -- ESPN's lineup fetch was
-# removed for licensing reasons, and Sportmonks (the only other lineup source
-# this codebase knows how to use) needs a key that isn't configured. Gate the
-# defense/keeper backfill on this explicitly rather than on the player DB
-# happening to be empty: a prior fix (2026-07-20) tried to make the backfill
-# "stay dormant" without a real lineup source, but stale entries from when
-# ESPN lineups WERE flowing kept silently feeding it anyway, since nothing
-# actually enforced the dormancy. Flip this only once update_player_db() has
-# a real, currently-fetching lineup source to draw on again.
-LINEUP_BACKFILL_ENABLED = False
+# fetch_api_football_box_scores() now attaches m['lineups'] from
+# API-FOOTBALL's free-tier /fixtures/lineups (2026-07-25) -- the first real,
+# currently-fetching lineup source since ESPN's was removed for licensing
+# reasons (Sportmonks, the other source this codebase knows how to use,
+# still needs a key that isn't configured). Gate the defense/keeper backfill
+# on this explicitly rather than on the player DB happening to be empty: a
+# prior fix (2026-07-20) tried to make the backfill "stay dormant" without a
+# real lineup source, but stale entries from when ESPN lineups WERE flowing
+# kept silently feeding it anyway, since nothing actually enforced the
+# dormancy. Coverage is intentionally narrow per run (LIVE, near-kickoff
+# upcoming, and matches finished within the last 2 days, capped at 10
+# fixtures) to protect the shared 100/day free-plan quota, so the player DB
+# builds up gradually across runs rather than backfilling a full season at
+# once -- defender/keeper rankings should be treated as still-warming-up
+# until more matches have been captured.
+LINEUP_BACKFILL_ENABLED = True
 
 
 def build_team_of_tournament(matches, scorers, standings):

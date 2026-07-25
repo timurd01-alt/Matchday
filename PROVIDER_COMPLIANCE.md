@@ -36,6 +36,11 @@ Reviewed: 2026-07-25. This is an engineering checklist, not legal advice.
   reasonable application needs.
 - **API-Sports / SportsDataIO / Sportmonks:** use only products and endpoints
   included in the active subscription. Never resell the provider's raw data.
+  API-FOOTBALL's `/fixtures/lineups` (2026-07-25, soccer only) is assumed
+  covered by the free plan since box-score stats already run on it under the
+  same key -- confirm this against the actual dashboard/plan before relying
+  on it in production, same caution as CFBD/CBBD below. Lineups and box
+  stats share the same daily request quota, so both stay capped and cached.
 - **CollegeFootballData / CollegeBasketballData:** the free key is suitable for
   testing and has a limited monthly allowance. Confirm the active tier permits
   the intended public-app traffic before production launch; do not assume that

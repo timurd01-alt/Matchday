@@ -16,7 +16,7 @@ Nothing else in the app changes — the code reads keys only from that file.
 - Use "regenerate API key" on the dashboard.
 - Paste into config_keys.py as ODDS_API_KEY.
 
-## 3. API-Football / api-sports  (box scores, optional)
+## 3. API-Football / api-sports  (box scores + soccer lineups, optional)
 - Log in at https://dashboard.api-football.com/
 - Profile -> "Regenerate API Key".
 - Paste into config_keys.py as API_FOOTBALL_KEY.
