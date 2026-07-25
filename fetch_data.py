@@ -429,7 +429,7 @@ def build_matches(raw, st):
                     "pld": s.get("pld", 0), "w": s.get("w", 0), "d": s.get("d", 0), "l": s.get("l", 0),
                     "gf": s.get("gf", 0), "ga": s.get("ga", 0), "gd": s.get("gd", 0),
                     "pts": s.get("pts", 0), "form": s.get("form", ""),
-                    "rating": round(rating_boost(t.get("name")), 2)}
+                    "rating": round(power_rating(t.get("name")), 2)}
 
         out.append({"id": str(m.get("id")),
                     "stage": pretty_group(m.get("group")) or (m.get("stage", "") or "").replace("_", " ").title(),
@@ -913,6 +913,23 @@ def elo_strength(name):
     conf = min(1.0, rec["n"] / ELO_FULL_TRUST_GAMES)
     pts = (rec["r"] - 1500.0) / 60.0
     return pts, conf
+
+
+def power_rating(name):
+    """Public-facing power rating for team profiles/standings/watchability.
+    Curated preseason files (FIFA rank/squad value/recruiting talent) only
+    cover a fraction of teams in leagues like NCAAF/NCAAM, and stay frozen
+    at a preseason snapshot for everyone else -- so this blends in the
+    self-updating Elo signal (same source predict() already uses for its
+    own 'elo' factor) as real games accumulate, and carries it alone for
+    teams the curated file has never heard of, instead of a flat neutral
+    default that makes every uncurated team look identical."""
+    known = bool(_ratings_lookup(name))
+    base = rating_boost(name)
+    elo_pts, elo_conf = elo_strength(name)
+    if not known:
+        return (5.0 + elo_pts) if elo_conf > 0 else base
+    return base * (1 - elo_conf * 0.5) + (5.0 + elo_pts) * (elo_conf * 0.5)
 
 
 # ---- head-to-head history (self-training, sport-agnostic) ---------------
@@ -1841,7 +1858,7 @@ def build_league_table(st, name_map, code_map, zones=None):
                      "pld": r["pld"], "w": r["w"], "d": r["d"], "l": r["l"],
                      "gf": r["gf"], "ga": r["ga"], "gd": r["gd"], "pts": r["pts"],
                      "form": r.get("form", ""), "pos": None, "_official": r.get("pos"), "qual": "",
-                     "rating": round(rating_boost(name_map.get(t, t)), 2)})
+                     "rating": round(power_rating(name_map.get(t, t)), 2)})
     if not rows:
         return []
     rows.sort(key=lambda x: ((x.get("_official") or 99), -x["pts"], -x["gd"], -x["gf"], x["name"]))
@@ -3169,7 +3186,8 @@ def compute_us_sport_standings(matches):
         played = r["w"] + r["l"] + r["t"]
         model[key] = {"name": r["name"], "code": "", "pld": played, "w": r["w"], "l": r["l"], "d": r["t"],
                       "gf": r["pf"], "ga": r["pa"], "gd": r["pf"] - r["pa"], "pts": r["w"] * 3 + r["t"],
-                      "form": " ".join(res for _, res in r["results"][-5:]), "group": "", "pos": None}
+                      "form": " ".join(res for _, res in r["results"][-5:]), "group": "", "pos": None,
+                      "rating": round(power_rating(r["name"]), 2)}
     ranked = sorted(model.values(), key=lambda rec: (-rec["w"] / max(1, rec["pld"]), -rec["gd"]))
     for i, rec in enumerate(ranked, 1):
         rec["pos"] = i
@@ -3507,8 +3525,12 @@ def build():
                 # class/power-rating signal, independent of standings -- lets the
                 # Sandbox (and predict() when pts/gd/form are still 0 preseason)
                 # differentiate teams by real preseason strength instead of
-                # going flat until games start being played
-                t["rating"] = round(rating_boost(t["name"]), 2)
+                # going flat until games start being played. power_rating()
+                # blends in live Elo so teams outside the curated ratings
+                # file (most of NCAAF/NCAAM) still get a real, differentiated
+                # number instead of the same neutral default as every other
+                # unlisted team.
+                t["rating"] = round(power_rating(t["name"]), 2)
         for table in sports_tables:
             for team in table.get("teams") or []:
                 if team.get("name"):
@@ -3631,7 +3653,7 @@ def build():
                 "name": name_map.get(t, t.title()), "code": code_map.get(t, ""),
                 "pos": r.get("pos"), "pld": r["pld"], "w": r["w"], "d": r["d"], "l": r["l"],
                 "gf": r["gf"], "ga": r["ga"], "gd": r["gd"], "pts": r["pts"], "form": r["form"],
-                "rating": round(rating_boost(name_map.get(t, t)), 2),
+                "rating": round(power_rating(name_map.get(t, t)), 2),
                 "season_stale": bool(r.get("season_stale"))})
     third_in = {norm(x.get("team")) for x in third if x.get("in")} or None
     third_out = {norm(x.get("team")) for x in third if not x.get("in")} if third else None
