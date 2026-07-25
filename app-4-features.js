@@ -165,7 +165,11 @@ function _v10OfficialPick(m){
   let marketGap=null;
   let gateReason='';
 
-  if(cand&&rawSide===cand&&marketTopNoDraw&&marketTopNoDraw!==cand&&_v10Has(market[marketTopNoDraw])&&_v10Has(market[cand])){
+  // Once a match is FINISHED, live market odds are either stale or have
+  // drifted toward reflecting the actual result -- never let them override
+  // the frozen pre-kickoff pick here, or a correct call can get silently
+  // rewritten into looking like hindsight (or a real miss can get hidden).
+  if(m?.status!=='FINISHED'&&cand&&rawSide===cand&&marketTopNoDraw&&marketTopNoDraw!==cand&&_v10Has(market[marketTopNoDraw])&&_v10Has(market[cand])){
     marketGap=Math.abs(Number(market[marketTopNoDraw])-Number(market[cand]));
     const boxEdge=Number(u.box_score_edge??u.box_edge??0);
     const strongBox=boxEdge>=0.35||u.box_score_gate===true;
