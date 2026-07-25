@@ -327,7 +327,7 @@ function _v11TeamRow(m,side){
   const win=_v11IsWin(m,side);
   const isPath=/^(Winner|Loser|Seed)\b|^TBD$/i.test(String(nm));
   let fl='';
-  try{fl=code?flagEmoji(code):''}catch(e){fl=''}
+  try{fl=code?uiFlag(code):''}catch(e){fl=''}
   return `<div class="brWideTeam ${win?'win':''} ${isPath?'path':''}"><div class="brWideName">${slot?`<span class="brWideSlot">${esc(slot)}</span>`:''}${fl?`<span class="flag">${fl}</span>`:''}${code?`<span class="brWideCode">${esc(code)}</span>`:''}<span class="brWideText">${esc(nm)}</span></div><div class="brWideScore">${score!=null&&score!==''?esc(score):''}</div></div>`;
 }
 function _v11StatusText(m){
@@ -433,10 +433,57 @@ function renderBracketSim(host,toggle){
   const cols=rounds.map(r=>`<section class="brCol"><div class="roundTitle">${esc(r.round)}</div>${r.matches.map(_bracketSimCard).join('')}</section>`).join('');
   host.innerHTML=`<div class="bracketStageHeader"><div class="vhead">Bracket Simulator</div><div class="bracketLegend">${toggle}<button class="btmbtn" onclick="bracketSimReset()">Reset to model picks</button></div></div><div class="bracketWideHint"><span>Click a team to override the model's pick for that match — it cascades through the rest of the bracket.</span>${_bracketScrollControls()}</div><div class="bracketWideShell"><div class="bracketWideBoard">${cols}</div></div>`;
 }
+// The CFP is a 12-team single-elimination bracket (4 first-round games,
+// seeds 5-12; the top 4 seeds get byes straight to the quarterfinals) --
+// nothing like a 32-team World Cup knockout stage. The generic bracket
+// renderer below hardcodes exactly that WC shape (Round of 32 down to a
+// third-place playoff) and silently drops any round whose name doesn't
+// canonicalize to one of those soccer labels, which is every CFP round
+// name the backend actually sends ("CFP First Round (model projection)"
+// etc.) -- so NCAAF always fell back to a fake 32-team bracket built from
+// group standings that don't apply to college football at all.
+function _cfpRoundKey(name){
+  const x=String(name||'').toLowerCase();
+  if(/first round/.test(x))return'first';
+  if(/quarter/.test(x))return'quarter';
+  if(/semi/.test(x))return'semi';
+  if(/national championship|championship|^final$/.test(x))return'final';
+  return'';
+}
+function _cfpBracketRounds(){
+  const grouped={first:[],quarter:[],semi:[],final:[]};
+  (Array.isArray(DATA.bracket)?DATA.bracket:[]).forEach(r=>{
+    const key=_cfpRoundKey(r.round||r.stage||r.name);
+    if(key)grouped[key].push(...(r.matches||[]));
+  });
+  // The model can only seed the first two rounds (quarterfinal matchups
+  // depend on results the first round hasn't produced yet), so later
+  // rounds get the same "Winner of X" placeholder-path treatment the WC
+  // bracket already uses for its own not-yet-knowable rounds.
+  if(!grouped.semi.length)grouped.semi=[
+    {stage:'Semifinal 1',home:'Winner QF 1',home_slot:'path',away:'Winner QF 2',away_slot:'path',status:'TBD',score:{}},
+    {stage:'Semifinal 2',home:'Winner QF 3',home_slot:'path',away:'Winner QF 4',away_slot:'path',status:'TBD',score:{}}
+  ];
+  if(!grouped.final.length)grouped.final=[
+    {stage:'National Championship',home:'Winner SF 1',home_slot:'path',away:'Winner SF 2',away_slot:'path',status:'TBD',score:{}}
+  ];
+  return [
+    {label:'First Round',matches:grouped.first},
+    {label:'Quarterfinals',matches:grouped.quarter},
+    {label:'Semifinals',matches:grouped.semi},
+    {label:'National Championship',matches:grouped.final}
+  ];
+}
+function _renderCFPBracket(host){
+  const official=Array.isArray(DATA.bracket)&&DATA.bracket.some(r=>(r.matches||[]).length);
+  const rounds=_cfpBracketRounds();
+  host.innerHTML=`<div class="bracketStageHeader"><div class="vhead">CFP Bracket</div><div class="bracketLegend">${official?'Official + projected paths':'Projected bracket (model seeding)'}</div></div><div class="bracketWideShell"><div class="bracketWideBoard">${rounds.map(r=>`<section class="brWideRound"><div class="brWideTitle"><b>${esc(r.label)}</b><span>${r.matches.length||0}</span></div><div class="brWideStack">${(r.matches.length?r.matches:[null]).map(m=>_v11MatchCard(m,r.label)).join('')}</div></section>`).join('')}</div></div>`;
+}
 function renderBracket(){
   const host=$('#view-bracket');
   if(!host)return;
   if(DATA.comp_key==='NCAAM'&&DATA.bracketology){_v14RenderBracketology(host,DATA.bracketology);return}
+  if(DATA.comp_key==='NCAAF'){_renderCFPBracket(host);return}
   const mode=window.__bracketMode||'view';
   const toggle=`<button class="btmbtn" onclick="window.__bracketMode='${mode==='view'?'simulate':'view'}';renderBracket();">${mode==='view'?'Simulate the bracket':'Back to bracket view'}</button>`;
   if(mode==='simulate'){renderBracketSim(host,toggle);return;}
