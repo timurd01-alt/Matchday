@@ -88,7 +88,7 @@ FD_BASE  = "https://api.football-data.org/v4"
 COMPETITIONS = {
     "WC":  {"label": "World Cup 2026",   "sport": "soccer", "fd": "WC", "odds": "soccer_fifa_world_cup",
             "outright": "soccer_fifa_world_cup_winner", "espn": "fifa.world", "tournament": True,
-            "source": "fd", "has_draws": True},
+            "source": "fd", "has_draws": True, "single_elimination": True},
     "UCL": {"label": "Champions League", "sport": "soccer", "fd": "CL", "odds": "soccer_uefa_champs_league",
             "outright": "soccer_uefa_champs_league_winner", "espn": "uefa.champions", "tournament": False,
             "source": "fd", "has_draws": True},
@@ -351,9 +351,11 @@ def _resolve_score(m):
     reg = sc.get("regularTime", {}) or {}
     et  = sc.get("extraTime", {}) or {}
     pens = sc.get("penalties", {}) or {}
-    # displayed scoreline: prefer ET if present, else regulation, else fullTime
-    if et.get("home") is not None:
-        hg, ag = et.get("home"), et.get("away")
+    # football-data reports extraTime as goals scored *during* extra time, not
+    # the cumulative 120-minute score.  Add it to regularTime.  This also avoids
+    # fullTime variants that include shootout kicks in the apparent scoreline.
+    if all(reg.get(side) is not None and et.get(side) is not None for side in ("home", "away")):
+        hg, ag = reg.get("home") + et.get("home"), reg.get("away") + et.get("away")
     elif reg.get("home") is not None:
         hg, ag = reg.get("home"), reg.get("away")
     else:
@@ -752,11 +754,31 @@ def compute_split_form(matches):
 
 
 def normalize_match_results(matches):
-    """Backfill the normalized winner on older cached provider payloads."""
+    """Backfill winners without discarding richer provider score metadata.
+
+    Soccer feeds can carry three distinct facts: the displayed score after
+    regulation/extra time, the 90-minute score used by a 1X2 market, and a
+    penalty-shootout winner.  Cached US-sports payloads generally carry only
+    ``home``/``away``.  Normalization must support both shapes without reducing
+    the richer one to the lowest common denominator.
+    """
     for match in matches or []:
         score = match.get("score") or {}
-        match["score"] = normalized_score(score.get("home"), score.get("away"),
-                                            match.get("status") == "FINISHED")
+        clean = normalized_score(score.get("home"), score.get("away"),
+                                 match.get("status") == "FINISHED")
+        for key in ("reg", "pens"):
+            value = score.get(key)
+            if isinstance(value, dict):
+                clean[key] = {"home": value.get("home"), "away": value.get("away")}
+        existing_winner = score.get("winner")
+        if match.get("status") == "FINISHED" and existing_winner in ("h", "d", "a"):
+            clean["winner"] = existing_winner
+        elif match.get("status") == "FINISHED" and clean.get("winner") == "d":
+            pens = clean.get("pens") or {}
+            ph, pa = pens.get("home"), pens.get("away")
+            if ph is not None and pa is not None and ph != pa:
+                clean["winner"] = "h" if ph > pa else "a"
+        match["score"] = clean
     return matches
 
 
@@ -1030,8 +1052,8 @@ def _scorecard_upset_bias():
     """
     try:
         picks = _load_picks()
-        graded = [p for p in picks.values()
-                  if p.get("result") and p.get("upset_candidate") and p.get("upset_score") is not None]
+        graded = [p for p in picks.values() if _record_is_official(p)
+                  and p.get("result") and p.get("upset_candidate") and p.get("upset_score") is not None]
         grp = [p for p in graded if float(p.get("upset_score") or 0) >= 60]
         if len(grp) < 8:
             return 0.0
@@ -1212,6 +1234,17 @@ def _upset_adjustment(home, away, markets, m, why, blend, two_way=False):
 
 FORM_RECENCY_WEIGHTS = [0.5, 0.65, 0.8, 0.9, 1.0]  # oldest -> most recent, within the last-5 window
 
+
+def _two_way_advancement_probs(regulation_probs):
+    """Condition a 1X2 forecast on one of the two teams advancing."""
+    home = max(0.0, float((regulation_probs or {}).get("h") or 0))
+    away = max(0.0, float((regulation_probs or {}).get("a") or 0))
+    decisive = home + away
+    if decisive <= 0:
+        return {"h": 50, "a": 50}
+    home_pct = int(round(home / decisive * 100))
+    return {"h": home_pct, "a": 100 - home_pct}
+
 def _weighted_form_score(form_str):
     """Recency-weighted W/D/L score: a result from 5 games ago counts less
     than one from last week. Scaled so a run of identical results matches
@@ -1349,23 +1382,42 @@ def predict(home, away, markets, m=None):
     raw_blend = ({"h": round((model["h"]+mk["home_pct"])/2), "d": round((model["d"]+mk["draw_pct"])/2),
               "a": round((model["a"]+mk["away_pct"])/2)} if mk else dict(model))
     raw_blend = _round_triplet(raw_blend)
-    adjusted, upset = _upset_adjustment(home, away, markets, m, why, raw_blend, two_way=two_way)
+    regulation_probs, upset = _upset_adjustment(home, away, markets, m, why, raw_blend, two_way=two_way)
 
-    outcomes = ("h", "a") if two_way else ("h", "d", "a")
-    base_pick = max(outcomes, key=lambda k: raw_blend[k])
-    pick = upset["candidate"] if upset.get("triggered") else max(outcomes, key=lambda k: adjusted[k])
+    knockout = bool(m and COMP.get("sport") == "soccer" and COMP.get("single_elimination")
+                    and _is_knockout_stage(m.get("stage")))
+    regulation_outcomes = ("h", "a") if two_way else ("h", "d", "a")
+    regulation_pick = max(regulation_outcomes, key=lambda k: regulation_probs[k])
+    advancement = _two_way_advancement_probs(regulation_probs) if knockout else None
+    if knockout:
+        outcomes = ("h", "a")
+        base_advancement = _two_way_advancement_probs(raw_blend)
+        base_pick = max(outcomes, key=lambda k: base_advancement[k])
+        candidate = upset.get("candidate")
+        pick = candidate if upset.get("triggered") and candidate in outcomes else max(outcomes, key=lambda k: advancement[k])
+        official_probs = {"h": advancement["h"], "d": 0, "a": advancement["a"]}
+        confidence = advancement[pick]
+    else:
+        outcomes = regulation_outcomes
+        base_pick = max(outcomes, key=lambda k: raw_blend[k])
+        pick = upset["candidate"] if upset.get("triggered") else max(outcomes, key=lambda k: regulation_probs[k])
+        official_probs = regulation_probs
+        confidence = regulation_probs[pick]
     name = {"h": home.get("name"), "a": away.get("name"), "d": "Draw"}[pick]
     edge, note = None, "no market to compare against"
     if mk:
         mm = {"h": mk["home_pct"], "d": mk["draw_pct"], "a": mk["away_pct"]}
-        edge = adjusted[pick] - mm[pick]
-        note = ("upset formula triggered — volatility makes the underdog playable" if upset.get("triggered")
+        edge = regulation_probs[regulation_pick] - mm[regulation_pick]
+        note = ("advancement forecast; market comparison uses regulation 1X2" if knockout
+                else "upset formula triggered — volatility makes the underdog playable" if upset.get("triggered")
                 else "favorite, but upset watch" if upset.get("score", 0) >= 60 and pick != upset.get("candidate")
                 else "model agrees with the market" if abs(edge) < 6
                 else f"model rates this {'higher' if edge > 0 else 'lower'} than the market")
+    elif knockout:
+        note = "two-way advancement forecast; no regulation market to compare"
     elif upset.get("triggered"):
         note = "upset formula triggered — volatility makes the underdog playable"
-    mkt_pull = (adjusted[pick] - model[pick]) if mk else 0
+    mkt_pull = (regulation_probs[regulation_pick] - model[regulation_pick]) if mk else 0
     sample = {"home": int(home.get("pld") or 0), "away": int(away.get("pld") or 0)}
     min_sample = min(sample.values())
     any_stale = bool(home.get("season_stale") or away.get("season_stale"))
@@ -1380,9 +1432,14 @@ def predict(home, away, markets, m=None):
                     "note": ("Limited current-season evidence; probability is intentionally conservative."
                              if quality_level != "established" else
                              "Current-season sample and opponent-adjusted results are available.")}
-    return {"pick": pick, "pick_name": name, "confidence": adjusted[pick],
+    return {"pick": pick, "pick_name": name, "confidence": confidence,
             "base_pick": base_pick, "base_pick_name": {"h": home.get("name"), "a": away.get("name"), "d": "Draw"}[base_pick],
-            "model": model, "base_blend": raw_blend, "blend": adjusted, "adjusted": adjusted,
+            "model": model, "base_blend": raw_blend, "blend": official_probs, "adjusted": official_probs,
+            "is_knockout": knockout, "advancement": advancement,
+            "regulation_pick": regulation_pick,
+            "regulation_pick_name": {"h": home.get("name"), "a": away.get("name"), "d": "Draw"}[regulation_pick],
+            "regulation_confidence": regulation_probs[regulation_pick],
+            "regulation_probs": regulation_probs,
             "edge": edge, "note": note, "why": why, "damp_pct": round(damp*100),
             "mkt_pull": mkt_pull, "upset": upset, "data_quality": data_quality}
 
@@ -2269,6 +2326,121 @@ def fetch_scorers():
 
 PICKS_FILE = f"picks_log_{COMP_KEY.lower()}.json"   # committed picks, per competition
 LEGACY_PICKS = "picks_log.json"
+PICK_SCHEMA_VERSION = 2
+MODEL_CODE_MARKER = "matchday-predictor-integrity-2026-07"
+WC_RESULT_MIGRATION_FILE = "wc_result_migration.json"
+
+
+def _json_safe(value):
+    """Return a detached JSON-safe copy suitable for an immutable ledger."""
+    return json.loads(json.dumps(value, ensure_ascii=False, default=str))
+
+
+def _utc_now(now=None):
+    value = now or datetime.datetime.now(datetime.timezone.utc)
+    if value.tzinfo is None:
+        value = value.replace(tzinfo=datetime.timezone.utc)
+    return value.astimezone(datetime.timezone.utc)
+
+
+def _parse_kickoff(value):
+    text = str(value or "").strip()
+    if not text:
+        return None
+    try:
+        parsed = datetime.datetime.fromisoformat(text.replace("Z", "+00:00"))
+    except (TypeError, ValueError):
+        return None
+    # A timezone-free time cannot establish a fair UTC lock boundary.
+    if parsed.tzinfo is None:
+        return None
+    return parsed.astimezone(datetime.timezone.utc)
+
+
+def _lock_decision(match, now=None):
+    """Classify a fixture without ever turning post-kickoff data into a pick."""
+    status = str((match or {}).get("status") or "").upper()
+    kickoff = _parse_kickoff((match or {}).get("kickoff"))
+    if status != "UPCOMING":
+        return {"state": "quarantine", "reason": f"first_seen_{status.lower() or 'unknown'}",
+                "status_at_lock": status or None, "kickoff": kickoff}
+    if kickoff is None:
+        return {"state": "wait", "reason": "missing_or_unparseable_kickoff",
+                "status_at_lock": status, "kickoff": None}
+    current = _utc_now(now)
+    lead_seconds = (kickoff - current).total_seconds()
+    if lead_seconds < 0:
+        return {"state": "quarantine", "reason": "past_due_upcoming",
+                "status_at_lock": status, "kickoff": kickoff, "lead_seconds": lead_seconds}
+    if lead_seconds > LOCK_WINDOW_HOURS * 3600:
+        return {"state": "wait", "reason": "outside_lock_window",
+                "status_at_lock": status, "kickoff": kickoff, "lead_seconds": lead_seconds}
+    return {"state": "eligible", "reason": "verified_pregame_window",
+            "status_at_lock": status, "kickoff": kickoff, "lead_seconds": lead_seconds,
+            "locked_at": current}
+
+
+def _record_is_official(rec):
+    try:
+        lead = float(rec.get("lead_time_seconds"))
+    except (TypeError, ValueError):
+        return False
+    locked_at = _parse_kickoff(rec.get("locked_at"))
+    kickoff = _parse_kickoff(rec.get("kickoff"))
+    if locked_at is None or kickoff is None:
+        return False
+    calculated_lead = (kickoff - locked_at).total_seconds()
+    return bool(rec.get("schema_ver") == PICK_SCHEMA_VERSION
+                and rec.get("model_code_marker") == MODEL_CODE_MARKER
+                and rec.get("fixture_id")
+                and rec.get("integrity_eligible") is True
+                and rec.get("integrity_status") == "verified"
+                and rec.get("status_at_lock") == "UPCOMING"
+                and 0 <= lead <= LOCK_WINDOW_HOURS * 3600
+                and abs(calculated_lead - lead) <= 1.0
+                and isinstance(rec.get("prediction_snapshot"), dict)
+                and isinstance(rec.get("input_snapshot"), dict))
+
+
+def _quarantine_legacy_records(picks):
+    """Move unverifiable entries aside while preserving every original field.
+
+    Moving the key lets the same fixture receive a new verified lock when it
+    eventually enters the two-hour window.  The legacy payload itself remains
+    in the ledger and in the scorecard's separate unverified summary.
+    """
+    changed = False
+    for key in list(picks):
+        rec = picks.get(key)
+        if not isinstance(rec, dict) or _record_is_official(rec):
+            continue
+        before = (rec.get("fixture_id"), rec.get("integrity_eligible"),
+                  rec.get("integrity_status"), rec.get("quarantine_reason"))
+        rec.setdefault("fixture_id", str(key).split("legacy:")[-1])
+        rec["integrity_eligible"] = False
+        rec["integrity_status"] = "quarantined"
+        rec.setdefault("quarantine_reason", "legacy_missing_lock_provenance")
+        if not str(key).startswith("legacy:"):
+            legacy_key = f"legacy:{key}"
+            suffix = 2
+            while legacy_key in picks:
+                legacy_key = f"legacy:{key}:{suffix}"
+                suffix += 1
+            picks[legacy_key] = rec
+            del picks[key]
+            changed = True
+        after = (rec.get("fixture_id"), rec.get("integrity_eligible"),
+                 rec.get("integrity_status"), rec.get("quarantine_reason"))
+        changed = changed or before != after
+    return changed
+
+
+def _locked_input_snapshot(match):
+    fields = ("id", "stage", "kickoff", "status", "venue", "home", "away",
+              "markets", "weather", "injuries", "lineups", "h2h", "stats", "stats_extra")
+    return _json_safe({"competition": COMP_KEY,
+                       "competition_config": COMP,
+                       "match": {key: (match or {}).get(key) for key in fields}})
 
 def _load_picks():
     for path in ([PICKS_FILE, LEGACY_PICKS] if COMP_KEY == "WC" else [PICKS_FILE]):
@@ -2296,12 +2468,75 @@ def _market_fields(pr, mk):
     if mk.get("home_pct") is not None:
         trio = {"h": mk["home_pct"], "d": mk["draw_pct"], "a": mk["away_pct"]}
         market_pick = max(trio, key=trio.get); market_pct = trio[market_pick]
-        # parallel value signal: biggest model-vs-market gap, if it clears +6
-        edges = {k: (pr.get("model") or {}).get(k, 0) - trio[k] for k in trio}
+        # Knockout official picks use advancement odds, but a 1X2 benchmark is
+        # always compared with the separately preserved regulation forecast.
+        regulation = pr.get("regulation_probs") or pr.get("model") or {}
+        edges = {k: regulation.get(k, 0) - trio[k] for k in trio}
         vs = max(edges, key=edges.get)
         if edges[vs] >= 6:
             value_side, value_edge, value_mkt = vs, round(edges[vs]), trio[vs]
     return market_pick, market_pct, value_side, value_edge, value_mkt
+
+
+def _make_pick_record(match, prediction, market, decision):
+    market_pick, market_pct, value_side, value_edge, value_mkt = _market_fields(prediction, market)
+    upset = prediction.get("upset") or {}
+    probs = prediction.get("adjusted") or prediction.get("blend") or prediction.get("model") or {}
+    regulation = prediction.get("regulation_probs") or probs
+    comparison_pick = prediction.get("regulation_pick") or prediction.get("pick")
+    locked_at = decision["locked_at"].isoformat().replace("+00:00", "Z")
+    rec = {
+        "schema_ver": PICK_SCHEMA_VERSION,
+        "fixture_id": str(match.get("id")),
+        "competition": COMP_KEY,
+        "home": match["home"]["name"], "away": match["away"]["name"],
+        "stage": match.get("stage"), "kickoff": match.get("kickoff"),
+        "pick": prediction.get("pick"), "pick_name": prediction.get("pick_name"),
+        "confidence": prediction.get("confidence"), "edge": prediction.get("edge"),
+        "base_pick": prediction.get("base_pick"), "base_pick_name": prediction.get("base_pick_name"),
+        "probs": {"h": probs.get("h"), "d": probs.get("d"), "a": probs.get("a")},
+        "advancement_probs": _json_safe(prediction.get("advancement")),
+        "regulation_probs": {"h": regulation.get("h"), "d": regulation.get("d"), "a": regulation.get("a")},
+        "regulation_pick": prediction.get("regulation_pick") or prediction.get("pick"),
+        "outcome_basis": "ultimate_winner" if prediction.get("is_knockout") else "regulation",
+        "market_basis": "regulation_1x2",
+        "market_pick": market_pick, "market_pct": market_pct,
+        "pick_mkt": ({"h": market.get("home_pct"), "d": market.get("draw_pct"), "a": market.get("away_pct")}.get(comparison_pick)
+                     if market.get("home_pct") is not None else None),
+        "value_side": value_side, "value_edge": value_edge, "value_mkt": value_mkt,
+        "value_name": ({"h": match["home"]["name"], "a": match["away"]["name"], "d": "Draw"}.get(value_side)
+                       if value_side else None),
+        "upset_candidate": upset.get("candidate"), "upset_name": upset.get("candidate_name"),
+        "upset_score": upset.get("score"), "upset_candidate_pct": upset.get("candidate_pct"),
+        "upset_triggered": upset.get("triggered"), "upset_temperature": upset.get("temperature"),
+        "upset_reason": upset.get("reason"),
+        "factor_snapshot": {k: round(float(v), 2) for k, v in (prediction.get("why") or {}).items()},
+        "market_snapshot": ({"h": market.get("home_pct"), "d": market.get("draw_pct"), "a": market.get("away_pct")}
+                            if market.get("home_pct") is not None else None),
+        "market_snapshot_at": locked_at if market.get("home_pct") is not None else None,
+        "market_gap": upset.get("market_gap_pct"),
+        "upset_snapshot": {"candidate": upset.get("candidate_name"),
+                           "class": upset.get("upset_class"),
+                           "market_dog_pct": upset.get("market_dog_pct"),
+                           "model_dog_pct": upset.get("model_dog_pct"),
+                           "upset_edge": upset.get("upset_edge"),
+                           "radar": upset.get("radar"),
+                           "gate": "open" if upset.get("triggered") else ("blocked" if upset.get("blocked") else "none"),
+                           "box_score_edge": upset.get("box_score_edge")},
+        "box_score_available": bool(match.get("stats_extra") or match.get("stats")),
+        "damp_pct": prediction.get("damp_pct"), "mkt_pull": prediction.get("mkt_pull"),
+        "model_ver": "v4-integrity-advancement", "model_code_marker": MODEL_CODE_MARKER,
+        "locked_at": locked_at,
+        "lead_time_seconds": round(float(decision["lead_seconds"]), 3),
+        "lead_time_hours": round(float(decision["lead_seconds"]) / 3600.0, 6),
+        "status_at_lock": decision["status_at_lock"],
+        "integrity_eligible": True, "integrity_status": "verified",
+        "integrity_reason": decision["reason"],
+        "prediction_snapshot": _json_safe(prediction),
+        "input_snapshot": _locked_input_snapshot(match),
+        "result": None, "model_result": None, "market_result": None,
+    }
+    return rec
 
 
 def apply_locked_picks(matches):
@@ -2318,40 +2553,12 @@ def apply_locked_picks(matches):
     picks = _load_picks()
     for m in matches:
         rec = picks.get(str(m.get("id")))
-        pr = m.get("prediction")
-        if not rec or pr is None or rec.get("pick") not in ("h", "d", "a"):
+        snapshot = (rec or {}).get("prediction_snapshot")
+        if not rec or not _record_is_official(rec) or not isinstance(snapshot, dict):
             continue
-        probs = rec.get("probs") or {}
-        if all(probs.get(k) is not None for k in ("h", "d", "a")):
-            locked = {"h": probs["h"], "d": probs["d"], "a": probs["a"]}
-            pr["adjusted"] = pr["blend"] = pr["base_blend"] = dict(locked)
-        pr["pick"] = rec["pick"]
-        pr["pick_name"] = rec.get("pick_name")
-        pr["confidence"] = rec.get("confidence")
-        pr["edge"] = rec.get("edge")
-        pr["base_pick"] = rec.get("base_pick")
-        pr["base_pick_name"] = rec.get("base_pick_name")
-        upset = dict(pr.get("upset") or {})
-        upset["candidate"] = rec.get("upset_candidate")
-        upset["candidate_name"] = rec.get("upset_name")
-        upset["score"] = rec.get("upset_score")
-        upset["candidate_pct"] = rec.get("upset_candidate_pct")
-        upset["triggered"] = rec.get("upset_triggered")
-        pr["upset"] = upset
-        # rebuild the same read predict() would have written at lock time --
-        # from the locked edge/upset fields, not a live recompute -- so the
-        # "model read" narrative always matches the locked pick, not just its
-        # side and percentage
-        edge = rec.get("edge")
-        if edge is not None:
-            pr["note"] = ("upset formula triggered — volatility makes the underdog playable" if rec.get("upset_triggered")
-                          else "favorite, but upset watch" if (rec.get("upset_score") or 0) >= 60 and rec.get("pick") != rec.get("upset_candidate")
-                          else "model agrees with the market" if abs(edge) < 6
-                          else f"model rates this {'higher' if edge > 0 else 'lower'} than the market")
-        elif rec.get("upset_triggered"):
-            pr["note"] = "upset formula triggered — volatility makes the underdog playable"
-        else:
-            pr["note"] = "no market to compare against"
+        # Replace the entire object.  Selective overlays previously left live
+        # factors, narrative and data-quality fields mixed into a locked pick.
+        m["prediction"] = _json_safe(snapshot)
 
 
 LOCK_WINDOW_HOURS = 2.0
@@ -2373,6 +2580,15 @@ def _is_knockout_stage(stage):
     return bool(label) and any(marker in label for marker in _KNOCKOUT_STAGE_MARKERS)
 
 
+def _is_advancement_fixture(match, locked_pick=None):
+    stage = (match or {}).get("stage") or (locked_pick or {}).get("stage")
+    snap = (locked_pick or {}).get("prediction_snapshot") or {}
+    if snap.get("is_knockout") is True:
+        return True
+    return bool(COMP.get("sport") == "soccer" and COMP.get("single_elimination")
+                and _is_knockout_stage(stage))
+
+
 def _scorecard_results(match, locked_pick=None):
     """Return separate (model, market) settlement results.
 
@@ -2390,8 +2606,7 @@ def _scorecard_results(match, locked_pick=None):
     if ultimate == "d" and pens.get("home") is not None and pens.get("away") is not None:
         ultimate = _side_result(pens.get("home"), pens.get("away"))
 
-    stage = match.get("stage") or (locked_pick or {}).get("stage")
-    is_knockout = _is_knockout_stage(stage)
+    is_knockout = _is_advancement_fixture(match, locked_pick)
     reg = sc_obj.get("reg") or {}
     market_result = _side_result(reg.get("home"), reg.get("away"))
     if market_result is None:
@@ -2405,20 +2620,115 @@ def _scorecard_results(match, locked_pick=None):
     return model_result, market_result
 
 
+def _score_snapshot(score, observed_at=None, source="provider"):
+    score = score or {}
+    return {"display": {"home": score.get("home"), "away": score.get("away")},
+            "regulation": _json_safe(score.get("reg")),
+            "penalties": _json_safe(score.get("pens")),
+            "ultimate_winner": score.get("winner"),
+            "observed_at": observed_at or _utc_now().isoformat().replace("+00:00", "Z"),
+            "source": source}
+
+
+def _score_string(score):
+    score = score or {}
+    home, away = score.get("home"), score.get("away")
+    if home is None or away is None:
+        return None
+    text = f"{home}-{away}"
+    pens = score.get("pens") or {}
+    if pens.get("home") is not None and pens.get("away") is not None:
+        text += f" ({pens['home']}-{pens['away']} pens)"
+    return text
+
+
+def _refresh_record_result(rec, score, source="provider", observed_at=None):
+    """Refresh factual result metadata; never rewrite the locked prediction."""
+    rendered = _score_string(score)
+    if rendered is not None:
+        previous = rec.get("result_snapshot")
+        current = _score_snapshot(score, observed_at=observed_at, source=source)
+        if previous and previous != current:
+            history = rec.setdefault("result_corrections", [])
+            comparable_previous = {k: v for k, v in previous.items() if k != "observed_at"}
+            comparable_current = {k: v for k, v in current.items() if k != "observed_at"}
+            if comparable_previous != comparable_current:
+                history.append(previous)
+        rec["score"] = rendered
+        rec["result_snapshot"] = current
+
+
+def _load_wc_result_migration():
+    if COMP_KEY != "WC":
+        return {}
+    try:
+        with open(WC_RESULT_MIGRATION_FILE, encoding="utf-8") as handle:
+            payload = json.load(handle)
+        return payload.get("fixtures") or {}
+    except Exception as exc:
+        DIAG.append(f"WC result migration unavailable: {exc}")
+        return {}
+
+
+def _apply_wc_result_migration(picks):
+    fixtures = _load_wc_result_migration()
+    changed = False
+    for rec in picks.values():
+        fixture_id = str(rec.get("fixture_id") or "")
+        migrated = fixtures.get(fixture_id)
+        if not migrated:
+            continue
+        score = migrated.get("score") or {}
+        before = (rec.get("score"), rec.get("result"), rec.get("market_result"),
+                  rec.get("model_hit"), rec.get("market_hit"),
+                  rec.get("result_snapshot"), rec.get("result_verification"))
+        match = {"stage": rec.get("stage"), "score": score}
+        model_result, market_result = _scorecard_results(match, rec)
+        _refresh_record_result(rec, score, source=migrated.get("source") or "wc_result_migration",
+                               observed_at=migrated.get("verified_at"))
+        if model_result:
+            _apply_scorecard_grade(rec, model_result, market_result)
+        rec["result_verification"] = {"status": "authoritative_result_verified",
+                                      "source": migrated.get("source"),
+                                      "verified_at": migrated.get("verified_at")}
+        after = (rec.get("score"), rec.get("result"), rec.get("market_result"),
+                 rec.get("model_hit"), rec.get("market_hit"),
+                 rec.get("result_snapshot"), rec.get("result_verification"))
+        changed = changed or before != after
+    return changed
+
+
 def _apply_scorecard_grade(rec, model_result, market_result):
     """Apply model and 1X2 market grades without touching the score string."""
-    rec["result"] = model_result
+    rec["model_result"] = model_result
+    rec["result"] = model_result  # compatibility with the existing scorecard UI
     rec["model_hit"] = (rec.get("pick") == model_result)
     if market_result:
         rec["market_result"] = market_result
         rec["market_hit"] = (rec.get("market_pick") == market_result) if rec.get("market_pick") else None
     else:
-        rec.setdefault("market_result", None)
-        rec.setdefault("market_hit", None)
+        # Never preserve a legacy ultimate-winner market grade when the actual
+        # regulation settlement is unknown.
+        rec["market_result"] = None
+        rec["market_hit"] = None
     if rec.get("upset_candidate"):
         rec["upset_hit"] = (rec.get("upset_candidate") == model_result)
-    probs = rec.get("probs") or {}
-    if probs:
+    knockout = rec.get("outcome_basis") == "ultimate_winner" or _is_advancement_fixture({}, rec)
+    probs = (rec.get("advancement_probs") or {}) if knockout else (rec.get("regulation_probs") or rec.get("probs") or {})
+    if knockout:
+        rec["brier3"] = None
+        rec["log_loss"] = None
+        if all(probs.get(k) is not None for k in ("h", "a")) and model_result in ("h", "a"):
+            y = {"h": 1.0 if model_result == "h" else 0.0,
+                 "a": 1.0 if model_result == "a" else 0.0}
+            try:
+                rec["brier_advancement"] = round(sum(
+                    ((float(probs[k]) / 100.0) - y[k]) ** 2 for k in ("h", "a")), 3)
+                rec["log_loss_advancement"] = round(
+                    -math.log(max(0.001, float(probs[model_result]) / 100.0)), 3)
+            except Exception:
+                pass
+    elif probs:
         y = {"h": 1.0 if model_result == "h" else 0.0,
              "d": 1.0 if model_result == "d" else 0.0,
              "a": 1.0 if model_result == "a" else 0.0}
@@ -2445,67 +2755,40 @@ def update_scorecard(matches):
     near-game market odds) right up to a fair cutoff; grade it once finished.
     Picks themselves are never rewritten after they lock — market-comparison
     fields backfill once odds appear if they weren't in yet at lock time.
-    A match that shows up already LIVE/FINISHED without ever having locked
-    (short-notice fixture, missed fetch window) locks immediately instead of
-    never locking at all."""
-    picks = _load_picks(); dirty = False
+    A fixture first seen after kickoff is never admitted to the official record."""
+    picks = _load_picks(); dirty = _quarantine_legacy_records(picks)
+    dirty = _apply_wc_result_migration(picks) or dirty
+    by_fixture = defaultdict(list)
+    for key, stored in picks.items():
+        fixture_id = str(stored.get("fixture_id") or ("" if str(key).startswith("legacy:") else key))
+        if fixture_id:
+            by_fixture[fixture_id].append(stored)
     for m in matches:
         mid = str(m.get("id"))
         pr = m.get("prediction"); mk = (m.get("markets") or {}).get("1x2") or {}
-        hrs = _hours_to_kickoff(m)
-        within_lock_window = hrs is None or hrs <= LOCK_WINDOW_HOURS
-        should_lock = pr and mid not in picks and (
-            (m.get("status") == "UPCOMING" and within_lock_window) or m.get("status") in ("LIVE", "FINISHED")
-        )
+        decision = _lock_decision(m)
+        should_lock = bool(pr and mid not in picks and decision["state"] == "eligible")
         if should_lock:
-            market_pick, market_pct, value_side, value_edge, value_mkt = _market_fields(pr, mk)
-            upset = pr.get("upset") or {}
-            probs = pr.get("adjusted") or pr.get("blend") or pr.get("model") or {}
-            picks[mid] = {"home": m["home"]["name"], "away": m["away"]["name"],
-                          "stage": m.get("stage"), "kickoff": m.get("kickoff"),
-                          "pick": pr.get("pick"), "pick_name": pr.get("pick_name"),
-                          "confidence": pr.get("confidence"), "edge": pr.get("edge"),
-                          "base_pick": pr.get("base_pick"), "base_pick_name": pr.get("base_pick_name"),
-                          "probs": {"h": probs.get("h"), "d": probs.get("d"), "a": probs.get("a")},
-                          "market_pick": market_pick, "market_pct": market_pct,
-                          "pick_mkt": ({"h": mk.get("home_pct"), "d": mk.get("draw_pct"), "a": mk.get("away_pct")}.get(pr.get("pick"))
-                                       if mk.get("home_pct") is not None else None),
-                          "value_side": value_side, "value_edge": value_edge, "value_mkt": value_mkt,
-                          "value_name": ({"h": m["home"]["name"], "a": m["away"]["name"], "d": "Draw"}.get(value_side) if value_side else None),
-                          "upset_candidate": upset.get("candidate"), "upset_name": upset.get("candidate_name"),
-                          "upset_score": upset.get("score"), "upset_candidate_pct": upset.get("candidate_pct"),
-                          "upset_triggered": upset.get("triggered"), "upset_temperature": upset.get("temperature"),
-                          "upset_reason": upset.get("reason"),
-                          # ---- deep-dive capture (evidence for later analysis) ----
-                          "factor_snapshot": {k: round(float(v), 2) for k, v in (pr.get("why") or {}).items()},
-                          "market_snapshot": ({"h": mk.get("home_pct"), "d": mk.get("draw_pct"), "a": mk.get("away_pct")}
-                                              if mk.get("home_pct") is not None else None),
-                          "market_gap": upset.get("market_gap_pct"),
-                          "upset_snapshot": {"candidate": upset.get("candidate_name"),
-                                             "class": upset.get("upset_class"),
-                                             "market_dog_pct": upset.get("market_dog_pct"),
-                                             "model_dog_pct": upset.get("model_dog_pct"),
-                                             "upset_edge": upset.get("upset_edge"),
-                                             "radar": upset.get("radar"),
-                                             "gate": "open" if upset.get("triggered") else ("blocked" if upset.get("blocked") else "none"),
-                                             "box_score_edge": upset.get("box_score_edge")},
-                          "box_score_available": bool(m.get("stats_extra") or m.get("stats")),
-                          "damp_pct": pr.get("damp_pct"), "mkt_pull": pr.get("mkt_pull"),
-                          "model_ver": "v3-upset", "result": None}
+            picks[mid] = _make_pick_record(m, pr, mk, decision)
+            by_fixture[mid].append(picks[mid])
             dirty = True
-        elif (m.get("status") == "UPCOMING" and mid in picks and picks[mid].get("result") is None
-              and picks[mid].get("market_pick") is None and mk.get("home_pct") is not None):
+        elif (m.get("status") == "UPCOMING" and mid in picks and _record_is_official(picks[mid])
+              and picks[mid].get("result") is None and picks[mid].get("market_pick") is None
+              and mk.get("home_pct") is not None):
             # odds weren't available when this pick locked (fetch_odds() only runs
             # within 24h of kickoff) — backfill the market-comparison fields now
             # that they exist. The pick itself (side/confidence) never changes.
             rec = picks[mid]
-            market_pick, market_pct, value_side, value_edge, value_mkt = _market_fields(pr or {}, mk)
+            locked_prediction = rec.get("prediction_snapshot") or {}
+            market_pick, market_pct, value_side, value_edge, value_mkt = _market_fields(locked_prediction, mk)
             rec["market_pick"] = market_pick; rec["market_pct"] = market_pct
-            rec["pick_mkt"] = ({"h": mk.get("home_pct"), "d": mk.get("draw_pct"), "a": mk.get("away_pct")}.get(rec.get("pick"))
+            comparison_pick = rec.get("regulation_pick") or rec.get("pick")
+            rec["pick_mkt"] = ({"h": mk.get("home_pct"), "d": mk.get("draw_pct"), "a": mk.get("away_pct")}.get(comparison_pick)
                                 if mk.get("home_pct") is not None else None)
             rec["value_side"] = value_side; rec["value_edge"] = value_edge; rec["value_mkt"] = value_mkt
             rec["value_name"] = ({"h": rec["home"], "a": rec["away"], "d": "Draw"}.get(value_side) if value_side else None)
-            rec["market_snapshot"] = {"h": mk.get("home_pct"), "d": mk.get("draw_pct"), "a": mk.get("away_pct")}
+            rec["post_lock_market_snapshot"] = {"h": mk.get("home_pct"), "d": mk.get("draw_pct"), "a": mk.get("away_pct")}
+            rec["market_backfilled_at"] = _utc_now().isoformat().replace("+00:00", "Z")
             dirty = True
         elif m.get("status") == "FINISHED" and mid in picks and picks[mid].get("result") is not None:
             # Keep previously graded picks aligned with the split settlement rule:
@@ -2513,11 +2796,12 @@ def update_scorecard(matches):
             rec = picks[mid]
             model_res, market_res = _scorecard_results(m, rec)
             if model_res:
-                before = (rec.get("result"), rec.get("market_result"),
+                before = (rec.get("score"), rec.get("result"), rec.get("market_result"),
                           rec.get("model_hit"), rec.get("market_hit"),
                           rec.get("value_hit"), rec.get("upset_hit"))
+                _refresh_record_result(rec, m.get("score") or {})
                 _apply_scorecard_grade(rec, model_res, market_res)
-                after = (rec.get("result"), rec.get("market_result"),
+                after = (rec.get("score"), rec.get("result"), rec.get("market_result"),
                          rec.get("model_hit"), rec.get("market_hit"),
                          rec.get("value_hit"), rec.get("upset_hit"))
                 if before != after:
@@ -2532,15 +2816,34 @@ def update_scorecard(matches):
             model_res, market_res = _scorecard_results(m, rec)
             if not model_res:
                 continue
-            pens = sc_obj.get("pens")
-            score_str = f"{sh}-{sa}" + (f" ({pens['home']}-{pens['away']} pens)" if pens else "")
-            rec["score"] = score_str
+            _refresh_record_result(rec, sc_obj)
             _apply_scorecard_grade(rec, model_res, market_res)
             # closing-line value: did the market move toward our pick after we locked it?
             close = (_load_open().get(pairkey(rec["home"], rec["away"])) or {}).get("last")
-            if close and rec.get("pick_mkt") is not None and rec.get("pick") in ("h", "d", "a"):
-                rec["clv"] = round(close[rec["pick"]] - rec["pick_mkt"], 1)
+            comparison_pick = rec.get("regulation_pick") or rec.get("pick")
+            if close and rec.get("pick_mkt") is not None and comparison_pick in ("h", "d", "a"):
+                rec["clv"] = round(close[comparison_pick] - rec["pick_mkt"], 1)
             dirty = True
+    # Regrade every stored version of a provider-present fixture, including a
+    # quarantined legacy entry that was moved out of the active fixture key.
+    for m in matches:
+        if m.get("status") != "FINISHED":
+            continue
+        mid = str(m.get("id"))
+        score = m.get("score") or {}
+        if score.get("home") is None or score.get("away") is None:
+            continue
+        for rec in by_fixture.get(mid, []):
+            model_res, market_res = _scorecard_results(m, rec)
+            if not model_res:
+                continue
+            before = (rec.get("score"), rec.get("result"), rec.get("market_result"),
+                      rec.get("model_hit"), rec.get("market_hit"))
+            _refresh_record_result(rec, score)
+            _apply_scorecard_grade(rec, model_res, market_res)
+            after = (rec.get("score"), rec.get("result"), rec.get("market_result"),
+                     rec.get("model_hit"), rec.get("market_hit"))
+            dirty = dirty or before != after
     if dirty:
         _save_picks(picks)
     # self-heal: correct any stored grading where a non-level scoreline was saved as
@@ -2565,14 +2868,25 @@ def update_scorecard(matches):
     if healed:
         _save_picks(picks)
         DIAG.append("scorecard: healed legacy draw mis-gradings")
-    graded = [p for p in picks.values() if p.get("result")]
+    official = [p for p in picks.values() if _record_is_official(p)]
+    quarantined = [p for p in picks.values() if not _record_is_official(p)]
+    graded = [p for p in official if p.get("result")]
+    legacy_graded = [p for p in quarantined if p.get("result")]
     mk_graded = [p for p in graded if p.get("market_hit") is not None]
     disagree = [p for p in graded if p.get("market_pick") and p.get("pick") != p.get("market_pick")]
-    rows = sorted(picks.values(), key=lambda p: p.get("kickoff") or "", reverse=True)
+    rows = []
+    for source in sorted(picks.values(), key=lambda p: p.get("kickoff") or "", reverse=True):
+        row = _json_safe(source)
+        if not _record_is_official(source):
+            row["stage"] = f"Legacy/unverified · {row.get('stage') or 'Fixture'}"
+            row["integrity_label"] = "legacy/unverified — excluded from official record"
+        rows.append(row)
     # Brier score on the pick side (0 = perfect, <0.2 = well calibrated)
     briers = [((p.get("confidence") or 0)/100.0 - (1.0 if p.get("model_hit") else 0.0))**2 for p in graded]
     briers3 = [p.get("brier3") for p in graded if p.get("brier3") is not None]
     logloss = [p.get("log_loss") for p in graded if p.get("log_loss") is not None]
+    advancement_briers = [p.get("brier_advancement") for p in graded if p.get("brier_advancement") is not None]
+    advancement_logloss = [p.get("log_loss_advancement") for p in graded if p.get("log_loss_advancement") is not None]
     upset_watched = [p for p in graded if p.get("upset_candidate")]
     upset_triggered = [p for p in upset_watched if p.get("upset_triggered")]
     # calibration bands: stated confidence vs actual hit rate
@@ -2602,7 +2916,7 @@ def update_scorecard(matches):
               for p in sorted(graded, key=lambda x: x.get("kickoff") or "", reverse=True)
               if not p.get("model_hit")][:10]
     value_summary = {"all": _vs(vals), "chances": _vs(chances),
-                     "pending": sum(1 for p in picks.values() if p.get("value_side") and not p.get("result"))}
+                      "pending": sum(1 for p in official if p.get("value_side") and not p.get("result"))}
     upset_summary = {
         "watched": len(upset_watched),
         "hits": sum(1 for p in upset_watched if p.get("upset_hit")),
@@ -2612,8 +2926,19 @@ def update_scorecard(matches):
     }
     _mh = sum(1 for p in graded if p.get("model_hit"))
     DIAG.append(f"scorecard record: {_mh}/{len(graded)} model hits")
-    return {"graded": len(graded), "pending": len(picks) - len(graded),
+    legacy_hits = sum(1 for p in legacy_graded if p.get("model_hit"))
+    legacy_market = [p for p in legacy_graded if p.get("market_hit") is not None]
+    return {"record_scope": "verified_pregame_picks_only",
+            "graded": len(graded), "pending": len(official) - len(graded),
             "model_hits": _mh,
+            "quarantined": {"total": len(quarantined), "graded": len(legacy_graded),
+                            "pending": len(quarantined) - len(legacy_graded),
+                            "model_hits": legacy_hits,
+                            "label": "Legacy/unverified — excluded from official record"},
+            "legacy": {"graded": len(legacy_graded), "model_hits": legacy_hits,
+                       "accuracy": round(legacy_hits / len(legacy_graded) * 100, 1) if legacy_graded else None,
+                       "market_graded": len(legacy_market),
+                       "market_hits": sum(1 for p in legacy_market if p.get("market_hit"))},
             "market_graded": len(mk_graded),
             "market_hits": sum(1 for p in mk_graded if p.get("market_hit")),
             "disagree": len(disagree),
@@ -2621,6 +2946,9 @@ def update_scorecard(matches):
             "brier": round(sum(briers)/len(briers), 3) if briers else None,
             "brier3": round(sum(briers3)/len(briers3), 3) if briers3 else None,
             "log_loss": round(sum(logloss)/len(logloss), 3) if logloss else None,
+            "advancement_graded": len(advancement_briers),
+            "brier_advancement": round(sum(advancement_briers)/len(advancement_briers), 3) if advancement_briers else None,
+            "log_loss_advancement": round(sum(advancement_logloss)/len(advancement_logloss), 3) if advancement_logloss else None,
             "calibration": calib,
             "clv_n": len(clvs), "clv_avg": round(sum(clvs)/len(clvs), 1) if clvs else None,
             "clv_beat": sum(1 for c in clvs if c > 0),

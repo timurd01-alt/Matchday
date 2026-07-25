@@ -142,50 +142,31 @@ function _v10TopSide(map,includeDraw=true){
   return best;
 }
 function _v10PctFor(m,side){
-  const pr=m?.prediction||{};
-  const market=_v10MarketMap(m);
-  const sources=[pr.base_blend,pr.adjusted,pr.blend,pr.model,market];
-  for(const src of sources){const v=Number(src?.[side]);if(Number.isFinite(v))return Math.round(v)}
-  return Number.isFinite(Number(pr.confidence))?Math.round(Number(pr.confidence)):null;
+  const official=officialPrediction(m);
+  if(side===official.side&&Number.isFinite(Number(official.confidence)))return Math.round(Number(official.confidence));
+  const v=Number(officialPredictionProbabilities(m)?.[side]);
+  return Number.isFinite(v)?Math.round(v):null;
 }
 function _v10OfficialPick(m){
   const pr=m?.prediction||{};
   const u=pr.upset||{};
-  const adjusted=pr.adjusted||pr.blend||pr.model||{};
-  const baseBlend=pr.base_blend||pr.raw_blend||pr.pre_upset||{};
+  const published=officialPrediction(m);
   const market=_v10MarketMap(m);
-  const marketTop=_v10TopSide(market,true);
-  const marketTopNoDraw=_v10TopSide(market,false);
-  let rawSide=pr.pick||_v10TopSide(adjusted,true)||_v10TopSide(baseBlend,true)||marketTop||'';
-  let rawName=pr.pick_name||_v10SideName(m,rawSide);
-  const cand=u.candidate||((u.triggered&&rawSide&&rawSide!=='d')?rawSide:'');
-  const fav=u.favorite||marketTopNoDraw||_v10TopSide(baseBlend,false)||_v10TopSide(adjusted,false)||'';
-  let officialSide=rawSide;
-  let blocked=false;
-  let marketGap=null;
-  let gateReason='';
-
-  if(cand&&rawSide===cand&&marketTopNoDraw&&marketTopNoDraw!==cand&&_v10Has(market[marketTopNoDraw])&&_v10Has(market[cand])){
-    marketGap=Math.abs(Number(market[marketTopNoDraw])-Number(market[cand]));
-    const boxEdge=Number(u.box_score_edge??u.box_edge??0);
-    const strongBox=boxEdge>=0.35||u.box_score_gate===true;
-    const backendBlocked=u.blocked===true||u.market_gate===false;
-    if(backendBlocked || (marketGap>12 && !(Number(u.score||0)>=75&&strongBox))){
-      blocked=true;
-      officialSide=(pr.base_pick&&pr.base_pick!==cand)?pr.base_pick:
-        (_v10TopSide(baseBlend,true)&&_v10TopSide(baseBlend,true)!==cand)?_v10TopSide(baseBlend,true):
-        marketTopNoDraw;
-      gateReason=`market gap ${Math.round(marketGap)} pts blocks override`;
-    }
-  }
-
-  const name=_v10SideName(m,officialSide);
-  const conf=_v10PctFor(m,officialSide);
+  // Do not recalculate a pick from live probabilities, odds, or box-score
+  // state here. The backend has already applied its gate and frozen the pick.
+  const officialSide=published.side;
+  const name=published.name||_v10SideName(m,officialSide);
+  const conf=Number.isFinite(Number(published.confidence))?Math.round(Number(published.confidence)):null;
+  const cand=u.candidate||'';
+  const rawSide=officialSide,rawName=name;
+  const blocked=!!cand&&(u.blocked===true||u.market_gate===false);
+  const marketGap=Number.isFinite(Number(u.market_gap_pct))?Math.round(Number(u.market_gap_pct)):null;
+  const gateReason=u.gate_reason||u.block_reason||(marketGap!=null?`market gap ${marketGap} pts`:'backend gate');
   const marketPct=_v10Has(market[officialSide])?Math.round(market[officialSide]):null;
   const candName=u.candidate_name||_v10SideName(m,cand);
   const candPct=Number.isFinite(Number(u.candidate_pct))?Math.round(Number(u.candidate_pct)):_v10PctFor(m,cand);
   const officialNote=blocked
-    ? `Upset watch: ${candName}. ${gateReason}; official pick stays ${name}.`
+    ? `Upset watch: ${candName}. ${gateReason}; the locked pick remains ${name}.`
     : (u.triggered&&cand===officialSide ? 'Upset pick passed the gate.' : (pr.note||'model read'));
   return {side:officialSide,name,confidence:conf,marketPct,rawSide,rawName,blocked,gateReason,marketGap,
           candidate:cand,candidateName:candName,candidatePct:candPct,upsetScore:Number(u.score||0),
@@ -203,7 +184,7 @@ function edgeBreakdown(m){
   const op=_v10OfficialPick(m);
   const pickSide=op.side;
   const mkmap={h:x.home_pct,d:x.draw_pct,a:x.away_pct};
-  const modelP=(pr.base_blend&&pr.base_blend[pickSide]!=null)?pr.base_blend[pickSide]:(pr.model?pr.model[pickSide]:null);
+  const modelP=officialPredictionProbabilities(m)?.[pickSide];
   const mktP=mkmap[pickSide];
   const edge=_v10OfficialEdge(m,op);
   const team=(pickSide==='h')?m.home:(pickSide==='a')?m.away:null;
@@ -265,7 +246,7 @@ function _modelRow(m){
   const edgeVal=_v10OfficialEdge(m,op);const edge=(edgeVal==null||arch)?'':`${edgeVal>0?'+':''}${edgeVal}`;
   const sub=arch?`${op.confidence??'—'}% · ${_modelFinalText(m)}`:`${op.confidence??'—'}% · ${_modelMarketText(m,op.side)}`;
   const statusKind=op.blocked?'gate':tag.kind;const statusTxt=op.blocked?'UPSET WATCH':tag.txt;
-  return `<div class="modelRow ${arch?'archived':''}" onclick="openMatchModal('${esc(String(m.id||''))}')"><div class="modelMatch"><div class="teams">${esc(m.home?.code||m.home?.name||'H')} v ${esc(m.away?.code||m.away?.name||'A')}</div><div class="meta">${esc(m.stage||'Fixture')} · ${_modelWhen(m)}</div></div><div class="modelChoice"><div class="small">${arch?'Archived pick':'Official pick'}</div><div class="main">${esc(op.name||'No pick')}</div><div class="sub">${esc(sub)}</div></div>${_modelBars(pr)}<div class="modelStatus"><span class="tag ${statusKind}">${statusTxt}</span>${edge?`<span class="tag ${kind}">${edge} edge</span>`:''}</div></div>`;
+  return `<div class="modelRow ${arch?'archived':''}" onclick="openMatchModal('${esc(String(m.id||''))}')"><div class="modelMatch"><div class="teams">${esc(m.home?.code||m.home?.name||'H')} v ${esc(m.away?.code||m.away?.name||'A')}</div><div class="meta">${esc(m.stage||'Fixture')} · ${_modelWhen(m)}</div></div><div class="modelChoice"><div class="small">${arch?'Archived pick':'Official pick'}</div><div class="main">${esc(op.name||'No pick')}</div><div class="sub">${esc(sub)}</div></div>${_modelBars(m)}<div class="modelStatus"><span class="tag ${statusKind}">${statusTxt}</span>${edge?`<span class="tag ${kind}">${edge} edge</span>`:''}</div></div>`;
 }
 function _modelSpotlight(list){
   const liveList=(list||[]).filter(m=>!_modelIsArchived(m));const m=liveList.find(x=>(_v10OfficialEdge(x,_v10OfficialPick(x))||0)>=6)||liveList[0];if(!m)return'';
@@ -293,7 +274,7 @@ function _v4UpsetRows(){
   }).sort((a,b)=>b.risk-a.risk).slice(0,6);
 }
 function simpleMatchFallbackPanel(m){
-  const pr=m?.prediction||{},op=_v10OfficialPick(m);const x=(m?.markets||{})['1x2']||{};const probs=pr.adjusted||pr.blend||pr.model||{};
+  const pr=m?.prediction||{},op=_v10OfficialPick(m);const x=(m?.markets||{})['1x2']||{};const probs=officialPredictionProbabilities(m);
   const pH=Math.round(Number(probs.h??x.home_pct??0));const pD=Math.round(Number(probs.d??x.draw_pct??0));const pA=Math.round(Number(probs.a??x.away_pct??0));
   return `<div class="detailGrid v8Fallback"><div class="readCard"><div class="seclbl">Model read</div><div class="pick insightPick ${op.blocked?'gate':''}"><span class="pl">Pick</span><span class="pn">${esc(op.name||'No pick')}</span><span class="pc">${esc(op.confidence??'—')}%</span><span class="pnote">${esc(op.note||'')}</span></div><div class="prob" style="margin-top:12px"><div class="problbl"><span>${esc(m?.home?.code||'Home')}</span><span>draw</span><span>${esc(m?.away?.code||'Away')}</span></div>${bar1x2(pH,pD,pA)}</div>${edgeBreakdown(m)?`<div class="ins-summary" style="margin-top:12px"><p>${esc(edgeBreakdown(m))}</p></div>`:''}</div><div class="readCard">${marketPanel(m)}</div><div class="statsBoard">${statsPanel(m)}</div><div class="lineupBoard">${lineupsPanel(m)}</div></div>`;
 }

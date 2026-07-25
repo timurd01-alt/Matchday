@@ -2,6 +2,7 @@ import json
 import os
 import tempfile
 import unittest
+from unittest import mock
 
 import fetch_data
 
@@ -25,12 +26,17 @@ class ModelInputTests(unittest.TestCase):
         fetch_data.COMP_KEY = self.old_key
         fetch_data.COMP = self.old_comp
 
+    def use_world_cup(self):
+        fetch_data.COMP_KEY = "WC"
+        fetch_data.COMP = dict(fetch_data.COMPETITIONS["WC"])
+
     def test_cached_results_are_backfilled_with_winners(self):
         matches = [finished("one", "Alpha", "Beta", 80, 72)]
         fetch_data.normalize_match_results(matches)
         self.assertEqual(matches[0]["score"]["winner"], "h")
 
     def test_knockout_extra_time_uses_winner_but_market_uses_regulation(self):
+        self.use_world_cup()
         match = {
             "stage": "Quarter Finals",
             "score": {
@@ -43,6 +49,7 @@ class ModelInputTests(unittest.TestCase):
         self.assertEqual(match["score"], original_score)
 
     def test_knockout_penalties_use_shootout_winner_without_changing_score(self):
+        self.use_world_cup()
         match = {
             "stage": "Last 16",
             "score": {
@@ -66,6 +73,7 @@ class ModelInputTests(unittest.TestCase):
         self.assertEqual(fetch_data._scorecard_results(match), ("d", "d"))
 
     def test_model_and_market_hits_use_their_separate_knockout_results(self):
+        self.use_world_cup()
         rec = {
             "pick": "h", "market_pick": "d", "value_side": "d",
             "probs": {"h": 55, "d": 30, "a": 15}, "score": "1-1 (4-3 pens)",
@@ -79,6 +87,7 @@ class ModelInputTests(unittest.TestCase):
         self.assertEqual(rec["score"], "1-1 (4-3 pens)")
 
     def test_missing_soccer_regulation_score_does_not_guess_market_settlement(self):
+        self.use_world_cup()
         fetch_data.COMP["has_draws"] = True
         match = {
             "stage": "Final",
@@ -88,7 +97,130 @@ class ModelInputTests(unittest.TestCase):
         rec = {"pick": "h", "market_pick": "d", "market_hit": True}
         fetch_data._apply_scorecard_grade(rec, "h", None)
         self.assertTrue(rec["model_hit"])
+        self.assertIsNone(rec["market_hit"])
+        self.assertIsNone(rec["market_result"])
+
+    def test_normalize_preserves_knockout_metadata_on_real_pipeline_shape(self):
+        self.use_world_cup()
+        match = {
+            "stage": "Last 16", "status": "FINISHED",
+            "score": {"home": 1, "away": 1, "winner": "h",
+                      "reg": {"home": 1, "away": 1},
+                      "pens": {"home": 4, "away": 3}},
+        }
+        fetch_data.normalize_match_results([match])
+        self.assertEqual(match["score"]["reg"], {"home": 1, "away": 1})
+        self.assertEqual(match["score"]["pens"], {"home": 4, "away": 3})
+        self.assertEqual(match["score"]["winner"], "h")
+        self.assertEqual(fetch_data._scorecard_results(match), ("h", "d"))
+
+    def test_football_data_extra_time_is_added_to_regulation(self):
+        raw = {"score": {"regularTime": {"home": 1, "away": 1},
+                         "extraTime": {"home": 2, "away": 0},
+                         "fullTime": {"home": 3, "away": 1},
+                         "penalties": {}}}
+        self.assertEqual(fetch_data._resolve_score(raw), (3, 1, "h", (None, None), (1, 1)))
+
+    def test_lock_decision_requires_parseable_upcoming_two_hour_window(self):
+        now = fetch_data.datetime.datetime(2026, 7, 24, 12, tzinfo=fetch_data.datetime.timezone.utc)
+        base = {"status": "UPCOMING", "kickoff": "2026-07-24T14:00:00Z"}
+        self.assertEqual(fetch_data._lock_decision(base, now)["state"], "eligible")
+        self.assertEqual(fetch_data._lock_decision({**base, "kickoff": "2026-07-24T12:00:00Z"}, now)["state"], "eligible")
+        self.assertEqual(fetch_data._lock_decision({**base, "kickoff": "2026-07-24T14:00:01Z"}, now)["state"], "wait")
+        self.assertEqual(fetch_data._lock_decision({**base, "kickoff": "bad"}, now)["state"], "wait")
+        self.assertEqual(fetch_data._lock_decision({**base, "kickoff": "2026-07-24T11:59:59Z"}, now)["state"], "quarantine")
+        for status in ("LIVE", "FINISHED"):
+            self.assertEqual(fetch_data._lock_decision({**base, "status": status}, now)["state"], "quarantine")
+
+    def test_legacy_record_is_moved_and_never_official(self):
+        picks = {"fixture-1": {"pick": "h", "result": "h", "home": "A", "away": "B"}}
+        self.assertTrue(fetch_data._quarantine_legacy_records(picks))
+        self.assertNotIn("fixture-1", picks)
+        self.assertIn("legacy:fixture-1", picks)
+        self.assertFalse(fetch_data._record_is_official(picks["legacy:fixture-1"]))
+        self.assertEqual(picks["legacy:fixture-1"]["quarantine_reason"], "legacy_missing_lock_provenance")
+
+    def test_locked_snapshot_replaces_entire_recomputed_prediction(self):
+        self.use_world_cup()
+        now = fetch_data.datetime.datetime(2026, 7, 24, 12, tzinfo=fetch_data.datetime.timezone.utc)
+        match = {"id": "lock-1", "stage": "Final", "status": "UPCOMING",
+                 "kickoff": "2026-07-24T13:00:00Z", "venue": "Test",
+                 "home": {"name": "Alpha"}, "away": {"name": "Beta"},
+                 "markets": {}, "weather": {}, "injuries": {}, "lineups": None,
+                 "prediction": {"pick": "h", "pick_name": "Alpha", "confidence": 60,
+                                "adjusted": {"h": 60, "d": 0, "a": 40},
+                                "regulation_probs": {"h": 44, "d": 26, "a": 30},
+                                "regulation_pick": "h", "advancement": {"h": 60, "a": 40},
+                                "is_knockout": True, "why": {"class": 1.2},
+                                "data_quality": {"level": "early"}, "upset": {}}}
+        decision = fetch_data._lock_decision(match, now)
+        rec = fetch_data._make_pick_record(match, match["prediction"], {}, decision)
+        frozen = json.loads(json.dumps(rec["prediction_snapshot"]))
+        match["prediction"] = {"pick": "a", "why": {"live": 999}, "note": "changed"}
+        with mock.patch.object(fetch_data, "_load_picks", return_value={"lock-1": rec}):
+            fetch_data.apply_locked_picks([match])
+        self.assertEqual(match["prediction"], frozen)
+
+    def test_knockout_prediction_and_metrics_are_two_way(self):
+        self.use_world_cup()
+        home = {"name": "Alpha", "pts": 6, "gd": 2, "form": "W W"}
+        away = {"name": "Beta", "pts": 3, "gd": 0, "form": "W L"}
+        prediction = fetch_data.predict(home, away, {}, {"stage": "Final", "weather": {}, "injuries": {}})
+        self.assertIn(prediction["pick"], ("h", "a"))
+        self.assertEqual(prediction["adjusted"]["d"], 0)
+        self.assertEqual(sum(prediction["advancement"].values()), 100)
+        self.assertEqual(prediction["confidence"], prediction["advancement"][prediction["pick"]])
+        rec = {"stage": "Final", "outcome_basis": "ultimate_winner", "pick": prediction["pick"],
+               "advancement_probs": prediction["advancement"], "market_pick": "d"}
+        fetch_data._apply_scorecard_grade(rec, prediction["pick"], "d")
+        self.assertIsNotNone(rec["brier_advancement"])
+        self.assertIsNone(rec["brier3"])
         self.assertTrue(rec["market_hit"])
+
+    def test_first_seen_finished_fixture_is_not_added_to_ledger(self):
+        self.use_world_cup()
+        match = {"id": "late", "stage": "Final", "status": "FINISHED",
+                 "kickoff": "2026-07-19T19:00:00Z", "home": {"name": "A"},
+                 "away": {"name": "B"}, "score": {"home": 1, "away": 0, "winner": "h",
+                 "reg": {"home": 0, "away": 0}}, "markets": {},
+                 "prediction": {"pick": "h", "pick_name": "A", "confidence": 60}}
+        saved = []
+        with mock.patch.object(fetch_data, "_load_picks", return_value={}), \
+             mock.patch.object(fetch_data, "_save_picks", side_effect=lambda value: saved.append(value)), \
+             mock.patch.object(fetch_data, "_load_wc_result_migration", return_value={}):
+            scorecard = fetch_data.update_scorecard([match])
+        self.assertEqual(scorecard["graded"], 0)
+        self.assertEqual(scorecard["quarantined"]["total"], 0)
+        self.assertFalse(saved)
+
+    def test_wc_migration_verifies_results_but_not_lock_provenance(self):
+        self.use_world_cup()
+        picks = {"legacy:537390": {"fixture_id": "537390", "stage": "Final",
+                                    "home": "Spain", "away": "Argentina",
+                                    "pick": "h", "market_pick": "h", "market_hit": True,
+                                    "integrity_eligible": False,
+                                    "integrity_status": "quarantined"}}
+        self.assertTrue(fetch_data._apply_wc_result_migration(picks))
+        rec = picks["legacy:537390"]
+        self.assertEqual(rec["score"], "1-0")
+        self.assertEqual(rec["model_result"], "h")
+        self.assertEqual(rec["market_result"], "d")
+        self.assertFalse(rec["market_hit"])
+        self.assertFalse(fetch_data._record_is_official(rec))
+
+    def test_legacy_record_is_reported_separately_from_official_metrics(self):
+        self.use_world_cup()
+        picks = {"old": {"fixture_id": "old", "stage": "Final", "home": "A", "away": "B",
+                          "pick": "h", "result": "h", "model_hit": True}}
+        with mock.patch.object(fetch_data, "_load_picks", return_value=picks), \
+             mock.patch.object(fetch_data, "_save_picks"), \
+             mock.patch.object(fetch_data, "_load_wc_result_migration", return_value={}):
+            scorecard = fetch_data.update_scorecard([])
+        self.assertEqual(scorecard["graded"], 0)
+        self.assertEqual(scorecard["model_hits"], 0)
+        self.assertEqual(scorecard["legacy"]["graded"], 1)
+        self.assertEqual(scorecard["legacy"]["model_hits"], 1)
+        self.assertIn("Legacy/unverified", scorecard["picks"][0]["stage"])
 
     def test_srs_adjusts_margin_for_opponent_strength(self):
         matches = [

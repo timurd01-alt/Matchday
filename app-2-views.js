@@ -2,9 +2,13 @@ function btmGrade(){ // fold finished results into the record
   const db=btmLoad();db.picks=db.picks||{};let changed=false;
   (DATA.matches||[]).forEach(m=>{const p=db.picks[m.id];
     if(p&&!p.result&&m.status==='FINISHED'&&m.score){
-      const _r=(m.score.reg&&m.score.reg.home!=null)?m.score.reg:m.score;const res=_r.home>_r.away?'h':_r.home<_r.away?'a':'d';
+      const side=x=>x?.home>x?.away?'h':x?.home<x?.away?'a':'d';
+      // Community and model picks follow the team that ultimately advanced;
+      // the market benchmark continues to use its regulation settlement.
+      const res=['h','a','d'].includes(m.score.winner)?m.score.winner:side(m.score);
+      const marketRes=side((m.score.reg&&m.score.reg.home!=null)?m.score.reg:m.score);
       p.result=res;p.you_hit=(p.pick===res);
-      p.model_hit=(p.modelPick===res);p.market_hit=(p.marketPick===res);changed=true;}});
+      p.model_hit=(p.modelPick===res);p.market_hit=(p.marketPick===marketRes);changed=true;}});
   if(changed){btmSave(db);pushScore();}return db;
 }
 function btmStats(db){
@@ -41,21 +45,21 @@ function btmBadges(s,db){const out=[];
 function btmChallenge(db){
   // a framed "where do you stand" prompt on the next unpicked upcoming match with a model+market split
   const picked=new Set(Object.keys(db.picks||{}));
-  const cand=(DATA.matches||[]).filter(m=>m.status==='UPCOMING'&&m.prediction&&m.markets&&(m.markets['1x2']||{}).home_pct!=null&&!picked.has(String(m.id)));
+  const cand=(DATA.matches||[]).filter(m=>isCommunityPickOpen(m)&&m.prediction&&m.markets&&(m.markets['1x2']||{}).home_pct!=null&&!picked.has(String(m.id)));
   if(!cand.length)return null;
   // pick the one where model disagrees most with the market favorite (most interesting call)
   const score=m=>{const x=m.markets['1x2'];const mk={h:x.home_pct,d:x.draw_pct,a:x.away_pct};
     const mfav=Object.keys(mk).reduce((a,b)=>mk[b]>mk[a]?b:a);
-    return m.prediction.pick!==mfav?2:1;};
+    return officialPrediction(m).side!==mfav?2:1;};
   cand.sort((a,b)=>score(b)-score(a)||(a.kickoff||'').localeCompare(b.kickoff||''));
   const m=cand[0];const x=m.markets['1x2'];const mk={h:x.home_pct,d:x.draw_pct,a:x.away_pct};
   const mfav=Object.keys(mk).reduce((a,b)=>mk[b]>mk[a]?b:a);
   const nm=s=>s==='h'?m.home.name:s==='a'?m.away.name:'a draw';
-  const disagree=m.prediction.pick!==mfav;
+  const official=officialPrediction(m),disagree=official.side!==mfav;
   return {id:m.id,home:m.home.name,away:m.away.name,
     line:disagree
-      ?`The model likes <b>${esc(nm(m.prediction.pick))}</b>, but the market favors <b>${esc(nm(mfav))}</b>. Who's right?`
-      :`The model and market agree on <b>${esc(nm(m.prediction.pick))}</b> (${m.prediction.confidence}%). Fade them or follow?`};
+      ?`The model likes <b>${esc(nm(official.side))}</b>, but the market favors <b>${esc(nm(mfav))}</b>. Who's right?`
+      :`The model and market agree on <b>${esc(nm(official.side))}</b> (${official.confidence}%). Fade them or follow?`};
 }
 function pickBtm(id,side){if(submitPick(id,side)){}}
 function btmAnalytics(db){
@@ -104,7 +108,7 @@ function renderWeeklyAwards(){
 }
 function renderCommunity(){ensureHandle();const host=$('#view-community');const fullDb=btmGrade();const db=btmScoped(fullDb);const s=btmStats(db);
   const scopeName=communityScope()==='ALL'?'All sports':(DATA.competition||DATA.comp_key||'This sport');
-  const open=(DATA.matches||[]).filter(m=>m.status==='UPCOMING'&&m.markets&&m.markets['1x2']&&m.prediction).sort((a,b)=>(a.kickoff||'').localeCompare(b.kickoff||''));
+  const open=(DATA.matches||[]).filter(m=>isCommunityPickOpen(m)&&m.markets&&m.markets['1x2']&&m.prediction).sort((a,b)=>(a.kickoff||'').localeCompare(b.kickoff||''));
   const picks=db.picks||{};
   let h=`<div class="vhead">Community &middot; ${esc(scopeName)}</div>
   <div class="banner"><b>Lock your pick before kickoff.</b> ${communityScope()==='ALL'?'Your combined record across every sport is shown here.':'This record and its picks belong only to '+esc(scopeName)+'.'} You, the model and the market are graded side by side.</div>
@@ -146,12 +150,12 @@ function renderCommunity(){ensureHandle();const host=$('#view-community');const 
   if(ch)h+=`<div class="challengeCard" onclick="openMatchModal('${ch.id}')"><div class="challengeTag">Today's call</div><div class="challengeMatch">${esc(ch.home)} v ${esc(ch.away)}</div><div class="challengeLine">${ch.line}</div><div class="challengeHint">tap to make your pick →</div></div>`;
   h+=`<div class="seclbl" style="margin-top:18px">Make your picks</div>`;
   if(!open.length)h+=`<div class="empty">No upcoming matches with a model line right now.<br><span class="faintline">New fixtures appear here before kickoff — lock a pick and see if you can out-read the model.</span></div>`;
-  open.forEach(m=>{const p=picks[m.id];const x=m.markets['1x2'];
+  open.forEach(m=>{const p=picks[m.id];const x=m.markets['1x2'],official=officialPrediction(m);
     const sideBtn=(side,label,pct)=>{const locked=p&&p.pick===side;const disabled=p?'disabled':'';
       return `<button class="btmbtn ${locked?'locked':''}" ${disabled} onclick="pickBtm('${m.id}','${side}')">${esc(label)}${pct!=null?` <b>${pct}%</b>`:''}</button>`;};
     h+=`<div class="btmcard"><div class="btmmatch">${esc(m.home.name)} <span class="mvvs">v</span> ${esc(m.away.name)}${p?`<span class="btmlocked">your pick: ${esc(p.pick==='h'?m.home.code:p.pick==='a'?m.away.code:'Draw')}</span>`:''}</div>
       <div class="btmrow">${sideBtn('h',m.home.code||'Home',x.home_pct)}${x.draw_pct!=null&&x.draw_pct>0?sideBtn('d',t('Draw'),x.draw_pct):''}${sideBtn('a',m.away.code||'Away',x.away_pct)}</div>
-      <div class="btmmeta">model: <b>${esc(m.prediction.pick_name)}</b> ${m.prediction.confidence}% &middot; ${p?'locked — graded at full time':'pick before kickoff to play'}</div></div>`;});
+      <div class="btmmeta">model: <b>${esc(official.name)}</b> ${official.confidence??'—'}% &middot; ${p?'locked — graded when final':'pick before kickoff to play'}</div></div>`;});
   const graded=Object.values(picks).filter(p=>p.result).sort((a,b)=>b.ts-a.ts);
   if(graded.length){h+=`<div class="seclbl" style="margin-top:18px">Your results</div>`+graded.slice(0,20).map(p=>{
     const nm=p.pick==='h'?p.code.h:p.pick==='a'?p.code.a:'Draw';
