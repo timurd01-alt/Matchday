@@ -484,6 +484,18 @@ function renderBracket(){
   if(!host)return;
   if(DATA.comp_key==='NCAAM'&&DATA.bracketology){_v14RenderBracketology(host,DATA.bracketology);return}
   if(DATA.comp_key==='NCAAF'){_renderCFPBracket(host);return}
+  if(navProfile()==='us_sport'){
+    // NFL/NBA/MLB/NHL playoffs are real single-elimination brackets, but
+    // nothing in the backend computes their seeding (no NFL wild-card/bye
+    // logic, no NBA/NHL conference bracket, no MLB Division/Championship
+    // Series structure) the way CFP and March Madness projections exist.
+    // Falling through to the generic renderer below would silently show
+    // the same fake 32-team World Cup group-into-knockout shape here too,
+    // built from standings data that isn't even grouped for these sports
+    // -- an honest "not available" beats a wrong bracket.
+    host.innerHTML=`<div class="vhead">Playoff Bracket</div><div class="empty">Playoff bracket projections aren\'t built for this league yet.</div>`;
+    return;
+  }
   const mode=window.__bracketMode||'view';
   const toggle=`<button class="btmbtn" onclick="window.__bracketMode='${mode==='view'?'simulate':'view'}';renderBracket();">${mode==='view'?'Simulate the bracket':'Back to bracket view'}</button>`;
   if(mode==='simulate'){renderBracketSim(host,toggle);return;}
