@@ -199,7 +199,7 @@ function _v10OfficialEdge(m,op){
 function _totalsUnit(m){return SANDBOX_TWO_WAY.has(String(m?._comp||DATA.comp_key||'').toLowerCase())?'points':'goals';}
 function edgeBreakdown(m){
   const pr=m?.prediction, x=(m?.markets||{})['1x2']||{};
-  if(!pr)return '';
+  if(!pr||m?.status==='FINISHED')return '';
   const op=_v10OfficialPick(m);
   const pickSide=op.side;
   const mkmap={h:x.home_pct,d:x.draw_pct,a:x.away_pct};
@@ -246,6 +246,7 @@ function _v6UpsetBox(m){
 function insightModelBlock(m){
   const pr=m&&m.prediction;
   if(!pr)return '<div class="seclbl">Model pick</div><div class="nomk">No model pick yet.</div>';
+  if(m.status==='FINISHED')return '<div class="seclbl">Model pick</div><div class="nomk">Game is final — the pre-kickoff pick is no longer shown once the result is known.</div>';
   const op=_v10OfficialPick(m),edge=_v10OfficialEdge(m,op);
   const cls=(edge!=null&&Math.abs(edge)>=6?'edge ':'')+(op.blocked?'gate':'');
   return `<div class="seclbl">Model pick</div><div class="pick insightPick ${cls}"><span class="pl">Pick</span><span class="pn">${esc(op.name)}</span><span class="pc">${esc(op.confidence??'—')}%</span><span class="pnote">${esc(op.note)}</span></div>`;
@@ -296,7 +297,10 @@ function _v4UpsetRows(){
 function simpleMatchFallbackPanel(m){
   const pr=m?.prediction||{},op=_v10OfficialPick(m);const x=(m?.markets||{})['1x2']||{};const probs=pr.adjusted||pr.blend||pr.model||{};
   const pH=Math.round(Number(probs.h??x.home_pct??0));const pD=Math.round(Number(probs.d??x.draw_pct??0));const pA=Math.round(Number(probs.a??x.away_pct??0));
-  return `<div class="detailGrid v8Fallback"><div class="readCard"><div class="seclbl">Model read</div><div class="pick insightPick ${op.blocked?'gate':''}"><span class="pl">Pick</span><span class="pn">${esc(op.name||'No pick')}</span><span class="pc">${esc(op.confidence??'—')}%</span><span class="pnote">${esc(op.note||'')}</span></div><div class="prob" style="margin-top:12px"><div class="problbl"><span>${esc(m?.home?.code||'Home')}</span><span>draw</span><span>${esc(m?.away?.code||'Away')}</span></div>${bar1x2(pH,pD,pA)}</div>${edgeBreakdown(m)?`<div class="ins-summary" style="margin-top:12px"><p>${esc(edgeBreakdown(m))}</p></div>`:''}</div><div class="readCard">${marketPanel(m)}</div><div class="statsBoard">${statsPanel(m)}</div><div class="lineupBoard">${lineupsPanel(m)}</div></div>`;
+  const modelRead=m?.status==='FINISHED'
+    ?`<div class="seclbl">Model read</div><div class="nomk">Game is final — the pre-kickoff pick is no longer shown once the result is known.</div>`
+    :`<div class="seclbl">Model read</div><div class="pick insightPick ${op.blocked?'gate':''}"><span class="pl">Pick</span><span class="pn">${esc(op.name||'No pick')}</span><span class="pc">${esc(op.confidence??'—')}%</span><span class="pnote">${esc(op.note||'')}</span></div><div class="prob" style="margin-top:12px"><div class="problbl"><span>${esc(m?.home?.code||'Home')}</span><span>draw</span><span>${esc(m?.away?.code||'Away')}</span></div>${bar1x2(pH,pD,pA)}</div>${edgeBreakdown(m)?`<div class="ins-summary" style="margin-top:12px"><p>${esc(edgeBreakdown(m))}</p></div>`:''}`;
+  return `<div class="detailGrid v8Fallback"><div class="readCard">${modelRead}</div><div class="readCard">${marketPanel(m)}</div><div class="statsBoard">${statsPanel(m)}</div><div class="lineupBoard">${lineupsPanel(m)}</div></div>`;
 }
 
 
@@ -560,6 +564,7 @@ function _v15MatchProfile(m,op){
 function modelBlock(m){
   const pr=m?.prediction;
   if(!pr)return '<section class="analystPanel"><div class="analystTop"><div class="analystTitle">Model read</div></div><div class="emptyForecast">No model pick yet.</div></section>';
+  if(m?.status==='FINISHED')return '<section class="analystPanel"><div class="analystTop"><div class="analystTitle">Model read</div></div><div class="emptyForecast">This game is final — the pre-kickoff pick is no longer shown once the result is known.</div></section>';
   const op=_v10OfficialPick(m);
   const marketText=op.marketPct!=null?`Consensus snapshot: ${op.marketPct}%`:'No consensus snapshot';
   const summary=edgeBreakdown(m)||`${op.name} is the official model side${op.confidence!=null?` at ${op.confidence}%`:''}.`;

@@ -357,6 +357,11 @@ function _v4ProbabilityLines(m){
 }
 /* dedup */
 function matchStory(m){const pr=m.prediction;if(!pr)return '';
+  // A finished game's pre-kickoff pick narrative reads as wrong once the
+  // real result is known and differs from it -- modelBlock() already
+  // explains the pick is retired for finished games, so just drop the
+  // story card here instead of repeating a stale "X is the pick" sentence.
+  if(m.status==='FINISHED')return '';
   const up=pr.upset||{};const conf=pr.confidence;
   const pickName=esc(pr.pick_name||'');
   // lead sentence
