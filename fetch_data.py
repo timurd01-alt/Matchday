@@ -382,6 +382,11 @@ def compute_standings(raw):
     for m in raw:
         h = (m.get("homeTeam") or {}).get("name"); a = (m.get("awayTeam") or {}).get("name")
         if not h or not a: continue
+        # touch both teams so every scheduled team gets a row even with 0
+        # games played -- otherwise a domestic league with no fixtures
+        # finished yet (preseason) ends up with an empty T, and no amount of
+        # zones-bypassing in build_league_table can fix a table with zero rows
+        T[norm(h)]; T[norm(a)]
         if m.get("group"): T[norm(h)]["group"] = m["group"]; T[norm(a)]["group"] = m["group"]
         hs, as_, _win, _, _r90 = _resolve_score(m)
         if m.get("status") in ("FINISHED", "IN_PLAY", "PAUSED", "LIVE") and hs is not None and as_ is not None:
@@ -2299,15 +2304,73 @@ def _market_fields(pr, mk):
     return market_pick, market_pct, value_side, value_edge, value_mkt
 
 
+def apply_locked_picks(matches):
+    """Overwrite the live-recomputed prediction with the locked pick from the
+    picks log, for any match that has already locked (see update_scorecard's
+    LOCK_WINDOW_HOURS).
+
+    predict() reruns on every match on every fetch — including matches that
+    are within their lock window, live, or long finished — using Elo/H2H
+    trained on all results seen so far. Without this, a match's displayed
+    pick could keep drifting after it locked (right up through kickoff and
+    even after full time), contradicting the frozen, graded record in the
+    picks log. This makes that frozen entry win everywhere once it exists."""
+    picks = _load_picks()
+    for m in matches:
+        rec = picks.get(str(m.get("id")))
+        pr = m.get("prediction")
+        if not rec or pr is None or rec.get("pick") not in ("h", "d", "a"):
+            continue
+        probs = rec.get("probs") or {}
+        if all(probs.get(k) is not None for k in ("h", "d", "a")):
+            locked = {"h": probs["h"], "d": probs["d"], "a": probs["a"]}
+            pr["adjusted"] = pr["blend"] = pr["base_blend"] = dict(locked)
+        pr["pick"] = rec["pick"]
+        pr["pick_name"] = rec.get("pick_name")
+        pr["confidence"] = rec.get("confidence")
+        pr["edge"] = rec.get("edge")
+        pr["base_pick"] = rec.get("base_pick")
+        pr["base_pick_name"] = rec.get("base_pick_name")
+        upset = dict(pr.get("upset") or {})
+        upset["candidate"] = rec.get("upset_candidate")
+        upset["candidate_name"] = rec.get("upset_name")
+        upset["score"] = rec.get("upset_score")
+        upset["candidate_pct"] = rec.get("upset_candidate_pct")
+        upset["triggered"] = rec.get("upset_triggered")
+        pr["upset"] = upset
+        pr["note"] = "Locked pre-kickoff pick — never rewritten after the fact."
+
+
+LOCK_WINDOW_HOURS = 2.0
+
+def _hours_to_kickoff(m):
+    """None if kickoff is missing/unparseable, else hours from now to kickoff
+    (negative once kickoff has passed)."""
+    try:
+        ko = datetime.datetime.fromisoformat(str(m.get("kickoff") or "").replace("Z", "+00:00"))
+    except Exception:
+        return None
+    return (ko - datetime.datetime.now(datetime.timezone.utc)).total_seconds() / 3600.0
+
 def update_scorecard(matches):
-    """Lock a pick the first time we see an upcoming match; grade it once finished.
-    Picks themselves are never rewritten — but market comparison fields backfill
-    once odds appear, since a pick often locks well before its 24h odds window."""
+    """Lock a pick once the match is within LOCK_WINDOW_HOURS of kickoff, so
+    the model can use as much pre-game information as possible (form, injuries,
+    near-game market odds) right up to a fair cutoff; grade it once finished.
+    Picks themselves are never rewritten after they lock — market-comparison
+    fields backfill once odds appear if they weren't in yet at lock time.
+    A match that shows up already LIVE/FINISHED without ever having locked
+    (short-notice fixture, missed fetch window) locks immediately instead of
+    never locking at all."""
     picks = _load_picks(); dirty = False
     for m in matches:
         mid = str(m.get("id"))
         pr = m.get("prediction"); mk = (m.get("markets") or {}).get("1x2") or {}
-        if m.get("status") == "UPCOMING" and pr and mid not in picks:
+        hrs = _hours_to_kickoff(m)
+        within_lock_window = hrs is None or hrs <= LOCK_WINDOW_HOURS
+        should_lock = pr and mid not in picks and (
+            (m.get("status") == "UPCOMING" and within_lock_window) or m.get("status") in ("LIVE", "FINISHED")
+        )
+        if should_lock:
             market_pick, market_pct, value_side, value_edge, value_mkt = _market_fields(pr, mk)
             upset = pr.get("upset") or {}
             probs = pr.get("adjusted") or pr.get("blend") or pr.get("model") or {}
@@ -3199,6 +3262,7 @@ def build():
     if COMP_KEY == "NCAAM":
         bracketology = build_ncaam_bracketology(sports_tables)
     scorecard = update_scorecard(matches)
+    apply_locked_picks(matches)
     weekly_awards = build_weekly_awards(matches)
     try:
         from generate_posts import publish_recap_if_due
