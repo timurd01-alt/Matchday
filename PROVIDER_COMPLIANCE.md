@@ -1,16 +1,19 @@
 # Matchday provider compliance notes
 
-Reviewed: 2026-07-23. This is an engineering checklist, not legal advice.
+Reviewed: 2026-07-25. This is an engineering checklist, not legal advice.
 
 ## Launch rules
 
 - Keep every API key in `config_keys.py` or server environment variables. Never
   expose a key in browser JavaScript, generated JSON, screenshots, or Git.
-- Use only documented provider API endpoints. ESPN's site-JSON endpoints
-  (scoreboard/summary/rankings/standings/leaders) have been removed from the
-  codebase, not just disabled, because Matchday has no licensed ESPN developer
-  feed. ESPN remains only as a labeled source in the News tab's RSS-style
-  headline links, which is a link-out, not a data feed.
+- ESPN cannot be used at all. Its site-JSON endpoints (scoreboard/summary/
+  rankings/standings/leaders) have been removed from the codebase, not just
+  disabled, because Matchday has no licensed ESPN developer feed. ESPN is also
+  excluded as a News tab source: any item attributed to ESPN is rejected both
+  on fresh intake and when merging in a previous run's cached headlines for
+  feed-diversity carryover, so a stale ESPN item can't resurface even if it
+  got in before this rule was tightened. Use only documented provider API
+  endpoints in general.
 - Show provider data inside Matchday's user-facing analytics experience. Do not
   offer raw feeds, bulk downloads, a proxy API, or a standalone data product.
 - Keep the analytics/not-betting-advice language and independent-provider
