@@ -1991,6 +1991,13 @@ def _balanced_news(items, limit=48):
             continue
         item = dict(item)
         item["source"] = _source_label(item)
+        if item["source"] == "ESPN":
+            # ESPN is excluded outright, not just deprioritized -- otherwise a
+            # stale ESPN item sitting in a previous run's cached data.json
+            # (loaded via _load_previous_news for feed-diversity carryover)
+            # would keep resurfacing here even though add_item() already
+            # rejects it on fresh intake.
+            continue
         item.setdefault("feed", item["source"])
         item.setdefault("competition", COMP_KEY)
         item.setdefault("sport", COMP["sport"])
@@ -2007,8 +2014,7 @@ def _balanced_news(items, limit=48):
     for item in sorted(cleaned, key=lambda x: x.get("published") or "", reverse=True):
         by_src[item.get("source") or "News"].append(item)
 
-    # Put non-ESPN outlets first so the first screen is diverse, while ESPN remains included.
-    srcs = sorted(by_src, key=lambda s: (s == "ESPN", s.lower()))
+    srcs = sorted(by_src, key=lambda s: s.lower())
     out, row = [], 0
     while len(out) < limit and srcs:
         moved = False
