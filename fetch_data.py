@@ -2338,7 +2338,20 @@ def apply_locked_picks(matches):
         upset["candidate_pct"] = rec.get("upset_candidate_pct")
         upset["triggered"] = rec.get("upset_triggered")
         pr["upset"] = upset
-        pr["note"] = "Locked pre-kickoff pick — never rewritten after the fact."
+        # rebuild the same read predict() would have written at lock time --
+        # from the locked edge/upset fields, not a live recompute -- so the
+        # "model read" narrative always matches the locked pick, not just its
+        # side and percentage
+        edge = rec.get("edge")
+        if edge is not None:
+            pr["note"] = ("upset formula triggered — volatility makes the underdog playable" if rec.get("upset_triggered")
+                          else "favorite, but upset watch" if (rec.get("upset_score") or 0) >= 60 and rec.get("pick") != rec.get("upset_candidate")
+                          else "model agrees with the market" if abs(edge) < 6
+                          else f"model rates this {'higher' if edge > 0 else 'lower'} than the market")
+        elif rec.get("upset_triggered"):
+            pr["note"] = "upset formula triggered — volatility makes the underdog playable"
+        else:
+            pr["note"] = "no market to compare against"
 
 
 LOCK_WINDOW_HOURS = 2.0
