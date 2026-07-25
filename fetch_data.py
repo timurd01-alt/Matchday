@@ -87,45 +87,45 @@ FD_BASE  = "https://api.football-data.org/v4"
 # to config_keys.py, or launch with:  python fetch_data.py --ucl
 COMPETITIONS = {
     "WC":  {"label": "World Cup 2026",   "sport": "soccer", "fd": "WC", "odds": "soccer_fifa_world_cup",
-            "outright": "soccer_fifa_world_cup_winner", "espn": "fifa.world", "tournament": True,
+            "outright": "soccer_fifa_world_cup_winner", "tournament": True,
             "source": "fd", "has_draws": True, "single_elimination": True},
     "UCL": {"label": "Champions League", "sport": "soccer", "fd": "CL", "odds": "soccer_uefa_champs_league",
-            "outright": "soccer_uefa_champs_league_winner", "espn": "uefa.champions", "tournament": False,
+            "outright": "soccer_uefa_champs_league_winner", "tournament": False,
             "source": "fd", "has_draws": True},
     # Free launch feeds. BALLDONTLIE supplies real schedules and scores; paid
     # standings/player endpoints stay hidden when unavailable.
     "NFL": {"label": "NFL", "sport": "football", "fd": None, "odds": "americanfootball_nfl",
-            "outright": "americanfootball_nfl_super_bowl_winner", "espn": "nfl", "tournament": False,
+            "outright": "americanfootball_nfl_super_bowl_winner", "tournament": False,
             "source": "balldontlie", "has_draws": False},
     "EPL": {"label": "Premier League", "sport": "soccer", "fd": "PL", "odds": "soccer_epl",
-            "outright": "soccer_epl_winner", "espn": "eng.1", "tournament": False,
+            "outright": "soccer_epl_winner", "tournament": False,
             "source": "fd", "has_draws": True, "league_zones": {"ucl": 4, "uel": 1, "rel": 3}},
     "LALIGA": {"label": "La Liga", "sport": "soccer", "fd": "PD", "odds": "soccer_spain_la_liga",
-            "outright": "soccer_spain_la_liga_winner", "espn": "esp.1", "tournament": False,
+            "outright": "soccer_spain_la_liga_winner", "tournament": False,
             "source": "fd", "has_draws": True, "league_zones": {"ucl": 4, "uel": 1, "rel": 3}},
     "SERIEA": {"label": "Serie A", "sport": "soccer", "fd": "SA", "odds": "soccer_italy_serie_a",
-            "outright": "soccer_italy_serie_a_winner", "espn": "ita.1", "tournament": False,
+            "outright": "soccer_italy_serie_a_winner", "tournament": False,
             "source": "fd", "has_draws": True, "league_zones": {"ucl": 4, "uel": 1, "rel": 3}},
     "BUNDESLIGA": {"label": "Bundesliga", "sport": "soccer", "fd": "BL1", "odds": "soccer_germany_bundesliga",
-            "outright": "soccer_germany_bundesliga_winner", "espn": "ger.1", "tournament": False,
+            "outright": "soccer_germany_bundesliga_winner", "tournament": False,
             "source": "fd", "has_draws": True, "league_zones": {"ucl": 4, "uel": 1, "rel": 2}},
     "LIGUE1": {"label": "Ligue 1", "sport": "soccer", "fd": "FL1", "odds": "soccer_france_ligue_one",
-            "outright": "soccer_france_ligue_one_winner", "espn": "fra.1", "tournament": False,
+            "outright": "soccer_france_ligue_one_winner", "tournament": False,
             "source": "fd", "has_draws": True, "league_zones": {"ucl": 4, "uel": 1, "rel": 2}},
     "NCAAF": {"label": "College Football", "sport": "football", "fd": None, "odds": "americanfootball_ncaaf",
-            "outright": "americanfootball_ncaaf_championship_winner", "espn": "college-football", "tournament": False,
+            "outright": "americanfootball_ncaaf_championship_winner", "tournament": False,
             "source": "cfbd", "has_draws": False},
     "NCAAM": {"label": "Men's College Basketball", "sport": "basketball", "fd": None, "odds": "basketball_ncaab",
-            "outright": "basketball_ncaab_championship_winner", "espn": "mens-college-basketball", "tournament": False,
+            "outright": "basketball_ncaab_championship_winner", "tournament": False,
             "source": "cbbd", "has_draws": False},
     "MLB": {"label": "MLB", "sport": "baseball", "fd": None, "odds": "baseball_mlb",
-            "outright": "baseball_mlb_world_series_winner", "espn": "mlb", "tournament": False,
+            "outright": "baseball_mlb_world_series_winner", "tournament": False,
             "source": "balldontlie", "has_draws": False},
     "NHL": {"label": "NHL", "sport": "hockey", "fd": None, "odds": "icehockey_nhl",
-            "outright": "icehockey_nhl_championship_winner", "espn": "nhl", "tournament": False,
+            "outright": "icehockey_nhl_championship_winner", "tournament": False,
             "source": "sportsdataio", "has_draws": False},
     "NBA": {"label": "NBA", "sport": "basketball", "fd": None, "odds": "basketball_nba",
-            "outright": "basketball_nba_championship_winner", "espn": "nba", "tournament": False,
+            "outright": "basketball_nba_championship_winner", "tournament": False,
             "source": "balldontlie", "has_draws": False},
 }
 try:
@@ -173,7 +173,6 @@ _OUT_CACHE  = {"t": 0.0, "data": []}
 _NEWS_CACHE = {"t": 0.0, "data": []}
 OUTRIGHTS_URL = (f"https://api.the-odds-api.com/v4/sports/{COMP['outright']}/odds/"
                  "?regions=eu&markets=outrights&oddsFormat=decimal")
-ESPN_NEWS = f"https://site.api.espn.com/apis/site/v2/sports/{COMP['sport']}/{COMP['espn']}/news"
 OUTRIGHTS_CACHE_MIN = 60
 NEWS_CACHE_MIN = 20
 BALLDONTLIE_CACHE_MIN = 10
