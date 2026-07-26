@@ -132,16 +132,30 @@ def _interval_for(key):
 
 def _run_one(key, flag):
     """One-shot fetch for a single sport in its own process."""
+    data_path = f"data_{key}.json"
+    # Confirmed live 2026-07-26: EPL/UCL's data went un-refreshed across
+    # multiple deploy runs with no visible error anywhere reachable from
+    # outside CI (the job logs aren't fetchable without a GH token) --
+    # os.path.exists() alone can't tell a genuinely fresh write from a stale
+    # file that was already sitting there before this subprocess ran, so a
+    # subprocess that exits 0 without actually reaching its write step would
+    # get silently reported as success. Comparing mtime before/after makes
+    # that distinguishable and loud instead of invisible.
+    mtime_before = os.path.getmtime(data_path) if os.path.exists(data_path) else None
     try:
         r = subprocess.run([sys.executable, "fetch_data.py", flag],
                            capture_output=True, text=True, timeout=600,
                            cwd=os.path.dirname(os.path.abspath(__file__)) or ".")
         out = (r.stdout or "") + "\n" + (r.stderr or "")
-        ok = r.returncode == 0 and os.path.exists(f"data_{key}.json")
+        mtime_after = os.path.getmtime(data_path) if os.path.exists(data_path) else None
+        wrote_fresh = mtime_after is not None and mtime_after != mtime_before
+        ok = r.returncode == 0 and wrote_fresh
         tail = [l for l in out.strip().splitlines() if l.strip()]
         last = tail[-1] if tail else "(no output)"
         if ok:
             print(f"  [{key}] fetched · {last[:100]}")
+        elif r.returncode == 0 and not wrote_fresh:
+            print(f"  [{key}] FAILED (silent -- exited 0 but never rewrote {data_path}) · {last[:140]}")
         else:
             # show WHY: keys not loaded, network blocked, etc.
             reason = last
