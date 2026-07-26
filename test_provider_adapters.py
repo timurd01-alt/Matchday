@@ -4,7 +4,7 @@ import urllib.parse
 from unittest import mock
 
 from provider_adapters import (BallDontLieAdapter, CollegeBasketballDataAdapter,
-                               CollegeFootballDataAdapter, ProviderError,
+                               CollegeFootballDataAdapter, NflverseAdapter, ProviderError,
                                SportsDataIOAdapter, SportmonksAdapter, normalized_score)
 
 
@@ -79,6 +79,61 @@ class SportsDataIOTests(unittest.TestCase):
         leaders = adapter.leaders()
         self.assertEqual(leaders["source"], "SportsDataIO")
         self.assertEqual(leaders["categories"][0]["leaders"][0]["value"], 30.0)
+
+    def test_nhl_leaders_include_offense_and_defense_extras(self):
+        # PlusMinus can be negative -- confirm a real leader (best plus/minus)
+        # still ranks correctly and a worse-but-still-nonzero value doesn't
+        # get treated as falsy/dropped.
+        payloads = {
+            "/stats/json/PlayerSeasonStats/": [
+                {"Name": "Skater One", "Games": 20, "Points": 30, "Goals": 15, "Assists": 15,
+                 "GoaltendingSavePercentage": 0, "PlusMinus": 12, "Hits": 40, "Takeaways": 22,
+                 "ShotsOnGoal": 90},
+                {"Name": "Skater Two", "Games": 20, "Points": 20, "Goals": 8, "Assists": 12,
+                 "GoaltendingSavePercentage": 0, "PlusMinus": -4, "Hits": 60, "Takeaways": 10,
+                 "ShotsOnGoal": 70},
+            ],
+        }
+        def getter(url, headers):
+            for marker, payload in payloads.items():
+                if marker in url:
+                    return payload
+            raise AssertionError(url)
+        adapter = SportsDataIOAdapter("test-key", "NHL", getter=getter)
+        leaders = adapter.leaders()
+        by_key = {c["key"]: c for c in leaders["categories"]}
+        self.assertEqual(by_key["PlusMinus"]["leaders"][0]["name"], "Skater One")
+        self.assertEqual(by_key["PlusMinus"]["leaders"][0]["value"], 12)
+        self.assertEqual(by_key["Hits"]["leaders"][0]["name"], "Skater Two")
+
+
+class NflverseAdapterTests(unittest.TestCase):
+    def test_leaders_include_offense_and_defense_categories(self):
+        rows = [
+            {"player_id": "1", "player_display_name": "Passer One", "passing_yards": "3500",
+             "passing_tds": "28", "rushing_yards": "0", "rushing_tds": "0",
+             "receiving_yards": "0", "receiving_tds": "0", "def_sacks": "0",
+             "def_interceptions": "0", "def_tackles_solo": "0", "def_tackles_for_loss": "0",
+             "def_qb_hits": "0"},
+            {"player_id": "2", "player_display_name": "Backer One", "passing_yards": "0",
+             "passing_tds": "0", "rushing_yards": "0", "rushing_tds": "0",
+             "receiving_yards": "0", "receiving_tds": "0", "def_sacks": "12.5",
+             "def_interceptions": "3", "def_tackles_solo": "85", "def_tackles_for_loss": "14",
+             "def_qb_hits": "20"},
+            # team-level aggregate artifact row -- no player_id, must be dropped
+            {"player_id": "", "player_display_name": "", "def_sacks": "999"},
+        ]
+        adapter = NflverseAdapter(getter=lambda url, headers: "\r\n".join(
+            [",".join(rows[0].keys())] + [",".join(row.values()) for row in rows]
+        ), today=dt.date(2026, 7, 25))
+        leaders = adapter.leaders()
+        by_key = {c["key"]: c for c in leaders["categories"]}
+        self.assertEqual(by_key["PassingYards"]["leaders"][0]["name"], "Passer One")
+        self.assertEqual(by_key["Sacks"]["leaders"][0]["name"], "Backer One")
+        self.assertEqual(by_key["Sacks"]["leaders"][0]["value"], 12.5)
+        self.assertEqual(by_key["TacklesForLoss"]["leaders"][0]["value"], 14)
+        names = [entry["name"] for cat in leaders["categories"] for entry in cat["leaders"]]
+        self.assertNotIn("", names)  # the aggregate artifact row never surfaces
 
 
 class BallDontLieTests(unittest.TestCase):
@@ -224,6 +279,67 @@ class CollegeFootballDataTests(unittest.TestCase):
         self.assertIsNone(projection)
         self.assertFalse(model["michigan"]["season_stale"])
 
+    def test_reshape_player_stats_groups_rows_by_player(self):
+        rows = [
+            {"playerId": "1", "player": "Player A", "position": "QB", "team": "Michigan",
+             "conference": "Big Ten", "category": "passing", "statType": "YDS", "stat": "3000"},
+            {"playerId": "1", "player": "Player A", "position": "QB", "team": "Michigan",
+             "conference": "Big Ten", "category": "passing", "statType": "TD", "stat": "25"},
+        ]
+        players = CollegeFootballDataAdapter._reshape_player_stats(rows)
+        self.assertEqual(len(players), 1)
+        entry = players["1"]
+        self.assertEqual(entry["name"], "Player A")
+        self.assertEqual(entry["team"], "Michigan")
+        self.assertEqual(entry["stats"]["passing"]["YDS"], 3000)
+        self.assertEqual(entry["stats"]["passing"]["TD"], 25)
+
+    def test_leaders_reshapes_long_format_and_filters_to_fbs(self):
+        # Regression: /stats/player/season has no working classification
+        # filter of its own (it returns FCS/D2/D3 rows regardless of the
+        # query param, same as /records before its per-row filter), so
+        # leaders() must cross-check each player's team against a real FBS
+        # team list -- otherwise a small-school stat leader with weak
+        # competition (e.g. Tuskegee here) could out-rank actual FBS
+        # leaders on the dashboard.
+        def getter(url, headers):
+            self.assertEqual(headers["Authorization"], "Bearer shared-key")
+            if "/records?" in url:
+                self.assertIn("year=2026", url)
+                return [{"team": "Michigan", "classification": "fbs"},
+                        {"team": "Tuskegee", "classification": "ii"}]
+            if "/stats/player/season?" in url:
+                self.assertIn("year=2026", url)
+                return [
+                    {"playerId": "1", "player": "Player A", "position": "QB", "team": "Michigan",
+                     "conference": "Big Ten", "category": "passing", "statType": "YDS", "stat": "3000"},
+                    {"playerId": "1", "player": "Player A", "position": "QB", "team": "Michigan",
+                     "conference": "Big Ten", "category": "passing", "statType": "TD", "stat": "25"},
+                    {"playerId": "2", "player": "Player B", "position": "RB", "team": "Michigan",
+                     "conference": "Big Ten", "category": "rushing", "statType": "YDS", "stat": "1200"},
+                    {"playerId": "3", "player": "Player X", "position": "QB", "team": "Tuskegee",
+                     "conference": "SIAC", "category": "passing", "statType": "YDS", "stat": "5000"},
+                    {"playerId": "4", "player": "Player C", "position": "LB", "team": "Michigan",
+                     "conference": "Big Ten", "category": "defensive", "statType": "TOT", "stat": "90"},
+                    {"playerId": "4", "player": "Player C", "position": "LB", "team": "Michigan",
+                     "conference": "Big Ten", "category": "defensive", "statType": "SACKS", "stat": "8"},
+                ]
+            raise AssertionError(url)
+
+        adapter = CollegeFootballDataAdapter("shared-key", getter=getter,
+                                             today=dt.date(2026, 7, 17))
+        leaders = adapter.leaders()
+        self.assertEqual(leaders["source"], "CollegeFootballData")
+        by_key = {c["key"]: c for c in leaders["categories"]}
+        self.assertEqual(by_key["PassingYards"]["leaders"][0]["name"], "Player A")
+        self.assertEqual(by_key["PassingYards"]["leaders"][0]["value"], 3000)
+        names = [entry["name"] for entry in by_key["PassingYards"]["leaders"]]
+        self.assertNotIn("Player X", names)  # non-FBS, excluded despite the higher raw total
+        self.assertEqual(by_key["RushingYards"]["leaders"][0]["name"], "Player B")
+        self.assertEqual(by_key["PassingTouchdowns"]["leaders"][0]["value"], 25)
+        self.assertEqual(by_key["Tackles"]["leaders"][0]["name"], "Player C")
+        self.assertEqual(by_key["Sacks"]["leaders"][0]["value"], 8)
+
     def test_standings_flags_prior_season_fallback_as_stale(self):
         # Regression: before the current season's games exist, CFBD's
         # /records for the new year comes back empty and the adapter falls
@@ -274,6 +390,40 @@ class CollegeBasketballDataTests(unittest.TestCase):
         self.assertEqual(model["duke"]["record"], "1-0")
         self.assertEqual(model["north carolina"]["record"], "0-1")
         self.assertEqual(ranks[0]["name"], "Duke")
+
+    def test_leaders_computes_per_game_averages_for_d1_only(self):
+        # CBBD's /stats/player/season is already one row per player (unlike
+        # CFBD's long format), but it reports season totals, not per-game
+        # rates, and includes non-Division-I programs -- both need handling
+        # before the totals are leaderboard-ready.
+        def getter(url, headers):
+            self.assertEqual(headers["Authorization"], "Bearer shared-key")
+            if url.endswith("/teams"):
+                return [{"school": "Duke", "conference": "ACC"},
+                        {"school": "Some JUCO", "conference": None}]
+            self.assertIn("/stats/player/season?season=2026", url)
+            return [
+                {"name": "Player A", "team": "Duke", "games": 10, "points": 250,
+                 "assists": 40, "blocks": 10, "rebounds": {"total": 90},
+                 "steals": 25, "turnovers": 15},
+                {"name": "Player B", "team": "Some JUCO", "games": 10, "points": 400,
+                 "assists": 5, "blocks": 2, "rebounds": {"total": 30},
+                 "steals": 50, "turnovers": 60},
+            ]
+
+        adapter = CollegeBasketballDataAdapter("shared-key", getter=getter,
+                                               today=dt.date(2026, 7, 17))
+        leaders = adapter.leaders()
+        self.assertEqual(leaders["source"], "CollegeBasketballData")
+        by_key = {c["key"]: c for c in leaders["categories"]}
+        self.assertEqual(by_key["PointsPerGame"]["leaders"][0]["name"], "Player A")
+        self.assertEqual(by_key["PointsPerGame"]["leaders"][0]["value"], 25.0)
+        names = [entry["name"] for entry in by_key["PointsPerGame"]["leaders"]]
+        self.assertNotIn("Player B", names)  # not a Division I team, excluded despite the higher raw total
+        self.assertEqual(by_key["ReboundsPerGame"]["leaders"][0]["value"], 9.0)
+        self.assertEqual(by_key["StealsPerGame"]["leaders"][0]["name"], "Player A")
+        names_steals = [entry["name"] for entry in by_key["StealsPerGame"]["leaders"]]
+        self.assertNotIn("Player B", names_steals)  # non-D1, excluded despite the higher raw total
 
 
 class SportmonksTests(unittest.TestCase):

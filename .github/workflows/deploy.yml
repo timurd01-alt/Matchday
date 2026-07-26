@@ -53,7 +53,6 @@ jobs:
           FOOTBALL_DATA_KEY = "${{ secrets.FOOTBALL_DATA_KEY }}"
           ODDS_API_KEY = "${{ secrets.ODDS_API_KEY }}"
           API_FOOTBALL_KEY = "${{ secrets.API_FOOTBALL_KEY }}"
-          SPORTSDATAIO_KEY = "${{ secrets.SPORTSDATAIO_KEY }}"
           BALLDONTLIE_KEY = "${{ secrets.BALLDONTLIE_KEY }}"
           EOF
 
@@ -96,14 +95,14 @@ jobs:
           cp favicon.ico favicon-16.png favicon-32.png matchday.ico _site/
           cp icon-180.png icon-192.png icon-512.png logo.png _site/
           cp data.json _site/
-          for data_file in data_wc.json data_ucl.json data_epl.json data_laliga.json data_seriea.json data_bundesliga.json data_ligue1.json data_nfl.json data_ncaaf.json data_ncaam.json data_nba.json data_nhl.json; do
+          for data_file in data_wc.json data_ucl.json data_epl.json data_laliga.json data_seriea.json data_bundesliga.json data_ligue1.json data_nfl.json data_ncaaf.json data_ncaam.json data_nba.json data_mlb.json; do
             [ ! -f "$data_file" ] || cp "$data_file" _site/
           done
           cp content-feed.json _site/
           mkdir -p _site/posts
           python - <<'EOF'
           import json, pathlib, shutil
-          public = {"wc", "ucl", "epl", "laliga", "seriea", "bundesliga", "ligue1", "nfl", "ncaaf", "ncaam", "nba", "nhl"}
+          public = {"wc", "ucl", "epl", "laliga", "seriea", "bundesliga", "ligue1", "nfl", "ncaaf", "ncaam", "nba", "mlb"}
           try:
               posts = json.loads(pathlib.Path("posts.json").read_text(encoding="utf-8"))
           except Exception:

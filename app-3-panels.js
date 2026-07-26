@@ -29,7 +29,7 @@ const isSample=(DATA.source_note||'').toLowerCase().includes('sample');
 parts.push(isSample?`<span class="ls-badge sample">${t("sample data")}</span>`:live.length?`<span class="ls-badge live">${t("live data")}</span>`:`<span class="ls-badge ok">${t("live feed")}</span>`);
 const streakStats=btmStats(btmGrade());
 if(streakStats.streak>=2)parts.push(`<span class="ls-streak" title="Beat the Model: ${streakStats.streak} correct in a row" onclick="setView('community')">\u{1F525} ${streakStats.streak}</span>`);
-if(live.length){const m=live[0];parts.push(`<span class="ls-tag"><span class="dot"></span>LIVE${m.minute?` ${m.minute}'`:''}</span>`);parts.push(`<span class="ls-live ls-clickable" data-mid="${esc(m.id)}" onclick="openMatchModal(this.dataset.mid)" role="button" tabindex="0" title="Open expanded view">${esc(m.home.code)} ${m.score?.home??0}–${m.score?.away??0} ${esc(m.away.code)}</span>`);if(live.length>1)parts.push(`<span class="ls-next">+${live.length-1} more live</span>`)}else parts.push(`<span class="ls-next">No live matches</span>`);if(next)parts.push(`<span class="ls-next ls-clickable" data-mid="${esc(next.id)}" onclick="openMatchModal(this.dataset.mid)" role="button" tabindex="0" title="Open expanded view">Next · <b>${esc(next.home.code)} v ${esc(next.away.code)}</b> ${kickIn(next.kickoff)}</span>`);else parts.push(`<span class="ls-next">No upcoming fixtures</span>`);parts.push(`<span class="ls-upd">${(()=>{try{const a=(Date.now()-new Date(DATA.updated))/60000;if(a>360)return `<b class="stale">data ${ago(DATA.updated)}</b> · `;}catch(e){}return 'Updated '+ago(DATA.updated)+' · ';})()}${t("analytics only, not betting advice")} · <b style="color:var(--signal)">build 0724Q</b></span>`);$('#strip').innerHTML=parts.join('')}
+if(live.length){const m=live[0];parts.push(`<span class="ls-tag"><span class="dot"></span>LIVE${m.minute?` ${m.minute}'`:''}</span>`);parts.push(`<span class="ls-live ls-clickable" data-mid="${esc(m.id)}" onclick="openMatchModal(this.dataset.mid)" role="button" tabindex="0" title="Open expanded view">${esc(m.home.code)} ${m.score?.home??0}–${m.score?.away??0} ${esc(m.away.code)}</span>`);if(live.length>1)parts.push(`<span class="ls-next">+${live.length-1} more live</span>`)}else parts.push(`<span class="ls-next">No live matches</span>`);if(next)parts.push(`<span class="ls-next ls-clickable" data-mid="${esc(next.id)}" onclick="openMatchModal(this.dataset.mid)" role="button" tabindex="0" title="Open expanded view">Next · <b>${esc(next.home.code)} v ${esc(next.away.code)}</b> ${kickIn(next.kickoff)}</span>`);else parts.push(`<span class="ls-next">No upcoming fixtures</span>`);parts.push(`<span class="ls-upd">${(()=>{try{const a=(Date.now()-new Date(DATA.updated))/60000;if(a>360)return `<b class="stale">data ${ago(DATA.updated)}</b> · `;}catch(e){}return 'Updated '+ago(DATA.updated)+' · ';})()}${t("analytics only, not betting advice")} · <b style="color:var(--signal)">build 0725H</b></span>`);$('#strip').innerHTML=parts.join('')}
 /* removed duplicate (diverseNews) */
 /* removed duplicate (renderInsight) */
 function setView(v){VIEW=v;document.querySelectorAll('.navbtn[data-v]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===v));document.querySelectorAll('.view').forEach(el=>el.style.display=el.id==='view-'+v?((v==='matches'||v==='results')?'grid':'block'):'none');renderCurrent();const active=$('#view-'+v);if(active){active.classList.remove('viewEntering');void active.offsetWidth;active.classList.add('viewEntering')}}
@@ -64,18 +64,21 @@ function aggregateScorecards(datasets){
 }
 async function load(manual=false){if(LOAD_TIMER){clearTimeout(LOAD_TIMER);LOAD_TIMER=null}try{
   if(!DATA_FILE){ // ALL SPORTS: merge every sport file that exists
-    const keys=['wc','ucl','epl','laliga','seriea','bundesliga','ligue1','nfl','ncaaf','ncaam','nba'];
+    const keys=['wc','ucl','epl','laliga','seriea','bundesliga','ligue1','nfl','ncaaf','ncaam','nba','mlb'];
     const results=await Promise.all(keys.map(k=>fetch('data_'+k+'.json?_='+Date.now()).then(r=>r.ok?r.json():null).catch(()=>null)));
     let base=null;const merged=[];let news=[];let latest='';
+    const titleBySport=[];
     results.forEach((d,i)=>{if(!d)return;if(!base)base=d;
       (d.matches||[]).forEach(m=>{m._comp=(d.comp_key||keys[i].toUpperCase());merged.push(m);});
       const comp=d.comp_key||keys[i].toUpperCase();
       const compLabel=SPORT_LABELS[String(comp).toLowerCase()]||d.competition||comp;
       news=news.concat((d.news||[]).slice(0,8).map(a=>({...a,_comp:a.competition||comp,feed:compLabel})));
-      if((d.updated||'')>latest)latest=d.updated;});
+      if((d.updated||'')>latest)latest=d.updated;
+      const top=(d.title_odds||[])[0];
+      if(top)titleBySport.push({comp,label:compLabel,team:top.team,code:top.code,pct:top.pct});});
     if(!base){const r0=await fetch('data.json?_='+Date.now());if(!r0.ok)throw new Error('no data files yet — run a fetch');base=await r0.json();(base.matches||[]).forEach(m=>merged.push(m));news=base.news||[];latest=base.updated;}
     merged.sort((a,b)=>(a.kickoff||'').localeCompare(b.kickoff||''));
-    DATA=Object.assign({},base,{matches:merged,news:news,updated:latest,competition:'All sports',comp_key:'ALL',standings:[],third_race:[],scorecard:aggregateScorecards(results.some(Boolean)?results:[base])});
+    DATA=Object.assign({},base,{matches:merged,news:news,updated:latest,competition:'All sports',comp_key:'ALL',standings:[],third_race:[],scorecard:aggregateScorecards(results.some(Boolean)?results:[base]),title_by_sport:titleBySport});
   } else {
     const r=await fetch(DATA_FILE+'?_='+Date.now());if(!r.ok)throw new Error('HTTP '+r.status);DATA=await r.json();
   }BYID={};(DATA.matches||[]).forEach(m=>BYID[m.id]=m);LAST_OK=true;LAST_ERROR='';const cn=$('#compName');if(cn)cn.textContent=DATA.competition?' · '+DATA.competition:'';const tb=document.querySelector('.navbtn[data-v="third"]');if(tb)tb.style.display=(DATA.third_race&&DATA.third_race.length)?'':'none';const gb2=document.querySelector('.navbtn[data-v="groups"]');if(gb2)gb2.style.display=(DATA.standings&&DATA.standings.length)?'':'none';$('#banner').innerHTML=DATA.markets_quota_out?`<div class="marketBanner"><b>Market odds temporarily unavailable.</b> Our monthly betting-market data quota is used up, so market comparisons are paused. The model's own predictions still work normally — market lines return when the quota resets.</div>`:'';applySportNav();renderStrip();renderInsight();renderCurrent();applyStaticI18n();renderAlerts()}catch(e){console.error(e);applySportNav();
@@ -443,6 +446,10 @@ function _v4TitleRows(t){
   const max=Number(t[0].pct)||1;
   return t.slice(0,12).map((x,i)=>`<div class="raceRow"><span class="raceRank">${i+1}</span><div><div class="raceTeam">${uiFlag(x.code)?`<span class="flagIcon">${uiFlag(x.code)}</span>`:''}${esc(x.team)}</div><div class="raceMeta">title probability snapshot</div></div><span class="raceBar"><i style="width:${Math.max(4,Math.round((Number(x.pct)||0)/max*100))}%"></i></span><span class="racePct">${esc(x.pct??'—')}%</span></div>`).join('');
 }
+function _v4TitleBySportRows(list){
+  if(!list||!list.length)return '<div class="emptyForecast">No per-sport title snapshot yet.</div>';
+  return list.map(x=>`<div class="raceRow"><span class="raceRank">${esc(x.label||x.comp||'')}</span><div><div class="raceTeam">${uiFlag(x.code)?`<span class="flagIcon">${uiFlag(x.code)}</span>`:''}${esc(x.team||'—')}</div><div class="raceMeta">favorite to win it all</div></div><span class="raceBar"><i style="width:${Math.max(4,Math.round(Number(x.pct)||0))}%"></i></span><span class="racePct">${esc(x.pct??'—')}%</span></div>`).join('');
+}
 function _v4ScorerRows(sc){
   if(!sc.length)return '<div class="emptyForecast">No scorer data yet.</div>';
   return sc.slice(0,10).map((p,i)=>`<div class="scorerRow"><span class="scorerRank">${i+1}</span><div><div class="scorerName">${esc(p.name||'')}</div><div class="scorerMeta">${esc(p.code||p.team||'')}</div></div><span class="scorerGoals">${esc(p.goals??0)} G${p.assists?` · ${esc(p.assists)} A`:''}</span></div>`).join('');
@@ -471,10 +478,12 @@ function _v4AdvancementTable(adv){
 function renderTitle(){
   const t=DATA.title_odds||[],adv=DATA.advancement||[],sc=DATA.scorers||[],upsets=_v4UpsetRows();
   const upcoming=(DATA.matches||[]).filter(m=>m.status!=='FINISHED'&&!isStaleUpcoming(m)).length;
-  let html=`<div class="forecastShell"><div class="forecastHero"><div><h2>Forecast board</h2><p>A cleaner view for tournament probabilities, upset risk, advancement paths, and scorer races. It avoids cramped rows and keeps the board focused on sports analytics rather than betting prompts.</p></div><div class="forecastKpis"><div class="forecastKpi"><span>Upcoming</span><b>${upcoming}</b></div><div class="forecastKpi"><span>Upset watch</span><b>${upsets.filter(x=>x.risk>=50).length}</b></div><div class="forecastKpi"><span>Title teams</span><b>${t.length||'—'}</b></div></div></div>`;
+  let html=`<div class="forecastShell"><div class="marketBanner"><b>Still calibrating.</b> The model just went through a significant accuracy pass across every sport. Treat these forecasts as a testing ground, not a finished read, while we keep validating them against real results.</div><div class="forecastHero"><div><h2>Forecast board</h2><p>A cleaner view for tournament probabilities, upset risk, advancement paths, and scorer races. It avoids cramped rows and keeps the board focused on sports analytics rather than betting prompts.</p></div><div class="forecastKpis"><div class="forecastKpi"><span>Upcoming</span><b>${upcoming}</b></div><div class="forecastKpi"><span>Upset watch</span><b>${upsets.filter(x=>x.risk>=50).length}</b></div><div class="forecastKpi"><span>Title teams</span><b>${t.length||'—'}</b></div></div></div>`;
   const leaderPanel=_v13LeaderPanel(sc);
   html+=`<div class="forecastGrid ${leaderPanel?'':'single'}"><section class="forecastPanel"><div class="forecastPanelHead"><h3>Upset radar</h3><span>${upsets.length} matches</span></div><div class="upsetList">${upsets.length?upsets.map(x=>`<div class="upsetRow" onclick="openMatchModal('${esc(String(x.m.id||''))}')"><div><div class="upsetMatch">${esc(x.m.home?.code||x.m.home?.name||'H')} v ${esc(x.m.away?.code||x.m.away?.name||'A')}</div><div class="upsetWhy">${esc(x.reason)}</div></div><div class="upsetWhy">${esc(x.m.stage||'')} · ${kickIn(x.m.kickoff)}</div><span class="riskPill ${x.cls}">${x.triggered?'active upset pick':x.risk>=70?'high variance':x.risk>=50?'medium variance':'low variance'}</span></div>`).join(''):'<div class="emptyForecast">No upcoming matches to analyze.</div>'}</div></section>${leaderPanel}</div>`;
+  const titleBySport=DATA.title_by_sport||[];
   html+=`<div class="forecastGrid"><section class="forecastPanel"><div class="forecastPanelHead"><h3>Title race</h3><span>probability snapshot</span></div><div class="raceList">${_v4TitleRows(t)}</div></section><section class="forecastPanel"><div class="forecastPanelHead"><h3>Match snapshots</h3><span>next fixtures</span></div><div class="matchSnapList">${_v4MatchSnapshots()}</div></section></div>`;
+  if(titleBySport.length)html+=`<div class="forecastGrid single"><section class="forecastPanel"><div class="forecastPanelHead"><h3>Title forecasts — every sport</h3><span>${titleBySport.length} competitions</span></div><div class="raceList">${_v4TitleBySportRows(titleBySport)}</div></section></div>`;
   html+=_v4AdvancementTable(adv);
   html+=`<div class="forecastNote">Analytics only. Use the model as a probability read: a 38% pick should still lose often. The app should surface uncertainty instead of hiding it.</div></div>`;
   host=$('#view-title');host.innerHTML=html;

@@ -5,16 +5,17 @@
     ['wc','World Cup','soccer'],['ucl','Champions League','soccer'],['epl','Premier League','soccer'],
     ['laliga','La Liga','soccer'],['seriea','Serie A','soccer'],['bundesliga','Bundesliga','soccer'],['ligue1','Ligue 1','soccer'],
     ['nfl','NFL','nfl'],['ncaaf','College Football','ncaaf'],['ncaam',"Men's College Basketball",'basketball'],
-    ['nba','NBA','basketball'],['nhl','NHL','hockey']
+    ['nba','NBA','basketball'],['nhl','NHL','hockey'],['mlb','MLB','baseball']
   ].map(([key,label,sport])=>({key,label,sport}));
   const COMP_BY_KEY=Object.fromEntries(COMPETITIONS.map(comp=>[comp.key,comp]));
-  const SPORT_LABELS={all:'All sports',soccer:'Soccer',nfl:'NFL',ncaaf:'College Football',basketball:'Basketball',hockey:'Hockey'};
+  const SPORT_LABELS={all:'All sports',soccer:'Soccer',nfl:'NFL',ncaaf:'College Football',basketball:'Basketball',hockey:'Hockey',baseball:'Baseball'};
   const FACTOR_LABELS={adv:'home context',form:'recent form',margin:'scoring margin',rest:'rest advantage',record:'season record',elo:'team strength',class:'roster strength',srs:'schedule-adjusted rating',rank:'ranking',h2h:'head-to-head history'};
   const GUIDE_ITEMS=[
     {id:'learn-soccer',type:'learn',sports:['soccer'],compLabel:'Soccer',title:'Shape, pressing & set pieces',summary:'Fixture congestion, draws, and the tactical details that move a match.',updated:'2026-07-24T12:00:00Z',minutes:8,url:'tactics-soccer.html',topic:'World Cup UCL Europe tactics pressing set pieces'},
     {id:'learn-football',type:'learn',sports:['nfl','ncaaf'],compLabel:'Football',title:'Situation, schedule & rest',summary:'Short weeks, opponent strength, and what changes between the professional and college games.',updated:'2026-07-24T12:00:00Z',minutes:7,url:'tactics-football.html',topic:'NFL College Football rest schedule strength'},
     {id:'learn-basketball',type:'learn',sports:['basketball'],compLabel:'Basketball',title:'Pace, spacing & back-to-backs',summary:'How possessions, fatigue, and bracket context shape the read.',updated:'2026-07-24T12:00:00Z',minutes:7,url:'tactics-basketball.html',topic:'NBA college basketball pace spacing fatigue'},
     {id:'learn-hockey',type:'learn',sports:['hockey'],compLabel:'Hockey',title:'Goalies, parity & special teams',summary:'Why rotation and thin margins make apparent upsets routine.',updated:'2026-07-24T12:00:00Z',minutes:6,url:'tactics-hockey.html',topic:'NHL hockey goalies special teams'},
+    {id:'learn-baseball',type:'learn',sports:['baseball'],compLabel:'Baseball',title:'Patience, run differential & the long season',summary:"Why a 162-game season needs patience, run differential over time, and what the model honestly doesn't see.",updated:'2026-07-25T12:00:00Z',minutes:6,url:'tactics-baseball.html',topic:'MLB baseball run differential 162-game season'},
     {id:'learn-data',type:'learn',sports:['all'],compLabel:'Reference',title:'Data, privacy & limitations',summary:'Where the numbers come from and what Matchday does not claim to know.',updated:'2026-07-24T12:00:00Z',minutes:5,url:'qa.html#data',topic:'data privacy limitations model methodology'}
   ];
 
@@ -86,7 +87,7 @@
     if(!comp&&['edge','score'].includes(view)){
       const available=filteredDatasets();
       const best=view==='score'?[...available].sort((a,b)=>Number(b.scorecard?.graded||0)-Number(a.scorecard?.graded||0))[0]:available[0];
-      comp=best?.compKey||({soccer:'ucl',nfl:'nfl',ncaaf:'ncaaf',basketball:'nba',hockey:'nhl'})[activeSport]||'ncaaf';
+      comp=best?.compKey||({soccer:'ucl',nfl:'nfl',ncaaf:'ncaaf',basketball:'nba',hockey:'nhl',baseball:'mlb'})[activeSport]||'ncaaf';
     }
     const params=new URLSearchParams();if(comp)params.set('sport',comp);if(view)params.set('view',view);if(matchId)params.set('match',matchId);
     return `index.html?${params.toString()}`;
@@ -99,7 +100,7 @@
 
   function contextLinks(item){
     const firstSport=(item.sports||[]).find(value=>value!=='all');
-    const comp=item.comp||({soccer:'ucl',nfl:'nfl',ncaaf:'ncaaf',basketball:'nba',hockey:'nhl'})[firstSport]||'';
+    const comp=item.comp||({soccer:'ucl',nfl:'nfl',ncaaf:'ncaaf',basketball:'nba',hockey:'nhl',baseball:'mlb'})[firstSport]||'';
     const links=[];
     if(item.matchId)links.push(['View matchup',dashboardUrl(comp,'matches',item.matchId)]);
     links.push(['See model prediction',dashboardUrl(comp,'edge',item.matchId||'')]);

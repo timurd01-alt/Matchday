@@ -6,6 +6,7 @@ payloads stay isolated here so changing vendors never requires a UI rewrite.
 
 from __future__ import annotations
 
+import csv
 import datetime as dt
 import json
 import math
@@ -23,6 +24,15 @@ def _get_json(url, headers=None, timeout=25):
     try:
         with urllib.request.urlopen(req, timeout=timeout) as response:
             return json.loads(response.read().decode("utf-8"))
+    except Exception as exc:
+        raise ProviderError(str(exc)) from exc
+
+
+def _get_csv_text(url, headers=None, timeout=25):
+    req = urllib.request.Request(url, headers=headers or {"User-Agent": "Matchday/1.0"})
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as response:
+            return response.read().decode("utf-8")
     except Exception as exc:
         raise ProviderError(str(exc)) from exc
 
@@ -273,7 +283,11 @@ class SportsDataIOAdapter:
             "MLB": [("HomeRuns", "Home runs", False), ("BattingAverage", "Batting average", False),
                     ("RunsBattedIn", "Runs batted in", False), ("PitchingStrikeouts", "Strikeouts", False)],
             "NHL": [("Points", "Points", False), ("Goals", "Goals", False),
-                    ("Assists", "Assists", False), ("GoaltendingSavePercentage", "Save percentage", False)],
+                    ("Assists", "Assists", False), ("GoaltendingSavePercentage", "Save percentage", False),
+                    # offense/defense extras confirmed live on the same
+                    # PlayerSeasonStats call, 2026-07-25 -- no new request.
+                    ("PlusMinus", "Plus/minus", False), ("Hits", "Hits", False),
+                    ("Takeaways", "Takeaways", False), ("ShotsOnGoal", "Shots on goal", False)],
         }
         wanted = definitions.get(self.competition) or []
         if not wanted:
@@ -423,7 +437,80 @@ class CollegeFootballDataAdapter:
         return self._cached_rankings
 
     def attach_availability(self, matches): return 0
-    def leaders(self): return {}
+
+    @staticmethod
+    def _reshape_player_stats(rows, team_filter=None):
+        """Turn CFBD's long category/statType/stat rows into one object per player.
+
+        /stats/player/season returns a row per player per stat type (e.g.
+        category="passing", statType="YDS", stat="3200") rather than a wide
+        per-player table. Reshape it once here into {name, position, team,
+        conference, stats: {category: {statType: value}}} so leaders() (and
+        any future per-player consumer) doesn't have to re-derive this shape
+        from raw rows.
+        """
+        players = {}
+        for row in rows if isinstance(rows, list) else []:
+            player_id, name, team = row.get("playerId"), row.get("player"), row.get("team")
+            if not player_id or not name:
+                continue
+            if team_filter and team not in team_filter:
+                continue
+            entry = players.setdefault(player_id, {
+                "player_id": player_id, "name": name, "position": row.get("position") or "",
+                "team": team or "", "conference": row.get("conference") or "", "stats": {},
+            })
+            category, stat_type = str(row.get("category") or "").lower(), str(row.get("statType") or "")
+            if category and stat_type:
+                entry["stats"].setdefault(category, {})[stat_type] = _number(row.get("stat"), 0)
+        return players
+
+    def leaders(self):
+        """Season leaders from CFBD's licensed per-player stat feed.
+
+        `team` is optional on /stats/player/season (year is the only
+        required filter), so this pulls the whole field in a single request
+        rather than looping per team -- one call, the same request-count
+        footprint as talent(), just a much larger payload (the response
+        covers FBS *and* lower-division programs, so it needs its own
+        classification filter -- see below). A second, much smaller
+        /records call recovers the FBS team list so leaders stay restricted
+        to FBS players, mirroring the classification filter standings()
+        already applies. fetch_college_bundle's caller in fetch_data.py
+        gives this result its own disk cache so the large pull doesn't
+        happen on every build() run.
+        """
+        definitions = [
+            ("passing", "YDS", "PassingYards", "Passing yards"),
+            ("passing", "TD", "PassingTouchdowns", "Passing TDs"),
+            ("rushing", "YDS", "RushingYards", "Rushing yards"),
+            ("receiving", "YDS", "ReceivingYards", "Receiving yards"),
+            # /stats/player/season's unfiltered pull already includes a
+            # "defensive" category (confirmed live 2026-07-25: 60k+ rows for
+            # the 2025 season, same request as the offensive categories
+            # above) -- no second call needed for defensive leaders.
+            ("defensive", "TOT", "Tackles", "Tackles"),
+            ("defensive", "SACKS", "Sacks", "Sacks"),
+            ("defensive", "TFL", "TacklesForLoss", "Tackles for loss"),
+            ("defensive", "PD", "PassesDefended", "Passes defended"),
+        ]
+        records = self._get("/records", {"year": self.season, "classification": "fbs"})
+        fbs_teams = ({row.get("team") for row in records
+                      if isinstance(row, dict) and str(row.get("classification") or "").lower() == "fbs"}
+                     if isinstance(records, list) else set())
+        rows = self._get("/stats/player/season", {"year": self.season})
+        players = self._reshape_player_stats(rows, fbs_teams)
+        categories = []
+        for category, stat_type, field_key, label in definitions:
+            ranked = sorted(
+                ((player["stats"].get(category, {}).get(stat_type), player["name"])
+                 for player in players.values()
+                 if player["stats"].get(category, {}).get(stat_type)),
+                reverse=True)
+            leaders = [{"name": name, "value": value} for value, name in ranked[:3]]
+            if leaders:
+                categories.append({"key": field_key, "label": label, "abbr": "", "leaders": leaders})
+        return {"season": self.season, "source": "CollegeFootballData", "categories": categories} if categories else {}
 
     def talent(self):
         """247Sports Team Talent Composite -- roster-quality coverage across
@@ -519,7 +606,63 @@ class CollegeBasketballDataAdapter:
         teams=[dict(team) for group in standings_payload for team in group.get("teams",[])];teams.sort(key=lambda x:(-x["win_pct"],-x["gd"],x["name"]))
         return ([{"rank":i,"name":team["name"],"code":team.get("code") or "","record":team.get("record") or ""} for i,team in enumerate(teams[:25],1)],None)
     def attach_availability(self, matches): return 0
-    def leaders(self): return {}
+
+    def leaders(self):
+        """Season leaders from CBBD's licensed per-player stat feed.
+
+        Unlike CFBD, CBBD's /stats/player/season is already one row per
+        player -- a wide format with pre-computed advanced metrics -- so no
+        long-format reshape is needed here, just per-game rate stats and
+        top-3 ranking. `team` is optional (season is the only required
+        filter), so this pulls the whole field in a single request rather
+        than looping per team -- the same request-count footprint as
+        recruiting(). A second, much smaller /teams call recovers the
+        Division I team list so leaders stay restricted to D1 players,
+        mirroring schedule()'s own filter. fetch_college_bundle's caller in
+        fetch_data.py gives this result its own disk cache so the large
+        pull doesn't happen on every build() run.
+        """
+        definitions = [
+            ("points", "PointsPerGame", "Points per game"),
+            ("rebounds", "ReboundsPerGame", "Rebounds per game"),
+            ("assists", "AssistsPerGame", "Assists per game"),
+            ("blocks", "BlocksPerGame", "Blocks per game"),
+            # steals/turnovers are flat numeric fields on the same row
+            # (confirmed live 2026-07-25, unlike rebounds' nested {"total":...}
+            # shape) -- same call, no new request.
+            ("steals", "StealsPerGame", "Steals per game"),
+            ("turnovers", "TurnoversPerGame", "Turnovers per game"),
+        ]
+        team_rows = self._get("/teams")
+        d1_teams = ({str(row.get("school")) for row in team_rows
+                     if isinstance(row, dict) and row.get("school") and row.get("conference")}
+                    if isinstance(team_rows, list) else set())
+        rows = self._get("/stats/player/season", {"season": self.season})
+        ranked_by_field = {field: [] for field, _, _ in definitions}
+        for row in rows if isinstance(rows, list) else []:
+            name, team = row.get("name"), row.get("team")
+            if not name or (d1_teams and team not in d1_teams):
+                continue
+            games = max(1, int(_number(row.get("games"), 1)))
+            totals = {
+                "points": _number(row.get("points"), 0),
+                "rebounds": _number((row.get("rebounds") or {}).get("total"), 0),
+                "assists": _number(row.get("assists"), 0),
+                "blocks": _number(row.get("blocks"), 0),
+                "steals": _number(row.get("steals"), 0),
+                "turnovers": _number(row.get("turnovers"), 0),
+            }
+            for field in ranked_by_field:
+                total = totals.get(field, 0)
+                if total:
+                    ranked_by_field[field].append((total / games, name))
+        categories = []
+        for field, key, label in definitions:
+            ranked = sorted(ranked_by_field.get(field, []), reverse=True)
+            leaders = [{"name": name, "value": round(value, 1)} for value, name in ranked[:3]]
+            if leaders:
+                categories.append({"key": key, "label": label, "abbr": "", "leaders": leaders})
+        return {"season": self.season, "source": "CollegeBasketballData", "categories": categories} if categories else {}
 
     def recruiting(self):
         """Recruiting class rating, for roster-quality coverage across the
@@ -538,6 +681,85 @@ class CollegeBasketballDataAdapter:
                 if name and score:
                     out[str(name)] = float(score)
         return out
+
+
+class NflverseAdapter:
+    """Season player-stat leaders from nflverse-data's "Player Summary Stats"
+    release (release tag `stats_player`, one CSV per season/season-type,
+    built with R's `nflfastR::calculate_stats()` from play-by-play data).
+
+    Licensing: the nflverse-data repository is CC BY 4.0
+    (https://github.com/nflverse/nflverse-data, confirmed against the repo's
+    actual LICENSE file via the GitHub API on 2026-07-25, SPDX `CC-BY-4.0`)
+    -- attribution is required, see the nflverse credit on `legal.html`.
+
+    ESPN exclusion: nflverse-data also publishes a *separate* release, tag
+    `espn_data` ("ESPN Stats" -- ESPN Total QBR, `qbr_season_level.csv` /
+    `qbr_week_level.csv`). That is a different release with different asset
+    names; this adapter's `RELEASE_BASE` is pinned to `stats_player` only and
+    never touches `espn_data`. `stats_player`'s own columns were checked for
+    ESPN provenance (no ESPN-named column, no "espn" substring found in any
+    2025-season row) -- it is nflfastR-derived, not ESPN-sourced. Matchday's
+    standing rule bars ESPN-originated data through any path (see
+    PROVIDER_COMPLIANCE.md's "Launch rules"); do not repoint `RELEASE_BASE`
+    at `espn_data`, and re-verify this note if nflverse ever restructures
+    `stats_player` to blend in another provider's columns.
+    """
+    RELEASE_BASE = "https://github.com/nflverse/nflverse-data/releases/download/stats_player"
+
+    def __init__(self, getter=None, today=None):
+        self.getter = getter or _get_csv_text
+        self.today = today or dt.date.today()
+        # NFL season labeling: the season that kicks off in September of
+        # year Y runs into February of Y+1, so from January through August
+        # the "current" (most recently completed or in-progress) season is
+        # still Y-1 -- e.g. in July, the prior September's season is still
+        # the one with real data; the new season's file doesn't exist yet.
+        self.season = self.today.year if self.today.month >= 9 else self.today.year - 1
+
+    def _rows(self, season):
+        url = f"{self.RELEASE_BASE}/stats_player_reg_{season}.csv"
+        text = self.getter(url, {"User-Agent": "Matchday/1.0"})
+        return list(csv.DictReader((text or "").splitlines()))
+
+    def leaders(self):
+        """Top-3-per-category season leaders, mirroring CFBD/CBBD's shape.
+
+        Rows with a blank `player_id` are team-level aggregate artifacts
+        (e.g. a season-total penalties row with no player attached, seen in
+        a live 2025 pull) rather than real players, and are dropped before
+        ranking. nflverse's `stats_player_reg_<season>.csv` already carries
+        one row per player for the season (no per-team split rows for
+        players traded mid-season), so no further de-duplication is needed.
+        """
+        definitions = [
+            ("passing_yards", "PassingYards", "Passing yards"),
+            ("passing_tds", "PassingTouchdowns", "Passing TDs"),
+            ("rushing_yards", "RushingYards", "Rushing yards"),
+            ("rushing_tds", "RushingTouchdowns", "Rushing TDs"),
+            ("receiving_yards", "ReceivingYards", "Receiving yards"),
+            ("receiving_tds", "ReceivingTouchdowns", "Receiving TDs"),
+            # defensive columns confirmed live on the same CSV, 2026-07-25 --
+            # no second release/request needed for defensive leaders.
+            ("def_sacks", "Sacks", "Sacks"),
+            ("def_interceptions", "Interceptions", "Interceptions"),
+            ("def_tackles_solo", "SoloTackles", "Solo tackles"),
+            ("def_tackles_for_loss", "TacklesForLoss", "Tackles for loss"),
+            ("def_qb_hits", "QBHits", "QB hits"),
+        ]
+        rows = self._rows(self.season)
+        players = [row for row in rows if (row.get("player_id") or "").strip()
+                   and (row.get("player_display_name") or "").strip()]
+        categories = []
+        for field, key, label in definitions:
+            ranked = sorted(
+                ((_number(row.get(field), 0), row["player_display_name"])
+                 for row in players if _number(row.get(field), 0)),
+                reverse=True)
+            leaders = [{"name": name, "value": value} for value, name in ranked[:3]]
+            if leaders:
+                categories.append({"key": key, "label": label, "abbr": "", "leaders": leaders})
+        return {"season": self.season, "source": "nflverse (CC BY 4.0)", "categories": categories} if categories else {}
 
 
 class BallDontLieAdapter:

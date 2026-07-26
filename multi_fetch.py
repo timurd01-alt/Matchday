@@ -26,7 +26,11 @@ SPORTS = [
     ("wc", "--wc"), ("epl", "--epl"), ("laliga", "--laliga"), ("seriea", "--seriea"),
     ("bundesliga", "--bundesliga"), ("ligue1", "--ligue1"), ("ucl", "--ucl"),
     ("nfl", "--nfl"), ("ncaaf", "--ncaaf"), ("ncaam", "--ncaam"), ("nba", "--nba"),
+    ("mlb", "--mlb"),
 ]
+# NHL deliberately excluded: not reachable from the sport picker (see
+# app-3-panels.js), and its schedule source (SportsDataIO) has an unresolved
+# plan/billing status -- see ROTATE_KEYS.md and PROVIDER_COMPLIANCE.md.
 SPACING = 20          # seconds between two sports' fetches (quota safety)
 TICK = 15             # scheduler wake-up interval
 RETRY_AFTER_ERROR = 15 * 60
@@ -41,7 +45,7 @@ DORMANT_EVERY = 12 * 3600
 # old one still looks "recently fetched" to the interval check below and
 # never gets refreshed. Force a refetch whenever the on-disk file's actual
 # source doesn't match what the sport is currently configured to use.
-EXPECTED_SOURCE = {"nfl": "BALLDONTLIE", "nba": "BALLDONTLIE"}
+EXPECTED_SOURCE = {"nfl": "BALLDONTLIE", "nba": "BALLDONTLIE", "mlb": "BALLDONTLIE"}
 
 
 def _stale_source(key):
