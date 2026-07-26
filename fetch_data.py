@@ -26,7 +26,6 @@ from provider_adapters import (ProviderError, BallDontLieAdapter,
                                CollegeFootballDataAdapter, NflverseAdapter,
                                SportsDataIOAdapter, SportmonksAdapter,
                                APISportsAdapter, normalized_score)
-from mfti_research import build_shadow_receipt
 
 # Windows terminals default to a legacy codec that crashes on characters like the
 # checkmark or accented player names. Force UTF-8 so background prints never crash.
@@ -3595,11 +3594,6 @@ def _make_pick_record(match, prediction, market, decision, history=()):
         "input_snapshot": _locked_input_snapshot(match),
         "result": None, "model_result": None, "market_result": None,
     }
-    # Research-only receipt. It cannot alter the prediction and deliberately
-    # stays incomplete when the point-in-time scientific inputs are absent.
-    rec["mfti_shadow"] = build_shadow_receipt(
-        match, prediction, history, locked_at
-    )
     return rec
 
 
