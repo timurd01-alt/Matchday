@@ -1,5 +1,19 @@
 [
  {
+  "id": "refining-the-record-2026-07-26",
+  "comp": "all",
+  "comp_label": "Method & Accountability",
+  "slug": "refining-the-record-2026-07-26",
+  "title": "What We’re Refining Before We Count More Results",
+  "date": "2026-07-26",
+  "summary": "How Matchday is tightening prediction locks, grading, calibration reporting, and MLB eligibility.",
+  "body": [
+   "We are refining the proof around every reported prediction: pregame locks, like-for-like outcomes, market comparisons, and uncertainty metrics.",
+   "MLB is back in active coverage, but older rows without pregame lock evidence remain excluded from the official score.",
+   "The standard stays stable: no legacy mixing, no rewritten picks, and no improvement claim from accuracy alone."
+  ]
+ },
+ {
   "id": "transparent-weekly-scorecard-2026-07-26",
   "comp": "all",
   "comp_label": "Independent Audit",
