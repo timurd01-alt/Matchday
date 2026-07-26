@@ -8,7 +8,7 @@ on:
     branches: [main]
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -36,6 +36,7 @@ jobs:
             picks_log*.json
             odds_open*.json
             ratings*.json
+            !ratings_elo.json
             title_open*.json
             *_cache.json
             player_db_*.json
@@ -83,6 +84,28 @@ jobs:
 
       - name: Fetch one adaptive round for all sports
         run: python multi_fetch.py --once
+
+      - name: Commit updated historical Elo back to the repo
+        # ratings_elo.json is git-tracked (seeded 2026-07-26 with a one-time
+        # historical backfill, see PROVIDER_COMPLIANCE.md) and deliberately
+        # excluded from the cache step above -- the cache's restore-keys
+        # fallback would otherwise silently restore an older cached copy
+        # over the checked-out file every run, discarding both the seed and
+        # any incremental Elo updates from real finished games. Committing
+        # it back here, instead of relying on the cache, makes git the one
+        # source of truth for this file. [skip ci] on the commit message
+        # stops this from re-triggering the workflow via its own
+        # `push: branches: [main]` trigger.
+        run: |
+          if ! git diff --quiet -- ratings_elo.json; then
+            git config user.name "matchday-bot"
+            git config user.email "actions@github.com"
+            git add ratings_elo.json
+            git commit -m "Update historical Elo ratings [skip ci]"
+            git push
+          else
+            echo "ratings_elo.json unchanged, nothing to commit"
+          fi
 
       - name: Assemble public site (curated allowlist only)
         run: |
