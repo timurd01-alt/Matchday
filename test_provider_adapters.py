@@ -441,6 +441,36 @@ class CollegeFootballDataTests(unittest.TestCase):
         self.assertEqual(by_key["Tackles"]["leaders"][0]["name"], "Player C")
         self.assertEqual(by_key["Sacks"]["leaders"][0]["value"], 8)
 
+    def test_offseason_with_no_poll_falls_back_to_talent_projection(self):
+        # Regression, live user report 2026-07-26: falling back to last
+        # season's postseason poll always succeeds once that poll happened
+        # (it's historical), so this used to show an already-finished
+        # season's final Top 25 for the ENTIRE off-season -- "the old season
+        # no one cares about" -- instead of ever preferring a signal about
+        # the season that's actually coming up. Zero completed games this
+        # season is the real off-season signal; when no real poll exists
+        # either (current or preseason), fall back to a real recruiting-
+        # talent-based projection instead, clearly marked as one.
+        def getter(url, headers):
+            if "/games?" in url:
+                return [{"id": 7, "season": 2027, "week": 1, "seasonType": "regular",
+                         "startDate": "2026-09-01T23:00:00Z", "completed": False,
+                         "homeTeam": "Michigan", "homeConference": "Big Ten", "homePoints": None,
+                         "awayTeam": "Ohio State", "awayConference": "Big Ten", "awayPoints": None,
+                         "venue": "Example Stadium"}]
+            if "/rankings?" in url:
+                return []  # no real poll yet, current or preseason
+            if "/talent?" in url:
+                return [{"team": "Ohio State", "talent": 950.0}, {"team": "Michigan", "talent": 800.0}]
+            raise AssertionError(url)
+        adapter = CollegeFootballDataAdapter("shared-key", getter=getter,
+                                             today=dt.date(2026, 7, 17))
+        adapter.schedule()
+        ranks, projection = adapter.rankings([])
+        self.assertTrue(ranks[0]["projected"])
+        self.assertEqual(ranks[0]["name"], "Ohio State")  # higher talent score ranks first
+        self.assertIsNone(projection)  # a projection never doubles as a real CFP seed
+
     def test_standings_flags_prior_season_fallback_as_stale(self):
         # Regression: before the current season's games exist, CFBD's
         # /records for the new year comes back empty and the adapter falls
@@ -522,6 +552,33 @@ class CollegeBasketballDataTests(unittest.TestCase):
                                                      today=dt.date(2026, 8, 1))
         self.assertEqual(adapter_after.season, 2027)
         adapter_after.schedule()
+
+    def test_offseason_with_no_poll_falls_back_to_recruiting_projection(self):
+        # Same off-season fix as CFBD: zero "final" games this season means
+        # it hasn't started, so an empty /rankings response should fall back
+        # to a real recruiting-composite projection, not reach backward into
+        # last season's final poll (see test_games_derive_real_standings_and_
+        # top_25 for the real-poll path, which a completed game preserves).
+        def getter(url, headers):
+            if url.endswith("/teams"):
+                return [{"school": "Duke", "conference": "ACC"}]
+            if "/rankings" in url:
+                return []
+            if "/recruiting/teams" in url:
+                return [{"team": "Duke", "rating": 95.0}, {"team": "Gonzaga", "rating": 80.0}]
+            self.assertIn("/games?season=2026", url)
+            return [{"id": 8, "season": 2026, "seasonType": "regular",
+                     "startDate": "2026-11-10T20:00:00Z", "status": "scheduled",
+                     "homeTeam": "Duke", "homeConference": "ACC", "homePoints": None,
+                     "awayTeam": "Gonzaga", "awayConference": "WCC", "awayPoints": None,
+                     "venue": "Example Arena"}]
+        adapter = CollegeBasketballDataAdapter("shared-key", getter=getter,
+                                               today=dt.date(2026, 7, 17))
+        adapter.schedule()
+        ranks, projection = adapter.rankings([])
+        self.assertTrue(ranks[0]["projected"])
+        self.assertEqual(ranks[0]["name"], "Duke")
+        self.assertIsNone(projection)
 
     def test_leaders_computes_per_game_averages_for_d1_only(self):
         # CBBD's /stats/player/season is already one row per player (unlike

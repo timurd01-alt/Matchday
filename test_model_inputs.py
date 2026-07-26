@@ -524,6 +524,55 @@ class TeamOfTournamentBackfillTests(unittest.TestCase):
         self.assertIn("don't fake it", result["note"])
 
 
+class PlayerDbSeasonResetTests(unittest.TestCase):
+    """player_db_<comp>.json never had a season concept at all -- it would
+    have kept accumulating one club's clean sheets across every season
+    forever, past and future blended into a single number. Dishonest for a
+    feature literally named "Team of the TOURNAMENT". update_player_db()
+    must reset to a blank slate the first time it runs in a new season."""
+
+    def setUp(self):
+        self.old_comp_key, self.old_comp = fetch_data.COMP_KEY, fetch_data.COMP
+        fetch_data.COMP_KEY = "UCL"
+        fetch_data.COMP = dict(fetch_data.COMPETITIONS["UCL"])
+        self.old_player_db_file = fetch_data.PLAYER_DB_FILE
+        fd_num, self.tmp_path = tempfile.mkstemp(suffix=".json")
+        os.close(fd_num)
+        fetch_data.PLAYER_DB_FILE = self.tmp_path
+
+    def tearDown(self):
+        fetch_data.COMP_KEY, fetch_data.COMP = self.old_comp_key, self.old_comp
+        fetch_data.PLAYER_DB_FILE = self.old_player_db_file
+        os.unlink(self.tmp_path)
+
+    def _match(self, mid):
+        return {"id": mid, "status": "FINISHED", "score": {"home": 1, "away": 0},
+                "home": {"name": "Team A"}, "away": {"name": "Team B"},
+                "lineups": {"home": {"formation": "4-3-3",
+                                     "xi": [{"name": f"Player {i}"} for i in range(11)]}}}
+
+    def test_stale_season_entries_are_cleared_before_folding_in_new_results(self):
+        with open(self.tmp_path, "w", encoding="utf-8") as f:
+            json.dump({"_season": "2024-25", "_matches": ["old-m1"],
+                       "players": {"stale player|team a": {"name": "Stale Player", "team": "Team A",
+                                                            "role": "DEF", "apps": 30, "starts": 30,
+                                                            "clean_sheets": 20}}}, f)
+        with mock.patch.object(fetch_data, "_current_soccer_season_label", return_value="2025-26"):
+            db = fetch_data.update_player_db([self._match("new-m1")])
+        self.assertNotIn("stale player|team a", db["players"])
+        self.assertEqual(db["_season"], "2025-26")
+        self.assertIn("new-m1", db["_matches"])
+        self.assertNotIn("old-m1", db["_matches"])
+
+    def test_same_season_entries_are_preserved_across_runs(self):
+        with mock.patch.object(fetch_data, "_current_soccer_season_label", return_value="2025-26"):
+            first = fetch_data.update_player_db([self._match("m1")])
+            self.assertIn("m1", first["_matches"])
+            second = fetch_data.update_player_db([self._match("m2")])
+        self.assertIn("m1", second["_matches"])
+        self.assertIn("m2", second["_matches"])
+
+
 class ApiFootballInjuryParsingTests(unittest.TestCase):
     """fetch_api_football_injuries() went live 2026-07-25 -- soccer's first
     real injury feed. _parse_af_injuries() is the piece that turns

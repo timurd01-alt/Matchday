@@ -416,6 +416,21 @@ class CollegeFootballDataAdapter:
     def rankings(self, standings_payload):
         if self._cached_rankings is not None:
             return self._cached_rankings
+        # Real games actually played for the CURRENT tracked season is the
+        # off-season signal, not "does a poll exist" -- a fallback to last
+        # season's postseason poll always succeeds once that poll happened
+        # (it's historical, immutable), which meant this kept showing an
+        # already-finished season's final rankings for the entire off-season
+        # ("no one cares" per the live user report 2026-07-26) instead of
+        # ever preferring a real signal about the season that's actually
+        # coming up. Zero completed games this season (checked before making
+        # any /rankings call, using schedule()'s own self._games) means the
+        # season hasn't started -- a real preseason poll may still exist
+        # (checked first, below) and is always preferred when it does; only
+        # when even that doesn't exist yet does this fall back to a
+        # talent-based projection instead of reaching backward into a season
+        # nobody is asking about anymore.
+        season_started = any(row.get("completed") for row in self._games)
         payload = self._get("/rankings", {"year": self.season, "seasonType": "regular"})
         def collect(rows):
             found = []
@@ -425,16 +440,35 @@ class CollegeFootballDataAdapter:
                     found.append((int(week.get("season") or 0), int(week.get("week") or 0), -priority, poll))
             return found
         candidates = collect(payload)
-        if not candidates and self.season > 2000:
+        if not candidates and season_started and self.season > 2000:
             candidates = collect(self._get("/rankings", {"year": self.season - 1, "seasonType": "postseason"}))
         if candidates:
             poll = sorted(candidates, reverse=True, key=lambda x: x[:3])[0][3]
             ranks = [{"rank": int(row.get("rank") or 0), "name": row.get("school") or "", "code": _short_code(row.get("school")), "record": ""}
                      for row in (poll.get("ranks") or [])[:25] if row.get("school")]
+        elif not season_started:
+            ranks = self._projected_ranking()
         else:
             ranks = []
-        self._cached_rankings = (ranks, SportsDataIOAdapter._cfp_projection(ranks) if len(ranks) >= 12 else None)
+        is_real_poll = bool(ranks) and not ranks[0].get("projected")
+        cfp = SportsDataIOAdapter._cfp_projection(ranks) if is_real_poll and len(ranks) >= 12 else None
+        self._cached_rankings = (ranks, cfp)
         return self._cached_rankings
+
+    def _projected_ranking(self):
+        """Way-too-early Top 25 from real recruiting-talent composite, used
+        only when the season hasn't started yet and no real poll (current or
+        preseason) exists either -- a model-derived estimate, same honest
+        posture as estimate_title_odds() in fetch_data.py, clearly marked
+        `"projected": True` so callers can label it differently from a real
+        poll rather than presenting it as one."""
+        try:
+            scores = self.talent()
+        except ProviderError:
+            return []
+        ranked = sorted(scores.items(), key=lambda kv: -kv[1])[:25]
+        return [{"rank": i, "name": name, "code": _short_code(name), "record": "Preseason", "projected": True}
+                for i, (name, _score) in enumerate(ranked, 1)]
 
     def attach_availability(self, matches): return 0
 
@@ -636,6 +670,14 @@ class CollegeBasketballDataAdapter:
         """
         if self._cached_rankings is not None:
             return self._cached_rankings
+        # Same off-season fix as CFBD's rankings(): falling back to last
+        # season's poll always succeeds once that poll happened (it's
+        # historical), which meant this kept showing an already-finished
+        # season's final ranking for the entire off-season instead of ever
+        # preferring the upcoming season. Zero "final" games this season
+        # means it hasn't started -- prefer a talent-based projection over
+        # reaching backward into a season nobody's asking about anymore.
+        season_started = any(str(row.get("status") or "").lower() == "final" for row in self._games)
         def collect(season):
             rows = self._get("/rankings", {"season": season, "seasonType": "regular"})
             found = []
@@ -647,7 +689,7 @@ class CollegeBasketballDataAdapter:
                 found.append((int(row.get("week") or 0), -priority, row))
             return found
         candidates = collect(self.season)
-        if not candidates and self.season > 2000:
+        if not candidates and season_started and self.season > 2000:
             candidates = collect(self.season - 1)
         if candidates:
             top_week, top_priority = max((w, p) for w, p, _ in candidates)
@@ -655,10 +697,27 @@ class CollegeBasketballDataAdapter:
             rows.sort(key=lambda r: r["ranking"])
             ranks = [{"rank": row["ranking"], "name": row["team"], "code": _short_code(row["team"]), "record": ""}
                      for row in rows[:25]]
+        elif not season_started:
+            ranks = self._projected_ranking()
         else:
             ranks = []
         self._cached_rankings = (ranks, None)
         return self._cached_rankings
+
+    def _projected_ranking(self):
+        """Way-too-early Top 25 from real recruiting composite, used only
+        when the season hasn't started yet and no real poll (current or
+        preseason) exists either -- same model-derived-estimate posture as
+        CFBD's own _projected_ranking(), clearly marked `"projected": True`
+        so callers can label it differently from a real poll."""
+        try:
+            scores = self.recruiting()
+        except ProviderError:
+            return []
+        ranked = sorted(scores.items(), key=lambda kv: -kv[1])[:25]
+        return [{"rank": i, "name": name, "code": _short_code(name), "record": "Preseason", "projected": True}
+                for i, (name, _score) in enumerate(ranked, 1)]
+
     def attach_availability(self, matches): return 0
 
     def leaders(self):

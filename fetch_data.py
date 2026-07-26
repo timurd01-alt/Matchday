@@ -26,6 +26,7 @@ from provider_adapters import (ProviderError, BallDontLieAdapter,
                                CollegeFootballDataAdapter, NflverseAdapter,
                                SportsDataIOAdapter, SportmonksAdapter,
                                APISportsAdapter, normalized_score)
+from mfti_research import build_shadow_receipt
 
 # Windows terminals default to a legacy codec that crashes on characters like the
 # checkmark or accented player names. Force UTF-8 so background prints never crash.
@@ -3075,6 +3076,17 @@ def _formation_roles(formation, n_players):
         roles += ["DEF"] * 4 + ["MID"] * 3 + ["FWD"] * (max(0, n_players - 8))
     return roles[:n_players]
 
+def _current_soccer_season_label():
+    """European club season label ("2025-26"), by the same Aug-start
+    convention every domestic league/UCL actually uses. WC only runs one
+    short window every four years, so this label is mostly a no-op there --
+    harmless, since a reset can only ever fire between two WC tournaments
+    fetched years apart, never mid-tournament."""
+    today = datetime.date.today()
+    start_year = today.year if today.month >= 8 else today.year - 1
+    return f"{start_year}-{str(start_year + 1)[2:]}"
+
+
 def _load_player_db():
     try:
         with open(PLAYER_DB_FILE, encoding="utf-8") as f: return json.load(f)
@@ -3084,10 +3096,26 @@ def _load_player_db():
 def update_player_db(matches):
     """Fold finished matches' lineups + scores into the per-competition player DB.
     Tracks apps, starts, clean sheets (team conceded 0 while player started),
-    and role from the formation. Idempotent per match id."""
+    and role from the formation. Idempotent per match id.
+
+    Resets to a blank slate at each season boundary (see
+    _current_soccer_season_label): this file previously had no season concept
+    at all, so it would have kept accumulating a single club's clean sheets
+    across every season forever, past and future blended into one number --
+    dishonest for a feature literally named "Team of the TOURNAMENT". Caught
+    while investigating why UCL's 2025-26 season (already finished) couldn't
+    show real defenders: the fix for THAT was a data-availability gap
+    (backfill_lineups.py, blocked by provider plan tier), but this is a
+    separate, real bug this file always had, worth fixing at the same time
+    rather than letting next season quietly inherit this one's numbers.
+    """
     if COMP["sport"] != "soccer":
         return None
     db = _load_player_db()
+    season = _current_soccer_season_label()
+    if db.get("_season") != season:
+        db = {"_matches": [], "players": {}}
+    db["_season"] = season
     seen = set(db.get("_matches", []))
     added = 0
     for m in matches:
@@ -3460,7 +3488,7 @@ def _market_fields(pr, mk):
     return market_pick, market_pct, value_side, value_edge, value_mkt
 
 
-def _make_pick_record(match, prediction, market, decision):
+def _make_pick_record(match, prediction, market, decision, history=()):
     market_pick, market_pct, value_side, value_edge, value_mkt = _market_fields(prediction, market)
     upset = prediction.get("upset") or {}
     probs = prediction.get("adjusted") or prediction.get("blend") or prediction.get("model") or {}
@@ -3518,6 +3546,11 @@ def _make_pick_record(match, prediction, market, decision):
         "input_snapshot": _locked_input_snapshot(match),
         "result": None, "model_result": None, "market_result": None,
     }
+    # Research-only receipt. It cannot alter the prediction and deliberately
+    # stays incomplete when the point-in-time scientific inputs are absent.
+    rec["mfti_shadow"] = build_shadow_receipt(
+        match, prediction, history, locked_at
+    )
     return rec
 
 
@@ -3751,7 +3784,12 @@ def update_scorecard(matches):
         decision = _lock_decision(m)
         should_lock = bool(pr and mid not in picks and decision["state"] == "eligible")
         if should_lock:
-            picks[mid] = _make_pick_record(m, pr, mk, decision)
+            prior_official = [
+                stored for stored in picks.values()
+                if isinstance(stored, dict) and _record_is_official(stored)
+                and stored.get("result") in ("h", "d", "a")
+            ]
+            picks[mid] = _make_pick_record(m, pr, mk, decision, history=prior_official)
             by_fixture[mid].append(picks[mid])
             dirty = True
         elif (m.get("status") == "UPCOMING" and mid in picks and _record_is_official(picks[mid])
@@ -4309,10 +4347,15 @@ def fetch_college_bundle():
     # OLD computed ranking (the "Miami OH is #1" bug) for the entire TTL
     # AFTER the fix was already live and deployed, because this file's own
     # freshness check has nothing to do with when the code last changed.
-    # Changing the filename is what actually invalidates it; bump this suffix
-    # again any time this bundle's cached CONTENT (not just its raw inputs)
-    # changes shape or computation.
-    cache_file = f"college_{COMP_KEY.lower()}_bundle_v5_cache.json"
+    # Bumped v5 -> v6 same day: rankings() itself changed again (a real
+    # preseason/current poll now beats an off-season fallback to an already-
+    # finished season's final poll -- confirmed live NCAAF's Week 1 2026
+    # season hasn't started yet, so this now correctly returns a real
+    # talent-based "Preseason" projection led by Alabama/Georgia/Ohio State
+    # instead of last season's CFP field). Changing the filename is what
+    # actually invalidates it; bump this suffix again any time this bundle's
+    # cached CONTENT (not just its raw inputs) changes shape or computation.
+    cache_file = f"college_{COMP_KEY.lower()}_bundle_v6_cache.json"
     bundle = None
     try:
         if os.path.exists(cache_file) and time.time() - os.path.getmtime(cache_file) < COLLEGE_CACHE_MIN * 60:
@@ -4750,12 +4793,22 @@ def build():
     if COMP_KEY in ("NCAAF", "NCAAM") and COMP.get("source") in {"sportsdataio", "cfbd", "cbbd"}:
         ranks, proj = sports_adapter.rankings(sports_tables) if sports_adapter else ([], None)
         if ranks:
+            is_projected = bool(ranks[0].get("projected"))
             rank_rows = [{"name": r["name"], "code": r["code"], "pos": r["rank"],
                           "pld": None, "w": None, "d": None, "l": None, "gf": None, "ga": None,
                           "gd": None, "pts": None, "form": "", "record": r["record"],
-                          "qual": ({"status": f"CFP {r['rank']}", "note": "projected playoff seed (straight seeding)"} if COMP_KEY == "NCAAF" and r["rank"] <= 12 else "")}
+                          "qual": ({"status": f"CFP {r['rank']}", "note": "projected playoff seed (straight seeding)"} if COMP_KEY == "NCAAF" and not is_projected and r["rank"] <= 12 else "")}
                          for r in ranks]
-            standings = [{"group": "Matchday Top 25", "teams": rank_rows}] + (standings or [])
+            # A real poll and a recruiting-talent projection are different
+            # kinds of claim -- labeling them the same ("Matchday Top 25")
+            # would present a model estimate as if it were the real AP/
+            # Coaches poll. See CFBD/CBBD's own rankings()/_projected_ranking()
+            # for why this shows up at all: no real current-season poll AND
+            # the season hasn't started yet (confirmed live 2026-07-26, off-
+            # season fallback used to keep reaching backward into an already-
+            # finished season's final poll instead).
+            group_label = "Way-too-early Top 25 (model projection)" if is_projected else "Matchday Top 25"
+            standings = [{"group": group_label, "teams": rank_rows}] + (standings or [])
         if COMP_KEY == "NCAAF" and proj and not bracket:
             bracket = proj
     if COMP_KEY == "NCAAM":
