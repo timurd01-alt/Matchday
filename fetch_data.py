@@ -2968,7 +2968,19 @@ def _news_key(item):
 
 
 def _load_previous_news():
-    """Keep RSS diversity during --loop if one refresh only returns ESPN."""
+    """Keep RSS diversity during --loop if one refresh only returns ESPN.
+
+    Re-checks _news_relevant() on every carried-forward item, not just fresh
+    ones -- confirmed live 2026-07-26: an item accepted back when a
+    competition had no relevance filtering at all (every soccer competition,
+    before that gap was fixed the same day) would otherwise keep getting
+    merged forward by fetch_news() indefinitely, since only freshly-fetched
+    items ever passed through add_item()'s relevance check. That's exactly
+    why EPL/UCL's News tab kept showing the same NFL/MLB pollution run after
+    run even once the underlying filtering gap was fixed and fresh fetches
+    were working again -- the OLD accepted items were never re-validated
+    against the new rules, just carried forward as "previous" forever.
+    """
     try:
         with open(f"data_{COMP_KEY.lower()}.json", "r", encoding="utf-8") as f:
             old = json.load(f)
@@ -2978,7 +2990,7 @@ def _load_previous_news():
             return []
         arr = old.get("news") or []
         if isinstance(arr, list):
-            return arr[:80]
+            return [item for item in arr[:80] if _news_relevant(item)]
     except Exception:
         pass
     return []

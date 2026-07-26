@@ -1689,6 +1689,38 @@ class NewsRelevanceTests(unittest.TestCase):
         self.assertFalse(fetch_data._news_relevant(
             {"headline": "Chiefs training camp update ahead of the NFL season", "desc": ""}))
 
+    def test_previous_news_drops_items_that_no_longer_pass_relevance(self):
+        # Confirmed live 2026-07-26: even after the relevance-filtering gap
+        # itself was fixed and fresh EPL/UCL fetches were working again, the
+        # News tab kept showing the exact same old NFL/MLB pollution -- items
+        # accepted back when soccer had no filtering at all were being
+        # merged forward by fetch_news() forever, since only fresh items
+        # were ever checked against _news_relevant(). _load_previous_news()
+        # must re-check every carried-forward item too.
+        data_path = "data_epl.json"
+        old_existed = os.path.exists(data_path)
+        old_content = None
+        if old_existed:
+            with open(data_path, encoding="utf-8") as f:
+                old_content = f.read()
+        with open(data_path, "w", encoding="utf-8") as f:
+            json.dump({"news_scope": "EPL", "news": [
+                {"headline": "MLB rumors: Major trade candidate could miss rest of 2026", "source": "CBS Sports"},
+                {"headline": "Arsenal Mulling Move For Real Madrid Star Vinicius Junior", "source": "FOX Sports"},
+            ]}, f)
+        try:
+            fetch_data.COMP_KEY = "EPL"
+            previous = fetch_data._load_previous_news()
+        finally:
+            if old_existed:
+                with open(data_path, "w", encoding="utf-8") as f:
+                    f.write(old_content)
+            else:
+                os.unlink(data_path)
+        headlines = [item["headline"] for item in previous]
+        self.assertNotIn("MLB rumors: Major trade candidate could miss rest of 2026", headlines)
+        self.assertIn("Arsenal Mulling Move For Real Madrid Star Vinicius Junior", headlines)
+
 
 if __name__ == "__main__":
     unittest.main()
