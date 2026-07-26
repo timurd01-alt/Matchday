@@ -743,6 +743,24 @@ def _ratings_lookup(name):
     return None
 
 
+# Tokens that make a school a genuinely DIFFERENT program from its bare
+# namesake, not mascot noise to strip -- "Alabama State" and "Alabama A&M"
+# are real, separate schools from "Alabama", not "Alabama" plus a mascot.
+# Confirmed live 2026-07-26: with no guard, a national talent-composite feed
+# (which covers every D1 team, not just this week's schedule) fed "Alabama
+# A&M" through this resolver; "alabama a m" itself wasn't in known_names
+# (Alabama A&M wasn't playing this week), so the prefix loop kept shortening
+# past "a"/"m" and landed on the real "Alabama"'s own key -- silently
+# overwriting the real Crimson Tide's talent-share rating with Alabama A&M's
+# much weaker one right before a Week 1 Alabama vs East Carolina prediction,
+# flipping Alabama's class score negative against an unranked opponent. The
+# same collision risks every "X" vs "X State"/"X Tech"/"X A&M"/"X Southern"
+# pair nationally (Ohio/Ohio State, Texas/Texas A&M/Texas Tech,
+# Washington/Washington State, etc.).
+_SCHOOL_DISTINGUISHER_TOKENS = {"state", "tech", "southern", "western", "eastern",
+                                 "northern", "central", "international", "poly", "a", "m"}
+
+
 def _resolve_known_name(raw_name, known_names):
     """Map a provider's own spelling of a team ("Alabama Crimson Tide" from a
     sportsbook, "Ball State Cardinals" from a talent/recruiting feed) back to
@@ -757,13 +775,18 @@ def _resolve_known_name(raw_name, known_names):
     matching the LONGEST known name that is a token-prefix of the provider's
     string avoids collisions like "Texas" swallowing "Texas A&M" (checked
     longest-first, so "texas a m" matches before the shorter "texas" gets a
-    chance to).
+    chance to) -- but only up to the point a dropped token would strip off a
+    real distinguishing identity (see _SCHOOL_DISTINGUISHER_TOKENS above);
+    past that point this stops shortening and keeps the provider's full name,
+    even if that means no match (better an unwritten rating than a wrong one).
     """
     key = norm(raw_name or "")
     if not known_names or key in known_names:
         return key
     toks = key.split()
     for cut in range(len(toks), 0, -1):
+        if any(tok in _SCHOOL_DISTINGUISHER_TOKENS for tok in toks[cut:]):
+            break
         candidate = " ".join(toks[:cut])
         if candidate in known_names:
             return candidate

@@ -554,9 +554,15 @@ class CollegeBasketballDataAdapter:
             raise ProviderError("missing CBBD_KEY")
         self.key, self.getter = api_key, getter or _get_json
         self.today = today or dt.date.today()
-        self.season = self.today.year
+        # CBBD numbers a season by its ENDING year (confirmed live 2026-07-26:
+        # season=2026 held the real Oct 2025-Apr 2026 schedule/polls) -- unlike
+        # _current_season()'s starting-year convention used elsewhere. New
+        # seasons start being published under the next ending year from
+        # around August, well before games tip off in November.
+        self.season = self.today.year if self.today.month < 8 else self.today.year + 1
         self._games = []
         self._d1_teams = set()
+        self._cached_rankings = None
 
     def _get(self, path, params=None):
         url = self.BASE + path
@@ -618,8 +624,41 @@ class CollegeBasketballDataAdapter:
         return model, sorted(tables,key=lambda x:x["group"])
 
     def rankings(self, standings_payload):
-        teams=[dict(team) for group in standings_payload for team in group.get("teams",[])];teams.sort(key=lambda x:(-x["win_pct"],-x["gd"],x["name"]))
-        return ([{"rank":i,"name":team["name"],"code":team.get("code") or "","record":team.get("record") or ""} for i,team in enumerate(teams[:25],1)],None)
+        """Real AP Top 25 / Coaches Poll from CBBD's own /rankings endpoint.
+
+        This used to sort every D1 team by raw win percentage, with no
+        strength-of-schedule or conference-quality adjustment -- a small
+        mid-major that runs up a gaudy record against weak competition (e.g.
+        32-2 in the MAC) would outrank blue bloods that go through brutal
+        high-major schedules. CBBD publishes the real weekly polls (confirmed
+        live 2026-07-26, same shape CFBD uses for NCAAF's real CFP/AP
+        rankings) -- use those instead, same as NCAAF already does.
+        """
+        if self._cached_rankings is not None:
+            return self._cached_rankings
+        def collect(season):
+            rows = self._get("/rankings", {"season": season, "seasonType": "regular"})
+            found = []
+            for row in rows if isinstance(rows, list) else []:
+                if row.get("ranking") is None or not row.get("team"):
+                    continue
+                poll = str(row.get("pollType") or "").lower()
+                priority = 0 if "ap top" in poll else 1 if "coaches" in poll else 2
+                found.append((int(row.get("week") or 0), -priority, row))
+            return found
+        candidates = collect(self.season)
+        if not candidates and self.season > 2000:
+            candidates = collect(self.season - 1)
+        if candidates:
+            top_week, top_priority = max((w, p) for w, p, _ in candidates)
+            rows = [row for w, p, row in candidates if w == top_week and p == top_priority]
+            rows.sort(key=lambda r: r["ranking"])
+            ranks = [{"rank": row["ranking"], "name": row["team"], "code": _short_code(row["team"]), "record": ""}
+                     for row in rows[:25]]
+        else:
+            ranks = []
+        self._cached_rankings = (ranks, None)
+        return self._cached_rankings
     def attach_availability(self, matches): return 0
 
     def leaders(self):

@@ -1,5 +1,9 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-07-26 (API-FOOTBALL's free-plan date restriction confirmed live against real past
+match dates while building `backfill_lineups.py` -- historical dates outside a rolling ~3-day
+window are rejected outright, same key/plan already licensed for live box scores/lineups/injuries,
+no new provider; full detail in the Changelog below.)
 Reviewed: 2026-07-26 (Five candidate sources -- Kaggle, the Sports Reference family,
 WorldFootball.net, Flashscore, Sofascore, and Sportradar -- evaluated against live ToS text for
 the historical-backfill and live-score gaps; Sports Reference, WorldFootball.net, Flashscore, and
@@ -163,6 +167,22 @@ Provider terms and tiers can change. Revisit the linked provider pages in
 record the review date here before each public release.
 
 ## Changelog
+
+- **2026-07-26:** Built `backfill_lineups.py`, a one-time script to backfill Team of Tournament's
+  defender/goalkeeper data for a just-finished competition (UCL's 2025-26 season ended in
+  March/April, before the lineup-tracking feature existed) on the same API-FOOTBALL key already
+  licensed for live box scores/lineups/injuries -- no new provider. **Confirmed blocked on the
+  current free plan, not a code bug:** live-tested `/fixtures?date=` against real past match dates
+  (including the UCL final itself, 2026-05-30) and every one returned `"errors":{"plan":"Free
+  plans do not have access to this date, try from 2026-07-25 to 2026-07-27."}` -- the free plan
+  only serves a rolling ~3-day window around whenever the call is made, which is why the existing
+  live hourly fetch works fine (it only ever asks about LIVE/near-term matches) but a historical
+  backfill structurally cannot, on any budget or schedule. Also confirmed the bulk season endpoint
+  (`/fixtures?league=...&season=2025`, API-FOOTBALL numbers a season by its starting year) is
+  separately blocked for the current season ("try from 2022 to 2024"). The script fails fast with
+  this exact finding the moment it hits the wall rather than silently spending quota with zero
+  progress. Left in place, unused, for if a paid plan is ever adopted, or for the 2022-2024 seasons
+  specifically via the bulk endpoint.
 
 - **2026-07-26:** Evaluated five candidate sources raised for two open gaps -- multi-season
   historical results (the `data` agent's backfill work is hitting real free-tier depth limits on

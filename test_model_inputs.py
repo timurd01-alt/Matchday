@@ -381,6 +381,47 @@ class RatingsLookupTests(unittest.TestCase):
         after = fetch_data._ratings_lookup("Duke")
         self.assertEqual(after["market_pct"], 25.0)
 
+    def test_sibling_school_does_not_swallow_the_bare_school_s_rating(self):
+        # Confirmed live 2026-07-26: a national talent feed covers every D1
+        # team, including ones not in this week's schedule (known_names).
+        # "Alabama A&M" wasn't playing the week Alabama played East Carolina,
+        # so "alabama a m" was never in known_names -- the old prefix-shorten
+        # loop kept trimming past "a"/"m" and landed on plain "alabama",
+        # silently overwriting real Alabama's talent-share rating with
+        # Alabama A&M's much weaker one and flipping Alabama's class score
+        # negative against an unranked opponent. Order matters here: the
+        # weak sibling must be applied AFTER the real school to prove it
+        # doesn't clobber it.
+        fetch_data.COMP_KEY = "NCAAF"
+        fetch_data.COMP = dict(fetch_data.COMPETITIONS["NCAAF"])
+        known_names = {"alabama", "east carolina"}  # Alabama A&M/State not playing this week
+        fetch_data.apply_recruiting_strength(
+            {"Alabama": 1000.0, "Alabama A&M": 130.0, "Alabama State": 150.0}, known_names)
+        alabama = fetch_data._ratings_lookup("Alabama")
+        self.assertEqual(alabama["squad_value_m"], 1500)
+        self.assertEqual(alabama["star_value_m"], 200)
+
+    def test_mascot_suffix_still_strips_down_to_the_bare_school_name(self):
+        # The distinguisher guard must not break the resolver's actual job:
+        # a sportsbook/talent feed tacking a real mascot onto the bare name.
+        fetch_data.COMP_KEY = "NCAAF"
+        fetch_data.COMP = dict(fetch_data.COMPETITIONS["NCAAF"])
+        known_names = {"alabama"}
+        fetch_data.apply_recruiting_strength({"Alabama Crimson Tide": 1000.0}, known_names)
+        self.assertIsNotNone(fetch_data._ratings_lookup("Alabama"))
+
+    def test_sibling_school_playing_this_week_resolves_to_its_own_key(self):
+        # When the longer name IS in known_names (it's actually playing this
+        # week), it must resolve to itself, not get shortened at all.
+        fetch_data.COMP_KEY = "NCAAF"
+        fetch_data.COMP = dict(fetch_data.COMPETITIONS["NCAAF"])
+        known_names = {"alabama", "alabama a m"}
+        fetch_data.apply_recruiting_strength({"Alabama": 1000.0, "Alabama A&M": 130.0}, known_names)
+        alabama = fetch_data._ratings_lookup("Alabama")
+        aamu = fetch_data._ratings_lookup("Alabama A&M")
+        self.assertEqual(alabama["squad_value_m"], 1500)
+        self.assertLess(aamu["squad_value_m"], alabama["squad_value_m"])
+
 
 class PredictPriorBoostTests(unittest.TestCase):
     """A user-reported symptom on 2026-07-25: preseason predictions looked

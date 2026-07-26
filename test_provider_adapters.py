@@ -472,6 +472,15 @@ class CollegeBasketballDataTests(unittest.TestCase):
         if url.endswith("/teams"):
             return [{"school": "Duke", "conference": "ACC"},
                     {"school": "North Carolina", "conference": "ACC"}]
+        if "/rankings" in url:
+            self.assertIn("season=2026", url)
+            return [
+                {"season": 2026, "week": 1, "pollType": "AP Top 25", "ranking": 1, "team": "North Carolina"},
+                {"season": 2026, "week": 1, "pollType": "AP Top 25", "ranking": None, "team": "Others receiving votes"},
+                {"season": 2026, "week": 2, "pollType": "AP Top 25", "ranking": 1, "team": "Duke"},
+                {"season": 2026, "week": 2, "pollType": "AP Top 25", "ranking": 2, "team": "North Carolina"},
+                {"season": 2026, "week": 2, "pollType": "Coaches Poll", "ranking": 1, "team": "North Carolina"},
+            ]
         self.assertIn("/games?season=2026", url)
         return [{"id": 8, "season": 2026, "seasonType": "regular",
                  "startDate": "2026-01-10T20:00:00Z", "status": "final",
@@ -490,7 +499,29 @@ class CollegeBasketballDataTests(unittest.TestCase):
         self.assertEqual(match["data_source"], "CollegeBasketballData")
         self.assertEqual(model["duke"]["record"], "1-0")
         self.assertEqual(model["north carolina"]["record"], "0-1")
+        # real AP Top 25 poll, latest week -- not a raw win-percentage sort
+        # (which would have ranked both teams 1-0/0-1 arbitrarily by name/gd)
         self.assertEqual(ranks[0]["name"], "Duke")
+        self.assertEqual(ranks[1]["name"], "North Carolina")
+
+    def test_rankings_season_rolls_over_in_august(self):
+        # CBBD numbers a season by its ENDING year -- a July date should
+        # request the season that just concluded, but from August onward it
+        # must request the following year's season, since the new season's
+        # (not-yet-played) schedule/polls start appearing under that number.
+        adapter_before = CollegeBasketballDataAdapter("shared-key", getter=self.getter,
+                                                      today=dt.date(2026, 7, 31))
+        self.assertEqual(adapter_before.season, 2026)
+
+        def getter_2027(url, headers):
+            if url.endswith("/teams"):
+                return []
+            self.assertIn("season=2027", url)
+            return []
+        adapter_after = CollegeBasketballDataAdapter("shared-key", getter=getter_2027,
+                                                     today=dt.date(2026, 8, 1))
+        self.assertEqual(adapter_after.season, 2027)
+        adapter_after.schedule()
 
     def test_leaders_computes_per_game_averages_for_d1_only(self):
         # CBBD's /stats/player/season is already one row per player (unlike
