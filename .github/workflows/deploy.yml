@@ -26,7 +26,7 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Restore fetch state (picks, odds, ratings, CI cadence)
+      - name: Restore fetch state (picks, odds, CI cadence)
         uses: actions/cache@v4
         with:
           path: |
@@ -35,8 +35,6 @@ jobs:
             data_*.json
             picks_log*.json
             odds_open*.json
-            ratings*.json
-            !ratings_elo.json
             title_open*.json
             *_cache.json
             player_db_*.json
@@ -85,26 +83,32 @@ jobs:
       - name: Fetch one adaptive round for all sports
         run: python multi_fetch.py --once
 
-      - name: Commit updated historical Elo back to the repo
-        # ratings_elo.json is git-tracked (seeded 2026-07-26 with a one-time
-        # historical backfill, see PROVIDER_COMPLIANCE.md) and deliberately
-        # excluded from the cache step above -- the cache's restore-keys
-        # fallback would otherwise silently restore an older cached copy
-        # over the checked-out file every run, discarding both the seed and
-        # any incremental Elo updates from real finished games. Committing
-        # it back here, instead of relying on the cache, makes git the one
-        # source of truth for this file. [skip ci] on the commit message
+      - name: Commit updated ratings back to the repo
+        # EVERY ratings*.json file (Elo, and every per-competition curated/
+        # enriched class-rating file -- ratings.json, ratings_ncaaf.json,
+        # ratings_bundesliga.json, etc.) is git-tracked, and all of them used
+        # to also be matched by the cache step above -- the cache's
+        # restore-keys fallback would silently restore an older cached copy
+        # over the freshly-checked-out file every run, discarding real
+        # enrichment (talent/recruiting strength, championship-odds strength,
+        # historical Elo) and reintroducing stale/contaminated data none of
+        # this session's fixes could see, since they never ran against it.
+        # Confirmed live 2026-07-26: this exact bug flipped Alabama's class
+        # score negative relative to East Carolina's on the live site, even
+        # though the underlying provider data was correct. Committing the
+        # real per-run result back here, instead of relying on the cache,
+        # makes git the one source of truth for every ratings file. [skip ci]
         # stops this from re-triggering the workflow via its own
         # `push: branches: [main]` trigger.
         run: |
-          if ! git diff --quiet -- ratings_elo.json; then
+          if ! git diff --quiet -- 'ratings*.json' ':!ratings*.backup.json' ':!ratings*.legacy.json' ':!ratings*.raced-preserved.json'; then
             git config user.name "matchday-bot"
             git config user.email "actions@github.com"
-            git add ratings_elo.json
-            git commit -m "Update historical Elo ratings [skip ci]"
+            git add -- 'ratings*.json' ':!ratings*.backup.json' ':!ratings*.legacy.json' ':!ratings*.raced-preserved.json'
+            git commit -m "Update ratings (Elo, class/talent strength) [skip ci]"
             git push
           else
-            echo "ratings_elo.json unchanged, nothing to commit"
+            echo "no ratings files changed, nothing to commit"
           fi
 
       - name: Assemble public site (curated allowlist only)
