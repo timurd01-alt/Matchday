@@ -1,0 +1,18 @@
+[
+ {
+  "id": "transparent-weekly-scorecard-2026-07-26",
+  "comp": "all",
+  "comp_label": "Independent Audit",
+  "slug": "transparent-weekly-scorecard-2026-07-26",
+  "title": "Transparent Weekly Scorecard — July 19–25, 2026",
+  "date": "2026-07-26",
+  "summary": "No verified locked pregame picks were eligible for the official score this week.",
+  "record": {"hits": 0, "graded": 0, "pct": null},
+  "highlights": {"best_call": null, "largest_miss": null},
+  "body": [
+   "There is no official weekly score to celebrate or explain away: zero verified, locked pregame picks were eligible for the completed July 19–25 window.",
+   "One World Cup result and 66 graded MLB entries were excluded because their stored records lack pregame lock timestamps. No picks were rewritten and no legacy record was mixed into the official score.",
+   "Hits, misses, model-versus-market comparison, multiclass Brier, log loss, and calibration are not estimable at n=0."
+  ]
+ }
+]
