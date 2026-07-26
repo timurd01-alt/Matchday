@@ -246,6 +246,107 @@ class BallDontLieTests(unittest.TestCase):
         # page 1 (once) + page 2 (initial attempt + one retry, both failing)
         self.assertEqual(len(calls), 3)
 
+    def test_historical_season_uses_seasons_filter_and_pages_to_completion(self):
+        # backfill_history.py's one-time historical pull, distinct from
+        # season_games()'s date-window approach used by the hourly build().
+        # Live-verified 2026-07-26 that BALLDONTLIE's `seasons[]` filter
+        # returns a real season in full via cursor pagination (2010 NFL:
+        # exactly 267 games over 3 pages) -- this test pins that contract.
+        calls = []
+
+        def paged_getter(url, headers):
+            qs = dict(urllib.parse.parse_qsl(urllib.parse.urlsplit(url).query))
+            self.assertEqual(qs.get("seasons[]"), "2010")
+            cursor = qs.get("cursor")
+            calls.append(cursor)
+            if cursor is None:
+                return {"data": [{
+                    "id": 1, "date": "2010-09-10T00:30:00.000Z", "season": 2010,
+                    "status": "STATUS_FINAL", "season_type": "regular",
+                    "home_team": {"display_name": "New Orleans Saints"},
+                    "visitor_team": {"display_name": "Minnesota Vikings"},
+                    "home_team_score": 14, "visitor_team_score": 9,
+                }], "meta": {"next_cursor": "page2"}}
+            return {"data": [{
+                "id": 2, "date": "2011-02-06T23:29:00.000Z", "season": 2010,
+                "status": "STATUS_FINAL", "season_type": "postseason",
+                "home_team": {"display_name": "Green Bay Packers"},
+                "visitor_team": {"display_name": "Pittsburgh Steelers"},
+                "home_team_score": 31, "visitor_team_score": 25,
+            }], "meta": {}}
+
+        adapter = BallDontLieAdapter("test-key", "NFL", getter=paged_getter)
+        with mock.patch("provider_adapters.time.sleep") as sleep_mock:
+            games = adapter.historical_season(2010)
+        self.assertEqual(len(calls), 2)
+        sleep_mock.assert_called_once_with(BallDontLieAdapter.SEASON_PAGE_DELAY_SEC)
+        self.assertEqual(len(games), 2)
+        self.assertEqual(games[0]["home"]["name"], "New Orleans Saints")
+        self.assertEqual(games[0]["score"], {"home": 14, "away": 9, "winner": "h"})
+        self.assertEqual(games[1]["score"], {"home": 31, "away": 25, "winner": "h"})
+
+    def test_historical_season_drops_preseason_like_season_games(self):
+        def getter(url, headers):
+            return {"data": [{
+                "id": 1, "date": "2019-08-01T00:00:00.000Z", "season": 2019,
+                "status": "STATUS_FINAL", "season_type": "preseason",
+                "home_team": {"display_name": "Boston Red Sox"},
+                "away_team": {"display_name": "New York Yankees"},
+                "home_team_score": 1, "visitor_team_score": 0,
+            }], "meta": {}}
+        adapter = BallDontLieAdapter("test-key", "MLB", getter=getter)
+        with mock.patch("provider_adapters.time.sleep"):
+            games = adapter.historical_season(2019)
+        self.assertEqual(games, [])
+
+    def test_historical_season_recovers_from_a_single_transient_page_failure(self):
+        calls = []
+
+        def flaky_once_getter(url, headers):
+            cursor = dict(urllib.parse.parse_qsl(urllib.parse.urlsplit(url).query)).get("cursor")
+            calls.append(cursor)
+            if cursor is None:
+                return {"data": [{
+                    "id": 1, "date": "2015-09-01T00:00:00.000Z", "season": 2015,
+                    "status": "STATUS_FINAL", "season_type": "regular",
+                    "home_team": {"display_name": "Boston Celtics"},
+                    "visitor_team": {"display_name": "New York Knicks"},
+                    "home_team_score": 100, "visitor_team_score": 90,
+                }], "meta": {"next_cursor": "page2"}}
+            if calls.count("page2") == 1:
+                raise ProviderError("429 rate limited")
+            return {"data": [{
+                "id": 2, "date": "2015-09-02T00:00:00.000Z", "season": 2015,
+                "status": "STATUS_FINAL", "season_type": "regular",
+                "home_team": {"display_name": "Chicago Bulls"},
+                "visitor_team": {"display_name": "Miami Heat"},
+                "home_team_score": 95, "visitor_team_score": 90,
+            }], "meta": {}}
+
+        adapter = BallDontLieAdapter("test-key", "NBA", getter=flaky_once_getter)
+        with mock.patch("provider_adapters.time.sleep"):
+            games = adapter.historical_season(2015)
+        self.assertEqual(len(calls), 3)
+        self.assertEqual(len(games), 2)
+
+    def test_historical_season_raises_instead_of_caching_a_truncated_season(self):
+        def always_fails_page2(url, headers):
+            cursor = dict(urllib.parse.parse_qsl(urllib.parse.urlsplit(url).query)).get("cursor")
+            if cursor is None:
+                return {"data": [{
+                    "id": 1, "date": "2015-09-01T00:00:00.000Z", "season": 2015,
+                    "status": "STATUS_FINAL", "season_type": "regular",
+                    "home_team": {"display_name": "Boston Celtics"},
+                    "visitor_team": {"display_name": "New York Knicks"},
+                    "home_team_score": 100, "visitor_team_score": 90,
+                }], "meta": {"next_cursor": "page2"}}
+            raise ProviderError("429 rate limited")
+
+        adapter = BallDontLieAdapter("test-key", "NBA", getter=always_fails_page2)
+        with mock.patch("provider_adapters.time.sleep"):
+            with self.assertRaises(ProviderError):
+                adapter.historical_season(2015)
+
 
 class CollegeFootballDataTests(unittest.TestCase):
     def getter(self, url, headers):

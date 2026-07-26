@@ -1,5 +1,15 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-07-26 (Five candidate sources -- Kaggle, the Sports Reference family,
+WorldFootball.net, Flashscore, Sofascore, and Sportradar -- evaluated against live ToS text for
+the historical-backfill and live-score gaps; Sports Reference, WorldFootball.net, Flashscore, and
+Sofascore all rejected on explicit clause text, Sportradar rejected on practical accessibility
+with a licensing-clause flag for a lawyer if that changes, and Kaggle explained as needing a
+per-dataset check rather than a platform-wide call -- full detail in the Changelog below); a new
+one-time `backfill_history.py` script added the same day to seed `ratings_elo.json` from real past
+seasons on the providers already licensed above (CFBD/CBBD/BALLDONTLIE/football-data.org/
+API-FOOTBALL, no new provider), a materially different bulk-historical-pull usage pattern from the
+existing hourly incremental fetch -- detailed below.
 Reviewed: 2026-07-25 (Polymarket evaluated as a possible internal-only calibration reference for
 `audit_model_vs_market.py` and rejected -- Section 4.2's automated-access/scraping ban and
 Section 1's Restricted-Territory Content-vs-Technology-Features split, both quoted below, block it
@@ -153,6 +163,222 @@ Provider terms and tiers can change. Revisit the linked provider pages in
 record the review date here before each public release.
 
 ## Changelog
+
+- **2026-07-26:** Evaluated five candidate sources raised for two open gaps -- multi-season
+  historical results (the `data` agent's backfill work is hitting real free-tier depth limits on
+  CFBD/CBBD/BALLDONTLIE/API-FOOTBALL, e.g. soccer can't reach back past 2022) and live scores
+  (currently football-data.org/BALLDONTLIE/API-FOOTBALL/Sportmonks). Read each source's actual
+  current terms live, not a summary or prior knowledge, matching this document's standing rule.
+  **Not integrated anywhere** -- this is a report-back-only pass, same posture as the Polymarket
+  entry below; no code was written for any of the five.
+
+  - **Sports Reference family (Baseball-Reference / Pro-Football-Reference /
+    Basketball-Reference / Hockey-Reference, sports-reference.com) -- REJECTED.** Read
+    `sports-reference.com/termsofuse.html` (Effective Oct 1, 2004, Last Updated May 19, 2023) and
+    `sports-reference.com/data_use.html` live. Section 5 (Permitted Use) bars, without a
+    non-displayed/internal-use carve-out: "use any material or Content from the Site, including
+    without limitation any statistics or data, (i) to create any database, archive, or other data
+    store that competes with or constitutes a material substitute for the services or data stores
+    offered on the Site or by the Site's Data Providers or (ii) to provide any service that
+    competes with or constitutes a material substitute for the services or data stores offered on
+    the Site" -- language matching SRL's own stated worry in the same section about "a bad apple...
+    creat[ing] a competing statistical database." The same section separately and explicitly bars:
+    "copy or use any material or Content from the Site... for purposes of training, fine-tuning,
+    prompting, or instructing artificial intelligence models or technologies in any manner,
+    including without limitation for purposes of... (ii) supporting machine learning methods used
+    to predict, classify, label, or score inputs into the models" -- a direct textual match for
+    what Matchday's Elo/SRS pipeline would do with backfilled historical results, not an inferred
+    analogy. The data_use.html page states this plainly in its own words: "you should not create
+    websites or tools based on data you scrape from Sports Reference or any of our sites... without
+    our permission," and sets a **$5,000 minimum** for any custom-data request, well outside what a
+    hobbyist/indie project can absorb. Automated access separately requires "express written
+    permission" per Section 5, backed by real rate limits (10 req/min on FBref/Stathead, 20/min on
+    other SR sites, per the linked bot-traffic page) and active IP blocking. Two independent,
+    on-point clauses plus a $5,000 cost floor -- a clean rejection on the provider's own terms, not
+    a close call. SRL's own data_use.html page points to free alternatives worth a separate look for
+    baseball/hockey specifically (Lahman Baseball Database, Retrosheet.org, Hockey Summary
+    Project) -- not evaluated here, since they weren't the sources asked about, but noted for
+    whoever picks this back up.
+  - **WorldFootball.net (weltfussball.de/at/com, voetbal.com, mondefootball.fr, livefutbol.com;
+    operated by Heimspiel Medien GmbH & Co. KG) -- REJECTED.** Read
+    `worldfootball.net/terms/content_terms/` live (General Terms and Conditions of Use). No
+    automated-access/scraping clause is present in the text at all, but a separate clause is
+    categorical on its own: "You may only use or exploit our platform or content thereof personally
+    and not commercially or for business purposes. In addition, you may not use our platform for
+    advertising purposes. Unless you have our express permission to do so." Matchday is a
+    public-facing product, not personal use, so this clause alone blocks it regardless of the
+    scraping question. No official API or data-licensing product was found (live search turned up
+    none; third-party scraper packages like `worldfootballR` exist but scrape it without
+    authorization, they aren't a sanctioned path). Secondary, non-decisive signal: the site's own
+    `robots.txt` (confirmed live) explicitly disallows AI-training crawlers (ClaudeBot, GPTBot,
+    Amazonbot, etc.) via Content-Signal directives, consistent with the ToS's non-commercial-only
+    posture -- noted for completeness, not the controlling document.
+  - **Flashscore (flashscore.com, operated by Livesport s.r.o.) -- REJECTED.** No official public
+    API exists at all (confirmed by live search: only unofficial third-party scrapers/wrappers on
+    Apify, RapidAPI, and GitHub). Read the actual governing terms live at
+    `livesport.eu/terms-of-use/en` (effective 2023-04-01; `flashscore.com/terms-and-conditions/`
+    itself 404s directly but resolves through `livesport.eu/terms/flashscore_com/` to this
+    document). License is explicitly "personal, non-exclusive, non-transferable... solely for your
+    personal use." Separately: "You may not burden our server on which the Application is run with
+    automated requests, nor may you assist a third party in such activity... you may not use the
+    content of the Application by embedding, aggregating, scraping, or re-creating it without our
+    express consent." And on top of that, a database-specific right: "no extraction (copying) or
+    utilization (making available to the public) of Database Content or of a qualitatively or
+    quantitatively substantial part thereof is permitted without our explicit consent." No API, an
+    explicit scraping ban, and a personal-use-only license together make this a clean rejection,
+    exactly the "no official API + ToS prohibits automated access = clean rejection, not a maybe"
+    case.
+  - **Sofascore (sofascore.com, operated by Sofa IT d.o.o.) -- REJECTED.** Sofascore does have one
+    live, keyed public API (`api.sofascore.com/api/docs/external`, confirmed live) -- but it is a
+    one-way **Betting Odds** ingestion endpoint (`GET`/`POST`
+    `/api/external/v1/betting-odds/{oddsType}/{event}`) for odds partners to push odds data *into*
+    Sofascore's platform, not a scores/results/statistics consumption API. It does not serve
+    Matchday's live-score use case at all, so this isn't really an "official API" exception to the
+    scrape-ban question -- there is no legitimate access path for what Matchday would need either
+    way. The actual Terms & Conditions (`sofascore.com/terms-and-conditions`, last updated
+    2024-09-18) read almost identically to Flashscore's (same template family): "User's decision to
+    use the Platform... is solely at his/her own risk for personal use only. The Platform is not to
+    be utilized for any commercial endeavors," plus "Burdening Sofascore's server with automated
+    requests or assisting others in doing so is strictly prohibited... Using website content
+    through embedding, aggregating, scraping, or reproducing without explicit consent is
+    prohibited," plus a database-extraction clause matching Flashscore's almost verbatim. Same
+    clean-rejection reasoning as Flashscore.
+  - **Kaggle (kaggle.com) -- NOT a single source; no blanket call is possible, and none was made.**
+    Kaggle is a hosting platform for individually-licensed community datasets, not one data source
+    with one ToS -- any specific dataset needs its own check when the user names one. Two separate
+    things govern any Kaggle-sourced data, read live from `kaggle.com/terms` (effective June 22,
+    2025):
+    1. **The platform Terms of Use** govern use of kaggle.com/its API itself, separate from any
+       dataset's own license: "You will only use the Services for your own internal, personal,
+       non-commercial use, and not on behalf of or for the benefit of any third party." Whether
+       pulling a dataset through Kaggle's API into a public product like Matchday counts as
+       "internal, personal, non-commercial use" is a real question this checklist does not resolve
+       -- flagging for an actual lawyer, not deciding it as an engineering judgment call, same
+       treatment as the Polymarket Restricted-Territory ambiguity below. Separately, "Crawls,"
+       scrapes," or "spiders" any page... of the Services or Content" is barred, but this targets
+       unauthorized scraping of Kaggle's own site, not use of Kaggle's sanctioned dataset-download
+       API/CLI -- it isn't a bar to downloading a dataset the normal, intended way.
+    2. **The dataset's own license** (CC0, CC BY, CC BY-SA, CC BY-ND, CC BY-NC, etc., set by the
+       uploader in the dataset's metadata) governs the actual data content, and is what most people
+       mean by "is this dataset OK to use." Critically, Kaggle does not verify an uploader's right
+       to publish -- the platform ToU puts the burden entirely on the uploader: "You are responsible
+       for all Content you contribute to the Services, and you represent and warrant you have all
+       rights necessary to do so." A CC0 tag is only as good as that warranty being true. If an
+       uploader actually built their "CC0" dataset by scraping a site whose own terms forbade that
+       -- Sports Reference (rejected above, today) or ESPN (Matchday's standing exclusion) being the
+       two examples directly on point for this project -- the CC0 tag does not cure the underlying
+       provenance problem; it only means Kaggle disclaims responsibility and the risk lands on
+       whoever ingests the data next.
+    **Guidance for any specific dataset the user points to later** (not a platform-wide rule): (a)
+    check the actual license tag in the dataset's metadata, not just its headline description; (b)
+    check the dataset's own description/documentation for a stated original source -- a lineage
+    claim of "scraped from Sports-Reference.com" or "scraped from ESPN" is an automatic rejection
+    here regardless of the license tag, per today's Sports Reference finding and the standing ESPN
+    rule; (c) prefer datasets with clear, checkable provenance (e.g., built from a source Matchday
+    has already vetted, like nflverse-data) over ones with no stated lineage at all; (d) still
+    resolve the platform-ToU commercial-use question above before any production use. No specific
+    dataset was named or evaluated in this pass.
+  - **Sportradar (sportradar.com) -- REJECTED for now, on accessibility, with a separate clause
+    flagged for a lawyer if that ever changes.** Different in kind from the other four: a real,
+    publicly-traded (NASDAQ: SRAD) official data vendor with direct league licensing agreements,
+    not a scrape target -- the question here is accessibility and use-scope, not ToS legitimacy.
+    Checked the actual developer portal live, not marketing pages: `developer.sportradar.com`
+    states plainly "Sportradar's APIs are a B2B (Business-to-Business) service and are not intended
+    to be called directly from a client application," and there is no published self-serve
+    pricing anywhere in the portal -- access requires a sales conversation and a negotiated
+    contract. A 30-day Free Trial does exist, but per the live Master Terms and Conditions
+    (`developer.sportradar.com/sportradar-updates/page/terms-and-conditions`, effective July 14,
+    2026; confirmed on two independent live fetches to guard against a summarization artifact) it
+    is restricted to "Non-commercial internal evaluation only" -- explicitly not usable for display
+    on a live public site. Production access requires the Fee-Based Service tier, which has no
+    accessible entry point comparable to football-data.org/BALLDONTLIE/API-FOOTBALL/CFBD/CBBD's
+    free tiers -- this is the practical blocker regardless of how clean Sportradar's licensing
+    otherwise is. Separately, for if that ever changes: the same Master Terms bar, as a material
+    breach, using the licensed data or service "for any prediction market, trading platform,
+    financial product or similar offering without Company's prior written consent." Given Matchday
+    is literally described as a sports-prediction analytics site, whether its own Elo/SRS/
+    probability output falls inside or outside "similar offering" is a real, unresolved textual
+    question -- flagging for an actual lawyer, not deciding it here, exactly like the Polymarket
+    Restricted-Territory ambiguity below. Coverage itself is broad and real (dedicated soccer, NFL,
+    NBA, MLB, NCAAF, NCAAB APIs per the live packaging page) and would be genuinely new
+    historical-depth capability if ever accessible, not merely redundant with current providers --
+    so this is worth revisiting if the site owner ever pursues a paid Sportradar relationship
+    directly, at which point the prediction-market clause needs real legal review before use.
+
+  This is an engineering read of each source's own posted terms and public developer-portal pages,
+  not legal advice. The Kaggle platform-use question and the Sportradar prediction-market clause
+  specifically should go to an actual lawyer if either is ever revisited, exactly as flagged above.
+
+- **2026-07-26:** Added `backfill_history.py` -- a standalone, manually-run script (same
+  run-when-needed posture as `update_ratings.py`, never part of the hourly `build()` loop or CI
+  cron) that seeds the self-training Elo store (`ratings_elo.json`) with real past completed
+  seasons, using only providers already licensed above -- no new provider, no new key. This is
+  worth its own compliance note because a bulk historical pull (tens of thousands of games in one
+  run for BALLDONTLIE's NBA/MLB coverage) is a meaningfully different usage pattern from the
+  existing hourly incremental fetch that these same keys otherwise see, even though the
+  request-per-call and rate-limit rules already documented above are unchanged and still apply.
+  **Not run against production yet** -- built, tested, and dry-run validated only; the site owner
+  decides when (if ever) to actually run it, since it permanently changes every live Elo-derived
+  rating/prediction.
+
+  Every provider-per-season assignment below was live-verified against the real endpoint on
+  2026-07-26, not assumed from docs:
+  - **WC (World Cup):** season 2022 only, via API-FOOTBALL (league id 1) -- confirmed live: 64
+    fixtures, FT/AET/PEN, spanning the real Qatar 2022 opener (Qatar 0-2 Ecuador) through the
+    third-place match (Croatia vs Morocco). football-data.org 403s on season 2022 and earlier for
+    every competition, including this tournament, on the free plan -- so this is the only past
+    World Cup reachable on either currently-integrated provider's free tier, not an arbitrary
+    2-3-season choice. No earlier World Cup (2018, 2014, ...) is reachable this way.
+  - **UCL, EPL, La Liga, Serie A, Bundesliga, Ligue 1:** season 2022 via API-FOOTBALL (league ids
+    2/39/140/135/78/61 respectively, each confirmed live against a real completed-season fixture
+    count -- e.g. EPL 380, UCL 203 including qualifying rounds, Bundesliga 308), seasons 2023-2025
+    via football-data.org (confirmed live with `?season=YYYY`, e.g. EPL 2023 returned exactly 380
+    matches with `resultSet.played: 380`). football-data.org and API-FOOTBALL's free plans both
+    reach seasons 2023/2024 -- pulling both into Elo would double-count those two seasons, so this
+    script always uses exactly one provider per (competition, season): API-FOOTBALL only for the
+    one season football-data.org can't reach (2022), football-data.org for the rest. 2022-2025 (4
+    seasons) is the real ceiling for these competitions on current free-tier access -- not 2000 as
+    originally asked for elsewhere in this project -- because neither provider's free plan reaches
+    further back (API-FOOTBALL: seasons 2021 and 2025 both fail; football-data.org: 2022 and
+    earlier all 403). Reaching further back would need a different, likely paid, provider (see the
+    Sportradar entry above).
+  - **NCAAF, NCAAM:** seasons 2000 through the last fully-completed season, via CFBD/CBBD (same
+    keys/endpoints already used for schedules/standings/talent/recruiting/leaders above) -- CFBD
+    confirmed with no restriction found back to at least 1970 in an earlier investigation this
+    session, CBBD the same pattern back to at least 2000; this script caps both at 2000 to match
+    what was actually asked for, not because of any provider limit.
+  - **NFL:** seasons 2002 through the last fully-completed season, via BALLDONTLIE. BALLDONTLIE has
+    no NFL games before season 2002 on the free plan -- confirmed live with a full `per_page=100`
+    request returning zero rows for both 2000 and 2001 (not a rate-limit artifact; the same request
+    shape for 2002 returned real data). NFL therefore cannot reach the full 2000 floor the way
+    NBA/MLB/NCAAF/NCAAM can.
+  - **NBA, MLB:** seasons 2000 through the last fully-completed season, via BALLDONTLIE -- confirmed
+    live at season 2000 for both (and NBA sampled all the way back to 1960 without emptying out, so
+    2000 is nowhere near BALLDONTLIE's real floor for that sport).
+  - **Team relocations/renames do not fragment Elo history:** confirmed live that both BALLDONTLIE
+    and CFBD report historical games under each franchise's/program's *current* name, not the name
+    actually in use at the time -- BALLDONTLIE's 2003 MLB season lists "Washington Nationals," not
+    "Montreal Expos"; a 1980 NBA game lists "Oklahoma City Thunder," not "Seattle SuperSonics"; CFBD's
+    2015 season lists "Louisiana," not the pre-2018 "Louisiana-Lafayette." So the sport-scoped Elo
+    key (`_elo_key()`, `norm(name)` scoped by `COMP["sport"]`) never splits one program's real
+    history across a relocation or rename the way it would if these providers used era-accurate
+    names -- no alias table was needed to handle this.
+
+  Request budget (see `backfill_history.py`'s own docstring for the full breakdown): soccer is
+  cheap (~25 requests total across API-FOOTBALL and football-data.org, a few minutes); NCAAF/NCAAM
+  are cheap (~26 and ~104 requests respectively, CFBD/CBBD's per-call limits being generous, a few
+  minutes); NFL is moderate (~65 requests, ~15 minutes at BALLDONTLIE's existing 5 req/min pacing);
+  NBA and MLB are the long pole (~340 and ~640 requests, ~75 and ~140 minutes respectively) because
+  a 24-26-season backfill at 100 games/page is simply a lot of pages at that free-tier pace. A full
+  run (every competition) is therefore a roughly 4-hour job, safely splittable across multiple
+  sittings/days via `--comp` since `update_elo()` is already idempotent per match id and
+  `ratings_elo.json` is written after every season, not batched to the end.
+
+  Regression coverage: `BallDontLieAdapter.historical_season()` (pagination, retry-then-raise,
+  preseason filtering) in `test_provider_adapters.py`; chronological-ordering, idempotency,
+  provider-per-season assignment, and sport-scoped-Elo-keying tests in the new
+  `test_backfill_history.py`. `python -m unittest test_model_inputs test_provider_adapters
+  test_generate_posts` stays green.
 
 - **2026-07-25:** Evaluated Polymarket (the prediction market) as a possible *internal-only*
   second calibration reference for `audit_model_vs_market.py` -- alongside cached Odds API

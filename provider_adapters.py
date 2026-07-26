@@ -512,23 +512,38 @@ class CollegeFootballDataAdapter:
                 categories.append({"key": field_key, "label": label, "abbr": "", "leaders": leaders})
         return {"season": self.season, "source": "CollegeFootballData", "categories": categories} if categories else {}
 
-    def talent(self):
-        """247Sports Team Talent Composite -- roster-quality coverage across
-        the full FBS field, not just the handful of teams with championship
-        futures odds. Same account/key as the rest of this adapter."""
-        rows = self._get("/talent", {"year": self.season})
-        out = {}
-        for row in rows if isinstance(rows, list) else []:
-            name, score = row.get("team"), row.get("talent")
-            if name and score:
-                out[str(name)] = float(score)
-        if not out and self.season > 2000:
-            rows = self._get("/talent", {"year": self.season - 1})
+    def talent(self, seasons_back=3):
+        """247Sports Team Talent Composite, averaged across the last few
+        seasons that actually have data, not just the most recent one.
+
+        Confirmed live 2026-07-26: `/talent?year=2026` returns zero rows this
+        far ahead of the season (the composite isn't published yet), and a
+        single-season read is noisy in general -- a program's roster quality
+        is more honestly read as a multi-year level than one snapshot, and
+        this also naturally subsumes the old single-year fallback (skip
+        years with no data, keep walking back) instead of only trying
+        exactly one prior year.
+
+        `seasons_back`: how many YEARS WITH REAL DATA to average (not how
+        many years back to search) -- an unpublished current season is
+        skipped entirely rather than counted as a thin/empty data point.
+        """
+        sums, counts = {}, {}
+        years_with_data = 0
+        year = self.season
+        while years_with_data < seasons_back and year > 2000:
+            rows = self._get("/talent", {"year": year})
+            found = False
             for row in rows if isinstance(rows, list) else []:
                 name, score = row.get("team"), row.get("talent")
                 if name and score:
-                    out[str(name)] = float(score)
-        return out
+                    sums[name] = sums.get(name, 0.0) + float(score)
+                    counts[name] = counts.get(name, 0) + 1
+                    found = True
+            if found:
+                years_with_data += 1
+            year -= 1
+        return {name: sums[name] / counts[name] for name in sums}
 
 
 class CollegeBasketballDataAdapter:
@@ -865,6 +880,47 @@ class BallDontLieAdapter:
                         time.sleep(self.SEASON_PAGE_DELAY_SEC * 3)
             if payload is None:
                 raise ProviderError(f"season_games: page {page} failed after retry: {last_exc}")
+            page_rows = payload.get("data") if isinstance(payload, dict) else []
+            rows.extend(page_rows or [])
+            cursor = (payload.get("meta") or {}).get("next_cursor") if isinstance(payload, dict) else None
+            if not cursor:
+                break
+        matches = [self._match(row) for row in rows if isinstance(row, dict)]
+        matches = [match for match in matches
+                   if match and not any(tag in (match.get("stage") or "").lower()
+                                         for tag in ("preseason", "spring"))]
+        matches.sort(key=lambda match: match.get("kickoff") or "")
+        return matches
+
+    def historical_season(self, year, max_pages=20):
+        """A full PAST completed season, for the one-time historical Elo
+        backfill (backfill_history.py) -- distinct from season_games()'s
+        date-windowed, current-season-only pull. Uses the `seasons[]` filter
+        directly rather than a date range, since a past season's real start/
+        end dates aren't worth re-deriving when the API already supports
+        filtering by season number.
+
+        Same retry-once-then-raise contract as season_games(): a page
+        failure never silently caches a truncated season, since the caller
+        folds this straight into Elo and a partial season would train on an
+        incomplete, wrongly-ordered slice of real history.
+        """
+        rows, cursor = [], None
+        for page in range(max_pages):
+            if page:
+                time.sleep(self.SEASON_PAGE_DELAY_SEC)
+            params = {"seasons[]": str(year), "per_page": 100, "cursor": cursor}
+            payload = None
+            for attempt in range(2):
+                try:
+                    payload = self._get(f"/{self.code}/v1/games", params)
+                    break
+                except ProviderError as exc:
+                    last_exc = exc
+                    if attempt == 0:
+                        time.sleep(self.SEASON_PAGE_DELAY_SEC * 3)
+            if payload is None:
+                raise ProviderError(f"historical_season({year}): page {page} failed after retry: {last_exc}")
             page_rows = payload.get("data") if isinstance(payload, dict) else []
             rows.extend(page_rows or [])
             cursor = (payload.get("meta") or {}).get("next_cursor") if isinstance(payload, dict) else None

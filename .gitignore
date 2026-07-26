@@ -10,7 +10,16 @@ api_football_box_cache*.json
 *_cache.json
 player_db_*.json
 ratings*.backup.json
-ratings_elo.json
+ratings*.legacy.json
+ratings*.raced-preserved.json
+# ratings_elo.json is deliberately tracked, not ignored: it was seeded
+# 2026-07-26 with a one-time historical backfill (see backfill_history.py
+# and PROVIDER_COMPLIANCE.md) so the live site starts from real historical
+# Elo instead of a blank slate. The GitHub Actions cache (a separate system
+# from git, see deploy.yml's actions/cache step) is the normal place this
+# file lives day-to-day; this is a one-time seed exception, not a new
+# standing convention -- don't add other generated files here on this
+# precedent without the same explicit reasoning.
 ratings_h2h.json
 .browser-profile/
 __pycache__/

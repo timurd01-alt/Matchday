@@ -820,6 +820,415 @@ class StrengthFloorTests(unittest.TestCase):
         self.assertGreater(pred["blend"]["h"], 80)
 
 
+class TalentShareCurveTests(unittest.TestCase):
+    """2026-07-26 user-reported symptom: real Vegas lines for Week 1 2026
+    NCAAF (USC -35.5/-50000ML over San Jose State, Florida State -28.5/
+    -10000ML over New Mexico State, etc.) imply 98.5-99.8% favorites, but
+    the deployed preseason model topped out around 60-64% for the exact
+    same real-shaped CFBD talent gap -- apply_recruiting_strength's flat
+    share**0.7 curve (added to fix a DIFFERENT problem, Build 0725B: a
+    middling P4 team crushing a good G5 team almost to nothing) also
+    over-protects a genuine bottom-of-FBS team, since 0.2**0.7 ~= 0.34 --
+    a team at one-fifth of the national ceiling still keeps a third of the
+    scaling weight. _talent_share_curve fixes this with a floor: unchanged
+    above it (protects the original Build 0725B case), steeper below it
+    (real bottom-tier teams pull apart from the pack instead of blurring
+    toward it)."""
+
+    def test_at_or_above_the_competitive_floor_is_unchanged_from_the_flat_curve(self):
+        for share in (0.58, 0.65, 0.826, 1.0):
+            self.assertAlmostEqual(fetch_data._talent_share_curve(share), share ** 0.7, places=9)
+
+    def test_below_the_floor_falls_off_faster_than_the_old_flat_curve(self):
+        # San Jose State's real 2025 CFBD talent share (~0.52) vs the old,
+        # unconditional share**0.7 curve.
+        share = 0.52
+        self.assertLess(fetch_data._talent_share_curve(share), share ** 0.7)
+
+    def test_falloff_below_the_floor_is_continuous_at_the_boundary(self):
+        # No cliff right at the floor -- a team just below it should land
+        # close to a team just above it, not jump discontinuously.
+        just_below = fetch_data._talent_share_curve(0.579)
+        just_above = fetch_data._talent_share_curve(0.58)
+        self.assertAlmostEqual(just_below, just_above, delta=0.01)
+
+    def test_the_further_below_the_floor_the_steeper_the_penalty(self):
+        # New Mexico State's real 2025 share (~0.40) is much further below
+        # the floor than San Jose State's (~0.52) -- it should lose
+        # proportionally more of its scaling weight, not the same fraction.
+        near_floor = fetch_data._talent_share_curve(0.52) / (0.52 ** 0.7)
+        far_below = fetch_data._talent_share_curve(0.40) / (0.40 ** 0.7)
+        self.assertLess(far_below, near_floor)
+
+    def test_ceiling_case_is_unaffected(self):
+        # The share==1.0 ceiling test (test_recruiting_and_market_strength_
+        # reach_the_full_class_scale) must keep landing exactly on 1500/200.
+        fetch_data.COMP_KEY = "NCAAM"
+        fetch_data.COMP = dict(fetch_data.COMPETITIONS["NCAAM"])
+        fetch_data.apply_recruiting_strength({"Duke": 100.0})
+        top = fetch_data._ratings_lookup("Duke")
+        self.assertEqual(top["squad_value_m"], 1500)
+        self.assertEqual(top["star_value_m"], 200)
+
+
+class NCAAFBlowoutConfidenceTests(unittest.TestCase):
+    """Real 2025 CFBD Team Talent Composite spot check (live-pulled
+    2026-07-26, /talent?year=2025) for the exact four matchups in the
+    user's proof, plus three real "good G5 vs middling P4" matchups to
+    confirm the fix widens the genuinely-separated blowout case without
+    dragging the moderate case anywhere near it. National max was Georgia
+    at 1002.98; every score below is the real team_scores value CFBD
+    returned for that team, fed through the real apply_recruiting_strength
+    -> predict() pipeline, at pld=0 (true preseason, matching the real
+    screenshots -- Week 1, 0-0 records)."""
+
+    REAL_TALENT_2025 = {
+        "Georgia": 1002.98,  # national max, sets share denominator
+        "USC": 847.53, "San Jose State": 522.91,
+        "Florida State": 828.45, "New Mexico State": 402.9,
+        "Illinois": 662.13, "UAB": 540.93,
+        "Rutgers": 689.22, "Massachusetts": 488.73,
+        "Michigan State": 717.42, "Boise State": 610.65,
+        "Kansas": 705.32, "Memphis": 668.63,
+        "Purdue": 687.74, "Toledo": 620.13,
+    }
+
+    def setUp(self):
+        self.old_key, self.old_comp = fetch_data.COMP_KEY, fetch_data.COMP
+        self.old_ratings_file, self.old_ratings = fetch_data.RATINGS_FILE, fetch_data._RATINGS
+        # Isolate Elo/H2H too -- see NCAAMBlowoutConfidenceTests.setUp for
+        # why: both are shared, live, mutable files the historical backfill
+        # writes real data into in the background, and these tests assert
+        # exact confidence thresholds.
+        self.old_elo_file, self.old_elo = fetch_data.ELO_FILE, fetch_data._ELO
+        self.old_h2h_file, self.old_h2h = fetch_data.H2H_FILE, fetch_data._H2H
+        fetch_data.COMP_KEY = "NCAAF"
+        fetch_data.COMP = dict(fetch_data.COMPETITIONS["NCAAF"])
+        fd, self.tmp_path = tempfile.mkstemp(suffix=".json")
+        with os.fdopen(fd, "w", encoding="utf-8") as f:
+            json.dump({}, f)
+        fetch_data.RATINGS_FILE = self.tmp_path
+        fetch_data._RATINGS = None
+        efd, self.elo_tmp_path = tempfile.mkstemp(suffix=".json")
+        os.close(efd)
+        fetch_data.ELO_FILE = self.elo_tmp_path
+        fetch_data._ELO = None
+        hfd, self.h2h_tmp_path = tempfile.mkstemp(suffix=".json")
+        os.close(hfd)
+        fetch_data.H2H_FILE = self.h2h_tmp_path
+        fetch_data._H2H = None
+        fetch_data.apply_recruiting_strength(dict(self.REAL_TALENT_2025))
+
+    def tearDown(self):
+        fetch_data.COMP_KEY, fetch_data.COMP = self.old_key, self.old_comp
+        fetch_data.RATINGS_FILE, fetch_data._RATINGS = self.old_ratings_file, self.old_ratings
+        fetch_data.ELO_FILE, fetch_data._ELO = self.old_elo_file, self.old_elo
+        fetch_data.H2H_FILE, fetch_data._H2H = self.old_h2h_file, self.old_h2h
+        os.unlink(self.tmp_path)
+        os.unlink(self.elo_tmp_path)
+        os.unlink(self.h2h_tmp_path)
+
+    def _confidence(self, home, away):
+        h = {"name": home, "pts": 0, "gd": 0, "form": "", "pld": 0}
+        a = {"name": away, "pts": 0, "gd": 0, "form": "", "pld": 0}
+        pred = fetch_data.predict(dict(h), dict(a), {}, {"stage": "Week 1", "weather": {}})
+        return pred["blend"]["h"]
+
+    def test_a_real_wide_talent_gap_reaches_a_clear_favorite_read(self):
+        # Florida State (share 0.826) vs New Mexico State (share 0.402) is
+        # the widest real gap of the four proof cases -- real books had FSU
+        # at ~99%. The recruiting-talent signal alone can't responsibly
+        # manufacture that exact number (see the written-up findings), but
+        # it should now read as a clear, real favorite instead of a
+        # near-coin-flip 56/44.
+        self.assertGreater(self._confidence("Florida State", "New Mexico State"), 70)
+
+    def test_every_proof_case_moves_toward_the_favorite_not_away(self):
+        for home, away in (("USC", "San Jose State"), ("Florida State", "New Mexico State"),
+                            ("Illinois", "UAB"), ("Rutgers", "Massachusetts")):
+            self.assertGreater(self._confidence(home, away), 50)
+
+    def test_a_moderate_good_g5_vs_middling_p4_gap_stays_believable(self):
+        # Real 2025 shares: Michigan State 0.715 vs Boise State 0.609,
+        # Kansas 0.703 vs Memphis 0.667, Purdue 0.686 vs Toledo 0.618 --
+        # all comfortably above _talent_share_curve's competitive floor, so
+        # none of them should be dragged anywhere near the blowout cases
+        # above just because the extreme end got more dynamic range.
+        for home, away in (("Michigan State", "Boise State"), ("Kansas", "Memphis"),
+                            ("Purdue", "Toledo")):
+            conf = self._confidence(home, away)
+            self.assertLess(conf, 60, f"{home} vs {away} should stay believable, got {conf}")
+
+    def test_moderate_case_is_untouched_by_the_extremity_gate(self):
+        # The base-shrink only engages once the class gap clears GAP_LO --
+        # every moderate real case above sits well under that, so it must
+        # be bit-for-bit identical to a run with the gate forced off.
+        with_gate = self._confidence("Michigan State", "Boise State")
+        pred = fetch_data.predict(
+            {"name": "Michigan State", "pts": 0, "gd": 0, "form": "", "pld": 0},
+            {"name": "Boise State", "pts": 0, "gd": 0, "form": "", "pld": 0},
+            {}, {"stage": "Week 1", "weather": {}})
+        self.assertLess(abs(pred["why"]["class"]), 3.0)  # confirms it's really under GAP_LO
+        self.assertEqual(with_gate, self._confidence("Michigan State", "Boise State"))
+
+
+class NCAAMBlowoutConfidenceTests(unittest.TestCase):
+    """Same investigation as NCAAFBlowoutConfidenceTests, extended to
+    NCAAM: apply_recruiting_strength is shared code (CollegeBasketballData
+    Adapter.recruiting() feeds the identical function CFBD's talent() does),
+    so the same curve-compression root cause applies here too -- confirmed
+    with a real 2025 CBBD /recruiting/teams spot check (live-pulled
+    2026-07-26) rather than assumed. Unlike NCAAF's four proof cases,
+    NCAAM's real recruiting-rating data has much more genuine separation
+    between a true blue-blood and a true bottom-of-D1 team (Duke sat at the
+    national max this cycle; several real bottom-tier teams reported the
+    provider's own floor value), so this is the case where the fix can
+    responsibly reach the 90%+ neighborhood without inventing signal that
+    isn't there -- see the module docstring's before/after numbers."""
+
+    REAL_RECRUITING_2025 = {
+        "Duke": 70.04, "Morehead State": 10.0, "UC Irvine": 12.0,
+        "Gonzaga": 45.33, "Wake Forest": 37.17,
+        "Houston": 68.54, "Boston College": 43.81,
+    }
+
+    def setUp(self):
+        self.old_key, self.old_comp = fetch_data.COMP_KEY, fetch_data.COMP
+        self.old_ratings_file, self.old_ratings = fetch_data.RATINGS_FILE, fetch_data._RATINGS
+        # Isolate Elo/H2H too, not just ratings -- these tests assert exact
+        # confidence thresholds, and both stores are shared, live, mutable
+        # files (the historical backfill script writes real data into them
+        # in the background). Without resetting these, whatever the
+        # backfill happens to have reached for "Duke"/"Houston"/etc. at test
+        # time silently changes the result out from under a fixed threshold.
+        self.old_elo_file, self.old_elo = fetch_data.ELO_FILE, fetch_data._ELO
+        self.old_h2h_file, self.old_h2h = fetch_data.H2H_FILE, fetch_data._H2H
+        fetch_data.COMP_KEY = "NCAAM"
+        fetch_data.COMP = dict(fetch_data.COMPETITIONS["NCAAM"])
+        fd, self.tmp_path = tempfile.mkstemp(suffix=".json")
+        with os.fdopen(fd, "w", encoding="utf-8") as f:
+            json.dump({}, f)
+        fetch_data.RATINGS_FILE = self.tmp_path
+        fetch_data._RATINGS = None
+        efd, self.elo_tmp_path = tempfile.mkstemp(suffix=".json")
+        os.close(efd)
+        fetch_data.ELO_FILE = self.elo_tmp_path
+        fetch_data._ELO = None
+        hfd, self.h2h_tmp_path = tempfile.mkstemp(suffix=".json")
+        os.close(hfd)
+        fetch_data.H2H_FILE = self.h2h_tmp_path
+        fetch_data._H2H = None
+        fetch_data.apply_recruiting_strength(dict(self.REAL_RECRUITING_2025))
+
+    def tearDown(self):
+        fetch_data.COMP_KEY, fetch_data.COMP = self.old_key, self.old_comp
+        fetch_data.RATINGS_FILE, fetch_data._RATINGS = self.old_ratings_file, self.old_ratings
+        fetch_data.ELO_FILE, fetch_data._ELO = self.old_elo_file, self.old_elo
+        fetch_data.H2H_FILE, fetch_data._H2H = self.old_h2h_file, self.old_h2h
+        os.unlink(self.tmp_path)
+        os.unlink(self.elo_tmp_path)
+        os.unlink(self.h2h_tmp_path)
+
+    def _confidence(self, home, away):
+        h = {"name": home, "pts": 0, "gd": 0, "form": "", "pld": 0}
+        a = {"name": away, "pts": 0, "gd": 0, "form": "", "pld": 0}
+        pred = fetch_data.predict(dict(h), dict(a), {}, {"stage": "Non-Conference", "weather": {}})
+        return pred["blend"]["h"]
+
+    def test_a_true_blue_blood_vs_bottom_of_d1_reaches_the_90_plus_neighborhood(self):
+        # Real 2025 CBBD shares: Duke at the national max (1.0) vs Morehead
+        # State at the provider's own reported floor (~0.14) -- a genuine,
+        # data-backed blowout, unlike three of NCAAF's four proof cases.
+        self.assertGreater(self._confidence("Duke", "Morehead State"), 80)
+        self.assertGreater(self._confidence("Duke", "UC Irvine"), 80)
+
+    def test_moderate_mid_major_vs_bottom_half_power_stays_believable(self):
+        # Gonzaga (elite mid-major-turned-power, share 0.647) vs Wake
+        # Forest (bottom-half ACC, share 0.531) and Houston (blue-blood
+        # tier, 0.979) vs Boston College (bottom-half ACC, 0.625) are both
+        # real, meaningfully-favored-but-not-a-lock matchups -- neither
+        # should be dragged toward the Duke-tier read above.
+        for home, away in (("Gonzaga", "Wake Forest"), ("Houston", "Boston College")):
+            conf = self._confidence(home, away)
+            self.assertLess(conf, 65, f"{home} vs {away} should stay believable, got {conf}")
+
+
+class PredictedMarginTests(unittest.TestCase):
+    """New field requested alongside the blowout-confidence fix: Matchday's
+    own predicted point/goal margin (not copied from a sportsbook),
+    derived from the same official win/draw/loss probabilities predict()
+    already computes via the standard odds<->margin relationship, reusing
+    american_cfg["margin"] as the per-sport scale rather than inventing a
+    new one."""
+
+    def setUp(self):
+        self.old_key, self.old_comp = fetch_data.COMP_KEY, fetch_data.COMP
+
+    def tearDown(self):
+        fetch_data.COMP_KEY, fetch_data.COMP = self.old_key, self.old_comp
+
+    def test_american_favorite_is_signed_positive_and_labeled_by_name(self):
+        fetch_data.COMP_KEY = "NFL"
+        fetch_data.COMP = dict(fetch_data.COMPETITIONS["NFL"])
+        home = {"name": "Contender", "pld": 17, "w": 15, "l": 2,
+                "gf": 500, "ga": 300, "srs": 12.0, "srs_games": 17, "rest_days": 7}
+        away = {"name": "Bottom Feeder", "pld": 17, "w": 1, "l": 16,
+                "gf": 250, "ga": 500, "srs": -12.0, "srs_games": 17, "rest_days": 7}
+        pred = fetch_data.predict(dict(home), dict(away), {}, {"stage": "Week 18", "weather": {}})
+        margin = pred["predicted_margin"]
+        self.assertEqual(margin["unit"], "points")
+        self.assertEqual(margin["favored"], "h")
+        self.assertGreater(margin["value"], 0)
+        self.assertIn("Contender by", margin["label"])
+
+    def test_away_favorite_flips_the_sign_and_the_favored_side(self):
+        fetch_data.COMP_KEY = "NFL"
+        fetch_data.COMP = dict(fetch_data.COMPETITIONS["NFL"])
+        home = {"name": "Bottom Feeder", "pld": 17, "w": 1, "l": 16,
+                "gf": 250, "ga": 500, "srs": -12.0, "srs_games": 17, "rest_days": 7}
+        away = {"name": "Contender", "pld": 17, "w": 15, "l": 2,
+                "gf": 500, "ga": 300, "srs": 12.0, "srs_games": 17, "rest_days": 7}
+        pred = fetch_data.predict(dict(home), dict(away), {}, {"stage": "Week 18", "weather": {}})
+        margin = pred["predicted_margin"]
+        self.assertEqual(margin["favored"], "a")
+        self.assertLess(margin["value"], 0)
+        self.assertIn("Contender by", margin["label"])
+
+    def test_a_bigger_probability_gap_produces_a_bigger_margin(self):
+        fetch_data.COMP_KEY = "NCAAF"
+        fetch_data.COMP = dict(fetch_data.COMPETITIONS["NCAAF"])
+        close = {"name": "A", "pld": 10, "w": 6, "l": 4, "gf": 250, "ga": 220,
+                 "srs": 2.0, "srs_games": 10, "rest_days": 7}
+        weak = {"name": "B", "pld": 10, "w": 4, "l": 6, "gf": 220, "ga": 250,
+                "srs": -2.0, "srs_games": 10, "rest_days": 7}
+        much_weaker = {"name": "C", "pld": 10, "w": 1, "l": 9, "gf": 150, "ga": 400,
+                       "srs": -15.0, "srs_games": 10, "rest_days": 7}
+        close_pred = fetch_data.predict(dict(close), dict(weak), {}, {"stage": "Week 11", "weather": {}})
+        blowout_pred = fetch_data.predict(dict(close), dict(much_weaker), {}, {"stage": "Week 11", "weather": {}})
+        self.assertGreater(blowout_pred["predicted_margin"]["value"], close_pred["predicted_margin"]["value"])
+
+    def test_soccer_margin_is_labeled_in_goals_with_an_explicit_sign(self):
+        fetch_data.COMP_KEY = "EPL"
+        fetch_data.COMP = dict(fetch_data.COMPETITIONS["EPL"])
+        home = {"name": "Strong FC", "pts": 30, "gd": 20, "form": "W W W W W"}
+        away = {"name": "Weak FC", "pts": 5, "gd": -20, "form": "L L L L L"}
+        pred = fetch_data.predict(dict(home), dict(away), {}, {"stage": "Regular Season", "weather": {}})
+        margin = pred["predicted_margin"]
+        self.assertEqual(margin["unit"], "goals")
+        self.assertTrue(margin["label"].endswith("goals"))
+        self.assertTrue(margin["label"].startswith("+"))
+
+    def test_an_even_matchup_reads_as_even_not_a_fake_precise_number(self):
+        fetch_data.COMP_KEY = "NBA"
+        fetch_data.COMP = dict(fetch_data.COMPETITIONS["NBA"])
+        a = {"name": "Even A", "pld": 20, "w": 10, "l": 10, "gf": 2200, "ga": 2200,
+             "srs": 0.0, "srs_games": 20, "rest_days": 2}
+        b = {"name": "Even B", "pld": 20, "w": 10, "l": 10, "gf": 2200, "ga": 2200,
+             "srs": 0.0, "srs_games": 20, "rest_days": 2}
+        pred = fetch_data.predict(dict(a), dict(b), {}, {"stage": "Regular Season", "weather": {}})
+        self.assertAlmostEqual(pred["predicted_margin"]["value"], 0.0, delta=0.5)
+
+
+class PreseasonTotalsTests(unittest.TestCase):
+    """predict_totals() used to return None unconditionally whenever either
+    side had pld==0 -- exactly the true-preseason case real sportsbooks
+    already post totals lines for (the 2026-07-25 screenshots showed real
+    o57.5/o55.5 NCAAF lines on 0-0-record Week 1 games). It now falls back
+    to a rating-based estimate via _preseason_expected_total() instead of
+    nothing, using power_rating() (the same curated-class + self-training-
+    Elo blend predict() itself already reads), while leaving in-season
+    behavior (real gf/ga rates) byte-for-byte unchanged."""
+
+    def setUp(self):
+        self.old_key, self.old_comp = fetch_data.COMP_KEY, fetch_data.COMP
+        fetch_data.COMP_KEY = "NCAAF"
+        fetch_data.COMP = dict(fetch_data.COMPETITIONS["NCAAF"])
+
+    def tearDown(self):
+        fetch_data.COMP_KEY, fetch_data.COMP = self.old_key, self.old_comp
+
+    def test_preseason_produces_a_real_estimate_instead_of_none(self):
+        home = {"name": "Florida State", "pld": 0}
+        away = {"name": "New Mexico State", "pld": 0}
+        totals = fetch_data.predict_totals(home, away, {})
+        self.assertIsNotNone(totals)
+        self.assertEqual(totals["basis"], "preseason_rating")
+        self.assertGreater(totals["expected"], 0)
+
+    def test_in_season_behavior_and_shape_is_unchanged(self):
+        home = {"name": "Team A", "pld": 10, "gf": 350, "ga": 200}
+        away = {"name": "Team B", "pld": 10, "gf": 280, "ga": 260}
+        totals = fetch_data.predict_totals(home, away, {})
+        self.assertEqual(totals["basis"], "season_rate")
+        # (h_gf+a_ga)/2 + (a_gf+h_ga)/2 with per-game rates 35/20 and 28/26
+        self.assertAlmostEqual(totals["expected"], (35 + 26) / 2 + (28 + 20) / 2, places=2)
+
+    def test_preseason_estimate_still_compares_against_a_real_market_line(self):
+        home = {"name": "Florida State", "pld": 0}
+        away = {"name": "New Mexico State", "pld": 0}
+        totals = fetch_data.predict_totals(home, away, {"totals": {"line": 57.5, "over_pct": 52, "under_pct": 48}})
+        self.assertEqual(totals["line"], 57.5)
+        self.assertIn(totals["pick"], ("over", "under"))
+        self.assertEqual(totals["over_pct"] + totals["under_pct"], 100)
+
+    def test_completely_unrated_teams_still_get_the_league_baseline(self):
+        home = {"name": "Totally Unknown School A", "pld": 0}
+        away = {"name": "Totally Unknown School B", "pld": 0}
+        totals = fetch_data.predict_totals(home, away, {})
+        self.assertAlmostEqual(totals["expected"], fetch_data.LEAGUE_AVG_TOTAL["NCAAF"], delta=0.5)
+
+
+class EstimateTitleOddsTests(unittest.TestCase):
+    """New fallback requested alongside the blowout-confidence fix: the
+    Title race panel only ever populated from real championship-odds
+    market data (fetch_outrights()/apply_market_strength()), which is
+    empty for every competition right now (The Odds API's outrights quota
+    is exhausted). estimate_title_odds() ranks a competition's own
+    schedule by power_rating() and produces a title_odds-shaped list
+    (team/code/pct) so the panel still shows something preseason, clearly
+    marked as a model estimate rather than a real market read."""
+
+    def setUp(self):
+        self.old_key, self.old_comp = fetch_data.COMP_KEY, fetch_data.COMP
+        self.old_ratings_file, self.old_ratings = fetch_data.RATINGS_FILE, fetch_data._RATINGS
+        fetch_data.COMP_KEY = "NCAAF"
+        fetch_data.COMP = dict(fetch_data.COMPETITIONS["NCAAF"])
+        fd, self.tmp_path = tempfile.mkstemp(suffix=".json")
+        with os.fdopen(fd, "w", encoding="utf-8") as f:
+            json.dump({"Georgia": {"fifa_rank": 45, "squad_value_m": 1500, "star_value_m": 200},
+                       "New Mexico State": {"fifa_rank": 45, "squad_value_m": 300, "star_value_m": 40}}, f)
+        fetch_data.RATINGS_FILE = self.tmp_path
+        fetch_data._RATINGS = None
+
+    def tearDown(self):
+        fetch_data.COMP_KEY, fetch_data.COMP = self.old_key, self.old_comp
+        fetch_data.RATINGS_FILE, fetch_data._RATINGS = self.old_ratings_file, self.old_ratings
+        os.unlink(self.tmp_path)
+
+    def test_produces_the_same_shape_the_frontend_title_race_panel_expects(self):
+        matches = [{"home": {"name": "Georgia"}, "away": {"name": "New Mexico State"}}]
+        rows = fetch_data.estimate_title_odds(matches, {"georgia": "GA", "new mexico state": "NMSU"})
+        self.assertEqual(len(rows), 2)
+        for row in rows:
+            self.assertIn("team", row); self.assertIn("code", row); self.assertIn("pct", row)
+
+    def test_every_row_is_clearly_marked_as_a_model_estimate(self):
+        matches = [{"home": {"name": "Georgia"}, "away": {"name": "New Mexico State"}}]
+        rows = fetch_data.estimate_title_odds(matches, {})
+        self.assertTrue(all(row.get("is_estimate") is True for row in rows))
+        self.assertTrue(all(row.get("source") == "model" for row in rows))
+
+    def test_the_better_rated_team_ranks_first_and_higher(self):
+        matches = [{"home": {"name": "Georgia"}, "away": {"name": "New Mexico State"}}]
+        rows = fetch_data.estimate_title_odds(matches, {})
+        by_team = {r["team"]: r["pct"] for r in rows}
+        self.assertEqual(rows[0]["team"], "Georgia")
+        self.assertGreater(by_team["Georgia"], by_team["New Mexico State"])
+
+    def test_no_matches_returns_an_empty_list_not_an_error(self):
+        self.assertEqual(fetch_data.estimate_title_odds([], {}), [])
+
+
 def _finished(mid, home, away, hs, aps, kickoff, winner):
     return {"id": mid, "status": "FINISHED", "kickoff": kickoff,
             "home": {"name": home}, "away": {"name": away},
@@ -896,6 +1305,131 @@ class EloSportScopeTests(unittest.TestCase):
         fetch_data.COMP = dict(fetch_data.COMPETITIONS["NCAAF"])
         key_ncaaf = fetch_data._pair_key("kansas", "duke")
         self.assertNotEqual(key_ncaam, key_ncaaf)
+
+
+class LegacyStoreMigrationTests(unittest.TestCase):
+    """The sport-scoping fix above (EloSportScopeTests) only changed how NEW
+    keys are derived -- it did nothing about the store files already sitting
+    on disk in the OLD unscoped format. Confirmed live 2026-07-26 against the
+    real ratings_elo.json/ratings_h2h.json: both files are entirely
+    unscoped (867 teams / 5644 pairs, zero keys with a sport prefix), which
+    means elo_strength()/h2h_strength() have been silently returning
+    (0.0, 0.0) for every team/pair in every sport since the scoping fix
+    landed -- not a cross-sport bug anymore, but a total-data-loss bug.
+    _migrate_legacy_elo_store()/_migrate_legacy_h2h_store() (triggered from
+    _load_elo()/_load_h2h() via a _version field) fix this by archiving the
+    old file and starting fresh sport-scoped tracking -- re-keying the old
+    data was considered and rejected (see that function's own docstring):
+    the stored (r, n) / meeting-log records don't retain which
+    competition/sport wrote them, so there's no reliable way to tell a
+    genuinely single-sport-safe entry apart from a contaminated
+    football/basketball-shared one."""
+
+    def setUp(self):
+        self.old_elo_file, self.old_elo = fetch_data.ELO_FILE, fetch_data._ELO
+        self.old_h2h_file, self.old_h2h = fetch_data.H2H_FILE, fetch_data._H2H
+        fd1, self.elo_path = tempfile.mkstemp(suffix=".json")
+        os.close(fd1)
+        fd2, self.h2h_path = tempfile.mkstemp(suffix=".json")
+        os.close(fd2)
+        self.elo_legacy_path = self.elo_path.rsplit(".json", 1)[0] + ".legacy.json"
+        self.h2h_legacy_path = self.h2h_path.rsplit(".json", 1)[0] + ".legacy.json"
+
+    def tearDown(self):
+        fetch_data.ELO_FILE, fetch_data._ELO = self.old_elo_file, self.old_elo
+        fetch_data.H2H_FILE, fetch_data._H2H = self.old_h2h_file, self.old_h2h
+        for p in (self.elo_path, self.elo_legacy_path, self.h2h_path, self.h2h_legacy_path):
+            if os.path.exists(p):
+                os.unlink(p)
+
+    def test_legacy_unscoped_elo_file_is_archived_and_reset_not_silently_kept(self):
+        legacy = {"teams": {"kent state": {"r": 1602.0, "n": 34},
+                             "mexico": {"r": 1550.0, "n": 10}},
+                  "seen": {"NCAAM:abc123": True}}
+        with open(self.elo_path, "w", encoding="utf-8") as f:
+            json.dump(legacy, f)
+        fetch_data.ELO_FILE = self.elo_path
+        fetch_data._ELO = None
+
+        store = fetch_data._load_elo()
+        # Reset, not re-keyed -- migration must never invent a sport for an
+        # old bare-name entry it can't actually verify.
+        self.assertEqual(store["teams"], {})
+        self.assertEqual(store["seen"], {})
+        self.assertEqual(store["_version"], fetch_data.ELO_STORE_VERSION)
+        # ...but nothing is thrown away -- the old data is archived, not lost.
+        self.assertTrue(os.path.exists(self.elo_legacy_path))
+        with open(self.elo_legacy_path, encoding="utf-8") as f:
+            archived = json.load(f)
+        self.assertEqual(archived["teams"], legacy["teams"])
+
+    def test_migration_is_idempotent_second_load_does_not_re_archive(self):
+        legacy = {"teams": {"kent state": {"r": 1602.0, "n": 34}}, "seen": {}}
+        with open(self.elo_path, "w", encoding="utf-8") as f:
+            json.dump(legacy, f)
+        fetch_data.ELO_FILE = self.elo_path
+        fetch_data._ELO = None
+        fetch_data._load_elo()
+        archived_mtime = os.path.getmtime(self.elo_legacy_path)
+
+        # Force a fresh load from disk (simulates the next process/run) --
+        # the file on disk is now the migrated v2 format, so this must NOT
+        # trigger another archive/reset cycle.
+        fetch_data._ELO = None
+        store2 = fetch_data._load_elo()
+        self.assertEqual(store2.get("_version"), fetch_data.ELO_STORE_VERSION)
+        self.assertEqual(os.path.getmtime(self.elo_legacy_path), archived_mtime)
+
+    def test_already_scoped_v2_elo_file_is_left_alone(self):
+        current = {"_version": fetch_data.ELO_STORE_VERSION,
+                   "teams": {"football:kent state": {"r": 1520.0, "n": 3}},
+                   "seen": {"NCAAF:xyz": True}}
+        with open(self.elo_path, "w", encoding="utf-8") as f:
+            json.dump(current, f)
+        fetch_data.ELO_FILE = self.elo_path
+        fetch_data._ELO = None
+        store = fetch_data._load_elo()
+        self.assertEqual(store["teams"], current["teams"])
+        self.assertFalse(os.path.exists(self.elo_legacy_path))
+
+    def test_legacy_unscoped_h2h_file_is_archived_and_reset(self):
+        legacy = {"pairs": {"kansas|duke": [{"date": "2025-01-01", "home": "kansas", "winner": "h"}]},
+                  "seen": {"NCAAM:def456": True}}
+        with open(self.h2h_path, "w", encoding="utf-8") as f:
+            json.dump(legacy, f)
+        fetch_data.H2H_FILE = self.h2h_path
+        fetch_data._H2H = None
+
+        store = fetch_data._load_h2h()
+        self.assertEqual(store["pairs"], {})
+        self.assertEqual(store["seen"], {})
+        self.assertEqual(store["_version"], fetch_data.H2H_STORE_VERSION)
+        self.assertTrue(os.path.exists(self.h2h_legacy_path))
+        with open(self.h2h_legacy_path, encoding="utf-8") as f:
+            archived = json.load(f)
+        self.assertEqual(archived["pairs"], legacy["pairs"])
+
+    def test_migrated_elo_store_rebuilds_sport_scoped_signal_from_scratch(self):
+        # End-to-end: a legacy file with a blended "kent state" entry gets
+        # reset, and a fresh sport-scoped result correctly starts the team
+        # at neutral and builds its OWN (not the old blended) signal.
+        legacy = {"teams": {"kent state": {"r": 1602.0, "n": 34}}, "seen": {}}
+        with open(self.elo_path, "w", encoding="utf-8") as f:
+            json.dump(legacy, f)
+        fetch_data.ELO_FILE = self.elo_path
+        fetch_data._ELO = None
+
+        fetch_data.COMP_KEY = "NCAAF"
+        fetch_data.COMP = dict(fetch_data.COMPETITIONS["NCAAF"])
+        pts_before, conf_before = fetch_data.elo_strength("Kent State")
+        self.assertEqual((pts_before, conf_before), (0.0, 0.0))  # neutral, not the old blended rating
+
+        loss = [_finished("cfbd-1", "Some Team", "Kent State", 40, 10,
+                           "2025-09-01T00:00:00Z", "h")]
+        fetch_data.update_elo(loss)
+        pts_after, conf_after = fetch_data.elo_strength("Kent State")
+        self.assertLess(pts_after, 0)  # its own fresh result, not inherited noise
+        self.assertGreater(conf_after, 0)
 
 
 class SoccerKnownRatingGateTests(unittest.TestCase):

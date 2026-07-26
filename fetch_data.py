@@ -446,6 +446,41 @@ def _resolve_score(m):
     return hg, ag, winner, (pens.get("home"), pens.get("away")), (r90h, r90a)
 
 
+def fetch_football_data_historical_season(comp_key, season):
+    """One-time historical pull for backfill_history.py -- NOT used by
+    build()/fetch_raw_matches(), which always wants the live/current season.
+
+    football-data.org's free plan supports `?season=YYYY` on `/matches`
+    (live-verified 2026-07-26: `?season=2023` on PL returned the complete
+    380-match 2023-24 season in one call, `resultSet.played` confirming full
+    coverage) but only back to season 2023 -- season 2022 and earlier 403 on
+    this plan for every competition, including the 2022 World Cup itself, so
+    backfill_history.py's plan never asks this function for a season before
+    2023 (2022 is covered by API-FOOTBALL instead -- see
+    fetch_api_football_historical_season below -- to avoid double-counting
+    the seasons both providers can reach, 2023/2024, into Elo).
+    """
+    fd_code = COMPETITIONS[comp_key]["fd"]
+    url = f"{FD_BASE}/competitions/{fd_code}/matches?season={season}&status=FINISHED"
+    raw = _get(url, {"X-Auth-Token": FOOTBALL_DATA_KEY}).get("matches", [])
+    matches = []
+    for m in raw:
+        h = m.get("homeTeam") or {}
+        a = m.get("awayTeam") or {}
+        if not h.get("name") or not a.get("name"):
+            continue
+        hg, ag, win, pens, _reg = _resolve_score(m)
+        matches.append({
+            "id": str(m.get("id")), "kickoff": m.get("utcDate"),
+            "status": "FINISHED" if m.get("status") == "FINISHED" else "UPCOMING",
+            "home": {"name": h["name"]}, "away": {"name": a["name"]},
+            "score": {"home": hg, "away": ag,
+                      "pens": ({"home": pens[0], "away": pens[1]} if pens[0] is not None else None),
+                      "winner": win},
+        })
+    matches.sort(key=lambda match: match.get("kickoff") or "")
+    return matches
+
 
 def compute_standings(raw):
     T = defaultdict(lambda: {"group": None, "pld": 0, "w": 0, "d": 0, "l": 0,
@@ -986,7 +1021,65 @@ ELO_FILE = "ratings_elo.json"
 ELO_K = 24
 ELO_HOME_ADV = 60          # rating-point home edge, used only in the expected-score calc
 ELO_FULL_TRUST_GAMES = 15  # games tracked before Elo counts at full weight
+# Bumped when the on-disk key format changes. _elo_key() moved from a plain
+# norm(name) key to a "<sport>:<name>" key (see the comment block above), so
+# any file written before this version is in the OLD unscoped format --
+# _migrate_legacy_elo_store() below decides what to do with it.
+ELO_STORE_VERSION = 2
 _ELO = None
+
+def _migrate_legacy_elo_store():
+    """One-time reset for a pre-sport-scoping ratings_elo.json.
+
+    Confirmed live 2026-07-26: the real file has 867 teams, ALL under bare
+    norm(name) keys with no sport prefix at all (e.g. "kent state", "ohio
+    state", "iowa state" sitting alongside soccer countries and MLB/NBA
+    franchises in the same flat "teams" dict) -- meaning every _elo_key()
+    lookup from the now-scoped code below silently misses, and
+    elo_strength() has been returning (0.0, 0.0) for literally every team in
+    every sport since the scoping fix landed, not just the college-shared
+    names it was written to fix.
+
+    Recovery was considered and rejected. The stored record for a name is a
+    single (r, n) pair -- Elo's rating and game count -- with no memory of
+    which competition/sport wrote each contribution. For any name used by
+    exactly one sport historically (a soccer country, an MLB/NBA/NFL/NHL
+    franchise -- these never collide with any other competition's naming,
+    see the ELO_FILE comment above) the number is technically clean and
+    could in principle be carried forward unchanged under its sport's new
+    key. But there is no reliable way to tell those apart from the
+    genuinely-contaminated subset (any bare school name shared by an
+    NCAAF and NCAAM program, e.g. "kent state") purely from what's stored --
+    doing so would require an independent, authoritative "does this school
+    field both a D-I football and D-I basketball program" cross-reference
+    that this codebase doesn't have on hand, and getting even one entry
+    wrong would silently reintroduce exactly the bug being fixed here. Elo
+    is explicitly designed to be self-training and self-correcting ("starts
+    at neutral 1500 for any unseen team... self-corrects over the season"
+    -- see this section's own docstring), so the cost of a clean reset is
+    bounded and temporary (ELO_FULL_TRUST_GAMES=15 games to reach full
+    confidence again), unlike the alternative of quietly keeping numbers
+    that might already be a blended football+basketball trajectory and
+    presenting them as this season's single-sport rating.
+
+    The old file is archived (not deleted) to `<ELO_FILE minus .json>
+    .legacy.json` alongside the reset, purely so nothing is silently
+    thrown away -- it is never read back by any code path."""
+    global _ELO
+    legacy = _ELO if isinstance(_ELO, dict) else {}
+    if legacy.get("teams") or legacy.get("seen"):
+        try:
+            archive_path = ELO_FILE.rsplit(".json", 1)[0] + ".legacy.json"
+            if not os.path.exists(archive_path):
+                with open(archive_path, "w", encoding="utf-8") as f:
+                    json.dump(legacy, f, ensure_ascii=False, indent=1)
+            DIAG.append(f"elo: migrated legacy unscoped store ({len(legacy.get('teams', {}))} "
+                        f"team(s)) -- archived to {archive_path}, ratings_elo.json reset to fresh "
+                        f"sport-scoped tracking (see _migrate_legacy_elo_store docstring)")
+        except Exception as e:
+            DIAG.append(f"elo: legacy archive failed ({e}) -- resetting anyway")
+    _ELO = {"_version": ELO_STORE_VERSION, "teams": {}, "seen": {}}
+    _save_elo()
 
 def _load_elo():
     global _ELO
@@ -996,6 +1089,8 @@ def _load_elo():
                 _ELO = json.load(f)
         except Exception:
             _ELO = {}
+        if _ELO.get("_version") != ELO_STORE_VERSION:
+            _migrate_legacy_elo_store()
         _ELO.setdefault("teams", {})
         _ELO.setdefault("seen", {})
     return _ELO
@@ -1080,7 +1175,53 @@ def power_rating(name):
 # ---- head-to-head history (self-training, sport-agnostic) ---------------
 H2H_FILE = "ratings_h2h.json"
 H2H_FULL_TRUST_MEETINGS = 6
+# See ELO_STORE_VERSION above -- _pair_key() moved from an unscoped
+# "a|b" key to a "<sport>|a|b" key, so a file written before this version is
+# in the old unscoped format. Same migration story as Elo (see
+# _migrate_legacy_h2h_store), for the same reason: two D-I schools sharing a
+# bare name across NCAAF/NCAAM can collide under the old key exactly the way
+# Kent State did for Elo.
+H2H_STORE_VERSION = 2
 _H2H = None
+
+def _migrate_legacy_h2h_store():
+    """One-time reset for a pre-sport-scoping ratings_h2h.json -- same
+    reasoning as _migrate_legacy_elo_store: confirmed live 2026-07-26, the
+    real file has 5644 pairs, ALL keyed as plain "a|b" with no sport prefix
+    (e.g. "mexico|south africa" alongside whatever NCAAF/NCAAM pairs it may
+    also hold), so every _pair_key() lookup from the now-scoped code below
+    misses and h2h_strength() has been returning (0.0, 0.0) for every pair
+    in every sport, not just the college-shared-name pairs the scoping fix
+    targeted.
+
+    A stored pair entry is a capped list of up to 10 past meetings -- unlike
+    Elo's single scalar, this WOULD in principle carry enough detail
+    (date + which side was home + winner) to sometimes infer sport from
+    context, but there is still no stored field naming which competition
+    recorded each meeting, and the same "kansas"/"duke"-shaped ambiguity
+    applies: a school-name pair with meetings logged under the old key could
+    be all-football, all-basketball, or (most riskily) an interleaved blend
+    of both if both sports' update_h2h() ever wrote into the same bucket --
+    exactly what the old unscoped key made possible. Reset for the same
+    reason given for Elo: self-training and bounded to rebuild
+    (H2H_FULL_TRUST_MEETINGS=6 meetings to reach full confidence), instead of
+    presenting possibly-blended history as one sport's own head-to-head
+    record. Archived, not deleted, to `<H2H_FILE minus .json>.legacy.json`."""
+    global _H2H
+    legacy = _H2H if isinstance(_H2H, dict) else {}
+    if legacy.get("pairs") or legacy.get("seen"):
+        try:
+            archive_path = H2H_FILE.rsplit(".json", 1)[0] + ".legacy.json"
+            if not os.path.exists(archive_path):
+                with open(archive_path, "w", encoding="utf-8") as f:
+                    json.dump(legacy, f, ensure_ascii=False, indent=1)
+            DIAG.append(f"h2h: migrated legacy unscoped store ({len(legacy.get('pairs', {}))} "
+                        f"pair(s)) -- archived to {archive_path}, ratings_h2h.json reset to fresh "
+                        f"sport-scoped tracking (see _migrate_legacy_h2h_store docstring)")
+        except Exception as e:
+            DIAG.append(f"h2h: legacy archive failed ({e}) -- resetting anyway")
+    _H2H = {"_version": H2H_STORE_VERSION, "pairs": {}, "seen": {}}
+    _save_h2h()
 
 def _load_h2h():
     global _H2H
@@ -1090,6 +1231,8 @@ def _load_h2h():
                 _H2H = json.load(f)
         except Exception:
             _H2H = {}
+        if _H2H.get("_version") != H2H_STORE_VERSION:
+            _migrate_legacy_h2h_store()
         _H2H.setdefault("pairs", {})
         _H2H.setdefault("seen", {})
     return _H2H
@@ -1551,7 +1694,16 @@ def predict(home, away, markets, m=None):
                 "margin": _clamp(margin / american_cfg["margin"], -1.5, 1.5) * 2.0 * reliability,
                 "form": (fp - form_center) * 0.22 * reliability if form_games else 0.0,
                 "adv": american_cfg["home"] if adv else 0.0,
-                "class": (sum(rp.values()) if known_rating else 0.0) * prior_boost,
+                # rp["fifa"] is a soccer-only signal -- American sports never
+                # populate a real fifa_rank (apply_recruiting_strength/
+                # apply_market_strength only ever write squad_value_m/
+                # star_value_m, so fifa_rank stays at rating_parts()'s
+                # neutral default forever). Including it here added an
+                # identical, non-differentiating constant to BOTH sides'
+                # class figure -- dead weight that only diluted the one
+                # real signal (value/star, both talent-share derived)
+                # preseason predictions have to work with.
+                "class": ((rp["value"] + rp["star"]) if known_rating else 0.0) * prior_boost,
                 "rank": poll_prior * prior_boost,
                 "srs": _clamp(float(s.get("srs") or 0) / american_cfg["margin"], -1.5, 1.5) * 2.4 * srs_conf,
                 "elo": elo_pts * elo_conf * prior_boost,
@@ -1565,6 +1717,38 @@ def predict(home, away, markets, m=None):
                 "elo": elo_pts*elo_conf*prior_boost,
                 "rest": 0.0 if rest is None else max(-0.6, min(0.45, (rest - 4) * 0.15))}
     ph, pa = parts(home, american_cfg["home"] if american else 1.2), parts(away, 0.0)
+    # A flat "base" anchor identical on both sides mathematically caps how
+    # far ANY signal, however lopsided, can push the sh/(sh+sa) ratio --
+    # necessary in-season (StrengthFloorTests: a merely-bad-but-not-
+    # historically-hopeless team shouldn't read as a mathematical
+    # impossibility), but the same anchor also caps a genuine preseason
+    # blowout at an unrealistically modest split, since class/rank/elo are
+    # the ONLY signal preseason has and nothing else dilutes this anchor's
+    # relative weight yet (confirmed against real 2025 CFBD talent shares:
+    # even with _talent_share_curve's steeper falloff above, Florida
+    # State's real share vs New Mexico State's tops out around a 67/33
+    # read with "base" left untouched -- the anchor itself, not the curve,
+    # is what's left capping it). Ease the anchor back specifically when
+    # BOTH conditions hold: there's essentially no in-season sample yet
+    # (prior_boost elevated -- a no-op once real games start, exactly like
+    # prior_boost itself is) AND the class gap is unambiguous, not a close
+    # call the recruiting/talent data can barely separate (real 2025 spot
+    # check: Illinois-vs-UAB's class gap sits well below GAP_LO and
+    # correctly stays untouched here, matching how modest their actual
+    # recruiting-talent gap really is). Only "class" -- the one signal that
+    # is actually non-zero and meaningful preseason -- feeds the gap; a
+    # true in-season StrengthFloorTests-style gap is already diluted by
+    # real record/margin/srs by the time it would reach GAP_LO, so this
+    # essentially never engages once games have been played.
+    if american:
+        class_gap = abs(ph.get("class", 0.0) - pa.get("class", 0.0))
+        GAP_LO, GAP_HI = 3.0, 8.0  # calibrated against real 2025 CFBD/CBBD spot checks -- see tests
+        extremity = _clamp((class_gap - GAP_LO) / (GAP_HI - GAP_LO), 0.0, 1.0)
+        preseason_factor = _clamp((prior_boost - 1.0) / 0.6, 0.0, 1.0)
+        shrink = extremity * preseason_factor * 0.85
+        if shrink:
+            ph["base"] *= (1 - shrink)
+            pa["base"] *= (1 - shrink)
     # Floor guards against a non-positive strength score reaching the sh/(sh+sa)
     # ratio below -- but a flat 0.1 (tuned back when the American branch's
     # "base" anchor was 8.0, so crossing zero required a huge negative swing
@@ -1700,6 +1884,31 @@ def predict(home, away, markets, m=None):
     elif upset.get("triggered"):
         note = "upset formula triggered — volatility makes the underdog playable"
     mkt_pull = (regulation_probs[regulation_pick] - model[regulation_pick]) if mk else 0
+    # ---- predicted margin/spread ------------------------------------------
+    # Matchday's own point/goal-margin estimate (not copied from a
+    # sportsbook) -- derived from the official win/draw/loss probabilities
+    # already computed above via the standard odds<->margin relationship
+    # (margin = scale * log10(odds ratio)), not a new model. `scale` reuses
+    # american_cfg["margin"] -- already each American sport's tuned typical
+    # single-game point/goal-margin unit -- for NFL/NCAAF/NBA/NCAAM/MLB/NHL,
+    # and a real average soccer winning margin (~1.3 goals) for two-way
+    # soccer probabilities alike. Works identically preseason, since it only
+    # needs the probabilities predict() already produces at pld=0.
+    h_frac = _clamp(official_probs["h"] / max(1e-6, official_probs["h"] + official_probs["a"]), 0.02, 0.98)
+    margin_scale = float(american_cfg["margin"]) if american else 1.3
+    margin_pts = round(margin_scale * math.log10(h_frac / (1 - h_frac)), 1)
+    margin_unit = ({"NFL": "points", "NCAAF": "points", "NBA": "points", "NCAAM": "points",
+                    "MLB": "runs", "NHL": "goals"}.get(COMP_KEY, "points") if american else "goals")
+    if abs(margin_pts) < 0.05:
+        margin_label = "Even matchup"
+        margin_favored = None
+    else:
+        margin_favored = "h" if margin_pts > 0 else "a"
+        fav_name = home.get("name") if margin_pts > 0 else away.get("name")
+        margin_label = (f"{fav_name} by {abs(margin_pts):.1f}" if american else
+                         f"{'+' if margin_pts >= 0 else ''}{margin_pts:.1f} goals")
+    predicted_margin = {"value": margin_pts, "unit": margin_unit,
+                         "favored": margin_favored, "label": margin_label}
     sample = {"home": int(home.get("pld") or 0), "away": int(away.get("pld") or 0)}
     min_sample = min(sample.values())
     any_stale = bool(home.get("season_stale") or away.get("season_stale"))
@@ -1727,16 +1936,70 @@ def predict(home, away, markets, m=None):
             "regulation_probs": regulation_probs,
             "edge": edge, "note": note, "why": why, "damp_pct": round(damp*100),
             "mkt_pull": mkt_pull, "market_weight": market_weight,
-            "upset": upset, "data_quality": data_quality}
+            "upset": upset, "data_quality": data_quality, "predicted_margin": predicted_margin}
+
+
+LEAGUE_AVG_TOTAL = {"NFL": 44.5, "NCAAF": 55.0, "NBA": 224.0, "NCAAM": 140.0,
+                     "MLB": 8.6, "NHL": 6.0}
+
+
+def _preseason_expected_total(home, away):
+    """Rating/talent-based total estimate for true preseason (pld==0 for
+    either side, so there's no real gf/ga history yet to average). Real
+    sportsbooks already post totals lines for Week 1 games with 0-0
+    records (the 2026-07-25 blowout-confidence screenshots showed real
+    o57.5/o55.5 NCAAF lines on exactly this kind of fixture) -- returning
+    nothing here, which predict_totals() used to do unconditionally, is a
+    worse answer than a rating-based estimate. Reuses power_rating() (the
+    same curated-class + self-training-Elo blend predict() itself reads
+    for its own "class"/"elo" factors) rather than inventing a new signal.
+
+    A team with no curated rating AND no self-training Elo history at all
+    contributes no real signal here either (rating_boost() still returns a
+    numeric default in that case, but it's a generic placeholder, not a
+    real read on this team -- see rating_parts()'s own known_rating gate
+    in predict(), same reasoning), so it's treated as exactly neutral
+    rather than dragging the estimate toward rating_boost()'s arbitrary
+    default. power_rating()'s own Elo-blended neutral point (5.0, the
+    center of "5.0 + elo_pts" at elo_pts==0) is reused as the neutral
+    constant once a team DOES have real signal. Nudging the league-average
+    baseline by how far this matchup's combined rating sits from that
+    midpoint is deliberately modest and capped -- this is a heuristic
+    total estimate, not a scoring-margin model."""
+    baseline = 2.6 if COMP["sport"] == "soccer" else LEAGUE_AVG_TOTAL.get(COMP_KEY)
+    if baseline is None:
+        return None
+    neutral = 5.0
+
+    def _signal(side):
+        name = (side or {}).get("name")
+        if not name:
+            return None
+        elo_pts, elo_conf = elo_strength(name)
+        if not _ratings_lookup(name) and elo_conf <= 0:
+            return None  # no real signal at all -- stay neutral, don't
+                          # let rating_boost()'s generic default drag it
+        return power_rating(name)
+    hr, ar = _signal(home), _signal(away)
+    if hr is None and ar is None:
+        return round(baseline, 2)
+    combined_edge = _clamp(((hr if hr is not None else neutral) +
+                            (ar if ar is not None else neutral)) / 2.0 - neutral, -4.0, 4.0)
+    return round(baseline * (1 + combined_edge * 0.03), 2)
 
 
 def predict_totals(home, away, markets):
-    """Expected combined goals/points from each side's own scoring and
-    conceding rate this season, shown independently alongside the market's
-    over/under line (not blended into it) -- same "show our work, don't
-    just parrot the market" spirit as the 1X2 model. A deliberately simple
-    heuristic, matching predict()'s style, rather than a full Poisson/normal
-    distribution model.
+    """Expected combined goals/points, shown independently alongside the
+    market's over/under line (not blended into it) -- same "show our work,
+    don't just parrot the market" spirit as the 1X2 model. A deliberately
+    simple heuristic, matching predict()'s style, rather than a full
+    Poisson/normal distribution model.
+
+    Prefers each side's own scoring/conceding rate this season once real
+    games have been played; falls back to _preseason_expected_total's
+    rating-based estimate at pld==0 (see its docstring) instead of
+    returning nothing, exactly like predict() itself now leans on
+    class/rank/elo before any record/margin/form sample exists.
     """
     def rate(side, key):
         pld = side.get("pld") or 0
@@ -1750,9 +2013,14 @@ def predict_totals(home, away, markets):
     h_gf, h_ga = rate(home, "gf"), rate(home, "ga")
     a_gf, a_ga = rate(away, "gf"), rate(away, "ga")
     if None in (h_gf, h_ga, a_gf, a_ga):
-        return None  # not enough games played yet to estimate scoring rates
-    exp_total = round((h_gf + a_ga) / 2 + (a_gf + h_ga) / 2, 2)
-    result = {"expected": exp_total}
+        exp_total = _preseason_expected_total(home, away)
+        if exp_total is None:
+            return None  # unknown sport/competition and no real rates either
+        basis = "preseason_rating"
+    else:
+        exp_total = round((h_gf + a_ga) / 2 + (a_gf + h_ga) / 2, 2)
+        basis = "season_rate"
+    result = {"expected": exp_total, "basis": basis}
     mk = markets.get("totals")
     if mk and mk.get("line") is not None:
         line = float(mk["line"])
@@ -1799,6 +2067,67 @@ def _api_football_get(path, params=None):
     headers = dict(UA)
     headers["x-apisports-key"] = API_FOOTBALL_KEY
     return _get(url, headers)
+
+
+# league ids for API-FOOTBALL's /fixtures?league=...&season=... -- confirmed
+# live 2026-07-26 against the real endpoint (each returned the right
+# competition name and a plausible match count for a completed season: WC 59
+# FT/AET/PEN fixtures for 2022 -- Qatar vs Ecuador opener through the Croatia
+# vs Morocco third-place match; UCL 203; EPL/La Liga/Ligue 1 380; Serie A
+# 381; Bundesliga 308). Used only by backfill_history.py, and only for
+# season 2022 there (API-FOOTBALL's free plan works for seasons 2022-2024,
+# 2021 and 2025 both fail -- confirmed live the same day) -- domestic
+# leagues/UCL's 2023-2025 seasons come from football-data.org instead (see
+# fetch_football_data_historical_season above) to avoid double-counting the
+# 2023/2024 seasons both providers can reach.
+API_FOOTBALL_LEAGUE_ID = {"WC": 1, "UCL": 2, "EPL": 39, "LALIGA": 140,
+                           "SERIEA": 135, "BUNDESLIGA": 78, "LIGUE1": 61}
+_AF_FINISHED_STATUSES = {"FT", "AET", "PEN"}
+
+
+def fetch_api_football_historical_season(comp_key, season):
+    """One-time historical pull for backfill_history.py -- shares the same
+    API-FOOTBALL key/quota as box scores, lineups, and injuries, but this is
+    a bulk historical pull (one /fixtures call, budgeted separately -- see
+    PROVIDER_COMPLIANCE.md), a meaningfully different usage pattern than
+    those hourly per-fixture calls.
+
+    No `status=` filter is sent -- API-FOOTBALL's dash-joined status-list
+    query syntax wasn't live-verified, so this fetches the whole season and
+    filters client-side on `fixture.status.short` instead, treating FT/AET/
+    PEN as finished (a knockout-stage match decided in extra time or on
+    penalties is still a real final result) and everything else (NS, PST,
+    CANC, ...) as not finished.
+    """
+    league = API_FOOTBALL_LEAGUE_ID.get(comp_key)
+    if not league:
+        raise RuntimeError(f"no API-FOOTBALL league id mapped for {comp_key}")
+    payload = _api_football_get("/fixtures", {"league": league, "season": season})
+    rows = payload.get("response") if isinstance(payload, dict) else []
+    matches = []
+    for row in rows or []:
+        fx = row.get("fixture") or {}
+        teams = row.get("teams") or {}
+        home, away = teams.get("home") or {}, teams.get("away") or {}
+        if not home.get("name") or not away.get("name"):
+            continue
+        status_short = (fx.get("status") or {}).get("short") or ""
+        finished = status_short in _AF_FINISHED_STATUSES
+        goals = row.get("goals") or {}
+        score = normalized_score(goals.get("home"), goals.get("away"), finished)
+        if finished and score.get("winner") == "d":
+            pen = (row.get("score") or {}).get("penalty") or {}
+            ph, pa = pen.get("home"), pen.get("away")
+            if ph is not None and pa is not None and ph != pa:
+                score["winner"] = "h" if ph > pa else "a"
+        matches.append({
+            "id": f"af-{fx.get('id')}", "kickoff": fx.get("date"),
+            "status": "FINISHED" if finished else "UPCOMING",
+            "home": {"name": str(home.get("name"))}, "away": {"name": str(away.get("name"))},
+            "score": score,
+        })
+    matches.sort(key=lambda match: match.get("kickoff") or "")
+    return matches
 
 
 def _load_box_cache():
@@ -2211,6 +2540,39 @@ def fetch_api_football_injuries(matches):
     DIAG.append(f"injuries(API-FOOTBALL): matched {matched}, attached {attached}, requests {date_requests}+{inj_requests}")
 
 
+def _talent_share_curve(share):
+    """Map a team's talent/market share of the national max (0..1) to a
+    0..1 scaling factor for squad_value_m/star_value_m -- shared by
+    apply_recruiting_strength() and apply_market_strength() (both
+    American-sports-only; soccer's ratings come from a real curated file,
+    not this transform).
+
+    A flat share**0.7 (concave) protects a genuinely competitive team from
+    being crushed just for sitting below the national ceiling -- necessary
+    so a good G5 program playing a middling P4 team doesn't get treated as
+    hopeless (the MSU-vs-Toledo history, Build 0725B). But the same curve
+    also over-protects a genuine bottom-of-FBS/bottom-of-D1 team: real 2025
+    CFBD data puts San Jose State's share of the national max at ~0.52 and
+    UMass at ~0.49, yet real 2026 Week 1 sportsbook lines price USC and
+    Rutgers as ~99% favorites against them -- 0.7 is too gentle at the true
+    low end. Below COMPETITIVE_FLOOR the curve steepens sharply instead, so
+    that tier pulls apart from the blue-bloods instead of blurring toward
+    them. COMPETITIVE_FLOOR (0.58) was picked from the real data's own gap:
+    every 2025 "good G5/mid-major" spot check (Boise State 0.61, Toledo
+    0.62, Marshall 0.59, Memphis 0.67) sits at or above it, while every
+    real "true bottom-tier" 2026 Week 1 opponent in the reported blowouts
+    (San Jose State 0.52, UAB 0.54, Massachusetts 0.49, New Mexico State
+    0.40) sits below it -- so a team at or above the floor is completely
+    unaffected (identical output to the old flat curve; the ceiling test
+    at share==1.0 is unchanged), and only a team the real data itself
+    calls "true bottom-tier" gets the steeper falloff."""
+    share = _clamp(share, 0.0, 1.0)
+    floor = 0.58
+    if share >= floor:
+        return share ** 0.7
+    return (floor ** 0.7) * ((share / floor) ** 4.5 if floor else 0.0)
+
+
 def apply_recruiting_strength(team_scores, known_names=None):
     """Derive team strength from CFBD/CBBD's own recruiting-talent data --
     same account/key already licensed for schedules and standings, no new
@@ -2236,9 +2598,12 @@ def apply_recruiting_strength(team_scores, known_names=None):
         # use (squad_value_m 1500 -> 10, star_value_m 200 -> 10) so the nation's
         # best-talent team reaches the true ceiling instead of undershooting it
         # -- undershooting flattened the gap between a middling P4 team and a
-        # good G5 team almost to nothing.
-        val_m = round(share ** 0.7 * 1500)
-        star_m = round(share ** 0.7 * 200)
+        # good G5 team almost to nothing. See _talent_share_curve for why a
+        # single flat exponent stops there instead of also fixing a true
+        # bottom-tier team's own separate problem (overprotection).
+        curved = _talent_share_curve(share)
+        val_m = round(curved * 1500)
+        star_m = round(curved * 200)
         rec = _ratings_lookup(key)
         if rec is None:
             rec = {"fifa_rank": 45, "squad_value_m": 0, "star_value_m": 0}
@@ -2273,10 +2638,13 @@ def apply_market_strength(outrights, known_names=None):
     for o in outrights:
         key = _resolve_known_name(o["team"], known_names)
         share = o["pct"] / mx
-        # see apply_recruiting_strength: scaled to the actual 10/10 ceiling
-        # (squad_value_m 1500, star_value_m 200) instead of undershooting it
-        val_m = round(share ** 0.7 * 1500)
-        star_m = round(share ** 0.7 * 200)
+        # see apply_recruiting_strength/_talent_share_curve: scaled to the
+        # actual 10/10 ceiling (squad_value_m 1500, star_value_m 200)
+        # instead of undershooting it, with the same steeper-below-the-
+        # competitive-floor curve for a true bottom-tier team's market odds.
+        curved = _talent_share_curve(share)
+        val_m = round(curved * 1500)
+        star_m = round(curved * 200)
         rec = _ratings_lookup(key)
         if rec is None:
             rec = {"fifa_rank": 45, "squad_value_m": 0, "star_value_m": 0}
@@ -2287,6 +2655,50 @@ def apply_market_strength(outrights, known_names=None):
         changed += 1
     if changed:
         DIAG.append(f"market strength: applied to {changed} teams from championship odds")
+
+
+def estimate_title_odds(matches, code_map):
+    """Model-derived 'who's favored to win it all' fallback for when real
+    championship-odds market data isn't available -- fetch_outrights()
+    returns an empty list for EVERY competition right now (The Odds API's
+    outrights quota is exhausted, per MARKET_STATE["quota_out"]), which
+    left the Title race panel with nothing to show even preseason, when
+    users are "all eager to know who is favored" despite no market odds
+    existing yet. Ranks every team appearing in this run's full schedule
+    by power_rating() -- the same curated-class + self-training-Elo blend
+    predict() itself already reads, not a new signal -- and reshapes that
+    into the exact title_odds shape the frontend's _v4TitleRows() already
+    expects (team/code/pct). Applies to every competition's schedule the
+    same way, not just NCAAF/NCAAM -- whatever rating data already exists
+    for that sport (curated class file, market-derived ratings, or bare
+    Elo) is what participates; this doesn't backfill soccer's separate,
+    already-flagged partial ratings-coverage gap.
+
+    Explicitly marked is_estimate=True (and source="model") on every row
+    so this is never mistaken for a real market read once live odds
+    return -- fetch_outrights()'s real rows carry neither field, so a
+    consumer can tell the two apart without any schema change."""
+    names = set()
+    for m in matches:
+        for side in (m.get("home"), m.get("away")):
+            if side and side.get("name"):
+                names.add(side["name"])
+    if not names:
+        return []
+    scores = {name: power_rating(name) for name in names}
+    # softmax-style share so the gap between teams' ratings matters, not
+    # just their rank -- a heuristic temperature, not a calibrated
+    # probability model (this is explicitly an estimate, not a real
+    # market read, and is labeled as such below)
+    TEMP = 0.9
+    exps = {name: math.exp(score * TEMP) for name, score in scores.items()}
+    total = sum(exps.values()) or 1.0
+    rows = [{"team": name, "code": code_map.get(norm(name), ""),
+              "pct": round(exps[name] / total * 100, 1),
+              "is_estimate": True, "source": "model"}
+             for name in names]
+    rows.sort(key=lambda r: -r["pct"])
+    return rows
 
 
 def fetch_outrights(code_map):
@@ -4272,6 +4684,10 @@ def build():
     print("Fetching title odds + news…")
     if title is None:
         title = fetch_outrights(code_map)
+    if not title:
+        title = estimate_title_odds(matches, code_map)
+        if title:
+            DIAG.append(f"title race: no market odds available, estimated from model ratings for {len(title)} teams")
     news = fetch_news()
     bracket = build_bracket(raw)
     third = third_race(st, name_map, code_map) if COMP["tournament"] else []

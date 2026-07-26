@@ -6,6 +6,16 @@ just the three this doc originally covered. Rotation = generate new key,
 paste into config_keys.py, done. Nothing else in the app changes — the code
 reads keys only from that file.
 
+`backfill_history.py` (a manually-run, one-time historical Elo seed script —
+see PROVIDER_COMPLIANCE.md's 2026-07-26 entry) reads the same
+CFBD_KEY/CBBD_KEY, BALLDONTLIE_KEY, FOOTBALL_DATA_KEY, and API_FOOTBALL_KEY
+from config_keys.py as everything else here — rotation works exactly the
+same way for it, nothing extra to do. It just pulls a lot more data per run
+than the hourly fetch does, so if you rotate a key while a backfill run is
+in progress, that run will start failing mid-way (it's safe to just stop it
+and re-run the same command after pasting the new key — already-applied
+seasons/results are skipped automatically).
+
 ## 1. football-data.org  (soccer fixtures)
 - Log in at https://www.football-data.org/client/home
 - My Account -> there is a "regenerate token" / contact option; if no self-serve
