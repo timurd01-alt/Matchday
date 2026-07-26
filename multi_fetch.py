@@ -31,7 +31,15 @@ SPORTS = [
 # NHL deliberately excluded: not reachable from the sport picker (see
 # app-3-panels.js), and its schedule source (SportsDataIO) has an unresolved
 # plan/billing status -- see ROTATE_KEYS.md and PROVIDER_COMPLIANCE.md.
-SPACING = 20          # seconds between two sports' fetches (quota safety)
+SPACING = 30          # seconds between two sports' fetches (quota safety)
+# Bumped 20 -> 30 2026-07-26: EPL/UCL/LaLiga/SerieA/Bundesliga/Ligue1/WC all
+# share one football-data.org key with a real published 10-req/min limit --
+# forcing 6+ of them to refetch in the same run (see FORCE_REFETCH_ONCE
+# above) at 20s spacing risks enough requests landing in the same rolling
+# minute to trip that limit; confirmed live 2026-07-26 that a run forcing
+# every soccer competition at once left EPL/UCL's data un-refreshed (their
+# fetch didn't complete) while other, non-soccer forced sports succeeded in
+# the same run.
 TICK = 15             # scheduler wake-up interval
 RETRY_AFTER_ERROR = 15 * 60
 # One-shot override, remove after the next successful CI run: today's fixes
