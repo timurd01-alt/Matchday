@@ -4301,7 +4301,18 @@ def fetch_college_bundle():
     else:
         adapter = CollegeBasketballDataAdapter(CBBD_KEY)
         provider_name = "CollegeBasketballData"
-    cache_file = f"college_{COMP_KEY.lower()}_bundle_v4_cache.json"
+    # Bumped v4 -> v5 2026-07-26: this cache blob embeds adapter.rankings()'s
+    # already-computed result (see below), not just raw provider data. CBBD's
+    # rankings() changed from a raw win-percent sort to a real AP Top 25 pull
+    # the same day -- an in-window (COLLEGE_CACHE_MIN, 8h) cached blob from
+    # before that fix, restored via CI's actions/cache step, kept serving the
+    # OLD computed ranking (the "Miami OH is #1" bug) for the entire TTL
+    # AFTER the fix was already live and deployed, because this file's own
+    # freshness check has nothing to do with when the code last changed.
+    # Changing the filename is what actually invalidates it; bump this suffix
+    # again any time this bundle's cached CONTENT (not just its raw inputs)
+    # changes shape or computation.
+    cache_file = f"college_{COMP_KEY.lower()}_bundle_v5_cache.json"
     bundle = None
     try:
         if os.path.exists(cache_file) and time.time() - os.path.getmtime(cache_file) < COLLEGE_CACHE_MIN * 60:
