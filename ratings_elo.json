@@ -7910,8 +7910,8 @@
    "n": 3908
   },
   "baseball:cleveland guardians": {
-   "r": 1487.557882163673,
-   "n": 3905
+   "r": 1479.2440712475532,
+   "n": 3906
   },
   "baseball:boston red sox": {
    "r": 1597.7351618562518,
@@ -8010,8 +8010,8 @@
    "n": 3868
   },
   "baseball:tampa bay rays": {
-   "r": 1537.844803279414,
-   "n": 3916
+   "r": 1546.1586141955338,
+   "n": 3917
   },
   "baseball:detroit tigers": {
    "r": 1534.7659426809978,
@@ -285855,6 +285855,7 @@
   "MLB:bdl-mlb-5059345": true,
   "MLB:bdl-mlb-5059346": true,
   "MLB:bdl-mlb-5059347": true,
-  "MLB:bdl-mlb-5059348": true
+  "MLB:bdl-mlb-5059348": true,
+  "MLB:bdl-mlb-5059349": true
  }
 }
