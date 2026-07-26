@@ -34,17 +34,17 @@ SPORTS = [
 SPACING = 20          # seconds between two sports' fetches (quota safety)
 TICK = 15             # scheduler wake-up interval
 RETRY_AFTER_ERROR = 15 * 60
-# One-shot override, remove after the next successful CI run: today's fix to
-# _resolve_known_name (fetch_data.py) changes what apply_recruiting_strength/
-# apply_market_strength write for every American-sports competition, and
-# CollegeBasketballDataAdapter.rankings() now pulls a real poll instead of a
-# raw win-percent sort -- but .ci_fetch_state.json's cached last-fetch time
-# means a currently-dormant sport (12h cadence, off-season) won't actually
-# re-run fetch_data.py and pick either fix up until its normal cadence comes
-# due on its own, which is what a real user saw: the deployed CODE changed
-# but the sport's DATA file didn't, since it simply wasn't due for a refetch
-# yet. Force exactly the competitions today's fixes touch, once.
-FORCE_REFETCH_ONCE = {"ncaaf", "ncaam", "nfl", "nba", "mlb"}
+# One-shot override, remove after the next successful CI run: today's fixes
+# (name-resolution collision, real Top 25 polls, preseason projections, and
+# now _news_relevant()'s soccer-relevance gap letting NFL/MLB articles onto
+# EPL/UCL's News tab) change what every competition's fetch actually
+# produces, but .ci_fetch_state.json's cached last-fetch time means a
+# currently-dormant sport (12h cadence, off-season) won't re-run
+# fetch_data.py and pick any of it up until its normal cadence comes due on
+# its own -- which is what a real user saw more than once today: the
+# deployed CODE changed but the sport's DATA file didn't, since it simply
+# wasn't due for a refetch yet. Force every competition today's fixes touch.
+FORCE_REFETCH_ONCE = {"ncaaf", "ncaam", "nfl", "nba", "mlb", "epl", "ucl", "laliga", "seriea", "bundesliga", "ligue1"}
 
 LIVE_EVERY = 60
 SOON_EVERY = 60 * 60

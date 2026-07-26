@@ -257,33 +257,82 @@ NEWS_TERMS = {
     "LIGUE1": "Ligue 1 soccer", "NFL": "NFL", "NCAAF": "college football", "NCAAM": "men's college basketball",
     "NBA": "NBA", "MLB": "MLB baseball", "NHL": "NHL hockey",
 }
+_EPL_CLUBS = "premier_league epl arsenal aston_villa bournemouth brentford brighton chelsea crystal_palace everton fulham liverpool manchester_city manchester_united newcastle nottingham_forest sunderland tottenham west_ham wolves leeds burnley"
+_LALIGA_CLUBS = "la_liga laliga real_madrid barcelona atletico_madrid sevilla valencia villarreal real_sociedad athletic_bilbao real_betis girona celta_vigo osasuna mallorca getafe rayo_vallecano"
+_SERIEA_CLUBS = "serie_a juventus inter_milan ac_milan napoli roma lazio atalanta fiorentina bologna torino udinese genoa sassuolo"
+_BUNDESLIGA_CLUBS = "bundesliga bayern_munich borussia_dortmund rb_leipzig bayer_leverkusen eintracht_frankfurt wolfsburg borussia_monchengladbach freiburg union_berlin hoffenheim stuttgart mainz augsburg werder_bremen"
+_LIGUE1_CLUBS = "ligue_1 psg paris_saint_germain marseille lyon monaco lille nice rennes lens strasbourg toulouse"
+_UCL_CLUBS = "champions_league ucl uefa " + " ".join([_EPL_CLUBS, _LALIGA_CLUBS, _SERIEA_CLUBS, _BUNDESLIGA_CLUBS, _LIGUE1_CLUBS])
 NEWS_RELEVANCE = {
     "NFL": "nfl super_bowl quarterback touchdown chiefs eagles bills ravens bengals browns steelers texans colts jaguars titans broncos chargers raiders cowboys giants commanders packers lions vikings bears falcons panthers saints buccaneers cardinals rams 49ers seahawks jets dolphins patriots",
     "NCAAF": "college_football ncaa cfp bowl heisman alabama georgia ohio_state michigan notre_dame oregon texas usc lsu clemson penn_state florida_state tennessee oklahoma auburn hurricanes",
-    "NCAAM": "college_basketball ncaa march_madness final_four duke north_carolina kansas kentucky uconn gonzaga houston purdue villanova arizona michigan_state",
+    "NCAAM": "college_basketball ncaa march_madness final_four duke north_carolina kansas_jayhawks kentucky uconn gonzaga houston_cougars purdue villanova arizona_wildcats michigan_state",
     "NBA": "nba basketball lebron giannis luka curry durant jokic wembanyama celtics lakers knicks nets 76ers raptors bulls cavaliers pistons pacers bucks heat magic hawks hornets wizards warriors clippers nuggets timberwolves thunder blazers jazz mavericks rockets grizzlies pelicans spurs suns kings",
     "MLB": "mlb baseball world_series yankees red_sox blue_jays orioles rays guardians tigers twins white_sox royals astros mariners rangers athletics angels braves mets phillies nationals marlins cubs cardinals brewers reds pirates dodgers padres giants diamondbacks rockies",
     "NHL": "nhl hockey stanley_cup bruins sabres red_wings panthers canadiens senators lightning maple_leafs hurricanes blue_jackets devils islanders rangers flyers penguins capitals blackhawks avalanche stars wild predators blues jets ducks flames oilers kings sharks kraken canucks golden_knights",
+    "EPL": _EPL_CLUBS, "LALIGA": _LALIGA_CLUBS, "SERIEA": _SERIEA_CLUBS,
+    "BUNDESLIGA": _BUNDESLIGA_CLUBS, "LIGUE1": _LIGUE1_CLUBS, "UCL": _UCL_CLUBS,
+    "WC": "world_cup fifa national_team qualifier brazil argentina france england spain germany portugal netherlands belgium croatia morocco japan mexico usmnt",
 }
 NEWS_STRONG_RELEVANCE = {
     "NFL": "nfl super_bowl quarterback touchdown chiefs eagles ravens bengals steelers texans colts jaguars titans broncos chargers raiders cowboys commanders packers vikings buccaneers 49ers seahawks patriots",
     "NCAAF": "college_football ncaa cfp heisman alabama ohio_state notre_dame penn_state florida_state",
-    "NCAAM": "college_basketball ncaa march_madness final_four duke north_carolina kansas kentucky uconn gonzaga houston purdue",
+    "NCAAM": "college_basketball ncaa march_madness final_four duke north_carolina kansas_jayhawks kentucky uconn gonzaga houston_cougars purdue",
     "NBA": "nba basketball lebron giannis luka curry durant jokic wembanyama celtics lakers knicks 76ers raptors cavaliers pistons pacers bucks warriors clippers nuggets timberwolves thunder mavericks grizzlies pelicans spurs",
     "MLB": "mlb baseball world_series yankees red_sox blue_jays orioles guardians white_sox royals astros mariners braves mets phillies marlins cubs brewers pirates dodgers padres diamondbacks rockies",
     "NHL": "nhl hockey stanley_cup bruins sabres red_wings canadiens senators lightning maple_leafs blue_jackets devils islanders flyers penguins capitals blackhawks avalanche predators kraken canucks golden_knights",
+    "EPL": "premier_league epl arsenal chelsea liverpool manchester_city manchester_united tottenham newcastle",
+    "LALIGA": "la_liga laliga real_madrid barcelona atletico_madrid",
+    "SERIEA": "serie_a juventus inter_milan ac_milan napoli roma",
+    "BUNDESLIGA": "bundesliga bayern_munich borussia_dortmund",
+    "LIGUE1": "ligue_1 psg paris_saint_germain marseille",
+    "UCL": "champions_league ucl uefa real_madrid manchester_city bayern_munich barcelona liverpool psg",
+    "WC": "world_cup fifa national_team",
+}
+# Bare city names (kansas/houston/arizona/etc) collide with a pro team from a
+# DIFFERENT sport in the same city -- confirmed live 2026-07-26: NCAAM's feed
+# (which lists "kansas" for Kansas Jayhawks) accepted an MLB Royals/Tigers
+# recap because "Kansas City Royals" contains the whole word "kansas". Any
+# headline/desc naming one of these OTHER-sport teams is rejected outright,
+# even if some relevance term also matched, since real coverage of the
+# target sport never needs to mention a different sport's franchise by name.
+NEWS_CROSS_SPORT_VETO = {
+    "NCAAF": "royals chiefs astros texans rockets nba nhl mlb",
+    "NCAAM": "royals chiefs astros texans rockets cardinals diamondbacks suns nfl mlb nhl",
+    "NBA": "royals chiefs astros texans nfl mlb nhl",
+    "MLB": "chiefs texans nfl nhl",
+    "NHL": "royals chiefs astros texans nfl mlb",
+    "EPL": "nfl mlb nba nhl fantasy_football touchdown quarterback",
+    "LALIGA": "nfl mlb nba nhl fantasy_football touchdown quarterback",
+    "SERIEA": "nfl mlb nba nhl fantasy_football touchdown quarterback",
+    "BUNDESLIGA": "nfl mlb nba nhl fantasy_football touchdown quarterback",
+    "LIGUE1": "nfl mlb nba nhl fantasy_football touchdown quarterback",
+    "UCL": "nfl mlb nba nhl fantasy_football touchdown quarterback",
 }
 
 
 def _news_relevant(item):
-    """Reject obvious cross-sport leakage from broad publisher feeds."""
+    """Reject obvious cross-sport leakage from broad publisher feeds.
+
+    Confirmed live 2026-07-26: soccer competitions (EPL/UCL/LaLiga/SerieA/
+    Bundesliga/Ligue1/WC) had no entry in NEWS_RELEVANCE at all, so
+    `terms = NEWS_RELEVANCE.get(COMP_KEY)` was None and this returned True
+    unconditionally for every soccer feed -- zero filtering. That let NFL
+    fantasy-football and MLB trade-deadline articles from the broad
+    site:cbssports.com/site:foxsports.com Google News searches straight onto
+    EPL/UCL's News tab. Added real club/league term lists for every soccer
+    competition, same shape as the US sports already had.
+    """
+    text = _clean(f"{item.get('headline', '')} {item.get('desc', '')}").lower()
+    veto = NEWS_CROSS_SPORT_VETO.get(COMP_KEY)
+    if veto and any(re.search(rf"\b{re.escape(term.replace('_', ' '))}\b", text) for term in veto.split()):
+        return False
     terms = NEWS_RELEVANCE.get(COMP_KEY)
     if not terms:
         return True
     raw_source = _clean(item.get("source") or item.get("feed") or "").lower()
     if re.search(r"\b(reuters|associated press|ap news|^ap$)\b", raw_source):
         terms = NEWS_STRONG_RELEVANCE.get(COMP_KEY, terms)
-    text = _clean(f"{item.get('headline', '')} {item.get('desc', '')}").lower()
     return any(re.search(rf"\b{re.escape(term.replace('_', ' '))}\b", text) for term in terms.split())
 
 

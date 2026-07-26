@@ -1630,5 +1630,65 @@ class OutrightMarketKeyVerificationTests(unittest.TestCase):
             fetch_data._OUT_CACHE = old_cache
 
 
+class NewsRelevanceTests(unittest.TestCase):
+    """Regression coverage for real cross-sport pollution confirmed live on
+    the site 2026-07-26: EPL/UCL's News tab was showing NFL fantasy-football
+    and MLB trade-deadline articles, and NCAAM's was showing an MLB Royals/
+    Tigers recap. Root cause #1: soccer competitions had no entry in
+    NEWS_RELEVANCE at all, so _news_relevant() returned True unconditionally
+    -- zero filtering. Root cause #2: NCAAM's own relevance term "kansas"
+    (for Kansas Jayhawks) is also a whole-word match inside "Kansas City
+    Royals" (MLB), a bare-city-name collision with a different sport's
+    franchise in the same city."""
+
+    def setUp(self):
+        self.old_key = fetch_data.COMP_KEY
+
+    def tearDown(self):
+        fetch_data.COMP_KEY = self.old_key
+
+    def test_epl_rejects_real_nfl_and_mlb_articles_found_live(self):
+        fetch_data.COMP_KEY = "EPL"
+        self.assertFalse(fetch_data._news_relevant(
+            {"headline": "MLB rumors: Major trade candidate could miss rest of 2026 with injury", "desc": ""}))
+        self.assertFalse(fetch_data._news_relevant(
+            {"headline": "Fantasy football rankings 2026: Sleepers from the model", "desc": ""}))
+
+    def test_epl_accepts_a_real_premier_league_article(self):
+        fetch_data.COMP_KEY = "EPL"
+        self.assertTrue(fetch_data._news_relevant(
+            {"headline": "Arsenal Mulling Move For Real Madrid Star Vinicius Junior", "desc": ""}))
+
+    def test_ucl_rejects_a_real_scottish_football_article_found_live(self):
+        # UCL's own generic BBC/Sky "football" feeds cover every league, not
+        # just the Champions League -- this must not accept everything with
+        # a ball in it.
+        fetch_data.COMP_KEY = "UCL"
+        self.assertFalse(fetch_data._news_relevant(
+            {"headline": "Holders St Mirren visit Rangers in League Cup last 16", "desc": ""}))
+
+    def test_ucl_accepts_a_real_champions_league_article(self):
+        fetch_data.COMP_KEY = "UCL"
+        self.assertTrue(fetch_data._news_relevant(
+            {"headline": "Real Madrid preparing Champions League squad for Manchester City clash", "desc": ""}))
+
+    def test_ncaam_rejects_the_real_mlb_recap_that_matched_on_the_bare_city_name(self):
+        fetch_data.COMP_KEY = "NCAAM"
+        self.assertFalse(fetch_data._news_relevant(
+            {"headline": "Kansas City Royals vs. Detroit Tigers Results, Stats, and Recap", "desc": ""}))
+
+    def test_ncaam_still_accepts_real_kansas_basketball_coverage(self):
+        fetch_data.COMP_KEY = "NCAAM"
+        self.assertTrue(fetch_data._news_relevant(
+            {"headline": "Kansas Jayhawks land 5-star recruit ahead of March Madness", "desc": ""}))
+
+    def test_mlb_unaffected_by_the_new_soccer_entries(self):
+        fetch_data.COMP_KEY = "MLB"
+        self.assertTrue(fetch_data._news_relevant(
+            {"headline": "With Judge's timeline uncertain, Yankees face a deadline balancing act", "desc": ""}))
+        self.assertFalse(fetch_data._news_relevant(
+            {"headline": "Chiefs training camp update ahead of the NFL season", "desc": ""}))
+
+
 if __name__ == "__main__":
     unittest.main()
