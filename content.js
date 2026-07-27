@@ -10,6 +10,14 @@
   const COMP_BY_KEY=Object.fromEntries(COMPETITIONS.map(comp=>[comp.key,comp]));
   const SPORT_LABELS={all:'All sports',soccer:'Soccer',nfl:'NFL',ncaaf:'College Football',basketball:'Basketball',hockey:'Hockey',baseball:'Baseball'};
   const FACTOR_LABELS={adv:'home context',form:'recent form',margin:'scoring margin',rest:'rest advantage',record:'season record',elo:'team strength',class:'roster strength',srs:'schedule-adjusted rating',rank:'ranking',h2h:'head-to-head history'};
+  // The content hub is an editorial highlights surface, not a fixture mirror.
+  // Watchability already combines team quality, competitiveness, upset drama,
+  // and playoff/knockout stakes in fetch_data.py.
+  const PREVIEW_HORIZON_DAYS=14;
+  const UPCOMING_PREVIEWS_PER_COMP=2;
+  const LIVE_PREVIEWS_PER_COMP=1;
+  const MATCH_RECAPS_PER_COMP=2;
+  const SECOND_RECAP_MIN_WATCHABILITY=55;
   const GUIDE_ITEMS=[
     {id:'learn-soccer',type:'learn',sports:['soccer'],compLabel:'Soccer',title:'Shape, pressing & set pieces',summary:'Fixture congestion, draws, and the tactical details that move a match.',updated:'2026-07-24T12:00:00Z',minutes:8,url:'tactics-soccer.html',topic:'World Cup UCL Europe tactics pressing set pieces'},
     {id:'learn-football',type:'learn',sports:['nfl','ncaaf'],compLabel:'Football',title:'Situation, schedule & rest',summary:'Short weeks, opponent strength, and what changes between the professional and college games.',updated:'2026-07-24T12:00:00Z',minutes:7,url:'tactics-football.html',topic:'NFL College Football rest schedule strength'},
@@ -182,9 +190,9 @@
         });
       });
       const live=candidates.filter(item=>item.live).sort((a,b)=>b.watchability-a.watchability);
-      const future=candidates.filter(item=>!item.live).sort((a,b)=>a.sortTime-b.sortTime||b.watchability-a.watchability);
-      const near=future.filter(item=>item.sortTime<=now+60*86400000);
-      selected.push(...live.slice(0,3),...(near.length?near:future).slice(0,5));
+      const future=candidates.filter(item=>!item.live&&item.sortTime<=now+PREVIEW_HORIZON_DAYS*86400000)
+        .sort((a,b)=>b.watchability-a.watchability||a.sortTime-b.sortTime);
+      selected.push(...live.slice(0,LIVE_PREVIEWS_PER_COMP),...future.slice(0,UPCOMING_PREVIEWS_PER_COMP));
     });
     return selected;
   }
@@ -192,19 +200,25 @@
   function buildMatchRecaps(){
     const items=[];
     datasets.forEach(dataset=>{
-      const meta=compMeta(dataset.compKey);
+      const meta=compMeta(dataset.compKey),candidates=[];
       (dataset.matches||[]).filter(match=>match.status==='FINISHED'&&match.prediction&&winnerSide(match)).forEach(match=>{
         const hit=winnerSide(match)===match.prediction.pick;
-        items.push({
+        candidates.push({
           id:`recap-${meta.key}-${match.id}`,type:'recap',sports:[meta.sport],comp:meta.key,compLabel:meta.label,matchId:match.id,
           home:match.home?.name,away:match.away?.name,score:`${match.score?.home??'—'}–${match.score?.away??'—'}`,
           pick:match.prediction.pick_name,confidence:match.prediction.confidence,hit,resultLabel:hit?'Model hit':'Model miss',
           title:`${match.home?.name} ${match.score?.home??'—'}–${match.score?.away??'—'} ${match.away?.name}`,
           summary:`The model picked ${match.prediction.pick_name}${match.prediction.confidence!=null?` at ${match.prediction.confidence}%`:''}; ${winnerName(match)} produced the result.`,
           takeaway:matchTakeaway(match,true),updated:match.kickoff,dataUpdated:dataset.updated,sortTime:timestamp(match.kickoff),minutes:3,
-          url:dashboardUrl(meta.key,'matches',match.id),match
+          url:dashboardUrl(meta.key,'matches',match.id),watchability:Number(match.watchability)||0,match
         });
       });
+      candidates.sort((a,b)=>b.watchability-a.watchability||b.sortTime-a.sortTime);
+      // Preserve one best recap per active competition even in a quiet week;
+      // a second story must clear the explicit importance threshold.
+      if(candidates[0])items.push(candidates[0]);
+      items.push(...candidates.slice(1,MATCH_RECAPS_PER_COMP)
+        .filter(item=>item.watchability>=SECOND_RECAP_MIN_WATCHABILITY));
     });
     return items.sort((a,b)=>b.sortTime-a.sortTime).slice(0,24);
   }

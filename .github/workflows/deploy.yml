@@ -124,7 +124,7 @@ jobs:
           rm -f config_keys.py
           mkdir -p _site
           cp index.html styles.css content.css content.js article-links.js translations.js legal.html qa.html content.html manifest.json _site/
-          cp tactics-soccer.html tactics-football.html tactics-basketball.html tactics-hockey.html _site/
+          cp tactics-soccer.html tactics-football.html tactics-basketball.html tactics-hockey.html tactics-baseball.html _site/
           cp robots.txt sitemap.xml _site/
           cp app-1-core.js app-2-views.js app-3-panels.js app-4-features.js _site/
           cp favicon.ico favicon-16.png favicon-32.png matchday.ico _site/

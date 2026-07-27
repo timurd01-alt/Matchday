@@ -40,6 +40,7 @@ PUBLIC_CONTENT_COMPETITIONS = (
     ("ncaam", "Men's College Basketball", "basketball"),
     ("nba", "NBA", "basketball"),
     ("nhl", "NHL", "hockey"),
+    ("mlb", "MLB", "baseball"),
 )
 PUBLIC_CONTENT_KEYS = {key for key, _, _ in PUBLIC_CONTENT_COMPETITIONS}
 
@@ -224,7 +225,7 @@ def _compact_content_match(match):
 
 
 def generate_public_content_feed():
-    """Build one compact, MLB-free input file for the public content hub."""
+    """Build one compact input file for every public content competition."""
     datasets = []
     for key, label, sport in PUBLIC_CONTENT_COMPETITIONS:
         data = _load_json(f"data_{key}.json", None)
@@ -378,6 +379,7 @@ def regenerate_sitemap():
         (BASE_URL + "tactics-football.html", "monthly", "0.5", None),
         (BASE_URL + "tactics-basketball.html", "monthly", "0.5", None),
         (BASE_URL + "tactics-hockey.html", "monthly", "0.5", None),
+        (BASE_URL + "tactics-baseball.html", "monthly", "0.5", None),
     ]
     for post in posts:
         urls.append((f"{BASE_URL}posts/{post['slug']}.html", "never", "0.6", post.get("date")))
