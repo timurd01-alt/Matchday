@@ -17,7 +17,7 @@ Run:  python fetch_data.py          (once)
       python fetch_data.py --loop   (auto: 45s while live, else 5 min)
 """
 
-import json, os, sys, time, datetime, re, unicodedata, urllib.request, urllib.error, urllib.parse, math
+import json, os, sys, time, datetime, re, unicodedata, urllib.request, urllib.error, urllib.parse, math, traceback
 import xml.etree.ElementTree as ET
 from email.utils import parsedate_to_datetime
 from collections import defaultdict
@@ -3954,7 +3954,8 @@ def update_scorecard(matches):
         row = _json_safe(source)
         if not _record_is_official(source):
             row["stage"] = f"Legacy/unverified · {row.get('stage') or 'Fixture'}"
-            row["integrity_label"] = "legacy/unverified — excluded from official record"
+            row["integrity_label"] = "no provable pregame timestamp — counted in the all-time total, excluded from the verified record"
+            row["legacy"] = True
         rows.append(row)
     # Brier score on the pick side (0 = perfect, <0.2 = well calibrated)
     briers = [((p.get("confidence") or 0)/100.0 - (1.0 if p.get("model_hit") else 0.0))**2 for p in graded]
@@ -4003,9 +4004,28 @@ def update_scorecard(matches):
     DIAG.append(f"scorecard record: {_mh}/{len(graded)} model hits")
     legacy_hits = sum(1 for p in legacy_graded if p.get("model_hit"))
     legacy_market = [p for p in legacy_graded if p.get("market_hit") is not None]
+    # Combined "all-time" tally = verified pregame-locked picks + legacy/
+    # migrated picks that have a real graded result. This is deliberately
+    # kept separate from `graded`/`model_hits` above (the strict, official,
+    # leakage-safe number _record_is_official() gates) rather than folding
+    # legacy picks into it -- an independent audit found the legacy cluster
+    # includes picks migrated from local test-machine history with no
+    # recoverable proof of pregame timing, so they can't honestly be
+    # relabeled "verified". This total exists purely for transparency: shown
+    # separately, clearly labeled, so the public record isn't silently
+    # padded with unverifiable picks even when they happen to be accurate.
+    combined_graded = len(graded) + len(legacy_graded)
+    combined_hits = _mh + legacy_hits
     return {"record_scope": "verified_pregame_picks_only",
             "graded": len(graded), "pending": len(official) - len(graded),
             "model_hits": _mh,
+            "combined": {"graded": combined_graded, "model_hits": combined_hits,
+                         "accuracy": round(combined_hits / combined_graded * 100, 1) if combined_graded else None,
+                         "verified_graded": len(graded), "verified_hits": _mh,
+                         "legacy_graded": len(legacy_graded), "legacy_hits": legacy_hits,
+                         "note": "Includes legacy/migrated picks without recoverable proof of pregame "
+                                 "timing alongside verified pregame-locked picks. See the pick log below "
+                                 "for which is which."},
             "quarantined": {"total": len(quarantined), "graded": len(legacy_graded),
                             "pending": len(quarantined) - len(legacy_graded),
                             "model_hits": legacy_hits,
@@ -4792,6 +4812,14 @@ def build():
         for m in matches:
             for t in (m["home"], m["away"]):
                 t["rating"] = round(power_rating(t["name"]), 2)
+        # Same enrichment for the standings/conference tables so the
+        # Groups/Standings tab can show the model's strength rating next to
+        # the actual win-loss record it's sorted by, instead of only
+        # surfacing that rating inside individual match cards.
+        for table in sports_tables:
+            for team in table.get("teams") or []:
+                if team.get("name"):
+                    team["rating"] = round(power_rating(team["name"]), 2)
 
     # train the self-updating factors (Elo, H2H) on this run's finished
     # results, and derive home/away split form -- all from the same
@@ -4928,10 +4956,32 @@ def main():
     if not FOOTBALL_DATA_KEY or not ODDS_API_KEY or "PASTE_" in FOOTBALL_DATA_KEY or "PASTE_" in ODDS_API_KEY:
         print("\n  Stop: keys not loaded — fix config_keys.py (see the !! lines above).\n"); sys.exit(1)
     loop = "--loop" in sys.argv
+    # A caught build() exception here used to only print to a CI log nobody
+    # outside the Actions run can read (this file's own picks/data caches
+    # are the only durable trace) and still exit 0, so a competition could
+    # silently stop locking/grading picks for hours with no visible signal.
+    # Persist what happened to a small per-competition file instead so the
+    # next run -- or anyone inspecting the repo -- can see whether recent
+    # runs are actually failing here, and clear it the moment a run succeeds
+    # so a fixed, healthy competition doesn't keep showing a stale failure.
+    failure_file = f"fetch_failure_{COMP_KEY.lower()}.json"
     while True:
         live = 0
-        try: live = build()
-        except Exception as e: print("  ! fetch failed this round:", e)
+        try:
+            live = build()
+            if os.path.exists(failure_file):
+                os.remove(failure_file)
+        except Exception as e:
+            print("  ! fetch failed this round:", e)
+            try:
+                tmp = failure_file + ".tmp"
+                with open(tmp, "w", encoding="utf-8") as f:
+                    json.dump({"comp": COMP_KEY,
+                               "at": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds"),
+                               "error": _scrub(e), "traceback": _scrub(traceback.format_exc())}, f, ensure_ascii=False, indent=2)
+                os.replace(tmp, failure_file)
+            except Exception:
+                pass  # diagnostics are best-effort; never let this mask the original failure
         if not loop: break
         if live:
             print(f"LIVE — refreshing in {LIVE_SECONDS}s  (Ctrl+C to stop)")

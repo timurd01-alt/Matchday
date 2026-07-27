@@ -121,7 +121,20 @@ body.modalOpen{overflow:hidden}.matchModal{position:fixed;inset:0;z-index:99;dis
   .scrow .scsplit{font-style:normal;color:var(--signal);font-size:.6rem;border:1px solid var(--line2);border-radius:4px;padding:0 4px;margin-left:4px}
   .scrow .sctag{font-family:var(--mono);font-size:.6rem;font-weight:700;padding:2px 8px;border-radius:5px;letter-spacing:.05em}
   .sctag.hit{color:var(--win);background:rgba(58,209,122,.13)} .sctag.miss{color:var(--loss);background:rgba(255,93,108,.12)} .sctag.wait{color:var(--muted);background:var(--bg2)}
+  .sctag.legacy{color:var(--faint);background:var(--bg2);border:1px solid var(--line2);margin-left:5px}
   .scrow.miss{opacity:.82}
+  /* Below 620px the auto/1fr/auto/auto grid forces .scpick's nowrap content to
+     size its auto column to full content width, which crushes the 1fr .scmatch
+     column to 0 and overflows the row -- same class of squeeze the v3 pick
+     redesign avoided (see app-3-panels.js). Switch to a wrapping flex stack so
+     nothing gets crushed to zero width. */
+  @media(max-width:620px){
+    .scrow{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px}
+    .scrow .scst{order:1;min-width:0}
+    .scrow .sctag{order:2;margin-left:auto}
+    .scrow .scmatch{order:3;flex-basis:100%;white-space:normal;overflow:visible;text-overflow:clip;line-height:1.35}
+    .scrow .scpick{order:4;flex-basis:100%;white-space:normal;overflow-wrap:break-word;line-height:1.5}
+  }
   .fchips{display:flex;flex-wrap:wrap;gap:6px;row-gap:6px;margin-top:9px;align-items:center}
   .fchip{display:inline-flex;align-items:center;white-space:nowrap;line-height:1.5;font-family:var(--mono);font-size:.6rem;font-weight:700;padding:2px 8px;border-radius:5px;border:1px solid var(--line);color:var(--muted)}
   .fchip.pos,.fchip.good{color:var(--win);border-color:rgba(58,209,122,.3)}

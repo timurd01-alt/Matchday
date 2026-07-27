@@ -362,9 +362,15 @@ function marqueeSelect(active){
   // favorites stay eligible regardless of how far out they are; the
   // watchability-ranked rest gets narrowed to a near-term window first, so a
   // months-away fixture can't outrank something happening this week
-  const rest=nearTermPool(active.filter(m=>!isFavoriteMatch(m)),MARQUEE_COUNT);
+  const rest=active.filter(m=>!isFavoriteMatch(m));
   const byComp={};
   rest.forEach(m=>{const c=m._comp||m.competition||'OTHER';(byComp[c]||=[]).push(m);});
+  // Widen each competition's window independently rather than pooling every
+  // sport together first: a high-volume in-season sport (e.g. MLB in July)
+  // satisfies a combined count threshold at the narrowest window on its own,
+  // which permanently starved every other sport of ever widening far enough
+  // to reach its own next fixture and let one sport fill every marquee slot.
+  Object.keys(byComp).forEach(c=>{byComp[c]=nearTermPool(byComp[c],MARQUEE_PER_COMP)});
   Object.values(byComp).forEach(list=>list.sort((a,b)=>(Number(b.watchability)||0)-(Number(a.watchability)||0)));
   const picked=[...favs];const seen=new Set(favs);
   for(let round=0;round<MARQUEE_PER_COMP&&picked.length<MARQUEE_COUNT;round++){

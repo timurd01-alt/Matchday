@@ -159,6 +159,27 @@ class BallDontLieTests(unittest.TestCase):
         self.assertEqual(adapter.standings(), ({}, []))
         self.assertEqual(adapter.leaders(), {})
 
+    def test_postponed_game_resolves_to_finished_with_no_fabricated_score(self):
+        def postponed_getter(url, headers):
+            return {"data": [{
+                "id": 502, "date": "2026-07-19T00:08:00.000Z", "season": 2026,
+                "status": "STATUS_POSTPONED", "period": None, "display_clock": None,
+                "venue": "Yankee Stadium", "season_type": "regular",
+                "home_team": {"display_name": "New York Yankees", "abbreviation": "NYY"},
+                "away_team": {"display_name": "Los Angeles Dodgers", "abbreviation": "LAD"},
+                # BALLDONTLIE's schema still reports a numeric 0 for an unplayed
+                # game rather than omitting the field -- naively trusting that
+                # as a real score would grade a postponed game as a false 0-0.
+                "home_team_data": {"runs": 0}, "away_team_data": {"runs": 0},
+            }], "meta": {"per_page": 100}}
+
+        adapter = BallDontLieAdapter("test-key", "MLB", getter=postponed_getter,
+                                    today=dt.date(2026, 7, 26))
+        match = adapter.schedule()[0]
+        # Terminal (not UPCOMING forever), but with no real score to grade against.
+        self.assertEqual(match["status"], "FINISHED")
+        self.assertEqual(match["score"], {"home": None, "away": None})
+
     def test_season_games_pages_through_results_and_drops_preseason(self):
         calls = []
 

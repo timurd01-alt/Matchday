@@ -41,6 +41,7 @@ jobs:
             posts.json
             posts_state.json
             posts/*.html
+            fetch_failure_*.json
           key: matchday-fetch-state-${{ github.run_id }}
           restore-keys: matchday-fetch-state-
 

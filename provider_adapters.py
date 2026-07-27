@@ -1049,19 +1049,32 @@ class BallDontLieAdapter:
             return None
         raw_status = str(row.get("status") or "").strip()
         status_key = raw_status.lower().replace("_", " ")
-        if "final" in status_key or status_key in {"completed", "closed", "post"}:
+        # A postponed/cancelled/suspended game will never produce a real
+        # score or a further status change from the provider -- treated as
+        # "UPCOMING" (the prior fallback), it lingered forever past its
+        # kickoff instead of resolving, and its kickoff timestamp being in
+        # the past made it fall straight to _lock_decision()'s
+        # "past_due_upcoming" quarantine without ever getting a chance to
+        # lock or grade. Map it to FINISHED (a status every caller already
+        # understands) but force a null score below so update_scorecard()'s
+        # "score is None -> skip grading" check keeps it from being graded
+        # as a fabricated 0-0 result.
+        not_played = any(token in status_key for token in ("postponed", "cancelled", "canceled", "suspended"))
+        if not_played:
+            status = "FINISHED"
+        elif "final" in status_key or status_key in {"completed", "closed", "post"}:
             status = "FINISHED"
         elif any(token in status_key for token in ("progress", "quarter", "inning", "halftime", "live")):
             status = "LIVE"
         else:
             status = "UPCOMING"
         if self.competition == "MLB":
-            home_score = (row.get("home_team_data") or {}).get("runs")
-            away_score = (row.get("away_team_data") or {}).get("runs")
+            home_score = None if not_played else (row.get("home_team_data") or {}).get("runs")
+            away_score = None if not_played else (row.get("away_team_data") or {}).get("runs")
             minute = f"{row.get('period') or ''} {row.get('display_clock') or ''}".strip()
         else:
-            home_score = row.get("home_team_score")
-            away_score = row.get("visitor_team_score")
+            home_score = None if not_played else row.get("home_team_score")
+            away_score = None if not_played else row.get("visitor_team_score")
             minute = str(row.get("time") or raw_status or "") if status == "LIVE" else ""
         if self.competition == "NFL" and row.get("week") not in (None, ""):
             stage = f"Week {row['week']}"
