@@ -126,6 +126,14 @@ jobs:
           for data_file in data_wc.json data_ucl.json data_epl.json data_laliga.json data_seriea.json data_bundesliga.json data_ligue1.json data_nfl.json data_ncaaf.json data_ncaam.json data_nba.json data_mlb.json; do
             [ ! -f "$data_file" ] || cp "$data_file" _site/
           done
+          # Published only when present -- a competition's fetch failed and the
+          # error (scrubbed of secrets by fetch_data.py before it's ever
+          # written) is otherwise stuck in CI's internal cache with no way to
+          # read it outside the Actions run. Cleared automatically the next
+          # time that competition's fetch succeeds (see fetch_data.py main()).
+          for failure_file in fetch_failure_*.json; do
+            [ ! -f "$failure_file" ] || cp "$failure_file" _site/
+          done
           cp content-feed.json _site/
           mkdir -p _site/posts
           python - <<'EOF'
