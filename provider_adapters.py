@@ -102,7 +102,31 @@ SPORTSDATA_CODES = {
 }
 
 
+# The generic first-letter algorithm below isn't just occasionally wrong, it
+# collides: "Michigan State" and "Mississippi State" both reduce to "MS", and
+# the initials for a lot of major "___ State" programs don't match how they're
+# actually known (real usage is "MSU"/"OSU"/"PSU"/"FSU", not first-letters).
+# Not a general solution -- a full curated table for 130+ FBS/360+ D1 hoops
+# programs is its own project -- just the handful of nationally visible
+# schools most likely to appear in Top 25s and marquee matchups, confirmed
+# against how each program is actually abbreviated in real broadcasts/press.
+_SHORT_CODE_OVERRIDES = {
+    "michigan state": "MSU", "mississippi state": "MSST", "ohio state": "OSU",
+    "penn state": "PSU", "florida state": "FSU", "oregon state": "ORST",
+    "arizona state": "ASU", "iowa state": "ISU", "kansas state": "KSU",
+    "oklahoma state": "OKST", "washington state": "WSU", "san diego state": "SDSU",
+    "fresno state": "FRES", "boise state": "BSU", "colorado state": "CSU",
+    "utah state": "USU", "new mexico state": "NMSU", "texas state": "TXST",
+    "georgia state": "GAST", "app state": "APP", "appalachian state": "APP",
+    "arkansas state": "ARST", "ball state": "BALL", "kent state": "KENT",
+    "michigan tech": "MTU", "texas a&m": "TAMU", "texas tech": "TTU",
+}
+
+
 def _short_code(name):
+    key = str(name or "").strip().lower()
+    if key in _SHORT_CODE_OVERRIDES:
+        return _SHORT_CODE_OVERRIDES[key]
     words = [word for word in str(name or "").replace("-", " ").split() if word]
     return "".join(word[0] for word in words[:4]).upper() or str(name or "")[:4].upper()
 
@@ -423,7 +447,13 @@ class CollegeFootballDataAdapter:
         tables = []
         for group, teams in grouped.items():
             teams.sort(key=lambda x: (-x["win_pct"], -x["gd"], x["name"]))
-            for index, team in enumerate(teams, 1): team["pos"] = index
+            for index, team in enumerate(teams, 1):
+                team["pos"] = index
+                # `model[name]` was snapshotted via {**item, ...} BEFORE this
+                # sort ran, so it kept pos=None forever -- any caller reading
+                # the model dict (fetch_data.py's generic groups-from-matches
+                # builder does) got every team's real position back as None.
+                model[team["name"].lower()]["pos"] = index
             tables.append({"group": group, "teams": teams})
         return model, sorted(tables, key=lambda x: x["group"])
 
@@ -708,7 +738,12 @@ class CollegeBasketballDataAdapter:
         tables=[]
         for group, teams in grouped.items():
             teams.sort(key=lambda x:(-x["win_pct"],-x["gd"],x["name"]));
-            for i, team in enumerate(teams,1): team["pos"]=i
+            for i, team in enumerate(teams,1):
+                team["pos"]=i
+                # model[name] was snapshotted via {**item,...} before this sort
+                # ran, so it kept pos=None forever -- see the identical fix and
+                # comment in CollegeFootballDataAdapter.standings().
+                model[team["name"].lower()]["pos"]=i
             tables.append({"group":group,"teams":teams})
         return model, sorted(tables,key=lambda x:x["group"])
 

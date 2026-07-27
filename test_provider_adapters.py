@@ -8,6 +8,18 @@ from provider_adapters import (BallDontLieAdapter, CollegeBasketballDataAdapter,
                                SportsDataIOAdapter, SportmonksAdapter, normalized_score)
 
 
+class ShortCodeTests(unittest.TestCase):
+    def test_michigan_state_is_msu_not_ms(self):
+        from provider_adapters import _short_code
+        self.assertEqual(_short_code("Michigan State"), "MSU")
+
+    def test_state_schools_dont_collide_on_shared_initials(self):
+        # The generic first-letter algorithm reduces both of these to "MS" --
+        # a real collision, not just an unfamiliar abbreviation.
+        from provider_adapters import _short_code
+        self.assertNotEqual(_short_code("Michigan State"), _short_code("Mississippi State"))
+
+
 class ScoreNormalizationTests(unittest.TestCase):
     def test_only_final_scores_receive_a_winner(self):
         self.assertEqual(normalized_score(27, 20, True),
@@ -400,6 +412,40 @@ class CollegeFootballDataTests(unittest.TestCase):
         self.assertEqual(ranks[0]["name"], "Michigan")
         self.assertIsNone(projection)
         self.assertFalse(model["michigan"]["season_stale"])
+
+    def test_standings_model_dict_gets_the_same_position_as_the_sorted_table(self):
+        # Regression: `model[name]` used to be snapshotted via {**item, ...}
+        # BEFORE the per-group sort assigned real positions, so every team's
+        # `pos` in the model dict stayed frozen at the pre-sort None forever --
+        # only the `tables` return value (a shared reference, mutated in
+        # place) ever saw the real position. Confirmed live 2026-07-27:
+        # fetch_data.py's standings builder reads position from `model`
+        # (`st` there), so conference tables sorted by "pos or 99" put every
+        # team at 99 and fell back to API response order -- observed as
+        # standings that looked completely unordered.
+        def getter(url, headers):
+            if "/games?" in url:
+                return []
+            if "/records?" in url:
+                return [
+                    {"team": "Losing Tigers", "conference": "Big Ten", "classification": "fbs",
+                     "total": {"games": 10, "wins": 2, "losses": 8, "ties": 0},
+                     "conferenceGames": {"games": 8, "wins": 1, "losses": 7}},
+                    {"team": "Winning Wolverines", "conference": "Big Ten", "classification": "fbs",
+                     "total": {"games": 10, "wins": 9, "losses": 1, "ties": 0},
+                     "conferenceGames": {"games": 8, "wins": 8, "losses": 0}},
+                ]
+            raise AssertionError(url)
+        adapter = CollegeFootballDataAdapter("shared-key", getter=getter, today=dt.date(2026, 7, 17))
+        model, tables = adapter.standings()
+        teams = tables[0]["teams"]
+        self.assertEqual(teams[0]["name"], "Winning Wolverines")
+        self.assertEqual(teams[0]["pos"], 1)
+        self.assertEqual(teams[1]["pos"], 2)
+        # the fix under test: the model dict (built before sorting, in API
+        # response order) must reflect the SAME final positions as the table
+        self.assertEqual(model["winning wolverines"]["pos"], 1)
+        self.assertEqual(model["losing tigers"]["pos"], 2)
 
     def test_reshape_player_stats_groups_rows_by_player(self):
         rows = [

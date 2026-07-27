@@ -372,10 +372,12 @@ KO_ORDER = ["Round of 32", "Knockout playoffs", "Round of 16", "Quarter-finals",
 def _scrub(s):
     """Mask API keys anywhere they might surface (error bodies, URLs, diagnostics)."""
     s = str(s)
-    s = re.sub(r"(apiKey=)[A-Za-z0-9]+", r"\1***", s)
+    s = re.sub(r"((?:apiKey|api_token)=)[^&\s]+", r"\1***", s, flags=re.I)
     s = re.sub(r"(X-Auth-Token['\"]?\s*[:=]\s*['\"]?)[A-Za-z0-9]+", r"\1***", s)
     s = re.sub(r"(x-apisports-key['\"]?\s*[:=]\s*['\"]?)[A-Za-z0-9]+", r"\1***", s)
-    for k in (FOOTBALL_DATA_KEY, ODDS_API_KEY, API_FOOTBALL_KEY):
+    for k in (FOOTBALL_DATA_KEY, ODDS_API_KEY, API_FOOTBALL_KEY,
+              SPORTSDATAIO_KEY, SPORTMONKS_KEY, BALLDONTLIE_KEY,
+              CFBD_KEY, CBBD_KEY):
         if k and len(str(k)) > 8:
             s = s.replace(str(k), "***")
     return s
@@ -4884,16 +4886,33 @@ def build():
     bracket = build_bracket(raw)
     third = third_race(st, name_map, code_map) if COMP["tournament"] else []
 
+    # This groups-from-`st` builder predates the American-sports providers and
+    # was only ever meant for soccer's GROUP_-tagged group stages (World Cup/
+    # UCL). cfbd/cbbd/sportsdataio/balldontlie/apisports all tag each team
+    # with its own real conference/division via the SAME "group" field, so
+    # this fired for them too and its output silently WON over the adapter's
+    # own sports_tables in the `if not standings: ...` fallback chain below --
+    # even though sports_tables is the adapter's correctly-sorted, fully
+    # populated table (win_pct, record, qual) and this rebuild drops all of
+    # that down to a narrow field list. Worse, it sorted by `x["pos"] or 99`,
+    # but CollegeFootballDataAdapter/CollegeBasketballDataAdapter's `model`
+    # dict (this function's `st`) held every team's position frozen at the
+    # pre-sort None (see the fix in provider_adapters.py's standings()) --
+    # every team fell back to 99 either way, and Python's stable sort just
+    # kept the API response order, live-observed as leagues that looked
+    # completely unordered. Skip this generic path for the providers that
+    # already return a real, sorted, fully-populated table of their own.
     groups = defaultdict(list)
-    for t, r in st.items():
-        gkey = r.get("group")
-        if gkey:
-            groups[gkey].append({
-                "name": name_map.get(t, t.title()), "code": code_map.get(t, ""),
-                "pos": r.get("pos"), "pld": r["pld"], "w": r["w"], "d": r["d"], "l": r["l"],
-                "gf": r["gf"], "ga": r["ga"], "gd": r["gd"], "pts": r["pts"], "form": r["form"],
-                "rating": round(power_rating(name_map.get(t, t)), 2),
-                "season_stale": bool(r.get("season_stale"))})
+    if COMP.get("source") not in {"cfbd", "cbbd", "sportsdataio", "balldontlie", "apisports"}:
+        for t, r in st.items():
+            gkey = r.get("group")
+            if gkey:
+                groups[gkey].append({
+                    "name": name_map.get(t, t.title()), "code": code_map.get(t, ""),
+                    "pos": r.get("pos"), "pld": r["pld"], "w": r["w"], "d": r["d"], "l": r["l"],
+                    "gf": r["gf"], "ga": r["ga"], "gd": r["gd"], "pts": r["pts"], "form": r["form"],
+                    "rating": round(power_rating(name_map.get(t, t)), 2),
+                    "season_stale": bool(r.get("season_stale"))})
     third_in = {norm(x.get("team")) for x in third if x.get("in")} or None
     third_out = {norm(x.get("team")) for x in third if not x.get("in")} if third else None
     def _annotate(teams):
