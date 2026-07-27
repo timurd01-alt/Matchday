@@ -442,8 +442,8 @@ class CollegeFootballDataAdapter:
         # season hasn't started -- a real preseason poll may still exist
         # (checked first, below) and is always preferred when it does; only
         # when even that doesn't exist yet does this fall back to a
-        # talent-based projection instead of reaching backward into a season
-        # nobody is asking about anymore.
+        # blended projection instead of presenting an old poll as though it
+        # were the ranking for the season nobody has played yet.
         season_started = any(row.get("completed") for row in self._games)
         payload = self._get("/rankings", {"year": self.season, "seasonType": "regular"})
         def collect(rows):
@@ -470,17 +470,58 @@ class CollegeFootballDataAdapter:
         return self._cached_rankings
 
     def _projected_ranking(self):
-        """Way-too-early Top 25 from real recruiting-talent composite, used
-        only when the season hasn't started yet and no real poll (current or
+        """Way-too-early Top 25 blending roster talent and recent results.
+
+        The prior season's final poll is a performance input, not a poll being
+        carried forward and relabeled.  Both inputs are converted to a 0..1
+        rank score before blending (55% performance, 45% talent), so their
+        unrelated native scales cannot dominate one another.  This gives
+        proven teams meaningful carryover while roster quality still matters
+        during an offseason with transfers, graduations, and coaching changes.
+
+        Used only when the season hasn't started yet and no real poll (current or
         preseason) exists either -- a model-derived estimate, same honest
         posture as estimate_title_odds() in fetch_data.py, clearly marked
         `"projected": True` so callers can label it differently from a real
         poll rather than presenting it as one."""
         try:
-            scores = self.talent()
+            talent = self.talent()
         except ProviderError:
+            talent = {}
+
+        performance = {}
+        if self.season > 2000:
+            try:
+                rows = self._get("/rankings", {"year": self.season - 1, "seasonType": "postseason"})
+                polls = []
+                for week in rows if isinstance(rows, list) else []:
+                    for poll in week.get("polls") or []:
+                        label = str(poll.get("poll") or "").lower()
+                        priority = 0 if "playoff" in label else 1 if "ap top" in label else 2
+                        polls.append((int(week.get("week") or 0), -priority, poll))
+                if polls:
+                    poll = max(polls, key=lambda item: item[:2])[2]
+                    performance = {
+                        row["school"]: int(row.get("rank") or 0)
+                        for row in (poll.get("ranks") or [])
+                        if row.get("school") and 1 <= int(row.get("rank") or 0) <= 25
+                    }
+            except (ProviderError, TypeError, ValueError):
+                performance = {}
+
+        if not talent and not performance:
             return []
-        ranked = sorted(scores.items(), key=lambda kv: -kv[1])[:25]
+        talent_ranked = sorted(talent, key=lambda name: (-talent[name], name))
+        talent_count = len(talent_ranked)
+        talent_score = {
+            name: (talent_count - index) / max(1, talent_count - 1)
+            for index, name in enumerate(talent_ranked)
+        }
+        scores = {}
+        for name in set(talent) | set(performance):
+            recent = (26 - performance[name]) / 25 if name in performance else 0.0
+            scores[name] = 0.55 * recent + 0.45 * talent_score.get(name, 0.0)
+        ranked = sorted(scores.items(), key=lambda kv: (-kv[1], kv[0]))[:25]
         return [{"rank": i, "name": name, "code": _short_code(name), "record": "Preseason", "projected": True}
                 for i, (name, _score) in enumerate(ranked, 1)]
 
@@ -689,8 +730,8 @@ class CollegeBasketballDataAdapter:
         # historical), which meant this kept showing an already-finished
         # season's final ranking for the entire off-season instead of ever
         # preferring the upcoming season. Zero "final" games this season
-        # means it hasn't started -- prefer a talent-based projection over
-        # reaching backward into a season nobody's asking about anymore.
+        # means it hasn't started -- prefer a blended projection over
+        # presenting last season's poll as the upcoming season's ranking.
         season_started = any(str(row.get("status") or "").lower() == "final" for row in self._games)
         def collect(season):
             rows = self._get("/rankings", {"season": season, "seasonType": "regular"})
@@ -719,16 +760,56 @@ class CollegeBasketballDataAdapter:
         return self._cached_rankings
 
     def _projected_ranking(self):
-        """Way-too-early Top 25 from real recruiting composite, used only
-        when the season hasn't started yet and no real poll (current or
-        preseason) exists either -- same model-derived-estimate posture as
-        CFBD's own _projected_ranking(), clearly marked `"projected": True`
-        so callers can label it differently from a real poll."""
+        """Way-too-early Top 25 blending recruiting and recent results.
+
+        The prior season's final poll is normalized as a performance input,
+        not carried forward as the new season's poll.  A 55% performance / 45%
+        recruiting blend lets proven teams survive roster-projection blind
+        spots while still accounting for offseason turnover.  The result is
+        clearly marked `"projected": True` and either signal can stand alone
+        when the other feed is unavailable.
+        """
         try:
-            scores = self.recruiting()
+            recruiting = self.recruiting()
         except ProviderError:
+            recruiting = {}
+
+        performance = {}
+        if self.season > 2000:
+            try:
+                rows = self._get("/rankings", {"season": self.season - 1, "seasonType": "postseason"})
+                candidates = []
+                for row in rows if isinstance(rows, list) else []:
+                    rank, name = row.get("ranking"), row.get("team")
+                    if rank is None or not name:
+                        continue
+                    poll = str(row.get("pollType") or "").lower()
+                    priority = 0 if "ap top" in poll else 1 if "coaches" in poll else 2
+                    candidates.append((int(row.get("week") or 0), -priority, row))
+                if candidates:
+                    top_week, top_priority = max((week, priority) for week, priority, _ in candidates)
+                    performance = {
+                        row["team"]: int(row["ranking"])
+                        for week, priority, row in candidates
+                        if week == top_week and priority == top_priority
+                        and 1 <= int(row["ranking"]) <= 25
+                    }
+            except (ProviderError, TypeError, ValueError):
+                performance = {}
+
+        if not recruiting and not performance:
             return []
-        ranked = sorted(scores.items(), key=lambda kv: -kv[1])[:25]
+        recruiting_ranked = sorted(recruiting, key=lambda name: (-recruiting[name], name))
+        recruiting_count = len(recruiting_ranked)
+        recruiting_score = {
+            name: (recruiting_count - index) / max(1, recruiting_count - 1)
+            for index, name in enumerate(recruiting_ranked)
+        }
+        scores = {}
+        for name in set(recruiting) | set(performance):
+            recent = (26 - performance[name]) / 25 if name in performance else 0.0
+            scores[name] = 0.55 * recent + 0.45 * recruiting_score.get(name, 0.0)
+        ranked = sorted(scores.items(), key=lambda kv: (-kv[1], kv[0]))[:25]
         return [{"rank": i, "name": name, "code": _short_code(name), "record": "Preseason", "projected": True}
                 for i, (name, _score) in enumerate(ranked, 1)]
 

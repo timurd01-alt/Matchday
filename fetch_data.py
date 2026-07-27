@@ -4442,7 +4442,10 @@ def fetch_college_bundle():
     # instead of last season's CFP field). Changing the filename is what
     # actually invalidates it; bump this suffix again any time this bundle's
     # cached CONTENT (not just its raw inputs) changes shape or computation.
-    cache_file = f"college_{COMP_KEY.lower()}_bundle_v6_cache.json"
+    # Bumped v6 -> v7 2026-07-27: both NCAAF and NCAAM way-too-early lists now
+    # blend the prior final poll with recruiting/roster talent instead of using
+    # recruiting alone. The cached ranking must be recomputed immediately.
+    cache_file = f"college_{COMP_KEY.lower()}_bundle_v7_cache.json"
     bundle = None
     try:
         if os.path.exists(cache_file) and time.time() - os.path.getmtime(cache_file) < COLLEGE_CACHE_MIN * 60:

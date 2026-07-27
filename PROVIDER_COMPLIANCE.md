@@ -1,5 +1,8 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-07-27 (NCAAF and NCAAM's derived way-too-early projections now blend the
+already-licensed CFBD/CBBD prior-postseason rankings feeds with their existing talent/recruiting
+feeds; no new provider, endpoint family, raw-feed display, or redistribution behavior.)
 Reviewed: 2026-07-26 (API-FOOTBALL's free-plan date restriction confirmed live against real past
 match dates while building `backfill_lineups.py` -- historical dates outside a rolling ~3-day
 window are rejected outright, same key/plan already licensed for live box scores/lineups/injuries,

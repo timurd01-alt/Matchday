@@ -462,7 +462,7 @@ class CollegeFootballDataTests(unittest.TestCase):
         self.assertEqual(by_key["Tackles"]["leaders"][0]["name"], "Player C")
         self.assertEqual(by_key["Sacks"]["leaders"][0]["value"], 8)
 
-    def test_offseason_with_no_poll_falls_back_to_talent_projection(self):
+    def test_offseason_with_no_poll_blends_prior_results_and_talent(self):
         # Regression, live user report 2026-07-26: falling back to last
         # season's postseason poll always succeeds once that poll happened
         # (it's historical), so this used to show an already-finished
@@ -470,8 +470,8 @@ class CollegeFootballDataTests(unittest.TestCase):
         # no one cares about" -- instead of ever preferring a signal about
         # the season that's actually coming up. Zero completed games this
         # season is the real off-season signal; when no real poll exists
-        # either (current or preseason), fall back to a real recruiting-
-        # talent-based projection instead, clearly marked as one.
+        # either (current or preseason), blend last year's performance with
+        # recruiting talent in a new projection, clearly marked as one.
         def getter(url, headers):
             if "/games?" in url:
                 return [{"id": 7, "season": 2027, "week": 1, "seasonType": "regular",
@@ -479,8 +479,12 @@ class CollegeFootballDataTests(unittest.TestCase):
                          "homeTeam": "Michigan", "homeConference": "Big Ten", "homePoints": None,
                          "awayTeam": "Ohio State", "awayConference": "Big Ten", "awayPoints": None,
                          "venue": "Example Stadium"}]
-            if "/rankings?" in url:
+            if "/rankings?" in url and "year=2026" in url:
                 return []  # no real poll yet, current or preseason
+            if "/rankings?" in url and "year=2025" in url:
+                return [{"season": 2025, "week": 16, "polls": [{"poll": "AP Top 25", "ranks": [
+                    {"rank": 1, "school": "Indiana"}, {"rank": 25, "school": "Boise State"},
+                ]}]}]
             if "/talent?" in url:
                 return [{"team": "Ohio State", "talent": 950.0}, {"team": "Michigan", "talent": 800.0}]
             raise AssertionError(url)
@@ -489,8 +493,23 @@ class CollegeFootballDataTests(unittest.TestCase):
         adapter.schedule()
         ranks, projection = adapter.rankings([])
         self.assertTrue(ranks[0]["projected"])
-        self.assertEqual(ranks[0]["name"], "Ohio State")  # higher talent score ranks first
+        names = [row["name"] for row in ranks]
+        self.assertIn("Indiana", names)  # recent elite performance survives weak/absent talent rank
+        self.assertLess(names.index("Indiana"), names.index("Michigan"))
+        self.assertLess(names.index("Ohio State"), names.index("Boise State"))
         self.assertIsNone(projection)  # a projection never doubles as a real CFP seed
+
+    def test_offseason_projection_falls_back_to_talent_when_final_poll_is_missing(self):
+        def getter(url, headers):
+            if "/rankings?" in url:
+                return []
+            if "/talent?" in url:
+                return [{"team": "Ohio State", "talent": 950.0}, {"team": "Michigan", "talent": 800.0}]
+            raise AssertionError(url)
+        adapter = CollegeFootballDataAdapter("shared-key", getter=getter,
+                                             today=dt.date(2026, 7, 17))
+        ranks = adapter._projected_ranking()
+        self.assertEqual([row["name"] for row in ranks], ["Ohio State", "Michigan"])
 
     def test_standings_flags_prior_season_fallback_as_stale(self):
         # Regression: before the current season's games exist, CFBD's
@@ -574,17 +593,21 @@ class CollegeBasketballDataTests(unittest.TestCase):
         self.assertEqual(adapter_after.season, 2027)
         adapter_after.schedule()
 
-    def test_offseason_with_no_poll_falls_back_to_recruiting_projection(self):
+    def test_offseason_with_no_poll_blends_prior_results_and_recruiting(self):
         # Same off-season fix as CFBD: zero "final" games this season means
-        # it hasn't started, so an empty /rankings response should fall back
-        # to a real recruiting-composite projection, not reach backward into
-        # last season's final poll (see test_games_derive_real_standings_and_
-        # top_25 for the real-poll path, which a completed game preserves).
+        # it hasn't started, so an empty current /rankings response should
+        # blend last year's results with recruiting instead of displaying the
+        # old final poll as though it were current.
         def getter(url, headers):
             if url.endswith("/teams"):
                 return [{"school": "Duke", "conference": "ACC"}]
-            if "/rankings" in url:
+            if "/rankings" in url and "season=2026" in url:
                 return []
+            if "/rankings" in url and "season=2025" in url:
+                return [
+                    {"season": 2025, "week": 20, "pollType": "AP Top 25", "ranking": 1, "team": "Florida"},
+                    {"season": 2025, "week": 20, "pollType": "AP Top 25", "ranking": 25, "team": "Memphis"},
+                ]
             if "/recruiting/teams" in url:
                 return [{"team": "Duke", "rating": 95.0}, {"team": "Gonzaga", "rating": 80.0}]
             self.assertIn("/games?season=2026", url)
@@ -598,8 +621,23 @@ class CollegeBasketballDataTests(unittest.TestCase):
         adapter.schedule()
         ranks, projection = adapter.rankings([])
         self.assertTrue(ranks[0]["projected"])
-        self.assertEqual(ranks[0]["name"], "Duke")
+        names = [row["name"] for row in ranks]
+        self.assertIn("Florida", names)
+        self.assertLess(names.index("Florida"), names.index("Gonzaga"))
+        self.assertLess(names.index("Duke"), names.index("Memphis"))
         self.assertIsNone(projection)
+
+    def test_basketball_projection_falls_back_to_recruiting_without_final_poll(self):
+        def getter(url, headers):
+            if "/rankings" in url:
+                return []
+            if "/recruiting/teams" in url:
+                return [{"team": "Duke", "rating": 95.0}, {"team": "Gonzaga", "rating": 80.0}]
+            raise AssertionError(url)
+        adapter = CollegeBasketballDataAdapter("shared-key", getter=getter,
+                                               today=dt.date(2026, 7, 17))
+        ranks = adapter._projected_ranking()
+        self.assertEqual([row["name"] for row in ranks], ["Duke", "Gonzaga"])
 
     def test_leaders_computes_per_game_averages_for_d1_only(self):
         # CBBD's /stats/player/season is already one row per player (unlike
