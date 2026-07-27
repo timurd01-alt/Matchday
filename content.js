@@ -74,6 +74,17 @@
     const side=winnerSide(match);return side==='h'?match.home?.name:side==='a'?match.away?.name:side==='d'?'Draw':'Unknown result';
   }
 
+  function hasVerifiedModelCall(dataset,match){
+    const fixtureId=String(match?.id??'');
+    if(!fixtureId)return false;
+    return ((dataset?.scorecard?.picks)||[]).some(pick=>
+      String(pick?.fixture_id??'')===fixtureId&&
+      pick?.integrity_eligible===true&&
+      pick?.integrity_status==='verified'&&
+      pick?.legacy!==true
+    );
+  }
+
   function strongestFactor(match){
     const why=match?.prediction?.why||{};
     const candidates=Object.entries(why).filter(([key,value])=>key!=='adv'&&Number.isFinite(Number(value)));
@@ -202,7 +213,11 @@
     const items=[];
     datasets.forEach(dataset=>{
       const meta=compMeta(dataset.compKey),candidates=[];
-      (dataset.matches||[]).filter(match=>match.status==='FINISHED'&&match.prediction&&winnerSide(match)).forEach(match=>{
+      // Finished fixtures receive a freshly calculated prediction in the data
+      // feed for analysis, including games played before Matchday existed. A
+      // recap is an accountability claim, so require evidence that the pick was
+      // genuinely locked before kickoff in the verified scorecard ledger.
+      (dataset.matches||[]).filter(match=>match.status==='FINISHED'&&match.prediction&&winnerSide(match)&&hasVerifiedModelCall(dataset,match)).forEach(match=>{
         const hit=winnerSide(match)===match.prediction.pick;
         candidates.push({
           id:`recap-${meta.key}-${match.id}`,type:'recap',sports:[meta.sport],comp:meta.key,compLabel:meta.label,matchId:match.id,
@@ -276,7 +291,7 @@
     const rows=allFilteredMatches(),now=Date.now();
     const active=rows.filter(row=>['LIVE','UPCOMING'].includes(row.match.status)&&row.match.prediction).sort((a,b)=>Number(b.match.prediction?.confidence||0)-Number(a.match.prediction?.confidence||0));
     const signal=active[0],matchOfDay=[...active].sort((a,b)=>Number(b.match.watchability||0)-Number(a.match.watchability||0))[0];
-    const finished=rows.filter(row=>row.match.status==='FINISHED'&&row.match.prediction&&winnerSide(row.match)).sort((a,b)=>timestamp(b.match.kickoff)-timestamp(a.match.kickoff));
+    const finished=rows.filter(row=>row.match.status==='FINISHED'&&row.match.prediction&&winnerSide(row.match)&&hasVerifiedModelCall(row.dataset,row.match)).sort((a,b)=>timestamp(b.match.kickoff)-timestamp(a.match.kickoff));
     const surprise=[...finished].filter(row=>winnerSide(row.match)!==row.match.prediction.pick).sort((a,b)=>Number(b.match.prediction.confidence||0)-Number(a.match.prediction.confidence||0))[0];
     const week=finished.filter(row=>timestamp(row.match.kickoff)>=now-7*86400000),weekHits=week.filter(row=>winnerSide(row.match)===row.match.prediction.pick).length;
     const noticed=active.slice(0,3).map(row=>`${row.match.prediction.pick_name}: ${strongestFactor(row.match)}`).join(' · ');
@@ -311,7 +326,7 @@
   function renderAccountability(){
     const host=byId('accountabilityGrid');if(!host)return;
     const rows=allFilteredMatches(),now=Date.now();
-    const finished=rows.filter(row=>row.match.status==='FINISHED'&&row.match.prediction&&winnerSide(row.match));
+    const finished=rows.filter(row=>row.match.status==='FINISHED'&&row.match.prediction&&winnerSide(row.match)&&hasVerifiedModelCall(row.dataset,row.match));
     const hits=finished.filter(row=>winnerSide(row.match)===row.match.prediction.pick).sort((a,b)=>Number(b.match.prediction.confidence||0)-Number(a.match.prediction.confidence||0));
     const misses=finished.filter(row=>winnerSide(row.match)!==row.match.prediction.pick).sort((a,b)=>Number(b.match.prediction.confidence||0)-Number(a.match.prediction.confidence||0));
     const right=hits[0],miss=misses[0],movement=movementHighlight(rows),week=finished.filter(row=>timestamp(row.match.kickoff)>=now-7*86400000),weekHits=week.filter(row=>winnerSide(row.match)===row.match.prediction.pick).length;
