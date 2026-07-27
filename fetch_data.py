@@ -3492,10 +3492,22 @@ def _quarantine_legacy_records(picks):
         rec.setdefault("quarantine_reason", "legacy_missing_lock_provenance")
         if not str(key).startswith("legacy:"):
             legacy_key = f"legacy:{key}"
-            suffix = 2
-            while legacy_key in picks:
-                legacy_key = f"legacy:{key}:{suffix}"
-                suffix += 1
+            if legacy_key in picks:
+                # This fixture is ALREADY quarantined under its legacy key --
+                # seeing it again under its plain key means something outside
+                # the pipeline re-introduced it (a re-run seed/import step, a
+                # restored backup). Suffixing to "legacy:<id>:2" here would
+                # store the same pick twice and count it twice in the
+                # scorecard's legacy/all-time tally; a real second opinion on
+                # one fixture is impossible, since a fixture locks at most
+                # once. Drop the reintroduced copy and keep the record already
+                # in the ledger, which has been through grading/self-heal (the
+                # re-added copies observed 2026-07-27 carried stale
+                # penalty-inflated scorelines this pass had already fixed).
+                del picks[key]
+                DIAG.append(f"scorecard: dropped duplicate re-seeded pick for fixture {key}")
+                changed = True
+                continue
             picks[legacy_key] = rec
             del picks[key]
             changed = True

@@ -148,6 +148,23 @@ class ModelInputTests(unittest.TestCase):
         self.assertFalse(fetch_data._record_is_official(picks["legacy:fixture-1"]))
         self.assertEqual(picks["legacy:fixture-1"]["quarantine_reason"], "legacy_missing_lock_provenance")
 
+    def test_reseeded_duplicate_pick_is_dropped_not_stored_twice(self):
+        # A fixture already quarantined under "legacy:<id>" that reappears
+        # under its plain key (an external re-seed/import re-running) must not
+        # become a second "legacy:<id>:2" record -- that double-counts one
+        # pick in the scorecard's legacy/all-time tally. Observed live
+        # 2026-07-27: a repeating seed step grew one 19-pick ledger to 38.
+        graded = {"pick": "h", "result": "h", "home": "A", "away": "B",
+                  "score": "1-1 (2-4 pens)", "integrity_status": "quarantined"}
+        stale_reseed = {"pick": "h", "result": "h", "home": "A", "away": "B",
+                        "score": "3-5"}  # pre-self-heal penalty-inflated score
+        picks = {"legacy:fixture-1": dict(graded), "fixture-1": dict(stale_reseed)}
+        fetch_data._quarantine_legacy_records(picks)
+        self.assertEqual(list(picks), ["legacy:fixture-1"])
+        self.assertNotIn("legacy:fixture-1:2", picks)
+        # the already-graded/self-healed copy is the one that survives
+        self.assertEqual(picks["legacy:fixture-1"]["score"], "1-1 (2-4 pens)")
+
     def test_locked_snapshot_replaces_entire_recomputed_prediction(self):
         self.use_world_cup()
         now = fetch_data.datetime.datetime(2026, 7, 24, 12, tzinfo=fetch_data.datetime.timezone.utc)

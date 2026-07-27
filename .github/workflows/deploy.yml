@@ -55,30 +55,25 @@ jobs:
           BALLDONTLIE_KEY = "${{ secrets.BALLDONTLIE_KEY }}"
           EOF
 
-      - name: ONE-TIME seed merge (remove after this runs successfully)
-        run: |
-          python - <<'EOF'
-          import json, os
-          seed_path = "seed_picks_log_wc.json"
-          if os.path.exists(seed_path):
-              with open(seed_path, encoding="utf-8") as f:
-                  seed = json.load(f)
-              try:
-                  with open("picks_log_wc.json", encoding="utf-8") as f:
-                      current = json.load(f)
-              except Exception:
-                  current = {}
-              added = 0
-              for mid, pick in seed.items():
-                  if mid not in current:
-                      current[mid] = pick
-                      added += 1
-              with open("picks_log_wc.json", "w", encoding="utf-8") as f:
-                  json.dump(current, f, ensure_ascii=False, indent=1)
-              print(f"seed merge: added {added} of {len(seed)} picks (rest already present)")
-          else:
-              print("seed merge: no seed file, skipping")
-          EOF
+      # The "ONE-TIME seed merge" step that used to live here was removed
+      # 2026-07-27. It was never actually one-time -- it ran on EVERY run and
+      # re-added all 19 seed picks under their original fixture keys, because
+      # its `if mid not in current` check compares against keys that
+      # _quarantine_legacy_records() has since renamed to "legacy:<id>". Each
+      # run therefore re-seeded 19 plain keys, which that function then
+      # renamed to "legacy:<id>:2", ":3", ... growing picks_log_wc.json by 19
+      # duplicate records per run (measured: 19 real fixtures stored as 38
+      # records) and inflating the scorecard's all-time legacy tally with
+      # copies of the same picks. The re-seeded copies also carried the old
+      # penalty-inflated scorelines ("3-5" instead of "1-1 (2-4 pens)") that
+      # update_scorecard()'s self-heal pass had already corrected, so every
+      # run reintroduced data the app had explicitly fixed.
+      #
+      # It is safe to drop outright: picks_log_wc.json is now tracked in git
+      # (see .gitignore) and committed back after every fetch, so the ledger
+      # persists on its own and no longer needs re-seeding from
+      # seed_picks_log_wc.json (kept in the repo as the historical record of
+      # what was originally seeded).
 
       - name: Fetch one adaptive round for all sports
         run: python multi_fetch.py --once
