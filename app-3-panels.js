@@ -29,7 +29,7 @@ const isSample=(DATA.source_note||'').toLowerCase().includes('sample');
 parts.push(isSample?`<span class="ls-badge sample">${t("sample data")}</span>`:live.length?`<span class="ls-badge live">${t("live data")}</span>`:`<span class="ls-badge ok">${t("live feed")}</span>`);
 const streakStats=btmStats(btmGrade());
 if(streakStats.streak>=2)parts.push(`<span class="ls-streak" title="Beat the Model: ${streakStats.streak} correct in a row" onclick="setView('community')">\u{1F525} ${streakStats.streak}</span>`);
-if(live.length){const m=live[0];const lc=liveClock(m);parts.push(`<span class="ls-tag"><span class="dot"></span>LIVE${lc?` ${lc}`:''}</span>`);parts.push(`<span class="ls-live ls-clickable" data-mid="${esc(m.id)}" onclick="openMatchModal(this.dataset.mid)" role="button" tabindex="0" title="Open expanded view">${esc(m.home.code)} ${m.score?.home??0}–${m.score?.away??0} ${esc(m.away.code)}</span>`);if(live.length>1)parts.push(`<span class="ls-next">+${live.length-1} more live</span>`)}else parts.push(`<span class="ls-next">No live matches</span>`);if(next)parts.push(`<span class="ls-next ls-clickable" data-mid="${esc(next.id)}" onclick="openMatchModal(this.dataset.mid)" role="button" tabindex="0" title="Open expanded view">Next · <b>${esc(next.home.code)} v ${esc(next.away.code)}</b> ${kickIn(next.kickoff)}</span>`);else parts.push(`<span class="ls-next">No upcoming fixtures</span>`);parts.push(`<span class="ls-upd">${(()=>{try{const a=(Date.now()-new Date(DATA.updated))/60000;if(a>360)return `<b class="stale">data ${ago(DATA.updated)}</b> · `;}catch(e){}return 'Updated '+ago(DATA.updated)+' · ';})()}${t("analytics only, not betting advice")} · <b style="color:var(--signal)">build 0726A</b></span>`);$('#strip').innerHTML=parts.join('')}
+if(live.length){const m=live[0];const lc=liveClock(m);parts.push(`<span class="ls-tag"><span class="dot"></span>LIVE${lc?` ${lc}`:''}</span>`);parts.push(`<span class="ls-live ls-clickable" data-mid="${esc(m.id)}" onclick="openMatchModal(this.dataset.mid)" role="button" tabindex="0" title="Open expanded view">${esc(m.home.code)} ${m.score?.home??0}–${m.score?.away??0} ${esc(m.away.code)}</span>`);if(live.length>1)parts.push(`<span class="ls-next">+${live.length-1} more live</span>`)}else parts.push(`<span class="ls-next">No live matches</span>`);if(next)parts.push(`<span class="ls-next ls-clickable" data-mid="${esc(next.id)}" onclick="openMatchModal(this.dataset.mid)" role="button" tabindex="0" title="Open expanded view">Next · <b>${esc(next.home.code)} v ${esc(next.away.code)}</b> ${kickIn(next.kickoff)}</span>`);else parts.push(`<span class="ls-next">No upcoming fixtures</span>`);parts.push(`<span class="ls-upd">${(()=>{try{const a=(Date.now()-new Date(DATA.updated))/60000;if(a>360)return `<b class="stale">data ${ago(DATA.updated)}</b> · `;}catch(e){}return 'Updated '+ago(DATA.updated)+' · ';})()}${t("analytics only, not betting advice")} · <b style="color:var(--signal)">build 0727A</b></span>`);$('#strip').innerHTML=parts.join('')}
 /* removed duplicate (diverseNews) */
 /* removed duplicate (renderInsight) */
 function setView(v){VIEW=v;document.querySelectorAll('.navbtn[data-v]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===v));document.querySelectorAll('.view').forEach(el=>el.style.display=el.id==='view-'+v?((v==='matches'||v==='results')?'grid':'block'):'none');renderCurrent();const active=$('#view-'+v);if(active){active.classList.remove('viewEntering');void active.offsetWidth;active.classList.add('viewEntering')}}
@@ -60,6 +60,20 @@ function aggregateScorecards(datasets){
   // never fold unverifiable history into the official graded denominator.
   const provenance={legacy:['legacy','legacy_count','legacy_picks'],quarantined:['quarantined','quarantined_count','quarantined_picks'],late_unverifiable:['late_unverifiable','late_unverifiable_count'],excluded:['excluded','excluded_count']};
   Object.entries(provenance).forEach(([name,keys])=>{let present=false,scalar=0,nested=null;sources.forEach(({sc})=>{for(const key of keys){const v=sc[key]??sc.provenance?.[key];if(v==null)continue;present=true;if(v&&typeof v==='object'&&!Array.isArray(v)){nested=nested||{};['total','graded','pending','model_hits','count'].forEach(k=>{if(v[k]!=null)nested[k]=(Number(nested[k])||0)+(Number(v[k])||0)});if(v.label&&!nested.label)nested.label=v.label}else scalar+=Array.isArray(v)?v.length:(Number(v)||0);break}});if(present){if(nested){nested.total=(Number(nested.total)||0)+scalar;if(nested.graded&&nested.model_hits!=null)nested.accuracy=Number((nested.model_hits/nested.graded*100).toFixed(1));out[name]=nested}else out[name]=scalar}});
+  // The all-time tally has to be rebuilt from the merged per-sport figures,
+  // not summed from each sport's own `combined` block: on the All-sports
+  // board (the default view) this aggregate IS the scorecard, so without
+  // this the "All-time total" card silently disappears on the exact screen
+  // most people land on, which is where it's most worth showing.
+  const legacyGraded=Number(out.legacy?.graded ?? out.quarantined?.graded)||0;
+  const legacyHits=Number(out.legacy?.model_hits ?? out.quarantined?.model_hits)||0;
+  const combinedGraded=(Number(out.graded)||0)+legacyGraded;
+  const combinedHits=(Number(out.model_hits)||0)+legacyHits;
+  out.combined={graded:combinedGraded,model_hits:combinedHits,
+    accuracy:combinedGraded?Number((combinedHits/combinedGraded*100).toFixed(1)):null,
+    verified_graded:Number(out.graded)||0,verified_hits:Number(out.model_hits)||0,
+    legacy_graded:legacyGraded,legacy_hits:legacyHits,
+    note:'Includes legacy/migrated picks without recoverable proof of pregame timing alongside verified pregame-locked picks. See the pick log below for which is which.'};
   return out;
 }
 async function load(manual=false){if(LOAD_TIMER){clearTimeout(LOAD_TIMER);LOAD_TIMER=null}try{
