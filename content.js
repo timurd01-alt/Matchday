@@ -24,7 +24,8 @@
     {id:'learn-basketball',type:'learn',sports:['basketball'],compLabel:'Basketball',title:'Pace, spacing & back-to-backs',summary:'How possessions, fatigue, and bracket context shape the read.',updated:'2026-07-24T12:00:00Z',minutes:7,url:'tactics-basketball.html',topic:'NBA college basketball pace spacing fatigue'},
     {id:'learn-hockey',type:'learn',sports:['hockey'],compLabel:'Hockey',title:'Goalies, parity & special teams',summary:'Why rotation and thin margins make apparent upsets routine.',updated:'2026-07-24T12:00:00Z',minutes:6,url:'tactics-hockey.html',topic:'NHL hockey goalies special teams'},
     {id:'learn-baseball',type:'learn',sports:['baseball'],compLabel:'Baseball',title:'Patience, run differential & the long season',summary:"Why a 162-game season needs patience, run differential over time, and what the model honestly doesn't see.",updated:'2026-07-25T12:00:00Z',minutes:6,url:'tactics-baseball.html',topic:'MLB baseball run differential 162-game season'},
-    {id:'learn-data',type:'learn',sports:['all'],compLabel:'Reference',title:'Data, privacy & limitations',summary:'Where the numbers come from and what Matchday does not claim to know.',updated:'2026-07-24T12:00:00Z',minutes:5,url:'qa.html#data',topic:'data privacy limitations model methodology'}
+    {id:'learn-data',type:'learn',sports:['all'],compLabel:'Reference',title:'Data, privacy & limitations',summary:'Where the numbers come from and what Matchday does not claim to know.',updated:'2026-07-24T12:00:00Z',minutes:5,url:'qa.html#data',topic:'data privacy limitations model methodology'},
+    {id:'learn-upsets',type:'learn',sports:['all'],compLabel:'Explainer',title:'What Upset Radar actually means',summary:'Who defines the underdog, what the model compares against, and why a radar flag is not always the official pick.',updated:'2026-07-27T12:00:00Z',minutes:3,url:'qa.html#upsets',topic:'upset radar underdog betting market official pick edge'}
   ];
 
   let datasets=[];
