@@ -1,5 +1,20 @@
 [
  {
+  "id": "matchday-10-college-football-2026-07-27",
+  "comp": "ncaaf",
+  "comp_label": "College Football · Matchday 10",
+  "type": "ranking",
+  "slug": "matchday-10-college-football-2026-07-27",
+  "title": "Matchday 10: The College Football Opening Board",
+  "date": "2026-07-27",
+  "summary": "A cautious top ten baseline: the current board, opening fixtures, and the uncertainty around both.",
+  "body": [
+   "Matchday's first 2026 College Football Matchday 10 is a baseline, not a week-over-week movers list.",
+   "The current Top 25 supplies the order; scheduled opening fixtures provide the immediate context.",
+   "No opening fixture in the top ten has a market comparison or listed team absence in the current feed."
+  ]
+ },
+ {
   "id": "refining-the-record-2026-07-26",
   "comp": "all",
   "comp_label": "Method & Accountability",

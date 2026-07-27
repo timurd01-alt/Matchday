@@ -129,10 +129,10 @@
     return links.slice(0,4);
   }
 
-  function primaryLabel(item){return item.type==='preview'?'Read preview':item.type==='recap'?'Read recap':'Read explainer'}
+  function primaryLabel(item){return item.badgeType==='ranking'?'Read rankings':item.type==='preview'?'Read preview':item.type==='recap'?'Read recap':'Read explainer'}
 
   function typeBadge(type){
-    const label=type==='preview'?'Preview':type==='recap'?'Recap':'Learn';
+    const label=type==='ranking'?'Rankings':type==='preview'?'Preview':type==='recap'?'Recap':'Learn';
     return `<span class="typeBadge type${label}">${label}</span>`;
   }
 
@@ -172,7 +172,7 @@
     const pick=item.pick?`<div class="storyPick"><span>Model pick</span><b>${escapeHTML(item.pick)}${item.confidence!=null?` ${escapeHTML(item.confidence)}%`:''}</b>${item.type==='recap'?`<i class="${item.hit?'hit':'miss'}">${item.hit?'Correct':'Missed'}</i>`:''}</div>`:'';
     const links=contextLinks(item).map(([label,url])=>`<a href="${escapeHTML(url)}">${escapeHTML(label)}</a>`).join('');
     return `<article class="storyCard story${item.type[0].toUpperCase()+item.type.slice(1)}" data-story-id="${escapeHTML(item.id)}">
-      <div class="storyTop">${typeBadge(item.type)}<span class="storyStatus ${status.className}">${escapeHTML(status.label)}</span></div>
+      <div class="storyTop">${typeBadge(item.badgeType||item.type)}<span class="storyStatus ${status.className}">${escapeHTML(status.label)}</span></div>
       <h3>${escapeHTML(item.title)}</h3>${score}${pick}
       <p>${escapeHTML(item.summary)}</p>
       ${item.takeaway?`<div class="storyTakeaway"><span>Takeaway</span>${escapeHTML(item.takeaway)}</div>`:''}
@@ -242,10 +242,11 @@
   function buildPostItems(){
     return posts.map(post=>{
       const meta=compMeta(post.comp),words=(Array.isArray(post.body)?post.body.join(' '):'').split(/\s+/).filter(Boolean).length;
-      return {id:`post-${post.id||post.slug}`,type:'recap',sports:[meta.sport],comp:meta.key,compLabel:post.comp_label||meta.label,
-        title:post.title||`${meta.label} model recap`,summary:post.summary||'The latest locked-pick model recap.',takeaway:'A weekly review of the calls, misses, and calibration lessons.',
+      const isRanking=post.type==='ranking';
+      return {id:`post-${post.id||post.slug}`,type:'recap',badgeType:isRanking?'ranking':null,sports:[meta.sport],comp:meta.key,compLabel:post.comp_label||meta.label,
+        title:post.title||`${meta.label} model recap`,summary:post.summary||'The latest locked-pick model recap.',takeaway:isRanking?'A current ordering, its opening-fixture context, and the limits of the available evidence.':'A weekly review of the calls, misses, and calibration lessons.',
         updated:`${post.date||''}T12:00:00Z`,dataUpdated:`${post.date||''}T12:00:00Z`,sortTime:timestamp(`${post.date||''}T12:00:00Z`),minutes:Math.max(3,Math.ceil(words/180)),
-        url:`posts/${encodeURIComponent(post.slug||post.id||'')}.html`,resultLabel:'Weekly recap'};
+        url:`posts/${encodeURIComponent(post.slug||post.id||'')}.html`,resultLabel:isRanking?'Ranked list':'Weekly recap'};
     });
   }
 
@@ -262,7 +263,7 @@
     const status=statusMeta(item),links=contextLinks(item).slice(0,3).map(([label,url])=>`<a href="${escapeHTML(url)}">${escapeHTML(label)}</a>`).join('');
     const headline=item.type==='preview'&&item.pick?`The case for ${item.pick}: ${item.home} vs ${item.away}`:item.title;
     host.className=`featured featured${item.type[0].toUpperCase()+item.type.slice(1)}`;
-    host.innerHTML=`<div><div class="featuredLabel">${typeBadge(item.type)}<span class="storyStatus ${status.className}">${escapeHTML(status.label)}</span></div><h3>${escapeHTML(headline)}</h3><p>${escapeHTML(item.takeaway||item.summary)}</p><div class="featuredMeta"><span>${escapeHTML(item.compLabel)}</span><span>${escapeHTML(formattedDate(item.updated,true))}</span><span>${escapeHTML(item.minutes)} min read</span><span>${escapeHTML(timeAgo(item.dataUpdated||item.updated))}</span></div><nav class="featuredLinks" aria-label="Featured story actions">${links}</nav></div><a class="featuredAction" href="${escapeHTML(item.url)}">Read analysis &rarr;</a>`;
+    host.innerHTML=`<div><div class="featuredLabel">${typeBadge(item.badgeType||item.type)}<span class="storyStatus ${status.className}">${escapeHTML(status.label)}</span></div><h3>${escapeHTML(headline)}</h3><p>${escapeHTML(item.takeaway||item.summary)}</p><div class="featuredMeta"><span>${escapeHTML(item.compLabel)}</span><span>${escapeHTML(formattedDate(item.updated,true))}</span><span>${escapeHTML(item.minutes)} min read</span><span>${escapeHTML(timeAgo(item.dataUpdated||item.updated))}</span></div><nav class="featuredLinks" aria-label="Featured story actions">${links}</nav></div><a class="featuredAction" href="${escapeHTML(item.url)}">Read analysis &rarr;</a>`;
   }
 
   function replayMotion(element,className='contentMotion'){
