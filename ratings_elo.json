@@ -7922,8 +7922,8 @@
    "n": 3913
   },
   "baseball:philadelphia phillies": {
-   "r": 1506.5888826035125,
-   "n": 3928
+   "r": 1517.8004417106326,
+   "n": 3929
   },
   "baseball:new york mets": {
    "r": 1457.2707396836092,
@@ -7946,8 +7946,8 @@
    "n": 3862
   },
   "baseball:new york yankees": {
-   "r": 1543.728246728401,
-   "n": 4004
+   "r": 1532.5166876212809,
+   "n": 4005
   },
   "baseball:arizona diamondbacks": {
    "r": 1525.524546772745,
@@ -285869,6 +285869,7 @@
   "MLB:bdl-mlb-5059359": true,
   "MLB:bdl-mlb-5059360": true,
   "MLB:bdl-mlb-5059361": true,
-  "MLB:bdl-mlb-5059362": true
+  "MLB:bdl-mlb-5059362": true,
+  "MLB:bdl-mlb-5059363": true
  }
 }
