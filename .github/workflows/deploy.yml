@@ -154,7 +154,19 @@ jobs:
         run: |
           sed -i "s/__BUILD__/${GITHUB_SHA::8}/g" _site/index.html _site/content.html _site/tactics-*.html
 
-      - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
+      # v3's action.yml internally calls actions/upload-artifact@v4 (an
+      # unpinned tag) to build the artifact -- fine on its own, but the repo's
+      # policy now requires every action pinned to a full SHA and validates
+      # that transitively into composite actions' own internal `uses:`
+      # lines, so v3 fails even though this workflow's own reference to it
+      # WAS pinned (confirmed live: run #213 failed on that inner
+      # actions/upload-artifact@v4, not on this line). v5 pins its internal
+      # call (to actions/upload-artifact@v7.0.0, itself a real SHA) --
+      # verified both SHAs below against their real upstream tags via the
+      # GitHub API. Same path/name/retention-days input contract as v3, plus
+      # one new optional input (include-hidden-files) this workflow doesn't
+      # use.
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5
         with:
           path: _site
 
