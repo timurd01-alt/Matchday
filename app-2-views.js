@@ -306,19 +306,29 @@ if(pr.mkt_pull)chips.push(`<span class="fchip mkt">market ${pr.mkt_pull>0?'+':''
 return chips.length?`<div class="fchips">${chips.join('')}</div>`:'';}
 function scDeepTab(t){window._scTab=t;renderScore();}
 function renderDeepDive(sc){const tab=window._scTab||'overview';
-  const need=(min,label)=>sc.graded<min?`<div class="empty">${label} unlocks after ${min} graded picks. You have ${sc.graded}.</div>`:'';
+  // "You have 0" alone is confusing when the audit cards directly above show
+  // graded legacy picks -- those deliberately never feed calibration/signals,
+  // since a pick with no provable lock time can't evidence forecast accuracy.
+  const need=(min,label)=>{
+    if(sc.graded>=min)return '';
+    const legacy=Number(sc.legacy?.graded ?? sc.quarantined?.graded)||0;
+    const note=legacy?` ${legacy} legacy pick${legacy===1?'':'s'} ${legacy===1?'is':'are'} excluded here: without a provable pregame lock time they can't evidence forecast accuracy.`:'';
+    return `<div class="empty">${label} unlocks after ${min} verified graded picks. You have ${sc.graded}.${note}</div>`;
+  };
   const tabs=['overview','calibration','signals','upsets','errors'];
   let h=`<div class="ddtabs">${tabs.map(x=>`<button class="ddtab ${x===tab?'on':''}" onclick="scDeepTab('${x}')">${x[0].toUpperCase()+x.slice(1)}</button>`).join('')}</div>`;
   if(tab==='overview'){
-    h+=`<div class="status-grid">
-      <div class="statuscard ${sc.model_hits>=(sc.graded-sc.model_hits)?'ok':'info'}"><span class="slbl">Model</span><div class="sval">${sc.model_hits}/${sc.graded}</div><div class="hint">${sc.graded?Math.round(sc.model_hits/sc.graded*100):0}% correct</div></div>
-      <div class="statuscard info"><span class="slbl">Market favourite</span><div class="sval">${sc.market_hits}/${sc.market_graded}</div><div class="hint">the baseline we chase</div></div>
-      <div class="statuscard ${sc.disagree_hits>sc.disagree-sc.disagree_hits?'ok':'info'}"><span class="slbl">When we split</span><div class="sval">${sc.disagree_hits}/${sc.disagree}</div><div class="hint">picks that differed from market</div></div>
-      <div class="statuscard info"><span class="slbl">Brier</span><div class="sval">${sc.brier??'—'}</div><div class="hint">under 0.20 = sharp</div></div></div>`;
+    // Deliberately renders nothing extra: renderScore() draws the full
+    // headline grid (model record, market benchmark, disagreements, pending)
+    // immediately below this, so repeating those four cards here stacked two
+    // near-identical grids on top of each other -- eight cards, three of them
+    // the same metric twice, which read as a broken/duplicated panel rather
+    // than an overview. Overview is simply the default un-filtered view.
+    h+='';
   } else if(tab==='calibration'){
-    h+=need(20,'Calibration')||`<div class="seclbl">When the model says X%, how often does it happen?</div>`+(sc.calibration||[]).map(c=>`<div class="ddrow"><span>${c.band}%</span><div class="ddbarwrap"><div class="ddbar" style="width:${Math.round(c.hits/c.n*100)}%"></div></div><span>${Math.round(c.hits/c.n*100)}% <i class="ssnote">(${c.n})</i></span></div>`).join('');
+    h+=need(20,'Calibration')||`<div class="seclbl">When the model says X%, how often does it happen?</div>`+(sc.calibration||[]).filter(c=>Number(c.n)>0).map(c=>{const pct=Math.round(c.hits/c.n*100);return `<div class="ddrow"><span>${c.band}%</span><div class="ddbarwrap"><div class="ddbar" style="width:${pct}%"></div></div><span>${pct}% <i class="ssnote">(${c.n})</i></span></div>`}).join('');
   } else if(tab==='signals'){
-    h+=need(20,'Signal quality')||`<div class="seclbl">When a factor favoured the pick, did the pick hit?</div>`+Object.entries(sc.signal_quality||{}).filter(([k,v])=>v.n).map(([k,v])=>{const L={class:'Class / ranking',form:'Recent form',gd:'Goal difference',rest:'Rest',pts:'Points',record:'Season record',margin:'Scoring margin',rank:'Poll rank',srs:'Opponent-adjusted rating',elo:'Elo rating'}[k]||k;const pct=Math.round(v.hits/v.n*100);return `<div class="ddrow"><span>${L}</span><div class="ddbarwrap"><div class="ddbar ${pct>=55?'good':pct<45?'bad':''}" style="width:${pct}%"></div></div><span>${v.hits}/${v.n} <i class="ssnote">${pct}%</i></span></div>`;}).join('');
+    h+=need(20,'Signal quality')||`<div class="seclbl">When a factor favoured the pick, did the pick hit?</div>`+Object.entries(sc.signal_quality||{}).filter(([k,v])=>v.n).map(([k,v])=>{const L={class:'Class / ranking',form:'Recent form',gd:'Score difference',rest:'Rest',pts:'Points',record:'Season record',margin:'Scoring margin',rank:'Poll rank',srs:'Opponent-adjusted rating',elo:'Elo rating'}[k]||k;const pct=Math.round(v.hits/v.n*100);return `<div class="ddrow"><span>${L}</span><div class="ddbarwrap"><div class="ddbar ${pct>=55?'good':pct<45?'bad':''}" style="width:${pct}%"></div></div><span>${v.hits}/${v.n} <i class="ssnote">${pct}%</i></span></div>`;}).join('');
   } else if(tab==='upsets'){
     const u=sc.upset||{};h+=`<div class="status-grid">
       <div class="statuscard info"><span class="slbl">Upsets watched</span><div class="sval">${u.watched||0}</div><div class="hint">flagged on the radar</div></div>
