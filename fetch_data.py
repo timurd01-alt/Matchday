@@ -4820,6 +4820,23 @@ def build():
             for team in table.get("teams") or []:
                 if team.get("name"):
                     team["rating"] = round(power_rating(team["name"]), 2)
+        # The BALLDONTLIE-sourced flat tables (MLB/NBA/NFL) aren't real
+        # divisional standings to begin with -- compute_us_sport_standings()
+        # dumps every team into one ungrouped table because the free tier
+        # has no standings endpoint to source real divisions/conferences
+        # from (see its docstring). A plain win% sort on that flat, made-up
+        # grouping reads like an official table it isn't. NCAAF/NCAAM (cfbd/
+        # cbbd) and sportsdataio/apisports DO come from a real standings
+        # endpoint with real conferences, so those keep the actual win-loss
+        # sort real tables use -- only re-sort the ones with no real group.
+        if COMP.get("source") == "balldontlie":
+            for table in sports_tables:
+                if table.get("group"):
+                    continue
+                teams = table.get("teams") or []
+                teams.sort(key=lambda t: -(t.get("rating") or 0))
+                for i, t in enumerate(teams, 1):
+                    t["pos"] = i
 
     # train the self-updating factors (Elo, H2H) on this run's finished
     # results, and derive home/away split form -- all from the same
