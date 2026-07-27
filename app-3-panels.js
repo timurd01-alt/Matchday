@@ -376,8 +376,8 @@ function _v4MarketPct(m,side){
   if(side==='d')return x.draw_pct;
   return null;
 }
-function _v4FactorRows(pr){
-  const labels={class:'team class',pts:'points',gd:scoreDiffLabel(),record:'season record',margin:'scoring margin',rank:'poll rank',srs:'opponent-adjusted rating',form:'form',adv:'home field',rest:'rest',elo:'elo rating',h2h:'head-to-head',injuries:'injuries'};
+function _v4FactorRows(pr,m){
+  const labels={class:'team class',pts:'points',gd:scoreDiffLabel(m),record:'season record',margin:'scoring margin',rank:'poll rank',srs:'opponent-adjusted rating',form:'form',adv:'home field',rest:'rest',elo:'elo rating',h2h:'head-to-head',injuries:'injuries'};
   const rows=[];
   if(pr&&pr.why){
     Object.entries(pr.why).filter(([k,v])=>labels[k]&&Math.abs(Number(v)||0)>=0.3)
@@ -412,7 +412,7 @@ function matchStory(m){const pr=m.prediction;if(!pr)return '';
     lead=`<b>${pickName}</b> is the model's pick${conf?` at ${conf}%`:''}${conf&&conf>=60?' — a confident, clean call with no live upset threat':''}. ${esc(pr.note||'')}.`;
   }
   // why bullets from factor attribution (top 3 by magnitude)
-  const L={pts:'points on the table',gd:scoreDiffLabel(),record:'season record',margin:'per-game scoring margin',rank:'poll rank',srs:'opponent-adjusted rating',elo:'Elo rating',form:'recent form',adv:'home-listing edge',class:'squad class and ranking',rest:'rest advantage'};
+  const L={pts:'points on the table',gd:scoreDiffLabel(m),record:'season record',margin:'per-game scoring margin',rank:'poll rank',srs:'opponent-adjusted rating',elo:'Elo rating',form:'recent form',adv:'home-listing edge',class:'squad class and ranking',rest:'rest advantage'};
   const why=pr.why||{};
   const bullets=Object.entries(why).filter(([k,v])=>Math.abs(v)>=0.4&&L[k]).sort((a,b)=>Math.abs(b[1])-Math.abs(a[1])).slice(0,3)
     .map(([k,v])=>{const who=v>0?esc(m.home.name):esc(m.away.name);return `<li>${who} leads on ${L[k]}</li>`;});
