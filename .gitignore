@@ -4,7 +4,6 @@ config_keys*.py
 data.json
 data_*.json
 odds_open*.json
-picks_log*.json
 title_open*.json
 api_football_box_cache*.json
 *_cache.json
@@ -21,6 +20,13 @@ ratings*.raced-preserved.json
 # standing convention -- don't add other generated files here on this
 # precedent without the same explicit reasoning.
 ratings_h2h.json
+# picks_log*.json is deliberately tracked too (2026-07-27), for the same
+# reason ratings*.json is: it's the pick-lock ledger the entire scorecard's
+# "Locked in public, never rewritten" claim depends on, and living only in
+# the GitHub Actions cache meant a single cache-restore hiccup could reset
+# it to empty with zero trace -- confirmed live the same day this comment
+# was added. Git is now the source of truth; deploy.yml commits it back
+# after every fetch, the same way it already does for ratings.
 .browser-profile/
 __pycache__/
 *.pyc

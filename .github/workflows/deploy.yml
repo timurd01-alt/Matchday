@@ -26,14 +26,13 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Restore fetch state (picks, odds, CI cadence)
+      - name: Restore fetch state (odds, CI cadence)
         uses: actions/cache@v4
         with:
           path: |
             .ci_fetch_state.json
             data.json
             data_*.json
-            picks_log*.json
             odds_open*.json
             title_open*.json
             *_cache.json
@@ -84,7 +83,7 @@ jobs:
       - name: Fetch one adaptive round for all sports
         run: python multi_fetch.py --once
 
-      - name: Commit updated ratings back to the repo
+      - name: Commit updated ratings and picks ledger back to the repo
         # EVERY ratings*.json file (Elo, and every per-competition curated/
         # enriched class-rating file -- ratings.json, ratings_ncaaf.json,
         # ratings_bundesliga.json, etc.) is git-tracked, and all of them used
@@ -98,18 +97,31 @@ jobs:
         # score negative relative to East Carolina's on the live site, even
         # though the underlying provider data was correct. Committing the
         # real per-run result back here, instead of relying on the cache,
-        # makes git the one source of truth for every ratings file. [skip ci]
-        # stops this from re-triggering the workflow via its own
-        # `push: branches: [main]` trigger.
+        # makes git the one source of truth for every ratings file.
+        #
+        # picks_log*.json joined this step 2026-07-27 for the identical
+        # reason: it was cache-only (see .gitignore's prior entry for it) and
+        # a single cache-restore hiccup silently reset the entire pick-lock
+        # ledger to empty with zero error trace -- confirmed live the same
+        # day. The scorecard's whole "verified pregame picks, locked in
+        # public, never rewritten" claim depends on this ledger actually
+        # persisting, so it gets the same durable-source-of-truth treatment.
+        #
+        # These files start untracked the first run after that .gitignore
+        # change, and `git diff` (unlike `git diff --cached`) ignores
+        # untracked files -- so `git add` has to run before the check below,
+        # not be conditioned on it, or that first real commit would be
+        # silently skipped. [skip ci] stops this from re-triggering the
+        # workflow via its own `push: branches: [main]` trigger.
         run: |
-          if ! git diff --quiet -- 'ratings*.json' ':!ratings*.backup.json' ':!ratings*.legacy.json' ':!ratings*.raced-preserved.json'; then
-            git config user.name "matchday-bot"
-            git config user.email "actions@github.com"
-            git add -- 'ratings*.json' ':!ratings*.backup.json' ':!ratings*.legacy.json' ':!ratings*.raced-preserved.json'
-            git commit -m "Update ratings (Elo, class/talent strength) [skip ci]"
+          git config user.name "matchday-bot"
+          git config user.email "actions@github.com"
+          git add -- 'ratings*.json' ':!ratings*.backup.json' ':!ratings*.legacy.json' ':!ratings*.raced-preserved.json' 'picks_log*.json'
+          if ! git diff --cached --quiet; then
+            git commit -m "Update ratings and picks ledger [skip ci]"
             git push
           else
-            echo "no ratings files changed, nothing to commit"
+            echo "no ratings or picks files changed, nothing to commit"
           fi
 
       - name: Assemble public site (curated allowlist only)

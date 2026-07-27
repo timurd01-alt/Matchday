@@ -45,6 +45,20 @@ def _number(value, default=0):
         return default
 
 
+def _ordinal_period(n):
+    """'3rd inning' not '3 0:00' -- BALLDONTLIE's free tier doesn't expose a
+    reliable live clock for these sports, so show the period number in the
+    sport's own vocabulary instead of a clock that can't be trusted."""
+    try:
+        n = int(n)
+    except (TypeError, ValueError):
+        return None
+    if n <= 0:
+        return None
+    suffix = "th" if 10 <= n % 100 <= 20 else {1: "st", 2: "nd", 3: "rd"}.get(n % 10, "th")
+    return f"{n}{suffix}"
+
+
 def normalized_score(home, away, finished=False):
     """Return Matchday's score contract, including a result only when final.
 
@@ -1068,14 +1082,15 @@ class BallDontLieAdapter:
             status = "LIVE"
         else:
             status = "UPCOMING"
+        period_word = {"MLB": "inning", "NBA": "quarter", "NFL": "quarter"}.get(self.competition, "period")
+        period_label = _ordinal_period(row.get("period"))
+        minute = f"{period_label} {period_word}" if status == "LIVE" and period_label else ""
         if self.competition == "MLB":
             home_score = None if not_played else (row.get("home_team_data") or {}).get("runs")
             away_score = None if not_played else (row.get("away_team_data") or {}).get("runs")
-            minute = f"{row.get('period') or ''} {row.get('display_clock') or ''}".strip()
         else:
             home_score = None if not_played else row.get("home_team_score")
             away_score = None if not_played else row.get("visitor_team_score")
-            minute = str(row.get("time") or raw_status or "") if status == "LIVE" else ""
         if self.competition == "NFL" and row.get("week") not in (None, ""):
             stage = f"Week {row['week']}"
         elif row.get("postseason"):

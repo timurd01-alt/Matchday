@@ -129,6 +129,9 @@ function isFavoriteTeam(name){const fav=teamKey(favoriteTeam());return !!fav&&te
 function isFavoriteMatch(m){return !!m&&(isFavoriteTeam(m.home?.name)||isFavoriteTeam(m.away?.name))}
 function favoriteFixtureSort(a,b){return Number(isFavoriteMatch(b))-Number(isFavoriteMatch(a))||fixtureSort(a,b)}
 function favoriteTeamOptions(){const names=new Set();(DATA.matches||[]).forEach(m=>{if(m.home?.name)names.add(m.home.name);if(m.away?.name)names.add(m.away.name)});(DATA.standings||[]).forEach(g=>(g.teams||[]).forEach(team=>{if(team.name)names.add(team.name)}));if(favoriteTeam())names.add(favoriteTeam());return [...names].sort((a,b)=>a.localeCompare(b)).map(name=>`<option value="${esc(name)}" ${name===favoriteTeam()?'selected':''}>${esc(name)}</option>`).join('')}
+function liveClock(m){const v=m?.minute;if(v==null||v==='')return'';return typeof v==='number'||/^\d+$/.test(v)?`${v}'`:String(v)}
+const SCORE_DIFF_TERM={mlb:'run diff',nfl:'point diff',nba:'point diff',ncaaf:'point diff',ncaam:'point diff',nhl:'goal diff'};
+function scoreDiffLabel(m){return SCORE_DIFF_TERM[String(m?._comp||DATA.comp_key||'').toLowerCase()]||'goal diff';}
 function scoreText(m){const done=m.status==='FINISHED'||m.status==='LIVE';if(isStaleUpcoming(m))return'<span class="kick">Past kickoff</span>';return done?`${m.score?.home??'-'}<span class="sep">–</span>${m.score?.away??'-'}${m.score?.pens?`<span class="pensTag">(${m.score.pens.home}-${m.score.pens.away} pens)</span>`:''}`:`<span class="kick">${dt(m.kickoff).split(', ').pop()||'TBD'}</span>`}
 function statNum(v){const m=String(v??'').match(/-?\d+(\.\d+)?/);return m?Number(m[0]):0}
 function pressure(stats,side){if(!stats)return 0;const s=stats[side]||{};return statNum(s.shots_on_target)*4+statNum(s.shots)*1.2+statNum(s.corners)*1.4+statNum(String(s.possession).replace('%',''))*.08-statNum(s.red_cards)*4}
