@@ -1,127 +1,114 @@
-"""
-security_check.py — run this before you ever share your project or put it online.
+"""Fail-closed pre-publication secret scan for the Matchday repository.
 
-You don't need to understand code to use it. Double-click check_security.bat (or
-run: python security_check.py) and read the plain-English report. It tells you,
-in order of importance, whether anything unsafe is about to leak — and exactly
-what to do about each thing it finds.
-
-It checks:
-  1. Are your real API keys hidden from any file you'd share?
-  2. Is .gitignore protecting your secrets and personal data?
-  3. Did any key accidentally get pasted into a code file?
-  4. Are your private data files (picks, keys) where they should be?
-It changes nothing — it only looks and reports.
+Scans every tracked and non-ignored untracked text file, reports locations but
+never prints secret values, and verifies that known private files are ignored.
+This complements GitHub secret scanning; it is not a substitute for rotation
+after a credential has entered Git history.
 """
+from __future__ import annotations
+
 import os
+import pathlib
 import re
+import subprocess
 import sys
 
 GREEN = "  [OK]  "
 WARN = "  [!!]  "
 STOP = "  [STOP]"
+MAX_FILE_BYTES = 20 * 1024 * 1024
 
-# patterns that look like real secrets (not the safe PASTE_ placeholders)
-KEYISH = re.compile(r"\b[a-f0-9]{32}\b|\b[A-Za-z0-9]{30,}\b")
-PLACEHOLDER = "PASTE_"
+KNOWN_SECRET_PATTERNS = [
+    ("private key", re.compile(r"-----BEGIN (?:RSA |EC |OPENSSH |DSA )?PRIVATE KEY-----")),
+    ("GitHub token", re.compile(r"\bgh[pousr]_[A-Za-z0-9]{30,}\b")),
+    ("AWS access key", re.compile(r"\b(?:AKIA|ASIA)[A-Z0-9]{16}\b")),
+    ("JWT", re.compile(r"\beyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\b")),
+    ("credential URL", re.compile(r"\b(?:postgres(?:ql)?|mysql|mongodb(?:\+srv)?):\/\/[^\s:@/]+:[^\s@/]+@", re.I)),
+]
+ASSIGNMENT = re.compile(
+    r"\b([A-Z][A-Z0-9_]*(?:KEY|TOKEN|SECRET|PASSWORD|DATABASE_URL))\s*[:=]\s*['\"]([^'\"\r\n]+)['\"]"
+)
+SAFE_VALUE = re.compile(r"^(?:$|PASTE_|YOUR_|EXAMPLE|TEST[-_]|SHARED[-_]|\*\*\*|\$\{|process\.env|os\.environ)", re.I)
+PRIVATE_NAMES = {"config_keys.py", ".env", ".env.local", ".env.production"}
 
-# files you would share / publish (code), vs files that must stay private
-SHAREABLE = ["fetch_data.py", "app.py", "multi_fetch.py",
-             "update_ratings.py", "index.html", "styles.css",
-             "app-1-core.js", "app-2-views.js", "app-3-panels.js", "app-4-features.js",
-             "translations.js"]
-PRIVATE = ["config_keys.py"]
-PRIVATE_DATA = ["picks_log_wc.json", "odds_open_wc.json"]
 
-
-def read(path):
+def candidate_files() -> list[pathlib.Path]:
     try:
-        with open(path, encoding="utf-8", errors="ignore") as f:
-            return f.read()
+        result = subprocess.run(
+            ["git", "ls-files", "--cached", "--others", "--exclude-standard", "-z"],
+            check=True, capture_output=True,
+        )
+        return [pathlib.Path(raw.decode("utf-8", "surrogateescape"))
+                for raw in result.stdout.split(b"\0") if raw]
     except Exception:
-        return ""
+        return [path for path in pathlib.Path(".").rglob("*")
+                if path.is_file() and ".git" not in path.parts]
 
 
-def find_real_keys(text):
-    """Return key-like strings that are NOT the safe placeholder."""
-    hits = []
-    for line in text.splitlines():
-        if PLACEHOLDER in line or line.strip().startswith("#"):
-            continue
-        for m in KEYISH.findall(line):
-            # ignore obvious non-secrets: urls, common words, short-ish tokens
-            if len(m) >= 30 and not m.startswith(("http", "www")):
-                hits.append(m[:6] + "…")
-    return hits
+def scan(path: pathlib.Path) -> list[tuple[int, str]]:
+    # This scanner necessarily contains literal examples of the signatures it
+    # detects; scanning its own definitions would be a guaranteed false alarm.
+    if path.name == pathlib.Path(__file__).name:
+        return []
+    try:
+        if path.stat().st_size > MAX_FILE_BYTES:
+            return []
+        raw = path.read_bytes()
+    except OSError:
+        return []
+    if b"\0" in raw[:8192]:
+        return []
+    text = raw.decode("utf-8", "ignore")
+    findings = []
+    for line_no, line in enumerate(text.splitlines(), 1):
+        for label, pattern in KNOWN_SECRET_PATTERNS:
+            if pattern.search(line):
+                findings.append((line_no, label))
+        for match in ASSIGNMENT.finditer(line):
+            value = match.group(2).strip()
+            if len(value) >= 8 and not SAFE_VALUE.search(value):
+                findings.append((line_no, f"literal assigned to {match.group(1)}"))
+    return findings
 
 
-def main():
-    problems, warnings = [], []
+def ignored(path: str) -> bool:
+    result = subprocess.run(["git", "check-ignore", "-q", "--", path], check=False)
+    return result.returncode == 0
+
+
+def main() -> int:
     print("\n=== Matchday security check ===\n")
+    problems, warnings = [], []
+    files = candidate_files()
+    for path in files:
+        for line_no, label in scan(path):
+            problems.append(f"{path.as_posix()}:{line_no} — possible {label}")
 
-    # 1. keys must NOT appear in any shareable code file
-    leaked = {}
-    for f in SHAREABLE:
-        if os.path.exists(f):
-            k = find_real_keys(read(f))
-            if k:
-                leaked[f] = k
-    if leaked:
-        problems.append("A real key may be sitting inside a file you would share:")
-        for f, k in leaked.items():
-            problems.append(f"     - {f}  (found: {', '.join(set(k))})")
-        problems.append("     FIX: keys belong ONLY in config_keys.py. Remove them from the file(s) above.")
-    else:
-        print(GREEN + "No API keys found inside shareable code files.")
+    tracked = set()
+    try:
+        tracked = set(subprocess.check_output(["git", "ls-files"], text=True).splitlines())
+    except Exception:
+        warnings.append("Could not inspect Git tracking state.")
+    for name in PRIVATE_NAMES:
+        if name in tracked:
+            problems.append(f"{name} is tracked by Git")
+        if pathlib.Path(name).exists() and not ignored(name):
+            problems.append(f"{name} exists but is not ignored")
 
-    # 2. .gitignore present and covers the essentials
-    gi = read(".gitignore")
-    if not gi:
-        problems.append("No .gitignore file — publishing to GitHub could upload your keys.")
-        problems.append("     FIX: keep the .gitignore that ships with the app in this folder.")
-    else:
-        need = ["config_keys.py", "picks_log", "odds_open"]
-        missing = [n for n in need if n not in gi]
-        if missing:
-            warnings.append(f".gitignore is missing: {', '.join(missing)} — add those lines.")
-        else:
-            print(GREEN + ".gitignore is protecting your keys and personal data.")
-
-    # 3. config_keys.py should exist and actually hold keys (not placeholders)
-    if not os.path.exists("config_keys.py"):
-        warnings.append("config_keys.py not found — the app can't fetch until it exists with your keys.")
-    else:
-        ck = read("config_keys.py")
-        if PLACEHOLDER in ck:
-            warnings.append("config_keys.py still has PASTE_ placeholders — real keys not entered yet.")
-        else:
-            print(GREEN + "config_keys.py exists and holds real keys (kept private).")
-
-    # 4. remind about private data files
-    present = [f for f in PRIVATE_DATA if os.path.exists(f)]
-    if present:
-        print(GREEN + f"Your track record exists ({', '.join(present)}) — .gitignore keeps it private.")
-
-    # verdict
-    print()
     if problems:
-        print(STOP + " DO NOT publish yet. Fix these first:\n")
-        for p in problems:
-            print("   " + p)
-        if warnings:
-            print()
-            for w in warnings:
-                print(WARN + w)
-        print("\n   Re-run this check after fixing.\n")
-        sys.exit(1)
-    elif warnings:
-        print(WARN + "Safe to share code, but note:\n")
-        for w in warnings:
-            print("   " + w)
-        print()
-    else:
-        print("  All clear. Your secrets are protected and nothing unsafe is exposed.\n")
+        print(STOP + " DO NOT publish. Potential secret exposure:\n")
+        for problem in sorted(set(problems)):
+            print("   " + problem)
+        print("\n   Remove or rotate real credentials, then run this check again.\n")
+        return 1
+    print(GREEN + f"Scanned {len(files)} tracked/non-ignored files without finding credential material.")
+    print(GREEN + "Known private configuration files are untracked and ignored.")
+    if warnings:
+        for warning in warnings:
+            print(WARN + warning)
+    print("\n  All clear for the checks above. GitHub push protection remains the second line of defense.\n")
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

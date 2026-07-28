@@ -17,10 +17,13 @@ Run it every single time before publishing. It changes nothing — it only check
 ## What's already protected for you
 - **Your keys** live only in `config_keys.py`. Every file the app packages up for
   sharing leaves that file out.
-- **`.gitignore`** stops your keys, your pick history, and your odds logs from ever
-  being uploaded if you put the project on GitHub.
-- **The code masks keys** in any error messages, so a screenshot of an error can't
-  leak them.
+- **`.gitignore`** stops credentials, private odds snapshots, and provider caches
+  from being uploaded. The public model pick ledger is intentionally versioned
+  and contains no community device identifiers.
+- **The code masks every configured provider key** in diagnostics, including
+  credentials carried in provider URLs.
+- **The public leaderboard never trusts browser-supplied totals.** Picks are
+  locked by the server before kickoff and graded there from published finals.
 
 ## The three real risks, ranked
 1. **A key leaking.** Handled: keys stay in `config_keys.py`; the security check
@@ -28,14 +31,14 @@ Run it every single time before publishing. It changes nothing — it only check
    as compromised and regenerate it (see ROTATE_KEYS.md — takes 10 minutes).
 2. **Publishing secrets by accident.** Handled by `.gitignore` + the security check.
    Just run the check before publishing.
-3. **The online leaderboard being abused (only once you deploy it).** The server
-   code already has guards (rejects fake records, limits how often anyone can post,
-   hides tiny samples). Nothing to do until you deploy Tier 2.
+3. **The online leaderboard being abused.** The server locks individual picks,
+   derives totals itself, validates identifiers and request sizes, and applies a
+   PostgreSQL-backed limit shared across serverless instances.
 
 ## What you do NOT need to worry about right now
-- Hackers breaking into the app: it runs only on your computer; there's no public
-  door to break into yet.
-- Passwords/user data: the app has no logins and stores no one else's data.
+- Password storage: Matchday has no user accounts or passwords.
+- Raw device identifiers appearing on the public board: only assigned handles
+  and derived records are returned.
 - Viruses in the app: it's your own code plus public sports data.
 
 ## If something ever feels wrong

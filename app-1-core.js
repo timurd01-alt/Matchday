@@ -997,11 +997,11 @@ function ensureHandle(){
     if(!myHandle()||!assigned)assignHandle(); // first-time visitor, or force-migrates an old free-text handle
   }catch(e){}
 }
-async function pushScore(){ // called after grading; no-op until URL set + handle chosen
-  if(!LEADERBOARD_URL||!myHandle())return;
-  const s=btmStats(btmLoad());
-  try{await fetch(LEADERBOARD_URL+'?action=score',{method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({deviceId:deviceId(),handle:myHandle(),hits:s.you,graded:s.n,streak:s.streak})});}catch(e){}
+async function pushScore(){ // server grades only picks it locked before kickoff
+  if(!LEADERBOARD_URL)return;
+  try{const r=await fetch(LEADERBOARD_URL+'?action=sync',{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({deviceId:deviceId()})});const d=await r.json();
+    if(d.ok&&d.handle){localStorage.setItem('matchday.handle',d.handle);localStorage.setItem('matchday.handleAssigned','1')}}catch(e){}
 }
 async function fetchLeaderboard(period){
   if(!LEADERBOARD_URL)return null;
@@ -1016,7 +1016,13 @@ function btmScoped(db){const scope=communityScope();if(scope==='ALL')return db;
   const picks={};Object.entries(db.picks||{}).forEach(([id,p])=>{if(String(p.comp||'WC').toUpperCase()===scope)picks[id]=p;});
   return {...db,picks};}
 function isCommunityPickOpen(m){const kickoff=kickMs(m);return m?.status==='UPCOMING'&&kickoff> Date.now()&&!isStaleUpcoming(m)}
-function submitPick(matchId,pick){ // <-- Tier 2: also POST to server here
+async function lockGlobalPick(matchId,pick,comp){
+  if(!LEADERBOARD_URL)return;
+  try{const r=await fetch(LEADERBOARD_URL+'?action=pick',{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({deviceId:deviceId(),matchId:String(matchId),pick,comp:String(comp||'').toLowerCase()})});
+    const d=await r.json();if(d.ok&&d.handle){localStorage.setItem('matchday.handle',d.handle);localStorage.setItem('matchday.handleAssigned','1')}}catch(e){}
+}
+function submitPick(matchId,pick){
   ensureHandle();
   const db=btmLoad();db.picks=db.picks||{};
   if(db.picks[matchId])return false; // one locked pick per match, like the model
@@ -1030,5 +1036,5 @@ function submitPick(matchId,pick){ // <-- Tier 2: also POST to server here
     comp:m._comp||DATA.comp_key||'',
     modelPick:official.side||null,
     marketPick:(()=>{const x=(m.markets||{})['1x2'];if(!x||x.home_pct==null)return null;const tr={h:x.home_pct,d:x.draw_pct,a:x.away_pct};return Object.keys(tr).reduce((a,b)=>tr[b]>tr[a]?b:a)})()};
-  btmSave(db);renderCommunity();pushScore();return true;
+  btmSave(db);renderCommunity();lockGlobalPick(matchId,pick,db.picks[matchId].comp);return true;
 }

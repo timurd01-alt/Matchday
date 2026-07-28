@@ -1,6 +1,9 @@
 """
-Matchday Leaderboard — tiny always-on app (Path B: simpler, small monthly cost)
-Single-file Flask app + SQLite. Run anywhere that hosts a Python process.
+Legacy Matchday leaderboard reader.
+
+The old SQLite write endpoint trusted browser-supplied totals and is permanently
+disabled. Production writes must use api/leaderboard.js, which locks individual
+picks before kickoff and grades them server-side.
 
 Deploy:
   pip install flask
@@ -8,15 +11,14 @@ Deploy:
   (on a host: run behind gunicorn, set PORT env)
 
 Endpoints:
-  POST /score        {deviceId, handle, hits, graded, streak}
+  POST /score        disabled (HTTP 410)
   GET  /leaderboard  -> {ok, board:[{handle,hits,graded,streak}]}
 """
-import os, re, time, sqlite3, json
+import os, sqlite3
 from flask import Flask, request, jsonify
 
 APP = Flask(__name__)
 DB = os.environ.get("MATCHDAY_DB", "leaderboard.db")
-_RATE = {}
 
 def db():
     c = sqlite3.connect(DB)
@@ -24,8 +26,6 @@ def db():
         device_id TEXT PRIMARY KEY, handle TEXT NOT NULL,
         hits INT, graded INT, streak INT, updated INT)""")
     return c
-
-def bad(s): return bool(re.search(r"[<>{}$]", s or ""))
 
 @APP.after_request
 def cors(r):
@@ -47,28 +47,7 @@ def leaderboard():
 @APP.route("/score", methods=["POST","OPTIONS"])
 def score():
     if request.method == "OPTIONS": return ("", 200)
-    b = request.get_json(force=True, silent=True) or {}
-    did, handle = b.get("deviceId"), b.get("handle")
-    if not did or not handle: return jsonify(ok=False, error="missing id/handle"), 400
-    if bad(handle) or len(handle) > 24: return jsonify(ok=False, error="bad handle"), 400
-    try: H,G,S = int(b["hits"]), int(b["graded"]), int(b["streak"])
-    except Exception: return jsonify(ok=False, error="bad numbers"), 400
-    # GUARDRAIL 1: sanity
-    if min(H,G,S) < 0 or H > G or S > G or G > 5000:
-        return jsonify(ok=False, error="impossible record"), 400
-    # GUARDRAIL 2: rate limit
-    now, last = time.time(), _RATE.get(did, 0)
-    if now - last < 60: return jsonify(ok=False, error="slow down"), 429
-    _RATE[did] = now
-    c = db()
-    prev = c.execute("SELECT graded FROM scores WHERE device_id=?", (did,)).fetchone()
-    if prev and G - prev[0] > 50:
-        c.close(); return jsonify(ok=False, error="graded jump too large"), 400
-    c.execute("INSERT INTO scores VALUES(?,?,?,?,?,?) "
-              "ON CONFLICT(device_id) DO UPDATE SET handle=?,hits=?,graded=?,streak=?,updated=?",
-              (did, handle[:24], H, G, S, int(now), handle[:24], H, G, S, int(now)))
-    c.commit(); c.close()
-    return jsonify(ok=True)
+    return jsonify(ok=False, error="legacy writes disabled; use the verified API"), 410
 
 if __name__ == "__main__":
     APP.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))

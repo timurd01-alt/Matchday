@@ -1,151 +1,226 @@
-// Matchday Leaderboard — serverless function (Vercel + hosted Postgres)
-// Deployed as /api/leaderboard via Vercel's zero-config /api convention.
-// Two routes on one function via ?action=  (score | leaderboard)
+// Matchday verified leaderboard (Vercel + PostgreSQL).
 //
-// ENV you set in the Vercel dashboard:
-//   DATABASE_URL   — your hosted Postgres connection string (use the
-//                    POOLED one — serverless functions open many short-lived
-//                    connections and a free-tier Postgres has a low direct
-//                    connection cap)
-//
-// Table (run once in your DB console):
-//   CREATE TABLE scores(
-//     device_id TEXT PRIMARY KEY,
-//     handle    TEXT NOT NULL,
-//     hits      INT  NOT NULL,
-//     graded    INT  NOT NULL,
-//     streak    INT  NOT NULL,
-//     updated   BIGINT NOT NULL
-//   );
-//
-// One-time migration for periodic (weekly/monthly) leaderboards — safe to
-// run even with existing rows, all new columns default to 0:
-//   ALTER TABLE scores
-//     ADD COLUMN week_start BIGINT NOT NULL DEFAULT 0,
-//     ADD COLUMN week_base_hits INT NOT NULL DEFAULT 0,
-//     ADD COLUMN week_base_graded INT NOT NULL DEFAULT 0,
-//     ADD COLUMN month_start BIGINT NOT NULL DEFAULT 0,
-//     ADD COLUMN month_base_hits INT NOT NULL DEFAULT 0,
-//     ADD COLUMN month_base_graded INT NOT NULL DEFAULT 0;
+// The browser may request a pick lock, but it never supplies authoritative
+// totals. Picks are accepted only while the published fixture is UPCOMING and
+// before kickoff; results are later read from Matchday's public generated data
+// and totals are derived from those server-held rows.
 
+import crypto from "node:crypto";
 import { Client } from "pg";
 
-const RATE = new Map(); // in-memory rate limiter (per warm instance)
+const PUBLIC_DATA_ORIGIN = process.env.PUBLIC_DATA_ORIGIN || "https://matchday-lake-omega.vercel.app";
+const ALLOWED_COMPS = new Set([
+  "wc", "ucl", "epl", "laliga", "seriea", "bundesliga", "ligue1",
+  "nfl", "ncaaf", "ncaam", "nba", "mlb", "nhl",
+]);
+const SAFE_ORIGINS = new Set([
+  PUBLIC_DATA_ORIGIN,
+  ...(process.env.ALLOWED_ORIGINS || "").split(",").map(v => v.trim()).filter(Boolean),
+]);
+const HANDLE_POOL = [
+  "Patrick Mahomes", "Josh Allen", "Nikola Jokic", "A'ja Wilson",
+  "Shohei Ohtani", "Aaron Judge", "Connor McDavid", "Alex Morgan",
+  "Marta", "Lionel Messi", "Kylian Mbappe", "Jude Bellingham",
+];
+const DEVICE_RE = /^mdx-[a-z0-9]{12,60}$/;
+const MATCH_RE = /^[A-Za-z0-9:_-]{1,100}$/;
+let schemaPromise;
 
-function badWord(s){ return /[<>{}$]/.test(s || ""); } // crude injection/junk guard
-
-// Synchronized period boundaries (same instant for every user, so "this
-// week" resets together instead of on a per-user rolling clock). Week =
-// 7-day chunks since epoch; month = 30-day chunks (approximate, not
-// calendar months, but simple and good enough for a casual leaderboard).
-function periodStart(days){
-  const ms = days * 86400000;
-  return Math.floor(Date.now() / ms) * ms;
-}
-
-export default async function handler(req, res){
-  // CORS so the app (any origin) can call it
-  res.setHeader("Access-Control-Allow-Origin", "*");
+function setHeaders(req, res) {
+  const origin = String(req.headers.origin || "");
+  if (SAFE_ORIGINS.has(origin) || /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+    res.setHeader("Vary", "Origin");
+  }
   res.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  if (req.method === "OPTIONS") return res.status(200).end();
+  res.setHeader("Cache-Control", "no-store");
+  res.setHeader("Content-Security-Policy", "default-src 'none'; frame-ancestors 'none'");
+  res.setHeader("X-Content-Type-Options", "nosniff");
+  res.setHeader("X-Frame-Options", "DENY");
+  res.setHeader("Referrer-Policy", "no-referrer");
+}
+
+function requestIp(req) {
+  return String(req.headers["x-forwarded-for"] || req.socket?.remoteAddress || "unknown")
+    .split(",")[0].trim().slice(0, 64);
+}
+
+function opaqueKey(value) {
+  const secret = process.env.RATE_LIMIT_SECRET || process.env.DATABASE_URL || "matchday";
+  return crypto.createHmac("sha256", secret).update(value).digest("hex");
+}
+
+function serverHandle(deviceId) {
+  const digest = crypto.createHash("sha256").update(`handle:${deviceId}`).digest();
+  const name = HANDLE_POOL[digest[0] % HANDLE_POOL.length];
+  const tag = 1000 + (digest.readUInt16BE(1) % 9000);
+  return `${name} #${tag}`;
+}
+
+async function ensureSchema(db) {
+  if (!schemaPromise) {
+    schemaPromise = (async () => {
+      await db.query(`CREATE TABLE IF NOT EXISTS verified_picks(
+        device_id VARCHAR(64) NOT NULL,
+        comp VARCHAR(16) NOT NULL,
+        match_id VARCHAR(100) NOT NULL,
+        handle VARCHAR(64) NOT NULL,
+        pick CHAR(1) NOT NULL,
+        kickoff BIGINT NOT NULL,
+        result CHAR(1),
+        created_at BIGINT NOT NULL,
+        graded_at BIGINT,
+        PRIMARY KEY(device_id, comp, match_id)
+      )`);
+      await db.query(`CREATE TABLE IF NOT EXISTS rate_limits(
+        bucket_key VARCHAR(80) PRIMARY KEY,
+        bucket_start BIGINT NOT NULL,
+        request_count INT NOT NULL
+      )`);
+      await db.query("CREATE INDEX IF NOT EXISTS verified_picks_graded_idx ON verified_picks(graded_at)");
+    })().catch(error => { schemaPromise = null; throw error; });
+  }
+  return schemaPromise;
+}
+
+async function consumeLimit(db, key, windowMs, limit) {
+  const start = Math.floor(Date.now() / windowMs) * windowMs;
+  const row = await db.query(
+    `INSERT INTO rate_limits(bucket_key,bucket_start,request_count) VALUES($1,$2,1)
+     ON CONFLICT(bucket_key) DO UPDATE SET
+       bucket_start=EXCLUDED.bucket_start,
+       request_count=CASE WHEN rate_limits.bucket_start=EXCLUDED.bucket_start
+                          THEN rate_limits.request_count+1 ELSE 1 END
+     RETURNING request_count`,
+    [key, start]
+  );
+  return Number(row.rows[0]?.request_count || 0) <= limit;
+}
+
+async function loadCompetition(comp) {
+  if (!ALLOWED_COMPS.has(comp)) return null;
+  const response = await fetch(`${PUBLIC_DATA_ORIGIN}/data_${comp}.json`, {
+    headers: { Accept: "application/json" }, redirect: "error",
+  });
+  if (!response.ok) return null;
+  return response.json();
+}
+
+function findMatch(data, matchId) {
+  return (data?.matches || []).find(match => String(match.id) === matchId) || null;
+}
+
+async function lockPick(db, body) {
+  const deviceId = String(body?.deviceId || "");
+  const comp = String(body?.comp || "").toLowerCase();
+  const matchId = String(body?.matchId || "");
+  const pick = String(body?.pick || "").toLowerCase();
+  if (!DEVICE_RE.test(deviceId) || !ALLOWED_COMPS.has(comp) || !MATCH_RE.test(matchId) || !["h", "d", "a"].includes(pick)) {
+    return { status: 400, payload: { ok: false, error: "invalid pick" } };
+  }
+  const data = await loadCompetition(comp);
+  const match = findMatch(data, matchId);
+  const kickoff = Date.parse(match?.kickoff || "");
+  if (!match || match.status !== "UPCOMING" || !Number.isFinite(kickoff) || kickoff <= Date.now() + 30000) {
+    return { status: 409, payload: { ok: false, error: "pick window closed" } };
+  }
+  const handle = serverHandle(deviceId);
+  await db.query(
+    `INSERT INTO verified_picks(device_id,comp,match_id,handle,pick,kickoff,created_at)
+     VALUES($1,$2,$3,$4,$5,$6,$7) ON CONFLICT(device_id,comp,match_id) DO NOTHING`,
+    [deviceId, comp, matchId, handle, pick, kickoff, Date.now()]
+  );
+  return { status: 200, payload: { ok: true, handle } };
+}
+
+async function syncDevice(db, deviceId) {
+  if (!DEVICE_RE.test(deviceId)) return { status: 400, payload: { ok: false, error: "invalid device" } };
+  const pending = await db.query(
+    "SELECT comp,match_id FROM verified_picks WHERE device_id=$1 AND result IS NULL LIMIT 500",
+    [deviceId]
+  );
+  const datasets = new Map();
+  for (const comp of new Set(pending.rows.map(row => row.comp))) datasets.set(comp, await loadCompetition(comp));
+  for (const row of pending.rows) {
+    const match = findMatch(datasets.get(row.comp), row.match_id);
+    const result = match?.status === "FINISHED" ? String(match.score?.winner || "") : "";
+    if (["h", "d", "a"].includes(result)) {
+      await db.query(
+        "UPDATE verified_picks SET result=$1,graded_at=$2 WHERE device_id=$3 AND comp=$4 AND match_id=$5 AND result IS NULL",
+        [result, Date.now(), deviceId, row.comp, row.match_id]
+      );
+    }
+  }
+  const stats = await db.query(
+    `SELECT COUNT(*) FILTER (WHERE result IS NOT NULL)::int AS graded,
+            COUNT(*) FILTER (WHERE result=pick)::int AS hits
+     FROM verified_picks WHERE device_id=$1`,
+    [deviceId]
+  );
+  return { status: 200, payload: { ok: true, handle: serverHandle(deviceId), ...stats.rows[0] } };
+}
+
+async function leaderboard(db, period) {
+  const allowedPeriod = ["all", "week", "month"].includes(period) ? period : "all";
+  const since = allowedPeriod === "week" ? Date.now() - 7 * 86400000
+    : allowedPeriod === "month" ? Date.now() - 30 * 86400000 : 0;
+  const minimum = allowedPeriod === "all" ? 10 : 3;
+  const rows = await db.query(
+    `SELECT MAX(handle) AS handle,
+            COUNT(*)::int AS graded,
+            COUNT(*) FILTER (WHERE result=pick)::int AS hits
+     FROM verified_picks
+     WHERE result IS NOT NULL AND graded_at >= $1
+     GROUP BY device_id
+     HAVING COUNT(*) >= $2
+     ORDER BY (COUNT(*) FILTER (WHERE result=pick))::float / COUNT(*) DESC, COUNT(*) DESC
+     LIMIT 100`,
+    [since, minimum]
+  );
+  return { ok: true, board: rows.rows.map(row => ({ ...row, streak: 0 })), period: allowedPeriod };
+}
+
+export default async function handler(req, res) {
+  setHeaders(req, res);
+  if (req.method === "OPTIONS") return res.status(204).end();
+  if (!["GET", "POST"].includes(req.method)) return res.status(405).json({ ok: false, error: "method not allowed" });
+  if (Number(req.headers["content-length"] || 0) > 4096) return res.status(413).json({ ok: false, error: "request too large" });
+  if (req.method === "POST" && !String(req.headers["content-type"] || "").toLowerCase().startsWith("application/json")) {
+    return res.status(415).json({ ok: false, error: "JSON required" });
+  }
 
   const db = new Client({ connectionString: process.env.DATABASE_URL });
-  await db.connect();
   try {
-    const action = (req.query.action || "").toString();
-
-    if (action === "leaderboard") {
-      const period = (req.query.period || "all").toString();
-      if (period === "week" || period === "month") {
-        const start = periodStart(period === "week" ? 7 : 30);
-        const baseHits = period === "week" ? "week_base_hits" : "month_base_hits";
-        const baseGraded = period === "week" ? "week_base_graded" : "month_base_graded";
-        const startCol = period === "week" ? "week_start" : "month_start";
-        // GUARDRAIL 3 (period-scoped): a smaller in-period minimum than the
-        // all-time gate, since a single week has far fewer graded picks
-        // to draw from than a full history.
-        const r = await db.query(
-          `SELECT handle, (hits - ${baseHits}) AS hits, (graded - ${baseGraded}) AS graded, streak ` +
-          `FROM scores WHERE ${startCol} = $1 AND (graded - ${baseGraded}) >= 3 ` +
-          `ORDER BY ((hits - ${baseHits})::float / NULLIF(graded - ${baseGraded}, 0)) DESC, (graded - ${baseGraded}) DESC LIMIT 100`,
-          [start]
-        );
-        return res.status(200).json({ ok: true, board: r.rows, period });
-      }
-      // GUARDRAIL 3 (all-time): minimum sample to appear
-      const r = await db.query(
-        "SELECT handle, hits, graded, streak FROM scores WHERE graded >= 10 " +
-        "ORDER BY (hits::float / NULLIF(graded,0)) DESC, graded DESC LIMIT 100"
-      );
-      return res.status(200).json({ ok: true, board: r.rows, period: "all" });
+    await db.connect();
+    await ensureSchema(db);
+    const ipKey = `ip:${opaqueKey(requestIp(req))}`;
+    if (!await consumeLimit(db, ipKey, 60000, req.method === "GET" ? 120 : 30)) {
+      return res.status(429).json({ ok: false, error: "slow down" });
     }
-
-    if (action === "score" && req.method === "POST") {
-      const b = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
-      const { deviceId, handle, hits, graded, streak } = b || {};
-
-      // basic validation
-      if (!deviceId || !handle) return res.status(400).json({ ok:false, error:"missing id/handle" });
-      if (badWord(handle) || handle.length > 24) return res.status(400).json({ ok:false, error:"bad handle" });
-      const H = parseInt(hits,10), G = parseInt(graded,10), S = parseInt(streak,10);
-
-      // GUARDRAIL 1: server-side sanity — reject the physically impossible
-      if ([H,G,S].some(n => Number.isNaN(n) || n < 0)) return res.status(400).json({ ok:false, error:"bad numbers" });
-      if (H > G) return res.status(400).json({ ok:false, error:"hits>graded" });
-      if (S > G) return res.status(400).json({ ok:false, error:"streak>graded" });
-      if (G > 5000) return res.status(400).json({ ok:false, error:"implausible volume" });
-
-      // GUARDRAIL 2: rate limit per device (one post / 60s per warm instance)
-      const now = Date.now(), last = RATE.get(deviceId) || 0;
-      if (now - last < 60000) return res.status(429).json({ ok:false, error:"slow down" });
-      RATE.set(deviceId, now);
-
-      const prev = await db.query(
-        "SELECT graded, week_start, week_base_hits, week_base_graded, " +
-        "month_start, month_base_hits, month_base_graded FROM scores WHERE device_id=$1",
-        [deviceId]
-      );
-      const row = prev.rows[0];
-
-      // reject graded jumping by an implausible amount vs stored value
-      if (row && G - row.graded > 50)
-        return res.status(400).json({ ok:false, error:"graded jump too large" });
-
-      // Roll the period baseline forward whenever the synchronized boundary
-      // has moved on since this device's last write -- snapshot the
-      // CURRENT cumulative hits/graded as the new "zero point", so
-      // (hits - base) reads 0 right at the reset and grows through the
-      // period from there. A brand-new device gets a fresh baseline too.
-      // NOTE: pg returns BIGINT columns as strings, not numbers -- must
-      // convert before comparing, or this "===" never matches and the
-      // baseline resets on every single write.
-      const curWeek = periodStart(7), curMonth = periodStart(30);
-      const rowWeekStart = row ? Number(row.week_start) : null;
-      const rowMonthStart = row ? Number(row.month_start) : null;
-      const weekStart = rowWeekStart === curWeek ? rowWeekStart : curWeek;
-      const weekBaseHits = rowWeekStart === curWeek ? row.week_base_hits : H;
-      const weekBaseGraded = rowWeekStart === curWeek ? row.week_base_graded : G;
-      const monthStart = rowMonthStart === curMonth ? rowMonthStart : curMonth;
-      const monthBaseHits = rowMonthStart === curMonth ? row.month_base_hits : H;
-      const monthBaseGraded = rowMonthStart === curMonth ? row.month_base_graded : G;
-
-      await db.query(
-        "INSERT INTO scores(device_id,handle,hits,graded,streak,updated," +
-        "week_start,week_base_hits,week_base_graded,month_start,month_base_hits,month_base_graded) " +
-        "VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12) " +
-        "ON CONFLICT(device_id) DO UPDATE SET handle=$2,hits=$3,graded=$4,streak=$5,updated=$6," +
-        "week_start=$7,week_base_hits=$8,week_base_graded=$9,month_start=$10,month_base_hits=$11,month_base_graded=$12",
-        [deviceId, handle.slice(0,24), H, G, S, now,
-         weekStart, weekBaseHits, weekBaseGraded, monthStart, monthBaseHits, monthBaseGraded]
-      );
-      return res.status(200).json({ ok: true });
+    if (!await consumeLimit(db, `${ipKey}:day`, 86400000, req.method === "GET" ? 5000 : 500)) {
+      return res.status(429).json({ ok: false, error: "daily limit reached" });
     }
-
-    return res.status(404).json({ ok:false, error:"unknown action" });
-  } catch (e) {
-    return res.status(500).json({ ok:false, error:String(e).slice(0,120) });
+    const action = String(req.query.action || "");
+    if (action === "leaderboard" && req.method === "GET") {
+      return res.status(200).json(await leaderboard(db, String(req.query.period || "all")));
+    }
+    const body = typeof req.body === "string" ? JSON.parse(req.body) : (req.body || {});
+    const deviceId = String(body.deviceId || "");
+    if (DEVICE_RE.test(deviceId) && !await consumeLimit(db, `device:${opaqueKey(deviceId)}`, 60000, 10)) {
+      return res.status(429).json({ ok: false, error: "slow down" });
+    }
+    if (DEVICE_RE.test(deviceId) && !await consumeLimit(db, `device:${opaqueKey(deviceId)}:day`, 86400000, 100)) {
+      return res.status(429).json({ ok: false, error: "daily limit reached" });
+    }
+    const result = action === "pick" && req.method === "POST" ? await lockPick(db, body)
+      : action === "sync" && req.method === "POST" ? await syncDevice(db, deviceId)
+      : { status: 404, payload: { ok: false, error: "unknown action" } };
+    return res.status(result.status).json(result.payload);
+  } catch (error) {
+    console.error("leaderboard request failed", error);
+    return res.status(500).json({ ok: false, error: "service unavailable" });
   } finally {
-    await db.end();
+    try { await db.end(); } catch (_) {}
   }
 }

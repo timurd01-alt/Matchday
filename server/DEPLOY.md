@@ -20,11 +20,11 @@ zero-config convention for serverless functions)
    connection string, not a direct one — serverless functions open many
    short-lived connections and a free-tier Postgres has a low direct
    connection cap.
-2. In that database's SQL console, run the `CREATE TABLE` block from the
-   top of `api/leaderboard.js`.
-3. Import this GitHub repo as a new Vercel project. No `vercel.json` is
-   needed — Vercel auto-detects any file under `/api` as a serverless
-   function with zero config; the rest of the (Python/static-site) repo is
+2. No manual schema migration is required. The verified-pick and durable
+   rate-limit tables are created idempotently by `api/leaderboard.js`.
+3. Import this GitHub repo as a new Vercel project. `vercel.json` supplies
+   production security headers, while Vercel auto-detects files under `/api`
+   as serverless functions; the rest of the (Python/static-site) repo is
    just deployed alongside as static files, harmlessly. Confirm the env
    var name Vercel
    set for the connection string matches `DATABASE_URL` — rename in the
@@ -33,12 +33,12 @@ zero-config convention for serverless functions)
    `https://yourapp.vercel.app/api/leaderboard` (the base URL before
    `?action=` is what gets pasted into the app).
 
-## PATH B — Always-on app (simpler, a few $/mo) — not in use
+## PATH B — Legacy read-only app — do not deploy for new installations
 File: `server_app.py`
 
-Kept as an alternative in case Path A ever needs replacing. Not deployed —
-some free always-on hosts reset their disk on redeploy, which would wipe
-the SQLite file this path relies on.
+Kept only for reading an old SQLite leaderboard. Its score-write endpoint is
+disabled because browser-supplied totals cannot be verified. Use Path A for any
+new deployment.
 
 1. Create a small app host (Render, Railway, Fly, a cheap VPS).
 2. Point it at `server_app.py`. Start command: `gunicorn server_app:APP`
