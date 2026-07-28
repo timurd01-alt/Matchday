@@ -47,7 +47,7 @@ ONCE_RETRY_DELAY = 5
 # Keep this empty in committed code. Temporary cache-busting entries must be
 # removed after one successful run; otherwise every hourly job refetches all
 # sports and delays the competitions near the end of the queue.
-FORCE_REFETCH_ONCE = {"ncaaf"}  # one-time retry to seed the new talent cache after a transient CFBD 429
+FORCE_REFETCH_ONCE = set()
 
 RESULT_PENDING_EVERY = 60 * 60
 SOON_EVERY = 60 * 60
