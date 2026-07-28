@@ -17,13 +17,17 @@ class AnalysisModeTests(unittest.TestCase):
         self.assertNotIn("more live", panels)
         self.assertNotIn("No live matches", panels)
         self.assertNotIn("_modelFilterBtn('live'", panels)
-        self.assertIn("Result pending", panels)
+        self.assertIn("Awaiting final", panels)
 
-    def test_in_progress_cards_hide_partial_scores(self):
+    def test_in_progress_cards_hide_partial_scores_without_squeezing_team_names(self):
         core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
         cards = (ROOT / "app-4-features.js").read_text(encoding="utf-8")
-        self.assertIn("if(m.status==='LIVE')return'<span class=\"kick\">Result pending</span>'", core)
-        self.assertIn("pending?'postgame update pending'", cards)
+        css = (ROOT / "styles.css").read_text(encoding="utf-8")
+        self.assertIn("if(m.status==='LIVE')return'<span class=\"pendingScore\"", core)
+        self.assertIn("pending?'AWAITING FINAL'", cards)
+        self.assertIn("pending?'score after final'", cards)
+        self.assertIn("grid-template-columns:minmax(0,1fr) 64px minmax(0,1fr)", css)
+        self.assertIn("-webkit-line-clamp:2", css)
         self.assertNotIn("liveClock(m)</div>", cards)
 
     def test_scheduled_deploy_is_hourly(self):
