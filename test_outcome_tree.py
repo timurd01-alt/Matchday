@@ -19,6 +19,12 @@ class OutcomeTreeStaticTests(unittest.TestCase):
         self.assertIn('id="view-tree"', html)
         self.assertIn('src="app-5-outcome-tree.js?v=__BUILD__"', html)
 
+    def test_deploy_artifact_includes_the_outcome_tree_script(self):
+        workflow = (ROOT / ".github/workflows/deploy.yml").read_text(encoding="utf-8")
+        copy_line = next(line for line in workflow.splitlines()
+                         if line.strip().startswith("cp app-1-core.js"))
+        self.assertIn("app-5-outcome-tree.js", copy_line)
+
     def test_tree_is_available_in_every_navigation_profile(self):
         core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
         nav_block = core.split("const NAV_DEF={", 1)[1].split("};", 1)[0]
