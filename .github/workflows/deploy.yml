@@ -55,6 +55,9 @@ jobs:
           BALLDONTLIE_KEY = "${{ secrets.BALLDONTLIE_KEY }}"
           EOF
 
+      - name: Recover durable NCAAF roster talent before shared quota use
+        run: python refresh_college_talent.py
+
       # The "ONE-TIME seed merge" step that used to live here was removed
       # 2026-07-27. It was never actually one-time -- it ran on EVERY run and
       # re-added all 19 seed picks under their original fixture keys, because

@@ -23,7 +23,7 @@ Signals are coverage-aware. A new team, stale season record, or small head-to-he
 
 | Sport | Displayed signal | Current method |
 | --- | --- | --- |
-| College football | **Roster talent edge** | Multi-year blend of 247Sports Team Talent Composite roster snapshots supplied by CollegeFootballData. A last-good cache prevents a temporary provider failure from erasing the signal. |
+| College football | **Roster talent edge** | Multi-year blend of 247Sports Team Talent Composite roster snapshots supplied by CollegeFootballData. Successful enrichment is persisted to the tracked ratings file so a later provider rate limit cannot turn the signal into zero. |
 | Men's college basketball | **Recruiting edge** | CollegeBasketballData team recruiting ratings. This is explicitly a recruiting prior, not a claim to measure the entire current roster or transfer portal. |
 | Soccer | **Squad edge** | Curated squad value, star-player value, and ranking data for covered clubs or national teams. Uncovered teams receive no fabricated squad edge. |
 | MLB | **Personnel edge** | Not published with the current feed. A legitimate version needs probable starting pitchers, projected or confirmed batting orders, and bullpen availability. |

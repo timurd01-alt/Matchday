@@ -5,6 +5,7 @@ import unittest
 from unittest import mock
 
 import fetch_data
+import refresh_college_talent
 
 
 def finished(mid, home, away, hs, aps):
@@ -457,6 +458,31 @@ class RatingsLookupTests(unittest.TestCase):
         self.assertEqual(pred["class_meta"]["label"], "Roster talent edge")
         self.assertEqual(pred["class_meta"]["coverage"], "complete")
 
+    def test_recruiting_enrichment_is_persisted_to_the_tracked_ratings_file(self):
+        fetch_data.COMP_KEY = "NCAAF"
+        fetch_data.COMP = dict(fetch_data.COMPETITIONS["NCAAF"])
+        fetch_data.apply_recruiting_strength({"Georgia": 1002.98, "Michigan State": 717.42})
+        with open(self.tmp_path, encoding="utf-8") as handle:
+            persisted = json.load(handle)
+        self.assertEqual(persisted["michigan state"]["talent_source"], "cfbd_team_talent")
+        self.assertGreater(persisted["michigan state"]["talent_strength"], 0)
+
+    def test_persisted_talent_survives_a_new_process_for_msu_toledo(self):
+        fetch_data.COMP_KEY = "NCAAF"
+        fetch_data.COMP = dict(fetch_data.COMPETITIONS["NCAAF"])
+        fetch_data.apply_recruiting_strength({
+            "Georgia": 1002.98, "Michigan State": 717.42, "Toledo": 620.13,
+        })
+        fetch_data._RATINGS = None
+        pred = fetch_data.predict(
+            {"name": "Michigan State", "pld": 12, "win_pct": 4 / 12, "season_stale": True},
+            {"name": "Toledo", "pld": 13, "win_pct": 8 / 13, "season_stale": True},
+            {}, {"stage": "Week 1", "weather": {}},
+        )
+        self.assertEqual(pred["class_meta"]["coverage"], "complete")
+        self.assertGreater(pred["why"]["class"], 0)
+        self.assertEqual(pred["pick_name"], "Michigan State")
+
     def test_mlb_market_power_is_not_mislabeled_as_personnel_class(self):
         fetch_data.COMP_KEY = "MLB"
         fetch_data.COMP = dict(fetch_data.COMPETITIONS["MLB"])
@@ -478,14 +504,18 @@ class RatingsLookupTests(unittest.TestCase):
 class CollegeClassCacheTests(unittest.TestCase):
     def setUp(self):
         self.old_key, self.old_comp = fetch_data.COMP_KEY, fetch_data.COMP
+        self.old_ratings_file, self.old_ratings = fetch_data.RATINGS_FILE, fetch_data._RATINGS
         self.old_cwd = os.getcwd()
         self.tmp = tempfile.TemporaryDirectory()
         os.chdir(self.tmp.name)
         fetch_data.COMP_KEY = "NCAAF"
         fetch_data.COMP = dict(fetch_data.COMPETITIONS["NCAAF"])
+        fetch_data.RATINGS_FILE = "ratings_ncaaf.json"
+        fetch_data._RATINGS = None
 
     def tearDown(self):
         fetch_data.COMP_KEY, fetch_data.COMP = self.old_key, self.old_comp
+        fetch_data.RATINGS_FILE, fetch_data._RATINGS = self.old_ratings_file, self.old_ratings
         os.chdir(self.old_cwd)
         self.tmp.cleanup()
 
@@ -505,6 +535,54 @@ class CollegeClassCacheTests(unittest.TestCase):
         result = fetch_data.fetch_college_class_strength(adapter, "talent")
         self.assertEqual(result, {"Michigan State": 812.4})
         adapter.talent.assert_not_called()
+class CollegeTalentRecoveryTests(unittest.TestCase):
+    def setUp(self):
+        self.old_key, self.old_comp = fetch_data.COMP_KEY, fetch_data.COMP
+        self.old_file, self.old_ratings = fetch_data.RATINGS_FILE, fetch_data._RATINGS
+        self.old_cwd = os.getcwd()
+        self.tmp = tempfile.TemporaryDirectory()
+        os.chdir(self.tmp.name)
+
+    def tearDown(self):
+        fetch_data.COMP_KEY, fetch_data.COMP = self.old_key, self.old_comp
+        fetch_data.RATINGS_FILE, fetch_data._RATINGS = self.old_file, self.old_ratings
+        os.chdir(self.old_cwd)
+        self.tmp.cleanup()
+
+    def test_quota_light_recovery_persists_broad_talent_coverage(self):
+        adapter = mock.Mock()
+        adapter.talent.return_value = {
+            f"Team {index}": 1000.0 - index for index in range(101)
+        }
+        coverage = refresh_college_talent.refresh_if_missing(adapter)
+        self.assertEqual(coverage, 101)
+        adapter.talent.assert_called_once_with(seasons_back=1)
+        with open("ratings_ncaaf.json", encoding="utf-8") as handle:
+            persisted = json.load(handle)
+        self.assertEqual(persisted["team 100"]["talent_source"], "cfbd_team_talent")
+
+    def test_recovery_skips_provider_after_durable_coverage_exists(self):
+        existing = {
+            f"team {index}": {"talent_source": "cfbd_team_talent", "talent_strength": 1.0}
+            for index in range(100)
+        }
+        with open("ratings_ncaaf.json", "w", encoding="utf-8") as handle:
+            json.dump(existing, handle)
+        adapter = mock.Mock()
+        coverage = refresh_college_talent.refresh_if_missing(adapter)
+        self.assertEqual(coverage, 100)
+        adapter.talent.assert_not_called()
+
+    def test_deploy_recovers_talent_before_the_quota_heavy_fetch(self):
+        workflow_path = os.path.join(
+            os.path.dirname(os.path.abspath(__file__)), ".github", "workflows", "deploy.yml")
+        with open(workflow_path, encoding="utf-8") as handle:
+            workflow = handle.read()
+        self.assertLess(
+            workflow.index("python refresh_college_talent.py"),
+            workflow.index("python multi_fetch.py --once"),
+        )
+        self.assertIn("git add -- 'ratings*.json'", workflow)
 
 
 class PredictPriorBoostTests(unittest.TestCase):

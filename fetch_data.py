@@ -777,6 +777,32 @@ def _load_ratings():
             DIAG.append(f"ratings: not loaded ({e})")
     return _RATINGS
 
+
+def _save_ratings():
+    """Persist enriched ratings so a later provider outage cannot erase them.
+
+    Talent/recruiting and championship-market enrichment used to live only in
+    this process's ``_RATINGS`` dictionary.  The deploy workflow dutifully
+    committed ``ratings_*.json``, but those files never changed, so the next
+    rate-limited run started from the old empty file and published a zero
+    roster edge.  Atomic persistence makes the tracked ratings file the durable
+    last-good state the workflow already expects it to be.
+    """
+    ratings = _load_ratings()
+    tmp = RATINGS_FILE + ".tmp"
+    try:
+        with open(tmp, "w", encoding="utf-8") as handle:
+            json.dump(ratings, handle, ensure_ascii=False, indent=1, sort_keys=True)
+            handle.write("\n")
+        os.replace(tmp, RATINGS_FILE)
+    except OSError as exc:
+        try:
+            if os.path.exists(tmp):
+                os.remove(tmp)
+        except OSError:
+            pass
+        DIAG.append(f"ratings persistence failed: {_scrub(exc)}")
+
 # Club-name suffixes/prefixes that provider feeds add or drop inconsistently
 # (football-data.org's official strings vs. the shorter names ratings files
 # are hand-written with) -- "Arsenal FC" vs "Arsenal", "FC Barcelona" vs
@@ -2844,6 +2870,7 @@ def apply_recruiting_strength(team_scores, known_names=None):
                                 else "unknown_recruiting")
         changed += 1
     if changed:
+        _save_ratings()
         DIAG.append(f"recruiting/talent strength: applied to {changed} teams")
 
 

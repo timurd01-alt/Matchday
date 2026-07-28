@@ -3,6 +3,9 @@
 Reviewed: 2026-07-28 (UEFA's public 2025/26 Champions League Team of the Season is
 manually transcribed as a small attributed editorial selection with a direct source link; no
 automated UEFA scraping, bulk extraction, API claim, images, article text, or implied endorsement.)
+Reviewed: 2026-07-28 (NCAAF roster-talent recovery uses one request to the already-licensed
+CollegeFootballData talent endpoint before the broader build, then persists only Matchday's
+derived rating fields; no raw provider payload is published or newly redistributed.)
 Reviewed: 2026-07-27 (NCAAF and NCAAM's derived way-too-early projections now blend the
 already-licensed CFBD/CBBD prior-postseason rankings feeds with their existing talent/recruiting
 feeds; no new provider, endpoint family, raw-feed display, or redistribution behavior.)
