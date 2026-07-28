@@ -3412,7 +3412,9 @@ def build_team_of_tournament(matches, scorers, standings):
                        "goals": g, "assists": a, "played": s.get("played", 0),
                        "role": role_of(s), "score": round(score, 1)})
     ranked.sort(key=lambda x: -x["score"])
-    caps = {"FWD": 3, "MID": 4, "DEF": 4, "GK": 1}
+    # A balanced model XI is a 4-3-3: the old caps allowed 12 players
+    # (3 FWD + 4 MID + 4 DEF + 1 GK) while still labeling the result an XI.
+    caps = {"FWD": 3, "MID": 3, "DEF": 4, "GK": 1}
     xi = []
     for role, cap in caps.items():
         xi += [p for p in ranked if p["role"] == role][:cap]

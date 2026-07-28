@@ -1342,6 +1342,13 @@ body.modalOpen{overflow:hidden}.matchModal{position:fixed;inset:0;z-index:99;dis
   .tottName{font-family:"Archivo",sans-serif;font-weight:700;font-size:.92rem;color:var(--text)}
   .tottTeam{font-family:var(--mono);font-size:.64rem;color:var(--muted);margin:3px 0 6px}
   .tottStat{font-family:var(--mono);font-size:.72rem;color:var(--win);font-weight:700}
+  .tottBanner{display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .tottBanner>span{min-width:0}
+  .tottSource{flex:0 0 auto;padding:7px 10px;border:1px solid rgba(58,209,122,.35);border-radius:8px;color:var(--signal);font-family:var(--mono);font-size:.62rem;font-weight:800;text-decoration:none;transition:border-color .15s ease,background .15s ease}
+  .tottSource:hover,.tottSource:focus-visible{border-color:var(--signal);background:rgba(58,209,122,.08);outline:none}
+  .tottPitch.official{background:linear-gradient(180deg,rgba(58,209,122,.09),rgba(58,209,122,.02) 70%,transparent)}
+  .tottCard.official{box-shadow:inset 0 2px rgba(58,209,122,.16)}
+  @media(max-width:620px){.tottBanner{align-items:flex-start;flex-direction:column}.tottSource{width:100%;text-align:center}}
 
 .compTag{font-family:var(--mono);font-size:.56rem;font-weight:700;letter-spacing:.06em;color:var(--signal);border:1px solid rgba(58,209,122,.3);border-radius:4px;padding:1px 6px;margin-left:7px;vertical-align:middle}
 

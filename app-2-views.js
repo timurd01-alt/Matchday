@@ -275,14 +275,37 @@ function renderSandbox(){
     </div>
     ${resultHtml}`;
 }
-function renderTOTT(){const host=$('#view-tott');const t=DATA.team_of_tournament;
+function tournamentPlayerKey(name){return String(name||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim()}
+function officialTournamentSelection(){
+  const selections=globalThis.MATCHDAY_OFFICIAL_SELECTIONS||{};
+  return Object.values(selections).find(selection=>{
+    if(selection.competition!==currentSportKey())return false;
+    return (selection.signature||[]).every(expected=>(DATA.scorers||[]).some(s=>tournamentPlayerKey(s.name)===tournamentPlayerKey(expected.name)&&Number(s.goals)===Number(expected.goals)));
+  })||null;
+}
+function tournamentViewData(){
+  const official=officialTournamentSelection();if(!official)return DATA.team_of_tournament;
+  const scorers=new Map((DATA.scorers||[]).map(p=>[tournamentPlayerKey(p.name),p]));
+  return {...official,kind:'official',v:3,xi:official.xi.map(player=>{
+    const stats=scorers.get(tournamentPlayerKey(player.name));
+    return {...player,goals:Number(stats?.goals)||0,assists:Number(stats?.assists)||0,played:Number(stats?.played)||0,statsAvailable:!!stats};
+  })};
+}
+function renderTOTT(){const host=$('#view-tott');const t=tournamentViewData();
   if(!t||!t.xi||!t.xi.length){host.innerHTML=`<div class="vhead">Team of the Tournament</div><div class="empty">Builds once qualifying player stats are logged. Check back after more matches.</div>`;return;}
-  if(t.v!==2){host.innerHTML=`<div class="vhead">Team of the Tournament</div><div class="banner"><b>Positions need a rebuild.</b> This XI was generated before the real-position fix — run one fetch and players will group by their actual positions (no more strikers in goal).</div>`;return;}
-  const byRole=r=>t.xi.filter(p=>p.role===r);
-  const line=(label,arr)=>`<div class="tottLine"><div class="tottLbl">${label}</div>${arr.length?`<div class="tottRow">${arr.map(p=>`<div class="tottCard"><div class="tottName">${esc(p.name||'')}</div><div class="tottTeam">${esc(p.code||p.team||'')}</div><div class="tottStat">${p.goals}G ${p.assists}A</div></div>`).join('')}</div>`:`<div class="tottEmpty">No qualifying player yet — none has a goal or assist logged this tournament.</div>`}</div>`;
-  host.innerHTML=`<div class="vhead">Team of the Tournament</div>
-    <div class="banner"><b>Model-built XI.</b> ${esc(t.note||'')}</div>
-    <div class="tottPitch">${line('Forwards',byRole('FWD'))}${line('Midfield',byRole('MID'))}${line('Defence',byRole('DEF'))}${line('Goalkeeper',byRole('GK'))}</div>`;}
+  if(t.v!==2&&t.v!==3){host.innerHTML=`<div class="vhead">Team of the Tournament</div><div class="banner"><b>Positions need a rebuild.</b> This XI was generated before the real-position fix — run one fetch and players will group by their actual positions (no more strikers in goal).</div>`;return;}
+  const byRole=r=>t.xi.filter(p=>p.role===r),official=t.kind==='official';
+  const complete=t.xi.length===11&&byRole('FWD').length>0&&byRole('MID').length>0&&byRole('DEF').length>0&&byRole('GK').length===1;
+  const stat=p=>official&&!p.statsAvailable?'Official XI':`${Number(p.goals)||0}G ${Number(p.assists)||0}A`;
+  const line=(label,arr)=>arr.length?`<div class="tottLine"><div class="tottLbl">${label}</div><div class="tottRow">${arr.map(p=>`<div class="tottCard ${official?'official':''}"><div class="tottName">${esc(p.name||'')}</div><div class="tottTeam">${esc(p.code||p.team||'')}</div><div class="tottStat">${esc(stat(p))}</div></div>`).join('')}</div></div>`:'';
+  const source=official?`<a class="tottSource" href="${esc(t.sourceUrl)}" target="_blank" rel="noopener noreferrer">View UEFA source <span aria-hidden="true">↗</span></a>`:'';
+  const intro=official
+    ?`<div class="banner tottBanner"><span><b>Official ${esc(t.season)} selection.</b> Chosen by the ${esc(t.sourceName)}. Scoring figures are shown only where they exist in Matchday's licensed scorer feed.</span>${source}</div>`
+    :complete
+      ?`<div class="banner"><b>Model-built XI.</b> ${esc(t.note||'')}</div>`
+      :`<div class="banner warn"><b>Model attacking leaders — not a complete XI.</b> ${esc(t.note||'')} Empty positions are hidden until real lineup data supports them.</div>`;
+  host.innerHTML=`<div class="vhead">Team of the Tournament</div>${intro}
+    <div class="tottPitch ${official?'official':''}">${line('Forwards',byRole('FWD'))}${line('Midfield',byRole('MID'))}${line('Defence',byRole('DEF'))}${line('Goalkeeper',byRole('GK'))}</div>`;}
 let POSTS_CACHE=null;
 function loadPosts(){
   if(POSTS_CACHE)return Promise.resolve(POSTS_CACHE);

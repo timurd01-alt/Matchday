@@ -5,6 +5,7 @@ Matchday uses provider APIs and licensed or permissively licensed datasets. Cove
 Current provider families include:
 
 - football-data.org for supported soccer competition data
+- UEFA's published Technical Observer Team of the Season for the attributed completed-season Champions League XI
 - The Odds API for available pregame market information
 - BALLDONTLIE for supported NFL, NBA, and MLB feeds
 - CollegeFootballData and CollegeBasketballData for NCAA data
@@ -20,6 +21,8 @@ Production runs an hourly pregame/postgame fetch. Result-pending and near-kickof
 The Odds API is queried only for upcoming fixtures close to kickoff—currently within three hours—and its response is cached for three hours. The independent model can still publish and lock when market data is unavailable.
 
 Starting lineups, injuries, and other licensed details may not exist until close to kickoff and may be unavailable on a provider's current tier.
+
+For a completed competition, Matchday may show an organizer's published Team of the Season when it can be linked and attributed directly. That editorial selection is labeled as official-source content, not model output. If neither a complete attributed selection nor enough real lineup data exists, Matchday shows the measured attacking leaders and does not call the partial list an XI.
 
 ## News freshness
 

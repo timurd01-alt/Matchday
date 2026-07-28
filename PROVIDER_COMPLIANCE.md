@@ -1,5 +1,8 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-07-28 (UEFA's public 2025/26 Champions League Team of the Season is
+manually transcribed as a small attributed editorial selection with a direct source link; no
+automated UEFA scraping, bulk extraction, API claim, images, article text, or implied endorsement.)
 Reviewed: 2026-07-27 (NCAAF and NCAAM's derived way-too-early projections now blend the
 already-licensed CFBD/CBBD prior-postseason rankings feeds with their existing talent/recruiting
 feeds; no new provider, endpoint family, raw-feed display, or redistribution behavior.)
@@ -171,6 +174,12 @@ record the review date here before each public release.
 
 ## Changelog
 
+- **2026-07-28:** Replaced the incomplete six-player UCL "Model-built XI" presentation with the
+  organizer's published 2025/26 Team of the Season (11 names/teams/positions only), visibly
+  attributed and directly linked to UEFA's source page. This is a manually maintained editorial
+  fact record, not an automated UEFA feed or scraped article. No UEFA images, prose, statistics,
+  logos, or page markup are copied. When an attributed complete selection is unavailable, the UI
+  now calls a partial scorer-derived result "attacking leaders" instead of falsely calling it an XI.
 - **2026-07-26:** Built `backfill_lineups.py`, a one-time script to backfill Team of Tournament's
   defender/goalkeeper data for a just-finished competition (UCL's 2025-26 season ended in
   March/April, before the lineup-tracking feature existed) on the same API-FOOTBALL key already
