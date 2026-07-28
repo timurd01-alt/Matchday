@@ -2,7 +2,9 @@ name: Refresh data and deploy
 
 on:
   schedule:
-    - cron: '0 * * * *'
+    # Fifteen minutes keeps live/final scores useful without overlapping the
+    # normal 2-7 minute Pages build or exhausting free provider quotas.
+    - cron: '*/15 * * * *'
   workflow_dispatch:
   push:
     branches: [main]

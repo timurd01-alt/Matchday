@@ -53,6 +53,7 @@ LIVE_EVERY = 60
 SOON_EVERY = 60 * 60
 NEAR_EVERY = 6 * 3600
 DORMANT_EVERY = 12 * 3600
+PAST_DUE_SCORE_GRACE_HOURS = 8
 
 # When a sport's provider changes in code, a cached data_<key>.json from the
 # old one still looks "recently fetched" to the interval check below and
@@ -114,6 +115,12 @@ def _interval_for(key):
                 ko = datetime.datetime.fromisoformat(str(m["kickoff"]).replace("Z", "+00:00"))
             except Exception:
                 continue
+            # Providers can leave a just-started/completed game marked
+            # UPCOMING until the next poll. Treat that recent past-kickoff
+            # state as score-urgent instead of waiting the normal hour.
+            hours = (ko - now).total_seconds() / 3600.0
+            if -PAST_DUE_SCORE_GRACE_HOURS <= hours <= 0:
+                return LIVE_EVERY
             if soonest is None or ko < soonest:
                 soonest = ko
     if soonest is not None:

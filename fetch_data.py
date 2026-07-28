@@ -233,6 +233,7 @@ OUTRIGHTS_URL = (f"https://api.the-odds-api.com/v4/sports/{COMP['outright']}/odd
 OUTRIGHTS_CACHE_MIN = 60
 NEWS_CACHE_MIN = 20
 BALLDONTLIE_CACHE_MIN = 10
+BALLDONTLIE_ACTIVE_CACHE_MIN = 2
 BALLDONTLIE_SEASON_CACHE_MIN = 240  # season-to-date pull re-pages the whole season; cache for hours
 APISPORTS_CACHE_MIN = 30  # api-sports.io free tier caps at 100 req/day per sport
 COLLEGE_CACHE_MIN = 480  # eight-hour cache keeps both college feeds within a shared free-key quota
@@ -4309,16 +4310,36 @@ def compute_us_sport_standings(matches):
     return model, tables
 
 
+def _balldontlie_cache_seconds(matches, now=None):
+    """Use a short schedule cache around games, a longer one otherwise."""
+    current = now or datetime.datetime.now(datetime.timezone.utc)
+    for match in matches or []:
+        if match.get("status") == "LIVE":
+            return BALLDONTLIE_ACTIVE_CACHE_MIN * 60
+        if match.get("status") != "UPCOMING":
+            continue
+        kickoff = _parse_kickoff(match.get("kickoff"))
+        if kickoff is None:
+            continue
+        hours = (kickoff - current).total_seconds() / 3600.0
+        if -8 <= hours <= 4:
+            return BALLDONTLIE_ACTIVE_CACHE_MIN * 60
+    return BALLDONTLIE_CACHE_MIN * 60
+
+
 def fetch_balldontlie_bundle():
     """Fetch real free-tier schedules/scores without paid-only substitutions."""
     adapter = BallDontLieAdapter(BALLDONTLIE_KEY, COMP_KEY)
     cache_file = f"balldontlie_games_{COMP_KEY.lower()}_cache.json"
     matches = None
     try:
-        if os.path.exists(cache_file) and time.time() - os.path.getmtime(cache_file) < BALLDONTLIE_CACHE_MIN * 60:
+        if os.path.exists(cache_file):
             with open(cache_file, encoding="utf-8") as handle:
-                matches = json.load(handle)
-            DIAG.append("BALLDONTLIE fixtures: local cache")
+                cached_matches = json.load(handle)
+            cache_age = time.time() - os.path.getmtime(cache_file)
+            if cache_age < _balldontlie_cache_seconds(cached_matches):
+                matches = cached_matches
+                DIAG.append("BALLDONTLIE fixtures: local cache")
     except Exception:
         matches = None
     schedule_fetched_live = matches is None
