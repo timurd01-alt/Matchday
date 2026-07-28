@@ -3,7 +3,7 @@ multi_fetch.py — one loop that keeps EVERY sport fresh.
 
 Each sport runs as a short one-shot fetch (its own process), on its own cadence:
 
-  any match LIVE now          -> refetch that sport every 60 s
+  game in progress/result due -> hourly
   kickoff within 48 h         -> hourly
   fixtures within 14 days     -> every 6 h
   offseason / no data file    -> probe twice a day
@@ -49,7 +49,7 @@ ONCE_RETRY_DELAY = 5
 # sports and delays the competitions near the end of the queue.
 FORCE_REFETCH_ONCE = set()
 
-LIVE_EVERY = 60
+RESULT_PENDING_EVERY = 60 * 60
 SOON_EVERY = 60 * 60
 NEAR_EVERY = 6 * 3600
 DORMANT_EVERY = 12 * 3600
@@ -109,7 +109,7 @@ def _interval_for(key):
     soonest = None
     for m in d.get("matches", []):
         if m.get("status") == "LIVE":
-            return LIVE_EVERY
+            return RESULT_PENDING_EVERY
         if m.get("status") == "UPCOMING" and m.get("kickoff"):
             try:
                 ko = datetime.datetime.fromisoformat(str(m["kickoff"]).replace("Z", "+00:00"))
@@ -120,7 +120,7 @@ def _interval_for(key):
             # state as score-urgent instead of waiting the normal hour.
             hours = (ko - now).total_seconds() / 3600.0
             if -PAST_DUE_SCORE_GRACE_HOURS <= hours <= 0:
-                return LIVE_EVERY
+                return RESULT_PENDING_EVERY
             if soonest is None or ko < soonest:
                 soonest = ko
     if soonest is not None:
@@ -182,8 +182,7 @@ def loop():
             ok = _run_one(key, flag)
             if ok:
                 iv = _interval_for(key)
-                label = ("live" if iv == LIVE_EVERY else "1h" if iv == SOON_EVERY
-                         else "6h" if iv == NEAR_EVERY else "12h")
+                label = ("1h" if iv == SOON_EVERY else "6h" if iv == NEAR_EVERY else "12h")
                 print(f"  [{key}] next in {label}")
                 next_due[key] = time.time() + iv
             else:

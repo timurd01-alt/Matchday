@@ -2,9 +2,10 @@ name: Refresh data and deploy
 
 on:
   schedule:
-    # Fifteen minutes keeps live/final scores useful without overlapping the
-    # normal 2-7 minute Pages build or exhausting free provider quotas.
-    - cron: '*/15 * * * *'
+    # Matchday publishes pregame analysis and postgame grading, not live
+    # scores. Hourly checks are enough to lock near-kickoff picks and collect
+    # final results without spending scarce provider quota on scoreboard duty.
+    - cron: '17 * * * *'
   workflow_dispatch:
   push:
     branches: [main]

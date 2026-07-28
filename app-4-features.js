@@ -1,7 +1,7 @@
 function _insightFocusHTML(focus){
   let h=`<div class="seclbl">In focus</div>`;
   if(focus){
-    h+=`<div class="ins-match">${esc(focus.home?.name||'Home')} <span class="evs">v</span> ${esc(focus.away?.name||'Away')}</div><div class="ins-sub">${focus.status==='LIVE'?`LIVE${liveClock(focus)?` ${liveClock(focus)}`:''} · ${focus.score?.home??0}–${focus.score?.away??0}`:`${esc(focus.stage||'')} · ${kickIn(focus.kickoff)}`}</div>`;
+    h+=`<div class="ins-match">${esc(focus.home?.name||'Home')} <span class="evs">v</span> ${esc(focus.away?.name||'Away')}</div><div class="ins-sub">${focus.status==='LIVE'?'Result pending':focus.status==='FINISHED'?`Final · ${scoreText(focus).replace(/<[^>]+>/g,'')}`:`${esc(focus.stage||'')} · ${kickIn(focus.kickoff)}`}</div>`;
     h+=insightModelBlock(focus);
     const x=(focus.markets||{})['1x2']||{};
     if(x.home_pct!=null)h+=`<div class="prob insightProb"><div class="problbl"><span>${esc(focus.home?.code||'H')}</span><span>draw</span><span>${esc(focus.away?.code||'A')}</span></div>${bar1x2(x.home_pct,x.draw_pct,x.away_pct)}</div>`;
@@ -13,12 +13,12 @@ function _insightFocusHTML(focus){
   return h;
 }
 function _insightFocusPool(M){
-  const primary=M.find(m=>m.status==='LIVE'&&isFavoriteMatch(m))||M.filter(m=>isFavoriteMatch(m)&&isVisibleUpcoming(m)).sort(fixtureSort)[0]||M.find(m=>m.status==='LIVE')||M.filter(isVisibleUpcoming).sort(fixtureSort)[0]||M.find(m=>isFavoriteMatch(m)&&m.status==='FINISHED')||M.find(m=>m.status==='FINISHED')||M[0];
+  const primary=M.filter(m=>isFavoriteMatch(m)&&isVisibleUpcoming(m)).sort(fixtureSort)[0]||M.filter(isVisibleUpcoming).sort(fixtureSort)[0]||M.find(m=>isFavoriteMatch(m)&&m.status==='FINISHED')||M.find(m=>m.status==='FINISHED')||M.find(m=>m.status==='LIVE')||M[0];
   if(!primary)return [];
-  // rotate the primary focus alongside a few other live/upcoming games worth
+  // rotate the primary focus alongside a few other upcoming games worth
   // surfacing, ranked by watchability within a near-term window so a
   // months-away fixture can't outrank this week's games
-  const candidates=M.filter(m=>(m.status==='LIVE'||isVisibleUpcoming(m))&&m.id!==primary.id);
+  const candidates=M.filter(m=>isVisibleUpcoming(m)&&m.id!==primary.id);
   const others=nearTermPool(candidates,4)
     .sort((a,b)=>(b.watchability||0)-(a.watchability||0)).slice(0,4);
   return [primary,...others];
@@ -56,7 +56,7 @@ function statsPanel(m){
   if(sx){
     html+=`<div class="statHero"><div class="pressureChip"><div class="label">Pressure index</div><div class="value">${Math.round(ph)}–${Math.round(pa)}</div><div class="sub">${esc(leader)} ${leader==='Balanced'?'match':'lean'} · not xG</div></div><div class="pressureChip"><div class="label">Best public signal</div><div class="value">${esc(leader)}</div><div class="sub">based on shots, SOT, possession, corners and cards</div></div></div><div class="statMetrics">${statMetric('Shots',hs.shots,as.shots)}${statMetric('Shots on target',hs.shots_on_target,as.shots_on_target)}${statMetric('Possession',hs.possession,as.possession)}${statMetric('Corners',hs.corners,as.corners)}${statMetric('Fouls',hs.fouls,as.fouls)}${statMetric('Offsides',hs.offsides,as.offsides)}${statMetric('Saves',hs.saves,as.saves)}${statMetric('Cards',`${hs.yellow_cards||0}Y ${hs.red_cards||0}R`,`${as.yellow_cards||0}Y ${as.red_cards||0}R`)}</div>`;
   }else{
-    html+=`<div class="emptyStats"><b>${m.status==='FINISHED'?'Box score unavailable':m.status==='LIVE'?'Live stats loading…':'Box score not yet available'}</b><span>${m.status==='UPCOMING'?'Stats appear once the match kicks off.':'This source has not released team stats for this fixture. The model is using form, odds, standings, ratings and market movement instead.'}</span></div>`;
+    html+=`<div class="emptyStats"><b>${m.status==='FINISHED'?'Box score unavailable':m.status==='LIVE'?'Postgame stats pending':'Box score not yet available'}</b><span>${m.status==='UPCOMING'?'Stats appear in the postgame review.':'This source has not released final team stats for this fixture. The pregame model used form, odds, standings, ratings and market movement instead.'}</span></div>`;
   }
   return html+`</div>`;
 }
@@ -104,7 +104,7 @@ window.openMatchModal=function(id){
     const hmeta=t=>`${t?.pos?`#${t.pos} · `:''}${t?.pts??0} pts${t?.form?` · ${esc(t.form)}`:''}`;
     const rawScore=String(scoreText(m)||'').replace(/<[^>]+>/g,'').trim()||'TBD';
     const body=safeMatchDetails(m);
-    modal.innerHTML=`<section class="matchSheet" role="dialog" aria-modal="true"><div class="modalHero"><button class="modalClose" onclick="closeMatchModal()" aria-label="Close">×</button><div class="modalStage">${esc(m.stage||'Fixture')} · ${esc(m.status||'')}</div><div class="modalFixture"><div class="modalTeam"><div class="modalCode">${teamFlagHTML(m.home)}${esc(m.home?.code||'HOME')}</div><div class="modalName">${esc(m.home?.name||'Home')}</div><div class="modalMeta">${hmeta(m.home)}</div></div><div class="modalScore"><div class="bigScore">${esc(rawScore)}</div><div class="modalStatus">${m.status==='LIVE'?`LIVE${liveClock(m)?` ${liveClock(m)}`:''}`:kickIn(m.kickoff)}</div></div><div class="modalTeam away"><div class="modalCode">${esc(m.away?.code||'AWAY')}${teamFlagHTML(m.away,true)}</div><div class="modalName">${esc(m.away?.name||'Away')}</div><div class="modalMeta">${hmeta(m.away)}</div></div></div></div><div class="modalBody">${body}</div></section>`;
+    modal.innerHTML=`<section class="matchSheet" role="dialog" aria-modal="true"><div class="modalHero"><button class="modalClose" onclick="closeMatchModal()" aria-label="Close">×</button><div class="modalStage">${esc(m.stage||'Fixture')} · ${esc(m.status==='LIVE'?'RESULT PENDING':m.status||'')}</div><div class="modalFixture"><div class="modalTeam"><div class="modalCode">${teamFlagHTML(m.home)}${esc(m.home?.code||'HOME')}</div><div class="modalName">${esc(m.home?.name||'Home')}</div><div class="modalMeta">${hmeta(m.home)}</div></div><div class="modalScore"><div class="bigScore">${esc(rawScore)}</div><div class="modalStatus">${m.status==='LIVE'?'Final result pending':kickIn(m.kickoff)}</div></div><div class="modalTeam away"><div class="modalCode">${esc(m.away?.code||'AWAY')}${teamFlagHTML(m.away,true)}</div><div class="modalName">${esc(m.away?.name||'Away')}</div><div class="modalMeta">${hmeta(m.away)}</div></div></div></div><div class="modalBody">${body}</div></section>`;
     modal.classList.add('show');
     document.body.classList.add('modalOpen');
   }catch(err){
@@ -237,13 +237,16 @@ function insightModelBlock(m){
 }
 function cardHTML(m,opts){
   opts=opts||{};
-  const live=m.status==='LIVE',stale=isStaleUpcoming(m),displayStatus=stale?'PAST / REFRESH':m.status;
+  const pending=m.status==='LIVE',stale=isStaleUpcoming(m);
+  const displayStatus=stale?'PAST / REFRESH':pending?'RESULT PENDING':m.status;
+  const statusClass=stale?'PAST_REFRESH':pending?'RESULT_PENDING':m.status;
   const x=(m.markets&&m.markets['1x2'])||{};const hfl=teamFlagHTML(m.home),afl=teamFlagHTML(m.away,true);
   const probTop=x.home_pct!=null?`<div class="prob"><div class="problbl"><span>${esc(m.home.code||m.home.name)}</span><span>Market read</span><span>${esc(m.away.code||m.away.name)}</span></div>${bar1x2(x.home_pct,x.draw_pct,x.away_pct)}</div>`:`<div class="prob"><div class="nomk">No market snapshot yet</div></div>`;
   const pr=m.prediction;const op=pr?_v10OfficialPick(m):null;const edge=op?_v10OfficialEdge(m,op):null;const trend=probabilitySparkline(m);
   const pick=(!opts.hidePick&&op)?`<div class="pick ${edge!=null&&Math.abs(edge)>=6?'edge':''} ${op.blocked?'gate':''}"><span class="pl">Pick</span><span class="pn">${esc(op.name)}</span><span class="pc">${esc(op.confidence??'—')}%</span><span class="pnote">${esc(op.note||'')}</span>${trend}</div>`:'';
-  const signalId=_signalId(m),scoreChanged=!!SCORE_SIGNAL_CHANGES[signalId],liveEntered=!!LIVE_ENTRY_CHANGES[signalId],probChanged=!!probabilityMovement(m);
-  return `<article class="card${live?' liveCard':''}${SETTINGS.showDetails?'':' compactCard'}${scoreChanged?' scoreChanged':''}${liveEntered?' liveJustStarted':''}${probChanged?' probChanged':''}" data-id="${esc(m.id)}"><div class="head" onclick="openMatchModal(this.closest('article').dataset.id)"><div class="metarow"><span class="stage">${esc(m.stage||'Fixture')}</span>${m._comp&&!DATA_FILE?`<span class="compTag">${esc(m._comp)}</span>`:''}<span class="wstar ${wlHas(m.home.name)||wlHas(m.away.name)?'on':''}" onclick="event.stopPropagation();wlToggle('${esc(m.home.name)}')" title="Watch">&#9733;</span>${m.weather?`<a class="wxchip" href="${esc(m.weather.source_url||'https://open-meteo.com/')}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" title="Weather data by Open-Meteo"><b>${m.weather.temp_c}&deg;</b>${m.weather.wind_kph>=20?` ${m.weather.wind_kph}km/h`:''}${m.weather.rain_pct>=40?` &#9730;${m.weather.rain_pct}%`:''}<small> Open-Meteo</small></a>`:''}<span class="spacer"></span><span class="pill ${esc(displayStatus)}">${live?'<span class="blink"></span>':''}${esc(displayStatus)}</span></div><div class="fixture"><div class="side"><div class="tname">${teamMarkHTML(m.home)}<span class="teamNameText">${hfl}${esc(m.home.name)}</span></div><div class="tsub"><span>${esc(m.home.code)}</span><span>${m.home.pos?`#${m.home.pos}`:''}</span><span>${m.home.pts??0} pts</span></div></div><div class="center"><div class="score">${scoreText(m)}</div>${live?`<div class="minute">${liveClock(m)}</div>`:`<div class="kick">${stale?'past kickoff':kickIn(m.kickoff)}</div>`}</div><div class="side away"><div class="tname"><span class="teamNameText">${esc(m.away.name)}${afl}</span>${teamMarkHTML(m.away,'away')}</div><div class="tsub"><span>${esc(m.away.code)}</span><span>${m.away.pos?`#${m.away.pos}`:''}</span><span>${m.away.pts??0} pts</span></div></div></div>${probTop}${pick}<div class="expander"></div></div></article>`;
+  const probChanged=!!probabilityMovement(m);
+  const timing=pending?'postgame update pending':m.status==='FINISHED'?'postgame':stale?'past kickoff':kickIn(m.kickoff);
+  return `<article class="card${SETTINGS.showDetails?'':' compactCard'}${probChanged?' probChanged':''}" data-id="${esc(m.id)}"><div class="head" onclick="openMatchModal(this.closest('article').dataset.id)"><div class="metarow"><span class="stage">${esc(m.stage||'Fixture')}</span>${m._comp&&!DATA_FILE?`<span class="compTag">${esc(m._comp)}</span>`:''}<span class="wstar ${wlHas(m.home.name)||wlHas(m.away.name)?'on':''}" onclick="event.stopPropagation();wlToggle('${esc(m.home.name)}')" title="Watch">&#9733;</span>${m.weather?`<a class="wxchip" href="${esc(m.weather.source_url||'https://open-meteo.com/')}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" title="Weather data by Open-Meteo"><b>${m.weather.temp_c}&deg;</b>${m.weather.wind_kph>=20?` ${m.weather.wind_kph}km/h`:''}${m.weather.rain_pct>=40?` &#9730;${m.weather.rain_pct}%`:''}<small> Open-Meteo</small></a>`:''}<span class="spacer"></span><span class="pill ${esc(statusClass)}">${esc(displayStatus)}</span></div><div class="fixture"><div class="side"><div class="tname">${teamMarkHTML(m.home)}<span class="teamNameText">${hfl}${esc(m.home.name)}</span></div><div class="tsub"><span>${esc(m.home.code)}</span><span>${m.home.pos?`#${m.home.pos}`:''}</span><span>${m.home.pts??0} pts</span></div></div><div class="center"><div class="score">${scoreText(m)}</div><div class="kick">${timing}</div></div><div class="side away"><div class="tname"><span class="teamNameText">${esc(m.away.name)}${afl}</span>${teamMarkHTML(m.away,'away')}</div><div class="tsub"><span>${esc(m.away.code)}</span><span>${m.away.pos?`#${m.away.pos}`:''}</span><span>${m.away.pts??0} pts</span></div></div></div>${probTop}${pick}<div class="expander"></div></div></article>`;
 }
 function _modelRow(m){
   const pr=m.prediction||{},op=_v10OfficialPick(m),kind=_modelEdgeKind(pr),tag=_modelTag(m),arch=_modelIsArchived(m);
@@ -253,12 +256,12 @@ function _modelRow(m){
   return `<div class="modelRow ${arch?'archived':''}" onclick="openMatchModal('${esc(String(m.id||''))}')"><div class="modelMatch"><div class="teams">${esc(m.home?.code||m.home?.name||'H')} v ${esc(m.away?.code||m.away?.name||'A')}</div><div class="meta">${esc(m.stage||'Fixture')} · ${_modelWhen(m)}</div></div><div class="modelChoice"><div class="small">${arch?'Archived pick':'Official pick'}</div><div class="main">${esc(op.name||'No pick')}</div><div class="sub">${esc(sub)}</div></div>${_modelBars(m)}<div class="modelStatus"><span class="tag ${statusKind}">${statusTxt}</span>${edge?`<span class="tag ${kind}">${edge} edge</span>`:''}</div></div>`;
 }
 function _modelSpotlight(list){
-  const liveList=(list||[]).filter(m=>!_modelIsArchived(m));const m=liveList.find(x=>(_v10OfficialEdge(x,_v10OfficialPick(x))||0)>=6)||liveList[0];if(!m)return'';
+  const pregame=(list||[]).filter(isVisibleUpcoming);const m=pregame.find(x=>(_v10OfficialEdge(x,_v10OfficialPick(x))||0)>=6)||pregame[0];if(!m)return'';
   const pr=m.prediction||{},op=_v10OfficialPick(m),kind=op.blocked?'gate':_modelEdgeKind(pr);const edgeVal=_v10OfficialEdge(m,op);const edge=edgeVal==null?'No edge data':`${edgeVal>0?'+':''}${edgeVal} vs market`;
   return `<div class="modelSpot"><div class="modelSpotHead"><span>Best current read</span><span>${esc(m.stage||'Fixture')} · ${_modelWhen(m)}</span></div><div class="modelSpotBody"><div class="modelSpotTeam"><span class="code">${esc(m.home?.code||'HOME')}</span><div class="name">${esc(m.home?.name||'Home')}</div></div><div class="modelPickDial"><div class="lbl">Official pick</div><div class="pickName">${esc(op.name||'No pick')}</div><div class="conf">${op.confidence??'—'}%</div><span class="edgePill ${kind}">${esc(op.blocked?'upset watch only':edge)}</span></div><div class="modelSpotTeam away"><span class="code">${esc(m.away?.code||'AWAY')}</span><div class="name">${esc(m.away?.name||'Away')}</div></div></div></div>`;
 }
 function _v4UpsetRows(){
-  const M=(DATA.matches||[]).filter(m=>m.status!=='FINISHED'&&!isStaleUpcoming(m));
+  const M=(DATA.matches||[]).filter(isVisibleUpcoming);
   return M.map(m=>{
     const pr=m.prediction||{},u=pr.upset||{},op=_v10OfficialPick(m);
     if(u.candidate){
@@ -310,6 +313,7 @@ function _v11TeamSlot(m,side){
   return '';
 }
 function _v11Score(m,side){
+  if(String(m?.status||'').toUpperCase()!=='FINISHED')return null;
   const sc=m?.score||{};
   return side==='h'?sc.home:sc.away;
 }
@@ -332,7 +336,7 @@ function _v11TeamRow(m,side){
 }
 function _v11StatusText(m){
   const st=String(m?.status||'').toUpperCase();
-  if(st==='LIVE')return 'LIVE';
+  if(st==='LIVE')return 'RESULT PENDING';
   if(st==='FINISHED')return 'FT';
   if(m?.kickoff){try{return dt(m.kickoff)}catch(e){return 'Scheduled'}}
   return st&&st!=='PROJECTED'?'TBD':'Path';
@@ -340,7 +344,7 @@ function _v11StatusText(m){
 function _v11MatchCard(m,roundName){
   if(!m)return `<div class="brWideEmpty">Waiting for matchup</div>`;
   const st=String(m.status||'').toUpperCase();
-  const cls=`brWideMatch ${st==='LIVE'?'live':''} ${st==='FINISHED'?'done':''} ${/Final/i.test(roundName)?'final':''} ${/Third/i.test(roundName)?'third':''}`;
+  const cls=`brWideMatch ${st==='FINISHED'?'done':''} ${/Final/i.test(roundName)?'final':''} ${/Third/i.test(roundName)?'third':''}`;
   const label=m.stage||m.round||roundName||'Match';
   return `<article class="${cls}"><div class="brWideMeta"><span>${esc(label)}</span><span class="brWideStatus">${esc(_v11StatusText(m))}</span></div>${_v11TeamRow(m,'h')}${_v11TeamRow(m,'a')}</article>`;
 }

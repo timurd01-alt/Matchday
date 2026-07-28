@@ -1,20 +1,20 @@
 """
 matchday fetcher  (v5)
 ----------------------
-  football-data.org  -> fixtures + live scores       (required key)
-  The Odds API       -> 1X2 + over/under odds         (required key)
+  football-data.org  -> fixtures + final scores      (required key)
+  The Odds API       -> pregame win probabilities     (required key)
   BALLDONTLIE        -> NBA/NFL/MLB fixtures + scores  (free launch key)
   College data APIs  -> NCAAF/NCAAM schedules + tables (shared free key)
   SportsDataIO       -> dormant development feeds       (trial/licensed key)
   Sportmonks         -> soccer detail + availability   (licensed token)
 
-v5 adds LIVE lineups:
-  * when any match is LIVE the loop refreshes every ~45s (scores + lineups);
-    odds are cached for 5 min so your Odds API quota is safe.
-  * subbed-off players are flagged; substitution events are logged.
+The product is intentionally pregame/postgame rather than a live-score feed:
+  * predictions lock before kickoff and are not rewritten during games;
+  * results are fetched after kickoff for public grading;
+  * odds are requested only for near-kickoff upcoming games and cached on disk.
 
 Run:  python fetch_data.py          (once)
-      python fetch_data.py --loop   (auto: 45s while live, else 5 min)
+      python fetch_data.py --loop   (hourly result checks)
 """
 
 import json, os, sys, time, datetime, re, unicodedata, urllib.request, urllib.error, urllib.parse, math, traceback
@@ -74,9 +74,9 @@ except Exception:
     CBBD_KEY = os.environ.get("CBBD_KEY", "")
 # ============================================================
 
-IDLE_MINUTES = 60     # refresh cadence when nothing is live (hourly)
-LIVE_SECONDS = 45     # refresh cadence while a match is live
-ODDS_CACHE_MIN = 5    # never hit the odds API more often than this
+IDLE_MINUTES = 60
+LIVE_SECONDS = 3600   # legacy local loop: in-progress games only need hourly result checks
+ODDS_CACHE_MIN = 180  # one pregame market snapshot per competition window
 OUT_FILE = "data.json"
 
 FD_BASE  = "https://api.football-data.org/v4"
@@ -192,7 +192,9 @@ COMP_KEY = str(_COMP).upper() if str(_COMP).upper() in COMPETITIONS else "WC"
 COMP = COMPETITIONS[COMP_KEY]
 
 ODDS_URL = (f"https://api.the-odds-api.com/v4/sports/{COMP['odds']}/odds/"
-            "?regions=eu&markets=h2h,totals&oddsFormat=decimal")
+            "?regions=eu&markets=h2h&oddsFormat=decimal")
+ODDS_CACHE_FILE = f"odds_market_cache_{COMP_KEY.lower()}.json"
+PREGAME_ODDS_WINDOW_HOURS = 3
 UA = {"User-Agent": "Mozilla/5.0 (matchday-terminal)"}
 
 API_FOOTBALL_BASE = "https://v3.football.api-sports.io"
@@ -632,10 +634,36 @@ def _save_open():
         DIAG.append(f"odds_open save failed: {e}")
 
 
+def _load_odds_market_cache():
+    """Restore the last parsed market snapshot across one-shot CI processes."""
+    if _ODDS_CACHE["t"]:
+        return
+    try:
+        with open(ODDS_CACHE_FILE, encoding="utf-8") as f:
+            cached = json.load(f)
+        if isinstance(cached.get("data"), dict):
+            _ODDS_CACHE["t"] = float(cached.get("t") or 0)
+            _ODDS_CACHE["data"] = cached["data"]
+    except Exception:
+        pass
+
+
+def _save_odds_market_cache():
+    try:
+        tmp = ODDS_CACHE_FILE + ".tmp"
+        with open(tmp, "w", encoding="utf-8") as f:
+            json.dump(_ODDS_CACHE, f)
+        os.replace(tmp, ODDS_CACHE_FILE)
+    except Exception as e:
+        DIAG.append(f"odds market cache save failed: {e}")
+
+
 def fetch_odds():
-    # serve from cache to protect the free quota
+    # This process is short-lived in CI, so the quota-saving cache must live
+    # on disk rather than only in memory.
+    _load_odds_market_cache()
     now = time.time()
-    if now - _ODDS_CACHE["t"] < ODDS_CACHE_MIN * 60 and _ODDS_CACHE["data"]:
+    if _ODDS_CACHE["t"] and now - _ODDS_CACHE["t"] < ODDS_CACHE_MIN * 60:
         DIAG.append("odds: served from cache")
         return _ODDS_CACHE["data"]
     out = {}
@@ -714,6 +742,7 @@ def fetch_odds():
         if rec: out[pair(home, away)] = rec
     if dirty: _save_open()
     _ODDS_CACHE["t"] = now; _ODDS_CACHE["data"] = out
+    _save_odds_market_cache()
     return out
 
 
@@ -4709,6 +4738,25 @@ def compute_advancement(matches, st, name_map, code_map):
     return out
 
 
+def _due_for_odds(match, now_utc=None):
+    """Only upcoming fixtures close enough to produce a lockable pregame pick.
+
+    In-progress, finished, and past-kickoff fixtures must never spend an odds
+    credit: once kickoff arrives the public ledger, not a changing market,
+    is the source of truth.
+    """
+    if match.get("status") != "UPCOMING":
+        return False
+    try:
+        kickoff = datetime.datetime.fromisoformat(
+            str(match.get("kickoff") or "").replace("Z", "+00:00"))
+    except Exception:
+        return False
+    now_utc = now_utc or datetime.datetime.now(datetime.timezone.utc)
+    seconds = (kickoff - now_utc).total_seconds()
+    return 0 < seconds <= PREGAME_ODDS_WINDOW_HOURS * 3600
+
+
 def build():
     DIAG.clear()
     MARKET_STATE["quota_out"] = False
@@ -4800,22 +4848,11 @@ def build():
     except Exception as e:
         DIAG.append(f"odds prune skipped: {e}")
     print("Fetching odds…")
-    ODDS_WINDOW_HOURS = 24  # conserve the Odds API's monthly quota — only worth
-                            # spending a call once a match is imminent
-    now_utc = datetime.datetime.now(datetime.timezone.utc)
-    def _due_for_odds(m):
-        if m.get("status") == "LIVE":
-            return True
-        try:
-            ko = datetime.datetime.fromisoformat(str(m.get("kickoff") or "").replace("Z", "+00:00"))
-        except Exception:
-            return False
-        return (ko - now_utc).total_seconds() <= ODDS_WINDOW_HOURS * 3600
     if any(_due_for_odds(m) for m in matches):
         odds = fetch_odds()
     else:
         odds = {}
-        DIAG.append(f"odds: skipped — nothing within {ODDS_WINDOW_HOURS}h (conserving quota)")
+        DIAG.append(f"odds: skipped — no upcoming game within {PREGAME_ODDS_WINDOW_HOURS}h")
     merged = 0; fuzzy = 0
     for m in matches:
         rec, how = find_odds(odds, m["home"]["name"], m["away"]["name"])

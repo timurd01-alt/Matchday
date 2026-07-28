@@ -25,7 +25,7 @@ function runCarousel(key,items,host,renderFn,intervalMs){
     host.dataset.carouselBound='1';
   }
 }
-const DEFAULT_SETTINGS={accent:'green',density:'normal',panel:'glass',defaultView:'matches',refresh:60,showInsight:true,showFinished:false,showDetails:false,favoriteTeam:'',alertsKickoff:true,alertsLive:true,alertsUpset:true,alertsModel:true,alertsData:true};
+const DEFAULT_SETTINGS={accent:'green',density:'normal',panel:'glass',defaultView:'matches',refresh:60,showInsight:true,showFinished:false,showDetails:false,favoriteTeam:'',alertsKickoff:true,alertsLive:false,alertsUpset:false,alertsModel:true,alertsData:true};
 let SETTINGS={...DEFAULT_SETTINGS};try{SETTINGS={...DEFAULT_SETTINGS,...JSON.parse(localStorage.getItem('matchday.settings')||'{}')}}catch(e){}
 // Refresh cadence is product-controlled so visitors cannot accidentally create
 // excessive polling or make the dashboard feel stale.
@@ -132,7 +132,7 @@ function favoriteTeamOptions(){const names=new Set();(DATA.matches||[]).forEach(
 function liveClock(m){const v=m?.minute;if(v==null||v==='')return'';return typeof v==='number'||/^\d+$/.test(v)?`${v}'`:String(v)}
 const SCORE_DIFF_TERM={mlb:'run diff',nfl:'point diff',nba:'point diff',ncaaf:'point diff',ncaam:'point diff',nhl:'goal diff'};
 function scoreDiffLabel(m){return SCORE_DIFF_TERM[String(m?._comp||DATA.comp_key||'').toLowerCase()]||'goal diff';}
-function scoreText(m){const done=m.status==='FINISHED'||m.status==='LIVE';if(isStaleUpcoming(m))return'<span class="kick">Past kickoff</span>';return done?`${m.score?.home??'-'}<span class="sep">–</span>${m.score?.away??'-'}${m.score?.pens?`<span class="pensTag">(${m.score.pens.home}-${m.score.pens.away} pens)</span>`:''}`:`<span class="kick">${dt(m.kickoff).split(', ').pop()||'TBD'}</span>`}
+function scoreText(m){if(m.status==='LIVE')return'<span class="kick">Result pending</span>';const done=m.status==='FINISHED';if(isStaleUpcoming(m))return'<span class="kick">Past kickoff</span>';return done?`${m.score?.home??'-'}<span class="sep">–</span>${m.score?.away??'-'}${m.score?.pens?`<span class="pensTag">(${m.score.pens.home}-${m.score.pens.away} pens)</span>`:''}`:`<span class="kick">${dt(m.kickoff).split(', ').pop()||'TBD'}</span>`}
 function statNum(v){const m=String(v??'').match(/-?\d+(\.\d+)?/);return m?Number(m[0]):0}
 function pressure(stats,side){if(!stats)return 0;const s=stats[side]||{};return statNum(s.shots_on_target)*4+statNum(s.shots)*1.2+statNum(s.corners)*1.4+statNum(String(s.possession).replace('%',''))*.08-statNum(s.red_cards)*4}
 function statRow(label,h,a){const hn=statNum(h),an=statNum(a),tot=Math.max(1,hn+an);return `<div class="home">${esc(h||'-')}</div><div class="lab">${label}</div><div class="away">${esc(a||'-')}</div><div class="statbar"><i style="width:${hn/tot*100}%"></i><i style="width:${an/tot*100}%"></i></div>`}
@@ -189,8 +189,8 @@ function enterMatchday(){
 
 // ---- guided tour (first-visit walkthrough) --------------------------------
 const TOUR_STEPS=[
-  {target:'#sportSel',title:'Start here',body:'Pick a competition to unlock the full toolkit — live predictions, model accuracy tracking, brackets and more. "All sports" just shows a combined feed across everything.'},
-  {target:'.navbtn[data-v="matches"]',title:'Matches',body:'Every fixture, live scores, and the model’s pick shown right next to the market’s.'},
+  {target:'#sportSel',title:'Start here',body:'Pick a competition to unlock pregame predictions, model accuracy tracking, brackets and more. "All sports" shows a combined analysis feed.'},
+  {target:'.navbtn[data-v="matches"]',title:'Matches',body:'Every upcoming fixture with the model’s locked pregame pick shown next to the market’s.'},
   {target:'.navbtn[data-v="edge"]',title:'Model',body:'See exactly why the model favors a side — points, form, ratings, injuries and more, broken down factor by factor.'},
   {target:'.navbtn[data-v="score"]',title:'Scorecard',body:'Every locked pick, tracked in public. Nothing gets rewritten after the fact — good calls or bad ones.'},
   {target:'.navbtn[data-v="sandbox"]',title:'Sandbox',body:'Build a hypothetical matchup between any two teams and see what the model thinks, on the spot.'},
@@ -267,35 +267,33 @@ function _welcomeCardHTML(m){
   const pick=op?.name||pr.pick_name||'',model=op?.confidence??pr.confidence,market=op?.marketPct;
   const edge=model!=null&&market!=null?Math.round(Number(model)-Number(market)):null;
   const meter=model!=null?`<div class="welcomeMeter" aria-hidden="true"><i style="--welcome-p:${pct(model)}%"></i></div>`:'';
-  return `<div class="welcomeMatchMeta"><span>${esc(m._comp||DATA.comp_key||m.stage||'NEXT')}</span><span class="${m.status==='LIVE'?'isLive':''}">${m.status==='LIVE'?'LIVE':kickIn(m.kickoff)}</span></div><div class="welcomeTeams"><div><small>${esc(m.home?.code||'HOME')}</small><b>${esc(m.home?.name||'Home')}</b></div><em>${m.status==='LIVE'?esc(scoreText(m).replace(/<[^>]+>/g,'')):'v'}</em><div class="away"><small>${esc(m.away?.code||'AWAY')}</small><b>${esc(m.away?.name||'Away')}</b></div></div>${pick?`<div class="welcomeSignal"><span>MODEL</span><b>${esc(pick)} ${model!=null?esc(model)+'%':''}</b>${market!=null?`<i>market ${esc(market)}%${edge!=null?` · ${edge>0?'+':''}${edge} pt`:''}</i>`:''}</div>${meter}`:''}`;
+  return `<div class="welcomeMatchMeta"><span>${esc(m._comp||DATA.comp_key||m.stage||'NEXT')}</span><span>${kickIn(m.kickoff)}</span></div><div class="welcomeTeams"><div><small>${esc(m.home?.code||'HOME')}</small><b>${esc(m.home?.name||'Home')}</b></div><em>v</em><div class="away"><small>${esc(m.away?.code||'AWAY')}</small><b>${esc(m.away?.name||'Away')}</b></div></div>${pick?`<div class="welcomeSignal"><span>MODEL</span><b>${esc(pick)} ${model!=null?esc(model)+'%':''}</b>${market!=null?`<i>market ${esc(market)}%${edge!=null?` · ${edge>0?'+':''}${edge} pt`:''}</i>`:''}</div>${meter}`:''}`;
 }
 function renderWelcome(){
   const gate=$('#welcomeGate');if(!gate)return;
   const dismissed=welcomeDismissed();gate.hidden=dismissed;document.body.classList.toggle('welcomeOpen',!dismissed);if(dismissed){runCarousel('welcome',null);return}
-  const live=(DATA.matches||[]).filter(m=>m.status==='LIVE'||isVisibleUpcoming(m));
-  const soonest=[...live].sort(fixtureSort)[0],host=$('#welcomeNext');
+  const upcoming=(DATA.matches||[]).filter(isVisibleUpcoming);
+  const soonest=[...upcoming].sort(fixtureSort)[0],host=$('#welcomeNext');
   if(!host||!soonest)return;
   // most urgent kickoff shown first, then rotates through a small pool of
   // the other featured games (by watchability, narrowed to a near-term
   // window so a months-away fixture can't outrank this week's games)
-  const featured=nearTermPool(live.filter(m=>m.id!==soonest.id),4)
+  const featured=nearTermPool(upcoming.filter(m=>m.id!==soonest.id),4)
     .sort((a,b)=>(b.watchability||0)-(a.watchability||0)).slice(0,4);
   const pool=[soonest,...featured];
   host.innerHTML=_welcomeCardHTML(soonest);
   runCarousel('welcome',pool,host,_welcomeCardHTML,4500);
-  const state=$('#welcomeFeedState');if(state)state.textContent=(DATA.matches||[]).some(x=>x.status==='LIVE')?'LIVE NOW':'NEXT MATCH';
+  const state=$('#welcomeFeedState');if(state)state.textContent='PREGAME';
 }
 function heroMarquee(){
-  const up=(DATA.matches||[]).filter(m=>m.status==='LIVE'||(m.status==='UPCOMING'&&m.prediction&&m.markets));
+  const up=(DATA.matches||[]).filter(m=>m.status==='UPCOMING'&&m.prediction&&m.markets);
   if(!up.length)return '';
-  // marquee = live game first, else the next kickoff with the strongest read
-  const live=up.find(m=>m.status==='LIVE');
-  const pick=live||up.sort((a,b)=>(a.kickoff||'').localeCompare(b.kickoff||''))[0];
+  const pick=up.sort((a,b)=>(a.kickoff||'').localeCompare(b.kickoff||''))[0];
   const pr=pick.prediction||{};
   return `<div class="heroMatch" onclick="openMatchModal('${esc(String(pick.id))}')">
     <div class="heroMatchTeams">${esc(pick.home.name)} <span class="mvvs">v</span> ${esc(pick.away.name)}
       ${pick._comp?`<span class="compTag">${esc(pick._comp)}</span>`:''}
-      ${pick.status==='LIVE'?'<span class="heroLive">LIVE</span>':''}</div>
+      <span class="heroLive">PREGAME</span></div>
     ${pr.pick_name?`<div class="heroMatchPick">model: <b>${esc(pr.pick_name)}</b>${pr.confidence?` ${pr.confidence}%`:''}</div>`:''}
   </div>`;
 }
@@ -402,9 +400,9 @@ function renderMatches(){const M=DATA.matches||[];
   const missing=DATA._missing?`<div class="banner" style="grid-column:1/-1"><b>No ${esc(DATA.competition||'this sport')} data yet.</b> Fetch it once its season is available — run the matching start file (e.g. start_ucl.bat) or keep an eye out when the season begins.</div>`:'';
   const intro=isAll
     ?`<div class="viewIntro"><div><div class="vhead">Top matchups</div><p>The strongest and closest games across every sport. Choose a sport above to see its complete schedule.</p></div><span>${shown.length} featured</span></div>`
-    :`<div class="viewIntro"><div><div class="vhead">${t('Fixtures')}</div><p>Kickoff times, live scores, and the model read in one place.</p></div><span>${capped.length} games</span></div>`;
+    :`<div class="viewIntro"><div><div class="vhead">${t('Fixtures')}</div><p>Pregame model reads now; final scores and grading after the game.</p></div><span>${capped.length} games</span></div>`;
   const html=missing+landingHero()+intro+
-    (shown.length?shown.map(cardHTML).join(''):`<div class="empty" style="grid-column:1/-1">No live or upcoming matches to show.</div>`)+
+    (shown.length?shown.map(cardHTML).join(''):`<div class="empty" style="grid-column:1/-1">No upcoming matches to analyze.</div>`)+
     (remaining?`<div class="fixturePager"><span>Showing ${shown.length} of ${capped.length} fixtures</span><button class="actionbtn" onclick="MATCH_VISIBLE+=FIXTURE_PAGE_SIZE;renderMatches()">Load ${Math.min(FIXTURE_PAGE_SIZE,remaining)} more</button></div>`:'');
   $('#view-matches').innerHTML=html;enhanceMatchCards($('#view-matches'));}
 function renderResults(){const M=DATA.matches||[];
@@ -418,13 +416,13 @@ function cleanGroup(g){g=String(g||'').trim();if(!g)return'';if(/^GROUP_/i.test(
 function rowKey(n){return String(n||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim()}
 function ensureRow(map,team,group){const key=rowKey(team?.name);if(!key)return null;if(!map[key])map[key]={name:team?.name||'',code:team?.code||'',group:cleanGroup(group||team?.group),pld:0,w:0,d:0,l:0,gf:0,ga:0,gd:0,pts:0,form:'',live:false,results:[]};else{map[key].code=map[key].code||team?.code||'';map[key].group=map[key].group||cleanGroup(group||team?.group)}return map[key]}
 function addResult(row,gf,ga,live,kick){row.pld++;row.gf+=gf;row.ga+=ga;row.gd=row.gf-row.ga;if(gf>ga){row.w++;row.pts+=3;row.results.push([kick,'W'+(live?'*':'')])}else if(gf<ga){row.l++;row.results.push([kick,'L'+(live?'*':'')])}else{row.d++;row.pts+=1;row.results.push([kick,'D'+(live?'*':'')])}row.live=row.live||live}
-function deriveStandings(){if(Array.isArray(DATA.standings)&&DATA.standings.length)return DATA.standings;const rows={},M=DATA.matches||[];M.forEach(m=>{const g=cleanGroup(m.home?.group||m.away?.group||(/^Group/i.test(m.stage||'')?m.stage:''));if(!g)return;const h=ensureRow(rows,m.home,g),a=ensureRow(rows,m.away,g);const sh=m.score?.home,sa=m.score?.away;const live=m.status==='LIVE';if(h&&a&&(m.status==='FINISHED'||m.status==='LIVE')&&Number.isFinite(Number(sh))&&Number.isFinite(Number(sa))){addResult(h,Number(sh),Number(sa),live,m.kickoff||'');addResult(a,Number(sa),Number(sh),live,m.kickoff||'')}});Object.values(rows).forEach(r=>{r.results.sort((a,b)=>String(a[0]).localeCompare(String(b[0])));r.form=r.results.slice(-5).map(x=>x[1]).join(' ')});const by={};Object.values(rows).forEach(r=>{if(!r.group)return;(by[r.group] ||= []).push(r)});return Object.keys(by).sort((a,b)=>groupLetter(a).localeCompare(groupLetter(b))).map(g=>{by[g].sort((x,y)=>(y.pts-x.pts)||(y.gd-x.gd)||(y.gf-x.gf)||String(x.name).localeCompare(y.name));by[g].forEach((r,i)=>r.pos=i+1);return {group:g,teams:by[g]}})}
+function deriveStandings(){if(Array.isArray(DATA.standings)&&DATA.standings.length)return DATA.standings;const rows={},M=DATA.matches||[];M.forEach(m=>{const g=cleanGroup(m.home?.group||m.away?.group||(/^Group/i.test(m.stage||'')?m.stage:''));if(!g)return;const h=ensureRow(rows,m.home,g),a=ensureRow(rows,m.away,g);const sh=m.score?.home,sa=m.score?.away;if(h&&a&&m.status==='FINISHED'&&Number.isFinite(Number(sh))&&Number.isFinite(Number(sa))){addResult(h,Number(sh),Number(sa),false,m.kickoff||'');addResult(a,Number(sa),Number(sh),false,m.kickoff||'')}});Object.values(rows).forEach(r=>{r.results.sort((a,b)=>String(a[0]).localeCompare(String(b[0])));r.form=r.results.slice(-5).map(x=>x[1]).join(' ')});const by={};Object.values(rows).forEach(r=>{if(!r.group)return;(by[r.group] ||= []).push(r)});return Object.keys(by).sort((a,b)=>groupLetter(a).localeCompare(groupLetter(b))).map(g=>{by[g].sort((x,y)=>(y.pts-x.pts)||(y.gd-x.gd)||(y.gf-x.gf)||String(x.name).localeCompare(y.name));by[g].forEach((r,i)=>r.pos=i+1);return {group:g,teams:by[g]}})}
 function getThirdRace(){let third=Array.isArray(DATA.third_race)&&DATA.third_race.length?DATA.third_race.map(x=>({...x})):deriveStandings().flatMap(g=>(g.teams||[]).filter(t=>t.pos===3).map(t=>({team:t.name,name:t.name,code:t.code,group:g.group,pts:t.pts,gd:t.gd,gf:t.gf,live:t.live})));third.sort((a,b)=>(b.pts-a.pts)||(b.gd-a.gd)||(b.gf-a.gf)||String(a.team||a.name).localeCompare(String(b.team||b.name)));third.forEach((t,i)=>{t.in=i<8;t.team=t.team||t.name});return third}
 function getProjectedSlots(){const existing=DATA.projected_bracket?.slots||[];if(existing.length)return existing;const slots=[];deriveStandings().forEach(g=>{const gl=groupLetter(g.group);(g.teams||[]).forEach(t=>{if(t.pos===1||t.pos===2)slots.push({slot:`${gl}${t.pos}`,team:t.name,code:t.code,pts:t.pts,gd:t.gd,live:t.live})})});getThirdRace().slice(0,8).forEach((t,i)=>slots.push({slot:`3rd #${i+1}`,team:t.team,code:t.code,pts:t.pts,gd:t.gd,live:t.live}));return slots}
 /* removed duplicate (sourceName) */
 /* removed duplicate (renderGroups) */
 /* removed duplicate (bracketTeam) */
-function bracketMatch(km,ri,mi,last=false){const live=km.status==='LIVE',done=km.status==='FINISHED';const hs=km.score?.home,as=km.score?.away;const hw=done&&Number(hs)>Number(as),aw=done&&Number(as)>Number(hs);return `<div class="bracketMatch ${last?'':'hasNext'}"><div class="bmMeta"><span>${esc(km.stage||km.round||`Match ${mi+1}`)}</span><span>${live?'LIVE':done?'FT':km.kickoff?dt(km.kickoff):'TBD'}</span></div>${bracketTeam(km.home,km.home_code,'',done||live?hs:null,hw,live)}${bracketTeam(km.away,km.away_code,'',done||live?as:null,aw,live)}</div>`}
+function bracketMatch(km,ri,mi,last=false){const pending=km.status==='LIVE',done=km.status==='FINISHED';const hs=km.score?.home,as=km.score?.away;const hw=done&&Number(hs)>Number(as),aw=done&&Number(as)>Number(hs);return `<div class="bracketMatch ${last?'':'hasNext'}"><div class="bmMeta"><span>${esc(km.stage||km.round||`Match ${mi+1}`)}</span><span>${pending?'RESULT PENDING':done?'FT':km.kickoff?dt(km.kickoff):'TBD'}</span></div>${bracketTeam(km.home,km.home_code,'',done?hs:null,hw,false)}${bracketTeam(km.away,km.away_code,'',done?as:null,aw,false)}</div>`}
 /* removed duplicate (projectedRounds) */
 function projectedMatch(km,ri,mi,last=false){return `<div class="bracketMatch ${last?'':'hasNext'}"><div class="bmMeta"><span>${esc(km.stage||'Projected')}</span><span>${ri===0?'field':'path'}</span></div>${bracketTeam(km.home,km.home_code,km.home_slot,null,false,false)}${bracketTeam(km.away,km.away_code,km.away_slot,null,false,false)}</div>`}
 /* removed duplicate (renderBracket) */
@@ -838,7 +836,7 @@ const SYSTEM_UPDATES=[
 function markUpdatesRead(){localStorage.setItem('matchday.updates.lastSeen',new Date().toISOString());renderSystemUpdates()}
 function renderSystemUpdates(){const host=$('#view-updates');const seen=localStorage.getItem('matchday.updates.lastSeen');const latest='build 0726B';host.innerHTML=`<div class="updatesShell"><div class="updatesHero"><section class="updatesIntro"><h2>System updates</h2><span class="safePill">UI</span></section><aside class="buildCard"><div class="tiny">Current build</div><div class="build">${esc(latest)}</div><div class="hint">Last viewed: ${seen?esc(ago(seen)):'not marked yet'}</div><div class="updateActions"><button class="miniBtn" onclick="markUpdatesRead()">Mark as read</button><button class="miniBtn" onclick="setView('status')">Open Status</button></div></aside></div><section class="timeline"><div class="timelineHead"><h3>Release notes</h3><span>${SYSTEM_UPDATES.length} entries</span></div>${SYSTEM_UPDATES.map(u=>`<article class="updateItem"><div class="updateDate">${esc(u.date)}</div><div><div class="updateTitle"><span>${esc(u.title)}</span><span class="updateBadge">${esc(u.tag)}</span></div><ul>${u.items.map(i=>`<li>${esc(i)}</li>`).join('')}</ul></div></article>`).join('')}</section></div>`}
 
-function renderStatus(){const host=$('#view-status'),M=DATA.matches||[],st=deriveStandings(),third=getThirdRace();const live=M.filter(m=>m.status==='LIVE').length,up=M.filter(m=>m.status==='UPCOMING').length,fin=M.filter(m=>m.status==='FINISHED').length;const next=M.filter(isVisibleUpcoming).sort((a,b)=>(a.kickoff||'').localeCompare(b.kickoff||''))[0];host.innerHTML=`<div class="vhead">App Status</div><div class="hint" style="margin-bottom:10px">menu profile: <b>${navProfile()}</b> · sport file: <b>${DATA_FILE||'all (merged)'}</b></div><div class="status-grid"><div class="statuscard ${LAST_OK?'ok':'warn'}"><span class="slbl">Data file</span><div class="sval">${LAST_OK?'loaded':'not loaded'}</div><div class="hint">${LAST_ERROR?esc(LAST_ERROR):'Loaded'}</div></div><div class="statuscard info"><span class="slbl">Source</span><div class="sval">${esc(DATA.source_note||'unknown')}</div><div class="hint">${esc(DATA.standings_mode||'')}</div></div><div class="statuscard info"><span class="slbl">Updated</span><div class="sval">${DATA.updated?ago(DATA.updated):'unknown'}</div><div class="hint">${esc(DATA.updated||'—')}</div></div><div class="statuscard info"><span class="slbl">Matches</span><div class="sval">${M.length}</div><div class="hint">${live} live · ${up} upcoming · ${fin} finished</div></div><div class="statuscard info"><span class="slbl">Groups</span><div class="sval">${st.length}</div><div class="hint">${third.length} third-place teams tracked</div></div><div class="statuscard info"><span class="slbl">News Items</span><div class="sval">${(DATA.news||[]).length}</div><div class="hint">${newsSources().filter(s=>s!=='all').join(' · ')}</div></div></div><div class="btnline"><button class="actionbtn" onclick="load(true)">Reload Data Now</button><button class="actionbtn" onclick="setView('groups')">Open Groups</button><button class="actionbtn" onclick="setView('third')">Open Thirds</button><button class="actionbtn" onclick="setView('updates')">System Updates</button></div>`}
+function renderStatus(){const host=$('#view-status'),M=DATA.matches||[],st=deriveStandings(),third=getThirdRace();const up=M.filter(m=>m.status==='UPCOMING').length,fin=M.filter(m=>m.status==='FINISHED').length;const next=M.filter(isVisibleUpcoming).sort((a,b)=>(a.kickoff||'').localeCompare(b.kickoff||''))[0];host.innerHTML=`<div class="vhead">App Status</div><div class="hint" style="margin-bottom:10px">menu profile: <b>${navProfile()}</b> · sport file: <b>${DATA_FILE||'all (merged)'}</b></div><div class="status-grid"><div class="statuscard ${LAST_OK?'ok':'warn'}"><span class="slbl">Data file</span><div class="sval">${LAST_OK?'loaded':'not loaded'}</div><div class="hint">${LAST_ERROR?esc(LAST_ERROR):'Loaded'}</div></div><div class="statuscard info"><span class="slbl">Source</span><div class="sval">${esc(DATA.source_note||'unknown')}</div><div class="hint">${esc(DATA.standings_mode||'')}</div></div><div class="statuscard info"><span class="slbl">Updated</span><div class="sval">${DATA.updated?ago(DATA.updated):'unknown'}</div><div class="hint">${esc(DATA.updated||'—')}</div></div><div class="statuscard info"><span class="slbl">Matches</span><div class="sval">${M.length}</div><div class="hint">${up} upcoming · ${fin} final</div></div><div class="statuscard info"><span class="slbl">Groups</span><div class="sval">${st.length}</div><div class="hint">${third.length} third-place teams tracked</div></div><div class="statuscard info"><span class="slbl">News Items</span><div class="sval">${(DATA.news||[]).length}</div><div class="hint">${newsSources().filter(s=>s!=='all').join(' · ')}</div></div></div><div class="btnline"><button class="actionbtn" onclick="load(true)">Reload Data Now</button><button class="actionbtn" onclick="setView('groups')">Open Groups</button><button class="actionbtn" onclick="setView('third')">Open Thirds</button><button class="actionbtn" onclick="setView('updates')">System Updates</button></div>`}
 function lopt(v,label,cur){return `<option value="${v}" ${v===cur?'selected':''}>${label}</option>`}
 function opt(v,label,cur){return `<option value="${v}" ${String(cur)===String(v)?'selected':''}>${label}</option>`}function checked(v){return v?'checked':''}
 
@@ -850,12 +848,8 @@ function wlToggle(team){let a=wlLoad();if(a.includes(team))a=a.filter(t=>t!==tea
 function watchedMatches(){const w=wlLoad();if(!w.length)return [];return (DATA.matches||[]).filter(m=>w.includes(m.home.name)||w.includes(m.away.name));}
 function computeAlerts(){const out=[];const now=Date.now();
   (DATA.matches||[]).forEach(m=>{const watched=wlHas(m.home.name)||wlHas(m.away.name);
-    // live upset on ANY match the model flags
-    const up=m.prediction&&m.prediction.upset;
-    if(m.status==='LIVE'&&up&&up.radar){out.push({t:'upset',txt:`Live upset alert: ${esc(up.candidate_name)} live vs the favourite`,id:m.id});}
     if(!watched)return;
-    if(m.status==='LIVE'){out.push({t:'live',txt:`${esc(m.home.code)} ${m.score?.home??0}-${m.score?.away??0} ${esc(m.away.code)} — LIVE now`,id:m.id});}
-    else if(m.status==='UPCOMING'&&m.kickoff){const mins=Math.round((new Date(m.kickoff)-now)/60000);
+    if(m.status==='UPCOMING'&&m.kickoff){const mins=Math.round((new Date(m.kickoff)-now)/60000);
       if(mins>0&&mins<=90)out.push({t:'soon',txt:`${esc(m.home.name)} v ${esc(m.away.name)} — kickoff in ${mins}m`,id:m.id});}
   });
   return out.slice(0,6);}
@@ -898,8 +892,8 @@ function probabilitySparkline(m){
   const delta=Math.round(vals[vals.length-1]-vals[0]),cls=delta>0?'up':delta<0?'down':'flat';
   return `<span class="probTrend ${cls}" title="Model probability movement: ${delta>0?'+':''}${delta} points"><svg viewBox="0 0 56 20" aria-hidden="true"><polyline points="${coords}"/></svg><b>${delta>0?'+':''}${delta}</b></span>`;
 }
-function _alertEnabled(type){const map={soon:'alertsKickoff',live:'alertsLive',upset:'alertsUpset',model:'alertsModel',market:'alertsModel',data:'alertsData'};return SETTINGS[map[type]]!==false}
-function _alertIcon(type){return ({upset:'&#9889;',live:'&#9679;',soon:'&#9203;',model:'&#8597;',market:'&#8644;',data:'&#9888;'})[type]||'&#8226;'}
+function _alertEnabled(type){if(type==='live'||type==='upset')return false;const map={soon:'alertsKickoff',model:'alertsModel',market:'alertsModel',data:'alertsData'};return SETTINGS[map[type]]!==false}
+function _alertIcon(type){return ({soon:'&#9203;',model:'&#8597;',market:'&#8644;',data:'&#9888;'})[type]||'&#8226;'}
 function _alertKey(a){return `${a.t}:${a.id||'app'}:${a.txt}`}
 function _alertSeen(){return new Set(_alertReadJSON('matchday.alertsSeen',[]))}
 function computeSignalAlerts(){
@@ -933,7 +927,7 @@ function renderSignalAlerts(){
   const unseen=alerts.filter(a=>!seen.has(_alertKey(a))).length;
   if(count){count.textContent=unseen;count.hidden=!unseen}bell?.classList.toggle('hasAlerts',!!alerts.length);bell?.classList.toggle('hasUnseen',unseen>0);
   if(bar){const urgent=alerts.filter(a=>a.t==='live'||a.t==='upset'||a.t==='model').slice(0,3);bar.style.display=urgent.length?'':'none';bar.innerHTML=urgent.map(a=>`<button class="alertPill ${a.t}" onclick="openAlertMatch('${esc(a.id)}')">${_alertIcon(a.t)} ${esc(a.txt)}</button>`).join('')}
-  if(panel)panel.innerHTML=`<div class="alertCenterHead"><div><span>Signal center</span><b>${alerts.length?`${alerts.length} active`:'All quiet'}</b></div><button class="alertCenterClose" onclick="toggleAlertCenter(false)" aria-label="Close alerts">&times;</button></div><div class="alertCenterList">${alerts.length?alerts.map(a=>`<button class="alertItem ${a.t}" onclick="openAlertMatch('${esc(a.id)}')"><i>${_alertIcon(a.t)}</i><span><b>${a.t==='soon'?'Kickoff':a.t==='market'?'Model vs market':a.t[0].toUpperCase()+a.t.slice(1)}</b><small>${esc(a.txt)}</small></span></button>`).join(''):`<div class="alertEmpty"><span>&#10003;</span><b>No active signals</b><p>Star a team to receive kickoff, live-score, model-movement and market-gap alerts.</p></div>`}</div><div class="alertCenterFoot"><button onclick="markAlertsRead()">Mark all read</button><button onclick="toggleAlertCenter(false);setView('customize')">Alert settings</button></div>`;
+  if(panel)panel.innerHTML=`<div class="alertCenterHead"><div><span>Signal center</span><b>${alerts.length?`${alerts.length} active`:'All quiet'}</b></div><button class="alertCenterClose" onclick="toggleAlertCenter(false)" aria-label="Close alerts">&times;</button></div><div class="alertCenterList">${alerts.length?alerts.map(a=>`<button class="alertItem ${a.t}" onclick="openAlertMatch('${esc(a.id)}')"><i>${_alertIcon(a.t)}</i><span><b>${a.t==='soon'?'Kickoff':a.t==='market'?'Model vs market':a.t[0].toUpperCase()+a.t.slice(1)}</b><small>${esc(a.txt)}</small></span></button>`).join(''):`<div class="alertEmpty"><span>&#10003;</span><b>No active signals</b><p>Star a team to receive kickoff, model-movement and market-gap alerts.</p></div>`}</div><div class="alertCenterFoot"><button onclick="markAlertsRead()">Mark all read</button><button onclick="toggleAlertCenter(false);setView('customize')">Alert settings</button></div>`;
 }
 computeAlerts=computeSignalAlerts;
 renderAlerts=renderSignalAlerts;
