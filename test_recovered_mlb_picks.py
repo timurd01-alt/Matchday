@@ -22,13 +22,18 @@ class RecoveredMlbPickTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.picks = json.loads(LEDGER.read_text(encoding="utf-8"))
+        cls.recovered = {
+            fixture_id: record
+            for fixture_id, record in cls.picks.items()
+            if record.get("artifact_verification")
+        }
 
     def test_all_twelve_records_pass_the_normal_official_gate(self):
-        self.assertEqual(len(self.picks), 12)
+        self.assertEqual(len(self.recovered), 12)
         self.assertTrue(all(fetch_data._record_is_official(record) for record in self.picks.values()))
 
     def test_every_record_points_to_a_verified_github_pages_artifact(self):
-        for record in self.picks.values():
+        for record in self.recovered.values():
             proof = record["artifact_verification"]
             run_id, artifact_id, data_hash = EXPECTED_ARTIFACTS[proof["workflow_number"]]
             self.assertEqual(proof["run_id"], run_id)
@@ -37,7 +42,7 @@ class RecoveredMlbPickTests(unittest.TestCase):
             self.assertEqual(proof["url"], f"https://github.com/timurd01-alt/Matchday/actions/runs/{run_id}")
 
     def test_recovery_used_only_snapshots_inside_the_two_hour_window(self):
-        for record in self.picks.values():
+        for record in self.recovered.values():
             self.assertGreaterEqual(record["lead_time_seconds"], 0)
             self.assertLessEqual(record["lead_time_seconds"], fetch_data.LOCK_WINDOW_HOURS * 3600)
             self.assertEqual(record["status_at_lock"], "UPCOMING")

@@ -1,7 +1,7 @@
 {
   "name": "Matchday Analysis",
   "short_name": "Matchday",
-  "description": "Transparent pregame predictions and accountable postgame grading.",
+  "description": "Pregame sports predictions, matchup analysis, probability forecasts, and verified postgame grading.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

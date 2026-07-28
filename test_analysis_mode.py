@@ -8,9 +8,16 @@ ROOT = Path(__file__).resolve().parent
 class AnalysisModeTests(unittest.TestCase):
     def test_public_shell_promises_pregame_and_postgame_analysis(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
-        self.assertIn("Pregame Picks &amp; Postgame Model Analysis", html)
-        self.assertNotIn("Live Scores", html)
-        self.assertNotIn("LIVE FEED", html)
+        content = (ROOT / "content.html").read_text(encoding="utf-8")
+        manifest = (ROOT / "manifest.json").read_text(encoding="utf-8")
+        public_copy = "\n".join((html, content, manifest)).lower()
+        self.assertIn("Sports Predictions &amp; Matchup Analysis", html)
+        self.assertIn("Pregame model picks, probability forecasts, matchup analysis", html)
+        self.assertIn("Sports Prediction Recaps &amp; Analysis", content)
+        for unsupported_promise in (
+            "live scores", "live scoreboard", "real-time scores", "live feed"
+        ):
+            self.assertNotIn(unsupported_promise, public_copy)
 
     def test_live_aggregate_and_live_filter_are_not_rendered(self):
         panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")

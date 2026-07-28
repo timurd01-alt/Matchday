@@ -98,40 +98,42 @@ Object.assign(window.MD_I18N.ru,{
 const MD_RETIRED_FORMAT_COPY=[
   "Live scores, accountable model reads, and the market context behind every prediction.",
   "One calm live terminal.",
-  "Personalize your terminal."
+  "Personalize your terminal.",
+  "Know every match before it happens.",
+  "Pregame predictions, the market context behind them, and accountable postgame grading."
 ];
 Object.values(window.MD_I18N).forEach(dict=>MD_RETIRED_FORMAT_COPY.forEach(key=>delete dict[key]));
 Object.assign(window.MD_I18N.es,{
-  "Know every match before it happens.":"Conoce cada partido antes de que ocurra.",
-  "Pregame predictions, the market context behind them, and accountable postgame grading.":"Predicciones previas, su contexto de mercado y una evaluación responsable después del partido.",
+  "Explore every matchup before it starts.":"Explora cada enfrentamiento antes de que comience.",
+  "Pregame model picks, probability forecasts, matchup analysis, and verified postgame grading.":"Pronósticos del modelo antes del partido, previsiones de probabilidad, análisis del enfrentamiento y evaluación verificada después del partido.",
   "One calm analysis desk.":"Un solo panel de análisis, claro y ordenado.",
   "Personalize your analysis desk.":"Personaliza tu panel de análisis.",
   "Signal red":"Rojo de señal"
 });
 Object.assign(window.MD_I18N.fr,{
-  "Know every match before it happens.":"Comprenez chaque match avant qu'il ne commence.",
-  "Pregame predictions, the market context behind them, and accountable postgame grading.":"Prévisions d'avant-match, contexte du marché et évaluation transparente après le match.",
+  "Explore every matchup before it starts.":"Explorez chaque rencontre avant son coup d’envoi.",
+  "Pregame model picks, probability forecasts, matchup analysis, and verified postgame grading.":"Choix du modèle avant-match, prévisions de probabilité, analyse des rencontres et évaluation vérifiée après-match.",
   "One calm analysis desk.":"Un espace d'analyse unique et clair.",
   "Personalize your analysis desk.":"Personnalisez votre espace d'analyse.",
   "Signal red":"Rouge signal"
 });
 Object.assign(window.MD_I18N.de,{
-  "Know every match before it happens.":"Verstehe jedes Spiel, bevor es beginnt.",
-  "Pregame predictions, the market context behind them, and accountable postgame grading.":"Prognosen vor dem Spiel, Marktkontext und nachvollziehbare Auswertung danach.",
+  "Explore every matchup before it starts.":"Analysiere jede Begegnung vor dem Anpfiff.",
+  "Pregame model picks, probability forecasts, matchup analysis, and verified postgame grading.":"Modelltipps vor dem Spiel, Wahrscheinlichkeitsprognosen, Spielanalysen und geprüfte Auswertungen danach.",
   "One calm analysis desk.":"Ein ruhiger, übersichtlicher Analysebereich.",
   "Personalize your analysis desk.":"Personalisiere deinen Analysebereich.",
   "Signal red":"Signalrot"
 });
 Object.assign(window.MD_I18N.pt,{
-  "Know every match before it happens.":"Conheça cada jogo antes de começar.",
-  "Pregame predictions, the market context behind them, and accountable postgame grading.":"Previsões pré-jogo, contexto de mercado e avaliação responsável após o jogo.",
+  "Explore every matchup before it starts.":"Explore cada confronto antes de começar.",
+  "Pregame model picks, probability forecasts, matchup analysis, and verified postgame grading.":"Palpites do modelo antes do jogo, previsões de probabilidade, análise do confronto e avaliação verificada após o jogo.",
   "One calm analysis desk.":"Um painel de análise simples e organizado.",
   "Personalize your analysis desk.":"Personalize seu painel de análise.",
   "Signal red":"Vermelho de sinal"
 });
 Object.assign(window.MD_I18N.ru,{
-  "Know every match before it happens.":"Разберитесь в каждом матче до его начала.",
-  "Pregame predictions, the market context behind them, and accountable postgame grading.":"Предматчевые прогнозы, рыночный контекст и прозрачная оценка после игры.",
+  "Explore every matchup before it starts.":"Изучите каждый матч до его начала.",
+  "Pregame model picks, probability forecasts, matchup analysis, and verified postgame grading.":"Предматчевые прогнозы модели, вероятностные оценки, анализ матчей и проверенная оценка результатов после игры.",
   "One calm analysis desk.":"Единая спокойная панель аналитики.",
   "Personalize your analysis desk.":"Настройте панель аналитики.",
   "Signal red":"Сигнальный красный"
