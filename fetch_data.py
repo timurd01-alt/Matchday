@@ -3536,13 +3536,21 @@ def _load_picks():
     return {}
 
 def _save_picks(p):
+    """Atomically persist the integrity ledger or fail the whole fetch.
+
+    A ledger write is not optional output: allowing this error to be swallowed
+    lets fresh predictions deploy while their official locks disappear.
+    """
+    tmp = PICKS_FILE + ".tmp"
     try:
-        tmp = PICKS_FILE + ".tmp"
         with open(tmp, "w", encoding="utf-8") as f:
             json.dump(p, f, ensure_ascii=False, indent=1)
+            f.flush()
+            os.fsync(f.fileno())
         os.replace(tmp, PICKS_FILE)
     except Exception as e:
         DIAG.append(f"picks save failed: {e}")
+        raise RuntimeError(f"could not persist {PICKS_FILE}") from e
 
 def _market_fields(pr, mk):
     """Derive the market-comparison fields for a pick from current market odds.
@@ -3841,6 +3849,7 @@ def update_scorecard(matches):
     fields backfill once odds appear if they weren't in yet at lock time.
     A fixture first seen after kickoff is never admitted to the official record."""
     picks = _load_picks(); dirty = _quarantine_legacy_records(picks)
+    expected_locks = set()
     dirty = _apply_wc_result_migration(picks) or dirty
     by_fixture = defaultdict(list)
     for key, stored in picks.items():
@@ -3851,6 +3860,8 @@ def update_scorecard(matches):
         mid = str(m.get("id"))
         pr = m.get("prediction"); mk = (m.get("markets") or {}).get("1x2") or {}
         decision = _lock_decision(m)
+        if pr and decision["state"] == "eligible":
+            expected_locks.add(mid)
         should_lock = bool(pr and mid not in picks and decision["state"] == "eligible")
         if should_lock:
             prior_official = [
@@ -3935,6 +3946,17 @@ def update_scorecard(matches):
             dirty = dirty or before != after
     if dirty:
         _save_picks(picks)
+    # A successful fetch is allowed to deploy only if every fixture currently
+    # inside the lock window exists both in memory and in the file just written.
+    # This converts the historical silent "predictions visible, ledger absent"
+    # state into a loud failed job that the scheduler retries.
+    if expected_locks:
+        persisted = _load_picks()
+        missing = sorted(mid for mid in expected_locks
+                         if not _record_is_official(picks.get(mid) or {})
+                         or not _record_is_official(persisted.get(mid) or {}))
+        if missing:
+            raise RuntimeError("official pick lock persistence check failed: " + ", ".join(missing))
     # self-heal: correct any stored grading where a non-level scoreline was saved as
     # a draw (legacy corruption from penalty-inflated scores). Runs over ALL picks,
     # not just those in this fetch, so old rounds outside the fetch window get fixed.
