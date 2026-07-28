@@ -27,6 +27,14 @@ Odds are fetched only for upcoming games close to kickoff and cached to conserve
 
 Displayed confidence is the selected outcome's probability, not a promise that the outcome will happen. Projected margin is derived from the same win probabilities and should be read as a matchup estimate, not a separately trained exact-score forecast.
 
+## Outcome Tree
+
+Outcome Tree combines exact published outcomes from different games into one model scenario. If selected event probabilities are `p1`, `p2`, and `p3`, the displayed joint probability is `p1 x p2 x p3`. The fair decimal and American odds are alternate representations of that same model probability, not sportsbook prices.
+
+The multiplication assumes the selected games are independent. Real sports events can be correlated through shared teams, injuries, scheduling, tournament incentives, or common information, so the combined estimate can be too high or too low. Matchday warns when selected events share a team, but it does not currently estimate those correlations. Only one exact result can be selected per game; in sports with draws, "Team wins" and "Draw" are separate outcomes, so a team-loss selection does not silently include a draw.
+
+Outcome Tree uses locked prediction snapshots when they exist and otherwise uses the current published probability. It does not improve the underlying prediction: missing talent, pitcher, injury, lineup, or market inputs carry into the combined estimate. It is a scenario-analysis tool, not a betting recommendation or staking calculator.
+
 ## Upsets and risk
 
 Upset Radar identifies market underdogs that the model rates more competitively than the consensus price. A radar flag is not automatically an official upset pick. Selecting the underdog requires additional probability, volatility, and market-gap checks; when a current market is unavailable, the model normally remains conservative rather than forcing a risky call.
