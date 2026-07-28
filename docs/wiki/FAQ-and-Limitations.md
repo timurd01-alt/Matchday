@@ -1,5 +1,21 @@
 # FAQ and Limitations
 
+## Is Matchday a live-score app?
+
+No. Matchday publishes pregame model analysis and postgame accountability. In-progress games are labeled **Result pending** until a provider-confirmed final result arrives; the product does not promise live clocks, score alerts, or minute-by-minute updates.
+
+## When does a pick lock?
+
+A prediction becomes eligible for a verified public lock inside 12 hours of scheduled kickoff. The selected side and confidence do not change after that lock. Market-comparison fields can be filled later if odds arrive, but they cannot rewrite the pick.
+
+## Why is a game still result pending after it ended?
+
+The hourly fetch may not have run yet, or the provider may not have published a final status. Suspensions, postponements, event-identity mismatches, and provider corrections can also delay grading. Matchday waits for a verifiable final result rather than grading from an unofficial score.
+
+## How do I know a pick was really graded?
+
+The scorecard counts only records that were verified as locked before kickoff and persisted with a final result and hit/miss field. The fetch fails if an expected lock or grade is missing after the ledger write. Generated recaps use the same verified record.
+
 ## Is Matchday an official league product?
 
 No. Matchday is an independent analytics project and does not imply endorsement by a league, team, poll, sportsbook, or data provider.
@@ -26,7 +42,7 @@ Coverage varies by sport, provider, subscription, time of season, and proximity 
 
 ## Can historical results change?
 
-Providers can correct scores, statuses, player statistics, or event identities after publication. Matchday caches data for reliability and quota control, so corrections may not appear instantly.
+Providers can correct scores, statuses, player statistics, or event identities after publication. Matchday caches data for reliability and quota control, so corrections may not appear instantly. A correction can update official result facts but does not rewrite the original locked pick.
 
 ## What are the main model limitations?
 

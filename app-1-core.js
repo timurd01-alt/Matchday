@@ -25,11 +25,16 @@ function runCarousel(key,items,host,renderFn,intervalMs){
     host.dataset.carouselBound='1';
   }
 }
-const DEFAULT_SETTINGS={accent:'green',density:'normal',panel:'glass',defaultView:'matches',refresh:60,showInsight:true,showFinished:false,showDetails:false,favoriteTeam:'',alertsKickoff:true,alertsLive:false,alertsUpset:false,alertsModel:true,alertsData:true};
+const DEFAULT_SETTINGS={accent:'green',density:'normal',panel:'glass',defaultView:'matches',refresh:900,showInsight:true,showFinished:false,showDetails:false,favoriteTeam:'',alertsKickoff:true,alertsLive:false,alertsUpset:false,alertsModel:true,alertsData:true};
 let SETTINGS={...DEFAULT_SETTINGS};try{SETTINGS={...DEFAULT_SETTINGS,...JSON.parse(localStorage.getItem('matchday.settings')||'{}')}}catch(e){}
 // Refresh cadence is product-controlled so visitors cannot accidentally create
 // excessive polling or make the dashboard feel stale.
-SETTINGS.refresh=60;
+SETTINGS.refresh=900;
+// The analysis format intentionally has no in-game score or upset alerts.
+// Clear older locally-saved preferences so the removed alert types cannot
+// quietly reappear for returning visitors.
+SETTINGS.alertsLive=false;
+SETTINGS.alertsUpset=false;
 let LANG='';try{LANG=localStorage.getItem('matchday.lang')||''}catch(e){}
 function translateUiText(source,dict){
   if(!LANG||!dict||!source)return source;
@@ -309,7 +314,7 @@ function landingHero(){
     <div class="heroRow">${rec}</div>
     ${heroMarquee()}
     <div class="heroActions">
-      <button class="btmbtn heroBtn" onclick="heroDismiss()">Enter the terminal</button>
+      <button class="btmbtn heroBtn" onclick="heroDismiss()">Open the analysis</button>
       <button class="btmbtn heroBtn ghost" onclick="heroDismiss();setView('community')">Think you can beat the model?</button>
     </div>
   </div>`;

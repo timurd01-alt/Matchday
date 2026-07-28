@@ -1564,7 +1564,7 @@ def _upset_adjustment(home, away, markets, m, why, blend, two_way=False):
     # Default closed, not open: with no market to check the underdog pick
     # against, the only thing allowed to flip the pick to the dog is real
     # box-score dominance (strong_box_override below). Odds are now gated to
-    # within 24h of kickoff to save quota, so "no market yet" is the common
+    # within 3h of kickoff to save quota, so "no market yet" is the common
     # case for most of a match's display life, not a rare edge case -- an
     # open-by-default gate here would mean the model's riskiest calls (upset
     # picks) go out with no safety check most of the time.
@@ -3546,7 +3546,7 @@ def _quarantine_legacy_records(picks):
     """Move unverifiable entries aside while preserving every original field.
 
     Moving the key lets the same fixture receive a new verified lock when it
-    eventually enters the two-hour window.  The legacy payload itself remains
+    eventually enters the 12-hour publication window. The legacy payload remains
     in the ledger and in the scorecard's separate unverified summary.
     """
     changed = False
@@ -5168,7 +5168,7 @@ def main():
                 pass  # diagnostics are best-effort; never let this mask the original failure
         if not loop: break
         if live:
-            print(f"LIVE — refreshing in {LIVE_SECONDS}s  (Ctrl+C to stop)")
+            print(f"Result pending — checking again in {LIVE_SECONDS // 60} min  (Ctrl+C to stop)")
             time.sleep(LIVE_SECONDS)
         else:
             print(f"Idle — refreshing in {IDLE_MINUTES} min  (Ctrl+C to stop)")

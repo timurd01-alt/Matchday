@@ -15,7 +15,6 @@
   // and playoff/knockout stakes in fetch_data.py.
   const PREVIEW_HORIZON_DAYS=14;
   const UPCOMING_PREVIEWS_PER_COMP=2;
-  const LIVE_PREVIEWS_PER_COMP=1;
   const MATCH_RECAPS_PER_COMP=2;
   const SECOND_RECAP_MIN_WATCHABILITY=55;
   const GUIDE_ITEMS=[
@@ -147,9 +146,9 @@
   function filteredItems(){
     const query=searchQuery.trim().toLowerCase();
     const filtered=storyItems.filter(item=>matchesSport(item)&&(activeType==='all'||item.type===activeType)&&(!query||itemSearchText(item).includes(query)));
-    if(activeType!=='all')return filtered.sort((a,b)=>activeType==='preview'?(Number(b.live)-Number(a.live)||a.sortTime-b.sortTime):b.sortTime-a.sortTime).slice(0,18);
+    if(activeType!=='all')return filtered.sort((a,b)=>activeType==='preview'?(a.sortTime-b.sortTime):b.sortTime-a.sortTime).slice(0,18);
     const buckets={preview:[],recap:[],learn:[]};filtered.sort((a,b)=>b.sortTime-a.sortTime).forEach(item=>(buckets[item.type]||buckets.learn).push(item));
-    buckets.preview.sort((a,b)=>Number(b.live)-Number(a.live)||a.sortTime-b.sortTime||b.watchability-a.watchability);
+    buckets.preview.sort((a,b)=>a.sortTime-b.sortTime||b.watchability-a.watchability);
     const diverse=[],seen=new Set();
     for(let round=0;diverse.length<18;round++){
       let added=false;
@@ -162,7 +161,6 @@
   function statusMeta(item){
     if(item.type==='learn')return {label:'Reference',className:'reference'};
     if(item.type==='recap')return {label:item.resultLabel||'Final',className:item.hit===true?'hit':item.hit===false?'miss':'final'};
-    if(item.live)return {label:'Live',className:'live'};
     return {label:item.kickoffLabel||'Upcoming',className:'upcoming'};
   }
 
@@ -188,23 +186,21 @@
       const meta=compMeta(dataset.compKey),candidates=[];
       (dataset.matches||[]).forEach(match=>{
         const kick=timestamp(match.kickoff);
-        const live=match.status==='LIVE';
-        if(!match.prediction||!['LIVE','UPCOMING'].includes(match.status)||(!live&&kick<now-3*3600000))return;
+        if(!match.prediction||match.status!=='UPCOMING'||kick<now-3*3600000)return;
         const pick=match.prediction.pick_name||'No model lean';
         candidates.push({
           id:`preview-${meta.key}-${match.id}`,type:'preview',sports:[meta.sport],comp:meta.key,compLabel:meta.label,
           matchId:match.id,home:match.home?.name,away:match.away?.name,pick,confidence:match.prediction.confidence,
-          title:live?`${match.home?.name} vs ${match.away?.name} is live`:`What to watch: ${match.home?.name} vs ${match.away?.name}`,
+          title:`What to watch: ${match.home?.name} vs ${match.away?.name}`,
           summary:`The model leans ${pick}${match.prediction.confidence!=null?` at ${match.prediction.confidence}%`:''}. ${match.prediction.note||'The matchup remains open enough to reward context over certainty.'}`,
-          takeaway:matchTakeaway(match),updated:match.kickoff,dataUpdated:dataset.updated,sortTime:live?now+86400000:kick,
-          kickoffLabel:live?'Live now':kick?formattedDate(match.kickoff,true):'Upcoming',live,minutes:3,
+          takeaway:matchTakeaway(match),updated:match.kickoff,dataUpdated:dataset.updated,sortTime:kick,
+          kickoffLabel:kick?formattedDate(match.kickoff,true):'Upcoming',minutes:3,
           url:dashboardUrl(meta.key,'edge',match.id),watchability:Number(match.watchability)||0,match
         });
       });
-      const live=candidates.filter(item=>item.live).sort((a,b)=>b.watchability-a.watchability);
-      const future=candidates.filter(item=>!item.live&&item.sortTime<=now+PREVIEW_HORIZON_DAYS*86400000)
+      const future=candidates.filter(item=>item.sortTime<=now+PREVIEW_HORIZON_DAYS*86400000)
         .sort((a,b)=>b.watchability-a.watchability||a.sortTime-b.sortTime);
-      selected.push(...live.slice(0,LIVE_PREVIEWS_PER_COMP),...future.slice(0,UPCOMING_PREVIEWS_PER_COMP));
+      selected.push(...future.slice(0,UPCOMING_PREVIEWS_PER_COMP));
     });
     return selected;
   }
@@ -251,7 +247,6 @@
   }
 
   function featuredItem(list){
-    const live=list.filter(item=>item.live).sort((a,b)=>b.watchability-a.watchability)[0];if(live)return live;
     const previews=list.filter(item=>item.type==='preview').sort((a,b)=>a.sortTime-b.sortTime);
     if(previews.length){const firstKick=previews[0].sortTime;return previews.filter(item=>item.sortTime<=firstKick+3*86400000).sort((a,b)=>b.watchability-a.watchability)[0]}
     return list.find(item=>item.type==='recap')||list[0];
@@ -290,7 +285,7 @@
   function renderBrief(){
     const host=byId('briefGrid');if(!host)return;
     const rows=allFilteredMatches(),now=Date.now();
-    const active=rows.filter(row=>['LIVE','UPCOMING'].includes(row.match.status)&&row.match.prediction).sort((a,b)=>Number(b.match.prediction?.confidence||0)-Number(a.match.prediction?.confidence||0));
+    const active=rows.filter(row=>row.match.status==='UPCOMING'&&row.match.prediction).sort((a,b)=>Number(b.match.prediction?.confidence||0)-Number(a.match.prediction?.confidence||0));
     const signal=active[0],matchOfDay=[...active].sort((a,b)=>Number(b.match.watchability||0)-Number(a.match.watchability||0))[0];
     const finished=rows.filter(row=>row.match.status==='FINISHED'&&row.match.prediction&&winnerSide(row.match)&&hasVerifiedModelCall(row.dataset,row.match)).sort((a,b)=>timestamp(b.match.kickoff)-timestamp(a.match.kickoff));
     const surprise=[...finished].filter(row=>winnerSide(row.match)!==row.match.prediction.pick).sort((a,b)=>Number(b.match.prediction.confidence||0)-Number(a.match.prediction.confidence||0))[0];
@@ -300,7 +295,7 @@
       signal?briefCard("Today's signal",`${signal.match.prediction.pick_name} ${signal.match.prediction.confidence}%`,`${signal.match.home?.name} vs ${signal.match.away?.name} carries the strongest current model probability.`,dashboardUrl(signal.meta.key,'edge',signal.match.id)):
         briefCard("Today's signal",'Waiting for a current prediction','The next signal appears when an upcoming matchup receives a model read.',dashboardUrl('','edge')),
       matchOfDay?briefCard('Match of the day',`${matchOfDay.match.home?.name} vs ${matchOfDay.match.away?.name}`,matchTakeaway(matchOfDay.match),dashboardUrl(matchOfDay.meta.key,'matches',matchOfDay.match.id),'View matchup'):
-        briefCard('Match of the day','No active matchup yet','The highest-watchability current game will appear here.'),
+        briefCard('Match of the day','No upcoming matchup yet','The highest-watchability pregame matchup will appear here.'),
       briefCard('Three things the model noticed',noticed||'No fresh factor notes yet',noticed?'The strongest signals across the current slate, without pretending any one factor is decisive.':'Factor notes appear with the next current predictions.',dashboardUrl('','edge'),'See every model read'),
       surprise?briefCard('Biggest surprise',`${winnerName(surprise.match)} changed the story`,matchTakeaway(surprise.match,true),dashboardUrl(surprise.meta.key,'matches',surprise.match.id),'Review the miss'):
         briefCard('Biggest surprise','No recent model miss in this view','That is not a claim of perfection—only that no graded miss is available for this filter.'),
@@ -352,7 +347,7 @@
   function renderFreshness(){
     const host=byId('freshnessLine');if(!host)return;
     const filtered=filteredDatasets().filter(dataset=>dataset.updated).sort((a,b)=>timestamp(b.updated)-timestamp(a.updated));
-    if(!filtered.length){host.textContent='No live data files are available for this filter; evergreen explainers remain accessible.';return}
+    if(!filtered.length){host.textContent='No current data files are available for this filter; evergreen explainers remain accessible.';return}
     const newest=filtered[0],oldest=filtered[filtered.length-1],oldStatus=dataStatus(oldest.updated);
     host.innerHTML=`<span class="freshDot ${oldStatus.className}"></span><b>${filtered.length} data ${filtered.length===1?'source':'sources'} loaded</b><span>Newest ${escapeHTML(timeAgo(newest.updated))}</span><span>Oldest ${escapeHTML(timeAgo(oldest.updated))}</span><span>${escapeHTML(oldStatus.label)}</span>`;
   }

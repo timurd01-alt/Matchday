@@ -125,6 +125,8 @@ class RenderAndSitemapTests(unittest.TestCase):
         self.assertIn("Open scorecard", html)
         self.assertIn("Explore similar games", html)
         self.assertIn("sport=nfl&amp;view=edge", html)
+        self.assertIn("pregame predictions, market context and postgame grading", html)
+        self.assertNotIn("live scores", html.lower())
 
     def test_regenerate_sitemap_includes_base_pages_and_every_post(self):
         gp.publish_recap_if_due("NFL", "NFL", SCORECARD, AWARDS)
@@ -158,6 +160,21 @@ class RenderAndSitemapTests(unittest.TestCase):
         public_match = feed["datasets"][0]["matches"][0]
         self.assertNotIn("news", public_match)
         self.assertNotIn("private", public_match["prediction"])
+
+    def test_public_content_feed_excludes_in_progress_games(self):
+        live = {
+            "id": "game-live", "kickoff": "2026-07-25T20:00:00Z", "status": "LIVE",
+            "home": {"name": "Alpha"}, "away": {"name": "Beta"},
+            "score": {"home": 1, "away": 0},
+            "prediction": {"pick": "h", "pick_name": "Alpha", "confidence": 61},
+        }
+        with open("data_mlb.json", "w", encoding="utf-8") as f:
+            json.dump({"competition": "MLB", "updated": "2026-07-25T20:30:00Z",
+                       "scorecard": SCORECARD, "matches": [live]}, f)
+        self.assertEqual(gp.generate_public_content_feed(), 1)
+        with open(gp.CONTENT_FEED_FILE, encoding="utf-8") as f:
+            feed = json.load(f)
+        self.assertEqual(feed["datasets"][0]["matches"], [])
 
 
 if __name__ == "__main__":

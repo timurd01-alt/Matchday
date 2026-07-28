@@ -92,6 +92,51 @@ Object.assign(window.MD_I18N.ru,{
 "Personalize your terminal.":"Настройте терминал.","These settings save locally in this browser/app window.":"Настройки сохраняются локально в этом браузере.","Accent color":"Цвет акцента","Language":"Язык","Card density":"Плотность карточек","Panel style":"Стиль панелей","Default tab":"Вкладка по умолчанию","Refresh rate":"Частота обновления","Display":"Отображение","Right insight panel":"Правая панель анализа","Match detail panels":"Детали матчей","Reset settings":"Сбросить настройки","Check app status":"Проверить статус","News cycle":"Лента новостей","All sources":"Все источники","No headlines yet.":"Новостей пока нет.","Latest from multiple sources":"Последнее из разных источников","No match in focus yet.":"Матча в фокусе пока нет."
 });
 
+// The welcome and settings copy now describes the pregame/postgame analysis
+// format. Remove the retired live-terminal keys, then register the current
+// source strings so returning non-English users do not see stale positioning.
+const MD_RETIRED_FORMAT_COPY=[
+  "Live scores, accountable model reads, and the market context behind every prediction.",
+  "One calm live terminal.",
+  "Personalize your terminal."
+];
+Object.values(window.MD_I18N).forEach(dict=>MD_RETIRED_FORMAT_COPY.forEach(key=>delete dict[key]));
+Object.assign(window.MD_I18N.es,{
+  "Know every match before it happens.":"Conoce cada partido antes de que ocurra.",
+  "Pregame predictions, the market context behind them, and accountable postgame grading.":"Predicciones previas, su contexto de mercado y una evaluación responsable después del partido.",
+  "One calm analysis desk.":"Un solo panel de análisis, claro y ordenado.",
+  "Personalize your analysis desk.":"Personaliza tu panel de análisis.",
+  "Signal red":"Rojo de señal"
+});
+Object.assign(window.MD_I18N.fr,{
+  "Know every match before it happens.":"Comprenez chaque match avant qu'il ne commence.",
+  "Pregame predictions, the market context behind them, and accountable postgame grading.":"Prévisions d'avant-match, contexte du marché et évaluation transparente après le match.",
+  "One calm analysis desk.":"Un espace d'analyse unique et clair.",
+  "Personalize your analysis desk.":"Personnalisez votre espace d'analyse.",
+  "Signal red":"Rouge signal"
+});
+Object.assign(window.MD_I18N.de,{
+  "Know every match before it happens.":"Verstehe jedes Spiel, bevor es beginnt.",
+  "Pregame predictions, the market context behind them, and accountable postgame grading.":"Prognosen vor dem Spiel, Marktkontext und nachvollziehbare Auswertung danach.",
+  "One calm analysis desk.":"Ein ruhiger, übersichtlicher Analysebereich.",
+  "Personalize your analysis desk.":"Personalisiere deinen Analysebereich.",
+  "Signal red":"Signalrot"
+});
+Object.assign(window.MD_I18N.pt,{
+  "Know every match before it happens.":"Conheça cada jogo antes de começar.",
+  "Pregame predictions, the market context behind them, and accountable postgame grading.":"Previsões pré-jogo, contexto de mercado e avaliação responsável após o jogo.",
+  "One calm analysis desk.":"Um painel de análise simples e organizado.",
+  "Personalize your analysis desk.":"Personalize seu painel de análise.",
+  "Signal red":"Vermelho de sinal"
+});
+Object.assign(window.MD_I18N.ru,{
+  "Know every match before it happens.":"Разберитесь в каждом матче до его начала.",
+  "Pregame predictions, the market context behind them, and accountable postgame grading.":"Предматчевые прогнозы, рыночный контекст и прозрачная оценка после игры.",
+  "One calm analysis desk.":"Единая спокойная панель аналитики.",
+  "Personalize your analysis desk.":"Настройте панель аналитики.",
+  "Signal red":"Сигнальный красный"
+});
+
 Object.assign(window.MD_I18N.es,{
 "Matchday orange":"Naranja Matchday","Electric blue":"Azul eléctrico","Pitch green":"Verde césped","Live red":"Rojo en vivo","Night purple":"Morado nocturno","Compact":"Compacta","Normal":"Normal","Spacious":"Espaciosa","Soft glass":"Cristal suave","Flat dark":"Oscuro plano",
 "Changes highlights, buttons and the brand dot.":"Cambia los destacados, los botones y el punto de la marca.","Translates the interface. Match data stays as provided by sources.":"Traduce la interfaz. Los datos deportivos se mantienen tal como los entregan las fuentes.","Compact fits more matches; spacious feels more premium.":"Compacta muestra más partidos; espaciosa ofrece una presentación más amplia.","Flat mode is lighter on older laptops.":"El modo plano consume menos recursos en equipos antiguos.","Selected when the page starts.":"Se abre al iniciar la página."

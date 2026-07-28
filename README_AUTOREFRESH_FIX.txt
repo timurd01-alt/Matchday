@@ -1,31 +1,24 @@
-Matchday auto-refresh fix
-=========================
+Matchday refresh and integrity notes
+====================================
 
-Replace only these launcher files in your Matchday folder:
+Matchday now operates as a pregame/postgame analysis product, not a live-score
+terminal.
 
-- app.py
-- start_app.bat
-- start_browser.bat
-- start_webview_old_mode.bat
-- start_with_mini.bat
-- fetch_once_show_errors.bat
+- Production fetches are scheduled hourly.
+- Picks become eligible for a verified lock inside 12 hours of kickoff.
+- A locked pick's side and confidence are immutable.
+- In-progress fixtures are displayed as "Result pending."
+- Only official final results grade the locked ledger.
+- Lock and grading persistence are verified before a successful fetch completes.
+- Pregame odds are requested only close to kickoff and cached to conserve quota.
+- News older than seven days, or without a usable publication date, is rejected.
 
-Optional helper:
-- fetch_loop_visible.bat
+Run one adaptive all-sport fetch:
 
-What this fixes:
+    python multi_fetch.py --once
 
-1. The launcher now always changes into the Matchday folder before running.
-2. The fetcher is forced to write to the exact data.json that the app serves.
-3. The batch files now also cd into the app folder, so shortcuts/VS Code do not make data.json update in the wrong place.
+Run the local scheduler:
 
-No UI, model formula, odds logic, data.json, config_keys.py, or API keys are changed.
+    python multi_fetch.py
 
-How to test:
-
-1. Run start_app.bat.
-2. The terminal should say: Data fetcher started in the background.
-3. It should later print: Auto-refresh wrote ...\data.json
-4. In the app, check Status/Updated time after the refresh interval.
-
-If you want to watch only the fetcher, run fetch_loop_visible.bat.
+Run the integrity regression suite shown in SETUP.md before deploying changes.

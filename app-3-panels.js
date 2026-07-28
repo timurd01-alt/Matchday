@@ -426,7 +426,7 @@ function matchStory(m){const pr=m.prediction;if(!pr)return '';
   if(up.triggered&&up.candidate_name&&up.candidate===official.side){
     lead=`<b>${esc(up.candidate_name)}</b> is the upset call — ${magnitude} the model rates high enough to back outright.`;
   }else if(radar&&up.candidate_name){
-    lead=`<b>${pickName}</b> is the official pick${conf?` at ${conf}%`:''}, but <b>${esc(up.candidate_name)}</b> is on the upset radar — ${magnitude} the model prices ${edge>0?`${edge} points above`:'above'} the market.${up.market_gate===false?' The gap is too wide to make it the pick, but it is live.':''}`;
+    lead=`<b>${pickName}</b> is the official pick${conf?` at ${conf}%`:''}, but <b>${esc(up.candidate_name)}</b> is on the upset radar — ${magnitude} the model prices ${edge>0?`${edge} points above`:'above'} the market.${up.market_gate===false?' The gap is too wide to make it the pick, so it remains a watch signal.':''}`;
   }else if(cls==='pickem'){
     lead=`<b>${pickName}</b> is the lean in what is essentially a coin-flip — the market can barely separate these two.`;
   }else{

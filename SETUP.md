@@ -1,67 +1,83 @@
-# Matchday Terminal — setup (v2)
+# Matchday analysis — local setup
 
-Files: `index.html` (dashboard), `fetch_data.py` (pulls data),
-`data.json` (what the page reads), `SETUP.md` (this). Keep all in one folder.
+Matchday is a static multi-sport analysis app backed by a Python data pipeline. It publishes pregame predictions, locks them before kickoff, and grades them after official final results. It is not designed to be a live-score service.
 
-## See it now (no keys)
-In VS Code, open the folder, then in the terminal:
+## Run the interface without provider keys
 
-    python -m http.server 8000
+From the repository folder:
 
-Open http://localhost:8000 — three sample matches. Tap a match to open the
-Markets / Stats / Lineups tabs.
+```powershell
+python -m http.server 8000
+```
 
-## Required keys (2 min each)
-1. football-data.org → https://www.football-data.org/client/register
-2. The Odds API       → https://the-odds-api.com/
-3. BALLDONTLIE        → https://www.balldontlie.io/account/
-4. College data       → https://collegefootballdata.com/key
-5. Sportmonks         → https://www.sportmonks.com/football-api/ (optional soccer detail)
+Open <http://localhost:8000>. The checked-in data files let you inspect the current interface without making provider requests.
 
-Open `config_keys.py`, paste them between the quotes, and save (Ctrl+S):
+## Provider credentials
 
-    FOOTBALL_DATA_KEY = "your_key"
-    ODDS_API_KEY      = "your_key"
-    BALLDONTLIE_KEY   = "your_key"
-    CFBD_KEY          = "your_college_key"
-    CBBD_KEY          = "your_college_key"  # use the same key here
-    SPORTMONKS_KEY    = "your_token"
+Create an ignored `config_keys.py` beside `fetch_data.py` and add only the providers you use:
 
-## Licensed detail feeds
-NBA and NFL schedules/scores use BALLDONTLIE's real free game feeds.
-The free tier does not include standings, leaders, injuries or player statistics,
-so Matchday leaves those sections unavailable instead of inventing data.
-NCAAF and NCAAM are live through CollegeFootballData and CollegeBasketballData.
-They share one key and use an eight-hour local provider cache so the background
-refresh loop stays within the free monthly allowance. NCAAM is restricted to the
-365 current Division I teams and retrieves the full season in documented date
-windows instead of silently stopping at the API's 3,000-game cap. MLB and NHL are
-intentionally out of the public launch scope for now.
-Soccer lineups, formations, injuries and match statistics come from Sportmonks.
-That optional detail requires provider credentials and the corresponding product access. One real-world note:
-official starting XIs are only published about 75 minutes before kickoff, so a
-match still hours away will show "drops ~75 min before kickoff" — that's normal.
+```python
+FOOTBALL_DATA_KEY = "your_key"
+ODDS_API_KEY = "your_key"
+BALLDONTLIE_KEY = "your_key"
+CFBD_KEY = "your_college_football_key"
+CBBD_KEY = "your_college_basketball_key"
+API_FOOTBALL_KEY = "your_api_sports_key"  # optional soccer detail
+SPORTMONKS_KEY = "your_token"             # optional soccer detail
+```
 
-## Pull live data
-    python fetch_data.py            (once)
-    python fetch_data.py --loop     (auto: ~45s while a match is live, else hourly)
+Never commit `config_keys.py`. The production workflow writes credentials from GitHub Actions secrets and removes the file before assembling the public site.
 
-Refresh the browser (F5). Sample banner disappears.
+## Current public coverage
 
-## Running setup
-- Terminal 1: python -m http.server 8000   (serves the page)
-- Terminal 2: python fetch_data.py --loop   (refreshes data)
-- Browser:    http://localhost:8000
+- Soccer: World Cup, Champions League, Premier League, La Liga, Serie A, Bundesliga, and Ligue 1
+- American football: NFL and NCAA football
+- Basketball: NBA and NCAA men's basketball
+- Baseball: MLB
 
-## What's in the app
-Four tabs at the top:
-- Matches: live + upcoming (finished hidden behind a toggle). Tap for Markets,
-  Stats (group, points, W-D-L, GD, form, H2H, absences) and Lineups (live subs).
-- Title: every team ranked by odds to win the tournament.
-- Bracket: the best-third-placed race (top 8 advance) plus the knockout rounds,
-  which fill in as the group stage finishes.
-- News: linked headlines from multiple public RSS sources.
+NHL is intentionally excluded while its provider access remains unresolved. Coverage within a supported sport still varies by provider, season, and account tier. Missing fields stay unavailable instead of being invented.
 
-Title odds, bracket and news need no extra key (Odds API key + public feeds).
-Twitter/X is not included — it has no free, reliable feed; the RSS sources above
-are the legitimate way to get diverse, well-known outlets.
+## Fetch data
+
+Run one competition directly:
+
+```powershell
+python fetch_data.py --mlb
+python fetch_data.py --epl
+```
+
+Run one adaptive round for every public competition:
+
+```powershell
+python multi_fetch.py --once
+```
+
+Run the local adaptive scheduler:
+
+```powershell
+python multi_fetch.py
+```
+
+The production workflow runs hourly. The scheduler may use longer caches for distant fixtures or dormant seasons, but checks result-pending and near-kickoff competitions hourly. Browser reloads cannot make an upstream provider publish a result sooner.
+
+## Prediction lifecycle
+
+1. Upcoming fixtures receive a model probability and selected outcome.
+2. Inside 12 hours of kickoff, the pick is written to the competition's `picks_log*.json` ledger as a verified pregame lock.
+3. The selected side and confidence are not rewritten. If odds arrive later, market-comparison fields may be added without changing the locked pick.
+4. In-progress games are shown as result pending, not as a live scoreboard.
+5. After the provider marks a game final, the locked record is graded and persisted. A failed persistence check fails the fetch instead of silently publishing an ungraded result.
+
+The Odds API is queried only for upcoming fixtures close to kickoff and the response is cached to protect quota. A missing market does not prevent the model from locking its independent prediction.
+
+## News and articles
+
+The news feed accepts dated articles no more than seven days old. Undated or stale entries are rejected. Generated matchup previews are pregame-only; recaps require a verified locked pick and a final result.
+
+## Test the integrity path
+
+```powershell
+python -m unittest test_analysis_mode test_news_freshness test_score_refresh test_multi_fetch test_pick_lock_persistence test_recovered_mlb_picks test_model_inputs test_provider_adapters test_security test_generate_posts test_backfill_history
+```
+
+See the [Wiki](https://github.com/timurd01-alt/Matchday/wiki) for product behavior and [PROVIDER_COMPLIANCE.md](PROVIDER_COMPLIANCE.md) for provider-specific notes.

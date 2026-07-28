@@ -19,14 +19,20 @@ Signals are coverage-aware. A new team, stale season record, or small head-to-he
 
 ## Model and market
 
-The model first creates its independent probability estimate. When valid market odds are present, Matchday removes the bookmaker margin and applies a bounded market blend. The market does not replace the model, and a missing market does not prevent a prediction.
+The model first creates its independent probability estimate. When valid market odds are present, Matchday removes the bookmaker margin and applies a bounded market blend. The market does not replace the model, and a missing market does not prevent a prediction or verified lock.
+
+Odds are fetched only for upcoming games close to kickoff and cached to conserve quota. If they arrive after the pick locks, Matchday can add market-comparison context without changing the locked outcome or confidence.
 
 ## Confidence and projected margin
 
-Displayed confidence is the selected outcome's probability, not a promise that the outcome will happen. Projected margin is derived from the same win probabilities and should be read as a matchup estimate, not a separately trained score forecast.
+Displayed confidence is the selected outcome's probability, not a promise that the outcome will happen. Projected margin is derived from the same win probabilities and should be read as a matchup estimate, not a separately trained exact-score forecast.
 
-## Evaluation
+## Upsets and risk
 
-Finished predictions are graded against real results. Matchday's research protocol calls for probability-focused evaluation—including Brier score, log loss, calibration, confidence intervals, and out-of-sample testing—rather than judging a model only by its raw win rate.
+Upset Radar identifies market underdogs that the model rates more competitively than the consensus price. A radar flag is not automatically an official upset pick. Selecting the underdog requires additional probability, volatility, and market-gap checks; when a current market is unavailable, the model normally remains conservative rather than forcing a risky call.
 
-See the repository's [MFTI research protocol](https://github.com/timurd01-alt/Matchday/blob/main/MFTI_RESEARCH_PROTOCOL.md) for the experimental forecast-trust framework. MFTI is a shadow research metric and does not alter the selected side or outcome probability.
+## Locking and evaluation
+
+Predictions become eligible for a verified public lock inside 12 hours of kickoff. The selected side and confidence are immutable after that lock. Final results grade the saved record; in-progress games remain result pending.
+
+Matchday emphasizes probability-focused evaluation—including Brier score, log loss, calibration, confidence intervals, and out-of-sample testing—rather than judging a model only by raw win rate. See [Prediction Lifecycle](Prediction-Lifecycle) for the persistence guarantees behind the public scorecard.

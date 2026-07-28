@@ -1,6 +1,7 @@
 {
-  "name": "Matchday Terminal",
+  "name": "Matchday Analysis",
   "short_name": "Matchday",
+  "description": "Transparent pregame predictions and accountable postgame grading.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

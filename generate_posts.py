@@ -234,7 +234,7 @@ def generate_public_content_feed():
         matches = [match for match in (data.get("matches") or [])
                    if isinstance(match, dict) and match.get("prediction")]
         active = sorted(
-            (match for match in matches if match.get("status") in {"LIVE", "UPCOMING"}),
+            (match for match in matches if match.get("status") == "UPCOMING"),
             key=lambda match: str(match.get("kickoff") or ""),
         )[:12]
         finished = sorted(
@@ -321,7 +321,7 @@ def render_post_html(post):
 <a href="../content.html?sport={_esc(content_sport)}#latest">Explore similar games</a>
 </nav>
 <div class="notice"><strong>Analytics only.</strong> Matchday does not offer betting advice. See the <a href="../qa.html">Q&amp;A page</a> for how predictions are built and the <a href="../legal.html">data sources and legal notice</a>.</div>
-<p class="foot"><a href="../index.html">Matchday</a> — live scores, odds and model-based predictions.</p>
+<p class="foot"><a href="../index.html">Matchday</a> — pregame predictions, market context and postgame grading.</p>
 </div>
 </body>
 </html>

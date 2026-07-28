@@ -42,10 +42,11 @@
   {"@type":"Question","name":"What is the opponent-adjusted rating?","acceptedAnswer":{"@type":"Answer","text":"It is a rating built only from a team's own results and the strength of who they played, correcting a team's raw scoring margin for whether their schedule has been easy or hard so far."}},
   {"@type":"Question","name":"Why does the model sometimes disagree with the betting market?","acceptedAnswer":{"@type":"Answer","text":"The market can price in information the model does not see yet, like late injury news or sharp betting activity. The model can weigh things the market is slower to move on, like recent underlying performance. Disagreement is reported as edge, not treated as the market being wrong."}},
   {"@type":"Question","name":"What does Upset Radar mean, and who is the underdog?","acceptedAnswer":{"@type":"Answer","text":"The underdog is defined by the consensus betting market: it is the team with the lower market-implied win probability, not simply the lower-ranked team or the side Matchday originally liked less. Upset Radar appears when Matchday gives that genuine market underdog a win probability at least six percentage points higher than the market does. The radar is a watch signal, not automatically the official pick; changing the pick to the underdog requires stricter probability, volatility, and market-gap checks."}},
-  {"@type":"Question","name":"How does Matchday track its own accuracy?","acceptedAnswer":{"@type":"Answer","text":"Every pick is locked before kickoff and graded automatically once the game finishes; picks are never rewritten afterward. In knockout games, the model pick is graded by the team that advances after extra time or penalties while the displayed score remains unchanged. Betting-market comparisons follow the market's own settlement rules. The Scorecard tab shows the full hit rate, calibration by confidence band, and which factors have actually been predictive recently."}},
+  {"@type":"Question","name":"How does Matchday track its own accuracy?","acceptedAnswer":{"@type":"Answer","text":"Every pick becomes eligible for a verified public lock inside 12 hours of kickoff and is graded only after an official final result; picks are never rewritten afterward. In knockout games, the model pick is graded by the team that advances after extra time or penalties while the displayed score remains unchanged. Betting-market comparisons follow the market's own settlement rules. The Scorecard tab shows the full hit rate, calibration by confidence band, and which factors have actually been predictive recently."}},
   {"@type":"Question","name":"Where does Matchday's data come from?","acceptedAnswer":{"@type":"Answer","text":"Licensed and free-tier sports data providers per sport, plus a market-odds provider and public RSS news feeds. The full list of sources and their terms is on the Legal page."}},
   {"@type":"Question","name":"Do I need an account, and is my data private?","acceptedAnswer":{"@type":"Answer","text":"No account is required. Personal settings like favorite team, watchlist, and appearance stay in your own browser's local storage rather than on a server. Full details are on the Legal page's privacy section."}},
-  {"@type":"Question","name":"How often does the data update?","acceptedAnswer":{"@type":"Answer","text":"On an automatic schedule that speeds up around live games and slows down when nothing is happening, so scores and predictions stay current without wasting API quota."}}
+  {"@type":"Question","name":"Is Matchday a live-score service?","acceptedAnswer":{"@type":"Answer","text":"No. Matchday is a pregame and postgame analysis product. In-progress games remain Result pending until the hourly pipeline receives a provider-confirmed final result suitable for grading."}},
+  {"@type":"Question","name":"How often does the data update?","acceptedAnswer":{"@type":"Answer","text":"Production runs an hourly pregame and postgame fetch. Odds are requested only for upcoming games close to kickoff and cached to conserve quota. Browser reloads read the latest published dataset; they do not force providers to publish a result sooner."}}
  ]
 }
 </script>
@@ -53,7 +54,7 @@
 <body>
 <main class="wrap">
   <a class="back" href="index.html">&larr; Back to Matchday</a>
-  <p class="eyebrow">MATCHDAY TERMINAL · Q&amp;A</p>
+  <p class="eyebrow">MATCHDAY ANALYSIS · Q&amp;A</p>
   <h1 class="brand">How the model<br>actually works.</h1>
   <p class="lead">Plain answers to what confidence, edge, and the model's ratings mean, why it sometimes disagrees with the market, and where the underlying data comes from.</p>
   <div class="meta"><span>Analytics only · not betting advice</span><span>No account required</span></div>
@@ -108,11 +109,11 @@
     <div class="qa">
       <div class="q">
         <h3>How does Matchday track its own accuracy?</h3>
-        <p>Every pick is locked before kickoff and graded automatically once the game finishes; picks are never rewritten afterward. In knockout games, the model pick is graded by the team that advances after extra time or penalties while the displayed score remains unchanged. Betting-market comparisons follow the market's own settlement rules. The Scorecard tab shows the full hit rate, calibration by confidence band, and which factors have actually been predictive recently.</p>
+        <p>Every pick becomes eligible for a verified public lock inside 12 hours of kickoff and is graded only after an official final result; picks are never rewritten afterward. The pipeline verifies that both the lock and grade persisted before a fetch succeeds. In knockout games, the model pick is graded by the team that advances after extra time or penalties while the displayed score remains unchanged. Betting-market comparisons follow the market's own settlement rules. The Scorecard tab shows the full hit rate, calibration by confidence band, and which factors have actually been predictive recently.</p>
       </div>
       <div class="q">
         <h3>Why didn't a pick change even though the market moved?</h3>
-        <p>Picks lock once a match becomes upcoming and stay locked — only the market-comparison numbers around it keep updating. That's deliberate: a model that could quietly rewrite its own picks after seeing new information wouldn't have an honest track record.</p>
+        <p>Picks become eligible for a verified lock inside 12 hours of scheduled kickoff and stay locked. If odds arrive later, only the market-comparison fields around the prediction can be filled; the selected side and confidence cannot change. That's deliberate: a model that could quietly rewrite its own picks after seeing new information wouldn't have an honest track record.</p>
       </div>
     </div>
     <div class="notice"><strong>See the receipts.</strong> The <a href="index.html">Matchday app's</a> Scorecard tab and the auto-generated model recaps linked from the Insights tab show this performance data directly, not just a claim.</div>
@@ -130,13 +131,17 @@
         <p>No account is required. Personal settings like favorite team, watchlist, and appearance stay in your own browser's local storage rather than on a server. Full details are on the <a href="legal.html#privacy">Legal page's privacy section</a>.</p>
       </div>
       <div class="q">
+        <h3>Is Matchday a live-score service?</h3>
+        <p>No. Matchday is a pregame and postgame analysis product. In-progress games remain <strong>Result pending</strong> until the hourly pipeline receives a provider-confirmed final result suitable for grading. It does not promise live clocks, score alerts, or minute-by-minute updates.</p>
+      </div>
+      <div class="q">
         <h3>How often does the data update?</h3>
-        <p>On an automatic schedule that speeds up around live games and slows down when nothing is happening, so scores and predictions stay current without wasting API quota.</p>
+        <p>Production runs an hourly pregame and postgame fetch. Odds are requested only for upcoming games close to kickoff and cached to conserve quota. Browser reloads read the latest published dataset; they do not force providers to publish a result sooner.</p>
       </div>
     </div>
   </section>
 
-  <p class="foot">© 2026 Matchday Terminal. This page explains how the product works; see the <a href="legal.html">Legal page</a> for terms, privacy, and data-source notices.</p>
+  <p class="foot">© 2026 Matchday Analysis. This page explains how the product works; see the <a href="legal.html">Legal page</a> for terms, privacy, and data-source notices.</p>
 </main>
 </body>
 </html>

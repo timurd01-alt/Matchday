@@ -1,5 +1,5 @@
 """
-Matchday Terminal — safe launcher
+Matchday Analysis — safe launcher
 ---------------------------------
 Starts the local server and opens Matchday in an Edge/Chrome app-style window.
 This version uses football-data.org for soccer fixtures/scores and BALLDONTLIE
@@ -10,7 +10,7 @@ market comparison and title odds.
 
 Run:                  python app.py
 Plain browser:        python app.py --browser
-No live fetcher:      python app.py --no-fetch
+No background fetch:  python app.py --no-fetch
 Old pywebview mode:   python app.py --webview
 """
 
@@ -167,7 +167,7 @@ def open_webview(url: str) -> bool:
         print("pywebview is not installed.")
         return False
     try:
-        webview.create_window("Matchday Terminal", url, width=1180, height=820, min_size=(420, 620))
+        webview.create_window("Matchday Analysis", url, width=1180, height=820, min_size=(420, 620))
         icon_path = HERE / "matchday.ico"
         try:
             webview.start(icon=str(icon_path) if icon_path.exists() else None)
@@ -180,7 +180,7 @@ def open_webview(url: str) -> bool:
 
 
 def keep_alive(httpd: ReusableThreadingHTTPServer) -> None:
-    print("\nKeep this window open while using Matchday Terminal.")
+    print("\nKeep this window open while using Matchday Analysis.")
     print("Press Enter here to stop the local server.\n")
     try:
         input()
