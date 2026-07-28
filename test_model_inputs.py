@@ -561,6 +561,17 @@ class CollegeTalentRecoveryTests(unittest.TestCase):
             persisted = json.load(handle)
         self.assertEqual(persisted["team 100"]["talent_source"], "cfbd_team_talent")
 
+    def test_tracked_verified_seed_covers_the_reported_msu_toledo_gap(self):
+        ratings_path = os.path.join(
+            os.path.dirname(os.path.abspath(__file__)), "ratings_ncaaf.json")
+        with open(ratings_path, encoding="utf-8") as handle:
+            ratings = json.load(handle)
+        msu = ratings["michigan state"]
+        toledo = ratings["toledo"]
+        self.assertEqual(msu["talent_source"], "cfbd_team_talent")
+        self.assertEqual(toledo["talent_source"], "cfbd_team_talent")
+        self.assertGreater(msu["talent_strength"], toledo["talent_strength"])
+
     def test_recovery_skips_provider_after_durable_coverage_exists(self):
         existing = {
             f"team {index}": {"talent_source": "cfbd_team_talent", "talent_strength": 1.0}
@@ -1086,6 +1097,20 @@ class TalentShareCurveTests(unittest.TestCase):
     above it (protects the original Build 0725B case), steeper below it
     (real bottom-tier teams pull apart from the pack instead of blurring
     toward it)."""
+
+    def setUp(self):
+        self.old_key, self.old_comp = fetch_data.COMP_KEY, fetch_data.COMP
+        self.old_ratings_file, self.old_ratings = fetch_data.RATINGS_FILE, fetch_data._RATINGS
+        fd, self.tmp_path = tempfile.mkstemp(suffix=".json")
+        with os.fdopen(fd, "w", encoding="utf-8") as handle:
+            json.dump({}, handle)
+        fetch_data.RATINGS_FILE = self.tmp_path
+        fetch_data._RATINGS = None
+
+    def tearDown(self):
+        fetch_data.COMP_KEY, fetch_data.COMP = self.old_key, self.old_comp
+        fetch_data.RATINGS_FILE, fetch_data._RATINGS = self.old_ratings_file, self.old_ratings
+        os.unlink(self.tmp_path)
 
     def test_at_or_above_the_competitive_floor_is_unchanged_from_the_flat_curve(self):
         for share in (0.58, 0.65, 0.826, 1.0):

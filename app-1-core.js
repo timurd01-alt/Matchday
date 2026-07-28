@@ -439,6 +439,10 @@ function renderThird(){const host=$('#view-third'),third=getThirdRace();if(!thir
 /* removed duplicate (renderNews) */
 
 const SYSTEM_UPDATES=[
+  {date:'Build 0728G',tag:'Fix',title:'Verified roster talent is restored during the current provider outage',items:[
+    'Seeded the derived model fields for 15 teams from the project\'s already live-verified 2025 CollegeFootballData spot checks, including Michigan State and Toledo. This is an immediate bridge while the account remains rate-limited; it does not copy or publish the provider\'s raw payload.',
+    'Michigan State-Toledo now has complete roster-talent coverage: MSU receives the positive talent edge and becomes the narrow model favorite despite Toledo\'s stronger prior-season record. The automatic full-field refresh will replace and expand this bridge when quota is available.'
+  ]},
   {date:'Build 0728F',tag:'Fix',title:'Roster talent can no longer disappear when the provider rate-limits a refresh',items:[
     'The live Michigan State-Toledo audit showed both roster inputs marked unavailable after CollegeFootballData returned HTTP 429, which zeroed the talent edge and left the dampened prior-season record to decide the game. The displayed 51% Toledo pick was therefore missing its most important preseason input.',
     'Talent enrichment now runs in one quota-light request before the broader data build and persists atomically to the tracked ratings file after every successful refresh. Later provider or cache failures therefore keep the last licensed snapshot instead of silently publishing zero roster talent.'

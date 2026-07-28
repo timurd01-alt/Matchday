@@ -100,6 +100,111 @@
   "squad_value_m": 0,
   "star_value_m": 0
  },
+ "boise state": {
+  "fifa_rank": 45,
+  "squad_value_m": 1060,
+  "star_value_m": 141,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 3.8833
+ },
+ "florida state": {
+  "fifa_rank": 45,
+  "squad_value_m": 1312,
+  "star_value_m": 175,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.8113
+ },
+ "georgia": {
+  "fifa_rank": 45,
+  "squad_value_m": 1500,
+  "star_value_m": 200,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 5.5
+ },
+ "illinois": {
+  "fifa_rank": 45,
+  "squad_value_m": 1122,
+  "star_value_m": 150,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.118
+ },
+ "kansas": {
+  "fifa_rank": 45,
+  "squad_value_m": 1172,
+  "star_value_m": 156,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.2947
+ },
+ "massachusetts": {
+  "fifa_rank": 45,
+  "squad_value_m": 468,
+  "star_value_m": 62,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 1.712
+ },
+ "memphis": {
+  "fifa_rank": 45,
+  "squad_value_m": 1129,
+  "star_value_m": 151,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.1443
+ },
+ "michigan state": {
+  "fifa_rank": 45,
+  "squad_value_m": 1186,
+  "star_value_m": 158,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.3473
+ },
+ "new mexico state": {
+  "fifa_rank": 45,
+  "squad_value_m": 196,
+  "star_value_m": 26,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.7173
+ },
+ "purdue": {
+  "fifa_rank": 45,
+  "squad_value_m": 1152,
+  "star_value_m": 154,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.228
+ },
+ "rutgers": {
+  "fifa_rank": 45,
+  "squad_value_m": 1154,
+  "star_value_m": 154,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.2327
+ },
+ "san jose state": {
+  "fifa_rank": 45,
+  "squad_value_m": 634,
+  "star_value_m": 85,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 2.3293
+ },
+ "toledo": {
+  "fifa_rank": 45,
+  "squad_value_m": 1071,
+  "star_value_m": 143,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 3.929
+ },
+ "uab": {
+  "fifa_rank": 45,
+  "squad_value_m": 739,
+  "star_value_m": 98,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 2.7043
+ },
+ "usc": {
+  "fifa_rank": 45,
+  "squad_value_m": 1333,
+  "star_value_m": 178,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.8903
+ },
  "Wolverines": {
   "fifa_rank": 21,
   "squad_value_m": 0,
