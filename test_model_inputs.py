@@ -129,12 +129,12 @@ class ModelInputTests(unittest.TestCase):
                          "penalties": {}}}
         self.assertEqual(fetch_data._resolve_score(raw), (3, 1, "h", (None, None), (1, 1)))
 
-    def test_lock_decision_requires_parseable_upcoming_two_hour_window(self):
+    def test_lock_decision_requires_parseable_upcoming_publication_window(self):
         now = fetch_data.datetime.datetime(2026, 7, 24, 12, tzinfo=fetch_data.datetime.timezone.utc)
         base = {"status": "UPCOMING", "kickoff": "2026-07-24T14:00:00Z"}
         self.assertEqual(fetch_data._lock_decision(base, now)["state"], "eligible")
         self.assertEqual(fetch_data._lock_decision({**base, "kickoff": "2026-07-24T12:00:00Z"}, now)["state"], "eligible")
-        self.assertEqual(fetch_data._lock_decision({**base, "kickoff": "2026-07-24T14:00:01Z"}, now)["state"], "wait")
+        self.assertEqual(fetch_data._lock_decision({**base, "kickoff": "2026-07-25T00:00:01Z"}, now)["state"], "wait")
         self.assertEqual(fetch_data._lock_decision({**base, "kickoff": "bad"}, now)["state"], "wait")
         self.assertEqual(fetch_data._lock_decision({**base, "kickoff": "2026-07-24T11:59:59Z"}, now)["state"], "quarantine")
         for status in ("LIVE", "FINISHED"):
@@ -1720,10 +1720,11 @@ class NewsRelevanceTests(unittest.TestCase):
         if old_existed:
             with open(data_path, encoding="utf-8") as f:
                 old_content = f.read()
+        published = fetch_data.datetime.datetime.now(fetch_data.datetime.timezone.utc).isoformat()
         with open(data_path, "w", encoding="utf-8") as f:
             json.dump({"news_scope": "EPL", "news": [
-                {"headline": "MLB rumors: Major trade candidate could miss rest of 2026", "source": "CBS Sports"},
-                {"headline": "Arsenal Mulling Move For Real Madrid Star Vinicius Junior", "source": "FOX Sports"},
+                {"headline": "MLB rumors: Major trade candidate could miss rest of 2026", "source": "CBS Sports", "published": published},
+                {"headline": "Arsenal Mulling Move For Real Madrid Star Vinicius Junior", "source": "FOX Sports", "published": published},
             ]}, f)
         try:
             fetch_data.COMP_KEY = "EPL"

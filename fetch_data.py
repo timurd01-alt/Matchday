@@ -234,6 +234,8 @@ OUTRIGHTS_URL = (f"https://api.the-odds-api.com/v4/sports/{COMP['outright']}/odd
                  "?regions=eu&markets=outrights&oddsFormat=decimal")
 OUTRIGHTS_CACHE_MIN = 60
 NEWS_CACHE_MIN = 20
+NEWS_MAX_AGE_DAYS = 7
+NEWS_FUTURE_TOLERANCE_HOURS = 24
 BALLDONTLIE_CACHE_MIN = 10
 BALLDONTLIE_ACTIVE_CACHE_MIN = 2
 BALLDONTLIE_SEASON_CACHE_MIN = 240  # season-to-date pull re-pages the whole season; cache for hours
@@ -2927,6 +2929,38 @@ def third_race(st, name_map, code_map):
 
 
 # -------- ESPN news + RSS feeds (keyless) : diverse updates --------------
+def _news_datetime(value):
+    text = str(value or "").strip()
+    if not text:
+        return None
+    try:
+        parsed = datetime.datetime.fromisoformat(text.replace("Z", "+00:00"))
+    except (TypeError, ValueError):
+        try:
+            parsed = parsedate_to_datetime(text)
+        except Exception:
+            return None
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=datetime.timezone.utc)
+    return parsed.astimezone(datetime.timezone.utc)
+
+
+def _news_is_fresh(item, now=None):
+    """Reject stale or undated headlines before cache/diversity processing."""
+    published = _news_datetime((item or {}).get("published"))
+    if published is None:
+        return False
+    current = _utc_now(now)
+    age = current - published
+    return (-datetime.timedelta(hours=NEWS_FUTURE_TOLERANCE_HOURS)
+            <= age <= datetime.timedelta(days=NEWS_MAX_AGE_DAYS))
+
+
+def _news_sort_key(item):
+    return _news_datetime((item or {}).get("published")) or datetime.datetime.min.replace(
+        tzinfo=datetime.timezone.utc)
+
+
 def _tag(el):
     return str(el.tag).split("}")[-1].lower()
 
@@ -3022,7 +3056,8 @@ def _load_previous_news():
             return []
         arr = old.get("news") or []
         if isinstance(arr, list):
-            return [item for item in arr[:80] if _news_relevant(item)]
+            return [item for item in arr[:80]
+                    if _news_relevant(item) and _news_is_fresh(item)]
     except Exception:
         pass
     return []
@@ -3032,7 +3067,7 @@ def _balanced_news(items, limit=48):
     """Interleave sources so one outlet cannot take over the News tab."""
     cleaned, seen = [], set()
     for item in items:
-        if not item.get("headline"):
+        if not item.get("headline") or not _news_is_fresh(item):
             continue
         item = dict(item)
         item["source"] = _source_label(item)
@@ -3058,7 +3093,7 @@ def _balanced_news(items, limit=48):
         cleaned.append(item)
 
     by_src = defaultdict(list)
-    for item in sorted(cleaned, key=lambda x: x.get("published") or "", reverse=True):
+    for item in sorted(cleaned, key=_news_sort_key, reverse=True):
         by_src[item.get("source") or "News"].append(item)
 
     srcs = sorted(by_src, key=lambda s: s.lower())
@@ -3085,7 +3120,7 @@ def fetch_news():
     items, seen = [], set()
 
     def add_item(item):
-        if not item.get("headline"):
+        if not item.get("headline") or not _news_is_fresh(item):
             return False
         item = dict(item)
         if not _news_relevant(item):
@@ -3107,6 +3142,7 @@ def fetch_news():
         try:
             root = ET.fromstring(_get_text(url, UA)); n = 0
             entries = [el for el in root.iter() if _tag(el) in ("item", "entry")]
+            candidates = []
             for it in entries:
                 title = _child_text(it, "title")
                 if not title:
@@ -3114,12 +3150,16 @@ def fetch_news():
                 src = _source_from_entry(it, feed_name)
                 desc = _child_text(it, "description", "summary", "content")
                 pub = _child_text(it, "pubDate", "published", "updated")
-                ok = add_item({"headline": _clean(title),
-                               "desc": _clean(desc)[:180],
-                               "published": _rfc_iso(pub) or pub,
-                               "link": _entry_link(it),
-                               "source": src,
-                               "feed": feed_name})
+                candidates.append({"headline": _clean(title),
+                                   "desc": _clean(desc)[:180],
+                                   "published": _rfc_iso(pub) or pub,
+                                   "link": _entry_link(it),
+                                   "source": src,
+                                   "feed": feed_name})
+            # Some search feeds return evergreen/archive pages ahead of recent
+            # reporting. Sort first, then apply the six-item publisher cap.
+            for candidate in sorted(candidates, key=_news_sort_key, reverse=True):
+                ok = add_item(candidate)
                 n += 1 if ok else 0
                 if n >= 6:
                     break
@@ -3131,15 +3171,13 @@ def fetch_news():
     current_sources = {_source_label(x) for x in items if x.get("headline")}
     previous_sources = {_source_label(x) for x in previous if x.get("headline")}
 
-    # This is the important loop fix: a temporary RSS failure should not replace
-    # a diverse feed with ESPN-only data in data.json.
+    # Carry prior headlines only when the current refresh genuinely lacks
+    # source coverage. Fresh multi-source results must replace the old batch.
     if len(current_sources) <= 1 and len(previous_sources) > 1:
         DIAG.append("news: RSS returned one source; preserved previous diverse feed")
         merged = _balanced_news(items + previous, limit=48)
     else:
-        merged = _balanced_news(items + previous, limit=48)
-        if previous and previous_sources - current_sources:
-            DIAG.append("news: merged previous feed to preserve source diversity")
+        merged = _balanced_news(items, limit=48)
 
     DIAG.append("news sources: " + ", ".join(sorted({_source_label(x) for x in merged})[:12]))
     _NEWS_CACHE["t"] = now; _NEWS_CACHE["data"] = merged
@@ -3683,7 +3721,10 @@ def apply_locked_picks(matches):
         m["prediction"] = _json_safe(snapshot)
 
 
-LOCK_WINDOW_HOURS = 2.0
+# Publish the slate well before kickoff. An hourly scheduler now gets many
+# independent chances to persist every pick, while the strict status/time gate
+# still makes post-kickoff admission impossible.
+LOCK_WINDOW_HOURS = 12.0
 
 _KNOCKOUT_STAGE_MARKERS = (
     "knockout", "playoff", "postseason", "round of", "last ",
@@ -3880,6 +3921,7 @@ def update_scorecard(matches):
     A fixture first seen after kickoff is never admitted to the official record."""
     picks = _load_picks(); dirty = _quarantine_legacy_records(picks)
     expected_locks = set()
+    expected_grades = set()
     dirty = _apply_wc_result_migration(picks) or dirty
     by_fixture = defaultdict(list)
     for key, stored in picks.items():
@@ -3890,6 +3932,11 @@ def update_scorecard(matches):
         mid = str(m.get("id"))
         pr = m.get("prediction"); mk = (m.get("markets") or {}).get("1x2") or {}
         decision = _lock_decision(m)
+        score = m.get("score") or {}
+        if (m.get("status") == "FINISHED"
+                and score.get("home") is not None and score.get("away") is not None
+                and _record_is_official(picks.get(mid) or {})):
+            expected_grades.add(mid)
         if pr and decision["state"] == "eligible":
             expected_locks.add(mid)
         should_lock = bool(pr and mid not in picks and decision["state"] == "eligible")
@@ -3906,7 +3953,7 @@ def update_scorecard(matches):
               and picks[mid].get("result") is None and picks[mid].get("market_pick") is None
               and mk.get("home_pct") is not None):
             # odds weren't available when this pick locked (fetch_odds() only runs
-            # within 24h of kickoff) — backfill the market-comparison fields now
+            # close to kickoff) — backfill the market-comparison fields now
             # that they exist. The pick itself (side/confidence) never changes.
             rec = picks[mid]
             locked_prediction = rec.get("prediction_snapshot") or {}
@@ -3980,13 +4027,19 @@ def update_scorecard(matches):
     # inside the lock window exists both in memory and in the file just written.
     # This converts the historical silent "predictions visible, ledger absent"
     # state into a loud failed job that the scheduler retries.
-    if expected_locks:
+    if expected_locks or expected_grades:
         persisted = _load_picks()
         missing = sorted(mid for mid in expected_locks
                          if not _record_is_official(picks.get(mid) or {})
                          or not _record_is_official(persisted.get(mid) or {}))
         if missing:
             raise RuntimeError("official pick lock persistence check failed: " + ", ".join(missing))
+        ungraded = sorted(mid for mid in expected_grades
+                          if (persisted.get(mid) or {}).get("result") not in ("h", "d", "a")
+                          or not isinstance((persisted.get(mid) or {}).get("model_hit"), bool)
+                          or not (persisted.get(mid) or {}).get("score"))
+        if ungraded:
+            raise RuntimeError("official pick grading persistence check failed: " + ", ".join(ungraded))
     # self-heal: correct any stored grading where a non-level scoreline was saved as
     # a draw (legacy corruption from penalty-inflated scores). Runs over ALL picks,
     # not just those in this fetch, so old rounds outside the fetch window get fixed.

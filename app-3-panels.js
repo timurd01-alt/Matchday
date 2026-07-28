@@ -89,7 +89,8 @@ async function load(manual=false){if(LOAD_TIMER){clearTimeout(LOAD_TIMER);LOAD_T
       (d.matches||[]).forEach(m=>{m._comp=(d.comp_key||keys[i].toUpperCase());merged.push(m);});
       const comp=d.comp_key||keys[i].toUpperCase();
       const compLabel=SPORT_LABELS[String(comp).toLowerCase()]||d.competition||comp;
-      news=news.concat((d.news||[]).slice(0,8).map(a=>({...a,_comp:a.competition||comp,feed:compLabel})));
+      const currentNews=(d.news||[]).filter(isFreshNews).sort((a,b)=>newsTime(b)-newsTime(a));
+      news=news.concat(currentNews.slice(0,8).map(a=>({...a,_comp:a.competition||comp,feed:compLabel})));
       if((d.updated||'')>latest)latest=d.updated;
       const top=(d.title_odds||[])[0];
       if(top)titleBySport.push({comp,label:compLabel,team:top.team,code:top.code,pct:top.pct});});
@@ -98,7 +99,7 @@ async function load(manual=false){if(LOAD_TIMER){clearTimeout(LOAD_TIMER);LOAD_T
     DATA=Object.assign({},base,{matches:merged,news:news,updated:latest,competition:'All sports',comp_key:'ALL',standings:[],third_race:[],scorers:[],leaders:{},scorecard:aggregateScorecards(results.some(Boolean)?results:[base]),title_by_sport:titleBySport});
   } else {
     const r=await fetch(DATA_FILE+'?_='+Date.now());if(!r.ok)throw new Error('HTTP '+r.status);DATA=await r.json();
-  }BYID={};(DATA.matches||[]).forEach(m=>BYID[m.id]=m);LAST_OK=true;LAST_ERROR='';const cn=$('#compName');if(cn)cn.textContent=DATA.competition?' · '+DATA.competition:'';const tb=document.querySelector('.navbtn[data-v="third"]');if(tb)tb.style.display=(DATA.third_race&&DATA.third_race.length)?'':'none';const gb2=document.querySelector('.navbtn[data-v="groups"]');if(gb2)gb2.style.display=(DATA.standings&&DATA.standings.length)?'':'none';$('#banner').innerHTML=DATA.markets_quota_out?`<div class="marketBanner"><b>Market odds temporarily unavailable.</b> Our monthly betting-market data quota is used up, so market comparisons are paused. The model's own predictions still work normally — market lines return when the quota resets.</div>`:'';applySportNav();renderStrip();renderInsight();renderCurrent();applyStaticI18n();renderAlerts()}catch(e){console.error(e);applySportNav();
+  }DATA.news=(DATA.news||[]).filter(isFreshNews).sort((a,b)=>newsTime(b)-newsTime(a));BYID={};(DATA.matches||[]).forEach(m=>BYID[m.id]=m);LAST_OK=true;LAST_ERROR='';const cn=$('#compName');if(cn)cn.textContent=DATA.competition?' · '+DATA.competition:'';const tb=document.querySelector('.navbtn[data-v="third"]');if(tb)tb.style.display=(DATA.third_race&&DATA.third_race.length)?'':'none';const gb2=document.querySelector('.navbtn[data-v="groups"]');if(gb2)gb2.style.display=(DATA.standings&&DATA.standings.length)?'':'none';$('#banner').innerHTML=DATA.markets_quota_out?`<div class="marketBanner"><b>Market odds temporarily unavailable.</b> Our monthly betting-market data quota is used up, so market comparisons are paused. The model's own predictions still work normally — market lines return when the quota resets.</div>`:'';applySportNav();renderStrip();renderInsight();renderCurrent();applyStaticI18n();renderAlerts()}catch(e){console.error(e);applySportNav();
   const sel=currentSportKey();
   if(sel&&(!DATA||((DATA.comp_key||'').toLowerCase()!==sel))){
     DATA={matches:[],news:[],standings:[],third_race:[],bracket:null,scorecard:null,title_odds:[],scorers:[],team_of_tournament:null,
@@ -211,17 +212,20 @@ function shortRoundName(name){return name.replace('Round of ','R').replace('Quar
 /* removed duplicate (renderBracket) */
 
 function _srcClean(x){x=String(x||'').replace(/\s+/g,' ').trim();if(!x)return'';x=x.replace(/^www\./i,'').replace(/\.com$/i,'');const map=[[/espn|espn fc/i,'ESPN'],[/bbc/i,'BBC Sport'],[/guardian/i,'The Guardian'],[/sky\s*sports|skysports/i,'Sky Sports'],[/cbs/i,'CBS Sports'],[/fox\s*sports|foxsports/i,'FOX Sports'],[/reuters/i,'Reuters'],[/associated\s*press|^ap$/i,'Associated Press'],[/fifa/i,'FIFA'],[/le\s*monde|lemonde/i,'Le Monde'],[/marca/i,'Marca'],[/goal/i,'Goal'],[/yahoo/i,'Yahoo Sports'],[/nbc/i,'NBC Sports'],[/google\s*news/i,'Google News']];for(const [re,n] of map)if(re.test(x))return n;return x.split('|')[0].trim()}
+function newsTime(a){const ts=Date.parse(a?.published||'');return Number.isFinite(ts)?ts:0}
+function isFreshNews(a){const ts=newsTime(a),age=Date.now()-ts;return !!ts&&age>=-24*3600000&&age<=7*86400000}
 function _srcFromTitle(a){const h=String(a.headline||a.title||'');const parts=h.split(/\s[-–—]\s/g).map(x=>x.trim()).filter(Boolean);if(parts.length>1){const tail=parts[parts.length-1];if(tail.length<=42&&!/world cup|football|soccer|latest|news|live/i.test(tail))return _srcClean(tail)}return''}
 function _srcFromLink(a){try{const u=new URL(a.link||a.url||'',location.href);let h=u.hostname.replace(/^www\./,'');if(h.includes('news.google.'))return'';if(h.includes('espn'))return'ESPN';if(h.includes('bbc'))return'BBC Sport';if(h.includes('theguardian'))return'The Guardian';if(h.includes('skysports'))return'Sky Sports';if(h.includes('cbssports'))return'CBS Sports';if(h.includes('foxsports'))return'FOX Sports';if(h.includes('reuters'))return'Reuters';if(h.includes('apnews'))return'Associated Press';if(h.includes('fifa'))return'FIFA';if(h.includes('marca'))return'Marca';if(h.includes('goal'))return'Goal';return _srcClean(h.split('.')[0])}catch(e){return''}}
 function sourceName(a){const raw=_srcClean(a.source_name||a.publisher||a.provider||a.source||a.feed_source||'');const feed=_srcClean(a.feed||'');const titleSrc=_srcFromTitle(a),linkSrc=_srcFromLink(a);const generic=s=>!s||/^(news|headlines|football|soccer|rss|google news|world cup)$/i.test(s);if(raw&&!generic(raw))return raw;if(titleSrc&&!generic(titleSrc))return titleSrc;if(linkSrc&&!generic(linkSrc))return linkSrc;if(feed&&!generic(feed))return feed;return raw||feed||'News'}
 function feedName(a){const f=_srcClean(a.feed||'');return f&&f!==sourceName(a)?f:''}
-function newsBuckets(){const buckets={};(DATA.news||[]).forEach((a,i)=>{const src=sourceName(a);(buckets[src] ||= []).push({...a,_idx:i})});return buckets}
+function newsBuckets(){const buckets={};(DATA.news||[]).filter(isFreshNews).forEach((a,i)=>{const src=sourceName(a);(buckets[src] ||= []).push({...a,_idx:i})});Object.values(buckets).forEach(items=>items.sort((a,b)=>newsTime(b)-newsTime(a)));return buckets}
 function newsSources(){const buckets=newsBuckets();return ['all',...Object.keys(buckets).sort((a,b)=>a.localeCompare(b))]}
 function diverseNews(limit=12){
-  const all=DATA.news||[],allSports=DATA.comp_key==='ALL'||DATA.competition==='All sports';
+  const all=(DATA.news||[]).filter(isFreshNews),allSports=DATA.comp_key==='ALL'||DATA.competition==='All sports';
   const buckets={};
   all.forEach((a,i)=>{const key=allSports?(a._comp||a.competition||'OTHER'):sourceName(a);(buckets[key]||=[]).push({...a,_idx:i})});
-  const keys=Object.keys(buckets).sort((a,b)=>a.localeCompare(b)),out=[];let row=0;
+  Object.values(buckets).forEach(items=>items.sort((a,b)=>newsTime(b)-newsTime(a)));
+  const keys=Object.keys(buckets).sort((a,b)=>newsTime(buckets[b][0])-newsTime(buckets[a][0])),out=[];let row=0;
   while(out.length<limit&&keys.length){let moved=false;for(const key of keys){const item=buckets[key][row];if(item){out.push(item);moved=true;if(out.length>=limit)break}}if(!moved)break;row++}
   const result=out.length?out:all.slice(0,limit),fav=favoriteNewsTerm();
   return fav?result.sort((a,b)=>Number(teamKey(`${b.headline||b.title||''} ${b.desc||''}`).includes(fav))-Number(teamKey(`${a.headline||a.title||''} ${a.desc||''}`).includes(fav))):result;
