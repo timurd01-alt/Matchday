@@ -78,6 +78,7 @@ IDLE_MINUTES = 60
 LIVE_SECONDS = 3600   # legacy local loop: in-progress games only need hourly result checks
 ODDS_CACHE_MIN = 180  # one pregame market snapshot per competition window
 OUT_FILE = "data.json"
+MODEL_SIGNAL_SCHEMA = 2  # class/talent provenance and separate championship market power
 
 FD_BASE  = "https://api.football-data.org/v4"
 
@@ -5256,6 +5257,11 @@ def build():
         bracketology = build_ncaam_bracketology(sports_tables)
     scorecard = update_scorecard(matches)
     apply_locked_picks(matches)
+    # Top-level marker survives immutable legacy prediction snapshots and lets
+    # multi_fetch detect that an otherwise fresh JSON file predates a model
+    # input/schema change. Bump only when every sport needs one clean rebuild.
+    for m in matches:
+        m["model_signal_schema"] = MODEL_SIGNAL_SCHEMA
     weekly_awards = build_weekly_awards(matches)
     try:
         from generate_posts import publish_recap_if_due

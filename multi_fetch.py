@@ -83,6 +83,7 @@ def _stale_source(key):
 # away, whenever the on-disk data is missing a field the current code
 # expects every match to carry.
 REQUIRED_MATCH_FIELDS = ["watchability"]
+REQUIRED_MATCH_VALUES = {"model_signal_schema": 2}
 
 
 def _missing_fields(key):
@@ -92,7 +93,8 @@ def _missing_fields(key):
         if not matches:
             return False
         sample = matches[0] or {}
-        return any(field not in sample for field in REQUIRED_MATCH_FIELDS)
+        return (any(field not in sample for field in REQUIRED_MATCH_FIELDS)
+                or any(sample.get(field) != value for field, value in REQUIRED_MATCH_VALUES.items()))
     except Exception:
         return True
 
