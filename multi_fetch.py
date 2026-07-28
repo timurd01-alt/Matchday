@@ -42,17 +42,12 @@ SPACING = 30          # seconds between two sports' fetches (quota safety)
 # the same run.
 TICK = 15             # scheduler wake-up interval
 RETRY_AFTER_ERROR = 15 * 60
-# One-shot override, remove after the next successful CI run: today's fixes
-# (name-resolution collision, real Top 25 polls, preseason projections, and
-# now _news_relevant()'s soccer-relevance gap letting NFL/MLB articles onto
-# EPL/UCL's News tab) change what every competition's fetch actually
-# produces, but .ci_fetch_state.json's cached last-fetch time means a
-# currently-dormant sport (12h cadence, off-season) won't re-run
-# fetch_data.py and pick any of it up until its normal cadence comes due on
-# its own -- which is what a real user saw more than once today: the
-# deployed CODE changed but the sport's DATA file didn't, since it simply
-# wasn't due for a refetch yet. Force every competition today's fixes touch.
-FORCE_REFETCH_ONCE = {"ncaaf", "ncaam", "nfl", "nba", "mlb", "epl", "ucl", "laliga", "seriea", "bundesliga", "ligue1"}
+ONCE_RETRIES = 2
+ONCE_RETRY_DELAY = 5
+# Keep this empty in committed code. Temporary cache-busting entries must be
+# removed after one successful run; otherwise every hourly job refetches all
+# sports and delays the competitions near the end of the queue.
+FORCE_REFETCH_ONCE = set()
 
 LIVE_EVERY = 60
 SOON_EVERY = 60 * 60
@@ -206,10 +201,20 @@ def run_once(state_path=".ci_fetch_state.json"):
     print(f"Multi-sport fetcher (one-shot): {', '.join(k for k, _ in SPORTS)}")
     due = [(k, f) for k, f in SPORTS if k in FORCE_REFETCH_ONCE or not os.path.exists(f"data_{k}.json")
            or _stale_source(k) or _missing_fields(k) or time.time() - last_fetched.get(k, 0) >= _interval_for(k)]
+    failed = []
     for i, (key, flag) in enumerate(due):
-        ok = _run_one(key, flag)
+        ok = False
+        for attempt in range(1, ONCE_RETRIES + 1):
+            ok = _run_one(key, flag)
+            if ok:
+                break
+            if attempt < ONCE_RETRIES:
+                print(f"  [{key}] retrying ({attempt + 1}/{ONCE_RETRIES})")
+                time.sleep(ONCE_RETRY_DELAY)
         if ok:
             last_fetched[key] = time.time()
+        else:
+            failed.append(key)
         if i < len(due) - 1:
             time.sleep(SPACING)
     due_keys = {k for k, _ in due}
@@ -224,6 +229,10 @@ def run_once(state_path=".ci_fetch_state.json"):
         print(f"  sitemap: {n} URLs")
     except Exception as e:
         print(f"  sitemap regen skipped: {e}")
+    if failed:
+        # Never assemble and deploy an old data file as a healthy refresh.
+        # Successful timestamps persist, while failures stay due next run.
+        raise RuntimeError("due sport refresh failed after retry: " + ", ".join(failed))
 
 
 if __name__ == "__main__":
