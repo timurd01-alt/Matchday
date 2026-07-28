@@ -37,6 +37,13 @@ class AnalysisModeTests(unittest.TestCase):
         self.assertIn("-webkit-line-clamp:2", css)
         self.assertNotIn("liveClock(m)</div>", cards)
 
+    def test_scorecard_only_calls_triggered_underdog_profiles_upset_picks(self):
+        panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
+        self.assertIn("underdog risk · ${name} ${score}/100", panels)
+        self.assertIn("upset pick · ${name} ${score}/100", panels)
+        self.assertIn("if(!p.upset_triggered)", panels)
+        self.assertNotIn('class="scsplit upsetTag">upset ${esc(', panels)
+
     def test_scheduled_deploy_is_hourly(self):
         workflow = (ROOT / ".github" / "workflows" / "deploy.yml").read_text(encoding="utf-8")
         self.assertIn("cron: '17 * * * *'", workflow)
