@@ -439,6 +439,15 @@ function renderThird(){const host=$('#view-third'),third=getThirdRace();if(!thir
 /* removed duplicate (renderNews) */
 
 const SYSTEM_UPDATES=[
+  {date:'Build 0728D',tag:'Model',title:'“Class” now means a real sport-specific talent signal',items:[
+    'College football now labels its 247 Team Talent Composite input as Roster talent edge; college basketball labels its narrower input as Recruiting edge; soccer uses Squad edge.',
+    'Championship futures no longer overwrite or masquerade as college talent. They remain a separate Championship market power factor, with reduced college weight because the signals overlap.',
+    'MLB, NFL, NBA and NHL now say when a real personnel or roster edge is unavailable instead of showing a generic class number sourced from market opinion. The model still uses result history, Elo, opponent-adjusted performance and real markets where available.',
+    'College talent and recruiting snapshots now keep a last-good cache, so a temporary provider or quota failure cannot erase the entire signal from a published build.'
+  ]},
+  {date:'Build 0728C',tag:'Fix',title:'Outcome Tree no longer prevents the whole site from loading',items:[
+    'The page referenced the new Outcome Tree script, but the deployment artifact forgot to include the file. That missing script stopped the dashboard at Loading. The artifact now packages it and a regression test protects the deploy list.'
+  ]},
   {date:'Build 0728B',tag:'Fix',title:'Team of the Tournament is finally a real eleven-player team',items:[
     'The completed Champions League page was calling six scorer-feed players a "Model-built XI" while leaving the entire defence and goalkeeper empty. It now shows UEFA\'s complete, attributed 2025/26 Team of the Season: one goalkeeper, four defenders, four midfielders and two forwards, with a direct link to the organizer\'s published selection.',
     'Official organizer selections are explicitly labeled as official-source editorial content, never as Matchday model output. Scoring figures appear only for players covered by Matchday\'s licensed scorer feed; the remaining cards say "Official XI" instead of inventing statistics.',

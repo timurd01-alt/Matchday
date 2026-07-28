@@ -439,6 +439,73 @@ class RatingsLookupTests(unittest.TestCase):
         self.assertEqual(alabama["squad_value_m"], 1500)
         self.assertLess(aamu["squad_value_m"], alabama["squad_value_m"])
 
+    def test_college_talent_and_championship_market_are_separate_factors(self):
+        fetch_data.COMP_KEY = "NCAAF"
+        fetch_data.COMP = dict(fetch_data.COMPETITIONS["NCAAF"])
+        fetch_data.apply_recruiting_strength({"Michigan State": 100.0, "Toledo": 50.0})
+        fetch_data.apply_market_strength([
+            {"team": "Michigan State", "pct": 5.0},
+            {"team": "Toledo", "pct": 25.0},
+        ])
+        pred = fetch_data.predict(
+            {"name": "Michigan State", "pld": 0},
+            {"name": "Toledo", "pld": 0}, {},
+            {"stage": "Week 1", "weather": {}},
+        )
+        self.assertGreater(pred["why"]["class"], 0)
+        self.assertLess(pred["why"]["market_power"], 0)
+        self.assertEqual(pred["class_meta"]["label"], "Roster talent edge")
+        self.assertEqual(pred["class_meta"]["coverage"], "complete")
+
+    def test_mlb_market_power_is_not_mislabeled_as_personnel_class(self):
+        fetch_data.COMP_KEY = "MLB"
+        fetch_data.COMP = dict(fetch_data.COMPETITIONS["MLB"])
+        fetch_data.apply_market_strength([
+            {"team": "New York Yankees", "pct": 20.0},
+            {"team": "Oakland Athletics", "pct": 1.0},
+        ])
+        pred = fetch_data.predict(
+            {"name": "New York Yankees", "pld": 0},
+            {"name": "Oakland Athletics", "pld": 0}, {},
+            {"stage": "Regular", "weather": {}},
+        )
+        self.assertEqual(pred["why"]["class"], 0)
+        self.assertGreater(pred["why"]["market_power"], 0)
+        self.assertEqual(pred["class_meta"]["label"], "Personnel edge")
+        self.assertEqual(pred["class_meta"]["coverage"], "unavailable")
+
+
+class CollegeClassCacheTests(unittest.TestCase):
+    def setUp(self):
+        self.old_key, self.old_comp = fetch_data.COMP_KEY, fetch_data.COMP
+        self.old_cwd = os.getcwd()
+        self.tmp = tempfile.TemporaryDirectory()
+        os.chdir(self.tmp.name)
+        fetch_data.COMP_KEY = "NCAAF"
+        fetch_data.COMP = dict(fetch_data.COMPETITIONS["NCAAF"])
+
+    def tearDown(self):
+        fetch_data.COMP_KEY, fetch_data.COMP = self.old_key, self.old_comp
+        os.chdir(self.old_cwd)
+        self.tmp.cleanup()
+
+    def test_provider_failure_uses_stale_last_good_talent(self):
+        with open("college_ncaaf_talent_cache.json", "w", encoding="utf-8") as handle:
+            json.dump({"t": 1, "data": {"Michigan State": 812.4, "Toledo": 512.1}}, handle)
+        adapter = mock.Mock()
+        adapter.talent.side_effect = fetch_data.ProviderError("rate limited")
+        result = fetch_data.fetch_college_class_strength(adapter, "talent")
+        self.assertEqual(result["Michigan State"], 812.4)
+        self.assertTrue(any("last-good cache" in line for line in fetch_data.DIAG))
+
+    def test_fresh_talent_cache_avoids_another_provider_call(self):
+        with open("college_ncaaf_talent_cache.json", "w", encoding="utf-8") as handle:
+            json.dump({"t": fetch_data.time.time(), "data": {"Michigan State": 812.4}}, handle)
+        adapter = mock.Mock()
+        result = fetch_data.fetch_college_class_strength(adapter, "talent")
+        self.assertEqual(result, {"Michigan State": 812.4})
+        adapter.talent.assert_not_called()
+
 
 class PredictPriorBoostTests(unittest.TestCase):
     """A user-reported symptom on 2026-07-25: preseason predictions looked

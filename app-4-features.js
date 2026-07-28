@@ -541,8 +541,10 @@ function _v12OutcomeCard(m,op){
   const sideSign=side==='a'?-1:1;
   const pts=v=>`${v>0?'+':''}${v.toFixed(1)} pts`;
   const hasMarket=marketPct!=null;
-  const compareLabel1=hasMarket?'Market on pick':'Class edge';
-  const compareVal1=hasMarket?`${marketPct}%`:(why.class!=null?pts(why.class*sideSign):'—');
+  const classMeta=sportClassMeta(m?.prediction||{},m);
+  const compareLabel1=hasMarket?'Market on pick':(classMeta.label||'Personnel edge');
+  const classEdge=why.class!=null?why.class*sideSign:null;
+  const compareVal1=hasMarket?`${marketPct}%`:(classMeta.coverage==='unavailable'?'Not available':classEdge!=null?`${classMeta.coverage==='partial'?'Partial · ':''}${pts(classEdge)}`:'—');
   const compareLabel2=hasMarket?'Model edge':'Elo edge';
   const eloEdge=why.elo!=null?why.elo*sideSign:null;
   const compareCls2=hasMarket?edgeCls:(eloEdge==null?'edgeFlat':eloEdge>0?'edgePos':eloEdge<0?'edgeNeg':'edgeFlat');

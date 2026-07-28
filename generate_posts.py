@@ -45,7 +45,8 @@ PUBLIC_CONTENT_COMPETITIONS = (
 PUBLIC_CONTENT_KEYS = {key for key, _, _ in PUBLIC_CONTENT_COMPETITIONS}
 
 FACTOR_LABELS = {
-    "class": "team class/power rating", "form": "recent form", "gd": "goal difference",
+    "class": "talent or squad quality", "market_power": "championship market power",
+    "form": "recent form", "gd": "goal difference",
     "rest": "rest advantage", "pts": "points on the table", "record": "season record",
     "margin": "scoring margin", "rank": "poll rank", "srs": "opponent-adjusted rating",
     "elo": "Elo rating",

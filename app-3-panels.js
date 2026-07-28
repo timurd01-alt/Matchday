@@ -398,8 +398,20 @@ function _v4MarketPct(m,side){
   if(side==='d')return x.draw_pct;
   return null;
 }
+function sportClassMeta(pr,m){
+  if(pr?.class_meta)return pr.class_meta;
+  // Locked predictions created before class provenance was added keep their
+  // immutable snapshot. Derive only the honest display label here; pro-sport
+  // legacy "class" values were market proxies, so never present them as a
+  // roster/personnel edge.
+  const comp=String(m?._comp||DATA.comp_key||'').toUpperCase();
+  const labels={NCAAF:'Roster talent edge',NCAAM:'Recruiting edge',MLB:'Personnel edge',NFL:'Roster edge',NBA:'Star / rotation edge',NHL:'Roster / goalie edge'};
+  if(['MLB','NFL','NBA','NHL'].includes(comp))return {label:labels[comp],coverage:'unavailable'};
+  return {label:labels[comp]||'Squad edge',coverage:'partial'};
+}
 function _v4FactorRows(pr,m){
-  const labels={class:'team class',pts:'points',gd:scoreDiffLabel(m),record:'season record',margin:'scoring margin',rank:'poll rank',srs:'opponent-adjusted rating',form:'form',adv:'home field',rest:'rest',elo:'elo rating',h2h:'head-to-head',injuries:'injuries'};
+  const classMeta=sportClassMeta(pr,m),legacyMarketClass=!pr?.class_meta&&classMeta.coverage==='unavailable';
+  const labels={class:legacyMarketClass?'legacy championship market power':classMeta.label.toLowerCase(),market_power:'championship market power',pts:'points',gd:scoreDiffLabel(m),record:'season record',margin:'scoring margin',rank:'poll rank',srs:'opponent-adjusted rating',form:'form',adv:'home field',rest:'rest',elo:'elo rating',h2h:'head-to-head',injuries:'injuries'};
   const rows=[];
   if(pr&&pr.why){
     Object.entries(pr.why).filter(([k,v])=>labels[k]&&Math.abs(Number(v)||0)>=0.3)

@@ -241,6 +241,11 @@ BALLDONTLIE_ACTIVE_CACHE_MIN = 2
 BALLDONTLIE_SEASON_CACHE_MIN = 240  # season-to-date pull re-pages the whole season; cache for hours
 APISPORTS_CACHE_MIN = 30  # api-sports.io free tier caps at 100 req/day per sport
 COLLEGE_CACHE_MIN = 480  # eight-hour cache keeps both college feeds within a shared free-key quota
+# Roster talent/recruiting changes far more slowly than schedules.  Keep the
+# last successful whole-field snapshot for a week so a transient provider
+# error or quota response cannot silently turn every college "class" edge
+# into zero on the next published build.
+COLLEGE_CLASS_CACHE_MIN = 10080  # seven days; stale data is still a safe fallback on provider failure
 # Season player-stats leaders pull the *whole* field in one request (no
 # per-team looping -- see CollegeFootballDataAdapter.leaders() /
 # CollegeBasketballDataAdapter.leaders()), so it's cheap in call count but
@@ -1098,6 +1103,101 @@ def rating_parts(name):
     return {"fifa": fifa_n*w["fifa"], "value": val_n*w["squad_value"], "star": star_n*w["star"]}
 
 
+CLASS_SIGNAL_CONFIG = {
+    "NCAAF": {
+        "label": "Roster talent edge",
+        "source": "247Sports Team Talent Composite via CollegeFootballData",
+        "source_key": "cfbd_team_talent",
+        "note": "Multi-year current-roster talent composite; it measures roster quality, not program prestige.",
+    },
+    "NCAAM": {
+        "label": "Recruiting edge",
+        "source": "CollegeBasketballData team recruiting ratings",
+        "source_key": "cbbd_recruiting",
+        "note": "Recruiting quality is a preseason prior, not a complete current-roster or transfer-portal measure.",
+    },
+    "MLB": {
+        "label": "Personnel edge",
+        "source": None,
+        "source_key": None,
+        "note": "Requires probable starters, confirmed batting orders, and bullpen availability; the configured feed does not provide them.",
+    },
+    "NFL": {
+        "label": "Roster edge",
+        "source": None,
+        "source_key": None,
+        "note": "Requires current depth charts and player-availability data; the configured feed does not provide full roster coverage.",
+    },
+    "NBA": {
+        "label": "Star / rotation edge",
+        "source": None,
+        "source_key": None,
+        "note": "Requires current rotations, active-player quality, and availability; the configured feed does not provide full coverage.",
+    },
+    "NHL": {
+        "label": "Roster / goalie edge",
+        "source": None,
+        "source_key": None,
+        "note": "Requires current lines, starting goalie, and player availability before it can be treated as a real personnel signal.",
+    },
+}
+
+
+def _college_talent_points(record):
+    """Return only a documented college talent/recruiting signal.
+
+    Championship futures deliberately do not qualify.  Older tests and
+    hand-built college rating files predate provenance fields, so non-zero
+    squad/star values remain a college-only compatibility fallback; live
+    enrichment always writes ``talent_strength`` and ``talent_source``.
+    """
+    if not record or COMP_KEY not in {"NCAAF", "NCAAM"}:
+        return 0.0
+    expected = CLASS_SIGNAL_CONFIG[COMP_KEY]["source_key"]
+    source = record.get("talent_source")
+    if source and source != expected:
+        return 0.0
+    if record.get("talent_strength") is not None:
+        return max(0.0, float(record.get("talent_strength") or 0.0))
+    if source is None and (record.get("squad_value_m") or record.get("star_value_m")):
+        rp = rating_parts_from_record(record)
+        return rp["value"] + rp["star"]
+    return 0.0
+
+
+def rating_parts_from_record(record):
+    """Value/star attribution for an already-resolved ratings record."""
+    record = record or {}
+    val_n = min(10.0, float(record.get("squad_value_m") or 0.0) / 150.0)
+    star_n = min(10.0, float(record.get("star_value_m") or 0.0) / 20.0)
+    return {"value": val_n * FACTOR_WEIGHTS["squad_value"],
+            "star": star_n * FACTOR_WEIGHTS["star"]}
+
+
+def class_signal_meta(home_name, away_name):
+    """Describe what the displayed class/personnel comparison really means."""
+    if COMP.get("sport") == "soccer":
+        label, source = "Squad edge", "Curated squad and star-player values"
+        available = []
+        for name in (home_name, away_name):
+            rec = _ratings_lookup(name) or {}
+            available.append(bool(rec and (rec.get("squad_value_m") or rec.get("star_value_m")
+                                           or rec.get("fifa_rank"))))
+        note = "Squad value, star quality, and ranking are a preseason prior; missing clubs are not assigned a fabricated edge."
+    else:
+        cfg = CLASS_SIGNAL_CONFIG.get(COMP_KEY, {
+            "label": "Personnel edge", "source": None,
+            "note": "No verified sport-specific personnel source is configured.",
+        })
+        label, source, note = cfg["label"], cfg.get("source"), cfg["note"]
+        available = [bool(_college_talent_points(_ratings_lookup(name)))
+                     for name in (home_name, away_name)]
+    coverage = "complete" if all(available) else "partial" if any(available) else "unavailable"
+    return {"label": label, "source": source, "available": coverage == "complete",
+            "coverage": coverage, "home_available": available[0],
+            "away_available": available[1], "note": note}
+
+
 # ---- in-house Elo (self-training, sport-agnostic) -----------------------
 # One shared store across every competition: club names never collide with
 # national-team or US-sport names, and it's actually correct for club
@@ -1756,6 +1856,7 @@ def predict(home, away, markets, m=None):
         fp = _weighted_form_score(form_str)
         rest = s.get("rest_days")
         rp = rating_parts(s.get("name"))
+        rating_record = _ratings_lookup(s.get("name")) or {}
         elo_pts, elo_conf = elo_strength(s.get("name"))
         # Unknown teams (no ratings-file entry, even after the club-suffix
         # fallback) receive no invented class prior rather than a default --
@@ -1770,7 +1871,7 @@ def predict(home, away, markets, m=None):
         # for real unknowns is honest: it hands the matchup to the signals
         # that ARE real for every team (pts/gd/form/elo) instead of padding
         # both sides with an identical phantom number.
-        known_rating = bool(_ratings_lookup(s.get("name")))
+        known_rating = bool(rating_record)
         if american:
             pld = max(0, int(s.get("pld") or 0))
             reliability = min(1.0, pld / float(american_cfg["full"]))
@@ -1794,6 +1895,13 @@ def predict(home, away, markets, m=None):
             poll_rank = s.get("model_rank")
             poll_prior = (max(0.0, 26.0 - float(poll_rank)) / 25.0 * 2.0
                           if poll_rank else 0.0)
+            talent_points = _college_talent_points(rating_record)
+            market_points = max(0.0, float(rating_record.get("market_strength") or 0.0))
+            # College futures and recruiting/talent are correlated, so the
+            # market signal remains a small independent cross-check there.
+            # Pro sports have no verified roster-quality feed today, making
+            # market power their full (but explicitly named) long-term prior.
+            market_scale = 0.35 if COMP_KEY in {"NCAAF", "NCAAM"} else 1.0
             return {
                 "base": 4.0,
                 "record": (win_pct - 0.5) * 8.0 * reliability,
@@ -1809,7 +1917,8 @@ def predict(home, away, markets, m=None):
                 # class figure -- dead weight that only diluted the one
                 # real signal (value/star, both talent-share derived)
                 # preseason predictions have to work with.
-                "class": ((rp["value"] + rp["star"]) if known_rating else 0.0) * prior_boost,
+                "class": talent_points * prior_boost,
+                "market_power": market_points * market_scale * prior_boost,
                 "rank": poll_prior * prior_boost,
                 "srs": _clamp(float(s.get("srs") or 0) / american_cfg["margin"], -1.5, 1.5) * 2.4 * srs_conf,
                 "elo": elo_pts * elo_conf * prior_boost,
@@ -1847,9 +1956,14 @@ def predict(home, away, markets, m=None):
     # real record/margin/srs by the time it would reach GAP_LO, so this
     # essentially never engages once games have been played.
     if american:
-        class_gap = abs(ph.get("class", 0.0) - pa.get("class", 0.0))
+        # Either a real talent prior or the separately attributed futures
+        # prior may reveal a large preseason mismatch.  Keeping both in this
+        # anchor calculation preserves the previous conservative-floor
+        # behavior without calling market opinion "class."
+        persistent_gap = abs((ph.get("class", 0.0) + ph.get("market_power", 0.0))
+                             - (pa.get("class", 0.0) + pa.get("market_power", 0.0)))
         GAP_LO, GAP_HI = 3.0, 8.0  # calibrated against real 2025 CFBD/CBBD spot checks -- see tests
-        extremity = _clamp((class_gap - GAP_LO) / (GAP_HI - GAP_LO), 0.0, 1.0)
+        extremity = _clamp((persistent_gap - GAP_LO) / (GAP_HI - GAP_LO), 0.0, 1.0)
         preseason_factor = _clamp((prior_boost - 1.0) / 0.6, 0.0, 1.0)
         shrink = extremity * preseason_factor * 0.85
         if shrink:
@@ -2020,7 +2134,7 @@ def predict(home, away, markets, m=None):
     any_stale = bool(home.get("season_stale") or away.get("season_stale"))
     quality_level = ("preseason" if min_sample == 0 or any_stale else "early"
                      if american and min_sample < american_cfg["full"] else "established")
-    signals = [key for key in ("record", "margin", "form", "rank", "srs", "elo", "rest", "injuries")
+    signals = [key for key in ("class", "market_power", "record", "margin", "form", "rank", "srs", "elo", "rest", "injuries")
                if abs(float(why.get(key) or 0)) > 0.001]
     if mk:
         signals.append("market")
@@ -2032,6 +2146,7 @@ def predict(home, away, markets, m=None):
                     "note": ("Limited current-season evidence; probability is intentionally conservative."
                              if quality_level != "established" else
                              "Current-season sample and opponent-adjusted results are available.")}
+    class_meta = class_signal_meta(home.get("name"), away.get("name"))
     return {"pick": pick, "pick_name": name, "confidence": confidence,
             "base_pick": base_pick, "base_pick_name": {"h": home.get("name"), "a": away.get("name"), "d": "Draw"}[base_pick],
             "model": model, "base_blend": raw_blend, "blend": official_probs, "adjusted": official_probs,
@@ -2042,7 +2157,8 @@ def predict(home, away, markets, m=None):
             "regulation_probs": regulation_probs,
             "edge": edge, "note": note, "why": why, "damp_pct": round(damp*100),
             "mkt_pull": mkt_pull, "market_weight": market_weight,
-            "upset": upset, "data_quality": data_quality, "predicted_margin": predicted_margin}
+            "upset": upset, "data_quality": data_quality, "predicted_margin": predicted_margin,
+            "class_meta": class_meta}
 
 
 LEAGUE_AVG_TOTAL = {"NFL": 44.5, "NCAAF": 55.0, "NBA": 224.0, "NCAAM": 140.0,
@@ -2716,6 +2832,15 @@ def apply_recruiting_strength(team_scores, known_names=None):
             ratings[key] = rec
         rec["squad_value_m"] = val_m
         rec["star_value_m"] = star_m
+        # Source-tagged strength keeps real talent/recruiting distinct from
+        # championship-futures market opinion, even if market enrichment
+        # refreshes the legacy generic value fields later in this build.
+        rec["talent_strength"] = round(
+            (val_m / 150.0) * FACTOR_WEIGHTS["squad_value"]
+            + (star_m / 20.0) * FACTOR_WEIGHTS["star"], 4)
+        rec["talent_source"] = ("cfbd_team_talent" if COMP_KEY == "NCAAF"
+                                else "cbbd_recruiting" if COMP_KEY == "NCAAM"
+                                else "unknown_recruiting")
         changed += 1
     if changed:
         DIAG.append(f"recruiting/talent strength: applied to {changed} teams")
@@ -2723,11 +2848,12 @@ def apply_recruiting_strength(team_scores, known_names=None):
 
 # -------- The Odds API : tournament winner (outrights) -------------------
 def apply_market_strength(outrights, known_names=None):
-    """For sports without squad values (NFL/NBA/MLB/NHL/NCAAF/NCAAM), derive
-    team strength from championship odds — the market's own valuation of each
-    team. A 20%-title team is objectively strong; a 0.3% team is weak. This is
-    the honest equivalent of soccer squad values, sourced live from the odds
-    you already fetch. Writes into the in-memory ratings so predict() uses it.
+    """Derive a separately attributed market-power signal from title futures.
+
+    A 20%-title team is market-rated more strongly than a 0.3% team, but that
+    is not the same thing as roster talent. The legacy generic value fields
+    remain for public power-rating compatibility; ``market_strength`` lets
+    predict() use and label the signal without calling market opinion class.
 
     Creates a fresh ratings entry when a team has none, rather than only
     enriching a pre-existing one — college sports especially had no reliable
@@ -2758,9 +2884,55 @@ def apply_market_strength(outrights, known_names=None):
         rec["squad_value_m"] = val_m
         rec["star_value_m"] = star_m
         rec["market_pct"] = o["pct"]
+        rec["market_strength"] = round(
+            (val_m / 150.0) * FACTOR_WEIGHTS["squad_value"]
+            + (star_m / 20.0) * FACTOR_WEIGHTS["star"], 4)
         changed += 1
     if changed:
         DIAG.append(f"market strength: applied to {changed} teams from championship odds")
+
+
+def fetch_college_class_strength(adapter, kind):
+    """Fetch a slow-changing college class signal with last-good fallback.
+
+    ``kind`` is ``talent`` (NCAAF) or ``recruiting`` (NCAAM). A fresh cache
+    saves quota; if a refresh later fails, even a stale last-good snapshot is
+    preferable to publishing a sudden all-zero talent field.
+    """
+    if kind not in {"talent", "recruiting"}:
+        raise ValueError(f"unsupported college class kind: {kind}")
+    cache_file = f"college_{COMP_KEY.lower()}_{kind}_cache.json"
+    cached = {}
+    try:
+        if os.path.exists(cache_file):
+            with open(cache_file, encoding="utf-8") as handle:
+                payload = json.load(handle)
+            cached = payload.get("data") if isinstance(payload, dict) else {}
+            cached = cached if isinstance(cached, dict) else {}
+            age = time.time() - float(payload.get("t") or os.path.getmtime(cache_file))
+            if cached and age < COLLEGE_CLASS_CACHE_MIN * 60:
+                DIAG.append(f"{kind} strength: cached ({len(cached)} teams)")
+                return cached
+    except (OSError, ValueError, TypeError, json.JSONDecodeError) as exc:
+        DIAG.append(f"{kind} strength cache ignored: {_scrub(exc)}")
+        cached = {}
+
+    try:
+        data = getattr(adapter, kind)()
+        if not data:
+            raise ProviderError(f"{kind} endpoint returned 0 teams")
+        payload = {"t": time.time(), "data": data}
+        tmp = cache_file + ".tmp"
+        with open(tmp, "w", encoding="utf-8") as handle:
+            json.dump(payload, handle)
+        os.replace(tmp, cache_file)
+        DIAG.append(f"{kind} strength: refreshed ({len(data)} teams)")
+        return data
+    except (ProviderError, OSError, ValueError, TypeError) as exc:
+        if cached:
+            DIAG.append(f"{kind} strength: refresh failed; using last-good cache ({_scrub(exc)})")
+            return cached
+        raise
 
 
 def estimate_title_odds(matches, code_map):
@@ -4105,7 +4277,7 @@ def update_scorecard(matches):
         favored = [p for p in rel if (float(p["factor_snapshot"].get(name, 0)) > 0) == (p.get("pick") == "h")]
         return {"n": len(favored), "hits": sum(1 for p in favored if p.get("model_hit"))} if favored else {"n": 0, "hits": 0}
     signal_quality = {k: _signal(k) for k in
-                      ("class", "form", "gd", "rest", "pts", "record", "margin", "rank", "srs", "elo")}
+                      ("class", "market_power", "form", "gd", "rest", "pts", "record", "margin", "rank", "srs", "elo")}
     # error review: recent misses with their captured evidence
     misses = [{"home": p.get("home"), "away": p.get("away"), "pick": p.get("pick"),
                "score": p.get("score"), "upset": (p.get("upset_snapshot") or {}).get("candidate"),
@@ -4937,13 +5109,13 @@ def build():
     if COMP_KEY == "NCAAF" and sports_adapter:
         try:
             print("Fetching team talent composite (CFBD)…")
-            apply_recruiting_strength(sports_adapter.talent(), known_names)
+            apply_recruiting_strength(fetch_college_class_strength(sports_adapter, "talent"), known_names)
         except ProviderError as exc:
             DIAG.append(f"{provider_name} talent unavailable: {_scrub(exc)}")
     elif COMP_KEY == "NCAAM" and sports_adapter:
         try:
             print("Fetching recruiting ratings (CBBD)…")
-            apply_recruiting_strength(sports_adapter.recruiting(), known_names)
+            apply_recruiting_strength(fetch_college_class_strength(sports_adapter, "recruiting"), known_names)
         except ProviderError as exc:
             DIAG.append(f"{provider_name} recruiting unavailable: {_scrub(exc)}")
 

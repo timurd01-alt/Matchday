@@ -54,6 +54,7 @@ Providers can correct scores, statuses, player statistics, or event identities a
 - Injuries, transfers, and lineups are only incorporated when reliable licensed data is available.
 - Elo and head-to-head signals need time to earn full weight.
 - A recruiting rating cannot fully measure development, coaching, or transfer impact.
+- MLB, NFL, NBA, and NHL do not display a roster/personnel edge until their configured feeds provide the required player, depth-chart, lineup, or starter coverage. Championship futures are labeled separately as market power rather than being passed off as talent.
 - Market availability is uneven across competitions and dates.
 - Projected margin is inferred from outcome probabilities, not a dedicated exact-score model.
 - Outcome Tree assumes different games are independent; real correlations can make its joint estimate too high or too low.
