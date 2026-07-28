@@ -7902,8 +7902,8 @@
    "n": 3890
   },
   "baseball:texas rangers": {
-   "r": 1495.7190611563697,
-   "n": 3913
+   "r": 1504.861815969908,
+   "n": 3914
   },
   "baseball:los angeles angels": {
    "r": 1417.3331702870746,
@@ -7974,8 +7974,8 @@
    "n": 3862
   },
   "baseball:seattle mariners": {
-   "r": 1471.3745742373067,
-   "n": 3868
+   "r": 1462.2318194237682,
+   "n": 3869
   },
   "baseball:chicago white sox": {
    "r": 1526.3649855057376,
@@ -285870,6 +285870,7 @@
   "MLB:bdl-mlb-5059360": true,
   "MLB:bdl-mlb-5059361": true,
   "MLB:bdl-mlb-5059362": true,
-  "MLB:bdl-mlb-5059363": true
+  "MLB:bdl-mlb-5059363": true,
+  "MLB:bdl-mlb-5059364": true
  }
 }

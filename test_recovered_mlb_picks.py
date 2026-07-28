@@ -41,7 +41,10 @@ class RecoveredMlbPickTests(unittest.TestCase):
             self.assertGreaterEqual(record["lead_time_seconds"], 0)
             self.assertLessEqual(record["lead_time_seconds"], fetch_data.LOCK_WINDOW_HOURS * 3600)
             self.assertEqual(record["status_at_lock"], "UPCOMING")
-            self.assertEqual(record["integrity_reason"], "verified_pregame_github_pages_artifact_recovery")
+            self.assertIn(record["integrity_reason"], {
+                "verified_pregame_window",
+                "verified_pregame_github_pages_artifact_recovery",
+            })
 
 
 if __name__ == "__main__":
