@@ -26,7 +26,7 @@ No. Predictions are probabilistic estimates for informational and analytical use
 
 ## Is Outcome Tree the same as a parlay calculator?
 
-No. Outcome Tree is scenario analysis built from Matchday's published game probabilities. It multiplies exact outcomes under an independence assumption and translates the result into fair model-implied odds only for readability. It does not use sportsbook prices, estimate correlated outcomes, calculate payouts, or recommend a stake. Only one exact outcome can be selected from the same game.
+No. Outcome Tree is scenario analysis built from Matchday's published game probabilities. Its compact menu accepts up to five events, then labels each selected branch `X` and every alternative result `Y`. It multiplies exact outcomes under an independence assumption and translates the result into fair model-implied odds only for readability. It does not use sportsbook prices, estimate correlated outcomes, calculate payouts, or recommend a stake. Only one exact outcome can be selected from the same game.
 
 ## Why did a favorite lose?
 

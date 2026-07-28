@@ -45,9 +45,9 @@ Displayed confidence is the selected outcome's probability, not a promise that t
 
 ## Outcome Tree
 
-Outcome Tree combines exact published outcomes from different games into one model scenario. If selected event probabilities are `p1`, `p2`, and `p3`, the displayed joint probability is `p1 x p2 x p3`. The fair decimal and American odds are alternate representations of that same model probability, not sportsbook prices.
+Outcome Tree combines up to five exact published outcomes from different games into one model scenario. A compact two-step menu selects the game and exact outcome, avoiding a long fixture list. If selected event probabilities are `p1`, `p2`, and `p3`, the displayed joint probability is `p1 x p2 x p3`. The fair decimal and American odds are alternate representations of that same model probability, not sportsbook prices.
 
-The multiplication assumes the selected games are independent. Real sports events can be correlated through shared teams, injuries, scheduling, tournament incentives, or common information, so the combined estimate can be too high or too low. Matchday warns when selected events share a team, but it does not currently estimate those correlations. Only one exact result can be selected per game; in sports with draws, "Team wins" and "Draw" are separate outcomes, so a team-loss selection does not silently include a draw.
+The tree diagram uses neutral notation: `X` means the exact outcome selected in the menu and `Y` means any other result. The multiplication assumes the selected games are independent. Real sports events can be correlated through shared teams, injuries, scheduling, tournament incentives, or common information, so the combined estimate can be too high or too low. Matchday warns when selected events share a team, but it does not currently estimate those correlations. Only one exact result can be selected per game; in sports with draws, "Team wins" and "Draw" are separate outcomes, so a team-loss selection does not silently include a draw.
 
 Outcome Tree uses locked prediction snapshots when they exist and otherwise uses the current published probability. It does not improve the underlying prediction: missing talent, pitcher, injury, lineup, or market inputs carry into the combined estimate. It is a scenario-analysis tool, not a betting recommendation or staking calculator.
 

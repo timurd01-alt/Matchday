@@ -2,9 +2,10 @@
 // independence assumption. Keep the math helpers side-effect free so the
 // calculation can be regression-tested without a browser.
 var OUTCOME_TREE_SELECTED=new Map();
-var OUTCOME_TREE_SEARCH='';
 var OUTCOME_TREE_NOTICE='';
-var OUTCOME_TREE_MAX_LEGS=8;
+var OUTCOME_TREE_DRAFT_MATCH='';
+var OUTCOME_TREE_DRAFT_SIDE='';
+var OUTCOME_TREE_MAX_LEGS=5;
 
 function outcomeTreeJointProbability(percentages){
   if(!Array.isArray(percentages)||!percentages.length)return 1;
@@ -60,28 +61,42 @@ function outcomeTreeSelectedLeg(match,side){
   };
 }
 
-function outcomeTreeToggle(key,side){
+function outcomeTreeAdd(key,side){
   const match=outcomeTreeMatches().find(item=>outcomeTreeMatchKey(item)===key);
   if(!match)return;
-  const existing=OUTCOME_TREE_SELECTED.get(key);
-  if(existing?.side===side){
-    OUTCOME_TREE_SELECTED.delete(key);
-    OUTCOME_TREE_NOTICE='';
-  }else{
-    if(!existing&&OUTCOME_TREE_SELECTED.size>=OUTCOME_TREE_MAX_LEGS){
-      OUTCOME_TREE_NOTICE=`Choose up to ${OUTCOME_TREE_MAX_LEGS} events so every branch stays readable.`;
-      renderOutcomeTree();return;
-    }
-    const leg=outcomeTreeSelectedLeg(match,side);
-    if(!leg)return;
-    OUTCOME_TREE_SELECTED.set(key,leg);
-    OUTCOME_TREE_NOTICE=existing?'Outcome replaced for this game. Only one exact result can occur.':'';
+  if(OUTCOME_TREE_SELECTED.has(key)){
+    OUTCOME_TREE_NOTICE='That game is already in the scenario. Remove it before choosing a different result.';
+    renderOutcomeTree();return;
   }
+  if(OUTCOME_TREE_SELECTED.size>=OUTCOME_TREE_MAX_LEGS){
+    OUTCOME_TREE_NOTICE=`Choose up to ${OUTCOME_TREE_MAX_LEGS} events so every branch stays readable.`;
+    renderOutcomeTree();return;
+  }
+  const leg=outcomeTreeSelectedLeg(match,side);
+  if(!leg)return;
+  OUTCOME_TREE_SELECTED.set(key,leg);
+  OUTCOME_TREE_DRAFT_MATCH='';OUTCOME_TREE_DRAFT_SIDE='';OUTCOME_TREE_NOTICE='';
   renderOutcomeTree();
 }
 
+function outcomeTreeRemove(key){
+  OUTCOME_TREE_SELECTED.delete(key);OUTCOME_TREE_NOTICE='';renderOutcomeTree();
+}
+
+function outcomeTreeDraftMatch(key){
+  OUTCOME_TREE_DRAFT_MATCH=String(key||'');OUTCOME_TREE_DRAFT_SIDE='';OUTCOME_TREE_NOTICE='';renderOutcomeTree();
+}
+
+function outcomeTreeDraftSide(side){
+  OUTCOME_TREE_DRAFT_SIDE=String(side||'');OUTCOME_TREE_NOTICE='';renderOutcomeTree();
+}
+
+function outcomeTreeAddDraft(){
+  if(OUTCOME_TREE_DRAFT_MATCH&&OUTCOME_TREE_DRAFT_SIDE)outcomeTreeAdd(OUTCOME_TREE_DRAFT_MATCH,OUTCOME_TREE_DRAFT_SIDE);
+}
+
 function outcomeTreeReset(render=true){
-  OUTCOME_TREE_SELECTED.clear();OUTCOME_TREE_SEARCH='';OUTCOME_TREE_NOTICE='';
+  OUTCOME_TREE_SELECTED.clear();OUTCOME_TREE_DRAFT_MATCH='';OUTCOME_TREE_DRAFT_SIDE='';OUTCOME_TREE_NOTICE='';
   if(render&&typeof renderOutcomeTree==='function')renderOutcomeTree();
 }
 
@@ -119,53 +134,64 @@ function outcomeTreeAmerican(value){
   return `${value>0?'+':''}${value}`;
 }
 
-function outcomeTreeSearch(value){
-  OUTCOME_TREE_SEARCH=String(value||'').toLowerCase().trim();
-  const host=document.getElementById('view-tree');if(!host)return;
-  let visible=0;
-  host.querySelectorAll('.outcomeMatch').forEach(row=>{
-    const show=!OUTCOME_TREE_SEARCH||String(row.dataset.search||'').includes(OUTCOME_TREE_SEARCH);
-    row.hidden=!show;if(show)visible++;
-  });
-  const count=host.querySelector('[data-tree-count]');
-  if(count)count.textContent=`${visible} game${visible===1?'':'s'}`;
-  const empty=host.querySelector('[data-tree-empty]');
-  if(empty)empty.hidden=visible!==0;
+function outcomeTreeMatchLabel(match){
+  const competition=match?._competition||match?._comp||DATA?.competition||'';
+  const matchup=`${match?.home?.name||'Home'} vs ${match?.away?.name||'Away'}`;
+  const kickoff=match?.kickoff?dt(match.kickoff):'TBD';
+  return [competition,matchup,kickoff].filter(Boolean).join(' · ');
 }
 
-function outcomeTreeMatchRow(match){
-  const key=outcomeTreeMatchKey(match),selected=OUTCOME_TREE_SELECTED.get(key);
-  const competition=match?._competition||match?._comp||DATA?.competition||'';
-  const search=[match?.home?.name,match?.away?.name,match?.stage,competition].join(' ').toLowerCase();
-  const buttons=outcomeTreeOptions(match).map(option=>{
-    const probability=outcomeTreeProbability(match,option.side),active=selected?.side===option.side;
-    return `<button type="button" class="outcomeChoice ${active?'selected':''}" data-tree-key="${esc(key)}" data-tree-side="${option.side}" aria-pressed="${active}"><span>${esc(option.name)}</span><b>${probability}%</b></button>`;
+function outcomeTreeSelectionRow(leg,index){
+  return `<article class="outcomeSelection"><span class="outcomeSelectionIndex">${index+1}</span><div><b>${esc(leg.outcome)}</b><small>${esc(leg.home)} vs ${esc(leg.away)} · ${leg.probability}%</small></div><button type="button" class="miniBtn" data-tree-remove="${esc(leg.key)}" aria-label="Remove ${esc(leg.outcome)}">Remove</button></article>`;
+}
+
+function outcomeTreeCompactPicker(matches,legs){
+  const selectedKeys=new Set(legs.map(leg=>leg.key));
+  const available=matches.filter(match=>!selectedKeys.has(outcomeTreeMatchKey(match)));
+  if(OUTCOME_TREE_DRAFT_MATCH&&!available.some(match=>outcomeTreeMatchKey(match)===OUTCOME_TREE_DRAFT_MATCH)){
+    OUTCOME_TREE_DRAFT_MATCH='';OUTCOME_TREE_DRAFT_SIDE='';
+  }
+  const draftMatch=available.find(match=>outcomeTreeMatchKey(match)===OUTCOME_TREE_DRAFT_MATCH);
+  const matchOptions=available.map(match=>{
+    const key=outcomeTreeMatchKey(match);
+    return `<option value="${esc(key)}" ${key===OUTCOME_TREE_DRAFT_MATCH?'selected':''}>${esc(outcomeTreeMatchLabel(match))}</option>`;
   }).join('');
-  return `<article class="outcomeMatch" data-search="${esc(search)}"><div class="outcomeMatchTop"><div><b>${esc(match?.home?.name)} <span>vs</span> ${esc(match?.away?.name)}</b><small>${esc(competition)}${match?.stage?` · ${esc(match.stage)}`:''}</small></div><time>${match?.kickoff?esc(dt(match.kickoff)):'TBD'}</time></div><div class="outcomeChoices">${buttons}</div></article>`;
+  const outcomeOptions=(draftMatch?outcomeTreeOptions(draftMatch):[]).map(option=>{
+    const probability=outcomeTreeProbability(draftMatch,option.side);
+    return `<option value="${option.side}" ${option.side===OUTCOME_TREE_DRAFT_SIDE?'selected':''}>${esc(option.name)} · ${probability}%</option>`;
+  }).join('');
+  const full=legs.length>=OUTCOME_TREE_MAX_LEGS;
+  const empty=legs.length?'':`<div class="outcomePickerEmpty"><b>No events selected yet.</b><span>Use the two menus below to build a scenario with up to ${OUTCOME_TREE_MAX_LEGS} exact outcomes.</span></div>`;
+  const rows=legs.map(outcomeTreeSelectionRow).join('');
+  return `<div class="outcomeSelections">${empty}${rows}</div><div class="outcomeAddForm"><label><span>1. Choose a game</span><select data-tree-draft-match ${full||!available.length?'disabled':''}><option value="">Select a matchup</option>${matchOptions}</select></label><label><span>2. Choose X</span><select data-tree-draft-side ${full||!draftMatch?'disabled':''}><option value="">Select the exact outcome</option>${outcomeOptions}</select></label><button type="button" class="actionbtn" data-tree-add ${full||!OUTCOME_TREE_DRAFT_MATCH||!OUTCOME_TREE_DRAFT_SIDE?'disabled':''}>Add event</button></div><p class="outcomePickerHint">${full?'Five-event limit reached. Remove an event to choose another.':`${available.length} matchup${available.length===1?'':'s'} available · one outcome per game`}</p>`;
 }
 
 function outcomeTreeSummary(legs){
-  if(!legs.length)return `<aside class="outcomeSummary"><div class="outcomeEmptyState"><div class="outcomeEmptyIcon">01</div><h3>Start a scenario</h3><p>Choose an exact result from two or more games. The tree will multiply the model probabilities and show where the path can branch.</p></div><div class="outcomeQuality"><b>What carries into this estimate</b><span>The tree does not improve the game predictions. Missing talent, pitcher, injury, lineup, or market inputs remain missing here too.</span></div></aside>`;
+  if(!legs.length)return `<aside class="outcomeSummary"><div class="outcomeEmptyState"><div class="outcomeEmptyIcon">X/Y</div><h3>Start a scenario</h3><p>Choose one to five exact outcomes from the compact selector. The tree uses X for each selected outcome and Y for every other result.</p></div><div class="outcomeQuality"><b>What carries into this estimate</b><span>The tree does not improve the game predictions. Missing talent, pitcher, injury, lineup, or market inputs remain missing here too.</span></div></aside>`;
   const joint=outcomeTreeJointProbability(legs.map(leg=>leg.probability)),odds=outcomeTreeFairOdds(joint);
   const branches=outcomeTreeBuild(legs),shared=outcomeTreeSharedTeams(legs);
   return `<aside class="outcomeSummary"><div class="outcomeSummaryHead"><div><span>Selected path</span><b>${legs.length}/${OUTCOME_TREE_MAX_LEGS} events</b></div><button type="button" class="miniBtn" data-tree-reset>Reset</button></div>
     <div class="outcomeTotals"><div class="outcomeMainTotal"><span>Combined model probability</span><b>${outcomeTreePercent(joint)}</b></div><div><span>Fair decimal</span><b>${odds.decimal?odds.decimal.toFixed(2):'—'}</b></div><div><span>Fair American</span><b>${outcomeTreeAmerican(odds.american)}</b></div></div>
     ${OUTCOME_TREE_NOTICE?`<div class="outcomeNotice">${esc(OUTCOME_TREE_NOTICE)}</div>`:''}
-    ${shared.length?`<div class="outcomeWarning"><b>Correlation warning</b><span>${esc(shared.join(', '))} appears in more than one selected game. Those events may not be independent, so the combined estimate can be too high or too low.</span></div>`:''}
-    <div class="outcomeBranches">${branches.map(branch=>`<div class="outcomeBranch"><div class="outcomeBranchRail"><i>${branch.index}</i><span></span></div><div class="outcomeBranchCard"><small>${esc(branch.home)} vs ${esc(branch.away)}</small><div><b>${esc(branch.outcome)}</b><strong>${branch.probability}%</strong></div><p>${esc(branch.source)} · path now ${outcomeTreePercent(branch.cumulative)}</p><div class="outcomeExit"><span>Any other result</span><b>${100-branch.probability}%</b></div></div></div>`).join('')}</div>
+    ${shared.length?`<div class="outcomeWarning"><b>Correlation warning</b><span>${shared.length} repeated team${shared.length===1?'':'s'} appears across the selected games. Those events may not be independent, so the combined estimate can be too high or too low.</span></div>`:''}
+    <div class="outcomeTreeKey"><span><b>X</b> selected exact outcome</span><span><b>Y</b> any other result</span></div>
+    <div class="outcomeBranches">${branches.map(branch=>`<div class="outcomeBranch"><div class="outcomeBranchRail"><i>${branch.index}</i><span></span></div><div class="outcomeBranchCard"><small>Event ${branch.index}</small><div><b>X</b><strong>${branch.probability}%</strong></div><p>Selected outcome · path now ${outcomeTreePercent(branch.cumulative)}</p><div class="outcomeExit"><span>Y</span><b>${100-branch.probability}%</b></div></div></div>`).join('')}</div>
     <div class="outcomeDisclosure"><b>Independence assumption</b><span>This multiplies published probabilities as if different games do not affect one another. Fair odds are model-implied, not a sportsbook price or betting recommendation.</span></div></aside>`;
 }
 
 function renderOutcomeTree(){
   const host=document.getElementById('view-tree');if(!host)return;
   const matches=outcomeTreeMatches(),legs=outcomeTreeLegs();
-  host.innerHTML=`<div class="outcomeHero"><div><span class="outcomeEyebrow">Scenario analysis</span><h2>Combine exact model outcomes.</h2><p>Choose results such as Michigan State wins and Alabama loses. Each branch uses the official published probability, with locked snapshots taking priority.</p></div><div class="outcomeFormula"><span>JOINT PATH</span><b>p<sub>1</sub> × p<sub>2</sub> × … × p<sub>n</sub></b><small>assumes games are independent</small></div></div>
-    <div class="outcomeShell"><section class="outcomePicker"><div class="outcomePickerHead"><div><h3>Upcoming outcomes</h3><span data-tree-count>${matches.length} game${matches.length===1?'':'s'}</span></div><label class="outcomeSearch"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16 16 5 5"/></svg><input type="search" value="${esc(OUTCOME_TREE_SEARCH)}" placeholder="Search team or competition" aria-label="Search upcoming outcomes"></label></div><div class="outcomeMatchList">${matches.map(outcomeTreeMatchRow).join('')}<div class="outcomeNoResults" data-tree-empty hidden>No upcoming games match that search.</div></div></section>${outcomeTreeSummary(legs)}</div>
+  host.innerHTML=`<div class="outcomeHero"><div><span class="outcomeEyebrow">Scenario analysis</span><h2>Build an exact five-event path.</h2><p>Choose up to five outcomes in the compact menu. In the tree, X is the selected exact outcome and Y is any other result. Locked prediction snapshots take priority.</p></div><div class="outcomeFormula"><span>JOINT PATH</span><b>p<sub>1</sub> × p<sub>2</sub> × … × p<sub>n</sub></b><small>assumes games are independent</small></div></div>
+    <div class="outcomeShell"><section class="outcomePicker"><div class="outcomePickerHead"><div><h3>Scenario selections</h3><span>${legs.length}/${OUTCOME_TREE_MAX_LEGS} chosen</span></div></div>${OUTCOME_TREE_NOTICE&& !legs.length?`<div class="outcomeNotice">${esc(OUTCOME_TREE_NOTICE)}</div>`:''}${outcomeTreeCompactPicker(matches,legs)}</section>${outcomeTreeSummary(legs)}</div>
     <div class="outcomeBottomNote"><b>Read this as a scenario, not a promise.</b> A 12% path means the model expects that exact combination roughly 12 times in 100 comparable sets only if the input probabilities are calibrated and the events are independent.</div>`;
   host.onclick=event=>{
     const reset=event.target.closest('[data-tree-reset]');if(reset){outcomeTreeReset();return;}
-    const button=event.target.closest('[data-tree-key]');if(button)outcomeTreeToggle(button.dataset.treeKey,button.dataset.treeSide);
+    const remove=event.target.closest('[data-tree-remove]');if(remove){outcomeTreeRemove(remove.dataset.treeRemove);return;}
+    const add=event.target.closest('[data-tree-add]');if(add)outcomeTreeAddDraft();
   };
-  const search=host.querySelector('.outcomeSearch input');if(search)search.oninput=event=>outcomeTreeSearch(event.target.value);
-  if(OUTCOME_TREE_SEARCH)outcomeTreeSearch(OUTCOME_TREE_SEARCH);
+  const matchSelect=host.querySelector('[data-tree-draft-match]');
+  if(matchSelect)matchSelect.onchange=event=>outcomeTreeDraftMatch(event.target.value);
+  const sideSelect=host.querySelector('[data-tree-draft-side]');
+  if(sideSelect)sideSelect.onchange=event=>outcomeTreeDraftSide(event.target.value);
 }

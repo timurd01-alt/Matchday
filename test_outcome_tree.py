@@ -43,6 +43,19 @@ class OutcomeTreeStaticTests(unittest.TestCase):
         self.assertIn("locked prediction snapshots", docs.lower())
         self.assertIn("only one exact result", docs.lower())
 
+    def test_compact_selector_caps_scenarios_at_five_and_uses_xy_branches(self):
+        tree = (ROOT / "app-5-outcome-tree.js").read_text(encoding="utf-8")
+        self.assertIn("OUTCOME_TREE_MAX_LEGS=5", tree)
+        self.assertIn("data-tree-draft-match", tree)
+        self.assertIn("data-tree-draft-side", tree)
+        self.assertIn("data-tree-add", tree)
+        self.assertIn("data-tree-remove", tree)
+        self.assertIn('<b>X</b>', tree)
+        self.assertIn('<span>Y</span>', tree)
+        self.assertIn("X is the selected exact outcome", tree)
+        self.assertNotIn("outcomeMatchList", tree)
+        self.assertNotIn("Michigan State wins and Alabama loses", tree)
+
 
 @unittest.skipUnless(NODE, "Node.js is required for JavaScript math tests")
 class OutcomeTreeMathTests(unittest.TestCase):

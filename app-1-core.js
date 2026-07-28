@@ -439,6 +439,10 @@ function renderThird(){const host=$('#view-third'),third=getThirdRace();if(!thir
 /* removed duplicate (renderNews) */
 
 const SYSTEM_UPDATES=[
+  {date:'Build 0728E',tag:'Fix',title:'Outcome Tree is now a compact five-event builder',items:[
+    'Replaced the endlessly scrolling fixture list with a two-step selection menu: choose a game, choose its exact outcome, then add it to the scenario. A scenario is capped at five events so it stays readable on desktop and mobile.',
+    'The visualization now uses neutral branches: X is the selected exact outcome and Y is any other result. Real team names remain in the selection list where they are needed, but no longer clutter the outcome tree itself.'
+  ]},
   {date:'Build 0728D',tag:'Model',title:'“Class” now means a real sport-specific talent signal',items:[
     'College football now labels its 247 Team Talent Composite input as Roster talent edge; college basketball labels its narrower input as Recruiting edge; soccer uses Squad edge.',
     'Championship futures no longer overwrite or masquerade as college talent. They remain a separate Championship market power factor, with reduced college weight because the signals overlap.',
@@ -455,7 +459,7 @@ const SYSTEM_UPDATES=[
     'Fixed a separate formation bug in the model-generated version: its position caps added up to 12 players. A complete model XI now uses a real 4-3-3.'
   ]},
   {date:'Build 0728A',tag:'New',title:'Outcome Tree combines exact model scenarios without pretending to be a sportsbook',items:[
-    'Added an Outcome Tree for combining up to eight published game outcomes -- for example, Michigan State to win and Alabama to lose -- into one transparent scenario probability.',
+    'Added an Outcome Tree for combining up to five published game outcomes into one transparent scenario probability.',
     'The result shows each selected branch, its individual official probability, the cumulative path probability, and model-implied fair decimal and American odds. Locked prediction snapshots take priority, so a public pick is never silently replaced by a later calculation.',
     'Only one exact outcome can be selected from the same game. The tree clearly discloses that multiplication assumes different games are independent, warns when selected games share a team, and does not present the result as a sportsbook price or betting recommendation.',
     'The tree cannot improve its source predictions: missing talent, pitcher, injury, lineup, or market inputs carry directly into the combined estimate.'
