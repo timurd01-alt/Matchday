@@ -271,7 +271,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-28T00:11:07.086098Z",
+   "observed_at": "2026-07-28T02:38:58.783707Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -548,16 +548,34 @@
     "stats_extra": null
    }
   },
-  "result": null,
-  "model_result": null,
-  "market_result": null,
+  "result": "h",
+  "model_result": "h",
+  "market_result": "h",
   "artifact_verification": {
    "workflow_number": 219,
    "run_id": 30305460405,
    "artifact_id": 8668629605,
    "data_sha256": "fd9b7b7a78e4da715fc19228aa3b7aaae39584a46d3bbef803eabb4eb6e96d9b",
    "url": "https://github.com/timurd01-alt/Matchday/actions/runs/30305460405"
-  }
+  },
+  "score": "3-2",
+  "result_snapshot": {
+   "display": {
+    "home": 3,
+    "away": 2
+   },
+   "regulation": null,
+   "penalties": null,
+   "ultimate_winner": "h",
+   "observed_at": "2026-07-28T02:38:58.783741Z",
+   "source": "provider"
+  },
+  "model_hit": true,
+  "market_hit": null,
+  "upset_hit": false,
+  "brier3": 0.423,
+  "log_loss": 0.616,
+  "result_corrections": []
  },
  "bdl-mlb-5059366": {
   "schema_ver": 2,
@@ -819,16 +837,34 @@
     "stats_extra": null
    }
   },
-  "result": null,
-  "model_result": null,
-  "market_result": null,
+  "result": "a",
+  "model_result": "a",
+  "market_result": "a",
   "artifact_verification": {
    "workflow_number": 219,
    "run_id": 30305460405,
    "artifact_id": 8668629605,
    "data_sha256": "fd9b7b7a78e4da715fc19228aa3b7aaae39584a46d3bbef803eabb4eb6e96d9b",
    "url": "https://github.com/timurd01-alt/Matchday/actions/runs/30305460405"
-  }
+  },
+  "score": "5-8",
+  "result_snapshot": {
+   "display": {
+    "home": 5,
+    "away": 8
+   },
+   "regulation": null,
+   "penalties": null,
+   "ultimate_winner": "a",
+   "observed_at": "2026-07-28T02:38:58.783767Z",
+   "source": "provider"
+  },
+  "model_hit": true,
+  "market_hit": null,
+  "upset_hit": false,
+  "brier3": 0.48,
+  "log_loss": 0.673,
+  "result_corrections": []
  },
  "bdl-mlb-5059367": {
   "schema_ver": 2,
@@ -1090,16 +1126,34 @@
     "stats_extra": null
    }
   },
-  "result": null,
-  "model_result": null,
-  "market_result": null,
+  "result": "h",
+  "model_result": "h",
+  "market_result": "h",
   "artifact_verification": {
    "workflow_number": 219,
    "run_id": 30305460405,
    "artifact_id": 8668629605,
    "data_sha256": "fd9b7b7a78e4da715fc19228aa3b7aaae39584a46d3bbef803eabb4eb6e96d9b",
    "url": "https://github.com/timurd01-alt/Matchday/actions/runs/30305460405"
-  }
+  },
+  "score": "8-7",
+  "result_snapshot": {
+   "display": {
+    "home": 8,
+    "away": 7
+   },
+   "regulation": null,
+   "penalties": null,
+   "ultimate_winner": "h",
+   "observed_at": "2026-07-28T02:38:58.783791Z",
+   "source": "provider"
+  },
+  "model_hit": false,
+  "market_hit": null,
+  "upset_hit": true,
+  "brier3": 1.125,
+  "log_loss": 1.386,
+  "result_corrections": []
  },
  "bdl-mlb-5059368": {
   "schema_ver": 2,
@@ -1359,16 +1413,34 @@
     "stats_extra": null
    }
   },
-  "result": null,
-  "model_result": null,
-  "market_result": null,
+  "result": "a",
+  "model_result": "a",
+  "market_result": "a",
   "artifact_verification": {
    "workflow_number": 219,
    "run_id": 30305460405,
    "artifact_id": 8668629605,
    "data_sha256": "fd9b7b7a78e4da715fc19228aa3b7aaae39584a46d3bbef803eabb4eb6e96d9b",
    "url": "https://github.com/timurd01-alt/Matchday/actions/runs/30305460405"
-  }
+  },
+  "score": "2-3",
+  "result_snapshot": {
+   "display": {
+    "home": 2,
+    "away": 3
+   },
+   "regulation": null,
+   "penalties": null,
+   "ultimate_winner": "a",
+   "observed_at": "2026-07-28T02:38:58.783813Z",
+   "source": "provider"
+  },
+  "model_hit": false,
+  "market_hit": null,
+  "upset_hit": true,
+  "brier3": 1.095,
+  "log_loss": 1.347,
+  "result_corrections": []
  },
  "bdl-mlb-5059370": {
   "schema_ver": 2,
@@ -1901,16 +1973,34 @@
     "stats_extra": null
    }
   },
-  "result": null,
-  "model_result": null,
-  "market_result": null,
+  "result": "h",
+  "model_result": "h",
+  "market_result": "h",
   "artifact_verification": {
    "workflow_number": 219,
    "run_id": 30305460405,
    "artifact_id": 8668629605,
    "data_sha256": "fd9b7b7a78e4da715fc19228aa3b7aaae39584a46d3bbef803eabb4eb6e96d9b",
    "url": "https://github.com/timurd01-alt/Matchday/actions/runs/30305460405"
-  }
+  },
+  "score": "14-3",
+  "result_snapshot": {
+   "display": {
+    "home": 14,
+    "away": 3
+   },
+   "regulation": null,
+   "penalties": null,
+   "ultimate_winner": "h",
+   "observed_at": "2026-07-28T02:38:58.783835Z",
+   "source": "provider"
+  },
+  "model_hit": false,
+  "market_hit": null,
+  "upset_hit": true,
+  "brier3": 1.28,
+  "log_loss": 1.609,
+  "result_corrections": []
  },
  "bdl-mlb-5059371": {
   "schema_ver": 2,

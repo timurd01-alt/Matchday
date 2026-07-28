@@ -7898,8 +7898,8 @@
    "n": 1996
   },
   "baseball:toronto blue jays": {
-   "r": 1443.9303383239965,
-   "n": 3890
+   "r": 1459.956152878348,
+   "n": 3891
   },
   "baseball:texas rangers": {
    "r": 1504.861815969908,
@@ -7918,20 +7918,20 @@
    "n": 3963
   },
   "baseball:atlanta braves": {
-   "r": 1531.00902054512,
-   "n": 3913
+   "r": 1518.534764285601,
+   "n": 3914
   },
   "baseball:philadelphia phillies": {
-   "r": 1517.8004417106326,
-   "n": 3929
+   "r": 1505.6833047538626,
+   "n": 3930
   },
   "baseball:new york mets": {
-   "r": 1457.2707396836092,
-   "n": 3886
+   "r": 1469.744995943128,
+   "n": 3887
   },
   "baseball:pittsburgh pirates": {
-   "r": 1529.3126507656384,
-   "n": 3851
+   "r": 1539.133913042957,
+   "n": 3852
   },
   "baseball:cincinnati reds": {
    "r": 1493.5629395071464,
@@ -7942,16 +7942,16 @@
    "n": 3906
   },
   "baseball:baltimore orioles": {
-   "r": 1522.3964450338258,
-   "n": 3862
+   "r": 1536.309667063871,
+   "n": 3863
   },
   "baseball:new york yankees": {
    "r": 1532.5166876212809,
    "n": 4005
   },
   "baseball:arizona diamondbacks": {
-   "r": 1525.524546772745,
-   "n": 3880
+   "r": 1515.7032844954265,
+   "n": 3881
   },
   "baseball:san diego padres": {
    "r": 1502.390428311921,
@@ -8002,20 +8002,20 @@
    "n": 3889
   },
   "baseball:washington nationals": {
-   "r": 1505.1838509756103,
-   "n": 3874
+   "r": 1489.1580364212589,
+   "n": 3875
   },
   "baseball:miami marlins": {
-   "r": 1454.4088717222937,
-   "n": 3869
+   "r": 1466.5260086790638,
+   "n": 3870
   },
   "baseball:tampa bay rays": {
    "r": 1546.1586141955338,
    "n": 3917
   },
   "baseball:detroit tigers": {
-   "r": 1518.2665468327696,
-   "n": 3897
+   "r": 1504.3533248027243,
+   "n": 3898
   },
   "soccer:us cremonese": {
    "r": 1425.6067045589273,
@@ -285871,6 +285871,11 @@
   "MLB:bdl-mlb-5059361": true,
   "MLB:bdl-mlb-5059362": true,
   "MLB:bdl-mlb-5059363": true,
-  "MLB:bdl-mlb-5059364": true
+  "MLB:bdl-mlb-5059364": true,
+  "MLB:bdl-mlb-5059365": true,
+  "MLB:bdl-mlb-5059366": true,
+  "MLB:bdl-mlb-5059367": true,
+  "MLB:bdl-mlb-5059368": true,
+  "MLB:bdl-mlb-5059369": true
  }
 }
