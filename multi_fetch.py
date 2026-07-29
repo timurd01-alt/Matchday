@@ -44,6 +44,7 @@ TICK = 15             # scheduler wake-up interval
 RETRY_AFTER_ERROR = 15 * 60
 ONCE_RETRIES = 2
 ONCE_RETRY_DELAY = 5
+_LAST_FAILURE_OUTPUT = {}
 # Keep this empty in committed code. Temporary cache-busting entries must be
 # removed after one successful run; otherwise every hourly job refetches all
 # sports and delays the competitions near the end of the queue.
@@ -83,7 +84,7 @@ def _stale_source(key):
 # away, whenever the on-disk data is missing a field the current code
 # expects every match to carry.
 REQUIRED_MATCH_FIELDS = ["watchability"]
-REQUIRED_MATCH_VALUES = {"model_signal_schema": 2}
+REQUIRED_MATCH_VALUES = {"model_signal_schema": 4}
 
 
 def _missing_fields(key):
@@ -136,6 +137,7 @@ def _interval_for(key):
 
 def _run_one(key, flag):
     """One-shot fetch for a single sport in its own process."""
+    _LAST_FAILURE_OUTPUT.pop(key, None)
     data_path = f"data_{key}.json"
     # Confirmed live 2026-07-26: EPL/UCL's data went un-refreshed across
     # multiple deploy runs with no visible error anywhere reachable from
@@ -157,6 +159,7 @@ def _run_one(key, flag):
         tail = [l for l in out.strip().splitlines() if l.strip()]
         last = tail[-1] if tail else "(no output)"
         if ok:
+            _LAST_FAILURE_OUTPUT.pop(key, None)
             print(f"  [{key}] fetched · {last[:100]}")
         elif r.returncode == 0 and not wrote_fresh:
             print(f"  [{key}] FAILED (silent -- exited 0 but never rewrote {data_path}) · {last[:140]}")
@@ -167,10 +170,33 @@ def _run_one(key, flag):
                 if "Stop:" in l or "not found" in l or "could not be loaded" in l or "403" in l or "401" in l:
                     reason = l.strip(); break
             print(f"  [{key}] FAILED · {reason[:140]}")
+        if not ok:
+            _LAST_FAILURE_OUTPUT[key] = out
         return ok
     except Exception as e:
+        _LAST_FAILURE_OUTPUT[key] = str(e)
         print(f"  [{key}] FAILED · {e}")
         return False
+
+
+def _deployable_last_good(key):
+    """Accept only a structurally valid existing fixture payload as fallback."""
+    try:
+        with open(f"data_{key}.json", encoding="utf-8") as f:
+            payload = json.load(f)
+        return (isinstance(payload, dict)
+                and isinstance(payload.get("matches"), list)
+                and isinstance(payload.get("updated"), str)
+                and bool(payload.get("competition") or payload.get("comp_key")))
+    except Exception:
+        return False
+
+
+def _rate_limited_with_last_good(key):
+    detail = str(_LAST_FAILURE_OUTPUT.get(key, "")).lower()
+    rate_limited = ("429" in detail or "too many requests" in detail
+                    or "rate limit" in detail or "quota exceeded" in detail)
+    return rate_limited and _deployable_last_good(key)
 
 
 def loop():
@@ -210,18 +236,24 @@ def run_once(state_path=".ci_fetch_state.json"):
     due = [(k, f) for k, f in SPORTS if k in FORCE_REFETCH_ONCE or not os.path.exists(f"data_{k}.json")
            or _stale_source(k) or _missing_fields(k) or time.time() - last_fetched.get(k, 0) >= _interval_for(k)]
     failed = []
+    degraded = []
     for i, (key, flag) in enumerate(due):
+        _LAST_FAILURE_OUTPUT.pop(key, None)
         ok = False
         for attempt in range(1, ONCE_RETRIES + 1):
             ok = _run_one(key, flag)
             if ok:
+                break
+            if _rate_limited_with_last_good(key):
+                print(f"  [{key}] DEGRADED · provider rate-limited; preserving validated last-good data")
+                degraded.append(key)
                 break
             if attempt < ONCE_RETRIES:
                 print(f"  [{key}] retrying ({attempt + 1}/{ONCE_RETRIES})")
                 time.sleep(ONCE_RETRY_DELAY)
         if ok:
             last_fetched[key] = time.time()
-        else:
+        elif key not in degraded:
             failed.append(key)
         if i < len(due) - 1:
             time.sleep(SPACING)
@@ -229,6 +261,8 @@ def run_once(state_path=".ci_fetch_state.json"):
     skipped = [k for k, _ in SPORTS if k not in due_keys]
     if skipped:
         print(f"  skipped (not due yet): {', '.join(skipped)}")
+    if degraded:
+        print(f"  degraded (last-good data retained; still due): {', '.join(degraded)}")
     with open(state_path, "w", encoding="utf-8") as f:
         json.dump(last_fetched, f)
     try:
