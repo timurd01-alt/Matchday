@@ -844,6 +844,91 @@ class ApiFootballInjuryPredictIntegrationTests(unittest.TestCase):
         self.assertGreater(pred["adjusted"]["a"], pred["adjusted"]["h"])
 
 
+class StandingsAndMarketUpsetRadarTests(unittest.TestCase):
+    def _profile(self, home_w, away_w, market_away):
+        home = {"name": "Good Team", "pld": 100, "w": home_w, "pts": home_w * 3}
+        away = {"name": "Bad Team", "pld": 100, "w": away_w, "pts": away_w * 3}
+        markets = {"1x2": {"home_pct": 100 - market_away, "away_pct": market_away}}
+        _, info = fetch_data._upset_adjustment(
+            home, away, markets, {}, {}, {"h": 62, "d": 0, "a": 38}, two_way=True)
+        return info
+
+    def test_radar_requires_both_a_standings_gap_and_large_market_edge(self):
+        info = self._profile(home_w=70, away_w=40, market_away=25)
+        self.assertTrue(info["radar"])
+        self.assertEqual(info["standings_candidate"], "a")
+        self.assertEqual(info["standings_gap_pct"], 30.0)
+        self.assertGreaterEqual(info["upset_edge"], 8)
+
+    def test_large_market_edge_without_standings_mismatch_is_not_upset_risk(self):
+        info = self._profile(home_w=55, away_w=50, market_away=25)
+        self.assertFalse(info["radar"])
+        self.assertIsNone(info["standings_candidate"])
+
+    def test_standings_mismatch_without_large_market_edge_is_not_upset_risk(self):
+        info = self._profile(home_w=70, away_w=40, market_away=35)
+        self.assertFalse(info["radar"])
+        self.assertLess(info["upset_edge"], 8)
+
+    def test_small_or_missing_season_sample_is_not_upset_risk(self):
+        home = {"name": "Good Team", "pld": 4, "w": 4}
+        away = {"name": "Bad Team", "pld": 4, "w": 0}
+        markets = {"1x2": {"home_pct": 75, "away_pct": 25}}
+        _, info = fetch_data._upset_adjustment(
+            home, away, markets, {}, {}, {"h": 62, "d": 0, "a": 38}, two_way=True)
+        self.assertFalse(info["radar"])
+        self.assertFalse(info["standings_sample_ok"])
+
+
+class ProStandingsFormattingTests(unittest.TestCase):
+    @staticmethod
+    def _flat_table(competition):
+        names = []
+        for group_names in fetch_data.US_PRO_STANDINGS_GROUPS[competition].values():
+            for name in group_names:
+                # Avoid aliases that deliberately map to the same franchise.
+                if name in {"Athletics", "LA Clippers"}:
+                    continue
+                names.append(name)
+        teams = [{"name": name, "code": "", "pld": 10, "w": i % 8 + 1,
+                  "l": 10 - (i % 8 + 1), "d": 0, "gf": 100 + i,
+                  "ga": 90, "gd": 10 + i, "rating": 5 + i / 100}
+                 for i, name in enumerate(names)]
+        return [{"group": "", "teams": teams}]
+
+    def test_mlb_is_six_divisions_with_five_teams_each(self):
+        tables = fetch_data._group_us_pro_standings(self._flat_table("MLB"), "MLB")
+        self.assertEqual(len(tables), 6)
+        self.assertTrue(all(t["table_type"] == "official_standings" for t in tables))
+        self.assertTrue(all(len(t["teams"]) == 5 for t in tables))
+        self.assertEqual({t["group"] for t in tables}, set(fetch_data.US_PRO_STANDINGS_GROUPS["MLB"]))
+
+    def test_nfl_is_eight_divisions_and_nba_is_two_conferences(self):
+        nfl = fetch_data._group_us_pro_standings(self._flat_table("NFL"), "NFL")
+        nba = fetch_data._group_us_pro_standings(self._flat_table("NBA"), "NBA")
+        self.assertEqual([len(t["teams"]) for t in nfl], [4] * 8)
+        self.assertEqual([len(t["teams"]) for t in nba], [15, 15])
+
+    def test_power_ratings_are_separate_and_do_not_replace_division_rank(self):
+        official = fetch_data._group_us_pro_standings(self._flat_table("MLB"), "MLB")
+        division_positions = {t["name"]: t["pos"] for g in official for t in g["teams"]}
+        payload = fetch_data._append_power_ratings_table(official)
+        self.assertEqual(payload[-1]["table_type"], "power_ratings")
+        self.assertEqual(len(payload[-1]["teams"]), 30)
+        self.assertEqual(
+            division_positions,
+            {t["name"]: t["pos"] for g in payload[:-1] for t in g["teams"]})
+
+    def test_placeholder_teams_are_not_rendered_as_a_real_division(self):
+        tables = self._flat_table("MLB")
+        tables[0]["teams"].append({"name": "Unknown", "pld": 0, "w": 0, "l": 0})
+        grouped = fetch_data._group_us_pro_standings(tables, "MLB")
+        self.assertFalse(any(t["name"] == "Unknown" for g in grouped for t in g["teams"]))
+
+    def test_nfl_tie_counts_as_half_a_win_in_standings_percentage(self):
+        self.assertEqual(fetch_data._pro_standings_pct({"pld": 2, "w": 1, "d": 1}), 0.75)
+
+
 class ApiFootballBoxScoreEdgeTests(unittest.TestCase):
     """box_score_edge inside _upset_adjustment() was dead in practice for as
     long as fetch_api_football_box_scores() went uncalled -- m['stats_extra']

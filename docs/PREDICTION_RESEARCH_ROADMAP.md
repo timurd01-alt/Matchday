@@ -1,6 +1,6 @@
 # Matchday prediction research roadmap
 
-Status: proposed research contract
+Status: active research contract
 
 Date: 2026-07-29
 
@@ -165,6 +165,12 @@ source metadata, and missingness/freshness tracking. Freeze the evaluation proto
 Run league prior, Elo, current independent heuristic, current hybrid, and licensed no-vig market on
 identical locked events. Publish coverage and calibration before headline accuracy.
 
+The frozen baseline evaluator is implemented. It adds raw and calibrated Elo separately, derives
+the league prior only from grades known at each target lock, and reports pairwise scores on identical
+fixtures with competition-week bootstrap intervals. It remains in evidence collection: most sports
+do not have every candidate, and the all-model review threshold is 256 common games across 16 common
+time blocks.
+
 ### Phase 2 — learned challengers by sport
 
 Begin with NFL because nflverse supplies deep, explicitly licensed play-by-play; then use licensed
@@ -172,10 +178,81 @@ box-score-derived basketball features; college feeds; soccer with coverage-aware
 and MLB historical validation plus licensed live inputs. NHL is explicitly outside the current
 expansion scope. Each included sport gets its own feature contract and model card.
 
+The basketball box-score challenger contract is implemented. Complete paired boxes generate
+point-in-time adjusted efficiency, shooting, possession, tempo, and context features, with each
+date block sealed before history updates. Expanding out-of-sample tests compare the full model to
+chronological Elo and to removal of every feature family. No authorized historical box export is
+bundled, so it remains an unrun zero-weight research path until licensed NBA/NCAAM inputs are supplied.
+
+The College Football challenger contract is implemented next. Authorized completed-game metadata,
+paired advanced game rows, and availability-declared talent snapshots generate prior-week-only PPA,
+success, explosiveness, opponent-adjusted, talent, and context features. Full season-week blocks are
+sealed before updates and every family receives an out-of-sample ablation against chronological Elo.
+No authorized multi-season advanced-game export is bundled, so there is no performance claim and
+the path remains unrun with production weight zero.
+
+The selective-coverage soccer challenger contract is also implemented. Official StatsBomb Open Data
+match and event files generate regulation-only xG strength, shot quality, possession/territory,
+pressure, set-piece, prior-lineup-continuity, and context features. A regularized three-way residual
+model is evaluated chronologically against both a goal-rate Poisson baseline and three-way Elo, with
+match-date-block ablations. Open Data coverage is not a live feed and no competition/season corpus is
+bundled into the repository, so this remains an unrun, attribution-bound, zero-weight research path.
+
+The MLB historical challenger is implemented and validated on official Retrosheet 2020–2025 event
+and game-log archives. It produced 9,090 out-of-sample forecasts across 683 sealed date blocks. A
+lean run-strength model using only Pythagorean strength and run differential per game improved log
+loss from Elo's `0.686457` to `0.682207`, with a paired 95% interval of
+`[-0.007292, -0.001244]`. Those inputs can be reconstructed from the licensed live standings totals,
+so the frozen model now attaches a prospective MLB challenger probability to eligible fixtures.
+Other tested historical families failed their ablation gates, while confirmed starters, lineups,
+and bullpen availability lack an authorized timestamped live source. All therefore remain excluded;
+the attached challenger has production weight zero until its prospective gate is reviewed.
+
+Authorized research evidence is now delivered to the expanded matchup view instead of remaining
+dormant in local artifacts. CI builds/restores the derived nflverse team profile before fixture
+refreshes, NCAAF continues to use its configured CFBD tier, and a post-fetch local population step
+updates even cached fixtures without another provider call. The panel exposes source, season/
+freshness, coverage, team metrics, and available NFL/MLB shadow probabilities. It labels failed/
+unvalidated challengers as zero-weight and does not alter the official forecast before promotion.
+
 ### Phase 3 — transparent shadow deployment
 
 Generate learned predictions invisibly alongside production for a full prospective window. Capture
 every forecast and revision. Do not cherry-pick examples into the public UI.
+
+The first NFL challenger entered this phase on 2026-07-29 after a 2021–2025 expanding-window test.
+It did not clear the promotion gate: its small log-loss difference from Elo was statistically
+indistinguishable from zero and its Brier score was worse. It remains zero-weight shadow research;
+this negative result is part of the permanent model record rather than a result to tune away.
+
+A prior-only quarterback extension was evaluated next. It used the most recent observed primary
+passer and only that player's earlier games, never the target game's actual starter. Its paired
+ablation interval also included no improvement, so it remains an uncertainty/provenance receipt
+rather than an accepted production feature. A future availability feed must provide timestamped
+pregame status before actual starter changes can be tested honestly.
+
+The availability intake contract is implemented, but no provider is assumed. It accepts only
+explicitly authorized, source-referenced observations recorded before kickoff, rejects ESPN-origin
+and retrospective records, and preserves updates in a separate hash-chained ledger. Availability
+is currently receipt-only with a zero probability adjustment. A licensed source and enough frozen
+pregame history are still required before any QB, offensive-line, or injury effect can be trained.
+
+Chronological Elo calibration was the first component to clear a research gate: it improved both
+proper scores over raw Elo across 844 out-of-sample forecasts, and the paired week-block interval
+for log-loss improvement excluded zero. It is eligible only for a prospective shadow window. The
+advanced-feature residual model did not beat calibrated Elo and remains rejected for production.
+
+The prospective protocol is now frozen before the 2026 evidence window. It evaluates only unique,
+verified pregame locks from the tamper-evident ledger, uses the latest appended correction for a
+settled result, excludes ties, and compares all three NFL probabilities on identical fixtures.
+Formal review requires at least 256 eligible games across 16 kickoff-week blocks. The evaluator
+reports exclusions and paired week-block intervals and cannot change production weights.
+
+The market benchmark contract is also implemented. Authorized pregame snapshots are margin-removed,
+hash-chained, and reconstructed as captured-opening, lock-time, and closing consensus using actual
+recording cutoffs. Matchday and each market stage are scored on the same settled fixtures. No odds
+provider is assumed or scraped: useful coverage begins only after an approved provider/export is
+configured and snapshots are collected prospectively.
 
 ### Phase 4 — controlled promotion
 

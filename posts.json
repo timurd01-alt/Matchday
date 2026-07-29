@@ -1,5 +1,20 @@
 [
  {
+  "id": "wednesday-availability-tracker-2026-07-29",
+  "comp": "all",
+  "comp_label": "Availability Desk",
+  "type": "availability",
+  "slug": "wednesday-availability-tracker-2026-07-29",
+  "title": "Wednesday Availability Tracker: No Verified Matchday Absence Yet",
+  "date": "2026-07-29",
+  "summary": "The non-MLB feed is quiet and out of the immediate match window; no model movement is reportable.",
+  "body": [
+   "The most consequential update is the absence of a verified update: the configured non-MLB match feeds contain no coded injury or availability labels for the current upcoming schedule.",
+   "That is not a clean bill of health. The source snapshots are several days old, no non-MLB fixture falls in the July 29-August 5 window, and the current export does not retain a comparable before-and-after availability snapshot.",
+   "Confirmed: none. Doubtful: none classified by the feed. Unknown: future team sheets, roster changes, and any effect on the model until a fresh, source-backed update arrives."
+  ]
+ },
+ {
   "id": "matchday-10-college-football-2026-07-27",
   "comp": "ncaaf",
   "comp_label": "College Football · Matchday 10",

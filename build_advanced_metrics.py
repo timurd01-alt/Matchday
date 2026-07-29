@@ -28,7 +28,7 @@ from advanced_metrics import (
 
 
 NFLVERSE_PBP = "https://github.com/nflverse/nflverse-data/releases/download/pbp/play_by_play_{season}.csv.gz"
-STATSBOMB_RAW = "https://raw.githubusercontent.com/statsbomb/open-data/master/data"
+STATSBOMB_RAW = "https://raw.githubusercontent.com/hudl/open-data/master/data"
 
 
 def _load_rows(path: Path):

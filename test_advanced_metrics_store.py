@@ -30,6 +30,8 @@ class AdvancedMetricStoreTests(unittest.TestCase):
         self.assertEqual(result["teams"], 2)
         self.assertEqual(matches[0]["advanced_metrics"]["home"]["epa_per_play"], 0.2)
         self.assertTrue(matches[0]["advanced_metrics_meta"]["shadow_only"])
+        self.assertEqual(matches[0]["advanced_metrics_meta"]["production_weight"], 0)
+        self.assertEqual(matches[0]["research_signal_schema"], 1)
 
     def test_rejects_espn_origin_profile(self):
         path = self._write("ESPN downstream dump")
@@ -45,6 +47,7 @@ class AdvancedMetricStoreTests(unittest.TestCase):
         result = attach_shadow_profiles(matches, "NFL", "football", self.root)
         self.assertIsNone(result["file"])
         self.assertNotIn("advanced_metrics", matches[0])
+        self.assertEqual(matches[0]["research_signal_schema"], 1)
 
 
 if __name__ == "__main__":

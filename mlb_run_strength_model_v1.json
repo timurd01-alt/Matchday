@@ -1,0 +1,83 @@
+{
+  "feature_contract": "licensed live season runs-for/runs-against through the prior completed game",
+  "features": [
+    "pythagorean_diff",
+    "run_diff_per_game_diff"
+  ],
+  "historical_validation": {
+    "checks": {
+      "brier_not_worse_than_elo": true,
+      "log_loss_better_than_elo": true,
+      "minimum_out_of_sample_games": true,
+      "minimum_test_seasons": true,
+      "paired_interval_below_zero": true
+    },
+    "decision": "eligible_for_prospective_shadow",
+    "elo": {
+      "accuracy": 0.564356,
+      "brier": 0.246335,
+      "log_loss": 0.686457,
+      "n": 9090
+    },
+    "features": [
+      "pythagorean_diff",
+      "run_diff_per_game_diff"
+    ],
+    "model": {
+      "accuracy": 0.560176,
+      "brier": 0.244584,
+      "log_loss": 0.682207,
+      "n": 9090
+    },
+    "paired_vs_elo": {
+      "blocks": 683,
+      "ci95": [
+        -0.007292,
+        -0.001244
+      ],
+      "mean_log_loss_delta": -0.00425,
+      "method": "deterministic game-date block bootstrap",
+      "n": 9090
+    }
+  },
+  "model": {
+    "baseline_probability_key": null,
+    "coefficients": {
+      "pythagorean_diff": 0.14131611500310945,
+      "run_diff_per_game_diff": 0.14476663787824917
+    },
+    "feature_names": [
+      "pythagorean_diff",
+      "run_diff_per_game_diff"
+    ],
+    "intercept": 0.13870708359355027,
+    "l2": 8.0,
+    "means": {
+      "pythagorean_diff": -0.0015042964074607893,
+      "run_diff_per_game_diff": -0.0164058159033581
+    },
+    "optimization_iterations": 180,
+    "scales": {
+      "pythagorean_diff": 0.15723916451732997,
+      "run_diff_per_game_diff": 1.6017343411256313
+    },
+    "training_rows": 12094
+  },
+  "model_version": "retrosheet-mlb-challenger-0.1.0",
+  "production_weight": 0,
+  "promotion_status": "eligible_for_prospective_shadow_not_production",
+  "research_only": true,
+  "schema_version": 1,
+  "shadow_only": true,
+  "source": {
+    "name": "Retrosheet event files and game logs",
+    "notice": "The information used here was obtained free of charge from and is copyrighted by Retrosheet. Interested parties may contact Retrosheet at \"www.retrosheet.org\".",
+    "retrieved_by_user": true
+  },
+  "source_hashes": {
+    "event_files_sha256": "5aee3c7ef567e4dd0f48c5e96c56f2c99c8161cccfb84148fcfdd344624d2867",
+    "game_logs_sha256": "76d98df9d19b27d06a52dc4c1f92273162daefc59eaa66bd44d0de0bc52c1015"
+  },
+  "trained_through": "2025-09-28",
+  "training_rows": 12094
+}

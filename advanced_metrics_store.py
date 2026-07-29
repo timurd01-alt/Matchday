@@ -67,6 +67,8 @@ def _candidate_files(competition: str, sport: str, directory: str | Path = ".") 
 
 
 def attach_shadow_profiles(matches, competition: str, sport: str, directory: str | Path = ".") -> dict[str, Any]:
+    for match in matches:
+        match["research_signal_schema"] = 1
     payload = None
     selected = None
     for candidate in _candidate_files(competition, sport, directory):
@@ -105,6 +107,7 @@ def attach_shadow_profiles(matches, competition: str, sport: str, directory: str
                 "generated_at": payload.get("generated_at"),
                 "coverage": payload.get("coverage"),
                 "shadow_only": True,
+                "production_weight": 0,
                 "profile_file": selected.name if selected else None,
             }
             attached_matches += 1

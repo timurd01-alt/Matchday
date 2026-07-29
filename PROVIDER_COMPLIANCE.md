@@ -7,6 +7,19 @@ basketball box-score normalization, and CFBD `/stats/season/advanced`; ESPN-orig
 excluded and NHL is explicitly outside this expansion. Generated profiles do not change production
 picks. The first CFBD advanced refresh returned HTTP 429 and correctly remained unavailable.)
 
+NFL challenger review: the 2021–2025 training corpus uses only the same nflverse `pbp` release
+family already approved above. Source file hashes are embedded in every reconstructed training row
+and model artifact. ESPN-origin releases remain excluded. Generated rows, fitted artifacts, and
+backtest reports are local/gitignored, and the runtime loader enforces research-only, zero-weight
+attachment to future fixtures.
+
+Quarterback research uses passer identifiers and play outcomes already contained in the approved
+nflverse `pbp` releases. It does not add a roster, injury, depth-chart, ESPN, or Sports Reference
+source and does not infer that the last observed primary passer is a confirmed future starter.
+
+Elo calibration adds no provider or dataset. It is fitted only from Matchday's chronological game
+outcomes and stored inside the local zero-weight research artifact.
+
 Reviewed: 2026-07-28 (UEFA's public 2025/26 Champions League Team of the Season is
 manually transcribed as a small attributed editorial selection with a direct source link; no
 automated UEFA scraping, bulk extraction, API claim, images, article text, or implied endorsement.)
@@ -601,3 +614,69 @@ record the review date here before each public release.
   test_generate_posts` stays green (52 tests). No provider-terms
   interpretation changed here; this is an engineering checklist note, not
   legal advice.
+
+- **2026-07-29:** Added a provider-neutral NFL availability intake contract.
+  The code performs no scraping and assumes no permission from a provider.
+  Each batch must declare an accepted authorization basis and source reference;
+  ESPN-origin inputs, post-kickoff ingestion, and future-dated observations are
+  rejected. Accepted records remain zero-weight research receipts in a local,
+  gitignored, SHA-256-chained ledger. Enabling a provider still requires a
+  separate terms/tier review and configured authorized access.
+
+- **2026-07-29:** Added a provider-neutral market snapshot and benchmarking
+  contract. It performs no scraping and enables no provider. Inputs must carry
+  an accepted authorization basis and source reference and must be recorded
+  before kickoff. Decimal prices are converted to implied probabilities and
+  normalized to remove overround. Opening, lock-time, and closing labels are
+  reconstructed only from captured timestamps; the earliest captured price is
+  explicitly an opening proxy unless provider coverage began at market open.
+  Generated ledgers and reports remain local and gitignored.
+
+- **2026-07-29:** Expanded basketball research using only normalized team-game
+  boxes supplied by an already authorized source. The code fetches no new
+  provider and does not infer permission. Incomplete or implausible boxes are
+  rejected, point-in-time rows require dates and home/away identity, and the
+  resulting challenger/report stay local, gitignored, and zero-weight. A
+  provider export must be reviewed against its active plan before use.
+
+- **2026-07-29:** Added a College Football advanced-metrics challenger that
+  consumes only local exports obtained through the configured CFBD tier. It
+  performs no scraping and makes no new provider request. Complete paired
+  advanced-game rows are joined to completed `/games` metadata; an entire
+  season-week is sealed before it can enter later features. Annual `/talent`
+  rows are used only when their declared availability week precedes the target
+  week. Generated rows/reports are gitignored, research-only, and zero-weight.
+  Historical use still requires a tier/terms review and reproducible authorized
+  exports; a season-end aggregate must never be relabeled as a pregame snapshot.
+
+- **2026-07-29:** Added an offline StatsBomb Open Data three-way soccer
+  challenger using only the official `hudl/open-data` repository layout. It
+  does not scrape StatsBomb/Hudl sites and cannot attach its selective research
+  coverage to live fixtures. Regulation outcomes are reconstructed from event
+  periods 1-2; extra time and shootouts are excluded from 1X2 grading. Match-
+  date blocks are sealed before updates, missing event files/incomplete pairs
+  are reported, prior starting-XI continuity never reads the target lineup,
+  and generated artifacts remain gitignored with production weight zero.
+  Anything published from these results must credit StatsBomb and use the
+  required logo under the repository's current terms.
+
+- **2026-07-29:** Closed the authorized-profile delivery gap. CI now builds a
+  derived NFL team profile from official nflverse releases, keeps raw play-by-
+  play only in the private Actions cache, and embeds matched derived fields in
+  the existing public fixture JSON. NCAAF continues through the configured
+  CFBD API tier. The expanded view displays source/license/season/coverage and
+  an explicit zero-weight receipt. Historical-only StatsBomb and Retrosheet
+  profiles remain `attach_live=false`; no selective dataset is represented as
+  live coverage. This is reasoning transparency, not model promotion.
+
+- **2026-07-29:** Reviewed Retrosheet's official current use notice and data-use
+  pages before the MLB historical integration. Retrosheet permits reuse, including
+  commercial products, when its specified copyright/attribution statement appears
+  prominently. The builder consumes only official downloaded 2020–2025 event and
+  game-log archives, records source hashes and the required notice in the frozen
+  derived artifact, and performs no website scraping. Historical Retrosheet inputs
+  are used only to fit and validate the run-strength challenger. Live reconstruction
+  uses the already authorized BALLDONTLIE team games/runs totals; unavailable stats
+  endpoints, target-game starters, lineups, and bullpen availability are not inferred.
+  The historical gate passed, but the live challenger remains a prospective shadow
+  with production weight zero.

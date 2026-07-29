@@ -36,6 +36,8 @@ jobs:
             odds_open*.json
             title_open*.json
             *_cache.json
+            advanced_metrics_*.json
+            nflverse_pbp_*.csv.gz
             player_db_*.json
             posts.json
             posts_state.json
@@ -57,6 +59,9 @@ jobs:
 
       - name: Recover durable NCAAF roster talent before shared quota use
         run: python refresh_college_talent.py
+
+      - name: Refresh authorized NFL research profile
+        run: python refresh_nfl_advanced_metrics.py
 
       # The "ONE-TIME seed merge" step that used to live here was removed
       # 2026-07-27. It was never actually one-time -- it ran on EVERY run and
@@ -80,6 +85,9 @@ jobs:
 
       - name: Fetch one adaptive round for all sports
         run: python multi_fetch.py --once
+
+      - name: Populate authorized research reasoning into cached fixtures
+        run: python populate_research_signals.py
 
       - name: Commit updated ratings and picks ledger back to the repo
         # EVERY ratings*.json file (Elo, and every per-competition curated/
@@ -126,10 +134,10 @@ jobs:
         run: |
           rm -f config_keys.py
           mkdir -p _site
-          cp index.html styles.css content.css content.js article-links.js translations.js legal.html qa.html content.html manifest.json _site/
+          cp index.html styles.css research-signals.css content.css content.js article-links.js translations.js legal.html qa.html content.html manifest.json _site/
           cp tactics-soccer.html tactics-football.html tactics-basketball.html tactics-hockey.html tactics-baseball.html _site/
           cp robots.txt sitemap.xml _site/
-          cp app-1-core.js app-2-views.js app-3-panels.js app-4-features.js app-5-outcome-tree.js _site/
+          cp app-1-core.js app-2-views.js app-3-panels.js app-4-features.js app-5-outcome-tree.js research-signals.js _site/
           cp favicon.ico favicon-16.png favicon-32.png matchday.ico _site/
           cp icon-180.png icon-192.png icon-512.png logo.png _site/
           cp data.json _site/

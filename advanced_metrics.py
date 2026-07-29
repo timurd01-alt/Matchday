@@ -220,6 +220,205 @@ def stats_for_match(events: Iterable[dict[str, Any]], match_id: str, team_name: 
     return total
 
 
+def statsbomb_match_records(
+    matches: Iterable[dict[str, Any]], events: Iterable[dict[str, Any]]
+) -> list[dict[str, Any]]:
+    """Create complete regulation-time team-match records from Open Data.
+
+    The match result is reconstructed from periods 1 and 2. Extra time and
+    shootouts are deliberately excluded so the outcome matches a three-way
+    regulation 1X2 definition. A match without a complete two-team event file
+    or with a regulation-score mismatch is rejected rather than zero-filled.
+    """
+    match_index = {}
+    for raw in matches:
+        match_id = str(raw.get("match_id") if raw.get("match_id") is not None else "").strip()
+        home_obj, away_obj = raw.get("home_team") or {}, raw.get("away_team") or {}
+        home = str(home_obj.get("home_team_name") if isinstance(home_obj, dict) else home_obj or "").strip()
+        away = str(away_obj.get("away_team_name") if isinstance(away_obj, dict) else away_obj or "").strip()
+        match_date = str(raw.get("match_date") or "")[:10]
+        if not match_id or not home or not away or not match_date:
+            continue
+        competition = raw.get("competition") or {}
+        season = raw.get("season") or {}
+        match_index[match_id] = {
+            "match_date": match_date, "home": home, "away": away,
+            "competition_id": str(raw.get("competition_id") or competition.get("competition_id") or "unknown"),
+            "competition_name": str(competition.get("competition_name") or raw.get("competition_name") or "unknown"),
+            "season_id": str(raw.get("season_id") or season.get("season_id") or "unknown"),
+            "season_name": str(season.get("season_name") or raw.get("season_name") or "unknown"),
+            "metadata_home_score": _number(raw.get("home_score"), None),
+            "metadata_away_score": _number(raw.get("away_score"), None),
+        }
+
+    summaries: dict[tuple[str, str], dict[str, Any]] = defaultdict(
+        lambda: {"events": 0, "shots": 0, "xg": 0.0, "npxg": 0.0,
+                 "pressures": 0, "passes": 0, "completed_passes": 0,
+                 "final_third_events": 0, "set_piece_xg": 0.0,
+                 "possessions": set(), "lineup": set(), "goals": 0})
+    seen_teams: dict[str, set[str]] = defaultdict(set)
+    max_period: dict[str, int] = defaultdict(int)
+    for event in events:
+        match_id = str(event.get("match_id") or event.get("match") or "").strip()
+        match = match_index.get(match_id)
+        if not match:
+            continue
+        period = int(_number(event.get("period"), 0) or 0)
+        max_period[match_id] = max(max_period[match_id], period)
+        if period not in (1, 2):
+            continue
+        team_obj = event.get("team") or {}
+        team = str(team_obj.get("name") if isinstance(team_obj, dict) else team_obj or "").strip()
+        if team not in {match["home"], match["away"]}:
+            continue
+        seen_teams[match_id].add(team)
+        row = summaries[(match_id, team)]
+        row["events"] += 1
+        type_obj = event.get("type") or {}
+        event_type = str(type_obj.get("name") if isinstance(type_obj, dict) else type_obj or "").lower()
+        possession = str(event.get("possession") or "")
+        possession_team_obj = event.get("possession_team") or {}
+        possession_team = str(possession_team_obj.get("name") if isinstance(possession_team_obj, dict)
+                              else possession_team_obj or "").strip()
+        if possession and possession_team in {match["home"], match["away"]}:
+            summaries[(match_id, possession_team)]["possessions"].add(possession)
+        location = event.get("location") or []
+        if isinstance(location, list) and location and (_number(location[0], 0) or 0) >= 80:
+            row["final_third_events"] += 1
+        if event_type == "pressure":
+            row["pressures"] += 1
+        elif event_type == "pass":
+            row["passes"] += 1
+            if not (event.get("pass") or {}).get("outcome"):
+                row["completed_passes"] += 1
+        elif event_type == "starting xi":
+            lineup = ((event.get("tactics") or {}).get("lineup") or [])
+            row["lineup"].update(str((item.get("player") or {}).get("id")
+                                      or (item.get("player") or {}).get("name") or "")
+                                 for item in lineup if isinstance(item, dict))
+            row["lineup"].discard("")
+        elif event_type == "shot":
+            shot = event.get("shot") or {}
+            xg = _number(shot.get("statsbomb_xg"), 0) or 0.0
+            row["shots"] += 1
+            row["xg"] += xg
+            shot_type = shot.get("type") or {}
+            shot_type_name = str(shot_type.get("name") if isinstance(shot_type, dict) else shot_type or "").lower()
+            if shot_type_name != "penalty":
+                row["npxg"] += xg
+            pattern = event.get("play_pattern") or {}
+            pattern_name = str(pattern.get("name") if isinstance(pattern, dict) else pattern or "").lower()
+            if "corner" in pattern_name or "free kick" in pattern_name:
+                row["set_piece_xg"] += xg
+            outcome = shot.get("outcome") or {}
+            if str(outcome.get("name") if isinstance(outcome, dict) else outcome or "").lower() == "goal":
+                row["goals"] += 1
+        elif event_type == "own goal for":
+            row["goals"] += 1
+        elif event_type == "own goal against":
+            opponent = match["away"] if team == match["home"] else match["home"]
+            summaries[(match_id, opponent)]["goals"] += 1
+
+    records = []
+    for match_id, match in match_index.items():
+        if seen_teams.get(match_id) != {match["home"], match["away"]}:
+            continue
+        home_row = summaries[(match_id, match["home"])]
+        away_row = summaries[(match_id, match["away"])]
+        if not home_row["events"] or not away_row["events"]:
+            continue
+        # Metadata is regulation-only for ordinary matches. A mismatch without
+        # extra periods indicates incomplete/corrupt event coverage.
+        if max_period[match_id] <= 2 and (
+            match["metadata_home_score"] is not None
+            and (home_row["goals"] != match["metadata_home_score"]
+                 or away_row["goals"] != match["metadata_away_score"])):
+            continue
+        total_possessions = len(home_row["possessions"]) + len(away_row["possessions"])
+        total_final_third = home_row["final_third_events"] + away_row["final_third_events"]
+        for team, opponent, own, other, is_home in (
+            (match["home"], match["away"], home_row, away_row, True),
+            (match["away"], match["home"], away_row, home_row, False),
+        ):
+            records.append({
+                "match_id": match_id, "match_date": match["match_date"],
+                "competition_id": match["competition_id"], "competition_name": match["competition_name"],
+                "season_id": match["season_id"], "season_name": match["season_name"],
+                "team": team, "opponent": opponent, "is_home": is_home,
+                "goals": own["goals"], "opponent_goals": other["goals"],
+                "xg": own["xg"], "xg_allowed": other["xg"],
+                "npxg": own["npxg"], "shots": own["shots"],
+                "xg_per_shot": own["xg"] / own["shots"] if own["shots"] else None,
+                "pressures_per_opponent_pass": own["pressures"] / max(1, other["passes"]),
+                "pass_completion_rate": own["completed_passes"] / own["passes"] if own["passes"] else None,
+                "possession_sequence_share": len(own["possessions"]) / total_possessions if total_possessions else None,
+                "field_tilt": own["final_third_events"] / total_final_third if total_final_third else None,
+                "set_piece_xg_share": own["set_piece_xg"] / own["xg"] if own["xg"] else None,
+                "lineup": sorted(own["lineup"]), "lineup_count": len(own["lineup"]),
+                "event_count": own["events"], "regulation_periods": 2,
+            })
+    return sorted(records, key=lambda item: (item["match_date"], item["match_id"], item["team"]))
+
+
+def basketball_game_records(rows: Iterable[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Normalize complete paired basketball boxes into team-game metric rows."""
+    by_game: dict[str, dict[str, dict[str, Any]]] = defaultdict(dict)
+    duplicate_games: set[str] = set()
+    for row in rows:
+        game_id = str(row.get("game_id") if row.get("game_id") is not None else "").strip()
+        team = str(row.get("team") or "").strip()
+        if game_id and team:
+            if team in by_game[game_id]:
+                duplicate_games.add(game_id)
+            by_game[game_id][team] = row
+    records = []
+    required = ("points", "fgm", "fga", "three_pm", "fta", "orb", "drb", "tov")
+    for game_id, team_rows in by_game.items():
+        if game_id in duplicate_games or len(team_rows) != 2:
+            continue
+        game_rows = list(team_rows.values())
+        if any(_number(row.get(field), None) is None for row in game_rows for field in required):
+            continue
+        for row, opponent in ((game_rows[0], game_rows[1]), (game_rows[1], game_rows[0])):
+            values = {field: _number(row.get(field), None) for field in required}
+            opponent_values = {field: _number(opponent.get(field), None) for field in required}
+            if any(value is None or value < 0 for value in (*values.values(), *opponent_values.values())):
+                continue
+            if (values["fgm"] > values["fga"] or values["three_pm"] > values["fgm"]
+                    or opponent_values["fgm"] > opponent_values["fga"]
+                    or opponent_values["three_pm"] > opponent_values["fgm"]):
+                continue
+            fga, fgm = values["fga"], values["fgm"]
+            three_pm, fta = values["three_pm"], values["fta"]
+            orb, tov, points = values["orb"], values["tov"], values["points"]
+            opp_drb = opponent_values["drb"]
+            own_possessions = fga - orb + tov + 0.44 * fta
+            opponent_possessions = (opponent_values["fga"] - opponent_values["orb"]
+                                    + opponent_values["tov"] + 0.44 * opponent_values["fta"])
+            possessions = max(1.0, (own_possessions + opponent_possessions) / 2.0)
+            three_pa = _number(row.get("three_pa"), None)
+            date_value = str(row.get("game_date") or row.get("date") or row.get("kickoff") or "")[:10]
+            is_home = row.get("is_home")
+            if is_home is None and row.get("home_team"):
+                is_home = str(row.get("home_team")) == str(row.get("team"))
+            records.append({
+                "game_id": game_id, "game_date": date_value,
+                "team": str(row["team"]),
+                "opponent": str(opponent.get("team") or row.get("opponent") or ""),
+                "is_home": bool(is_home) if is_home is not None else None,
+                "possessions": possessions,
+                "off_rating": 100 * points / possessions,
+                "def_rating": 100 * opponent_values["points"] / possessions,
+                "efg": (fgm + 0.5 * three_pm) / fga if fga else None,
+                "tov_rate": tov / possessions,
+                "orb_rate": orb / (orb + opp_drb) if orb + opp_drb else None,
+                "ft_rate": fta / fga if fga else None,
+                "three_point_attempt_rate": (three_pa / fga if three_pa is not None and fga else None),
+                "points": points, "opponent_points": opponent_values["points"],
+            })
+    return sorted(records, key=lambda item: (item["game_date"], item["game_id"], item["team"]))
+
+
 def basketball_team_profiles(rows: Iterable[dict[str, Any]], min_games: int = 3) -> dict[str, dict[str, Any]]:
     """Derive tempo, efficiency and Dean Oliver's four factors from team-game boxes.
 
@@ -227,41 +426,9 @@ def basketball_team_profiles(rows: Iterable[dict[str, Any]], min_games: int = 3)
     three_pm, fta, orb, drb, tov. Two rows per game are required so offensive
     rebound percentage can use the opponent's defensive rebounds.
     """
-    by_game: dict[str, list[dict[str, Any]]] = defaultdict(list)
-    for row in rows:
-        if row.get("game_id") is not None and row.get("team"):
-            by_game[str(row["game_id"])].append(row)
     team_games: dict[str, list[dict[str, float]]] = defaultdict(list)
-    for game_rows in by_game.values():
-        if len(game_rows) != 2:
-            continue
-        for row, opponent in ((game_rows[0], game_rows[1]), (game_rows[1], game_rows[0])):
-            fga = _number(row.get("fga"), 0) or 0
-            fgm = _number(row.get("fgm"), 0) or 0
-            three_pm = _number(row.get("three_pm"), 0) or 0
-            fta = _number(row.get("fta"), 0) or 0
-            orb = _number(row.get("orb"), 0) or 0
-            tov = _number(row.get("tov"), 0) or 0
-            points = _number(row.get("points"), 0) or 0
-            opp_drb = _number(opponent.get("drb"), 0) or 0
-            opponent_fga = _number(opponent.get("fga"), 0) or 0
-            opponent_orb = _number(opponent.get("orb"), 0) or 0
-            opponent_tov = _number(opponent.get("tov"), 0) or 0
-            opponent_fta = _number(opponent.get("fta"), 0) or 0
-            own_possessions = fga - orb + tov + 0.44 * fta
-            opponent_possessions = opponent_fga - opponent_orb + opponent_tov + 0.44 * opponent_fta
-            possessions = max(1.0, (own_possessions + opponent_possessions) / 2.0)
-            opponent_points = _number(opponent.get("points"), 0) or 0
-            team_games[str(row["team"])].append({
-                "opponent": str(opponent.get("team") or row.get("opponent") or ""),
-                "possessions": possessions,
-                "off_rating": 100 * points / possessions,
-                "def_rating": 100 * opponent_points / possessions,
-                "efg": (fgm + 0.5 * three_pm) / fga if fga else 0,
-                "tov_rate": tov / possessions,
-                "orb_rate": orb / (orb + opp_drb) if orb + opp_drb else 0,
-                "ft_rate": fta / fga if fga else 0,
-            })
+    for record in basketball_game_records(rows):
+        team_games[record["team"]].append(record)
     league_rating = _mean(game["off_rating"] for games in team_games.values() for game in games) or 100.0
     offense = {team: (_mean(game["off_rating"] for game in games) or league_rating) - league_rating
                for team, games in team_games.items()}
@@ -284,12 +451,23 @@ def basketball_team_profiles(rows: Iterable[dict[str, Any]], min_games: int = 3)
         if len(games) < min_games:
             continue
         profiles[team] = {"games": len(games)}
-        for field in ("possessions", "off_rating", "def_rating", "efg", "tov_rate", "orb_rate", "ft_rate"):
+        for field in ("possessions", "off_rating", "def_rating", "efg", "tov_rate", "orb_rate", "ft_rate",
+                      "three_point_attempt_rate"):
             profiles[team][field] = _round(_mean(game[field] for game in games))
+        profiles[team]["tempo"] = profiles[team]["possessions"]
         profiles[team]["net_rating"] = _round(profiles[team]["off_rating"] - profiles[team]["def_rating"])
         profiles[team]["adjusted_off_rating"] = _round(league_rating + offense.get(team, 0.0))
         profiles[team]["adjusted_def_rating"] = _round(league_rating - defense.get(team, 0.0))
         profiles[team]["adjusted_net_rating"] = _round(offense.get(team, 0.0) + defense.get(team, 0.0))
+        opponents = [game["opponent"] for game in games]
+        profiles[team]["schedule_strength"] = _round(_mean(
+            offense.get(opponent, 0.0) + defense.get(opponent, 0.0) for opponent in opponents))
+        profiles[team]["coverage"] = {
+            "complete_paired_games": len(games),
+            "unique_opponents": len(set(opponents)),
+            "observed_through": max((game.get("game_date") or "" for game in games), default="") or None,
+            "three_point_attempt_games": sum(game.get("three_point_attempt_rate") is not None for game in games),
+        }
     return profiles
 
 
@@ -316,6 +494,85 @@ def cfbd_advanced_team_profiles(rows: Iterable[dict[str, Any]]) -> dict[str, dic
             "def_explosiveness_allowed": _round(_number(defense.get("explosiveness"), None)),
         }
     return profiles
+
+
+def cfbd_advanced_game_records(
+    games: Iterable[dict[str, Any]], advanced_rows: Iterable[dict[str, Any]]
+) -> list[dict[str, Any]]:
+    """Join authorized CFBD game metadata to normalized advanced-game rows.
+
+    Advanced input is one row per team-game with ``gameId``/``game_id``,
+    ``team`` and an ``offense`` object. Complete pairs are required. Defensive
+    rates are reconstructed from the opponent's offense, which avoids silently
+    accepting mismatched or partially populated team rows.
+    """
+    game_index = {}
+    for raw in games:
+        game_id = str(raw.get("id") if raw.get("id") is not None else raw.get("game_id") or "").strip()
+        home = str(raw.get("homeTeam") or raw.get("home_team") or "").strip()
+        away = str(raw.get("awayTeam") or raw.get("away_team") or "").strip()
+        home_points = _number(raw.get("homePoints", raw.get("home_points")), None)
+        away_points = _number(raw.get("awayPoints", raw.get("away_points")), None)
+        season = int(_number(raw.get("season"), 0) or 0)
+        week = int(_number(raw.get("week"), 0) or 0)
+        completed = raw.get("completed")
+        if (not game_id or not home or not away or not season or not week
+                or home_points is None or away_points is None or home_points == away_points
+                or completed is False):
+            continue
+        game_index[game_id] = {
+            "season": season, "week": week,
+            "game_date": str(raw.get("startDate") or raw.get("game_date") or raw.get("date") or "")[:10] or None,
+            "home": home, "away": away,
+            "home_points": home_points, "away_points": away_points,
+            "neutral_site": bool(raw.get("neutralSite", raw.get("neutral_site", False))),
+        }
+
+    paired: dict[str, dict[str, dict[str, Any]]] = defaultdict(dict)
+    duplicate_games = set()
+    for raw in advanced_rows:
+        game_id = str(raw.get("gameId") if raw.get("gameId") is not None else raw.get("game_id") or "").strip()
+        team = str(raw.get("team") or "").strip()
+        game = game_index.get(game_id)
+        if not game or team not in {game["home"], game["away"]}:
+            continue
+        offense = raw.get("offense") or raw.get("offense_stats") or {}
+        ppa = _number(offense.get("ppa"), None)
+        success = _number(offense.get("successRate", offense.get("success_rate")), None)
+        explosive = _number(offense.get("explosiveness"), None)
+        plays = _number(offense.get("plays"), None)
+        if (ppa is None or success is None or explosive is None
+                or success < 0 or success > 1 or plays is not None and plays < 0):
+            continue
+        if team in paired[game_id]:
+            duplicate_games.add(game_id)
+            continue
+        paired[game_id][team] = {
+            "ppa": ppa, "success_rate": success, "explosiveness": explosive,
+            "plays": int(plays) if plays is not None else None,
+        }
+
+    records = []
+    for game_id, game in game_index.items():
+        teams = paired.get(game_id, {})
+        if game_id in duplicate_games or set(teams) != {game["home"], game["away"]}:
+            continue
+        for team, opponent in ((game["home"], game["away"]), (game["away"], game["home"])):
+            own, other = teams[team], teams[opponent]
+            is_home = team == game["home"]
+            points = game["home_points"] if is_home else game["away_points"]
+            opponent_points = game["away_points"] if is_home else game["home_points"]
+            records.append({
+                "game_id": game_id, "season": game["season"], "week": game["week"],
+                "game_date": game["game_date"], "team": team, "opponent": opponent,
+                "is_home": is_home, "neutral_site": game["neutral_site"],
+                "points": points, "opponent_points": opponent_points,
+                **own,
+                "ppa_allowed": other["ppa"],
+                "success_rate_allowed": other["success_rate"],
+                "explosiveness_allowed": other["explosiveness"],
+            })
+    return sorted(records, key=lambda item: (item["season"], item["week"], item["game_id"], item["team"]))
 
 
 def retrosheet_event_profiles(lines: Iterable[str], min_plate_appearances: int = 100) -> dict[str, dict[str, Any]]:
