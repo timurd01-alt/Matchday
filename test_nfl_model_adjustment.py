@@ -8,6 +8,10 @@ from nfl_model_adjustment import apply_nfl_adjustment, load_nfl_adjustment_polic
 
 
 class NFLModelAdjustmentTests(unittest.TestCase):
+    def test_checked_in_policy_matches_repository_evidence(self):
+        policy = load_nfl_adjustment_policy(Path(__file__).parent / "nfl_model_adjustment.json")
+        self.assertEqual(policy["historical_oos_games"], 844)
+
     def _files(self, directory):
         root = Path(directory)
         report = {"full": {"calibrated_elo": {"n": 844, "log_loss": .6405, "brier": .2242},

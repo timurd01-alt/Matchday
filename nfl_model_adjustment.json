@@ -7,7 +7,7 @@
   "max_shift_points": 3.0,
   "allow_pick_flip": false,
   "evidence_report": "nfl_challenger_backtest.json",
-  "evidence_sha256": "dd9165646b7fe89c8956fba0961328d9301f6e9da0a8da0446a715d82fd6429f",
+  "evidence_sha256": "cbfcec8c4f828f98710ba6752de6ef3edc943a2a39aa4c8c827e0da8960fa305",
   "approved_at": "2026-07-29T22:55:00Z",
   "approved_by": "repository-owner directive",
   "basis": "historical_oos_pilot",

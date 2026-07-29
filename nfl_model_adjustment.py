@@ -53,7 +53,10 @@ def load_nfl_adjustment_policy(
     if report_path.parent != source.resolve().parent or not report_path.is_file():
         raise ValueError("NFL adjustment evidence must be committed beside the policy")
     evidence = report_path.read_bytes()
-    digest = hashlib.sha256(evidence).hexdigest()
+    # Git normalizes tracked JSON to LF while Windows worktrees commonly use
+    # CRLF. Hash the canonical repository representation so the exact same
+    # reviewed report verifies locally and in Linux CI.
+    digest = hashlib.sha256(evidence.replace(b"\r\n", b"\n")).hexdigest()
     if digest != str(policy.get("evidence_sha256") or "").lower():
         raise ValueError("NFL adjustment evidence hash mismatch")
     report = json.loads(evidence.decode("utf-8"))
