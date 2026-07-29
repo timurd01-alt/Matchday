@@ -20,6 +20,8 @@ class ResearchSignalsUITests(unittest.TestCase):
         source = (ROOT / "research-signals.js").read_text(encoding="utf-8")
         self.assertIn("advanced_metrics", source)
         self.assertIn("nfl_challenger_shadow", source)
+        self.assertIn("mlb_challenger_shadow", source)
+        self.assertIn("cleared historical out-of-sample testing", source)
         self.assertIn("production weight 0", source)
         self.assertIn("failed its promotion gate", source)
         index = (ROOT / "index.html").read_text(encoding="utf-8")

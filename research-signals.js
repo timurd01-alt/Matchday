@@ -42,9 +42,10 @@
     return rows.join('');
   }
   function shadowBlock(m){
-    const shadow=m?.nfl_challenger_shadow;if(!shadow)return '';
+    const nfl=m?.nfl_challenger_shadow,mlb=m?.mlb_challenger_shadow,shadow=nfl||mlb;if(!shadow)return '';
     const official=finite(m?.prediction?.adjusted?.h??m?.prediction?.regulation_probs?.h??m?.prediction?.model?.h);
     const learned=finite(shadow.home_win_probability);
+    if(mlb)return `<div class="researchShadow"><div><span>Official home probability</span><b>${official==null?'—':esc(`${official.toFixed(1)}%`)}</b></div><div><span>Run-strength shadow</span><b>${learned==null?'—':esc(`${(learned*100).toFixed(1)}%`)}</b></div></div><p class="researchCaution">The lean MLB model cleared historical out-of-sample testing and is now collecting prospective evidence with zero probability weight. Starting pitchers, confirmed lineups, and bullpen availability remain missing.</p><p class="researchCaution">${esc(shadow.retrosheet_notice||'Historical training data: Retrosheet.')}</p>`;
     const calibrated=finite(shadow.calibrated_elo_home_probability);
     return `<div class="researchShadow"><div><span>Official home probability</span><b>${official==null?'—':esc(`${official.toFixed(1)}%`)}</b></div><div><span>Calibrated Elo shadow</span><b>${calibrated==null?'—':esc(`${(calibrated*100).toFixed(1)}%`)}</b></div><div><span>Learned shadow</span><b>${learned==null?'—':esc(`${(learned*100).toFixed(1)}%`)}</b></div></div><p class="researchCaution">The learned NFL challenger failed its promotion gate and has zero probability weight. It is shown as audit evidence, not a second official pick.</p>`;
   }
@@ -60,10 +61,10 @@
     const metrics=metricRows(m),shadow=shadowBlock(m),meta=m?.advanced_metrics_meta;
     if(!metrics&&!shadow){
       const comp=String(DATA?.comp_key||'').toUpperCase();
-      if(!['NFL','NCAAF','NBA','NCAAM'].includes(comp))return '';
+      if(!['NFL','NCAAF','NBA','NCAAM','MLB'].includes(comp))return '';
       return `<section class="analystPanel researchPanel unavailable"><div class="researchHead"><div><span>Research signals</span><b>Authorized profile unavailable</b></div><em>official model unchanged</em></div><p class="researchCaution">This build has no fresh, matchup-linked advanced profile from an approved source. Matchday leaves the signal missing instead of inventing a neutral value.</p></section>`;
     }
-    return `<section class="analystPanel researchPanel"><div class="researchHead"><div><span>Research signals</span><b>${esc(meta?.source||'NFL challenger shadow')}</b></div><em>production weight 0</em></div>${metrics?`<div class="researchTeams"><b>${esc(m?.home?.code||m?.home?.name||'Home')}</b><span>authorized derived profile</span><b>${esc(m?.away?.code||m?.away?.name||'Away')}</b></div><div class="researchMetrics">${metrics}</div>`:''}${shadow}<div class="researchReceipt"><span>${esc(coverageText(meta)||'point-in-time shadow receipt')}</span><span>${esc(meta?.license||'research artifact')}</span></div><p class="researchCaution">These fields expand the reasoning record. They do not change the official probability until a frozen out-of-sample and prospective promotion gate passes.</p></section>`;
+    return `<section class="analystPanel researchPanel"><div class="researchHead"><div><span>Research signals</span><b>${esc(meta?.source||(m?.mlb_challenger_shadow?'MLB run-strength prospective shadow':'NFL challenger shadow'))}</b></div><em>production weight 0</em></div>${metrics?`<div class="researchTeams"><b>${esc(m?.home?.code||m?.home?.name||'Home')}</b><span>authorized derived profile</span><b>${esc(m?.away?.code||m?.away?.name||'Away')}</b></div><div class="researchMetrics">${metrics}</div>`:''}${shadow}<div class="researchReceipt"><span>${esc(coverageText(meta)||'point-in-time shadow receipt')}</span><span>${esc(meta?.license||'research artifact')}</span></div><p class="researchCaution">These fields expand the reasoning record. They do not change the official probability until a frozen out-of-sample and prospective promotion gate passes.</p></section>`;
   }
   if(typeof details==='function'){
     const priorDetails=details;

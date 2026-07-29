@@ -668,3 +668,15 @@ record the review date here before each public release.
   an explicit zero-weight receipt. Historical-only StatsBomb and Retrosheet
   profiles remain `attach_live=false`; no selective dataset is represented as
   live coverage. This is reasoning transparency, not model promotion.
+
+- **2026-07-29:** Reviewed Retrosheet's official current use notice and data-use
+  pages before the MLB historical integration. Retrosheet permits reuse, including
+  commercial products, when its specified copyright/attribution statement appears
+  prominently. The builder consumes only official downloaded 2020–2025 event and
+  game-log archives, records source hashes and the required notice in the frozen
+  derived artifact, and performs no website scraping. Historical Retrosheet inputs
+  are used only to fit and validate the run-strength challenger. Live reconstruction
+  uses the already authorized BALLDONTLIE team games/runs totals; unavailable stats
+  endpoints, target-game starters, lineups, and bullpen availability are not inferred.
+  The historical gate passed, but the live challenger remains a prospective shadow
+  with production weight zero.

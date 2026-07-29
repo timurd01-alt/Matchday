@@ -198,11 +198,21 @@ model is evaluated chronologically against both a goal-rate Poisson baseline and
 match-date-block ablations. Open Data coverage is not a live feed and no competition/season corpus is
 bundled into the repository, so this remains an unrun, attribution-bound, zero-weight research path.
 
+The MLB historical challenger is implemented and validated on official Retrosheet 2020–2025 event
+and game-log archives. It produced 9,090 out-of-sample forecasts across 683 sealed date blocks. A
+lean run-strength model using only Pythagorean strength and run differential per game improved log
+loss from Elo's `0.686457` to `0.682207`, with a paired 95% interval of
+`[-0.007292, -0.001244]`. Those inputs can be reconstructed from the licensed live standings totals,
+so the frozen model now attaches a prospective MLB challenger probability to eligible fixtures.
+Other tested historical families failed their ablation gates, while confirmed starters, lineups,
+and bullpen availability lack an authorized timestamped live source. All therefore remain excluded;
+the attached challenger has production weight zero until its prospective gate is reviewed.
+
 Authorized research evidence is now delivered to the expanded matchup view instead of remaining
 dormant in local artifacts. CI builds/restores the derived nflverse team profile before fixture
 refreshes, NCAAF continues to use its configured CFBD tier, and a post-fetch local population step
 updates even cached fixtures without another provider call. The panel exposes source, season/
-freshness, coverage, team metrics, and available NFL shadow probabilities. It labels failed/
+freshness, coverage, team metrics, and available NFL/MLB shadow probabilities. It labels failed/
 unvalidated challengers as zero-weight and does not alter the official forecast before promotion.
 
 ### Phase 3 — transparent shadow deployment

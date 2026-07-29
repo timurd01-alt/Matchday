@@ -89,6 +89,42 @@ outputs set `attach_live=false` and remain historical research only. Before publ
 transferring any Retrosheet-based data or derived product, reproduce the prominent attribution
 statement required on Retrosheet's current notice page exactly as supplied there.
 
+### Validated run-strength challenger
+
+The MLB challenger joins official Retrosheet event files to official game logs by Retrosheet game
+ID. It seals every date block before updating team history, resets seasonal history, regresses Elo
+between seasons, and never reads the target game's starter or lineup. Build it from locally
+downloaded official archives with:
+
+```powershell
+python build_mlb_challenger.py --events-root C:\data\retrosheet\events `
+  --gamelogs-root C:\data\retrosheet\gamelogs
+```
+
+The 2020–2025 validation parsed 13,046 complete games and produced 9,090 strictly out-of-sample
+forecasts across 683 sealed date blocks. The full residual model improved log loss over
+chronological Elo from `0.686457` to `0.682717`; its paired date-block difference was `-0.003739`
+with a 95% interval of `[-0.005808, -0.001729]`. Of the tested families, only run strength showed
+a stable incremental benefit. Bullpen workload, context, plate discipline, power/contact, and the
+available run-prevention proxy did not clear their ablation intervals and receive no live weight.
+
+A smaller live-reconstructible model therefore uses only prior team runs scored/allowed and games
+played to derive Pythagorean strength and run differential per game. On the same out-of-sample
+games it scored `0.682207` log loss and `0.244584` Brier versus Elo's `0.686457` and `0.246335`;
+the paired log-loss interval was `[-0.007292, -0.001244]`. Current BALLDONTLIE standings totals can
+reconstruct those exact two features, so eligible current MLB fixtures receive an
+`mlb_challenger_shadow` receipt in the expanded view.
+
+This clears only the historical gate. The artifact is frozen through `2025-09-28`, remains
+research-only with production weight zero, and must collect prospective evidence before it can
+affect an official probability. Confirmed starting pitchers, target lineups, and timestamped bullpen
+availability remain explicitly missing until an authorized pregame source is configured.
+
+Required Retrosheet notice:
+
+> The information used here was obtained free of charge from and is copyrighted by Retrosheet.
+> Interested parties may contact Retrosheet at "www.retrosheet.org".
+
 ## Basketball — licensed normalized team-game boxes
 
 The current BALLDONTLIE free adapter does not expose the box fields needed for four factors.
@@ -176,7 +212,7 @@ profiles but is not valid historical pregame evidence.
 
 ## Expanded-view research reasoning
 
-`research-signals.js` renders any approved `advanced_metrics` profiles and the NFL learned shadow
+`research-signals.js` renders any approved `advanced_metrics` profiles and the NFL or MLB learned shadow
 already attached to a fixture. The panel shows both teams, source/license, season role, build date,
 coverage, and an explicit production-weight-zero receipt. Missing approved coverage is displayed as
 missing for NFL/NCAAF/basketball rather than silently converted to an average.

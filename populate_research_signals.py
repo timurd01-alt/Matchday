@@ -8,6 +8,7 @@ import os
 from pathlib import Path
 
 from advanced_metrics_store import attach_shadow_profiles
+from mlb_challenger_store import attach_mlb_challenger_shadows
 from nfl_challenger_store import attach_nfl_challenger_shadows
 
 
@@ -37,6 +38,10 @@ def populate(directory: str | Path = ".") -> dict[str, dict]:
                 challenger = attach_nfl_challenger_shadows(
                     matches, root / "nfl_challenger_model.json",
                     root / "nfl_availability_ledger.jsonl",
+                )
+            elif competition == "MLB":
+                challenger = attach_mlb_challenger_shadows(
+                    matches, root / "mlb_run_strength_model_v1.json"
                 )
             temporary = path.with_suffix(path.suffix + ".research.tmp")
             temporary.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
