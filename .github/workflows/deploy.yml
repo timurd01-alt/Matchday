@@ -139,12 +139,18 @@ jobs:
             git commit -m "Update ratings and picks ledger [skip ci]"
             persisted=false
             for attempt in 1 2 3; do
-              if git pull --rebase origin main && git push origin HEAD:main; then
+              # The fetch leaves other generated site files intentionally
+              # unstaged for the deployment artifact. Push the durable commit
+              # directly first; only rebase if main actually moved while this
+              # job was running. --autostash keeps those in-run files intact.
+              if git push origin HEAD:main; then
                 persisted=true
                 break
               fi
-              git rebase --abort 2>/dev/null || true
-              echo "ratings/picks persistence attempt $attempt failed; retrying against latest main"
+              echo "ratings/picks persistence attempt $attempt lost a race; rebasing against latest main"
+              if ! git pull --rebase --autostash origin main; then
+                git rebase --abort 2>/dev/null || true
+              fi
               sleep 2
             done
             if [ "$persisted" != true ]; then
