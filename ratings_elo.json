@@ -7954,8 +7954,8 @@
    "n": 3883
   },
   "baseball:san diego padres": {
-   "r": 1509.653295345593,
-   "n": 3889
+   "r": 1516.499759584527,
+   "n": 3890
   },
   "baseball:kansas city royals": {
    "r": 1465.754498253426,
@@ -7970,8 +7970,8 @@
    "n": 3956
   },
   "baseball:colorado rockies": {
-   "r": 1410.098372060635,
-   "n": 3863
+   "r": 1403.251907821701,
+   "n": 3864
   },
   "baseball:seattle mariners": {
    "r": 1480.1087471703293,
@@ -7990,16 +7990,16 @@
    "n": 4006
   },
   "baseball:san francisco giants": {
-   "r": 1434.690494234836,
-   "n": 3905
+   "r": 1449.6529388740635,
+   "n": 3906
   },
   "baseball:houston astros": {
    "r": 1540.3302859180776,
    "n": 3982
   },
   "baseball:milwaukee brewers": {
-   "r": 1582.2711285929188,
-   "n": 3891
+   "r": 1567.3086839536913,
+   "n": 3892
   },
   "baseball:washington nationals": {
    "r": 1482.5545820136053,
@@ -285901,6 +285901,8 @@
   "MLB:bdl-mlb-9470133": true,
   "MLB:bdl-mlb-9470134": true,
   "MLB:bdl-mlb-9470135": true,
-  "MLB:bdl-mlb-9470136": true
+  "MLB:bdl-mlb-9470136": true,
+  "MLB:bdl-mlb-9470137": true,
+  "MLB:bdl-mlb-9470138": true
  }
 }
