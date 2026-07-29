@@ -111,6 +111,36 @@ python build_advanced_metrics.py cfbd --input cfbd_advanced.json `
   --output advanced_metrics_ncaaf.json
 ```
 
+### Chronological NCAAF challenger
+
+The learned research path uses authorized game-level exports, not a season-end aggregate. It expects:
+
+- `games.json`: CFBD `/games` rows with `id`, `season`, `week`, teams, final points, completion,
+  neutral-site status, and start date;
+- `advanced_games.json`: two normalized `/stats/game/advanced` team rows per game containing
+  `gameId`, `team`, and offense `plays`, `ppa`, `successRate`, and `explosiveness`;
+- `talent.json`: `/talent` rows augmented with `season`/`year` and the week the snapshot was
+  available (`available_week`, normally `0` for a verified preseason composite).
+
+```powershell
+python build_cfb_challenger.py --games games.json --advanced advanced_games.json `
+  --talent talent.json --rows-output cfb_challenger_rows.jsonl `
+  --report-output cfb_challenger_report.json
+```
+
+Incomplete advanced-game pairs are rejected. Each complete season-week is sealed before history,
+opponent adjustments, or Elo update, so a Saturday result cannot enter another target in the same
+week. In-season history resets at each season boundary; Elo regresses toward average, while talent
+uses only a declared pre-target snapshot. The challenger tests raw PPA, success, explosiveness,
+internally opponent-adjusted versions, talent priors, and context through expanding-window family
+ablations. Its gate requires at least 500 out-of-sample games, better log loss than Elo, and a
+season-week bootstrap interval wholly below zero. It cannot promote itself and has production
+weight zero.
+
+CFBD's own modeling guidance likewise warns that features must include only games played before the
+prediction week. A season-end `/stats/season/advanced` response is valid for current descriptive
+profiles but is not valid historical pregame evidence.
+
 ## Point-in-time ledger
 
 Every verified scorecard lock is reconciled into `forecast_ledger_<competition>.jsonl` as a

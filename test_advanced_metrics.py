@@ -3,6 +3,7 @@ import unittest
 from advanced_metrics import (
     basketball_game_records,
     basketball_team_profiles,
+    cfbd_advanced_game_records,
     cfbd_advanced_team_profiles,
     nflverse_team_profiles,
     retrosheet_event_profiles,
@@ -62,6 +63,28 @@ class AdvancedMetricTests(unittest.TestCase):
         profiles = cfbd_advanced_team_profiles([{"team": "A", "offense": {"plays": 100, "ppa": 0.2, "successRate": 0.5, "explosiveness": 1.3}, "defense": {"ppa": -0.1}}])
         self.assertEqual(profiles["A"]["ppa"], 0.2)
         self.assertEqual(profiles["A"]["def_ppa_allowed"], -0.1)
+
+    def test_cfbd_advanced_games_require_complete_team_pairs(self):
+        games = [{"id": 1, "season": 2025, "week": 1, "completed": True,
+                  "homeTeam": "A", "awayTeam": "B", "homePoints": 28,
+                  "awayPoints": 21, "startDate": "2025-08-30T16:00:00Z"}]
+        offense = {"plays": 70, "ppa": .2, "successRate": .45, "explosiveness": 1.3}
+        self.assertEqual(cfbd_advanced_game_records(games, [
+            {"gameId": 1, "team": "A", "offense": offense}]), [])
+        rows = cfbd_advanced_game_records(games, [
+            {"gameId": 1, "team": "A", "offense": offense},
+            {"gameId": 1, "team": "B", "offense": {**offense, "ppa": -.1}},
+        ])
+        self.assertEqual(len(rows), 2)
+        home = next(row for row in rows if row["is_home"])
+        self.assertEqual(home["ppa"], .2)
+        self.assertEqual(home["ppa_allowed"], -.1)
+        self.assertEqual(home["game_date"], "2025-08-30")
+        self.assertEqual(cfbd_advanced_game_records(games, [
+            {"gameId": 1, "team": "A", "offense": offense},
+            {"gameId": 1, "team": "A", "offense": offense},
+            {"gameId": 1, "team": "B", "offense": offense},
+        ]), [])
 
     def test_retrosheet_event_rates(self):
         lines = ["id,G1", "info,visteam,AAA", "info,hometeam,BBB",

@@ -356,6 +356,85 @@ def cfbd_advanced_team_profiles(rows: Iterable[dict[str, Any]]) -> dict[str, dic
     return profiles
 
 
+def cfbd_advanced_game_records(
+    games: Iterable[dict[str, Any]], advanced_rows: Iterable[dict[str, Any]]
+) -> list[dict[str, Any]]:
+    """Join authorized CFBD game metadata to normalized advanced-game rows.
+
+    Advanced input is one row per team-game with ``gameId``/``game_id``,
+    ``team`` and an ``offense`` object. Complete pairs are required. Defensive
+    rates are reconstructed from the opponent's offense, which avoids silently
+    accepting mismatched or partially populated team rows.
+    """
+    game_index = {}
+    for raw in games:
+        game_id = str(raw.get("id") if raw.get("id") is not None else raw.get("game_id") or "").strip()
+        home = str(raw.get("homeTeam") or raw.get("home_team") or "").strip()
+        away = str(raw.get("awayTeam") or raw.get("away_team") or "").strip()
+        home_points = _number(raw.get("homePoints", raw.get("home_points")), None)
+        away_points = _number(raw.get("awayPoints", raw.get("away_points")), None)
+        season = int(_number(raw.get("season"), 0) or 0)
+        week = int(_number(raw.get("week"), 0) or 0)
+        completed = raw.get("completed")
+        if (not game_id or not home or not away or not season or not week
+                or home_points is None or away_points is None or home_points == away_points
+                or completed is False):
+            continue
+        game_index[game_id] = {
+            "season": season, "week": week,
+            "game_date": str(raw.get("startDate") or raw.get("game_date") or raw.get("date") or "")[:10] or None,
+            "home": home, "away": away,
+            "home_points": home_points, "away_points": away_points,
+            "neutral_site": bool(raw.get("neutralSite", raw.get("neutral_site", False))),
+        }
+
+    paired: dict[str, dict[str, dict[str, Any]]] = defaultdict(dict)
+    duplicate_games = set()
+    for raw in advanced_rows:
+        game_id = str(raw.get("gameId") if raw.get("gameId") is not None else raw.get("game_id") or "").strip()
+        team = str(raw.get("team") or "").strip()
+        game = game_index.get(game_id)
+        if not game or team not in {game["home"], game["away"]}:
+            continue
+        offense = raw.get("offense") or raw.get("offense_stats") or {}
+        ppa = _number(offense.get("ppa"), None)
+        success = _number(offense.get("successRate", offense.get("success_rate")), None)
+        explosive = _number(offense.get("explosiveness"), None)
+        plays = _number(offense.get("plays"), None)
+        if (ppa is None or success is None or explosive is None
+                or success < 0 or success > 1 or plays is not None and plays < 0):
+            continue
+        if team in paired[game_id]:
+            duplicate_games.add(game_id)
+            continue
+        paired[game_id][team] = {
+            "ppa": ppa, "success_rate": success, "explosiveness": explosive,
+            "plays": int(plays) if plays is not None else None,
+        }
+
+    records = []
+    for game_id, game in game_index.items():
+        teams = paired.get(game_id, {})
+        if game_id in duplicate_games or set(teams) != {game["home"], game["away"]}:
+            continue
+        for team, opponent in ((game["home"], game["away"]), (game["away"], game["home"])):
+            own, other = teams[team], teams[opponent]
+            is_home = team == game["home"]
+            points = game["home_points"] if is_home else game["away_points"]
+            opponent_points = game["away_points"] if is_home else game["home_points"]
+            records.append({
+                "game_id": game_id, "season": game["season"], "week": game["week"],
+                "game_date": game["game_date"], "team": team, "opponent": opponent,
+                "is_home": is_home, "neutral_site": game["neutral_site"],
+                "points": points, "opponent_points": opponent_points,
+                **own,
+                "ppa_allowed": other["ppa"],
+                "success_rate_allowed": other["success_rate"],
+                "explosiveness_allowed": other["explosiveness"],
+            })
+    return sorted(records, key=lambda item: (item["season"], item["week"], item["game_id"], item["team"]))
+
+
 def retrosheet_event_profiles(lines: Iterable[str], min_plate_appearances: int = 100) -> dict[str, dict[str, Any]]:
     """Derive simple outcome-rate profiles from Retrosheet event files.
 

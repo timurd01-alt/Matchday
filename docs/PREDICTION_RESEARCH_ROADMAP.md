@@ -184,6 +184,13 @@ date block sealed before history updates. Expanding out-of-sample tests compare 
 chronological Elo and to removal of every feature family. No authorized historical box export is
 bundled, so it remains an unrun zero-weight research path until licensed NBA/NCAAM inputs are supplied.
 
+The College Football challenger contract is implemented next. Authorized completed-game metadata,
+paired advanced game rows, and availability-declared talent snapshots generate prior-week-only PPA,
+success, explosiveness, opponent-adjusted, talent, and context features. Full season-week blocks are
+sealed before updates and every family receives an out-of-sample ablation against chronological Elo.
+No authorized multi-season advanced-game export is bundled, so there is no performance claim and
+the path remains unrun with production weight zero.
+
 ### Phase 3 — transparent shadow deployment
 
 Generate learned predictions invisibly alongside production for a full prospective window. Capture

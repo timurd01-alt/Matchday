@@ -638,3 +638,13 @@ record the review date here before each public release.
   rejected, point-in-time rows require dates and home/away identity, and the
   resulting challenger/report stay local, gitignored, and zero-weight. A
   provider export must be reviewed against its active plan before use.
+
+- **2026-07-29:** Added a College Football advanced-metrics challenger that
+  consumes only local exports obtained through the configured CFBD tier. It
+  performs no scraping and makes no new provider request. Complete paired
+  advanced-game rows are joined to completed `/games` metadata; an entire
+  season-week is sealed before it can enter later features. Annual `/talent`
+  rows are used only when their declared availability week precedes the target
+  week. Generated rows/reports are gitignored, research-only, and zero-weight.
+  Historical use still requires a tier/terms review and reproducible authorized
+  exports; a season-end aggregate must never be relabeled as a pregame snapshot.
