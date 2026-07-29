@@ -659,3 +659,12 @@ record the review date here before each public release.
   and generated artifacts remain gitignored with production weight zero.
   Anything published from these results must credit StatsBomb and use the
   required logo under the repository's current terms.
+
+- **2026-07-29:** Closed the authorized-profile delivery gap. CI now builds a
+  derived NFL team profile from official nflverse releases, keeps raw play-by-
+  play only in the private Actions cache, and embeds matched derived fields in
+  the existing public fixture JSON. NCAAF continues through the configured
+  CFBD API tier. The expanded view displays source/license/season/coverage and
+  an explicit zero-weight receipt. Historical-only StatsBomb and Retrosheet
+  profiles remain `attach_live=false`; no selective dataset is represented as
+  live coverage. This is reasoning transparency, not model promotion.

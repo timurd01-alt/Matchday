@@ -198,6 +198,13 @@ model is evaluated chronologically against both a goal-rate Poisson baseline and
 match-date-block ablations. Open Data coverage is not a live feed and no competition/season corpus is
 bundled into the repository, so this remains an unrun, attribution-bound, zero-weight research path.
 
+Authorized research evidence is now delivered to the expanded matchup view instead of remaining
+dormant in local artifacts. CI builds/restores the derived nflverse team profile before fixture
+refreshes, NCAAF continues to use its configured CFBD tier, and a post-fetch local population step
+updates even cached fixtures without another provider call. The panel exposes source, season/
+freshness, coverage, team metrics, and available NFL shadow probabilities. It labels failed/
+unvalidated challengers as zero-weight and does not alter the official forecast before promotion.
+
 ### Phase 3 — transparent shadow deployment
 
 Generate learned predictions invisibly alongside production for a full prospective window. Capture

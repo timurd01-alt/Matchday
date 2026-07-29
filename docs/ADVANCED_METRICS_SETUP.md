@@ -25,6 +25,13 @@ Output: EPA/play, success rate, CPOE, explosive-play rate, early-down share, sec
 EPA/drive, drive score rate, and defensive rates. The 2025 profile was built successfully for all
 32 teams and maps to the current Matchday NFL identity set.
 
+The deploy workflow now runs `refresh_nfl_advanced_metrics.py` before its adaptive sports refresh.
+It tries the active NFL season once games exist, falls back to the last completed season when the
+active file lacks broad team coverage, and preserves a last-good profile on download failure. Only
+derived team profiles are embedded into fixture JSON; nflverse play-by-play files stay in the private
+build cache. Coverage labels explicitly distinguish a current profile from a prior-completed-season
+prior, and the probability weight remains zero.
+
 ## Soccer — StatsBomb Open Data
 
 StatsBomb coverage is selective. The downloader consumes official raw GitHub files for one
@@ -166,6 +173,20 @@ weight zero.
 CFBD's own modeling guidance likewise warns that features must include only games played before the
 prediction week. A season-end `/stats/season/advanced` response is valid for current descriptive
 profiles but is not valid historical pregame evidence.
+
+## Expanded-view research reasoning
+
+`research-signals.js` renders any approved `advanced_metrics` profiles and the NFL learned shadow
+already attached to a fixture. The panel shows both teams, source/license, season role, build date,
+coverage, and an explicit production-weight-zero receipt. Missing approved coverage is displayed as
+missing for NFL/NCAAF/basketball rather than silently converted to an average.
+
+After the adaptive provider pass, `populate_research_signals.py` runs locally against cached fixture
+JSON and embeds any approved profile already present in the build cache. This does not trigger an
+extra provider refresh. The `research_signal_schema` receipt makes successful population auditable.
+This improves visible reasoning and preserves the evidence in pick locks. It does not change
+`predict()` weights. A challenger may affect official probabilities only after its frozen out-of-
+sample and prospective promotion gates pass.
 
 ## Point-in-time ledger
 
