@@ -1774,3 +1774,15 @@ html{color-scheme:dark}
 @media(max-width:1050px){.outcomeShell{grid-template-columns:1fr}.outcomeSummary{position:static}}
 @media(max-width:700px){.outcomeHero{grid-template-columns:1fr;padding:17px}.outcomeFormula{min-width:0}.outcomePickerHead{align-items:stretch;flex-direction:column}.outcomeAddForm{grid-template-columns:1fr}.outcomeSelection{grid-template-columns:24px minmax(0,1fr)}.outcomeSelection .miniBtn{grid-column:2;justify-self:start}.outcomeTotals{grid-template-columns:1.35fr 1fr}.outcomeTotals>div:last-child{grid-column:1/-1}.outcomeBranchCard>div{align-items:flex-start}.outcomeSummary{border-radius:13px}}
 @media(prefers-reduced-motion:reduce){.outcomeAddForm select{transition:none}}
+/* Conventional North American standings: compact divisions/conferences,
+   followed by one clearly separate league-wide model table. */
+.proStandingsGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(620px,1fr));gap:14px;margin-bottom:18px}
+.proStandingsGrid .tablewrap{margin:0;min-width:0}
+.proDivisionTable,.proPowerTable{overflow-x:auto}
+.proDivisionTable .groupHead span,.proPowerTable .groupHead span{font-weight:400}
+.proPowerTable{margin-top:18px}
+.proTable{min-width:650px}
+.proTable th,.proTable td{white-space:nowrap}
+.proTable .gteam{min-width:190px}
+@media(max-width:1050px){.proStandingsGrid{grid-template-columns:1fr}}
+@media(max-width:680px){.proStandingsGrid{grid-template-columns:1fr;gap:10px}.proTable{min-width:620px}}

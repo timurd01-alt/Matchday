@@ -209,7 +209,7 @@ const SANDBOX_TWO_WAY=new Set(['nfl','ncaaf','ncaam','mlb','nhl','nba']);
 // backend fix for the same P4-loses-class-edge-to-a-stale-record bug.
 const SANDBOX_FULL_GAMES={nfl:10,ncaaf:10,nba:20,ncaam:18,mlb:30,nhl:20};
 function sandboxTeams(){
-  const fromStandings=(DATA.standings||[]).flatMap(g=>g.teams||[]);
+  const fromStandings=(DATA.standings||[]).filter(g=>g.table_type!=='power_ratings').flatMap(g=>g.teams||[]);
   if(fromStandings.length)return fromStandings;
   // Preseason / before any games are played, standings are legitimately
   // empty -- fall back to the team list from scheduled fixtures so the

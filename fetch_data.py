@@ -21,6 +21,7 @@ import json, os, sys, time, datetime, re, unicodedata, urllib.request, urllib.er
 import xml.etree.ElementTree as ET
 from email.utils import parsedate_to_datetime
 from collections import defaultdict
+import mfti_research
 import forecast_ledger
 from advanced_metrics_store import attach_shadow_profiles
 from nfl_challenger_store import attach_nfl_challenger_shadows
@@ -1606,7 +1607,10 @@ def _scorecard_upset_bias():
     try:
         picks = _load_picks()
         graded = [p for p in picks.values() if _record_is_official(p)
-                  and p.get("result") and p.get("upset_candidate") and p.get("upset_score") is not None]
+                  and p.get("result") and p.get("upset_candidate")
+                  and (p.get("upset_snapshot") or {}).get("radar")
+                  and (p.get("upset_snapshot") or {}).get("standings_gap_pct") is not None
+                  and p.get("upset_score") is not None]
         grp = [p for p in graded if float(p.get("upset_score") or 0) >= 60]
         if len(grp) < 8:
             return 0.0
@@ -1742,14 +1746,38 @@ def _upset_adjustment(home, away, markets, m, why, blend, two_way=False):
     if blocked and market_gap_pct is not None: reasons.append(f"market gap {market_gap_pct:.0f} pts blocks override")
     if not reasons: reasons.append("favorite profile is cleaner")
 
-    # ---- statistically-correct upset classification -----------------------
-    # An upset is defined by the MARKET: the underdog is whoever the market prices
-    # lower, and upset magnitude comes from the underdog's market win probability,
-    # not from volatility. Thresholds match standard betting conventions.
+    # ---- standings + market upset classification --------------------------
+    # Radar is narrower than generic game volatility. It requires BOTH a
+    # clearly weaker team in the current standings and a meaningful model
+    # disagreement with the market on that same team.
+    def _standings_strength(team):
+        try:
+            played = float(team.get("pld") or 0)
+            if played < 5:
+                return None
+            if two_way:
+                return _clamp(float(team.get("w") or 0) / played, 0.0, 1.0)
+            # Soccer points per game, normalized to the same 0..1 scale.
+            return _clamp(float(team.get("pts") or 0) / (3.0 * played), 0.0, 1.0)
+        except (TypeError, ValueError, ZeroDivisionError):
+            return None
+
+    home_standing = _standings_strength(home)
+    away_standing = _standings_strength(away)
+    standings_candidate = None
+    standings_gap_pct = None
+    if home_standing is not None and away_standing is not None:
+        standings_gap_pct = round(abs(home_standing - away_standing) * 100.0, 1)
+        if standings_gap_pct >= 12:
+            standings_candidate = "h" if home_standing < away_standing else "a"
+
+    # The market must call that lower-standing team the underdog too.
     mkt_dog_pct = None
+    market_dog = None
     if mk and mk.get("home_pct") is not None and mk.get("away_pct") is not None:
         m_side = "h" if float(mk.get("home_pct") or 0) >= float(mk.get("away_pct") or 0) else "a"
         m_dog = "a" if m_side == "h" else "h"
+        market_dog = m_dog
         mkt_dog_pct = float(mk.get("home_pct") if m_dog == "h" else mk.get("away_pct") or 0)
     # class: pickem (>40) / live dog (25-40) / real dog (12-25) / heavy dog (<12)
     if mkt_dog_pct is None:
@@ -1763,11 +1791,18 @@ def _upset_adjustment(home, away, markets, m, why, blend, two_way=False):
     else:
         upset_class = "major"      # heavy underdog; win = major upset
     # the model's edge on the underdog = does OUR number beat the market's?
-    model_dog_pct = float(adjusted.get(dog, 0) or 0)
+    model_dog_pct = (float(adjusted.get(market_dog, 0) or 0)
+                     if market_dog else float(adjusted.get(dog, 0) or 0))
     upset_edge = None if mkt_dog_pct is None else round(model_dog_pct - mkt_dog_pct, 1)
     # radar fires ONLY when it's a genuine underdog (not a pickem) AND the model
     # rates that underdog meaningfully above the market — a live, underpriced dog.
-    radar = bool(upset_class in ("minor", "solid", "major") and (upset_edge or 0) >= 6)
+    radar = bool(
+        standings_candidate is not None and
+        market_dog == standings_candidate and
+        dog == standings_candidate and
+        upset_class in ("minor", "solid", "major") and
+        (upset_edge or 0) >= 8
+    )
     return adjusted, {
         "candidate": dog,
         "candidate_name": _side_name_for(home, away, dog),
@@ -1779,6 +1814,9 @@ def _upset_adjustment(home, away, markets, m, why, blend, two_way=False):
         "model_dog_pct": round(model_dog_pct, 1),
         "upset_edge": upset_edge,
         "radar": radar,
+        "standings_candidate": standings_candidate,
+        "standings_gap_pct": standings_gap_pct,
+        "standings_sample_ok": home_standing is not None and away_standing is not None,
         "temperature": round(temp, 2),
         "variance_pct": int(round(variance * 100)),
         "low_goal_pct": int(round(low_goal * 100)),
@@ -3873,11 +3911,11 @@ def _save_picks(p):
         DIAG.append(f"picks save failed: {e}")
         raise RuntimeError(f"could not persist {PICKS_FILE}") from e
 
+
 def _forecast_ledger_path():
     """Keep test/temp ledgers beside their patched picks file."""
     directory = os.path.dirname(os.path.abspath(PICKS_FILE))
     return os.path.join(directory, f"forecast_ledger_{COMP_KEY.lower()}.jsonl")
-
 
 def _market_fields(pr, mk):
     """Derive the market-comparison fields for a pick from current market odds.
@@ -3940,6 +3978,8 @@ def _make_pick_record(match, prediction, market, decision, history=()):
                            "model_dog_pct": upset.get("model_dog_pct"),
                            "upset_edge": upset.get("upset_edge"),
                            "radar": upset.get("radar"),
+                           "standings_candidate": upset.get("standings_candidate"),
+                           "standings_gap_pct": upset.get("standings_gap_pct"),
                            "gate": "open" if upset.get("triggered") else ("blocked" if upset.get("blocked") else "none"),
                            "box_score_edge": upset.get("box_score_edge")},
         "box_score_available": bool(match.get("stats_extra") or match.get("stats")),
@@ -3953,6 +3993,13 @@ def _make_pick_record(match, prediction, market, decision, history=()):
         "integrity_reason": decision["reason"],
         "prediction_snapshot": _json_safe(prediction),
         "input_snapshot": _locked_input_snapshot(match),
+        # Research-only and immutable: this captures exactly what MFTI could
+        # reconstruct at the official pregame lock without affecting the pick.
+        "mfti_shadow": _json_safe(
+            mfti_research.build_shadow_receipt(
+                match, prediction, history, locked_at
+            )
+        ),
         "result": None, "model_result": None, "market_result": None,
     }
     return rec
@@ -4346,7 +4393,9 @@ def update_scorecard(matches):
     logloss = [p.get("log_loss") for p in graded if p.get("log_loss") is not None]
     advancement_briers = [p.get("brier_advancement") for p in graded if p.get("brier_advancement") is not None]
     advancement_logloss = [p.get("log_loss_advancement") for p in graded if p.get("log_loss_advancement") is not None]
-    upset_watched = [p for p in graded if p.get("upset_candidate")]
+    upset_watched = [p for p in graded if p.get("upset_candidate")
+                     and (p.get("upset_snapshot") or {}).get("radar")
+                     and (p.get("upset_snapshot") or {}).get("standings_gap_pct") is not None]
     upset_triggered = [p for p in upset_watched if p.get("upset_triggered")]
     # calibration bands: stated confidence vs actual hit rate
     bands = [("<45", 0, 45), ("45-55", 45, 55), ("55-65", 55, 65), ("65+", 65, 101)]
@@ -4614,14 +4663,109 @@ def fetch_sportsdataio_bundle():
     return adapter, matches, st, tables
 
 
+US_PRO_STANDINGS_GROUPS = {
+    "MLB": {
+        "American League East": ["New York Yankees", "Boston Red Sox", "Toronto Blue Jays", "Tampa Bay Rays", "Baltimore Orioles"],
+        "American League Central": ["Cleveland Guardians", "Detroit Tigers", "Kansas City Royals", "Minnesota Twins", "Chicago White Sox"],
+        "American League West": ["Houston Astros", "Seattle Mariners", "Texas Rangers", "Los Angeles Angels", "Oakland Athletics", "Athletics"],
+        "National League East": ["Atlanta Braves", "Miami Marlins", "New York Mets", "Philadelphia Phillies", "Washington Nationals"],
+        "National League Central": ["Chicago Cubs", "Cincinnati Reds", "Milwaukee Brewers", "Pittsburgh Pirates", "St. Louis Cardinals"],
+        "National League West": ["Arizona Diamondbacks", "Colorado Rockies", "Los Angeles Dodgers", "San Diego Padres", "San Francisco Giants"],
+    },
+    "NFL": {
+        "AFC East": ["Buffalo Bills", "Miami Dolphins", "New England Patriots", "New York Jets"],
+        "AFC North": ["Baltimore Ravens", "Cincinnati Bengals", "Cleveland Browns", "Pittsburgh Steelers"],
+        "AFC South": ["Houston Texans", "Indianapolis Colts", "Jacksonville Jaguars", "Tennessee Titans"],
+        "AFC West": ["Denver Broncos", "Kansas City Chiefs", "Las Vegas Raiders", "Los Angeles Chargers"],
+        "NFC East": ["Dallas Cowboys", "New York Giants", "Philadelphia Eagles", "Washington Commanders"],
+        "NFC North": ["Chicago Bears", "Detroit Lions", "Green Bay Packers", "Minnesota Vikings"],
+        "NFC South": ["Atlanta Falcons", "Carolina Panthers", "New Orleans Saints", "Tampa Bay Buccaneers"],
+        "NFC West": ["Arizona Cardinals", "Los Angeles Rams", "San Francisco 49ers", "Seattle Seahawks"],
+    },
+    "NBA": {
+        "Eastern Conference": ["Atlanta Hawks", "Boston Celtics", "Brooklyn Nets", "Charlotte Hornets", "Chicago Bulls", "Cleveland Cavaliers", "Detroit Pistons", "Indiana Pacers", "Miami Heat", "Milwaukee Bucks", "New York Knicks", "Orlando Magic", "Philadelphia 76ers", "Toronto Raptors", "Washington Wizards"],
+        "Western Conference": ["Dallas Mavericks", "Denver Nuggets", "Golden State Warriors", "Houston Rockets", "Los Angeles Clippers", "LA Clippers", "Los Angeles Lakers", "Memphis Grizzlies", "Minnesota Timberwolves", "New Orleans Pelicans", "Oklahoma City Thunder", "Phoenix Suns", "Portland Trail Blazers", "Sacramento Kings", "San Antonio Spurs", "Utah Jazz"],
+    },
+}
+
+
+def _pro_standings_pct(team):
+    played = max(1.0, float(team.get("pld") or 0))
+    return (float(team.get("w") or 0) + 0.5 * float(team.get("d") or 0)) / played
+
+
+def _group_us_pro_standings(tables, competition):
+    """Return conventional pro-league standings groups, never model-sorted.
+
+    Some free providers expose results but no division metadata. Pro-league
+    membership is fixed league structure, so a local map is safer than showing
+    a fabricated flat table. Unknown expansion/renamed teams remain visible in
+    an explicit unassigned table instead of silently disappearing.
+    """
+    layout = US_PRO_STANDINGS_GROUPS.get(competition)
+    if not layout:
+        return tables
+    rows = {}
+    for table in tables or []:
+        if table.get("table_type") == "power_ratings":
+            continue
+        for team in table.get("teams") or []:
+            if team.get("name") and norm(team.get("name")) not in {"unknown", "tbd", "to be determined"}:
+                rows[norm(team["name"])] = dict(team)
+    membership = {norm(name): group for group, names in layout.items() for name in names}
+    grouped = {group: [] for group in layout}
+    unassigned = []
+    for key, team in rows.items():
+        group = membership.get(key)
+        (grouped[group] if group else unassigned).append(team)
+    payload = []
+    for group in layout:
+        teams = grouped[group]
+        if not teams:
+            continue
+        teams.sort(key=lambda t: (-_pro_standings_pct(t),
+                                  -float(t.get("gd") or 0), str(t.get("name") or "")))
+        for i, team in enumerate(teams, 1):
+            team["pos"] = i
+            team["group"] = group
+            team["win_pct"] = round(_pro_standings_pct(team), 6)
+        payload.append({"group": group, "table_type": "official_standings", "teams": teams})
+    if unassigned:
+        unassigned.sort(key=lambda t: (-_pro_standings_pct(t),
+                                       str(t.get("name") or "")))
+        for i, team in enumerate(unassigned, 1):
+            team["pos"] = i
+            team["group"] = "League standings"
+            team["win_pct"] = round(_pro_standings_pct(team), 6)
+        payload.append({"group": "League standings", "table_type": "official_standings", "teams": unassigned})
+    return payload
+
+
+def _append_power_ratings_table(tables):
+    teams = [dict(team) for table in tables or []
+             if table.get("table_type") != "power_ratings"
+             for team in table.get("teams") or []]
+    seen, unique = set(), []
+    for team in teams:
+        key = norm(team.get("name"))
+        if key and key not in seen:
+            seen.add(key)
+            unique.append(team)
+    teams = unique
+    teams.sort(key=lambda t: (-float(t.get("rating") or 0), str(t.get("name") or "")))
+    for i, team in enumerate(teams, 1):
+        team["pos"] = i
+    return list(tables or []) + ([{"group": "Power Ratings", "table_type": "power_ratings", "teams": teams}] if teams else [])
+
+
 def compute_us_sport_standings(matches):
     """Derive win-loss(-tie) records, point differential and recent form
     directly from finished game results. Used when the provider's free tier
     doesn't expose a standings endpoint (BallDontLie) -- same `pts = wins*3 +
     ties` scale the API-Sports adapter used, so predict()'s strength formula
     behaves the same regardless of which provider is actually active. No
-    division/conference breakdown is available from game results alone, so
-    this returns one flat ranked table rather than grouped ones."""
+    provider's result rows do not include division metadata; fixed pro-league
+    structure is applied later by _group_us_pro_standings()."""
     T = defaultdict(lambda: {"name": "", "w": 0, "l": 0, "t": 0, "pf": 0, "pa": 0, "results": []})
     for m in matches:
         if m.get("status") != "FINISHED":
@@ -4636,6 +4780,7 @@ def compute_us_sport_standings(matches):
                 continue
             r = T[key]
             r["name"] = side.get("name")
+            r["code"] = side.get("code") or r.get("code") or ""
             r["pf"] += pf; r["pa"] += pa
             if pf > pa: r["w"] += 1; res = "W"
             elif pf < pa: r["l"] += 1; res = "L"
@@ -4645,11 +4790,11 @@ def compute_us_sport_standings(matches):
     for key, r in T.items():
         r["results"].sort(key=lambda x: x[0])
         played = r["w"] + r["l"] + r["t"]
-        model[key] = {"name": r["name"], "code": "", "pld": played, "w": r["w"], "l": r["l"], "d": r["t"],
+        model[key] = {"name": r["name"], "code": r.get("code") or "", "pld": played, "w": r["w"], "l": r["l"], "d": r["t"],
                       "gf": r["pf"], "ga": r["pa"], "gd": r["pf"] - r["pa"], "pts": r["w"] * 3 + r["t"],
                       "form": " ".join(res for _, res in r["results"][-5:]), "group": "", "pos": None,
                       "rating": round(power_rating(r["name"]), 2)}
-    ranked = sorted(model.values(), key=lambda rec: (-rec["w"] / max(1, rec["pld"]), -rec["gd"]))
+    ranked = sorted(model.values(), key=lambda rec: (-_pro_standings_pct(rec), -rec["gd"]))
     for i, rec in enumerate(ranked, 1):
         rec["pos"] = i
     tables = [{"group": "", "teams": ranked}] if ranked else []
@@ -5093,6 +5238,16 @@ def build():
         else:
             sports_adapter, matches, st, sports_tables = fetch_sportsdataio_bundle()
             provider_name = "SportsDataIO"
+        if COMP_KEY in US_PRO_STANDINGS_GROUPS:
+            sports_tables = _group_us_pro_standings(sports_tables, COMP_KEY)
+            # Keep match hydration/model inputs aligned with the official table
+            # group and within-group rank shown to users.
+            for table in sports_tables:
+                for team in table.get("teams") or []:
+                    rec = st.get(norm(team.get("name")))
+                    if rec is not None:
+                        rec["group"] = table.get("group")
+                        rec["pos"] = team.get("pos")
         print(f"  got {len(matches)} fixtures ({provider_name})")
         training_matches = normalize_match_results(
             getattr(sports_adapter, "_model_history", matches))
@@ -5234,23 +5389,10 @@ def build():
             for team in table.get("teams") or []:
                 if team.get("name"):
                     team["rating"] = round(power_rating(team["name"]), 2)
-        # The BALLDONTLIE-sourced flat tables (MLB/NBA/NFL) aren't real
-        # divisional standings to begin with -- compute_us_sport_standings()
-        # dumps every team into one ungrouped table because the free tier
-        # has no standings endpoint to source real divisions/conferences
-        # from (see its docstring). A plain win% sort on that flat, made-up
-        # grouping reads like an official table it isn't. NCAAF/NCAAM (cfbd/
-        # cbbd) and sportsdataio/apisports DO come from a real standings
-        # endpoint with real conferences, so those keep the actual win-loss
-        # sort real tables use -- only re-sort the ones with no real group.
-        if COMP.get("source") == "balldontlie":
-            for table in sports_tables:
-                if table.get("group"):
-                    continue
-                teams = table.get("teams") or []
-                teams.sort(key=lambda t: -(t.get("rating") or 0))
-                for i, t in enumerate(teams, 1):
-                    t["pos"] = i
+        # Official standings stay record-sorted. Model opinion gets its own
+        # clearly labeled, league-wide table instead of replacing division rank.
+        if COMP_KEY in US_PRO_STANDINGS_GROUPS:
+            sports_tables = _append_power_ratings_table(sports_tables)
 
     # train the self-updating factors (Elo, H2H) on this run's finished
     # results, and derive home/away split form -- all from the same

@@ -218,7 +218,7 @@ function edgeBreakdown(m){
 }
 function _v6UpsetBox(m){
   const pr=m?.prediction||{},u=pr.upset||{},op=_v10OfficialPick(m);
-  if(!u.candidate)return `<div class="analystBox upsetBox"><div class="analystBoxTitle">Upset radar</div><div class="emptyForecast" style="padding:12px">No upset profile yet.</div></div>`;
+  if(!u.radar)return `<div class="analystBox upsetBox"><div class="analystBoxTitle">Upset radar</div><div class="emptyForecast" style="padding:12px">No upset risk: this match does not have both a clear standings mismatch and an 8+ point model/market disagreement.</div></div>`;
   const shownActive=!!u.triggered&&!op.blocked;
   const cls=_v6UpsetClass(u.score,shownActive);
   const status=op.blocked?'watch only · gate blocked':shownActive?'upset pick active':'watch only';
@@ -261,23 +261,14 @@ function _modelSpotlight(list){
   return `<div class="modelSpot"><div class="modelSpotHead"><span>Best current read</span><span>${esc(m.stage||'Fixture')} · ${_modelWhen(m)}</span></div><div class="modelSpotBody"><div class="modelSpotTeam"><span class="code">${esc(m.home?.code||'HOME')}</span><div class="name">${esc(m.home?.name||'Home')}</div></div><div class="modelPickDial"><div class="lbl">Official pick</div><div class="pickName">${esc(op.name||'No pick')}</div><div class="conf">${op.confidence??'—'}%</div><span class="edgePill ${kind}">${esc(op.blocked?'upset watch only':edge)}</span></div><div class="modelSpotTeam away"><span class="code">${esc(m.away?.code||'AWAY')}</span><div class="name">${esc(m.away?.name||'Away')}</div></div></div></div>`;
 }
 function _v4UpsetRows(){
-  const M=(DATA.matches||[]).filter(isVisibleUpcoming);
+  const M=(DATA.matches||[]).filter(isVisibleUpcoming).filter(m=>m.prediction?.upset?.radar);
   return M.map(m=>{
     const pr=m.prediction||{},u=pr.upset||{},op=_v10OfficialPick(m);
-    if(u.candidate){
+    if(u.radar){
       const risk=Number(u.score)||0;const active=!!u.triggered&&!op.blocked;const cls=active?'trigger':risk>=70?'high':risk>=50?'med':'low';
-      const reason=op.blocked?`${u.candidate_name||'Underdog'} ${u.candidate_pct??'—'}% · ${op.gateReason}`:`${u.candidate_name||'Underdog'} ${u.candidate_pct??'—'}% · ${u.reason||'upset profile'}`;
+      const reason=`${u.candidate_name||'Underdog'} · standings gap ${u.standings_gap_pct??'—'} pts · model ${u.upset_edge>0?'+':''}${u.upset_edge??'—'} vs market`;
       return {m,risk,cls,reason,triggered:active,blocked:op.blocked};
     }
-    const hp=_v4OutcomePct(m,'h'),dp=_v4OutcomePct(m,'d'),ap=_v4OutcomePct(m,'a');
-    const fav=hp>=ap&&hp>=dp?'h':ap>=hp&&ap>=dp?'a':'d';const favPct=Math.max(hp,ap,dp),margin=Math.abs(hp-ap),draw=dp;
-    let risk=0,reason='balanced profile';
-    if(draw>=30){risk=72;reason=`draw pressure is high at ${Math.round(draw)}%`}
-    else if(favPct<46){risk=66;reason=`favorite is not dominant (${Math.round(favPct)}%)`}
-    else if(Number((m.prediction||{}).confidence||0)<45){risk=58;reason=`low model confidence (${(m.prediction||{}).confidence||'—'}%)`}
-    else if(margin<9){risk=52;reason='teams are close on win probability'}
-    else {risk=34;reason='favorite profile is cleaner'}
-    const cls=risk>=70?'high':risk>=50?'med':'low';return {m,risk,cls,reason,triggered:false,blocked:false};
   }).sort((a,b)=>b.risk-a.risk).slice(0,6);
 }
 function simpleMatchFallbackPanel(m){

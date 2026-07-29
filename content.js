@@ -128,10 +128,10 @@
     return links.slice(0,4);
   }
 
-  function primaryLabel(item){return item.badgeType==='ranking'?'Read rankings':item.type==='preview'?'Read preview':item.type==='recap'?'Read recap':'Read explainer'}
+  function primaryLabel(item){return item.badgeType==='availability'?'Read tracker':item.badgeType==='ranking'?'Read rankings':item.type==='preview'?'Read preview':item.type==='recap'?'Read recap':'Read explainer'}
 
   function typeBadge(type){
-    const label=type==='ranking'?'Rankings':type==='preview'?'Preview':type==='recap'?'Recap':'Learn';
+    const label=type==='availability'?'Availability':type==='ranking'?'Rankings':type==='preview'?'Preview':type==='recap'?'Recap':'Learn';
     return `<span class="typeBadge type${label}">${label}</span>`;
   }
 
@@ -238,11 +238,11 @@
   function buildPostItems(){
     return posts.map(post=>{
       const meta=compMeta(post.comp),words=(Array.isArray(post.body)?post.body.join(' '):'').split(/\s+/).filter(Boolean).length;
-      const isRanking=post.type==='ranking';
-      return {id:`post-${post.id||post.slug}`,type:'recap',badgeType:isRanking?'ranking':null,sports:[meta.sport],comp:meta.key,compLabel:post.comp_label||meta.label,
-        title:post.title||`${meta.label} model recap`,summary:post.summary||'The latest locked-pick model recap.',takeaway:isRanking?'A current ordering, its opening-fixture context, and the limits of the available evidence.':'A weekly review of the calls, misses, and calibration lessons.',
+      const isRanking=post.type==='ranking',isAvailability=post.type==='availability';
+      return {id:`post-${post.id||post.slug}`,type:'recap',badgeType:isAvailability?'availability':isRanking?'ranking':null,sports:[meta.sport],comp:meta.key,compLabel:post.comp_label||meta.label,
+        title:post.title||`${meta.label} model recap`,summary:post.summary||'The latest locked-pick model recap.',takeaway:isAvailability?'A sourced status check that separates confirmed news from what the current feed cannot establish.':isRanking?'A current ordering, its opening-fixture context, and the limits of the available evidence.':'A weekly review of the calls, misses, and calibration lessons.',
         updated:`${post.date||''}T12:00:00Z`,dataUpdated:`${post.date||''}T12:00:00Z`,sortTime:timestamp(`${post.date||''}T12:00:00Z`),minutes:Math.max(3,Math.ceil(words/180)),
-        url:`posts/${encodeURIComponent(post.slug||post.id||'')}.html`,resultLabel:isRanking?'Ranked list':'Weekly recap'};
+        url:`posts/${encodeURIComponent(post.slug||post.id||'')}.html`,resultLabel:isAvailability?'Availability desk':isRanking?'Ranked list':'Weekly recap'};
     });
   }
 
@@ -380,7 +380,9 @@
 
   async function loadContentData(){
     const [postResult,feedResult]=await Promise.allSettled([fetchJSON('posts.json'),fetchJSON('content-feed.json')]);
-    posts=postResult.status==='fulfilled'&&Array.isArray(postResult.value)?postResult.value.filter(post=>COMP_BY_KEY[String(post?.comp||'').toLowerCase()]):[];
+    posts=postResult.status==='fulfilled'&&Array.isArray(postResult.value)?postResult.value.filter(post=>{
+      const key=String(post?.comp||'').toLowerCase();return key==='all'||COMP_BY_KEY[key];
+    }):[];
     const feed=feedResult.status==='fulfilled'&&feedResult.value&&Array.isArray(feedResult.value.datasets)?feedResult.value.datasets:[];
     datasets=feed.filter(dataset=>COMP_BY_KEY[String(dataset?.compKey||'').toLowerCase()]);
     storyItems=[...buildPreviewItems(),...buildMatchRecaps(),...buildPostItems(),...GUIDE_ITEMS];
