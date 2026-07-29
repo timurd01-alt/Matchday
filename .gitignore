@@ -36,3 +36,6 @@ posts_state.json
 posts/*.html
 _site/
 node_modules/
+forecast_ledger_*.jsonl
+advanced_metrics_*.json
+nflverse_pbp_*.csv.gz

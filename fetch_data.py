@@ -21,6 +21,8 @@ import json, os, sys, time, datetime, re, unicodedata, urllib.request, urllib.er
 import xml.etree.ElementTree as ET
 from email.utils import parsedate_to_datetime
 from collections import defaultdict
+import forecast_ledger
+from advanced_metrics_store import attach_shadow_profiles
 from provider_adapters import (ProviderError, BallDontLieAdapter,
                                CollegeBasketballDataAdapter,
                                CollegeFootballDataAdapter, NflverseAdapter,
@@ -78,7 +80,7 @@ IDLE_MINUTES = 60
 LIVE_SECONDS = 3600   # legacy local loop: in-progress games only need hourly result checks
 ODDS_CACHE_MIN = 180  # one pregame market snapshot per competition window
 OUT_FILE = "data.json"
-MODEL_SIGNAL_SCHEMA = 2  # class/talent provenance and separate championship market power
+MODEL_SIGNAL_SCHEMA = 3  # point-in-time advanced-feature provenance added to immutable locks
 
 FD_BASE  = "https://api.football-data.org/v4"
 
@@ -254,6 +256,7 @@ COLLEGE_CLASS_CACHE_MIN = 10080  # seven days; stale data is still a safe fallba
 # within a season, so this rides a much longer cache than the schedule
 # bundle rather than refetching on the bundle's 8-hour cadence.
 COLLEGE_LEADERS_CACHE_MIN = 1440  # 24 hours
+COLLEGE_ADVANCED_CACHE_MIN = 1440  # one league-wide CFBD shadow refresh per day
 # nflverse-data's stats_player release is a public, unauthenticated GitHub
 # release CSV (no API key, no per-request quota) that moves slowly within a
 # season -- one CSV covers the whole league, refreshed by nflverse on their
@@ -2963,6 +2966,51 @@ def fetch_college_class_strength(adapter, kind):
         raise
 
 
+def refresh_college_advanced_metrics(adapter, output_path=None):
+    """Refresh NCAAF's licensed CFBD advanced profile as shadow-only data."""
+    if COMP_KEY != "NCAAF" or adapter is None:
+        return None
+    path = output_path or "advanced_metrics_ncaaf.json"
+    try:
+        if os.path.exists(path) and time.time() - os.path.getmtime(path) < COLLEGE_ADVANCED_CACHE_MIN * 60:
+            with open(path, encoding="utf-8") as handle:
+                cached = json.load(handle)
+            if cached.get("schema_version") == 1 and cached.get("shadow_only") is True:
+                return cached
+    except Exception as exc:
+        DIAG.append(f"CFBD advanced cache unreadable: {_scrub(exc)}")
+    try:
+        result = adapter.advanced_team_metrics()
+        profiles = result.get("profiles") or {}
+        if not profiles:
+            return None
+        payload = {
+            "schema_version": 1,
+            "generated_at": _utc_now().isoformat().replace("+00:00", "Z"),
+            "sport": "NCAAF",
+            "source": result.get("source") or "CollegeFootballData /stats/season/advanced",
+            "license": "active CFBD API tier",
+            "shadow_only": True,
+            "coverage": {"season": result.get("season"), "teams": len(profiles), "garbage_time_excluded": True},
+            "profiles": profiles,
+        }
+        tmp = path + ".tmp"
+        with open(tmp, "w", encoding="utf-8") as handle:
+            json.dump(payload, handle, ensure_ascii=False, indent=2)
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(tmp, path)
+        return payload
+    except Exception as exc:
+        DIAG.append(f"CFBD advanced metrics unavailable: {_scrub(exc)}")
+        try:
+            with open(path, encoding="utf-8") as handle:
+                stale = json.load(handle)
+            return stale if stale.get("schema_version") == 1 and stale.get("shadow_only") is True else None
+        except Exception:
+            return None
+
+
 def estimate_title_odds(matches, code_map):
     """Model-derived 'who's favored to win it all' fallback for when real
     championship-odds market data isn't available -- fetch_outrights()
@@ -3791,7 +3839,8 @@ def _quarantine_legacy_records(picks):
 
 def _locked_input_snapshot(match):
     fields = ("id", "stage", "kickoff", "status", "venue", "home", "away",
-              "markets", "weather", "injuries", "lineups", "h2h", "stats", "stats_extra")
+              "markets", "weather", "injuries", "lineups", "h2h", "stats", "stats_extra",
+              "data_source", "advanced_metrics", "advanced_metrics_meta", "model_signal_schema")
     return _json_safe({"competition": COMP_KEY,
                        "competition_config": COMP,
                        "match": {key: (match or {}).get(key) for key in fields}})
@@ -3821,6 +3870,12 @@ def _save_picks(p):
     except Exception as e:
         DIAG.append(f"picks save failed: {e}")
         raise RuntimeError(f"could not persist {PICKS_FILE}") from e
+
+def _forecast_ledger_path():
+    """Keep test/temp ledgers beside their patched picks file."""
+    directory = os.path.dirname(os.path.abspath(PICKS_FILE))
+    return os.path.join(directory, f"forecast_ledger_{COMP_KEY.lower()}.jsonl")
+
 
 def _market_fields(pr, mk):
     """Derive the market-comparison fields for a pick from current market odds.
@@ -4264,6 +4319,11 @@ def update_scorecard(matches):
     if healed:
         _save_picks(picks)
         DIAG.append("scorecard: healed legacy draw mis-gradings")
+    ledger_state = forecast_ledger.sync_pick_records(
+        _forecast_ledger_path(), picks.values(), COMP_KEY
+    )
+    if ledger_state.get("appended"):
+        DIAG.append(f"forecast ledger: appended {ledger_state['appended']} event(s)")
     official = [p for p in picks.values() if _record_is_official(p)]
     quarantined = [p for p in picks.values() if not _record_is_official(p)]
     graded = [p for p in official if p.get("result")]
@@ -5203,7 +5263,17 @@ def build():
                 m[side_key]["form_home"] = rec["form_home"]
                 m[side_key]["form_away"] = rec["form_away"]
 
+    # Advanced metrics remain shadow-only until the frozen research protocol
+    # promotes a learned challenger. NCAAF can refresh directly from its
+    # already-approved league-wide CFBD endpoint; other sports consume
+    # profiles built by build_advanced_metrics.py from approved downloads.
+    if COMP_KEY == "NCAAF" and sports_adapter:
+        refresh_college_advanced_metrics(sports_adapter)
+
     # predictions run AFTER all stats/lineups so the model can use them this run
+    shadow = attach_shadow_profiles(matches, COMP_KEY, COMP["sport"])
+    if shadow.get("matches"):
+        DIAG.append(f"advanced metrics shadow: {shadow['teams']} team profiles on {shadow['matches']} match(es)")
     for m in matches:
         m["prediction"] = predict(m["home"], m["away"], m["markets"], m)
         m["prediction"]["totals"] = predict_totals(m["home"], m["away"], m["markets"])

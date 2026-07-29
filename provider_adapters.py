@@ -14,6 +14,8 @@ import time
 import urllib.parse
 import urllib.request
 
+from advanced_metrics import cfbd_advanced_team_profiles
+
 
 class ProviderError(RuntimeError):
     pass
@@ -663,6 +665,23 @@ class CollegeFootballDataAdapter:
                 years_with_data += 1
             year -= 1
         return {name: sums[name] / counts[name] for name in sums}
+
+    def advanced_team_metrics(self):
+        """Licensed CFBD opponent/context-aware season metrics in one call.
+
+        This intentionally uses `/stats/season/advanced`, not a named third-
+        party rating. The returned values are shadow research inputs and do
+        not alter the production prediction weights.
+        """
+        rows = self._get("/stats/season/advanced", {
+            "year": self.season,
+            "excludeGarbageTime": "true",
+        })
+        return {
+            "season": self.season,
+            "source": "CollegeFootballData /stats/season/advanced",
+            "profiles": cfbd_advanced_team_profiles(rows if isinstance(rows, list) else []),
+        }
 
 
 class CollegeBasketballDataAdapter:
