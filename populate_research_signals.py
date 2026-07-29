@@ -22,6 +22,45 @@ COMPETITIONS = {
 }
 
 
+def _nfl_scorecard_summary(root: Path) -> dict:
+    """Return the public audit summary, including a zero-evidence cold start."""
+    path = root / "nfl_prospective_scorecard.json"
+    if not path.exists():
+        return {
+            "protocol_version": "nfl-prospective-shadow-1.0.0",
+            "status": "collecting_prospective_evidence",
+            "eligible_games": 0,
+            "required_games": 256,
+            "kickoff_week_blocks": 0,
+            "required_kickoff_week_blocks": 16,
+            "calibrated_elo_log_loss": None,
+            "raw_elo_log_loss": None,
+            "paired_log_loss_ci95": [None, None],
+            "production_weight": 0,
+        }
+    report = json.loads(path.read_text(encoding="utf-8"))
+    if (report.get("schema_version") != 1
+            or report.get("protocol_version") != "nfl-prospective-shadow-1.0.0"):
+        raise ValueError(f"unsupported NFL prospective scorecard: {path}")
+    contract = report.get("evaluation_contract") or {}
+    models = report.get("models") or {}
+    calibrated = models.get("calibrated_elo") or {}
+    raw = models.get("raw_elo") or {}
+    comparison = ((report.get("comparisons") or {}).get("calibrated_elo_vs_raw_elo") or {})
+    return {
+        "protocol_version": report["protocol_version"],
+        "status": report.get("status") or "collecting_prospective_evidence",
+        "eligible_games": int(calibrated.get("n") or 0),
+        "required_games": int(contract.get("minimum_games") or 256),
+        "kickoff_week_blocks": int(comparison.get("blocks") or 0),
+        "required_kickoff_week_blocks": int(contract.get("minimum_kickoff_week_blocks") or 16),
+        "calibrated_elo_log_loss": calibrated.get("log_loss"),
+        "raw_elo_log_loss": raw.get("log_loss"),
+        "paired_log_loss_ci95": comparison.get("ci95") or [None, None],
+        "production_weight": 0,
+    }
+
+
 def _mlb_scorecard_summary(root: Path) -> dict | None:
     path = root / "mlb_prospective_scorecard.json"
     if not path.exists():
@@ -65,6 +104,8 @@ def populate(directory: str | Path = ".") -> dict[str, dict]:
                     matches, root / "nfl_challenger_model.json",
                     root / "nfl_availability_ledger.jsonl",
                 )
+                if (root / "nfl_challenger_model.json").exists():
+                    payload.setdefault("research_scorecards", {})["nfl"] = _nfl_scorecard_summary(root)
             elif competition == "MLB":
                 challenger = attach_mlb_challenger_shadows(
                     matches, root / "mlb_run_strength_model_v1.json"

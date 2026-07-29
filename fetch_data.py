@@ -84,7 +84,7 @@ IDLE_MINUTES = 60
 LIVE_SECONDS = 3600   # legacy local loop: in-progress games only need hourly result checks
 ODDS_CACHE_MIN = 180  # one pregame market snapshot per competition window
 OUT_FILE = "data.json"
-MODEL_SIGNAL_SCHEMA = 5  # adds immutable MLB prospective receipts and gated promotion provenance
+MODEL_SIGNAL_SCHEMA = 6  # delivers validated NFL calibrated-Elo shadow and prospective receipts
 
 FD_BASE  = "https://api.football-data.org/v4"
 

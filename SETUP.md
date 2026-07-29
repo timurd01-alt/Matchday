@@ -81,3 +81,11 @@ python -m unittest test_analysis_mode test_news_freshness test_score_refresh tes
 ```
 
 See the [Wiki](https://github.com/timurd01-alt/Matchday/wiki) for product behavior and [PROVIDER_COMPLIANCE.md](PROVIDER_COMPLIANCE.md) for provider-specific notes.
+
+## NFL cold-start research
+
+The checked-in `nfl_challenger_model.json` is a derived, research-only artifact built from the authorized nflverse play-by-play releases under CC BY 4.0; ESPN-origin releases remain excluded. It lets every clean CI build reproduce the same frozen raw-Elo, calibrated-Elo, and learned-residual shadows without downloading multi-season play-by-play during deployment.
+
+Chronological out-of-sample testing found that calibrated Elo improved on raw Elo (844 games; log loss 0.640552 versus 0.652560, paired 95% interval for the improvement -0.023072 to -0.000895). The learned EPA/success/explosive/QB residual did not improve on calibrated Elo and remains at zero production weight. A separate early-season audit also found no reliable improvement from carrying those prior-season advanced features into weeks 1-4 or 1-8, so Matchday does not turn them into an official probability merely to fill sparse samples.
+
+`forecast_ledger_*.jsonl` and `nfl_prospective_scorecard.json` persist in the private Actions cache. The expanded NFL view reports the calibrated-Elo prospective counter against a frozen minimum of 256 graded games across 16 kickoff weeks. Reaching that minimum permits manual review; it never auto-promotes a model.

@@ -24,6 +24,8 @@ class ResearchSignalsUITests(unittest.TestCase):
         self.assertIn("cleared historical out-of-sample testing", source)
         self.assertIn("Prospective evidence", source)
         self.assertIn("eligible_games", source)
+        self.assertIn("kickoff_week_blocks", source)
+        self.assertIn("Calibrated Elo beat raw Elo", source)
         self.assertIn("research_promotion", source)
         self.assertIn("manually reviewed prospective gate", source)
         self.assertIn("production weight 0", source)
@@ -36,6 +38,11 @@ class ResearchSignalsUITests(unittest.TestCase):
         workflow = (ROOT / ".github" / "workflows" / "deploy.yml").read_text(encoding="utf-8")
         self.assertIn("python refresh_nfl_advanced_metrics.py", workflow)
         self.assertIn("python populate_research_signals.py", workflow)
+        self.assertIn("python build_nfl_prospective_scorecard.py", workflow)
+        self.assertIn("forecast_ledger_*.jsonl", workflow)
+        refresh_step = workflow.index("Refresh authorized NFL research profile")
+        refresh_command = workflow.index("python refresh_nfl_advanced_metrics.py")
+        self.assertIn("if: github.event_name != 'push'", workflow[refresh_step:refresh_command])
         self.assertIn("research-signals.js", workflow)
         self.assertIn("research-signals.css", workflow)
 
@@ -74,6 +81,23 @@ class ResearchSignalsUITests(unittest.TestCase):
             summary = payload["research_scorecards"]["mlb"]
             self.assertEqual(summary["eligible_games"], 12)
             self.assertEqual(summary["game_date_blocks"], 3)
+            self.assertEqual(summary["production_weight"], 0)
+
+    def test_nfl_population_exposes_prospective_counter_even_before_first_grade(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "data_nfl.json").write_text(json.dumps({"matches": []}), encoding="utf-8")
+            (root / "nfl_challenger_model.json").write_text(
+                (ROOT / "nfl_challenger_model.json").read_text(encoding="utf-8"),
+                encoding="utf-8",
+            )
+            populate(root)
+            payload = json.loads((root / "data_nfl.json").read_text(encoding="utf-8"))
+            summary = payload["research_scorecards"]["nfl"]
+            self.assertEqual(summary["eligible_games"], 0)
+            self.assertEqual(summary["required_games"], 256)
+            self.assertEqual(summary["kickoff_week_blocks"], 0)
+            self.assertEqual(summary["required_kickoff_week_blocks"], 16)
             self.assertEqual(summary["production_weight"], 0)
 
 
