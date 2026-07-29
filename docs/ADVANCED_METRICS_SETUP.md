@@ -152,3 +152,25 @@ was `-0.011611`, with a 95% interval of `[-0.023072, -0.000895]`. This clears th
 prospective shadow evaluation, not production promotion. The advanced-feature residual challenger
 scored `0.642373`; its interval versus calibrated Elo was `[-0.010197, 0.014477]`, so it still has
 no demonstrated advantage and remains zero-weight.
+
+### Prospective NFL shadow scorecard
+
+The evaluation protocol is frozen in `nfl_prospective_scorecard.py`. It reads the verified
+append-only ledger rather than current fixture state, pairs each unique pregame lock with the
+latest appended result correction, and compares raw Elo, calibrated Elo, and the advanced
+challenger on the same games. Ties, post-kickoff locks, duplicate locks, incomplete probabilities,
+and non-shadow records are excluded with explicit counts.
+
+Run it after NFL locks begin settling:
+
+```powershell
+python build_nfl_prospective_scorecard.py `
+  --ledger forecast_ledger_nfl.jsonl `
+  --output nfl_prospective_scorecard.json
+```
+
+The primary metric is log loss, with Brier score and calibration bands as secondary diagnostics.
+Paired uncertainty uses a deterministic kickoff-week block bootstrap. Review is disabled until at
+least 256 eligible games across 16 kickoff-week blocks; reaching that threshold never promotes a
+model automatically. The generated report is gitignored and every row retains its lock and grade
+event IDs so the result can be audited against the hash chain.

@@ -193,6 +193,12 @@ proper scores over raw Elo across 844 out-of-sample forecasts, and the paired we
 for log-loss improvement excluded zero. It is eligible only for a prospective shadow window. The
 advanced-feature residual model did not beat calibrated Elo and remains rejected for production.
 
+The prospective protocol is now frozen before the 2026 evidence window. It evaluates only unique,
+verified pregame locks from the tamper-evident ledger, uses the latest appended correction for a
+settled result, excludes ties, and compares all three NFL probabilities on identical fixtures.
+Formal review requires at least 256 eligible games across 16 kickoff-week blocks. The evaluator
+reports exclusions and paired week-block intervals and cannot change production weights.
+
 ### Phase 4 — controlled promotion
 
 Promote only the frozen winner, preserve the replaced model in the scorecard, and add drift alerts,
