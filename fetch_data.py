@@ -5260,7 +5260,7 @@ def build():
         if COMP_KEY in ("NCAAF", "NCAAM") and sports_adapter:
             try:
                 provider_ranks, _ = sports_adapter.rankings(sports_tables)
-                rank_map = {norm(row.get("name")): row.get("rank") for row in provider_ranks}
+                rank_map = {norm(row.get("name")): row for row in provider_ranks}
             except ProviderError as exc:
                 DIAG.append(f"{provider_name} rankings unavailable: {_scrub(exc)}")
         name_map = {}
@@ -5279,7 +5279,10 @@ def build():
                 if srs:
                     t["srs"], t["srs_games"] = srs["rating"], srs["games"]
                 if norm(t["name"]) in rank_map:
-                    t["model_rank"] = rank_map[norm(t["name"])]
+                    rank_record = rank_map[norm(t["name"])]
+                    t["model_rank"] = rank_record.get("rank")
+                    t["rank_source"] = ("model_projection" if rank_record.get("projected")
+                                        else "poll")
                 # class/power-rating ("rating") is intentionally NOT set here.
                 # power_rating() reads the same ratings store that
                 # apply_recruiting_strength()/apply_market_strength() enrich

@@ -6,6 +6,16 @@ ROOT = Path(__file__).resolve().parent
 
 
 class AnalysisModeTests(unittest.TestCase):
+    def test_match_profile_separates_standings_position_from_rank(self):
+        source = (ROOT / "app-4-features.js").read_text(encoding="utf-8")
+        self.assertIn("return 'Table position'", source)
+        self.assertIn("return 'Division position'", source)
+        self.assertIn("return 'Conference position'", source)
+        self.assertIn("_v15CompareRow(_v15PlacementLabel(m),_v15Placement(m?.home),_v15Placement(m?.away))", source)
+        self.assertIn("_v15CompareRow(_v15RankLabel(m),_v15Num(m?.home?.model_rank)", source)
+        self.assertNotIn("model_rank??m?.home?.pos", source)
+        self.assertNotIn("model_rank??m?.away?.pos", source)
+
     def test_public_shell_promises_pregame_and_postgame_analysis(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
         content = (ROOT / "content.html").read_text(encoding="utf-8")

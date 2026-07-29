@@ -566,6 +566,34 @@ function _v15CompareRow(label,home,away,html){
   const val=v=>v==null?'—':html?v:esc(v);
   return `<div class="profileCompareRow"><b>${val(home)}</b><span>${esc(label)}</span><b>${val(away)}</b></div>`;
 }
+function _v15CompetitionKey(m){
+  return String(m?._comp||DATA.comp_key||'').toUpperCase();
+}
+function _v15PlacementLabel(m){
+  const comp=_v15CompetitionKey(m);
+  if(['WC','UCL','EPL','LALIGA','SERIEA','BUNDESLIGA','LIGUE1'].includes(comp))return 'Table position';
+  if(['NFL','MLB','NHL'].includes(comp))return 'Division position';
+  if(['NBA','NCAAF','NCAAM'].includes(comp))return 'Conference position';
+  return 'Standings position';
+}
+function _v15Ordinal(value){
+  const n=_v15Num(value);if(n==null)return null;
+  const whole=Math.trunc(n),mod100=whole%100;
+  const suffix=mod100>=11&&mod100<=13?'th':({1:'st',2:'nd',3:'rd'}[whole%10]||'th');
+  return `${whole}${suffix}`;
+}
+function _v15Placement(team){
+  const position=_v15Ordinal(team?.pos);if(!position)return null;
+  const context=team?.group?` · ${team.group}`:'';
+  const stale=team?.season_stale?' · prior season':'';
+  return `${position}${context}${stale}`;
+}
+function _v15RankLabel(m){
+  const sources=[m?.home?.rank_source,m?.away?.rank_source].filter(Boolean);
+  if(sources.includes('model_projection'))return 'Model projection rank';
+  if(sources.includes('poll'))return 'Poll rank';
+  return ['NCAAF','NCAAM'].includes(_v15CompetitionKey(m))?'Poll / model rank':'Model rank';
+}
 function _v15MatchProfile(m,op){
   const pr=m?.prediction||{},probs=_v4ModelProbs(m)||{},side=op?.side||'';
   const quality=pr.data_quality||{},sample=quality.games||{};
@@ -589,7 +617,8 @@ function _v15MatchProfile(m,op){
   ].map(([label,value,help])=>`<div class="profileKpi"><span>${esc(label)}${help?metricHelp(label,help):''}</span><b>${esc(value)}</b></div>`).join('');
   const rows=[
     _v15CompareRow('Record',_v15Record(m?.home,m),_v15Record(m?.away,m)),
-    _v15CompareRow('Rank',_v15Num(m?.home?.model_rank??m?.home?.pos)!=null?`#${m.home.model_rank??m.home.pos}`:null,_v15Num(m?.away?.model_rank??m?.away?.pos)!=null?`#${m.away.model_rank??m.away.pos}`:null),
+    _v15CompareRow(_v15PlacementLabel(m),_v15Placement(m?.home),_v15Placement(m?.away)),
+    _v15CompareRow(_v15RankLabel(m),_v15Num(m?.home?.model_rank)!=null?`#${m.home.model_rank}`:null,_v15Num(m?.away?.model_rank)!=null?`#${m.away.model_rank}`:null),
     _v15CompareRow('Opponent-adjusted rating',_v15Num(m?.home?.srs)!=null?Number(m.home.srs).toFixed(1):null,_v15Num(m?.away?.srs)!=null?Number(m.away.srs).toFixed(1):null),
     _v15CompareRow(`Avg ${unit} scored`,hScored,aScored),
     _v15CompareRow(`Avg ${unit} allowed`,_v15Rate(m?.home,'ga'),_v15Rate(m?.away,'ga')),
