@@ -208,6 +208,21 @@ Other tested historical families failed their ablation gates, while confirmed st
 and bullpen availability lack an authorized timestamped live source. All therefore remain excluded;
 the attached challenger has production weight zero until its prospective gate is reviewed.
 
+The prospective bridge is now implemented rather than leaving that review as a paper requirement.
+Each eligible MLB fixture attaches the frozen run-strength shadow before the official pregame lock;
+the shadow probability, model version, training cutoff, and missing-personnel declaration are then
+preserved in the append-only forecast ledger. `mlb_prospective_scorecard.py` grades the shadow and
+official forecast on the same settled fixtures with deterministic game-date-block uncertainty.
+Review remains disabled until at least 500 eligible games across 30 game-date blocks are available.
+
+`mlb_model_promotion.py` is the controlled production boundary. The checked-in policy remains at
+zero while evidence is collecting. A future non-zero policy must reference a hash-verified frozen
+report, show lower prospective log loss and Brier score than the official model, have a paired
+log-loss interval entirely below zero, and include a named timestamped manual review. Even then,
+the first stage is capped at 10% weight and a three-percentage-point adjustment and cannot flip the
+official winner. The raw shadow stays zero-weight in the research ledger so its evaluation remains
+independent of the promoted blend.
+
 Authorized research evidence is now delivered to the expanded matchup view instead of remaining
 dormant in local artifacts. CI builds/restores the derived nflverse team profile before fixture
 refreshes, NCAAF continues to use its configured CFBD tier, and a post-fetch local population step

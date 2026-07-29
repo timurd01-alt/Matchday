@@ -22,6 +22,10 @@ class ResearchSignalsUITests(unittest.TestCase):
         self.assertIn("nfl_challenger_shadow", source)
         self.assertIn("mlb_challenger_shadow", source)
         self.assertIn("cleared historical out-of-sample testing", source)
+        self.assertIn("Prospective evidence", source)
+        self.assertIn("eligible_games", source)
+        self.assertIn("research_promotion", source)
+        self.assertIn("manually reviewed prospective gate", source)
         self.assertIn("production weight 0", source)
         self.assertIn("failed its promotion gate", source)
         index = (ROOT / "index.html").read_text(encoding="utf-8")
@@ -52,6 +56,25 @@ class ResearchSignalsUITests(unittest.TestCase):
             self.assertEqual(result["nfl"]["advanced"], 1)
             self.assertEqual(payload["matches"][0]["research_signal_schema"], 1)
             self.assertEqual(payload["matches"][0]["advanced_metrics"]["home"]["epa_per_play"], .2)
+
+    def test_mlb_population_exposes_only_scorecard_summary(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "data_mlb.json").write_text(json.dumps({"matches": []}), encoding="utf-8")
+            (root / "mlb_prospective_scorecard.json").write_text(json.dumps({
+                "schema_version": 1, "protocol_version": "mlb-prospective-shadow-1.0.0",
+                "status": "collecting_prospective_evidence",
+                "evaluation_contract": {"minimum_games": 500, "minimum_game_date_blocks": 30},
+                "models": {"official": {"n": 12, "log_loss": .69},
+                           "run_strength_challenger": {"n": 12, "log_loss": .68}},
+                "comparisons": {"run_strength_vs_official": {"blocks": 3, "ci95": [-.02, .01]}},
+            }), encoding="utf-8")
+            populate(root)
+            payload = json.loads((root / "data_mlb.json").read_text(encoding="utf-8"))
+            summary = payload["research_scorecards"]["mlb"]
+            self.assertEqual(summary["eligible_games"], 12)
+            self.assertEqual(summary["game_date_blocks"], 3)
+            self.assertEqual(summary["production_weight"], 0)
 
 
 if __name__ == "__main__":

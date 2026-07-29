@@ -19,6 +19,10 @@ def eligible_match():
         "home": {"name": "Home", "code": "H"},
         "away": {"name": "Away", "code": "A"},
         "markets": {},
+        "mlb_challenger_shadow": {
+            "mode": "prospective_shadow", "production_weight": 0,
+            "home_win_probability": .57,
+        },
         "prediction": {
             "pick": "h", "pick_name": "Home", "confidence": 60,
             "model": {"h": 60, "d": 0, "a": 40}, "why": {},
@@ -39,6 +43,8 @@ class PickLockPersistenceTests(unittest.TestCase):
         fetch_data.update_scorecard([eligible_match()])
         saved = json.loads(self.ledger.read_text(encoding="utf-8"))
         self.assertTrue(fetch_data._record_is_official(saved["persistence-test-1"]))
+        snapshot = saved["persistence-test-1"]["input_snapshot"]["match"]
+        self.assertEqual(snapshot["mlb_challenger_shadow"]["home_win_probability"], .57)
 
     def test_silent_writer_failure_is_rejected_by_postcondition(self):
         with mock.patch.object(fetch_data, "_save_picks", return_value=None):

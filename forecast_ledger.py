@@ -142,6 +142,7 @@ def _forecast_payload(rec: dict[str, Any]) -> dict[str, Any]:
             "factor_snapshot": _safe(rec.get("factor_snapshot")),
             "advanced_metrics": _safe(match.get("advanced_metrics")),
             "nfl_challenger_shadow": _safe(match.get("nfl_challenger_shadow")),
+            "mlb_challenger_shadow": _safe(match.get("mlb_challenger_shadow")),
             "data_quality": _safe(prediction.get("data_quality")),
             "mfti_shadow": _safe(rec.get("mfti_shadow")),
         },

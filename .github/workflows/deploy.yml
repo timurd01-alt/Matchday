@@ -38,6 +38,7 @@ jobs:
             *_cache.json
             advanced_metrics_*.json
             nflverse_pbp_*.csv.gz
+            mlb_prospective_scorecard.json
             player_db_*.json
             posts.json
             posts_state.json
@@ -96,6 +97,15 @@ jobs:
         if: github.event_name != 'push' && steps.adaptive-fetch.outcome == 'failure'
         run: |
           echo "::warning::One or more providers failed after retry. Deploying the structurally validated last-good fixture snapshots recovered before refresh."
+
+      - name: Grade frozen MLB challenger evidence
+        if: github.event_name != 'push'
+        run: |
+          if [ -f forecast_ledger_mlb.jsonl ]; then
+            python build_mlb_prospective_scorecard.py --ledger forecast_ledger_mlb.jsonl --output mlb_prospective_scorecard.json
+          else
+            echo "no MLB forecast ledger yet; prospective scorecard remains pending"
+          fi
 
       - name: Populate authorized research reasoning into cached fixtures
         run: python populate_research_signals.py

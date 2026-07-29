@@ -37,9 +37,10 @@ def official_record(result=None):
             "competition": "NFL",
             "match": {
                 "data_source": "nflverse (CC BY 4.0)",
-                "model_signal_schema": 4,
+                "model_signal_schema": 5,
                 "advanced_metrics": {"home": {"epa_per_play": 0.12}},
                 "nfl_challenger_shadow": {"model_version": "test-shadow", "production_weight": 0},
+                "mlb_challenger_shadow": {"model_version": "test-mlb-shadow", "production_weight": 0},
             },
         },
         "mfti_shadow": {"version": "shadow"},
@@ -63,6 +64,7 @@ class ForecastLedgerTests(unittest.TestCase):
         self.assertEqual(forecast_ledger.validate(self.path)["events"], 1)
         event = forecast_ledger.read_events(self.path)[0]
         self.assertEqual(event["payload"]["features"]["nfl_challenger_shadow"]["production_weight"], 0)
+        self.assertEqual(event["payload"]["features"]["mlb_challenger_shadow"]["production_weight"], 0)
 
     def test_grade_and_later_correction_append_new_events(self):
         rec = official_record("h")

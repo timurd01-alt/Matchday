@@ -24,6 +24,8 @@ from collections import defaultdict
 import mfti_research
 import forecast_ledger
 from advanced_metrics_store import attach_shadow_profiles
+from mlb_challenger_store import attach_mlb_challenger_shadows
+from mlb_model_promotion import apply_mlb_promotion, load_mlb_promotion_policy
 from nfl_challenger_store import attach_nfl_challenger_shadows
 from provider_adapters import (ProviderError, BallDontLieAdapter,
                                CollegeBasketballDataAdapter,
@@ -82,7 +84,7 @@ IDLE_MINUTES = 60
 LIVE_SECONDS = 3600   # legacy local loop: in-progress games only need hourly result checks
 ODDS_CACHE_MIN = 180  # one pregame market snapshot per competition window
 OUT_FILE = "data.json"
-MODEL_SIGNAL_SCHEMA = 4  # adds zero-weight NFL learned-challenger shadow receipts
+MODEL_SIGNAL_SCHEMA = 5  # adds immutable MLB prospective receipts and gated promotion provenance
 
 FD_BASE  = "https://api.football-data.org/v4"
 
@@ -3880,6 +3882,7 @@ def _locked_input_snapshot(match):
     fields = ("id", "stage", "kickoff", "status", "venue", "home", "away",
               "markets", "weather", "injuries", "lineups", "h2h", "stats", "stats_extra",
               "data_source", "advanced_metrics", "advanced_metrics_meta", "nfl_challenger_shadow",
+              "mlb_challenger_shadow",
               "model_signal_schema")
     return _json_safe({"competition": COMP_KEY,
                        "competition_config": COMP,
@@ -5422,10 +5425,20 @@ def build():
         challenger = attach_nfl_challenger_shadows(matches)
         if challenger.get("matches"):
             DIAG.append(f"NFL learned challenger shadow: {challenger['matches']} match(es), production weight 0")
+    elif COMP_KEY == "MLB":
+        challenger = attach_mlb_challenger_shadows(matches)
+        if challenger.get("matches"):
+            DIAG.append(f"MLB run-strength challenger shadow: {challenger['matches']} match(es), production weight 0")
+    mlb_promotion_policy = load_mlb_promotion_policy() if COMP_KEY == "MLB" else None
+    promoted_matches = 0
     for m in matches:
         m["prediction"] = predict(m["home"], m["away"], m["markets"], m)
+        if mlb_promotion_policy and apply_mlb_promotion(m, m["prediction"], mlb_promotion_policy):
+            promoted_matches += 1
         m["prediction"]["totals"] = predict_totals(m["home"], m["away"], m["markets"])
         m["watchability"] = compute_watchability(m)
+    if promoted_matches:
+        DIAG.append(f"MLB reviewed challenger blend applied to {promoted_matches} match(es)")
     print(f"  merged odds onto {merged} fixtures ({fuzzy} via name-variant match) · predictions on all {len(matches)}")
 
     print("Fetching title odds + news…")

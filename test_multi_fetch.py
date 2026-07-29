@@ -81,7 +81,7 @@ class ModelSchemaRefreshTests(unittest.TestCase):
         self.assertTrue(multi_fetch._missing_fields("ncaaf"))
 
     def test_current_model_schema_returns_to_normal_cadence(self):
-        self._write_match(model_signal_schema=4)
+        self._write_match(model_signal_schema=5)
         self.assertFalse(multi_fetch._missing_fields("ncaaf"))
 
 

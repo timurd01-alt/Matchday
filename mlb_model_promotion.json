@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "status": "collecting_prospective_evidence",
+  "signal": "run_strength_challenger",
+  "model_version": "retrosheet-mlb-challenger-0.1.0",
+  "production_weight": 0,
+  "max_shift_points": 3,
+  "allow_pick_flip": false,
+  "requirements": {
+    "protocol_version": "mlb-prospective-shadow-1.0.0",
+    "minimum_games": 500,
+    "minimum_game_date_blocks": 30,
+    "primary_metric": "log_loss",
+    "paired_interval_upper_bound_below_zero": true,
+    "brier_must_improve": true,
+    "manual_review_required": true
+  }
+}
