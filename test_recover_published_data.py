@@ -84,9 +84,12 @@ class PublishedDataRecoveryTests(unittest.TestCase):
         self.assertLess(refresh, assembly)
         self.assertIn("id: adaptive-fetch", workflow)
         self.assertIn("if: github.event_name != 'push'", workflow)
+        self.assertGreaterEqual(workflow.count("if: github.event_name != 'push'"), 2)
         self.assertIn("continue-on-error: true", workflow)
         self.assertIn("if: github.event_name != 'push' && steps.adaptive-fetch.outcome == 'failure'", workflow)
         self.assertIn('if [ ! -f data.json ]; then', workflow)
+        self.assertIn('git pull --rebase origin main && git push origin HEAD:main', workflow)
+        self.assertIn('Could not persist refreshed ratings/picks after three rebased attempts', workflow)
 
 
 if __name__ == "__main__":

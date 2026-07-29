@@ -101,6 +101,7 @@ jobs:
         run: python populate_research_signals.py
 
       - name: Commit updated ratings and picks ledger back to the repo
+        if: github.event_name != 'push'
         # EVERY ratings*.json file (Elo, and every per-competition curated/
         # enriched class-rating file -- ratings.json, ratings_ncaaf.json,
         # ratings_bundesliga.json, etc.) is git-tracked, and all of them used
@@ -136,7 +137,19 @@ jobs:
           git add -- 'ratings*.json' ':!ratings*.backup.json' ':!ratings*.legacy.json' ':!ratings*.raced-preserved.json' 'picks_log*.json'
           if ! git diff --cached --quiet; then
             git commit -m "Update ratings and picks ledger [skip ci]"
-            git push
+            persisted=false
+            for attempt in 1 2 3; do
+              if git pull --rebase origin main && git push origin HEAD:main; then
+                persisted=true
+                break
+              fi
+              git rebase --abort 2>/dev/null || true
+              echo "ratings/picks persistence attempt $attempt failed; retrying against latest main"
+              sleep 2
+            done
+            if [ "$persisted" != true ]; then
+              echo "::warning::Could not persist refreshed ratings/picks after three rebased attempts. Continuing with the validated in-run files so site deployment is not blocked."
+            fi
           else
             echo "no ratings or picks files changed, nothing to commit"
           fi
