@@ -10,6 +10,7 @@ from pathlib import Path
 from advanced_metrics_store import attach_shadow_profiles
 from mlb_challenger_store import attach_mlb_challenger_shadows
 from nfl_challenger_store import attach_nfl_challenger_shadows
+from nfl_model_adjustment import apply_nfl_adjustment, load_nfl_adjustment_policy
 
 
 COMPETITIONS = {
@@ -106,6 +107,10 @@ def populate(directory: str | Path = ".") -> dict[str, dict]:
                 )
                 if (root / "nfl_challenger_model.json").exists():
                     payload.setdefault("research_scorecards", {})["nfl"] = _nfl_scorecard_summary(root)
+                policy = load_nfl_adjustment_policy(root / "nfl_model_adjustment.json")
+                for match in matches:
+                    prediction = match.get("prediction") or {}
+                    apply_nfl_adjustment(match, prediction, policy, allow_inside_lock_window=False)
             elif competition == "MLB":
                 challenger = attach_mlb_challenger_shadows(
                     matches, root / "mlb_run_strength_model_v1.json"

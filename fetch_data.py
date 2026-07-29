@@ -26,6 +26,7 @@ import forecast_ledger
 from advanced_metrics_store import attach_shadow_profiles
 from mlb_challenger_store import attach_mlb_challenger_shadows
 from mlb_model_promotion import apply_mlb_promotion, load_mlb_promotion_policy
+from nfl_model_adjustment import apply_nfl_adjustment, load_nfl_adjustment_policy
 from nfl_challenger_store import attach_nfl_challenger_shadows
 from provider_adapters import (ProviderError, BallDontLieAdapter,
                                CollegeBasketballDataAdapter,
@@ -84,7 +85,7 @@ IDLE_MINUTES = 60
 LIVE_SECONDS = 3600   # legacy local loop: in-progress games only need hourly result checks
 ODDS_CACHE_MIN = 180  # one pregame market snapshot per competition window
 OUT_FILE = "data.json"
-MODEL_SIGNAL_SCHEMA = 6  # delivers validated NFL calibrated-Elo shadow and prospective receipts
+MODEL_SIGNAL_SCHEMA = 7  # adds capped, historically validated NFL calibrated-Elo adjustment
 
 FD_BASE  = "https://api.football-data.org/v4"
 
@@ -5430,15 +5431,19 @@ def build():
         if challenger.get("matches"):
             DIAG.append(f"MLB run-strength challenger shadow: {challenger['matches']} match(es), production weight 0")
     mlb_promotion_policy = load_mlb_promotion_policy() if COMP_KEY == "MLB" else None
+    nfl_adjustment_policy = load_nfl_adjustment_policy() if COMP_KEY == "NFL" else None
     promoted_matches = 0
     for m in matches:
         m["prediction"] = predict(m["home"], m["away"], m["markets"], m)
         if mlb_promotion_policy and apply_mlb_promotion(m, m["prediction"], mlb_promotion_policy):
             promoted_matches += 1
+        if nfl_adjustment_policy and apply_nfl_adjustment(m, m["prediction"], nfl_adjustment_policy):
+            promoted_matches += 1
         m["prediction"]["totals"] = predict_totals(m["home"], m["away"], m["markets"])
         m["watchability"] = compute_watchability(m)
     if promoted_matches:
-        DIAG.append(f"MLB reviewed challenger blend applied to {promoted_matches} match(es)")
+        label = "NFL calibrated-Elo historical pilot" if COMP_KEY == "NFL" else "MLB reviewed challenger blend"
+        DIAG.append(f"{label} applied to {promoted_matches} match(es)")
     print(f"  merged odds onto {merged} fixtures ({fuzzy} via name-variant match) · predictions on all {len(matches)}")
 
     print("Fetching title odds + news…")
