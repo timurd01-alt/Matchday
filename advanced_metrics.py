@@ -220,6 +220,65 @@ def stats_for_match(events: Iterable[dict[str, Any]], match_id: str, team_name: 
     return total
 
 
+def basketball_game_records(rows: Iterable[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Normalize complete paired basketball boxes into team-game metric rows."""
+    by_game: dict[str, dict[str, dict[str, Any]]] = defaultdict(dict)
+    duplicate_games: set[str] = set()
+    for row in rows:
+        game_id = str(row.get("game_id") if row.get("game_id") is not None else "").strip()
+        team = str(row.get("team") or "").strip()
+        if game_id and team:
+            if team in by_game[game_id]:
+                duplicate_games.add(game_id)
+            by_game[game_id][team] = row
+    records = []
+    required = ("points", "fgm", "fga", "three_pm", "fta", "orb", "drb", "tov")
+    for game_id, team_rows in by_game.items():
+        if game_id in duplicate_games or len(team_rows) != 2:
+            continue
+        game_rows = list(team_rows.values())
+        if any(_number(row.get(field), None) is None for row in game_rows for field in required):
+            continue
+        for row, opponent in ((game_rows[0], game_rows[1]), (game_rows[1], game_rows[0])):
+            values = {field: _number(row.get(field), None) for field in required}
+            opponent_values = {field: _number(opponent.get(field), None) for field in required}
+            if any(value is None or value < 0 for value in (*values.values(), *opponent_values.values())):
+                continue
+            if (values["fgm"] > values["fga"] or values["three_pm"] > values["fgm"]
+                    or opponent_values["fgm"] > opponent_values["fga"]
+                    or opponent_values["three_pm"] > opponent_values["fgm"]):
+                continue
+            fga, fgm = values["fga"], values["fgm"]
+            three_pm, fta = values["three_pm"], values["fta"]
+            orb, tov, points = values["orb"], values["tov"], values["points"]
+            opp_drb = opponent_values["drb"]
+            own_possessions = fga - orb + tov + 0.44 * fta
+            opponent_possessions = (opponent_values["fga"] - opponent_values["orb"]
+                                    + opponent_values["tov"] + 0.44 * opponent_values["fta"])
+            possessions = max(1.0, (own_possessions + opponent_possessions) / 2.0)
+            three_pa = _number(row.get("three_pa"), None)
+            date_value = str(row.get("game_date") or row.get("date") or row.get("kickoff") or "")[:10]
+            is_home = row.get("is_home")
+            if is_home is None and row.get("home_team"):
+                is_home = str(row.get("home_team")) == str(row.get("team"))
+            records.append({
+                "game_id": game_id, "game_date": date_value,
+                "team": str(row["team"]),
+                "opponent": str(opponent.get("team") or row.get("opponent") or ""),
+                "is_home": bool(is_home) if is_home is not None else None,
+                "possessions": possessions,
+                "off_rating": 100 * points / possessions,
+                "def_rating": 100 * opponent_values["points"] / possessions,
+                "efg": (fgm + 0.5 * three_pm) / fga if fga else None,
+                "tov_rate": tov / possessions,
+                "orb_rate": orb / (orb + opp_drb) if orb + opp_drb else None,
+                "ft_rate": fta / fga if fga else None,
+                "three_point_attempt_rate": (three_pa / fga if three_pa is not None and fga else None),
+                "points": points, "opponent_points": opponent_values["points"],
+            })
+    return sorted(records, key=lambda item: (item["game_date"], item["game_id"], item["team"]))
+
+
 def basketball_team_profiles(rows: Iterable[dict[str, Any]], min_games: int = 3) -> dict[str, dict[str, Any]]:
     """Derive tempo, efficiency and Dean Oliver's four factors from team-game boxes.
 
@@ -227,41 +286,9 @@ def basketball_team_profiles(rows: Iterable[dict[str, Any]], min_games: int = 3)
     three_pm, fta, orb, drb, tov. Two rows per game are required so offensive
     rebound percentage can use the opponent's defensive rebounds.
     """
-    by_game: dict[str, list[dict[str, Any]]] = defaultdict(list)
-    for row in rows:
-        if row.get("game_id") is not None and row.get("team"):
-            by_game[str(row["game_id"])].append(row)
     team_games: dict[str, list[dict[str, float]]] = defaultdict(list)
-    for game_rows in by_game.values():
-        if len(game_rows) != 2:
-            continue
-        for row, opponent in ((game_rows[0], game_rows[1]), (game_rows[1], game_rows[0])):
-            fga = _number(row.get("fga"), 0) or 0
-            fgm = _number(row.get("fgm"), 0) or 0
-            three_pm = _number(row.get("three_pm"), 0) or 0
-            fta = _number(row.get("fta"), 0) or 0
-            orb = _number(row.get("orb"), 0) or 0
-            tov = _number(row.get("tov"), 0) or 0
-            points = _number(row.get("points"), 0) or 0
-            opp_drb = _number(opponent.get("drb"), 0) or 0
-            opponent_fga = _number(opponent.get("fga"), 0) or 0
-            opponent_orb = _number(opponent.get("orb"), 0) or 0
-            opponent_tov = _number(opponent.get("tov"), 0) or 0
-            opponent_fta = _number(opponent.get("fta"), 0) or 0
-            own_possessions = fga - orb + tov + 0.44 * fta
-            opponent_possessions = opponent_fga - opponent_orb + opponent_tov + 0.44 * opponent_fta
-            possessions = max(1.0, (own_possessions + opponent_possessions) / 2.0)
-            opponent_points = _number(opponent.get("points"), 0) or 0
-            team_games[str(row["team"])].append({
-                "opponent": str(opponent.get("team") or row.get("opponent") or ""),
-                "possessions": possessions,
-                "off_rating": 100 * points / possessions,
-                "def_rating": 100 * opponent_points / possessions,
-                "efg": (fgm + 0.5 * three_pm) / fga if fga else 0,
-                "tov_rate": tov / possessions,
-                "orb_rate": orb / (orb + opp_drb) if orb + opp_drb else 0,
-                "ft_rate": fta / fga if fga else 0,
-            })
+    for record in basketball_game_records(rows):
+        team_games[record["team"]].append(record)
     league_rating = _mean(game["off_rating"] for games in team_games.values() for game in games) or 100.0
     offense = {team: (_mean(game["off_rating"] for game in games) or league_rating) - league_rating
                for team, games in team_games.items()}
@@ -284,12 +311,23 @@ def basketball_team_profiles(rows: Iterable[dict[str, Any]], min_games: int = 3)
         if len(games) < min_games:
             continue
         profiles[team] = {"games": len(games)}
-        for field in ("possessions", "off_rating", "def_rating", "efg", "tov_rate", "orb_rate", "ft_rate"):
+        for field in ("possessions", "off_rating", "def_rating", "efg", "tov_rate", "orb_rate", "ft_rate",
+                      "three_point_attempt_rate"):
             profiles[team][field] = _round(_mean(game[field] for game in games))
+        profiles[team]["tempo"] = profiles[team]["possessions"]
         profiles[team]["net_rating"] = _round(profiles[team]["off_rating"] - profiles[team]["def_rating"])
         profiles[team]["adjusted_off_rating"] = _round(league_rating + offense.get(team, 0.0))
         profiles[team]["adjusted_def_rating"] = _round(league_rating - defense.get(team, 0.0))
         profiles[team]["adjusted_net_rating"] = _round(offense.get(team, 0.0) + defense.get(team, 0.0))
+        opponents = [game["opponent"] for game in games]
+        profiles[team]["schedule_strength"] = _round(_mean(
+            offense.get(opponent, 0.0) + defense.get(opponent, 0.0) for opponent in opponents))
+        profiles[team]["coverage"] = {
+            "complete_paired_games": len(games),
+            "unique_opponents": len(set(opponents)),
+            "observed_through": max((game.get("game_date") or "" for game in games), default="") or None,
+            "three_point_attempt_games": sum(game.get("three_point_attempt_rate") is not None for game in games),
+        }
     return profiles
 
 

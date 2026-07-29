@@ -631,3 +631,10 @@ record the review date here before each public release.
   reconstructed only from captured timestamps; the earliest captured price is
   explicitly an opening proxy unless provider coverage began at market open.
   Generated ledgers and reports remain local and gitignored.
+
+- **2026-07-29:** Expanded basketball research using only normalized team-game
+  boxes supplied by an already authorized source. The code fetches no new
+  provider and does not infer permission. Incomplete or implausible boxes are
+  rejected, point-in-time rows require dates and home/away identity, and the
+  resulting challenger/report stay local, gitignored, and zero-weight. A
+  provider export must be reviewed against its active plan before use.

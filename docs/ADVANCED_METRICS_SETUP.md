@@ -62,9 +62,12 @@ The current BALLDONTLIE free adapter does not expose the box fields needed for f
 Do not fabricate them. When an authorized active provider/tier supplies team-game boxes, normalize
 each row to:
 
-`game_id, team, opponent, points, fgm, fga, three_pm, fta, orb, drb, tov`
+`game_id, game_date, team, opponent, is_home, points, fgm, fga, three_pm, fta, orb, drb, tov`
 
-Two rows per game are required. JSON may be a list or `{ "rows": [...] }`; CSV uses the same headers.
+Two rows per game are required. `three_pa` is optional for the three-point attempt profile. JSON may
+be a list or `{ "rows": [...] }`; CSV uses the same headers. The profile builder rejects incomplete
+pairs, duplicate team rows, negative statistics, made-field-goal counts above attempts, and made
+three-pointers above total field goals instead of silently zero-filling bad boxes.
 
 ```powershell
 python build_advanced_metrics.py basketball --input authorized_boxes.json `
@@ -73,7 +76,25 @@ python build_advanced_metrics.py basketball --input authorized_boxes.json `
 ```
 
 Output: possessions/tempo, raw and opponent-adjusted offensive/defensive/net ratings, eFG%,
-turnover rate, offensive rebound rate, and free-throw rate.
+turnover rate, offensive rebound rate, free-throw rate, three-point attempt rate when covered,
+schedule strength, unique-opponent coverage, and the latest observed game date.
+
+The chronological research challenger additionally requires `game_date` and an unambiguous
+`is_home` value on both rows. It seals each date block before updating team history, so two games on
+the same date cannot leak results into one another. Build its point-in-time rows and report with:
+
+```powershell
+python build_basketball_challenger.py --input authorized_boxes.json `
+  --rows-output basketball_challenger_rows.jsonl `
+  --report-output basketball_challenger_report.json
+```
+
+The challenger tests adjusted efficiency, shooting, possession/four-factor, tempo, and rest/history
+families as residual corrections to chronological Elo. Every family receives a full-versus-removed
+out-of-sample comparison with a game-date block interval. Missing three-point-attempt coverage is
+league-mean imputed with an explicit coverage feature. The promotion gate requires at least 500
+out-of-sample games, better log loss than Elo, and an interval wholly below zero. This is offline,
+zero-weight research; there is no live attachment or production model promotion.
 
 ## NCAAF — CollegeFootballData
 

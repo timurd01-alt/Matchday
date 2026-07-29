@@ -178,6 +178,12 @@ box-score-derived basketball features; college feeds; soccer with coverage-aware
 and MLB historical validation plus licensed live inputs. NHL is explicitly outside the current
 expansion scope. Each included sport gets its own feature contract and model card.
 
+The basketball box-score challenger contract is implemented. Complete paired boxes generate
+point-in-time adjusted efficiency, shooting, possession, tempo, and context features, with each
+date block sealed before history updates. Expanding out-of-sample tests compare the full model to
+chronological Elo and to removal of every feature family. No authorized historical box export is
+bundled, so it remains an unrun zero-weight research path until licensed NBA/NCAAM inputs are supplied.
+
 ### Phase 3 — transparent shadow deployment
 
 Generate learned predictions invisibly alongside production for a full prospective window. Capture
