@@ -151,6 +151,11 @@ jobs:
           cp app-1-core.js app-2-views.js app-3-panels.js app-4-features.js app-5-outcome-tree.js research-signals.js _site/
           cp favicon.ico favicon-16.png favicon-32.png matchday.ico _site/
           cp icon-180.png icon-192.png icon-512.png logo.png _site/
+          if [ ! -f data.json ]; then
+            for fallback in data_mlb.json data_wc.json data_nfl.json data_ncaaf.json; do
+              if [ -f "$fallback" ]; then cp "$fallback" data.json; break; fi
+            done
+          fi
           cp data.json _site/
           for data_file in data_wc.json data_ucl.json data_epl.json data_laliga.json data_seriea.json data_bundesliga.json data_ligue1.json data_nfl.json data_ncaaf.json data_ncaam.json data_nba.json data_mlb.json; do
             [ ! -f "$data_file" ] || cp "$data_file" _site/

@@ -10,15 +10,17 @@ import urllib.request
 
 PUBLIC_DATA_ORIGIN = "https://matchdayterminal.com"
 SPORT_KEYS = (
-    "wc", "epl", "laliga", "seriea", "bundesliga", "ligue1", "ucl",
+    "default", "wc", "epl", "laliga", "seriea", "bundesliga", "ligue1", "ucl",
     "nfl", "ncaaf", "ncaam", "nba", "mlb",
 )
 MAX_DOWNLOAD_BYTES = 25 * 1024 * 1024
 
 
 def valid_payload(payload, key):
-    return (isinstance(payload, dict)
-            and str(payload.get("comp_key", "")).upper() == key.upper()
+    if not isinstance(payload, dict):
+        return False
+    expected_comp = str(payload.get("comp_key", "")).upper()
+    return ((bool(expected_comp) if key == "default" else expected_comp == key.upper())
             and isinstance(payload.get("updated"), str)
             and isinstance(payload.get("matches"), list))
 
@@ -32,20 +34,21 @@ def read_valid(path, key):
 
 def recover_one(root, key, opener=urllib.request.urlopen):
     root = Path(root)
-    target = root / f"data_{key}.json"
+    filename = "data.json" if key == "default" else f"data_{key}.json"
+    target = root / filename
     if read_valid(target, key):
         return "present"
     request = urllib.request.Request(
-        f"{PUBLIC_DATA_ORIGIN}/data_{key}.json",
+        f"{PUBLIC_DATA_ORIGIN}/{filename}",
         headers={"User-Agent": "Matchday-CI-Last-Good-Recovery/1.0"},
     )
     with opener(request, timeout=30) as response:
         raw = response.read(MAX_DOWNLOAD_BYTES + 1)
     if len(raw) > MAX_DOWNLOAD_BYTES:
-        raise ValueError(f"published data_{key}.json exceeds recovery size limit")
+        raise ValueError(f"published {filename} exceeds recovery size limit")
     payload = json.loads(raw.decode("utf-8"))
     if not valid_payload(payload, key):
-        raise ValueError(f"published data_{key}.json failed structural validation")
+        raise ValueError(f"published {filename} failed structural validation")
     temporary = target.with_suffix(target.suffix + ".recover.tmp")
     temporary.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     os.replace(temporary, target)

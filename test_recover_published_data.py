@@ -54,6 +54,19 @@ class PublishedDataRecoveryTests(unittest.TestCase):
         result = recover_published_data.recover(self.root, ("ncaaf",), opener)
         self.assertEqual(result["present"], ["ncaaf"])
 
+    def test_recovers_legacy_default_data_snapshot(self):
+        raw = json.dumps(self.payload("mlb")).encode("utf-8")
+        calls = []
+
+        def opener(request, timeout):
+            calls.append((request.full_url, timeout))
+            return Response(raw)
+
+        result = recover_published_data.recover(self.root, ("default",), opener)
+        self.assertEqual(result["recovered"], ["default"])
+        self.assertEqual(calls, [("https://matchdayterminal.com/data.json", 30)])
+        self.assertTrue((self.root / "data.json").exists())
+
     def test_rejects_wrong_competition_without_overwriting(self):
         raw = json.dumps(self.payload("ncaam")).encode("utf-8")
         result = recover_published_data.recover(
@@ -73,6 +86,7 @@ class PublishedDataRecoveryTests(unittest.TestCase):
         self.assertIn("if: github.event_name != 'push'", workflow)
         self.assertIn("continue-on-error: true", workflow)
         self.assertIn("if: github.event_name != 'push' && steps.adaptive-fetch.outcome == 'failure'", workflow)
+        self.assertIn('if [ ! -f data.json ]; then', workflow)
 
 
 if __name__ == "__main__":
