@@ -212,3 +212,49 @@ Paired uncertainty uses a deterministic kickoff-week block bootstrap. Review is 
 least 256 eligible games across 16 kickoff-week blocks; reaching that threshold never promotes a
 model automatically. The generated report is gitignored and every row retains its lock and grade
 event IDs so the result can be audited against the hash chain.
+
+### Timestamped market benchmark
+
+`market_snapshots.py` accepts authorized decimal odds or explicit implied probabilities for
+two-way moneyline and three-way 1X2 markets. It derives no-vig probabilities by normalizing the
+implied outcome probabilities, preserves the raw overround, and appends every batch to a separate
+SHA-256-chained ledger. Source/reference metadata is mandatory, ESPN-origin inputs are excluded,
+and a snapshot must be both observed and recorded before kickoff.
+
+An input batch has this shape:
+
+```json
+{
+  "source": "Configured licensed odds provider",
+  "authorization_basis": "licensed",
+  "source_reference": "provider-contract:odds",
+  "fetched_at": "2026-09-09T17:00:00Z",
+  "snapshots": [{
+    "fixture_id": "provider-game-id",
+    "competition": "NFL",
+    "kickoff": "2026-09-10T00:20:00Z",
+    "observed_at": "2026-09-09T16:59:00Z",
+    "market_type": "moneyline",
+    "odds_format": "decimal",
+    "outcomes": {"h": 1.8, "a": 2.1}
+  }]
+}
+```
+
+Ingest and evaluate with:
+
+```powershell
+python ingest_market_snapshots.py --input odds-batch.json
+python build_market_benchmark.py `
+  --forecast-ledger forecast_ledger_nfl.jsonl `
+  --market-ledger market_snapshot_ledger.jsonl
+```
+
+`market_benchmark.py` compares Matchday's frozen independent forecast against the captured opening
+proxy (the earliest snapshot actually recorded per source), lock-time consensus, and closing
+consensus on identical graded fixtures. Consensus is the equal mean of the latest eligible no-vig
+probability from each source. A snapshot counts at lock only if both its observation and ledger
+recording timestamps precede the lock; retrospective timestamps cannot enter that comparison.
+Three-way markets use the regulation market result when it differs from knockout advancement.
+Reports show coverage, paired competition-week bootstrap intervals, movement from lock to close,
+and source/event receipts. They never modify production predictions.

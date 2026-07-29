@@ -205,6 +205,12 @@ settled result, excludes ties, and compares all three NFL probabilities on ident
 Formal review requires at least 256 eligible games across 16 kickoff-week blocks. The evaluator
 reports exclusions and paired week-block intervals and cannot change production weights.
 
+The market benchmark contract is also implemented. Authorized pregame snapshots are margin-removed,
+hash-chained, and reconstructed as captured-opening, lock-time, and closing consensus using actual
+recording cutoffs. Matchday and each market stage are scored on the same settled fixtures. No odds
+provider is assumed or scraped: useful coverage begins only after an approved provider/export is
+configured and snapshots are collected prospectively.
+
 ### Phase 4 — controlled promotion
 
 Promote only the frozen winner, preserve the replaced model in the scorecard, and add drift alerts,

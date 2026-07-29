@@ -622,3 +622,12 @@ record the review date here before each public release.
   rejected. Accepted records remain zero-weight research receipts in a local,
   gitignored, SHA-256-chained ledger. Enabling a provider still requires a
   separate terms/tier review and configured authorized access.
+
+- **2026-07-29:** Added a provider-neutral market snapshot and benchmarking
+  contract. It performs no scraping and enables no provider. Inputs must carry
+  an accepted authorization basis and source reference and must be recorded
+  before kickoff. Decimal prices are converted to implied probabilities and
+  normalized to remove overround. Opening, lock-time, and closing labels are
+  reconstructed only from captured timestamps; the earliest captured price is
+  explicitly an opening proxy unless provider coverage began at market open.
+  Generated ledgers and reports remain local and gitignored.
