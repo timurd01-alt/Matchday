@@ -271,7 +271,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-28T22:20:28.396654Z",
+   "observed_at": "2026-07-29T03:45:11.041637Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -567,7 +567,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-28T22:20:28.396687Z",
+   "observed_at": "2026-07-29T03:45:11.041669Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -856,7 +856,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-28T22:20:28.396713Z",
+   "observed_at": "2026-07-29T03:45:11.041694Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -1145,7 +1145,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-28T22:20:28.396736Z",
+   "observed_at": "2026-07-29T03:45:11.041717Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -1432,7 +1432,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-28T22:20:28.396760Z",
+   "observed_at": "2026-07-29T03:45:11.041740Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -1992,7 +1992,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-28T22:20:28.396813Z",
+   "observed_at": "2026-07-29T03:45:11.041763Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -2281,7 +2281,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-28T22:20:28.396856Z",
+   "observed_at": "2026-07-29T03:45:11.041787Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -2570,7 +2570,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-28T22:20:28.396882Z",
+   "observed_at": "2026-07-29T03:45:11.041811Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -2859,7 +2859,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-28T22:20:28.396904Z",
+   "observed_at": "2026-07-29T03:45:11.041833Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -3146,7 +3146,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-28T22:20:28.396926Z",
+   "observed_at": "2026-07-29T03:45:11.041875Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -3433,7 +3433,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-28T22:20:28.396967Z",
+   "observed_at": "2026-07-29T03:45:11.041902Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -3715,7 +3715,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-28T22:20:28.396997Z",
+   "observed_at": "2026-07-29T03:45:11.041924Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -3984,9 +3984,27 @@
     "stats_extra": null
    }
   },
-  "result": null,
-  "model_result": null,
-  "market_result": null
+  "result": "a",
+  "model_result": "a",
+  "market_result": "a",
+  "score": "7-8",
+  "result_snapshot": {
+   "display": {
+    "home": 7,
+    "away": 8
+   },
+   "regulation": null,
+   "penalties": null,
+   "ultimate_winner": "a",
+   "observed_at": "2026-07-29T03:45:11.041946Z",
+   "source": "provider"
+  },
+  "model_hit": false,
+  "market_hit": null,
+  "upset_hit": true,
+  "brier3": 0.744,
+  "log_loss": 0.942,
+  "result_corrections": []
  },
  "bdl-mlb-9544169": {
   "schema_ver": 2,
@@ -4248,9 +4266,27 @@
     "stats_extra": null
    }
   },
-  "result": null,
-  "model_result": null,
-  "market_result": null
+  "result": "h",
+  "model_result": "h",
+  "market_result": "h",
+  "score": "14-0",
+  "result_snapshot": {
+   "display": {
+    "home": 14,
+    "away": 0
+   },
+   "regulation": null,
+   "penalties": null,
+   "ultimate_winner": "h",
+   "observed_at": "2026-07-29T03:45:11.041968Z",
+   "source": "provider"
+  },
+  "model_hit": false,
+  "market_hit": null,
+  "upset_hit": true,
+  "brier3": 0.65,
+  "log_loss": 0.844,
+  "result_corrections": []
  },
  "bdl-mlb-9544170": {
   "schema_ver": 2,
@@ -4512,9 +4548,27 @@
     "stats_extra": null
    }
   },
-  "result": null,
-  "model_result": null,
-  "market_result": null
+  "result": "h",
+  "model_result": "h",
+  "market_result": "h",
+  "score": "1-0",
+  "result_snapshot": {
+   "display": {
+    "home": 1,
+    "away": 0
+   },
+   "regulation": null,
+   "penalties": null,
+   "ultimate_winner": "h",
+   "observed_at": "2026-07-29T03:45:11.041990Z",
+   "source": "provider"
+  },
+  "model_hit": false,
+  "market_hit": null,
+  "upset_hit": true,
+  "brier3": 0.769,
+  "log_loss": 0.968,
+  "result_corrections": []
  },
  "bdl-mlb-9544171": {
   "schema_ver": 2,
@@ -4775,9 +4829,27 @@
     "stats_extra": null
    }
   },
-  "result": null,
-  "model_result": null,
-  "market_result": null
+  "result": "a",
+  "model_result": "a",
+  "market_result": "a",
+  "score": "1-4",
+  "result_snapshot": {
+   "display": {
+    "home": 1,
+    "away": 4
+   },
+   "regulation": null,
+   "penalties": null,
+   "ultimate_winner": "a",
+   "observed_at": "2026-07-29T03:45:11.042013Z",
+   "source": "provider"
+  },
+  "model_hit": false,
+  "market_hit": null,
+  "upset_hit": true,
+  "brier3": 0.952,
+  "log_loss": 1.171,
+  "result_corrections": []
  },
  "bdl-mlb-9544172": {
   "schema_ver": 2,
@@ -5039,9 +5111,27 @@
     "stats_extra": null
    }
   },
-  "result": null,
-  "model_result": null,
-  "market_result": null
+  "result": "h",
+  "model_result": "h",
+  "market_result": "h",
+  "score": "8-6",
+  "result_snapshot": {
+   "display": {
+    "home": 8,
+    "away": 6
+   },
+   "regulation": null,
+   "penalties": null,
+   "ultimate_winner": "h",
+   "observed_at": "2026-07-29T03:45:11.042035Z",
+   "source": "provider"
+  },
+  "model_hit": true,
+  "market_hit": null,
+  "upset_hit": false,
+  "brier3": 0.231,
+  "log_loss": 0.416,
+  "result_corrections": []
  },
  "bdl-mlb-9544173": {
   "schema_ver": 2,
@@ -5567,9 +5657,27 @@
     "stats_extra": null
    }
   },
-  "result": null,
-  "model_result": null,
-  "market_result": null
+  "result": "h",
+  "model_result": "h",
+  "market_result": "h",
+  "score": "2-0",
+  "result_snapshot": {
+   "display": {
+    "home": 2,
+    "away": 0
+   },
+   "regulation": null,
+   "penalties": null,
+   "ultimate_winner": "h",
+   "observed_at": "2026-07-29T03:45:11.042057Z",
+   "source": "provider"
+  },
+  "model_hit": false,
+  "market_hit": null,
+  "upset_hit": true,
+  "brier3": 0.605,
+  "log_loss": 0.799,
+  "result_corrections": []
  },
  "bdl-mlb-9544175": {
   "schema_ver": 2,
@@ -5831,9 +5939,27 @@
     "stats_extra": null
    }
   },
-  "result": null,
-  "model_result": null,
-  "market_result": null
+  "result": "h",
+  "model_result": "h",
+  "market_result": "h",
+  "score": "3-2",
+  "result_snapshot": {
+   "display": {
+    "home": 3,
+    "away": 2
+   },
+   "regulation": null,
+   "penalties": null,
+   "ultimate_winner": "h",
+   "observed_at": "2026-07-29T03:45:11.042078Z",
+   "source": "provider"
+  },
+  "model_hit": true,
+  "market_hit": null,
+  "upset_hit": false,
+  "brier3": 0.146,
+  "log_loss": 0.315,
+  "result_corrections": []
  },
  "bdl-mlb-9544176": {
   "schema_ver": 2,
@@ -6095,9 +6221,27 @@
     "stats_extra": null
    }
   },
-  "result": null,
-  "model_result": null,
-  "market_result": null
+  "result": "a",
+  "model_result": "a",
+  "market_result": "a",
+  "score": "2-3",
+  "result_snapshot": {
+   "display": {
+    "home": 2,
+    "away": 3
+   },
+   "regulation": null,
+   "penalties": null,
+   "ultimate_winner": "a",
+   "observed_at": "2026-07-29T03:45:11.042099Z",
+   "source": "provider"
+  },
+  "model_hit": true,
+  "market_hit": null,
+  "upset_hit": false,
+  "brier3": 0.289,
+  "log_loss": 0.478,
+  "result_corrections": []
  },
  "bdl-mlb-9544177": {
   "schema_ver": 2,
@@ -6359,9 +6503,27 @@
     "stats_extra": null
    }
   },
-  "result": null,
-  "model_result": null,
-  "market_result": null
+  "result": "a",
+  "model_result": "a",
+  "market_result": "a",
+  "score": "2-10",
+  "result_snapshot": {
+   "display": {
+    "home": 2,
+    "away": 10
+   },
+   "regulation": null,
+   "penalties": null,
+   "ultimate_winner": "a",
+   "observed_at": "2026-07-29T03:45:11.042119Z",
+   "source": "provider"
+  },
+  "model_hit": true,
+  "market_hit": null,
+  "upset_hit": false,
+  "brier3": 0.125,
+  "log_loss": 0.288,
+  "result_corrections": []
  },
  "bdl-mlb-9544178": {
   "schema_ver": 2,
