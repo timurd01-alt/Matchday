@@ -11,6 +11,7 @@ from advanced_metrics_store import NFL_ALIASES, normalize_team
 from nfl_challenger import (
     MODEL_VERSION,
     feature_contributions,
+    calibrate_elo_probability,
     matchup_features,
     predict_probability,
     quarterback_profile,
@@ -69,6 +70,9 @@ def attach_nfl_challenger_shadows(matches, path: str | Path = "nfl_challenger_mo
     if not artifact:
         return {"file": None, "matches": 0, "skipped": 0}
     state, model = artifact["state"], artifact["model"]
+    calibrator = artifact.get("elo_calibrator")
+    if not isinstance(calibrator, dict):
+        raise ValueError(f"NFL challenger is missing its training-only Elo calibrator: {path}")
     history = state.get("team_games") or {}
     elo = state.get("elo") or {}
     last_played = state.get("last_played") or {}
@@ -105,14 +109,17 @@ def attach_nfl_challenger_shadows(matches, path: str | Path = "nfl_challenger_mo
                 float(assumption.get("uncertainty") or 0.0), 0.75 if offseason_days > 45 else 0.0
             )
         elo_probability = 1.0 / (1.0 + 10.0 ** (-float(features.get("elo_diff", 0.0))))
-        probability = predict_probability(model, features, elo_probability)
+        calibrated_elo_probability = calibrate_elo_probability(calibrator, elo_probability)
+        probability = predict_probability(model, features, calibrated_elo_probability)
         match["nfl_challenger_shadow"] = {
             "schema_version": 1, "model_version": artifact["model_version"],
             "mode": "research_only", "production_weight": 0,
             "home_win_probability": round(probability, 6),
             "away_win_probability": round(1.0 - probability, 6),
             "elo_baseline_home_probability": round(elo_probability, 6),
-            "learned_residual_vs_elo": round(probability - elo_probability, 6),
+            "calibrated_elo_home_probability": round(calibrated_elo_probability, 6),
+            "elo_calibration_status": (artifact.get("elo_calibration_gate") or {}).get("decision"),
+            "learned_residual_vs_calibrated_elo": round(probability - calibrated_elo_probability, 6),
             "features": features, "top_contributions": feature_contributions(model, features),
             "quarterback_assumptions": qb_assumptions,
             "quarterback_basis": "last observed primary QB and prior appearances only; target starter not asserted",

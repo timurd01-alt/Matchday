@@ -138,3 +138,17 @@ Across the same 844 out-of-sample forecasts, the QB challenger logged `0.652730`
 for full-minus-without-QB was `[-0.009805, 0.011115]`. The quarterback family therefore has no
 demonstrated incremental log-loss value and remains research-only. It moved Brier close to Elo
 (`0.227376` versus `0.227370`), but that difference is also not a promotion case.
+
+### Chronological Elo calibration
+
+Version `nfl-challenger-0.3.0-calibrated-elo-shadow` fits an intercept and slope for raw Elo inside
+each historical training window, then applies that calibrator to the next untouched block. Advanced
+and quarterback features are subsequently trained only as residual corrections to calibrated Elo.
+The production heuristic remains unchanged.
+
+Across 844 out-of-sample forecasts, calibrated Elo improved log loss from `0.652560` to `0.640552`
+and Brier score from `0.227370` to `0.224223`. Its paired week-block log-loss delta versus raw Elo
+was `-0.011611`, with a 95% interval of `[-0.023072, -0.000895]`. This clears the separate gate for
+prospective shadow evaluation, not production promotion. The advanced-feature residual challenger
+scored `0.642373`; its interval versus calibrated Elo was `[-0.010197, 0.014477]`, so it still has
+no demonstrated advantage and remains zero-weight.

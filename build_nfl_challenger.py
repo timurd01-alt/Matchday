@@ -61,7 +61,9 @@ def main():
             handle.write(json.dumps(row, ensure_ascii=False, sort_keys=True, separators=(",", ":")) + "\n")
     print(f"games={len(games)} eligible_rows={len(eligible)}")
     print(f"shadow artifact: {args.artifact}")
-    print(f"rolling log loss={report['full']['model']['log_loss']} elo={report['full']['elo']['log_loss']}")
+    print(f"rolling log loss={report['full']['model']['log_loss']} "
+          f"calibrated_elo={report['full']['calibrated_elo']['log_loss']} "
+          f"raw_elo={report['full']['raw_elo']['log_loss']}")
     print(f"promotion_status={artifact['promotion_status']} production_weight=0")
 
 

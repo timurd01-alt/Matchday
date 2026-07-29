@@ -19,9 +19,13 @@ def artifact():
         "schema_version": 1, "model_version": MODEL_VERSION, "source": "nflverse-data pbp release",
         "research_only": True, "shadow_only": True, "production_weight": 0,
         "espn_origin_excluded": True, "promotion_status": "unvalidated_shadow_challenger",
+        "elo_calibration_gate": {"decision": "eligible_for_prospective_shadow"},
         "model": {"feature_names": FEATURE_NAMES, "means": {name: 0 for name in FEATURE_NAMES},
                   "scales": {name: 1 for name in FEATURE_NAMES}, "intercept": 0,
                   "coefficients": {name: 0 for name in FEATURE_NAMES}},
+        "elo_calibrator": {"feature_names": ["elo_logit"], "means": {"elo_logit": 0},
+                           "scales": {"elo_logit": 1}, "intercept": 0,
+                           "coefficients": {"elo_logit": 1}},
         "state": {"rolling_games": 16, "trained_through": "2025-12-31",
                   "elo": {"SEA": 1550, "NE": 1500},
                   "last_played": {"SEA": "2025-12-31", "NE": "2025-12-31"},
@@ -46,6 +50,8 @@ class NFLChallengerStoreTests(unittest.TestCase):
             self.assertEqual(match["prediction"], before)
             self.assertEqual(match["nfl_challenger_shadow"]["production_weight"], 0)
             self.assertIn("quarterback_assumptions", match["nfl_challenger_shadow"])
+            self.assertEqual(match["nfl_challenger_shadow"]["elo_calibration_status"],
+                             "eligible_for_prospective_shadow")
             self.assertFalse(match["nfl_challenger_shadow"]["quarterback_assumptions"]["home"]["availability_confirmed"])
             self.assertGreaterEqual(match["nfl_challenger_shadow"]["quarterback_assumptions"]["home"]["effective_uncertainty"], 0.75)
             self.assertIn("offseason_roster_and_qb_changes_not_modeled",

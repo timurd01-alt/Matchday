@@ -18,7 +18,7 @@ from pathlib import Path
 from typing import Any, Iterable, Sequence
 
 
-MODEL_VERSION = "nfl-challenger-0.2.0-qb-shadow"
+MODEL_VERSION = "nfl-challenger-0.3.0-calibrated-elo-shadow"
 SCHEMA_VERSION = 1
 ROLLING_GAMES = 16
 HOME_ELO_ADVANTAGE = 55.0
@@ -546,6 +546,32 @@ def predict_probability(model: dict[str, Any], features: dict[str, float],
     return min(0.995, max(0.005, _sigmoid(score)))
 
 
+def fit_elo_calibrator(rows: Sequence[dict[str, Any]]) -> dict[str, Any]:
+    """Fit intercept/slope calibration using only the supplied historical rows."""
+    calibration_rows = []
+    for row in rows:
+        if not row.get("eligible"):
+            continue
+        probability = min(0.995, max(0.005, float(row["elo_home_probability"])))
+        calibration_rows.append({
+            "eligible": True, "outcome": row["outcome"],
+            "features": {"elo_logit": math.log(probability / (1.0 - probability))},
+        })
+    model = fit_logistic(calibration_rows, ["elo_logit"], l2=2.0)
+    model["kind"] = "training-window Platt calibration of chronological Elo"
+    return model
+
+
+def calibrate_elo_probability(calibrator: dict[str, Any], probability: float) -> float:
+    probability = min(0.995, max(0.005, float(probability)))
+    return predict_probability(calibrator, {"elo_logit": math.log(probability / (1.0 - probability))})
+
+
+def _calibrated_rows(rows: Sequence[dict[str, Any]], calibrator: dict[str, Any]) -> list[dict[str, Any]]:
+    return [{**row, "calibrated_elo_probability": calibrate_elo_probability(
+        calibrator, row["elo_home_probability"])} for row in rows]
+
+
 def _forecast_metrics(predictions: Sequence[dict[str, Any]]) -> dict[str, Any]:
     if not predictions:
         return {"n": 0, "brier": None, "log_loss": None, "accuracy": None, "calibration": []}
@@ -582,12 +608,13 @@ def _paired_bootstrap(predictions: Sequence[dict[str, Any]], samples: int = 1000
         for key in chosen:
             for item in blocks[key]:
                 y = float(item["outcome"])
-                for bucket, probability in ((model_loss, item["probability"]), (elo_loss, item["elo_probability"])):
+                for bucket, probability in ((model_loss, item["probability"]),
+                                            (elo_loss, item["benchmark_probability"])):
                     p = min(0.999, max(0.001, float(probability)))
                     bucket.append(-(y * math.log(p) + (1.0 - y) * math.log(1.0 - p)))
         deltas.append((_mean(model_loss) or 0.0) - (_mean(elo_loss) or 0.0))
     deltas.sort()
-    return {"mean_log_loss_delta_vs_elo": round(_mean(deltas) or 0.0, 6),
+    return {"mean_log_loss_delta_vs_calibrated_elo": round(_mean(deltas) or 0.0, 6),
             "ci95": [round(deltas[int(0.025 * samples)], 6), round(deltas[min(samples - 1, int(0.975 * samples))], 6)],
             "blocks": len(keys)}
 
@@ -601,7 +628,7 @@ def _paired_prediction_bootstrap(primary: Sequence[dict[str, Any]], comparison: 
         blocks[tuple(item["block_key"])].append(item)
     keys = list(blocks)
     if len(keys) < 2:
-        return {"mean_log_loss_delta_full_minus_without": None, "ci95": [None, None], "blocks": len(keys)}
+        return {"mean_log_loss_delta_primary_minus_comparison": None, "ci95": [None, None], "blocks": len(keys)}
     rng = random.Random(20260730)
     deltas = []
     for _ in range(samples):
@@ -617,7 +644,7 @@ def _paired_prediction_bootstrap(primary: Sequence[dict[str, Any]], comparison: 
                                     (1.0 - outcome) * math.log(1.0 - probability)))
         deltas.append((_mean(primary_losses) or 0.0) - (_mean(comparison_losses) or 0.0))
     deltas.sort()
-    return {"mean_log_loss_delta_full_minus_without": round(_mean(deltas) or 0.0, 6),
+    return {"mean_log_loss_delta_primary_minus_comparison": round(_mean(deltas) or 0.0, 6),
             "ci95": [round(deltas[int(0.025 * samples)], 6),
                      round(deltas[min(samples - 1, int(0.975 * samples))], 6)],
             "blocks": len(keys)}
@@ -631,19 +658,34 @@ def rolling_backtest(rows: Sequence[dict[str, Any]], feature_names: Sequence[str
     while cursor < len(eligible):
         train = eligible[:cursor]
         test = eligible[cursor:cursor + test_size]
-        model = fit_logistic(train, feature_names, baseline_probability_key="elo_home_probability")
+        calibrator = fit_elo_calibrator(train)
+        calibrated_train = _calibrated_rows(train, calibrator)
+        calibrated_test = _calibrated_rows(test, calibrator)
+        model = fit_logistic(calibrated_train, feature_names,
+                             baseline_probability_key="calibrated_elo_probability")
         base_rate = min(0.99, max(0.01, _mean(row["outcome"] for row in train) or 0.5))
-        for row in test:
+        for row in calibrated_test:
             predictions.append({
                 "game_id": row["game_id"], "block_key": row["block_key"], "outcome": row["outcome"],
-                "probability": predict_probability(model, row["features"], row["elo_home_probability"]),
-                "elo_probability": row["elo_home_probability"], "base_probability": base_rate,
+                "probability": predict_probability(model, row["features"], row["calibrated_elo_probability"]),
+                "elo_probability": row["elo_home_probability"],
+                "calibrated_elo_probability": row["calibrated_elo_probability"],
+                "benchmark_probability": row["calibrated_elo_probability"],
+                "base_probability": base_rate,
             })
         cursor += len(test)
     model_metrics = _forecast_metrics(predictions)
     elo_metrics = _forecast_metrics([{**item, "probability": item["elo_probability"]} for item in predictions])
+    calibrated_elo_metrics = _forecast_metrics([
+        {**item, "probability": item["calibrated_elo_probability"]} for item in predictions])
+    calibration_comparison = _paired_prediction_bootstrap(
+        [{**item, "probability": item["calibrated_elo_probability"]} for item in predictions],
+        [{**item, "probability": item["elo_probability"]} for item in predictions],
+    )
     base_metrics = _forecast_metrics([{**item, "probability": item["base_probability"]} for item in predictions])
-    return {"model": model_metrics, "elo": elo_metrics, "league_home_rate": base_metrics,
+    return {"model": model_metrics, "calibrated_elo": calibrated_elo_metrics,
+            "raw_elo": elo_metrics, "league_home_rate": base_metrics,
+            "elo_calibration_paired_bootstrap": calibration_comparison,
             "design": {"min_train": min_train, "test_size": test_size, "chronological_expanding_window": True},
             "paired_bootstrap": _paired_bootstrap(predictions), "predictions": predictions}
 
@@ -680,12 +722,12 @@ def feature_contributions(model: dict[str, Any], features: dict[str, float], lim
 def promotion_gate(report: dict[str, Any]) -> dict[str, Any]:
     full = report.get("full") or report
     model = full.get("model") or {}
-    elo = full.get("elo") or {}
+    elo = full.get("calibrated_elo") or full.get("elo") or {}
     interval = (full.get("paired_bootstrap") or {}).get("ci95") or [None, None]
     checks = {
-        "log_loss_better_than_elo": (model.get("log_loss") is not None and elo.get("log_loss") is not None and
+        "log_loss_better_than_calibrated_elo": (model.get("log_loss") is not None and elo.get("log_loss") is not None and
                                       model["log_loss"] < elo["log_loss"]),
-        "brier_not_worse_than_elo": (model.get("brier") is not None and elo.get("brier") is not None and
+        "brier_not_worse_than_calibrated_elo": (model.get("brier") is not None and elo.get("brier") is not None and
                                       model["brier"] <= elo["brier"]),
         "paired_ci_excludes_no_improvement": interval[1] is not None and interval[1] < 0,
         "minimum_out_of_sample_games": int(model.get("n") or 0) >= 500,
@@ -695,14 +737,41 @@ def promotion_gate(report: dict[str, Any]) -> dict[str, Any]:
         "passed": passed, "checks": checks,
         "decision": "eligible_for_separate_review" if passed else "remain_shadow_only",
         "reason": ("all frozen statistical gates passed; manual compliance and prediction audit still required"
-                   if passed else "challenger has not demonstrated stable proper-score improvement over Elo"),
+                   if passed else "challenger has not demonstrated stable proper-score improvement over calibrated Elo"),
+    }
+
+
+def elo_calibration_gate(report: dict[str, Any]) -> dict[str, Any]:
+    full = report.get("full") or report
+    calibrated = full.get("calibrated_elo") or {}
+    raw = full.get("raw_elo") or {}
+    interval = (full.get("elo_calibration_paired_bootstrap") or {}).get("ci95") or [None, None]
+    checks = {
+        "log_loss_better_than_raw_elo": (calibrated.get("log_loss") is not None and raw.get("log_loss") is not None and
+                                          calibrated["log_loss"] < raw["log_loss"]),
+        "brier_better_than_raw_elo": (calibrated.get("brier") is not None and raw.get("brier") is not None and
+                                       calibrated["brier"] < raw["brier"]),
+        "paired_ci_excludes_no_improvement": interval[1] is not None and interval[1] < 0,
+        "minimum_out_of_sample_games": int(calibrated.get("n") or 0) >= 500,
+    }
+    passed = all(checks.values())
+    return {
+        "passed": passed, "checks": checks,
+        "decision": "eligible_for_prospective_shadow" if passed else "research_only",
+        "reason": ("calibration improved both proper scores with a paired interval below zero"
+                   if passed else "calibration has not demonstrated stable improvement over raw Elo"),
     }
 
 
 def make_artifact(rows: Sequence[dict[str, Any]], state: dict[str, Any], report: dict[str, Any],
                   source_hashes: dict[str, str]) -> dict[str, Any]:
-    model = fit_logistic(rows, FEATURE_NAMES, baseline_probability_key="elo_home_probability")
+    eligible = [row for row in rows if row.get("eligible")]
+    calibrator = fit_elo_calibrator(eligible)
+    calibrated = _calibrated_rows(eligible, calibrator)
+    model = fit_logistic(calibrated, FEATURE_NAMES,
+                         baseline_probability_key="calibrated_elo_probability")
     gate = promotion_gate(report)
+    calibration_gate = elo_calibration_gate(report)
     return {
         "schema_version": SCHEMA_VERSION, "model_version": MODEL_VERSION,
         "generated_at": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
@@ -713,7 +782,8 @@ def make_artifact(rows: Sequence[dict[str, Any]], state: dict[str, Any], report:
             "timing": "prior completed week boundary only", "rolling_games": state["rolling_games"],
             "features": FEATURE_NAMES, "families": FEATURE_FAMILIES,
         },
-        "model": model, "state": state, "backtest": report,
+        "model": model, "elo_calibrator": calibrator, "elo_calibration_gate": calibration_gate,
+        "state": state, "backtest": report,
         "source_hashes": source_hashes,
     }
 

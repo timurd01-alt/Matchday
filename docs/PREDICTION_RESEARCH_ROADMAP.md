@@ -188,6 +188,11 @@ ablation interval also included no improvement, so it remains an uncertainty/pro
 rather than an accepted production feature. A future availability feed must provide timestamped
 pregame status before actual starter changes can be tested honestly.
 
+Chronological Elo calibration was the first component to clear a research gate: it improved both
+proper scores over raw Elo across 844 out-of-sample forecasts, and the paired week-block interval
+for log-loss improvement excluded zero. It is eligible only for a prospective shadow window. The
+advanced-feature residual model did not beat calibrated Elo and remains rejected for production.
+
 ### Phase 4 — controlled promotion
 
 Promote only the frozen winner, preserve the replaced model in the scorecard, and add drift alerts,

@@ -4,6 +4,7 @@ from nfl_challenger import (
     FEATURE_NAMES,
     aggregate_games,
     build_point_in_time_rows,
+    elo_calibration_gate,
     fit_logistic,
     predict_probability,
     promotion_gate,
@@ -110,7 +111,7 @@ class NFLChallengerTests(unittest.TestCase):
                          "features": features, "outcome": float(index % 2), "elo_home_probability": 0.5})
         report = rolling_backtest(rows, min_train=20, test_size=5)
         self.assertEqual(report["model"]["n"], 20)
-        self.assertLess(report["model"]["log_loss"], report["elo"]["log_loss"])
+        self.assertLess(report["model"]["log_loss"], report["calibrated_elo"]["log_loss"])
 
     def test_promotion_gate_requires_proper_scores_and_confidence_interval(self):
         failed = promotion_gate({"full": {"model": {"n": 800, "log_loss": 0.64, "brier": 0.23},
@@ -121,6 +122,16 @@ class NFLChallengerTests(unittest.TestCase):
                                                    "elo": {"log_loss": 0.65, "brier": 0.22},
                                                    "paired_bootstrap": {"ci95": [-0.03, -0.005]}}})
         self.assertTrue(passed["passed"])
+
+    def test_elo_calibration_gate_requires_paired_improvement(self):
+        report = {"full": {
+            "calibrated_elo": {"n": 844, "log_loss": 0.64, "brier": 0.22},
+            "raw_elo": {"log_loss": 0.65, "brier": 0.23},
+            "elo_calibration_paired_bootstrap": {"ci95": [-0.02, -0.001]},
+        }}
+        gate = elo_calibration_gate(report)
+        self.assertTrue(gate["passed"])
+        self.assertEqual(gate["decision"], "eligible_for_prospective_shadow")
 
 
 if __name__ == "__main__":
