@@ -38,6 +38,17 @@ class DeploymentSecurityTests(unittest.TestCase):
         self.assertNotIn('action === "score"', source)
         self.assertNotRegex(source, r"const\s*\{[^}]*hits[^}]*graded")
 
+    def test_leaderboard_reads_public_data_and_allows_the_production_site(self):
+        source = (ROOT / "api" / "leaderboard.js").read_text(encoding="utf-8")
+        self.assertIn(
+            'process.env.PUBLIC_SITE_ORIGIN || "https://matchdayterminal.com"',
+            source,
+        )
+        self.assertIn("process.env.PUBLIC_DATA_ORIGIN || PUBLIC_SITE_ORIGIN", source)
+        safe_origins = source[source.index("const SAFE_ORIGINS"):source.index("const HANDLE_POOL")]
+        self.assertIn("PUBLIC_SITE_ORIGIN", safe_origins)
+        self.assertIn("PUBLIC_DATA_ORIGIN", safe_origins)
+
     def test_security_headers_are_configured(self):
         config = (ROOT / "vercel.json").read_text(encoding="utf-8")
         for header in ("Content-Security-Policy", "X-Content-Type-Options",

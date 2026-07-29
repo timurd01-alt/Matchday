@@ -1,5 +1,12 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-07-29 (Advanced-metrics shadow expansion: nflverse `pbp` CC BY 4.0 only,
+StatsBomb Open Data selective historical research with required credit/logo, Retrosheet official
+event downloads with its mandatory prominent notice before any transfer/publication, authorized
+basketball box-score normalization, and CFBD `/stats/season/advanced`; ESPN-origin releases remain
+excluded and NHL is explicitly outside this expansion. Generated profiles do not change production
+picks. The first CFBD advanced refresh returned HTTP 429 and correctly remained unavailable.)
+
 Reviewed: 2026-07-28 (UEFA's public 2025/26 Champions League Team of the Season is
 manually transcribed as a small attributed editorial selection with a direct source link; no
 automated UEFA scraping, bulk extraction, API claim, images, article text, or implied endorsement.)
