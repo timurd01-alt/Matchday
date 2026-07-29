@@ -4,6 +4,7 @@ import unittest
 from pathlib import Path
 
 from nfl_challenger import FEATURE_NAMES, MODEL_VERSION
+from nfl_availability import append_batch
 from nfl_challenger_store import attach_nfl_challenger_shadows, load_artifact
 
 
@@ -77,6 +78,36 @@ class NFLChallengerStoreTests(unittest.TestCase):
                      "home": {"code": "LAR", "name": "Los Angeles Rams"},
                      "away": {"code": "NE", "name": "New England Patriots"}}
             self.assertEqual(attach_nfl_challenger_shadows([match], path)["matches"], 1)
+
+    def test_authorized_availability_attaches_as_zero_weight_receipt(self):
+        with tempfile.TemporaryDirectory() as directory:
+            model_path = Path(directory) / "model.json"
+            availability_path = Path(directory) / "availability.jsonl"
+            model_path.write_text(json.dumps(artifact()), encoding="utf-8")
+            append_batch(availability_path, {
+                "source": "Licensed Provider", "authorization_basis": "licensed",
+                "source_reference": "provider-contract:nfl-availability",
+                "fetched_at": "2026-09-09T15:00:00Z", "observations": [{
+                    "fixture_id": "game-1", "kickoff": "2026-09-10T00:20:00Z",
+                    "observed_at": "2026-09-09T14:55:00Z", "team_code": "SEA",
+                    "player_id": "provider-qb-1", "player_name": None, "position_group": "QB",
+                    "role": "STARTER", "status": "QUESTIONABLE", "confidence": .9,
+                }]}, "2026-09-09T15:01:00Z")
+            match = {"id": "game-1", "kickoff": "2026-09-10T00:20:00Z", "status": "UPCOMING",
+                     "home": {"name": "Seattle Seahawks"},
+                     "away": {"name": "New England Patriots"},
+                     "prediction": {"model": {"h": 60, "a": 40}}}
+            before = json.loads(json.dumps(match["prediction"]))
+            result = attach_nfl_challenger_shadows(
+                [match], model_path, availability_path, "2026-09-09T19:00:00Z"
+            )
+            shadow = match["nfl_challenger_shadow"]
+            self.assertEqual(result["availability_matches"], 1)
+            self.assertEqual(match["prediction"], before)
+            self.assertEqual(shadow["pregame_availability"]["production_weight"], 0)
+            self.assertEqual(shadow["pregame_availability"]["availability_probability_adjustment"], 0)
+            self.assertFalse(shadow["quarterback_assumptions"]["home"]["availability_confirmed"])
+            self.assertTrue(shadow["quarterback_assumptions"]["home"]["starter_change_reported"])
 
 
 if __name__ == "__main__":

@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Any
 
 from advanced_metrics_store import NFL_ALIASES, normalize_team
+from nfl_availability import fixture_receipt
 from nfl_challenger import (
     MODEL_VERSION,
     feature_contributions,
@@ -57,6 +58,21 @@ def _resolve_team(team: dict[str, Any], index: dict[str, list[str]], history: di
             _resolve_code(team.get("name"), index, history))
 
 
+def _same_team_code(left: Any, right: Any) -> bool:
+    left_name = NFL_ALIASES.get(str(left or "").upper(), left)
+    right_name = NFL_ALIASES.get(str(right or "").upper(), right)
+    return normalize_team(left_name) == normalize_team(right_name)
+
+
+def _same_player(observation: dict[str, Any], assumption: dict[str, Any]) -> bool:
+    observed_id = str(observation.get("player_id") or "").strip().lower()
+    assumed_id = str(assumption.get("qb_id") or "").strip().lower()
+    if observed_id and assumed_id and observed_id == assumed_id:
+        return True
+    return (bool(observation.get("player_name") and assumption.get("qb_name")) and
+            normalize_team(observation.get("player_name")) == normalize_team(assumption.get("qb_name")))
+
+
 def _kickoff_day(match: dict[str, Any]) -> str:
     text = str(match.get("kickoff") or "")
     try:
@@ -65,7 +81,12 @@ def _kickoff_day(match: dict[str, Any]) -> str:
         return ""
 
 
-def attach_nfl_challenger_shadows(matches, path: str | Path = "nfl_challenger_model.json") -> dict[str, Any]:
+def attach_nfl_challenger_shadows(
+    matches,
+    path: str | Path = "nfl_challenger_model.json",
+    availability_path: str | Path = "nfl_availability_ledger.jsonl",
+    availability_as_of: str | None = None,
+) -> dict[str, Any]:
     artifact = load_artifact(path)
     if not artifact:
         return {"file": None, "matches": 0, "skipped": 0}
@@ -80,7 +101,7 @@ def attach_nfl_challenger_shadows(matches, path: str | Path = "nfl_challenger_mo
     index = _code_index()
     rolling_games = int(state.get("rolling_games") or 16)
     ratings = rating_cache(history, rolling_games)
-    attached = skipped = 0
+    attached = skipped = availability_attached = 0
     for match in matches:
         day = _kickoff_day(match)
         # Prevent a season-complete artifact from being attached to an older
@@ -111,7 +132,8 @@ def attach_nfl_challenger_shadows(matches, path: str | Path = "nfl_challenger_mo
         elo_probability = 1.0 / (1.0 + 10.0 ** (-float(features.get("elo_diff", 0.0))))
         calibrated_elo_probability = calibrate_elo_probability(calibrator, elo_probability)
         probability = predict_probability(model, features, calibrated_elo_probability)
-        match["nfl_challenger_shadow"] = {
+        uncertainty_flags = (["offseason_roster_and_qb_changes_not_modeled"] if offseason_days > 45 else [])
+        shadow = {
             "schema_version": 1, "model_version": artifact["model_version"],
             "mode": "research_only", "production_weight": 0,
             "home_win_probability": round(probability, 6),
@@ -124,8 +146,34 @@ def attach_nfl_challenger_shadows(matches, path: str | Path = "nfl_challenger_mo
             "quarterback_assumptions": qb_assumptions,
             "quarterback_basis": "last observed primary QB and prior appearances only; target starter not asserted",
             "trained_through": trained_through,
-            "uncertainty_flags": (["offseason_roster_and_qb_changes_not_modeled"] if offseason_days > 45 else []),
+            "uncertainty_flags": uncertainty_flags,
             "promotion_status": artifact.get("promotion_status"),
         }
+        fixture_id = match.get("id") or match.get("fixture_id")
+        availability = fixture_receipt(
+            availability_path, fixture_id, match.get("kickoff"), availability_as_of
+        )
+        if availability:
+            shadow["pregame_availability"] = availability
+            shadow["uncertainty_flags"].append("authorized_availability_is_receipt_only_zero_weight")
+            for side, team_code in (("home", home), ("away", away)):
+                qb_observations = [item for item in availability["observations"]
+                                   if _same_team_code(item.get("team_code"), team_code)
+                                   and item.get("position_group") == "QB"]
+                assumption = shadow["quarterback_assumptions"][side]
+                assumption["target_availability"] = qb_observations
+                assumption["availability_confirmed"] = any(
+                    item.get("role") == "STARTER" and item.get("status") != "UNKNOWN"
+                    and _same_player(item, assumption)
+                    for item in qb_observations
+                )
+                assumption["starter_change_reported"] = any(
+                    item.get("role") == "STARTER" and item.get("status") != "UNKNOWN"
+                    and not _same_player(item, assumption)
+                    for item in qb_observations
+                )
+            availability_attached += 1
+        match["nfl_challenger_shadow"] = shadow
         attached += 1
-    return {"file": str(path), "matches": attached, "skipped": skipped}
+    return {"file": str(path), "matches": attached, "skipped": skipped,
+            "availability_matches": availability_attached}

@@ -164,6 +164,7 @@ def extract_rows(events: Iterable[dict[str, Any]]) -> tuple[list[dict[str, Any]]
             "model_version": shadow.get("model_version"), "trained_through": shadow.get("trained_through"),
             "home_win": int(result == "h"), "challenger_home_probability": challenger,
             "calibrated_elo_home_probability": calibrated, "raw_elo_home_probability": raw,
+            "pregame_availability": shadow.get("pregame_availability"),
         })
     counts["eligible"] = len(rows)
     return rows, dict(sorted(counts.items()))
@@ -183,6 +184,11 @@ def build_report(paths: Iterable[str | Path]) -> dict[str, Any]:
     challenger_vs_calibrated = _paired_block_interval(
         rows, "challenger_home_probability", "calibrated_elo_home_probability")
     enough_data = len(rows) >= MIN_GAMES and calibrated_vs_raw["blocks"] >= MIN_TIME_BLOCKS
+    availability_rows = [row for row in rows if isinstance(row.get("pregame_availability"), dict)]
+    availability_observations = sum(
+        len((row.get("pregame_availability") or {}).get("observations") or [])
+        for row in availability_rows
+    )
     return {
         "schema_version": SCHEMA_VERSION, "protocol_version": PROTOCOL_VERSION,
         "research_only": True, "production_weight": 0,
@@ -193,6 +199,9 @@ def build_report(paths: Iterable[str | Path]) -> dict[str, Any]:
             "decision_rule": "evaluate only after both minimums; prospective evidence cannot auto-promote",
         },
         "sources": sources, "exclusions": exclusions,
+        "availability_coverage": {"fixtures": len(availability_rows),
+                                  "observations": availability_observations,
+                                  "probability_adjustment": 0},
         "models": {"raw_elo": _metrics(rows, "raw_elo_home_probability"),
                    "calibrated_elo": _metrics(rows, "calibrated_elo_home_probability"),
                    "advanced_challenger": _metrics(rows, "challenger_home_probability")},

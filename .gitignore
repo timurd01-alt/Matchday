@@ -43,3 +43,4 @@ nfl_challenger_model.json
 nfl_challenger_training_rows.jsonl
 nfl_challenger_backtest.json
 nfl_prospective_scorecard.json
+nfl_availability_ledger.jsonl

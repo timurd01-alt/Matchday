@@ -188,6 +188,12 @@ ablation interval also included no improvement, so it remains an uncertainty/pro
 rather than an accepted production feature. A future availability feed must provide timestamped
 pregame status before actual starter changes can be tested honestly.
 
+The availability intake contract is implemented, but no provider is assumed. It accepts only
+explicitly authorized, source-referenced observations recorded before kickoff, rejects ESPN-origin
+and retrospective records, and preserves updates in a separate hash-chained ledger. Availability
+is currently receipt-only with a zero probability adjustment. A licensed source and enough frozen
+pregame history are still required before any QB, offensive-line, or injury effect can be trained.
+
 Chronological Elo calibration was the first component to clear a research gate: it improved both
 proper scores over raw Elo across 844 out-of-sample forecasts, and the paired week-block interval
 for log-loss improvement excluded zero. It is eligible only for a prospective shadow window. The

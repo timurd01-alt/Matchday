@@ -64,6 +64,7 @@ class NFLProspectiveScorecardTests(unittest.TestCase):
             self.assertEqual(report["models"]["calibrated_elo"]["n"], 1)
             self.assertEqual(report["models"]["raw_elo"]["brier"], .1156)
             self.assertEqual(report["production_weight"], 0)
+            self.assertEqual(report["availability_coverage"]["fixtures"], 0)
 
 
 if __name__ == "__main__":

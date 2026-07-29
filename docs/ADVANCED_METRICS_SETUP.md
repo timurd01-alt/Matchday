@@ -139,6 +139,44 @@ for full-minus-without-QB was `[-0.009805, 0.011115]`. The quarterback family th
 demonstrated incremental log-loss value and remains research-only. It moved Brier close to Elo
 (`0.227376` versus `0.227370`), but that difference is also not a promotion case.
 
+### Authorized NFL availability intake
+
+`nfl_availability.py` defines the point-in-time contract for quarterback, offensive-line, and
+other roster-status observations. It does not scrape or fetch a source. A batch can be ingested
+only when it declares `licensed`, `open_license`, `first_party`, or
+`user_supplied_with_permission`, includes a source reference, and is recorded before kickoff.
+ESPN-origin batches, post-kickoff records, future-dated observations, unknown statuses, and
+timezone-free timestamps are rejected.
+
+Example authorized input:
+
+```json
+{
+  "source": "Configured licensed provider",
+  "authorization_basis": "licensed",
+  "source_reference": "provider-contract:nfl-availability",
+  "fetched_at": "2026-09-09T15:00:00Z",
+  "observations": [{
+    "fixture_id": "provider-game-id",
+    "kickoff": "2026-09-10T00:20:00Z",
+    "observed_at": "2026-09-09T14:55:00Z",
+    "team_code": "SEA",
+    "player_id": "provider-player-id",
+    "player_name": "Player name",
+    "position_group": "QB",
+    "role": "STARTER",
+    "status": "QUESTIONABLE",
+    "confidence": 0.9
+  }]
+}
+```
+
+Ingest with `python ingest_nfl_availability.py --input batch.json`. The resulting
+`nfl_availability_ledger.jsonl` is append-only, SHA-256 chained, and gitignored. Current status is
+attached to the NFL shadow receipt and frozen by the forecast ledger. It does not adjust a
+probability: `production_weight` and `availability_probability_adjustment` are both zero until a
+licensed historical/prospective sample supports a separately tested effect.
+
 ### Chronological Elo calibration
 
 Version `nfl-challenger-0.3.0-calibrated-elo-shadow` fits an intercept and slope for raw Elo inside

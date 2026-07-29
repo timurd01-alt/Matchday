@@ -614,3 +614,11 @@ record the review date here before each public release.
   test_generate_posts` stays green (52 tests). No provider-terms
   interpretation changed here; this is an engineering checklist note, not
   legal advice.
+
+- **2026-07-29:** Added a provider-neutral NFL availability intake contract.
+  The code performs no scraping and assumes no permission from a provider.
+  Each batch must declare an accepted authorization basis and source reference;
+  ESPN-origin inputs, post-kickoff ingestion, and future-dated observations are
+  rejected. Accepted records remain zero-weight research receipts in a local,
+  gitignored, SHA-256-chained ledger. Enabling a provider still requires a
+  separate terms/tier review and configured authorized access.
