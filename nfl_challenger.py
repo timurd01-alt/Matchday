@@ -18,7 +18,7 @@ from pathlib import Path
 from typing import Any, Iterable, Sequence
 
 
-MODEL_VERSION = "nfl-challenger-0.1.0-shadow"
+MODEL_VERSION = "nfl-challenger-0.2.0-qb-shadow"
 SCHEMA_VERSION = 1
 ROLLING_GAMES = 16
 HOME_ELO_ADVANTAGE = 55.0
@@ -43,6 +43,7 @@ FEATURE_FAMILIES = {
     "rushing": ["rush_epa_matchup_edge"],
     "situational": ["neutral_epa_matchup_edge", "early_down_epa_matchup_edge", "redzone_matchup_edge"],
     "pace_special": ["pace_diff", "pace_mean", "special_teams_epa_diff"],
+    "quarterback": ["qb_epa_diff", "qb_cpoe_diff", "qb_continuity_diff", "qb_experience_diff", "qb_uncertainty_diff"],
     "rating_context": ["rest_diff", "history_gap"],
 }
 FEATURE_NAMES = [name for names in FEATURE_FAMILIES.values() for name in names]
@@ -109,6 +110,8 @@ def aggregate_games(rows: Iterable[dict[str, Any]]) -> list[dict[str, Any]]:
             "home_score": None,
             "away_score": None,
             "teams": defaultdict(lambda: defaultdict(float)),
+            "qbs": defaultdict(lambda: defaultdict(lambda: defaultdict(float))),
+            "qb_names": {},
             "drives": {},
             "clocks": defaultdict(list),
         })
@@ -175,6 +178,21 @@ def aggregate_games(rows: Iterable[dict[str, Any]]) -> list[dict[str, Any]]:
                 stats["cpoe_count"] += 1
             stats["dropbacks"] += 1
             allowed["dropbacks_faced"] += 1
+            qb_id = str(raw.get("passer_player_id") or raw.get("passer_id") or
+                        raw.get("passer_player_name") or raw.get("passer") or "").strip()
+            if qb_id:
+                qb = game["qbs"][offense][qb_id]
+                qb["epa_sum"] += epa
+                qb["success_sum"] += success
+                qb["dropbacks"] += 1
+                qb_name = str(raw.get("passer_player_name") or raw.get("passer") or qb_id).strip()
+                game["qb_names"][(offense, qb_id)] = qb_name
+                qb_cpoe = _num(raw.get("cpoe"), None)
+                if qb_cpoe is not None:
+                    qb["cpoe_sum"] += qb_cpoe
+                    qb["cpoe_count"] += 1
+                if _num(raw.get("sack"), 0) == 1:
+                    qb["sacks"] += 1
             if _num(raw.get("sack"), 0) == 1:
                 stats["sacks_allowed"] += 1
                 allowed["sacks_forced"] += 1
@@ -217,6 +235,9 @@ def aggregate_games(rows: Iterable[dict[str, Any]]) -> list[dict[str, Any]]:
         summaries = {}
         for team in (game["home_team"], game["away_team"]):
             values = game["teams"][team]
+            quarterbacks = game["qbs"].get(team, {})
+            primary_id = max(quarterbacks, key=lambda key: quarterbacks[key]["dropbacks"], default=None)
+            primary = quarterbacks.get(primary_id, {}) if primary_id else {}
             clocks = sorted(set(game["clocks"].get(team, [])), reverse=True)
             elapsed = [before - after for before, after in zip(clocks, clocks[1:]) if 1 <= before - after <= 60]
             summaries[team] = {
@@ -241,6 +262,14 @@ def aggregate_games(rows: Iterable[dict[str, Any]]) -> list[dict[str, Any]]:
                 "seconds_per_play": _mean(elapsed),
                 "special_teams_epa": _rate(values["special_epa_sum"], values["special_count"]),
                 "plays": int(values["off_plays"]),
+                "primary_qb_id": primary_id,
+                "primary_qb_name": game["qb_names"].get((team, primary_id)) if primary_id else None,
+                "primary_qb_dropbacks": int(primary.get("dropbacks", 0)),
+                "primary_qb_dropback_share": _rate(primary.get("dropbacks", 0), values["dropbacks"]),
+                "primary_qb_epa": _rate(primary.get("epa_sum", 0), primary.get("dropbacks", 0)),
+                "primary_qb_success": _rate(primary.get("success_sum", 0), primary.get("dropbacks", 0)),
+                "primary_qb_cpoe": _rate(primary.get("cpoe_sum", 0), primary.get("cpoe_count", 0)),
+                "primary_qb_sack_rate": _rate(primary.get("sacks", 0), primary.get("dropbacks", 0)),
             }
         output.append({
             "game_id": game["game_id"], "season": game["season"], "season_type": game["season_type"],
@@ -257,6 +286,37 @@ def _recent(history: dict[str, list[dict[str, Any]]], team: str, limit: int) -> 
 
 def _raw_average(history: dict[str, list[dict[str, Any]]], team: str, metric: str, limit: int) -> float:
     return _mean(game.get(metric) for game in _recent(history, team, limit)) or 0.0
+
+
+def quarterback_profile(history: dict[str, list[dict[str, Any]]], team: str,
+                        limit: int = ROLLING_GAMES) -> dict[str, Any]:
+    """Forecast-time QB assumption derived only from the team's prior games."""
+    recent = _recent(history, team, limit)
+    if not recent:
+        return {"qb_id": None, "qb_name": None, "epa": 0.0, "cpoe": 0.0,
+                "continuity": 0.0, "dropbacks": 0, "uncertainty": 1.0,
+                "last_observed": None}
+    latest = recent[-1]
+    qb_id = latest.get("primary_qb_id")
+    if not qb_id:
+        return {"qb_id": None, "qb_name": None, "epa": 0.0, "cpoe": 0.0,
+                "continuity": 0.0, "dropbacks": 0, "uncertainty": 1.0,
+                "last_observed": latest.get("game_date")}
+    appearances = [game for game in recent if game.get("primary_qb_id") == qb_id]
+    last_four = recent[-4:]
+    continuity = sum(game.get("primary_qb_id") == qb_id for game in last_four) / len(last_four)
+    dropbacks = sum(int(game.get("primary_qb_dropbacks") or 0) for game in appearances)
+    share = float(latest.get("primary_qb_dropback_share") or 0.0)
+    # Small samples and split-QB games are explicitly uncertain. The value is
+    # a feature/receipt, not a claim that a player will start the target game.
+    uncertainty = max(0.0, min(1.0, 1.0 - min(1.0, dropbacks / 150.0) * min(1.0, share / 0.75)))
+    return {
+        "qb_id": qb_id, "qb_name": latest.get("primary_qb_name"),
+        "epa": _mean(game.get("primary_qb_epa") for game in appearances) or 0.0,
+        "cpoe": _mean(game.get("primary_qb_cpoe") for game in appearances) or 0.0,
+        "continuity": continuity, "dropbacks": dropbacks, "uncertainty": uncertainty,
+        "last_observed": latest.get("game_date"), "latest_dropback_share": share,
+    }
 
 
 def _adjusted_components(history: dict[str, list[dict[str, Any]]], metric: str,
@@ -314,6 +374,13 @@ def matchup_features(home: str, away: str, history: dict[str, list[dict[str, Any
     features["pace_mean"] = ((home_pace + away_pace) / 2.0 - 28.0) / 10.0 if home_pace and away_pace else 0.0
     features["special_teams_epa_diff"] = (_raw_average(history, home, "special_teams_epa", rolling_games) -
                                            _raw_average(history, away, "special_teams_epa", rolling_games))
+    home_qb = quarterback_profile(history, home, rolling_games)
+    away_qb = quarterback_profile(history, away, rolling_games)
+    features["qb_epa_diff"] = home_qb["epa"] - away_qb["epa"]
+    features["qb_cpoe_diff"] = (home_qb["cpoe"] - away_qb["cpoe"]) / 10.0
+    features["qb_continuity_diff"] = home_qb["continuity"] - away_qb["continuity"]
+    features["qb_experience_diff"] = (math.log1p(home_qb["dropbacks"]) - math.log1p(away_qb["dropbacks"])) / 5.0
+    features["qb_uncertainty_diff"] = home_qb["uncertainty"] - away_qb["uncertainty"]
     features["elo_diff"] = (elo.get(home, 1500.0) - elo.get(away, 1500.0) + HOME_ELO_ADVANTAGE) / 400.0
 
     target = date.fromisoformat(forecast_day) if forecast_day else None
@@ -525,6 +592,37 @@ def _paired_bootstrap(predictions: Sequence[dict[str, Any]], samples: int = 1000
             "blocks": len(keys)}
 
 
+def _paired_prediction_bootstrap(primary: Sequence[dict[str, Any]], comparison: Sequence[dict[str, Any]],
+                                 samples: int = 1000) -> dict[str, Any]:
+    comparison_index = {item["game_id"]: item for item in comparison}
+    paired = [item for item in primary if item["game_id"] in comparison_index]
+    blocks: dict[tuple[int, ...], list[dict[str, Any]]] = defaultdict(list)
+    for item in paired:
+        blocks[tuple(item["block_key"])].append(item)
+    keys = list(blocks)
+    if len(keys) < 2:
+        return {"mean_log_loss_delta_full_minus_without": None, "ci95": [None, None], "blocks": len(keys)}
+    rng = random.Random(20260730)
+    deltas = []
+    for _ in range(samples):
+        primary_losses, comparison_losses = [], []
+        for key in (rng.choice(keys) for _key in keys):
+            for item in blocks[key]:
+                other = comparison_index[item["game_id"]]
+                outcome = float(item["outcome"])
+                for bucket, probability in ((primary_losses, item["probability"]),
+                                            (comparison_losses, other["probability"])):
+                    probability = min(0.999, max(0.001, float(probability)))
+                    bucket.append(-(outcome * math.log(probability) +
+                                    (1.0 - outcome) * math.log(1.0 - probability)))
+        deltas.append((_mean(primary_losses) or 0.0) - (_mean(comparison_losses) or 0.0))
+    deltas.sort()
+    return {"mean_log_loss_delta_full_minus_without": round(_mean(deltas) or 0.0, 6),
+            "ci95": [round(deltas[int(0.025 * samples)], 6),
+                     round(deltas[min(samples - 1, int(0.975 * samples))], 6)],
+            "blocks": len(keys)}
+
+
 def rolling_backtest(rows: Sequence[dict[str, Any]], feature_names: Sequence[str] = FEATURE_NAMES,
                      min_train: int = 96, test_size: int = 32) -> dict[str, Any]:
     eligible = [row for row in rows if row.get("eligible")]
@@ -556,6 +654,7 @@ def ablation_report(rows: Sequence[dict[str, Any]], min_train: int = 96, test_si
     for family, removed in FEATURE_FAMILIES.items():
         retained = [name for name in FEATURE_NAMES if name not in removed]
         result = rolling_backtest(rows, retained, min_train, test_size)
+        paired = _paired_prediction_bootstrap(full["predictions"], result["predictions"])
         full_loss = full["model"]["log_loss"]
         without_loss = result["model"]["log_loss"]
         families[family] = {
@@ -563,6 +662,7 @@ def ablation_report(rows: Sequence[dict[str, Any]], min_train: int = 96, test_si
             "log_loss_increase_without_family": (round(without_loss - full_loss, 6)
                                                   if full_loss is not None and without_loss is not None else None),
             "without_brier": result["model"]["brier"], "n": result["model"]["n"],
+            "paired_bootstrap": paired,
         }
     return {"full": {key: value for key, value in full.items() if key != "predictions"}, "families": families}
 

@@ -8,7 +8,14 @@ from pathlib import Path
 from typing import Any
 
 from advanced_metrics_store import NFL_ALIASES, normalize_team
-from nfl_challenger import MODEL_VERSION, feature_contributions, matchup_features, predict_probability, rating_cache
+from nfl_challenger import (
+    MODEL_VERSION,
+    feature_contributions,
+    matchup_features,
+    predict_probability,
+    quarterback_profile,
+    rating_cache,
+)
 
 
 def load_artifact(path: str | Path = "nfl_challenger_model.json") -> dict[str, Any] | None:
@@ -83,9 +90,22 @@ def attach_nfl_challenger_shadows(matches, path: str | Path = "nfl_challenger_mo
             skipped += 1
             continue
         features = matchup_features(home, away, history, elo, last_played, day, rolling_games, ratings)
+        offseason_days = max((datetime.fromisoformat(day).date() - datetime.fromisoformat(trained_through).date()).days, 0)
+        qb_assumptions = {
+            "home": quarterback_profile(history, home, rolling_games),
+            "away": quarterback_profile(history, away, rolling_games),
+        }
+        for assumption in qb_assumptions.values():
+            observed = assumption.get("last_observed")
+            freshness_days = ((datetime.fromisoformat(day).date() - datetime.fromisoformat(observed).date()).days
+                              if observed else None)
+            assumption["assumption_freshness_days"] = freshness_days
+            assumption["availability_confirmed"] = False
+            assumption["effective_uncertainty"] = max(
+                float(assumption.get("uncertainty") or 0.0), 0.75 if offseason_days > 45 else 0.0
+            )
         elo_probability = 1.0 / (1.0 + 10.0 ** (-float(features.get("elo_diff", 0.0))))
         probability = predict_probability(model, features, elo_probability)
-        offseason_days = max((datetime.fromisoformat(day).date() - datetime.fromisoformat(trained_through).date()).days, 0)
         match["nfl_challenger_shadow"] = {
             "schema_version": 1, "model_version": artifact["model_version"],
             "mode": "research_only", "production_weight": 0,
@@ -94,6 +114,8 @@ def attach_nfl_challenger_shadows(matches, path: str | Path = "nfl_challenger_mo
             "elo_baseline_home_probability": round(elo_probability, 6),
             "learned_residual_vs_elo": round(probability - elo_probability, 6),
             "features": features, "top_contributions": feature_contributions(model, features),
+            "quarterback_assumptions": qb_assumptions,
+            "quarterback_basis": "last observed primary QB and prior appearances only; target starter not asserted",
             "trained_through": trained_through,
             "uncertainty_flags": (["offseason_roster_and_qb_changes_not_modeled"] if offseason_days > 45 else []),
             "promotion_status": artifact.get("promotion_status"),

@@ -45,6 +45,9 @@ class NFLChallengerStoreTests(unittest.TestCase):
             self.assertEqual(result["matches"], 1)
             self.assertEqual(match["prediction"], before)
             self.assertEqual(match["nfl_challenger_shadow"]["production_weight"], 0)
+            self.assertIn("quarterback_assumptions", match["nfl_challenger_shadow"])
+            self.assertFalse(match["nfl_challenger_shadow"]["quarterback_assumptions"]["home"]["availability_confirmed"])
+            self.assertGreaterEqual(match["nfl_challenger_shadow"]["quarterback_assumptions"]["home"]["effective_uncertainty"], 0.75)
             self.assertIn("offseason_roster_and_qb_changes_not_modeled",
                           match["nfl_challenger_shadow"]["uncertainty_flags"])
 

@@ -7,6 +7,7 @@ from nfl_challenger import (
     fit_logistic,
     predict_probability,
     promotion_gate,
+    quarterback_profile,
     rolling_backtest,
 )
 
@@ -41,7 +42,8 @@ class NFLChallengerTests(unittest.TestCase):
                 "pass_attempt": 1, "rush_attempt": 0, "qb_dropback": 1, "epa": 0.4,
                 "success": 1, "yards_gained": 25, "down": 1, "qtr": 1,
                 "score_differential": 0, "yardline_100": 15, "fixed_drive": 1,
-                "touchdown": 1, "game_seconds_remaining": 3500, "cpoe": 5, "sack": 0}
+                "touchdown": 1, "game_seconds_remaining": 3500, "cpoe": 5, "sack": 0,
+                "passer_player_id": "qb-a", "passer_player_name": "Quarterback A"}
         kneel = {**base, "play_id": 2, "pass_attempt": 0, "rush_attempt": 1, "qb_dropback": 0,
                  "qb_kneel": 1, "epa": -2, "game_seconds_remaining": 3470}
         opponent = {**base, "play_id": 3, "posteam": "B", "defteam": "A", "epa": -0.2,
@@ -51,6 +53,8 @@ class NFLChallengerTests(unittest.TestCase):
         self.assertEqual(games[0]["teams"]["A"]["off_epa"], 0.4)
         self.assertEqual(games[0]["teams"]["A"]["explosive_rate"], 1.0)
         self.assertEqual(games[0]["teams"]["A"]["redzone_td_rate"], 1.0)
+        self.assertEqual(games[0]["teams"]["A"]["primary_qb_id"], "qb-a")
+        self.assertEqual(games[0]["teams"]["A"]["primary_qb_epa"], 0.4)
 
     def test_point_in_time_rows_never_use_same_or_future_week(self):
         games = []
@@ -78,6 +82,24 @@ class NFLChallengerTests(unittest.TestCase):
         self.assertLess(predict_probability(model, low), 0.5)
         self.assertGreater(predict_probability(model, high), 0.5)
         self.assertEqual(model["training_rows"], 80)
+
+    def test_quarterback_profile_uses_only_latest_prior_assumption(self):
+        history = {"A": [
+            {"game_date": "2025-09-01", "primary_qb_id": "old", "primary_qb_name": "Old QB",
+             "primary_qb_dropbacks": 30, "primary_qb_dropback_share": 1, "primary_qb_epa": -0.1,
+             "primary_qb_cpoe": -2},
+            {"game_date": "2025-09-08", "primary_qb_id": "new", "primary_qb_name": "New QB",
+             "primary_qb_dropbacks": 35, "primary_qb_dropback_share": 0.9, "primary_qb_epa": 0.2,
+             "primary_qb_cpoe": 4},
+            {"game_date": "2025-09-15", "primary_qb_id": "new", "primary_qb_name": "New QB",
+             "primary_qb_dropbacks": 32, "primary_qb_dropback_share": 1, "primary_qb_epa": 0.1,
+             "primary_qb_cpoe": 2},
+        ]}
+        profile = quarterback_profile(history, "A")
+        self.assertEqual(profile["qb_id"], "new")
+        self.assertEqual(profile["dropbacks"], 67)
+        self.assertAlmostEqual(profile["epa"], 0.15)
+        self.assertAlmostEqual(profile["continuity"], 2 / 3)
 
     def test_rolling_backtest_is_out_of_sample(self):
         rows = []

@@ -123,3 +123,18 @@ artifact is present, future NFL fixtures receive `nfl_challenger_shadow` with ze
 weight, the Elo baseline, residual probability, feature contributions, provenance, and offseason
 uncertainty. The loader rejects any artifact that is not explicitly research-only or assigns a
 nonzero production weight.
+
+### Quarterback shadow extension
+
+Version `nfl-challenger-0.2.0-qb-shadow` adds only forecast-reconstructible quarterback signals:
+the primary passer from the latest completed prior game, that passer's earlier EPA/CPOE sample,
+dropback experience, four-game continuity, and split-QB/sample uncertainty. It never reads the
+target game's actual starter from play-by-play. Runtime receipts state that availability is
+unconfirmed, record assumption freshness, and force elevated effective uncertainty across the
+offseason.
+
+Across the same 844 out-of-sample forecasts, the QB challenger logged `0.652730` versus Elo's
+`0.652560`. Removing the quarterback family produced `0.652474`; the paired week-block interval
+for full-minus-without-QB was `[-0.009805, 0.011115]`. The quarterback family therefore has no
+demonstrated incremental log-loss value and remains research-only. It moved Brier close to Elo
+(`0.227376` versus `0.227370`), but that difference is also not a promotion case.

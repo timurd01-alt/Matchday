@@ -62,7 +62,7 @@ def main():
     print(f"games={len(games)} eligible_rows={len(eligible)}")
     print(f"shadow artifact: {args.artifact}")
     print(f"rolling log loss={report['full']['model']['log_loss']} elo={report['full']['elo']['log_loss']}")
-    print("promotion_status=unvalidated_shadow_challenger production_weight=0")
+    print(f"promotion_status={artifact['promotion_status']} production_weight=0")
 
 
 if __name__ == "__main__":

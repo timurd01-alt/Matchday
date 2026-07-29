@@ -182,6 +182,12 @@ It did not clear the promotion gate: its small log-loss difference from Elo was 
 indistinguishable from zero and its Brier score was worse. It remains zero-weight shadow research;
 this negative result is part of the permanent model record rather than a result to tune away.
 
+A prior-only quarterback extension was evaluated next. It used the most recent observed primary
+passer and only that player's earlier games, never the target game's actual starter. Its paired
+ablation interval also included no improvement, so it remains an uncertainty/provenance receipt
+rather than an accepted production feature. A future availability feed must provide timestamped
+pregame status before actual starter changes can be tested honestly.
+
 ### Phase 4 — controlled promotion
 
 Promote only the frozen winner, preserve the replaced model in the scorecard, and add drift alerts,

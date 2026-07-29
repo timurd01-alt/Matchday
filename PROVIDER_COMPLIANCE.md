@@ -13,6 +13,10 @@ and model artifact. ESPN-origin releases remain excluded. Generated rows, fitted
 backtest reports are local/gitignored, and the runtime loader enforces research-only, zero-weight
 attachment to future fixtures.
 
+Quarterback research uses passer identifiers and play outcomes already contained in the approved
+nflverse `pbp` releases. It does not add a roster, injury, depth-chart, ESPN, or Sports Reference
+source and does not infer that the last observed primary passer is a confirmed future starter.
+
 Reviewed: 2026-07-28 (UEFA's public 2025/26 Champions League Team of the Season is
 manually transcribed as a small attributed editorial selection with a direct source link; no
 automated UEFA scraping, bulk extraction, API claim, images, article text, or implied endorsement.)
