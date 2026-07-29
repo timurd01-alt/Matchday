@@ -46,6 +46,9 @@ jobs:
           key: matchday-fetch-state-${{ github.run_id }}
           restore-keys: matchday-fetch-state-
 
+      - name: Recover published last-good fixtures after a cold cache miss
+        run: python recover_published_data.py
+
       - name: Write private keys from secrets (never committed)
         run: |
           cat > config_keys.py <<EOF
