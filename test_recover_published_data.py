@@ -61,6 +61,19 @@ class PublishedDataRecoveryTests(unittest.TestCase):
         self.assertIn("ncaaf", result["failed"])
         self.assertFalse((self.root / "data_ncaaf.json").exists())
 
+    def test_workflow_deploys_validated_last_good_after_refresh_failure(self):
+        workflow = (Path(__file__).parent / ".github" / "workflows" / "deploy.yml").read_text(
+            encoding="utf-8")
+        recovery = workflow.index("Recover published last-good fixtures after a cold cache miss")
+        refresh = workflow.index("Fetch one adaptive round for all sports")
+        assembly = workflow.index("Assemble public site (curated allowlist only)")
+        self.assertLess(recovery, refresh)
+        self.assertLess(refresh, assembly)
+        self.assertIn("id: adaptive-fetch", workflow)
+        self.assertIn("if: github.event_name != 'push'", workflow)
+        self.assertIn("continue-on-error: true", workflow)
+        self.assertIn("if: github.event_name != 'push' && steps.adaptive-fetch.outcome == 'failure'", workflow)
+
 
 if __name__ == "__main__":
     unittest.main()

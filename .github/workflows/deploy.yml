@@ -87,7 +87,15 @@ jobs:
       # what was originally seeded).
 
       - name: Fetch one adaptive round for all sports
+        if: github.event_name != 'push'
+        id: adaptive-fetch
+        continue-on-error: true
         run: python multi_fetch.py --once
+
+      - name: Report degraded provider refresh without blocking site deployment
+        if: github.event_name != 'push' && steps.adaptive-fetch.outcome == 'failure'
+        run: |
+          echo "::warning::One or more providers failed after retry. Deploying the structurally validated last-good fixture snapshots recovered before refresh."
 
       - name: Populate authorized research reasoning into cached fixtures
         run: python populate_research_signals.py
