@@ -258,3 +258,27 @@ recording timestamps precede the lock; retrospective timestamps cannot enter tha
 Three-way markets use the regulation market result when it differs from knockout advancement.
 Reports show coverage, paired competition-week bootstrap intervals, movement from lock to close,
 and source/event receipts. They never modify production predictions.
+
+### Honest baseline tournament
+
+`baseline_tournament.py` scores six frozen candidates: an expanding competition prior, raw Elo,
+calibrated Elo, Matchday's independent forecast, Matchday's market-informed forecast, and the
+no-vig lock market. The competition prior uses only results whose grade event was already recorded
+by the target forecast's lock time, with symmetric Dirichlet(2) smoothing; later games and later
+result corrections cannot leak backward.
+
+Run the tournament over any verified forecast ledgers, optionally supplying the authorized market
+ledger for multi-source lock consensus:
+
+```powershell
+python build_baseline_tournament.py `
+  --forecast-ledger forecast_ledger_nfl.jsonl `
+  --market-ledger market_snapshot_ledger.jsonl
+```
+
+When the separate market ledger has no eligible lock-time record, the evaluator can use the
+normalized market snapshot already frozen inside the official forecast lock and labels that basis
+explicitly. Two-way raw/calibrated Elo are omitted from incompatible three-way events. Overall
+coverage is reported, but every head-to-head score and confidence interval is recalculated on the
+exact same fixtures. All-model review requires 256 common games across 16 common competition-week
+blocks and still cannot trigger automatic promotion. The generated report is gitignored.

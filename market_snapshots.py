@@ -185,7 +185,9 @@ def append_batch(
             "last_hash": final["last_hash"]}
 
 
-def fixture_snapshots(path: str | os.PathLike[str], fixture_id: Any, kickoff: Any) -> list[dict[str, Any]]:
+def fixture_snapshots(
+    path: str | os.PathLike[str], fixture_id: Any, kickoff: Any, competition: Any = None
+) -> list[dict[str, Any]]:
     source = Path(path)
     if not source.exists() or not fixture_id:
         return []
@@ -196,7 +198,9 @@ def fixture_snapshots(path: str | os.PathLike[str], fixture_id: Any, kickoff: An
         recorded = _time(event["recorded_at"], "recorded_at")
         for snapshot in event.get("snapshots") or []:
             if (str(snapshot.get("fixture_id")) == str(fixture_id)
-                    and _time(snapshot.get("kickoff"), "kickoff") == fixture_kickoff):
+                    and _time(snapshot.get("kickoff"), "kickoff") == fixture_kickoff
+                    and (competition is None
+                         or str(snapshot.get("competition") or "").upper() == str(competition).upper())):
                 output.append({**snapshot, "recorded_at": _iso(recorded),
                                "event_id": event["event_id"], "source": event["source"]})
     return sorted(output, key=lambda item: (item["observed_at"], item["recorded_at"], item["event_id"]))

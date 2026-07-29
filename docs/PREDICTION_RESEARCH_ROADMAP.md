@@ -165,6 +165,12 @@ source metadata, and missingness/freshness tracking. Freeze the evaluation proto
 Run league prior, Elo, current independent heuristic, current hybrid, and licensed no-vig market on
 identical locked events. Publish coverage and calibration before headline accuracy.
 
+The frozen baseline evaluator is implemented. It adds raw and calibrated Elo separately, derives
+the league prior only from grades known at each target lock, and reports pairwise scores on identical
+fixtures with competition-week bootstrap intervals. It remains in evidence collection: most sports
+do not have every candidate, and the all-model review threshold is 256 common games across 16 common
+time blocks.
+
 ### Phase 2 — learned challengers by sport
 
 Begin with NFL because nflverse supplies deep, explicitly licensed play-by-play; then use licensed

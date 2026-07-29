@@ -174,7 +174,9 @@ def extract_rows(forecast_events: Iterable[dict[str, Any]], market_path: str | P
         if locked_at >= kickoff:
             counts["invalid_lock_time"] += 1
             continue
-        snapshots = market_snapshots.fixture_snapshots(market_path, fixture_id, lock_info.get("kickoff"))
+        snapshots = market_snapshots.fixture_snapshots(
+            market_path, fixture_id, lock_info.get("kickoff"), lock.get("competition")
+        )
         outcomes = set(model)
         opening = _source_consensus(snapshots, kickoff, outcomes, earliest=True)
         at_lock = _source_consensus(snapshots, locked_at, outcomes)
