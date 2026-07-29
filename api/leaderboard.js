@@ -8,12 +8,18 @@
 import crypto from "node:crypto";
 import { Client } from "pg";
 
-const PUBLIC_DATA_ORIGIN = process.env.PUBLIC_DATA_ORIGIN || "https://matchday-lake-omega.vercel.app";
+// Generated competition files are published by the GitHub Pages site, not by
+// this Vercel function project. Keep the browser origin separate so an
+// optional data mirror does not accidentally remove the production site from
+// the CORS allowlist.
+const PUBLIC_SITE_ORIGIN = process.env.PUBLIC_SITE_ORIGIN || "https://matchdayterminal.com";
+const PUBLIC_DATA_ORIGIN = process.env.PUBLIC_DATA_ORIGIN || PUBLIC_SITE_ORIGIN;
 const ALLOWED_COMPS = new Set([
   "wc", "ucl", "epl", "laliga", "seriea", "bundesliga", "ligue1",
   "nfl", "ncaaf", "ncaam", "nba", "mlb", "nhl",
 ]);
 const SAFE_ORIGINS = new Set([
+  PUBLIC_SITE_ORIGIN,
   PUBLIC_DATA_ORIGIN,
   ...(process.env.ALLOWED_ORIGINS || "").split(",").map(v => v.trim()).filter(Boolean),
 ]);
