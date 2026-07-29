@@ -41,6 +41,32 @@ final-third event share, and possession-sequence share. StatsBomb outputs set `a
 historical/selective coverage is for feature research and training only, never a silent current-
 season input. Published analysis must follow StatsBomb's agreement, credit, and logo requirements.
 
+### Chronological three-way soccer challenger
+
+For learned research, clone or download the official `hudl/open-data` tree and choose one explicitly
+published competition/season. The builder reads its match metadata and corresponding event files:
+
+```powershell
+python build_soccer_challenger.py --root C:\data\open-data `
+  --competition-id 43 --season-id 106 `
+  --rows-output soccer_challenger_rows.jsonl `
+  --report-output soccer_challenger_report.json
+```
+
+The importer reconstructs the home/draw/away regulation result from periods 1-2 and excludes extra
+time and shootouts. Missing event files, incomplete team pairs, or ordinary-match score mismatches
+are rejected and counted rather than replaced with neutral values. Each match-date block is sealed
+before any result or event can update later features.
+
+Candidate families are opponent-adjusted xG strength, non-penalty shot quality, possession/field
+tilt/pass completion, pressure, set-piece xG share, prior-match starting-XI continuity, and rest/
+history context. Target-match lineups are never used retrospectively. Coverage indicators distinguish
+real zeros from missing shot, territory, or lineup history. A regularized multinomial residual is
+compared on identical matches with goal-rate Poisson and three-way Elo, and every family receives a
+match-date-block ablation interval. The gate requires 500 out-of-sample matches, lower log loss than
+both baselines, and an interval wholly below zero versus Poisson. It cannot self-promote, has zero
+production weight, and remains `attach_live=false`.
+
 ## MLB — Retrosheet
 
 Download official event files from https://www.retrosheet.org/game.htm, extract them locally, then:

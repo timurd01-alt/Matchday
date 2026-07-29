@@ -191,6 +191,13 @@ sealed before updates and every family receives an out-of-sample ablation agains
 No authorized multi-season advanced-game export is bundled, so there is no performance claim and
 the path remains unrun with production weight zero.
 
+The selective-coverage soccer challenger contract is also implemented. Official StatsBomb Open Data
+match and event files generate regulation-only xG strength, shot quality, possession/territory,
+pressure, set-piece, prior-lineup-continuity, and context features. A regularized three-way residual
+model is evaluated chronologically against both a goal-rate Poisson baseline and three-way Elo, with
+match-date-block ablations. Open Data coverage is not a live feed and no competition/season corpus is
+bundled into the repository, so this remains an unrun, attribution-bound, zero-weight research path.
+
 ### Phase 3 — transparent shadow deployment
 
 Generate learned predictions invisibly alongside production for a full prospective window. Capture

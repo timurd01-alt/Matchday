@@ -220,6 +220,146 @@ def stats_for_match(events: Iterable[dict[str, Any]], match_id: str, team_name: 
     return total
 
 
+def statsbomb_match_records(
+    matches: Iterable[dict[str, Any]], events: Iterable[dict[str, Any]]
+) -> list[dict[str, Any]]:
+    """Create complete regulation-time team-match records from Open Data.
+
+    The match result is reconstructed from periods 1 and 2. Extra time and
+    shootouts are deliberately excluded so the outcome matches a three-way
+    regulation 1X2 definition. A match without a complete two-team event file
+    or with a regulation-score mismatch is rejected rather than zero-filled.
+    """
+    match_index = {}
+    for raw in matches:
+        match_id = str(raw.get("match_id") if raw.get("match_id") is not None else "").strip()
+        home_obj, away_obj = raw.get("home_team") or {}, raw.get("away_team") or {}
+        home = str(home_obj.get("home_team_name") if isinstance(home_obj, dict) else home_obj or "").strip()
+        away = str(away_obj.get("away_team_name") if isinstance(away_obj, dict) else away_obj or "").strip()
+        match_date = str(raw.get("match_date") or "")[:10]
+        if not match_id or not home or not away or not match_date:
+            continue
+        competition = raw.get("competition") or {}
+        season = raw.get("season") or {}
+        match_index[match_id] = {
+            "match_date": match_date, "home": home, "away": away,
+            "competition_id": str(raw.get("competition_id") or competition.get("competition_id") or "unknown"),
+            "competition_name": str(competition.get("competition_name") or raw.get("competition_name") or "unknown"),
+            "season_id": str(raw.get("season_id") or season.get("season_id") or "unknown"),
+            "season_name": str(season.get("season_name") or raw.get("season_name") or "unknown"),
+            "metadata_home_score": _number(raw.get("home_score"), None),
+            "metadata_away_score": _number(raw.get("away_score"), None),
+        }
+
+    summaries: dict[tuple[str, str], dict[str, Any]] = defaultdict(
+        lambda: {"events": 0, "shots": 0, "xg": 0.0, "npxg": 0.0,
+                 "pressures": 0, "passes": 0, "completed_passes": 0,
+                 "final_third_events": 0, "set_piece_xg": 0.0,
+                 "possessions": set(), "lineup": set(), "goals": 0})
+    seen_teams: dict[str, set[str]] = defaultdict(set)
+    max_period: dict[str, int] = defaultdict(int)
+    for event in events:
+        match_id = str(event.get("match_id") or event.get("match") or "").strip()
+        match = match_index.get(match_id)
+        if not match:
+            continue
+        period = int(_number(event.get("period"), 0) or 0)
+        max_period[match_id] = max(max_period[match_id], period)
+        if period not in (1, 2):
+            continue
+        team_obj = event.get("team") or {}
+        team = str(team_obj.get("name") if isinstance(team_obj, dict) else team_obj or "").strip()
+        if team not in {match["home"], match["away"]}:
+            continue
+        seen_teams[match_id].add(team)
+        row = summaries[(match_id, team)]
+        row["events"] += 1
+        type_obj = event.get("type") or {}
+        event_type = str(type_obj.get("name") if isinstance(type_obj, dict) else type_obj or "").lower()
+        possession = str(event.get("possession") or "")
+        possession_team_obj = event.get("possession_team") or {}
+        possession_team = str(possession_team_obj.get("name") if isinstance(possession_team_obj, dict)
+                              else possession_team_obj or "").strip()
+        if possession and possession_team in {match["home"], match["away"]}:
+            summaries[(match_id, possession_team)]["possessions"].add(possession)
+        location = event.get("location") or []
+        if isinstance(location, list) and location and (_number(location[0], 0) or 0) >= 80:
+            row["final_third_events"] += 1
+        if event_type == "pressure":
+            row["pressures"] += 1
+        elif event_type == "pass":
+            row["passes"] += 1
+            if not (event.get("pass") or {}).get("outcome"):
+                row["completed_passes"] += 1
+        elif event_type == "starting xi":
+            lineup = ((event.get("tactics") or {}).get("lineup") or [])
+            row["lineup"].update(str((item.get("player") or {}).get("id")
+                                      or (item.get("player") or {}).get("name") or "")
+                                 for item in lineup if isinstance(item, dict))
+            row["lineup"].discard("")
+        elif event_type == "shot":
+            shot = event.get("shot") or {}
+            xg = _number(shot.get("statsbomb_xg"), 0) or 0.0
+            row["shots"] += 1
+            row["xg"] += xg
+            shot_type = shot.get("type") or {}
+            shot_type_name = str(shot_type.get("name") if isinstance(shot_type, dict) else shot_type or "").lower()
+            if shot_type_name != "penalty":
+                row["npxg"] += xg
+            pattern = event.get("play_pattern") or {}
+            pattern_name = str(pattern.get("name") if isinstance(pattern, dict) else pattern or "").lower()
+            if "corner" in pattern_name or "free kick" in pattern_name:
+                row["set_piece_xg"] += xg
+            outcome = shot.get("outcome") or {}
+            if str(outcome.get("name") if isinstance(outcome, dict) else outcome or "").lower() == "goal":
+                row["goals"] += 1
+        elif event_type == "own goal for":
+            row["goals"] += 1
+        elif event_type == "own goal against":
+            opponent = match["away"] if team == match["home"] else match["home"]
+            summaries[(match_id, opponent)]["goals"] += 1
+
+    records = []
+    for match_id, match in match_index.items():
+        if seen_teams.get(match_id) != {match["home"], match["away"]}:
+            continue
+        home_row = summaries[(match_id, match["home"])]
+        away_row = summaries[(match_id, match["away"])]
+        if not home_row["events"] or not away_row["events"]:
+            continue
+        # Metadata is regulation-only for ordinary matches. A mismatch without
+        # extra periods indicates incomplete/corrupt event coverage.
+        if max_period[match_id] <= 2 and (
+            match["metadata_home_score"] is not None
+            and (home_row["goals"] != match["metadata_home_score"]
+                 or away_row["goals"] != match["metadata_away_score"])):
+            continue
+        total_possessions = len(home_row["possessions"]) + len(away_row["possessions"])
+        total_final_third = home_row["final_third_events"] + away_row["final_third_events"]
+        for team, opponent, own, other, is_home in (
+            (match["home"], match["away"], home_row, away_row, True),
+            (match["away"], match["home"], away_row, home_row, False),
+        ):
+            records.append({
+                "match_id": match_id, "match_date": match["match_date"],
+                "competition_id": match["competition_id"], "competition_name": match["competition_name"],
+                "season_id": match["season_id"], "season_name": match["season_name"],
+                "team": team, "opponent": opponent, "is_home": is_home,
+                "goals": own["goals"], "opponent_goals": other["goals"],
+                "xg": own["xg"], "xg_allowed": other["xg"],
+                "npxg": own["npxg"], "shots": own["shots"],
+                "xg_per_shot": own["xg"] / own["shots"] if own["shots"] else None,
+                "pressures_per_opponent_pass": own["pressures"] / max(1, other["passes"]),
+                "pass_completion_rate": own["completed_passes"] / own["passes"] if own["passes"] else None,
+                "possession_sequence_share": len(own["possessions"]) / total_possessions if total_possessions else None,
+                "field_tilt": own["final_third_events"] / total_final_third if total_final_third else None,
+                "set_piece_xg_share": own["set_piece_xg"] / own["xg"] if own["xg"] else None,
+                "lineup": sorted(own["lineup"]), "lineup_count": len(own["lineup"]),
+                "event_count": own["events"], "regulation_periods": 2,
+            })
+    return sorted(records, key=lambda item: (item["match_date"], item["match_id"], item["team"]))
+
+
 def basketball_game_records(rows: Iterable[dict[str, Any]]) -> list[dict[str, Any]]:
     """Normalize complete paired basketball boxes into team-game metric rows."""
     by_game: dict[str, dict[str, dict[str, Any]]] = defaultdict(dict)

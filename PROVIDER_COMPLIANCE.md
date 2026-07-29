@@ -648,3 +648,14 @@ record the review date here before each public release.
   week. Generated rows/reports are gitignored, research-only, and zero-weight.
   Historical use still requires a tier/terms review and reproducible authorized
   exports; a season-end aggregate must never be relabeled as a pregame snapshot.
+
+- **2026-07-29:** Added an offline StatsBomb Open Data three-way soccer
+  challenger using only the official `hudl/open-data` repository layout. It
+  does not scrape StatsBomb/Hudl sites and cannot attach its selective research
+  coverage to live fixtures. Regulation outcomes are reconstructed from event
+  periods 1-2; extra time and shootouts are excluded from 1X2 grading. Match-
+  date blocks are sealed before updates, missing event files/incomplete pairs
+  are reported, prior starting-XI continuity never reads the target lineup,
+  and generated artifacts remain gitignored with production weight zero.
+  Anything published from these results must credit StatsBomb and use the
+  required logo under the repository's current terms.
