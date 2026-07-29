@@ -96,3 +96,30 @@ Every verified scorecard lock is reconciled into `forecast_ledger_<competition>.
 deterministic `forecast_locked` event. A settled result appends `forecast_graded`; a material score
 correction appends another grade instead of rewriting history. Records are SHA-256 chained and
 validated after every append. Replays are idempotent.
+
+## NFL learned challenger
+
+`build_nfl_challenger.py` turns approved nflverse play-by-play releases into a week-boundary
+point-in-time corpus. A target game never sees plays or results from its own week. The research
+model is an L2-regularized logistic residual layered on a fixed chronological Elo baseline. It
+evaluates EPA, success, explosiveness, passing/CPOE/sacks, rushing, situational,
+pace/special-teams, and rest/history families through expanding-window ablations.
+
+```powershell
+python build_nfl_challenger.py --input nflverse_pbp_2021.csv.gz `
+  nflverse_pbp_2022.csv.gz nflverse_pbp_2023.csv.gz `
+  nflverse_pbp_2024.csv.gz nflverse_pbp_2025.csv.gz `
+  --min-train 512 --test-size 256
+```
+
+The 2021–2025 run produced 1,356 eligible training rows and 844 strictly out-of-sample forecasts.
+The challenger log loss was `0.652474` versus Elo's `0.652560`, while challenger Brier score was
+worse (`0.228454` versus `0.227370`). The paired week-block bootstrap interval for the log-loss
+difference was `[-0.008881, 0.008852]`, so the apparent difference is indistinguishable from no
+improvement. The automatic promotion gate therefore failed.
+
+`nfl_challenger_model.json`, its training rows, and its backtest report are gitignored. When the
+artifact is present, future NFL fixtures receive `nfl_challenger_shadow` with zero production
+weight, the Elo baseline, residual probability, feature contributions, provenance, and offseason
+uncertainty. The loader rejects any artifact that is not explicitly research-only or assigns a
+nonzero production weight.

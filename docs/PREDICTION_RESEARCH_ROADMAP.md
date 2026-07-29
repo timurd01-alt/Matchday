@@ -1,6 +1,6 @@
 # Matchday prediction research roadmap
 
-Status: proposed research contract
+Status: active research contract
 
 Date: 2026-07-29
 
@@ -176,6 +176,11 @@ expansion scope. Each included sport gets its own feature contract and model car
 
 Generate learned predictions invisibly alongside production for a full prospective window. Capture
 every forecast and revision. Do not cherry-pick examples into the public UI.
+
+The first NFL challenger entered this phase on 2026-07-29 after a 2021–2025 expanding-window test.
+It did not clear the promotion gate: its small log-loss difference from Elo was statistically
+indistinguishable from zero and its Brier score was worse. It remains zero-weight shadow research;
+this negative result is part of the permanent model record rather than a result to tune away.
 
 ### Phase 4 — controlled promotion
 

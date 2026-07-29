@@ -39,3 +39,6 @@ node_modules/
 forecast_ledger_*.jsonl
 advanced_metrics_*.json
 nflverse_pbp_*.csv.gz
+nfl_challenger_model.json
+nfl_challenger_training_rows.jsonl
+nfl_challenger_backtest.json

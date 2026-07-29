@@ -7,6 +7,12 @@ basketball box-score normalization, and CFBD `/stats/season/advanced`; ESPN-orig
 excluded and NHL is explicitly outside this expansion. Generated profiles do not change production
 picks. The first CFBD advanced refresh returned HTTP 429 and correctly remained unavailable.)
 
+NFL challenger review: the 2021–2025 training corpus uses only the same nflverse `pbp` release
+family already approved above. Source file hashes are embedded in every reconstructed training row
+and model artifact. ESPN-origin releases remain excluded. Generated rows, fitted artifacts, and
+backtest reports are local/gitignored, and the runtime loader enforces research-only, zero-weight
+attachment to future fixtures.
+
 Reviewed: 2026-07-28 (UEFA's public 2025/26 Champions League Team of the Season is
 manually transcribed as a small attributed editorial selection with a direct source link; no
 automated UEFA scraping, bulk extraction, API claim, images, article text, or implied endorsement.)

@@ -23,6 +23,7 @@ from email.utils import parsedate_to_datetime
 from collections import defaultdict
 import forecast_ledger
 from advanced_metrics_store import attach_shadow_profiles
+from nfl_challenger_store import attach_nfl_challenger_shadows
 from provider_adapters import (ProviderError, BallDontLieAdapter,
                                CollegeBasketballDataAdapter,
                                CollegeFootballDataAdapter, NflverseAdapter,
@@ -80,7 +81,7 @@ IDLE_MINUTES = 60
 LIVE_SECONDS = 3600   # legacy local loop: in-progress games only need hourly result checks
 ODDS_CACHE_MIN = 180  # one pregame market snapshot per competition window
 OUT_FILE = "data.json"
-MODEL_SIGNAL_SCHEMA = 3  # point-in-time advanced-feature provenance added to immutable locks
+MODEL_SIGNAL_SCHEMA = 4  # adds zero-weight NFL learned-challenger shadow receipts
 
 FD_BASE  = "https://api.football-data.org/v4"
 
@@ -3840,7 +3841,8 @@ def _quarantine_legacy_records(picks):
 def _locked_input_snapshot(match):
     fields = ("id", "stage", "kickoff", "status", "venue", "home", "away",
               "markets", "weather", "injuries", "lineups", "h2h", "stats", "stats_extra",
-              "data_source", "advanced_metrics", "advanced_metrics_meta", "model_signal_schema")
+              "data_source", "advanced_metrics", "advanced_metrics_meta", "nfl_challenger_shadow",
+              "model_signal_schema")
     return _json_safe({"competition": COMP_KEY,
                        "competition_config": COMP,
                        "match": {key: (match or {}).get(key) for key in fields}})
@@ -5274,6 +5276,10 @@ def build():
     shadow = attach_shadow_profiles(matches, COMP_KEY, COMP["sport"])
     if shadow.get("matches"):
         DIAG.append(f"advanced metrics shadow: {shadow['teams']} team profiles on {shadow['matches']} match(es)")
+    if COMP_KEY == "NFL":
+        challenger = attach_nfl_challenger_shadows(matches)
+        if challenger.get("matches"):
+            DIAG.append(f"NFL learned challenger shadow: {challenger['matches']} match(es), production weight 0")
     for m in matches:
         m["prediction"] = predict(m["home"], m["away"], m["markets"], m)
         m["prediction"]["totals"] = predict_totals(m["home"], m["away"], m["markets"])
