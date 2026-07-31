@@ -47,6 +47,25 @@ def _number(value, default=0):
         return default
 
 
+# Strings a provider sends for a fixture slot it has no real club for -- an
+# unmapped/exhibition game, or a bracket slot whose participant isn't decided
+# yet. These are not team names: accepted as one, a placeholder becomes a
+# franchise that accrues real win-loss records in the standings table and a
+# real Elo rating trained on other teams' results (confirmed live: a single
+# BALLDONTLIE MLB game with both sides named "Unknown" produced a 31st MLB
+# "team" with a 1-1 record and an Elo entry with n=2). There is no honest way
+# to recover which club was meant, so the game is dropped instead.
+PLACEHOLDER_TEAM_NAMES = {
+    "unknown", "unk", "tbd", "tba", "to be determined", "undecided",
+    "n/a", "na", "none", "null",
+}
+
+
+def is_placeholder_team_name(name):
+    """True when `name` is a provider placeholder rather than a real team."""
+    return " ".join(str(name or "").strip().lower().split()) in PLACEHOLDER_TEAM_NAMES
+
+
 def _ordinal_period(n):
     """'3rd inning' not '3 0:00' -- BALLDONTLIE's free tier doesn't expose a
     reliable live clock for these sports, so show the period number in the
@@ -1185,6 +1204,11 @@ class BallDontLieAdapter:
         team = row.get(side) if isinstance(row.get(side), dict) else {}
         name = (team.get("full_name") or team.get("display_name") or
                 row.get(f"{side}_name") or team.get("name"))
+        # A placeholder is no more usable than a missing name -- blank it so
+        # _match()'s existing empty-name check drops the game (see
+        # PLACEHOLDER_TEAM_NAMES).
+        if is_placeholder_team_name(name):
+            name = ""
         return {
             "name": str(name or ""),
             "code": str(team.get("abbreviation") or ""),

@@ -192,6 +192,34 @@ class BallDontLieTests(unittest.TestCase):
         self.assertEqual(match["status"], "FINISHED")
         self.assertEqual(match["score"], {"home": None, "away": None})
 
+    def test_placeholder_team_name_drops_the_game_instead_of_inventing_a_team(self):
+        def placeholder_getter(url, headers):
+            return {"data": [
+                {
+                    "id": 8712499, "date": "2026-07-15T00:00:00.000Z", "season": 2026,
+                    "status": "STATUS_FINAL", "period": 9, "venue": "Citizens Bank Park",
+                    "season_type": "regular",
+                    "home_team": {"display_name": "Unknown", "abbreviation": "UNK"},
+                    "away_team": {"display_name": "Unknown", "abbreviation": "UNK"},
+                    "home_team_data": {"runs": 0}, "away_team_data": {"runs": 4},
+                },
+                {
+                    "id": 503, "date": "2026-07-15T00:00:00.000Z", "season": 2026,
+                    "status": "STATUS_FINAL", "period": 9, "venue": "Fenway Park",
+                    "season_type": "regular",
+                    "home_team": {"display_name": "Boston Red Sox", "abbreviation": "BOS"},
+                    "away_team": {"display_name": "TBD", "abbreviation": ""},
+                    "home_team_data": {"runs": 3}, "away_team_data": {"runs": 1},
+                },
+            ], "meta": {"per_page": 100}}
+
+        adapter = BallDontLieAdapter("test-key", "MLB", getter=placeholder_getter,
+                                    today=dt.date(2026, 7, 15))
+        # A placeholder is not a resolvable club: crediting it created a 31st
+        # MLB "team" in the standings table and a real Elo entry trained on
+        # real results, so both rows are dropped at the provider boundary.
+        self.assertEqual(adapter.schedule(), [])
+
     def test_season_games_pages_through_results_and_drops_preseason(self):
         calls = []
 
