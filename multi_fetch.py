@@ -100,6 +100,125 @@ def _missing_fields(key):
         return True
 
 
+# ---- per-sport anchored refresh windows ---------------------------------
+# The adaptive intervals below answer "how often", but not "when". A sport
+# whose next game is a few days out sits on the 6h tier, so on the morning of
+# a game day its odds/lineups/probables could be up to six hours stale, and a
+# final score could wait six hours to be graded. These anchors pin a refresh
+# to the moments that actually matter for each sport -- shortly before the
+# day's first scheduled start, once mid-slate, and after the last game should
+# have finished -- on top of whatever the interval logic already decided.
+#
+# Quota cost is bounded on purpose: anchors are only honoured on a day the
+# sport actually has a game (see _anchor_due), so an offseason or off-day
+# sport still costs exactly what it costs today. On a game day already sitting
+# on the 1h tier they cost nothing either, because that tier refetches more
+# often than the anchors ask for.
+#
+# Hours are local to the zone each sport's schedule is really keyed to, so
+# they stay correct across daylight-saving changes rather than drifting an
+# hour twice a year the way fixed UTC hours would.
+SPORT_ZONE = {
+    "nfl": "America/New_York", "ncaaf": "America/New_York",
+    "nba": "America/New_York", "ncaam": "America/New_York",
+    "mlb": "America/New_York",
+    "wc": "UTC", "ucl": "UTC", "epl": "UTC", "laliga": "UTC",
+    "seriea": "UTC", "bundesliga": "UTC", "ligue1": "UTC",
+}
+# (pregame, mid-slate, post-slate) in each sport's own zone.
+ANCHOR_HOURS = {
+    # Sat slates run noon-to-midnight ET, with Thu/Fri night games. 10:00
+    # precedes the earliest kickoff; 23:30 lands after West Coast finals
+    # rather than at 22:00, when late games are still in the fourth quarter.
+    "ncaaf": ((10, 0), (15, 0), (23, 30)),
+    # 11:00 is after the 90-minute inactive reports for the 13:00 ET window.
+    "nfl": ((11, 0), (16, 0), (23, 30)),
+    # Tips 19:00-22:30 ET; the latest West Coast games end after 01:00.
+    "nba": ((17, 0), (23, 0), (3, 30)),
+    "ncaam": ((11, 0), (18, 0), (1, 0)),
+    # Probable pitchers and lineups post through the late morning; West Coast
+    # games finish around 01:00-02:00 ET.
+    "mlb": ((11, 0), (17, 0), (2, 0)),
+    # European kickoffs, kept in UTC: early Saturday games from ~11:30 UTC,
+    # late Sunday/midweek kickoffs finishing by ~22:00 UTC.
+    "wc": ((10, 0), (15, 0), (22, 30)),
+    "ucl": ((10, 0), (15, 0), (22, 30)),
+    "epl": ((10, 0), (15, 0), (22, 30)),
+    "laliga": ((10, 0), (15, 0), (22, 30)),
+    "seriea": ((10, 0), (15, 0), (22, 30)),
+    "bundesliga": ((10, 0), (15, 0), (22, 30)),
+    "ligue1": ((10, 0), (15, 0), (22, 30)),
+}
+# An anchor stays claimable for this long, so the hourly CI job (which fires
+# at :17) still serves a :00 or :30 anchor instead of missing it outright.
+ANCHOR_GRACE_MINUTES = 90
+
+
+def _zone_for(key):
+    name = SPORT_ZONE.get(key, "UTC")
+    if name == "UTC":
+        return datetime.timezone.utc
+    try:
+        from zoneinfo import ZoneInfo
+        return ZoneInfo(name)
+    except Exception:
+        # No tz database on this machine (bare Windows without tzdata). Fixed
+        # UTC hours drift an hour across DST, which is well within the 90
+        # minute grace window, so degrade rather than drop anchors entirely.
+        return datetime.timezone.utc
+
+
+def _local_kickoffs(key):
+    """Every scheduled kickoff for this sport, in the sport's own zone."""
+    try:
+        with open(f"data_{key}.json", encoding="utf-8") as f:
+            matches = json.load(f).get("matches") or []
+    except Exception:
+        return []
+    zone, out = _zone_for(key), []
+    for m in matches:
+        if not m.get("kickoff"):
+            continue
+        try:
+            ko = datetime.datetime.fromisoformat(str(m["kickoff"]).replace("Z", "+00:00"))
+        except Exception:
+            continue
+        if ko.tzinfo is None:
+            ko = ko.replace(tzinfo=datetime.timezone.utc)
+        out.append(ko.astimezone(zone))
+    return out
+
+
+def _anchor_due(key, served, now=None):
+    """The anchor this run should serve for `key`, or None.
+
+    `served` is the anchor id this sport last satisfied. Returns an id of the
+    form "YYYY-MM-DD:HH:MM" so a served anchor is never re-served, and so a
+    missed one expires instead of firing a day late.
+    """
+    anchors = ANCHOR_HOURS.get(key)
+    if not anchors:
+        return None
+    zone = _zone_for(key)
+    local_now = (now or datetime.datetime.now(datetime.timezone.utc)).astimezone(zone)
+    kickoffs = _local_kickoffs(key)
+    if not kickoffs:
+        return None
+    for hour, minute in anchors:
+        at = local_now.replace(hour=hour, minute=minute, second=0, microsecond=0)
+        # A post-slate anchor in the small hours (MLB 02:00, NBA 03:30) closes
+        # out the PREVIOUS day's games, so it belongs to that game day.
+        game_day = at.date() - datetime.timedelta(days=1) if hour < 6 else at.date()
+        if not any(ko.date() == game_day for ko in kickoffs):
+            continue
+        elapsed = (local_now - at).total_seconds() / 60.0
+        if 0 <= elapsed <= ANCHOR_GRACE_MINUTES:
+            anchor_id = f"{game_day.isoformat()}:{hour:02d}:{minute:02d}"
+            if served != anchor_id:
+                return anchor_id
+    return None
+
+
 def _interval_for(key):
     """Decide the refetch interval from the sport's own data file."""
     path = f"data_{key}.json"
@@ -202,13 +321,19 @@ def _rate_limited_with_last_good(key):
 def loop():
     print(f"Multi-sport fetcher: {', '.join(k for k, _ in SPORTS)}")
     next_due = {k: 0.0 for k, _ in SPORTS}   # everything due immediately on start
+    served_anchors = {}
     while True:
         now = time.time()
         for key, flag in SPORTS:
-            if now < next_due[key]:
+            anchor = _anchor_due(key, served_anchors.get(key))
+            if now < next_due[key] and not anchor:
                 continue
+            if anchor:
+                print(f"  [{key}] anchored refresh window {anchor}")
             ok = _run_one(key, flag)
             if ok:
+                if anchor:
+                    served_anchors[key] = anchor
                 iv = _interval_for(key)
                 label = ("1h" if iv == SOON_EVERY else "6h" if iv == NEAR_EVERY else "12h")
                 print(f"  [{key}] next in {label}")
@@ -229,12 +354,22 @@ def run_once(state_path=".ci_fetch_state.json"):
     """
     try:
         with open(state_path, encoding="utf-8") as f:
-            last_fetched = json.load(f)
+            state = json.load(f)
     except Exception:
-        last_fetched = {}
+        state = {}
+    # Older state files are a bare {sport: timestamp} map. Keep reading those,
+    # and keep writing that shape so a rollback can still read what we wrote,
+    # with anchor bookkeeping alongside it under a reserved key.
+    served_anchors = state.pop("_anchors", None) or {}
+    last_fetched = {k: v for k, v in state.items() if isinstance(v, (int, float))}
     print(f"Multi-sport fetcher (one-shot): {', '.join(k for k, _ in SPORTS)}")
+    anchors_now = {k: _anchor_due(k, served_anchors.get(k)) for k, _ in SPORTS}
     due = [(k, f) for k, f in SPORTS if k in FORCE_REFETCH_ONCE or not os.path.exists(f"data_{k}.json")
-           or _stale_source(k) or _missing_fields(k) or time.time() - last_fetched.get(k, 0) >= _interval_for(k)]
+           or _stale_source(k) or _missing_fields(k) or anchors_now.get(k)
+           or time.time() - last_fetched.get(k, 0) >= _interval_for(k)]
+    for key, anchor in anchors_now.items():
+        if anchor and any(key == k for k, _ in due):
+            print(f"  [{key}] anchored refresh window {anchor}")
     failed = []
     degraded = []
     for i, (key, flag) in enumerate(due):
@@ -253,6 +388,10 @@ def run_once(state_path=".ci_fetch_state.json"):
                 time.sleep(ONCE_RETRY_DELAY)
         if ok:
             last_fetched[key] = time.time()
+            # Only a refresh that actually landed satisfies the anchor; a
+            # failed one stays claimable so the next run retries the window.
+            if anchors_now.get(key):
+                served_anchors[key] = anchors_now[key]
         elif key not in degraded:
             failed.append(key)
         if i < len(due) - 1:
@@ -264,7 +403,7 @@ def run_once(state_path=".ci_fetch_state.json"):
     if degraded:
         print(f"  degraded (last-good data retained; still due): {', '.join(degraded)}")
     with open(state_path, "w", encoding="utf-8") as f:
-        json.dump(last_fetched, f)
+        json.dump({**last_fetched, **({"_anchors": served_anchors} if served_anchors else {})}, f)
     try:
         from generate_posts import regenerate_sitemap
         n = regenerate_sitemap()

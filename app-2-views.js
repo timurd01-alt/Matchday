@@ -306,8 +306,8 @@ function tournamentViewData(){
   })};
 }
 function renderTOTT(){const host=$('#view-tott');const t=tournamentViewData();
-  if(!t||!t.xi||!t.xi.length){host.innerHTML=`<div class="vhead">Team of the Tournament</div><div class="empty">Builds once qualifying player stats are logged. Check back after more matches.</div>`;return;}
-  if(t.v!==2&&t.v!==3){host.innerHTML=`<div class="vhead">Team of the Tournament</div><div class="banner"><b>Positions need a rebuild.</b> This XI was generated before the real-position fix — run one fetch and players will group by their actual positions (no more strikers in goal).</div>`;return;}
+  if(!t||!t.xi||!t.xi.length){host.innerHTML=`<div class="vhead">${esc(tottTitle())}</div><div class="empty">Builds once qualifying player stats are logged. Check back after more matches.</div>`;return;}
+  if(t.v!==2&&t.v!==3){host.innerHTML=`<div class="vhead">${esc(tottTitle())}</div><div class="banner"><b>Positions need a rebuild.</b> This XI was generated before the real-position fix — run one fetch and players will group by their actual positions (no more strikers in goal).</div>`;return;}
   const byRole=r=>t.xi.filter(p=>p.role===r),official=t.kind==='official';
   const complete=t.xi.length===11&&byRole('FWD').length>0&&byRole('MID').length>0&&byRole('DEF').length>0&&byRole('GK').length===1;
   const stat=p=>official&&!p.statsAvailable?'Official XI':`${Number(p.goals)||0}G ${Number(p.assists)||0}A`;
@@ -318,7 +318,7 @@ function renderTOTT(){const host=$('#view-tott');const t=tournamentViewData();
     :complete
       ?`<div class="banner"><b>Model-built XI.</b> ${esc(t.note||'')}</div>`
       :`<div class="banner warn"><b>Model attacking leaders — not a complete XI.</b> ${esc(t.note||'')} Empty positions are hidden until real lineup data supports them.</div>`;
-  host.innerHTML=`<div class="vhead">Team of the Tournament</div>${intro}
+  host.innerHTML=`<div class="vhead">${esc(tottTitle())}</div>${intro}
     <div class="tottPitch ${official?'official':''}">${line('Forwards',byRole('FWD'))}${line('Midfield',byRole('MID'))}${line('Defence',byRole('DEF'))}${line('Goalkeeper',byRole('GK'))}</div>`;}
 let POSTS_CACHE=null;
 function loadPosts(){

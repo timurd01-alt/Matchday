@@ -80,6 +80,9 @@ const SPORT_KIND={'':'all',wc:'soccer_cup',ucl:'soccer_club',epl:'soccer_league'
 function currentSportKey(){const m=(DATA_FILE||'').match(/data_(\w+)\.json/);return m?m[1]:'';}
 function navProfile(){return SPORT_KIND[currentSportKey()]||'all';}
 const NAV_LABELS={soccer_club:{groups:'League Phase'},us_sport:{groups:'Standings'},college:{groups:'Rankings',bracket:'CFP Bracket'},college_basketball:{groups:'Conferences',bracket:'Bracketology'},soccer_league:{groups:'Table',tott:'Team of the Season'}};
+// A domestic league plays a season, not a tournament. The nav button already
+// said so via NAV_LABELS; the view's own heading did not.
+function tottTitle(){return navProfile()==='soccer_league'?'Team of the Season':'Team of the Tournament'}
 function applySportNav(){
   const prof=navProfile();
   const allowed=NAV_DEF[prof];
@@ -103,7 +106,23 @@ function changeSport(v){DATA_FILE=v?('data_'+v+'.json'):'';MATCH_VISIBLE=FIXTURE
 
 const COLORS={orange:'#ffb02e',blue:'#4cc2ff',green:'#3ad17a',red:'#ff4d5e',purple:'#b16cff'};
 function saveSettings(){localStorage.setItem('matchday.settings',JSON.stringify(SETTINGS))}
-function applySettings(){document.documentElement.style.setProperty('--signal',COLORS[SETTINGS.accent]||COLORS.orange);document.body.classList.toggle('compact',SETTINGS.density==='compact');document.body.classList.toggle('spacious',SETTINGS.density==='spacious');$('#app').classList.toggle('flat',SETTINGS.panel==='flat');$('#app').classList.toggle('noinsight',!SETTINGS.showInsight);document.body.classList.toggle('hideStats',!SETTINGS.showDetails)}
+function applySettings(){document.documentElement.style.setProperty('--signal',COLORS[SETTINGS.accent]||COLORS.orange);document.body.classList.toggle('compact',SETTINGS.density==='compact');document.body.classList.toggle('spacious',SETTINGS.density==='spacious');$('#app').classList.toggle('flat',SETTINGS.panel==='flat');$('#app').classList.toggle('noinsight',!SETTINGS.showInsight);document.body.classList.toggle('hideStats',!SETTINGS.showDetails);syncRailToggle()}
+function syncRailToggle(){
+  const btn=$('#railToggle');
+  if(!btn)return;
+  const open=!!SETTINGS.showInsight,label=open?'Hide the in-focus rail':'Show the in-focus rail';
+  btn.setAttribute('aria-expanded',String(open));
+  btn.title=label;
+  const sr=btn.querySelector('.srOnly');
+  if(sr)sr.textContent=label;
+}
+function toggleInsightRail(){
+  const open=!SETTINGS.showInsight;
+  updateSetting('showInsight',open);
+  // renderCurrent() never touches the rail, so a rail that was collapsed
+  // before its first render would come back empty without this.
+  if(open&&typeof renderInsight==='function')renderInsight();
+}
 function updateSetting(k,v){if(k==='refresh')return;if(k==='showInsight'||k==='showDetails'||k==='showFinished'||k.startsWith('alerts'))v=!!v;SETTINGS[k]=v;saveSettings();applySettings();renderCurrent();if(k==='favoriteTeam'&&typeof renderInsight==='function')renderInsight();if(k.startsWith('alerts'))renderAlerts();scheduleNextLoad()}
 function resetSettings(){SETTINGS={...DEFAULT_SETTINGS};saveSettings();applySettings();setView(SETTINGS.defaultView);scheduleNextLoad()}
 function esc(s){return String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
@@ -127,7 +146,33 @@ function teamInitials(team){
 }
 function teamHue(team){let h=0;for(const ch of String(team?.name||team?.code||'team'))h=(h*31+ch.charCodeAt(0))%360;return h}
 function teamMarkHTML(team,extra=''){return `<span class="teamMark ${esc(extra)}" style="--team-hue:${teamHue(team)}" aria-hidden="true">${esc(teamInitials(team))}</span>`}
-function metricHelp(label,copy){return `<span class="metricHelp" tabindex="0" role="note" aria-label="${esc(label)}: ${esc(copy)}" data-tip="${esc(copy)}">?</span>`}
+function metricHelp(label,copy){return `<button type="button" class="metricHelp" aria-label="${esc(label)}: ${esc(copy)}" aria-expanded="false" data-tip="${esc(copy)}">?</button>`}
+function closeMetricHelps(except){
+  document.querySelectorAll('.metricHelp.isOpen').forEach(help=>{
+    if(help===except)return;
+    help.classList.remove('isOpen');
+    help.setAttribute('aria-expanded','false');
+  });
+}
+document.addEventListener('click',event=>{
+  const help=event.target.closest?.('.metricHelp');
+  if(!help){closeMetricHelps();return;}
+  event.preventDefault();
+  const open=!help.classList.contains('isOpen');
+  closeMetricHelps(help);
+  help.classList.toggle('isOpen',open);
+  help.setAttribute('aria-expanded',String(open));
+  if(!open)help.blur();
+});
+document.addEventListener('keydown',event=>{
+  if(event.key!=='Escape')return;
+  const open=document.querySelector('.metricHelp.isOpen');
+  if(!open)return;
+  event.preventDefault();
+  event.stopImmediatePropagation();
+  closeMetricHelps();
+  open.blur();
+});
 function favoriteTeam(){return String(SETTINGS.favoriteTeam||'').trim()}
 function favoriteNewsTerm(){return teamKey(favoriteTeam()).replace(/\b(fc|afc|cf|sc|football club)\b/g,'').replace(/\s+/g,' ').trim()}
 function isFavoriteTeam(name){const fav=teamKey(favoriteTeam());return !!fav&&teamKey(name)===fav}
@@ -137,6 +182,45 @@ function favoriteTeamOptions(){const names=new Set();(DATA.matches||[]).forEach(
 function liveClock(m){const v=m?.minute;if(v==null||v==='')return'';return typeof v==='number'||/^\d+$/.test(v)?`${v}'`:String(v)}
 const SCORE_DIFF_TERM={mlb:'run diff',nfl:'point diff',nba:'point diff',ncaaf:'point diff',ncaam:'point diff',nhl:'goal diff'};
 function scoreDiffLabel(m){return SCORE_DIFF_TERM[String(m?._comp||DATA.comp_key||'').toLowerCase()]||'goal diff';}
+const SCORE_DIFF_ABBR={mlb:'RD',nfl:'PD',nba:'PD',ncaaf:'PD',ncaam:'PD',nhl:'GD'};
+// Only league/cup tables that actually award standings points have a real
+// "pts" column. Every US sport ranks on win-loss record, so the pts value the
+// pipeline derives for them (wins x 3) is an artefact of the soccer-shaped
+// schema, not a number any fan of that sport recognises -- NCAAF showed
+// "27 pts" for a 9-4 team. Show the record those sports rank on instead.
+const TABLE_POINTS_COMPS=new Set(['WC','UCL','EPL','LALIGA','SERIEA','BUNDESLIGA','LIGUE1']);
+function usesTablePoints(comp){return TABLE_POINTS_COMPS.has(String(comp??DATA.comp_key??'').toUpperCase())}
+function teamRecordText(team){
+  if(team?.record)return String(team.record);
+  const w=Number(team?.w),l=Number(team?.l),d=Number(team?.d);
+  if(!Number.isFinite(w)||!Number.isFinite(l))return '';
+  return `${w}-${l}${Number.isFinite(d)&&d?`-${d}`:''}`;
+}
+// One standings blurb shared by the fixture card, the expanded view's hero and
+// its match-read panel, so all three stay honest about the same sport.
+function teamStandingsMeta(team,comp,opts){
+  opts=opts||{};
+  const parts=[];
+  if(team?.pos)parts.push(`#${team.pos}`);
+  if(usesTablePoints(comp)){
+    const pts=Number(team?.pts);
+    // Preseason there is no table yet, so "0 pts" is a placeholder pretending
+    // to be a standing. Say nothing until a game has been played.
+    if(Number.isFinite(pts)&&Number(team?.pld))parts.push(`${pts} pts`);
+  }else{
+    const rec=teamRecordText(team);
+    if(rec)parts.push(rec);
+  }
+  if(opts.diff){
+    const gd=Number(team?.gd);
+    // A team whose provider gave no scoring data at all reads gd 0 with gf/ga
+    // 0 -- that is "unknown", not "dead even", so leave the row off entirely.
+    if(Number.isFinite(gd)&&(gd||Number(team?.gf)||Number(team?.ga)))parts.push(`${SCORE_DIFF_ABBR[String(comp??DATA.comp_key??'').toLowerCase()]||'GD'} ${gd>0?'+':''}${gd}`);
+  }
+  const form=String(team?.form||'').trim();
+  if(opts.form&&form)parts.push(form);
+  return parts;
+}
 function scoreText(m){if(m.status==='LIVE')return'<span class="pendingScore" aria-label="Score shown after final">—</span>';const done=m.status==='FINISHED';if(isStaleUpcoming(m))return'<span class="kick">Past kickoff</span>';return done?`${m.score?.home??'-'}<span class="sep">–</span>${m.score?.away??'-'}${m.score?.pens?`<span class="pensTag">(${m.score.pens.home}-${m.score.pens.away} pens)</span>`:''}`:`<span class="kick">${dt(m.kickoff).split(', ').pop()||'TBD'}</span>`}
 function statNum(v){const m=String(v??'').match(/-?\d+(\.\d+)?/);return m?Number(m[0]):0}
 function pressure(stats,side){if(!stats)return 0;const s=stats[side]||{};return statNum(s.shots_on_target)*4+statNum(s.shots)*1.2+statNum(s.corners)*1.4+statNum(String(s.possession).replace('%',''))*.08-statNum(s.red_cards)*4}
@@ -275,9 +359,42 @@ function _welcomeCardHTML(m){
   const meter=model!=null?`<div class="welcomeMeter" aria-hidden="true"><i style="--welcome-p:${pct(model)}%"></i></div>`:'';
   return `<div class="welcomeMatchMeta"><span>${esc(m._comp||DATA.comp_key||m.stage||'NEXT')}</span><span>${kickIn(m.kickoff)}</span></div><div class="welcomeTeams"><div><small>${esc(m.home?.code||'HOME')}</small><b>${esc(m.home?.name||'Home')}</b></div><em>v</em><div class="away"><small>${esc(m.away?.code||'AWAY')}</small><b>${esc(m.away?.name||'Away')}</b></div></div>${pick?`<div class="welcomeSignal"><span>MODEL</span><b>${esc(pick)} ${model!=null?esc(model)+'%':''}</b>${market!=null?`<i>market ${esc(market)}%${edge!=null?` · ${edge>0?'+':''}${edge} pt`:''}</i>`:''}</div>${meter}`:''}`;
 }
+// Real coverage numbers, counted from the slate that just loaded. Deliberately
+// three short figures rather than another paragraph of claims.
+function renderWelcomeStats(){
+  const host=$('#welcomeStats');if(!host)return;
+  const M=DATA.matches||[];
+  const upcoming=M.filter(isVisibleUpcoming);
+  if(!upcoming.length){host.innerHTML='';return}
+  const priced=upcoming.filter(m=>(typeof officialPrediction==='function'&&officialPrediction(m))||m.prediction).length;
+  // Competitions is the product's breadth, not the current selection's -- the
+  // gate is the front door for all of it, and a single-sport view would
+  // otherwise read "1 competitions".
+  const cells=[[upcoming.length,'fixtures ahead'],
+               [Object.keys(SPORT_LABELS).length,'competitions'],
+               [`${Math.round(priced/upcoming.length*100)}%`,'model coverage']];
+  host.innerHTML=cells.map(([v,l])=>`<div><b>${esc(v)}</b><span>${esc(l)}</span></div>`).join('');
+}
+// Slight parallax on the preview card. Pointer-only and opt-out aware, so it
+// never interferes with touch scrolling or reduced-motion preferences.
+function bindWelcomeTilt(){
+  const card=document.querySelector('.welcomePreview');
+  if(!card||card.dataset.tiltBound||prefersReducedMotion())return;
+  if(!window.matchMedia?.('(hover:hover) and (pointer:fine)').matches)return;
+  card.dataset.tiltBound='1';
+  const reset=()=>{card.style.transform=''};
+  card.addEventListener('pointermove',e=>{
+    const r=card.getBoundingClientRect();
+    const dx=(e.clientX-r.left)/r.width-0.5,dy=(e.clientY-r.top)/r.height-0.5;
+    card.style.transform=`perspective(900px) rotateY(${dx*5.5}deg) rotateX(${-dy*5.5}deg) translateZ(6px)`;
+  });
+  card.addEventListener('pointerleave',reset);
+  card.addEventListener('blur',reset,true);
+}
 function renderWelcome(){
   const gate=$('#welcomeGate');if(!gate)return;
   const dismissed=welcomeDismissed();gate.hidden=dismissed;document.body.classList.toggle('welcomeOpen',!dismissed);if(dismissed){runCarousel('welcome',null);return}
+  renderWelcomeStats();bindWelcomeTilt();
   const upcoming=(DATA.matches||[]).filter(isVisibleUpcoming);
   const soonest=[...upcoming].sort(fixtureSort)[0],host=$('#welcomeNext');
   if(!host||!soonest)return;
@@ -439,6 +556,15 @@ function renderThird(){const host=$('#view-third'),third=getThirdRace();if(!thir
 /* removed duplicate (renderNews) */
 
 const SYSTEM_UPDATES=[
+  {date:'Build 0730A',tag:'Fix',title:'Sports that don\'t use table points no longer show fake ones, and MLB power ratings account for this season',items:[
+    'College football, NFL, NBA, MLB and NHL were showing a "pts" figure on fixture cards, in the expanded view\'s hero, and in its match-read panel. None of those sports award standings points — the number was wins x 3, an artefact of the soccer-shaped data schema, so a 9-4 college team read "27 pts". All three places now show the win-loss record those sports actually rank on, with a run/point-differential label that matches the sport. Soccer keeps real table points, and no longer prints "0 pts" before a ball has been kicked.',
+    'MLB power ratings were anchored to a hardcoded preseason ranking that still had Baltimore 5th, and that preseason snapshot kept a permanent 50% share of the number no matter how many games had been played — so a 51-55 Baltimore published the 4th-highest power rating in baseball while the standings table beside it showed them 22nd. The preseason prior now retires as real results accumulate, and the rating includes a current-season term. Baltimore moves from 4th to 10th, and the league-wide order now tracks records closely.',
+    'The roster-talent edge stopped disappearing from the expanded view. Any factor below a display threshold was dropped silently, which hid the talent row on 41 of 160 live college-football fixtures and made it look like the model ignored roster quality. It now always states its position — a real number, "level" when the two rosters grade out even, or "no data" when the provider genuinely has no coverage, which are three different things that previously looked identical.',
+    'The in-focus rail has a visible arrow on its own edge to collapse and reopen it, instead of being reachable only through Customize.',
+    'Domestic leagues call it Team of the Season rather than Team of the Tournament. The nav button already did; the page heading did not.',
+    'Each sport now gets refreshes anchored to its own game windows — before the day\'s first start, once mid-slate, and after the last game should have finished — on top of the existing adaptive cadence, so odds, lineups and final scores stop waiting on an arbitrary interval. Anchors only fire on days a sport actually plays, so no extra provider quota is spent on off-days or in the offseason.',
+    'The welcome page leads with real coverage counted from the loaded slate instead of another paragraph of claims, and the development disclosure keeps every word but opens on request.'
+  ]},
   {date:'Build 0728G',tag:'Fix',title:'Verified roster talent is restored during the current provider outage',items:[
     'Seeded the derived model fields for 15 teams from the project\'s already live-verified 2025 CollegeFootballData spot checks, including Michigan State and Toledo. This is an immediate bridge while the account remains rate-limited; it does not copy or publish the provider\'s raw payload.',
     'Michigan State-Toledo now has complete roster-talent coverage: MSU receives the positive talent edge and becomes the narrow model favorite despite Toledo\'s stronger prior-season record. The automatic full-field refresh will replace and expand this bridge when quota is available.'

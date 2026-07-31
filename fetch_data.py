@@ -603,7 +603,7 @@ def build_matches(raw, st):
                     "pld": s.get("pld", 0), "w": s.get("w", 0), "d": s.get("d", 0), "l": s.get("l", 0),
                     "gf": s.get("gf", 0), "ga": s.get("ga", 0), "gd": s.get("gd", 0),
                     "pts": s.get("pts", 0), "form": s.get("form", ""),
-                    "rating": round(power_rating(t.get("name")), 2)}
+                    "rating": round(power_rating(t.get("name"), s), 2)}
 
         out.append({"id": str(m.get("id")),
                     "stage": pretty_group(m.get("group")) or (m.get("stage", "") or "").replace("_", " ").title(),
@@ -1396,21 +1396,85 @@ def elo_strength(name):
     return pts, conf
 
 
-def power_rating(name):
+def elo_games(name):
+    """How many finished results the Elo store has folded in for this team."""
+    rec = _load_elo()["teams"].get(_elo_key(name))
+    return int((rec or {}).get("n", 0) or 0)
+
+
+# The curated preseason file is a snapshot taken before a ball was thrown. It
+# should hand over to real results, not keep a permanent share of the number:
+# ratings_mlb.json still carried a hardcoded preseason order that ranked
+# Baltimore 5th, and the old formula floored the curated term's weight at 50%
+# forever, so a 51-55 Baltimore published the 4th-highest power rating in the
+# league while the standings table beside it showed them 22nd.
+POWER_PRIOR_FADE_GAMES = 40
+# ... and the rating had no current-season term at all. Elo is deliberately
+# deep-history (backfill_history.py seeds ~12 MLB seasons) with no
+# season-boundary regression, so on its own it reads as a multi-season
+# franchise identity rather than "how good is this team right now".
+POWER_SEASON_MAX_WEIGHT = 0.45
+POWER_SEASON_FULL_TRUST_GAMES = 40
+
+
+def _season_form_points(record):
+    """This season's own results, on the same 5.0-is-average scale as Elo.
+
+    Win rate only: it is the one measure every sport in this codebase reports
+    the same way, and the scoring-margin equivalent already reaches the rating
+    through Elo. Returns None before a game has been played, so preseason
+    behaviour is unchanged.
+    """
+    if not record:
+        return None
+    played = int(record.get("pld") or 0)
+    if played < 1:
+        return None
+    wins = float(record.get("w") or 0)
+    draws = float(record.get("d") or 0)
+    win_pct = _clamp((wins + 0.5 * draws) / played, 0.0, 1.0)
+    return 5.0 + (win_pct - 0.5) * 10.0
+
+
+def power_rating(name, record=None):
     """Public-facing power rating for team profiles/standings/watchability.
-    Curated preseason files (FIFA rank/squad value/recruiting talent) only
-    cover a fraction of teams in leagues like NCAAF/NCAAM, and stay frozen
-    at a preseason snapshot for everyone else -- so this blends in the
-    self-updating Elo signal (same source predict() already uses for its
-    own 'elo' factor) as real games accumulate, and carries it alone for
-    teams the curated file has never heard of, instead of a flat neutral
-    default that makes every uncurated team look identical."""
+
+    Three signals, weighted by how much each has actually earned:
+
+      curated preseason prior -- FIFA rank/squad value/recruiting talent.
+        Only covers a fraction of teams in leagues like NCAAF/NCAAM and is
+        frozen at a preseason snapshot, so it carries the rating before any
+        results exist and fades out over POWER_PRIOR_FADE_GAMES.
+      self-training Elo -- the same signal predict() reads for its own 'elo'
+        factor, and the only one available for teams the curated file has
+        never heard of.
+      this season's record -- passed in by the standings builders that
+        already computed it, capped at POWER_SEASON_MAX_WEIGHT so a hot start
+        can't erase everything known about a team.
+    """
     known = bool(_ratings_lookup(name))
     base = rating_boost(name)
     elo_pts, elo_conf = elo_strength(name)
+    season = _season_form_points(record)
+    season_w = 0.0
+    if season is not None:
+        played = int((record or {}).get("pld") or 0)
+        season_w = (POWER_SEASON_MAX_WEIGHT
+                    * min(1.0, played / float(POWER_SEASON_FULL_TRUST_GAMES)))
     if not known:
-        return (5.0 + elo_pts) if elo_conf > 0 else base
-    return base * (1 - elo_conf * 0.5) + (5.0 + elo_pts) * (elo_conf * 0.5)
+        if elo_conf <= 0:
+            # Nothing but the generic default and possibly a record.
+            return season if season is not None else base
+        elo_only = 5.0 + elo_pts
+        return elo_only * (1 - season_w) + season * season_w if season_w else elo_only
+    # Whatever the season term doesn't claim is split between the preseason
+    # prior and Elo, with the prior retiring as results accumulate.
+    prior_share = max(0.0, 1.0 - elo_games(name) / float(POWER_PRIOR_FADE_GAMES))
+    if elo_conf <= 0:
+        prior_share = 1.0
+    prior_w = (1 - season_w) * prior_share
+    elo_w = 1 - season_w - prior_w
+    return base * prior_w + (5.0 + elo_pts) * elo_w + (season or 0.0) * season_w
 
 
 # ---- head-to-head history (self-training, sport-agnostic) ---------------
@@ -3165,7 +3229,7 @@ def build_league_table(st, name_map, code_map, zones=None):
                      "pld": r["pld"], "w": r["w"], "d": r["d"], "l": r["l"],
                      "gf": r["gf"], "ga": r["ga"], "gd": r["gd"], "pts": r["pts"],
                      "form": r.get("form", ""), "pos": None, "_official": r.get("pos"), "qual": "",
-                     "rating": round(power_rating(name_map.get(t, t)), 2)})
+                     "rating": round(power_rating(name_map.get(t, t), r), 2)})
     if not rows:
         return []
     rows.sort(key=lambda x: ((x.get("_official") or 99), -x["pts"], -x["gd"], -x["gf"], x["name"]))
@@ -4797,7 +4861,7 @@ def compute_us_sport_standings(matches):
         model[key] = {"name": r["name"], "code": r.get("code") or "", "pld": played, "w": r["w"], "l": r["l"], "d": r["t"],
                       "gf": r["pf"], "ga": r["pa"], "gd": r["pf"] - r["pa"], "pts": r["w"] * 3 + r["t"],
                       "form": " ".join(res for _, res in r["results"][-5:]), "group": "", "pos": None,
-                      "rating": round(power_rating(r["name"]), 2)}
+                      "rating": round(power_rating(r["name"], {"pld": played, "w": r["w"], "l": r["l"], "d": r["t"]}), 2)}
     ranked = sorted(model.values(), key=lambda rec: (-_pro_standings_pct(rec), -rec["gd"]))
     for i, rec in enumerate(ranked, 1):
         rec["pos"] = i

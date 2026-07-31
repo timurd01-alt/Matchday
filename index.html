@@ -56,12 +56,12 @@
     <div class="welcomeBrand">
       <div class="welcomeEyebrow"><span class="welcomeDot"></span> MATCHDAY ANALYSIS <span class="welcomeBeta">BETA</span></div>
       <img src="logo.png?v=4" class="welcomeLogo" alt="Matchday">
-      <h1 id="welcomeTitle">Explore every matchup before it starts.</h1>
+      <h1 id="welcomeTitle">Explore every matchup <span>before it starts.</span></h1>
       <p class="welcomeLead">Pregame model picks, probability forecasts, matchup analysis, and verified postgame grading.</p>
-      <div class="welcomeDevNote" role="note">
-        <span>Still in development</span>
+      <details class="welcomeDevNote">
+        <summary>Still in development &mdash; what that means for the numbers</summary>
         <p>You&rsquo;re using an early version of Matchday, and a lot of it is still actively being built. The model currently runs on free-tier data access, so some predictions won&rsquo;t be as sharp as they could be yet &mdash; that&rsquo;s a data-access limitation, not a finished product. As we tune what we have and can justify upgrading to better data sources, accuracy should keep improving &mdash; tell us what you find, since real feedback is what shapes which upgrades happen next.</p>
-      </div>
+      </details>
       <div class="welcomeActions">
         <button class="welcomeEnter" type="button" onclick="enterMatchday()">Enter Matchday <span aria-hidden="true">→</span></button>
         <span>Analytics only · no tips · no ads</span>
@@ -71,6 +71,7 @@
     <aside class="welcomePreview" aria-label="Matchday preview">
       <div class="welcomePreviewTop"><span>IN FOCUS</span><span id="welcomeFeedState">PREGAME</span></div>
       <div class="welcomeNext" id="welcomeNext"><div class="welcomeLoading">Loading today’s slate…</div></div>
+      <div class="welcomeStats" id="welcomeStats" aria-live="polite"></div>
       <div class="welcomeProof">
         <div><b>01</b><span>Model vs market</span><small>Probability, not certainty.</small></div>
         <div><b>02</b><span>Locked in public</span><small>Picks never rewritten.</small></div>
@@ -116,6 +117,7 @@
   <main class="content" tabindex="-1"><div id="banner"></div><div id="alertBar" class="alertBar" style="display:none"></div><div class="view" id="view-matches" style="display:grid"><div class="empty">Loading…</div></div><div class="view" id="view-groups"></div><div class="view" id="view-title"></div>
 <div class="view" id="view-advanced"></div><div class="view" id="view-edge"></div><div class="view" id="view-score"></div><div class="view" id="view-bracket"></div><div class="view" id="view-third"></div><div class="view" id="view-news"></div><div class="view" id="view-insights"></div><div class="view" id="view-status"></div><div class="view" id="view-updates"></div><div class="view" id="view-results"></div><div class="view" id="view-tott"></div><div class="view" id="view-community"></div><div class="view" id="view-tree"></div><div class="view" id="view-sandbox"></div><div class="view" id="view-customize"></div></main>
   <aside class="insight" id="insight"></aside>
+  <button class="railToggle" id="railToggle" type="button" onclick="toggleInsightRail()" aria-controls="insight" aria-expanded="true" title="Hide the in-focus rail"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg><span class="srOnly">Hide the in-focus rail</span></button>
 </div>
 <script src="translations.js?v=__BUILD__"></script>
 <script src="app-1-core.js?v=__BUILD__"></script>

@@ -1565,7 +1565,7 @@ body.modalOpen{overflow:hidden}.matchModal{position:fixed;inset:0;z-index:99;dis
 .teamMark{--team-hue:145;flex:0 0 27px;width:27px;height:27px;display:inline-grid;place-items:center;border:1px solid hsla(var(--team-hue),62%,58%,.38);border-radius:9px;background:linear-gradient(145deg,hsla(var(--team-hue),58%,44%,.2),rgba(255,255,255,.025));color:hsl(var(--team-hue),72%,70%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.025);font:800 .55rem/1 var(--mono);letter-spacing:-.03em}.tname{display:flex;align-items:center;gap:8px}.side.away .tname{justify-content:flex-end}.teamNameText{min-width:0;overflow:hidden;text-overflow:ellipsis}.teamMark.away{order:2}
 .fixture{grid-template-columns:minmax(0,1fr) 64px minmax(0,1fr)}.fixture .center{width:64px;min-width:0}.fixture .center>.kick{max-width:64px;text-align:center;white-space:normal;overflow-wrap:anywhere;font-size:.6rem;line-height:1.25}.pendingScore{display:block;color:var(--faint);font-size:1.35rem;line-height:1}.tname{overflow:visible}.teamNameText{flex:1;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;white-space:normal;overflow:hidden;overflow-wrap:anywhere;text-overflow:clip}.side.away .teamNameText{text-align:right}
 .probTrend{display:inline-flex;align-items:center;gap:3px;margin-left:2px;color:var(--faint);font:700 .6rem/1 var(--mono)}.probTrend svg{width:40px;height:17px}.probTrend polyline{fill:none;stroke:currentColor;stroke-width:2;vector-effect:non-scaling-stroke}.probTrend.up{color:var(--win)}.probTrend.down{color:var(--loss)}
-.metricHelp{position:relative;display:inline-grid;place-items:center;width:15px;height:15px;margin-left:3px;border:1px solid var(--line2);border-radius:50%;color:var(--muted);font:800 .55rem/1 var(--mono);text-transform:none;letter-spacing:0;cursor:help;vertical-align:1px;outline:none}.metricHelp:hover,.metricHelp:focus{color:var(--signal);border-color:var(--signal)}.metricHelp::after{content:attr(data-tip);position:absolute;left:50%;bottom:calc(100% + 8px);z-index:80;width:220px;padding:8px 9px;border:1px solid var(--line2);border-radius:9px;background:#090d13;color:var(--text);box-shadow:0 12px 32px rgba(0,0,0,.45);font:500 .68rem/1.45 "Inter",sans-serif;text-transform:none;letter-spacing:0;white-space:normal;pointer-events:none;opacity:0;transform:translate(-50%,4px);transition:.12s}.metricHelp:hover::after,.metricHelp:focus::after{opacity:1;transform:translate(-50%,0)}
+.metricHelp{position:relative;display:inline-grid;place-items:center;width:18px;height:18px;padding:0;margin-left:3px;border:1px solid var(--line2);border-radius:50%;background:transparent;color:var(--muted);font:800 .58rem/1 var(--mono);text-transform:none;letter-spacing:0;cursor:pointer;vertical-align:1px;outline:none;touch-action:manipulation}.metricHelp:hover,.metricHelp:focus-visible,.metricHelp.isOpen{color:var(--signal);border-color:var(--signal)}.metricHelp::after{content:attr(data-tip);position:absolute;left:50%;bottom:calc(100% + 8px);z-index:120;width:220px;padding:8px 9px;border:1px solid var(--line2);border-radius:9px;background:#090d13;color:var(--text);box-shadow:0 12px 32px rgba(0,0,0,.45);font:500 .68rem/1.45 "Inter",sans-serif;text-align:left;text-transform:none;letter-spacing:0;white-space:normal;pointer-events:none;opacity:0;transform:translate(-50%,4px);transition:.12s}.metricHelp:hover::after,.metricHelp:focus-visible::after,.metricHelp.isOpen::after{opacity:1;transform:translate(-50%,0)}
 .profileKpi .metricHelp,.heroRec .metricHelp,.slbl .metricHelp{display:inline-grid;margin:0 0 0 4px;vertical-align:-2px}
 .loadingBoard{grid-column:1/-1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.loadingBoard span{height:150px;border:1px solid var(--line);border-radius:12px;background:linear-gradient(90deg,var(--panel) 20%,var(--panel2) 38%,var(--panel) 56%);background-size:220% 100%;animation:loadingSweep 1.25s ease-in-out infinite}@keyframes loadingSweep{to{background-position:-120% 0}}
 .insightsList{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:11px}.insightCard{display:flex;flex-direction:column;gap:6px;padding:14px 15px;border:1px solid var(--line);border-radius:12px;background:var(--panel);color:var(--text);text-decoration:none}.insightCard:hover{border-color:var(--signal)}.insightCard b{font-family:"Archivo",sans-serif;font-size:.92rem;line-height:1.25}.insightCard span{color:var(--muted);font-size:.82rem;line-height:1.4}.insightCard small{color:var(--faint);font:700 .65rem/1 var(--mono);text-transform:uppercase;letter-spacing:.04em;margin-top:4px}
@@ -1603,7 +1603,7 @@ body.modalOpen{overflow:hidden}.matchModal{position:fixed;inset:0;z-index:99;dis
   .welcomeGate:not([hidden]) .welcomePreview,.welcomeGate:not([hidden]) .welcomeProof>div,.carouselFade{animation:none}
   .welcomeDot,.welcomeEnter::after{animation:none}
 }
-@media(max-width:760px){.legalLink{display:none}.alertCenter{right:8px;top:47px;width:calc(100vw - 16px)}.alertSettings{grid-column:auto}.alertSettingList{grid-template-columns:1fr}.teamMark{width:24px;height:24px;flex-basis:24px;border-radius:8px}.loadingBoard{grid-template-columns:1fr}.metricHelp::after{left:auto;right:-8px;transform:translateY(4px)}.metricHelp:hover::after,.metricHelp:focus::after{transform:none}}
+@media(max-width:760px){.legalLink{display:none}.alertCenter{right:8px;top:47px;width:calc(100vw - 16px)}.alertSettings{grid-column:auto}.alertSettingList{grid-template-columns:1fr}.teamMark{width:24px;height:24px;flex-basis:24px;border-radius:8px}.loadingBoard{grid-template-columns:1fr}.metricHelp{width:28px;height:28px;margin-left:4px;font-size:.68rem}.profileKpi .metricHelp,.heroRec .metricHelp,.slbl .metricHelp{margin-left:4px}.metricHelp::after{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));width:auto;padding:12px 14px;border-radius:12px;font-size:.76rem;line-height:1.45;opacity:0;transform:translateY(8px)}.metricHelp:hover::after,.metricHelp:focus::after{opacity:0;transform:translateY(8px)}.metricHelp.isOpen::after,.metricHelp:focus-visible::after{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){.alertCenter,.matchModal.show .matchSheet,.loadingBoard span{animation:none!important}.alertBell,.metricHelp::after{transition:none!important}}
 
 /* ===== UI clarity pass: shared rhythm, readable navigation, purposeful motion ===== */
@@ -1786,3 +1786,80 @@ html{color-scheme:dark}
 .proTable .gteam{min-width:190px}
 @media(max-width:1050px){.proStandingsGrid{grid-template-columns:1fr}}
 @media(max-width:680px){.proStandingsGrid{grid-template-columns:1fr;gap:10px}.proTable{min-width:620px}}
+
+/* In-focus rail collapse control. The rail could previously only be hidden
+   from Customize, several clicks away from the rail itself, so the arrow lives
+   on the rail's own edge and stays put when collapsed so it can be reopened. */
+.srOnly{position:absolute;width:1px;height:1px;margin:-1px;padding:0;border:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.app{position:relative}
+.railToggle{position:absolute;z-index:14;top:60px;right:340px;display:grid;place-items:center;width:22px;height:44px;padding:0;border:1px solid var(--line2);border-right:0;border-radius:8px 0 0 8px;background:var(--panel2);color:var(--muted);cursor:pointer;transition:color .15s,border-color .15s,background .15s}
+.railToggle:hover,.railToggle:focus-visible{color:var(--signal);border-color:var(--signal);background:var(--panel)}
+.railToggle svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .18s}
+.app.noinsight .railToggle{right:0;border-radius:8px 0 0 8px}
+.app.noinsight .railToggle svg{transform:rotate(180deg)}
+@media(max-width:920px){.railToggle{display:none}}
+@media(prefers-reduced-motion:reduce){.railToggle,.railToggle svg{transition:none}}
+
+/* ===== Welcome front door: more presence, less prose =====================
+   The gate already had staggered entrance motion and floating blobs. What it
+   lacked was a focal point and any sense that real data sits behind it, so:
+   an animated accent on the headline, a lit conic edge and pointer tilt on the
+   preview card, and a live counter row fed by the actual slate. The long
+   development disclosure keeps every word but now opens on demand. */
+.welcomeBrand h1 span{
+  background:linear-gradient(100deg,var(--signal) 8%,var(--home) 38%,#fff 52%,var(--signal) 74%);
+  background-size:280% 100%;
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;color:transparent;
+  animation:welcomeSheen 7s ease-in-out infinite;
+}
+@keyframes welcomeSheen{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+
+/* Lit edge around the preview. A conic gradient on a padded pseudo-element
+   masked to the border box: no extra markup, and it degrades to the existing
+   flat border wherever mask-composite isn't supported. */
+.welcomePreview{position:relative;isolation:isolate;transform-style:preserve-3d;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.welcomePreview::before{
+  content:"";position:absolute;inset:-1px;z-index:-1;border-radius:inherit;padding:1px;
+  background:conic-gradient(from var(--welcome-spin,0deg),transparent 0deg,var(--signal) 42deg,var(--home) 96deg,transparent 150deg,transparent 360deg);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;
+  animation:welcomeSpin 9s linear infinite;opacity:.9;
+}
+.welcomePreview::after{
+  content:"";position:absolute;inset:12% -18% -22% -18%;z-index:-2;pointer-events:none;
+  background:radial-gradient(ellipse at 50% 50%,rgba(58,209,122,.20),transparent 68%);
+  filter:blur(42px);
+}
+@property --welcome-spin{syntax:'<angle>';inherits:false;initial-value:0deg}
+@keyframes welcomeSpin{to{--welcome-spin:360deg}}
+
+/* Live counters. Values are written by renderWelcomeStats() from the loaded
+   slate, so this is real coverage, not decoration with numbers on it. */
+.welcomeStats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0 0 18px}
+.welcomeStats>div{padding:11px 10px;border:1px solid var(--line);border-radius:11px;background:rgba(255,255,255,.022);text-align:center}
+.welcomeStats b{display:block;font-family:"Archivo",sans-serif;font-size:1.34rem;line-height:1;letter-spacing:-.03em;color:var(--text);font-variant-numeric:tabular-nums}
+.welcomeStats span{display:block;margin-top:5px;font-family:var(--mono);font-size:.53rem;letter-spacing:.11em;text-transform:uppercase;color:var(--faint);font-weight:700}
+.welcomeStats:empty{display:none}
+
+/* Development disclosure: same text, opened on request. */
+.welcomeDevNote{max-width:570px;margin-top:22px;padding:12px 15px;border:1px solid rgba(58,209,122,.24);border-left:3px solid var(--signal);border-radius:10px;background:rgba(58,209,122,.055)}
+.welcomeDevNote summary{cursor:pointer;color:var(--signal);font-family:var(--mono);font-size:.6rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;list-style:none}
+.welcomeDevNote summary::-webkit-details-marker{display:none}
+.welcomeDevNote summary::after{content:" +";font-size:.72rem}
+.welcomeDevNote[open] summary::after{content:" \2212"}
+.welcomeDevNote summary:focus-visible{outline:2px solid var(--signal);outline-offset:3px;border-radius:4px}
+.welcomeDevNote[open] p{margin:9px 0 0}
+
+@media(max-width:760px){
+  .welcomeStats{gap:6px;margin-bottom:14px}
+  .welcomeStats>div{padding:9px 6px}
+  .welcomeStats b{font-size:1.1rem}
+  .welcomePreview::after{inset:20% -10% -14% -10%}
+}
+@media(prefers-reduced-motion:reduce){
+  .welcomeBrand h1 span{animation:none;background-position:0 50%}
+  .welcomePreview{transition:none}
+  .welcomePreview::before{animation:none}
+}

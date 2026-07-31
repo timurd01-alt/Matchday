@@ -6,6 +6,60 @@ ROOT = Path(__file__).resolve().parent
 
 
 class AnalysisModeTests(unittest.TestCase):
+    def test_mobile_metric_help_is_tap_safe_and_stays_onscreen(self):
+        core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
+        css = (ROOT / "styles.css").read_text(encoding="utf-8")
+        self.assertIn('<button type="button" class="metricHelp"', core)
+        self.assertIn("aria-expanded=\"false\"", core)
+        self.assertIn("function closeMetricHelps(except)", core)
+        self.assertIn("event.stopImmediatePropagation()", core)
+        self.assertIn(".metricHelp.isOpen::after", css)
+        self.assertIn("position:fixed;left:12px;right:12px", css)
+        self.assertIn("width:28px;height:28px", css)
+
+    def test_sports_without_table_points_show_a_record_instead(self):
+        """No US sport awards standings points; "pts" there was wins x 3."""
+        core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
+        cards = (ROOT / "app-4-features.js").read_text(encoding="utf-8")
+        panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
+        self.assertIn("function teamStandingsMeta(team,comp,opts)", core)
+        self.assertIn("const TABLE_POINTS_COMPS=new Set(", core)
+        # Soccer keeps real table points, and only once a game has been played.
+        self.assertIn("Number.isFinite(pts)&&Number(team?.pld)", core)
+        # None of the three surfaces may hardcode a pts figure any more.
+        for name, source in (("app-4-features.js", cards), ("app-3-panels.js", panels)):
+            self.assertNotIn("pts??0} pts", source, f"{name} still prints a fabricated pts value")
+        self.assertIn("teamStandingsMeta(m.home,m._comp)", cards)
+        self.assertIn("teamStandingsMeta(m.away,m._comp)", cards)
+        self.assertIn("teamStandingsMeta(t,m._comp,{form:true})", cards)
+        self.assertIn("teamStandingsMeta(team,comp,{diff:true,form:true})", panels)
+
+    def test_talent_edge_row_is_never_silently_dropped(self):
+        panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
+        self.assertIn("const classListed=", panels)
+        self.assertIn("if(!classListed){", panels)
+        # "level" and "no data" are different claims and must stay distinct.
+        self.assertIn("covered?'level':'no data'", panels)
+
+    def test_insight_rail_has_a_visible_collapse_control(self):
+        markup = (ROOT / "index.html").read_text(encoding="utf-8")
+        core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
+        css = (ROOT / "styles.css").read_text(encoding="utf-8")
+        self.assertIn('id="railToggle"', markup)
+        self.assertIn('aria-controls="insight"', markup)
+        self.assertIn("function toggleInsightRail()", core)
+        self.assertIn("function syncRailToggle()", core)
+        # Must stay reachable once collapsed, or the rail can't be reopened.
+        self.assertIn(".app.noinsight .railToggle{right:0", css)
+
+    def test_leagues_say_team_of_the_season(self):
+        core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
+        views = (ROOT / "app-2-views.js").read_text(encoding="utf-8")
+        self.assertIn("function tottTitle()", core)
+        self.assertIn("'Team of the Season'", core)
+        self.assertNotIn('<div class="vhead">Team of the Tournament</div>', views)
+        self.assertIn("${esc(tottTitle())}", views)
+
     def test_match_profile_separates_standings_position_from_rank(self):
         source = (ROOT / "app-4-features.js").read_text(encoding="utf-8")
         self.assertIn("return 'Table position'", source)

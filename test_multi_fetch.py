@@ -1,3 +1,4 @@
+import datetime
 import json
 import os
 import tempfile
@@ -114,3 +115,123 @@ class RateLimitFallbackTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class AnchoredWindowTests(unittest.TestCase):
+    """Per-sport anchored refresh windows (see multi_fetch.ANCHOR_HOURS)."""
+
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.cwd = os.getcwd()
+        os.chdir(self.temp.name)
+        self.addCleanup(os.chdir, self.cwd)
+
+    def _schedule(self, key, kickoffs):
+        Path(f"data_{key}.json").write_text(json.dumps(
+            {"matches": [{"kickoff": k} for k in kickoffs]}), encoding="utf-8")
+
+    def _at(self, iso):
+        return datetime.datetime.fromisoformat(iso)
+
+    def _eastern(self):
+        """Pin the zone so these assertions hold with or without a tz database.
+
+        zoneinfo raises on a bare Windows install with no tzdata package, and
+        _zone_for() deliberately degrades to UTC there (see its comment), so
+        asserting real Eastern-time behaviour has to state the offset rather
+        than depend on the host. CI runs on Linux, where the real zone loads.
+        """
+        return mock.patch.object(multi_fetch, "_zone_for",
+                                 return_value=datetime.timezone(datetime.timedelta(hours=-4)))
+
+    def test_pregame_anchor_fires_on_a_game_day(self):
+        # NCAAF anchors at 10:00 ET; 14:17 UTC is 10:17 EDT, inside the grace
+        # window, on a day with a scheduled kickoff.
+        self._schedule("ncaaf", ["2026-09-05T16:00:00Z"])
+        with self._eastern():
+            self.assertEqual(
+                multi_fetch._anchor_due("ncaaf", None, self._at("2026-09-05T14:17:00+00:00")),
+                "2026-09-05:10:00")
+
+    def test_anchor_is_not_served_twice(self):
+        self._schedule("ncaaf", ["2026-09-05T16:00:00Z"])
+        with self._eastern():
+            self.assertIsNone(multi_fetch._anchor_due(
+                "ncaaf", "2026-09-05:10:00", self._at("2026-09-05T14:17:00+00:00")))
+
+    def test_no_anchor_without_a_game_that_day(self):
+        # Same clock time, but the only kickoff is a week away: an off-day
+        # sport must not spend quota on anchored refreshes.
+        self._schedule("ncaaf", ["2026-09-12T16:00:00Z"])
+        with self._eastern():
+            self.assertIsNone(multi_fetch._anchor_due(
+                "ncaaf", None, self._at("2026-09-05T14:17:00+00:00")))
+
+    def test_no_anchor_outside_the_grace_window(self):
+        self._schedule("ncaaf", ["2026-09-05T16:00:00Z"])
+        # 12:30 ET is 2.5h past the 10:00 anchor and still short of the 15:00
+        # one, so no window is claimable.
+        with self._eastern():
+            self.assertIsNone(multi_fetch._anchor_due(
+                "ncaaf", None, self._at("2026-09-05T16:30:00+00:00")))
+
+    def test_small_hours_anchor_closes_out_the_previous_game_day(self):
+        # MLB's 02:00 ET anchor grades West Coast finals from the day before,
+        # so it must match against that game day, not the calendar date it
+        # fires on.
+        self._schedule("mlb", ["2026-07-29T23:10:00Z"])
+        with self._eastern():
+            self.assertEqual(
+                multi_fetch._anchor_due("mlb", None, self._at("2026-07-30T06:10:00+00:00")),
+                "2026-07-29:02:00")
+
+    def test_zone_lookup_never_raises_without_a_tz_database(self):
+        with mock.patch.dict("sys.modules", {"zoneinfo": None}):
+            self.assertEqual(multi_fetch._zone_for("mlb"), datetime.timezone.utc)
+
+    def test_anchor_forces_a_sport_that_is_not_otherwise_due(self):
+        self._schedule("ncaaf", ["2026-09-05T16:00:00Z"])
+        state = Path("state.json")
+        state.write_text(json.dumps({"ncaaf": 9e9}), encoding="utf-8")  # fetched "just now"
+        runner = mock.Mock(return_value=True)
+        with mock.patch.object(multi_fetch, "SPORTS", [("ncaaf", "--ncaaf")]), \
+             mock.patch.object(multi_fetch, "FORCE_REFETCH_ONCE", set()), \
+             mock.patch.object(multi_fetch, "_run_one", runner), \
+             mock.patch.object(multi_fetch, "_anchor_due", return_value="2026-09-05:10:00"), \
+             mock.patch("generate_posts.regenerate_sitemap", return_value=0):
+            multi_fetch.run_once(str(state))
+        self.assertEqual(runner.call_count, 1)
+        written = json.loads(state.read_text(encoding="utf-8"))
+        self.assertEqual(written["_anchors"], {"ncaaf": "2026-09-05:10:00"})
+
+    def test_failed_refresh_leaves_the_anchor_claimable(self):
+        self._schedule("ncaaf", ["2026-09-05T16:00:00Z"])
+        state = Path("state.json")
+        runner = mock.Mock(return_value=False)
+        with mock.patch.object(multi_fetch, "SPORTS", [("ncaaf", "--ncaaf")]), \
+             mock.patch.object(multi_fetch, "ONCE_RETRY_DELAY", 0), \
+             mock.patch.object(multi_fetch, "FORCE_REFETCH_ONCE", set()), \
+             mock.patch.object(multi_fetch, "_run_one", runner), \
+             mock.patch.object(multi_fetch, "_anchor_due", return_value="2026-09-05:10:00"), \
+             mock.patch("generate_posts.regenerate_sitemap", return_value=0):
+            with self.assertRaises(RuntimeError):
+                multi_fetch.run_once(str(state))
+        self.assertNotIn("_anchors", json.loads(state.read_text(encoding="utf-8")))
+
+    def test_legacy_state_file_without_anchors_still_loads(self):
+        self._schedule("mlb", [])
+        state = Path("state.json")
+        state.write_text(json.dumps({"mlb": 1.0}), encoding="utf-8")
+        runner = mock.Mock(return_value=True)
+        with mock.patch.object(multi_fetch, "SPORTS", [("mlb", "--mlb")]), \
+             mock.patch.object(multi_fetch, "FORCE_REFETCH_ONCE", set()), \
+             mock.patch.object(multi_fetch, "_run_one", runner), \
+             mock.patch("generate_posts.regenerate_sitemap", return_value=0):
+            multi_fetch.run_once(str(state))
+        self.assertGreater(json.loads(state.read_text(encoding="utf-8"))["mlb"], 1.0)
+
+    def test_every_scheduled_sport_has_anchor_hours(self):
+        for key, _ in multi_fetch.SPORTS:
+            self.assertIn(key, multi_fetch.ANCHOR_HOURS, f"{key} has no anchored windows")
+            self.assertIn(key, multi_fetch.SPORT_ZONE, f"{key} has no schedule zone")
