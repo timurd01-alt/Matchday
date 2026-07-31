@@ -9,6 +9,8 @@
     "https://gamma-api.polymarket.com/*",
     "https://clob.polymarket.com/*",
     "wss://ws-subscriptions-clob.polymarket.com/*",
+    "https://trading-api.kalshi.com/*",
+    "https://api.the-odds-api.com/*",
     "https://matchdayterminal.com/*"
   ],
   "background": {

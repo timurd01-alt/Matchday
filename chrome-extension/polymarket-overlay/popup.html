@@ -3,16 +3,28 @@
 <head>
 <meta charset="utf-8">
 <style>
-  body { width: 260px; font: 13px/1.5 -apple-system, Segoe UI, Roboto, sans-serif; padding: 10px; }
+  body { width: 280px; font: 13px/1.5 -apple-system, Segoe UI, Roboto, sans-serif; padding: 10px; }
   label { display: block; margin-bottom: 4px; color: #444; }
-  input { width: 100%; box-sizing: border-box; padding: 5px; margin-bottom: 8px; }
+  input { width: 100%; box-sizing: border-box; padding: 5px; margin-bottom: 10px; }
   button { width: 100%; padding: 6px; }
   #status { font-size: 11px; color: #666; margin-top: 6px; }
+  .hint { font-size: 10.5px; color: #888; margin: -6px 0 10px; }
 </style>
 </head>
 <body>
   <label for="origin">Matchday data origin</label>
   <input id="origin" placeholder="https://matchdayterminal.com">
+
+  <label for="oddsApiKey">Odds API key (your own, not Matchday's)</label>
+  <input id="oddsApiKey" placeholder="from the-odds-api.com">
+  <div class="hint">Bookmaker consensus is skipped without this.</div>
+
+  <label for="oddsApiRegion">Odds API region</label>
+  <input id="oddsApiRegion" placeholder="eu">
+
+  <label for="kalshiApiKey">Kalshi API key (optional)</label>
+  <input id="kalshiApiKey" placeholder="only if market listing needs auth">
+
   <button id="save">Save</button>
   <div id="status"></div>
   <script src="popup.js"></script>
