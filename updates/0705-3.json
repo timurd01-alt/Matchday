@@ -1,0 +1,9 @@
+{
+ "rank": 6,
+ "date": "Build 0705",
+ "tag": "App",
+ "title": "Multi-sport groundwork and cleanup",
+ "items": [
+  "Sport menu (WC, UCL, NFL, NBA), compact cards with a Customize toggle, live-match glow, data-status badge, analyst read, 29 duplicate functions removed, keys scrubbed, analytics-only disclaimers."
+ ]
+}

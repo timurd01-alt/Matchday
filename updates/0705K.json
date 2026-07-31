@@ -1,0 +1,10 @@
+{
+ "rank": 14,
+ "date": "Build 0705K",
+ "tag": "UI",
+ "title": "Cleaner past matches",
+ "items": [
+  "Completed matches now sit in their own separated, dimmed section below live and upcoming — no more flooding the fixtures board.",
+  "Sorted newest-first, with a divider and a count."
+ ]
+}

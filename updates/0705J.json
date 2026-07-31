@@ -1,0 +1,11 @@
+{
+ "rank": 13,
+ "date": "Build 0705J",
+ "tag": "New",
+ "title": "Community — Beat the Model",
+ "items": [
+  "New Community tab: lock your own pick before kickoff and get graded against the model and the market.",
+  "Tracks your record, current streak, times you beat the model, and earns badges.",
+  "Runs locally for now; built to connect to a shared leaderboard next."
+ ]
+}

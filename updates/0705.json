@@ -1,0 +1,12 @@
+{
+ "rank": 8,
+ "date": "Build 0705",
+ "tag": "Model",
+ "title": "Transparent scorecard and smarter model",
+ "items": [
+  "Scorecard: picks lock before kickoff, grade at full time, never rewritten.",
+  "Closing line value, Brier score and calibration bands.",
+  "Value signals graded in parallel without overriding the pick.",
+  "Ten-factor model with receipts on every pick."
+ ]
+}

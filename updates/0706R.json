@@ -1,0 +1,11 @@
+{
+ "rank": 47,
+ "date": "Build 0706R",
+ "tag": "Security",
+ "title": "Security layer for non-coders",
+ "items": [
+  "New one-click security check (check_security.bat): scans everything and tells you in plain English whether it is safe to share or publish — and exactly how to fix anything it finds.",
+  "Plain-English SECURITY.md explains the real risks and the one habit that matters (keys only ever go in config_keys.py).",
+  "Error messages now mask API keys even when they appear inside request headers, so no screenshot can leak them."
+ ]
+}

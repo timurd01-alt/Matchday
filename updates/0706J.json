@@ -1,0 +1,13 @@
+{
+ "rank": 39,
+ "date": "Build 0706J",
+ "tag": "New",
+ "title": "NFL support",
+ "items": [
+  "Real NFL standings: AFC/NFC division tables with records, point differential and current playoff seeds (top 7 per conference tagged).",
+  "The model now feeds on real NFL data — wins, point differential and streaks map onto its inputs, predictions run two-way (no draws).",
+  "Fixture window widened to show the past week and next month of games.",
+  "New Standings tab in the US-sports menu; ratings_nfl.json seeds a 32-team power ranking (estimates, refine in season).",
+  "Super Bowl odds already flow through the existing title-odds pipeline."
+ ]
+}

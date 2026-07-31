@@ -1,0 +1,10 @@
+{
+ "rank": 102,
+ "date": "Build 0725H",
+ "tag": "New",
+ "title": "A visible calibration notice, and one title forecast covering every sport at once",
+ "items": [
+  "The Forecast board now leads with a plain notice that the model is still being calibrated and these numbers are a testing ground, not a finished read -- shown everywhere the forecast is, not buried in a footnote.",
+  "The \"All sports\" view's Forecast board now shows a single list with every sport's current title favorite side by side, instead of only ever showing whichever one sport happened to load first. Empty until the market-odds quota resets and championship-odds data starts flowing again for each sport -- this only reads real per-sport data, it never guesses."
+ ]
+}

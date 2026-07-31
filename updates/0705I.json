@@ -1,0 +1,11 @@
+{
+ "rank": 12,
+ "date": "Build 0705I",
+ "tag": "i18n",
+ "title": "Interface translations + box-score probe",
+ "items": [
+  "Interface now available in Spanish, French, German, Portuguese and Russian — pick it under Customize > Language.",
+  "Match data stays in source language; the app chrome translates.",
+  "Added an ESPN payload probe to diagnostics to pin down why box scores are not attaching."
+ ]
+}

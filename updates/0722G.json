@@ -1,0 +1,11 @@
+{
+ "rank": 68,
+ "date": "Build 0722G",
+ "tag": "Fix",
+ "title": "News layout, clickable top bar, and a market-outage notice",
+ "items": [
+  "The News tab now flows into a multi-column grid on wider screens instead of one full-width column stacked like a phone.",
+  "The live score and \"Next\" fixture in the top bar are now clickable — tap them to jump straight to the expanded match view.",
+  "When our monthly betting-market data quota runs out, a clear banner now explains that market comparisons are paused (model predictions keep working) instead of markets silently vanishing."
+ ]
+}

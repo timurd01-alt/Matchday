@@ -1,0 +1,9 @@
+{
+ "rank": 78,
+ "date": "Build 0724J",
+ "tag": "Fix",
+ "title": "Team of the Tournament — fixed for good this time",
+ "items": [
+  "Defenders and keepers were meant to stay hidden until Matchday has a real lineup data source, but stale entries left over from before ESPN lineups were removed kept silently reappearing anyway — a fix from July 20 addressed the symptom, not the cause. Now structurally gated off regardless of what the old data file contains, verified live against the actual stale file."
+ ]
+}

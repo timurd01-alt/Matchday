@@ -1,0 +1,10 @@
+{
+ "rank": 87,
+ "date": "Build 0724S",
+ "tag": "Fix",
+ "title": "Draws no longer show up for sports that can't have them",
+ "items": [
+  "College football (and every other two-way sport — NFL, NCAAM, NBA, MLB, NHL) showed a \"Draw\" tile and draw-pressure language in the match modal's probability check, plus a 0% draw bar in the Model dashboard's row list, even though those sports can't end level. Both are now hidden for two-way sports instead of always rendering a meaningless 0%.",
+  "Team records everywhere — the model-read match profile card and the Standings/Conferences table's D column — showed a literal 0 draws for these same sports. Records now read as W-L for two-way sports and W-D-L only where a draw is actually possible (soccer)."
+ ]
+}

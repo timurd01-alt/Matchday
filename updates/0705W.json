@@ -1,0 +1,11 @@
+{
+ "rank": 26,
+ "date": "Build 0705W",
+ "tag": "Fix",
+ "title": "Penalty shootouts handled correctly",
+ "items": [
+  "Knockout games decided on penalties now show the regulation scoreline (e.g. 1-1) with the shootout result noted separately, instead of counting penalties as goals.",
+  "The winner — and pick grading — now resolves via the shootout, not by adding penalty kicks to the score.",
+  "Standings and goal difference no longer inflated by shootout tallies."
+ ]
+}

@@ -1,0 +1,11 @@
+{
+ "rank": 57,
+ "date": "Build 0720B",
+ "tag": "Model",
+ "title": "Self-training Elo, head-to-head history, and recency-weighted form",
+ "items": [
+  "A dynamic Elo rating now updates after every result and factors into every pick, alongside a real per-matchup head-to-head record — both start neutral and get more accurate the longer the site runs.",
+  "Recent form now weights the last few games more than older ones, and home/away form are tracked separately instead of blended.",
+  "Closed a gap where an underdog pick could flip with no market data to check it against — that now requires real evidence, not just the model's own math."
+ ]
+}

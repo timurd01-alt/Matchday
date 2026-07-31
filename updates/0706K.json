@@ -1,0 +1,13 @@
+{
+ "rank": 40,
+ "date": "Build 0706K",
+ "tag": "New",
+ "title": "College Football structure",
+ "items": [
+  "Rankings are the spine: the app pulls the CFP rankings (AP Top 25 until they exist) and shows them as the lead table, with the top 12 tagged as projected playoff seeds.",
+  "Rankings self-feed the model: ratings_ncaaf.json is rewritten from the live poll on every fetch — the model always rates teams by their current rank.",
+  "Projected 12-team CFP bracket (straight seeding: 1-4 byes, 5v12, 6v11, 7v10, 8v9) renders in the new CFP Bracket tab until the real playoff exists.",
+  "Conference standings via the same ESPN pipeline as the NFL.",
+  "Season starts late August — the structure is ready first."
+ ]
+}

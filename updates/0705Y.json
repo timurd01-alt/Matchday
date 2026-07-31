@@ -1,0 +1,11 @@
+{
+ "rank": 28,
+ "date": "Build 0705Y",
+ "tag": "Fix",
+ "title": "Team of the Tournament repaired",
+ "items": [
+  "Players are now grouped by their REAL positions from the data — no more strikers relabeled as goalkeepers or defenders to fill a formation.",
+  "Lines without scoring players (like goalkeepers) are honestly omitted instead of faked.",
+  "Restored the missing pitch styling — the tab renders as a proper visual pitch again, not plain text."
+ ]
+}

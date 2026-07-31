@@ -1,0 +1,10 @@
+{
+ "rank": 89,
+ "date": "Build 0724U",
+ "tag": "Fix",
+ "title": "American sports were dressed up in soccer terminology",
+ "items": [
+  "NFL/NBA/NCAAF standings borrowed soccer's \"Groups\" screen wholesale: a blank group header next to a \"Top 2 · 3rd\" qualification subtitle that means nothing outside a World Cup-style group stage, green \"qualified\" row highlighting applied to plain win-loss rankings, and columns literally labeled GF/GA (goals) and Pts. These sports now get their own \"Standings\" heading, real conference names where available (or \"Full table\" when the source has none), no qualification highlighting, sport-correct column labels (PF/PA for football and basketball, RF/RA for baseball, GF/GA stays for hockey), and Win% instead of a synthetic points figure nobody actually ranks these leagues by.",
+  "The same soccer-vs-American mismatch showed up in the team profile card (\"Goal/point diff\", a flat \"Points\" tile) and in match-read totals language (\"points\" for every two-way sport including baseball and hockey). Both now use the sport's real term: goals for hockey and soccer, runs for baseball, points for football/basketball."
+ ]
+}

@@ -1,0 +1,11 @@
+{
+ "rank": 32,
+ "date": "Build 0706C",
+ "tag": "App",
+ "title": "Architecture + security hardening",
+ "items": [
+  "The app is now modular: styles.css plus four JS modules instead of one 233KB file — split losslessly (verified byte-identical) so behavior is unchanged, but future edits get far safer.",
+  "Removed live API keys that were embedded as fallbacks in the fetcher — shipped copies no longer contain credentials.",
+  "Added ROTATE_KEYS.md (step-by-step key rotation) and a .gitignore protecting keys and personal data in any future repo."
+ ]
+}

@@ -1,0 +1,10 @@
+{
+ "rank": 80,
+ "date": "Build 0724L",
+ "tag": "UI",
+ "title": "A livelier welcome screen",
+ "items": [
+  "Two soft, slowly drifting color blobs behind the welcome screen instead of a static gradient, the headline and preview card now reveal in sequence rather than all at once, and the \"Enter Matchday\" button gets a periodic light sweep to draw the eye.",
+  "All of it — the drift, the staggered reveal, the sweep, and the earlier featured-match rotation — turns off automatically for anyone with reduced-motion enabled at the OS level."
+ ]
+}

@@ -1,0 +1,10 @@
+{
+ "rank": 62,
+ "date": "Build 0722A",
+ "tag": "Fix",
+ "title": "Sidebar glitch + model-read detail",
+ "items": [
+  "Fixed a sidebar flicker during normal use (nav labels were flashing in clipped on hover).",
+  "The Elo and head-to-head factors added recently now actually appear in the \"Main drivers\" list, and the market-comparison cells show class/Elo edges instead of blank dashes when no market line exists yet."
+ ]
+}

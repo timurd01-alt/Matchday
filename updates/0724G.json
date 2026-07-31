@@ -1,0 +1,10 @@
+{
+ "rank": 75,
+ "date": "Build 0724G",
+ "tag": "Fix",
+ "title": "Team-class ratings were silently zeroed for most club soccer, and dead for NCAAF/NCAAM",
+ "items": [
+  "Ratings files hand-written with short club names (\"Arsenal\") never matched official live fixture names (\"Arsenal FC\"), silently zeroing the class factor for most matches across every club competition — fixed with a suffix-tolerant lookup.",
+  "NCAAF and NCAAM class ratings were completely dead — leftover from the deleted ESPN code, keyed by mascot names that never matched real school names. Both sports now build class ratings live from championship odds instead, the same honest mechanism NFL/NBA/NHL already used, and NCAAM gets a live poll-rank factor for the first time."
+ ]
+}

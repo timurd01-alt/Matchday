@@ -1,0 +1,9 @@
+{
+ "rank": 113,
+ "date": "Build 0730A",
+ "tag": "Fix",
+ "title": "Watch-only underdogs read differently from official upset picks again",
+ "items": [
+  "A scorecard tag that should say \"underdog risk\" had drifted to \"upset risk\", leaving the watch-only line one mid-string word away from the \"upset pick\" line it exists to contrast with. Both now read distinctly at a glance, matching how the match view already separates watch only from an active pick."
+ ]
+}

@@ -1,0 +1,10 @@
+{
+ "rank": 77,
+ "date": "Build 0724I",
+ "tag": "New",
+ "title": "NCAAF/NCAAM class ratings now cover the whole field",
+ "items": [
+  "Team class was previously only reachable for the handful of teams with championship futures odds, which for college sports is a tiny slice of the field. It now also pulls from CFBD/CBBD's own recruiting-talent data — the same licensed account already used for schedules — covering 130-150+ teams instead of a dozen. Live-verified: NCAAF class went from 0 populated matches to 153 of 160; NCAAM from 0 to 39 of 40.",
+  "Live market data still refines the number for whichever teams do have real championship odds; recruiting/talent is the broad baseline underneath it."
+ ]
+}

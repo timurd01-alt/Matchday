@@ -1,0 +1,12 @@
+{
+ "rank": 42,
+ "date": "Build 0706M",
+ "tag": "New",
+ "title": "Top 5 leagues — Premier League, La Liga, Serie A, Bundesliga, Ligue 1",
+ "items": [
+  "All five domestic leagues added end-to-end: fixtures and tables from football-data, odds and model picks, per-league scorecards, and Team of the Season from the player database.",
+  "League tables carry real qualification zones: Champions League places, Europa League, and relegation (two-team zones for Germany and France where a playoff decides the third).",
+  "Each league gets its own sidebar profile, ratings file (big-club values verified, others estimated), data file and one-click fetcher.",
+  "Seasons start mid-August — ready before kickoff, same as everything else."
+ ]
+}

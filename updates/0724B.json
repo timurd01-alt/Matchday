@@ -1,0 +1,9 @@
+{
+ "rank": 70,
+ "date": "Build 0724B",
+ "tag": "Data",
+ "title": "Removed ESPN's unlicensed site feeds",
+ "items": [
+  "Deleted the dormant ESPN scoreboard/summary/rankings/standings/leaders code paths and the standalone backfill script that used them — Matchday has no licensed ESPN developer feed. ESPN headline links in News are unaffected."
+ ]
+}

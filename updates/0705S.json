@@ -1,0 +1,11 @@
+{
+ "rank": 22,
+ "date": "Build 0705S",
+ "tag": "New",
+ "title": "Watchlist, alerts & Team of the Tournament",
+ "items": [
+  "Star any team to add it to your Watchlist; an alert bar surfaces kickoffs, live scores and live upset flags for followed teams.",
+  "Live upset alerts appear for any match the model flags, watched or not.",
+  "New Team of the Tournament tab: a model-built XI ranked by goals, assists and team strength (honest impact ranking, not per-player match ratings)."
+ ]
+}

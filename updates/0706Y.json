@@ -1,0 +1,10 @@
+{
+ "rank": 52,
+ "date": "Build 0706Y",
+ "tag": "Fix",
+ "title": "Record grading corrected + easy refresh",
+ "items": [
+  "Confirmed fix: the model record now correctly reads 12/17 — penalty-affected games like Argentina v Switzerland grade as HITs. The app self-heals old mis-gradings on every fetch.",
+  "Added a small refresh button on the scorecard so new results show instantly without restarting (the app also auto-refreshes every 60 seconds)."
+ ]
+}

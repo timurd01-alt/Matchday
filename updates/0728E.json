@@ -1,0 +1,10 @@
+{
+ "rank": 110,
+ "date": "Build 0728E",
+ "tag": "Fix",
+ "title": "Outcome Tree is now a compact five-event builder",
+ "items": [
+  "Replaced the endlessly scrolling fixture list with a two-step selection menu: choose a game, choose its exact outcome, then add it to the scenario. A scenario is capped at five events so it stays readable on desktop and mobile.",
+  "The visualization now uses neutral branches: X is the selected exact outcome and Y is any other result. Real team names remain in the selection list where they are needed, but no longer clutter the outcome tree itself."
+ ]
+}

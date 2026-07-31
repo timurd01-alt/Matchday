@@ -1,0 +1,12 @@
+{
+ "rank": 50,
+ "date": "Build 0706V",
+ "tag": "Fix",
+ "title": "Corrupted gradings repaired — record was understated",
+ "items": [
+  "Found and fixed a grading bug: some finished games were wrongly stored as draws (a 2-0 counted as a draw), which counted correct picks as misses.",
+  "Added a consistency guard so a non-level scoreline can never be graded as a draw again.",
+  "New repair_picks.py corrects the historical mistakes in your saved record — run it once. Your model record was being understated (true record is higher).",
+  "Your locked PICKS never changed — only the win/loss grading was wrong, and is now correct."
+ ]
+}

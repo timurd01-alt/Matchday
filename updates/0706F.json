@@ -1,0 +1,12 @@
+{
+ "rank": 35,
+ "date": "Build 0706F",
+ "tag": "New",
+ "title": "All Sports home + sidebar fix",
+ "items": [
+  "The sport menu now starts on \"All sports\": a merged home feed showing every sport's fixtures and results together, each card tagged with its competition.",
+  "Picking a sport filters everything down to that sport, with its own tailored sidebar.",
+  "Fixed a scoping bug that could stop the sidebar adapting on switch.",
+  "Status tab now shows the active menu profile — if the sidebar ever looks wrong, Status tells you what the app thinks it should be showing."
+ ]
+}

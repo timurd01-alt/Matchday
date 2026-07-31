@@ -1,0 +1,10 @@
+{
+ "rank": 64,
+ "date": "Build 0722C",
+ "tag": "New",
+ "title": "Pick streak + Weekly awards",
+ "items": [
+  "A flame streak counter now rides in the top bar once you string together 2+ correct Beat-the-Model picks.",
+  "The Community tab shows weekly awards — biggest upset, the model's best call and biggest miss, and the closest game — drawn from the last 7 days of real results."
+ ]
+}

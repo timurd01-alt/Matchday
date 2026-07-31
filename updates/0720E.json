@@ -1,0 +1,9 @@
+{
+ "rank": 60,
+ "date": "Build 0720E",
+ "tag": "Fix",
+ "title": "NFL and NBA back on real, current-season data",
+ "items": [
+  "Both had drifted onto a provider whose free tier is hard-capped at the 2022-2024 seasons — reverted to a provider with real 2026 schedules and derive standings ourselves from finished results, since it has no standings endpoint."
+ ]
+}

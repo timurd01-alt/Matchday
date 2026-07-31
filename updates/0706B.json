@@ -1,0 +1,10 @@
+{
+ "rank": 31,
+ "date": "Build 0706B",
+ "tag": "Model",
+ "title": "Ratings toolchain",
+ "items": [
+  "New update_ratings.py: merge fresh FIFA rankings from a downloaded CSV, set any value by hand, or print the table — one command each, with automatic backup.",
+  "Per-competition ratings files supported: ratings_ucl.json (etc.) load automatically when running other competitions, falling back to the shared file."
+ ]
+}

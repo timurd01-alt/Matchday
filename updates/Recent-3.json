@@ -1,0 +1,11 @@
+{
+ "rank": 2,
+ "date": "Recent",
+ "tag": "UI",
+ "title": "Bracket, thirds, and live-strip polish",
+ "items": [
+  "Bracket was redesigned into a smaller two-sided tournament view.",
+  "Third-place tracker was changed into a top-to-bottom ranking table.",
+  "Top strip text spacing and past-match hiding were cleaned up."
+ ]
+}

@@ -1,0 +1,11 @@
+{
+ "rank": 53,
+ "date": "Build 0706Z",
+ "tag": "Model",
+ "title": "Market-implied team strength for US sports",
+ "items": [
+  "US sports (NFL, NBA, MLB, NHL, College Football) had no squad-value equivalent because salary caps make roster prices meaningless. They now derive team strength from championship odds — the market's own valuation of each team.",
+  "This is the honest equivalent of soccer squad values, sourced live from the odds already fetched, replacing rough rank estimates.",
+  "Still market-anchored, not yet per-sport calibrated — that needs a full season of results, which the pick log is now collecting."
+ ]
+}

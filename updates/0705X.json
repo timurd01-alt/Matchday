@@ -1,0 +1,10 @@
+{
+ "rank": 27,
+ "date": "Build 0705X",
+ "tag": "UI",
+ "title": "Community tab depth",
+ "items": [
+  "Added a head-to-head insight bar: how often your picks matched the model, how you did when you went your own way, and your net record against it.",
+  "Warmer empty state that invites you to try out-reading the model."
+ ]
+}

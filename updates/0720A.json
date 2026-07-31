@@ -1,0 +1,12 @@
+{
+ "rank": 56,
+ "date": "Build 0720A",
+ "tag": "Fix",
+ "title": "Smaller display fixes",
+ "items": [
+  "Team of the Tournament no longer claims defense data it doesn't have — an honest note instead of a misleading one.",
+  "Sandbox team pickers are properly themed instead of raw white dropdowns.",
+  "Combined score/points predictions for NFL, NBA and other non-soccer sports no longer say \"goals.\"",
+  "The match modal's Model read panel is full-width again instead of being squeezed next to the odds tracker."
+ ]
+}

@@ -1,0 +1,10 @@
+{
+ "rank": 93,
+ "date": "Build 0724Y",
+ "tag": "Fix",
+ "title": "A real CFP bracket instead of a fake World Cup one — and a stray national flag",
+ "items": [
+  "The CFP Bracket tab was quietly showing a fake 32-team, Round-of-32-through-third-place bracket built from World Cup group-standings logic, because the shared bracket renderer only recognizes soccer round names — it silently discarded the real \"CFP First Round\" / \"CFP Quarter-finals\" projection the model already computes correctly and fell back to a generic knockout shape that has nothing to do with a 12-team, bye-seeded college football playoff. NCAAF now gets its own bracket: First Round, Quarterfinals, Semifinals, National Championship, built from the model's actual seeding.",
+  "That same shared renderer also called the flag-lookup function directly instead of through the check that limits flags to actual soccer competitions — any two-letter college or NFL code that happened to match a real country's ISO code rendered that country's flag (Ole Miss's code matched Montserrat's). Flags are now correctly gated for every bracket-style view, not just the ones that already had the check."
+ ]
+}

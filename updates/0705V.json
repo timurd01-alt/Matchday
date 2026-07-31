@@ -1,0 +1,10 @@
+{
+ "rank": 25,
+ "date": "Build 0705V",
+ "tag": "Fix",
+ "title": "Scorecard tabs + empty space",
+ "items": [
+  "Fixed the Scorecard deep-dive tabs rendering as plain white text — styles were missing.",
+  "Forecast board now flows as balanced columns, so a short panel (like Upset radar) no longer leaves a big gap under it next to a long one (Golden Boot)."
+ ]
+}

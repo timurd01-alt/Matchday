@@ -1,0 +1,11 @@
+{
+ "rank": 18,
+ "date": "Build 0705O",
+ "tag": "New",
+ "title": "Leaderboard ready (dormant)",
+ "items": [
+  "Global leaderboard code is built and shipped but inactive — shows \"Coming soon\" until a server URL is set.",
+  "When you deploy the backend and paste its URL, picks post automatically and the Community tab shows live rankings.",
+  "Anonymous handle + device ID; no accounts. Server code and deploy guide included for two hosting paths."
+ ]
+}

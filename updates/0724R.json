@@ -1,0 +1,12 @@
+{
+ "rank": 86,
+ "date": "Build 0724R",
+ "tag": "UI",
+ "title": "Color tokens that were quietly working against clarity",
+ "items": [
+  "A \"warn\" KPI on the Model dashboard rendered in the exact same green as a \"good\" one, because both fell back to the same brand-accent variable — there was no dedicated warning color at all. Introduced a real amber warn token and pointed the warn state at it.",
+  "The two amber accents already in use (the market-hours banner and the content hub's \"current data\" indicator) were two different hardcoded hex values with no relationship to each other. Both now reference the same token.",
+  "The away side of every stat bar, probability split, and score line rendered in a warm red-orange that sat in the same hue family as the loss/live indicators, baking an unintended \"danger\" read into whichever team happened to be listed second. Moved it to a distinct violet so it no longer competes with result-status colors.",
+  "The dimmest text tier (small labels like table headers and timestamps) computed to roughly 2.7:1 contrast against the background, under the WCAG floor even for large text. Lightened it to clear AA contrast for small text on both the app shell and the content hub."
+ ]
+}

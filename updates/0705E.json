@@ -1,0 +1,13 @@
+{
+ "rank": 9,
+ "date": "Build 0705E",
+ "tag": "Fix",
+ "title": "Stability and layout repairs",
+ "items": [
+  "Restored from a bad build that broke loading — full function audit now runs before every release.",
+  "Advancement odds table columns align across all rows.",
+  "Expanded match view stacks panels until the window is genuinely wide.",
+  "Factor receipt chips no longer overlap when wrapping.",
+  "Fixed the \"Box-score stats\" empty-state sentence."
+ ]
+}

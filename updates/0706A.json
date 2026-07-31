@@ -1,0 +1,11 @@
+{
+ "rank": 30,
+ "date": "Build 0706A",
+ "tag": "Model",
+ "title": "Real market values + housekeeping",
+ "items": [
+  "Squad values in the ratings file replaced with verified Transfermarkt figures (June 2026) for the top ~30 teams — the model now runs on real numbers, not estimates. Star-player values verified for the top squads (Mbappé, Haaland and Yamal all around €200M; Argentina's top value is Enzo Fernández/Julián Álvarez at ~€90M, not Messi).",
+  "Removed the dead FIFA news feed that errored on every fetch (the working backup feed remains).",
+  "Odds history now self-cleans: entries from other sports (inherited during an old migration) are pruned automatically."
+ ]
+}

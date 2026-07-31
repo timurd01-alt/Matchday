@@ -1,0 +1,12 @@
+{
+ "rank": 106,
+ "date": "Build 0728A",
+ "tag": "New",
+ "title": "Outcome Tree combines exact model scenarios without pretending to be a sportsbook",
+ "items": [
+  "Added an Outcome Tree for combining up to five published game outcomes into one transparent scenario probability.",
+  "The result shows each selected branch, its individual official probability, the cumulative path probability, and model-implied fair decimal and American odds. Locked prediction snapshots take priority, so a public pick is never silently replaced by a later calculation.",
+  "Only one exact outcome can be selected from the same game. The tree clearly discloses that multiplication assumes different games are independent, warns when selected games share a team, and does not present the result as a sportsbook price or betting recommendation.",
+  "The tree cannot improve its source predictions: missing talent, pitcher, injury, lineup, or market inputs carry directly into the combined estimate."
+ ]
+}

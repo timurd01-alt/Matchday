@@ -1,0 +1,12 @@
+{
+ "rank": 44,
+ "date": "Build 0706O",
+ "tag": "Fix",
+ "title": "Picks settle on the 90-minute market",
+ "items": [
+  "Draw picks now grade correctly: a knockout game level after regulation counts as a DRAW for the pick — extra time and penalties decide who advances, not the 1X2 result. This matches how the betting market your model predicts against actually settles.",
+  "Past picks graded under the old rule are automatically corrected on the next fetch (the diagnostics list each regrade).",
+  "Beat the Model picks follow the same convention.",
+  "Scorelines still display the full story: final score plus the shootout tag."
+ ]
+}

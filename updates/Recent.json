@@ -1,0 +1,10 @@
+{
+ "rank": 4,
+ "date": "Recent",
+ "tag": "UI",
+ "title": "Model command center",
+ "items": [
+  "Reworked the Model tab into compact KPIs, filter chips, a best-read spotlight, and a scan-friendly pick board.",
+  "Clicking a model row still opens the larger match view with the original model and odds fields."
+ ]
+}

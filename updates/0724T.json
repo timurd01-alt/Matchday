@@ -1,0 +1,9 @@
+{
+ "rank": 88,
+ "date": "Build 0724T",
+ "tag": "Fix",
+ "title": "CFP poll rankings showed \"null\" instead of a dash",
+ "items": [
+  "The Matchday Top 25 rows in the College Football standings table (poll-ranked teams with no games-played record of their own) rendered the literal text \"null\" in every P/W/L/GF/GA/GD/Pts cell, since those fields are intentionally empty for poll rankings and the table printed them unguarded. They now show a dash like every other \"not available\" value in the app."
+ ]
+}

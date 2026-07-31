@@ -1,0 +1,10 @@
+{
+ "rank": 3,
+ "date": "Recent",
+ "tag": "UI",
+ "title": "Fixture spotlight modal",
+ "items": [
+  "Match cards open in a larger modal instead of expanding downward and creating empty vertical space.",
+  "The modal groups model pick, odds, match read, stats, and lineups into a more readable layout."
+ ]
+}

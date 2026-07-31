@@ -1,0 +1,11 @@
+{
+ "rank": 11,
+ "date": "Build 0705H",
+ "tag": "Data",
+ "title": "Free box scores via ESPN",
+ "items": [
+  "Match statistics (shots, possession, corners, fouls, cards, saves) now come from ESPN — no key, no quota, using requests the lineups fetch already makes.",
+  "Covers live matches and the last week of finished games.",
+  "API-Football stays as an optional upgrade: with a paid key present it takes priority automatically."
+ ]
+}

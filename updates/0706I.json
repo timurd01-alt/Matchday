@@ -1,0 +1,13 @@
+{
+ "rank": 38,
+ "date": "Build 0706I",
+ "tag": "New",
+ "title": "Champions League support (2026-27 format)",
+ "items": [
+  "Correct modern format: no group stage — a 36-team league phase table with the three real zones (top 8 straight to R16, 9-24 to the knockout playoffs, 25-36 out).",
+  "Knockout playoff round added to the bracket and advancement chain between the league phase and the Round of 16.",
+  "Sidebar shows \"League Phase\" instead of \"Groups\" in Champions League mode.",
+  "ratings_ucl.json created: 21 confirmed qualifiers with UEFA coefficient ranks and club value estimates — the last 7 clubs arrive via qualifying in late August.",
+  "Season starts September 8; the app is ready the day fixtures appear."
+ ]
+}

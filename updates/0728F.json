@@ -1,0 +1,10 @@
+{
+ "rank": 111,
+ "date": "Build 0728F",
+ "tag": "Fix",
+ "title": "Roster talent can no longer disappear when the provider rate-limits a refresh",
+ "items": [
+  "The live Michigan State-Toledo audit showed both roster inputs marked unavailable after CollegeFootballData returned HTTP 429, which zeroed the talent edge and left the dampened prior-season record to decide the game. The displayed 51% Toledo pick was therefore missing its most important preseason input.",
+  "Talent enrichment now runs in one quota-light request before the broader data build and persists atomically to the tracked ratings file after every successful refresh. Later provider or cache failures therefore keep the last licensed snapshot instead of silently publishing zero roster talent."
+ ]
+}

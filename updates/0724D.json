@@ -1,0 +1,10 @@
+{
+ "rank": 72,
+ "date": "Build 0724D",
+ "tag": "New",
+ "title": "Matchday now writes its own recaps, plus a Q&A page",
+ "items": [
+  "A new Insights tab publishes short, auto-generated recap posts per sport — hit rate, calibration, and the week's biggest storylines — built entirely from the model's own graded picks, not third-party content.",
+  "A new Q&A page explains what confidence, edge, Elo and the opponent-adjusted rating actually mean, and how the model is graded."
+ ]
+}

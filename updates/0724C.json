@@ -1,0 +1,9 @@
+{
+ "rank": 71,
+ "date": "Build 0724C",
+ "tag": "Fix",
+ "title": "NFL/NBA/MLB predictions were only seeing last week's games",
+ "items": [
+  "Standings, the opponent-adjusted rating and Elo training for these sports now pull the full season instead of a rolling 7-day window, so records and model confidence reflect the real season instead of resetting to \"early\" on every refresh."
+ ]
+}

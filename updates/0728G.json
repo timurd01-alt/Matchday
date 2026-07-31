@@ -1,0 +1,10 @@
+{
+ "rank": 112,
+ "date": "Build 0728G",
+ "tag": "Fix",
+ "title": "Verified roster talent is restored during the current provider outage",
+ "items": [
+  "Seeded the derived model fields for 15 teams from the project's already live-verified 2025 CollegeFootballData spot checks, including Michigan State and Toledo. This is an immediate bridge while the account remains rate-limited; it does not copy or publish the provider's raw payload.",
+  "Michigan State-Toledo now has complete roster-talent coverage: MSU receives the positive talent edge and becomes the narrow model favorite despite Toledo's stronger prior-season record. The automatic full-field refresh will replace and expand this bridge when quota is available."
+ ]
+}

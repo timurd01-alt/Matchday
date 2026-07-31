@@ -1,0 +1,12 @@
+{
+ "rank": 23,
+ "date": "Build 0705T",
+ "tag": "New",
+ "title": "Scorecard Deep Dive",
+ "items": [
+  "Scorecard now has tabs: Overview, Calibration, Signals, Upsets, Errors.",
+  "Signal quality shows which factors (class, form, goal diff, rest) actually help when they favour a pick.",
+  "Error review lists recent misses with the evidence captured at lock time.",
+  "Deeper tabs show honest \"unlocks after N picks\" states until the sample is real."
+ ]
+}

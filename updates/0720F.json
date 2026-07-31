@@ -1,0 +1,11 @@
+{
+ "rank": 61,
+ "date": "Build 0720F",
+ "tag": "Fix",
+ "title": "Predictions were flat/identical for every match — root cause fixed",
+ "items": [
+  "Team power-rating files (public FIFA-rank/squad-value/preseason-strength data) were accidentally excluded from every deploy — every team fell back to the same default, so picks came down to home-field advantage alone. They're now correctly shipped with every build.",
+  "The Matchup Sandbox had the same problem — it now uses the same class/power-rating signal, so picking a strong team against a weak one actually moves the percentages.",
+  "Sandbox also falls back to the scheduled-fixtures team list when a sport has no standings yet (true preseason), instead of going blank."
+ ]
+}

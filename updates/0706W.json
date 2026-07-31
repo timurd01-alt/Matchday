@@ -1,0 +1,11 @@
+{
+ "rank": 51,
+ "date": "Build 0706W",
+ "tag": "Fix",
+ "title": "Scorecard self-heals mis-gradings on every fetch",
+ "items": [
+  "The previous fix only corrected games still inside the fetch window; older rounds (like the quarter-finals) kept showing wrong results. The scorecard now re-checks EVERY stored pick on every build, so a non-level score can never display as a draw/miss.",
+  "Argentina v Switzerland 2-0 and the other affected games now correctly show HIT.",
+  "No separate script needed — just fetch once and the record corrects itself."
+ ]
+}

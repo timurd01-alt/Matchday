@@ -1,0 +1,11 @@
+{
+ "rank": 15,
+ "date": "Build 0705L",
+ "tag": "Fix",
+ "title": "Box scores confirmed + honest empty state",
+ "items": [
+  "Box scores are attaching from ESPN and API-Football (verified via diagnostics).",
+  "Finished matches without stats now say so honestly instead of \"appears once the match kicks off\".",
+  "Widened the stats window to cover the last 20 finished matches, not 10."
+ ]
+}

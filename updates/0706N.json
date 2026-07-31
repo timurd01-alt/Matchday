@@ -1,0 +1,12 @@
+{
+ "rank": 43,
+ "date": "Build 0706N",
+ "tag": "App",
+ "title": "Multi-sport fetcher — one button, everything fresh",
+ "items": [
+  "start_app.bat now keeps ALL ten sports updated automatically: live matches refetch every minute, upcoming ones hourly, near-season every 6 hours, offseason sports probe twice a day.",
+  "Sports fetch one at a time with spacing, so API quotas never spike regardless of how many are in season.",
+  "No more manual per-sport fetches — the one-off fetch_X_once.bat files remain for instant refreshes when you want them.",
+  "Launching with a sport flag (e.g. start_nfl.bat) still runs that sport alone, as before."
+ ]
+}

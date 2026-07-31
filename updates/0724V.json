@@ -1,0 +1,11 @@
+{
+ "rank": 90,
+ "date": "Build 0724V",
+ "tag": "New",
+ "title": "Real power ratings for teams outside the curated files",
+ "items": [
+  "Every team's \"Class rating\" (team profiles, standings, Sandbox, the watchability score) came from a hand-curated preseason-strength file. Soccer and NFL/NBA/MLB/NHL have full league coverage, but NCAAF only has 24 of 130+ FBS teams curated and NCAAM only 25 of 360+ — every other team silently fell back to the same flat, neutral number, indistinguishable from every other uncurated team.",
+  "Ratings now blend in the app's existing self-updating Elo (already computed from real final scores for its own place in the model, previously never surfaced anywhere) — teams in the curated file keep trusting it early and lean on Elo more as real games accumulate, and teams missing from the file entirely now get a real, differentiated rating from Elo alone once they've played a handful of games, instead of the same default as every other unlisted team.",
+  "Also fixed: the flat NFL/NBA/MLB/NHL standings table (used when the free-tier provider has no conference/division breakdown) never included a rating field at all — team profiles for those leagues silently lost their Class rating the moment they were looked up via that table instead of a live match."
+ ]
+}

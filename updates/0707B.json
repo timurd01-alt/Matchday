@@ -1,0 +1,11 @@
+{
+ "rank": 55,
+ "date": "Build 0707B",
+ "tag": "Model",
+ "title": "Injuries now affect predictions",
+ "items": [
+  "The model now factors in key players ruled OUT — data it already fetched but never used. A team missing stars is rated slightly weaker.",
+  "Weighted per sport (one absence swings basketball far more than baseball) and kept deliberately small, since the market already prices injuries and we blend with it.",
+  "Shows up as an \"injuries\" chip in the Match Story so you can see when it moved a pick."
+ ]
+}

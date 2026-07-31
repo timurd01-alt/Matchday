@@ -1,0 +1,12 @@
+{
+ "rank": 19,
+ "date": "Build 0705P",
+ "tag": "Fix",
+ "title": "Match Story visible + data order",
+ "items": [
+  "Match Story card now actually renders at the top of the expanded match view (it was built but not shown).",
+  "Stats and lineups now fetch BEFORE predictions, so the model uses them the same run.",
+  "Box-score empty states rewritten to explain what the model falls back on.",
+  "Clearer box-stat diagnostics showing attached/total and coverage warnings."
+ ]
+}

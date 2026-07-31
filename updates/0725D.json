@@ -1,0 +1,11 @@
+{
+ "rank": 98,
+ "date": "Build 0725D",
+ "tag": "New",
+ "title": "Real soccer box scores and a first injuries feed, both actually wired in this time",
+ "items": [
+  "API-FOOTBALL box-score stats and starting lineups (shots, shots on target, possession, corners, fouls, cards) were fully built but never actually called from anywhere -- confirmed dead code since the very first commit. They now run for every soccer competition, and the \"box score dominance\" override used in upset detection (also dead for the same reason, since it reads this same data) can trigger on real data for the first time.",
+  "Soccer also gets a real injuries feed for the first time -- every provider path previously left it empty, so the Model's injury-weighting nudge had nothing to work with for any soccer competition. A new API-FOOTBALL call now supplies confirmed-out and doubtful player status pre-kickoff and live, sharing the same free-plan key and daily request budget as box scores/lineups with its own small, separate cap.",
+  "Along the way, live testing against the provider caught API-FOOTBALL's injuries endpoint silently repeating every player twice in its own response -- that's now deduplicated before it reaches the model, so an absence can't accidentally count double."
+ ]
+}

@@ -1,0 +1,11 @@
+{
+ "rank": 81,
+ "date": "Build 0724M",
+ "tag": "UI",
+ "title": "Clearer navigation, calmer spacing, and a real learning hub",
+ "items": [
+  "Desktop navigation now shows labels, mobile navigation stays in one reachable horizontal row, and Content remains accessible from the bottom navigation instead of disappearing on small screens.",
+  "The match board has one compact introduction instead of a repeated banner and heading, technical scorecard terms use plain-language labels first, and the welcome screen now hands off smoothly to the dashboard.",
+  "The Content page is now organized around starting points, model recaps, and sport-by-sport learning with direct links and more efficient spacing."
+ ]
+}

@@ -1,0 +1,10 @@
+{
+ "rank": 73,
+ "date": "Build 0724E",
+ "tag": "UI",
+ "title": "A little more motion in the welcome screen and insight panel",
+ "items": [
+  "The welcome screen now rotates through a few of the day's most watchable games instead of showing just one static matchup.",
+  "The right-side insight panel does the same for its \"In focus\" match, pausing whenever you hover over it, and skips the animation entirely if your system prefers reduced motion."
+ ]
+}

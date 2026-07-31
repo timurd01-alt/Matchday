@@ -1,0 +1,10 @@
+{
+ "rank": 1,
+ "date": "Recent",
+ "tag": "Feeds",
+ "title": "News UI fixes",
+ "items": [
+  "News cards preserve source labels better and the all-sources view is designed to avoid one feed visually dominating.",
+  "This UI tab does not fetch news itself; it only displays what your existing data.json provides."
+ ]
+}

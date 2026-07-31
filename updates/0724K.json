@@ -1,0 +1,10 @@
+{
+ "rank": 79,
+ "date": "Build 0724K",
+ "tag": "UI",
+ "title": "A sidebar that's easier to scan, and a more visible Content page",
+ "items": [
+  "The sidebar's 16 icons now sit in labeled groups (Games, Competition, Model, Content, Community, More) with dividers between them, and every icon has a hover tooltip — the sidebar has no visible text labels outside the guided tour, so there was previously no way to tell them apart without hovering blind.",
+  "The Content link in the top bar is now a filled accent button instead of a small text link, since that's a more effective spot for it than adding a 17th unlabeled sidebar icon."
+ ]
+}

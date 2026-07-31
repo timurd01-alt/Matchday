@@ -1,0 +1,12 @@
+{
+ "rank": 109,
+ "date": "Build 0728D",
+ "tag": "Model",
+ "title": "“Class” now means a real sport-specific talent signal",
+ "items": [
+  "College football now labels its 247 Team Talent Composite input as Roster talent edge; college basketball labels its narrower input as Recruiting edge; soccer uses Squad edge.",
+  "Championship futures no longer overwrite or masquerade as college talent. They remain a separate Championship market power factor, with reduced college weight because the signals overlap.",
+  "MLB, NFL, NBA and NHL now say when a real personnel or roster edge is unavailable instead of showing a generic class number sourced from market opinion. The model still uses result history, Elo, opponent-adjusted performance and real markets where available.",
+  "College talent and recruiting snapshots now keep a last-good cache, so a temporary provider or quota failure cannot erase the entire signal from a published build."
+ ]
+}

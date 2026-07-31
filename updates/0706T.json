@@ -1,0 +1,10 @@
+{
+ "rank": 48,
+ "date": "Build 0706T",
+ "tag": "Fix",
+ "title": "Multi-sport fetcher works on Windows",
+ "items": [
+  "Fixed the real cause of the multi-sport fetcher failing: Windows terminals use a legacy text encoding that crashed on special characters (the checkmark in \"Wrote data.json\", accented player names). The fetcher now forces UTF-8 output.",
+  "All sports should now fetch and refresh automatically as intended."
+ ]
+}

@@ -1,0 +1,10 @@
+{
+ "rank": 69,
+ "date": "Build 0724A",
+ "tag": "New",
+ "title": "Native prediction model for NFL, NBA, MLB, NHL, and college sports",
+ "items": [
+  "These sports now use sport-native factors — season record, scoring margin, rest, poll rank — plus a new opponent-adjusted rating, instead of being forced through soccer-shaped inputs.",
+  "Match results now carry a winner only once a game is actually final, closing a class of \"phantom result\" bugs."
+ ]
+}

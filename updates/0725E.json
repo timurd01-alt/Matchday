@@ -1,0 +1,11 @@
+{
+ "rank": 99,
+ "date": "Build 0725E",
+ "tag": "New",
+ "title": "Defensive & advanced stat categories, and less timid preseason predictions",
+ "items": [
+  "Season leaders now covers defense too, not just offense: NFL adds sacks, interceptions, solo tackles, tackles for loss and QB hits (from the same free nflverse feed already powering passing/rushing/receiving); NCAAF adds tackles, sacks, tackles for loss and passes defended (same CFBD call, confirmed live to already include a \"defensive\" category alongside offense); NCAAM adds steals and turnovers per game (same CBBD call); NHL adds plus/minus, hits, takeaways and shots on goal (same SportsDataIO call). None of this cost an extra request against any provider’s quota — every field already existed on a call this build was already making.",
+  "NBA and MLB do not get this treatment yet: BALLDONTLIE’s free-tier key was checked live against its stats endpoints for both and came back unauthorized, matching what the adapter’s own comments already said — a plan upgrade (or a different provider) is needed before either gets a real stats feed.",
+  "A user flagged that preseason predictions looked too tame for objectively mismatched teams. Diagnosed: with zero games played, record/margin/form/schedule-adjusted rating are all correctly at zero, leaving the recruiting-talent/market-strength \"class\" prior, poll rank, and in-house Elo to carry the entire signal alone, at a fixed weight tuned assuming the other signals also contribute — flattening a real on-paper blowout toward a near-coin-flip. Those three now scale up as the average current-season sample shrinks, tapering back to exactly no change once the season is established, so this cannot affect any already-tuned in-season prediction."
+ ]
+}

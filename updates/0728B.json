@@ -1,0 +1,12 @@
+{
+ "rank": 107,
+ "date": "Build 0728B",
+ "tag": "Fix",
+ "title": "Team of the Tournament is finally a real eleven-player team",
+ "items": [
+  "The completed Champions League page was calling six scorer-feed players a \"Model-built XI\" while leaving the entire defence and goalkeeper empty. It now shows UEFA's complete, attributed 2025/26 Team of the Season: one goalkeeper, four defenders, four midfielders and two forwards, with a direct link to the organizer's published selection.",
+  "Official organizer selections are explicitly labeled as official-source editorial content, never as Matchday model output. Scoring figures appear only for players covered by Matchday's licensed scorer feed; the remaining cards say \"Official XI\" instead of inventing statistics.",
+  "For competitions without a complete official selection or enough lineup coverage, a partial scorer list is now honestly labeled \"Model attacking leaders\" and empty position bands are hidden instead of presenting an unfinished team as an XI.",
+  "Fixed a separate formation bug in the model-generated version: its position caps added up to 12 players. A complete model XI now uses a real 4-3-3."
+ ]
+}

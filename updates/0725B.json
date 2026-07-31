@@ -1,0 +1,11 @@
+{
+ "rank": 96,
+ "date": "Build 0725B",
+ "tag": "Fix",
+ "title": "Class ratings: blue-blood programs were silently landing on the same neutral number as everyone else",
+ "items": [
+  "A user flagged Alabama looking barely favored over East Carolina. Traced it to two bugs: championship-odds and recruiting-talent data for NCAAF/NCAAM get written under whatever name the provider hands back (\"Alabama Crimson Tide\" from the odds book) instead of the schedule's bare school name (\"Alabama\"), so it silently landed on a key predict() never reads -- checked every NCAAF team with a live championship-futures price and found zero survived the old exact-name match. Provider names now resolve to the schedule's own name before anything gets written, so \"Alabama Crimson Tide\" and \"Texas A&M Aggies\" land on the same team the schedule and predict() already agree on. NCAAM's curated Top 25 file was a second instance of the identical bug (25 of 25 entries keyed by mascot -- \"Blue Devils\", \"Wolverines\" -- never matched a school name either).",
+  "Separately, the \"Class rating\" shown on team profiles/Sandbox/watchability for NCAAF/NCAAM/every US sport with championship odds was computed BEFORE that run's recruiting-talent and championship-odds data got folded in, not after -- so the number on screen was always one enrichment step stale relative to what predict() itself used moments later in the same run. Now computed after.",
+  "Two specific name-identity mismatches fixed the same way: the NHL's Utah franchise renamed from \"Utah Hockey Club\" to \"Utah Mammoth\" and stopped matching its own rating; Champions League's curated file still said \"Inter Milan\" while live fixtures use the official \"FC Internazionale Milano\". Both now resolve correctly."
+ ]
+}

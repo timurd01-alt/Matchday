@@ -1,0 +1,11 @@
+{
+ "rank": 84,
+ "date": "Build 0724P",
+ "tag": "Fix",
+ "title": "A finished match's pick could quietly change after the fact",
+ "items": [
+  "Predictions were recomputed for every match on every data refresh, including ones already decided — so a finished game's \"Model\" pick could drift away from the pick that was actually locked in and graded, sometimes even naming the other team. Results cards no longer show a pick at all (just the final score), and once a pick locks it is now pinned everywhere for that match, through kickoff and after full time.",
+  "Picks now lock 2 hours before kickoff instead of the moment a fixture first appears (which was often days out, before there was even market data to weigh against) — giving the model more real information to use before its call is final.",
+  "Domestic leagues with a scheduled but not-yet-started season (e.g. Bundesliga, Ligue 1) were showing a completely empty table, because standings were only built from teams with at least one finished match — every team now gets a 0-played row from the day the fixture list exists, not just after kickoff."
+ ]
+}

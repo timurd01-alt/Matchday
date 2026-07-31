@@ -1,0 +1,9 @@
+{
+ "rank": 29,
+ "date": "Build 0705Z",
+ "tag": "Fix",
+ "title": "Stale Team of the Tournament guard",
+ "items": [
+  "Player positions are computed at fetch time — if the app is showing an XI built before the position fix, it now says so and asks for one fetch instead of displaying strikers in goal."
+ ]
+}

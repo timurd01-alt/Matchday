@@ -1,0 +1,10 @@
+{
+ "rank": 74,
+ "date": "Build 0724F",
+ "tag": "Fix",
+ "title": "Reliability fixes for NFL/NBA/MLB predictions",
+ "items": [
+  "Fixed a rare case where the season pull could get cut short by a rate limit and quietly cache an incomplete season for hours; it now retries and falls back cleanly instead of caching a lie.",
+  "The rest-days factor no longer silently drops across a bye week or break — it now checks the full season, not just the last week."
+ ]
+}

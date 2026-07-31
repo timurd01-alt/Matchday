@@ -1,0 +1,12 @@
+{
+ "rank": 83,
+ "date": "Build 0724O",
+ "tag": "Fix",
+ "title": "A P4 team's bad prior season could outweigh its real talent edge",
+ "items": [
+  "Live example: Michigan State was an underdog to Toledo for a season opener, entirely because CFBD had no 2026 games yet and silently fell back to MSU's rough 2025 record (4-8), which the model then trusted at nearly full confidence — swamping MSU's much larger recruiting/talent edge.",
+  "That stale carryover record is now flagged and heavily discounted instead of trusted like real current-season form, and the match correctly shows as \"preseason\" data quality instead of \"established.\"",
+  "Also widened the recruiting/talent and championship-odds strength scale, which was undershooting its own ceiling and flattening the gap between a solid recruiting class and an elite one.",
+  "The Matchup Sandbox had the same stale-record blind spot for every American sport (it never discounted for games played or a stale prior season) — now scaled the same way as real predictions."
+ ]
+}

@@ -1,0 +1,11 @@
+{
+ "rank": 17,
+ "date": "Build 0705N",
+ "tag": "UI",
+ "title": "Match Story + model credibility",
+ "items": [
+  "Every expanded match now opens with a Match Story card: one clear read on who the model picks, whether an upset is live, and why — generated from the real model output.",
+  "The Model tab now leads with a credibility strip: recent record, Brier, CLV and value-signal hit rate.",
+  "Gives the app a clear main answer instead of many equal panels."
+ ]
+}

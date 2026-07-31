@@ -1,0 +1,11 @@
+{
+ "rank": 97,
+ "date": "Build 0725C",
+ "tag": "New",
+ "title": "College football and basketball now have real season leaders",
+ "items": [
+  "NCAAF and NCAAM previously had no player-stat leaders at all -- the \"Season leaders\" panel only ever populated from SportsDataIO, which those two sports never use, so it silently stayed empty. CollegeFootballData and CollegeBasketballData (the same licensed keys already powering schedules, standings, talent and recruiting for these sports) now supply real current-season passing/rushing/receiving leaders for NCAAF and points/rebounds/assists/blocks-per-game leaders for NCAAM, shown in the same Season leaders panel every other sport already uses.",
+  "CFBD reports player stats as one row per player per stat type rather than a per-player table; that gets reshaped into a proper per-player object before any leaderboard is built. Both feeds also needed a real Division-I/FBS filter -- neither provider's own classification filter actually restricts the player-stats endpoint, so an unfiltered pull would let a small-school stat leader with far weaker competition out-rank the real national leaders.",
+  "Each feed pulls the whole league in a single request (team is an optional filter on both endpoints, not required) rather than looping per team, and is cached for 24 hours separately from the schedule data -- CFBD's full-league pull alone is tens of megabytes, so it rides its own longer cache instead of refetching on every run. This is a display-only addition: player stats are not read anywhere in the prediction model."
+ ]
+}

@@ -1,0 +1,10 @@
+{
+ "rank": 16,
+ "date": "Build 0705M",
+ "tag": "UI",
+ "title": "Results moved to its own tab",
+ "items": [
+  "Completed matches now live in a dedicated Results tab — Fixtures stays clean with only live and upcoming.",
+  "Reverted the dimmed inline section."
+ ]
+}

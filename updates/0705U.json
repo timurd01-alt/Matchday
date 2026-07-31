@@ -1,0 +1,9 @@
+{
+ "rank": 24,
+ "date": "Build 0705U",
+ "tag": "Fix",
+ "title": "Groups cleanup",
+ "items": [
+  "Removed the stray Golden Boot race from the Groups tab — it lives on the Odds board where it belongs."
+ ]
+}

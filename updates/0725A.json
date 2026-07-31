@@ -1,0 +1,12 @@
+{
+ "rank": 95,
+ "date": "Build 0725A",
+ "tag": "New",
+ "title": "MLB is now selectable — plus a Baseball guide and SEO wiring",
+ "items": [
+  "MLB has quietly had a full data pipeline since launch (standings, model picks, championship odds) but was never reachable from the sport picker; it was even actively stripped back out of \"All sports\" and localStorage if selected. It now appears in the sport dropdown, joins the \"All sports\" merged view, and is no longer forced back to Auto.",
+  "NHL stays off the picker for now since its data file has zero current matches (off-season) -- it will get the same treatment once games resume.",
+  "The Legal &amp; data sources page now names MLB alongside NBA and NFL in the BALLDONTLIE disclosure, matching what the app actually displays.",
+  "A full \"Patience, run differential &amp; the long season\" baseball tactics guide existed on disk but was never linked from Content, never tagged with a sport in the content hub, and never listed in the sitemap -- it is now wired into all three, plus a new Baseball filter on the Content page."
+ ]
+}

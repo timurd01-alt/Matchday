@@ -1,0 +1,10 @@
+{
+ "rank": 37,
+ "date": "Build 0706H",
+ "tag": "Fix",
+ "title": "Sports fully separated",
+ "items": [
+  "Switching to a sport with no data no longer shows another sport's content — the app now clears the view and says honestly that this sport has no data yet and how to fetch it.",
+  "Every tab (Forecast, Model, Groups…) now strictly shows the selected sport or an empty state, never a leftover."
+ ]
+}

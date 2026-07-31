@@ -1,0 +1,9 @@
+{
+ "rank": 108,
+ "date": "Build 0728C",
+ "tag": "Fix",
+ "title": "Outcome Tree no longer prevents the whole site from loading",
+ "items": [
+  "The page referenced the new Outcome Tree script, but the deployment artifact forgot to include the file. That missing script stopped the dashboard at Loading. The artifact now packages it and a regression test protects the deploy list."
+ ]
+}

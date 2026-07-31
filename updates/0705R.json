@@ -1,0 +1,11 @@
+{
+ "rank": 21,
+ "date": "Build 0705R",
+ "tag": "Model",
+ "title": "Upset radar redefined + deep-dive capture",
+ "items": [
+  "Upset radar now uses the real statistical definition: the market underdog's win probability sets the class (pickem / minor / solid / major), and the radar only fires when the model prices a genuine underdog above the market.",
+  "Coin-flip games no longer flag as upsets; confident favourites read as confident.",
+  "Every locked pick now captures a full evidence snapshot (factor values, market odds, gap, upset profile, box-score availability) for the coming Scorecard Deep Dive."
+ ]
+}

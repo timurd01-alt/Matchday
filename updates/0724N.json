@@ -1,0 +1,9 @@
+{
+ "rank": 82,
+ "date": "Build 0724N",
+ "tag": "Fix",
+ "title": "Made a silent model-data gap visible",
+ "items": [
+  "The NCAAF/NCAAM team-talent fix from earlier tonight tested correctly against a local key but is returning zero teams live in production — found by auditing real deployed data, not by re-testing locally. The code was silently treating \"provider returned nothing\" the same as \"nothing to apply,\" so there was no trace of the gap anywhere. It now logs a clear diagnostic line instead, so this stops being invisible on future runs while the actual cause (a live-key/plan access question) gets sorted out."
+ ]
+}

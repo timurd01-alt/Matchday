@@ -1,0 +1,11 @@
+{
+ "rank": 67,
+ "date": "Build 0722F",
+ "tag": "New",
+ "title": "Watchability index picks the marquee matchups",
+ "items": [
+  "The \"All sports\" screen no longer dumps every fixture — it ranks games by a watchability score (team strength, how close the model rates it, upset potential, knockout stakes) and shows the biggest ones.",
+  "Balanced across sports: it takes the top game from each active competition first, so college football, NFL and others surface alongside soccer instead of being buried.",
+  "Some sports (NBA, college basketball) have no games until their seasons start — they'll join automatically once schedules publish."
+ ]
+}

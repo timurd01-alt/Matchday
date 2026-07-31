@@ -1,0 +1,14 @@
+{
+ "rank": 33,
+ "date": "Build 0706D",
+ "tag": "New",
+ "title": "Player database + multi-sport groundwork",
+ "items": [
+  "New player database: every finished match's lineup and result accumulates locally — appearances, starts, roles from formations, and clean sheets.",
+  "Team of the Tournament now fields a real Defence and Goalkeeper line ranked by clean sheets (honest defensive data), alongside the goals/assists attack.",
+  "One-time backfill script pulls every match since June 11 so the XI covers the whole tournament.",
+  "The sidebar now adapts per sport — no more Groups/Bracket/Thirds when viewing NFL or NBA.",
+  "College Football added to the sport menu (experimental, like NFL/NBA).",
+  "All of it competition-generic: Champions League and other sports reuse the same system."
+ ]
+}

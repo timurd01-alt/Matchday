@@ -1,0 +1,11 @@
+{
+ "rank": 34,
+ "date": "Build 0706E",
+ "tag": "Fix",
+ "title": "Sidebar truly follows the sport",
+ "items": [
+  "The menu now rebuilds from a per-sport definition the instant you pick a sport — before any data loads, even if that sport has no data yet.",
+  "World Cup shows the full tournament menu; Champions League drops Thirds; NFL, College Football and NBA show a clean US-sports menu (no Groups, Bracket, Thirds or Team of the Tournament).",
+  "If you are on a tab that does not exist for the new sport, you land on Matches."
+ ]
+}

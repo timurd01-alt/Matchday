@@ -1,0 +1,9 @@
+{
+ "rank": 91,
+ "date": "Build 0724W",
+ "tag": "Fix",
+ "title": "A stale ESPN article was still slipping into the News tab",
+ "items": [
+  "ESPN was already rejected the moment a fresh headline was fetched, but that filter only ran on newly-fetched items. The separate step that keeps News diverse across a temporary feed outage carries forward the previous run's cached headlines too, and that carry-forward path never re-checked the source — so an ESPN item that got in before the stricter filter existed (an NCAAM bracketology piece, confirmed live in the current cache) could keep resurfacing indefinitely instead of aging out. ESPN is now excluded at that step as well, closing the gap for good."
+ ]
+}

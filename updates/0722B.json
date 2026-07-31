@@ -1,0 +1,9 @@
+{
+ "rank": 63,
+ "date": "Build 0722B",
+ "tag": "UI",
+ "title": "Expanded match view fills its space",
+ "items": [
+  "The expanded model read now includes a Match profile card (records, scoring rates, form, absences) and lays out as two balanced columns on wide screens instead of leaving empty gaps."
+ ]
+}

@@ -1,0 +1,9 @@
+{
+ "rank": 85,
+ "date": "Build 0724Q",
+ "tag": "Fix",
+ "title": "The match modal's \"model read\" text could disagree with the locked pick",
+ "items": [
+  "The pick badge and percentage were pinned to the locked, graded value in the last build, but the \"model read\" sentence in the match modal (e.g. \"model agrees with the market\" / upset-watch language) was still being reset to a generic placeholder. It's now rebuilt from the same locked edge and upset data the pick itself uses, so the read always matches the pick it's describing."
+ ]
+}

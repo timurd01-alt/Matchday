@@ -1,0 +1,13 @@
+{
+ "rank": 41,
+ "date": "Build 0706L",
+ "tag": "New",
+ "title": "NBA support — the four-sport platform is complete",
+ "items": [
+  "Conference standings with direct playoff seeds (1-6) and the play-in zone (7-10) tagged.",
+  "Season-length normalization: an 82-game NBA record and a 17-game NFL record now feed the model on the same scale.",
+  "Per-game point differential handled correctly (ESPN reports NBA per-game, NFL season totals).",
+  "ratings_nba.json seeds a 30-team power ranking; championship odds flow through the title pipeline.",
+  "World Cup, Champions League, NFL, College Football and NBA now share one model, one scorecard system, one UI."
+ ]
+}

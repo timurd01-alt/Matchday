@@ -1,0 +1,12 @@
+{
+ "rank": 10,
+ "date": "Build 0705G",
+ "tag": "App",
+ "title": "Box scores, adaptive upsets, cleanup",
+ "items": [
+  "Box-score stats for recent matches via API-Football (optional key in config_keys.py).",
+  "Upset candidates scored and tracked; the model self-tunes from graded results with strict small-sample guards.",
+  "Safer match view: a fallback panel replaces blank screens if match data errors.",
+  "Removed 17 duplicate function bodies introduced during recent edits."
+ ]
+}

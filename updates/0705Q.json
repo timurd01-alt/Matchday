@@ -1,0 +1,11 @@
+{
+ "rank": 20,
+ "date": "Build 0705Q",
+ "tag": "Fix",
+ "title": "Upset radar only fires on real volatility",
+ "items": [
+  "Match Story no longer says every game is \"on the upset radar\".",
+  "Upset language is now gated on the model's own 0-100 score: live threat at 65+, mild watch at 50-64, and confident/clear reads below that.",
+  "Confident favourites now read as confident, not as upset risks."
+ ]
+}
