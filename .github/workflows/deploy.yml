@@ -31,6 +31,7 @@ jobs:
         with:
           path: |
             .ci_fetch_state.json
+            provider_quota_state.json
             data.json
             data_*.json
             odds_open*.json

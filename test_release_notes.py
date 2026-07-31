@@ -67,6 +67,18 @@ class ReleaseNotesTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "missing"):
                 build_updates.load_entries(temp)
 
+    def test_rank_gap_is_rejected(self):
+        """Confirmed live 2026-07-31: two entries added back-to-back skipped
+        rank 115, leaving the true newest entry sorting second instead of
+        first -- silent, since a gap doesn't break rendering by itself."""
+        with tempfile.TemporaryDirectory() as temp:
+            for rank in (1, 3):  # 2 is missing
+                io.open(os.path.join(temp, f"e{rank}.json"), "w", encoding="utf-8").write(
+                    json.dumps({"rank": rank, "date": "Build X", "tag": "Fix",
+                                "title": "t", "items": ["i"]}))
+            with self.assertRaisesRegex(ValueError, "gap"):
+                build_updates.load_entries(temp)
+
     def test_every_entry_has_real_content(self):
         for entry in build_updates.load_entries(str(ROOT / "updates")):
             self.assertTrue(entry["date"].strip(), entry["_path"])

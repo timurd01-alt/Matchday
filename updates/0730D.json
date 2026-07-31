@@ -1,0 +1,11 @@
+{
+ "rank": 116,
+ "date": "Build 0730D",
+ "tag": "New",
+ "title": "Provider requests now stop before a quota is exhausted, not after",
+ "items": [
+  "CollegeFootballData, CollegeBasketballData, and The Odds API were all confirmed live at zero remaining calls for the current billing period, with nothing in this codebase tracking it -- roster talent and market comparisons were quietly degrading to \"no data\" across the live site with no record of why. Every one of those providers, and football-data.org and BallDontLie besides, already report the caller's exact remaining budget on every single response; this project simply never read it.",
+  "A new persisted ledger reads that number off every real response and refuses the next call before it fires once a provider's tracked budget hits a safety reserve, instead of firing blind and finding out via a 429. Verified end-to-end against the real, currently-exhausted CFBD API: the first call correctly recorded \"0 remaining\" from the live response, and an immediate second call was refused with zero network request made.",
+  "Coverage is automatic for CollegeFootballData, CollegeBasketballData, BallDontLie and API-Football -- any script building those adapters is protected with no code changes, including the existing backfill and talent-refresh tools. football-data.org and The Odds API are tagged individually since they route through a different, older fetch path."
+ ]
+}

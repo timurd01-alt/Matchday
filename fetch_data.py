@@ -23,6 +23,7 @@ from email.utils import parsedate_to_datetime
 from collections import defaultdict
 import mfti_research
 import forecast_ledger
+import provider_quota
 from advanced_metrics_store import attach_shadow_profiles
 from mlb_challenger_store import attach_mlb_challenger_shadows
 from mlb_model_promotion import apply_mlb_promotion, load_mlb_promotion_policy
@@ -404,14 +405,29 @@ def _scrub(s):
     return s
 
 
-def _get(url, headers=None):
+def _get(url, headers=None, provider=None):
+    """`provider`, when given, gates the call against provider_quota's ledger
+    and records whatever quota header the response carried -- see
+    provider_quota.py. Confirmed live 2026-07-31: football-data.org and The
+    Odds API both expose their remaining budget on every response, and The
+    Odds API was already sitting at zero for the current period."""
+    if provider:
+        try:
+            provider_quota.check(provider)
+        except provider_quota.QuotaExceededError as exc:
+            raise RuntimeError(_scrub(str(exc)))
     req = urllib.request.Request(url, headers=headers or {})
     try:
         with urllib.request.urlopen(req, timeout=25) as r:
-            return json.loads(r.read().decode("utf-8"))
+            body = r.read()
+            if provider:
+                provider_quota.record_response(provider, r.headers)
+            return json.loads(body.decode("utf-8"))
     except urllib.error.HTTPError as e:
         try: body = e.read().decode("utf-8")[:300]
         except Exception: body = ""
+        if provider:
+            provider_quota.record_response(provider, e.headers, body)
         raise RuntimeError(_scrub(f"HTTP {e.code} — {body or e.reason}"))
 
 
@@ -479,7 +495,7 @@ def find_odds(odds, home, away):
 
 
 def fetch_raw_matches():
-    return _get(f"{FD_BASE}/competitions/{COMP["fd"]}/matches", {"X-Auth-Token": FOOTBALL_DATA_KEY}).get("matches", [])
+    return _get(f"{FD_BASE}/competitions/{COMP["fd"]}/matches", {"X-Auth-Token": FOOTBALL_DATA_KEY}, provider="football_data").get("matches", [])
 
 
 def _resolve_score(m):
@@ -534,7 +550,7 @@ def fetch_football_data_historical_season(comp_key, season):
     """
     fd_code = COMPETITIONS[comp_key]["fd"]
     url = f"{FD_BASE}/competitions/{fd_code}/matches?season={season}&status=FINISHED"
-    raw = _get(url, {"X-Auth-Token": FOOTBALL_DATA_KEY}).get("matches", [])
+    raw = _get(url, {"X-Auth-Token": FOOTBALL_DATA_KEY}, provider="football_data").get("matches", [])
     matches = []
     for m in raw:
         h = m.get("homeTeam") or {}
@@ -686,7 +702,7 @@ def fetch_odds():
         return _ODDS_CACHE["data"]
     out = {}
     try:
-        events = _get(f"{ODDS_URL}&apiKey={ODDS_API_KEY}")
+        events = _get(f"{ODDS_URL}&apiKey={ODDS_API_KEY}", provider="odds_api")
     except Exception as e:
         if _is_quota_error(e):
             MARKET_STATE["quota_out"] = True
@@ -3198,7 +3214,7 @@ def fetch_outrights(code_map):
     if now - _OUT_CACHE["t"] < OUTRIGHTS_CACHE_MIN * 60 and _OUT_CACHE["data"]:
         DIAG.append("title odds: cached"); return _OUT_CACHE["data"]
     try:
-        events = _get(f"{OUTRIGHTS_URL}&apiKey={ODDS_API_KEY}")
+        events = _get(f"{OUTRIGHTS_URL}&apiKey={ODDS_API_KEY}", provider="odds_api")
     except Exception as e:
         if _is_quota_error(e):
             MARKET_STATE["quota_out"] = True
@@ -3836,7 +3852,7 @@ def build_team_of_tournament(matches, scorers, standings):
 
 def fetch_scorers():
     try:
-        d = _get(f"{FD_BASE}/competitions/{COMP["fd"]}/scorers?limit=20", {"X-Auth-Token": FOOTBALL_DATA_KEY})
+        d = _get(f"{FD_BASE}/competitions/{COMP["fd"]}/scorers?limit=20", {"X-Auth-Token": FOOTBALL_DATA_KEY}, provider="football_data")
     except Exception as e:
         DIAG.append(f"scorers: FAILED — {e}"); return []
     out = []

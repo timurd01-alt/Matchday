@@ -54,6 +54,16 @@ def load_entries(directory=UPDATES_DIR):
     if duplicates:
         clashing = sorted(e["_path"] for e in entries if e["rank"] in duplicates)
         raise ValueError("duplicate rank(s) %s in %s" % (sorted(duplicates), clashing))
+    # A gap doesn't break rendering (sorting by rank alone is enough), but it
+    # silently means the "newest" entry isn't actually the one with the
+    # highest rank a later addition assumed it would be -- confirmed live
+    # 2026-07-31, when two entries added back-to-back left a hole at 115 and
+    # the true newest one sorted second instead of first.
+    expected = set(range(1, len(ranks) + 1))
+    gaps = expected - set(ranks)
+    if gaps:
+        raise ValueError("rank sequence has gap(s) %s -- ranks must be 1..%d with none skipped"
+                         % (sorted(gaps), len(ranks)))
     entries.sort(key=lambda entry: -entry["rank"])
     return entries
 

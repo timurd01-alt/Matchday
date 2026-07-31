@@ -58,6 +58,34 @@ and conflicts on a large generated JSON. Change the *code* that produces them
 and let the scheduled run regenerate the data. If a branch already carries such
 a change, resolve in favour of `main`'s copy.
 
+## Provider quota is enforced, not assumed
+
+Confirmed live 2026-07-31: CFBD, CBBD, and The Odds API were all sitting at zero
+remaining calls for their current billing period, with no code anywhere aware
+of it — predictions and market data just quietly degraded to "no data" across
+the live site. `provider_quota.py` reads the real rate-limit header(s) every
+provider already returns on every response and persists them to
+`provider_quota_state.json` (gitignored, CI-cached the same way as
+`.ci_fetch_state.json` — see `deploy.yml`'s "Restore fetch state" step). A call
+is refused **before** it fires once a provider's tracked remaining budget hits
+its safety reserve, instead of firing blind and finding out via a 429.
+
+**This is automatic for CFBD, CBBD, BallDontLie, and API-Football** — any
+code that builds `CollegeFootballDataAdapter`, `CollegeBasketballDataAdapter`,
+`BallDontLieAdapter`, or `APISportsAdapter` (via `provider_adapters.py`, which
+every fetch/backfill/refresh script already does) is covered with zero extra
+work, because the enforcement lives in each adapter's default HTTP getter, not
+in each call site. football-data.org and The Odds API route through
+`fetch_data.py`'s own separate `_get()` and are tagged per call site with
+`provider="football_data"` / `provider="odds_api"`.
+
+**Adding a new provider or a new call site**: pass `provider="<key>"` to
+`_get_json`/`_get_csv_text` (or `fetch_data._get`) and add a `PROVIDER_SPECS`
+entry in `provider_quota.py` describing its real header names — read them off
+a live response first (`curl -i` or a one-off script), never assume a number.
+CFBD/CBBD in particular publish no rate-limit numbers in their docs; the
+reserve-based design works without ever knowing the true ceiling.
+
 ## Tests
 
 Run before considering prediction/data/provider changes complete:

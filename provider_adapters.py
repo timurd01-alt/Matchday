@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import csv
 import datetime as dt
+import functools
 import json
 import math
 import time
@@ -15,26 +16,70 @@ import urllib.parse
 import urllib.request
 
 from advanced_metrics import cfbd_advanced_team_profiles
+import provider_quota
 
 
 class ProviderError(RuntimeError):
     pass
 
 
-def _get_json(url, headers=None, timeout=25):
+def _get_json(url, headers=None, timeout=25, provider=None):
+    """`provider`, when given, gates the call against provider_quota's ledger
+    before it fires and records whatever quota header this response carried
+    afterward -- see provider_quota.py for why. Callers that never pass it
+    (tests, or a provider provider_quota doesn't know about) behave exactly
+    as before."""
+    if provider:
+        try:
+            provider_quota.check(provider)
+        except provider_quota.QuotaExceededError as exc:
+            # Surface as the same ProviderError every existing caller already
+            # falls back gracefully on -- a pre-flight refusal should look
+            # exactly like any other provider failure to code that never
+            # needs to know the difference.
+            raise ProviderError(str(exc)) from exc
     req = urllib.request.Request(url, headers=headers or {"User-Agent": "Matchday/1.0"})
     try:
         with urllib.request.urlopen(req, timeout=timeout) as response:
-            return json.loads(response.read().decode("utf-8"))
+            body = response.read()
+            if provider:
+                provider_quota.record_response(provider, response.headers)
+            return json.loads(body.decode("utf-8"))
+    except urllib.error.HTTPError as exc:
+        if provider:
+            error_body = ""
+            try:
+                error_body = exc.read().decode("utf-8", "replace")
+            except Exception:
+                pass
+            provider_quota.record_response(provider, exc.headers, error_body)
+        raise ProviderError(str(exc)) from exc
     except Exception as exc:
         raise ProviderError(str(exc)) from exc
 
 
-def _get_csv_text(url, headers=None, timeout=25):
+def _get_csv_text(url, headers=None, timeout=25, provider=None):
+    if provider:
+        try:
+            provider_quota.check(provider)
+        except provider_quota.QuotaExceededError as exc:
+            raise ProviderError(str(exc)) from exc
     req = urllib.request.Request(url, headers=headers or {"User-Agent": "Matchday/1.0"})
     try:
         with urllib.request.urlopen(req, timeout=timeout) as response:
-            return response.read().decode("utf-8")
+            text = response.read().decode("utf-8")
+            if provider:
+                provider_quota.record_response(provider, response.headers)
+            return text
+    except urllib.error.HTTPError as exc:
+        if provider:
+            error_body = ""
+            try:
+                error_body = exc.read().decode("utf-8", "replace")
+            except Exception:
+                pass
+            provider_quota.record_response(provider, exc.headers, error_body)
+        raise ProviderError(str(exc)) from exc
     except Exception as exc:
         raise ProviderError(str(exc)) from exc
 
@@ -478,7 +523,7 @@ class CollegeFootballDataAdapter:
     def __init__(self, api_key, getter=None, today=None):
         if not api_key:
             raise ProviderError("missing CFBD_KEY")
-        self.key, self.getter = api_key, getter or _get_json
+        self.key, self.getter = api_key, getter or functools.partial(_get_json, provider="cfbd")
         self.today = today or dt.date.today()
         self.season = self.today.year
         self._games = []
@@ -808,7 +853,7 @@ class CollegeBasketballDataAdapter:
     def __init__(self, api_key, getter=None, today=None):
         if not api_key:
             raise ProviderError("missing CBBD_KEY")
-        self.key, self.getter = api_key, getter or _get_json
+        self.key, self.getter = api_key, getter or functools.partial(_get_json, provider="cbbd")
         self.today = today or dt.date.today()
         # CBBD numbers a season by its ENDING year (confirmed live 2026-07-26:
         # season=2026 held the real Oct 2025-Apr 2026 schedule/polls) -- unlike
@@ -1188,7 +1233,7 @@ class BallDontLieAdapter:
         self.key = api_key
         self.competition = competition
         self.code = self.CODES[competition]
-        self.getter = getter or _get_json
+        self.getter = getter or functools.partial(_get_json, provider="balldontlie")
         self.today = today or dt.date.today()
         self.season = _current_season(self.code, self.today)
 
@@ -1425,7 +1470,7 @@ class APISportsAdapter:
         self.key = api_key
         self.competition = competition
         self.base = self.BASES[competition]
-        self.getter = getter or _get_json
+        self.getter = getter or functools.partial(_get_json, provider="api_football")
         self.today = today or dt.date.today()
         self.season = _current_season("nba" if competition == "NBA" else "nfl", self.today)
 
