@@ -1,0 +1,10 @@
+{
+ "rank": 116,
+ "date": "Build 0730C",
+ "tag": "Fix",
+ "title": "A placeholder team name can no longer enter the standings or the ratings",
+ "items": [
+  "The MLB standings table listed 31 clubs. The extra entry was named \"Unknown\" with a 1-1 record, created from a single provider game whose home and away sides both arrived without a resolvable team name; both sides were credited to the same placeholder, and the same game also wrote an Elo entry for that non-existent team.",
+  "Games with an unresolvable team name are now dropped at the provider boundary and skipped again by the standings, Elo and head-to-head builders, rather than being attributed to an invented club. The name was not recoverable from the feed, so the game is excluded instead of guessed. The stray \"Unknown\" rating entry has been removed, and the affected game is not marked as processed, so a corrected copy can still be graded normally."
+ ]
+}

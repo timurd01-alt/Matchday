@@ -1021,6 +1021,28 @@ class ProStandingsFormattingTests(unittest.TestCase):
         grouped = fetch_data._group_us_pro_standings(tables, "MLB")
         self.assertFalse(any(t["name"] == "Unknown" for g in grouped for t in g["teams"]))
 
+    def test_placeholder_side_never_becomes_a_31st_standings_team(self):
+        # Live 2026-07-30: data_mlb.json carried 31 MLB "teams" -- the extra
+        # one was named "Unknown" with a 1-1 record, both sides of a single
+        # game credited to the same phantom key.
+        finished = [
+            {"status": "FINISHED", "kickoff": "2026-07-15T00:00:00Z",
+             "home": {"name": "Unknown"}, "away": {"name": "Unknown"},
+             "score": {"home": 0, "away": 4}},
+            {"status": "FINISHED", "kickoff": "2026-07-15T00:00:00Z",
+             "home": {"name": "Boston Red Sox"}, "away": {"name": "TBD"},
+             "score": {"home": 3, "away": 1}},
+            {"status": "FINISHED", "kickoff": "2026-07-16T00:00:00Z",
+             "home": {"name": "Boston Red Sox"}, "away": {"name": "New York Yankees"},
+             "score": {"home": 5, "away": 2}},
+        ]
+        model, tables = fetch_data.compute_us_sport_standings(finished)
+        self.assertEqual(sorted(model), ["boston red sox", "new york yankees"])
+        # The one real game is still counted in full.
+        self.assertEqual(model["boston red sox"]["pld"], 1)
+        self.assertEqual([t["name"] for t in tables[0]["teams"]],
+                         ["Boston Red Sox", "New York Yankees"])
+
     def test_nfl_tie_counts_as_half_a_win_in_standings_percentage(self):
         self.assertEqual(fetch_data._pro_standings_pct({"pld": 2, "w": 1, "d": 1}), 0.75)
 
@@ -1751,6 +1773,25 @@ class EloSportScopeTests(unittest.TestCase):
         bball_pts_after, bball_conf_after = fetch_data.elo_strength("Kent State")
         self.assertEqual(bball_pts_after, bball_pts)
         self.assertEqual(bball_conf_after, bball_conf)
+
+    def test_placeholder_side_is_never_trained_into_the_elo_store(self):
+        # Live 2026-07-30: one BALLDONTLIE MLB game arrived with both sides
+        # named "Unknown", producing a permanent "baseball:unknown" entry
+        # (n=2) in the shared store -- a rating for a team that doesn't exist.
+        fetch_data.COMP_KEY = "MLB"
+        fetch_data.COMP = dict(fetch_data.COMPETITIONS["MLB"])
+        fetch_data.update_elo([
+            _finished("bdl-mlb-8712499", "Unknown", "Unknown", 0, 4,
+                      "2026-07-15T00:00:00Z", "a"),
+            _finished("bdl-mlb-8712500", "Boston Red Sox", "TBD", 3, 1,
+                      "2026-07-15T00:00:00Z", "h"),
+        ])
+        store = fetch_data._load_elo()
+        self.assertEqual(store["teams"], {})
+        # Not marked seen either -- a placeholder game is skipped, not
+        # recorded as processed, so a later resolved copy can still train.
+        self.assertEqual(store["seen"], {})
+        self.assertEqual(fetch_data.elo_strength("Boston Red Sox"), (0.0, 0.0))
 
     def test_h2h_pair_key_is_also_sport_scoped(self):
         # Same class of bug for the H2H store: two schools that happen to

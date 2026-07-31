@@ -8276,10 +8276,6 @@
   "basketball:bryant stratton ohio": {
    "r": 1494.481333818344,
    "n": 1
-  },
-  "baseball:unknown": {
-   "r": 1500.0,
-   "n": 2
   }
  },
  "seen": {
@@ -285729,7 +285725,6 @@
   "MLB:bdl-mlb-5059221": true,
   "MLB:bdl-mlb-5059222": true,
   "MLB:bdl-mlb-5059223": true,
-  "MLB:bdl-mlb-8712499": true,
   "MLB:bdl-mlb-5059225": true,
   "MLB:bdl-mlb-7746396": true,
   "MLB:bdl-mlb-5059226": true,

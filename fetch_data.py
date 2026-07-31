@@ -33,7 +33,8 @@ from provider_adapters import (ProviderError, BallDontLieAdapter,
                                CollegeFootballDataAdapter, NflverseAdapter,
                                SportsDataIOAdapter, SportmonksAdapter,
                                APISportsAdapter, normalized_score,
-                               season_form_from_matches, blend_season_history)
+                               season_form_from_matches, blend_season_history,
+                               is_placeholder_team_name)
 
 # Windows terminals default to a legacy codec that crashes on characters like the
 # checkmark or accented player names. Force UTF-8 so background prints never crash.
@@ -1370,6 +1371,11 @@ def update_elo(matches):
         seen_key = f"{COMP_KEY}:{mid}"
         # Honor legacy raw ids so an upgrade never double-trains old results.
         if seen_key in seen or mid in seen: continue
+        # Never train on a placeholder side: it creates a permanent fake team
+        # whose rating is then subtracted from the real opponent's, and marking
+        # it seen would bake that in (see PLACEHOLDER_TEAM_NAMES).
+        if any(is_placeholder_team_name((m.get(side) or {}).get("name"))
+               for side in ("home", "away")): continue
         hn, an = _elo_key(m["home"]["name"]), _elo_key(m["away"]["name"])
         rh = teams.setdefault(hn, {"r": 1500.0, "n": 0})
         ra = teams.setdefault(an, {"r": 1500.0, "n": 0})
@@ -1577,6 +1583,10 @@ def update_h2h(matches):
         if not mid: continue
         seen_key = f"{COMP_KEY}:{mid}"
         if seen_key in seen or mid in seen: continue
+        # Same placeholder guard as update_elo() -- a "unknown vs unknown"
+        # pair is a meeting between two teams that don't exist.
+        if any(is_placeholder_team_name((m.get(side) or {}).get("name"))
+               for side in ("home", "away")): continue
         hn, an = norm(m["home"]["name"]), norm(m["away"]["name"])
         log = pairs.setdefault(_pair_key(hn, an), [])
         log.append({"date": m.get("kickoff") or "", "home": hn, "winner": win})
@@ -4798,7 +4808,7 @@ def _group_us_pro_standings(tables, competition):
         if table.get("table_type") == "power_ratings":
             continue
         for team in table.get("teams") or []:
-            if team.get("name") and norm(team.get("name")) not in {"unknown", "tbd", "to be determined"}:
+            if team.get("name") and not is_placeholder_team_name(team.get("name")):
                 rows[norm(team["name"])] = dict(team)
     membership = {norm(name): group for group, names in layout.items() for name in names}
     grouped = {group: [] for group in layout}
@@ -4861,6 +4871,13 @@ def compute_us_sport_standings(matches):
         sc = m.get("score") or {}
         hs, as_ = sc.get("home"), sc.get("away")
         if hs is None or as_ is None:
+            continue
+        # Second line of defence behind the provider boundary: cached game
+        # files written by an earlier build can still hold placeholder-named
+        # sides, and crediting one invents a team in the standings table
+        # (see PLACEHOLDER_TEAM_NAMES in provider_adapters).
+        if any(is_placeholder_team_name((m.get(side) or {}).get("name"))
+               for side in ("home", "away")):
             continue
         for side, pf, pa in ((m["home"], hs, as_), (m["away"], as_, hs)):
             key = norm(side.get("name"))
