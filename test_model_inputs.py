@@ -5,6 +5,7 @@ import unittest
 from unittest import mock
 
 import fetch_data
+import provider_adapters
 import refresh_college_talent
 
 
@@ -313,6 +314,101 @@ class ModelInputTests(unittest.TestCase):
         self.assertLess(abs(stale_pred["why"]["record"]), abs(fresh_pred["why"]["record"]))
         self.assertEqual(stale_pred["data_quality"]["level"], "preseason")
         self.assertNotEqual(fresh_pred["data_quality"]["level"], "preseason")
+
+
+class MultiSeasonCollegeSampleTests(unittest.TestCase):
+    """College football plays ~13 games a season, so one season is a thin
+    sample and preseason there is none at all. The provider layer summarises
+    several seasons; predict() may only spend the confidence the current
+    season has NOT earned on it."""
+
+    def setUp(self):
+        self.old_key, self.old_comp = fetch_data.COMP_KEY, fetch_data.COMP
+        fetch_data.COMP_KEY = "NCAAF"
+        fetch_data.COMP = dict(fetch_data.COMPETITIONS["NCAAF"])
+
+    def tearDown(self):
+        fetch_data.COMP_KEY, fetch_data.COMP = self.old_key, self.old_comp
+
+    def test_established_season_is_completely_unaffected(self):
+        """The whole change has to be a no-op once the sample is full."""
+        full = {"pld": 12, "w": 9, "l": 3, "win_pct": 9 / 12, "gf": 340, "ga": 240, "form": ""}
+        home, away = {**full, "name": "Alpha"}, {**full, "name": "Beta", "w": 4, "l": 8, "win_pct": 4 / 12}
+        without = fetch_data.predict(home, away, {})
+        deep = {"multi_win_pct": 0.15, "multi_margin": -20.0, "multi_games": 40}
+        with_history = fetch_data.predict({**home, **deep}, {**away, **deep}, {})
+        self.assertAlmostEqual(without["why"]["record"], with_history["why"]["record"], places=6)
+        self.assertAlmostEqual(without["why"]["margin"], with_history["why"]["margin"], places=6)
+
+    def test_preseason_record_comes_from_the_multi_season_sample(self):
+        blank = {"pld": 0, "w": 0, "l": 0, "gf": 0, "ga": 0, "form": ""}
+        home = {**blank, "name": "Strong", "multi_win_pct": 0.82, "multi_margin": 18.0, "multi_games": 38}
+        away = {**blank, "name": "Weak", "multi_win_pct": 0.24, "multi_margin": -14.0, "multi_games": 38}
+        bare = fetch_data.predict({**blank, "name": "Strong"}, {**blank, "name": "Weak"}, {})
+        deep = fetch_data.predict(home, away, {})
+        # With no sample at all, record and margin used to be exactly zero.
+        self.assertEqual(bare["why"]["record"], 0.0)
+        self.assertEqual(bare["why"]["margin"], 0.0)
+        self.assertGreater(deep["why"]["record"], 0.0)
+        self.assertGreater(deep["why"]["margin"], 0.0)
+        self.assertGreater(deep["confidence"], bare["confidence"])
+
+    def test_thin_history_is_trusted_proportionally(self):
+        blank = {"pld": 0, "w": 0, "l": 0, "gf": 0, "ga": 0, "form": ""}
+        strong = {"multi_win_pct": 0.9, "multi_margin": 20.0}
+        deep = fetch_data.predict({**blank, "name": "A", **strong, "multi_games": 40},
+                                  {**blank, "name": "B"}, {})
+        thin = fetch_data.predict({**blank, "name": "A", **strong, "multi_games": 4},
+                                  {**blank, "name": "B"}, {})
+        self.assertGreater(deep["why"]["record"], thin["why"]["record"])
+        self.assertGreater(thin["why"]["record"], 0.0)
+
+    def test_missing_history_changes_nothing(self):
+        blank = {"pld": 4, "w": 3, "l": 1, "win_pct": 0.75, "gf": 120, "ga": 90, "form": ""}
+        home, away = {**blank, "name": "A"}, {**blank, "name": "B", "w": 1, "l": 3, "win_pct": 0.25}
+        self.assertEqual(fetch_data.predict(home, away, {})["why"]["record"],
+                         fetch_data.predict({**home, "multi_win_pct": None},
+                                            {**away, "multi_win_pct": None}, {})["why"]["record"])
+
+
+class SeasonHistoryAggregationTests(unittest.TestCase):
+    def test_finished_games_aggregate_into_record_and_points(self):
+        agg = provider_adapters.season_form_from_matches([
+            finished("1", "A", "B", 30, 10),
+            finished("2", "B", "A", 20, 20),
+            {**finished("3", "A", "B", 7, 21), "status": "UPCOMING"},
+        ])
+        self.assertEqual(agg["A"], {"w": 1, "l": 0, "t": 1, "pf": 50, "pa": 30, "games": 2})
+        self.assertEqual(agg["B"]["l"], 1)
+        self.assertEqual(agg["B"]["games"], 2)
+
+    def test_recent_seasons_outweigh_older_ones(self):
+        recent = {"A": {"w": 10, "l": 0, "t": 0, "pf": 400, "pa": 100, "games": 10}}
+        old = {"A": {"w": 0, "l": 10, "t": 0, "pf": 100, "pa": 400, "games": 10}}
+        newer_good = provider_adapters.blend_season_history([(2026, recent), (2024, old)])
+        newer_bad = provider_adapters.blend_season_history([(2026, old), (2024, recent)])
+        self.assertGreater(newer_good["a"]["multi_win_pct"], newer_bad["a"]["multi_win_pct"])
+        self.assertGreater(newer_good["a"]["multi_margin"], 0)
+        self.assertEqual(newer_good["a"]["multi_games"], 20)
+        self.assertEqual(newer_good["a"]["multi_seasons"], [2026, 2024])
+
+    def test_empty_seasons_are_ignored_not_counted_as_zero(self):
+        agg = {"A": {"w": 8, "l": 4, "t": 0, "pf": 300, "pa": 200, "games": 12}}
+        with_gap = provider_adapters.blend_season_history([(2026, agg), (2025, {}), (2024, None)])
+        alone = provider_adapters.blend_season_history([(2026, agg)])
+        self.assertAlmostEqual(with_gap["a"]["multi_win_pct"], alone["a"]["multi_win_pct"])
+        self.assertEqual(with_gap["a"]["multi_seasons"], [2026])
+
+    def test_history_is_attached_to_standings_rows(self):
+        history = {"alpha": {"name": "Alpha", "multi_win_pct": 0.7, "multi_margin": 9.0,
+                             "multi_games": 25, "multi_seasons": [2026, 2025]}}
+        model = {"alpha": {"name": "Alpha"}}
+        tables = [{"group": "SEC", "teams": [{"name": "Alpha"}, {"name": "Nobody"}]}]
+        applied = fetch_data.apply_season_history(history, model, tables)
+        self.assertEqual(applied, 2)
+        self.assertEqual(model["alpha"]["multi_games"], 25)
+        self.assertEqual(tables[0]["teams"][0]["multi_seasons"], [2026, 2025])
+        self.assertNotIn("multi_games", tables[0]["teams"][1])
 
 
 class RatingsLookupTests(unittest.TestCase):

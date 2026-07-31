@@ -32,7 +32,8 @@ from provider_adapters import (ProviderError, BallDontLieAdapter,
                                CollegeBasketballDataAdapter,
                                CollegeFootballDataAdapter, NflverseAdapter,
                                SportsDataIOAdapter, SportmonksAdapter,
-                               APISportsAdapter, normalized_score)
+                               APISportsAdapter, normalized_score,
+                               season_form_from_matches, blend_season_history)
 
 # Windows terminals default to a legacy codec that crashes on characters like the
 # checkmark or accented player names. Force UTF-8 so background prints never crash.
@@ -2038,10 +2039,29 @@ def predict(home, away, markets, m=None):
             # Pro sports have no verified roster-quality feed today, making
             # market power their full (but explicitly named) long-term prior.
             market_scale = 0.35 if COMP_KEY in {"NCAAF", "NCAAM"} else 1.0
+            # Whatever confidence the current season hasn't earned is offered to
+            # the recency-weighted multi-season history, when the provider layer
+            # supplied one (college only today -- see
+            # fetch_college_season_history). This is strictly additive: at
+            # reliability 1.0 the depth term is multiplied by zero and the two
+            # lines below are exactly what they were before, so no established
+            # in-season prediction moves. What changes is preseason and the
+            # opening weeks, where record/margin used to contribute nothing at
+            # all and a 13-game sport had to lean entirely on talent and polls.
+            depth_gap = max(0.0, 1.0 - reliability)
+            multi_wp, multi_mg = s.get("multi_win_pct"), s.get("multi_margin")
+            multi_conf = (min(1.0, int(s.get("multi_games") or 0) / (float(american_cfg["full"]) * 2.0))
+                          if multi_wp is not None else 0.0)
+            depth_w = depth_gap * multi_conf
+            record_signal = (win_pct - 0.5) * reliability
+            margin_signal = _clamp(margin / american_cfg["margin"], -1.5, 1.5) * reliability
+            if depth_w > 0:
+                record_signal += (float(multi_wp) - 0.5) * depth_w
+                margin_signal += _clamp(float(multi_mg or 0.0) / american_cfg["margin"], -1.5, 1.5) * depth_w
             return {
                 "base": 4.0,
-                "record": (win_pct - 0.5) * 8.0 * reliability,
-                "margin": _clamp(margin / american_cfg["margin"], -1.5, 1.5) * 2.0 * reliability,
+                "record": record_signal * 8.0,
+                "margin": margin_signal * 2.0,
                 "form": (fp - form_center) * 0.22 * reliability if form_games else 0.0,
                 "adv": american_cfg["home"] if adv else 0.0,
                 # rp["fifa"] is a soccer-only signal -- American sports never
@@ -5094,12 +5114,117 @@ def fetch_college_bundle():
         (past if kickoff <= now else future).append((kickoff, match))
     # Keep the dashboard responsive: enough recent context plus the nearest slate,
     # while standings and projections still use the complete season bundle.
+    # A 160-fixture window is barely two weeks of college football (Week 1 alone
+    # is ~99 FBS games), which is why the published slate kept stopping at Week
+    # 2. Roughly a month of scheduled games is a far more useful horizon, and a
+    # fixture serializes to ~2KB that gzips heavily, so this stays a modest
+    # transfer cost for a much larger published schedule.
+    future_window = {"NCAAF": 420, "NCAAM": 300}.get(COMP_KEY, 160)
     matches = [match for _, match in sorted(past, key=lambda item: item[0])[-40:]]
-    matches += [match for _, match in sorted(future, key=lambda item: item[0])[:160]]
+    matches += [match for _, match in sorted(future, key=lambda item: item[0])[:future_window]]
     matches.sort(key=lambda match: match.get("kickoff") or "")
+    try:
+        history = fetch_college_season_history(adapter, provider_name, all_matches)
+        applied = apply_season_history(history, st, tables)
+        DIAG.append(f"{provider_name} history: applied to {applied} standings rows")
+    except Exception as exc:
+        # A thin sample is a degraded prediction, not a broken build.
+        DIAG.append(f"{provider_name} history: skipped ({exc})")
     DIAG.append(f"{provider_name} fixtures: {len(matches)} in display window ({len(all_matches)} season total)")
     DIAG.append(f"{provider_name} standings: {sum(len(g.get('teams') or []) for g in tables)} teams")
     return adapter, matches, st, tables
+
+
+COLLEGE_HISTORY_SEASONS = 3   # the season in progress plus two completed ones
+
+
+def fetch_college_season_history(adapter, provider_name, current_matches):
+    """Recency-weighted multi-season form for the current college field.
+
+    A college football season is 12-13 games and a college basketball season
+    ~30, so a single season is a thin basis for record and scoring-margin --
+    and in the weeks before a season opens there is no sample at all, which is
+    exactly when the schedule is full of games people want a read on.
+
+    Completed seasons are immutable, so each one is fetched at most once ever
+    and kept in a cache with no TTL. Only the season in progress comes from
+    this run's live schedule. That keeps the ongoing provider cost at zero
+    extra requests per build once the cache is warm -- worth stating plainly
+    because CBBD charges four windowed requests per season (see
+    CollegeBasketballDataAdapter._season_rows).
+    """
+    cache_file = f"college_{COMP_KEY.lower()}_history_cache.json"
+    try:
+        with open(cache_file, encoding="utf-8") as handle:
+            cached = json.load(handle)
+    except Exception:
+        cached = {}
+    if not isinstance(cached, dict):
+        cached = {}
+    seasons = [(adapter.season, season_form_from_matches(current_matches))]
+    fetched = []
+    for offset in range(1, COLLEGE_HISTORY_SEASONS):
+        year = adapter.season - offset
+        key = str(year)
+        if key in cached:
+            seasons.append((year, cached[key]))
+            continue
+        try:
+            agg = season_form_from_matches(adapter.historical_matches(year))
+        except ProviderError as exc:
+            DIAG.append(f"{provider_name} history: {year} unavailable ({exc})")
+            continue
+        except Exception as exc:
+            DIAG.append(f"{provider_name} history: {year} failed ({exc})")
+            continue
+        if not agg:
+            # Distinguish "provider has no data for this year" from a failure:
+            # don't cache an empty year, or a provider gap becomes permanent.
+            DIAG.append(f"{provider_name} history: {year} returned no completed games")
+            continue
+        cached[key] = agg
+        fetched.append(year)
+        seasons.append((year, agg))
+    if fetched:
+        try:
+            tmp = cache_file + ".tmp"
+            with open(tmp, "w", encoding="utf-8") as handle:
+                json.dump(cached, handle, ensure_ascii=False)
+            os.replace(tmp, cache_file)
+        except Exception as exc:
+            DIAG.append(f"{provider_name} history: cache write failed ({exc})")
+    history = blend_season_history(seasons)
+    covered = sorted((year for year, agg in seasons if agg), reverse=True)
+    wanted = COLLEGE_HISTORY_SEASONS
+    if fetched:
+        source = f"fetched {fetched}"
+    elif len(covered) >= wanted:
+        source = "cache warm"
+    else:
+        # Saying "cache warm" here hid the fact that prior seasons were missing
+        # because the provider refused them, which is the difference between a
+        # deep sample and today's single-season one.
+        source = f"only {len(covered)}/{wanted} seasons available"
+    DIAG.append(f"{provider_name} history: {len(history)} teams across seasons {covered} ({source})")
+    return history
+
+
+def apply_season_history(history, standings_model, tables):
+    """Attach the multi-season summary to every standings row that has one."""
+    applied = 0
+    rows = list((standings_model or {}).values())
+    for table in tables or []:
+        rows.extend(table.get("teams") or [])
+    for row in rows:
+        entry = history.get(str(row.get("name") or "").lower())
+        if not entry:
+            continue
+        row["multi_win_pct"] = entry["multi_win_pct"]
+        row["multi_margin"] = entry["multi_margin"]
+        row["multi_games"] = entry["multi_games"]
+        row["multi_seasons"] = entry["multi_seasons"]
+        applied += 1
+    return applied
 
 
 def fetch_college_leaders(adapter, provider_name):

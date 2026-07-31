@@ -133,6 +133,93 @@ def _short_code(name):
     return "".join(word[0] for word in words[:4]).upper() or str(name or "")[:4].upper()
 
 
+# ---- multi-season college form -----------------------------------------
+# A college football season is only 12-13 games, and before Week 1 there is no
+# sample at all -- so record and scoring margin, two of the model's main
+# in-season signals, are either thin or entirely absent for the games people
+# most want read. These helpers summarise several seasons of real results into
+# one recency-weighted view. Weights are newest-first: the season in progress
+# counts fully, the one before it a little over half, the one before that under
+# a third, because roster turnover makes older seasons weaker evidence without
+# making them worthless.
+SEASON_RECENCY_WEIGHTS = (1.0, 0.55, 0.30)
+
+
+def season_form_from_matches(matches):
+    """Per-team wins/losses/ties and points for/against from finished games.
+
+    Takes the *normalized* match shape every adapter's schedule() already
+    returns, so one implementation serves both college providers despite their
+    raw payloads differing.
+    """
+    agg = {}
+    for match in matches or []:
+        if match.get("status") != "FINISHED":
+            continue
+        score = match.get("score") or {}
+        home_pts, away_pts = score.get("home"), score.get("away")
+        if home_pts is None or away_pts is None:
+            continue
+        home_pts, away_pts = _number(home_pts, 0), _number(away_pts, 0)
+        for side, opp_side, pf, pa in (("home", "away", home_pts, away_pts),
+                                       ("away", "home", away_pts, home_pts)):
+            name = ((match.get(side) or {}).get("name") or "").strip()
+            if not name:
+                continue
+            rec = agg.setdefault(name, {"w": 0, "l": 0, "t": 0, "pf": 0, "pa": 0, "games": 0})
+            rec["w" if pf > pa else "l" if pa > pf else "t"] += 1
+            rec["pf"] += pf
+            rec["pa"] += pa
+            rec["games"] += 1
+    return agg
+
+
+def blend_season_history(seasons):
+    """Combine per-season aggregates into one recency-weighted view.
+
+    `seasons` is an iterable of (year, aggregate) newest-first, where each
+    aggregate is season_form_from_matches() output. Returns
+    {team_lower: {multi_win_pct, multi_margin, multi_games, multi_seasons}}.
+
+    Rates are weighted by weight x games, so a season a team barely played
+    (or one still in its opening weeks) contributes proportionally rather than
+    counting the same as a completed one.
+    """
+    blended = {}
+    for index, (year, agg) in enumerate(seasons or []):
+        weight = (SEASON_RECENCY_WEIGHTS[index] if index < len(SEASON_RECENCY_WEIGHTS)
+                  else SEASON_RECENCY_WEIGHTS[-1] / (index - len(SEASON_RECENCY_WEIGHTS) + 2))
+        for name, rec in (agg or {}).items():
+            games = int(rec.get("games") or 0)
+            if games < 1:
+                continue
+            slot = blended.setdefault(name.lower(), {
+                "_name": name, "_wp_num": 0.0, "_mg_num": 0.0, "_den": 0.0,
+                "multi_games": 0, "multi_seasons": [],
+            })
+            wins = float(rec.get("w") or 0) + 0.5 * float(rec.get("t") or 0)
+            margin = (float(rec.get("pf") or 0) - float(rec.get("pa") or 0)) / games
+            mass = weight * games
+            slot["_wp_num"] += (wins / games) * mass
+            slot["_mg_num"] += margin * mass
+            slot["_den"] += mass
+            slot["multi_games"] += games
+            if year not in slot["multi_seasons"]:
+                slot["multi_seasons"].append(year)
+    out = {}
+    for key, slot in blended.items():
+        if slot["_den"] <= 0:
+            continue
+        out[key] = {
+            "name": slot["_name"],
+            "multi_win_pct": round(slot["_wp_num"] / slot["_den"], 5),
+            "multi_margin": round(slot["_mg_num"] / slot["_den"], 4),
+            "multi_games": slot["multi_games"],
+            "multi_seasons": sorted(slot["multi_seasons"], reverse=True),
+        }
+    return out
+
+
 class SportsDataIOAdapter:
     BASE = "https://api.sportsdata.io/v3"
 
@@ -387,9 +474,21 @@ class CollegeFootballDataAdapter:
     def schedule(self):
         rows = self._get("/games", {"year": self.season, "seasonType": "regular", "classification": "fbs"})
         self._games = rows if isinstance(rows, list) else []
+        return self._matches_from_rows(self._games)
+
+    def historical_matches(self, year):
+        """One completed prior season, in the same normalized match shape.
+
+        Feeds season_form_from_matches(). A finished season never changes, so
+        callers are expected to cache the result rather than re-request it.
+        """
+        rows = self._get("/games", {"year": year, "seasonType": "regular", "classification": "fbs"})
+        return self._matches_from_rows(rows if isinstance(rows, list) else [])
+
+    def _matches_from_rows(self, rows):
         matches = []
         now = dt.datetime.now(dt.timezone.utc)
-        for row in self._games:
+        for row in rows:
             home, away = row.get("homeTeam"), row.get("awayTeam")
             if not home or not away:
                 continue
@@ -707,24 +806,42 @@ class CollegeBasketballDataAdapter:
         if params: url += "?" + urllib.parse.urlencode(params)
         return self.getter(url, {"Authorization": f"Bearer {self.key}", "User-Agent": "Matchday/1.0"})
 
-    def schedule(self):
-        team_rows = self._get("/teams")
-        self._d1_teams = {str(row.get("school")) for row in team_rows if row.get("school") and row.get("conference")}
+    def _season_rows(self, season):
         # The endpoint deliberately caps responses at 3,000 rows. Four bounded
         # season windows retrieve the complete Division I schedule without loss.
-        windows = ((f"{self.season - 1}-10-01T00:00:00Z", f"{self.season - 1}-12-01T00:00:00Z"),
-                   (f"{self.season - 1}-12-01T00:00:00Z", f"{self.season}-02-01T00:00:00Z"),
-                   (f"{self.season}-02-01T00:00:00Z", f"{self.season}-04-01T00:00:00Z"),
-                   (f"{self.season}-04-01T00:00:00Z", f"{self.season}-05-16T00:00:00Z"))
+        windows = ((f"{season - 1}-10-01T00:00:00Z", f"{season - 1}-12-01T00:00:00Z"),
+                   (f"{season - 1}-12-01T00:00:00Z", f"{season}-02-01T00:00:00Z"),
+                   (f"{season}-02-01T00:00:00Z", f"{season}-04-01T00:00:00Z"),
+                   (f"{season}-04-01T00:00:00Z", f"{season}-05-16T00:00:00Z"))
         by_id = {}
         for start, end in windows:
-            chunk = self._get("/games", {"season": self.season, "startDateRange": start, "endDateRange": end})
+            chunk = self._get("/games", {"season": season, "startDateRange": start, "endDateRange": end})
             for row in chunk if isinstance(chunk, list) else []:
                 by_id[str(row.get("id"))] = row
         rows = list(by_id.values())
-        self._games = [row for row in rows if row.get("homeTeam") in self._d1_teams or row.get("awayTeam") in self._d1_teams] if isinstance(rows, list) else []
+        return [row for row in rows
+                if row.get("homeTeam") in self._d1_teams or row.get("awayTeam") in self._d1_teams]
+
+    def schedule(self):
+        team_rows = self._get("/teams")
+        self._d1_teams = {str(row.get("school")) for row in team_rows if row.get("school") and row.get("conference")}
+        self._games = self._season_rows(self.season)
+        return self._matches_from_rows(self._games)
+
+    def historical_matches(self, year):
+        """One completed prior season, in the same normalized match shape.
+
+        Costs four windowed requests per season (see _season_rows), so callers
+        must cache this -- a finished season never changes.
+        """
+        if not getattr(self, "_d1_teams", None):
+            team_rows = self._get("/teams")
+            self._d1_teams = {str(row.get("school")) for row in team_rows if row.get("school") and row.get("conference")}
+        return self._matches_from_rows(self._season_rows(year))
+
+    def _matches_from_rows(self, rows):
         matches = []
-        for row in self._games:
+        for row in rows:
             home, away = row.get("homeTeam"), row.get("awayTeam")
             if not home or not away: continue
             raw = str(row.get("status") or "").lower()
