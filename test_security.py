@@ -61,6 +61,34 @@ class DeploymentSecurityTests(unittest.TestCase):
         self.assertTrue(refs)
         self.assertTrue(all(re.fullmatch(r"[0-9a-f]{40}", ref) for ref in refs))
 
+    def test_roi_endpoint_fails_closed_without_a_configured_token(self):
+        source = (ROOT / "api" / "roi.js").read_text(encoding="utf-8")
+        self.assertIn('const configured = process.env.ROI_ACCESS_TOKEN || "";', source)
+        self.assertIn("if (!configured) return false;", source)
+
+    def test_roi_endpoint_compares_the_token_in_constant_time(self):
+        source = (ROOT / "api" / "roi.js").read_text(encoding="utf-8")
+        self.assertIn("crypto.timingSafeEqual", source)
+        self.assertNotRegex(source, r"authorization[^\n]*===\s*(configured|process\.env)")
+
+    def test_roi_endpoint_does_not_fabricate_prediction_market_data(self):
+        source = (ROOT / "api" / "roi.js").read_text(encoding="utf-8")
+        self.assertIn('status: "not_connected"', source)
+        self.assertNotIn("polymarket.com", source)
+        self.assertNotIn("clob.polymarket", source)
+
+    def test_roi_page_is_not_linked_from_the_public_nav(self):
+        markup = (ROOT / "index.html").read_text(encoding="utf-8")
+        self.assertNotIn("roi.html", markup)
+
+    def test_roi_page_is_not_published_to_the_public_github_pages_site(self):
+        workflow = (ROOT / ".github" / "workflows" / "deploy.yml").read_text(encoding="utf-8")
+        self.assertNotIn("roi.html", workflow)
+
+    def test_roi_page_opts_out_of_search_indexing(self):
+        markup = (ROOT / "roi.html").read_text(encoding="utf-8")
+        self.assertIn('name="robots" content="noindex, nofollow"', markup)
+
 
 if __name__ == "__main__":
     unittest.main()
