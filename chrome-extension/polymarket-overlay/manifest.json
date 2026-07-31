@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "Matchday Edge Overlay (personal build)",
+  "version": "0.1.0",
+  "description": "Personal-use overlay: shows Matchday's model probability next to Polymarket's live price while you browse a market.",
+  "permissions": ["storage", "offscreen"],
+  "host_permissions": [
+    "https://polymarket.com/*",
+    "https://gamma-api.polymarket.com/*",
+    "https://clob.polymarket.com/*",
+    "wss://ws-subscriptions-clob.polymarket.com/*",
+    "https://matchdayterminal.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://polymarket.com/event/*"],
+      "js": ["content.js"],
+      "css": ["overlay.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Matchday Edge Overlay"
+  }
+}
