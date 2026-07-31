@@ -271,7 +271,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-30T22:20:42.377270Z",
+   "observed_at": "2026-07-31T14:45:08.548475Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -567,7 +567,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-30T22:20:42.377313Z",
+   "observed_at": "2026-07-31T14:45:08.548509Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -856,7 +856,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-30T22:20:42.377338Z",
+   "observed_at": "2026-07-31T14:45:08.548533Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -1145,7 +1145,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-30T22:20:42.377362Z",
+   "observed_at": "2026-07-31T14:45:08.548569Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -1432,7 +1432,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-30T22:20:42.377383Z",
+   "observed_at": "2026-07-31T14:45:08.548589Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -1992,7 +1992,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-30T22:20:42.377405Z",
+   "observed_at": "2026-07-31T14:45:08.548609Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -2281,7 +2281,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-30T22:20:42.377426Z",
+   "observed_at": "2026-07-31T14:45:08.548627Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -2570,7 +2570,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-30T22:20:42.377447Z",
+   "observed_at": "2026-07-31T14:45:08.548645Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -2859,7 +2859,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-30T22:20:42.377468Z",
+   "observed_at": "2026-07-31T14:45:08.548664Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -3146,7 +3146,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-30T22:20:42.377489Z",
+   "observed_at": "2026-07-31T14:45:08.548681Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -3433,7 +3433,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-30T22:20:42.377510Z",
+   "observed_at": "2026-07-31T14:45:08.548699Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -3715,7 +3715,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-30T22:20:42.377531Z",
+   "observed_at": "2026-07-31T14:45:08.548717Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -3996,7 +3996,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-30T22:20:42.377552Z",
+   "observed_at": "2026-07-31T14:45:08.548735Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -4278,7 +4278,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-30T22:20:42.377572Z",
+   "observed_at": "2026-07-31T14:45:08.548754Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -4560,7 +4560,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-30T22:20:42.377593Z",
+   "observed_at": "2026-07-31T14:45:08.548772Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -4841,7 +4841,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-30T22:20:42.377613Z",
+   "observed_at": "2026-07-31T14:45:08.548790Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -5123,7 +5123,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-30T22:20:42.377633Z",
+   "observed_at": "2026-07-31T14:45:08.548808Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -5669,7 +5669,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-30T22:20:42.377654Z",
+   "observed_at": "2026-07-31T14:45:08.548827Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -5951,7 +5951,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-30T22:20:42.377675Z",
+   "observed_at": "2026-07-31T14:45:08.548844Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -6233,7 +6233,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-30T22:20:42.377697Z",
+   "observed_at": "2026-07-31T14:45:08.548862Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -6515,7 +6515,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-30T22:20:42.377718Z",
+   "observed_at": "2026-07-31T14:45:08.548880Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -6795,7 +6795,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-30T22:20:42.377738Z",
+   "observed_at": "2026-07-31T14:45:08.548898Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -7077,7 +7077,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-30T22:20:42.377759Z",
+   "observed_at": "2026-07-31T14:45:08.548916Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -7359,7 +7359,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-30T22:20:42.377779Z",
+   "observed_at": "2026-07-31T14:45:08.548935Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -7641,7 +7641,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-30T22:20:42.377799Z",
+   "observed_at": "2026-07-31T14:45:08.548954Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -7922,7 +7922,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-30T22:20:42.377819Z",
+   "observed_at": "2026-07-31T14:45:08.548972Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -8215,7 +8215,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-30T22:20:42.377839Z",
+   "observed_at": "2026-07-31T14:45:08.548990Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -8508,7 +8508,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-30T22:20:42.377860Z",
+   "observed_at": "2026-07-31T14:45:08.549007Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -8799,7 +8799,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-30T22:20:42.377881Z",
+   "observed_at": "2026-07-31T14:45:08.549025Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -9092,7 +9092,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-30T22:20:42.377901Z",
+   "observed_at": "2026-07-31T14:45:08.549042Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -9385,7 +9385,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-30T22:20:42.377921Z",
+   "observed_at": "2026-07-31T14:45:08.549059Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -9676,7 +9676,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-30T22:20:42.377941Z",
+   "observed_at": "2026-07-31T14:45:08.549077Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -9969,7 +9969,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-30T22:20:42.377961Z",
+   "observed_at": "2026-07-31T14:45:08.549094Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -10262,7 +10262,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-30T22:20:42.377980Z",
+   "observed_at": "2026-07-31T14:45:08.549111Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -10555,7 +10555,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-30T22:20:42.378001Z",
+   "observed_at": "2026-07-31T14:45:08.549129Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -10848,7 +10848,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-30T22:20:42.378021Z",
+   "observed_at": "2026-07-31T14:45:08.549146Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -11141,7 +11141,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-30T22:20:42.378041Z",
+   "observed_at": "2026-07-31T14:45:08.549164Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -11434,7 +11434,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-30T22:20:42.378060Z",
+   "observed_at": "2026-07-31T14:45:08.549182Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -11725,7 +11725,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-30T22:20:42.378080Z",
+   "observed_at": "2026-07-31T14:45:08.549199Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -12018,7 +12018,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-30T22:20:42.378100Z",
+   "observed_at": "2026-07-31T14:45:08.549216Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -12309,7 +12309,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-30T22:20:42.378138Z",
+   "observed_at": "2026-07-31T14:45:08.549234Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -12602,7 +12602,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-30T22:20:42.378162Z",
+   "observed_at": "2026-07-31T14:45:08.549256Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -13035,7 +13035,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-30T22:20:42.378184Z",
+   "observed_at": "2026-07-31T14:45:08.549274Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -13470,7 +13470,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-30T22:20:42.378204Z",
+   "observed_at": "2026-07-31T14:45:08.549291Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -13905,7 +13905,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-30T22:20:42.378225Z",
+   "observed_at": "2026-07-31T14:45:08.549310Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -14340,7 +14340,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-30T22:20:42.378246Z",
+   "observed_at": "2026-07-31T14:45:08.549328Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -14763,9 +14763,27 @@
    "affects_prediction": false,
    "user_visible": false
   },
-  "result": null,
-  "model_result": null,
-  "market_result": null
+  "result": "h",
+  "model_result": "h",
+  "market_result": "h",
+  "score": "5-4",
+  "result_snapshot": {
+   "display": {
+    "home": 5,
+    "away": 4
+   },
+   "regulation": null,
+   "penalties": null,
+   "ultimate_winner": "h",
+   "observed_at": "2026-07-31T14:45:08.549345Z",
+   "source": "provider"
+  },
+  "model_hit": true,
+  "market_hit": null,
+  "upset_hit": false,
+  "brier3": 0.289,
+  "log_loss": 0.478,
+  "result_corrections": []
  },
  "bdl-mlb-5059410": {
   "schema_ver": 2,
@@ -15178,9 +15196,27 @@
    "affects_prediction": false,
    "user_visible": false
   },
-  "result": null,
-  "model_result": null,
-  "market_result": null
+  "result": "h",
+  "model_result": "h",
+  "market_result": "h",
+  "score": "4-2",
+  "result_snapshot": {
+   "display": {
+    "home": 4,
+    "away": 2
+   },
+   "regulation": null,
+   "penalties": null,
+   "ultimate_winner": "h",
+   "observed_at": "2026-07-31T14:45:08.549362Z",
+   "source": "provider"
+  },
+  "model_hit": true,
+  "market_hit": null,
+  "upset_hit": false,
+  "brier3": 0.423,
+  "log_loss": 0.616,
+  "result_corrections": []
  },
  "bdl-mlb-5059411": {
   "schema_ver": 2,
@@ -15595,9 +15631,27 @@
    "affects_prediction": false,
    "user_visible": false
   },
-  "result": null,
-  "model_result": null,
-  "market_result": null
+  "result": "h",
+  "model_result": "h",
+  "market_result": "h",
+  "score": "3-2",
+  "result_snapshot": {
+   "display": {
+    "home": 3,
+    "away": 2
+   },
+   "regulation": null,
+   "penalties": null,
+   "ultimate_winner": "h",
+   "observed_at": "2026-07-31T14:45:08.549380Z",
+   "source": "provider"
+  },
+  "model_hit": false,
+  "market_hit": null,
+  "upset_hit": true,
+  "brier3": 1.066,
+  "log_loss": 1.309,
+  "result_corrections": []
  },
  "bdl-mlb-5059413": {
   "schema_ver": 2,
@@ -16012,9 +16066,27 @@
    "affects_prediction": false,
    "user_visible": false
   },
-  "result": null,
-  "model_result": null,
-  "market_result": null
+  "result": "a",
+  "model_result": "a",
+  "market_result": "a",
+  "score": "4-5",
+  "result_snapshot": {
+   "display": {
+    "home": 4,
+    "away": 5
+   },
+   "regulation": null,
+   "penalties": null,
+   "ultimate_winner": "a",
+   "observed_at": "2026-07-31T14:45:08.549397Z",
+   "source": "provider"
+  },
+  "model_hit": true,
+  "market_hit": null,
+  "upset_hit": false,
+  "brier3": 0.072,
+  "log_loss": 0.211,
+  "result_corrections": []
  },
  "bdl-mlb-5059414": {
   "schema_ver": 2,
@@ -16427,9 +16499,27 @@
    "affects_prediction": false,
    "user_visible": false
   },
-  "result": null,
-  "model_result": null,
-  "market_result": null
+  "result": "a",
+  "model_result": "a",
+  "market_result": "a",
+  "score": "1-4",
+  "result_snapshot": {
+   "display": {
+    "home": 1,
+    "away": 4
+   },
+   "regulation": null,
+   "penalties": null,
+   "ultimate_winner": "a",
+   "observed_at": "2026-07-31T14:45:08.549414Z",
+   "source": "provider"
+  },
+  "model_hit": false,
+  "market_hit": null,
+  "upset_hit": true,
+  "brier3": 1.186,
+  "log_loss": 1.47,
+  "result_corrections": []
  },
  "bdl-mlb-5059415": {
   "schema_ver": 2,
@@ -16798,6 +16888,6267 @@
      "mean_log_loss": 0.789919,
      "brier_skill_vs_uniform": 0.1297,
      "log_skill_vs_uniform": 0.280985
+    }
+   },
+   "event_readiness": {
+    "available": false,
+    "score": null,
+    "missing_components": [
+     "scenario_stability",
+     "availability",
+     "freshness",
+     "model_stability"
+    ]
+   },
+   "components": {
+    "scenario_stability": {
+     "available": false,
+     "score": null,
+     "reason": "scenario_forecasts_not_captured"
+    },
+    "availability": {
+     "available": false,
+     "score": null,
+     "reason": "availability_probabilities_not_captured"
+    },
+    "freshness": {
+     "available": false,
+     "score": null,
+     "reason": "input_freshness_not_captured"
+    },
+    "model_stability": {
+     "available": false,
+     "score": null,
+     "reason": "independent_model_outputs_not_captured"
+    }
+   },
+   "missing_components": [
+    "historical_evidence",
+    "scenario_stability",
+    "availability",
+    "freshness",
+    "model_stability"
+   ],
+   "affects_prediction": false,
+   "user_visible": false
+  },
+  "result": "h",
+  "model_result": "h",
+  "market_result": "h",
+  "score": "6-2",
+  "result_snapshot": {
+   "display": {
+    "home": 6,
+    "away": 2
+   },
+   "regulation": null,
+   "penalties": null,
+   "ultimate_winner": "h",
+   "observed_at": "2026-07-31T14:45:08.549432Z",
+   "source": "provider"
+  },
+  "model_hit": true,
+  "market_hit": null,
+  "upset_hit": false,
+  "brier3": 0.168,
+  "log_loss": 0.342,
+  "result_corrections": []
+ },
+ "bdl-mlb-5059416": {
+  "schema_ver": 2,
+  "fixture_id": "bdl-mlb-5059416",
+  "competition": "MLB",
+  "home": "Chicago Cubs",
+  "away": "New York Yankees",
+  "stage": "Regular",
+  "kickoff": "2026-07-31T18:20:00Z",
+  "pick": "h",
+  "pick_name": "Chicago Cubs",
+  "confidence": 55,
+  "edge": null,
+  "base_pick": "h",
+  "base_pick_name": "Chicago Cubs",
+  "probs": {
+   "h": 55,
+   "d": 0,
+   "a": 45
+  },
+  "advancement_probs": null,
+  "regulation_probs": {
+   "h": 55,
+   "d": 0,
+   "a": 45
+  },
+  "regulation_pick": "h",
+  "outcome_basis": "regulation",
+  "market_basis": "regulation_1x2",
+  "market_pick": null,
+  "market_pct": null,
+  "pick_mkt": null,
+  "value_side": null,
+  "value_edge": null,
+  "value_mkt": null,
+  "value_name": null,
+  "upset_candidate": "a",
+  "upset_name": "New York Yankees",
+  "upset_score": 58,
+  "upset_candidate_pct": 45,
+  "upset_triggered": false,
+  "upset_temperature": 1.13,
+  "upset_reason": "favorite profile is cleaner",
+  "factor_snapshot": {
+   "srs": 0.07,
+   "margin": 0.01,
+   "class": 0.0,
+   "form": 0.51,
+   "market_power": 0.0,
+   "elo": 0.64,
+   "rest": 0.0,
+   "rank": 0.0,
+   "record": 0.07,
+   "adv": 0.25
+  },
+  "market_snapshot": null,
+  "market_snapshot_at": null,
+  "market_gap": null,
+  "upset_snapshot": {
+   "candidate": "New York Yankees",
+   "class": "unknown",
+   "market_dog_pct": null,
+   "model_dog_pct": 45.0,
+   "upset_edge": null,
+   "radar": false,
+   "standings_candidate": null,
+   "standings_gap_pct": 0.9,
+   "gate": "none",
+   "box_score_edge": 0.0
+  },
+  "box_score_available": false,
+  "damp_pct": 0,
+  "mkt_pull": 0,
+  "model_ver": "v4-integrity-advancement",
+  "model_code_marker": "matchday-predictor-integrity-2026-07",
+  "locked_at": "2026-07-31T07:23:05.373726Z",
+  "lead_time_seconds": 39414.626,
+  "lead_time_hours": 10.948507,
+  "status_at_lock": "UPCOMING",
+  "integrity_eligible": true,
+  "integrity_status": "verified",
+  "integrity_reason": "verified_pregame_window",
+  "prediction_snapshot": {
+   "pick": "h",
+   "pick_name": "Chicago Cubs",
+   "confidence": 55,
+   "base_pick": "h",
+   "base_pick_name": "Chicago Cubs",
+   "model": {
+    "h": 56,
+    "a": 44,
+    "d": 0
+   },
+   "base_blend": {
+    "h": 56,
+    "d": 0,
+    "a": 44
+   },
+   "blend": {
+    "h": 55,
+    "d": 0,
+    "a": 45
+   },
+   "adjusted": {
+    "h": 55,
+    "d": 0,
+    "a": 45
+   },
+   "is_knockout": false,
+   "advancement": null,
+   "regulation_pick": "h",
+   "regulation_pick_name": "Chicago Cubs",
+   "regulation_confidence": 55,
+   "regulation_probs": {
+    "h": 55,
+    "d": 0,
+    "a": 45
+   },
+   "edge": null,
+   "note": "no market to compare against",
+   "why": {
+    "srs": 0.07,
+    "margin": 0.01,
+    "class": 0.0,
+    "form": 0.51,
+    "market_power": 0.0,
+    "elo": 0.64,
+    "rest": 0.0,
+    "rank": 0.0,
+    "record": 0.07,
+    "adv": 0.25
+   },
+   "damp_pct": 0,
+   "mkt_pull": 0,
+   "market_weight": 0.0,
+   "upset": {
+    "candidate": "a",
+    "candidate_name": "New York Yankees",
+    "favorite": "h",
+    "favorite_name": "Chicago Cubs",
+    "score": 58,
+    "upset_class": "unknown",
+    "market_dog_pct": null,
+    "model_dog_pct": 45.0,
+    "upset_edge": null,
+    "radar": false,
+    "standings_candidate": null,
+    "standings_gap_pct": 0.9,
+    "standings_sample_ok": true,
+    "temperature": 1.13,
+    "variance_pct": 8,
+    "low_goal_pct": 42,
+    "draw_pct": 0,
+    "favorite_pct": 55,
+    "candidate_pct": 45,
+    "margin_pct": 10,
+    "learn_bias_pct": 0.0,
+    "market_gap_pct": null,
+    "market_gate": false,
+    "box_score_edge": 0.0,
+    "blocked": false,
+    "triggered": false,
+    "reason": "favorite profile is cleaner"
+   },
+   "data_quality": {
+    "level": "established",
+    "games": {
+     "home": 109,
+     "away": 109
+    },
+    "signals": [
+     "record",
+     "margin",
+     "form",
+     "srs",
+     "elo"
+    ],
+    "market_available": false,
+    "market_books": 0,
+    "market_spread": null,
+    "market_weight": 0.0,
+    "note": "Current-season sample and opponent-adjusted results are available."
+   },
+   "predicted_margin": {
+    "value": 0.2,
+    "unit": "runs",
+    "favored": "h",
+    "label": "Chicago Cubs by 0.2"
+   },
+   "class_meta": {
+    "label": "Personnel edge",
+    "source": null,
+    "available": false,
+    "coverage": "unavailable",
+    "home_available": false,
+    "away_available": false,
+    "note": "Requires probable starters, confirmed batting orders, and bullpen availability; the configured feed does not provide them."
+   },
+   "totals": {
+    "expected": 9.01,
+    "basis": "season_rate"
+   }
+  },
+  "input_snapshot": {
+   "competition": "MLB",
+   "competition_config": {
+    "label": "MLB",
+    "sport": "baseball",
+    "fd": null,
+    "odds": "baseball_mlb",
+    "outright": "baseball_mlb_world_series_winner",
+    "tournament": false,
+    "source": "balldontlie",
+    "has_draws": false
+   },
+   "match": {
+    "id": "bdl-mlb-5059416",
+    "stage": "Regular",
+    "kickoff": "2026-07-31T18:20:00Z",
+    "status": "UPCOMING",
+    "venue": "Wrigley Field",
+    "home": {
+     "name": "Chicago Cubs",
+     "code": "CHC",
+     "pts": 186,
+     "gd": 89,
+     "form": "L W W L W",
+     "pos": 2,
+     "group": "National League Central",
+     "gf": 564,
+     "ga": 475,
+     "pld": 109,
+     "w": 62,
+     "d": 0,
+     "l": 47,
+     "srs": 0.712,
+     "srs_games": 109,
+     "rest_days": 1,
+     "rating": 5.31,
+     "form_home": "W W L W L",
+     "form_away": "L W W L W"
+    },
+    "away": {
+     "name": "New York Yankees",
+     "code": "NYY",
+     "pts": 183,
+     "gd": 87,
+     "form": "L W W L L",
+     "pos": 2,
+     "group": "American League East",
+     "gf": 506,
+     "ga": 419,
+     "pld": 109,
+     "w": 61,
+     "d": 0,
+     "l": 48,
+     "srs": 0.636,
+     "srs_games": 109,
+     "rest_days": 1,
+     "rating": 5.75,
+     "form_home": "L W W L W",
+     "form_away": "L W W L L"
+    },
+    "markets": {},
+    "weather": null,
+    "injuries": {
+     "home": [],
+     "away": []
+    },
+    "lineups": null,
+    "h2h": [],
+    "stats": null,
+    "stats_extra": null,
+    "data_source": "BALLDONTLIE",
+    "advanced_metrics": null,
+    "advanced_metrics_meta": null,
+    "nfl_challenger_shadow": null,
+    "mlb_challenger_shadow": {
+     "schema_version": 1,
+     "model_version": "retrosheet-mlb-challenger-0.1.0",
+     "mode": "prospective_shadow",
+     "production_weight": 0,
+     "home_win_probability": 0.534054,
+     "away_win_probability": 0.465946,
+     "features": {
+      "pythagorean_diff": -0.007537,
+      "run_diff_per_game_diff": 0.018349
+     },
+     "top_contributions": [
+      {
+       "feature": "pythagorean_diff",
+       "contribution": -0.00542,
+       "direction": "away"
+      },
+      {
+       "feature": "run_diff_per_game_diff",
+       "contribution": 0.00314,
+       "direction": "home"
+      }
+     ],
+     "live_feature_source": "licensed BALLDONTLIE season team totals through prior completed games",
+     "historical_training_source": "Retrosheet event files and game logs",
+     "retrosheet_notice": "The information used here was obtained free of charge from and is copyrighted by Retrosheet. Interested parties may contact Retrosheet at \"www.retrosheet.org\".",
+     "trained_through": "2025-09-28",
+     "home_games": 109,
+     "away_games": 109,
+     "historical_validation": {
+      "checks": {
+       "brier_not_worse_than_elo": true,
+       "log_loss_better_than_elo": true,
+       "minimum_out_of_sample_games": true,
+       "minimum_test_seasons": true,
+       "paired_interval_below_zero": true
+      },
+      "decision": "eligible_for_prospective_shadow",
+      "elo": {
+       "accuracy": 0.564356,
+       "brier": 0.246335,
+       "log_loss": 0.686457,
+       "n": 9090
+      },
+      "features": [
+       "pythagorean_diff",
+       "run_diff_per_game_diff"
+      ],
+      "model": {
+       "accuracy": 0.560176,
+       "brier": 0.244584,
+       "log_loss": 0.682207,
+       "n": 9090
+      },
+      "paired_vs_elo": {
+       "blocks": 683,
+       "ci95": [
+        -0.007292,
+        -0.001244
+       ],
+       "mean_log_loss_delta": -0.00425,
+       "method": "deterministic game-date block bootstrap",
+       "n": 9090
+      }
+     },
+     "promotion_status": "eligible_for_prospective_shadow_not_production",
+     "missing_personnel": [
+      "probable_or_confirmed_starter",
+      "confirmed_lineup",
+      "bullpen_availability"
+     ]
+    },
+    "model_signal_schema": null
+   }
+  },
+  "mfti_shadow": {
+   "spec_version": "MFTI-0.1.1-shadow",
+   "mode": "shadow_research_only",
+   "captured_at": "2026-07-31T07:23:05.373726Z",
+   "status": "incomplete",
+   "score": null,
+   "historical_evidence": {
+    "available": false,
+    "score": null,
+    "reason": "frozen_normalization_and_rolling_recalibration_not_fitted",
+    "diagnostics": {
+     "eligible_prior_forecasts": 52,
+     "mean_brier": 0.561196,
+     "mean_log_loss": 0.768783,
+     "brier_skill_vs_uniform": 0.158206,
+     "log_skill_vs_uniform": 0.300224
+    }
+   },
+   "event_readiness": {
+    "available": false,
+    "score": null,
+    "missing_components": [
+     "scenario_stability",
+     "availability",
+     "freshness",
+     "model_stability"
+    ]
+   },
+   "components": {
+    "scenario_stability": {
+     "available": false,
+     "score": null,
+     "reason": "scenario_forecasts_not_captured"
+    },
+    "availability": {
+     "available": false,
+     "score": null,
+     "reason": "availability_probabilities_not_captured"
+    },
+    "freshness": {
+     "available": false,
+     "score": null,
+     "reason": "input_freshness_not_captured"
+    },
+    "model_stability": {
+     "available": false,
+     "score": null,
+     "reason": "independent_model_outputs_not_captured"
+    }
+   },
+   "missing_components": [
+    "historical_evidence",
+    "scenario_stability",
+    "availability",
+    "freshness",
+    "model_stability"
+   ],
+   "affects_prediction": false,
+   "user_visible": false
+  },
+  "result": null,
+  "model_result": null,
+  "market_result": null
+ },
+ "bdl-mlb-5059417": {
+  "schema_ver": 2,
+  "fixture_id": "bdl-mlb-5059417",
+  "competition": "MLB",
+  "home": "Cincinnati Reds",
+  "away": "Pittsburgh Pirates",
+  "stage": "Regular",
+  "kickoff": "2026-07-31T22:10:00Z",
+  "pick": "a",
+  "pick_name": "Pittsburgh Pirates",
+  "confidence": 61,
+  "edge": null,
+  "base_pick": "a",
+  "base_pick_name": "Pittsburgh Pirates",
+  "probs": {
+   "h": 39,
+   "d": 0,
+   "a": 61
+  },
+  "advancement_probs": null,
+  "regulation_probs": {
+   "h": 39,
+   "d": 0,
+   "a": 61
+  },
+  "regulation_pick": "a",
+  "outcome_basis": "regulation",
+  "market_basis": "regulation_1x2",
+  "market_pick": null,
+  "market_pct": null,
+  "pick_mkt": null,
+  "value_side": null,
+  "value_edge": null,
+  "value_mkt": null,
+  "value_name": null,
+  "upset_candidate": "h",
+  "upset_name": "Cincinnati Reds",
+  "upset_score": 46,
+  "upset_candidate_pct": 39,
+  "upset_triggered": false,
+  "upset_temperature": 1.08,
+  "upset_reason": "favorite profile is cleaner",
+  "factor_snapshot": {
+   "form": 0.43,
+   "rank": 0.0,
+   "class": 0.0,
+   "rest": 0.0,
+   "srs": -0.88,
+   "margin": -0.77,
+   "elo": -0.22,
+   "record": -0.22,
+   "market_power": 0.0,
+   "adv": 0.25,
+   "h2h": -0.16
+  },
+  "market_snapshot": null,
+  "market_snapshot_at": null,
+  "market_gap": null,
+  "upset_snapshot": {
+   "candidate": "Cincinnati Reds",
+   "class": "unknown",
+   "market_dog_pct": null,
+   "model_dog_pct": 39.0,
+   "upset_edge": null,
+   "radar": false,
+   "standings_candidate": null,
+   "standings_gap_pct": 2.8,
+   "gate": "none",
+   "box_score_edge": 0.0
+  },
+  "box_score_available": false,
+  "damp_pct": 0,
+  "mkt_pull": 0,
+  "model_ver": "v4-integrity-advancement",
+  "model_code_marker": "matchday-predictor-integrity-2026-07",
+  "locked_at": "2026-07-31T12:25:36.331752Z",
+  "lead_time_seconds": 35063.668,
+  "lead_time_hours": 9.739908,
+  "status_at_lock": "UPCOMING",
+  "integrity_eligible": true,
+  "integrity_status": "verified",
+  "integrity_reason": "verified_pregame_window",
+  "prediction_snapshot": {
+   "pick": "a",
+   "pick_name": "Pittsburgh Pirates",
+   "confidence": 61,
+   "base_pick": "a",
+   "base_pick_name": "Pittsburgh Pirates",
+   "model": {
+    "h": 38,
+    "a": 62,
+    "d": 0
+   },
+   "base_blend": {
+    "h": 38,
+    "d": 0,
+    "a": 62
+   },
+   "blend": {
+    "h": 39,
+    "d": 0,
+    "a": 61
+   },
+   "adjusted": {
+    "h": 39,
+    "d": 0,
+    "a": 61
+   },
+   "is_knockout": false,
+   "advancement": null,
+   "regulation_pick": "a",
+   "regulation_pick_name": "Pittsburgh Pirates",
+   "regulation_confidence": 61,
+   "regulation_probs": {
+    "h": 39,
+    "d": 0,
+    "a": 61
+   },
+   "edge": null,
+   "note": "no market to compare against",
+   "why": {
+    "form": 0.43,
+    "rank": 0.0,
+    "class": 0.0,
+    "rest": 0.0,
+    "srs": -0.88,
+    "margin": -0.77,
+    "elo": -0.22,
+    "record": -0.22,
+    "market_power": 0.0,
+    "adv": 0.25,
+    "h2h": -0.16
+   },
+   "damp_pct": 0,
+   "mkt_pull": 0,
+   "market_weight": 0.0,
+   "upset": {
+    "candidate": "h",
+    "candidate_name": "Cincinnati Reds",
+    "favorite": "a",
+    "favorite_name": "Pittsburgh Pirates",
+    "score": 46,
+    "upset_class": "unknown",
+    "market_dog_pct": null,
+    "model_dog_pct": 39.0,
+    "upset_edge": null,
+    "radar": false,
+    "standings_candidate": null,
+    "standings_gap_pct": 2.8,
+    "standings_sample_ok": true,
+    "temperature": 1.08,
+    "variance_pct": 0,
+    "low_goal_pct": 42,
+    "draw_pct": 0,
+    "favorite_pct": 61,
+    "candidate_pct": 39,
+    "margin_pct": 22,
+    "learn_bias_pct": 0.0,
+    "market_gap_pct": null,
+    "market_gate": false,
+    "box_score_edge": 0.0,
+    "blocked": false,
+    "triggered": false,
+    "reason": "favorite profile is cleaner"
+   },
+   "data_quality": {
+    "level": "established",
+    "games": {
+     "home": 108,
+     "away": 110
+    },
+    "signals": [
+     "record",
+     "margin",
+     "form",
+     "srs",
+     "elo"
+    ],
+    "market_available": false,
+    "market_books": 0,
+    "market_spread": null,
+    "market_weight": 0.0,
+    "note": "Current-season sample and opponent-adjusted results are available."
+   },
+   "predicted_margin": {
+    "value": -0.5,
+    "unit": "runs",
+    "favored": "a",
+    "label": "Pittsburgh Pirates by 0.5"
+   },
+   "class_meta": {
+    "label": "Personnel edge",
+    "source": null,
+    "available": false,
+    "coverage": "unavailable",
+    "home_available": false,
+    "away_available": false,
+    "note": "Requires probable starters, confirmed batting orders, and bullpen availability; the configured feed does not provide them."
+   },
+   "totals": {
+    "expected": 9.39,
+    "basis": "season_rate"
+   }
+  },
+  "input_snapshot": {
+   "competition": "MLB",
+   "competition_config": {
+    "label": "MLB",
+    "sport": "baseball",
+    "fd": null,
+    "odds": "baseball_mlb",
+    "outright": "baseball_mlb_world_series_winner",
+    "tournament": false,
+    "source": "balldontlie",
+    "has_draws": false
+   },
+   "match": {
+    "id": "bdl-mlb-5059417",
+    "stage": "Regular",
+    "kickoff": "2026-07-31T22:10:00Z",
+    "status": "UPCOMING",
+    "venue": "Great American Ball Park",
+    "home": {
+     "name": "Cincinnati Reds",
+     "code": "CIN",
+     "pts": 153,
+     "gd": -69,
+     "form": "W L W L W",
+     "pos": 5,
+     "group": "National League Central",
+     "gf": 443,
+     "ga": 512,
+     "pld": 108,
+     "w": 51,
+     "d": 0,
+     "l": 57,
+     "srs": -0.605,
+     "srs_games": 108,
+     "rest_days": 1,
+     "rating": 4.31,
+     "form_home": "L L W L W",
+     "form_away": "W W W L W"
+    },
+    "away": {
+     "name": "Pittsburgh Pirates",
+     "code": "PIT",
+     "pts": 165,
+     "gd": 36,
+     "form": "W W L L L",
+     "pos": 3,
+     "group": "National League Central",
+     "gf": 565,
+     "ga": 529,
+     "pld": 110,
+     "w": 55,
+     "d": 0,
+     "l": 55,
+     "srs": 0.309,
+     "srs_games": 110,
+     "rest_days": 1,
+     "rating": 4.25,
+     "form_home": "L W W L L",
+     "form_away": "W L W L L"
+    },
+    "markets": {},
+    "weather": null,
+    "injuries": {
+     "home": [],
+     "away": []
+    },
+    "lineups": null,
+    "h2h": [],
+    "stats": null,
+    "stats_extra": null,
+    "data_source": "BALLDONTLIE",
+    "advanced_metrics": null,
+    "advanced_metrics_meta": null,
+    "nfl_challenger_shadow": null,
+    "mlb_challenger_shadow": {
+     "schema_version": 1,
+     "model_version": "retrosheet-mlb-challenger-0.1.0",
+     "mode": "prospective_shadow",
+     "production_weight": 0,
+     "home_win_probability": 0.492003,
+     "away_win_probability": 0.507997,
+     "features": {
+      "pythagorean_diff": -0.095925,
+      "run_diff_per_game_diff": -0.966162
+     },
+     "top_contributions": [
+      {
+       "feature": "run_diff_per_game_diff",
+       "contribution": -0.08584,
+       "direction": "away"
+      },
+      {
+       "feature": "pythagorean_diff",
+       "contribution": -0.08486,
+       "direction": "away"
+      }
+     ],
+     "live_feature_source": "licensed BALLDONTLIE season team totals through prior completed games",
+     "historical_training_source": "Retrosheet event files and game logs",
+     "retrosheet_notice": "The information used here was obtained free of charge from and is copyrighted by Retrosheet. Interested parties may contact Retrosheet at \"www.retrosheet.org\".",
+     "trained_through": "2025-09-28",
+     "home_games": 108,
+     "away_games": 110,
+     "historical_validation": {
+      "checks": {
+       "brier_not_worse_than_elo": true,
+       "log_loss_better_than_elo": true,
+       "minimum_out_of_sample_games": true,
+       "minimum_test_seasons": true,
+       "paired_interval_below_zero": true
+      },
+      "decision": "eligible_for_prospective_shadow",
+      "elo": {
+       "accuracy": 0.564356,
+       "brier": 0.246335,
+       "log_loss": 0.686457,
+       "n": 9090
+      },
+      "features": [
+       "pythagorean_diff",
+       "run_diff_per_game_diff"
+      ],
+      "model": {
+       "accuracy": 0.560176,
+       "brier": 0.244584,
+       "log_loss": 0.682207,
+       "n": 9090
+      },
+      "paired_vs_elo": {
+       "blocks": 683,
+       "ci95": [
+        -0.007292,
+        -0.001244
+       ],
+       "mean_log_loss_delta": -0.00425,
+       "method": "deterministic game-date block bootstrap",
+       "n": 9090
+      }
+     },
+     "promotion_status": "eligible_for_prospective_shadow_not_production",
+     "missing_personnel": [
+      "probable_or_confirmed_starter",
+      "confirmed_lineup",
+      "bullpen_availability"
+     ]
+    },
+    "model_signal_schema": null
+   }
+  },
+  "mfti_shadow": {
+   "spec_version": "MFTI-0.1.1-shadow",
+   "mode": "shadow_research_only",
+   "captured_at": "2026-07-31T12:25:36.331752Z",
+   "status": "incomplete",
+   "score": null,
+   "historical_evidence": {
+    "available": false,
+    "score": null,
+    "reason": "frozen_normalization_and_rolling_recalibration_not_fitted",
+    "diagnostics": {
+     "eligible_prior_forecasts": 52,
+     "mean_brier": 0.561196,
+     "mean_log_loss": 0.768783,
+     "brier_skill_vs_uniform": 0.158206,
+     "log_skill_vs_uniform": 0.300224
+    }
+   },
+   "event_readiness": {
+    "available": false,
+    "score": null,
+    "missing_components": [
+     "scenario_stability",
+     "availability",
+     "freshness",
+     "model_stability"
+    ]
+   },
+   "components": {
+    "scenario_stability": {
+     "available": false,
+     "score": null,
+     "reason": "scenario_forecasts_not_captured"
+    },
+    "availability": {
+     "available": false,
+     "score": null,
+     "reason": "availability_probabilities_not_captured"
+    },
+    "freshness": {
+     "available": false,
+     "score": null,
+     "reason": "input_freshness_not_captured"
+    },
+    "model_stability": {
+     "available": false,
+     "score": null,
+     "reason": "independent_model_outputs_not_captured"
+    }
+   },
+   "missing_components": [
+    "historical_evidence",
+    "scenario_stability",
+    "availability",
+    "freshness",
+    "model_stability"
+   ],
+   "affects_prediction": false,
+   "user_visible": false
+  },
+  "result": null,
+  "model_result": null,
+  "market_result": null
+ },
+ "bdl-mlb-5059418": {
+  "schema_ver": 2,
+  "fixture_id": "bdl-mlb-5059418",
+  "competition": "MLB",
+  "home": "Baltimore Orioles",
+  "away": "Philadelphia Phillies",
+  "stage": "Regular",
+  "kickoff": "2026-07-31T23:05:00Z",
+  "pick": "h",
+  "pick_name": "Baltimore Orioles",
+  "confidence": 59,
+  "edge": null,
+  "base_pick": "h",
+  "base_pick_name": "Baltimore Orioles",
+  "probs": {
+   "h": 59,
+   "d": 0,
+   "a": 41
+  },
+  "advancement_probs": null,
+  "regulation_probs": {
+   "h": 59,
+   "d": 0,
+   "a": 41
+  },
+  "regulation_pick": "h",
+  "outcome_basis": "regulation",
+  "market_basis": "regulation_1x2",
+  "market_pick": null,
+  "market_pct": null,
+  "pick_mkt": null,
+  "value_side": null,
+  "value_edge": null,
+  "value_mkt": null,
+  "value_name": null,
+  "upset_candidate": "a",
+  "upset_name": "Philadelphia Phillies",
+  "upset_score": 48,
+  "upset_candidate_pct": 41,
+  "upset_triggered": false,
+  "upset_temperature": 1.08,
+  "upset_reason": "favorite profile is cleaner",
+  "factor_snapshot": {
+   "form": 0.77,
+   "rank": 0.0,
+   "class": 0.0,
+   "rest": 0.0,
+   "srs": -0.06,
+   "margin": -0.07,
+   "elo": 0.92,
+   "record": -0.29,
+   "market_power": 0.0,
+   "adv": 0.25
+  },
+  "market_snapshot": null,
+  "market_snapshot_at": null,
+  "market_gap": null,
+  "upset_snapshot": {
+   "candidate": "Philadelphia Phillies",
+   "class": "unknown",
+   "market_dog_pct": null,
+   "model_dog_pct": 41.0,
+   "upset_edge": null,
+   "radar": false,
+   "standings_candidate": null,
+   "standings_gap_pct": 3.7,
+   "gate": "none",
+   "box_score_edge": 0.0
+  },
+  "box_score_available": false,
+  "damp_pct": 0,
+  "mkt_pull": 0,
+  "model_ver": "v4-integrity-advancement",
+  "model_code_marker": "matchday-predictor-integrity-2026-07",
+  "locked_at": "2026-07-31T12:25:36.332411Z",
+  "lead_time_seconds": 38363.668,
+  "lead_time_hours": 10.656574,
+  "status_at_lock": "UPCOMING",
+  "integrity_eligible": true,
+  "integrity_status": "verified",
+  "integrity_reason": "verified_pregame_window",
+  "prediction_snapshot": {
+   "pick": "h",
+   "pick_name": "Baltimore Orioles",
+   "confidence": 59,
+   "base_pick": "h",
+   "base_pick_name": "Baltimore Orioles",
+   "model": {
+    "h": 60,
+    "a": 40,
+    "d": 0
+   },
+   "base_blend": {
+    "h": 60,
+    "d": 0,
+    "a": 40
+   },
+   "blend": {
+    "h": 59,
+    "d": 0,
+    "a": 41
+   },
+   "adjusted": {
+    "h": 59,
+    "d": 0,
+    "a": 41
+   },
+   "is_knockout": false,
+   "advancement": null,
+   "regulation_pick": "h",
+   "regulation_pick_name": "Baltimore Orioles",
+   "regulation_confidence": 59,
+   "regulation_probs": {
+    "h": 59,
+    "d": 0,
+    "a": 41
+   },
+   "edge": null,
+   "note": "no market to compare against",
+   "why": {
+    "form": 0.77,
+    "rank": 0.0,
+    "class": 0.0,
+    "rest": 0.0,
+    "srs": -0.06,
+    "margin": -0.07,
+    "elo": 0.92,
+    "record": -0.29,
+    "market_power": 0.0,
+    "adv": 0.25
+   },
+   "damp_pct": 0,
+   "mkt_pull": 0,
+   "market_weight": 0.0,
+   "upset": {
+    "candidate": "a",
+    "candidate_name": "Philadelphia Phillies",
+    "favorite": "h",
+    "favorite_name": "Baltimore Orioles",
+    "score": 48,
+    "upset_class": "unknown",
+    "market_dog_pct": null,
+    "model_dog_pct": 41.0,
+    "upset_edge": null,
+    "radar": false,
+    "standings_candidate": null,
+    "standings_gap_pct": 3.7,
+    "standings_sample_ok": true,
+    "temperature": 1.08,
+    "variance_pct": 0,
+    "low_goal_pct": 42,
+    "draw_pct": 0,
+    "favorite_pct": 59,
+    "candidate_pct": 41,
+    "margin_pct": 18,
+    "learn_bias_pct": 0.0,
+    "market_gap_pct": null,
+    "market_gate": false,
+    "box_score_edge": 0.0,
+    "blocked": false,
+    "triggered": false,
+    "reason": "favorite profile is cleaner"
+   },
+   "data_quality": {
+    "level": "established",
+    "games": {
+     "home": 109,
+     "away": 109
+    },
+    "signals": [
+     "record",
+     "margin",
+     "form",
+     "srs",
+     "elo"
+    ],
+    "market_available": false,
+    "market_books": 0,
+    "market_spread": null,
+    "market_weight": 0.0,
+    "note": "Current-season sample and opponent-adjusted results are available."
+   },
+   "predicted_margin": {
+    "value": 0.4,
+    "unit": "runs",
+    "favored": "h",
+    "label": "Baltimore Orioles by 0.4"
+   },
+   "class_meta": {
+    "label": "Personnel edge",
+    "source": null,
+    "available": false,
+    "coverage": "unavailable",
+    "home_available": false,
+    "away_available": false,
+    "note": "Requires probable starters, confirmed batting orders, and bullpen availability; the configured feed does not provide them."
+   },
+   "totals": {
+    "expected": 9.11,
+    "basis": "season_rate"
+   }
+  },
+  "input_snapshot": {
+   "competition": "MLB",
+   "competition_config": {
+    "label": "MLB",
+    "sport": "baseball",
+    "fd": null,
+    "odds": "baseball_mlb",
+    "outright": "baseball_mlb_world_series_winner",
+    "tournament": false,
+    "source": "balldontlie",
+    "has_draws": false
+   },
+   "match": {
+    "id": "bdl-mlb-5059418",
+    "stage": "Regular",
+    "kickoff": "2026-07-31T23:05:00Z",
+    "status": "UPCOMING",
+    "venue": "Oriole Park at Camden Yards",
+    "home": {
+     "name": "Baltimore Orioles",
+     "code": "BAL",
+     "pts": 159,
+     "gd": -24,
+     "form": "W L W L W",
+     "pos": 4,
+     "group": "American League East",
+     "gf": 501,
+     "ga": 525,
+     "pld": 109,
+     "w": 53,
+     "d": 0,
+     "l": 56,
+     "srs": -0.054,
+     "srs_games": 109,
+     "rest_days": 2,
+     "rating": 5.61,
+     "form_home": "W W L W L",
+     "form_away": "L W W L W"
+    },
+    "away": {
+     "name": "Philadelphia Phillies",
+     "code": "PHI",
+     "pts": 171,
+     "gd": -15,
+     "form": "L W L L L",
+     "pos": 2,
+     "group": "National League East",
+     "gf": 473,
+     "ga": 488,
+     "pld": 109,
+     "w": 57,
+     "d": 0,
+     "l": 52,
+     "srs": 0.004,
+     "srs_games": 109,
+     "rest_days": 2,
+     "rating": 5.26,
+     "form_home": "L L L L W",
+     "form_away": "W W L L L"
+    },
+    "markets": {},
+    "weather": null,
+    "injuries": {
+     "home": [],
+     "away": []
+    },
+    "lineups": null,
+    "h2h": [],
+    "stats": null,
+    "stats_extra": null,
+    "data_source": "BALLDONTLIE",
+    "advanced_metrics": null,
+    "advanced_metrics_meta": null,
+    "nfl_challenger_shadow": null,
+    "mlb_challenger_shadow": {
+     "schema_version": 1,
+     "model_version": "retrosheet-mlb-challenger-0.1.0",
+     "mode": "prospective_shadow",
+     "production_weight": 0,
+     "home_win_probability": 0.531878,
+     "away_win_probability": 0.468122,
+     "features": {
+      "pythagorean_diff": -0.007115,
+      "run_diff_per_game_diff": -0.082569
+     },
+     "top_contributions": [
+      {
+       "feature": "run_diff_per_game_diff",
+       "contribution": -0.00598,
+       "direction": "away"
+      },
+      {
+       "feature": "pythagorean_diff",
+       "contribution": -0.00504,
+       "direction": "away"
+      }
+     ],
+     "live_feature_source": "licensed BALLDONTLIE season team totals through prior completed games",
+     "historical_training_source": "Retrosheet event files and game logs",
+     "retrosheet_notice": "The information used here was obtained free of charge from and is copyrighted by Retrosheet. Interested parties may contact Retrosheet at \"www.retrosheet.org\".",
+     "trained_through": "2025-09-28",
+     "home_games": 109,
+     "away_games": 109,
+     "historical_validation": {
+      "checks": {
+       "brier_not_worse_than_elo": true,
+       "log_loss_better_than_elo": true,
+       "minimum_out_of_sample_games": true,
+       "minimum_test_seasons": true,
+       "paired_interval_below_zero": true
+      },
+      "decision": "eligible_for_prospective_shadow",
+      "elo": {
+       "accuracy": 0.564356,
+       "brier": 0.246335,
+       "log_loss": 0.686457,
+       "n": 9090
+      },
+      "features": [
+       "pythagorean_diff",
+       "run_diff_per_game_diff"
+      ],
+      "model": {
+       "accuracy": 0.560176,
+       "brier": 0.244584,
+       "log_loss": 0.682207,
+       "n": 9090
+      },
+      "paired_vs_elo": {
+       "blocks": 683,
+       "ci95": [
+        -0.007292,
+        -0.001244
+       ],
+       "mean_log_loss_delta": -0.00425,
+       "method": "deterministic game-date block bootstrap",
+       "n": 9090
+      }
+     },
+     "promotion_status": "eligible_for_prospective_shadow_not_production",
+     "missing_personnel": [
+      "probable_or_confirmed_starter",
+      "confirmed_lineup",
+      "bullpen_availability"
+     ]
+    },
+    "model_signal_schema": null
+   }
+  },
+  "mfti_shadow": {
+   "spec_version": "MFTI-0.1.1-shadow",
+   "mode": "shadow_research_only",
+   "captured_at": "2026-07-31T12:25:36.332411Z",
+   "status": "incomplete",
+   "score": null,
+   "historical_evidence": {
+    "available": false,
+    "score": null,
+    "reason": "frozen_normalization_and_rolling_recalibration_not_fitted",
+    "diagnostics": {
+     "eligible_prior_forecasts": 52,
+     "mean_brier": 0.561196,
+     "mean_log_loss": 0.768783,
+     "brier_skill_vs_uniform": 0.158206,
+     "log_skill_vs_uniform": 0.300224
+    }
+   },
+   "event_readiness": {
+    "available": false,
+    "score": null,
+    "missing_components": [
+     "scenario_stability",
+     "availability",
+     "freshness",
+     "model_stability"
+    ]
+   },
+   "components": {
+    "scenario_stability": {
+     "available": false,
+     "score": null,
+     "reason": "scenario_forecasts_not_captured"
+    },
+    "availability": {
+     "available": false,
+     "score": null,
+     "reason": "availability_probabilities_not_captured"
+    },
+    "freshness": {
+     "available": false,
+     "score": null,
+     "reason": "input_freshness_not_captured"
+    },
+    "model_stability": {
+     "available": false,
+     "score": null,
+     "reason": "independent_model_outputs_not_captured"
+    }
+   },
+   "missing_components": [
+    "historical_evidence",
+    "scenario_stability",
+    "availability",
+    "freshness",
+    "model_stability"
+   ],
+   "affects_prediction": false,
+   "user_visible": false
+  },
+  "result": null,
+  "model_result": null,
+  "market_result": null
+ },
+ "bdl-mlb-5059419": {
+  "schema_ver": 2,
+  "fixture_id": "bdl-mlb-5059419",
+  "competition": "MLB",
+  "home": "Toronto Blue Jays",
+  "away": "St. Louis Cardinals",
+  "stage": "Regular",
+  "kickoff": "2026-07-31T23:07:00Z",
+  "pick": "a",
+  "pick_name": "St. Louis Cardinals",
+  "confidence": 51,
+  "edge": null,
+  "base_pick": "a",
+  "base_pick_name": "St. Louis Cardinals",
+  "probs": {
+   "h": 49,
+   "d": 0,
+   "a": 51
+  },
+  "advancement_probs": null,
+  "regulation_probs": {
+   "h": 49,
+   "d": 0,
+   "a": 51
+  },
+  "regulation_pick": "a",
+  "outcome_basis": "regulation",
+  "market_basis": "regulation_1x2",
+  "market_pick": null,
+  "market_pct": null,
+  "pick_mkt": null,
+  "value_side": null,
+  "value_edge": null,
+  "value_mkt": null,
+  "value_name": null,
+  "upset_candidate": "h",
+  "upset_name": "Toronto Blue Jays",
+  "upset_score": 68,
+  "upset_candidate_pct": 49,
+  "upset_triggered": false,
+  "upset_temperature": 1.22,
+  "upset_reason": "narrow team gap",
+  "factor_snapshot": {
+   "form": 0.0,
+   "rank": 0.0,
+   "class": 0.0,
+   "rest": 0.08,
+   "srs": -0.27,
+   "margin": -0.34,
+   "elo": 0.52,
+   "record": -0.29,
+   "market_power": 0.0,
+   "adv": 0.25
+  },
+  "market_snapshot": null,
+  "market_snapshot_at": null,
+  "market_gap": null,
+  "upset_snapshot": {
+   "candidate": "Toronto Blue Jays",
+   "class": "unknown",
+   "market_dog_pct": null,
+   "model_dog_pct": 49.0,
+   "upset_edge": null,
+   "radar": false,
+   "standings_candidate": null,
+   "standings_gap_pct": 3.7,
+   "gate": "none",
+   "box_score_edge": 0.0
+  },
+  "box_score_available": false,
+  "damp_pct": 0,
+  "mkt_pull": 0,
+  "model_ver": "v4-integrity-advancement",
+  "model_code_marker": "matchday-predictor-integrity-2026-07",
+  "locked_at": "2026-07-31T12:25:36.333011Z",
+  "lead_time_seconds": 38483.667,
+  "lead_time_hours": 10.689907,
+  "status_at_lock": "UPCOMING",
+  "integrity_eligible": true,
+  "integrity_status": "verified",
+  "integrity_reason": "verified_pregame_window",
+  "prediction_snapshot": {
+   "pick": "a",
+   "pick_name": "St. Louis Cardinals",
+   "confidence": 51,
+   "base_pick": "a",
+   "base_pick_name": "St. Louis Cardinals",
+   "model": {
+    "h": 49,
+    "a": 51,
+    "d": 0
+   },
+   "base_blend": {
+    "h": 49,
+    "d": 0,
+    "a": 51
+   },
+   "blend": {
+    "h": 49,
+    "d": 0,
+    "a": 51
+   },
+   "adjusted": {
+    "h": 49,
+    "d": 0,
+    "a": 51
+   },
+   "is_knockout": false,
+   "advancement": null,
+   "regulation_pick": "a",
+   "regulation_pick_name": "St. Louis Cardinals",
+   "regulation_confidence": 51,
+   "regulation_probs": {
+    "h": 49,
+    "d": 0,
+    "a": 51
+   },
+   "edge": null,
+   "note": "no market to compare against",
+   "why": {
+    "form": 0.0,
+    "rank": 0.0,
+    "class": 0.0,
+    "rest": 0.08,
+    "srs": -0.27,
+    "margin": -0.34,
+    "elo": 0.52,
+    "record": -0.29,
+    "market_power": 0.0,
+    "adv": 0.25
+   },
+   "damp_pct": 0,
+   "mkt_pull": 0,
+   "market_weight": 0.0,
+   "upset": {
+    "candidate": "h",
+    "candidate_name": "Toronto Blue Jays",
+    "favorite": "a",
+    "favorite_name": "St. Louis Cardinals",
+    "score": 68,
+    "upset_class": "unknown",
+    "market_dog_pct": null,
+    "model_dog_pct": 49.0,
+    "upset_edge": null,
+    "radar": false,
+    "standings_candidate": null,
+    "standings_gap_pct": 3.7,
+    "standings_sample_ok": true,
+    "temperature": 1.22,
+    "variance_pct": 23,
+    "low_goal_pct": 42,
+    "draw_pct": 0,
+    "favorite_pct": 51,
+    "candidate_pct": 49,
+    "margin_pct": 2,
+    "learn_bias_pct": 0.0,
+    "market_gap_pct": null,
+    "market_gate": false,
+    "box_score_edge": 0.0,
+    "blocked": false,
+    "triggered": false,
+    "reason": "narrow team gap"
+   },
+   "data_quality": {
+    "level": "established",
+    "games": {
+     "home": 109,
+     "away": 109
+    },
+    "signals": [
+     "record",
+     "margin",
+     "srs",
+     "elo",
+     "rest"
+    ],
+    "market_available": false,
+    "market_books": 0,
+    "market_spread": null,
+    "market_weight": 0.0,
+    "note": "Current-season sample and opponent-adjusted results are available."
+   },
+   "predicted_margin": {
+    "value": -0.0,
+    "unit": "runs",
+    "favored": null,
+    "label": "Even matchup"
+   },
+   "class_meta": {
+    "label": "Personnel edge",
+    "source": null,
+    "available": false,
+    "coverage": "unavailable",
+    "home_available": false,
+    "away_available": false,
+    "note": "Requires probable starters, confirmed batting orders, and bullpen availability; the configured feed does not provide them."
+   },
+   "totals": {
+    "expected": 8.65,
+    "basis": "season_rate"
+   }
+  },
+  "input_snapshot": {
+   "competition": "MLB",
+   "competition_config": {
+    "label": "MLB",
+    "sport": "baseball",
+    "fd": null,
+    "odds": "baseball_mlb",
+    "outright": "baseball_mlb_world_series_winner",
+    "tournament": false,
+    "source": "balldontlie",
+    "has_draws": false
+   },
+   "match": {
+    "id": "bdl-mlb-5059419",
+    "stage": "Regular",
+    "kickoff": "2026-07-31T23:07:00Z",
+    "status": "UPCOMING",
+    "venue": "Rogers Centre",
+    "home": {
+     "name": "Toronto Blue Jays",
+     "code": "TOR",
+     "pts": 150,
+     "gd": -60,
+     "form": "W L W L W",
+     "pos": 5,
+     "group": "American League East",
+     "gf": 430,
+     "ga": 490,
+     "pld": 109,
+     "w": 50,
+     "d": 0,
+     "l": 59,
+     "srs": -0.357,
+     "srs_games": 109,
+     "rest_days": 2,
+     "rating": 4.03,
+     "form_home": "L L L L W",
+     "form_away": "W L W L W"
+    },
+    "away": {
+     "name": "St. Louis Cardinals",
+     "code": "STL",
+     "pts": 162,
+     "gd": -14,
+     "form": "L L L W L",
+     "pos": 4,
+     "group": "National League Central",
+     "gf": 476,
+     "ga": 490,
+     "pld": 109,
+     "w": 54,
+     "d": 0,
+     "l": 55,
+     "srs": -0.077,
+     "srs_games": 109,
+     "rest_days": 1,
+     "rating": 3.94,
+     "form_home": "L L L W L",
+     "form_away": "L L L L W"
+    },
+    "markets": {},
+    "weather": null,
+    "injuries": {
+     "home": [],
+     "away": []
+    },
+    "lineups": null,
+    "h2h": [],
+    "stats": null,
+    "stats_extra": null,
+    "data_source": "BALLDONTLIE",
+    "advanced_metrics": null,
+    "advanced_metrics_meta": null,
+    "nfl_challenger_shadow": null,
+    "mlb_challenger_shadow": {
+     "schema_version": 1,
+     "model_version": "retrosheet-mlb-challenger-0.1.0",
+     "mode": "prospective_shadow",
+     "production_weight": 0,
+     "home_win_probability": 0.515461,
+     "away_win_probability": 0.484539,
+     "features": {
+      "pythagorean_diff": -0.046217,
+      "run_diff_per_game_diff": -0.422018
+     },
+     "top_contributions": [
+      {
+       "feature": "pythagorean_diff",
+       "contribution": -0.04018,
+       "direction": "away"
+      },
+      {
+       "feature": "run_diff_per_game_diff",
+       "contribution": -0.03666,
+       "direction": "away"
+      }
+     ],
+     "live_feature_source": "licensed BALLDONTLIE season team totals through prior completed games",
+     "historical_training_source": "Retrosheet event files and game logs",
+     "retrosheet_notice": "The information used here was obtained free of charge from and is copyrighted by Retrosheet. Interested parties may contact Retrosheet at \"www.retrosheet.org\".",
+     "trained_through": "2025-09-28",
+     "home_games": 109,
+     "away_games": 109,
+     "historical_validation": {
+      "checks": {
+       "brier_not_worse_than_elo": true,
+       "log_loss_better_than_elo": true,
+       "minimum_out_of_sample_games": true,
+       "minimum_test_seasons": true,
+       "paired_interval_below_zero": true
+      },
+      "decision": "eligible_for_prospective_shadow",
+      "elo": {
+       "accuracy": 0.564356,
+       "brier": 0.246335,
+       "log_loss": 0.686457,
+       "n": 9090
+      },
+      "features": [
+       "pythagorean_diff",
+       "run_diff_per_game_diff"
+      ],
+      "model": {
+       "accuracy": 0.560176,
+       "brier": 0.244584,
+       "log_loss": 0.682207,
+       "n": 9090
+      },
+      "paired_vs_elo": {
+       "blocks": 683,
+       "ci95": [
+        -0.007292,
+        -0.001244
+       ],
+       "mean_log_loss_delta": -0.00425,
+       "method": "deterministic game-date block bootstrap",
+       "n": 9090
+      }
+     },
+     "promotion_status": "eligible_for_prospective_shadow_not_production",
+     "missing_personnel": [
+      "probable_or_confirmed_starter",
+      "confirmed_lineup",
+      "bullpen_availability"
+     ]
+    },
+    "model_signal_schema": null
+   }
+  },
+  "mfti_shadow": {
+   "spec_version": "MFTI-0.1.1-shadow",
+   "mode": "shadow_research_only",
+   "captured_at": "2026-07-31T12:25:36.333011Z",
+   "status": "incomplete",
+   "score": null,
+   "historical_evidence": {
+    "available": false,
+    "score": null,
+    "reason": "frozen_normalization_and_rolling_recalibration_not_fitted",
+    "diagnostics": {
+     "eligible_prior_forecasts": 52,
+     "mean_brier": 0.561196,
+     "mean_log_loss": 0.768783,
+     "brier_skill_vs_uniform": 0.158206,
+     "log_skill_vs_uniform": 0.300224
+    }
+   },
+   "event_readiness": {
+    "available": false,
+    "score": null,
+    "missing_components": [
+     "scenario_stability",
+     "availability",
+     "freshness",
+     "model_stability"
+    ]
+   },
+   "components": {
+    "scenario_stability": {
+     "available": false,
+     "score": null,
+     "reason": "scenario_forecasts_not_captured"
+    },
+    "availability": {
+     "available": false,
+     "score": null,
+     "reason": "availability_probabilities_not_captured"
+    },
+    "freshness": {
+     "available": false,
+     "score": null,
+     "reason": "input_freshness_not_captured"
+    },
+    "model_stability": {
+     "available": false,
+     "score": null,
+     "reason": "independent_model_outputs_not_captured"
+    }
+   },
+   "missing_components": [
+    "historical_evidence",
+    "scenario_stability",
+    "availability",
+    "freshness",
+    "model_stability"
+   ],
+   "affects_prediction": false,
+   "user_visible": false
+  },
+  "result": null,
+  "model_result": null,
+  "market_result": null
+ },
+ "bdl-mlb-5059420": {
+  "schema_ver": 2,
+  "fixture_id": "bdl-mlb-5059420",
+  "competition": "MLB",
+  "home": "Cleveland Guardians",
+  "away": "Arizona Diamondbacks",
+  "stage": "Regular",
+  "kickoff": "2026-07-31T23:10:00Z",
+  "pick": "a",
+  "pick_name": "Arizona Diamondbacks",
+  "confidence": 57,
+  "edge": null,
+  "base_pick": "a",
+  "base_pick_name": "Arizona Diamondbacks",
+  "probs": {
+   "h": 43,
+   "d": 0,
+   "a": 57
+  },
+  "advancement_probs": null,
+  "regulation_probs": {
+   "h": 43,
+   "d": 0,
+   "a": 57
+  },
+  "regulation_pick": "a",
+  "outcome_basis": "regulation",
+  "market_basis": "regulation_1x2",
+  "market_pick": null,
+  "market_pct": null,
+  "pick_mkt": null,
+  "value_side": null,
+  "value_edge": null,
+  "value_mkt": null,
+  "value_name": null,
+  "upset_candidate": "h",
+  "upset_name": "Cleveland Guardians",
+  "upset_score": 53,
+  "upset_candidate_pct": 43,
+  "upset_triggered": false,
+  "upset_temperature": 1.1,
+  "upset_reason": "favorite profile is cleaner",
+  "factor_snapshot": {
+   "form": -0.39,
+   "rank": 0.0,
+   "class": 0.0,
+   "rest": 0.0,
+   "srs": -0.25,
+   "margin": -0.1,
+   "elo": -0.78,
+   "record": -0.11,
+   "market_power": 0.0,
+   "adv": 0.25
+  },
+  "market_snapshot": null,
+  "market_snapshot_at": null,
+  "market_gap": null,
+  "upset_snapshot": {
+   "candidate": "Cleveland Guardians",
+   "class": "unknown",
+   "market_dog_pct": null,
+   "model_dog_pct": 43.0,
+   "upset_edge": null,
+   "radar": false,
+   "standings_candidate": null,
+   "standings_gap_pct": 1.4,
+   "gate": "none",
+   "box_score_edge": 0.0
+  },
+  "box_score_available": false,
+  "damp_pct": 0,
+  "mkt_pull": 0,
+  "model_ver": "v4-integrity-advancement",
+  "model_code_marker": "matchday-predictor-integrity-2026-07",
+  "locked_at": "2026-07-31T12:25:36.333592Z",
+  "lead_time_seconds": 38663.666,
+  "lead_time_hours": 10.739907,
+  "status_at_lock": "UPCOMING",
+  "integrity_eligible": true,
+  "integrity_status": "verified",
+  "integrity_reason": "verified_pregame_window",
+  "prediction_snapshot": {
+   "pick": "a",
+   "pick_name": "Arizona Diamondbacks",
+   "confidence": 57,
+   "base_pick": "a",
+   "base_pick_name": "Arizona Diamondbacks",
+   "model": {
+    "h": 42,
+    "a": 58,
+    "d": 0
+   },
+   "base_blend": {
+    "h": 42,
+    "d": 0,
+    "a": 58
+   },
+   "blend": {
+    "h": 43,
+    "d": 0,
+    "a": 57
+   },
+   "adjusted": {
+    "h": 43,
+    "d": 0,
+    "a": 57
+   },
+   "is_knockout": false,
+   "advancement": null,
+   "regulation_pick": "a",
+   "regulation_pick_name": "Arizona Diamondbacks",
+   "regulation_confidence": 57,
+   "regulation_probs": {
+    "h": 43,
+    "d": 0,
+    "a": 57
+   },
+   "edge": null,
+   "note": "no market to compare against",
+   "why": {
+    "form": -0.39,
+    "rank": 0.0,
+    "class": 0.0,
+    "rest": 0.0,
+    "srs": -0.25,
+    "margin": -0.1,
+    "elo": -0.78,
+    "record": -0.11,
+    "market_power": 0.0,
+    "adv": 0.25
+   },
+   "damp_pct": 0,
+   "mkt_pull": 0,
+   "market_weight": 0.0,
+   "upset": {
+    "candidate": "h",
+    "candidate_name": "Cleveland Guardians",
+    "favorite": "a",
+    "favorite_name": "Arizona Diamondbacks",
+    "score": 53,
+    "upset_class": "unknown",
+    "market_dog_pct": null,
+    "model_dog_pct": 43.0,
+    "upset_edge": null,
+    "radar": false,
+    "standings_candidate": null,
+    "standings_gap_pct": 1.4,
+    "standings_sample_ok": true,
+    "temperature": 1.1,
+    "variance_pct": 3,
+    "low_goal_pct": 42,
+    "draw_pct": 0,
+    "favorite_pct": 57,
+    "candidate_pct": 43,
+    "margin_pct": 14,
+    "learn_bias_pct": 0.0,
+    "market_gap_pct": null,
+    "market_gate": false,
+    "box_score_edge": 0.0,
+    "blocked": false,
+    "triggered": false,
+    "reason": "favorite profile is cleaner"
+   },
+   "data_quality": {
+    "level": "established",
+    "games": {
+     "home": 110,
+     "away": 109
+    },
+    "signals": [
+     "record",
+     "margin",
+     "form",
+     "srs",
+     "elo"
+    ],
+    "market_available": false,
+    "market_books": 0,
+    "market_spread": null,
+    "market_weight": 0.0,
+    "note": "Current-season sample and opponent-adjusted results are available."
+   },
+   "predicted_margin": {
+    "value": -0.3,
+    "unit": "runs",
+    "favored": "a",
+    "label": "Arizona Diamondbacks by 0.3"
+   },
+   "class_meta": {
+    "label": "Personnel edge",
+    "source": null,
+    "available": false,
+    "coverage": "unavailable",
+    "home_available": false,
+    "away_available": false,
+    "note": "Requires probable starters, confirmed batting orders, and bullpen availability; the configured feed does not provide them."
+   },
+   "totals": {
+    "expected": 8.5,
+    "basis": "season_rate"
+   }
+  },
+  "input_snapshot": {
+   "competition": "MLB",
+   "competition_config": {
+    "label": "MLB",
+    "sport": "baseball",
+    "fd": null,
+    "odds": "baseball_mlb",
+    "outright": "baseball_mlb_world_series_winner",
+    "tournament": false,
+    "source": "balldontlie",
+    "has_draws": false
+   },
+   "match": {
+    "id": "bdl-mlb-5059420",
+    "stage": "Regular",
+    "kickoff": "2026-07-31T23:10:00Z",
+    "status": "UPCOMING",
+    "venue": "Progressive Field",
+    "home": {
+     "name": "Cleveland Guardians",
+     "code": "CLE",
+     "pts": 168,
+     "gd": -14,
+     "form": "L L W L W",
+     "pos": 2,
+     "group": "American League Central",
+     "gf": 432,
+     "ga": 446,
+     "pld": 110,
+     "w": 56,
+     "d": 0,
+     "l": 54,
+     "srs": -0.072,
+     "srs_games": 110,
+     "rest_days": 2,
+     "rating": 4.78,
+     "form_home": "L W W L L",
+     "form_away": "L L W L W"
+    },
+    "away": {
+     "name": "Arizona Diamondbacks",
+     "code": "ARI",
+     "pts": 171,
+     "gd": 0,
+     "form": "L L L W W",
+     "pos": 2,
+     "group": "National League West",
+     "gf": 492,
+     "ga": 492,
+     "pld": 109,
+     "w": 57,
+     "d": 0,
+     "l": 52,
+     "srs": 0.189,
+     "srs_games": 109,
+     "rest_days": 2,
+     "rating": 5.28,
+     "form_home": "W W L W W",
+     "form_away": "L L L W W"
+    },
+    "markets": {},
+    "weather": null,
+    "injuries": {
+     "home": [],
+     "away": []
+    },
+    "lineups": null,
+    "h2h": [],
+    "stats": null,
+    "stats_extra": null,
+    "data_source": "BALLDONTLIE",
+    "advanced_metrics": null,
+    "advanced_metrics_meta": null,
+    "nfl_challenger_shadow": null,
+    "mlb_challenger_shadow": {
+     "schema_version": 1,
+     "model_version": "retrosheet-mlb-challenger-0.1.0",
+     "mode": "prospective_shadow",
+     "production_weight": 0,
+     "home_win_probability": 0.529199,
+     "away_win_probability": 0.470801,
+     "features": {
+      "pythagorean_diff": -0.014587,
+      "run_diff_per_game_diff": -0.127273
+     },
+     "top_contributions": [
+      {
+       "feature": "pythagorean_diff",
+       "contribution": -0.01176,
+       "direction": "away"
+      },
+      {
+       "feature": "run_diff_per_game_diff",
+       "contribution": -0.01002,
+       "direction": "away"
+      }
+     ],
+     "live_feature_source": "licensed BALLDONTLIE season team totals through prior completed games",
+     "historical_training_source": "Retrosheet event files and game logs",
+     "retrosheet_notice": "The information used here was obtained free of charge from and is copyrighted by Retrosheet. Interested parties may contact Retrosheet at \"www.retrosheet.org\".",
+     "trained_through": "2025-09-28",
+     "home_games": 110,
+     "away_games": 109,
+     "historical_validation": {
+      "checks": {
+       "brier_not_worse_than_elo": true,
+       "log_loss_better_than_elo": true,
+       "minimum_out_of_sample_games": true,
+       "minimum_test_seasons": true,
+       "paired_interval_below_zero": true
+      },
+      "decision": "eligible_for_prospective_shadow",
+      "elo": {
+       "accuracy": 0.564356,
+       "brier": 0.246335,
+       "log_loss": 0.686457,
+       "n": 9090
+      },
+      "features": [
+       "pythagorean_diff",
+       "run_diff_per_game_diff"
+      ],
+      "model": {
+       "accuracy": 0.560176,
+       "brier": 0.244584,
+       "log_loss": 0.682207,
+       "n": 9090
+      },
+      "paired_vs_elo": {
+       "blocks": 683,
+       "ci95": [
+        -0.007292,
+        -0.001244
+       ],
+       "mean_log_loss_delta": -0.00425,
+       "method": "deterministic game-date block bootstrap",
+       "n": 9090
+      }
+     },
+     "promotion_status": "eligible_for_prospective_shadow_not_production",
+     "missing_personnel": [
+      "probable_or_confirmed_starter",
+      "confirmed_lineup",
+      "bullpen_availability"
+     ]
+    },
+    "model_signal_schema": null
+   }
+  },
+  "mfti_shadow": {
+   "spec_version": "MFTI-0.1.1-shadow",
+   "mode": "shadow_research_only",
+   "captured_at": "2026-07-31T12:25:36.333592Z",
+   "status": "incomplete",
+   "score": null,
+   "historical_evidence": {
+    "available": false,
+    "score": null,
+    "reason": "frozen_normalization_and_rolling_recalibration_not_fitted",
+    "diagnostics": {
+     "eligible_prior_forecasts": 52,
+     "mean_brier": 0.561196,
+     "mean_log_loss": 0.768783,
+     "brier_skill_vs_uniform": 0.158206,
+     "log_skill_vs_uniform": 0.300224
+    }
+   },
+   "event_readiness": {
+    "available": false,
+    "score": null,
+    "missing_components": [
+     "scenario_stability",
+     "availability",
+     "freshness",
+     "model_stability"
+    ]
+   },
+   "components": {
+    "scenario_stability": {
+     "available": false,
+     "score": null,
+     "reason": "scenario_forecasts_not_captured"
+    },
+    "availability": {
+     "available": false,
+     "score": null,
+     "reason": "availability_probabilities_not_captured"
+    },
+    "freshness": {
+     "available": false,
+     "score": null,
+     "reason": "input_freshness_not_captured"
+    },
+    "model_stability": {
+     "available": false,
+     "score": null,
+     "reason": "independent_model_outputs_not_captured"
+    }
+   },
+   "missing_components": [
+    "historical_evidence",
+    "scenario_stability",
+    "availability",
+    "freshness",
+    "model_stability"
+   ],
+   "affects_prediction": false,
+   "user_visible": false
+  },
+  "result": null,
+  "model_result": null,
+  "market_result": null
+ },
+ "bdl-mlb-5059421": {
+  "schema_ver": 2,
+  "fixture_id": "bdl-mlb-5059421",
+  "competition": "MLB",
+  "home": "Tampa Bay Rays",
+  "away": "Chicago White Sox",
+  "stage": "Regular",
+  "kickoff": "2026-07-31T23:10:00Z",
+  "pick": "h",
+  "pick_name": "Tampa Bay Rays",
+  "confidence": 58,
+  "edge": null,
+  "base_pick": "h",
+  "base_pick_name": "Tampa Bay Rays",
+  "probs": {
+   "h": 58,
+   "d": 0,
+   "a": 42
+  },
+  "advancement_probs": null,
+  "regulation_probs": {
+   "h": 58,
+   "d": 0,
+   "a": 42
+  },
+  "regulation_pick": "h",
+  "outcome_basis": "regulation",
+  "market_basis": "regulation_1x2",
+  "market_pick": null,
+  "market_pct": null,
+  "pick_mkt": null,
+  "value_side": null,
+  "value_edge": null,
+  "value_mkt": null,
+  "value_name": null,
+  "upset_candidate": "a",
+  "upset_name": "Chicago White Sox",
+  "upset_score": 50,
+  "upset_candidate_pct": 42,
+  "upset_triggered": false,
+  "upset_temperature": 1.08,
+  "upset_reason": "favorite profile is cleaner",
+  "factor_snapshot": {
+   "form": 0.51,
+   "rank": 0.0,
+   "class": 0.0,
+   "rest": 0.0,
+   "srs": 0.18,
+   "margin": 0.0,
+   "elo": 0.44,
+   "record": 0.52,
+   "market_power": 0.0,
+   "adv": 0.25,
+   "h2h": 0.4
+  },
+  "market_snapshot": null,
+  "market_snapshot_at": null,
+  "market_gap": null,
+  "upset_snapshot": {
+   "candidate": "Chicago White Sox",
+   "class": "unknown",
+   "market_dog_pct": null,
+   "model_dog_pct": 42.0,
+   "upset_edge": null,
+   "radar": false,
+   "standings_candidate": null,
+   "standings_gap_pct": 6.5,
+   "gate": "none",
+   "box_score_edge": 0.0
+  },
+  "box_score_available": false,
+  "damp_pct": 0,
+  "mkt_pull": 0,
+  "model_ver": "v4-integrity-advancement",
+  "model_code_marker": "matchday-predictor-integrity-2026-07",
+  "locked_at": "2026-07-31T12:25:36.334150Z",
+  "lead_time_seconds": 38663.666,
+  "lead_time_hours": 10.739907,
+  "status_at_lock": "UPCOMING",
+  "integrity_eligible": true,
+  "integrity_status": "verified",
+  "integrity_reason": "verified_pregame_window",
+  "prediction_snapshot": {
+   "pick": "h",
+   "pick_name": "Tampa Bay Rays",
+   "confidence": 58,
+   "base_pick": "h",
+   "base_pick_name": "Tampa Bay Rays",
+   "model": {
+    "h": 59,
+    "a": 41,
+    "d": 0
+   },
+   "base_blend": {
+    "h": 59,
+    "d": 0,
+    "a": 41
+   },
+   "blend": {
+    "h": 58,
+    "d": 0,
+    "a": 42
+   },
+   "adjusted": {
+    "h": 58,
+    "d": 0,
+    "a": 42
+   },
+   "is_knockout": false,
+   "advancement": null,
+   "regulation_pick": "h",
+   "regulation_pick_name": "Tampa Bay Rays",
+   "regulation_confidence": 58,
+   "regulation_probs": {
+    "h": 58,
+    "d": 0,
+    "a": 42
+   },
+   "edge": null,
+   "note": "no market to compare against",
+   "why": {
+    "form": 0.51,
+    "rank": 0.0,
+    "class": 0.0,
+    "rest": 0.0,
+    "srs": 0.18,
+    "margin": 0.0,
+    "elo": 0.44,
+    "record": 0.52,
+    "market_power": 0.0,
+    "adv": 0.25,
+    "h2h": 0.4
+   },
+   "damp_pct": 0,
+   "mkt_pull": 0,
+   "market_weight": 0.0,
+   "upset": {
+    "candidate": "a",
+    "candidate_name": "Chicago White Sox",
+    "favorite": "h",
+    "favorite_name": "Tampa Bay Rays",
+    "score": 50,
+    "upset_class": "unknown",
+    "market_dog_pct": null,
+    "model_dog_pct": 42.0,
+    "upset_edge": null,
+    "radar": false,
+    "standings_candidate": null,
+    "standings_gap_pct": 6.5,
+    "standings_sample_ok": true,
+    "temperature": 1.08,
+    "variance_pct": 0,
+    "low_goal_pct": 42,
+    "draw_pct": 0,
+    "favorite_pct": 58,
+    "candidate_pct": 42,
+    "margin_pct": 16,
+    "learn_bias_pct": 0.0,
+    "market_gap_pct": null,
+    "market_gate": false,
+    "box_score_edge": 0.0,
+    "blocked": false,
+    "triggered": false,
+    "reason": "favorite profile is cleaner"
+   },
+   "data_quality": {
+    "level": "established",
+    "games": {
+     "home": 108,
+     "away": 108
+    },
+    "signals": [
+     "record",
+     "form",
+     "srs",
+     "elo"
+    ],
+    "market_available": false,
+    "market_books": 0,
+    "market_spread": null,
+    "market_weight": 0.0,
+    "note": "Current-season sample and opponent-adjusted results are available."
+   },
+   "predicted_margin": {
+    "value": 0.4,
+    "unit": "runs",
+    "favored": "h",
+    "label": "Tampa Bay Rays by 0.4"
+   },
+   "class_meta": {
+    "label": "Personnel edge",
+    "source": null,
+    "available": false,
+    "coverage": "unavailable",
+    "home_available": false,
+    "away_available": false,
+    "note": "Requires probable starters, confirmed batting orders, and bullpen availability; the configured feed does not provide them."
+   },
+   "totals": {
+    "expected": 8.83,
+    "basis": "season_rate"
+   }
+  },
+  "input_snapshot": {
+   "competition": "MLB",
+   "competition_config": {
+    "label": "MLB",
+    "sport": "baseball",
+    "fd": null,
+    "odds": "baseball_mlb",
+    "outright": "baseball_mlb_world_series_winner",
+    "tournament": false,
+    "source": "balldontlie",
+    "has_draws": false
+   },
+   "match": {
+    "id": "bdl-mlb-5059421",
+    "stage": "Regular",
+    "kickoff": "2026-07-31T23:10:00Z",
+    "status": "UPCOMING",
+    "venue": "Tropicana Field",
+    "home": {
+     "name": "Tampa Bay Rays",
+     "code": "TB",
+     "pts": 192,
+     "gd": 43,
+     "form": "W W L W W",
+     "pos": 1,
+     "group": "American League East",
+     "gf": 481,
+     "ga": 438,
+     "pld": 108,
+     "w": 64,
+     "d": 0,
+     "l": 44,
+     "srs": 0.405,
+     "srs_games": 108,
+     "rest_days": 1,
+     "rating": 4.94,
+     "form_home": "W W L W W",
+     "form_away": "L W W W L"
+    },
+    "away": {
+     "name": "Chicago White Sox",
+     "code": "CHW",
+     "pts": 171,
+     "gd": 43,
+     "form": "W L L W W",
+     "pos": 1,
+     "group": "American League Central",
+     "gf": 516,
+     "ga": 473,
+     "pld": 108,
+     "w": 57,
+     "d": 0,
+     "l": 51,
+     "srs": 0.219,
+     "srs_games": 108,
+     "rest_days": 1,
+     "rating": 4.12,
+     "form_home": "W L L W W",
+     "form_away": "L W W L W"
+    },
+    "markets": {},
+    "weather": null,
+    "injuries": {
+     "home": [],
+     "away": []
+    },
+    "lineups": null,
+    "h2h": [],
+    "stats": null,
+    "stats_extra": null,
+    "data_source": "BALLDONTLIE",
+    "advanced_metrics": null,
+    "advanced_metrics_meta": null,
+    "nfl_challenger_shadow": null,
+    "mlb_challenger_shadow": {
+     "schema_version": 1,
+     "model_version": "retrosheet-mlb-challenger-0.1.0",
+     "mode": "prospective_shadow",
+     "production_weight": 0,
+     "home_win_probability": 0.536001,
+     "away_win_probability": 0.463999,
+     "features": {
+      "pythagorean_diff": 0.003016,
+      "run_diff_per_game_diff": 0.0
+     },
+     "top_contributions": [
+      {
+       "feature": "pythagorean_diff",
+       "contribution": 0.00406,
+       "direction": "home"
+      },
+      {
+       "feature": "run_diff_per_game_diff",
+       "contribution": 0.00148,
+       "direction": "home"
+      }
+     ],
+     "live_feature_source": "licensed BALLDONTLIE season team totals through prior completed games",
+     "historical_training_source": "Retrosheet event files and game logs",
+     "retrosheet_notice": "The information used here was obtained free of charge from and is copyrighted by Retrosheet. Interested parties may contact Retrosheet at \"www.retrosheet.org\".",
+     "trained_through": "2025-09-28",
+     "home_games": 108,
+     "away_games": 108,
+     "historical_validation": {
+      "checks": {
+       "brier_not_worse_than_elo": true,
+       "log_loss_better_than_elo": true,
+       "minimum_out_of_sample_games": true,
+       "minimum_test_seasons": true,
+       "paired_interval_below_zero": true
+      },
+      "decision": "eligible_for_prospective_shadow",
+      "elo": {
+       "accuracy": 0.564356,
+       "brier": 0.246335,
+       "log_loss": 0.686457,
+       "n": 9090
+      },
+      "features": [
+       "pythagorean_diff",
+       "run_diff_per_game_diff"
+      ],
+      "model": {
+       "accuracy": 0.560176,
+       "brier": 0.244584,
+       "log_loss": 0.682207,
+       "n": 9090
+      },
+      "paired_vs_elo": {
+       "blocks": 683,
+       "ci95": [
+        -0.007292,
+        -0.001244
+       ],
+       "mean_log_loss_delta": -0.00425,
+       "method": "deterministic game-date block bootstrap",
+       "n": 9090
+      }
+     },
+     "promotion_status": "eligible_for_prospective_shadow_not_production",
+     "missing_personnel": [
+      "probable_or_confirmed_starter",
+      "confirmed_lineup",
+      "bullpen_availability"
+     ]
+    },
+    "model_signal_schema": null
+   }
+  },
+  "mfti_shadow": {
+   "spec_version": "MFTI-0.1.1-shadow",
+   "mode": "shadow_research_only",
+   "captured_at": "2026-07-31T12:25:36.334150Z",
+   "status": "incomplete",
+   "score": null,
+   "historical_evidence": {
+    "available": false,
+    "score": null,
+    "reason": "frozen_normalization_and_rolling_recalibration_not_fitted",
+    "diagnostics": {
+     "eligible_prior_forecasts": 52,
+     "mean_brier": 0.561196,
+     "mean_log_loss": 0.768783,
+     "brier_skill_vs_uniform": 0.158206,
+     "log_skill_vs_uniform": 0.300224
+    }
+   },
+   "event_readiness": {
+    "available": false,
+    "score": null,
+    "missing_components": [
+     "scenario_stability",
+     "availability",
+     "freshness",
+     "model_stability"
+    ]
+   },
+   "components": {
+    "scenario_stability": {
+     "available": false,
+     "score": null,
+     "reason": "scenario_forecasts_not_captured"
+    },
+    "availability": {
+     "available": false,
+     "score": null,
+     "reason": "availability_probabilities_not_captured"
+    },
+    "freshness": {
+     "available": false,
+     "score": null,
+     "reason": "input_freshness_not_captured"
+    },
+    "model_stability": {
+     "available": false,
+     "score": null,
+     "reason": "independent_model_outputs_not_captured"
+    }
+   },
+   "missing_components": [
+    "historical_evidence",
+    "scenario_stability",
+    "availability",
+    "freshness",
+    "model_stability"
+   ],
+   "affects_prediction": false,
+   "user_visible": false
+  },
+  "result": null,
+  "model_result": null,
+  "market_result": null
+ },
+ "bdl-mlb-5059422": {
+  "schema_ver": 2,
+  "fixture_id": "bdl-mlb-5059422",
+  "competition": "MLB",
+  "home": "New York Mets",
+  "away": "Miami Marlins",
+  "stage": "Regular",
+  "kickoff": "2026-07-31T23:10:00Z",
+  "pick": "h",
+  "pick_name": "New York Mets",
+  "confidence": 64,
+  "edge": null,
+  "base_pick": "h",
+  "base_pick_name": "New York Mets",
+  "probs": {
+   "h": 64,
+   "d": 0,
+   "a": 36
+  },
+  "advancement_probs": null,
+  "regulation_probs": {
+   "h": 64,
+   "d": 0,
+   "a": 36
+  },
+  "regulation_pick": "h",
+  "outcome_basis": "regulation",
+  "market_basis": "regulation_1x2",
+  "market_pick": null,
+  "market_pct": null,
+  "pick_mkt": null,
+  "value_side": null,
+  "value_edge": null,
+  "value_mkt": null,
+  "value_name": null,
+  "upset_candidate": "a",
+  "upset_name": "Miami Marlins",
+  "upset_score": 37,
+  "upset_candidate_pct": 36,
+  "upset_triggered": false,
+  "upset_temperature": 1.08,
+  "upset_reason": "favorite profile is cleaner",
+  "factor_snapshot": {
+   "form": 2.53,
+   "rank": 0.0,
+   "class": 0.0,
+   "rest": 0.0,
+   "srs": -0.27,
+   "margin": -0.39,
+   "elo": 0.02,
+   "record": -0.58,
+   "market_power": 0.0,
+   "adv": 0.25,
+   "h2h": 0.11
+  },
+  "market_snapshot": null,
+  "market_snapshot_at": null,
+  "market_gap": null,
+  "upset_snapshot": {
+   "candidate": "Miami Marlins",
+   "class": "unknown",
+   "market_dog_pct": null,
+   "model_dog_pct": 36.0,
+   "upset_edge": null,
+   "radar": false,
+   "standings_candidate": null,
+   "standings_gap_pct": 7.3,
+   "gate": "none",
+   "box_score_edge": 0.0
+  },
+  "box_score_available": false,
+  "damp_pct": 0,
+  "mkt_pull": 0,
+  "model_ver": "v4-integrity-advancement",
+  "model_code_marker": "matchday-predictor-integrity-2026-07",
+  "locked_at": "2026-07-31T12:25:36.334734Z",
+  "lead_time_seconds": 38663.665,
+  "lead_time_hours": 10.739907,
+  "status_at_lock": "UPCOMING",
+  "integrity_eligible": true,
+  "integrity_status": "verified",
+  "integrity_reason": "verified_pregame_window",
+  "prediction_snapshot": {
+   "pick": "h",
+   "pick_name": "New York Mets",
+   "confidence": 64,
+   "base_pick": "h",
+   "base_pick_name": "New York Mets",
+   "model": {
+    "h": 65,
+    "a": 35,
+    "d": 0
+   },
+   "base_blend": {
+    "h": 65,
+    "d": 0,
+    "a": 35
+   },
+   "blend": {
+    "h": 64,
+    "d": 0,
+    "a": 36
+   },
+   "adjusted": {
+    "h": 64,
+    "d": 0,
+    "a": 36
+   },
+   "is_knockout": false,
+   "advancement": null,
+   "regulation_pick": "h",
+   "regulation_pick_name": "New York Mets",
+   "regulation_confidence": 64,
+   "regulation_probs": {
+    "h": 64,
+    "d": 0,
+    "a": 36
+   },
+   "edge": null,
+   "note": "no market to compare against",
+   "why": {
+    "form": 2.53,
+    "rank": 0.0,
+    "class": 0.0,
+    "rest": 0.0,
+    "srs": -0.27,
+    "margin": -0.39,
+    "elo": 0.02,
+    "record": -0.58,
+    "market_power": 0.0,
+    "adv": 0.25,
+    "h2h": 0.11
+   },
+   "damp_pct": 0,
+   "mkt_pull": 0,
+   "market_weight": 0.0,
+   "upset": {
+    "candidate": "a",
+    "candidate_name": "Miami Marlins",
+    "favorite": "h",
+    "favorite_name": "New York Mets",
+    "score": 37,
+    "upset_class": "unknown",
+    "market_dog_pct": null,
+    "model_dog_pct": 36.0,
+    "upset_edge": null,
+    "radar": false,
+    "standings_candidate": null,
+    "standings_gap_pct": 7.3,
+    "standings_sample_ok": true,
+    "temperature": 1.08,
+    "variance_pct": 0,
+    "low_goal_pct": 42,
+    "draw_pct": 0,
+    "favorite_pct": 64,
+    "candidate_pct": 36,
+    "margin_pct": 28,
+    "learn_bias_pct": 0.0,
+    "market_gap_pct": null,
+    "market_gate": false,
+    "box_score_edge": 0.0,
+    "blocked": false,
+    "triggered": false,
+    "reason": "favorite profile is cleaner"
+   },
+   "data_quality": {
+    "level": "established",
+    "games": {
+     "home": 110,
+     "away": 110
+    },
+    "signals": [
+     "record",
+     "margin",
+     "form",
+     "srs",
+     "elo"
+    ],
+    "market_available": false,
+    "market_books": 0,
+    "market_spread": null,
+    "market_weight": 0.0,
+    "note": "Current-season sample and opponent-adjusted results are available."
+   },
+   "predicted_margin": {
+    "value": 0.6,
+    "unit": "runs",
+    "favored": "h",
+    "label": "New York Mets by 0.6"
+   },
+   "class_meta": {
+    "label": "Personnel edge",
+    "source": null,
+    "available": false,
+    "coverage": "unavailable",
+    "home_available": false,
+    "away_available": false,
+    "note": "Requires probable starters, confirmed batting orders, and bullpen availability; the configured feed does not provide them."
+   },
+   "totals": {
+    "expected": 8.71,
+    "basis": "season_rate"
+   }
+  },
+  "input_snapshot": {
+   "competition": "MLB",
+   "competition_config": {
+    "label": "MLB",
+    "sport": "baseball",
+    "fd": null,
+    "odds": "baseball_mlb",
+    "outright": "baseball_mlb_world_series_winner",
+    "tournament": false,
+    "source": "balldontlie",
+    "has_draws": false
+   },
+   "match": {
+    "id": "bdl-mlb-5059422",
+    "stage": "Regular",
+    "kickoff": "2026-07-31T23:10:00Z",
+    "status": "UPCOMING",
+    "venue": "Citi Field",
+    "home": {
+     "name": "New York Mets",
+     "code": "NYM",
+     "pts": 141,
+     "gd": -49,
+     "form": "W W W L W",
+     "pos": 5,
+     "group": "National League East",
+     "gf": 453,
+     "ga": 502,
+     "pld": 110,
+     "w": 47,
+     "d": 0,
+     "l": 63,
+     "srs": -0.28,
+     "srs_games": 110,
+     "rest_days": 1,
+     "rating": 4.89,
+     "form_home": "W W W L W",
+     "form_away": "L W L W L"
+    },
+    "away": {
+     "name": "Miami Marlins",
+     "code": "MIA",
+     "pts": 165,
+     "gd": 4,
+     "form": "L W W W L",
+     "pos": 4,
+     "group": "National League East",
+     "gf": 483,
+     "ga": 479,
+     "pld": 110,
+     "w": 55,
+     "d": 0,
+     "l": 55,
+     "srs": -0.001,
+     "srs_games": 110,
+     "rest_days": 1,
+     "rating": 3.86,
+     "form_home": "L L W W W",
+     "form_away": "L L L L L"
+    },
+    "markets": {},
+    "weather": null,
+    "injuries": {
+     "home": [],
+     "away": []
+    },
+    "lineups": null,
+    "h2h": [],
+    "stats": null,
+    "stats_extra": null,
+    "data_source": "BALLDONTLIE",
+    "advanced_metrics": null,
+    "advanced_metrics_meta": null,
+    "nfl_challenger_shadow": null,
+    "mlb_challenger_shadow": {
+     "schema_version": 1,
+     "model_version": "retrosheet-mlb-challenger-0.1.0",
+     "mode": "prospective_shadow",
+     "production_weight": 0,
+     "home_win_probability": 0.513114,
+     "away_win_probability": 0.486886,
+     "features": {
+      "pythagorean_diff": -0.050656,
+      "run_diff_per_game_diff": -0.481818
+     },
+     "top_contributions": [
+      {
+       "feature": "pythagorean_diff",
+       "contribution": -0.04417,
+       "direction": "away"
+      },
+      {
+       "feature": "run_diff_per_game_diff",
+       "contribution": -0.04206,
+       "direction": "away"
+      }
+     ],
+     "live_feature_source": "licensed BALLDONTLIE season team totals through prior completed games",
+     "historical_training_source": "Retrosheet event files and game logs",
+     "retrosheet_notice": "The information used here was obtained free of charge from and is copyrighted by Retrosheet. Interested parties may contact Retrosheet at \"www.retrosheet.org\".",
+     "trained_through": "2025-09-28",
+     "home_games": 110,
+     "away_games": 110,
+     "historical_validation": {
+      "checks": {
+       "brier_not_worse_than_elo": true,
+       "log_loss_better_than_elo": true,
+       "minimum_out_of_sample_games": true,
+       "minimum_test_seasons": true,
+       "paired_interval_below_zero": true
+      },
+      "decision": "eligible_for_prospective_shadow",
+      "elo": {
+       "accuracy": 0.564356,
+       "brier": 0.246335,
+       "log_loss": 0.686457,
+       "n": 9090
+      },
+      "features": [
+       "pythagorean_diff",
+       "run_diff_per_game_diff"
+      ],
+      "model": {
+       "accuracy": 0.560176,
+       "brier": 0.244584,
+       "log_loss": 0.682207,
+       "n": 9090
+      },
+      "paired_vs_elo": {
+       "blocks": 683,
+       "ci95": [
+        -0.007292,
+        -0.001244
+       ],
+       "mean_log_loss_delta": -0.00425,
+       "method": "deterministic game-date block bootstrap",
+       "n": 9090
+      }
+     },
+     "promotion_status": "eligible_for_prospective_shadow_not_production",
+     "missing_personnel": [
+      "probable_or_confirmed_starter",
+      "confirmed_lineup",
+      "bullpen_availability"
+     ]
+    },
+    "model_signal_schema": null
+   }
+  },
+  "mfti_shadow": {
+   "spec_version": "MFTI-0.1.1-shadow",
+   "mode": "shadow_research_only",
+   "captured_at": "2026-07-31T12:25:36.334734Z",
+   "status": "incomplete",
+   "score": null,
+   "historical_evidence": {
+    "available": false,
+    "score": null,
+    "reason": "frozen_normalization_and_rolling_recalibration_not_fitted",
+    "diagnostics": {
+     "eligible_prior_forecasts": 52,
+     "mean_brier": 0.561196,
+     "mean_log_loss": 0.768783,
+     "brier_skill_vs_uniform": 0.158206,
+     "log_skill_vs_uniform": 0.300224
+    }
+   },
+   "event_readiness": {
+    "available": false,
+    "score": null,
+    "missing_components": [
+     "scenario_stability",
+     "availability",
+     "freshness",
+     "model_stability"
+    ]
+   },
+   "components": {
+    "scenario_stability": {
+     "available": false,
+     "score": null,
+     "reason": "scenario_forecasts_not_captured"
+    },
+    "availability": {
+     "available": false,
+     "score": null,
+     "reason": "availability_probabilities_not_captured"
+    },
+    "freshness": {
+     "available": false,
+     "score": null,
+     "reason": "input_freshness_not_captured"
+    },
+    "model_stability": {
+     "available": false,
+     "score": null,
+     "reason": "independent_model_outputs_not_captured"
+    }
+   },
+   "missing_components": [
+    "historical_evidence",
+    "scenario_stability",
+    "availability",
+    "freshness",
+    "model_stability"
+   ],
+   "affects_prediction": false,
+   "user_visible": false
+  },
+  "result": null,
+  "model_result": null,
+  "market_result": null
+ },
+ "bdl-mlb-5059423": {
+  "schema_ver": 2,
+  "fixture_id": "bdl-mlb-5059423",
+  "competition": "MLB",
+  "home": "Atlanta Braves",
+  "away": "Washington Nationals",
+  "stage": "Regular",
+  "kickoff": "2026-07-31T23:15:00Z",
+  "pick": "h",
+  "pick_name": "Atlanta Braves",
+  "confidence": 66,
+  "edge": null,
+  "base_pick": "h",
+  "base_pick_name": "Atlanta Braves",
+  "probs": {
+   "h": 66,
+   "d": 0,
+   "a": 34
+  },
+  "advancement_probs": null,
+  "regulation_probs": {
+   "h": 66,
+   "d": 0,
+   "a": 34
+  },
+  "regulation_pick": "h",
+  "outcome_basis": "regulation",
+  "market_basis": "regulation_1x2",
+  "market_pick": null,
+  "market_pct": null,
+  "pick_mkt": null,
+  "value_side": null,
+  "value_edge": null,
+  "value_mkt": null,
+  "value_name": null,
+  "upset_candidate": "a",
+  "upset_name": "Washington Nationals",
+  "upset_score": 33,
+  "upset_candidate_pct": 34,
+  "upset_triggered": false,
+  "upset_temperature": 1.08,
+  "upset_reason": "favorite profile is cleaner",
+  "factor_snapshot": {
+   "form": 0.99,
+   "rank": 0.0,
+   "class": 0.0,
+   "rest": 0.0,
+   "srs": 0.53,
+   "margin": 0.52,
+   "elo": 0.92,
+   "record": 0.7,
+   "market_power": 0.0,
+   "adv": 0.25,
+   "h2h": 0.2
+  },
+  "market_snapshot": null,
+  "market_snapshot_at": null,
+  "market_gap": null,
+  "upset_snapshot": {
+   "candidate": "Washington Nationals",
+   "class": "unknown",
+   "market_dog_pct": null,
+   "model_dog_pct": 34.0,
+   "upset_edge": null,
+   "radar": false,
+   "standings_candidate": null,
+   "standings_gap_pct": 8.7,
+   "gate": "none",
+   "box_score_edge": 0.0
+  },
+  "box_score_available": false,
+  "damp_pct": 0,
+  "mkt_pull": 0,
+  "model_ver": "v4-integrity-advancement",
+  "model_code_marker": "matchday-predictor-integrity-2026-07",
+  "locked_at": "2026-07-31T12:25:36.335304Z",
+  "lead_time_seconds": 38963.665,
+  "lead_time_hours": 10.82324,
+  "status_at_lock": "UPCOMING",
+  "integrity_eligible": true,
+  "integrity_status": "verified",
+  "integrity_reason": "verified_pregame_window",
+  "prediction_snapshot": {
+   "pick": "h",
+   "pick_name": "Atlanta Braves",
+   "confidence": 66,
+   "base_pick": "h",
+   "base_pick_name": "Atlanta Braves",
+   "model": {
+    "h": 67,
+    "a": 33,
+    "d": 0
+   },
+   "base_blend": {
+    "h": 67,
+    "d": 0,
+    "a": 33
+   },
+   "blend": {
+    "h": 66,
+    "d": 0,
+    "a": 34
+   },
+   "adjusted": {
+    "h": 66,
+    "d": 0,
+    "a": 34
+   },
+   "is_knockout": false,
+   "advancement": null,
+   "regulation_pick": "h",
+   "regulation_pick_name": "Atlanta Braves",
+   "regulation_confidence": 66,
+   "regulation_probs": {
+    "h": 66,
+    "d": 0,
+    "a": 34
+   },
+   "edge": null,
+   "note": "no market to compare against",
+   "why": {
+    "form": 0.99,
+    "rank": 0.0,
+    "class": 0.0,
+    "rest": 0.0,
+    "srs": 0.53,
+    "margin": 0.52,
+    "elo": 0.92,
+    "record": 0.7,
+    "market_power": 0.0,
+    "adv": 0.25,
+    "h2h": 0.2
+   },
+   "damp_pct": 0,
+   "mkt_pull": 0,
+   "market_weight": 0.0,
+   "upset": {
+    "candidate": "a",
+    "candidate_name": "Washington Nationals",
+    "favorite": "h",
+    "favorite_name": "Atlanta Braves",
+    "score": 33,
+    "upset_class": "unknown",
+    "market_dog_pct": null,
+    "model_dog_pct": 34.0,
+    "upset_edge": null,
+    "radar": false,
+    "standings_candidate": null,
+    "standings_gap_pct": 8.7,
+    "standings_sample_ok": true,
+    "temperature": 1.08,
+    "variance_pct": 0,
+    "low_goal_pct": 42,
+    "draw_pct": 0,
+    "favorite_pct": 66,
+    "candidate_pct": 34,
+    "margin_pct": 32,
+    "learn_bias_pct": 0.0,
+    "market_gap_pct": null,
+    "market_gate": false,
+    "box_score_edge": 0.0,
+    "blocked": false,
+    "triggered": false,
+    "reason": "favorite profile is cleaner"
+   },
+   "data_quality": {
+    "level": "established",
+    "games": {
+     "home": 109,
+     "away": 110
+    },
+    "signals": [
+     "record",
+     "margin",
+     "form",
+     "srs",
+     "elo"
+    ],
+    "market_available": false,
+    "market_books": 0,
+    "market_spread": null,
+    "market_weight": 0.0,
+    "note": "Current-season sample and opponent-adjusted results are available."
+   },
+   "predicted_margin": {
+    "value": 0.7,
+    "unit": "runs",
+    "favored": "h",
+    "label": "Atlanta Braves by 0.7"
+   },
+   "class_meta": {
+    "label": "Personnel edge",
+    "source": null,
+    "available": false,
+    "coverage": "unavailable",
+    "home_available": false,
+    "away_available": false,
+    "note": "Requires probable starters, confirmed batting orders, and bullpen availability; the configured feed does not provide them."
+   },
+   "totals": {
+    "expected": 9.76,
+    "basis": "season_rate"
+   }
+  },
+  "input_snapshot": {
+   "competition": "MLB",
+   "competition_config": {
+    "label": "MLB",
+    "sport": "baseball",
+    "fd": null,
+    "odds": "baseball_mlb",
+    "outright": "baseball_mlb_world_series_winner",
+    "tournament": false,
+    "source": "balldontlie",
+    "has_draws": false
+   },
+   "match": {
+    "id": "bdl-mlb-5059423",
+    "stage": "Regular",
+    "kickoff": "2026-07-31T23:15:00Z",
+    "status": "UPCOMING",
+    "venue": "Truist Park",
+    "home": {
+     "name": "Atlanta Braves",
+     "code": "ATL",
+     "pts": 192,
+     "gd": 97,
+     "form": "W L L W W",
+     "pos": 1,
+     "group": "National League East",
+     "gf": 531,
+     "ga": 434,
+     "pld": 109,
+     "w": 64,
+     "d": 0,
+     "l": 45,
+     "srs": 0.728,
+     "srs_games": 109,
+     "rest_days": 1,
+     "rating": 5.58,
+     "form_home": "W L W W W",
+     "form_away": "L W L L W"
+    },
+    "away": {
+     "name": "Washington Nationals",
+     "code": "WSH",
+     "pts": 165,
+     "gd": 27,
+     "form": "W L W L L",
+     "pos": 3,
+     "group": "National League East",
+     "gf": 600,
+     "ga": 573,
+     "pld": 110,
+     "w": 55,
+     "d": 0,
+     "l": 55,
+     "srs": 0.181,
+     "srs_games": 110,
+     "rest_days": 1,
+     "rating": 3.93,
+     "form_home": "W W L W L",
+     "form_away": "W W L W L"
+    },
+    "markets": {},
+    "weather": null,
+    "injuries": {
+     "home": [],
+     "away": []
+    },
+    "lineups": null,
+    "h2h": [],
+    "stats": null,
+    "stats_extra": null,
+    "data_source": "BALLDONTLIE",
+    "advanced_metrics": null,
+    "advanced_metrics_meta": null,
+    "nfl_challenger_shadow": null,
+    "mlb_challenger_shadow": {
+     "schema_version": 1,
+     "model_version": "retrosheet-mlb-challenger-0.1.0",
+     "mode": "prospective_shadow",
+     "production_weight": 0,
+     "home_win_probability": 0.565344,
+     "away_win_probability": 0.434656,
+     "features": {
+      "pythagorean_diff": 0.070199,
+      "run_diff_per_game_diff": 0.644454
+     },
+     "top_contributions": [
+      {
+       "feature": "pythagorean_diff",
+       "contribution": 0.06444,
+       "direction": "home"
+      },
+      {
+       "feature": "run_diff_per_game_diff",
+       "contribution": 0.05973,
+       "direction": "home"
+      }
+     ],
+     "live_feature_source": "licensed BALLDONTLIE season team totals through prior completed games",
+     "historical_training_source": "Retrosheet event files and game logs",
+     "retrosheet_notice": "The information used here was obtained free of charge from and is copyrighted by Retrosheet. Interested parties may contact Retrosheet at \"www.retrosheet.org\".",
+     "trained_through": "2025-09-28",
+     "home_games": 109,
+     "away_games": 110,
+     "historical_validation": {
+      "checks": {
+       "brier_not_worse_than_elo": true,
+       "log_loss_better_than_elo": true,
+       "minimum_out_of_sample_games": true,
+       "minimum_test_seasons": true,
+       "paired_interval_below_zero": true
+      },
+      "decision": "eligible_for_prospective_shadow",
+      "elo": {
+       "accuracy": 0.564356,
+       "brier": 0.246335,
+       "log_loss": 0.686457,
+       "n": 9090
+      },
+      "features": [
+       "pythagorean_diff",
+       "run_diff_per_game_diff"
+      ],
+      "model": {
+       "accuracy": 0.560176,
+       "brier": 0.244584,
+       "log_loss": 0.682207,
+       "n": 9090
+      },
+      "paired_vs_elo": {
+       "blocks": 683,
+       "ci95": [
+        -0.007292,
+        -0.001244
+       ],
+       "mean_log_loss_delta": -0.00425,
+       "method": "deterministic game-date block bootstrap",
+       "n": 9090
+      }
+     },
+     "promotion_status": "eligible_for_prospective_shadow_not_production",
+     "missing_personnel": [
+      "probable_or_confirmed_starter",
+      "confirmed_lineup",
+      "bullpen_availability"
+     ]
+    },
+    "model_signal_schema": null
+   }
+  },
+  "mfti_shadow": {
+   "spec_version": "MFTI-0.1.1-shadow",
+   "mode": "shadow_research_only",
+   "captured_at": "2026-07-31T12:25:36.335304Z",
+   "status": "incomplete",
+   "score": null,
+   "historical_evidence": {
+    "available": false,
+    "score": null,
+    "reason": "frozen_normalization_and_rolling_recalibration_not_fitted",
+    "diagnostics": {
+     "eligible_prior_forecasts": 52,
+     "mean_brier": 0.561196,
+     "mean_log_loss": 0.768783,
+     "brier_skill_vs_uniform": 0.158206,
+     "log_skill_vs_uniform": 0.300224
+    }
+   },
+   "event_readiness": {
+    "available": false,
+    "score": null,
+    "missing_components": [
+     "scenario_stability",
+     "availability",
+     "freshness",
+     "model_stability"
+    ]
+   },
+   "components": {
+    "scenario_stability": {
+     "available": false,
+     "score": null,
+     "reason": "scenario_forecasts_not_captured"
+    },
+    "availability": {
+     "available": false,
+     "score": null,
+     "reason": "availability_probabilities_not_captured"
+    },
+    "freshness": {
+     "available": false,
+     "score": null,
+     "reason": "input_freshness_not_captured"
+    },
+    "model_stability": {
+     "available": false,
+     "score": null,
+     "reason": "independent_model_outputs_not_captured"
+    }
+   },
+   "missing_components": [
+    "historical_evidence",
+    "scenario_stability",
+    "availability",
+    "freshness",
+    "model_stability"
+   ],
+   "affects_prediction": false,
+   "user_visible": false
+  },
+  "result": null,
+  "model_result": null,
+  "market_result": null
+ },
+ "bdl-mlb-5059424": {
+  "schema_ver": 2,
+  "fixture_id": "bdl-mlb-5059424",
+  "competition": "MLB",
+  "home": "Houston Astros",
+  "away": "Texas Rangers",
+  "stage": "Regular",
+  "kickoff": "2026-08-01T00:15:00Z",
+  "pick": "h",
+  "pick_name": "Houston Astros",
+  "confidence": 61,
+  "edge": null,
+  "base_pick": "h",
+  "base_pick_name": "Houston Astros",
+  "probs": {
+   "h": 61,
+   "d": 0,
+   "a": 39
+  },
+  "advancement_probs": null,
+  "regulation_probs": {
+   "h": 61,
+   "d": 0,
+   "a": 39
+  },
+  "regulation_pick": "h",
+  "outcome_basis": "regulation",
+  "market_basis": "regulation_1x2",
+  "market_pick": null,
+  "market_pct": null,
+  "pick_mkt": null,
+  "value_side": null,
+  "value_edge": null,
+  "value_mkt": null,
+  "value_name": null,
+  "upset_candidate": "a",
+  "upset_name": "Texas Rangers",
+  "upset_score": 43,
+  "upset_candidate_pct": 39,
+  "upset_triggered": false,
+  "upset_temperature": 1.08,
+  "upset_reason": "favorite profile is cleaner",
+  "factor_snapshot": {
+   "form": 1.2,
+   "rank": 0.0,
+   "class": 0.0,
+   "rest": 0.08,
+   "srs": -0.27,
+   "margin": -0.14,
+   "elo": 0.8,
+   "record": -0.04,
+   "market_power": 0.0,
+   "adv": 0.25,
+   "h2h": 0.16
+  },
+  "market_snapshot": null,
+  "market_snapshot_at": null,
+  "market_gap": null,
+  "upset_snapshot": {
+   "candidate": "Texas Rangers",
+   "class": "unknown",
+   "market_dog_pct": null,
+   "model_dog_pct": 39.0,
+   "upset_edge": null,
+   "radar": false,
+   "standings_candidate": null,
+   "standings_gap_pct": 0.5,
+   "gate": "none",
+   "box_score_edge": 0.0
+  },
+  "box_score_available": false,
+  "damp_pct": 0,
+  "mkt_pull": 0,
+  "model_ver": "v4-integrity-advancement",
+  "model_code_marker": "matchday-predictor-integrity-2026-07",
+  "locked_at": "2026-07-31T12:25:36.335882Z",
+  "lead_time_seconds": 42563.664,
+  "lead_time_hours": 11.82324,
+  "status_at_lock": "UPCOMING",
+  "integrity_eligible": true,
+  "integrity_status": "verified",
+  "integrity_reason": "verified_pregame_window",
+  "prediction_snapshot": {
+   "pick": "h",
+   "pick_name": "Houston Astros",
+   "confidence": 61,
+   "base_pick": "h",
+   "base_pick_name": "Houston Astros",
+   "model": {
+    "h": 62,
+    "a": 38,
+    "d": 0
+   },
+   "base_blend": {
+    "h": 62,
+    "d": 0,
+    "a": 38
+   },
+   "blend": {
+    "h": 61,
+    "d": 0,
+    "a": 39
+   },
+   "adjusted": {
+    "h": 61,
+    "d": 0,
+    "a": 39
+   },
+   "is_knockout": false,
+   "advancement": null,
+   "regulation_pick": "h",
+   "regulation_pick_name": "Houston Astros",
+   "regulation_confidence": 61,
+   "regulation_probs": {
+    "h": 61,
+    "d": 0,
+    "a": 39
+   },
+   "edge": null,
+   "note": "no market to compare against",
+   "why": {
+    "form": 1.2,
+    "rank": 0.0,
+    "class": 0.0,
+    "rest": 0.08,
+    "srs": -0.27,
+    "margin": -0.14,
+    "elo": 0.8,
+    "record": -0.04,
+    "market_power": 0.0,
+    "adv": 0.25,
+    "h2h": 0.16
+   },
+   "damp_pct": 0,
+   "mkt_pull": 0,
+   "market_weight": 0.0,
+   "upset": {
+    "candidate": "a",
+    "candidate_name": "Texas Rangers",
+    "favorite": "h",
+    "favorite_name": "Houston Astros",
+    "score": 43,
+    "upset_class": "unknown",
+    "market_dog_pct": null,
+    "model_dog_pct": 39.0,
+    "upset_edge": null,
+    "radar": false,
+    "standings_candidate": null,
+    "standings_gap_pct": 0.5,
+    "standings_sample_ok": true,
+    "temperature": 1.08,
+    "variance_pct": 0,
+    "low_goal_pct": 42,
+    "draw_pct": 0,
+    "favorite_pct": 61,
+    "candidate_pct": 39,
+    "margin_pct": 22,
+    "learn_bias_pct": 0.0,
+    "market_gap_pct": null,
+    "market_gate": false,
+    "box_score_edge": 0.0,
+    "blocked": false,
+    "triggered": false,
+    "reason": "favorite profile is cleaner"
+   },
+   "data_quality": {
+    "level": "established",
+    "games": {
+     "home": 110,
+     "away": 109
+    },
+    "signals": [
+     "record",
+     "margin",
+     "form",
+     "srs",
+     "elo",
+     "rest"
+    ],
+    "market_available": false,
+    "market_books": 0,
+    "market_spread": null,
+    "market_weight": 0.0,
+    "note": "Current-season sample and opponent-adjusted results are available."
+   },
+   "predicted_margin": {
+    "value": 0.5,
+    "unit": "runs",
+    "favored": "h",
+    "label": "Houston Astros by 0.5"
+   },
+   "class_meta": {
+    "label": "Personnel edge",
+    "source": null,
+    "available": false,
+    "coverage": "unavailable",
+    "home_available": false,
+    "away_available": false,
+    "note": "Requires probable starters, confirmed batting orders, and bullpen availability; the configured feed does not provide them."
+   },
+   "totals": {
+    "expected": 9.06,
+    "basis": "season_rate"
+   }
+  },
+  "input_snapshot": {
+   "competition": "MLB",
+   "competition_config": {
+    "label": "MLB",
+    "sport": "baseball",
+    "fd": null,
+    "odds": "baseball_mlb",
+    "outright": "baseball_mlb_world_series_winner",
+    "tournament": false,
+    "source": "balldontlie",
+    "has_draws": false
+   },
+   "match": {
+    "id": "bdl-mlb-5059424",
+    "stage": "Regular",
+    "kickoff": "2026-08-01T00:15:00Z",
+    "status": "UPCOMING",
+    "venue": "Daikin Park",
+    "home": {
+     "name": "Houston Astros",
+     "code": "HOU",
+     "pts": 165,
+     "gd": -41,
+     "form": "W L W W W",
+     "pos": 2,
+     "group": "American League West",
+     "gf": 505,
+     "ga": 546,
+     "pld": 110,
+     "w": 55,
+     "d": 0,
+     "l": 55,
+     "srs": -0.518,
+     "srs_games": 110,
+     "rest_days": 2,
+     "rating": 5.64,
+     "form_home": "L L W W W",
+     "form_away": "W L W W W"
+    },
+    "away": {
+     "name": "Texas Rangers",
+     "code": "TEX",
+     "pts": 165,
+     "gd": -22,
+     "form": "L W W L L",
+     "pos": 1,
+     "group": "American League West",
+     "gf": 456,
+     "ga": 478,
+     "pld": 109,
+     "w": 55,
+     "d": 0,
+     "l": 54,
+     "srs": -0.234,
+     "srs_games": 109,
+     "rest_days": 1,
+     "rating": 5.19,
+     "form_home": "L W W L W",
+     "form_away": "W L W L L"
+    },
+    "markets": {},
+    "weather": null,
+    "injuries": {
+     "home": [],
+     "away": []
+    },
+    "lineups": null,
+    "h2h": [],
+    "stats": null,
+    "stats_extra": null,
+    "data_source": "BALLDONTLIE",
+    "advanced_metrics": null,
+    "advanced_metrics_meta": null,
+    "nfl_challenger_shadow": null,
+    "mlb_challenger_shadow": {
+     "schema_version": 1,
+     "model_version": "retrosheet-mlb-challenger-0.1.0",
+     "mode": "prospective_shadow",
+     "production_weight": 0,
+     "home_win_probability": 0.528324,
+     "away_win_probability": 0.471676,
+     "features": {
+      "pythagorean_diff": -0.014109,
+      "run_diff_per_game_diff": -0.170892
+     },
+     "top_contributions": [
+      {
+       "feature": "run_diff_per_game_diff",
+       "contribution": -0.01396,
+       "direction": "away"
+      },
+      {
+       "feature": "pythagorean_diff",
+       "contribution": -0.01133,
+       "direction": "away"
+      }
+     ],
+     "live_feature_source": "licensed BALLDONTLIE season team totals through prior completed games",
+     "historical_training_source": "Retrosheet event files and game logs",
+     "retrosheet_notice": "The information used here was obtained free of charge from and is copyrighted by Retrosheet. Interested parties may contact Retrosheet at \"www.retrosheet.org\".",
+     "trained_through": "2025-09-28",
+     "home_games": 110,
+     "away_games": 109,
+     "historical_validation": {
+      "checks": {
+       "brier_not_worse_than_elo": true,
+       "log_loss_better_than_elo": true,
+       "minimum_out_of_sample_games": true,
+       "minimum_test_seasons": true,
+       "paired_interval_below_zero": true
+      },
+      "decision": "eligible_for_prospective_shadow",
+      "elo": {
+       "accuracy": 0.564356,
+       "brier": 0.246335,
+       "log_loss": 0.686457,
+       "n": 9090
+      },
+      "features": [
+       "pythagorean_diff",
+       "run_diff_per_game_diff"
+      ],
+      "model": {
+       "accuracy": 0.560176,
+       "brier": 0.244584,
+       "log_loss": 0.682207,
+       "n": 9090
+      },
+      "paired_vs_elo": {
+       "blocks": 683,
+       "ci95": [
+        -0.007292,
+        -0.001244
+       ],
+       "mean_log_loss_delta": -0.00425,
+       "method": "deterministic game-date block bootstrap",
+       "n": 9090
+      }
+     },
+     "promotion_status": "eligible_for_prospective_shadow_not_production",
+     "missing_personnel": [
+      "probable_or_confirmed_starter",
+      "confirmed_lineup",
+      "bullpen_availability"
+     ]
+    },
+    "model_signal_schema": null
+   }
+  },
+  "mfti_shadow": {
+   "spec_version": "MFTI-0.1.1-shadow",
+   "mode": "shadow_research_only",
+   "captured_at": "2026-07-31T12:25:36.335882Z",
+   "status": "incomplete",
+   "score": null,
+   "historical_evidence": {
+    "available": false,
+    "score": null,
+    "reason": "frozen_normalization_and_rolling_recalibration_not_fitted",
+    "diagnostics": {
+     "eligible_prior_forecasts": 52,
+     "mean_brier": 0.561196,
+     "mean_log_loss": 0.768783,
+     "brier_skill_vs_uniform": 0.158206,
+     "log_skill_vs_uniform": 0.300224
+    }
+   },
+   "event_readiness": {
+    "available": false,
+    "score": null,
+    "missing_components": [
+     "scenario_stability",
+     "availability",
+     "freshness",
+     "model_stability"
+    ]
+   },
+   "components": {
+    "scenario_stability": {
+     "available": false,
+     "score": null,
+     "reason": "scenario_forecasts_not_captured"
+    },
+    "availability": {
+     "available": false,
+     "score": null,
+     "reason": "availability_probabilities_not_captured"
+    },
+    "freshness": {
+     "available": false,
+     "score": null,
+     "reason": "input_freshness_not_captured"
+    },
+    "model_stability": {
+     "available": false,
+     "score": null,
+     "reason": "independent_model_outputs_not_captured"
+    }
+   },
+   "missing_components": [
+    "historical_evidence",
+    "scenario_stability",
+    "availability",
+    "freshness",
+    "model_stability"
+   ],
+   "affects_prediction": false,
+   "user_visible": false
+  },
+  "result": null,
+  "model_result": null,
+  "market_result": null
+ },
+ "bdl-mlb-5059425": {
+  "schema_ver": 2,
+  "fixture_id": "bdl-mlb-5059425",
+  "competition": "MLB",
+  "home": "Colorado Rockies",
+  "away": "Kansas City Royals",
+  "stage": "Regular",
+  "kickoff": "2026-08-01T00:40:00Z",
+  "pick": "a",
+  "pick_name": "Kansas City Royals",
+  "confidence": 53,
+  "edge": null,
+  "base_pick": "a",
+  "base_pick_name": "Kansas City Royals",
+  "probs": {
+   "h": 47,
+   "d": 0,
+   "a": 53
+  },
+  "advancement_probs": null,
+  "regulation_probs": {
+   "h": 47,
+   "d": 0,
+   "a": 53
+  },
+  "regulation_pick": "a",
+  "outcome_basis": "regulation",
+  "market_basis": "regulation_1x2",
+  "market_pick": null,
+  "market_pct": null,
+  "pick_mkt": null,
+  "value_side": null,
+  "value_edge": null,
+  "value_mkt": null,
+  "value_name": null,
+  "upset_candidate": "h",
+  "upset_name": "Colorado Rockies",
+  "upset_score": 63,
+  "upset_candidate_pct": 47,
+  "upset_triggered": false,
+  "upset_temperature": 1.18,
+  "upset_reason": "narrow team gap",
+  "factor_snapshot": {
+   "adv": 0.25,
+   "srs": -0.33,
+   "market_power": 0.0,
+   "rank": 0.0,
+   "form": -0.56,
+   "margin": -0.15,
+   "elo": -1.16,
+   "rest": 0.08,
+   "class": 0.0,
+   "record": -0.26
+  },
+  "market_snapshot": null,
+  "market_snapshot_at": null,
+  "market_gap": null,
+  "upset_snapshot": {
+   "candidate": "Colorado Rockies",
+   "class": "unknown",
+   "market_dog_pct": null,
+   "model_dog_pct": 47.0,
+   "upset_edge": null,
+   "radar": false,
+   "standings_candidate": null,
+   "standings_gap_pct": 3.3,
+   "gate": "none",
+   "box_score_edge": 0.0
+  },
+  "box_score_available": false,
+  "damp_pct": 0,
+  "mkt_pull": 0,
+  "model_ver": "v4-integrity-advancement",
+  "model_code_marker": "matchday-predictor-integrity-2026-07",
+  "locked_at": "2026-07-31T14:45:08.544166Z",
+  "lead_time_seconds": 35691.456,
+  "lead_time_hours": 9.914293,
+  "status_at_lock": "UPCOMING",
+  "integrity_eligible": true,
+  "integrity_status": "verified",
+  "integrity_reason": "verified_pregame_window",
+  "prediction_snapshot": {
+   "pick": "a",
+   "pick_name": "Kansas City Royals",
+   "confidence": 53,
+   "base_pick": "a",
+   "base_pick_name": "Kansas City Royals",
+   "model": {
+    "h": 47,
+    "a": 53,
+    "d": 0
+   },
+   "base_blend": {
+    "h": 47,
+    "d": 0,
+    "a": 53
+   },
+   "blend": {
+    "h": 47,
+    "d": 0,
+    "a": 53
+   },
+   "adjusted": {
+    "h": 47,
+    "d": 0,
+    "a": 53
+   },
+   "is_knockout": false,
+   "advancement": null,
+   "regulation_pick": "a",
+   "regulation_pick_name": "Kansas City Royals",
+   "regulation_confidence": 53,
+   "regulation_probs": {
+    "h": 47,
+    "d": 0,
+    "a": 53
+   },
+   "edge": null,
+   "note": "no market to compare against",
+   "why": {
+    "adv": 0.25,
+    "srs": -0.33,
+    "market_power": 0.0,
+    "rank": 0.0,
+    "form": -0.56,
+    "margin": -0.15,
+    "elo": -1.16,
+    "rest": 0.08,
+    "class": 0.0,
+    "record": -0.26
+   },
+   "damp_pct": 0,
+   "mkt_pull": 0,
+   "market_weight": 0.0,
+   "upset": {
+    "candidate": "h",
+    "candidate_name": "Colorado Rockies",
+    "favorite": "a",
+    "favorite_name": "Kansas City Royals",
+    "score": 63,
+    "upset_class": "unknown",
+    "market_dog_pct": null,
+    "model_dog_pct": 47.0,
+    "upset_edge": null,
+    "radar": false,
+    "standings_candidate": null,
+    "standings_gap_pct": 3.3,
+    "standings_sample_ok": true,
+    "temperature": 1.18,
+    "variance_pct": 16,
+    "low_goal_pct": 42,
+    "draw_pct": 0,
+    "favorite_pct": 53,
+    "candidate_pct": 47,
+    "margin_pct": 6,
+    "learn_bias_pct": 0.0,
+    "market_gap_pct": null,
+    "market_gate": false,
+    "box_score_edge": 0.0,
+    "blocked": false,
+    "triggered": false,
+    "reason": "narrow team gap"
+   },
+   "data_quality": {
+    "level": "established",
+    "games": {
+     "home": 109,
+     "away": 110
+    },
+    "signals": [
+     "record",
+     "margin",
+     "form",
+     "srs",
+     "elo",
+     "rest"
+    ],
+    "market_available": false,
+    "market_books": 0,
+    "market_spread": null,
+    "market_weight": 0.0,
+    "note": "Current-season sample and opponent-adjusted results are available."
+   },
+   "predicted_margin": {
+    "value": -0.1,
+    "unit": "runs",
+    "favored": "a",
+    "label": "Kansas City Royals by 0.1"
+   },
+   "class_meta": {
+    "label": "Personnel edge",
+    "source": null,
+    "available": false,
+    "coverage": "unavailable",
+    "home_available": false,
+    "away_available": false,
+    "note": "Requires probable starters, confirmed batting orders, and bullpen availability; the configured feed does not provide them."
+   },
+   "totals": {
+    "expected": 9.84,
+    "basis": "season_rate"
+   }
+  },
+  "input_snapshot": {
+   "competition": "MLB",
+   "competition_config": {
+    "label": "MLB",
+    "sport": "baseball",
+    "fd": null,
+    "odds": "baseball_mlb",
+    "outright": "baseball_mlb_world_series_winner",
+    "tournament": false,
+    "source": "balldontlie",
+    "has_draws": false
+   },
+   "match": {
+    "id": "bdl-mlb-5059425",
+    "stage": "Regular",
+    "kickoff": "2026-08-01T00:40:00Z",
+    "status": "UPCOMING",
+    "venue": "Coors Field",
+    "home": {
+     "name": "Colorado Rockies",
+     "code": "COL",
+     "pts": 126,
+     "gd": -113,
+     "form": "W L L L L",
+     "pos": 5,
+     "group": "National League West",
+     "gf": 515,
+     "ga": 628,
+     "pld": 109,
+     "w": 42,
+     "d": 0,
+     "l": 67,
+     "srs": -0.967,
+     "srs_games": 109,
+     "rest_days": 2,
+     "rating": 3.18,
+     "form_home": "W L L W L",
+     "form_away": "W L L L L"
+    },
+    "away": {
+     "name": "Kansas City Royals",
+     "code": "KC",
+     "pts": 138,
+     "gd": -94,
+     "form": "W W L W L",
+     "pos": 5,
+     "group": "American League Central",
+     "gf": 459,
+     "ga": 553,
+     "pld": 110,
+     "w": 46,
+     "d": 0,
+     "l": 64,
+     "srs": -0.626,
+     "srs_games": 110,
+     "rest_days": 1,
+     "rating": 4.35,
+     "form_home": "W L W W W",
+     "form_away": "W W L W L"
+    },
+    "markets": {},
+    "weather": null,
+    "injuries": {
+     "home": [],
+     "away": []
+    },
+    "lineups": null,
+    "h2h": [],
+    "stats": null,
+    "stats_extra": null,
+    "data_source": "BALLDONTLIE",
+    "advanced_metrics": null,
+    "advanced_metrics_meta": null,
+    "nfl_challenger_shadow": null,
+    "mlb_challenger_shadow": {
+     "schema_version": 1,
+     "model_version": "retrosheet-mlb-challenger-0.1.0",
+     "mode": "prospective_shadow",
+     "production_weight": 0,
+     "home_win_probability": 0.530031,
+     "away_win_probability": 0.469969,
+     "features": {
+      "pythagorean_diff": -0.005352,
+      "run_diff_per_game_diff": -0.182152
+     },
+     "top_contributions": [
+      {
+       "feature": "run_diff_per_game_diff",
+       "contribution": -0.01498,
+       "direction": "away"
+      },
+      {
+       "feature": "pythagorean_diff",
+       "contribution": -0.00346,
+       "direction": "away"
+      }
+     ],
+     "live_feature_source": "licensed BALLDONTLIE season team totals through prior completed games",
+     "historical_training_source": "Retrosheet event files and game logs",
+     "retrosheet_notice": "The information used here was obtained free of charge from and is copyrighted by Retrosheet. Interested parties may contact Retrosheet at \"www.retrosheet.org\".",
+     "trained_through": "2025-09-28",
+     "home_games": 109,
+     "away_games": 110,
+     "historical_validation": {
+      "checks": {
+       "brier_not_worse_than_elo": true,
+       "log_loss_better_than_elo": true,
+       "minimum_out_of_sample_games": true,
+       "minimum_test_seasons": true,
+       "paired_interval_below_zero": true
+      },
+      "decision": "eligible_for_prospective_shadow",
+      "elo": {
+       "accuracy": 0.564356,
+       "brier": 0.246335,
+       "log_loss": 0.686457,
+       "n": 9090
+      },
+      "features": [
+       "pythagorean_diff",
+       "run_diff_per_game_diff"
+      ],
+      "model": {
+       "accuracy": 0.560176,
+       "brier": 0.244584,
+       "log_loss": 0.682207,
+       "n": 9090
+      },
+      "paired_vs_elo": {
+       "blocks": 683,
+       "ci95": [
+        -0.007292,
+        -0.001244
+       ],
+       "mean_log_loss_delta": -0.00425,
+       "method": "deterministic game-date block bootstrap",
+       "n": 9090
+      }
+     },
+     "promotion_status": "eligible_for_prospective_shadow_not_production",
+     "missing_personnel": [
+      "probable_or_confirmed_starter",
+      "confirmed_lineup",
+      "bullpen_availability"
+     ]
+    },
+    "model_signal_schema": null
+   }
+  },
+  "mfti_shadow": {
+   "spec_version": "MFTI-0.1.1-shadow",
+   "mode": "shadow_research_only",
+   "captured_at": "2026-07-31T14:45:08.544166Z",
+   "status": "incomplete",
+   "score": null,
+   "historical_evidence": {
+    "available": false,
+    "score": null,
+    "reason": "frozen_normalization_and_rolling_recalibration_not_fitted",
+    "diagnostics": {
+     "eligible_prior_forecasts": 52,
+     "mean_brier": 0.561196,
+     "mean_log_loss": 0.768783,
+     "brier_skill_vs_uniform": 0.158206,
+     "log_skill_vs_uniform": 0.300224
+    }
+   },
+   "event_readiness": {
+    "available": false,
+    "score": null,
+    "missing_components": [
+     "scenario_stability",
+     "availability",
+     "freshness",
+     "model_stability"
+    ]
+   },
+   "components": {
+    "scenario_stability": {
+     "available": false,
+     "score": null,
+     "reason": "scenario_forecasts_not_captured"
+    },
+    "availability": {
+     "available": false,
+     "score": null,
+     "reason": "availability_probabilities_not_captured"
+    },
+    "freshness": {
+     "available": false,
+     "score": null,
+     "reason": "input_freshness_not_captured"
+    },
+    "model_stability": {
+     "available": false,
+     "score": null,
+     "reason": "independent_model_outputs_not_captured"
+    }
+   },
+   "missing_components": [
+    "historical_evidence",
+    "scenario_stability",
+    "availability",
+    "freshness",
+    "model_stability"
+   ],
+   "affects_prediction": false,
+   "user_visible": false
+  },
+  "result": null,
+  "model_result": null,
+  "market_result": null
+ },
+ "bdl-mlb-5059426": {
+  "schema_ver": 2,
+  "fixture_id": "bdl-mlb-5059426",
+  "competition": "MLB",
+  "home": "Los Angeles Angels",
+  "away": "Milwaukee Brewers",
+  "stage": "Regular",
+  "kickoff": "2026-08-01T01:38:00Z",
+  "pick": "a",
+  "pick_name": "Milwaukee Brewers",
+  "confidence": 81,
+  "edge": null,
+  "base_pick": "a",
+  "base_pick_name": "Milwaukee Brewers",
+  "probs": {
+   "h": 19,
+   "d": 0,
+   "a": 81
+  },
+  "advancement_probs": null,
+  "regulation_probs": {
+   "h": 19,
+   "d": 0,
+   "a": 81
+  },
+  "regulation_pick": "a",
+  "outcome_basis": "regulation",
+  "market_basis": "regulation_1x2",
+  "market_pick": null,
+  "market_pct": null,
+  "pick_mkt": null,
+  "value_side": null,
+  "value_edge": null,
+  "value_mkt": null,
+  "value_name": null,
+  "upset_candidate": "h",
+  "upset_name": "Los Angeles Angels",
+  "upset_score": 10,
+  "upset_candidate_pct": 19,
+  "upset_triggered": false,
+  "upset_temperature": 1.08,
+  "upset_reason": "favorite profile is cleaner",
+  "factor_snapshot": {
+   "adv": 0.25,
+   "srs": -1.7,
+   "market_power": 0.0,
+   "rank": 0.0,
+   "form": -0.34,
+   "margin": -1.5,
+   "elo": -2.99,
+   "rest": 0.0,
+   "class": 0.0,
+   "record": -1.88
+  },
+  "market_snapshot": null,
+  "market_snapshot_at": null,
+  "market_gap": null,
+  "upset_snapshot": {
+   "candidate": "Los Angeles Angels",
+   "class": "unknown",
+   "market_dog_pct": null,
+   "model_dog_pct": 19.0,
+   "upset_edge": null,
+   "radar": false,
+   "standings_candidate": "h",
+   "standings_gap_pct": 23.5,
+   "gate": "none",
+   "box_score_edge": 0.0
+  },
+  "box_score_available": false,
+  "damp_pct": 0,
+  "mkt_pull": 0,
+  "model_ver": "v4-integrity-advancement",
+  "model_code_marker": "matchday-predictor-integrity-2026-07",
+  "locked_at": "2026-07-31T14:45:08.544866Z",
+  "lead_time_seconds": 39171.455,
+  "lead_time_hours": 10.88096,
+  "status_at_lock": "UPCOMING",
+  "integrity_eligible": true,
+  "integrity_status": "verified",
+  "integrity_reason": "verified_pregame_window",
+  "prediction_snapshot": {
+   "pick": "a",
+   "pick_name": "Milwaukee Brewers",
+   "confidence": 81,
+   "base_pick": "a",
+   "base_pick_name": "Milwaukee Brewers",
+   "model": {
+    "h": 17,
+    "a": 83,
+    "d": 0
+   },
+   "base_blend": {
+    "h": 17,
+    "d": 0,
+    "a": 83
+   },
+   "blend": {
+    "h": 19,
+    "d": 0,
+    "a": 81
+   },
+   "adjusted": {
+    "h": 19,
+    "d": 0,
+    "a": 81
+   },
+   "is_knockout": false,
+   "advancement": null,
+   "regulation_pick": "a",
+   "regulation_pick_name": "Milwaukee Brewers",
+   "regulation_confidence": 81,
+   "regulation_probs": {
+    "h": 19,
+    "d": 0,
+    "a": 81
+   },
+   "edge": null,
+   "note": "no market to compare against",
+   "why": {
+    "adv": 0.25,
+    "srs": -1.7,
+    "market_power": 0.0,
+    "rank": 0.0,
+    "form": -0.34,
+    "margin": -1.5,
+    "elo": -2.99,
+    "rest": 0.0,
+    "class": 0.0,
+    "record": -1.88
+   },
+   "damp_pct": 0,
+   "mkt_pull": 0,
+   "market_weight": 0.0,
+   "upset": {
+    "candidate": "h",
+    "candidate_name": "Los Angeles Angels",
+    "favorite": "a",
+    "favorite_name": "Milwaukee Brewers",
+    "score": 10,
+    "upset_class": "unknown",
+    "market_dog_pct": null,
+    "model_dog_pct": 19.0,
+    "upset_edge": null,
+    "radar": false,
+    "standings_candidate": "h",
+    "standings_gap_pct": 23.5,
+    "standings_sample_ok": true,
+    "temperature": 1.08,
+    "variance_pct": 0,
+    "low_goal_pct": 42,
+    "draw_pct": 0,
+    "favorite_pct": 81,
+    "candidate_pct": 19,
+    "margin_pct": 62,
+    "learn_bias_pct": 0.0,
+    "market_gap_pct": null,
+    "market_gate": false,
+    "box_score_edge": 0.0,
+    "blocked": false,
+    "triggered": false,
+    "reason": "favorite profile is cleaner"
+   },
+   "data_quality": {
+    "level": "established",
+    "games": {
+     "home": 109,
+     "away": 108
+    },
+    "signals": [
+     "record",
+     "margin",
+     "form",
+     "srs",
+     "elo"
+    ],
+    "market_available": false,
+    "market_books": 0,
+    "market_spread": null,
+    "market_weight": 0.0,
+    "note": "Current-season sample and opponent-adjusted results are available."
+   },
+   "predicted_margin": {
+    "value": -1.6,
+    "unit": "runs",
+    "favored": "a",
+    "label": "Milwaukee Brewers by 1.6"
+   },
+   "class_meta": {
+    "label": "Personnel edge",
+    "source": null,
+    "available": false,
+    "coverage": "unavailable",
+    "home_available": false,
+    "away_available": false,
+    "note": "Requires probable starters, confirmed batting orders, and bullpen availability; the configured feed does not provide them."
+   },
+   "totals": {
+    "expected": 9.03,
+    "basis": "season_rate"
+   }
+  },
+  "input_snapshot": {
+   "competition": "MLB",
+   "competition_config": {
+    "label": "MLB",
+    "sport": "baseball",
+    "fd": null,
+    "odds": "baseball_mlb",
+    "outright": "baseball_mlb_world_series_winner",
+    "tournament": false,
+    "source": "balldontlie",
+    "has_draws": false
+   },
+   "match": {
+    "id": "bdl-mlb-5059426",
+    "stage": "Regular",
+    "kickoff": "2026-08-01T01:38:00Z",
+    "status": "UPCOMING",
+    "venue": "Angel Stadium",
+    "home": {
+     "name": "Los Angeles Angels",
+     "code": "LAA",
+     "pts": 126,
+     "gd": -71,
+     "form": "L W L L L",
+     "pos": 5,
+     "group": "American League West",
+     "gf": 464,
+     "ga": 535,
+     "pld": 109,
+     "w": 42,
+     "d": 0,
+     "l": 67,
+     "srs": -0.686,
+     "srs_games": 109,
+     "rest_days": 2,
+     "rating": 3.27,
+     "form_home": "W L L L L",
+     "form_away": "L L L L W"
+    },
+    "away": {
+     "name": "Milwaukee Brewers",
+     "code": "MIL",
+     "pts": 201,
+     "gd": 132,
+     "form": "W W L W L",
+     "pos": 1,
+     "group": "National League Central",
+     "gf": 546,
+     "ga": 414,
+     "pld": 108,
+     "w": 67,
+     "d": 0,
+     "l": 41,
+     "srs": 1.082,
+     "srs_games": 108,
+     "rest_days": 2,
+     "rating": 5.57,
+     "form_home": "L W L W W",
+     "form_away": "L L L W L"
+    },
+    "markets": {},
+    "weather": null,
+    "injuries": {
+     "home": [],
+     "away": []
+    },
+    "lineups": null,
+    "h2h": [],
+    "stats": null,
+    "stats_extra": null,
+    "data_source": "BALLDONTLIE",
+    "advanced_metrics": null,
+    "advanced_metrics_meta": null,
+    "nfl_challenger_shadow": null,
+    "mlb_challenger_shadow": {
+     "schema_version": 1,
+     "model_version": "retrosheet-mlb-challenger-0.1.0",
+     "mode": "prospective_shadow",
+     "production_weight": 0,
+     "home_win_probability": 0.450802,
+     "away_win_probability": 0.549198,
+     "features": {
+      "pythagorean_diff": -0.18875,
+      "run_diff_per_game_diff": -1.873598
+     },
+     "top_contributions": [
+      {
+       "feature": "pythagorean_diff",
+       "contribution": -0.16828,
+       "direction": "away"
+      },
+      {
+       "feature": "run_diff_per_game_diff",
+       "contribution": -0.16786,
+       "direction": "away"
+      }
+     ],
+     "live_feature_source": "licensed BALLDONTLIE season team totals through prior completed games",
+     "historical_training_source": "Retrosheet event files and game logs",
+     "retrosheet_notice": "The information used here was obtained free of charge from and is copyrighted by Retrosheet. Interested parties may contact Retrosheet at \"www.retrosheet.org\".",
+     "trained_through": "2025-09-28",
+     "home_games": 109,
+     "away_games": 108,
+     "historical_validation": {
+      "checks": {
+       "brier_not_worse_than_elo": true,
+       "log_loss_better_than_elo": true,
+       "minimum_out_of_sample_games": true,
+       "minimum_test_seasons": true,
+       "paired_interval_below_zero": true
+      },
+      "decision": "eligible_for_prospective_shadow",
+      "elo": {
+       "accuracy": 0.564356,
+       "brier": 0.246335,
+       "log_loss": 0.686457,
+       "n": 9090
+      },
+      "features": [
+       "pythagorean_diff",
+       "run_diff_per_game_diff"
+      ],
+      "model": {
+       "accuracy": 0.560176,
+       "brier": 0.244584,
+       "log_loss": 0.682207,
+       "n": 9090
+      },
+      "paired_vs_elo": {
+       "blocks": 683,
+       "ci95": [
+        -0.007292,
+        -0.001244
+       ],
+       "mean_log_loss_delta": -0.00425,
+       "method": "deterministic game-date block bootstrap",
+       "n": 9090
+      }
+     },
+     "promotion_status": "eligible_for_prospective_shadow_not_production",
+     "missing_personnel": [
+      "probable_or_confirmed_starter",
+      "confirmed_lineup",
+      "bullpen_availability"
+     ]
+    },
+    "model_signal_schema": null
+   }
+  },
+  "mfti_shadow": {
+   "spec_version": "MFTI-0.1.1-shadow",
+   "mode": "shadow_research_only",
+   "captured_at": "2026-07-31T14:45:08.544866Z",
+   "status": "incomplete",
+   "score": null,
+   "historical_evidence": {
+    "available": false,
+    "score": null,
+    "reason": "frozen_normalization_and_rolling_recalibration_not_fitted",
+    "diagnostics": {
+     "eligible_prior_forecasts": 52,
+     "mean_brier": 0.561196,
+     "mean_log_loss": 0.768783,
+     "brier_skill_vs_uniform": 0.158206,
+     "log_skill_vs_uniform": 0.300224
+    }
+   },
+   "event_readiness": {
+    "available": false,
+    "score": null,
+    "missing_components": [
+     "scenario_stability",
+     "availability",
+     "freshness",
+     "model_stability"
+    ]
+   },
+   "components": {
+    "scenario_stability": {
+     "available": false,
+     "score": null,
+     "reason": "scenario_forecasts_not_captured"
+    },
+    "availability": {
+     "available": false,
+     "score": null,
+     "reason": "availability_probabilities_not_captured"
+    },
+    "freshness": {
+     "available": false,
+     "score": null,
+     "reason": "input_freshness_not_captured"
+    },
+    "model_stability": {
+     "available": false,
+     "score": null,
+     "reason": "independent_model_outputs_not_captured"
+    }
+   },
+   "missing_components": [
+    "historical_evidence",
+    "scenario_stability",
+    "availability",
+    "freshness",
+    "model_stability"
+   ],
+   "affects_prediction": false,
+   "user_visible": false
+  },
+  "result": null,
+  "model_result": null,
+  "market_result": null
+ },
+ "bdl-mlb-5059427": {
+  "schema_ver": 2,
+  "fixture_id": "bdl-mlb-5059427",
+  "competition": "MLB",
+  "home": "Oakland Athletics",
+  "away": "Detroit Tigers",
+  "stage": "Regular",
+  "kickoff": "2026-08-01T01:40:00Z",
+  "pick": "a",
+  "pick_name": "Detroit Tigers",
+  "confidence": 74,
+  "edge": null,
+  "base_pick": "a",
+  "base_pick_name": "Detroit Tigers",
+  "probs": {
+   "h": 26,
+   "d": 0,
+   "a": 74
+  },
+  "advancement_probs": null,
+  "regulation_probs": {
+   "h": 26,
+   "d": 0,
+   "a": 74
+  },
+  "regulation_pick": "a",
+  "outcome_basis": "regulation",
+  "market_basis": "regulation_1x2",
+  "market_pick": null,
+  "market_pct": null,
+  "pick_mkt": null,
+  "value_side": null,
+  "value_edge": null,
+  "value_mkt": null,
+  "value_name": null,
+  "upset_candidate": "h",
+  "upset_name": "Oakland Athletics",
+  "upset_score": 19,
+  "upset_candidate_pct": 26,
+  "upset_triggered": false,
+  "upset_temperature": 1.08,
+  "upset_reason": "favorite profile is cleaner",
+  "factor_snapshot": {
+   "adv": 0.25,
+   "srs": -1.17,
+   "market_power": 0.0,
+   "rank": 0.0,
+   "form": -1.29,
+   "margin": -1.23,
+   "elo": -2.04,
+   "rest": -0.08,
+   "class": 0.0,
+   "record": -0.44,
+   "h2h": -0.4
+  },
+  "market_snapshot": null,
+  "market_snapshot_at": null,
+  "market_gap": null,
+  "upset_snapshot": {
+   "candidate": "Oakland Athletics",
+   "class": "unknown",
+   "market_dog_pct": null,
+   "model_dog_pct": 26.0,
+   "upset_edge": null,
+   "radar": false,
+   "standings_candidate": null,
+   "standings_gap_pct": 5.5,
+   "gate": "none",
+   "box_score_edge": 0.0
+  },
+  "box_score_available": false,
+  "damp_pct": 0,
+  "mkt_pull": 0,
+  "model_ver": "v4-integrity-advancement",
+  "model_code_marker": "matchday-predictor-integrity-2026-07",
+  "locked_at": "2026-07-31T14:45:08.545475Z",
+  "lead_time_seconds": 39291.455,
+  "lead_time_hours": 10.914293,
+  "status_at_lock": "UPCOMING",
+  "integrity_eligible": true,
+  "integrity_status": "verified",
+  "integrity_reason": "verified_pregame_window",
+  "prediction_snapshot": {
+   "pick": "a",
+   "pick_name": "Detroit Tigers",
+   "confidence": 74,
+   "base_pick": "a",
+   "base_pick_name": "Detroit Tigers",
+   "model": {
+    "h": 24,
+    "a": 76,
+    "d": 0
+   },
+   "base_blend": {
+    "h": 24,
+    "d": 0,
+    "a": 76
+   },
+   "blend": {
+    "h": 26,
+    "d": 0,
+    "a": 74
+   },
+   "adjusted": {
+    "h": 26,
+    "d": 0,
+    "a": 74
+   },
+   "is_knockout": false,
+   "advancement": null,
+   "regulation_pick": "a",
+   "regulation_pick_name": "Detroit Tigers",
+   "regulation_confidence": 74,
+   "regulation_probs": {
+    "h": 26,
+    "d": 0,
+    "a": 74
+   },
+   "edge": null,
+   "note": "no market to compare against",
+   "why": {
+    "adv": 0.25,
+    "srs": -1.17,
+    "market_power": 0.0,
+    "rank": 0.0,
+    "form": -1.29,
+    "margin": -1.23,
+    "elo": -2.04,
+    "rest": -0.08,
+    "class": 0.0,
+    "record": -0.44,
+    "h2h": -0.4
+   },
+   "damp_pct": 0,
+   "mkt_pull": 0,
+   "market_weight": 0.0,
+   "upset": {
+    "candidate": "h",
+    "candidate_name": "Oakland Athletics",
+    "favorite": "a",
+    "favorite_name": "Detroit Tigers",
+    "score": 19,
+    "upset_class": "unknown",
+    "market_dog_pct": null,
+    "model_dog_pct": 26.0,
+    "upset_edge": null,
+    "radar": false,
+    "standings_candidate": null,
+    "standings_gap_pct": 5.5,
+    "standings_sample_ok": true,
+    "temperature": 1.08,
+    "variance_pct": 0,
+    "low_goal_pct": 42,
+    "draw_pct": 0,
+    "favorite_pct": 74,
+    "candidate_pct": 26,
+    "margin_pct": 48,
+    "learn_bias_pct": 0.0,
+    "market_gap_pct": null,
+    "market_gate": false,
+    "box_score_edge": 0.0,
+    "blocked": false,
+    "triggered": false,
+    "reason": "favorite profile is cleaner"
+   },
+   "data_quality": {
+    "level": "established",
+    "games": {
+     "home": 109,
+     "away": 109
+    },
+    "signals": [
+     "record",
+     "margin",
+     "form",
+     "srs",
+     "elo",
+     "rest"
+    ],
+    "market_available": false,
+    "market_books": 0,
+    "market_spread": null,
+    "market_weight": 0.0,
+    "note": "Current-season sample and opponent-adjusted results are available."
+   },
+   "predicted_margin": {
+    "value": -1.1,
+    "unit": "runs",
+    "favored": "a",
+    "label": "Detroit Tigers by 1.1"
+   },
+   "class_meta": {
+    "label": "Personnel edge",
+    "source": null,
+    "available": false,
+    "coverage": "unavailable",
+    "home_available": false,
+    "away_available": false,
+    "note": "Requires probable starters, confirmed batting orders, and bullpen availability; the configured feed does not provide them."
+   },
+   "totals": {
+    "expected": 9.16,
+    "basis": "season_rate"
+   }
+  },
+  "input_snapshot": {
+   "competition": "MLB",
+   "competition_config": {
+    "label": "MLB",
+    "sport": "baseball",
+    "fd": null,
+    "odds": "baseball_mlb",
+    "outright": "baseball_mlb_world_series_winner",
+    "tournament": false,
+    "source": "balldontlie",
+    "has_draws": false
+   },
+   "match": {
+    "id": "bdl-mlb-5059427",
+    "stage": "Regular",
+    "kickoff": "2026-08-01T01:40:00Z",
+    "status": "UPCOMING",
+    "venue": "Sutter Health Park",
+    "home": {
+     "name": "Oakland Athletics",
+     "code": "OAK",
+     "pts": 135,
+     "gd": -129,
+     "form": "L L W L L",
+     "pos": 4,
+     "group": "American League West",
+     "gf": 480,
+     "ga": 609,
+     "pld": 109,
+     "w": 45,
+     "d": 0,
+     "l": 64,
+     "srs": -1.017,
+     "srs_games": 109,
+     "rest_days": 1,
+     "rating": 2.99,
+     "form_home": "L L W L L",
+     "form_away": "L L W L L"
+    },
+    "away": {
+     "name": "Detroit Tigers",
+     "code": "DET",
+     "pts": 153,
+     "gd": 38,
+     "form": "L L L W L",
+     "pos": 4,
+     "group": "American League Central",
+     "gf": 473,
+     "ga": 435,
+     "pld": 109,
+     "w": 51,
+     "d": 0,
+     "l": 58,
+     "srs": 0.201,
+     "srs_games": 109,
+     "rest_days": 2,
+     "rating": 4.65,
+     "form_home": "L L L W L",
+     "form_away": "W L W L W"
+    },
+    "markets": {},
+    "weather": null,
+    "injuries": {
+     "home": [],
+     "away": []
+    },
+    "lineups": null,
+    "h2h": [],
+    "stats": null,
+    "stats_extra": null,
+    "data_source": "BALLDONTLIE",
+    "advanced_metrics": null,
+    "advanced_metrics_meta": null,
+    "nfl_challenger_shadow": null,
+    "mlb_challenger_shadow": {
+     "schema_version": 1,
+     "model_version": "retrosheet-mlb-challenger-0.1.0",
+     "mode": "prospective_shadow",
+     "production_weight": 0,
+     "home_win_probability": 0.46813,
+     "away_win_probability": 0.53187,
+     "features": {
+      "pythagorean_diff": -0.14545,
+      "run_diff_per_game_diff": -1.53211
+     },
+     "top_contributions": [
+      {
+       "feature": "run_diff_per_game_diff",
+       "contribution": -0.13699,
+       "direction": "away"
+      },
+      {
+       "feature": "pythagorean_diff",
+       "contribution": -0.12937,
+       "direction": "away"
+      }
+     ],
+     "live_feature_source": "licensed BALLDONTLIE season team totals through prior completed games",
+     "historical_training_source": "Retrosheet event files and game logs",
+     "retrosheet_notice": "The information used here was obtained free of charge from and is copyrighted by Retrosheet. Interested parties may contact Retrosheet at \"www.retrosheet.org\".",
+     "trained_through": "2025-09-28",
+     "home_games": 109,
+     "away_games": 109,
+     "historical_validation": {
+      "checks": {
+       "brier_not_worse_than_elo": true,
+       "log_loss_better_than_elo": true,
+       "minimum_out_of_sample_games": true,
+       "minimum_test_seasons": true,
+       "paired_interval_below_zero": true
+      },
+      "decision": "eligible_for_prospective_shadow",
+      "elo": {
+       "accuracy": 0.564356,
+       "brier": 0.246335,
+       "log_loss": 0.686457,
+       "n": 9090
+      },
+      "features": [
+       "pythagorean_diff",
+       "run_diff_per_game_diff"
+      ],
+      "model": {
+       "accuracy": 0.560176,
+       "brier": 0.244584,
+       "log_loss": 0.682207,
+       "n": 9090
+      },
+      "paired_vs_elo": {
+       "blocks": 683,
+       "ci95": [
+        -0.007292,
+        -0.001244
+       ],
+       "mean_log_loss_delta": -0.00425,
+       "method": "deterministic game-date block bootstrap",
+       "n": 9090
+      }
+     },
+     "promotion_status": "eligible_for_prospective_shadow_not_production",
+     "missing_personnel": [
+      "probable_or_confirmed_starter",
+      "confirmed_lineup",
+      "bullpen_availability"
+     ]
+    },
+    "model_signal_schema": null
+   }
+  },
+  "mfti_shadow": {
+   "spec_version": "MFTI-0.1.1-shadow",
+   "mode": "shadow_research_only",
+   "captured_at": "2026-07-31T14:45:08.545475Z",
+   "status": "incomplete",
+   "score": null,
+   "historical_evidence": {
+    "available": false,
+    "score": null,
+    "reason": "frozen_normalization_and_rolling_recalibration_not_fitted",
+    "diagnostics": {
+     "eligible_prior_forecasts": 52,
+     "mean_brier": 0.561196,
+     "mean_log_loss": 0.768783,
+     "brier_skill_vs_uniform": 0.158206,
+     "log_skill_vs_uniform": 0.300224
+    }
+   },
+   "event_readiness": {
+    "available": false,
+    "score": null,
+    "missing_components": [
+     "scenario_stability",
+     "availability",
+     "freshness",
+     "model_stability"
+    ]
+   },
+   "components": {
+    "scenario_stability": {
+     "available": false,
+     "score": null,
+     "reason": "scenario_forecasts_not_captured"
+    },
+    "availability": {
+     "available": false,
+     "score": null,
+     "reason": "availability_probabilities_not_captured"
+    },
+    "freshness": {
+     "available": false,
+     "score": null,
+     "reason": "input_freshness_not_captured"
+    },
+    "model_stability": {
+     "available": false,
+     "score": null,
+     "reason": "independent_model_outputs_not_captured"
+    }
+   },
+   "missing_components": [
+    "historical_evidence",
+    "scenario_stability",
+    "availability",
+    "freshness",
+    "model_stability"
+   ],
+   "affects_prediction": false,
+   "user_visible": false
+  },
+  "result": null,
+  "model_result": null,
+  "market_result": null
+ },
+ "bdl-mlb-5059428": {
+  "schema_ver": 2,
+  "fixture_id": "bdl-mlb-5059428",
+  "competition": "MLB",
+  "home": "San Diego Padres",
+  "away": "San Francisco Giants",
+  "stage": "Regular",
+  "kickoff": "2026-08-01T01:45:00Z",
+  "pick": "h",
+  "pick_name": "San Diego Padres",
+  "confidence": 74,
+  "edge": null,
+  "base_pick": "h",
+  "base_pick_name": "San Diego Padres",
+  "probs": {
+   "h": 74,
+   "d": 0,
+   "a": 26
+  },
+  "advancement_probs": null,
+  "regulation_probs": {
+   "h": 74,
+   "d": 0,
+   "a": 26
+  },
+  "regulation_pick": "h",
+  "outcome_basis": "regulation",
+  "market_basis": "regulation_1x2",
+  "market_pick": null,
+  "market_pct": null,
+  "pick_mkt": null,
+  "value_side": null,
+  "value_edge": null,
+  "value_mkt": null,
+  "value_name": null,
+  "upset_candidate": "a",
+  "upset_name": "San Francisco Giants",
+  "upset_score": 19,
+  "upset_candidate_pct": 26,
+  "upset_triggered": false,
+  "upset_temperature": 1.08,
+  "upset_reason": "favorite profile is cleaner",
+  "factor_snapshot": {
+   "adv": 0.25,
+   "srs": 0.27,
+   "market_power": 0.0,
+   "rank": 0.0,
+   "form": 1.59,
+   "margin": 0.17,
+   "elo": 0.57,
+   "rest": 0.0,
+   "class": 0.0,
+   "record": 0.59,
+   "h2h": -0.11
+  },
+  "market_snapshot": null,
+  "market_snapshot_at": null,
+  "market_gap": null,
+  "upset_snapshot": {
+   "candidate": "San Francisco Giants",
+   "class": "unknown",
+   "market_dog_pct": null,
+   "model_dog_pct": 26.0,
+   "upset_edge": null,
+   "radar": false,
+   "standings_candidate": null,
+   "standings_gap_pct": 7.3,
+   "gate": "none",
+   "box_score_edge": 0.0
+  },
+  "box_score_available": false,
+  "damp_pct": 0,
+  "mkt_pull": 0,
+  "model_ver": "v4-integrity-advancement",
+  "model_code_marker": "matchday-predictor-integrity-2026-07",
+  "locked_at": "2026-07-31T14:45:08.546080Z",
+  "lead_time_seconds": 39591.454,
+  "lead_time_hours": 10.997626,
+  "status_at_lock": "UPCOMING",
+  "integrity_eligible": true,
+  "integrity_status": "verified",
+  "integrity_reason": "verified_pregame_window",
+  "prediction_snapshot": {
+   "pick": "h",
+   "pick_name": "San Diego Padres",
+   "confidence": 74,
+   "base_pick": "h",
+   "base_pick_name": "San Diego Padres",
+   "model": {
+    "h": 76,
+    "a": 24,
+    "d": 0
+   },
+   "base_blend": {
+    "h": 76,
+    "d": 0,
+    "a": 24
+   },
+   "blend": {
+    "h": 74,
+    "d": 0,
+    "a": 26
+   },
+   "adjusted": {
+    "h": 74,
+    "d": 0,
+    "a": 26
+   },
+   "is_knockout": false,
+   "advancement": null,
+   "regulation_pick": "h",
+   "regulation_pick_name": "San Diego Padres",
+   "regulation_confidence": 74,
+   "regulation_probs": {
+    "h": 74,
+    "d": 0,
+    "a": 26
+   },
+   "edge": null,
+   "note": "no market to compare against",
+   "why": {
+    "adv": 0.25,
+    "srs": 0.27,
+    "market_power": 0.0,
+    "rank": 0.0,
+    "form": 1.59,
+    "margin": 0.17,
+    "elo": 0.57,
+    "rest": 0.0,
+    "class": 0.0,
+    "record": 0.59,
+    "h2h": -0.11
+   },
+   "damp_pct": 0,
+   "mkt_pull": 0,
+   "market_weight": 0.0,
+   "upset": {
+    "candidate": "a",
+    "candidate_name": "San Francisco Giants",
+    "favorite": "h",
+    "favorite_name": "San Diego Padres",
+    "score": 19,
+    "upset_class": "unknown",
+    "market_dog_pct": null,
+    "model_dog_pct": 26.0,
+    "upset_edge": null,
+    "radar": false,
+    "standings_candidate": null,
+    "standings_gap_pct": 7.3,
+    "standings_sample_ok": true,
+    "temperature": 1.08,
+    "variance_pct": 0,
+    "low_goal_pct": 42,
+    "draw_pct": 0,
+    "favorite_pct": 74,
+    "candidate_pct": 26,
+    "margin_pct": 48,
+    "learn_bias_pct": 0.0,
+    "market_gap_pct": null,
+    "market_gate": false,
+    "box_score_edge": 0.0,
+    "blocked": false,
+    "triggered": false,
+    "reason": "favorite profile is cleaner"
+   },
+   "data_quality": {
+    "level": "established",
+    "games": {
+     "home": 109,
+     "away": 109
+    },
+    "signals": [
+     "record",
+     "margin",
+     "form",
+     "srs",
+     "elo"
+    ],
+    "market_available": false,
+    "market_books": 0,
+    "market_spread": null,
+    "market_weight": 0.0,
+    "note": "Current-season sample and opponent-adjusted results are available."
+   },
+   "predicted_margin": {
+    "value": 1.1,
+    "unit": "runs",
+    "favored": "h",
+    "label": "San Diego Padres by 1.1"
+   },
+   "class_meta": {
+    "label": "Personnel edge",
+    "source": null,
+    "available": false,
+    "coverage": "unavailable",
+    "home_available": false,
+    "away_available": false,
+    "note": "Requires probable starters, confirmed batting orders, and bullpen availability; the configured feed does not provide them."
+   },
+   "totals": {
+    "expected": 8.69,
+    "basis": "season_rate"
+   }
+  },
+  "input_snapshot": {
+   "competition": "MLB",
+   "competition_config": {
+    "label": "MLB",
+    "sport": "baseball",
+    "fd": null,
+    "odds": "baseball_mlb",
+    "outright": "baseball_mlb_world_series_winner",
+    "tournament": false,
+    "source": "balldontlie",
+    "has_draws": false
+   },
+   "match": {
+    "id": "bdl-mlb-5059428",
+    "stage": "Regular",
+    "kickoff": "2026-08-01T01:45:00Z",
+    "status": "UPCOMING",
+    "venue": "Petco Park",
+    "home": {
+     "name": "San Diego Padres",
+     "code": "SD",
+     "pts": 165,
+     "gd": -21,
+     "form": "W W W W L",
+     "pos": 3,
+     "group": "National League West",
+     "gf": 454,
+     "ga": 475,
+     "pld": 109,
+     "w": 55,
+     "d": 0,
+     "l": 54,
+     "srs": -0.077,
+     "srs_games": 109,
+     "rest_days": 1,
+     "rating": 4.96,
+     "form_home": "W W W W L",
+     "form_away": "L L W W W"
+    },
+    "away": {
+     "name": "San Francisco Giants",
+     "code": "SF",
+     "pts": 141,
+     "gd": -44,
+     "form": "L W L W W",
+     "pos": 4,
+     "group": "National League West",
+     "gf": 461,
+     "ga": 505,
+     "pld": 109,
+     "w": 47,
+     "d": 0,
+     "l": 62,
+     "srs": -0.36,
+     "srs_games": 109,
+     "rest_days": 1,
+     "rating": 4.08,
+     "form_home": "W L W L W",
+     "form_away": "L L L L W"
+    },
+    "markets": {},
+    "weather": null,
+    "injuries": {
+     "home": [],
+     "away": []
+    },
+    "lineups": null,
+    "h2h": [],
+    "stats": null,
+    "stats_extra": null,
+    "data_source": "BALLDONTLIE",
+    "advanced_metrics": null,
+    "advanced_metrics_meta": null,
+    "nfl_challenger_shadow": null,
+    "mlb_challenger_shadow": {
+     "schema_version": 1,
+     "model_version": "retrosheet-mlb-challenger-0.1.0",
+     "mode": "prospective_shadow",
+     "production_weight": 0,
+     "home_win_probability": 0.544737,
+     "away_win_probability": 0.455263,
+     "features": {
+      "pythagorean_diff": 0.020934,
+      "run_diff_per_game_diff": 0.211009
+     },
+     "top_contributions": [
+      {
+       "feature": "run_diff_per_game_diff",
+       "contribution": 0.02055,
+       "direction": "home"
+      },
+      {
+       "feature": "pythagorean_diff",
+       "contribution": 0.02017,
+       "direction": "home"
+      }
+     ],
+     "live_feature_source": "licensed BALLDONTLIE season team totals through prior completed games",
+     "historical_training_source": "Retrosheet event files and game logs",
+     "retrosheet_notice": "The information used here was obtained free of charge from and is copyrighted by Retrosheet. Interested parties may contact Retrosheet at \"www.retrosheet.org\".",
+     "trained_through": "2025-09-28",
+     "home_games": 109,
+     "away_games": 109,
+     "historical_validation": {
+      "checks": {
+       "brier_not_worse_than_elo": true,
+       "log_loss_better_than_elo": true,
+       "minimum_out_of_sample_games": true,
+       "minimum_test_seasons": true,
+       "paired_interval_below_zero": true
+      },
+      "decision": "eligible_for_prospective_shadow",
+      "elo": {
+       "accuracy": 0.564356,
+       "brier": 0.246335,
+       "log_loss": 0.686457,
+       "n": 9090
+      },
+      "features": [
+       "pythagorean_diff",
+       "run_diff_per_game_diff"
+      ],
+      "model": {
+       "accuracy": 0.560176,
+       "brier": 0.244584,
+       "log_loss": 0.682207,
+       "n": 9090
+      },
+      "paired_vs_elo": {
+       "blocks": 683,
+       "ci95": [
+        -0.007292,
+        -0.001244
+       ],
+       "mean_log_loss_delta": -0.00425,
+       "method": "deterministic game-date block bootstrap",
+       "n": 9090
+      }
+     },
+     "promotion_status": "eligible_for_prospective_shadow_not_production",
+     "missing_personnel": [
+      "probable_or_confirmed_starter",
+      "confirmed_lineup",
+      "bullpen_availability"
+     ]
+    },
+    "model_signal_schema": null
+   }
+  },
+  "mfti_shadow": {
+   "spec_version": "MFTI-0.1.1-shadow",
+   "mode": "shadow_research_only",
+   "captured_at": "2026-07-31T14:45:08.546080Z",
+   "status": "incomplete",
+   "score": null,
+   "historical_evidence": {
+    "available": false,
+    "score": null,
+    "reason": "frozen_normalization_and_rolling_recalibration_not_fitted",
+    "diagnostics": {
+     "eligible_prior_forecasts": 52,
+     "mean_brier": 0.561196,
+     "mean_log_loss": 0.768783,
+     "brier_skill_vs_uniform": 0.158206,
+     "log_skill_vs_uniform": 0.300224
+    }
+   },
+   "event_readiness": {
+    "available": false,
+    "score": null,
+    "missing_components": [
+     "scenario_stability",
+     "availability",
+     "freshness",
+     "model_stability"
+    ]
+   },
+   "components": {
+    "scenario_stability": {
+     "available": false,
+     "score": null,
+     "reason": "scenario_forecasts_not_captured"
+    },
+    "availability": {
+     "available": false,
+     "score": null,
+     "reason": "availability_probabilities_not_captured"
+    },
+    "freshness": {
+     "available": false,
+     "score": null,
+     "reason": "input_freshness_not_captured"
+    },
+    "model_stability": {
+     "available": false,
+     "score": null,
+     "reason": "independent_model_outputs_not_captured"
+    }
+   },
+   "missing_components": [
+    "historical_evidence",
+    "scenario_stability",
+    "availability",
+    "freshness",
+    "model_stability"
+   ],
+   "affects_prediction": false,
+   "user_visible": false
+  },
+  "result": null,
+  "model_result": null,
+  "market_result": null
+ },
+ "bdl-mlb-5059429": {
+  "schema_ver": 2,
+  "fixture_id": "bdl-mlb-5059429",
+  "competition": "MLB",
+  "home": "Los Angeles Dodgers",
+  "away": "Boston Red Sox",
+  "stage": "Regular",
+  "kickoff": "2026-08-01T02:10:00Z",
+  "pick": "h",
+  "pick_name": "Los Angeles Dodgers",
+  "confidence": 53,
+  "edge": null,
+  "base_pick": "h",
+  "base_pick_name": "Los Angeles Dodgers",
+  "probs": {
+   "h": 53,
+   "d": 0,
+   "a": 47
+  },
+  "advancement_probs": null,
+  "regulation_probs": {
+   "h": 53,
+   "d": 0,
+   "a": 47
+  },
+  "regulation_pick": "h",
+  "outcome_basis": "regulation",
+  "market_basis": "regulation_1x2",
+  "market_pick": null,
+  "market_pct": null,
+  "pick_mkt": null,
+  "value_side": null,
+  "value_edge": null,
+  "value_mkt": null,
+  "value_name": null,
+  "upset_candidate": "a",
+  "upset_name": "Boston Red Sox",
+  "upset_score": 70,
+  "upset_candidate_pct": 47,
+  "upset_triggered": false,
+  "upset_temperature": 1.16,
+  "upset_reason": "narrow team gap · underdog momentum",
+  "factor_snapshot": {
+   "adv": 0.25,
+   "srs": 0.84,
+   "market_power": 0.0,
+   "rank": 0.0,
+   "form": -0.99,
+   "margin": 0.8,
+   "elo": -0.38,
+   "rest": 0.0,
+   "class": 0.0,
+   "record": 0.84
+  },
+  "market_snapshot": null,
+  "market_snapshot_at": null,
+  "market_gap": null,
+  "upset_snapshot": {
+   "candidate": "Boston Red Sox",
+   "class": "unknown",
+   "market_dog_pct": null,
+   "model_dog_pct": 47.0,
+   "upset_edge": null,
+   "radar": false,
+   "standings_candidate": null,
+   "standings_gap_pct": 10.5,
+   "gate": "none",
+   "box_score_edge": 0.0
+  },
+  "box_score_available": false,
+  "damp_pct": 0,
+  "mkt_pull": 0,
+  "model_ver": "v4-integrity-advancement",
+  "model_code_marker": "matchday-predictor-integrity-2026-07",
+  "locked_at": "2026-07-31T14:45:08.546670Z",
+  "lead_time_seconds": 41091.453,
+  "lead_time_hours": 11.414293,
+  "status_at_lock": "UPCOMING",
+  "integrity_eligible": true,
+  "integrity_status": "verified",
+  "integrity_reason": "verified_pregame_window",
+  "prediction_snapshot": {
+   "pick": "h",
+   "pick_name": "Los Angeles Dodgers",
+   "confidence": 53,
+   "base_pick": "h",
+   "base_pick_name": "Los Angeles Dodgers",
+   "model": {
+    "h": 54,
+    "a": 46,
+    "d": 0
+   },
+   "base_blend": {
+    "h": 54,
+    "d": 0,
+    "a": 46
+   },
+   "blend": {
+    "h": 53,
+    "d": 0,
+    "a": 47
+   },
+   "adjusted": {
+    "h": 53,
+    "d": 0,
+    "a": 47
+   },
+   "is_knockout": false,
+   "advancement": null,
+   "regulation_pick": "h",
+   "regulation_pick_name": "Los Angeles Dodgers",
+   "regulation_confidence": 53,
+   "regulation_probs": {
+    "h": 53,
+    "d": 0,
+    "a": 47
+   },
+   "edge": null,
+   "note": "no market to compare against",
+   "why": {
+    "adv": 0.25,
+    "srs": 0.84,
+    "market_power": 0.0,
+    "rank": 0.0,
+    "form": -0.99,
+    "margin": 0.8,
+    "elo": -0.38,
+    "rest": 0.0,
+    "class": 0.0,
+    "record": 0.84
+   },
+   "damp_pct": 0,
+   "mkt_pull": 0,
+   "market_weight": 0.0,
+   "upset": {
+    "candidate": "a",
+    "candidate_name": "Boston Red Sox",
+    "favorite": "h",
+    "favorite_name": "Los Angeles Dodgers",
+    "score": 70,
+    "upset_class": "unknown",
+    "market_dog_pct": null,
+    "model_dog_pct": 47.0,
+    "upset_edge": null,
+    "radar": false,
+    "standings_candidate": null,
+    "standings_gap_pct": 10.5,
+    "standings_sample_ok": true,
+    "temperature": 1.16,
+    "variance_pct": 13,
+    "low_goal_pct": 42,
+    "draw_pct": 0,
+    "favorite_pct": 53,
+    "candidate_pct": 47,
+    "margin_pct": 6,
+    "learn_bias_pct": 0.0,
+    "market_gap_pct": null,
+    "market_gate": false,
+    "box_score_edge": 0.0,
+    "blocked": false,
+    "triggered": false,
+    "reason": "narrow team gap · underdog momentum"
+   },
+   "data_quality": {
+    "level": "established",
+    "games": {
+     "home": 109,
+     "away": 108
+    },
+    "signals": [
+     "record",
+     "margin",
+     "form",
+     "srs",
+     "elo"
+    ],
+    "market_available": false,
+    "market_books": 0,
+    "market_spread": null,
+    "market_weight": 0.0,
+    "note": "Current-season sample and opponent-adjusted results are available."
+   },
+   "predicted_margin": {
+    "value": 0.1,
+    "unit": "runs",
+    "favored": "h",
+    "label": "Los Angeles Dodgers by 0.1"
+   },
+   "class_meta": {
+    "label": "Personnel edge",
+    "source": null,
+    "available": false,
+    "coverage": "unavailable",
+    "home_available": false,
+    "away_available": false,
+    "note": "Requires probable starters, confirmed batting orders, and bullpen availability; the configured feed does not provide them."
+   },
+   "totals": {
+    "expected": 8.39,
+    "basis": "season_rate"
+   }
+  },
+  "input_snapshot": {
+   "competition": "MLB",
+   "competition_config": {
+    "label": "MLB",
+    "sport": "baseball",
+    "fd": null,
+    "odds": "baseball_mlb",
+    "outright": "baseball_mlb_world_series_winner",
+    "tournament": false,
+    "source": "balldontlie",
+    "has_draws": false
+   },
+   "match": {
+    "id": "bdl-mlb-5059429",
+    "stage": "Regular",
+    "kickoff": "2026-08-01T02:10:00Z",
+    "status": "UPCOMING",
+    "venue": "Dodger Stadium",
+    "home": {
+     "name": "Los Angeles Dodgers",
+     "code": "LAD",
+     "pts": 207,
+     "gd": 160,
+     "form": "W L L W W",
+     "pos": 1,
+     "group": "National League West",
+     "gf": 562,
+     "ga": 402,
+     "pld": 109,
+     "w": 69,
+     "d": 0,
+     "l": 40,
+     "srs": 1.203,
+     "srs_games": 109,
+     "rest_days": 1,
+     "rating": 6.2,
+     "form_home": "L L L W W",
+     "form_away": "W W W W L"
+    },
+    "away": {
+     "name": "Boston Red Sox",
+     "code": "BOS",
+     "pts": 171,
+     "gd": 50,
+     "form": "W W L W W",
+     "pos": 3,
+     "group": "American League East",
+     "gf": 454,
+     "ga": 404,
+     "pld": 108,
+     "w": 57,
+     "d": 0,
+     "l": 51,
+     "srs": 0.333,
+     "srs_games": 108,
+     "rest_days": 1,
+     "rating": 5.64,
+     "form_home": "W L W L W",
+     "form_away": "W W L W W"
+    },
+    "markets": {},
+    "weather": null,
+    "injuries": {
+     "home": [],
+     "away": []
+    },
+    "lineups": null,
+    "h2h": [],
+    "stats": null,
+    "stats_extra": null,
+    "data_source": "BALLDONTLIE",
+    "advanced_metrics": null,
+    "advanced_metrics_meta": null,
+    "nfl_challenger_shadow": null,
+    "mlb_challenger_shadow": {
+     "schema_version": 1,
+     "model_version": "retrosheet-mlb-challenger-0.1.0",
+     "mode": "prospective_shadow",
+     "production_weight": 0,
+     "home_win_probability": 0.57888,
+     "away_win_probability": 0.42112,
+     "features": {
+      "pythagorean_diff": 0.095477,
+      "run_diff_per_game_diff": 1.004927
+     },
+     "top_contributions": [
+      {
+       "feature": "run_diff_per_game_diff",
+       "contribution": 0.09231,
+       "direction": "home"
+      },
+      {
+       "feature": "pythagorean_diff",
+       "contribution": 0.08716,
+       "direction": "home"
+      }
+     ],
+     "live_feature_source": "licensed BALLDONTLIE season team totals through prior completed games",
+     "historical_training_source": "Retrosheet event files and game logs",
+     "retrosheet_notice": "The information used here was obtained free of charge from and is copyrighted by Retrosheet. Interested parties may contact Retrosheet at \"www.retrosheet.org\".",
+     "trained_through": "2025-09-28",
+     "home_games": 109,
+     "away_games": 108,
+     "historical_validation": {
+      "checks": {
+       "brier_not_worse_than_elo": true,
+       "log_loss_better_than_elo": true,
+       "minimum_out_of_sample_games": true,
+       "minimum_test_seasons": true,
+       "paired_interval_below_zero": true
+      },
+      "decision": "eligible_for_prospective_shadow",
+      "elo": {
+       "accuracy": 0.564356,
+       "brier": 0.246335,
+       "log_loss": 0.686457,
+       "n": 9090
+      },
+      "features": [
+       "pythagorean_diff",
+       "run_diff_per_game_diff"
+      ],
+      "model": {
+       "accuracy": 0.560176,
+       "brier": 0.244584,
+       "log_loss": 0.682207,
+       "n": 9090
+      },
+      "paired_vs_elo": {
+       "blocks": 683,
+       "ci95": [
+        -0.007292,
+        -0.001244
+       ],
+       "mean_log_loss_delta": -0.00425,
+       "method": "deterministic game-date block bootstrap",
+       "n": 9090
+      }
+     },
+     "promotion_status": "eligible_for_prospective_shadow_not_production",
+     "missing_personnel": [
+      "probable_or_confirmed_starter",
+      "confirmed_lineup",
+      "bullpen_availability"
+     ]
+    },
+    "model_signal_schema": null
+   }
+  },
+  "mfti_shadow": {
+   "spec_version": "MFTI-0.1.1-shadow",
+   "mode": "shadow_research_only",
+   "captured_at": "2026-07-31T14:45:08.546670Z",
+   "status": "incomplete",
+   "score": null,
+   "historical_evidence": {
+    "available": false,
+    "score": null,
+    "reason": "frozen_normalization_and_rolling_recalibration_not_fitted",
+    "diagnostics": {
+     "eligible_prior_forecasts": 52,
+     "mean_brier": 0.561196,
+     "mean_log_loss": 0.768783,
+     "brier_skill_vs_uniform": 0.158206,
+     "log_skill_vs_uniform": 0.300224
+    }
+   },
+   "event_readiness": {
+    "available": false,
+    "score": null,
+    "missing_components": [
+     "scenario_stability",
+     "availability",
+     "freshness",
+     "model_stability"
+    ]
+   },
+   "components": {
+    "scenario_stability": {
+     "available": false,
+     "score": null,
+     "reason": "scenario_forecasts_not_captured"
+    },
+    "availability": {
+     "available": false,
+     "score": null,
+     "reason": "availability_probabilities_not_captured"
+    },
+    "freshness": {
+     "available": false,
+     "score": null,
+     "reason": "input_freshness_not_captured"
+    },
+    "model_stability": {
+     "available": false,
+     "score": null,
+     "reason": "independent_model_outputs_not_captured"
+    }
+   },
+   "missing_components": [
+    "historical_evidence",
+    "scenario_stability",
+    "availability",
+    "freshness",
+    "model_stability"
+   ],
+   "affects_prediction": false,
+   "user_visible": false
+  },
+  "result": null,
+  "model_result": null,
+  "market_result": null
+ },
+ "bdl-mlb-5059430": {
+  "schema_ver": 2,
+  "fixture_id": "bdl-mlb-5059430",
+  "competition": "MLB",
+  "home": "Seattle Mariners",
+  "away": "Minnesota Twins",
+  "stage": "Regular",
+  "kickoff": "2026-08-01T02:10:00Z",
+  "pick": "a",
+  "pick_name": "Minnesota Twins",
+  "confidence": 52,
+  "edge": null,
+  "base_pick": "a",
+  "base_pick_name": "Minnesota Twins",
+  "probs": {
+   "h": 48,
+   "d": 0,
+   "a": 52
+  },
+  "advancement_probs": null,
+  "regulation_probs": {
+   "h": 48,
+   "d": 0,
+   "a": 52
+  },
+  "regulation_pick": "a",
+  "outcome_basis": "regulation",
+  "market_basis": "regulation_1x2",
+  "market_pick": null,
+  "market_pct": null,
+  "pick_mkt": null,
+  "value_side": null,
+  "value_edge": null,
+  "value_mkt": null,
+  "value_name": null,
+  "upset_candidate": "h",
+  "upset_name": "Seattle Mariners",
+  "upset_score": 66,
+  "upset_candidate_pct": 48,
+  "upset_triggered": false,
+  "upset_temperature": 1.2,
+  "upset_reason": "narrow team gap",
+  "factor_snapshot": {
+   "adv": 0.25,
+   "srs": 0.08,
+   "market_power": 0.0,
+   "rank": 0.0,
+   "form": 0.04,
+   "margin": 0.23,
+   "elo": -0.87,
+   "rest": 0.0,
+   "class": 0.0,
+   "record": -0.15,
+   "h2h": 0.13
+  },
+  "market_snapshot": null,
+  "market_snapshot_at": null,
+  "market_gap": null,
+  "upset_snapshot": {
+   "candidate": "Seattle Mariners",
+   "class": "unknown",
+   "market_dog_pct": null,
+   "model_dog_pct": 48.0,
+   "upset_edge": null,
+   "radar": false,
+   "standings_candidate": null,
+   "standings_gap_pct": 1.8,
+   "gate": "none",
+   "box_score_edge": 0.0
+  },
+  "box_score_available": false,
+  "damp_pct": 0,
+  "mkt_pull": 0,
+  "model_ver": "v4-integrity-advancement",
+  "model_code_marker": "matchday-predictor-integrity-2026-07",
+  "locked_at": "2026-07-31T14:45:08.547262Z",
+  "lead_time_seconds": 41091.453,
+  "lead_time_hours": 11.414292,
+  "status_at_lock": "UPCOMING",
+  "integrity_eligible": true,
+  "integrity_status": "verified",
+  "integrity_reason": "verified_pregame_window",
+  "prediction_snapshot": {
+   "pick": "a",
+   "pick_name": "Minnesota Twins",
+   "confidence": 52,
+   "base_pick": "a",
+   "base_pick_name": "Minnesota Twins",
+   "model": {
+    "h": 48,
+    "a": 52,
+    "d": 0
+   },
+   "base_blend": {
+    "h": 48,
+    "d": 0,
+    "a": 52
+   },
+   "blend": {
+    "h": 48,
+    "d": 0,
+    "a": 52
+   },
+   "adjusted": {
+    "h": 48,
+    "d": 0,
+    "a": 52
+   },
+   "is_knockout": false,
+   "advancement": null,
+   "regulation_pick": "a",
+   "regulation_pick_name": "Minnesota Twins",
+   "regulation_confidence": 52,
+   "regulation_probs": {
+    "h": 48,
+    "d": 0,
+    "a": 52
+   },
+   "edge": null,
+   "note": "no market to compare against",
+   "why": {
+    "adv": 0.25,
+    "srs": 0.08,
+    "market_power": 0.0,
+    "rank": 0.0,
+    "form": 0.04,
+    "margin": 0.23,
+    "elo": -0.87,
+    "rest": 0.0,
+    "class": 0.0,
+    "record": -0.15,
+    "h2h": 0.13
+   },
+   "damp_pct": 0,
+   "mkt_pull": 0,
+   "market_weight": 0.0,
+   "upset": {
+    "candidate": "h",
+    "candidate_name": "Seattle Mariners",
+    "favorite": "a",
+    "favorite_name": "Minnesota Twins",
+    "score": 66,
+    "upset_class": "unknown",
+    "market_dog_pct": null,
+    "model_dog_pct": 48.0,
+    "upset_edge": null,
+    "radar": false,
+    "standings_candidate": null,
+    "standings_gap_pct": 1.8,
+    "standings_sample_ok": true,
+    "temperature": 1.2,
+    "variance_pct": 19,
+    "low_goal_pct": 42,
+    "draw_pct": 0,
+    "favorite_pct": 52,
+    "candidate_pct": 48,
+    "margin_pct": 4,
+    "learn_bias_pct": 0.0,
+    "market_gap_pct": null,
+    "market_gate": false,
+    "box_score_edge": 0.0,
+    "blocked": false,
+    "triggered": false,
+    "reason": "narrow team gap"
+   },
+   "data_quality": {
+    "level": "established",
+    "games": {
+     "home": 110,
+     "away": 110
+    },
+    "signals": [
+     "record",
+     "margin",
+     "form",
+     "srs",
+     "elo"
+    ],
+    "market_available": false,
+    "market_books": 0,
+    "market_spread": null,
+    "market_weight": 0.0,
+    "note": "Current-season sample and opponent-adjusted results are available."
+   },
+   "predicted_margin": {
+    "value": -0.1,
+    "unit": "runs",
+    "favored": "a",
+    "label": "Minnesota Twins by 0.1"
+   },
+   "class_meta": {
+    "label": "Personnel edge",
+    "source": null,
+    "available": false,
+    "coverage": "unavailable",
+    "home_available": false,
+    "away_available": false,
+    "note": "Requires probable starters, confirmed batting orders, and bullpen availability; the configured feed does not provide them."
+   },
+   "totals": {
+    "expected": 8.83,
+    "basis": "season_rate"
+   }
+  },
+  "input_snapshot": {
+   "competition": "MLB",
+   "competition_config": {
+    "label": "MLB",
+    "sport": "baseball",
+    "fd": null,
+    "odds": "baseball_mlb",
+    "outright": "baseball_mlb_world_series_winner",
+    "tournament": false,
+    "source": "balldontlie",
+    "has_draws": false
+   },
+   "match": {
+    "id": "bdl-mlb-5059430",
+    "stage": "Regular",
+    "kickoff": "2026-08-01T02:10:00Z",
+    "status": "UPCOMING",
+    "venue": "T-Mobile Park",
+    "home": {
+     "name": "Seattle Mariners",
+     "code": "SEA",
+     "pts": 159,
+     "gd": 3,
+     "form": "W L W L L",
+     "pos": 3,
+     "group": "American League West",
+     "gf": 440,
+     "ga": 437,
+     "pld": 110,
+     "w": 53,
+     "d": 0,
+     "l": 57,
+     "srs": -0.095,
+     "srs_games": 110,
+     "rest_days": 1,
+     "rating": 4.84,
+     "form_home": "W W W L L",
+     "form_away": "W L W L L"
+    },
+    "away": {
+     "name": "Minnesota Twins",
+     "code": "MIN",
+     "pts": 165,
+     "gd": -29,
+     "form": "W W W L W",
+     "pos": 3,
+     "group": "American League Central",
+     "gf": 518,
+     "ga": 547,
+     "pld": 110,
+     "w": 55,
+     "d": 0,
+     "l": 55,
+     "srs": -0.176,
+     "srs_games": 110,
+     "rest_days": 1,
+     "rating": 5.0,
+     "form_home": "W W W L W",
+     "form_away": "L L L W W"
+    },
+    "markets": {},
+    "weather": null,
+    "injuries": {
+     "home": [],
+     "away": []
+    },
+    "lineups": null,
+    "h2h": [],
+    "stats": null,
+    "stats_extra": null,
+    "data_source": "BALLDONTLIE",
+    "advanced_metrics": null,
+    "advanced_metrics_meta": null,
+    "nfl_challenger_shadow": null,
+    "mlb_challenger_shadow": {
+     "schema_version": 1,
+     "model_version": "retrosheet-mlb-challenger-0.1.0",
+     "mode": "prospective_shadow",
+     "production_weight": 0,
+     "home_win_probability": 0.548107,
+     "away_win_probability": 0.451893,
+     "features": {
+      "pythagorean_diff": 0.028031,
+      "run_diff_per_game_diff": 0.290909
+     },
+     "top_contributions": [
+      {
+       "feature": "run_diff_per_game_diff",
+       "contribution": 0.02778,
+       "direction": "home"
+      },
+      {
+       "feature": "pythagorean_diff",
+       "contribution": 0.02654,
+       "direction": "home"
+      }
+     ],
+     "live_feature_source": "licensed BALLDONTLIE season team totals through prior completed games",
+     "historical_training_source": "Retrosheet event files and game logs",
+     "retrosheet_notice": "The information used here was obtained free of charge from and is copyrighted by Retrosheet. Interested parties may contact Retrosheet at \"www.retrosheet.org\".",
+     "trained_through": "2025-09-28",
+     "home_games": 110,
+     "away_games": 110,
+     "historical_validation": {
+      "checks": {
+       "brier_not_worse_than_elo": true,
+       "log_loss_better_than_elo": true,
+       "minimum_out_of_sample_games": true,
+       "minimum_test_seasons": true,
+       "paired_interval_below_zero": true
+      },
+      "decision": "eligible_for_prospective_shadow",
+      "elo": {
+       "accuracy": 0.564356,
+       "brier": 0.246335,
+       "log_loss": 0.686457,
+       "n": 9090
+      },
+      "features": [
+       "pythagorean_diff",
+       "run_diff_per_game_diff"
+      ],
+      "model": {
+       "accuracy": 0.560176,
+       "brier": 0.244584,
+       "log_loss": 0.682207,
+       "n": 9090
+      },
+      "paired_vs_elo": {
+       "blocks": 683,
+       "ci95": [
+        -0.007292,
+        -0.001244
+       ],
+       "mean_log_loss_delta": -0.00425,
+       "method": "deterministic game-date block bootstrap",
+       "n": 9090
+      }
+     },
+     "promotion_status": "eligible_for_prospective_shadow_not_production",
+     "missing_personnel": [
+      "probable_or_confirmed_starter",
+      "confirmed_lineup",
+      "bullpen_availability"
+     ]
+    },
+    "model_signal_schema": null
+   }
+  },
+  "mfti_shadow": {
+   "spec_version": "MFTI-0.1.1-shadow",
+   "mode": "shadow_research_only",
+   "captured_at": "2026-07-31T14:45:08.547262Z",
+   "status": "incomplete",
+   "score": null,
+   "historical_evidence": {
+    "available": false,
+    "score": null,
+    "reason": "frozen_normalization_and_rolling_recalibration_not_fitted",
+    "diagnostics": {
+     "eligible_prior_forecasts": 52,
+     "mean_brier": 0.561196,
+     "mean_log_loss": 0.768783,
+     "brier_skill_vs_uniform": 0.158206,
+     "log_skill_vs_uniform": 0.300224
     }
    },
    "event_readiness": {
