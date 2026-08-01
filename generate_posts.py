@@ -370,6 +370,12 @@ def regenerate_sitemap():
     have had a chance to publish (see multi_fetch.py)."""
     rewrite_all_post_files()
     generate_public_content_feed()
+    try:
+        from build_research_posts import build_research_posts
+        research_posts = build_research_posts()
+    except Exception as e:
+        print(f"  research posts regen skipped: {e}")
+        research_posts = []
     posts = [post for post in load_posts() if _is_public_comp(post.get("comp"))]
     urls = [
         (BASE_URL, "hourly", "1.0", None),
@@ -384,6 +390,8 @@ def regenerate_sitemap():
     ]
     for post in posts:
         urls.append((f"{BASE_URL}posts/{post['slug']}.html", "never", "0.6", post.get("date")))
+    for post in research_posts:
+        urls.append((f"{BASE_URL}posts/{post['slug']}.html", "monthly", "0.6", post.get("date")))
     lines = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
     for loc, freq, priority, lastmod in urls:
         lines.append("  <url>")

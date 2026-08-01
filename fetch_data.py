@@ -424,6 +424,7 @@ def _get(url, headers=None, provider=None):
         try:
             provider_quota.check(provider)
         except provider_quota.QuotaExceededError as exc:
+            provider_quota.record_block(provider)
             raise RuntimeError(_scrub(str(exc)))
     req = urllib.request.Request(url, headers=headers or {})
     try:
@@ -2017,7 +2018,7 @@ def _market_blend_weight(market):
     return round(_clamp(weight, 0.30, 0.60), 2)
 
 
-def predict(home, away, markets, m=None):
+def predict(home, away, markets, m=None, neutral_venue=False):
     two_way = not COMP.get("has_draws", True)
     american = COMP["sport"] != "soccer"
     american_cfg = {
@@ -2153,7 +2154,8 @@ def predict(home, away, markets, m=None):
                 "fifa": rp["fifa"]*class_scale, "value": rp["value"]*class_scale, "star": rp["star"]*class_scale,
                 "elo": elo_pts*elo_conf*prior_boost,
                 "rest": 0.0 if rest is None else max(-0.6, min(0.45, (rest - 4) * 0.15))}
-    ph, pa = parts(home, american_cfg["home"] if american else 1.2), parts(away, 0.0)
+    home_adv = 0.0 if neutral_venue else (american_cfg["home"] if american else 1.2)
+    ph, pa = parts(home, home_adv), parts(away, 0.0)
     # A flat "base" anchor identical on both sides mathematically caps how
     # far ANY signal, however lopsided, can push the sh/(sh+sa) ratio --
     # necessary in-season (StrengthFloorTests: a merely-bad-but-not-
@@ -3914,6 +3916,54 @@ PICK_SCHEMA_VERSION = 2
 MODEL_CODE_MARKER = "matchday-predictor-integrity-2026-07"
 WC_RESULT_MIGRATION_FILE = "wc_result_migration.json"
 
+FIXTURE_COUNT_HISTORY_FILE = "fixture_count_history.json"
+FIXTURE_COUNT_HISTORY_LEN = 8
+FIXTURE_COUNT_MIN_TRAILING = 5      # don't flag naturally-small competitions
+FIXTURE_COUNT_ANOMALY_RATIO = 0.4   # current count below 40% of trailing average is suspicious
+
+
+def _load_fixture_count_history():
+    try:
+        with open(FIXTURE_COUNT_HISTORY_FILE, encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return {}
+
+
+def _check_and_record_fixture_count(comp_key, current_count):
+    """Flags a provider silently returning far fewer fixtures than usual --
+    a 200 OK with 3 games instead of the usual 15 raises no error anywhere
+    else in the pipeline, so this is the one place that would ever notice.
+    Doesn't fail the build (a real short slate -- byes, an off week -- is
+    legitimate and shouldn't block deployment); it only makes the anomaly
+    loudly visible in DIAG and the payload, instead of quietly shipping as
+    if nothing changed."""
+    history = _load_fixture_count_history()
+    trailing = history.get(comp_key) or []
+    trailing_avg = sum(trailing) / len(trailing) if trailing else None
+    anomaly = (
+        trailing_avg is not None
+        and trailing_avg >= FIXTURE_COUNT_MIN_TRAILING
+        and current_count < trailing_avg * FIXTURE_COUNT_ANOMALY_RATIO
+    )
+    if anomaly:
+        DIAG.append(
+            f"fixture count anomaly: {current_count} fixtures this run vs. "
+            f"trailing average {trailing_avg:.1f} over last {len(trailing)} run(s)"
+        )
+    trailing.append(current_count)
+    history[comp_key] = trailing[-FIXTURE_COUNT_HISTORY_LEN:]
+    try:
+        tmp = FIXTURE_COUNT_HISTORY_FILE + ".tmp"
+        with open(tmp, "w", encoding="utf-8") as f:
+            json.dump(history, f, ensure_ascii=False, indent=1)
+        os.replace(tmp, FIXTURE_COUNT_HISTORY_FILE)
+    except Exception as e:
+        DIAG.append(f"fixture count history save failed: {e}")
+    return {"current": current_count,
+            "trailing_avg": round(trailing_avg, 1) if trailing_avg is not None else None,
+            "anomaly": bool(anomaly)}
+
 
 def _json_safe(value):
     """Return a detached JSON-safe copy suitable for an immutable ledger."""
@@ -4139,6 +4189,12 @@ def _make_pick_record(match, prediction, market, decision, history=()):
                            "gate": "open" if upset.get("triggered") else ("blocked" if upset.get("blocked") else "none"),
                            "box_score_edge": upset.get("box_score_edge")},
         "box_score_available": bool(match.get("stats_extra") or match.get("stats")),
+        "data_availability": {
+            "market": "available" if market.get("home_pct") is not None else "unavailable",
+            "box_score": "available" if (match.get("stats_extra") or match.get("stats")) else "unavailable",
+            "lineups": "available" if match.get("lineups") else "unavailable",
+            "injuries": "available" if match.get("injuries") else "unavailable",
+        },
         "damp_pct": prediction.get("damp_pct"), "mkt_pull": prediction.get("mkt_pull"),
         "model_ver": "v4-integrity-advancement", "model_code_marker": MODEL_CODE_MARKER,
         "locked_at": locked_at,
@@ -4514,12 +4570,20 @@ def update_scorecard(matches):
             except Exception:
                 continue
             if _h != _a:
+                previous_result = _p.get("result")
                 _p["result"] = "h" if _h > _a else "a"
                 if "pick" in _p:
                     _p["model_hit"] = (_p.get("pick") == _p["result"])
                 # A displayed ET score cannot reconstruct the 90-minute market
                 # settlement, so preserve the existing market grade here. Current
                 # fixtures are corrected above from their explicit regulation score.
+                _p.setdefault("grading_corrections", []).append({
+                    "field": "result",
+                    "previous": previous_result,
+                    "corrected": _p["result"],
+                    "reason": "non-level scoreline mis-graded as draw (legacy penalty-inflated score)",
+                    "corrected_at": _utc_now().isoformat().replace("+00:00", "Z"),
+                })
                 healed = True
     if healed:
         _save_picks(picks)
@@ -4554,11 +4618,23 @@ def update_scorecard(matches):
                      and (p.get("upset_snapshot") or {}).get("standings_gap_pct") is not None]
     upset_triggered = [p for p in upset_watched if p.get("upset_triggered")]
     # calibration bands: stated confidence vs actual hit rate
-    bands = [("<45", 0, 45), ("45-55", 45, 55), ("55-65", 55, 65), ("65+", 65, 101)]
+    bands = [("<50", 0, 50), ("50-60", 50, 60), ("60-70", 60, 70),
+             ("70-80", 70, 80), ("80-90", 80, 90), ("90+", 90, 101)]
     calib = []
     for lbl, lo, hi in bands:
         grp = [p for p in graded if lo <= (p.get("confidence") or 0) < hi]
         if grp: calib.append({"band": lbl, "n": len(grp), "hits": sum(1 for p in grp if p.get("model_hit"))})
+    # home vs. away: hit rate when the pick was the home side vs. the away side
+    home_picks = [p for p in graded if p.get("pick") == "h"]
+    away_picks = [p for p in graded if p.get("pick") == "a"]
+    home_away = {"home": {"n": len(home_picks), "hits": sum(1 for p in home_picks if p.get("model_hit"))},
+                 "away": {"n": len(away_picks), "hits": sum(1 for p in away_picks if p.get("model_hit"))}}
+    # favorite vs. underdog: was the picked side's own predicted probability >= 50%?
+    # (a plurality winner below 50% only happens in three-way soccer markets.)
+    favorite_picks = [p for p in graded if (p.get("confidence") or 0) >= 50]
+    underdog_picks = [p for p in graded if (p.get("confidence") or 0) < 50]
+    favorite_underdog = {"favorite": {"n": len(favorite_picks), "hits": sum(1 for p in favorite_picks if p.get("model_hit"))},
+                         "underdog": {"n": len(underdog_picks), "hits": sum(1 for p in underdog_picks if p.get("model_hit"))}}
     clvs = [p["clv"] for p in graded if p.get("clv") is not None]
     vals = [p for p in graded if p.get("value_side")]
     chances = [p for p in vals if p.get("value_side") != p.get("pick")]
@@ -4633,6 +4709,8 @@ def update_scorecard(matches):
             "brier_advancement": round(sum(advancement_briers)/len(advancement_briers), 3) if advancement_briers else None,
             "log_loss_advancement": round(sum(advancement_logloss)/len(advancement_logloss), 3) if advancement_logloss else None,
             "calibration": calib,
+            "home_away": home_away,
+            "favorite_underdog": favorite_underdog,
             "clv_n": len(clvs), "clv_avg": round(sum(clvs)/len(clvs), 1) if clvs else None,
             "clv_beat": sum(1 for c in clvs if c > 0),
             "value": value_summary, "signal_quality": signal_quality, "misses": misses, "upset": upset_summary,
@@ -5489,6 +5567,7 @@ def _due_for_odds(match, now_utc=None):
 
 def build():
     DIAG.clear()
+    provider_quota.BLOCKED_THIS_RUN.clear()
     MARKET_STATE["quota_out"] = False
     print("Fetching fixtures…")
     sports_adapter = None
@@ -5702,6 +5781,17 @@ def build():
     promoted_matches = 0
     for m in matches:
         m["prediction"] = predict(m["home"], m["away"], m["markets"], m)
+        # Real, not simulated: reruns the same predict() with the home-
+        # advantage term zeroed, so the Sandbox's "neutral venue" toggle
+        # shows an actual model output rather than a client-side guess.
+        # Skipped once a match is finished (nothing left to toggle) and left
+        # out of the locked prediction_snapshot the same way -- apply_locked_picks()
+        # replaces this whole dict for locked matches, so it only ever
+        # appears on a still-adjustable, not-yet-locked forecast.
+        if m.get("status") != "FINISHED":
+            m["prediction"]["neutral_venue_probs"] = predict(
+                m["home"], m["away"], m["markets"], m, neutral_venue=True
+            )["adjusted"]
         if mlb_promotion_policy and apply_mlb_promotion(m, m["prediction"], mlb_promotion_policy):
             promoted_matches += 1
         if nfl_adjustment_policy and apply_nfl_adjustment(m, m["prediction"], nfl_adjustment_policy):
@@ -5826,13 +5916,16 @@ def build():
 
     live = sum(1 for m in matches if m["status"] == "LIVE")
     source_note = "sample" if COMP.get("source") == "sportsdataio" else "live"
+    fixture_count_check = _check_and_record_fixture_count(COMP_KEY, len(matches))
     payload = {"updated": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds"),
+               "fixture_count_check": fixture_count_check,
                "source_note": source_note, "competition": COMP["label"], "comp_key": COMP_KEY, "matches": matches,
                "title_odds": title, "news": news, "news_scope": COMP_KEY, "bracket": bracket, "bracketology": bracketology,
                "third_race": third, "standings": standings, "scorers": scorers, "leaders": leaders, "team_of_tournament": build_team_of_tournament(matches, scorers, standings), "scorecard": scorecard,
                "advancement": compute_advancement(matches, st, name_map, code_map),
                "weekly_awards": weekly_awards,
                "markets_quota_out": MARKET_STATE["quota_out"],
+               "quota_blocked_providers": list(provider_quota.BLOCKED_THIS_RUN),
                "diagnostics": [_scrub(x) for x in DIAG]}
     for out in (OUT_FILE, f"data_{COMP_KEY.lower()}.json"):
         tmp = out + ".tmp"

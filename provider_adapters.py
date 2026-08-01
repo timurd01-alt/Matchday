@@ -37,6 +37,7 @@ def _get_json(url, headers=None, timeout=25, provider=None):
             # falls back gracefully on -- a pre-flight refusal should look
             # exactly like any other provider failure to code that never
             # needs to know the difference.
+            provider_quota.record_block(provider)
             raise ProviderError(str(exc)) from exc
     req = urllib.request.Request(url, headers=headers or {"User-Agent": "Matchday/1.0"})
     try:
@@ -63,6 +64,7 @@ def _get_csv_text(url, headers=None, timeout=25, provider=None):
         try:
             provider_quota.check(provider)
         except provider_quota.QuotaExceededError as exc:
+            provider_quota.record_block(provider)
             raise ProviderError(str(exc)) from exc
     req = urllib.request.Request(url, headers=headers or {"User-Agent": "Matchday/1.0"})
     try:

@@ -325,9 +325,19 @@ function loadPosts(){
   if(POSTS_CACHE)return Promise.resolve(POSTS_CACHE);
   return fetch('posts.json').then(r=>r.json()).catch(()=>[]).then(list=>{POSTS_CACHE=Array.isArray(list)?list:[];return POSTS_CACHE});
 }
+let RESEARCH_POSTS_CACHE=null;
+function loadResearchPosts(){
+  if(RESEARCH_POSTS_CACHE)return Promise.resolve(RESEARCH_POSTS_CACHE);
+  return fetch('research_posts.json').then(r=>r.json()).catch(()=>[]).then(list=>{RESEARCH_POSTS_CACHE=Array.isArray(list)?list:[];return RESEARCH_POSTS_CACHE});
+}
 function renderInsights(){
   const host=$('#view-insights');
-  host.innerHTML=`<div class="vhead">Insights</div><div class="banner"><b>Matchday's own recaps.</b> Auto-generated weekly from the model's own graded picks — hit rate, calibration, and this week's storylines. Not third-party news. Want the tactics behind the numbers instead? See the <a href="content.html" style="color:inherit;text-decoration:underline">Content hub</a>.</div><div id="insightsList" class="insightsList"><div class="empty">Loading…</div></div>`;
+  host.innerHTML=`<div class="vhead">Insights</div><div class="banner"><b>Matchday's own recaps.</b> Auto-generated weekly from the model's own graded picks — hit rate, calibration, and this week's storylines. Not third-party news. Want the tactics behind the numbers instead? See the <a href="content.html" style="color:inherit;text-decoration:underline">Content hub</a>.</div><div class="seclbl" style="margin-top:16px">Research</div><div class="hint" style="margin-bottom:8px">How the model itself performs — methodology and results, not marketing.</div><div id="researchList" class="insightsList"><div class="empty">Loading…</div></div><div class="seclbl" style="margin-top:20px">Weekly recaps</div><div id="insightsList" class="insightsList"><div class="empty">Loading…</div></div>`;
+  loadResearchPosts().then(posts=>{
+    const list=$('#researchList');if(!list)return;
+    if(!posts.length){list.innerHTML='<div class="empty">No research posts published yet.</div>';return;}
+    list.innerHTML=posts.map(p=>`<a class="insightCard" href="posts/${esc(p.slug)}.html" target="_blank" rel="noopener"><b>${esc(p.title)}</b><span>${esc(p.summary||'')}</span><small>${esc(p.date||'')} · Research</small></a>`).join('');
+  });
   loadPosts().then(posts=>{
     const list=$('#insightsList');if(!list)return;
     if(!posts.length){list.innerHTML='<div class="empty">No recaps published yet — check back once this week\'s games are graded.</div>';return;}
