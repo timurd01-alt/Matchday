@@ -1,0 +1,10 @@
+{
+ "rank": 120,
+ "date": "Build 0801B",
+ "tag": "Fix",
+ "title": "Club teams no longer show national flags",
+ "items": [
+  "Fixed club competitions (Ligue 1, EPL, La Liga, Serie A, Bundesliga, UCL) picking up a country flag whenever a team's short code happened to collide with an ISO country code -- e.g. Marseille's OM code was rendering Oman's flag.",
+  "Flags are now shown only for genuine national-team competitions (World Cup); club fixtures, standings, brackets, and modals no longer attempt a flag lookup."
+ ]
+}
