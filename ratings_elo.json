@@ -7898,8 +7898,8 @@
    "n": 1996
   },
   "baseball:toronto blue jays": {
-   "r": 1475.4883922350243,
-   "n": 3894
+   "r": 1483.8487766321005,
+   "n": 3895
   },
   "baseball:texas rangers": {
    "r": 1493.3055856983774,
@@ -7966,8 +7966,8 @@
    "n": 3894
   },
   "baseball:st louis cardinals": {
-   "r": 1426.6884608272292,
-   "n": 3959
+   "r": 1418.328076430153,
+   "n": 3960
   },
   "baseball:colorado rockies": {
    "r": 1415.5777994330351,
@@ -7978,8 +7978,8 @@
    "n": 3873
   },
   "baseball:chicago white sox": {
-   "r": 1537.6961117779454,
-   "n": 3876
+   "r": 1527.637191477731,
+   "n": 3877
   },
   "baseball:oakland athletics": {
    "r": 1369.5977083226373,
@@ -8010,8 +8010,8 @@
    "n": 3874
   },
   "baseball:tampa bay rays": {
-   "r": 1534.394128940128,
-   "n": 3921
+   "r": 1544.4530492403424,
+   "n": 3922
   },
   "baseball:detroit tigers": {
    "r": 1511.5424608018668,
@@ -285932,6 +285932,8 @@
   "MLB:bdl-mlb-5059427": true,
   "MLB:bdl-mlb-5059428": true,
   "MLB:bdl-mlb-5059429": true,
-  "MLB:bdl-mlb-5059430": true
+  "MLB:bdl-mlb-5059430": true,
+  "MLB:bdl-mlb-5059431": true,
+  "MLB:bdl-mlb-5059432": true
  }
 }
