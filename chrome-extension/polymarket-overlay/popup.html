@@ -25,6 +25,10 @@
   <label for="kalshiApiKey">Kalshi API key (optional)</label>
   <input id="kalshiApiKey" placeholder="only if market listing needs auth">
 
+  <label for="alertThreshold">Alert threshold (points, 0 = off)</label>
+  <input id="alertThreshold" placeholder="e.g. 5" inputmode="decimal">
+  <div class="hint">Pulses the panel and fires a browser notification when the spread across markets (or model-vs-Polymarket edge) crosses this many points.</div>
+
   <button id="save">Save</button>
   <div id="status"></div>
   <script src="popup.js"></script>

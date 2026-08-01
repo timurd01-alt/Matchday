@@ -11,8 +11,15 @@ boundary is just "only I loaded this."
 
 ## What it shows
 
-On a Polymarket event page (`polymarket.com/event/<slug>`), the overlay
-shows four numbers side by side for whichever team the market is about:
+The panel is now **always visible on every polymarket.com page** as a small
+status chip (`idle` / `loading…` / `no match` / `watching`) — earlier
+versions only injected on `/event/*` and showed nothing at all elsewhere,
+which made a real failure indistinguishable from "not built yet." If you
+see `idle`, the extension is running; if you see nothing, it isn't loaded
+at all (check `chrome://extensions`).
+
+On a market page it shows four numbers side by side for whichever team the
+market is about:
 
 - **Model** — Matchday's own probability (`prediction.blend`)
 - **Odds API (books)** — no-vig consensus across bookmakers, same math as
@@ -20,10 +27,30 @@ shows four numbers side by side for whichever team the market is about:
 - **Polymarket** — live price from the market you're viewing
 - **Kalshi** — best-effort match on the same fixture, if Kalshi lists it
 
-Plus a spread (max − min across the three market prices) as a quick
-"how much do these disagree with each other" signal — the point of using
-several sources isn't picking one as ground truth, it's seeing where they
-diverge.
+Plus:
+- A **spread** (max − min across the three market prices) as a quick "how
+  much do these disagree with each other" signal — the point of using
+  several sources isn't picking one as ground truth, it's seeing where they
+  diverge.
+- A tiny **sparkline** of that spread (or, before every source has loaded,
+  the model-vs-Polymarket gap) over the last ~20 changes.
+- A **drag handle** on the header — move the panel anywhere, position is
+  remembered per browser profile.
+- An **alert threshold** (set in the popup, 0 = off): when the spread/gap
+  crosses it, the panel border pulses and a native Chrome notification
+  fires once (not on every tick past the line).
+
+### How market pages are detected now
+
+Earlier this only matched `polymarket.com/event/*`, which may not be
+Polymarket's actual URL shape for sports markets specifically — that
+couldn't be verified from the sandbox that built it, and a wrong guess
+here would make the extension silently do nothing. It now runs on every
+polymarket.com page, takes the last path segment as a candidate slug
+(skipping known non-market routes like `/portfolio`, `/leaderboard`,
+`/search`, the homepage, etc.), and lets the Gamma API lookup itself decide
+whether that's a real market. If it isn't, you'll see `no match` with a
+reason instead of silence.
 
 ## Setup
 
@@ -43,10 +70,13 @@ diverge.
      different bookmaker mix.
    - **Kalshi API key** — optional. Left blank, market listing is attempted
      unauthenticated first.
-3. Visit a Polymarket event page for a match one of Matchday's covered
-   competitions has. The overlay appears bottom-right once a fixture match
-   is found; a note explains why if one isn't (no key set, no match found,
-   etc.) without wiping out whatever numbers did load.
+   - **Alert threshold** — points of spread/gap before the panel pulses and
+     a notification fires. 0 disables alerts.
+3. Visit any polymarket.com page — the panel now always appears bottom-right
+   showing a status chip. On a match one of Matchday's covered competitions
+   has, it switches to `watching` and fills in; on other pages it stays on
+   `idle` or `no match` rather than disappearing, so you can always tell the
+   extension is alive. Drag the header to reposition it.
 
 No Chrome Web Store review needed for personal use — "Load unpacked" is the
 whole install.

@@ -1,9 +1,10 @@
 const DEFAULT_DATA_ORIGIN = "https://matchdayterminal.com";
 const DEFAULT_REGION = "eu";
-const FIELDS = ["origin", "oddsApiKey", "oddsApiRegion", "kalshiApiKey"];
+const FIELDS = ["origin", "oddsApiKey", "oddsApiRegion", "kalshiApiKey", "alertThreshold"];
 const STORAGE_KEYS = {
   origin: "dataOrigin", oddsApiKey: "oddsApiKey",
   oddsApiRegion: "oddsApiRegion", kalshiApiKey: "kalshiApiKey",
+  alertThreshold: "alertThreshold",
 };
 const status = document.getElementById("status");
 
@@ -12,6 +13,7 @@ chrome.storage.local.get(Object.values(STORAGE_KEYS), (stored) => {
   document.getElementById("oddsApiKey").value = stored.oddsApiKey || "";
   document.getElementById("oddsApiRegion").value = stored.oddsApiRegion || DEFAULT_REGION;
   document.getElementById("kalshiApiKey").value = stored.kalshiApiKey || "";
+  document.getElementById("alertThreshold").value = stored.alertThreshold || "";
 });
 
 document.getElementById("save").addEventListener("click", () => {
@@ -21,6 +23,7 @@ document.getElementById("save").addEventListener("click", () => {
   }
   update.dataOrigin = update.dataOrigin.replace(/\/$/, "") || DEFAULT_DATA_ORIGIN;
   update.oddsApiRegion = update.oddsApiRegion || DEFAULT_REGION;
+  update.alertThreshold = Number(update.alertThreshold) || 0;
   chrome.storage.local.set(update, () => {
     status.textContent = "Saved. Reload any open Polymarket tabs to apply.";
   });

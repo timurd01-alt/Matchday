@@ -252,6 +252,8 @@ function setValue(slug, key, value) {
   emitSnapshot(slug);
 }
 
+const HISTORY_LIMIT = 20;
+
 function emitSnapshot(slug) {
   const state = active.get(slug);
   if (!state) return;
@@ -260,6 +262,19 @@ function emitSnapshot(slug) {
   const spread = marketValues.length > 1
     ? Math.round((Math.max(...marketValues) - Math.min(...marketValues)) * 10) / 10
     : null;
+  // Track whichever cross-source gap is available yet, so the overlay can
+  // show a trend even before every source has loaded: prefer the spread
+  // across markets, fall back to model-vs-Polymarket edge.
+  const trendValue = spread != null ? spread
+    : (modelPct != null && polymarketPct != null ? Math.round((modelPct - polymarketPct) * 10) / 10 : null);
+  if (!state.history) state.history = [];
+  if (trendValue != null) {
+    const last = state.history[state.history.length - 1];
+    if (!last || last.v !== trendValue) {
+      state.history.push({ at: Date.now(), v: trendValue });
+      if (state.history.length > HISTORY_LIMIT) state.history.shift();
+    }
+  }
   report(slug, {
     type: "MARKET_SNAPSHOT",
     snapshot: {
@@ -269,6 +284,7 @@ function emitSnapshot(slug) {
       away: state.match.away?.name,
       side: state.side,
       modelPct, polymarketPct, kalshiPct, oddsApiPct, spread,
+      history: state.history.slice(),
       at: Date.now(),
     },
   });

@@ -7,6 +7,9 @@ const OFFSCREEN_URL = chrome.runtime.getURL("offscreen.html");
 let creatingOffscreen = null;
 // slug -> Set<tabId>
 const watchers = new Map();
+// slug -> bool, whether it's currently past the alert threshold (hysteresis
+// so a value hovering right at the line doesn't spam a notification per tick)
+const alerting = new Map();
 
 async function ensureOffscreenDocument() {
   const existing = await chrome.runtime.getContexts({
@@ -61,9 +64,31 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     for (const tabId of set) {
       chrome.tabs.sendMessage(tabId, message).catch(() => {});
     }
+    if (message.type === "MARKET_SNAPSHOT") checkAlertThreshold(message.slug, message.snapshot);
     return;
   }
 });
+
+async function checkAlertThreshold(slug, snapshot) {
+  const { alertThreshold } = await chrome.storage.local.get(["alertThreshold"]);
+  const threshold = Number(alertThreshold);
+  if (!Number.isFinite(threshold) || threshold <= 0) return;
+  const gap = snapshot.spread != null ? snapshot.spread
+    : (snapshot.modelPct != null && snapshot.polymarketPct != null
+      ? Math.abs(snapshot.modelPct - snapshot.polymarketPct) : null);
+  if (gap == null) return;
+  const wasAlerting = alerting.get(slug) || false;
+  const isAlerting = gap >= threshold;
+  alerting.set(slug, isAlerting);
+  if (isAlerting && !wasAlerting) {
+    chrome.notifications.create(`mdx-${slug}-${Date.now()}`, {
+      type: "basic",
+      iconUrl: "icons/icon128.png",
+      title: "Matchday edge threshold crossed",
+      message: `${snapshot.home} vs ${snapshot.away}: ${gap.toFixed(1)} pt gap (threshold ${threshold}).`,
+    });
+  }
+}
 
 chrome.tabs.onRemoved.addListener((tabId) => {
   for (const [slug, set] of watchers.entries()) {
