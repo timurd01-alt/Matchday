@@ -1,0 +1,9 @@
+{
+ "rank": 118,
+ "date": "Build 0731B",
+ "tag": "Fix",
+ "title": "Odds tracker no longer shows a draw row for sports that can't draw",
+ "items": [
+  "The match modal's Odds tracker panel, the In-focus market snapshot, and the match card's compact probability bar all hard-coded a 'draw' label and bar segment regardless of sport, so NFL, NCAAF, NCAAM, MLB and NBA fixtures showed a meaningless 0% draw slice next to the real home/away market read. All three now hide the draw column and segment for two-way sports, matching the fix already shipped for the match modal's probability check and the Model dashboard's row list."
+ ]
+}

@@ -4,7 +4,7 @@ function _insightFocusHTML(focus){
     h+=`<div class="ins-match">${esc(focus.home?.name||'Home')} <span class="evs">v</span> ${esc(focus.away?.name||'Away')}</div><div class="ins-sub">${focus.status==='LIVE'?'Awaiting final':focus.status==='FINISHED'?`Final · ${scoreText(focus).replace(/<[^>]+>/g,'')}`:`${esc(focus.stage||'')} · ${kickIn(focus.kickoff)}`}</div>`;
     h+=insightModelBlock(focus);
     const x=(focus.markets||{})['1x2']||{};
-    if(x.home_pct!=null)h+=`<div class="prob insightProb"><div class="problbl"><span>${esc(focus.home?.code||'H')}</span><span>draw</span><span>${esc(focus.away?.code||'A')}</span></div>${bar1x2(x.home_pct,x.draw_pct,x.away_pct)}</div>`;
+    if(x.home_pct!=null){const twoWay=_isTwoWay(focus);h+=`<div class="prob insightProb"><div class="problbl"><span>${esc(focus.home?.code||'H')}</span>${twoWay?'':'<span>draw</span>'}<span>${esc(focus.away?.code||'A')}</span></div>${bar1x2(x.home_pct,twoWay?null:x.draw_pct,x.away_pct)}</div>`;}
     const bd=edgeBreakdown(focus);
     if(bd)h+=`<div class="seclbl" style="margin-top:16px">Model read</div><div class="ins-summary"><p>${esc(bd)}</p></div>`;
   }else{
@@ -241,7 +241,7 @@ function cardHTML(m,opts){
   const displayStatus=stale?'PAST / REFRESH':pending?'AWAITING FINAL':m.status;
   const statusClass=stale?'PAST_REFRESH':pending?'RESULT_PENDING':m.status;
   const x=(m.markets&&m.markets['1x2'])||{};const hfl=teamFlagHTML(m.home),afl=teamFlagHTML(m.away,true);
-  const probTop=x.home_pct!=null?`<div class="prob"><div class="problbl"><span>${esc(m.home.code||m.home.name)}</span><span>Market read</span><span>${esc(m.away.code||m.away.name)}</span></div>${bar1x2(x.home_pct,x.draw_pct,x.away_pct)}</div>`:`<div class="prob"><div class="nomk">No market snapshot yet</div></div>`;
+  const probTop=x.home_pct!=null?`<div class="prob"><div class="problbl"><span>${esc(m.home.code||m.home.name)}</span><span>Market read</span><span>${esc(m.away.code||m.away.name)}</span></div>${bar1x2(x.home_pct,_isTwoWay(m)?null:x.draw_pct,x.away_pct)}</div>`:`<div class="prob"><div class="nomk">No market snapshot yet</div></div>`;
   const pr=m.prediction;const op=pr?_v10OfficialPick(m):null;const edge=op?_v10OfficialEdge(m,op):null;const trend=probabilitySparkline(m);
   const pick=(!opts.hidePick&&op)?`<div class="pick ${edge!=null&&Math.abs(edge)>=6?'edge':''} ${op.blocked?'gate':''}"><span class="pl">Pick</span><span class="pn">${esc(op.name)}</span><span class="pc">${esc(op.confidence??'—')}%</span><span class="pnote">${esc(op.note||'')}</span>${trend}</div>`:'';
   const probChanged=!!probabilityMovement(m);

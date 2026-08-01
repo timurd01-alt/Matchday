@@ -28,6 +28,17 @@ published one in this codebase; the reserve-based approach works without it).
 A provider not listed in PROVIDER_SPECS, or a caller that never passes
 `provider=`, is completely untracked -- existing behavior for anything this
 module doesn't yet know how to read.
+
+The reserve alone only guarantees a provider never actually hits zero -- it
+says nothing about WHEN in the period that happens. A provider that front-
+loads its whole budget in the first few days (exactly how The Odds API got
+to zero well before 2026-07-31's billing period ended) would sail past every
+check() until the reserve floor, then go dark for the rest of the period.
+Where a real numeric ceiling is derivable (The Odds API's remaining+used
+pair; see `limit` in _record_one), _pace_reason() adds a second check: refuse
+once usage is running meaningfully ahead of an even day-by-day drawdown of
+that ceiling, so a hot streak gets throttled while it's happening instead of
+only once nothing is left.
 """
 from __future__ import annotations
 
@@ -227,6 +238,67 @@ def record_response(provider, headers, body=None, state_path=STATE_FILE):
     _save_state(state, state_path)
 
 
+def _period_end(window, period_start):
+    if window == "calendar_month":
+        if period_start.month == 12:
+            return period_start.replace(year=period_start.year + 1, month=1)
+        return period_start.replace(month=period_start.month + 1)
+    if window == "calendar_day":
+        return period_start + datetime.timedelta(days=1)
+    return None
+
+
+# How far ahead of an even day-by-day drawdown of the period's budget a
+# provider is allowed to run before pacing refuses further calls -- e.g. 1.15
+# lets a provider that's used 40% of its budget 20% of the way through the
+# period keep going (a real, plausible burst: a busy multi-sport day), while
+# one that's used 90% after 20% of the period (confirmed live 2026-07-31 for
+# The Odds API, spent to zero long before the month was out) gets refused
+# well before the hard RESERVE floor at the very end would have caught it.
+PACE_SLACK = 1.15
+
+
+def _pace_reason(key, spec, entry, now):
+    """None if usage is roughly on track to last the rest of the period, else
+    a refusal reason. Only engages when a real numeric ceiling is known (the
+    `limit` derived from a provider's own remaining/used headers -- see
+    _record_one) -- CFBD/CBBD publish no such number, so this silently never
+    applies to them, same as every other check in this module: only ever
+    tightens behavior once real data says to, never guesses one up.
+
+    Scoped to calendar_month only, not calendar_day: API-Football's day
+    bucket (the only other spec with a derivable `limit`) legitimately gets
+    used in bursts within a single day by design (a batch stats/lineups
+    pass), and that bucket already resets in hours, not weeks -- there's
+    little for within-day pacing to protect against that the existing
+    per-day reserve doesn't already cover, and it would make "how far
+    through today are we" -- a time-of-day-dependent quantity -- part of
+    whether a call is allowed, which is a sharper edge than this feature is
+    meant to add."""
+    limit = entry.get("limit")
+    if not limit or spec["window"] != "calendar_month":
+        return None
+    period_start_raw = entry.get("period_start")
+    if not period_start_raw:
+        return None
+    try:
+        period_start = datetime.datetime.fromisoformat(period_start_raw)
+    except ValueError:
+        return None
+    period_end = _period_end(spec["window"], period_start)
+    total_seconds = (period_end - period_start).total_seconds()
+    if total_seconds <= 0:
+        return None
+    elapsed_fraction = max(0.0, min(1.0, (now - period_start).total_seconds() / total_seconds))
+    allowed_used = limit * elapsed_fraction * PACE_SLACK
+    used = limit - entry["remaining"]
+    if used > allowed_used:
+        return (f"{key}: {used}/{limit} used, ahead of the pace needed to last "
+                f"the rest of the {spec['window'].split('_')[1]} "
+                f"({allowed_used:.0f} allowed by now; observed {entry.get('observed_at', '?')})")
+    return None
+
+
 def _resets_since(entry, spec, now):
     """True if the tracked window has rolled over since the last observation,
     meaning a stale low/zero remaining count should no longer block calls."""
@@ -259,7 +331,7 @@ def _check_one(state, key, spec, now):
     if entry["remaining"] <= spec["reserve"]:
         return (f"{key}: {entry['remaining']} remaining, at or below the "
                 f"{spec['reserve']}-call safety reserve (observed {entry.get('observed_at', '?')})")
-    return None
+    return _pace_reason(key, spec, entry, now)
 
 
 def check(provider, state_path=STATE_FILE):
