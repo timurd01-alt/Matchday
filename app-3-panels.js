@@ -332,7 +332,7 @@ function bracketColumn(title,matches,side,official,connect=true){
 
 
 /* ===== UI PATCH: pitch lineups, flags, and richer odds board; UI only ===== */
-function uiFlag(code){if(!['WC','UCL','EPL','LALIGA','SERIEA','BUNDESLIGA','LIGUE1'].includes(String(DATA?.comp_key||'')))return'';try{return flagEmoji(code||'')||''}catch(e){return''}}
+function uiFlag(code){if(String(DATA?.comp_key||'')!=='WC')return'';try{return flagEmoji(code||'')||''}catch(e){return''}}
 function uiTeamFlag(team){return uiFlag(team?.code||codeForTeam(team?.name||'',team?.code||''))}
 function teamFlagHTML(team,away=false){const fl=uiTeamFlag(team);return fl?`<span class="flagIcon ${away?'away':''}">${fl}</span>`:''}
 function shortPlayerName(name){const s=String(name||'').trim();if(!s)return'';const parts=s.split(/\s+/).filter(Boolean);return parts.length>1?parts[parts.length-1]:s}
