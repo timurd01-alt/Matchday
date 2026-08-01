@@ -53,6 +53,22 @@ class QuotaExceededError(RuntimeError):
 
 STATE_FILE = "provider_quota_state.json"
 
+# A provider's tracked remaining budget can be low without this run ever
+# having asked it for anything -- that alone doesn't mean output degraded
+# just now. This instead records providers that were ACTUALLY refused a call
+# during the current build(), so the payload can tell users "some data is
+# limited this run" rather than only a stale "last updated" timestamp, which
+# stays fresh even when every call to a quota-exhausted provider silently
+# fails and falls back to "no data" (see CLAUDE.md's 2026-07-31 incident).
+BLOCKED_THIS_RUN = []
+
+
+def record_block(provider):
+    """Call when `check()` refused a call this run, from the same except
+    block that catches QuotaExceededError at each adapter's HTTP getter."""
+    if provider not in BLOCKED_THIS_RUN:
+        BLOCKED_THIS_RUN.append(provider)
+
 # --- per-provider header maps -------------------------------------------
 # Every mapping below was read directly off a live response on 2026-07-31,
 # not guessed from documentation (CFBD/CBBD in particular publish no rate
@@ -322,6 +338,24 @@ def _resets_since(entry, spec, now):
     return False
 
 
+
+# Confirmed 2026-08-01: CFBD and The Odds API both still reported 0
+# remaining several hours into the new UTC month (04:37), then had
+# genuinely reset by early afternoon -- their real billing-cycle rollover
+# doesn't land exactly on the 00:00:00 UTC boundary this module assumes.
+# record_response() stamps period_start onto the ledger the instant a
+# provider is observed in the new period, even if that first observation
+# still carries the previous period's near-zero count. Once that happens,
+# _resets_since() sees the ledger's period_start already matching the
+# current one and stops treating the count as stale, so check() blocks
+# every further call for the rest of the period -- and since a blocked
+# call never fires, record_response() never gets another real response to
+# refresh the ledger with. Without a bounded re-probe, a provider whose
+# reset merely lags our assumed boundary by a few hours would otherwise
+# read as exhausted for the remaining ~30 days of the period.
+PROBE_COOLDOWN_HOURS = 6
+
+
 def _check_one(state, key, spec, now):
     entry = state.get(key)
     if not entry or entry.get("remaining") is None:
@@ -329,6 +363,14 @@ def _check_one(state, key, spec, now):
     if _resets_since(entry, spec, now):
         return None  # window has rolled over; the stale count no longer applies
     if entry["remaining"] <= spec["reserve"]:
+        observed_at = entry.get("observed_at")
+        if observed_at:
+            try:
+                last = datetime.datetime.fromisoformat(observed_at)
+                if now - last >= datetime.timedelta(hours=PROBE_COOLDOWN_HOURS):
+                    return None  # let one real call through to re-observe the true count
+            except ValueError:
+                pass
         return (f"{key}: {entry['remaining']} remaining, at or below the "
                 f"{spec['reserve']}-call safety reserve (observed {entry.get('observed_at', '?')})")
     return _pace_reason(key, spec, entry, now)

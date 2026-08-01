@@ -1,5 +1,20 @@
 [
  {
+  "id": "hypothetical-bills-lions-2026-08-01",
+  "comp": "nfl",
+  "comp_label": "NFL · Hypothetical Matchup",
+  "type": "simulation",
+  "slug": "hypothetical-bills-lions-2026-08-01",
+  "title": "Hypothetical Matchup: Bills vs. Lions, Under a Closed Roof",
+  "date": "2026-08-01",
+  "summary": "A transparent neutral-site simulation of two 2025 team profiles — clearly not a forecast or real fixture.",
+  "body": [
+   "A fictional neutral-site game between the 2025 Buffalo Bills and Detroit Lions profiles produces a 55.1% to 44.9% simulated split.",
+   "The scenario freezes 2025 team-era inputs, uses equal rest and a roofed neutral venue, and makes no present-day roster, injury, market, or fixture claim.",
+   "Sensitivity cases show that home field or small changes to the passing and explosive-play assumptions can reverse or sharply narrow the result."
+  ]
+ },
+ {
   "id": "wednesday-availability-tracker-2026-07-29",
   "comp": "all",
   "comp_label": "Availability Desk",

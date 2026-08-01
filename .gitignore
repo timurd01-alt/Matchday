@@ -35,6 +35,12 @@ provider_quota_state.json
 posts.json
 posts_state.json
 posts/*.html
+# research_posts.json (and posts/research-*.html, already caught by
+# posts/*.html above) are rebuilt deterministically by
+# build_research_posts.py from docs/experiments.json + picks_log_*.json on
+# every regenerate_sitemap() call -- same "CI-owned, don't commit from a
+# feature branch" reasoning as posts.json.
+research_posts.json
 _site/
 node_modules/
 forecast_ledger_*.jsonl

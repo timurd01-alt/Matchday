@@ -241,7 +241,7 @@ function cardHTML(m,opts){
   const displayStatus=stale?'PAST / REFRESH':pending?'AWAITING FINAL':m.status;
   const statusClass=stale?'PAST_REFRESH':pending?'RESULT_PENDING':m.status;
   const x=(m.markets&&m.markets['1x2'])||{};const hfl=teamFlagHTML(m.home),afl=teamFlagHTML(m.away,true);
-  const probTop=x.home_pct!=null?`<div class="prob"><div class="problbl"><span>${esc(m.home.code||m.home.name)}</span><span>Market read</span><span>${esc(m.away.code||m.away.name)}</span></div>${bar1x2(x.home_pct,_isTwoWay(m)?null:x.draw_pct,x.away_pct)}</div>`:`<div class="prob"><div class="nomk">No market snapshot yet</div></div>`;
+  const probTop=x.home_pct!=null?`<div class="prob"><div class="problbl"><span>${esc(m.home.code||m.home.name)}</span><span>Market read</span><span>${esc(m.away.code||m.away.name)}</span></div>${bar1x2(x.home_pct,_isTwoWay(m)?null:x.draw_pct,x.away_pct)}</div>`:`<div class="prob"><div class="nomk">${esc(oddsEtaLabel(m)||'No market snapshot yet')}</div></div>`;
   const pr=m.prediction;const op=pr?_v10OfficialPick(m):null;const edge=op?_v10OfficialEdge(m,op):null;const trend=probabilitySparkline(m);
   const pick=(!opts.hidePick&&op)?`<div class="pick ${edge!=null&&Math.abs(edge)>=6?'edge':''} ${op.blocked?'gate':''}"><span class="pl">Pick</span><span class="pn">${esc(op.name)}</span><span class="pc">${esc(op.confidence??'—')}%</span><span class="pnote">${esc(op.note||'')}</span>${trend}</div>`:'';
   const probChanged=!!probabilityMovement(m);
@@ -627,6 +627,22 @@ function _v15MatchProfile(m,op){
   ].join('');
   return `<div class="analystBox matchProfileCard"><div class="analystBoxTitle">Match profile</div><div class="profileKpis">${kpis}</div><div class="profileCompareHead"><b>${esc(m?.home?.code||m?.home?.name||'Home')}</b><span>team comparison</span><b>${esc(m?.away?.code||m?.away?.name||'Away')}</b></div><div class="profileCompareRows">${rows}</div></div>`;
 }
+function neutralVenuePanel(m){
+  // pr.neutral_venue_probs is a real second predict() run with the home-
+  // advantage term zeroed (fetch_data.py), not a client-side estimate --
+  // only present on matches that haven't finished, and dropped entirely
+  // once a pick locks (apply_locked_picks() replaces the whole prediction
+  // object), so this can never imply the official, locked forecast changed.
+  const pr=m?.prediction;
+  if(!pr||!pr.neutral_venue_probs)return'';
+  const side=pr.regulation_pick||pr.pick;
+  const probs=pr.adjusted||pr.blend||{};
+  const cur=Number(probs[side]),neu=Number(pr.neutral_venue_probs[side]);
+  if(!Number.isFinite(cur)||!Number.isFinite(neu))return'';
+  const delta=Math.round(neu)-Math.round(cur);
+  const pickName=esc(_v4PickSideLabel(m,side));
+  return `<div class="analystBox neutralVenueBox"><div class="analystBoxTitle">Neutral venue <span class="hypotheticalTag">hypothetical, not the official forecast</span></div><div class="neutralVenueRow"><span>Current (home field)</span><b>${pickName} ${Math.round(cur)}%</b></div><div class="neutralVenueRow"><span>If this were a neutral site</span><b>${pickName} ${Math.round(neu)}%</b></div><div class="neutralVenueDelta ${delta<0?'down':delta>0?'up':''}">${delta===0?'No change — home field isn’t moving this pick':`${delta>0?'+':''}${delta} point${Math.abs(delta)===1?'':'s'} from removing home advantage`}</div></div>`;
+}
 function modelBlock(m){
   const pr=m?.prediction;
   if(!pr)return '<section class="analystPanel"><div class="analystTop"><div class="analystTitle">Model read</div></div><div class="emptyForecast">No model pick yet.</div></section>';
@@ -635,7 +651,7 @@ function modelBlock(m){
   const summary=edgeBreakdown(m)||`${op.name} is the official model side${op.confidence!=null?` at ${op.confidence}%`:''}.`;
   const base=op.blocked?`<small>Raw upset trigger: ${esc(op.rawName)}</small>`:(pr.base_pick&&pr.base_pick!==op.side?`<small>Base favorite: ${esc(pr.base_pick_name||_v4PickSideLabel(m,pr.base_pick))}</small>`:'');
   const gate=op.blocked?`<div class="upsetGateNotice"><b>Upset watch only:</b> ${esc(op.candidateName)} was flagged by volatility, but ${esc(op.gateReason)}. The official pick remains ${esc(op.name)}.</div>`:'';
-  return `<section class="analystPanel"><div class="analystTop"><div class="analystTitle">Model read</div><div class="analystBadge ${op.blocked?'gate':''}">${op.blocked?'upset gate':'official probabilities'}</div></div><div class="analystHero"><div class="analystMain"><div class="analystLabel">Official pick</div><div class="analystPick">${esc(op.name)}</div><p class="analystNote">${esc(op.note)}</p>${gate}</div><div class="analystConfidence"><b>${esc(op.confidence??'—')}%</b><span>official probability</span><small>${esc(marketText)}</small>${base}</div></div><div class="analystGrid upsetGrid"><div class="modelReadColumn">${_v12OutcomeCard(m,op)}${_v15MatchProfile(m,op)}</div><div class="modelReadColumn">${_v6UpsetBox(m)}<div class="analystBox driversBox"><div class="analystBoxTitle">Main drivers</div><div class="factorRows">${_v4FactorRows(pr,m)}</div></div></div></div><p class="analystSummary">${esc(summary)}</p></section>`;
+  return `<section class="analystPanel"><div class="analystTop"><div class="analystTitle">Model read</div><div class="analystBadge ${op.blocked?'gate':''}">${op.blocked?'upset gate':'official probabilities'}</div></div><div class="analystHero"><div class="analystMain"><div class="analystLabel">Official pick</div><div class="analystPick">${esc(op.name)}</div><p class="analystNote">${esc(op.note)}</p>${gate}</div><div class="analystConfidence"><b>${esc(op.confidence??'—')}%</b><span>official probability</span><small>${esc(marketText)}</small>${base}</div></div><div class="analystGrid upsetGrid"><div class="modelReadColumn">${_v12OutcomeCard(m,op)}${_v15MatchProfile(m,op)}</div><div class="modelReadColumn">${_v6UpsetBox(m)}<div class="analystBox driversBox"><div class="analystBoxTitle">Main drivers</div><div class="factorRows">${_v4FactorRows(pr,m)}</div></div>${neutralVenuePanel(m)}</div></div><p class="analystSummary">${esc(summary)}</p></section>`;
 }
 
 const startupParams=new URLSearchParams(window.location.search);
