@@ -1792,7 +1792,7 @@ html{color-scheme:dark}
    on the rail's own edge and stays put when collapsed so it can be reopened. */
 .srOnly{position:absolute;width:1px;height:1px;margin:-1px;padding:0;border:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 .app{position:relative}
-.railToggle{position:absolute;z-index:14;top:60px;right:340px;display:grid;place-items:center;width:22px;height:44px;padding:0;border:1px solid var(--line2);border-right:0;border-radius:8px 0 0 8px;background:var(--panel2);color:var(--muted);cursor:pointer;transition:color .15s,border-color .15s,background .15s}
+.railToggle{position:absolute;z-index:14;top:50%;transform:translateY(-50%);right:340px;display:grid;place-items:center;width:22px;height:44px;padding:0;border:1px solid var(--line2);border-right:0;border-radius:8px 0 0 8px;background:var(--panel2);color:var(--muted);cursor:pointer;transition:color .15s,border-color .15s,background .15s}
 .railToggle:hover,.railToggle:focus-visible{color:var(--signal);border-color:var(--signal);background:var(--panel)}
 .railToggle svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .18s}
 .app.noinsight .railToggle{right:0;border-radius:8px 0 0 8px}
