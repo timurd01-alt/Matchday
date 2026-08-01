@@ -271,7 +271,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-31T22:35:48.954223Z",
+   "observed_at": "2026-08-01T00:15:21.323922Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -567,7 +567,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-31T22:35:48.954253Z",
+   "observed_at": "2026-08-01T00:15:21.323947Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -856,7 +856,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-31T22:35:48.954278Z",
+   "observed_at": "2026-08-01T00:15:21.323967Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -1145,7 +1145,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-31T22:35:48.954301Z",
+   "observed_at": "2026-08-01T00:15:21.323986Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -1432,7 +1432,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-31T22:35:48.954324Z",
+   "observed_at": "2026-08-01T00:15:21.324005Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -1992,7 +1992,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-31T22:35:48.954346Z",
+   "observed_at": "2026-08-01T00:15:21.324023Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -2281,7 +2281,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-31T22:35:48.954367Z",
+   "observed_at": "2026-08-01T00:15:21.324041Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -2570,7 +2570,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-31T22:35:48.954389Z",
+   "observed_at": "2026-08-01T00:15:21.324059Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -2859,7 +2859,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-31T22:35:48.954411Z",
+   "observed_at": "2026-08-01T00:15:21.324077Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -3146,7 +3146,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-31T22:35:48.954432Z",
+   "observed_at": "2026-08-01T00:15:21.324094Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -3433,7 +3433,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-31T22:35:48.954452Z",
+   "observed_at": "2026-08-01T00:15:21.324111Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -3715,7 +3715,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-31T22:35:48.954473Z",
+   "observed_at": "2026-08-01T00:15:21.324128Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -3996,7 +3996,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-31T22:35:48.954511Z",
+   "observed_at": "2026-08-01T00:15:21.324146Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -4278,7 +4278,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-31T22:35:48.954539Z",
+   "observed_at": "2026-08-01T00:15:21.324163Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -4560,7 +4560,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-31T22:35:48.954561Z",
+   "observed_at": "2026-08-01T00:15:21.324180Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -4841,7 +4841,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-31T22:35:48.954583Z",
+   "observed_at": "2026-08-01T00:15:21.324197Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -5123,7 +5123,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-31T22:35:48.954603Z",
+   "observed_at": "2026-08-01T00:15:21.324214Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -5669,7 +5669,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-31T22:35:48.954624Z",
+   "observed_at": "2026-08-01T00:15:21.324231Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -5951,7 +5951,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-31T22:35:48.954645Z",
+   "observed_at": "2026-08-01T00:15:21.324248Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -6233,7 +6233,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-31T22:35:48.954665Z",
+   "observed_at": "2026-08-01T00:15:21.324265Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -6515,7 +6515,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-31T22:35:48.954685Z",
+   "observed_at": "2026-08-01T00:15:21.324283Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -6795,7 +6795,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-31T22:35:48.954705Z",
+   "observed_at": "2026-08-01T00:15:21.324300Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -7077,7 +7077,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-31T22:35:48.954726Z",
+   "observed_at": "2026-08-01T00:15:21.324317Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -7359,7 +7359,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-31T22:35:48.954746Z",
+   "observed_at": "2026-08-01T00:15:21.324334Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -7641,7 +7641,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-31T22:35:48.954766Z",
+   "observed_at": "2026-08-01T00:15:21.324351Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -7922,7 +7922,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-31T22:35:48.954787Z",
+   "observed_at": "2026-08-01T00:15:21.324369Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -8215,7 +8215,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-31T22:35:48.954807Z",
+   "observed_at": "2026-08-01T00:15:21.324386Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -8508,7 +8508,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-31T22:35:48.954827Z",
+   "observed_at": "2026-08-01T00:15:21.324404Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -8799,7 +8799,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-31T22:35:48.954847Z",
+   "observed_at": "2026-08-01T00:15:21.324421Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -9092,7 +9092,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-31T22:35:48.954868Z",
+   "observed_at": "2026-08-01T00:15:21.324438Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -9385,7 +9385,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-31T22:35:48.954888Z",
+   "observed_at": "2026-08-01T00:15:21.324455Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -9676,7 +9676,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-31T22:35:48.954909Z",
+   "observed_at": "2026-08-01T00:15:21.324472Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -9969,7 +9969,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-31T22:35:48.954930Z",
+   "observed_at": "2026-08-01T00:15:21.324490Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -10262,7 +10262,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-31T22:35:48.954950Z",
+   "observed_at": "2026-08-01T00:15:21.324507Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -10555,7 +10555,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-31T22:35:48.954970Z",
+   "observed_at": "2026-08-01T00:15:21.324524Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -10848,7 +10848,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-31T22:35:48.954989Z",
+   "observed_at": "2026-08-01T00:15:21.324541Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -11141,7 +11141,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-31T22:35:48.955009Z",
+   "observed_at": "2026-08-01T00:15:21.324559Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -11434,7 +11434,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-31T22:35:48.955029Z",
+   "observed_at": "2026-08-01T00:15:21.324575Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -11725,7 +11725,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-31T22:35:48.955048Z",
+   "observed_at": "2026-08-01T00:15:21.324592Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -12018,7 +12018,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-31T22:35:48.955068Z",
+   "observed_at": "2026-08-01T00:15:21.324610Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -12309,7 +12309,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-31T22:35:48.955088Z",
+   "observed_at": "2026-08-01T00:15:21.324626Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -12602,7 +12602,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-31T22:35:48.955108Z",
+   "observed_at": "2026-08-01T00:15:21.324643Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -13035,7 +13035,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-31T22:35:48.955128Z",
+   "observed_at": "2026-08-01T00:15:21.324661Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -13470,7 +13470,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-31T22:35:48.955148Z",
+   "observed_at": "2026-08-01T00:15:21.324694Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -13905,7 +13905,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-31T22:35:48.955167Z",
+   "observed_at": "2026-08-01T00:15:21.324711Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -14340,7 +14340,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-31T22:35:48.955187Z",
+   "observed_at": "2026-08-01T00:15:21.324729Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -14775,7 +14775,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-31T22:35:48.955207Z",
+   "observed_at": "2026-08-01T00:15:21.324746Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -15208,7 +15208,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-31T22:35:48.955227Z",
+   "observed_at": "2026-08-01T00:15:21.324763Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -15643,7 +15643,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-31T22:35:48.955246Z",
+   "observed_at": "2026-08-01T00:15:21.324781Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -16078,7 +16078,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-31T22:35:48.955266Z",
+   "observed_at": "2026-08-01T00:15:21.324798Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -16511,7 +16511,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-31T22:35:48.955286Z",
+   "observed_at": "2026-08-01T00:15:21.324815Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -16944,7 +16944,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-07-31T22:35:48.955306Z",
+   "observed_at": "2026-08-01T00:15:21.324832Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -17377,7 +17377,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-07-31T22:35:48.955326Z",
+   "observed_at": "2026-08-01T00:15:21.324849Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -20327,13 +20327,13 @@
   "regulation_pick": "h",
   "outcome_basis": "regulation",
   "market_basis": "regulation_1x2",
-  "market_pick": null,
-  "market_pct": null,
-  "pick_mkt": null,
-  "value_side": null,
-  "value_edge": null,
-  "value_mkt": null,
-  "value_name": null,
+  "market_pick": "a",
+  "market_pct": 54,
+  "pick_mkt": 46,
+  "value_side": "h",
+  "value_edge": 15,
+  "value_mkt": 46,
+  "value_name": "Houston Astros",
   "upset_candidate": "a",
   "upset_name": "Texas Rangers",
   "upset_score": 43,
@@ -20715,7 +20715,13 @@
   },
   "result": null,
   "model_result": null,
-  "market_result": null
+  "market_result": null,
+  "post_lock_market_snapshot": {
+   "h": 46,
+   "d": 0,
+   "a": 54
+  },
+  "market_backfilled_at": "2026-08-01T00:15:21.323254Z"
  },
  "bdl-mlb-5059425": {
   "schema_ver": 2,
@@ -20745,9 +20751,9 @@
   "regulation_pick": "a",
   "outcome_basis": "regulation",
   "market_basis": "regulation_1x2",
-  "market_pick": null,
-  "market_pct": null,
-  "pick_mkt": null,
+  "market_pick": "h",
+  "market_pct": 52,
+  "pick_mkt": 48,
   "value_side": null,
   "value_edge": null,
   "value_mkt": null,
@@ -21131,7 +21137,13 @@
   },
   "result": null,
   "model_result": null,
-  "market_result": null
+  "market_result": null,
+  "post_lock_market_snapshot": {
+   "h": 52,
+   "d": 0,
+   "a": 48
+  },
+  "market_backfilled_at": "2026-08-01T00:15:21.323273Z"
  },
  "bdl-mlb-5059426": {
   "schema_ver": 2,
@@ -21161,13 +21173,13 @@
   "regulation_pick": "a",
   "outcome_basis": "regulation",
   "market_basis": "regulation_1x2",
-  "market_pick": null,
-  "market_pct": null,
-  "pick_mkt": null,
-  "value_side": null,
-  "value_edge": null,
-  "value_mkt": null,
-  "value_name": null,
+  "market_pick": "a",
+  "market_pct": 53,
+  "pick_mkt": 53,
+  "value_side": "a",
+  "value_edge": 28,
+  "value_mkt": 53,
+  "value_name": "Milwaukee Brewers",
   "upset_candidate": "h",
   "upset_name": "Los Angeles Angels",
   "upset_score": 10,
@@ -21546,7 +21558,13 @@
   },
   "result": null,
   "model_result": null,
-  "market_result": null
+  "market_result": null,
+  "post_lock_market_snapshot": {
+   "h": 47,
+   "d": 0,
+   "a": 53
+  },
+  "market_backfilled_at": "2026-08-01T00:15:21.323289Z"
  },
  "bdl-mlb-5059427": {
   "schema_ver": 2,
@@ -21576,13 +21594,13 @@
   "regulation_pick": "a",
   "outcome_basis": "regulation",
   "market_basis": "regulation_1x2",
-  "market_pick": null,
-  "market_pct": null,
-  "pick_mkt": null,
-  "value_side": null,
-  "value_edge": null,
-  "value_mkt": null,
-  "value_name": null,
+  "market_pick": "a",
+  "market_pct": 55,
+  "pick_mkt": 55,
+  "value_side": "a",
+  "value_edge": 19,
+  "value_mkt": 55,
+  "value_name": "Detroit Tigers",
   "upset_candidate": "h",
   "upset_name": "Oakland Athletics",
   "upset_score": 19,
@@ -21964,7 +21982,13 @@
   },
   "result": null,
   "model_result": null,
-  "market_result": null
+  "market_result": null,
+  "post_lock_market_snapshot": {
+   "h": 45,
+   "d": 0,
+   "a": 55
+  },
+  "market_backfilled_at": "2026-08-01T00:15:21.323303Z"
  },
  "bdl-mlb-5059428": {
   "schema_ver": 2,
@@ -21994,13 +22018,13 @@
   "regulation_pick": "h",
   "outcome_basis": "regulation",
   "market_basis": "regulation_1x2",
-  "market_pick": null,
-  "market_pct": null,
-  "pick_mkt": null,
-  "value_side": null,
-  "value_edge": null,
-  "value_mkt": null,
-  "value_name": null,
+  "market_pick": "h",
+  "market_pct": 58,
+  "pick_mkt": 58,
+  "value_side": "h",
+  "value_edge": 16,
+  "value_mkt": 58,
+  "value_name": "San Diego Padres",
   "upset_candidate": "a",
   "upset_name": "San Francisco Giants",
   "upset_score": 19,
@@ -22381,7 +22405,13 @@
   },
   "result": null,
   "model_result": null,
-  "market_result": null
+  "market_result": null,
+  "post_lock_market_snapshot": {
+   "h": 58,
+   "d": 0,
+   "a": 42
+  },
+  "market_backfilled_at": "2026-08-01T00:15:21.323315Z"
  },
  "bdl-mlb-5059429": {
   "schema_ver": 2,
@@ -22411,13 +22441,13 @@
   "regulation_pick": "h",
   "outcome_basis": "regulation",
   "market_basis": "regulation_1x2",
-  "market_pick": null,
-  "market_pct": null,
-  "pick_mkt": null,
-  "value_side": null,
-  "value_edge": null,
-  "value_mkt": null,
-  "value_name": null,
+  "market_pick": "h",
+  "market_pct": 59,
+  "pick_mkt": 59,
+  "value_side": "a",
+  "value_edge": 6,
+  "value_mkt": 41,
+  "value_name": "Boston Red Sox",
   "upset_candidate": "a",
   "upset_name": "Boston Red Sox",
   "upset_score": 70,
@@ -22796,7 +22826,13 @@
   },
   "result": null,
   "model_result": null,
-  "market_result": null
+  "market_result": null,
+  "post_lock_market_snapshot": {
+   "h": 59,
+   "d": 0,
+   "a": 41
+  },
+  "market_backfilled_at": "2026-08-01T00:15:21.323326Z"
  },
  "bdl-mlb-5059430": {
   "schema_ver": 2,
@@ -22826,13 +22862,13 @@
   "regulation_pick": "a",
   "outcome_basis": "regulation",
   "market_basis": "regulation_1x2",
-  "market_pick": null,
-  "market_pct": null,
-  "pick_mkt": null,
-  "value_side": null,
-  "value_edge": null,
-  "value_mkt": null,
-  "value_name": null,
+  "market_pick": "h",
+  "market_pct": 60,
+  "pick_mkt": 40,
+  "value_side": "a",
+  "value_edge": 12,
+  "value_mkt": 40,
+  "value_name": "Minnesota Twins",
   "upset_candidate": "h",
   "upset_name": "Seattle Mariners",
   "upset_score": 66,
@@ -23213,6 +23249,12 @@
   },
   "result": null,
   "model_result": null,
-  "market_result": null
+  "market_result": null,
+  "post_lock_market_snapshot": {
+   "h": 60,
+   "d": 0,
+   "a": 40
+  },
+  "market_backfilled_at": "2026-08-01T00:15:21.323337Z"
  }
 }
