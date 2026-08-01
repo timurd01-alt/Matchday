@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0801A",
+  "tag": "New",
+  "title": "Repositioned around being independent and built for fans, with a real responsible-gambling section",
+  "items": [
+   "The site led with a defensive 'analytics only, not betting advice' disclaimer everywhere -- the welcome screen, the in-app status strip, the Legal and Q&A pages, the tactics guides. That's still true, but it's not the point: Matchday has no bookmaker relationship, no tout service, and no stake in what anyone decides to do with the information, so it's built to be used however works for a given fan -- settling an argument, tracking a team, following the model's own graded track record, or just enjoying the numbers.",
+   "The Legal page's Terms section now leads with that instead of the disclaimer, and gained its own Responsible gambling section (previously one buried sentence) with real support resources: the US National Problem Gambling Helpline, Gamblers Anonymous, the UK's GamCare and BeGambleAware, and pointers for other jurisdictions. The Q&A page picked up a matching FAQ entry and links to it.",
+   "The short badge shown across the welcome screen, the in-app status strip (all five languages), the Legal/Q&A pages, and the five tactics guides now reads 'Independent · built for fans' instead of the old disclaimer-first framing."
+  ]
+ },
+ {
   "date": "Build 0731B",
   "tag": "Fix",
   "title": "Odds tracker no longer shows a draw row for sports that can't draw",

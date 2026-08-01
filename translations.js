@@ -11,7 +11,7 @@ es: {
 "Through":"Clasificado","Eliminated":"Eliminado","Through as 3rd":"Clasificado como 3.º","Win to go through":"Gana y clasifica","In contention":"En la pelea","In 3rd-place race":"En la lucha de terceros",
 "Substitutions":"Sustituciones","Absences":"Bajas","Head-to-head":"Cara a cara","Position":"Posición","Points":"Puntos","Goal diff":"Dif. de goles","Last 5":"Últimos 5","Team":"Equipo","Form":"Forma",
 "Box-score stats appear once the match kicks off.":"Las estadísticas del partido aparecen cuando comienza el encuentro.",
-"analytics only, not betting advice":"solo análisis, no es consejo de apuestas",
+"independent · built for fans":"independiente · pensado para la afición",
 "Knockout bracket":"Cuadro eliminatorio","Best third-placed race · top 8 advance":"Mejores terceros · avanzan 8","Final":"Final","Semi-finals":"Semifinales","Quarter-finals":"Cuartos de final","Round of 16":"Octavos de final","Round of 32":"Dieciseisavos","Third-place playoff":"Tercer puesto","Champion":"Campeón","Win":"Título"
 },
 fr: {
@@ -23,7 +23,7 @@ fr: {
 "Through":"Qualifié","Eliminated":"Éliminé","Through as 3rd":"Qualifié comme 3e","Win to go through":"Gagner pour se qualifier","In contention":"En course","In 3rd-place race":"Dans la course des 3es",
 "Substitutions":"Remplacements","Absences":"Absents","Head-to-head":"Confrontations","Position":"Position","Points":"Points","Goal diff":"Diff. de buts","Last 5":"5 derniers","Team":"Équipe","Form":"Forme",
 "Box-score stats appear once the match kicks off.":"Les statistiques du match apparaissent après le coup d'envoi.",
-"analytics only, not betting advice":"analyse uniquement, pas un conseil de pari",
+"independent · built for fans":"indépendant · fait pour les fans",
 "Knockout bracket":"Tableau final","Best third-placed race · top 8 advance":"Meilleurs troisièmes · 8 qualifiés","Final":"Finale","Semi-finals":"Demi-finales","Quarter-finals":"Quarts de finale","Round of 16":"Huitièmes de finale","Round of 32":"Seizièmes","Third-place playoff":"Petite finale","Champion":"Champion","Win":"Titre"
 },
 de: {
@@ -35,7 +35,7 @@ de: {
 "Through":"Weiter","Eliminated":"Ausgeschieden","Through as 3rd":"Als Dritter weiter","Win to go through":"Sieg zum Weiterkommen","In contention":"Im Rennen","In 3rd-place race":"Im Rennen der Dritten",
 "Substitutions":"Wechsel","Absences":"Ausfälle","Head-to-head":"Direkter Vergleich","Position":"Platz","Points":"Punkte","Goal diff":"Tordifferenz","Last 5":"Letzte 5","Team":"Team","Form":"Form",
 "Box-score stats appear once the match kicks off.":"Spielstatistiken erscheinen nach dem Anpfiff.",
-"analytics only, not betting advice":"nur Analyse, keine Wettempfehlung",
+"independent · built for fans":"unabhängig · für Fans gemacht",
 "Knockout bracket":"K.-o.-Runde","Best third-placed race · top 8 advance":"Beste Gruppendritte · 8 kommen weiter","Final":"Finale","Semi-finals":"Halbfinale","Quarter-finals":"Viertelfinale","Round of 16":"Achtelfinale","Round of 32":"Sechzehntelfinale","Third-place playoff":"Spiel um Platz 3","Champion":"Sieger","Win":"Titel"
 },
 pt: {
@@ -47,7 +47,7 @@ pt: {
 "Through":"Classificado","Eliminated":"Eliminado","Through as 3rd":"Classificado como 3º","Win to go through":"Vença para avançar","In contention":"Na disputa","In 3rd-place race":"Na disputa dos terceiros",
 "Substitutions":"Substituições","Absences":"Desfalques","Head-to-head":"Confronto direto","Position":"Posição","Points":"Pontos","Goal diff":"Saldo de gols","Last 5":"Últimos 5","Team":"Equipe","Form":"Fase",
 "Box-score stats appear once the match kicks off.":"As estatísticas da partida aparecem após o pontapé inicial.",
-"analytics only, not betting advice":"apenas análise, não é recomendação de aposta",
+"independent · built for fans":"independente · feito para os fãs",
 "Knockout bracket":"Fase eliminatória","Best third-placed race · top 8 advance":"Melhores terceiros · 8 avançam","Final":"Final","Semi-finals":"Semifinais","Quarter-finals":"Quartas de final","Round of 16":"Oitavas de final","Round of 32":"Dezesseis avos","Third-place playoff":"Disputa de 3º lugar","Champion":"Campeão","Win":"Título"
 },
 ru: {
@@ -59,7 +59,7 @@ ru: {
 "Through":"Вышел","Eliminated":"Выбыл","Through as 3rd":"Вышел с 3-го места","Win to go through":"Победа выводит дальше","In contention":"В борьбе","In 3rd-place race":"В гонке третьих мест",
 "Substitutions":"Замены","Absences":"Потери","Head-to-head":"Очные встречи","Position":"Позиция","Points":"Очки","Goal diff":"Разница мячей","Last 5":"Последние 5","Team":"Команда","Form":"Форма",
 "Box-score stats appear once the match kicks off.":"Статистика матча появится после стартового свистка.",
-"analytics only, not betting advice":"только аналитика, не является советом по ставкам",
+"independent · built for fans":"независимо · создано для болельщиков",
 "Knockout bracket":"Сетка плей-офф","Best third-placed race · top 8 advance":"Лучшие третьи · проходят 8","Final":"Финал","Semi-finals":"Полуфиналы","Quarter-finals":"Четвертьфиналы","Round of 16":"1/8 финала","Round of 32":"1/16 финала","Third-place playoff":"Матч за 3-е место","Champion":"Чемпион","Win":"Титул"
 }
 };
