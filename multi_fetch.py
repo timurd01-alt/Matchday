@@ -40,6 +40,18 @@ SPACING = 30          # seconds between two sports' fetches (quota safety)
 # every soccer competition at once left EPL/UCL's data un-refreshed (their
 # fetch didn't complete) while other, non-soccer forced sports succeeded in
 # the same run.
+# NFL/NBA/MLB (EXPECTED_SOURCE below) all share one BALLDONTLIE key and its
+# real 5-req/min budget (see provider_quota.py's "balldontlie" spec, a
+# 60-second rolling window). They sit back-to-back in SPORTS with no other
+# fetch between nba and mlb, so the default 30s SPACING left the second
+# sport starting inside the first sport's still-active window -- confirmed
+# live 2026-08-01: MLB's real season-to-date record (season_games(), needed
+# for standings/Elo/the Match profile card) kept losing that shared budget
+# to whichever BALLDONTLIE sport ran just before it, so it silently fell
+# back to a ~3-week schedule window every single run and a team's shown
+# "record" never grew past a handful of games. Spacing BALLDONTLIE sports at
+# least a full window apart lets each one start against a fresh budget.
+BALLDONTLIE_SPACING = 65
 TICK = 15             # scheduler wake-up interval
 RETRY_AFTER_ERROR = 15 * 60
 ONCE_RETRIES = 2
@@ -61,6 +73,14 @@ PAST_DUE_SCORE_GRACE_HOURS = 8
 # never gets refreshed. Force a refetch whenever the on-disk file's actual
 # source doesn't match what the sport is currently configured to use.
 EXPECTED_SOURCE = {"nfl": "BALLDONTLIE", "nba": "BALLDONTLIE", "mlb": "BALLDONTLIE"}
+
+
+def _spacing_after(key):
+    """How long to wait before the next sport's fetch. Only the sport that
+    just ran matters -- if it just spent BALLDONTLIE's shared budget, give
+    that budget a full window to refill before anything else (BALLDONTLIE
+    included) starts drawing on it again."""
+    return BALLDONTLIE_SPACING if EXPECTED_SOURCE.get(key) == "BALLDONTLIE" else SPACING
 
 
 def _stale_source(key):
@@ -340,7 +360,7 @@ def loop():
                 next_due[key] = time.time() + iv
             else:
                 next_due[key] = time.time() + RETRY_AFTER_ERROR
-            time.sleep(SPACING)
+            time.sleep(_spacing_after(key))
             now = time.time()
         time.sleep(TICK)
 
@@ -395,7 +415,7 @@ def run_once(state_path=".ci_fetch_state.json"):
         elif key not in degraded:
             failed.append(key)
         if i < len(due) - 1:
-            time.sleep(SPACING)
+            time.sleep(_spacing_after(key))
     due_keys = {k for k, _ in due}
     skipped = [k for k, _ in SPORTS if k not in due_keys]
     if skipped:

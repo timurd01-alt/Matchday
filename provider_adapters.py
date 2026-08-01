@@ -1259,7 +1259,14 @@ class BallDontLieAdapter:
         dates = [(self.today + dt.timedelta(days=offset)).isoformat()
                  for offset in range(-back, forward + 1)]
         rows, cursor = [], None
-        for _ in range(4):
+        for page in range(4):
+            # Paced the same way season_games() already is: an unpaced burst
+            # of up to 4 rapid calls can by itself exhaust the free tier's
+            # entire 5-req/min budget, starving season_games() -- called
+            # right after this in fetch_balldontlie_bundle() -- of the
+            # budget it needs for the real season-to-date record.
+            if page:
+                time.sleep(self.SEASON_PAGE_DELAY_SEC)
             params = {"dates[]": dates, "per_page": 100, "cursor": cursor}
             payload = self._get(f"/{self.code}/v1/games", params)
             page = payload.get("data") if isinstance(payload, dict) else []

@@ -1,0 +1,11 @@
+{
+ "rank": 121,
+ "date": "Build 0801C",
+ "tag": "Fix",
+ "title": "MLB (and NFL/NBA) records now reflect the real season, not a ~3-week window",
+ "items": [
+  "NFL, NBA and MLB all share one BALLDONTLIE API key and its real 5-requests-per-minute budget. They sit back-to-back in the fetch queue, and the previous 30s gap between them wasn't enough for that shared budget to refill between sports, so the second/third sport's request for the real season-to-date record (needed for standings, Elo, and the expanded match view's Match profile card) kept losing to whichever sport ran just before it and silently fell back to a ~3-week schedule window instead -- a team's shown record and 'data sample' games count never grew past a handful of games all season.",
+  "Also fixed: the schedule fetch itself paged through up to 4 requests with no pacing between them, which alone could burn the entire shared budget before the season record fetch even got a turn. It's now paced the same way the season fetch already was.",
+  "Sports on BALLDONTLIE now get a full rate-limit window of spacing before the next fetch starts, so each one runs against a fresh budget instead of racing the sport before it."
+ ]
+}
