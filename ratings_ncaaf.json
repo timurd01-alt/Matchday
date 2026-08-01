@@ -1,228 +1,1774 @@
 {
- "_note": "Auto-refreshed each fetch from AP Top 25 — do not hand-edit ranks; they are overwritten. Unranked teams default to rank 40 in the model.",
- "Hoosiers": {
-  "fifa_rank": 1,
-  "squad_value_m": 0,
-  "star_value_m": 0
+ "abilene christian": {
+  "fifa_rank": 45,
+  "squad_value_m": 56,
+  "star_value_m": 7,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.2007
  },
- "Hurricanes": {
-  "fifa_rank": 2,
-  "squad_value_m": 0,
-  "star_value_m": 0
- },
- "Rebels": {
-  "fifa_rank": 3,
-  "squad_value_m": 0,
-  "star_value_m": 0
- },
- "Ducks": {
-  "fifa_rank": 4,
-  "squad_value_m": 0,
-  "star_value_m": 0
- },
- "Buckeyes": {
-  "fifa_rank": 5,
-  "squad_value_m": 0,
-  "star_value_m": 0
- },
- "Bulldogs": {
-  "fifa_rank": 6,
-  "squad_value_m": 0,
-  "star_value_m": 0
- },
- "Red Raiders": {
-  "fifa_rank": 7,
-  "squad_value_m": 0,
-  "star_value_m": 0
- },
- "Aggies": {
+ "aggies": {
   "fifa_rank": 8,
   "squad_value_m": 0,
   "star_value_m": 0
  },
- "Crimson Tide": {
-  "fifa_rank": 9,
-  "squad_value_m": 0,
-  "star_value_m": 0
- },
- "Fighting Irish": {
-  "fifa_rank": 10,
-  "squad_value_m": 0,
-  "star_value_m": 0
- },
- "Cougars": {
-  "fifa_rank": 22,
-  "squad_value_m": 0,
-  "star_value_m": 0
- },
- "Longhorns": {
-  "fifa_rank": 12,
-  "squad_value_m": 0,
-  "star_value_m": 0
- },
- "Sooners": {
-  "fifa_rank": 13,
-  "squad_value_m": 0,
-  "star_value_m": 0
- },
- "Utes": {
-  "fifa_rank": 14,
-  "squad_value_m": 0,
-  "star_value_m": 0
- },
- "Commodores": {
-  "fifa_rank": 15,
-  "squad_value_m": 0,
-  "star_value_m": 0
- },
- "Cavaliers": {
-  "fifa_rank": 16,
-  "squad_value_m": 0,
-  "star_value_m": 0
- },
- "Hawkeyes": {
-  "fifa_rank": 17,
-  "squad_value_m": 0,
-  "star_value_m": 0
- },
- "Green Wave": {
-  "fifa_rank": 18,
-  "squad_value_m": 0,
-  "star_value_m": 0
- },
- "Dukes": {
-  "fifa_rank": 19,
-  "squad_value_m": 0,
-  "star_value_m": 0
- },
- "Trojans": {
-  "fifa_rank": 20,
-  "squad_value_m": 0,
-  "star_value_m": 0
- },
- "boise state": {
+ "akron": {
   "fifa_rank": 45,
-  "squad_value_m": 1060,
-  "star_value_m": 141,
+  "squad_value_m": 535,
+  "star_value_m": 71,
   "talent_source": "cfbd_team_talent",
-  "talent_strength": 3.8833
+  "talent_strength": 1.9583
  },
- "florida state": {
-  "fifa_rank": 45,
-  "squad_value_m": 1312,
-  "star_value_m": 175,
-  "talent_source": "cfbd_team_talent",
-  "talent_strength": 4.8113
- },
- "georgia": {
+ "alabama": {
   "fifa_rank": 45,
   "squad_value_m": 1500,
   "star_value_m": 200,
   "talent_source": "cfbd_team_talent",
   "talent_strength": 5.5
  },
- "illinois": {
+ "alabama a m": {
   "fifa_rank": 45,
-  "squad_value_m": 1122,
+  "squad_value_m": 2,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0047
+ },
+ "alabama state": {
+  "fifa_rank": 45,
+  "squad_value_m": 8,
+  "star_value_m": 1,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0287
+ },
+ "alcorn state": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "app state": {
+  "fifa_rank": 45,
+  "squad_value_m": 896,
+  "star_value_m": 119,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 3.2807
+ },
+ "arizona": {
+  "fifa_rank": 45,
+  "squad_value_m": 1127,
   "star_value_m": 150,
   "talent_source": "cfbd_team_talent",
-  "talent_strength": 4.118
+  "talent_strength": 4.1297
+ },
+ "arizona state": {
+  "fifa_rank": 45,
+  "squad_value_m": 1191,
+  "star_value_m": 159,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.369
+ },
+ "arkansas": {
+  "fifa_rank": 45,
+  "squad_value_m": 1231,
+  "star_value_m": 164,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.5123
+ },
+ "arkansas pine bluff": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "arkansas state": {
+  "fifa_rank": 45,
+  "squad_value_m": 779,
+  "star_value_m": 104,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 2.8577
+ },
+ "army": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "auburn": {
+  "fifa_rank": 45,
+  "squad_value_m": 1311,
+  "star_value_m": 175,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.809
+ },
+ "austin peay": {
+  "fifa_rank": 45,
+  "squad_value_m": 1,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0023
+ },
+ "ball state": {
+  "fifa_rank": 45,
+  "squad_value_m": 328,
+  "star_value_m": 44,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 1.2053
+ },
+ "baylor": {
+  "fifa_rank": 45,
+  "squad_value_m": 1167,
+  "star_value_m": 156,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.283
+ },
+ "bethune cookman": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "boise state": {
+  "fifa_rank": 45,
+  "squad_value_m": 1042,
+  "star_value_m": 139,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 3.8213
+ },
+ "boston college": {
+  "fifa_rank": 45,
+  "squad_value_m": 1110,
+  "star_value_m": 148,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.07
+ },
+ "bowling green": {
+  "fifa_rank": 45,
+  "squad_value_m": 381,
+  "star_value_m": 51,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 1.399
+ },
+ "bryant": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "buckeyes": {
+  "fifa_rank": 5,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "bucknell": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "buffalo": {
+  "fifa_rank": 45,
+  "squad_value_m": 218,
+  "star_value_m": 29,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.7987
+ },
+ "bulldogs": {
+  "fifa_rank": 6,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "butler": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "byu": {
+  "fifa_rank": 45,
+  "squad_value_m": 1054,
+  "star_value_m": 141,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 3.8693
+ },
+ "cal poly": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "california": {
+  "fifa_rank": 45,
+  "squad_value_m": 1165,
+  "star_value_m": 155,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.2683
+ },
+ "campbell": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "cavaliers": {
+  "fifa_rank": 16,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "central arkansas": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "central connecticut": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "central michigan": {
+  "fifa_rank": 45,
+  "squad_value_m": 248,
+  "star_value_m": 33,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.9087
+ },
+ "charleston southern": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "charlotte": {
+  "fifa_rank": 45,
+  "squad_value_m": 957,
+  "star_value_m": 128,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 3.513
+ },
+ "chattanooga": {
+  "fifa_rank": 45,
+  "squad_value_m": 9,
+  "star_value_m": 1,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.031
+ },
+ "cincinnati": {
+  "fifa_rank": 45,
+  "squad_value_m": 1110,
+  "star_value_m": 148,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.07
+ },
+ "citadel": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "clemson": {
+  "fifa_rank": 45,
+  "squad_value_m": 1406,
+  "star_value_m": 188,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 5.1607
+ },
+ "coastal carolina": {
+  "fifa_rank": 45,
+  "squad_value_m": 849,
+  "star_value_m": 113,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 3.111
+ },
+ "colorado": {
+  "fifa_rank": 45,
+  "squad_value_m": 1206,
+  "star_value_m": 161,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.424
+ },
+ "colorado state": {
+  "fifa_rank": 45,
+  "squad_value_m": 574,
+  "star_value_m": 77,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 2.1093
+ },
+ "commodores": {
+  "fifa_rank": 15,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "cougars": {
+  "fifa_rank": 22,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "crimson tide": {
+  "fifa_rank": 9,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "delaware": {
+  "fifa_rank": 45,
+  "squad_value_m": 4,
+  "star_value_m": 1,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0193
+ },
+ "delaware state": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "drake": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "ducks": {
+  "fifa_rank": 4,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "duke": {
+  "fifa_rank": 45,
+  "squad_value_m": 1093,
+  "star_value_m": 146,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.0103
+ },
+ "dukes": {
+  "fifa_rank": 19,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "duquesne": {
+  "fifa_rank": 45,
+  "squad_value_m": 1,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0023
+ },
+ "east carolina": {
+  "fifa_rank": 45,
+  "squad_value_m": 1037,
+  "star_value_m": 138,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 3.7997
+ },
+ "east tennessee state": {
+  "fifa_rank": 45,
+  "squad_value_m": 1,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0023
+ },
+ "eastern illinois": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "eastern kentucky": {
+  "fifa_rank": 45,
+  "squad_value_m": 11,
+  "star_value_m": 1,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0357
+ },
+ "eastern michigan": {
+  "fifa_rank": 45,
+  "squad_value_m": 445,
+  "star_value_m": 59,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 1.6283
+ },
+ "eastern washington": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "elon": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "fighting irish": {
+  "fifa_rank": 10,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "florida": {
+  "fifa_rank": 45,
+  "squad_value_m": 1362,
+  "star_value_m": 182,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.998
+ },
+ "florida a m": {
+  "fifa_rank": 45,
+  "squad_value_m": 70,
+  "star_value_m": 9,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.2533
+ },
+ "florida atlantic": {
+  "fifa_rank": 45,
+  "squad_value_m": 1034,
+  "star_value_m": 138,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 3.7927
+ },
+ "florida international": {
+  "fifa_rank": 45,
+  "squad_value_m": 592,
+  "star_value_m": 79,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 2.1713
+ },
+ "florida state": {
+  "fifa_rank": 45,
+  "squad_value_m": 1302,
+  "star_value_m": 174,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.778
+ },
+ "fordham": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "fresno state": {
+  "fifa_rank": 45,
+  "squad_value_m": 911,
+  "star_value_m": 121,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 3.3357
+ },
+ "furman": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "gardner webb": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "georgia": {
+  "fifa_rank": 45,
+  "squad_value_m": 1486,
+  "star_value_m": 198,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 5.4473
+ },
+ "georgia southern": {
+  "fifa_rank": 45,
+  "squad_value_m": 534,
+  "star_value_m": 71,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 1.956
+ },
+ "georgia state": {
+  "fifa_rank": 45,
+  "squad_value_m": 832,
+  "star_value_m": 111,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 3.0513
+ },
+ "georgia tech": {
+  "fifa_rank": 45,
+  "squad_value_m": 1173,
+  "star_value_m": 156,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.297
+ },
+ "grambling": {
+  "fifa_rank": 45,
+  "squad_value_m": 2,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0047
+ },
+ "green wave": {
+  "fifa_rank": 18,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "hampton": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "hawai i": {
+  "fifa_rank": 45,
+  "squad_value_m": 373,
+  "star_value_m": 50,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 1.3703
+ },
+ "hawkeyes": {
+  "fifa_rank": 17,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "holy cross": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "hoosiers": {
+  "fifa_rank": 1,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "horned frogs": {
+  "fifa_rank": 25,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "houston": {
+  "fifa_rank": 45,
+  "squad_value_m": 1112,
+  "star_value_m": 148,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.0747
+ },
+ "houston christian": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "howard": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "hurricanes": {
+  "fifa_rank": 2,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "idaho": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "idaho state": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "illinois": {
+  "fifa_rank": 45,
+  "squad_value_m": 1101,
+  "star_value_m": 147,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.039
+ },
+ "illinois state": {
+  "fifa_rank": 45,
+  "squad_value_m": 1,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0023
+ },
+ "indiana": {
+  "fifa_rank": 45,
+  "squad_value_m": 1119,
+  "star_value_m": 149,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.101
+ },
+ "indiana state": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "iowa": {
+  "fifa_rank": 45,
+  "squad_value_m": 1171,
+  "star_value_m": 156,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.2923
+ },
+ "iowa state": {
+  "fifa_rank": 45,
+  "squad_value_m": 1095,
+  "star_value_m": 146,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.015
+ },
+ "jackson state": {
+  "fifa_rank": 45,
+  "squad_value_m": 103,
+  "star_value_m": 14,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.3803
+ },
+ "jacksonville": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "jacksonville state": {
+  "fifa_rank": 45,
+  "squad_value_m": 170,
+  "star_value_m": 23,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.6267
+ },
+ "james madison": {
+  "fifa_rank": 45,
+  "squad_value_m": 133,
+  "star_value_m": 18,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.4903
  },
  "kansas": {
   "fifa_rank": 45,
-  "squad_value_m": 1172,
-  "star_value_m": 156,
-  "talent_source": "cfbd_team_talent",
-  "talent_strength": 4.2947
- },
- "massachusetts": {
-  "fifa_rank": 45,
-  "squad_value_m": 468,
-  "star_value_m": 62,
-  "talent_source": "cfbd_team_talent",
-  "talent_strength": 1.712
- },
- "memphis": {
-  "fifa_rank": 45,
-  "squad_value_m": 1129,
+  "squad_value_m": 1136,
   "star_value_m": 151,
   "talent_source": "cfbd_team_talent",
-  "talent_strength": 4.1443
+  "talent_strength": 4.1607
  },
- "michigan state": {
+ "kansas state": {
   "fifa_rank": 45,
-  "squad_value_m": 1186,
-  "star_value_m": 158,
+  "squad_value_m": 1112,
+  "star_value_m": 148,
   "talent_source": "cfbd_team_talent",
-  "talent_strength": 4.3473
+  "talent_strength": 4.0747
  },
- "new mexico state": {
+ "kennesaw state": {
   "fifa_rank": 45,
-  "squad_value_m": 196,
-  "star_value_m": 26,
+  "squad_value_m": 15,
+  "star_value_m": 2,
   "talent_source": "cfbd_team_talent",
-  "talent_strength": 0.7173
+  "talent_strength": 0.055
  },
- "purdue": {
+ "kent state": {
   "fifa_rank": 45,
-  "squad_value_m": 1152,
-  "star_value_m": 154,
+  "squad_value_m": 234,
+  "star_value_m": 31,
   "talent_source": "cfbd_team_talent",
-  "talent_strength": 4.228
+  "talent_strength": 0.856
  },
- "rutgers": {
+ "kentucky": {
+  "fifa_rank": 45,
+  "squad_value_m": 1235,
+  "star_value_m": 165,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.5317
+ },
+ "lafayette": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "lamar": {
+  "fifa_rank": 45,
+  "squad_value_m": 1,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0023
+ },
+ "lehigh": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "liberty": {
+  "fifa_rank": 45,
+  "squad_value_m": 503,
+  "star_value_m": 67,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 1.8437
+ },
+ "longhorns": {
+  "fifa_rank": 12,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "louisiana": {
+  "fifa_rank": 45,
+  "squad_value_m": 703,
+  "star_value_m": 94,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 2.5803
+ },
+ "louisiana tech": {
+  "fifa_rank": 45,
+  "squad_value_m": 448,
+  "star_value_m": 60,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 1.6453
+ },
+ "louisville": {
+  "fifa_rank": 45,
+  "squad_value_m": 1194,
+  "star_value_m": 159,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.376
+ },
+ "lsu": {
+  "fifa_rank": 45,
+  "squad_value_m": 1394,
+  "star_value_m": 186,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 5.1127
+ },
+ "maine": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "marshall": {
+  "fifa_rank": 45,
+  "squad_value_m": 788,
+  "star_value_m": 105,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 2.8887
+ },
+ "maryland": {
   "fifa_rank": 45,
   "squad_value_m": 1154,
   "star_value_m": 154,
   "talent_source": "cfbd_team_talent",
   "talent_strength": 4.2327
  },
- "san jose state": {
+ "massachusetts": {
   "fifa_rank": 45,
-  "squad_value_m": 634,
-  "star_value_m": 85,
+  "squad_value_m": 753,
+  "star_value_m": 100,
   "talent_source": "cfbd_team_talent",
-  "talent_strength": 2.3293
+  "talent_strength": 2.757
  },
- "toledo": {
+ "mcneese": {
   "fifa_rank": 45,
-  "squad_value_m": 1071,
-  "star_value_m": 143,
-  "talent_source": "cfbd_team_talent",
-  "talent_strength": 3.929
- },
- "uab": {
-  "fifa_rank": 45,
-  "squad_value_m": 739,
-  "star_value_m": 98,
-  "talent_source": "cfbd_team_talent",
-  "talent_strength": 2.7043
- },
- "usc": {
-  "fifa_rank": 45,
-  "squad_value_m": 1333,
-  "star_value_m": 178,
-  "talent_source": "cfbd_team_talent",
-  "talent_strength": 4.8903
- },
- "Wolverines": {
-  "fifa_rank": 21,
   "squad_value_m": 0,
-  "star_value_m": 0
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
  },
- "Midshipmen": {
-  "fifa_rank": 23,
-  "squad_value_m": 0,
-  "star_value_m": 0
- },
- "Mean Green": {
+ "mean green": {
   "fifa_rank": 24,
   "squad_value_m": 0,
   "star_value_m": 0
  },
- "Horned Frogs": {
-  "fifa_rank": 25,
+ "memphis": {
+  "fifa_rank": 45,
+  "squad_value_m": 1094,
+  "star_value_m": 146,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.0127
+ },
+ "mercer": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "miami": {
+  "fifa_rank": 45,
+  "squad_value_m": 1350,
+  "star_value_m": 180,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.95
+ },
+ "miami oh": {
+  "fifa_rank": 45,
+  "squad_value_m": 513,
+  "star_value_m": 68,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 1.877
+ },
+ "michigan": {
+  "fifa_rank": 45,
+  "squad_value_m": 1355,
+  "star_value_m": 181,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.9717
+ },
+ "michigan state": {
+  "fifa_rank": 45,
+  "squad_value_m": 1194,
+  "star_value_m": 159,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.376
+ },
+ "middle tennessee": {
+  "fifa_rank": 45,
+  "squad_value_m": 523,
+  "star_value_m": 70,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 1.9203
+ },
+ "midshipmen": {
+  "fifa_rank": 23,
   "squad_value_m": 0,
   "star_value_m": 0
+ },
+ "minnesota": {
+  "fifa_rank": 45,
+  "squad_value_m": 1144,
+  "star_value_m": 153,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.1993
+ },
+ "mississippi state": {
+  "fifa_rank": 45,
+  "squad_value_m": 1223,
+  "star_value_m": 163,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.4837
+ },
+ "missouri": {
+  "fifa_rank": 45,
+  "squad_value_m": 1263,
+  "star_value_m": 168,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.627
+ },
+ "missouri state": {
+  "fifa_rank": 45,
+  "squad_value_m": 77,
+  "star_value_m": 10,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.2797
+ },
+ "monmouth": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "montana": {
+  "fifa_rank": 45,
+  "squad_value_m": 2,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0047
+ },
+ "montana state": {
+  "fifa_rank": 45,
+  "squad_value_m": 1,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0023
+ },
+ "morehead state": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "morgan state": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "murray state": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "nc state": {
+  "fifa_rank": 45,
+  "squad_value_m": 1173,
+  "star_value_m": 156,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.297
+ },
+ "nebraska": {
+  "fifa_rank": 45,
+  "squad_value_m": 1266,
+  "star_value_m": 169,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.644
+ },
+ "nevada": {
+  "fifa_rank": 45,
+  "squad_value_m": 481,
+  "star_value_m": 64,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 1.7623
+ },
+ "new hampshire": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "new mexico": {
+  "fifa_rank": 45,
+  "squad_value_m": 198,
+  "star_value_m": 26,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.722
+ },
+ "new mexico state": {
+  "fifa_rank": 45,
+  "squad_value_m": 154,
+  "star_value_m": 21,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.5693
+ },
+ "nicholls": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "norfolk state": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "north alabama": {
+  "fifa_rank": 45,
+  "squad_value_m": 3,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.007
+ },
+ "north carolina": {
+  "fifa_rank": 45,
+  "squad_value_m": 1258,
+  "star_value_m": 168,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.6153
+ },
+ "north carolina a t": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "north carolina central": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "north dakota": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "north dakota state": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "north texas": {
+  "fifa_rank": 45,
+  "squad_value_m": 751,
+  "star_value_m": 100,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 2.7523
+ },
+ "northern arizona": {
+  "fifa_rank": 45,
+  "squad_value_m": 2,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0047
+ },
+ "northern colorado": {
+  "fifa_rank": 45,
+  "squad_value_m": 2,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0047
+ },
+ "northern illinois": {
+  "fifa_rank": 45,
+  "squad_value_m": 231,
+  "star_value_m": 31,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.849
+ },
+ "northern iowa": {
+  "fifa_rank": 45,
+  "squad_value_m": 6,
+  "star_value_m": 1,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.024
+ },
+ "northwestern": {
+  "fifa_rank": 45,
+  "squad_value_m": 1127,
+  "star_value_m": 150,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.1297
+ },
+ "northwestern state": {
+  "fifa_rank": 45,
+  "squad_value_m": 3,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.007
+ },
+ "notre dame": {
+  "fifa_rank": 45,
+  "squad_value_m": 1380,
+  "star_value_m": 184,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 5.06
+ },
+ "ohio": {
+  "fifa_rank": 45,
+  "squad_value_m": 233,
+  "star_value_m": 31,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.8537
+ },
+ "ohio state": {
+  "fifa_rank": 45,
+  "squad_value_m": 1472,
+  "star_value_m": 196,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 5.3947
+ },
+ "oklahoma": {
+  "fifa_rank": 45,
+  "squad_value_m": 1375,
+  "star_value_m": 183,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 5.0383
+ },
+ "oklahoma state": {
+  "fifa_rank": 45,
+  "squad_value_m": 1138,
+  "star_value_m": 152,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.1753
+ },
+ "old dominion": {
+  "fifa_rank": 45,
+  "squad_value_m": 222,
+  "star_value_m": 30,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.818
+ },
+ "ole miss": {
+  "fifa_rank": 45,
+  "squad_value_m": 1264,
+  "star_value_m": 169,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.6393
+ },
+ "oregon": {
+  "fifa_rank": 45,
+  "squad_value_m": 1396,
+  "star_value_m": 186,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 5.1173
+ },
+ "oregon state": {
+  "fifa_rank": 45,
+  "squad_value_m": 1102,
+  "star_value_m": 147,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.0413
+ },
+ "penn state": {
+  "fifa_rank": 45,
+  "squad_value_m": 1372,
+  "star_value_m": 183,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 5.0313
+ },
+ "pennsylvania": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "pittsburgh": {
+  "fifa_rank": 45,
+  "squad_value_m": 1159,
+  "star_value_m": 155,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.2543
+ },
+ "portland state": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "prairie view a m": {
+  "fifa_rank": 45,
+  "squad_value_m": 1,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0023
+ },
+ "presbyterian": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "princeton": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "purdue": {
+  "fifa_rank": 45,
+  "squad_value_m": 1160,
+  "star_value_m": 155,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.2567
+ },
+ "rebels": {
+  "fifa_rank": 3,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "red raiders": {
+  "fifa_rank": 7,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "rhode island": {
+  "fifa_rank": 45,
+  "squad_value_m": 7,
+  "star_value_m": 1,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0263
+ },
+ "rice": {
+  "fifa_rank": 45,
+  "squad_value_m": 560,
+  "star_value_m": 75,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 2.0567
+ },
+ "richmond": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "robert morris": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "rutgers": {
+  "fifa_rank": 45,
+  "squad_value_m": 1118,
+  "star_value_m": 149,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.0987
+ },
+ "sacramento state": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "sacred heart": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "sam houston": {
+  "fifa_rank": 45,
+  "squad_value_m": 189,
+  "star_value_m": 25,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.691
+ },
+ "samford": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "san diego": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "san diego state": {
+  "fifa_rank": 45,
+  "squad_value_m": 761,
+  "star_value_m": 101,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 2.7857
+ },
+ "san jose state": {
+  "fifa_rank": 45,
+  "squad_value_m": 531,
+  "star_value_m": 71,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 1.949
+ },
+ "se louisiana": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "smu": {
+  "fifa_rank": 45,
+  "squad_value_m": 1226,
+  "star_value_m": 163,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.4907
+ },
+ "sooners": {
+  "fifa_rank": 13,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "south alabama": {
+  "fifa_rank": 45,
+  "squad_value_m": 765,
+  "star_value_m": 102,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 2.805
+ },
+ "south carolina": {
+  "fifa_rank": 45,
+  "squad_value_m": 1273,
+  "star_value_m": 170,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.6703
+ },
+ "south carolina state": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "south dakota": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "south dakota state": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "south florida": {
+  "fifa_rank": 45,
+  "squad_value_m": 1095,
+  "star_value_m": 146,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.015
+ },
+ "southeast missouri state": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "southern": {
+  "fifa_rank": 45,
+  "squad_value_m": 3,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.007
+ },
+ "southern illinois": {
+  "fifa_rank": 45,
+  "squad_value_m": 1,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0023
+ },
+ "southern miss": {
+  "fifa_rank": 45,
+  "squad_value_m": 662,
+  "star_value_m": 88,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 2.4247
+ },
+ "southern utah": {
+  "fifa_rank": 45,
+  "squad_value_m": 1,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0023
+ },
+ "st francis pa": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "stanford": {
+  "fifa_rank": 45,
+  "squad_value_m": 1175,
+  "star_value_m": 157,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.3117
+ },
+ "stephen f austin": {
+  "fifa_rank": 45,
+  "squad_value_m": 4,
+  "star_value_m": 1,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0193
+ },
+ "stony brook": {
+  "fifa_rank": 45,
+  "squad_value_m": 6,
+  "star_value_m": 1,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.024
+ },
+ "syracuse": {
+  "fifa_rank": 45,
+  "squad_value_m": 1137,
+  "star_value_m": 152,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.173
+ },
+ "tcu": {
+  "fifa_rank": 45,
+  "squad_value_m": 1230,
+  "star_value_m": 164,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.51
+ },
+ "temple": {
+  "fifa_rank": 45,
+  "squad_value_m": 665,
+  "star_value_m": 89,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 2.4417
+ },
+ "tennessee": {
+  "fifa_rank": 45,
+  "squad_value_m": 1329,
+  "star_value_m": 177,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.871
+ },
+ "tennessee state": {
+  "fifa_rank": 45,
+  "squad_value_m": 2,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0047
+ },
+ "tennessee tech": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "texas": {
+  "fifa_rank": 45,
+  "squad_value_m": 1435,
+  "star_value_m": 191,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 5.2583
+ },
+ "texas a m": {
+  "fifa_rank": 45,
+  "squad_value_m": 1405,
+  "star_value_m": 187,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 5.1483
+ },
+ "texas southern": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "texas state": {
+  "fifa_rank": 45,
+  "squad_value_m": 748,
+  "star_value_m": 100,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 2.7453
+ },
+ "texas tech": {
+  "fifa_rank": 45,
+  "squad_value_m": 1193,
+  "star_value_m": 159,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.3737
+ },
+ "toledo": {
+  "fifa_rank": 45,
+  "squad_value_m": 862,
+  "star_value_m": 115,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 3.1613
+ },
+ "towson": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "trojans": {
+  "fifa_rank": 20,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "troy": {
+  "fifa_rank": 45,
+  "squad_value_m": 528,
+  "star_value_m": 70,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 1.932
+ },
+ "tulane": {
+  "fifa_rank": 45,
+  "squad_value_m": 1060,
+  "star_value_m": 141,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 3.8833
+ },
+ "tulsa": {
+  "fifa_rank": 45,
+  "squad_value_m": 821,
+  "star_value_m": 110,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 3.0157
+ },
+ "uab": {
+  "fifa_rank": 45,
+  "squad_value_m": 670,
+  "star_value_m": 89,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 2.4533
+ },
+ "ualbany": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "uc davis": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "ucf": {
+  "fifa_rank": 45,
+  "squad_value_m": 1165,
+  "star_value_m": 155,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.2683
+ },
+ "ucla": {
+  "fifa_rank": 45,
+  "squad_value_m": 1229,
+  "star_value_m": 164,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.5077
+ },
+ "uconn": {
+  "fifa_rank": 45,
+  "squad_value_m": 657,
+  "star_value_m": 88,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 2.413
+ },
+ "ul monroe": {
+  "fifa_rank": 45,
+  "squad_value_m": 146,
+  "star_value_m": 19,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.5307
+ },
+ "unlv": {
+  "fifa_rank": 45,
+  "squad_value_m": 733,
+  "star_value_m": 98,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 2.6903
+ },
+ "usc": {
+  "fifa_rank": 45,
+  "squad_value_m": 1351,
+  "star_value_m": 180,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.9523
+ },
+ "ut martin": {
+  "fifa_rank": 45,
+  "squad_value_m": 13,
+  "star_value_m": 2,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0503
+ },
+ "utah": {
+  "fifa_rank": 45,
+  "squad_value_m": 1190,
+  "star_value_m": 159,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.3667
+ },
+ "utah state": {
+  "fifa_rank": 45,
+  "squad_value_m": 479,
+  "star_value_m": 64,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 1.7577
+ },
+ "utep": {
+  "fifa_rank": 45,
+  "squad_value_m": 355,
+  "star_value_m": 47,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 1.2983
+ },
+ "utes": {
+  "fifa_rank": 14,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "utsa": {
+  "fifa_rank": 45,
+  "squad_value_m": 1075,
+  "star_value_m": 143,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 3.9383
+ },
+ "vanderbilt": {
+  "fifa_rank": 45,
+  "squad_value_m": 1131,
+  "star_value_m": 151,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.149
+ },
+ "villanova": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "virginia": {
+  "fifa_rank": 45,
+  "squad_value_m": 1103,
+  "star_value_m": 147,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.0437
+ },
+ "virginia tech": {
+  "fifa_rank": 45,
+  "squad_value_m": 1140,
+  "star_value_m": 152,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.18
+ },
+ "wagner": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "wake forest": {
+  "fifa_rank": 45,
+  "squad_value_m": 1069,
+  "star_value_m": 143,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 3.9243
+ },
+ "washington": {
+  "fifa_rank": 45,
+  "squad_value_m": 1205,
+  "star_value_m": 161,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.4217
+ },
+ "washington state": {
+  "fifa_rank": 45,
+  "squad_value_m": 1018,
+  "star_value_m": 136,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 3.7353
+ },
+ "weber state": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "west virginia": {
+  "fifa_rank": 45,
+  "squad_value_m": 1128,
+  "star_value_m": 150,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.132
+ },
+ "western carolina": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "western illinois": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "western kentucky": {
+  "fifa_rank": 45,
+  "squad_value_m": 622,
+  "star_value_m": 83,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 2.2813
+ },
+ "western michigan": {
+  "fifa_rank": 45,
+  "squad_value_m": 480,
+  "star_value_m": 64,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 1.76
+ },
+ "wisconsin": {
+  "fifa_rank": 45,
+  "squad_value_m": 1229,
+  "star_value_m": 164,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 4.5077
+ },
+ "wofford": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "wolverines": {
+  "fifa_rank": 21,
+  "squad_value_m": 0,
+  "star_value_m": 0
+ },
+ "wyoming": {
+  "fifa_rank": 45,
+  "squad_value_m": 250,
+  "star_value_m": 33,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.9133
+ },
+ "yale": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
+ "youngstown state": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
  }
 }
