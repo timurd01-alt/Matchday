@@ -40,6 +40,17 @@ Plus:
   crosses it, the panel border pulses and a native Chrome notification
   fires once (not on every tick past the line).
 
+### The popup is now a dashboard, not just settings
+
+Click the toolbar icon and you land on **Dashboard**, a table of every
+market you've viewed this browser profile (up to the last 30), sorted by
+spread — the most-disagreeing markets float to the top. Each row shows
+Model/Books/Poly/Kalshi side by side plus a tiny trend sparkline. It keeps
+updating live while the popup is open (via `chrome.storage.onChanged`), and
+persists across browser restarts since it's just `chrome.storage.local` --
+`offscreen.js` writes to it, the popup only ever reads. **Settings** (the
+old single view) moved to its own tab. **Clear history** wipes the table.
+
 ### How market pages are detected now
 
 Earlier this only matched `polymarket.com/event/*`, which may not be

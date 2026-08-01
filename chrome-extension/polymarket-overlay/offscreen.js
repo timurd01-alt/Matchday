@@ -275,19 +275,36 @@ function emitSnapshot(slug) {
       if (state.history.length > HISTORY_LIMIT) state.history.shift();
     }
   }
-  report(slug, {
-    type: "MARKET_SNAPSHOT",
-    snapshot: {
-      question: state.question,
-      comp: state.comp,
-      home: state.match.home?.name,
-      away: state.match.away?.name,
-      side: state.side,
-      modelPct, polymarketPct, kalshiPct, oddsApiPct, spread,
-      history: state.history.slice(),
-      at: Date.now(),
-    },
-  });
+  const snapshot = {
+    slug,
+    question: state.question,
+    comp: state.comp,
+    home: state.match.home?.name,
+    away: state.match.away?.name,
+    side: state.side,
+    modelPct, polymarketPct, kalshiPct, oddsApiPct, spread,
+    history: state.history.slice(),
+    at: Date.now(),
+  };
+  report(slug, { type: "MARKET_SNAPSHOT", snapshot });
+  persistToDashboard(slug, snapshot);
+}
+
+const DASHBOARD_CAP = 30;
+
+// Keep every market seen this browser profile (not just the one currently
+// open) so the popup dashboard can list them -- this is the only place
+// that data is written; the popup only ever reads it.
+async function persistToDashboard(slug, snapshot) {
+  const { watchedMarkets } = await chrome.storage.local.get(["watchedMarkets"]);
+  const all = watchedMarkets || {};
+  all[slug] = snapshot;
+  const entries = Object.entries(all);
+  if (entries.length > DASHBOARD_CAP) {
+    entries.sort((a, b) => (a[1].at || 0) - (b[1].at || 0));
+    while (entries.length > DASHBOARD_CAP) entries.shift();
+  }
+  await chrome.storage.local.set({ watchedMarkets: Object.fromEntries(entries) });
 }
 
 async function watchMarket(slug) {
