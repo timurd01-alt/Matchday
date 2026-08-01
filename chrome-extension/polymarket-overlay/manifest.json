@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Matchday Edge Overlay (personal build)",
-  "version": "0.1.0",
+  "version": "0.4.0",
   "description": "Personal-use overlay: shows Matchday's model probability next to Polymarket's live price while you browse a market.",
   "permissions": ["storage", "offscreen", "notifications"],
   "host_permissions": [
