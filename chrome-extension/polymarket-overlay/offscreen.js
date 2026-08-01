@@ -308,18 +308,23 @@ async function persistToDashboard(slug, snapshot) {
 }
 
 async function watchMarket(slug) {
+  console.log("[MDX] offscreen: watchMarket", slug);
   if (active.has(slug)) return; // already watching
   active.set(slug, { ws: null, pollTimers: {}, tokenId: null, wsGotPrice: false, values: {} });
   try {
     const { question, tokenIds } = await fetchGammaMarket(slug);
+    console.log("[MDX] offscreen: gamma lookup ok, question:", question, "tokenIds:", tokenIds);
     const config = await getConfig();
     const competitions = await fetchMatchdayCompetitions(config.dataOrigin, config.comps);
+    console.log("[MDX] offscreen: loaded", competitions.length, "of", config.comps.length, "competition files from", config.dataOrigin);
     const found = self.MatchdayMatcher.findMatch(question, competitions);
     if (!found) {
+      console.warn("[MDX] offscreen: no Matchday fixture matched question:", question);
       report(slug, { type: "MARKET_ERROR", message: "No matching Matchday fixture found for this market." });
       active.delete(slug);
       return;
     }
+    console.log("[MDX] offscreen: matched fixture", found.match.home?.name, "vs", found.match.away?.name);
     const { comp, match, side } = found;
     const homeTeam = match.home?.name || "";
     const awayTeam = match.away?.name || "";
@@ -339,6 +344,7 @@ async function watchMarket(slug) {
     }
     emitSnapshot(slug);
   } catch (err) {
+    console.error("[MDX] offscreen: watchMarket failed:", err);
     report(slug, { type: "MARKET_ERROR", message: err.message || String(err) });
     active.delete(slug);
   }
@@ -351,6 +357,8 @@ function unwatchMarket(slug) {
   for (const timer of Object.values(state.pollTimers)) clearTimeout(timer);
   active.delete(slug);
 }
+
+console.log("[MDX] offscreen document loaded, matcher available:", typeof self.MatchdayMatcher !== "undefined");
 
 chrome.runtime.onMessage.addListener((message) => {
   if (!message || message.target !== "offscreen") return;

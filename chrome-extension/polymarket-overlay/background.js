@@ -30,17 +30,21 @@ async function ensureOffscreenDocument() {
   creatingOffscreen = null;
 }
 
+console.log("[MDX] background service worker started");
+
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (!message || typeof message !== "object") return;
 
   if (message.type === "WATCH_MARKET" && message.target === "background") {
+    console.log("[MDX] background: WATCH_MARKET for", message.slug, "from tab", sender.tab && sender.tab.id);
     const tabId = sender.tab && sender.tab.id;
     if (tabId == null) return;
     if (!watchers.has(message.slug)) watchers.set(message.slug, new Set());
     watchers.get(message.slug).add(tabId);
     ensureOffscreenDocument().then(() => {
+      console.log("[MDX] background: offscreen ready, forwarding WATCH_MARKET for", message.slug);
       chrome.runtime.sendMessage({ type: "WATCH_MARKET", target: "offscreen", slug: message.slug });
-    });
+    }).catch(err => console.error("[MDX] background: ensureOffscreenDocument failed:", err));
     return;
   }
 

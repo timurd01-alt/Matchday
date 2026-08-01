@@ -27,6 +27,8 @@ function candidateSlug() {
   return last;
 }
 
+console.log("[MDX] content script loaded on", location.href);
+
 function ensurePanel() {
   if (panel) return panel;
   panel = document.createElement("div");
@@ -157,12 +159,17 @@ function render() {
 }
 
 function watch(slug) {
+  console.log("[MDX] watching slug:", slug);
   currentSlug = slug;
   lastSnapshot = null;
   lastWarning = null;
   render();
   ensurePanel().style.display = "block";
-  chrome.runtime.sendMessage({ type: "WATCH_MARKET", target: "background", slug });
+  chrome.runtime.sendMessage({ type: "WATCH_MARKET", target: "background", slug }, () => {
+    if (chrome.runtime.lastError) {
+      console.error("[MDX] sendMessage to background failed:", chrome.runtime.lastError.message);
+    }
+  });
 }
 
 function unwatch(slug) {
@@ -172,6 +179,7 @@ function unwatch(slug) {
 
 chrome.runtime.onMessage.addListener((message) => {
   if (!message || message.target !== "content" || message.slug !== currentSlug) return;
+  console.log("[MDX] received", message.type, message);
   if (message.type === "MARKET_SNAPSHOT") { lastSnapshot = message.snapshot; render(); }
   if (message.type === "MARKET_ERROR") { lastWarning = message.message; render(); }
 });
@@ -186,6 +194,7 @@ chrome.storage.onChanged.addListener((changes) => {
 function checkForNavigation() {
   const slug = candidateSlug();
   if (slug === currentSlug) return;
+  console.log("[MDX] navigation detected, candidate slug:", slug, "path:", location.pathname);
   unwatch(currentSlug);
   currentSlug = null;
   if (slug) watch(slug);
