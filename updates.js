@@ -4,6 +4,24 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0731B",
+  "tag": "Fix",
+  "title": "Odds tracker no longer shows a draw row for sports that can't draw",
+  "items": [
+   "The match modal's Odds tracker panel, the In-focus market snapshot, and the match card's compact probability bar all hard-coded a 'draw' label and bar segment regardless of sport, so NFL, NCAAF, NCAAM, MLB and NBA fixtures showed a meaningless 0% draw slice next to the real home/away market read. All three now hide the draw column and segment for two-way sports, matching the fix already shipped for the match modal's probability check and the Model dashboard's row list."
+  ]
+ },
+ {
+  "date": "Build 0731A",
+  "tag": "Fix",
+  "title": "The Odds API's quota reserve now paces across the whole month, not just the last few calls",
+  "items": [
+   "Confirmed live: two of the three on-disk caches meant to hold down Odds API call volume were silently dead in production. The championship-odds (outrights) cache only ever lived in memory, so it reset to empty every time -- every hourly CI run re-fetched it regardless of its intended 60-minute window. The main match-odds cache does persist to disk, but its file (odds_market_cache_<comp>.json) and the API-Football box-score cache didn't match the GitHub Actions cache glob that restores files between runs, so neither actually survived from one hourly build to the next either -- both were refetching from scratch every run.",
+   "Fixed both: the outrights cache now persists to disk the same way the match-odds cache does, and the workflow's restore step now explicitly covers all three cache files by name. The outrights cache window was also widened from 60 minutes to 6 hours -- a championship-futures market barely moves hour to hour, and 6 competitions share this one call budget with the match-odds requests.",
+   "Added a second safeguard on top of the existing safety-reserve cutoff: the quota ledger now also refuses a call once usage is running meaningfully ahead of an even day-by-day drawdown of the month's budget, not just once almost nothing is left. This is what actually keeps market odds available for the whole billing period -- the old reserve-only check let a fast burn spend the whole month's quota in the first few days and only caught it once nearly empty, which is exactly how this key ran out before its last billing period ended."
+  ]
+ },
+ {
   "date": "Build 0730D",
   "tag": "New",
   "title": "Provider requests now stop before a quota is exhausted, not after",

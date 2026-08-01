@@ -37,6 +37,19 @@ jobs:
             odds_open*.json
             title_open*.json
             *_cache.json
+            # odds_market_cache_<comp>.json / outrights_market_cache_<comp>.json /
+            # api_football_box_cache_<comp>.json put "cache" BEFORE the per-
+            # competition suffix, so *_cache.json (which needs the filename to
+            # END in "_cache.json") never matched them -- confirmed via
+            # fnmatch: 'odds_market_cache_wc.json' against '*_cache.json' is
+            # False. Their on-disk caches (see ODDS_CACHE_MIN / OUTRIGHTS_CACHE_MIN
+            # in fetch_data.py) were therefore never actually restored between
+            # hourly runs; every run re-fetched from the provider regardless of
+            # the intended cache window, silently burning Odds API / API-Football
+            # quota faster than the cache durations were designed for.
+            odds_market_cache_*.json
+            outrights_market_cache_*.json
+            api_football_box_cache_*.json
             advanced_metrics_*.json
             nflverse_pbp_*.csv.gz
             forecast_ledger_*.jsonl

@@ -24,6 +24,18 @@ class QuotaModuleTests(unittest.TestCase):
         self.path = temp.name
         self.addCleanup(lambda: os.path.exists(self.path) and os.unlink(self.path))
 
+    def _freeze(self, when):
+        """Pin pq._now() so a pacing scenario's "how far into the period are
+        we" is deterministic regardless of which real calendar day the test
+        suite happens to run on -- pacing math is inherently date-relative,
+        so leaving it to the real clock would make these tests flaky exactly
+        once a month (confirmed while writing them: this suite genuinely
+        started failing for real on 2026-08-01, a few minutes into a new
+        billing period, with no state or code at fault but the wall clock)."""
+        orig = pq._now
+        pq._now = lambda: when
+        self.addCleanup(setattr, pq, "_now", orig)
+
     # ---- CFBD/CBBD: calendar-month window, no limit header, body fallback --
     def test_cfbd_remaining_header_is_recorded_and_enforced(self):
         pq.record_response("cfbd", {"X-CallLimit-Remaining": "30"}, state_path=self.path)
@@ -143,9 +155,40 @@ class QuotaModuleTests(unittest.TestCase):
         self.assertEqual(state["odds_api"]["limit"], 500)  # derived: remaining + used
 
     def test_odds_api_healthy_remaining_is_not_blocked(self):
+        """450/500 used only counts as healthy late in the billing period --
+        pinned to day 28 of a 31-day month so this doesn't depend on when in
+        the real month the suite happens to run."""
+        self._freeze(datetime.datetime(2026, 8, 28, 12, 0, tzinfo=datetime.timezone.utc))
         pq.record_response("odds_api", {"x-requests-remaining": "50", "x-requests-used": "450"},
                            state_path=self.path)
         pq.check("odds_api", state_path=self.path)
+
+    # ---- pacing: catch a fast burn well before the reserve floor would ---
+    def test_odds_api_burning_ahead_of_monthly_pace_is_refused(self):
+        """Confirmed-live failure mode: The Odds API hit zero before its
+        billing period ended. 300 used out of 500 barely into the month is
+        nowhere near the reserve(5) floor, but it's wildly ahead of an even
+        30-day drawdown -- pacing must catch this, not just the reserve."""
+        self._freeze(datetime.datetime(2026, 3, 1, 2, 0, tzinfo=datetime.timezone.utc))
+        pq.record_response("odds_api", {"x-requests-remaining": "200", "x-requests-used": "300"},
+                           state_path=self.path)
+        with self.assertRaises(pq.QuotaExceededError):
+            pq.check("odds_api", state_path=self.path)
+
+    def test_odds_api_on_pace_usage_is_not_blocked_by_pacing(self):
+        """Same shape as above, but usage tracks the calendar instead of
+        outrunning it -- must not be refused just for having used some budget."""
+        self._freeze(datetime.datetime(2026, 3, 5, 12, 0, tzinfo=datetime.timezone.utc))
+        pq.record_response("odds_api", {"x-requests-remaining": "480", "x-requests-used": "20"},
+                           state_path=self.path)
+        pq.check("odds_api", state_path=self.path)
+
+    def test_pacing_never_applies_without_a_derivable_limit(self):
+        """CFBD/CBBD never carry a `limit` (no total is ever published), so
+        pacing must stay a silent no-op for them regardless of how much of
+        the reserve-free range remains -- only the reserve floor applies."""
+        pq.record_response("cfbd", {"X-CallLimit-Remaining": "26"}, state_path=self.path)
+        pq.check("cfbd", state_path=self.path)  # 26 > reserve(25); no limit to pace against
 
     # ---- persistence: this only matters because CI is one-shot per-run -
     def test_state_persists_across_separate_load_cycles(self):

@@ -205,6 +205,7 @@ COMP = COMPETITIONS[COMP_KEY]
 ODDS_URL = (f"https://api.the-odds-api.com/v4/sports/{COMP['odds']}/odds/"
             "?regions=eu&markets=h2h&oddsFormat=decimal")
 ODDS_CACHE_FILE = f"odds_market_cache_{COMP_KEY.lower()}.json"
+OUTRIGHTS_CACHE_FILE = f"outrights_market_cache_{COMP_KEY.lower()}.json"
 PREGAME_ODDS_WINDOW_HOURS = 3
 UA = {"User-Agent": "Mozilla/5.0 (matchday-terminal)"}
 
@@ -243,7 +244,15 @@ _OUT_CACHE  = {"t": 0.0, "data": []}
 _NEWS_CACHE = {"t": 0.0, "data": []}
 OUTRIGHTS_URL = (f"https://api.the-odds-api.com/v4/sports/{COMP['outright']}/odds/"
                  "?regions=eu&markets=outrights&oddsFormat=decimal")
-OUTRIGHTS_CACHE_MIN = 60
+# Was 60: a championship-futures market barely moves hour to hour, so an
+# hourly refresh bought nothing but quota risk -- 6 competitions carry an
+# outright market (WC, NFL, NCAAF, NCAAM, MLB, NBA) sharing one 500/month
+# Odds API key with every h2h call across all 12 competitions, so an outright
+# market refreshing every subprocess run (previously effectively every run,
+# since its on-disk cache was never actually restored between CI runs -- see
+# deploy.yml's "Restore fetch state" step) could alone burn a quarter of the
+# entire monthly budget in a single active day.
+OUTRIGHTS_CACHE_MIN = 360
 NEWS_CACHE_MIN = 20
 NEWS_MAX_AGE_DAYS = 7
 NEWS_FUTURE_TOLERANCE_HOURS = 24
@@ -690,6 +699,37 @@ def _save_odds_market_cache():
         os.replace(tmp, ODDS_CACHE_FILE)
     except Exception as e:
         DIAG.append(f"odds market cache save failed: {e}")
+
+
+def _load_outrights_cache():
+    """_OUT_CACHE was in-memory only, so OUTRIGHTS_CACHE_MIN never actually
+    throttled anything -- this process is one-shot per CI run (see
+    _load_odds_market_cache above), so _OUT_CACHE["t"] reset to 0 on every
+    single invocation and the "cached" branch in fetch_outrights() could
+    never be taken. Confirmed live: every due sport's subprocess was calling
+    the outrights endpoint on every run regardless of OUTRIGHTS_CACHE_MIN,
+    burning real monthly Odds API quota for a cache that looked like it was
+    working. Mirrors the odds h2h cache's disk persistence exactly."""
+    if _OUT_CACHE["t"]:
+        return
+    try:
+        with open(OUTRIGHTS_CACHE_FILE, encoding="utf-8") as f:
+            cached = json.load(f)
+        if isinstance(cached.get("data"), list):
+            _OUT_CACHE["t"] = float(cached.get("t") or 0)
+            _OUT_CACHE["data"] = cached["data"]
+    except Exception:
+        pass
+
+
+def _save_outrights_cache():
+    try:
+        tmp = OUTRIGHTS_CACHE_FILE + ".tmp"
+        with open(tmp, "w", encoding="utf-8") as f:
+            json.dump(_OUT_CACHE, f)
+        os.replace(tmp, OUTRIGHTS_CACHE_FILE)
+    except Exception as e:
+        DIAG.append(f"outrights market cache save failed: {e}")
 
 
 def fetch_odds():
@@ -3210,6 +3250,7 @@ def estimate_title_odds(matches, code_map):
 def fetch_outrights(code_map):
     if not COMP.get("outright"):
         DIAG.append("title odds: no outright market for this competition"); return []
+    _load_outrights_cache()
     now = time.time()
     if now - _OUT_CACHE["t"] < OUTRIGHTS_CACHE_MIN * 60 and _OUT_CACHE["data"]:
         DIAG.append("title odds: cached"); return _OUT_CACHE["data"]
@@ -3257,6 +3298,7 @@ def fetch_outrights(code_map):
         except Exception as e:
             DIAG.append(f"title open save failed: {e}")
     _OUT_CACHE["t"] = now; _OUT_CACHE["data"] = out
+    _save_outrights_cache()
     DIAG.append(f"title odds: {len(out)} teams")
     return out
 
