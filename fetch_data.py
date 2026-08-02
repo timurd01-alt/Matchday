@@ -5124,9 +5124,18 @@ def fetch_balldontlie_bundle():
                     season_matches = json.load(handle)
                 DIAG.append(f"BALLDONTLIE season-to-date: stale cache after provider limit/error — {_scrub(e)}")
             else:
-                # Better a narrow-window standings table than none at all.
-                season_matches = matches
-                DIAG.append(f"BALLDONTLIE season-to-date: unavailable, using display window — {_scrub(e)}")
+                # No real season sample exists at all -- substituting
+                # schedule()'s ~7-day display window used to silently produce
+                # a standings table that *looked* like real season records
+                # (sorted, "pld"/"w"/"l" columns and all) while actually being
+                # off by 100+ games per team (confirmed live 2026-08-02: site
+                # showed things like "6-1, 7 games played" for a team that
+                # had actually played ~110). Raise instead, same as the
+                # schedule()-cache miss just above: build() lets this
+                # competition's run fail and keep serving the last published
+                # (real) data_mlb.json rather than overwrite it with a
+                # confidently wrong one.
+                raise
 
     st, tables = compute_us_sport_standings(season_matches)
     adapter._model_history = season_matches

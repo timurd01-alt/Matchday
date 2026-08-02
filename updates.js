@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0802B",
+  "tag": "Fix",
+  "title": "Fixed wildly inaccurate MLB win-loss records",
+  "items": [
+   "MLB standings were quietly falling back to a 7-day display window whenever the full season-to-date pull failed with no cache to fall back on, publishing records like \"6-1, 7 games played\" for teams that had actually played 100+ games — confirmed live on 2026-08-02.",
+   "That silent substitution is gone: a failed season pull with no usable cache now fails the MLB refresh for that run instead, so the site keeps serving the last real, full-season standings rather than overwriting them with a confidently wrong table."
+  ]
+ },
+ {
   "date": "Build 0802A",
   "tag": "Audit",
   "title": "Published the July 26–August 1 transparent weekly scorecard",
