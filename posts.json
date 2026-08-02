@@ -1,5 +1,21 @@
 [
  {
+  "id": "transparent-weekly-scorecard-2026-08-02",
+  "comp": "all",
+  "comp_label": "Independent Audit",
+  "slug": "transparent-weekly-scorecard-2026-08-02",
+  "title": "Transparent Weekly Scorecard — July 26–August 1, 2026",
+  "date": "2026-08-02",
+  "summary": "34 hits, 28 misses, and a high-confidence calibration failure in the verified MLB cohort.",
+  "record": {"hits": 34, "graded": 62, "pct": 54.8},
+  "highlights": {"best_call": "Boston Red Sox over Oakland Athletics (83%)", "largest_miss": "Boston Red Sox over Oakland Athletics (83%)"},
+  "body": [
+   "The completed July 26–August 1 audit counted 62 verified locked, graded MLB picks: 34 hits and 28 misses. Accuracy alone is not an improvement claim.",
+   "The seven 80–89% calls won only 42.9%, against 81.1% average stated confidence. The official model-versus-market comparison is not valid because no timestamped market cohort exists.",
+   "The scorecard reports multiclass Brier (0.554), log loss (0.759), calibration, corrections, and the append-only-ledger reconciliation limitation without mixing legacy records."
+  ]
+ },
+ {
   "id": "hypothetical-bills-lions-2026-08-01",
   "comp": "nfl",
   "comp_label": "NFL · Hypothetical Matchup",
