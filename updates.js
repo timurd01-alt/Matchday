@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0802A",
+  "tag": "Audit",
+  "title": "Published the July 26–August 1 transparent weekly scorecard",
+  "items": [
+   "The completed-window audit reports 34 hits and 28 misses from 62 verified, pregame-locked, graded MLB picks. It reports multiclass Brier, log loss, calibration bands, the best call, and the largest miss without calling a short weekly sample an improvement.",
+   "The report leads with the high-confidence failure: seven 80–89% calls won only 42.9%. It also records two integrity limits: no timestamped model-versus-market cohort and an append-only-ledger reconciliation lag for 36 counted locks."
+  ]
+ },
+ {
   "date": "Build 0801A",
   "tag": "New",
   "title": "Repositioned around being independent and built for fans, with a real responsible-gambling section",
