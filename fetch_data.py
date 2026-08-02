@@ -1866,9 +1866,33 @@ def _upset_adjustment(home, away, markets, m, why, blend, two_way=False):
     except Exception:
         box_score_edge = 0.0
 
+    # The model's edge on the market's own underdog price = does OUR number
+    # beat the market's number for that same side? Computed here (ahead of
+    # the trigger) so the override decision can actually require a real edge
+    # instead of just a volatile-looking game. Previously this was computed
+    # further below and only fed the separate `radar` display flag, so the
+    # model could flip the pick to the underdog purely on upset_score/margin
+    # even when it didn't rate that underdog any higher than the market did
+    # -- see the 2026-08 audit: model hit rate on picks disagreeing with the
+    # market favorite was 35.3% (17 picks), worse than a coin flip.
+    market_dog = None
+    mkt_dog_pct = None
+    if mk and mk.get("home_pct") is not None and mk.get("away_pct") is not None:
+        m_side = "h" if float(mk.get("home_pct") or 0) >= float(mk.get("away_pct") or 0) else "a"
+        market_dog = "a" if m_side == "h" else "h"
+        mkt_dog_pct = float(mk.get("home_pct") if market_dog == "h" else mk.get("away_pct") or 0)
+    model_dog_pct = (float(adjusted.get(market_dog, 0) or 0)
+                     if market_dog else float(adjusted.get(dog, 0) or 0))
+    upset_edge = None if mkt_dog_pct is None else round(model_dog_pct - mkt_dog_pct, 1)
+    # Require a real, positive edge over the market's own underdog price --
+    # not just agreement (market_gate) that the game is close -- before the
+    # market-gated path is allowed to flip the pick. strong_box_override is
+    # untouched: real, live box-score dominance is independent evidence, not
+    # a market comparison, so it isn't gated on upset_edge.
+    has_real_edge = upset_edge is not None and upset_edge >= 5
     base_trigger = (dog_adj >= fav_adj - 0.05 and upset_score >= 65 and fav_adj < 0.46)
     strong_box_override = (upset_score >= 75 and box_score_edge >= 0.35)
-    trigger = bool(base_trigger and (market_gate or strong_box_override))
+    trigger = bool(base_trigger and ((market_gate and has_real_edge) or strong_box_override))
     blocked = bool(base_trigger and not trigger)
 
     reasons = []
@@ -1878,7 +1902,10 @@ def _upset_adjustment(home, away, markets, m, why, blend, two_way=False):
     if closeness >= 0.55: reasons.append("narrow team gap")
     if dog_momentum >= 0.07: reasons.append("underdog momentum")
     if learn_bias > 0.005: reasons.append("scorecard boost")
-    if blocked and market_gap_pct is not None: reasons.append(f"market gap {market_gap_pct:.0f} pts blocks override")
+    if blocked and market_gap_pct is not None and not has_real_edge:
+        reasons.append(f"no real edge over market underdog price ({upset_edge if upset_edge is not None else 'n/a'} pts)")
+    elif blocked and market_gap_pct is not None:
+        reasons.append(f"market gap {market_gap_pct:.0f} pts blocks override")
     if not reasons: reasons.append("favorite profile is cleaner")
 
     # ---- standings + market upset classification --------------------------
@@ -1907,13 +1934,8 @@ def _upset_adjustment(home, away, markets, m, why, blend, two_way=False):
             standings_candidate = "h" if home_standing < away_standing else "a"
 
     # The market must call that lower-standing team the underdog too.
-    mkt_dog_pct = None
-    market_dog = None
-    if mk and mk.get("home_pct") is not None and mk.get("away_pct") is not None:
-        m_side = "h" if float(mk.get("home_pct") or 0) >= float(mk.get("away_pct") or 0) else "a"
-        m_dog = "a" if m_side == "h" else "h"
-        market_dog = m_dog
-        mkt_dog_pct = float(mk.get("home_pct") if m_dog == "h" else mk.get("away_pct") or 0)
+    # (market_dog / mkt_dog_pct / model_dog_pct / upset_edge are computed
+    # earlier, ahead of the trigger, so they can gate it -- reused here.)
     # class: pickem (>40) / live dog (25-40) / real dog (12-25) / heavy dog (<12)
     if mkt_dog_pct is None:
         upset_class = "unknown"
@@ -1925,10 +1947,6 @@ def _upset_adjustment(home, away, markets, m, why, blend, two_way=False):
         upset_class = "solid"      # real underdog; win = solid upset
     else:
         upset_class = "major"      # heavy underdog; win = major upset
-    # the model's edge on the underdog = does OUR number beat the market's?
-    model_dog_pct = (float(adjusted.get(market_dog, 0) or 0)
-                     if market_dog else float(adjusted.get(dog, 0) or 0))
-    upset_edge = None if mkt_dog_pct is None else round(model_dog_pct - mkt_dog_pct, 1)
     # radar fires ONLY when it's a genuine underdog (not a pickem) AND the model
     # rates that underdog meaningfully above the market — a live, underpriced dog.
     radar = bool(
