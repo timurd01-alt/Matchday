@@ -24,6 +24,8 @@ CFBD_KEY = "your_college_football_key"
 CBBD_KEY = "your_college_basketball_key"
 API_FOOTBALL_KEY = "your_api_sports_key"  # optional soccer detail
 SPORTMONKS_KEY = "your_token"             # optional soccer detail
+SPORTSDATAIO_KEY = "your_key"             # optional US-sport injuries/lineups
+SPORTSDATAIO_PREGAME_ENABLED = True         # only after rights + live quota headers are verified
 ```
 
 Never commit `config_keys.py`. The production workflow writes credentials from GitHub Actions secrets and removes the file before assembling the public site.
@@ -63,12 +65,16 @@ The production workflow runs hourly. The scheduler may use longer caches for dis
 ## Prediction lifecycle
 
 1. Upcoming fixtures receive a model probability and selected outcome.
-2. Inside 12 hours of kickoff, the pick is written to the competition's `picks_log*.json` ledger as a verified pregame lock.
+2. Early forecasts are labeled preliminary while late information is still missing. The official pick is written to the competition's `picks_log*.json` ledger inside the sport-aware lock window: two hours for pro sports and soccer, three hours for college sports.
 3. The selected side and confidence are not rewritten. If odds arrive later, market-comparison fields may be added without changing the locked pick.
 4. In-progress games are shown as result pending, not as a live scoreboard.
 5. After the provider marks a game final, the locked record is graded and persisted. A failed persistence check fails the fetch instead of silently publishing an ungraded result.
 
 The Odds API is queried only for upcoming fixtures close to kickoff and the response is cached to protect quota. A missing market does not prevent the model from locking its independent prediction.
+
+The private market benchmark automatically segments completed comparisons by competition, realized home/draw/away outcome, favorite versus underdog result, model-market agreement, confidence band, and closing-favorite strength. Segments report log loss and Brier score on the same fixtures; they remain research-only and do not automatically retune the model.
+
+The expanded match view shows market, injury, lineup, starter/key-player, weather, and venue readiness using sport-native labels. Empty provider containers count as missing data. SportsDataIO can overlay the existing BALLDONTLIE/college feeds without replacing their schedules; endpoint availability still depends on the configured SportsDataIO product and account tier. Keep `SPORTSDATAIO_PREGAME_ENABLED` off for free-trial, replay, or personal/research-only access. Before production activation, confirm that the agreement permits live public redistribution, inspect the contracted tier's live quota headers, add its verified quota-ledger rule, and explicitly wire the enable flag into CI. New personnel and venue fields are captured as prospective shadows with production weight zero until they pass the model-promotion protocol.
 
 ## News and articles
 
@@ -77,7 +83,7 @@ The news feed accepts dated articles no more than seven days old. Undated or sta
 ## Test the integrity path
 
 ```powershell
-python -m unittest test_analysis_mode test_news_freshness test_score_refresh test_multi_fetch test_pick_lock_persistence test_recovered_mlb_picks test_model_inputs test_provider_adapters test_security test_generate_posts test_backfill_history
+python -m unittest test_analysis_mode test_news_freshness test_score_refresh test_multi_fetch test_pick_lock_persistence test_recovered_mlb_picks test_model_inputs test_provider_adapters test_pregame_context test_security test_generate_posts test_backfill_history
 ```
 
 See the [Wiki](https://github.com/timurd01-alt/Matchday/wiki) for product behavior and [PROVIDER_COMPLIANCE.md](PROVIDER_COMPLIANCE.md) for provider-specific notes.

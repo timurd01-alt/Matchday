@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0803A",
+  "tag": "Improvement",
+  "title": "Added the late information forecasts were missing",
+  "items": [
+   "Every supported public sport now gets an explicit pregame-readiness receipt for its own important inputs: starters and bullpens for baseball, rotations for basketball, QBs and inactives for football, and XIs for soccer, plus injuries, weather, venue context, and the near-kickoff market where providers supply them. Hockey goalie support is ready but remains dormant until licensed public access is confirmed.",
+   "Early calls are labeled preliminary. New official picks lock much closer to kickoff—two hours for pro sports and soccer, three for college—while every older verified 12-hour pick remains valid and unchanged.",
+   "Licensed SportsDataIO availability can now overlay the existing US-sport fixture feeds, and authorized Odds API consensus snapshots are timestamped for later market-loss analysis. Missing fields remain visibly missing; all new personnel and venue factors start at zero model weight until prospective results prove they help."
+  ]
+ },
+ {
   "date": "Build 0802A",
   "tag": "Audit",
   "title": "Published the July 26–August 1 transparent weekly scorecard",

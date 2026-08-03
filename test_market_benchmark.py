@@ -44,6 +44,9 @@ class MarketBenchmarkTests(unittest.TestCase):
             self.assertEqual(report["comparisons"]["closing_market"]["market"]["n"], 1)
             self.assertEqual(report["comparisons"]["closing_market"]["paired_log_loss"]["n"], 1)
             self.assertGreater(report["closing_line_movement"]["mean_probability_movement_toward_matchday_pick"], 0)
+            self.assertEqual(report["outcome_segments"]["favorite_result"]["favorite_won"]["n"], 1)
+            self.assertIn("agree", report["outcome_segments"]["model_market_agreement"])
+            self.assertIn("NFL", report["outcome_segments"]["competition"])
             self.assertEqual(report["production_weight"], 0)
 
     def test_consensus_averages_latest_snapshot_from_each_source(self):

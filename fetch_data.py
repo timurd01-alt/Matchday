@@ -23,6 +23,8 @@ from email.utils import parsedate_to_datetime
 from collections import defaultdict
 import mfti_research
 import forecast_ledger
+import market_snapshots
+import pregame_context
 import provider_quota
 from advanced_metrics_store import attach_shadow_profiles
 from mlb_challenger_store import attach_mlb_challenger_shadows
@@ -69,10 +71,20 @@ try:
 except Exception:
     API_FOOTBALL_KEY = os.environ.get("API_FOOTBALL_KEY", "")
 try:
-    from config_keys import SPORTSDATAIO_KEY, SPORTMONKS_KEY
+    from config_keys import SPORTSDATAIO_KEY
 except Exception:
     SPORTSDATAIO_KEY = os.environ.get("SPORTSDATAIO_KEY", "")
+try:
+    from config_keys import SPORTMONKS_KEY
+except Exception:
     SPORTMONKS_KEY = os.environ.get("SPORTMONKS_KEY", "")
+try:
+    from config_keys import SPORTSDATAIO_PREGAME_ENABLED
+except Exception:
+    SPORTSDATAIO_PREGAME_ENABLED = os.environ.get("SPORTSDATAIO_PREGAME_ENABLED", "")
+SPORTSDATAIO_PREGAME_ENABLED = str(SPORTSDATAIO_PREGAME_ENABLED).lower() in {
+    "1", "true", "yes", "on"
+}
 try:
     from config_keys import BALLDONTLIE_KEY
 except Exception:
@@ -229,6 +241,9 @@ API_FOOTBALL_MAX_LINEUPS = 10
 # looks forward from now rather than back from kickoff or from full time.
 API_FOOTBALL_INJURY_PRE_KICKOFF_HOURS = 72
 API_FOOTBALL_MAX_INJURIES = 8
+SPORTSDATAIO_PREGAME_CACHE_FILE = f"sportsdataio_pregame_{COMP_KEY.lower()}_cache.json"
+SPORTSDATAIO_PREGAME_CACHE_MIN = 15
+SPORTSDATAIO_PREGAME_STALE_MAX_HOURS = 6
 
 DIAG = []
 _ODDS_CACHE = {"t": 0.0, "data": {}}
@@ -790,7 +805,9 @@ def fetch_odds():
         rec = {}
         if hn:
             rec["1x2"] = {"home_pct": round(hs["home"]/hn*100), "draw_pct": round(hs["draw"]/hn*100),
-                          "away_pct": round(hs["away"]/hn*100), "books": hn}
+                          "away_pct": round(hs["away"]/hn*100), "books": hn,
+                          "observed_at": datetime.datetime.fromtimestamp(
+                              now, datetime.timezone.utc).isoformat().replace("+00:00", "Z")}
             # bookmaker disagreement: spread of the home-win % across books
             if len(home_book) >= 2:
                 spread = round(max(home_book) - min(home_book))
@@ -1004,6 +1021,30 @@ VENUE_COORDS = {
     "mexico": (19.303, -99.150), "azteca": (19.303, -99.150),
     "guadalajara": (20.681, -103.462), "akron": (20.681, -103.462), "zapopan": (20.681, -103.462),
     "monterrey": (25.669, -100.244), "bbva": (25.669, -100.244), "guadalupe": (25.669, -100.244),
+    # MLB parks / shared pro-sport cities. Indoor venues are still retained as
+    # provenance; the UI can distinguish a forecast from a verified roof state.
+    "wrigley": (41.948, -87.656), "guaranteed rate": (41.830, -87.634),
+    "yankee stadium": (40.829, -73.926), "citi field": (40.757, -73.846),
+    "fenway": (42.346, -71.097), "camden yards": (39.284, -76.622),
+    "nationals park": (38.873, -77.007), "citizens bank": (39.906, -75.166),
+    "pnc park": (40.447, -80.006), "progressive field": (41.496, -81.685),
+    "comerica": (42.339, -83.049), "target field": (44.981, -93.278),
+    "kauffman": (39.051, -94.480), "busch stadium": (38.623, -90.193),
+    "great american": (39.097, -84.507), "american family field": (43.028, -87.971),
+    "truist park": (33.890, -84.468), "loandepot": (25.778, -80.220),
+    "tropicana field": (27.768, -82.653), "globe life": (32.747, -97.084),
+    "minute maid": (29.757, -95.355), "coors field": (39.756, -104.994),
+    "chase field": (33.445, -112.067), "petco": (32.707, -117.157),
+    "dodger stadium": (34.074, -118.240), "angel stadium": (33.800, -117.883),
+    "oracle park": (37.778, -122.389), "oakland coliseum": (37.752, -122.201),
+    "t-mobile park": (47.591, -122.333),
+    # Common top-flight soccer grounds (existing city keys cover many more).
+    "old trafford": (53.463, -2.291), "anfield": (53.431, -2.961),
+    "emirates stadium": (51.555, -0.108), "stamford bridge": (51.481, -0.191),
+    "etihad stadium": (53.483, -2.200), "tottenham hotspur": (51.604, -0.067),
+    "camp nou": (41.381, 2.123), "bernabeu": (40.453, -3.688),
+    "san siro": (45.478, 9.124), "allianz arena": (48.219, 11.625),
+    "signal iduna": (51.493, 7.452), "parc des princes": (48.842, 2.253),
 }
 _WX_CACHE = {}
 
@@ -2980,6 +3021,11 @@ def fetch_api_football_injuries(matches):
                 injuries = irec.get("injuries") if irec else None
         if injuries is not None:
             m["injuries"] = injuries
+            m.setdefault("personnel", {})["injuries_feed_checked"] = True
+            m.setdefault("pregame_provenance", []).append({
+                "input": "injuries", "source": "API-FOOTBALL",
+                "fetched_at": datetime.datetime.now(datetime.timezone.utc).isoformat().replace("+00:00", "Z"),
+            })
             attached += 1
 
     _save_box_cache(cache)
@@ -4006,12 +4052,15 @@ def _lock_decision(match, now=None):
     if lead_seconds < 0:
         return {"state": "quarantine", "reason": "past_due_upcoming",
                 "status_at_lock": status, "kickoff": kickoff, "lead_seconds": lead_seconds}
-    if lead_seconds > LOCK_WINDOW_HOURS * 3600:
+    competition = str((match or {}).get("_comp") or COMP_KEY).upper()
+    lock_hours = pregame_context.lock_window_hours(competition)
+    if lead_seconds > lock_hours * 3600:
         return {"state": "wait", "reason": "outside_lock_window",
-                "status_at_lock": status, "kickoff": kickoff, "lead_seconds": lead_seconds}
+                "status_at_lock": status, "kickoff": kickoff, "lead_seconds": lead_seconds,
+                "lock_window_hours": lock_hours}
     return {"state": "eligible", "reason": "verified_pregame_window",
             "status_at_lock": status, "kickoff": kickoff, "lead_seconds": lead_seconds,
-            "locked_at": current}
+            "locked_at": current, "lock_window_hours": lock_hours}
 
 
 def _record_is_official(rec):
@@ -4024,13 +4073,19 @@ def _record_is_official(rec):
     if locked_at is None or kickoff is None:
         return False
     calculated_lead = (kickoff - locked_at).total_seconds()
+    # Records created before sport-aware lock windows retain the historically
+    # published 12-hour boundary; new records freeze their own window.
+    try:
+        lock_hours = float(rec.get("lock_window_hours", LOCK_WINDOW_HOURS))
+    except (TypeError, ValueError):
+        return False
     return bool(rec.get("schema_ver") == PICK_SCHEMA_VERSION
                 and rec.get("model_code_marker") == MODEL_CODE_MARKER
                 and rec.get("fixture_id")
                 and rec.get("integrity_eligible") is True
                 and rec.get("integrity_status") == "verified"
                 and rec.get("status_at_lock") == "UPCOMING"
-                and 0 <= lead <= LOCK_WINDOW_HOURS * 3600
+                and 0 <= lead <= lock_hours * 3600
                 and abs(calculated_lead - lead) <= 1.0
                 and isinstance(rec.get("prediction_snapshot"), dict)
                 and isinstance(rec.get("input_snapshot"), dict))
@@ -4086,6 +4141,8 @@ def _locked_input_snapshot(match):
               "markets", "weather", "injuries", "lineups", "h2h", "stats", "stats_extra",
               "data_source", "advanced_metrics", "advanced_metrics_meta", "nfl_challenger_shadow",
               "mlb_challenger_shadow",
+              "personnel", "personnel_shadow", "pregame_context", "pregame_provenance",
+              "venue_context",
               "model_signal_schema")
     return _json_safe({"competition": COMP_KEY,
                        "competition_config": COMP,
@@ -4142,6 +4199,21 @@ def _market_fields(pr, mk):
 
 
 def _make_pick_record(match, prediction, market, decision, history=()):
+    # This is the fixture's live prediction object. Mark it in place so the
+    # UI and the immutable snapshot agree during the same build pass.
+    prediction = prediction if isinstance(prediction, dict) else {}
+    prediction["publication_state"] = "locked"
+    prediction["lock_readiness"] = _json_safe(match.get("pregame_context"))
+    availability = {
+        "market": "available" if market.get("home_pct") is not None else "unavailable",
+        "box_score": "available" if (match.get("stats_extra") or match.get("stats")) else "unavailable",
+        "lineups": "available" if match.get("lineups") else "unavailable",
+        "injuries": "available" if _injury_data_available(match) else "unavailable",
+        "weather": "available" if match.get("weather") else "unavailable",
+        "personnel": "available" if match.get("personnel") else "unavailable",
+        "venue_context": "available" if match.get("venue_context") else "unavailable",
+    }
+    prediction["data_availability"] = availability
     market_pick, market_pct, value_side, value_edge, value_mkt = _market_fields(prediction, market)
     upset = prediction.get("upset") or {}
     probs = prediction.get("adjusted") or prediction.get("blend") or prediction.get("model") or {}
@@ -4189,17 +4261,14 @@ def _make_pick_record(match, prediction, market, decision, history=()):
                            "gate": "open" if upset.get("triggered") else ("blocked" if upset.get("blocked") else "none"),
                            "box_score_edge": upset.get("box_score_edge")},
         "box_score_available": bool(match.get("stats_extra") or match.get("stats")),
-        "data_availability": {
-            "market": "available" if market.get("home_pct") is not None else "unavailable",
-            "box_score": "available" if (match.get("stats_extra") or match.get("stats")) else "unavailable",
-            "lineups": "available" if match.get("lineups") else "unavailable",
-            "injuries": "available" if match.get("injuries") else "unavailable",
-        },
+        "data_availability": availability,
         "damp_pct": prediction.get("damp_pct"), "mkt_pull": prediction.get("mkt_pull"),
         "model_ver": "v4-integrity-advancement", "model_code_marker": MODEL_CODE_MARKER,
         "locked_at": locked_at,
         "lead_time_seconds": round(float(decision["lead_seconds"]), 3),
         "lead_time_hours": round(float(decision["lead_seconds"]) / 3600.0, 6),
+        "lock_window_hours": float(decision.get("lock_window_hours") or
+                                     pregame_context.lock_window_hours(COMP_KEY)),
         "status_at_lock": decision["status_at_lock"],
         "integrity_eligible": True, "integrity_status": "verified",
         "integrity_reason": decision["reason"],
@@ -4239,9 +4308,8 @@ def apply_locked_picks(matches):
         m["prediction"] = _json_safe(snapshot)
 
 
-# Publish the slate well before kickoff. An hourly scheduler now gets many
-# independent chances to persist every pick, while the strict status/time gate
-# still makes post-kickoff admission impossible.
+# Legacy boundary used only to validate already-published records that predate
+# sport-aware windows. New locks use pregame_context.lock_window_hours().
 LOCK_WINDOW_HOURS = 12.0
 
 _KNOCKOUT_STAGE_MARKERS = (
@@ -4889,11 +4957,18 @@ def fetch_sportsdataio_bundle():
     st = {norm(name): row for name, row in st.items()}
     DIAG.append(f"SportsDataIO fixtures: {len(matches)} in display window ({len(all_matches)} season total)")
     DIAG.append(f"SportsDataIO standings: {sum(len(g.get('teams') or []) for g in tables)} teams")
-    try:
-        attached = adapter.attach_availability(matches)
-        DIAG.append(f"SportsDataIO availability: {attached} player labels")
-    except ProviderError as exc:
-        DIAG.append(f"SportsDataIO availability unavailable on this plan: {_scrub(exc)}")
+    if SPORTSDATAIO_PREGAME_ENABLED:
+        try:
+            attached = adapter.attach_pregame(matches)
+            DIAG.append(f"SportsDataIO availability: {attached['injuries']} player labels, "
+                        f"{attached['lineups']} lineup(s)")
+            for error in attached.get("errors") or []:
+                DIAG.append(f"SportsDataIO {error.get('input')} unavailable: "
+                            f"{_scrub(error.get('error'))}")
+        except ProviderError as exc:
+            DIAG.append(f"SportsDataIO availability unavailable on this plan: {_scrub(exc)}")
+    else:
+        DIAG.append("SportsDataIO availability: disabled until a live redistribution tier is confirmed")
     return adapter, matches, st, tables
 
 
@@ -5472,6 +5547,147 @@ def fetch_sportmonks_enrichment(matches):
         DIAG.append(f"Sportmonks enrichment failed: {_scrub(exc)}")
 
 
+def fetch_sportsdataio_pregame_overlay(matches):
+    """Add licensed late information without replacing each sport's fixture feed.
+
+    Only fixtures inside 72 hours are sent through the overlay.  A normalized
+    cache avoids repeatedly spending provider quota and is safe to restore in
+    CI because it contains derived fields, never the API key.
+    """
+    if COMP_KEY not in {"NFL", "NBA", "MLB", "NHL", "NCAAF", "NCAAM"}:
+        return {"injuries": 0, "lineups": 0}
+    if not SPORTSDATAIO_PREGAME_ENABLED:
+        DIAG.append("pregame overlay: disabled until a live redistribution tier is confirmed")
+        return {"injuries": 0, "lineups": 0}
+    if not SPORTSDATAIO_KEY or "PASTE_" in str(SPORTSDATAIO_KEY):
+        DIAG.append("pregame overlay: SportsDataIO key not configured")
+        return {"injuries": 0, "lineups": 0}
+    now = datetime.datetime.now(datetime.timezone.utc)
+    near = []
+    for match in matches:
+        kickoff = _parse_kickoff(match.get("kickoff"))
+        if match.get("status") == "UPCOMING" and kickoff:
+            hours = (kickoff - now).total_seconds() / 3600
+            if 0 <= hours <= 72:
+                near.append(match)
+    if not near:
+        DIAG.append("pregame overlay: no upcoming fixture inside 72h")
+        return {"injuries": 0, "lineups": 0}
+
+    cached = None
+    try:
+        if (os.path.exists(SPORTSDATAIO_PREGAME_CACHE_FILE) and
+                time.time() - os.path.getmtime(SPORTSDATAIO_PREGAME_CACHE_FILE) <
+                SPORTSDATAIO_PREGAME_CACHE_MIN * 60):
+            with open(SPORTSDATAIO_PREGAME_CACHE_FILE, encoding="utf-8") as handle:
+                cached = json.load(handle)
+    except Exception:
+        cached = None
+    if cached is None:
+        try:
+            result = SportsDataIOAdapter(SPORTSDATAIO_KEY, COMP_KEY).attach_pregame(near)
+            cached = {str(match.get("id")): {
+                key: match.get(key) for key in
+                ("injuries_shadow", "lineups", "personnel", "pregame_provenance")
+            } for match in near}
+            tmp = SPORTSDATAIO_PREGAME_CACHE_FILE + ".tmp"
+            with open(tmp, "w", encoding="utf-8") as handle:
+                json.dump(cached, handle, ensure_ascii=False)
+            os.replace(tmp, SPORTSDATAIO_PREGAME_CACHE_FILE)
+            DIAG.append(f"pregame overlay: {result['injuries']} availability rows, "
+                        f"{result['lineups']} lineups")
+            for error in result.get("errors") or []:
+                DIAG.append(f"pregame overlay {error.get('input')} unavailable"
+                            f"{f' for {error.get('date')}' if error.get('date') else ''}: "
+                            f"{_scrub(error.get('error'))}")
+            return result
+        except ProviderError as exc:
+            try:
+                age_seconds = time.time() - os.path.getmtime(SPORTSDATAIO_PREGAME_CACHE_FILE)
+                if age_seconds > SPORTSDATAIO_PREGAME_STALE_MAX_HOURS * 3600:
+                    raise OSError("pregame cache exceeds bounded stale window")
+                with open(SPORTSDATAIO_PREGAME_CACHE_FILE, encoding="utf-8") as handle:
+                    cached = json.load(handle)
+                DIAG.append(f"pregame overlay: stale cache after provider error — {_scrub(exc)}")
+            except Exception:
+                DIAG.append(f"pregame overlay unavailable on this plan — {_scrub(exc)}")
+                return {"injuries": 0, "lineups": 0}
+    else:
+        DIAG.append("pregame overlay: local cache")
+    for match in near:
+        row = cached.get(str(match.get("id"))) if isinstance(cached, dict) else None
+        if not isinstance(row, dict):
+            continue
+        for key in ("injuries_shadow", "lineups", "personnel", "pregame_provenance"):
+            if row.get(key):
+                match[key] = row[key]
+    return {"injuries": sum(_shadow_injury_count(match) for match in near),
+            "lineups": sum(bool(match.get("lineups")) for match in near)}
+
+
+def _has_injuries(match):
+    injuries = match.get("injuries") or {}
+    return isinstance(injuries, dict) and any(injuries.get(side) for side in ("home", "away"))
+
+
+def _shadow_injury_count(match):
+    details = (match.get("personnel") or {}).get("injury_details") or {}
+    return sum(len(details.get(side) or []) for side in ("home", "away"))
+
+
+def _injury_data_available(match):
+    return (_has_injuries(match) or
+            bool((match.get("personnel") or {}).get("injuries_feed_checked")))
+
+
+def record_market_snapshots(matches):
+    """Persist authorized pregame consensus probabilities for later CLV/audits."""
+    now = datetime.datetime.now(datetime.timezone.utc)
+    snapshots = []
+    for match in matches:
+        kickoff = _parse_kickoff(match.get("kickoff"))
+        market = (match.get("markets") or {}).get("1x2") or {}
+        if match.get("status") != "UPCOMING" or not kickoff or now >= kickoff:
+            continue
+        keys = ("h", "a") if not COMP.get("has_draws") else ("h", "d", "a")
+        source_keys = {"h": "home_pct", "d": "draw_pct", "a": "away_pct"}
+        if any(market.get(source_keys[key]) is None for key in keys):
+            continue
+        observed_at = market.get("observed_at")
+        if not observed_at and _ODDS_CACHE.get("t"):
+            observed_at = datetime.datetime.fromtimestamp(
+                float(_ODDS_CACHE["t"]), datetime.timezone.utc).isoformat().replace("+00:00", "Z")
+        if not observed_at:
+            continue
+        snapshots.append({
+            "fixture_id": str(match.get("id")), "competition": COMP_KEY,
+            "kickoff": match.get("kickoff"), "observed_at": observed_at,
+            "market_type": "1x2" if len(keys) == 3 else "moneyline",
+            "odds_format": "probability",
+            "outcomes": {key: float(market[source_keys[key]]) / 100.0 for key in keys},
+            "source_snapshot_id": market.get("snapshot_id") or
+                                  f"{match.get('id')}:{observed_at}",
+        })
+    if not snapshots:
+        return 0
+    # Replaying a cache is not a new provider fetch. Keeping the batch fetch
+    # time tied to the newest actual quote also makes identical cache replays
+    # deduplicate in the append-only ledger.
+    fetched_at = max(snapshot["observed_at"] for snapshot in snapshots)
+    try:
+        result = market_snapshots.append_batch("market_snapshot_ledger.jsonl", {
+            "source": "The Odds API consensus",
+            "authorization_basis": "licensed",
+            "source_reference": "https://the-odds-api.com/",
+            "fetched_at": fetched_at, "snapshots": snapshots,
+        }, recorded_at=now.isoformat())
+        DIAG.append(f"market ledger: {'appended' if result['created'] else 'deduplicated'} "
+                    f"{len(snapshots)} pregame snapshot(s)")
+    except (OSError, ValueError) as exc:
+        DIAG.append(f"market ledger: snapshot rejected — {_scrub(exc)}")
+    return len(snapshots)
+
+
 
 def compute_advancement(matches, st, name_map, code_map):
     """Model-derived advancement odds: roll the strength model through the
@@ -5681,6 +5897,7 @@ def build():
         if rec:
             m["markets"] = rec; merged += 1
             if how == "fuzzy": fuzzy += 1
+    record_market_snapshots(matches)
 
     if COMP["sport"] == "soccer":
         print("Fetching soccer detail (Sportmonks)…")
@@ -5693,6 +5910,13 @@ def build():
         # for a second /fixtures lookup against the same shared daily quota.
         print("Fetching soccer injuries (API-FOOTBALL)…")
         fetch_api_football_injuries(matches)
+    elif COMP.get("source") != "sportsdataio":
+        print("Fetching sport-specific personnel context (SportsDataIO)…")
+        fetch_sportsdataio_pregame_overlay(matches)
+
+    venue_shadow = pregame_context.derive_venue_context(matches, training_matches, COMP["sport"])
+    if venue_shadow.get("matches"):
+        DIAG.append(f"venue context shadow: {venue_shadow['matches']} match(es), production weight 0")
 
     # for US sports, pull championship odds first and fold them into team strength
     # so predictions use market-implied strength (their soccer-value equivalent)
@@ -5764,6 +5988,13 @@ def build():
     if COMP_KEY == "NCAAF" and sports_adapter:
         refresh_college_advanced_metrics(sports_adapter)
 
+    # Build an auditable, sport-aware readiness receipt. Personnel and venue
+    # additions stay at zero production weight until prospective promotion.
+    pregame_context.attach_personnel_shadows(matches, COMP["sport"])
+    readiness = pregame_context.attach_pregame_context(matches, COMP_KEY, COMP["sport"])
+    DIAG.append("pregame readiness: " + ", ".join(
+        f"{key}={value}" for key, value in readiness.items() if value))
+
     # predictions run AFTER all stats/lineups so the model can use them this run
     shadow = attach_shadow_profiles(matches, COMP_KEY, COMP["sport"])
     if shadow.get("matches"):
@@ -5781,6 +6012,10 @@ def build():
     promoted_matches = 0
     for m in matches:
         m["prediction"] = predict(m["home"], m["away"], m["markets"], m)
+        context = m.get("pregame_context") or {}
+        m["prediction"]["publication_state"] = (
+            "lock_candidate" if context.get("phase") == "lock_window" else "preliminary")
+        m["prediction"]["lock_readiness"] = context
         # Real, not simulated: reruns the same predict() with the home-
         # advantage term zeroed, so the Sandbox's "neutral venue" toggle
         # shows an actual model output rather than a client-side guess.
