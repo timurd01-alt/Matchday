@@ -50,7 +50,7 @@ class SportsDataIOTests(unittest.TestCase):
                  "Wins": 8, "Losses": 4, "PointsFor": 1380, "PointsAgainst": 1320,
                  "ConferenceRank": 2, "Streak": -1},
             ],
-            "/stats/json/Injuries": [
+            "/projections/json/InjuredPlayers": [
                 {"Team": "BOS", "Name": "Example Player", "InjuryStatus": "Questionable"},
             ],
             "/stats/json/PlayerSeasonStats/": [
@@ -59,6 +59,15 @@ class SportsDataIOTests(unittest.TestCase):
                 {"Name": "Player Two", "Games": 10, "Points": 250, "Rebounds": 110,
                  "Assists": 60, "BlockedShots": 30},
             ],
+            "/projections/json/StartingLineupsByDate/": [{
+                "GameID": 42, "HomeTeam": "BOS", "AwayTeam": "NYK",
+                "HomeLineup": [{"PlayerID": 1, "Name": "Home Starter", "Position": "PG",
+                                "Starting": True, "Confirmed": True},
+                               {"PlayerID": 3, "Name": "Home Bench", "Position": "SG",
+                                "Starting": False, "Confirmed": True}],
+                "AwayLineup": [{"PlayerID": 2, "Name": "Away Starter", "Position": "PG",
+                                "Starting": True, "Confirmed": True}],
+            }],
         }
 
     def getter(self, url, headers):
@@ -87,10 +96,45 @@ class SportsDataIOTests(unittest.TestCase):
         adapter = SportsDataIOAdapter("test-key", "NBA", getter=self.getter)
         matches = adapter.schedule()
         self.assertEqual(adapter.attach_availability(matches), 1)
-        self.assertIn("Questionable", matches[0]["injuries"]["home"][0])
+        self.assertIn("Questionable", matches[0]["injuries_shadow"]["home"][0])
+        self.assertFalse(any(matches[0]["injuries"].values()))
         leaders = adapter.leaders()
         self.assertEqual(leaders["source"], "SportsDataIO")
         self.assertEqual(leaders["categories"][0]["leaders"][0]["value"], 30.0)
+
+    def test_availability_maps_cross_provider_team_name_not_only_short_code(self):
+        adapter = SportsDataIOAdapter("test-key", "NBA", getter=self.getter)
+        matches = [{"home": {"name": "Boston Celtics", "code": "B"},
+                    "away": {"name": "New York Knicks", "code": "N"},
+                    "personnel": {}}]
+        self.assertEqual(adapter.attach_availability(matches), 1)
+        self.assertEqual(matches[0]["personnel"]["injury_details"]["home"][0]["name"],
+                         "Example Player")
+
+    def test_starting_lineups_are_normalized_with_confirmation(self):
+        adapter = SportsDataIOAdapter("test-key", "NBA", getter=self.getter)
+        rows = adapter.starting_lineups("2026-11-01")
+        self.assertEqual(rows[0]["home"]["xi"][0]["name"], "Home Starter")
+        self.assertEqual(len(rows[0]["home"]["xi"]), 1)
+        self.assertTrue(rows[0]["confirmed"])
+
+    def test_mlb_batting_lineups_and_pitchers_follow_official_schema(self):
+        def getter(url, headers):
+            if "/projections/json/StartingLineupsByDate/" in url:
+                return [{"GameID": 7, "HomeTeam": "BOS", "AwayTeam": "NYY",
+                         "HomeBattingLineup": [{"PlayerID": 1, "Name": "Home Batter",
+                                                 "Starting": True, "Confirmed": True}],
+                         "AwayBattingLineup": [{"PlayerID": 2, "Name": "Away Batter",
+                                                 "Starting": True, "Confirmed": True}],
+                         "HomeStartingPitcher": {"PlayerID": 3, "Name": "Home Pitcher",
+                                                   "Confirmed": True},
+                         "AwayStartingPitcher": {"PlayerID": 4, "Name": "Away Pitcher",
+                                                   "Confirmed": False}}]
+            raise AssertionError(url)
+        row = SportsDataIOAdapter("test-key", "MLB", getter=getter).starting_lineups("2026-08-03")[0]
+        self.assertEqual(row["home"]["xi"][0]["name"], "Home Batter")
+        self.assertTrue(row["home_starting_pitcher"]["confirmed"])
+        self.assertFalse(row["away_starting_pitcher"]["confirmed"])
 
     def test_nhl_leaders_include_offense_and_defense_extras(self):
         # PlusMinus can be negative -- confirm a real leader (best plus/minus)
@@ -117,6 +161,20 @@ class SportsDataIOTests(unittest.TestCase):
         self.assertEqual(by_key["PlusMinus"]["leaders"][0]["name"], "Skater One")
         self.assertEqual(by_key["PlusMinus"]["leaders"][0]["value"], 12)
         self.assertEqual(by_key["Hits"]["leaders"][0]["name"], "Skater Two")
+
+    def test_nhl_starting_goalies_are_normalized(self):
+        def getter(url, headers):
+            if "/projections/json/StartingGoaltendersByDate/" in url:
+                return [{"GameID": 9, "HomeTeam": "BOS", "AwayTeam": "NYR",
+                         "HomeGoaltender": {"PlayerID": 1, "FirstName": "Home", "LastName": "Goalie",
+                                             "Confirmed": True},
+                         "AwayGoaltender": {"PlayerID": 2, "FirstName": "Away", "LastName": "Goalie",
+                                             "Confirmed": False}}]
+            raise AssertionError(url)
+        rows = SportsDataIOAdapter("test-key", "NHL", getter=getter).starting_goalies("2026-OCT-10")
+        self.assertEqual(rows[0]["home"]["name"], "Home Goalie")
+        self.assertTrue(rows[0]["home"]["confirmed"])
+        self.assertFalse(rows[0]["away"]["confirmed"])
 
 
 class NflverseAdapterTests(unittest.TestCase):

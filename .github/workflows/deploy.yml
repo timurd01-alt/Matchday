@@ -53,6 +53,8 @@ jobs:
             advanced_metrics_*.json
             nflverse_pbp_*.csv.gz
             forecast_ledger_*.jsonl
+            market_snapshot_ledger.jsonl
+            market_benchmark_report.json
             nfl_availability_ledger.jsonl
             nfl_prospective_scorecard.json
             mlb_prospective_scorecard.json
@@ -72,7 +74,7 @@ jobs:
       # deploy below if it fails, since a broken prediction/provider path
       # is exactly what those steps would otherwise ship.
       - name: Run required test suite
-        run: python -m unittest test_model_inputs test_provider_adapters test_generate_posts
+        run: python -m unittest test_model_inputs test_provider_adapters test_generate_posts test_pregame_context test_market_benchmark
 
       - name: Recover published last-good fixtures after a cold cache miss
         run: python recover_published_data.py
@@ -86,6 +88,7 @@ jobs:
           ODDS_API_KEY = "${{ secrets.ODDS_API_KEY }}"
           API_FOOTBALL_KEY = "${{ secrets.API_FOOTBALL_KEY }}"
           BALLDONTLIE_KEY = "${{ secrets.BALLDONTLIE_KEY }}"
+          SPORTSDATAIO_KEY = "${{ secrets.SPORTSDATAIO_KEY }}"
           EOF
 
       # updates.js is generated from updates/*.json and committed only so a
@@ -152,6 +155,16 @@ jobs:
             python build_nfl_prospective_scorecard.py --ledger forecast_ledger_nfl.jsonl --output nfl_prospective_scorecard.json
           else
             echo "no NFL forecast ledger yet; prospective scorecard remains pending"
+          fi
+
+      - name: Segment model losses against the closing market
+        if: github.event_name != 'push'
+        run: |
+          files=(forecast_ledger_*.jsonl)
+          if [ -f market_snapshot_ledger.jsonl ] && [ -e "${files[0]}" ]; then
+            python build_market_benchmark.py --forecast-ledger "${files[@]}" --market-ledger market_snapshot_ledger.jsonl --output market_benchmark_report.json
+          else
+            echo "market/forecast receipts have not accumulated yet; benchmark remains pending"
           fi
 
       - name: Populate authorized research reasoning into cached fixtures

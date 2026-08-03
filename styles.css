@@ -752,6 +752,7 @@ body.modalOpen{overflow:hidden}.matchModal{position:fixed;inset:0;z-index:99;dis
 /* ===== MATCH MODAL + FORECAST BOARD REDESIGN — v4 =====
    Full-width model read, no chip crowding, no vertical text, and a cleaner forecast board. */
 .modalBody .detailGrid.v4Detail{display:block;min-width:0}
+.modalBody .detailGrid.v4Detail .pregameContextCard{margin:16px 0}
 .modalBody .detailGrid.v4Detail .detailTop{display:grid!important;grid-template-columns:1fr!important;gap:16px!important;min-width:0}
 .modalBody .detailGrid.v4Detail .detailLow{display:grid!important;grid-template-columns:1fr!important;gap:16px!important;margin-top:16px;min-width:0}
 .modalBody .detailGrid.v4Detail .readCard{min-width:0!important;overflow:hidden!important}

@@ -11,9 +11,11 @@ import datetime as dt
 import functools
 import json
 import math
+import re
 import time
 import urllib.parse
 import urllib.request
+from zoneinfo import ZoneInfo
 
 from advanced_metrics import cfbd_advanced_team_profiles
 import provider_quota
@@ -437,30 +439,226 @@ class SportsDataIOAdapter:
 
     def attach_availability(self, matches):
         """Attach licensed injury/availability labels when the feed includes them."""
-        resources = ["Injuries"]
         if self.code == "nfl":
+            resources = ["Injuries"]
             weeks = [int(match.get("stage", "").replace("Week ", "")) for match in matches
                      if str(match.get("stage") or "").startswith("Week ")
                      and str(match.get("stage") or "").replace("Week ", "").isdigit()]
             if weeks:
                 resources = [f"Injuries/{self.season}/{max(weeks)}"]
-        rows = self._get_product("stats", resources[0])
+            rows = self._get_product("stats", resources[0])
+        else:
+            # Current league OpenAPI specs expose the cross-team injury list
+            # from the projections product as InjuredPlayers.
+            rows = self._get_product("projections", "InjuredPlayers")
         by_team = {}
         for row in rows if isinstance(rows, list) else []:
             team = str(row.get("Team") or row.get("TeamKey") or "")
             name = row.get("Name") or row.get("PlayerName") or ""
             status = row.get("InjuryStatus") or row.get("Status") or "Unavailable"
             if team and name:
-                by_team.setdefault(team.lower(), []).append(f"{name} ({status})")
+                by_team.setdefault(team.lower(), []).append({
+                    "player_id": row.get("PlayerID") or row.get("GlobalPlayerID"),
+                    "name": str(name), "status": str(status),
+                    "position": str(row.get("Position") or ""),
+                    "body_part": str(row.get("BodyPart") or row.get("InjuryBodyPart") or ""),
+                    "updated_at": _iso_utc(row.get("Updated") or row.get("UpdatedDate") or
+                                             row.get("LastUpdated")),
+                })
+        # CFBD/CBBD fixture abbreviations are not SportsDataIO team keys.
+        # Resolve both providers through normalized full team names, while
+        # retaining the exact-key fast path for native/pro fixtures.
+        def team_key(value):
+            return re.sub(r"[^a-z0-9]", "", str(value or "").lower())
+        aliases = {}
+        for provider_code, provider_name in self.teams().items():
+            aliases[team_key(provider_code)] = str(provider_code).lower()
+            aliases[team_key(provider_name)] = str(provider_code).lower()
         attached = 0
         for match in matches:
+            personnel = match.setdefault("personnel", {})
+            personnel["injuries_feed_checked"] = True
             for side in ("home", "away"):
-                code = str((match.get(side) or {}).get("code") or "").lower()
+                team = match.get(side) or {}
+                code = aliases.get(team_key(team.get("code"))) or \
+                       aliases.get(team_key(team.get("name"))) or \
+                       str(team.get("code") or "").lower()
                 people = by_team.get(code) or []
                 if people:
-                    match.setdefault("injuries", {"home": [], "away": []})[side] = people[:12]
+                    details = people[:20]
+                    match.setdefault("injuries_shadow", {"home": [], "away": []})[side] = [
+                        f"{person['name']} ({person['status']})" for person in details[:12]
+                    ]
+                    personnel.setdefault("injury_details", {"home": [], "away": []})[side] = details
                     attached += len(people[:12])
+            match.setdefault("pregame_provenance", []).append({
+                "input": "injuries", "source": "SportsDataIO",
+                "fetched_at": dt.datetime.now(dt.timezone.utc).isoformat().replace("+00:00", "Z"),
+            })
         return attached
+
+    @staticmethod
+    def _lineup_side(row, prefix):
+        raw = (row.get(f"{prefix}BattingLineup") or row.get(f"{prefix}Lineup") or
+               row.get(f"{prefix}StartingLineup") or
+               row.get(f"{prefix}Players") or [])
+        if isinstance(raw, dict):
+            raw = raw.get("Players") or raw.get("Lineup") or raw.get("Starters") or []
+        players = []
+        for slot in raw if isinstance(raw, list) else []:
+            if not isinstance(slot, dict):
+                continue
+            player = slot.get("Player") if isinstance(slot.get("Player"), dict) else slot
+            lineup_status = str(slot.get("LineupStatus") or player.get("LineupStatus") or "").lower()
+            starting = slot.get("Starting", player.get("Starting"))
+            if starting is False or (starting is None and lineup_status in {"active", "inactive"}):
+                continue
+            name = player.get("Name") or player.get("PlayerName") or player.get("FirstName")
+            if not name:
+                continue
+            if player.get("FirstName") and player.get("LastName"):
+                name = f"{player['FirstName']} {player['LastName']}"
+            players.append({
+                "id": player.get("PlayerID") or player.get("GlobalPlayerID"),
+                "name": str(name),
+                "position": player.get("Position") or slot.get("Position") or "",
+                "order": slot.get("BattingOrder") or slot.get("LineupPosition") or slot.get("Order"),
+                "confirmed": bool(slot.get("Confirmed", player.get("Confirmed", False))),
+            })
+        return players
+
+    def starting_lineups(self, date):
+        """Normalize the licensed MLB/NBA starting-lineup projection endpoint."""
+        if self.code not in {"mlb", "nba"}:
+            return []
+        rows = self._get_product("projections", f"StartingLineupsByDate/{date}")
+        out = []
+        for row in rows if isinstance(rows, list) else []:
+            if not isinstance(row, dict):
+                continue
+            home = str(row.get("HomeTeam") or row.get("HomeTeamKey") or "")
+            away = str(row.get("AwayTeam") or row.get("AwayTeamKey") or "")
+            home_lineup = self._lineup_side(row, "Home")
+            away_lineup = self._lineup_side(row, "Away")
+            confirmed = bool(row.get("Confirmed") or
+                             str(row.get("LineupStatus") or "").lower() == "confirmed" or
+                             (home_lineup and away_lineup and
+                              all(player.get("confirmed") for player in home_lineup + away_lineup)))
+            item = {
+                "game_id": row.get("GameID") or row.get("GlobalGameID"),
+                "home_code": home, "away_code": away, "confirmed": confirmed,
+                "home": {"xi": home_lineup, "confirmed": confirmed},
+                "away": {"xi": away_lineup, "confirmed": confirmed},
+            }
+            for side, prefix in (("home", "Home"), ("away", "Away")):
+                starter = row.get(f"{prefix}StartingPitcher") or row.get(f"{prefix}Pitcher")
+                if isinstance(starter, dict):
+                    item[f"{side}_starting_pitcher"] = {
+                        "id": starter.get("PlayerID") or starter.get("GlobalPlayerID"),
+                        "name": starter.get("Name") or starter.get("PlayerName") or
+                                " ".join(x for x in (starter.get("FirstName"), starter.get("LastName")) if x),
+                        "confirmed": bool(starter.get("Confirmed")),
+                    }
+            if home and away:
+                out.append(item)
+        return out
+
+    def starting_goalies(self, date):
+        """Normalize NHL projected/confirmed goaltenders from the projections feed."""
+        if self.code != "nhl":
+            return []
+        rows = self._get_product("projections", f"StartingGoaltendersByDate/{date}")
+        out = []
+        for row in rows if isinstance(rows, list) else []:
+            if not isinstance(row, dict):
+                continue
+            item = {"game_id": row.get("GameID"),
+                    "home_code": str(row.get("HomeTeam") or ""),
+                    "away_code": str(row.get("AwayTeam") or "")}
+            for side, prefix in (("home", "Home"), ("away", "Away")):
+                goalie = row.get(f"{prefix}Goaltender")
+                if isinstance(goalie, dict):
+                    item[side] = {
+                        "id": goalie.get("PlayerID"),
+                        "name": goalie.get("Name") or
+                                " ".join(x for x in (goalie.get("FirstName"), goalie.get("LastName")) if x),
+                        "confirmed": bool(goalie.get("Confirmed")),
+                    }
+            if item["home_code"] and item["away_code"]:
+                out.append(item)
+        return out
+
+    def attach_pregame(self, matches):
+        """Overlay licensed availability and, where offered, projected lineups."""
+        errors = []
+        try:
+            attached = self.attach_availability(matches)
+        except ProviderError as exc:
+            attached = 0
+            errors.append({"input": "injuries", "error": str(exc)})
+        lineup_count = 0
+        if self.code not in {"mlb", "nba", "nhl"}:
+            return {"injuries": attached, "lineups": 0, "errors": errors}
+        eastern = ZoneInfo("America/New_York")
+        dates = set()
+        for match in matches:
+            if match.get("status") != "UPCOMING" or not match.get("kickoff"):
+                continue
+            try:
+                kickoff = dt.datetime.fromisoformat(str(match["kickoff"]).replace("Z", "+00:00"))
+                dates.add(kickoff.astimezone(eastern).date().isoformat())
+            except (TypeError, ValueError):
+                continue
+        dates = sorted(dates)
+        for date in dates[:3]:
+            try:
+                rows = self.starting_goalies(date) if self.code == "nhl" else self.starting_lineups(date)
+            except ProviderError as exc:
+                errors.append({"input": "starting_goalies" if self.code == "nhl" else "starting_lineups",
+                               "date": date, "error": str(exc)})
+                continue
+            if self.code == "nhl":
+                for row in rows:
+                    for match in matches:
+                        hc = str((match.get("home") or {}).get("code") or "").lower()
+                        ac = str((match.get("away") or {}).get("code") or "").lower()
+                        if hc != row["home_code"].lower() or ac != row["away_code"].lower():
+                            continue
+                        goalies = {side: row.get(side) for side in ("home", "away")}
+                        if any(goalies.values()):
+                            personnel = match.setdefault("personnel", {})
+                            personnel["starting_goalies"] = goalies
+                            personnel["starting_goalies_confirmed"] = all(
+                                goalie and goalie.get("confirmed") for goalie in goalies.values())
+                            match.setdefault("pregame_provenance", []).append({
+                                "input": "starting_goalies", "source": "SportsDataIO",
+                                "fetched_at": dt.datetime.now(dt.timezone.utc).isoformat().replace("+00:00", "Z"),
+                                "confirmed": personnel["starting_goalies_confirmed"],
+                            })
+                continue
+            for row in rows:
+                for match in matches:
+                    hc = str((match.get("home") or {}).get("code") or "").lower()
+                    ac = str((match.get("away") or {}).get("code") or "").lower()
+                    if hc != row["home_code"].lower() or ac != row["away_code"].lower():
+                        continue
+                    if row["home"]["xi"] or row["away"]["xi"]:
+                        match["lineups"] = {"home": row["home"], "away": row["away"],
+                                            "confirmed": row["confirmed"]}
+                        lineup_count += 1
+                    personnel = match.setdefault("personnel", {})
+                    pitchers = {side: row.get(f"{side}_starting_pitcher")
+                                for side in ("home", "away")}
+                    if any(pitchers.values()):
+                        personnel["starting_pitchers"] = pitchers
+                        personnel["starting_pitchers_confirmed"] = all(
+                            pitcher and pitcher.get("confirmed") for pitcher in pitchers.values())
+                    match.setdefault("pregame_provenance", []).append({
+                        "input": "starting_lineups", "source": "SportsDataIO",
+                        "fetched_at": dt.datetime.now(dt.timezone.utc).isoformat().replace("+00:00", "Z"),
+                        "confirmed": row["confirmed"],
+                    })
+        return {"injuries": attached, "lineups": lineup_count, "errors": errors}
 
     def leaders(self):
         """Return sport-native season leaders from licensed player stats."""

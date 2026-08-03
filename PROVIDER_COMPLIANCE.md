@@ -1,6 +1,8 @@
 # Matchday provider compliance notes
 
-Reviewed: 2026-07-29 (Advanced-metrics shadow expansion: nflverse `pbp` CC BY 4.0 only,
+Reviewed: 2026-08-03 (sport-aware pregame context and a disabled-by-default SportsDataIO
+overlay; activation requires a live public-redistribution agreement and endpoint coverage.
+Advanced-metrics shadow expansion: nflverse `pbp` CC BY 4.0 only,
 StatsBomb Open Data selective historical research with required credit/logo, Retrosheet official
 event downloads with its mandatory prominent notice before any transfer/publication, authorized
 basketball box-score normalization, and CFBD `/stats/season/advanced`; ESPN-origin releases remain
@@ -680,3 +682,20 @@ record the review date here before each public release.
   endpoints, target-game starters, lineups, and bullpen availability are not inferred.
   The historical gate passed, but the live challenger remains a prospective shadow
   with production weight zero.
+
+- **2026-08-03:** Added a credential-gated SportsDataIO pregame overlay for
+  NFL, NBA, MLB, NHL, NCAAF, and NCAAM. It uses the configured licensed API,
+  never scrapes pages, caches only normalized derived fields, and fails to an
+  explicit unavailable state when the active account does not include an
+  endpoint. The overlay is also disabled by default; a configured key alone is
+  insufficient, and activation requires explicit confirmation that the active
+  agreement permits live public redistribution. MLB/NBA starting-lineup requests use the provider's projections
+  product; NFL weekly injury reports use the stats product, while the other
+  league APIs expose `InjuredPlayers` in projections. Soccer keeps
+  the existing API-FOOTBALL/Sportmonks path because it already has native
+  fixture identity and lineup/injury integration. Market consensus from the
+  licensed Odds API is now passed through the existing authorized, pre-kickoff,
+  hash-chained snapshot contract for later benchmark analysis. Personnel,
+  workload, and venue additions remain prospective shadows with production
+  weight zero; this change does not claim that an unverified provider tier or
+  an unvalidated feature improves the production model.

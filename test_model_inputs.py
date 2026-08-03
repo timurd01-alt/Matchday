@@ -18,6 +18,18 @@ def finished(mid, home, away, hs, aps):
 
 
 class ModelInputTests(unittest.TestCase):
+    def test_market_ledger_preserves_quote_time_when_replaying_cache(self):
+        match = {"id": "cached-odds", "status": "UPCOMING",
+                 "kickoff": "2099-01-01T00:00:00Z",
+                 "markets": {"1x2": {"home_pct": 60, "away_pct": 40,
+                                       "observed_at": "2026-08-03T14:00:00Z"}}}
+        with mock.patch.object(fetch_data.market_snapshots, "append_batch",
+                               return_value={"created": True} ) as append:
+            self.assertEqual(fetch_data.record_market_snapshots([match]), 1)
+        payload = append.call_args.args[1]
+        self.assertEqual(payload["fetched_at"], "2026-08-03T14:00:00Z")
+        self.assertEqual(payload["snapshots"][0]["observed_at"], "2026-08-03T14:00:00Z")
+
     def test_market_weight_uses_depth_and_disagreement(self):
         self.assertEqual(fetch_data._market_blend_weight(None), 0.0)
         deep_tight = fetch_data._market_blend_weight({"books": 8, "spread": 4})

@@ -137,6 +137,62 @@ def _closing_movement(rows: list[dict[str, Any]]) -> dict[str, Any]:
             "negative": sum(value < 0 for value in values)}
 
 
+def _segment(rows: list[dict[str, Any]], classifier) -> dict[str, Any]:
+    grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for row in rows:
+        label = classifier(row)
+        if label:
+            grouped[str(label)].append(row)
+    output = {}
+    for label, subset in sorted(grouped.items()):
+        model = _metric(subset, "model_independent")
+        market = _metric(subset, "closing_market")
+        output[label] = {
+            "n": len(subset), "matchday": model, "market": market,
+            "matchday_minus_market_log_loss": (
+                round(model["log_loss"] - market["log_loss"], 6)
+                if model["log_loss"] is not None and market["log_loss"] is not None else None),
+        }
+    return output
+
+
+def _outcome_segments(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    """Describe *where* market losses occur, without post-hoc model tuning."""
+    eligible = [row for row in rows if isinstance(row.get("closing_market"), dict)]
+
+    def favorite_result(row):
+        market = row["closing_market"]
+        favorite = max(market, key=market.get)
+        return "favorite_won" if row["result"] == favorite else "underdog_or_draw_won"
+
+    def agreement(row):
+        model_pick = max(row["model_independent"], key=row["model_independent"].get)
+        market_pick = max(row["closing_market"], key=row["closing_market"].get)
+        return "agree" if model_pick == market_pick else "disagree"
+
+    def confidence(row):
+        pct = 100 * max(row["model_independent"].values())
+        floor = int(pct // 10) * 10
+        return f"{floor}-{floor + 9}%"
+
+    def favorite_strength(row):
+        pct = 100 * max(row["closing_market"].values())
+        if pct < 55:
+            return "pickem_under_55%"
+        if pct < 65:
+            return "favorite_55-64%"
+        return "strong_favorite_65%+"
+
+    return {
+        "competition": _segment(eligible, lambda row: row.get("competition")),
+        "realized_outcome": _segment(eligible, lambda row: row.get("result")),
+        "favorite_result": _segment(eligible, favorite_result),
+        "model_market_agreement": _segment(eligible, agreement),
+        "model_confidence_band": _segment(eligible, confidence),
+        "closing_favorite_strength": _segment(eligible, favorite_strength),
+    }
+
+
 def extract_rows(forecast_events: Iterable[dict[str, Any]], market_path: str | Path) -> tuple[list[dict[str, Any]], dict[str, int]]:
     locks: dict[str, list[dict[str, Any]]] = defaultdict(list)
     grades: dict[str, dict[str, Any]] = {}
@@ -224,6 +280,7 @@ def build_report(forecast_paths: Iterable[str | Path], market_path: str | Path) 
             "market_source": {"path": str(market_path), "events": market_state["events"],
                               "last_hash": market_state["last_hash"]},
             "coverage": coverage, "comparisons": comparisons,
+            "outcome_segments": _outcome_segments(rows),
             "closing_line_movement": _closing_movement(rows), "rows": rows}
 
 
