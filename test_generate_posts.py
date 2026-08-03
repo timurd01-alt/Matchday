@@ -25,6 +25,9 @@ AWARDS = {
 
 
 class RecapContentTests(unittest.TestCase):
+    def test_content_sport_routes_mlb_posts_to_baseball(self):
+        self.assertEqual(gp._content_sport("MLB"), "baseball")
+
     def test_no_post_when_nothing_graded(self):
         self.assertIsNone(gp.build_recap_post("NFL", "NFL", {"graded": 0}, None))
 
@@ -160,6 +163,46 @@ class RenderAndSitemapTests(unittest.TestCase):
         public_match = feed["datasets"][0]["matches"][0]
         self.assertNotIn("news", public_match)
         self.assertNotIn("private", public_match["prediction"])
+
+    def test_public_content_feed_keeps_only_verified_fixture_receipts(self):
+        matches = []
+        picks = []
+        for fixture_id, eligible, status in (
+                ("verified-game", True, "verified"),
+                ("legacy-game", False, "quarantined")):
+            matches.append({
+                "id": fixture_id, "kickoff": "2026-07-25T20:00:00Z", "status": "FINISHED",
+                "stage": "Week 1", "venue": "Example Field",
+                "home": {"name": "Alpha"}, "away": {"name": "Beta"},
+                # Knockout-style final: display score stays tied while the
+                # locked pick is graded on advancement.
+                "score": {"home": 1, "away": 1, "winner": "h"},
+                "prediction": (None if fixture_id == "verified-game" else
+                               {"pick": "a", "pick_name": "Beta", "confidence": 99}),
+            })
+            picks.append({"fixture_id": fixture_id, "integrity_eligible": eligible,
+                          "integrity_status": status, "legacy": not eligible,
+                          "pick": "h", "pick_name": "Alpha", "confidence": 61,
+                          "model_hit": True, "result": "hit",
+                          "factor_snapshot": {"elo": 4}, "locked_at": "2026-07-25T18:00:00Z"})
+        with open("data_mlb.json", "w", encoding="utf-8") as f:
+            json.dump({"competition": "MLB", "updated": "2026-07-25T20:30:00Z",
+                       "scorecard": {"graded": 1, "model_hits": 1, "picks": picks},
+                       "matches": matches}, f)
+        self.assertEqual(gp.generate_public_content_feed(), 1)
+        with open(gp.CONTENT_FEED_FILE, encoding="utf-8") as f:
+            dataset = json.load(f)["datasets"][0]
+        self.assertEqual(dataset["scorecard"]["verified_fixture_ids"], ["verified-game"])
+        self.assertNotIn("picks", dataset["scorecard"])
+        compact = {match["id"]: match for match in dataset["matches"]}
+        self.assertEqual(compact["verified-game"]["stage"], "Week 1")
+        self.assertEqual(compact["verified-game"]["venue"], "Example Field")
+        self.assertEqual(compact["verified-game"]["official_pick"]["pick_name"], "Alpha")
+        self.assertEqual(compact["verified-game"]["official_pick"]["confidence"], 61)
+        self.assertEqual(compact["verified-game"]["score"],
+                         {"home": 1, "away": 1, "winner": "h"})
+        self.assertTrue(compact["verified-game"]["official_pick"]["model_hit"])
+        self.assertNotIn("legacy-game", compact)
 
     def test_public_content_feed_excludes_in_progress_games(self):
         live = {

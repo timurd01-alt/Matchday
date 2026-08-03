@@ -18,6 +18,41 @@ def finished(mid, home, away, hs, aps):
 
 
 class ModelInputTests(unittest.TestCase):
+    def test_weekly_awards_use_only_verified_locked_prediction(self):
+        kickoff = (fetch_data.datetime.datetime.now(fetch_data.datetime.timezone.utc) -
+                   fetch_data.datetime.timedelta(days=1)).isoformat()
+        match = {"id": "award-game", "status": "FINISHED", "kickoff": kickoff,
+                 "home": {"name": "Alpha"}, "away": {"name": "Beta"},
+                 "score": {"home": 2, "away": 1, "winner": "h"},
+                 "prediction": {"pick": "a", "pick_name": "Beta", "confidence": 99}}
+        locked = {"fixture_id": "award-game", "integrity_eligible": True,
+                  "integrity_status": "verified", "legacy": False,
+                  "pick": "h", "pick_name": "Alpha", "confidence": 61, "edge": 5,
+                  "model_hit": True, "result": "hit",
+                  "prediction_snapshot": {"pick": "h", "pick_name": "Alpha",
+                                          "confidence": 61, "edge": 5}}
+        awards = fetch_data.build_weekly_awards([match], {"picks": [locked]})
+        self.assertEqual(awards["best_call"]["pick"], "Alpha")
+        self.assertEqual(awards["best_call"]["confidence"], 61)
+        self.assertIsNone(fetch_data.build_weekly_awards([match], {"picks": []}))
+
+    def test_weekly_awards_honor_advancement_grade_without_rewriting_tied_score(self):
+        kickoff = (fetch_data.datetime.datetime.now(fetch_data.datetime.timezone.utc) -
+                   fetch_data.datetime.timedelta(days=1)).isoformat()
+        match = {"id": "knockout-game", "status": "FINISHED", "kickoff": kickoff,
+                 "home": {"name": "Alpha"}, "away": {"name": "Beta"},
+                 "score": {"home": 1, "away": 1, "winner": "d"},
+                 "prediction": {"pick": "a", "pick_name": "Beta", "confidence": 99}}
+        locked = {"fixture_id": "knockout-game", "integrity_eligible": True,
+                  "integrity_status": "verified", "legacy": False,
+                  "pick": "h", "pick_name": "Alpha", "confidence": 61, "edge": 5,
+                  "model_hit": True, "result": "hit",
+                  "prediction_snapshot": {"pick": "h", "pick_name": "Alpha",
+                                          "confidence": 61, "edge": 5}}
+        awards = fetch_data.build_weekly_awards([match], {"picks": [locked]})
+        self.assertEqual(awards["best_call"]["pick"], "Alpha")
+        self.assertEqual(match["score"], {"home": 1, "away": 1, "winner": "d"})
+
     def test_market_ledger_preserves_quote_time_when_replaying_cache(self):
         match = {"id": "cached-odds", "status": "UPCOMING",
                  "kickoff": "2099-01-01T00:00:00Z",

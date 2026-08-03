@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0803B",
+  "tag": "Improvement",
+  "title": "Game recaps now look like game recaps",
+  "items": [
+   "The Content page adds Game Rewind: visual, sport-aware recap cards with team marks, the untouched final score, stage and venue context, verified pregame confidence, and the official locked-pick verdict.",
+   "A new Fun Stats strip turns the loaded slate into quick, shareable facts such as the published model record, closest finish, highest combined score, watchability leader, and strongest verified or current confidence—without inventing data that the feed does not contain.",
+   "Fixed the compact content pipeline so finished-game stories use the immutable verified pick receipt instead of a prediction recalculated after the result. Quarantined or legacy picks cannot receive a hit or miss label."
+  ]
+ },
+ {
   "date": "Build 0803A",
   "tag": "Improvement",
   "title": "Added the late information forecasts were missing",

@@ -83,6 +83,23 @@ class AnalysisModeTests(unittest.TestCase):
         ):
             self.assertNotIn(unsupported_promise, public_copy)
 
+    def test_content_rewind_uses_locked_receipts_and_renders_every_filter_change(self):
+        html = (ROOT / "content.html").read_text(encoding="utf-8")
+        js = (ROOT / "content.js").read_text(encoding="utf-8")
+        css = (ROOT / "content.css").read_text(encoding="utf-8")
+        scheduler = (ROOT / "multi_fetch.py").read_text(encoding="utf-8")
+        self.assertIn('id="gameRewindGrid"', html)
+        self.assertIn('id="funStatsGrid"', html)
+        self.assertIn("function verifiedModelCall", js)
+        self.assertIn("match?.official_pick", js)
+        self.assertIn("function officialPickHit", js)
+        self.assertIn("renderGameRewind()", js)
+        self.assertIn("renderFunStats()", js)
+        self.assertIn(".rewindVisual", css)
+        self.assertIn(".rewindCopy", css)
+        self.assertIn(".funStatsGrid", css)
+        self.assertIn("generate_public_content_feed()", scheduler)
+
     def test_live_aggregate_and_live_filter_are_not_rendered(self):
         panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
         self.assertNotIn("more live", panels)

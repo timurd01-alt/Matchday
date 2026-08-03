@@ -198,10 +198,11 @@ def _content_sport(comp_key):
         return "soccer"
     if key in {"ncaam", "nba"}:
         return "basketball"
-    return {"nfl": "nfl", "ncaaf": "ncaaf", "nhl": "hockey"}.get(key, "all")
+    return {"nfl": "nfl", "ncaaf": "ncaaf", "nhl": "hockey",
+            "mlb": "baseball"}.get(key, "all")
 
 
-def _compact_content_match(match):
+def _compact_content_match(match, official_pick=None):
     """Keep only fields the public content hub renders.
 
     The full competition files can be several megabytes. This projection keeps
@@ -214,6 +215,8 @@ def _compact_content_match(match):
         "id": match.get("id"),
         "kickoff": match.get("kickoff"),
         "status": match.get("status"),
+        "stage": match.get("stage"),
+        "venue": match.get("venue"),
         "home": {"name": (match.get("home") or {}).get("name")},
         "away": {"name": (match.get("away") or {}).get("name")},
         "score": {key: score.get(key) for key in ("home", "away", "winner")},
@@ -221,6 +224,11 @@ def _compact_content_match(match):
             key: prediction.get(key)
             for key in ("pick", "pick_name", "confidence", "note", "why")
         } if prediction else None,
+        "official_pick": ({
+            key: official_pick.get(key)
+            for key in ("pick", "pick_name", "confidence", "model_hit", "result",
+                        "factor_snapshot", "locked_at")
+        } if isinstance(official_pick, dict) else None),
         "watchability": match.get("watchability"),
     }
 
@@ -232,14 +240,26 @@ def generate_public_content_feed():
         data = _load_json(f"data_{key}.json", None)
         if not isinstance(data, dict):
             continue
+        scorecard = data.get("scorecard") or {}
+        verified_picks = {
+            str(pick.get("fixture_id")): pick
+            for pick in (scorecard.get("picks") or [])
+            if pick.get("fixture_id") is not None
+            and pick.get("integrity_eligible") is True
+            and pick.get("integrity_status") == "verified"
+            and pick.get("legacy") is not True
+        }
         matches = [match for match in (data.get("matches") or [])
-                   if isinstance(match, dict) and match.get("prediction")]
+                   if isinstance(match, dict)]
         active = sorted(
-            (match for match in matches if match.get("status") == "UPCOMING"),
+            (match for match in matches
+             if match.get("status") == "UPCOMING" and match.get("prediction")),
             key=lambda match: str(match.get("kickoff") or ""),
         )[:12]
         finished = sorted(
-            (match for match in matches if match.get("status") == "FINISHED"),
+            (match for match in matches
+             if match.get("status") == "FINISHED"
+             and str(match.get("id")) in verified_picks),
             key=lambda match: str(match.get("kickoff") or ""), reverse=True,
         )[:12]
         datasets.append({
@@ -248,11 +268,16 @@ def generate_public_content_feed():
             "sport": sport,
             "updated": data.get("updated"),
             "scorecard": {
-                field: (data.get("scorecard") or {}).get(field)
+                field: scorecard.get(field)
                 for field in ("graded", "model_hits")
+            } | {
+                "verified_fixture_ids": sorted({
+                    str(pick.get("fixture_id"))
+                    for pick in verified_picks.values()
+                })
             },
             "matches": [
-                _compact_content_match(match)
+                _compact_content_match(match, verified_picks.get(str(match.get("id"))))
                 for match in active + finished
             ],
         })

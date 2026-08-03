@@ -3777,7 +3777,7 @@ def update_player_db(matches):
     return db
 
 
-def build_weekly_awards(matches):
+def build_weekly_awards(matches, scorecard=None):
     """Four storylines from the last 7 days of finished results -- a "come
     back Monday to see what happened" hook for Community, built entirely
     from data every match already carries (score, prediction, upset
@@ -3791,6 +3791,16 @@ def build_weekly_awards(matches):
         except Exception:
             return None
 
+    verified = None
+    if isinstance(scorecard, dict):
+        verified = {
+            str(pick.get("fixture_id")): pick
+            for pick in (scorecard.get("picks") or [])
+            if pick.get("fixture_id") is not None
+            and pick.get("integrity_eligible") is True
+            and pick.get("integrity_status") == "verified"
+            and pick.get("legacy") is not True
+        }
     recent = []
     for m in matches:
         if m.get("status") != "FINISHED":
@@ -3799,6 +3809,24 @@ def build_weekly_awards(matches):
         sc = m.get("score") or {}
         if not ko or ko < window or sc.get("home") is None or sc.get("away") is None:
             continue
+        if verified is not None:
+            locked = verified.get(str(m.get("id")))
+            if not locked:
+                continue
+            # Awards are public accountability claims. Reconstruct their model
+            # evidence from the immutable lock receipt, never a finished
+            # fixture's freshly recalculated prediction.
+            m = dict(m)
+            snapshot = locked.get("prediction_snapshot")
+            if isinstance(snapshot, dict):
+                m["prediction"] = _json_safe(snapshot)
+            else:
+                m["prediction"] = {
+                    "pick": locked.get("pick"), "pick_name": locked.get("pick_name"),
+                    "confidence": locked.get("confidence"), "edge": locked.get("edge"),
+                    "upset": locked.get("upset_snapshot") or {},
+                }
+            m["_official_pick"] = locked
         recent.append(m)
     if not recent:
         return None
@@ -3835,7 +3863,24 @@ def build_weekly_awards(matches):
         if not winner or not pr.get("pick"):
             continue
         row = (pr.get("edge") or 0, pr.get("confidence") or 0, m, pr, winner)
-        (hits if pr["pick"] == winner else misses).append(row)
+        official = m.get("_official_pick")
+        if official is None:
+            model_hit = pr["pick"] == winner
+        elif isinstance(official.get("model_hit"), bool):
+            model_hit = official["model_hit"]
+        elif isinstance(official.get("result"), bool):
+            model_hit = official["result"]
+        elif str(official.get("result") or "").lower() in {"h", "a", "d"}:
+            model_hit = str(official.get("result")).lower() == str(official.get("pick")).lower()
+        elif str(official.get("result") or "").lower() in {"hit", "correct", "won", "win", "true"}:
+            model_hit = True
+        elif str(official.get("result") or "").lower() in {"miss", "incorrect", "lost", "loss", "false"}:
+            model_hit = False
+        else:
+            # A verified receipt without a grade is not public evidence of a
+            # hit or miss yet, even if the displayed score suggests one.
+            continue
+        (hits if model_hit else misses).append(row)
     best_call = None
     if hits:
         hits.sort(key=lambda x: -(x[0] or 0))
@@ -6117,7 +6162,7 @@ def build():
     # input/schema change. Bump only when every sport needs one clean rebuild.
     for m in matches:
         m["model_signal_schema"] = MODEL_SIGNAL_SCHEMA
-    weekly_awards = build_weekly_awards(matches)
+    weekly_awards = build_weekly_awards(matches, scorecard)
     try:
         from generate_posts import publish_recap_if_due
         post = publish_recap_if_due(COMP_KEY, COMP["label"], scorecard, weekly_awards)

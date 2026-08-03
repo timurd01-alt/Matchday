@@ -17,6 +17,9 @@
   const UPCOMING_PREVIEWS_PER_COMP=2;
   const MATCH_RECAPS_PER_COMP=2;
   const SECOND_RECAP_MIN_WATCHABILITY=55;
+  const REWIND_CARD_LIMIT=3;
+  const FUN_STAT_LIMIT=4;
+  const SCORE_LABELS={soccer:['goal','goals'],hockey:['goal','goals'],baseball:['run','runs'],nfl:['point','points'],ncaaf:['point','points'],basketball:['point','points']};
   const GUIDE_ITEMS=[
     {id:'learn-soccer',type:'learn',sports:['soccer'],compLabel:'Soccer',title:'Shape, pressing & set pieces',summary:'Fixture congestion, draws, and the tactical details that move a match.',updated:'2026-07-24T12:00:00Z',minutes:8,url:'tactics-soccer.html',topic:'World Cup UCL Europe tactics pressing set pieces'},
     {id:'learn-football',type:'learn',sports:['nfl','ncaaf'],compLabel:'Football',title:'Situation, schedule & rest',summary:'Short weeks, opponent strength, and what changes between the professional and college games.',updated:'2026-07-24T12:00:00Z',minutes:7,url:'tactics-football.html',topic:'NFL College Football rest schedule strength'},
@@ -73,19 +76,53 @@
     const side=winnerSide(match);return side==='h'?match.home?.name:side==='a'?match.away?.name:side==='d'?'Draw':'Unknown result';
   }
 
-  function hasVerifiedModelCall(dataset,match){
-    const fixtureId=String(match?.id??'');
-    if(!fixtureId)return false;
-    return ((dataset?.scorecard?.picks)||[]).some(pick=>
-      String(pick?.fixture_id??'')===fixtureId&&
-      pick?.integrity_eligible===true&&
-      pick?.integrity_status==='verified'&&
-      pick?.legacy!==true
-    );
+  function verifiedModelCall(dataset,match){
+    const official=match?.official_pick;
+    if(!official||typeof official!=='object'||!['h','a','d'].includes(official.pick))return null;
+    // `official_pick` is projected from the verified pregame ledger by the
+    // feed builder. A fixture-id list alone cannot prove that the current,
+    // potentially recalculated prediction is the one that was locked.
+    return official;
   }
 
-  function strongestFactor(match){
-    const why=match?.prediction?.why||{};
+  function hasVerifiedModelCall(dataset,match){
+    return !!verifiedModelCall(dataset,match);
+  }
+
+  function officialPickHit(modelCall){
+    if(typeof modelCall?.model_hit==='boolean')return modelCall.model_hit;
+    if(typeof modelCall?.result==='boolean')return modelCall.result;
+    const result=String(modelCall?.result||'').toLowerCase();
+    if(['h','a','d'].includes(result)&&['h','a','d'].includes(modelCall?.pick))return result===modelCall.pick;
+    if(['hit','correct','won','win','true'].includes(result))return true;
+    if(['miss','incorrect','lost','loss','false'].includes(result))return false;
+    return null;
+  }
+
+  function finiteNumber(value){
+    if(value===null||value===''||value===undefined)return null;
+    const number=Number(value);return Number.isFinite(number)?number:null;
+  }
+
+  function hasFinalScore(match){
+    return match?.status==='FINISHED'&&finiteNumber(match?.score?.home)!==null&&finiteNumber(match?.score?.away)!==null&&['h','a','d'].includes(winnerSide(match));
+  }
+
+  function scoreWord(sport,value,capitalized=false){
+    const forms=SCORE_LABELS[sport]||['point','points'],word=forms[Math.abs(Number(value))===1?0:1];
+    return capitalized?word[0].toUpperCase()+word.slice(1):word;
+  }
+
+  function teamInitials(name){
+    const words=String(name||'').replace(/[^\p{L}\p{N}'-]+/gu,' ').trim().split(/\s+/).filter(Boolean);
+    const meaningful=words.filter(word=>!/^(?:afc|cf|fc|hc|sc)$/i.test(word)&&!/^\d+$/.test(word));
+    const source=meaningful.length?meaningful:words;
+    if(source.length===1)return source[0].replace(/[^\p{L}\p{N}]/gu,'').slice(0,3).toUpperCase()||'—';
+    return source.slice(0,3).map(word=>word[0]).join('').toUpperCase()||'—';
+  }
+
+  function strongestFactor(match,modelCall=null){
+    const why=modelCall?.factor_snapshot||modelCall?.why||match?.prediction?.why||{};
     const candidates=Object.entries(why).filter(([key,value])=>key!=='adv'&&Number.isFinite(Number(value)));
     candidates.sort((a,b)=>Math.abs(Number(b[1]))-Math.abs(Number(a[1])));
     const key=(candidates[0]||Object.entries(why).find(([,value])=>Number.isFinite(Number(value)))||[])[0];
@@ -94,10 +131,11 @@
 
   function possessive(name){return /s$/i.test(String(name||''))?`${name}'`:`${name}'s`}
 
-  function matchTakeaway(match,finished=false){
-    const pick=match?.prediction?.pick_name||'the model pick',factor=strongestFactor(match);
+  function matchTakeaway(match,finished=false,modelCall=null){
+    const prediction=modelCall||match?.prediction||{},pick=prediction.pick_name||'the model pick',factor=strongestFactor(match,prediction);
     if(!finished)return `${pick} has the clearest ${factor} signal, but the probability still leaves room for the other side.`;
-    const hit=winnerSide(match)===match?.prediction?.pick;
+    const hit=finished?officialPickHit(prediction):null;
+    if(hit===null)return `The verified pregame pick leaned ${pick} on ${factor}; the feed does not provide a graded outcome for this call.`;
     if(hit)return `The model correctly identified ${possessive(pick)} ${factor} advantage.`;
     return `${winnerName(match)} overturned the model's ${factor} lean toward ${pick}.`;
   }
@@ -213,15 +251,15 @@
       // feed for analysis, including games played before Matchday existed. A
       // recap is an accountability claim, so require evidence that the pick was
       // genuinely locked before kickoff in the verified scorecard ledger.
-      (dataset.matches||[]).filter(match=>match.status==='FINISHED'&&match.prediction&&winnerSide(match)&&hasVerifiedModelCall(dataset,match)).forEach(match=>{
-        const hit=winnerSide(match)===match.prediction.pick;
+      (dataset.matches||[]).filter(match=>match.status==='FINISHED'&&winnerSide(match)&&hasVerifiedModelCall(dataset,match)).forEach(match=>{
+        const official=verifiedModelCall(dataset,match),hit=officialPickHit(official);if(hit===null)return;
         candidates.push({
           id:`recap-${meta.key}-${match.id}`,type:'recap',sports:[meta.sport],comp:meta.key,compLabel:meta.label,matchId:match.id,
           home:match.home?.name,away:match.away?.name,score:`${match.score?.home??'—'}–${match.score?.away??'—'}`,
-          pick:match.prediction.pick_name,confidence:match.prediction.confidence,hit,resultLabel:hit?'Model hit':'Model miss',
+          pick:official.pick_name,confidence:official.confidence,hit,resultLabel:hit?'Model hit':'Model miss',
           title:`${match.home?.name} ${match.score?.home??'—'}–${match.score?.away??'—'} ${match.away?.name}`,
-          summary:`The model picked ${match.prediction.pick_name}${match.prediction.confidence!=null?` at ${match.prediction.confidence}%`:''}; ${winnerName(match)} produced the result.`,
-          takeaway:matchTakeaway(match,true),updated:match.kickoff,dataUpdated:dataset.updated,sortTime:timestamp(match.kickoff),minutes:3,
+          summary:`The verified pregame pick was ${official.pick_name}${official.confidence!=null?` at ${official.confidence}%`:''}; ${winnerName(match)} produced the result.`,
+          takeaway:matchTakeaway(match,true,official),updated:match.kickoff,dataUpdated:dataset.updated,sortTime:timestamp(match.kickoff),minutes:3,
           url:dashboardUrl(meta.key,'matches',match.id),watchability:Number(match.watchability)||0,match
         });
       });
@@ -282,24 +320,141 @@
     return `<article class="briefCard"><span>${escapeHTML(label)}</span><h3>${escapeHTML(title)}</h3><p>${escapeHTML(body)}</p>${link?`<a href="${escapeHTML(link)}">${escapeHTML(labelLink)} &rarr;</a>`:''}</article>`;
   }
 
+  function moduleRows(){
+    const query=searchQuery.trim().toLowerCase();
+    let rows=allFilteredMatches().filter(({match,dataset,meta})=>{
+      if(!query)return true;
+      const venue=typeof match.venue==='string'?match.venue:match.venue?.name;
+      const modelCall=match.status==='FINISHED'?verifiedModelCall(dataset,match):match.prediction;
+      return [meta.label,match.home?.name,match.away?.name,modelCall?.pick_name,match.stage,venue].filter(Boolean).join(' ').toLowerCase().includes(query);
+    });
+    if(activeType==='preview')rows=rows.filter(row=>row.match.status==='UPCOMING');
+    if(activeType==='recap')rows=rows.filter(row=>row.match.status==='FINISHED');
+    if(activeType==='learn')rows=[];
+    return rows;
+  }
+
+  function moduleEmpty(title,body,kind='stats'){
+    if(kind==='rewind')return `<article class="rewindCard rewindPlaceholder"><div class="rewindVisual" aria-hidden="true"><span class="rewindFinal">Awaiting final</span><div class="rewindMatchup"><div class="rewindTeam"><span class="rewindInitials">--</span><span class="rewindScore">--</span></div><span class="rewindVs">VS</span><div class="rewindTeam"><span class="rewindInitials">--</span><span class="rewindScore">--</span></div></div><div class="rewindMeter"><span></span></div></div><div class="rewindCopy"><div class="rewindHeader"><span>Game rewind</span><span>No matching final</span></div><h3>${escapeHTML(title)}</h3><p>${escapeHTML(body)}</p><div class="rewindVerdict push">Nothing is inferred from missing data</div></div></article>`;
+    return `<article class="funStatCard moduleEmpty"><span class="funStatValue" aria-hidden="true">--</span><h3 class="funStatLabel">${escapeHTML(title)}</h3><p class="funStatDetail">${escapeHTML(body)}</p></article>`;
+  }
+
+  function rewindMeter(label,value){
+    const amount=Math.max(0,Math.min(100,Math.round(Number(value))));
+    return `<div class="rewindMetric"><span>${escapeHTML(label)}</span><b>${amount}%</b><div class="rewindMeter" role="meter" aria-label="${escapeHTML(label)}: ${amount} percent" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${amount}"><span style="--rewind-value:${amount}%"></span></div></div>`;
+  }
+
+  function rewindTextMetric(label,value){return `<div class="rewindMetric"><span>${escapeHTML(label)}</span><b>${escapeHTML(value)}</b></div>`}
+
+  function rewindCard(row){
+    const {match,dataset,meta}=row,homeScore=finiteNumber(match.score?.home),awayScore=finiteNumber(match.score?.away);
+    const lockedCall=verifiedModelCall(dataset,match),modelCall=lockedCall||{},confidence=finiteNumber(modelCall.confidence),watchability=finiteNumber(match.watchability);
+    const hit=officialPickHit(lockedCall);
+    const pickName=modelCall.pick_name||'No verified pregame pick';
+    const venue=typeof match.venue==='string'?match.venue:match.venue?.name;
+    const context=[match.stage,venue,formattedDate(match.kickoff)].filter(Boolean).join(' · ');
+    const resultLabel=lockedCall?'Verified result + pick':'Final result';
+    const verdict=lockedCall&&hit!==null
+      ?`The verified pregame pick was ${pickName}${confidence!==null?` at ${Math.round(confidence)}%`:''}. It was ${hit?'correct':'not correct'} against the official graded outcome.`
+      :lockedCall?`The verified pregame pick was ${pickName}${confidence!==null?` at ${Math.round(confidence)}%`:''}, but the feed does not provide a graded outcome for this call.`
+      :'No verified pregame pick is available, so this game is not scored as a model hit or miss.';
+    const total=homeScore+awayScore,scoreAria=`Final score: ${match.home?.name}, ${homeScore} ${scoreWord(meta.sport,homeScore)}; ${match.away?.name}, ${awayScore} ${scoreWord(meta.sport,awayScore)}.`;
+    const metrics=[rewindTextMetric(`Total ${scoreWord(meta.sport,total)}`,String(total))];
+    if(confidence!==null)metrics.push(rewindMeter('Pregame confidence',confidence));
+    if(watchability!==null)metrics.push(rewindMeter('Watchability',watchability));
+    const titleId=`rewind-${String(meta.key)}-${String(match.id).replace(/[^a-zA-Z0-9_-]/g,'-')}`;
+    const visualValue=watchability!==null?Math.max(0,Math.min(100,Math.round(watchability))):confidence!==null?Math.max(0,Math.min(100,Math.round(confidence))):0;
+    return `<article class="rewindCard" data-sport="${escapeHTML(meta.sport)}" aria-labelledby="${escapeHTML(titleId)}">
+      <div class="rewindVisual">
+        <span class="rewindFinal">${escapeHTML(resultLabel)}</span>
+        <div class="rewindMatchup" aria-label="${escapeHTML(scoreAria)}">
+          <div class="rewindTeam" aria-hidden="true"><span class="rewindInitials">${escapeHTML(teamInitials(match.home?.name))}</span><span class="rewindTeamName">${escapeHTML(match.home?.name||'Home')}</span><span class="rewindScore">${homeScore}</span></div>
+          <span class="rewindVs" aria-hidden="true">&ndash;</span>
+          <div class="rewindTeam" aria-hidden="true"><span class="rewindInitials">${escapeHTML(teamInitials(match.away?.name))}</span><span class="rewindTeamName">${escapeHTML(match.away?.name||'Away')}</span><span class="rewindScore">${awayScore}</span></div>
+        </div>
+        <div class="rewindMeter" aria-hidden="true"><span style="--rewind-value:${visualValue}%"></span></div>
+      </div>
+      <div class="rewindCopy">
+        <div class="rewindHeader"><span>${escapeHTML(meta.label)}</span><span>${escapeHTML(context||formattedDate(match.kickoff))}</span></div>
+        <h3 id="${escapeHTML(titleId)}">${escapeHTML(match.home?.name||'Home')} vs ${escapeHTML(match.away?.name||'Away')}</h3>
+        <p>${escapeHTML(`${winnerName(match)} produced the final result shown in the feed.`)}</p>
+        <div class="rewindMetrics">${metrics.join('')}</div>
+        <p class="rewindVerdict ${hit===true?'hit':hit===false?'miss':'push'}">${escapeHTML(verdict)}</p>
+        <a href="${escapeHTML(dashboardUrl(meta.key,'matches',match.id))}">Open matchup &rarr;</a>
+      </div>
+    </article>`;
+  }
+
+  function renderGameRewind(){
+    const host=byId('gameRewindGrid');if(!host)return;
+    if(activeType==='preview'||activeType==='learn'){
+      host.innerHTML=moduleEmpty('Game Rewind is a final-results view','Choose Recaps or All to see completed games in this section.','rewind');return;
+    }
+    const finals=moduleRows().filter(row=>hasFinalScore(row.match)).sort((a,b)=>timestamp(b.match.kickoff)-timestamp(a.match.kickoff));
+    if(!finals.length){
+      const scope=activeSport==='all'?'this view':SPORT_LABELS[activeSport];
+      const reason=searchQuery.trim()?`No final score matches “${searchQuery.trim()}” in ${scope}.`:`No complete final scores are available for ${scope} yet.`;
+      host.innerHTML=moduleEmpty('No game rewind available',reason,'rewind');return;
+    }
+    host.innerHTML=finals.slice(0,REWIND_CARD_LIMIT).map(rewindCard).join('');
+  }
+
+  function funStatCard(value,label,detail){
+    return `<article class="funStatCard"><strong class="funStatValue">${escapeHTML(value)}</strong><h3 class="funStatLabel">${escapeHTML(label)}</h3><p class="funStatDetail">${escapeHTML(detail)}</p></article>`;
+  }
+
+  function renderFunStats(){
+    const host=byId('funStatsGrid');if(!host)return;
+    const rows=moduleRows();
+    if(!rows.length){
+      const reason=activeType==='learn'?'Fun Stats uses game data; choose All, Previews, or Recaps.':searchQuery.trim()?`No games match “${searchQuery.trim()}” in the current sport filter.`:'No game data is available for this filter yet.';
+      host.innerHTML=moduleEmpty('No stats for this view',reason);return;
+    }
+    const finals=rows.filter(row=>hasFinalScore(row.match));
+    const upcoming=rows.filter(row=>row.match.status==='UPCOMING'&&row.match.prediction);
+    const verified=finals.filter(row=>hasVerifiedModelCall(row.dataset,row.match));
+    const watchable=rows.filter(row=>finiteNumber(row.match.watchability)!==null).sort((a,b)=>finiteNumber(b.match.watchability)-finiteNumber(a.match.watchability));
+    const confident=rows.map(row=>({row,modelCall:row.match.status==='FINISHED'?verifiedModelCall(row.dataset,row.match):row.match.prediction}))
+      .filter(item=>finiteNumber(item.modelCall?.confidence)!==null).sort((a,b)=>finiteNumber(b.modelCall.confidence)-finiteNumber(a.modelCall.confidence));
+    const cards=[];
+    if(!searchQuery.trim()&&activeType!=='preview'){
+      const scorecards=filteredDatasets().map(dataset=>dataset.scorecard||{}),graded=scorecards.reduce((sum,card)=>sum+(finiteNumber(card.graded)||0),0),hits=scorecards.reduce((sum,card)=>sum+(finiteNumber(card.model_hits)||0),0);
+      if(graded>0)cards.push(funStatCard(`${hits}–${graded-hits}`,'Published model record',`${Math.round(100*hits/graded)}% correct across ${graded} verified, graded picks in this sport filter.`));
+    }
+    if(activeType==='recap')cards.push(funStatCard(String(verified.length),'Verified rewinds',`${finals.length} final ${finals.length===1?'result is':'results are'} in this filtered feed; ${verified.length} include a verified pregame pick.`));
+    else if(activeType==='preview')cards.push(funStatCard(String(upcoming.length),'Upcoming model reads',`Across ${new Set(upcoming.map(row=>row.meta.key)).size} ${new Set(upcoming.map(row=>row.meta.key)).size===1?'competition':'competitions'} in this view.`));
+    else cards.push(funStatCard(String(finals.length),'Final results in view',`${upcoming.length} upcoming ${upcoming.length===1?'game also has':'games also have'} a current model read.`));
+    if(activeSport!=='all'&&finals.length){
+      const high=[...finals].sort((a,b)=>(finiteNumber(b.match.score.home)+finiteNumber(b.match.score.away))-(finiteNumber(a.match.score.home)+finiteNumber(a.match.score.away)))[0];
+      const total=finiteNumber(high.match.score.home)+finiteNumber(high.match.score.away);
+      cards.push(funStatCard(`${total} ${scoreWord(high.meta.sport,total)}`,'Highest combined score',`${high.match.home?.name} ${high.match.score.home}–${high.match.score.away} ${high.match.away?.name}, among loaded finals.`));
+      const close=[...finals].sort((a,b)=>Math.abs(finiteNumber(a.match.score.home)-finiteNumber(a.match.score.away))-Math.abs(finiteNumber(b.match.score.home)-finiteNumber(b.match.score.away)))[0];
+      const margin=Math.abs(finiteNumber(close.match.score.home)-finiteNumber(close.match.score.away));
+      cards.push(funStatCard(`${margin} ${scoreWord(close.meta.sport,margin)}`,'Closest final margin',`${close.match.home?.name} ${close.match.score.home}–${close.match.score.away} ${close.match.away?.name}, among loaded finals.`));
+    }
+    if(watchable[0])cards.push(funStatCard(`${Math.round(finiteNumber(watchable[0].match.watchability))}/100`,'Watchability leader',`${watchable[0].match.home?.name} vs ${watchable[0].match.away?.name}; this is Matchday’s internal matchup score.`));
+    if(confident[0])cards.push(funStatCard(`${Math.round(finiteNumber(confident[0].modelCall.confidence))}%`,confident[0].row.match.status==='FINISHED'?'Highest verified confidence':'Highest current confidence',`${confident[0].modelCall.pick_name} in ${confident[0].row.match.home?.name} vs ${confident[0].row.match.away?.name}.`));
+    host.innerHTML=cards.slice(0,FUN_STAT_LIMIT).join('')||moduleEmpty('No calculated stats yet','The available games do not include enough score, watchability, or confidence data for a truthful comparison.');
+  }
+
   function renderBrief(){
     const host=byId('briefGrid');if(!host)return;
     const rows=allFilteredMatches(),now=Date.now();
     const active=rows.filter(row=>row.match.status==='UPCOMING'&&row.match.prediction).sort((a,b)=>Number(b.match.prediction?.confidence||0)-Number(a.match.prediction?.confidence||0));
     const signal=active[0],matchOfDay=[...active].sort((a,b)=>Number(b.match.watchability||0)-Number(a.match.watchability||0))[0];
-    const finished=rows.filter(row=>row.match.status==='FINISHED'&&row.match.prediction&&winnerSide(row.match)&&hasVerifiedModelCall(row.dataset,row.match)).sort((a,b)=>timestamp(b.match.kickoff)-timestamp(a.match.kickoff));
-    const surprise=[...finished].filter(row=>winnerSide(row.match)!==row.match.prediction.pick).sort((a,b)=>Number(b.match.prediction.confidence||0)-Number(a.match.prediction.confidence||0))[0];
-    const week=finished.filter(row=>timestamp(row.match.kickoff)>=now-7*86400000),weekHits=week.filter(row=>winnerSide(row.match)===row.match.prediction.pick).length;
+    const finished=rows.filter(row=>row.match.status==='FINISHED'&&winnerSide(row.match)&&hasVerifiedModelCall(row.dataset,row.match)).map(row=>({...row,official:verifiedModelCall(row.dataset,row.match)})).sort((a,b)=>timestamp(b.match.kickoff)-timestamp(a.match.kickoff));
+    const graded=finished.filter(row=>officialPickHit(row.official)!==null),surprise=[...graded].filter(row=>officialPickHit(row.official)===false).sort((a,b)=>Number(b.official.confidence||0)-Number(a.official.confidence||0))[0];
+    const week=graded.filter(row=>timestamp(row.match.kickoff)>=now-7*86400000),weekHits=week.filter(row=>officialPickHit(row.official)===true).length;
     const noticed=active.slice(0,3).map(row=>`${row.match.prediction.pick_name}: ${strongestFactor(row.match)}`).join(' · ');
     const cards=[
-      signal?briefCard("Today's signal",`${signal.match.prediction.pick_name} ${signal.match.prediction.confidence}%`,`${signal.match.home?.name} vs ${signal.match.away?.name} carries the strongest current model probability.`,dashboardUrl(signal.meta.key,'edge',signal.match.id)):
-        briefCard("Today's signal",'Waiting for a current prediction','The next signal appears when an upcoming matchup receives a model read.',dashboardUrl('','edge')),
+      signal?briefCard('Strongest upcoming signal',`${signal.match.prediction.pick_name} ${signal.match.prediction.confidence}%`,`${signal.match.home?.name} vs ${signal.match.away?.name} carries the strongest current model probability.`,dashboardUrl(signal.meta.key,'edge',signal.match.id)):
+        briefCard('Strongest upcoming signal','Waiting for a current prediction','The next signal appears when an upcoming matchup receives a model read.',dashboardUrl('','edge')),
       matchOfDay?briefCard('Match of the day',`${matchOfDay.match.home?.name} vs ${matchOfDay.match.away?.name}`,matchTakeaway(matchOfDay.match),dashboardUrl(matchOfDay.meta.key,'matches',matchOfDay.match.id),'View matchup'):
         briefCard('Match of the day','No upcoming matchup yet','The highest-watchability pregame matchup will appear here.'),
       briefCard('Three things the model noticed',noticed||'No fresh factor notes yet',noticed?'The strongest signals across the current slate, without pretending any one factor is decisive.':'Factor notes appear with the next current predictions.',dashboardUrl('','edge'),'See every model read'),
-      surprise?briefCard('Biggest surprise',`${winnerName(surprise.match)} changed the story`,matchTakeaway(surprise.match,true),dashboardUrl(surprise.meta.key,'matches',surprise.match.id),'Review the miss'):
+      surprise?briefCard('Biggest surprise',`${winnerName(surprise.match)} changed the story`,matchTakeaway(surprise.match,true,surprise.official),dashboardUrl(surprise.meta.key,'matches',surprise.match.id),'Review the miss'):
         briefCard('Biggest surprise','No recent model miss in this view','That is not a claim of perfection—only that no graded miss is available for this filter.'),
-      briefCard('Weekend scorecard',week.length?`${weekHits}–${week.length-weekHits} over the last 7 days`:'No graded games in the last 7 days',week.length?`${Math.round(100*weekHits/week.length)}% of locked predictions were correct in this filtered view.`:'The weekly record will populate automatically as results are graded.',dashboardUrl('','score'),'Open scorecard')
+      briefCard('Seven-day scorecard',week.length?`${weekHits}–${week.length-weekHits} over the last 7 days`:'No graded games in the last 7 days',week.length?`${Math.round(100*weekHits/week.length)}% of locked predictions were correct in this filtered view.`:'The weekly record will populate automatically as results are graded.',dashboardUrl('','score'),'Open scorecard')
     ];
     host.innerHTML=cards.join('');
   }
@@ -322,21 +477,21 @@
   function renderAccountability(){
     const host=byId('accountabilityGrid');if(!host)return;
     const rows=allFilteredMatches(),now=Date.now();
-    const finished=rows.filter(row=>row.match.status==='FINISHED'&&row.match.prediction&&winnerSide(row.match)&&hasVerifiedModelCall(row.dataset,row.match));
-    const hits=finished.filter(row=>winnerSide(row.match)===row.match.prediction.pick).sort((a,b)=>Number(b.match.prediction.confidence||0)-Number(a.match.prediction.confidence||0));
-    const misses=finished.filter(row=>winnerSide(row.match)!==row.match.prediction.pick).sort((a,b)=>Number(b.match.prediction.confidence||0)-Number(a.match.prediction.confidence||0));
-    const right=hits[0],miss=misses[0],movement=movementHighlight(rows),week=finished.filter(row=>timestamp(row.match.kickoff)>=now-7*86400000),weekHits=week.filter(row=>winnerSide(row.match)===row.match.prediction.pick).length;
+    const finished=rows.filter(row=>row.match.status==='FINISHED'&&winnerSide(row.match)&&hasVerifiedModelCall(row.dataset,row.match)).map(row=>({...row,official:verifiedModelCall(row.dataset,row.match)}));
+    const gradedFinished=finished.filter(row=>officialPickHit(row.official)!==null),hits=gradedFinished.filter(row=>officialPickHit(row.official)===true).sort((a,b)=>Number(b.official.confidence||0)-Number(a.official.confidence||0));
+    const misses=gradedFinished.filter(row=>officialPickHit(row.official)===false).sort((a,b)=>Number(b.official.confidence||0)-Number(a.official.confidence||0));
+    const right=hits[0],miss=misses[0],movement=movementHighlight(rows.filter(row=>row.match.status==='UPCOMING')),week=gradedFinished.filter(row=>timestamp(row.match.kickoff)>=now-7*86400000),weekHits=week.filter(row=>officialPickHit(row.official)===true).length;
     const scorecards=filteredDatasets().map(dataset=>dataset.scorecard||{}),graded=scorecards.reduce((sum,card)=>sum+Number(card.graded||0),0),modelHits=scorecards.reduce((sum,card)=>sum+Number(card.model_hits||0),0);
     const recordN=week.length,recordHits=weekHits,recordTitle=recordN?`${recordHits}–${recordN-recordHits} this week`:graded?`${modelHits}–${graded-modelHits} published record`:'No graded record yet';
     const cards=[
-      right?accountabilityCard('What the model got right',`${right.match.prediction.pick_name} at ${right.match.prediction.confidence}%`,matchTakeaway(right.match,true),'good',dashboardUrl(right.meta.key,'matches',right.match.id)):
+      right?accountabilityCard('What the model got right',`${right.official.pick_name} at ${right.official.confidence}%`,matchTakeaway(right.match,true,right.official),'good',dashboardUrl(right.meta.key,'matches',right.match.id)):
         accountabilityCard('What the model got right','Waiting for a graded hit','Correct calls appear here only after the result is final.'),
-      miss?accountabilityCard('What it missed',`${miss.match.prediction.pick_name} did not land`,matchTakeaway(miss.match,true),'bad',dashboardUrl(miss.meta.key,'matches',miss.match.id)):
+      miss?accountabilityCard('What it missed',`${miss.official.pick_name} did not land`,matchTakeaway(miss.match,true,miss.official),'bad',dashboardUrl(miss.meta.key,'matches',miss.match.id)):
         accountabilityCard('What it missed','No graded miss available','Misses are never hidden; the next one will appear automatically.'),
       movement?accountabilityCard('Biggest probability movement',`${movement.delta>0?'+':''}${movement.delta} points on ${movement.match.prediction.pick_name}`,`The saved probability moved from ${movement.first}% to ${movement.last}% across refreshes.`,'move',dashboardUrl(movement.meta.key,'edge',movement.match.id)):
         accountabilityCard('Biggest probability movement','Not enough snapshots yet','Movement is reported only after the same matchup has been observed more than once.'),
       accountabilityCard('Weekly prediction record',recordTitle,recordN?`${Math.round(100*recordHits/recordN)}% correct across ${recordN} graded games in the last seven days.`:graded?`${Math.round(100*modelHits/graded)}% correct across the available scorecards.`:'The record begins when locked picks are graded.','record',dashboardUrl('','score')),
-      miss?accountabilityCard('Lesson from an incorrect pick',`Re-check ${strongestFactor(miss.match)}`,`The ${miss.match.prediction.confidence}% lean left ${100-Number(miss.match.prediction.confidence||0)}% for other outcomes. The miss is evidence to recalibrate, not rewrite the pick.`,'lesson',dashboardUrl(miss.meta.key,'edge',miss.match.id)):
+      miss?accountabilityCard('Lesson from an incorrect pick',`Re-check ${strongestFactor(miss.match,miss.official)}`,`The ${miss.official.confidence}% lean left ${100-Number(miss.official.confidence||0)}% for other outcomes. The miss is evidence to recalibrate, not rewrite the pick.`,'lesson',dashboardUrl(miss.meta.key,'edge',miss.match.id)):
         accountabilityCard('Lesson from an incorrect pick','Calibration needs final results','This section will explain the strongest signal behind each meaningful miss.')
     ];
     host.innerHTML=cards.join('');
@@ -359,7 +514,7 @@
     });
   }
 
-  function renderAll(animate=false){renderLatest(animate);renderBrief();renderAccountability();renderFreshness();renderGuides();if(animate){replayMotion(byId('briefGrid'));replayMotion(byId('accountabilityGrid'))}}
+  function renderAll(animate=false){renderLatest(animate);renderGameRewind();renderFunStats();renderBrief();renderAccountability();renderFreshness();renderGuides();if(animate){replayMotion(byId('gameRewindGrid'));replayMotion(byId('funStatsGrid'));replayMotion(byId('briefGrid'));replayMotion(byId('accountabilityGrid'))}}
 
   function setSport(filter,persist=true){
     activeSport=validSport(filter);
@@ -371,7 +526,7 @@
   function setType(filter){
     activeType=['all','preview','recap','learn'].includes(filter)?filter:'all';
     document.querySelectorAll('[data-type-filter]').forEach(button=>{const active=button.dataset.typeFilter===activeType;button.classList.toggle('isActive',active);button.setAttribute('aria-pressed',String(active))});
-    renderLatest(true);
+    renderLatest(true);renderGameRewind();renderFunStats();replayMotion(byId('gameRewindGrid'));replayMotion(byId('funStatsGrid'));
   }
 
   async function fetchJSON(url){
@@ -392,10 +547,10 @@
   const params=new URLSearchParams(location.search),requestedSport=validSport(params.get('sport')||safeGet('matchday.content.sport','all'));
   document.querySelectorAll('[data-sport-filter]').forEach(button=>button.addEventListener('click',()=>setSport(button.dataset.sportFilter)));
   document.querySelectorAll('[data-type-filter]').forEach(button=>button.addEventListener('click',()=>setType(button.dataset.typeFilter)));
-  let searchTimer;const search=byId('contentSearch');if(search)search.addEventListener('input',()=>{searchQuery=search.value;clearTimeout(searchTimer);searchTimer=setTimeout(()=>renderLatest(true),90)});
+  let searchTimer;const search=byId('contentSearch');if(search)search.addEventListener('input',()=>{searchQuery=search.value;clearTimeout(searchTimer);searchTimer=setTimeout(()=>{renderLatest(true);renderGameRewind();renderFunStats();replayMotion(byId('gameRewindGrid'));replayMotion(byId('funStatsGrid'))},90)});
   document.addEventListener('keydown',event=>{
     if(event.key==='/'&&!/input|textarea/i.test(document.activeElement?.tagName||'')){event.preventDefault();search?.focus()}
-    if(event.key==='Escape'&&document.activeElement===search&&search.value){search.value='';searchQuery='';renderLatest(true)}
+    if(event.key==='Escape'&&document.activeElement===search&&search.value){search.value='';searchQuery='';renderLatest(true);renderGameRewind();renderFunStats()}
   });
   storyItems=[...GUIDE_ITEMS];
   setSport(requestedSport,false);

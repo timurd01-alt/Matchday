@@ -404,16 +404,18 @@ def run_once(state_path=".ci_fetch_state.json"):
         print(f"  degraded (last-good data retained; still due): {', '.join(degraded)}")
     with open(state_path, "w", encoding="utf-8") as f:
         json.dump({**last_fetched, **({"_anchors": served_anchors} if served_anchors else {})}, f)
-    try:
-        from generate_posts import regenerate_sitemap
-        n = regenerate_sitemap()
-        print(f"  sitemap: {n} URLs")
-    except Exception as e:
-        print(f"  sitemap regen skipped: {e}")
     if failed:
         # Never assemble and deploy an old data file as a healthy refresh.
         # Successful timestamps persist, while failures stay due next run.
         raise RuntimeError("due sport refresh failed after retry: " + ", ".join(failed))
+    try:
+        from generate_posts import generate_public_content_feed, regenerate_sitemap
+        datasets = generate_public_content_feed()
+        print(f"  content feed: {datasets} competitions")
+        n = regenerate_sitemap()
+        print(f"  sitemap: {n} URLs")
+    except Exception as e:
+        print(f"  public content regen skipped: {e}")
 
 
 if __name__ == "__main__":

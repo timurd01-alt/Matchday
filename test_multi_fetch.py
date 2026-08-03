@@ -25,6 +25,7 @@ class RunOnceTests(unittest.TestCase):
             mock.patch.object(multi_fetch, "_run_one", runner),
             mock.patch.object(multi_fetch, "_deployable_last_good",
                               return_value=cached_payload is not None),
+            mock.patch("generate_posts.generate_public_content_feed", return_value=0),
             mock.patch("generate_posts.regenerate_sitemap", return_value=0),
         ]
         for patcher in patches:
@@ -199,6 +200,7 @@ class AnchoredWindowTests(unittest.TestCase):
              mock.patch.object(multi_fetch, "FORCE_REFETCH_ONCE", set()), \
              mock.patch.object(multi_fetch, "_run_one", runner), \
              mock.patch.object(multi_fetch, "_anchor_due", return_value="2026-09-05:10:00"), \
+             mock.patch("generate_posts.generate_public_content_feed", return_value=0), \
              mock.patch("generate_posts.regenerate_sitemap", return_value=0):
             multi_fetch.run_once(str(state))
         self.assertEqual(runner.call_count, 1)
@@ -214,6 +216,7 @@ class AnchoredWindowTests(unittest.TestCase):
              mock.patch.object(multi_fetch, "FORCE_REFETCH_ONCE", set()), \
              mock.patch.object(multi_fetch, "_run_one", runner), \
              mock.patch.object(multi_fetch, "_anchor_due", return_value="2026-09-05:10:00"), \
+             mock.patch("generate_posts.generate_public_content_feed", return_value=0), \
              mock.patch("generate_posts.regenerate_sitemap", return_value=0):
             with self.assertRaises(RuntimeError):
                 multi_fetch.run_once(str(state))
@@ -227,6 +230,7 @@ class AnchoredWindowTests(unittest.TestCase):
         with mock.patch.object(multi_fetch, "SPORTS", [("mlb", "--mlb")]), \
              mock.patch.object(multi_fetch, "FORCE_REFETCH_ONCE", set()), \
              mock.patch.object(multi_fetch, "_run_one", runner), \
+             mock.patch("generate_posts.generate_public_content_feed", return_value=0), \
              mock.patch("generate_posts.regenerate_sitemap", return_value=0):
             multi_fetch.run_once(str(state))
         self.assertGreater(json.loads(state.read_text(encoding="utf-8"))["mlb"], 1.0)

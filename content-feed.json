@@ -4,383 +4,444 @@
    "compKey": "ucl",
    "competition": "Champions League",
    "sport": "soccer",
-   "updated": "2026-07-20T00:08:44+00:00",
+   "updated": "2026-07-26T19:51:07+00:00",
    "scorecard": {
     "graded": 0,
-    "model_hits": 0
+    "model_hits": 0,
+    "verified_fixture_ids": []
+   },
+   "matches": []
+  },
+  {
+   "compKey": "epl",
+   "competition": "Premier League",
+   "sport": "soccer",
+   "updated": "2026-07-26T20:32:30+00:00",
+   "scorecard": {
+    "graded": 0,
+    "model_hits": 0,
+    "verified_fixture_ids": []
    },
    "matches": [
     {
-     "id": "552096",
-     "kickoff": "2026-05-30T16:00:00Z",
-     "status": "FINISHED",
-     "home": {
-      "name": "Paris Saint-Germain FC"
-     },
-     "away": {
-      "name": "Arsenal FC"
-     },
-     "score": {
-      "home": 0,
-      "away": 0,
-      "winner": "h"
-     },
-     "prediction": {
-      "pick": "a",
-      "pick_name": "Arsenal FC",
-      "confidence": 36,
-      "note": "upset formula triggered — volatility makes the underdog playable",
-      "why": {
-       "form": 1.0,
-       "rest": 0.0,
-       "pts": -1.2,
-       "adv": 1.2,
-       "gd": -0.25,
-       "class": 0.0
-      }
-     },
-     "watchability": null
-    },
-    {
-     "id": "552094",
-     "kickoff": "2026-05-06T19:00:00Z",
-     "status": "FINISHED",
-     "home": {
-      "name": "FC Bayern München"
-     },
-     "away": {
-      "name": "Paris Saint-Germain FC"
-     },
-     "score": {
-      "home": 1,
-      "away": 1,
-      "winner": "d"
-     },
-     "prediction": {
-      "pick": "a",
-      "pick_name": "Paris Saint-Germain FC",
-      "confidence": 36,
-      "note": "upset formula triggered — volatility makes the underdog playable",
-      "why": {
-       "form": -0.5,
-       "rest": 0.0,
-       "pts": -0.6,
-       "adv": 1.2,
-       "gd": 0.25,
-       "class": 0.0
-      }
-     },
-     "watchability": null
-    },
-    {
-     "id": "552095",
-     "kickoff": "2026-05-05T19:00:00Z",
-     "status": "FINISHED",
+     "id": "560542",
+     "kickoff": "2026-08-21T19:00:00Z",
+     "status": "UPCOMING",
+     "stage": "Regular Season",
+     "venue": "",
      "home": {
       "name": "Arsenal FC"
      },
      "away": {
-      "name": "Club Atlético de Madrid"
+      "name": "Coventry City FC"
      },
      "score": {
-      "home": 1,
-      "away": 0,
-      "winner": "h"
+      "home": null,
+      "away": null,
+      "winner": null
      },
      "prediction": {
       "pick": "h",
       "pick_name": "Arsenal FC",
-      "confidence": 42,
+      "confidence": 79,
       "note": "no market to compare against",
       "why": {
-       "form": 2.5,
+       "pts": 0.0,
+       "form": 0.0,
+       "elo": 6.59,
        "rest": 0.0,
-       "pts": 7.8,
        "adv": 1.2,
-       "gd": 4.0,
-       "class": 0.0
+       "gd": 0.0,
+       "class": 16.48
       }
      },
-     "watchability": null
+     "official_pick": null,
+     "watchability": 37.9
     },
     {
-     "id": "552093",
-     "kickoff": "2026-04-29T19:00:00Z",
-     "status": "FINISHED",
+     "id": "560543",
+     "kickoff": "2026-08-22T11:30:00Z",
+     "status": "UPCOMING",
+     "stage": "Regular Season",
+     "venue": "",
      "home": {
-      "name": "Club Atlético de Madrid"
+      "name": "Hull City AFC"
      },
      "away": {
-      "name": "Arsenal FC"
+      "name": "Manchester United FC"
      },
      "score": {
-      "home": 1,
-      "away": 1,
-      "winner": "d"
+      "home": null,
+      "away": null,
+      "winner": null
      },
      "prediction": {
       "pick": "a",
-      "pick_name": "Arsenal FC",
-      "confidence": 41,
+      "pick_name": "Manchester United FC",
+      "confidence": 70,
       "note": "no market to compare against",
       "why": {
-       "form": -2.5,
+       "pts": 0.0,
+       "form": 0.0,
+       "elo": -3.72,
        "rest": 0.0,
-       "pts": -7.8,
        "adv": 1.2,
-       "gd": -4.0,
-       "class": 0.0
+       "gd": 0.0,
+       "class": -13.99
       }
      },
-     "watchability": null
+     "official_pick": null,
+     "watchability": 34.9
     },
     {
-     "id": "552092",
-     "kickoff": "2026-04-28T19:00:00Z",
-     "status": "FINISHED",
+     "id": "560544",
+     "kickoff": "2026-08-22T14:00:00Z",
+     "status": "UPCOMING",
+     "stage": "Regular Season",
+     "venue": "",
      "home": {
-      "name": "Paris Saint-Germain FC"
+      "name": "Ipswich Town FC"
      },
      "away": {
-      "name": "FC Bayern München"
+      "name": "Sunderland AFC"
      },
      "score": {
-      "home": 5,
-      "away": 4,
-      "winner": "h"
+      "home": null,
+      "away": null,
+      "winner": null
      },
      "prediction": {
       "pick": "a",
-      "pick_name": "FC Bayern München",
-      "confidence": 35,
-      "note": "upset formula triggered — volatility makes the underdog playable",
+      "pick_name": "Sunderland AFC",
+      "confidence": 78,
+      "note": "no market to compare against",
       "why": {
-       "form": 0.5,
+       "pts": 0.0,
+       "form": 0.0,
+       "elo": -4.62,
        "rest": 0.0,
-       "pts": 0.6,
        "adv": 1.2,
-       "gd": -0.25,
+       "gd": 0.0,
        "class": 0.0
       }
      },
-     "watchability": null
+     "official_pick": null,
+     "watchability": 31.4
     },
     {
-     "id": "556723",
-     "kickoff": "2026-04-15T19:00:00Z",
-     "status": "FINISHED",
+     "id": "560545",
+     "kickoff": "2026-08-22T14:00:00Z",
+     "status": "UPCOMING",
+     "stage": "Regular Season",
+     "venue": "",
      "home": {
-      "name": "FC Bayern München"
+      "name": "Nottingham Forest FC"
      },
      "away": {
-      "name": "Real Madrid CF"
+      "name": "Leeds United FC"
      },
      "score": {
-      "home": 4,
-      "away": 3,
-      "winner": "h"
-     },
-     "prediction": {
-      "pick": "a",
-      "pick_name": "Real Madrid CF",
-      "confidence": 33,
-      "note": "upset formula triggered — volatility makes the underdog playable",
-      "why": {
-       "form": 0.5,
-       "rest": 0.0,
-       "pts": 4.2,
-       "adv": 1.2,
-       "gd": 2.5,
-       "class": 0.0
-      }
-     },
-     "watchability": null
-    },
-    {
-     "id": "556725",
-     "kickoff": "2026-04-15T19:00:00Z",
-     "status": "FINISHED",
-     "home": {
-      "name": "Arsenal FC"
-     },
-     "away": {
-      "name": "Sporting Clube de Portugal"
-     },
-     "score": {
-      "home": 0,
-      "away": 0,
-      "winner": "d"
+      "home": null,
+      "away": null,
+      "winner": null
      },
      "prediction": {
       "pick": "h",
-      "pick_name": "Arsenal FC",
+      "pick_name": "Nottingham Forest FC",
       "confidence": 43,
       "note": "no market to compare against",
       "why": {
-       "form": 1.0,
+       "pts": 0.0,
+       "form": 0.0,
+       "elo": -0.17,
        "rest": 0.0,
-       "pts": 10.2,
        "adv": 1.2,
-       "gd": 4.75,
+       "gd": 0.0,
        "class": 0.0
       }
      },
-     "watchability": null
+     "official_pick": null,
+     "watchability": 72.9
     },
     {
-     "id": "556722",
-     "kickoff": "2026-04-14T19:00:00Z",
-     "status": "FINISHED",
+     "id": "560546",
+     "kickoff": "2026-08-22T14:00:00Z",
+     "status": "UPCOMING",
+     "stage": "Regular Season",
+     "venue": "",
+     "home": {
+      "name": "Everton FC"
+     },
+     "away": {
+      "name": "Crystal Palace FC"
+     },
+     "score": {
+      "home": null,
+      "away": null,
+      "winner": null
+     },
+     "prediction": {
+      "pick": "h",
+      "pick_name": "Everton FC",
+      "confidence": 49,
+      "note": "no market to compare against",
+      "why": {
+       "pts": 0.0,
+       "form": 0.0,
+       "elo": 0.22,
+       "rest": 0.0,
+       "adv": 1.2,
+       "gd": 0.0,
+       "class": 0.0
+      }
+     },
+     "official_pick": null,
+     "watchability": 62.0
+    },
+    {
+     "id": "560547",
+     "kickoff": "2026-08-22T16:30:00Z",
+     "status": "UPCOMING",
+     "stage": "Regular Season",
+     "venue": "",
+     "home": {
+      "name": "Brentford FC"
+     },
+     "away": {
+      "name": "Tottenham Hotspur FC"
+     },
+     "score": {
+      "home": null,
+      "away": null,
+      "winner": null
+     },
+     "prediction": {
+      "pick": "a",
+      "pick_name": "Tottenham Hotspur FC",
+      "confidence": 58,
+      "note": "no market to compare against",
+      "why": {
+       "pts": 0.0,
+       "form": 0.0,
+       "elo": 2.48,
+       "rest": 0.0,
+       "adv": 1.2,
+       "gd": 0.0,
+       "class": -12.44
+      }
+     },
+     "official_pick": null,
+     "watchability": 51.5
+    },
+    {
+     "id": "560548",
+     "kickoff": "2026-08-23T13:00:00Z",
+     "status": "UPCOMING",
+     "stage": "Regular Season",
+     "venue": "",
+     "home": {
+      "name": "Manchester City FC"
+     },
+     "away": {
+      "name": "AFC Bournemouth"
+     },
+     "score": {
+      "home": null,
+      "away": null,
+      "winner": null
+     },
+     "prediction": {
+      "pick": "h",
+      "pick_name": "Manchester City FC",
+      "confidence": 46,
+      "note": "no market to compare against",
+      "why": {
+       "pts": 0.0,
+       "form": 0.0,
+       "elo": 2.71,
+       "rest": 0.0,
+       "adv": 1.2,
+       "gd": 0.0,
+       "class": 7.14
+      }
+     },
+     "official_pick": null,
+     "watchability": 79.8
+    },
+    {
+     "id": "560549",
+     "kickoff": "2026-08-23T13:00:00Z",
+     "status": "UPCOMING",
+     "stage": "Regular Season",
+     "venue": "",
+     "home": {
+      "name": "Brighton & Hove Albion FC"
+     },
+     "away": {
+      "name": "Aston Villa FC"
+     },
+     "score": {
+      "home": null,
+      "away": null,
+      "winner": null
+     },
+     "prediction": {
+      "pick": "a",
+      "pick_name": "Aston Villa FC",
+      "confidence": 38,
+      "note": "no market to compare against",
+      "why": {
+       "pts": 0.0,
+       "form": 0.0,
+       "elo": -1.46,
+       "rest": 0.0,
+       "adv": 1.2,
+       "gd": 0.0,
+       "class": -1.38
+      }
+     },
+     "official_pick": null,
+     "watchability": 87.5
+    },
+    {
+     "id": "560550",
+     "kickoff": "2026-08-23T15:30:00Z",
+     "status": "UPCOMING",
+     "stage": "Regular Season",
+     "venue": "",
+     "home": {
+      "name": "Newcastle United FC"
+     },
+     "away": {
+      "name": "Liverpool FC"
+     },
+     "score": {
+      "home": null,
+      "away": null,
+      "winner": null
+     },
+     "prediction": {
+      "pick": "a",
+      "pick_name": "Liverpool FC",
+      "confidence": 39,
+      "note": "no market to compare against",
+      "why": {
+       "pts": 0.0,
+       "form": 0.0,
+       "elo": -2.08,
+       "rest": 0.0,
+       "adv": 1.2,
+       "gd": 0.0,
+       "class": -3.14
+      }
+     },
+     "official_pick": null,
+     "watchability": 88.5
+    },
+    {
+     "id": "560551",
+     "kickoff": "2026-08-24T19:00:00Z",
+     "status": "UPCOMING",
+     "stage": "Regular Season",
+     "venue": "",
+     "home": {
+      "name": "Fulham FC"
+     },
+     "away": {
+      "name": "Chelsea FC"
+     },
+     "score": {
+      "home": null,
+      "away": null,
+      "winner": null
+     },
+     "prediction": {
+      "pick": "a",
+      "pick_name": "Chelsea FC",
+      "confidence": 63,
+      "note": "no market to compare against",
+      "why": {
+       "pts": 0.0,
+       "form": 0.0,
+       "elo": -0.39,
+       "rest": 0.0,
+       "adv": 1.2,
+       "gd": 0.0,
+       "class": -14.21
+      }
+     },
+     "official_pick": null,
+     "watchability": 48.6
+    },
+    {
+     "id": "560555",
+     "kickoff": "2026-08-28T19:00:00Z",
+     "status": "UPCOMING",
+     "stage": "Regular Season",
+     "venue": "",
+     "home": {
+      "name": "Crystal Palace FC"
+     },
+     "away": {
+      "name": "Manchester City FC"
+     },
+     "score": {
+      "home": null,
+      "away": null,
+      "winner": null
+     },
+     "prediction": {
+      "pick": "a",
+      "pick_name": "Manchester City FC",
+      "confidence": 70,
+      "note": "no market to compare against",
+      "why": {
+       "pts": 0.0,
+       "form": 0.0,
+       "elo": -5.22,
+       "rest": 0.0,
+       "adv": 1.2,
+       "gd": 0.0,
+       "class": -17.3
+      }
+     },
+     "official_pick": null,
+     "watchability": 47.3
+    },
+    {
+     "id": "560552",
+     "kickoff": "2026-08-29T11:30:00Z",
+     "status": "UPCOMING",
+     "stage": "Regular Season",
+     "venue": "",
      "home": {
       "name": "Liverpool FC"
      },
      "away": {
-      "name": "Paris Saint-Germain FC"
+      "name": "Nottingham Forest FC"
      },
      "score": {
-      "home": 0,
-      "away": 2,
-      "winner": "a"
+      "home": null,
+      "away": null,
+      "winner": null
      },
      "prediction": {
-      "pick": "a",
-      "pick_name": "Paris Saint-Germain FC",
-      "confidence": 41,
+      "pick": "h",
+      "pick_name": "Liverpool FC",
+      "confidence": 73,
       "note": "no market to compare against",
       "why": {
-       "form": -2.5,
+       "pts": 0.0,
+       "form": 0.0,
+       "elo": 2.22,
        "rest": 0.0,
-       "pts": -8.4,
        "adv": 1.2,
-       "gd": -2.75,
-       "class": 0.0
+       "gd": 0.0,
+       "class": 15.57
       }
      },
-     "watchability": null
-    },
-    {
-     "id": "556724",
-     "kickoff": "2026-04-14T19:00:00Z",
-     "status": "FINISHED",
-     "home": {
-      "name": "Club Atlético de Madrid"
-     },
-     "away": {
-      "name": "FC Barcelona"
-     },
-     "score": {
-      "home": 1,
-      "away": 2,
-      "winner": "a"
-     },
-     "prediction": {
-      "pick": "h",
-      "pick_name": "Club Atlético de Madrid",
-      "confidence": 34,
-      "note": "upset formula triggered — volatility makes the underdog playable",
-      "why": {
-       "form": -3.0,
-       "rest": 0.0,
-       "pts": 0.6,
-       "adv": 1.2,
-       "gd": -1.25,
-       "class": 0.0
-      }
-     },
-     "watchability": null
-    },
-    {
-     "id": "556718",
-     "kickoff": "2026-04-08T19:00:00Z",
-     "status": "FINISHED",
-     "home": {
-      "name": "Paris Saint-Germain FC"
-     },
-     "away": {
-      "name": "Liverpool FC"
-     },
-     "score": {
-      "home": 2,
-      "away": 0,
-      "winner": "h"
-     },
-     "prediction": {
-      "pick": "h",
-      "pick_name": "Paris Saint-Germain FC",
-      "confidence": 41,
-      "note": "no market to compare against",
-      "why": {
-       "form": 2.5,
-       "rest": 0.0,
-       "pts": 8.4,
-       "adv": 1.2,
-       "gd": 2.75,
-       "class": 0.0
-      }
-     },
-     "watchability": null
-    },
-    {
-     "id": "556720",
-     "kickoff": "2026-04-08T19:00:00Z",
-     "status": "FINISHED",
-     "home": {
-      "name": "FC Barcelona"
-     },
-     "away": {
-      "name": "Club Atlético de Madrid"
-     },
-     "score": {
-      "home": 0,
-      "away": 2,
-      "winner": "a"
-     },
-     "prediction": {
-      "pick": "a",
-      "pick_name": "Club Atlético de Madrid",
-      "confidence": 34,
-      "note": "upset formula triggered — volatility makes the underdog playable",
-      "why": {
-       "form": 3.0,
-       "rest": 0.0,
-       "pts": -0.6,
-       "adv": 1.2,
-       "gd": 1.25,
-       "class": 0.0
-      }
-     },
-     "watchability": null
-    },
-    {
-     "id": "556719",
-     "kickoff": "2026-04-07T19:00:00Z",
-     "status": "FINISHED",
-     "home": {
-      "name": "Real Madrid CF"
-     },
-     "away": {
-      "name": "FC Bayern München"
-     },
-     "score": {
-      "home": 1,
-      "away": 2,
-      "winner": "a"
-     },
-     "prediction": {
-      "pick": "h",
-      "pick_name": "Real Madrid CF",
-      "confidence": 34,
-      "note": "upset formula triggered — volatility makes the underdog playable",
-      "why": {
-       "form": -0.5,
-       "rest": 0.0,
-       "pts": -4.2,
-       "adv": 1.2,
-       "gd": -2.5,
-       "class": 0.0
-      }
-     },
-     "watchability": null
+     "official_pick": null,
+     "watchability": 44.4
     }
    ]
   },
@@ -391,13 +452,16 @@
    "updated": "2026-07-20T00:08:15+00:00",
    "scorecard": {
     "graded": 0,
-    "model_hits": 0
+    "model_hits": 0,
+    "verified_fixture_ids": []
    },
    "matches": [
     {
      "id": "565776",
      "kickoff": "2026-08-28T18:30:00Z",
      "status": "UPCOMING",
+     "stage": "Regular Season",
+     "venue": "",
      "home": {
       "name": "FC Bayern München"
      },
@@ -423,12 +487,15 @@
        "class": 2.91
       }
      },
+     "official_pick": null,
      "watchability": null
     },
     {
      "id": "565777",
      "kickoff": "2026-08-29T13:30:00Z",
      "status": "UPCOMING",
+     "stage": "Regular Season",
+     "venue": "",
      "home": {
       "name": "RB Leipzig"
      },
@@ -454,12 +521,15 @@
        "class": 5.98
       }
      },
+     "official_pick": null,
      "watchability": null
     },
     {
      "id": "565778",
      "kickoff": "2026-08-29T13:30:00Z",
      "status": "UPCOMING",
+     "stage": "Regular Season",
+     "venue": "",
      "home": {
       "name": "1. FSV Mainz 05"
      },
@@ -485,12 +555,15 @@
        "class": 0.0
       }
      },
+     "official_pick": null,
      "watchability": null
     },
     {
      "id": "565779",
      "kickoff": "2026-08-29T13:30:00Z",
      "status": "UPCOMING",
+     "stage": "Regular Season",
+     "venue": "",
      "home": {
       "name": "1. FC Union Berlin"
      },
@@ -516,12 +589,15 @@
        "class": -5.21
       }
      },
+     "official_pick": null,
      "watchability": null
     },
     {
      "id": "565780",
      "kickoff": "2026-08-29T13:30:00Z",
      "status": "UPCOMING",
+     "stage": "Regular Season",
+     "venue": "",
      "home": {
       "name": "SV 07 Elversberg"
      },
@@ -547,12 +623,15 @@
        "class": -5.65
       }
      },
+     "official_pick": null,
      "watchability": null
     },
     {
      "id": "565781",
      "kickoff": "2026-08-29T13:30:00Z",
      "status": "UPCOMING",
+     "stage": "Regular Season",
+     "venue": "",
      "home": {
       "name": "Borussia Dortmund"
      },
@@ -578,12 +657,15 @@
        "class": 6.39
       }
      },
+     "official_pick": null,
      "watchability": null
     },
     {
      "id": "565782",
      "kickoff": "2026-08-29T13:30:00Z",
      "status": "UPCOMING",
+     "stage": "Regular Season",
+     "venue": "",
      "home": {
       "name": "FC Augsburg"
      },
@@ -609,12 +691,15 @@
        "class": 0.0
       }
      },
+     "official_pick": null,
      "watchability": null
     },
     {
      "id": "565783",
      "kickoff": "2026-08-29T13:30:00Z",
      "status": "UPCOMING",
+     "stage": "Regular Season",
+     "venue": "",
      "home": {
       "name": "1. FC Köln"
      },
@@ -640,12 +725,15 @@
        "class": 0.0
       }
      },
+     "official_pick": null,
      "watchability": null
     },
     {
      "id": "565784",
      "kickoff": "2026-08-29T13:30:00Z",
      "status": "UPCOMING",
+     "stage": "Regular Season",
+     "venue": "",
      "home": {
       "name": "SC Freiburg"
      },
@@ -671,12 +759,15 @@
        "class": 4.55
       }
      },
+     "official_pick": null,
      "watchability": null
     },
     {
      "id": "565785",
      "kickoff": "2026-09-05T13:30:00Z",
      "status": "UPCOMING",
+     "stage": "Regular Season",
+     "venue": "",
      "home": {
       "name": "SV Werder Bremen"
      },
@@ -702,12 +793,15 @@
        "class": -5.98
       }
      },
+     "official_pick": null,
      "watchability": null
     },
     {
      "id": "565786",
      "kickoff": "2026-09-05T13:30:00Z",
      "status": "UPCOMING",
+     "stage": "Regular Season",
+     "venue": "",
      "home": {
       "name": "Eintracht Frankfurt"
      },
@@ -733,12 +827,15 @@
        "class": 5.21
       }
      },
+     "official_pick": null,
      "watchability": null
     },
     {
      "id": "565787",
      "kickoff": "2026-09-05T13:30:00Z",
      "status": "UPCOMING",
+     "stage": "Regular Season",
+     "venue": "",
      "home": {
       "name": "TSG 1899 Hoffenheim"
      },
@@ -764,6 +861,7 @@
        "class": -6.39
       }
      },
+     "official_pick": null,
      "watchability": null
     }
    ]
@@ -775,13 +873,16 @@
    "updated": "2026-07-20T00:08:29+00:00",
    "scorecard": {
     "graded": 0,
-    "model_hits": 0
+    "model_hits": 0,
+    "verified_fixture_ids": []
    },
    "matches": [
     {
      "id": "559711",
      "kickoff": "2026-08-22T15:00:00Z",
      "status": "UPCOMING",
+     "stage": "Regular Season",
+     "venue": "",
      "home": {
       "name": "Le Mans FC"
      },
@@ -807,12 +908,15 @@
        "class": 0.0
       }
      },
+     "official_pick": null,
      "watchability": null
     },
     {
      "id": "559712",
      "kickoff": "2026-08-22T15:00:00Z",
      "status": "UPCOMING",
+     "stage": "Regular Season",
+     "venue": "",
      "home": {
       "name": "Racing Club de Lens"
      },
@@ -838,12 +942,15 @@
        "class": 0.0
       }
      },
+     "official_pick": null,
      "watchability": null
     },
     {
      "id": "559713",
      "kickoff": "2026-08-22T15:00:00Z",
      "status": "UPCOMING",
+     "stage": "Regular Season",
+     "venue": "",
      "home": {
       "name": "Paris Saint-Germain FC"
      },
@@ -869,12 +976,15 @@
        "class": 3.94
       }
      },
+     "official_pick": null,
      "watchability": null
     },
     {
      "id": "559714",
      "kickoff": "2026-08-22T15:00:00Z",
      "status": "UPCOMING",
+     "stage": "Regular Season",
+     "venue": "",
      "home": {
       "name": "ES Troyes AC"
      },
@@ -900,12 +1010,15 @@
        "class": 0.0
       }
      },
+     "official_pick": null,
      "watchability": null
     },
     {
      "id": "559715",
      "kickoff": "2026-08-22T15:00:00Z",
      "status": "UPCOMING",
+     "stage": "Regular Season",
+     "venue": "",
      "home": {
       "name": "Olympique de Marseille"
      },
@@ -931,12 +1044,15 @@
        "class": 5.21
       }
      },
+     "official_pick": null,
      "watchability": null
     },
     {
      "id": "559716",
      "kickoff": "2026-08-22T15:00:00Z",
      "status": "UPCOMING",
+     "stage": "Regular Season",
+     "venue": "",
      "home": {
       "name": "OGC Nice"
      },
@@ -962,12 +1078,15 @@
        "class": 4.97
       }
      },
+     "official_pick": null,
      "watchability": null
     },
     {
      "id": "559717",
      "kickoff": "2026-08-22T15:00:00Z",
      "status": "UPCOMING",
+     "stage": "Regular Season",
+     "venue": "",
      "home": {
       "name": "Angers SCO"
      },
@@ -993,12 +1112,15 @@
        "class": 0.0
       }
      },
+     "official_pick": null,
      "watchability": null
     },
     {
      "id": "559718",
      "kickoff": "2026-08-22T15:00:00Z",
      "status": "UPCOMING",
+     "stage": "Regular Season",
+     "venue": "",
      "home": {
       "name": "Toulouse FC"
      },
@@ -1024,12 +1146,15 @@
        "class": -4.89
       }
      },
+     "official_pick": null,
      "watchability": null
     },
     {
      "id": "559719",
      "kickoff": "2026-08-22T15:00:00Z",
      "status": "UPCOMING",
+     "stage": "Regular Season",
+     "venue": "",
      "home": {
       "name": "Le Havre AC"
      },
@@ -1055,12 +1180,15 @@
        "class": -5.32
       }
      },
+     "official_pick": null,
      "watchability": null
     },
     {
      "id": "559703",
      "kickoff": "2026-08-29T15:00:00Z",
      "status": "UPCOMING",
+     "stage": "Regular Season",
+     "venue": "",
      "home": {
       "name": "AS Monaco FC"
      },
@@ -1086,12 +1214,15 @@
        "class": 0.11
       }
      },
+     "official_pick": null,
      "watchability": null
     },
     {
      "id": "559704",
      "kickoff": "2026-08-29T15:00:00Z",
      "status": "UPCOMING",
+     "stage": "Regular Season",
+     "venue": "",
      "home": {
       "name": "RC Strasbourg Alsace"
      },
@@ -1117,12 +1248,15 @@
        "class": 0.0
       }
      },
+     "official_pick": null,
      "watchability": null
     },
     {
      "id": "559705",
      "kickoff": "2026-08-29T15:00:00Z",
      "status": "UPCOMING",
+     "stage": "Regular Season",
+     "venue": "",
      "home": {
       "name": "FC Lorient"
      },
@@ -1148,6 +1282,7 @@
        "class": 0.0
       }
      },
+     "official_pick": null,
      "watchability": null
     }
    ]
@@ -1156,16 +1291,19 @@
    "compKey": "nfl",
    "competition": "NFL",
    "sport": "nfl",
-   "updated": "2026-07-23T19:16:06+00:00",
+   "updated": "2026-07-26T00:42:50+00:00",
    "scorecard": {
     "graded": 0,
-    "model_hits": 0
+    "model_hits": 0,
+    "verified_fixture_ids": []
    },
    "matches": [
     {
      "id": "bdl-nfl-1392216",
      "kickoff": "2026-09-10T00:20:00Z",
      "status": "UPCOMING",
+     "stage": "Week 1",
+     "venue": "Lumen Field",
      "home": {
       "name": "Seattle Seahawks"
      },
@@ -1180,26 +1318,30 @@
      "prediction": {
       "pick": "h",
       "pick_name": "Seattle Seahawks",
-      "confidence": 52,
+      "confidence": 54,
       "note": "no market to compare against",
       "why": {
-       "form": -0.56,
-       "srs": 2.0,
-       "adv": 0.5,
+       "margin": 0.73,
+       "elo": 0.51,
+       "record": 0.32,
        "class": 1.4,
-       "record": -0.62,
        "rest": 0.0,
-       "margin": 0.78,
-       "elo": -0.23,
-       "rank": 0.0
+       "rank": 0.0,
+       "adv": 0.5,
+       "form": 0.0,
+       "srs": 1.78,
+       "h2h": 0.13
       }
      },
-     "watchability": 70.8
+     "official_pick": null,
+     "watchability": 74.9
     },
     {
      "id": "bdl-nfl-1392217",
      "kickoff": "2026-09-11T00:35:00Z",
      "status": "UPCOMING",
+     "stage": "Week 1",
+     "venue": "Melbourne Cricket Ground",
      "home": {
       "name": "Los Angeles Rams"
      },
@@ -1214,26 +1356,29 @@
      "prediction": {
       "pick": "h",
       "pick_name": "Los Angeles Rams",
-      "confidence": 54,
+      "confidence": 53,
       "note": "no market to compare against",
       "why": {
-       "form": 0.43,
-       "srs": 1.93,
-       "adv": 0.5,
+       "margin": 1.37,
+       "elo": 0.1,
+       "record": 0.13,
        "class": -0.32,
-       "record": 0.46,
        "rest": 0.0,
-       "margin": 1.48,
-       "elo": 0.05,
-       "rank": 0.0
+       "rank": 0.0,
+       "adv": 0.5,
+       "form": 0.86,
+       "srs": 1.53
       }
      },
-     "watchability": 74.3
+     "official_pick": null,
+     "watchability": 78.3
     },
     {
      "id": "bdl-nfl-1392218",
      "kickoff": "2026-09-13T17:00:00Z",
      "status": "UPCOMING",
+     "stage": "Week 1",
+     "venue": "Paycor Stadium",
      "home": {
       "name": "Cincinnati Bengals"
      },
@@ -1248,26 +1393,29 @@
      "prediction": {
       "pick": "a",
       "pick_name": "Tampa Bay Buccaneers",
-      "confidence": 59,
+      "confidence": 52,
       "note": "no market to compare against",
       "why": {
-       "form": -0.56,
-       "srs": -1.77,
-       "adv": 0.5,
+       "margin": -0.55,
+       "elo": -0.52,
+       "record": -0.94,
        "class": 0.97,
-       "record": -1.64,
        "rest": 0.0,
-       "margin": -1.17,
-       "elo": -0.59,
-       "rank": 0.0
+       "rank": 0.0,
+       "adv": 0.5,
+       "form": 0.34,
+       "srs": -0.78
       }
      },
-     "watchability": 62.7
+     "official_pick": null,
+     "watchability": 74.8
     },
     {
      "id": "bdl-nfl-1392219",
      "kickoff": "2026-09-13T17:00:00Z",
      "status": "UPCOMING",
+     "stage": "Week 1",
+     "venue": "Ford Field",
      "home": {
       "name": "Detroit Lions"
      },
@@ -1282,26 +1430,29 @@
      "prediction": {
       "pick": "h",
       "pick_name": "Detroit Lions",
-      "confidence": 73,
+      "confidence": 63,
       "note": "no market to compare against",
       "why": {
-       "form": 0.43,
-       "srs": 2.87,
-       "adv": 0.5,
+       "margin": 1.71,
+       "elo": 0.75,
+       "record": 1.41,
        "class": 2.59,
-       "record": 3.08,
        "rest": 0.0,
-       "margin": 3.06,
-       "elo": 1.24,
-       "rank": 0.0
+       "rank": 0.0,
+       "adv": 0.5,
+       "form": -0.56,
+       "srs": 1.94
       }
      },
-     "watchability": 37.6
+     "official_pick": null,
+     "watchability": 55.5
     },
     {
      "id": "bdl-nfl-1392220",
      "kickoff": "2026-09-13T17:00:00Z",
      "status": "UPCOMING",
+     "stage": "Week 1",
+     "venue": "Nissan Stadium",
      "home": {
       "name": "Tennessee Titans"
      },
@@ -1314,28 +1465,31 @@
       "winner": null
      },
      "prediction": {
-      "pick": "a",
-      "pick_name": "New York Jets",
-      "confidence": 70,
+      "pick": "h",
+      "pick_name": "Tennessee Titans",
+      "confidence": 73,
       "note": "no market to compare against",
       "why": {
-       "form": -0.69,
-       "srs": 0.14,
-       "adv": 0.5,
+       "margin": 0.11,
+       "elo": 0.03,
+       "record": 0.0,
        "class": -0.65,
-       "record": -0.62,
        "rest": 0.0,
-       "margin": -0.97,
-       "elo": -0.24,
-       "rank": 0.0
+       "rank": 0.0,
+       "adv": 0.5,
+       "form": 0.77,
+       "srs": 1.03
       }
      },
-     "watchability": 35.9
+     "official_pick": null,
+     "watchability": 31.6
     },
     {
      "id": "bdl-nfl-1392221",
      "kickoff": "2026-09-13T17:00:00Z",
      "status": "UPCOMING",
+     "stage": "Week 1",
+     "venue": "Lucas Oil Stadium",
      "home": {
       "name": "Indianapolis Colts"
      },
@@ -1348,28 +1502,31 @@
       "winner": null
      },
      "prediction": {
-      "pick": "h",
-      "pick_name": "Indianapolis Colts",
-      "confidence": 55,
+      "pick": "a",
+      "pick_name": "Baltimore Ravens",
+      "confidence": 52,
       "note": "no market to compare against",
       "why": {
-       "form": 0.13,
-       "srs": 1.98,
-       "adv": 0.5,
+       "margin": 0.33,
+       "elo": -0.17,
+       "record": 0.0,
        "class": -1.73,
-       "record": 1.33,
        "rest": 0.0,
-       "margin": 1.87,
-       "elo": 0.44,
-       "rank": 0.0
+       "rank": 0.0,
+       "adv": 0.5,
+       "form": -1.46,
+       "srs": 0.71
       }
      },
-     "watchability": 69.6
+     "official_pick": null,
+     "watchability": 75.1
     },
     {
      "id": "bdl-nfl-1392222",
      "kickoff": "2026-09-13T17:00:00Z",
      "status": "UPCOMING",
+     "stage": "Week 1",
+     "venue": "Acrisure Stadium",
      "home": {
       "name": "Pittsburgh Steelers"
      },
@@ -1384,26 +1541,29 @@
      "prediction": {
       "pick": "h",
       "pick_name": "Pittsburgh Steelers",
-      "confidence": 61,
+      "confidence": 53,
       "note": "no market to compare against",
       "why": {
-       "form": 1.11,
-       "srs": 0.87,
-       "adv": 0.5,
+       "margin": 0.41,
+       "elo": 0.24,
+       "record": 0.68,
        "class": 0.32,
-       "record": 1.54,
        "rest": 0.0,
-       "margin": 0.81,
-       "elo": 0.65,
-       "rank": 0.0
+       "rank": 0.0,
+       "adv": 0.5,
+       "form": -0.3,
+       "srs": 0.55
       }
      },
-     "watchability": 57.1
+     "official_pick": null,
+     "watchability": 73.7
     },
     {
      "id": "bdl-nfl-1392223",
      "kickoff": "2026-09-13T17:00:00Z",
      "status": "UPCOMING",
+     "stage": "Week 1",
+     "venue": "Bank of America Stadium",
      "home": {
       "name": "Carolina Panthers"
      },
@@ -1418,26 +1578,29 @@
      "prediction": {
       "pick": "a",
       "pick_name": "Chicago Bears",
-      "confidence": 58,
+      "confidence": 60,
       "note": "no market to compare against",
       "why": {
-       "form": -0.9,
-       "srs": -0.2,
-       "adv": 0.5,
+       "margin": -1.08,
+       "elo": -1.07,
+       "record": -1.5,
        "class": -1.3,
-       "record": -1.69,
        "rest": 0.0,
-       "margin": -0.87,
-       "elo": -0.69,
-       "rank": 0.0
+       "rank": 0.0,
+       "adv": 0.5,
+       "form": -0.43,
+       "srs": -0.93
       }
      },
-     "watchability": 57.4
+     "official_pick": null,
+     "watchability": 58.4
     },
     {
      "id": "bdl-nfl-1392224",
      "kickoff": "2026-09-13T17:00:00Z",
      "status": "UPCOMING",
+     "stage": "Week 1",
+     "venue": "EverBank Stadium",
      "home": {
       "name": "Jacksonville Jaguars"
      },
@@ -1452,26 +1615,29 @@
      "prediction": {
       "pick": "h",
       "pick_name": "Jacksonville Jaguars",
-      "confidence": 73,
+      "confidence": 70,
       "note": "no market to compare against",
       "why": {
-       "form": 0.99,
-       "srs": 3.12,
-       "adv": 0.5,
+       "margin": 2.68,
+       "elo": 2.24,
+       "record": 3.42,
        "class": 0.54,
-       "record": 3.49,
        "rest": 0.0,
-       "margin": 1.85,
-       "elo": 1.63,
-       "rank": 0.0
+       "rank": 0.0,
+       "adv": 0.5,
+       "form": 0.9,
+       "srs": 3.65
       }
      },
-     "watchability": 34.3
+     "official_pick": null,
+     "watchability": 42.3
     },
     {
      "id": "bdl-nfl-1392225",
      "kickoff": "2026-09-13T17:00:00Z",
      "status": "UPCOMING",
+     "stage": "Week 1",
+     "venue": "NRG Stadium",
      "home": {
       "name": "Houston Texans"
      },
@@ -1486,27 +1652,30 @@
      "prediction": {
       "pick": "h",
       "pick_name": "Houston Texans",
-      "confidence": 51,
+      "confidence": 52,
       "note": "no market to compare against",
       "why": {
-       "form": 1.2,
-       "srs": 0.73,
-       "adv": 0.5,
+       "margin": 0.05,
+       "elo": 0.25,
+       "record": 0.0,
        "class": -0.86,
-       "record": -0.67,
        "rest": 0.0,
-       "margin": -0.22,
-       "elo": -0.08,
        "rank": 0.0,
+       "adv": 0.5,
+       "form": 0.86,
+       "srs": 0.82,
        "h2h": 0.13
       }
      },
-     "watchability": 80.5
+     "official_pick": null,
+     "watchability": 80.4
     },
     {
      "id": "bdl-nfl-1392226",
      "kickoff": "2026-09-13T20:25:00Z",
      "status": "UPCOMING",
+     "stage": "Week 1",
+     "venue": "Allegiant Stadium",
      "home": {
       "name": "Las Vegas Raiders"
      },
@@ -1521,26 +1690,29 @@
      "prediction": {
       "pick": "a",
       "pick_name": "Miami Dolphins",
-      "confidence": 77,
+      "confidence": 74,
       "note": "no market to compare against",
       "why": {
-       "form": -1.07,
-       "srs": -1.66,
-       "adv": 0.5,
+       "margin": -1.34,
+       "elo": -1.29,
+       "record": -1.88,
        "class": -1.73,
-       "record": -2.36,
        "rest": 0.0,
-       "margin": -1.92,
-       "elo": -1.01,
-       "rank": 0.0
+       "rank": 0.0,
+       "adv": 0.5,
+       "form": -0.39,
+       "srs": -0.9
       }
      },
-     "watchability": 31.3
+     "official_pick": null,
+     "watchability": 33.1
     },
     {
      "id": "bdl-nfl-1392227",
      "kickoff": "2026-09-13T20:25:00Z",
      "status": "UPCOMING",
+     "stage": "Week 1",
+     "venue": "U.S. Bank Stadium",
      "home": {
       "name": "Minnesota Vikings"
      },
@@ -1553,24 +1725,24 @@
       "winner": null
      },
      "prediction": {
-      "pick": "a",
-      "pick_name": "Green Bay Packers",
-      "confidence": 61,
+      "pick": "h",
+      "pick_name": "Minnesota Vikings",
+      "confidence": 52,
       "note": "no market to compare against",
       "why": {
-       "form": -1.73,
-       "srs": -1.76,
-       "adv": 0.5,
+       "margin": -0.17,
+       "elo": 0.2,
+       "record": 0.24,
        "class": -0.76,
-       "record": -2.26,
        "rest": 0.0,
-       "margin": -1.53,
-       "elo": -1.08,
        "rank": 0.0,
-       "h2h": -0.13
+       "adv": 0.5,
+       "form": 1.89,
+       "srs": -0.18
       }
      },
-     "watchability": 60.2
+     "official_pick": null,
+     "watchability": 76.8
     }
    ]
   },
@@ -1581,13 +1753,16 @@
    "updated": "2026-07-24T19:53:18+00:00",
    "scorecard": {
     "graded": 0,
-    "model_hits": 0
+    "model_hits": 0,
+    "verified_fixture_ids": []
    },
    "matches": [
     {
      "id": "cfbd-401856766",
      "kickoff": "2026-08-29T16:00:00Z",
      "status": "UPCOMING",
+     "stage": "Week 1",
+     "venue": "Aviva Stadium",
      "home": {
       "name": "TCU"
      },
@@ -1616,12 +1791,15 @@
        "rank": 0.08
       }
      },
+     "official_pick": null,
      "watchability": 55.5
     },
     {
      "id": "cfbd-401864494",
      "kickoff": "2026-08-29T19:00:00Z",
      "status": "UPCOMING",
+     "stage": "Week 1",
+     "venue": "Los Angeles Memorial Coliseum",
      "home": {
       "name": "USC"
      },
@@ -1650,12 +1828,15 @@
        "rank": 0.48
       }
      },
+     "official_pick": null,
      "watchability": 48.4
     },
     {
      "id": "cfbd-401858202",
      "kickoff": "2026-08-29T19:30:00Z",
      "status": "UPCOMING",
+     "stage": "Week 1",
+     "venue": "Scott Stadium",
      "home": {
       "name": "Virginia"
      },
@@ -1684,12 +1865,15 @@
        "rank": 0.8
       }
      },
+     "official_pick": null,
      "watchability": 59.1
     },
     {
      "id": "cfbd-401864577",
      "kickoff": "2026-08-29T21:30:00Z",
      "status": "UPCOMING",
+     "stage": "Week 1",
+     "venue": "Fargodome",
      "home": {
       "name": "North Dakota State"
      },
@@ -1718,12 +1902,15 @@
        "rank": 0.0
       }
      },
+     "official_pick": null,
      "watchability": 50.1
     },
     {
      "id": "cfbd-401866408",
      "kickoff": "2026-08-29T22:30:00Z",
      "status": "UPCOMING",
+     "stage": "Week 1",
+     "venue": "Rynearson Stadium",
      "home": {
       "name": "Eastern Michigan"
      },
@@ -1752,12 +1939,15 @@
        "rank": 0.0
       }
      },
+     "official_pick": null,
      "watchability": 55.5
     },
     {
      "id": "cfbd-401864570",
      "kickoff": "2026-08-29T23:00:00Z",
      "status": "UPCOMING",
+     "stage": "Week 1",
+     "venue": "Doak Campbell Stadium",
      "home": {
       "name": "Florida State"
      },
@@ -1786,12 +1976,15 @@
        "rank": 0.0
       }
      },
+     "official_pick": null,
      "watchability": 57.4
     },
     {
      "id": "cfbd-401858201",
      "kickoff": "2026-08-29T23:00:00Z",
      "status": "UPCOMING",
+     "stage": "Week 1",
+     "venue": "Stanford Stadium",
      "home": {
       "name": "Stanford"
      },
@@ -1820,12 +2013,15 @@
        "rank": 0.0
       }
      },
+     "official_pick": null,
      "watchability": 60.9
     },
     {
      "id": "cfbd-401862693",
      "kickoff": "2026-08-30T02:00:00Z",
      "status": "UPCOMING",
+     "stage": "Week 1",
+     "venue": "Allegiant Stadium",
      "home": {
       "name": "UNLV"
      },
@@ -1854,12 +2050,15 @@
        "rank": 0.0
       }
      },
+     "official_pick": null,
      "watchability": 60.9
     },
     {
      "id": "cfbd-401858423",
      "kickoff": "2026-09-03T22:00:00Z",
      "status": "UPCOMING",
+     "stage": "Week 1",
+     "venue": "SHI Stadium",
      "home": {
       "name": "Rutgers"
      },
@@ -1888,12 +2087,15 @@
        "rank": 0.0
       }
      },
+     "official_pick": null,
      "watchability": 48.4
     },
     {
      "id": "cfbd-401856767",
      "kickoff": "2026-09-03T23:00:00Z",
      "status": "UPCOMING",
+     "stage": "Week 1",
+     "venue": "FBC Mortgage Stadium",
      "home": {
       "name": "UCF"
      },
@@ -1922,12 +2124,15 @@
        "rank": 0.0
       }
      },
+     "official_pick": null,
      "watchability": 52.0
     },
     {
      "id": "cfbd-401858204",
      "kickoff": "2026-09-03T23:00:00Z",
      "status": "UPCOMING",
+     "stage": "Week 1",
+     "venue": "Allegacy Federal Credit Union Stadium",
      "home": {
       "name": "Wake Forest"
      },
@@ -1956,12 +2161,15 @@
        "rank": 0.0
       }
      },
+     "official_pick": null,
      "watchability": 57.4
     },
     {
      "id": "cfbd-401866409",
      "kickoff": "2026-09-03T23:00:00Z",
      "status": "UPCOMING",
+     "stage": "Week 1",
+     "venue": "UB Stadium",
      "home": {
       "name": "Buffalo"
      },
@@ -1990,6 +2198,7 @@
        "rank": 0.0
       }
      },
+     "official_pick": null,
      "watchability": 53.7
     }
    ]
@@ -2001,430 +2210,10 @@
    "updated": "2026-07-24T19:53:52+00:00",
    "scorecard": {
     "graded": 0,
-    "model_hits": 0
+    "model_hits": 0,
+    "verified_fixture_ids": []
    },
-   "matches": [
-    {
-     "id": "cbbd-372614",
-     "kickoff": "2026-04-07T00:50:00Z",
-     "status": "FINISHED",
-     "home": {
-      "name": "Michigan"
-     },
-     "away": {
-      "name": "UConn"
-     },
-     "score": {
-      "home": 69,
-      "away": 63,
-      "winner": "h"
-     },
-     "prediction": {
-      "pick": "h",
-      "pick_name": "Michigan",
-      "confidence": 54,
-      "note": "no market to compare against",
-      "why": {
-       "srs": 0.0,
-       "elo": 1.08,
-       "adv": 0.45,
-       "record": 0.6,
-       "rank": 0.4,
-       "form": 2.1,
-       "rest": 0.0,
-       "margin": 0.72,
-       "class": 0.5,
-       "h2h": 0.13
-      }
-     },
-     "watchability": 57.4
-    },
-    {
-     "id": "cbbd-372612",
-     "kickoff": "2026-04-06T00:00:00Z",
-     "status": "FINISHED",
-     "home": {
-      "name": "Auburn"
-     },
-     "away": {
-      "name": "Tulsa"
-     },
-     "score": {
-      "home": 92,
-      "away": 86,
-      "winner": "h"
-     },
-     "prediction": {
-      "pick": "a",
-      "pick_name": "Tulsa",
-      "confidence": 52,
-      "note": "no market to compare against",
-      "why": {
-       "srs": 0.0,
-       "elo": -1.61,
-       "adv": 0.45,
-       "record": -1.68,
-       "rank": -0.48,
-       "form": 1.54,
-       "rest": 0.0,
-       "margin": -1.44,
-       "class": 0.26,
-       "h2h": 0.13
-      }
-     },
-     "watchability": 62.7
-    },
-    {
-     "id": "cbbd-372613",
-     "kickoff": "2026-04-05T21:30:00Z",
-     "status": "FINISHED",
-     "home": {
-      "name": "West Virginia"
-     },
-     "away": {
-      "name": "Oklahoma"
-     },
-     "score": {
-      "home": 89,
-      "away": 82,
-      "winner": "h"
-     },
-     "prediction": {
-      "pick": "h",
-      "pick_name": "West Virginia",
-      "confidence": 52,
-      "note": "no market to compare against",
-      "why": {
-       "srs": 0.0,
-       "elo": -0.24,
-       "adv": 0.45,
-       "record": 0.26,
-       "rank": 0.0,
-       "form": 0.73,
-       "rest": 0.0,
-       "margin": -0.11,
-       "class": 1.17,
-       "h2h": 0.13
-      }
-     },
-     "watchability": 60.9
-    },
-    {
-     "id": "cbbd-372608",
-     "kickoff": "2026-04-05T01:19:00Z",
-     "status": "FINISHED",
-     "home": {
-      "name": "Arizona"
-     },
-     "away": {
-      "name": "Michigan"
-     },
-     "score": {
-      "home": 73,
-      "away": 91,
-      "winner": "a"
-     },
-     "prediction": {
-      "pick": "a",
-      "pick_name": "Michigan",
-      "confidence": 51,
-      "note": "no market to compare against",
-      "why": {
-       "srs": 0.0,
-       "elo": -0.33,
-       "adv": 0.45,
-       "record": -0.02,
-       "rank": -0.08,
-       "form": -0.3,
-       "rest": 0.03,
-       "margin": 0.0,
-       "class": -0.46,
-       "h2h": -0.13
-      }
-     },
-     "watchability": 62.8
-    },
-    {
-     "id": "cbbd-372609",
-     "kickoff": "2026-04-04T22:09:00Z",
-     "status": "FINISHED",
-     "home": {
-      "name": "UConn"
-     },
-     "away": {
-      "name": "Illinois"
-     },
-     "score": {
-      "home": 71,
-      "away": 62,
-      "winner": "h"
-     },
-     "prediction": {
-      "pick": "h",
-      "pick_name": "UConn",
-      "confidence": 53,
-      "note": "no market to compare against",
-      "why": {
-       "srs": 0.0,
-       "elo": 0.91,
-       "adv": 0.45,
-       "record": 0.75,
-       "rank": 1.52,
-       "form": 1.41,
-       "rest": -0.03,
-       "margin": -0.61,
-       "class": -0.19,
-       "h2h": 0.27
-      }
-     },
-     "watchability": 59.1
-    },
-    {
-     "id": "cbbd-372611",
-     "kickoff": "2026-04-04T20:14:00Z",
-     "status": "FINISHED",
-     "home": {
-      "name": "Creighton"
-     },
-     "away": {
-      "name": "West Virginia"
-     },
-     "score": {
-      "home": 70,
-      "away": 87,
-      "winner": "a"
-     },
-     "prediction": {
-      "pick": "a",
-      "pick_name": "West Virginia",
-      "confidence": 54,
-      "note": "no market to compare against",
-      "why": {
-       "srs": 0.0,
-       "elo": -1.16,
-       "adv": 0.45,
-       "record": -1.04,
-       "rank": 0.0,
-       "form": -0.51,
-       "rest": 0.0,
-       "margin": -0.98,
-       "class": -0.35,
-       "h2h": -0.13
-      }
-     },
-     "watchability": 57.4
-    },
-    {
-     "id": "cbbd-372610",
-     "kickoff": "2026-04-04T17:30:00Z",
-     "status": "FINISHED",
-     "home": {
-      "name": "Baylor"
-     },
-     "away": {
-      "name": "Oklahoma"
-     },
-     "score": {
-      "home": 69,
-      "away": 82,
-      "winner": "a"
-     },
-     "prediction": {
-      "pick": "a",
-      "pick_name": "Oklahoma",
-      "confidence": 52,
-      "note": "no market to compare against",
-      "why": {
-       "srs": 0.0,
-       "elo": -1.16,
-       "adv": 0.45,
-       "record": -0.54,
-       "rank": 0.0,
-       "form": -0.56,
-       "rest": 0.0,
-       "margin": -0.04,
-       "class": 0.05,
-       "h2h": -0.13
-      }
-     },
-     "watchability": 60.9
-    },
-    {
-     "id": "cbbd-372601",
-     "kickoff": "2026-04-03T02:54:00Z",
-     "status": "FINISHED",
-     "home": {
-      "name": "Creighton"
-     },
-     "away": {
-      "name": "Rutgers"
-     },
-     "score": {
-      "home": 82,
-      "away": 69,
-      "winner": "h"
-     },
-     "prediction": {
-      "pick": "h",
-      "pick_name": "Creighton",
-      "confidence": 54,
-      "note": "no market to compare against",
-      "why": {
-       "srs": 0.0,
-       "elo": 0.32,
-       "adv": 0.45,
-       "record": 0.47,
-       "rank": 0.0,
-       "form": -0.34,
-       "rest": 0.0,
-       "margin": 0.95,
-       "class": 1.16,
-       "h2h": 0.13
-      }
-     },
-     "watchability": 57.7
-    },
-    {
-     "id": "cbbd-372603",
-     "kickoff": "2026-04-03T01:47:00Z",
-     "status": "FINISHED",
-     "home": {
-      "name": "Auburn"
-     },
-     "away": {
-      "name": "Illinois State"
-     },
-     "score": {
-      "home": 88,
-      "away": 66,
-      "winner": "h"
-     },
-     "prediction": {
-      "pick": "h",
-      "pick_name": "Auburn",
-      "confidence": 53,
-      "note": "no market to compare against",
-      "why": {
-       "srs": 0.0,
-       "elo": -0.28,
-       "adv": 0.45,
-       "record": -0.48,
-       "rank": 0.0,
-       "form": 1.29,
-       "rest": 0.0,
-       "margin": -0.39,
-       "class": 2.69,
-       "h2h": 0.13
-      }
-     },
-     "watchability": 59.1
-    },
-    {
-     "id": "cbbd-372600",
-     "kickoff": "2026-04-03T00:00:00Z",
-     "status": "FINISHED",
-     "home": {
-      "name": "West Virginia"
-     },
-     "away": {
-      "name": "Stanford"
-     },
-     "score": {
-      "home": 82,
-      "away": 77,
-      "winner": "h"
-     },
-     "prediction": {
-      "pick": "h",
-      "pick_name": "West Virginia",
-      "confidence": 52,
-      "note": "no market to compare against",
-      "why": {
-       "srs": 0.0,
-       "elo": 0.12,
-       "adv": 0.45,
-       "record": -0.05,
-       "rank": 0.0,
-       "form": 1.16,
-       "rest": 0.0,
-       "margin": 0.37,
-       "class": -0.12,
-       "h2h": 0.13
-      }
-     },
-     "watchability": 60.9
-    },
-    {
-     "id": "cbbd-372602",
-     "kickoff": "2026-04-02T23:00:00Z",
-     "status": "FINISHED",
-     "home": {
-      "name": "New Mexico"
-     },
-     "away": {
-      "name": "Tulsa"
-     },
-     "score": {
-      "home": 69,
-      "away": 74,
-      "winner": "a"
-     },
-     "prediction": {
-      "pick": "a",
-      "pick_name": "Tulsa",
-      "confidence": 53,
-      "note": "no market to compare against",
-      "why": {
-       "srs": 0.0,
-       "elo": -1.01,
-       "adv": 0.45,
-       "record": -0.69,
-       "rank": -0.48,
-       "form": 0.69,
-       "rest": 0.0,
-       "margin": -0.23,
-       "class": -2.43,
-       "h2h": -0.13
-      }
-     },
-     "watchability": 60.0
-    },
-    {
-     "id": "cbbd-372599",
-     "kickoff": "2026-04-02T03:15:00Z",
-     "status": "FINISHED",
-     "home": {
-      "name": "Minnesota"
-     },
-     "away": {
-      "name": "Baylor"
-     },
-     "score": {
-      "home": 48,
-      "away": 67,
-      "winner": "a"
-     },
-     "prediction": {
-      "pick": "h",
-      "pick_name": "Minnesota",
-      "confidence": 50,
-      "note": "no market to compare against",
-      "why": {
-       "srs": 0.0,
-       "elo": -0.49,
-       "adv": 0.45,
-       "record": -0.36,
-       "rank": 0.0,
-       "form": 0.26,
-       "rest": 0.0,
-       "margin": -0.88,
-       "class": 0.91,
-       "h2h": -0.13
-      }
-     },
-     "watchability": 64.6
-    }
-   ]
+   "matches": []
   },
   {
    "compKey": "nba",
@@ -2433,7 +2222,8 @@
    "updated": "2026-07-23T19:17:17+00:00",
    "scorecard": {
     "graded": 0,
-    "model_hits": 0
+    "model_hits": 0,
+    "verified_fixture_ids": []
    },
    "matches": []
   },
@@ -2444,9 +2234,478 @@
    "updated": "2026-07-17T03:26:02+00:00",
    "scorecard": {
     "graded": 0,
-    "model_hits": 0
+    "model_hits": 0,
+    "verified_fixture_ids": []
    },
    "matches": []
+  },
+  {
+   "compKey": "mlb",
+   "competition": "MLB",
+   "sport": "baseball",
+   "updated": "2026-07-27T00:10:44+00:00",
+   "scorecard": {
+    "graded": 0,
+    "model_hits": 0,
+    "verified_fixture_ids": []
+   },
+   "matches": [
+    {
+     "id": "bdl-mlb-5059251",
+     "kickoff": "2026-07-19T00:08:00Z",
+     "status": "UPCOMING",
+     "stage": "Regular",
+     "venue": "Yankee Stadium",
+     "home": {
+      "name": "New York Yankees"
+     },
+     "away": {
+      "name": "Los Angeles Dodgers"
+     },
+     "score": {
+      "home": 0,
+      "away": 0,
+      "winner": null
+     },
+     "prediction": {
+      "pick": "a",
+      "pick_name": "Los Angeles Dodgers",
+      "confidence": 56,
+      "note": "no market to compare against",
+      "why": {
+       "class": 0.0,
+       "elo": -0.74,
+       "rest": 0.0,
+       "form": -0.34,
+       "margin": -0.47,
+       "record": -0.52,
+       "adv": 0.25,
+       "rank": 0.0,
+       "srs": -0.47,
+       "h2h": -0.13
+      }
+     },
+     "official_pick": null,
+     "watchability": 74.1
+    },
+    {
+     "id": "bdl-mlb-5059287",
+     "kickoff": "2026-07-21T23:05:00Z",
+     "status": "UPCOMING",
+     "stage": "Regular",
+     "venue": "Yankee Stadium",
+     "home": {
+      "name": "New York Yankees"
+     },
+     "away": {
+      "name": "Pittsburgh Pirates"
+     },
+     "score": {
+      "home": 0,
+      "away": 0,
+      "winner": null
+     },
+     "prediction": {
+      "pick": "h",
+      "pick_name": "New York Yankees",
+      "confidence": 59,
+      "note": "no market to compare against",
+      "why": {
+       "class": 0.0,
+       "elo": 0.24,
+       "rest": 0.0,
+       "form": 0.77,
+       "margin": 0.4,
+       "record": 0.46,
+       "adv": 0.25,
+       "rank": 0.0,
+       "srs": 0.32,
+       "h2h": 0.13
+      }
+     },
+     "official_pick": null,
+     "watchability": 64.1
+    },
+    {
+     "id": "bdl-mlb-5059289",
+     "kickoff": "2026-07-21T23:10:00Z",
+     "status": "UPCOMING",
+     "stage": "Regular",
+     "venue": "Fenway Park",
+     "home": {
+      "name": "Boston Red Sox"
+     },
+     "away": {
+      "name": "Baltimore Orioles"
+     },
+     "score": {
+      "home": 0,
+      "away": 0,
+      "winner": null
+     },
+     "prediction": {
+      "pick": "h",
+      "pick_name": "Boston Red Sox",
+      "confidence": 62,
+      "note": "no market to compare against",
+      "why": {
+       "class": 0.0,
+       "elo": 1.35,
+       "rest": 0.0,
+       "form": 0.13,
+       "margin": 0.46,
+       "record": 0.3,
+       "adv": 0.25,
+       "rank": 0.0,
+       "srs": 0.36,
+       "h2h": 0.09
+      }
+     },
+     "official_pick": null,
+     "watchability": 61.1
+    },
+    {
+     "id": "bdl-mlb-5059364",
+     "kickoff": "2026-07-27T18:35:00Z",
+     "status": "UPCOMING",
+     "stage": "Regular",
+     "venue": "Globe Life Field",
+     "home": {
+      "name": "Texas Rangers"
+     },
+     "away": {
+      "name": "Seattle Mariners"
+     },
+     "score": {
+      "home": 0,
+      "away": 0,
+      "winner": null
+     },
+     "prediction": {
+      "pick": "h",
+      "pick_name": "Texas Rangers",
+      "confidence": 56,
+      "note": "no market to compare against",
+      "why": {
+       "class": 0.0,
+       "elo": 0.41,
+       "rest": 0.0,
+       "form": 0.47,
+       "margin": -0.28,
+       "record": 0.11,
+       "adv": 0.25,
+       "rank": 0.0,
+       "srs": -0.22,
+       "h2h": 0.27
+      }
+     },
+     "official_pick": null,
+     "watchability": 68.9
+    },
+    {
+     "id": "bdl-mlb-5059365",
+     "kickoff": "2026-07-27T22:40:00Z",
+     "status": "UPCOMING",
+     "stage": "Regular",
+     "venue": "PNC Park",
+     "home": {
+      "name": "Pittsburgh Pirates"
+     },
+     "away": {
+      "name": "Arizona Diamondbacks"
+     },
+     "score": {
+      "home": 0,
+      "away": 0,
+      "winner": null
+     },
+     "prediction": {
+      "pick": "h",
+      "pick_name": "Pittsburgh Pirates",
+      "confidence": 54,
+      "note": "no market to compare against",
+      "why": {
+       "class": 0.0,
+       "elo": 0.06,
+       "rest": 0.0,
+       "form": 0.17,
+       "margin": 0.32,
+       "record": -0.08,
+       "adv": 0.25,
+       "rank": 0.0,
+       "srs": 0.2,
+       "h2h": 0.13
+      }
+     },
+     "official_pick": null,
+     "watchability": 71.5
+    },
+    {
+     "id": "bdl-mlb-5059366",
+     "kickoff": "2026-07-27T22:40:00Z",
+     "status": "UPCOMING",
+     "stage": "Regular",
+     "venue": "Comerica Park",
+     "home": {
+      "name": "Detroit Tigers"
+     },
+     "away": {
+      "name": "Baltimore Orioles"
+     },
+     "score": {
+      "home": 0,
+      "away": 0,
+      "winner": null
+     },
+     "prediction": {
+      "pick": "a",
+      "pick_name": "Baltimore Orioles",
+      "confidence": 51,
+      "note": "no market to compare against",
+      "why": {
+       "class": 0.0,
+       "elo": -0.07,
+       "rest": 0.0,
+       "form": -0.6,
+       "margin": 0.32,
+       "record": -0.08,
+       "adv": 0.25,
+       "rank": 0.0,
+       "srs": 0.19,
+       "h2h": -0.13
+      }
+     },
+     "official_pick": null,
+     "watchability": 79.0
+    },
+    {
+     "id": "bdl-mlb-5059367",
+     "kickoff": "2026-07-27T22:40:00Z",
+     "status": "UPCOMING",
+     "stage": "Regular",
+     "venue": "loanDepot park",
+     "home": {
+      "name": "Miami Marlins"
+     },
+     "away": {
+      "name": "Philadelphia Phillies"
+     },
+     "score": {
+      "home": 0,
+      "away": 0,
+      "winner": null
+     },
+     "prediction": {
+      "pick": "a",
+      "pick_name": "Philadelphia Phillies",
+      "confidence": 74,
+      "note": "no market to compare against",
+      "why": {
+       "class": 0.0,
+       "elo": -0.87,
+       "rest": 0.0,
+       "form": -2.19,
+       "margin": 0.15,
+       "record": -0.34,
+       "adv": 0.25,
+       "rank": 0.0,
+       "srs": 0.03,
+       "h2h": -0.34
+      }
+     },
+     "official_pick": null,
+     "watchability": 36.4
+    },
+    {
+     "id": "bdl-mlb-5059368",
+     "kickoff": "2026-07-27T22:45:00Z",
+     "status": "UPCOMING",
+     "stage": "Regular",
+     "venue": "Nationals Park",
+     "home": {
+      "name": "Washington Nationals"
+     },
+     "away": {
+      "name": "Toronto Blue Jays"
+     },
+     "score": {
+      "home": 0,
+      "away": 0,
+      "winner": null
+     },
+     "prediction": {
+      "pick": "h",
+      "pick_name": "Washington Nationals",
+      "confidence": 74,
+      "note": "no market to compare against",
+      "why": {
+       "class": 0.0,
+       "elo": 1.02,
+       "rest": 0.0,
+       "form": 0.86,
+       "margin": 0.69,
+       "record": 0.45,
+       "adv": 0.25,
+       "rank": 0.0,
+       "srs": 0.58
+      }
+     },
+     "official_pick": null,
+     "watchability": 33.4
+    },
+    {
+     "id": "bdl-mlb-5059370",
+     "kickoff": "2026-07-27T23:00:00Z",
+     "status": "UPCOMING",
+     "stage": "Regular",
+     "venue": "Great American Ball Park",
+     "home": {
+      "name": "Cincinnati Reds"
+     },
+     "away": {
+      "name": "Cleveland Guardians"
+     },
+     "score": {
+      "home": 0,
+      "away": 0,
+      "winner": null
+     },
+     "prediction": {
+      "pick": "a",
+      "pick_name": "Cleveland Guardians",
+      "confidence": 56,
+      "note": "no market to compare against",
+      "why": {
+       "class": 0.0,
+       "elo": 0.24,
+       "rest": 0.0,
+       "form": 0.13,
+       "margin": -0.37,
+       "record": -0.27,
+       "adv": 0.25,
+       "rank": 0.0,
+       "srs": -0.49,
+       "h2h": -0.13
+      }
+     },
+     "official_pick": null,
+     "watchability": 66.3
+    },
+    {
+     "id": "bdl-mlb-5059369",
+     "kickoff": "2026-07-27T23:10:00Z",
+     "status": "UPCOMING",
+     "stage": "Regular",
+     "venue": "Citi Field",
+     "home": {
+      "name": "New York Mets"
+     },
+     "away": {
+      "name": "Atlanta Braves"
+     },
+     "score": {
+      "home": 0,
+      "away": 0,
+      "winner": null
+     },
+     "prediction": {
+      "pick": "a",
+      "pick_name": "Atlanta Braves",
+      "confidence": 80,
+      "note": "no market to compare against",
+      "why": {
+       "class": 0.0,
+       "elo": -1.23,
+       "rest": 0.0,
+       "form": -1.24,
+       "margin": -1.28,
+       "record": -1.4,
+       "adv": 0.25,
+       "rank": 0.0,
+       "srs": -1.18,
+       "h2h": 0.11
+      }
+     },
+     "official_pick": null,
+     "watchability": 35.8
+    },
+    {
+     "id": "bdl-mlb-5059371",
+     "kickoff": "2026-07-27T23:40:00Z",
+     "status": "UPCOMING",
+     "stage": "Regular",
+     "venue": "Rate Field",
+     "home": {
+      "name": "Chicago White Sox"
+     },
+     "away": {
+      "name": "New York Yankees"
+     },
+     "score": {
+      "home": 0,
+      "away": 0,
+      "winner": null
+     },
+     "prediction": {
+      "pick": "a",
+      "pick_name": "New York Yankees",
+      "confidence": 59,
+      "note": "no market to compare against",
+      "why": {
+       "class": 0.0,
+       "elo": -0.29,
+       "rest": 0.0,
+       "form": -1.46,
+       "margin": -0.35,
+       "record": -0.31,
+       "adv": 0.25,
+       "rank": 0.0,
+       "srs": -0.44,
+       "h2h": -0.13
+      }
+     },
+     "official_pick": null,
+     "watchability": 63.3
+    },
+    {
+     "id": "bdl-mlb-5059372",
+     "kickoff": "2026-07-27T23:45:00Z",
+     "status": "UPCOMING",
+     "stage": "Regular",
+     "venue": "Busch Stadium",
+     "home": {
+      "name": "St. Louis Cardinals"
+     },
+     "away": {
+      "name": "Chicago Cubs"
+     },
+     "score": {
+      "home": 0,
+      "away": 0,
+      "winner": null
+     },
+     "prediction": {
+      "pick": "a",
+      "pick_name": "Chicago Cubs",
+      "confidence": 71,
+      "note": "no market to compare against",
+      "why": {
+       "class": 0.0,
+       "elo": -1.82,
+       "rest": 0.0,
+       "form": -1.67,
+       "margin": -0.59,
+       "record": -0.46,
+       "adv": 0.25,
+       "rank": 0.0,
+       "srs": -0.58,
+       "h2h": 0.27
+      }
+     },
+     "official_pick": null,
+     "watchability": 41.9
+    }
+   ]
   }
  ]
 }

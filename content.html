@@ -33,8 +33,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="content.css?v=20260727-recaps">
-<script src="content.js?v=20260727-recaps" defer></script>
+<link rel="stylesheet" href="content.css?v=20260803-visual-recaps-2">
+<script src="content.js?v=20260803-visual-recaps-2" defer></script>
 <script type="application/ld+json">
 {
  "@context": "https://schema.org",
@@ -55,7 +55,7 @@
     <p class="eyebrow">MATCHDAY ANALYSIS · CONTENT &amp; LEARNING</p>
     <h1 class="brand">Understand the matchup.<br>Review the model.</h1>
     <p class="lead">Read pregame analysis, review verified postgame grading, or go deeper into the tactics and decisions behind each sport.</p>
-    <nav class="jumpnav" aria-label="Browse content"><a href="#latest">Latest</a><a href="#brief">Daily brief</a><a href="#accountability">Accountability</a><a href="#learn">Learn</a></nav>
+    <nav class="jumpnav" aria-label="Browse content"><a href="#latest">Latest</a><a href="#rewind">Game rewind</a><a href="#fun-stats">Fun stats</a><a href="#brief">Daily brief</a><a href="#accountability">Accountability</a><a href="#learn">Learn</a></nav>
   </header>
 
   <section id="latest">
@@ -86,6 +86,40 @@
     <div id="latestGrid" class="cards latestGrid" aria-live="polite"></div>
     <div id="contentEmpty" class="contentEmpty" hidden><b>No stories match those filters</b><span>Try another sport, content type, or a broader search.</span></div>
     <div id="freshnessLine" class="freshnessLine">Checking data freshness…</div>
+  </section>
+
+  <section id="rewind" aria-labelledby="rewindTitle">
+    <div class="sectionHead"><div><p class="kicker">FINAL SCORE, FULL STORY</p><h2 id="rewindTitle">Game rewind</h2></div><p>A visual replay of the model call, the final score, and the numbers that shaped the result.</p></div>
+    <div id="gameRewindGrid" class="gameRewindGrid" aria-live="polite" aria-label="Recent game recaps">
+      <article class="rewindCard rewindPlaceholder">
+        <div class="rewindVisual" aria-hidden="true">
+          <span class="rewindFinal">Awaiting final</span>
+          <div class="rewindMatchup">
+            <div class="rewindTeam"><span class="rewindInitials">--</span><span class="rewindTeamName">Home</span><span class="rewindScore">--</span></div>
+            <span class="rewindVs">VS</span>
+            <div class="rewindTeam"><span class="rewindInitials">--</span><span class="rewindTeamName">Away</span><span class="rewindScore">--</span></div>
+          </div>
+          <div class="rewindMeter"><span></span></div>
+        </div>
+        <div class="rewindCopy">
+          <div class="rewindHeader"><span>Game rewind</span><span>No matching final</span></div>
+          <h3>Recaps appear when games go final</h3>
+          <p>Each graphic pairs the published prediction with the verified score and a concise postgame takeaway.</p>
+          <div class="rewindVerdict push">Nothing is inferred from missing data</div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section id="fun-stats" aria-labelledby="funStatsTitle">
+    <div class="sectionHead"><div><p class="kicker">NUMBERS WORTH SHARING</p><h2 id="funStatsTitle">Fun stats</h2></div><p>Quick, data-backed observations from the current slate and recently graded picks.</p></div>
+    <div id="funStatsGrid" class="funStatsGrid" aria-live="polite" aria-label="Current fun statistics">
+      <article class="funStatCard moduleEmpty">
+        <span class="funStatValue" aria-hidden="true">--</span>
+        <h3 class="funStatLabel">Stats are warming up</h3>
+        <p class="funStatDetail">Fresh milestones and matchup quirks will appear as current data is available.</p>
+      </article>
+    </div>
   </section>
 
   <section id="brief">
