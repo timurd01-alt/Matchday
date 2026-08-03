@@ -7914,8 +7914,8 @@
    "n": 3912
   },
   "baseball:boston red sox": {
-   "r": 1632.7000358138016,
-   "n": 3969
+   "r": 1644.2149319126854,
+   "n": 3970
   },
   "baseball:atlanta braves": {
    "r": 1551.8753924315351,
@@ -7938,16 +7938,16 @@
    "n": 3859
   },
   "baseball:chicago cubs": {
-   "r": 1568.7864067634243,
-   "n": 3912
+   "r": 1553.8409692913356,
+   "n": 3913
   },
   "baseball:baltimore orioles": {
    "r": 1515.502252012044,
    "n": 3868
   },
   "baseball:new york yankees": {
-   "r": 1541.7299428670412,
-   "n": 4011
+   "r": 1556.67538033913,
+   "n": 4012
   },
   "baseball:arizona diamondbacks": {
    "r": 1555.2243676002993,
@@ -7982,12 +7982,12 @@
    "n": 3878
   },
   "baseball:oakland athletics": {
-   "r": 1360.3766410419096,
-   "n": 3885
+   "r": 1351.7505111958103,
+   "n": 3886
   },
   "baseball:los angeles dodgers": {
-   "r": 1558.6471808904396,
-   "n": 4010
+   "r": 1547.1322847915558,
+   "n": 4011
   },
   "baseball:san francisco giants": {
    "r": 1441.0252943413657,
@@ -8014,8 +8014,8 @@
    "n": 3923
   },
   "baseball:detroit tigers": {
-   "r": 1520.7635280825946,
-   "n": 3902
+   "r": 1529.3896579286939,
+   "n": 3903
   },
   "soccer:us cremonese": {
    "r": 1425.6067045589273,
@@ -285959,6 +285959,9 @@
   "MLB:bdl-mlb-5059455": true,
   "MLB:bdl-mlb-5059456": true,
   "MLB:bdl-mlb-5059458": true,
-  "MLB:bdl-mlb-5059459": true
+  "MLB:bdl-mlb-5059459": true,
+  "MLB:bdl-mlb-5059454": true,
+  "MLB:bdl-mlb-5059457": true,
+  "MLB:bdl-mlb-5059460": true
  }
 }
