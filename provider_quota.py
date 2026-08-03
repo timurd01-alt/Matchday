@@ -59,7 +59,7 @@ STATE_FILE = "provider_quota_state.json"
 # during the current build(), so the payload can tell users "some data is
 # limited this run" rather than only a stale "last updated" timestamp, which
 # stays fresh even when every call to a quota-exhausted provider silently
-# fails and falls back to "no data" (see CLAUDE.md's 2026-07-31 incident).
+# fails and falls back to "no data" (see AGENTS.md's 2026-07-31 incident).
 BLOCKED_THIS_RUN = []
 
 
