@@ -20,9 +20,9 @@ The scorecard counts only records that were verified as locked before kickoff an
 
 No. Matchday is an independent analytics project and does not imply endorsement by a league, team, poll, sportsbook, or data provider.
 
-## Are predictions betting advice?
+## How can predictions be used?
 
-No. Predictions are probabilistic estimates for informational and analytical use. A 70% forecast still assigns a meaningful chance to the other outcome.
+However works for you. Predictions are public probabilistic estimates, and a 70% forecast still assigns a meaningful chance to the other outcome.
 
 ## Is Outcome Tree the same as a parlay calculator?
 

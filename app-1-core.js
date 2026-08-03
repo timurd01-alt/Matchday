@@ -430,7 +430,7 @@ function landingHero(){
   return `<div class="heroBand">
     <img src="logo.png?v=4" class="heroLogo" alt="Matchday">
     <div class="heroTitle">A transparent sports model.</div>
-    <div class="heroSub">Every pick locked before kickoff, graded in public — across football, and more sports as their seasons start. No tips, no ads, just an accountable model.</div>
+    <div class="heroSub">Every pick locked before kickoff and graded in public — information anyone can use, with no ads and a fully accountable model.</div>
     <div class="heroRow">${rec}</div>
     ${heroMarquee()}
     <div class="heroActions">

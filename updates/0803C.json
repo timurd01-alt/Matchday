@@ -1,0 +1,11 @@
+{
+ "rank": 124,
+ "date": "Build 0803C",
+ "tag": "New",
+ "title": "Matchday Terminal can now promote itself on X",
+ "items": [
+  "Added an opt-in X bot that publishes one measured daily promotion through the official API, defaults manual runs to preview mode, and stays disabled until credentials and an explicit repository switch are configured.",
+  "Prediction posts use only immutable official-pick receipts; when no locked pick is eligible, the bot rotates through recaps, research, explainers, tactics pages, and general Matchday Terminal features.",
+  "A private publication ledger prevents duplicate campaigns and records the post ID, timestamp, campaign key, and copy hash without storing credentials."
+ ]
+}

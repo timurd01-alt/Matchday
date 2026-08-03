@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0803C",
+  "tag": "Improvement",
+  "title": "Information anyone can use",
+  "items": [
+   "Removed the defensive advice disclaimers from the scorecard, Q&A, Legal page, generated articles, research posts, documentation, and translated welcome copy.",
+   "Matchday now says the useful thing directly: it publishes probabilities, market context, and a public track record for anyone to use however works for them.",
+   "Kept the factual guardrails that matter—probabilities are estimates, important data can change, Matchday does not take bets or act as a bookmaker, and the model has no stake in any outcome."
+  ]
+ },
+ {
   "date": "Build 0803B",
   "tag": "Improvement",
   "title": "Game recaps now look like game recaps",
@@ -46,7 +56,7 @@ window.SYSTEM_UPDATES=[
   "tag": "New",
   "title": "Repositioned around being independent and built for fans, with a real responsible-gambling section",
   "items": [
-   "The site led with a defensive 'analytics only, not betting advice' disclaimer everywhere -- the welcome screen, the in-app status strip, the Legal and Q&A pages, the tactics guides. That's still true, but it's not the point: Matchday has no bookmaker relationship, no tout service, and no stake in what anyone decides to do with the information, so it's built to be used however works for a given fan -- settling an argument, tracking a team, following the model's own graded track record, or just enjoying the numbers.",
+   "The site stopped leading with defensive disclaimers across the welcome screen, in-app status strip, Legal and Q&A pages, and tactics guides. Matchday has no bookmaker relationship, no tout service, and no stake in what anyone decides to do with the information, so it is built to be used however works for each person -- settling an argument, tracking a team, following the model's graded track record, or simply enjoying the numbers.",
    "The Legal page's Terms section now leads with that instead of the disclaimer, and gained its own Responsible gambling section (previously one buried sentence) with real support resources: the US National Problem Gambling Helpline, Gamblers Anonymous, the UK's GamCare and BeGambleAware, and pointers for other jurisdictions. The Q&A page picked up a matching FAQ entry and links to it.",
    "The short badge shown across the welcome screen, the in-app status strip (all five languages), the Legal/Q&A pages, and the five tactics guides now reads 'Independent · built for fans' instead of the old disclaimer-first framing."
   ]

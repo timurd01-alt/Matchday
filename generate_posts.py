@@ -169,7 +169,7 @@ def build_recap_post(comp_key, comp_label, scorecard, awards):
         if para:
             paragraphs.append(para)
     paragraphs.append(
-        "This is Matchday's own model reporting on itself — not betting advice. "
+        "This is Matchday's own model reporting on itself for anyone to use. "
         "Every pick is locked before kickoff and graded automatically once the game finishes; "
         "none are rewritten after the fact. See the Q&A page for how the model works."
     )
@@ -346,7 +346,7 @@ def render_post_html(post):
 <a href="../index.html?sport={_esc(comp_key)}&amp;view=score">Open scorecard</a>
 <a href="../content.html?sport={_esc(content_sport)}#latest">Explore similar games</a>
 </nav>
-<div class="notice"><strong>Analytics only.</strong> Matchday does not offer betting advice. See the <a href="../qa.html">Q&amp;A page</a> for how predictions are built and the <a href="../legal.html">data sources and legal notice</a>.</div>
+<div class="notice"><strong>Use the information your way.</strong> Matchday publishes probabilities, market context, and a public track record. See the <a href="../qa.html">Q&amp;A page</a> for how predictions are built and the <a href="../legal.html">data sources and legal notice</a>.</div>
 <p class="foot"><a href="../index.html">Matchday</a> — pregame predictions, market context and postgame grading.</p>
 </div>
 </body>

@@ -41,7 +41,7 @@ class RecapContentTests(unittest.TestCase):
         self.assertIn("calibration", text.lower())
         self.assertIn("opponent-adjusted", text)  # srs is the hottest signal (6/8)
         self.assertIn("Beta", text)  # biggest upset winner
-        self.assertIn("not betting advice", text.lower())
+        self.assertIn("for anyone to use", text.lower())
         self.assertEqual(post["slug"], f"nfl-{datetime.date.today().isoformat()}")
         self.assertEqual(post["record"], {"hits": 9, "graded": 13, "pct": 69})
         self.assertEqual(post["highlights"]["best_call"]["pick"], "Gamma")
