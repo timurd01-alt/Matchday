@@ -1254,6 +1254,13 @@
   "talent_source": "cfbd_team_talent",
   "talent_strength": 0.0
  },
+ "saint francis": {
+  "fifa_rank": 45,
+  "squad_value_m": 0,
+  "star_value_m": 0,
+  "talent_source": "cfbd_team_talent",
+  "talent_strength": 0.0
+ },
  "sam houston": {
   "fifa_rank": 45,
   "squad_value_m": 189,
