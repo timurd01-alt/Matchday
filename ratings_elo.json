@@ -7950,12 +7950,12 @@
    "n": 4013
   },
   "baseball:arizona diamondbacks": {
-   "r": 1555.2243676002993,
-   "n": 3886
+   "r": 1564.180455903335,
+   "n": 3887
   },
   "baseball:san diego padres": {
-   "r": 1525.1274041172248,
-   "n": 3894
+   "r": 1516.171315814189,
+   "n": 3895
   },
   "baseball:kansas city royals": {
    "r": 1438.201850898729,
@@ -285969,6 +285969,7 @@
   "MLB:bdl-mlb-5059465": true,
   "MLB:bdl-mlb-5059464": true,
   "MLB:bdl-mlb-5059466": true,
-  "MLB:bdl-mlb-5059467": true
+  "MLB:bdl-mlb-5059467": true,
+  "MLB:bdl-mlb-5059468": true
  }
 }
