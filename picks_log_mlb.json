@@ -6795,7 +6795,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T03:41:42.162146Z",
+   "observed_at": "2026-08-05T06:45:35.198920Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -7077,7 +7077,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T03:41:42.162167Z",
+   "observed_at": "2026-08-05T06:45:35.198952Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -7359,7 +7359,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T03:41:42.162182Z",
+   "observed_at": "2026-08-05T06:45:35.198978Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -7641,7 +7641,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T03:41:42.162197Z",
+   "observed_at": "2026-08-05T06:45:35.199000Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -7922,7 +7922,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T03:41:42.162210Z",
+   "observed_at": "2026-08-05T06:45:35.199022Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -8215,7 +8215,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T03:41:42.162224Z",
+   "observed_at": "2026-08-05T06:45:35.199044Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -8508,7 +8508,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T03:41:42.162238Z",
+   "observed_at": "2026-08-05T06:45:35.199064Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -8799,7 +8799,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T03:41:42.162252Z",
+   "observed_at": "2026-08-05T06:45:35.199086Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -9092,7 +9092,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T03:41:42.162265Z",
+   "observed_at": "2026-08-05T06:45:35.199108Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -9385,7 +9385,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T03:41:42.162279Z",
+   "observed_at": "2026-08-05T06:45:35.199128Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -9676,7 +9676,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T03:41:42.162293Z",
+   "observed_at": "2026-08-05T06:45:35.199149Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -9969,7 +9969,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T03:41:42.162307Z",
+   "observed_at": "2026-08-05T06:45:35.199169Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -10262,7 +10262,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T03:41:42.162320Z",
+   "observed_at": "2026-08-05T06:45:35.199191Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -10555,7 +10555,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T03:41:42.162334Z",
+   "observed_at": "2026-08-05T06:45:35.199215Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -10848,7 +10848,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T03:41:42.162347Z",
+   "observed_at": "2026-08-05T06:45:35.199237Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -11141,7 +11141,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T03:41:42.162362Z",
+   "observed_at": "2026-08-05T06:45:35.199259Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -11434,7 +11434,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T03:41:42.162375Z",
+   "observed_at": "2026-08-05T06:45:35.199280Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -11725,7 +11725,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T03:41:42.162389Z",
+   "observed_at": "2026-08-05T06:45:35.199300Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -12018,7 +12018,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T03:41:42.162402Z",
+   "observed_at": "2026-08-05T06:45:35.199321Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -12309,7 +12309,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T03:41:42.162416Z",
+   "observed_at": "2026-08-05T06:45:35.199343Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -12602,7 +12602,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T03:41:42.162429Z",
+   "observed_at": "2026-08-05T06:45:35.199363Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -13035,7 +13035,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T03:41:42.162442Z",
+   "observed_at": "2026-08-05T06:45:35.199383Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -13470,7 +13470,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T03:41:42.162455Z",
+   "observed_at": "2026-08-05T06:45:35.199404Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -13905,7 +13905,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T03:41:42.162469Z",
+   "observed_at": "2026-08-05T06:45:35.199424Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -14340,7 +14340,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T03:41:42.162482Z",
+   "observed_at": "2026-08-05T06:45:35.199444Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -14775,7 +14775,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T03:41:42.162496Z",
+   "observed_at": "2026-08-05T06:45:35.199464Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -15208,7 +15208,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T03:41:42.162510Z",
+   "observed_at": "2026-08-05T06:45:35.199484Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -15643,7 +15643,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T03:41:42.162525Z",
+   "observed_at": "2026-08-05T06:45:35.199504Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -16078,7 +16078,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T03:41:42.162538Z",
+   "observed_at": "2026-08-05T06:45:35.199524Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -16511,7 +16511,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T03:41:42.162552Z",
+   "observed_at": "2026-08-05T06:45:35.199544Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -16944,7 +16944,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T03:41:42.162566Z",
+   "observed_at": "2026-08-05T06:45:35.199563Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -17377,7 +17377,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T03:41:42.162579Z",
+   "observed_at": "2026-08-05T06:45:35.199583Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -17812,7 +17812,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T03:41:42.162593Z",
+   "observed_at": "2026-08-05T06:45:35.199604Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -18245,7 +18245,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T03:41:42.162606Z",
+   "observed_at": "2026-08-05T06:45:35.199623Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -18678,7 +18678,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T03:41:42.162619Z",
+   "observed_at": "2026-08-05T06:45:35.199643Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -19111,7 +19111,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T03:41:42.162632Z",
+   "observed_at": "2026-08-05T06:45:35.199663Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -19545,7 +19545,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T03:41:42.162646Z",
+   "observed_at": "2026-08-05T06:45:35.199684Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -19980,7 +19980,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T03:41:42.162659Z",
+   "observed_at": "2026-08-05T06:45:35.199704Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -20415,7 +20415,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T03:41:42.162673Z",
+   "observed_at": "2026-08-05T06:45:35.199724Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -20857,7 +20857,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T03:41:42.162686Z",
+   "observed_at": "2026-08-05T06:45:35.199744Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -21298,7 +21298,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T03:41:42.162700Z",
+   "observed_at": "2026-08-05T06:45:35.199765Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -21737,7 +21737,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T03:41:42.162713Z",
+   "observed_at": "2026-08-05T06:45:35.199785Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -22180,7 +22180,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T03:41:42.162727Z",
+   "observed_at": "2026-08-05T06:45:35.199806Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -22622,7 +22622,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T03:41:42.162740Z",
+   "observed_at": "2026-08-05T06:45:35.199827Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -23062,7 +23062,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T03:41:42.162754Z",
+   "observed_at": "2026-08-05T06:45:35.199865Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -23504,7 +23504,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T03:41:42.162767Z",
+   "observed_at": "2026-08-05T06:45:35.199889Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -23875,7 +23875,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T03:41:42.162780Z",
+   "observed_at": "2026-08-05T06:45:35.199910Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -24248,7 +24248,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T03:41:42.162794Z",
+   "observed_at": "2026-08-05T06:45:35.199931Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -24617,7 +24617,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T03:41:42.162808Z",
+   "observed_at": "2026-08-05T06:45:35.199952Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -24990,7 +24990,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T03:41:42.162821Z",
+   "observed_at": "2026-08-05T06:45:35.199973Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -25362,7 +25362,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T03:41:42.162835Z",
+   "observed_at": "2026-08-05T06:45:35.199993Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -25735,7 +25735,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T03:41:42.162849Z",
+   "observed_at": "2026-08-05T06:45:35.200013Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -26108,7 +26108,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T03:41:42.162862Z",
+   "observed_at": "2026-08-05T06:45:35.200034Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -26480,7 +26480,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T03:41:42.162876Z",
+   "observed_at": "2026-08-05T06:45:35.200054Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -26853,7 +26853,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T03:41:42.162890Z",
+   "observed_at": "2026-08-05T06:45:35.200074Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -27225,7 +27225,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T03:41:42.162903Z",
+   "observed_at": "2026-08-05T06:45:35.200094Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -27597,7 +27597,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T03:41:42.162916Z",
+   "observed_at": "2026-08-05T06:45:35.200114Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -27967,7 +27967,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T03:41:42.162930Z",
+   "observed_at": "2026-08-05T06:45:35.200134Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -28339,7 +28339,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T03:41:42.162944Z",
+   "observed_at": "2026-08-05T06:45:35.200154Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -28712,7 +28712,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T03:41:42.162957Z",
+   "observed_at": "2026-08-05T06:45:35.200174Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -29084,7 +29084,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T03:41:42.162971Z",
+   "observed_at": "2026-08-05T06:45:35.200194Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -29465,7 +29465,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T03:41:42.162993Z",
+   "observed_at": "2026-08-05T06:45:35.200214Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -29849,7 +29849,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T03:41:42.163007Z",
+   "observed_at": "2026-08-05T06:45:35.200234Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -30232,7 +30232,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T03:41:42.163020Z",
+   "observed_at": "2026-08-05T06:45:35.200254Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -30615,7 +30615,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T03:41:42.163034Z",
+   "observed_at": "2026-08-05T06:45:35.200273Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -30997,7 +30997,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T03:41:42.163047Z",
+   "observed_at": "2026-08-05T06:45:35.200293Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -31380,7 +31380,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T03:41:42.163060Z",
+   "observed_at": "2026-08-05T06:45:35.200313Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -31762,7 +31762,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T03:41:42.163074Z",
+   "observed_at": "2026-08-05T06:45:35.200333Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -32145,7 +32145,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T03:41:42.163087Z",
+   "observed_at": "2026-08-05T06:45:35.200353Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -32527,7 +32527,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T03:41:42.163101Z",
+   "observed_at": "2026-08-05T06:45:35.200373Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -32910,7 +32910,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T03:41:42.163114Z",
+   "observed_at": "2026-08-05T06:45:35.200394Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -33293,7 +33293,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T03:41:42.163127Z",
+   "observed_at": "2026-08-05T06:45:35.200415Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -33676,7 +33676,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T03:41:42.163141Z",
+   "observed_at": "2026-08-05T06:45:35.200435Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -34057,7 +34057,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T03:41:42.163154Z",
+   "observed_at": "2026-08-05T06:45:35.200455Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -34440,7 +34440,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T03:41:42.163168Z",
+   "observed_at": "2026-08-05T06:45:35.200476Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -34824,7 +34824,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T03:41:42.163181Z",
+   "observed_at": "2026-08-05T06:45:35.200497Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -35276,7 +35276,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T03:41:42.163194Z",
+   "observed_at": "2026-08-05T06:45:35.200518Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -35728,7 +35728,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T03:41:42.163208Z",
+   "observed_at": "2026-08-05T06:45:35.200538Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -36183,7 +36183,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T03:41:42.163222Z",
+   "observed_at": "2026-08-05T06:45:35.200558Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -36635,7 +36635,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T03:41:42.163235Z",
+   "observed_at": "2026-08-05T06:45:35.200578Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -37090,7 +37090,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T03:41:42.163249Z",
+   "observed_at": "2026-08-05T06:45:35.200598Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -37543,7 +37543,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T03:41:42.163262Z",
+   "observed_at": "2026-08-05T06:45:35.200618Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -37996,7 +37996,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T03:41:42.163275Z",
+   "observed_at": "2026-08-05T06:45:35.200637Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -38448,7 +38448,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T03:41:42.163289Z",
+   "observed_at": "2026-08-05T06:45:35.200657Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -39050,7 +39050,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T03:41:42.163302Z",
+   "observed_at": "2026-08-05T06:45:35.200677Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -39650,7 +39650,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T03:41:42.163316Z",
+   "observed_at": "2026-08-05T06:45:35.200697Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -40249,7 +40249,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T03:41:42.163329Z",
+   "observed_at": "2026-08-05T06:45:35.200717Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -40852,7 +40852,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T03:41:42.163343Z",
+   "observed_at": "2026-08-05T06:45:35.200737Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -41456,7 +41456,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T03:41:42.163357Z",
+   "observed_at": "2026-08-05T06:45:35.200757Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -42059,7 +42059,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T03:41:42.163370Z",
+   "observed_at": "2026-08-05T06:45:35.200776Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -42662,7 +42662,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T03:41:42.163383Z",
+   "observed_at": "2026-08-05T06:45:35.200796Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -43264,7 +43264,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T03:41:42.163397Z",
+   "observed_at": "2026-08-05T06:45:35.200816Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -43867,7 +43867,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T03:41:42.163410Z",
+   "observed_at": "2026-08-05T06:45:35.200835Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -44468,7 +44468,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T03:41:42.163423Z",
+   "observed_at": "2026-08-05T06:45:35.200874Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -45071,7 +45071,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T03:41:42.163436Z",
+   "observed_at": "2026-08-05T06:45:35.200895Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -45659,7 +45659,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T03:41:42.163449Z",
+   "observed_at": "2026-08-05T06:45:35.200915Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -46250,8 +46250,28 @@
    "affects_prediction": false,
    "user_visible": false
   },
-  "result": null,
-  "model_result": null,
-  "market_result": null
+  "result": "a",
+  "model_result": "a",
+  "market_result": "a",
+  "score": "7-9",
+  "result_snapshot": {
+   "display": {
+    "home": 7,
+    "away": 9
+   },
+   "regulation": null,
+   "penalties": null,
+   "ultimate_winner": "a",
+   "observed_at": "2026-08-05T06:45:35.200935Z",
+   "source": "provider"
+  },
+  "model_hit": true,
+  "market_hit": true,
+  "upset_hit": false,
+  "brier3": 0.218,
+  "log_loss": 0.4,
+  "value_hit": true,
+  "clv": 0,
+  "result_corrections": []
  }
 }
