@@ -32,7 +32,7 @@
     "away": 4
    },
    "ultimate_winner": "a",
-   "observed_at": "2026-08-04T23:18:02.066028Z",
+   "observed_at": "2026-08-05T12:15:22.649187Z",
    "source": "provider"
   },
   "model_result": "a",
@@ -741,6 +741,40 @@
     "ultimate_winner": "a",
     "observed_at": "2026-07-24T00:00:00Z",
     "source": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/match-schedule-fixtures-results-teams-stadiums"
+   },
+   {
+    "display": {
+     "home": 1,
+     "away": 1
+    },
+    "regulation": {
+     "home": 1,
+     "away": 1
+    },
+    "penalties": {
+     "home": 2,
+     "away": 4
+    },
+    "ultimate_winner": "a",
+    "observed_at": "2026-08-04T23:18:02.066028Z",
+    "source": "provider"
+   },
+   {
+    "display": {
+     "home": 1,
+     "away": 1
+    },
+    "regulation": {
+     "home": 1,
+     "away": 1
+    },
+    "penalties": {
+     "home": 2,
+     "away": 4
+    },
+    "ultimate_winner": "a",
+    "observed_at": "2026-07-24T00:00:00Z",
+    "source": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/match-schedule-fixtures-results-teams-stadiums"
    }
   ]
  },
@@ -774,7 +808,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-04T23:18:02.066053Z",
+   "observed_at": "2026-08-05T12:15:22.649224Z",
    "source": "provider"
   },
   "model_result": "h",
@@ -1360,6 +1394,34 @@
     "ultimate_winner": "h",
     "observed_at": "2026-07-24T00:00:00Z",
     "source": "https://www.fifa.com/en/articles/argentina-cabo-verde-match-report-highlights"
+   },
+   {
+    "display": {
+     "home": 3,
+     "away": 2
+    },
+    "regulation": {
+     "home": 1,
+     "away": 1
+    },
+    "penalties": null,
+    "ultimate_winner": "h",
+    "observed_at": "2026-08-04T23:18:02.066053Z",
+    "source": "provider"
+   },
+   {
+    "display": {
+     "home": 3,
+     "away": 2
+    },
+    "regulation": {
+     "home": 1,
+     "away": 1
+    },
+    "penalties": null,
+    "ultimate_winner": "h",
+    "observed_at": "2026-07-24T00:00:00Z",
+    "source": "https://www.fifa.com/en/articles/argentina-cabo-verde-match-report-highlights"
    }
   ]
  },
@@ -1393,7 +1455,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-04T23:18:02.066069Z",
+   "observed_at": "2026-08-05T12:15:22.649255Z",
    "source": "provider"
   },
   "model_result": "h",
@@ -1979,6 +2041,34 @@
     "ultimate_winner": "h",
     "observed_at": "2026-07-24T00:00:00Z",
     "source": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/match-schedule-fixtures-results-teams-stadiums"
+   },
+   {
+    "display": {
+     "home": 1,
+     "away": 0
+    },
+    "regulation": {
+     "home": 1,
+     "away": 0
+    },
+    "penalties": null,
+    "ultimate_winner": "h",
+    "observed_at": "2026-08-04T23:18:02.066069Z",
+    "source": "provider"
+   },
+   {
+    "display": {
+     "home": 1,
+     "away": 0
+    },
+    "regulation": {
+     "home": 1,
+     "away": 0
+    },
+    "penalties": null,
+    "ultimate_winner": "h",
+    "observed_at": "2026-07-24T00:00:00Z",
+    "source": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/match-schedule-fixtures-results-teams-stadiums"
    }
   ]
  },
@@ -2012,7 +2102,7 @@
    },
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-04T23:18:02.066082Z",
+   "observed_at": "2026-08-05T12:15:22.649283Z",
    "source": "provider"
   },
   "model_result": "a",
@@ -2598,6 +2688,34 @@
     "ultimate_winner": "a",
     "observed_at": "2026-07-24T00:00:00Z",
     "source": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/match-schedule-fixtures-results-teams-stadiums"
+   },
+   {
+    "display": {
+     "home": 0,
+     "away": 3
+    },
+    "regulation": {
+     "home": 0,
+     "away": 3
+    },
+    "penalties": null,
+    "ultimate_winner": "a",
+    "observed_at": "2026-08-04T23:18:02.066082Z",
+    "source": "provider"
+   },
+   {
+    "display": {
+     "home": 0,
+     "away": 3
+    },
+    "regulation": {
+     "home": 0,
+     "away": 3
+    },
+    "penalties": null,
+    "ultimate_winner": "a",
+    "observed_at": "2026-07-24T00:00:00Z",
+    "source": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/match-schedule-fixtures-results-teams-stadiums"
    }
   ]
  },
@@ -2631,7 +2749,7 @@
    },
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-04T23:18:02.066094Z",
+   "observed_at": "2026-08-05T12:15:22.649309Z",
    "source": "provider"
   },
   "model_result": "a",
@@ -3217,6 +3335,34 @@
     "ultimate_winner": "a",
     "observed_at": "2026-07-24T00:00:00Z",
     "source": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/match-schedule-fixtures-results-teams-stadiums"
+   },
+   {
+    "display": {
+     "home": 0,
+     "away": 1
+    },
+    "regulation": {
+     "home": 0,
+     "away": 1
+    },
+    "penalties": null,
+    "ultimate_winner": "a",
+    "observed_at": "2026-08-04T23:18:02.066094Z",
+    "source": "provider"
+   },
+   {
+    "display": {
+     "home": 0,
+     "away": 1
+    },
+    "regulation": {
+     "home": 0,
+     "away": 1
+    },
+    "penalties": null,
+    "ultimate_winner": "a",
+    "observed_at": "2026-07-24T00:00:00Z",
+    "source": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/match-schedule-fixtures-results-teams-stadiums"
    }
   ]
  },
@@ -3250,7 +3396,7 @@
    },
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-04T23:18:02.066105Z",
+   "observed_at": "2026-08-05T12:15:22.649335Z",
    "source": "provider"
   },
   "model_result": "a",
@@ -3836,6 +3982,34 @@
     "ultimate_winner": "a",
     "observed_at": "2026-07-24T00:00:00Z",
     "source": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/match-schedule-fixtures-results-teams-stadiums"
+   },
+   {
+    "display": {
+     "home": 1,
+     "away": 2
+    },
+    "regulation": {
+     "home": 1,
+     "away": 2
+    },
+    "penalties": null,
+    "ultimate_winner": "a",
+    "observed_at": "2026-08-04T23:18:02.066105Z",
+    "source": "provider"
+   },
+   {
+    "display": {
+     "home": 1,
+     "away": 2
+    },
+    "regulation": {
+     "home": 1,
+     "away": 2
+    },
+    "penalties": null,
+    "ultimate_winner": "a",
+    "observed_at": "2026-07-24T00:00:00Z",
+    "source": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/match-schedule-fixtures-results-teams-stadiums"
    }
   ]
  },
@@ -3869,7 +4043,7 @@
    },
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-04T23:18:02.066117Z",
+   "observed_at": "2026-08-05T12:15:22.649361Z",
    "source": "provider"
   },
   "model_result": "a",
@@ -4455,6 +4629,34 @@
     "ultimate_winner": "a",
     "observed_at": "2026-07-24T00:00:00Z",
     "source": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/match-schedule-fixtures-results-teams-stadiums"
+   },
+   {
+    "display": {
+     "home": 2,
+     "away": 3
+    },
+    "regulation": {
+     "home": 2,
+     "away": 3
+    },
+    "penalties": null,
+    "ultimate_winner": "a",
+    "observed_at": "2026-08-04T23:18:02.066117Z",
+    "source": "provider"
+   },
+   {
+    "display": {
+     "home": 2,
+     "away": 3
+    },
+    "regulation": {
+     "home": 2,
+     "away": 3
+    },
+    "penalties": null,
+    "ultimate_winner": "a",
+    "observed_at": "2026-07-24T00:00:00Z",
+    "source": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/match-schedule-fixtures-results-teams-stadiums"
    }
   ]
  },
@@ -4488,7 +4690,7 @@
    },
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-04T23:18:02.066141Z",
+   "observed_at": "2026-08-05T12:15:22.649413Z",
    "source": "provider"
   },
   "model_result": "a",
@@ -5074,6 +5276,34 @@
     "ultimate_winner": "a",
     "observed_at": "2026-07-24T00:00:00Z",
     "source": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/match-schedule-fixtures-results-teams-stadiums"
+   },
+   {
+    "display": {
+     "home": 1,
+     "away": 4
+    },
+    "regulation": {
+     "home": 1,
+     "away": 4
+    },
+    "penalties": null,
+    "ultimate_winner": "a",
+    "observed_at": "2026-08-04T23:18:02.066141Z",
+    "source": "provider"
+   },
+   {
+    "display": {
+     "home": 1,
+     "away": 4
+    },
+    "regulation": {
+     "home": 1,
+     "away": 4
+    },
+    "penalties": null,
+    "ultimate_winner": "a",
+    "observed_at": "2026-07-24T00:00:00Z",
+    "source": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/match-schedule-fixtures-results-teams-stadiums"
    }
   ]
  },
@@ -5108,7 +5338,7 @@
    },
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-04T23:18:02.066129Z",
+   "observed_at": "2026-08-05T12:15:22.649387Z",
    "source": "provider"
   },
   "model_result": "a",
@@ -5694,6 +5924,34 @@
     "ultimate_winner": "a",
     "observed_at": "2026-07-24T00:00:00Z",
     "source": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/match-schedule-fixtures-results-teams-stadiums"
+   },
+   {
+    "display": {
+     "home": 0,
+     "away": 1
+    },
+    "regulation": {
+     "home": 0,
+     "away": 1
+    },
+    "penalties": null,
+    "ultimate_winner": "a",
+    "observed_at": "2026-08-04T23:18:02.066129Z",
+    "source": "provider"
+   },
+   {
+    "display": {
+     "home": 0,
+     "away": 1
+    },
+    "regulation": {
+     "home": 0,
+     "away": 1
+    },
+    "penalties": null,
+    "ultimate_winner": "a",
+    "observed_at": "2026-07-24T00:00:00Z",
+    "source": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/match-schedule-fixtures-results-teams-stadiums"
    }
   ]
  },
@@ -5728,7 +5986,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-04T23:18:02.066153Z",
+   "observed_at": "2026-08-05T12:15:22.649438Z",
    "source": "provider"
   },
   "model_result": "h",
@@ -6314,6 +6572,34 @@
     "ultimate_winner": "h",
     "observed_at": "2026-07-24T00:00:00Z",
     "source": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/match-schedule-fixtures-results-teams-stadiums"
+   },
+   {
+    "display": {
+     "home": 3,
+     "away": 2
+    },
+    "regulation": {
+     "home": 3,
+     "away": 2
+    },
+    "penalties": null,
+    "ultimate_winner": "h",
+    "observed_at": "2026-08-04T23:18:02.066153Z",
+    "source": "provider"
+   },
+   {
+    "display": {
+     "home": 3,
+     "away": 2
+    },
+    "regulation": {
+     "home": 3,
+     "away": 2
+    },
+    "penalties": null,
+    "ultimate_winner": "h",
+    "observed_at": "2026-07-24T00:00:00Z",
+    "source": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/match-schedule-fixtures-results-teams-stadiums"
    }
   ]
  },
@@ -6351,7 +6637,7 @@
     "away": 3
    },
    "ultimate_winner": "h",
-   "observed_at": "2026-08-04T23:18:02.066167Z",
+   "observed_at": "2026-08-05T12:15:22.649465Z",
    "source": "provider"
   },
   "model_result": "h",
@@ -7060,6 +7346,40 @@
     "ultimate_winner": "h",
     "observed_at": "2026-07-24T00:00:00Z",
     "source": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/switzerland-colombia-match-report-highlights"
+   },
+   {
+    "display": {
+     "home": 0,
+     "away": 0
+    },
+    "regulation": {
+     "home": 0,
+     "away": 0
+    },
+    "penalties": {
+     "home": 4,
+     "away": 3
+    },
+    "ultimate_winner": "h",
+    "observed_at": "2026-08-04T23:18:02.066167Z",
+    "source": "provider"
+   },
+   {
+    "display": {
+     "home": 0,
+     "away": 0
+    },
+    "regulation": {
+     "home": 0,
+     "away": 0
+    },
+    "penalties": {
+     "home": 4,
+     "away": 3
+    },
+    "ultimate_winner": "h",
+    "observed_at": "2026-07-24T00:00:00Z",
+    "source": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/switzerland-colombia-match-report-highlights"
    }
   ]
  },
@@ -7101,7 +7421,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-04T23:18:02.066180Z",
+   "observed_at": "2026-08-05T12:15:22.649492Z",
    "source": "provider"
   },
   "model_result": "h",
@@ -7687,6 +8007,34 @@
     "ultimate_winner": "h",
     "observed_at": "2026-07-24T00:00:00Z",
     "source": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/match-schedule-fixtures-results-teams-stadiums"
+   },
+   {
+    "display": {
+     "home": 2,
+     "away": 0
+    },
+    "regulation": {
+     "home": 2,
+     "away": 0
+    },
+    "penalties": null,
+    "ultimate_winner": "h",
+    "observed_at": "2026-08-04T23:18:02.066180Z",
+    "source": "provider"
+   },
+   {
+    "display": {
+     "home": 2,
+     "away": 0
+    },
+    "regulation": {
+     "home": 2,
+     "away": 0
+    },
+    "penalties": null,
+    "ultimate_winner": "h",
+    "observed_at": "2026-07-24T00:00:00Z",
+    "source": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/match-schedule-fixtures-results-teams-stadiums"
    }
   ]
  },
@@ -7745,7 +8093,7 @@
    },
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-04T23:18:02.066205Z",
+   "observed_at": "2026-08-05T12:15:22.649544Z",
    "source": "provider"
   },
   "model_result": "a",
@@ -8329,6 +8677,34 @@
     "ultimate_winner": "a",
     "observed_at": "2026-07-24T00:00:00Z",
     "source": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/england-world-cup-quarter-final-wins"
+   },
+   {
+    "display": {
+     "home": 1,
+     "away": 2
+    },
+    "regulation": {
+     "home": 1,
+     "away": 1
+    },
+    "penalties": null,
+    "ultimate_winner": "a",
+    "observed_at": "2026-08-04T23:18:02.066205Z",
+    "source": "provider"
+   },
+   {
+    "display": {
+     "home": 1,
+     "away": 2
+    },
+    "regulation": {
+     "home": 1,
+     "away": 1
+    },
+    "penalties": null,
+    "ultimate_winner": "a",
+    "observed_at": "2026-07-24T00:00:00Z",
+    "source": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/england-world-cup-quarter-final-wins"
    }
   ]
  },
@@ -8387,7 +8763,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-04T23:18:02.066192Z",
+   "observed_at": "2026-08-05T12:15:22.649518Z",
    "source": "provider"
   },
   "model_result": "h",
@@ -8971,6 +9347,34 @@
     "ultimate_winner": "h",
     "observed_at": "2026-07-24T00:00:00Z",
     "source": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/match-schedule-fixtures-results-teams-stadiums"
+   },
+   {
+    "display": {
+     "home": 2,
+     "away": 1
+    },
+    "regulation": {
+     "home": 2,
+     "away": 1
+    },
+    "penalties": null,
+    "ultimate_winner": "h",
+    "observed_at": "2026-08-04T23:18:02.066192Z",
+    "source": "provider"
+   },
+   {
+    "display": {
+     "home": 2,
+     "away": 1
+    },
+    "regulation": {
+     "home": 2,
+     "away": 1
+    },
+    "penalties": null,
+    "ultimate_winner": "h",
+    "observed_at": "2026-07-24T00:00:00Z",
+    "source": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/match-schedule-fixtures-results-teams-stadiums"
    }
   ]
  },
@@ -9056,7 +9460,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-04T23:18:02.066216Z",
+   "observed_at": "2026-08-05T12:15:22.649570Z",
    "source": "provider"
   },
   "model_result": "h",
@@ -9640,6 +10044,34 @@
     "ultimate_winner": "h",
     "observed_at": "2026-07-24T00:00:00Z",
     "source": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/argentina-switzerland-match-report-highlights"
+   },
+   {
+    "display": {
+     "home": 3,
+     "away": 1
+    },
+    "regulation": {
+     "home": 1,
+     "away": 1
+    },
+    "penalties": null,
+    "ultimate_winner": "h",
+    "observed_at": "2026-08-04T23:18:02.066216Z",
+    "source": "provider"
+   },
+   {
+    "display": {
+     "home": 3,
+     "away": 1
+    },
+    "regulation": {
+     "home": 1,
+     "away": 1
+    },
+    "penalties": null,
+    "ultimate_winner": "h",
+    "observed_at": "2026-07-24T00:00:00Z",
+    "source": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/argentina-switzerland-match-report-highlights"
    }
   ]
  },
@@ -9724,7 +10156,7 @@
    },
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-04T23:18:02.066229Z",
+   "observed_at": "2026-08-05T12:15:22.649595Z",
    "source": "provider"
   },
   "model_result": "a",
@@ -10308,6 +10740,34 @@
     "ultimate_winner": "a",
     "observed_at": "2026-07-24T00:00:00Z",
     "source": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/match-schedule-fixtures-results-teams-stadiums"
+   },
+   {
+    "display": {
+     "home": 0,
+     "away": 2
+    },
+    "regulation": {
+     "home": 0,
+     "away": 2
+    },
+    "penalties": null,
+    "ultimate_winner": "a",
+    "observed_at": "2026-08-04T23:18:02.066229Z",
+    "source": "provider"
+   },
+   {
+    "display": {
+     "home": 0,
+     "away": 2
+    },
+    "regulation": {
+     "home": 0,
+     "away": 2
+    },
+    "penalties": null,
+    "ultimate_winner": "a",
+    "observed_at": "2026-07-24T00:00:00Z",
+    "source": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/match-schedule-fixtures-results-teams-stadiums"
    }
   ]
  },
@@ -10393,7 +10853,7 @@
    },
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-04T23:18:02.066240Z",
+   "observed_at": "2026-08-05T12:15:22.649620Z",
    "source": "provider"
   },
   "model_result": "a",
@@ -10977,6 +11437,34 @@
     "ultimate_winner": "a",
     "observed_at": "2026-07-24T00:00:00Z",
     "source": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/match-schedule-fixtures-results-teams-stadiums"
+   },
+   {
+    "display": {
+     "home": 1,
+     "away": 2
+    },
+    "regulation": {
+     "home": 1,
+     "away": 2
+    },
+    "penalties": null,
+    "ultimate_winner": "a",
+    "observed_at": "2026-08-04T23:18:02.066240Z",
+    "source": "provider"
+   },
+   {
+    "display": {
+     "home": 1,
+     "away": 2
+    },
+    "regulation": {
+     "home": 1,
+     "away": 2
+    },
+    "penalties": null,
+    "ultimate_winner": "a",
+    "observed_at": "2026-07-24T00:00:00Z",
+    "source": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/match-schedule-fixtures-results-teams-stadiums"
    }
   ]
  },
@@ -11062,7 +11550,7 @@
    },
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-04T23:18:02.066253Z",
+   "observed_at": "2026-08-05T12:15:22.649646Z",
    "source": "provider"
   },
   "model_result": "a",
@@ -11646,6 +12134,34 @@
     "ultimate_winner": "a",
     "observed_at": "2026-07-24T00:00:00Z",
     "source": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/france-england-report-highlights-bronze-final"
+   },
+   {
+    "display": {
+     "home": 4,
+     "away": 6
+    },
+    "regulation": {
+     "home": 4,
+     "away": 6
+    },
+    "penalties": null,
+    "ultimate_winner": "a",
+    "observed_at": "2026-08-04T23:18:02.066253Z",
+    "source": "provider"
+   },
+   {
+    "display": {
+     "home": 4,
+     "away": 6
+    },
+    "regulation": {
+     "home": 4,
+     "away": 6
+    },
+    "penalties": null,
+    "ultimate_winner": "a",
+    "observed_at": "2026-07-24T00:00:00Z",
+    "source": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/france-england-report-highlights-bronze-final"
    }
   ]
  },
@@ -11724,7 +12240,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-04T23:18:02.066266Z",
+   "observed_at": "2026-08-05T12:15:22.649670Z",
    "source": "provider"
   },
   "model_result": "h",
@@ -12299,6 +12815,34 @@
     "penalties": null,
     "ultimate_winner": "h",
     "observed_at": "2026-08-04T09:50:09.853338Z",
+    "source": "provider"
+   },
+   {
+    "display": {
+     "home": 1,
+     "away": 0
+    },
+    "regulation": {
+     "home": 0,
+     "away": 0
+    },
+    "penalties": null,
+    "ultimate_winner": "h",
+    "observed_at": "2026-07-24T00:00:00Z",
+    "source": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/spain-argentina-final-report-highlights"
+   },
+   {
+    "display": {
+     "home": 1,
+     "away": 0
+    },
+    "regulation": {
+     "home": 0,
+     "away": 0
+    },
+    "penalties": null,
+    "ultimate_winner": "h",
+    "observed_at": "2026-08-04T23:18:02.066266Z",
     "source": "provider"
    },
    {
