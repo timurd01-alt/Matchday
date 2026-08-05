@@ -6795,7 +6795,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T06:45:35.198920Z",
+   "observed_at": "2026-08-05T16:56:58.924476Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -7077,7 +7077,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T06:45:35.198952Z",
+   "observed_at": "2026-08-05T16:56:58.924509Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -7359,7 +7359,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T06:45:35.198978Z",
+   "observed_at": "2026-08-05T16:56:58.924532Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -7641,7 +7641,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T06:45:35.199000Z",
+   "observed_at": "2026-08-05T16:56:58.924552Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -7922,7 +7922,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T06:45:35.199022Z",
+   "observed_at": "2026-08-05T16:56:58.924571Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -8215,7 +8215,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T06:45:35.199044Z",
+   "observed_at": "2026-08-05T16:56:58.924589Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -8508,7 +8508,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T06:45:35.199064Z",
+   "observed_at": "2026-08-05T16:56:58.924607Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -8799,7 +8799,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T06:45:35.199086Z",
+   "observed_at": "2026-08-05T16:56:58.924626Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -9092,7 +9092,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T06:45:35.199108Z",
+   "observed_at": "2026-08-05T16:56:58.924644Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -9385,7 +9385,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T06:45:35.199128Z",
+   "observed_at": "2026-08-05T16:56:58.924662Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -9676,7 +9676,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T06:45:35.199149Z",
+   "observed_at": "2026-08-05T16:56:58.924680Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -9969,7 +9969,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T06:45:35.199169Z",
+   "observed_at": "2026-08-05T16:56:58.924698Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -10262,7 +10262,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T06:45:35.199191Z",
+   "observed_at": "2026-08-05T16:56:58.924716Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -10555,7 +10555,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T06:45:35.199215Z",
+   "observed_at": "2026-08-05T16:56:58.924734Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -10848,7 +10848,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T06:45:35.199237Z",
+   "observed_at": "2026-08-05T16:56:58.924752Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -11141,7 +11141,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T06:45:35.199259Z",
+   "observed_at": "2026-08-05T16:56:58.924769Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -11434,7 +11434,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T06:45:35.199280Z",
+   "observed_at": "2026-08-05T16:56:58.924787Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -11725,7 +11725,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T06:45:35.199300Z",
+   "observed_at": "2026-08-05T16:56:58.924804Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -12018,7 +12018,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T06:45:35.199321Z",
+   "observed_at": "2026-08-05T16:56:58.924822Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -12309,7 +12309,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T06:45:35.199343Z",
+   "observed_at": "2026-08-05T16:56:58.924840Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -12602,7 +12602,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T06:45:35.199363Z",
+   "observed_at": "2026-08-05T16:56:58.924857Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -13035,7 +13035,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T06:45:35.199383Z",
+   "observed_at": "2026-08-05T16:56:58.924875Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -13470,7 +13470,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T06:45:35.199404Z",
+   "observed_at": "2026-08-05T16:56:58.924892Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -13905,7 +13905,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T06:45:35.199424Z",
+   "observed_at": "2026-08-05T16:56:58.924909Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -14340,7 +14340,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T06:45:35.199444Z",
+   "observed_at": "2026-08-05T16:56:58.924928Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -14775,7 +14775,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T06:45:35.199464Z",
+   "observed_at": "2026-08-05T16:56:58.924947Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -15208,7 +15208,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T06:45:35.199484Z",
+   "observed_at": "2026-08-05T16:56:58.924965Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -15643,7 +15643,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T06:45:35.199504Z",
+   "observed_at": "2026-08-05T16:56:58.924983Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -16078,7 +16078,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T06:45:35.199524Z",
+   "observed_at": "2026-08-05T16:56:58.925001Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -16511,7 +16511,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T06:45:35.199544Z",
+   "observed_at": "2026-08-05T16:56:58.925019Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -16944,7 +16944,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T06:45:35.199563Z",
+   "observed_at": "2026-08-05T16:56:58.925037Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -17377,7 +17377,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T06:45:35.199583Z",
+   "observed_at": "2026-08-05T16:56:58.925057Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -17812,7 +17812,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T06:45:35.199604Z",
+   "observed_at": "2026-08-05T16:56:58.925085Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -18245,7 +18245,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T06:45:35.199623Z",
+   "observed_at": "2026-08-05T16:56:58.925103Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -18678,7 +18678,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T06:45:35.199643Z",
+   "observed_at": "2026-08-05T16:56:58.925121Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -19111,7 +19111,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T06:45:35.199663Z",
+   "observed_at": "2026-08-05T16:56:58.925138Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -19545,7 +19545,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T06:45:35.199684Z",
+   "observed_at": "2026-08-05T16:56:58.925156Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -19980,7 +19980,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T06:45:35.199704Z",
+   "observed_at": "2026-08-05T16:56:58.925173Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -20415,7 +20415,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T06:45:35.199724Z",
+   "observed_at": "2026-08-05T16:56:58.925191Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -20857,7 +20857,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T06:45:35.199744Z",
+   "observed_at": "2026-08-05T16:56:58.925208Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -21298,7 +21298,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T06:45:35.199765Z",
+   "observed_at": "2026-08-05T16:56:58.925226Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -21737,7 +21737,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T06:45:35.199785Z",
+   "observed_at": "2026-08-05T16:56:58.925243Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -22180,7 +22180,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T06:45:35.199806Z",
+   "observed_at": "2026-08-05T16:56:58.925261Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -22622,7 +22622,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T06:45:35.199827Z",
+   "observed_at": "2026-08-05T16:56:58.925279Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -23062,7 +23062,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T06:45:35.199865Z",
+   "observed_at": "2026-08-05T16:56:58.925296Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -23504,7 +23504,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T06:45:35.199889Z",
+   "observed_at": "2026-08-05T16:56:58.925314Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -23875,7 +23875,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T06:45:35.199910Z",
+   "observed_at": "2026-08-05T16:56:58.925332Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -24248,7 +24248,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T06:45:35.199931Z",
+   "observed_at": "2026-08-05T16:56:58.925350Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -24617,7 +24617,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T06:45:35.199952Z",
+   "observed_at": "2026-08-05T16:56:58.925368Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -24990,7 +24990,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T06:45:35.199973Z",
+   "observed_at": "2026-08-05T16:56:58.925385Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -25362,7 +25362,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T06:45:35.199993Z",
+   "observed_at": "2026-08-05T16:56:58.925403Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -25735,7 +25735,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T06:45:35.200013Z",
+   "observed_at": "2026-08-05T16:56:58.925421Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -26108,7 +26108,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T06:45:35.200034Z",
+   "observed_at": "2026-08-05T16:56:58.925438Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -26480,7 +26480,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T06:45:35.200054Z",
+   "observed_at": "2026-08-05T16:56:58.925456Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -26853,7 +26853,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T06:45:35.200074Z",
+   "observed_at": "2026-08-05T16:56:58.925473Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -27225,7 +27225,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T06:45:35.200094Z",
+   "observed_at": "2026-08-05T16:56:58.925491Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -27597,7 +27597,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T06:45:35.200114Z",
+   "observed_at": "2026-08-05T16:56:58.925509Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -27967,7 +27967,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T06:45:35.200134Z",
+   "observed_at": "2026-08-05T16:56:58.925527Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -28339,7 +28339,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T06:45:35.200154Z",
+   "observed_at": "2026-08-05T16:56:58.925545Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -28712,7 +28712,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T06:45:35.200174Z",
+   "observed_at": "2026-08-05T16:56:58.925562Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -29084,7 +29084,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T06:45:35.200194Z",
+   "observed_at": "2026-08-05T16:56:58.925580Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -29465,7 +29465,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T06:45:35.200214Z",
+   "observed_at": "2026-08-05T16:56:58.925597Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -29849,7 +29849,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T06:45:35.200234Z",
+   "observed_at": "2026-08-05T16:56:58.925615Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -30232,7 +30232,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T06:45:35.200254Z",
+   "observed_at": "2026-08-05T16:56:58.925633Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -30615,7 +30615,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T06:45:35.200273Z",
+   "observed_at": "2026-08-05T16:56:58.925650Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -30997,7 +30997,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T06:45:35.200293Z",
+   "observed_at": "2026-08-05T16:56:58.925667Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -31380,7 +31380,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T06:45:35.200313Z",
+   "observed_at": "2026-08-05T16:56:58.925685Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -31762,7 +31762,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T06:45:35.200333Z",
+   "observed_at": "2026-08-05T16:56:58.925702Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -32145,7 +32145,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T06:45:35.200353Z",
+   "observed_at": "2026-08-05T16:56:58.925720Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -32527,7 +32527,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T06:45:35.200373Z",
+   "observed_at": "2026-08-05T16:56:58.925737Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -32910,7 +32910,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T06:45:35.200394Z",
+   "observed_at": "2026-08-05T16:56:58.925755Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -33293,7 +33293,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T06:45:35.200415Z",
+   "observed_at": "2026-08-05T16:56:58.925772Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -33676,7 +33676,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T06:45:35.200435Z",
+   "observed_at": "2026-08-05T16:56:58.925790Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -34057,7 +34057,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T06:45:35.200455Z",
+   "observed_at": "2026-08-05T16:56:58.925807Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -34440,7 +34440,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T06:45:35.200476Z",
+   "observed_at": "2026-08-05T16:56:58.925824Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -34824,7 +34824,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T06:45:35.200497Z",
+   "observed_at": "2026-08-05T16:56:58.925842Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -35276,7 +35276,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T06:45:35.200518Z",
+   "observed_at": "2026-08-05T16:56:58.925859Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -35728,7 +35728,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T06:45:35.200538Z",
+   "observed_at": "2026-08-05T16:56:58.925877Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -36183,7 +36183,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T06:45:35.200558Z",
+   "observed_at": "2026-08-05T16:56:58.925894Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -36635,7 +36635,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T06:45:35.200578Z",
+   "observed_at": "2026-08-05T16:56:58.925911Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -37090,7 +37090,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T06:45:35.200598Z",
+   "observed_at": "2026-08-05T16:56:58.925929Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -37543,7 +37543,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T06:45:35.200618Z",
+   "observed_at": "2026-08-05T16:56:58.925946Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -37996,7 +37996,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T06:45:35.200637Z",
+   "observed_at": "2026-08-05T16:56:58.925964Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -38448,7 +38448,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T06:45:35.200657Z",
+   "observed_at": "2026-08-05T16:56:58.925982Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -39050,7 +39050,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T06:45:35.200677Z",
+   "observed_at": "2026-08-05T16:56:58.926000Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -39650,7 +39650,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T06:45:35.200697Z",
+   "observed_at": "2026-08-05T16:56:58.926018Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -40249,7 +40249,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T06:45:35.200717Z",
+   "observed_at": "2026-08-05T16:56:58.926035Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -40852,7 +40852,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T06:45:35.200737Z",
+   "observed_at": "2026-08-05T16:56:58.926053Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -41456,7 +41456,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T06:45:35.200757Z",
+   "observed_at": "2026-08-05T16:56:58.926080Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -42059,7 +42059,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T06:45:35.200776Z",
+   "observed_at": "2026-08-05T16:56:58.926098Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -42662,7 +42662,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T06:45:35.200796Z",
+   "observed_at": "2026-08-05T16:56:58.926116Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -43264,7 +43264,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T06:45:35.200816Z",
+   "observed_at": "2026-08-05T16:56:58.926133Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -43867,7 +43867,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T06:45:35.200835Z",
+   "observed_at": "2026-08-05T16:56:58.926151Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -44468,7 +44468,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T06:45:35.200874Z",
+   "observed_at": "2026-08-05T16:56:58.926168Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -45071,7 +45071,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T06:45:35.200895Z",
+   "observed_at": "2026-08-05T16:56:58.926186Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -45659,7 +45659,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-05T06:45:35.200915Z",
+   "observed_at": "2026-08-05T16:56:58.926203Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -46262,7 +46262,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-05T06:45:35.200935Z",
+   "observed_at": "2026-08-05T16:56:58.926221Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -46273,5 +46273,1739 @@
   "value_hit": true,
   "clv": 0,
   "result_corrections": []
+ },
+ "bdl-mlb-5059484": {
+  "schema_ver": 2,
+  "fixture_id": "bdl-mlb-5059484",
+  "competition": "MLB",
+  "home": "Houston Astros",
+  "away": "Toronto Blue Jays",
+  "stage": "Regular",
+  "kickoff": "2026-08-05T18:10:00Z",
+  "pick": "h",
+  "pick_name": "Houston Astros",
+  "confidence": 64,
+  "edge": -3,
+  "base_pick": "h",
+  "base_pick_name": "Houston Astros",
+  "probs": {
+   "h": 64,
+   "d": 0,
+   "a": 36
+  },
+  "advancement_probs": null,
+  "regulation_probs": {
+   "h": 64,
+   "d": 0,
+   "a": 36
+  },
+  "regulation_pick": "h",
+  "outcome_basis": "regulation",
+  "market_basis": "regulation_1x2",
+  "market_pick": "h",
+  "market_pct": 67,
+  "pick_mkt": 67,
+  "value_side": null,
+  "value_edge": null,
+  "value_mkt": null,
+  "value_name": null,
+  "upset_candidate": "a",
+  "upset_name": "Toronto Blue Jays",
+  "upset_score": 37,
+  "upset_candidate_pct": 36,
+  "upset_triggered": false,
+  "upset_temperature": 1.08,
+  "upset_reason": "favorite profile is cleaner",
+  "factor_snapshot": {
+   "form": 0.26,
+   "margin": 0.19,
+   "srs": -0.11,
+   "rank": 0.0,
+   "rest": 0.0,
+   "market_power": 0.0,
+   "elo": 1.18,
+   "record": 0.32,
+   "class": 0.0,
+   "adv": 0.25
+  },
+  "market_snapshot": {
+   "h": 67,
+   "d": 0,
+   "a": 33
+  },
+  "market_snapshot_at": "2026-08-05T16:56:58.920270Z",
+  "market_gap": 34.0,
+  "upset_snapshot": {
+   "candidate": "Toronto Blue Jays",
+   "class": "minor",
+   "market_dog_pct": 33.0,
+   "model_dog_pct": 36.0,
+   "upset_edge": 3.0,
+   "radar": false,
+   "standings_candidate": null,
+   "standings_gap_pct": 4.0,
+   "gate": "none",
+   "box_score_edge": 0.0
+  },
+  "box_score_available": false,
+  "data_availability": {
+   "market": "available",
+   "box_score": "unavailable",
+   "lineups": "unavailable",
+   "injuries": "unavailable",
+   "weather": "unavailable",
+   "personnel": "unavailable",
+   "venue_context": "available"
+  },
+  "damp_pct": 0,
+  "mkt_pull": 2,
+  "model_ver": "v4-integrity-advancement",
+  "model_code_marker": "matchday-predictor-integrity-2026-07",
+  "locked_at": "2026-08-05T16:56:58.920270Z",
+  "lead_time_seconds": 4381.08,
+  "lead_time_hours": 1.216967,
+  "lock_window_hours": 2.0,
+  "status_at_lock": "UPCOMING",
+  "integrity_eligible": true,
+  "integrity_status": "verified",
+  "integrity_reason": "verified_pregame_window",
+  "prediction_snapshot": {
+   "pick": "h",
+   "pick_name": "Houston Astros",
+   "confidence": 64,
+   "base_pick": "h",
+   "base_pick_name": "Houston Astros",
+   "model": {
+    "h": 62,
+    "a": 38,
+    "d": 0
+   },
+   "base_blend": {
+    "h": 65,
+    "d": 0,
+    "a": 35
+   },
+   "blend": {
+    "h": 64,
+    "d": 0,
+    "a": 36
+   },
+   "adjusted": {
+    "h": 64,
+    "d": 0,
+    "a": 36
+   },
+   "is_knockout": false,
+   "advancement": null,
+   "regulation_pick": "h",
+   "regulation_pick_name": "Houston Astros",
+   "regulation_confidence": 64,
+   "regulation_probs": {
+    "h": 64,
+    "d": 0,
+    "a": 36
+   },
+   "edge": -3,
+   "note": "model agrees with the market",
+   "why": {
+    "form": 0.26,
+    "margin": 0.19,
+    "srs": -0.11,
+    "rank": 0.0,
+    "rest": 0.0,
+    "market_power": 0.0,
+    "elo": 1.18,
+    "record": 0.32,
+    "class": 0.0,
+    "adv": 0.25
+   },
+   "damp_pct": 0,
+   "mkt_pull": 2,
+   "market_weight": 0.6,
+   "upset": {
+    "candidate": "a",
+    "candidate_name": "Toronto Blue Jays",
+    "favorite": "h",
+    "favorite_name": "Houston Astros",
+    "score": 37,
+    "upset_class": "minor",
+    "market_dog_pct": 33.0,
+    "model_dog_pct": 36.0,
+    "upset_edge": 3.0,
+    "radar": false,
+    "standings_candidate": null,
+    "standings_gap_pct": 4.0,
+    "standings_sample_ok": true,
+    "temperature": 1.08,
+    "variance_pct": 0,
+    "low_goal_pct": 42,
+    "draw_pct": 0,
+    "favorite_pct": 64,
+    "candidate_pct": 36,
+    "margin_pct": 28,
+    "learn_bias_pct": 0.0,
+    "market_gap_pct": 34.0,
+    "market_gate": false,
+    "box_score_edge": 0.0,
+    "blocked": false,
+    "triggered": false,
+    "reason": "favorite profile is cleaner"
+   },
+   "data_quality": {
+    "level": "established",
+    "games": {
+     "home": 114,
+     "away": 113
+    },
+    "signals": [
+     "record",
+     "margin",
+     "form",
+     "srs",
+     "elo",
+     "market"
+    ],
+    "market_available": true,
+    "market_books": 22,
+    "market_spread": 2,
+    "market_weight": 0.6,
+    "note": "Current-season sample and opponent-adjusted results are available."
+   },
+   "predicted_margin": {
+    "value": 0.6,
+    "unit": "runs",
+    "favored": "h",
+    "label": "Houston Astros by 0.6"
+   },
+   "class_meta": {
+    "label": "Personnel edge",
+    "source": null,
+    "available": false,
+    "coverage": "unavailable",
+    "home_available": false,
+    "away_available": false,
+    "note": "Requires probable starters, confirmed batting orders, and bullpen availability; the configured feed does not provide them."
+   },
+   "publication_state": "locked",
+   "lock_readiness": {
+    "schema_ver": 1,
+    "sport": "baseball",
+    "competition": "MLB",
+    "phase": "lock_window",
+    "lock_window_hours": 2.0,
+    "lead_time_hours": 1.22,
+    "inputs": {
+     "market": "confirmed",
+     "injuries": "missing",
+     "starting_pitchers": "missing",
+     "lineups": "missing",
+     "bullpen": "missing",
+     "weather": "missing",
+     "venue": "confirmed"
+    },
+    "missing_critical": [
+     "starting_pitchers",
+     "lineups"
+    ],
+    "coverage_pct": 29,
+    "confirmed_pct": 29,
+    "provenance": [],
+    "confidence_guard": {
+     "high_confidence_label_allowed": false,
+     "reason": "critical pregame inputs missing"
+    },
+    "production_weight": 0,
+    "research_mode": "prospective_shadow"
+   },
+   "neutral_venue_probs": {
+    "h": 64,
+    "d": 0,
+    "a": 36
+   },
+   "totals": {
+    "expected": 8.93,
+    "basis": "season_rate"
+   },
+   "data_availability": {
+    "market": "available",
+    "box_score": "unavailable",
+    "lineups": "unavailable",
+    "injuries": "unavailable",
+    "weather": "unavailable",
+    "personnel": "unavailable",
+    "venue_context": "available"
+   }
+  },
+  "input_snapshot": {
+   "competition": "MLB",
+   "competition_config": {
+    "label": "MLB",
+    "sport": "baseball",
+    "fd": null,
+    "odds": "baseball_mlb",
+    "outright": "baseball_mlb_world_series_winner",
+    "tournament": false,
+    "source": "balldontlie",
+    "has_draws": false
+   },
+   "match": {
+    "id": "bdl-mlb-5059484",
+    "stage": "Regular",
+    "kickoff": "2026-08-05T18:10:00Z",
+    "status": "UPCOMING",
+    "venue": "Daikin Park",
+    "home": {
+     "name": "Houston Astros",
+     "code": "HOU",
+     "pts": 174,
+     "gd": -29,
+     "form": "W W W W L",
+     "pos": 1,
+     "group": "American League West",
+     "gf": 529,
+     "ga": 558,
+     "pld": 114,
+     "w": 58,
+     "d": 0,
+     "l": 56,
+     "srs": -0.43,
+     "srs_games": 114,
+     "rest_days": 2,
+     "rating": 5.93,
+     "form_home": "W W W W L",
+     "form_away": "W L W W W"
+    },
+    "away": {
+     "name": "Toronto Blue Jays",
+     "code": "TOR",
+     "pts": 159,
+     "gd": -56,
+     "form": "W W W L W",
+     "pos": 5,
+     "group": "American League East",
+     "gf": 442,
+     "ga": 498,
+     "pld": 113,
+     "w": 53,
+     "d": 0,
+     "l": 60,
+     "srs": -0.319,
+     "srs_games": 113,
+     "rest_days": 2,
+     "rating": 4.75,
+     "form_home": "L W W W L",
+     "form_away": "L W L W W"
+    },
+    "markets": {
+     "1x2": {
+      "home_pct": 67,
+      "draw_pct": 0,
+      "away_pct": 33,
+      "books": 22,
+      "observed_at": "2026-08-05T16:56:50.257669Z",
+      "spread": 2,
+      "spread_lo": 66,
+      "spread_hi": 68,
+      "confidence": "tight",
+      "open": {
+       "h": 55,
+       "d": 0,
+       "a": 45
+      },
+      "move": {
+       "h": 12,
+       "d": 0,
+       "a": -12
+      }
+     }
+    },
+    "weather": null,
+    "injuries": {
+     "home": [],
+     "away": []
+    },
+    "lineups": null,
+    "h2h": [],
+    "stats": null,
+    "stats_extra": null,
+    "data_source": "BALLDONTLIE",
+    "advanced_metrics": null,
+    "advanced_metrics_meta": null,
+    "nfl_challenger_shadow": null,
+    "mlb_challenger_shadow": {
+     "schema_version": 1,
+     "model_version": "retrosheet-mlb-challenger-0.1.0",
+     "mode": "prospective_shadow",
+     "production_weight": 0,
+     "home_win_probability": 0.547424,
+     "away_win_probability": 0.452576,
+     "features": {
+      "pythagorean_diff": 0.029962,
+      "run_diff_per_game_diff": 0.241189
+     },
+     "top_contributions": [
+      {
+       "feature": "pythagorean_diff",
+       "contribution": 0.02828,
+       "direction": "home"
+      },
+      {
+       "feature": "run_diff_per_game_diff",
+       "contribution": 0.02328,
+       "direction": "home"
+      }
+     ],
+     "live_feature_source": "licensed BALLDONTLIE season team totals through prior completed games",
+     "historical_training_source": "Retrosheet event files and game logs",
+     "retrosheet_notice": "The information used here was obtained free of charge from and is copyrighted by Retrosheet. Interested parties may contact Retrosheet at \"www.retrosheet.org\".",
+     "trained_through": "2025-09-28",
+     "home_games": 114,
+     "away_games": 113,
+     "historical_validation": {
+      "checks": {
+       "brier_not_worse_than_elo": true,
+       "log_loss_better_than_elo": true,
+       "minimum_out_of_sample_games": true,
+       "minimum_test_seasons": true,
+       "paired_interval_below_zero": true
+      },
+      "decision": "eligible_for_prospective_shadow",
+      "elo": {
+       "accuracy": 0.564356,
+       "brier": 0.246335,
+       "log_loss": 0.686457,
+       "n": 9090
+      },
+      "features": [
+       "pythagorean_diff",
+       "run_diff_per_game_diff"
+      ],
+      "model": {
+       "accuracy": 0.560176,
+       "brier": 0.244584,
+       "log_loss": 0.682207,
+       "n": 9090
+      },
+      "paired_vs_elo": {
+       "blocks": 683,
+       "ci95": [
+        -0.007292,
+        -0.001244
+       ],
+       "mean_log_loss_delta": -0.00425,
+       "method": "deterministic game-date block bootstrap",
+       "n": 9090
+      }
+     },
+     "promotion_status": "eligible_for_prospective_shadow_not_production",
+     "missing_personnel": [
+      "probable_or_confirmed_starter",
+      "confirmed_lineup",
+      "bullpen_availability"
+     ]
+    },
+    "personnel": null,
+    "personnel_shadow": {
+     "schema_ver": 1,
+     "sport": "baseball",
+     "production_weight": 0,
+     "mode": "prospective_shadow",
+     "features": {
+      "injury_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineup_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineups_confirmed": false,
+      "rest_days": {
+       "home": 2,
+       "away": 2
+      },
+      "weather": null,
+      "venue_context": {
+       "sample_games": 57,
+       "league_total_avg": 8.992,
+       "venue_total_avg": 9.178,
+       "factor": 1.0206,
+       "label": "park factor",
+       "production_weight": 0,
+       "method": "prior finals, 10-game shrinkage"
+      }
+     }
+    },
+    "pregame_context": {
+     "schema_ver": 1,
+     "sport": "baseball",
+     "competition": "MLB",
+     "phase": "lock_window",
+     "lock_window_hours": 2.0,
+     "lead_time_hours": 1.22,
+     "inputs": {
+      "market": "confirmed",
+      "injuries": "missing",
+      "starting_pitchers": "missing",
+      "lineups": "missing",
+      "bullpen": "missing",
+      "weather": "missing",
+      "venue": "confirmed"
+     },
+     "missing_critical": [
+      "starting_pitchers",
+      "lineups"
+     ],
+     "coverage_pct": 29,
+     "confirmed_pct": 29,
+     "provenance": [],
+     "confidence_guard": {
+      "high_confidence_label_allowed": false,
+      "reason": "critical pregame inputs missing"
+     },
+     "production_weight": 0,
+     "research_mode": "prospective_shadow"
+    },
+    "pregame_provenance": null,
+    "venue_context": {
+     "sample_games": 57,
+     "league_total_avg": 8.992,
+     "venue_total_avg": 9.178,
+     "factor": 1.0206,
+     "label": "park factor",
+     "production_weight": 0,
+     "method": "prior finals, 10-game shrinkage"
+    },
+    "model_signal_schema": null
+   }
+  },
+  "mfti_shadow": {
+   "spec_version": "MFTI-0.1.1-shadow",
+   "mode": "shadow_research_only",
+   "captured_at": "2026-08-05T16:56:58.920270Z",
+   "status": "incomplete",
+   "score": null,
+   "historical_evidence": {
+    "available": false,
+    "score": null,
+    "reason": "frozen_normalization_and_rolling_recalibration_not_fitted",
+    "diagnostics": {
+     "eligible_prior_forecasts": 118,
+     "mean_brier": 0.527864,
+     "mean_log_loss": 0.728279,
+     "brier_skill_vs_uniform": 0.208203,
+     "log_skill_vs_uniform": 0.337092
+    }
+   },
+   "event_readiness": {
+    "available": false,
+    "score": null,
+    "missing_components": [
+     "scenario_stability",
+     "availability",
+     "freshness",
+     "model_stability"
+    ]
+   },
+   "components": {
+    "scenario_stability": {
+     "available": false,
+     "score": null,
+     "reason": "scenario_forecasts_not_captured"
+    },
+    "availability": {
+     "available": false,
+     "score": null,
+     "reason": "availability_probabilities_not_captured"
+    },
+    "freshness": {
+     "available": false,
+     "score": null,
+     "reason": "input_freshness_not_captured"
+    },
+    "model_stability": {
+     "available": false,
+     "score": null,
+     "reason": "independent_model_outputs_not_captured"
+    }
+   },
+   "missing_components": [
+    "historical_evidence",
+    "scenario_stability",
+    "availability",
+    "freshness",
+    "model_stability"
+   ],
+   "affects_prediction": false,
+   "user_visible": false
+  },
+  "result": null,
+  "model_result": null,
+  "market_result": null
+ },
+ "bdl-mlb-5059485": {
+  "schema_ver": 2,
+  "fixture_id": "bdl-mlb-5059485",
+  "competition": "MLB",
+  "home": "Chicago Cubs",
+  "away": "Los Angeles Dodgers",
+  "stage": "Regular",
+  "kickoff": "2026-08-05T18:20:00Z",
+  "pick": "a",
+  "pick_name": "Los Angeles Dodgers",
+  "confidence": 54,
+  "edge": 6,
+  "base_pick": "a",
+  "base_pick_name": "Los Angeles Dodgers",
+  "probs": {
+   "h": 46,
+   "d": 0,
+   "a": 54
+  },
+  "advancement_probs": null,
+  "regulation_probs": {
+   "h": 46,
+   "d": 0,
+   "a": 54
+  },
+  "regulation_pick": "a",
+  "outcome_basis": "regulation",
+  "market_basis": "regulation_1x2",
+  "market_pick": "h",
+  "market_pct": 52,
+  "pick_mkt": 48,
+  "value_side": "a",
+  "value_edge": 6,
+  "value_mkt": 48,
+  "value_name": "Los Angeles Dodgers",
+  "upset_candidate": "h",
+  "upset_name": "Chicago Cubs",
+  "upset_score": 60,
+  "upset_candidate_pct": 46,
+  "upset_triggered": false,
+  "upset_temperature": 1.15,
+  "upset_reason": "favorite profile is cleaner",
+  "factor_snapshot": {
+   "form": -0.13,
+   "margin": -0.36,
+   "srs": -0.28,
+   "rank": 0.0,
+   "rest": 0.0,
+   "market_power": -5.5,
+   "elo": 0.44,
+   "record": -0.35,
+   "class": 0.0,
+   "adv": 0.25
+  },
+  "market_snapshot": {
+   "h": 52,
+   "d": 0,
+   "a": 48
+  },
+  "market_snapshot_at": "2026-08-05T16:56:58.921522Z",
+  "market_gap": null,
+  "upset_snapshot": {
+   "candidate": "Chicago Cubs",
+   "class": "pickem",
+   "market_dog_pct": 48.0,
+   "model_dog_pct": 54.0,
+   "upset_edge": 6.0,
+   "radar": false,
+   "standings_candidate": null,
+   "standings_gap_pct": 4.4,
+   "gate": "none",
+   "box_score_edge": 0.0
+  },
+  "box_score_available": false,
+  "data_availability": {
+   "market": "available",
+   "box_score": "unavailable",
+   "lineups": "unavailable",
+   "injuries": "unavailable",
+   "weather": "available",
+   "personnel": "unavailable",
+   "venue_context": "available"
+  },
+  "damp_pct": 0,
+  "mkt_pull": -11,
+  "model_ver": "v4-integrity-advancement",
+  "model_code_marker": "matchday-predictor-integrity-2026-07",
+  "locked_at": "2026-08-05T16:56:58.921522Z",
+  "lead_time_seconds": 4981.078,
+  "lead_time_hours": 1.383633,
+  "lock_window_hours": 2.0,
+  "status_at_lock": "UPCOMING",
+  "integrity_eligible": true,
+  "integrity_status": "verified",
+  "integrity_reason": "verified_pregame_window",
+  "prediction_snapshot": {
+   "pick": "a",
+   "pick_name": "Los Angeles Dodgers",
+   "confidence": 54,
+   "base_pick": "a",
+   "base_pick_name": "Los Angeles Dodgers",
+   "model": {
+    "h": 35,
+    "a": 65,
+    "d": 0
+   },
+   "base_blend": {
+    "h": 45,
+    "d": 0,
+    "a": 55
+   },
+   "blend": {
+    "h": 46,
+    "d": 0,
+    "a": 54
+   },
+   "adjusted": {
+    "h": 46,
+    "d": 0,
+    "a": 54
+   },
+   "is_knockout": false,
+   "advancement": null,
+   "regulation_pick": "a",
+   "regulation_pick_name": "Los Angeles Dodgers",
+   "regulation_confidence": 54,
+   "regulation_probs": {
+    "h": 46,
+    "d": 0,
+    "a": 54
+   },
+   "edge": 6,
+   "note": "favorite, but upset watch",
+   "why": {
+    "form": -0.13,
+    "margin": -0.36,
+    "srs": -0.28,
+    "rank": 0.0,
+    "rest": 0.0,
+    "market_power": -5.5,
+    "elo": 0.44,
+    "record": -0.35,
+    "class": 0.0,
+    "adv": 0.25
+   },
+   "damp_pct": 0,
+   "mkt_pull": -11,
+   "market_weight": 0.6,
+   "upset": {
+    "candidate": "h",
+    "candidate_name": "Chicago Cubs",
+    "favorite": "a",
+    "favorite_name": "Los Angeles Dodgers",
+    "score": 60,
+    "upset_class": "pickem",
+    "market_dog_pct": 48.0,
+    "model_dog_pct": 54.0,
+    "upset_edge": 6.0,
+    "radar": false,
+    "standings_candidate": null,
+    "standings_gap_pct": 4.4,
+    "standings_sample_ok": true,
+    "temperature": 1.15,
+    "variance_pct": 11,
+    "low_goal_pct": 42,
+    "draw_pct": 0,
+    "favorite_pct": 54,
+    "candidate_pct": 46,
+    "margin_pct": 8,
+    "learn_bias_pct": 0.0,
+    "market_gap_pct": null,
+    "market_gate": false,
+    "box_score_edge": 0.0,
+    "blocked": false,
+    "triggered": false,
+    "reason": "favorite profile is cleaner"
+   },
+   "data_quality": {
+    "level": "established",
+    "games": {
+     "home": 113,
+     "away": 113
+    },
+    "signals": [
+     "market_power",
+     "record",
+     "margin",
+     "form",
+     "srs",
+     "elo",
+     "market"
+    ],
+    "market_available": true,
+    "market_books": 22,
+    "market_spread": 3,
+    "market_weight": 0.6,
+    "note": "Current-season sample and opponent-adjusted results are available."
+   },
+   "predicted_margin": {
+    "value": -0.2,
+    "unit": "runs",
+    "favored": "a",
+    "label": "Los Angeles Dodgers by 0.2"
+   },
+   "class_meta": {
+    "label": "Personnel edge",
+    "source": null,
+    "available": false,
+    "coverage": "unavailable",
+    "home_available": false,
+    "away_available": false,
+    "note": "Requires probable starters, confirmed batting orders, and bullpen availability; the configured feed does not provide them."
+   },
+   "publication_state": "locked",
+   "lock_readiness": {
+    "schema_ver": 1,
+    "sport": "baseball",
+    "competition": "MLB",
+    "phase": "lock_window",
+    "lock_window_hours": 2.0,
+    "lead_time_hours": 1.39,
+    "inputs": {
+     "market": "confirmed",
+     "injuries": "missing",
+     "starting_pitchers": "missing",
+     "lineups": "missing",
+     "bullpen": "missing",
+     "weather": "confirmed",
+     "venue": "confirmed"
+    },
+    "missing_critical": [
+     "starting_pitchers",
+     "lineups"
+    ],
+    "coverage_pct": 43,
+    "confirmed_pct": 43,
+    "provenance": [],
+    "confidence_guard": {
+     "high_confidence_label_allowed": false,
+     "reason": "critical pregame inputs missing"
+    },
+    "production_weight": 0,
+    "research_mode": "prospective_shadow"
+   },
+   "neutral_venue_probs": {
+    "h": 47,
+    "d": 0,
+    "a": 53
+   },
+   "totals": {
+    "expected": 9.18,
+    "basis": "season_rate"
+   },
+   "data_availability": {
+    "market": "available",
+    "box_score": "unavailable",
+    "lineups": "unavailable",
+    "injuries": "unavailable",
+    "weather": "available",
+    "personnel": "unavailable",
+    "venue_context": "available"
+   }
+  },
+  "input_snapshot": {
+   "competition": "MLB",
+   "competition_config": {
+    "label": "MLB",
+    "sport": "baseball",
+    "fd": null,
+    "odds": "baseball_mlb",
+    "outright": "baseball_mlb_world_series_winner",
+    "tournament": false,
+    "source": "balldontlie",
+    "has_draws": false
+   },
+   "match": {
+    "id": "bdl-mlb-5059485",
+    "stage": "Regular",
+    "kickoff": "2026-08-05T18:20:00Z",
+    "status": "UPCOMING",
+    "venue": "Wrigley Field",
+    "home": {
+     "name": "Chicago Cubs",
+     "code": "CHC",
+     "pts": 192,
+     "gd": 94,
+     "form": "W L W L W",
+     "pos": 2,
+     "group": "National League Central",
+     "gf": 580,
+     "ga": 486,
+     "pld": 113,
+     "w": 64,
+     "d": 0,
+     "l": 49,
+     "srs": 0.763,
+     "srs_games": 113,
+     "rest_days": 2,
+     "rating": 6.06,
+     "form_home": "L L W L W",
+     "form_away": "L W W L W"
+    },
+    "away": {
+     "name": "Los Angeles Dodgers",
+     "code": "LAD",
+     "pts": 207,
+     "gd": 145,
+     "form": "W L L L L",
+     "pos": 1,
+     "group": "National League West",
+     "gf": 577,
+     "ga": 432,
+     "pld": 113,
+     "w": 69,
+     "d": 0,
+     "l": 44,
+     "srs": 1.059,
+     "srs_games": 113,
+     "rest_days": 2,
+     "rating": 5.62,
+     "form_home": "W W L L L",
+     "form_away": "W W W L L"
+    },
+    "markets": {
+     "1x2": {
+      "home_pct": 52,
+      "draw_pct": 0,
+      "away_pct": 48,
+      "books": 22,
+      "observed_at": "2026-08-05T16:56:50.257669Z",
+      "spread": 3,
+      "spread_lo": 50,
+      "spread_hi": 53,
+      "confidence": "tight",
+      "open": {
+       "h": 47,
+       "d": 0,
+       "a": 53
+      },
+      "move": {
+       "h": 5,
+       "d": 0,
+       "a": -5
+      }
+     }
+    },
+    "weather": {
+     "temp_c": 26,
+     "wind_kph": 9,
+     "rain_pct": 18,
+     "source": "Open-Meteo",
+     "source_url": "https://open-meteo.com/"
+    },
+    "injuries": {
+     "home": [],
+     "away": []
+    },
+    "lineups": null,
+    "h2h": [],
+    "stats": null,
+    "stats_extra": null,
+    "data_source": "BALLDONTLIE",
+    "advanced_metrics": null,
+    "advanced_metrics_meta": null,
+    "nfl_challenger_shadow": null,
+    "mlb_challenger_shadow": {
+     "schema_version": 1,
+     "model_version": "retrosheet-mlb-challenger-0.1.0",
+     "mode": "prospective_shadow",
+     "production_weight": 0,
+     "home_win_probability": 0.514129,
+     "away_win_probability": 0.485871,
+     "features": {
+      "pythagorean_diff": -0.049201,
+      "run_diff_per_game_diff": -0.451327
+     },
+     "top_contributions": [
+      {
+       "feature": "pythagorean_diff",
+       "contribution": -0.04287,
+       "direction": "away"
+      },
+      {
+       "feature": "run_diff_per_game_diff",
+       "contribution": -0.03931,
+       "direction": "away"
+      }
+     ],
+     "live_feature_source": "licensed BALLDONTLIE season team totals through prior completed games",
+     "historical_training_source": "Retrosheet event files and game logs",
+     "retrosheet_notice": "The information used here was obtained free of charge from and is copyrighted by Retrosheet. Interested parties may contact Retrosheet at \"www.retrosheet.org\".",
+     "trained_through": "2025-09-28",
+     "home_games": 113,
+     "away_games": 113,
+     "historical_validation": {
+      "checks": {
+       "brier_not_worse_than_elo": true,
+       "log_loss_better_than_elo": true,
+       "minimum_out_of_sample_games": true,
+       "minimum_test_seasons": true,
+       "paired_interval_below_zero": true
+      },
+      "decision": "eligible_for_prospective_shadow",
+      "elo": {
+       "accuracy": 0.564356,
+       "brier": 0.246335,
+       "log_loss": 0.686457,
+       "n": 9090
+      },
+      "features": [
+       "pythagorean_diff",
+       "run_diff_per_game_diff"
+      ],
+      "model": {
+       "accuracy": 0.560176,
+       "brier": 0.244584,
+       "log_loss": 0.682207,
+       "n": 9090
+      },
+      "paired_vs_elo": {
+       "blocks": 683,
+       "ci95": [
+        -0.007292,
+        -0.001244
+       ],
+       "mean_log_loss_delta": -0.00425,
+       "method": "deterministic game-date block bootstrap",
+       "n": 9090
+      }
+     },
+     "promotion_status": "eligible_for_prospective_shadow_not_production",
+     "missing_personnel": [
+      "probable_or_confirmed_starter",
+      "confirmed_lineup",
+      "bullpen_availability"
+     ]
+    },
+    "personnel": null,
+    "personnel_shadow": {
+     "schema_ver": 1,
+     "sport": "baseball",
+     "production_weight": 0,
+     "mode": "prospective_shadow",
+     "features": {
+      "injury_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineup_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineups_confirmed": false,
+      "rest_days": {
+       "home": 2,
+       "away": 2
+      },
+      "weather": {
+       "temp_c": 26,
+       "wind_kph": 9,
+       "rain_pct": 18,
+       "source": "Open-Meteo",
+       "source_url": "https://open-meteo.com/"
+      },
+      "venue_context": {
+       "sample_games": 56,
+       "league_total_avg": 8.992,
+       "venue_total_avg": 9.408,
+       "factor": 1.0462,
+       "label": "park factor",
+       "production_weight": 0,
+       "method": "prior finals, 10-game shrinkage"
+      }
+     }
+    },
+    "pregame_context": {
+     "schema_ver": 1,
+     "sport": "baseball",
+     "competition": "MLB",
+     "phase": "lock_window",
+     "lock_window_hours": 2.0,
+     "lead_time_hours": 1.39,
+     "inputs": {
+      "market": "confirmed",
+      "injuries": "missing",
+      "starting_pitchers": "missing",
+      "lineups": "missing",
+      "bullpen": "missing",
+      "weather": "confirmed",
+      "venue": "confirmed"
+     },
+     "missing_critical": [
+      "starting_pitchers",
+      "lineups"
+     ],
+     "coverage_pct": 43,
+     "confirmed_pct": 43,
+     "provenance": [],
+     "confidence_guard": {
+      "high_confidence_label_allowed": false,
+      "reason": "critical pregame inputs missing"
+     },
+     "production_weight": 0,
+     "research_mode": "prospective_shadow"
+    },
+    "pregame_provenance": null,
+    "venue_context": {
+     "sample_games": 56,
+     "league_total_avg": 8.992,
+     "venue_total_avg": 9.408,
+     "factor": 1.0462,
+     "label": "park factor",
+     "production_weight": 0,
+     "method": "prior finals, 10-game shrinkage"
+    },
+    "model_signal_schema": null
+   }
+  },
+  "mfti_shadow": {
+   "spec_version": "MFTI-0.1.1-shadow",
+   "mode": "shadow_research_only",
+   "captured_at": "2026-08-05T16:56:58.921522Z",
+   "status": "incomplete",
+   "score": null,
+   "historical_evidence": {
+    "available": false,
+    "score": null,
+    "reason": "frozen_normalization_and_rolling_recalibration_not_fitted",
+    "diagnostics": {
+     "eligible_prior_forecasts": 118,
+     "mean_brier": 0.527864,
+     "mean_log_loss": 0.728279,
+     "brier_skill_vs_uniform": 0.208203,
+     "log_skill_vs_uniform": 0.337092
+    }
+   },
+   "event_readiness": {
+    "available": false,
+    "score": null,
+    "missing_components": [
+     "scenario_stability",
+     "availability",
+     "freshness",
+     "model_stability"
+    ]
+   },
+   "components": {
+    "scenario_stability": {
+     "available": false,
+     "score": null,
+     "reason": "scenario_forecasts_not_captured"
+    },
+    "availability": {
+     "available": false,
+     "score": null,
+     "reason": "availability_probabilities_not_captured"
+    },
+    "freshness": {
+     "available": false,
+     "score": null,
+     "reason": "input_freshness_not_captured"
+    },
+    "model_stability": {
+     "available": false,
+     "score": null,
+     "reason": "independent_model_outputs_not_captured"
+    }
+   },
+   "missing_components": [
+    "historical_evidence",
+    "scenario_stability",
+    "availability",
+    "freshness",
+    "model_stability"
+   ],
+   "affects_prediction": false,
+   "user_visible": false
+  },
+  "result": null,
+  "model_result": null,
+  "market_result": null
+ },
+ "bdl-mlb-5059486": {
+  "schema_ver": 2,
+  "fixture_id": "bdl-mlb-5059486",
+  "competition": "MLB",
+  "home": "Texas Rangers",
+  "away": "San Francisco Giants",
+  "stage": "Regular",
+  "kickoff": "2026-08-05T18:35:00Z",
+  "pick": "h",
+  "pick_name": "Texas Rangers",
+  "confidence": 59,
+  "edge": 0,
+  "base_pick": "h",
+  "base_pick_name": "Texas Rangers",
+  "probs": {
+   "h": 59,
+   "d": 0,
+   "a": 41
+  },
+  "advancement_probs": null,
+  "regulation_probs": {
+   "h": 59,
+   "d": 0,
+   "a": 41
+  },
+  "regulation_pick": "h",
+  "outcome_basis": "regulation",
+  "market_basis": "regulation_1x2",
+  "market_pick": "h",
+  "market_pct": 59,
+  "pick_mkt": 59,
+  "value_side": null,
+  "value_edge": null,
+  "value_mkt": null,
+  "value_name": null,
+  "upset_candidate": "a",
+  "upset_name": "San Francisco Giants",
+  "upset_score": 48,
+  "upset_candidate_pct": 41,
+  "upset_triggered": false,
+  "upset_temperature": 1.08,
+  "upset_reason": "favorite profile is cleaner",
+  "factor_snapshot": {
+   "form": 0.47,
+   "margin": 0.06,
+   "srs": 0.01,
+   "rank": 0.0,
+   "rest": 0.0,
+   "market_power": 0.0,
+   "elo": 0.11,
+   "record": 0.5,
+   "class": 0.0,
+   "adv": 0.25,
+   "h2h": -0.13
+  },
+  "market_snapshot": {
+   "h": 59,
+   "d": 0,
+   "a": 41
+  },
+  "market_snapshot_at": "2026-08-05T16:56:58.922679Z",
+  "market_gap": 18.0,
+  "upset_snapshot": {
+   "candidate": "San Francisco Giants",
+   "class": "pickem",
+   "market_dog_pct": 41.0,
+   "model_dog_pct": 41.0,
+   "upset_edge": 0.0,
+   "radar": false,
+   "standings_candidate": null,
+   "standings_gap_pct": 6.2,
+   "gate": "none",
+   "box_score_edge": 0.0
+  },
+  "box_score_available": false,
+  "data_availability": {
+   "market": "available",
+   "box_score": "unavailable",
+   "lineups": "unavailable",
+   "injuries": "unavailable",
+   "weather": "available",
+   "personnel": "unavailable",
+   "venue_context": "available"
+  },
+  "damp_pct": 10,
+  "mkt_pull": -3,
+  "model_ver": "v4-integrity-advancement",
+  "model_code_marker": "matchday-predictor-integrity-2026-07",
+  "locked_at": "2026-08-05T16:56:58.922679Z",
+  "lead_time_seconds": 5881.077,
+  "lead_time_hours": 1.633633,
+  "lock_window_hours": 2.0,
+  "status_at_lock": "UPCOMING",
+  "integrity_eligible": true,
+  "integrity_status": "verified",
+  "integrity_reason": "verified_pregame_window",
+  "prediction_snapshot": {
+   "pick": "h",
+   "pick_name": "Texas Rangers",
+   "confidence": 59,
+   "base_pick": "h",
+   "base_pick_name": "Texas Rangers",
+   "model": {
+    "h": 62,
+    "a": 38,
+    "d": 0
+   },
+   "base_blend": {
+    "h": 60,
+    "d": 0,
+    "a": 40
+   },
+   "blend": {
+    "h": 59,
+    "d": 0,
+    "a": 41
+   },
+   "adjusted": {
+    "h": 59,
+    "d": 0,
+    "a": 41
+   },
+   "is_knockout": false,
+   "advancement": null,
+   "regulation_pick": "h",
+   "regulation_pick_name": "Texas Rangers",
+   "regulation_confidence": 59,
+   "regulation_probs": {
+    "h": 59,
+    "d": 0,
+    "a": 41
+   },
+   "edge": 0,
+   "note": "model agrees with the market",
+   "why": {
+    "form": 0.47,
+    "margin": 0.06,
+    "srs": 0.01,
+    "rank": 0.0,
+    "rest": 0.0,
+    "market_power": 0.0,
+    "elo": 0.11,
+    "record": 0.5,
+    "class": 0.0,
+    "adv": 0.25,
+    "h2h": -0.13
+   },
+   "damp_pct": 10,
+   "mkt_pull": -3,
+   "market_weight": 0.6,
+   "upset": {
+    "candidate": "a",
+    "candidate_name": "San Francisco Giants",
+    "favorite": "h",
+    "favorite_name": "Texas Rangers",
+    "score": 48,
+    "upset_class": "pickem",
+    "market_dog_pct": 41.0,
+    "model_dog_pct": 41.0,
+    "upset_edge": 0.0,
+    "radar": false,
+    "standings_candidate": null,
+    "standings_gap_pct": 6.2,
+    "standings_sample_ok": true,
+    "temperature": 1.08,
+    "variance_pct": 0,
+    "low_goal_pct": 42,
+    "draw_pct": 0,
+    "favorite_pct": 59,
+    "candidate_pct": 41,
+    "margin_pct": 18,
+    "learn_bias_pct": 0.0,
+    "market_gap_pct": 18.0,
+    "market_gate": false,
+    "box_score_edge": 0.0,
+    "blocked": false,
+    "triggered": false,
+    "reason": "favorite profile is cleaner"
+   },
+   "data_quality": {
+    "level": "established",
+    "games": {
+     "home": 113,
+     "away": 113
+    },
+    "signals": [
+     "record",
+     "margin",
+     "form",
+     "srs",
+     "elo",
+     "market"
+    ],
+    "market_available": true,
+    "market_books": 22,
+    "market_spread": 2,
+    "market_weight": 0.6,
+    "note": "Current-season sample and opponent-adjusted results are available."
+   },
+   "predicted_margin": {
+    "value": 0.4,
+    "unit": "runs",
+    "favored": "h",
+    "label": "Texas Rangers by 0.4"
+   },
+   "class_meta": {
+    "label": "Personnel edge",
+    "source": null,
+    "available": false,
+    "coverage": "unavailable",
+    "home_available": false,
+    "away_available": false,
+    "note": "Requires probable starters, confirmed batting orders, and bullpen availability; the configured feed does not provide them."
+   },
+   "publication_state": "locked",
+   "lock_readiness": {
+    "schema_ver": 1,
+    "sport": "baseball",
+    "competition": "MLB",
+    "phase": "lock_window",
+    "lock_window_hours": 2.0,
+    "lead_time_hours": 1.64,
+    "inputs": {
+     "market": "confirmed",
+     "injuries": "missing",
+     "starting_pitchers": "missing",
+     "lineups": "missing",
+     "bullpen": "missing",
+     "weather": "confirmed",
+     "venue": "confirmed"
+    },
+    "missing_critical": [
+     "starting_pitchers",
+     "lineups"
+    ],
+    "coverage_pct": 43,
+    "confirmed_pct": 43,
+    "provenance": [],
+    "confidence_guard": {
+     "high_confidence_label_allowed": false,
+     "reason": "critical pregame inputs missing"
+    },
+    "production_weight": 0,
+    "research_mode": "prospective_shadow"
+   },
+   "neutral_venue_probs": {
+    "h": 54,
+    "d": 0,
+    "a": 46
+   },
+   "totals": {
+    "expected": 8.72,
+    "basis": "season_rate"
+   },
+   "data_availability": {
+    "market": "available",
+    "box_score": "unavailable",
+    "lineups": "unavailable",
+    "injuries": "unavailable",
+    "weather": "available",
+    "personnel": "unavailable",
+    "venue_context": "available"
+   }
+  },
+  "input_snapshot": {
+   "competition": "MLB",
+   "competition_config": {
+    "label": "MLB",
+    "sport": "baseball",
+    "fd": null,
+    "odds": "baseball_mlb",
+    "outright": "baseball_mlb_world_series_winner",
+    "tournament": false,
+    "source": "balldontlie",
+    "has_draws": false
+   },
+   "match": {
+    "id": "bdl-mlb-5059486",
+    "stage": "Regular",
+    "kickoff": "2026-08-05T18:35:00Z",
+    "status": "UPCOMING",
+    "venue": "Globe Life Field",
+    "home": {
+     "name": "Texas Rangers",
+     "code": "TEX",
+     "pts": 165,
+     "gd": -40,
+     "form": "L L L L L",
+     "pos": 3,
+     "group": "American League West",
+     "gf": 466,
+     "ga": 506,
+     "pld": 113,
+     "w": 55,
+     "d": 0,
+     "l": 58,
+     "srs": -0.384,
+     "srs_games": 113,
+     "rest_days": 2,
+     "rating": 4.38,
+     "form_home": "W W L W L",
+     "form_away": "L L L L L"
+    },
+    "away": {
+     "name": "San Francisco Giants",
+     "code": "SF",
+     "pts": 144,
+     "gd": -49,
+     "form": "W L L L W",
+     "pos": 4,
+     "group": "National League West",
+     "gf": 475,
+     "ga": 524,
+     "pld": 113,
+     "w": 48,
+     "d": 0,
+     "l": 65,
+     "srs": -0.393,
+     "srs_games": 113,
+     "rest_days": 2,
+     "rating": 4.27,
+     "form_home": "W L W L W",
+     "form_away": "W L L L W"
+    },
+    "markets": {
+     "1x2": {
+      "home_pct": 59,
+      "draw_pct": 0,
+      "away_pct": 41,
+      "books": 22,
+      "observed_at": "2026-08-05T16:56:50.257669Z",
+      "spread": 2,
+      "spread_lo": 58,
+      "spread_hi": 61,
+      "confidence": "tight",
+      "open": {
+       "h": 53,
+       "d": 0,
+       "a": 47
+      },
+      "move": {
+       "h": 6,
+       "d": 0,
+       "a": -6
+      }
+     }
+    },
+    "weather": {
+     "temp_c": 37,
+     "wind_kph": 16,
+     "rain_pct": 0,
+     "source": "Open-Meteo",
+     "source_url": "https://open-meteo.com/"
+    },
+    "injuries": {
+     "home": [],
+     "away": []
+    },
+    "lineups": null,
+    "h2h": [],
+    "stats": null,
+    "stats_extra": null,
+    "data_source": "BALLDONTLIE",
+    "advanced_metrics": null,
+    "advanced_metrics_meta": null,
+    "nfl_challenger_shadow": null,
+    "mlb_challenger_shadow": {
+     "schema_version": 1,
+     "model_version": "retrosheet-mlb-challenger-0.1.0",
+     "mode": "prospective_shadow",
+     "production_weight": 0,
+     "home_win_probability": 0.538723,
+     "away_win_probability": 0.461277,
+     "features": {
+      "pythagorean_diff": 0.007191,
+      "run_diff_per_game_diff": 0.079646
+     },
+     "top_contributions": [
+      {
+       "feature": "run_diff_per_game_diff",
+       "contribution": 0.00868,
+       "direction": "home"
+      },
+      {
+       "feature": "pythagorean_diff",
+       "contribution": 0.00781,
+       "direction": "home"
+      }
+     ],
+     "live_feature_source": "licensed BALLDONTLIE season team totals through prior completed games",
+     "historical_training_source": "Retrosheet event files and game logs",
+     "retrosheet_notice": "The information used here was obtained free of charge from and is copyrighted by Retrosheet. Interested parties may contact Retrosheet at \"www.retrosheet.org\".",
+     "trained_through": "2025-09-28",
+     "home_games": 113,
+     "away_games": 113,
+     "historical_validation": {
+      "checks": {
+       "brier_not_worse_than_elo": true,
+       "log_loss_better_than_elo": true,
+       "minimum_out_of_sample_games": true,
+       "minimum_test_seasons": true,
+       "paired_interval_below_zero": true
+      },
+      "decision": "eligible_for_prospective_shadow",
+      "elo": {
+       "accuracy": 0.564356,
+       "brier": 0.246335,
+       "log_loss": 0.686457,
+       "n": 9090
+      },
+      "features": [
+       "pythagorean_diff",
+       "run_diff_per_game_diff"
+      ],
+      "model": {
+       "accuracy": 0.560176,
+       "brier": 0.244584,
+       "log_loss": 0.682207,
+       "n": 9090
+      },
+      "paired_vs_elo": {
+       "blocks": 683,
+       "ci95": [
+        -0.007292,
+        -0.001244
+       ],
+       "mean_log_loss_delta": -0.00425,
+       "method": "deterministic game-date block bootstrap",
+       "n": 9090
+      }
+     },
+     "promotion_status": "eligible_for_prospective_shadow_not_production",
+     "missing_personnel": [
+      "probable_or_confirmed_starter",
+      "confirmed_lineup",
+      "bullpen_availability"
+     ]
+    },
+    "personnel": null,
+    "personnel_shadow": {
+     "schema_ver": 1,
+     "sport": "baseball",
+     "production_weight": 0,
+     "mode": "prospective_shadow",
+     "features": {
+      "injury_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineup_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineups_confirmed": false,
+      "rest_days": {
+       "home": 2,
+       "away": 2
+      },
+      "weather": {
+       "temp_c": 37,
+       "wind_kph": 16,
+       "rain_pct": 0,
+       "source": "Open-Meteo",
+       "source_url": "https://open-meteo.com/"
+      },
+      "venue_context": {
+       "sample_games": 54,
+       "league_total_avg": 8.992,
+       "venue_total_avg": 8.405,
+       "factor": 0.9347,
+       "label": "park factor",
+       "production_weight": 0,
+       "method": "prior finals, 10-game shrinkage"
+      }
+     }
+    },
+    "pregame_context": {
+     "schema_ver": 1,
+     "sport": "baseball",
+     "competition": "MLB",
+     "phase": "lock_window",
+     "lock_window_hours": 2.0,
+     "lead_time_hours": 1.64,
+     "inputs": {
+      "market": "confirmed",
+      "injuries": "missing",
+      "starting_pitchers": "missing",
+      "lineups": "missing",
+      "bullpen": "missing",
+      "weather": "confirmed",
+      "venue": "confirmed"
+     },
+     "missing_critical": [
+      "starting_pitchers",
+      "lineups"
+     ],
+     "coverage_pct": 43,
+     "confirmed_pct": 43,
+     "provenance": [],
+     "confidence_guard": {
+      "high_confidence_label_allowed": false,
+      "reason": "critical pregame inputs missing"
+     },
+     "production_weight": 0,
+     "research_mode": "prospective_shadow"
+    },
+    "pregame_provenance": null,
+    "venue_context": {
+     "sample_games": 54,
+     "league_total_avg": 8.992,
+     "venue_total_avg": 8.405,
+     "factor": 0.9347,
+     "label": "park factor",
+     "production_weight": 0,
+     "method": "prior finals, 10-game shrinkage"
+    },
+    "model_signal_schema": null
+   }
+  },
+  "mfti_shadow": {
+   "spec_version": "MFTI-0.1.1-shadow",
+   "mode": "shadow_research_only",
+   "captured_at": "2026-08-05T16:56:58.922679Z",
+   "status": "incomplete",
+   "score": null,
+   "historical_evidence": {
+    "available": false,
+    "score": null,
+    "reason": "frozen_normalization_and_rolling_recalibration_not_fitted",
+    "diagnostics": {
+     "eligible_prior_forecasts": 118,
+     "mean_brier": 0.527864,
+     "mean_log_loss": 0.728279,
+     "brier_skill_vs_uniform": 0.208203,
+     "log_skill_vs_uniform": 0.337092
+    }
+   },
+   "event_readiness": {
+    "available": false,
+    "score": null,
+    "missing_components": [
+     "scenario_stability",
+     "availability",
+     "freshness",
+     "model_stability"
+    ]
+   },
+   "components": {
+    "scenario_stability": {
+     "available": false,
+     "score": null,
+     "reason": "scenario_forecasts_not_captured"
+    },
+    "availability": {
+     "available": false,
+     "score": null,
+     "reason": "availability_probabilities_not_captured"
+    },
+    "freshness": {
+     "available": false,
+     "score": null,
+     "reason": "input_freshness_not_captured"
+    },
+    "model_stability": {
+     "available": false,
+     "score": null,
+     "reason": "independent_model_outputs_not_captured"
+    }
+   },
+   "missing_components": [
+    "historical_evidence",
+    "scenario_stability",
+    "availability",
+    "freshness",
+    "model_stability"
+   ],
+   "affects_prediction": false,
+   "user_visible": false
+  },
+  "result": null,
+  "model_result": null,
+  "market_result": null
  }
 }
