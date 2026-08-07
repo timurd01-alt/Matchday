@@ -1,5 +1,12 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-08-07 (market-comparison hardening adds no provider or endpoint.
+Authorized The Odds API consensus snapshots now retain exact competition, fixture,
+kickoff, home/away orientation, source receipt, and observed/recorded timestamps in
+the existing append-only research ledger. Legacy unordered pair-cache entries and
+post-lock quotes are excluded from the official same-time benchmark. Closing quotes
+remain a separately labeled diagnostic and cannot alter a locked forecast.)
+
 Reviewed: 2026-08-03 (sport-aware pregame context and a disabled-by-default SportsDataIO
 overlay; activation requires a live public-redistribution agreement and endpoint coverage.
 Advanced-metrics shadow expansion: nflverse `pbp` CC BY 4.0 only,

@@ -166,6 +166,9 @@ def _forecast_payload(rec: dict[str, Any]) -> dict[str, Any]:
 def _grade_payload(rec: dict[str, Any]) -> dict[str, Any]:
     result_snapshot = _safe(rec.get("result_snapshot")) or {}
     return {
+        "fixture_identity": {"competition": rec.get("competition"),
+                             "fixture_id": rec.get("fixture_id"),
+                             "kickoff": rec.get("kickoff")},
         "result": rec.get("result"),
         "model_result": rec.get("model_result"),
         "market_result": rec.get("market_result"),

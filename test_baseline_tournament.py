@@ -34,6 +34,8 @@ class BaselineTournamentTests(unittest.TestCase):
                 "fetched_at": "2026-09-09T17:00:00Z", "snapshots": [{
                     "fixture_id": "g1", "competition": "NFL", "kickoff": rec["kickoff"],
                     "observed_at": "2026-09-09T16:59:00Z", "market_type": "moneyline",
+                    "participants": {"home": {"id": "A", "name": "A"},
+                                     "away": {"id": "B", "name": "B"}},
                     "odds_format": "decimal", "outcomes": {"h": 1.8, "a": 2.1}}]},
                 "2026-09-09T17:01:00Z")
             report = build_report([forecast_path], market_path)

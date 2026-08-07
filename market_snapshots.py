@@ -11,7 +11,8 @@ from pathlib import Path
 from typing import Any
 
 
-SCHEMA_VERSION = 1
+SCHEMA_VERSION = 2
+SUPPORTED_SCHEMA_VERSIONS = {1, SCHEMA_VERSION}
 GENESIS_HASH = "0" * 64
 AUTHORIZATION_BASES = {"licensed", "open_license", "first_party", "user_supplied_with_permission"}
 
@@ -62,7 +63,7 @@ def validate(path: str | os.PathLike[str]) -> dict[str, Any]:
     seen = set()
     events = read_events(path)
     for line_number, event in enumerate(events, 1):
-        if event.get("schema_version") != SCHEMA_VERSION:
+        if event.get("schema_version") not in SUPPORTED_SCHEMA_VERSIONS:
             raise ValueError(f"unsupported market snapshot schema on line {line_number}")
         event_id = str(event.get("event_id") or "")
         if not event_id or event_id in seen:
@@ -112,6 +113,16 @@ def no_vig_probabilities(values: dict[str, Any], odds_format: str) -> tuple[dict
             {key: round(value, 8) for key, value in normalized.items()}, round(total - 1.0, 8))
 
 
+def _participant(raw: Any, side: str) -> dict[str, str]:
+    if not isinstance(raw, dict):
+        raise ValueError(f"market snapshot requires an explicit {side} participant")
+    participant_id = str(raw.get("id") or "").strip()
+    name = str(raw.get("name") or "").strip()
+    if not participant_id or not name:
+        raise ValueError(f"market snapshot {side} participant requires id and name")
+    return {"id": participant_id, "name": name}
+
+
 def _normalize_snapshot(raw: dict[str, Any], recorded: datetime) -> dict[str, Any]:
     if not isinstance(raw, dict):
         raise ValueError("each market snapshot must be an object")
@@ -127,6 +138,11 @@ def _normalize_snapshot(raw: dict[str, Any], recorded: datetime) -> dict[str, An
     if observed > recorded:
         raise ValueError(f"market snapshot for {fixture_id} cannot be observed after it is recorded")
     odds_format = str(raw.get("odds_format") or "").strip().lower()
+    participants = raw.get("participants") or {}
+    home = _participant(participants.get("home"), "home")
+    away = _participant(participants.get("away"), "away")
+    if home["id"] == away["id"]:
+        raise ValueError("market snapshot home and away participants must differ")
     values = raw.get("outcomes")
     implied, no_vig, overround = no_vig_probabilities(values, odds_format)
     if market_type == "moneyline" and set(no_vig) != {"h", "a"}:
@@ -135,6 +151,7 @@ def _normalize_snapshot(raw: dict[str, Any], recorded: datetime) -> dict[str, An
         raise ValueError("1x2 snapshots must be three-way h/d/a")
     return {"fixture_id": fixture_id, "competition": competition, "kickoff": _iso(kickoff),
             "observed_at": _iso(observed), "market_type": market_type, "odds_format": odds_format,
+            "participants": {"home": home, "away": away},
             "outcomes": {key: float(values[key]) for key in no_vig},
             "raw_implied_probabilities": implied, "no_vig_probabilities": no_vig,
             "overround": overround, "source_snapshot_id": str(raw.get("source_snapshot_id") or "") or None}
@@ -201,6 +218,7 @@ def fixture_snapshots(
                     and _time(snapshot.get("kickoff"), "kickoff") == fixture_kickoff
                     and (competition is None
                          or str(snapshot.get("competition") or "").upper() == str(competition).upper())):
-                output.append({**snapshot, "recorded_at": _iso(recorded),
+                output.append({**snapshot, "schema_version": event.get("schema_version"),
+                               "recorded_at": _iso(recorded),
                                "event_id": event["event_id"], "source": event["source"]})
     return sorted(output, key=lambda item: (item["observed_at"], item["recorded_at"], item["event_id"]))

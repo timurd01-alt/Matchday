@@ -4,13 +4,41 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
-  "date": "Build 0803C",
-  "tag": "Improvement",
-  "title": "Information anyone can use",
+  "date": "Build 0807B",
+  "tag": "Fix",
+  "title": "Model-versus-market scorecard now compares like with like",
   "items": [
-   "Removed the defensive advice disclaimers from the scorecard, Q&A, Legal page, generated articles, research posts, documentation, and translated welcome copy.",
-   "Matchday now says the useful thing directly: it publishes probabilities, market context, and a public track record for anyone to use however works for them.",
-   "Kept the factual guardrails that matter—probabilities are estimates, important data can change, Matchday does not take bets or act as a bookmaker, and the model has no stake in any outcome."
+   "Replaced the unsafe team-pair odds audit with exact competition, fixture, kickoff, and home/away identity checks backed by timestamped append-only receipts.",
+   "The public market benchmark now counts only quotes observed by the moment the model locked; later quotes are disclosed separately instead of receiving an informational advantage.",
+   "Closing-line value now comes from exact pre-kickoff ledger snapshots, and small samples remain descriptive until at least 100 paired fixtures across five time blocks are available."
+  ]
+ },
+ {
+  "date": "Build 0807A",
+  "tag": "Content",
+  "title": "Friday model-versus-market ledger published",
+  "items": [
+   "Published a quality-gated Friday review that declines to present a market disagreement when fixture alignment, freshness, no-vig conversion, or book coverage cannot be verified.",
+   "The article documents the stale and missing non-MLB market inputs, keeps MLB out of scope, and does not imply a guarantee or betting value."
+  ]
+ },
+ {
+  "date": "Build 0805A",
+  "tag": "Content",
+  "title": "Wednesday availability watch published",
+  "items": [
+   "Published a concise non-MLB availability tracker that separates confirmed news from doubtful and unknown status.",
+   "The dispatch makes no availability-driven model claim without source-backed personnel news and comparable snapshots."
+  ]
+ },
+ {
+  "date": "Build 0803C",
+  "tag": "New",
+  "title": "Matchday Terminal can now promote itself on X",
+  "items": [
+   "Added an opt-in X bot that publishes one measured daily promotion through the official API, defaults manual runs to preview mode, and stays disabled until credentials and an explicit repository switch are configured.",
+   "Prediction posts use only immutable official-pick receipts; when no locked pick is eligible, the bot rotates through recaps, research, explainers, tactics pages, and general Matchday Terminal features.",
+   "A private publication ledger prevents duplicate campaigns and records the post ID, timestamp, campaign key, and copy hash without storing credentials."
   ]
  },
  {
