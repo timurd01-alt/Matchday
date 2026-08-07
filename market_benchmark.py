@@ -17,6 +17,8 @@ import market_snapshots
 
 SCHEMA_VERSION = 1
 PROTOCOL_VERSION = "market-benchmark-1.0.0"
+MIN_PAIRED_FIXTURES = 100
+MIN_TIME_BLOCKS = 5
 
 
 def _time(value: Any) -> datetime:
@@ -68,6 +70,23 @@ def _source_consensus(
     return {"probabilities": probabilities, "sources": [item["source"] for item in selected],
             "source_count": len(selected), "event_ids": [item["event_id"] for item in selected],
             "observed_at": [item["observed_at"] for item in selected]}
+
+
+def _identity_key(competition: Any, fixture_id: Any, kickoff: Any) -> tuple[str, str, str]:
+    return (str(competition or "").strip().upper(), str(fixture_id or "").strip(),
+            str(kickoff or "").strip())
+
+
+def _participants_match(snapshot: dict[str, Any], forecast: dict[str, Any]) -> bool:
+    if snapshot.get("schema_version") != market_snapshots.SCHEMA_VERSION:
+        return False
+    market = snapshot.get("participants") or {}
+    for side in ("home", "away"):
+        market_name = str((market.get(side) or {}).get("name") or "").strip().casefold()
+        forecast_name = str((forecast.get(side) or "")).strip().casefold()
+        if not market_name or market_name != forecast_name:
+            return False
+    return True
 
 
 def _metric(rows: list[dict[str, Any]], key: str) -> dict[str, Any]:
@@ -194,22 +213,35 @@ def _outcome_segments(rows: list[dict[str, Any]]) -> dict[str, Any]:
 
 
 def extract_rows(forecast_events: Iterable[dict[str, Any]], market_path: str | Path) -> tuple[list[dict[str, Any]], dict[str, int]]:
-    locks: dict[str, list[dict[str, Any]]] = defaultdict(list)
-    grades: dict[str, dict[str, Any]] = {}
+    locks: dict[tuple[str, str, str], list[dict[str, Any]]] = defaultdict(list)
+    grades: dict[tuple[str, str, str], list[dict[str, Any]]] = defaultdict(list)
+    legacy_grades: dict[tuple[str, str], list[dict[str, Any]]] = defaultdict(list)
     counts: dict[str, int] = defaultdict(int)
     for event in forecast_events:
         fixture_id = str(event.get("fixture_id") or "")
         if event.get("event_type") == "forecast_locked":
-            locks[fixture_id].append(event)
+            payload = event.get("payload") or {}
+            kickoff = ((payload.get("lock") or {}).get("kickoff"))
+            locks[_identity_key(event.get("competition"), fixture_id, kickoff)].append(event)
         elif event.get("event_type") == "forecast_graded":
-            grades[fixture_id] = event
+            identity = ((event.get("payload") or {}).get("fixture_identity") or {})
+            kickoff = identity.get("kickoff")
+            if kickoff:
+                grades[_identity_key(event.get("competition"), fixture_id, kickoff)].append(event)
+            else:
+                legacy_grades[(str(event.get("competition") or "").upper(), fixture_id)].append(event)
     rows = []
-    for fixture_id, fixture_locks in sorted(locks.items()):
+    for identity, fixture_locks in sorted(locks.items()):
+        competition, fixture_id, identity_kickoff = identity
         if len(fixture_locks) != 1:
             counts["ambiguous_locks"] += 1
             continue
-        grade = grades.get(fixture_id)
-        if not grade:
+        fixture_grades = grades.get(identity) or legacy_grades.get((competition, fixture_id)) or []
+        if len(fixture_grades) > 1:
+            counts["ambiguous_grades"] += 1
+            continue
+        grade = fixture_grades[0] if fixture_grades else None
+        if grade is None:
             counts["pending"] += 1
             continue
         grade_payload = grade.get("payload") or {}
@@ -231,13 +263,22 @@ def extract_rows(forecast_events: Iterable[dict[str, Any]], market_path: str | P
             counts["invalid_lock_time"] += 1
             continue
         snapshots = market_snapshots.fixture_snapshots(
-            market_path, fixture_id, lock_info.get("kickoff"), lock.get("competition")
+            market_path, fixture_id, identity_kickoff, competition
         )
+        legacy_or_unoriented = [snapshot for snapshot in snapshots
+                                if snapshot.get("schema_version") != market_snapshots.SCHEMA_VERSION]
+        if legacy_or_unoriented:
+            counts["legacy_market_snapshots_excluded"] += len(legacy_or_unoriented)
+        forecast_participants = payload.get("participants") or {}
+        aligned = [snapshot for snapshot in snapshots
+                   if _participants_match(snapshot, forecast_participants)]
+        counts["orientation_mismatches_excluded"] += len(snapshots) - len(aligned) - len(legacy_or_unoriented)
+        snapshots = aligned
         outcomes = set(model)
         opening = _source_consensus(snapshots, kickoff, outcomes, earliest=True)
         at_lock = _source_consensus(snapshots, locked_at, outcomes)
         closing = _source_consensus(snapshots, kickoff, outcomes)
-        rows.append({"fixture_id": fixture_id, "competition": lock.get("competition"),
+        rows.append({"fixture_id": fixture_id, "competition": competition,
                      "lock_event_id": lock.get("event_id"), "grade_event_id": grade.get("event_id"),
                      "locked_at": lock.get("effective_at"), "kickoff": lock_info.get("kickoff"),
                      "result": result, "model_independent": model,
@@ -265,9 +306,14 @@ def build_report(forecast_paths: Iterable[str | Path], market_path: str | Path) 
     comparisons = {}
     for stage in ("opening_market", "lock_market", "closing_market"):
         common = [row for row in rows if row.get(stage) is not None]
-        comparisons[stage] = {"market": _metric(common, stage),
+        paired = _paired_interval(common, stage)
+        ready = paired["n"] >= MIN_PAIRED_FIXTURES and paired["blocks"] >= MIN_TIME_BLOCKS
+        comparisons[stage] = {"status": "ready_for_review" if ready else "descriptive_only_insufficient_evidence",
+                              "minimum_paired_fixtures": MIN_PAIRED_FIXTURES,
+                              "minimum_time_blocks": MIN_TIME_BLOCKS,
+                              "market": _metric(common, stage),
                               "matchday_independent_same_fixtures": _metric(common, "model_independent"),
-                              "paired_log_loss": _paired_interval(common, stage)}
+                              "paired_log_loss": paired}
     return {"schema_version": SCHEMA_VERSION, "protocol_version": PROTOCOL_VERSION,
             "research_only": True, "production_weight": 0,
             "method": {"margin_removal": "normalize implied probabilities to sum to one",
@@ -275,7 +321,8 @@ def build_report(forecast_paths: Iterable[str | Path], market_path: str | Path) 
                        "opening": "earliest pregame snapshot recorded per source",
                        "lock": "latest snapshot both observed and recorded by forecast lock",
                        "closing": "latest snapshot both observed and recorded before kickoff",
-                       "primary_metric": "log_loss", "secondary_metric": "multiclass_brier"},
+                       "primary_metric": "log_loss", "secondary_metric": "multiclass_brier",
+                       "accuracy_role": "descriptive_only"},
             "forecast_sources": forecast_sources,
             "market_source": {"path": str(market_path), "events": market_state["events"],
                               "last_hash": market_state["last_hash"]},

@@ -32,6 +32,7 @@ __pycache__/
 *.pyc
 .ci_fetch_state.json
 provider_quota_state.json
+.x_bot_state.json
 posts.json
 posts_state.json
 posts/*.html

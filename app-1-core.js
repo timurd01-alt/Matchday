@@ -68,7 +68,7 @@ let MATCH_VISIBLE=FIXTURE_PAGE_SIZE,RESULT_VISIBLE=FIXTURE_PAGE_SIZE;
 // ---- per-sport sidebar (data-driven, follows the SELECTION) ---------------
 // Each sport declares exactly which views exist for it, in order.
 const NAV_DEF={
-  all:         ['matches','results','advanced','community','tree','sandbox','news','insights','status','updates','customize'],
+  all:         ['matches','results','advanced','community','tree','news','insights','status','updates','customize'],
   soccer_cup:  ['matches','results','groups','title','edge','advanced','score','bracket','third','tott','community','tree','sandbox','news','insights','status','updates','customize'],
   soccer_club: ['matches','results','groups','title','edge','advanced','score','bracket','tott','community','tree','sandbox','news','insights','status','updates','customize'],
   us_sport:    ['matches','results','groups','title','edge','advanced','score','community','tree','sandbox','news','insights','status','updates','customize'],
@@ -148,24 +148,49 @@ function teamInitials(team){
 }
 function teamHue(team){let h=0;for(const ch of String(team?.name||team?.code||'team'))h=(h*31+ch.charCodeAt(0))%360;return h}
 function teamMarkHTML(team,extra=''){return `<span class="teamMark ${esc(extra)}" style="--team-hue:${teamHue(team)}" aria-hidden="true">${esc(teamInitials(team))}</span>`}
-function metricHelp(label,copy){return `<button type="button" class="metricHelp" aria-label="${esc(label)}: ${esc(copy)}" aria-expanded="false" data-tip="${esc(copy)}">?</button>`}
+function metricHelp(label,copy){return `<button type="button" class="metricHelp" aria-label="${esc(label)}: ${esc(copy)}" aria-expanded="false" aria-controls="metricHelpPopover" data-tip="${esc(copy)}">?</button>`}
+function metricHelpPopover(){
+  let pop=document.querySelector('#metricHelpPopover');
+  if(pop)return pop;
+  pop=document.createElement('div');
+  pop.id='metricHelpPopover';
+  pop.className='metricHelpPopover';
+  pop.setAttribute('role','tooltip');
+  pop.setAttribute('aria-live','polite');
+  pop.hidden=true;
+  document.body.appendChild(pop);
+  return pop;
+}
+function syncMetricHelpPopover(help,open){
+  const pop=document.querySelector('#metricHelpPopover');
+  document.querySelectorAll('.metricHelp[aria-describedby="metricHelpPopover"]').forEach(item=>item.removeAttribute('aria-describedby'));
+  if(pop)pop.hidden=true;
+  if(!open||!help||!window.matchMedia('(max-width: 760px)').matches)return;
+  const mobilePop=metricHelpPopover();
+  mobilePop.textContent=help.getAttribute('aria-label')||help.dataset.tip||'';
+  mobilePop.hidden=false;
+  help.setAttribute('aria-describedby',mobilePop.id);
+}
 function closeMetricHelps(except){
   document.querySelectorAll('.metricHelp.isOpen').forEach(help=>{
     if(help===except)return;
     help.classList.remove('isOpen');
     help.setAttribute('aria-expanded','false');
   });
+  syncMetricHelpPopover(null,false);
 }
 document.addEventListener('click',event=>{
   const help=event.target.closest?.('.metricHelp');
   if(!help){closeMetricHelps();return;}
   event.preventDefault();
+  event.stopImmediatePropagation();
   const open=!help.classList.contains('isOpen');
   closeMetricHelps(help);
   help.classList.toggle('isOpen',open);
   help.setAttribute('aria-expanded',String(open));
+  syncMetricHelpPopover(help,open);
   if(!open)help.blur();
-});
+},true);
 document.addEventListener('keydown',event=>{
   if(event.key!=='Escape')return;
   const open=document.querySelector('.metricHelp.isOpen');

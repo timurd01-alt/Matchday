@@ -21,6 +21,8 @@ def odds_batch(observed_at, home_odds, away_odds, source="Book A"):
             "source_reference": f"contract:{source}", "fetched_at": observed_at,
             "snapshots": [{"fixture_id": "game-1", "competition": "NFL",
                 "kickoff": "2026-09-10T00:20:00Z", "observed_at": observed_at,
+                "participants": {"home": {"id": "A", "name": "A"},
+                                 "away": {"id": "B", "name": "B"}},
                 "market_type": "moneyline", "odds_format": "decimal",
                 "outcomes": {"h": home_odds, "a": away_odds}}]}
 
@@ -43,6 +45,8 @@ class MarketBenchmarkTests(unittest.TestCase):
             self.assertLess(row["lock_market"]["h"], row["closing_market"]["h"])
             self.assertEqual(report["comparisons"]["closing_market"]["market"]["n"], 1)
             self.assertEqual(report["comparisons"]["closing_market"]["paired_log_loss"]["n"], 1)
+            self.assertEqual(report["comparisons"]["closing_market"]["status"],
+                             "descriptive_only_insufficient_evidence")
             self.assertGreater(report["closing_line_movement"]["mean_probability_movement_toward_matchday_pick"], 0)
             self.assertEqual(report["outcome_segments"]["favorite_result"]["favorite_won"]["n"], 1)
             self.assertIn("agree", report["outcome_segments"]["model_market_agreement"])
@@ -75,6 +79,33 @@ class MarketBenchmarkTests(unittest.TestCase):
                 odds_batch("2026-09-09T17:00:00Z", 1.8, 2.1), "2026-09-09T17:01:00Z")
             report = build_report([forecast_path], market_path)
             self.assertEqual(report["rows"][0]["result"], "a")
+
+    def test_reused_fixture_id_cannot_cross_competitions(self):
+        with tempfile.TemporaryDirectory() as directory:
+            forecast_path = Path(directory) / "forecasts.jsonl"
+            market_path = Path(directory) / "markets.jsonl"
+            nfl = pick_record()
+            nba = pick_record(); nba["competition"] = "NBA"
+            forecast_ledger.sync_pick_records(forecast_path, [nfl], "NFL")
+            forecast_ledger.sync_pick_records(forecast_path, [nba], "NBA")
+            market_snapshots.append_batch(market_path,
+                odds_batch("2026-09-09T17:00:00Z", 1.8, 2.1), "2026-09-09T17:01:00Z")
+            report = build_report([forecast_path], market_path)
+            paired = [row for row in report["rows"] if row["lock_market"] is not None]
+            self.assertEqual([(row["competition"], row["fixture_id"]) for row in paired], [("NFL", "game-1")])
+
+    def test_reversed_orientation_is_excluded(self):
+        with tempfile.TemporaryDirectory() as directory:
+            forecast_path = Path(directory) / "forecasts.jsonl"
+            market_path = Path(directory) / "markets.jsonl"
+            forecast_ledger.sync_pick_records(forecast_path, [pick_record()], "NFL")
+            payload = odds_batch("2026-09-09T17:00:00Z", 1.8, 2.1)
+            participants = payload["snapshots"][0]["participants"]
+            participants["home"], participants["away"] = participants["away"], participants["home"]
+            market_snapshots.append_batch(market_path, payload, "2026-09-09T17:01:00Z")
+            report = build_report([forecast_path], market_path)
+            self.assertIsNone(report["rows"][0]["lock_market"])
+            self.assertEqual(report["coverage"]["orientation_mismatches_excluded"], 1)
 
 
 if __name__ == "__main__":

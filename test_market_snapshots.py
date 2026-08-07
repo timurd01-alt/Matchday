@@ -11,6 +11,8 @@ def batch(outcomes=None, observed_at="2026-09-09T14:55:00Z"):
             "source_reference": "provider-contract:odds", "fetched_at": "2026-09-09T15:00:00Z",
             "snapshots": [{"fixture_id": "game-1", "competition": "NFL",
                 "kickoff": "2026-09-10T00:20:00Z", "observed_at": observed_at,
+                "participants": {"home": {"id": "A", "name": "Alpha"},
+                                 "away": {"id": "B", "name": "Beta"}},
                 "market_type": "moneyline", "odds_format": "decimal",
                 "outcomes": outcomes or {"h": 1.8, "a": 2.1}, "source_snapshot_id": "odds-1"}]}
 
@@ -46,6 +48,12 @@ class MarketSnapshotTests(unittest.TestCase):
             append_batch(self.path, batch(), "2026-09-10T00:21:00Z")
         payload = batch(); payload["source"] = "ESPN odds"
         with self.assertRaisesRegex(ValueError, "ESPN-origin"):
+            append_batch(self.path, payload, "2026-09-09T15:01:00Z")
+
+    def test_rejects_ambiguous_orientation(self):
+        payload = batch()
+        payload["snapshots"][0]["participants"]["away"]["id"] = "A"
+        with self.assertRaisesRegex(ValueError, "must differ"):
             append_batch(self.path, payload, "2026-09-09T15:01:00Z")
 
     def test_tampering_breaks_hash_chain(self):

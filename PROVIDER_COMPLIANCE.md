@@ -1,5 +1,12 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-08-07 (market-comparison hardening adds no provider or endpoint.
+Authorized The Odds API consensus snapshots now retain exact competition, fixture,
+kickoff, home/away orientation, source receipt, and observed/recorded timestamps in
+the existing append-only research ledger. Legacy unordered pair-cache entries and
+post-lock quotes are excluded from the official same-time benchmark. Closing quotes
+remain a separately labeled diagnostic and cannot alter a locked forecast.)
+
 Reviewed: 2026-08-03 (sport-aware pregame context and a disabled-by-default SportsDataIO
 overlay; activation requires a live public-redistribution agreement and endpoint coverage.
 Advanced-metrics shadow expansion: nflverse `pbp` CC BY 4.0 only,
@@ -8,6 +15,14 @@ event downloads with its mandatory prominent notice before any transfer/publicat
 basketball box-score normalization, and CFBD `/stats/season/advanced`; ESPN-origin releases remain
 excluded and NHL is explicitly outside this expansion. Generated profiles do not change production
 picks. The first CFBD advanced refresh returned HTTP 429 and correctly remained unavailable.)
+
+Reviewed: 2026-08-03 (the disabled-by-default Matchday Terminal X publisher adds a new
+distribution surface but no provider, endpoint, scrape, raw payload, odds line, news text,
+player data, or third-party mark. Prediction copy is derived only from Matchday's verified,
+immutable pregame receipt after the same integrity gate used for grading; legacy,
+quarantined, mutable, graded, and post-kickoff records are excluded. The publisher links
+back to Matchday, uses X's official API, keeps credentials private, and makes no claim of
+league affiliation, certainty, betting advice, or provider authorship.)
 
 NFL challenger review: the 2021–2025 training corpus uses only the same nflverse `pbp` release
 family already approved above. Source file hashes are embedded in every reconstructed training row

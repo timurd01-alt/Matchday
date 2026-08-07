@@ -73,6 +73,21 @@ class ModelInputTests(unittest.TestCase):
         self.assertGreaterEqual(thin_split, 0.30)
         self.assertLessEqual(deep_tight, 0.60)
 
+    def test_market_comparison_requires_quote_observed_by_lock(self):
+        base = {"market_snapshot": {"h": 60, "a": 40},
+                "locked_at": "2026-09-09T18:00:00Z",
+                "kickoff": "2026-09-10T00:20:00Z"}
+        valid = dict(base, market_snapshot_receipt={
+            "observed_at": "2026-09-09T17:59:00Z",
+            "recorded_at": "2026-09-09T18:00:00Z"})
+        self.assertTrue(fetch_data._lock_market_comparable(valid))
+        late = dict(base, market_snapshot_receipt={
+            "observed_at": "2026-09-09T18:00:01Z",
+            "recorded_at": "2026-09-09T18:00:01Z"})
+        self.assertFalse(fetch_data._lock_market_comparable(late))
+        backfilled = dict(valid, market_backfilled_at="2026-09-09T19:00:00Z")
+        self.assertFalse(fetch_data._lock_market_comparable(backfilled))
+
     def setUp(self):
         self.old_key = fetch_data.COMP_KEY
         self.old_comp = fetch_data.COMP

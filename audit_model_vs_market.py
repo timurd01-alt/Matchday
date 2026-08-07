@@ -1,61 +1,16 @@
-"""Independent calibration check: Matchday's own model probability vs. an
-outside reference (cached consensus market odds, or AP-style polls where no
-market exists), for every currently-live competition except NHL (disabled
-this session).
+"""Official same-fixture, same-horizon model-versus-market audit.
 
-This is an AUDIT / validation tool, not a feature. It is deliberately kept
-out of build()/main() and does not write anything back into data_*.json,
-picks_log_*.json, or any file the live site reads. Nothing it prints is
-displayed on the site.
-
-Why this exists
-----------------
-The user asked for the model's predictions to be checked against an
-independent predictor as a calibration sanity-check. The Odds API's match-
-level odds account is quota-exhausted (confirmed live: HTTP 401
-OUT_OF_USAGE_CREDITS, x-requests-remaining: 0, checked on the day of this
-audit), so this script uses whatever "opening odds" snapshots are already
-cached on disk (odds_open_<comp>.json), captured before the quota ran out.
-ESPN is never used, in any form, per the standing rule in
-PROVIDER_COMPLIANCE.md.
-
-Methodology / leakage guard
-----------------------------
-- Only UPCOMING fixtures are compared. Comparing a FINISHED match's model
-  output against a cached pre-kickoff market snapshot would silently feed
-  the model *today's* team stats (which include every game played since,
-  for an in-season sport) into what's supposed to be a pre-game prediction
-  -- exactly the kind of post-event recomputation leakage this audit exists
-  to catch. Competitions whose only cached matches are already FINISHED
-  (NCAAM, UCL -- both off-season right now) are reported as "could not
-  verify" instead of silently backtested with leaky inputs.
-- The model side is recomputed fresh via fetch_data.predict(home, away, {},
-  m) with an explicitly empty markets dict, so the returned "model" field
-  is guaranteed pre-market-blend (the model's own judgment), never
-  something already partly derived from a market. The site's own cached
-  "prediction" field is NOT trusted here, because data_*.json's mtimes
-  predate this session's four predict()/_upset_adjustment() fixes -- this
-  script always reflects current fetch_data.py.
-- The market side is the cached odds_open_<comp>.json snapshot, matched by
-  fetch_data.pairkey(home, away) (falls back to a fuzzy name match the same
-  way fetch_data.find_odds does). The "last" sub-snapshot is preferred (the
-  most recently observed odds before the account ran dry); the top-level
-  entry (first-seen "opening" odds) is used when "last" is absent.
-- For NCAAF/NCAAM, where no match-level odds cache exists at all, AP-poll
-  rank (m['home']/m['away']['model_rank'], sourced live from CFBD/CBBD --
-  not ESPN) is used as a secondary independent reference: does the model
-  favor the higher-ranked (lower number) team when exactly one side is
-  ranked, or the better-ranked side when both are?
-
-Usage
------
-    python audit_model_vs_market.py            # all in-scope competitions
-    python audit_model_vs_market.py NFL MLB     # just these
+Only immutable forecast locks and authorized v2 market-ledger snapshots are
+eligible. The legacy unordered ``odds_open_*.json`` cache is deliberately
+excluded because it cannot prove fixture identity or home/away orientation.
+This read-only command delegates scoring to :mod:`market_benchmark`.
 """
 import json
 import sys
+from pathlib import Path
 
 import fetch_data as fd
+import market_benchmark
 
 # WC/UCL/EPL/LALIGA/SERIEA/BUNDESLIGA/LIGUE1/NFL/NCAAF/NCAAM/NBA/MLB per the
 # explicit scope handed down this session. NHL is being disabled from the
@@ -236,41 +191,33 @@ def summarize_poll(comp, results):
     return {"comp": comp, "n": n, "agree": agree}
 
 
+# Kept as explicit tombstones for callers of the former cache-based API. The
+# unordered pair cache cannot safely identify a fixture or outcome orientation.
+def check_market_comp(comp):
+    raise RuntimeError("legacy cache-based market audit retired; use market_benchmark")
+
+
+def check_poll_comp(comp):
+    raise RuntimeError("recomputed poll comparison retired; use frozen forecast receipts")
+
+
 def main():
     only = set(a.upper() for a in sys.argv[1:]) or None
-    market_summaries, poll_summaries, skipped = [], [], []
-    for comp in COMPS:
-        if only and comp not in only:
-            continue
-        results, reason = check_market_comp(comp)
-        if reason:
-            # NCAAF/NCAAM specifically have a poll-based fallback; try it
-            # before giving up on the competition entirely.
-            if comp in ("NCAAF", "NCAAM"):
-                poll_results, poll_reason = check_poll_comp(comp)
-                if poll_reason:
-                    skipped.append((comp, f"{reason}; poll fallback also unavailable: {poll_reason}"))
-                else:
-                    print(f"\n[{comp}] no usable match-level odds cache ({reason}); "
-                          f"falling back to AP-poll-rank comparison")
-                    poll_summaries.append(summarize_poll(comp, poll_results))
-                continue
-            skipped.append((comp, reason))
-            continue
-        market_summaries.append(summarize(comp, results))
-
-    print("\n" + "=" * 70)
-    print("SUMMARY")
-    print("=" * 70)
-    for s in market_summaries:
-        print(f"  {s['comp']:10s} n={s['n']:4d}  MAD={s['mad']:5.1f}pts  "
-              f"favorite-disagree={s['disagree']}/{s['n']}  lopsided-disagree={s['lopsided_disagree']}")
-    for s in poll_summaries:
-        print(f"  {s['comp']:10s} n={s['n']:4d}  poll-agree={s['agree']}/{s['n']} (rank-based, no market)")
-    if skipped:
-        print("\nCould not verify (no leak-free comparison possible right now):")
-        for comp, reason in skipped:
-            print(f"  {comp:10s} -- {reason}")
+    market_path = Path("market_snapshot_ledger.jsonl")
+    forecast_paths = sorted(Path(".").glob("forecast_ledger_*.jsonl"))
+    if only:
+        forecast_paths = [path for path in forecast_paths
+                          if path.stem.removeprefix("forecast_ledger_").upper() in only]
+    if not market_path.exists() or not forecast_paths:
+        print("No official model-versus-market result is available.")
+        print("The legacy odds_open_<competition>.json pair cache is intentionally excluded: "
+              "it has no fixture-safe identity or reliable home/away orientation.")
+        print("Collect timestamped v2 market snapshots and verified forecast-ledger locks first.")
+        return
+    report = market_benchmark.build_report(forecast_paths, market_path)
+    print("Official same-fixture benchmark (independent model probabilities only)")
+    print(json.dumps({"coverage": report["coverage"],
+                      "comparisons": report["comparisons"]}, indent=2, sort_keys=True))
 
 
 if __name__ == "__main__":

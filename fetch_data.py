@@ -26,6 +26,7 @@ import forecast_ledger
 import market_snapshots
 import pregame_context
 import provider_quota
+from pick_integrity import is_official_pick_record
 from advanced_metrics_store import attach_shadow_profiles
 from mlb_challenger_store import attach_mlb_challenger_shadows
 from mlb_model_promotion import apply_mlb_promotion, load_mlb_promotion_policy
@@ -4109,31 +4110,15 @@ def _lock_decision(match, now=None):
 
 
 def _record_is_official(rec):
-    try:
-        lead = float(rec.get("lead_time_seconds"))
-    except (TypeError, ValueError):
-        return False
-    locked_at = _parse_kickoff(rec.get("locked_at"))
-    kickoff = _parse_kickoff(rec.get("kickoff"))
-    if locked_at is None or kickoff is None:
-        return False
-    calculated_lead = (kickoff - locked_at).total_seconds()
-    # Records created before sport-aware lock windows retain the historically
-    # published 12-hour boundary; new records freeze their own window.
-    try:
-        lock_hours = float(rec.get("lock_window_hours", LOCK_WINDOW_HOURS))
-    except (TypeError, ValueError):
-        return False
-    return bool(rec.get("schema_ver") == PICK_SCHEMA_VERSION
-                and rec.get("model_code_marker") == MODEL_CODE_MARKER
-                and rec.get("fixture_id")
-                and rec.get("integrity_eligible") is True
-                and rec.get("integrity_status") == "verified"
-                and rec.get("status_at_lock") == "UPCOMING"
-                and 0 <= lead <= lock_hours * 3600
-                and abs(calculated_lead - lead) <= 1.0
-                and isinstance(rec.get("prediction_snapshot"), dict)
-                and isinstance(rec.get("input_snapshot"), dict))
+    # Keep grading and every downstream publisher on one integrity boundary.
+    # Historical receipts without a frozen sport-aware window retain the
+    # original 12-hour default through this shared validator.
+    return is_official_pick_record(
+        rec,
+        schema_version=PICK_SCHEMA_VERSION,
+        model_code_marker=MODEL_CODE_MARKER,
+        default_lock_window_hours=LOCK_WINDOW_HOURS,
+    )
 
 
 def _quarantine_legacy_records(picks):
@@ -4243,6 +4228,87 @@ def _market_fields(pr, mk):
     return market_pick, market_pct, value_side, value_edge, value_mkt
 
 
+def _market_snapshot_receipt(market, recorded_at):
+    """Return a same-lock receipt only when quote time is provably pre-lock."""
+    if not isinstance(market, dict) or market.get("home_pct") is None:
+        return None
+    observed_at = market.get("observed_at")
+    observed = _parse_kickoff(observed_at)
+    recorded = _parse_kickoff(recorded_at)
+    if observed is None or recorded is None or observed > recorded:
+        return None
+    return {
+        "source": "The Odds API consensus",
+        "observed_at": observed_at,
+        "recorded_at": recorded_at,
+        "snapshot_id": market.get("snapshot_id"),
+        "books": market.get("books"),
+        "spread": market.get("spread"),
+    }
+
+
+def _lock_market_comparable(rec):
+    """True only for a market quote captured no later than this forecast lock."""
+    if not isinstance(rec, dict) or not isinstance(rec.get("market_snapshot"), dict):
+        return False
+    receipt = rec.get("market_snapshot_receipt") or {}
+    observed = _parse_kickoff(receipt.get("observed_at") or rec.get("market_snapshot_at"))
+    recorded = _parse_kickoff(receipt.get("recorded_at") or rec.get("market_snapshot_recorded_at")
+                              or rec.get("locked_at"))
+    locked = _parse_kickoff(rec.get("locked_at"))
+    kickoff = _parse_kickoff(rec.get("kickoff"))
+    return bool(observed and recorded and locked and kickoff
+                and observed <= recorded <= locked < kickoff
+                and not rec.get("market_backfilled_at"))
+
+
+def _closing_market_from_ledger(rec, path="market_snapshot_ledger.jsonl"):
+    """Latest pre-kickoff v2 market consensus for this exact oriented fixture."""
+    try:
+        snapshots = market_snapshots.fixture_snapshots(
+            path, rec.get("fixture_id"), rec.get("kickoff"), rec.get("competition") or COMP_KEY)
+    except (OSError, ValueError):
+        return None, None
+    kickoff = _parse_kickoff(rec.get("kickoff"))
+    eligible = []
+    for snapshot in snapshots:
+        participants = snapshot.get("participants") or {}
+        if snapshot.get("schema_version") != market_snapshots.SCHEMA_VERSION:
+            continue
+        if str((participants.get("home") or {}).get("name") or "") != str(rec.get("home") or ""):
+            continue
+        if str((participants.get("away") or {}).get("name") or "") != str(rec.get("away") or ""):
+            continue
+        observed = _parse_kickoff(snapshot.get("observed_at"))
+        recorded = _parse_kickoff(snapshot.get("recorded_at"))
+        if not kickoff or not observed or not recorded or observed >= kickoff or recorded >= kickoff:
+            continue
+        eligible.append(snapshot)
+    if not eligible:
+        return None, None
+    latest_by_source = {}
+    for snapshot in eligible:
+        source = str(snapshot.get("source") or "unknown")
+        current = latest_by_source.get(source)
+        marker = (snapshot.get("observed_at"), snapshot.get("recorded_at"), snapshot.get("event_id"))
+        if current is None or marker > (current.get("observed_at"), current.get("recorded_at"), current.get("event_id")):
+            latest_by_source[source] = snapshot
+    selected = list(latest_by_source.values())
+    outcomes = set((selected[0].get("no_vig_probabilities") or {}).keys())
+    selected = [snapshot for snapshot in selected
+                if set((snapshot.get("no_vig_probabilities") or {}).keys()) == outcomes]
+    if not selected:
+        return None, None
+    probabilities = {side: round(sum(float(snapshot["no_vig_probabilities"][side])
+                                          for snapshot in selected) / len(selected) * 100, 3)
+                     for side in outcomes}
+    receipt = {"sources": sorted(str(snapshot.get("source") or "unknown") for snapshot in selected),
+               "source_count": len(selected),
+               "event_ids": [snapshot.get("event_id") for snapshot in selected],
+               "observed_at": [snapshot.get("observed_at") for snapshot in selected]}
+    return probabilities, receipt
+
+
 def _make_pick_record(match, prediction, market, decision, history=()):
     # This is the fixture's live prediction object. Mark it in place so the
     # UI and the immutable snapshot agree during the same build pass.
@@ -4265,6 +4331,7 @@ def _make_pick_record(match, prediction, market, decision, history=()):
     regulation = prediction.get("regulation_probs") or probs
     comparison_pick = prediction.get("regulation_pick") or prediction.get("pick")
     locked_at = decision["locked_at"].isoformat().replace("+00:00", "Z")
+    market_receipt = _market_snapshot_receipt(market, locked_at)
     rec = {
         "schema_ver": PICK_SCHEMA_VERSION,
         "fixture_id": str(match.get("id")),
@@ -4293,7 +4360,9 @@ def _make_pick_record(match, prediction, market, decision, history=()):
         "factor_snapshot": {k: round(float(v), 2) for k, v in (prediction.get("why") or {}).items()},
         "market_snapshot": ({"h": market.get("home_pct"), "d": market.get("draw_pct"), "a": market.get("away_pct")}
                             if market.get("home_pct") is not None else None),
-        "market_snapshot_at": locked_at if market.get("home_pct") is not None else None,
+        "market_snapshot_at": (market_receipt or {}).get("observed_at"),
+        "market_snapshot_recorded_at": locked_at if market.get("home_pct") is not None else None,
+        "market_snapshot_receipt": market_receipt,
         "market_gap": upset.get("market_gap_pct"),
         "upset_snapshot": {"candidate": upset.get("candidate_name"),
                            "class": upset.get("upset_class"),
@@ -4597,6 +4666,10 @@ def update_scorecard(matches):
             rec["value_name"] = ({"h": rec["home"], "a": rec["away"], "d": "Draw"}.get(value_side) if value_side else None)
             rec["post_lock_market_snapshot"] = {"h": mk.get("home_pct"), "d": mk.get("draw_pct"), "a": mk.get("away_pct")}
             rec["market_backfilled_at"] = _utc_now().isoformat().replace("+00:00", "Z")
+            rec["post_lock_market_receipt"] = {
+                "source": "The Odds API consensus", "observed_at": mk.get("observed_at"),
+                "recorded_at": rec["market_backfilled_at"], "snapshot_id": mk.get("snapshot_id"),
+                "books": mk.get("books"), "spread": mk.get("spread")}
             dirty = True
         elif m.get("status") == "FINISHED" and mid in picks and picks[mid].get("result") is not None:
             # Keep previously graded picks aligned with the split settlement rule:
@@ -4627,10 +4700,13 @@ def update_scorecard(matches):
             _refresh_record_result(rec, sc_obj)
             _apply_scorecard_grade(rec, model_res, market_res)
             # closing-line value: did the market move toward our pick after we locked it?
-            close = (_load_open().get(pairkey(rec["home"], rec["away"])) or {}).get("last")
+            close, close_receipt = _closing_market_from_ledger(rec)
             comparison_pick = rec.get("regulation_pick") or rec.get("pick")
-            if close and rec.get("pick_mkt") is not None and comparison_pick in ("h", "d", "a"):
+            if (_lock_market_comparable(rec) and close and rec.get("pick_mkt") is not None
+                    and comparison_pick in ("h", "d", "a")):
                 rec["clv"] = round(close[comparison_pick] - rec["pick_mkt"], 1)
+                rec["closing_market_snapshot"] = close
+                rec["closing_market_receipt"] = close_receipt
             dirty = True
     # Regrade every stored version of a provider-present fixture, including a
     # quarantined legacy entry that was moved out of the active fixture key.
@@ -4710,8 +4786,9 @@ def update_scorecard(matches):
     quarantined = [p for p in picks.values() if not _record_is_official(p)]
     graded = [p for p in official if p.get("result")]
     legacy_graded = [p for p in quarantined if p.get("result")]
-    mk_graded = [p for p in graded if p.get("market_hit") is not None]
-    disagree = [p for p in graded if p.get("market_pick") and p.get("pick") != p.get("market_pick")]
+    mk_graded = [p for p in graded if p.get("market_hit") is not None and _lock_market_comparable(p)]
+    later_market_graded = [p for p in graded if p.get("market_hit") is not None and not _lock_market_comparable(p)]
+    disagree = [p for p in mk_graded if p.get("market_pick") and p.get("pick") != p.get("market_pick")]
     rows = []
     for source in sorted(picks.values(), key=lambda p: p.get("kickoff") or "", reverse=True):
         row = _json_safe(source)
@@ -4749,7 +4826,7 @@ def update_scorecard(matches):
     favorite_underdog = {"favorite": {"n": len(favorite_picks), "hits": sum(1 for p in favorite_picks if p.get("model_hit"))},
                          "underdog": {"n": len(underdog_picks), "hits": sum(1 for p in underdog_picks if p.get("model_hit"))}}
     clvs = [p["clv"] for p in graded if p.get("clv") is not None]
-    vals = [p for p in graded if p.get("value_side")]
+    vals = [p for p in mk_graded if p.get("value_side")]
     chances = [p for p in vals if p.get("value_side") != p.get("pick")]
     def _vs(grp):
         return {"n": len(grp), "hits": sum(1 for p in grp if p.get("value_hit")),
@@ -4813,6 +4890,8 @@ def update_scorecard(matches):
                        "market_hits": sum(1 for p in legacy_market if p.get("market_hit"))},
             "market_graded": len(mk_graded),
             "market_hits": sum(1 for p in mk_graded if p.get("market_hit")),
+            "post_lock_market_graded": len(later_market_graded),
+            "post_lock_market_hits": sum(1 for p in later_market_graded if p.get("market_hit")),
             "disagree": len(disagree),
             "disagree_hits": sum(1 for p in disagree if p.get("model_hit")),
             "brier": round(sum(briers)/len(briers), 3) if briers else None,
@@ -5707,6 +5786,12 @@ def record_market_snapshots(matches):
         snapshots.append({
             "fixture_id": str(match.get("id")), "competition": COMP_KEY,
             "kickoff": match.get("kickoff"), "observed_at": observed_at,
+            "participants": {
+                "home": {"id": str((match.get("home") or {}).get("code") or norm((match.get("home") or {}).get("name"))),
+                         "name": (match.get("home") or {}).get("name")},
+                "away": {"id": str((match.get("away") or {}).get("code") or norm((match.get("away") or {}).get("name"))),
+                         "name": (match.get("away") or {}).get("name")},
+            },
             "market_type": "1x2" if len(keys) == 3 else "moneyline",
             "odds_format": "probability",
             "outcomes": {key: float(market[source_keys[key]]) / 100.0 for key in keys},
