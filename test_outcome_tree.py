@@ -33,6 +33,17 @@ class OutcomeTreeStaticTests(unittest.TestCase):
         for profile in profiles:
             self.assertIn("'tree'", profile)
 
+    def test_sandbox_is_hidden_from_all_sports_only(self):
+        core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
+        nav_block = core.split("const NAV_DEF={", 1)[1].split("};", 1)[0]
+        profiles = {
+            line.split(":", 1)[0].strip(): line
+            for line in nav_block.splitlines()
+            if ":[" in line.replace(" ", "")
+        }
+        self.assertNotIn("'sandbox'", profiles["all"])
+        self.assertIn("'sandbox'", profiles["us_sport"])
+
     def test_renderer_and_disclosures_are_present(self):
         panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
         tree = (ROOT / "app-5-outcome-tree.js").read_text(encoding="utf-8")

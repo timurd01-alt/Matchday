@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0807C",
+  "tag": "Fix",
+  "title": "All Sports navigation drops the dead-end sandbox",
+  "items": [
+   "Removed the Sandbox tab from the combined All Sports view, where merged standings are unavailable and the page could only ask visitors to select a sport.",
+   "The simulator remains available after selecting a supported competition, and its shared model utilities continue to power bracket simulations."
+  ]
+ },
+ {
   "date": "Build 0807B",
   "tag": "Fix",
   "title": "Model-versus-market scorecard now compares like with like",
