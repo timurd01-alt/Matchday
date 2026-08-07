@@ -16,6 +16,14 @@ basketball box-score normalization, and CFBD `/stats/season/advanced`; ESPN-orig
 excluded and NHL is explicitly outside this expansion. Generated profiles do not change production
 picks. The first CFBD advanced refresh returned HTTP 429 and correctly remained unavailable.)
 
+Reviewed: 2026-08-03 (the disabled-by-default Matchday Terminal X publisher adds a new
+distribution surface but no provider, endpoint, scrape, raw payload, odds line, news text,
+player data, or third-party mark. Prediction copy is derived only from Matchday's verified,
+immutable pregame receipt after the same integrity gate used for grading; legacy,
+quarantined, mutable, graded, and post-kickoff records are excluded. The publisher links
+back to Matchday, uses X's official API, keeps credentials private, and makes no claim of
+league affiliation, certainty, betting advice, or provider authorship.)
+
 NFL challenger review: the 2021–2025 training corpus uses only the same nflverse `pbp` release
 family already approved above. Source file hashes are embedded in every reconstructed training row
 and model artifact. ESPN-origin releases remain excluded. Generated rows, fitted artifacts, and

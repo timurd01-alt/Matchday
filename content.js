@@ -166,11 +166,11 @@
     return links.slice(0,4);
   }
 
-  function primaryLabel(item){return item.badgeType==='availability'?'Read tracker':item.badgeType==='ranking'?'Read rankings':item.badgeType==='simulation'?'Read simulation':item.type==='preview'?'Read preview':item.type==='recap'?'Read recap':'Read explainer'}
+  function primaryLabel(item){return item.badgeType==='availability'?'Read tracker':item.badgeType==='ranking'?'Read rankings':item.badgeType==='simulation'?'Read simulation':item.badgeType==='market-audit'?'Read market audit':item.type==='preview'?'Read preview':item.type==='recap'?'Read recap':'Read explainer'}
 
   function typeBadge(type){
-    const label=type==='availability'?'Availability':type==='ranking'?'Rankings':type==='simulation'?'Simulation':type==='preview'?'Preview':type==='recap'?'Recap':'Learn';
-    return `<span class="typeBadge type${label}">${label}</span>`;
+    const label=type==='availability'?'Availability':type==='ranking'?'Rankings':type==='simulation'?'Simulation':type==='market-audit'?'Market audit':type==='preview'?'Preview':type==='recap'?'Recap':'Learn';
+    return `<span class="typeBadge type${label.replace(/\s+/g,'')}">${label}</span>`;
   }
 
   function itemSearchText(item){
@@ -276,11 +276,11 @@
   function buildPostItems(){
     return posts.map(post=>{
       const meta=compMeta(post.comp),words=(Array.isArray(post.body)?post.body.join(' '):'').split(/\s+/).filter(Boolean).length;
-      const isRanking=post.type==='ranking',isAvailability=post.type==='availability',isSimulation=post.type==='simulation';
-      return {id:`post-${post.id||post.slug}`,type:'recap',badgeType:isAvailability?'availability':isRanking?'ranking':isSimulation?'simulation':null,sports:[meta.sport],comp:meta.key,compLabel:post.comp_label||meta.label,
-        title:post.title||`${meta.label} model recap`,summary:post.summary||'The latest locked-pick model recap.',takeaway:isAvailability?'A sourced status check that separates confirmed news from what the current feed cannot establish.':isRanking?'A current ordering, its opening-fixture context, and the limits of the available evidence.':isSimulation?'A clearly labeled fictional scenario with fixed inputs, sensitivity cases, and no forecast claim.':'A weekly review of the calls, misses, and calibration lessons.',
+      const isRanking=post.type==='ranking',isAvailability=post.type==='availability',isSimulation=post.type==='simulation',isMarketAudit=post.type==='market-audit';
+      return {id:`post-${post.id||post.slug}`,type:'recap',badgeType:isAvailability?'availability':isRanking?'ranking':isSimulation?'simulation':isMarketAudit?'market-audit':null,sports:[meta.sport],comp:meta.key,compLabel:post.comp_label||meta.label,
+        title:post.title||`${meta.label} model recap`,summary:post.summary||'The latest locked-pick model recap.',takeaway:isAvailability?'A sourced status check that separates confirmed news from what the current feed cannot establish.':isRanking?'A current ordering, its opening-fixture context, and the limits of the available evidence.':isSimulation?'A clearly labeled fictional scenario with fixed inputs, sensitivity cases, and no forecast claim.':isMarketAudit?'A quality-gated comparison that states plainly when current market evidence is too thin to publish.':'A weekly review of the calls, misses, and calibration lessons.',
         updated:`${post.date||''}T12:00:00Z`,dataUpdated:`${post.date||''}T12:00:00Z`,sortTime:timestamp(`${post.date||''}T12:00:00Z`),minutes:Math.max(3,Math.ceil(words/180)),
-        url:`posts/${encodeURIComponent(post.slug||post.id||'')}.html`,resultLabel:isAvailability?'Availability desk':isRanking?'Ranked list':isSimulation?'Simulation':'Weekly recap'};
+        url:`posts/${encodeURIComponent(post.slug||post.id||'')}.html`,resultLabel:isAvailability?'Availability desk':isRanking?'Ranked list':isSimulation?'Simulation':isMarketAudit?'Market audit':'Weekly recap'};
     });
   }
 

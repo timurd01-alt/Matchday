@@ -26,6 +26,7 @@ import forecast_ledger
 import market_snapshots
 import pregame_context
 import provider_quota
+from pick_integrity import is_official_pick_record
 from advanced_metrics_store import attach_shadow_profiles
 from mlb_challenger_store import attach_mlb_challenger_shadows
 from mlb_model_promotion import apply_mlb_promotion, load_mlb_promotion_policy
@@ -4109,31 +4110,15 @@ def _lock_decision(match, now=None):
 
 
 def _record_is_official(rec):
-    try:
-        lead = float(rec.get("lead_time_seconds"))
-    except (TypeError, ValueError):
-        return False
-    locked_at = _parse_kickoff(rec.get("locked_at"))
-    kickoff = _parse_kickoff(rec.get("kickoff"))
-    if locked_at is None or kickoff is None:
-        return False
-    calculated_lead = (kickoff - locked_at).total_seconds()
-    # Records created before sport-aware lock windows retain the historically
-    # published 12-hour boundary; new records freeze their own window.
-    try:
-        lock_hours = float(rec.get("lock_window_hours", LOCK_WINDOW_HOURS))
-    except (TypeError, ValueError):
-        return False
-    return bool(rec.get("schema_ver") == PICK_SCHEMA_VERSION
-                and rec.get("model_code_marker") == MODEL_CODE_MARKER
-                and rec.get("fixture_id")
-                and rec.get("integrity_eligible") is True
-                and rec.get("integrity_status") == "verified"
-                and rec.get("status_at_lock") == "UPCOMING"
-                and 0 <= lead <= lock_hours * 3600
-                and abs(calculated_lead - lead) <= 1.0
-                and isinstance(rec.get("prediction_snapshot"), dict)
-                and isinstance(rec.get("input_snapshot"), dict))
+    # Keep grading and every downstream publisher on one integrity boundary.
+    # Historical receipts without a frozen sport-aware window retain the
+    # original 12-hour default through this shared validator.
+    return is_official_pick_record(
+        rec,
+        schema_version=PICK_SCHEMA_VERSION,
+        model_code_marker=MODEL_CODE_MARKER,
+        default_lock_window_hours=LOCK_WINDOW_HOURS,
+    )
 
 
 def _quarantine_legacy_records(picks):
