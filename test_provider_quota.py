@@ -116,6 +116,15 @@ class QuotaModuleTests(unittest.TestCase):
                            state_path=self.path)
         pq.check("balldontlie", state_path=self.path)
 
+    def test_bigballs_uses_observed_unix_reset_bucket(self):
+        future = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(minutes=1)
+        pq.record_response("bigballs",
+                           {"x-ratelimit-limit": "100", "x-ratelimit-remaining": "2",
+                            "x-ratelimit-reset": str(int(future.timestamp()))},
+                           state_path=self.path)
+        with self.assertRaises(pq.QuotaExceededError):
+            pq.check("bigballs", state_path=self.path)
+
     # ---- API-Football: two independent buckets from one response ------
     def test_api_football_tracks_minute_and_day_independently(self):
         pq.record_response("api_football",

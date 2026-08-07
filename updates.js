@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0807E",
+  "tag": "Data",
+  "title": "Pregame injury coverage now fails closed",
+  "items": [
+   "A quota-safe NBA/NHL injury adapter is ready, with team matching and expected-return filtering that prevents expired reports from affecting a future fixture.",
+   "The new feed remains disabled until its upstream injury source is identified and verified against Matchday's provider rules; a configured API key alone cannot activate it.",
+   "Unsupported lineup, starter, bullpen, NFL, college, soccer, and MLB personnel fields remain honestly marked missing instead of being cleared from provider marketing claims."
+  ]
+ },
+ {
   "date": "Build 0807D",
   "tag": "Fix",
   "title": "Metric help now opens reliably on mobile",

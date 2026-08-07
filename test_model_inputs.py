@@ -986,6 +986,18 @@ class ApiFootballInjuryPredictIntegrationTests(unittest.TestCase):
         # home's confirmed absence should tilt probability toward the away side
         self.assertGreater(pred_out["adjusted"]["a"], pred_q["adjusted"]["a"])
 
+    def test_injured_reserve_and_suspension_are_hard_absences(self):
+        home = {"name": "Alpha", "pts": 6, "gd": 2, "form": "W W"}
+        away = {"name": "Beta", "pts": 6, "gd": 2, "form": "W W"}
+        baseline = {"stage": "Final", "weather": {}, "injuries": {"home": [], "away": []}}
+        unavailable = {"stage": "Final", "weather": {},
+                       "injuries": {"home": ["One (Injured Reserve - Knee)",
+                                              "Two (Suspension - Suspension)"], "away": []}}
+        pred_base = fetch_data.predict(dict(home), dict(away), {}, baseline)
+        pred_out = fetch_data.predict(dict(home), dict(away), {}, unavailable)
+        self.assertIn("injuries", pred_out["why"])
+        self.assertGreater(pred_out["adjusted"]["a"], pred_base["adjusted"]["a"])
+
     def test_real_shaped_af_injuries_payload_feeds_predict_end_to_end(self):
         payload = {"response": [
             {"player": {"id": 1, "name": "Home Starter", "type": "Missing Fixture", "reason": "Injury"},
@@ -1000,6 +1012,31 @@ class ApiFootballInjuryPredictIntegrationTests(unittest.TestCase):
         pred = fetch_data.predict(home, away, {}, m)
         self.assertIn("injuries", pred["why"])
         self.assertGreater(pred["adjusted"]["a"], pred["adjusted"]["h"])
+
+
+class BigBallsOverlayGateTests(unittest.TestCase):
+    def test_key_alone_cannot_enable_unverified_injury_feed(self):
+        old_enabled, old_key, old_comp = (fetch_data.BBS_PREGAME_ENABLED,
+                                          fetch_data.BBS_API_KEY,
+                                          fetch_data.COMP_KEY)
+        try:
+            fetch_data.BBS_PREGAME_ENABLED = False
+            fetch_data.BBS_API_KEY = "configured-secret"
+            fetch_data.COMP_KEY = "NBA"
+            with mock.patch.object(fetch_data.BigBallsSportsAdapter,
+                                   "attach_availability") as attach:
+                result = fetch_data.fetch_bbs_pregame_overlay([{
+                    "id": "future", "status": "UPCOMING",
+                    "kickoff": "2099-01-01T00:00:00Z",
+                    "home": {"name": "Boston Celtics"},
+                    "away": {"name": "New York Knicks"},
+                }])
+            self.assertEqual(result, {"injuries": 0})
+            attach.assert_not_called()
+        finally:
+            fetch_data.BBS_PREGAME_ENABLED = old_enabled
+            fetch_data.BBS_API_KEY = old_key
+            fetch_data.COMP_KEY = old_comp
 
 
 class StandingsAndMarketUpsetRadarTests(unittest.TestCase):

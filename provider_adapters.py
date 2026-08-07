@@ -115,6 +115,11 @@ def is_placeholder_team_name(name):
     return " ".join(str(name or "").strip().lower().split()) in PLACEHOLDER_TEAM_NAMES
 
 
+def _team_identity(value):
+    """Provider-neutral team key for joining enrichment feeds to fixtures."""
+    return re.sub(r"[^a-z0-9]", "", str(value or "").lower())
+
+
 def _ordinal_period(n):
     """'3rd inning' not '3 0:00' -- BALLDONTLIE's free tier doesn't expose a
     reliable live clock for these sports, so show the period number in the
@@ -286,6 +291,138 @@ def blend_season_history(seasons):
             "multi_seasons": sorted(slot["multi_seasons"], reverse=True),
         }
     return out
+
+
+class BigBallsSportsAdapter:
+    """Verified free-tier pregame availability from Big Balls Sports Data.
+
+    The provider's current machine-readable coverage contract exposes active
+    injury reports for NBA and NHL only. Its marketing pages also mention
+    lineups in other sports, but the OpenAPI route explicitly reports that
+    lineup ingestion is not active yet, so this adapter must not manufacture
+    support for those inputs or mark them available.
+    """
+
+    BASE = "https://api.bigballsdata.com"
+    INJURY_SPORTS = {"NBA": "basketball", "NHL": "ice_hockey"}
+
+    def __init__(self, api_key, competition, getter=None):
+        if not api_key:
+            raise ProviderError("missing BBS_API_KEY")
+        if competition not in self.INJURY_SPORTS:
+            raise ProviderError(f"unsupported Big Balls injury competition: {competition}")
+        self.key = api_key
+        self.competition = competition
+        self.sport = self.INJURY_SPORTS[competition]
+        self.getter = getter or functools.partial(_get_json, provider="bigballs")
+
+    def _get(self, path, params=None):
+        url = self.BASE + path
+        if params:
+            url += "?" + urllib.parse.urlencode(params)
+        return self.getter(url, {
+            "Authorization": f"Bearer {self.key}",
+            "User-Agent": "Matchday/1.0",
+        })
+
+    def injury_report(self):
+        payload = self._get("/v1/injuries", {"sport": self.sport})
+        data = payload.get("data") if isinstance(payload, dict) else None
+        rows = data.get("injuries") if isinstance(data, dict) else data
+        return [row for row in (rows or []) if isinstance(row, dict)]
+
+    @staticmethod
+    def _return_date(row):
+        raw = row.get("return_date")
+        if not raw:
+            return None
+        try:
+            return dt.date.fromisoformat(str(raw)[:10])
+        except (TypeError, ValueError):
+            return None
+
+    @classmethod
+    def _relevant_for_match(cls, row, match_date):
+        status = str(row.get("status") or "").strip().lower()
+        if status in {"", "active", "healthy", "available", "unknown"}:
+            return False
+        expected_back = cls._return_date(row)
+        # A report whose own expected-return date is before the target game is
+        # historical context, not evidence that the player will miss the game.
+        return not (match_date and expected_back and expected_back < match_date)
+
+    @staticmethod
+    def _detail(row):
+        player = row.get("player") if isinstance(row.get("player"), dict) else {}
+        team = player.get("team") if isinstance(player.get("team"), dict) else {}
+        return {
+            "player_id": player.get("id"),
+            "name": str(player.get("name") or ""),
+            "status": str(row.get("status") or "Unavailable"),
+            "body_part": str(row.get("injury_type") or ""),
+            "return_date": row.get("return_date"),
+            "updated_at": _iso_utc(row.get("updated_at")),
+            "team_name": str(team.get("name") or ""),
+            "team_code": str(team.get("abbreviation") or ""),
+        }
+
+    def attach_availability(self, matches, rows=None, observed_at=None):
+        rows = self.injury_report() if rows is None else rows
+        fetched_at = observed_at or dt.datetime.now(dt.timezone.utc).isoformat().replace("+00:00", "Z")
+        by_team = {}
+        for row in rows:
+            detail = self._detail(row)
+            if not detail["name"]:
+                continue
+            for identifier in (detail["team_name"], detail["team_code"]):
+                key = _team_identity(identifier)
+                if key:
+                    by_team.setdefault(key, {})[detail["player_id"] or detail["name"].lower()] = (row, detail)
+
+        attached = 0
+        for match in matches:
+            try:
+                match_date = dt.datetime.fromisoformat(
+                    str(match.get("kickoff") or "").replace("Z", "+00:00")
+                ).date()
+            except (TypeError, ValueError):
+                match_date = None
+            personnel = match.setdefault("personnel", {})
+            personnel["injuries_feed_checked"] = True
+            personnel["injuries_confirmed"] = True
+            personnel["injuries_source"] = "Big Balls Sports Data"
+            injury_sides = match.setdefault("injuries", {"home": [], "away": []})
+            detail_sides = personnel.setdefault("injury_details", {"home": [], "away": []})
+            counts = {}
+            for side in ("home", "away"):
+                team = match.get(side) or {}
+                candidates = {}
+                for identifier in (team.get("name"), team.get("code")):
+                    candidates.update(by_team.get(_team_identity(identifier), {}))
+                details = [detail for row, detail in candidates.values()
+                           if self._relevant_for_match(row, match_date)]
+                details.sort(key=lambda item: (item["name"].lower(), item["status"].lower()))
+                existing = {str(item.get("player_id") or item.get("name") or "").lower()
+                            for item in detail_sides.get(side) or []}
+                for detail in details[:20]:
+                    identity = str(detail.get("player_id") or detail.get("name") or "").lower()
+                    if identity not in existing:
+                        detail_sides.setdefault(side, []).append(detail)
+                        existing.add(identity)
+                    label = detail["status"]
+                    if detail["body_part"]:
+                        label += f" - {detail['body_part']}"
+                    rendered = f"{detail['name']} ({label})"
+                    if rendered not in injury_sides.setdefault(side, []):
+                        injury_sides[side].append(rendered)
+                        attached += 1
+                counts[side] = len(details[:20])
+            match.setdefault("pregame_provenance", []).append({
+                "input": "injuries", "source": "Big Balls Sports Data",
+                "fetched_at": fetched_at, "confirmed": True,
+                "counts": counts,
+            })
+        return attached
 
 
 class SportsDataIOAdapter:

@@ -3,7 +3,8 @@ import unittest
 import urllib.parse
 from unittest import mock
 
-from provider_adapters import (BallDontLieAdapter, CollegeBasketballDataAdapter,
+from provider_adapters import (BallDontLieAdapter, BigBallsSportsAdapter,
+                               CollegeBasketballDataAdapter,
                                CollegeFootballDataAdapter, NflverseAdapter, ProviderError,
                                SportsDataIOAdapter, SportmonksAdapter, normalized_score)
 
@@ -28,6 +29,60 @@ class ScoreNormalizationTests(unittest.TestCase):
                          {"home": 20, "away": 20, "winner": "d"})
         self.assertEqual(normalized_score(27, 20, False),
                          {"home": 27, "away": 20})
+
+
+class BigBallsSportsTests(unittest.TestCase):
+    def setUp(self):
+        self.rows = [{
+            "player": {"id": "p1", "name": "Current Star",
+                       "team": {"name": "Boston Celtics", "abbreviation": "BOS"}},
+            "status": "Out", "injury_type": "Knee",
+            "return_date": "2026-12-01", "updated_at": "2026-10-20T12:00:00Z",
+        }, {
+            "player": {"id": "p2", "name": "Recovered Player",
+                       "team": {"name": "Boston Celtics", "abbreviation": "BOS"}},
+            "status": "Out", "injury_type": "Ankle",
+            "return_date": "2026-10-01", "updated_at": "2026-09-15T12:00:00Z",
+        }, {
+            "player": {"id": "p3", "name": "Away Doubt",
+                       "team": {"name": "New York Knicks", "abbreviation": "NYK"}},
+            "status": "Questionable", "injury_type": "Illness",
+            "return_date": None, "updated_at": "2026-10-20T12:00:00Z",
+        }]
+
+    def getter(self, url, headers):
+        self.assertIn("/v1/injuries?sport=basketball", url)
+        self.assertEqual(headers["Authorization"], "Bearer test-key")
+        return {"data": {"sport": "basketball", "injuries": self.rows}}
+
+    @staticmethod
+    def match():
+        return {"id": "game-1", "kickoff": "2026-10-25T23:00:00Z",
+                "home": {"name": "Boston Celtics", "code": "BOS"},
+                "away": {"name": "New York Knicks", "code": "NYK"},
+                "injuries": {"home": [], "away": []}}
+
+    def test_active_reports_attach_by_team_and_expired_return_is_excluded(self):
+        match = self.match()
+        count = BigBallsSportsAdapter("test-key", "NBA", getter=self.getter).attach_availability(
+            [match], observed_at="2026-10-20T12:00:00Z")
+        self.assertEqual(count, 2)
+        self.assertEqual(match["injuries"]["home"], ["Current Star (Out - Knee)"])
+        self.assertEqual(match["injuries"]["away"], ["Away Doubt (Questionable - Illness)"])
+        self.assertTrue(match["personnel"]["injuries_feed_checked"])
+        self.assertTrue(match["personnel"]["injuries_confirmed"])
+        self.assertEqual(match["pregame_provenance"][0]["source"], "Big Balls Sports Data")
+
+    def test_successful_empty_report_still_marks_feed_checked(self):
+        match = self.match()
+        adapter = BigBallsSportsAdapter("test-key", "NHL", getter=lambda *_: {"data": {"injuries": []}})
+        self.assertEqual(adapter.attach_availability([match]), 0)
+        self.assertTrue(match["personnel"]["injuries_feed_checked"])
+        self.assertFalse(any(match["injuries"].values()))
+
+    def test_unsupported_injury_sport_is_rejected_instead_of_faked(self):
+        with self.assertRaises(ProviderError):
+            BigBallsSportsAdapter("test-key", "MLB", getter=self.getter)
 
 
 class SportsDataIOTests(unittest.TestCase):

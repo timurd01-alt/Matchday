@@ -1,5 +1,16 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-08-07 (Big Balls Sports Data pregame adapter and quota handling are
+staged but disabled. The provider's terms page identifies itself as an initial draft
+with an effective date pending public launch; its public attribution page does not name
+the upstream source for the NBA/NHL injury feed, and its OpenAPI description says the
+gateway aggregates free-tier sources and scrapers while response provenance is an opaque
+source tier. That is insufficient to prove the injury rows are not ESPN-originated, so
+Matchday's standing ESPN exclusion prevents activation. The provider's machine-readable
+contract also says stored lineups are not ingested, despite broader marketing claims;
+MLB/soccer lineups, MLB injuries, starting pitchers, bullpens, NFL injuries, and college
+injuries remain explicitly missing. A configured key alone cannot enable this overlay.)
+
 Reviewed: 2026-08-07 (market-comparison hardening adds no provider or endpoint.
 Authorized The Odds API consensus snapshots now retain exact competition, fixture,
 kickoff, home/away orientation, source receipt, and observed/recorded timestamps in
@@ -213,6 +224,21 @@ Provider terms and tiers can change. Revisit the linked provider pages in
 record the review date here before each public release.
 
 ## Changelog
+
+- **2026-08-07:** Staged a disabled-by-default Big Balls Sports Data injury
+  adapter for the two competitions its active injury endpoint actually supports
+  (NBA and NHL). Normalization joins full team names/codes, drops a report when
+  its own expected-return date precedes the target fixture, records bounded
+  provenance, and lets only hard Out/Inactive/Injured Reserve/Suspension labels
+  enter the existing capped injury nudge. A 45-minute normalized cache and the
+  provider's observed `X-RateLimit-*` headers protect the free tier. Production
+  activation is blocked: the provider's terms are explicitly a pre-launch draft,
+  the attribution page omits the injury source, and response metadata does not
+  identify upstream vendors, so Matchday cannot enforce its absolute ESPN-origin
+  exclusion. The machine-readable OpenAPI contract also states lineup ingestion
+  is not active; no lineup, starter, bullpen, NFL, college, soccer, or MLB coverage
+  is fabricated from marketing copy. The configured key is retained privately,
+  but a key alone does not enable any request.
 
 - **2026-07-28:** Replaced the incomplete six-player UCL "Model-built XI" presentation with the
   organizer's published 2025/26 Team of the Season (11 names/teams/positions only), visibly
