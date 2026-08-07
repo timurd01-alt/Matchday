@@ -11,10 +11,16 @@ class AnalysisModeTests(unittest.TestCase):
         css = (ROOT / "styles.css").read_text(encoding="utf-8")
         self.assertIn('<button type="button" class="metricHelp"', core)
         self.assertIn("aria-expanded=\"false\"", core)
+        self.assertIn('aria-controls="metricHelpPopover"', core)
+        self.assertIn("function metricHelpPopover()", core)
+        self.assertIn("syncMetricHelpPopover(help,open)", core)
         self.assertIn("function closeMetricHelps(except)", core)
         self.assertIn("event.stopImmediatePropagation()", core)
+        self.assertIn("},true);", core)
         self.assertIn(".metricHelp.isOpen::after", css)
-        self.assertIn("position:fixed;left:12px;right:12px", css)
+        self.assertIn(".metricHelp::after{display:none!important}", css)
+        self.assertIn(".metricHelpPopover{position:fixed;display:block;left:12px;right:12px", css)
+        self.assertIn(".metricHelpPopover[hidden]{display:none}", css)
         self.assertIn("width:28px;height:28px", css)
 
     def test_sports_without_table_points_show_a_record_instead(self):

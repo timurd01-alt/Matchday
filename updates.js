@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0807D",
+  "tag": "Fix",
+  "title": "Metric help now opens reliably on mobile",
+  "items": [
+   "Question-mark help buttons now open a viewport-level explanation panel on phones instead of rendering inside a clipped card pseudo-element.",
+   "Help taps no longer bubble into the surrounding matchup or profile card, and the open explanation remains connected to its button for assistive technology."
+  ]
+ },
+ {
   "date": "Build 0807C",
   "tag": "Fix",
   "title": "All Sports navigation drops the dead-end sandbox",
