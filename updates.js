@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0808A",
+  "tag": "Operations",
+  "title": "X publishing is paused until the account exists",
+  "items": [
+   "Removed the X bot's automatic trigger, credential wiring, and live publishing step. The remaining workflow can only generate a manual dry-run preview and cannot post externally."
+  ]
+ },
+ {
   "date": "Build 0807E",
   "tag": "Data",
   "title": "Pregame injury coverage now fails closed",
