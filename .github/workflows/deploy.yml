@@ -89,6 +89,7 @@ jobs:
           API_FOOTBALL_KEY = "${{ secrets.API_FOOTBALL_KEY }}"
           BALLDONTLIE_KEY = "${{ secrets.BALLDONTLIE_KEY }}"
           BBS_API_KEY = "${{ secrets.BBS_API_KEY }}"
+          SPORTSGAMEODDS_KEY = "${{ secrets.SPORTSGAMEODDS_KEY }}"
           SPORTSDATAIO_KEY = "${{ secrets.SPORTSDATAIO_KEY }}"
           EOF
 

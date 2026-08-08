@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0808B",
+  "tag": "Data",
+  "title": "A free market fallback now protects pregame comparisons",
+  "items": [
+   "SportsGameOdds now fills missing near-term game markets for its supported NFL, NBA, MLB, NHL, college football, college basketball, and Champions League feeds without replacing a healthy primary market source.",
+   "The integration checks the live monthly object allowance, keeps a safety reserve, caps each response at eight events, and caches normalized results for 24 hours to remain within the 2,500-object free tier.",
+   "ESPN BET is excluded before Matchday calculates bookmaker consensus, and prop-linked player identities are not mislabeled as injuries, lineups, probable starters, goalies, or bullpen availability."
+  ]
+ },
+ {
   "date": "Build 0808A",
   "tag": "Operations",
   "title": "X publishing is paused until the account exists",

@@ -6,7 +6,8 @@ from unittest import mock
 from provider_adapters import (BallDontLieAdapter, BigBallsSportsAdapter,
                                CollegeBasketballDataAdapter,
                                CollegeFootballDataAdapter, NflverseAdapter, ProviderError,
-                               SportsDataIOAdapter, SportmonksAdapter, normalized_score)
+                               SportsDataIOAdapter, SportsGameOddsAdapter, SportmonksAdapter,
+                               normalized_score)
 
 
 class ShortCodeTests(unittest.TestCase):
@@ -83,6 +84,85 @@ class BigBallsSportsTests(unittest.TestCase):
     def test_unsupported_injury_sport_is_rejected_instead_of_faked(self):
         with self.assertRaises(ProviderError):
             BigBallsSportsAdapter("test-key", "MLB", getter=self.getter)
+
+
+class SportsGameOddsTests(unittest.TestCase):
+    @staticmethod
+    def _odd(side, prices, draw=False):
+        return {
+            "statID": "points", "statEntityID": "all" if side == "draw" else side,
+            "periodID": "reg" if draw else "game",
+            "betTypeID": "ml3way" if draw else "ml", "sideID": side,
+            "byBookmaker": {book: {"odds": price, "available": True}
+                            for book, price in prices.items()},
+        }
+
+    def event(self):
+        return {
+            "eventID": "sgo-1",
+            "teams": {
+                "home": {"teamID": "BOSTON_CELTICS_NBA",
+                         "names": {"long": "Boston Celtics", "short": "BOS"}},
+                "away": {"teamID": "NEW_YORK_KNICKS_NBA",
+                         "names": {"long": "New York Knicks", "short": "NYK"}},
+            },
+            "info": {"venue": "Example Garden"},
+            # Players tied to props are intentionally ignored by the adapter.
+            "players": {"p1": {"name": "A Player", "teamID": "BOSTON_CELTICS_NBA"}},
+            "odds": {
+                "home": self._odd("home", {"fanduel": "+110", "betmgm": "+105",
+                                             "espnbet": "-500"}),
+                "away": self._odd("away", {"fanduel": "-120", "betmgm": "-115",
+                                             "espnbet": "+350"}),
+            },
+        }
+
+    def test_consensus_excludes_espn_and_removes_each_books_overround(self):
+        market = SportsGameOddsAdapter.market(
+            self.event(), observed_at="2026-08-08T12:00:00Z")
+        self.assertEqual(market["books"], 2)
+        self.assertTrue(market["espn_excluded"])
+        self.assertEqual(market["home_pct"] + market["away_pct"], 100)
+        self.assertEqual(market["source"], "SportsGameOdds consensus")
+
+    def test_prop_players_are_not_mislabeled_as_lineups_or_injuries(self):
+        match = {
+            "id": "m1", "home": {"name": "Boston Celtics", "code": "BOS"},
+            "away": {"name": "New York Knicks", "code": "NYK"},
+            "markets": {}, "injuries": {"home": [], "away": []}, "lineups": None,
+        }
+        adapter = SportsGameOddsAdapter("test-key", "NBA", getter=lambda *_: {})
+        result = adapter.attach_pregame(
+            [match], [self.event()], observed_at="2026-08-08T12:00:00Z")
+        self.assertEqual(result, {"markets": 1, "venues": 1})
+        self.assertEqual(match["venue"], "Example Garden")
+        self.assertIsNone(match["lineups"])
+        self.assertFalse(any(match["injuries"].values()))
+        self.assertNotIn("players", match)
+
+    def test_usage_gate_refuses_event_call_before_monthly_reserve(self):
+        calls = []
+        def getter(url, headers):
+            calls.append(url)
+            return {"data": {"rateLimits": {"per-month": {
+                "max-entities": 2500, "current-entities": 2395,
+            }}}}
+        adapter = SportsGameOddsAdapter("test-key", "MLB", getter=getter)
+        with self.assertRaisesRegex(ProviderError, "reserve reached"):
+            adapter.upcoming_events("2026-08-08T00:00:00Z", "2026-08-09T12:00:00Z")
+        self.assertEqual(len(calls), 1)
+        self.assertIn("/account/usage", calls[0])
+
+    def test_ucl_market_requires_same_three_non_espn_books(self):
+        event = self.event()
+        event["odds"] = {
+            "home": self._odd("home", {"fanduel": "+150", "betmgm": "+160"}, draw=True),
+            "draw": self._odd("draw", {"fanduel": "+220", "betmgm": "+230"}, draw=True),
+            "away": self._odd("away", {"fanduel": "+180", "betmgm": "+175"}, draw=True),
+        }
+        market = SportsGameOddsAdapter.market(event, has_draws=True)
+        self.assertEqual(market["books"], 2)
+        self.assertEqual(market["home_pct"] + market["draw_pct"] + market["away_pct"], 100)
 
 
 class SportsDataIOTests(unittest.TestCase):

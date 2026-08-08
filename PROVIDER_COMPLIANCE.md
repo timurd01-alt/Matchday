@@ -1,5 +1,18 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-08-08 (SportsGameOdds v2 free-tier market fallback. Version 3
+Terms, dated 2026-06-23, permit Data to reach end users inside an application
+that supplies material independent value, while prohibiting standalone feeds,
+bulk exports, resale, and substitute services. The live Amateur key confirms a
+2,500-object monthly ceiling and access to NFL, NBA, MLB, NHL, NCAAF, NCAAB,
+MLS, and UEFA Champions League. Matchday requests at most eight near-term
+events per supported competition, caches the normalized result for 24 hours,
+keeps a 100-object reserve, and does not persist raw payloads. Because the free
+payload includes ESPN BET, provider-wide fair/consensus fields are rejected;
+Matchday recomputes the game market only from matched non-ESPN bookmakers.
+Event `players` are prop-linked identities, not confirmed lineups or injury
+reports, so they are neither persisted nor represented as personnel coverage.)
+
 Reviewed: 2026-08-07 (Big Balls Sports Data pregame adapter and quota handling are
 staged but disabled. The provider's terms page identifies itself as an initial draft
 with an effective date pending public launch; its public attribution page does not name
@@ -146,6 +159,20 @@ legal advice.
   Removed (set to `None`) on 2026-07-25; do not reintroduce any of them
   without re-checking the live catalog first, since this provider can add
   outright markets over time and the check is free to repeat.
+- **SportsGameOdds:** Version 3 Terms sections 30-41 allow Data to be shown to
+  end users only as part of an application providing material independent
+  value and prohibit standalone redistribution, bulk exports, resale, and a
+  substitute data service. Keep the key server-side. The Amateur plan is
+  currently marketed for testing/prototyping/initial development and provides
+  2,500 objects/month, 10 requests/minute, eight leagues, and ten-minute
+  updates; re-check the account and terms before treating the free offering as
+  permanent production infrastructure. Use `/account/usage` before fetching,
+  keep the 100-object reserve and 24-hour cache, and never expand the eight-
+  event response cap without recalculating monthly consumption. Do not use
+  provider-wide `fairOdds`/`bookOdds`/consensus fields because ESPN BET is one
+  of the free plan's nine books. Build consensus only from `byBookmaker` after
+  excluding every ESPN-labelled identifier. The event `players` map is tied
+  to props and is not proof of a lineup, starter, injury, or availability.
 - **BALLDONTLIE:** use the official API only; do not scrape, share the key,
   present data as official league data, or retain/redistribute it beyond
   reasonable application needs. Covers NBA, NFL, and MLB fixtures/scores on
@@ -224,6 +251,19 @@ Provider terms and tiers can change. Revisit the linked provider pages in
 record the review date here before each public release.
 
 ## Changelog
+
+- **2026-08-08:** Added SportsGameOdds as a quota-bounded fallback only when
+  the existing Odds API has no near-term game market. Live account verification
+  confirmed all eight advertised Amateur leagues and the real monthly counters.
+  The adapter requests no more than eight upcoming events in a 36-hour window,
+  once per competition per 24 hours, and persists only normalized market/venue
+  fields. Consensus is rebuilt per bookmaker after removing overround and
+  excluding ESPN BET; provider aggregate prices and raw event/player/odds
+  objects are not stored. Market snapshot and lock receipts now preserve the
+  actual provider identity instead of hardcoding The Odds API. SportsGameOdds
+  does not clear injuries, lineups, probable starters, starting goalies, or
+  bullpen availability because the verified event schema supplies none of
+  those as authoritative personnel fields.
 
 - **2026-08-07:** Staged a disabled-by-default Big Balls Sports Data injury
   adapter for the two competitions its active injury endpoint actually supports

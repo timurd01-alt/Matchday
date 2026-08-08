@@ -425,6 +425,227 @@ class BigBallsSportsAdapter:
         return attached
 
 
+class SportsGameOddsAdapter:
+    """Quota-bounded pregame market overlay for the provider's free tier.
+
+    The Events payload also contains event/player metadata, but the `players`
+    object is the set referenced by offered props -- it is not a confirmed
+    lineup or an injury report.  This adapter therefore attaches only venue
+    metadata and a bookmaker-derived game market.  Provider-level consensus
+    fields are deliberately ignored because the free payload includes ESPN
+    BET; Matchday recomputes consensus from explicitly non-ESPN books.
+    """
+
+    BASE = "https://api.sportsgameodds.com/v2"
+    LEAGUES = {
+        "NFL": "NFL", "NBA": "NBA", "MLB": "MLB", "NHL": "NHL",
+        "NCAAF": "NCAAF", "NCAAM": "NCAAB", "UCL": "UEFA_CHAMPIONS_LEAGUE",
+    }
+    MAX_EVENTS = 8
+    MONTHLY_RESERVE = 100
+
+    def __init__(self, api_key, competition, getter=None):
+        if not api_key or "PASTE_" in str(api_key):
+            raise ProviderError("missing SPORTSGAMEODDS_KEY")
+        if competition not in self.LEAGUES:
+            raise ProviderError(f"unsupported SportsGameOdds competition: {competition}")
+        self.key = str(api_key).strip()
+        self.competition = competition
+        self.league = self.LEAGUES[competition]
+        self.getter = getter or _get_json
+
+    def _get(self, path, params=None):
+        url = self.BASE + path
+        if params:
+            url += "?" + urllib.parse.urlencode(params)
+        return self.getter(url, {
+            "x-api-key": self.key,
+            "User-Agent": "Matchday/1.0",
+        })
+
+    def remaining_monthly_entities(self):
+        payload = self._get("/account/usage")
+        data = payload.get("data") if isinstance(payload, dict) else {}
+        limits = data.get("rateLimits") if isinstance(data, dict) else {}
+        month = limits.get("per-month") if isinstance(limits, dict) else {}
+        try:
+            maximum = int(month.get("max-entities"))
+            current = int(month.get("current-entities"))
+        except (TypeError, ValueError, AttributeError) as exc:
+            raise ProviderError("SportsGameOdds monthly usage counters unavailable") from exc
+        return max(0, maximum - current)
+
+    def upcoming_events(self, starts_after, starts_before, limit=None):
+        remaining = self.remaining_monthly_entities()
+        request_limit = min(int(limit or self.MAX_EVENTS), self.MAX_EVENTS)
+        # The usage request itself counts as at least one object. Preserve a
+        # real reserve plus the maximum size of the event response before the
+        # second request is allowed to fire.
+        if remaining <= self.MONTHLY_RESERVE + request_limit:
+            raise ProviderError(
+                f"SportsGameOdds monthly object reserve reached ({remaining} remaining)"
+            )
+        has_draws = self.competition == "UCL"
+        odd_ids = (
+            "points-home-reg-ml3way-home,points-all-reg-ml3way-draw,"
+            "points-away-reg-ml3way-away"
+            if has_draws else
+            "points-home-game-ml-home,points-away-game-ml-away"
+        )
+        payload = self._get("/events", {
+            "leagueID": self.league,
+            "started": "false",
+            "cancelled": "false",
+            "startsAfter": starts_after,
+            "startsBefore": starts_before,
+            "oddID": odd_ids,
+            "limit": request_limit,
+        })
+        rows = payload.get("data") if isinstance(payload, dict) else None
+        return [row for row in (rows or []) if isinstance(row, dict)]
+
+    @staticmethod
+    def _american_implied(value):
+        try:
+            price = float(str(value).strip())
+        except (TypeError, ValueError):
+            return None
+        if price <= -100:
+            return abs(price) / (abs(price) + 100.0)
+        if price >= 100:
+            return 100.0 / (price + 100.0)
+        return None
+
+    @staticmethod
+    def _outcome_odds(event, side, has_draws):
+        period = "reg" if has_draws else "game"
+        bet_type = "ml3way" if has_draws else "ml"
+        for odd in (event.get("odds") or {}).values():
+            if not isinstance(odd, dict):
+                continue
+            if (odd.get("periodID") == period and odd.get("betTypeID") == bet_type
+                    and odd.get("sideID") == side and odd.get("statID") == "points"):
+                return odd
+        return {}
+
+    @classmethod
+    def market(cls, event, has_draws=False, observed_at=None):
+        sides = ("home", "draw", "away") if has_draws else ("home", "away")
+        by_side = {}
+        for side in sides:
+            odd = cls._outcome_odds(event, side, has_draws)
+            prices = {}
+            for book_id, quote in (odd.get("byBookmaker") or {}).items():
+                # Matchday's standing ESPN exclusion applies even when ESPN
+                # BET arrives indirectly inside an otherwise permitted API.
+                if "espn" in str(book_id).lower() or not isinstance(quote, dict):
+                    continue
+                if quote.get("available") is False:
+                    continue
+                implied = cls._american_implied(quote.get("odds"))
+                if implied is not None:
+                    prices[str(book_id)] = implied
+            by_side[side] = prices
+        common = set.intersection(*(set(by_side[side]) for side in sides)) if sides else set()
+        if not common:
+            return None
+        normalized = {side: [] for side in sides}
+        home_book = []
+        for book_id in sorted(common):
+            raw = {side: by_side[side][book_id] for side in sides}
+            total = sum(raw.values())
+            if total <= 0:
+                continue
+            for side in sides:
+                normalized[side].append(raw[side] / total)
+            home_book.append(raw["home"] / total * 100.0)
+        if not home_book:
+            return None
+        averages = {side: sum(values) / len(values) * 100.0
+                    for side, values in normalized.items()}
+        floors = {side: int(math.floor(value)) for side, value in averages.items()}
+        remainder = 100 - sum(floors.values())
+        order = sorted(sides, key=lambda side: averages[side] - floors[side], reverse=True)
+        for side in order[:max(0, remainder)]:
+            floors[side] += 1
+        market = {
+            "home_pct": floors["home"],
+            "draw_pct": floors.get("draw", 0),
+            "away_pct": floors["away"],
+            "books": len(home_book),
+            "observed_at": observed_at or dt.datetime.now(dt.timezone.utc).isoformat().replace("+00:00", "Z"),
+            "source": "SportsGameOdds consensus",
+            "source_reference": "https://sportsgameodds.com/",
+            "provider_event_id": event.get("eventID"),
+            "espn_excluded": True,
+        }
+        if len(home_book) >= 2:
+            spread = round(max(home_book) - min(home_book))
+            market.update({
+                "spread": spread,
+                "spread_lo": round(min(home_book)),
+                "spread_hi": round(max(home_book)),
+                "confidence": "tight" if spread <= 8 else "mixed" if spread <= 18 else "split",
+            })
+        return market
+
+    @staticmethod
+    def _team_values(team):
+        names = team.get("names") if isinstance(team, dict) else {}
+        return [team.get("teamID"), names.get("long"), names.get("medium"), names.get("short")]
+
+    @classmethod
+    def _same_team(cls, provider_team, match_team):
+        wanted = {_team_identity((match_team or {}).get(key)) for key in ("name", "code")}
+        wanted.discard("")
+        candidates = {_team_identity(value) for value in cls._team_values(provider_team or {})}
+        candidates.discard("")
+        if wanted & candidates:
+            return True
+        # teamID appends the league (NEW_YORK_YANKEES_MLB); accepting a
+        # prefix only when the complete fixture name is present avoids loose
+        # city/nickname matches and cross-team collisions.
+        full = _team_identity((match_team or {}).get("name"))
+        return bool(full and any(value.startswith(full) for value in candidates))
+
+    @classmethod
+    def _event_for_match(cls, events, match):
+        for event in events:
+            teams = event.get("teams") or {}
+            if (cls._same_team(teams.get("home") or {}, match.get("home") or {})
+                    and cls._same_team(teams.get("away") or {}, match.get("away") or {})):
+                return event
+        return None
+
+    def attach_pregame(self, matches, events, observed_at=None, has_draws=False):
+        attached = venues = 0
+        for match in matches:
+            event = self._event_for_match(events, match)
+            if not event:
+                continue
+            info = event.get("info") or {}
+            venue = info.get("venue")
+            if not match.get("venue") and isinstance(venue, dict):
+                venue = venue.get("name") or venue.get("displayName")
+            if not match.get("venue") and isinstance(venue, str) and venue.strip():
+                match["venue"] = venue.strip()
+                venues += 1
+            existing = (match.get("markets") or {}).get("1x2")
+            market = None if existing else self.market(event, has_draws, observed_at)
+            if market:
+                match.setdefault("markets", {})["1x2"] = market
+                attached += 1
+            match.setdefault("pregame_provenance", []).append({
+                "input": "market" if market else "event_metadata",
+                "source": "SportsGameOdds",
+                "source_reference": "https://sportsgameodds.com/",
+                "fetched_at": observed_at,
+                "provider_event_id": event.get("eventID"),
+                "espn_excluded": True,
+            })
+        return {"markets": attached, "venues": venues}
+
+
 class SportsDataIOAdapter:
     BASE = "https://api.sportsdata.io/v3"
 
