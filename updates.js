@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0809A",
+  "tag": "Content",
+  "title": "Weekly scorecard publishes incomplete MLB record",
+  "items": [
+   "The August 2–8 scorecard reports 7 hits and 8 misses from 15 verified, pregame-locked MLB picks, while explicitly excluding eight ungraded locks.",
+   "The audit flags a stale local record, no valid market comparison, and missing append-only-ledger reconciliation rather than presenting a partial sample as a full week."
+  ]
+ },
+ {
   "date": "Build 0807D",
   "tag": "Fix",
   "title": "Metric help now opens reliably on mobile",

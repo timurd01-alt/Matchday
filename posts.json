@@ -1,5 +1,24 @@
 [
- {
+  {
+    "id": "transparent-weekly-scorecard-2026-08-09",
+    "comp": "all",
+    "comp_label": "Independent Audit",
+    "slug": "transparent-weekly-scorecard-2026-08-09",
+    "title": "Transparent Weekly Scorecard — August 2–8, 2026",
+    "date": "2026-08-09",
+    "summary": "7 hits, 8 misses, eight ungraded locks, and a reconciliation failure in a partial MLB audit.",
+    "record": {"hits": 7, "graded": 15, "pct": 46.7},
+    "highlights": {
+      "best_call": "Atlanta Braves over Washington Nationals (79%)",
+      "largest_miss": "Milwaukee Brewers over Los Angeles Angels (82%)"
+    },
+    "body": [
+      "The completed August 2–8 window has 23 verified MLB locks but only 15 final grades: 7 hits and 8 misses. The eight ungraded locks are excluded rather than backfilled or counted as losses.",
+      "No settled pick has a retained locked market snapshot, so model versus market is invalid at n=0. The 15 settled picks have frozen source snapshots but none has reconciled into the append-only MLB ledger.",
+      "The scorecard reports three-outcome-form Brier (0.572), log loss (0.779), calibration, corrections, and the stale-data limitation without claiming improvement from accuracy."
+    ]
+  },
+  {
   "id": "friday-model-vs-market-2026-08-07",
   "comp": "all",
   "comp_label": "Model vs. Market",
