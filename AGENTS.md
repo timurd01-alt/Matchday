@@ -4,6 +4,14 @@ Sports-prediction analytics site (Elo/SRS-derived picks, probabilities, bracketo
 soccer, NFL, NBA, MLB, NHL, and college football/basketball. Flask backend (`app.py`,
 `server/server_app.py`), static JS/HTML/CSS frontend, provider data cached to JSON.
 
+## Production delivery
+
+When the owner asks to push, ship, deploy, or finish a change, completion means
+the verified work is merged into `main`, pushed to `origin/main`, and the
+production deployment is checked. Pushing only a feature branch is not delivery.
+Before merging, update from the current remote `main` and preserve its bot-owned
+generated data. Never force-push production.
+
 ## Departments
 
 Specialist subagents are organized into de facto departments. Each agent's file

@@ -300,18 +300,65 @@ class FetchDataWiringTests(unittest.TestCase):
         pq.STATE_FILE = self.path
         self.addCleanup(setattr, pq, "STATE_FILE", self._orig_state_file)
 
-    def test_fetch_data_get_refuses_before_the_request_when_exhausted(self):
+    def test_fetch_data_reconciles_stale_odds_ledger_through_free_endpoint(self):
         import fetch_data as fd
         pq.record_response("odds_api", {"x-requests-remaining": "0", "x-requests-used": "500"})
         called = []
-        real_request = fd.urllib.request.Request
-        fd.urllib.request.Request = lambda *a, **k: called.append(1) or real_request(*a, **k)
-        try:
-            with self.assertRaises(RuntimeError):
-                fd._get("https://api.the-odds-api.com/v4/sports", provider="odds_api")
-        finally:
-            fd.urllib.request.Request = real_request
-        self.assertEqual(called, [])
+
+        class Response:
+            def __init__(self, headers):
+                self.headers = headers
+            def __enter__(self):
+                return self
+            def __exit__(self, *_):
+                return False
+            def read(self):
+                return b"[]"
+
+        def open_response(request, timeout=25):
+            called.append(request.full_url)
+            if len(called) == 1:
+                return Response({"x-requests-remaining": "335", "x-requests-used": "165",
+                                 "x-requests-last": "0"})
+            return Response({"x-requests-remaining": "334", "x-requests-used": "166",
+                             "x-requests-last": "1"})
+
+        real_open = fd.urllib.request.urlopen
+        fd.urllib.request.urlopen = open_response
+        self.addCleanup(setattr, fd.urllib.request, "urlopen", real_open)
+        self.assertEqual(fd._get("https://api.the-odds-api.com/v4/sports/baseball_mlb/odds",
+                                 provider="odds_api"), [])
+        self.assertTrue(called[0].startswith(fd.ODDS_FREE_QUOTA_URL))
+        self.assertEqual(len(called), 2)
+
+    def test_exhausted_odds_account_is_not_reprobed_during_cooldown(self):
+        pq.record_response("odds_api", {"x-requests-remaining": "0", "x-requests-used": "500"})
+        self.assertTrue(pq.claim_free_probe("odds_api"))
+        self.assertFalse(pq.claim_free_probe("odds_api"))
+
+    def test_free_probe_confirming_zero_still_blocks_paid_request(self):
+        import fetch_data as fd
+        pq.record_response("odds_api", {"x-requests-remaining": "0", "x-requests-used": "500"})
+        called = []
+
+        class Response:
+            headers = {"x-requests-remaining": "0", "x-requests-used": "500",
+                       "x-requests-last": "0"}
+            def __enter__(self):
+                return self
+            def __exit__(self, *_):
+                return False
+            def read(self):
+                return b"[]"
+
+        real_open = fd.urllib.request.urlopen
+        fd.urllib.request.urlopen = lambda request, timeout=25: called.append(request.full_url) or Response()
+        self.addCleanup(setattr, fd.urllib.request, "urlopen", real_open)
+        with self.assertRaises(RuntimeError):
+            fd._get("https://api.the-odds-api.com/v4/sports/baseball_mlb/odds",
+                    provider="odds_api")
+        self.assertEqual(len(called), 1)
+        self.assertTrue(called[0].startswith(fd.ODDS_FREE_QUOTA_URL))
 
 
 if __name__ == "__main__":

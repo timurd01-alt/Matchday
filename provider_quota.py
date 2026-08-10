@@ -55,6 +55,7 @@ class QuotaExceededError(RuntimeError):
 STATE_FILE = "provider_quota_state.json"
 BOOTSTRAP_ENV = "MATCHDAY_QUOTA_ALLOW_BOOTSTRAP"
 FAIL_CLOSED_WITHOUT_STATE = {"cfbd", "odds_api"}
+FREE_PROBE_COOLDOWN_HOURS = 6
 
 # A provider's tracked remaining budget can be low without this run ever
 # having asked it for anything -- that alone doesn't mean output degraded
@@ -169,7 +170,8 @@ PROVIDER_SPECS = {
 }
 
 
-def _load_state(path=STATE_FILE):
+def _load_state(path=None):
+    path = os.fspath(path or STATE_FILE)
     try:
         with open(path, encoding="utf-8") as handle:
             return json.load(handle)
@@ -177,7 +179,8 @@ def _load_state(path=STATE_FILE):
         return {}
 
 
-def _save_state(state, path=STATE_FILE):
+def _save_state(state, path=None):
+    path = os.fspath(path or STATE_FILE)
     tmp = path + ".tmp"
     with open(tmp, "w", encoding="utf-8") as handle:
         json.dump(state, handle)
@@ -273,7 +276,7 @@ def _record_one(state, key, spec, headers, body, now):
     return quota_hit
 
 
-def record_response(provider, headers, body=None, state_path=STATE_FILE):
+def record_response(provider, headers, body=None, state_path=None):
     """Update the persisted ledger from one real HTTP response's headers
     (and, for CFBD/CBBD, the response body -- they carry no numeric total,
     only a "Monthly call quota exceeded" message once actually exhausted)."""
@@ -288,6 +291,31 @@ def record_response(provider, headers, body=None, state_path=STATE_FILE):
     else:
         _record_one(state, provider, spec, headers, body, now)
     _save_state(state, state_path)
+
+
+def claim_free_probe(provider, state_path=None):
+    """Claim a provider-documented zero-credit quota receipt refresh.
+
+    Only The Odds API currently has such an endpoint.  The claim is persisted
+    before HTTP so parallel competition jobs and a genuinely exhausted account
+    cannot turn a free status check into an unbounded polling loop.
+    """
+    if provider != "odds_api":
+        return False
+    state = _load_state(state_path)
+    now = _now()
+    entry = state.get(provider, {})
+    last_raw = entry.get("free_probe_at")
+    try:
+        last = datetime.datetime.fromisoformat(last_raw) if last_raw else None
+    except ValueError:
+        last = None
+    if last is not None and now - last < datetime.timedelta(hours=FREE_PROBE_COOLDOWN_HOURS):
+        return False
+    entry["free_probe_at"] = now.isoformat()
+    state[provider] = entry
+    _save_state(state, state_path)
+    return True
 
 
 def _period_end(window, period_start):
@@ -454,7 +482,7 @@ def _check_one(state, key, spec, now):
     return _pace_reason(key, spec, entry, now)
 
 
-def check(provider, state_path=STATE_FILE):
+def check(provider, state_path=None):
     """Raise QuotaExceededError if the ledger shows this provider at or below
     its safety reserve for the currently-tracked window. Silent (no-op) for
     unknown providers. CFBD and The Odds API fail closed when their persisted
@@ -484,7 +512,7 @@ def check(provider, state_path=STATE_FILE):
         raise QuotaExceededError(reason)
 
 
-def status(state_path=STATE_FILE):
+def status(state_path=None):
     """Human-readable snapshot for diagnostics/status pages."""
     state = _load_state(state_path)
     lines = []
