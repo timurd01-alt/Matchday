@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0810A",
+  "tag": "Content",
+  "title": "Matchday 10 verification edition published",
+  "items": [
+   "College Football's top ten holds while the configured snapshot remains unchanged.",
+   "The ranking records missing market, availability, schedule-strength, and model-history signals instead of inferring them."
+  ]
+ },
+ {
   "date": "Build 0809A",
   "tag": "Content",
   "title": "Weekly scorecard publishes incomplete MLB record",

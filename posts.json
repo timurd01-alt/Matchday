@@ -1,5 +1,20 @@
 [
   {
+    "id": "matchday-10-college-football-2026-08-10",
+    "comp": "ncaaf",
+    "comp_label": "College Football \u00b7 Matchday 10",
+    "type": "ranking",
+    "slug": "matchday-10-college-football-2026-08-10",
+    "title": "Matchday 10: Ten Names, No New Evidence",
+    "date": "2026-08-10",
+    "summary": "The College Football top ten holds because the configured evidence has not changed.",
+    "body": [
+      "The July 24 configured snapshot still supplies the same top ten, model ranks, and first-fixture probabilities as the July 27 opening board, so this is a verification hold rather than a reshuffle.",
+      "No listed injury entries or market comparisons appear for the ten; the odds pass was skipped outside the immediate window and title odds are unavailable on the exhausted monthly quota.",
+      "The export exposes rank, record-derived context, and immediate fixture context, but not a separate full-schedule-strength measure, market depth, prior-model history, or fresh availability update."
+    ]
+  },
+  {
     "id": "transparent-weekly-scorecard-2026-08-09",
     "comp": "all",
     "comp_label": "Independent Audit",
