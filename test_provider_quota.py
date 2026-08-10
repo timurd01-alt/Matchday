@@ -38,8 +38,9 @@ class QuotaModuleTests(unittest.TestCase):
 
     # ---- CFBD/CBBD: calendar-month window, no limit header, body fallback --
     def test_cfbd_remaining_header_is_recorded_and_enforced(self):
-        pq.record_response("cfbd", {"X-CallLimit-Remaining": "30"}, state_path=self.path)
-        pq.check("cfbd", state_path=self.path)  # 30 > reserve(25): must not raise
+        self._freeze(datetime.datetime(2026, 8, 28, 12, 0, tzinfo=datetime.timezone.utc))
+        pq.record_response("cfbd", {"X-CallLimit-Remaining": "990"}, state_path=self.path)
+        pq.check("cfbd", state_path=self.path)
         pq.record_response("cfbd", {"X-CallLimit-Remaining": "20"}, state_path=self.path)
         with self.assertRaises(pq.QuotaExceededError):
             pq.check("cfbd", state_path=self.path)
@@ -60,6 +61,8 @@ class QuotaModuleTests(unittest.TestCase):
             pq.check("cfbd", state_path=self.path)
 
     def test_cfbd_calendar_month_reset_clears_a_stale_zero(self):
+        now = datetime.datetime(2026, 7, 1, 12, tzinfo=datetime.timezone.utc)
+        self._freeze(now)
         past = datetime.datetime(2026, 6, 15, tzinfo=datetime.timezone.utc)
         pq.record_response("cfbd", {"X-CallLimit-Remaining": "0"}, state_path=self.path)
         with open(self.path, encoding="utf-8") as handle:
@@ -68,10 +71,20 @@ class QuotaModuleTests(unittest.TestCase):
         state["cfbd"]["observed_at"] = past.isoformat()
         with open(self.path, "w", encoding="utf-8") as handle:
             json.dump(state, handle)
-        pq.check("cfbd", state_path=self.path)  # now July: June's zero no longer applies
+        pq.check("cfbd", state_path=self.path)  # one claimed reset probe
+        with self.assertRaises(pq.QuotaExceededError):
+            pq.check("cfbd", state_path=self.path)  # cannot fan out before a response records reset
 
-    def test_never_observed_provider_is_not_enforced(self):
-        pq.check("cfbd", state_path=self.path)  # no prior record_response call at all
+    def test_never_observed_monthly_provider_fails_closed(self):
+        with self.assertRaises(pq.QuotaExceededError):
+            pq.check("cfbd", state_path=self.path)
+
+    def test_explicit_bootstrap_allows_a_cold_monthly_provider_probe(self):
+        old = os.environ.get(pq.BOOTSTRAP_ENV)
+        os.environ[pq.BOOTSTRAP_ENV] = "1"
+        self.addCleanup(lambda: (os.environ.pop(pq.BOOTSTRAP_ENV, None) if old is None
+                                 else os.environ.__setitem__(pq.BOOTSTRAP_ENV, old)))
+        pq.check("cfbd", state_path=self.path)
 
     def test_unknown_provider_is_a_silent_no_op(self):
         pq.record_response("not_a_real_provider", {"whatever": "1"}, state_path=self.path)
@@ -115,6 +128,15 @@ class QuotaModuleTests(unittest.TestCase):
                                            "x-ratelimit-reset": "9999999999"},
                            state_path=self.path)
         pq.check("balldontlie", state_path=self.path)
+
+    def test_bigballs_uses_observed_unix_reset_bucket(self):
+        future = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(minutes=1)
+        pq.record_response("bigballs",
+                           {"x-ratelimit-limit": "100", "x-ratelimit-remaining": "2",
+                            "x-ratelimit-reset": str(int(future.timestamp()))},
+                           state_path=self.path)
+        with self.assertRaises(pq.QuotaExceededError):
+            pq.check("bigballs", state_path=self.path)
 
     # ---- API-Football: two independent buckets from one response ------
     def test_api_football_tracks_minute_and_day_independently(self):
@@ -183,12 +205,37 @@ class QuotaModuleTests(unittest.TestCase):
                            state_path=self.path)
         pq.check("odds_api", state_path=self.path)
 
-    def test_pacing_never_applies_without_a_derivable_limit(self):
-        """CFBD/CBBD never carry a `limit` (no total is ever published), so
-        pacing must stay a silent no-op for them regardless of how much of
-        the reserve-free range remains -- only the reserve floor applies."""
-        pq.record_response("cfbd", {"X-CallLimit-Remaining": "26"}, state_path=self.path)
-        pq.check("cfbd", state_path=self.path)  # 26 > reserve(25); no limit to pace against
+    def test_cfbd_known_free_tier_limit_enables_monthly_pacing(self):
+        self._freeze(datetime.datetime(2026, 3, 5, 12, 0, tzinfo=datetime.timezone.utc))
+        pq.record_response("cfbd", {"X-CallLimit-Remaining": "700"}, state_path=self.path)
+        with self.assertRaises(pq.QuotaExceededError):
+            pq.check("cfbd", state_path=self.path)
+        with open(self.path, encoding="utf-8") as handle:
+            self.assertEqual(json.load(handle)["cfbd"]["limit"], 1000)
+
+    def test_six_hour_age_does_not_leak_the_reserve(self):
+        observed = datetime.datetime(2026, 8, 10, 0, 0, tzinfo=datetime.timezone.utc)
+        self._freeze(observed)
+        pq.record_response("cfbd", {"X-CallLimit-Remaining": "25"}, state_path=self.path)
+        self._freeze(observed + datetime.timedelta(days=2))
+        with self.assertRaises(pq.QuotaExceededError):
+            pq.check("cfbd", state_path=self.path)
+
+    def test_automatic_reset_reprobes_have_a_hard_call_cap(self):
+        now = datetime.datetime(2026, 9, 1, 18, 0, tzinfo=datetime.timezone.utc)
+        self._freeze(now)
+        pq.record_response("cfbd", {"X-CallLimit-Remaining": "0"}, state_path=self.path)
+        with open(self.path, encoding="utf-8") as handle:
+            state = json.load(handle)
+        entry = state["cfbd"]
+        entry["period_start"] = datetime.datetime(2026, 8, 1, tzinfo=datetime.timezone.utc).isoformat()
+        entry["reset_pending"] = True
+        entry["reset_probe_count"] = pq.RESET_PROBE_MAX_CALLS
+        entry["reset_probe_at"] = (now - datetime.timedelta(hours=7)).isoformat()
+        with open(self.path, "w", encoding="utf-8") as handle:
+            json.dump(state, handle)
+        with self.assertRaises(pq.QuotaExceededError):
+            pq.check("cfbd", state_path=self.path)
 
     # ---- persistence: this only matters because CI is one-shot per-run -
     def test_state_persists_across_separate_load_cycles(self):

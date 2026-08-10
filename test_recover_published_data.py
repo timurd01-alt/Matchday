@@ -43,6 +43,9 @@ class PublishedDataRecoveryTests(unittest.TestCase):
         self.assertEqual(calls, [("https://matchdayterminal.com/data_ncaaf.json", 30)])
         saved = json.loads((self.root / "data_ncaaf.json").read_text(encoding="utf-8"))
         self.assertEqual(saved["comp_key"], "NCAAF")
+        self.assertEqual(saved["source_freshness"]["state"], "fallback")
+        self.assertEqual(saved["source_freshness"]["last_successful_at"], saved["updated"])
+        self.assertGreaterEqual(saved["source_freshness"]["fallback_age_hours"], 0)
 
     def test_keeps_valid_local_snapshot_without_network(self):
         path = self.root / "data_ncaaf.json"

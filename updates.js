@@ -4,12 +4,60 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0810B",
+  "tag": "Improvement",
+  "title": "Free-data coverage now fails safely and proves its freshness",
+  "items": [
+   "CFBD now paces its verified 1,000-call monthly allowance, CFBD and market calls fail closed when their private quota ledger is missing, and reset probes are claimed and tightly capped instead of draining the final reserve.",
+   "Every persisted official pick and grade is reconciled into the tamper-evident forecast ledger even when a provider refresh is skipped, while recovered last-good fixture files disclose their source age instead of looking newly fetched.",
+   "A pinned CC0 OpenFootball importer validated 25,452 completed domestic-league results with exact revision, file, license, and identity provenance; its tuned Elo point estimates improved slightly, but the paired interval crossed zero, so it failed promotion and remains offline.",
+   "The manual NFL availability pilot now has a concrete provenance checklist and example batch; prohibited, unclear, post-kickoff, and ESPN-origin inputs remain rejected."
+  ]
+ },
+ {
+  "date": "Build 0810A",
+  "tag": "Content",
+  "title": "Matchday 10 verification edition published",
+  "items": [
+   "College Football's top ten holds while the configured snapshot remains unchanged.",
+   "The ranking records missing market, availability, schedule-strength, and model-history signals instead of inferring them."
+  ]
+ },
+ {
   "date": "Build 0809A",
   "tag": "Content",
   "title": "Weekly scorecard publishes incomplete MLB record",
   "items": [
    "The August 2–8 scorecard reports 7 hits and 8 misses from 15 verified, pregame-locked MLB picks, while explicitly excluding eight ungraded locks.",
    "The audit flags a stale local record, no valid market comparison, and missing append-only-ledger reconciliation rather than presenting a partial sample as a full week."
+  ]
+ },
+ {
+  "date": "Build 0808B",
+  "tag": "Data",
+  "title": "A free market fallback now protects pregame comparisons",
+  "items": [
+   "SportsGameOdds now fills missing near-term game markets for its supported NFL, NBA, MLB, NHL, college football, college basketball, and Champions League feeds without replacing a healthy primary market source.",
+   "The integration checks the live monthly object allowance, keeps a safety reserve, caps each response at eight events, and caches normalized results for 24 hours to remain within the 2,500-object free tier.",
+   "ESPN BET is excluded before Matchday calculates bookmaker consensus, and prop-linked player identities are not mislabeled as injuries, lineups, probable starters, goalies, or bullpen availability."
+  ]
+ },
+ {
+  "date": "Build 0808A",
+  "tag": "Operations",
+  "title": "X publishing is paused until the account exists",
+  "items": [
+   "Removed the X bot's automatic trigger, credential wiring, and live publishing step. The remaining workflow can only generate a manual dry-run preview and cannot post externally."
+  ]
+ },
+ {
+  "date": "Build 0807E",
+  "tag": "Data",
+  "title": "Pregame injury coverage now fails closed",
+  "items": [
+   "A quota-safe NBA/NHL injury adapter is ready, with team matching and expected-return filtering that prevents expired reports from affecting a future fixture.",
+   "The new feed remains disabled until its upstream injury source is identified and verified against Matchday's provider rules; a configured API key alone cannot activate it.",
+   "Unsupported lineup, starter, bullpen, NFL, college, soccer, and MLB personnel fields remain honestly marked missing instead of being cleared from provider marketing claims."
   ]
  },
  {

@@ -83,20 +83,24 @@ in each call site. football-data.org and The Odds API route through
 `_get_json`/`_get_csv_text` (or `fetch_data._get`) and add a `PROVIDER_SPECS`
 entry in `provider_quota.py` describing its real header names — read them off
 a live response first (`curl -i` or a one-off script), never assume a number.
-CFBD/CBBD in particular publish no rate-limit numbers in their docs; the
-reserve-based design works without ever knowing the true ceiling.
+CFBD's configured free tier is paced against its verified 1,000-call monthly
+ceiling in addition to the response's real remaining count. CBBD still uses
+reserve-only enforcement because no verified ceiling is configured. CFBD and
+The Odds API fail closed if the private quota ledger is missing; only an
+explicit `quota_bootstrap` workflow dispatch may seed a cold ledger.
 
 ## Tests
 
 Run before considering prediction/data/provider changes complete:
 
 ```bash
-python -m unittest test_model_inputs test_provider_adapters test_generate_posts
+python -m unittest test_model_inputs test_provider_adapters test_generate_posts test_provider_quota
 ```
 
 - `test_model_inputs.py` — prediction/model input construction
 - `test_provider_adapters.py` — provider normalization and adapters
 - `test_generate_posts.py` — social post generation
+- `test_provider_quota.py` — persisted quota pacing, reset probes, and provider wiring
 
 ## Compliance
 

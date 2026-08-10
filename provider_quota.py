@@ -22,8 +22,9 @@ PROVIDER_SPECS) into a small persisted ledger. Before firing the next request,
 check() consults that ledger and refuses the call once remaining budget drops
 to a safety reserve, well before the provider's own limit -- self-correcting
 from ground truth instead of a fixed estimate, and immediately effective even
-without knowing a provider's exact monthly ceiling (CFBD/CBBD have never
-published one in this codebase; the reserve-based approach works without it).
+without knowing a provider's exact monthly ceiling. CFBD's configured free
+tier is now known to be 1,000/month and is paced explicitly; CBBD still falls
+back to reserve enforcement because no verified ceiling is configured here.
 
 A provider not listed in PROVIDER_SPECS, or a caller that never passes
 `provider=`, is completely untracked -- existing behavior for anything this
@@ -52,6 +53,8 @@ class QuotaExceededError(RuntimeError):
 
 
 STATE_FILE = "provider_quota_state.json"
+BOOTSTRAP_ENV = "MATCHDAY_QUOTA_ALLOW_BOOTSTRAP"
+FAIL_CLOSED_WITHOUT_STATE = {"cfbd", "odds_api"}
 
 # A provider's tracked remaining budget can be low without this run ever
 # having asked it for anything -- that alone doesn't mean output degraded
@@ -103,6 +106,10 @@ PROVIDER_SPECS = {
         "limit_header": None,
         "window": "calendar_month",
         "reserve": 25,
+        # CFBD's current free tier is 1,000 calls/month.  Unlike The Odds API
+        # it does not return a total-limit header, so the known plan ceiling
+        # must be supplied here or day-by-day pacing can never engage.
+        "known_limit": 1000,
         "quota_body_markers": ("monthly call quota exceeded",),
     },
     "cbbd": {
@@ -125,6 +132,18 @@ PROVIDER_SPECS = {
         "reset_header": "x-ratelimit-reset",
         "window": "rolling_unix",
         "reserve": 1,
+    },
+    # Big Balls returns the tighter of its minute/day buckets in the standard
+    # X-RateLimit trio on every authenticated response. The reset is a unix
+    # timestamp. This enforces the observable bucket; Matchday additionally
+    # limits usage structurally to one cached league-wide injury request per
+    # supported competition, keeping the 1,000/day free allowance well clear.
+    "bigballs": {
+        "remaining_header": "x-ratelimit-remaining",
+        "limit_header": "x-ratelimit-limit",
+        "reset_header": "x-ratelimit-reset",
+        "window": "rolling_unix",
+        "reserve": 2,
     },
     # API-Football exposes two INDEPENDENT buckets on every response: a
     # per-minute rate limit and a per-day request cap. Both must have room or
@@ -191,6 +210,8 @@ def _period_start(window, when):
 def _record_one(state, key, spec, headers, body, now):
     remaining_raw = _header(headers, spec["remaining_header"]) if spec.get("remaining_header") else None
     entry = state.get(key, {})
+    previous_period = entry.get("period_start")
+    previous_remaining = entry.get("remaining")
     quota_hit = False
     if remaining_raw is not None:
         try:
@@ -203,6 +224,8 @@ def _record_one(state, key, spec, headers, body, now):
             entry["limit"] = int(float(limit_raw))
         except (TypeError, ValueError):
             pass
+    if spec.get("known_limit"):
+        entry.setdefault("limit", int(spec["known_limit"]))
     if spec.get("used_header") and remaining_raw is not None:
         used_raw = _header(headers, spec["used_header"])
         try:
@@ -225,7 +248,20 @@ def _record_one(state, key, spec, headers, body, now):
         except (TypeError, ValueError):
             pass
     elif spec["window"] in ("calendar_day", "calendar_month"):
-        entry["period_start"] = _period_start(spec["window"], now).isoformat()
+        current_period = _period_start(spec["window"], now).isoformat()
+        entry["period_start"] = current_period
+        crossed_period = previous_period and previous_period != current_period
+        still_exhausted = (entry.get("remaining") is not None
+                           and entry["remaining"] <= spec["reserve"])
+        if still_exhausted and (entry.get("reset_pending") or
+                                (crossed_period and previous_remaining is not None
+                                 and previous_remaining <= spec["reserve"])):
+            entry["reset_pending"] = True
+            entry.setdefault("reset_probe_at", now.isoformat())
+        elif not still_exhausted:
+            entry.pop("reset_pending", None)
+            entry.pop("reset_probe_at", None)
+            entry.pop("reset_probe_count", None)
     entry["observed_at"] = now.isoformat()
     markers = spec.get("quota_body_markers")
     if markers and body:
@@ -278,9 +314,8 @@ def _pace_reason(key, spec, entry, now):
     """None if usage is roughly on track to last the rest of the period, else
     a refusal reason. Only engages when a real numeric ceiling is known (the
     `limit` derived from a provider's own remaining/used headers -- see
-    _record_one) -- CFBD/CBBD publish no such number, so this silently never
-    applies to them, same as every other check in this module: only ever
-    tightens behavior once real data says to, never guesses one up.
+    _record_one), or when a verified ``known_limit`` is configured (CFBD).
+    Providers with neither silently retain reserve-only behavior.
 
     Scoped to calendar_month only, not calendar_day: API-Football's day
     bucket (the only other spec with a derivable `limit`) legitimately gets
@@ -354,23 +389,66 @@ def _resets_since(entry, spec, now):
 # reset merely lags our assumed boundary by a few hours would otherwise
 # read as exhausted for the remaining ~30 days of the period.
 PROBE_COOLDOWN_HOURS = 6
+RESET_PROBE_WINDOW_HOURS = 48
+RESET_PROBE_MAX_CALLS = 4
+
+
+def _bootstrap_allowed():
+    return str(os.environ.get(BOOTSTRAP_ENV, "")).strip().lower() in {"1", "true", "yes"}
+
+
+def _calendar_reset_probe_due(entry, spec, now):
+    """Whether one bounded re-observation may fire around a calendar reset.
+
+    A zero balance is not itself permission to probe forever.  Re-probes are
+    only allowed during the first 48 hours of a newly expected period, capped
+    at four calls, and claimed in the persisted ledger before HTTP starts.
+    """
+    if spec["window"] not in ("calendar_day", "calendar_month"):
+        return False
+    current_start = _period_start(spec["window"], now)
+    if now - current_start > datetime.timedelta(hours=RESET_PROBE_WINDOW_HOURS):
+        return False
+    if not _resets_since(entry, spec, now) and not entry.get("reset_pending"):
+        return False
+    if int(entry.get("reset_probe_count") or 0) >= RESET_PROBE_MAX_CALLS:
+        return False
+    probe_at = entry.get("reset_probe_at")
+    if probe_at:
+        try:
+            if now - datetime.datetime.fromisoformat(probe_at) < datetime.timedelta(hours=PROBE_COOLDOWN_HOURS):
+                return False
+        except ValueError:
+            pass
+    return True
 
 
 def _check_one(state, key, spec, now):
     entry = state.get(key)
     if not entry or entry.get("remaining") is None:
         return None  # never observed -- nothing to enforce yet
+    if _calendar_reset_probe_due(entry, spec, now):
+        entry["reset_pending"] = True
+        entry["reset_probe_at"] = now.isoformat()
+        entry["reset_probe_count"] = int(entry.get("reset_probe_count") or 0) + 1
+        return None
+    if (_bootstrap_allowed() and spec["window"] in ("calendar_day", "calendar_month")
+            and (_resets_since(entry, spec, now) or entry.get("reset_pending")
+                 or entry["remaining"] <= spec["reserve"])):
+        last_raw = entry.get("manual_probe_at")
+        try:
+            last = datetime.datetime.fromisoformat(last_raw) if last_raw else None
+        except ValueError:
+            last = None
+        if last is None or now - last >= datetime.timedelta(hours=PROBE_COOLDOWN_HOURS):
+            entry["manual_probe_at"] = now.isoformat()
+            return None
     if _resets_since(entry, spec, now):
-        return None  # window has rolled over; the stale count no longer applies
+        if spec["window"] in ("rolling_seconds", "rolling_seconds_assumed", "rolling_unix"):
+            return None
+        return (f"{key}: expected quota reset has not been safely re-observed; "
+                f"manual {BOOTSTRAP_ENV}=1 bootstrap required")
     if entry["remaining"] <= spec["reserve"]:
-        observed_at = entry.get("observed_at")
-        if observed_at:
-            try:
-                last = datetime.datetime.fromisoformat(observed_at)
-                if now - last >= datetime.timedelta(hours=PROBE_COOLDOWN_HOURS):
-                    return None  # let one real call through to re-observe the true count
-            except ValueError:
-                pass
         return (f"{key}: {entry['remaining']} remaining, at or below the "
                 f"{spec['reserve']}-call safety reserve (observed {entry.get('observed_at', '?')})")
     return _pace_reason(key, spec, entry, now)
@@ -379,20 +457,29 @@ def _check_one(state, key, spec, now):
 def check(provider, state_path=STATE_FILE):
     """Raise QuotaExceededError if the ledger shows this provider at or below
     its safety reserve for the currently-tracked window. Silent (no-op) for
-    any provider never observed yet, or one not in PROVIDER_SPECS at all --
-    this only ever tightens behavior once real data says to, never guesses."""
+    unknown providers. CFBD and The Odds API fail closed when their persisted
+    ledger is missing; a deliberate bootstrap probe requires an explicit
+    environment opt-in."""
     spec = PROVIDER_SPECS.get(provider)
     if not spec:
         return
     state = _load_state(state_path)
     now = _now()
+    if provider in FAIL_CLOSED_WITHOUT_STATE and not state.get(provider):
+        if _bootstrap_allowed():
+            return
+        raise QuotaExceededError(
+            f"{provider}: no persisted quota ledger; refusing blind request "
+            f"(set {BOOTSTRAP_ENV}=1 only for one deliberate bootstrap probe)")
     if "sub_keys" in spec:
         for sub_name, sub_spec in spec["sub_keys"].items():
             reason = _check_one(state, f"{provider}:{sub_name}", sub_spec, now)
             if reason:
                 raise QuotaExceededError(reason)
+        _save_state(state, state_path)
         return
     reason = _check_one(state, provider, spec, now)
+    _save_state(state, state_path)
     if reason:
         raise QuotaExceededError(reason)
 

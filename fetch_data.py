@@ -33,9 +33,10 @@ from mlb_model_promotion import apply_mlb_promotion, load_mlb_promotion_policy
 from nfl_model_adjustment import apply_nfl_adjustment, load_nfl_adjustment_policy
 from nfl_challenger_store import attach_nfl_challenger_shadows
 from provider_adapters import (ProviderError, BallDontLieAdapter,
+                               BigBallsSportsAdapter,
                                CollegeBasketballDataAdapter,
                                CollegeFootballDataAdapter, NflverseAdapter,
-                               SportsDataIOAdapter, SportmonksAdapter,
+                               SportsDataIOAdapter, SportsGameOddsAdapter, SportmonksAdapter,
                                APISportsAdapter, normalized_score,
                                season_form_from_matches, blend_season_history,
                                is_placeholder_team_name)
@@ -90,6 +91,19 @@ try:
     from config_keys import BALLDONTLIE_KEY
 except Exception:
     BALLDONTLIE_KEY = os.environ.get("BALLDONTLIE_KEY", "")
+try:
+    from config_keys import BBS_API_KEY
+except Exception:
+    BBS_API_KEY = os.environ.get("BBS_API_KEY", "")
+try:
+    from config_keys import BBS_PREGAME_ENABLED
+except Exception:
+    BBS_PREGAME_ENABLED = os.environ.get("BBS_PREGAME_ENABLED", "")
+BBS_PREGAME_ENABLED = str(BBS_PREGAME_ENABLED).lower() in {"1", "true", "yes", "on"}
+try:
+    from config_keys import SPORTSGAMEODDS_KEY
+except Exception:
+    SPORTSGAMEODDS_KEY = os.environ.get("SPORTSGAMEODDS_KEY", "")
 try:
     from config_keys import CFBD_KEY, CBBD_KEY
 except Exception:
@@ -245,6 +259,16 @@ API_FOOTBALL_MAX_INJURIES = 8
 SPORTSDATAIO_PREGAME_CACHE_FILE = f"sportsdataio_pregame_{COMP_KEY.lower()}_cache.json"
 SPORTSDATAIO_PREGAME_CACHE_MIN = 15
 SPORTSDATAIO_PREGAME_STALE_MAX_HOURS = 6
+BBS_PREGAME_CACHE_FILE = f"bbs_pregame_{COMP_KEY.lower()}_cache.json"
+BBS_PREGAME_CACHE_MIN = 45
+BBS_PREGAME_STALE_MAX_HOURS = 24
+SPORTSGAMEODDS_CACHE_FILE = f"sportsgameodds_{COMP_KEY.lower()}_cache.json"
+# The free plan is capped at 2,500 returned objects per month across seven
+# Matchday competitions. One request per competition per day, capped at eight
+# events, remains inside that budget; hourly odds polling would not.
+SPORTSGAMEODDS_CACHE_MIN = 1440
+SPORTSGAMEODDS_STALE_MAX_HOURS = 30
+SPORTSGAMEODDS_WINDOW_HOURS = 36
 
 DIAG = []
 _ODDS_CACHE = {"t": 0.0, "data": {}}
@@ -423,8 +447,8 @@ def _scrub(s):
     s = re.sub(r"(X-Auth-Token['\"]?\s*[:=]\s*['\"]?)[A-Za-z0-9]+", r"\1***", s)
     s = re.sub(r"(x-apisports-key['\"]?\s*[:=]\s*['\"]?)[A-Za-z0-9]+", r"\1***", s)
     for k in (FOOTBALL_DATA_KEY, ODDS_API_KEY, API_FOOTBALL_KEY,
-              SPORTSDATAIO_KEY, SPORTMONKS_KEY, BALLDONTLIE_KEY,
-              CFBD_KEY, CBBD_KEY):
+              SPORTSDATAIO_KEY, SPORTMONKS_KEY, BALLDONTLIE_KEY, BBS_API_KEY,
+              SPORTSGAMEODDS_KEY, CFBD_KEY, CBBD_KEY):
         if k and len(str(k)) > 8:
             s = s.replace(str(k), "***")
     return s
@@ -807,6 +831,8 @@ def fetch_odds():
         if hn:
             rec["1x2"] = {"home_pct": round(hs["home"]/hn*100), "draw_pct": round(hs["draw"]/hn*100),
                           "away_pct": round(hs["away"]/hn*100), "books": hn,
+                          "source": "The Odds API consensus",
+                          "source_reference": "https://the-odds-api.com/",
                           "observed_at": datetime.datetime.fromtimestamp(
                               now, datetime.timezone.utc).isoformat().replace("+00:00", "Z")}
             # bookmaker disagreement: spread of the home-win % across books
@@ -2275,7 +2301,9 @@ def predict(home, away, markets, m=None, neutral_venue=False):
             n = 0
             for p in (lst or []):
                 s = str(p).lower()
-                if "(out" in s or "(inactive" in s or s.endswith("out)") or "(o)" in s:
+                if ("(out" in s or "(inactive" in s or "(injured reserve" in s or
+                        "(suspension" in s or "(suspended" in s or
+                        s.endswith("out)") or "(o)" in s):
                     n += 1
             return n
         injd = m.get("injuries") or {}
@@ -4238,7 +4266,8 @@ def _market_snapshot_receipt(market, recorded_at):
     if observed is None or recorded is None or observed > recorded:
         return None
     return {
-        "source": "The Odds API consensus",
+        "source": market.get("source") or "The Odds API consensus",
+        "source_reference": market.get("source_reference") or "https://the-odds-api.com/",
         "observed_at": observed_at,
         "recorded_at": recorded_at,
         "snapshot_id": market.get("snapshot_id"),
@@ -4667,7 +4696,9 @@ def update_scorecard(matches):
             rec["post_lock_market_snapshot"] = {"h": mk.get("home_pct"), "d": mk.get("draw_pct"), "a": mk.get("away_pct")}
             rec["market_backfilled_at"] = _utc_now().isoformat().replace("+00:00", "Z")
             rec["post_lock_market_receipt"] = {
-                "source": "The Odds API consensus", "observed_at": mk.get("observed_at"),
+                "source": mk.get("source") or "The Odds API consensus",
+                "source_reference": mk.get("source_reference") or "https://the-odds-api.com/",
+                "observed_at": mk.get("observed_at"),
                 "recorded_at": rec["market_backfilled_at"], "snapshot_id": mk.get("snapshot_id"),
                 "books": mk.get("books"), "spread": mk.get("spread")}
             dirty = True
@@ -5749,6 +5780,222 @@ def fetch_sportsdataio_pregame_overlay(matches):
             "lineups": sum(bool(match.get("lineups")) for match in near)}
 
 
+def _merge_sportsgameodds_overlay(match, row):
+    """Restore only normalized, non-ESPN fields from the quota-saving cache."""
+    if not isinstance(row, dict):
+        return {"markets": 0, "venues": 0}
+    markets = venues = 0
+    incoming = (row.get("markets") or {}).get("1x2")
+    if incoming and not (match.get("markets") or {}).get("1x2"):
+        match.setdefault("markets", {})["1x2"] = incoming
+        markets = 1
+    if row.get("venue") and not match.get("venue"):
+        match["venue"] = row["venue"]
+        venues = 1
+    provenance = match.setdefault("pregame_provenance", [])
+    for item in row.get("pregame_provenance") or []:
+        if item not in provenance:
+            provenance.append(item)
+    return {"markets": markets, "venues": venues}
+
+
+def fetch_sportsgameodds_overlay(matches):
+    """Fill missing pregame markets from the 2,500-object/month free tier.
+
+    SportsGameOdds is a fallback, not another hourly poll. The primary Odds
+    API remains untouched when it returned a market. A 24-hour normalized
+    cache and eight-event response cap bound worst-case monthly consumption
+    across every supported Matchday competition. The API's player map is not
+    a lineup/injury feed and is intentionally never persisted or attached.
+    """
+    if COMP_KEY not in SportsGameOddsAdapter.LEAGUES:
+        return {"markets": 0, "venues": 0}
+    if not SPORTSGAMEODDS_KEY or "PASTE_" in str(SPORTSGAMEODDS_KEY):
+        DIAG.append("SportsGameOdds overlay: key not configured")
+        return {"markets": 0, "venues": 0}
+    now = datetime.datetime.now(datetime.timezone.utc)
+    near = []
+    for match in matches:
+        kickoff = _parse_kickoff(match.get("kickoff"))
+        if match.get("status") == "UPCOMING" and kickoff:
+            hours = (kickoff - now).total_seconds() / 3600
+            if 0 <= hours <= SPORTSGAMEODDS_WINDOW_HOURS:
+                near.append(match)
+    missing = [match for match in near if not (match.get("markets") or {}).get("1x2")]
+    if not missing:
+        DIAG.append("SportsGameOdds overlay: no missing near-term market")
+        return {"markets": 0, "venues": 0}
+
+    cached = None
+    try:
+        with open(SPORTSGAMEODDS_CACHE_FILE, encoding="utf-8") as handle:
+            candidate = json.load(handle)
+        age = time.time() - float(candidate.get("t") or 0)
+        if age < SPORTSGAMEODDS_CACHE_MIN * 60:
+            cached = candidate
+    except Exception:
+        cached = None
+
+    if cached is None:
+        observed_at = now.isoformat().replace("+00:00", "Z")
+        try:
+            adapter = SportsGameOddsAdapter(SPORTSGAMEODDS_KEY, COMP_KEY)
+            venue_was_missing = {str(match.get("id")): not bool(match.get("venue"))
+                                 for match in missing}
+            events = adapter.upcoming_events(
+                observed_at,
+                (now + datetime.timedelta(hours=SPORTSGAMEODDS_WINDOW_HOURS))
+                .isoformat().replace("+00:00", "Z"),
+            )
+            result = adapter.attach_pregame(
+                missing, events, observed_at=observed_at,
+                has_draws=bool(COMP.get("has_draws")),
+            )
+            cached = {"t": time.time(), "observed_at": observed_at, "matches": {
+                str(match.get("id")): {
+                    "markets": {"1x2": (match.get("markets") or {}).get("1x2")}
+                               if ((match.get("markets") or {}).get("1x2") or {}).get("source")
+                               == "SportsGameOdds consensus" else {},
+                    "venue": match.get("venue") if venue_was_missing.get(str(match.get("id"))) else None,
+                    "pregame_provenance": [item for item in match.get("pregame_provenance") or []
+                                             if item.get("source") == "SportsGameOdds"],
+                } for match in missing
+            }}
+            tmp = SPORTSGAMEODDS_CACHE_FILE + ".tmp"
+            with open(tmp, "w", encoding="utf-8") as handle:
+                json.dump(cached, handle, ensure_ascii=False)
+            os.replace(tmp, SPORTSGAMEODDS_CACHE_FILE)
+            DIAG.append(f"SportsGameOdds overlay: {result['markets']} market(s), "
+                        f"{result['venues']} venue(s), {len(events)} object(s)")
+            return result
+        except ProviderError as exc:
+            try:
+                with open(SPORTSGAMEODDS_CACHE_FILE, encoding="utf-8") as handle:
+                    candidate = json.load(handle)
+                age = time.time() - float(candidate.get("t") or 0)
+                if age > SPORTSGAMEODDS_STALE_MAX_HOURS * 3600:
+                    raise OSError("SportsGameOdds cache exceeds bounded stale window")
+                cached = candidate
+                DIAG.append(f"SportsGameOdds overlay: bounded stale cache after provider error — {_scrub(exc)}")
+            except Exception:
+                DIAG.append(f"SportsGameOdds overlay unavailable — {_scrub(exc)}")
+                return {"markets": 0, "venues": 0}
+    else:
+        DIAG.append("SportsGameOdds overlay: local cache")
+
+    totals = {"markets": 0, "venues": 0}
+    rows = cached.get("matches") if isinstance(cached, dict) else {}
+    for match in missing:
+        added = _merge_sportsgameodds_overlay(match, (rows or {}).get(str(match.get("id"))))
+        totals["markets"] += added["markets"]
+        totals["venues"] += added["venues"]
+    return totals
+
+
+def _merge_bbs_overlay(match, row):
+    """Merge cached BBS fields without deleting a richer licensed overlay."""
+    if not isinstance(row, dict):
+        return
+    incoming = row.get("injuries") or {}
+    target = match.setdefault("injuries", {"home": [], "away": []})
+    for side in ("home", "away"):
+        for label in incoming.get(side) or []:
+            if label not in target.setdefault(side, []):
+                target[side].append(label)
+    personnel = match.setdefault("personnel", {})
+    cached_personnel = row.get("personnel") or {}
+    for key in ("injuries_feed_checked", "injuries_confirmed", "injuries_source"):
+        if cached_personnel.get(key) is not None:
+            personnel.setdefault(key, cached_personnel[key])
+    details = personnel.setdefault("injury_details", {"home": [], "away": []})
+    cached_details = cached_personnel.get("injury_details") or {}
+    for side in ("home", "away"):
+        seen = {str(item.get("player_id") or item.get("name") or "").lower()
+                for item in details.get(side) or [] if isinstance(item, dict)}
+        for item in cached_details.get(side) or []:
+            if not isinstance(item, dict):
+                continue
+            identity = str(item.get("player_id") or item.get("name") or "").lower()
+            if identity not in seen:
+                details.setdefault(side, []).append(item)
+                seen.add(identity)
+    provenance = match.setdefault("pregame_provenance", [])
+    for item in row.get("pregame_provenance") or []:
+        if item not in provenance:
+            provenance.append(item)
+
+
+def fetch_bbs_pregame_overlay(matches):
+    """Attach verified free-tier NBA/NHL injury reports near prediction lock.
+
+    Big Balls currently documents NBA and NHL injury ingestion as active. Its
+    OpenAPI contract explicitly says stored lineups are not ingested yet, so
+    this overlay is intentionally injury-only and never clears lineup,
+    starting-pitcher, goalie, or other readiness flags.
+    """
+    if COMP_KEY not in BigBallsSportsAdapter.INJURY_SPORTS:
+        return {"injuries": 0}
+    if not BBS_PREGAME_ENABLED:
+        DIAG.append("Big Balls pregame overlay: disabled until upstream provenance is confirmed")
+        return {"injuries": 0}
+    if not BBS_API_KEY or "PASTE_" in str(BBS_API_KEY):
+        DIAG.append("Big Balls pregame overlay: key not configured")
+        return {"injuries": 0}
+    now = datetime.datetime.now(datetime.timezone.utc)
+    near = []
+    for match in matches:
+        kickoff = _parse_kickoff(match.get("kickoff"))
+        if match.get("status") == "UPCOMING" and kickoff:
+            hours = (kickoff - now).total_seconds() / 3600
+            if 0 <= hours <= 72:
+                near.append(match)
+    if not near:
+        DIAG.append("Big Balls pregame overlay: no upcoming fixture inside 72h")
+        return {"injuries": 0}
+
+    cached = None
+    try:
+        if (os.path.exists(BBS_PREGAME_CACHE_FILE) and
+                time.time() - os.path.getmtime(BBS_PREGAME_CACHE_FILE) <
+                BBS_PREGAME_CACHE_MIN * 60):
+            with open(BBS_PREGAME_CACHE_FILE, encoding="utf-8") as handle:
+                cached = json.load(handle)
+    except Exception:
+        cached = None
+    if cached is None:
+        try:
+            attached = BigBallsSportsAdapter(BBS_API_KEY, COMP_KEY).attach_availability(near)
+            cached = {str(match.get("id")): {
+                "injuries": match.get("injuries"),
+                "personnel": match.get("personnel"),
+                "pregame_provenance": [item for item in match.get("pregame_provenance") or []
+                                         if item.get("source") == "Big Balls Sports Data"],
+            } for match in near}
+            tmp = BBS_PREGAME_CACHE_FILE + ".tmp"
+            with open(tmp, "w", encoding="utf-8") as handle:
+                json.dump(cached, handle, ensure_ascii=False)
+            os.replace(tmp, BBS_PREGAME_CACHE_FILE)
+            DIAG.append(f"Big Balls pregame overlay: {attached} injury label(s)")
+            return {"injuries": attached}
+        except ProviderError as exc:
+            try:
+                age_seconds = time.time() - os.path.getmtime(BBS_PREGAME_CACHE_FILE)
+                if age_seconds > BBS_PREGAME_STALE_MAX_HOURS * 3600:
+                    raise OSError("pregame cache exceeds bounded stale window")
+                with open(BBS_PREGAME_CACHE_FILE, encoding="utf-8") as handle:
+                    cached = json.load(handle)
+                DIAG.append(f"Big Balls pregame overlay: stale cache after provider error — {_scrub(exc)}")
+            except Exception:
+                DIAG.append(f"Big Balls pregame overlay unavailable — {_scrub(exc)}")
+                return {"injuries": 0}
+    else:
+        DIAG.append("Big Balls pregame overlay: local cache")
+    for match in near:
+        _merge_bbs_overlay(match, cached.get(str(match.get("id"))) if isinstance(cached, dict) else None)
+    return {"injuries": sum(len((match.get("injuries") or {}).get(side) or [])
+                            for match in near for side in ("home", "away"))}
+
+
 def _has_injuries(match):
     injuries = match.get("injuries") or {}
     return isinstance(injuries, dict) and any(injuries.get(side) for side in ("home", "away"))
@@ -5767,7 +6014,7 @@ def _injury_data_available(match):
 def record_market_snapshots(matches):
     """Persist authorized pregame consensus probabilities for later CLV/audits."""
     now = datetime.datetime.now(datetime.timezone.utc)
-    snapshots = []
+    batches = defaultdict(list)
     for match in matches:
         kickoff = _parse_kickoff(match.get("kickoff"))
         market = (match.get("markets") or {}).get("1x2") or {}
@@ -5783,7 +6030,7 @@ def record_market_snapshots(matches):
                 float(_ODDS_CACHE["t"]), datetime.timezone.utc).isoformat().replace("+00:00", "Z")
         if not observed_at:
             continue
-        snapshots.append({
+        snapshot = {
             "fixture_id": str(match.get("id")), "competition": COMP_KEY,
             "kickoff": match.get("kickoff"), "observed_at": observed_at,
             "participants": {
@@ -5797,25 +6044,31 @@ def record_market_snapshots(matches):
             "outcomes": {key: float(market[source_keys[key]]) / 100.0 for key in keys},
             "source_snapshot_id": market.get("snapshot_id") or
                                   f"{match.get('id')}:{observed_at}",
-        })
-    if not snapshots:
+        }
+        source = market.get("source") or "The Odds API consensus"
+        source_reference = market.get("source_reference") or "https://the-odds-api.com/"
+        batches[(source, source_reference)].append(snapshot)
+    if not batches:
         return 0
-    # Replaying a cache is not a new provider fetch. Keeping the batch fetch
-    # time tied to the newest actual quote also makes identical cache replays
-    # deduplicate in the append-only ledger.
-    fetched_at = max(snapshot["observed_at"] for snapshot in snapshots)
-    try:
-        result = market_snapshots.append_batch("market_snapshot_ledger.jsonl", {
-            "source": "The Odds API consensus",
-            "authorization_basis": "licensed",
-            "source_reference": "https://the-odds-api.com/",
-            "fetched_at": fetched_at, "snapshots": snapshots,
-        }, recorded_at=now.isoformat())
-        DIAG.append(f"market ledger: {'appended' if result['created'] else 'deduplicated'} "
-                    f"{len(snapshots)} pregame snapshot(s)")
-    except (OSError, ValueError) as exc:
-        DIAG.append(f"market ledger: snapshot rejected — {_scrub(exc)}")
-    return len(snapshots)
+    total = 0
+    for (source, source_reference), snapshots in batches.items():
+        # Replaying a cache is not a new provider fetch. Keeping each batch's
+        # fetch time tied to its actual quote also makes cache replays dedupe.
+        fetched_at = max(snapshot["observed_at"] for snapshot in snapshots)
+        try:
+            result = market_snapshots.append_batch("market_snapshot_ledger.jsonl", {
+                "source": source,
+                "authorization_basis": "licensed",
+                "source_reference": source_reference,
+                "fetched_at": fetched_at, "snapshots": snapshots,
+            }, recorded_at=now.isoformat())
+            DIAG.append(f"market ledger ({source}): "
+                        f"{'appended' if result['created'] else 'deduplicated'} "
+                        f"{len(snapshots)} pregame snapshot(s)")
+            total += len(snapshots)
+        except (OSError, ValueError) as exc:
+            DIAG.append(f"market ledger ({source}): snapshot rejected — {_scrub(exc)}")
+    return total
 
 
 
@@ -6027,6 +6280,8 @@ def build():
         if rec:
             m["markets"] = rec; merged += 1
             if how == "fuzzy": fuzzy += 1
+    print("Fetching fallback market context (SportsGameOdds)…")
+    fetch_sportsgameodds_overlay(matches)
     record_market_snapshots(matches)
 
     if COMP["sport"] == "soccer":
@@ -6043,6 +6298,12 @@ def build():
     elif COMP.get("source") != "sportsdataio":
         print("Fetching sport-specific personnel context (SportsDataIO)…")
         fetch_sportsdataio_pregame_overlay(matches)
+
+    # The adapter is coverage-safe but remains disabled until the provider
+    # identifies the upstream injury source and Matchday can exclude ESPN
+    # origin. Unsupported sports always no-op and remain honestly missing.
+    print("Fetching free-tier injury context (Big Balls Sports Data)…")
+    fetch_bbs_pregame_overlay(matches)
 
     venue_shadow = pregame_context.derive_venue_context(matches, training_matches, COMP["sport"])
     if venue_shadow.get("matches"):
@@ -6282,7 +6543,27 @@ def build():
     live = sum(1 for m in matches if m["status"] == "LIVE")
     source_note = "sample" if COMP.get("source") == "sportsdataio" else "live"
     fixture_count_check = _check_and_record_fixture_count(COMP_KEY, len(matches))
-    payload = {"updated": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds"),
+    generated_at = datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds")
+    source_provider = {"fd": "football_data", "cfbd": "cfbd", "cbbd": "cbbd",
+                       "balldontlie": "balldontlie", "apisports": "api_football",
+                       "sportsdataio": "sportsdataio"}.get(COMP.get("source"), COMP.get("source"))
+    blocked_providers = list(provider_quota.BLOCKED_THIS_RUN)
+    source_state = ("quota_limited" if source_provider in blocked_providers
+                    else "partial" if blocked_providers else "fresh")
+    payload = {"updated": generated_at,
+               "source_freshness": {
+                   "state": source_state,
+                   "generated_at": generated_at,
+                   "last_successful_at": generated_at if source_state != "quota_limited" else None,
+                   "primary_provider": source_provider,
+                   "quota_blocked_providers": blocked_providers,
+                   "fallback_age_hours": 0,
+                   "note": ("Primary provider was quota-limited; retained fields may come from bounded caches."
+                            if source_state == "quota_limited" else
+                            "Some optional provider signals were quota-limited."
+                            if source_state == "partial" else
+                            "This competition build completed without a quota refusal."),
+               },
                "fixture_count_check": fixture_count_check,
                "source_note": source_note, "competition": COMP["label"], "comp_key": COMP_KEY, "matches": matches,
                "title_odds": title, "news": news, "news_scope": COMP_KEY, "bracket": bracket, "bracketology": bracketology,
@@ -6290,7 +6571,7 @@ def build():
                "advancement": compute_advancement(matches, st, name_map, code_map),
                "weekly_awards": weekly_awards,
                "markets_quota_out": MARKET_STATE["quota_out"],
-               "quota_blocked_providers": list(provider_quota.BLOCKED_THIS_RUN),
+               "quota_blocked_providers": blocked_providers,
                "diagnostics": [_scrub(x) for x in DIAG]}
     for out in (OUT_FILE, f"data_{COMP_KEY.lower()}.json"):
         tmp = out + ".tmp"

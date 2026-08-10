@@ -1,0 +1,21 @@
+{
+  "source": "REPLACE WITH REVIEWED SOURCE OWNER",
+  "authorization_basis": "first_party",
+  "source_reference": "REPLACE WITH DIRECT URL OR CONTRACT REFERENCE",
+  "fetched_at": "2026-09-09T15:00:00Z",
+  "observations": [
+    {
+      "fixture_id": "REPLACE_FIXTURE_ID",
+      "kickoff": "2026-09-10T00:20:00Z",
+      "observed_at": "2026-09-09T14:55:00Z",
+      "team_code": "SEA",
+      "player_id": "REPLACE_PLAYER_ID",
+      "player_name": "REPLACE PLAYER NAME",
+      "position_group": "QB",
+      "role": "STARTER",
+      "status": "QUESTIONABLE",
+      "confidence": 1.0,
+      "source_observation_id": "REPLACE_SOURCE_RECORD_ID"
+    }
+  ]
+}

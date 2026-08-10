@@ -95,6 +95,20 @@ class ForecastLedgerTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "hash mismatch"):
             forecast_ledger.validate(self.path)
 
+    def test_coverage_reports_missing_lock_and_grade(self):
+        rec = official_record("h")
+        rec.update({"model_hit": True, "score": "24-17"})
+        before = forecast_ledger.coverage(self.path, [rec])
+        self.assertEqual(before["missing_locks"], ["fixture-1"])
+        self.assertEqual(before["missing_grades"], ["fixture-1"])
+        self.assertFalse(before["complete"])
+
+        forecast_ledger.sync_pick_records(self.path, [rec], "NFL")
+        after = forecast_ledger.coverage(self.path, [rec])
+        self.assertTrue(after["complete"])
+        self.assertEqual(after["logged_locks"], 1)
+        self.assertEqual(after["logged_grades"], 1)
+
 
 if __name__ == "__main__":
     unittest.main()
