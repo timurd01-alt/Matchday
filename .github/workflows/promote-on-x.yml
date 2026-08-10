@@ -89,7 +89,7 @@ jobs:
       # receipt then blocks a retry while the account is reconciled manually.
       - name: Save publication ledger for deduplication
         if: always() && hashFiles('.x_bot_state.json') != ''
-        uses: actions/cache/save@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: .x_bot_state.json
           key: matchday-x-bot-${{ github.run_id }}
