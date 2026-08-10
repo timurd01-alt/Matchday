@@ -1,5 +1,17 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-08-10 (zero-cost coverage hardening. Added a pinned offline
+OpenFootball `football.json` importer at revision
+`a5dd38b3bcbe3aa2477cf400f569264253d51431`; the repository declares its
+schema, data, and scripts CC0/public domain. Matchday accepts only completed
+domestic-league results, validates fixture identities and scores, records the
+exact revision/file/license on every normalized row, and keeps the resulting
+corpus research-only and zero-weight. This is not a live provider and does not
+authorize unrelated football sites or moving/unpinned GitHub datasets. The
+provider-neutral manual availability contract remains provenance-gated,
+pregame-only, tamper-evident, and zero-weight; no source is enabled merely
+because it is publicly viewable or the site is noncommercial.)
+
 Reviewed: 2026-08-07 (market-comparison hardening adds no provider or endpoint.
 Authorized The Odds API consensus snapshots now retain exact competition, fixture,
 kickoff, home/away orientation, source receipt, and observed/recorded timestamps in
@@ -113,6 +125,11 @@ legal advice.
 - **football-data.org:** retain the visible required attribution, keep the key
   private, use one application/domain per subscription, and stay within the
   plan's request rate and competition coverage.
+- **OpenFootball (`openfootball/football.json`):** offline historical domestic-
+  league results only, pinned to the reviewed CC0 revision above. Preserve the
+  revision and per-row source file, reject incomplete or implausible scores,
+  and validate identity/overlap before any production use. Do not present it as
+  a live, official, lineup, injury, player-value, or event-stat source.
 - **The Odds API:** user-facing analytics are permitted, but never redistribute
   the market data as a raw feed. Keep odds informational and verify plan quota.
   Outright/futures markets are a small, fixed catalog, not "every sport_key

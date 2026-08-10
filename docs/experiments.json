@@ -128,6 +128,20 @@
       "decided_at": null,
       "evidence": [],
       "source": "docs/PREDICTION_RESEARCH_ROADMAP.md#phase-2-learned-challengers-by-sport"
+    },
+    {
+      "id": "soccer-openfootball-elo-cold-start",
+      "sport": "soccer",
+      "feature_family": "pinned multi-season domestic-league Elo history",
+      "hypothesis": "Tuned three-way Elo built from deeper CC0 domestic-league results improves proper scores over Matchday's default three-way Elo.",
+      "baseline": "Default three-way Elo on the identical frozen 2025 season cohort",
+      "experiment": "Pinned OpenFootball revision a5dd38b3bcbe3aa2477cf400f569264253d51431 supplied 25,452 validated completed results across EPL, Bundesliga, La Liga, Serie A, and Ligue 1; tune on 2024 and test on 1,751 2025 fixtures across 37 kickoff-week blocks.",
+      "evaluation": "Candidate log loss 1.001532 versus 1.004432 and Brier 0.597919 versus 0.599424, but the paired week-block 95% log-loss interval [-0.008859, 0.002669] included no improvement; candidate accuracy was also slightly lower (0.504283 versus 0.507139).",
+      "decision": "reject",
+      "decision_detail": "The deeper CC0 corpus is retained as lawful research input, but the tuned Elo variant failed the frozen promotion gate and remains offline with production_weight 0.",
+      "decided_at": "2026-08-10",
+      "evidence": ["soccer_elo_challenger_backtest.json"],
+      "source": "openfootball_history.py and build_soccer_elo_challenger.py"
     }
   ]
 }

@@ -232,3 +232,44 @@ def sync_pick_records(
         appended += int(created)
     final = validate(path)
     return {"appended": appended, "events": final["events"], "last_hash": final["last_hash"]}
+
+
+def coverage(path: str | os.PathLike[str], records: Iterable[dict[str, Any]]) -> dict[str, Any]:
+    """Report whether every eligible official record reached the event log.
+
+    Coverage is deliberately fixture-based. A fixture has exactly one official
+    pregame lock, while corrected results may legitimately append more than one
+    grade event without making the scorecard record itself a second fixture.
+    """
+    rows = [row for row in records if isinstance(row, dict)]
+    expected_locks = {
+        str(row.get("fixture_id")) for row in rows
+        if row.get("integrity_eligible") is True
+        and row.get("fixture_id")
+        and isinstance(row.get("prediction_snapshot"), dict)
+    }
+    expected_grades = {
+        str(row.get("fixture_id")) for row in rows
+        if str(row.get("fixture_id") or "") in expected_locks
+        and row.get("result") in {"h", "d", "a"}
+    }
+    events = read_events(path)
+    logged_locks = {
+        str(event.get("fixture_id")) for event in events
+        if event.get("event_type") == "forecast_locked"
+    }
+    logged_grades = {
+        str(event.get("fixture_id")) for event in events
+        if event.get("event_type") == "forecast_graded"
+    }
+    missing_locks = sorted(expected_locks - logged_locks)
+    missing_grades = sorted(expected_grades - logged_grades)
+    return {
+        "expected_locks": len(expected_locks),
+        "logged_locks": len(expected_locks & logged_locks),
+        "expected_grades": len(expected_grades),
+        "logged_grades": len(expected_grades & logged_grades),
+        "missing_locks": missing_locks,
+        "missing_grades": missing_grades,
+        "complete": not missing_locks and not missing_grades,
+    }

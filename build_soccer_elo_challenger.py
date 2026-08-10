@@ -10,6 +10,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 import fetch_data
+import openfootball_history
 from soccer_elo_challenger import (DEFAULT_PARAMS, MODEL_VERSION, metrics,
                                    paired_week_interval, replay, source_hash, tune)
 
@@ -95,8 +96,20 @@ def main() -> None:
     parser.add_argument("--model", default="soccer_elo_challenger_model.json")
     parser.add_argument("--report", default="soccer_elo_challenger_backtest.json")
     parser.add_argument("--cache", default="soccer_elo_history_cache.json")
+    parser.add_argument("--openfootball-checkout",
+                        help="use the pinned CC0 OpenFootball checkout instead of provider calls")
     args = parser.parse_args()
-    artifact, report = build(fetch_rows(args.cache))
+    if args.openfootball_checkout:
+        rows = openfootball_history.load_checkout(args.openfootball_checkout)
+        openfootball_history.write_cache("openfootball_soccer_history_cache.json", rows)
+    else:
+        rows = fetch_rows(args.cache)
+    artifact, report = build(rows)
+    if args.openfootball_checkout:
+        artifact["source"] = "OpenFootball pinned CC0 historical results"
+        artifact["source_reference"] = openfootball_history.SOURCE_REPOSITORY
+        artifact["source_revision"] = openfootball_history.PINNED_REVISION
+        artifact["source_license"] = openfootball_history.LICENSE
     Path(args.model).write_text(json.dumps(artifact, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
                                 encoding="utf-8", newline="\n")
     Path(args.report).write_text(json.dumps(report, ensure_ascii=False, indent=2, sort_keys=True) + "\n",

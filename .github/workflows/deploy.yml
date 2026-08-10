@@ -7,6 +7,12 @@ on:
     # final results without spending scarce provider quota on scoreboard duty.
     - cron: '17 * * * *'
   workflow_dispatch:
+    inputs:
+      quota_bootstrap:
+        description: 'Allow one deliberate call per protected provider when the private quota ledger is missing'
+        required: false
+        type: boolean
+        default: false
   push:
     branches: [main]
 
@@ -19,6 +25,11 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    env:
+      # Scheduled runs fail closed on a cold cache. A human may explicitly
+      # authorize one bootstrap response so real provider headers can seed the
+      # private ledger; ordinary dispatches remain protected too.
+      MATCHDAY_QUOTA_ALLOW_BOOTSTRAP: ${{ github.event_name == 'workflow_dispatch' && inputs.quota_bootstrap && '1' || '0' }}
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
 
@@ -74,10 +85,13 @@ jobs:
       # deploy below if it fails, since a broken prediction/provider path
       # is exactly what those steps would otherwise ship.
       - name: Run required test suite
-        run: python -m unittest test_model_inputs test_provider_adapters test_generate_posts test_pregame_context test_market_benchmark test_x_bot
+        run: python -m unittest test_model_inputs test_provider_adapters test_generate_posts test_pregame_context test_market_benchmark test_x_bot test_provider_quota
 
       - name: Recover published last-good fixtures after a cold cache miss
         run: python recover_published_data.py
+
+      - name: Reconcile official picks into append-only forecast ledgers
+        run: python reconcile_forecast_ledgers.py
 
       - name: Write private keys from secrets (never committed)
         run: |

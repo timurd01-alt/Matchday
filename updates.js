@@ -4,6 +4,17 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0810B",
+  "tag": "Improvement",
+  "title": "Free-data coverage now fails safely and proves its freshness",
+  "items": [
+   "CFBD now paces its verified 1,000-call monthly allowance, CFBD and market calls fail closed when their private quota ledger is missing, and reset probes are claimed and tightly capped instead of draining the final reserve.",
+   "Every persisted official pick and grade is reconciled into the tamper-evident forecast ledger even when a provider refresh is skipped, while recovered last-good fixture files disclose their source age instead of looking newly fetched.",
+   "A pinned CC0 OpenFootball importer validated 25,452 completed domestic-league results with exact revision, file, license, and identity provenance; its tuned Elo point estimates improved slightly, but the paired interval crossed zero, so it failed promotion and remains offline.",
+   "The manual NFL availability pilot now has a concrete provenance checklist and example batch; prohibited, unclear, post-kickoff, and ESPN-origin inputs remain rejected."
+  ]
+ },
+ {
   "date": "Build 0810A",
   "tag": "Content",
   "title": "Matchday 10 verification edition published",

@@ -6282,7 +6282,27 @@ def build():
     live = sum(1 for m in matches if m["status"] == "LIVE")
     source_note = "sample" if COMP.get("source") == "sportsdataio" else "live"
     fixture_count_check = _check_and_record_fixture_count(COMP_KEY, len(matches))
-    payload = {"updated": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds"),
+    generated_at = datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds")
+    source_provider = {"fd": "football_data", "cfbd": "cfbd", "cbbd": "cbbd",
+                       "balldontlie": "balldontlie", "apisports": "api_football",
+                       "sportsdataio": "sportsdataio"}.get(COMP.get("source"), COMP.get("source"))
+    blocked_providers = list(provider_quota.BLOCKED_THIS_RUN)
+    source_state = ("quota_limited" if source_provider in blocked_providers
+                    else "partial" if blocked_providers else "fresh")
+    payload = {"updated": generated_at,
+               "source_freshness": {
+                   "state": source_state,
+                   "generated_at": generated_at,
+                   "last_successful_at": generated_at if source_state != "quota_limited" else None,
+                   "primary_provider": source_provider,
+                   "quota_blocked_providers": blocked_providers,
+                   "fallback_age_hours": 0,
+                   "note": ("Primary provider was quota-limited; retained fields may come from bounded caches."
+                            if source_state == "quota_limited" else
+                            "Some optional provider signals were quota-limited."
+                            if source_state == "partial" else
+                            "This competition build completed without a quota refusal."),
+               },
                "fixture_count_check": fixture_count_check,
                "source_note": source_note, "competition": COMP["label"], "comp_key": COMP_KEY, "matches": matches,
                "title_odds": title, "news": news, "news_scope": COMP_KEY, "bracket": bracket, "bracketology": bracketology,
@@ -6290,7 +6310,7 @@ def build():
                "advancement": compute_advancement(matches, st, name_map, code_map),
                "weekly_awards": weekly_awards,
                "markets_quota_out": MARKET_STATE["quota_out"],
-               "quota_blocked_providers": list(provider_quota.BLOCKED_THIS_RUN),
+               "quota_blocked_providers": blocked_providers,
                "diagnostics": [_scrub(x) for x in DIAG]}
     for out in (OUT_FILE, f"data_{COMP_KEY.lower()}.json"):
         tmp = out + ".tmp"

@@ -60,5 +60,7 @@ cfb_challenger_rows.jsonl
 cfb_challenger_report.json
 soccer_challenger_rows.jsonl
 soccer_challenger_report.json
+soccer_elo_challenger_model.json
+soccer_elo_challenger_backtest.json
 mlb_challenger_rows.jsonl
 mlb_challenger_report.json
