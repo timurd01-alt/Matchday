@@ -64,6 +64,36 @@
   ]
  },
  {
+  "id": "friday-model-vs-market-2026-08-07",
+  "comp": "all",
+  "comp_label": "Model vs. Market",
+  "type": "market-audit",
+  "slug": "friday-model-vs-market-2026-08-07",
+  "title": "Friday Model vs. Market: The Rejection Ledger",
+  "date": "2026-08-07",
+  "summary": "No upcoming non-MLB fixture had a current, match-aligned, verifiable market comparison worth publishing.",
+  "body": [
+   "Friday's quality gate found zero qualifying non-MLB model-versus-market comparisons. No model probability, no-vig market probability, or gap is printed without aligned fixture identity, timing, and documented market coverage.",
+   "The next Premier League fixture is Arsenal FC v Coventry City FC on August 21, but its export has no market to compare against. Cached Ligue 1 and Bundesliga files are from July 20; the latest cached NFL snapshot is July 17; college football has no match-level odds cache.",
+   "Model factors such as rating, form, home advantage, schedule context, and competition adjustments remain context rather than proof. Some inputs are correlated, and no stale price or undocumented book count is treated as a consensus market."
+  ]
+ },
+ {
+  "id": "wednesday-availability-tracker-2026-08-05",
+  "comp": "all",
+  "comp_label": "Availability Desk",
+  "type": "availability",
+  "slug": "wednesday-availability-tracker-2026-08-05",
+  "title": "Wednesday Availability Tracker: The Watch Window Opens",
+  "date": "2026-08-05",
+  "summary": "The next covered fixture is approaching, but no source-backed player-status call or model movement is reportable.",
+  "body": [
+   "Arsenal FC v Coventry City FC on August 21 is the next covered non-MLB fixture, but the current export carries no player-level absence, suspension, return, roster move, or confirmed lineup change.",
+   "Confirmed: none. Doubtful: none classified. Unknown: official club bulletins, team sheets, and any role or replacement effect closer to kickoff.",
+   "No before-and-after availability snapshot is retained, so the model effect is unknown rather than assumed to be zero. MLB remains out of scope because the documented feed does not provide a current compliant player-availability source."
+  ]
+ },
+ {
   "id": "transparent-weekly-scorecard-2026-08-02",
   "comp": "all",
   "comp_label": "Independent Audit",

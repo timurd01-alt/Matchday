@@ -12,6 +12,30 @@ provider-neutral manual availability contract remains provenance-gated,
 pregame-only, tamper-evident, and zero-weight; no source is enabled merely
 because it is publicly viewable or the site is noncommercial.)
 
+Reviewed: 2026-08-08 (SportsGameOdds v2 free-tier market fallback. Version 3
+Terms, dated 2026-06-23, permit Data to reach end users inside an application
+that supplies material independent value, while prohibiting standalone feeds,
+bulk exports, resale, and substitute services. The live Amateur key confirms a
+2,500-object monthly ceiling and access to NFL, NBA, MLB, NHL, NCAAF, NCAAB,
+MLS, and UEFA Champions League. Matchday requests at most eight near-term
+events per supported competition, caches the normalized result for 24 hours,
+keeps a 100-object reserve, and does not persist raw payloads. Because the free
+payload includes ESPN BET, provider-wide fair/consensus fields are rejected;
+Matchday recomputes the game market only from matched non-ESPN bookmakers.
+Event `players` are prop-linked identities, not confirmed lineups or injury
+reports, so they are neither persisted nor represented as personnel coverage.)
+
+Reviewed: 2026-08-07 (Big Balls Sports Data pregame adapter and quota handling are
+staged but disabled. The provider's terms page identifies itself as an initial draft
+with an effective date pending public launch; its public attribution page does not name
+the upstream source for the NBA/NHL injury feed, and its OpenAPI description says the
+gateway aggregates free-tier sources and scrapers while response provenance is an opaque
+source tier. That is insufficient to prove the injury rows are not ESPN-originated, so
+Matchday's standing ESPN exclusion prevents activation. The provider's machine-readable
+contract also says stored lineups are not ingested, despite broader marketing claims;
+MLB/soccer lineups, MLB injuries, starting pitchers, bullpens, NFL injuries, and college
+injuries remain explicitly missing. A configured key alone cannot enable this overlay.)
+
 Reviewed: 2026-08-07 (market-comparison hardening adds no provider or endpoint.
 Authorized The Odds API consensus snapshots now retain exact competition, fixture,
 kickoff, home/away orientation, source receipt, and observed/recorded timestamps in
@@ -152,6 +176,20 @@ legal advice.
   Removed (set to `None`) on 2026-07-25; do not reintroduce any of them
   without re-checking the live catalog first, since this provider can add
   outright markets over time and the check is free to repeat.
+- **SportsGameOdds:** Version 3 Terms sections 30-41 allow Data to be shown to
+  end users only as part of an application providing material independent
+  value and prohibit standalone redistribution, bulk exports, resale, and a
+  substitute data service. Keep the key server-side. The Amateur plan is
+  currently marketed for testing/prototyping/initial development and provides
+  2,500 objects/month, 10 requests/minute, eight leagues, and ten-minute
+  updates; re-check the account and terms before treating the free offering as
+  permanent production infrastructure. Use `/account/usage` before fetching,
+  keep the 100-object reserve and 24-hour cache, and never expand the eight-
+  event response cap without recalculating monthly consumption. Do not use
+  provider-wide `fairOdds`/`bookOdds`/consensus fields because ESPN BET is one
+  of the free plan's nine books. Build consensus only from `byBookmaker` after
+  excluding every ESPN-labelled identifier. The event `players` map is tied
+  to props and is not proof of a lineup, starter, injury, or availability.
 - **BALLDONTLIE:** use the official API only; do not scrape, share the key,
   present data as official league data, or retain/redistribute it beyond
   reasonable application needs. Covers NBA, NFL, and MLB fixtures/scores on
@@ -230,6 +268,34 @@ Provider terms and tiers can change. Revisit the linked provider pages in
 record the review date here before each public release.
 
 ## Changelog
+
+- **2026-08-08:** Added SportsGameOdds as a quota-bounded fallback only when
+  the existing Odds API has no near-term game market. Live account verification
+  confirmed all eight advertised Amateur leagues and the real monthly counters.
+  The adapter requests no more than eight upcoming events in a 36-hour window,
+  once per competition per 24 hours, and persists only normalized market/venue
+  fields. Consensus is rebuilt per bookmaker after removing overround and
+  excluding ESPN BET; provider aggregate prices and raw event/player/odds
+  objects are not stored. Market snapshot and lock receipts now preserve the
+  actual provider identity instead of hardcoding The Odds API. SportsGameOdds
+  does not clear injuries, lineups, probable starters, starting goalies, or
+  bullpen availability because the verified event schema supplies none of
+  those as authoritative personnel fields.
+
+- **2026-08-07:** Staged a disabled-by-default Big Balls Sports Data injury
+  adapter for the two competitions its active injury endpoint actually supports
+  (NBA and NHL). Normalization joins full team names/codes, drops a report when
+  its own expected-return date precedes the target fixture, records bounded
+  provenance, and lets only hard Out/Inactive/Injured Reserve/Suspension labels
+  enter the existing capped injury nudge. A 45-minute normalized cache and the
+  provider's observed `X-RateLimit-*` headers protect the free tier. Production
+  activation is blocked: the provider's terms are explicitly a pre-launch draft,
+  the attribution page omits the injury source, and response metadata does not
+  identify upstream vendors, so Matchday cannot enforce its absolute ESPN-origin
+  exclusion. The machine-readable OpenAPI contract also states lineup ingestion
+  is not active; no lineup, starter, bullpen, NFL, college, soccer, or MLB coverage
+  is fabricated from marketing copy. The configured key is retained privately,
+  but a key alone does not enable any request.
 
 - **2026-07-28:** Replaced the incomplete six-player UCL "Model-built XI" presentation with the
   organizer's published 2025/26 Team of the Season (11 names/teams/positions only), visibly

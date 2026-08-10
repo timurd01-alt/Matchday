@@ -65,6 +65,22 @@ class ModelInputTests(unittest.TestCase):
         self.assertEqual(payload["fetched_at"], "2026-08-03T14:00:00Z")
         self.assertEqual(payload["snapshots"][0]["observed_at"], "2026-08-03T14:00:00Z")
 
+    def test_market_ledger_preserves_the_actual_provider_identity(self):
+        match = {"id": "sgo-odds", "status": "UPCOMING",
+                 "kickoff": "2099-01-01T00:00:00Z",
+                 "markets": {"1x2": {
+                     "home_pct": 55, "away_pct": 45,
+                     "observed_at": "2026-08-08T14:00:00Z",
+                     "source": "SportsGameOdds consensus",
+                     "source_reference": "https://sportsgameodds.com/",
+                 }}}
+        with mock.patch.object(fetch_data.market_snapshots, "append_batch",
+                               return_value={"created": True}) as append:
+            self.assertEqual(fetch_data.record_market_snapshots([match]), 1)
+        payload = append.call_args.args[1]
+        self.assertEqual(payload["source"], "SportsGameOdds consensus")
+        self.assertEqual(payload["source_reference"], "https://sportsgameodds.com/")
+
     def test_market_weight_uses_depth_and_disagreement(self):
         self.assertEqual(fetch_data._market_blend_weight(None), 0.0)
         deep_tight = fetch_data._market_blend_weight({"books": 8, "spread": 4})
@@ -986,6 +1002,18 @@ class ApiFootballInjuryPredictIntegrationTests(unittest.TestCase):
         # home's confirmed absence should tilt probability toward the away side
         self.assertGreater(pred_out["adjusted"]["a"], pred_q["adjusted"]["a"])
 
+    def test_injured_reserve_and_suspension_are_hard_absences(self):
+        home = {"name": "Alpha", "pts": 6, "gd": 2, "form": "W W"}
+        away = {"name": "Beta", "pts": 6, "gd": 2, "form": "W W"}
+        baseline = {"stage": "Final", "weather": {}, "injuries": {"home": [], "away": []}}
+        unavailable = {"stage": "Final", "weather": {},
+                       "injuries": {"home": ["One (Injured Reserve - Knee)",
+                                              "Two (Suspension - Suspension)"], "away": []}}
+        pred_base = fetch_data.predict(dict(home), dict(away), {}, baseline)
+        pred_out = fetch_data.predict(dict(home), dict(away), {}, unavailable)
+        self.assertIn("injuries", pred_out["why"])
+        self.assertGreater(pred_out["adjusted"]["a"], pred_base["adjusted"]["a"])
+
     def test_real_shaped_af_injuries_payload_feeds_predict_end_to_end(self):
         payload = {"response": [
             {"player": {"id": 1, "name": "Home Starter", "type": "Missing Fixture", "reason": "Injury"},
@@ -1000,6 +1028,104 @@ class ApiFootballInjuryPredictIntegrationTests(unittest.TestCase):
         pred = fetch_data.predict(home, away, {}, m)
         self.assertIn("injuries", pred["why"])
         self.assertGreater(pred["adjusted"]["a"], pred["adjusted"]["h"])
+
+
+class BigBallsOverlayGateTests(unittest.TestCase):
+    def test_key_alone_cannot_enable_unverified_injury_feed(self):
+        old_enabled, old_key, old_comp = (fetch_data.BBS_PREGAME_ENABLED,
+                                          fetch_data.BBS_API_KEY,
+                                          fetch_data.COMP_KEY)
+        try:
+            fetch_data.BBS_PREGAME_ENABLED = False
+            setattr(fetch_data, "BBS_API_KEY", "configured-secret")
+            fetch_data.COMP_KEY = "NBA"
+            with mock.patch.object(fetch_data.BigBallsSportsAdapter,
+                                   "attach_availability") as attach:
+                result = fetch_data.fetch_bbs_pregame_overlay([{
+                    "id": "future", "status": "UPCOMING",
+                    "kickoff": "2099-01-01T00:00:00Z",
+                    "home": {"name": "Boston Celtics"},
+                    "away": {"name": "New York Knicks"},
+                }])
+            self.assertEqual(result, {"injuries": 0})
+            attach.assert_not_called()
+        finally:
+            fetch_data.BBS_PREGAME_ENABLED = old_enabled
+            fetch_data.BBS_API_KEY = old_key
+            fetch_data.COMP_KEY = old_comp
+
+
+class SportsGameOddsOverlayTests(unittest.TestCase):
+    @staticmethod
+    def event():
+        def odd(side, home_price, away_price):
+            prices = {"fanduel": home_price if side == "home" else away_price,
+                      "espnbet": "-500"}
+            return {"statID": "points", "periodID": "game", "betTypeID": "ml",
+                    "sideID": side, "byBookmaker": {
+                        book: {"odds": price, "available": True}
+                        for book, price in prices.items()}}
+        return {"eventID": "provider-event", "info": {"venue": "Test Park"},
+                "teams": {
+                    "home": {"teamID": "BOSTON_RED_SOX_MLB",
+                             "names": {"long": "Boston Red Sox", "short": "BOS"}},
+                    "away": {"teamID": "NEW_YORK_YANKEES_MLB",
+                             "names": {"long": "New York Yankees", "short": "NYY"}},
+                },
+                "players": {"private-raw": {"name": "Not A Confirmed Lineup"}},
+                "odds": {"home": odd("home", "+110", "-120"),
+                         "away": odd("away", "+110", "-120")}}
+
+    def test_overlay_attaches_normalized_market_and_caches_no_raw_payload(self):
+        old = (fetch_data.COMP_KEY, fetch_data.COMP, fetch_data.SPORTSGAMEODDS_KEY,
+               fetch_data.SPORTSGAMEODDS_CACHE_FILE)
+        kickoff = (fetch_data.datetime.datetime.now(fetch_data.datetime.timezone.utc) +
+                   fetch_data.datetime.timedelta(hours=2)).isoformat()
+        match = {"id": "mlb-1", "status": "UPCOMING", "kickoff": kickoff,
+                 "home": {"name": "Boston Red Sox", "code": "BOS"},
+                 "away": {"name": "New York Yankees", "code": "NYY"},
+                 "markets": {}, "lineups": None,
+                 "injuries": {"home": [], "away": []}}
+        try:
+            with tempfile.TemporaryDirectory() as tmp:
+                fetch_data.COMP_KEY = "MLB"
+                fetch_data.COMP = dict(fetch_data.COMPETITIONS["MLB"])
+                setattr(fetch_data, "SPORTSGAMEODDS_KEY", "configured-key")
+                fetch_data.SPORTSGAMEODDS_CACHE_FILE = os.path.join(tmp, "sgo.json")
+                with mock.patch.object(provider_adapters.SportsGameOddsAdapter,
+                                       "upcoming_events", return_value=[self.event()]):
+                    result = fetch_data.fetch_sportsgameodds_overlay([match])
+                self.assertEqual(result["markets"], 1)
+                self.assertEqual(match["markets"]["1x2"]["source"],
+                                 "SportsGameOdds consensus")
+                self.assertTrue(match["markets"]["1x2"]["espn_excluded"])
+                self.assertIsNone(match["lineups"])
+                with open(fetch_data.SPORTSGAMEODDS_CACHE_FILE, encoding="utf-8") as handle:
+                    cache_text = handle.read()
+                self.assertNotIn("private-raw", cache_text)
+                self.assertNotIn("Not A Confirmed Lineup", cache_text)
+        finally:
+            (fetch_data.COMP_KEY, fetch_data.COMP, fetch_data.SPORTSGAMEODDS_KEY,
+             fetch_data.SPORTSGAMEODDS_CACHE_FILE) = old
+
+    def test_existing_primary_market_avoids_free_tier_call(self):
+        old = (fetch_data.COMP_KEY, fetch_data.COMP, fetch_data.SPORTSGAMEODDS_KEY)
+        kickoff = (fetch_data.datetime.datetime.now(fetch_data.datetime.timezone.utc) +
+                   fetch_data.datetime.timedelta(hours=2)).isoformat()
+        match = {"id": "mlb-1", "status": "UPCOMING", "kickoff": kickoff,
+                 "home": {"name": "Boston Red Sox"}, "away": {"name": "New York Yankees"},
+                 "markets": {"1x2": {"home_pct": 50, "away_pct": 50}}}
+        try:
+            fetch_data.COMP_KEY = "MLB"
+            fetch_data.COMP = dict(fetch_data.COMPETITIONS["MLB"])
+            setattr(fetch_data, "SPORTSGAMEODDS_KEY", "configured-key")
+            with mock.patch.object(provider_adapters.SportsGameOddsAdapter,
+                                   "upcoming_events") as upcoming:
+                self.assertEqual(fetch_data.fetch_sportsgameodds_overlay([match]),
+                                 {"markets": 0, "venues": 0})
+            upcoming.assert_not_called()
+        finally:
+            fetch_data.COMP_KEY, fetch_data.COMP, fetch_data.SPORTSGAMEODDS_KEY = old
 
 
 class StandingsAndMarketUpsetRadarTests(unittest.TestCase):

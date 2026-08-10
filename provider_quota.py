@@ -133,6 +133,18 @@ PROVIDER_SPECS = {
         "window": "rolling_unix",
         "reserve": 1,
     },
+    # Big Balls returns the tighter of its minute/day buckets in the standard
+    # X-RateLimit trio on every authenticated response. The reset is a unix
+    # timestamp. This enforces the observable bucket; Matchday additionally
+    # limits usage structurally to one cached league-wide injury request per
+    # supported competition, keeping the 1,000/day free allowance well clear.
+    "bigballs": {
+        "remaining_header": "x-ratelimit-remaining",
+        "limit_header": "x-ratelimit-limit",
+        "reset_header": "x-ratelimit-reset",
+        "window": "rolling_unix",
+        "reserve": 2,
+    },
     # API-Football exposes two INDEPENDENT buckets on every response: a
     # per-minute rate limit and a per-day request cap. Both must have room or
     # the call is refused -- see check()/record_response()'s "api_football"

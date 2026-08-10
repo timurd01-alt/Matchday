@@ -33,6 +33,34 @@ window.SYSTEM_UPDATES=[
   ]
  },
  {
+  "date": "Build 0808B",
+  "tag": "Data",
+  "title": "A free market fallback now protects pregame comparisons",
+  "items": [
+   "SportsGameOdds now fills missing near-term game markets for its supported NFL, NBA, MLB, NHL, college football, college basketball, and Champions League feeds without replacing a healthy primary market source.",
+   "The integration checks the live monthly object allowance, keeps a safety reserve, caps each response at eight events, and caches normalized results for 24 hours to remain within the 2,500-object free tier.",
+   "ESPN BET is excluded before Matchday calculates bookmaker consensus, and prop-linked player identities are not mislabeled as injuries, lineups, probable starters, goalies, or bullpen availability."
+  ]
+ },
+ {
+  "date": "Build 0808A",
+  "tag": "Operations",
+  "title": "X publishing is paused until the account exists",
+  "items": [
+   "Removed the X bot's automatic trigger, credential wiring, and live publishing step. The remaining workflow can only generate a manual dry-run preview and cannot post externally."
+  ]
+ },
+ {
+  "date": "Build 0807E",
+  "tag": "Data",
+  "title": "Pregame injury coverage now fails closed",
+  "items": [
+   "A quota-safe NBA/NHL injury adapter is ready, with team matching and expected-return filtering that prevents expired reports from affecting a future fixture.",
+   "The new feed remains disabled until its upstream injury source is identified and verified against Matchday's provider rules; a configured API key alone cannot activate it.",
+   "Unsupported lineup, starter, bullpen, NFL, college, soccer, and MLB personnel fields remain honestly marked missing instead of being cleared from provider marketing claims."
+  ]
+ },
+ {
   "date": "Build 0807D",
   "tag": "Fix",
   "title": "Metric help now opens reliably on mobile",
