@@ -1,5 +1,11 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-08-10 (The Odds API quota reconciliation uses only the provider's
+documented `/v4/sports` endpoint, whose official v4 guide states that it costs
+zero usage credits and returns the standard remaining/used/last-cost headers.
+It is called only after the private ledger would otherwise block a paid market
+request, and its persisted six-hour claim prevents unbounded polling.)
+
 Reviewed: 2026-08-10 (zero-cost coverage hardening. Added a pinned offline
 OpenFootball `football.json` importer at revision
 `a5dd38b3bcbe3aa2477cf400f569264253d51431`; the repository declares its

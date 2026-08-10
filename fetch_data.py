@@ -231,6 +231,7 @@ COMP = COMPETITIONS[COMP_KEY]
 
 ODDS_URL = (f"https://api.the-odds-api.com/v4/sports/{COMP['odds']}/odds/"
             "?regions=eu&markets=h2h&oddsFormat=decimal")
+ODDS_FREE_QUOTA_URL = "https://api.the-odds-api.com/v4/sports/?apiKey="
 ODDS_CACHE_FILE = f"odds_market_cache_{COMP_KEY.lower()}.json"
 OUTRIGHTS_CACHE_FILE = f"outrights_market_cache_{COMP_KEY.lower()}.json"
 PREGAME_ODDS_WINDOW_HOURS = 3
@@ -454,6 +455,17 @@ def _scrub(s):
     return s
 
 
+def _refresh_odds_quota_free():
+    """Refresh a stale Odds API ledger through its documented zero-cost endpoint."""
+    req = urllib.request.Request(f"{ODDS_FREE_QUOTA_URL}{ODDS_API_KEY}", headers=UA)
+    with urllib.request.urlopen(req, timeout=25) as response:
+        response.read()
+        provider_quota.record_response("odds_api", response.headers)
+        last_cost = response.headers.get("x-requests-last")
+        if last_cost not in (None, "0", 0):
+            raise RuntimeError("Odds API quota receipt endpoint unexpectedly reported a nonzero cost")
+
+
 def _get(url, headers=None, provider=None):
     """`provider`, when given, gates the call against provider_quota's ledger
     and records whatever quota header the response carried -- see
@@ -464,8 +476,18 @@ def _get(url, headers=None, provider=None):
         try:
             provider_quota.check(provider)
         except provider_quota.QuotaExceededError as exc:
-            provider_quota.record_block(provider)
-            raise RuntimeError(_scrub(str(exc)))
+            # The provider documents /v4/sports as zero-credit.  Use it to
+            # reconcile stale/cold quota state before suppressing paid calls.
+            if provider == "odds_api" and provider_quota.claim_free_probe(provider):
+                try:
+                    _refresh_odds_quota_free()
+                    provider_quota.check(provider)
+                except Exception as refresh_exc:
+                    provider_quota.record_block(provider)
+                    raise RuntimeError(_scrub(str(refresh_exc)))
+            else:
+                provider_quota.record_block(provider)
+                raise RuntimeError(_scrub(str(exc)))
     req = urllib.request.Request(url, headers=headers or {})
     try:
         with urllib.request.urlopen(req, timeout=25) as r:

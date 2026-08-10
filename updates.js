@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0810C",
+  "tag": "Fix",
+  "title": "Available market credits no longer look exhausted",
+  "items": [
+   "The Odds API guard now reconciles stale or cold quota state through the provider's documented zero-credit sports endpoint before blocking paid market calls.",
+   "The free reconciliation probe is claimed in the private ledger and limited to once every six hours, preventing both false lockouts and unbounded status polling.",
+   "Quota state paths are now resolved when each operation runs, so tests and alternate deployments cannot accidentally read or overwrite the default ledger."
+  ]
+ },
+ {
   "date": "Build 0810B",
   "tag": "Improvement",
   "title": "Free-data coverage now fails safely and proves its freshness",
