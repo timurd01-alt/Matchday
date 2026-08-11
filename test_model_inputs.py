@@ -18,6 +18,10 @@ def finished(mid, home, away, hs, aps):
 
 
 class ModelInputTests(unittest.TestCase):
+    def test_nflverse_team_code_aliases_cover_live_provider_mismatches(self):
+        self.assertEqual(fetch_data.NFLVERSE_TEAM_CODE_MAP["WSH"], "WAS")
+        self.assertEqual(fetch_data.NFLVERSE_TEAM_CODE_MAP["LAR"], "LA")
+
     def test_weekly_awards_use_only_verified_locked_prediction(self):
         kickoff = (fetch_data.datetime.datetime.now(fetch_data.datetime.timezone.utc) -
                    fetch_data.datetime.timedelta(days=1)).isoformat()

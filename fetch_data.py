@@ -324,6 +324,7 @@ COLLEGE_ADVANCED_CACHE_MIN = 1440  # one league-wide CFBD shadow refresh per day
 # multi-hundred-KB file every run for data that barely changes hour to hour.
 NFLVERSE_LEADERS_CACHE_MIN = 1440  # 24 hours
 NFLVERSE_PREGAME_CACHE_MIN = 1440  # current assets are published daily
+NFLVERSE_TEAM_CODE_MAP = {"WSH": "WAS", "LAR": "LA"}
 NEWS_TERMS = {
     "WC": "FIFA World Cup", "UCL": "UEFA Champions League",
     "EPL": "Premier League soccer", "LALIGA": "La Liga soccer",
@@ -5884,6 +5885,7 @@ def fetch_nflverse_pregame_overlay(matches):
         key_sides = personnel.setdefault("key_players", {})
         for side in ("home", "away"):
             code = str((match.get(side) or {}).get("code") or "").upper()
+            code = NFLVERSE_TEAM_CODE_MAP.get(code, code)
             chart = teams.get(code)
             if not chart:
                 continue

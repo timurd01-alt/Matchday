@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0811B",
+  "tag": "Fix",
+  "title": "NFL depth-chart coverage reaches every scheduled fixture",
+  "items": [
+   "Normalized Washington and Los Angeles Rams provider abbreviations across BALLDONTLIE and nflverse after the first live deployment showed those were the only remaining depth-chart misses.",
+   "The live audit improved from 225 of 256 upcoming NFL fixtures with both teams populated to full scheduled-fixture coverage after rebuild."
+  ]
+ },
+ {
   "date": "Build 0811A",
   "tag": "Data",
   "title": "Current NFL depth charts replace empty key-player context",
