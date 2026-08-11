@@ -1,0 +1,11 @@
+{
+  "rank": 137,
+  "date": "Build 0810D",
+  "tag": "Fix",
+  "title": "CFBD credits now recover from stale quota state",
+  "items": [
+    "Before suppressing a college-football refresh, Matchday now reconciles CFBD's persisted balance through the provider's documented zero-call info endpoint; the live account reported 582 calls remaining.",
+    "CFBD pacing now permits a bounded preseason schedule/model rebuild while retaining the 25-call hard reserve, adaptive cadence, and six-hour status-probe cooldown.",
+    "Production workflow dispatches can explicitly force one full competition rebuild without bypassing any provider quota or data-validation guard."
+  ]
+}

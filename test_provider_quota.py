@@ -213,6 +213,11 @@ class QuotaModuleTests(unittest.TestCase):
         with open(self.path, encoding="utf-8") as handle:
             self.assertEqual(json.load(handle)["cfbd"]["limit"], 1000)
 
+    def test_cfbd_seasonal_burst_allows_live_582_balance_on_august_10(self):
+        self._freeze(datetime.datetime(2026, 8, 11, 2, 40, tzinfo=datetime.timezone.utc))
+        pq.record_response("cfbd", {"X-CallLimit-Remaining": "582"}, state_path=self.path)
+        pq.check("cfbd", state_path=self.path)
+
     def test_six_hour_age_does_not_leak_the_reserve(self):
         observed = datetime.datetime(2026, 8, 10, 0, 0, tzinfo=datetime.timezone.utc)
         self._freeze(observed)
@@ -268,18 +273,57 @@ class ProviderAdaptersWiringTests(unittest.TestCase):
         pq.STATE_FILE = self.path
         self.addCleanup(setattr, pq, "STATE_FILE", self._orig_state_file)
 
-    def test_get_json_refuses_before_the_request_when_exhausted(self):
+    def test_cfbd_stale_zero_reconciles_through_free_info_endpoint(self):
         import provider_adapters as pa
         pq.record_response("cfbd", {"X-CallLimit-Remaining": "0"})
         called = []
-        real_request = pa.urllib.request.Request
-        pa.urllib.request.Request = lambda *a, **k: called.append(1) or real_request(*a, **k)
-        try:
-            with self.assertRaises(pa.ProviderError):
-                pa._get_json("https://api.collegefootballdata.com/games", provider="cfbd")
-        finally:
-            pa.urllib.request.Request = real_request
-        self.assertEqual(called, [], "the HTTP request must never fire once quota is known exhausted")
+
+        class Response:
+            def __init__(self, headers, body):
+                self.headers, self.body = headers, body
+            def __enter__(self):
+                return self
+            def __exit__(self, *_):
+                return False
+            def read(self):
+                return self.body
+
+        def open_response(request, timeout=25):
+            called.append(request.full_url)
+            if request.full_url == pa.CFBD_FREE_QUOTA_URL:
+                return Response({"X-CallLimit-Remaining": "582"}, b'{"remainingCalls":582}')
+            return Response({"X-CallLimit-Remaining": "581"}, b"[]")
+
+        real_open = pa.urllib.request.urlopen
+        pa.urllib.request.urlopen = open_response
+        self.addCleanup(setattr, pa.urllib.request, "urlopen", real_open)
+        rows = pa._get_json("https://api.collegefootballdata.com/games",
+                            headers={"Authorization": "Bearer test"}, provider="cfbd")
+        self.assertEqual(rows, [])
+        self.assertEqual(called, [pa.CFBD_FREE_QUOTA_URL,
+                                  "https://api.collegefootballdata.com/games"])
+
+    def test_cfbd_info_confirming_zero_still_blocks_paid_request(self):
+        import provider_adapters as pa
+        pq.record_response("cfbd", {"X-CallLimit-Remaining": "0"})
+        called = []
+
+        class Response:
+            headers = {"X-CallLimit-Remaining": "0"}
+            def __enter__(self):
+                return self
+            def __exit__(self, *_):
+                return False
+            def read(self):
+                return b'{"remainingCalls":0}'
+
+        real_open = pa.urllib.request.urlopen
+        pa.urllib.request.urlopen = lambda request, timeout=25: called.append(request.full_url) or Response()
+        self.addCleanup(setattr, pa.urllib.request, "urlopen", real_open)
+        with self.assertRaises(pa.ProviderError):
+            pa._get_json("https://api.collegefootballdata.com/games",
+                         headers={"Authorization": "Bearer test"}, provider="cfbd")
+        self.assertEqual(called, [pa.CFBD_FREE_QUOTA_URL])
 
     def test_get_json_without_provider_is_completely_untracked(self):
         """Existing callers/tests that never pass provider= keep working

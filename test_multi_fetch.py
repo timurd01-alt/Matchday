@@ -62,6 +62,13 @@ class RunOnceTests(unittest.TestCase):
             multi_fetch.run_once(str(state))
         self.assertEqual(runner.call_count, 2)
 
+    def test_force_rebuild_ignores_recent_cadence_state(self):
+        state, runner = self._run([True])
+        state.write_text(json.dumps({"mlb": 9e9}), encoding="utf-8")
+        with mock.patch.object(multi_fetch, "FORCE_REFETCH_ONCE", set()):
+            multi_fetch.run_once(str(state), force=True)
+        self.assertEqual(runner.call_count, 1)
+
 
 class ModelSchemaRefreshTests(unittest.TestCase):
     def setUp(self):

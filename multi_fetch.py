@@ -345,7 +345,7 @@ def loop():
         time.sleep(TICK)
 
 
-def run_once(state_path=".ci_fetch_state.json"):
+def run_once(state_path=".ci_fetch_state.json", force=False):
     """One adaptive pass over every sport, for external schedulers (e.g. CI).
 
     Persists last-fetch times to state_path so repeated calls only refetch
@@ -364,7 +364,7 @@ def run_once(state_path=".ci_fetch_state.json"):
     last_fetched = {k: v for k, v in state.items() if isinstance(v, (int, float))}
     print(f"Multi-sport fetcher (one-shot): {', '.join(k for k, _ in SPORTS)}")
     anchors_now = {k: _anchor_due(k, served_anchors.get(k)) for k, _ in SPORTS}
-    due = [(k, f) for k, f in SPORTS if k in FORCE_REFETCH_ONCE or not os.path.exists(f"data_{k}.json")
+    due = [(k, f) for k, f in SPORTS if force or k in FORCE_REFETCH_ONCE or not os.path.exists(f"data_{k}.json")
            or _stale_source(k) or _missing_fields(k) or anchors_now.get(k)
            or time.time() - last_fetched.get(k, 0) >= _interval_for(k)]
     for key, anchor in anchors_now.items():
@@ -421,7 +421,7 @@ def run_once(state_path=".ci_fetch_state.json"):
 if __name__ == "__main__":
     try:
         if "--once" in sys.argv:
-            run_once()
+            run_once(force="--force" in sys.argv)
         else:
             loop()
     except KeyboardInterrupt:

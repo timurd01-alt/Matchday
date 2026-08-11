@@ -13,6 +13,11 @@ on:
         required: false
         type: boolean
         default: false
+      force_rebuild:
+        description: 'Ignore adaptive cadence once and rebuild every competition'
+        required: false
+        type: boolean
+        default: false
   push:
     branches: [main]
 
@@ -148,7 +153,14 @@ jobs:
         if: github.event_name != 'push'
         id: adaptive-fetch
         continue-on-error: true
-        run: python multi_fetch.py --once
+        env:
+          FORCE_REBUILD: ${{ github.event_name == 'workflow_dispatch' && inputs.force_rebuild && 'true' || 'false' }}
+        run: |
+          if [ "$FORCE_REBUILD" = "true" ]; then
+            python multi_fetch.py --once --force
+          else
+            python multi_fetch.py --once
+          fi
 
       - name: Report degraded provider refresh without blocking site deployment
         if: github.event_name != 'push' && steps.adaptive-fetch.outcome == 'failure'

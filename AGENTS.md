@@ -95,7 +95,10 @@ CFBD's configured free tier is paced against its verified 1,000-call monthly
 ceiling in addition to the response's real remaining count. CBBD still uses
 reserve-only enforcement because no verified ceiling is configured. CFBD and
 The Odds API fail closed if the private quota ledger is missing; only an
-explicit `quota_bootstrap` workflow dispatch may seed a cold ledger.
+explicit `quota_bootstrap` workflow dispatch may seed a cold ledger. When a
+stored CFBD or Odds balance would block a call, their documented zero-cost
+status endpoints (`/info` and `/v4/sports`) may reconcile the real balance at
+most once per six hours; never use a paid data endpoint as a quota probe.
 
 ## Tests
 

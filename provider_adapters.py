@@ -25,6 +25,26 @@ class ProviderError(RuntimeError):
     pass
 
 
+CFBD_FREE_QUOTA_URL = "https://api.collegefootballdata.com/info"
+
+
+def _refresh_cfbd_quota_free(headers, timeout=25):
+    """Reconcile CFBD quota state through its documented zero-call endpoint."""
+    req = urllib.request.Request(CFBD_FREE_QUOTA_URL, headers=headers or {})
+    with urllib.request.urlopen(req, timeout=timeout) as response:
+        body = response.read()
+        try:
+            payload = json.loads(body.decode("utf-8"))
+        except (UnicodeDecodeError, json.JSONDecodeError):
+            payload = {}
+        quota_headers = dict(response.headers.items())
+        if not any(str(key).lower() == "x-calllimit-remaining" for key in quota_headers):
+            remaining = payload.get("remainingCalls") if isinstance(payload, dict) else None
+            if remaining is not None:
+                quota_headers["x-calllimit-remaining"] = str(remaining)
+        provider_quota.record_response("cfbd", quota_headers)
+
+
 def _get_json(url, headers=None, timeout=25, provider=None):
     """`provider`, when given, gates the call against provider_quota's ledger
     before it fires and records whatever quota header this response carried
@@ -35,12 +55,20 @@ def _get_json(url, headers=None, timeout=25, provider=None):
         try:
             provider_quota.check(provider)
         except provider_quota.QuotaExceededError as exc:
-            # Surface as the same ProviderError every existing caller already
-            # falls back gracefully on -- a pre-flight refusal should look
-            # exactly like any other provider failure to code that never
-            # needs to know the difference.
-            provider_quota.record_block(provider)
-            raise ProviderError(str(exc)) from exc
+            if provider == "cfbd" and provider_quota.claim_free_probe(provider):
+                try:
+                    _refresh_cfbd_quota_free(headers or {}, timeout)
+                    provider_quota.check(provider)
+                except Exception as refresh_exc:
+                    provider_quota.record_block(provider)
+                    raise ProviderError(str(refresh_exc)) from refresh_exc
+            else:
+                # Surface as the same ProviderError every existing caller already
+                # falls back gracefully on -- a pre-flight refusal should look
+                # exactly like any other provider failure to code that never
+                # needs to know the difference.
+                provider_quota.record_block(provider)
+                raise ProviderError(str(exc)) from exc
     req = urllib.request.Request(url, headers=headers or {"User-Agent": "Matchday/1.0"})
     try:
         with urllib.request.urlopen(req, timeout=timeout) as response:

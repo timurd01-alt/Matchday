@@ -1,5 +1,13 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-08-10 (CFBD quota reconciliation uses the provider's documented
+`/info` endpoint, which the official CFBD guidance states does not count against
+monthly limits. It is called only when the persisted ledger would otherwise
+block a request, records the returned `X-CallLimit-Remaining`/`remainingCalls`
+balance, and shares the persisted six-hour free-probe cooldown. The production
+force-rebuild switch changes cadence only; it does not bypass provider quota
+checks, safety reserves, source restrictions, or validation.)
+
 Reviewed: 2026-08-10 (The Odds API quota reconciliation uses only the provider's
 documented `/v4/sports` endpoint, whose official v4 guide states that it costs
 zero usage credits and returns the standard remaining/used/last-cost headers.

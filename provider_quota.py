@@ -56,6 +56,7 @@ STATE_FILE = "provider_quota_state.json"
 BOOTSTRAP_ENV = "MATCHDAY_QUOTA_ALLOW_BOOTSTRAP"
 FAIL_CLOSED_WITHOUT_STATE = {"cfbd", "odds_api"}
 FREE_PROBE_COOLDOWN_HOURS = 6
+FREE_PROBE_PROVIDERS = {"cfbd", "odds_api"}
 
 # A provider's tracked remaining budget can be low without this run ever
 # having asked it for anything -- that alone doesn't mean output degraded
@@ -111,6 +112,10 @@ PROVIDER_SPECS = {
         # it does not return a total-limit header, so the known plan ceiling
         # must be supplied here or day-by-day pacing can never engage.
         "known_limit": 1000,
+        # CFBD usage is seasonally front-loaded around schedule/model rebuilds.
+        # A wider burst allowance still catches a runaway early-month burn,
+        # while the adaptive fetch cadence and hard reserve protect the tail.
+        "pace_slack": 1.5,
         "quota_body_markers": ("monthly call quota exceeded",),
     },
     "cbbd": {
@@ -300,7 +305,7 @@ def claim_free_probe(provider, state_path=None):
     before HTTP so parallel competition jobs and a genuinely exhausted account
     cannot turn a free status check into an unbounded polling loop.
     """
-    if provider != "odds_api":
+    if provider not in FREE_PROBE_PROVIDERS:
         return False
     state = _load_state(state_path)
     now = _now()
@@ -369,7 +374,7 @@ def _pace_reason(key, spec, entry, now):
     if total_seconds <= 0:
         return None
     elapsed_fraction = max(0.0, min(1.0, (now - period_start).total_seconds() / total_seconds))
-    allowed_used = limit * elapsed_fraction * PACE_SLACK
+    allowed_used = limit * elapsed_fraction * float(spec.get("pace_slack", PACE_SLACK))
     used = limit - entry["remaining"]
     if used > allowed_used:
         return (f"{key}: {used}/{limit} used, ahead of the pace needed to last "
