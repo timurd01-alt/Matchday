@@ -1,5 +1,20 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-08-11 (NFL pregame context through nflverse. The current 2026
+`depth_charts` and `weekly_rosters` release assets were live-verified through
+GitHub's release API and carry source timestamps from 2026-08-10. nflreadr's
+1.5.0 release notes state that depth charts are ESPN-derived starting in 2025;
+this provenance is disclosed in every fixture receipt and in the UI. Matchday
+publishes only a compact, normalized expected-starter view inside its analytics
+experience, not the raw bulk file, and labels it unconfirmed rather than a
+gameday lineup. The daily private cache avoids repeated bulk downloads. The
+dedicated nflverse 2026 injury asset does not exist yet, so 2025 rows are never
+carried forward or represented as current. Repository data is offered under CC
+BY 4.0 and attribution is retained, but nflverse also warns that underlying
+football data remain subject to owner terms; this is a residual licensing risk,
+not a claim of ESPN/NFL endorsement. Direct ESPN endpoint access and scraping
+remain disabled.)
+
 Reviewed: 2026-08-10 (pregame-context retention and quota priority add no new
 provider or endpoint. Normalized injuries, lineups, starters, weather, venue
 context, and provenance already acquired from cleared sources are retained in
@@ -137,19 +152,15 @@ legal advice.
 
 - Keep every API key in `config_keys.py` or server environment variables. Never
   expose a key in browser JavaScript, generated JSON, screenshots, or Git.
-- **STANDING RULE: Matchday may not use ESPN as a data source, in any form,
-  at any time, under any code path -- full stop -- unless and until ESPN's
-  own terms of service / a signed licensing agreement explicitly permits the
-  specific use.** This is not a preference to be re-litigated per feature; it
-  applies to every future addition (scores, stats, rankings, standings,
-  leaders, lineups, injuries, news, images, video, anything) regardless of
-  how it's sourced (direct API, RSS/Google News carryover, a third-party
-  aggregator that re-serves ESPN content, scraping, etc.). If a future task
-  would pull ESPN-originated content through any path, stop and flag it
-  instead of implementing -- do not assume an exception applies. Today's
-  status: ESPN's site-JSON endpoints (scoreboard/summary/rankings/standings/
-  leaders) have been removed from the codebase, not just disabled, because
-  Matchday has no licensed ESPN developer feed. ESPN is also excluded as a
+- **ESPN sourcing rule:** Direct ESPN site/API access, scraping, images, video,
+  article text, and bulk redistribution remain excluded because Matchday has
+  no licensed ESPN developer feed. A narrowly reviewed, openly licensed
+  secondary release may be used only when its ESPN provenance is explicit,
+  the exact asset/schema/cadence has been verified, Matchday publishes only a
+  normalized analytical view rather than the raw feed, and the UI identifies
+  it as ESPN-derived and unofficial. The only current exception is nflverse's
+  2025+ depth-chart release described in the 2026-08-11 review above. ESPN is
+  still excluded as a
   News tab source: any item attributed to ESPN is rejected both on fresh
   intake and when merging in a previous run's cached headlines for
   feed-diversity carryover (`_is_espn()` in `fetch_data.py`, a whole-word

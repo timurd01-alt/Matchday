@@ -36,6 +36,7 @@ from provider_adapters import (ProviderError, BallDontLieAdapter,
                                BigBallsSportsAdapter,
                                CollegeBasketballDataAdapter,
                                CollegeFootballDataAdapter, NflverseAdapter,
+                               NflversePregameAdapter,
                                SportsDataIOAdapter, SportsGameOddsAdapter, SportmonksAdapter,
                                APISportsAdapter, normalized_score,
                                season_form_from_matches, blend_season_history,
@@ -322,6 +323,7 @@ COLLEGE_ADVANCED_CACHE_MIN = 1440  # one league-wide CFBD shadow refresh per day
 # own schedule, not ours. Cache for a day so build() doesn't re-download a
 # multi-hundred-KB file every run for data that barely changes hour to hour.
 NFLVERSE_LEADERS_CACHE_MIN = 1440  # 24 hours
+NFLVERSE_PREGAME_CACHE_MIN = 1440  # current assets are published daily
 NEWS_TERMS = {
     "WC": "FIFA World Cup", "UCL": "UEFA Champions League",
     "EPL": "Premier League soccer", "LALIGA": "La Liga soccer",
@@ -5833,6 +5835,88 @@ def fetch_nflverse_leaders():
     return leaders
 
 
+def fetch_nflverse_pregame_overlay(matches):
+    """Attach current NFL starter hierarchy and roster availability.
+
+    Depth charts are ESPN-derived through nflverse and are explicitly marked
+    expected/unconfirmed.  A non-active weekly-roster status is shown as an
+    availability flag, not converted into a medical diagnosis or a confirmed
+    gameday inactive.  The normalized daily cache keeps the 8 MB GitHub asset
+    out of hourly rebuilds and preserves the last successful snapshot.
+    """
+    if COMP_KEY != "NFL":
+        return {"matches": 0, "starters": 0, "availability_flags": 0}
+    cache_file = "nflverse_pregame_cache.json"
+    snapshot = None
+    try:
+        if (os.path.exists(cache_file) and
+                time.time() - os.path.getmtime(cache_file) < NFLVERSE_PREGAME_CACHE_MIN * 60):
+            with open(cache_file, encoding="utf-8") as handle:
+                snapshot = json.load(handle)
+            DIAG.append("nflverse pregame: daily cache")
+    except Exception:
+        snapshot = None
+    if snapshot is None:
+        try:
+            snapshot = NflversePregameAdapter().snapshot()
+            tmp = cache_file + ".tmp"
+            with open(tmp, "w", encoding="utf-8") as handle:
+                json.dump(snapshot, handle, ensure_ascii=False)
+            os.replace(tmp, cache_file)
+            DIAG.append(f"nflverse pregame: fetched season {snapshot.get('season')} "
+                        f"depth charts observed {snapshot.get('observed_at')}")
+        except ProviderError as exc:
+            if os.path.exists(cache_file):
+                with open(cache_file, encoding="utf-8") as handle:
+                    snapshot = json.load(handle)
+                DIAG.append(f"nflverse pregame: stale cache after fetch failure — {_scrub(exc)}")
+            else:
+                DIAG.append(f"nflverse pregame unavailable: {_scrub(exc)}")
+                return {"matches": 0, "starters": 0, "availability_flags": 0}
+
+    teams = snapshot.get("teams") or {}
+    matched = starters = flags = 0
+    for match in matches:
+        if match.get("status") not in {"UPCOMING", "LIVE"}:
+            continue
+        personnel = match.setdefault("personnel", {})
+        chart_sides = personnel.setdefault("depth_chart", {})
+        key_sides = personnel.setdefault("key_players", {})
+        for side in ("home", "away"):
+            code = str((match.get(side) or {}).get("code") or "").upper()
+            chart = teams.get(code)
+            if not chart:
+                continue
+            players = chart.get("starters") or []
+            chart_sides[side] = {
+                "status": "expected_depth_chart",
+                "confirmed": False,
+                "observed_at": chart.get("observed_at") or snapshot.get("observed_at"),
+                "players": players,
+            }
+            key_sides[side] = [
+                {"name": player.get("name"), "position": player.get("position"),
+                 "roster_status": player.get("roster_status")}
+                for player in players if player.get("name")
+            ]
+            starters += len(players)
+            flags += sum(bool(player.get("roster_status") and
+                              player.get("roster_status") != "ACT") for player in players)
+        if chart_sides:
+            matched += 1
+            personnel["key_players_confirmed"] = False
+            match.setdefault("pregame_provenance", []).append({
+                "input": "key_players",
+                "source": snapshot.get("source"),
+                "source_url": snapshot.get("source_url"),
+                "observed_at": snapshot.get("observed_at"),
+                "season": snapshot.get("season"),
+                "week": snapshot.get("week"),
+                "status": "expected, not confirmed gameday lineup",
+            })
+    return {"matches": matched, "starters": starters, "availability_flags": flags}
+
+
 def fetch_sportmonks_enrichment(matches):
     """Attach licensed soccer stats, lineups and availability when configured."""
     if not SPORTMONKS_KEY:
@@ -6451,6 +6535,12 @@ def build():
     # origin. Unsupported sports always no-op and remain honestly missing.
     print("Fetching free-tier injury context (Big Balls Sports Data)…")
     fetch_bbs_pregame_overlay(matches)
+
+    if COMP_KEY == "NFL":
+        print("Fetching current NFL depth charts + weekly rosters (nflverse)…")
+        nfl_context = fetch_nflverse_pregame_overlay(matches)
+        DIAG.append("nflverse pregame context: " + ", ".join(
+            f"{key}={value}" for key, value in nfl_context.items()))
 
     venue_shadow = pregame_context.derive_venue_context(matches, training_matches, COMP["sport"])
     if venue_shadow.get("matches"):

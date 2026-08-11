@@ -533,15 +533,26 @@ function pregameContextPanel(m){
   const injuryDetails=m.personnel?.injury_details||{};
   const injuryCount=(injuries.home||[]).length+(injuries.away||[]).length+
     (injuryDetails.home||[]).length+(injuryDetails.away||[]).length;
+  const depth=m.personnel?.depth_chart||{};
+  const depthPositions=new Set(['QB','RB','LWR','RWR','SLWR','TE','LDE','RDE','MLB','LCB','RCB','FS','SS']);
+  const depthLine=side=>{
+    const chart=depth[side]||{},players=(chart.players||[]).filter(p=>depthPositions.has(String(p.position||'').toUpperCase())).slice(0,8);
+    if(!players.length)return'';
+    const team=side==='home'?m.home:m.away;
+    return `${esc(team?.code||team?.name||side)} expected: ${players.map(p=>`${esc(p.position||'')} ${esc(p.name||'')}${p.roster_status&&p.roster_status!=='ACT'?` <b>(${esc(p.roster_status)})</b>`:''}`).join(' · ')}`;
+  };
   const notes=[];
   if(starterNames.length)notes.push(`Starters: ${starterNames.map(esc).join(' · ')}`);
   if(injuryCount)notes.push(`${injuryCount} reported unavailable/questionable player${injuryCount===1?'':'s'}`);
+  ['home','away'].map(depthLine).filter(Boolean).forEach(line=>notes.push(line));
+  const depthObserved=depth.home?.observed_at||depth.away?.observed_at;
+  if(depthObserved)notes.push(`NFL depth chart observed ${esc(new Date(depthObserved).toLocaleString())}; expected hierarchy, not confirmed gameday actives.`);
   if((ctx.missing_critical||[]).length)notes.push(`Still missing: ${ctx.missing_critical.map(k=>labels[k]||k).join(', ')}`);
   const comp=String(m?._comp||DATA.comp_key||'').toUpperCase();
   const soccer=['WC','UCL','EPL','LALIGA','SERIEA','BUNDESLIGA','LIGUE1'].includes(comp);
   if(soccer&&ctx.inputs?.injuries==='missing')notes.push('Injuries are checked inside 72h of kickoff; lineups inside 2h.');
   if(!soccer&&['MLB','NFL','NBA','NCAAF','NCAAM','NHL'].includes(comp)&&
-      ['injuries','lineups','starting_pitchers','bullpen','rotation','key_players','starting_goalies'].some(k=>ctx.inputs?.[k]==='missing'))notes.push('No cleared live personnel feed is active for this competition.');
+      ['injuries','lineups','starting_pitchers','bullpen','rotation','key_players','starting_goalies'].some(k=>ctx.inputs?.[k]==='missing'))notes.push(ctx.inputs?.key_players!=='missing'?'Some personnel inputs still have no active source.':'No cleared live personnel feed is active for this competition.');
   return `<div class="readCard pregameContextCard"><div class="seclbl">Pregame context</div><div class="pick insightPick ${state==='locked'?'':'gate'}"><span class="pl">State</span><span class="pn">${esc(stateLabel)}</span><span class="pc">${esc(ctx.coverage_pct??0)}%</span><span class="pnote">input coverage · locks ${esc(ctx.lock_window_hours??2)}h before start</span></div><div style="margin-top:10px">${rows}</div>${notes.length?`<div class="faintline" style="margin-top:8px">${notes.join('<br>')}</div>`:''}<div class="faintline" style="margin-top:6px">New personnel and venue fields are recorded at zero model weight until prospective validation.</div></div>`;
 }
 function details(m){

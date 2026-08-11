@@ -1,11 +1,15 @@
+import csv
 import datetime as dt
+import gzip
+import io
 import unittest
 import urllib.parse
 from unittest import mock
 
 from provider_adapters import (BallDontLieAdapter, BigBallsSportsAdapter,
                                CollegeBasketballDataAdapter,
-                               CollegeFootballDataAdapter, NflverseAdapter, ProviderError,
+                               CollegeFootballDataAdapter, NflverseAdapter,
+                               NflversePregameAdapter, ProviderError,
                                SportsDataIOAdapter, SportsGameOddsAdapter, SportmonksAdapter,
                                normalized_score)
 
@@ -339,6 +343,46 @@ class NflverseAdapterTests(unittest.TestCase):
         self.assertEqual(by_key["TacklesForLoss"]["leaders"][0]["value"], 14)
         names = [entry["name"] for cat in leaders["categories"] for entry in cat["leaders"]]
         self.assertNotIn("", names)  # the aggregate artifact row never surfaces
+
+    def test_pregame_snapshot_uses_newest_depth_chart_and_roster_status(self):
+        depth_rows = [
+            {"dt": "2026-08-09T07:00:00Z", "team": "SEA", "player_name": "Old QB",
+             "gsis_id": "old", "pos_grp": "Offense", "pos_name": "Quarterback",
+             "pos_abb": "QB", "pos_slot": "1", "pos_rank": "1"},
+            {"dt": "2026-08-10T07:00:00Z", "team": "SEA", "player_name": "Current QB",
+             "gsis_id": "new", "pos_grp": "Offense", "pos_name": "Quarterback",
+             "pos_abb": "QB", "pos_slot": "1", "pos_rank": "1"},
+            {"dt": "2026-08-10T07:00:00Z", "team": "SEA", "player_name": "Backup QB",
+             "gsis_id": "backup", "pos_grp": "Offense", "pos_name": "Quarterback",
+             "pos_abb": "QB", "pos_slot": "1", "pos_rank": "2"},
+        ]
+        roster_rows = [
+            {"season": "2026", "team": "SEA", "position": "QB", "status": "ACT",
+             "full_name": "Current QB", "gsis_id": "new", "week": "1",
+             "status_description_abbr": "A01"},
+            {"season": "2026", "team": "SEA", "position": "QB", "status": "RES",
+             "full_name": "Current QB", "gsis_id": "new", "week": "2",
+             "status_description_abbr": "R09"},
+        ]
+
+        def zipped(rows):
+            buffer = io.StringIO(newline="")
+            writer = csv.DictWriter(buffer, fieldnames=list(rows[0]))
+            writer.writeheader()
+            writer.writerows(rows)
+            return gzip.compress(buffer.getvalue().encode("utf-8"))
+
+        def getter(url, headers):
+            return zipped(roster_rows if "weekly_rosters" in url else depth_rows)
+
+        snapshot = NflversePregameAdapter(
+            getter=getter, today=dt.date(2026, 8, 11)).snapshot()
+        self.assertEqual(snapshot["season"], 2026)
+        self.assertEqual(snapshot["week"], 2)
+        self.assertEqual(snapshot["observed_at"], "2026-08-10T07:00:00Z")
+        self.assertEqual([p["name"] for p in snapshot["teams"]["SEA"]["starters"]],
+                         ["Current QB"])
+        self.assertEqual(snapshot["teams"]["SEA"]["starters"][0]["roster_status"], "RES")
 
 
 class BallDontLieTests(unittest.TestCase):

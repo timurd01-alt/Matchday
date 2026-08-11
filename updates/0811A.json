@@ -1,0 +1,13 @@
+{
+  "rank": 138,
+  "date": "Build 0811A",
+  "tag": "Data",
+  "title": "Current NFL depth charts replace empty key-player context",
+  "items": [
+    "NFL fixtures now ingest nflverse's current 2026 depth charts and weekly rosters from GitHub, refreshed daily and cached so hourly builds do not repeatedly download the bulk release.",
+    "Expanded pregame context shows named expected quarterbacks, skill players, and defensive starters for both teams, with the source observation time and any non-active roster status.",
+    "Every fixture identifies the depth chart as ESPN-derived and unconfirmed; it is not presented as a gameday inactive list or confirmed starting lineup.",
+    "The pipeline will not reuse the completed 2025 injury file as current 2026 information. Dedicated 2026 practice and injury reports remain missing until the new-season asset is published.",
+    "Normalized depth-chart context is retained in the durable pregame snapshot, while probability weight remains zero until prospective locked-pick evidence shows that a derived change signal improves forecasts."
+  ]
+}

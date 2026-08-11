@@ -9,6 +9,8 @@ from __future__ import annotations
 import csv
 import datetime as dt
 import functools
+import gzip
+import io
 import json
 import math
 import re
@@ -111,6 +113,16 @@ def _get_csv_text(url, headers=None, timeout=25, provider=None):
             except Exception:
                 pass
             provider_quota.record_response(provider, exc.headers, error_body)
+        raise ProviderError(str(exc)) from exc
+
+
+def _get_bytes(url, headers=None, timeout=60):
+    """Read a public binary asset without adding an API/quota dependency."""
+    req = urllib.request.Request(url, headers=headers or {"User-Agent": "Matchday/1.0"})
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as response:
+            return response.read()
+    except Exception as exc:
         raise ProviderError(str(exc)) from exc
     except Exception as exc:
         raise ProviderError(str(exc)) from exc
@@ -1789,6 +1801,116 @@ class NflverseAdapter:
             if leaders:
                 categories.append({"key": key, "label": label, "abbr": "", "leaders": leaders})
         return {"season": self.season, "source": "nflverse (CC BY 4.0)", "categories": categories} if categories else {}
+
+
+class NflversePregameAdapter:
+    """Current NFL depth-chart and weekly-roster context from nflverse.
+
+    The 2025+ depth-chart source is ESPN-derived.  It is an expected roster
+    hierarchy, not a confirmed gameday lineup or an injury report.  Weekly
+    roster status is joined only to identify whether a listed player is on the
+    active roster; opaque reserve codes are retained verbatim and never
+    relabelled as a diagnosed injury.
+    """
+
+    DEPTH_URL = ("https://github.com/nflverse/nflverse-data/releases/download/"
+                 "depth_charts/depth_charts_{season}.csv.gz")
+    ROSTER_URL = ("https://github.com/nflverse/nflverse-data/releases/download/"
+                  "weekly_rosters/roster_weekly_{season}.csv.gz")
+
+    def __init__(self, getter=None, today=None):
+        self.getter = getter or _get_bytes
+        self.today = today or dt.date.today()
+        # Unlike season statistics, preseason depth charts and rosters for Y
+        # are published before September of Y.
+        self.season = self.today.year if self.today.month >= 3 else self.today.year - 1
+
+    def _rows(self, template):
+        url = template.format(season=self.season)
+        raw = self.getter(url, {"User-Agent": "Matchday/1.0"})
+        try:
+            stream = gzip.GzipFile(fileobj=io.BytesIO(raw))
+            text = io.TextIOWrapper(stream, encoding="utf-8-sig", newline="")
+            return csv.DictReader(text)
+        except (OSError, TypeError, ValueError) as exc:
+            raise ProviderError(f"invalid nflverse gzip asset: {exc}") from exc
+
+    def depth_charts(self):
+        """Return only each team's newest rank-one depth-chart rows."""
+        teams = {}
+        for row in self._rows(self.DEPTH_URL):
+            team = str(row.get("team") or "").strip().upper()
+            observed_at = str(row.get("dt") or "").strip()
+            if not team or not observed_at:
+                continue
+            current = teams.get(team)
+            if current is None or observed_at > current["observed_at"]:
+                current = {"observed_at": observed_at, "starters": []}
+                teams[team] = current
+            elif observed_at < current["observed_at"]:
+                continue
+            if str(row.get("pos_rank") or "").strip() != "1":
+                continue
+            name = str(row.get("player_name") or "").strip()
+            if not name:
+                continue
+            current["starters"].append({
+                "name": name,
+                "position": str(row.get("pos_abb") or row.get("pos_name") or "").strip(),
+                "position_group": str(row.get("pos_grp") or "").strip(),
+                "slot": str(row.get("pos_slot") or "").strip(),
+                "gsis_id": str(row.get("gsis_id") or "").strip(),
+            })
+        return teams
+
+    def weekly_rosters(self):
+        """Return the newest published weekly status for every rostered player."""
+        newest_week = -1
+        rows = []
+        for row in self._rows(self.ROSTER_URL):
+            try:
+                week = int(row.get("week") or -1)
+            except (TypeError, ValueError):
+                continue
+            if week > newest_week:
+                newest_week, rows = week, [row]
+            elif week == newest_week:
+                rows.append(row)
+        teams = {}
+        for row in rows:
+            team = str(row.get("team") or "").strip().upper()
+            name = str(row.get("full_name") or "").strip()
+            if not team or not name:
+                continue
+            teams.setdefault(team, {})[name.casefold()] = {
+                "name": name,
+                "position": str(row.get("position") or "").strip(),
+                "status": str(row.get("status") or "").strip().upper(),
+                "status_code": str(row.get("status_description_abbr") or "").strip(),
+                "week": newest_week,
+                "gsis_id": str(row.get("gsis_id") or "").strip(),
+            }
+        return {"week": newest_week, "teams": teams}
+
+    def snapshot(self):
+        charts = self.depth_charts()
+        rosters = self.weekly_rosters()
+        for team, chart in charts.items():
+            roster = rosters["teams"].get(team, {})
+            for player in chart["starters"]:
+                status = roster.get(player["name"].casefold())
+                if status:
+                    player["roster_status"] = status["status"]
+                    player["roster_status_code"] = status["status_code"]
+        observed = max((row["observed_at"] for row in charts.values()), default=None)
+        return {
+            "season": self.season,
+            "observed_at": observed,
+            "week": rosters["week"],
+            "teams": charts,
+            "source": "nflverse depth charts (ESPN-derived) + weekly rosters",
+            "source_url": "https://github.com/nflverse/nflverse-data/releases/tag/depth_charts",
+        }
 
 
 class BallDontLieAdapter:
