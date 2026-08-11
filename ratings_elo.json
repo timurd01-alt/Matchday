@@ -7898,8 +7898,8 @@
    "n": 1996
   },
   "baseball:toronto blue jays": {
-   "r": 1504.8561852245832,
-   "n": 3903
+   "r": 1518.842069348222,
+   "n": 3904
   },
   "baseball:texas rangers": {
    "r": 1488.0604582965777,
@@ -7914,20 +7914,20 @@
    "n": 3918
   },
   "baseball:boston red sox": {
-   "r": 1622.8871105213216,
-   "n": 3976
+   "r": 1608.9012263976829,
+   "n": 3977
   },
   "baseball:atlanta braves": {
-   "r": 1568.2660675931568,
-   "n": 3926
+   "r": 1552.03540477051,
+   "n": 3927
   },
   "baseball:philadelphia phillies": {
-   "r": 1496.5258472022194,
-   "n": 3942
+   "r": 1509.429943971252,
+   "n": 3943
   },
   "baseball:new york mets": {
-   "r": 1500.2851531152417,
-   "n": 3899
+   "r": 1516.5158159378884,
+   "n": 3900
   },
   "baseball:pittsburgh pirates": {
    "r": 1467.562174629213,
@@ -7942,8 +7942,8 @@
    "n": 3920
   },
   "baseball:baltimore orioles": {
-   "r": 1502.4617336995645,
-   "n": 3874
+   "r": 1492.2985623353454,
+   "n": 3875
   },
   "baseball:new york yankees": {
    "r": 1537.3305378915563,
@@ -7962,12 +7962,12 @@
    "n": 3901
   },
   "baseball:minnesota twins": {
-   "r": 1496.06465929228,
-   "n": 3902
+   "r": 1506.2278306564992,
+   "n": 3903
   },
   "baseball:st louis cardinals": {
-   "r": 1462.7518274716617,
-   "n": 3967
+   "r": 1449.8477307026292,
+   "n": 3968
   },
   "baseball:colorado rockies": {
    "r": 1406.7022251854653,
@@ -286056,6 +286056,10 @@
   "MLB:bdl-mlb-5059550": true,
   "MLB:bdl-mlb-5059551": true,
   "MLB:bdl-mlb-5059552": true,
-  "MLB:bdl-mlb-5059553": true
+  "MLB:bdl-mlb-5059553": true,
+  "MLB:bdl-mlb-5059554": true,
+  "MLB:bdl-mlb-5059555": true,
+  "MLB:bdl-mlb-5059556": true,
+  "MLB:bdl-mlb-5059557": true
  }
 }
