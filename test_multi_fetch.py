@@ -90,8 +90,12 @@ class ModelSchemaRefreshTests(unittest.TestCase):
         self.assertTrue(multi_fetch._missing_fields("ncaaf"))
 
     def test_current_model_schema_returns_to_normal_cadence(self):
-        self._write_match(model_signal_schema=7)
+        self._write_match(model_signal_schema=7, pregame_context={"schema_ver": 1})
         self.assertFalse(multi_fetch._missing_fields("ncaaf"))
+
+    def test_missing_pregame_context_forces_one_refresh(self):
+        self._write_match(model_signal_schema=7)
+        self.assertTrue(multi_fetch._missing_fields("ncaaf"))
 
 
 class RateLimitFallbackTests(unittest.TestCase):

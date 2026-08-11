@@ -345,8 +345,23 @@ function normalizePlayer(p){return {n:String(p?.n??p?.number??'').trim(),name:St
 function lineupRows(xi,formation){const players=(xi||[]).map(normalizePlayer).filter(p=>p.n||p.name);if(!players.length)return[];const parts=formationParts(formation);if(!parts.length){const rows=[];for(let i=0;i<players.length;i+=3)rows.push(players.slice(i,i+3));return rows}const rows=[];let idx=0;rows.push(players.slice(idx,idx+1));idx+=1;parts.forEach(c=>{rows.push(players.slice(idx,idx+c));idx+=c});if(idx<players.length)rows.push(players.slice(idx));return rows.filter(r=>r.length)}
 function pitchPlayer(p){const nm=shortPlayerName(p.name)||`#${p.n||'?'}`;return `<div class="pitchPlayer ${p.out?'out':''}" title="${esc((p.n?('#'+p.n+' '):'')+(p.name||''))}"><div class="num">${esc(p.n||'—')}</div><div class="pname">${esc(nm)}</div>${p.out?'<span class="subMark">sub</span>':''}</div>`}
 function pitchTeamCard(team,line,side){const rows=lineupRows(line?.xi||[],line?.formation||'');const fl=teamFlagHTML(team);const form=line?.formation||'XI';return `<div class="pitchCard ${side}"><div class="pitchHeader"><div class="pitchTeamName">${fl}<span>${esc(team?.name||side)}</span></div><div class="formationBadge">${esc(form)}</div></div>${rows.length?`<div class="pitch">${rows.map(r=>`<div class="pitchRow">${r.map(pitchPlayer).join('')}</div>`).join('')}</div>`:`<div class="emptyStats">Lineup not available.</div>`}<div class="lineupFoot"><span>${esc(team?.code||'')}</span><span>${rows.reduce((a,r)=>a+r.length,0)} players shown</span></div></div>`}
-function lineupsPanel(m){const l=m.lineups;if(l&&((l.home?.xi||[]).length||(l.away?.xi||[]).length)){return `<div class="lineupBoard pitchMode"><div class="seclbl">Lineups</div><div class="pitchGrid">${pitchTeamCard(m.home,l.home||{},'home')}${pitchTeamCard(m.away,l.away||{},'away')}</div></div>`}return `<div class="lineupBoard pitchMode"><div class="seclbl">Lineups</div><div class="emptyStats">Lineups not available yet.</div></div>`}
-function teamSnap(team,side,comp){return `<div class="teamSnap ${side==='away'?'away':''}"><div class="snapCode">${teamFlagHTML(team,side==='away')}${esc(team?.code||side)}</div><div class="snapName">${esc(team?.name||'TBD')}</div><div class="snapMeta">${esc(teamStandingsMeta(team,comp,{diff:true,form:true}).join(' · '))}</div></div>`}
+function lineupsPanel(m){
+  const l=m.lineups;
+  if(l&&((l.home?.xi||[]).length||(l.away?.xi||[]).length))return `<div class="lineupBoard pitchMode"><div class="seclbl">Lineups</div><div class="pitchGrid">${pitchTeamCard(m.home,l.home||{},'home')}${pitchTeamCard(m.away,l.away||{},'away')}</div></div>`;
+  const comp=String(m?._comp||DATA.comp_key||'').toUpperCase();
+  const soccer=['WC','UCL','EPL','LALIGA','SERIEA','BUNDESLIGA','LIGUE1'].includes(comp);
+  const ctx=m.pregame_context||m.prediction?.lock_readiness;
+  const checked=!!m.personnel?.lineups_feed_checked;
+  const lead=Number(ctx?.lead_time_hours);
+  let title='No cleared lineup feed for this competition';
+  let note='Matchday will not infer a lineup or scrape an unlicensed source.';
+  if(!ctx){title='Readiness receipt unavailable';note='This published snapshot predates pregame-context tracking.'}
+  else if(soccer&&Number.isFinite(lead)&&lead>2){title='Lineups are not due yet';note='The authorized feed is checked during the final two hours before kickoff.'}
+  else if(soccer&&checked){title='Provider checked — no confirmed lineup';note='The feed has not published a usable starting XI yet.'}
+  else if(soccer){title='Awaiting the near-kickoff lineup check';note='The authorized feed is checked during the final two hours before kickoff.'}
+  return `<div class="lineupBoard pitchMode"><div class="seclbl">Lineups</div><div class="emptyStats"><b>${esc(title)}</b><span>${esc(note)}</span></div></div>`;
+}
+function teamSnap(team,side,comp){return `<div class="teamSnap ${side==='away'?'away':''}"><div class="snapCode">${teamFlagHTML(team,side==='away')}${esc(team?.code||side)}</div><div class="snapName">${esc(team?.name||'TBD')}</div><div class="snapMeta">${esc(teamStandingsMeta(team,comp,{diff:true,form:true,hideStaleRecord:['NCAAF','NFL'].includes(String(comp||'').toUpperCase())}).join(' · '))}</div></div>`}
 function oddsTier(p,i){p=Number(p)||0;if(i<3)return'hot';if(p>=7)return'live';if(p>=3)return'chase';return''}
 function oddsTierText(p,i){p=Number(p)||0;if(i<3)return'Contender';if(p>=7)return'In range';if(p>=3)return'Chaser';return'Long shot'}
 function oddsCode(x){return x.code||codeForTeam(x.team||'',x.code||'')||''}
@@ -507,7 +522,7 @@ function matchStory(m){const pr=m.prediction;if(!pr)return '';
   return `<div class="storyCard"><div class="storyTag">Match Story</div><p class="storyLead">${lead}</p>${(bullets.length||goals)?`<ul class="storyWhy">${bullets.join('')}${goals}</ul>`:''}</div>`;}
 function pregameContextPanel(m){
   const ctx=m.pregame_context||m.prediction?.lock_readiness;
-  if(!ctx)return '';
+  if(!ctx)return `<div class="readCard pregameContextCard"><div class="seclbl">Pregame context</div><div class="emptyStats"><b>Readiness receipt unavailable</b><span>This published snapshot predates pregame-context tracking and must be rebuilt.</span></div></div>`;
   const labels={market:'market',injuries:'injuries',lineups:'lineups',weather:'weather',venue:'venue',starting_pitchers:'starting pitchers',bullpen:'bullpen availability',rotation:'rotation',key_players:'QB / key players',starting_goalies:'starting goalies'};
   const state=m.prediction?.publication_state||ctx.phase||'preliminary';
   const stateLabel=state==='locked'?'Locked forecast':state==='lock_candidate'?'Inside lock window':'Preliminary forecast';
@@ -522,6 +537,11 @@ function pregameContextPanel(m){
   if(starterNames.length)notes.push(`Starters: ${starterNames.map(esc).join(' · ')}`);
   if(injuryCount)notes.push(`${injuryCount} reported unavailable/questionable player${injuryCount===1?'':'s'}`);
   if((ctx.missing_critical||[]).length)notes.push(`Still missing: ${ctx.missing_critical.map(k=>labels[k]||k).join(', ')}`);
+  const comp=String(m?._comp||DATA.comp_key||'').toUpperCase();
+  const soccer=['WC','UCL','EPL','LALIGA','SERIEA','BUNDESLIGA','LIGUE1'].includes(comp);
+  if(soccer&&ctx.inputs?.injuries==='missing')notes.push('Injuries are checked inside 72h of kickoff; lineups inside 2h.');
+  if(!soccer&&['MLB','NFL','NBA','NCAAF','NCAAM','NHL'].includes(comp)&&
+      ['injuries','lineups','starting_pitchers','bullpen','rotation','key_players','starting_goalies'].some(k=>ctx.inputs?.[k]==='missing'))notes.push('No cleared live personnel feed is active for this competition.');
   return `<div class="readCard pregameContextCard"><div class="seclbl">Pregame context</div><div class="pick insightPick ${state==='locked'?'':'gate'}"><span class="pl">State</span><span class="pn">${esc(stateLabel)}</span><span class="pc">${esc(ctx.coverage_pct??0)}%</span><span class="pnote">input coverage · locks ${esc(ctx.lock_window_hours??2)}h before start</span></div><div style="margin-top:10px">${rows}</div>${notes.length?`<div class="faintline" style="margin-top:8px">${notes.join('<br>')}</div>`:''}<div class="faintline" style="margin-top:6px">New personnel and venue fields are recorded at zero model weight until prospective validation.</div></div>`;
 }
 function details(m){

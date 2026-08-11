@@ -1,6 +1,10 @@
 import datetime as dt
+import json
+import tempfile
 import unittest
+from pathlib import Path
 
+import fetch_data
 import pregame_context
 
 
@@ -59,6 +63,43 @@ class PregameContextTests(unittest.TestCase):
         context = pregame_context.build_pregame_context(
             match, "NFL", "football", dt.datetime(2026, 8, 3, tzinfo=dt.timezone.utc))
         self.assertEqual(context["inputs"]["injuries"], "available")
+
+    def test_last_known_context_survives_a_fixture_rebuild(self):
+        with tempfile.TemporaryDirectory() as directory:
+            cache = Path(directory) / "pregame_epl_cache.json"
+            original = [{
+                "id": "fx-1", "status": "UPCOMING", "kickoff": "2026-08-12T18:00:00Z",
+                "home": {"name": "Home"}, "away": {"name": "Away"},
+                "injuries": {"home": ["Player A (out)"], "away": []},
+                "lineups": {"home": {"xi": [{"name": "Player A"}]}, "away": {"xi": []}},
+                "personnel": {"injuries_feed_checked": True, "lineups_feed_checked": True},
+            }]
+            fetch_data.save_pregame_snapshots(original, str(cache), "2026-08-10T12:00:00Z")
+            rebuilt = [{
+                "id": "fx-1", "status": "UPCOMING", "kickoff": "2026-08-12T18:00:00Z",
+                "home": {"name": "Home"}, "away": {"name": "Away"},
+                "injuries": {"home": [], "away": []}, "lineups": None,
+            }]
+            self.assertEqual(fetch_data.restore_pregame_snapshots(rebuilt, str(cache)), 1)
+            self.assertEqual(rebuilt[0]["injuries"]["home"], ["Player A (out)"])
+            self.assertTrue(rebuilt[0]["personnel"]["lineups_feed_checked"])
+
+    def test_context_snapshot_does_not_cross_a_kickoff_change(self):
+        with tempfile.TemporaryDirectory() as directory:
+            cache = Path(directory) / "pregame_epl_cache.json"
+            original = [{
+                "id": "fx-1", "status": "UPCOMING", "kickoff": "2026-08-12T18:00:00Z",
+                "home": {"name": "Home"}, "away": {"name": "Away"},
+                "injuries": {"home": ["Player A (out)"], "away": []},
+            }]
+            fetch_data.save_pregame_snapshots(original, str(cache), "2026-08-10T12:00:00Z")
+            postponed = [{
+                "id": "fx-1", "status": "UPCOMING", "kickoff": "2026-08-13T18:00:00Z",
+                "home": {"name": "Home"}, "away": {"name": "Away"},
+                "injuries": {"home": [], "away": []},
+            }]
+            self.assertEqual(fetch_data.restore_pregame_snapshots(postponed, str(cache)), 0)
+            self.assertEqual(postponed[0]["injuries"]["home"], [])
 
 
 if __name__ == "__main__":

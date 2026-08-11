@@ -37,8 +37,31 @@ class AnalysisModeTests(unittest.TestCase):
             self.assertNotIn("pts??0} pts", source, f"{name} still prints a fabricated pts value")
         self.assertIn("teamStandingsMeta(m.home,m._comp)", cards)
         self.assertIn("teamStandingsMeta(m.away,m._comp)", cards)
-        self.assertIn("teamStandingsMeta(t,m._comp,{form:true})", cards)
-        self.assertIn("teamStandingsMeta(team,comp,{diff:true,form:true})", panels)
+        self.assertIn("hideStaleRecord:['NCAAF','NFL'].includes(_v15CompetitionKey(m))", cards)
+        self.assertIn("teamStandingsMeta(team,comp,{diff:true,form:true,hideStaleRecord:", panels)
+
+    def test_expanded_football_views_hide_prior_season_records(self):
+        core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
+        cards = (ROOT / "app-4-features.js").read_text(encoding="utf-8")
+        panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
+        self.assertIn("opts.hideStaleRecord&&team?.season_stale", core)
+        self.assertIn("['NCAAF','NFL'].includes(_v15CompetitionKey(m))&&team?.season_stale", cards)
+        self.assertIn("hideStaleRecord:['NCAAF','NFL'].includes(String(comp||'').toUpperCase())", panels)
+        self.assertIn("teamStandingsMeta(m.home,m._comp).map", cards)
+        self.assertIn("teamStandingsMeta(m.away,m._comp).map", cards)
+
+    def test_pregame_gaps_explain_source_and_collection_state(self):
+        panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
+        self.assertIn("This published snapshot predates pregame-context tracking", panels)
+        self.assertIn("No cleared lineup feed for this competition", panels)
+        self.assertIn("Provider checked — no confirmed lineup", panels)
+        self.assertIn("Injuries are checked inside 72h of kickoff; lineups inside 2h.", panels)
+
+    def test_neutral_venue_comparison_has_responsive_layout(self):
+        css = (ROOT / "styles.css").read_text(encoding="utf-8")
+        self.assertIn(".neutralVenueRow{display:grid", css)
+        self.assertIn(".hypotheticalTag{display:inline-flex", css)
+        self.assertIn("@media(max-width:540px){.neutralVenueBox", css)
 
     def test_talent_edge_row_is_never_silently_dropped(self):
         panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")

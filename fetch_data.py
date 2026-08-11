@@ -263,6 +263,7 @@ SPORTSDATAIO_PREGAME_STALE_MAX_HOURS = 6
 BBS_PREGAME_CACHE_FILE = f"bbs_pregame_{COMP_KEY.lower()}_cache.json"
 BBS_PREGAME_CACHE_MIN = 45
 BBS_PREGAME_STALE_MAX_HOURS = 24
+PREGAME_CONTEXT_CACHE_FILE = f"pregame_{COMP_KEY.lower()}_cache.json"
 SPORTSGAMEODDS_CACHE_FILE = f"sportsgameodds_{COMP_KEY.lower()}_cache.json"
 # The free plan is capped at 2,500 returned objects per month across seven
 # Matchday competitions. One request per competition per day, capped at eight
@@ -1176,6 +1177,31 @@ def compute_rest(matches, training_matches=None):
                 t["rest_days"] = max(0, round((d2 - d1).total_seconds() / 86400))
             except Exception:
                 pass
+
+
+def mark_stale_offseason_records(standings, tables, history, fixtures, competition):
+    """Keep an offseason NFL record as a model prior, never as current UI."""
+    if str(competition or "").upper() != "NFL":
+        return False
+    history_times = [_parse_kickoff(row.get("kickoff")) for row in history or []
+                     if row.get("status") == "FINISHED"]
+    fixture_times = [_parse_kickoff(row.get("kickoff")) for row in fixtures or []
+                     if row.get("status") == "UPCOMING"]
+    history_times = [value for value in history_times if value]
+    fixture_times = [value for value in fixture_times if value]
+    if not history_times or not fixture_times:
+        return False
+    # A 90-day gap cannot occur inside an NFL season. This detects the year
+    # boundary without trusting provider season labels that roll over on
+    # different dates.
+    if (min(fixture_times) - max(history_times)).total_seconds() < 90 * 86400:
+        return False
+    for record in (standings or {}).values():
+        record["season_stale"] = True
+    for table in tables or []:
+        for team in table.get("teams") or []:
+            team["season_stale"] = True
+    return True
 
 
 def compute_split_form(matches):
@@ -2623,6 +2649,96 @@ API_FOOTBALL_LEAGUE_ID = {"WC": 1, "UCL": 2, "EPL": 39, "LALIGA": 140,
 _AF_FINISHED_STATUSES = {"FT", "AET", "PEN"}
 
 
+_DURABLE_PREGAME_FIELDS = (
+    "weather", "injuries", "lineups", "personnel", "pregame_provenance",
+    "venue_context",
+)
+
+
+def _pregame_snapshot_signature(match):
+    return {
+        "home": norm((match.get("home") or {}).get("name")),
+        "away": norm((match.get("away") or {}).get("name")),
+        "kickoff": str(match.get("kickoff") or ""),
+    }
+
+
+def restore_pregame_snapshots(matches, path=None):
+    """Restore last-known personnel/context before live overlays refresh it.
+
+    Fixture providers rebuild match dictionaries from scratch. Without this
+    layer, a transient empty response erased a previously observed lineup,
+    injury report, starter, or weather forecast. The cache is normalized and
+    fixture-bound; it never carries context across a team or kickoff change.
+    """
+    path = path or PREGAME_CONTEXT_CACHE_FILE
+    try:
+        with open(path, encoding="utf-8") as handle:
+            cached = json.load(handle)
+    except Exception:
+        return 0
+    rows = cached.get("fixtures") if isinstance(cached, dict) else None
+    if not isinstance(rows, dict):
+        return 0
+    restored = 0
+    for match in matches:
+        row = rows.get(str(match.get("id")))
+        if not isinstance(row, dict) or row.get("signature") != _pregame_snapshot_signature(match):
+            continue
+        fields = row.get("fields") or {}
+        touched = False
+        for key in _DURABLE_PREGAME_FIELDS:
+            value = fields.get(key)
+            if value not in (None, {}, []):
+                match[key] = value
+                touched = True
+        if touched:
+            match["pregame_snapshot"] = {
+                "first_observed_at": row.get("first_observed_at"),
+                "last_changed_at": row.get("last_changed_at"),
+                "restored": True,
+            }
+            restored += 1
+    return restored
+
+
+def save_pregame_snapshots(matches, path=None, now=None):
+    """Persist material pregame observations and retain their first receipt."""
+    path = path or PREGAME_CONTEXT_CACHE_FILE
+    stamp = now or datetime.datetime.now(datetime.timezone.utc).isoformat().replace("+00:00", "Z")
+    try:
+        with open(path, encoding="utf-8") as handle:
+            previous = json.load(handle).get("fixtures") or {}
+    except Exception:
+        previous = {}
+    fixtures = {}
+    for match in matches:
+        if match.get("status") not in {"UPCOMING", "LIVE"}:
+            continue
+        key = str(match.get("id"))
+        fields = {name: _json_safe(match.get(name)) for name in _DURABLE_PREGAME_FIELDS
+                  if match.get(name) not in (None, {}, [])}
+        old = previous.get(key) if isinstance(previous.get(key), dict) else {}
+        changed = old.get("fields") != fields or old.get("signature") != _pregame_snapshot_signature(match)
+        fixtures[key] = {
+            "signature": _pregame_snapshot_signature(match),
+            "fields": fields,
+            "first_observed_at": old.get("first_observed_at") or stamp,
+            "last_changed_at": stamp if changed else old.get("last_changed_at") or stamp,
+        }
+        match["pregame_snapshot"] = {
+            "first_observed_at": fixtures[key]["first_observed_at"],
+            "last_changed_at": fixtures[key]["last_changed_at"],
+            "restored": bool(match.get("pregame_snapshot", {}).get("restored")),
+        }
+    tmp = path + ".tmp"
+    with open(tmp, "w", encoding="utf-8") as handle:
+        json.dump({"schema_ver": 1, "updated": stamp, "fixtures": fixtures}, handle,
+                  ensure_ascii=False)
+    os.replace(tmp, path)
+    return len(fixtures)
+
+
 def fetch_api_football_historical_season(comp_key, season):
     """One-time historical pull for backfill_history.py -- shares the same
     API-FOOTBALL key/quota as box scores, lineups, and injuries, but this is
@@ -2923,33 +3039,6 @@ def fetch_api_football_box_scores(matches):
             DIAG.append(f"box stats(API-FOOTBALL): fixture date {d} FAILED — {_scrub(e)}")
             events_by_date[d] = rec.get("events") if rec else []
 
-    for m in stat_targets:
-        d = _match_date_utc(m)
-        fid = _af_fixture_id_for_match(m, events_by_date.get(d) or [])
-        if not fid:
-            continue
-        matched += 1
-        fid = str(fid)
-        srec = (cache.get("stats") or {}).get(fid)
-        # Final stats are stable; live stats refresh for the active match.
-        live = m.get("status") == "LIVE"
-        if srec and ((not live) or now_ts - float(srec.get("t") or 0) < 90):
-            stats = srec.get("stats_extra")
-        else:
-            try:
-                payload = _api_football_get("/fixtures/statistics", {"fixture": fid})
-                stats = _parse_af_stats(payload, m, fid)
-                cache.setdefault("stats", {})[fid] = {"t": now_ts, "stats_extra": stats}
-                stat_requests += 1
-            except Exception as e:
-                DIAG.append(f"box stats(API-FOOTBALL): stats {fid} FAILED — {_scrub(e)}")
-                stats = srec.get("stats_extra") if srec else None
-        if stats:
-            m["stats_extra"] = stats
-            # Alias for the upset model; older patches looked at m['stats'].
-            m["stats"] = stats
-            attached += 1
-
     lineup_matched = 0
     lineup_attached = 0
     lineup_requests = 0
@@ -2965,20 +3054,54 @@ def fetch_api_football_box_scores(matches):
         # cache hit of any age is trusted for a FINISHED/LIVE match; only
         # a still-UPCOMING fixture needs re-checking (lineups may not be
         # posted yet on an earlier pass).
+        lineup_checked = False
         if lrec and (m.get("status") != "UPCOMING" or now_ts - float(lrec.get("t") or 0) < 900):
             lineups = lrec.get("lineups")
+            lineup_checked = True
         else:
             try:
                 payload = _api_football_get("/fixtures/lineups", {"fixture": fid})
                 lineups = _parse_af_lineups(payload, m)
                 cache.setdefault("lineups", {})[fid] = {"t": now_ts, "lineups": lineups}
                 lineup_requests += 1
+                lineup_checked = True
             except Exception as e:
                 DIAG.append(f"lineups(API-FOOTBALL): fixture {fid} FAILED — {_scrub(e)}")
                 lineups = lrec.get("lineups") if lrec else None
+                lineup_checked = bool(lrec)
+        if lineup_checked:
+            m.setdefault("personnel", {})["lineups_feed_checked"] = True
         if lineups:
             m["lineups"] = lineups
             lineup_attached += 1
+
+    # Postgame stats intentionally run after the pregame lineup pass. They
+    # are useful for review and training, but must not consume the last free
+    # requests before an imminent fixture's starting XI can be checked.
+    for m in stat_targets:
+        d = _match_date_utc(m)
+        fid = _af_fixture_id_for_match(m, events_by_date.get(d) or [])
+        if not fid:
+            continue
+        matched += 1
+        fid = str(fid)
+        srec = (cache.get("stats") or {}).get(fid)
+        live = m.get("status") == "LIVE"
+        if srec and ((not live) or now_ts - float(srec.get("t") or 0) < 90):
+            stats = srec.get("stats_extra")
+        else:
+            try:
+                payload = _api_football_get("/fixtures/statistics", {"fixture": fid})
+                stats = _parse_af_stats(payload, m, fid)
+                cache.setdefault("stats", {})[fid] = {"t": now_ts, "stats_extra": stats}
+                stat_requests += 1
+            except Exception as e:
+                DIAG.append(f"box stats(API-FOOTBALL): stats {fid} FAILED — {_scrub(e)}")
+                stats = srec.get("stats_extra") if srec else None
+        if stats:
+            m["stats_extra"] = stats
+            m["stats"] = stats
+            attached += 1
 
     _save_box_cache(cache)
     DIAG.append(f"box stats(API-FOOTBALL): matched {matched}, attached {attached}, requests {date_requests}+{stat_requests}")
@@ -2993,11 +3116,9 @@ def fetch_api_football_injuries(matches):
     path previously left m['injuries'] at its empty default.
 
     Shares the same free-plan key and 100/day budget as
-    fetch_api_football_box_scores() above, and -- as long as this is called
-    right after that function in build() -- reuses its 'dates' cache entries
-    (same on-disk cache file, same 6h freshness window) instead of re-fetching
-    /fixtures by date, so a normal run costs zero extra requests just to
-    resolve fixture ids.
+    fetch_api_football_box_scores() above. It runs first in build(), so the
+    lineup/box-score pass reuses this function's date cache and the pregame
+    injury check cannot be starved by postgame statistics.
 
     Only LIVE and near-kickoff UPCOMING fixtures are targeted: injuries are
     forward-looking team news with no predictive value (and no quota worth
@@ -6219,6 +6340,8 @@ def build():
         print(f"  got {len(matches)} fixtures ({provider_name})")
         training_matches = normalize_match_results(
             getattr(sports_adapter, "_model_history", matches))
+        if mark_stale_offseason_records(st, sports_tables, training_matches, matches, COMP_KEY):
+            DIAG.append("NFL records: prior season retained as a dampened model prior; hidden as current context")
         srs_ratings = compute_srs(training_matches) if COMP["sport"] != "soccer" else {}
         rank_map = {}
         if COMP_KEY in ("NCAAF", "NCAAM") and sports_adapter:
@@ -6271,6 +6394,9 @@ def build():
                 if t and t.get("name"): name_map[norm(t["name"])] = t["name"]
 
     DIAG.append(f"ratings: {len(_load_ratings())} teams loaded")
+    restored_context = restore_pregame_snapshots(matches)
+    if restored_context:
+        DIAG.append(f"pregame snapshots: restored last-known context for {restored_context} match(es)")
     compute_rest(matches, training_matches)
     print("Fetching weather…")
     fetch_weather(matches)
@@ -6309,14 +6435,13 @@ def build():
     if COMP["sport"] == "soccer":
         print("Fetching soccer detail (Sportmonks)…")
         fetch_sportmonks_enrichment(matches)
-        print("Fetching soccer box scores + lineups (API-FOOTBALL)…")
-        fetch_api_football_box_scores(matches)
-        # Injuries run right after box scores/lineups above, on purpose --
-        # it reuses that call's just-refreshed 'dates' fixture-id cache
-        # (see fetch_api_football_injuries()'s docstring) instead of paying
-        # for a second /fixtures lookup against the same shared daily quota.
+        # Pregame information gets the shared free allowance before postgame
+        # enrichment. The injury pass populates the date/id cache, which the
+        # lineup/box-score pass immediately reuses.
         print("Fetching soccer injuries (API-FOOTBALL)…")
         fetch_api_football_injuries(matches)
+        print("Fetching soccer lineups + box scores (API-FOOTBALL)…")
+        fetch_api_football_box_scores(matches)
     elif COMP.get("source") != "sportsdataio":
         print("Fetching sport-specific personnel context (SportsDataIO)…")
         fetch_sportsdataio_pregame_overlay(matches)
@@ -6330,6 +6455,9 @@ def build():
     venue_shadow = pregame_context.derive_venue_context(matches, training_matches, COMP["sport"])
     if venue_shadow.get("matches"):
         DIAG.append(f"venue context shadow: {venue_shadow['matches']} match(es), production weight 0")
+    saved_context = save_pregame_snapshots(matches)
+    if saved_context:
+        DIAG.append(f"pregame snapshots: retained {saved_context} active fixture(s)")
 
     # for US sports, pull championship odds first and fold them into team strength
     # so predictions use market-implied strength (their soccer-value equivalent)

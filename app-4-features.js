@@ -101,7 +101,7 @@ window.openMatchModal=function(id){
       modal.addEventListener('click',e=>{if(e.target===modal)window.closeMatchModal()});
       document.body.appendChild(modal);
     }
-    const hmeta=t=>esc(teamStandingsMeta(t,m._comp,{form:true}).join(' · '));
+    const hmeta=t=>esc(teamStandingsMeta(t,m._comp,{form:true,hideStaleRecord:['NCAAF','NFL'].includes(_v15CompetitionKey(m))}).join(' · '));
     const rawScore=String(scoreText(m)||'').replace(/<[^>]+>/g,'').trim()||'TBD';
     const body=safeMatchDetails(m);
     modal.innerHTML=`<section class="matchSheet" role="dialog" aria-modal="true"><div class="modalHero"><button class="modalClose" onclick="closeMatchModal()" aria-label="Close">×</button><div class="modalStage">${esc(m.stage||'Fixture')} · ${esc(m.status==='LIVE'?'AWAITING FINAL':m.status||'')}</div><div class="modalFixture"><div class="modalTeam"><div class="modalCode">${teamFlagHTML(m.home)}${esc(m.home?.code||'HOME')}</div><div class="modalName">${esc(m.home?.name||'Home')}</div><div class="modalMeta">${hmeta(m.home)}</div></div><div class="modalScore"><div class="bigScore">${esc(rawScore)}</div><div class="modalStatus">${m.status==='LIVE'?'Score shown after final':kickIn(m.kickoff)}</div></div><div class="modalTeam away"><div class="modalCode">${esc(m.away?.code||'AWAY')}${teamFlagHTML(m.away,true)}</div><div class="modalName">${esc(m.away?.name||'Away')}</div><div class="modalMeta">${hmeta(m.away)}</div></div></div></div><div class="modalBody">${body}</div></section>`;
@@ -548,6 +548,7 @@ function _v15Num(v){
   const n=Number(v);return Number.isFinite(n)?n:null;
 }
 function _v15Record(team,m){
+  if(['NCAAF','NFL'].includes(_v15CompetitionKey(m))&&team?.season_stale)return null;
   const p=_v15Num(team?.pld),w=_v15Num(team?.w),d=_v15Num(team?.d),l=_v15Num(team?.l);
   if(!p||w==null||l==null)return null;
   const twoWay=SANDBOX_TWO_WAY.has(String(m?._comp||DATA.comp_key||'').toLowerCase());

@@ -1,5 +1,14 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-08-10 (pregame-context retention and quota priority add no new
+provider or endpoint. Normalized injuries, lineups, starters, weather, venue
+context, and provenance already acquired from cleared sources are retained in
+a fixture-id/team/kickoff-bound private CI cache so a later empty/transient
+fixture rebuild cannot erase them. A kickoff or team-identity change prevents
+carryover. API-FOOTBALL's existing injury and lineup calls now run before
+postgame statistics against the same enforced daily/minute quota; this changes
+priority only and does not bypass reserves, terms, or source restrictions.)
+
 Reviewed: 2026-08-10 (CFBD quota reconciliation uses the provider's documented
 `/info` endpoint, which the official CFBD guidance states does not count against
 monthly limits. It is called only when the persisted ledger would otherwise

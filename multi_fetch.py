@@ -83,7 +83,7 @@ def _stale_source(key):
 # for a DORMANT sport, can be up to 12h away. Force a refetch once, right
 # away, whenever the on-disk data is missing a field the current code
 # expects every match to carry.
-REQUIRED_MATCH_FIELDS = ["watchability"]
+REQUIRED_MATCH_FIELDS = ["watchability", "pregame_context"]
 REQUIRED_MATCH_VALUES = {"model_signal_schema": 7}
 
 

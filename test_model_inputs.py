@@ -2320,5 +2320,25 @@ class NewsRelevanceTests(unittest.TestCase):
         self.assertIn("Arsenal Mulling Move For Real Madrid Star Vinicius Junior", headlines)
 
 
+class OffseasonRecordTests(unittest.TestCase):
+    def test_nfl_prior_season_record_is_marked_stale_across_long_gap(self):
+        standings = {"team": {"w": 12, "l": 5}}
+        tables = [{"teams": [{"name": "Team", "w": 12, "l": 5}]}]
+        history = [{"status": "FINISHED", "kickoff": "2026-02-08T23:00:00Z"}]
+        fixtures = [{"status": "UPCOMING", "kickoff": "2026-09-10T00:20:00Z"}]
+        self.assertTrue(fetch_data.mark_stale_offseason_records(
+            standings, tables, history, fixtures, "NFL"))
+        self.assertTrue(standings["team"]["season_stale"])
+        self.assertTrue(tables[0]["teams"][0]["season_stale"])
+
+    def test_inseason_nfl_record_remains_current(self):
+        standings = {"team": {"w": 2, "l": 1}}
+        history = [{"status": "FINISHED", "kickoff": "2026-09-27T20:00:00Z"}]
+        fixtures = [{"status": "UPCOMING", "kickoff": "2026-10-04T20:00:00Z"}]
+        self.assertFalse(fetch_data.mark_stale_offseason_records(
+            standings, [], history, fixtures, "NFL"))
+        self.assertNotIn("season_stale", standings["team"])
+
+
 if __name__ == "__main__":
     unittest.main()

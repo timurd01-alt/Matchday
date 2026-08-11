@@ -234,7 +234,7 @@ function teamStandingsMeta(team,comp,opts){
     // Preseason there is no table yet, so "0 pts" is a placeholder pretending
     // to be a standing. Say nothing until a game has been played.
     if(Number.isFinite(pts)&&Number(team?.pld))parts.push(`${pts} pts`);
-  }else{
+  }else if(!(opts.hideStaleRecord&&team?.season_stale)){
     const rec=teamRecordText(team);
     if(rec)parts.push(rec);
   }

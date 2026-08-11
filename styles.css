@@ -780,6 +780,16 @@ body.modalOpen{overflow:hidden}.matchModal{position:fixed;inset:0;z-index:99;dis
 .analystGrid{display:grid;grid-template-columns:minmax(260px,1fr) minmax(260px,.9fr);gap:14px;margin-top:16px;min-width:0}
 .analystBox{min-width:0;background:rgba(4,8,14,.34);border:1px solid var(--line);border-radius:13px;padding:13px}
 .analystBoxTitle{font-family:var(--mono);font-size:.58rem;text-transform:uppercase;letter-spacing:.09em;color:var(--faint);font-weight:800;margin-bottom:10px;white-space:nowrap}
+.neutralVenueBox{display:grid;gap:0;padding:15px}
+.neutralVenueBox .analystBoxTitle{display:flex;align-items:center;justify-content:space-between;gap:10px;white-space:normal;line-height:1.35;margin-bottom:8px}
+.hypotheticalTag{display:inline-flex;align-items:center;border:1px solid var(--line2);border-radius:999px;padding:4px 7px;color:var(--muted);background:rgba(255,255,255,.03);font-size:.5rem;letter-spacing:.05em;white-space:nowrap}
+.neutralVenueRow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:center;padding:10px 0;border-top:1px solid rgba(255,255,255,.06);font-size:.82rem;line-height:1.35}
+.neutralVenueRow span{color:var(--muted)}
+.neutralVenueRow b{color:var(--text);text-align:right;white-space:nowrap}
+.neutralVenueDelta{margin-top:2px;padding:9px 10px;border-radius:9px;background:rgba(255,255,255,.035);color:var(--muted);font-family:var(--mono);font-size:.62rem;line-height:1.4}
+.neutralVenueDelta.down{color:var(--loss);background:rgba(255,93,108,.07)}
+.neutralVenueDelta.up{color:var(--win);background:rgba(58,209,122,.07)}
+@media(max-width:540px){.neutralVenueBox .analystBoxTitle{align-items:flex-start;flex-direction:column}.hypotheticalTag{white-space:normal}.neutralVenueRow{grid-template-columns:1fr;gap:4px}.neutralVenueRow b{text-align:left;white-space:normal}}
 .probLines{display:grid;gap:8px;min-width:0}
 .probLine{display:grid;grid-template-columns:minmax(78px,120px) minmax(0,1fr) 44px;gap:9px;align-items:center;min-width:0;font-family:var(--mono);font-size:.68rem;color:var(--muted)}
 .probLine .sideName{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--text);font-weight:800}
