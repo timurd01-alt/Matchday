@@ -49,21 +49,6 @@
   ]
  },
  {
-  "id": "wednesday-availability-tracker-2026-08-05",
-  "comp": "all",
-  "comp_label": "Availability Desk",
-  "type": "availability",
-  "slug": "wednesday-availability-tracker-2026-08-05",
-  "title": "Wednesday Availability Tracker: The Watch Window Opens",
-  "date": "2026-08-05",
-  "summary": "The next covered fixture is approaching, but no source-backed player-status call or model movement is reportable.",
-  "body": [
-   "Arsenal FC v Coventry City FC on August 21 is the next covered non-MLB fixture, but the current export carries no player-level absence, suspension, return, roster move, or confirmed lineup change.",
-   "Confirmed: none. Doubtful: none classified. Unknown: official club bulletins, team sheets, and any role or replacement effect closer to kickoff.",
-   "No before-and-after availability snapshot is retained, so the model effect is unknown rather than assumed to be zero. MLB remains out of scope because the documented feed does not provide a current compliant player-availability source."
-  ]
- },
- {
   "id": "friday-model-vs-market-2026-08-07",
   "comp": "all",
   "comp_label": "Model vs. Market",
@@ -79,18 +64,18 @@
   ]
  },
  {
-  "id": "wednesday-availability-tracker-2026-08-05",
+  "id": "wednesday-availability-tracker-2026-08-12",
   "comp": "all",
   "comp_label": "Availability Desk",
   "type": "availability",
-  "slug": "wednesday-availability-tracker-2026-08-05",
-  "title": "Wednesday Availability Tracker: The Watch Window Opens",
-  "date": "2026-08-05",
-  "summary": "The next covered fixture is approaching, but no source-backed player-status call or model movement is reportable.",
+  "slug": "wednesday-availability-tracker-2026-08-12",
+  "title": "Wednesday Availability Tracker: Nine Days, No Verified Personnel Call",
+  "date": "2026-08-12",
+  "summary": "Arsenal v Coventry is nine days away; the configured non-MLB feed supports no player-status call or availability-driven model move.",
   "body": [
-   "Arsenal FC v Coventry City FC on August 21 is the next covered non-MLB fixture, but the current export carries no player-level absence, suspension, return, roster move, or confirmed lineup change.",
-   "Confirmed: none. Doubtful: none classified. Unknown: official club bulletins, team sheets, and any role or replacement effect closer to kickoff.",
-   "No before-and-after availability snapshot is retained, so the model effect is unknown rather than assumed to be zero. MLB remains out of scope because the documented feed does not provide a current compliant player-availability source."
+   "The opening Premier League fixture, Arsenal FC v Coventry City FC on August 21, is now nine days away. The configured non-MLB records still carry no player-level injury, suspension, return, roster move, or confirmed lineup status that this desk can verify.",
+   "Confirmed: none. Doubtful: none classified. Unknown: official club notices, team sheets, likely roles, replacement quality, and any availability effect as the fixture approaches.",
+   "The current Arsenal lean is a 79% fixture snapshot, not a recorded before-and-after availability change. No paired availability snapshots are retained, so direction and magnitude remain unknown. MLB is excluded because no current compliant player-availability source is documented."
   ]
  },
  {

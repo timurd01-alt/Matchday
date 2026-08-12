@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0812A",
+  "tag": "Report",
+  "title": "Wednesday availability desk publishes a verified hold",
+  "items": [
+   "Published the August 12 Availability Desk dispatch for Arsenal v Coventry, explicitly separating confirmed, doubtful, and unknown personnel information.",
+   "No player-status claim or availability-driven model movement is reported: the configured non-MLB snapshot contains no usable personnel label or paired availability snapshot."
+  ]
+ },
+ {
   "date": "Build 0811B",
   "tag": "Fix",
   "title": "NFL depth-chart coverage reaches every scheduled fixture",
