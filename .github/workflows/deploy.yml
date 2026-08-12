@@ -284,7 +284,10 @@ jobs:
           mkdir -p _site/posts
           python - <<'EOF'
           import json, pathlib, shutil
-          public = {"wc", "ucl", "epl", "laliga", "seriea", "bundesliga", "ligue1", "nfl", "ncaaf", "ncaam", "nba", "mlb"}
+          # Editorial desk posts may cover the whole non-MLB board rather
+          # than a single competition. Keep those `comp: "all"` pages in
+          # the same explicit public allowlist as the competition posts.
+          public = {"all", "wc", "ucl", "epl", "laliga", "seriea", "bundesliga", "ligue1", "nfl", "ncaaf", "ncaam", "nba", "mlb"}
           try:
               posts = json.loads(pathlib.Path("posts.json").read_text(encoding="utf-8"))
           except Exception:

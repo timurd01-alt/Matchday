@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0812B",
+  "tag": "Fix",
+  "title": "Availability Desk pages reach the public site",
+  "items": [
+   "The production artifact now includes all-sport editorial posts, so the Wednesday Availability Tracker and other desk reports receive their standalone public URLs and Content-hub entries."
+  ]
+ },
+ {
   "date": "Build 0812A",
   "tag": "Report",
   "title": "Wednesday availability desk publishes a verified hold",
