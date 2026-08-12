@@ -345,8 +345,10 @@ function normalizePlayer(p){return {n:String(p?.n??p?.number??'').trim(),name:St
 function lineupRows(xi,formation){const players=(xi||[]).map(normalizePlayer).filter(p=>p.n||p.name);if(!players.length)return[];const parts=formationParts(formation);if(!parts.length){const rows=[];for(let i=0;i<players.length;i+=3)rows.push(players.slice(i,i+3));return rows}const rows=[];let idx=0;rows.push(players.slice(idx,idx+1));idx+=1;parts.forEach(c=>{rows.push(players.slice(idx,idx+c));idx+=c});if(idx<players.length)rows.push(players.slice(idx));return rows.filter(r=>r.length)}
 function pitchPlayer(p){const nm=shortPlayerName(p.name)||`#${p.n||'?'}`;return `<div class="pitchPlayer ${p.out?'out':''}" title="${esc((p.n?('#'+p.n+' '):'')+(p.name||''))}"><div class="num">${esc(p.n||'—')}</div><div class="pname">${esc(nm)}</div>${p.out?'<span class="subMark">sub</span>':''}</div>`}
 function pitchTeamCard(team,line,side){const rows=lineupRows(line?.xi||[],line?.formation||'');const fl=teamFlagHTML(team);const form=line?.formation||'XI';return `<div class="pitchCard ${side}"><div class="pitchHeader"><div class="pitchTeamName">${fl}<span>${esc(team?.name||side)}</span></div><div class="formationBadge">${esc(form)}</div></div>${rows.length?`<div class="pitch">${rows.map(r=>`<div class="pitchRow">${r.map(pitchPlayer).join('')}</div>`).join('')}</div>`:`<div class="emptyStats">Lineup not available.</div>`}<div class="lineupFoot"><span>${esc(team?.code||'')}</span><span>${rows.reduce((a,r)=>a+r.length,0)} players shown</span></div></div>`}
+function marketHitterCard(team,line){const players=(line?.xi||[]).map(normalizePlayer).filter(p=>p.name);return `<div class="marketHitterCard"><div class="marketHitterHead"><b>${esc(team?.name||'Team')}</b><span>${players.length} listed</span></div><div class="marketHitterList">${players.map(p=>`<span>${esc(p.name)}</span>`).join('')}</div></div>`}
 function lineupsPanel(m){
   const l=m.lineups;
+  if(l?.basis&&((l.home?.xi||[]).length||(l.away?.xi||[]).length))return `<div class="lineupBoard marketHitterBoard"><div class="seclbl">Likely active hitters</div><div class="marketInferenceNote">Inferred from non-ESPN batting-hit markets. These names are unordered and unconfirmed; this is not an official batting card.</div><div class="marketHitterGrid">${marketHitterCard(m.home,l.home||{})}${marketHitterCard(m.away,l.away||{})}</div></div>`;
   if(l&&((l.home?.xi||[]).length||(l.away?.xi||[]).length))return `<div class="lineupBoard pitchMode"><div class="seclbl">Lineups</div><div class="pitchGrid">${pitchTeamCard(m.home,l.home||{},'home')}${pitchTeamCard(m.away,l.away||{},'away')}</div></div>`;
   const comp=String(m?._comp||DATA.comp_key||'').toUpperCase();
   const soccer=['WC','UCL','EPL','LALIGA','SERIEA','BUNDESLIGA','LIGUE1'].includes(comp);
@@ -529,6 +531,8 @@ function pregameContextPanel(m){
   const rows=Object.entries(ctx.inputs||{}).map(([key,value])=>`<div class="factorRow ${value==='confirmed'?'pos':'neu'}"><span class="fName">${esc(labels[key]||key)}</span><span class="fVal">${esc(value)}</span></div>`).join('');
   const pitchers=m.personnel?.starting_pitchers||{};
   const starterNames=['home','away'].map(side=>pitchers[side]?.name).filter(Boolean);
+  const marketHitters=m.personnel?.market_listed_hitters||{};
+  const bullpen=m.personnel?.bullpen||{};
   const injuries=m.injuries||{};
   const injuryDetails=m.personnel?.injury_details||{};
   const injuryCount=(injuries.home||[]).length+(injuries.away||[]).length+
@@ -542,7 +546,9 @@ function pregameContextPanel(m){
     return `${esc(team?.code||team?.name||side)} expected: ${players.map(p=>`${esc(p.position||'')} ${esc(p.name||'')}${p.roster_status&&p.roster_status!=='ACT'?` <b>(${esc(p.roster_status)})</b>`:''}`).join(' · ')}`;
   };
   const notes=[];
-  if(starterNames.length)notes.push(`Starters: ${starterNames.map(esc).join(' · ')}`);
+  if(starterNames.length)notes.push(`${m.personnel?.starting_pitchers_confirmed?'Confirmed starters':'Market-listed starter candidates'}: ${starterNames.map(esc).join(' · ')}`);
+  if((marketHitters.home||[]).length||(marketHitters.away||[]).length)notes.push(`Likely active hitters from player markets: ${(marketHitters.home||[]).length} home / ${(marketHitters.away||[]).length} away; unordered and unconfirmed.`);
+  if(bullpen.home||bullpen.away){const bp=side=>{const x=bullpen[side]||{},team=side==='home'?m.home:m.away;return `${esc(team?.code||side)} ${esc(x.status||'unknown')} (${esc(x.games_last_72h??'—')} games/72h${x.hours_since_last_game!=null?`, ${esc(x.hours_since_last_game)}h rest`:''})`};notes.push(`Bullpen rest pressure: ${bp('home')} / ${bp('away')}. Schedule-derived; individual reliever usage is unavailable.`)}
   if(injuryCount)notes.push(`${injuryCount} reported unavailable/questionable player${injuryCount===1?'':'s'}`);
   ['home','away'].map(depthLine).filter(Boolean).forEach(line=>notes.push(line));
   const depthObserved=depth.home?.observed_at||depth.away?.observed_at;

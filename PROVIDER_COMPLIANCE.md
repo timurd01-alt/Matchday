@@ -1,5 +1,26 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-08-12 (MLB pregame personnel fallback. SportsGameOdds' existing
+Version 3 application-display permission and 2,500-object Amateur allowance
+were re-checked against its current MLB documentation. Matchday now requests
+pitcher-strikeout and batter-hit markets inside the same bounded event objects
+already used for game odds; the provider documents that market count does not
+change object cost. Only players backed by an available non-ESPN bookmaker are
+retained. Pitchers are labelled market-listed candidates, hitters are labelled
+likely active/unordered, both remain unconfirmed and zero-weight, and no raw
+odds/player payload is redistributed. A separate bullpen-rest proxy uses only
+Matchday's existing fixture history (games in the prior 72 hours and time since
+the previous game); it explicitly does not claim individual reliever usage or
+availability. Big Balls' advertised MLB lineup route was live-tested and still
+returned `meta.available=false` with empty arrays; its MLB injury call timed
+out and opaque upstream provenance remains unresolved, so it stays disabled.
+SportsFBI was rejected because its Terms limit the license to personal,
+non-commercial use and prohibit redistribution/derivative competing products;
+ClearSports was rejected because its free credits are for testing and its
+Terms prohibit redistribution without permission. MySportsFeeds' free offer
+is likewise personal/private. MLB StatsAPI remains excluded under MLB's
+automated-access terms. No scraping or direct ESPN access was introduced.)
+
 Reviewed: 2026-08-11 (NFL pregame context through nflverse. The current 2026
 `depth_charts` and `weekly_rosters` release assets were live-verified through
 GitHub's release API and carry source timestamps from 2026-08-10. nflreadr's
@@ -56,7 +77,8 @@ that supplies material independent value, while prohibiting standalone feeds,
 bulk exports, resale, and substitute services. The live Amateur key confirms a
 2,500-object monthly ceiling and access to NFL, NBA, MLB, NHL, NCAAF, NCAAB,
 MLS, and UEFA Champions League. Matchday requests at most eight near-term
-events per supported competition, caches the normalized result for 24 hours,
+events per supported competition (15 for a complete MLB slate), caches the
+normalized result for 24 hours,
 keeps a 100-object reserve, and does not persist raw payloads. Because the free
 payload includes ESPN BET, provider-wide fair/consensus fields are rejected;
 Matchday recomputes the game market only from matched non-ESPN bookmakers.

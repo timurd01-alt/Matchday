@@ -1112,24 +1112,29 @@ class SportsGameOddsOverlayTests(unittest.TestCase):
             (fetch_data.COMP_KEY, fetch_data.COMP, fetch_data.SPORTSGAMEODDS_KEY,
              fetch_data.SPORTSGAMEODDS_CACHE_FILE) = old
 
-    def test_existing_primary_market_avoids_free_tier_call(self):
-        old = (fetch_data.COMP_KEY, fetch_data.COMP, fetch_data.SPORTSGAMEODDS_KEY)
+    def test_existing_primary_mlb_market_still_fetches_personnel_once(self):
+        old = (fetch_data.COMP_KEY, fetch_data.COMP, fetch_data.SPORTSGAMEODDS_KEY,
+               fetch_data.SPORTSGAMEODDS_CACHE_FILE)
         kickoff = (fetch_data.datetime.datetime.now(fetch_data.datetime.timezone.utc) +
                    fetch_data.datetime.timedelta(hours=2)).isoformat()
         match = {"id": "mlb-1", "status": "UPCOMING", "kickoff": kickoff,
                  "home": {"name": "Boston Red Sox"}, "away": {"name": "New York Yankees"},
                  "markets": {"1x2": {"home_pct": 50, "away_pct": 50}}}
         try:
-            fetch_data.COMP_KEY = "MLB"
-            fetch_data.COMP = dict(fetch_data.COMPETITIONS["MLB"])
-            setattr(fetch_data, "SPORTSGAMEODDS_KEY", "configured-key")
-            with mock.patch.object(provider_adapters.SportsGameOddsAdapter,
-                                   "upcoming_events") as upcoming:
-                self.assertEqual(fetch_data.fetch_sportsgameodds_overlay([match]),
-                                 {"markets": 0, "venues": 0})
-            upcoming.assert_not_called()
+            with tempfile.TemporaryDirectory() as tmp:
+                fetch_data.COMP_KEY = "MLB"
+                fetch_data.COMP = dict(fetch_data.COMPETITIONS["MLB"])
+                setattr(fetch_data, "SPORTSGAMEODDS_KEY", "configured-key")
+                fetch_data.SPORTSGAMEODDS_CACHE_FILE = os.path.join(tmp, "sgo.json")
+                with mock.patch.object(provider_adapters.SportsGameOddsAdapter,
+                                       "upcoming_events", return_value=[]) as upcoming:
+                    self.assertEqual(fetch_data.fetch_sportsgameodds_overlay([match]),
+                                     {"markets": 0, "venues": 0,
+                                      "starting_pitchers": 0, "lineups": 0})
+                upcoming.assert_called_once()
         finally:
-            fetch_data.COMP_KEY, fetch_data.COMP, fetch_data.SPORTSGAMEODDS_KEY = old
+            (fetch_data.COMP_KEY, fetch_data.COMP, fetch_data.SPORTSGAMEODDS_KEY,
+             fetch_data.SPORTSGAMEODDS_CACHE_FILE) = old
 
 
 class StandingsAndMarketUpsetRadarTests(unittest.TestCase):

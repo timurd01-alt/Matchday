@@ -144,6 +144,65 @@ class SportsGameOddsTests(unittest.TestCase):
         self.assertFalse(any(match["injuries"].values()))
         self.assertNotIn("players", match)
 
+    def test_mlb_player_markets_attach_only_unconfirmed_inferences(self):
+        home_ids = [f"HOME_{i}_MLB" for i in range(1, 8)]
+        away_ids = [f"AWAY_{i}_MLB" for i in range(1, 8)]
+        players = {
+            **{player_id: {"name": f"Home Hitter {i}", "teamID": "BOSTON_RED_SOX_MLB"}
+               for i, player_id in enumerate(home_ids, 1)},
+            **{player_id: {"name": f"Away Hitter {i}", "teamID": "NEW_YORK_YANKEES_MLB"}
+               for i, player_id in enumerate(away_ids, 1)},
+            "HOME_P_MLB": {"name": "Home Pitcher", "teamID": "BOSTON_RED_SOX_MLB"},
+            "AWAY_P_MLB": {"name": "Away Pitcher", "teamID": "NEW_YORK_YANKEES_MLB"},
+        }
+        odds = {
+            "home": self._odd("home", {"fanduel": "+110", "espnbet": "-500"}),
+            "away": self._odd("away", {"fanduel": "-120", "espnbet": "+350"}),
+        }
+        for player_id in home_ids + away_ids:
+            odds["hit-" + player_id] = {
+                "statID": "batting_hits", "playerID": player_id,
+                "byBookmaker": {"fanduel": {"odds": "-110", "available": True}},
+            }
+        for player_id in ("HOME_P_MLB", "AWAY_P_MLB"):
+            odds["pitch-" + player_id] = {
+                "statID": "pitching_strikeouts", "playerID": player_id,
+                "byBookmaker": {"draftkings": {"odds": "+100", "available": True}},
+            }
+        event = {
+            "eventID": "mlb-1",
+            "teams": {
+                "home": {"teamID": "BOSTON_RED_SOX_MLB", "names": {"long": "Boston Red Sox"}},
+                "away": {"teamID": "NEW_YORK_YANKEES_MLB", "names": {"long": "New York Yankees"}},
+            },
+            "players": players, "odds": odds,
+        }
+        match = {"id": "m1", "home": {"name": "Boston Red Sox", "code": "BOS"},
+                 "away": {"name": "New York Yankees", "code": "NYY"},
+                 "markets": {}, "lineups": None, "injuries": {"home": [], "away": []}}
+        result = SportsGameOddsAdapter("test-key", "MLB", getter=lambda *_: {}).attach_pregame(
+            [match], [event], observed_at="2026-08-12T12:00:00Z")
+        self.assertEqual(result["starting_pitchers"], 2)
+        self.assertEqual(result["lineups"], 1)
+        self.assertEqual(match["personnel"]["starting_pitchers"]["home"]["name"],
+                         "Home Pitcher")
+        self.assertFalse(match["personnel"]["starting_pitchers_confirmed"])
+        self.assertEqual(len(match["lineups"]["away"]["xi"]), 7)
+        self.assertFalse(match["lineups"]["confirmed"])
+        self.assertIn("not a batting order", match["lineups"]["basis"])
+        self.assertFalse(any(match["injuries"].values()))
+
+    def test_mlb_inference_rejects_espn_only_player_markets(self):
+        event = {
+            "teams": {"home": {"teamID": "HOME_MLB"}, "away": {"teamID": "AWAY_MLB"}},
+            "players": {"P_MLB": {"name": "Pitcher", "teamID": "HOME_MLB"}},
+            "odds": {"pitch": {"statID": "pitching_strikeouts", "playerID": "P_MLB",
+                                "byBookmaker": {"espnbet": {"odds": "-110", "available": True}}}},
+        }
+        inferred = SportsGameOddsAdapter.mlb_personnel(event)
+        self.assertEqual(inferred["starting_pitchers"], {})
+        self.assertIsNone(inferred["lineups"])
+
     def test_usage_gate_refuses_event_call_before_monthly_reserve(self):
         calls = []
         def getter(url, headers):

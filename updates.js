@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0812C",
+  "tag": "Data",
+  "title": "MLB pregame context gains a legal free fallback",
+  "items": [
+   "SportsGameOdds player markets now supply clearly labelled, unconfirmed starting-pitcher candidates and likely active hitters without extra event-object cost or ESPN BET input.",
+   "MLB expanded views show inferred hitter groups as compact unordered lists instead of pretending they are official batting orders.",
+   "Bullpen context now reports schedule-derived rest pressure from recent Matchday fixtures while explicitly distinguishing it from individual reliever availability."
+  ]
+ },
+ {
   "date": "Build 0812B",
   "tag": "Fix",
   "title": "Availability Desk pages reach the public site",

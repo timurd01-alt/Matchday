@@ -753,6 +753,10 @@ body.modalOpen{overflow:hidden}.matchModal{position:fixed;inset:0;z-index:99;dis
    Full-width model read, no chip crowding, no vertical text, and a cleaner forecast board. */
 .modalBody .detailGrid.v4Detail{display:block;min-width:0}
 .modalBody .detailGrid.v4Detail .pregameContextCard{margin:16px 0}
+
+/* MLB player-market inference: compact lists, never a fake baseball field. */
+.marketHitterBoard{padding:14px 15px}.marketInferenceNote{margin:-2px 0 12px;color:var(--muted);font-size:.74rem;line-height:1.45}.marketHitterGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.marketHitterCard{overflow:hidden;border:1px solid var(--line);border-radius:12px;background:var(--bg2)}.marketHitterHead{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;border-bottom:1px solid var(--line)}.marketHitterHead b{font-family:"Archivo",sans-serif;font-size:.86rem}.marketHitterHead span{font-family:var(--mono);font-size:.6rem;color:var(--faint);text-transform:uppercase;letter-spacing:.06em}.marketHitterList{display:grid;grid-template-columns:1fr 1fr;gap:0 12px;padding:6px 12px 10px}.marketHitterList span{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:.76rem;color:var(--text)}
+@media(max-width:620px){.marketHitterGrid,.marketHitterList{grid-template-columns:1fr}}
 .modalBody .detailGrid.v4Detail .detailTop{display:grid!important;grid-template-columns:1fr!important;gap:16px!important;min-width:0}
 .modalBody .detailGrid.v4Detail .detailLow{display:grid!important;grid-template-columns:1fr!important;gap:16px!important;margin-top:16px;min-width:0}
 .modalBody .detailGrid.v4Detail .readCard{min-width:0!important;overflow:hidden!important}

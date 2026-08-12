@@ -482,6 +482,7 @@ class SportsGameOddsAdapter:
         "NCAAF": "NCAAF", "NCAAM": "NCAAB", "UCL": "UEFA_CHAMPIONS_LEAGUE",
     }
     MAX_EVENTS = 8
+    MLB_MAX_EVENTS = 15
     MONTHLY_RESERVE = 100
 
     def __init__(self, api_key, competition, getter=None):
@@ -517,7 +518,8 @@ class SportsGameOddsAdapter:
 
     def upcoming_events(self, starts_after, starts_before, limit=None):
         remaining = self.remaining_monthly_entities()
-        request_limit = min(int(limit or self.MAX_EVENTS), self.MAX_EVENTS)
+        event_cap = self.MLB_MAX_EVENTS if self.competition == "MLB" else self.MAX_EVENTS
+        request_limit = min(int(limit or event_cap), event_cap)
         # The usage request itself counts as at least one object. Preserve a
         # real reserve plus the maximum size of the event response before the
         # second request is allowed to fire.
@@ -532,6 +534,14 @@ class SportsGameOddsAdapter:
             if has_draws else
             "points-home-game-ml-home,points-away-game-ml-away"
         )
+        # One returned event costs one object regardless of its market count.
+        # MLB player markets therefore add useful, explicitly inferred
+        # personnel context without increasing the monthly entity spend.
+        if self.competition == "MLB":
+            odd_ids += (
+                ",pitching_strikeouts-PLAYER_ID-game-ou-over"
+                ",batting_hits-PLAYER_ID-game-ou-over"
+            )
         payload = self._get("/events", {
             "leagueID": self.league,
             "started": "false",
@@ -539,6 +549,7 @@ class SportsGameOddsAdapter:
             "startsAfter": starts_after,
             "startsBefore": starts_before,
             "oddID": odd_ids,
+            "includeOpposingOdds": "true" if self.competition == "MLB" else "false",
             "limit": request_limit,
         })
         rows = payload.get("data") if isinstance(payload, dict) else None
@@ -657,8 +668,88 @@ class SportsGameOddsAdapter:
                 return event
         return None
 
+    @staticmethod
+    def _non_espn_market_available(odd):
+        """Require a live quote from at least one permitted bookmaker."""
+        for book_id, quote in (odd.get("byBookmaker") or {}).items():
+            if "espn" in str(book_id).lower() or not isinstance(quote, dict):
+                continue
+            if quote.get("available") is not False:
+                return True
+        return False
+
+    @classmethod
+    def mlb_personnel(cls, event, observed_at=None):
+        """Infer MLB starter candidates and likely active hitters from props.
+
+        Player markets are not an official team sheet. We only retain the
+        compact analytical inference, label it unconfirmed, and require
+        non-ESPN bookmaker support for every included player.
+        """
+        players = event.get("players") or {}
+        teams = event.get("teams") or {}
+        side_by_team = {
+            str((teams.get(side) or {}).get("teamID") or ""): side
+            for side in ("home", "away")
+        }
+        pitchers = {"home": {}, "away": {}}
+        hitters = {"home": {}, "away": {}}
+        for odd in (event.get("odds") or {}).values():
+            if not isinstance(odd, dict) or not cls._non_espn_market_available(odd):
+                continue
+            stat_id = str(odd.get("statID") or "")
+            player_id = str(odd.get("playerID") or odd.get("statEntityID") or "")
+            player = players.get(player_id) if isinstance(players, dict) else None
+            if not isinstance(player, dict):
+                continue
+            side = side_by_team.get(str(player.get("teamID") or ""))
+            name = str(player.get("name") or "").strip()
+            if not side or not name:
+                continue
+            if stat_id == "pitching_strikeouts":
+                slot = pitchers[side].setdefault(player_id, {
+                    "player_id": player_id, "name": name, "market_count": 0,
+                })
+                slot["market_count"] += 1
+            elif stat_id == "batting_hits":
+                hitters[side][player_id] = {"player_id": player_id, "name": name}
+
+        starter_rows = {}
+        for side, candidates in pitchers.items():
+            ranked = sorted(candidates.values(),
+                            key=lambda row: (-row["market_count"], row["name"].lower()))
+            if ranked:
+                starter_rows[side] = {
+                    "player_id": ranked[0]["player_id"],
+                    "name": ranked[0]["name"],
+                    "status": "market-listed starter candidate",
+                    "confirmed": False,
+                    "source": "SportsGameOdds player markets",
+                    "observed_at": observed_at,
+                }
+
+        hitter_rows = {side: sorted(rows.values(), key=lambda row: row["name"].lower())
+                       for side, rows in hitters.items()}
+        # A sparse props board is useful as personnel context, but it is not
+        # close enough to a projected batting group to satisfy lineup
+        # readiness. Seven names per side is the conservative lower bound.
+        projected_lineups = None
+        if all(len(hitter_rows[side]) >= 7 for side in ("home", "away")):
+            projected_lineups = {
+                "home": {"xi": hitter_rows["home"], "confirmed": False,
+                         "status": "market-listed, unordered"},
+                "away": {"xi": hitter_rows["away"], "confirmed": False,
+                         "status": "market-listed, unordered"},
+                "confirmed": False,
+                "basis": "SportsGameOdds batting-hit markets; likely active hitters, not a batting order",
+                "observed_at": observed_at,
+            }
+        return {"starting_pitchers": starter_rows,
+                "market_listed_hitters": hitter_rows,
+                "lineups": projected_lineups}
+
     def attach_pregame(self, matches, events, observed_at=None, has_draws=False):
-        attached = venues = 0
+        attached = venues = pitchers = lineups = 0
         for match in matches:
             event = self._event_for_match(events, match)
             if not event:
@@ -675,15 +766,33 @@ class SportsGameOddsAdapter:
             if market:
                 match.setdefault("markets", {})["1x2"] = market
                 attached += 1
+            if self.competition == "MLB":
+                inferred = self.mlb_personnel(event, observed_at)
+                personnel = match.setdefault("personnel", {})
+                if inferred["starting_pitchers"]:
+                    personnel["starting_pitchers"] = inferred["starting_pitchers"]
+                    personnel["starting_pitchers_confirmed"] = False
+                    pitchers += len(inferred["starting_pitchers"])
+                if any(inferred["market_listed_hitters"].values()):
+                    personnel["market_listed_hitters"] = inferred["market_listed_hitters"]
+                if inferred["lineups"] and not match.get("lineups"):
+                    match["lineups"] = inferred["lineups"]
+                    lineups += 1
             match.setdefault("pregame_provenance", []).append({
-                "input": "market" if market else "event_metadata",
+                "input": "market_and_inferred_personnel" if self.competition == "MLB"
+                         else "market" if market else "event_metadata",
                 "source": "SportsGameOdds",
                 "source_reference": "https://sportsgameodds.com/",
                 "fetched_at": observed_at,
                 "provider_event_id": event.get("eventID"),
                 "espn_excluded": True,
+                "personnel_semantics": ("player-market inference; not official lineup/injury data"
+                                        if self.competition == "MLB" else None),
             })
-        return {"markets": attached, "venues": venues}
+        result = {"markets": attached, "venues": venues}
+        if self.competition == "MLB":
+            result.update({"starting_pitchers": pitchers, "lineups": lineups})
+        return result
 
 
 class SportsDataIOAdapter:

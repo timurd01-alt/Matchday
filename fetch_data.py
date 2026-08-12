@@ -1333,7 +1333,7 @@ CLASS_SIGNAL_CONFIG = {
         "label": "Personnel edge",
         "source": None,
         "source_key": None,
-        "note": "Requires probable starters, confirmed batting orders, and bullpen availability; the configured feed does not provide them.",
+        "note": "Market-listed starter/hitter candidates and schedule-derived bullpen rest are collected at zero weight; confirmed batting orders, injuries, and individual reliever availability remain unavailable.",
     },
     "NFL": {
         "label": "Roster edge",
@@ -6012,8 +6012,8 @@ def fetch_sportsdataio_pregame_overlay(matches):
 def _merge_sportsgameodds_overlay(match, row):
     """Restore only normalized, non-ESPN fields from the quota-saving cache."""
     if not isinstance(row, dict):
-        return {"markets": 0, "venues": 0}
-    markets = venues = 0
+        return {"markets": 0, "venues": 0, "starting_pitchers": 0, "lineups": 0}
+    markets = venues = pitchers = lineups = 0
     incoming = (row.get("markets") or {}).get("1x2")
     if incoming and not (match.get("markets") or {}).get("1x2"):
         match.setdefault("markets", {})["1x2"] = incoming
@@ -6021,21 +6021,96 @@ def _merge_sportsgameodds_overlay(match, row):
     if row.get("venue") and not match.get("venue"):
         match["venue"] = row["venue"]
         venues = 1
+    cached_personnel = row.get("personnel") or {}
+    personnel = match.setdefault("personnel", {})
+    if cached_personnel.get("starting_pitchers") and not personnel.get("starting_pitchers"):
+        personnel["starting_pitchers"] = cached_personnel["starting_pitchers"]
+        personnel["starting_pitchers_confirmed"] = False
+        pitchers = len(cached_personnel["starting_pitchers"])
+    if cached_personnel.get("market_listed_hitters") and not personnel.get("market_listed_hitters"):
+        personnel["market_listed_hitters"] = cached_personnel["market_listed_hitters"]
+    if row.get("lineups") and not match.get("lineups"):
+        match["lineups"] = row["lineups"]
+        lineups = 1
     provenance = match.setdefault("pregame_provenance", [])
     for item in row.get("pregame_provenance") or []:
         if item not in provenance:
             provenance.append(item)
-    return {"markets": markets, "venues": venues}
+    return {"markets": markets, "venues": venues,
+            "starting_pitchers": pitchers, "lineups": lineups}
+
+
+def derive_mlb_bullpen_rest_context(matches, now=None):
+    """Attach a conservative bullpen-rest proxy from Matchday game history.
+
+    This does not claim to know which relievers threw or are unavailable. It
+    reports only team schedule load before the target game and stays at zero
+    model weight until a richer licensed pitch-usage feed exists.
+    """
+    if COMP_KEY != "MLB":
+        return 0
+    observed_at = (now or datetime.datetime.now(datetime.timezone.utc))
+    if observed_at.tzinfo is None:
+        observed_at = observed_at.replace(tzinfo=datetime.timezone.utc)
+    finished = []
+    for row in matches:
+        if row.get("status") != "FINISHED":
+            continue
+        when = _parse_kickoff(row.get("kickoff"))
+        if not when:
+            continue
+        for side in ("home", "away"):
+            team = row.get(side) or {}
+            for identity in (team.get("name"), team.get("code")):
+                key = norm(identity)
+                if key:
+                    finished.append((key, when))
+    attached = 0
+    for match in matches:
+        if match.get("status") != "UPCOMING":
+            continue
+        kickoff = _parse_kickoff(match.get("kickoff"))
+        if not kickoff:
+            continue
+        bullpen = {}
+        for side in ("home", "away"):
+            team = match.get(side) or {}
+            identities = {norm(team.get("name")), norm(team.get("code"))} - {""}
+            prior = sorted({when for key, when in finished
+                            if key in identities and when < kickoff}, reverse=True)
+            recent = [when for when in prior if (kickoff - when).total_seconds() <= 72 * 3600]
+            hours = round((kickoff - prior[0]).total_seconds() / 3600, 1) if prior else None
+            load = len(recent)
+            pressure = "elevated" if load >= 3 or (hours is not None and hours < 20) else (
+                "normal" if prior else "unknown")
+            bullpen[side] = {
+                "status": pressure,
+                "games_last_72h": load,
+                "hours_since_last_game": hours,
+                "basis": "schedule-derived rest pressure; reliever usage unavailable",
+                "confirmed": False,
+                "observed_at": observed_at.isoformat().replace("+00:00", "Z"),
+            }
+        match.setdefault("personnel", {})["bullpen"] = bullpen
+        match["personnel"]["bullpen_confirmed"] = False
+        match.setdefault("pregame_provenance", []).append({
+            "input": "bullpen_rest_proxy", "source": "Matchday schedule history",
+            "fetched_at": observed_at.isoformat().replace("+00:00", "Z"),
+            "confirmed": False,
+            "semantics": "team schedule load only; not individual reliever availability",
+        })
+        attached += 1
+    return attached
 
 
 def fetch_sportsgameodds_overlay(matches):
-    """Fill missing pregame markets from the 2,500-object/month free tier.
+    """Fill market gaps and infer MLB personnel from the licensed odds feed.
 
     SportsGameOdds is a fallback, not another hourly poll. The primary Odds
-    API remains untouched when it returned a market. A 24-hour normalized
-    cache and eight-event response cap bound worst-case monthly consumption
-    across every supported Matchday competition. The API's player map is not
-    a lineup/injury feed and is intentionally never persisted or attached.
+    API remains untouched when it returned a market. MLB player props arrive
+    inside the same paid event objects, so a 24-hour normalized cache can
+    retain carefully labelled starter/active-hitter inferences without extra
+    entity spend. They are never represented as confirmed team sheets.
     """
     if COMP_KEY not in SportsGameOddsAdapter.LEAGUES:
         return {"markets": 0, "venues": 0}
@@ -6050,17 +6125,22 @@ def fetch_sportsgameodds_overlay(matches):
             hours = (kickoff - now).total_seconds() / 3600
             if 0 <= hours <= SPORTSGAMEODDS_WINDOW_HOURS:
                 near.append(match)
-    missing = [match for match in near if not (match.get("markets") or {}).get("1x2")]
-    if not missing:
+    targets = near if COMP_KEY == "MLB" else [
+        match for match in near if not (match.get("markets") or {}).get("1x2")]
+    if not targets:
         DIAG.append("SportsGameOdds overlay: no missing near-term market")
-        return {"markets": 0, "venues": 0}
+        result = {"markets": 0, "venues": 0}
+        if COMP_KEY == "MLB":
+            result.update({"starting_pitchers": 0, "lineups": 0})
+        return result
 
     cached = None
     try:
         with open(SPORTSGAMEODDS_CACHE_FILE, encoding="utf-8") as handle:
             candidate = json.load(handle)
         age = time.time() - float(candidate.get("t") or 0)
-        if age < SPORTSGAMEODDS_CACHE_MIN * 60:
+        schema_ok = COMP_KEY != "MLB" or candidate.get("schema_ver") == 2
+        if schema_ok and age < SPORTSGAMEODDS_CACHE_MIN * 60:
             cached = candidate
     except Exception:
         cached = None
@@ -6070,17 +6150,17 @@ def fetch_sportsgameodds_overlay(matches):
         try:
             adapter = SportsGameOddsAdapter(SPORTSGAMEODDS_KEY, COMP_KEY)
             venue_was_missing = {str(match.get("id")): not bool(match.get("venue"))
-                                 for match in missing}
+                                 for match in targets}
             events = adapter.upcoming_events(
                 observed_at,
                 (now + datetime.timedelta(hours=SPORTSGAMEODDS_WINDOW_HOURS))
                 .isoformat().replace("+00:00", "Z"),
             )
             result = adapter.attach_pregame(
-                missing, events, observed_at=observed_at,
+                targets, events, observed_at=observed_at,
                 has_draws=bool(COMP.get("has_draws")),
             )
-            cached = {"t": time.time(), "observed_at": observed_at, "matches": {
+            cached = {"schema_ver": 2, "t": time.time(), "observed_at": observed_at, "matches": {
                 str(match.get("id")): {
                     "markets": {"1x2": (match.get("markets") or {}).get("1x2")}
                                if ((match.get("markets") or {}).get("1x2") or {}).get("source")
@@ -6088,36 +6168,53 @@ def fetch_sportsgameodds_overlay(matches):
                     "venue": match.get("venue") if venue_was_missing.get(str(match.get("id"))) else None,
                     "pregame_provenance": [item for item in match.get("pregame_provenance") or []
                                              if item.get("source") == "SportsGameOdds"],
-                } for match in missing
+                    "personnel": {
+                        "starting_pitchers": (match.get("personnel") or {}).get("starting_pitchers")
+                            if any(isinstance(item, dict) and
+                                   item.get("source") == "SportsGameOdds player markets"
+                                   for item in ((match.get("personnel") or {})
+                                                .get("starting_pitchers") or {}).values()) else None,
+                        "market_listed_hitters": (match.get("personnel") or {})
+                            .get("market_listed_hitters"),
+                    },
+                    "lineups": match.get("lineups")
+                        if str((match.get("lineups") or {}).get("basis") or "")
+                        .startswith("SportsGameOdds") else None,
+                } for match in targets
             }}
             tmp = SPORTSGAMEODDS_CACHE_FILE + ".tmp"
             with open(tmp, "w", encoding="utf-8") as handle:
                 json.dump(cached, handle, ensure_ascii=False)
             os.replace(tmp, SPORTSGAMEODDS_CACHE_FILE)
             DIAG.append(f"SportsGameOdds overlay: {result['markets']} market(s), "
-                        f"{result['venues']} venue(s), {len(events)} object(s)")
+                        f"{result['venues']} venue(s), "
+                        f"{result.get('starting_pitchers', 0)} starter candidate(s), "
+                        f"{result.get('lineups', 0)} inferred lineup(s), {len(events)} object(s)")
             return result
         except ProviderError as exc:
             try:
                 with open(SPORTSGAMEODDS_CACHE_FILE, encoding="utf-8") as handle:
                     candidate = json.load(handle)
                 age = time.time() - float(candidate.get("t") or 0)
+                if COMP_KEY == "MLB" and candidate.get("schema_ver") != 2:
+                    raise OSError("SportsGameOdds MLB cache predates personnel schema")
                 if age > SPORTSGAMEODDS_STALE_MAX_HOURS * 3600:
                     raise OSError("SportsGameOdds cache exceeds bounded stale window")
                 cached = candidate
                 DIAG.append(f"SportsGameOdds overlay: bounded stale cache after provider error — {_scrub(exc)}")
             except Exception:
                 DIAG.append(f"SportsGameOdds overlay unavailable — {_scrub(exc)}")
-                return {"markets": 0, "venues": 0}
+                return {"markets": 0, "venues": 0,
+                        "starting_pitchers": 0, "lineups": 0}
     else:
         DIAG.append("SportsGameOdds overlay: local cache")
 
-    totals = {"markets": 0, "venues": 0}
+    totals = {"markets": 0, "venues": 0, "starting_pitchers": 0, "lineups": 0}
     rows = cached.get("matches") if isinstance(cached, dict) else {}
-    for match in missing:
+    for match in targets:
         added = _merge_sportsgameodds_overlay(match, (rows or {}).get(str(match.get("id"))))
-        totals["markets"] += added["markets"]
-        totals["venues"] += added["venues"]
+        for key in totals:
+            totals[key] += added[key]
     return totals
 
 
@@ -6516,6 +6613,9 @@ def build():
             if how == "fuzzy": fuzzy += 1
     print("Fetching fallback market context (SportsGameOdds)…")
     fetch_sportsgameodds_overlay(matches)
+    if COMP_KEY == "MLB":
+        bullpen_context = derive_mlb_bullpen_rest_context(matches)
+        DIAG.append(f"MLB bullpen rest proxy: {bullpen_context} upcoming match(es), production weight 0")
     record_market_snapshots(matches)
 
     if COMP["sport"] == "soccer":
