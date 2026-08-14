@@ -1907,6 +1907,12 @@ html{color-scheme:dark}
 .welcomeCoverage{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:19px}
 .welcomeCoverage span{display:inline-flex;align-items:center;min-height:26px;padding:5px 10px;border:1px solid rgba(255,255,255,.105);border-radius:999px;background:rgba(255,255,255,.025);color:var(--muted);font-family:var(--mono);font-size:.57rem;font-weight:750;letter-spacing:.08em;text-transform:uppercase}
 .welcomeCoverage span:first-child{border-color:rgba(58,209,122,.34);background:rgba(58,209,122,.065);color:var(--signal)}
+.welcomeTourLink,.welcomeProofLink{appearance:none;border:0;background:none;color:var(--muted);font-family:var(--mono);font-size:.62rem;cursor:pointer;text-decoration:underline;text-decoration-color:rgba(255,255,255,.2);text-underline-offset:3px}
+.welcomeTourLink{padding:4px 0}
+.welcomeTourLink:hover,.welcomeTourLink:focus-visible,.welcomeProofLink:hover,.welcomeProofLink:focus-visible{color:var(--signal);text-decoration-color:currentColor}
+.welcomeTourLink:focus-visible,.welcomeProofLink:focus-visible{outline:2px solid var(--signal);outline-offset:4px;border-radius:3px}
+.welcomeProofLink{grid-column:2;justify-self:start;padding:4px 0 0;font-size:.56rem;text-align:left}
+.welcomeProofLink span{font-size:inherit;font-weight:400}
 .welcomeFallback{min-height:125px;display:flex;flex-direction:column;justify-content:center}
 .welcomeFallbackKicker{color:var(--signal);font-family:var(--mono);font-size:.56rem;font-weight:800;letter-spacing:.12em}
 .welcomeFallback strong{display:block;max-width:300px;margin-top:9px;font-family:"Archivo",sans-serif;font-size:clamp(1rem,1.7vw,1.3rem);line-height:1.18;letter-spacing:-.02em}

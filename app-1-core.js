@@ -104,7 +104,7 @@ function stripPastSeasonCompetitionViews(payload,now=new Date()){
 // ---- per-sport sidebar (data-driven, follows the SELECTION) ---------------
 // Each sport declares exactly which views exist for it, in order.
 const NAV_DEF={
-  all:         ['matches','results','advanced','community','tree','news','insights','status','updates','customize'],
+  all:         ['matches','results','advanced','score','community','tree','news','insights','status','updates','customize'],
   soccer_cup:  ['matches','results','groups','title','edge','advanced','score','bracket','third','tott','community','tree','sandbox','news','insights','status','updates','customize'],
   soccer_club: ['matches','results','groups','title','edge','advanced','score','bracket','tott','community','tree','sandbox','news','insights','status','updates','customize'],
   us_sport:    ['matches','results','groups','title','edge','advanced','score','community','tree','sandbox','news','insights','status','updates','customize'],
@@ -329,15 +329,16 @@ let HERO_FIRST_VISIT=false;try{HERO_FIRST_VISIT=!localStorage.getItem('matchday.
 function heroSeen(){try{return localStorage.getItem('matchday.heroSeen')==='1'||!HERO_FIRST_VISIT}catch(e){return false}}
 function heroDismiss(){try{localStorage.setItem('matchday.heroSeen','1')}catch(e){};renderCurrent();}
 function welcomeDismissed(){try{return sessionStorage.getItem('matchday.welcome.entered')==='1'}catch(e){return false}}
-function enterMatchday(){
+function enterMatchday(targetView='',startWithTour=false){
   try{sessionStorage.setItem('matchday.welcome.entered','1');localStorage.setItem('matchday.heroSeen','1')}catch(e){}
   const gate=$('#welcomeGate'),app=$('#app');
   const finish=()=>{
     if(gate){gate.hidden=true;gate.classList.remove('welcomeLeaving')}
     document.body.classList.remove('welcomeOpen','welcomeExiting');
     if(app)app.classList.remove('appRevealing');
-    renderCurrent();const main=document.querySelector('.content');if(main)main.focus?.();
-    if(!tourSeen())setTimeout(startTour,500);
+    if(targetView&&typeof setView==='function')setView(targetView);else renderCurrent();
+    const main=document.querySelector('.content');if(main)main.focus?.();
+    if(startWithTour)setTimeout(startTour,500);
   };
   if(!gate||prefersReducedMotion()){finish();return}
   gate.classList.add('welcomeLeaving');

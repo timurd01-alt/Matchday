@@ -112,6 +112,7 @@ Object.assign(window.MD_I18N.es,{
   "Model probability, market context, and the factors moving each matchup.":"Probabilidad del modelo, contexto del mercado y factores que mueven cada encuentro.",
   "Fresh reads appear as matchups are published.":"Los nuevos análisis aparecen al publicarse los encuentros.",
   "Explore the dashboard for completed scorecards, model methodology, and every available competition.":"Explora el panel para ver evaluaciones completas, la metodología del modelo y todas las competiciones disponibles.",
+  "No account required · no ads":"Sin cuenta · sin anuncios","Take a quick tour":"Haz un recorrido rápido","View verified scorecard":"Ver evaluación verificada",
   "One calm analysis desk.":"Un solo panel de análisis, claro y ordenado.",
   "Personalize your analysis desk.":"Personaliza tu panel de análisis.",
   "Signal red":"Rojo de señal"
@@ -125,6 +126,7 @@ Object.assign(window.MD_I18N.fr,{
   "Model probability, market context, and the factors moving each matchup.":"Probabilité du modèle, contexte du marché et facteurs qui font évoluer chaque rencontre.",
   "Fresh reads appear as matchups are published.":"De nouvelles analyses apparaissent dès la publication des rencontres.",
   "Explore the dashboard for completed scorecards, model methodology, and every available competition.":"Explorez le tableau de bord pour les bilans complets, la méthode du modèle et toutes les compétitions disponibles.",
+  "No account required · no ads":"Sans compte · sans publicité","Take a quick tour":"Visite guidée rapide","View verified scorecard":"Voir le bilan vérifié",
   "One calm analysis desk.":"Un espace d'analyse unique et clair.",
   "Personalize your analysis desk.":"Personnalisez votre espace d'analyse.",
   "Signal red":"Rouge signal"
@@ -138,6 +140,7 @@ Object.assign(window.MD_I18N.de,{
   "Model probability, market context, and the factors moving each matchup.":"Modellwahrscheinlichkeit, Marktkontext und die Faktoren, die jede Begegnung bewegen.",
   "Fresh reads appear as matchups are published.":"Neue Analysen erscheinen, sobald Begegnungen veröffentlicht werden.",
   "Explore the dashboard for completed scorecards, model methodology, and every available competition.":"Im Dashboard finden Sie vollständige Auswertungen, die Modellmethodik und alle verfügbaren Wettbewerbe.",
+  "No account required · no ads":"Kein Konto · keine Werbung","Take a quick tour":"Kurze Tour starten","View verified scorecard":"Geprüfte Auswertung ansehen",
   "One calm analysis desk.":"Ein ruhiger, übersichtlicher Analysebereich.",
   "Personalize your analysis desk.":"Personalisiere deinen Analysebereich.",
   "Signal red":"Signalrot"
@@ -151,6 +154,7 @@ Object.assign(window.MD_I18N.pt,{
   "Model probability, market context, and the factors moving each matchup.":"Probabilidade do modelo, contexto do mercado e os fatores que movimentam cada confronto.",
   "Fresh reads appear as matchups are published.":"Novas análises aparecem quando os confrontos são publicados.",
   "Explore the dashboard for completed scorecards, model methodology, and every available competition.":"Explore o painel para ver avaliações completas, a metodologia do modelo e todas as competições disponíveis.",
+  "No account required · no ads":"Sem conta · sem anúncios","Take a quick tour":"Fazer um tour rápido","View verified scorecard":"Ver avaliação verificada",
   "One calm analysis desk.":"Um painel de análise simples e organizado.",
   "Personalize your analysis desk.":"Personalize seu painel de análise.",
   "Signal red":"Vermelho de sinal"
@@ -164,6 +168,7 @@ Object.assign(window.MD_I18N.ru,{
   "Model probability, market context, and the factors moving each matchup.":"Вероятность модели, рыночный контекст и факторы, влияющие на каждый матч.",
   "Fresh reads appear as matchups are published.":"Новые разборы появляются после публикации матчей.",
   "Explore the dashboard for completed scorecards, model methodology, and every available competition.":"Откройте панель, чтобы увидеть полные оценки, методологию модели и все доступные турниры.",
+  "No account required · no ads":"Без аккаунта · без рекламы","Take a quick tour":"Краткий обзор","View verified scorecard":"Проверенная оценка",
   "One calm analysis desk.":"Единая спокойная панель аналитики.",
   "Personalize your analysis desk.":"Настройте панель аналитики.",
   "Signal red":"Сигнальный красный"

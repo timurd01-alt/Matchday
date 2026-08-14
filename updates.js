@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0814H",
+  "tag": "Polish",
+  "title": "Welcome with proof, not clutter",
+  "items": [
+   "The welcome page now answers the immediate friction question with no-account reassurance and offers a direct path to Matchday's verified scorecard.",
+   "The guided product tour is optional instead of opening automatically, so visitors can reach the matchup board immediately or choose the walkthrough themselves.",
+   "The all-sports navigation now exposes the combined verified scorecard, and every new welcome action is translated across the supported interface languages."
+  ]
+ },
+ {
   "date": "Build 0814G",
   "tag": "Polish",
   "title": "A clearer welcome before the first matchup",
