@@ -467,7 +467,12 @@ function renderWelcome(){
   renderWelcomeStats();bindWelcomeTilt();
   const upcoming=(DATA.matches||[]).filter(isVisibleUpcoming);
   const soonest=[...upcoming].sort(fixtureSort)[0],host=$('#welcomeNext');
-  if(!host||!soonest)return;
+  if(!host)return;
+  if(!soonest){
+    host.innerHTML=`<div class="welcomeFallback"><span class="welcomeFallbackKicker">BOARD READY</span><strong>Fresh reads appear as matchups are published.</strong><p>Explore the dashboard for completed scorecards, model methodology, and every available competition.</p><div aria-hidden="true"><i></i><i></i><i></i></div></div>`;
+    const state=$('#welcomeFeedState');if(state)state.textContent='ANALYSIS';
+    return;
+  }
   // most urgent kickoff shown first, then rotates through a small pool of
   // the other featured games (by watchability, narrowed to a near-term
   // window so a months-away fixture can't outrank this week's games)

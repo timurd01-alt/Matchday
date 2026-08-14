@@ -58,6 +58,9 @@
       <img src="logo.png?v=4" class="welcomeLogo" alt="Matchday">
       <h1 id="welcomeTitle">Explore every matchup <span>before it starts.</span></h1>
       <p class="welcomeLead">Pregame model picks, probability forecasts, matchup analysis, and verified postgame grading.</p>
+      <div class="welcomeCoverage" aria-label="Sports coverage">
+        <span>Soccer</span><span>Football</span><span>Basketball</span><span>Baseball</span><span>Hockey</span>
+      </div>
       <details class="welcomeDevNote">
         <summary>Early access &mdash; see exactly how it performs</summary>
         <p>Matchday is in early access and improving its data and forecasting every week. Every prediction is published before the event and graded automatically afterward &mdash; nothing is rewritten after the fact &mdash; so you can see exactly how the system performs instead of taking our word for it. Real feedback shapes which upgrades happen next.</p>
@@ -70,7 +73,14 @@
     </div>
     <aside class="welcomePreview" aria-label="Matchday preview">
       <div class="welcomePreviewTop"><span>IN FOCUS</span><span id="welcomeFeedState">PREGAME</span></div>
-      <div class="welcomeNext" id="welcomeNext"><div class="welcomeLoading">Loading today’s slate…</div></div>
+      <div class="welcomeNext" id="welcomeNext">
+        <div class="welcomeFallback">
+          <span class="welcomeFallbackKicker">TODAY'S BOARD</span>
+          <strong>One clear read before the game.</strong>
+          <p>Model probability, market context, and the factors moving each matchup.</p>
+          <div aria-hidden="true"><i></i><i></i><i></i></div>
+        </div>
+      </div>
       <div class="welcomeStats" id="welcomeStats" aria-live="polite"></div>
       <div class="welcomeProof">
         <div><b>01</b><span>Model vs market</span><small>Probability, not certainty.</small></div>

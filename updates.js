@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0814G",
+  "tag": "Polish",
+  "title": "A clearer welcome before the first matchup",
+  "items": [
+   "The welcome page now shows Matchday's coverage across soccer, football, basketball, baseball, and hockey at a glance.",
+   "The preview card stays useful while the day's slate loads and provides a deliberate analysis state when no upcoming fixture is published, instead of hanging on a loading message.",
+   "The refreshed welcome copy and fallback states are responsive and translated across every supported interface language."
+  ]
+ },
+ {
   "date": "Build 0814F",
   "tag": "New",
   "title": "The Content hub gets a live signal lab",

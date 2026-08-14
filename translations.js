@@ -106,6 +106,12 @@ Object.values(window.MD_I18N).forEach(dict=>MD_RETIRED_FORMAT_COPY.forEach(key=>
 Object.assign(window.MD_I18N.es,{
   "Explore every matchup before it starts.":"Explora cada enfrentamiento antes de que comience.",
   "Pregame model picks, probability forecasts, matchup analysis, and verified postgame grading.":"Pronósticos del modelo antes del partido, previsiones de probabilidad, análisis del enfrentamiento y evaluación verificada después del partido.",
+  "Soccer":"Fútbol","Football":"Fútbol americano","Basketball":"Baloncesto","Baseball":"Béisbol","Hockey":"Hockey",
+  "TODAY'S BOARD":"CARTELERA DE HOY","BOARD READY":"PANEL LISTO",
+  "One clear read before the game.":"Una lectura clara antes del partido.",
+  "Model probability, market context, and the factors moving each matchup.":"Probabilidad del modelo, contexto del mercado y factores que mueven cada encuentro.",
+  "Fresh reads appear as matchups are published.":"Los nuevos análisis aparecen al publicarse los encuentros.",
+  "Explore the dashboard for completed scorecards, model methodology, and every available competition.":"Explora el panel para ver evaluaciones completas, la metodología del modelo y todas las competiciones disponibles.",
   "One calm analysis desk.":"Un solo panel de análisis, claro y ordenado.",
   "Personalize your analysis desk.":"Personaliza tu panel de análisis.",
   "Signal red":"Rojo de señal"
@@ -113,6 +119,12 @@ Object.assign(window.MD_I18N.es,{
 Object.assign(window.MD_I18N.fr,{
   "Explore every matchup before it starts.":"Explorez chaque rencontre avant son coup d’envoi.",
   "Pregame model picks, probability forecasts, matchup analysis, and verified postgame grading.":"Choix du modèle avant-match, prévisions de probabilité, analyse des rencontres et évaluation vérifiée après-match.",
+  "Soccer":"Football","Football":"Football américain","Basketball":"Basket-ball","Baseball":"Baseball","Hockey":"Hockey",
+  "TODAY'S BOARD":"PROGRAMME DU JOUR","BOARD READY":"TABLEAU PRÊT",
+  "One clear read before the game.":"Une lecture claire avant le match.",
+  "Model probability, market context, and the factors moving each matchup.":"Probabilité du modèle, contexte du marché et facteurs qui font évoluer chaque rencontre.",
+  "Fresh reads appear as matchups are published.":"De nouvelles analyses apparaissent dès la publication des rencontres.",
+  "Explore the dashboard for completed scorecards, model methodology, and every available competition.":"Explorez le tableau de bord pour les bilans complets, la méthode du modèle et toutes les compétitions disponibles.",
   "One calm analysis desk.":"Un espace d'analyse unique et clair.",
   "Personalize your analysis desk.":"Personnalisez votre espace d'analyse.",
   "Signal red":"Rouge signal"
@@ -120,6 +132,12 @@ Object.assign(window.MD_I18N.fr,{
 Object.assign(window.MD_I18N.de,{
   "Explore every matchup before it starts.":"Analysiere jede Begegnung vor dem Anpfiff.",
   "Pregame model picks, probability forecasts, matchup analysis, and verified postgame grading.":"Modelltipps vor dem Spiel, Wahrscheinlichkeitsprognosen, Spielanalysen und geprüfte Auswertungen danach.",
+  "Soccer":"Fußball","Football":"American Football","Basketball":"Basketball","Baseball":"Baseball","Hockey":"Eishockey",
+  "TODAY'S BOARD":"HEUTIGE SPIELE","BOARD READY":"ÜBERSICHT BEREIT",
+  "One clear read before the game.":"Eine klare Einschätzung vor dem Spiel.",
+  "Model probability, market context, and the factors moving each matchup.":"Modellwahrscheinlichkeit, Marktkontext und die Faktoren, die jede Begegnung bewegen.",
+  "Fresh reads appear as matchups are published.":"Neue Analysen erscheinen, sobald Begegnungen veröffentlicht werden.",
+  "Explore the dashboard for completed scorecards, model methodology, and every available competition.":"Im Dashboard finden Sie vollständige Auswertungen, die Modellmethodik und alle verfügbaren Wettbewerbe.",
   "One calm analysis desk.":"Ein ruhiger, übersichtlicher Analysebereich.",
   "Personalize your analysis desk.":"Personalisiere deinen Analysebereich.",
   "Signal red":"Signalrot"
@@ -127,6 +145,12 @@ Object.assign(window.MD_I18N.de,{
 Object.assign(window.MD_I18N.pt,{
   "Explore every matchup before it starts.":"Explore cada confronto antes de começar.",
   "Pregame model picks, probability forecasts, matchup analysis, and verified postgame grading.":"Palpites do modelo antes do jogo, previsões de probabilidade, análise do confronto e avaliação verificada após o jogo.",
+  "Soccer":"Futebol","Football":"Futebol americano","Basketball":"Basquete","Baseball":"Beisebol","Hockey":"Hóquei",
+  "TODAY'S BOARD":"JOGOS DE HOJE","BOARD READY":"PAINEL PRONTO",
+  "One clear read before the game.":"Uma leitura clara antes do jogo.",
+  "Model probability, market context, and the factors moving each matchup.":"Probabilidade do modelo, contexto do mercado e os fatores que movimentam cada confronto.",
+  "Fresh reads appear as matchups are published.":"Novas análises aparecem quando os confrontos são publicados.",
+  "Explore the dashboard for completed scorecards, model methodology, and every available competition.":"Explore o painel para ver avaliações completas, a metodologia do modelo e todas as competições disponíveis.",
   "One calm analysis desk.":"Um painel de análise simples e organizado.",
   "Personalize your analysis desk.":"Personalize seu painel de análise.",
   "Signal red":"Vermelho de sinal"
@@ -134,6 +158,12 @@ Object.assign(window.MD_I18N.pt,{
 Object.assign(window.MD_I18N.ru,{
   "Explore every matchup before it starts.":"Изучите каждый матч до его начала.",
   "Pregame model picks, probability forecasts, matchup analysis, and verified postgame grading.":"Предматчевые прогнозы модели, вероятностные оценки, анализ матчей и проверенная оценка результатов после игры.",
+  "Soccer":"Футбол","Football":"Американский футбол","Basketball":"Баскетбол","Baseball":"Бейсбол","Hockey":"Хоккей",
+  "TODAY'S BOARD":"МАТЧИ СЕГОДНЯ","BOARD READY":"ПАНЕЛЬ ГОТОВА",
+  "One clear read before the game.":"Ясный разбор перед матчем.",
+  "Model probability, market context, and the factors moving each matchup.":"Вероятность модели, рыночный контекст и факторы, влияющие на каждый матч.",
+  "Fresh reads appear as matchups are published.":"Новые разборы появляются после публикации матчей.",
+  "Explore the dashboard for completed scorecards, model methodology, and every available competition.":"Откройте панель, чтобы увидеть полные оценки, методологию модели и все доступные турниры.",
   "One calm analysis desk.":"Единая спокойная панель аналитики.",
   "Personalize your analysis desk.":"Настройте панель аналитики.",
   "Signal red":"Сигнальный красный"

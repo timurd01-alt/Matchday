@@ -1902,8 +1902,25 @@ html{color-scheme:dark}
 .welcomeDevNote summary:focus-visible{outline:2px solid var(--signal);outline-offset:3px;border-radius:4px}
 .welcomeDevNote[open] p{margin:9px 0 0}
 
+/* Welcome refresh: make coverage obvious and keep the preview useful while
+   the published slate is still loading (or there is no upcoming fixture). */
+.welcomeCoverage{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:19px}
+.welcomeCoverage span{display:inline-flex;align-items:center;min-height:26px;padding:5px 10px;border:1px solid rgba(255,255,255,.105);border-radius:999px;background:rgba(255,255,255,.025);color:var(--muted);font-family:var(--mono);font-size:.57rem;font-weight:750;letter-spacing:.08em;text-transform:uppercase}
+.welcomeCoverage span:first-child{border-color:rgba(58,209,122,.34);background:rgba(58,209,122,.065);color:var(--signal)}
+.welcomeFallback{min-height:125px;display:flex;flex-direction:column;justify-content:center}
+.welcomeFallbackKicker{color:var(--signal);font-family:var(--mono);font-size:.56rem;font-weight:800;letter-spacing:.12em}
+.welcomeFallback strong{display:block;max-width:300px;margin-top:9px;font-family:"Archivo",sans-serif;font-size:clamp(1rem,1.7vw,1.3rem);line-height:1.18;letter-spacing:-.02em}
+.welcomeFallback p{max-width:330px;margin:8px 0 0;color:var(--muted);font-size:.7rem;line-height:1.5}
+.welcomeFallback>div{display:grid;grid-template-columns:1.35fr .9fr .55fr;gap:6px;margin-top:16px}
+.welcomeFallback i{display:block;height:4px;border-radius:999px;background:linear-gradient(90deg,rgba(58,209,122,.7),rgba(58,209,122,.14))}
+.welcomeFallback i:nth-child(2){background:linear-gradient(90deg,rgba(76,194,255,.52),rgba(76,194,255,.1))}
+.welcomeFallback i:nth-child(3){background:rgba(255,255,255,.1)}
+
 @media(max-width:760px){
   .welcomeStats{gap:6px;margin-bottom:14px}
+  .welcomeCoverage{gap:6px;margin-top:15px}
+  .welcomeCoverage span{min-height:24px;padding:4px 8px;font-size:.52rem}
+  .welcomeFallback{min-height:108px}
   .welcomeStats>div{padding:9px 6px}
   .welcomeStats b{font-size:1.1rem}
   .welcomePreview::after{inset:20% -10% -14% -10%}
