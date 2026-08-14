@@ -1,0 +1,11 @@
+{
+  "rank": 145,
+  "date": "Build 0814C",
+  "tag": "Design",
+  "title": "Pregame readiness becomes readable at a glance",
+  "items": [
+    "Replaced the pregame context panel's dense diagnostic paragraph with structured bullpen workload cards, compact personnel notes, and a distinct missing-before-lock alert.",
+    "Shortened the research disclosure and removed repeated missing-source caveats while preserving the same data limitations and zero-weight status.",
+    "Added a single-column mobile treatment so workload and personnel details remain readable in narrow match modals."
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "rank": 148,
+  "date": "Build 0814F",
+  "tag": "New",
+  "title": "The Content hub gets a live signal lab",
+  "items": [
+    "A new Signal lab turns current model data into three responsive infographics: confidence terrain, a factor fingerprint, and a board-coverage donut.",
+    "Every graphic follows the selected sport and labels missing or unscored data instead of smoothing it away.",
+    "The visualizations are built from the existing published matchup feed, include accessible meter and chart labels, and collapse cleanly for phones."
+  ]
+}

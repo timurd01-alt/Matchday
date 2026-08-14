@@ -1,5 +1,20 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-08-14 (season-boundary and Champions League display correction.
+No provider, endpoint, source, or redistribution scope changed. Existing
+football-data.org match metadata is now filtered so only league-phase fixtures
+contribute to the live league-phase table, and completed-season tables and
+brackets are withheld from current-season views while match results remain
+available under the provider's existing attribution requirements.)
+
+Reviewed: 2026-08-14 (NFL roster display semantics only; no new source,
+endpoint, download, or production signal. The already-reviewed nflverse
+expected-depth-chart view may establish whether both teams have normalized
+coverage, but it has no validated player-quality grades and remains
+unconfirmed/zero-weight. The UI now distinguishes "Roster coverage" from
+"Roster edge" and explicitly marks the latter not scored instead of implying
+that a covered depth chart is a numerical talent comparison.)
+
 Reviewed: 2026-08-12 (MLB pregame personnel fallback. SportsGameOdds' existing
 Version 3 application-display permission and 2,500-object Amateur allowance
 were re-checked against its current MLB documentation. Matchday now requests

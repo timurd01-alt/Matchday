@@ -1,3 +1,4 @@
+import json
 import unittest
 from pathlib import Path
 
@@ -6,6 +7,28 @@ ROOT = Path(__file__).resolve().parent
 
 
 class AnalysisModeTests(unittest.TestCase):
+    def test_past_season_tables_and_brackets_are_suppressed(self):
+        core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
+        panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
+        self.assertIn("function stripPastSeasonCompetitionViews", core)
+        self.assertIn("payload.standings=[]", core)
+        self.assertIn("payload.bracket=[]", core)
+        self.assertIn("payload.bracketology=null", core)
+        self.assertIn("DATA=stripPastSeasonCompetitionViews(await r.json())", panels)
+
+    def test_champions_league_uses_its_own_knockout_shape(self):
+        cards = (ROOT / "app-4-features.js").read_text(encoding="utf-8")
+        panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
+        self.assertIn("function _renderUCLBracket", cards)
+        self.assertIn("['Knockout phase play-offs','Round of 16','Quarter-finals','Semi-finals','Final']", cards)
+        self.assertIn("if(DATA.comp_key==='UCL'){_renderUCLBracket(host);return}", cards)
+        self.assertIn("function _renderUCLLeagueTable", panels)
+        self.assertIn("No current league-phase standings yet", panels)
+        self.assertIn("eight league-phase matches each", panels)
+        renderer = cards.split("function _renderUCLBracket", 1)[1].split("function renderBracket", 1)[0]
+        self.assertNotIn("Round of 32", renderer)
+        self.assertNotIn("Third-place playoff", renderer)
+
     def test_mobile_metric_help_is_tap_safe_and_stays_onscreen(self):
         core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
         css = (ROOT / "styles.css").read_text(encoding="utf-8")
@@ -55,7 +78,12 @@ class AnalysisModeTests(unittest.TestCase):
         self.assertIn("This published snapshot predates pregame-context tracking", panels)
         self.assertIn("No cleared lineup feed for this competition", panels)
         self.assertIn("Provider checked — no confirmed lineup", panels)
-        self.assertIn("Injuries are checked inside 72h of kickoff; lineups inside 2h.", panels)
+        self.assertIn("Injuries inside 72h · lineups inside 2h", panels)
+        self.assertIn("Needed before lock", panels)
+        self.assertIn("Bullpen workload", panels)
+        css = (ROOT / "styles.css").read_text(encoding="utf-8")
+        self.assertIn(".bullpenGrid{display:grid", css)
+        self.assertIn(".contextAlert{display:grid", css)
 
     def test_neutral_venue_comparison_has_responsive_layout(self):
         css = (ROOT / "styles.css").read_text(encoding="utf-8")
@@ -67,6 +95,9 @@ class AnalysisModeTests(unittest.TestCase):
         panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
         self.assertIn("const classListed=", panels)
         self.assertIn("if(!classListed){", panels)
+        self.assertIn("classMeta.edge_available===false", panels)
+        self.assertIn("not scored", panels)
+        self.assertIn("classMeta.coverage_label", panels)
         # "level" and "no data" are different claims and must stay distinct.
         self.assertIn("covered?'level':'no data'", panels)
 
@@ -128,6 +159,34 @@ class AnalysisModeTests(unittest.TestCase):
         self.assertIn(".rewindCopy", css)
         self.assertIn(".funStatsGrid", css)
         self.assertIn("generate_public_content_feed()", scheduler)
+
+    def test_content_signal_lab_visualizes_live_model_inputs(self):
+        html = (ROOT / "content.html").read_text(encoding="utf-8")
+        js = (ROOT / "content.js").read_text(encoding="utf-8")
+        css = (ROOT / "content.css").read_text(encoding="utf-8")
+        self.assertIn('id="signal-lab"', html)
+        self.assertIn('id="signalLabGrid"', html)
+        self.assertIn("function renderSignalLab()", js)
+        self.assertIn("Confidence terrain", js)
+        self.assertIn("Factor fingerprint", js)
+        self.assertIn("Board coverage", js)
+        self.assertIn("renderSignalLab()", js.split("function renderAll", 1)[1])
+        self.assertIn(".signalLabGrid{display:grid", css)
+        self.assertIn(".boardDonut", css)
+        self.assertIn("role=\"meter\"", js)
+
+    def test_editorial_features_are_not_classified_as_weekly_recaps(self):
+        content = (ROOT / "content.js").read_text(encoding="utf-8")
+        views = (ROOT / "app-2-views.js").read_text(encoding="utf-8")
+        posts = json.loads((ROOT / "posts.json").read_text(encoding="utf-8"))
+        refining = next(post for post in posts if post["id"] == "refining-the-record-2026-07-26")
+        self.assertIn("const storyType=isRanking?'preview'", content)
+        self.assertNotIn("type:'recap',badgeType", content)
+        self.assertIn("INSIGHT_FEATURE_TYPES", views)
+        self.assertIn('id="featuresList"', views)
+        self.assertIn("posts.filter(isWeeklyRecapPost)", views)
+        self.assertIn("sort(newestPostFirst)", views)
+        self.assertEqual("methodology", refining["type"])
 
     def test_live_aggregate_and_live_filter_are_not_rendered(self):
         panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")

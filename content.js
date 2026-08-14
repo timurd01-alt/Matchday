@@ -166,10 +166,10 @@
     return links.slice(0,4);
   }
 
-  function primaryLabel(item){return item.badgeType==='availability'?'Read tracker':item.badgeType==='ranking'?'Read rankings':item.badgeType==='simulation'?'Read simulation':item.badgeType==='market-audit'?'Read market audit':item.type==='preview'?'Read preview':item.type==='recap'?'Read recap':'Read explainer'}
+  function primaryLabel(item){return item.badgeType==='availability'?'Read tracker':item.badgeType==='ranking'?'Read rankings':item.badgeType==='simulation'?'Read simulation':item.badgeType==='market-audit'?'Read market audit':item.badgeType==='methodology'?'Read methodology':item.type==='preview'?'Read preview':item.type==='recap'?'Read recap':'Read explainer'}
 
   function typeBadge(type){
-    const label=type==='availability'?'Availability':type==='ranking'?'Rankings':type==='simulation'?'Simulation':type==='market-audit'?'Market audit':type==='preview'?'Preview':type==='recap'?'Recap':'Learn';
+    const label=type==='availability'?'Availability':type==='ranking'?'Rankings':type==='simulation'?'Simulation':type==='market-audit'?'Market audit':type==='methodology'?'Methodology':type==='preview'?'Preview':type==='recap'?'Recap':'Learn';
     return `<span class="typeBadge type${label.replace(/\s+/g,'')}">${label}</span>`;
   }
 
@@ -276,11 +276,12 @@
   function buildPostItems(){
     return posts.map(post=>{
       const meta=compMeta(post.comp),words=(Array.isArray(post.body)?post.body.join(' '):'').split(/\s+/).filter(Boolean).length;
-      const isRanking=post.type==='ranking',isAvailability=post.type==='availability',isSimulation=post.type==='simulation',isMarketAudit=post.type==='market-audit';
-      return {id:`post-${post.id||post.slug}`,type:'recap',badgeType:isAvailability?'availability':isRanking?'ranking':isSimulation?'simulation':isMarketAudit?'market-audit':null,sports:[meta.sport],comp:meta.key,compLabel:post.comp_label||meta.label,
-        title:post.title||`${meta.label} model recap`,summary:post.summary||'The latest locked-pick model recap.',takeaway:isAvailability?'A sourced status check that separates confirmed news from what the current feed cannot establish.':isRanking?'A current ordering, its opening-fixture context, and the limits of the available evidence.':isSimulation?'A clearly labeled fictional scenario with fixed inputs, sensitivity cases, and no forecast claim.':isMarketAudit?'A quality-gated comparison that states plainly when current market evidence is too thin to publish.':'A weekly review of the calls, misses, and calibration lessons.',
+      const isRanking=post.type==='ranking',isAvailability=post.type==='availability',isSimulation=post.type==='simulation',isMarketAudit=post.type==='market-audit',isMethodology=post.type==='methodology';
+      const storyType=isRanking?'preview':(isAvailability||isSimulation||isMarketAudit||isMethodology)?'learn':'recap';
+      return {id:`post-${post.id||post.slug}`,type:storyType,badgeType:isAvailability?'availability':isRanking?'ranking':isSimulation?'simulation':isMarketAudit?'market-audit':isMethodology?'methodology':null,sports:[meta.sport],comp:meta.key,compLabel:post.comp_label||meta.label,
+        title:post.title||`${meta.label} model recap`,summary:post.summary||'The latest locked-pick model recap.',takeaway:isAvailability?'A sourced status check that separates confirmed news from what the current feed cannot establish.':isRanking?'A current ordering, its opening-fixture context, and the limits of the available evidence.':isSimulation?'A clearly labeled fictional scenario with fixed inputs, sensitivity cases, and no forecast claim.':isMarketAudit?'A quality-gated comparison that states plainly when current market evidence is too thin to publish.':isMethodology?'An accountability note explaining how Matchday locks, grades, and evaluates its predictions.':'A weekly review of the calls, misses, and calibration lessons.',
         updated:`${post.date||''}T12:00:00Z`,dataUpdated:`${post.date||''}T12:00:00Z`,sortTime:timestamp(`${post.date||''}T12:00:00Z`),minutes:Math.max(3,Math.ceil(words/180)),
-        url:`posts/${encodeURIComponent(post.slug||post.id||'')}.html`,resultLabel:isAvailability?'Availability desk':isRanking?'Ranked list':isSimulation?'Simulation':isMarketAudit?'Market audit':'Weekly recap'};
+        url:`posts/${encodeURIComponent(post.slug||post.id||'')}.html`,resultLabel:isAvailability?'Availability desk':isRanking?'Ranked list':isSimulation?'Simulation':isMarketAudit?'Market audit':isMethodology?'Methodology':'Weekly recap'};
     });
   }
 
@@ -332,6 +333,55 @@
     if(activeType==='recap')rows=rows.filter(row=>row.match.status==='FINISHED');
     if(activeType==='learn')rows=[];
     return rows;
+  }
+
+  function signalBar(label,detail,count,max,tone='green'){
+    const width=max?Math.max(count?8:0,Math.round(100*count/max)):0;
+    return `<div class="signalBar"><div class="signalBarLabel"><span>${escapeHTML(label)}</span><b>${escapeHTML(detail)}</b></div><div class="signalBarTrack" role="meter" aria-label="${escapeHTML(label)}: ${count}" aria-valuemin="0" aria-valuemax="${max}" aria-valuenow="${count}"><span class="${tone}" style="--signal-width:${width}%"></span></div></div>`;
+  }
+
+  function renderSignalLab(){
+    const host=byId('signalLabGrid');if(!host)return;
+    const rows=allFilteredMatches();
+    const upcoming=rows.filter(row=>row.match.status==='UPCOMING'&&finiteNumber(row.match.prediction?.confidence)!==null);
+    const verified=rows.filter(row=>row.match.status==='FINISHED'&&hasVerifiedModelCall(row.dataset,row.match));
+    const modelRows=[...upcoming.map(row=>({row,call:row.match.prediction})),...verified.map(row=>({row,call:verifiedModelCall(row.dataset,row.match)}))];
+    if(!rows.length||!modelRows.length){
+      host.innerHTML=`<article class="signalViz signalVizEmpty"><div class="signalEmptyMark" aria-hidden="true"></div><h3>No signal map for this sport yet</h3><p>The charts need at least one current prediction or verified pregame call.</p></article>`;return;
+    }
+    const confidenceBands=[
+      {label:'Open field',detail:'under 50%',min:0,max:49,tone:'blue'},
+      {label:'Lean',detail:'50–64%',min:50,max:64,tone:'purple'},
+      {label:'Strong',detail:'65–79%',min:65,max:79,tone:'green'},
+      {label:'Rare air',detail:'80%+',min:80,max:100,tone:'gold'}
+    ].map(band=>({...band,count:modelRows.filter(item=>item.call.confidence>=band.min&&item.call.confidence<=band.max).length}));
+    const confidenceMax=Math.max(...confidenceBands.map(band=>band.count),1);
+    const sortedConfidence=modelRows.map(item=>Math.round(Number(item.call.confidence))).sort((a,b)=>a-b);
+    const median=sortedConfidence[Math.floor(sortedConfidence.length/2)];
+    const factorCounts={};
+    upcoming.forEach(({match})=>{const label=strongestFactor(match);factorCounts[label]=(factorCounts[label]||0)+1});
+    const factors=Object.entries(factorCounts).sort((a,b)=>b[1]-a[1]).slice(0,5),factorMax=Math.max(...factors.map(([,count])=>count),1);
+    const other=Math.max(0,rows.length-upcoming.length-verified.length),upcomingPct=Math.round(100*upcoming.length/rows.length),verifiedPct=Math.round(100*verified.length/rows.length);
+    const scope=activeSport==='all'?'all loaded sports':SPORT_LABELS[activeSport];
+    host.innerHTML=`
+      <article class="signalViz confidenceViz">
+        <div class="signalVizHead"><div><span>Confidence terrain</span><h3>How bold is the board?</h3></div><strong>${median}%<small>median</small></strong></div>
+        <div class="signalBars">${confidenceBands.map(band=>signalBar(band.label,`${band.detail} · ${band.count}`,band.count,confidenceMax,band.tone)).join('')}</div>
+        <p>${modelRows.length} model ${modelRows.length===1?'call':'calls'} across ${scope}. Confidence describes uncertainty; it is not a promise.</p>
+      </article>
+      <article class="signalViz driverViz">
+        <div class="signalVizHead"><div><span>Factor fingerprint</span><h3>What is moving picks?</h3></div><strong>${factors.length}<small>drivers</small></strong></div>
+        <div class="driverMap" role="img" aria-label="Most common strongest model factors">${factors.length?factors.map(([label,count],index)=>`<div class="driverRoute"><i aria-hidden="true">${index+1}</i><span>${escapeHTML(label)}</span><div><b style="--driver-width:${Math.max(12,Math.round(100*count/factorMax))}%"></b></div><em>${count}</em></div>`).join(''):'<p>No upcoming factor snapshots are available.</p>'}</div>
+        <p>Counts the strongest available factor in each upcoming model read; related inputs can overlap.</p>
+      </article>
+      <article class="signalViz boardViz">
+        <div class="signalVizHead"><div><span>Board coverage</span><h3>What can the model see?</h3></div></div>
+        <div class="boardGraphic">
+          <div class="boardDonut" role="img" aria-label="${upcoming.length} upcoming model reads, ${verified.length} verified finals, and ${other} other loaded games" style="--upcoming:${upcomingPct * 3.6}deg;--verified:${(upcomingPct+verifiedPct) * 3.6}deg"><b>${rows.length}</b><span>loaded games</span></div>
+          <div class="boardLegend"><span class="upcoming"><b>${upcoming.length}</b> Upcoming reads</span><span class="verified"><b>${verified.length}</b> Verified finals</span><span class="other"><b>${other}</b> Other / unscored</span></div>
+        </div>
+        <p>“Other” stays visible instead of being silently treated as a prediction or graded result.</p>
+      </article>`;
   }
 
   function moduleEmpty(title,body,kind='stats'){
@@ -514,7 +564,7 @@
     });
   }
 
-  function renderAll(animate=false){renderLatest(animate);renderGameRewind();renderFunStats();renderBrief();renderAccountability();renderFreshness();renderGuides();if(animate){replayMotion(byId('gameRewindGrid'));replayMotion(byId('funStatsGrid'));replayMotion(byId('briefGrid'));replayMotion(byId('accountabilityGrid'))}}
+  function renderAll(animate=false){renderLatest(animate);renderSignalLab();renderGameRewind();renderFunStats();renderBrief();renderAccountability();renderFreshness();renderGuides();if(animate){replayMotion(byId('signalLabGrid'));replayMotion(byId('gameRewindGrid'));replayMotion(byId('funStatsGrid'));replayMotion(byId('briefGrid'));replayMotion(byId('accountabilityGrid'))}}
 
   function setSport(filter,persist=true){
     activeSport=validSport(filter);

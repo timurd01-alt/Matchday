@@ -438,11 +438,21 @@ for _source, _site in (
     RSS_FEEDS.append(_google_news_feed(_source, _site, _news_term))
 if COMP_KEY == "WC":
     RSS_FEEDS.append(_google_news_feed("FIFA", "fifa.com", _news_term))
-KO_STAGES = {"LAST_32": "Round of 32", "ROUND_OF_32": "Round of 32", "PLAYOFFS": "Knockout playoffs", "PLAY_OFF_ROUND": "Knockout playoffs", "LAST_16": "Round of 16",
+KO_PLAYOFF_ROUND = "Knockout phase play-offs"
+KO_STAGES = {"LAST_32": "Round of 32", "ROUND_OF_32": "Round of 32", "PLAYOFFS": KO_PLAYOFF_ROUND, "PLAY_OFF_ROUND": KO_PLAYOFF_ROUND, "LAST_16": "Round of 16",
              "QUARTER_FINALS": "Quarter-finals", "QUARTER_FINAL": "Quarter-finals",
              "SEMI_FINALS": "Semi-finals", "SEMI_FINAL": "Semi-finals",
              "THIRD_PLACE": "Third-place playoff", "FINAL": "Final"}
-KO_ORDER = ["Round of 32", "Knockout playoffs", "Round of 16", "Quarter-finals", "Semi-finals", "Third-place playoff", "Final"]
+KO_ORDER = ["Round of 32", KO_PLAYOFF_ROUND, "Round of 16", "Quarter-finals", "Semi-finals", "Third-place playoff", "Final"]
+
+
+def canonical_knockout_round(stage):
+    """Normalize legacy cached labels to the provider/UI round contract."""
+    value = str(stage or "").strip()
+    if value.lower() in {"knockout playoffs", "knockout phase playoffs",
+                         "knockout phase play-offs"}:
+        return KO_PLAYOFF_ROUND
+    return value
 
 
 def _scrub(s):
@@ -650,6 +660,12 @@ def compute_standings(raw):
     T = defaultdict(lambda: {"group": None, "pld": 0, "w": 0, "d": 0, "l": 0,
                              "gf": 0, "ga": 0, "pts": 0, "results": []})
     for m in raw:
+        # The Champions League endpoint includes the knockout rounds in the
+        # same season payload.  Those results must remain in the match list,
+        # but they are not league-phase games and must never alter (or add
+        # teams to) the league table.
+        if COMP_KEY == "UCL" and str(m.get("stage") or "").upper() != "LEAGUE_STAGE":
+            continue
         h = (m.get("homeTeam") or {}).get("name"); a = (m.get("awayTeam") or {}).get("name")
         if not h or not a: continue
         # touch both teams so every scheduled team gets a row even with 0
@@ -1207,6 +1223,110 @@ def mark_stale_offseason_records(standings, tables, history, fixtures, competiti
     return True
 
 
+def competition_season_context(history, fixtures, competition, now=None,
+                               projection_current=False, standings=None):
+    """Describe whether standings/brackets belong to the active season.
+
+    July 1 is the rollover for fall-to-spring and fall/winter competitions;
+    MLB is calendar-year. Results remain available regardless of this flag --
+    it only governs season-position views such as tables and brackets.
+    """
+    now = now or datetime.datetime.now(datetime.timezone.utc)
+    if now.tzinfo is None:
+        now = now.replace(tzinfo=datetime.timezone.utc)
+    key = str(competition or "").upper()
+    if key == "MLB":
+        cutoff = datetime.datetime(now.year, 1, 1, tzinfo=datetime.timezone.utc)
+    else:
+        start_year = now.year if now.month >= 7 else now.year - 1
+        cutoff = datetime.datetime(start_year, 7, 1, tzinfo=datetime.timezone.utc)
+
+    def _after_cutoff(match):
+        kickoff = _parse_kickoff((match or {}).get("kickoff"))
+        return kickoff is not None and kickoff >= cutoff
+
+    current_results = any(
+        str((match or {}).get("status") or "").upper() in {"FINISHED", "LIVE"}
+        and _after_cutoff(match) for match in (history or []))
+    current_fixtures = any(
+        str((match or {}).get("status") or "").upper() in {"UPCOMING", "SCHEDULED", "TIMED", "LIVE"}
+        and _after_cutoff(match) for match in (fixtures or []))
+
+    rows = []
+    if isinstance(standings, dict):
+        rows = list(standings.values())
+    else:
+        for table in standings or []:
+            rows.extend((table or {}).get("teams") or [])
+    record_fields = ("pld", "w", "d", "l", "gf", "ga", "pts")
+    all_zero_preseason = bool(rows) and current_fixtures and all(
+        not float(row.get(field) or 0)
+        for row in rows for field in record_fields
+    )
+    standings_current = bool(current_results or all_zero_preseason)
+    if current_results:
+        basis = "current_results"
+    elif all_zero_preseason:
+        basis = "current_preseason"
+    elif rows:
+        basis = "stale_or_unverified"
+    else:
+        basis = "unavailable"
+    return {
+        "competition": key,
+        "season_start_year": cutoff.year,
+        "cutoff": cutoff.date().isoformat(),
+        "current_results": current_results,
+        "current_fixtures": current_fixtures,
+        "standings_rows": len(rows),
+        "all_zero_preseason": all_zero_preseason,
+        "standings_current": standings_current,
+        "standings_basis": basis,
+        "projection_current": bool(projection_current),
+        "position_views_current": bool(standings_current or projection_current),
+        "results_preserved": True,
+    }
+
+
+def filter_current_season_views(standings, bracket, bracketology, season_context,
+                                bracket_projection_current=False):
+    """Hide unverified prior-season position views without removing results."""
+    context = dict(season_context or {})
+    suppressed = []
+    if not context.get("standings_current"):
+        kept = [table for table in (standings or [])
+                if (table or {}).get("projection_current")]
+        if len(kept) != len(standings or []):
+            suppressed.append("standings")
+        standings = kept
+        if bracketology:
+            suppressed.append("bracketology")
+            bracketology = None
+    cutoff_text = str(context.get("cutoff") or "")
+    cutoff = _parse_kickoff(cutoff_text + "T00:00:00Z" if cutoff_text else None)
+    bracket_matches = []
+    if isinstance(bracket, list):
+        for round_row in bracket:
+            bracket_matches.extend((round_row or {}).get("matches") or [])
+    bracket_has_current_fixture = bool(cutoff and any(
+        (_parse_kickoff(match.get("kickoff")) or datetime.datetime.min.replace(
+            tzinfo=datetime.timezone.utc)) >= cutoff
+        for match in bracket_matches
+    ))
+    bracket_current = bool(bracket_projection_current or bracket_has_current_fixture)
+    if bracket and not bracket_current:
+        suppressed.append("bracket")
+        bracket = [] if isinstance(bracket, list) else None
+    context["suppressed_views"] = suppressed
+    context["bracket_projection_current"] = bool(bracket_projection_current)
+    context["bracket_current"] = bracket_current
+    context["standings_visible"] = bool(standings)
+    context["bracket_visible"] = bool(bracket)
+    context["bracketology_visible"] = bool(bracketology)
+    context["derived_positions_current"] = bool(context.get("standings_current"))
+    return standings, bracket, bracketology, context
+
+
 def compute_split_form(matches):
     """Last-5 form, split by venue. Overall `form` mixes home and away
     results, which hides teams that are much stronger at home than on the
@@ -1333,24 +1453,29 @@ CLASS_SIGNAL_CONFIG = {
         "label": "Personnel edge",
         "source": None,
         "source_key": None,
+        "edge_available": False,
         "note": "Market-listed starter/hitter candidates and schedule-derived bullpen rest are collected at zero weight; confirmed batting orders, injuries, and individual reliever availability remain unavailable.",
     },
     "NFL": {
         "label": "Roster edge",
-        "source": None,
+        "source": "nflverse expected depth charts",
         "source_key": None,
-        "note": "Requires current depth charts and player-availability data; the configured feed does not provide full roster coverage.",
+        "edge_available": False,
+        "coverage_label": "Roster coverage",
+        "note": "Expected depth charts can confirm coverage, but they do not contain validated player-quality grades and therefore cannot produce a numerical roster edge.",
     },
     "NBA": {
         "label": "Star / rotation edge",
         "source": None,
         "source_key": None,
+        "edge_available": False,
         "note": "Requires current rotations, active-player quality, and availability; the configured feed does not provide full coverage.",
     },
     "NHL": {
         "label": "Roster / goalie edge",
         "source": None,
         "source_key": None,
+        "edge_available": False,
         "note": "Requires current lines, starting goalie, and player availability before it can be treated as a real personnel signal.",
     },
 }
@@ -1387,7 +1512,7 @@ def rating_parts_from_record(record):
             "star": star_n * FACTOR_WEIGHTS["star"]}
 
 
-def class_signal_meta(home_name, away_name):
+def class_signal_meta(home_name, away_name, match=None):
     """Describe what the displayed class/personnel comparison really means."""
     if COMP.get("sport") == "soccer":
         label, source = "Squad edge", "Curated squad and star-player values"
@@ -1397,6 +1522,12 @@ def class_signal_meta(home_name, away_name):
             available.append(bool(rec and (rec.get("squad_value_m") or rec.get("star_value_m")
                                            or rec.get("fifa_rank"))))
         note = "Squad value, star quality, and ranking are a preseason prior; missing clubs are not assigned a fabricated edge."
+    elif COMP_KEY == "NFL":
+        cfg = CLASS_SIGNAL_CONFIG["NFL"]
+        charts = ((match or {}).get("personnel") or {}).get("depth_chart") or {}
+        available = [bool(((charts.get(side) or {}).get("players") or []))
+                     for side in ("home", "away")]
+        label, source, note = cfg["label"], cfg["source"], cfg["note"]
     else:
         cfg = CLASS_SIGNAL_CONFIG.get(COMP_KEY, {
             "label": "Personnel edge", "source": None,
@@ -1406,9 +1537,12 @@ def class_signal_meta(home_name, away_name):
         available = [bool(_college_talent_points(_ratings_lookup(name)))
                      for name in (home_name, away_name)]
     coverage = "complete" if all(available) else "partial" if any(available) else "unavailable"
+    cfg = CLASS_SIGNAL_CONFIG.get(COMP_KEY, {}) if COMP.get("sport") != "soccer" else {}
     return {"label": label, "source": source, "available": coverage == "complete",
             "coverage": coverage, "home_available": available[0],
-            "away_available": available[1], "note": note}
+            "away_available": available[1], "note": note,
+            "edge_available": cfg.get("edge_available", True),
+            "coverage_label": cfg.get("coverage_label")}
 
 
 # ---- in-house Elo (self-training, sport-agnostic) -----------------------
@@ -1875,7 +2009,14 @@ def _scorecard_upset_bias():
         return 0.0
 
 
-def _upset_adjustment(home, away, markets, m, why, blend, two_way=False):
+UNDERDOG_EDGE_THRESHOLDS = {
+    "NFL": 8.0, "NCAAF": 8.0, "NBA": 8.0, "NCAAM": 8.0,
+    "MLB": 10.0, "NHL": 9.0,
+}
+
+
+def _upset_adjustment(home, away, markets, m, why, blend, two_way=False,
+                      model_probs=None):
     """Return adjusted probabilities plus an upset profile.
 
     Formula idea:
@@ -1892,7 +2033,17 @@ def _upset_adjustment(home, away, markets, m, why, blend, two_way=False):
 
     hp = float(blend.get("h", 0) or 0)
     ap = float(blend.get("a", 0) or 0)
-    fav = "h" if hp >= ap else "a"
+    mk = (markets or {}).get("1x2") or {}
+    market_available = mk.get("home_pct") is not None and mk.get("away_pct") is not None
+    # An underdog is a market classification, not whichever side happens to
+    # trail after the model and market have already been blended together.
+    # Falling back to the blended ordering keeps watch-only volatility useful
+    # when no market exists, but such a candidate can never trigger a pregame
+    # official upset pick (market_gate remains closed below).
+    if market_available:
+        fav = "h" if float(mk.get("home_pct") or 0) >= float(mk.get("away_pct") or 0) else "a"
+    else:
+        fav = "h" if hp >= ap else "a"
     dog = "a" if fav == "h" else "h"
     fav_pct = max(hp, ap)
     dog_pct = min(hp, ap)
@@ -1948,27 +2099,39 @@ def _upset_adjustment(home, away, markets, m, why, blend, two_way=False):
 
     raw_score = 100.0 * dog_adj * (1.0 - adj_margin) * (1.0 + draw_prob) * (1.0 + low_goal) * (1.0 + dog_momentum) * (1.0 + fav_fragility)
     upset_score = int(round(_clamp(raw_score, 0, 100)))
-    mk = (markets or {}).get("1x2") or {}
     market_gap_pct = None
-    # Default closed, not open: with no market to check the underdog pick
-    # against, the only thing allowed to flip the pick to the dog is real
-    # box-score dominance (strong_box_override below). Odds are now gated to
-    # within 3h of kickoff to save quota, so "no market yet" is the common
-    # case for most of a match's display life, not a rare edge case -- an
-    # open-by-default gate here would mean the model's riskiest calls (upset
-    # picks) go out with no safety check most of the time.
+    # Default closed, not open: odds are gated to near kickoff to save quota,
+    # so "no market yet" is common. Without a no-vig market benchmark there
+    # is no defensible way to classify a side as the market underdog or prove
+    # that Matchday has an independent edge on it.
     market_gate = False
+    market_quality_gate = False
+    independent_edge = None
+    independent_dog_pct = None
+    independent_lead_pct = None
+    edge_threshold = float(UNDERDOG_EDGE_THRESHOLDS.get(COMP_KEY, 8.0))
     box_score_edge = 0.0
-    if mk and mk.get("home_pct") is not None and mk.get("away_pct") is not None:
-        market_side = "h" if float(mk.get("home_pct") or 0) >= float(mk.get("away_pct") or 0) else "a"
-        if market_side != dog:
-            dog_market = float(mk.get("home_pct") if dog == "h" else mk.get("away_pct") or 0)
-            fav_market = float(mk.get("home_pct") if market_side == "h" else mk.get("away_pct") or 0)
-            market_gap_pct = abs(fav_market - dog_market)
-            market_gate = market_gap_pct <= 12
+    if market_available:
+        dog_market = float(mk.get("home_pct") if dog == "h" else mk.get("away_pct") or 0)
+        fav_market = float(mk.get("home_pct") if fav == "h" else mk.get("away_pct") or 0)
+        market_gap_pct = abs(fav_market - dog_market)
+        independent = model_probs or blend
+        independent_dog_pct = float(independent.get(dog, 0) or 0)
+        other_outcomes = ("h", "a") if two_way else ("h", "d", "a")
+        independent_lead_pct = independent_dog_pct - max(
+            float(independent.get(side, 0) or 0) for side in other_outcomes if side != dog
+        )
+        independent_edge = independent_dog_pct - dog_market
+        books = mk.get("books")
+        spread = mk.get("spread")
+        enough_books = books is None or int(books or 0) >= 2
+        coherent_market = spread is None or float(spread) <= 18.0
+        has_actual_underdog = market_gap_pct >= 1.0
+        market_quality_gate = bool(has_actual_underdog and enough_books and coherent_market)
+        market_gate = bool(independent_edge >= edge_threshold and market_quality_gate)
 
-    # A large market gap can only be overridden by real box-score dominance.
-    # Pregame fixtures normally have no box score, so they stay as upset watch only.
+    # Box-score pressure remains descriptive only. It must never turn live
+    # match information into a record that is presented as a pregame pick.
     st = (m or {}).get("stats_extra") or (m or {}).get("stats") or {}
     try:
         hs, ads = st.get("home") or {}, st.get("away") or {}
@@ -1985,19 +2148,58 @@ def _upset_adjustment(home, away, markets, m, why, blend, two_way=False):
     except Exception:
         box_score_edge = 0.0
 
-    base_trigger = (dog_adj >= fav_adj - 0.05 and upset_score >= 65 and fav_adj < 0.46)
+    independent_pick_gate = independent_lead_pct is not None and independent_lead_pct >= 1.0
+    if two_way:
+        playability_gate = dog_adj >= 0.44
+    else:
+        adjusted_leader = max(float(adjusted.get(side, 0) or 0) / 100.0 for side in ("h", "d", "a"))
+        playability_gate = dog_adj >= 0.30 and dog_adj >= adjusted_leader - 0.05
+
+    # Require at least two separately attributed production factors to point
+    # toward the market underdog. Research-only advanced profiles remain at
+    # zero weight and are deliberately not counted here.
+    dog_direction = 1.0 if dog == "h" else -1.0
+    supporting_signals = sorted(
+        key for key, value in (why or {}).items()
+        if key != "base" and dog_direction * float(value or 0) > 0.05
+    )
+    evidence_gate = len(supporting_signals) >= 2
+
+    # Baseball and hockey outcomes hinge unusually strongly on the named
+    # starter. Do not freeze an official upset pick from a candidate/proxy.
+    # Preliminary forecasts can still surface the candidate as blocked.
+    personnel_gate = True
+    personnel_blockers = []
+    personnel = (m or {}).get("personnel") or {}
+    if COMP_KEY == "MLB" and not personnel.get("starting_pitchers_confirmed"):
+        personnel_gate = False
+        personnel_blockers.append("confirmed starting pitchers missing")
+    elif COMP_KEY == "NHL" and not personnel.get("starting_goalies_confirmed"):
+        personnel_gate = False
+        personnel_blockers.append("confirmed starting goalies missing")
+
+    candidate_profile = bool(independent_pick_gate and playability_gate and upset_score >= 60)
+    base_trigger = bool(candidate_profile and market_gate and evidence_gate and personnel_gate)
     strong_box_override = (upset_score >= 75 and box_score_edge >= 0.35)
-    trigger = bool(base_trigger and (market_gate or strong_box_override))
-    blocked = bool(base_trigger and not trigger)
+    # Live box-score dominance is retained as a descriptive signal, but never
+    # turns post-kickoff information into an official pregame selection.
+    trigger = base_trigger
+    blocked = bool(candidate_profile and not trigger)
 
     reasons = []
-    if fav_adj < 0.46: reasons.append("favorite below 46%")
+    if independent_pick_gate: reasons.append("independent model ranks the market underdog first")
+    if independent_edge is not None and independent_edge >= edge_threshold:
+        reasons.append(f"model edge {independent_edge:.0f} pts")
     if draw_prob >= 0.24: reasons.append("draw pressure")
     if low_goal >= 0.55: reasons.append("low-scoring profile")
     if closeness >= 0.55: reasons.append("narrow team gap")
     if dog_momentum >= 0.07: reasons.append("underdog momentum")
     if learn_bias > 0.005: reasons.append("scorecard boost")
-    if blocked and market_gap_pct is not None: reasons.append(f"market gap {market_gap_pct:.0f} pts blocks override")
+    if blocked and independent_edge is not None and independent_edge < edge_threshold:
+        reasons.append(f"edge below {edge_threshold:.0f}-pt {COMP_KEY} gate")
+    if blocked and not market_quality_gate: reasons.append("market quality gate closed")
+    if blocked and not evidence_gate: reasons.append("fewer than two supporting model factors")
+    if blocked and personnel_blockers: reasons.extend(personnel_blockers)
     if not reasons: reasons.append("favorite profile is cleaner")
 
     # ---- standings + market upset classification --------------------------
@@ -2081,7 +2283,21 @@ def _upset_adjustment(home, away, markets, m, why, blend, two_way=False):
         "learn_bias_pct": round(learn_bias * 100, 1),
         "market_gap_pct": None if market_gap_pct is None else round(market_gap_pct, 1),
         "market_gate": bool(market_gate),
+        "market_quality_gate": bool(market_quality_gate),
+        "independent_model_dog_pct": (None if independent_dog_pct is None
+                                      else round(independent_dog_pct, 1)),
+        "independent_model_lead_pct": (None if independent_lead_pct is None
+                                       else round(independent_lead_pct, 1)),
+        "independent_edge": None if independent_edge is None else round(independent_edge, 1),
+        "edge_threshold": edge_threshold,
+        "independent_pick_gate": bool(independent_pick_gate),
+        "playability_gate": bool(playability_gate),
+        "evidence_gate": bool(evidence_gate),
+        "supporting_signals": supporting_signals,
+        "personnel_gate": bool(personnel_gate),
+        "personnel_blockers": personnel_blockers,
         "box_score_edge": round(box_score_edge, 3),
+        "strong_box_signal": bool(strong_box_override),
         "blocked": bool(blocked),
         "triggered": bool(trigger),
         "reason": " · ".join(reasons)
@@ -2413,7 +2629,10 @@ def predict(home, away, markets, m=None, neutral_venue=False):
                   "a": round(model["a"]*(1-market_weight) + mk["away_pct"]*market_weight)}
                  if mk else dict(model))
     raw_blend = _round_triplet(raw_blend)
-    regulation_probs, upset = _upset_adjustment(home, away, markets, m, why, raw_blend, two_way=two_way)
+    regulation_probs, upset = _upset_adjustment(
+        home, away, markets, m, why, raw_blend, two_way=two_way,
+        model_probs=model,
+    )
 
     knockout = bool(m and COMP.get("sport") == "soccer" and COMP.get("single_elimination")
                     and _is_knockout_stage(m.get("stage")))
@@ -2491,7 +2710,7 @@ def predict(home, away, markets, m=None, neutral_venue=False):
                     "note": ("Limited current-season evidence; probability is intentionally conservative."
                              if quality_level != "established" else
                              "Current-season sample and opponent-adjusted results are available.")}
-    class_meta = class_signal_meta(home.get("name"), away.get("name"))
+    class_meta = class_signal_meta(home.get("name"), away.get("name"), m)
     return {"pick": pick, "pick_name": name, "confidence": confidence,
             "base_pick": base_pick, "base_pick_name": {"h": home.get("name"), "a": away.get("name"), "d": "Draw"}[base_pick],
             "model": model, "base_blend": raw_blend, "blend": official_probs, "adjusted": official_probs,
@@ -4544,6 +4763,13 @@ def _make_pick_record(match, prediction, market, decision, history=()):
                            "market_dog_pct": upset.get("market_dog_pct"),
                            "model_dog_pct": upset.get("model_dog_pct"),
                            "upset_edge": upset.get("upset_edge"),
+                           "independent_model_dog_pct": upset.get("independent_model_dog_pct"),
+                           "independent_model_lead_pct": upset.get("independent_model_lead_pct"),
+                           "independent_edge": upset.get("independent_edge"),
+                           "edge_threshold": upset.get("edge_threshold"),
+                           "supporting_signals": upset.get("supporting_signals"),
+                           "personnel_gate": upset.get("personnel_gate"),
+                           "personnel_blockers": upset.get("personnel_blockers"),
                            "radar": upset.get("radar"),
                            "standings_candidate": upset.get("standings_candidate"),
                            "standings_gap_pct": upset.get("standings_gap_pct"),
@@ -6414,9 +6640,10 @@ def compute_advancement(matches, st, name_map, code_map):
         return []
     # the earliest unresolved knockout round = current round
     order = {r: i for i, r in enumerate(KO_ORDER)}
-    ko.sort(key=lambda m: order.get(m.get("stage"), 99))
-    cur_stage = ko[0].get("stage")
-    cur = [m for m in ko if m.get("stage") == cur_stage and cur_stage != "Third-place playoff"]
+    ko.sort(key=lambda m: order.get(canonical_knockout_round(m.get("stage")), 99))
+    cur_stage = canonical_knockout_round(ko[0].get("stage"))
+    cur = [m for m in ko if canonical_knockout_round(m.get("stage")) == cur_stage
+           and cur_stage != "Third-place playoff"]
     rounds_after = [r for r in KO_ORDER if order.get(r, 99) > order.get(cur_stage, -1)
                     and r != "Third-place playoff"]
 
@@ -6820,10 +7047,14 @@ def build():
     if not standings and COMP.get("source") in {"sportsdataio", "balldontlie", "cfbd", "cbbd", "apisports"}:
         standings = sports_tables
     bracketology = None
+    projection_current = False
+    bracket_projection_current = False
     if COMP_KEY in ("NCAAF", "NCAAM") and COMP.get("source") in {"sportsdataio", "cfbd", "cbbd"}:
         ranks, proj = sports_adapter.rankings(sports_tables) if sports_adapter else ([], None)
+        is_projected = False
         if ranks:
             is_projected = bool(ranks[0].get("projected"))
+            projection_current = is_projected
             rank_rows = [{"name": r["name"], "code": r["code"], "pos": r["rank"],
                           "pld": None, "w": None, "d": None, "l": None, "gf": None, "ga": None,
                           "gd": None, "pts": None, "form": "", "record": r["record"],
@@ -6838,11 +7069,35 @@ def build():
             # season fallback used to keep reaching backward into an already-
             # finished season's final poll instead).
             group_label = "Way-too-early Top 25 (model projection)" if is_projected else "Matchday Top 25"
-            standings = [{"group": group_label, "teams": rank_rows}] + (standings or [])
+            rank_table = {"group": group_label, "teams": rank_rows}
+            if is_projected:
+                rank_table["table_type"] = "model_projection"
+                rank_table["projection_current"] = True
+            standings = [rank_table] + (standings or [])
         if COMP_KEY == "NCAAF" and proj and not bracket:
-            bracket = proj
+            bracket = dict(proj) if isinstance(proj, dict) else proj
+            if isinstance(bracket, dict):
+                bracket["projection_current"] = True
+            projection_current = True
+            bracket_projection_current = True
     if COMP_KEY == "NCAAM":
         bracketology = build_ncaam_bracketology(sports_tables)
+    season_context = competition_season_context(
+        training_matches, matches, COMP_KEY,
+        projection_current=projection_current, standings=standings,
+    )
+    standings, bracket, bracketology, season_context = filter_current_season_views(
+        standings, bracket, bracketology, season_context,
+        bracket_projection_current=bracket_projection_current,
+    )
+    if not season_context["derived_positions_current"]:
+        third = []
+        for view in ("third_race", "advancement"):
+            if view not in season_context["suppressed_views"]:
+                season_context["suppressed_views"].append(view)
+    if season_context["suppressed_views"]:
+        DIAG.append("season context: suppressed stale " + ", ".join(
+            season_context["suppressed_views"]))
     scorecard = update_scorecard(matches)
     apply_locked_picks(matches)
     # Top-level marker survives immutable legacy prediction snapshots and lets
@@ -6892,6 +7147,8 @@ def build():
     blocked_providers = list(provider_quota.BLOCKED_THIS_RUN)
     source_state = ("quota_limited" if source_provider in blocked_providers
                     else "partial" if blocked_providers else "fresh")
+    advancement = (compute_advancement(matches, st, name_map, code_map)
+                   if season_context["derived_positions_current"] else [])
     payload = {"updated": generated_at,
                "source_freshness": {
                    "state": source_state,
@@ -6907,10 +7164,11 @@ def build():
                             "This competition build completed without a quota refusal."),
                },
                "fixture_count_check": fixture_count_check,
+               "season_context": season_context,
                "source_note": source_note, "competition": COMP["label"], "comp_key": COMP_KEY, "matches": matches,
                "title_odds": title, "news": news, "news_scope": COMP_KEY, "bracket": bracket, "bracketology": bracketology,
                "third_race": third, "standings": standings, "scorers": scorers, "leaders": leaders, "team_of_tournament": build_team_of_tournament(matches, scorers, standings), "scorecard": scorecard,
-               "advancement": compute_advancement(matches, st, name_map, code_map),
+               "advancement": advancement,
                "weekly_awards": weekly_awards,
                "markets_quota_out": MARKET_STATE["quota_out"],
                "quota_blocked_providers": blocked_providers,

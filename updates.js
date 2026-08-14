@@ -4,6 +4,65 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0814F",
+  "tag": "New",
+  "title": "The Content hub gets a live signal lab",
+  "items": [
+   "A new Signal lab turns current model data into three responsive infographics: confidence terrain, a factor fingerprint, and a board-coverage donut.",
+   "Every graphic follows the selected sport and labels missing or unscored data instead of smoothing it away.",
+   "The visualizations are built from the existing published matchup feed, include accessible meter and chart labels, and collapse cleanly for phones."
+  ]
+ },
+ {
+  "date": "Build 0814E",
+  "tag": "Fix",
+  "title": "Past seasons leave the live standings and brackets",
+  "items": [
+   "Completed-season standings, brackets, bracketology, third-place races, and advancement paths no longer remain in current-season views; historical match results stay available.",
+   "Legitimate zero-game preseason tables and explicitly current model projections are preserved, while mixed prior-season records are rejected at the season boundary.",
+   "Champions League now uses its real league-phase and knockout structure: only league-phase matches count in the table, and the bracket shows knockout phase play-offs, two-leg aggregate ties through the semifinals, and a single-match final — never a World Cup Round of 32 or third-place game."
+  ]
+ },
+ {
+  "date": "Build 0814D",
+  "tag": "Fix",
+  "title": "NFL roster coverage stops masquerading as a missing edge",
+  "items": [
+   "NFL matchup panels now distinguish expected depth-chart coverage from a numerical roster-quality edge: both teams can be tracked even though the feed has no validated player grades.",
+   "Roster edge now reads not scored instead of Not available, while a separate Roster coverage row reports both teams or partial coverage when current depth charts are attached.",
+   "Depth-chart coverage remains unconfirmed and zero-weight; no talent number or production probability was fabricated from a list of player names."
+  ]
+ },
+ {
+  "date": "Build 0814C",
+  "tag": "Design",
+  "title": "Pregame readiness becomes readable at a glance",
+  "items": [
+   "Replaced the pregame context panel's dense diagnostic paragraph with structured bullpen workload cards, compact personnel notes, and a distinct missing-before-lock alert.",
+   "Shortened the research disclosure and removed repeated missing-source caveats while preserving the same data limitations and zero-weight status.",
+   "Added a single-column mobile treatment so workload and personnel details remain readable in narrow match modals."
+  ]
+ },
+ {
+  "date": "Build 0814B",
+  "tag": "Model",
+  "title": "The model can make a real underdog pick",
+  "items": [
+   "Removed a mathematically impossible upset gate that required a favorite to sit below 46% in two-way sports, where the favorite must always be at least 50%.",
+   "An official upset now starts with the no-vig market underdog, requires Matchday's independent model to rank that side first, clears a sport-specific model-versus-market edge, and needs at least two supporting production factors.",
+   "MLB upset picks require confirmed starting pitchers and NHL upset picks require confirmed starting goalies; unapproved advanced-stat challengers remain research-only and cannot silently flip a published pick."
+  ]
+ },
+ {
+  "date": "Build 0814A",
+  "tag": "Content",
+  "title": "Friday market audit publishes a verified hold",
+  "items": [
+   "Published the August 14 Model vs. Market review with no purported disagreement because no upcoming non-MLB fixture has a current, identity-matched, documented no-vig market comparison.",
+   "The article excludes MLB, rejects stale unordered odds caches and unknown book counts, and explains why correlated model inputs do not stand in for a market check."
+  ]
+ },
+ {
   "date": "Build 0812C",
   "tag": "Data",
   "title": "MLB pregame context gains a legal free fallback",

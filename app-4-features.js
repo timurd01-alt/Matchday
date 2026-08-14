@@ -474,11 +474,51 @@ function _renderCFPBracket(host){
   const rounds=_cfpBracketRounds();
   host.innerHTML=`<div class="bracketStageHeader"><div class="vhead">CFP Bracket</div><div class="bracketLegend">${official?'Official + projected paths':'Projected bracket (model seeding)'}</div></div><div class="bracketWideShell"><div class="bracketWideBoard">${rounds.map(r=>`<section class="brWideRound"><div class="brWideTitle"><b>${esc(r.label)}</b><span>${r.matches.length||0}</span></div><div class="brWideStack">${(r.matches.length?r.matches:[null]).map(m=>_v11MatchCard(m,r.label)).join('')}</div></section>`).join('')}</div></div>`;
 }
+function _uclRoundTies(fixtures,singleMatch=false){
+  if(singleMatch)return (fixtures||[]).map((match,index)=>({key:`final-${index}`,legs:[match],teams:[match.home,match.away]}));
+  const ties=new Map();
+  (fixtures||[]).forEach((match,index)=>{
+    const teams=[match.home,match.away].filter(Boolean);
+    const key=teams.length===2?teams.map(team=>String(team).toLowerCase()).sort().join('|'):`unknown-${index}`;
+    if(!ties.has(key))ties.set(key,{key,legs:[],teams:[match.home,match.away]});
+    ties.get(key).legs.push(match);
+  });
+  return [...ties.values()];
+}
+function _uclTieCard(tie,roundName){
+  if(roundName==='Final')return _v11MatchCard(tie.legs[0],roundName);
+  const teams=tie.teams||[],totals=new Map(teams.map(team=>[String(team||''),0]));
+  let scoredLegs=0;
+  (tie.legs||[]).forEach(leg=>{
+    const hs=Number(leg?.score?.home),as=Number(leg?.score?.away);
+    if(Number.isFinite(hs)&&Number.isFinite(as)){
+      totals.set(String(leg.home||''),(totals.get(String(leg.home||''))||0)+hs);
+      totals.set(String(leg.away||''),(totals.get(String(leg.away||''))||0)+as);
+      scoredLegs+=1;
+    }
+  });
+  const legNote=(tie.legs||[]).map((leg,index)=>{
+    const hs=leg?.score?.home,as=leg?.score?.away,score=hs!=null&&as!=null?`${hs}–${as}`:_v11StatusText(leg);
+    return `Leg ${index+1}: ${leg.home||'TBD'} ${score} ${leg.away||'TBD'}`;
+  }).join(' · ');
+  const row=team=>`<div class="brWideTeam"><div class="brWideName"><span class="brWideCode">${esc(codeForTeam(team,'')||'')}</span><span class="brWideText">${esc(team||'TBD')}</span></div><div class="brWideScore">${scoredLegs?esc(totals.get(String(team||''))||0):''}</div></div>`;
+  return `<article class="brWideMatch ${scoredLegs===2?'done':''}"><div class="brWideMeta"><span>${scoredLegs?'Aggregate':'Two-leg tie'}</span><span class="brWideStatus">${scoredLegs}/2 legs</span></div>${teams.map(row).join('')}<div class="faintline">${esc(legNote)}</div></article>`;
+}
+function _renderUCLBracket(host){
+  const rounds=_bracketSourceMap(DATA.bracket||[]);
+  const names=['Knockout phase play-offs','Round of 16','Quarter-finals','Semi-finals','Final'];
+  const columns=names.filter(name=>(rounds[name]||[]).length).map(name=>{
+    const ties=_uclRoundTies(rounds[name]||[],name==='Final');
+    return `<section class="brWideRound"><div class="brWideTitle"><b>${esc(name)}</b><span>${ties.length} ${ties.length===1?'tie':'ties'}</span></div><div class="brWideStack">${ties.map(tie=>_uclTieCard(tie,name)).join('')}</div></section>`;
+  }).join('');
+  host.innerHTML=`<div class="bracketStageHeader"><div class="vhead">Champions League knockout bracket</div><div class="bracketLegend">Official knockout ties</div></div><div class="bracketWideHint"><span>Playoffs through semifinals are decided on aggregate over two legs. The final is one match.</span>${_bracketScrollControls()}</div><div class="bracketWideShell"><div class="bracketWideBoard">${columns}</div></div>`;
+}
 function renderBracket(){
   const host=$('#view-bracket');
   if(!host)return;
   if(DATA.comp_key==='NCAAM'&&DATA.bracketology){_v14RenderBracketology(host,DATA.bracketology);return}
   if(DATA.comp_key==='NCAAF'){_renderCFPBracket(host);return}
+  if(DATA.comp_key==='UCL'){_renderUCLBracket(host);return}
   if(navProfile()==='us_sport'){
     // NFL/NBA/MLB/NHL playoffs are real single-elimination brackets, but
     // nothing in the backend computes their seeding (no NFL wild-card/bye
@@ -535,7 +575,7 @@ function _v12OutcomeCard(m,op){
   const classMeta=sportClassMeta(m?.prediction||{},m);
   const compareLabel1=hasMarket?'Market on pick':(classMeta.label||'Personnel edge');
   const classEdge=why.class!=null?why.class*sideSign:null;
-  const compareVal1=hasMarket?`${marketPct}%`:(classMeta.coverage==='unavailable'?'Not available':classEdge!=null?`${classMeta.coverage==='partial'?'Partial · ':''}${pts(classEdge)}`:'—');
+  const compareVal1=hasMarket?`${marketPct}%`:(classMeta.edge_available===false?'Not scored':classMeta.coverage==='unavailable'?'Not available':classEdge!=null?`${classMeta.coverage==='partial'?'Partial · ':''}${pts(classEdge)}`:'—');
   const compareLabel2=hasMarket?'Model edge':'Elo edge';
   const eloEdge=why.elo!=null?why.elo*sideSign:null;
   const compareCls2=hasMarket?edgeCls:(eloEdge==null?'edgeFlat':eloEdge>0?'edgePos':eloEdge<0?'edgeNeg':'edgeFlat');

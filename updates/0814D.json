@@ -1,0 +1,11 @@
+{
+  "rank": 146,
+  "date": "Build 0814D",
+  "tag": "Fix",
+  "title": "NFL roster coverage stops masquerading as a missing edge",
+  "items": [
+    "NFL matchup panels now distinguish expected depth-chart coverage from a numerical roster-quality edge: both teams can be tracked even though the feed has no validated player grades.",
+    "Roster edge now reads not scored instead of Not available, while a separate Roster coverage row reports both teams or partial coverage when current depth charts are attached.",
+    "Depth-chart coverage remains unconfirmed and zero-weight; no talent number or production probability was fabricated from a list of player names."
+  ]
+}

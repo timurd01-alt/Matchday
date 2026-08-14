@@ -753,6 +753,39 @@ body.modalOpen{overflow:hidden}.matchModal{position:fixed;inset:0;z-index:99;dis
    Full-width model read, no chip crowding, no vertical text, and a cleaner forecast board. */
 .modalBody .detailGrid.v4Detail{display:block;min-width:0}
 .modalBody .detailGrid.v4Detail .pregameContextCard{margin:16px 0}
+.pregameContextCard{padding:16px!important;background:linear-gradient(180deg,rgba(255,255,255,.032),rgba(255,255,255,.012))!important}
+.contextFactorRows{margin-top:12px;padding:0 11px;border:1px solid var(--line);border-radius:12px;background:rgba(0,0,0,.14)}
+.contextDetails{display:grid;gap:10px;margin-top:12px}
+.contextSection{padding:12px;border:1px solid var(--line);border-radius:13px;background:rgba(4,8,14,.34)}
+.contextSectionHead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+.contextSectionHead>span{font-family:"Archivo",sans-serif;font-size:.86rem;font-weight:800;color:var(--text)}
+.contextSectionHead>small{font-family:var(--mono);font-size:.56rem;text-transform:uppercase;letter-spacing:.08em;color:var(--faint)}
+.bullpenGrid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.bullpenSide{min-width:0;padding:10px;border:1px solid var(--line);border-radius:11px;background:rgba(255,255,255,.02)}
+.bullpenSide.warn{border-color:rgba(255,184,77,.28);background:rgba(255,184,77,.055)}
+.bullpenSide.ok{border-color:rgba(58,209,122,.24);background:rgba(58,209,122,.045)}
+.bullpenSideHead{display:flex;align-items:center;justify-content:space-between;gap:8px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,.055)}
+.bullpenSideHead b{font-family:"Archivo",sans-serif;font-size:.88rem;color:var(--text)}
+.bullpenSideHead span{font-family:var(--mono);font-size:.56rem;text-transform:uppercase;letter-spacing:.07em;font-weight:900;color:var(--muted)}
+.bullpenSide.warn .bullpenSideHead span{color:#ffb84d}.bullpenSide.ok .bullpenSideHead span{color:var(--win)}
+.bullpenMetrics{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding-top:9px}
+.bullpenMetrics div{min-width:0}.bullpenMetrics strong{display:block;font-family:var(--mono);font-size:.9rem;color:var(--text)}
+.bullpenMetrics small{display:block;margin-top:2px;font-family:var(--mono);font-size:.54rem;line-height:1.3;color:var(--faint)}
+.contextSource{margin:9px 0 0;color:var(--faint);font-family:var(--mono);font-size:.59rem;line-height:1.4}
+.contextNoteGrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.contextNote{min-width:0;padding:10px 11px;border:1px solid var(--line);border-radius:11px;background:rgba(255,255,255,.018)}
+.contextNoteWide{grid-column:1/-1}.contextNote b,.contextNote span,.contextNote small{display:block}
+.contextNote b{font-family:var(--mono);font-size:.56rem;text-transform:uppercase;letter-spacing:.07em;color:var(--faint)}
+.contextNote span{margin-top:4px;font-size:.76rem;line-height:1.4;color:var(--text)}
+.contextNote small{margin-top:3px;font-size:.63rem;line-height:1.35;color:var(--muted)}
+.contextAlert{display:grid;grid-template-columns:28px minmax(0,1fr);gap:10px;align-items:center;padding:10px 11px;border:1px solid rgba(255,184,77,.28);border-radius:11px;background:rgba(255,184,77,.07)}
+.contextAlert>span{display:grid;place-items:center;width:26px;height:26px;border-radius:999px;background:rgba(255,184,77,.14);color:#ffb84d;font-family:var(--mono);font-weight:900}
+.contextAlert b{display:block;font-family:var(--mono);font-size:.58rem;text-transform:uppercase;letter-spacing:.07em;color:#ffcf83}
+.contextAlert p{margin:3px 0 0;color:var(--muted);font-size:.72rem;line-height:1.35}
+.contextResearch{display:flex;align-items:center;gap:9px;margin-top:11px;padding-top:10px;border-top:1px solid var(--line)}
+.contextResearch span{flex:none;border:1px solid var(--line2);border-radius:999px;padding:3px 7px;font-family:var(--mono);font-size:.52rem;text-transform:uppercase;letter-spacing:.07em;color:var(--faint)}
+.contextResearch p{margin:0;color:var(--faint);font-size:.65rem;line-height:1.4}
+@media(max-width:620px){.bullpenGrid,.contextNoteGrid{grid-template-columns:1fr}.contextNoteWide{grid-column:auto}.contextResearch{align-items:flex-start;flex-direction:column}.contextSectionHead{align-items:flex-start;flex-direction:column;gap:3px}}
 
 /* MLB player-market inference: compact lists, never a fake baseball field. */
 .marketHitterBoard{padding:14px 15px}.marketInferenceNote{margin:-2px 0 12px;color:var(--muted);font-size:.74rem;line-height:1.45}.marketHitterGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.marketHitterCard{overflow:hidden;border:1px solid var(--line);border-radius:12px;background:var(--bg2)}.marketHitterHead{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;border-bottom:1px solid var(--line)}.marketHitterHead b{font-family:"Archivo",sans-serif;font-size:.86rem}.marketHitterHead span{font-family:var(--mono);font-size:.6rem;color:var(--faint);text-transform:uppercase;letter-spacing:.06em}.marketHitterList{display:grid;grid-template-columns:1fr 1fr;gap:0 12px;padding:6px 12px 10px}.marketHitterList span{padding:6px 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:.76rem;color:var(--text)}

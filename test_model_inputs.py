@@ -678,6 +678,23 @@ class RatingsLookupTests(unittest.TestCase):
         self.assertEqual(pred["class_meta"]["label"], "Personnel edge")
         self.assertEqual(pred["class_meta"]["coverage"], "unavailable")
 
+    def test_nfl_depth_charts_report_coverage_without_fabricating_roster_edge(self):
+        fetch_data.COMP_KEY = "NFL"
+        fetch_data.COMP = dict(fetch_data.COMPETITIONS["NFL"])
+        match = {"stage": "Week 1", "weather": {}, "personnel": {"depth_chart": {
+            "home": {"players": [{"name": "Home QB", "position": "QB"}]},
+            "away": {"players": [{"name": "Away QB", "position": "QB"}]},
+        }}}
+        pred = fetch_data.predict(
+            {"name": "Chicago Bears", "pld": 0},
+            {"name": "Green Bay Packers", "pld": 0}, {}, match,
+        )
+        self.assertEqual(pred["class_meta"]["label"], "Roster edge")
+        self.assertEqual(pred["class_meta"]["coverage_label"], "Roster coverage")
+        self.assertEqual(pred["class_meta"]["coverage"], "complete")
+        self.assertFalse(pred["class_meta"]["edge_available"])
+        self.assertEqual(pred["why"]["class"], 0)
+
 
 class CollegeClassCacheTests(unittest.TestCase):
     def setUp(self):
@@ -1171,6 +1188,81 @@ class StandingsAndMarketUpsetRadarTests(unittest.TestCase):
             home, away, markets, {}, {}, {"h": 62, "d": 0, "a": 38}, two_way=True)
         self.assertFalse(info["radar"])
         self.assertFalse(info["standings_sample_ok"])
+
+
+class OfficialUnderdogSelectionTests(unittest.TestCase):
+    def setUp(self):
+        self.old_key, self.old_comp = fetch_data.COMP_KEY, fetch_data.COMP
+
+    def tearDown(self):
+        fetch_data.COMP_KEY, fetch_data.COMP = self.old_key, self.old_comp
+
+    def _profile(self, competition="NBA", *, model=None, why=None, match=None,
+                 blend=None, market=None):
+        fetch_data.COMP_KEY = competition
+        fetch_data.COMP = dict(fetch_data.COMPETITIONS[competition])
+        two_way = not fetch_data.COMP.get("has_draws", True)
+        home = {"name": "Market Favorite", "pld": 30, "w": 20, "pts": 60}
+        away = {"name": "Market Underdog", "pld": 30, "w": 15, "pts": 45}
+        market = market or ({"home_pct": 55, "draw_pct": 0, "away_pct": 45,
+                             "books": 5, "spread": 6})
+        blend = blend or {"h": 52, "d": 0, "a": 48}
+        model = model or {"h": 42, "d": 0, "a": 58}
+        why = why if why is not None else {"srs": -1.2, "form": -0.8, "elo": -0.5}
+        _, info = fetch_data._upset_adjustment(
+            home, away, {"1x2": market}, match or {}, why, blend,
+            two_way=two_way, model_probs=model,
+        )
+        return info
+
+    def test_two_way_market_underdog_can_become_official_pick(self):
+        info = self._profile()
+        self.assertEqual(info["candidate"], "a")
+        self.assertTrue(info["independent_pick_gate"])
+        self.assertGreaterEqual(info["independent_edge"], info["edge_threshold"])
+        self.assertTrue(info["evidence_gate"])
+        self.assertTrue(info["triggered"])
+
+    def test_market_underdog_stays_watch_only_when_model_does_not_rank_it_first(self):
+        info = self._profile(model={"h": 54, "d": 0, "a": 46})
+        self.assertFalse(info["independent_pick_gate"])
+        self.assertFalse(info["triggered"])
+
+    def test_two_independent_production_factors_are_required(self):
+        info = self._profile(why={"elo": -1.0})
+        self.assertFalse(info["evidence_gate"])
+        self.assertTrue(info["blocked"])
+        self.assertFalse(info["triggered"])
+
+    def test_pickem_market_does_not_invent_an_underdog(self):
+        info = self._profile(market={"home_pct": 50, "draw_pct": 0, "away_pct": 50,
+                                     "books": 5, "spread": 4})
+        self.assertFalse(info["market_quality_gate"])
+        self.assertFalse(info["triggered"])
+
+    def test_mlb_requires_confirmed_starting_pitchers(self):
+        blocked = self._profile("MLB")
+        self.assertFalse(blocked["personnel_gate"])
+        self.assertIn("confirmed starting pitchers missing", blocked["personnel_blockers"])
+        self.assertFalse(blocked["triggered"])
+        confirmed = self._profile("MLB", match={"personnel": {
+            "starting_pitchers": {"home": {"name": "A"}, "away": {"name": "B"}},
+            "starting_pitchers_confirmed": True,
+        }})
+        self.assertTrue(confirmed["personnel_gate"])
+        self.assertTrue(confirmed["triggered"])
+
+    def test_soccer_underdog_must_beat_home_away_and_draw_in_independent_model(self):
+        info = self._profile(
+            "EPL",
+            market={"home_pct": 45, "draw_pct": 30, "away_pct": 25,
+                    "books": 6, "spread": 7},
+            blend={"h": 38, "d": 29, "a": 33},
+            model={"h": 33, "d": 29, "a": 38},
+        )
+        self.assertEqual(info["candidate"], "a")
+        self.assertEqual(info["independent_model_lead_pct"], 5.0)
+        self.assertTrue(info["triggered"])
 
 
 class ProStandingsFormattingTests(unittest.TestCase):
@@ -2347,6 +2439,88 @@ class OffseasonRecordTests(unittest.TestCase):
         self.assertFalse(fetch_data.mark_stale_offseason_records(
             standings, [], history, fixtures, "NFL"))
         self.assertNotIn("season_stale", standings["team"])
+
+    def test_season_context_rejects_nonzero_prior_table_after_rollover(self):
+        now = fetch_data.datetime.datetime(2026, 8, 14, tzinfo=fetch_data.datetime.timezone.utc)
+        history = [{"status": "FINISHED", "kickoff": "2026-03-15T20:00:00Z"}]
+        fixtures = [{"status": "UPCOMING", "kickoff": "2026-09-05T20:00:00Z"}]
+        context = fetch_data.competition_season_context(
+            history, fixtures, "NCAAF", now=now,
+            standings=[{"teams": [{"name": "Old Team", "pld": 13, "w": 10}]}],
+        )
+        self.assertFalse(context["standings_current"])
+        self.assertEqual(context["standings_basis"], "stale_or_unverified")
+
+    def test_current_zero_game_preseason_table_is_preserved(self):
+        now = fetch_data.datetime.datetime(2026, 8, 14, tzinfo=fetch_data.datetime.timezone.utc)
+        context = fetch_data.competition_season_context(
+            [], [{"status": "UPCOMING", "kickoff": "2026-09-05T20:00:00Z"}],
+            "NCAAF", now=now,
+            standings=[{"teams": [
+                {"name": "Team A", "pld": 0, "w": 0, "l": 0},
+                {"name": "Team B", "pld": 0, "w": 0, "l": 0},
+            ]}],
+        )
+        self.assertTrue(context["all_zero_preseason"])
+        self.assertTrue(context["standings_current"])
+        standings = [{"group": "Conference", "teams": [{"name": "Team A", "pld": 0}]}]
+        kept, bracket, bracketology, context = fetch_data.filter_current_season_views(
+            standings, [], None, context)
+        self.assertEqual(kept, standings)
+        self.assertEqual(context["suppressed_views"], [])
+
+    def test_stale_views_keep_only_explicitly_current_projection(self):
+        context = {"standings_current": False, "projection_current": True}
+        projected = {"group": "Way-too-early Top 25 (model projection)",
+                     "projection_current": True, "teams": [{"name": "Team A"}]}
+        official = {"group": "Conference", "teams": [{"name": "Old Team", "pld": 30}]}
+        bracket_projection = {"rounds": [{"name": "First Round"}]}
+        standings, bracket, bracketology, context = fetch_data.filter_current_season_views(
+            [projected, official], bracket_projection, {"regions": {}}, context,
+            bracket_projection_current=True,
+        )
+        self.assertEqual(standings, [projected])
+        self.assertIs(bracket, bracket_projection)
+        self.assertIsNone(bracketology)
+        self.assertEqual(context["suppressed_views"], ["standings", "bracketology"])
+
+    def test_ucl_standings_ignore_knockout_fixtures(self):
+        fetch_data.COMP_KEY = "UCL"
+        raw = [
+            {"stage": "LEAGUE_STAGE", "status": "FINISHED", "utcDate": "2026-01-20T20:00:00Z",
+             "homeTeam": {"name": "Bayern Munich"}, "awayTeam": {"name": "Paris Saint-Germain"},
+             "score": {"fullTime": {"home": 2, "away": 1}, "winner": "HOME_TEAM"}},
+            {"stage": "LAST_16", "status": "FINISHED", "utcDate": "2026-03-10T20:00:00Z",
+             "homeTeam": {"name": "Bayern Munich"}, "awayTeam": {"name": "Inter"},
+             "score": {"fullTime": {"home": 4, "away": 0}, "winner": "HOME_TEAM"}},
+        ]
+        standings = fetch_data.compute_standings(raw)
+        self.assertEqual(standings[fetch_data.norm("Bayern Munich")]["pld"], 1)
+        self.assertEqual(standings[fetch_data.norm("Bayern Munich")]["gf"], 2)
+        self.assertNotIn(fetch_data.norm("Inter"), standings)
+
+    def test_ucl_knockout_playoff_round_uses_canonical_label(self):
+        self.assertEqual(fetch_data.KO_STAGES["PLAYOFFS"], "Knockout phase play-offs")
+        self.assertEqual(fetch_data.KO_STAGES["PLAY_OFF_ROUND"], "Knockout phase play-offs")
+        self.assertIn("Knockout phase play-offs", fetch_data.KO_ORDER)
+        self.assertNotIn("Knockout playoffs", fetch_data.KO_ORDER)
+        self.assertEqual(fetch_data.canonical_knockout_round("Knockout playoffs"),
+                         "Knockout phase play-offs")
+
+    def test_current_world_cup_keeps_derived_position_views_current(self):
+        now = fetch_data.datetime.datetime(2026, 6, 15, tzinfo=fetch_data.datetime.timezone.utc)
+        context = fetch_data.competition_season_context(
+            [{"status": "FINISHED", "kickoff": "2026-06-12T20:00:00Z"}],
+            [{"status": "UPCOMING", "kickoff": "2026-06-20T20:00:00Z"}],
+            "WC", now=now,
+            standings=[{"teams": [{"name": "Team A", "pld": 1, "w": 1}]}],
+        )
+        _, _, _, context = fetch_data.filter_current_season_views(
+            [{"group": "Group A", "teams": [{"name": "Team A", "pld": 1}]}],
+            [], None, context,
+        )
+        self.assertTrue(context["standings_current"])
+        self.assertTrue(context["derived_positions_current"])
 
 
 if __name__ == "__main__":

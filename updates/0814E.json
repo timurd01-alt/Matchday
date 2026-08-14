@@ -1,0 +1,11 @@
+{
+  "rank": 147,
+  "date": "Build 0814E",
+  "tag": "Fix",
+  "title": "Past seasons leave the live standings and brackets",
+  "items": [
+    "Completed-season standings, brackets, bracketology, third-place races, and advancement paths no longer remain in current-season views; historical match results stay available.",
+    "Legitimate zero-game preseason tables and explicitly current model projections are preserved, while mixed prior-season records are rejected at the season boundary.",
+    "Champions League now uses its real league-phase and knockout structure: only league-phase matches count in the table, and the bracket shows knockout phase play-offs, two-leg aggregate ties through the semifinals, and a single-match final — never a World Cup Round of 32 or third-place game."
+  ]
+}

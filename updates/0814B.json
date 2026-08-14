@@ -1,0 +1,11 @@
+{
+  "rank": 144,
+  "date": "Build 0814B",
+  "tag": "Model",
+  "title": "The model can make a real underdog pick",
+  "items": [
+    "Removed a mathematically impossible upset gate that required a favorite to sit below 46% in two-way sports, where the favorite must always be at least 50%.",
+    "An official upset now starts with the no-vig market underdog, requires Matchday's independent model to rank that side first, clears a sport-specific model-versus-market edge, and needs at least two supporting production factors.",
+    "MLB upset picks require confirmed starting pitchers and NHL upset picks require confirmed starting goalies; unapproved advanced-stat challengers remain research-only and cannot silently flip a published pick."
+  ]
+}

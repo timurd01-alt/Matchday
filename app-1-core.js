@@ -65,6 +65,42 @@ const SPORT_LABELS={wc:'World Cup',ucl:'Champions League',epl:'Premier League',l
 const FIXTURE_PAGE_SIZE=40;
 let MATCH_VISIBLE=FIXTURE_PAGE_SIZE,RESULT_VISIBLE=FIXTURE_PAGE_SIZE;
 
+// Providers can keep the season that just ended until the next schedule
+// opens. Keep its games in Results, but never label its table or bracket as
+// the new season's live competition state.
+function competitionSeasonCutoff(comp,now=new Date()){
+  const key=String(comp||'').toUpperCase(),year=now.getUTCFullYear();
+  if(key==='MLB')return new Date(Date.UTC(year,0,1));
+  const startYear=now.getUTCMonth()>=6?year:year-1;
+  return new Date(Date.UTC(startYear,6,1));
+}
+function stripPastSeasonCompetitionViews(payload,now=new Date()){
+  if(!payload||String(payload.comp_key||'').toUpperCase()==='ALL')return payload;
+  if(payload.season_context?.position_views_current===true)return payload;
+  const key=String(payload.comp_key||'').toUpperCase(),cutoff=competitionSeasonCutoff(key,now);
+  const matches=Array.isArray(payload.matches)?payload.matches:[];
+  const currentResult=matches.some(m=>{
+    const when=new Date(m?.kickoff||0);
+    return ['FINISHED','LIVE'].includes(String(m?.status||'').toUpperCase())&&!Number.isNaN(+when)&&when>=cutoff;
+  });
+  const future=matches.some(m=>String(m?.status||'').toUpperCase()==='UPCOMING'&&new Date(m?.kickoff||0)>now);
+  if(currentResult)return payload;
+  const teams=(payload.standings||[]).flatMap(group=>group?.teams||[]);
+  const cleanPreseasonTable=future&&teams.length&&teams.every(team=>team?.pld==null||Number(team.pld)===0);
+  const currentProjection=payload.season_context?.projection_current===true;
+  if(currentProjection){
+    payload.standings=(payload.standings||[]).filter(group=>/projection/i.test(String(group?.group||'')));
+  }else if(!cleanPreseasonTable){
+    payload.standings=[];
+  }
+  if(!currentProjection)payload.bracket=[];
+  if(!currentProjection)payload.bracketology=null;
+  payload.third_race=[];
+  payload.advancement=[];
+  payload._season_views_suppressed=true;
+  return payload;
+}
+
 // ---- per-sport sidebar (data-driven, follows the SELECTION) ---------------
 // Each sport declares exactly which views exist for it, in order.
 const NAV_DEF={
@@ -88,7 +124,11 @@ function applySportNav(){
   const allowed=NAV_DEF[prof];
   const labels=NAV_LABELS[prof]||{};
   document.querySelectorAll('.navbtn[data-v]').forEach(b=>{
-    b.style.display=allowed.includes(b.dataset.v)?'':'none';
+    const hasBracket=(Array.isArray(DATA?.bracket)&&DATA.bracket.some(r=>(r?.matches||[]).length))||!!DATA?.bracketology;
+    const hasStandings=Array.isArray(DATA?.standings)&&DATA.standings.length>0;
+    const hasThirdRace=Array.isArray(DATA?.third_race)&&DATA.third_race.length>0;
+    const hasViewData=b.dataset.v==='bracket'?hasBracket:b.dataset.v==='groups'?hasStandings:b.dataset.v==='third'?hasThirdRace:true;
+    b.style.display=allowed.includes(b.dataset.v)&&hasViewData?'':'none';
     const l=b.querySelector('.lbl');
     if(l){const en=l.getAttribute('data-en')||l.textContent.trim();l.setAttribute('data-en',en);
       l.textContent=labels[b.dataset.v]||t(en);
@@ -102,7 +142,10 @@ function applySportNav(){
 }
 function loadingBoardHTML(){return '<div class="loadingBoard" aria-label="Loading matches"><span></span><span></span><span></span><span></span></div>'}
 function showMatchLoading(){const host=$('#view-matches');if(host)host.innerHTML=loadingBoardHTML()}
-function changeSport(v){DATA_FILE=v?('data_'+v+'.json'):'';MATCH_VISIBLE=FIXTURE_PAGE_SIZE;RESULT_VISIBLE=FIXTURE_PAGE_SIZE;if(typeof outcomeTreeReset==='function')outcomeTreeReset(false);try{localStorage.setItem('matchday.sport',DATA_FILE)}catch(e){};applySportNav();showMatchLoading();load(true);}
+function clearCompetitionViewsForLoad(){
+  ['groups','bracket','third'].forEach(view=>{const host=$('#view-'+view);if(host)host.innerHTML='<div class="empty">Loading current-season data…</div>'});
+}
+function changeSport(v){DATA_FILE=v?('data_'+v+'.json'):'';MATCH_VISIBLE=FIXTURE_PAGE_SIZE;RESULT_VISIBLE=FIXTURE_PAGE_SIZE;if(typeof outcomeTreeReset==='function')outcomeTreeReset(false);try{localStorage.setItem('matchday.sport',DATA_FILE)}catch(e){};applySportNav();showMatchLoading();clearCompetitionViewsForLoad();load(true);}
 
 const COLORS={orange:'#ffb02e',blue:'#4cc2ff',green:'#3ad17a',red:'#ff4d5e',purple:'#b16cff'};
 function saveSettings(){localStorage.setItem('matchday.settings',JSON.stringify(SETTINGS))}
