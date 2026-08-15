@@ -890,16 +890,16 @@
    "n": 114
   },
   "soccer:getafe cf": {
-   "r": 1502.866638965023,
-   "n": 114
+   "r": 1492.4774020648238,
+   "n": 115
   },
   "soccer:cadiz cf": {
    "r": 1428.7039624848308,
    "n": 38
   },
   "soccer:deportivo alaves": {
-   "r": 1489.786169218795,
-   "n": 114
+   "r": 1500.1754061189943,
+   "n": 115
   },
   "soccer:granada cf": {
    "r": 1354.3339237730097,
@@ -286106,6 +286106,7 @@
   "MLB:bdl-mlb-5059600": true,
   "MLB:bdl-mlb-5059601": true,
   "MLB:bdl-mlb-5059602": true,
-  "MLB:bdl-mlb-5059603": true
+  "MLB:bdl-mlb-5059603": true,
+  "LALIGA:564634": true
  }
 }
