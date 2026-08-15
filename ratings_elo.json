@@ -518,8 +518,8 @@
    "n": 28
   },
   "soccer:sevilla fc": {
-   "r": 1462.4651024437994,
-   "n": 120
+   "r": 1475.2725871334922,
+   "n": 121
   },
   "soccer:racing club de lens": {
    "r": 1627.0870547173024,
@@ -862,8 +862,8 @@
    "n": 38
   },
   "soccer:rayo vallecano de madrid": {
-   "r": 1545.8795617458243,
-   "n": 114
+   "r": 1533.0720770561315,
+   "n": 115
   },
   "soccer:valencia cf": {
    "r": 1538.5315445995695,
@@ -286107,6 +286107,7 @@
   "MLB:bdl-mlb-5059601": true,
   "MLB:bdl-mlb-5059602": true,
   "MLB:bdl-mlb-5059603": true,
-  "LALIGA:564634": true
+  "LALIGA:564634": true,
+  "LALIGA:564633": true
  }
 }
