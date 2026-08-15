@@ -810,5 +810,814 @@
   "result": null,
   "model_result": null,
   "market_result": null
+ },
+ "564633": {
+  "schema_ver": 2,
+  "fixture_id": "564633",
+  "competition": "LALIGA",
+  "home": "Sevilla FC",
+  "away": "Rayo Vallecano de Madrid",
+  "stage": "Regular Season",
+  "kickoff": "2026-08-15T19:30:00Z",
+  "pick": "h",
+  "pick_name": "Sevilla FC",
+  "confidence": 52,
+  "edge": 15,
+  "base_pick": "h",
+  "base_pick_name": "Sevilla FC",
+  "probs": {
+   "h": 52,
+   "d": 26,
+   "a": 22
+  },
+  "advancement_probs": null,
+  "regulation_probs": {
+   "h": 52,
+   "d": 26,
+   "a": 22
+  },
+  "regulation_pick": "h",
+  "outcome_basis": "regulation",
+  "market_basis": "regulation_1x2",
+  "market_pick": "h",
+  "market_pct": 37,
+  "pick_mkt": 37,
+  "value_side": "h",
+  "value_edge": 15,
+  "value_mkt": 37,
+  "value_name": "Sevilla FC",
+  "upset_candidate": "a",
+  "upset_name": "Rayo Vallecano de Madrid",
+  "upset_score": 29,
+  "upset_candidate_pct": 22,
+  "upset_triggered": false,
+  "upset_temperature": 1.27,
+  "upset_reason": "draw pressure",
+  "factor_snapshot": {
+   "rest": 0.0,
+   "gd": 0.0,
+   "form": 0.0,
+   "elo": -2.22,
+   "adv": 1.2,
+   "pts": 0.0,
+   "class": 9.96,
+   "injuries": 0.0
+  },
+  "market_snapshot": {
+   "h": 37,
+   "d": 32,
+   "a": 31
+  },
+  "market_snapshot_at": "2026-08-15T18:47:32.839180Z",
+  "market_snapshot_recorded_at": "2026-08-15T18:47:36.913637Z",
+  "market_snapshot_receipt": {
+   "source": "The Odds API consensus",
+   "source_reference": "https://the-odds-api.com/",
+   "observed_at": "2026-08-15T18:47:32.839180Z",
+   "recorded_at": "2026-08-15T18:47:36.913637Z",
+   "snapshot_id": null,
+   "books": 20,
+   "spread": 5
+  },
+  "market_gap": 6.0,
+  "upset_snapshot": {
+   "candidate": "Rayo Vallecano de Madrid",
+   "class": "minor",
+   "market_dog_pct": 31.0,
+   "model_dog_pct": 22.0,
+   "upset_edge": -9.0,
+   "independent_model_dog_pct": 1.0,
+   "independent_model_lead_pct": -86.0,
+   "independent_edge": -30.0,
+   "edge_threshold": 8.0,
+   "supporting_signals": [
+    "elo"
+   ],
+   "personnel_gate": true,
+   "personnel_blockers": [],
+   "radar": false,
+   "standings_candidate": null,
+   "standings_gap_pct": null,
+   "gate": "none",
+   "box_score_edge": 0.0
+  },
+  "box_score_available": false,
+  "data_availability": {
+   "market": "available",
+   "box_score": "unavailable",
+   "lineups": "unavailable",
+   "injuries": "available",
+   "weather": "unavailable",
+   "personnel": "available",
+   "venue_context": "unavailable"
+  },
+  "damp_pct": 0,
+  "mkt_pull": -35,
+  "model_ver": "v4-integrity-advancement",
+  "model_code_marker": "matchday-predictor-integrity-2026-07",
+  "locked_at": "2026-08-15T18:47:36.913637Z",
+  "lead_time_seconds": 2543.086,
+  "lead_time_hours": 0.706413,
+  "lock_window_hours": 2.0,
+  "status_at_lock": "UPCOMING",
+  "integrity_eligible": true,
+  "integrity_status": "verified",
+  "integrity_reason": "verified_pregame_window",
+  "prediction_snapshot": {
+   "pick": "h",
+   "pick_name": "Sevilla FC",
+   "confidence": 52,
+   "base_pick": "h",
+   "base_pick_name": "Sevilla FC",
+   "model": {
+    "h": 87,
+    "a": 1,
+    "d": 12
+   },
+   "base_blend": {
+    "h": 57,
+    "d": 24,
+    "a": 19
+   },
+   "blend": {
+    "h": 52,
+    "d": 26,
+    "a": 22
+   },
+   "adjusted": {
+    "h": 52,
+    "d": 26,
+    "a": 22
+   },
+   "is_knockout": false,
+   "advancement": null,
+   "regulation_pick": "h",
+   "regulation_pick_name": "Sevilla FC",
+   "regulation_confidence": 52,
+   "regulation_probs": {
+    "h": 52,
+    "d": 26,
+    "a": 22
+   },
+   "edge": 15,
+   "note": "model rates this higher than the market",
+   "why": {
+    "rest": 0.0,
+    "gd": 0.0,
+    "form": 0.0,
+    "elo": -2.22,
+    "adv": 1.2,
+    "pts": 0.0,
+    "class": 9.96,
+    "injuries": 0.0
+   },
+   "damp_pct": 0,
+   "mkt_pull": -35,
+   "market_weight": 0.6,
+   "upset": {
+    "candidate": "a",
+    "candidate_name": "Rayo Vallecano de Madrid",
+    "favorite": "h",
+    "favorite_name": "Sevilla FC",
+    "score": 29,
+    "upset_class": "minor",
+    "market_dog_pct": 31.0,
+    "model_dog_pct": 22.0,
+    "upset_edge": -9.0,
+    "radar": false,
+    "standings_candidate": null,
+    "standings_gap_pct": null,
+    "standings_sample_ok": false,
+    "temperature": 1.27,
+    "variance_pct": 18,
+    "low_goal_pct": 52,
+    "draw_pct": 24,
+    "favorite_pct": 52,
+    "candidate_pct": 22,
+    "margin_pct": 30,
+    "learn_bias_pct": 0.0,
+    "market_gap_pct": 6.0,
+    "market_gate": false,
+    "market_quality_gate": true,
+    "independent_model_dog_pct": 1.0,
+    "independent_model_lead_pct": -86.0,
+    "independent_edge": -30.0,
+    "edge_threshold": 8.0,
+    "independent_pick_gate": false,
+    "playability_gate": false,
+    "evidence_gate": false,
+    "supporting_signals": [
+     "elo"
+    ],
+    "personnel_gate": true,
+    "personnel_blockers": [],
+    "box_score_edge": 0.0,
+    "strong_box_signal": false,
+    "blocked": false,
+    "triggered": false,
+    "reason": "draw pressure"
+   },
+   "data_quality": {
+    "level": "preseason",
+    "games": {
+     "home": 0,
+     "away": 0
+    },
+    "signals": [
+     "class",
+     "elo",
+     "market"
+    ],
+    "market_available": true,
+    "market_books": 20,
+    "market_spread": 5,
+    "market_weight": 0.6,
+    "note": "Limited current-season evidence; probability is intentionally conservative."
+   },
+   "predicted_margin": {
+    "value": 0.5,
+    "unit": "goals",
+    "favored": "h",
+    "label": "+0.5 goals"
+   },
+   "class_meta": {
+    "label": "Squad edge",
+    "source": "Curated squad and star-player values",
+    "available": false,
+    "coverage": "partial",
+    "home_available": true,
+    "away_available": false,
+    "note": "Squad value, star quality, and ranking are a preseason prior; missing clubs are not assigned a fabricated edge.",
+    "edge_available": true,
+    "coverage_label": null
+   },
+   "publication_state": "locked",
+   "lock_readiness": {
+    "schema_ver": 1,
+    "sport": "soccer",
+    "competition": "LALIGA",
+    "phase": "lock_window",
+    "lock_window_hours": 2.0,
+    "lead_time_hours": 0.71,
+    "inputs": {
+     "market": "confirmed",
+     "injuries": "available",
+     "lineups": "missing",
+     "weather": "missing"
+    },
+    "missing_critical": [
+     "lineups"
+    ],
+    "coverage_pct": 50,
+    "confirmed_pct": 25,
+    "provenance": [
+     {
+      "input": "injuries",
+      "source": "API-FOOTBALL",
+      "fetched_at": "2026-08-14T02:45:28.802403Z"
+     },
+     {
+      "input": "injuries",
+      "source": "API-FOOTBALL",
+      "fetched_at": "2026-08-14T05:01:40.019775Z"
+     },
+     {
+      "input": "injuries",
+      "source": "API-FOOTBALL",
+      "fetched_at": "2026-08-14T06:43:02.678909Z"
+     },
+     {
+      "input": "injuries",
+      "source": "API-FOOTBALL",
+      "fetched_at": "2026-08-14T08:37:44.906005Z"
+     },
+     {
+      "input": "injuries",
+      "source": "API-FOOTBALL",
+      "fetched_at": "2026-08-14T10:17:06.981242Z"
+     },
+     {
+      "input": "injuries",
+      "source": "API-FOOTBALL",
+      "fetched_at": "2026-08-14T11:56:37.584937Z"
+     },
+     {
+      "input": "injuries",
+      "source": "API-FOOTBALL",
+      "fetched_at": "2026-08-14T13:42:28.808680Z"
+     },
+     {
+      "input": "injuries",
+      "source": "API-FOOTBALL",
+      "fetched_at": "2026-08-14T15:07:08.385301Z"
+     },
+     {
+      "input": "injuries",
+      "source": "API-FOOTBALL",
+      "fetched_at": "2026-08-14T17:11:14.103186Z"
+     },
+     {
+      "input": "injuries",
+      "source": "API-FOOTBALL",
+      "fetched_at": "2026-08-14T19:13:37.917198Z"
+     },
+     {
+      "input": "injuries",
+      "source": "API-FOOTBALL",
+      "fetched_at": "2026-08-14T20:45:21.103891Z"
+     },
+     {
+      "input": "injuries",
+      "source": "API-FOOTBALL",
+      "fetched_at": "2026-08-14T22:40:23.791113Z"
+     },
+     {
+      "input": "injuries",
+      "source": "API-FOOTBALL",
+      "fetched_at": "2026-08-15T01:49:26.226470Z"
+     },
+     {
+      "input": "injuries",
+      "source": "API-FOOTBALL",
+      "fetched_at": "2026-08-15T03:05:20.944973Z"
+     },
+     {
+      "input": "injuries",
+      "source": "API-FOOTBALL",
+      "fetched_at": "2026-08-15T04:46:58.565644Z"
+     },
+     {
+      "input": "injuries",
+      "source": "API-FOOTBALL",
+      "fetched_at": "2026-08-15T06:57:40.471570Z"
+     },
+     {
+      "input": "injuries",
+      "source": "API-FOOTBALL",
+      "fetched_at": "2026-08-15T08:45:10.303762Z"
+     },
+     {
+      "input": "injuries",
+      "source": "API-FOOTBALL",
+      "fetched_at": "2026-08-15T10:38:23.567494Z"
+     },
+     {
+      "input": "injuries",
+      "source": "API-FOOTBALL",
+      "fetched_at": "2026-08-15T12:58:35.973677Z"
+     },
+     {
+      "input": "injuries",
+      "source": "API-FOOTBALL",
+      "fetched_at": "2026-08-15T14:39:03.055554Z"
+     }
+    ],
+    "confidence_guard": {
+     "high_confidence_label_allowed": false,
+     "reason": "critical pregame inputs missing"
+    },
+    "production_weight": 0,
+    "research_mode": "prospective_shadow"
+   },
+   "neutral_venue_probs": {
+    "h": 52,
+    "d": 26,
+    "a": 22
+   },
+   "totals": {
+    "expected": 2.61,
+    "basis": "preseason_rating"
+   },
+   "data_availability": {
+    "market": "available",
+    "box_score": "unavailable",
+    "lineups": "unavailable",
+    "injuries": "available",
+    "weather": "unavailable",
+    "personnel": "available",
+    "venue_context": "unavailable"
+   }
+  },
+  "input_snapshot": {
+   "competition": "LALIGA",
+   "competition_config": {
+    "label": "La Liga",
+    "sport": "soccer",
+    "fd": "PD",
+    "odds": "soccer_spain_la_liga",
+    "outright": null,
+    "tournament": false,
+    "source": "fd",
+    "has_draws": true,
+    "league_zones": {
+     "ucl": 4,
+     "uel": 1,
+     "rel": 3
+    }
+   },
+   "match": {
+    "id": "564633",
+    "stage": "Regular Season",
+    "kickoff": "2026-08-15T19:30:00Z",
+    "status": "UPCOMING",
+    "venue": "",
+    "home": {
+     "name": "Sevilla FC",
+     "code": "SEV",
+     "group": "",
+     "pos": null,
+     "pld": 0,
+     "w": 0,
+     "d": 0,
+     "l": 0,
+     "gf": 0,
+     "ga": 0,
+     "gd": 0,
+     "pts": 0,
+     "form": "",
+     "rating": 4.37
+    },
+    "away": {
+     "name": "Rayo Vallecano de Madrid",
+     "code": "RAY",
+     "group": "",
+     "pos": null,
+     "pld": 0,
+     "w": 0,
+     "d": 0,
+     "l": 0,
+     "gf": 0,
+     "ga": 0,
+     "gd": 0,
+     "pts": 0,
+     "form": "",
+     "rating": 5.76
+    },
+    "markets": {
+     "1x2": {
+      "home_pct": 37,
+      "draw_pct": 32,
+      "away_pct": 31,
+      "books": 20,
+      "source": "The Odds API consensus",
+      "source_reference": "https://the-odds-api.com/",
+      "observed_at": "2026-08-15T18:47:32.839180Z",
+      "spread": 5,
+      "spread_lo": 35,
+      "spread_hi": 40,
+      "confidence": "tight",
+      "open": {
+       "h": 37,
+       "d": 32,
+       "a": 31
+      },
+      "move": {
+       "h": 0,
+       "d": 0,
+       "a": 0
+      }
+     }
+    },
+    "weather": null,
+    "injuries": {
+     "home": [
+      "A. Gonzalez (Out - Muscle Injury)",
+      "Marcao (Out - Foot Injury)"
+     ],
+     "away": [
+      "Luiz Felipe (Out - Hamstring Injury)",
+      "D. Mendez (Out - Knee Injury)",
+      "M. Kumbulla (Questionable - Muscle Injury)"
+     ],
+     "source": "API-FOOTBALL",
+     "fixture_id": "1570341"
+    },
+    "lineups": null,
+    "h2h": [],
+    "stats": null,
+    "stats_extra": null,
+    "data_source": null,
+    "advanced_metrics": null,
+    "advanced_metrics_meta": null,
+    "nfl_challenger_shadow": null,
+    "mlb_challenger_shadow": null,
+    "personnel": {
+     "injuries_feed_checked": true
+    },
+    "personnel_shadow": {
+     "schema_ver": 1,
+     "sport": "soccer",
+     "production_weight": 0,
+     "mode": "prospective_shadow",
+     "features": {
+      "injury_counts": {
+       "home": 2,
+       "away": 3
+      },
+      "lineup_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineups_confirmed": false,
+      "rest_days": {
+       "home": null,
+       "away": null
+      },
+      "weather": null,
+      "venue_context": null
+     }
+    },
+    "pregame_context": {
+     "schema_ver": 1,
+     "sport": "soccer",
+     "competition": "LALIGA",
+     "phase": "lock_window",
+     "lock_window_hours": 2.0,
+     "lead_time_hours": 0.71,
+     "inputs": {
+      "market": "confirmed",
+      "injuries": "available",
+      "lineups": "missing",
+      "weather": "missing"
+     },
+     "missing_critical": [
+      "lineups"
+     ],
+     "coverage_pct": 50,
+     "confirmed_pct": 25,
+     "provenance": [
+      {
+       "input": "injuries",
+       "source": "API-FOOTBALL",
+       "fetched_at": "2026-08-14T02:45:28.802403Z"
+      },
+      {
+       "input": "injuries",
+       "source": "API-FOOTBALL",
+       "fetched_at": "2026-08-14T05:01:40.019775Z"
+      },
+      {
+       "input": "injuries",
+       "source": "API-FOOTBALL",
+       "fetched_at": "2026-08-14T06:43:02.678909Z"
+      },
+      {
+       "input": "injuries",
+       "source": "API-FOOTBALL",
+       "fetched_at": "2026-08-14T08:37:44.906005Z"
+      },
+      {
+       "input": "injuries",
+       "source": "API-FOOTBALL",
+       "fetched_at": "2026-08-14T10:17:06.981242Z"
+      },
+      {
+       "input": "injuries",
+       "source": "API-FOOTBALL",
+       "fetched_at": "2026-08-14T11:56:37.584937Z"
+      },
+      {
+       "input": "injuries",
+       "source": "API-FOOTBALL",
+       "fetched_at": "2026-08-14T13:42:28.808680Z"
+      },
+      {
+       "input": "injuries",
+       "source": "API-FOOTBALL",
+       "fetched_at": "2026-08-14T15:07:08.385301Z"
+      },
+      {
+       "input": "injuries",
+       "source": "API-FOOTBALL",
+       "fetched_at": "2026-08-14T17:11:14.103186Z"
+      },
+      {
+       "input": "injuries",
+       "source": "API-FOOTBALL",
+       "fetched_at": "2026-08-14T19:13:37.917198Z"
+      },
+      {
+       "input": "injuries",
+       "source": "API-FOOTBALL",
+       "fetched_at": "2026-08-14T20:45:21.103891Z"
+      },
+      {
+       "input": "injuries",
+       "source": "API-FOOTBALL",
+       "fetched_at": "2026-08-14T22:40:23.791113Z"
+      },
+      {
+       "input": "injuries",
+       "source": "API-FOOTBALL",
+       "fetched_at": "2026-08-15T01:49:26.226470Z"
+      },
+      {
+       "input": "injuries",
+       "source": "API-FOOTBALL",
+       "fetched_at": "2026-08-15T03:05:20.944973Z"
+      },
+      {
+       "input": "injuries",
+       "source": "API-FOOTBALL",
+       "fetched_at": "2026-08-15T04:46:58.565644Z"
+      },
+      {
+       "input": "injuries",
+       "source": "API-FOOTBALL",
+       "fetched_at": "2026-08-15T06:57:40.471570Z"
+      },
+      {
+       "input": "injuries",
+       "source": "API-FOOTBALL",
+       "fetched_at": "2026-08-15T08:45:10.303762Z"
+      },
+      {
+       "input": "injuries",
+       "source": "API-FOOTBALL",
+       "fetched_at": "2026-08-15T10:38:23.567494Z"
+      },
+      {
+       "input": "injuries",
+       "source": "API-FOOTBALL",
+       "fetched_at": "2026-08-15T12:58:35.973677Z"
+      },
+      {
+       "input": "injuries",
+       "source": "API-FOOTBALL",
+       "fetched_at": "2026-08-15T14:39:03.055554Z"
+      }
+     ],
+     "confidence_guard": {
+      "high_confidence_label_allowed": false,
+      "reason": "critical pregame inputs missing"
+     },
+     "production_weight": 0,
+     "research_mode": "prospective_shadow"
+    },
+    "pregame_provenance": [
+     {
+      "input": "injuries",
+      "source": "API-FOOTBALL",
+      "fetched_at": "2026-08-14T02:45:28.802403Z"
+     },
+     {
+      "input": "injuries",
+      "source": "API-FOOTBALL",
+      "fetched_at": "2026-08-14T05:01:40.019775Z"
+     },
+     {
+      "input": "injuries",
+      "source": "API-FOOTBALL",
+      "fetched_at": "2026-08-14T06:43:02.678909Z"
+     },
+     {
+      "input": "injuries",
+      "source": "API-FOOTBALL",
+      "fetched_at": "2026-08-14T08:37:44.906005Z"
+     },
+     {
+      "input": "injuries",
+      "source": "API-FOOTBALL",
+      "fetched_at": "2026-08-14T10:17:06.981242Z"
+     },
+     {
+      "input": "injuries",
+      "source": "API-FOOTBALL",
+      "fetched_at": "2026-08-14T11:56:37.584937Z"
+     },
+     {
+      "input": "injuries",
+      "source": "API-FOOTBALL",
+      "fetched_at": "2026-08-14T13:42:28.808680Z"
+     },
+     {
+      "input": "injuries",
+      "source": "API-FOOTBALL",
+      "fetched_at": "2026-08-14T15:07:08.385301Z"
+     },
+     {
+      "input": "injuries",
+      "source": "API-FOOTBALL",
+      "fetched_at": "2026-08-14T17:11:14.103186Z"
+     },
+     {
+      "input": "injuries",
+      "source": "API-FOOTBALL",
+      "fetched_at": "2026-08-14T19:13:37.917198Z"
+     },
+     {
+      "input": "injuries",
+      "source": "API-FOOTBALL",
+      "fetched_at": "2026-08-14T20:45:21.103891Z"
+     },
+     {
+      "input": "injuries",
+      "source": "API-FOOTBALL",
+      "fetched_at": "2026-08-14T22:40:23.791113Z"
+     },
+     {
+      "input": "injuries",
+      "source": "API-FOOTBALL",
+      "fetched_at": "2026-08-15T01:49:26.226470Z"
+     },
+     {
+      "input": "injuries",
+      "source": "API-FOOTBALL",
+      "fetched_at": "2026-08-15T03:05:20.944973Z"
+     },
+     {
+      "input": "injuries",
+      "source": "API-FOOTBALL",
+      "fetched_at": "2026-08-15T04:46:58.565644Z"
+     },
+     {
+      "input": "injuries",
+      "source": "API-FOOTBALL",
+      "fetched_at": "2026-08-15T06:57:40.471570Z"
+     },
+     {
+      "input": "injuries",
+      "source": "API-FOOTBALL",
+      "fetched_at": "2026-08-15T08:45:10.303762Z"
+     },
+     {
+      "input": "injuries",
+      "source": "API-FOOTBALL",
+      "fetched_at": "2026-08-15T10:38:23.567494Z"
+     },
+     {
+      "input": "injuries",
+      "source": "API-FOOTBALL",
+      "fetched_at": "2026-08-15T12:58:35.973677Z"
+     },
+     {
+      "input": "injuries",
+      "source": "API-FOOTBALL",
+      "fetched_at": "2026-08-15T14:39:03.055554Z"
+     }
+    ],
+    "venue_context": null,
+    "model_signal_schema": null
+   }
+  },
+  "mfti_shadow": {
+   "spec_version": "MFTI-0.1.1-shadow",
+   "mode": "shadow_research_only",
+   "captured_at": "2026-08-15T18:47:36.913637Z",
+   "status": "incomplete",
+   "score": null,
+   "historical_evidence": {
+    "available": false,
+    "score": null,
+    "reason": "frozen_normalization_and_rolling_recalibration_not_fitted",
+    "diagnostics": {
+     "eligible_prior_forecasts": 0
+    }
+   },
+   "event_readiness": {
+    "available": false,
+    "score": null,
+    "missing_components": [
+     "scenario_stability",
+     "availability",
+     "freshness",
+     "model_stability"
+    ]
+   },
+   "components": {
+    "scenario_stability": {
+     "available": false,
+     "score": null,
+     "reason": "scenario_forecasts_not_captured"
+    },
+    "availability": {
+     "available": false,
+     "score": null,
+     "reason": "availability_probabilities_not_captured"
+    },
+    "freshness": {
+     "available": false,
+     "score": null,
+     "reason": "input_freshness_not_captured"
+    },
+    "model_stability": {
+     "available": false,
+     "score": null,
+     "reason": "independent_model_outputs_not_captured"
+    }
+   },
+   "missing_components": [
+    "historical_evidence",
+    "scenario_stability",
+    "availability",
+    "freshness",
+    "model_stability"
+   ],
+   "affects_prediction": false,
+   "user_visible": false
+  },
+  "result": null,
+  "model_result": null,
+  "market_result": null
  }
 }
