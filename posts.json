@@ -1,5 +1,24 @@
 [
   {
+    "id": "transparent-weekly-scorecard-2026-08-16",
+    "comp": "all",
+    "comp_label": "Independent Audit",
+    "slug": "transparent-weekly-scorecard-2026-08-16",
+    "title": "Transparent Weekly Scorecard - August 9-15, 2026",
+    "date": "2026-08-16",
+    "summary": "26 hits, 20 misses, one unresolved grade, and incomplete MLB ledger coverage.",
+    "record": {"hits": 26, "graded": 46, "pct": 56.5},
+    "highlights": {
+      "best_call": "Tampa Bay Rays over Oakland Athletics (73%)",
+      "largest_miss": "Boston Red Sox over Oakland Athletics (72%)"
+    },
+    "body": [
+      "The completed August 9-15 window has 47 verified MLB locks and 46 final grades: 26 hits and 20 misses. The one ungraded Cubs-Cardinals lock is excluded rather than backfilled or counted as a loss.",
+      "All 46 settled rows retain same-time regulation market snapshots. The model's Brier/log loss was 0.488/0.682 against the market's 0.494/0.687, but the model uses market context, so this narrow one-week comparison is not an independent edge claim.",
+      "Only 15 locks and 14 grades reached the append-only MLB ledger. Frozen official pick receipts support the score, while incomplete ledger reconciliation, no August 15 lock, and the unresolved grade remain explicit integrity limitations."
+    ]
+  },
+  {
     "id": "friday-model-vs-market-2026-08-14",
     "comp": "all",
     "comp_label": "Model vs. Market",

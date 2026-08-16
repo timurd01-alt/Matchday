@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0816A",
+  "tag": "Audit",
+  "title": "Published the August 9-15 transparent scorecard",
+  "items": [
+   "The weekly scorecard reports 26 hits, 20 misses, one unresolved lock, probability scores, calibration, and a same-time market comparison.",
+   "The report flags incomplete append-only MLB ledger coverage and the missing final day of stored locks instead of treating either gap as performance evidence."
+  ]
+ },
+ {
   "date": "Build 0814H",
   "tag": "Polish",
   "title": "Welcome with proof, not clutter",
