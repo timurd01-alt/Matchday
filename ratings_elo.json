@@ -7902,12 +7902,12 @@
    "n": 3909
   },
   "baseball:texas rangers": {
-   "r": 1446.8475855908964,
-   "n": 3931
+   "r": 1458.2546434221958,
+   "n": 3932
   },
   "baseball:los angeles angels": {
-   "r": 1410.9560601842209,
-   "n": 3926
+   "r": 1421.7985651926242,
+   "n": 3927
   },
   "baseball:cleveland guardians": {
    "r": 1452.3468229055804,
@@ -7958,8 +7958,8 @@
    "n": 3906
   },
   "baseball:kansas city royals": {
-   "r": 1437.3386274067946,
-   "n": 3905
+   "r": 1426.4961223983912,
+   "n": 3906
   },
   "baseball:minnesota twins": {
    "r": 1473.9858845381718,
@@ -7982,8 +7982,8 @@
    "n": 3889
   },
   "baseball:oakland athletics": {
-   "r": 1369.6661593519725,
-   "n": 3896
+   "r": 1358.259101520673,
+   "n": 3897
   },
   "baseball:los angeles dodgers": {
    "r": 1521.602777664082,
@@ -286134,6 +286134,8 @@
   "MLB:bdl-mlb-5059627": true,
   "MLB:bdl-mlb-5059623": true,
   "MLB:bdl-mlb-5059628": true,
-  "MLB:bdl-mlb-5059629": true
+  "MLB:bdl-mlb-5059629": true,
+  "MLB:bdl-mlb-5059630": true,
+  "MLB:bdl-mlb-5059631": true
  }
 }
