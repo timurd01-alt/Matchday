@@ -822,7 +822,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-16T15:35:37.741600Z",
+   "observed_at": "2026-08-16T18:47:10.441162Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -1670,7 +1670,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-16T15:35:37.741637Z",
+   "observed_at": "2026-08-16T18:47:10.441217Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -2321,9 +2321,49 @@
    "affects_prediction": false,
    "user_visible": false
   },
-  "result": null,
-  "model_result": null,
-  "market_result": null
+  "result": "d",
+  "model_result": "d",
+  "market_result": "d",
+  "score": "2-2",
+  "result_snapshot": {
+   "display": {
+    "home": 2,
+    "away": 2
+   },
+   "regulation": {
+    "home": 2,
+    "away": 2
+   },
+   "penalties": null,
+   "ultimate_winner": "d",
+   "observed_at": "2026-08-16T18:47:10.441255Z",
+   "source": "provider"
+  },
+  "model_hit": false,
+  "market_hit": false,
+  "upset_hit": false,
+  "brier3": 0.906,
+  "log_loss": 1.427,
+  "value_hit": false,
+  "clv": 2.0,
+  "closing_market_snapshot": {
+   "d": 26.0,
+   "a": 48.0,
+   "h": 26.0
+  },
+  "closing_market_receipt": {
+   "sources": [
+    "The Odds API consensus"
+   ],
+   "source_count": 1,
+   "event_ids": [
+    "c5cd7227f9de1aa8c35aadd6e56843422dabbbc71a0e6cd43b5b03103797432f"
+   ],
+   "observed_at": [
+    "2026-08-16T14:38:02.137694Z"
+   ]
+  },
+  "result_corrections": []
  },
  "564632": {
   "schema_ver": 2,

@@ -634,8 +634,8 @@
    "n": 124
   },
   "soccer:villarreal cf": {
-   "r": 1628.7197540698182,
-   "n": 122
+   "r": 1626.3767325663182,
+   "n": 123
   },
   "soccer:sk slavia praha": {
    "r": 1453.5345876010529,
@@ -8275,6 +8275,10 @@
   },
   "basketball:bryant stratton ohio": {
    "r": 1494.481333818344,
+   "n": 1
+  },
+  "soccer:real racing club de santander": {
+   "r": 1502.3430215035,
    "n": 1
   }
  },
@@ -286136,6 +286140,7 @@
   "MLB:bdl-mlb-5059628": true,
   "MLB:bdl-mlb-5059629": true,
   "MLB:bdl-mlb-5059630": true,
-  "MLB:bdl-mlb-5059631": true
+  "MLB:bdl-mlb-5059631": true,
+  "LALIGA:564629": true
  }
 }
