@@ -914,16 +914,16 @@
    "n": 38
   },
   "soccer:rcd espanyol de barcelona": {
-   "r": 1470.6369769164648,
-   "n": 76
+   "r": 1481.6181768570823,
+   "n": 77
   },
   "soccer:real oviedo": {
    "r": 1421.4997923273097,
    "n": 38
   },
   "soccer:levante ud": {
-   "r": 1501.0685136455272,
-   "n": 38
+   "r": 1490.0873137049098,
+   "n": 39
   },
   "soccer:elche cf": {
    "r": 1491.0502769982377,
@@ -286141,6 +286141,7 @@
   "MLB:bdl-mlb-5059629": true,
   "MLB:bdl-mlb-5059630": true,
   "MLB:bdl-mlb-5059631": true,
-  "LALIGA:564629": true
+  "LALIGA:564629": true,
+  "LALIGA:564632": true
  }
 }
