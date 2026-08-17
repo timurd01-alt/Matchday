@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0817A",
+  "tag": "Ranking",
+  "title": "Premier League opening board",
+  "items": [
+   "Matchday 10 now covers the August 21 Premier League opening slate.",
+   "The ranking uses current Matchday ratings and marks the preseason limits: no market, availability, lineup, or current-season form signal."
+  ]
+ },
+ {
   "date": "Build 0816C",
   "tag": "Fix",
   "title": "Scorecard metrics now compare like with like",

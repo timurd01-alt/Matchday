@@ -1,5 +1,20 @@
 [
   {
+    "id": "matchday-10-premier-league-2026-08-17",
+    "comp": "epl",
+    "comp_label": "Premier League · Matchday 10",
+    "type": "ranking",
+    "slug": "matchday-10-premier-league-2026-08-17",
+    "title": "Matchday 10: The Opening Ledger",
+    "date": "2026-08-17",
+    "summary": "A Premier League opening board ordered by current Matchday ratings, with the preseason gaps left visible.",
+    "body": [
+      "This is the first Premier League Matchday 10, selected because its August 21 opening slate is the best-supported active schedule after the prior College Football board remained on a July 24 snapshot.",
+      "The current order is Arsenal, Manchester City, Liverpool, Manchester United, Chelsea, Aston Villa, Newcastle, Bournemouth, Brighton, and Tottenham — the ten highest current Matchday team ratings.",
+      "All ten opening fixtures are preseason reads with no available market or bookmaker, listed injury, lineup entry, current-season form, separate full schedule-strength grade, or prior-model series."
+    ]
+  },
+  {
     "id": "transparent-weekly-scorecard-2026-08-16",
     "comp": "all",
     "comp_label": "Independent Audit",
