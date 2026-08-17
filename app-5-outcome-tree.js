@@ -101,6 +101,8 @@ function outcomeTreeReset(render=true){
 }
 
 function outcomeTreeLegs(){
+  const available=new Set(outcomeTreeMatches().map(outcomeTreeMatchKey));
+  for(const key of OUTCOME_TREE_SELECTED.keys())if(!available.has(key))OUTCOME_TREE_SELECTED.delete(key);
   return [...OUTCOME_TREE_SELECTED.values()].sort((a,b)=>String(a.kickoff).localeCompare(String(b.kickoff)));
 }
 

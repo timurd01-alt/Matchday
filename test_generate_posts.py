@@ -219,6 +219,32 @@ class RenderAndSitemapTests(unittest.TestCase):
             feed = json.load(f)
         self.assertEqual(feed["datasets"][0]["matches"], [])
 
+    def test_public_content_feed_excludes_stale_unmarked_mlb_forecasts_but_keeps_receipts(self):
+        upcoming = {
+            "id": "future", "kickoff": "2026-08-18T20:00:00Z", "status": "UPCOMING",
+            "home": {"name": "Alpha"}, "away": {"name": "Beta"},
+            "prediction": {"publication_state": "locked", "pick": "h",
+                           "pick_name": "Alpha", "confidence": 88},
+        }
+        finished = {
+            "id": "receipt", "kickoff": "2026-08-16T20:00:00Z", "status": "FINISHED",
+            "home": {"name": "Gamma"}, "away": {"name": "Delta"},
+            "score": {"home": 4, "away": 2, "winner": "h"},
+        }
+        receipt = {"fixture_id": "receipt", "integrity_eligible": True,
+                   "integrity_status": "verified", "legacy": False,
+                   "pick": "h", "pick_name": "Gamma", "confidence": 57,
+                   "model_hit": True, "result": "hit", "locked_at": "2026-08-16T18:00:00Z"}
+        with open("data_mlb.json", "w", encoding="utf-8") as f:
+            json.dump({"comp_key": "MLB", "competition": "MLB",
+                       "scorecard": {"graded": 1, "model_hits": 1, "picks": [receipt]},
+                       "matches": [upcoming, finished]}, f)
+        self.assertEqual(gp.generate_public_content_feed(), 1)
+        with open(gp.CONTENT_FEED_FILE, encoding="utf-8") as f:
+            matches = json.load(f)["datasets"][0]["matches"]
+        self.assertEqual([match["id"] for match in matches], ["receipt"])
+        self.assertEqual(matches[0]["official_pick"]["pick_name"], "Gamma")
+
 
 if __name__ == "__main__":
     unittest.main()

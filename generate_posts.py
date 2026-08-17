@@ -43,6 +43,10 @@ PUBLIC_CONTENT_COMPETITIONS = (
     ("mlb", "MLB", "baseball"),
 )
 PUBLIC_CONTENT_KEYS = {key for key, _, _ in PUBLIC_CONTENT_COMPETITIONS}
+MLB_FORECAST_PAUSE_MESSAGE = (
+    "MLB forecasts paused while calibration and starting-pitcher coverage are being fixed."
+)
+MLB_FORECAST_PUBLICATION_PAUSED = True
 
 FACTOR_LABELS = {
     "class": "talent or squad quality", "market_power": "championship market power",
@@ -70,6 +74,34 @@ def _save_json(path, data):
 
 def _is_public_comp(comp_key):
     return str(comp_key or "").lower() in PUBLIC_CONTENT_KEYS
+
+
+def _publication_state(data, match):
+    def value(candidate):
+        if isinstance(candidate, str):
+            return candidate
+        if isinstance(candidate, dict):
+            return (candidate.get("state") or candidate.get("status")
+                    or candidate.get("publication_state") or "")
+        return ""
+
+    prediction = match.get("prediction") or {}
+    candidates = (
+        match.get("forecast_publication_state"),
+        match.get("prediction_publication_state"), match.get("publication_state"),
+        match.get("forecast_publication"), prediction.get("publication_state"),
+        data.get("forecast_publication_state"),
+        data.get("prediction_publication_state"), data.get("publication_state"),
+        data.get("forecast_publication"), data.get("prediction_publication"),
+    )
+    return str(next((value(item) for item in candidates if value(item)), "")).lower()
+
+
+def _forecast_is_paused(data, match):
+    comp = str(match.get("_comp") or data.get("comp_key") or "").upper()
+    return (comp == "MLB" and match.get("status") == "UPCOMING"
+            and (MLB_FORECAST_PUBLICATION_PAUSED
+                 or _publication_state(data, match) == "paused"))
 
 
 def load_posts():
@@ -253,7 +285,8 @@ def generate_public_content_feed():
                    if isinstance(match, dict)]
         active = sorted(
             (match for match in matches
-             if match.get("status") == "UPCOMING" and match.get("prediction")),
+             if match.get("status") == "UPCOMING" and match.get("prediction")
+             and not _forecast_is_paused(data, match)),
             key=lambda match: str(match.get("kickoff") or ""),
         )[:12]
         finished = sorted(

@@ -362,6 +362,137 @@ class ModelInputTests(unittest.TestCase):
         for status in ("LIVE", "FINISHED"):
             self.assertEqual(fetch_data._lock_decision({**base, "status": status}, now)["state"], "quarantine")
 
+    def test_upcoming_mlb_forecast_is_minimal_pause_shell_and_never_lock_eligible(self):
+        now = fetch_data.datetime.datetime(2026, 7, 24, 12, tzinfo=fetch_data.datetime.timezone.utc)
+        match = {"_comp": "MLB", "status": "UPCOMING",
+                 "kickoff": "2026-07-24T14:00:00Z",
+                 "pregame_context": {"phase": "lock_window"},
+                 "mlb_challenger_shadow": {"home_win_probability": 0.61},
+                 "watchability": 88}
+        prediction = {"pick": "a", "confidence": 77,
+                      "model": {"h": 23, "d": 0, "a": 77},
+                      "adjusted": {"h": 35, "d": 0, "a": 65},
+                      "edge": 12, "predicted_margin": {"value": -1.2},
+                      "upset": {"score": 75}, "totals": {"pick": "over"},
+                      "neutral_venue_probs": {"h": 40, "d": 0, "a": 60}}
+
+        fetch_data._set_prediction_publication_state(match, prediction)
+        decision = fetch_data._lock_decision(match, now)
+
+        self.assertEqual(decision["state"], "wait")
+        self.assertEqual(decision["reason"], "mlb_official_forecasts_paused")
+        self.assertEqual(prediction["publication_state"], "paused")
+        self.assertFalse(prediction["official_publication_eligible"])
+        self.assertTrue(prediction["research_shadow_available"])
+        self.assertEqual(
+            prediction["publication_message"],
+            "MLB forecasts paused while calibration and starting-pitcher coverage are being fixed.")
+        for key in ("pick", "confidence", "model", "adjusted", "edge",
+                    "predicted_margin", "upset", "totals", "neutral_venue_probs"):
+            self.assertNotIn(key, prediction)
+        self.assertNotIn("watchability", match)
+        self.assertEqual(match["mlb_challenger_shadow"], {"home_win_probability": 0.61})
+
+    def test_paused_upcoming_mlb_does_not_create_pick_log_entry(self):
+        now = fetch_data.datetime.datetime.now(fetch_data.datetime.timezone.utc)
+        match = {"id": "mlb-paused", "_comp": "MLB", "status": "UPCOMING",
+                 "kickoff": (now + fetch_data.datetime.timedelta(hours=1)).isoformat(),
+                 "home": {"name": "Home"}, "away": {"name": "Away"},
+                 "markets": {}, "prediction": {"pick": "h", "confidence": 70}}
+        picks = {}
+        with mock.patch.object(fetch_data, "_load_picks", return_value=picks), \
+             mock.patch.object(fetch_data, "_save_picks") as save:
+            fetch_data.update_scorecard([match])
+        self.assertEqual(picks, {})
+        save.assert_not_called()
+
+    def test_mlb_pause_does_not_interrupt_historical_grading(self):
+        picks = {"mlb-finished": {
+            "fixture_id": "mlb-finished", "competition": "MLB",
+            "pick": "a", "market_pick": "a", "market_comparison_pick": "a",
+            "regulation_probs": {"h": 40, "d": 0, "a": 60},
+            "result": None,
+        }}
+        match = {"id": "mlb-finished", "_comp": "MLB", "status": "FINISHED",
+                 "home": {"name": "Home"}, "away": {"name": "Away"},
+                 "markets": {}, "score": {"home": 2, "away": 4, "winner": "a"}}
+        with mock.patch.object(fetch_data, "_load_picks", return_value=picks), \
+             mock.patch.object(fetch_data, "_save_picks") as save, \
+             mock.patch.object(fetch_data, "_record_is_official", return_value=True), \
+             mock.patch.object(fetch_data, "_refresh_record_clv", return_value=False):
+            fetch_data.update_scorecard([match])
+        self.assertEqual(picks["mlb-finished"]["result"], "a")
+        self.assertTrue(picks["mlb-finished"]["model_hit"])
+        self.assertEqual(picks["mlb-finished"]["score"], "2-4")
+        save.assert_called_once()
+
+    def test_existing_upcoming_mlb_lock_is_not_republished_during_pause(self):
+        match = {"id": "old-mlb-lock", "_comp": "MLB", "status": "UPCOMING",
+                 "pregame_context": {"phase": "lock_window"},
+                 "prediction": {"publication_state": "paused"}}
+        rec = {"prediction_snapshot": {
+            "pick": "h", "confidence": 72,
+            "adjusted": {"h": 72, "d": 0, "a": 28},
+            "totals": {"pick": "over"},
+        }}
+        with mock.patch.object(fetch_data, "_load_picks", return_value={"old-mlb-lock": rec}), \
+             mock.patch.object(fetch_data, "_record_is_official", return_value=True):
+            fetch_data.apply_locked_picks([match])
+        self.assertEqual(match["prediction"]["publication_state"], "locked")
+
+        self.assertEqual(fetch_data._enforce_mlb_pause_after_locked_picks([match]), 1)
+
+        self.assertEqual(match["prediction"]["publication_state"], "paused")
+        self.assertNotIn("pick", match["prediction"])
+        self.assertNotIn("confidence", match["prediction"])
+        self.assertNotIn("adjusted", match["prediction"])
+        self.assertNotIn("totals", match["prediction"])
+
+    def test_finished_mlb_locked_prediction_remains_visible_and_locked(self):
+        match = {"id": "finished-mlb-lock", "_comp": "MLB", "status": "FINISHED",
+                 "prediction": {"publication_state": "preliminary"}}
+        rec = {"prediction_snapshot": {
+            "pick": "a", "pick_name": "Away", "confidence": 58,
+            "adjusted": {"h": 42, "d": 0, "a": 58},
+        }}
+        with mock.patch.object(fetch_data, "_load_picks", return_value={"finished-mlb-lock": rec}), \
+             mock.patch.object(fetch_data, "_record_is_official", return_value=True):
+            fetch_data.apply_locked_picks([match])
+
+        self.assertEqual(fetch_data._enforce_mlb_pause_after_locked_picks([match]), 0)
+
+        self.assertEqual(match["prediction"]["publication_state"], "locked")
+        self.assertEqual(match["prediction"]["pick"], "a")
+        self.assertEqual(match["prediction"]["confidence"], 58)
+
+    def test_non_mlb_publication_and_lock_behavior_is_unchanged(self):
+        now = fetch_data.datetime.datetime(2026, 7, 24, 12, tzinfo=fetch_data.datetime.timezone.utc)
+        match = {"_comp": "NBA", "status": "UPCOMING",
+                 "kickoff": "2026-07-24T14:00:00Z",
+                 "pregame_context": {"phase": "lock_window"}}
+        prediction = {"pick": "h", "confidence": 55}
+        fetch_data._set_prediction_publication_state(match, prediction)
+        self.assertEqual(prediction["publication_state"], "lock_candidate")
+        self.assertEqual(fetch_data._lock_decision(match, now)["state"], "eligible")
+        self.assertNotIn("publication_message", prediction)
+
+    def test_mlb_pause_switch_false_restores_normal_publication_and_locking(self):
+        now = fetch_data.datetime.datetime(2026, 7, 24, 12, tzinfo=fetch_data.datetime.timezone.utc)
+        match = {"_comp": "MLB", "status": "UPCOMING",
+                 "kickoff": "2026-07-24T14:00:00Z",
+                 "pregame_context": {"phase": "lock_window"}}
+        prediction = {"pick": "h", "confidence": 55,
+                      "adjusted": {"h": 55, "d": 0, "a": 45}}
+
+        with mock.patch.object(fetch_data, "MLB_FORECAST_PUBLICATION_PAUSED", False):
+            fetch_data._set_prediction_publication_state(match, prediction)
+            decision = fetch_data._lock_decision(match, now)
+
+        self.assertEqual(prediction["publication_state"], "lock_candidate")
+        self.assertEqual(prediction["pick"], "h")
+        self.assertEqual(prediction["confidence"], 55)
+        self.assertEqual(decision["state"], "eligible")
+
     def test_legacy_record_is_moved_and_never_official(self):
         picks = {"fixture-1": {"pick": "h", "result": "h", "home": "A", "away": "B"}}
         self.assertTrue(fetch_data._quarantine_legacy_records(picks))

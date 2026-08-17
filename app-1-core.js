@@ -64,6 +64,40 @@ let DATA_FILE='';try{DATA_FILE=localStorage.getItem('matchday.sport')||'';if(/^d
 const SPORT_LABELS={wc:'World Cup',ucl:'Champions League',epl:'Premier League',laliga:'La Liga',seriea:'Serie A',bundesliga:'Bundesliga',ligue1:'Ligue 1',nfl:'NFL',ncaaf:'College Football',ncaam:"Men's College Basketball",nba:'NBA',mlb:'MLB',nhl:'NHL'};
 const FIXTURE_PAGE_SIZE=40;
 let MATCH_VISIBLE=FIXTURE_PAGE_SIZE,RESULT_VISIBLE=FIXTURE_PAGE_SIZE;
+const MLB_FORECAST_PAUSE_MESSAGE='MLB forecasts paused while calibration and starting-pitcher coverage are being fixed.';
+const MLB_FORECAST_PUBLICATION_PAUSED=true;
+
+function forecastPublicationState(payload,match){
+  const value=x=>typeof x==='string'?x:(x&&typeof x==='object'?(x.state||x.status||x.publication_state):'');
+  const candidates=[
+    match?._forecast_paused?'paused':'',match?.forecast_publication_state,match?.prediction_publication_state,
+    match?.publication_state,match?.forecast_publication,match?.prediction?.publication_state,
+    payload?.forecast_publication_state,payload?.prediction_publication_state,payload?.publication_state,
+    payload?.forecast_publication,payload?.prediction_publication,
+  ];
+  return String(candidates.map(value).find(Boolean)||'').toLowerCase();
+}
+function isMlbForecastPaused(match,payload=DATA){
+  const comp=String(match?._comp||payload?.comp_key||'').toUpperCase();
+  return comp==='MLB'&&match?.status==='UPCOMING'&&
+    (MLB_FORECAST_PUBLICATION_PAUSED||forecastPublicationState(payload,match)==='paused');
+}
+function applyForecastPublicationPauses(payload){
+  if(!payload||!Array.isArray(payload.matches))return payload;
+  payload.matches.forEach(match=>{
+    if(!isMlbForecastPaused(match,payload))return;
+    match._forecast_paused=true;
+    match._forecast_pause_message=MLB_FORECAST_PAUSE_MESSAGE;
+    ['prediction','locked_prediction','prediction_snapshot','official_pick','model_pick','model_confidence',
+     'confidence','edge','upset','watchability','watch_score','forecast','predicted_score',
+     'predicted_home_score','predicted_away_score','predicted_margin','expected_margin','model_margin',
+     'model_alert','model_vs_market_alert'].forEach(key=>delete match[key]);
+  });
+  return payload;
+}
+function forecastPauseHTML(match){
+  return isMlbForecastPaused(match)?`<div class="emptyForecast forecastPaused"><b>Forecast paused</b><span>${esc(MLB_FORECAST_PAUSE_MESSAGE)}</span></div>`:'';
+}
 
 // Providers can keep the season that just ended until the next schedule
 // opens. Keep its games in Results, but never label its table or bracket as
@@ -307,12 +341,14 @@ function lockedPredictionSnapshot(m){
   return found?.prediction&&typeof found.prediction==='object'?found.prediction:(found||{});
 }
 function officialPrediction(m){
+  if(isMlbForecastPaused(m))return {side:'',name:'',confidence:null,locked:{}};
   const pr=m?.prediction||{},locked=lockedPredictionSnapshot(m);
   const side=locked.pick??pr.pick??'';
   const name=locked.pick_name??pr.pick_name??(side==='h'?m?.home?.name:side==='a'?m?.away?.name:side==='d'?'Draw':'');
   return {side,name,confidence:locked.confidence??pr.confidence??null,locked};
 }
 function officialPredictionProbabilities(m){
+  if(isMlbForecastPaused(m))return {};
   const pr=m?.prediction||{},locked=lockedPredictionSnapshot(m);
   return locked.adjusted||locked.blend||locked.probs||pr.adjusted||pr.blend||pr.model||{};
 }
@@ -438,7 +474,7 @@ function renderWelcomeStats(){
   const M=DATA.matches||[];
   const upcoming=M.filter(isVisibleUpcoming);
   if(!upcoming.length){host.innerHTML='';return}
-  const priced=upcoming.filter(m=>(typeof officialPrediction==='function'&&officialPrediction(m))||m.prediction).length;
+  const priced=upcoming.filter(m=>!isMlbForecastPaused(m)&&((typeof officialPrediction==='function'&&officialPrediction(m))||m.prediction)).length;
   // Competitions is the product's breadth, not the current selection's -- the
   // gate is the front door for all of it, and a single-sport view would
   // otherwise read "1 competitions".

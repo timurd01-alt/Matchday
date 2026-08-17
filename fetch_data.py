@@ -4484,6 +4484,57 @@ def _parse_kickoff(value):
     return parsed.astimezone(datetime.timezone.utc)
 
 
+MLB_FORECAST_PAUSE_MESSAGE = (
+    "MLB forecasts paused while calibration and starting-pitcher coverage are being fixed.")
+# Deliberate production kill switch. Re-enable only after starter coverage and
+# locked-scorecard calibration have passed review.
+MLB_FORECAST_PUBLICATION_PAUSED = True
+
+
+def _set_prediction_publication_state(match, prediction):
+    """Publish a normal forecast label or replace paused MLB output with a shell."""
+    prediction = prediction if isinstance(prediction, dict) else {}
+    context = (match or {}).get("pregame_context") or {}
+    competition = str((match or {}).get("_comp") or COMP_KEY).upper()
+    status = str((match or {}).get("status") or "").upper()
+    if (MLB_FORECAST_PUBLICATION_PAUSED
+            and competition == "MLB" and status == "UPCOMING"):
+        # Do not merely label the regular prediction: API consumers historically
+        # read pick/confidence/probability fields without checking publication
+        # state. Clear the production output into a minimal shell. The separate
+        # match-level mlb_challenger_shadow remains available for research.
+        prediction.clear()
+        prediction.update({
+            "publication_state": "paused",
+            "publication_message": MLB_FORECAST_PAUSE_MESSAGE,
+            "official_publication_eligible": False,
+            "research_shadow_available": bool((match or {}).get("mlb_challenger_shadow")),
+        })
+        if isinstance(match, dict):
+            match.pop("watchability", None)
+    else:
+        prediction["publication_state"] = (
+            "lock_candidate" if context.get("phase") == "lock_window" else "preliminary")
+    prediction["lock_readiness"] = context
+    return prediction
+
+
+def _enforce_mlb_pause_after_locked_picks(matches):
+    """Hide legacy upcoming MLB locks without touching finished receipts."""
+    if not MLB_FORECAST_PUBLICATION_PAUSED:
+        return 0
+    paused = 0
+    for match in matches or []:
+        competition = str((match or {}).get("_comp") or COMP_KEY).upper()
+        status = str((match or {}).get("status") or "").upper()
+        if competition != "MLB" or status != "UPCOMING":
+            continue
+        match["prediction"] = _set_prediction_publication_state(
+            match, match.get("prediction"))
+        paused += 1
+    return paused
+
+
 def _lock_decision(match, now=None):
     """Classify a fixture without ever turning post-kickoff data into a pick."""
     status = str((match or {}).get("status") or "").upper()
@@ -4491,6 +4542,16 @@ def _lock_decision(match, now=None):
     if status != "UPCOMING":
         return {"state": "quarantine", "reason": f"first_seen_{status.lower() or 'unknown'}",
                 "status_at_lock": status or None, "kickoff": kickoff}
+    competition = str((match or {}).get("_comp") or COMP_KEY).upper()
+    # Product safety pause: MLB's current production forecast lacks reliable
+    # confirmed-starter coverage and has not yet earned calibration claims.
+    # Keep computing the research shadow, but do not admit a new MLB receipt
+    # to the official immutable pick ledger. Existing receipts still flow
+    # through apply_locked_picks() and every historical grading path below.
+    if MLB_FORECAST_PUBLICATION_PAUSED and competition == "MLB":
+        return {"state": "wait", "reason": "mlb_official_forecasts_paused",
+                "status_at_lock": status, "kickoff": kickoff,
+                "publication_state": "paused"}
     if kickoff is None:
         return {"state": "wait", "reason": "missing_or_unparseable_kickoff",
                 "status_at_lock": status, "kickoff": None}
@@ -4499,7 +4560,6 @@ def _lock_decision(match, now=None):
     if lead_seconds < 0:
         return {"state": "quarantine", "reason": "past_due_upcoming",
                 "status_at_lock": status, "kickoff": kickoff, "lead_seconds": lead_seconds}
-    competition = str((match or {}).get("_comp") or COMP_KEY).upper()
     lock_hours = pregame_context.lock_window_hours(competition)
     if lead_seconds > lock_hours * 3600:
         return {"state": "wait", "reason": "outside_lock_window",
@@ -7171,10 +7231,9 @@ def build():
     promoted_matches = 0
     for m in matches:
         m["prediction"] = predict(m["home"], m["away"], m["markets"], m)
-        context = m.get("pregame_context") or {}
-        m["prediction"]["publication_state"] = (
-            "lock_candidate" if context.get("phase") == "lock_window" else "preliminary")
-        m["prediction"]["lock_readiness"] = context
+        m["prediction"] = _set_prediction_publication_state(m, m["prediction"])
+        if m["prediction"].get("publication_state") == "paused":
+            continue
         # Real, not simulated: reruns the same predict() with the home-
         # advantage term zeroed, so the Sandbox's "neutral venue" toggle
         # shows an actual model output rather than a client-side guess.
@@ -7299,6 +7358,9 @@ def build():
             season_context["suppressed_views"]))
     scorecard = update_scorecard(matches)
     apply_locked_picks(matches)
+    # A historical upcoming lock may predate the pause. Keep its immutable
+    # receipt for later grading, but never republish its official model output.
+    _enforce_mlb_pause_after_locked_picks(matches)
     # Top-level marker survives immutable legacy prediction snapshots and lets
     # multi_fetch detect that an otherwise fresh JSON file predates a model
     # input/schema change. Bump only when every sport needs one clean rebuild.
@@ -7372,6 +7434,12 @@ def build():
                "markets_quota_out": MARKET_STATE["quota_out"],
                "quota_blocked_providers": blocked_providers,
                "diagnostics": [_scrub(x) for x in DIAG]}
+    if MLB_FORECAST_PUBLICATION_PAUSED and COMP_KEY == "MLB":
+        payload["forecast_publication"] = {
+            "state": "paused",
+            "message": MLB_FORECAST_PAUSE_MESSAGE,
+            "official_publication_eligible": False,
+        }
     for out in (OUT_FILE, f"data_{COMP_KEY.lower()}.json"):
         tmp = out + ".tmp"
         with open(tmp, "w", encoding="utf-8") as f:

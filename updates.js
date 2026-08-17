@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0817B",
+  "tag": "Safety",
+  "title": "MLB forecasts paused for recalibration",
+  "items": [
+   "New official MLB picks are paused while calibration and confirmed starting-pitcher coverage are repaired; schedules, scores, standings, ratings, and clearly labeled market odds remain available.",
+   "Upcoming MLB fixtures no longer publish model picks, confidence, edges, margins, upset signals, alerts, social candidates, or Outcome Tree branches, and no new official MLB locks are created.",
+   "Historical verified MLB receipts and grading remain unchanged and visible, with the zero-weight challenger retained for research."
+  ]
+ },
+ {
   "date": "Build 0817A",
   "tag": "Ranking",
   "title": "Premier League opening board",
