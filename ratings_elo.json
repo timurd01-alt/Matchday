@@ -926,8 +926,8 @@
    "n": 39
   },
   "soccer:elche cf": {
-   "r": 1491.0502769982377,
-   "n": 38
+   "r": 1493.4009375517028,
+   "n": 39
   },
   "soccer:udinese": {
    "r": 1455.0541013878383,
@@ -8279,6 +8279,10 @@
   },
   "soccer:real racing club de santander": {
    "r": 1502.3430215035,
+   "n": 1
+  },
+  "soccer:rc deportivo la coruna": {
+   "r": 1497.649339446535,
    "n": 1
   }
  },
@@ -286158,6 +286162,7 @@
   "MLB:bdl-mlb-5059644": true,
   "MLB:bdl-mlb-5059645": true,
   "MLB:bdl-mlb-5059646": true,
-  "MLB:bdl-mlb-8202183": true
+  "MLB:bdl-mlb-8202183": true,
+  "LALIGA:564635": true
  }
 }
