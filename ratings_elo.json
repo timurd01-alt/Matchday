@@ -7974,8 +7974,8 @@
    "n": 3879
   },
   "baseball:seattle mariners": {
-   "r": 1451.553841319955,
-   "n": 3886
+   "r": 1468.2262713210719,
+   "n": 3887
   },
   "baseball:chicago white sox": {
    "r": 1544.9053776958986,
@@ -7994,8 +7994,8 @@
    "n": 3922
   },
   "baseball:houston astros": {
-   "r": 1534.3694120617229,
-   "n": 3997
+   "r": 1517.696982060606,
+   "n": 3998
   },
   "baseball:milwaukee brewers": {
    "r": 1572.4854500532024,
@@ -286156,6 +286156,7 @@
   "MLB:bdl-mlb-5059642": true,
   "MLB:bdl-mlb-5059643": true,
   "MLB:bdl-mlb-5059644": true,
-  "MLB:bdl-mlb-5059645": true
+  "MLB:bdl-mlb-5059645": true,
+  "MLB:bdl-mlb-5059646": true
  }
 }
