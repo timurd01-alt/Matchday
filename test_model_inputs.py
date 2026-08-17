@@ -108,6 +108,94 @@ class ModelInputTests(unittest.TestCase):
         backfilled = dict(valid, market_backfilled_at="2026-09-09T19:00:00Z")
         self.assertFalse(fetch_data._lock_market_comparable(backfilled))
 
+    def test_scorecard_market_agreement_uses_settlement_aware_side(self):
+        records = [
+            {"pick": "a", "market_comparison_pick": "a", "market_pick": "h",
+             "market_comparison_hit": True},
+            {"pick": "h", "regulation_pick": "a", "market_comparison_pick": "a",
+             "outcome_basis": "ultimate_winner", "market_pick": "a",
+             "market_comparison_hit": False},
+            {"pick": "h", "market_pick": None, "market_comparison_hit": True},
+        ]
+        self.assertEqual(fetch_data._market_agreement_split(records), {
+            "agree": {"n": 1, "hits": 0},
+            "disagree": {"n": 1, "hits": 1},
+        })
+        older = {"pick": "h", "regulation_pick": "a",
+                 "outcome_basis": "ultimate_winner", "market_result": "a"}
+        self.assertTrue(fetch_data._refresh_market_comparison_grade(older))
+        self.assertTrue(older["market_comparison_hit"])
+
+    def test_advancement_value_chance_uses_regulation_comparison_side(self):
+        rec = {"pick": "h", "regulation_pick": "a",
+               "outcome_basis": "ultimate_winner", "value_side": "a"}
+        self.assertFalse(fetch_data._is_value_chance(rec))
+        rec["value_side"] = "h"
+        self.assertTrue(fetch_data._is_value_chance(rec))
+
+    def test_pending_value_count_excludes_post_lock_backfills(self):
+        valid = {
+            "value_side": "a", "pick": "h", "market_comparison_pick": "h",
+            "market_snapshot": {"h": 55, "d": 0, "a": 45},
+            "market_snapshot_receipt": {"observed_at": "2026-09-09T17:59:00Z",
+                                        "recorded_at": "2026-09-09T18:00:00Z"},
+            "locked_at": "2026-09-09T18:00:00Z", "kickoff": "2026-09-10T00:20:00Z",
+        }
+        late = dict(valid, market_backfilled_at="2026-09-09T19:00:00Z")
+        self.assertEqual(fetch_data._pending_value_count([valid, late]), 1)
+
+    def test_upset_override_drives_edge_and_market_comparison_side(self):
+        home = {"name": "Favorite", "pld": 30, "w": 18}
+        away = {"name": "Underdog", "pld": 30, "w": 15}
+        market = {"1x2": {"home_pct": 55, "draw_pct": 0, "away_pct": 45}}
+        adjusted = {"h": 52, "d": 0, "a": 48}
+        upset = {"candidate": "a", "triggered": True, "score": 70}
+        with mock.patch.object(fetch_data, "_upset_adjustment",
+                               return_value=(adjusted, upset)):
+            prediction = fetch_data.predict(home, away, market, {})
+        self.assertEqual(prediction["pick"], "a")
+        self.assertEqual(prediction["regulation_pick"], "h")
+        self.assertEqual(prediction["market_comparison_pick"], "a")
+        self.assertEqual(prediction["edge"], 3)
+
+    def test_clv_retries_and_removes_ineligible_stale_values(self):
+        base = {
+            "pick": "a", "market_comparison_pick": "a", "pick_mkt": 45,
+            "market_snapshot": {"h": 55, "d": 0, "a": 45},
+            "market_snapshot_receipt": {"observed_at": "2026-09-09T17:59:00Z",
+                                        "recorded_at": "2026-09-09T18:00:00Z"},
+            "locked_at": "2026-09-09T18:00:00Z", "kickoff": "2026-09-10T00:20:00Z",
+        }
+        with mock.patch.object(fetch_data, "_closing_market_from_ledger",
+                               return_value=({"h": 52, "d": 0, "a": 48}, {"source": "close"})):
+            self.assertTrue(fetch_data._refresh_record_clv(base))
+        self.assertEqual(base["clv"], 3.0)
+        base["market_backfilled_at"] = "2026-09-09T19:00:00Z"
+        self.assertTrue(fetch_data._refresh_record_clv(base))
+        self.assertNotIn("clv", base)
+        self.assertNotIn("closing_market_snapshot", base)
+
+    def test_signal_quality_does_not_treat_draw_pick_as_away(self):
+        records = [
+            {"pick": "d", "model_hit": True, "factor_snapshot": {"elo": -2}},
+            {"pick": "a", "model_hit": True, "factor_snapshot": {"elo": -1}},
+            {"pick": "h", "model_hit": False, "factor_snapshot": {"elo": 1}},
+        ]
+        self.assertEqual(fetch_data._signal_quality(records, "elo"), {"n": 2, "hits": 1})
+
+    def test_probability_metrics_expose_exact_denominators(self):
+        metrics = fetch_data._probability_metric_summary([
+            {"confidence": 60, "model_hit": True, "brier3": .4, "log_loss": .5},
+            {"confidence": 70, "model_hit": False, "brier_advancement": .3,
+             "log_loss_advancement": .4},
+            {"model_hit": True},
+        ])
+        self.assertEqual(metrics["brier_graded"], 2)
+        self.assertEqual(metrics["brier3_graded"], 1)
+        self.assertEqual(metrics["log_loss_graded"], 1)
+        self.assertEqual(metrics["advancement_graded"], 1)
+        self.assertEqual(metrics["log_loss_advancement_graded"], 1)
+
     def setUp(self):
         self.old_key = fetch_data.COMP_KEY
         self.old_comp = fetch_data.COMP
@@ -163,6 +251,56 @@ class ModelInputTests(unittest.TestCase):
             },
         }
         self.assertEqual(fetch_data._scorecard_results(match), ("d", "d"))
+
+    def test_ucl_single_match_final_grades_advancement_but_two_leg_round_does_not(self):
+        fetch_data.COMP_KEY = "UCL"
+        fetch_data.COMP = dict(fetch_data.COMPETITIONS["UCL"])
+        final = {
+            "_comp": "UCL", "stage": "Final",
+            "score": {"home": 1, "away": 1, "winner": "h",
+                      "reg": {"home": 1, "away": 1},
+                      "pens": {"home": 4, "away": 3}},
+        }
+        self.assertTrue(fetch_data._is_advancement_fixture(final))
+        self.assertEqual(fetch_data._scorecard_results(final), ("h", "d"))
+        prediction = fetch_data.predict(
+            {"name": "PSG", "pts": 35, "gd": 22, "form": "W W D"},
+            {"name": "Arsenal", "pts": 37, "gd": 23, "form": "W D D"},
+            {}, {"_comp": "UCL", "stage": "Final"})
+        self.assertTrue(prediction["is_knockout"])
+        self.assertIn(prediction["pick"], ("h", "a"))
+        two_leg = {"_comp": "UCL", "stage": "Semi Finals", "score": final["score"]}
+        self.assertFalse(fetch_data._is_advancement_fixture(two_leg))
+        self.assertEqual(fetch_data._scorecard_results(two_leg), ("d", "d"))
+        stale_locked_leg = {"competition": "UCL", "stage": "Semi Finals",
+                            "outcome_basis": "ultimate_winner",
+                            "pick": "h", "result": "h", "model_hit": True,
+                            "prediction_snapshot": {"is_knockout": True}}
+        self.assertFalse(fetch_data._is_advancement_fixture(two_leg, stale_locked_leg))
+        self.assertEqual(fetch_data._scorecard_results(two_leg, stale_locked_leg), (None, None))
+        picks = {"legacy-ucl-leg": stale_locked_leg}
+        self.assertTrue(fetch_data._quarantine_incompatible_ucl_receipts(picks))
+        self.assertEqual(stale_locked_leg["integrity_status"], "quarantined")
+        self.assertEqual(stale_locked_leg["quarantine_reason"],
+                         "legacy_ucl_advancement_target_unverifiable")
+        # Quarantine preserves the historical frozen grade; it does not
+        # reinterpret the advancement pick against the leg's regulation draw.
+        self.assertEqual(stale_locked_leg["result"], "h")
+        self.assertTrue(stale_locked_leg["model_hit"])
+
+    def test_nfl_tie_is_model_miss_but_market_push(self):
+        fetch_data.COMP_KEY = "NFL"
+        fetch_data.COMP = dict(fetch_data.COMPETITIONS["NFL"])
+        match = {"_comp": "NFL", "stage": "Regular",
+                 "score": {"home": 20, "away": 20, "winner": "d"}}
+        self.assertEqual(fetch_data._scorecard_results(match), ("d", None))
+        rec = {"competition": "NFL", "pick": "h", "market_pick": "h",
+               "market_comparison_pick": "h", "market_hit": True,
+               "market_comparison_hit": True}
+        fetch_data._apply_scorecard_grade(rec, "d", None)
+        self.assertFalse(rec["model_hit"])
+        self.assertIsNone(rec["market_hit"])
+        self.assertIsNone(rec["market_comparison_hit"])
 
     def test_model_and_market_hits_use_their_separate_knockout_results(self):
         self.use_world_cup()
@@ -270,6 +408,16 @@ class ModelInputTests(unittest.TestCase):
             fetch_data.apply_locked_picks([match])
         self.assertEqual(match["prediction"], frozen)
 
+    def test_older_locked_snapshot_gets_display_marker_without_mutating_receipt(self):
+        self.use_world_cup()
+        rec = {"prediction_snapshot": {"pick": "h", "confidence": 60}}
+        match = {"id": "old-lock", "prediction": {"pick": "a"}}
+        with mock.patch.object(fetch_data, "_load_picks", return_value={"old-lock": rec}), \
+             mock.patch.object(fetch_data, "_record_is_official", return_value=True):
+            fetch_data.apply_locked_picks([match])
+        self.assertEqual(match["prediction"]["publication_state"], "locked")
+        self.assertNotIn("publication_state", rec["prediction_snapshot"])
+
     def test_knockout_prediction_and_metrics_are_two_way(self):
         self.use_world_cup()
         home = {"name": "Alpha", "pts": 6, "gd": 2, "form": "W W"}
@@ -330,6 +478,26 @@ class ModelInputTests(unittest.TestCase):
         self.assertEqual(scorecard["legacy"]["graded"], 1)
         self.assertEqual(scorecard["legacy"]["model_hits"], 1)
         self.assertIn("Legacy/unverified", scorecard["picks"][0]["stage"])
+
+    def test_unverifiable_ucl_advancement_receipt_is_excluded_from_all_accuracy(self):
+        fetch_data.COMP_KEY = "UCL"
+        fetch_data.COMP = dict(fetch_data.COMPETITIONS["UCL"])
+        picks = {"old-leg": {
+            "fixture_id": "old-leg", "competition": "UCL", "stage": "Semi Finals",
+            "outcome_basis": "ultimate_winner", "prediction_snapshot": {"is_knockout": True},
+            "pick": "h", "result": "h", "model_hit": True,
+        }}
+        with mock.patch.object(fetch_data, "_load_picks", return_value=picks), \
+             mock.patch.object(fetch_data, "_save_picks"), \
+             mock.patch.object(fetch_data, "_load_wc_result_migration", return_value={}):
+            scorecard = fetch_data.update_scorecard([])
+        self.assertEqual(scorecard["graded"], 0)
+        self.assertEqual(scorecard["combined"]["graded"], 0)
+        self.assertEqual(scorecard["legacy"]["graded"], 0)
+        self.assertEqual(scorecard["excluded"], 1)
+        self.assertIn("Excluded/unverifiable", scorecard["picks"][0]["stage"])
+        self.assertIn("excluded from every accuracy total",
+                      scorecard["picks"][0]["integrity_label"])
 
     def test_srs_adjusts_margin_for_opponent_strength(self):
         matches = [

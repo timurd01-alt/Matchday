@@ -66,9 +66,15 @@ def _two_way(home_probability: Any) -> dict[str, float] | None:
 
 def _settlement(grade: dict[str, Any], outcomes: set[str]) -> str | None:
     payload = grade.get("payload") or {}
-    value = payload.get("market_result") if "d" in outcomes else payload.get("result")
-    if value not in outcomes:
-        value = payload.get("result")
+    market_result = payload.get("market_result")
+    if "d" in outcomes:
+        # A three-way forecast is a regulation 1X2 forecast.  Never replace a
+        # missing regulation settlement with a knockout advancement result.
+        return market_result if market_result in outcomes else None
+    if market_result == "d":
+        # A tied two-way moneyline is a push, not a home or away loss.
+        return None
+    value = market_result if market_result in outcomes else payload.get("result")
     return value if value in outcomes else None
 
 

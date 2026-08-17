@@ -4,6 +4,26 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0816C",
+  "tag": "Fix",
+  "title": "Scorecard metrics now compare like with like",
+  "items": [
+   "Only verified locked predictions appear in the graded Model archive.",
+   "Market agreement, line movement, and benchmark grading now respect regulation-versus-advancement settlement rules.",
+   "All-sports reporting includes NHL and weights probability scores by their actual eligible samples."
+  ]
+ },
+ {
+  "date": "Build 0816B",
+  "tag": "Security",
+  "title": "Hardened client rendering and secret-scan output",
+  "items": [
+   "Release notes now render with DOM text nodes instead of an HTML injection sink.",
+   "Score displays use structured plain-text formatting instead of regex-based tag removal.",
+   "The pre-publication secret scanner reports fixed finding categories without logging credential-derived text."
+  ]
+ },
+ {
   "date": "Build 0816A",
   "tag": "Audit",
   "title": "Published the August 9-15 transparent scorecard",

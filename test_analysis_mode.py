@@ -213,6 +213,32 @@ class AnalysisModeTests(unittest.TestCase):
         self.assertIn("if(!p.upset_triggered)", panels)
         self.assertNotIn('class="scsplit upsetTag">upset ${esc(', panels)
 
+    def test_model_archive_requires_a_verified_locked_snapshot(self):
+        panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
+        features = (ROOT / "app-4-features.js").read_text(encoding="utf-8")
+        self.assertIn("function _modelHasVerifiedLock", panels)
+        self.assertIn("m?.prediction?.publication_state==='locked'", panels)
+        self.assertIn("m.prediction&&(!_modelIsPast(m)||_modelHasVerifiedLock(m))", panels)
+        self.assertIn("Verified locked pregame picks", panels)
+        self.assertIn("const eligible=M.filter(m=>!_modelIsPast(m)||_modelHasVerifiedLock(m))", features)
+
+    def test_all_sports_scorecard_includes_nhl_and_uses_metric_denominators(self):
+        panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
+        self.assertIn("'nba','mlb','nhl'", panels)
+        self.assertIn("weighted('brier','brier_graded',3,true)", panels)
+        self.assertIn("weighted('brier3','brier3_graded',3,true)", panels)
+        self.assertIn("weighted('log_loss','log_loss_graded',3,true)", panels)
+        self.assertIn("weighted('log_loss_advancement','log_loss_advancement_graded',3,true)", panels)
+        self.assertIn("Number(sc.log_loss_advancement_graded)", panels)
+        self.assertIn("separate cohorts and sample sizes", panels)
+
+    def test_scorecard_market_copy_uses_compatible_claims(self):
+        panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
+        self.assertIn("Market agreement", panels)
+        self.assertIn("Draws and pick’em prices are not mislabeled as underdogs", panels)
+        self.assertIn("Change in the no-vig market probability", panels)
+        self.assertNotIn("the sharps' favourite metric", panels)
+
     def test_scheduled_deploy_is_hourly(self):
         workflow = (ROOT / ".github" / "workflows" / "deploy.yml").read_text(encoding="utf-8")
         self.assertIn("cron: '17 * * * *'", workflow)

@@ -80,6 +80,34 @@ class MarketBenchmarkTests(unittest.TestCase):
             report = build_report([forecast_path], market_path)
             self.assertEqual(report["rows"][0]["result"], "a")
 
+    def test_excludes_three_way_knockout_without_regulation_settlement(self):
+        with tempfile.TemporaryDirectory() as directory:
+            forecast_path = Path(directory) / "forecasts.jsonl"
+            record = pick_record()
+            record["competition"] = "WC"
+            record["prediction_snapshot"]["model"] = {"h": 40, "d": 30, "a": 30}
+            record["result"] = "h"  # home advanced, but the 90-minute result is unknown
+            forecast_ledger.sync_pick_records(forecast_path, [record], "WC")
+
+            report = build_report([forecast_path], Path(directory) / "markets.jsonl")
+
+            self.assertEqual(report["rows"], [])
+            self.assertEqual(report["coverage"]["invalid_result"], 1)
+
+    def test_excludes_two_way_tie_as_moneyline_push(self):
+        with tempfile.TemporaryDirectory() as directory:
+            forecast_path = Path(directory) / "forecasts.jsonl"
+            record = pick_record()
+            record["result"] = "d"
+            record["market_result"] = "d"
+            record["score"] = "20-20"
+            forecast_ledger.sync_pick_records(forecast_path, [record], "NFL")
+
+            report = build_report([forecast_path], Path(directory) / "markets.jsonl")
+
+            self.assertEqual(report["rows"], [])
+            self.assertEqual(report["coverage"]["invalid_result"], 1)
+
     def test_reused_fixture_id_cannot_cross_competitions(self):
         with tempfile.TemporaryDirectory() as directory:
             forecast_path = Path(directory) / "forecasts.jsonl"

@@ -47,6 +47,23 @@ def _probabilities(value: Any) -> dict[str, float] | None:
     return {key: number / total for key, number in clean.items()}
 
 
+def _settlement(grade_payload: dict[str, Any], outcomes: set[str]) -> str | None:
+    """Return a result compatible with the locked forecast/market universe.
+
+    Three-way forecasts are regulation 1X2 forecasts, so an explicit
+    ``market_result`` is required.  For legacy two-way records the sports
+    result remains a valid fallback, but an explicit or realized draw is a
+    moneyline push and is not a gradable h/a outcome.
+    """
+    market_result = grade_payload.get("market_result")
+    if "d" in outcomes:
+        return market_result if market_result in outcomes else None
+    if market_result == "d":
+        return None
+    value = market_result if market_result in outcomes else grade_payload.get("result")
+    return value if value in outcomes else None
+
+
 def _source_consensus(
     snapshots: list[dict[str, Any]], cutoff: datetime, outcomes: set[str], earliest: bool = False
 ) -> dict[str, Any] | None:
@@ -245,17 +262,16 @@ def extract_rows(forecast_events: Iterable[dict[str, Any]], market_path: str | P
             counts["pending"] += 1
             continue
         grade_payload = grade.get("payload") or {}
-        # 1X2 markets settle regulation time; knockout advancement may differ.
-        result = grade_payload.get("market_result") or grade_payload.get("result")
-        if result not in {"h", "d", "a"}:
-            counts["invalid_result"] += 1
-            continue
         lock = fixture_locks[0]
         payload = lock.get("payload") or {}
         lock_info = payload.get("lock") or {}
         model = _probabilities((payload.get("model") or {}).get("independent_probabilities"))
-        if not model or result not in model:
+        if not model:
             counts["invalid_model_probability"] += 1
+            continue
+        result = _settlement(grade_payload, set(model))
+        if result is None:
+            counts["invalid_result"] += 1
             continue
         locked_at = _time(lock.get("effective_at"))
         kickoff = _time(lock_info.get("kickoff"))

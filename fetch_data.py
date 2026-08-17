@@ -117,6 +117,7 @@ LIVE_SECONDS = 3600   # legacy local loop: in-progress games only need hourly re
 ODDS_CACHE_MIN = 180  # one pregame market snapshot per competition window
 OUT_FILE = "data.json"
 MODEL_SIGNAL_SCHEMA = 7  # adds capped, historically validated NFL calibrated-Elo adjustment
+PREDICTION_MODEL_VERSION = "v5-settlement-aware"
 
 FD_BASE  = "https://api.football-data.org/v4"
 
@@ -2634,8 +2635,7 @@ def predict(home, away, markets, m=None, neutral_venue=False):
         model_probs=model,
     )
 
-    knockout = bool(m and COMP.get("sport") == "soccer" and COMP.get("single_elimination")
-                    and _is_knockout_stage(m.get("stage")))
+    knockout = _is_advancement_fixture(m or {})
     regulation_outcomes = ("h", "a") if two_way else ("h", "d", "a")
     regulation_pick = max(regulation_outcomes, key=lambda k: regulation_probs[k])
     advancement = _two_way_advancement_probs(regulation_probs) if knockout else None
@@ -2653,11 +2653,15 @@ def predict(home, away, markets, m=None, neutral_venue=False):
         pick = upset["candidate"] if upset.get("triggered") else max(outcomes, key=lambda k: regulation_probs[k])
         official_probs = regulation_probs
         confidence = regulation_probs[pick]
+    # The official selection and the side used for a regulation 1X2 comparison
+    # are identical for ordinary fixtures, including an upset override.  An
+    # advancement forecast instead needs its separately frozen regulation side.
+    market_comparison_pick = regulation_pick if knockout else pick
     name = {"h": home.get("name"), "a": away.get("name"), "d": "Draw"}[pick]
     edge, note = None, "no market to compare against"
     if mk:
         mm = {"h": mk["home_pct"], "d": mk["draw_pct"], "a": mk["away_pct"]}
-        edge = regulation_probs[regulation_pick] - mm[regulation_pick]
+        edge = regulation_probs[market_comparison_pick] - mm[market_comparison_pick]
         note = ("advancement forecast; market comparison uses regulation 1X2" if knockout
                 else "upset formula triggered — volatility makes the underdog playable" if upset.get("triggered")
                 else "favorite, but upset watch" if upset.get("score", 0) >= 60 and pick != upset.get("candidate")
@@ -2667,7 +2671,7 @@ def predict(home, away, markets, m=None, neutral_venue=False):
         note = "two-way advancement forecast; no regulation market to compare"
     elif upset.get("triggered"):
         note = "upset formula triggered — volatility makes the underdog playable"
-    mkt_pull = (regulation_probs[regulation_pick] - model[regulation_pick]) if mk else 0
+    mkt_pull = (regulation_probs[market_comparison_pick] - model[market_comparison_pick]) if mk else 0
     # ---- predicted margin/spread ------------------------------------------
     # Matchday's own point/goal-margin estimate (not copied from a
     # sportsbook) -- derived from the official win/draw/loss probabilities
@@ -2712,10 +2716,14 @@ def predict(home, away, markets, m=None, neutral_venue=False):
                              "Current-season sample and opponent-adjusted results are available.")}
     class_meta = class_signal_meta(home.get("name"), away.get("name"), m)
     return {"pick": pick, "pick_name": name, "confidence": confidence,
+            "model_version": PREDICTION_MODEL_VERSION,
+            "model_signal_schema": MODEL_SIGNAL_SCHEMA,
             "base_pick": base_pick, "base_pick_name": {"h": home.get("name"), "a": away.get("name"), "d": "Draw"}[base_pick],
             "model": model, "base_blend": raw_blend, "blend": official_probs, "adjusted": official_probs,
             "is_knockout": knockout, "advancement": advancement,
             "regulation_pick": regulation_pick,
+            "market_comparison_pick": market_comparison_pick,
+            "market_comparison_basis": "regulation_1x2",
             "regulation_pick_name": {"h": home.get("name"), "a": away.get("name"), "d": "Draw"}[regulation_pick],
             "regulation_confidence": regulation_probs[regulation_pick],
             "regulation_probs": regulation_probs,
@@ -4621,6 +4629,21 @@ def _market_fields(pr, mk):
     return market_pick, market_pct, value_side, value_edge, value_mkt
 
 
+def _market_comparison_side(rec):
+    """Frozen side whose regulation result is comparable with a 1X2 market."""
+    if not isinstance(rec, dict):
+        return None
+    explicit = rec.get("market_comparison_pick")
+    if explicit in ("h", "d", "a"):
+        return explicit
+    # Backward compatibility for receipts written before the explicit field.
+    if rec.get("outcome_basis") == "ultimate_winner" or (rec.get("prediction_snapshot") or {}).get("is_knockout"):
+        side = rec.get("regulation_pick")
+    else:
+        side = rec.get("pick")
+    return side if side in ("h", "d", "a") else None
+
+
 def _market_snapshot_receipt(market, recorded_at):
     """Return a same-lock receipt only when quote time is provably pre-lock."""
     if not isinstance(market, dict) or market.get("home_pct") is None:
@@ -4654,6 +4677,74 @@ def _lock_market_comparable(rec):
     return bool(observed and recorded and locked and kickoff
                 and observed <= recorded <= locked < kickoff
                 and not rec.get("market_backfilled_at"))
+
+
+def _market_agreement_split(records):
+    """Summarize like-for-like regulation accuracy by market agreement."""
+    comparable = [p for p in records if _market_comparison_side(p) in ("h", "d", "a")
+                  and p.get("market_pick") in ("h", "d", "a")
+                  and isinstance(p.get("market_comparison_hit"), bool)]
+    agreed = [p for p in comparable if _market_comparison_side(p) == p.get("market_pick")]
+    disagreed = [p for p in comparable if _market_comparison_side(p) != p.get("market_pick")]
+    return {
+        "agree": {"n": len(agreed),
+                  "hits": sum(1 for p in agreed if p.get("market_comparison_hit"))},
+        "disagree": {"n": len(disagreed),
+                     "hits": sum(1 for p in disagreed if p.get("market_comparison_hit"))},
+    }
+
+
+def _is_value_chance(rec):
+    """True when the best regulation value side differs from our comparable side."""
+    return bool(rec.get("value_side") in ("h", "d", "a")
+                and rec.get("value_side") != _market_comparison_side(rec))
+
+
+def _pending_value_count(records):
+    """Count only value signals supported by a market present at model lock."""
+    return sum(1 for rec in records
+               if rec.get("value_side") and not rec.get("result")
+               and _lock_market_comparable(rec)
+               and _market_comparison_side(rec) in ("h", "d", "a"))
+
+
+def _signal_quality(records, name):
+    """Accuracy when a directional factor favored the selected team.
+
+    Draw selections have no home/away direction and must not be silently
+    treated as away picks.
+    """
+    relevant = [p for p in records if p.get("pick") in ("h", "a")
+                and isinstance(p.get("factor_snapshot"), dict)
+                and abs(float(p["factor_snapshot"].get(name, 0))) >= 0.5]
+    favored = [p for p in relevant
+               if (float(p["factor_snapshot"].get(name, 0)) > 0) == (p.get("pick") == "h")]
+    return ({"n": len(favored), "hits": sum(1 for p in favored if p.get("model_hit"))}
+            if favored else {"n": 0, "hits": 0})
+
+
+def _probability_metric_summary(records):
+    """Return probability metrics with their exact contributing cohorts."""
+    briers = [((float(p["confidence"]) / 100.0) -
+               (1.0 if p.get("model_hit") else 0.0)) ** 2
+              for p in records if isinstance(p.get("confidence"), (int, float))]
+    briers3 = [p.get("brier3") for p in records if p.get("brier3") is not None]
+    logloss = [p.get("log_loss") for p in records if p.get("log_loss") is not None]
+    advancement_briers = [p.get("brier_advancement") for p in records
+                          if p.get("brier_advancement") is not None]
+    advancement_logloss = [p.get("log_loss_advancement") for p in records
+                           if p.get("log_loss_advancement") is not None]
+    def mean(values):
+        return round(sum(values) / len(values), 3) if values else None
+    return {
+        "brier": mean(briers), "brier_graded": len(briers),
+        "brier3": mean(briers3), "brier3_graded": len(briers3),
+        "log_loss": mean(logloss), "log_loss_graded": len(logloss),
+        "brier_advancement": mean(advancement_briers),
+        "advancement_graded": len(advancement_briers),
+        "log_loss_advancement": mean(advancement_logloss),
+        "log_loss_advancement_graded": len(advancement_logloss),
+    }
 
 
 def _closing_market_from_ledger(rec, path="market_snapshot_ledger.jsonl"):
@@ -4723,7 +4814,9 @@ def _make_pick_record(match, prediction, market, decision, history=()):
     upset = prediction.get("upset") or {}
     probs = prediction.get("adjusted") or prediction.get("blend") or prediction.get("model") or {}
     regulation = prediction.get("regulation_probs") or probs
-    comparison_pick = prediction.get("regulation_pick") or prediction.get("pick")
+    comparison_pick = (prediction.get("market_comparison_pick")
+                       or (prediction.get("regulation_pick") if prediction.get("is_knockout")
+                           else prediction.get("pick")))
     locked_at = decision["locked_at"].isoformat().replace("+00:00", "Z")
     market_receipt = _market_snapshot_receipt(market, locked_at)
     rec = {
@@ -4739,6 +4832,8 @@ def _make_pick_record(match, prediction, market, decision, history=()):
         "advancement_probs": _json_safe(prediction.get("advancement")),
         "regulation_probs": {"h": regulation.get("h"), "d": regulation.get("d"), "a": regulation.get("a")},
         "regulation_pick": prediction.get("regulation_pick") or prediction.get("pick"),
+        "market_comparison_pick": comparison_pick,
+        "market_comparison_basis": "regulation_1x2",
         "outcome_basis": "ultimate_winner" if prediction.get("is_knockout") else "regulation",
         "market_basis": "regulation_1x2",
         "market_pick": market_pick, "market_pct": market_pct,
@@ -4778,7 +4873,13 @@ def _make_pick_record(match, prediction, market, decision, history=()):
         "box_score_available": bool(match.get("stats_extra") or match.get("stats")),
         "data_availability": availability,
         "damp_pct": prediction.get("damp_pct"), "mkt_pull": prediction.get("mkt_pull"),
-        "model_ver": "v4-integrity-advancement", "model_code_marker": MODEL_CODE_MARKER,
+        "model_ver": PREDICTION_MODEL_VERSION, "model_code_marker": MODEL_CODE_MARKER,
+        "model_signal_schema": match.get("model_signal_schema") or MODEL_SIGNAL_SCHEMA,
+        "reproducibility": {"model_version": PREDICTION_MODEL_VERSION,
+                            "model_signal_schema": match.get("model_signal_schema") or MODEL_SIGNAL_SCHEMA,
+                            "probability_basis": "advancement" if prediction.get("is_knockout") else "regulation",
+                            "market_comparison_basis": "regulation_1x2",
+                            "market_comparison_pick": comparison_pick},
         "locked_at": locked_at,
         "lead_time_seconds": round(float(decision["lead_seconds"]), 3),
         "lead_time_hours": round(float(decision["lead_seconds"]) / 3600.0, 6),
@@ -4821,6 +4922,9 @@ def apply_locked_picks(matches):
         # Replace the entire object.  Selective overlays previously left live
         # factors, narrative and data-quality fields mixed into a locked pick.
         m["prediction"] = _json_safe(snapshot)
+        # Older valid receipts predate this display marker.  Mark only the
+        # detached in-memory copy; never rewrite their stored lock snapshot.
+        m["prediction"]["publication_state"] = "locked"
 
 
 # Legacy boundary used only to validate already-published records that predate
@@ -4847,10 +4951,52 @@ def _is_knockout_stage(stage):
 def _is_advancement_fixture(match, locked_pick=None):
     stage = (match or {}).get("stage") or (locked_pick or {}).get("stage")
     snap = (locked_pick or {}).get("prediction_snapshot") or {}
-    if snap.get("is_knockout") is True:
+    competition = str((locked_pick or {}).get("competition") or
+                      (match or {}).get("_comp") or COMP_KEY).upper()
+    label = " ".join(str(stage or "").strip().lower().replace("_", " ").split())
+    # UCL's Final is unambiguously a single match. Earlier knockout stages can
+    # be two-legged; this competition rule deliberately overrides stale legacy
+    # snapshots that once marked every knockout-stage leg as advancement.
+    if competition == "UCL":
+        return label == "final"
+    if snap.get("is_knockout") is True or (locked_pick or {}).get("outcome_basis") == "ultimate_winner":
         return True
-    return bool(COMP.get("sport") == "soccer" and COMP.get("single_elimination")
+    config = COMPETITIONS.get(competition, COMP)
+    return bool(config.get("sport") == "soccer" and config.get("single_elimination")
                 and _is_knockout_stage(stage))
+
+
+def _is_incompatible_legacy_ucl_receipt(match=None, locked_pick=None):
+    """True when an old per-leg UCL advancement target cannot be settled safely."""
+    locked_pick = locked_pick or {}
+    snap = locked_pick.get("prediction_snapshot") or {}
+    competition = str(locked_pick.get("competition") or
+                      (match or {}).get("_comp") or COMP_KEY).upper()
+    stage = (match or {}).get("stage") or locked_pick.get("stage")
+    label = " ".join(str(stage or "").strip().lower().replace("_", " ").split())
+    legacy_advancement = (snap.get("is_knockout") is True or
+                          locked_pick.get("outcome_basis") == "ultimate_winner")
+    # Before the settlement-aware schema, every UCL knockout leg could be
+    # frozen as an advancement forecast. A leg score cannot prove who advanced
+    # across a two-match tie, so those receipts must not be reinterpreted as
+    # regulation picks. The single-match Final remains unambiguous.
+    return bool(competition == "UCL" and label != "final" and legacy_advancement)
+
+
+def _quarantine_incompatible_ucl_receipts(picks):
+    changed = False
+    for rec in picks.values():
+        if not isinstance(rec, dict) or not _is_incompatible_legacy_ucl_receipt({}, rec):
+            continue
+        before = (rec.get("integrity_eligible"), rec.get("integrity_status"),
+                  rec.get("quarantine_reason"))
+        rec["integrity_eligible"] = False
+        rec["integrity_status"] = "quarantined"
+        rec["quarantine_reason"] = "legacy_ucl_advancement_target_unverifiable"
+        after = (rec.get("integrity_eligible"), rec.get("integrity_status"),
+                 rec.get("quarantine_reason"))
+        changed = changed or before != after
+    return changed
 
 
 def _scorecard_results(match, locked_pick=None):
@@ -4860,6 +5006,9 @@ def _scorecard_results(match, locked_pick=None):
     or advances after extra time or penalties. The 1X2 market comparison remains
     settled on the regulation result. Neither result changes the stored score.
     """
+    if _is_incompatible_legacy_ucl_receipt(match, locked_pick):
+        return None, None
+
     sc_obj = match.get("score") or {}
     shown_home, shown_away = sc_obj.get("home"), sc_obj.get("away")
     pens = sc_obj.get("pens") or {}
@@ -4871,15 +5020,22 @@ def _scorecard_results(match, locked_pick=None):
         ultimate = _side_result(pens.get("home"), pens.get("away"))
 
     is_knockout = _is_advancement_fixture(match, locked_pick)
+    competition = str((locked_pick or {}).get("competition") or
+                      (match or {}).get("_comp") or COMP_KEY).upper()
+    config = COMPETITIONS.get(competition, COMP)
     reg = sc_obj.get("reg") or {}
     market_result = _side_result(reg.get("home"), reg.get("away"))
     if market_result is None:
-        if is_knockout and COMP.get("has_draws"):
+        if is_knockout and config.get("has_draws"):
             # Do not guess a soccer 1X2 settlement from an extra-time score.
             market_result = (locked_pick or {}).get("market_result")
         else:
             # Non-draw moneylines (and ordinary final scores) settle on the winner.
             market_result = ultimate
+    # A tied NFL game is a push for the two-way moneyline benchmark. Keep the
+    # model's winner forecast as a miss, but exclude the market from grading.
+    if competition == "NFL" and ultimate == "d":
+        market_result = None
     model_result = ultimate if is_knockout else (market_result or ultimate)
     return model_result, market_result
 
@@ -4970,18 +5126,26 @@ def _apply_scorecard_grade(rec, model_result, market_result):
     if market_result:
         rec["market_result"] = market_result
         rec["market_hit"] = (rec.get("market_pick") == market_result) if rec.get("market_pick") else None
+        comparison_side = _market_comparison_side(rec)
+        rec["market_comparison_hit"] = ((comparison_side == market_result)
+                                        if comparison_side else None)
     else:
         # Never preserve a legacy ultimate-winner market grade when the actual
         # regulation settlement is unknown.
         rec["market_result"] = None
         rec["market_hit"] = None
+        rec["market_comparison_hit"] = None
     if rec.get("upset_candidate"):
         rec["upset_hit"] = (rec.get("upset_candidate") == model_result)
-    knockout = rec.get("outcome_basis") == "ultimate_winner" or _is_advancement_fixture({}, rec)
+    knockout = _is_advancement_fixture({}, rec)
     probs = (rec.get("advancement_probs") or {}) if knockout else (rec.get("regulation_probs") or rec.get("probs") or {})
+    # Clear derived metrics before recomputing so a changed/corrected settlement
+    # cannot retain an incompatible value from an earlier grade.
+    rec["brier3"] = None
+    rec["log_loss"] = None
+    rec["brier_advancement"] = None
+    rec["log_loss_advancement"] = None
     if knockout:
-        rec["brier3"] = None
-        rec["log_loss"] = None
         if all(probs.get(k) is not None for k in ("h", "a")) and model_result in ("h", "a"):
             y = {"h": 1.0 if model_result == "h" else 0.0,
                  "a": 1.0 if model_result == "a" else 0.0}
@@ -5003,6 +5167,43 @@ def _apply_scorecard_grade(rec, model_result, market_result):
             pass
     if rec.get("value_side") and market_result:
         rec["value_hit"] = (rec.get("value_side") == market_result)
+    elif rec.get("value_side"):
+        rec["value_hit"] = None
+
+
+def _refresh_record_clv(rec):
+    """Recompute reproducible CLV, removing stale or ineligible stored values."""
+    before = (rec.get("clv"), rec.get("closing_market_snapshot"),
+              rec.get("closing_market_receipt"))
+    side = _market_comparison_side(rec)
+    eligible = (_lock_market_comparable(rec) and side in ("h", "d", "a")
+                and rec.get("pick_mkt") is not None)
+    close = receipt = None
+    if eligible:
+        close, receipt = _closing_market_from_ledger(rec)
+        eligible = isinstance(close, dict) and close.get(side) is not None
+    if eligible:
+        rec["clv"] = round(float(close[side]) - float(rec["pick_mkt"]), 1)
+        rec["closing_market_snapshot"] = close
+        rec["closing_market_receipt"] = receipt
+    else:
+        rec.pop("clv", None)
+        rec.pop("closing_market_snapshot", None)
+        rec.pop("closing_market_receipt", None)
+    after = (rec.get("clv"), rec.get("closing_market_snapshot"),
+             rec.get("closing_market_receipt"))
+    return before != after
+
+
+def _refresh_market_comparison_grade(rec):
+    """Backfill the regulation-side model grade on older locked receipts."""
+    before = rec.get("market_comparison_hit")
+    side = _market_comparison_side(rec)
+    result = rec.get("market_result")
+    rec["market_comparison_hit"] = ((side == result)
+                                    if side in ("h", "d", "a") and result in ("h", "d", "a")
+                                    else None)
+    return before != rec.get("market_comparison_hit")
 
 def _hours_to_kickoff(m):
     """None if kickoff is missing/unparseable, else hours from now to kickoff
@@ -5020,7 +5221,9 @@ def update_scorecard(matches):
     Picks themselves are never rewritten after they lock — market-comparison
     fields backfill once odds appear if they weren't in yet at lock time.
     A fixture first seen after kickoff is never admitted to the official record."""
-    picks = _load_picks(); dirty = _quarantine_legacy_records(picks)
+    picks = _load_picks()
+    dirty = _quarantine_incompatible_ucl_receipts(picks)
+    dirty = _quarantine_legacy_records(picks) or dirty
     expected_locks = set()
     expected_grades = set()
     dirty = _apply_wc_result_migration(picks) or dirty
@@ -5060,7 +5263,7 @@ def update_scorecard(matches):
             locked_prediction = rec.get("prediction_snapshot") or {}
             market_pick, market_pct, value_side, value_edge, value_mkt = _market_fields(locked_prediction, mk)
             rec["market_pick"] = market_pick; rec["market_pct"] = market_pct
-            comparison_pick = rec.get("regulation_pick") or rec.get("pick")
+            comparison_pick = _market_comparison_side(rec)
             rec["pick_mkt"] = ({"h": mk.get("home_pct"), "d": mk.get("draw_pct"), "a": mk.get("away_pct")}.get(comparison_pick)
                                 if mk.get("home_pct") is not None else None)
             rec["value_side"] = value_side; rec["value_edge"] = value_edge; rec["value_mkt"] = value_mkt
@@ -5102,14 +5305,6 @@ def update_scorecard(matches):
                 continue
             _refresh_record_result(rec, sc_obj)
             _apply_scorecard_grade(rec, model_res, market_res)
-            # closing-line value: did the market move toward our pick after we locked it?
-            close, close_receipt = _closing_market_from_ledger(rec)
-            comparison_pick = rec.get("regulation_pick") or rec.get("pick")
-            if (_lock_market_comparable(rec) and close and rec.get("pick_mkt") is not None
-                    and comparison_pick in ("h", "d", "a")):
-                rec["clv"] = round(close[comparison_pick] - rec["pick_mkt"], 1)
-                rec["closing_market_snapshot"] = close
-                rec["closing_market_receipt"] = close_receipt
             dirty = True
     # Regrade every stored version of a provider-present fixture, including a
     # quarantined legacy entry that was moved out of the active fixture key.
@@ -5131,6 +5326,13 @@ def update_scorecard(matches):
             after = (rec.get("score"), rec.get("result"), rec.get("market_result"),
                      rec.get("model_hit"), rec.get("market_hit"))
             dirty = dirty or before != after
+    # CLV availability can lag the first result fetch. Re-evaluate every graded
+    # official receipt on every build and remove any value whose lock quote was
+    # later marked backfilled/stale or can no longer be reproduced.
+    for rec in picks.values():
+        if _record_is_official(rec) and rec.get("result") in ("h", "d", "a"):
+            dirty = _refresh_market_comparison_grade(rec) or dirty
+            dirty = _refresh_record_clv(rec) or dirty
     if dirty:
         _save_picks(picks)
     # A successful fetch is allowed to deploy only if every fixture currently
@@ -5188,24 +5390,33 @@ def update_scorecard(matches):
     official = [p for p in picks.values() if _record_is_official(p)]
     quarantined = [p for p in picks.values() if not _record_is_official(p)]
     graded = [p for p in official if p.get("result")]
-    legacy_graded = [p for p in quarantined if p.get("result")]
-    mk_graded = [p for p in graded if p.get("market_hit") is not None and _lock_market_comparable(p)]
+    # Some quarantined receipts retain a historical result for auditability but
+    # do not describe a verifiable event target. In particular, an old UCL
+    # per-leg "advancement" pick cannot be settled from that leg's result. Keep
+    # those rows visible, but never let them enter any accuracy denominator.
+    non_gradable_reasons = {"legacy_ucl_advancement_target_unverifiable"}
+    non_gradable = [p for p in quarantined
+                    if p.get("quarantine_reason") in non_gradable_reasons]
+    legacy_graded = [p for p in quarantined if p.get("result")
+                     and p.get("quarantine_reason") not in non_gradable_reasons]
+    mk_graded = [p for p in graded if p.get("market_hit") is not None
+                 and p.get("market_comparison_hit") is not None
+                 and _lock_market_comparable(p)]
     later_market_graded = [p for p in graded if p.get("market_hit") is not None and not _lock_market_comparable(p)]
-    disagree = [p for p in mk_graded if p.get("market_pick") and p.get("pick") != p.get("market_pick")]
+    disagree = [p for p in mk_graded if p.get("market_pick")
+                and _market_comparison_side(p) != p.get("market_pick")]
     rows = []
     for source in sorted(picks.values(), key=lambda p: p.get("kickoff") or "", reverse=True):
         row = _json_safe(source)
         if not _record_is_official(source):
-            row["stage"] = f"Legacy/unverified · {row.get('stage') or 'Fixture'}"
-            row["integrity_label"] = "no provable pregame timestamp — counted in the all-time total, excluded from the verified record"
+            incompatible = source.get("quarantine_reason") in non_gradable_reasons
+            row["stage"] = f"{'Excluded/unverifiable' if incompatible else 'Legacy/unverified'} · {row.get('stage') or 'Fixture'}"
+            row["integrity_label"] = ("advancement target cannot be verified — excluded from every accuracy total"
+                                      if incompatible else
+                                      "no provable pregame timestamp — counted in the all-time total, excluded from the verified record")
             row["legacy"] = True
         rows.append(row)
-    # Brier score on the pick side (0 = perfect, <0.2 = well calibrated)
-    briers = [((p.get("confidence") or 0)/100.0 - (1.0 if p.get("model_hit") else 0.0))**2 for p in graded]
-    briers3 = [p.get("brier3") for p in graded if p.get("brier3") is not None]
-    logloss = [p.get("log_loss") for p in graded if p.get("log_loss") is not None]
-    advancement_briers = [p.get("brier_advancement") for p in graded if p.get("brier_advancement") is not None]
-    advancement_logloss = [p.get("log_loss_advancement") for p in graded if p.get("log_loss_advancement") is not None]
+    probability_metrics = _probability_metric_summary(graded)
     upset_watched = [p for p in graded if p.get("upset_candidate")
                      and (p.get("upset_snapshot") or {}).get("radar")
                      and (p.get("upset_snapshot") or {}).get("standings_gap_pct") is not None]
@@ -5222,25 +5433,17 @@ def update_scorecard(matches):
     away_picks = [p for p in graded if p.get("pick") == "a"]
     home_away = {"home": {"n": len(home_picks), "hits": sum(1 for p in home_picks if p.get("model_hit"))},
                  "away": {"n": len(away_picks), "hits": sum(1 for p in away_picks if p.get("model_hit"))}}
-    # favorite vs. underdog: was the picked side's own predicted probability >= 50%?
-    # (a plurality winner below 50% only happens in three-way soccer markets.)
-    favorite_picks = [p for p in graded if (p.get("confidence") or 0) >= 50]
-    underdog_picks = [p for p in graded if (p.get("confidence") or 0) < 50]
-    favorite_underdog = {"favorite": {"n": len(favorite_picks), "hits": sum(1 for p in favorite_picks if p.get("model_hit"))},
-                         "underdog": {"n": len(underdog_picks), "hits": sum(1 for p in underdog_picks if p.get("model_hit"))}}
+    # Agreement is settlement-aware and avoids inventing an "underdog" label
+    # for 3-way draws or pick'em markets. Later/backfilled quotes are excluded.
+    market_agreement = _market_agreement_split(mk_graded)
     clvs = [p["clv"] for p in graded if p.get("clv") is not None]
     vals = [p for p in mk_graded if p.get("value_side")]
-    chances = [p for p in vals if p.get("value_side") != p.get("pick")]
+    chances = [p for p in vals if _is_value_chance(p)]
     def _vs(grp):
         return {"n": len(grp), "hits": sum(1 for p in grp if p.get("value_hit")),
                 "be": round(sum(p.get("value_mkt") or 0 for p in grp)/len(grp)) if grp else None}
     # signal quality: when a factor favored our pick, did the pick hit?
-    def _signal(name):
-        rel = [p for p in graded if isinstance(p.get("factor_snapshot"), dict)
-               and abs(float(p["factor_snapshot"].get(name, 0))) >= 0.5]
-        favored = [p for p in rel if (float(p["factor_snapshot"].get(name, 0)) > 0) == (p.get("pick") == "h")]
-        return {"n": len(favored), "hits": sum(1 for p in favored if p.get("model_hit"))} if favored else {"n": 0, "hits": 0}
-    signal_quality = {k: _signal(k) for k in
+    signal_quality = {k: _signal_quality(graded, k) for k in
                       ("class", "market_power", "form", "gd", "rest", "pts", "record", "margin", "rank", "srs", "elo")}
     # error review: recent misses with their captured evidence
     misses = [{"home": p.get("home"), "away": p.get("away"), "pick": p.get("pick"),
@@ -5249,7 +5452,7 @@ def update_scorecard(matches):
               for p in sorted(graded, key=lambda x: x.get("kickoff") or "", reverse=True)
               if not p.get("model_hit")][:10]
     value_summary = {"all": _vs(vals), "chances": _vs(chances),
-                      "pending": sum(1 for p in official if p.get("value_side") and not p.get("result"))}
+                      "pending": _pending_value_count(official)}
     upset_summary = {
         "watched": len(upset_watched),
         "hits": sum(1 for p in upset_watched if p.get("upset_hit")),
@@ -5284,9 +5487,10 @@ def update_scorecard(matches):
                                  "timing alongside verified pregame-locked picks. See the pick log below "
                                  "for which is which."},
             "quarantined": {"total": len(quarantined), "graded": len(legacy_graded),
-                            "pending": len(quarantined) - len(legacy_graded),
+                            "pending": sum(1 for p in quarantined if not p.get("result")),
                             "model_hits": legacy_hits,
                             "label": "Legacy/unverified — excluded from official record"},
+            "excluded": len(non_gradable),
             "legacy": {"graded": len(legacy_graded), "model_hits": legacy_hits,
                        "accuracy": round(legacy_hits / len(legacy_graded) * 100, 1) if legacy_graded else None,
                        "market_graded": len(legacy_market),
@@ -5296,16 +5500,11 @@ def update_scorecard(matches):
             "post_lock_market_graded": len(later_market_graded),
             "post_lock_market_hits": sum(1 for p in later_market_graded if p.get("market_hit")),
             "disagree": len(disagree),
-            "disagree_hits": sum(1 for p in disagree if p.get("model_hit")),
-            "brier": round(sum(briers)/len(briers), 3) if briers else None,
-            "brier3": round(sum(briers3)/len(briers3), 3) if briers3 else None,
-            "log_loss": round(sum(logloss)/len(logloss), 3) if logloss else None,
-            "advancement_graded": len(advancement_briers),
-            "brier_advancement": round(sum(advancement_briers)/len(advancement_briers), 3) if advancement_briers else None,
-            "log_loss_advancement": round(sum(advancement_logloss)/len(advancement_logloss), 3) if advancement_logloss else None,
+            "disagree_hits": sum(1 for p in disagree if p.get("market_comparison_hit")),
+            **probability_metrics,
             "calibration": calib,
             "home_away": home_away,
-            "favorite_underdog": favorite_underdog,
+            "market_agreement": market_agreement,
             "clv_n": len(clvs), "clv_avg": round(sum(clvs)/len(clvs), 1) if clvs else None,
             "clv_beat": sum(1 for c in clvs if c > 0),
             "value": value_summary, "signal_quality": signal_quality, "misses": misses, "upset": upset_summary,

@@ -18,7 +18,7 @@ class SecretScannerTests(unittest.TestCase):
 
     def test_detects_literal_secret_assignment_without_echoing_value(self):
         findings = self.scan_text('SERVICE_API_' + 'KEY = "abcdefghijklmnopqrstuvwxyz123456"')
-        self.assertEqual(findings, [(1, "literal assigned to SERVICE_API_KEY")])
+        self.assertEqual(findings, [(1, "literal credential assignment")])
 
     def test_allows_placeholders_and_environment_references(self):
         self.assertEqual(self.scan_text('SERVICE_API_KEY = "PASTE_SERVICE_API_KEY"'), [])
@@ -30,6 +30,26 @@ class SecretScannerTests(unittest.TestCase):
 
 
 class DeploymentSecurityTests(unittest.TestCase):
+    def test_release_notes_render_without_an_html_sink(self):
+        source = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
+        renderer = source[source.index("function renderSystemUpdates"):
+                          source.index("function renderStatus")]
+        self.assertNotIn("innerHTML", renderer)
+        self.assertIn("textContent", renderer)
+        self.assertIn("replaceChildren", renderer)
+
+    def test_score_plain_text_does_not_strip_tags_with_a_regex(self):
+        for name in ("app-1-core.js", "app-3-panels.js", "app-4-features.js"):
+            source = (ROOT / name).read_text(encoding="utf-8")
+            self.assertNotRegex(source, r"replace\(/<\[\^>\]\+>/g")
+        core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
+        self.assertIn("function scorePlainText", core)
+
+    def test_round_labels_do_not_replace_text_with_itself(self):
+        source = (ROOT / "app-4-features.js").read_text(encoding="utf-8")
+        self.assertNotIn("replace('Round of 32','Round of 32')", source)
+        self.assertNotIn("replace('Round of 16','Round of 16')", source)
+
     def test_leaderboard_uses_verified_pick_rows_not_client_totals(self):
         source = (ROOT / "api" / "leaderboard.js").read_text(encoding="utf-8")
         self.assertIn("verified_picks", source)

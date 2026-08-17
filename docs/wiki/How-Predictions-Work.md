@@ -37,6 +37,8 @@ Championship futures remain useful as a long-term team-strength prior, but the m
 
 The model first creates its independent probability estimate. When valid market odds are present, Matchday removes the bookmaker margin and applies a bounded market blend. The market does not replace the model, and a missing market does not prevent a prediction or verified lock.
 
+The public pick and headline scorecard grade that published, market-informed forecast. A comparison with the same market is therefore a same-time hybrid-versus-market benchmark, not evidence that a statistically independent model beat its own input. The independent pre-blend probabilities are preserved separately in the forecast ledger for research evaluation.
+
 Odds are fetched only for upcoming games close to kickoff and cached to conserve quota. If they arrive after the pick locks, Matchday can add market-comparison context without changing the locked outcome or confidence.
 
 ## Confidence and projected margin
@@ -57,6 +59,6 @@ Upset Radar identifies market underdogs that the model rates more competitively 
 
 ## Locking and evaluation
 
-Predictions become eligible for a verified public lock inside 12 hours of kickoff. The selected side and confidence are immutable after that lock. Final results grade the saved record; in-progress games remain result pending.
+Predictions become eligible for a verified public lock on the first successful refresh inside the sport-aware pregame window: two hours for professional sports and soccer, and three hours for college sports. The selected side and confidence are immutable after that lock. Final results grade the saved record; in-progress games remain result pending.
 
 Matchday emphasizes probability-focused evaluation—including Brier score, log loss, calibration, confidence intervals, and out-of-sample testing—rather than judging a model only by raw win rate. See [Prediction Lifecycle](Prediction-Lifecycle) for the persistence guarantees behind the public scorecard.

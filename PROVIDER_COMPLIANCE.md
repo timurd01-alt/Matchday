@@ -1,5 +1,13 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-08-16 (prediction archive, scorecard, and market-benchmark
+display corrections only. No provider, endpoint, source, retained payload, or
+redistribution scope changed. Existing normalized fixture outcomes and market
+snapshots are now filtered to verified locked predictions, settled according
+to each competition's existing regulation-versus-advancement rules, and
+aggregated across the actual eligible samples. Client rendering changes use
+plain-text DOM construction and do not expose additional provider fields.)
+
 Reviewed: 2026-08-14 (season-boundary and Champions League display correction.
 No provider, endpoint, source, or redistribution scope changed. Existing
 football-data.org match metadata is now filtered so only league-phase fixtures

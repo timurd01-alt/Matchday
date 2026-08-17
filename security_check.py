@@ -67,7 +67,7 @@ def scan(path: pathlib.Path) -> list[tuple[int, str]]:
         for match in ASSIGNMENT.finditer(line):
             value = match.group(2).strip()
             if len(value) >= 8 and not SAFE_VALUE.search(value):
-                findings.append((line_no, f"literal assigned to {match.group(1)}"))
+                findings.append((line_no, "literal credential assignment"))
     return findings
 
 

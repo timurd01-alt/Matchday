@@ -28,7 +28,7 @@ The pipeline verifies that every expected lock and grade was actually written ba
 - A computed prediction is not counted as a public pick unless the lock exists in the durable ledger.
 - A finished game is not counted as graded until the result and hit/miss fields persist.
 - Historical provider corrections may update official result facts, but they do not rewrite the original pick.
-- Every new verified record freezes the lock window and the complete pregame readiness/input snapshot used for that competition. Older verified 12-hour records remain valid under their original boundary.
+- Every new verified record freezes the lock window, published probabilities, and match-level pregame readiness/input snapshot used for that competition. Mutable global model state such as Elo, H2H history, and ratings artifacts is identified but is not yet fully embedded for byte-for-byte reruns. Older verified 12-hour records remain valid under their original boundary.
 - Auto-generated recaps require both a verified pregame lock and a final grade.
 
 These guarantees are covered by the lock-persistence, score-refresh, recovery, and analysis-mode regression tests documented in [Development and Testing](Development-and-Testing).

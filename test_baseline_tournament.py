@@ -72,6 +72,33 @@ class BaselineTournamentTests(unittest.TestCase):
             self.assertEqual(report["rows"][0]["result"], "d")
             self.assertIsNone(report["rows"][0]["raw_elo"])
 
+    def test_excludes_three_way_knockout_without_regulation_settlement(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "forecast.jsonl"
+            rec = record("g1", "2026-09-10T00:20:00Z", "2026-09-09T18:00:00Z", "h", .62)
+            rec["prediction_snapshot"]["model"] = {"h": 40, "d": 30, "a": 30}
+            rec["probs"] = {"h": 39, "d": 31, "a": 30}
+            rec["market_snapshot"] = {"h": 38, "d": 32, "a": 30}
+            forecast_ledger.sync_pick_records(path, [rec], "SOCCER")
+
+            report = build_report([path])
+
+            self.assertEqual(report["rows"], [])
+            self.assertEqual(report["coverage"]["incompatible_result"], 1)
+
+    def test_excludes_two_way_tie_as_moneyline_push(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "forecast.jsonl"
+            rec = record("g1", "2026-09-10T00:20:00Z", "2026-09-09T18:00:00Z", "d", .62)
+            rec["market_result"] = "d"
+            rec["score"] = "20-20"
+            forecast_ledger.sync_pick_records(path, [rec], "NFL")
+
+            report = build_report([path])
+
+            self.assertEqual(report["rows"], [])
+            self.assertEqual(report["coverage"]["incompatible_result"], 1)
+
     def test_same_provider_fixture_id_in_two_competitions_does_not_collide(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "forecast.jsonl"

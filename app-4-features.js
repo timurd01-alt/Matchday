@@ -1,7 +1,7 @@
 function _insightFocusHTML(focus){
   let h=`<div class="seclbl">In focus</div>`;
   if(focus){
-    h+=`<div class="ins-match">${esc(focus.home?.name||'Home')} <span class="evs">v</span> ${esc(focus.away?.name||'Away')}</div><div class="ins-sub">${focus.status==='LIVE'?'Awaiting final':focus.status==='FINISHED'?`Final · ${scoreText(focus).replace(/<[^>]+>/g,'')}`:`${esc(focus.stage||'')} · ${kickIn(focus.kickoff)}`}</div>`;
+    h+=`<div class="ins-match">${esc(focus.home?.name||'Home')} <span class="evs">v</span> ${esc(focus.away?.name||'Away')}</div><div class="ins-sub">${focus.status==='LIVE'?'Awaiting final':focus.status==='FINISHED'?`Final · ${esc(scorePlainText(focus))}`:`${esc(focus.stage||'')} · ${kickIn(focus.kickoff)}`}</div>`;
     h+=insightModelBlock(focus);
     const x=(focus.markets||{})['1x2']||{};
     if(x.home_pct!=null){const twoWay=_isTwoWay(focus);h+=`<div class="prob insightProb"><div class="problbl"><span>${esc(focus.home?.code||'H')}</span>${twoWay?'':'<span>draw</span>'}<span>${esc(focus.away?.code||'A')}</span></div>${bar1x2(x.home_pct,twoWay?null:x.draw_pct,x.away_pct)}</div>`;}
@@ -13,12 +13,13 @@ function _insightFocusHTML(focus){
   return h;
 }
 function _insightFocusPool(M){
-  const primary=M.filter(m=>isFavoriteMatch(m)&&isVisibleUpcoming(m)).sort(fixtureSort)[0]||M.filter(isVisibleUpcoming).sort(fixtureSort)[0]||M.find(m=>isFavoriteMatch(m)&&m.status==='FINISHED')||M.find(m=>m.status==='FINISHED')||M.find(m=>m.status==='LIVE')||M[0];
+  const eligible=M.filter(m=>!_modelIsPast(m)||_modelHasVerifiedLock(m));
+  const primary=eligible.filter(m=>isFavoriteMatch(m)&&isVisibleUpcoming(m)).sort(fixtureSort)[0]||eligible.filter(isVisibleUpcoming).sort(fixtureSort)[0]||eligible.find(m=>isFavoriteMatch(m)&&m.status==='FINISHED')||eligible.find(m=>m.status==='FINISHED')||eligible.find(m=>m.status==='LIVE')||eligible[0];
   if(!primary)return [];
   // rotate the primary focus alongside a few other upcoming games worth
   // surfacing, ranked by watchability within a near-term window so a
   // months-away fixture can't outrank this week's games
-  const candidates=M.filter(m=>isVisibleUpcoming(m)&&m.id!==primary.id);
+  const candidates=eligible.filter(m=>isVisibleUpcoming(m)&&m.id!==primary.id);
   const others=nearTermPool(candidates,4)
     .sort((a,b)=>(b.watchability||0)-(a.watchability||0)).slice(0,4);
   return [primary,...others];
@@ -52,7 +53,7 @@ function statsPanel(m){
   const sx=m?.stats_extra,hs=sx?.home||{},as=sx?.away||{};
   const ph=sx?pressure(sx,'home'):0,pa=sx?pressure(sx,'away'):0;
   const leader=!sx?'Waiting':ph===pa?'Balanced':ph>pa?(m?.home?.code||m?.home?.name):(m?.away?.code||m?.away?.name);
-  let html=`<div class="statsBoard"><div class="seclbl">Match read</div><div class="matchRead">${teamSnap(m?.home||{},'home',m?._comp)}<div class="snapMid"><span>${esc(m?.status||'')}</span><b>${scoreText(m||{}).replace(/<[^>]+>/g,'–')}</b><span>${esc(m?.stage||'')}</span></div>${teamSnap(m?.away||{},'away',m?._comp)}</div>`;
+  let html=`<div class="statsBoard"><div class="seclbl">Match read</div><div class="matchRead">${teamSnap(m?.home||{},'home',m?._comp)}<div class="snapMid"><span>${esc(m?.status||'')}</span><b>${esc(scorePlainText(m||{}))}</b><span>${esc(m?.stage||'')}</span></div>${teamSnap(m?.away||{},'away',m?._comp)}</div>`;
   if(sx){
     html+=`<div class="statHero"><div class="pressureChip"><div class="label">Pressure index</div><div class="value">${Math.round(ph)}–${Math.round(pa)}</div><div class="sub">${esc(leader)} ${leader==='Balanced'?'match':'lean'} · not xG</div></div><div class="pressureChip"><div class="label">Best public signal</div><div class="value">${esc(leader)}</div><div class="sub">based on shots, SOT, possession, corners and cards</div></div></div><div class="statMetrics">${statMetric('Shots',hs.shots,as.shots)}${statMetric('Shots on target',hs.shots_on_target,as.shots_on_target)}${statMetric('Possession',hs.possession,as.possession)}${statMetric('Corners',hs.corners,as.corners)}${statMetric('Fouls',hs.fouls,as.fouls)}${statMetric('Offsides',hs.offsides,as.offsides)}${statMetric('Saves',hs.saves,as.saves)}${statMetric('Cards',`${hs.yellow_cards||0}Y ${hs.red_cards||0}R`,`${as.yellow_cards||0}Y ${as.red_cards||0}R`)}</div>`;
   }else{
@@ -102,7 +103,7 @@ window.openMatchModal=function(id){
       document.body.appendChild(modal);
     }
     const hmeta=t=>esc(teamStandingsMeta(t,m._comp,{form:true,hideStaleRecord:['NCAAF','NFL'].includes(_v15CompetitionKey(m))}).join(' · '));
-    const rawScore=String(scoreText(m)||'').replace(/<[^>]+>/g,'').trim()||'TBD';
+    const rawScore=scorePlainText(m).trim()||'TBD';
     const body=safeMatchDetails(m);
     modal.innerHTML=`<section class="matchSheet" role="dialog" aria-modal="true"><div class="modalHero"><button class="modalClose" onclick="closeMatchModal()" aria-label="Close">×</button><div class="modalStage">${esc(m.stage||'Fixture')} · ${esc(m.status==='LIVE'?'AWAITING FINAL':m.status||'')}</div><div class="modalFixture"><div class="modalTeam"><div class="modalCode">${teamFlagHTML(m.home)}${esc(m.home?.code||'HOME')}</div><div class="modalName">${esc(m.home?.name||'Home')}</div><div class="modalMeta">${hmeta(m.home)}</div></div><div class="modalScore"><div class="bigScore">${esc(rawScore)}</div><div class="modalStatus">${m.status==='LIVE'?'Score shown after final':kickIn(m.kickoff)}</div></div><div class="modalTeam away"><div class="modalCode">${esc(m.away?.code||'AWAY')}${teamFlagHTML(m.away,true)}</div><div class="modalName">${esc(m.away?.name||'Away')}</div><div class="modalMeta">${hmeta(m.away)}</div></div></div></div><div class="modalBody">${body}</div></section>`;
     modal.classList.add('show');
@@ -281,7 +282,7 @@ function simpleMatchFallbackPanel(m){
 /* ===== BRACKET V11 — render readable round-by-round board ===== */
 function _v11RoundLabel(name){
   const x=String(name||'');
-  return x.replace('Round of 32','Round of 32').replace('Round of 16','Round of 16').replace('Quarter-finals','Quarterfinals').replace('Semi-finals','Semifinals').replace('Third-place playoff','Third place');
+  return {'Quarter-finals':'Quarterfinals','Semi-finals':'Semifinals','Third-place playoff':'Third place'}[x]||x;
 }
 function _v11TeamName(v){
   if(v&&typeof v==='object')return v.name||v.team||v.code||'TBD';
