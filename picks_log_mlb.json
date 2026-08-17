@@ -58371,8 +58371,8 @@
   "log_loss": 0.755,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 56.0,
-   "a": 44.0
+   "a": 44.0,
+   "h": 56.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -58990,8 +58990,8 @@
   "log_loss": 0.968,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 59.0,
-   "a": 41.0
+   "a": 41.0,
+   "h": 59.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -59609,8 +59609,8 @@
   "log_loss": 0.777,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 44.0,
-   "a": 56.0
+   "a": 56.0,
+   "h": 44.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -60228,8 +60228,8 @@
   "log_loss": 0.777,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 45.0,
-   "a": 55.0
+   "a": 55.0,
+   "h": 45.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -60846,8 +60846,8 @@
   "value_hit": false,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 59.0,
-   "a": 41.0
+   "a": 41.0,
+   "h": 59.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -61467,8 +61467,8 @@
   "value_hit": true,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 65.0,
-   "a": 35.0
+   "a": 35.0,
+   "h": 65.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -62084,8 +62084,8 @@
   "value_hit": false,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 46.0,
-   "a": 54.0
+   "a": 54.0,
+   "h": 46.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -62714,8 +62714,8 @@
   "value_hit": false,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 57.0,
-   "a": 43.0
+   "a": 43.0,
+   "h": 57.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -63342,8 +63342,8 @@
   "value_hit": true,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 40.0,
-   "a": 60.0
+   "a": 60.0,
+   "h": 40.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -63970,8 +63970,8 @@
   "log_loss": 0.635,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 56.0,
-   "a": 44.0
+   "a": 44.0,
+   "h": 56.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -64596,8 +64596,8 @@
   "log_loss": 0.511,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 59.0,
-   "a": 41.0
+   "a": 41.0,
+   "h": 59.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -65222,8 +65222,8 @@
   "log_loss": 0.755,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 53.0,
-   "a": 47.0
+   "a": 47.0,
+   "h": 53.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -65850,8 +65850,8 @@
   "log_loss": 0.942,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 40.0,
-   "a": 60.0
+   "a": 60.0,
+   "h": 40.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -66481,8 +66481,8 @@
   "value_hit": true,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 52.0,
-   "a": 48.0
+   "a": 48.0,
+   "h": 52.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -67109,8 +67109,8 @@
   "log_loss": 0.799,
   "clv": -14.0,
   "closing_market_snapshot": {
-   "h": 57.0,
-   "a": 43.0
+   "a": 43.0,
+   "h": 57.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -67736,8 +67736,8 @@
   "value_hit": true,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 57.0,
-   "a": 43.0
+   "a": 43.0,
+   "h": 57.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -68365,8 +68365,8 @@
   "log_loss": 1.309,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 70.0,
-   "a": 30.0
+   "a": 30.0,
+   "h": 70.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -68993,8 +68993,8 @@
   "log_loss": 0.968,
   "clv": 3.0,
   "closing_market_snapshot": {
-   "h": 64.0,
-   "a": 36.0
+   "a": 36.0,
+   "h": 64.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -69621,8 +69621,8 @@
   "log_loss": 0.635,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 55.0,
-   "a": 45.0
+   "a": 45.0,
+   "h": 55.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -70249,8 +70249,8 @@
   "log_loss": 0.777,
   "clv": -1.0,
   "closing_market_snapshot": {
-   "h": 45.0,
-   "a": 55.0
+   "a": 55.0,
+   "h": 45.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -70876,8 +70876,8 @@
   "log_loss": 1.05,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 40.0,
-   "a": 60.0
+   "a": 60.0,
+   "h": 40.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -71505,8 +71505,8 @@
   "log_loss": 0.342,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 67.0,
-   "a": 33.0
+   "a": 33.0,
+   "h": 67.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -72122,8 +72122,8 @@
   "value_hit": true,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 51.0,
-   "a": 49.0
+   "a": 49.0,
+   "h": 51.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -72750,8 +72750,8 @@
   "log_loss": 0.635,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 55.0,
-   "a": 45.0
+   "a": 45.0,
+   "h": 55.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -73376,8 +73376,8 @@
   "log_loss": 0.916,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 60.0,
-   "a": 40.0
+   "a": 40.0,
+   "h": 60.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -74004,8 +74004,8 @@
   "value_hit": true,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 48.0,
-   "a": 52.0
+   "a": 52.0,
+   "h": 48.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -74630,8 +74630,8 @@
   "log_loss": 0.635,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 53.0,
-   "a": 47.0
+   "a": 47.0,
+   "h": 53.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -75258,8 +75258,8 @@
   "log_loss": 0.511,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 43.0,
-   "a": 57.0
+   "a": 57.0,
+   "h": 43.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -75886,8 +75886,8 @@
   "log_loss": 0.713,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 50.0,
-   "a": 50.0
+   "a": 50.0,
+   "h": 50.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -76515,8 +76515,8 @@
   "log_loss": 1.273,
   "clv": -1.0,
   "closing_market_snapshot": {
-   "h": 67.0,
-   "a": 33.0
+   "a": 33.0,
+   "h": 67.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -77143,8 +77143,8 @@
   "log_loss": 0.755,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 57.0,
-   "a": 43.0
+   "a": 43.0,
+   "h": 57.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -77771,8 +77771,8 @@
   "log_loss": 0.755,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 57.0,
-   "a": 43.0
+   "a": 43.0,
+   "h": 57.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -78399,8 +78399,8 @@
   "log_loss": 0.431,
   "clv": 1.0,
   "closing_market_snapshot": {
-   "h": 68.0,
-   "a": 32.0
+   "a": 32.0,
+   "h": 68.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -79026,8 +79026,8 @@
   "value_hit": true,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 57.0,
-   "a": 43.0
+   "a": 43.0,
+   "h": 57.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -79653,8 +79653,8 @@
   "log_loss": 0.431,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 40.0,
-   "a": 60.0
+   "a": 60.0,
+   "h": 40.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -80270,8 +80270,8 @@
   "value_hit": true,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 46.0,
-   "a": 54.0
+   "a": 54.0,
+   "h": 46.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -80899,8 +80899,8 @@
   "log_loss": 0.342,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 70.0,
-   "a": 30.0
+   "a": 30.0,
+   "h": 70.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -81525,8 +81525,8 @@
   "log_loss": 0.494,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 60.0,
-   "a": 40.0
+   "a": 40.0,
+   "h": 60.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -82153,8 +82153,8 @@
   "log_loss": 0.755,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 55.0,
-   "a": 45.0
+   "a": 45.0,
+   "h": 55.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -82781,8 +82781,8 @@
   "value_hit": true,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 46.0,
-   "a": 54.0
+   "a": 54.0,
+   "h": 46.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -83409,8 +83409,8 @@
   "log_loss": 0.892,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 44.0,
-   "a": 56.0
+   "a": 56.0,
+   "h": 44.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -84040,8 +84040,8 @@
   "value_hit": true,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 50.0,
-   "a": 50.0
+   "a": 50.0,
+   "h": 50.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -84656,7 +84656,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-17T03:21:41.706934Z",
+   "observed_at": "2026-08-17T15:58:26.612853Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -84666,8 +84666,8 @@
   "log_loss": 0.654,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 52.0,
-   "a": 48.0
+   "a": 48.0,
+   "h": 52.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -85290,7 +85290,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-17T03:21:41.706970Z",
+   "observed_at": "2026-08-17T15:58:26.612893Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -85301,8 +85301,8 @@
   "value_hit": false,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 54.0,
-   "a": 46.0
+   "a": 46.0,
+   "h": 54.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -85924,7 +85924,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-17T03:21:41.707000Z",
+   "observed_at": "2026-08-17T15:58:26.612914Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -85934,8 +85934,8 @@
   "log_loss": 0.635,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 52.0,
-   "a": 48.0
+   "a": 48.0,
+   "h": 52.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -86555,7 +86555,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-17T03:21:41.707027Z",
+   "observed_at": "2026-08-17T15:58:26.612932Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -86565,8 +86565,8 @@
   "log_loss": 0.58,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 40.0,
-   "a": 60.0
+   "a": 60.0,
+   "h": 40.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -87188,7 +87188,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-17T03:21:41.707055Z",
+   "observed_at": "2026-08-17T15:58:26.612951Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -87198,8 +87198,8 @@
   "log_loss": 0.545,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 54.0,
-   "a": 46.0
+   "a": 46.0,
+   "h": 54.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -87821,7 +87821,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-17T03:21:41.707082Z",
+   "observed_at": "2026-08-17T15:58:26.612967Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -87832,8 +87832,8 @@
   "value_hit": true,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 49.0,
-   "a": 51.0
+   "a": 51.0,
+   "h": 49.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -88456,7 +88456,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-17T03:21:41.707109Z",
+   "observed_at": "2026-08-17T15:58:26.612983Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -88466,8 +88466,8 @@
   "log_loss": 0.511,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 38.0,
-   "a": 62.0
+   "a": 62.0,
+   "h": 38.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -89090,7 +89090,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-17T03:21:41.707136Z",
+   "observed_at": "2026-08-17T15:58:26.613000Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -89101,8 +89101,8 @@
   "value_hit": true,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 53.0,
-   "a": 47.0
+   "a": 47.0,
+   "h": 53.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -89713,7 +89713,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-17T03:21:41.707163Z",
+   "observed_at": "2026-08-17T15:58:26.613015Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -89723,8 +89723,8 @@
   "log_loss": 0.821,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 46.0,
-   "a": 54.0
+   "a": 54.0,
+   "h": 46.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -90347,7 +90347,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-17T03:21:41.707189Z",
+   "observed_at": "2026-08-17T15:58:26.613031Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -90357,8 +90357,8 @@
   "log_loss": 0.511,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 59.0,
-   "a": 41.0
+   "a": 41.0,
+   "h": 59.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -90977,7 +90977,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-17T03:21:41.707214Z",
+   "observed_at": "2026-08-17T15:58:26.613047Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -90987,8 +90987,8 @@
   "log_loss": 0.799,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 52.0,
-   "a": 48.0
+   "a": 48.0,
+   "h": 52.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -91596,7 +91596,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-17T03:21:41.707239Z",
+   "observed_at": "2026-08-17T15:58:26.613062Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -91607,8 +91607,8 @@
   "value_hit": false,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 56.0,
-   "a": 44.0
+   "a": 44.0,
+   "h": 56.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -92230,7 +92230,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-17T03:21:41.707264Z",
+   "observed_at": "2026-08-17T15:58:26.613078Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -92240,8 +92240,8 @@
   "log_loss": 0.892,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 42.0,
-   "a": 58.0
+   "a": 58.0,
+   "h": 42.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -92887,7 +92887,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-17T03:21:41.707292Z",
+   "observed_at": "2026-08-17T15:58:26.613095Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -92897,8 +92897,8 @@
   "log_loss": 0.616,
   "clv": 0.5,
   "closing_market_snapshot": {
-   "h": 50.5,
-   "a": 49.5
+   "a": 49.5,
+   "h": 50.5
   },
   "closing_market_receipt": {
    "sources": [
@@ -93550,7 +93550,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-17T03:21:41.707317Z",
+   "observed_at": "2026-08-17T15:58:26.613110Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -93560,8 +93560,8 @@
   "log_loss": 0.916,
   "clv": -0.5,
   "closing_market_snapshot": {
-   "h": 40.5,
-   "a": 59.5
+   "a": 59.5,
+   "h": 40.5
   },
   "closing_market_receipt": {
    "sources": [
@@ -94202,7 +94202,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-17T03:21:41.707342Z",
+   "observed_at": "2026-08-17T15:58:26.613125Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -94213,8 +94213,8 @@
   "value_hit": true,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 33.0,
-   "a": 67.0
+   "a": 67.0,
+   "h": 33.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -94863,7 +94863,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-17T03:21:41.707367Z",
+   "observed_at": "2026-08-17T15:58:26.613141Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -94874,8 +94874,8 @@
   "value_hit": false,
   "clv": -0.5,
   "closing_market_snapshot": {
-   "h": 61.5,
-   "a": 38.5
+   "a": 38.5,
+   "h": 61.5
   },
   "closing_market_receipt": {
    "sources": [
@@ -95527,7 +95527,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-17T03:21:41.707392Z",
+   "observed_at": "2026-08-17T15:58:26.613156Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -95538,8 +95538,8 @@
   "value_hit": true,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 43.0,
-   "a": 57.0
+   "a": 57.0,
+   "h": 43.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -96187,7 +96187,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-17T03:21:41.707417Z",
+   "observed_at": "2026-08-17T15:58:26.613172Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -96197,8 +96197,8 @@
   "log_loss": 0.755,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 48.0,
-   "a": 52.0
+   "a": 52.0,
+   "h": 48.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -97130,7 +97130,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-17T03:21:41.707443Z",
+   "observed_at": "2026-08-17T15:58:26.613187Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -97141,8 +97141,8 @@
   "value_hit": false,
   "clv": 2.5,
   "closing_market_snapshot": {
-   "h": 51.5,
-   "a": 48.5
+   "a": 48.5,
+   "h": 51.5
   },
   "closing_market_receipt": {
    "sources": [
@@ -98106,7 +98106,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-17T03:21:41.707467Z",
+   "observed_at": "2026-08-17T15:58:26.613202Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -98117,8 +98117,8 @@
   "value_hit": true,
   "clv": 3.0,
   "closing_market_snapshot": {
-   "h": 49.0,
-   "a": 51.0
+   "a": 51.0,
+   "h": 49.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -99019,7 +99019,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-17T03:21:41.707492Z",
+   "observed_at": "2026-08-17T15:58:26.613218Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -99029,8 +99029,8 @@
   "log_loss": 0.58,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 45.0,
-   "a": 55.0
+   "a": 55.0,
+   "h": 45.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -99860,7 +99860,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-17T03:21:41.707516Z",
+   "observed_at": "2026-08-17T15:58:26.613233Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -99871,8 +99871,8 @@
   "value_hit": true,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 57.0,
-   "a": 43.0
+   "a": 43.0,
+   "h": 57.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -100787,7 +100787,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-17T03:21:41.707539Z",
+   "observed_at": "2026-08-17T15:58:26.613249Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -100797,8 +100797,8 @@
   "log_loss": 0.916,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 40.0,
-   "a": 60.0
+   "a": 60.0,
+   "h": 40.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -101741,7 +101741,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-17T03:21:41.707563Z",
+   "observed_at": "2026-08-17T15:58:26.613264Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -101751,8 +101751,8 @@
   "log_loss": 0.478,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 62.0,
-   "a": 38.0
+   "a": 38.0,
+   "h": 62.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -102680,7 +102680,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-17T03:21:41.707588Z",
+   "observed_at": "2026-08-17T15:58:26.613280Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -102691,8 +102691,8 @@
   "value_hit": true,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 55.0,
-   "a": 45.0
+   "a": 45.0,
+   "h": 55.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -103807,7 +103807,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-17T03:21:41.707614Z",
+   "observed_at": "2026-08-17T15:58:26.613296Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -103818,8 +103818,8 @@
   "value_hit": true,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 48.0,
-   "a": 52.0
+   "a": 52.0,
+   "h": 48.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -104966,7 +104966,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-17T03:21:41.707640Z",
+   "observed_at": "2026-08-17T15:58:26.613313Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -104977,8 +104977,8 @@
   "value_hit": false,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 47.0,
-   "a": 53.0
+   "a": 53.0,
+   "h": 47.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -106039,7 +106039,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-17T03:21:41.707666Z",
+   "observed_at": "2026-08-17T15:58:26.613329Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -106050,8 +106050,8 @@
   "value_hit": false,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 60.0,
-   "a": 40.0
+   "a": 40.0,
+   "h": 60.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -107176,7 +107176,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-17T03:21:41.707691Z",
+   "observed_at": "2026-08-17T15:58:26.613344Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -107186,8 +107186,8 @@
   "log_loss": 0.616,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 43.0,
-   "a": 57.0
+   "a": 57.0,
+   "h": 43.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -108337,7 +108337,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-17T03:21:41.707716Z",
+   "observed_at": "2026-08-17T15:58:26.613360Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -108347,8 +108347,8 @@
   "log_loss": 0.968,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 42.0,
-   "a": 58.0
+   "a": 58.0,
+   "h": 42.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -109549,7 +109549,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-17T03:21:41.707741Z",
+   "observed_at": "2026-08-17T15:58:26.613375Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -109559,8 +109559,8 @@
   "log_loss": 0.713,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 50.0,
-   "a": 50.0
+   "a": 50.0,
+   "h": 50.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -110796,7 +110796,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-17T03:21:41.707766Z",
+   "observed_at": "2026-08-17T15:58:26.613391Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -110806,8 +110806,8 @@
   "log_loss": 0.446,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 63.0,
-   "a": 37.0
+   "a": 37.0,
+   "h": 63.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -112116,7 +112116,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-17T03:21:41.707812Z",
+   "observed_at": "2026-08-17T15:58:26.613407Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -112126,8 +112126,8 @@
   "log_loss": 0.635,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 51.0,
-   "a": 49.0
+   "a": 49.0,
+   "h": 51.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -113433,7 +113433,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-17T03:21:41.707840Z",
+   "observed_at": "2026-08-17T15:58:26.613422Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -113443,8 +113443,8 @@
   "log_loss": 0.868,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 47.0,
-   "a": 53.0
+   "a": 53.0,
+   "h": 47.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -114749,7 +114749,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-17T03:21:41.707865Z",
+   "observed_at": "2026-08-17T15:58:26.613437Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -114759,8 +114759,8 @@
   "log_loss": 0.892,
   "clv": -1.0,
   "closing_market_snapshot": {
-   "h": 57.0,
-   "a": 43.0
+   "a": 43.0,
+   "h": 57.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -116275,7 +116275,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-17T03:21:41.707891Z",
+   "observed_at": "2026-08-17T15:58:26.613453Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -116285,8 +116285,8 @@
   "log_loss": 0.968,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 57.0,
-   "a": 43.0
+   "a": 43.0,
+   "h": 57.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -117839,7 +117839,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-17T03:21:41.707917Z",
+   "observed_at": "2026-08-17T15:58:26.613469Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -117850,8 +117850,8 @@
   "value_hit": true,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 52.0,
-   "a": 48.0
+   "a": 48.0,
+   "h": 52.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -119396,7 +119396,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-17T03:21:41.707943Z",
+   "observed_at": "2026-08-17T15:58:26.613484Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -119406,8 +119406,8 @@
   "log_loss": 0.734,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 52.0,
-   "a": 48.0
+   "a": 48.0,
+   "h": 52.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -120850,7 +120850,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-17T03:21:41.707970Z",
+   "observed_at": "2026-08-17T15:58:26.613500Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -120860,8 +120860,8 @@
   "log_loss": 0.844,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 43.0,
-   "a": 57.0
+   "a": 57.0,
+   "h": 43.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -122408,7 +122408,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-17T03:21:41.707995Z",
+   "observed_at": "2026-08-17T15:58:26.613515Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -122418,8 +122418,8 @@
   "log_loss": 0.844,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 56.0,
-   "a": 44.0
+   "a": 44.0,
+   "h": 56.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -123991,7 +123991,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-17T03:21:41.708022Z",
+   "observed_at": "2026-08-17T15:58:26.613531Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -124002,8 +124002,8 @@
   "value_hit": true,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 53.0,
-   "a": 47.0
+   "a": 47.0,
+   "h": 53.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -125588,7 +125588,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-17T03:21:41.708047Z",
+   "observed_at": "2026-08-17T15:58:26.613546Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -125598,8 +125598,8 @@
   "log_loss": 0.799,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 58.0,
-   "a": 42.0
+   "a": 42.0,
+   "h": 58.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -127173,7 +127173,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-17T03:21:41.708072Z",
+   "observed_at": "2026-08-17T15:58:26.613562Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -127183,8 +127183,8 @@
   "log_loss": 0.734,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 45.0,
-   "a": 55.0
+   "a": 55.0,
+   "h": 45.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -128799,7 +128799,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-17T03:21:41.708097Z",
+   "observed_at": "2026-08-17T15:58:26.613577Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -128810,8 +128810,8 @@
   "value_hit": true,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 44.0,
-   "a": 56.0
+   "a": 56.0,
+   "h": 44.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -130378,7 +130378,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-17T03:21:41.708122Z",
+   "observed_at": "2026-08-17T15:58:26.613592Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -130389,8 +130389,8 @@
   "value_hit": true,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 62.0,
-   "a": 38.0
+   "a": 38.0,
+   "h": 62.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -132099,7 +132099,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-17T03:21:41.708148Z",
+   "observed_at": "2026-08-17T15:58:26.613608Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -132109,8 +132109,8 @@
   "log_loss": 0.868,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 56.0,
-   "a": 44.0
+   "a": 44.0,
+   "h": 56.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -133666,7 +133666,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-17T03:21:41.708174Z",
+   "observed_at": "2026-08-17T15:58:26.613623Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -133676,8 +133676,8 @@
   "log_loss": 1.079,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 63.0,
-   "a": 37.0
+   "a": 37.0,
+   "h": 63.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -135324,7 +135324,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-17T03:21:41.708200Z",
+   "observed_at": "2026-08-17T15:58:26.613639Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -135334,8 +135334,8 @@
   "log_loss": 0.942,
   "clv": -15.0,
   "closing_market_snapshot": {
-   "h": 52.0,
-   "a": 48.0
+   "a": 48.0,
+   "h": 52.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -137112,7 +137112,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-17T03:21:41.708226Z",
+   "observed_at": "2026-08-17T15:58:26.613655Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -137122,8 +137122,8 @@
   "log_loss": 0.635,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 55.0,
-   "a": 45.0
+   "a": 45.0,
+   "h": 55.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -138892,7 +138892,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-17T03:21:41.708251Z",
+   "observed_at": "2026-08-17T15:58:26.613670Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -138903,8 +138903,8 @@
   "value_hit": false,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 60.0,
-   "a": 40.0
+   "a": 40.0,
+   "h": 60.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -140665,7 +140665,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-17T03:21:41.708277Z",
+   "observed_at": "2026-08-17T15:58:26.613685Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -140675,8 +140675,8 @@
   "log_loss": 0.968,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 57.0,
-   "a": 43.0
+   "a": 43.0,
+   "h": 57.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -142476,7 +142476,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-17T03:21:41.708302Z",
+   "observed_at": "2026-08-17T15:58:26.613701Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -142486,8 +142486,8 @@
   "log_loss": 0.693,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 47.0,
-   "a": 53.0
+   "a": 53.0,
+   "h": 47.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -144296,7 +144296,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-17T03:21:41.708327Z",
+   "observed_at": "2026-08-17T15:58:26.613717Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -144307,8 +144307,8 @@
   "value_hit": false,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 49.0,
-   "a": 51.0
+   "a": 51.0,
+   "h": 49.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -145903,7 +145903,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-17T03:21:41.708352Z",
+   "observed_at": "2026-08-17T15:58:26.613733Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -145913,8 +145913,8 @@
   "log_loss": 0.635,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 49.0,
-   "a": 51.0
+   "a": 51.0,
+   "h": 49.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -147732,7 +147732,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-17T03:21:41.708377Z",
+   "observed_at": "2026-08-17T15:58:26.613748Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -147743,8 +147743,8 @@
   "value_hit": false,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 54.0,
-   "a": 46.0
+   "a": 46.0,
+   "h": 54.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -149546,7 +149546,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-17T03:21:41.708401Z",
+   "observed_at": "2026-08-17T15:58:26.613764Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -149557,8 +149557,8 @@
   "value_hit": true,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 52.0,
-   "a": 48.0
+   "a": 48.0,
+   "h": 52.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -151372,7 +151372,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-17T03:21:41.708427Z",
+   "observed_at": "2026-08-17T15:58:26.613780Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -151382,8 +151382,8 @@
   "log_loss": 0.821,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 54.0,
-   "a": 46.0
+   "a": 46.0,
+   "h": 54.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -153219,7 +153219,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-17T03:21:41.708452Z",
+   "observed_at": "2026-08-17T15:58:26.613795Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -153229,8 +153229,8 @@
   "log_loss": 0.942,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 60.0,
-   "a": 40.0
+   "a": 40.0,
+   "h": 60.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -155117,7 +155117,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-17T03:21:41.708477Z",
+   "observed_at": "2026-08-17T15:58:26.613811Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -155127,8 +155127,8 @@
   "log_loss": 0.713,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 47.0,
-   "a": 53.0
+   "a": 53.0,
+   "h": 47.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -156996,7 +156996,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-17T03:21:41.708501Z",
+   "observed_at": "2026-08-17T15:58:26.613826Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -157006,8 +157006,8 @@
   "log_loss": 0.635,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 44.0,
-   "a": 56.0
+   "a": 56.0,
+   "h": 44.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -158821,7 +158821,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-17T03:21:41.708526Z",
+   "observed_at": "2026-08-17T15:58:26.613841Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -158831,8 +158831,8 @@
   "log_loss": 0.821,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 57.0,
-   "a": 43.0
+   "a": 43.0,
+   "h": 57.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -160669,7 +160669,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-17T03:21:41.708552Z",
+   "observed_at": "2026-08-17T15:58:26.613857Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -160679,8 +160679,8 @@
   "log_loss": 0.654,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 54.0,
-   "a": 46.0
+   "a": 46.0,
+   "h": 54.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -162511,7 +162511,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-17T03:21:41.708577Z",
+   "observed_at": "2026-08-17T15:58:26.613873Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -162521,8 +162521,8 @@
   "log_loss": 0.821,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 49.0,
-   "a": 51.0
+   "a": 51.0,
+   "h": 49.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -164349,7 +164349,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-17T03:21:41.708601Z",
+   "observed_at": "2026-08-17T15:58:26.613897Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -164359,8 +164359,8 @@
   "log_loss": 0.734,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 53.0,
-   "a": 47.0
+   "a": 47.0,
+   "h": 53.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -166379,7 +166379,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-17T03:21:41.708626Z",
+   "observed_at": "2026-08-17T15:58:26.613913Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -166389,8 +166389,8 @@
   "log_loss": 0.693,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 52.0,
-   "a": 48.0
+   "a": 48.0,
+   "h": 52.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -168222,7 +168222,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-17T03:21:41.708650Z",
+   "observed_at": "2026-08-17T15:58:26.613928Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -168232,8 +168232,8 @@
   "log_loss": 0.673,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 47.0,
-   "a": 53.0
+   "a": 53.0,
+   "h": 47.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -170063,7 +170063,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-17T03:21:41.708676Z",
+   "observed_at": "2026-08-17T15:58:26.613944Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -170074,8 +170074,8 @@
   "value_hit": true,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 49.0,
-   "a": 51.0
+   "a": 51.0,
+   "h": 49.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -171911,7 +171911,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-17T03:21:41.708701Z",
+   "observed_at": "2026-08-17T15:58:26.613960Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -171921,8 +171921,8 @@
   "log_loss": 0.511,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 60.0,
-   "a": 40.0
+   "a": 40.0,
+   "h": 60.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -173775,7 +173775,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-17T03:21:41.708726Z",
+   "observed_at": "2026-08-17T15:58:26.613975Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -173786,8 +173786,8 @@
   "value_hit": true,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 49.0,
-   "a": 51.0
+   "a": 51.0,
+   "h": 49.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -175684,7 +175684,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-17T03:21:41.708752Z",
+   "observed_at": "2026-08-17T15:58:26.613991Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -175694,8 +175694,8 @@
   "log_loss": 0.755,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 55.0,
-   "a": 45.0
+   "a": 45.0,
+   "h": 55.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -177785,7 +177785,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-17T03:21:41.708794Z",
+   "observed_at": "2026-08-17T15:58:26.614007Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -177795,8 +177795,8 @@
   "log_loss": 0.755,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 45.0,
-   "a": 55.0
+   "a": 55.0,
+   "h": 45.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -179916,7 +179916,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-17T03:21:41.708825Z",
+   "observed_at": "2026-08-17T15:58:26.614022Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -179926,8 +179926,8 @@
   "log_loss": 0.673,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 48.0,
-   "a": 52.0
+   "a": 52.0,
+   "h": 48.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -181796,7 +181796,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-17T03:21:41.708851Z",
+   "observed_at": "2026-08-17T15:58:26.614037Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -181806,8 +181806,8 @@
   "log_loss": 0.968,
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 63.0,
-   "a": 37.0
+   "a": 37.0,
+   "h": 63.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -183709,7 +183709,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-17T03:21:41.708876Z",
+   "observed_at": "2026-08-17T15:58:26.614053Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -183723,8 +183723,8 @@
   "result_corrections": [],
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 53.0,
-   "a": 47.0
+   "a": 47.0,
+   "h": 53.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -183738,5 +183738,2160 @@
     "2026-08-16T21:38:09.147594Z"
    ]
   }
+ },
+ "bdl-mlb-8202183": {
+  "schema_ver": 2,
+  "fixture_id": "bdl-mlb-8202183",
+  "competition": "MLB",
+  "home": "Cincinnati Reds",
+  "away": "St. Louis Cardinals",
+  "stage": "Regular",
+  "kickoff": "2026-08-17T17:40:00Z",
+  "pick": "a",
+  "pick_name": "St. Louis Cardinals",
+  "confidence": 58,
+  "edge": 5,
+  "base_pick": "a",
+  "base_pick_name": "St. Louis Cardinals",
+  "probs": {
+   "h": 42,
+   "d": 0,
+   "a": 58
+  },
+  "advancement_probs": null,
+  "regulation_probs": {
+   "h": 42,
+   "d": 0,
+   "a": 58
+  },
+  "regulation_pick": "a",
+  "market_comparison_pick": "a",
+  "market_comparison_basis": "regulation_1x2",
+  "outcome_basis": "regulation",
+  "market_basis": "regulation_1x2",
+  "market_pick": "a",
+  "market_pct": 53,
+  "pick_mkt": 53,
+  "value_side": null,
+  "value_edge": null,
+  "value_mkt": null,
+  "value_name": null,
+  "upset_candidate": "h",
+  "upset_name": "Cincinnati Reds",
+  "upset_score": 50,
+  "upset_candidate_pct": 42,
+  "upset_triggered": false,
+  "upset_temperature": 1.08,
+  "upset_reason": "favorite profile is cleaner",
+  "factor_snapshot": {
+   "record": -0.23,
+   "market_power": 0.0,
+   "form": -0.51,
+   "rest": 0.0,
+   "srs": -0.74,
+   "margin": -0.6,
+   "adv": 0.25,
+   "class": 0.0,
+   "elo": -0.4,
+   "rank": 0.0,
+   "h2h": -0.2
+  },
+  "market_snapshot": {
+   "h": 47,
+   "d": 0,
+   "a": 53
+  },
+  "market_snapshot_at": "2026-08-17T15:58:08.195636Z",
+  "market_snapshot_recorded_at": "2026-08-17T15:58:26.610132Z",
+  "market_snapshot_receipt": {
+   "source": "The Odds API consensus",
+   "source_reference": "https://the-odds-api.com/",
+   "observed_at": "2026-08-17T15:58:08.195636Z",
+   "recorded_at": "2026-08-17T15:58:26.610132Z",
+   "snapshot_id": null,
+   "books": 20,
+   "spread": 2
+  },
+  "market_gap": 6.0,
+  "upset_snapshot": {
+   "candidate": "Cincinnati Reds",
+   "class": "pickem",
+   "market_dog_pct": 47.0,
+   "model_dog_pct": 42.0,
+   "upset_edge": -5.0,
+   "independent_model_dog_pct": 33.0,
+   "independent_model_lead_pct": -34.0,
+   "independent_edge": -14.0,
+   "edge_threshold": 10.0,
+   "supporting_signals": [
+    "adv"
+   ],
+   "personnel_gate": false,
+   "personnel_blockers": [
+    "confirmed starting pitchers missing"
+   ],
+   "radar": false,
+   "standings_candidate": null,
+   "standings_gap_pct": 2.8,
+   "gate": "none",
+   "box_score_edge": 0.0
+  },
+  "box_score_available": false,
+  "data_availability": {
+   "market": "available",
+   "box_score": "unavailable",
+   "lineups": "unavailable",
+   "injuries": "unavailable",
+   "weather": "available",
+   "personnel": "available",
+   "venue_context": "available"
+  },
+  "damp_pct": 0,
+  "mkt_pull": -9,
+  "model_ver": "v5-settlement-aware",
+  "model_code_marker": "matchday-predictor-integrity-2026-07",
+  "model_signal_schema": 7,
+  "reproducibility": {
+   "model_version": "v5-settlement-aware",
+   "model_signal_schema": 7,
+   "probability_basis": "regulation",
+   "market_comparison_basis": "regulation_1x2",
+   "market_comparison_pick": "a"
+  },
+  "locked_at": "2026-08-17T15:58:26.610132Z",
+  "lead_time_seconds": 6093.39,
+  "lead_time_hours": 1.692608,
+  "lock_window_hours": 2.0,
+  "status_at_lock": "UPCOMING",
+  "integrity_eligible": true,
+  "integrity_status": "verified",
+  "integrity_reason": "verified_pregame_window",
+  "prediction_snapshot": {
+   "pick": "a",
+   "pick_name": "St. Louis Cardinals",
+   "confidence": 58,
+   "model_version": "v5-settlement-aware",
+   "model_signal_schema": 7,
+   "base_pick": "a",
+   "base_pick_name": "St. Louis Cardinals",
+   "model": {
+    "h": 33,
+    "a": 67,
+    "d": 0
+   },
+   "base_blend": {
+    "h": 41,
+    "d": 0,
+    "a": 59
+   },
+   "blend": {
+    "h": 42,
+    "d": 0,
+    "a": 58
+   },
+   "adjusted": {
+    "h": 42,
+    "d": 0,
+    "a": 58
+   },
+   "is_knockout": false,
+   "advancement": null,
+   "regulation_pick": "a",
+   "market_comparison_pick": "a",
+   "market_comparison_basis": "regulation_1x2",
+   "regulation_pick_name": "St. Louis Cardinals",
+   "regulation_confidence": 58,
+   "regulation_probs": {
+    "h": 42,
+    "d": 0,
+    "a": 58
+   },
+   "edge": 5,
+   "note": "model agrees with the market",
+   "why": {
+    "record": -0.23,
+    "market_power": 0.0,
+    "form": -0.51,
+    "rest": 0.0,
+    "srs": -0.74,
+    "margin": -0.6,
+    "adv": 0.25,
+    "class": 0.0,
+    "elo": -0.4,
+    "rank": 0.0,
+    "h2h": -0.2
+   },
+   "damp_pct": 0,
+   "mkt_pull": -9,
+   "market_weight": 0.6,
+   "upset": {
+    "candidate": "h",
+    "candidate_name": "Cincinnati Reds",
+    "favorite": "a",
+    "favorite_name": "St. Louis Cardinals",
+    "score": 50,
+    "upset_class": "pickem",
+    "market_dog_pct": 47.0,
+    "model_dog_pct": 42.0,
+    "upset_edge": -5.0,
+    "radar": false,
+    "standings_candidate": null,
+    "standings_gap_pct": 2.8,
+    "standings_sample_ok": true,
+    "temperature": 1.08,
+    "variance_pct": 0,
+    "low_goal_pct": 42,
+    "draw_pct": 0,
+    "favorite_pct": 58,
+    "candidate_pct": 42,
+    "margin_pct": 16,
+    "learn_bias_pct": 0.0,
+    "market_gap_pct": 6.0,
+    "market_gate": false,
+    "market_quality_gate": true,
+    "independent_model_dog_pct": 33.0,
+    "independent_model_lead_pct": -34.0,
+    "independent_edge": -14.0,
+    "edge_threshold": 10.0,
+    "independent_pick_gate": false,
+    "playability_gate": false,
+    "evidence_gate": false,
+    "supporting_signals": [
+     "adv"
+    ],
+    "personnel_gate": false,
+    "personnel_blockers": [
+     "confirmed starting pitchers missing"
+    ],
+    "box_score_edge": 0.0,
+    "strong_box_signal": false,
+    "blocked": false,
+    "triggered": false,
+    "reason": "favorite profile is cleaner"
+   },
+   "data_quality": {
+    "level": "established",
+    "games": {
+     "home": 123,
+     "away": 124
+    },
+    "signals": [
+     "record",
+     "margin",
+     "form",
+     "srs",
+     "elo",
+     "market"
+    ],
+    "market_available": true,
+    "market_books": 20,
+    "market_spread": 2,
+    "market_weight": 0.6,
+    "note": "Current-season sample and opponent-adjusted results are available."
+   },
+   "predicted_margin": {
+    "value": -0.4,
+    "unit": "runs",
+    "favored": "a",
+    "label": "St. Louis Cardinals by 0.4"
+   },
+   "class_meta": {
+    "label": "Personnel edge",
+    "source": null,
+    "available": false,
+    "coverage": "unavailable",
+    "home_available": false,
+    "away_available": false,
+    "note": "Market-listed starter/hitter candidates and schedule-derived bullpen rest are collected at zero weight; confirmed batting orders, injuries, and individual reliever availability remain unavailable.",
+    "edge_available": false,
+    "coverage_label": null
+   },
+   "publication_state": "locked",
+   "lock_readiness": {
+    "schema_ver": 1,
+    "sport": "baseball",
+    "competition": "MLB",
+    "phase": "lock_window",
+    "lock_window_hours": 2.0,
+    "lead_time_hours": 1.7,
+    "inputs": {
+     "market": "confirmed",
+     "injuries": "missing",
+     "starting_pitchers": "missing",
+     "lineups": "missing",
+     "bullpen": "available",
+     "weather": "confirmed",
+     "venue": "confirmed"
+    },
+    "missing_critical": [
+     "starting_pitchers",
+     "lineups"
+    ],
+    "coverage_pct": 57,
+    "confirmed_pct": 43,
+    "provenance": [
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-12T20:17:02.370335Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-12T21:06:31.937609Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-12T23:04:17.627216Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-13T02:58:29.592539Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-13T03:01:33.130419Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-13T05:05:51.129538Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-13T06:49:02.111931Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-13T09:07:20.689554Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-13T10:26:35.657105Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-13T12:03:52.410608Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-13T13:59:30.869582Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-13T15:18:47.014574Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-13T17:17:40.155394Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-13T19:33:33.786665Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-13T21:12:32.044307Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-13T23:06:26.238027Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-14T02:55:59.409438Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-14T02:58:37.170158Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-14T05:06:13.647450Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-14T06:48:53.643508Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-14T08:51:30.994334Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-14T10:27:36.257106Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-14T11:59:41.888036Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-14T13:58:47.915341Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-14T15:11:17.071636Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-14T17:15:13.380524Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-14T19:28:20.610072Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-14T20:49:19.719846Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-14T21:43:24.566114Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-14T23:50:25.519445Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-15T01:53:09.957787Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-15T03:11:09.122797Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-15T04:51:51.190710Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-15T07:03:26.382234Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-15T08:49:53.149783Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-15T10:43:39.668060Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-15T13:06:21.578631Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-15T14:43:29.154531Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-15T15:40:40.648863Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-15T17:39:35.365686Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-15T18:53:02.257598Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-15T20:42:43.565229Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-15T21:38:53.871471Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-15T23:41:11.785918Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-16T02:17:27.762988Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-16T04:03:56.784405Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-16T05:46:45.820772Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-16T07:12:04.223206Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-16T08:52:16.110481Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-16T10:43:28.850940Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-16T13:17:38.163451Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-16T14:47:17.135958Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-16T15:40:13.170121Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-16T16:46:39.516512Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-16T18:58:09.716092Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-16T19:00:47.799708Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-16T20:41:50.374093Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-16T21:38:09.398330Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "market_and_inferred_personnel",
+      "source": "SportsGameOdds",
+      "source_reference": "https://sportsgameodds.com/",
+      "fetched_at": "2026-08-16T23:44:03.992460Z",
+      "provider_event_id": "gaLu8AKNUUPMygL1ABqh",
+      "espn_excluded": true,
+      "personnel_semantics": "player-market inference; not official lineup/injury data"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-16T23:44:04.192320Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-16T23:46:40.888918Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-17T02:02:25.820822Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-17T03:21:20.698467Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-17T05:12:39.782268Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-17T07:19:58.823577Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-17T09:04:52.112324Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-17T11:03:03.879040Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-17T13:09:50.293738Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-17T14:50:33.192057Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-17T15:58:08.397956Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     }
+    ],
+    "confidence_guard": {
+     "high_confidence_label_allowed": false,
+     "reason": "critical pregame inputs missing"
+    },
+    "production_weight": 0,
+    "research_mode": "prospective_shadow"
+   },
+   "neutral_venue_probs": {
+    "h": 41,
+    "d": 0,
+    "a": 59
+   },
+   "totals": {
+    "expected": 8.82,
+    "basis": "season_rate"
+   },
+   "data_availability": {
+    "market": "available",
+    "box_score": "unavailable",
+    "lineups": "unavailable",
+    "injuries": "unavailable",
+    "weather": "available",
+    "personnel": "available",
+    "venue_context": "available"
+   }
+  },
+  "input_snapshot": {
+   "competition": "MLB",
+   "competition_config": {
+    "label": "MLB",
+    "sport": "baseball",
+    "fd": null,
+    "odds": "baseball_mlb",
+    "outright": "baseball_mlb_world_series_winner",
+    "tournament": false,
+    "source": "balldontlie",
+    "has_draws": false
+   },
+   "match": {
+    "id": "bdl-mlb-8202183",
+    "stage": "Regular",
+    "kickoff": "2026-08-17T17:40:00Z",
+    "status": "UPCOMING",
+    "venue": "Great American Ball Park",
+    "home": {
+     "name": "Cincinnati Reds",
+     "code": "CIN",
+     "pts": 177,
+     "gd": -86,
+     "form": "L W W L L",
+     "pos": 5,
+     "group": "National League Central",
+     "gf": 502,
+     "ga": 588,
+     "pld": 123,
+     "w": 59,
+     "d": 0,
+     "l": 64,
+     "srs": -0.659,
+     "srs_games": 123,
+     "rest_days": 1,
+     "rating": 4.63,
+     "form_home": "W W W L L",
+     "form_away": "L L W L W"
+    },
+    "away": {
+     "name": "St. Louis Cardinals",
+     "code": "STL",
+     "pts": 189,
+     "gd": 7,
+     "form": "W W L W W",
+     "pos": 3,
+     "group": "National League Central",
+     "gf": 548,
+     "ga": 541,
+     "pld": 124,
+     "w": 63,
+     "d": 0,
+     "l": 61,
+     "srs": 0.115,
+     "srs_games": 124,
+     "rest_days": 1,
+     "rating": 5.03,
+     "form_home": "L W L W W",
+     "form_away": "L W L W W"
+    },
+    "markets": {
+     "1x2": {
+      "home_pct": 47,
+      "draw_pct": 0,
+      "away_pct": 53,
+      "books": 20,
+      "source": "The Odds API consensus",
+      "source_reference": "https://the-odds-api.com/",
+      "observed_at": "2026-08-17T15:58:08.195636Z",
+      "spread": 2,
+      "spread_lo": 46,
+      "spread_hi": 48,
+      "confidence": "tight",
+      "open": {
+       "h": 49,
+       "d": 0,
+       "a": 51
+      },
+      "move": {
+       "h": -2,
+       "d": 0,
+       "a": 2
+      }
+     }
+    },
+    "weather": {
+     "temp_c": 28,
+     "wind_kph": 11,
+     "rain_pct": 11,
+     "source": "Open-Meteo",
+     "source_url": "https://open-meteo.com/"
+    },
+    "injuries": {
+     "home": [],
+     "away": []
+    },
+    "lineups": null,
+    "h2h": [],
+    "stats": null,
+    "stats_extra": null,
+    "data_source": "BALLDONTLIE",
+    "advanced_metrics": null,
+    "advanced_metrics_meta": null,
+    "nfl_challenger_shadow": null,
+    "mlb_challenger_shadow": {
+     "schema_version": 1,
+     "model_version": "retrosheet-mlb-challenger-0.1.0",
+     "mode": "prospective_shadow",
+     "production_weight": 0,
+     "home_win_probability": 0.500848,
+     "away_win_probability": 0.499152,
+     "features": {
+      "pythagorean_diff": -0.077724,
+      "run_diff_per_game_diff": -0.755639
+     },
+     "top_contributions": [
+      {
+       "feature": "pythagorean_diff",
+       "contribution": -0.0685,
+       "direction": "away"
+      },
+      {
+       "feature": "run_diff_per_game_diff",
+       "contribution": -0.06681,
+       "direction": "away"
+      }
+     ],
+     "live_feature_source": "licensed BALLDONTLIE season team totals through prior completed games",
+     "historical_training_source": "Retrosheet event files and game logs",
+     "retrosheet_notice": "The information used here was obtained free of charge from and is copyrighted by Retrosheet. Interested parties may contact Retrosheet at \"www.retrosheet.org\".",
+     "trained_through": "2025-09-28",
+     "home_games": 123,
+     "away_games": 124,
+     "historical_validation": {
+      "checks": {
+       "brier_not_worse_than_elo": true,
+       "log_loss_better_than_elo": true,
+       "minimum_out_of_sample_games": true,
+       "minimum_test_seasons": true,
+       "paired_interval_below_zero": true
+      },
+      "decision": "eligible_for_prospective_shadow",
+      "elo": {
+       "accuracy": 0.564356,
+       "brier": 0.246335,
+       "log_loss": 0.686457,
+       "n": 9090
+      },
+      "features": [
+       "pythagorean_diff",
+       "run_diff_per_game_diff"
+      ],
+      "model": {
+       "accuracy": 0.560176,
+       "brier": 0.244584,
+       "log_loss": 0.682207,
+       "n": 9090
+      },
+      "paired_vs_elo": {
+       "blocks": 683,
+       "ci95": [
+        -0.007292,
+        -0.001244
+       ],
+       "mean_log_loss_delta": -0.00425,
+       "method": "deterministic game-date block bootstrap",
+       "n": 9090
+      }
+     },
+     "promotion_status": "eligible_for_prospective_shadow_not_production",
+     "missing_personnel": [
+      "probable_or_confirmed_starter",
+      "confirmed_lineup",
+      "bullpen_availability"
+     ]
+    },
+    "personnel": {
+     "bullpen": {
+      "home": {
+       "status": "elevated",
+       "games_last_72h": 3,
+       "hours_since_last_game": 24.0,
+       "basis": "schedule-derived rest pressure; reliever usage unavailable",
+       "confirmed": false,
+       "observed_at": "2026-08-17T15:58:08.397956Z"
+      },
+      "away": {
+       "status": "elevated",
+       "games_last_72h": 3,
+       "hours_since_last_game": 22.7,
+       "basis": "schedule-derived rest pressure; reliever usage unavailable",
+       "confirmed": false,
+       "observed_at": "2026-08-17T15:58:08.397956Z"
+      }
+     },
+     "bullpen_confirmed": false
+    },
+    "personnel_shadow": {
+     "schema_ver": 1,
+     "sport": "baseball",
+     "production_weight": 0,
+     "mode": "prospective_shadow",
+     "features": {
+      "injury_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineup_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineups_confirmed": false,
+      "rest_days": {
+       "home": 1,
+       "away": 1
+      },
+      "weather": {
+       "temp_c": 28,
+       "wind_kph": 11,
+       "rain_pct": 11,
+       "source": "Open-Meteo",
+       "source_url": "https://open-meteo.com/"
+      },
+      "venue_context": {
+       "sample_games": 63,
+       "league_total_avg": 8.955,
+       "venue_total_avg": 8.665,
+       "factor": 0.9677,
+       "label": "park factor",
+       "production_weight": 0,
+       "method": "prior finals, 10-game shrinkage"
+      },
+      "bullpen": {
+       "home": {
+        "status": "elevated",
+        "games_last_72h": 3,
+        "hours_since_last_game": 24.0,
+        "basis": "schedule-derived rest pressure; reliever usage unavailable",
+        "confirmed": false,
+        "observed_at": "2026-08-17T15:58:08.397956Z"
+       },
+       "away": {
+        "status": "elevated",
+        "games_last_72h": 3,
+        "hours_since_last_game": 22.7,
+        "basis": "schedule-derived rest pressure; reliever usage unavailable",
+        "confirmed": false,
+        "observed_at": "2026-08-17T15:58:08.397956Z"
+       }
+      }
+     }
+    },
+    "pregame_context": {
+     "schema_ver": 1,
+     "sport": "baseball",
+     "competition": "MLB",
+     "phase": "lock_window",
+     "lock_window_hours": 2.0,
+     "lead_time_hours": 1.7,
+     "inputs": {
+      "market": "confirmed",
+      "injuries": "missing",
+      "starting_pitchers": "missing",
+      "lineups": "missing",
+      "bullpen": "available",
+      "weather": "confirmed",
+      "venue": "confirmed"
+     },
+     "missing_critical": [
+      "starting_pitchers",
+      "lineups"
+     ],
+     "coverage_pct": 57,
+     "confirmed_pct": 43,
+     "provenance": [
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-12T20:17:02.370335Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-12T21:06:31.937609Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-12T23:04:17.627216Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-13T02:58:29.592539Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-13T03:01:33.130419Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-13T05:05:51.129538Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-13T06:49:02.111931Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-13T09:07:20.689554Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-13T10:26:35.657105Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-13T12:03:52.410608Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-13T13:59:30.869582Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-13T15:18:47.014574Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-13T17:17:40.155394Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-13T19:33:33.786665Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-13T21:12:32.044307Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-13T23:06:26.238027Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-14T02:55:59.409438Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-14T02:58:37.170158Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-14T05:06:13.647450Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-14T06:48:53.643508Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-14T08:51:30.994334Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-14T10:27:36.257106Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-14T11:59:41.888036Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-14T13:58:47.915341Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-14T15:11:17.071636Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-14T17:15:13.380524Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-14T19:28:20.610072Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-14T20:49:19.719846Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-14T21:43:24.566114Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-14T23:50:25.519445Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-15T01:53:09.957787Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-15T03:11:09.122797Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-15T04:51:51.190710Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-15T07:03:26.382234Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-15T08:49:53.149783Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-15T10:43:39.668060Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-15T13:06:21.578631Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-15T14:43:29.154531Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-15T15:40:40.648863Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-15T17:39:35.365686Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-15T18:53:02.257598Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-15T20:42:43.565229Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-15T21:38:53.871471Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-15T23:41:11.785918Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-16T02:17:27.762988Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-16T04:03:56.784405Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-16T05:46:45.820772Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-16T07:12:04.223206Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-16T08:52:16.110481Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-16T10:43:28.850940Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-16T13:17:38.163451Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-16T14:47:17.135958Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-16T15:40:13.170121Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-16T16:46:39.516512Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-16T18:58:09.716092Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-16T19:00:47.799708Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-16T20:41:50.374093Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-16T21:38:09.398330Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "market_and_inferred_personnel",
+       "source": "SportsGameOdds",
+       "source_reference": "https://sportsgameodds.com/",
+       "fetched_at": "2026-08-16T23:44:03.992460Z",
+       "provider_event_id": "gaLu8AKNUUPMygL1ABqh",
+       "espn_excluded": true,
+       "personnel_semantics": "player-market inference; not official lineup/injury data"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-16T23:44:04.192320Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-16T23:46:40.888918Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-17T02:02:25.820822Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-17T03:21:20.698467Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-17T05:12:39.782268Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-17T07:19:58.823577Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-17T09:04:52.112324Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-17T11:03:03.879040Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-17T13:09:50.293738Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-17T14:50:33.192057Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-17T15:58:08.397956Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      }
+     ],
+     "confidence_guard": {
+      "high_confidence_label_allowed": false,
+      "reason": "critical pregame inputs missing"
+     },
+     "production_weight": 0,
+     "research_mode": "prospective_shadow"
+    },
+    "pregame_provenance": [
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-12T20:17:02.370335Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-12T21:06:31.937609Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-12T23:04:17.627216Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-13T02:58:29.592539Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-13T03:01:33.130419Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-13T05:05:51.129538Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-13T06:49:02.111931Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-13T09:07:20.689554Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-13T10:26:35.657105Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-13T12:03:52.410608Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-13T13:59:30.869582Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-13T15:18:47.014574Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-13T17:17:40.155394Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-13T19:33:33.786665Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-13T21:12:32.044307Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-13T23:06:26.238027Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-14T02:55:59.409438Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-14T02:58:37.170158Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-14T05:06:13.647450Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-14T06:48:53.643508Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-14T08:51:30.994334Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-14T10:27:36.257106Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-14T11:59:41.888036Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-14T13:58:47.915341Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-14T15:11:17.071636Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-14T17:15:13.380524Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-14T19:28:20.610072Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-14T20:49:19.719846Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-14T21:43:24.566114Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-14T23:50:25.519445Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-15T01:53:09.957787Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-15T03:11:09.122797Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-15T04:51:51.190710Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-15T07:03:26.382234Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-15T08:49:53.149783Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-15T10:43:39.668060Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-15T13:06:21.578631Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-15T14:43:29.154531Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-15T15:40:40.648863Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-15T17:39:35.365686Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-15T18:53:02.257598Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-15T20:42:43.565229Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-15T21:38:53.871471Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-15T23:41:11.785918Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-16T02:17:27.762988Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-16T04:03:56.784405Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-16T05:46:45.820772Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-16T07:12:04.223206Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-16T08:52:16.110481Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-16T10:43:28.850940Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-16T13:17:38.163451Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-16T14:47:17.135958Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-16T15:40:13.170121Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-16T16:46:39.516512Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-16T18:58:09.716092Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-16T19:00:47.799708Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-16T20:41:50.374093Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-16T21:38:09.398330Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "market_and_inferred_personnel",
+      "source": "SportsGameOdds",
+      "source_reference": "https://sportsgameodds.com/",
+      "fetched_at": "2026-08-16T23:44:03.992460Z",
+      "provider_event_id": "gaLu8AKNUUPMygL1ABqh",
+      "espn_excluded": true,
+      "personnel_semantics": "player-market inference; not official lineup/injury data"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-16T23:44:04.192320Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-16T23:46:40.888918Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-17T02:02:25.820822Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-17T03:21:20.698467Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-17T05:12:39.782268Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-17T07:19:58.823577Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-17T09:04:52.112324Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-17T11:03:03.879040Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-17T13:09:50.293738Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-17T14:50:33.192057Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-17T15:58:08.397956Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     }
+    ],
+    "venue_context": {
+     "sample_games": 63,
+     "league_total_avg": 8.955,
+     "venue_total_avg": 8.665,
+     "factor": 0.9677,
+     "label": "park factor",
+     "production_weight": 0,
+     "method": "prior finals, 10-game shrinkage"
+    },
+    "model_signal_schema": null
+   }
+  },
+  "mfti_shadow": {
+   "spec_version": "MFTI-0.1.1-shadow",
+   "mode": "shadow_research_only",
+   "captured_at": "2026-08-17T15:58:26.610132Z",
+   "status": "incomplete",
+   "score": null,
+   "historical_evidence": {
+    "available": false,
+    "score": null,
+    "reason": "frozen_normalization_and_rolling_recalibration_not_fitted",
+    "diagnostics": {
+     "eligible_prior_forecasts": 254,
+     "mean_brier": 0.525076,
+     "mean_log_loss": 0.722178,
+     "brier_skill_vs_uniform": 0.212387,
+     "log_skill_vs_uniform": 0.342645
+    }
+   },
+   "event_readiness": {
+    "available": false,
+    "score": null,
+    "missing_components": [
+     "scenario_stability",
+     "availability",
+     "freshness",
+     "model_stability"
+    ]
+   },
+   "components": {
+    "scenario_stability": {
+     "available": false,
+     "score": null,
+     "reason": "scenario_forecasts_not_captured"
+    },
+    "availability": {
+     "available": false,
+     "score": null,
+     "reason": "availability_probabilities_not_captured"
+    },
+    "freshness": {
+     "available": false,
+     "score": null,
+     "reason": "input_freshness_not_captured"
+    },
+    "model_stability": {
+     "available": false,
+     "score": null,
+     "reason": "independent_model_outputs_not_captured"
+    }
+   },
+   "missing_components": [
+    "historical_evidence",
+    "scenario_stability",
+    "availability",
+    "freshness",
+    "model_stability"
+   ],
+   "affects_prediction": false,
+   "user_visible": false
+  },
+  "result": null,
+  "model_result": null,
+  "market_result": null
  }
 }
