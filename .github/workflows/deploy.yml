@@ -248,7 +248,18 @@ jobs:
         run: |
           git config user.name "matchday-bot"
           git config user.email "actions@github.com"
-          git add -- 'ratings*.json' ':!ratings*.backup.json' ':!ratings*.legacy.json' ':!ratings*.raced-preserved.json' 'picks_log*.json' 'forecast_ledger_*.jsonl' 'mlb_shadow_ledger.jsonl'
+          git add -- 'ratings*.json' ':!ratings*.backup.json' ':!ratings*.legacy.json' ':!ratings*.raced-preserved.json' 'picks_log*.json'
+          # `git add` fails the ENTIRE step on a pathspec matching nothing
+          # (verified: exit 128, "did not match any files"), and these ledgers
+          # legitimately may not exist -- mlb_shadow_ledger.jsonl before the
+          # first shadow lock, forecast_ledger_*.jsonl on a cold checkout.
+          # Naming them as literal pathspecs would therefore fail the build
+          # job, and with it the hourly site deploy, on exactly the runs where
+          # nothing was wrong. Collect only the ledgers actually present.
+          ledgers=$(ls forecast_ledger_*.jsonl mlb_shadow_ledger.jsonl 2>/dev/null || true)
+          if [ -n "$ledgers" ]; then
+            git add -- $ledgers
+          fi
           if ! git diff --cached --quiet; then
             git commit -m "Update ratings and picks ledger [skip ci]"
             persisted=false
