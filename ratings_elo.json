@@ -7922,28 +7922,28 @@
    "n": 3932
   },
   "baseball:philadelphia phillies": {
-   "r": 1527.142938695349,
-   "n": 3948
+   "r": 1536.566970635249,
+   "n": 3949
   },
   "baseball:new york mets": {
-   "r": 1525.0659355177304,
-   "n": 3905
+   "r": 1536.9157303708494,
+   "n": 3906
   },
   "baseball:pittsburgh pirates": {
    "r": 1483.7333824550803,
    "n": 3871
   },
   "baseball:cincinnati reds": {
-   "r": 1464.5969691669295,
-   "n": 3872
+   "r": 1476.2764390843358,
+   "n": 3873
   },
   "baseball:chicago cubs": {
    "r": 1567.3910043256492,
    "n": 3926
   },
   "baseball:baltimore orioles": {
-   "r": 1546.0233968509876,
-   "n": 3880
+   "r": 1536.56819115261,
+   "n": 3881
   },
   "baseball:new york yankees": {
    "r": 1528.5766189347373,
@@ -7954,8 +7954,8 @@
    "n": 3899
   },
   "baseball:san diego padres": {
-   "r": 1580.716823942404,
-   "n": 3907
+   "r": 1568.867029089285,
+   "n": 3908
   },
   "baseball:kansas city royals": {
    "r": 1440.39023160168,
@@ -7966,8 +7966,8 @@
    "n": 3908
   },
   "baseball:st louis cardinals": {
-   "r": 1515.314464743462,
-   "n": 3974
+   "r": 1503.6349948260556,
+   "n": 3975
   },
   "baseball:colorado rockies": {
    "r": 1452.5903988532164,
@@ -8006,12 +8006,12 @@
    "n": 3894
   },
   "baseball:miami marlins": {
-   "r": 1511.3826752481907,
-   "n": 3888
+   "r": 1501.9586433082907,
+   "n": 3889
   },
   "baseball:tampa bay rays": {
-   "r": 1560.838037763087,
-   "n": 3935
+   "r": 1570.2932434614645,
+   "n": 3936
   },
   "baseball:detroit tigers": {
    "r": 1502.6440572899567,
@@ -286163,6 +286163,10 @@
   "MLB:bdl-mlb-5059645": true,
   "MLB:bdl-mlb-5059646": true,
   "MLB:bdl-mlb-8202183": true,
-  "LALIGA:564635": true
+  "LALIGA:564635": true,
+  "MLB:bdl-mlb-5059647": true,
+  "MLB:bdl-mlb-5059648": true,
+  "MLB:bdl-mlb-5059649": true,
+  "MLB:bdl-mlb-5059652": true
  }
 }
