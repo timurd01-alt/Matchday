@@ -58369,23 +58369,6 @@
   "upset_hit": true,
   "brier3": 0.562,
   "log_loss": 0.755,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 56.0,
-   "a": 44.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "fd1fb15963db2fd0a7b7a7a78faba9befc333ecea3f7e9fbee88ae3b088e01d4"
-   ],
-   "observed_at": [
-    "2026-08-07T21:58:23.040439Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false
  },
@@ -58988,23 +58971,6 @@
   "upset_hit": true,
   "brier3": 0.769,
   "log_loss": 0.968,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 59.0,
-   "a": 41.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "fd1fb15963db2fd0a7b7a7a78faba9befc333ecea3f7e9fbee88ae3b088e01d4"
-   ],
-   "observed_at": [
-    "2026-08-07T21:58:23.040439Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false
  },
@@ -59607,23 +59573,6 @@
   "upset_hit": true,
   "brier3": 0.583,
   "log_loss": 0.777,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 44.0,
-   "a": 56.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "fd1fb15963db2fd0a7b7a7a78faba9befc333ecea3f7e9fbee88ae3b088e01d4"
-   ],
-   "observed_at": [
-    "2026-08-07T21:58:23.040439Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false
  },
@@ -60226,23 +60175,6 @@
   "upset_hit": true,
   "brier3": 0.583,
   "log_loss": 0.777,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 45.0,
-   "a": 55.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "fd1fb15963db2fd0a7b7a7a78faba9befc333ecea3f7e9fbee88ae3b088e01d4"
-   ],
-   "observed_at": [
-    "2026-08-07T21:58:23.040439Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false
  },
@@ -60844,23 +60776,6 @@
   "brier3": 0.845,
   "log_loss": 1.05,
   "value_hit": false,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 59.0,
-   "a": 41.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "fd1fb15963db2fd0a7b7a7a78faba9befc333ecea3f7e9fbee88ae3b088e01d4"
-   ],
-   "observed_at": [
-    "2026-08-07T21:58:23.040439Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false
  },
@@ -61465,23 +61380,6 @@
   "brier3": 0.168,
   "log_loss": 0.342,
   "value_hit": true,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 65.0,
-   "a": 35.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "fd1fb15963db2fd0a7b7a7a78faba9befc333ecea3f7e9fbee88ae3b088e01d4"
-   ],
-   "observed_at": [
-    "2026-08-07T21:58:23.040439Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true
  },
@@ -62082,23 +61980,6 @@
   "brier3": 0.605,
   "log_loss": 0.799,
   "value_hit": false,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 46.0,
-   "a": 54.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "fd1fb15963db2fd0a7b7a7a78faba9befc333ecea3f7e9fbee88ae3b088e01d4"
-   ],
-   "observed_at": [
-    "2026-08-07T21:58:23.040439Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false
  },
@@ -62712,23 +62593,6 @@
   "brier3": 0.845,
   "log_loss": 1.05,
   "value_hit": false,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 57.0,
-   "a": 43.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "fd1fb15963db2fd0a7b7a7a78faba9befc333ecea3f7e9fbee88ae3b088e01d4"
-   ],
-   "observed_at": [
-    "2026-08-07T21:58:23.040439Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false
  },
@@ -63340,23 +63204,6 @@
   "brier3": 0.218,
   "log_loss": 0.4,
   "value_hit": true,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 40.0,
-   "a": 60.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "8eea7a3fa14d6dfcc4dd2d53f52b1b74d1459c75dffa738ad2a182fff8c56d04"
-   ],
-   "observed_at": [
-    "2026-08-07T23:55:40.826738Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true
  },
@@ -63968,23 +63815,6 @@
   "upset_hit": false,
   "brier3": 0.442,
   "log_loss": 0.635,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 56.0,
-   "a": 44.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "8eea7a3fa14d6dfcc4dd2d53f52b1b74d1459c75dffa738ad2a182fff8c56d04"
-   ],
-   "observed_at": [
-    "2026-08-07T23:55:40.826738Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true
  },
@@ -64594,23 +64424,6 @@
   "upset_hit": false,
   "brier3": 0.32,
   "log_loss": 0.511,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 59.0,
-   "a": 41.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "8eea7a3fa14d6dfcc4dd2d53f52b1b74d1459c75dffa738ad2a182fff8c56d04"
-   ],
-   "observed_at": [
-    "2026-08-07T23:55:40.826738Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true
  },
@@ -65220,23 +65033,6 @@
   "upset_hit": true,
   "brier3": 0.562,
   "log_loss": 0.755,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 53.0,
-   "a": 47.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "8eea7a3fa14d6dfcc4dd2d53f52b1b74d1459c75dffa738ad2a182fff8c56d04"
-   ],
-   "observed_at": [
-    "2026-08-07T23:55:40.826738Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false
  },
@@ -65848,23 +65644,6 @@
   "upset_hit": true,
   "brier3": 0.744,
   "log_loss": 0.942,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 40.0,
-   "a": 60.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "8eea7a3fa14d6dfcc4dd2d53f52b1b74d1459c75dffa738ad2a182fff8c56d04"
-   ],
-   "observed_at": [
-    "2026-08-07T23:55:40.826738Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false
  },
@@ -66479,23 +66258,6 @@
   "brier3": 0.387,
   "log_loss": 0.58,
   "value_hit": true,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 52.0,
-   "a": 48.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "8eea7a3fa14d6dfcc4dd2d53f52b1b74d1459c75dffa738ad2a182fff8c56d04"
-   ],
-   "observed_at": [
-    "2026-08-07T23:55:40.826738Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true
  },
@@ -67107,23 +66869,6 @@
   "upset_hit": true,
   "brier3": 0.605,
   "log_loss": 0.799,
-  "clv": -14.0,
-  "closing_market_snapshot": {
-   "h": 57.0,
-   "a": 43.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "b27b450d86b8e4f29a397e6e837f0d1737ee472413b58b0fb5738c548b6b6f8f"
-   ],
-   "observed_at": [
-    "2026-08-08T19:01:27.376008Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false
  },
@@ -67734,23 +67479,6 @@
   "brier3": 0.259,
   "log_loss": 0.446,
   "value_hit": true,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 57.0,
-   "a": 43.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "b27b450d86b8e4f29a397e6e837f0d1737ee472413b58b0fb5738c548b6b6f8f"
-   ],
-   "observed_at": [
-    "2026-08-08T19:01:27.376008Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true
  },
@@ -68363,23 +68091,6 @@
   "upset_hit": true,
   "brier3": 1.066,
   "log_loss": 1.309,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 70.0,
-   "a": 30.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "b27b450d86b8e4f29a397e6e837f0d1737ee472413b58b0fb5738c548b6b6f8f"
-   ],
-   "observed_at": [
-    "2026-08-08T19:01:27.376008Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false
  },
@@ -68991,23 +68702,6 @@
   "upset_hit": true,
   "brier3": 0.769,
   "log_loss": 0.968,
-  "clv": 3.0,
-  "closing_market_snapshot": {
-   "h": 64.0,
-   "a": 36.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "68fbeba48be61fcdf4e5dc0d0ffaf97f950445056afed575a3f000c9259df826"
-   ],
-   "observed_at": [
-    "2026-08-08T21:49:32.332731Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false
  },
@@ -69619,23 +69313,6 @@
   "upset_hit": false,
   "brier3": 0.442,
   "log_loss": 0.635,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 55.0,
-   "a": 45.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "68fbeba48be61fcdf4e5dc0d0ffaf97f950445056afed575a3f000c9259df826"
-   ],
-   "observed_at": [
-    "2026-08-08T21:49:32.332731Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true
  },
@@ -70247,23 +69924,6 @@
   "upset_hit": true,
   "brier3": 0.583,
   "log_loss": 0.777,
-  "clv": -1.0,
-  "closing_market_snapshot": {
-   "h": 45.0,
-   "a": 55.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "68fbeba48be61fcdf4e5dc0d0ffaf97f950445056afed575a3f000c9259df826"
-   ],
-   "observed_at": [
-    "2026-08-08T21:49:32.332731Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false
  },
@@ -70874,23 +70534,6 @@
   "upset_hit": true,
   "brier3": 0.845,
   "log_loss": 1.05,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 40.0,
-   "a": 60.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "68fbeba48be61fcdf4e5dc0d0ffaf97f950445056afed575a3f000c9259df826"
-   ],
-   "observed_at": [
-    "2026-08-08T21:49:32.332731Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false
  },
@@ -71503,23 +71146,6 @@
   "upset_hit": false,
   "brier3": 0.168,
   "log_loss": 0.342,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 67.0,
-   "a": 33.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "68fbeba48be61fcdf4e5dc0d0ffaf97f950445056afed575a3f000c9259df826"
-   ],
-   "observed_at": [
-    "2026-08-08T21:49:32.332731Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true
  },
@@ -72120,23 +71746,6 @@
   "brier3": 0.37,
   "log_loss": 0.562,
   "value_hit": true,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 51.0,
-   "a": 49.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "68fbeba48be61fcdf4e5dc0d0ffaf97f950445056afed575a3f000c9259df826"
-   ],
-   "observed_at": [
-    "2026-08-08T21:49:32.332731Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true
  },
@@ -72748,23 +72357,6 @@
   "upset_hit": false,
   "brier3": 0.442,
   "log_loss": 0.635,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 55.0,
-   "a": 45.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "68fbeba48be61fcdf4e5dc0d0ffaf97f950445056afed575a3f000c9259df826"
-   ],
-   "observed_at": [
-    "2026-08-08T21:49:32.332731Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true
  },
@@ -73374,23 +72966,6 @@
   "upset_hit": true,
   "brier3": 0.72,
   "log_loss": 0.916,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 60.0,
-   "a": 40.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "68fbeba48be61fcdf4e5dc0d0ffaf97f950445056afed575a3f000c9259df826"
-   ],
-   "observed_at": [
-    "2026-08-08T21:49:32.332731Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false
  },
@@ -74002,23 +73577,6 @@
   "brier3": 0.32,
   "log_loss": 0.511,
   "value_hit": true,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 48.0,
-   "a": 52.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "68fbeba48be61fcdf4e5dc0d0ffaf97f950445056afed575a3f000c9259df826"
-   ],
-   "observed_at": [
-    "2026-08-08T21:49:32.332731Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true
  },
@@ -74628,23 +74186,6 @@
   "upset_hit": false,
   "brier3": 0.442,
   "log_loss": 0.635,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 53.0,
-   "a": 47.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "68fbeba48be61fcdf4e5dc0d0ffaf97f950445056afed575a3f000c9259df826"
-   ],
-   "observed_at": [
-    "2026-08-08T21:49:32.332731Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true
  },
@@ -75256,23 +74797,6 @@
   "upset_hit": false,
   "brier3": 0.32,
   "log_loss": 0.511,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 43.0,
-   "a": 57.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "3dac9eb8cb901b77faacf8d514e6aec65b8089232e7425375a842df74da5ca7f"
-   ],
-   "observed_at": [
-    "2026-08-08T23:48:24.919017Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true
  },
@@ -75884,23 +75408,6 @@
   "upset_hit": true,
   "brier3": 0.52,
   "log_loss": 0.713,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 50.0,
-   "a": 50.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "8ca7e04f8dacb057d2aeda558d452022f0f088d046c1a1b97118b3ef24419b66"
-   ],
-   "observed_at": [
-    "2026-08-09T15:49:39.409573Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false
  },
@@ -76513,23 +76020,6 @@
   "upset_hit": true,
   "brier3": 1.037,
   "log_loss": 1.273,
-  "clv": -1.0,
-  "closing_market_snapshot": {
-   "h": 67.0,
-   "a": 33.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "c484edc25b0dc5ac28d1fb7e7391e1075ecb0556a7e07314ae295b5ec87f2e63"
-   ],
-   "observed_at": [
-    "2026-08-09T17:04:20.263930Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false
  },
@@ -77141,23 +76631,6 @@
   "upset_hit": true,
   "brier3": 0.562,
   "log_loss": 0.755,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 57.0,
-   "a": 43.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "c484edc25b0dc5ac28d1fb7e7391e1075ecb0556a7e07314ae295b5ec87f2e63"
-   ],
-   "observed_at": [
-    "2026-08-09T17:04:20.263930Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false
  },
@@ -77769,23 +77242,6 @@
   "upset_hit": true,
   "brier3": 0.562,
   "log_loss": 0.755,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 57.0,
-   "a": 43.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "c484edc25b0dc5ac28d1fb7e7391e1075ecb0556a7e07314ae295b5ec87f2e63"
-   ],
-   "observed_at": [
-    "2026-08-09T17:04:20.263930Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false
  },
@@ -78397,23 +77853,6 @@
   "upset_hit": false,
   "brier3": 0.245,
   "log_loss": 0.431,
-  "clv": 1.0,
-  "closing_market_snapshot": {
-   "h": 68.0,
-   "a": 32.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "c484edc25b0dc5ac28d1fb7e7391e1075ecb0556a7e07314ae295b5ec87f2e63"
-   ],
-   "observed_at": [
-    "2026-08-09T17:04:20.263930Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true
  },
@@ -79024,23 +78463,6 @@
   "brier3": 0.259,
   "log_loss": 0.446,
   "value_hit": true,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 57.0,
-   "a": 43.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "c484edc25b0dc5ac28d1fb7e7391e1075ecb0556a7e07314ae295b5ec87f2e63"
-   ],
-   "observed_at": [
-    "2026-08-09T17:04:20.263930Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true
  },
@@ -79651,23 +79073,6 @@
   "upset_hit": false,
   "brier3": 0.245,
   "log_loss": 0.431,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 40.0,
-   "a": 60.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "c484edc25b0dc5ac28d1fb7e7391e1075ecb0556a7e07314ae295b5ec87f2e63"
-   ],
-   "observed_at": [
-    "2026-08-09T17:04:20.263930Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true
  },
@@ -80268,23 +79673,6 @@
   "brier3": 0.423,
   "log_loss": 0.616,
   "value_hit": true,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 46.0,
-   "a": 54.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "c484edc25b0dc5ac28d1fb7e7391e1075ecb0556a7e07314ae295b5ec87f2e63"
-   ],
-   "observed_at": [
-    "2026-08-09T17:04:20.263930Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true
  },
@@ -80897,23 +80285,6 @@
   "upset_hit": false,
   "brier3": 0.168,
   "log_loss": 0.342,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 70.0,
-   "a": 30.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "c484edc25b0dc5ac28d1fb7e7391e1075ecb0556a7e07314ae295b5ec87f2e63"
-   ],
-   "observed_at": [
-    "2026-08-09T17:04:20.263930Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true
  },
@@ -81523,23 +80894,6 @@
   "upset_hit": false,
   "brier3": 0.304,
   "log_loss": 0.494,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 60.0,
-   "a": 40.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "c484edc25b0dc5ac28d1fb7e7391e1075ecb0556a7e07314ae295b5ec87f2e63"
-   ],
-   "observed_at": [
-    "2026-08-09T17:04:20.263930Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true
  },
@@ -82151,23 +81505,6 @@
   "upset_hit": true,
   "brier3": 0.562,
   "log_loss": 0.755,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 55.0,
-   "a": 45.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "c484edc25b0dc5ac28d1fb7e7391e1075ecb0556a7e07314ae295b5ec87f2e63"
-   ],
-   "observed_at": [
-    "2026-08-09T17:04:20.263930Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false
  },
@@ -82779,23 +82116,6 @@
   "brier3": 0.304,
   "log_loss": 0.494,
   "value_hit": true,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 46.0,
-   "a": 54.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "c78b044ebbe481dd0a7cdf1c5d43a66527108c90570786a15eca48858cd13c0e"
-   ],
-   "observed_at": [
-    "2026-08-09T19:03:49.704589Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true
  },
@@ -83407,23 +82727,6 @@
   "upset_hit": true,
   "brier3": 0.696,
   "log_loss": 0.892,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 44.0,
-   "a": 56.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "c78b044ebbe481dd0a7cdf1c5d43a66527108c90570786a15eca48858cd13c0e"
-   ],
-   "observed_at": [
-    "2026-08-09T19:03:49.704589Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false
  },
@@ -84038,23 +83341,6 @@
   "brier3": 0.37,
   "log_loss": 0.562,
   "value_hit": true,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 50.0,
-   "a": 50.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "c78b044ebbe481dd0a7cdf1c5d43a66527108c90570786a15eca48858cd13c0e"
-   ],
-   "observed_at": [
-    "2026-08-09T19:03:49.704589Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true
  },
@@ -84664,23 +83950,6 @@
   "upset_hit": false,
   "brier3": 0.461,
   "log_loss": 0.654,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 52.0,
-   "a": 48.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "d92fc0fff19261f7b7902fd00c67d594d8483a7c3c45f649f3148b326fb31816"
-   ],
-   "observed_at": [
-    "2026-08-09T23:50:24.573159Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true,
   "brier_advancement": null,
@@ -85299,23 +84568,6 @@
   "brier3": 0.72,
   "log_loss": 0.916,
   "value_hit": false,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 54.0,
-   "a": 46.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "01b81eba06c7a73bf67db20a0c19d6a9236af1abc6a5ba5186a3b371a4000e88"
-   ],
-   "observed_at": [
-    "2026-08-10T23:09:37.473395Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false,
   "brier_advancement": null,
@@ -85932,23 +85184,6 @@
   "upset_hit": false,
   "brier3": 0.442,
   "log_loss": 0.635,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 52.0,
-   "a": 48.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "01b81eba06c7a73bf67db20a0c19d6a9236af1abc6a5ba5186a3b371a4000e88"
-   ],
-   "observed_at": [
-    "2026-08-10T23:09:37.473395Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true,
   "brier_advancement": null,
@@ -86563,23 +85798,6 @@
   "upset_hit": false,
   "brier3": 0.387,
   "log_loss": 0.58,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 40.0,
-   "a": 60.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "01b81eba06c7a73bf67db20a0c19d6a9236af1abc6a5ba5186a3b371a4000e88"
-   ],
-   "observed_at": [
-    "2026-08-10T23:09:37.473395Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true,
   "brier_advancement": null,
@@ -87188,7 +86406,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-18T04:56:35.473646Z",
+   "observed_at": "2026-08-18T21:04:12.036209Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -87196,23 +86414,6 @@
   "upset_hit": false,
   "brier3": 0.353,
   "log_loss": 0.545,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 54.0,
-   "a": 46.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "83eee7e38b76e35fb29abb6b7de2a4b8db6073b989d42196a94ff57d27cc6657"
-   ],
-   "observed_at": [
-    "2026-08-11T21:07:31.575629Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true,
   "brier_advancement": null,
@@ -87821,7 +87022,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-18T04:56:35.473682Z",
+   "observed_at": "2026-08-18T21:04:12.036257Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -87830,23 +87031,6 @@
   "brier3": 0.387,
   "log_loss": 0.58,
   "value_hit": true,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 49.0,
-   "a": 51.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "83eee7e38b76e35fb29abb6b7de2a4b8db6073b989d42196a94ff57d27cc6657"
-   ],
-   "observed_at": [
-    "2026-08-11T21:07:31.575629Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true,
   "brier_advancement": null,
@@ -88456,7 +87640,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-18T04:56:35.473712Z",
+   "observed_at": "2026-08-18T21:04:12.036290Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -88464,23 +87648,6 @@
   "upset_hit": false,
   "brier3": 0.32,
   "log_loss": 0.511,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 38.0,
-   "a": 62.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "83eee7e38b76e35fb29abb6b7de2a4b8db6073b989d42196a94ff57d27cc6657"
-   ],
-   "observed_at": [
-    "2026-08-11T21:07:31.575629Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true,
   "brier_advancement": null,
@@ -89090,7 +88257,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-18T04:56:35.473741Z",
+   "observed_at": "2026-08-18T21:04:12.036321Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -89099,23 +88266,6 @@
   "brier3": 0.289,
   "log_loss": 0.478,
   "value_hit": true,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 53.0,
-   "a": 47.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "46594d8bb27369bd10faa02f50b7425717ade99bd0f6c1de7106745e53c651ee"
-   ],
-   "observed_at": [
-    "2026-08-11T23:04:49.142143Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true,
   "brier_advancement": null,
@@ -89713,7 +88863,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-18T04:56:35.473771Z",
+   "observed_at": "2026-08-18T21:04:12.036350Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -89721,23 +88871,6 @@
   "upset_hit": true,
   "brier3": 0.627,
   "log_loss": 0.821,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 46.0,
-   "a": 54.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "46594d8bb27369bd10faa02f50b7425717ade99bd0f6c1de7106745e53c651ee"
-   ],
-   "observed_at": [
-    "2026-08-11T23:04:49.142143Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false,
   "brier_advancement": null,
@@ -90347,7 +89480,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-18T04:56:35.473798Z",
+   "observed_at": "2026-08-18T21:04:12.036378Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -90355,23 +89488,6 @@
   "upset_hit": false,
   "brier3": 0.32,
   "log_loss": 0.511,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 59.0,
-   "a": 41.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "46594d8bb27369bd10faa02f50b7425717ade99bd0f6c1de7106745e53c651ee"
-   ],
-   "observed_at": [
-    "2026-08-11T23:04:49.142143Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true,
   "brier_advancement": null,
@@ -90977,7 +90093,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-18T04:56:35.473825Z",
+   "observed_at": "2026-08-18T21:04:12.036405Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -90985,23 +90101,6 @@
   "upset_hit": true,
   "brier3": 0.605,
   "log_loss": 0.799,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 52.0,
-   "a": 48.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "46594d8bb27369bd10faa02f50b7425717ade99bd0f6c1de7106745e53c651ee"
-   ],
-   "observed_at": [
-    "2026-08-11T23:04:49.142143Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false,
   "brier_advancement": null,
@@ -91596,7 +90695,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-18T04:56:35.473852Z",
+   "observed_at": "2026-08-18T21:04:12.036432Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -91605,23 +90704,6 @@
   "brier3": 0.845,
   "log_loss": 1.05,
   "value_hit": false,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 56.0,
-   "a": 44.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "46594d8bb27369bd10faa02f50b7425717ade99bd0f6c1de7106745e53c651ee"
-   ],
-   "observed_at": [
-    "2026-08-11T23:04:49.142143Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false,
   "brier_advancement": null,
@@ -92230,7 +91312,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-18T04:56:35.473879Z",
+   "observed_at": "2026-08-18T21:04:12.036458Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -92238,23 +91320,6 @@
   "upset_hit": true,
   "brier3": 0.696,
   "log_loss": 0.892,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 42.0,
-   "a": 58.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "46594d8bb27369bd10faa02f50b7425717ade99bd0f6c1de7106745e53c651ee"
-   ],
-   "observed_at": [
-    "2026-08-11T23:04:49.142143Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false,
   "brier_advancement": null,
@@ -92887,7 +91952,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-18T04:56:35.473911Z",
+   "observed_at": "2026-08-18T21:04:12.036487Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -92895,26 +91960,6 @@
   "upset_hit": false,
   "brier3": 0.423,
   "log_loss": 0.616,
-  "clv": 0.5,
-  "closing_market_snapshot": {
-   "h": 50.5,
-   "a": 49.5
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "SportsGameOdds consensus",
-    "The Odds API consensus"
-   ],
-   "source_count": 2,
-   "event_ids": [
-    "4fb20278045f785a0ba92150602085191fe48f826848e08f388179f44c3e3c09",
-    "9a438d6989f2551239a99b1b79e8af21c7e9193a932e6f56dea25c9ddba79b74"
-   ],
-   "observed_at": [
-    "2026-08-12T17:21:16.281109Z",
-    "2026-08-12T02:47:06.736442Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true,
   "brier_advancement": null,
@@ -93550,7 +92595,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-18T04:56:35.473960Z",
+   "observed_at": "2026-08-18T21:04:12.036513Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -93558,26 +92603,6 @@
   "upset_hit": true,
   "brier3": 0.72,
   "log_loss": 0.916,
-  "clv": -0.5,
-  "closing_market_snapshot": {
-   "h": 40.5,
-   "a": 59.5
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "SportsGameOdds consensus",
-    "The Odds API consensus"
-   ],
-   "source_count": 2,
-   "event_ids": [
-    "4fb20278045f785a0ba92150602085191fe48f826848e08f388179f44c3e3c09",
-    "9a438d6989f2551239a99b1b79e8af21c7e9193a932e6f56dea25c9ddba79b74"
-   ],
-   "observed_at": [
-    "2026-08-12T17:21:16.281109Z",
-    "2026-08-12T02:47:06.736442Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false,
   "brier_advancement": null,
@@ -94202,7 +93227,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-18T04:56:35.473987Z",
+   "observed_at": "2026-08-18T21:04:12.036563Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -94211,23 +93236,6 @@
   "brier3": 0.146,
   "log_loss": 0.315,
   "value_hit": true,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 33.0,
-   "a": 67.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "4fb20278045f785a0ba92150602085191fe48f826848e08f388179f44c3e3c09"
-   ],
-   "observed_at": [
-    "2026-08-12T17:21:16.281109Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true,
   "brier_advancement": null,
@@ -94863,7 +93871,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-18T04:56:35.474013Z",
+   "observed_at": "2026-08-18T21:04:12.036594Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -94872,26 +93880,6 @@
   "brier3": 0.925,
   "log_loss": 1.139,
   "value_hit": false,
-  "clv": -0.5,
-  "closing_market_snapshot": {
-   "h": 61.5,
-   "a": 38.5
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "SportsGameOdds consensus",
-    "The Odds API consensus"
-   ],
-   "source_count": 2,
-   "event_ids": [
-    "53d2ef7418131b4338a30f2a97a45e0424311260321f9f6e4fa89621d330e652",
-    "9a438d6989f2551239a99b1b79e8af21c7e9193a932e6f56dea25c9ddba79b74"
-   ],
-   "observed_at": [
-    "2026-08-12T19:29:02.970379Z",
-    "2026-08-12T02:47:06.736442Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false,
   "brier_advancement": null,
@@ -95527,7 +94515,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-18T04:56:35.474040Z",
+   "observed_at": "2026-08-18T21:04:12.036621Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -95536,23 +94524,6 @@
   "brier3": 0.274,
   "log_loss": 0.462,
   "value_hit": true,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 43.0,
-   "a": 57.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "53d2ef7418131b4338a30f2a97a45e0424311260321f9f6e4fa89621d330e652"
-   ],
-   "observed_at": [
-    "2026-08-12T19:29:02.970379Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true,
   "brier_advancement": null,
@@ -96187,7 +95158,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-18T04:56:35.474065Z",
+   "observed_at": "2026-08-18T21:04:12.036646Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -96195,26 +95166,6 @@
   "upset_hit": true,
   "brier3": 0.562,
   "log_loss": 0.755,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 48.0,
-   "a": 52.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "SportsGameOdds consensus",
-    "The Odds API consensus"
-   ],
-   "source_count": 2,
-   "event_ids": [
-    "53d2ef7418131b4338a30f2a97a45e0424311260321f9f6e4fa89621d330e652",
-    "9a438d6989f2551239a99b1b79e8af21c7e9193a932e6f56dea25c9ddba79b74"
-   ],
-   "observed_at": [
-    "2026-08-12T19:29:02.970379Z",
-    "2026-08-12T02:47:06.736442Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false,
   "brier_advancement": null,
@@ -97130,7 +96081,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-18T04:56:35.474092Z",
+   "observed_at": "2026-08-18T21:04:12.036670Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -97139,26 +96090,6 @@
   "brier3": 0.605,
   "log_loss": 0.799,
   "value_hit": false,
-  "clv": 2.5,
-  "closing_market_snapshot": {
-   "h": 51.5,
-   "a": 48.5
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "SportsGameOdds consensus",
-    "The Odds API consensus"
-   ],
-   "source_count": 2,
-   "event_ids": [
-    "7968f1823865cabef6a70eff9ac2a9dbe0463d7839a2773808dbb62d89c7e56f",
-    "9a438d6989f2551239a99b1b79e8af21c7e9193a932e6f56dea25c9ddba79b74"
-   ],
-   "observed_at": [
-    "2026-08-12T21:06:31.633919Z",
-    "2026-08-12T02:47:06.736442Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false,
   "brier_advancement": null,
@@ -98106,7 +97037,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-18T04:56:35.474118Z",
+   "observed_at": "2026-08-18T21:04:12.036694Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -98115,26 +97046,6 @@
   "brier3": 0.442,
   "log_loss": 0.635,
   "value_hit": true,
-  "clv": 3.0,
-  "closing_market_snapshot": {
-   "h": 49.0,
-   "a": 51.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "SportsGameOdds consensus",
-    "The Odds API consensus"
-   ],
-   "source_count": 2,
-   "event_ids": [
-    "7968f1823865cabef6a70eff9ac2a9dbe0463d7839a2773808dbb62d89c7e56f",
-    "9a438d6989f2551239a99b1b79e8af21c7e9193a932e6f56dea25c9ddba79b74"
-   ],
-   "observed_at": [
-    "2026-08-12T21:06:31.633919Z",
-    "2026-08-12T02:47:06.736442Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true,
   "brier_advancement": null,
@@ -99019,7 +97930,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-18T04:56:35.474144Z",
+   "observed_at": "2026-08-18T21:04:12.036719Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -99027,23 +97938,6 @@
   "upset_hit": false,
   "brier3": 0.387,
   "log_loss": 0.58,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 45.0,
-   "a": 55.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "7968f1823865cabef6a70eff9ac2a9dbe0463d7839a2773808dbb62d89c7e56f"
-   ],
-   "observed_at": [
-    "2026-08-12T21:06:31.633919Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true,
   "brier_advancement": null,
@@ -99860,7 +98754,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-18T04:56:35.474169Z",
+   "observed_at": "2026-08-18T21:04:12.036743Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -99869,23 +98763,6 @@
   "brier3": 0.245,
   "log_loss": 0.431,
   "value_hit": true,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 57.0,
-   "a": 43.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "7968f1823865cabef6a70eff9ac2a9dbe0463d7839a2773808dbb62d89c7e56f"
-   ],
-   "observed_at": [
-    "2026-08-12T21:06:31.633919Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true,
   "brier_advancement": null,
@@ -100787,7 +99664,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-18T04:56:35.474195Z",
+   "observed_at": "2026-08-18T21:04:12.036767Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -100795,23 +99672,6 @@
   "upset_hit": true,
   "brier3": 0.72,
   "log_loss": 0.916,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 40.0,
-   "a": 60.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "587e4f2c904d8d200c15d2f340c3d6eb77781256c945b58667cb64f719c38a25"
-   ],
-   "observed_at": [
-    "2026-08-12T23:04:17.349728Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false,
   "brier_advancement": null,
@@ -101741,7 +100601,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-18T04:56:35.474220Z",
+   "observed_at": "2026-08-18T21:04:12.036790Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -101749,23 +100609,6 @@
   "upset_hit": false,
   "brier3": 0.289,
   "log_loss": 0.478,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 62.0,
-   "a": 38.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "587e4f2c904d8d200c15d2f340c3d6eb77781256c945b58667cb64f719c38a25"
-   ],
-   "observed_at": [
-    "2026-08-12T23:04:17.349728Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true,
   "brier_advancement": null,
@@ -102680,7 +101523,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-18T04:56:35.474246Z",
+   "observed_at": "2026-08-18T21:04:12.036814Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -102689,23 +101532,6 @@
   "brier3": 0.259,
   "log_loss": 0.446,
   "value_hit": true,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 55.0,
-   "a": 45.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "587e4f2c904d8d200c15d2f340c3d6eb77781256c945b58667cb64f719c38a25"
-   ],
-   "observed_at": [
-    "2026-08-12T23:04:17.349728Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true,
   "brier_advancement": null,
@@ -103807,7 +102633,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-18T04:56:35.474274Z",
+   "observed_at": "2026-08-18T21:04:12.036840Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -103816,23 +102642,6 @@
   "brier3": 0.405,
   "log_loss": 0.598,
   "value_hit": true,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 48.0,
-   "a": 52.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "e77bf62287d6adc03974c6e3073fd1ae2a0bbdf557be34e6ffb306a73048c197"
-   ],
-   "observed_at": [
-    "2026-08-13T15:18:46.511907Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true,
   "brier_advancement": null,
@@ -104966,7 +103775,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-18T04:56:35.474300Z",
+   "observed_at": "2026-08-18T21:04:12.036865Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -104975,23 +103784,6 @@
   "brier3": 0.673,
   "log_loss": 0.868,
   "value_hit": false,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 47.0,
-   "a": 53.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "e77bf62287d6adc03974c6e3073fd1ae2a0bbdf557be34e6ffb306a73048c197"
-   ],
-   "observed_at": [
-    "2026-08-13T15:18:46.511907Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false,
   "brier_advancement": null,
@@ -106039,7 +104831,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-18T04:56:35.474327Z",
+   "observed_at": "2026-08-18T21:04:12.036891Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -106048,23 +104840,6 @@
   "brier3": 0.952,
   "log_loss": 1.171,
   "value_hit": false,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 60.0,
-   "a": 40.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "73f0b685aab800d7b386c1596a73aef3f4688ed2b1520737b61e5cb213713174"
-   ],
-   "observed_at": [
-    "2026-08-13T17:17:39.920018Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false,
   "brier_advancement": null,
@@ -107176,7 +105951,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-18T04:56:35.474353Z",
+   "observed_at": "2026-08-18T21:04:12.036916Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -107184,23 +105959,6 @@
   "upset_hit": false,
   "brier3": 0.423,
   "log_loss": 0.616,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 43.0,
-   "a": 57.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "73f0b685aab800d7b386c1596a73aef3f4688ed2b1520737b61e5cb213713174"
-   ],
-   "observed_at": [
-    "2026-08-13T17:17:39.920018Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true,
   "brier_advancement": null,
@@ -108337,7 +107095,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-18T04:56:35.474378Z",
+   "observed_at": "2026-08-18T21:04:12.036941Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -108345,23 +107103,6 @@
   "upset_hit": true,
   "brier3": 0.769,
   "log_loss": 0.968,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 42.0,
-   "a": 58.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "4abef325906b46791be5839f092d40874cb01181d1380da94c20085a9e5c3aef"
-   ],
-   "observed_at": [
-    "2026-08-13T19:33:33.414539Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false,
   "brier_advancement": null,
@@ -109549,7 +108290,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-18T04:56:35.474405Z",
+   "observed_at": "2026-08-18T21:04:12.036967Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -109557,23 +108298,6 @@
   "upset_hit": true,
   "brier3": 0.52,
   "log_loss": 0.713,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 50.0,
-   "a": 50.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "7467a19331f4547d9897a3be81c46ac896afe129726857bc45c22a331e9bb898"
-   ],
-   "observed_at": [
-    "2026-08-13T23:06:25.972622Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false,
   "brier_advancement": null,
@@ -110796,7 +109520,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-18T04:56:35.474431Z",
+   "observed_at": "2026-08-18T21:04:12.036994Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -110804,23 +109528,6 @@
   "upset_hit": false,
   "brier3": 0.259,
   "log_loss": 0.446,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 63.0,
-   "a": 37.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "a4942fbb1065f2a7bcb8e64163df7ab6b9c988fb2fb1322e3b327c9a1e3a579b"
-   ],
-   "observed_at": [
-    "2026-08-14T17:15:13.150485Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true,
   "brier_advancement": null,
@@ -112116,7 +110823,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-18T04:56:35.474456Z",
+   "observed_at": "2026-08-18T21:04:12.037019Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -112124,23 +110831,6 @@
   "upset_hit": false,
   "brier3": 0.442,
   "log_loss": 0.635,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 51.0,
-   "a": 49.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "b7e4f20a173bd2fdb7668971a07435de09fec800ef3abff847ebb551c5d35bcd"
-   ],
-   "observed_at": [
-    "2026-08-14T21:43:23.762404Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true,
   "brier_advancement": null,
@@ -113433,7 +112123,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-18T04:56:35.474480Z",
+   "observed_at": "2026-08-18T21:04:12.037043Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -113441,23 +112131,6 @@
   "upset_hit": true,
   "brier3": 0.673,
   "log_loss": 0.868,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 47.0,
-   "a": 53.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "b7e4f20a173bd2fdb7668971a07435de09fec800ef3abff847ebb551c5d35bcd"
-   ],
-   "observed_at": [
-    "2026-08-14T21:43:23.762404Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false,
   "brier_advancement": null,
@@ -114749,7 +113422,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-18T04:56:35.474506Z",
+   "observed_at": "2026-08-18T21:04:12.037067Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -114757,23 +113430,6 @@
   "upset_hit": true,
   "brier3": 0.696,
   "log_loss": 0.892,
-  "clv": -1.0,
-  "closing_market_snapshot": {
-   "h": 57.0,
-   "a": 43.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "b7e4f20a173bd2fdb7668971a07435de09fec800ef3abff847ebb551c5d35bcd"
-   ],
-   "observed_at": [
-    "2026-08-14T21:43:23.762404Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false,
   "brier_advancement": null,
@@ -116275,7 +114931,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-18T04:56:35.474532Z",
+   "observed_at": "2026-08-18T21:04:12.037092Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -116283,23 +114939,6 @@
   "upset_hit": true,
   "brier3": 0.769,
   "log_loss": 0.968,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 57.0,
-   "a": 43.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "b7e4f20a173bd2fdb7668971a07435de09fec800ef3abff847ebb551c5d35bcd"
-   ],
-   "observed_at": [
-    "2026-08-14T21:43:23.762404Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false,
   "brier_advancement": null,
@@ -117839,7 +116478,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-18T04:56:35.474557Z",
+   "observed_at": "2026-08-18T21:04:12.037116Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -117848,23 +116487,6 @@
   "brier3": 0.336,
   "log_loss": 0.528,
   "value_hit": true,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 52.0,
-   "a": 48.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "b7e4f20a173bd2fdb7668971a07435de09fec800ef3abff847ebb551c5d35bcd"
-   ],
-   "observed_at": [
-    "2026-08-14T21:43:23.762404Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true,
   "brier_advancement": null,
@@ -119396,7 +118018,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-18T04:56:35.474583Z",
+   "observed_at": "2026-08-18T21:04:12.037140Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -119404,23 +118026,6 @@
   "upset_hit": false,
   "brier3": 0.541,
   "log_loss": 0.734,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 52.0,
-   "a": 48.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "b7e4f20a173bd2fdb7668971a07435de09fec800ef3abff847ebb551c5d35bcd"
-   ],
-   "observed_at": [
-    "2026-08-14T21:43:23.762404Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false,
   "brier_advancement": null,
@@ -120850,7 +119455,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-18T04:56:35.474609Z",
+   "observed_at": "2026-08-18T21:04:12.037165Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -120858,23 +119463,6 @@
   "upset_hit": true,
   "brier3": 0.65,
   "log_loss": 0.844,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 43.0,
-   "a": 57.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "b7e4f20a173bd2fdb7668971a07435de09fec800ef3abff847ebb551c5d35bcd"
-   ],
-   "observed_at": [
-    "2026-08-14T21:43:23.762404Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false,
   "brier_advancement": null,
@@ -122408,7 +120996,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-18T04:56:35.474635Z",
+   "observed_at": "2026-08-18T21:04:12.037188Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -122416,23 +121004,6 @@
   "upset_hit": true,
   "brier3": 0.65,
   "log_loss": 0.844,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 56.0,
-   "a": 44.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "b7e4f20a173bd2fdb7668971a07435de09fec800ef3abff847ebb551c5d35bcd"
-   ],
-   "observed_at": [
-    "2026-08-14T21:43:23.762404Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false,
   "brier_advancement": null,
@@ -123991,7 +122562,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-18T04:56:35.474660Z",
+   "observed_at": "2026-08-18T21:04:12.037212Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -124000,23 +122571,6 @@
   "brier3": 0.32,
   "log_loss": 0.511,
   "value_hit": true,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 53.0,
-   "a": 47.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "4ae260404d78253fdba0ecdc2b342f623fe1fc600163b34cf37babaf2d2de36b"
-   ],
-   "observed_at": [
-    "2026-08-14T23:50:25.085695Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true,
   "brier_advancement": null,
@@ -125588,7 +124142,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-18T04:56:35.474687Z",
+   "observed_at": "2026-08-18T21:04:12.037235Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -125596,23 +124150,6 @@
   "upset_hit": true,
   "brier3": 0.605,
   "log_loss": 0.799,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 58.0,
-   "a": 42.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "4ae260404d78253fdba0ecdc2b342f623fe1fc600163b34cf37babaf2d2de36b"
-   ],
-   "observed_at": [
-    "2026-08-14T23:50:25.085695Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false,
   "brier_advancement": null,
@@ -127173,7 +125710,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-18T04:56:35.474712Z",
+   "observed_at": "2026-08-18T21:04:12.037259Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -127181,23 +125718,6 @@
   "upset_hit": true,
   "brier3": 0.541,
   "log_loss": 0.734,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 45.0,
-   "a": 55.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "4ae260404d78253fdba0ecdc2b342f623fe1fc600163b34cf37babaf2d2de36b"
-   ],
-   "observed_at": [
-    "2026-08-14T23:50:25.085695Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false,
   "brier_advancement": null,
@@ -128799,7 +127319,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-18T04:56:35.474738Z",
+   "observed_at": "2026-08-18T21:04:12.037282Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -128808,23 +127328,6 @@
   "brier3": 0.461,
   "log_loss": 0.654,
   "value_hit": true,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 44.0,
-   "a": 56.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "47a1bdbd4b19676d0925ede03db5eabfc95ad239da16723fd46301105508fb4c"
-   ],
-   "observed_at": [
-    "2026-08-15T01:53:09.711385Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true,
   "brier_advancement": null,
@@ -130378,7 +128881,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-18T04:56:35.474764Z",
+   "observed_at": "2026-08-18T21:04:12.037306Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -130387,23 +128890,6 @@
   "brier3": 0.627,
   "log_loss": 0.821,
   "value_hit": true,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 62.0,
-   "a": 38.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "47a1bdbd4b19676d0925ede03db5eabfc95ad239da16723fd46301105508fb4c"
-   ],
-   "observed_at": [
-    "2026-08-15T01:53:09.711385Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false,
   "brier_advancement": null,
@@ -132099,7 +130585,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-18T04:56:35.474791Z",
+   "observed_at": "2026-08-18T21:04:12.037330Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -132107,23 +130593,6 @@
   "upset_hit": true,
   "brier3": 0.673,
   "log_loss": 0.868,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 56.0,
-   "a": 44.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "cd49243ae3732435184ceb61d06f3a2ef56781815e6e5e5223a0e20dcdf28c89"
-   ],
-   "observed_at": [
-    "2026-08-15T15:40:40.376079Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false,
   "brier_advancement": null,
@@ -133666,7 +132135,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-18T04:56:35.474816Z",
+   "observed_at": "2026-08-18T21:04:12.037355Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -133674,23 +132143,6 @@
   "upset_hit": true,
   "brier3": 0.871,
   "log_loss": 1.079,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 63.0,
-   "a": 37.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "6ff92a81a02f33116e3ea8fd2f28ecc1cb83af3b11f0e4fa4ab0abe207ce994e"
-   ],
-   "observed_at": [
-    "2026-08-15T17:39:35.063068Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false,
   "brier_advancement": null,
@@ -135324,7 +133776,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-18T04:56:35.474842Z",
+   "observed_at": "2026-08-18T21:04:12.037380Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -135332,23 +133784,6 @@
   "upset_hit": true,
   "brier3": 0.744,
   "log_loss": 0.942,
-  "clv": -15.0,
-  "closing_market_snapshot": {
-   "h": 52.0,
-   "a": 48.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "8f809adfaa3f1fea2882e72bb1f293033271184056b05b546cb57789855f6cb6"
-   ],
-   "observed_at": [
-    "2026-08-15T18:53:01.929799Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false,
   "brier_advancement": null,
@@ -137112,7 +135547,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-18T04:56:35.474867Z",
+   "observed_at": "2026-08-18T21:04:12.037404Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -137120,23 +135555,6 @@
   "upset_hit": false,
   "brier3": 0.442,
   "log_loss": 0.635,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 55.0,
-   "a": 45.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "8f809adfaa3f1fea2882e72bb1f293033271184056b05b546cb57789855f6cb6"
-   ],
-   "observed_at": [
-    "2026-08-15T18:53:01.929799Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true,
   "brier_advancement": null,
@@ -138892,7 +137310,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-18T04:56:35.474892Z",
+   "observed_at": "2026-08-18T21:04:12.037428Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -138901,23 +137319,6 @@
   "brier3": 0.461,
   "log_loss": 0.654,
   "value_hit": false,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 60.0,
-   "a": 40.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "8f809adfaa3f1fea2882e72bb1f293033271184056b05b546cb57789855f6cb6"
-   ],
-   "observed_at": [
-    "2026-08-15T18:53:01.929799Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true,
   "brier_advancement": null,
@@ -140665,7 +139066,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-18T04:56:35.474918Z",
+   "observed_at": "2026-08-18T21:04:12.037454Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -140673,23 +139074,6 @@
   "upset_hit": true,
   "brier3": 0.769,
   "log_loss": 0.968,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 57.0,
-   "a": 43.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "77c7eafb760074dd05c4fd5bf5c0974b68b2ca63e6867703462bc111e409e0c1"
-   ],
-   "observed_at": [
-    "2026-08-15T21:38:53.654282Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false,
   "brier_advancement": null,
@@ -142476,7 +140860,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-18T04:56:35.474965Z",
+   "observed_at": "2026-08-18T21:04:12.037480Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -142484,23 +140868,6 @@
   "upset_hit": false,
   "brier3": 0.5,
   "log_loss": 0.693,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 47.0,
-   "a": 53.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "77c7eafb760074dd05c4fd5bf5c0974b68b2ca63e6867703462bc111e409e0c1"
-   ],
-   "observed_at": [
-    "2026-08-15T21:38:53.654282Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false,
   "brier_advancement": null,
@@ -144296,7 +142663,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-18T04:56:35.474991Z",
+   "observed_at": "2026-08-18T21:04:12.037505Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -144305,23 +142672,6 @@
   "brier3": 0.72,
   "log_loss": 0.916,
   "value_hit": false,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 49.0,
-   "a": 51.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "77c7eafb760074dd05c4fd5bf5c0974b68b2ca63e6867703462bc111e409e0c1"
-   ],
-   "observed_at": [
-    "2026-08-15T21:38:53.654282Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false,
   "brier_advancement": null,
@@ -145903,7 +144253,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-18T04:56:35.475016Z",
+   "observed_at": "2026-08-18T21:04:12.037548Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -145911,23 +144261,6 @@
   "upset_hit": false,
   "brier3": 0.442,
   "log_loss": 0.635,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 49.0,
-   "a": 51.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "77c7eafb760074dd05c4fd5bf5c0974b68b2ca63e6867703462bc111e409e0c1"
-   ],
-   "observed_at": [
-    "2026-08-15T21:38:53.654282Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true,
   "brier_advancement": null,
@@ -147732,7 +146065,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-18T04:56:35.475042Z",
+   "observed_at": "2026-08-18T21:04:12.037580Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -147741,23 +146074,6 @@
   "brier3": 0.72,
   "log_loss": 0.916,
   "value_hit": false,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 54.0,
-   "a": 46.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "77c7eafb760074dd05c4fd5bf5c0974b68b2ca63e6867703462bc111e409e0c1"
-   ],
-   "observed_at": [
-    "2026-08-15T21:38:53.654282Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false,
   "brier_advancement": null,
@@ -149546,7 +147862,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-18T04:56:35.475069Z",
+   "observed_at": "2026-08-18T21:04:12.037606Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -149555,23 +147871,6 @@
   "brier3": 0.405,
   "log_loss": 0.598,
   "value_hit": true,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 52.0,
-   "a": 48.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "77c7eafb760074dd05c4fd5bf5c0974b68b2ca63e6867703462bc111e409e0c1"
-   ],
-   "observed_at": [
-    "2026-08-15T21:38:53.654282Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true,
   "brier_advancement": null,
@@ -151372,7 +149671,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-18T04:56:35.475096Z",
+   "observed_at": "2026-08-18T21:04:12.037633Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -151380,23 +149679,6 @@
   "upset_hit": true,
   "brier3": 0.627,
   "log_loss": 0.821,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 54.0,
-   "a": 46.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "77c7eafb760074dd05c4fd5bf5c0974b68b2ca63e6867703462bc111e409e0c1"
-   ],
-   "observed_at": [
-    "2026-08-15T21:38:53.654282Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false,
   "brier_advancement": null,
@@ -153219,7 +151501,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-18T04:56:35.475122Z",
+   "observed_at": "2026-08-18T21:04:12.037658Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -153227,23 +151509,6 @@
   "upset_hit": true,
   "brier3": 0.744,
   "log_loss": 0.942,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 60.0,
-   "a": 40.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "77c7eafb760074dd05c4fd5bf5c0974b68b2ca63e6867703462bc111e409e0c1"
-   ],
-   "observed_at": [
-    "2026-08-15T21:38:53.654282Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false,
   "brier_advancement": null,
@@ -155117,7 +153382,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-18T04:56:35.475148Z",
+   "observed_at": "2026-08-18T21:04:12.037682Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -155125,23 +153390,6 @@
   "upset_hit": true,
   "brier3": 0.52,
   "log_loss": 0.713,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 47.0,
-   "a": 53.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "0ba7c633586d67c0490fa7509ff832f739108c5e12d95dd1d49ef3760e0f1330"
-   ],
-   "observed_at": [
-    "2026-08-15T23:41:10.811157Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false,
   "brier_advancement": null,
@@ -156996,7 +155244,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-18T04:56:35.475174Z",
+   "observed_at": "2026-08-18T21:04:12.037706Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -157004,23 +155252,6 @@
   "upset_hit": false,
   "brier3": 0.442,
   "log_loss": 0.635,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 44.0,
-   "a": 56.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "0ba7c633586d67c0490fa7509ff832f739108c5e12d95dd1d49ef3760e0f1330"
-   ],
-   "observed_at": [
-    "2026-08-15T23:41:10.811157Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true,
   "brier_advancement": null,
@@ -158821,7 +157052,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-18T04:56:35.475200Z",
+   "observed_at": "2026-08-18T21:04:12.037730Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -158829,23 +157060,6 @@
   "upset_hit": true,
   "brier3": 0.627,
   "log_loss": 0.821,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 57.0,
-   "a": 43.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "9d568d54ab5b2a72c6c8c19e5b5c2a152c2f138337a1710bb5c434bcc76eb8ba"
-   ],
-   "observed_at": [
-    "2026-08-16T15:40:12.924358Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false,
   "brier_advancement": null,
@@ -160669,7 +158883,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-18T04:56:35.475225Z",
+   "observed_at": "2026-08-18T21:04:12.037755Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -160677,23 +158891,6 @@
   "upset_hit": false,
   "brier3": 0.461,
   "log_loss": 0.654,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 54.0,
-   "a": 46.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "28b2a117583b6062962c8b212c56be409a57fee1fd452c4b0be6dbbf7c6c3e4d"
-   ],
-   "observed_at": [
-    "2026-08-16T16:46:39.265032Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true,
   "brier_advancement": null,
@@ -162511,7 +160708,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-18T04:56:35.475250Z",
+   "observed_at": "2026-08-18T21:04:12.037778Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -162519,23 +160716,6 @@
   "upset_hit": true,
   "brier3": 0.627,
   "log_loss": 0.821,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 49.0,
-   "a": 51.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "28b2a117583b6062962c8b212c56be409a57fee1fd452c4b0be6dbbf7c6c3e4d"
-   ],
-   "observed_at": [
-    "2026-08-16T16:46:39.265032Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false,
   "brier_advancement": null,
@@ -164349,7 +162529,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-18T04:56:35.475275Z",
+   "observed_at": "2026-08-18T21:04:12.037802Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -164357,23 +162537,6 @@
   "upset_hit": true,
   "brier3": 0.541,
   "log_loss": 0.734,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 53.0,
-   "a": 47.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "28b2a117583b6062962c8b212c56be409a57fee1fd452c4b0be6dbbf7c6c3e4d"
-   ],
-   "observed_at": [
-    "2026-08-16T16:46:39.265032Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false,
   "brier_advancement": null,
@@ -166379,7 +164542,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-18T04:56:35.475299Z",
+   "observed_at": "2026-08-18T21:04:12.037825Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -166387,23 +164550,6 @@
   "upset_hit": true,
   "brier3": 0.5,
   "log_loss": 0.693,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 52.0,
-   "a": 48.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "28b2a117583b6062962c8b212c56be409a57fee1fd452c4b0be6dbbf7c6c3e4d"
-   ],
-   "observed_at": [
-    "2026-08-16T16:46:39.265032Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false,
   "brier_advancement": null,
@@ -168222,7 +166368,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-18T04:56:35.475326Z",
+   "observed_at": "2026-08-18T21:04:12.037849Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -168230,23 +166376,6 @@
   "upset_hit": false,
   "brier3": 0.48,
   "log_loss": 0.673,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 47.0,
-   "a": 53.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "28b2a117583b6062962c8b212c56be409a57fee1fd452c4b0be6dbbf7c6c3e4d"
-   ],
-   "observed_at": [
-    "2026-08-16T16:46:39.265032Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true,
   "brier_advancement": null,
@@ -170063,7 +168192,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-18T04:56:35.475351Z",
+   "observed_at": "2026-08-18T21:04:12.037873Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -170072,23 +168201,6 @@
   "brier3": 0.353,
   "log_loss": 0.545,
   "value_hit": true,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 49.0,
-   "a": 51.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "28b2a117583b6062962c8b212c56be409a57fee1fd452c4b0be6dbbf7c6c3e4d"
-   ],
-   "observed_at": [
-    "2026-08-16T16:46:39.265032Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true,
   "brier_advancement": null,
@@ -171911,7 +170023,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-18T04:56:35.475377Z",
+   "observed_at": "2026-08-18T21:04:12.037897Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -171919,23 +170031,6 @@
   "upset_hit": false,
   "brier3": 0.32,
   "log_loss": 0.511,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 60.0,
-   "a": 40.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "28b2a117583b6062962c8b212c56be409a57fee1fd452c4b0be6dbbf7c6c3e4d"
-   ],
-   "observed_at": [
-    "2026-08-16T16:46:39.265032Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true,
   "brier_advancement": null,
@@ -173775,7 +171870,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-18T04:56:35.475402Z",
+   "observed_at": "2026-08-18T21:04:12.037921Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -173784,23 +171879,6 @@
   "brier3": 0.37,
   "log_loss": 0.562,
   "value_hit": true,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 49.0,
-   "a": 51.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "28b2a117583b6062962c8b212c56be409a57fee1fd452c4b0be6dbbf7c6c3e4d"
-   ],
-   "observed_at": [
-    "2026-08-16T16:46:39.265032Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true,
   "brier_advancement": null,
@@ -175684,7 +173762,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-18T04:56:35.475428Z",
+   "observed_at": "2026-08-18T21:04:12.037946Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -175692,23 +173770,6 @@
   "upset_hit": true,
   "brier3": 0.562,
   "log_loss": 0.755,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 55.0,
-   "a": 45.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "c497543cb36e71a5a18fa7f1aa477503de1bef98bfd53404f8131662f95142b0"
-   ],
-   "observed_at": [
-    "2026-08-16T19:00:47.602955Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false,
   "brier_advancement": null,
@@ -177785,7 +175846,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-18T04:56:35.475453Z",
+   "observed_at": "2026-08-18T21:04:12.037970Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -177793,23 +175854,6 @@
   "upset_hit": true,
   "brier3": 0.562,
   "log_loss": 0.755,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 45.0,
-   "a": 55.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "c497543cb36e71a5a18fa7f1aa477503de1bef98bfd53404f8131662f95142b0"
-   ],
-   "observed_at": [
-    "2026-08-16T19:00:47.602955Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false,
   "brier_advancement": null,
@@ -179916,7 +177960,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-18T04:56:35.475478Z",
+   "observed_at": "2026-08-18T21:04:12.037995Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -179924,23 +177968,6 @@
   "upset_hit": false,
   "brier3": 0.48,
   "log_loss": 0.673,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 48.0,
-   "a": 52.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "c497543cb36e71a5a18fa7f1aa477503de1bef98bfd53404f8131662f95142b0"
-   ],
-   "observed_at": [
-    "2026-08-16T19:00:47.602955Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": true,
   "brier_advancement": null,
@@ -181796,7 +179823,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-18T04:56:35.475503Z",
+   "observed_at": "2026-08-18T21:04:12.038019Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -181804,23 +179831,6 @@
   "upset_hit": true,
   "brier3": 0.769,
   "log_loss": 0.968,
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 63.0,
-   "a": 37.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "c497543cb36e71a5a18fa7f1aa477503de1bef98bfd53404f8131662f95142b0"
-   ],
-   "observed_at": [
-    "2026-08-16T19:00:47.602955Z"
-   ]
-  },
   "result_corrections": [],
   "market_comparison_hit": false,
   "brier_advancement": null,
@@ -183709,7 +181719,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-18T04:56:35.475528Z",
+   "observed_at": "2026-08-18T21:04:12.038043Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -183720,24 +181730,7 @@
   "log_loss": 0.777,
   "brier_advancement": null,
   "log_loss_advancement": null,
-  "result_corrections": [],
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 53.0,
-   "a": 47.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "04e2adcd2c2126921e7d4dec6c3fc3737b32fdb203b23d2f0426afcea0fb6452"
-   ],
-   "observed_at": [
-    "2026-08-16T21:38:09.147594Z"
-   ]
-  }
+  "result_corrections": []
  },
  "bdl-mlb-8202183": {
   "schema_ver": 2,
@@ -185902,7 +183895,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-18T04:56:35.475553Z",
+   "observed_at": "2026-08-18T21:04:12.038067Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -185913,24 +183906,7 @@
   "log_loss": 0.545,
   "brier_advancement": null,
   "log_loss_advancement": null,
-  "result_corrections": [],
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 47.0,
-   "a": 53.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "b7ea618d5b9af71da1d3d8e9f9afbcdf1dd19e4864522006f303f5fef3d18792"
-   ],
-   "observed_at": [
-    "2026-08-17T15:58:08.195636Z"
-   ]
-  }
+  "result_corrections": []
  },
  "bdl-mlb-5059647": {
   "schema_ver": 2,
@@ -188334,7 +186310,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-18T04:56:35.475578Z",
+   "observed_at": "2026-08-18T21:04:12.038091Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -188345,27 +186321,7 @@
   "log_loss": 0.598,
   "brier_advancement": null,
   "log_loss_advancement": null,
-  "result_corrections": [],
-  "clv": -0.5,
-  "closing_market_snapshot": {
-   "h": 59.5,
-   "a": 40.5
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "SportsGameOdds consensus",
-    "The Odds API consensus"
-   ],
-   "source_count": 2,
-   "event_ids": [
-    "8743db390014c7367d358f36677b0452ba0bd5d1b963d3f389943ee702b0bbb0",
-    "03551e795b026e2a5de3183f74d08a3b2909fa05d6aa8123567263e739ddb8fe"
-   ],
-   "observed_at": [
-    "2026-08-17T21:46:50.256817Z",
-    "2026-08-16T23:44:03.992460Z"
-   ]
-  }
+  "result_corrections": []
  },
  "bdl-mlb-5059648": {
   "schema_ver": 2,
@@ -190593,7 +188549,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-18T04:56:35.475603Z",
+   "observed_at": "2026-08-18T21:04:12.038115Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -190605,27 +188561,7 @@
   "brier_advancement": null,
   "log_loss_advancement": null,
   "value_hit": false,
-  "result_corrections": [],
-  "clv": 1.0,
-  "closing_market_snapshot": {
-   "h": 67.0,
-   "a": 33.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "SportsGameOdds consensus",
-    "The Odds API consensus"
-   ],
-   "source_count": 2,
-   "event_ids": [
-    "8743db390014c7367d358f36677b0452ba0bd5d1b963d3f389943ee702b0bbb0",
-    "03551e795b026e2a5de3183f74d08a3b2909fa05d6aa8123567263e739ddb8fe"
-   ],
-   "observed_at": [
-    "2026-08-17T21:46:50.256817Z",
-    "2026-08-16T23:44:03.992460Z"
-   ]
-  }
+  "result_corrections": []
  },
  "bdl-mlb-5059649": {
   "schema_ver": 2,
@@ -192853,7 +190789,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-18T04:56:35.475627Z",
+   "observed_at": "2026-08-18T21:04:12.038139Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -192865,24 +190801,7 @@
   "brier_advancement": null,
   "log_loss_advancement": null,
   "value_hit": false,
-  "result_corrections": [],
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 49.0,
-   "a": 51.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "8743db390014c7367d358f36677b0452ba0bd5d1b963d3f389943ee702b0bbb0"
-   ],
-   "observed_at": [
-    "2026-08-17T21:46:50.256817Z"
-   ]
-  }
+  "result_corrections": []
  },
  "bdl-mlb-5059650": {
   "schema_ver": 2,
@@ -195134,7 +193053,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-18T04:56:35.475652Z",
+   "observed_at": "2026-08-18T21:04:12.038163Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -195145,27 +193064,7 @@
   "log_loss": 0.734,
   "brier_advancement": null,
   "log_loss_advancement": null,
-  "result_corrections": [],
-  "clv": -4.0,
-  "closing_market_snapshot": {
-   "h": 52.0,
-   "a": 48.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "SportsGameOdds consensus",
-    "The Odds API consensus"
-   ],
-   "source_count": 2,
-   "event_ids": [
-    "8743db390014c7367d358f36677b0452ba0bd5d1b963d3f389943ee702b0bbb0",
-    "03551e795b026e2a5de3183f74d08a3b2909fa05d6aa8123567263e739ddb8fe"
-   ],
-   "observed_at": [
-    "2026-08-17T21:46:50.256817Z",
-    "2026-08-16T23:44:03.992460Z"
-   ]
-  }
+  "result_corrections": []
  },
  "bdl-mlb-5059651": {
   "schema_ver": 2,
@@ -197413,7 +195312,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-18T04:56:35.475678Z",
+   "observed_at": "2026-08-18T21:04:12.038187Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -197424,24 +195323,7 @@
   "log_loss": 0.562,
   "brier_advancement": null,
   "log_loss_advancement": null,
-  "result_corrections": [],
-  "clv": 0.0,
-  "closing_market_snapshot": {
-   "h": 60.0,
-   "a": 40.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "8743db390014c7367d358f36677b0452ba0bd5d1b963d3f389943ee702b0bbb0"
-   ],
-   "observed_at": [
-    "2026-08-17T21:46:50.256817Z"
-   ]
-  }
+  "result_corrections": []
  },
  "bdl-mlb-5059652": {
   "schema_ver": 2,
@@ -199694,7 +197576,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-18T04:56:35.475703Z",
+   "observed_at": "2026-08-18T21:04:12.038210Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -199705,27 +197587,7 @@
   "log_loss": 0.755,
   "brier_advancement": null,
   "log_loss_advancement": null,
-  "result_corrections": [],
-  "clv": -1.5,
-  "closing_market_snapshot": {
-   "h": 50.5,
-   "a": 49.5
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "SportsGameOdds consensus",
-    "The Odds API consensus"
-   ],
-   "source_count": 2,
-   "event_ids": [
-    "8743db390014c7367d358f36677b0452ba0bd5d1b963d3f389943ee702b0bbb0",
-    "03551e795b026e2a5de3183f74d08a3b2909fa05d6aa8123567263e739ddb8fe"
-   ],
-   "observed_at": [
-    "2026-08-17T21:46:50.256817Z",
-    "2026-08-16T23:44:03.992460Z"
-   ]
-  }
+  "result_corrections": []
  },
  "bdl-mlb-5059653": {
   "schema_ver": 2,
@@ -201976,7 +199838,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-18T04:56:35.475728Z",
+   "observed_at": "2026-08-18T21:04:12.038234Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -201987,24 +199849,7 @@
   "log_loss": 0.654,
   "brier_advancement": null,
   "log_loss_advancement": null,
-  "result_corrections": [],
-  "clv": 1.0,
-  "closing_market_snapshot": {
-   "h": 55.0,
-   "a": 45.0
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "The Odds API consensus"
-   ],
-   "source_count": 1,
-   "event_ids": [
-    "b2d510dfa5ec0eb174ae6baec62d7d790de0dd16665d84c940e690627debc821"
-   ],
-   "observed_at": [
-    "2026-08-17T23:39:51.657087Z"
-   ]
-  }
+  "result_corrections": []
  },
  "bdl-mlb-5059654": {
   "schema_ver": 2,
@@ -204441,7 +202286,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-18T04:56:35.475753Z",
+   "observed_at": "2026-08-18T21:04:12.038258Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -204453,26 +202298,6 @@
   "brier_advancement": null,
   "log_loss_advancement": null,
   "value_hit": false,
-  "result_corrections": [],
-  "clv": -0.5,
-  "closing_market_snapshot": {
-   "h": 46.5,
-   "a": 53.5
-  },
-  "closing_market_receipt": {
-   "sources": [
-    "SportsGameOdds consensus",
-    "The Odds API consensus"
-   ],
-   "source_count": 2,
-   "event_ids": [
-    "b2d510dfa5ec0eb174ae6baec62d7d790de0dd16665d84c940e690627debc821",
-    "03551e795b026e2a5de3183f74d08a3b2909fa05d6aa8123567263e739ddb8fe"
-   ],
-   "observed_at": [
-    "2026-08-17T23:39:51.657087Z",
-    "2026-08-16T23:44:03.992460Z"
-   ]
-  }
+  "result_corrections": []
  }
 }
