@@ -69,6 +69,7 @@ jobs:
             advanced_metrics_*.json
             nflverse_pbp_*.csv.gz
             forecast_ledger_*.jsonl
+            mlb_shadow_ledger.jsonl
             market_snapshot_ledger.jsonl
             market_benchmark_report.json
             nfl_availability_ledger.jsonl
@@ -90,7 +91,7 @@ jobs:
       # deploy below if it fails, since a broken prediction/provider path
       # is exactly what those steps would otherwise ship.
       - name: Run required test suite
-        run: python -m unittest test_model_inputs test_provider_adapters test_generate_posts test_pregame_context test_market_benchmark test_x_bot test_provider_quota
+        run: python -m unittest test_model_inputs test_provider_adapters test_generate_posts test_pregame_context test_market_benchmark test_x_bot test_provider_quota test_mlb_recovery test_mlb_shadow_ledger test_mlb_prospective_scorecard test_mlb_model_promotion test_mlb_forecast_pause test_nfl_challenger test_nfl_challenger_store test_nfl_availability test_nfl_prospective_scorecard test_nfl_model_adjustment test_cfb_challenger
 
       - name: Recover published last-good fixtures after a cold cache miss
         run: python recover_published_data.py
@@ -170,10 +171,12 @@ jobs:
       - name: Grade frozen MLB challenger evidence
         if: github.event_name != 'push'
         run: |
-          if [ -f forecast_ledger_mlb.jsonl ]; then
+          if [ -f mlb_shadow_ledger.jsonl ]; then
+            python build_mlb_prospective_scorecard.py --ledger mlb_shadow_ledger.jsonl --output mlb_prospective_scorecard.json
+          elif [ -f forecast_ledger_mlb.jsonl ]; then
             python build_mlb_prospective_scorecard.py --ledger forecast_ledger_mlb.jsonl --output mlb_prospective_scorecard.json
           else
-            echo "no MLB forecast ledger yet; prospective scorecard remains pending"
+            echo "no MLB shadow or legacy forecast ledger yet; prospective scorecard remains pending"
           fi
 
       - name: Grade frozen NFL calibrated-Elo evidence
@@ -223,6 +226,19 @@ jobs:
         # public, never rewritten" claim depends on this ledger actually
         # persisting, so it gets the same durable-source-of-truth treatment.
         #
+        # forecast_ledger_*.jsonl and mlb_shadow_ledger.jsonl joined
+        # 2026-08-18 for the third instance of the same reason. They were
+        # cache-only, and they hold the append-only prospective receipts that
+        # the NFL calibrated-Elo gate and the MLB promotion/recovery gates are
+        # graded from -- nfl_model_adjustment.json sits at
+        # prospective_status: "collecting_prospective_evidence" with the NFL
+        # season about to start writing exactly that evidence. A cache miss
+        # would erase it with no error trace, and unlike a ratings file it
+        # cannot be recomputed afterwards: a pregame lock is only worth
+        # anything because it was recorded before the result existed. The
+        # grading steps above are guarded by `if [ -f ... ]`, so a silent loss
+        # degrades to a cheerful "pending" rather than a failure.
+        #
         # These files start untracked the first run after that .gitignore
         # change, and `git diff` (unlike `git diff --cached`) ignores
         # untracked files -- so `git add` has to run before the check below,
@@ -232,7 +248,7 @@ jobs:
         run: |
           git config user.name "matchday-bot"
           git config user.email "actions@github.com"
-          git add -- 'ratings*.json' ':!ratings*.backup.json' ':!ratings*.legacy.json' ':!ratings*.raced-preserved.json' 'picks_log*.json'
+          git add -- 'ratings*.json' ':!ratings*.backup.json' ':!ratings*.legacy.json' ':!ratings*.raced-preserved.json' 'picks_log*.json' 'forecast_ledger_*.jsonl' 'mlb_shadow_ledger.jsonl'
           if ! git diff --cached --quiet; then
             git commit -m "Update ratings and picks ledger [skip ci]"
             persisted=false

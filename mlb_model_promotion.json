@@ -3,6 +3,14 @@
   "status": "collecting_prospective_evidence",
   "signal": "run_strength_challenger",
   "model_version": "retrosheet-mlb-challenger-0.1.0",
+  "trained_through": "2025-09-28",
+  "artifact_sha256": "f110758c7e3075fe79f907c0b404203cf854818bc417a90e6fa93ecee51e8dd1",
+  "feature_schema_version": 1,
+  "transformation_version": "mlb-run-strength-standardization-1",
+  "baseline_cohort": {
+    "model_version": "v6-calibrated",
+    "model_signal_schema": 8
+  },
   "production_weight": 0,
   "max_shift_points": 3,
   "allow_pick_flip": false,
@@ -11,8 +19,22 @@
     "minimum_games": 500,
     "minimum_game_date_blocks": 30,
     "primary_metric": "log_loss",
+    "exact_cohort_required": [
+      "model_version",
+      "trained_through",
+      "artifact_sha256",
+      "feature_schema_version",
+      "transformation_version"
+    ],
+    "exact_incumbent_baseline_required": [
+      "model_version",
+      "model_signal_schema"
+    ],
+    "evaluate_exact_capped_blend": true,
+    "probability_rounding": "none",
     "paired_interval_upper_bound_below_zero": true,
     "brier_must_improve": true,
     "manual_review_required": true
-  }
+  },
+  "baseline_cohort_note": "Reset 2026-08-18: the incumbent's emitted probabilities changed (per-sport calibration), so evidence paired against v5-settlement-aware cannot be pooled with evidence paired against v6-calibrated. Prospective collection restarts against the new incumbent."
 }

@@ -1,0 +1,13 @@
+{
+  "rank": 157,
+  "date": "Build 0818B",
+  "tag": "Trust",
+  "title": "MLB confidence numbers are calibrated against the graded record",
+  "items": [
+    "An audit of all 255 graded MLB fixtures found the model's stated confidence far wider than its real accuracy: a stated 70-74% read hit 54.7%, and the numbers scored worse than saying 50/50 every time.",
+    "MLB probabilities are now shrunk toward an even split by a factor chosen on held-out game dates, so a stated confidence means what it says. Every other sport is untouched, because no other sport has the graded evidence to justify a change.",
+    "The correction is applied to Matchday's own read before any market blend, so it damps the model's overconfidence without discarding what the odds know.",
+    "The recovery gate no longer blocks resuming forecasts on a confirmed-starter feed when no forecast reads personnel data; that route now requires a signed, hash-bound attestation that the weight really is zero.",
+    "MLB fixture forecasts remain paused. This changes what the numbers will say when they return, not whether they have returned."
+  ]
+}

@@ -28,6 +28,12 @@ class RecapContentTests(unittest.TestCase):
     def test_content_sport_routes_mlb_posts_to_baseball(self):
         self.assertEqual(gp._content_sport("MLB"), "baseball")
 
+    def test_mlb_publication_state_uses_canonical_dataset_eligibility(self):
+        for phase in ("preliminary", "lock_candidate", "locked"):
+            data = {"comp_key": "MLB", "forecast_publication": {"state": "eligible"}}
+            match = {"status": "UPCOMING", "prediction": {"publication_state": phase}}
+            self.assertFalse(gp._forecast_is_paused(data, match))
+
     def test_no_post_when_nothing_graded(self):
         self.assertIsNone(gp.build_recap_post("NFL", "NFL", {"graded": 0}, None))
 
@@ -155,6 +161,7 @@ class RenderAndSitemapTests(unittest.TestCase):
         for key in ("nfl", "mlb"):
             with open(f"data_{key}.json", "w", encoding="utf-8") as f:
                 json.dump({"competition": key.upper(), "updated": "2026-07-25T12:00:00Z",
+                           "forecast_publication": ({"state": "eligible"} if key == "mlb" else None),
                            "scorecard": SCORECARD, "matches": [match], "standings": ["drop me"]}, f)
         self.assertEqual(gp.generate_public_content_feed(), 2)
         with open(gp.CONTENT_FEED_FILE, encoding="utf-8") as f:

@@ -4,6 +4,29 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0818B",
+  "tag": "Trust",
+  "title": "MLB confidence numbers are calibrated against the graded record",
+  "items": [
+   "An audit of all 255 graded MLB fixtures found the model's stated confidence far wider than its real accuracy: a stated 70-74% read hit 54.7%, and the numbers scored worse than saying 50/50 every time.",
+   "MLB probabilities are now shrunk toward an even split by a factor chosen on held-out game dates, so a stated confidence means what it says. Every other sport is untouched, because no other sport has the graded evidence to justify a change.",
+   "The correction is applied to Matchday's own read before any market blend, so it damps the model's overconfidence without discarding what the odds know.",
+   "The recovery gate no longer blocks resuming forecasts on a confirmed-starter feed when no forecast reads personnel data; that route now requires a signed, hash-bound attestation that the weight really is zero.",
+   "MLB fixture forecasts remain paused. This changes what the numbers will say when they return, not whether they have returned."
+  ]
+ },
+ {
+  "date": "Build 0818A",
+  "tag": "Trust",
+  "title": "MLB recovery evidence now accumulates safely",
+  "items": [
+   "A private tamper-evident shadow ledger now freezes zero-weight MLB research forecasts before first pitch and grades them later without creating public picks.",
+   "Promotion now requires one exact model artifact and scores the precise capped canary transformation on paired prospective games; mixed or mismatched evidence fails closed.",
+   "Bookmaker-prop player candidates can no longer masquerade as confirmed starters or lineups, and ambiguous doubleheader joins attach no personnel data.",
+   "Public MLB fixture forecasts remain paused while prospective calibration evidence and an approved confirmed-starter source are still incomplete."
+  ]
+ },
+ {
   "date": "Build 0817B",
   "tag": "Safety",
   "title": "MLB forecasts paused for recalibration",

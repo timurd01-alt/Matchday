@@ -11,7 +11,7 @@ from provider_adapters import (BallDontLieAdapter, BigBallsSportsAdapter,
                                CollegeFootballDataAdapter, NflverseAdapter,
                                NflversePregameAdapter, ProviderError,
                                SportsDataIOAdapter, SportsGameOddsAdapter, SportmonksAdapter,
-                               normalized_score)
+                               _iso_utc, normalized_score)
 
 
 class ShortCodeTests(unittest.TestCase):
@@ -34,6 +34,10 @@ class ScoreNormalizationTests(unittest.TestCase):
                          {"home": 20, "away": 20, "winner": "d"})
         self.assertEqual(normalized_score(27, 20, False),
                          {"home": 27, "away": 20})
+
+    def test_unqualified_et_uses_daylight_saving_time(self):
+        self.assertEqual(_iso_utc("2026-07-04T13:00:00"), "2026-07-04T17:00:00Z")
+        self.assertEqual(_iso_utc("2026-12-04T13:00:00"), "2026-12-04T18:00:00Z")
 
 
 class BigBallsSportsTests(unittest.TestCase):
@@ -182,14 +186,13 @@ class SportsGameOddsTests(unittest.TestCase):
                  "markets": {}, "lineups": None, "injuries": {"home": [], "away": []}}
         result = SportsGameOddsAdapter("test-key", "MLB", getter=lambda *_: {}).attach_pregame(
             [match], [event], observed_at="2026-08-12T12:00:00Z")
-        self.assertEqual(result["starting_pitchers"], 2)
-        self.assertEqual(result["lineups"], 1)
-        self.assertEqual(match["personnel"]["starting_pitchers"]["home"]["name"],
+        self.assertEqual(result["starting_pitchers"], 0)
+        self.assertEqual(result["lineups"], 0)
+        self.assertEqual(match["personnel"]["starter_candidates"]["home"]["name"],
                          "Home Pitcher")
-        self.assertFalse(match["personnel"]["starting_pitchers_confirmed"])
-        self.assertEqual(len(match["lineups"]["away"]["xi"]), 7)
-        self.assertFalse(match["lineups"]["confirmed"])
-        self.assertIn("not a batting order", match["lineups"]["basis"])
+        self.assertNotIn("starting_pitchers", match["personnel"])
+        self.assertIsNone(match["lineups"])
+        self.assertEqual(len(match["personnel"]["market_listed_hitters"]["away"]), 7)
         self.assertFalse(any(match["injuries"].values()))
 
     def test_mlb_inference_rejects_espn_only_player_markets(self):
@@ -200,8 +203,30 @@ class SportsGameOddsTests(unittest.TestCase):
                                 "byBookmaker": {"espnbet": {"odds": "-110", "available": True}}}},
         }
         inferred = SportsGameOddsAdapter.mlb_personnel(event)
-        self.assertEqual(inferred["starting_pitchers"], {})
-        self.assertIsNone(inferred["lineups"])
+        self.assertEqual(inferred["starter_candidates"], {})
+        self.assertEqual(inferred["market_listed_hitters"], {"home": [], "away": []})
+
+    def test_same_team_doubleheader_requires_exact_event_time(self):
+        first = self.event()
+        first.update({"eventID": "dh-1", "startsAt": "2026-08-12T17:00:00Z"})
+        second = self.event()
+        second.update({"eventID": "dh-2", "startsAt": "2026-08-12T23:00:00Z"})
+        match = {"id": "local-2", "kickoff": "2026-08-12T23:00:00Z",
+                 "home": {"name": "Boston Celtics", "code": "BOS"},
+                 "away": {"name": "New York Knicks", "code": "NYK"},
+                 "markets": {}, "lineups": None}
+        adapter = SportsGameOddsAdapter("test-key", "NBA", getter=lambda *_: {})
+        adapter.attach_pregame([match], [first, second], observed_at="2026-08-12T12:00:00Z")
+        receipt = match["pregame_provenance"][0]["join"]
+        self.assertEqual(receipt["strategy"], "teams_and_start_time")
+        self.assertEqual(receipt["provider_event_id"], "dh-2")
+
+        ambiguous = {**match, "id": "local-x", "kickoff": "2026-08-12T20:00:00Z",
+                     "markets": {}, "pregame_provenance": []}
+        adapter.attach_pregame([ambiguous], [first, second], observed_at="2026-08-12T12:00:00Z")
+        self.assertFalse(ambiguous["markets"])
+        self.assertEqual(ambiguous["pregame_provenance"][0]["join"]["reason"],
+                         "ambiguous_same_team_fixture")
 
     def test_usage_gate_refuses_event_call_before_monthly_reserve(self):
         calls = []
@@ -320,19 +345,45 @@ class SportsDataIOTests(unittest.TestCase):
         def getter(url, headers):
             if "/projections/json/StartingLineupsByDate/" in url:
                 return [{"GameID": 7, "HomeTeam": "BOS", "AwayTeam": "NYY",
+                         "DateTime": "2026-08-03T19:10:00",
+                         "Updated": "2026-08-03T17:00:00",
                          "HomeBattingLineup": [{"PlayerID": 1, "Name": "Home Batter",
                                                  "Starting": True, "Confirmed": True}],
                          "AwayBattingLineup": [{"PlayerID": 2, "Name": "Away Batter",
                                                  "Starting": True, "Confirmed": True}],
                          "HomeStartingPitcher": {"PlayerID": 3, "Name": "Home Pitcher",
-                                                   "Confirmed": True},
+                                                   "Confirmed": True, "IsOpener": True},
                          "AwayStartingPitcher": {"PlayerID": 4, "Name": "Away Pitcher",
                                                    "Confirmed": False}}]
             raise AssertionError(url)
         row = SportsDataIOAdapter("test-key", "MLB", getter=getter).starting_lineups("2026-08-03")[0]
         self.assertEqual(row["home"]["xi"][0]["name"], "Home Batter")
+        self.assertEqual(row["provider_game_id"], 7)
+        self.assertEqual(row["scheduled_at"], "2026-08-03T23:10:00Z")
+        self.assertEqual(row["provider_updated_at"], "2026-08-03T21:00:00Z")
+        self.assertTrue(row["home"]["xi"][0]["confirmed"])
         self.assertTrue(row["home_starting_pitcher"]["confirmed"])
+        self.assertTrue(row["home_starting_pitcher"]["opener"])
         self.assertFalse(row["away_starting_pitcher"]["confirmed"])
+        self.assertFalse(row["confirmed"])
+        self.assertFalse(row["home"]["confirmed"])
+
+    def test_sportsdata_doubleheader_join_rejects_ambiguous_team_only_match(self):
+        rows = [
+            {"provider_game_id": 11, "home_code": "BOS", "away_code": "NYY",
+             "scheduled_at": "2026-08-03T17:00:00Z"},
+            {"provider_game_id": 12, "home_code": "BOS", "away_code": "NYY",
+             "scheduled_at": "2026-08-03T23:00:00Z"},
+        ]
+        match = {"id": "local", "kickoff": "2026-08-03T20:00:00Z",
+                 "home": {"code": "BOS"}, "away": {"code": "NYY"}}
+        row, receipt = SportsDataIOAdapter._lineup_join(rows, match)
+        self.assertIsNone(row)
+        self.assertEqual(receipt["reason"], "ambiguous_same_team_fixture")
+        match["kickoff"] = "2026-08-03T23:00:00Z"
+        row, receipt = SportsDataIOAdapter._lineup_join(rows, match)
+        self.assertEqual(row["provider_game_id"], 12)
+        self.assertEqual(receipt["strategy"], "teams_and_start_time")
 
     def test_nhl_leaders_include_offense_and_defense_extras(self):
         # PlusMinus can be negative -- confirm a real leader (best plus/minus)

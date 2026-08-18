@@ -136,6 +136,13 @@ def _number(value, default=0):
         return default
 
 
+def _provider_true(value):
+    """Interpret only explicit provider truth values as confirmation."""
+    return value is True or value == 1 or str(value or "").strip().lower() in {
+        "true", "yes", "confirmed", "official",
+    }
+
+
 # Strings a provider sends for a fixture slot it has no real club for -- an
 # unmapped/exhibition game, or a bracket slot whose participant isn't decided
 # yet. These are not team names: accepted as one, a placeholder becomes a
@@ -197,7 +204,8 @@ def _iso_utc(value):
         parsed = dt.datetime.fromisoformat(text)
         if parsed.tzinfo is None:
             # SportsDataIO league feeds document unqualified game times as ET.
-            parsed = parsed.replace(tzinfo=dt.timezone(dt.timedelta(hours=-5)))
+            # ET is not a fixed UTC-5 offset: summer fixtures observe EDT.
+            parsed = parsed.replace(tzinfo=ZoneInfo("America/New_York"))
         return parsed.astimezone(dt.timezone.utc).isoformat().replace("+00:00", "Z")
     except ValueError:
         return str(value)
@@ -659,14 +667,68 @@ class SportsGameOddsAdapter:
         full = _team_identity((match_team or {}).get("name"))
         return bool(full and any(value.startswith(full) for value in candidates))
 
+    @staticmethod
+    def _event_time(event):
+        info = event.get("info") if isinstance(event.get("info"), dict) else {}
+        return _iso_utc(event.get("startsAt") or event.get("startTime") or
+                        event.get("scheduled") or info.get("startsAt") or
+                        info.get("startTime"))
+
+    @staticmethod
+    def _match_provider_ids(match):
+        values = (match.get("provider_event_id"), match.get("provider_id"), match.get("id"))
+        return {str(value) for value in values if value not in (None, "")}
+
     @classmethod
-    def _event_for_match(cls, events, match):
+    def _event_join(cls, events, match):
+        """Return one exact event and a receipt; never guess a doubleheader."""
+        candidates = []
         for event in events:
             teams = event.get("teams") or {}
-            if (cls._same_team(teams.get("home") or {}, match.get("home") or {})
-                    and cls._same_team(teams.get("away") or {}, match.get("away") or {})):
-                return event
-        return None
+            if (cls._same_team(teams.get("home") or {}, match.get("home") or {}) and
+                    cls._same_team(teams.get("away") or {}, match.get("away") or {})):
+                candidates.append(event)
+        receipt = {
+            "match_provider_ids": sorted(cls._match_provider_ids(match)),
+            "match_kickoff": _iso_utc(match.get("kickoff")),
+            "candidate_event_ids": [event.get("eventID") for event in candidates],
+        }
+        if not candidates:
+            return None, {**receipt, "status": "rejected", "reason": "team_pair_not_found"}
+
+        wanted_ids = cls._match_provider_ids(match)
+        id_matches = [event for event in candidates
+                      if str(event.get("eventID")) in wanted_ids]
+        if len(id_matches) == 1:
+            event = id_matches[0]
+            return event, {**receipt, "status": "matched", "strategy": "provider_event_id",
+                           "provider_event_id": event.get("eventID"),
+                           "provider_start": cls._event_time(event)}
+
+        kickoff = _iso_utc(match.get("kickoff"))
+        time_matches = [event for event in candidates
+                        if kickoff and cls._event_time(event) == kickoff]
+        if len(time_matches) == 1:
+            event = time_matches[0]
+            return event, {**receipt, "status": "matched", "strategy": "teams_and_start_time",
+                           "provider_event_id": event.get("eventID"),
+                           "provider_start": cls._event_time(event)}
+        if len(candidates) == 1:
+            event = candidates[0]
+            event_time = cls._event_time(event)
+            if kickoff and event_time and kickoff != event_time:
+                return None, {**receipt, "status": "rejected", "reason": "start_time_mismatch",
+                              "provider_start": event_time}
+            return event, {**receipt, "status": "matched", "strategy": "unique_team_pair",
+                           "provider_event_id": event.get("eventID"),
+                           "provider_start": event_time}
+        return None, {**receipt, "status": "rejected",
+                      "reason": "ambiguous_same_team_fixture"}
+
+    @classmethod
+    def _event_for_match(cls, events, match):
+        event, _ = cls._event_join(events, match)
+        return event
 
     @staticmethod
     def _non_espn_market_available(odd):
@@ -730,29 +792,19 @@ class SportsGameOddsAdapter:
 
         hitter_rows = {side: sorted(rows.values(), key=lambda row: row["name"].lower())
                        for side, rows in hitters.items()}
-        # A sparse props board is useful as personnel context, but it is not
-        # close enough to a projected batting group to satisfy lineup
-        # readiness. Seven names per side is the conservative lower bound.
-        projected_lineups = None
-        if all(len(hitter_rows[side]) >= 7 for side in ("home", "away")):
-            projected_lineups = {
-                "home": {"xi": hitter_rows["home"], "confirmed": False,
-                         "status": "market-listed, unordered"},
-                "away": {"xi": hitter_rows["away"], "confirmed": False,
-                         "status": "market-listed, unordered"},
-                "confirmed": False,
-                "basis": "SportsGameOdds batting-hit markets; likely active hitters, not a batting order",
-                "observed_at": observed_at,
-            }
-        return {"starting_pitchers": starter_rows,
-                "market_listed_hitters": hitter_rows,
-                "lineups": projected_lineups}
+        return {"starter_candidates": starter_rows,
+                "market_listed_hitters": hitter_rows}
 
     def attach_pregame(self, matches, events, observed_at=None, has_draws=False):
-        attached = venues = pitchers = lineups = 0
+        attached = venues = 0
         for match in matches:
-            event = self._event_for_match(events, match)
+            event, join_receipt = self._event_join(events, match)
             if not event:
+                if join_receipt.get("reason") == "ambiguous_same_team_fixture":
+                    match.setdefault("pregame_provenance", []).append({
+                        "input": "fixture_join", "source": "SportsGameOdds",
+                        "join": join_receipt, "fetched_at": observed_at,
+                    })
                 continue
             info = event.get("info") or {}
             venue = info.get("venue")
@@ -769,15 +821,10 @@ class SportsGameOddsAdapter:
             if self.competition == "MLB":
                 inferred = self.mlb_personnel(event, observed_at)
                 personnel = match.setdefault("personnel", {})
-                if inferred["starting_pitchers"]:
-                    personnel["starting_pitchers"] = inferred["starting_pitchers"]
-                    personnel["starting_pitchers_confirmed"] = False
-                    pitchers += len(inferred["starting_pitchers"])
+                if inferred["starter_candidates"]:
+                    personnel["starter_candidates"] = inferred["starter_candidates"]
                 if any(inferred["market_listed_hitters"].values()):
                     personnel["market_listed_hitters"] = inferred["market_listed_hitters"]
-                if inferred["lineups"] and not match.get("lineups"):
-                    match["lineups"] = inferred["lineups"]
-                    lineups += 1
             match.setdefault("pregame_provenance", []).append({
                 "input": "market_and_inferred_personnel" if self.competition == "MLB"
                          else "market" if market else "event_metadata",
@@ -785,13 +832,16 @@ class SportsGameOddsAdapter:
                 "source_reference": "https://sportsgameodds.com/",
                 "fetched_at": observed_at,
                 "provider_event_id": event.get("eventID"),
+                "join": join_receipt,
                 "espn_excluded": True,
                 "personnel_semantics": ("player-market inference; not official lineup/injury data"
                                         if self.competition == "MLB" else None),
             })
         result = {"markets": attached, "venues": venues}
         if self.competition == "MLB":
-            result.update({"starting_pitchers": pitchers, "lineups": lineups})
+            # Preserve the public overlay-count contract while making clear
+            # that no canonical starting-pitcher or lineup input was attached.
+            result.update({"starting_pitchers": 0, "lineups": 0})
         return result
 
 
@@ -1030,7 +1080,7 @@ class SportsDataIOAdapter:
                 "name": str(name),
                 "position": player.get("Position") or slot.get("Position") or "",
                 "order": slot.get("BattingOrder") or slot.get("LineupPosition") or slot.get("Order"),
-                "confirmed": bool(slot.get("Confirmed", player.get("Confirmed", False))),
+                "confirmed": _provider_true(slot.get("Confirmed", player.get("Confirmed", False))),
             })
         return players
 
@@ -1040,6 +1090,7 @@ class SportsDataIOAdapter:
             return []
         rows = self._get_product("projections", f"StartingLineupsByDate/{date}")
         out = []
+        fetched_at = dt.datetime.now(dt.timezone.utc).isoformat().replace("+00:00", "Z")
         for row in rows if isinstance(rows, list) else []:
             if not isinstance(row, dict):
                 continue
@@ -1047,28 +1098,107 @@ class SportsDataIOAdapter:
             away = str(row.get("AwayTeam") or row.get("AwayTeamKey") or "")
             home_lineup = self._lineup_side(row, "Home")
             away_lineup = self._lineup_side(row, "Away")
-            confirmed = bool(row.get("Confirmed") or
-                             str(row.get("LineupStatus") or "").lower() == "confirmed" or
-                             (home_lineup and away_lineup and
-                              all(player.get("confirmed") for player in home_lineup + away_lineup)))
+            provider_confirmed = (_provider_true(row.get("Confirmed")) or
+                                  str(row.get("LineupStatus") or "").lower() == "confirmed")
+            home_confirmed = bool(home_lineup) and all(
+                player.get("confirmed") is True for player in home_lineup)
+            away_confirmed = bool(away_lineup) and all(
+                player.get("confirmed") is True for player in away_lineup)
+            # A fixture-level provider flag cannot confirm an absent side.
+            confirmed = bool(home_lineup and away_lineup) and (
+                provider_confirmed or (home_confirmed and away_confirmed))
             item = {
                 "game_id": row.get("GameID") or row.get("GlobalGameID"),
+                "provider_game_id": row.get("GameID") or row.get("GlobalGameID"),
                 "home_code": home, "away_code": away, "confirmed": confirmed,
-                "home": {"xi": home_lineup, "confirmed": confirmed},
-                "away": {"xi": away_lineup, "confirmed": confirmed},
+                "scheduled_at": _iso_utc(row.get("DateTimeUTC") or row.get("DateTime") or
+                                           row.get("Day")),
+                "provider_updated_at": _iso_utc(row.get("Updated") or row.get("UpdatedDate") or
+                                                  row.get("LastUpdated")),
+                "fetched_at": fetched_at,
+                "home": {"xi": home_lineup,
+                         "confirmed": bool(home_lineup) and (provider_confirmed or home_confirmed)},
+                "away": {"xi": away_lineup,
+                         "confirmed": bool(away_lineup) and (provider_confirmed or away_confirmed)},
             }
             for side, prefix in (("home", "Home"), ("away", "Away")):
                 starter = row.get(f"{prefix}StartingPitcher") or row.get(f"{prefix}Pitcher")
+                if not isinstance(starter, dict) and (row.get(f"{prefix}StartingPitcherID") or
+                                                      row.get(f"{prefix}StartingPitcherName")):
+                    starter = {
+                        "PlayerID": row.get(f"{prefix}StartingPitcherID"),
+                        "Name": row.get(f"{prefix}StartingPitcherName"),
+                        "Confirmed": row.get(f"{prefix}StartingPitcherConfirmed"),
+                        "IsOpener": row.get(f"{prefix}StartingPitcherIsOpener"),
+                    }
                 if isinstance(starter, dict):
                     item[f"{side}_starting_pitcher"] = {
                         "id": starter.get("PlayerID") or starter.get("GlobalPlayerID"),
                         "name": starter.get("Name") or starter.get("PlayerName") or
                                 " ".join(x for x in (starter.get("FirstName"), starter.get("LastName")) if x),
-                        "confirmed": bool(starter.get("Confirmed")),
+                        "confirmed": (_provider_true(starter.get("Confirmed")) or
+                                      str(starter.get("Status") or
+                                          starter.get("LineupStatus") or "").lower() in
+                                      {"confirmed", "official"}),
+                        "opener": _provider_true(
+                            starter.get("IsOpener") or starter.get("Opener") or
+                            row.get(f"{prefix}StartingPitcherIsOpener") or
+                            row.get(f"{prefix}IsOpener")),
+                        "provider_updated_at": _iso_utc(
+                            starter.get("Updated") or starter.get("UpdatedDate") or
+                            starter.get("LastUpdated") or item["provider_updated_at"]),
                     }
+            if self.code == "mlb":
+                pitchers_confirmed = all(
+                    item.get(f"{side}_starting_pitcher")
+                    and item[f"{side}_starting_pitcher"].get("confirmed") is True
+                    for side in ("home", "away"))
+                item["confirmed"] = bool(item["confirmed"] and pitchers_confirmed)
+                # Readiness treats both-side confirmation as top-level
+                # confirmation, so keep the side flags on the same strict gate.
+                item["home"]["confirmed"] = item["confirmed"]
+                item["away"]["confirmed"] = item["confirmed"]
             if home and away:
                 out.append(item)
         return out
+
+    @staticmethod
+    def _lineup_join(rows, match):
+        """Match a lineup receipt by provider id or exact team/time identity."""
+        home_code = str((match.get("home") or {}).get("code") or "").lower()
+        away_code = str((match.get("away") or {}).get("code") or "").lower()
+        candidates = [row for row in rows
+                      if home_code == str(row.get("home_code") or "").lower()
+                      and away_code == str(row.get("away_code") or "").lower()]
+        match_ids = {str(value) for value in
+                     (match.get("provider_id"), match.get("provider_game_id"), match.get("id"))
+                     if value not in (None, "")}
+        kickoff = _iso_utc(match.get("kickoff"))
+        base = {"match_provider_ids": sorted(match_ids), "match_kickoff": kickoff,
+                "candidate_game_ids": [row.get("provider_game_id") for row in candidates]}
+        id_matches = [row for row in candidates
+                      if str(row.get("provider_game_id")) in match_ids]
+        if len(id_matches) == 1:
+            row = id_matches[0]
+            return row, {**base, "status": "matched", "strategy": "provider_game_id",
+                         "provider_game_id": row.get("provider_game_id"),
+                         "provider_start": row.get("scheduled_at")}
+        time_matches = [row for row in candidates
+                        if kickoff and row.get("scheduled_at") == kickoff]
+        if len(time_matches) == 1:
+            row = time_matches[0]
+            return row, {**base, "status": "matched", "strategy": "teams_and_start_time",
+                         "provider_game_id": row.get("provider_game_id"),
+                         "provider_start": row.get("scheduled_at")}
+        if len(candidates) == 1:
+            row = candidates[0]
+            reason = ("start_time_mismatch" if kickoff and row.get("scheduled_at")
+                      else "missing_exact_fixture_identity")
+            return None, {**base, "status": "rejected", "reason": reason,
+                          "provider_start": row.get("scheduled_at")}
+        return None, {**base, "status": "rejected",
+                      "reason": ("ambiguous_same_team_fixture" if candidates
+                                 else "team_pair_not_found")}
 
     def starting_goalies(self, date):
         """Normalize NHL projected/confirmed goaltenders from the projections feed."""
@@ -1143,28 +1273,39 @@ class SportsDataIOAdapter:
                                 "confirmed": personnel["starting_goalies_confirmed"],
                             })
                 continue
-            for row in rows:
-                for match in matches:
-                    hc = str((match.get("home") or {}).get("code") or "").lower()
-                    ac = str((match.get("away") or {}).get("code") or "").lower()
-                    if hc != row["home_code"].lower() or ac != row["away_code"].lower():
-                        continue
-                    if row["home"]["xi"] or row["away"]["xi"]:
-                        match["lineups"] = {"home": row["home"], "away": row["away"],
-                                            "confirmed": row["confirmed"]}
-                        lineup_count += 1
-                    personnel = match.setdefault("personnel", {})
-                    pitchers = {side: row.get(f"{side}_starting_pitcher")
-                                for side in ("home", "away")}
-                    if any(pitchers.values()):
-                        personnel["starting_pitchers"] = pitchers
-                        personnel["starting_pitchers_confirmed"] = all(
-                            pitcher and pitcher.get("confirmed") for pitcher in pitchers.values())
-                    match.setdefault("pregame_provenance", []).append({
-                        "input": "starting_lineups", "source": "SportsDataIO",
-                        "fetched_at": dt.datetime.now(dt.timezone.utc).isoformat().replace("+00:00", "Z"),
-                        "confirmed": row["confirmed"],
-                    })
+            for match in matches:
+                row, join_receipt = self._lineup_join(rows, match)
+                if not row:
+                    if join_receipt.get("reason") == "ambiguous_same_team_fixture":
+                        match.setdefault("pregame_provenance", []).append({
+                            "input": "fixture_join", "source": "SportsDataIO",
+                            "join": join_receipt,
+                        })
+                    continue
+                if row["home"]["xi"] or row["away"]["xi"]:
+                    match["lineups"] = {"home": row["home"], "away": row["away"],
+                                        "confirmed": row["confirmed"],
+                                        "provider_game_id": row["provider_game_id"],
+                                        "scheduled_at": row["scheduled_at"],
+                                        "provider_updated_at": row["provider_updated_at"],
+                                        "fetched_at": row["fetched_at"]}
+                    lineup_count += 1
+                personnel = match.setdefault("personnel", {})
+                pitchers = {side: row.get(f"{side}_starting_pitcher")
+                            for side in ("home", "away")}
+                if any(pitchers.values()):
+                    personnel["starting_pitchers"] = pitchers
+                    personnel["starting_pitchers_confirmed"] = all(
+                        pitcher and pitcher.get("confirmed") is True
+                        for pitcher in pitchers.values())
+                match.setdefault("pregame_provenance", []).append({
+                    "input": "starting_lineups", "source": "SportsDataIO",
+                    "fetched_at": row["fetched_at"],
+                    "provider_updated_at": row["provider_updated_at"],
+                    "provider_game_id": row["provider_game_id"],
+                    "scheduled_at": row["scheduled_at"],
+                    "confirmed": row["confirmed"], "join": join_receipt,
+                })
         return {"injuries": attached, "lineups": lineup_count, "errors": errors}
 
     def leaders(self):

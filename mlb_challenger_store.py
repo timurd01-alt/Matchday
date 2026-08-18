@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import json
+import hashlib
+import math
 from pathlib import Path
 from typing import Any
 
@@ -27,6 +29,7 @@ def load_artifact(path: str | Path = "mlb_run_strength_model_v1.json") -> dict[s
     candidate = payload.get("historical_validation") or {}
     if candidate.get("decision") != "eligible_for_prospective_shadow":
         raise ValueError(f"MLB challenger did not clear its historical shadow gate: {source}")
+    payload["_artifact_sha256"] = hashlib.sha256(source.read_bytes()).hexdigest()
     return payload
 
 
@@ -63,11 +66,17 @@ def attach_mlb_challenger_shadows(matches, path: str | Path = "mlb_run_strength_
             "run_diff_per_game_diff": home["run_diff_per_game"] - away["run_diff_per_game"],
         }
         probability = predict_probability(artifact["model"], features)
+        intercept = float((artifact.get("model") or {}).get("intercept") or 0.0)
         match["mlb_challenger_shadow"] = {
             "schema_version": 1, "model_version": artifact["model_version"],
+            "artifact_sha256": artifact["_artifact_sha256"],
+            "feature_schema": list(artifact.get("features") or sorted(features)),
+            "feature_schema_version": 1,
+            "transformation_version": "mlb-run-strength-standardization-1",
             "mode": "prospective_shadow", "production_weight": 0,
             "home_win_probability": round(probability, 6),
             "away_win_probability": round(1.0 - probability, 6),
+            "league_home_prior_probability": round(1.0 / (1.0 + math.exp(-intercept)), 6),
             "features": {name: round(value, 6) for name, value in features.items()},
             "top_contributions": feature_contributions(artifact["model"], features),
             "live_feature_source": "licensed BALLDONTLIE season team totals through prior completed games",

@@ -56,6 +56,23 @@ class PregameContextTests(unittest.TestCase):
             match, "NFL", "football", dt.datetime(2026, 8, 3, tzinfo=dt.timezone.utc))
         self.assertEqual(context["inputs"]["injuries"], "missing")
 
+    def test_high_confidence_requires_confirmed_not_merely_available_critical_inputs(self):
+        match = {
+            "status": "UPCOMING", "kickoff": "2026-08-04T12:00:00Z",
+            "markets": {"1x2": {"home_pct": 52, "away_pct": 48}},
+            "lineups": {"home": {"xi": [{"name": "A"}], "confirmed": False},
+                        "away": {"xi": [{"name": "B"}], "confirmed": False}},
+            "personnel": {"starting_pitchers": {
+                "home": {"name": "P1"}, "away": {"name": "P2"}},
+                "starting_pitchers_confirmed": False},
+        }
+        context = pregame_context.build_pregame_context(
+            match, "MLB", "baseball", dt.datetime(2026, 8, 4, 10, tzinfo=dt.timezone.utc))
+        self.assertEqual(context["missing_critical"], [])
+        self.assertCountEqual(context["unconfirmed_critical"],
+                              ["starting_pitchers", "lineups"])
+        self.assertFalse(context["confidence_guard"]["high_confidence_label_allowed"])
+
     def test_successfully_checked_zero_injuries_is_available_not_missing(self):
         match = {"status": "UPCOMING", "kickoff": "2026-08-04T12:00:00Z",
                  "markets": {}, "injuries": {"home": [], "away": []},

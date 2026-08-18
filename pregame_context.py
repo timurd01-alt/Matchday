@@ -110,6 +110,7 @@ def build_pregame_context(match, competition, sport, now=None):
     inputs = {key: _status(match, key) for key in SPORT_INPUTS.get(sport, ("market", "injuries"))}
     critical = CRITICAL_INPUTS.get(sport, {"market", "injuries"})
     missing_critical = [key for key in inputs if key in critical and inputs[key] == "missing"]
+    unconfirmed_critical = [key for key in inputs if key in critical and inputs[key] != "confirmed"]
     confirmed = sum(value == "confirmed" for value in inputs.values())
     available = sum(value != "missing" for value in inputs.values())
     if str(match.get("status") or "").upper() != "UPCOMING":
@@ -130,12 +131,14 @@ def build_pregame_context(match, competition, sport, now=None):
         "lead_time_hours": round(lead_hours, 2) if lead_hours is not None else None,
         "inputs": inputs,
         "missing_critical": missing_critical,
+        "unconfirmed_critical": unconfirmed_critical,
         "coverage_pct": round(100 * available / max(1, len(inputs))),
         "confirmed_pct": round(100 * confirmed / max(1, len(inputs))),
         "provenance": provenance,
         "confidence_guard": {
-            "high_confidence_label_allowed": not missing_critical,
-            "reason": None if not missing_critical else "critical pregame inputs missing",
+            "high_confidence_label_allowed": not unconfirmed_critical,
+            "reason": (None if not unconfirmed_critical else
+                       "critical pregame inputs not confirmed"),
         },
         "production_weight": 0,
         "research_mode": "prospective_shadow",

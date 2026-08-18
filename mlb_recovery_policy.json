@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "policy_version": "mlb-recovery-1",
+  "status": "paused",
+  "publication_approved": false,
+  "reason": "model_evidence_and_confirmed_personnel_not_approved",
+  "model_gate": {
+    "status": "collecting_prospective_evidence",
+    "minimum_games": 500,
+    "minimum_game_date_blocks": 30,
+    "paired_log_loss_ci95_upper_below_zero": true,
+    "brier_must_improve": true,
+    "exact_deployable_transform_required": true,
+    "independent_manual_review_required": true
+  },
+  "personnel_gate": {
+    "status": "source_not_approved",
+    "confirmed_source": null,
+    "minimum_consecutive_days": 30,
+    "minimum_both_starters_coverage_pct": 95,
+    "maximum_wrong_fixture_or_team_joins": 0,
+    "stale_or_inferred_confirmation_allowed": false,
+    "independent_manual_review_required": true,
+    "features_weighted": true,
+    "zero_weight_attestation": null,
+    "note": "Set features_weighted=false and supply a signed zero_weight_attestation to publish a model that reads no personnel data; the coverage requirements below then do not apply. Anything other than an explicit false keeps them."
+  },
+  "canary": {
+    "maximum_weight": 0.1,
+    "maximum_shift_points": 3,
+    "allow_pick_flip": false
+  }
+}

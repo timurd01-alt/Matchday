@@ -84,7 +84,7 @@ def _stale_source(key):
 # away, whenever the on-disk data is missing a field the current code
 # expects every match to carry.
 REQUIRED_MATCH_FIELDS = ["watchability", "pregame_context"]
-REQUIRED_MATCH_VALUES = {"model_signal_schema": 7}
+REQUIRED_MATCH_VALUES = {"model_signal_schema": 8}
 
 
 def _missing_fields(key):

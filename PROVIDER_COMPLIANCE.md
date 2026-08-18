@@ -1,5 +1,18 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-08-18 (MLB recovery and personnel-semantics hardening only. No
+provider, endpoint, key, contracted tier, retained raw payload, or
+redistribution scope changed. SportsGameOdds pitcher and hitter prop identities
+remain compact non-ESPN bookmaker-derived research context, but are now kept
+only as `starter_candidates` / `market_listed_hitters`; they cannot populate a
+canonical lineup, confirmed starter, or high-confidence readiness state.
+SportsDataIO remains disabled pending the existing commercial redistribution,
+endpoint-entitlement, and live quota-header review. Its dormant normalizer now
+preserves exact game/time, opener, per-player confirmation, and source
+timestamps and rejects ambiguous same-team/doubleheader joins. BALLDONTLIE and
+Retrosheet uses remain unchanged. Private zero-weight MLB shadow receipts add
+no provider fields to the public API or site.)
+
 Reviewed: 2026-08-16 (prediction archive, scorecard, and market-benchmark
 display corrections only. No provider, endpoint, source, retained payload, or
 redistribution scope changed. Existing normalized fixture outcomes and market

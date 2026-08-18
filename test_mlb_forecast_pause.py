@@ -57,6 +57,16 @@ console.log(JSON.stringify(payload));
         self.assertNotIn("prediction", gated[0])
         self.assertEqual(gated[1]["prediction"]["pick"], "h")
 
+    def test_explicit_backend_eligibility_is_the_only_unpause_path(self):
+        for phase in ("preliminary", "lock_candidate", "locked"):
+            match = {"id": "future", "status": "UPCOMING",
+                     "prediction": {"publication_state": phase, "pick": "h"}}
+            gated = self.run_pause_gate({"comp_key": "MLB",
+                                         "forecast_publication": {"state": "eligible"},
+                                         "matches": [match]})["matches"][0]
+            self.assertEqual(gated["prediction"]["pick"], "h")
+            self.assertNotIn("_forecast_paused", gated)
+
     def test_consumers_show_notice_and_prune_stale_outcome_tree_legs(self):
         core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
         panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")

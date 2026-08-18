@@ -44,7 +44,18 @@ posts/*.html
 research_posts.json
 _site/
 node_modules/
-forecast_ledger_*.jsonl
+# forecast_ledger_*.jsonl and mlb_shadow_ledger.jsonl were cache-only until
+# 2026-08-18, sitting on the exact mechanism that had already silently reset
+# picks_log once: the cache step's restore-keys fallback can hand a run an
+# older copy (or nothing at all on a cold miss) with no error trace. These
+# append-only ledgers ARE the prospective evidence behind every "locked
+# pregame, never rewritten" claim and behind the NFL/MLB promotion gates --
+# losing one silently discards months of receipts that cannot be
+# reconstructed after the fact, because the whole point is that they were
+# written before kickoff. They now get the same durable-source-of-truth
+# treatment as ratings*.json and picks_log*.json: committed back to git after
+# every fetch (see "Commit updated ratings and picks ledger" in deploy.yml),
+# with git as the one source of truth and the cache as pure accelerator.
 advanced_metrics_*.json
 nflverse_pbp_*.csv.gz
 nfl_challenger_training_rows.jsonl

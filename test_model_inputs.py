@@ -476,7 +476,7 @@ class ModelInputTests(unittest.TestCase):
         self.assertEqual(fetch_data._lock_decision(match, now)["state"], "eligible")
         self.assertNotIn("publication_message", prediction)
 
-    def test_mlb_pause_switch_false_restores_normal_publication_and_locking(self):
+    def test_verified_canonical_gate_restores_normal_publication_and_locking(self):
         now = fetch_data.datetime.datetime(2026, 7, 24, 12, tzinfo=fetch_data.datetime.timezone.utc)
         match = {"_comp": "MLB", "status": "UPCOMING",
                  "kickoff": "2026-07-24T14:00:00Z",
@@ -484,7 +484,7 @@ class ModelInputTests(unittest.TestCase):
         prediction = {"pick": "h", "confidence": 55,
                       "adjusted": {"h": 55, "d": 0, "a": 45}}
 
-        with mock.patch.object(fetch_data, "MLB_FORECAST_PUBLICATION_PAUSED", False):
+        with mock.patch.object(fetch_data.mlb_recovery, "publication_eligible", return_value=True):
             fetch_data._set_prediction_publication_state(match, prediction)
             decision = fetch_data._lock_decision(match, now)
 
@@ -1375,6 +1375,61 @@ class BigBallsOverlayGateTests(unittest.TestCase):
             fetch_data.COMP_KEY = old_comp
 
 
+class SportsDataIOCacheConfirmationTests(unittest.TestCase):
+    def setUp(self):
+        self.old_comp = fetch_data.COMP_KEY
+        fetch_data.COMP_KEY = "MLB"
+        self.match = {
+            "id": "mlb-1", "kickoff": "2026-08-18T20:00:00Z",
+            "home": {"name": "Alpha", "code": "ALP"},
+            "away": {"name": "Beta", "code": "BET"},
+        }
+
+    def tearDown(self):
+        fetch_data.COMP_KEY = self.old_comp
+
+    def row(self):
+        return {
+            "fixture_identity": fetch_data._sportsdataio_cache_identity(self.match),
+            "lineups": {
+                "scheduled_at": self.match["kickoff"], "confirmed": True,
+                "home": {"confirmed": True, "xi": [{"name": "H", "confirmed": True}]},
+                "away": {"confirmed": True, "xi": [{"name": "A", "confirmed": True}]},
+            },
+            "personnel": {
+                "starting_pitchers": {
+                    "home": {"name": "HP", "confirmed": True},
+                    "away": {"name": "AP", "confirmed": True},
+                },
+                "starting_pitchers_confirmed": True,
+                "injuries_confirmed": True,
+            },
+        }
+
+    def test_stale_cache_downgrades_every_confirmation(self):
+        fetch_data._merge_sportsdataio_cached_pregame(self.match, self.row(), stale=True)
+        self.assertFalse(self.match["lineups"]["confirmed"])
+        self.assertFalse(self.match["lineups"]["home"]["xi"][0]["confirmed"])
+        self.assertFalse(self.match["personnel"]["starting_pitchers_confirmed"])
+        self.assertFalse(self.match["personnel"]["starting_pitchers"]["home"]["confirmed"])
+        self.assertFalse(self.match["personnel"]["injuries_confirmed"])
+
+    def test_fresh_cache_requires_exact_fixture_both_sides_and_pitchers(self):
+        row = self.row()
+        row["personnel"]["starting_pitchers"]["away"]["confirmed"] = False
+        fetch_data._merge_sportsdataio_cached_pregame(self.match, row)
+        self.assertFalse(self.match["lineups"]["confirmed"])
+
+        other = self.row()
+        other["fixture_identity"]["kickoff"] = "2026-08-18T21:00:00Z"
+        fetch_data._merge_sportsdataio_cached_pregame(self.match, other)
+        self.assertFalse(self.match["lineups"]["confirmed"])
+
+        fetch_data._merge_sportsdataio_cached_pregame(self.match, self.row())
+        self.assertTrue(self.match["lineups"]["confirmed"])
+        self.assertTrue(self.match["personnel"]["starting_pitchers_confirmed"])
+
+
 class SportsGameOddsOverlayTests(unittest.TestCase):
     @staticmethod
     def event():
@@ -1451,6 +1506,28 @@ class SportsGameOddsOverlayTests(unittest.TestCase):
         finally:
             (fetch_data.COMP_KEY, fetch_data.COMP, fetch_data.SPORTSGAMEODDS_KEY,
              fetch_data.SPORTSGAMEODDS_CACHE_FILE) = old
+
+    def test_legacy_sgo_cache_cannot_restore_canonical_mlb_personnel(self):
+        match = {"id": "mlb-1", "markets": {}, "personnel": {}}
+        legacy = {
+            "personnel": {
+                "starting_pitchers": {"home": {"name": "Prop Pitcher"}},
+                "market_listed_hitters": {"home": [{"name": "Listed Hitter"}]},
+            },
+            "lineups": {"home": {"xi": [{"name": "Prop Batter"}]}},
+        }
+        fetch_data._merge_sportsgameodds_overlay(match, legacy)
+        self.assertNotIn("starting_pitchers", match["personnel"])
+        self.assertNotIn("lineups", match)
+        self.assertEqual(match["personnel"]["market_listed_hitters"]["home"][0]["name"],
+                         "Listed Hitter")
+
+        current = {"personnel": {"starter_candidates": {
+            "home": {"name": "Clearly Unconfirmed", "confirmed": False}}}}
+        fetch_data._merge_sportsgameodds_overlay(match, current)
+        self.assertEqual(match["personnel"]["starter_candidates"]["home"]["name"],
+                         "Clearly Unconfirmed")
+        self.assertNotIn("starting_pitchers", match["personnel"])
 
 
 class StandingsAndMarketUpsetRadarTests(unittest.TestCase):
@@ -1872,6 +1949,94 @@ class StrengthFloorTests(unittest.TestCase):
         pred = fetch_data.predict(dict(good), dict(bad), {}, {"stage": "Week 18", "weather": {}})
         self.assertEqual(pred["pick"], "h")
         self.assertGreater(pred["blend"]["h"], 80)
+
+
+class ProbabilityCalibrationTests(unittest.TestCase):
+    """2026-08-18 ledger audit of all 255 graded MLB fixtures in
+    picks_log_mlb.json (2026-07-27 .. 2026-08-17, the entire recorded
+    history): the shipped independent read was worse than a coin flip --
+    mean log loss 0.7215 against 0.6931 for a flat 50/50, AUC 0.525, and a
+    stated 70-74% confidence bucket that hit 54.7% (n=53). The cause is that
+    predict()'s sh/(sh+sa) strength ratio is never fitted to outcomes and its
+    factor weights were tuned on higher-signal American sports, so it emits an
+    NBA-shaped spread for a sport whose true single-game win probability
+    rarely leaves 35-65%.
+
+    Leave-one-game-date-out cross-validation over the 22 game-date blocks
+    chose a shrink factor inside 0.05-0.30 on every single fold and cut
+    held-out log loss from 0.7290 to 0.6986, so the correction's direction is
+    robust to the sample even though its exact size is not. PROB_CALIBRATION
+    ships 0.35 -- above every fold's choice, i.e. deliberately under-
+    correcting rather than claiming more shrinkage than 255 games can prove.
+    Replaying the full ledger through the shipped constant gives 0.6960.
+
+    The critical scope guarantee these tests protect: sports with no graded
+    evidence are absent from PROB_CALIBRATION and must be bit-for-bit
+    unchanged."""
+
+    def test_uncalibrated_sports_are_an_exact_no_op(self):
+        for probs in ({"h": 57, "d": 0, "a": 43},
+                      {"h": 40, "d": 26, "a": 34},
+                      {"h": 91, "d": 0, "a": 9}):
+            for comp in ("NFL", "NBA", "NCAAF", "NHL", "EPL"):
+                self.assertNotIn(comp, fetch_data.PROB_CALIBRATION)
+                factor = fetch_data._calibration_factor(comp)
+                self.assertEqual(factor, 1.0)
+                self.assertEqual(fetch_data._calibrate_probs(probs, factor), probs)
+
+    def test_mlb_read_is_shrunk_toward_an_even_split(self):
+        factor = fetch_data._calibration_factor("MLB")
+        self.assertLess(factor, 1.0)
+        out = fetch_data._calibrate_probs({"h": 73, "d": 0, "a": 27}, factor)
+        # 50 + 23*0.35 == 58.05
+        self.assertEqual(out, {"h": 58, "d": 0, "a": 42})
+        self.assertEqual(sum(out.values()), 100)
+
+    def test_calibration_preserves_the_side_and_never_flips_a_pick(self):
+        factor = fetch_data._calibration_factor("MLB")
+        for h in range(1, 100):
+            probs = {"h": h, "d": 0, "a": 100 - h}
+            out = fetch_data._calibrate_probs(probs, factor)
+            self.assertEqual(sum(out.values()), 100)
+            if h > 50:
+                self.assertGreaterEqual(out["h"], out["a"])
+            elif h < 50:
+                self.assertGreaterEqual(out["a"], out["h"])
+
+    def test_draw_leg_is_left_alone(self):
+        # The draw rate is derived separately (pre_draw_gap taper) and has its
+        # own evidence -- this correction targets the side read only.
+        out = fetch_data._calibrate_probs({"h": 50, "d": 26, "a": 24}, 0.35)
+        self.assertEqual(out["d"], 26)
+
+    def test_mlb_prediction_stays_inside_a_believable_band(self):
+        old_key, old_comp = fetch_data.COMP_KEY, fetch_data.COMP
+        fetch_data.COMP_KEY = "MLB"
+        fetch_data.COMP = dict(fetch_data.COMPETITIONS["MLB"])
+        try:
+            # A genuine best-vs-worst MLB matchup is still only a ~65/35 game.
+            best = {"name": "Best Club", "pld": 120, "w": 80, "l": 40,
+                    "gf": 640, "ga": 480, "srs": 1.4, "srs_games": 120,
+                    "rest_days": 1, "form_home": "W W W W L", "form_away": "W W L W W"}
+            worst = {"name": "Worst Club", "pld": 120, "w": 40, "l": 80,
+                     "gf": 470, "ga": 650, "srs": -1.5, "srs_games": 120,
+                     "rest_days": 1, "form_home": "L L W L L", "form_away": "L L L W L"}
+            pred = fetch_data.predict(dict(best), dict(worst), {},
+                                      {"stage": "Regular", "weather": {}})
+            fav = max(pred["model"]["h"], pred["model"]["a"])
+            self.assertEqual(pred["pick"], "h")
+            # Still reads the right side, but no longer claims football-grade
+            # certainty about a baseball game.
+            self.assertGreater(fav, 50)
+            self.assertLess(fav, 70)
+        finally:
+            fetch_data.COMP_KEY, fetch_data.COMP = old_key, old_comp
+
+    def test_model_identity_moved_with_the_output_change(self):
+        # MLB_RECOVERY.md forbids pooling mixed model artifacts, so any change
+        # to emitted probabilities must land in a new cohort.
+        self.assertEqual(fetch_data.MODEL_SIGNAL_SCHEMA, 8)
+        self.assertEqual(fetch_data.PREDICTION_MODEL_VERSION, "v6-calibrated")
 
 
 class TalentShareCurveTests(unittest.TestCase):

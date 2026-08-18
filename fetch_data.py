@@ -23,6 +23,8 @@ from email.utils import parsedate_to_datetime
 from collections import defaultdict
 import mfti_research
 import forecast_ledger
+import mlb_recovery
+import mlb_shadow_ledger
 import market_snapshots
 import pregame_context
 import provider_quota
@@ -116,8 +118,58 @@ IDLE_MINUTES = 60
 LIVE_SECONDS = 3600   # legacy local loop: in-progress games only need hourly result checks
 ODDS_CACHE_MIN = 180  # one pregame market snapshot per competition window
 OUT_FILE = "data.json"
-MODEL_SIGNAL_SCHEMA = 7  # adds capped, historically validated NFL calibrated-Elo adjustment
-PREDICTION_MODEL_VERSION = "v5-settlement-aware"
+MODEL_SIGNAL_SCHEMA = 8  # adds per-sport independent-probability calibration
+PREDICTION_MODEL_VERSION = "v6-calibrated"
+
+# ---- per-sport independent-probability calibration --------------------------
+# predict() builds its independent read as a ratio of hand-weighted strength
+# sums, sh/(sh+sa). That ratio is not fitted to outcomes, and its spread was
+# tuned on the high-signal American sports; the same factor weights applied to
+# a sport whose true single-game win probability rarely leaves 35-65% produce
+# stated confidences far wider than the sport can support.
+#
+# Measured on the 255 graded MLB fixtures in picks_log_mlb.json (2026-07-27 ..
+# 2026-08-17, the full ledger), the uncalibrated model was worse than saying
+# 50/50 every time: mean log loss 0.7215 vs 0.6931, AUC 0.525, and a stated
+# 70-74% bucket that hit 54.7% (n=53). Shrinking the independent read toward
+# an even split improves log loss monotonically down to ~0.2. Leave-one-
+# game-date-out cross-validation (22 folds) chose a shrink in 0.05-0.30 on
+# EVERY fold and cut held-out log loss from 0.7290 to 0.6986, so the direction
+# is robust even though 255 games cannot pin the value down.
+#
+# 0.35 is deliberately above every fold's choice: it is the conservative end
+# of the supported range, so it under-corrects rather than asserting more
+# shrinkage than the sample proves. It is not a claim that MLB is 65% noise --
+# it is a claim that this particular signal has not earned a wider spread.
+#
+# Sports with no graded evidence stay at 1.0 (exact previous behavior). Do not
+# add an entry here without a measured ledger to justify it -- an unmeasured
+# calibration constant is the same mistake as an unmeasured factor weight.
+PROB_CALIBRATION = {
+    "MLB": 0.35,
+}
+DEFAULT_PROB_CALIBRATION = 1.0
+
+
+def _calibration_factor(comp_key):
+    return float(PROB_CALIBRATION.get(comp_key, DEFAULT_PROB_CALIBRATION))
+
+
+def _calibrate_probs(probs, factor):
+    """Shrink a h/d/a percentage triplet toward an even home/away split.
+
+    The draw leg is left untouched -- this corrects the strength-ratio's
+    over-confident *side* read, not the draw rate, which is derived separately
+    and has its own evidence. At factor 1.0 this is an exact no-op.
+    """
+    if factor >= 1.0:
+        return dict(probs)
+    h = float(probs.get("h") or 0.0)
+    a = float(probs.get("a") or 0.0)
+    mid = (h + a) / 2.0
+    return _round_triplet({"h": mid + (h - mid) * factor,
+                           "d": float(probs.get("d") or 0.0),
+                           "a": mid + (a - mid) * factor})
 
 FD_BASE  = "https://api.football-data.org/v4"
 
@@ -2623,6 +2675,11 @@ def predict(home, away, markets, m=None, neutral_venue=False):
         draw = 0.26 - _clamp(pre_draw_gap, 0.0, 1.0) * 0.14
     tot = sh+sa
     model = {"h": round(sh/tot*(1-draw)*100), "a": round(sa/tot*(1-draw)*100), "d": round(draw*100)}
+    # Calibrate the independent read BEFORE the market blend. The over-
+    # confidence being corrected here belongs to the strength ratio, not to
+    # the consensus price -- shrinking after the blend would damp the market's
+    # information too, which is the one input with a track record.
+    model = _calibrate_probs(model, _calibration_factor(COMP_KEY))
     mk = markets.get("1x2")
     market_weight = _market_blend_weight(mk)
     raw_blend = ({"h": round(model["h"]*(1-market_weight) + mk["home_pct"]*market_weight),
@@ -4484,11 +4541,12 @@ def _parse_kickoff(value):
     return parsed.astimezone(datetime.timezone.utc)
 
 
-MLB_FORECAST_PAUSE_MESSAGE = (
-    "MLB forecasts paused while calibration and starting-pitcher coverage are being fixed.")
-# Deliberate production kill switch. Re-enable only after starter coverage and
-# locked-scorecard calibration have passed review.
-MLB_FORECAST_PUBLICATION_PAUSED = True
+MLB_FORECAST_PAUSE_MESSAGE = mlb_recovery.PAUSE_MESSAGE
+
+
+def _mlb_forecast_publication_paused():
+    """Canonical two-key gate; malformed or incomplete approval pauses."""
+    return not mlb_recovery.publication_eligible()
 
 
 def _set_prediction_publication_state(match, prediction):
@@ -4497,7 +4555,7 @@ def _set_prediction_publication_state(match, prediction):
     context = (match or {}).get("pregame_context") or {}
     competition = str((match or {}).get("_comp") or COMP_KEY).upper()
     status = str((match or {}).get("status") or "").upper()
-    if (MLB_FORECAST_PUBLICATION_PAUSED
+    if (_mlb_forecast_publication_paused()
             and competition == "MLB" and status == "UPCOMING"):
         # Do not merely label the regular prediction: API consumers historically
         # read pick/confidence/probability fields without checking publication
@@ -4521,7 +4579,7 @@ def _set_prediction_publication_state(match, prediction):
 
 def _enforce_mlb_pause_after_locked_picks(matches):
     """Hide legacy upcoming MLB locks without touching finished receipts."""
-    if not MLB_FORECAST_PUBLICATION_PAUSED:
+    if not _mlb_forecast_publication_paused():
         return 0
     paused = 0
     for match in matches or []:
@@ -4548,7 +4606,7 @@ def _lock_decision(match, now=None):
     # Keep computing the research shadow, but do not admit a new MLB receipt
     # to the official immutable pick ledger. Existing receipts still flow
     # through apply_locked_picks() and every historical grading path below.
-    if MLB_FORECAST_PUBLICATION_PAUSED and competition == "MLB":
+    if _mlb_forecast_publication_paused() and competition == "MLB":
         return {"state": "wait", "reason": "mlb_official_forecasts_paused",
                 "status_at_lock": status, "kickoff": kickoff,
                 "publication_state": "paused"}
@@ -4670,6 +4728,12 @@ def _forecast_ledger_path():
     """Keep test/temp ledgers beside their patched picks file."""
     directory = os.path.dirname(os.path.abspath(PICKS_FILE))
     return os.path.join(directory, f"forecast_ledger_{COMP_KEY.lower()}.jsonl")
+
+
+def _mlb_shadow_ledger_path():
+    """Keep paused MLB research evidence separate from official picks."""
+    directory = os.path.dirname(os.path.abspath(PICKS_FILE))
+    return os.path.join(directory, "mlb_shadow_ledger.jsonl")
 
 def _market_fields(pr, mk):
     """Derive the market-comparison fields for a pick from current market odds.
@@ -6416,6 +6480,77 @@ def fetch_sportmonks_enrichment(matches):
         DIAG.append(f"Sportmonks enrichment failed: {_scrub(exc)}")
 
 
+def _sportsdataio_cache_identity(match):
+    return {
+        "fixture_id": str(match.get("id") or ""),
+        "kickoff": match.get("kickoff"),
+        "home": {"name": (match.get("home") or {}).get("name"),
+                 "code": (match.get("home") or {}).get("code")},
+        "away": {"name": (match.get("away") or {}).get("name"),
+                 "code": (match.get("away") or {}).get("code")},
+    }
+
+
+def _merge_sportsdataio_cached_pregame(match, row, *, stale=False):
+    """Restore cached detail while failing confirmation closed.
+
+    Confirmation survives only a fresh cache row bound to the exact fixture,
+    with both lineup sides present and (for MLB) both starting pitchers
+    explicitly confirmed. Older cache shapes remain usable as unconfirmed
+    research detail but can never open a readiness gate.
+    """
+    if not isinstance(row, dict):
+        return
+    detached = _json_safe(row)
+    exact_fixture = detached.get("fixture_identity") == _sportsdataio_cache_identity(match)
+    lineups = detached.get("lineups") if isinstance(detached.get("lineups"), dict) else None
+    personnel = detached.get("personnel") if isinstance(detached.get("personnel"), dict) else {}
+    schedule_matches = bool(
+        lineups and _parse_kickoff(lineups.get("scheduled_at"))
+        and _parse_kickoff(lineups.get("scheduled_at")) == _parse_kickoff(match.get("kickoff")))
+    sides_confirmed = bool(lineups and all(
+        isinstance(lineups.get(side), dict)
+        and bool((lineups.get(side) or {}).get("xi"))
+        and (lineups.get(side) or {}).get("confirmed") is True
+        for side in ("home", "away")))
+    pitchers_confirmed = True
+    if str(COMP_KEY).upper() == "MLB":
+        pitchers = personnel.get("starting_pitchers") or {}
+        pitchers_confirmed = all(
+            isinstance(pitchers.get(side), dict)
+            and pitchers[side].get("confirmed") is True
+            for side in ("home", "away"))
+    confirmed = bool(not stale and exact_fixture and schedule_matches
+                     and sides_confirmed and pitchers_confirmed)
+    if lineups:
+        lineups["confirmed"] = confirmed
+        for side in ("home", "away"):
+            if isinstance(lineups.get(side), dict):
+                lineups[side]["confirmed"] = confirmed
+                if not confirmed:
+                    for player in lineups[side].get("xi") or []:
+                        if isinstance(player, dict):
+                            player["confirmed"] = False
+        match["lineups"] = lineups
+    if personnel:
+        for key in list(personnel):
+            if key.endswith("_confirmed"):
+                personnel[key] = bool(personnel[key] and confirmed)
+        for group in ("starting_pitchers", "starting_goalies"):
+            for item in (personnel.get(group) or {}).values():
+                if isinstance(item, dict) and not confirmed:
+                    item["confirmed"] = False
+        match["personnel"] = personnel
+    if detached.get("injuries_shadow"):
+        match["injuries_shadow"] = detached["injuries_shadow"]
+    provenance = list(detached.get("pregame_provenance") or [])
+    provenance.append({"input": "cached_pregame_confirmation", "source": "SportsDataIO",
+                       "confirmed": confirmed,
+                       "status": "stale_cache" if stale else
+                                 "exact_fixture_cache" if exact_fixture else "identity_unverified_cache"})
+    match["pregame_provenance"] = provenance
+
+
 def fetch_sportsdataio_pregame_overlay(matches):
     """Add licensed late information without replacing each sport's fixture feed.
 
@@ -6444,6 +6579,7 @@ def fetch_sportsdataio_pregame_overlay(matches):
         return {"injuries": 0, "lineups": 0}
 
     cached = None
+    cached_is_stale = False
     try:
         if (os.path.exists(SPORTSDATAIO_PREGAME_CACHE_FILE) and
                 time.time() - os.path.getmtime(SPORTSDATAIO_PREGAME_CACHE_FILE) <
@@ -6458,7 +6594,7 @@ def fetch_sportsdataio_pregame_overlay(matches):
             cached = {str(match.get("id")): {
                 key: match.get(key) for key in
                 ("injuries_shadow", "lineups", "personnel", "pregame_provenance")
-            } for match in near}
+            } | {"fixture_identity": _sportsdataio_cache_identity(match)} for match in near}
             tmp = SPORTSDATAIO_PREGAME_CACHE_FILE + ".tmp"
             with open(tmp, "w", encoding="utf-8") as handle:
                 json.dump(cached, handle, ensure_ascii=False)
@@ -6477,6 +6613,7 @@ def fetch_sportsdataio_pregame_overlay(matches):
                     raise OSError("pregame cache exceeds bounded stale window")
                 with open(SPORTSDATAIO_PREGAME_CACHE_FILE, encoding="utf-8") as handle:
                     cached = json.load(handle)
+                cached_is_stale = True
                 DIAG.append(f"pregame overlay: stale cache after provider error — {_scrub(exc)}")
             except Exception:
                 DIAG.append(f"pregame overlay unavailable on this plan — {_scrub(exc)}")
@@ -6487,9 +6624,7 @@ def fetch_sportsdataio_pregame_overlay(matches):
         row = cached.get(str(match.get("id"))) if isinstance(cached, dict) else None
         if not isinstance(row, dict):
             continue
-        for key in ("injuries_shadow", "lineups", "personnel", "pregame_provenance"):
-            if row.get(key):
-                match[key] = row[key]
+        _merge_sportsdataio_cached_pregame(match, row, stale=cached_is_stale)
     return {"injuries": sum(_shadow_injury_count(match) for match in near),
             "lineups": sum(bool(match.get("lineups")) for match in near)}
 
@@ -6508,15 +6643,12 @@ def _merge_sportsgameodds_overlay(match, row):
         venues = 1
     cached_personnel = row.get("personnel") or {}
     personnel = match.setdefault("personnel", {})
-    if cached_personnel.get("starting_pitchers") and not personnel.get("starting_pitchers"):
-        personnel["starting_pitchers"] = cached_personnel["starting_pitchers"]
-        personnel["starting_pitchers_confirmed"] = False
-        pitchers = len(cached_personnel["starting_pitchers"])
+    # Schema-v2 caches mislabeled prop-derived names as canonical starters and
+    # lineups. Never restore those keys, even from a bounded stale cache.
+    if cached_personnel.get("starter_candidates") and not personnel.get("starter_candidates"):
+        personnel["starter_candidates"] = cached_personnel["starter_candidates"]
     if cached_personnel.get("market_listed_hitters") and not personnel.get("market_listed_hitters"):
         personnel["market_listed_hitters"] = cached_personnel["market_listed_hitters"]
-    if row.get("lineups") and not match.get("lineups"):
-        match["lineups"] = row["lineups"]
-        lineups = 1
     provenance = match.setdefault("pregame_provenance", [])
     for item in row.get("pregame_provenance") or []:
         if item not in provenance:
@@ -6624,7 +6756,7 @@ def fetch_sportsgameodds_overlay(matches):
         with open(SPORTSGAMEODDS_CACHE_FILE, encoding="utf-8") as handle:
             candidate = json.load(handle)
         age = time.time() - float(candidate.get("t") or 0)
-        schema_ok = COMP_KEY != "MLB" or candidate.get("schema_ver") == 2
+        schema_ok = COMP_KEY != "MLB" or candidate.get("schema_ver") == 3
         if schema_ok and age < SPORTSGAMEODDS_CACHE_MIN * 60:
             cached = candidate
     except Exception:
@@ -6645,7 +6777,7 @@ def fetch_sportsgameodds_overlay(matches):
                 targets, events, observed_at=observed_at,
                 has_draws=bool(COMP.get("has_draws")),
             )
-            cached = {"schema_ver": 2, "t": time.time(), "observed_at": observed_at, "matches": {
+            cached = {"schema_ver": 3, "t": time.time(), "observed_at": observed_at, "matches": {
                 str(match.get("id")): {
                     "markets": {"1x2": (match.get("markets") or {}).get("1x2")}
                                if ((match.get("markets") or {}).get("1x2") or {}).get("source")
@@ -6654,17 +6786,11 @@ def fetch_sportsgameodds_overlay(matches):
                     "pregame_provenance": [item for item in match.get("pregame_provenance") or []
                                              if item.get("source") == "SportsGameOdds"],
                     "personnel": {
-                        "starting_pitchers": (match.get("personnel") or {}).get("starting_pitchers")
-                            if any(isinstance(item, dict) and
-                                   item.get("source") == "SportsGameOdds player markets"
-                                   for item in ((match.get("personnel") or {})
-                                                .get("starting_pitchers") or {}).values()) else None,
+                        "starter_candidates": (match.get("personnel") or {})
+                            .get("starter_candidates"),
                         "market_listed_hitters": (match.get("personnel") or {})
                             .get("market_listed_hitters"),
                     },
-                    "lineups": match.get("lineups")
-                        if str((match.get("lineups") or {}).get("basis") or "")
-                        .startswith("SportsGameOdds") else None,
                 } for match in targets
             }}
             tmp = SPORTSGAMEODDS_CACHE_FILE + ".tmp"
@@ -6681,7 +6807,7 @@ def fetch_sportsgameodds_overlay(matches):
                 with open(SPORTSGAMEODDS_CACHE_FILE, encoding="utf-8") as handle:
                     candidate = json.load(handle)
                 age = time.time() - float(candidate.get("t") or 0)
-                if COMP_KEY == "MLB" and candidate.get("schema_ver") != 2:
+                if COMP_KEY == "MLB" and candidate.get("schema_ver") != 3:
                     raise OSError("SportsGameOdds MLB cache predates personnel schema")
                 if age > SPORTSGAMEODDS_STALE_MAX_HOURS * 3600:
                     raise OSError("SportsGameOdds cache exceeds bounded stale window")
@@ -7229,8 +7355,13 @@ def build():
     mlb_promotion_policy = load_mlb_promotion_policy() if COMP_KEY == "MLB" else None
     nfl_adjustment_policy = load_nfl_adjustment_policy() if COMP_KEY == "NFL" else None
     promoted_matches = 0
+    mlb_research_predictions = {}
     for m in matches:
         m["prediction"] = predict(m["home"], m["away"], m["markets"], m)
+        if COMP_KEY == "MLB":
+            # This detached raw baseline exists only long enough to reach the
+            # private research ledger. The pause shell clears the public copy.
+            mlb_research_predictions[str(m.get("id") or "")] = _json_safe(m["prediction"])
         m["prediction"] = _set_prediction_publication_state(m, m["prediction"])
         if m["prediction"].get("publication_state") == "paused":
             continue
@@ -7254,6 +7385,13 @@ def build():
     if promoted_matches:
         label = "NFL calibrated-Elo historical pilot" if COMP_KEY == "NFL" else "MLB reviewed challenger blend"
         DIAG.append(f"{label} applied to {promoted_matches} match(es)")
+    if COMP_KEY == "MLB":
+        shadow_state = mlb_shadow_ledger.sync(
+            _mlb_shadow_ledger_path(), matches, mlb_research_predictions)
+        if shadow_state.get("locked") or shadow_state.get("graded"):
+            DIAG.append(
+                "MLB private research ledger: "
+                f"locked={shadow_state['locked']}, graded={shadow_state['graded']}")
     print(f"  merged odds onto {merged} fixtures ({fuzzy} via name-variant match) · predictions on all {len(matches)}")
 
     print("Fetching title odds + news…")
@@ -7434,12 +7572,8 @@ def build():
                "markets_quota_out": MARKET_STATE["quota_out"],
                "quota_blocked_providers": blocked_providers,
                "diagnostics": [_scrub(x) for x in DIAG]}
-    if MLB_FORECAST_PUBLICATION_PAUSED and COMP_KEY == "MLB":
-        payload["forecast_publication"] = {
-            "state": "paused",
-            "message": MLB_FORECAST_PAUSE_MESSAGE,
-            "official_publication_eligible": False,
-        }
+    if COMP_KEY == "MLB":
+        payload["forecast_publication"] = mlb_recovery.publication_decision()
     for out in (OUT_FILE, f"data_{COMP_KEY.lower()}.json"):
         tmp = out + ".tmp"
         with open(tmp, "w", encoding="utf-8") as f:

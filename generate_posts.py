@@ -46,7 +46,6 @@ PUBLIC_CONTENT_KEYS = {key for key, _, _ in PUBLIC_CONTENT_COMPETITIONS}
 MLB_FORECAST_PAUSE_MESSAGE = (
     "MLB forecasts paused while calibration and starting-pitcher coverage are being fixed."
 )
-MLB_FORECAST_PUBLICATION_PAUSED = True
 
 FACTOR_LABELS = {
     "class": "talent or squad quality", "market_power": "championship market power",
@@ -94,14 +93,20 @@ def _publication_state(data, match):
         data.get("prediction_publication_state"), data.get("publication_state"),
         data.get("forecast_publication"), data.get("prediction_publication"),
     )
-    return str(next((value(item) for item in candidates if value(item)), "")).lower()
+    states = [str(value(item)).lower() for item in candidates if value(item)]
+    if "paused" in states:
+        return "paused"
+    dataset = str(value(data.get("forecast_publication")) or
+                  value(data.get("prediction_publication")) or "").lower()
+    return "eligible" if dataset == "eligible" else (states[0] if states else "")
 
 
 def _forecast_is_paused(data, match):
     comp = str(match.get("_comp") or data.get("comp_key") or "").upper()
+    # Fail closed: MLB is publishable only when the canonical backend payload
+    # explicitly says eligible. Missing/stale payloads cannot resurrect picks.
     return (comp == "MLB" and match.get("status") == "UPCOMING"
-            and (MLB_FORECAST_PUBLICATION_PAUSED
-                 or _publication_state(data, match) == "paused"))
+            and _publication_state(data, match) != "eligible")
 
 
 def load_posts():

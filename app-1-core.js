@@ -65,7 +65,6 @@ const SPORT_LABELS={wc:'World Cup',ucl:'Champions League',epl:'Premier League',l
 const FIXTURE_PAGE_SIZE=40;
 let MATCH_VISIBLE=FIXTURE_PAGE_SIZE,RESULT_VISIBLE=FIXTURE_PAGE_SIZE;
 const MLB_FORECAST_PAUSE_MESSAGE='MLB forecasts paused while calibration and starting-pitcher coverage are being fixed.';
-const MLB_FORECAST_PUBLICATION_PAUSED=true;
 
 function forecastPublicationState(payload,match){
   const value=x=>typeof x==='string'?x:(x&&typeof x==='object'?(x.state||x.status||x.publication_state):'');
@@ -75,12 +74,16 @@ function forecastPublicationState(payload,match){
     payload?.forecast_publication_state,payload?.prediction_publication_state,payload?.publication_state,
     payload?.forecast_publication,payload?.prediction_publication,
   ];
-  return String(candidates.map(value).find(Boolean)||'').toLowerCase();
+  const states=candidates.map(value).filter(Boolean).map(x=>String(x).toLowerCase());
+  if(states.includes('paused'))return 'paused';
+  const dataset=String(value(payload?.forecast_publication)||value(payload?.prediction_publication)||'').toLowerCase();
+  if(dataset==='eligible')return 'eligible';
+  return states[0]||'';
 }
 function isMlbForecastPaused(match,payload=DATA){
   const comp=String(match?._comp||payload?.comp_key||'').toUpperCase();
-  return comp==='MLB'&&match?.status==='UPCOMING'&&
-    (MLB_FORECAST_PUBLICATION_PAUSED||forecastPublicationState(payload,match)==='paused');
+  // Fail closed: stale or marker-free MLB payloads never regain forecasts.
+  return comp==='MLB'&&match?.status==='UPCOMING'&&forecastPublicationState(payload,match)!=='eligible';
 }
 function applyForecastPublicationPauses(payload){
   if(!payload||!Array.isArray(payload.matches))return payload;

@@ -90,11 +90,17 @@ class ModelSchemaRefreshTests(unittest.TestCase):
         self.assertTrue(multi_fetch._missing_fields("ncaaf"))
 
     def test_current_model_schema_returns_to_normal_cadence(self):
-        self._write_match(model_signal_schema=7, pregame_context={"schema_ver": 1})
+        # Read the expected schema from the module rather than restating it --
+        # every model change that alters emitted probabilities has to bump this
+        # constant, and a literal here turns each of those into a test edit.
+        self._write_match(
+            model_signal_schema=multi_fetch.REQUIRED_MATCH_VALUES["model_signal_schema"],
+            pregame_context={"schema_ver": 1})
         self.assertFalse(multi_fetch._missing_fields("ncaaf"))
 
     def test_missing_pregame_context_forces_one_refresh(self):
-        self._write_match(model_signal_schema=7)
+        self._write_match(
+            model_signal_schema=multi_fetch.REQUIRED_MATCH_VALUES["model_signal_schema"])
         self.assertTrue(multi_fetch._missing_fields("ncaaf"))
 
 
