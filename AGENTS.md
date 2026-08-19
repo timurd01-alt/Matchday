@@ -264,3 +264,20 @@ python -m http.server 8743
 ```
 
 (matches `.claude/launch.json`'s `matchday-local` config)
+
+## Local environment: two things that fail quietly
+
+**Python 3.12 is required, not preferred.** `fetch_data.py` uses nested same-
+quote f-strings, which are a syntax error before 3.12. On 3.11 the failure is
+an *import* error inside the test run, so `test_model_inputs`,
+`test_provider_adapters` and `test_generate_posts` -- three of the four the
+guardrails call required before opening a PR -- do not fail, they never
+execute. A run can look like it passed while having verified none of them.
+CI pins 3.12 in `deploy.yml`; match it locally.
+
+**On Windows, `pip install tzdata`.** `provider_adapters._iso_utc` resolves
+`ZoneInfo("America/New_York")`. Linux ships a system tz database and CI is
+fine; Windows has none, so zoneinfo raises `ZoneInfoNotFoundError` and two
+provider tests error for a reason unrelated to the code under test.
+
+With both in place the full CI suite runs locally: 557 tests, 4 skipped.
