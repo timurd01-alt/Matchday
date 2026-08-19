@@ -361,12 +361,47 @@ def collect(root: str | Path = ".") -> list[dict[str, Any]]:
     return sorted(candidates, key=lambda item: (item["priority"], item["title"]))
 
 
+# The exact suite list `deploy.yml` runs. Kept here as data, and asserted
+# against the workflow by test_next_task, because the guardrail previously
+# named four suites while CI ran twenty-seven: an agent that followed the
+# prompt exactly ran a fraction of the tests its PR would be judged by, and
+# nothing was watching for the divergence.
+REQUIRED_SUITES = (
+    "test_model_inputs",
+    "test_provider_adapters",
+    "test_generate_posts",
+    "test_pregame_context",
+    "test_market_benchmark",
+    "test_x_bot",
+    "test_provider_quota",
+    "test_mlb_recovery",
+    "test_mlb_shadow_ledger",
+    "test_mlb_prospective_scorecard",
+    "test_mlb_model_promotion",
+    "test_mlb_forecast_pause",
+    "test_nfl_challenger",
+    "test_nfl_challenger_store",
+    "test_nfl_availability",
+    "test_nfl_prospective_scorecard",
+    "test_nfl_model_adjustment",
+    "test_cfb_challenger",
+    "test_check_promotion_readiness",
+    "test_next_task",
+    "test_clv_report",
+    "test_preregistration",
+    "test_ncaam_advanced_metrics",
+    "test_independent_value",
+    "test_ui_audit",
+    "test_data_coverage",
+)
+
+
 GUARDRAILS = (
     "Work on the designated branch and open a pull request; never push to main.",
     "Never edit ratings*.json or picks_log*.json -- the hourly workflow owns them.",
     "Never edit a promotion policy's `requirements` block, reserve, or quota enforcement.",
-    "Run the required suite before opening the PR: python -m unittest test_model_inputs "
-    "test_provider_adapters test_generate_posts test_provider_quota",
+    "Run the full suite before opening the PR -- the same list deploy.yml runs, "
+    "not a subset: python -m unittest " + " ".join(REQUIRED_SUITES),
     "Add a new updates/<build>.json release note and run python build_updates.py; never "
     "hand-edit updates.js.",
     "If the task turns out to need a judgement call the evidence cannot settle, stop and "
