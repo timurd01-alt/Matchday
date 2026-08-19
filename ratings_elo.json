@@ -7914,8 +7914,8 @@
    "n": 3925
   },
   "baseball:boston red sox": {
-   "r": 1595.025905452886,
-   "n": 3985
+   "r": 1578.5711257605756,
+   "n": 3986
   },
   "baseball:atlanta braves": {
    "r": 1512.4937595392034,
@@ -7950,8 +7950,8 @@
    "n": 4025
   },
   "baseball:arizona diamondbacks": {
-   "r": 1519.5778466209917,
-   "n": 3901
+   "r": 1536.0326263133022,
+   "n": 3902
   },
   "baseball:san diego padres": {
    "r": 1569.9067589348438,
@@ -286197,6 +286197,7 @@
   "MLB:bdl-mlb-5059673": true,
   "MLB:bdl-mlb-5059674": true,
   "MLB:bdl-mlb-5059675": true,
-  "LALIGA:564628": true
+  "LALIGA:564628": true,
+  "MLB:bdl-mlb-5059676": true
  }
 }
