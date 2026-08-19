@@ -75,6 +75,91 @@ class QuotaModuleTests(unittest.TestCase):
         with self.assertRaises(pq.QuotaExceededError):
             pq.check("cfbd", state_path=self.path)  # cannot fan out before a response records reset
 
+    # ---- header-less responses still spend budget -------------------------
+    # CFBD does not return X-CallLimit-Remaining on every response (see
+    # test_cfbd_quota_body_message_sets_remaining_to_zero, taken off a real
+    # 429). Those calls are real spend, and while the ledger ignored them
+    # `remaining` stood still at whatever the last header said -- so check()
+    # kept approving calls and the reserve could be stepped over rather than
+    # stopped at. Observed live: cfbd at remaining=0 against reserve=25.
+    def test_header_less_response_debits_the_local_count(self):
+        self._freeze(datetime.datetime(2026, 8, 28, 12, tzinfo=datetime.timezone.utc))
+        pq.record_response("cfbd", {"X-CallLimit-Remaining": "100"}, state_path=self.path)
+        for _ in range(3):
+            pq.record_response("cfbd", {}, state_path=self.path)
+        with open(self.path, encoding="utf-8") as handle:
+            self.assertEqual(json.load(handle)["cfbd"]["remaining"], 97)
+
+    def test_header_less_responses_cannot_step_over_the_reserve(self):
+        """The regression this exists for: without a local debit the ledger
+        reads 30 forever and check() never refuses, however many calls fire."""
+        self._freeze(datetime.datetime(2026, 8, 28, 12, tzinfo=datetime.timezone.utc))
+        pq.record_response("cfbd", {"X-CallLimit-Remaining": "30"}, state_path=self.path)
+        for _ in range(5):
+            pq.check("cfbd", state_path=self.path)
+            pq.record_response("cfbd", {}, state_path=self.path)
+        with self.assertRaises(pq.QuotaExceededError):
+            pq.check("cfbd", state_path=self.path)
+
+    def test_a_real_header_overrides_the_local_estimate(self):
+        """The debit is a stand-in between observations, never a competitor
+        to ground truth: the provider's own number wins whenever it arrives."""
+        self._freeze(datetime.datetime(2026, 8, 28, 12, tzinfo=datetime.timezone.utc))
+        pq.record_response("cfbd", {"X-CallLimit-Remaining": "100"}, state_path=self.path)
+        pq.record_response("cfbd", {}, state_path=self.path)
+        pq.record_response("cfbd", {"X-CallLimit-Remaining": "500"}, state_path=self.path)
+        with open(self.path, encoding="utf-8") as handle:
+            self.assertEqual(json.load(handle)["cfbd"]["remaining"], 500)
+
+    def test_local_debit_never_goes_negative(self):
+        self._freeze(datetime.datetime(2026, 8, 28, 12, tzinfo=datetime.timezone.utc))
+        pq.record_response("cfbd", {"X-CallLimit-Remaining": "1"}, state_path=self.path)
+        for _ in range(4):
+            pq.record_response("cfbd", {}, state_path=self.path)
+        with open(self.path, encoding="utf-8") as handle:
+            self.assertEqual(json.load(handle)["cfbd"]["remaining"], 0)
+
+    def test_local_debit_does_not_fire_on_an_unobserved_provider(self):
+        """Nothing to debit before a real header has ever been seen -- the
+        cold-start path must stay fail-closed rather than inventing a count."""
+        pq.record_response("cfbd", {}, state_path=self.path)
+        with open(self.path, encoding="utf-8") as handle:
+            self.assertIsNone(json.load(handle)["cfbd"].get("remaining"))
+
+    def test_an_entry_without_a_reading_still_fails_closed(self):
+        """A header-less response writes observed_at/period_start, so the
+        ledger entry exists while carrying no number to enforce against. That
+        was enough to pass a truthiness-based fail-closed guard and leave the
+        provider permanently unblocked."""
+        pq.record_response("cfbd", {}, state_path=self.path)
+        with self.assertRaises(pq.QuotaExceededError):
+            pq.check("cfbd", state_path=self.path)
+
+    def test_local_debit_is_skipped_on_the_period_crossing_run(self):
+        """`remaining` is last month's reading on the run that crosses into a
+        new period; debiting it would carry a stale zero forward and keep the
+        provider dark after its budget actually reset."""
+        self._freeze(datetime.datetime(2026, 8, 1, 0, 30, tzinfo=datetime.timezone.utc))
+        pq.record_response("cfbd", {"X-CallLimit-Remaining": "40"}, state_path=self.path)
+        with open(self.path, encoding="utf-8") as handle:
+            state = json.load(handle)
+        state["cfbd"]["period_start"] = "2026-07-01T00:00:00+00:00"
+        with open(self.path, "w", encoding="utf-8") as handle:
+            json.dump(state, handle)
+        pq.record_response("cfbd", {}, state_path=self.path)
+        with open(self.path, encoding="utf-8") as handle:
+            self.assertEqual(json.load(handle)["cfbd"]["remaining"], 40)
+
+    def test_local_debit_does_not_apply_to_rolling_windows(self):
+        """A rolling per-minute bucket refills on its own clock; a missing
+        header there means "no fresh reading", not "one more call spent"."""
+        pq.record_response("football_data",
+                           {"x-requests-available-minute": "8",
+                            "X-RequestCounter-Reset": "45"}, state_path=self.path)
+        pq.record_response("football_data", {}, state_path=self.path)
+        with open(self.path, encoding="utf-8") as handle:
+            self.assertEqual(json.load(handle)["football_data"]["remaining"], 8)
+
     def test_never_observed_monthly_provider_fails_closed(self):
         with self.assertRaises(pq.QuotaExceededError):
             pq.check("cfbd", state_path=self.path)

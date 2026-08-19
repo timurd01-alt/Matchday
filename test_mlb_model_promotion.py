@@ -223,5 +223,39 @@ class MLBModelPromotionTests(unittest.TestCase):
                 apply_mlb_promotion(live_match(artifact_sha256="b" * 64), prediction, policy)
 
 
+class CheckedInCohortIdentityTests(unittest.TestCase):
+    """The frozen cohort must name the artifact this repository actually ships.
+
+    mlb_model_promotion.json froze the CRLF rendering of the challenger
+    artifact -- a hash produced by a Windows checkout under core.autocrlf --
+    while mlb_challenger_store.py hashes raw bytes and CI checks the file out
+    with LF. The two never matched, so `exact_cohort_required` was
+    unsatisfiable and the gate accumulated prospective evidence that its own
+    rule would have thrown away. .gitattributes now pins eol=lf; this test is
+    what makes that stick, and it fails on any platform where it stops being
+    true rather than waiting for a promotion review to discover it.
+    """
+
+    ROOT = Path(__file__).parent
+
+    def test_policy_hash_matches_the_artifact_on_disk(self):
+        policy = json.loads(
+            (self.ROOT / "mlb_model_promotion.json").read_text(encoding="utf-8"))
+        artifact = self.ROOT / "mlb_run_strength_model_v1.json"
+        self.assertEqual(
+            policy["artifact_sha256"],
+            hashlib.sha256(artifact.read_bytes()).hexdigest(),
+            "mlb_model_promotion.json's frozen artifact_sha256 does not match "
+            "mlb_run_strength_model_v1.json as checked out here. If this fails "
+            "on Windows, confirm .gitattributes is in effect and re-check the "
+            "file out; do NOT edit the policy to match a local rendering.")
+
+    def test_artifact_has_no_carriage_returns(self):
+        """The condition the hash mismatch was a symptom of, asserted directly
+        so the cause is named rather than only its consequence."""
+        raw = (self.ROOT / "mlb_run_strength_model_v1.json").read_bytes()
+        self.assertNotIn(b"\r\n", raw)
+
+
 if __name__ == "__main__":
     unittest.main()

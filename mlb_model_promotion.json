@@ -4,7 +4,7 @@
   "signal": "run_strength_challenger",
   "model_version": "retrosheet-mlb-challenger-0.1.0",
   "trained_through": "2025-09-28",
-  "artifact_sha256": "f110758c7e3075fe79f907c0b404203cf854818bc417a90e6fa93ecee51e8dd1",
+  "artifact_sha256": "f0177891dd2fe0d870b1ec62e7f6aae259158bf33e5151856e89100e88975bb9",
   "feature_schema_version": 1,
   "transformation_version": "mlb-run-strength-standardization-1",
   "baseline_cohort": {
@@ -36,5 +36,6 @@
     "brier_must_improve": true,
     "manual_review_required": true
   },
-  "baseline_cohort_note": "Reset 2026-08-18: the incumbent's emitted probabilities changed (per-sport calibration), so evidence paired against v5-settlement-aware cannot be pooled with evidence paired against v6-calibrated. Prospective collection restarts against the new incumbent."
+  "baseline_cohort_note": "Reset 2026-08-18: the incumbent's emitted probabilities changed (per-sport calibration), so evidence paired against v5-settlement-aware cannot be pooled with evidence paired against v6-calibrated. Prospective collection restarts against the new incumbent.",
+  "artifact_sha256_note": "Corrected 2026-08-19 from f110758c... to f0177891.... These are the same artifact, not two models: mlb_challenger_store.py hashes the file's raw bytes, and with core.autocrlf=true and no .gitattributes, a Windows checkout rendered mlb_run_strength_model_v1.json with CRLF (f110758c...) while the committed blob and every Linux CI checkout kept LF (f0177891...). The frozen value had been captured on a Windows checkout, so exact_cohort_required could never be satisfied by a CI-produced lock and this gate was accumulating evidence it would have had to reject. The corrected value is the one all 30 shadow locks in mlb_shadow_ledger.jsonl already recorded, so the collected evidence is preserved rather than discarded. .gitattributes now pins eol=lf so the hash is platform-stable; test_mlb_model_promotion.py asserts the artifact on disk still hashes to this value."
 }

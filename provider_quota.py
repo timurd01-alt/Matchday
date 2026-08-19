@@ -221,6 +221,7 @@ def _record_one(state, key, spec, headers, body, now):
     previous_period = entry.get("period_start")
     previous_remaining = entry.get("remaining")
     quota_hit = False
+    crossed_period = False
     if remaining_raw is not None:
         try:
             entry["remaining"] = int(float(remaining_raw))
@@ -270,6 +271,28 @@ def _record_one(state, key, spec, headers, body, now):
             entry.pop("reset_pending", None)
             entry.pop("reset_probe_at", None)
             entry.pop("reset_probe_count", None)
+    # A response carrying no remaining-count header still spent budget. Until
+    # now `remaining` only ever moved when the provider volunteered that
+    # header, so calls against header-less endpoints were invisible to the
+    # ledger: check() kept seeing the last number the provider happened to
+    # report and went on approving calls. That is how a floor can be skipped
+    # entirely rather than enforced -- cfbd was observed at remaining=0
+    # against reserve=25, which the reserve alone should have made
+    # unreachable, and then stayed dark for the rest of the calendar month.
+    #
+    # Debiting one call per observed response keeps the reserve enforceable
+    # from what the ledger can actually see. A real header always overwrites
+    # this estimate on the next response that carries one, so the local count
+    # is only ever a floor-preserving stand-in between real observations, and
+    # it is deliberately one-directional: it never credits budget back and
+    # never raises a reserve. Skipped on the run that crosses into a new
+    # period, where `remaining` is a stale reading of the period just ended
+    # and the reset probe -- not arithmetic here -- establishes the new one.
+    if (remaining_raw is None
+            and spec["window"] in ("calendar_day", "calendar_month")
+            and isinstance(entry.get("remaining"), int)
+            and not crossed_period):
+        entry["remaining"] = max(0, entry["remaining"] - 1)
     entry["observed_at"] = now.isoformat()
     markers = spec.get("quota_body_markers")
     if markers and body:
@@ -498,7 +521,16 @@ def check(provider, state_path=None):
         return
     state = _load_state(state_path)
     now = _now()
-    if provider in FAIL_CLOSED_WITHOUT_STATE and not state.get(provider):
+    # An entry can exist while carrying no usable count: a response that
+    # returned no remaining-count header still records observed_at and
+    # period_start, and that was enough to satisfy a bare `not state.get(...)`
+    # truthiness test. A provider whose very first response omitted the header
+    # therefore left a ledger entry that looked like state, passed the
+    # fail-closed guard, and then never blocked anything, because _check_one
+    # has no number to compare against a reserve. Fail closed on the reading,
+    # not on the entry.
+    if provider in FAIL_CLOSED_WITHOUT_STATE and not isinstance(
+            (state.get(provider) or {}).get("remaining"), int):
         if _bootstrap_allowed():
             return
         raise QuotaExceededError(

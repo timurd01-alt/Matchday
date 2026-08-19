@@ -148,6 +148,107 @@ class NextTaskTest(unittest.TestCase):
         for rule in GUARDRAILS:
             self.assertIn(rule, prompt)
 
+class ProductLoopSignalTests(unittest.TestCase):
+    """The UI audit and the data-coverage report as ranked task sources.
+
+    Both were added so the loop can act on the product itself, not only on the
+    models. Their ranking is the substance: an interface blocker is a live
+    defect and outranks research, while thin evidence and an unsourced feature
+    family are decisions about what to build next and must never outrank a
+    gate that is actively broken.
+    """
+
+    def _coverage(self, *gaps):
+        return {"schema_version": 1, "gaps": list(gaps)}
+
+    def _gap(self, kind="stale_feed", severity="critical", comp="EPL"):
+        return {"kind": kind, "severity": severity, "competition": comp,
+                "summary": f"{comp}: {kind} ({severity})"}
+
+    def _audit(self, *findings):
+        return {"schema_version": 1, "findings": list(findings)}
+
+    def _finding(self, severity="blocker", rule="contrast-below-floor"):
+        return {"rule": rule, "severity": severity, "file": "styles.css",
+                "line": 1561, "detail": f"{rule} detail", "snippet": ".x"}
+
+    def test_a_critical_data_gap_becomes_a_task(self):
+        with tempfile.TemporaryDirectory() as root:
+            write(root, "data_coverage_report.json", self._coverage(self._gap()))
+            report = build_report(root)
+        self.assertEqual(report["task"]["kind"], "data_gap_critical")
+        self.assertIn("EPL", report["prompt"])
+
+    def test_an_interface_blocker_becomes_a_task(self):
+        with tempfile.TemporaryDirectory() as root:
+            write(root, "ui_audit_report.json", self._audit(self._finding()))
+            report = build_report(root)
+        self.assertEqual(report["task"]["kind"], "ui_blocker")
+        self.assertIn("styles.css:1561", report["prompt"])
+
+    def test_a_broken_data_pipeline_outranks_an_interface_blocker(self):
+        with tempfile.TemporaryDirectory() as root:
+            write(root, "data_coverage_report.json", self._coverage(self._gap()))
+            write(root, "ui_audit_report.json", self._audit(self._finding()))
+            report = build_report(root)
+        self.assertEqual(report["task"]["kind"], "data_gap_critical")
+        self.assertIn("ui_blocker", [item["kind"] for item in report["deferred"]])
+
+    def test_an_interface_blocker_outranks_a_pending_experiment(self):
+        with tempfile.TemporaryDirectory() as root:
+            write(root, "ui_audit_report.json", self._audit(self._finding()))
+            write(root, "docs/experiments.json",
+                  {"experiments": [{"id": "x", "decision": "not_yet_run"}]})
+            report = build_report(root)
+        self.assertEqual(report["task"]["kind"], "ui_blocker")
+
+    def test_a_promotion_block_still_outranks_every_product_signal(self):
+        with tempfile.TemporaryDirectory() as root:
+            write(root, "promotion_readiness.json", readiness(gate(state="blocked")))
+            write(root, "data_coverage_report.json", self._coverage(self._gap()))
+            write(root, "ui_audit_report.json", self._audit(self._finding()))
+            report = build_report(root)
+        self.assertEqual(report["task"]["kind"], "promotion_blocked")
+
+    def test_warn_level_signals_rank_below_critical_ones(self):
+        with tempfile.TemporaryDirectory() as root:
+            write(root, "data_coverage_report.json",
+                  self._coverage(self._gap(kind="thin_evidence", severity="warn")))
+            write(root, "ui_audit_report.json", self._audit(self._finding("warn")))
+            report = build_report(root)
+        kinds = [report["task"]["kind"]] + [item["kind"] for item in report["deferred"]]
+        self.assertEqual(kinds, ["data_gap_warn", "ui_warn"])
+
+    def test_empty_reports_produce_no_task(self):
+        """A clean audit and a clean coverage report must leave the loop
+        silent rather than manufacturing a low-priority errand."""
+        with tempfile.TemporaryDirectory() as root:
+            write(root, "ui_audit_report.json", self._audit())
+            write(root, "data_coverage_report.json", self._coverage())
+            report = build_report(root)
+        self.assertIsNone(report["task"])
+        self.assertIn("No action needed", report["prompt"])
+
+    def test_malformed_reports_are_ignored_rather_than_crashing(self):
+        with tempfile.TemporaryDirectory() as root:
+            Path(root, "ui_audit_report.json").write_text("{oh no", encoding="utf-8")
+            Path(root, "data_coverage_report.json").write_text("[]", encoding="utf-8")
+            self.assertEqual(collect(root), [])
+
+    def test_the_ui_task_forbids_moving_the_threshold_instead_of_fixing(self):
+        with tempfile.TemporaryDirectory() as root:
+            write(root, "ui_audit_report.json", self._audit(self._finding()))
+            prompt = build_report(root)["prompt"]
+        self.assertIn("Do not widen a threshold", prompt)
+
+    def test_the_data_task_forbids_editing_the_measured_files(self):
+        with tempfile.TemporaryDirectory() as root:
+            write(root, "data_coverage_report.json", self._coverage(self._gap()))
+            prompt = build_report(root)["prompt"]
+        self.assertIn("changes the measurement rather than the problem", prompt)
+
+
+class GuardrailTest(unittest.TestCase):
     def test_guardrails_protect_bot_owned_and_frozen_files(self):
         joined = " ".join(GUARDRAILS)
         self.assertIn("picks_log", joined)

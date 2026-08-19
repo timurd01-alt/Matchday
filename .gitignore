@@ -80,3 +80,8 @@ promotion_readiness.json
 next_task.json
 clv_report.json
 independent_value_report.json
+
+# Derived each run from the shipped source and the cache-restored payloads;
+# regenerated, never authored.
+ui_audit_report.json
+data_coverage_report.json

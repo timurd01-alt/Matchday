@@ -66,6 +66,28 @@ and conflicts on a large generated JSON. Change the *code* that produces them
 and let the scheduled run regenerate the data. If a branch already carries such
 a change, resolve in favour of `main`'s copy.
 
+## Hashed artifacts are byte-sensitive
+
+Three places hash a checked-in file's raw bytes and freeze the digest into
+governance: the MLB challenger artifact (`mlb_challenger_store.py`), the CFB
+challenger (`build_cfb_challenger.py`), and every manual-review evidence file a
+release review binds to (`mlb_recovery.py`). A hash over bytes is only stable
+if the bytes are, so `.gitattributes` pins `eol=lf` repository-wide (`.bat`
+keeps CRLF for `cmd.exe`).
+
+This is not theoretical. `mlb_model_promotion.json` froze `f110758c...`, the
+CRLF rendering of the challenger produced by a Windows checkout under
+`core.autocrlf=true`, while CI checked the file out with LF and every shadow
+lock recorded `f0177891...`. Same model, two digests, and
+`exact_cohort_required` could never be satisfied — the gate spent weeks
+collecting prospective evidence it would have had to discard. Corrected
+2026-08-19 to the digest the evidence was recorded against, preserving it.
+
+Never "fix" such a mismatch by writing your local digest into a policy. Check
+whether the file is the same content rendered differently first;
+`test_mlb_model_promotion.py` now asserts the policy digest against the
+artifact on disk on every run.
+
 ## Provider quota is enforced, not assumed
 
 Confirmed live 2026-07-31: CFBD, CBBD, and The Odds API were all sitting at zero
@@ -102,8 +124,13 @@ most once per six hours; never use a paid data endpoint as a quota probe.
 
 ## Self-development loops
 
-Three loops keep the site improving. They are deliberately separate: the loop
+Five loops keep the site improving. They are deliberately separate: the loop
 that can write model code must never be the loop that decides a model ships.
+
+Every loop obeys the same rule: **report findings, never opinions.** A loop
+that fires without something concrete to point at makes the agent downstream
+invent work to justify the trigger. Each one below must be able to say
+nothing, and each has a test proving the silent case is reachable.
 
 **Loop A -- `check_promotion_readiness.py`** (hourly, in `deploy.yml`). Compares
 each frozen promotion policy against the prospective scorecard built from the
@@ -119,13 +146,45 @@ Add a gate by appending to `GATES`, naming the policy, the scorecard, and which
 pair of models the policy is about. That last part cannot be inferred: MLB's
 policy governs the capped blend, not the raw challenger.
 
-**Loop B -- `next_task.py`** (hourly). Ranks live signals from Loop A's report,
-`fetch_failure_*.json`, `provider_quota_state.json`, `market_benchmark_report.json`,
-and `docs/experiments.json`, then emits **one** scoped task prompt plus the
-guardrails. A quiet repository produces an explicit "no action needed, do not
-invent work". Adjust priorities in `PRIORITY`.
+**Loop B -- `ui_audit.py`** (hourly). Audits the shipped HTML/CSS against
+published interface requirements -- WCAG 2.2 AA contrast, focus visibility,
+tap-target size, heading order, `lang`, pinch-zoom, reduced motion -- plus the
+CLS and render-blocking budgets stated in the module. Writes
+`ui_audit_report.json`. Every finding names a file, a line and a rule.
 
-**Loop C -- the scheduled agent.** Consumes Loop B's prompt, works on a branch,
+It reports **violations only, never taste**. "Does this look modern?" is not a
+checkable question and a loop that asks it hourly answers it hourly; judging
+the design is the job of whoever picks the task up, arriving with evidence.
+Two false-positive classes are already fixed and regression-tested: a
+translucent background is unresolvable (not flattened to opaque), and a tap
+target is the selector's *subject* (not any interactive ancestor). When adding
+a rule, add its silent case too.
+
+**Loop C -- `data_coverage.py`** (hourly). Measures the gap between the inputs
+the models wanted and the data that arrived, writing `data_coverage_report.json`
+in four kinds: `missing_input` (absent on fixtures inside the 72h horizon),
+`stale_feed` (payload past its freshness budget while still publishing),
+`unsourced_family` (empty on every fixture everywhere -- a sourcing decision,
+not a repair), and `thin_evidence` (picks published with too little graded
+history to judge). Read-only.
+
+Off-season is never a gap: a competition with no imminent fixtures is skipped
+for input and freshness entirely, or NBA and NHL would be reported every hour
+for half the year. A family reported as globally unsourced is suppressed from
+the per-competition signal, so one absence is never reported twice.
+
+**Loop D -- `next_task.py`** (hourly). Ranks live signals from Loop A's report,
+Loops B and C's reports, `fetch_failure_*.json`, `provider_quota_state.json`,
+`market_benchmark_report.json`, and `docs/experiments.json`, then emits **one**
+scoped task prompt plus the guardrails. A quiet repository produces an explicit
+"no action needed, do not invent work". Adjust priorities in `PRIORITY`.
+
+The ranking encodes a judgement worth keeping: a broken data pipeline outranks
+an interface blocker, which outranks research questions, which outrank
+decisions about what to build next. Anything actively degrading what the site
+publishes comes before anything that merely could be better.
+
+**Loop E -- the scheduled agent.** Consumes Loop D's prompt, works on a branch,
 opens a PR. CI is the verifier; a human merges. It may *propose* a policy status
 change with evidence attached, never apply one, and never touch a
 `requirements` block, a quota reserve, or the bot-owned generated data.
