@@ -44,7 +44,10 @@ def _refresh_cfbd_quota_free(headers, timeout=25):
             remaining = payload.get("remainingCalls") if isinstance(payload, dict) else None
             if remaining is not None:
                 quota_headers["x-calllimit-remaining"] = str(remaining)
-        provider_quota.record_response("cfbd", quota_headers)
+        # Labelled explicitly: a zero-cost probe still belongs in the spend
+        # breakdown, or the accounting quietly under-reports the month.
+        provider_quota.record_response("cfbd", quota_headers,
+                                       url="https://api.collegefootballdata.com/info")
 
 
 def _get_json(url, headers=None, timeout=25, provider=None):
@@ -76,7 +79,7 @@ def _get_json(url, headers=None, timeout=25, provider=None):
         with urllib.request.urlopen(req, timeout=timeout) as response:
             body = response.read()
             if provider:
-                provider_quota.record_response(provider, response.headers)
+                provider_quota.record_response(provider, response.headers, url=url)
             return json.loads(body.decode("utf-8"))
     except urllib.error.HTTPError as exc:
         if provider:
@@ -85,7 +88,7 @@ def _get_json(url, headers=None, timeout=25, provider=None):
                 error_body = exc.read().decode("utf-8", "replace")
             except Exception:
                 pass
-            provider_quota.record_response(provider, exc.headers, error_body)
+            provider_quota.record_response(provider, exc.headers, error_body, url=url)
         raise ProviderError(str(exc)) from exc
     except Exception as exc:
         raise ProviderError(str(exc)) from exc
@@ -103,7 +106,7 @@ def _get_csv_text(url, headers=None, timeout=25, provider=None):
         with urllib.request.urlopen(req, timeout=timeout) as response:
             text = response.read().decode("utf-8")
             if provider:
-                provider_quota.record_response(provider, response.headers)
+                provider_quota.record_response(provider, response.headers, url=url)
             return text
     except urllib.error.HTTPError as exc:
         if provider:
@@ -112,7 +115,7 @@ def _get_csv_text(url, headers=None, timeout=25, provider=None):
                 error_body = exc.read().decode("utf-8", "replace")
             except Exception:
                 pass
-            provider_quota.record_response(provider, exc.headers, error_body)
+            provider_quota.record_response(provider, exc.headers, error_body, url=url)
         raise ProviderError(str(exc)) from exc
 
 

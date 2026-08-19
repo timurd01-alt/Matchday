@@ -492,3 +492,170 @@ class FetchDataWiringTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class SpendAccountingTests(unittest.TestCase):
+    """What Matchday spent, and on what.
+
+    The ledger recorded only what a provider said was left. It never recorded
+    what was spent or on which endpoint, so every cache TTL in the codebase
+    was a guess nobody could check, and cfbd's exhausted month could not be
+    traced to the call that drained it.
+    """
+
+    def setUp(self):
+        temp = tempfile.NamedTemporaryFile(suffix=".json", delete=False)
+        temp.close()
+        os.unlink(temp.name)
+        self.path = temp.name
+        self.addCleanup(lambda: os.path.exists(self.path) and os.unlink(self.path))
+        orig = pq._now
+        pq._now = lambda: datetime.datetime(2026, 8, 12, 9, tzinfo=datetime.timezone.utc)
+        self.addCleanup(setattr, pq, "_now", orig)
+
+    def _entry(self):
+        with open(self.path, encoding="utf-8") as handle:
+            return json.load(handle)["cfbd"]
+
+    def test_endpoint_key_drops_the_query_string(self):
+        self.assertEqual(
+            pq.endpoint_key("https://api.collegefootballdata.com/games?year=2026&x=1"),
+            "/games")
+
+    def test_endpoint_key_collapses_identifiers(self):
+        self.assertEqual(pq.endpoint_key("https://x.dev/teams/42"), "/teams/:id")
+
+    def test_endpoint_key_survives_junk(self):
+        for value in ("", None, "not a url"):
+            self.assertTrue(pq.endpoint_key(value).startswith("/"))
+
+    def test_spend_is_counted_per_endpoint(self):
+        for _ in range(3):
+            pq.record_response("cfbd", {"X-CallLimit-Remaining": "900"},
+                               state_path=self.path, url="https://x.dev/games?year=2026")
+        pq.record_response("cfbd", {"X-CallLimit-Remaining": "899"},
+                           state_path=self.path, url="https://x.dev/records")
+        entry = self._entry()
+        self.assertEqual(entry["spent"], 4)
+        self.assertEqual(entry["by_endpoint"], {"/games": 3, "/records": 1})
+
+    def test_spend_without_a_url_still_counts_the_call(self):
+        pq.record_response("cfbd", {"X-CallLimit-Remaining": "900"}, state_path=self.path)
+        self.assertEqual(self._entry()["spent"], 1)
+
+    def test_endpoint_cardinality_is_capped(self):
+        for index in range(pq.USAGE_ENDPOINT_CAP + 8):
+            pq.record_response("cfbd", {"X-CallLimit-Remaining": "900"},
+                               state_path=self.path, url=f"https://x.dev/e{index}")
+        usage = self._entry()["by_endpoint"]
+        self.assertLessEqual(len(usage), pq.USAGE_ENDPOINT_CAP + 1)
+        self.assertIn("(other)", usage)
+
+    def test_spend_resets_when_the_period_rolls_over(self):
+        pq.record_response("cfbd", {"X-CallLimit-Remaining": "900"},
+                           state_path=self.path, url="https://x.dev/games")
+        pq._now = lambda: datetime.datetime(2026, 9, 2, 9, tzinfo=datetime.timezone.utc)
+        pq.record_response("cfbd", {"X-CallLimit-Remaining": "999"},
+                           state_path=self.path, url="https://x.dev/games")
+        self.assertEqual(self._entry()["spent"], 1)
+
+    def test_daily_spend_resets_on_a_new_day(self):
+        pq.record_response("cfbd", {"X-CallLimit-Remaining": "900"}, state_path=self.path)
+        pq._now = lambda: datetime.datetime(2026, 8, 13, 9, tzinfo=datetime.timezone.utc)
+        pq.record_response("cfbd", {"X-CallLimit-Remaining": "899"}, state_path=self.path)
+        entry = self._entry()
+        self.assertEqual(entry["spent_today"], 1)
+        self.assertEqual(entry["spent"], 2)
+
+    def test_usage_report_summarises_the_period(self):
+        for _ in range(5):
+            pq.record_response("cfbd", {"X-CallLimit-Remaining": "900"},
+                               state_path=self.path, url="https://x.dev/games")
+        report = pq.usage_report(state_path=self.path)
+        self.assertEqual(report["cfbd"]["spent"], 5)
+        self.assertEqual(report["cfbd"]["top_endpoints"][0], ("/games", 5))
+
+
+class BudgetRationingTests(unittest.TestCase):
+    """The budget rations a month; the reserve only guards its end.
+
+    cfbd spent its entire 1,000-call month by 2026-08-10 with the reserve
+    working exactly as designed, then went dark for three weeks.
+    """
+
+    BUDGET = {
+        "schema_version": 1,
+        "defaults": {"tier": 3, "tier_day_share": {"1": 4.0, "2": 1.0, "3": 0.6, "4": 0.35}},
+        "providers": {"cfbd": {"period": "calendar_month", "ceiling": 1000,
+                               "daily_floor": 8, "tier1_may_exceed_daily": True}},
+    }
+
+    def setUp(self):
+        self.now = datetime.datetime(2026, 8, 15, 12, tzinfo=datetime.timezone.utc)
+        self.spec = pq.PROVIDER_SPECS["cfbd"]
+
+    def _state(self, spent_today, spent=100):
+        return {"cfbd": {"remaining": 500, "limit": 1000, "spent": spent,
+                         "spent_today": spent_today,
+                         "spend_day": pq._period_start("calendar_day", self.now).isoformat()}}
+
+    def _decide(self, tier, spent_today):
+        return pq.budget_decision("cfbd", tier, self._state(spent_today),
+                                  self.spec, self.now, self.BUDGET)
+
+    def test_a_low_tier_call_is_refused_once_its_share_is_spent(self):
+        self.assertIsNotNone(self._decide(4, spent_today=400))
+
+    def test_a_low_tier_call_is_allowed_while_budget_remains(self):
+        self.assertIsNone(self._decide(4, spent_today=0))
+
+    def test_a_lock_window_call_outranks_the_daily_allowance(self):
+        """Tier 1 freezes a pick permanently; rationing it to protect a
+        talent refresh would be the wrong trade every time."""
+        self.assertIsNone(self._decide(1, spent_today=100_000))
+
+    def test_tier_ordering_is_strict(self):
+        """On 2026-08-15 with 900 of 1000 left and 17 days to go the allowance
+        is ~53/day, so the tier thresholds are ~212 / 53 / 32 / 19. A day that
+        has spent 25 has used up tier 4's share and nothing else's."""
+        refused = [tier for tier in (1, 2, 3, 4)
+                   if self._decide(tier, spent_today=25) is not None]
+        self.assertEqual(refused, [4])
+
+    def test_pressure_closes_tiers_from_the_bottom_up(self):
+        self.assertEqual(
+            [tier for tier in (1, 2, 3, 4) if self._decide(tier, spent_today=35) is not None],
+            [3, 4])
+        self.assertEqual(
+            [tier for tier in (1, 2, 3, 4) if self._decide(tier, spent_today=60) is not None],
+            [2, 3, 4])
+
+    def test_no_budget_policy_means_no_rationing(self):
+        self.assertIsNone(pq.budget_decision("cfbd", 4, self._state(9999),
+                                             self.spec, self.now, {}))
+
+    def test_a_provider_without_a_ceiling_is_not_rationed(self):
+        budget = {"schema_version": 1, "defaults": self.BUDGET["defaults"],
+                  "providers": {"cfbd": {"ceiling": None, "daily_floor": 8}}}
+        state = {"cfbd": {"spent": 10, "spent_today": 9999}}
+        self.assertIsNone(pq.budget_decision("cfbd", 4, state, self.spec,
+                                             self.now, budget))
+
+    def test_yesterdays_counter_does_not_ration_today(self):
+        state = {"cfbd": {"remaining": 500, "limit": 1000, "spent": 100,
+                          "spent_today": 9999, "spend_day": "2026-08-14T00:00:00+00:00"}}
+        self.assertIsNone(pq.budget_decision("cfbd", 4, state, self.spec,
+                                             self.now, self.BUDGET))
+
+    def test_without_accounting_there_is_nothing_to_ration(self):
+        self.assertIsNone(pq.budget_decision("cfbd", 4, {"cfbd": {"remaining": 500}},
+                                             self.spec, self.now, self.BUDGET))
+
+    def test_the_checked_in_policy_parses_and_covers_metered_providers(self):
+        budget = pq.load_budget("quota_budget.json")
+        self.assertEqual(budget.get("schema_version"), 1)
+        for provider in ("cfbd", "cbbd", "odds_api"):
+            self.assertIn(provider, budget["providers"])
+
+    def test_a_missing_policy_file_is_not_an_error(self):
+        self.assertEqual(pq.load_budget("no_such_budget_file.json"), {})

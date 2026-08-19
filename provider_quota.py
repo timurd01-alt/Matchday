@@ -215,7 +215,73 @@ def _period_start(window, when):
     return None
 
 
-def _record_one(state, key, spec, headers, body, now):
+# How many distinct endpoints to keep per provider. A provider whose URLs
+# carry unbounded identifiers would otherwise grow the ledger without limit;
+# the point is to see where a budget goes, and the long tail past this many
+# endpoints is not where it goes.
+USAGE_ENDPOINT_CAP = 24
+
+
+def endpoint_key(url):
+    """A stable, low-cardinality label for what a call was spent on.
+
+    Budget accounting is only useful if the same logical endpoint reports
+    under the same name across a month, so the query string goes (that is
+    where `year=2026` lives) and path segments that look like identifiers
+    collapse to `:id`. `/games?year=2026&classification=fbs` and
+    `/games?year=2025` are the same line item; `/teams/42` and `/teams/97`
+    are `/teams/:id`.
+    """
+    text = str(url or "")
+    path = text.split("://", 1)[-1]
+    path = path.split("/", 1)[1] if "/" in path else ""
+    path = path.split("?", 1)[0].split("#", 1)[0]
+    parts = []
+    for segment in path.split("/"):
+        if not segment:
+            continue
+        looks_like_id = segment.isdigit() or (
+            len(segment) > 12 and any(char.isdigit() for char in segment))
+        parts.append(":id" if looks_like_id else segment)
+    return "/" + "/".join(parts[:3]) if parts else "/"
+
+
+def _record_spend(entry, spec, endpoint, now, crossed_period):
+    """Count what this run actually spent, per period and per endpoint.
+
+    The ledger has always recorded what a provider *said was left*. It never
+    recorded what Matchday *spent, or on what*, so every cache TTL in the
+    codebase is a guess nobody can check and an exhausted budget cannot be
+    traced to the call that drained it. cfbd burned 1,000 calls by 2026-08-10
+    and there is still no way to say which endpoint did it.
+    """
+    period = _period_start(spec["window"], now).isoformat() if spec["window"] in (
+        "calendar_day", "calendar_month") else "rolling"
+    if entry.get("spend_period") != period or crossed_period:
+        entry["spend_period"] = period
+        entry["spent"] = 0
+        entry["by_endpoint"] = {}
+    entry["spent"] = int(entry.get("spent") or 0) + 1
+    # Daily spend is tracked separately from period spend: the budget rations
+    # a day at a time, and a period total cannot say whether today has already
+    # had its share.
+    day = _period_start("calendar_day", now).isoformat()
+    if entry.get("spend_day") != day:
+        entry["spend_day"] = day
+        entry["spent_today"] = 0
+    entry["spent_today"] = int(entry.get("spent_today") or 0) + 1
+    if endpoint:
+        usage = entry.get("by_endpoint")
+        if not isinstance(usage, dict):
+            usage = {}
+        if endpoint in usage or len(usage) < USAGE_ENDPOINT_CAP:
+            usage[endpoint] = int(usage.get(endpoint) or 0) + 1
+        else:
+            usage["(other)"] = int(usage.get("(other)") or 0) + 1
+        entry["by_endpoint"] = usage
+
+
+def _record_one(state, key, spec, headers, body, now, endpoint=None):
     remaining_raw = _header(headers, spec["remaining_header"]) if spec.get("remaining_header") else None
     entry = state.get(key, {})
     previous_period = entry.get("period_start")
@@ -293,6 +359,7 @@ def _record_one(state, key, spec, headers, body, now):
             and isinstance(entry.get("remaining"), int)
             and not crossed_period):
         entry["remaining"] = max(0, entry["remaining"] - 1)
+    _record_spend(entry, spec, endpoint, now, crossed_period)
     entry["observed_at"] = now.isoformat()
     markers = spec.get("quota_body_markers")
     if markers and body:
@@ -304,20 +371,28 @@ def _record_one(state, key, spec, headers, body, now):
     return quota_hit
 
 
-def record_response(provider, headers, body=None, state_path=None):
+def record_response(provider, headers, body=None, state_path=None, url=None):
     """Update the persisted ledger from one real HTTP response's headers
     (and, for CFBD/CBBD, the response body -- they carry no numeric total,
-    only a "Monthly call quota exceeded" message once actually exhausted)."""
+    only a "Monthly call quota exceeded" message once actually exhausted).
+
+    `url`, when given, is reduced to a low-cardinality endpoint label and
+    counted, so a month's spend can be attributed to the calls that made it.
+    Callers that omit it still update the ledger exactly as before; only the
+    per-endpoint breakdown is lost.
+    """
     spec = PROVIDER_SPECS.get(provider)
     if not spec:
         return
     state = _load_state(state_path)
     now = _now()
+    endpoint = endpoint_key(url) if url else None
     if "sub_keys" in spec:
         for sub_name, sub_spec in spec["sub_keys"].items():
-            _record_one(state, f"{provider}:{sub_name}", sub_spec, headers, body, now)
+            _record_one(state, f"{provider}:{sub_name}", sub_spec, headers, body,
+                        now, endpoint)
     else:
-        _record_one(state, provider, spec, headers, body, now)
+        _record_one(state, provider, spec, headers, body, now, endpoint)
     _save_state(state, state_path)
 
 
@@ -510,12 +585,19 @@ def _check_one(state, key, spec, now):
     return _pace_reason(key, spec, entry, now)
 
 
-def check(provider, state_path=None):
+def check(provider, state_path=None, tier=None):
     """Raise QuotaExceededError if the ledger shows this provider at or below
     its safety reserve for the currently-tracked window. Silent (no-op) for
     unknown providers. CFBD and The Odds API fail closed when their persisted
     ledger is missing; a deliberate bootstrap probe requires an explicit
-    environment opt-in."""
+    environment opt-in.
+
+    `tier` states how much this particular call is worth (see quota_budget
+    .json): 1 is a fixture inside its lock window, 4 is slow-moving background
+    data. Omitted, it takes the policy default. The reserve is checked first
+    and independently -- the budget can only ration spending that the reserve
+    would already have permitted, never authorise a call it would refuse.
+    """
     spec = PROVIDER_SPECS.get(provider)
     if not spec:
         return
@@ -544,9 +626,152 @@ def check(provider, state_path=None):
         _save_state(state, state_path)
         return
     reason = _check_one(state, provider, spec, now)
+    if reason is None:
+        budget = load_budget()
+        effective_tier = tier if tier is not None else (
+            (budget.get("defaults") or {}).get("tier", 3))
+        verdict = budget_decision(provider, effective_tier, state, spec, now, budget)
+        if verdict:
+            # Advisory mode records the refusal it would have made instead of
+            # making it. The allowances are derived from a ceiling and a
+            # calendar rather than from measured behaviour, so enforcing them
+            # before a period of accounting exists would ration real calls
+            # against a guess -- the same mistake as the fixed cache TTLs this
+            # is meant to replace. The counter is the evidence for flipping
+            # `enforce` later.
+            if budget.get("enforce") is True:
+                reason = verdict
+            else:
+                entry = state.setdefault(provider, {})
+                entry["budget_would_decline"] = int(
+                    entry.get("budget_would_decline") or 0) + 1
+                entry["budget_last_advice"] = verdict
     _save_state(state, state_path)
     if reason:
         raise QuotaExceededError(reason)
+
+
+BUDGET_FILE = "quota_budget.json"
+_BUDGET_CACHE = {}
+
+
+def load_budget(path=None):
+    """The rationing policy, or {} when it is absent or unreadable.
+
+    Absent means "no budget enforcement", not "refuse everything". A missing
+    policy file must never take the site's data down -- the hard reserve in
+    check() is the safety mechanism and it does not depend on this.
+    """
+    target = path or BUDGET_FILE
+    try:
+        mtime = os.path.getmtime(target)
+    except OSError:
+        return {}
+    cached = _BUDGET_CACHE.get(target)
+    if cached and cached[0] == mtime:
+        return cached[1]
+    try:
+        with open(target, encoding="utf-8") as handle:
+            payload = json.load(handle)
+    except (OSError, ValueError):
+        return {}
+    if not isinstance(payload, dict) or payload.get("schema_version") != 1:
+        return {}
+    _BUDGET_CACHE[target] = (mtime, payload)
+    return payload
+
+
+def _days_in_period(spec, now):
+    if spec["window"] == "calendar_month":
+        start = _period_start("calendar_month", now)
+        if start.month == 12:
+            nxt = start.replace(year=start.year + 1, month=1)
+        else:
+            nxt = start.replace(month=start.month + 1)
+        return (nxt - start).days
+    return 1
+
+
+def budget_decision(provider, tier, state, spec, now, budget=None):
+    """Whether a tier-`tier` call fits today's allowance. None means allowed.
+
+    The allowance is the budget still unspent divided by the days still left
+    in the period, so an underspent week raises the daily figure rather than
+    expiring, and an overspent one lowers it. Each tier may use a stated
+    multiple of that: tier 1 up to 4x (a lock window is worth borrowing
+    against a quiet Tuesday for), tier 4 barely a third of it.
+
+    Deliberately advisory-only in one direction: this can refuse a low-tier
+    call while budget remains, but it never *grants* one the reserve would
+    refuse. check() applies the reserve first and this second.
+    """
+    budget = load_budget() if budget is None else budget
+    providers = budget.get("providers") or {}
+    rules = providers.get(provider)
+    if not isinstance(rules, dict):
+        return None
+    entry = state.get(provider) or {}
+    spent = entry.get("spent")
+    if not isinstance(spent, int):
+        return None  # no accounting yet; nothing to ration against
+    ceiling = rules.get("ceiling") or entry.get("limit") or spec.get("known_limit")
+    if not ceiling:
+        return None  # no verified ceiling means no derivable allowance
+    remaining_budget = max(0, int(ceiling) - spent)
+    days_total = _days_in_period(spec, now)
+    day_index = min(days_total, max(1, now.day if spec["window"] == "calendar_month" else 1))
+    days_left = max(1, days_total - day_index + 1)
+    allowance = max(float(rules.get("daily_floor") or 0),
+                    remaining_budget / days_left)
+    shares = (budget.get("defaults") or {}).get("tier_day_share") or {}
+    share = shares.get(str(tier))
+    try:
+        share = float(share)
+    except (TypeError, ValueError):
+        return None
+    # A counter from an earlier day is not today's spend. Reading it as such
+    # would ration a fresh day against yesterday's total and refuse calls that
+    # have a full allowance waiting for them.
+    today = _period_start("calendar_day", now).isoformat()
+    spent_today = int(entry.get("spent_today") or 0) if entry.get("spend_day") == today else 0
+    if spent_today < allowance * share:
+        return None
+    if tier == 1 and rules.get("tier1_may_exceed_daily"):
+        return None
+    return (f"{provider}: tier-{tier} call declined by the daily budget "
+            f"({spent_today} spent today against an allowance of "
+            f"{allowance:.0f} x {share} for this tier; {remaining_budget} of "
+            f"{ceiling} left with {days_left} day(s) in the period)")
+
+
+def usage_report(state_path=None):
+    """What each provider has spent this period, and on which endpoints.
+
+    Structured rather than printed so `next_task.py` can rank it and a human
+    can read it. This is the evidence every cache-TTL decision in the codebase
+    has been made without.
+    """
+    state = _load_state(state_path)
+    report = {}
+    for key in sorted(state):
+        entry = state[key]
+        if not isinstance(entry, dict):
+            continue
+        spent = entry.get("spent")
+        if not isinstance(spent, int):
+            continue
+        usage = entry.get("by_endpoint") if isinstance(entry.get("by_endpoint"), dict) else {}
+        spec = PROVIDER_SPECS.get(key.split(":", 1)[0], {})
+        ceiling = entry.get("limit") or spec.get("known_limit")
+        report[key] = {
+            "spent": spent,
+            "period": entry.get("spend_period"),
+            "remaining": entry.get("remaining"),
+            "ceiling": ceiling,
+            "share_of_ceiling": round(spent / ceiling, 4) if ceiling else None,
+            "top_endpoints": sorted(usage.items(), key=lambda kv: (-kv[1], kv[0]))[:8],
+        }
+    return report
 
 
 def status(state_path=None):

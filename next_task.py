@@ -163,15 +163,41 @@ def _quota_candidates(base: Path) -> list[dict[str, Any]]:
                            f"(observed {entry.get('observed_at', '?')})")
     if not starved:
         return []
+    # Attach where the budget actually went. A task that says "cfbd is empty"
+    # sends someone to guess at cache windows; one that says "/games took 612
+    # of 1000 calls" sends them to the line that spent it.
+    spend = []
+    for key, entry in sorted(state.items()):
+        if not isinstance(entry, dict) or not isinstance(entry.get("spent"), int):
+            continue
+        top = entry.get("by_endpoint")
+        if isinstance(top, dict) and top:
+            ranked = sorted(top.items(), key=lambda kv: (-kv[1], kv[0]))[:4]
+            spend.append(f"{key} spent {entry['spent']} this period ("
+                         + ", ".join(f"{name} x{count}" for name, count in ranked) + ")")
+        else:
+            spend.append(f"{key} spent {entry['spent']} this period")
+    advisory = [f"{key}: budget would have declined {entry['budget_would_decline']} call(s)"
+                for key, entry in sorted(state.items())
+                if isinstance(entry, dict)
+                and isinstance(entry.get("budget_would_decline"), int)]
+    why = "; ".join(starved)
+    if spend:
+        why += " | spend: " + "; ".join(spend)
+    if advisory:
+        why += " | " + "; ".join(advisory)
     return [_candidate(
         "provider_quota",
         f"{len(starved)} provider(s) at their safety reserve",
-        "; ".join(starved),
+        why,
         "These providers are being refused before they fire, so the data they feed is "
-        "degrading. Check whether the cadence, cache windows, or call sites can be reduced "
-        "to fit the real budget. Never raise a reserve or bypass the quota check to make "
-        "calls succeed.",
-        ["provider_quota.py", "multi_fetch.py", ".github/workflows/deploy.yml"])]
+        "degrading. Use the per-endpoint spend above to find what actually consumed the "
+        "budget, then reduce that call's cadence or widen its cache window -- do not "
+        "guess at a TTL. Never raise a reserve, relax quota_budget.json, or bypass the "
+        "quota check to make calls succeed. If the budget is merely mis-shaped rather "
+        "than overspent, say so and propose the allowance change instead of applying it.",
+        ["provider_quota.py", "quota_budget.json", "multi_fetch.py",
+         ".github/workflows/deploy.yml"])]
 
 
 def _market_segment_candidates(base: Path) -> list[dict[str, Any]]:

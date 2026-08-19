@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "policy_version": "quota-budget-1",
+  "note": "Rationing rules as data, not constants scattered through fetch code. The reserve in provider_quota.PROVIDER_SPECS is a floor -- it stops a provider hitting zero. This is the budget: it decides who may spend while budget still exists. cfbd burned its whole 1,000-call month by 2026-08-10 and went dark for three weeks with the reserve working exactly as designed, because nothing rationed the month.",
+  "tiers": {
+    "1": "A fixture inside its lock window. A pick is about to be frozen permanently and cannot be revised, so this is the one call whose data quality is irreversible.",
+    "2": "A fixture kicking off today. Wrong or stale data here is published to users while it matters.",
+    "3": "Standings, rankings, tables. Visible, but a few hours stale changes nothing a reader would notice.",
+    "4": "Leaders, talent, season backfill, advanced metrics. Slow-moving; a day stale is indistinguishable from fresh."
+  },
+  "enforce": false,
+  "enforce_note": "Advisory until a full period of spend accounting exists. The allowances below are derived from a ceiling and a calendar, not from measured behaviour, so enforcing them today would ration real calls against a guess -- the same mistake as the fixed cache TTLs this replaces. While false, budget_decision() still computes and reports every refusal it would have made, so a month of hindsight is available before anything is actually declined. Set true once usage_report() shows where the budget really goes.",
+  "defaults": {
+    "tier": 3,
+    "tier_day_share": {
+      "1": 4.0,
+      "2": 1.0,
+      "3": 0.6,
+      "4": 0.35
+    }
+  },
+  "providers": {
+    "cfbd": {
+      "period": "calendar_month",
+      "ceiling": 1000,
+      "daily_floor": 8,
+      "tier1_may_exceed_daily": true,
+      "note": "Free tier verified at 1,000/month. NCAAF plays Saturdays, so an even daily split starves the day that matters; day_share lets a game day borrow against the quiet days around it."
+    },
+    "cbbd": {
+      "period": "calendar_month",
+      "ceiling": null,
+      "daily_floor": 8,
+      "tier1_may_exceed_daily": true,
+      "note": "No verified ceiling is configured, so no daily allowance can be derived. Enforcement stays reserve-only until a real ceiling is read off a live response."
+    },
+    "odds_api": {
+      "period": "calendar_month",
+      "ceiling": 500,
+      "daily_floor": 4,
+      "tier1_may_exceed_daily": true,
+      "note": "Ceiling is derived live from remaining+used, so the stored value is a fallback for a cold ledger."
+    }
+  }
+}

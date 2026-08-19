@@ -122,6 +122,42 @@ stored CFBD or Odds balance would block a call, their documented zero-cost
 status endpoints (`/info` and `/v4/sports`) may reconcile the real balance at
 most once per six hours; never use a paid data endpoint as a quota probe.
 
+## Quota is a budget, not just a floor
+
+The reserve in `PROVIDER_SPECS` stops a provider reaching zero. It does not
+ration the period, which is why cfbd spent its entire 1,000-call month by
+2026-08-10 and went dark for three weeks with the reserve working exactly as
+designed. Two pieces address that, and they were built in that order on
+purpose.
+
+**Accounting (`entry["spent"]`, `entry["by_endpoint"]`).** The ledger used to
+record only what a provider *said was left*, never what Matchday *spent or on
+what*, so every cache TTL in this codebase was a guess nobody could check and
+an exhausted budget could not be traced to the call that drained it. Pass
+`url=` to `record_response()` and the spend is attributed;
+`provider_quota.usage_report()` returns per-period totals and the top
+endpoints, and `next_task.py` attaches them to any quota task so it names the
+call that spent the budget instead of asking someone to guess at a TTL.
+
+**Budget (`quota_budget.json`).** A daily allowance derived from budget
+remaining over days remaining, with four call tiers: 1 is a fixture inside its
+lock window (a pick about to be frozen permanently), 4 is slow-moving
+background data. Each tier may use a stated multiple of the day's allowance,
+so pressure closes tiers from the bottom up and a lock-window call is the last
+thing to be refused. Pass `tier=` to `check()`; omitted, it takes the policy
+default.
+
+**It ships advisory (`"enforce": false`).** The allowances are derived from a
+ceiling and a calendar, not from measured behaviour -- enforcing them before a
+period of accounting exists would ration real calls against a guess, which is
+the mistake the fixed TTLs already make. While advisory, every refusal it
+*would* have made is counted in `budget_would_decline`. Flip `enforce` once
+`usage_report()` shows where the budget actually goes, not before.
+
+Never relax an allowance or a reserve to make calls succeed. If the budget is
+mis-shaped rather than overspent, propose the change with the spend data
+attached.
+
 ## Self-development loops
 
 Five loops keep the site improving. They are deliberately separate: the loop
