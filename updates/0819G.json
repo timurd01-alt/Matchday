@@ -1,0 +1,12 @@
+{
+  "rank": 164,
+  "date": "Build 0819G",
+  "tag": "Speed",
+  "title": "A 1.2MB logo displayed at 76 pixels",
+  "items": [
+    "Matchday's welcome screen and hero band both loaded a 1254x1254 logo weighing 1.18MB, to display it in a 76-pixel square. Both now use the 192-pixel icon at 35KB — the same image, 97% less to download.",
+    "That single file was roughly four times the weight of every stylesheet and script the page needs before it can render, and it loaded on first visit.",
+    "The result badge for a loss showed white text on red at a 2.99:1 contrast ratio, just under the readable minimum. It now uses the same dark ink the win badge already used.",
+    "The interface audit that missed both has been extended: it now weighs images against a budget, and reads the markup built in JavaScript rather than only the HTML files — which is where the second copy of the logo was hiding."
+  ]
+}

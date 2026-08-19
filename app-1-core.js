@@ -542,7 +542,7 @@ function landingHero(){
   const rec=sc&&sc.graded?`<span class="heroRec"><b>${sc.model_hits}-${sc.graded-sc.model_hits}</b> record</span>${sc.brier!=null?`<span class="heroRec">Probability accuracy ${metricHelp('Brier score','Measures probability accuracy. Lower is better.')} <b>${sc.brier}</b></span>`:''}${sc.clv_avg!=null?`<span class="heroRec">Market movement ${metricHelp('Closing line value','How the recorded probability compares with the final market snapshot.')} <b>${sc.clv_avg>0?'+':''}${sc.clv_avg}</b></span>`:''}`:`<span class="heroRec faintline">Model record begins as completed picks are graded</span>`;
   if(slim)return `<div class="heroSlim">${rec}<button class="heroSlimLink" type="button" onclick="setView('score')">Open scorecard <span aria-hidden="true">→</span></button></div>`;
   return `<div class="heroBand">
-    <img src="logo.png?v=4" class="heroLogo" alt="Matchday">
+    <img src="icon-192.png?v=4" class="heroLogo" alt="Matchday" width="192" height="192">
     <div class="heroTitle">A transparent sports model.</div>
     <div class="heroSub">Every pick locked before kickoff and graded in public — information anyone can use, with no ads and a fully accountable model.</div>
     <div class="heroRow">${rec}</div>
