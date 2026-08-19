@@ -707,7 +707,9 @@ if(Object.prototype.hasOwnProperty.call(SPORT_LABELS,requestedSport)){
   try{localStorage.setItem('matchday.sport',DATA_FILE)}catch(e){}
 }
 const initialView=requestedView&&document.getElementById('view-'+requestedView)?requestedView:(SETTINGS.defaultView||'matches');
-applySettings();applySportNav();setView(initialView);load().then(()=>{
+applySettings();applySportNav();setView(initialView);
+bootAccount(); // resolves a returning sign-in redirect, or restores an existing session
+load().then(()=>{
   if(requestedView&&document.getElementById('view-'+requestedView))setView(requestedView);
   if(requestedMatch&&BYID[requestedMatch])openMatchModal(requestedMatch);
 });

@@ -805,6 +805,78 @@ const LEADERBOARD_URL = "https://matchday-lake-omega.vercel.app/api/leaderboard"
 function deviceId(){let id;try{id=localStorage.getItem('matchday.device')}catch(e){}
   if(!id){id='mdx-'+Math.random().toString(36).slice(2)+Date.now().toString(36);try{localStorage.setItem('matchday.device',id)}catch(e){}}return id;}
 function myHandle(){try{return localStorage.getItem('matchday.handle')||''}catch(e){return ''}}
+// ---- Accounts: identity that outlives the browser ------------------------
+// A device id lives and dies with localStorage, so clearing a browser or
+// switching devices used to mean a new handle and an empty record. Signing in
+// with Google/GitHub maps this browser onto a durable server-side account; the
+// session token below is disposable, because signing in again finds the same
+// account. Anonymous play is unchanged for anyone who never signs in.
+const AUTH_BASE=LEADERBOARD_URL?LEADERBOARD_URL.replace(/\/api\/leaderboard\/?$/,''):'';
+let ACCOUNT={signedIn:false,handle:'',canReshuffle:false};
+let AUTH_PROVIDERS=[];
+function authToken(){try{return localStorage.getItem('matchday.session')||''}catch(e){return ''}}
+function setAuthToken(t){try{t?localStorage.setItem('matchday.session',t):localStorage.removeItem('matchday.session')}catch(e){}}
+function applyAccount(d){
+  if(!d)return;
+  // `canReshuffle` is absent from pick responses; absent means unchanged, not false.
+  ACCOUNT={signedIn:!!d.signedIn,handle:d.handle||ACCOUNT.handle,
+    canReshuffle:d.canReshuffle===undefined?ACCOUNT.canReshuffle:!!d.canReshuffle};
+  if(d.handle){try{localStorage.setItem('matchday.handle',d.handle);localStorage.setItem('matchday.handleAssigned','1')}catch(e){}}
+}
+async function lbPost(action,body){
+  if(!LEADERBOARD_URL)return null;
+  try{const r=await fetch(LEADERBOARD_URL+'?action='+action,{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({token:authToken()||undefined,...body})});return await r.json();}catch(e){return null;}
+}
+function signIn(provider){
+  if(!AUTH_BASE)return;
+  const url=AUTH_BASE+'/api/auth?provider='+encodeURIComponent(provider)
+    +'&return='+encodeURIComponent(location.origin)+'&deviceId='+encodeURIComponent(deviceId());
+  location.assign(url);
+}
+async function signOut(){
+  await lbPost('signout',{});
+  setAuthToken('');ACCOUNT={signedIn:false,handle:'',canReshuffle:false};SIGNIN_CLAIMED=0;
+  // Drop the account's handle too, or a guest would keep wearing a name the
+  // board no longer knows them by.
+  try{localStorage.removeItem('matchday.handle');localStorage.removeItem('matchday.handleAssigned')}catch(e){}
+  // The local record stays put; only the server identity is released.
+  try{renderCommunity()}catch(e){}
+}
+let SIGNIN_ERROR='';
+let SIGNIN_CLAIMED=0;
+// The callback hands back a single-use code in the fragment (never sent to a
+// server). Trade it for a session token, then scrub it from the URL so a
+// shared or reloaded link cannot replay a sign-in.
+async function consumeSigninRedirect(){
+  const m=/(?:^|&)mdsignin=([^&]+)/.exec(String(location.hash||'').replace(/^#/,''));
+  if(!m)return false;
+  const code=decodeURIComponent(m[1]);
+  history.replaceState(null,'',location.pathname+location.search);
+  if(code==='cancelled'||code==='failed'){SIGNIN_ERROR=code==='cancelled'?'Sign-in cancelled.':'Sign-in failed — please try again.';return false;}
+  const d=await lbPost('session-exchange',{code,deviceId:deviceId()});
+  if(d&&d.ok){applyAccount(d);SIGNIN_CLAIMED=Number(d.claimed||0);return true;}
+  SIGNIN_ERROR='Sign-in failed — please try again.';return false;
+}
+async function refreshSession(){
+  if(!authToken())return;
+  const d=await lbPost('session',{});
+  if(d&&d.ok){applyAccount(d);if(!d.signedIn)setAuthToken('');}
+}
+async function loadAuthProviders(){
+  if(!LEADERBOARD_URL)return;
+  try{const r=await fetch(LEADERBOARD_URL+'?action=providers');const d=await r.json();
+    if(d&&d.ok)AUTH_PROVIDERS=d.providers||[];}catch(e){}
+}
+async function bootAccount(){
+  if(!LEADERBOARD_URL)return;
+  await loadAuthProviders();
+  const signedInNow=await consumeSigninRedirect();
+  if(!signedInNow)await refreshSession();
+  // The community view may already have painted a guest state while this was
+  // in flight, so repaint it whether or not it is the visible tab.
+  try{renderCommunity()}catch(e){}
+}
 // ---- Community identity: assigned real-player names, never free text ------
 // A free-text handle on a shared public board is an open door for offensive
 // or trolling names. Rather than moderate input, there's no input at all --
@@ -840,25 +912,32 @@ function assignHandle(){
   try{localStorage.setItem('matchday.handle',h);localStorage.setItem('matchday.handleAssigned','1');localStorage.setItem('matchday.handleReshuffled','0')}catch(e){}
   return h;
 }
-function canReshuffleHandle(){try{return localStorage.getItem('matchday.handleReshuffled')!=='1'}catch(e){return false}}
-function reshuffleHandle(){
+function canReshuffleHandle(){
+  if(ACCOUNT.signedIn)return ACCOUNT.canReshuffle; // the account, not the browser, owns the one reshuffle
+  try{return localStorage.getItem('matchday.handleReshuffled')!=='1'}catch(e){return false}
+}
+async function reshuffleHandle(){
   if(!canReshuffleHandle())return;
+  if(ACCOUNT.signedIn){
+    const d=await lbPost('reshuffle',{});
+    if(d&&d.ok)applyAccount({signedIn:true,handle:d.handle,canReshuffle:false});
+    renderCommunity();return;
+  }
   const base=myHandle().replace(/\s#\d+$/,'');
   const h=_drawHandle(base);
   try{localStorage.setItem('matchday.handle',h);localStorage.setItem('matchday.handleReshuffled','1')}catch(e){}
   renderCommunity();
 }
 function ensureHandle(){
+  if(ACCOUNT.signedIn)return; // server-assigned, and it outranks anything local
   try{
     const assigned=localStorage.getItem('matchday.handleAssigned')==='1';
     if(!myHandle()||!assigned)assignHandle(); // first-time visitor, or force-migrates an old free-text handle
   }catch(e){}
 }
 async function pushScore(){ // server grades only picks it locked before kickoff
-  if(!LEADERBOARD_URL)return;
-  try{const r=await fetch(LEADERBOARD_URL+'?action=sync',{method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({deviceId:deviceId()})});const d=await r.json();
-    if(d.ok&&d.handle){localStorage.setItem('matchday.handle',d.handle);localStorage.setItem('matchday.handleAssigned','1')}}catch(e){}
+  const d=await lbPost('sync',{deviceId:deviceId()});
+  if(d&&d.ok)applyAccount(d);
 }
 async function fetchLeaderboard(period){
   if(!LEADERBOARD_URL)return null;
@@ -874,10 +953,8 @@ function btmScoped(db){const scope=communityScope();if(scope==='ALL')return db;
   return {...db,picks};}
 function isCommunityPickOpen(m){const kickoff=kickMs(m);return m?.status==='UPCOMING'&&kickoff> Date.now()&&!isStaleUpcoming(m)}
 async function lockGlobalPick(matchId,pick,comp){
-  if(!LEADERBOARD_URL)return;
-  try{const r=await fetch(LEADERBOARD_URL+'?action=pick',{method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({deviceId:deviceId(),matchId:String(matchId),pick,comp:String(comp||'').toLowerCase()})});
-    const d=await r.json();if(d.ok&&d.handle){localStorage.setItem('matchday.handle',d.handle);localStorage.setItem('matchday.handleAssigned','1')}}catch(e){}
+  const d=await lbPost('pick',{deviceId:deviceId(),matchId:String(matchId),pick,comp:String(comp||'').toLowerCase()});
+  if(d&&d.ok)applyAccount(d);
 }
 function submitPick(matchId,pick){
   ensureHandle();

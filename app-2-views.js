@@ -116,6 +116,23 @@ function renderWeeklyAwards(){
   if(!cards.length)return '';
   return `<div class="seclbl" style="margin-top:4px">Weekly awards</div><div class="status-grid weeklyAwards">${cards.map(c=>`<div class="statuscard info"><span class="slbl">${c.label}</span><div class="sval" style="font-size:1rem">${c.title}</div><div class="hint">${c.sub}</div></div>`).join('')}</div>`;
 }
+// Signed out, a handle belongs to one browser and dies with its storage.
+// Signed in, it belongs to an account, so the record follows the person to a
+// new browser or a second device.
+function renderAccountRow(){
+  const providerLabel={google:'Google',github:'GitHub'};
+  if(ACCOUNT.signedIn){
+    const moved=SIGNIN_CLAIMED?` <b>${SIGNIN_CLAIMED} earlier pick${SIGNIN_CLAIMED===1?'':'s'} moved across.</b>`:'';
+    return `<div class="acctRow signedIn"><span class="acctState">&#10003; Signed in — this handle and record are saved to your account.${moved}</span>
+      <button class="btmbtn" onclick="signOut()">Sign out</button></div>`;
+  }
+  const buttons=(AUTH_PROVIDERS.length?AUTH_PROVIDERS:[]).map(p=>
+    `<button class="btmbtn" onclick="signIn('${esc(p)}')">Continue with ${esc(providerLabel[p]||p)}</button>`).join('');
+  const note=SIGNIN_ERROR?`<span class="acctErr">${esc(SIGNIN_ERROR)}</span>`:'';
+  if(!buttons)return note?`<div class="acctRow">${note}</div>`:'';
+  return `<div class="acctRow"><span class="acctState">Playing as a guest — clearing this browser loses your handle and record. Sign in to keep them.</span>
+    <span class="acctBtns">${buttons}</span>${note}</div>`;
+}
 function renderCommunity(){ensureHandle();const host=$('#view-community');const fullDb=btmGrade();const db=btmScoped(fullDb);const s=btmStats(db);
   const scopeName=communityScope()==='ALL'?'All sports':(DATA.competition||DATA.comp_key||'This sport');
   const eligible=(DATA.matches||[]).filter(m=>isCommunityPickOpen(m)&&m.prediction&&communityPickProbs(m)).sort((a,b)=>(a.kickoff||'').localeCompare(b.kickoff||''));
@@ -181,6 +198,7 @@ function renderCommunity(){ensureHandle();const host=$('#view-community');const 
     const tab=(p,label)=>`<button class="lbTab ${p===period?'on':''}" onclick="setLbPeriod('${p}')">${label}</button>`;
     h+=`<div class="seclbl" style="margin-top:20px">Global leaderboard</div>`;
     h+=`<div class="btmmeta" style="margin-bottom:8px">You appear as <b>${esc(hn)}</b> — assigned automatically so the board stays free of offensive names.${canReshuffleHandle()?` <button class="btmbtn" style="margin-left:8px;padding:3px 9px;font-size:.72rem" onclick="reshuffleHandle()">Reshuffle (1 left)</button>`:''}</div>`;
+    h+=renderAccountRow();
     h+=`<div class="lbTabs">${tab('all','All time')}${tab('week','This week')}${tab('month','This month')}</div>`;
     h+=`<div id="lbBoard" class="empty">Loading board…</div>`;
   } else {
