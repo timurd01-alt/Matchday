@@ -62,7 +62,6 @@ nfl_challenger_training_rows.jsonl
 nfl_prospective_scorecard.json
 mlb_prospective_scorecard.json
 nfl_availability_ledger.jsonl
-market_snapshot_ledger.jsonl
 market_benchmark_report.json
 baseline_tournament_report.json
 basketball_challenger_rows.jsonl
@@ -79,3 +78,4 @@ mlb_challenger_report.json
 # Derived from the cache-restored scorecards each run; regenerated, never authored.
 promotion_readiness.json
 next_task.json
+clv_report.json

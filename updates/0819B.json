@@ -1,0 +1,13 @@
+{
+  "rank": 159,
+  "date": "Build 0819B",
+  "tag": "Trust",
+  "title": "Matchday now measures itself against the closing line, and says so in advance",
+  "items": [
+    "The record shows Matchday agreeing with the market on 81.5% of graded picks and going 40.5% on the 18.5% where it disagreed. Where it copies the line it adds nothing, and where it departs it has been wrong more often than a coin flip. That is the honest starting point.",
+    "Match results are too noisy to settle whether a model beats the market in any reasonable sample. Matchday now measures closing line value instead — whether the market moves toward its pick between lock and tip-off — reported per competition with an interval, which answers in hundreds of fixtures rather than thousands.",
+    "A pick locked moments before the start has nothing to be right early about, so a competition whose typical lock comes under an hour before kickoff is reported but given no verdict.",
+    "The ledger of market prices is now committed rather than cached. Ratings can be recomputed and forecasts re-derived, but what the market said at a kickoff that has already happened cannot be recovered once lost.",
+    "The 2026-27 college basketball season is pre-registered: the target, the metric, the minimum sample and the decision rule are all sealed and published before a single game is played. Changing any of them afterwards voids the declaration and fails the build, so the result cannot be fitted after the fact — including if the answer turns out to be no."
+  ]
+}

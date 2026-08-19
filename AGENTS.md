@@ -130,6 +130,36 @@ opens a PR. CI is the verifier; a human merges. It may *propose* a policy status
 change with evidence attached, never apply one, and never touch a
 `requirements` block, a quota reserve, or the bot-owned generated data.
 
+## Beating the market: CLV and pre-registration
+
+Matchday's stated goal is to beat the closing line as a forecasting claim, not
+to bet. Two rules follow from that.
+
+**Measure CLV, not win rate.** `clv_report.py` reports closing-minus-lock
+probability movement toward Matchday's pick, per competition, with a game-date
+block bootstrap. Match outcomes are too noisy to settle the question in a
+reasonable sample; line movement answers in hundreds of fixtures rather than
+thousands. A segment is given no verdict unless its median lock lead clears
+`MIN_LEAD_MINUTES` -- a pick locked at the bell has nothing to be right early
+about. The report is descriptive and feeds no forecast.
+
+**`market_snapshot_ledger.jsonl` is irreplaceable.** Ratings recompute, picks
+regenerate, forecasts re-derive. A closing price cannot be recovered after the
+kickoff it belonged to. It is git-tracked and committed back hourly for that
+reason; never move it back behind `.gitignore`.
+
+**Pre-register before the season, not after.** `preregistration.py` seals a
+declaration's immutable terms -- competition, season, hypothesis, metrics,
+minimum sample, lock lead floor, decision rule -- into `terms_sha256`. Editing
+any of them afterwards makes the declaration report `void`, and `--seal`
+refuses to re-hash an edited file rather than laundering the change. CI runs
+`--check`, so moving the goalposts breaks the build. `ncaam_preregistration.json`
+is the live declaration for the 2026-27 season; its model artifact must be
+frozen before `artifact_freeze_deadline` or the declaration is void.
+
+To register a new target, write the declaration, run `--seal` once, and record
+it in `docs/experiments.json`. Never amend a sealed declaration: open a new one.
+
 ## Tests
 
 Run before considering prediction/data/provider changes complete:
