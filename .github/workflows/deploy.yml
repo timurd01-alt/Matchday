@@ -75,6 +75,8 @@ jobs:
             nfl_availability_ledger.jsonl
             nfl_prospective_scorecard.json
             mlb_prospective_scorecard.json
+            promotion_readiness.json
+            next_task.json
             player_db_*.json
             posts.json
             posts_state.json
@@ -91,7 +93,7 @@ jobs:
       # deploy below if it fails, since a broken prediction/provider path
       # is exactly what those steps would otherwise ship.
       - name: Run required test suite
-        run: python -m unittest test_model_inputs test_provider_adapters test_generate_posts test_pregame_context test_market_benchmark test_x_bot test_provider_quota test_mlb_recovery test_mlb_shadow_ledger test_mlb_prospective_scorecard test_mlb_model_promotion test_mlb_forecast_pause test_nfl_challenger test_nfl_challenger_store test_nfl_availability test_nfl_prospective_scorecard test_nfl_model_adjustment test_cfb_challenger
+        run: python -m unittest test_model_inputs test_provider_adapters test_generate_posts test_pregame_context test_market_benchmark test_x_bot test_provider_quota test_mlb_recovery test_mlb_shadow_ledger test_mlb_prospective_scorecard test_mlb_model_promotion test_mlb_forecast_pause test_nfl_challenger test_nfl_challenger_store test_nfl_availability test_nfl_prospective_scorecard test_nfl_model_adjustment test_cfb_challenger test_check_promotion_readiness test_next_task
 
       - name: Recover published last-good fixtures after a cold cache miss
         run: python recover_published_data.py
@@ -197,6 +199,28 @@ jobs:
           else
             echo "market/forecast receipts have not accumulated yet; benchmark remains pending"
           fi
+
+      # Runs after every grading/benchmark step above so it reads this run's
+      # freshly rebuilt scorecards, and before the deploy so a gate that just
+      # came ready is visible in the same run that produced the evidence. It
+      # never edits a promotion policy and never blocks the build: a gate
+      # needing a human decision is information, not a broken build, and
+      # failing the hourly deploy over it would take the live site down for a
+      # research question. --fail-on-actionable is deliberately not passed.
+      - name: Evaluate frozen promotion gates against accumulated evidence
+        if: github.event_name != 'push'
+        continue-on-error: true
+        run: |
+          python check_promotion_readiness.py
+          python next_task.py --output next_task.json
+          python - <<'PY'
+          import json, pathlib
+          report = json.loads(pathlib.Path("promotion_readiness.json").read_text(encoding="utf-8"))
+          for gate in report["gates"]:
+              if gate["state"] in ("policy_missing", "blocked", "evidence_against",
+                                   "ready_for_manual_review", "ready"):
+                  print(f"::warning::{gate['summary']}")
+          PY
 
       - name: Populate authorized research reasoning into cached fixtures
         run: python populate_research_signals.py

@@ -100,6 +100,36 @@ stored CFBD or Odds balance would block a call, their documented zero-cost
 status endpoints (`/info` and `/v4/sports`) may reconcile the real balance at
 most once per six hours; never use a paid data endpoint as a quota probe.
 
+## Self-development loops
+
+Three loops keep the site improving. They are deliberately separate: the loop
+that can write model code must never be the loop that decides a model ships.
+
+**Loop A -- `check_promotion_readiness.py`** (hourly, in `deploy.yml`). Compares
+each frozen promotion policy against the prospective scorecard built from the
+ledgers this run, and writes `promotion_readiness.json`. Read-only: it never
+edits a policy and its most positive verdict is `ready_for_manual_review`. The
+scorecards' own `status` only checks sample-size minimums; the extra conditions
+a policy states (exact cohort identity, paired interval, Brier improvement) are
+checked here. Four states matter -- `collecting` (wait), `evidence_against`
+(record a rejection), `blocked` (evidence is unusable, decide now), and
+`ready_for_manual_review`.
+
+Add a gate by appending to `GATES`, naming the policy, the scorecard, and which
+pair of models the policy is about. That last part cannot be inferred: MLB's
+policy governs the capped blend, not the raw challenger.
+
+**Loop B -- `next_task.py`** (hourly). Ranks live signals from Loop A's report,
+`fetch_failure_*.json`, `provider_quota_state.json`, `market_benchmark_report.json`,
+and `docs/experiments.json`, then emits **one** scoped task prompt plus the
+guardrails. A quiet repository produces an explicit "no action needed, do not
+invent work". Adjust priorities in `PRIORITY`.
+
+**Loop C -- the scheduled agent.** Consumes Loop B's prompt, works on a branch,
+opens a PR. CI is the verifier; a human merges. It may *propose* a policy status
+change with evidence attached, never apply one, and never touch a
+`requirements` block, a quota reserve, or the bot-owned generated data.
+
 ## Tests
 
 Run before considering prediction/data/provider changes complete:
