@@ -4,6 +4,40 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0819C",
+  "tag": "Research",
+  "title": "College basketball gets the model it was always missing",
+  "items": [
+   "Matchday has carried a correct adjusted-efficiency model for basketball for some time — opponent-adjusted attack and defence, tempo, and the four factors — and it was never connected to live data.",
+   "It now has a build path from the college basketball box-score feed, which is the groundwork for the pre-registered 2026-27 season.",
+   "The connection stays switched off until its field names are confirmed against a real provider response. A renamed column would not raise an error; it would quietly produce an empty model and read as 'no data available', so the code refuses to run rather than guess.",
+   "Nothing here changes any published pick. The profile is research-only at zero weight."
+  ]
+ },
+ {
+  "date": "Build 0819B",
+  "tag": "Trust",
+  "title": "Matchday now measures itself against the closing line, and says so in advance",
+  "items": [
+   "The record shows Matchday agreeing with the market on 81.5% of graded picks and going 40.5% on the 18.5% where it disagreed. Where it copies the line it adds nothing, and where it departs it has been wrong more often than a coin flip. That is the honest starting point.",
+   "Match results are too noisy to settle whether a model beats the market in any reasonable sample. Matchday now measures closing line value instead — whether the market moves toward its pick between lock and tip-off — reported per competition with an interval, which answers in hundreds of fixtures rather than thousands.",
+   "A pick locked moments before the start has nothing to be right early about, so a competition whose typical lock comes under an hour before kickoff is reported but given no verdict.",
+   "The ledger of market prices is now committed rather than cached. Ratings can be recomputed and forecasts re-derived, but what the market said at a kickoff that has already happened cannot be recovered once lost.",
+   "The 2026-27 college basketball season is pre-registered: the target, the metric, the minimum sample and the decision rule are all sealed and published before a single game is played. Changing any of them afterwards voids the declaration and fails the build, so the result cannot be fitted after the fact — including if the answer turns out to be no."
+  ]
+ },
+ {
+  "date": "Build 0819A",
+  "tag": "Trust",
+  "title": "Promotion gates are now checked against the evidence every hour",
+  "items": [
+   "Matchday's model promotion bars were stated as data but never actually compared against the accumulated evidence, so only a human reading two large reports side by side could tell whether a bar had been met or how far away it was.",
+   "Every hour the site now evaluates each frozen gate against the prospective record and reports one of four states: still collecting (with the exact remaining count), evidence that argues against promotion, evidence that has become unusable, or every requirement met.",
+   "The check is strictly read-only. It never promotes a model, never edits a promotion policy, and its most positive verdict is that a human review is warranted.",
+   "The first live run found that the MLB challenger's frozen policy hash does not match the artifact actually producing its shadow forecasts, meaning that evidence could never have satisfied its own gate. The discrepancy is reported rather than silently corrected."
+  ]
+ },
+ {
   "date": "Build 0818B",
   "tag": "Trust",
   "title": "MLB confidence numbers are calibrated against the graded record",

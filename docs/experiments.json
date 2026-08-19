@@ -1,7 +1,13 @@
 {
   "schema_version": 1,
   "description": "Structured, per-feature experiment ledger for Matchday's model research framework. Each entry follows the roadmap's Hypothesis / Baseline / Experiment / Evaluation / Decision template. This is a distillation of the narrative record in docs/PREDICTION_RESEARCH_ROADMAP.md plus the checked-in promotion-policy files — it does not replace either; when they disagree, the promotion-policy JSON and the dated prose in PREDICTION_RESEARCH_ROADMAP.md are authoritative and this file should be corrected to match.",
-  "decisions": ["keep_production", "keep_shadow", "reject", "continue_testing", "not_yet_run"],
+  "decisions": [
+    "keep_production",
+    "keep_shadow",
+    "reject",
+    "continue_testing",
+    "not_yet_run"
+  ],
   "experiments": [
     {
       "id": "nfl-chronological-elo-calibration",
@@ -14,7 +20,10 @@
       "decision": "keep_production",
       "decision_detail": "Approved for a capped, reversible historical pilot: production_weight 0.10, max_shift_points 3.0, allow_pick_flip false.",
       "decided_at": "2026-07-29T22:55:00Z",
-      "evidence": ["nfl_model_adjustment.json", "nfl_challenger_backtest.json"],
+      "evidence": [
+        "nfl_model_adjustment.json",
+        "nfl_challenger_backtest.json"
+      ],
       "source": "docs/PREDICTION_RESEARCH_ROADMAP.md#phase-3-transparent-shadow-deployment"
     },
     {
@@ -84,7 +93,9 @@
       "decision": "continue_testing",
       "decision_detail": "Frozen model attaches a prospective shadow probability to eligible fixtures via the append-only forecast ledger; production_weight is still 0 pending the prospective promotion gate (>=500 games across >=30 date blocks, log-loss + Brier improvement, paired interval upper bound below zero, named manual review).",
       "decided_at": null,
-      "evidence": ["mlb_model_promotion.json"],
+      "evidence": [
+        "mlb_model_promotion.json"
+      ],
       "source": "docs/PREDICTION_RESEARCH_ROADMAP.md#phase-2-learned-challengers-by-sport"
     },
     {
@@ -140,8 +151,21 @@
       "decision": "reject",
       "decision_detail": "The deeper CC0 corpus is retained as lawful research input, but the tuned Elo variant failed the frozen promotion gate and remains offline with production_weight 0.",
       "decided_at": "2026-08-10",
-      "evidence": ["soccer_elo_challenger_backtest.json"],
+      "evidence": [
+        "soccer_elo_challenger_backtest.json"
+      ],
       "source": "openfootball_history.py and build_soccer_elo_challenger.py"
+    },
+    {
+      "id": "ncaam-adjusted-efficiency-vs-closing-line",
+      "sport": "ncaam",
+      "feature_family": "Adjusted efficiency and four factors",
+      "hypothesis": "Matchday's independent NCAAM model, built on opponent-adjusted efficiency and four-factors profiles from CollegeBasketballData box scores, holds information the closing sportsbook consensus has not priced at lock time.",
+      "baseline": "Closing no-vig sportsbook consensus on the same fixtures.",
+      "experiment": "Pre-registered before the 2026-27 season in ncaam_preregistration.json (terms sealed 2026-08-19, sha256 6a78f62b...). Model artifact must be frozen before 2026-11-01. Primary metric is closing line value; minimum 400 fixtures across 40 game-dates with a 60-minute median lock lead.",
+      "evaluation": "Single evaluation after the final graded regular-season fixture. Upheld only if the CLV 95% game-date block bootstrap interval lies entirely above zero.",
+      "decision": "not_yet_run",
+      "notes": "Chosen over MLB deliberately: MLB's dominant variable is the starting pitcher, which the market prices and Matchday has no licensed source for, so that gap is an information asymmetry rather than a modelling deficit. The model itself is not yet built; the declaration is registered first on purpose. Implementation started 2026-08-19: ncaam_advanced_metrics.py bridges CBBD team box scores to advanced_metrics.basketball_team_profiles, and fails closed until its field mapping is confirmed against a live response (MAPPING_VERIFIED)."
     }
   ]
 }

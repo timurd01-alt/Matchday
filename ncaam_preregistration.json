@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "competition": "NCAAM",
+  "season": "2026-27",
+  "hypothesis": "Matchday's independent model, built on opponent-adjusted efficiency and four-factors profiles derived from CollegeBasketballData box scores, holds information about men's college basketball fixtures that the closing sportsbook consensus has not yet priced at lock time.",
+  "target": "Beat the closing no-vig consensus on NCAAM fixtures. This is a forecasting claim only. Matchday places no wagers, so the target is accuracy against the closing line, not profit after margin.",
+  "primary_metric": "Mean closing-minus-lock probability movement toward Matchday's selected outcome (closing line value), with a 95% deterministic game-date block bootstrap interval. The claim is upheld only if the interval lies entirely above zero.",
+  "secondary_metric": "Paired log loss of Matchday's independent probabilities against the closing no-vig consensus over the same fixtures, reported with the same interval method. Reported always; it cannot rescue a failed primary metric.",
+  "minimum_fixtures": 400,
+  "minimum_date_blocks": 40,
+  "minimum_median_lock_lead_minutes": 60,
+  "decision_rule": "Evaluate once, after the final graded fixture of the 2026-27 regular season, and only if every minimum is met. Upheld if the primary metric's 95% interval lies entirely above zero. Not upheld in every other case, including an interval containing zero. No subset, sport, date range, metric, or threshold may be chosen after collection begins; a segment analysis may be published only as exploratory and may never restate the outcome. A failed result is recorded as a failed result.",
+  "registered_at": "2026-08-19T00:00:00Z",
+  "artifact_freeze_deadline": "2026-11-01T00:00:00Z",
+  "status": "declared_pending_artifact_freeze",
+  "cohort": {
+    "model_version": null,
+    "artifact_sha256": null,
+    "feature_schema_version": null,
+    "transformation_version": null,
+    "frozen_at": null
+  },
+  "notes": [
+    "Registered before the 2026-27 season begins and before the NCAAM model exists. The model artifact must be built and frozen before artifact_freeze_deadline; if that deadline passes with no frozen cohort, this declaration is void and no claim may be made from the season's evidence.",
+    "NCAAM was chosen over MLB deliberately. MLB's dominant variable is the starting pitcher, which the market prices and Matchday has no licensed source for (PROVIDER_COMPLIANCE.md), so the MLB gap is an information asymmetry rather than a modelling deficit. NCAAM has an approved data source already wired, genuine differentiated talent data, and roughly 360 Division I programmes that sportsbooks cannot all price sharply.",
+    "Closing line value is the primary metric because match outcomes are too noisy to settle this question in a reasonable sample; line movement carries far less variance and answers in hundreds of fixtures rather than thousands.",
+    "The lock lead floor exists so the claim cannot be won by locking late. A pick recorded moments before tip-off has nothing to be right early about."
+  ],
+  "terms_sha256": "6a78f62be23a783e68402d35cae31a10aab467d230c2ca2e9630c6ffe7315dcb"
+}
