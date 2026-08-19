@@ -1,0 +1,13 @@
+{
+  "rank": 163,
+  "date": "Build 0819F",
+  "tag": "Product",
+  "title": "The site now checks its own interface and its own data coverage",
+  "items": [
+    "Matchday already watched its models every hour. It now watches the product too, on the same schedule and through the same ranked queue.",
+    "An interface audit checks the shipped pages against published accessibility requirements — colour contrast, keyboard focus, tap-target size, heading structure, reduced motion, and a stated budget for how much must load before the page can paint. It reports only rules that were actually broken, with a file and a line.",
+    "A coverage report measures the difference between the data the predictions wanted and the data that arrived: inputs missing on fixtures about to kick off, feeds that stopped refreshing, feature families no provider supplies at all, and competitions publishing picks with too little graded history to judge them.",
+    "Both stay silent when there is nothing wrong. That is deliberate — a monitor that always has something to say trains everyone to stop reading it, and an off-season competition with no fixtures is never reported as a gap.",
+    "Neither can take the site down. An accessibility finding is something to fix, not a reason to stop publishing."
+  ]
+}

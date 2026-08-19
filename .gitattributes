@@ -1,0 +1,31 @@
+# Matchday hashes checked-in files byte-for-byte and freezes those hashes into
+# governance policy: the MLB challenger artifact (mlb_challenger_store.py), the
+# CFB challenger (build_cfb_challenger.py), and every manual-review evidence
+# file a release review binds to (mlb_recovery.py). A hash taken over bytes is
+# only stable if the bytes are.
+#
+# Without this file, core.autocrlf=true rewrote LF to CRLF on Windows checkouts
+# while Linux CI kept LF, so the same artifact hashed two different ways
+# depending on who looked at it. That is not hypothetical: mlb_model_promotion
+# .json froze f110758c... (the CRLF rendering, captured on a Windows checkout)
+# while every shadow lock in the ledger recorded f0177891... (the LF rendering,
+# computed by CI). The gate's exact_cohort_required rule could therefore never
+# be satisfied, and the MLB promotion gate spent weeks accumulating prospective
+# evidence that its own policy would have rejected.
+#
+# Normalising in the working tree, not just in the object store, is the part
+# that matters here -- `text` alone stores LF but still checks CRLF out.
+* text=auto eol=lf
+
+# Executed by cmd.exe, which is the one consumer that genuinely wants CRLF.
+*.bat text eol=crlf
+
+# Binary payloads: never transform, never diff as text.
+*.png binary
+*.ico binary
+*.gz binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.woff binary
+*.woff2 binary

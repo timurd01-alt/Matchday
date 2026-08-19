@@ -4,6 +4,30 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0819F",
+  "tag": "Product",
+  "title": "The site now checks its own interface and its own data coverage",
+  "items": [
+   "Matchday already watched its models every hour. It now watches the product too, on the same schedule and through the same ranked queue.",
+   "An interface audit checks the shipped pages against published accessibility requirements — colour contrast, keyboard focus, tap-target size, heading structure, reduced motion, and a stated budget for how much must load before the page can paint. It reports only rules that were actually broken, with a file and a line.",
+   "A coverage report measures the difference between the data the predictions wanted and the data that arrived: inputs missing on fixtures about to kick off, feeds that stopped refreshing, feature families no provider supplies at all, and competitions publishing picks with too little graded history to judge them.",
+   "Both stay silent when there is nothing wrong. That is deliberate — a monitor that always has something to say trains everyone to stop reading it, and an off-season competition with no fixtures is never reported as a gap.",
+   "Neither can take the site down. An accessibility finding is something to fix, not a reason to stop publishing."
+  ]
+ },
+ {
+  "date": "Build 0819E",
+  "tag": "Trust",
+  "title": "A promotion gate that had been measuring nothing",
+  "items": [
+   "Matchday freezes the exact identity of a candidate model before it starts collecting evidence, so nobody can quietly swap the model mid-experiment. Part of that identity is a fingerprint of the model file itself.",
+   "The frozen fingerprint had been recorded on a Windows machine, where the file is stored with different invisible line-ending characters than on the servers that actually run the model. Same model, two fingerprints — and they could never match.",
+   "Every one of the 15 recorded evidence entries was therefore destined to be thrown out on review, and the gate would have reported that it had collected nothing after weeks of waiting. The fingerprint has been corrected to the one the evidence was actually recorded against, so that evidence now counts.",
+   "The underlying cause is fixed rather than patched: line endings are now pinned repository-wide, and a test checks the frozen fingerprint against the real file on every run, so this cannot drift again unnoticed.",
+   "MLB forecasts remain paused. This clears the obstruction that was preventing the evidence from accumulating; it does not by itself meet the bar for resuming publication."
+  ]
+ },
+ {
   "date": "Build 0819D",
   "tag": "Trust",
   "title": "Separating what Matchday knows from what it copies",
