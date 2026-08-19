@@ -46,7 +46,11 @@ if(streakStats.streak>=2)parts.push(`<span class="ls-streak" title="Beat the Mod
 if(next)parts.push(`<span class="ls-next ls-clickable" data-mid="${esc(next.id)}" onclick="openMatchModal(this.dataset.mid)" role="button" tabindex="0" title="Open expanded view">Next · <b>${esc(next.home.code)} v ${esc(next.away.code)}</b> ${kickIn(next.kickoff)}</span>`);else parts.push(`<span class="ls-next">No upcoming fixtures</span>`);parts.push(`<span class="ls-upd">${fallback?`<b class="stale">fallback snapshot ${ago(freshness.last_successful_at||DATA.updated)}</b> · `:(()=>{try{const a=(Date.now()-new Date(DATA.updated))/60000;if(a>360)return `<b class="stale">data ${ago(DATA.updated)}</b> · `;}catch(e){}return 'Updated '+ago(DATA.updated)+' · ';})()}${t("independent · built for fans")} · <b style="color:var(--signal)">build ${currentBuild()}</b></span>`);$('#strip').innerHTML=parts.join('')}
 /* removed duplicate (diverseNews) */
 /* removed duplicate (renderInsight) */
-function setView(v){VIEW=v;document.querySelectorAll('.navbtn[data-v]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===v));document.querySelectorAll('.view').forEach(el=>el.style.display=el.id==='view-'+v?((v==='matches'||v==='results')?'grid':'block'):'none');renderCurrent();const active=$('#view-'+v);if(active){active.classList.remove('viewEntering');void active.offsetWidth;active.classList.add('viewEntering')}}
+function setView(v){VIEW=v;if(typeof closeNavSheet==='function')closeNavSheet();
+  // Leaving the board is the signal that the visitor wants more than the board
+  // payload holds. Renders now from what's loaded, then again once the full
+  // per-sport files arrive.
+  if(!DATA_FILE&&DATA?._summary&&VIEWS_NEEDING_FULL_DATA.has(v))escalateAllSports();document.querySelectorAll('.navbtn[data-v]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===v));document.querySelectorAll('.view').forEach(el=>el.style.display=el.id==='view-'+v?((v==='matches'||v==='results')?'grid':'block'):'none');renderCurrent();const active=$('#view-'+v);if(active){active.classList.remove('viewEntering');void active.offsetWidth;active.classList.add('viewEntering')}}
 $('#nav').addEventListener('click',e=>{const b=e.target.closest('.navbtn[data-v]');if(b?.dataset.v)setView(b.dataset.v)});
 function aggregateScorecards(datasets){
   const sources=(datasets||[]).filter(d=>d?.scorecard).map(d=>({comp:d.comp_key||d.competition||'',sc:d.scorecard}));
@@ -105,9 +109,45 @@ function aggregateScorecards(datasets){
 // megabytes. Not 'no-store', which would forbid keeping a copy to revalidate
 // against and put us straight back to full downloads.
 const REVALIDATE={cache:'no-cache'};
+// Views that need more than the landing board holds -- full season history, the
+// research detail behind a pick, standings. Opening one escalates the merged
+// "All sports" view from the summary payload to the real per-sport files.
+const VIEWS_NEEDING_FULL_DATA=new Set(['results','groups','title','advanced','edge','score','bracket','third','tott','tree','sandbox']);
+let ALL_SPORTS_FULL=false;
+function allSportsNeedsFull(){return ALL_SPORTS_FULL||VIEWS_NEEDING_FULL_DATA.has(VIEW)}
+// Escalate on demand: called when a visitor leaves the board or opens a match,
+// so the cost of the full files is paid by people who asked for what's in them.
+async function escalateAllSports(){
+  if(DATA_FILE||!DATA?._summary||ALL_SPORTS_FULL)return;
+  ALL_SPORTS_FULL=true;
+  await load(true);
+}
 async function load(manual=false){if(LOAD_TIMER){clearTimeout(LOAD_TIMER);LOAD_TIMER=null}try{
-  if(!DATA_FILE){ // ALL SPORTS: merge every sport file that exists
-    const keys=['wc','ucl','epl','laliga','seriea','bundesliga','ligue1','nfl','ncaaf','ncaam','nba','mlb','nhl'];
+  let usedSummary=false;
+  if(!DATA_FILE&&!allSportsNeedsFull()){
+    // The landing board needs a slate and a scorecard, not twelve seasons of
+    // fixtures and the research detail behind every one of them. board_summary
+    // .json carries exactly what this view renders; if it is missing or stale
+    // the merge below still works, just slowly, so a failed build degrades to
+    // the old behaviour rather than to an empty page.
+    const summary=await fetch('board_summary.json',REVALIDATE).then(r=>r.ok?r.json():null).catch(()=>null);
+    if(summary&&(summary.matches||[]).length){
+      applyForecastPublicationPauses(summary);
+      DATA=Object.assign({},summary,{
+        scorecard:aggregateScorecards(summary.scorecard_sources||[]),
+        standings:[],third_race:[],scorers:[],leaders:{},bracket:[],
+        _summary:true});
+      delete DATA.scorecard_sources;
+      usedSummary=true;
+    }
+  }
+  if(usedSummary){/* board payload already in DATA */}
+  else if(!DATA_FILE){ // ALL SPORTS: merge every sport file that exists
+    // NHL is retired for now: data_nhl.json is not published, so asking for it
+    // cost every visitor a 404 on every load. The NHL entries elsewhere (labels,
+    // score units, sandbox sizes) stay put so restoring the sport is a one-word
+    // change here rather than a hunt.
+    const keys=ALL_SPORT_KEYS;
     const results=await Promise.all(keys.map(k=>fetch('data_'+k+'.json',REVALIDATE).then(r=>r.ok?r.json():null).catch(()=>null)));
     let base=null;const merged=[];let news=[];let latest='';
     const titleBySport=[];
@@ -404,6 +444,35 @@ function _renderProStandings(st,host){
 function renderStandings(){const comp=String(DATA.comp_key||'').toUpperCase();if(comp==='UCL'){const host=$('#view-groups'),st=deriveStandings();if(!st.length){host.innerHTML='<div class="vhead">League Phase</div><div class="empty">No current league-phase standings yet.</div>';return}_renderUCLLeagueTable(st,host);return}if(['MLB','NFL','NBA'].includes(comp)){const host=$('#view-groups'),st=deriveStandings();if(!st.length){host.innerHTML='<div class="vhead">Standings</div><div class="empty">No standings data found yet.</div>';return}_renderProStandings(st,host);return}renderGroups()}
 function renderGroups(){const st=deriveStandings(),host=$('#view-groups'),sc=DATA.scorers||[];if(!st.length){host.innerHTML=`<div class="vhead">${DATA.comp_key==='NCAAM'?'Conferences':navProfile()==='soccer_league'?'Table':'Groups'}</div><div class="empty">No group data found yet.</div>`;return}if(navProfile()==='soccer_league'){_v15RenderLeagueTable(st,host);return}if(DATA.comp_key==='NCAAM'){host.innerHTML=`<div class="vhead">Conferences</div>`+st.map(g=>`<div class="tablewrap"><div class="groupHead">${esc(g.group)}<span>${g.group==='Top 25'?'national poll':'raw season records'}</span></div><table class="gtable ncaamTable"><thead><tr><th>Team</th><th>Rating</th><th>Record</th><th>Win%</th><th>PF/G</th><th>PA/G</th><th>Diff</th><th>Streak</th></tr></thead><tbody>${(g.teams||[]).map(t=>`<tr><td><div class="gteam teamClickable" data-team="${esc(t.name||'')}" onclick="openTeamModal(this.dataset.team)"><span class="pos">${t.pos||''}</span><span class="code">${esc(t.code||'')}</span>${esc(t.name||'')}</div></td><td>${t.rating!=null?Number(t.rating).toFixed(2):'—'}</td><td><b>${esc(t.record||`${t.w??'—'}-${t.l??'—'}`)}</b></td><td>${t.win_pct!=null?(Number(t.win_pct)*100).toFixed(1)+'%':'—'}</td><td>${t.avg_pf!=null&&Number(t.avg_pf)?Number(t.avg_pf).toFixed(1):'—'}</td><td>${t.avg_pa!=null&&Number(t.avg_pa)?Number(t.avg_pa).toFixed(1):'—'}</td><td>${t.gd!=null?esc(t.gd):'—'}</td><td class="form">${esc(t.form||'—')}</td></tr>`).join('')}</tbody></table></div>`).join('');return}const groupsTwoWay=SANDBOX_TWO_WAY.has(String(DATA.comp_key||'').toLowerCase());const americanSport=navProfile()==='us_sport'||navProfile()==='college';const ratingSorted=['nfl','nba','mlb'].includes(String(DATA.comp_key||'').toLowerCase());const US_SCORE_UNIT={nfl:['PF','PA'],nba:['PF','PA'],ncaaf:['PF','PA'],mlb:['RF','RA'],nhl:['GF','GA']};const[fLabel,aLabel]=US_SCORE_UNIT[String(DATA.comp_key||'').toLowerCase()]||['GF','GA'];const winPct=t=>t.pld?((Number(t.w)||0)/t.pld*100).toFixed(1)+'%':'—';host.innerHTML=`<div class="vhead">${americanSport?'Standings':'Groups'}</div>`+st.map(g=>`<div class="tablewrap"><div class="groupHead">${americanSport?esc(g.group||'Full table'):esc(g.group)}<span>${americanSport?(ratingSorted?'ranked by model rating':'ranked by win rate'):'Top 2 · 3rd'}</span></div><table class="gtable"><thead><tr><th>Team</th>${americanSport?'<th>Rating</th>':''}<th>P</th><th>W</th>${groupsTwoWay?'':'<th>D</th>'}<th>L</th><th>${fLabel}</th><th>${aLabel}</th><th>${americanSport?'Diff':'GD'}</th><th>${americanSport?'Win%':'Pts'}</th><th>Form</th></tr></thead><tbody>${(g.teams||[]).map(t=>{const fl=uiFlag(t.code);const q=t.qual?`<span class="qbadge ${esc(t.qual.status)}" title="${esc(t.qual.note)}">${esc(t.qual.note)}</span>`:'';return `<tr class="${americanSport?'':(t.pos<=2?'qual':t.pos===3?'third':'')}"><td><div class="gteam teamClickable" data-team="${esc(t.name||'')}" onclick="openTeamModal(this.dataset.team)"><span class="pos">${t.pos||''}</span>${fl?`<span class="flagIcon">${fl}</span>`:''}<span class="code">${esc(t.code||'')}</span>${esc(t.name)} ${t.live?'<span class="liveMark">*</span>':''}${q}</div></td>${americanSport?`<td>${t.rating!=null?Number(t.rating).toFixed(2):'—'}</td>`:''}<td>${t.pld??'—'}</td><td>${t.w??'—'}</td>${groupsTwoWay?'':`<td>${t.d??'—'}</td>`}<td>${t.l??'—'}</td><td>${t.gf??'—'}</td><td>${t.ga??'—'}</td><td>${t.gd??'—'}</td><td><b>${americanSport?winPct(t):(t.pts??'—')}</b></td><td class="form">${esc(t.form||'')}</td></tr>`}).join('')}</tbody></table></div>`).join('')}
 /* dedup */
+// Sports whose expanded view has a research-signals panel (see research-signals
+// .js). Only these are worth re-fetching a full sport file for when the board is
+// running on the summary payload -- everywhere else the summary already holds
+// everything the modal renders.
+const RESEARCH_SIGNAL_COMPS=new Set(['NFL','NCAAF','NBA','NCAAM','MLB']);
+const SPORT_FILE_CACHE={};
+function fetchSportFile(key){
+  if(!key)return Promise.resolve(null);
+  if(!SPORT_FILE_CACHE[key])SPORT_FILE_CACHE[key]=fetch('data_'+key+'.json',REVALIDATE).then(r=>r.ok?r.json():null).catch(()=>null);
+  return SPORT_FILE_CACHE[key];
+}
+// Fill in the detail fields the summary payload leaves out, for one match only.
+// Mutates the match in place so BYID and DATA.matches see it too.
+async function hydrateMatchDetail(m){
+  const key=String(m?._comp||'').toLowerCase();
+  const full=await fetchSportFile(key);
+  const hit=(full?.matches||[]).find(x=>String(x.id)===String(m.id));
+  if(!hit)return false;
+  Object.assign(m,hit,{_comp:m._comp});
+  return true;
+}
+// True when this match is being shown from the summary payload and its sport
+// has a research panel whose fields the summary leaves out. app-4-features.js
+// overrides openMatchModal with a hardened version; the hook lives there.
+function needsDetailHydration(m){
+  if(!DATA?._summary||!m)return false;
+  if(!RESEARCH_SIGNAL_COMPS.has(String(m._comp||'').toUpperCase()))return false;
+  return !m.advanced_metrics&&!m.nfl_challenger_shadow&&!m.mlb_challenger_shadow;
+}
 function openMatchModal(id){const m=BYID[id]||(DATA.matches||[]).find(x=>String(x.id)===String(id));if(!m)return;const modal=ensureMatchModal();const hmeta=t=>esc(teamStandingsMeta(t,m._comp,{form:true}).join(' · '));modal.innerHTML=`<section class="matchSheet" role="dialog" aria-modal="true"><div class="modalHero"><button class="modalClose" onclick="closeMatchModal()" aria-label="Close">×</button><div class="modalStage">${esc(m.stage||'Fixture')} · ${esc(m.status==='LIVE'?'AWAITING FINAL':m.status||'')}</div><div class="modalFixture"><div class="modalTeam"><div class="modalCode">${teamFlagHTML(m.home)}${esc(m.home?.code||'HOME')}</div><div class="modalName">${esc(m.home?.name||'Home')}</div><div class="modalMeta">${hmeta(m.home)}</div></div><div class="modalScore"><div class="bigScore">${esc(scorePlainText(m))}</div><div class="modalStatus">${m.status==='LIVE'?'Score shown after final':kickIn(m.kickoff)}</div></div><div class="modalTeam away"><div class="modalCode">${esc(m.away?.code||'AWAY')}${teamFlagHTML(m.away,true)}</div><div class="modalName">${esc(m.away?.name||'Away')}</div><div class="modalMeta">${hmeta(m.away)}</div></div></div></div><div class="modalBody">${details(m)}</div></section>`;modal.classList.add('show');document.body.classList.add('modalOpen')}
 
 

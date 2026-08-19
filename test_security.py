@@ -59,15 +59,29 @@ class DeploymentSecurityTests(unittest.TestCase):
         self.assertNotRegex(source, r"const\s*\{[^}]*hits[^}]*graded")
 
     def test_leaderboard_reads_public_data_and_allows_the_production_site(self):
-        source = (ROOT / "api" / "leaderboard.js").read_text(encoding="utf-8")
+        """The origin allowlist moved to _accounts.js when accounts were added;
+        this follows it there rather than being deleted.
+
+        The assertion is about a security property -- which origins the API
+        trusts -- not about which file holds the constant, so a refactor that
+        preserves the property should keep the test, pointed at the new
+        location. Worth noting this test is not in deploy.yml's suite list, so
+        CI never ran it and the stale assertion sat green in every PR."""
+        accounts = (ROOT / "api" / "_accounts.js").read_text(encoding="utf-8")
         self.assertIn(
             'process.env.PUBLIC_SITE_ORIGIN || "https://matchdayterminal.com"',
-            source,
+            accounts,
         )
-        self.assertIn("process.env.PUBLIC_DATA_ORIGIN || PUBLIC_SITE_ORIGIN", source)
-        safe_origins = source[source.index("const SAFE_ORIGINS"):source.index("const HANDLE_POOL")]
+        self.assertIn("process.env.PUBLIC_DATA_ORIGIN || PUBLIC_SITE_ORIGIN", accounts)
+        safe_origins = accounts[accounts.index("const SAFE_ORIGINS"):
+                                accounts.index("export const HANDLE_POOL")]
         self.assertIn("PUBLIC_SITE_ORIGIN", safe_origins)
         self.assertIn("PUBLIC_DATA_ORIGIN", safe_origins)
+        # And the endpoint must actually consume them rather than defining its
+        # own origin, which is the way this property would quietly regress.
+        leaderboard = (ROOT / "api" / "leaderboard.js").read_text(encoding="utf-8")
+        self.assertIn("PUBLIC_DATA_ORIGIN", leaderboard)
+        self.assertNotIn("matchdayterminal.com", leaderboard)
 
     def test_security_headers_are_configured(self):
         config = (ROOT / "vercel.json").read_text(encoding="utf-8")
@@ -80,6 +94,23 @@ class DeploymentSecurityTests(unittest.TestCase):
         refs = re.findall(r"uses:\s*[^@\s]+@([^\s#]+)", workflow)
         self.assertTrue(refs)
         self.assertTrue(all(re.fullmatch(r"[0-9a-f]{40}", ref) for ref in refs))
+
+    def test_rate_limit_key_has_no_guessable_fallback(self):
+        """Rate-limit buckets are keyed by an HMAC so the table never stores a
+        raw IP or device id. A literal fallback secret defeats that: anyone
+        could compute the bucket key for an identifier that is not theirs and
+        spend that victim's allowance, locking them out with the limiter
+        working exactly as designed."""
+        source = (ROOT / "api" / "_accounts.js").read_text(encoding="utf-8")
+        signature = source[source.index("export function opaqueKey"):]
+        signature = signature[:signature.index("\n}")]
+        self.assertIn("process.env.RATE_LIMIT_SECRET", signature)
+        self.assertNotRegex(
+            signature,
+            r"process\.env\.\w+\s*\|\|\s*[\"'][^\"']+[\"']",
+            "opaqueKey must not fall back to a literal secret",
+        )
+        self.assertIn("throw new Error", signature)
 
 
 if __name__ == "__main__":

@@ -107,8 +107,21 @@ window.openMatchModal=function(id){
     const rawScore=scorePlainText(m).trim()||'TBD';
     const body=safeMatchDetails(m);
     modal.innerHTML=`<section class="matchSheet" role="dialog" aria-modal="true"><div class="modalHero"><button class="modalClose" onclick="closeMatchModal()" aria-label="Close">×</button><div class="modalStage">${esc(m.stage||'Fixture')} · ${esc(m.status==='LIVE'?'AWAITING FINAL':m.status||'')}</div><div class="modalFixture"><div class="modalTeam"><div class="modalCode">${teamFlagHTML(m.home)}${esc(m.home?.code||'HOME')}</div><div class="modalName">${esc(m.home?.name||'Home')}</div><div class="modalMeta">${hmeta(m.home)}</div></div><div class="modalScore"><div class="bigScore">${esc(rawScore)}</div><div class="modalStatus">${m.status==='LIVE'?'Score shown after final':kickIn(m.kickoff)}</div></div><div class="modalTeam away"><div class="modalCode">${esc(m.away?.code||'AWAY')}${teamFlagHTML(m.away,true)}</div><div class="modalName">${esc(m.away?.name||'Away')}</div><div class="modalMeta">${hmeta(m.away)}</div></div></div></div><div class="modalBody">${body}</div></section>`;
+    modal.dataset.matchId=key;
     modal.classList.add('show');
     document.body.classList.add('modalOpen');
+    // When the board is running on the summary payload, this match is missing
+    // the research detail the expanded view shows for some sports. The modal is
+    // already on screen with the score, the pick and the market read; fetch that
+    // sport's full file behind it and re-render once, rather than making the
+    // visitor wait on a multi-megabyte download to see anything at all.
+    if(typeof needsDetailHydration==='function'&&needsDetailHydration(m)){
+      hydrateMatchDetail(m).then(ok=>{
+        if(!ok)return;
+        const open=document.getElementById('matchModal');
+        if(open?.classList.contains('show')&&open.dataset.matchId===key)window.openMatchModal(key);
+      });
+    }
   }catch(err){
     console.error('openMatchModal failed:',err);
     alert('Expanded view failed to open. Check the browser console for details.');
@@ -246,7 +259,16 @@ function cardHTML(m,opts){
   const x=(m.markets&&m.markets['1x2'])||{};const hfl=teamFlagHTML(m.home),afl=teamFlagHTML(m.away,true);
   const probTop=x.home_pct!=null?`<div class="prob"><div class="problbl"><span>${esc(m.home.code||m.home.name)}</span><span>Market read</span><span>${esc(m.away.code||m.away.name)}</span></div>${bar1x2(x.home_pct,_isTwoWay(m)?null:x.draw_pct,x.away_pct)}</div>`:`<div class="prob"><div class="nomk">${esc(oddsEtaLabel(m)||'No market snapshot yet')}</div></div>`;
   const pr=m.prediction;const op=pr?_v10OfficialPick(m):null;const edge=op?_v10OfficialEdge(m,op):null;const trend=probabilitySparkline(m);
-  const pick=isMlbForecastPaused(m)?forecastPauseHTML(m):(!opts.hidePick&&op)?`<div class="pick ${edge!=null&&Math.abs(edge)>=6?'edge':''} ${op.blocked?'gate':''}"><span class="pl">Pick</span><span class="pn">${esc(op.name)}</span><span class="pc">${esc(op.confidence??'—')}%</span><span class="pnote">${esc(op.note||'')}</span>${trend}</div>`:'';
+  // A three-way market makes a leading outcome of 37% perfectly normal, but a
+  // lone "Pick ... 37%" reads as a broken model to anyone who hasn't thought
+  // about the draw. Where draws exist, label it "Most likely" and show the whole
+  // distribution underneath -- the same treatment the market read gets directly
+  // above, so the two are comparable at a glance.
+  const modelProbs=officialPredictionProbabilities(m);
+  const threeWay=hasThreeWayProbabilities(m);
+  const pickLabel=leadsUnderHalf(m,op?.confidence)?'Most likely':'Pick';
+  const modelBar=threeWay?`<div class="prob modelRead"><div class="problbl"><span>${esc(m.home.code||m.home.name)}</span><span>Model read</span><span>${esc(m.away.code||m.away.name)}</span></div>${bar1x2(modelProbs.h,modelProbs.d,modelProbs.a)}</div>`:'';
+  const pick=isMlbForecastPaused(m)?forecastPauseHTML(m):(!opts.hidePick&&op)?`<div class="pick ${edge!=null&&Math.abs(edge)>=6?'edge':''} ${op.blocked?'gate':''}"><span class="pl">${esc(pickLabel)}</span><span class="pn">${esc(op.name)}</span><span class="pc">${esc(op.confidence??'—')}%</span><span class="pnote">${esc(op.note||'')}</span>${trend}</div>${modelBar}`:'';
   const probChanged=!!probabilityMovement(m);
   const timing=pending?'score after final':m.status==='FINISHED'?'postgame':stale?'past kickoff':kickIn(m.kickoff);
   return `<article class="card${SETTINGS.showDetails?'':' compactCard'}${probChanged?' probChanged':''}" data-id="${esc(m.id)}"><div class="head" onclick="openMatchModal(this.closest('article').dataset.id)"><div class="metarow"><span class="stage">${esc(m.stage||'Fixture')}</span>${m._comp&&!DATA_FILE?`<span class="compTag">${esc(m._comp)}</span>`:''}<span class="wstar ${wlHas(m.home.name)||wlHas(m.away.name)?'on':''}" onclick="event.stopPropagation();wlToggle('${esc(m.home.name)}')" title="Watch">&#9733;</span>${m.weather?`<a class="wxchip" href="${esc(m.weather.source_url||'https://open-meteo.com/')}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" title="Weather data by Open-Meteo"><b>${m.weather.temp_c}&deg;</b>${m.weather.wind_kph>=20?` ${m.weather.wind_kph}km/h`:''}${m.weather.rain_pct>=40?` &#9730;${m.weather.rain_pct}%`:''}<small> Open-Meteo</small></a>`:''}<span class="spacer"></span><span class="pill ${esc(statusClass)}">${esc(displayStatus)}</span></div><div class="fixture"><div class="side"><div class="tname">${teamMarkHTML(m.home)}<span class="teamNameText">${hfl}${esc(m.home.name)}</span></div><div class="tsub"><span>${esc(m.home.code)}</span>${teamStandingsMeta(m.home,m._comp).map(p=>`<span>${esc(p)}</span>`).join('')}</div></div><div class="center"><div class="score">${scoreText(m)}</div><div class="kick">${timing}</div></div><div class="side away"><div class="tname"><span class="teamNameText">${esc(m.away.name)}${afl}</span>${teamMarkHTML(m.away,'away')}</div><div class="tsub"><span>${esc(m.away.code)}</span>${teamStandingsMeta(m.away,m._comp).map(p=>`<span>${esc(p)}</span>`).join('')}</div></div></div>${probTop}${pick}<div class="expander"></div></div></article>`;
@@ -707,7 +729,9 @@ if(Object.prototype.hasOwnProperty.call(SPORT_LABELS,requestedSport)){
   try{localStorage.setItem('matchday.sport',DATA_FILE)}catch(e){}
 }
 const initialView=requestedView&&document.getElementById('view-'+requestedView)?requestedView:(SETTINGS.defaultView||'matches');
-applySettings();applySportNav();setView(initialView);load().then(()=>{
+applySettings();applySportNav();setView(initialView);
+bootAccount(); // resolves a returning sign-in redirect, or restores an existing session
+load().then(()=>{
   if(requestedView&&document.getElementById('view-'+requestedView))setView(requestedView);
   if(requestedMatch&&BYID[requestedMatch])openMatchModal(requestedMatch);
 });

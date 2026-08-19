@@ -4,8 +4,32 @@
     {
       "name": "matchday-local",
       "runtimeExecutable": "python",
-      "runtimeArgs": ["-m", "http.server", "8743"],
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8743"
+      ],
       "port": 8743
+    },
+    {
+      "name": "matchday-accounts",
+      "runtimeExecutable": "py",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8752"
+      ],
+      "port": 8752
+    },
+    {
+      "name": "matchday-verify",
+      "runtimeExecutable": "py",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8744"
+      ],
+      "port": 8744
     }
   ]
 }

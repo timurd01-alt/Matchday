@@ -25,7 +25,7 @@ function runCarousel(key,items,host,renderFn,intervalMs){
     host.dataset.carouselBound='1';
   }
 }
-const DEFAULT_SETTINGS={accent:'green',density:'normal',panel:'glass',defaultView:'matches',refresh:900,showInsight:true,showFinished:false,showDetails:false,favoriteTeam:'',alertsKickoff:true,alertsLive:false,alertsUpset:false,alertsModel:true,alertsData:true};
+const DEFAULT_SETTINGS={accent:'green',density:'normal',panel:'glass',defaultView:'matches',refresh:900,showInsight:true,showFinished:false,showDetails:false,favoriteTeam:'',favoriteTeams:[],alertsKickoff:true,alertsLive:false,alertsUpset:false,alertsModel:true,alertsData:true};
 let SETTINGS={...DEFAULT_SETTINGS};try{SETTINGS={...DEFAULT_SETTINGS,...JSON.parse(localStorage.getItem('matchday.settings')||'{}')}}catch(e){}
 // Refresh cadence is product-controlled so visitors cannot accidentally create
 // excessive polling or make the dashboard feel stale.
@@ -62,6 +62,10 @@ function t(s){if(!LANG||!window.MD_I18N||!MD_I18N[LANG])return s;return translat
 function setLang(v){LANG=v;try{localStorage.setItem('matchday.lang',v)}catch(e){};renderStrip();renderCurrent();renderInsight&&renderInsight();applyStaticI18n();renderAlerts();}
 let DATA_FILE='';try{DATA_FILE=localStorage.getItem('matchday.sport')||'';if(/^data_nhl\.json$/i.test(DATA_FILE)){DATA_FILE='';localStorage.setItem('matchday.sport','')}}catch(e){}
 const SPORT_LABELS={wc:'World Cup',ucl:'Champions League',epl:'Premier League',laliga:'La Liga',seriea:'Serie A',bundesliga:'Bundesliga',ligue1:'Ligue 1',nfl:'NFL',ncaaf:'College Football',ncaam:"Men's College Basketball",nba:'NBA',mlb:'MLB',nhl:'NHL'};
+// The sports we actually publish data for. SPORT_LABELS above still knows about
+// NHL so a restored sport picks up its name for free, but nothing fetches a file
+// that isn't there.
+const ALL_SPORT_KEYS=['wc','ucl','epl','laliga','seriea','bundesliga','ligue1','nfl','ncaaf','ncaam','nba','mlb'];
 const FIXTURE_PAGE_SIZE=40;
 let MATCH_VISIBLE=FIXTURE_PAGE_SIZE,RESULT_VISIBLE=FIXTURE_PAGE_SIZE;
 const MLB_FORECAST_PAUSE_MESSAGE='MLB forecasts paused while calibration and starting-pitcher coverage are being fixed.';
@@ -203,7 +207,7 @@ function toggleInsightRail(){
   // before its first render would come back empty without this.
   if(open&&typeof renderInsight==='function')renderInsight();
 }
-function updateSetting(k,v){if(k==='refresh')return;if(k==='showInsight'||k==='showDetails'||k==='showFinished'||k.startsWith('alerts'))v=!!v;SETTINGS[k]=v;saveSettings();applySettings();renderCurrent();if(k==='favoriteTeam'&&typeof renderInsight==='function')renderInsight();if(k.startsWith('alerts'))renderAlerts();scheduleNextLoad()}
+function updateSetting(k,v){if(k==='refresh')return;if(k==='showInsight'||k==='showDetails'||k==='showFinished'||k.startsWith('alerts'))v=!!v;SETTINGS[k]=v;saveSettings();applySettings();renderCurrent();if((k==='favoriteTeam'||k==='favoriteTeams')&&typeof renderInsight==='function')renderInsight();if(k.startsWith('alerts'))renderAlerts();scheduleNextLoad()}
 function resetSettings(){SETTINGS={...DEFAULT_SETTINGS};saveSettings();applySettings();setView(SETTINGS.defaultView);scheduleNextLoad()}
 function esc(s){return String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
 function uiLocale(){return({es:'es',fr:'fr',de:'de',pt:'pt-BR',ru:'ru'})[LANG]||undefined}
@@ -280,12 +284,52 @@ document.addEventListener('keydown',event=>{
   closeMetricHelps();
   open.blur();
 });
-function favoriteTeam(){return String(SETTINGS.favoriteTeam||'').trim()}
+// Following was a single team, stored as a string. Plenty of people follow a
+// handful -- three NFL teams, or a club and a national side -- and got a board
+// no different from an anonymous visitor's. favoriteTeams() is the list;
+// favoriteTeam() stays as the first entry because the news term and the insight
+// rail are built around one subject and reading them for a whole list would just
+// dilute both.
+function favoriteTeams(){
+  const raw=SETTINGS.favoriteTeams;
+  if(Array.isArray(raw))return raw.map(name=>String(name||'').trim()).filter(Boolean);
+  // Migration: honour a previously saved single favourite until it is re-saved.
+  const one=String(SETTINGS.favoriteTeam||'').trim();
+  return one?[one]:[];
+}
+function favoriteTeam(){return favoriteTeams()[0]||''}
+function isFollowingTeam(name){const key=teamKey(name);return !!key&&favoriteTeams().some(fav=>teamKey(fav)===key)}
+function toggleFavoriteTeam(name){
+  const clean=String(name||'').trim();if(!clean)return;
+  const next=isFollowingTeam(clean)?favoriteTeams().filter(fav=>teamKey(fav)!==teamKey(clean)):[...favoriteTeams(),clean];
+  updateSetting('favoriteTeams',next);
+}
 function favoriteNewsTerm(){return teamKey(favoriteTeam()).replace(/\b(fc|afc|cf|sc|football club)\b/g,'').replace(/\s+/g,' ').trim()}
-function isFavoriteTeam(name){const fav=teamKey(favoriteTeam());return !!fav&&teamKey(name)===fav}
+function isFavoriteTeam(name){return isFollowingTeam(name)}
 function isFavoriteMatch(m){return !!m&&(isFavoriteTeam(m.home?.name)||isFavoriteTeam(m.away?.name))}
 function favoriteFixtureSort(a,b){return Number(isFavoriteMatch(b))-Number(isFavoriteMatch(a))||fixtureSort(a,b)}
-function favoriteTeamOptions(){const names=new Set();(DATA.matches||[]).forEach(m=>{if(m.home?.name)names.add(m.home.name);if(m.away?.name)names.add(m.away.name)});(DATA.standings||[]).forEach(g=>(g.teams||[]).forEach(team=>{if(team.name)names.add(team.name)}));if(favoriteTeam())names.add(favoriteTeam());return [...names].sort((a,b)=>a.localeCompare(b)).map(name=>`<option value="${esc(name)}" ${name===favoriteTeam()?'selected':''}>${esc(name)}</option>`).join('')}
+function favoriteTeamNames(){
+  const names=new Set();
+  (DATA.matches||[]).forEach(m=>{if(m.home?.name)names.add(m.home.name);if(m.away?.name)names.add(m.away.name)});
+  (DATA.standings||[]).forEach(g=>(g.teams||[]).forEach(team=>{if(team.name)names.add(team.name)}));
+  // A followed team whose sport is out of season isn't on the current slate;
+  // keep it listed so it can still be removed.
+  favoriteTeams().forEach(name=>names.add(name));
+  return [...names].sort((a,b)=>a.localeCompare(b));
+}
+function favoriteTeamOptions(){return favoriteTeamNames().map(name=>`<option value="${esc(name)}" ${isFollowingTeam(name)?'selected':''}>${esc(name)}</option>`).join('')}
+// The followed list, plus a picker that adds to it. Rendered as chips rather
+// than a multi-select because removing one entry from a native multi-select
+// means ctrl-clicking, which nobody discovers.
+function favoriteTeamsControl(){
+  const following=favoriteTeams();
+  const chips=following.length
+    ?following.map(name=>`<button type="button" class="favChip" onclick="toggleFavoriteTeam(${JSON.stringify(name).replace(/"/g,'&quot;')})" aria-label="${esc('Stop following '+name)}">${esc(name)}<span aria-hidden="true">&times;</span></button>`).join('')
+    :`<span class="favEmpty">${t('No favorite selected')}</span>`;
+  const available=favoriteTeamNames().filter(name=>!isFollowingTeam(name));
+  const picker=`<select class="favAdd" onchange="if(this.value){toggleFavoriteTeam(this.value);this.value=''}" aria-label="${esc('Add a team to follow')}"><option value="">${t('Add a team')}…</option>${available.map(name=>`<option value="${esc(name)}">${esc(name)}</option>`).join('')}</select>`;
+  return `<div class="favChips">${chips}</div>${picker}`;
+}
 function liveClock(m){const v=m?.minute;if(v==null||v==='')return'';return typeof v==='number'||/^\d+$/.test(v)?`${v}'`:String(v)}
 const SCORE_DIFF_TERM={mlb:'run diff',nfl:'point diff',nba:'point diff',ncaaf:'point diff',ncaam:'point diff',nhl:'goal diff'};
 function scoreDiffLabel(m){return SCORE_DIFF_TERM[String(m?._comp||DATA.comp_key||'').toLowerCase()]||'goal diff';}
@@ -468,7 +512,7 @@ function _welcomeCardHTML(m){
   const pick=op?.name||pr.pick_name||'',model=op?.confidence??pr.confidence,market=op?.marketPct;
   const edge=model!=null&&market!=null?Math.round(Number(model)-Number(market)):null;
   const meter=model!=null?`<div class="welcomeMeter" aria-hidden="true"><i style="--welcome-p:${pct(model)}%"></i></div>`:'';
-  return `<div class="welcomeMatchMeta"><span>${esc(m._comp||DATA.comp_key||m.stage||'NEXT')}</span><span>${kickIn(m.kickoff)}</span></div><div class="welcomeTeams"><div><small>${esc(m.home?.code||'HOME')}</small><b>${esc(m.home?.name||'Home')}</b></div><em>v</em><div class="away"><small>${esc(m.away?.code||'AWAY')}</small><b>${esc(m.away?.name||'Away')}</b></div></div>${pick?`<div class="welcomeSignal"><span>MODEL</span><b>${esc(pick)} ${model!=null?esc(model)+'%':''}</b>${market!=null?`<i>market ${esc(market)}%${edge!=null?` · ${edge>0?'+':''}${edge} pt`:''}</i>`:''}</div>${meter}`:''}`;
+  return `<div class="welcomeMatchMeta"><span>${esc(m._comp||DATA.comp_key||m.stage||'NEXT')}</span><span>${kickIn(m.kickoff)}</span></div><div class="welcomeTeams"><div><small>${esc(m.home?.code||'HOME')}</small><b>${esc(m.home?.name||'Home')}</b></div><em>v</em><div class="away"><small>${esc(m.away?.code||'AWAY')}</small><b>${esc(m.away?.name||'Away')}</b></div></div>${pick?`<div class="welcomeSignal"><span>${_isTwoWay(m)||!(Number(model)<50)?'MODEL':'MOST LIKELY'}</span><b>${esc(pick)} ${model!=null?esc(model)+'%':''}</b>${market!=null?`<i>market ${esc(market)}%${edge!=null?` · ${edge>0?'+':''}${edge} pt`:''}</i>`:''}</div>${meter}`:''}`;
 }
 // Real coverage numbers, counted from the slate that just loaded. Deliberately
 // three short figures rather than another paragraph of claims.
@@ -539,7 +583,14 @@ function heroMarquee(){
 function landingHero(){
   const sc=DATA.scorecard;
   const slim=heroSeen();
-  const rec=sc&&sc.graded?`<span class="heroRec"><b>${sc.model_hits}-${sc.graded-sc.model_hits}</b> record</span>${sc.brier!=null?`<span class="heroRec">Probability accuracy ${metricHelp('Brier score','Measures probability accuracy. Lower is better.')} <b>${sc.brier}</b></span>`:''}${sc.clv_avg!=null?`<span class="heroRec">Market movement ${metricHelp('Closing line value','How the recorded probability compares with the final market snapshot.')} <b>${sc.clv_avg>0?'+':''}${sc.clv_avg}</b></span>`:''}`:`<span class="heroRec faintline">Model record begins as completed picks are graded</span>`;
+  // What leads here is the property that is true regardless of how the model is
+  // performing this month: the pick was published before kickoff and graded from
+  // the record afterward. A bare W-L and a raw Brier score led instead, and both
+  // mislead a first-time reader — a 139-129 record reads as a coin flip, and a
+  // Brier score is unreadable without knowing that lower is better and that 0.25
+  // is the do-nothing baseline. The full numbers, favourable or not, stay one
+  // click away on the Scorecard, which has the room to give them context.
+  const rec=sc&&sc.graded?`<span class="heroRec"><b>${sc.graded}</b> picks locked pregame and graded</span><span class="heroRec faintline">never edited after the result</span>`:`<span class="heroRec faintline">Model record begins as completed picks are graded</span>`;
   if(slim)return `<div class="heroSlim">${rec}<button class="heroSlimLink" type="button" onclick="setView('score')">Open scorecard <span aria-hidden="true">→</span></button></div>`;
   return `<div class="heroBand">
     <img src="icon-192.png?v=4" class="heroLogo" alt="Matchday" width="192" height="192">
@@ -553,6 +604,16 @@ function landingHero(){
     </div>
   </div>`;
 }
+// Where a draw is possible the leading outcome is routinely under 50%, which
+// reads as a broken model when it is presented as a flat "Pick". Both the card
+// markup and the compact-card pass below label those "Most likely" instead, so
+// they have to agree on when that is.
+function hasThreeWayProbabilities(m){
+  if(typeof _isTwoWay==='function'&&_isTwoWay(m))return false;
+  const p=officialPredictionProbabilities(m)||{};
+  return p.h!=null&&p.d!=null&&p.a!=null;
+}
+function leadsUnderHalf(m,confidence){return hasThreeWayProbabilities(m)&&Number(confidence)<50}
 function enhanceMatchCards(host){
   host.querySelectorAll('.card .head').forEach(head=>{
     const card=head.closest('.card'),m=BYID[card?.dataset.id];
@@ -561,7 +622,7 @@ function enhanceMatchCards(host){
     if(m)head.setAttribute('aria-label',`Open ${m.home?.name||'home'} versus ${m.away?.name||'away'}`);
     if(card.classList.contains('compactCard')&&m?.prediction){
       const op=_v10OfficialPick(m),edge=_v10OfficialEdge(m,op),label=card.querySelector('.pick .pl'),note=card.querySelector('.pick .pnote');
-      if(label)label.textContent='Model';
+      if(label)label.textContent=leadsUnderHalf(m,op.confidence)?'Most likely':'Model';
       if(note&&op.marketPct!=null){note.textContent=`market ${op.marketPct}%${edge==null?'':` · ${edge>0?'+':''}${edge} pt`}`;note.classList.add('compactSignal')}
     }
     const setFinishedLabel=()=>{if(m?.status!=='FINISHED')return;const status=document.querySelector('.matchModal.show .modalStatus');if(status)status.textContent='FT'};
@@ -625,6 +686,29 @@ function marqueeSelect(active){
   }
   return picked;
 }
+// The marquee board deliberately reaches months ahead when a sport is between
+// seasons (see nearTermPool), which is right -- an empty NBA slot would be worse
+// than a distant one. What it lacked was any cue that it had done so, leaving a
+// game 62 days out looking exactly like one tomorrow and the whole board reading
+// as stale. Group by horizon so a quiet week is legible as a quiet week.
+const BOARD_HORIZONS=[
+  {key:'live',  label:'In play',        test:(m,now)=>m.status==='LIVE'},
+  {key:'today', label:'Today',          test:(m,now)=>kickMs(m)&&kickMs(m)<now+86400000},
+  {key:'week',  label:'This week',      test:(m,now)=>kickMs(m)&&kickMs(m)<now+7*86400000},
+  {key:'later', label:'Further ahead',  test:()=>true}
+];
+function groupedBoardHTML(list){
+  const now=Date.now(),buckets=new Map();
+  list.forEach(m=>{
+    const h=BOARD_HORIZONS.find(x=>x.test(m,now))||BOARD_HORIZONS[BOARD_HORIZONS.length-1];
+    if(!buckets.has(h.key))buckets.set(h.key,[]);
+    buckets.get(h.key).push(m);
+  });
+  return BOARD_HORIZONS.filter(h=>buckets.get(h.key)?.length).map(h=>{
+    const games=buckets.get(h.key);
+    return `<div class="boardHorizon"><span>${esc(h.label)}</span><i>${games.length} ${games.length===1?'game':'games'}</i></div>`+games.map(cardHTML).join('');
+  }).join('');
+}
 function renderMatches(){const M=DATA.matches||[];
   // "All sports" merges every competition's fixtures into one list (often
   // 1000+ matches) -- instead of dumping everything, rank by a
@@ -641,7 +725,7 @@ function renderMatches(){const M=DATA.matches||[];
     ?`<div class="viewIntro"><div><div class="vhead">Top matchups</div><p>The strongest and closest games across every sport. Choose a sport above to see its complete schedule.</p></div><span>${shown.length} featured</span></div>`
     :`<div class="viewIntro"><div><div class="vhead">${t('Fixtures')}</div><p>Pregame model reads now; final scores and grading after the game.</p></div><span>${capped.length} games</span></div>`;
   const html=missing+landingHero()+intro+
-    (shown.length?shown.map(cardHTML).join(''):`<div class="empty" style="grid-column:1/-1">No upcoming matches to analyze.</div>`)+
+    (shown.length?(isAll?groupedBoardHTML(shown):shown.map(cardHTML).join('')):`<div class="empty" style="grid-column:1/-1">No upcoming matches to analyze.</div>`)+
     (remaining?`<div class="fixturePager"><span>Showing ${shown.length} of ${capped.length} fixtures</span><button class="actionbtn" onclick="MATCH_VISIBLE+=FIXTURE_PAGE_SIZE;renderMatches()">Load ${Math.min(FIXTURE_PAGE_SIZE,remaining)} more</button></div>`:'');
   $('#view-matches').innerHTML=html;enhanceMatchCards($('#view-matches'));}
 function renderResults(){const M=DATA.matches||[];
@@ -779,6 +863,28 @@ function computeSignalAlerts(){
 }
 function openAlertMatch(id){toggleAlertCenter(false);if(id)openMatchModal(id)}
 function markAlertsRead(alerts=computeSignalAlerts()){try{localStorage.setItem('matchday.alertsSeen',JSON.stringify(alerts.map(_alertKey).slice(-80)))}catch(e){}renderSignalAlerts()}
+// Phone nav. Nineteen destinations in a 375px bar meant four were reachable and
+// the labels sat at 8px; the rest were behind a horizontal scroll nobody finds.
+// The bar now carries four primary views plus this trigger, and everything else
+// lives in a sheet that opens over it. Desktop is untouched -- the sidebar has
+// the room for the full list and always did.
+function navSheetOpen(){return !!document.getElementById('nav')?.classList.contains('navSheet')}
+function closeNavSheet(){
+  const nav=document.getElementById('nav');if(!nav||!nav.classList.contains('navSheet'))return;
+  nav.classList.remove('navSheet');
+  nav.querySelector('.navMore')?.setAttribute('aria-expanded','false');
+  document.body.classList.remove('navSheetOpen');
+}
+function toggleNavSheet(){
+  const nav=document.getElementById('nav');if(!nav)return;
+  if(nav.classList.contains('navSheet')){closeNavSheet();return}
+  nav.classList.add('navSheet');
+  nav.querySelector('.navMore')?.setAttribute('aria-expanded','true');
+  document.body.classList.add('navSheetOpen');
+  nav.querySelector('.navbtn[data-v]:not([data-primary]):not([style*="display: none"])')?.focus();
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&navSheetOpen())closeNavSheet()});
+document.addEventListener('click',e=>{if(navSheetOpen()&&!e.target.closest('#nav'))closeNavSheet()});
 function toggleAlertCenter(force){
   const panel=$('#alertCenter'),bell=$('#alertBell');if(!panel)return;
   const open=force===undefined?panel.hidden:!!force;panel.hidden=!open;
@@ -805,6 +911,78 @@ const LEADERBOARD_URL = "https://matchday-lake-omega.vercel.app/api/leaderboard"
 function deviceId(){let id;try{id=localStorage.getItem('matchday.device')}catch(e){}
   if(!id){id='mdx-'+Math.random().toString(36).slice(2)+Date.now().toString(36);try{localStorage.setItem('matchday.device',id)}catch(e){}}return id;}
 function myHandle(){try{return localStorage.getItem('matchday.handle')||''}catch(e){return ''}}
+// ---- Accounts: identity that outlives the browser ------------------------
+// A device id lives and dies with localStorage, so clearing a browser or
+// switching devices used to mean a new handle and an empty record. Signing in
+// with Google/GitHub maps this browser onto a durable server-side account; the
+// session token below is disposable, because signing in again finds the same
+// account. Anonymous play is unchanged for anyone who never signs in.
+const AUTH_BASE=LEADERBOARD_URL?LEADERBOARD_URL.replace(/\/api\/leaderboard\/?$/,''):'';
+let ACCOUNT={signedIn:false,handle:'',canReshuffle:false};
+let AUTH_PROVIDERS=[];
+function authToken(){try{return localStorage.getItem('matchday.session')||''}catch(e){return ''}}
+function setAuthToken(t){try{t?localStorage.setItem('matchday.session',t):localStorage.removeItem('matchday.session')}catch(e){}}
+function applyAccount(d){
+  if(!d)return;
+  // `canReshuffle` is absent from pick responses; absent means unchanged, not false.
+  ACCOUNT={signedIn:!!d.signedIn,handle:d.handle||ACCOUNT.handle,
+    canReshuffle:d.canReshuffle===undefined?ACCOUNT.canReshuffle:!!d.canReshuffle};
+  if(d.handle){try{localStorage.setItem('matchday.handle',d.handle);localStorage.setItem('matchday.handleAssigned','1')}catch(e){}}
+}
+async function lbPost(action,body){
+  if(!LEADERBOARD_URL)return null;
+  try{const r=await fetch(LEADERBOARD_URL+'?action='+action,{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({token:authToken()||undefined,...body})});return await r.json();}catch(e){return null;}
+}
+function signIn(provider){
+  if(!AUTH_BASE)return;
+  const url=AUTH_BASE+'/api/auth?provider='+encodeURIComponent(provider)
+    +'&return='+encodeURIComponent(location.origin)+'&deviceId='+encodeURIComponent(deviceId());
+  location.assign(url);
+}
+async function signOut(){
+  await lbPost('signout',{});
+  setAuthToken('');ACCOUNT={signedIn:false,handle:'',canReshuffle:false};SIGNIN_CLAIMED=0;
+  // Drop the account's handle too, or a guest would keep wearing a name the
+  // board no longer knows them by.
+  try{localStorage.removeItem('matchday.handle');localStorage.removeItem('matchday.handleAssigned')}catch(e){}
+  // The local record stays put; only the server identity is released.
+  try{renderCommunity()}catch(e){}
+}
+let SIGNIN_ERROR='';
+let SIGNIN_CLAIMED=0;
+// The callback hands back a single-use code in the fragment (never sent to a
+// server). Trade it for a session token, then scrub it from the URL so a
+// shared or reloaded link cannot replay a sign-in.
+async function consumeSigninRedirect(){
+  const m=/(?:^|&)mdsignin=([^&]+)/.exec(String(location.hash||'').replace(/^#/,''));
+  if(!m)return false;
+  const code=decodeURIComponent(m[1]);
+  history.replaceState(null,'',location.pathname+location.search);
+  if(code==='cancelled'||code==='failed'){SIGNIN_ERROR=code==='cancelled'?'Sign-in cancelled.':'Sign-in failed — please try again.';return false;}
+  const d=await lbPost('session-exchange',{code,deviceId:deviceId()});
+  if(d&&d.ok){applyAccount(d);SIGNIN_CLAIMED=Number(d.claimed||0);return true;}
+  SIGNIN_ERROR='Sign-in failed — please try again.';return false;
+}
+async function refreshSession(){
+  if(!authToken())return;
+  const d=await lbPost('session',{});
+  if(d&&d.ok){applyAccount(d);if(!d.signedIn)setAuthToken('');}
+}
+async function loadAuthProviders(){
+  if(!LEADERBOARD_URL)return;
+  try{const r=await fetch(LEADERBOARD_URL+'?action=providers');const d=await r.json();
+    if(d&&d.ok)AUTH_PROVIDERS=d.providers||[];}catch(e){}
+}
+async function bootAccount(){
+  if(!LEADERBOARD_URL)return;
+  await loadAuthProviders();
+  const signedInNow=await consumeSigninRedirect();
+  if(!signedInNow)await refreshSession();
+  // The community view may already have painted a guest state while this was
+  // in flight, so repaint it whether or not it is the visible tab.
+  try{renderCommunity()}catch(e){}
+}
 // ---- Community identity: assigned real-player names, never free text ------
 // A free-text handle on a shared public board is an open door for offensive
 // or trolling names. Rather than moderate input, there's no input at all --
@@ -840,25 +1018,32 @@ function assignHandle(){
   try{localStorage.setItem('matchday.handle',h);localStorage.setItem('matchday.handleAssigned','1');localStorage.setItem('matchday.handleReshuffled','0')}catch(e){}
   return h;
 }
-function canReshuffleHandle(){try{return localStorage.getItem('matchday.handleReshuffled')!=='1'}catch(e){return false}}
-function reshuffleHandle(){
+function canReshuffleHandle(){
+  if(ACCOUNT.signedIn)return ACCOUNT.canReshuffle; // the account, not the browser, owns the one reshuffle
+  try{return localStorage.getItem('matchday.handleReshuffled')!=='1'}catch(e){return false}
+}
+async function reshuffleHandle(){
   if(!canReshuffleHandle())return;
+  if(ACCOUNT.signedIn){
+    const d=await lbPost('reshuffle',{});
+    if(d&&d.ok)applyAccount({signedIn:true,handle:d.handle,canReshuffle:false});
+    renderCommunity();return;
+  }
   const base=myHandle().replace(/\s#\d+$/,'');
   const h=_drawHandle(base);
   try{localStorage.setItem('matchday.handle',h);localStorage.setItem('matchday.handleReshuffled','1')}catch(e){}
   renderCommunity();
 }
 function ensureHandle(){
+  if(ACCOUNT.signedIn)return; // server-assigned, and it outranks anything local
   try{
     const assigned=localStorage.getItem('matchday.handleAssigned')==='1';
     if(!myHandle()||!assigned)assignHandle(); // first-time visitor, or force-migrates an old free-text handle
   }catch(e){}
 }
 async function pushScore(){ // server grades only picks it locked before kickoff
-  if(!LEADERBOARD_URL)return;
-  try{const r=await fetch(LEADERBOARD_URL+'?action=sync',{method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({deviceId:deviceId()})});const d=await r.json();
-    if(d.ok&&d.handle){localStorage.setItem('matchday.handle',d.handle);localStorage.setItem('matchday.handleAssigned','1')}}catch(e){}
+  const d=await lbPost('sync',{deviceId:deviceId()});
+  if(d&&d.ok)applyAccount(d);
 }
 async function fetchLeaderboard(period){
   if(!LEADERBOARD_URL)return null;
@@ -874,10 +1059,8 @@ function btmScoped(db){const scope=communityScope();if(scope==='ALL')return db;
   return {...db,picks};}
 function isCommunityPickOpen(m){const kickoff=kickMs(m);return m?.status==='UPCOMING'&&kickoff> Date.now()&&!isStaleUpcoming(m)}
 async function lockGlobalPick(matchId,pick,comp){
-  if(!LEADERBOARD_URL)return;
-  try{const r=await fetch(LEADERBOARD_URL+'?action=pick',{method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({deviceId:deviceId(),matchId:String(matchId),pick,comp:String(comp||'').toLowerCase()})});
-    const d=await r.json();if(d.ok&&d.handle){localStorage.setItem('matchday.handle',d.handle);localStorage.setItem('matchday.handleAssigned','1')}}catch(e){}
+  const d=await lbPost('pick',{deviceId:deviceId(),matchId:String(matchId),pick,comp:String(comp||'').toLowerCase()});
+  if(d&&d.ok)applyAccount(d);
 }
 function submitPick(matchId,pick){
   ensureHandle();

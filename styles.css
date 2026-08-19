@@ -204,6 +204,13 @@ body.modalOpen{overflow:hidden}.matchModal{position:fixed;inset:0;z-index:99;dis
   .btmrow{display:flex;gap:8px;margin-bottom:9px}
   .btmbtn{flex:1;background:var(--bg2);color:var(--text);border:1px solid var(--line);border-radius:9px;padding:10px;font-family:var(--mono);font-size:.78rem;font-weight:700;cursor:pointer;transition:border-color .15s,background .15s}
   .btmbtn:hover:not(:disabled){border-color:var(--signal)}
+  .acctRow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:12px;padding:10px 12px;border:1px solid var(--line);border-radius:9px;background:var(--bg2);font-size:.76rem;color:var(--muted)}
+  .acctRow.signedIn{border-color:rgba(58,209,122,.35)}
+  .acctRow .acctState{flex:1 1 220px}
+  .acctRow .acctState b{color:var(--text)}
+  .acctRow .acctBtns{display:flex;flex-wrap:wrap;gap:8px}
+  .acctRow .btmbtn{flex:0 0 auto;padding:7px 13px;font-size:.72rem}
+  .acctErr{flex:1 1 100%;color:var(--warn,#e2b04a);font-family:var(--mono);font-size:.68rem}
   .lbTabs{display:flex;gap:6px;margin-bottom:10px}
   .lbTab{background:var(--bg2);color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:6px 13px;font-family:var(--mono);font-size:.7rem;font-weight:700;cursor:pointer;transition:border-color .15s,color .15s}
   .lbTab:hover{color:var(--text)}
@@ -1936,3 +1943,66 @@ html{color-scheme:dark}
   .welcomePreview{transition:none}
   .welcomePreview::before{animation:none}
 }
+
+/* Model distribution on a card, shown only where a draw exists. Sits directly
+   under the pick line so a sub-50% leader reads as "the biggest slice of three"
+   rather than as a broken forecast. Slightly shorter than the market bar above
+   it so the two never compete for the same weight. */
+.prob.modelRead{margin-top:8px}
+.prob.modelRead .bar{height:18px}
+.prob.modelRead .seg{font-size:.64rem}
+
+/* Horizon dividers on the merged all-sports board. Full grid width so they read
+   as separators rather than as another card. */
+.boardHorizon{grid-column:1/-1;display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:18px 0 2px;padding-bottom:7px;border-bottom:1px solid var(--line)}
+.boardHorizon:first-of-type{margin-top:6px}
+.boardHorizon span{font-family:var(--mono);font-size:.66rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text)}
+.boardHorizon i{font-family:var(--mono);font-size:.62rem;font-style:normal;color:var(--faint)}
+
+/* ---- Phone navigation: five destinations, the rest in a sheet ----
+   Nineteen items in a 375px bar produced 8px labels and a horizontal scroll
+   that hid fifteen of them. The bar keeps four primary views plus More; the
+   sheet opens over it with everything. Desktop keeps the full sidebar. */
+@media(max-width:700px){
+  .sidebar{overflow-x:hidden}
+  /* let the bar lay the buttons out directly, so the grouping borders that
+     make sense in a vertical rail don't turn into stray dividers in a row */
+  .sidebar .navGroup{display:contents}
+  .sidebar .navbtn:not([data-primary]):not(.navMore),
+  .sidebar .navExternal{display:none}
+  .sidebar .navbtn{width:20%;min-width:0;flex:1 1 20%}
+  .sidebar .navbtn .lbl{font-size:11px;max-width:none;font-weight:600}
+  .sidebar .navMore{display:flex}
+
+  .sidebar.navSheet{
+    position:fixed;left:0;right:0;bottom:0;z-index:40;
+    height:auto;max-height:78dvh;overflow-y:auto;
+    display:grid;grid-template-columns:repeat(4,1fr);gap:2px;
+    padding:12px 8px calc(12px + env(safe-area-inset-bottom,0px));
+    background:var(--bg);border-top:1px solid var(--line);
+    box-shadow:0 -14px 34px rgba(0,0,0,.45);
+  }
+  /* Has to out-specify the hiding rule above, which carries two :not() arguments
+     -- matching its shape is what makes the sheet actually reveal anything. An
+     item applySportNav has switched off stays off: that's an inline style. */
+  .sidebar.navSheet .navbtn:not([data-primary]):not(.navMore),
+  .sidebar.navSheet .navExternal{display:flex}
+  .sidebar.navSheet .navbtn,
+  .sidebar.navSheet .navExternal{width:auto;min-width:0;flex:0 0 auto;height:66px;border-radius:9px;text-decoration:none}
+  .sidebar.navSheet .navExternal{flex-direction:column;align-items:center;justify-content:center;gap:4px;color:var(--muted);padding:7px 4px 6px}
+  .sidebar.navSheet .navExternal svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.7}
+  .sidebar.navSheet .navExternal .lbl{font-size:11px;line-height:1.1;text-align:center;opacity:1}
+  .sidebar.navSheet .navMore{color:var(--signal)}
+  body.navSheetOpen{overflow:hidden}
+}
+
+/* Followed teams: chips you can remove in one tap, plus a picker that adds.
+   A native multi-select would technically hold the same list, but removing one
+   entry from one means ctrl-clicking, which nobody discovers. */
+.favChips{display:flex;flex-wrap:wrap;gap:6px;margin:2px 0 9px}
+.favChip{display:inline-flex;align-items:center;gap:7px;padding:5px 9px;border-radius:999px;border:1px solid var(--line2);background:var(--bg2);color:var(--text);font:600 .72rem/1 "Inter",system-ui,sans-serif;cursor:pointer;transition:border-color .14s,color .14s}
+.favChip span{font-size:.9rem;line-height:1;color:var(--faint)}
+.favChip:hover{border-color:var(--loss);color:var(--loss)}
+.favChip:hover span{color:var(--loss)}
+.favEmpty{color:var(--faint);font-size:.74rem;font-family:var(--mono)}
+.favAdd{width:100%}

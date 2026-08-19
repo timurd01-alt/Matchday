@@ -4,59 +4,28 @@
 // totals. Picks are accepted only while the published fixture is UPCOMING and
 // before kickoff; results are later read from Matchday's public generated data
 // and totals are derived from those server-held rows.
+//
+// Rows are owned by either an anonymous device id or, once someone signs in,
+// their account's stable owner key -- see `_accounts.js` for why the two share
+// a column and how anonymous history gets claimed.
 
+import {
+  PUBLIC_DATA_ORIGIN, HANDLE_POOL, DEVICE_RE, SESSION_TTL_MS,
+  PROVIDERS, providerConfigured, newClient, ensureSchema, setHeaders, requestIp,
+  opaqueKey, consumeLimit, accountForToken, createSession, destroySession,
+  redeemSigninCode, claimDevicePicks, reshuffleAccountHandle,
+} from "./_accounts.js";
 import crypto from "node:crypto";
-import { Client } from "pg";
 
-// Generated competition files are published by the GitHub Pages site, not by
-// this Vercel function project. Keep the browser origin separate so an
-// optional data mirror does not accidentally remove the production site from
-// the CORS allowlist.
-const PUBLIC_SITE_ORIGIN = process.env.PUBLIC_SITE_ORIGIN || "https://matchdayterminal.com";
-const PUBLIC_DATA_ORIGIN = process.env.PUBLIC_DATA_ORIGIN || PUBLIC_SITE_ORIGIN;
 const ALLOWED_COMPS = new Set([
   "wc", "ucl", "epl", "laliga", "seriea", "bundesliga", "ligue1",
   "nfl", "ncaaf", "ncaam", "nba", "mlb", "nhl",
 ]);
-const SAFE_ORIGINS = new Set([
-  PUBLIC_SITE_ORIGIN,
-  PUBLIC_DATA_ORIGIN,
-  ...(process.env.ALLOWED_ORIGINS || "").split(",").map(v => v.trim()).filter(Boolean),
-]);
-const HANDLE_POOL = [
-  "Patrick Mahomes", "Josh Allen", "Nikola Jokic", "A'ja Wilson",
-  "Shohei Ohtani", "Aaron Judge", "Connor McDavid", "Alex Morgan",
-  "Marta", "Lionel Messi", "Kylian Mbappe", "Jude Bellingham",
-];
-const DEVICE_RE = /^mdx-[a-z0-9]{12,60}$/;
 const MATCH_RE = /^[A-Za-z0-9:_-]{1,100}$/;
-let schemaPromise;
 
-function setHeaders(req, res) {
-  const origin = String(req.headers.origin || "");
-  if (SAFE_ORIGINS.has(origin) || /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) {
-    res.setHeader("Access-Control-Allow-Origin", origin);
-    res.setHeader("Vary", "Origin");
-  }
-  res.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  res.setHeader("Cache-Control", "no-store");
-  res.setHeader("Content-Security-Policy", "default-src 'none'; frame-ancestors 'none'");
-  res.setHeader("X-Content-Type-Options", "nosniff");
-  res.setHeader("X-Frame-Options", "DENY");
-  res.setHeader("Referrer-Policy", "no-referrer");
-}
-
-function requestIp(req) {
-  return String(req.headers["x-forwarded-for"] || req.socket?.remoteAddress || "unknown")
-    .split(",")[0].trim().slice(0, 64);
-}
-
-function opaqueKey(value) {
-  const secret = process.env.RATE_LIMIT_SECRET || process.env.DATABASE_URL || "matchday";
-  return crypto.createHmac("sha256", secret).update(value).digest("hex");
-}
-
+// Anonymous visitors still get a stable name derived from their device id.
+// Signed-in accounts carry a real handle row instead, so this is only the
+// pre-account fallback.
 function serverHandle(deviceId) {
   const digest = crypto.createHash("sha256").update(`handle:${deviceId}`).digest();
   const name = HANDLE_POOL[digest[0] % HANDLE_POOL.length];
@@ -64,44 +33,16 @@ function serverHandle(deviceId) {
   return `${name} #${tag}`;
 }
 
-async function ensureSchema(db) {
-  if (!schemaPromise) {
-    schemaPromise = (async () => {
-      await db.query(`CREATE TABLE IF NOT EXISTS verified_picks(
-        device_id VARCHAR(64) NOT NULL,
-        comp VARCHAR(16) NOT NULL,
-        match_id VARCHAR(100) NOT NULL,
-        handle VARCHAR(64) NOT NULL,
-        pick CHAR(1) NOT NULL,
-        kickoff BIGINT NOT NULL,
-        result CHAR(1),
-        created_at BIGINT NOT NULL,
-        graded_at BIGINT,
-        PRIMARY KEY(device_id, comp, match_id)
-      )`);
-      await db.query(`CREATE TABLE IF NOT EXISTS rate_limits(
-        bucket_key VARCHAR(80) PRIMARY KEY,
-        bucket_start BIGINT NOT NULL,
-        request_count INT NOT NULL
-      )`);
-      await db.query("CREATE INDEX IF NOT EXISTS verified_picks_graded_idx ON verified_picks(graded_at)");
-    })().catch(error => { schemaPromise = null; throw error; });
+// Who owns the rows this request touches: the session if there is a valid one,
+// otherwise the anonymous device id the browser presented.
+async function resolveOwner(db, body) {
+  const account = await accountForToken(db, body?.token);
+  if (account) {
+    return { ownerId: account.owner_key, handle: account.handle, account };
   }
-  return schemaPromise;
-}
-
-async function consumeLimit(db, key, windowMs, limit) {
-  const start = Math.floor(Date.now() / windowMs) * windowMs;
-  const row = await db.query(
-    `INSERT INTO rate_limits(bucket_key,bucket_start,request_count) VALUES($1,$2,1)
-     ON CONFLICT(bucket_key) DO UPDATE SET
-       bucket_start=EXCLUDED.bucket_start,
-       request_count=CASE WHEN rate_limits.bucket_start=EXCLUDED.bucket_start
-                          THEN rate_limits.request_count+1 ELSE 1 END
-     RETURNING request_count`,
-    [key, start]
-  );
-  return Number(row.rows[0]?.request_count || 0) <= limit;
+  const deviceId = String(body?.deviceId || "");
+  if (!DEVICE_RE.test(deviceId)) return null;
+  return { ownerId: deviceId, handle: serverHandle(deviceId), account: null };
 }
 
 async function loadCompetition(comp) {
@@ -118,11 +59,11 @@ function findMatch(data, matchId) {
 }
 
 async function lockPick(db, body) {
-  const deviceId = String(body?.deviceId || "");
+  const owner = await resolveOwner(db, body);
   const comp = String(body?.comp || "").toLowerCase();
   const matchId = String(body?.matchId || "");
   const pick = String(body?.pick || "").toLowerCase();
-  if (!DEVICE_RE.test(deviceId) || !ALLOWED_COMPS.has(comp) || !MATCH_RE.test(matchId) || !["h", "d", "a"].includes(pick)) {
+  if (!owner || !ALLOWED_COMPS.has(comp) || !MATCH_RE.test(matchId) || !["h", "d", "a"].includes(pick)) {
     return { status: 400, payload: { ok: false, error: "invalid pick" } };
   }
   const data = await loadCompetition(comp);
@@ -131,20 +72,18 @@ async function lockPick(db, body) {
   if (!match || match.status !== "UPCOMING" || !Number.isFinite(kickoff) || kickoff <= Date.now() + 30000) {
     return { status: 409, payload: { ok: false, error: "pick window closed" } };
   }
-  const handle = serverHandle(deviceId);
   await db.query(
     `INSERT INTO verified_picks(device_id,comp,match_id,handle,pick,kickoff,created_at)
      VALUES($1,$2,$3,$4,$5,$6,$7) ON CONFLICT(device_id,comp,match_id) DO NOTHING`,
-    [deviceId, comp, matchId, handle, pick, kickoff, Date.now()]
+    [owner.ownerId, comp, matchId, owner.handle, pick, kickoff, Date.now()]
   );
-  return { status: 200, payload: { ok: true, handle } };
+  return { status: 200, payload: { ok: true, handle: owner.handle, signedIn: !!owner.account } };
 }
 
-async function syncDevice(db, deviceId) {
-  if (!DEVICE_RE.test(deviceId)) return { status: 400, payload: { ok: false, error: "invalid device" } };
+async function gradeAndCount(db, owner) {
   const pending = await db.query(
     "SELECT comp,match_id FROM verified_picks WHERE device_id=$1 AND result IS NULL LIMIT 500",
-    [deviceId]
+    [owner.ownerId]
   );
   const datasets = new Map();
   for (const comp of new Set(pending.rows.map(row => row.comp))) datasets.set(comp, await loadCompetition(comp));
@@ -154,7 +93,7 @@ async function syncDevice(db, deviceId) {
     if (["h", "d", "a"].includes(result)) {
       await db.query(
         "UPDATE verified_picks SET result=$1,graded_at=$2 WHERE device_id=$3 AND comp=$4 AND match_id=$5 AND result IS NULL",
-        [result, Date.now(), deviceId, row.comp, row.match_id]
+        [result, Date.now(), owner.ownerId, row.comp, row.match_id]
       );
     }
   }
@@ -162,9 +101,70 @@ async function syncDevice(db, deviceId) {
     `SELECT COUNT(*) FILTER (WHERE result IS NOT NULL)::int AS graded,
             COUNT(*) FILTER (WHERE result=pick)::int AS hits
      FROM verified_picks WHERE device_id=$1`,
-    [deviceId]
+    [owner.ownerId]
   );
-  return { status: 200, payload: { ok: true, handle: serverHandle(deviceId), ...stats.rows[0] } };
+  return stats.rows[0];
+}
+
+async function syncOwner(db, body) {
+  const owner = await resolveOwner(db, body);
+  if (!owner) return { status: 400, payload: { ok: false, error: "invalid device" } };
+  const stats = await gradeAndCount(db, owner);
+  return {
+    status: 200,
+    payload: {
+      ok: true,
+      handle: owner.handle,
+      signedIn: !!owner.account,
+      canReshuffle: owner.account ? !owner.account.reshuffled : false,
+      ...stats,
+    },
+  };
+}
+
+// Trades the single-use code from the sign-in redirect for a session token,
+// and folds the browser's anonymous history into the account it just proved.
+async function exchangeSignin(db, body) {
+  const redeemed = await redeemSigninCode(db, body?.code);
+  if (!redeemed) return { status: 400, payload: { ok: false, error: "sign-in expired, please try again" } };
+  const account = await db.query("SELECT * FROM accounts WHERE owner_key=$1", [redeemed.owner_key]);
+  if (!account.rows[0]) return { status: 400, payload: { ok: false, error: "sign-in expired, please try again" } };
+  const row = account.rows[0];
+  // The device id recorded when sign-in started is authoritative; a device id
+  // supplied now is accepted only as a fallback for the same browser.
+  const deviceId = redeemed.device_id || String(body?.deviceId || "");
+  const claimed = await claimDevicePicks(db, row.owner_key, deviceId, row.handle);
+  const token = await createSession(db, row.owner_key);
+  const stats = await gradeAndCount(db, { ownerId: row.owner_key });
+  return {
+    status: 200,
+    payload: {
+      ok: true, token, handle: row.handle, signedIn: true,
+      canReshuffle: !row.reshuffled, claimed,
+      expiresAt: Date.now() + SESSION_TTL_MS, ...stats,
+    },
+  };
+}
+
+async function sessionState(db, body) {
+  const account = await accountForToken(db, body?.token);
+  if (!account) return { status: 200, payload: { ok: true, signedIn: false } };
+  const stats = await gradeAndCount(db, { ownerId: account.owner_key });
+  return {
+    status: 200,
+    payload: {
+      ok: true, signedIn: true, handle: account.handle,
+      canReshuffle: !account.reshuffled, ...stats,
+    },
+  };
+}
+
+async function reshuffle(db, body) {
+  const account = await accountForToken(db, body?.token);
+  if (!account) return { status: 401, payload: { ok: false, error: "sign in first" } };
+  const handle = await reshuffleAccountHandle(db, account.owner_key);
+  if (!handle) return { status: 409, payload: { ok: false, error: "reshuffle already used" } };
+  return { status: 200, payload: { ok: true, handle, canReshuffle: false } };
 }
 
 async function leaderboard(db, period) {
@@ -172,15 +172,19 @@ async function leaderboard(db, period) {
   const since = allowedPeriod === "week" ? Date.now() - 7 * 86400000
     : allowedPeriod === "month" ? Date.now() - 30 * 86400000 : 0;
   const minimum = allowedPeriod === "all" ? 10 : 3;
+  // An account's live handle wins over the one stamped on the row, so a
+  // reshuffle renames the player everywhere at once.
   const rows = await db.query(
-    `SELECT MAX(handle) AS handle,
+    `SELECT COALESCE(MAX(a.handle), MAX(v.handle)) AS handle,
+            BOOL_OR(a.owner_key IS NOT NULL) AS verified,
             COUNT(*)::int AS graded,
-            COUNT(*) FILTER (WHERE result=pick)::int AS hits
-     FROM verified_picks
-     WHERE result IS NOT NULL AND graded_at >= $1
-     GROUP BY device_id
+            COUNT(*) FILTER (WHERE v.result=v.pick)::int AS hits
+     FROM verified_picks v
+     LEFT JOIN accounts a ON a.owner_key = v.device_id
+     WHERE v.result IS NOT NULL AND v.graded_at >= $1
+     GROUP BY v.device_id
      HAVING COUNT(*) >= $2
-     ORDER BY (COUNT(*) FILTER (WHERE result=pick))::float / COUNT(*) DESC, COUNT(*) DESC
+     ORDER BY (COUNT(*) FILTER (WHERE v.result=v.pick))::float / COUNT(*) DESC, COUNT(*) DESC
      LIMIT 100`,
     [since, minimum]
   );
@@ -196,7 +200,7 @@ export default async function handler(req, res) {
     return res.status(415).json({ ok: false, error: "JSON required" });
   }
 
-  const db = new Client({ connectionString: process.env.DATABASE_URL });
+  const db = newClient();
   try {
     await db.connect();
     await ensureSchema(db);
@@ -211,7 +215,14 @@ export default async function handler(req, res) {
     if (action === "leaderboard" && req.method === "GET") {
       return res.status(200).json(await leaderboard(db, String(req.query.period || "all")));
     }
+    if (action === "providers" && req.method === "GET") {
+      return res.status(200).json({
+        ok: true,
+        providers: Object.keys(PROVIDERS).filter(providerConfigured),
+      });
+    }
     const body = typeof req.body === "string" ? JSON.parse(req.body) : (req.body || {});
+    // Per-identity throttles, on whichever identity the caller presented.
     const deviceId = String(body.deviceId || "");
     if (DEVICE_RE.test(deviceId) && !await consumeLimit(db, `device:${opaqueKey(deviceId)}`, 60000, 10)) {
       return res.status(429).json({ ok: false, error: "slow down" });
@@ -219,8 +230,22 @@ export default async function handler(req, res) {
     if (DEVICE_RE.test(deviceId) && !await consumeLimit(db, `device:${opaqueKey(deviceId)}:day`, 86400000, 100)) {
       return res.status(429).json({ ok: false, error: "daily limit reached" });
     }
+    const token = String(body.token || "");
+    if (token && !await consumeLimit(db, `session:${opaqueKey(token)}`, 60000, 20)) {
+      return res.status(429).json({ ok: false, error: "slow down" });
+    }
+    if (token && !await consumeLimit(db, `session:${opaqueKey(token)}:day`, 86400000, 200)) {
+      return res.status(429).json({ ok: false, error: "daily limit reached" });
+    }
+    if (action === "signout" && req.method === "POST") {
+      await destroySession(db, token);
+      return res.status(200).json({ ok: true, signedIn: false });
+    }
     const result = action === "pick" && req.method === "POST" ? await lockPick(db, body)
-      : action === "sync" && req.method === "POST" ? await syncDevice(db, deviceId)
+      : action === "sync" && req.method === "POST" ? await syncOwner(db, body)
+      : action === "session-exchange" && req.method === "POST" ? await exchangeSignin(db, body)
+      : action === "session" && req.method === "POST" ? await sessionState(db, body)
+      : action === "reshuffle" && req.method === "POST" ? await reshuffle(db, body)
       : { status: 404, payload: { ok: false, error: "unknown action" } };
     return res.status(result.status).json(result.payload);
   } catch (error) {

@@ -393,6 +393,8 @@ REQUIRED_SUITES = (
     "test_independent_value",
     "test_ui_audit",
     "test_data_coverage",
+    "test_board_summary",
+    "test_security",
 )
 
 
