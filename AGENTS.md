@@ -135,6 +135,16 @@ change with evidence attached, never apply one, and never touch a
 Matchday's stated goal is to beat the closing line as a forecasting claim, not
 to bet. Two rules follow from that.
 
+**Overall hit rate is not evidence about the model.** When Matchday names the
+market's favourite it inherits the market's record, so a headline hit rate says
+almost nothing. `independent_value.py` splits the committed pick logs on
+agreement with the market and scores the two sides separately. It is
+descriptive -- the pick logs are the published record, which the scorecard's
+self-heal pass may correct -- and `market_benchmark_report.json` is the
+tamper-evident authority once it has data. Each metric uses every row that can
+support it: the agreement split needs only the market's pick, the paired
+scoring comparison needs its probabilities, and they report separate n.
+
 **Measure CLV, not win rate.** `clv_report.py` reports closing-minus-lock
 probability movement toward Matchday's pick, per competition, with a game-date
 block bootstrap. Match outcomes are too noisy to settle the question in a

@@ -1,0 +1,12 @@
+{
+  "rank": 161,
+  "date": "Build 0819D",
+  "tag": "Trust",
+  "title": "Separating what Matchday knows from what it copies",
+  "items": [
+    "A headline accuracy figure says almost nothing about a prediction model that usually names the same side as the betting market: on those games it simply inherits the market's record.",
+    "The published record is now split in two. On the 80.9% of graded picks where Matchday agreed with the market it hit 54.0%. On the 19.1% where it went its own way it hit 41.5%, against 58.5% for the side the market preferred.",
+    "Judged on the quality of its stated probabilities rather than its picks, Matchday is not measurably worse than the market — the comparison interval still contains zero on the games with full market prices.",
+    "Both readings are published as they are. The disagreement sample is still small enough that it is a strong hint rather than a settled verdict, and it is labelled that way."
+  ]
+}

@@ -78,6 +78,7 @@ jobs:
             promotion_readiness.json
             next_task.json
             clv_report.json
+            independent_value_report.json
             player_db_*.json
             posts.json
             posts_state.json
@@ -94,7 +95,7 @@ jobs:
       # deploy below if it fails, since a broken prediction/provider path
       # is exactly what those steps would otherwise ship.
       - name: Run required test suite
-        run: python -m unittest test_model_inputs test_provider_adapters test_generate_posts test_pregame_context test_market_benchmark test_x_bot test_provider_quota test_mlb_recovery test_mlb_shadow_ledger test_mlb_prospective_scorecard test_mlb_model_promotion test_mlb_forecast_pause test_nfl_challenger test_nfl_challenger_store test_nfl_availability test_nfl_prospective_scorecard test_nfl_model_adjustment test_cfb_challenger test_check_promotion_readiness test_next_task test_clv_report test_preregistration test_ncaam_advanced_metrics
+        run: python -m unittest test_model_inputs test_provider_adapters test_generate_posts test_pregame_context test_market_benchmark test_x_bot test_provider_quota test_mlb_recovery test_mlb_shadow_ledger test_mlb_prospective_scorecard test_mlb_model_promotion test_mlb_forecast_pause test_nfl_challenger test_nfl_challenger_store test_nfl_availability test_nfl_prospective_scorecard test_nfl_model_adjustment test_cfb_challenger test_check_promotion_readiness test_next_task test_clv_report test_preregistration test_ncaam_advanced_metrics test_independent_value
 
       - name: Recover published last-good fixtures after a cold cache miss
         run: python recover_published_data.py
@@ -220,6 +221,18 @@ jobs:
       # post-hoc change to the goalposts breaks CI instead of passing silently.
       - name: Verify pre-registered forecasting targets are unamended
         run: python preregistration.py ncaam_preregistration.json --check
+
+      # Answers "does the independent read add anything over the market" from
+      # the committed pick logs. Descriptive, not authoritative -- the pick logs
+      # are the published record and the scorecard's self-heal pass may correct
+      # them, whereas market_benchmark_report.json is built from the
+      # append-only ledger. It runs anyway because the market snapshot ledger
+      # only began persisting 2026-08-19 and will not carry a usable sample for
+      # months, while the pick logs already hold hundreds of graded fixtures.
+      - name: Measure independent value against the market
+        if: github.event_name != 'push'
+        continue-on-error: true
+        run: python independent_value.py --output independent_value_report.json
 
       # Closing line value is the fast-converging read on whether Matchday
       # knows anything the market does not yet: line movement carries far less
