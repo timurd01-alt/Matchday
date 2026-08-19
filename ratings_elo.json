@@ -7938,8 +7938,8 @@
    "n": 3874
   },
   "baseball:chicago cubs": {
-   "r": 1585.2044550146177,
-   "n": 3928
+   "r": 1569.275206414604,
+   "n": 3929
   },
   "baseball:baltimore orioles": {
    "r": 1522.2493712081848,
@@ -7978,8 +7978,8 @@
    "n": 3888
   },
   "baseball:chicago white sox": {
-   "r": 1527.09192700693,
-   "n": 3892
+   "r": 1543.0211756069436,
+   "n": 3893
   },
   "baseball:oakland athletics": {
    "r": 1356.6028358446235,
@@ -286191,6 +286191,7 @@
   "MLB:bdl-mlb-5059671": true,
   "MLB:bdl-mlb-5059672": true,
   "MLB:bdl-mlb-5059673": true,
-  "MLB:bdl-mlb-5059674": true
+  "MLB:bdl-mlb-5059674": true,
+  "MLB:bdl-mlb-5059675": true
  }
 }
