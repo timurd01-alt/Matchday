@@ -165,7 +165,7 @@
       "experiment": "Pre-registered before the 2026-27 season in ncaam_preregistration.json (terms sealed 2026-08-19, sha256 6a78f62b...). Model artifact must be frozen before 2026-11-01. Primary metric is closing line value; minimum 400 fixtures across 40 game-dates with a 60-minute median lock lead.",
       "evaluation": "Single evaluation after the final graded regular-season fixture. Upheld only if the CLV 95% game-date block bootstrap interval lies entirely above zero.",
       "decision": "not_yet_run",
-      "notes": "Chosen over MLB deliberately: MLB's dominant variable is the starting pitcher, which the market prices and Matchday has no licensed source for, so that gap is an information asymmetry rather than a modelling deficit. The model itself is not yet built; the declaration is registered first on purpose."
+      "notes": "Chosen over MLB deliberately: MLB's dominant variable is the starting pitcher, which the market prices and Matchday has no licensed source for, so that gap is an information asymmetry rather than a modelling deficit. The model itself is not yet built; the declaration is registered first on purpose. Implementation started 2026-08-19: ncaam_advanced_metrics.py bridges CBBD team box scores to advanced_metrics.basketball_team_profiles, and fails closed until its field mapping is confirmed against a live response (MAPPING_VERIFIED)."
     }
   ]
 }

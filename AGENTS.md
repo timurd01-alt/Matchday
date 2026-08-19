@@ -160,6 +160,14 @@ frozen before `artifact_freeze_deadline` or the declaration is void.
 To register a new target, write the declaration, run `--seal` once, and record
 it in `docs/experiments.json`. Never amend a sealed declaration: open a new one.
 
+**NCAAM build path.** `ncaam_advanced_metrics.py` connects CBBD team box scores
+to `advanced_metrics.basketball_team_profiles`. It fails closed: `refresh()`
+raises while `MAPPING_VERIFIED` is False, because a mis-named provider field
+does not error -- `basketball_game_records` silently drops the row, yielding an
+empty profile set and a cheerful "no data". To enable it, run
+`--verify` against one real CBBD response, correct `TEAM_BOX_FIELDS` if the
+names differ, and set the flag in a commit showing that evidence.
+
 ## Tests
 
 Run before considering prediction/data/provider changes complete:

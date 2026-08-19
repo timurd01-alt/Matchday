@@ -94,7 +94,7 @@ jobs:
       # deploy below if it fails, since a broken prediction/provider path
       # is exactly what those steps would otherwise ship.
       - name: Run required test suite
-        run: python -m unittest test_model_inputs test_provider_adapters test_generate_posts test_pregame_context test_market_benchmark test_x_bot test_provider_quota test_mlb_recovery test_mlb_shadow_ledger test_mlb_prospective_scorecard test_mlb_model_promotion test_mlb_forecast_pause test_nfl_challenger test_nfl_challenger_store test_nfl_availability test_nfl_prospective_scorecard test_nfl_model_adjustment test_cfb_challenger test_check_promotion_readiness test_next_task test_clv_report test_preregistration
+        run: python -m unittest test_model_inputs test_provider_adapters test_generate_posts test_pregame_context test_market_benchmark test_x_bot test_provider_quota test_mlb_recovery test_mlb_shadow_ledger test_mlb_prospective_scorecard test_mlb_model_promotion test_mlb_forecast_pause test_nfl_challenger test_nfl_challenger_store test_nfl_availability test_nfl_prospective_scorecard test_nfl_model_adjustment test_cfb_challenger test_check_promotion_readiness test_next_task test_clv_report test_preregistration test_ncaam_advanced_metrics
 
       - name: Recover published last-good fixtures after a cold cache miss
         run: python recover_published_data.py
@@ -128,6 +128,19 @@ jobs:
 
       - name: Recover durable NCAAF roster talent before shared quota use
         run: python refresh_college_talent.py
+
+      # Plumbing for the pre-registered 2026-27 NCAAM season. This is a no-op
+      # today by design: ncaam_advanced_metrics.MAPPING_VERIFIED is False, so
+      # the script prints why and exits 0 without spending a single CBBD call.
+      # Enabling it is a one-line change AFTER someone runs --verify against a
+      # real response and commits the evidence. Wiring it now means the step,
+      # its cache entry, and its position in the run order are already settled
+      # and reviewed rather than being rushed in November against the
+      # artifact_freeze_deadline in ncaam_preregistration.json.
+      - name: Refresh NCAAM adjusted-efficiency research profile
+        if: github.event_name != 'push'
+        continue-on-error: true
+        run: python ncaam_advanced_metrics.py
 
       - name: Refresh authorized NFL research profile
         if: github.event_name != 'push'

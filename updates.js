@@ -4,6 +4,17 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0819C",
+  "tag": "Research",
+  "title": "College basketball gets the model it was always missing",
+  "items": [
+   "Matchday has carried a correct adjusted-efficiency model for basketball for some time — opponent-adjusted attack and defence, tempo, and the four factors — and it was never connected to live data.",
+   "It now has a build path from the college basketball box-score feed, which is the groundwork for the pre-registered 2026-27 season.",
+   "The connection stays switched off until its field names are confirmed against a real provider response. A renamed column would not raise an error; it would quietly produce an empty model and read as 'no data available', so the code refuses to run rather than guess.",
+   "Nothing here changes any published pick. The profile is research-only at zero weight."
+  ]
+ },
+ {
   "date": "Build 0819B",
   "tag": "Trust",
   "title": "Matchday now measures itself against the closing line, and says so in advance",
