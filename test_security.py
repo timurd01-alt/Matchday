@@ -59,15 +59,29 @@ class DeploymentSecurityTests(unittest.TestCase):
         self.assertNotRegex(source, r"const\s*\{[^}]*hits[^}]*graded")
 
     def test_leaderboard_reads_public_data_and_allows_the_production_site(self):
-        source = (ROOT / "api" / "leaderboard.js").read_text(encoding="utf-8")
+        """The origin allowlist moved to _accounts.js when accounts were added;
+        this follows it there rather than being deleted.
+
+        The assertion is about a security property -- which origins the API
+        trusts -- not about which file holds the constant, so a refactor that
+        preserves the property should keep the test, pointed at the new
+        location. Worth noting this test is not in deploy.yml's suite list, so
+        CI never ran it and the stale assertion sat green in every PR."""
+        accounts = (ROOT / "api" / "_accounts.js").read_text(encoding="utf-8")
         self.assertIn(
             'process.env.PUBLIC_SITE_ORIGIN || "https://matchdayterminal.com"',
-            source,
+            accounts,
         )
-        self.assertIn("process.env.PUBLIC_DATA_ORIGIN || PUBLIC_SITE_ORIGIN", source)
-        safe_origins = source[source.index("const SAFE_ORIGINS"):source.index("const HANDLE_POOL")]
+        self.assertIn("process.env.PUBLIC_DATA_ORIGIN || PUBLIC_SITE_ORIGIN", accounts)
+        safe_origins = accounts[accounts.index("const SAFE_ORIGINS"):
+                                accounts.index("export const HANDLE_POOL")]
         self.assertIn("PUBLIC_SITE_ORIGIN", safe_origins)
         self.assertIn("PUBLIC_DATA_ORIGIN", safe_origins)
+        # And the endpoint must actually consume them rather than defining its
+        # own origin, which is the way this property would quietly regress.
+        leaderboard = (ROOT / "api" / "leaderboard.js").read_text(encoding="utf-8")
+        self.assertIn("PUBLIC_DATA_ORIGIN", leaderboard)
+        self.assertNotIn("matchdayterminal.com", leaderboard)
 
     def test_security_headers_are_configured(self):
         config = (ROOT / "vercel.json").read_text(encoding="utf-8")

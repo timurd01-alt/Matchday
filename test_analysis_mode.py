@@ -1,3 +1,4 @@
+import re
 import json
 import unittest
 from pathlib import Path
@@ -149,31 +150,61 @@ class AnalysisModeTests(unittest.TestCase):
         css = (ROOT / "content.css").read_text(encoding="utf-8")
         scheduler = (ROOT / "multi_fetch.py").read_text(encoding="utf-8")
         self.assertIn('id="gameRewindGrid"', html)
-        self.assertIn('id="funStatsGrid"', html)
         self.assertIn("function verifiedModelCall", js)
         self.assertIn("match?.official_pick", js)
         self.assertIn("function officialPickHit", js)
         self.assertIn("renderGameRewind()", js)
-        self.assertIn("renderFunStats()", js)
         self.assertIn(".rewindVisual", css)
         self.assertIn(".rewindCopy", css)
-        self.assertIn(".funStatsGrid", css)
         self.assertIn("generate_public_content_feed()", scheduler)
 
-    def test_content_signal_lab_visualizes_live_model_inputs(self):
+    def test_content_hub_does_not_re_render_dashboard_only_sections(self):
+        """The hub is an archive, tactics index, and SEO landing page.
+
+        Signal lab, Fun stats, and the Daily brief were second renderings of
+        `index.html`'s edge and score views over the same feed, which is what
+        made the page read as a large surface that showed nothing new. Keep
+        them out: the dashboard owns live probabilities and the scorecard.
+        """
         html = (ROOT / "content.html").read_text(encoding="utf-8")
         js = (ROOT / "content.js").read_text(encoding="utf-8")
         css = (ROOT / "content.css").read_text(encoding="utf-8")
-        self.assertIn('id="signal-lab"', html)
-        self.assertIn('id="signalLabGrid"', html)
-        self.assertIn("function renderSignalLab()", js)
-        self.assertIn("Confidence terrain", js)
-        self.assertIn("Factor fingerprint", js)
-        self.assertIn("Board coverage", js)
-        self.assertIn("renderSignalLab()", js.split("function renderAll", 1)[1])
-        self.assertIn(".signalLabGrid{display:grid", css)
-        self.assertIn(".boardDonut", css)
-        self.assertIn("role=\"meter\"", js)
+        for removed_id in ('id="signal-lab"', 'id="signalLabGrid"',
+                           'id="fun-stats"', 'id="funStatsGrid"',
+                           'id="brief"', 'id="briefGrid"'):
+            self.assertNotIn(removed_id, html)
+        for removed_fn in ("renderSignalLab", "renderFunStats", "renderBrief",
+                           "movementHighlight"):
+            self.assertNotIn(removed_fn, js)
+        for removed_rule in (".signalLabGrid", ".funStatsGrid", ".briefGrid",
+                             ".briefCard", ".boardDonut"):
+            self.assertNotIn(removed_rule, css)
+        # What the page still owns.
+        self.assertIn('id="latestGrid"', html)
+        self.assertIn('id="gameRewindGrid"', html)
+        self.assertIn('id="accountabilityGrid"', html)
+        self.assertIn('href="tactics-soccer.html"', html)
+        jump_nav = html.split('class="jumpnav"', 1)[1].split("</nav>", 1)[0]
+        for dead_anchor in ("#signal-lab", "#fun-stats", "#brief"):
+            self.assertNotIn(dead_anchor, jump_nav)
+
+    def test_content_hub_states_no_freshness_it_cannot_back(self):
+        """A page branded on verified grading must not fake an update stamp.
+
+        The Learn cards hardcoded "Updated Jul 24" while the tactics pages they
+        link to were last revised Aug 1, and nothing regenerates those labels.
+        The HTML no longer claims a date at all, and the JS stamps that drive
+        the Latest feed carry a comment tying them to the linked page's edit.
+        """
+        import re
+
+        html = (ROOT / "content.html").read_text(encoding="utf-8")
+        js = (ROOT / "content.js").read_text(encoding="utf-8")
+        self.assertEqual([], re.findall(r"Updated \w{3} \d{1,2}", html))
+        self.assertIn("`updated` is hand-maintained", js)
+        # An evergreen explainer is not stale data; it has no live feed behind
+        # it, so it must not be labelled with the feed's freshness state.
+        self.assertIn("item.type==='learn'?null:dataStatus", js)
 
     def test_editorial_features_are_not_classified_as_weekly_recaps(self):
         content = (ROOT / "content.js").read_text(encoding="utf-8")
@@ -222,9 +253,41 @@ class AnalysisModeTests(unittest.TestCase):
         self.assertIn("Verified locked pregame picks", panels)
         self.assertIn("const eligible=M.filter(m=>!_modelIsPast(m)||_modelHasVerifiedLock(m))", features)
 
-    def test_all_sports_scorecard_includes_nhl_and_uses_metric_denominators(self):
+    def test_all_sports_merge_covers_every_published_sport(self):
+        """The all-sports load must request exactly what the deploy ships.
+
+        This pinned the literal key list `'nba','mlb','nhl'`, which broke the
+        moment NHL was retired -- data_nhl.json is not in the deploy allowlist,
+        so asking for it cost every visitor a 404 on every load. Pin the real
+        invariant instead: the merge reads one shared key list, and that list
+        matches the data files the workflow actually publishes.
+        """
+        core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
         panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
-        self.assertIn("'nba','mlb','nhl'", panels)
+        workflow = (ROOT / ".github" / "workflows" / "deploy.yml").read_text(encoding="utf-8")
+
+        self.assertIn("const keys=ALL_SPORT_KEYS;", panels)
+        declared = re.search(r"const ALL_SPORT_KEYS=\[([^\]]*)\]", core)
+        self.assertIsNotNone(declared, "app-1-core.js must declare ALL_SPORT_KEYS")
+        keys = re.findall(r"'([a-z0-9]+)'", declared.group(1))
+        self.assertTrue(keys, "ALL_SPORT_KEYS must not be empty")
+
+        shipped = re.search(r"for data_file in ((?:data_\w+\.json ?)+); do", workflow)
+        self.assertIsNotNone(shipped, "deploy.yml must copy the data files in a loop")
+        published = [name[len("data_"):-len(".json")]
+                     for name in shipped.group(1).split()]
+        self.assertEqual(
+            sorted(published), sorted(keys),
+            "the all-sports merge and the deploy allowlist have drifted: "
+            "every requested key must have a published data file, or visitors "
+            "take a 404 on every load",
+        )
+        # Retiring a sport from the fetch must not strip its name, so restoring
+        # it stays a one-line change rather than a hunt.
+        self.assertIn("nhl:'NHL'", core)
+
+    def test_all_sports_scorecard_uses_metric_denominators(self):
+        panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
         self.assertIn("weighted('brier','brier_graded',3,true)", panels)
         self.assertIn("weighted('brier3','brier3_graded',3,true)", panels)
         self.assertIn("weighted('log_loss','log_loss_graded',3,true)", panels)

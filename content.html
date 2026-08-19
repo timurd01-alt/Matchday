@@ -33,8 +33,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="content.css?v=20260814-signal-lab">
-<script src="content.js?v=20260814-signal-lab" defer></script>
+<link rel="stylesheet" href="content.css?v=20260819-hub-trim">
+<script src="content.js?v=20260819-hub-trim" defer></script>
 <script type="application/ld+json">
 {
  "@context": "https://schema.org",
@@ -54,8 +54,8 @@
   <header class="hubHero">
     <p class="eyebrow">MATCHDAY ANALYSIS · CONTENT &amp; LEARNING</p>
     <h1 class="brand">Understand the matchup.<br>Review the model.</h1>
-    <p class="lead">Read pregame analysis, review verified postgame grading, or go deeper into the tactics and decisions behind each sport.</p>
-    <nav class="jumpnav" aria-label="Browse content"><a href="#latest">Latest</a><a href="#signal-lab">Signal lab</a><a href="#rewind">Game rewind</a><a href="#fun-stats">Fun stats</a><a href="#brief">Daily brief</a><a href="#accountability">Accountability</a><a href="#learn">Learn</a></nav>
+    <p class="lead">Browse every published Matchday story, review verified postgame grading, and go deeper into the tactics behind each sport. Live probabilities and the full scorecard stay on the <a href="index.html">dashboard</a>.</p>
+    <nav class="jumpnav" aria-label="Browse content"><a href="#latest">Latest</a><a href="#rewind">Game rewind</a><a href="#accountability">Accountability</a><a href="#start">Start here</a><a href="#learn">Learn</a></nav>
   </header>
 
   <section id="latest">
@@ -88,13 +88,6 @@
     <div id="freshnessLine" class="freshnessLine">Checking data freshness…</div>
   </section>
 
-  <section id="signal-lab" aria-labelledby="signalLabTitle">
-    <div class="sectionHead"><div><p class="kicker">THE BOARD, VISUALIZED</p><h2 id="signalLabTitle">Signal lab</h2></div><p>A visual snapshot of confidence, the factors driving picks, and how much of the loaded board has a model read.</p></div>
-    <div id="signalLabGrid" class="signalLabGrid" aria-live="polite" aria-label="Current model signal visualizations">
-      <article class="signalViz signalVizEmpty"><div class="signalEmptyMark" aria-hidden="true"></div><h3>Building the signal map</h3><p>The charts appear when current matchup data is loaded.</p></article>
-    </div>
-  </section>
-
   <section id="rewind" aria-labelledby="rewindTitle">
     <div class="sectionHead"><div><p class="kicker">FINAL SCORE, FULL STORY</p><h2 id="rewindTitle">Game rewind</h2></div><p>A visual replay of the model call, the final score, and the numbers that shaped the result.</p></div>
     <div id="gameRewindGrid" class="gameRewindGrid" aria-live="polite" aria-label="Recent game recaps">
@@ -118,22 +111,6 @@
     </div>
   </section>
 
-  <section id="fun-stats" aria-labelledby="funStatsTitle">
-    <div class="sectionHead"><div><p class="kicker">NUMBERS WORTH SHARING</p><h2 id="funStatsTitle">Fun stats</h2></div><p>Quick, data-backed observations from the current slate and recently graded picks.</p></div>
-    <div id="funStatsGrid" class="funStatsGrid" aria-live="polite" aria-label="Current fun statistics">
-      <article class="funStatCard moduleEmpty">
-        <span class="funStatValue" aria-hidden="true">--</span>
-        <h3 class="funStatLabel">Stats are warming up</h3>
-        <p class="funStatDetail">Fresh milestones and matchup quirks will appear as current data is available.</p>
-      </article>
-    </div>
-  </section>
-
-  <section id="brief">
-    <div class="sectionHead"><div><p class="kicker">THE MATCHDAY BRIEF</p><h2>Today, at a glance</h2></div><p>A newsletter-style read generated from current matches and locked results.</p></div>
-    <div id="briefGrid" class="briefGrid" aria-live="polite"></div>
-  </section>
-
   <section id="accountability">
     <div class="sectionHead"><div><p class="kicker">MODEL ACCOUNTABILITY</p><h2>The record, including the misses</h2></div><p>What worked, what failed, how probabilities moved, and what the model should learn next.</p></div>
     <div id="accountabilityGrid" class="accountabilityGrid" aria-live="polite"></div>
@@ -153,12 +130,12 @@
   <section id="learn">
     <div class="sectionHead"><div><p class="kicker">DEEPER READING</p><h2>Learn by sport</h2></div><p>The factors that matter, explained in the language of the sport instead of generic model jargon.</p></div>
     <div class="cards sportGrid">
-      <a class="card guideCard" data-sports="soccer" href="tactics-soccer.html"><small><span class="typeBadge typeLearn">Learn</span> Soccer · 8 min</small><b>Shape, pressing &amp; set pieces</b><span>Fixture congestion, draws, and the tactical details that move a match.</span><em>Updated Jul 24 · World Cup · UCL · Europe</em></a>
-      <a class="card guideCard" data-sports="nfl ncaaf" href="tactics-football.html"><small><span class="typeBadge typeLearn">Learn</span> Football · 7 min</small><b>Situation, schedule &amp; rest</b><span>Short weeks, opponent strength, and what changes in the college game.</span><em>Updated Jul 24 · NFL · College Football</em></a>
-      <a class="card guideCard" data-sports="basketball" href="tactics-basketball.html"><small><span class="typeBadge typeLearn">Learn</span> Basketball · 7 min</small><b>Pace, spacing &amp; back-to-backs</b><span>How possessions, fatigue, and bracket context shape the read.</span><em>Updated Jul 24 · NBA · College Basketball</em></a>
-      <a class="card guideCard" data-sports="hockey" href="tactics-hockey.html"><small><span class="typeBadge typeLearn">Learn</span> Hockey · 6 min</small><b>Goalies, parity &amp; special teams</b><span>Why rotation and thin margins make apparent upsets routine.</span><em>Updated Jul 24 · NHL</em></a>
-      <a class="card guideCard" data-sports="baseball" href="tactics-baseball.html"><small><span class="typeBadge typeLearn">Learn</span> Baseball · 6 min</small><b>Patience, run differential &amp; the long season</b><span>Why a 162-game season needs patience, run differential over time, and what the model honestly doesn't see.</span><em>Updated Jul 25 · MLB</em></a>
-      <a class="card referenceCard guideCard" data-sports="all" href="qa.html#data"><small><span class="typeBadge typeLearn">Learn</span> Reference · 5 min</small><b>Data, privacy &amp; limitations</b><span>Where the numbers come from and what Matchday does not claim to know.</span><em>Updated Jul 24 · Read the reference &rarr;</em></a>
+      <a class="card guideCard" data-sports="soccer" href="tactics-soccer.html"><small><span class="typeBadge typeLearn">Learn</span> Soccer · 8 min</small><b>Shape, pressing &amp; set pieces</b><span>Fixture congestion, draws, and the tactical details that move a match.</span><em>World Cup · UCL · Europe</em></a>
+      <a class="card guideCard" data-sports="nfl ncaaf" href="tactics-football.html"><small><span class="typeBadge typeLearn">Learn</span> Football · 7 min</small><b>Situation, schedule &amp; rest</b><span>Short weeks, opponent strength, and what changes in the college game.</span><em>NFL · College Football</em></a>
+      <a class="card guideCard" data-sports="basketball" href="tactics-basketball.html"><small><span class="typeBadge typeLearn">Learn</span> Basketball · 7 min</small><b>Pace, spacing &amp; back-to-backs</b><span>How possessions, fatigue, and bracket context shape the read.</span><em>NBA · College Basketball</em></a>
+      <a class="card guideCard" data-sports="hockey" href="tactics-hockey.html"><small><span class="typeBadge typeLearn">Learn</span> Hockey · 6 min</small><b>Goalies, parity &amp; special teams</b><span>Why rotation and thin margins make apparent upsets routine.</span><em>NHL</em></a>
+      <a class="card guideCard" data-sports="baseball" href="tactics-baseball.html"><small><span class="typeBadge typeLearn">Learn</span> Baseball · 6 min</small><b>Patience, run differential &amp; the long season</b><span>Why a 162-game season needs patience, run differential over time, and what the model honestly doesn't see.</span><em>MLB</em></a>
+      <a class="card referenceCard guideCard" data-sports="all" href="qa.html#data"><small><span class="typeBadge typeLearn">Learn</span> Reference · 5 min</small><b>Data, privacy &amp; limitations</b><span>Where the numbers come from and what Matchday does not claim to know.</span><em>Read the reference &rarr;</em></a>
     </div>
   </section>
 

@@ -18,16 +18,18 @@
   const MATCH_RECAPS_PER_COMP=2;
   const SECOND_RECAP_MIN_WATCHABILITY=55;
   const REWIND_CARD_LIMIT=3;
-  const FUN_STAT_LIMIT=4;
   const SCORE_LABELS={soccer:['goal','goals'],hockey:['goal','goals'],baseball:['run','runs'],nfl:['point','points'],ncaaf:['point','points'],basketball:['point','points']};
+  // `updated` is hand-maintained: nothing regenerates it. Revise the stamp in
+  // the same commit that edits the tactics or Q&A page it points at, or the
+  // card starts advertising a freshness the linked page does not have.
   const GUIDE_ITEMS=[
-    {id:'learn-soccer',type:'learn',sports:['soccer'],compLabel:'Soccer',title:'Shape, pressing & set pieces',summary:'Fixture congestion, draws, and the tactical details that move a match.',updated:'2026-07-24T12:00:00Z',minutes:8,url:'tactics-soccer.html',topic:'World Cup UCL Europe tactics pressing set pieces'},
-    {id:'learn-football',type:'learn',sports:['nfl','ncaaf'],compLabel:'Football',title:'Situation, schedule & rest',summary:'Short weeks, opponent strength, and what changes between the professional and college games.',updated:'2026-07-24T12:00:00Z',minutes:7,url:'tactics-football.html',topic:'NFL College Football rest schedule strength'},
-    {id:'learn-basketball',type:'learn',sports:['basketball'],compLabel:'Basketball',title:'Pace, spacing & back-to-backs',summary:'How possessions, fatigue, and bracket context shape the read.',updated:'2026-07-24T12:00:00Z',minutes:7,url:'tactics-basketball.html',topic:'NBA college basketball pace spacing fatigue'},
-    {id:'learn-hockey',type:'learn',sports:['hockey'],compLabel:'Hockey',title:'Goalies, parity & special teams',summary:'Why rotation and thin margins make apparent upsets routine.',updated:'2026-07-24T12:00:00Z',minutes:6,url:'tactics-hockey.html',topic:'NHL hockey goalies special teams'},
-    {id:'learn-baseball',type:'learn',sports:['baseball'],compLabel:'Baseball',title:'Patience, run differential & the long season',summary:"Why a 162-game season needs patience, run differential over time, and what the model honestly doesn't see.",updated:'2026-07-25T12:00:00Z',minutes:6,url:'tactics-baseball.html',topic:'MLB baseball run differential 162-game season'},
-    {id:'learn-data',type:'learn',sports:['all'],compLabel:'Reference',title:'Data, privacy & limitations',summary:'Where the numbers come from and what Matchday does not claim to know.',updated:'2026-07-24T12:00:00Z',minutes:5,url:'qa.html#data',topic:'data privacy limitations model methodology'},
-    {id:'learn-upsets',type:'learn',sports:['all'],compLabel:'Explainer',title:'What Upset Radar actually means',summary:'Who defines the underdog, what the model compares against, and why a radar flag is not always the official pick.',updated:'2026-07-27T12:00:00Z',minutes:3,url:'qa.html#upsets',topic:'upset radar underdog betting market official pick edge'}
+    {id:'learn-soccer',type:'learn',sports:['soccer'],compLabel:'Soccer',title:'Shape, pressing & set pieces',summary:'Fixture congestion, draws, and the tactical details that move a match.',updated:'2026-08-01T12:00:00Z',minutes:8,url:'tactics-soccer.html',topic:'World Cup UCL Europe tactics pressing set pieces'},
+    {id:'learn-football',type:'learn',sports:['nfl','ncaaf'],compLabel:'Football',title:'Situation, schedule & rest',summary:'Short weeks, opponent strength, and what changes between the professional and college games.',updated:'2026-08-01T12:00:00Z',minutes:7,url:'tactics-football.html',topic:'NFL College Football rest schedule strength'},
+    {id:'learn-basketball',type:'learn',sports:['basketball'],compLabel:'Basketball',title:'Pace, spacing & back-to-backs',summary:'How possessions, fatigue, and bracket context shape the read.',updated:'2026-08-01T12:00:00Z',minutes:7,url:'tactics-basketball.html',topic:'NBA college basketball pace spacing fatigue'},
+    {id:'learn-hockey',type:'learn',sports:['hockey'],compLabel:'Hockey',title:'Goalies, parity & special teams',summary:'Why rotation and thin margins make apparent upsets routine.',updated:'2026-08-01T12:00:00Z',minutes:6,url:'tactics-hockey.html',topic:'NHL hockey goalies special teams'},
+    {id:'learn-baseball',type:'learn',sports:['baseball'],compLabel:'Baseball',title:'Patience, run differential & the long season',summary:"Why a 162-game season needs patience, run differential over time, and what the model honestly doesn't see.",updated:'2026-08-01T12:00:00Z',minutes:6,url:'tactics-baseball.html',topic:'MLB baseball run differential 162-game season'},
+    {id:'learn-data',type:'learn',sports:['all'],compLabel:'Reference',title:'Data, privacy & limitations',summary:'Where the numbers come from and what Matchday does not claim to know.',updated:'2026-08-03T12:00:00Z',minutes:5,url:'qa.html#data',topic:'data privacy limitations model methodology'},
+    {id:'learn-upsets',type:'learn',sports:['all'],compLabel:'Explainer',title:'What Upset Radar actually means',summary:'Who defines the underdog, what the model compares against, and why a radar flag is not always the official pick.',updated:'2026-08-03T12:00:00Z',minutes:3,url:'qa.html#upsets',topic:'upset radar underdog betting market official pick edge'}
   ];
 
   let datasets=[];
@@ -203,7 +205,7 @@
   }
 
   function storyCard(item){
-    const status=statusMeta(item),fresh=dataStatus(item.dataUpdated||item.updated);
+    const status=statusMeta(item),fresh=item.type==='learn'?null:dataStatus(item.dataUpdated||item.updated);
     const score=item.type==='recap'&&item.home?`<div class="storyFixture"><span>${escapeHTML(item.home)}</span><b>${escapeHTML(item.score||'Final')}</b><span>${escapeHTML(item.away)}</span></div>`:'';
     const pick=item.pick?`<div class="storyPick"><span>Model pick</span><b>${escapeHTML(item.pick)}${item.confidence!=null?` ${escapeHTML(item.confidence)}%`:''}</b>${item.type==='recap'?`<i class="${item.hit?'hit':'miss'}">${item.hit?'Correct':'Missed'}</i>`:''}</div>`:'';
     const links=contextLinks(item).map(([label,url])=>`<a href="${escapeHTML(url)}">${escapeHTML(label)}</a>`).join('');
@@ -212,7 +214,7 @@
       <h3>${escapeHTML(item.title)}</h3>${score}${pick}
       <p>${escapeHTML(item.summary)}</p>
       ${item.takeaway?`<div class="storyTakeaway"><span>Takeaway</span>${escapeHTML(item.takeaway)}</div>`:''}
-      <div class="storyMeta"><span>${escapeHTML(formattedDate(item.updated,item.type==='preview'))}</span><span>${escapeHTML(item.compLabel||'Matchday')}</span><span>${escapeHTML(item.minutes||3)} min read</span><span class="dataState ${fresh.className}">${escapeHTML(fresh.label)}</span></div>
+      <div class="storyMeta"><span>${escapeHTML(formattedDate(item.updated,item.type==='preview'))}</span><span>${escapeHTML(item.compLabel||'Matchday')}</span><span>${escapeHTML(item.minutes||3)} min read</span>${fresh?`<span class="dataState ${fresh.className}">${escapeHTML(fresh.label)}</span>`:''}</div>
       <a class="storyPrimary" href="${escapeHTML(item.url)}">${primaryLabel(item)} &rarr;</a>
       <nav class="contextLinks" aria-label="Related actions">${links}</nav>
     </article>`;
@@ -317,10 +319,6 @@
 
   function allFilteredMatches(){return filteredDatasets().flatMap(dataset=>(dataset.matches||[]).map(match=>({match,dataset,meta:compMeta(dataset.compKey)})))}
 
-  function briefCard(label,title,body,link,labelLink='Open analysis'){
-    return `<article class="briefCard"><span>${escapeHTML(label)}</span><h3>${escapeHTML(title)}</h3><p>${escapeHTML(body)}</p>${link?`<a href="${escapeHTML(link)}">${escapeHTML(labelLink)} &rarr;</a>`:''}</article>`;
-  }
-
   function moduleRows(){
     const query=searchQuery.trim().toLowerCase();
     let rows=allFilteredMatches().filter(({match,dataset,meta})=>{
@@ -335,58 +333,8 @@
     return rows;
   }
 
-  function signalBar(label,detail,count,max,tone='green'){
-    const width=max?Math.max(count?8:0,Math.round(100*count/max)):0;
-    return `<div class="signalBar"><div class="signalBarLabel"><span>${escapeHTML(label)}</span><b>${escapeHTML(detail)}</b></div><div class="signalBarTrack" role="meter" aria-label="${escapeHTML(label)}: ${count}" aria-valuemin="0" aria-valuemax="${max}" aria-valuenow="${count}"><span class="${tone}" style="--signal-width:${width}%"></span></div></div>`;
-  }
-
-  function renderSignalLab(){
-    const host=byId('signalLabGrid');if(!host)return;
-    const rows=allFilteredMatches();
-    const upcoming=rows.filter(row=>row.match.status==='UPCOMING'&&finiteNumber(row.match.prediction?.confidence)!==null);
-    const verified=rows.filter(row=>row.match.status==='FINISHED'&&hasVerifiedModelCall(row.dataset,row.match));
-    const modelRows=[...upcoming.map(row=>({row,call:row.match.prediction})),...verified.map(row=>({row,call:verifiedModelCall(row.dataset,row.match)}))];
-    if(!rows.length||!modelRows.length){
-      host.innerHTML=`<article class="signalViz signalVizEmpty"><div class="signalEmptyMark" aria-hidden="true"></div><h3>No signal map for this sport yet</h3><p>The charts need at least one current prediction or verified pregame call.</p></article>`;return;
-    }
-    const confidenceBands=[
-      {label:'Open field',detail:'under 50%',min:0,max:49,tone:'blue'},
-      {label:'Lean',detail:'50–64%',min:50,max:64,tone:'purple'},
-      {label:'Strong',detail:'65–79%',min:65,max:79,tone:'green'},
-      {label:'Rare air',detail:'80%+',min:80,max:100,tone:'gold'}
-    ].map(band=>({...band,count:modelRows.filter(item=>item.call.confidence>=band.min&&item.call.confidence<=band.max).length}));
-    const confidenceMax=Math.max(...confidenceBands.map(band=>band.count),1);
-    const sortedConfidence=modelRows.map(item=>Math.round(Number(item.call.confidence))).sort((a,b)=>a-b);
-    const median=sortedConfidence[Math.floor(sortedConfidence.length/2)];
-    const factorCounts={};
-    upcoming.forEach(({match})=>{const label=strongestFactor(match);factorCounts[label]=(factorCounts[label]||0)+1});
-    const factors=Object.entries(factorCounts).sort((a,b)=>b[1]-a[1]).slice(0,5),factorMax=Math.max(...factors.map(([,count])=>count),1);
-    const other=Math.max(0,rows.length-upcoming.length-verified.length),upcomingPct=Math.round(100*upcoming.length/rows.length),verifiedPct=Math.round(100*verified.length/rows.length);
-    const scope=activeSport==='all'?'all loaded sports':SPORT_LABELS[activeSport];
-    host.innerHTML=`
-      <article class="signalViz confidenceViz">
-        <div class="signalVizHead"><div><span>Confidence terrain</span><h3>How bold is the board?</h3></div><strong>${median}%<small>median</small></strong></div>
-        <div class="signalBars">${confidenceBands.map(band=>signalBar(band.label,`${band.detail} · ${band.count}`,band.count,confidenceMax,band.tone)).join('')}</div>
-        <p>${modelRows.length} model ${modelRows.length===1?'call':'calls'} across ${scope}. Confidence describes uncertainty; it is not a promise.</p>
-      </article>
-      <article class="signalViz driverViz">
-        <div class="signalVizHead"><div><span>Factor fingerprint</span><h3>What is moving picks?</h3></div><strong>${factors.length}<small>drivers</small></strong></div>
-        <div class="driverMap" role="img" aria-label="Most common strongest model factors">${factors.length?factors.map(([label,count],index)=>`<div class="driverRoute"><i aria-hidden="true">${index+1}</i><span>${escapeHTML(label)}</span><div><b style="--driver-width:${Math.max(12,Math.round(100*count/factorMax))}%"></b></div><em>${count}</em></div>`).join(''):'<p>No upcoming factor snapshots are available.</p>'}</div>
-        <p>Counts the strongest available factor in each upcoming model read; related inputs can overlap.</p>
-      </article>
-      <article class="signalViz boardViz">
-        <div class="signalVizHead"><div><span>Board coverage</span><h3>What can the model see?</h3></div></div>
-        <div class="boardGraphic">
-          <div class="boardDonut" role="img" aria-label="${upcoming.length} upcoming model reads, ${verified.length} verified finals, and ${other} other loaded games" style="--upcoming:${upcomingPct * 3.6}deg;--verified:${(upcomingPct+verifiedPct) * 3.6}deg"><b>${rows.length}</b><span>loaded games</span></div>
-          <div class="boardLegend"><span class="upcoming"><b>${upcoming.length}</b> Upcoming reads</span><span class="verified"><b>${verified.length}</b> Verified finals</span><span class="other"><b>${other}</b> Other / unscored</span></div>
-        </div>
-        <p>“Other” stays visible instead of being silently treated as a prediction or graded result.</p>
-      </article>`;
-  }
-
-  function moduleEmpty(title,body,kind='stats'){
-    if(kind==='rewind')return `<article class="rewindCard rewindPlaceholder"><div class="rewindVisual" aria-hidden="true"><span class="rewindFinal">Awaiting final</span><div class="rewindMatchup"><div class="rewindTeam"><span class="rewindInitials">--</span><span class="rewindScore">--</span></div><span class="rewindVs">VS</span><div class="rewindTeam"><span class="rewindInitials">--</span><span class="rewindScore">--</span></div></div><div class="rewindMeter"><span></span></div></div><div class="rewindCopy"><div class="rewindHeader"><span>Game rewind</span><span>No matching final</span></div><h3>${escapeHTML(title)}</h3><p>${escapeHTML(body)}</p><div class="rewindVerdict push">Nothing is inferred from missing data</div></div></article>`;
-    return `<article class="funStatCard moduleEmpty"><span class="funStatValue" aria-hidden="true">--</span><h3 class="funStatLabel">${escapeHTML(title)}</h3><p class="funStatDetail">${escapeHTML(body)}</p></article>`;
+  function moduleEmpty(title,body){
+    return `<article class="rewindCard rewindPlaceholder"><div class="rewindVisual" aria-hidden="true"><span class="rewindFinal">Awaiting final</span><div class="rewindMatchup"><div class="rewindTeam"><span class="rewindInitials">--</span><span class="rewindScore">--</span></div><span class="rewindVs">VS</span><div class="rewindTeam"><span class="rewindInitials">--</span><span class="rewindScore">--</span></div></div><div class="rewindMeter"><span></span></div></div><div class="rewindCopy"><div class="rewindHeader"><span>Game rewind</span><span>No matching final</span></div><h3>${escapeHTML(title)}</h3><p>${escapeHTML(body)}</p><div class="rewindVerdict push">Nothing is inferred from missing data</div></div></article>`;
   }
 
   function rewindMeter(label,value){
@@ -438,86 +386,15 @@
   function renderGameRewind(){
     const host=byId('gameRewindGrid');if(!host)return;
     if(activeType==='preview'||activeType==='learn'){
-      host.innerHTML=moduleEmpty('Game Rewind is a final-results view','Choose Recaps or All to see completed games in this section.','rewind');return;
+      host.innerHTML=moduleEmpty('Game Rewind is a final-results view','Choose Recaps or All to see completed games in this section.');return;
     }
     const finals=moduleRows().filter(row=>hasFinalScore(row.match)).sort((a,b)=>timestamp(b.match.kickoff)-timestamp(a.match.kickoff));
     if(!finals.length){
       const scope=activeSport==='all'?'this view':SPORT_LABELS[activeSport];
       const reason=searchQuery.trim()?`No final score matches “${searchQuery.trim()}” in ${scope}.`:`No complete final scores are available for ${scope} yet.`;
-      host.innerHTML=moduleEmpty('No game rewind available',reason,'rewind');return;
+      host.innerHTML=moduleEmpty('No game rewind available',reason);return;
     }
     host.innerHTML=finals.slice(0,REWIND_CARD_LIMIT).map(rewindCard).join('');
-  }
-
-  function funStatCard(value,label,detail){
-    return `<article class="funStatCard"><strong class="funStatValue">${escapeHTML(value)}</strong><h3 class="funStatLabel">${escapeHTML(label)}</h3><p class="funStatDetail">${escapeHTML(detail)}</p></article>`;
-  }
-
-  function renderFunStats(){
-    const host=byId('funStatsGrid');if(!host)return;
-    const rows=moduleRows();
-    if(!rows.length){
-      const reason=activeType==='learn'?'Fun Stats uses game data; choose All, Previews, or Recaps.':searchQuery.trim()?`No games match “${searchQuery.trim()}” in the current sport filter.`:'No game data is available for this filter yet.';
-      host.innerHTML=moduleEmpty('No stats for this view',reason);return;
-    }
-    const finals=rows.filter(row=>hasFinalScore(row.match));
-    const upcoming=rows.filter(row=>row.match.status==='UPCOMING'&&row.match.prediction);
-    const verified=finals.filter(row=>hasVerifiedModelCall(row.dataset,row.match));
-    const watchable=rows.filter(row=>finiteNumber(row.match.watchability)!==null).sort((a,b)=>finiteNumber(b.match.watchability)-finiteNumber(a.match.watchability));
-    const confident=rows.map(row=>({row,modelCall:row.match.status==='FINISHED'?verifiedModelCall(row.dataset,row.match):row.match.prediction}))
-      .filter(item=>finiteNumber(item.modelCall?.confidence)!==null).sort((a,b)=>finiteNumber(b.modelCall.confidence)-finiteNumber(a.modelCall.confidence));
-    const cards=[];
-    if(!searchQuery.trim()&&activeType!=='preview'){
-      const scorecards=filteredDatasets().map(dataset=>dataset.scorecard||{}),graded=scorecards.reduce((sum,card)=>sum+(finiteNumber(card.graded)||0),0),hits=scorecards.reduce((sum,card)=>sum+(finiteNumber(card.model_hits)||0),0);
-      if(graded>0)cards.push(funStatCard(`${hits}–${graded-hits}`,'Published model record',`${Math.round(100*hits/graded)}% correct across ${graded} verified, graded picks in this sport filter.`));
-    }
-    if(activeType==='recap')cards.push(funStatCard(String(verified.length),'Verified rewinds',`${finals.length} final ${finals.length===1?'result is':'results are'} in this filtered feed; ${verified.length} include a verified pregame pick.`));
-    else if(activeType==='preview')cards.push(funStatCard(String(upcoming.length),'Upcoming model reads',`Across ${new Set(upcoming.map(row=>row.meta.key)).size} ${new Set(upcoming.map(row=>row.meta.key)).size===1?'competition':'competitions'} in this view.`));
-    else cards.push(funStatCard(String(finals.length),'Final results in view',`${upcoming.length} upcoming ${upcoming.length===1?'game also has':'games also have'} a current model read.`));
-    if(activeSport!=='all'&&finals.length){
-      const high=[...finals].sort((a,b)=>(finiteNumber(b.match.score.home)+finiteNumber(b.match.score.away))-(finiteNumber(a.match.score.home)+finiteNumber(a.match.score.away)))[0];
-      const total=finiteNumber(high.match.score.home)+finiteNumber(high.match.score.away);
-      cards.push(funStatCard(`${total} ${scoreWord(high.meta.sport,total)}`,'Highest combined score',`${high.match.home?.name} ${high.match.score.home}–${high.match.score.away} ${high.match.away?.name}, among loaded finals.`));
-      const close=[...finals].sort((a,b)=>Math.abs(finiteNumber(a.match.score.home)-finiteNumber(a.match.score.away))-Math.abs(finiteNumber(b.match.score.home)-finiteNumber(b.match.score.away)))[0];
-      const margin=Math.abs(finiteNumber(close.match.score.home)-finiteNumber(close.match.score.away));
-      cards.push(funStatCard(`${margin} ${scoreWord(close.meta.sport,margin)}`,'Closest final margin',`${close.match.home?.name} ${close.match.score.home}–${close.match.score.away} ${close.match.away?.name}, among loaded finals.`));
-    }
-    if(watchable[0])cards.push(funStatCard(`${Math.round(finiteNumber(watchable[0].match.watchability))}/100`,'Watchability leader',`${watchable[0].match.home?.name} vs ${watchable[0].match.away?.name}; this is Matchday’s internal matchup score.`));
-    if(confident[0])cards.push(funStatCard(`${Math.round(finiteNumber(confident[0].modelCall.confidence))}%`,confident[0].row.match.status==='FINISHED'?'Highest verified confidence':'Highest current confidence',`${confident[0].modelCall.pick_name} in ${confident[0].row.match.home?.name} vs ${confident[0].row.match.away?.name}.`));
-    host.innerHTML=cards.slice(0,FUN_STAT_LIMIT).join('')||moduleEmpty('No calculated stats yet','The available games do not include enough score, watchability, or confidence data for a truthful comparison.');
-  }
-
-  function renderBrief(){
-    const host=byId('briefGrid');if(!host)return;
-    const rows=allFilteredMatches(),now=Date.now();
-    const active=rows.filter(row=>row.match.status==='UPCOMING'&&row.match.prediction).sort((a,b)=>Number(b.match.prediction?.confidence||0)-Number(a.match.prediction?.confidence||0));
-    const signal=active[0],matchOfDay=[...active].sort((a,b)=>Number(b.match.watchability||0)-Number(a.match.watchability||0))[0];
-    const finished=rows.filter(row=>row.match.status==='FINISHED'&&winnerSide(row.match)&&hasVerifiedModelCall(row.dataset,row.match)).map(row=>({...row,official:verifiedModelCall(row.dataset,row.match)})).sort((a,b)=>timestamp(b.match.kickoff)-timestamp(a.match.kickoff));
-    const graded=finished.filter(row=>officialPickHit(row.official)!==null),surprise=[...graded].filter(row=>officialPickHit(row.official)===false).sort((a,b)=>Number(b.official.confidence||0)-Number(a.official.confidence||0))[0];
-    const week=graded.filter(row=>timestamp(row.match.kickoff)>=now-7*86400000),weekHits=week.filter(row=>officialPickHit(row.official)===true).length;
-    const noticed=active.slice(0,3).map(row=>`${row.match.prediction.pick_name}: ${strongestFactor(row.match)}`).join(' · ');
-    const cards=[
-      signal?briefCard('Strongest upcoming signal',`${signal.match.prediction.pick_name} ${signal.match.prediction.confidence}%`,`${signal.match.home?.name} vs ${signal.match.away?.name} carries the strongest current model probability.`,dashboardUrl(signal.meta.key,'edge',signal.match.id)):
-        briefCard('Strongest upcoming signal','Waiting for a current prediction','The next signal appears when an upcoming matchup receives a model read.',dashboardUrl('','edge')),
-      matchOfDay?briefCard('Match of the day',`${matchOfDay.match.home?.name} vs ${matchOfDay.match.away?.name}`,matchTakeaway(matchOfDay.match),dashboardUrl(matchOfDay.meta.key,'matches',matchOfDay.match.id),'View matchup'):
-        briefCard('Match of the day','No upcoming matchup yet','The highest-watchability pregame matchup will appear here.'),
-      briefCard('Three things the model noticed',noticed||'No fresh factor notes yet',noticed?'The strongest signals across the current slate, without pretending any one factor is decisive.':'Factor notes appear with the next current predictions.',dashboardUrl('','edge'),'See every model read'),
-      surprise?briefCard('Biggest surprise',`${winnerName(surprise.match)} changed the story`,matchTakeaway(surprise.match,true,surprise.official),dashboardUrl(surprise.meta.key,'matches',surprise.match.id),'Review the miss'):
-        briefCard('Biggest surprise','No recent model miss in this view','That is not a claim of perfection—only that no graded miss is available for this filter.'),
-      briefCard('Seven-day scorecard',week.length?`${weekHits}–${week.length-weekHits} over the last 7 days`:'No graded games in the last 7 days',week.length?`${Math.round(100*weekHits/week.length)}% of locked predictions were correct in this filtered view.`:'The weekly record will populate automatically as results are graded.',dashboardUrl('','score'),'Open scorecard')
-    ];
-    host.innerHTML=cards.join('');
-  }
-
-  function movementHighlight(rows){
-    let history={};try{history=JSON.parse(safeGet('matchday.modelHistory','{}'))||{}}catch(error){}
-    let best=null;
-    rows.forEach(row=>{
-      const points=history[row.match.id];if(!Array.isArray(points)||points.length<2)return;
-      const first=Number(points[0]?.p),last=Number(points[points.length-1]?.p);if(!Number.isFinite(first)||!Number.isFinite(last))return;
-      const delta=Math.round(last-first);if(!best||Math.abs(delta)>Math.abs(best.delta))best={...row,delta,first,last};
-    });
-    return best;
   }
 
   function accountabilityCard(label,title,body,tone='neutral',link=''){
@@ -530,7 +407,7 @@
     const finished=rows.filter(row=>row.match.status==='FINISHED'&&winnerSide(row.match)&&hasVerifiedModelCall(row.dataset,row.match)).map(row=>({...row,official:verifiedModelCall(row.dataset,row.match)}));
     const gradedFinished=finished.filter(row=>officialPickHit(row.official)!==null),hits=gradedFinished.filter(row=>officialPickHit(row.official)===true).sort((a,b)=>Number(b.official.confidence||0)-Number(a.official.confidence||0));
     const misses=gradedFinished.filter(row=>officialPickHit(row.official)===false).sort((a,b)=>Number(b.official.confidence||0)-Number(a.official.confidence||0));
-    const right=hits[0],miss=misses[0],movement=movementHighlight(rows.filter(row=>row.match.status==='UPCOMING')),week=gradedFinished.filter(row=>timestamp(row.match.kickoff)>=now-7*86400000),weekHits=week.filter(row=>officialPickHit(row.official)===true).length;
+    const right=hits[0],miss=misses[0],week=gradedFinished.filter(row=>timestamp(row.match.kickoff)>=now-7*86400000),weekHits=week.filter(row=>officialPickHit(row.official)===true).length;
     const scorecards=filteredDatasets().map(dataset=>dataset.scorecard||{}),graded=scorecards.reduce((sum,card)=>sum+Number(card.graded||0),0),modelHits=scorecards.reduce((sum,card)=>sum+Number(card.model_hits||0),0);
     const recordN=week.length,recordHits=weekHits,recordTitle=recordN?`${recordHits}–${recordN-recordHits} this week`:graded?`${modelHits}–${graded-modelHits} published record`:'No graded record yet';
     const cards=[
@@ -538,11 +415,7 @@
         accountabilityCard('What the model got right','Waiting for a graded hit','Correct calls appear here only after the result is final.'),
       miss?accountabilityCard('What it missed',`${miss.official.pick_name} did not land`,matchTakeaway(miss.match,true,miss.official),'bad',dashboardUrl(miss.meta.key,'matches',miss.match.id)):
         accountabilityCard('What it missed','No graded miss available','Misses are never hidden; the next one will appear automatically.'),
-      movement?accountabilityCard('Biggest probability movement',`${movement.delta>0?'+':''}${movement.delta} points on ${movement.match.prediction.pick_name}`,`The saved probability moved from ${movement.first}% to ${movement.last}% across refreshes.`,'move',dashboardUrl(movement.meta.key,'edge',movement.match.id)):
-        accountabilityCard('Biggest probability movement','Not enough snapshots yet','Movement is reported only after the same matchup has been observed more than once.'),
-      accountabilityCard('Weekly prediction record',recordTitle,recordN?`${Math.round(100*recordHits/recordN)}% correct across ${recordN} graded games in the last seven days.`:graded?`${Math.round(100*modelHits/graded)}% correct across the available scorecards.`:'The record begins when locked picks are graded.','record',dashboardUrl('','score')),
-      miss?accountabilityCard('Lesson from an incorrect pick',`Re-check ${strongestFactor(miss.match,miss.official)}`,`The ${miss.official.confidence}% lean left ${100-Number(miss.official.confidence||0)}% for other outcomes. The miss is evidence to recalibrate, not rewrite the pick.`,'lesson',dashboardUrl(miss.meta.key,'edge',miss.match.id)):
-        accountabilityCard('Lesson from an incorrect pick','Calibration needs final results','This section will explain the strongest signal behind each meaningful miss.')
+      accountabilityCard('Weekly prediction record',recordTitle,recordN?`${Math.round(100*recordHits/recordN)}% correct across ${recordN} graded games in the last seven days.`:graded?`${Math.round(100*modelHits/graded)}% correct across the available scorecards.`:'The record begins when locked picks are graded.','record',dashboardUrl('','score'))
     ];
     host.innerHTML=cards.join('');
     const scorecardLink=document.querySelector('.accountabilityActions a');
@@ -564,7 +437,7 @@
     });
   }
 
-  function renderAll(animate=false){renderLatest(animate);renderSignalLab();renderGameRewind();renderFunStats();renderBrief();renderAccountability();renderFreshness();renderGuides();if(animate){replayMotion(byId('signalLabGrid'));replayMotion(byId('gameRewindGrid'));replayMotion(byId('funStatsGrid'));replayMotion(byId('briefGrid'));replayMotion(byId('accountabilityGrid'))}}
+  function renderAll(animate=false){renderLatest(animate);renderGameRewind();renderAccountability();renderFreshness();renderGuides();if(animate){replayMotion(byId('gameRewindGrid'));replayMotion(byId('accountabilityGrid'))}}
 
   function setSport(filter,persist=true){
     activeSport=validSport(filter);
@@ -576,7 +449,7 @@
   function setType(filter){
     activeType=['all','preview','recap','learn'].includes(filter)?filter:'all';
     document.querySelectorAll('[data-type-filter]').forEach(button=>{const active=button.dataset.typeFilter===activeType;button.classList.toggle('isActive',active);button.setAttribute('aria-pressed',String(active))});
-    renderLatest(true);renderGameRewind();renderFunStats();replayMotion(byId('gameRewindGrid'));replayMotion(byId('funStatsGrid'));
+    renderLatest(true);renderGameRewind();replayMotion(byId('gameRewindGrid'));
   }
 
   async function fetchJSON(url){
@@ -597,10 +470,10 @@
   const params=new URLSearchParams(location.search),requestedSport=validSport(params.get('sport')||safeGet('matchday.content.sport','all'));
   document.querySelectorAll('[data-sport-filter]').forEach(button=>button.addEventListener('click',()=>setSport(button.dataset.sportFilter)));
   document.querySelectorAll('[data-type-filter]').forEach(button=>button.addEventListener('click',()=>setType(button.dataset.typeFilter)));
-  let searchTimer;const search=byId('contentSearch');if(search)search.addEventListener('input',()=>{searchQuery=search.value;clearTimeout(searchTimer);searchTimer=setTimeout(()=>{renderLatest(true);renderGameRewind();renderFunStats();replayMotion(byId('gameRewindGrid'));replayMotion(byId('funStatsGrid'))},90)});
+  let searchTimer;const search=byId('contentSearch');if(search)search.addEventListener('input',()=>{searchQuery=search.value;clearTimeout(searchTimer);searchTimer=setTimeout(()=>{renderLatest(true);renderGameRewind();replayMotion(byId('gameRewindGrid'))},90)});
   document.addEventListener('keydown',event=>{
     if(event.key==='/'&&!/input|textarea/i.test(document.activeElement?.tagName||'')){event.preventDefault();search?.focus()}
-    if(event.key==='Escape'&&document.activeElement===search&&search.value){search.value='';searchQuery='';renderLatest(true);renderGameRewind();renderFunStats()}
+    if(event.key==='Escape'&&document.activeElement===search&&search.value){search.value='';searchQuery='';renderLatest(true);renderGameRewind()}
   });
   storyItems=[...GUIDE_ITEMS];
   setSport(requestedSport,false);
