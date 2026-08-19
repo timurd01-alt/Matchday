@@ -822,7 +822,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-19T18:56:49.628765Z",
+   "observed_at": "2026-08-19T22:41:58.774726Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -1655,7 +1655,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-19T18:56:49.628810Z",
+   "observed_at": "2026-08-19T22:41:58.774781Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -2306,7 +2306,7 @@
    },
    "penalties": null,
    "ultimate_winner": "d",
-   "observed_at": "2026-08-19T18:56:49.628834Z",
+   "observed_at": "2026-08-19T22:41:58.774821Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -2965,7 +2965,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-19T18:56:49.628854Z",
+   "observed_at": "2026-08-19T22:41:58.774856Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -3497,7 +3497,7 @@
    },
    "penalties": null,
    "ultimate_winner": "d",
-   "observed_at": "2026-08-19T18:56:49.628872Z",
+   "observed_at": "2026-08-19T22:41:58.774888Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -4023,8 +4023,50 @@
    "affects_prediction": false,
    "user_visible": false
   },
-  "result": null,
-  "model_result": null,
-  "market_result": null
+  "result": "h",
+  "model_result": "h",
+  "market_result": "h",
+  "score": "2-0",
+  "result_snapshot": {
+   "display": {
+    "home": 2,
+    "away": 0
+   },
+   "regulation": {
+    "home": 2,
+    "away": 0
+   },
+   "penalties": null,
+   "ultimate_winner": "h",
+   "observed_at": "2026-08-19T22:41:58.774920Z",
+   "source": "provider"
+  },
+  "model_hit": true,
+  "market_hit": true,
+  "market_comparison_hit": true,
+  "upset_hit": false,
+  "brier3": 0.177,
+  "log_loss": 0.416,
+  "brier_advancement": null,
+  "log_loss_advancement": null,
+  "result_corrections": [],
+  "clv": 0.0,
+  "closing_market_snapshot": {
+   "h": 65.0,
+   "a": 14.0,
+   "d": 21.0
+  },
+  "closing_market_receipt": {
+   "sources": [
+    "The Odds API consensus"
+   ],
+   "source_count": 1,
+   "event_ids": [
+    "f288688d64e9b78a8bb157df2c559a1e62364b72e0aabd318f92140f7cce8861"
+   ],
+   "observed_at": [
+    "2026-08-19T18:56:43.267852Z"
+   ]
+  }
  }
 }

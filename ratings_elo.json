@@ -454,8 +454,8 @@
    "n": 122
   },
   "soccer:club atletico de madrid": {
-   "r": 1622.0079028971595,
-   "n": 150
+   "r": 1628.2398109360893,
+   "n": 151
   },
   "soccer:feyenoord rotterdam": {
    "r": 1489.561941450289,
@@ -8283,6 +8283,10 @@
   },
   "soccer:rc deportivo la coruna": {
    "r": 1497.649339446535,
+   "n": 1
+  },
+  "soccer:malaga cf": {
+   "r": 1493.7680919610702,
    "n": 1
   }
  },
@@ -286192,6 +286196,7 @@
   "MLB:bdl-mlb-5059672": true,
   "MLB:bdl-mlb-5059673": true,
   "MLB:bdl-mlb-5059674": true,
-  "MLB:bdl-mlb-5059675": true
+  "MLB:bdl-mlb-5059675": true,
+  "LALIGA:564628": true
  }
 }
