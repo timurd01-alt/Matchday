@@ -527,7 +527,8 @@ def _refresh_odds_quota_free():
     req = urllib.request.Request(f"{ODDS_FREE_QUOTA_URL}{ODDS_API_KEY}", headers=UA)
     with urllib.request.urlopen(req, timeout=25) as response:
         response.read()
-        provider_quota.record_response("odds_api", response.headers)
+        provider_quota.record_response("odds_api", response.headers,
+                                       url=ODDS_FREE_QUOTA_URL)
         last_cost = response.headers.get("x-requests-last")
         if last_cost not in (None, "0", 0):
             raise RuntimeError("Odds API quota receipt endpoint unexpectedly reported a nonzero cost")
@@ -560,13 +561,13 @@ def _get(url, headers=None, provider=None):
         with urllib.request.urlopen(req, timeout=25) as r:
             body = r.read()
             if provider:
-                provider_quota.record_response(provider, r.headers)
+                provider_quota.record_response(provider, r.headers, url=url)
             return json.loads(body.decode("utf-8"))
     except urllib.error.HTTPError as e:
         try: body = e.read().decode("utf-8")[:300]
         except Exception: body = ""
         if provider:
-            provider_quota.record_response(provider, e.headers, body)
+            provider_quota.record_response(provider, e.headers, body, url=url)
         raise RuntimeError(_scrub(f"HTTP {e.code} — {body or e.reason}"))
 
 

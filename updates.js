@@ -4,6 +4,18 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0819H",
+  "tag": "Reliability",
+  "title": "Knowing where the data budget goes",
+  "items": [
+   "Matchday's data providers cap how many requests it may make each month. Until now the system tracked how many were left but never what it had spent them on, so when a provider ran dry there was no way to find the call responsible.",
+   "One provider used its entire month by the 10th and stayed unavailable until the 1st — with the safety limit working exactly as designed, because nothing was rationing the month.",
+   "Every request is now recorded against the endpoint that made it, so a month's usage can be read as a list rather than guessed at.",
+   "A budget policy sets a daily allowance and ranks requests by how much they matter: a fixture minutes from locking a prediction outranks a background statistics refresh, and pressure now closes the low-value requests first.",
+   "The budget is deliberately advisory for now. It records every request it would have declined without declining any, so the rules can be checked against a real month before they take effect."
+  ]
+ },
+ {
   "date": "Build 0819G",
   "tag": "Speed",
   "title": "A 1.2MB logo displayed at 76 pixels",
