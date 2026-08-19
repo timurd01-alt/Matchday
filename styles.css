@@ -1558,7 +1558,7 @@ body.modalOpen{overflow:hidden}.matchModal{position:fixed;inset:0;z-index:99;dis
 .tpFormDots{display:flex;gap:4px}
 .tpDot{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:6px;font-family:var(--mono);font-size:.62rem;font-weight:800;color:var(--muted);background:var(--bg2);border:1px solid var(--line)}
 .tpDot.W{color:#07110b;background:var(--win);border-color:var(--win)}
-.tpDot.L{color:#fff;background:var(--loss);border-color:var(--loss)}
+.tpDot.L{color:#07110b;background:var(--loss);border-color:var(--loss)}
 .tpDot.D{color:var(--text);background:var(--line2)}
 .tpNext{margin:12px 0;padding:11px 13px;border:1px solid var(--line);border-left:3px solid var(--signal);border-radius:10px;background:rgba(0,0,0,.15);font-size:.86rem}
 .tpSeclbl{font-family:var(--mono);font-size:.62rem;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);font-weight:700;margin:16px 0 8px}

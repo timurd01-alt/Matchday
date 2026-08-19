@@ -191,6 +191,86 @@ class HtmlAuditTests(unittest.TestCase):
             '<html lang="en"><h1>a</h1><h2>b</h2><h3>c</h3><h2>d</h2></html>'))
 
 
+class ImageWeightAndJsMarkupTests(unittest.TestCase):
+    """Rules added after the audit went green while still shipping 1.18MB.
+
+    logo.png was removed from index.html, the report said "no defects", and
+    app-1-core.js was injecting the same image into the hero band on every
+    page view. An audit that reads only .html measures a fraction of the
+    markup this site actually renders.
+    """
+
+    def setUp(self):
+        self.dir = Path(tempfile.mkdtemp())
+        self.addCleanup(self._cleanup)
+
+    def _cleanup(self):
+        for path in sorted(self.dir.rglob("*"), reverse=True):
+            path.unlink() if path.is_file() else path.rmdir()
+        self.dir.rmdir()
+
+    def _asset(self, name, size):
+        (self.dir / name).write_bytes(b"\0" * size)
+
+    def test_oversized_image_in_a_js_template_is_reported(self):
+        self._asset("logo.png", ui_audit.IMAGE_BUDGET_BYTES + 1)
+        js = self.dir / "app-1-core.js"
+        js.write_text(
+            'return `<div><img src="logo.png?v=4" class="heroLogo" alt="M"></div>`;',
+            encoding="utf-8")
+        rules = {item["rule"] for item in ui_audit.audit_js_markup(js, {"heroLogo"}, self.dir)}
+        self.assertIn("image-over-budget", rules)
+
+    def test_missing_alt_in_a_js_template_is_reported(self):
+        js = self.dir / "app-1-core.js"
+        js.write_text('`<img src="a.png">`', encoding="utf-8")
+        rules = {item["rule"] for item in ui_audit.audit_js_markup(js, set(), self.dir)}
+        self.assertIn("img-alt-missing", rules)
+
+    def test_an_image_within_budget_is_silent(self):
+        self._asset("small.png", 1000)
+        js = self.dir / "app-1-core.js"
+        js.write_text('`<img src="small.png" alt="x" width="10" height="10">`',
+                      encoding="utf-8")
+        self.assertEqual(ui_audit.audit_js_markup(js, set(), self.dir), [])
+
+    def test_interpolated_src_is_not_treated_as_a_file(self):
+        """A template literal's src is often a variable; there is no file to
+        weigh and guessing at one would report a phantom."""
+        js = self.dir / "app-1-core.js"
+        js.write_text('`<img src="${team.crest}" alt="crest" width="20" height="20">`',
+                      encoding="utf-8")
+        rules = {item["rule"] for item in ui_audit.audit_js_markup(js, set(), self.dir)}
+        self.assertNotIn("image-over-budget", rules)
+
+    def test_css_sized_class_suppresses_the_dimensions_warning(self):
+        """Regression: .welcomeLogo is 76px square in styles.css and cannot
+        shift, but was reported for missing HTML width/height attributes."""
+        (self.dir / "styles.css").write_text(
+            ".welcomeLogo{width:76px;height:76px}", encoding="utf-8")
+        page = self.dir / "index.html"
+        page.write_text('<html lang="en"><img src="a.png" class="welcomeLogo" alt="M"></html>',
+                        encoding="utf-8")
+        sized = ui_audit.css_sized_classes(self.dir)
+        self.assertIn("welcomeLogo", sized)
+        rules = {item["rule"] for item in ui_audit.audit_html(page, sized, self.dir)}
+        self.assertNotIn("img-dimensions-missing", rules)
+
+    def test_an_unsized_class_still_warns(self):
+        (self.dir / "styles.css").write_text(".other{color:red}", encoding="utf-8")
+        page = self.dir / "index.html"
+        page.write_text('<html lang="en"><img src="a.png" class="loose" alt="M"></html>',
+                        encoding="utf-8")
+        rules = {item["rule"] for item in ui_audit.audit_html(
+            page, ui_audit.css_sized_classes(self.dir), self.dir)}
+        self.assertIn("img-dimensions-missing", rules)
+
+    def test_aspect_ratio_also_reserves_a_box(self):
+        (self.dir / "styles.css").write_text(
+            ".crest{aspect-ratio:1/1}", encoding="utf-8")
+        self.assertIn("crest", ui_audit.css_sized_classes(self.dir))
+
+
 class RenderBudgetTests(unittest.TestCase):
     def setUp(self):
         self.dir = Path(tempfile.mkdtemp())

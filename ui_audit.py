@@ -42,6 +42,19 @@ AUDITED_HTML = ("index.html", "content.html", "legal.html",
                 "tactics-soccer.html")
 AUDITED_CSS = ("styles.css", "content.css", "research-signals.css")
 
+# Most of this interface is rendered from template literals in these files, not
+# from the .html shells, so an audit that reads only HTML sees a fraction of
+# the markup that actually ships. Confirmed the hard way: the 1.18MB logo was
+# removed from index.html and the audit went green while app-1-core.js was
+# still injecting the same image into the hero band on every page view.
+#
+# Only the <img> rules run here. Heading order and document-level rules
+# (lang, viewport) are meaningless across fragments that get composed at
+# runtime in an order this cannot know.
+AUDITED_JS = ("app-1-core.js", "app-2-views.js", "app-3-panels.js",
+              "app-4-features.js", "app-5-outcome-tree.js", "content.js",
+              "research-signals.js")
+
 # WCAG 2.2 AA: 4.5:1 for body text, 3:1 for large text. Without layout we
 # cannot know which rules render large, so the lower bar is applied and only
 # pairs failing even that are reported. A rule that fails 3:1 fails at every
@@ -58,6 +71,13 @@ MIN_TAP_TARGET_PX = 24
 # a stated budget, so that growth has to be a decision somebody makes rather
 # than something that happens. Raise it deliberately if the site outgrows it.
 RENDER_BLOCKING_BUDGET_BYTES = 320_000
+
+# Per-image budget. The first version of this module counted only CSS and JS,
+# so logo.png -- 1254x1254, 1.18MB, displayed at 76px -- passed every check
+# while being several times the weight of the entire render-blocking budget it
+# was measured alongside. An image nobody sees at full resolution is the
+# easiest weight on a page to remove, and the hardest to notice.
+IMAGE_BUDGET_BYTES = 150_000
 
 INTERACTIVE_HINT = re.compile(
     r"(^|[\s,>+~])(button|a|summary|\[role=[\"']?(button|link|tab)[\"']?\])(?![\w-])"
@@ -301,20 +321,53 @@ def audit_css(path: Path) -> list[dict[str, Any]]:
 # HTML
 # --------------------------------------------------------------------------
 
-def audit_html(path: Path) -> list[dict[str, Any]]:
+def css_sized_classes(base: Path) -> set[str]:
+    """Class names whose stylesheet rules already reserve a box.
+
+    `img-dimensions-missing` exists to catch layout shift, and an element the
+    stylesheet gives both a width and a height does not shift -- the space is
+    reserved before the image arrives. Judging the HTML attribute alone
+    reported `.welcomeLogo`, which is sized `76px` square in styles.css and
+    cannot move. A rule that flags markup for a problem the CSS already solved
+    trains its reader to skip it.
+    """
+    sized: set[str] = set()
+    for name in AUDITED_CSS:
+        path = base / name
+        if not path.is_file():
+            continue
+        try:
+            css = path.read_text(encoding="utf-8", errors="replace")
+        except OSError:
+            continue
+        for selector, body, _line in _rules(css):
+            declarations = _declarations(body)
+            has_box = (("width" in declarations and "height" in declarations)
+                       or "aspect-ratio" in declarations)
+            if not has_box:
+                continue
+            for match in re.finditer(r"\.([\w-]+)", _subject(selector)):
+                sized.add(match.group(1))
+    return sized
+
+
+def audit_html(path: Path, sized_classes: set[str] | None = None,
+               root: Path | None = None) -> list[dict[str, Any]]:
     try:
         html = path.read_text(encoding="utf-8", errors="replace")
     except OSError:
         return []
     name = path.name
+    sized_classes = sized_classes or set()
+    root = root or path.parent
     findings: list[dict[str, Any]] = []
 
-    root = re.search(r"<html\b([^>]*)>", html, re.I)
-    if root and not re.search(r"\blang\s*=", root.group(1), re.I):
+    html_tag = re.search(r"<html\b([^>]*)>", html, re.I)
+    if html_tag and not re.search(r"\blang\s*=", html_tag.group(1), re.I):
         findings.append(_finding(
-            "html-lang-missing", "blocker", name, _line_of(html, root.start()),
+            "html-lang-missing", "blocker", name, _line_of(html, html_tag.start()),
             "<html> has no lang attribute, so screen readers cannot pick a "
-            "pronunciation for the page (WCAG 3.1.1).", root.group(0)))
+            "pronunciation for the page (WCAG 3.1.1).", html_tag.group(0)))
 
     viewport = re.search(r"<meta[^>]*name=[\"']viewport[\"'][^>]*>", html, re.I)
     if viewport:
@@ -327,20 +380,7 @@ def audit_html(path: Path) -> list[dict[str, Any]]:
                 "Viewport meta blocks pinch-zoom, which low-vision users rely "
                 "on to read the page (WCAG 1.4.4).", viewport.group(0)))
 
-    for match in re.finditer(r"<img\b[^>]*>", html, re.I):
-        tag, line = match.group(0), _line_of(html, match.start())
-        if not re.search(r"\balt\s*=", tag, re.I):
-            findings.append(_finding(
-                "img-alt-missing", "blocker", name, line,
-                "<img> has no alt attribute. Decorative images need alt=\"\" "
-                "so assistive tech can skip them (WCAG 1.1.1).", tag))
-        has_dimensions = (re.search(r"\bwidth\s*=", tag, re.I)
-                          and re.search(r"\bheight\s*=", tag, re.I))
-        if not has_dimensions and "style=" not in tag.lower():
-            findings.append(_finding(
-                "img-dimensions-missing", "warn", name, line,
-                "<img> declares no width/height, so the browser cannot reserve "
-                "space and the page shifts as it loads (CLS).", tag))
+    findings.extend(_image_findings(html, name, sized_classes, root))
 
     # Heading order. A jump downward skips a level and breaks the outline
     # screen-reader users navigate by; jumps back up are how sections close
@@ -357,6 +397,52 @@ def audit_html(path: Path) -> list[dict[str, Any]]:
         previous = level
 
     return findings
+
+
+def _image_findings(html: str, name: str, sized_classes: set[str],
+                    root: Path) -> list[dict[str, Any]]:
+    """The <img> rules, over any markup source."""
+    findings = []
+    for match in re.finditer(r"<img\b[^>]*>", html, re.I):
+        tag, line = match.group(0), _line_of(html, match.start())
+        if not re.search(r"\balt\s*=", tag, re.I):
+            findings.append(_finding(
+                "img-alt-missing", "blocker", name, line,
+                "<img> has no alt attribute. Decorative images need alt=\"\" "
+                "so assistive tech can skip them (WCAG 1.1.1).", tag))
+        has_dimensions = (re.search(r"\bwidth\s*=", tag, re.I)
+                          and re.search(r"\bheight\s*=", tag, re.I))
+        class_attr = re.search(r'\bclass\s*=\s*["\']([^"\']*)["\']', tag, re.I)
+        classes = set((class_attr.group(1) if class_attr else "").split())
+        if (not has_dimensions and "style=" not in tag.lower()
+                and not (classes & sized_classes)):
+            findings.append(_finding(
+                "img-dimensions-missing", "warn", name, line,
+                "<img> declares no width/height and no stylesheet rule "
+                "reserves a box for it, so the page shifts as it loads (CLS).",
+                tag))
+        source = re.search(r'\bsrc\s*=\s*["\']([^"\']+)["\']', tag, re.I)
+        if source and not source.group(1).startswith(
+                ("http://", "https://", "//", "data:", "$")):
+            asset = root / source.group(1).split("?", 1)[0].lstrip("./")
+            if asset.is_file() and asset.stat().st_size > IMAGE_BUDGET_BYTES:
+                findings.append(_finding(
+                    "image-over-budget", "warn", name, line,
+                    f"{asset.name} is {asset.stat().st_size:,} bytes, over the "
+                    f"{IMAGE_BUDGET_BYTES:,}-byte per-image budget. Check the "
+                    f"size it actually renders at before shipping the "
+                    f"full-resolution file.", tag))
+    return findings
+
+
+def audit_js_markup(path: Path, sized_classes: set[str],
+                    root: Path) -> list[dict[str, Any]]:
+    """Image rules over markup built in JavaScript template literals."""
+    try:
+        source = path.read_text(encoding="utf-8", errors="replace")
+    except OSError:
+        return []
+    return _image_findings(source, path.name, sized_classes, root)
 
 
 def audit_render_budget(root: Path, page: str = "index.html") -> list[dict[str, Any]]:
@@ -400,16 +486,22 @@ def build_report(root: str | Path = ".") -> dict[str, Any]:
     base = Path(root)
     findings: list[dict[str, Any]] = []
     scanned: list[str] = []
+    sized = css_sized_classes(base)
     for name in AUDITED_HTML:
         path = base / name
         if path.is_file():
             scanned.append(name)
-            findings.extend(audit_html(path))
+            findings.extend(audit_html(path, sized, base))
     for name in AUDITED_CSS:
         path = base / name
         if path.is_file():
             scanned.append(name)
             findings.extend(audit_css(path))
+    for name in AUDITED_JS:
+        path = base / name
+        if path.is_file():
+            scanned.append(name)
+            findings.extend(audit_js_markup(path, sized, base))
     findings.extend(audit_render_budget(base))
     findings.sort(key=lambda item: (SEVERITY_ORDER.get(item["severity"], 9),
                                     item["file"], item["line"], item["rule"]))
