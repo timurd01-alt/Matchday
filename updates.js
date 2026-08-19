@@ -4,6 +4,17 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0819I",
+  "tag": "Speed",
+  "title": "Downloading the same megabytes over and over",
+  "items": [
+   "Every automatic refresh added a unique timestamp to its web address, which made each request look brand new to your browser. Nothing could ever be reused, so the whole fixture file was downloaded again from scratch — up to 9.8MB on the all-sports view — to receive data that had not changed.",
+   "Refreshes now ask the server whether anything is new instead of assuming it is. Measured on a real fixture file: the first request transferred 1,667,606 bytes and the next transferred 300.",
+   "Updates arrive exactly as quickly as before. The difference is that unchanged data now costs almost nothing to check, which matters most on a phone.",
+   "Separately, the coverage report no longer treats an off-season competition as a problem. It had been flagging seven leagues for having no graded predictions when their seasons simply had not started — the Premier League's first fixture was still two days away."
+  ]
+ },
+ {
   "date": "Build 0819H",
   "tag": "Reliability",
   "title": "Knowing where the data budget goes",
