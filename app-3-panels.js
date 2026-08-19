@@ -99,6 +99,16 @@ function aggregateScorecards(datasets){
     note:'Includes legacy/migrated picks without recoverable proof of pregame timing alongside verified pregame-locked picks. See the pick log below for which is which.'};
   return out;
 }
+// A unique ?_=<timestamp> on every poll made each request a distinct URL, so
+// no browser or CDN cache could ever serve or revalidate it: each refresh
+// re-downloaded the full payload -- 9.8MB across the all-sports view -- to
+// receive bytes that only change when the hourly build publishes. cache
+// 'no-cache' revalidates instead of guessing: the browser sends the ETag it
+// holds and a server with nothing new answers 304 with no body at all. Data
+// arrives exactly as promptly, having cost a few hundred bytes instead of
+// megabytes. Not 'no-store', which would forbid keeping a copy to revalidate
+// against and put us straight back to full downloads.
+const REVALIDATE={cache:'no-cache'};
 // Views that need more than the landing board holds -- full season history, the
 // research detail behind a pick, standings. Opening one escalates the merged
 // "All sports" view from the summary payload to the real per-sport files.
@@ -120,7 +130,7 @@ async function load(manual=false){if(LOAD_TIMER){clearTimeout(LOAD_TIMER);LOAD_T
     // .json carries exactly what this view renders; if it is missing or stale
     // the merge below still works, just slowly, so a failed build degrades to
     // the old behaviour rather than to an empty page.
-    const summary=await fetch('board_summary.json?_='+Date.now()).then(r=>r.ok?r.json():null).catch(()=>null);
+    const summary=await fetch('board_summary.json',REVALIDATE).then(r=>r.ok?r.json():null).catch(()=>null);
     if(summary&&(summary.matches||[]).length){
       applyForecastPublicationPauses(summary);
       DATA=Object.assign({},summary,{
@@ -138,7 +148,7 @@ async function load(manual=false){if(LOAD_TIMER){clearTimeout(LOAD_TIMER);LOAD_T
     // score units, sandbox sizes) stay put so restoring the sport is a one-word
     // change here rather than a hunt.
     const keys=ALL_SPORT_KEYS;
-    const results=await Promise.all(keys.map(k=>fetch('data_'+k+'.json?_='+Date.now()).then(r=>r.ok?r.json():null).catch(()=>null)));
+    const results=await Promise.all(keys.map(k=>fetch('data_'+k+'.json',REVALIDATE).then(r=>r.ok?r.json():null).catch(()=>null)));
     let base=null;const merged=[];let news=[];let latest='';
     const titleBySport=[];
     results.forEach((d,i)=>{if(!d)return;applyForecastPublicationPauses(d);if(!base)base=d;
@@ -150,11 +160,11 @@ async function load(manual=false){if(LOAD_TIMER){clearTimeout(LOAD_TIMER);LOAD_T
       if((d.updated||'')>latest)latest=d.updated;
       const top=(d.title_odds||[])[0];
       if(top)titleBySport.push({comp,label:compLabel,team:top.team,code:top.code,pct:top.pct});});
-    if(!base){const r0=await fetch('data.json?_='+Date.now());if(!r0.ok)throw new Error('no data files yet — run a fetch');base=await r0.json();(base.matches||[]).forEach(m=>merged.push(m));news=base.news||[];latest=base.updated;}
+    if(!base){const r0=await fetch('data.json',REVALIDATE);if(!r0.ok)throw new Error('no data files yet — run a fetch');base=await r0.json();(base.matches||[]).forEach(m=>merged.push(m));news=base.news||[];latest=base.updated;}
     merged.sort((a,b)=>(a.kickoff||'').localeCompare(b.kickoff||''));
     DATA=Object.assign({},base,{matches:merged,news:news,updated:latest,competition:'All sports',comp_key:'ALL',standings:[],third_race:[],scorers:[],leaders:{},scorecard:aggregateScorecards(results.some(Boolean)?results:[base]),title_by_sport:titleBySport});
   } else {
-    const r=await fetch(DATA_FILE+'?_='+Date.now());if(!r.ok)throw new Error('HTTP '+r.status);DATA=stripPastSeasonCompetitionViews(await r.json());applyForecastPublicationPauses(DATA);
+    const r=await fetch(DATA_FILE,REVALIDATE);if(!r.ok)throw new Error('HTTP '+r.status);DATA=stripPastSeasonCompetitionViews(await r.json());applyForecastPublicationPauses(DATA);
   }DATA.news=(DATA.news||[]).filter(isFreshNews).sort((a,b)=>newsTime(b)-newsTime(a));BYID={};(DATA.matches||[]).forEach(m=>BYID[m.id]=m);LAST_OK=true;LAST_ERROR='';const cn=$('#compName');if(cn)cn.textContent=DATA.competition?' · '+DATA.competition:'';const tb=document.querySelector('.navbtn[data-v="third"]');if(tb)tb.style.display=(DATA.third_race&&DATA.third_race.length)?'':'none';const gb2=document.querySelector('.navbtn[data-v="groups"]');if(gb2)gb2.style.display=(DATA.standings&&DATA.standings.length)?'':'none';const paused=(DATA.matches||[]).some(isMlbForecastPaused);$('#banner').innerHTML=paused?`<div class="marketBanner"><b>Forecast paused.</b> ${esc(MLB_FORECAST_PAUSE_MESSAGE)} Market odds remain available where supplied.</div>`:DATA.markets_quota_out?`<div class="marketBanner"><b>Market odds temporarily unavailable.</b> Our monthly betting-market data quota is used up, so market comparisons are paused. The model's own predictions still work normally — market lines return when the quota resets.</div>`:'';applySportNav();renderStrip();renderInsight();renderCurrent();applyStaticI18n();renderAlerts()}catch(e){console.error(e);applySportNav();
   const sel=currentSportKey();
   if(sel&&(!DATA||((DATA.comp_key||'').toLowerCase()!==sel))){
@@ -442,7 +452,7 @@ const RESEARCH_SIGNAL_COMPS=new Set(['NFL','NCAAF','NBA','NCAAM','MLB']);
 const SPORT_FILE_CACHE={};
 function fetchSportFile(key){
   if(!key)return Promise.resolve(null);
-  if(!SPORT_FILE_CACHE[key])SPORT_FILE_CACHE[key]=fetch('data_'+key+'.json?_='+Date.now()).then(r=>r.ok?r.json():null).catch(()=>null);
+  if(!SPORT_FILE_CACHE[key])SPORT_FILE_CACHE[key]=fetch('data_'+key+'.json',REVALIDATE).then(r=>r.ok?r.json():null).catch(()=>null);
   return SPORT_FILE_CACHE[key];
 }
 // Fill in the detail fields the summary payload leaves out, for one match only.

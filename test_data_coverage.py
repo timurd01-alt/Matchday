@@ -159,23 +159,23 @@ class EvidenceTests(unittest.TestCase):
             json.dumps(rows), encoding="utf-8")
 
     def test_a_competition_with_no_pick_log_is_reported(self):
-        payloads = {"EPL": _payload(matches=[_match()])}
+        payloads = {"EPL": _payload(matches=[_match(hours_out=-50, status="FINISHED"), _match()])}
         gaps = dc.evidence_gaps(self.dir, payloads)
         self.assertEqual(gaps[0]["graded"], 0)
 
     def test_a_competition_below_the_bar_is_reported_with_its_count(self):
         self._log("epl", graded=4)
-        payloads = {"EPL": _payload(matches=[_match()])}
+        payloads = {"EPL": _payload(matches=[_match(hours_out=-50, status="FINISHED"), _match()])}
         self.assertEqual(dc.evidence_gaps(self.dir, payloads)[0]["graded"], 4)
 
     def test_a_well_evidenced_competition_is_silent(self):
         self._log("epl", graded=dc.MIN_GRADED_FIXTURES + 1)
-        payloads = {"EPL": _payload(matches=[_match()])}
+        payloads = {"EPL": _payload(matches=[_match(hours_out=-50, status="FINISHED"), _match()])}
         self.assertEqual(dc.evidence_gaps(self.dir, payloads), [])
 
     def test_ungraded_rows_do_not_count_towards_the_bar(self):
         self._log("epl", graded=2, ungraded=99)
-        payloads = {"EPL": _payload(matches=[_match()])}
+        payloads = {"EPL": _payload(matches=[_match(hours_out=-50, status="FINISHED"), _match()])}
         self.assertEqual(dc.evidence_gaps(self.dir, payloads)[0]["graded"], 2)
 
     def test_a_competition_publishing_nothing_is_not_judged(self):
@@ -228,3 +228,57 @@ class ReportTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class SeasonalityTests(unittest.TestCase):
+    """A competition between seasons is not a competition with a problem.
+
+    On 2026-08-19 this report flagged seven competitions for having no graded
+    pick log. Every one of them was simply between seasons: EPL's first 2026-27
+    fixture was Aug 21 (14 matches, 0 finished) and UCL's payload held 13
+    finished fixtures with nothing upcoming. A pick can only be graded if it was
+    locked, and locked only if the fixture was seen while still upcoming.
+    """
+
+    def setUp(self):
+        self.dir = Path(tempfile.mkdtemp())
+        self.addCleanup(self._cleanup)
+
+    def _cleanup(self):
+        for path in sorted(self.dir.rglob("*"), reverse=True):
+            path.unlink() if path.is_file() else path.rmdir()
+        self.dir.rmdir()
+
+    def _finished(self, n):
+        return [_match(hours_out=-50 - i, status="FINISHED") for i in range(n)]
+
+    def test_season_not_started_is_not_a_gap(self):
+        """EPL on 2026-08-19: all upcoming, first kickoff two days away."""
+        payloads = {"EPL": _payload(matches=[_match() for _ in range(14)])}
+        self.assertEqual(dc.evidence_gaps(self.dir, payloads), [])
+
+    def test_season_finished_is_not_a_gap(self):
+        """UCL on the same day: 13 finished, none upcoming, next season in
+        September. Fixtures first seen already complete are quarantined by
+        fetch_data._lock_decision, never locked, so never gradeable."""
+        payloads = {"UCL": _payload("UCL", matches=self._finished(13))}
+        self.assertEqual(dc.evidence_gaps(self.dir, payloads), [])
+
+    def test_mid_season_without_a_pick_log_is_still_reported(self):
+        """The case the rule exists for: fixtures are being played and
+        observed, and nothing is measuring the picks."""
+        payloads = {"MLB": _payload("MLB", matches=self._finished(20) + [_match()])}
+        gaps = dc.evidence_gaps(self.dir, payloads)
+        self.assertEqual([gap["kind"] for gap in gaps], ["thin_evidence"])
+
+    def test_mid_season_detection(self):
+        self.assertFalse(dc._is_mid_season(_payload(matches=[_match()])))
+        self.assertFalse(dc._is_mid_season(_payload(matches=self._finished(3))))
+        self.assertTrue(dc._is_mid_season(
+            _payload(matches=self._finished(3) + [_match()])))
+
+    def test_a_live_fixture_counts_as_an_active_season(self):
+        payloads = {"MLB": _payload("MLB", matches=self._finished(20)
+                                    + [_match(status="LIVE")])}
+        self.assertEqual([gap["kind"] for gap in dc.evidence_gaps(self.dir, payloads)],
+                         ["thin_evidence"])

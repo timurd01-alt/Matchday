@@ -259,3 +259,35 @@ class GuardrailTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class RequiredSuiteDriftTest(unittest.TestCase):
+    """The prompt's test list must be the one CI actually runs.
+
+    It named four suites while deploy.yml ran twenty-six. An agent following
+    the guardrail exactly ran a fraction of the tests its PR would then be
+    judged by, and nothing was watching the gap. Asserting the two against
+    each other is what stops it reopening the next time a suite is added.
+    """
+
+    def _workflow_suites(self):
+        import re
+        text = Path(".github/workflows/deploy.yml").read_text(encoding="utf-8")
+        match = re.search(r"run: python -m unittest ((?:test_\w+\s*)+)", text)
+        self.assertIsNotNone(match, "deploy.yml has no `python -m unittest` step")
+        return match.group(1).split()
+
+    def test_required_suites_match_the_workflow(self):
+        from next_task import REQUIRED_SUITES
+        self.assertEqual(list(REQUIRED_SUITES), self._workflow_suites())
+
+    def test_the_guardrail_text_names_every_required_suite(self):
+        from next_task import GUARDRAILS, REQUIRED_SUITES
+        line = next(rule for rule in GUARDRAILS if "unittest" in rule)
+        for suite in REQUIRED_SUITES:
+            self.assertIn(suite, line)
+
+    def test_every_named_suite_exists(self):
+        from next_task import REQUIRED_SUITES
+        for suite in REQUIRED_SUITES:
+            self.assertTrue(Path(f"{suite}.py").is_file(), f"{suite}.py is missing")

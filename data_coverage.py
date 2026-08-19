@@ -238,6 +238,40 @@ def unsourced_family_gaps(payloads: dict[str, dict]) -> list[dict[str, Any]]:
     return gaps
 
 
+def _is_mid_season(payload: dict) -> bool:
+    """Whether a competition is actually running right now.
+
+    A pick can only be graded if it was locked, and it can only be locked if
+    the system saw the fixture while it was still upcoming. So "no graded
+    evidence" means completely different things depending on where a
+    competition is in its year, and only one of them is a defect:
+
+      all upcoming   -- the season has not started. EPL on 2026-08-19 was
+                        14 fixtures, 0 finished, first kickoff Aug 21.
+      all finished   -- the season is over, or the fixtures were first seen
+                        already complete and were therefore quarantined
+                        rather than locked (fetch_data._lock_decision returns
+                        first_seen_finished). UCL on the same day: 13
+                        finished, 0 upcoming, next season in September.
+      both           -- fixtures are being played and observed. Now an empty
+                        pick log means something is broken.
+
+    Without this, the report flagged seven competitions on a single August
+    afternoon for the crime of being between seasons, which is the same
+    false-positive class the interface audit already had to be cured of.
+    """
+    finished = upcoming = 0
+    for match in payload.get("matches") or []:
+        if not isinstance(match, dict):
+            continue
+        status = str(match.get("status") or "").upper()
+        if status == "FINISHED":
+            finished += 1
+        elif status in ("UPCOMING", "LIVE"):
+            upcoming += 1
+    return bool(finished and upcoming)
+
+
 def evidence_gaps(base: Path, payloads: dict[str, dict]) -> list[dict[str, Any]]:
     """Competitions publishing picks without enough graded results to judge."""
     graded: dict[str, int] = {}
@@ -253,6 +287,8 @@ def evidence_gaps(base: Path, payloads: dict[str, dict]) -> list[dict[str, Any]]
     for comp, payload in sorted(payloads.items()):
         if not (payload.get("matches") or []):
             continue  # nothing published, nothing to judge
+        if not _is_mid_season(payload):
+            continue  # between seasons: an empty pick log is expected, not a gap
         count = graded.get(comp, 0)
         if count >= MIN_GRADED_FIXTURES:
             continue
