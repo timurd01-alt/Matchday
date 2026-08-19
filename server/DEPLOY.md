@@ -59,6 +59,56 @@ new deployment.
 ## To turn it back off
 Set `LEADERBOARD_URL` back to `""`. The app returns to local-only instantly.
 
+---
+
+## ACCOUNTS — sign in with Google / GitHub (optional, but it is what makes a
+## handle survive a cleared browser)
+
+Without this step the Community tab still works exactly as before: everyone
+plays as a guest, identified by the device id in their browser storage. The
+sign-in buttons only appear once at least one provider below is configured —
+`/api/leaderboard?action=providers` reports which ones are, and the app hides
+buttons for the rest.
+
+### 1. Register the OAuth apps
+Both need the same callback URL, which must be the **clean path** (Google
+rejects a registered redirect URI carrying a query string):
+
+    https://yourapp.vercel.app/api/auth-callback
+
+- **Google** — console.cloud.google.com → APIs & Services → Credentials →
+  Create OAuth client ID → *Web application*. Add the callback above as an
+  Authorized redirect URI. Scopes needed: `openid email` (the default consent
+  screen covers these). Keep the client ID and secret.
+- **GitHub** — github.com/settings/developers → New OAuth App. *Authorization
+  callback URL* is the same URL. Generate a client secret.
+
+### 2. Set the Vercel environment variables
+| Variable | Value |
+| --- | --- |
+| `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` | from the Google credential |
+| `GITHUB_CLIENT_ID` / `GITHUB_CLIENT_SECRET` | from the GitHub OAuth app |
+| `API_ORIGIN` | `https://yourapp.vercel.app` (used to build the callback URL) |
+| `PUBLIC_SITE_ORIGIN` | the site people actually visit, e.g. `https://matchdayterminal.com` |
+
+Either provider may be omitted; whichever pair is present is offered. No
+schema migration is needed — the account tables are created idempotently on
+the next request.
+
+### 3. What a user sees
+Community tab → "Continue with Google/GitHub" → back on the site signed in.
+The picks they had already locked as a guest are moved onto the account on
+that first sign-in ("N earlier picks moved across"), one time only. From then
+on the same sign-in on any browser or device returns the same handle and the
+same record.
+
+### What is stored
+The provider's opaque subject id, nothing else — no email, no name, no
+avatar. Sessions are bearer tokens held in the browser (the site and the API
+are different origins, so a session cookie would be a blocked third-party
+cookie). Losing the token is harmless: signing in again finds the same
+account, which is the entire point of the feature.
+
 ## What I could not do for you
 Create the hosting/database accounts or run the deploy — those need you
 logged into real services. Everything else (all server + client code) is

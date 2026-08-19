@@ -53,6 +53,15 @@ FUTURE_WINDOW_DAYS = 45
 # Matches the per-competition cap the browser applied to merged news.
 NEWS_PER_COMPETITION = 8
 
+# aggregateScorecards() in app-3-panels.js keeps only the newest 80 picks and 20
+# misses across all sports, so shipping every sport's complete pick log to the
+# board is pure waste -- on a recent production snapshot MLB's alone was 2.7 MB
+# of a 3.1 MB total. Keeping each sport's newest 80 guarantees the merged newest
+# 80 is unchanged. The Scorecard view, which renders the real pick log, is in
+# VIEWS_NEEDING_FULL_DATA and loads the full files anyway.
+SCORECARD_PICKS_KEPT = 80
+SCORECARD_MISSES_KEPT = 20
+
 # Mirrors SPORT_LABELS in app-1-core.js. Used only for the news "feed" label the
 # merged view showed beside each headline.
 SPORT_LABELS = {
@@ -94,6 +103,19 @@ def slim_match(match: dict[str, Any], comp: str) -> dict[str, Any]:
     # The browser stamped _comp during its own merge; do it here instead so the
     # summary is self-describing and the card can tag the competition.
     out["_comp"] = match.get("_comp") or comp
+    return out
+
+
+def slim_scorecard(scorecard: dict[str, Any]) -> dict[str, Any]:
+    """Keep every aggregate number; trim only the two long row lists."""
+    out = dict(scorecard)
+    picks = out.get("picks")
+    if isinstance(picks, list):
+        newest = sorted(picks, key=lambda p: str(p.get("kickoff") or ""), reverse=True)
+        out["picks"] = newest[:SCORECARD_PICKS_KEPT]
+    misses = out.get("misses")
+    if isinstance(misses, list):
+        out["misses"] = misses[:SCORECARD_MISSES_KEPT]
     return out
 
 
@@ -156,7 +178,7 @@ def build_summary(root: str = ".", today: dt.date | None = None) -> dict[str, An
             scorecard_sources.append({
                 "comp_key": comp,
                 "competition": data.get("competition") or label,
-                "scorecard": scorecard,
+                "scorecard": slim_scorecard(scorecard),
             })
 
         updated = str(data.get("updated") or "")

@@ -95,6 +95,23 @@ class DeploymentSecurityTests(unittest.TestCase):
         self.assertTrue(refs)
         self.assertTrue(all(re.fullmatch(r"[0-9a-f]{40}", ref) for ref in refs))
 
+    def test_rate_limit_key_has_no_guessable_fallback(self):
+        """Rate-limit buckets are keyed by an HMAC so the table never stores a
+        raw IP or device id. A literal fallback secret defeats that: anyone
+        could compute the bucket key for an identifier that is not theirs and
+        spend that victim's allowance, locking them out with the limiter
+        working exactly as designed."""
+        source = (ROOT / "api" / "_accounts.js").read_text(encoding="utf-8")
+        signature = source[source.index("export function opaqueKey"):]
+        signature = signature[:signature.index("\n}")]
+        self.assertIn("process.env.RATE_LIMIT_SECRET", signature)
+        self.assertNotRegex(
+            signature,
+            r"process\.env\.\w+\s*\|\|\s*[\"'][^\"']+[\"']",
+            "opaqueKey must not fall back to a literal secret",
+        )
+        self.assertIn("throw new Error", signature)
+
 
 if __name__ == "__main__":
     unittest.main()

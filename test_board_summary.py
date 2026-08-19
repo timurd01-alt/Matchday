@@ -243,3 +243,41 @@ class ContractTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class ScorecardTrimTests(unittest.TestCase):
+    """The board needs the scorecard's numbers, not its full pick log."""
+
+    def test_keeps_every_aggregate_number(self):
+        raw = {"graded": 268, "model_hits": 139, "brier": 0.263, "log_loss": 0.728,
+               "calibration": [{"band": "50-60", "n": 126, "hits": 63}],
+               "picks": [], "misses": []}
+        out = bbs.slim_scorecard(raw)
+        for key in ("graded", "model_hits", "brier", "log_loss", "calibration"):
+            self.assertEqual(out[key], raw[key])
+
+    def test_trims_picks_to_the_newest_the_aggregate_can_use(self):
+        picks = [{"kickoff": f"2026-01-{day:02d}T00:00:00Z", "n": day} for day in range(1, 32)]
+        out = bbs.slim_scorecard({"picks": picks * 8})
+        self.assertEqual(len(out["picks"]), bbs.SCORECARD_PICKS_KEPT)
+        # newest first, so the merged newest-80 across sports is unchanged
+        self.assertEqual(out["picks"][0]["kickoff"], "2026-01-31T00:00:00Z")
+
+    def test_trims_misses(self):
+        out = bbs.slim_scorecard({"misses": [{"i": i} for i in range(90)]})
+        self.assertEqual(len(out["misses"]), bbs.SCORECARD_MISSES_KEPT)
+
+    def test_leaves_a_short_pick_log_alone(self):
+        picks = [{"kickoff": "2026-01-02T00:00:00Z"}, {"kickoff": "2026-01-01T00:00:00Z"}]
+        self.assertEqual(len(bbs.slim_scorecard({"picks": picks})["picks"]), 2)
+
+    def test_does_not_mutate_the_source_scorecard(self):
+        raw = {"picks": [{"kickoff": f"2026-01-01T00:00:{s:02d}Z"} for s in range(60)] * 3}
+        bbs.slim_scorecard(raw)
+        self.assertEqual(len(raw["picks"]), 180)
+
+    def test_caps_match_the_interface_slices(self):
+        with open("app-3-panels.js", encoding="utf-8") as handle:
+            source = handle.read()
+        self.assertIn(f".slice(0,{bbs.SCORECARD_PICKS_KEPT})", source)
+        self.assertIn(f".slice(0,{bbs.SCORECARD_MISSES_KEPT})", source)

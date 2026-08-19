@@ -92,7 +92,21 @@ export function requestIp(req) {
 }
 
 export function opaqueKey(value) {
-  const secret = process.env.RATE_LIMIT_SECRET || process.env.DATABASE_URL || "matchday";
+  // Rate-limit buckets are keyed by an HMAC of an identifier -- an IP, a device
+  // id, a session token -- so the table never stores the identifier itself. That
+  // only holds while the key is secret. With a literal fallback ("matchday"),
+  // anyone could compute the bucket key for an IP or device that is not theirs
+  // and spend that victim's allowance for them, locking them out with the
+  // rate limiter working exactly as designed.
+  //
+  // There is no safe default, so there is no default. DATABASE_URL is an
+  // acceptable derivation because this module cannot function without it
+  // anyway; if neither is present the request fails loudly rather than
+  // silently using a key an attacker already knows.
+  const secret = process.env.RATE_LIMIT_SECRET || process.env.DATABASE_URL;
+  if (!secret) {
+    throw new Error("RATE_LIMIT_SECRET or DATABASE_URL must be set to key rate limits");
+  }
   return crypto.createHmac("sha256", secret).update(value).digest("hex");
 }
 

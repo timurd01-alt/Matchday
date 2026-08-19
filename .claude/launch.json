@@ -12,6 +12,16 @@
       "port": 8743
     },
     {
+      "name": "matchday-accounts",
+      "runtimeExecutable": "py",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8752"
+      ],
+      "port": 8752
+    },
+    {
       "name": "matchday-verify",
       "runtimeExecutable": "py",
       "runtimeArgs": [
