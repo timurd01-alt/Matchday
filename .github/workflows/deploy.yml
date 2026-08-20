@@ -67,6 +67,7 @@ jobs:
             outrights_market_cache_*.json
             api_football_box_cache_*.json
             advanced_metrics_*.json
+            ncaaf_venue_coords.json
             nflverse_pbp_*.csv.gz
             forecast_ledger_*.jsonl
             mlb_shadow_ledger.jsonl
@@ -97,7 +98,7 @@ jobs:
       # deploy below if it fails, since a broken prediction/provider path
       # is exactly what those steps would otherwise ship.
       - name: Run required test suite
-        run: python -m unittest test_model_inputs test_provider_adapters test_generate_posts test_pregame_context test_market_benchmark test_x_bot test_provider_quota test_mlb_recovery test_mlb_shadow_ledger test_mlb_prospective_scorecard test_mlb_model_promotion test_mlb_forecast_pause test_nfl_challenger test_nfl_challenger_store test_nfl_availability test_nfl_prospective_scorecard test_nfl_model_adjustment test_cfb_challenger test_check_promotion_readiness test_next_task test_clv_report test_preregistration test_ncaam_advanced_metrics test_independent_value test_ui_audit test_data_coverage test_board_summary test_deploy_assets test_security
+        run: python -m unittest test_model_inputs test_provider_adapters test_generate_posts test_pregame_context test_market_benchmark test_x_bot test_provider_quota test_mlb_recovery test_mlb_shadow_ledger test_mlb_prospective_scorecard test_mlb_model_promotion test_mlb_forecast_pause test_nfl_challenger test_nfl_challenger_store test_nfl_availability test_nfl_prospective_scorecard test_nfl_model_adjustment test_cfb_challenger test_check_promotion_readiness test_next_task test_clv_report test_preregistration test_ncaam_advanced_metrics test_independent_value test_ui_audit test_data_coverage test_board_summary test_deploy_assets test_ncaaf_venues test_security
 
       - name: Recover published last-good fixtures after a cold cache miss
         run: python recover_published_data.py
@@ -131,6 +132,15 @@ jobs:
 
       - name: Recover durable NCAAF roster talent before shared quota use
         run: python refresh_college_talent.py
+
+      # Stadium coordinates for the weather lookup. One licensed CFBD call the
+      # first time, then skipped forever -- stadiums do not move. Without it
+      # 145 of 160 upcoming NCAAF fixtures resolved to no coordinates and
+      # silently published with no forecast. Never blocks: a missing forecast
+      # is an absent enrichment, not a reason to stop deploying picks.
+      - name: Recover durable NCAAF venue coordinates
+        continue-on-error: true
+        run: python refresh_ncaaf_venues.py
 
       # Plumbing for the pre-registered 2026-27 NCAAM season. This is a no-op
       # today by design: ncaam_advanced_metrics.MAPPING_VERIFIED is False, so
@@ -354,6 +364,11 @@ jobs:
           git config user.name "matchday-bot"
           git config user.email "actions@github.com"
           git add -- 'ratings*.json' ':!ratings*.backup.json' ':!ratings*.legacy.json' ':!ratings*.raced-preserved.json' 'picks_log*.json'
+          # Durable and slow-moving: committing it means the one CFBD call
+          # never has to be spent again, even on a cold cache.
+          if [ -f ncaaf_venue_coords.json ]; then
+            git add -- ncaaf_venue_coords.json
+          fi
           # `git add` fails the ENTIRE step on a pathspec matching nothing
           # (verified: exit 128, "did not match any files"), and these ledgers
           # legitimately may not exist -- mlb_shadow_ledger.jsonl before the

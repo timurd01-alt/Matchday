@@ -63,7 +63,12 @@
   function researchSignalsPanel(m){
     const metrics=metricRows(m),shadow=shadowBlock(m),meta=m?.advanced_metrics_meta;
     if(!metrics&&!shadow){
-      const comp=String(DATA?.comp_key||'').toUpperCase();
+      // The match's own competition, not the board's. On the merged "All
+      // sports" board DATA.comp_key is 'ALL', so every one of these sports
+      // failed the test and the panel vanished silently -- the same board
+      // where needsDetailHydration() has already read m._comp to decide the
+      // fixture was worth hydrating for this very panel.
+      const comp=String(m?._comp||DATA?.comp_key||'').toUpperCase();
       if(!['NFL','NCAAF','NBA','NCAAM','MLB'].includes(comp))return '';
       return `<section class="analystPanel researchPanel unavailable"><div class="researchHead"><div><span>Research signals</span><b>Authorized profile unavailable</b></div><em>official model unchanged</em></div><p class="researchCaution">This build has no fresh, matchup-linked advanced profile from an approved source. Matchday leaves the signal missing instead of inventing a neutral value.</p></section>`;
     }

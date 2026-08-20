@@ -16,9 +16,15 @@ class SecretScannerTests(unittest.TestCase):
             path.write_text(text, encoding="utf-8")
             return security_check.scan(path)
 
+    def label_id(self, label):
+        """scan() addresses labels by index into the fixed LABELS table rather
+        than returning their text. Resolve the index here so these tests still
+        read by name and stay correct if the table is ever reordered."""
+        return security_check.LABELS.index(label)
+
     def test_detects_literal_secret_assignment_without_echoing_value(self):
         findings = self.scan_text('SERVICE_API_' + 'KEY = "abcdefghijklmnopqrstuvwxyz123456"')
-        self.assertEqual(findings, [(1, "literal credential assignment")])
+        self.assertEqual(findings, [(1, self.label_id("literal credential assignment"))])
 
     def test_allows_placeholders_and_environment_references(self):
         self.assertEqual(self.scan_text('SERVICE_API_KEY = "PASTE_SERVICE_API_KEY"'), [])
@@ -26,7 +32,36 @@ class SecretScannerTests(unittest.TestCase):
 
     def test_detects_private_key_material(self):
         findings = self.scan_text("-----BEGIN " + "PRIVATE KEY-----\nnot-real\n")
-        self.assertEqual(findings, [(1, "private key")])
+        self.assertEqual(findings, [(1, self.label_id("private key"))])
+
+    def test_findings_never_carry_text_read_out_of_the_scanned_file(self):
+        """The point of indexing labels: main() prints LABELS[label_id], so a
+        finding cannot smuggle a matched substring -- part of the secret
+        itself, or anything else an attacker put in a scanned file -- into the
+        report. Returning a plain string here would quietly reopen that path,
+        so pin the shape rather than trusting the convention to hold."""
+        findings = self.scan_text(
+            'SERVICE_API_' + 'KEY = "abcdefghijklmnopqrstuvwxyz123456"')
+        self.assertTrue(findings)
+        for line_no, label_id in findings:
+            self.assertIsInstance(line_no, int)
+            self.assertIsInstance(label_id, int)
+            self.assertNotIsInstance(label_id, bool)
+            self.assertIn(label_id, range(len(security_check.LABELS)))
+
+    def test_every_pattern_has_a_printable_label(self):
+        """main() indexes LABELS with an id scan() produced. If a pattern were
+        added to KNOWN_SECRET_PATTERNS without extending LABELS in step, that
+        lookup would raise mid-scan -- and it would raise on the one file that
+        actually held a secret, turning a fail-closed check into a crash."""
+        self.assertEqual(
+            len(security_check.LABELS),
+            len(security_check.KNOWN_SECRET_PATTERNS) + 1,
+        )
+        self.assertEqual(
+            security_check.LABELS[security_check.ASSIGNMENT_LABEL_ID],
+            security_check.ASSIGNMENT_LABEL,
+        )
 
 
 class DeploymentSecurityTests(unittest.TestCase):

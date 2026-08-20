@@ -323,6 +323,17 @@ SPORTSGAMEODDS_CACHE_FILE = f"sportsgameodds_{COMP_KEY.lower()}_cache.json"
 # Matchday competitions. One request per competition per day, capped at eight
 # events, remains inside that budget; hourly odds polling would not.
 SPORTSGAMEODDS_CACHE_MIN = 1440
+# Ceiling above is wall-clock only, and the cached rows are keyed by the
+# fixture ids that were inside the 36h window when it was written. That set
+# rolls forward continuously in a league that plays daily, so a fixture
+# entering the window after the write found no row and got no market for up
+# to a full day -- while the age check still reported the cache fresh and
+# suppressed the request that would have covered it. Measured live
+# 2026-08-20: zero markets on all 195 upcoming MLB fixtures with the
+# overlay reporting "local cache". This floor lets an uncovered near-term
+# fixture force one refresh, at most doubling a spend currently running at
+# 218 of 2,500 monthly objects.
+SPORTSGAMEODDS_REFRESH_MIN = 720
 SPORTSGAMEODDS_STALE_MAX_HOURS = 30
 SPORTSGAMEODDS_WINDOW_HOURS = 36
 
@@ -1168,10 +1179,86 @@ VENUE_COORDS = {
     "camp nou": (41.381, 2.123), "bernabeu": (40.453, -3.688),
     "san siro": (45.478, 9.124), "allianz arena": (48.219, 11.625),
     "signal iduna": (51.493, 7.452), "parc des princes": (48.842, 2.253),
+    # Recent renames. venue_coords() substring-matches, so the retired
+    # sponsor name never fires once a provider ships the current one:
+    # "Rate Field" does not contain "guaranteed rate", and "Daikin Park"
+    # does not contain "minute maid". Both parks silently lost weather.
+    "rate field": (41.830, -87.634), "daikin park": (29.757, -95.355),
+    "rogers centre": (43.641, -79.389),
+    # Athletics' Sacramento home while the Las Vegas park is built.
+    "sutter health park": (38.580, -121.513),
+    # NFL homes. Only the handful of shared WC2026 grounds were mapped, so
+    # 134 of 224 upcoming fixtures resolved to no coordinates at all.
+    "acrisure": (40.447, -80.016), "allegiant": (36.091, -115.184),
+    "bank of america stadium": (35.226, -80.853),
+    "caesars superdome": (29.951, -90.081),
+    "empower field": (39.744, -105.020), "everbank": (30.324, -81.637),
+    "ford field": (42.340, -83.046), "highmark": (42.774, -78.787),
+    "huntington bank field": (41.506, -81.700),
+    "lambeau": (44.501, -88.062), "lucas oil": (39.760, -86.164),
+    "m&t bank": (39.278, -76.623), "nissan stadium": (36.166, -86.771),
+    "northwest stadium": (38.908, -76.864), "paycor": (39.095, -84.516),
+    "raymond james": (27.976, -82.503), "soldier field": (41.862, -87.617),
+    "state farm stadium": (33.528, -112.263), "u.s. bank stadium": (44.974, -93.258),
+    # International series venues. Accent-tolerant prefixes ("bernab",
+    # "maracan") match whether or not the provider sends the diacritic.
+    "estadio banorte": (19.303, -99.150), "wembley": (51.556, -0.280),
+    "stade de france": (48.924, 2.360), "maracan": (-22.912, -43.230),
+    "melbourne cricket": (-37.820, 144.983), "bernab": (40.453, -3.688),
+    "fc bayern munich stadium": (48.219, 11.625),
 }
 _WX_CACHE = {}
 
+_COLLEGE_VENUE_COORDS = None
+
+
+def _college_venue_coords(venue):
+    """Exact stadium coordinates from the licensed CFBD venue snapshot.
+
+    Only consulted after VENUE_COORDS, which is hand-verified and already
+    covers every pro ground. The provider's file is a *college* venue list and
+    is not authoritative outside that: its "Wrigley Field" row sits 8.6km from
+    the real park, so letting it override a curated entry would corrupt
+    coordinates that were already right.
+    """
+    global _COLLEGE_VENUE_COORDS
+    if _COLLEGE_VENUE_COORDS is None:
+        try:
+            import refresh_ncaaf_venues
+            _COLLEGE_VENUE_COORDS = refresh_ncaaf_venues.load()
+        except Exception:
+            _COLLEGE_VENUE_COORDS = ({}, {})
+    by_name_city, by_name = _COLLEGE_VENUE_COORDS
+    if not by_name and not by_name_city:
+        return None
+    import refresh_ncaaf_venues
+    # Exact match on the full name, qualifier included. Names that map to
+    # more than one real site were dropped at build time.
+    exact = by_name.get(refresh_ncaaf_venues.normalize(venue))
+    if exact:
+        return exact
+    base = refresh_ncaaf_venues.strip_qualifier(venue)
+    city = refresh_ncaaf_venues.qualifier_city(venue)
+    if base and city:
+        return by_name_city.get(f"{base}|{city}")
+    return None
+
+
+# Competitions whose grounds the CFBD venue file actually covers. It is a
+# college list and is not authoritative elsewhere -- its "Wrigley Field" row
+# is 8.6km from the real park -- so pro competitions never consult it.
+COLLEGE_VENUE_COMPETITIONS = {"NCAAF", "NCAAM"}
+
+
 def venue_coords(venue):
+    # For college fixtures the exact provider match must win outright. The
+    # curated table matches by substring, and "Memorial Stadium (Lincoln,
+    # NE)" contains the "lincoln" keyword -- which is Lincoln Financial
+    # Field, putting a Nebraska home game's forecast in Philadelphia.
+    if COMP_KEY in COLLEGE_VENUE_COMPETITIONS:
+        exact = _college_venue_coords(venue)
+        if exact:
+            return exact
     v = (venue or "").lower()
     for key, ll in VENUE_COORDS.items():
         if key in v: return ll
@@ -1193,13 +1280,27 @@ def fetch_weather(matches):
         date = ko.strftime("%Y-%m-%d")
         ck = (ll, date)
         if ck not in _WX_CACHE:
-            try:
-                url = (f"https://api.open-meteo.com/v1/forecast?latitude={ll[0]}&longitude={ll[1]}"
-                       f"&hourly=temperature_2m,wind_speed_10m,precipitation_probability"
-                       f"&start_date={date}&end_date={date}&timezone=UTC")
-                _WX_CACHE[ck] = _get(url)
-            except Exception as e:
-                DIAG.append(f"weather: FAILED — {e}"); _WX_CACHE[ck] = None
+            # Open-Meteo is keyless and free, so a transient TLS/network blip
+            # costs nothing to retry -- but the single-shot version cached the
+            # None and wrote off every fixture at that park for the whole run.
+            # Confirmed live 2026-08-20: five handshake timeouts in one MLB
+            # run, each silently dropping a venue-date.
+            url = (f"https://api.open-meteo.com/v1/forecast?latitude={ll[0]}&longitude={ll[1]}"
+                   f"&hourly=temperature_2m,wind_speed_10m,precipitation_probability"
+                   f"&start_date={date}&end_date={date}&timezone=UTC")
+            _WX_CACHE[ck] = None
+            for attempt in range(3):
+                try:
+                    _WX_CACHE[ck] = _get(url)
+                    break
+                except Exception as e:
+                    if attempt == 2:
+                        # One line per failing venue-date, not one per fixture.
+                        note = f"weather: FAILED after 3 attempts — {e}"
+                        if note not in DIAG:
+                            DIAG.append(note)
+                    else:
+                        time.sleep(1.5 * (attempt + 1))
         d = _WX_CACHE[ck]
         if not d: continue
         try:
@@ -3682,8 +3783,23 @@ def refresh_college_advanced_metrics(adapter, output_path=None):
     try:
         result = adapter.advanced_team_metrics()
         profiles = result.get("profiles") or {}
+        season_role = "current"
         if not profiles:
-            return None
+            # These metrics are derived from plays that have been run, so from
+            # the end of one season until well into the next the current-season
+            # query answers with nothing -- and returning None here dropped the
+            # research panel for every NCAAF fixture on the board through the
+            # whole offseason. The last completed season comes from the same
+            # licensed endpoint and is exactly what the NFL profile already
+            # falls back to. The season and its role travel in the receipt
+            # below, so a prior season is never shown as current form.
+            prior_season = int(result.get("season") or 0) - 1
+            prior = adapter.advanced_team_metrics(season=prior_season) if prior_season > 0 else {}
+            profiles = prior.get("profiles") or {}
+            if not profiles:
+                return None
+            result = prior
+            season_role = "prior_completed"
         payload = {
             "schema_version": 1,
             "generated_at": _utc_now().isoformat().replace("+00:00", "Z"),
@@ -3691,7 +3807,8 @@ def refresh_college_advanced_metrics(adapter, output_path=None):
             "source": result.get("source") or "CollegeFootballData /stats/season/advanced",
             "license": "active CFBD API tier",
             "shadow_only": True,
-            "coverage": {"season": result.get("season"), "teams": len(profiles), "garbage_time_excluded": True},
+            "coverage": {"season": result.get("season"), "season_role": season_role,
+                         "teams": len(profiles), "garbage_time_excluded": True},
             "profiles": profiles,
         }
         tmp = path + ".tmp"
@@ -6760,6 +6877,15 @@ def fetch_sportsgameodds_overlay(matches):
         schema_ok = COMP_KEY != "MLB" or candidate.get("schema_ver") == 3
         if schema_ok and age < SPORTSGAMEODDS_CACHE_MIN * 60:
             cached = candidate
+            rows = candidate.get("matches") or {}
+            uncovered = [match for match in targets
+                         if str(match.get("id")) not in rows]
+            if uncovered and age >= SPORTSGAMEODDS_REFRESH_MIN * 60:
+                # Serving this cache would silently return nothing for these
+                # fixtures until the ceiling expired. Spend one request.
+                cached = None
+                DIAG.append(f"SportsGameOdds overlay: cache misses "
+                            f"{len(uncovered)} near-term fixture(s); refreshing")
     except Exception:
         cached = None
 

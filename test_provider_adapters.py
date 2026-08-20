@@ -228,6 +228,37 @@ class SportsGameOddsTests(unittest.TestCase):
         self.assertEqual(ambiguous["pregame_provenance"][0]["join"]["reason"],
                          "ambiguous_same_team_fixture")
 
+    def test_start_time_is_read_from_the_live_payload_shape(self):
+        # The provider carries kickoff on `status`, not at the top level and
+        # not on `info` (which holds only venue metadata). Reading the wrong
+        # field returned None for every real event and silently disabled the
+        # teams_and_start_time join.
+        event = self.event()
+        event.pop("startsAt", None)
+        event["info"] = {"venue": {"name": "American Family Field"}}
+        event["status"] = {"startsAt": "2026-08-20T18:10:00.000Z", "started": False}
+        self.assertEqual(SportsGameOddsAdapter._event_time(event),
+                         "2026-08-20T18:10:00Z")
+
+    def test_doubleheader_is_separated_using_the_live_payload_shape(self):
+        first = self.event()
+        first.pop("startsAt", None)
+        first.update({"eventID": "dh-1",
+                      "status": {"startsAt": "2026-08-12T17:00:00.000Z"}})
+        second = self.event()
+        second.pop("startsAt", None)
+        second.update({"eventID": "dh-2",
+                       "status": {"startsAt": "2026-08-12T23:00:00.000Z"}})
+        match = {"id": "local-3", "kickoff": "2026-08-12T23:00:00Z",
+                 "home": {"name": "Boston Celtics", "code": "BOS"},
+                 "away": {"name": "New York Knicks", "code": "NYK"},
+                 "markets": {}, "lineups": None}
+        adapter = SportsGameOddsAdapter("test-key", "NBA", getter=lambda *_: {})
+        adapter.attach_pregame([match], [first, second], observed_at="2026-08-12T12:00:00Z")
+        receipt = match["pregame_provenance"][0]["join"]
+        self.assertEqual(receipt["strategy"], "teams_and_start_time")
+        self.assertEqual(receipt["provider_event_id"], "dh-2")
+
     def test_usage_gate_refuses_event_call_before_monthly_reserve(self):
         calls = []
         def getter(url, headers):
