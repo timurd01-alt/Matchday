@@ -949,6 +949,24 @@ async function signOut(){
   // The local record stays put; only the server identity is released.
   try{renderCommunity()}catch(e){}
 }
+// Deletion is irreversible and takes the graded picks with it, so it asks in
+// those words rather than the usual "are you sure?" -- the cost of the action
+// is the thing worth confirming, not the click.
+async function deleteAccount(){
+  const warning='Delete your account?\n\nThis removes your handle, your graded picks and your place on the leaderboard. It cannot be undone.\n\nSigning out instead keeps all of it.';
+  if(!confirm(warning))return;
+  const d=await lbPost('delete-account',{});
+  if(!d||!d.ok){ACCOUNT_ERROR='Could not delete the account — please try again.';try{renderCommunity()}catch(e){};return;}
+  setAuthToken('');ACCOUNT={signedIn:false,handle:'',canReshuffle:false};SIGNIN_CLAIMED=0;ACCOUNT_ERROR='';
+  // Local picks are this browser's own copy and were never the server's to
+  // delete; clearing them keeps the app from re-uploading what was just erased.
+  try{localStorage.removeItem('matchday.handle');localStorage.removeItem('matchday.handleAssigned');
+    localStorage.removeItem('matchday.btm');localStorage.removeItem('matchday.device')}catch(e){}
+  ACCOUNT_DELETED=true;
+  try{renderCommunity()}catch(e){}
+}
+let ACCOUNT_ERROR='';
+let ACCOUNT_DELETED=false;
 let SIGNIN_ERROR='';
 let SIGNIN_CLAIMED=0;
 // The callback hands back a single-use code in the fragment (never sent to a

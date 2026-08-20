@@ -38,18 +38,25 @@ export const SESSION_TTL_MS = 180 * 86400000;
 const SIGNIN_CODE_TTL_MS = 120000;
 const OAUTH_STATE_TTL_MS = 600000;
 
+// Scopes are the narrowest that still identify a returning user, because a
+// scope is a promise about what we look at, not merely about what we keep.
+// `openid` yields the subject id alone; adding `email` would put an address in
+// the id_token that this code reads past and discards -- data we asked for,
+// were trusted with, and had no use for. GitHub needs no scope at all (an
+// OAuth app may read its own user's id unscoped), so it asks for none and its
+// consent screen says so.
 export const PROVIDERS = {
   google: {
     authorize: "https://accounts.google.com/o/oauth2/v2/auth",
     tokenUrl: "https://oauth2.googleapis.com/token",
-    scope: "openid email",
+    scope: "openid",
     idEnv: "GOOGLE_CLIENT_ID",
     secretEnv: "GOOGLE_CLIENT_SECRET",
   },
   github: {
     authorize: "https://github.com/login/oauth/authorize",
     tokenUrl: "https://github.com/login/oauth/access_token",
-    scope: "read:user",
+    scope: "",
     idEnv: "GITHUB_CLIENT_ID",
     secretEnv: "GITHUB_CLIENT_SECRET",
   },
@@ -289,6 +296,61 @@ export async function destroySession(db, token) {
   const value = String(token || "");
   if (!TOKEN_RE.test(value)) return;
   await db.query("DELETE FROM sessions WHERE token_hash=$1", [sha256(value)]);
+}
+
+// Erasure has to be actual erasure, so this removes the picks too rather than
+// orphaning them under an owner key nobody can sign into. It runs in one
+// transaction: a half-deleted account -- rows gone, identity left behind --
+// would let the same provider login return to a hollow account and would be a
+// worse outcome than either finishing or not starting.
+//
+// The graded picks are the account's own contribution, so they leave with it.
+// The leaderboard recomputes from the surviving rows, and the person is gone
+// from it by the next read.
+export async function deleteAccount(db, ownerKey) {
+  if (!OWNER_RE.test(String(ownerKey || ""))) return false;
+  try {
+    await db.query("BEGIN");
+    await db.query("DELETE FROM verified_picks WHERE device_id=$1", [ownerKey]);
+    await db.query("DELETE FROM sessions WHERE owner_key=$1", [ownerKey]);
+    await db.query("DELETE FROM signin_codes WHERE owner_key=$1", [ownerKey]);
+    await db.query("DELETE FROM account_identities WHERE owner_key=$1", [ownerKey]);
+    const removed = await db.query("DELETE FROM accounts WHERE owner_key=$1 RETURNING owner_key", [ownerKey]);
+    await db.query("COMMIT");
+    return !!removed.rows[0];
+  } catch (error) {
+    try { await db.query("ROLLBACK"); } catch (_) {}
+    throw error;
+  }
+}
+
+// Keeping an identity forever because nobody came back is a retention policy by
+// neglect. `last_seen_at` is refreshed on every authenticated request, so
+// dormancy here means the account genuinely went unused for the full window,
+// not merely that its owner was quiet this month.
+//
+// There is no scheduler in front of this function, so it is called from ordinary
+// traffic and gated on a once-a-day rate-limit bucket: the first request after
+// midnight pays for the sweep and every other request skips it.
+export const RETENTION_MS = 540 * 86400000; // 18 months
+export async function purgeDormantAccounts(db) {
+  const cutoff = Date.now() - RETENTION_MS;
+  const dormant = await db.query(
+    // Capped so one unlucky request never pays for a huge sweep; a backlog
+    // simply drains over the following days.
+    "SELECT owner_key FROM accounts WHERE last_seen_at < $1 LIMIT 50",
+    [cutoff]
+  );
+  let purged = 0;
+  for (const row of dormant.rows) {
+    if (await deleteAccount(db, row.owner_key)) purged += 1;
+  }
+  // Guest rows have no account to age out, so they are swept on the same clock.
+  await db.query(
+    "DELETE FROM verified_picks WHERE device_id LIKE 'mdx-%' AND created_at < $1",
+    [cutoff]
+  );
+  return purged;
 }
 
 // One-way and one-shot: rows already owned by an account are never re-assigned,

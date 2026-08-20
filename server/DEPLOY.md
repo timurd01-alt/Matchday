@@ -78,10 +78,17 @@ rejects a registered redirect URI carrying a query string):
 
 - **Google** — console.cloud.google.com → APIs & Services → Credentials →
   Create OAuth client ID → *Web application*. Add the callback above as an
-  Authorized redirect URI. Scopes needed: `openid email` (the default consent
-  screen covers these). Keep the client ID and secret.
+  Authorized redirect URI. The only scope requested is `openid`, which is a
+  non-sensitive scope, so the consent screen needs no verification review.
+  Keep the client ID and secret.
 - **GitHub** — github.com/settings/developers → New OAuth App. *Authorization
-  callback URL* is the same URL. Generate a client secret.
+  callback URL* is the same URL. Generate a client secret. No scope is
+  requested at all; an OAuth app can read its own user's id unscoped.
+
+Google's OAuth setup also asks for a privacy policy URL. Use
+`https://matchdayterminal.com/legal.html` — it describes the sign-in, what is
+stored, the retention window and the deletion route, and `test_security.py`
+holds it to what the code actually does.
 
 ### 2. Set the Vercel environment variables
 | Variable | Value |
@@ -108,6 +115,25 @@ avatar. Sessions are bearer tokens held in the browser (the site and the API
 are different origins, so a session cookie would be a blocked third-party
 cookie). Losing the token is harmless: signing in again finds the same
 account, which is the entire point of the feature.
+
+### Deletion and retention
+The Community tab's **Delete account** button hits `?action=delete-account`,
+which removes the account, its provider identity, every session and every
+pick it owns, in one transaction. It requires a valid session, so only the
+signed-in person can do it, and it is irreversible.
+
+Accounts unused for 18 months (`RETENTION_MS` in `api/_accounts.js`) are
+purged automatically, along with guest picks of the same age. There is no
+scheduler in front of this: the sweep is gated on a once-a-day bucket in the
+same `rate_limits` table, so the first request after midnight performs it and
+every other request skips it. That means retention depends on the site being
+visited at least occasionally — fine for a public site, worth knowing if
+traffic ever stops. A sweep that fails is logged and never fails the request
+that triggered it.
+
+If you change `RETENTION_MS`, `test_security.py` will fail until `legal.html`
+states the new window, which is deliberate: the policy is a promise, and the
+test is what stops it drifting from the code.
 
 ## What I could not do for you
 Create the hosting/database accounts or run the deploy — those need you
