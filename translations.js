@@ -104,95 +104,105 @@ const MD_RETIRED_FORMAT_COPY=[
 ];
 Object.values(window.MD_I18N).forEach(dict=>MD_RETIRED_FORMAT_COPY.forEach(key=>delete dict[key]));
 Object.assign(window.MD_I18N.es,{
-  "Explore every matchup before it starts.":"Explora cada enfrentamiento antes de que comience.",
-  "Pregame model picks, probability forecasts, matchup analysis, and verified postgame grading.":"Pronósticos del modelo antes del partido, previsiones de probabilidad, análisis del enfrentamiento y evaluación verificada después del partido.",
+  "Every prediction, published before kickoff.":"Cada pronóstico, publicado antes del inicio.",
+  "Every prediction,":"Cada pronóstico,",
+  "published before kickoff.":"publicado antes del inicio.",
+  "The model picks a side before the game, shows what drove the call, and grades itself once the result is in.":"El modelo elige un lado antes del partido, muestra en qué se basó y se califica solo cuando llega el resultado.",
   "Soccer":"Fútbol","Football":"Fútbol americano","Basketball":"Baloncesto","Baseball":"Béisbol","Hockey":"Hockey",
   "TODAY'S BOARD":"CARTELERA DE HOY","BOARD READY":"PANEL LISTO",
-  "One clear read before the game.":"Una lectura clara antes del partido.",
-  "Model probability, market context, and the factors moving each matchup.":"Probabilidad del modelo, contexto del mercado y factores que mueven cada encuentro.",
+  "The model's pick on every game today.":"La elección del modelo en cada partido de hoy.",
+  "Probability, the market's number beside it, and what's driving the gap.":"La probabilidad, la cifra del mercado al lado y qué explica la diferencia.",
   "Fresh reads appear as matchups are published.":"Los nuevos análisis aparecen al publicarse los encuentros.",
   "Explore the dashboard for completed scorecards, model methodology, and every available competition.":"Explora el panel para ver evaluaciones completas, la metodología del modelo y todas las competiciones disponibles.",
   "No account required · no ads":"Sin cuenta · sin anuncios","Take a quick tour":"Haz un recorrido rápido","View verified scorecard":"Ver evaluación verificada",
-  "One calm analysis desk.":"Un solo panel de análisis, claro y ordenado.",
+  "Twelve competitions, one board.":"Doce competiciones, un solo panel.",
   "Personalize your analysis desk.":"Personaliza tu panel de análisis.",
   "Signal red":"Rojo de señal"
 });
 Object.assign(window.MD_I18N.fr,{
-  "Explore every matchup before it starts.":"Explorez chaque rencontre avant son coup d’envoi.",
-  "Pregame model picks, probability forecasts, matchup analysis, and verified postgame grading.":"Choix du modèle avant-match, prévisions de probabilité, analyse des rencontres et évaluation vérifiée après-match.",
+  "Every prediction, published before kickoff.":"Chaque pronostic, publié avant le coup d'envoi.",
+  "Every prediction,":"Chaque pronostic,",
+  "published before kickoff.":"publié avant le coup d'envoi.",
+  "The model picks a side before the game, shows what drove the call, and grades itself once the result is in.":"Le modèle choisit un camp avant le match, montre ce qui a motivé ce choix et se note lui-même une fois le résultat connu.",
   "Soccer":"Football","Football":"Football américain","Basketball":"Basket-ball","Baseball":"Baseball","Hockey":"Hockey",
   "TODAY'S BOARD":"PROGRAMME DU JOUR","BOARD READY":"TABLEAU PRÊT",
-  "One clear read before the game.":"Une lecture claire avant le match.",
-  "Model probability, market context, and the factors moving each matchup.":"Probabilité du modèle, contexte du marché et facteurs qui font évoluer chaque rencontre.",
+  "The model's pick on every game today.":"Le choix du modèle sur chaque match du jour.",
+  "Probability, the market's number beside it, and what's driving the gap.":"La probabilité, le chiffre du marché à côté et ce qui explique l'écart.",
   "Fresh reads appear as matchups are published.":"De nouvelles analyses apparaissent dès la publication des rencontres.",
   "Explore the dashboard for completed scorecards, model methodology, and every available competition.":"Explorez le tableau de bord pour les bilans complets, la méthode du modèle et toutes les compétitions disponibles.",
   "No account required · no ads":"Sans compte · sans publicité","Take a quick tour":"Visite guidée rapide","View verified scorecard":"Voir le bilan vérifié",
-  "One calm analysis desk.":"Un espace d'analyse unique et clair.",
+  "Twelve competitions, one board.":"Douze compétitions, un seul tableau.",
   "Personalize your analysis desk.":"Personnalisez votre espace d'analyse.",
   "Signal red":"Rouge signal"
 });
 Object.assign(window.MD_I18N.de,{
-  "Explore every matchup before it starts.":"Analysiere jede Begegnung vor dem Anpfiff.",
-  "Pregame model picks, probability forecasts, matchup analysis, and verified postgame grading.":"Modelltipps vor dem Spiel, Wahrscheinlichkeitsprognosen, Spielanalysen und geprüfte Auswertungen danach.",
+  "Every prediction, published before kickoff.":"Jede Prognose, veröffentlicht vor dem Anpfiff.",
+  "Every prediction,":"Jede Prognose,",
+  "published before kickoff.":"veröffentlicht vor dem Anpfiff.",
+  "The model picks a side before the game, shows what drove the call, and grades itself once the result is in.":"Das Modell wählt vor dem Spiel eine Seite, zeigt die Gründe dafür und bewertet sich nach dem Ergebnis selbst.",
   "Soccer":"Fußball","Football":"American Football","Basketball":"Basketball","Baseball":"Baseball","Hockey":"Eishockey",
   "TODAY'S BOARD":"HEUTIGE SPIELE","BOARD READY":"ÜBERSICHT BEREIT",
-  "One clear read before the game.":"Eine klare Einschätzung vor dem Spiel.",
-  "Model probability, market context, and the factors moving each matchup.":"Modellwahrscheinlichkeit, Marktkontext und die Faktoren, die jede Begegnung bewegen.",
+  "The model's pick on every game today.":"Der Modell-Tipp zu jedem Spiel von heute.",
+  "Probability, the market's number beside it, and what's driving the gap.":"Die Wahrscheinlichkeit, daneben die Marktzahl und was die Differenz erklärt.",
   "Fresh reads appear as matchups are published.":"Neue Analysen erscheinen, sobald Begegnungen veröffentlicht werden.",
   "Explore the dashboard for completed scorecards, model methodology, and every available competition.":"Im Dashboard finden Sie vollständige Auswertungen, die Modellmethodik und alle verfügbaren Wettbewerbe.",
   "No account required · no ads":"Kein Konto · keine Werbung","Take a quick tour":"Kurze Tour starten","View verified scorecard":"Geprüfte Auswertung ansehen",
-  "One calm analysis desk.":"Ein ruhiger, übersichtlicher Analysebereich.",
+  "Twelve competitions, one board.":"Zwölf Wettbewerbe, ein Board.",
   "Personalize your analysis desk.":"Personalisiere deinen Analysebereich.",
   "Signal red":"Signalrot"
 });
 Object.assign(window.MD_I18N.pt,{
-  "Explore every matchup before it starts.":"Explore cada confronto antes de começar.",
-  "Pregame model picks, probability forecasts, matchup analysis, and verified postgame grading.":"Palpites do modelo antes do jogo, previsões de probabilidade, análise do confronto e avaliação verificada após o jogo.",
+  "Every prediction, published before kickoff.":"Cada previsão, publicada antes do apito inicial.",
+  "Every prediction,":"Cada previsão,",
+  "published before kickoff.":"publicada antes do apito inicial.",
+  "The model picks a side before the game, shows what drove the call, and grades itself once the result is in.":"O modelo escolhe um lado antes do jogo, mostra o que motivou a escolha e se avalia quando sai o resultado.",
   "Soccer":"Futebol","Football":"Futebol americano","Basketball":"Basquete","Baseball":"Beisebol","Hockey":"Hóquei",
   "TODAY'S BOARD":"JOGOS DE HOJE","BOARD READY":"PAINEL PRONTO",
-  "One clear read before the game.":"Uma leitura clara antes do jogo.",
-  "Model probability, market context, and the factors moving each matchup.":"Probabilidade do modelo, contexto do mercado e os fatores que movimentam cada confronto.",
+  "The model's pick on every game today.":"A escolha do modelo em cada jogo de hoje.",
+  "Probability, the market's number beside it, and what's driving the gap.":"A probabilidade, o número do mercado ao lado e o que explica a diferença.",
   "Fresh reads appear as matchups are published.":"Novas análises aparecem quando os confrontos são publicados.",
   "Explore the dashboard for completed scorecards, model methodology, and every available competition.":"Explore o painel para ver avaliações completas, a metodologia do modelo e todas as competições disponíveis.",
   "No account required · no ads":"Sem conta · sem anúncios","Take a quick tour":"Fazer um tour rápido","View verified scorecard":"Ver avaliação verificada",
-  "One calm analysis desk.":"Um painel de análise simples e organizado.",
+  "Twelve competitions, one board.":"Doze competições, um só painel.",
   "Personalize your analysis desk.":"Personalize seu painel de análise.",
   "Signal red":"Vermelho de sinal"
 });
 Object.assign(window.MD_I18N.ru,{
-  "Explore every matchup before it starts.":"Изучите каждый матч до его начала.",
-  "Pregame model picks, probability forecasts, matchup analysis, and verified postgame grading.":"Предматчевые прогнозы модели, вероятностные оценки, анализ матчей и проверенная оценка результатов после игры.",
+  "Every prediction, published before kickoff.":"Каждый прогноз публикуется до стартового свистка.",
+  "Every prediction,":"Каждый прогноз,",
+  "published before kickoff.":"опубликованный до стартового свистка.",
+  "The model picks a side before the game, shows what drove the call, and grades itself once the result is in.":"Модель выбирает сторону до игры, показывает основания и сама оценивает себя по итогу.",
   "Soccer":"Футбол","Football":"Американский футбол","Basketball":"Баскетбол","Baseball":"Бейсбол","Hockey":"Хоккей",
   "TODAY'S BOARD":"МАТЧИ СЕГОДНЯ","BOARD READY":"ПАНЕЛЬ ГОТОВА",
-  "One clear read before the game.":"Ясный разбор перед матчем.",
-  "Model probability, market context, and the factors moving each matchup.":"Вероятность модели, рыночный контекст и факторы, влияющие на каждый матч.",
+  "The model's pick on every game today.":"Выбор модели по каждой сегодняшней игре.",
+  "Probability, the market's number beside it, and what's driving the gap.":"Вероятность, рядом число рынка и то, чем объясняется разрыв.",
   "Fresh reads appear as matchups are published.":"Новые разборы появляются после публикации матчей.",
   "Explore the dashboard for completed scorecards, model methodology, and every available competition.":"Откройте панель, чтобы увидеть полные оценки, методологию модели и все доступные турниры.",
   "No account required · no ads":"Без аккаунта · без рекламы","Take a quick tour":"Краткий обзор","View verified scorecard":"Проверенная оценка",
-  "One calm analysis desk.":"Единая спокойная панель аналитики.",
+  "Twelve competitions, one board.":"Двенадцать турниров, одна панель.",
   "Personalize your analysis desk.":"Настройте панель аналитики.",
   "Signal red":"Сигнальный красный"
 });
 
 Object.assign(window.MD_I18N.es,{
 "Matchday orange":"Naranja Matchday","Electric blue":"Azul eléctrico","Pitch green":"Verde césped","Live red":"Rojo en vivo","Night purple":"Morado nocturno","Compact":"Compacta","Normal":"Normal","Spacious":"Espaciosa","Soft glass":"Cristal suave","Flat dark":"Oscuro plano",
-"Changes highlights, buttons and the brand dot.":"Cambia los destacados, los botones y el punto de la marca.","Translates the interface. Match data stays as provided by sources.":"Traduce la interfaz. Los datos deportivos se mantienen tal como los entregan las fuentes.","Compact fits more matches; spacious feels more premium.":"Compacta muestra más partidos; espaciosa ofrece una presentación más amplia.","Flat mode is lighter on older laptops.":"El modo plano consume menos recursos en equipos antiguos.","Selected when the page starts.":"Se abre al iniciar la página."
+"Changes highlights, buttons and the brand dot.":"Cambia los destacados, los botones y el punto de la marca.","Translates the interface. Match data stays as provided by sources.":"Traduce la interfaz. Los datos deportivos se mantienen tal como los entregan las fuentes.","Compact fits more matches on screen; spacious gives each card more room.":"El modo compacto muestra más partidos; el espacioso da más aire a cada tarjeta.","Flat mode is lighter on older laptops.":"El modo plano consume menos recursos en equipos antiguos.","Selected when the page starts.":"Se abre al iniciar la página."
 });
 Object.assign(window.MD_I18N.fr,{
 "Matchday orange":"Orange Matchday","Electric blue":"Bleu électrique","Pitch green":"Vert pelouse","Live red":"Rouge direct","Night purple":"Violet nocturne","Compact":"Compacte","Normal":"Normale","Spacious":"Aérée","Soft glass":"Verre doux","Flat dark":"Sombre uni",
-"Changes highlights, buttons and the brand dot.":"Modifie les éléments mis en avant, les boutons et le point de la marque.","Translates the interface. Match data stays as provided by sources.":"Traduit l’interface. Les données sportives restent telles que fournies par les sources.","Compact fits more matches; spacious feels more premium.":"Le mode compact affiche plus de matchs ; le mode aéré offre plus d’espace.","Flat mode is lighter on older laptops.":"Le mode uni est plus léger sur les anciens ordinateurs.","Selected when the page starts.":"S’ouvre au démarrage de la page."
+"Changes highlights, buttons and the brand dot.":"Modifie les éléments mis en avant, les boutons et le point de la marque.","Translates the interface. Match data stays as provided by sources.":"Traduit l’interface. Les données sportives restent telles que fournies par les sources.","Compact fits more matches on screen; spacious gives each card more room.":"Le mode compact affiche plus de matchs ; le mode spacieux laisse plus d'air à chaque carte.","Flat mode is lighter on older laptops.":"Le mode uni est plus léger sur les anciens ordinateurs.","Selected when the page starts.":"S’ouvre au démarrage de la page."
 });
 Object.assign(window.MD_I18N.de,{
 "Matchday orange":"Matchday-Orange","Electric blue":"Elektrisches Blau","Pitch green":"Rasengrün","Live red":"Live-Rot","Night purple":"Nachtviolett","Compact":"Kompakt","Normal":"Normal","Spacious":"Großzügig","Soft glass":"Sanftes Glas","Flat dark":"Flach dunkel",
-"Changes highlights, buttons and the brand dot.":"Ändert Hervorhebungen, Schaltflächen und den Markenpunkt.","Translates the interface. Match data stays as provided by sources.":"Übersetzt die Oberfläche. Sportdaten bleiben so, wie sie von den Quellen geliefert werden.","Compact fits more matches; spacious feels more premium.":"Kompakt zeigt mehr Spiele; großzügig bietet mehr Raum.","Flat mode is lighter on older laptops.":"Der flache Modus schont ältere Geräte.","Selected when the page starts.":"Wird beim Start der Seite geöffnet."
+"Changes highlights, buttons and the brand dot.":"Ändert Hervorhebungen, Schaltflächen und den Markenpunkt.","Translates the interface. Match data stays as provided by sources.":"Übersetzt die Oberfläche. Sportdaten bleiben so, wie sie von den Quellen geliefert werden.","Compact fits more matches on screen; spacious gives each card more room.":"Kompakt zeigt mehr Spiele; großzügig gibt jeder Karte mehr Raum.","Flat mode is lighter on older laptops.":"Der flache Modus schont ältere Geräte.","Selected when the page starts.":"Wird beim Start der Seite geöffnet."
 });
 Object.assign(window.MD_I18N.pt,{
 "Matchday orange":"Laranja Matchday","Electric blue":"Azul elétrico","Pitch green":"Verde gramado","Live red":"Vermelho ao vivo","Night purple":"Roxo noturno","Compact":"Compacta","Normal":"Normal","Spacious":"Espaçosa","Soft glass":"Vidro suave","Flat dark":"Escuro plano",
-"Changes highlights, buttons and the brand dot.":"Altera destaques, botões e o ponto da marca.","Translates the interface. Match data stays as provided by sources.":"Traduz a interface. Os dados esportivos permanecem como são fornecidos pelas fontes.","Compact fits more matches; spacious feels more premium.":"Compacta mostra mais jogos; espaçosa oferece mais respiro.","Flat mode is lighter on older laptops.":"O modo plano é mais leve em computadores antigos.","Selected when the page starts.":"É aberta ao iniciar a página."
+"Changes highlights, buttons and the brand dot.":"Altera destaques, botões e o ponto da marca.","Translates the interface. Match data stays as provided by sources.":"Traduz a interface. Os dados esportivos permanecem como são fornecidos pelas fontes.","Compact fits more matches on screen; spacious gives each card more room.":"O modo compacto mostra mais jogos; o espaçoso dá mais espaço a cada cartão.","Flat mode is lighter on older laptops.":"O modo plano é mais leve em computadores antigos.","Selected when the page starts.":"É aberta ao iniciar a página."
 });
 Object.assign(window.MD_I18N.ru,{
 "Matchday orange":"Оранжевый Matchday","Electric blue":"Электрический синий","Pitch green":"Зелёный газон","Live red":"Красный live","Night purple":"Ночной фиолетовый","Compact":"Компактно","Normal":"Обычно","Spacious":"Просторно","Soft glass":"Мягкое стекло","Flat dark":"Плоская тёмная",
-"Changes highlights, buttons and the brand dot.":"Меняет акценты, кнопки и точку бренда.","Translates the interface. Match data stays as provided by sources.":"Переводит интерфейс. Спортивные данные остаются в виде, предоставленном источниками.","Compact fits more matches; spacious feels more premium.":"Компактный режим показывает больше матчей, просторный даёт больше воздуха.","Flat mode is lighter on older laptops.":"Плоский режим меньше нагружает старые компьютеры.","Selected when the page starts.":"Открывается при запуске страницы."
+"Changes highlights, buttons and the brand dot.":"Меняет акценты, кнопки и точку бренда.","Translates the interface. Match data stays as provided by sources.":"Переводит интерфейс. Спортивные данные остаются в виде, предоставленном источниками.","Compact fits more matches on screen; spacious gives each card more room.":"Компактный режим показывает больше матчей, просторный даёт больше воздуха.","Flat mode is lighter on older laptops.":"Плоский режим меньше нагружает старые компьютеры.","Selected when the page starts.":"Открывается при запуске страницы."
 });
 
 // Shared dynamic dashboard copy. These are intentionally limited to Matchday's

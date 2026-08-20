@@ -67,7 +67,11 @@ const SPORT_LABELS={wc:'World Cup',ucl:'Champions League',epl:'Premier League',l
 // that isn't there.
 const ALL_SPORT_KEYS=['wc','ucl','epl','laliga','seriea','bundesliga','ligue1','nfl','ncaaf','ncaam','nba','mlb'];
 const FIXTURE_PAGE_SIZE=40;
-let MATCH_VISIBLE=FIXTURE_PAGE_SIZE,RESULT_VISIBLE=FIXTURE_PAGE_SIZE;
+// The model board used to render every pick in one scroll (1,300+ rows on a
+// full slate). Same pager the fixture list already uses, smaller page: a pick
+// row is denser reading than a match card.
+const MODEL_PAGE_SIZE=25;
+let MATCH_VISIBLE=FIXTURE_PAGE_SIZE,RESULT_VISIBLE=FIXTURE_PAGE_SIZE,MODEL_VISIBLE=MODEL_PAGE_SIZE;
 const MLB_FORECAST_PAUSE_MESSAGE='MLB forecasts paused while calibration and starting-pitcher coverage are being fixed.';
 
 function forecastPublicationState(payload,match){
@@ -145,13 +149,13 @@ function stripPastSeasonCompetitionViews(payload,now=new Date()){
 // ---- per-sport sidebar (data-driven, follows the SELECTION) ---------------
 // Each sport declares exactly which views exist for it, in order.
 const NAV_DEF={
-  all:         ['matches','results','advanced','score','community','tree','news','insights','status','updates','customize'],
-  soccer_cup:  ['matches','results','groups','title','edge','advanced','score','bracket','third','tott','community','tree','sandbox','news','insights','status','updates','customize'],
-  soccer_club: ['matches','results','groups','title','edge','advanced','score','bracket','tott','community','tree','sandbox','news','insights','status','updates','customize'],
-  us_sport:    ['matches','results','groups','title','edge','advanced','score','community','tree','sandbox','news','insights','status','updates','customize'],
-  college:     ['matches','results','groups','bracket','title','edge','advanced','score','community','tree','sandbox','news','insights','status','updates','customize'],
-  college_basketball:['matches','results','groups','bracket','title','edge','advanced','score','community','tree','sandbox','news','insights','status','updates','customize'],
-  soccer_league:['matches','results','groups','title','edge','advanced','score','tott','community','tree','sandbox','news','insights','status','updates','customize']
+  all:         ['matches','results','score','community','tree','news','insights','status','updates','customize'],
+  soccer_cup:  ['matches','results','groups','title','edge','score','bracket','third','tott','community','tree','sandbox','news','insights','status','updates','customize'],
+  soccer_club: ['matches','results','groups','title','edge','score','bracket','tott','community','tree','sandbox','news','insights','status','updates','customize'],
+  us_sport:    ['matches','results','groups','title','edge','score','community','tree','sandbox','news','insights','status','updates','customize'],
+  college:     ['matches','results','groups','bracket','title','edge','score','community','tree','sandbox','news','insights','status','updates','customize'],
+  college_basketball:['matches','results','groups','bracket','title','edge','score','community','tree','sandbox','news','insights','status','updates','customize'],
+  soccer_league:['matches','results','groups','title','edge','score','tott','community','tree','sandbox','news','insights','status','updates','customize']
 };
 const SPORT_KIND={'':'all',wc:'soccer_cup',ucl:'soccer_club',epl:'soccer_league',laliga:'soccer_league',seriea:'soccer_league',bundesliga:'soccer_league',ligue1:'soccer_league',nfl:'us_sport',ncaaf:'college',ncaam:'college_basketball',nba:'us_sport',mlb:'us_sport',nhl:'us_sport'};
 function currentSportKey(){const m=(DATA_FILE||'').match(/data_(\w+)\.json/);return m?m[1]:'';}
@@ -186,7 +190,7 @@ function showMatchLoading(){const host=$('#view-matches');if(host)host.innerHTML
 function clearCompetitionViewsForLoad(){
   ['groups','bracket','third'].forEach(view=>{const host=$('#view-'+view);if(host)host.innerHTML='<div class="empty">Loading current-season data…</div>'});
 }
-function changeSport(v){DATA_FILE=v?('data_'+v+'.json'):'';MATCH_VISIBLE=FIXTURE_PAGE_SIZE;RESULT_VISIBLE=FIXTURE_PAGE_SIZE;if(typeof outcomeTreeReset==='function')outcomeTreeReset(false);try{localStorage.setItem('matchday.sport',DATA_FILE)}catch(e){};applySportNav();showMatchLoading();clearCompetitionViewsForLoad();load(true);}
+function changeSport(v){DATA_FILE=v?('data_'+v+'.json'):'';MATCH_VISIBLE=FIXTURE_PAGE_SIZE;RESULT_VISIBLE=FIXTURE_PAGE_SIZE;MODEL_VISIBLE=MODEL_PAGE_SIZE;if(typeof outcomeTreeReset==='function')outcomeTreeReset(false);try{localStorage.setItem('matchday.sport',DATA_FILE)}catch(e){};applySportNav();showMatchLoading();clearCompetitionViewsForLoad();load(true);}
 
 const COLORS={orange:'#ffb02e',blue:'#4cc2ff',green:'#3ad17a',red:'#ff4d5e',purple:'#b16cff'};
 function saveSettings(){localStorage.setItem('matchday.settings',JSON.stringify(SETTINGS))}
@@ -433,7 +437,7 @@ function enterMatchday(targetView='',startWithTour=false){
 
 // ---- guided tour (first-visit walkthrough) --------------------------------
 const TOUR_STEPS=[
-  {target:'#sportSel',title:'Start here',body:'Pick a competition to unlock pregame predictions, model accuracy tracking, brackets and more. "All sports" shows a combined analysis feed.'},
+  {target:'#sportSel',title:'Start here',body:'Pick a competition to see its pregame predictions, accuracy tracking and brackets. "All sports" shows everything in one feed.'},
   {target:'.navbtn[data-v="matches"]',title:'Matches',body:'Every upcoming fixture with the model’s locked pregame pick shown next to the market’s.'},
   {target:'.navbtn[data-v="edge"]',title:'Model',body:'See exactly why the model favors a side — points, form, ratings, injuries and more, broken down factor by factor.'},
   {target:'.navbtn[data-v="score"]',title:'Scorecard',body:'Every locked pick, tracked in public. Nothing gets rewritten after the fact — good calls or bad ones.'},
@@ -590,17 +594,20 @@ function landingHero(){
   // Brier score is unreadable without knowing that lower is better and that 0.25
   // is the do-nothing baseline. The full numbers, favourable or not, stay one
   // click away on the Scorecard, which has the room to give them context.
-  const rec=sc&&sc.graded?`<span class="heroRec"><b>${sc.graded}</b> picks locked pregame and graded</span><span class="heroRec faintline">never edited after the result</span>`:`<span class="heroRec faintline">Model record begins as completed picks are graded</span>`;
+  // Both halves live in one baseline-aligned group: the count is set larger than
+  // the words around it, so centring the two spans as separate flex items lined
+  // up their boxes and left the second line's text visibly riding high.
+  const rec=`<span class="heroRecLine">${sc&&sc.graded?`<span class="heroRec"><b>${sc.graded}</b> picks locked pregame and graded</span><span class="heroRec faintline">never edited after the result</span>`:`<span class="heroRec faintline">Model record begins as completed picks are graded</span>`}</span>`;
   if(slim)return `<div class="heroSlim">${rec}<button class="heroSlimLink" type="button" onclick="setView('score')">Open scorecard <span aria-hidden="true">→</span></button></div>`;
   return `<div class="heroBand">
     <img src="icon-192.png?v=4" class="heroLogo" alt="Matchday" width="192" height="192">
-    <div class="heroTitle">A transparent sports model.</div>
-    <div class="heroSub">Every pick locked before kickoff and graded in public — information anyone can use, with no ads and a fully accountable model.</div>
+    <div class="heroTitle">Every pick, on the record.</div>
+    <div class="heroSub">Locked before kickoff, graded after the final whistle, never edited in between. Free, and no ads.</div>
     <div class="heroRow">${rec}</div>
     ${heroMarquee()}
     <div class="heroActions">
       <button class="btmbtn heroBtn" onclick="heroDismiss()">Open the analysis</button>
-      <button class="btmbtn heroBtn ghost" onclick="heroDismiss();setView('community')">Think you can beat the model?</button>
+      <button class="btmbtn heroBtn ghost" onclick="heroDismiss();setView('community')">Play against the model</button>
     </div>
   </div>`;
 }
@@ -765,6 +772,9 @@ const SYSTEM_UPDATES=Array.isArray(window.SYSTEM_UPDATES)?window.SYSTEM_UPDATES:
 // which is exactly what had happened: the strip said 0728B while the Updates
 // page said 0730A.
 function currentBuild(){return String(SYSTEM_UPDATES[0]?.date||'').replace(/^Build\s*/i,'').trim()||'dev';}
+const UPDATES_PAGE_SIZE=10;
+let UPDATES_EXPANDED=false;
+function toggleUpdatesHistory(){UPDATES_EXPANDED=!UPDATES_EXPANDED;renderSystemUpdates()}
 function markUpdatesRead(){localStorage.setItem('matchday.updates.lastSeen',new Date().toISOString());renderSystemUpdates()}
 function renderSystemUpdates(){
   const host=$('#view-updates');if(!host)return;
@@ -777,11 +787,17 @@ function renderSystemUpdates(){
   const actions=el('div','updateActions'),mark=el('button','miniBtn','Mark as read'),status=el('button','miniBtn','Open Status');
   mark.type=status.type='button';mark.addEventListener('click',markUpdatesRead);status.addEventListener('click',()=>setView('status'));actions.append(mark,status);build.append(actions);hero.append(intro,build);
   const timeline=el('section','timeline'),head=el('div','timelineHead');head.append(el('h3','','Release notes'),el('span','',`${SYSTEM_UPDATES.length} entries`));timeline.append(head);
-  SYSTEM_UPDATES.forEach(update=>{const article=el('article','updateItem'),body=el('div'),title=el('div','updateTitle'),items=el('ul');title.append(el('span','',update?.title??''),el('span','updateBadge',update?.tag??''));(Array.isArray(update?.items)?update.items:[]).forEach(item=>items.append(el('li','',item)));body.append(title,items);article.append(el('div','updateDate',update?.date??''),body);timeline.append(article)});
+  const visibleUpdates=UPDATES_EXPANDED?SYSTEM_UPDATES:SYSTEM_UPDATES.slice(0,UPDATES_PAGE_SIZE);
+  visibleUpdates.forEach(update=>{const article=el('article','updateItem'),body=el('div'),title=el('div','updateTitle'),items=el('ul');title.append(el('span','',update?.title??''),el('span','updateBadge',update?.tag??''));(Array.isArray(update?.items)?update.items:[]).forEach(item=>items.append(el('li','',item)));body.append(title,items);article.append(el('div','updateDate',update?.date??''),body);timeline.append(article)});
+  const hiddenCount=SYSTEM_UPDATES.length-visibleUpdates.length;
+  if(hiddenCount>0||UPDATES_EXPANDED){const pager=el('div','fixturePager');
+    pager.append(el('span','',`Showing ${visibleUpdates.length} of ${SYSTEM_UPDATES.length} releases`));
+    const more=el('button','actionbtn',UPDATES_EXPANDED?'Show recent only':`Older releases (${hiddenCount})`);
+    more.type='button';more.addEventListener('click',toggleUpdatesHistory);pager.append(more);timeline.append(pager)}
   shell.append(hero,timeline);host.replaceChildren(shell);
 }
 
-function renderStatus(){const host=$('#view-status'),M=DATA.matches||[],st=deriveStandings(),third=getThirdRace(),fresh=DATA.source_freshness||{};const up=M.filter(m=>m.status==='UPCOMING').length,fin=M.filter(m=>m.status==='FINISHED').length;const next=M.filter(isVisibleUpcoming).sort((a,b)=>(a.kickoff||'').localeCompare(b.kickoff||''))[0];host.innerHTML=`<div class="vhead">App Status</div><div class="hint" style="margin-bottom:10px">menu profile: <b>${navProfile()}</b> · sport file: <b>${DATA_FILE||'all (merged)'}</b></div><div class="status-grid"><div class="statuscard ${LAST_OK?'ok':'warn'}"><span class="slbl">Data file</span><div class="sval">${LAST_OK?'loaded':'not loaded'}</div><div class="hint">${LAST_ERROR?esc(LAST_ERROR):'Loaded'}</div></div><div class="statuscard info"><span class="slbl">Source</span><div class="sval">${esc(DATA.source_note||'unknown')}</div><div class="hint">${esc(fresh.primary_provider||DATA.standings_mode||'')}</div></div><div class="statuscard ${fresh.state==='fresh'?'ok':fresh.state?'warn':'info'}"><span class="slbl">Source freshness</span><div class="sval">${esc(fresh.state||'legacy snapshot')}</div><div class="hint">${esc(fresh.note||DATA.updated||'No source-age receipt')}</div></div><div class="statuscard info"><span class="slbl">Last successful</span><div class="sval">${fresh.last_successful_at?ago(fresh.last_successful_at):DATA.updated?ago(DATA.updated):'unknown'}</div><div class="hint">${esc(fresh.last_successful_at||DATA.updated||'—')}</div></div><div class="statuscard ${(DATA.quota_blocked_providers||[]).length?'warn':'ok'}"><span class="slbl">Provider quota</span><div class="sval">${(DATA.quota_blocked_providers||[]).length?'limited':'ok'}</div><div class="hint">${(DATA.quota_blocked_providers||[]).length?`${esc((DATA.quota_blocked_providers||[]).join(', '))} hit its safety reserve this run`:'no provider hit its safety reserve this run'}</div></div><div class="statuscard ${DATA.fixture_count_check?.anomaly?'warn':'ok'}"><span class="slbl">Fixture count</span><div class="sval">${DATA.fixture_count_check?.current??'—'}</div><div class="hint">${DATA.fixture_count_check?.anomaly?`well below the recent average of ${DATA.fixture_count_check.trailing_avg} — possible partial slate`:DATA.fixture_count_check?.trailing_avg!=null?`recent average ${DATA.fixture_count_check.trailing_avg}`:'building trailing history'}</div></div><div class="statuscard info"><span class="slbl">Matches</span><div class="sval">${M.length}</div><div class="hint">${up} upcoming · ${fin} final</div></div><div class="statuscard info"><span class="slbl">Groups</span><div class="sval">${st.length}</div><div class="hint">${third.length} third-place teams tracked</div></div><div class="statuscard info"><span class="slbl">News Items</span><div class="sval">${(DATA.news||[]).length}</div><div class="hint">${newsSources().filter(s=>s!=='all').join(' · ')}</div></div></div><div class="btnline"><button class="actionbtn" onclick="load(true)">Reload Data Now</button><button class="actionbtn" onclick="setView('groups')">Open Groups</button><button class="actionbtn" onclick="setView('third')">Open Thirds</button><button class="actionbtn" onclick="setView('updates')">System Updates</button></div>`}
+function renderStatus(){const host=$('#view-status'),M=DATA.matches||[],st=deriveStandings(),third=getThirdRace(),fresh=DATA.source_freshness||{};const up=M.filter(m=>m.status==='UPCOMING').length,fin=M.filter(m=>m.status==='FINISHED').length;const next=M.filter(isVisibleUpcoming).sort((a,b)=>(a.kickoff||'').localeCompare(b.kickoff||''))[0];host.innerHTML=`<div class="vhead">App Status</div><div class="hint" style="margin-bottom:10px">menu profile: <b>${esc(navProfile())}</b> · sport file: <b>${esc(DATA_FILE||'all (merged)')}</b></div><div class="status-grid"><div class="statuscard ${LAST_OK?'ok':'warn'}"><span class="slbl">Data file</span><div class="sval">${LAST_OK?'loaded':'not loaded'}</div><div class="hint">${LAST_ERROR?esc(LAST_ERROR):'Loaded'}</div></div><div class="statuscard info"><span class="slbl">Source</span><div class="sval">${esc(DATA.source_note||'unknown')}</div><div class="hint">${esc(fresh.primary_provider||DATA.standings_mode||'')}</div></div><div class="statuscard ${fresh.state==='fresh'?'ok':fresh.state?'warn':'info'}"><span class="slbl">Source freshness</span><div class="sval">${esc(fresh.state||'legacy snapshot')}</div><div class="hint">${esc(fresh.note||DATA.updated||'No source-age receipt')}</div></div><div class="statuscard info"><span class="slbl">Last successful</span><div class="sval">${fresh.last_successful_at?ago(fresh.last_successful_at):DATA.updated?ago(DATA.updated):'unknown'}</div><div class="hint">${esc(fresh.last_successful_at||DATA.updated||'—')}</div></div><div class="statuscard ${(DATA.quota_blocked_providers||[]).length?'warn':'ok'}"><span class="slbl">Provider quota</span><div class="sval">${(DATA.quota_blocked_providers||[]).length?'limited':'ok'}</div><div class="hint">${(DATA.quota_blocked_providers||[]).length?`${esc((DATA.quota_blocked_providers||[]).join(', '))} hit its safety reserve this run`:'no provider hit its safety reserve this run'}</div></div><div class="statuscard ${DATA.fixture_count_check?.anomaly?'warn':'ok'}"><span class="slbl">Fixture count</span><div class="sval">${DATA.fixture_count_check?.current??'—'}</div><div class="hint">${DATA.fixture_count_check?.anomaly?`well below the recent average of ${DATA.fixture_count_check.trailing_avg} — possible partial slate`:DATA.fixture_count_check?.trailing_avg!=null?`recent average ${DATA.fixture_count_check.trailing_avg}`:'building trailing history'}</div></div><div class="statuscard info"><span class="slbl">Matches</span><div class="sval">${M.length}</div><div class="hint">${up} upcoming · ${fin} final</div></div><div class="statuscard info"><span class="slbl">Groups</span><div class="sval">${st.length}</div><div class="hint">${third.length} third-place teams tracked</div></div><div class="statuscard info"><span class="slbl">News Items</span><div class="sval">${(DATA.news||[]).length}</div><div class="hint">${newsSources().filter(s=>s!=='all').join(' · ')}</div></div></div><div class="btnline"><button class="actionbtn" onclick="load(true)">Reload Data Now</button><button class="actionbtn" onclick="setView('groups')">Open Groups</button><button class="actionbtn" onclick="setView('third')">Open Thirds</button><button class="actionbtn" onclick="setView('updates')">System Updates</button></div>`}
 function lopt(v,label,cur){return `<option value="${v}" ${v===cur?'selected':''}>${label}</option>`}
 function opt(v,label,cur){return `<option value="${v}" ${String(cur)===String(v)?'selected':''}>${label}</option>`}function checked(v){return v?'checked':''}
 

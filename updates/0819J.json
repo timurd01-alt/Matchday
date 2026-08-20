@@ -1,0 +1,12 @@
+{
+  "rank": 167,
+  "date": "Build 0819J",
+  "tag": "UI",
+  "title": "A paused-baseball notice on every other sport",
+  "items": [
+    "The banner explaining that MLB forecasts are paused was appearing above the all-sports board, where eleven other competitions are publishing normally, and was missing from the MLB board it describes. It read as though the whole site had stopped forecasting. It now appears on the MLB board and nowhere else; individual paused baseball fixtures still carry their own notice wherever they are listed.",
+    "Pregame context on a fixture that has not reached its lock window no longer lists every unconfirmed input as a separate 'missing' row under a red warning. For a match two days out, lineups and injury reports do not exist yet — that is the schedule working, not a fault. The panel now shows what has been confirmed so far and a single quiet line naming what is still to arrive and roughly when. The full input-by-input receipt and the pre-lock warning still appear inside the lock window, where a missing input actually blocks the pick.",
+    "A fixture published before Matchday recorded its pregame inputs now says so in plain language instead of showing an internal note about rebuilding the snapshot.",
+    "Removed the Advanced tab. It was built to surface season leaders and box scores, but no competition currently supplies either — on five of six sports it rendered a heading and an apology, and its one populated panel was already shown on the Forecast board. The sidebar also carried two separate links to the same content hub; one is gone."
+  ]
+}
