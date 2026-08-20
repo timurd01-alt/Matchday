@@ -25,11 +25,14 @@ KNOWN_SECRET_PATTERNS = [
     ("JWT", re.compile(r"\beyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\b")),
     ("credential URL", re.compile(r"\b(?:postgres(?:ql)?|mysql|mongodb(?:\+srv)?):\/\/[^\s:@/]+:[^\s@/]+@", re.I)),
 ]
+ASSIGNMENT_LABEL = "literal credential assignment"
 ASSIGNMENT = re.compile(
     r"\b([A-Z][A-Z0-9_]*(?:KEY|TOKEN|SECRET|PASSWORD|DATABASE_URL))\s*[:=]\s*['\"]([^'\"\r\n]+)['\"]"
 )
 SAFE_VALUE = re.compile(r"^(?:$|PASTE_|YOUR_|EXAMPLE|TEST[-_]|SHARED[-_]|\*\*\*|\$\{|process\.env|os\.environ)", re.I)
-PRIVATE_NAMES = {"config_keys.py", ".env", ".env.local", ".env.production"}
+# Names of the local-only configuration files; they must stay untracked and
+# ignored. Only the file names appear in the report -- never their contents.
+UNTRACKED_CONFIG_FILES = ("config_keys.py", ".env", ".env.local", ".env.production")
 
 
 def candidate_files() -> list[pathlib.Path]:
@@ -45,7 +48,14 @@ def candidate_files() -> list[pathlib.Path]:
                 if path.is_file() and ".git" not in path.parts]
 
 
-def scan(path: pathlib.Path) -> list[tuple[int, str]]:
+# Every label the report can print, addressed by index. scan() hands back
+# indexes rather than text so that nothing read out of a scanned file -- not
+# even a matched substring -- can be carried into the printed output.
+LABELS = tuple(label for label, _ in KNOWN_SECRET_PATTERNS) + (ASSIGNMENT_LABEL,)
+ASSIGNMENT_LABEL_ID = len(LABELS) - 1
+
+
+def scan(path: pathlib.Path) -> list[tuple[int, int]]:
     # This scanner necessarily contains literal examples of the signatures it
     # detects; scanning its own definitions would be a guaranteed false alarm.
     if path.name == pathlib.Path(__file__).name:
@@ -61,13 +71,13 @@ def scan(path: pathlib.Path) -> list[tuple[int, str]]:
     text = raw.decode("utf-8", "ignore")
     findings = []
     for line_no, line in enumerate(text.splitlines(), 1):
-        for label, pattern in KNOWN_SECRET_PATTERNS:
+        for label_id, (_, pattern) in enumerate(KNOWN_SECRET_PATTERNS):
             if pattern.search(line):
-                findings.append((line_no, label))
+                findings.append((line_no, label_id))
         for match in ASSIGNMENT.finditer(line):
             value = match.group(2).strip()
             if len(value) >= 8 and not SAFE_VALUE.search(value):
-                findings.append((line_no, "literal credential assignment"))
+                findings.append((line_no, ASSIGNMENT_LABEL_ID))
     return findings
 
 
@@ -81,15 +91,15 @@ def main() -> int:
     problems, warnings = [], []
     files = candidate_files()
     for path in files:
-        for line_no, label in scan(path):
-            problems.append(f"{path.as_posix()}:{line_no} — possible {label}")
+        for line_no, label_id in scan(path):
+            problems.append(f"{path.as_posix()}:{int(line_no)} — possible {LABELS[label_id]}")
 
     tracked = set()
     try:
         tracked = set(subprocess.check_output(["git", "ls-files"], text=True).splitlines())
     except Exception:
         warnings.append("Could not inspect Git tracking state.")
-    for name in PRIVATE_NAMES:
+    for name in UNTRACKED_CONFIG_FILES:
         if name in tracked:
             problems.append(f"{name} is tracked by Git")
         if pathlib.Path(name).exists() and not ignored(name):

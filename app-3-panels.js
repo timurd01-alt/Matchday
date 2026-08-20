@@ -36,7 +36,7 @@ h+=`<div class="seclbl" style="margin-top:16px">Pick log</div>`+(sc.picks||[]).m
 h+=`<div class="edisc">Verified pregame picks are the official record. Late or unverifiable legacy picks are excluded from accuracy. In knockout games, model picks are graded by who advances after extra time or penalties. Displayed scores remain factual and unchanged; market comparisons follow each market's settlement rules. Use the information however works for you; probabilities remain estimates, and Matchday has no stake in any outcome.</div>`;
 host.innerHTML=h}
 function highlightFavoriteRows(){if(!favoriteTeam())return;document.querySelectorAll('.gtable .gteam').forEach(cell=>{if(teamKey(cell.textContent).includes(teamKey(favoriteTeam())))cell.closest('tr')?.classList.add('favoriteTeamRow')})}
-function renderCurrent(){captureSignalsIfFresh();({matches:renderMatches,results:renderResults,tott:renderTOTT,groups:renderStandings,title:renderTitle,advanced:renderAdvanced,edge:renderEdge,score:renderScore,bracket:renderBracket,third:renderThird,news:renderNews,insights:renderInsights,status:renderStatus,updates:renderSystemUpdates,community:renderCommunity,tree:renderOutcomeTree,sandbox:renderSandbox,customize:renderCustomize}[VIEW]||renderMatches)();renderWelcome();highlightFavoriteRows();applyStaticI18n()}
+function renderCurrent(){captureSignalsIfFresh();({matches:renderMatches,results:renderResults,tott:renderTOTT,groups:renderStandings,title:renderTitle,edge:renderEdge,score:renderScore,bracket:renderBracket,third:renderThird,news:renderNews,insights:renderInsights,status:renderStatus,updates:renderSystemUpdates,community:renderCommunity,tree:renderOutcomeTree,sandbox:renderSandbox,customize:renderCustomize}[VIEW]||renderMatches)();renderWelcome();highlightFavoriteRows();applyStaticI18n()}
 function renderStrip(){const M=DATA.matches||[],next=M.filter(isVisibleUpcoming).sort((a,b)=>(a.kickoff||'').localeCompare(b.kickoff||''))[0];const parts=[];
 const isSample=(DATA.source_note||'').toLowerCase().includes('sample');
 const freshness=DATA.source_freshness||{},fallback=freshness.state==='fallback';
@@ -112,7 +112,7 @@ const REVALIDATE={cache:'no-cache'};
 // Views that need more than the landing board holds -- full season history, the
 // research detail behind a pick, standings. Opening one escalates the merged
 // "All sports" view from the summary payload to the real per-sport files.
-const VIEWS_NEEDING_FULL_DATA=new Set(['results','groups','title','advanced','edge','score','bracket','third','tott','tree','sandbox']);
+const VIEWS_NEEDING_FULL_DATA=new Set(['results','groups','title','edge','score','bracket','third','tott','tree','sandbox']);
 let ALL_SPORTS_FULL=false;
 function allSportsNeedsFull(){return ALL_SPORTS_FULL||VIEWS_NEEDING_FULL_DATA.has(VIEW)}
 // Escalate on demand: called when a visitor leaves the board or opens a match,
@@ -165,7 +165,14 @@ async function load(manual=false){if(LOAD_TIMER){clearTimeout(LOAD_TIMER);LOAD_T
     DATA=Object.assign({},base,{matches:merged,news:news,updated:latest,competition:'All sports',comp_key:'ALL',standings:[],third_race:[],scorers:[],leaders:{},scorecard:aggregateScorecards(results.some(Boolean)?results:[base]),title_by_sport:titleBySport});
   } else {
     const r=await fetch(DATA_FILE,REVALIDATE);if(!r.ok)throw new Error('HTTP '+r.status);DATA=stripPastSeasonCompetitionViews(await r.json());applyForecastPublicationPauses(DATA);
-  }DATA.news=(DATA.news||[]).filter(isFreshNews).sort((a,b)=>newsTime(b)-newsTime(a));BYID={};(DATA.matches||[]).forEach(m=>BYID[m.id]=m);LAST_OK=true;LAST_ERROR='';const cn=$('#compName');if(cn)cn.textContent=DATA.competition?' · '+DATA.competition:'';const tb=document.querySelector('.navbtn[data-v="third"]');if(tb)tb.style.display=(DATA.third_race&&DATA.third_race.length)?'':'none';const gb2=document.querySelector('.navbtn[data-v="groups"]');if(gb2)gb2.style.display=(DATA.standings&&DATA.standings.length)?'':'none';const paused=(DATA.matches||[]).some(isMlbForecastPaused);$('#banner').innerHTML=paused?`<div class="marketBanner"><b>Forecast paused.</b> ${esc(MLB_FORECAST_PAUSE_MESSAGE)} Market odds remain available where supplied.</div>`:DATA.markets_quota_out?`<div class="marketBanner"><b>Market odds temporarily unavailable.</b> Our monthly betting-market data quota is used up, so market comparisons are paused. The model's own predictions still work normally — market lines return when the quota resets.</div>`:'';applySportNav();renderStrip();renderInsight();renderCurrent();applyStaticI18n();renderAlerts()}catch(e){console.error(e);applySportNav();
+  }DATA.news=(DATA.news||[]).filter(isFreshNews).sort((a,b)=>newsTime(b)-newsTime(a));BYID={};(DATA.matches||[]).forEach(m=>BYID[m.id]=m);LAST_OK=true;LAST_ERROR='';const cn=$('#compName');if(cn)cn.textContent=DATA.competition?' · '+DATA.competition:'';const tb=document.querySelector('.navbtn[data-v="third"]');if(tb)tb.style.display=(DATA.third_race&&DATA.third_race.length)?'':'none';const gb2=document.querySelector('.navbtn[data-v="groups"]');if(gb2)gb2.style.display=(DATA.standings&&DATA.standings.length)?'':'none';// .some() passes (element,index): the index landed on isMlbForecastPaused's
+  // `payload` parameter, so the competition check read match._comp, which only
+  // the merged build sets -- the banner fired on every board except MLB's own.
+  // Scoped to the MLB board as well: in the merged "All sports" view MLB's
+  // fixtures sit alongside eleven other competitions, and announcing "Forecast
+  // paused" above all of them read as the whole site being down. Paused MLB
+  // cards still carry their own pause shell there.
+  const paused=String(DATA.comp_key||'').toUpperCase()==='MLB'&&(DATA.matches||[]).some(m=>isMlbForecastPaused(m));$('#banner').innerHTML=paused?`<div class="marketBanner"><b>Forecast paused.</b> ${esc(MLB_FORECAST_PAUSE_MESSAGE)} Market odds remain available where supplied.</div>`:DATA.markets_quota_out?`<div class="marketBanner"><b>Market odds temporarily unavailable.</b> Our monthly betting-market data quota is used up, so market comparisons are paused. The model's own predictions still work normally — market lines return when the quota resets.</div>`:'';applySportNav();renderStrip();renderInsight();renderCurrent();applyStaticI18n();renderAlerts()}catch(e){console.error(e);applySportNav();
   const sel=currentSportKey();
   if(sel&&(!DATA||((DATA.comp_key||'').toLowerCase()!==sel))){
     DATA={matches:[],news:[],standings:[],third_race:[],bracket:null,scorecard:null,title_odds:[],scorers:[],team_of_tournament:null,
@@ -619,11 +626,24 @@ function matchStory(m){const pr=m.prediction;if(!pr)return '';
   return `<div class="storyCard"><div class="storyTag">Match Story</div><p class="storyLead">${lead}</p>${(bullets.length||goals)?`<ul class="storyWhy">${bullets.join('')}${goals}</ul>`:''}</div>`;}
 function pregameContextPanel(m){
   const ctx=m.pregame_context||m.prediction?.lock_readiness;
-  if(!ctx)return `<div class="readCard pregameContextCard"><div class="seclbl">Pregame context</div><div class="emptyStats"><b>Readiness receipt unavailable</b><span>This published snapshot predates pregame-context tracking and must be rebuilt.</span></div></div>`;
+  if(!ctx)return `<div class="readCard pregameContextCard"><div class="seclbl">Pregame context</div><div class="emptyStats"><b>No readiness receipt for this fixture</b><span>This forecast was published before Matchday started recording which pregame inputs it had. The pick still stands as locked; only the receipt is missing.</span></div></div>`;
   const labels={market:'market',injuries:'injuries',lineups:'lineups',weather:'weather',venue:'venue',starting_pitchers:'starting pitchers',bullpen:'bullpen availability',rotation:'rotation',key_players:'QB / key players',starting_goalies:'starting goalies'};
   const state=m.prediction?.publication_state||ctx.phase||'preliminary';
   const stateLabel=state==='locked'?'Locked forecast':state==='lock_candidate'?'Inside lock window':'Preliminary forecast';
-  const rows=Object.entries(ctx.inputs||{}).map(([key,value])=>`<div class="factorRow ${value==='confirmed'?'pos':'neu'}"><span class="fName">${esc(labels[key]||key)}</span><span class="fVal">${esc(value)}</span></div>`).join('');
+  const inWindow=state==='locked'||state==='lock_candidate';
+  // Outside the lock window an unconfirmed input is the schedule working, not
+  // a fault -- lineups for a fixture two days out have not been named yet. The
+  // panel used to render one grey "missing" row per input plus a red "Needed
+  // before lock" alert on every such fixture, which is every soccer and
+  // college fixture on the board, so a normal pregame card read as a broken
+  // one. The full receipt is kept for inside the window, where a missing input
+  // genuinely blocks the lock.
+  const inputPairs=Object.entries(ctx.inputs||{});
+  const confirmedPairs=inputPairs.filter(([,value])=>String(value)==='confirmed');
+  const pendingPairs=inputPairs.filter(([,value])=>String(value)!=='confirmed');
+  const rows=(inWindow?inputPairs:confirmedPairs).map(([key,value])=>`<div class="factorRow ${value==='confirmed'?'pos':'neu'}"><span class="fName">${esc(labels[key]||key)}</span><span class="fVal">${esc(value)}</span></div>`).join('');
+  const lead=Number(ctx.lead_time_hours);
+  const pendingLine=(!inWindow&&pendingPairs.length)?`<div class="contextPending"><b>Still to arrive</b><span>${pendingPairs.map(([key])=>esc(labels[key]||key)).join(' · ')}</span><small>${lead>0?`Kickoff is ${lead>=48?Math.round(lead/24)+' days':Math.round(lead)+'h'} away — these confirm closer to it.`:'These confirm closer to kickoff.'}</small></div>`:'';
   const pitchers=m.personnel?.starting_pitchers||{};
   const starterNames=['home','away'].map(side=>pitchers[side]?.name).filter(Boolean);
   const marketHitters=m.personnel?.market_listed_hitters||{};
@@ -650,13 +670,13 @@ function pregameContextPanel(m){
   const missing=(ctx.missing_critical||[]).map(k=>labels[k]||k);
   const comp=String(m?._comp||DATA.comp_key||'').toUpperCase();
   const soccer=['WC','UCL','EPL','LALIGA','SERIEA','BUNDESLIGA','LIGUE1'].includes(comp);
-  if(soccer&&ctx.inputs?.injuries==='missing')detailNotes.push('<div class="contextNote contextNoteWide"><b>Update schedule</b><span>Injuries inside 72h · lineups inside 2h</span></div>');
+  if(soccer&&inWindow&&ctx.inputs?.injuries==='missing')detailNotes.push('<div class="contextNote contextNoteWide"><b>Update schedule</b><span>Injuries inside 72h · lineups inside 2h</span></div>');
   const bullpenBlock=(bullpen.home||bullpen.away)?(()=>{
     const sideCard=side=>{const x=bullpen[side]||{},team=side==='home'?m.home:m.away,status=String(x.status||'unknown').toLowerCase(),cls=status==='elevated'?'warn':status==='normal'?'ok':'unknown';return `<div class="bullpenSide ${cls}"><div class="bullpenSideHead"><b>${esc(team?.code||team?.name||side)}</b><span>${esc(status)}</span></div><div class="bullpenMetrics"><div><strong>${esc(x.games_last_72h??'—')}</strong><small>games / 72h</small></div><div><strong>${x.hours_since_last_game!=null?esc(x.hours_since_last_game)+'h':'—'}</strong><small>since last game</small></div></div></div>`};
     return `<section class="contextSection"><div class="contextSectionHead"><span>Bullpen workload</span><small>Schedule estimate</small></div><div class="bullpenGrid">${sideCard('home')}${sideCard('away')}</div><p class="contextSource">Team rest only · individual reliever usage unavailable</p></section>`;
   })():'';
-  const missingBlock=missing.length?`<div class="contextAlert"><span aria-hidden="true">!</span><div><b>Needed before lock</b><p>${missing.map(x=>esc(x)).join(' · ')}</p></div></div>`:'';
-  return `<div class="readCard pregameContextCard"><div class="seclbl">Pregame context</div><div class="pick insightPick ${state==='locked'?'':'gate'}"><span class="pl">State</span><span class="pn">${esc(stateLabel)}</span><span class="pc">${esc(ctx.coverage_pct??0)}%</span><span class="pnote">input coverage · locks on the first successful refresh inside the ${esc(ctx.lock_window_hours??2)}h pregame window</span></div><div class="factorRows contextFactorRows">${rows}</div><div class="contextDetails">${bullpenBlock}${detailNotes.length?`<div class="contextNoteGrid">${detailNotes.join('')}</div>`:''}${missingBlock}</div><div class="contextResearch"><span>Research-only</span><p>New personnel and venue inputs are tracked, but do not change the model yet.</p></div></div>`;
+  const missingBlock=(inWindow&&missing.length)?`<div class="contextAlert"><span aria-hidden="true">!</span><div><b>Needed before lock</b><p>${missing.map(x=>esc(x)).join(' · ')}</p></div></div>`:'';
+  return `<div class="readCard pregameContextCard"><div class="seclbl">Pregame context</div><div class="pick insightPick ${state==='locked'?'':'gate'}"><span class="pl">State</span><span class="pn">${esc(stateLabel)}</span><span class="pc">${esc(ctx.coverage_pct??0)}%</span><span class="pnote">${inWindow?`input coverage · locks on the first successful refresh inside the ${esc(ctx.lock_window_hours??2)}h pregame window`:`input coverage so far · the pick locks inside the ${esc(ctx.lock_window_hours??2)}h window before kickoff`}</span></div>${rows?`<div class="factorRows contextFactorRows">${rows}</div>`:''}${pendingLine}<div class="contextDetails">${bullpenBlock}${detailNotes.length?`<div class="contextNoteGrid">${detailNotes.join('')}</div>`:''}${missingBlock}</div><div class="contextResearch"><span>Research-only</span><p>New personnel and venue inputs are tracked, but do not change the model yet.</p></div></div>`;
 }
 function details(m){
   if(isMlbForecastPaused(m))return `<div class="detailGrid v4Detail">${forecastPauseHTML(m)}<div class="detailTop"><div class="readCard forecastMarketCard">${marketPanel(m)}</div></div><div class="detailLow">${statsPanel(m)}${lineupsPanel(m)}</div></div>`;
@@ -693,25 +713,6 @@ function _v13LeaderPanel(sc){
   if(sc.length)return `<section class="forecastPanel"><div class="forecastPanelHead"><h3>Scoring leaders</h3><span>goals & assists</span></div><div class="scorerList">${_v4ScorerRows(sc)}</div></section>`;
   return '';
 }
-function _v4BoxScoreRows(){
-  const M=(DATA.matches||[]).filter(m=>m.stats_extra&&(m.status==='LIVE'||m.status==='FINISHED')).sort((a,b)=>(b.kickoff||'').localeCompare(a.kickoff||'')).slice(0,10);
-  if(!M.length)return '';
-  const stat=(label,hv,av)=>`<div class="statMetric"><div class="val home">${esc(hv??'\u2014')}</div><div class="mid"><div class="lab"><span>${esc(label)}</span></div></div><div class="val away">${esc(av??'\u2014')}</div></div>`;
-  const rows=M.map(m=>{const hs=m.stats_extra.home||{},as=m.stats_extra.away||{};
-    return `<div class="forecastPanel" style="margin-bottom:10px"><div class="forecastPanelHead"><h3>${esc(m.home?.code||m.home?.name||'H')} v ${esc(m.away?.code||m.away?.name||'A')}</h3><span>${esc(m.status||'')} \u00b7 ${esc(m.stage||'')}</span></div><div style="padding:12px"><div class="statsBoard">${stat('Shots',hs.shots,as.shots)}${stat('Shots on target',hs.shots_on_target,as.shots_on_target)}${stat('Possession',hs.possession,as.possession)}${stat('Corners',hs.corners,as.corners)}${stat('Fouls',hs.fouls,as.fouls)}${stat('Cards',(Number(hs.yellow_cards)||0)+(Number(hs.red_cards)||0)*2||null,(Number(as.yellow_cards)||0)+(Number(as.red_cards)||0)*2||null)}</div></div></div>`;
-  }).join('');
-  return `<div class="seclbl" style="margin-top:18px">Recent box scores</div>${rows}`;
-}
-function renderAdvanced(){
-  const host=$('#view-advanced'),sc=DATA.scorers||[];
-  const board=DATA.leaders||{};
-  const hasLeaders=(board.categories||[]).length>0;
-  let html=`<div class="forecastShell"><div class="forecastHero"><div><h2>Advanced metrics</h2><p>Season stat leaders and real per-match box-score data, pulled into one place instead of being buried inside Forecast/Model. Offense and defense both, wherever the underlying provider supplies it.</p></div></div>`;
-  html+=hasLeaders||sc.length?_v13LeaderPanel(sc):'<div class="emptyForecast">No season-leader data yet for this sport/competition. Check back once the season\u2019s underway or the provider publishes it.</div>';
-  html+=_v4BoxScoreRows();
-  html+='</div>';
-  host.innerHTML=html;
-}
 function _v4MatchSnapshots(){
   const M=(DATA.matches||[]).filter(m=>m.status!=='FINISHED'&&!isStaleUpcoming(m)&&(m.markets?.['1x2']||m.prediction)).sort((a,b)=>(a.kickoff||'').localeCompare(b.kickoff||'')).slice(0,8);
   if(!M.length)return '<div class="emptyForecast">No upcoming match snapshots yet.</div>';
@@ -726,14 +727,14 @@ function _v4AdvancementTable(adv){
 function renderTitle(){
   const t=DATA.title_odds||[],adv=DATA.advancement||[],sc=DATA.scorers||[],upsets=_v4UpsetRows();
   const upcoming=(DATA.matches||[]).filter(m=>m.status!=='FINISHED'&&!isStaleUpcoming(m)).length;
-  let html=`<div class="forecastShell"><div class="marketBanner"><b>Still calibrating.</b> A lot of Matchday is still actively being built, and the model currently runs on free-tier data access -- so some predictions won\u2019t be as sharp as they could be yet. Treat these forecasts as a testing ground, not a finished read. As we tune what we have and can justify upgrading to better data sources, accuracy should keep improving -- real feedback from people using this is what shapes which upgrades happen next.</div><div class="forecastHero"><div><h2>Forecast board</h2><p>A cleaner view for tournament probabilities, upset risk, advancement paths, and scorer races. It avoids cramped rows and keeps the board focused on sports analytics rather than betting prompts.</p></div><div class="forecastKpis"><div class="forecastKpi"><span>Upcoming</span><b>${upcoming}</b></div><div class="forecastKpi"><span>Upset watch</span><b>${upsets.length}</b></div><div class="forecastKpi"><span>Title teams</span><b>${t.length||'—'}</b></div></div></div>`;
+  let html=`<div class="forecastShell"><div class="marketBanner"><b>Still calibrating.</b> Much of Matchday is still being built, and the model runs on free-tier data for now, so some of these forecasts are rougher than they will be. Treat this board as a testing ground rather than a finished read. Accuracy should improve as the data sources and tuning improve.</div><div class="forecastHero"><div><h2>Forecast board</h2><p>Tournament probabilities, upset risk, advancement paths, and scorer races, in one place.</p></div><div class="forecastKpis"><div class="forecastKpi"><span>Upcoming</span><b>${upcoming}</b></div><div class="forecastKpi"><span>Upset watch</span><b>${upsets.length}</b></div><div class="forecastKpi"><span>Title teams</span><b>${t.length||'—'}</b></div></div></div>`;
   const leaderPanel=_v13LeaderPanel(sc);
   html+=`<div class="forecastGrid ${leaderPanel?'':'single'}"><section class="forecastPanel"><div class="forecastPanelHead"><h3>Upset radar</h3><span>${upsets.length} matches</span></div><div class="upsetList">${upsets.length?upsets.map(x=>`<div class="upsetRow" onclick="openMatchModal('${esc(String(x.m.id||''))}')"><div><div class="upsetMatch">${esc(x.m.home?.code||x.m.home?.name||'H')} v ${esc(x.m.away?.code||x.m.away?.name||'A')}</div><div class="upsetWhy">${esc(x.reason)}</div></div><div class="upsetWhy">${esc(x.m.stage||'')} · ${kickIn(x.m.kickoff)}</div><span class="riskPill ${x.cls}">${x.triggered?'active upset pick':x.risk>=70?'high variance':x.risk>=50?'medium variance':'low variance'}</span></div>`).join(''):'<div class="emptyForecast">No upcoming matches to analyze.</div>'}</div></section>${leaderPanel}</div>`;
   const titleBySport=DATA.title_by_sport||[];
   html+=`<div class="forecastGrid"><section class="forecastPanel"><div class="forecastPanelHead"><h3>Title race</h3><span>probability snapshot</span></div><div class="raceList">${_v4TitleRows(t)}</div></section><section class="forecastPanel"><div class="forecastPanelHead"><h3>Match snapshots</h3><span>next fixtures</span></div><div class="matchSnapList">${_v4MatchSnapshots()}</div></section></div>`;
   if(titleBySport.length)html+=`<div class="forecastGrid single"><section class="forecastPanel"><div class="forecastPanelHead"><h3>Title forecasts — every sport</h3><span>${titleBySport.length} competitions</span></div><div class="raceList">${_v4TitleBySportRows(titleBySport)}</div></section></div>`;
   html+=_v4AdvancementTable(adv);
-  html+=`<div class="forecastNote">Use the model as a probability read: a 38% pick should still lose often. The app surfaces uncertainty instead of hiding it.</div></div>`;
+  html+=`<div class="forecastNote">Read these as probabilities, not calls: a 38% pick is supposed to lose most of the time.</div></div>`;
   host=$('#view-title');host.innerHTML=html;
 }
 

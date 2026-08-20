@@ -149,13 +149,13 @@ function stripPastSeasonCompetitionViews(payload,now=new Date()){
 // ---- per-sport sidebar (data-driven, follows the SELECTION) ---------------
 // Each sport declares exactly which views exist for it, in order.
 const NAV_DEF={
-  all:         ['matches','results','advanced','score','community','tree','news','insights','status','updates','customize'],
-  soccer_cup:  ['matches','results','groups','title','edge','advanced','score','bracket','third','tott','community','tree','sandbox','news','insights','status','updates','customize'],
-  soccer_club: ['matches','results','groups','title','edge','advanced','score','bracket','tott','community','tree','sandbox','news','insights','status','updates','customize'],
-  us_sport:    ['matches','results','groups','title','edge','advanced','score','community','tree','sandbox','news','insights','status','updates','customize'],
-  college:     ['matches','results','groups','bracket','title','edge','advanced','score','community','tree','sandbox','news','insights','status','updates','customize'],
-  college_basketball:['matches','results','groups','bracket','title','edge','advanced','score','community','tree','sandbox','news','insights','status','updates','customize'],
-  soccer_league:['matches','results','groups','title','edge','advanced','score','tott','community','tree','sandbox','news','insights','status','updates','customize']
+  all:         ['matches','results','score','community','tree','news','insights','status','updates','customize'],
+  soccer_cup:  ['matches','results','groups','title','edge','score','bracket','third','tott','community','tree','sandbox','news','insights','status','updates','customize'],
+  soccer_club: ['matches','results','groups','title','edge','score','bracket','tott','community','tree','sandbox','news','insights','status','updates','customize'],
+  us_sport:    ['matches','results','groups','title','edge','score','community','tree','sandbox','news','insights','status','updates','customize'],
+  college:     ['matches','results','groups','bracket','title','edge','score','community','tree','sandbox','news','insights','status','updates','customize'],
+  college_basketball:['matches','results','groups','bracket','title','edge','score','community','tree','sandbox','news','insights','status','updates','customize'],
+  soccer_league:['matches','results','groups','title','edge','score','tott','community','tree','sandbox','news','insights','status','updates','customize']
 };
 const SPORT_KIND={'':'all',wc:'soccer_cup',ucl:'soccer_club',epl:'soccer_league',laliga:'soccer_league',seriea:'soccer_league',bundesliga:'soccer_league',ligue1:'soccer_league',nfl:'us_sport',ncaaf:'college',ncaam:'college_basketball',nba:'us_sport',mlb:'us_sport',nhl:'us_sport'};
 function currentSportKey(){const m=(DATA_FILE||'').match(/data_(\w+)\.json/);return m?m[1]:'';}
@@ -437,7 +437,7 @@ function enterMatchday(targetView='',startWithTour=false){
 
 // ---- guided tour (first-visit walkthrough) --------------------------------
 const TOUR_STEPS=[
-  {target:'#sportSel',title:'Start here',body:'Pick a competition to unlock pregame predictions, model accuracy tracking, brackets and more. "All sports" shows a combined analysis feed.'},
+  {target:'#sportSel',title:'Start here',body:'Pick a competition to see its pregame predictions, accuracy tracking and brackets. "All sports" shows everything in one feed.'},
   {target:'.navbtn[data-v="matches"]',title:'Matches',body:'Every upcoming fixture with the model’s locked pregame pick shown next to the market’s.'},
   {target:'.navbtn[data-v="edge"]',title:'Model',body:'See exactly why the model favors a side — points, form, ratings, injuries and more, broken down factor by factor.'},
   {target:'.navbtn[data-v="score"]',title:'Scorecard',body:'Every locked pick, tracked in public. Nothing gets rewritten after the fact — good calls or bad ones.'},
@@ -594,17 +594,20 @@ function landingHero(){
   // Brier score is unreadable without knowing that lower is better and that 0.25
   // is the do-nothing baseline. The full numbers, favourable or not, stay one
   // click away on the Scorecard, which has the room to give them context.
-  const rec=sc&&sc.graded?`<span class="heroRec"><b>${sc.graded}</b> picks locked pregame and graded</span><span class="heroRec faintline">never edited after the result</span>`:`<span class="heroRec faintline">Model record begins as completed picks are graded</span>`;
+  // Both halves live in one baseline-aligned group: the count is set larger than
+  // the words around it, so centring the two spans as separate flex items lined
+  // up their boxes and left the second line's text visibly riding high.
+  const rec=`<span class="heroRecLine">${sc&&sc.graded?`<span class="heroRec"><b>${sc.graded}</b> picks locked pregame and graded</span><span class="heroRec faintline">never edited after the result</span>`:`<span class="heroRec faintline">Model record begins as completed picks are graded</span>`}</span>`;
   if(slim)return `<div class="heroSlim">${rec}<button class="heroSlimLink" type="button" onclick="setView('score')">Open scorecard <span aria-hidden="true">→</span></button></div>`;
   return `<div class="heroBand">
     <img src="icon-192.png?v=4" class="heroLogo" alt="Matchday" width="192" height="192">
-    <div class="heroTitle">A transparent sports model.</div>
-    <div class="heroSub">Every pick locked before kickoff and graded in public — information anyone can use, with no ads and a fully accountable model.</div>
+    <div class="heroTitle">Every pick, on the record.</div>
+    <div class="heroSub">Locked before kickoff, graded after the final whistle, never edited in between. Free, and no ads.</div>
     <div class="heroRow">${rec}</div>
     ${heroMarquee()}
     <div class="heroActions">
       <button class="btmbtn heroBtn" onclick="heroDismiss()">Open the analysis</button>
-      <button class="btmbtn heroBtn ghost" onclick="heroDismiss();setView('community')">Think you can beat the model?</button>
+      <button class="btmbtn heroBtn ghost" onclick="heroDismiss();setView('community')">Play against the model</button>
     </div>
   </div>`;
 }
