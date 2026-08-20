@@ -30,3 +30,55 @@ class DeployAssetTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class RuntimeDataAssetTests(unittest.TestCase):
+    """Same regression class as above, for data the app fetches at runtime.
+
+    The script-tag check cannot see these: board_summary.json and the per-sport
+    files are requested by fetch() at runtime, so a missing copy step 404s in
+    exactly the quiet, degrade-gracefully way official-selections.js did -- the
+    board would silently fall back to merging the full sport files, undoing the
+    payload work without anything failing.
+    """
+
+    def _workflow(self):
+        return (ROOT / ".github" / "workflows" / "deploy.yml").read_text(encoding="utf-8")
+
+    def _app_sources(self):
+        return "\n".join(
+            path.read_text(encoding="utf-8")
+            for path in sorted(ROOT.glob("app-*.js"))
+        )
+
+    def test_every_statically_named_json_fetch_is_published(self):
+        workflow = self._workflow()
+        fetched = set(re.findall(r"fetch\('([A-Za-z0-9_./-]+\.json)", self._app_sources()))
+        self.assertIn("board_summary.json", fetched,
+                      "sanity check: the board payload should be fetched by name")
+        missing = sorted(name for name in fetched if name not in workflow)
+        self.assertEqual(missing, [],
+                         f"the app fetches {missing} at runtime but deploy.yml never "
+                         "publishes it to _site/ -- it will 404 on the live site")
+
+    def test_board_summary_is_built_into_the_published_site(self):
+        # Copying it is not enough: it is generated per run from the freshly
+        # fetched data files, so the build has to invoke the builder itself.
+        workflow = self._workflow()
+        self.assertIn("build_board_summary.py", workflow,
+                      "deploy.yml never runs the board payload builder, so the "
+                      "site would ship whatever stale copy was committed")
+        self.assertIn("_site/board_summary.json", workflow,
+                      "the board payload builder must write into the published directory")
+
+    def test_every_published_sport_file_is_copied(self):
+        workflow = self._workflow()
+        core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
+        literal = re.search(r"const ALL_SPORT_KEYS=\[([^\]]*)\]", core)
+        self.assertIsNotNone(literal, "ALL_SPORT_KEYS not found in app-1-core.js")
+        keys = re.findall(r"'([a-z]+)'", literal.group(1))
+        self.assertGreater(len(keys), 5, "sanity check: too few sport keys to be real")
+        missing = [f"data_{key}.json" for key in keys if f"data_{key}.json" not in workflow]
+        self.assertEqual(missing, [],
+                         f"the app fetches {missing} when a visitor picks that sport, "
+                         "but deploy.yml never copies it to _site/")

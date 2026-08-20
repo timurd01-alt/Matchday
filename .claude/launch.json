@@ -30,6 +30,18 @@
         "8744"
       ],
       "port": 8744
+    },
+    {
+      "name": "matchday-legal",
+      "runtimeExecutable": "py",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8761",
+        "--directory",
+        "C:\\Users\\Timur Dunaer\\AppData\\Local\\Temp\\mdlegal"
+      ],
+      "port": 8761
     }
   ]
 }

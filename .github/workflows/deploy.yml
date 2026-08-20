@@ -97,7 +97,7 @@ jobs:
       # deploy below if it fails, since a broken prediction/provider path
       # is exactly what those steps would otherwise ship.
       - name: Run required test suite
-        run: python -m unittest test_model_inputs test_provider_adapters test_generate_posts test_pregame_context test_market_benchmark test_x_bot test_provider_quota test_mlb_recovery test_mlb_shadow_ledger test_mlb_prospective_scorecard test_mlb_model_promotion test_mlb_forecast_pause test_nfl_challenger test_nfl_challenger_store test_nfl_availability test_nfl_prospective_scorecard test_nfl_model_adjustment test_cfb_challenger test_check_promotion_readiness test_next_task test_clv_report test_preregistration test_ncaam_advanced_metrics test_independent_value test_ui_audit test_data_coverage test_board_summary test_security
+        run: python -m unittest test_model_inputs test_provider_adapters test_generate_posts test_pregame_context test_market_benchmark test_x_bot test_provider_quota test_mlb_recovery test_mlb_shadow_ledger test_mlb_prospective_scorecard test_mlb_model_promotion test_mlb_forecast_pause test_nfl_challenger test_nfl_challenger_store test_nfl_availability test_nfl_prospective_scorecard test_nfl_model_adjustment test_cfb_challenger test_check_promotion_readiness test_next_task test_clv_report test_preregistration test_ncaam_advanced_metrics test_independent_value test_ui_audit test_data_coverage test_board_summary test_deploy_assets test_security
 
       - name: Recover published last-good fixtures after a cold cache miss
         run: python recover_published_data.py
