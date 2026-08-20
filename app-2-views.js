@@ -123,12 +123,20 @@ function renderAccountRow(){
   const providerLabel={google:'Google',github:'GitHub'};
   if(ACCOUNT.signedIn){
     const moved=SIGNIN_CLAIMED?` <b>${SIGNIN_CLAIMED} earlier pick${SIGNIN_CLAIMED===1?'':'s'} moved across.</b>`:'';
+    const err=ACCOUNT_ERROR?`<span class="acctErr">${esc(ACCOUNT_ERROR)}</span>`:'';
+    // Sign out and delete sit side by side, so delete is styled as the
+    // destructive one rather than looking like a second way to leave.
     return `<div class="acctRow signedIn"><span class="acctState">&#10003; Signed in — this handle and record are saved to your account.${moved}</span>
-      <button class="btmbtn" onclick="signOut()">Sign out</button></div>`;
+      <span class="acctBtns"><button class="btmbtn" onclick="signOut()">Sign out</button>
+      <button class="btmbtn danger" onclick="deleteAccount()">Delete account</button></span>${err}</div>`;
   }
   const buttons=(AUTH_PROVIDERS.length?AUTH_PROVIDERS:[]).map(p=>
     `<button class="btmbtn" onclick="signIn('${esc(p)}')">Continue with ${esc(providerLabel[p]||p)}</button>`).join('');
   const note=SIGNIN_ERROR?`<span class="acctErr">${esc(SIGNIN_ERROR)}</span>`:'';
+  if(ACCOUNT_DELETED){
+    return `<div class="acctRow"><span class="acctState">&#10003; Your account and its picks were deleted. You are playing as a guest again.</span>
+      ${buttons?`<span class="acctBtns">${buttons}</span>`:''}</div>`;
+  }
   if(!buttons)return note?`<div class="acctRow">${note}</div>`:'';
   return `<div class="acctRow"><span class="acctState">Playing as a guest — clearing this browser loses your handle and record. Sign in to keep them.</span>
     <span class="acctBtns">${buttons}</span>${note}</div>`;

@@ -148,5 +148,65 @@ class DeploymentSecurityTests(unittest.TestCase):
         self.assertIn("throw new Error", signature)
 
 
+class PrivacyPromiseTests(unittest.TestCase):
+    """The privacy policy is a promise users and Google's OAuth review rely on,
+    and it is the one artefact in this repo that can be wrong without anything
+    failing. It already went stale once: it claimed the leaderboard was
+    "disabled in the current release" for as long as the live endpoint was
+    shipping picks to a server. These tests tie the claims to the code."""
+
+    def setUp(self):
+        self.legal = (ROOT / "legal.html").read_text(encoding="utf-8")
+        self.accounts = (ROOT / "api" / "_accounts.js").read_text(encoding="utf-8")
+        self.core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
+
+    def test_policy_does_not_claim_the_leaderboard_is_off_while_it_is_on(self):
+        live = re.search(r'LEADERBOARD_URL\s*=\s*"([^"]*)"', self.core)
+        self.assertIsNotNone(live, "LEADERBOARD_URL not found")
+        if live.group(1):
+            self.assertNotIn("disabled in the current release", self.legal)
+            self.assertIn("The leaderboard is live", self.legal)
+
+    def test_policy_names_every_provider_the_api_offers(self):
+        for provider in re.findall(r"^  (\w+): \{$", self.accounts, re.M):
+            self.assertRegex(
+                self.legal, f"(?i){provider}",
+                f"{provider} sign-in is offered but the policy never names it",
+            )
+
+    def test_policy_does_not_promise_narrower_scopes_than_the_code_requests(self):
+        """The policy says Google is asked for `openid` and GitHub for nothing.
+        Widening a scope without revising that sentence turns it into a false
+        statement about data we then receive."""
+        scopes = dict(re.findall(r'^  (\w+): \{.*?scope: "([^"]*)"', self.accounts, re.M | re.S))
+        self.assertEqual(scopes.get("google"), "openid")
+        self.assertEqual(scopes.get("github"), "")
+        self.assertIn("<code>openid</code> permission and nothing further", self.legal)
+        self.assertIn("asks GitHub for no permissions at all", self.legal)
+
+    def test_policy_does_not_promise_a_deletion_route_that_does_not_exist(self):
+        self.assertIn("Delete account", self.legal)
+        leaderboard = (ROOT / "api" / "leaderboard.js").read_text(encoding="utf-8")
+        self.assertIn('action === "delete-account"', leaderboard)
+        self.assertIn("export async function deleteAccount", self.accounts)
+
+    def test_stated_retention_window_matches_the_purge(self):
+        window = re.search(r"RETENTION_MS = (\d+) \* 86400000", self.accounts)
+        self.assertIsNotNone(window, "RETENTION_MS not found")
+        months = round(int(window.group(1)) / 30)
+        self.assertIn(f"{months} months", self.legal)
+
+    def test_deletion_removes_every_table_that_holds_the_account(self):
+        """A deletion that leaves the identity row behind would let the same
+        provider login return to a hollow account, and would not be erasure."""
+        body = self.accounts[self.accounts.index("export async function deleteAccount"):]
+        body = body[:body.index("\n}")]
+        for table in ("verified_picks", "sessions", "signin_codes",
+                      "account_identities", "accounts"):
+            self.assertIn(f"FROM {table}", body, f"{table} survives deletion")
+        self.assertIn("BEGIN", body)
+        self.assertIn("ROLLBACK", body)
+
+
 if __name__ == "__main__":
     unittest.main()

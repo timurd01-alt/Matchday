@@ -211,6 +211,8 @@ body.modalOpen{overflow:hidden}.matchModal{position:fixed;inset:0;z-index:99;dis
   .acctRow .acctBtns{display:flex;flex-wrap:wrap;gap:8px}
   .acctRow .btmbtn{flex:0 0 auto;padding:7px 13px;font-size:.72rem}
   .acctErr{flex:1 1 100%;color:var(--warn,#e2b04a);font-family:var(--mono);font-size:.68rem}
+  .acctRow .btmbtn.danger{color:var(--loss,#e2564a);border-color:rgba(226,86,74,.35)}
+  .acctRow .btmbtn.danger:hover:not(:disabled){border-color:var(--loss,#e2564a);background:rgba(226,86,74,.1)}
   .lbTabs{display:flex;gap:6px;margin-bottom:10px}
   .lbTab{background:var(--bg2);color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:6px 13px;font-family:var(--mono);font-size:.7rem;font-weight:700;cursor:pointer;transition:border-color .15s,color .15s}
   .lbTab:hover{color:var(--text)}

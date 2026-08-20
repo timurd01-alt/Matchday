@@ -38,9 +38,11 @@ export default async function handler(req, res) {
       client_id: process.env[provider.idEnv],
       redirect_uri: redirectUri(),
       response_type: "code",
-      scope: provider.scope,
       state,
     });
+    // Omitted entirely rather than sent empty: GitHub reads `scope=` as a
+    // request it must render, and an empty one is not the same as no request.
+    if (provider.scope) params.set("scope", provider.scope);
     if (providerName === "google") params.set("prompt", "select_account");
     res.setHeader("Location", `${provider.authorize}?${params}`);
     return res.status(302).end();

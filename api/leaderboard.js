@@ -14,6 +14,7 @@ import {
   PROVIDERS, providerConfigured, newClient, ensureSchema, setHeaders, requestIp,
   opaqueKey, consumeLimit, accountForToken, createSession, destroySession,
   redeemSigninCode, claimDevicePicks, reshuffleAccountHandle,
+  deleteAccount, purgeDormantAccounts,
 } from "./_accounts.js";
 import crypto from "node:crypto";
 
@@ -167,6 +168,17 @@ async function reshuffle(db, body) {
   return { status: 200, payload: { ok: true, handle, canReshuffle: false } };
 }
 
+// Deleting requires the session, not just the account id: the person doing it
+// must be the person signed in. The response carries no `token`, so the client
+// drops its own copy and there is nothing left to present.
+async function removeAccount(db, body) {
+  const account = await accountForToken(db, body?.token);
+  if (!account) return { status: 401, payload: { ok: false, error: "sign in first" } };
+  const removed = await deleteAccount(db, account.owner_key);
+  if (!removed) return { status: 409, payload: { ok: false, error: "account already gone" } };
+  return { status: 200, payload: { ok: true, deleted: true, signedIn: false } };
+}
+
 async function leaderboard(db, period) {
   const allowedPeriod = ["all", "week", "month"].includes(period) ? period : "all";
   const since = allowedPeriod === "week" ? Date.now() - 7 * 86400000
@@ -211,6 +223,14 @@ export default async function handler(req, res) {
     if (!await consumeLimit(db, `${ipKey}:day`, 86400000, req.method === "GET" ? 5000 : 500)) {
       return res.status(429).json({ ok: false, error: "daily limit reached" });
     }
+    // The retention sweep rides on the same durable counter the rate limiter
+    // uses, so exactly one request a day performs it and the rest skip. A
+    // failed sweep must never fail the request that happened to trigger it --
+    // the visitor asked for a leaderboard, not for housekeeping.
+    if (await consumeLimit(db, "retention:daily", 86400000, 1)) {
+      try { await purgeDormantAccounts(db); }
+      catch (error) { console.error("retention sweep failed", error); }
+    }
     const action = String(req.query.action || "");
     if (action === "leaderboard" && req.method === "GET") {
       return res.status(200).json(await leaderboard(db, String(req.query.period || "all")));
@@ -246,6 +266,7 @@ export default async function handler(req, res) {
       : action === "session-exchange" && req.method === "POST" ? await exchangeSignin(db, body)
       : action === "session" && req.method === "POST" ? await sessionState(db, body)
       : action === "reshuffle" && req.method === "POST" ? await reshuffle(db, body)
+      : action === "delete-account" && req.method === "POST" ? await removeAccount(db, body)
       : { status: 404, payload: { ok: false, error: "unknown action" } };
     return res.status(result.status).json(result.payload);
   } catch (error) {
