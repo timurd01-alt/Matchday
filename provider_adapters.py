@@ -672,9 +672,18 @@ class SportsGameOddsAdapter:
 
     @staticmethod
     def _event_time(event):
+        # The provider carries the kickoff on the `status` object, not at the
+        # top level and not on `info` (confirmed live 2026-08-20: `info` holds
+        # only venue metadata). Without this the whole function returned None
+        # for every event, which silently killed the `teams_and_start_time`
+        # join strategy -- so an MLB doubleheader, the exact case _event_join
+        # promises never to guess at, produced two same-pair candidates and
+        # was rejected as ambiguous instead of being separated by start time.
         info = event.get("info") if isinstance(event.get("info"), dict) else {}
+        status = event.get("status") if isinstance(event.get("status"), dict) else {}
         return _iso_utc(event.get("startsAt") or event.get("startTime") or
-                        event.get("scheduled") or info.get("startsAt") or
+                        event.get("scheduled") or status.get("startsAt") or
+                        status.get("startTime") or info.get("startsAt") or
                         info.get("startTime"))
 
     @staticmethod
@@ -1680,22 +1689,61 @@ class CollegeFootballDataAdapter:
             year -= 1
         return {name: sums[name] / counts[name] for name in sums}
 
-    def advanced_team_metrics(self):
+    def advanced_team_metrics(self, season=None):
         """Licensed CFBD opponent/context-aware season metrics in one call.
 
         This intentionally uses `/stats/season/advanced`, not a named third-
         party rating. The returned values are shadow research inputs and do
         not alter the production prediction weights.
+
+        `season` overrides the current season. These metrics are derived from
+        plays that have actually been run, so the current season answers with
+        nothing until enough of it has been played; the caller uses this to ask
+        for the last completed season instead of showing no profile at all.
         """
+        year = int(season or self.season)
         rows = self._get("/stats/season/advanced", {
-            "year": self.season,
+            "year": year,
             "excludeGarbageTime": "true",
         })
         return {
-            "season": self.season,
+            "season": year,
             "source": "CollegeFootballData /stats/season/advanced",
             "profiles": cfbd_advanced_team_profiles(rows if isinstance(rows, list) else []),
         }
+
+    def venues(self):
+        """Licensed stadium coordinates for weather lookup, in one call.
+
+        College venue names are not unique -- several schools share a bare
+        "Memorial Stadium" -- so a hand-built keyword table cannot resolve
+        them, and resolving by home team instead attaches the wrong forecast
+        to a neutral-site game (TCU hosting in Dublin, Notre Dame at Lambeau).
+        The provider publishes the coordinates directly, which removes the
+        guess entirely. Slow-moving data: fetched once and persisted.
+        """
+        rows = self._get("/venues")
+        venues = []
+        for row in rows if isinstance(rows, list) else []:
+            if not isinstance(row, dict):
+                continue
+            try:
+                latitude = float(row["latitude"])
+                longitude = float(row["longitude"])
+            except (KeyError, TypeError, ValueError):
+                continue
+            name = str(row.get("name") or "").strip()
+            if not name or not (-90 <= latitude <= 90) or not (-180 <= longitude <= 180):
+                continue
+            venues.append({
+                "name": name,
+                "latitude": round(latitude, 4),
+                "longitude": round(longitude, 4),
+                "dome": bool(row.get("dome")),
+                "city": str(row.get("city") or "").strip(),
+                "state": str(row.get("state") or "").strip(),
+            })
+        return venues
 
 
 class CollegeBasketballDataAdapter:
