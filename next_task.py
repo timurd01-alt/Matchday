@@ -394,6 +394,7 @@ REQUIRED_SUITES = (
     "test_ui_audit",
     "test_data_coverage",
     "test_board_summary",
+    "test_deploy_assets",
     "test_security",
 )
 
