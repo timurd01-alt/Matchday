@@ -152,20 +152,16 @@
     return `index.html?${params.toString()}`;
   }
 
-  function similarUrl(item){
-    const sport=(item.sports||[]).find(value=>value!=='all')||'all';
-    return `content.html?sport=${encodeURIComponent(sport)}#latest`;
-  }
-
   function contextLinks(item){
     const firstSport=(item.sports||[]).find(value=>value!=='all');
     const comp=item.comp||({soccer:'ucl',nfl:'nfl',ncaaf:'ncaaf',basketball:'nba',hockey:'nhl',baseball:'mlb'})[firstSport]||'';
-    const links=[];
-    if(item.matchId)links.push(['View matchup',dashboardUrl(comp,'matches',item.matchId)]);
-    links.push(['See model prediction',dashboardUrl(comp,'edge',item.matchId||'')]);
-    links.push(['Open scorecard',dashboardUrl(comp,'score')]);
-    links.push(['Explore similar',similarUrl(item)]);
-    return links.slice(0,4);
+    // Five exits per card -- roughly ninety on a full page -- made every card a
+    // menu. The matchup is the thing a reader actually wants next; where there
+    // is no match behind the story, the model read is the nearest equivalent.
+    // Scorecard already has a nav entry, and "Explore similar" only re-filtered
+    // the page the reader was standing on.
+    if(item.matchId)return [['View matchup',dashboardUrl(comp,'matches',item.matchId)]];
+    return [['See model prediction',dashboardUrl(comp,'edge','')]];
   }
 
   function primaryLabel(item){return item.badgeType==='availability'?'Read tracker':item.badgeType==='ranking'?'Read rankings':item.badgeType==='simulation'?'Read simulation':item.badgeType==='market-audit'?'Read market audit':item.badgeType==='methodology'?'Read methodology':item.type==='preview'?'Read preview':item.type==='recap'?'Read recap':'Read explainer'}
@@ -183,16 +179,35 @@
     return activeSport==='all'||(item.sports||[]).includes('all')||(item.sports||[]).includes(activeSport);
   }
 
+  // Ascending order was right for a fixture that hasn't kicked off and wrong
+  // for anything already played, and feature posts (rankings, audits) carry
+  // past dates in this same bucket -- which is how a three-week-old rankings
+  // card reached position 0 while that week's sat six cards down. Order by
+  // distance from today instead of direction: a post from two days ago and a
+  // fixture three days out are both relevant now, and only genuinely old
+  // things sink.
+  function previewOrder(a,b){
+    const now=Date.now();
+    return Math.abs(a.sortTime-now)-Math.abs(b.sortTime-now)||b.watchability-a.watchability;
+  }
   function filteredItems(){
     const query=searchQuery.trim().toLowerCase();
     const filtered=storyItems.filter(item=>matchesSport(item)&&(activeType==='all'||item.type===activeType)&&(!query||itemSearchText(item).includes(query)));
-    if(activeType!=='all')return filtered.sort((a,b)=>activeType==='preview'?(a.sortTime-b.sortTime):b.sortTime-a.sortTime).slice(0,18);
+    if(activeType!=='all')return filtered.sort((a,b)=>activeType==='preview'?previewOrder(a,b):b.sortTime-a.sortTime).slice(0,18);
     const buckets={preview:[],recap:[],learn:[]};filtered.sort((a,b)=>b.sortTime-a.sortTime).forEach(item=>(buckets[item.type]||buckets.learn).push(item));
-    buckets.preview.sort((a,b)=>a.sortTime-b.sortTime||b.watchability-a.watchability);
+    buckets.preview.sort(previewOrder);
+    // The evergreen explainers never change, so giving them one slot in every
+    // three spent a third of the page on the same seven articles. Every other
+    // round keeps them discoverable without crowding out dated coverage.
     const diverse=[],seen=new Set();
+    let learnRound=0;
     for(let round=0;diverse.length<18;round++){
       let added=false;
-      ['preview','recap','learn'].forEach(type=>{const item=buckets[type][round];if(item&&!seen.has(item.id)){diverse.push(item);seen.add(item.id);added=true}});
+      const types=round%2===1?['preview','recap','learn']:['preview','recap'];
+      types.forEach(type=>{
+        const item=buckets[type][type==='learn'?learnRound:round];
+        if(item&&!seen.has(item.id)){diverse.push(item);seen.add(item.id);added=true;if(type==='learn')learnRound++}
+      });
       if(!added)break;
     }
     return diverse.slice(0,18);
