@@ -1,88 +1,111 @@
 [
-  {
-    "id": "matchday-10-premier-league-2026-08-17",
-    "comp": "epl",
-    "comp_label": "Premier League · Matchday 10",
-    "type": "ranking",
-    "slug": "matchday-10-premier-league-2026-08-17",
-    "title": "Matchday 10: The Opening Ledger",
-    "date": "2026-08-17",
-    "summary": "A Premier League opening board ordered by current Matchday ratings, with the preseason gaps left visible.",
-    "body": [
-      "This is the first Premier League Matchday 10, selected because its August 21 opening slate is the best-supported active schedule after the prior College Football board remained on a July 24 snapshot.",
-      "The current order is Arsenal, Manchester City, Liverpool, Manchester United, Chelsea, Aston Villa, Newcastle, Bournemouth, Brighton, and Tottenham — the ten highest current Matchday team ratings.",
-      "All ten opening fixtures are preseason reads with no available market or bookmaker, listed injury, lineup entry, current-season form, separate full schedule-strength grade, or prior-model series."
-    ]
+ {
+  "id": "matchday-10-premier-league-2026-08-17",
+  "comp": "epl",
+  "comp_label": "Premier League · Matchday 10",
+  "type": "ranking",
+  "slug": "matchday-10-premier-league-2026-08-17",
+  "title": "Matchday 10: The Opening Ledger",
+  "date": "2026-08-17",
+  "summary": "A Premier League opening board ordered by current Matchday ratings, with the preseason gaps left visible.",
+  "body": [
+   "This is the first Premier League Matchday 10, selected because its August 21 opening slate is the best-supported active schedule after the prior College Football board remained on a July 24 snapshot.",
+   "The current order is Arsenal, Manchester City, Liverpool, Manchester United, Chelsea, Aston Villa, Newcastle, Bournemouth, Brighton, and Tottenham — the ten highest current Matchday team ratings.",
+   "All ten opening fixtures are preseason reads with no available market or bookmaker, listed injury, lineup entry, current-season form, separate full schedule-strength grade, or prior-model series."
+  ]
+ },
+ {
+  "id": "transparent-weekly-scorecard-2026-08-16",
+  "comp": "all",
+  "comp_label": "Independent Audit",
+  "slug": "transparent-weekly-scorecard-2026-08-16",
+  "title": "Transparent Weekly Scorecard - August 9-15, 2026",
+  "date": "2026-08-16",
+  "summary": "26 hits, 20 misses, one unresolved grade, and incomplete MLB ledger coverage.",
+  "record": {
+   "hits": 26,
+   "graded": 46,
+   "pct": 56.5
   },
-  {
-    "id": "transparent-weekly-scorecard-2026-08-16",
-    "comp": "all",
-    "comp_label": "Independent Audit",
-    "slug": "transparent-weekly-scorecard-2026-08-16",
-    "title": "Transparent Weekly Scorecard - August 9-15, 2026",
-    "date": "2026-08-16",
-    "summary": "26 hits, 20 misses, one unresolved grade, and incomplete MLB ledger coverage.",
-    "record": {"hits": 26, "graded": 46, "pct": 56.5},
-    "highlights": {
-      "best_call": "Tampa Bay Rays over Oakland Athletics (73%)",
-      "largest_miss": "Boston Red Sox over Oakland Athletics (72%)"
-    },
-    "body": [
-      "The completed August 9-15 window has 47 verified MLB locks and 46 final grades: 26 hits and 20 misses. The one ungraded Cubs-Cardinals lock is excluded rather than backfilled or counted as a loss.",
-      "All 46 settled rows retain same-time regulation market snapshots. The model's Brier/log loss was 0.488/0.682 against the market's 0.494/0.687, but the model uses market context, so this narrow one-week comparison is not an independent edge claim.",
-      "Only 15 locks and 14 grades reached the append-only MLB ledger. Frozen official pick receipts support the score, while incomplete ledger reconciliation, no August 15 lock, and the unresolved grade remain explicit integrity limitations."
-    ]
+  "highlights": {
+   "best_call": "Tampa Bay Rays over Oakland Athletics (73%)",
+   "largest_miss": "Boston Red Sox over Oakland Athletics (72%)"
   },
-  {
-    "id": "friday-model-vs-market-2026-08-14",
-    "comp": "all",
-    "comp_label": "Model vs. Market",
-    "type": "market-audit",
-    "slug": "friday-model-vs-market-2026-08-14",
-    "title": "Friday Model vs. Market: The Blind Date Test",
-    "date": "2026-08-14",
-    "summary": "No upcoming non-MLB fixture has a current, match-aligned, documented market comparison fit to publish.",
-    "body": [
-      "Friday's quality gate found zero qualifying non-MLB model-versus-market comparisons. No model probability, no-vig market probability, or gap is printed without aligned fixture identity, timing, and known market coverage.",
-      "Arsenal FC v Coventry City FC is scheduled for August 21 and carries a 79% model snapshot, but the configured export says no market to compare against. There is no official fixture-safe market-snapshot ledger, while legacy caches are stale or cannot establish orientation and book count.",
-      "Rating, form, home advantage, schedule context, and competition adjustments remain explanatory context rather than proof. Rating and form can overlap, so they are not treated as independent confirmation when the market side is missing."
-    ]
+  "body": [
+   "The completed August 9-15 window has 47 verified MLB locks and 46 final grades: 26 hits and 20 misses. The one ungraded Cubs-Cardinals lock is excluded rather than backfilled or counted as a loss.",
+   "All 46 settled rows retain same-time regulation market snapshots. The model's Brier/log loss was 0.488/0.682 against the market's 0.494/0.687, but the model uses market context, so this narrow one-week comparison is not an independent edge claim.",
+   "Only 15 locks and 14 grades reached the append-only MLB ledger. Frozen official pick receipts support the score, while incomplete ledger reconciliation, no August 15 lock, and the unresolved grade remain explicit integrity limitations."
+  ]
+ },
+ {
+  "id": "friday-model-vs-market-2026-08-14",
+  "comp": "all",
+  "comp_label": "Model vs. Market",
+  "type": "market-audit",
+  "slug": "friday-model-vs-market-2026-08-14",
+  "title": "Friday Model vs. Market: The Blind Date Test",
+  "date": "2026-08-14",
+  "summary": "No upcoming non-MLB fixture has a current, match-aligned, documented market comparison fit to publish.",
+  "body": [
+   "Friday's quality gate found zero qualifying non-MLB model-versus-market comparisons. No model probability, no-vig market probability, or gap is printed without aligned fixture identity, timing, and known market coverage.",
+   "Arsenal FC v Coventry City FC is scheduled for August 21 and carries a 79% model snapshot, but the configured export says no market to compare against. There is no official fixture-safe market-snapshot ledger, while legacy caches are stale or cannot establish orientation and book count.",
+   "Rating, form, home advantage, schedule context, and competition adjustments remain explanatory context rather than proof. Rating and form can overlap, so they are not treated as independent confirmation when the market side is missing."
+  ]
+ },
+ {
+  "id": "matchday-10-college-football-2026-08-10",
+  "comp": "ncaaf",
+  "comp_label": "College Football · Matchday 10",
+  "type": "ranking",
+  "slug": "matchday-10-college-football-2026-08-10",
+  "title": "Matchday 10: Ten Names, No New Evidence",
+  "date": "2026-08-10",
+  "summary": "The College Football top ten holds because the configured evidence has not changed.",
+  "body": [
+   "The July 24 configured snapshot still supplies the same top ten, model ranks, and first-fixture probabilities as the July 27 opening board, so this is a verification hold rather than a reshuffle.",
+   "No listed injury entries or market comparisons appear for the ten; the odds pass was skipped outside the immediate window and title odds are unavailable on the exhausted monthly quota.",
+   "The export exposes rank, record-derived context, and immediate fixture context, but not a separate full-schedule-strength measure, market depth, prior-model history, or fresh availability update."
+  ]
+ },
+ {
+  "id": "transparent-weekly-scorecard-2026-08-09",
+  "comp": "all",
+  "comp_label": "Independent Audit",
+  "slug": "transparent-weekly-scorecard-2026-08-09",
+  "title": "Transparent Weekly Scorecard — August 2–8, 2026",
+  "date": "2026-08-09",
+  "summary": "7 hits, 8 misses, eight ungraded locks, and a reconciliation failure in a partial MLB audit.",
+  "record": {
+   "hits": 7,
+   "graded": 15,
+   "pct": 46.7
   },
-  {
-    "id": "matchday-10-college-football-2026-08-10",
-    "comp": "ncaaf",
-    "comp_label": "College Football \u00b7 Matchday 10",
-    "type": "ranking",
-    "slug": "matchday-10-college-football-2026-08-10",
-    "title": "Matchday 10: Ten Names, No New Evidence",
-    "date": "2026-08-10",
-    "summary": "The College Football top ten holds because the configured evidence has not changed.",
-    "body": [
-      "The July 24 configured snapshot still supplies the same top ten, model ranks, and first-fixture probabilities as the July 27 opening board, so this is a verification hold rather than a reshuffle.",
-      "No listed injury entries or market comparisons appear for the ten; the odds pass was skipped outside the immediate window and title odds are unavailable on the exhausted monthly quota.",
-      "The export exposes rank, record-derived context, and immediate fixture context, but not a separate full-schedule-strength measure, market depth, prior-model history, or fresh availability update."
-    ]
+  "highlights": {
+   "best_call": "Atlanta Braves over Washington Nationals (79%)",
+   "largest_miss": "Milwaukee Brewers over Los Angeles Angels (82%)"
   },
-  {
-    "id": "transparent-weekly-scorecard-2026-08-09",
-    "comp": "all",
-    "comp_label": "Independent Audit",
-    "slug": "transparent-weekly-scorecard-2026-08-09",
-    "title": "Transparent Weekly Scorecard — August 2–8, 2026",
-    "date": "2026-08-09",
-    "summary": "7 hits, 8 misses, eight ungraded locks, and a reconciliation failure in a partial MLB audit.",
-    "record": {"hits": 7, "graded": 15, "pct": 46.7},
-    "highlights": {
-      "best_call": "Atlanta Braves over Washington Nationals (79%)",
-      "largest_miss": "Milwaukee Brewers over Los Angeles Angels (82%)"
-    },
-    "body": [
-      "The completed August 2–8 window has 23 verified MLB locks but only 15 final grades: 7 hits and 8 misses. The eight ungraded locks are excluded rather than backfilled or counted as losses.",
-      "No settled pick has a retained locked market snapshot, so model versus market is invalid at n=0. The 15 settled picks have frozen source snapshots but none has reconciled into the append-only MLB ledger.",
-      "The scorecard reports three-outcome-form Brier (0.572), log loss (0.779), calibration, corrections, and the stale-data limitation without claiming improvement from accuracy."
-    ]
-  },
-  {
+  "body": [
+   "The completed August 2–8 window has 23 verified MLB locks but only 15 final grades: 7 hits and 8 misses. The eight ungraded locks are excluded rather than backfilled or counted as losses.",
+   "No settled pick has a retained locked market snapshot, so model versus market is invalid at n=0. The 15 settled picks have frozen source snapshots but none has reconciled into the append-only MLB ledger.",
+   "The scorecard reports three-outcome-form Brier (0.572), log loss (0.779), calibration, corrections, and the stale-data limitation without claiming improvement from accuracy."
+  ]
+ },
+ {
+  "id": "wednesday-availability-tracker-2026-08-05",
+  "comp": "all",
+  "comp_label": "Availability Desk",
+  "type": "availability",
+  "slug": "wednesday-availability-tracker-2026-08-05",
+  "title": "Wednesday Availability Tracker: The Watch Window Opens",
+  "date": "2026-08-05",
+  "summary": "The next covered fixture is approaching, but no source-backed player-status call or model movement is reportable.",
+  "body": [
+   "Arsenal FC v Coventry City FC on August 21 is the next covered non-MLB fixture, but the current export carries no player-level absence, suspension, return, roster move, or confirmed lineup change.",
+   "Confirmed: none. Doubtful: none classified. Unknown: official club bulletins, team sheets, and any role or replacement effect closer to kickoff.",
+   "No before-and-after availability snapshot is retained, so the model effect is unknown rather than assumed to be zero. MLB remains out of scope because the documented feed does not provide a current compliant player-availability source."
+  ]
+ },
+ {
   "id": "friday-model-vs-market-2026-08-07",
   "comp": "all",
   "comp_label": "Model vs. Market",
@@ -120,8 +143,15 @@
   "title": "Transparent Weekly Scorecard — July 26–August 1, 2026",
   "date": "2026-08-02",
   "summary": "34 hits, 28 misses, and a high-confidence calibration failure in the verified MLB cohort.",
-  "record": {"hits": 34, "graded": 62, "pct": 54.8},
-  "highlights": {"best_call": "Boston Red Sox over Oakland Athletics (83%)", "largest_miss": "Boston Red Sox over Oakland Athletics (83%)"},
+  "record": {
+   "hits": 34,
+   "graded": 62,
+   "pct": 54.8
+  },
+  "highlights": {
+   "best_call": "Boston Red Sox over Oakland Athletics (83%)",
+   "largest_miss": "Boston Red Sox over Oakland Athletics (83%)"
+  },
   "body": [
    "The completed July 26–August 1 audit counted 62 verified locked, graded MLB picks: 34 hits and 28 misses. Accuracy alone is not an improvement claim.",
    "The seven 80–89% calls won only 42.9%, against 81.1% average stated confidence. The official model-versus-market comparison is not valid because no timestamped market cohort exists.",
@@ -196,8 +226,15 @@
   "title": "Transparent Weekly Scorecard — July 19–25, 2026",
   "date": "2026-07-26",
   "summary": "No verified locked pregame picks were eligible for the official score this week.",
-  "record": {"hits": 0, "graded": 0, "pct": null},
-  "highlights": {"best_call": null, "largest_miss": null},
+  "record": {
+   "hits": 0,
+   "graded": 0,
+   "pct": null
+  },
+  "highlights": {
+   "best_call": null,
+   "largest_miss": null
+  },
   "body": [
    "There is no official weekly score to celebrate or explain away: zero verified, locked pregame picks were eligible for the completed July 19–25 window.",
    "One World Cup result and 66 graded MLB entries were excluded because their stored records lack pregame lock timestamps. No picks were rewritten and no legacy record was mixed into the official score.",
