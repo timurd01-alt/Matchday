@@ -225,11 +225,6 @@ class ReportTests(unittest.TestCase):
         dc.main(["--root", str(self.dir), "--output", str(target)])
         self.assertIn("gaps", json.loads(target.read_text(encoding="utf-8")))
 
-
-if __name__ == "__main__":
-    unittest.main()
-
-
 class SeasonalityTests(unittest.TestCase):
     """A competition between seasons is not a competition with a problem.
 
@@ -282,3 +277,7 @@ class SeasonalityTests(unittest.TestCase):
                                     + [_match(status="LIVE")])}
         self.assertEqual([gap["kind"] for gap in dc.evidence_gaps(self.dir, payloads)],
                          ["thin_evidence"])
+
+
+if __name__ == "__main__":
+    unittest.main()

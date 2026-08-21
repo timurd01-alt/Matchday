@@ -240,11 +240,6 @@ class ContractTests(unittest.TestCase):
         for field in bbs.DETAIL_ONLY_FIELDS:
             self.assertIn(field, source, f"{field} is stripped but research-signals.js never reads it")
 
-
-if __name__ == "__main__":
-    unittest.main()
-
-
 class ScorecardTrimTests(unittest.TestCase):
     """The board needs the scorecard's numbers, not its full pick log."""
 
@@ -281,3 +276,7 @@ class ScorecardTrimTests(unittest.TestCase):
             source = handle.read()
         self.assertIn(f".slice(0,{bbs.SCORECARD_PICKS_KEPT})", source)
         self.assertIn(f".slice(0,{bbs.SCORECARD_MISSES_KEPT})", source)
+
+
+if __name__ == "__main__":
+    unittest.main()

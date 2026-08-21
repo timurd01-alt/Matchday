@@ -27,11 +27,6 @@ class DeployAssetTests(unittest.TestCase):
                          f"index.html loads {missing} but deploy.yml never copies "
                          "it to _site/ -- it will 404 on the live site")
 
-
-if __name__ == "__main__":
-    unittest.main()
-
-
 class RuntimeDataAssetTests(unittest.TestCase):
     """Same regression class as above, for data the app fetches at runtime.
 
@@ -82,3 +77,7 @@ class RuntimeDataAssetTests(unittest.TestCase):
         self.assertEqual(missing, [],
                          f"the app fetches {missing} when a visitor picks that sport, "
                          "but deploy.yml never copies it to _site/")
+
+
+if __name__ == "__main__":
+    unittest.main()
