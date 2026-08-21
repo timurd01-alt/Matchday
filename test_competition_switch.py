@@ -21,8 +21,25 @@ These tests pin the switch down from both directions: everything moves together
 import re
 import unittest
 from pathlib import Path
+from urllib.parse import urlsplit
 
 import fetch_data
+
+
+def _feed_hosts(feeds):
+    """The hostnames a feed set actually fetches from.
+
+    Matching "bbci.co.uk" as a substring of the whole URL is the wrong test
+    and CodeQL flags it (py/incomplete-url-substring-sanitization): the
+    string can sit anywhere in a URL, so a path or query on an unrelated
+    host would satisfy it. Comparing the parsed hostname is both precise and
+    what this assertion actually means.
+    """
+    return {(urlsplit(url).hostname or "").lower() for _, url in feeds}
+
+
+def _serves(hosts, domain):
+    return any(host == domain or host.endswith("." + domain) for host in hosts)
 
 
 # Every module-level name fetch_data derives from the active competition, with
@@ -77,8 +94,8 @@ class DerivedStateTests(unittest.TestCase):
         college = list(fetch_data.RSS_FEEDS)
         self.assertNotEqual(world_cup, college)
         # Soccer gets direct football feeds; a football competition does not.
-        self.assertTrue(any("bbci.co.uk" in url for _, url in world_cup))
-        self.assertFalse(any("bbci.co.uk" in url for _, url in college))
+        self.assertTrue(_serves(_feed_hosts(world_cup), "bbci.co.uk"))
+        self.assertFalse(_serves(_feed_hosts(college), "bbci.co.uk"))
 
     def test_switching_clears_the_previous_competitions_load_caches(self):
         fetch_data.set_competition("WC")
