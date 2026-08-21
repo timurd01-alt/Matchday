@@ -33,15 +33,27 @@ __pycache__/
 .ci_fetch_state.json
 provider_quota_state.json
 .x_bot_state.json
-posts.json
-posts_state.json
-posts/*.html
-# research_posts.json (and posts/research-*.html, already caught by
-# posts/*.html above) are rebuilt deterministically by
+# posts.json, posts_state.json and posts/*.html were listed here as
+# "CI-owned, cache-only" while being tracked in git anyway -- ignoring a
+# tracked file changes nothing, so checkout kept writing them and the cache
+# step kept restoring an older copy straight over the top. That is the same
+# restore-keys clobber documented above for ratings and picks_log, and it
+# had the same result: a posts.json culled by the comp-filter bug (fixed in
+# generate_posts.py) was cached, then restored over every corrected
+# checkout, so the fix could not take and the hourly deploy stayed red.
+# Git is now the source of truth for the published record; deploy.yml
+# commits these back after every fetch and no longer caches them. The post
+# HTML has to travel with posts.json or the site links entries whose pages
+# 404 (friday-model-vs-market-2026-08-07 and
+# wednesday-availability-tracker-2026-08-05 were in that state, reachable
+# only for as long as the cache happened to hold them).
+#
+# research_posts.json and posts/research-*.html stay untracked: unlike the
+# editorial posts they really are rebuilt deterministically by
 # build_research_posts.py from docs/experiments.json + picks_log_*.json on
-# every regenerate_sitemap() call -- same "CI-owned, don't commit from a
-# feature branch" reasoning as posts.json.
+# every regenerate_sitemap() call, so losing them costs nothing.
 research_posts.json
+posts/research-*.html
 _site/
 node_modules/
 # forecast_ledger_*.jsonl and mlb_shadow_ledger.jsonl were cache-only until
