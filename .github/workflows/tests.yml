@@ -1,0 +1,46 @@
+name: Tests
+
+# Runs the suite on branches and pull requests, which nothing did before.
+#
+# deploy.yml also runs the suite, but it triggers only on the hourly schedule,
+# on workflow_dispatch, and on push to main -- and it is not a test workflow:
+# the same run fetches from every provider, commits ratings/picks/ledgers back
+# with `git push origin HEAD:main`, and publishes to Pages. So the tests first
+# ran against a change only *after* it reached main, in the run that was
+# already deploying it.
+#
+# AGENTS.md tells contributors to work on a branch and open a pull request and
+# never push to main, so the mandated path was the one with no test gate on it
+# at all. This closes that: same command deploy.yml runs, asserted identical by
+# test_next_task.RequiredSuiteDriftTest, with none of the side effects.
+
+on:
+  push:
+    branches-ignore: [main]   # main is covered by deploy.yml's own test step
+  pull_request:
+
+# Read-only, no secrets, no cache, no deploy. This workflow must never be able
+# to write to the repo or spend provider quota -- it exists to run tests on
+# code that has not been reviewed yet.
+permissions:
+  contents: read
+
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  unittest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.12'
+
+      # No install step: every import across the 72 production modules is
+      # stdlib or local. config_keys.py is absent here, exactly as it is at
+      # deploy.yml's test step, which runs before the secrets are written.
+      - name: Run required test suite
+        run: python -m unittest discover -p "test_*.py"

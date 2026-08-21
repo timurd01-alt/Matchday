@@ -90,15 +90,27 @@ jobs:
           key: matchday-fetch-state-${{ github.run_id }}
           restore-keys: matchday-fetch-state-
 
-      # CLAUDE.md documents these three as required before considering any
+      # AGENTS.md documents a core set as required before considering any
       # prediction/data/provider change complete, but nothing previously
       # enforced that -- a regression could merge to main and start
       # deploying hourly with the suite never having actually run. Runs
       # early enough to block both the ratings/picks commit and the site
       # deploy below if it fails, since a broken prediction/provider path
       # is exactly what those steps would otherwise ship.
+      #
+      # Was a hand-maintained list of 30 module names (2026-08-20): that
+      # covered 659 tests and left 26 modules / 159 tests on disk gating
+      # nothing at all -- including test_pick_lock_persistence,
+      # test_forecast_ledger, test_recovered_mlb_picks and
+      # test_outcome_tree, i.e. exactly the suites protecting the
+      # "locked in public, never rewritten" claim the scorecard rests on.
+      # A hardcoded list also fails open: every new test_*.py was
+      # unprotected by default until someone remembered to edit this line,
+      # which is how the gap opened in the first place. Discovery finds all
+      # 56 modules / 818 tests, verified passing together and in reverse
+      # order, so this closed the gap without changing any test.
       - name: Run required test suite
-        run: python -m unittest test_model_inputs test_provider_adapters test_generate_posts test_pregame_context test_market_benchmark test_x_bot test_provider_quota test_mlb_recovery test_mlb_shadow_ledger test_mlb_prospective_scorecard test_mlb_model_promotion test_mlb_forecast_pause test_nfl_challenger test_nfl_challenger_store test_nfl_availability test_nfl_prospective_scorecard test_nfl_model_adjustment test_cfb_challenger test_check_promotion_readiness test_next_task test_clv_report test_preregistration test_ncaam_advanced_metrics test_independent_value test_ui_audit test_data_coverage test_board_summary test_deploy_assets test_ncaaf_venues test_security
+        run: python -m unittest discover -p "test_*.py"
 
       - name: Recover published last-good fixtures after a cold cache miss
         run: python recover_published_data.py

@@ -77,8 +77,12 @@ def _market_pct(odds_cache, home, away):
 
 
 def _model_probs(comp, m):
-    fd.COMP_KEY = comp
-    fd.COMP = dict(fd.COMPETITIONS[comp])
+    # predict() reads the ratings for the active competition, so this has to be
+    # a real switch: assigning COMP_KEY/COMP left RATINGS_FILE and the _RATINGS
+    # cache on whichever competition was active at import, which for an audit
+    # run over several competitions meant every one after the first scored
+    # against the wrong ratings file.
+    fd.set_competition(comp)
     home, away = dict(m["home"]), dict(m["away"])
     pred = fd.predict(home, away, {}, m)
     return pred["model"], pred["why"]

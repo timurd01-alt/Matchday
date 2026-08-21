@@ -17,12 +17,15 @@ import datetime
 import json
 import os
 
-BASE_URL = "https://matchdayterminal.com/"
+# Re-exported: defined here until build_research_posts needed them too,
+# which made the two modules import each other. See post_layout.
+from post_layout import BASE_URL, POST_CSS, SOCIAL_IMAGE_URL, _esc
+from build_research_posts import build_research_posts
+
 POSTS_FILE = "posts.json"
 STATE_FILE = "posts_state.json"
 POSTS_DIR = "posts"
 CONTENT_FEED_FILE = "content-feed.json"
-SOCIAL_IMAGE_URL = "https://matchdayterminal.com/icon-512.png"
 MIN_GRADED_FOR_FIRST_POST = 5
 MIN_NEW_GRADED_SINCE_LAST_POST = 5
 MIN_DAYS_SINCE_LAST_POST = 7
@@ -221,12 +224,8 @@ def build_recap_post(comp_key, comp_label, scorecard, awards):
     }
 
 
-def _esc(s):
-    return (str(s or "")
-            .replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace('"', "&quot;"))
 
 
-POST_CSS = """:root{--bg:#070a0f;--panel:#111822;--text:#eef2f8;--muted:#9ba8b8;--faint:#647184;--line:#263244;--signal:#3ad17a;--link:#76caff}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 10% 0,rgba(58,209,122,.1),transparent 30%),var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;line-height:1.65}.wrap{width:min(760px,calc(100% - 40px));margin:auto;padding:44px 0 76px}.postNav{display:flex;align-items:center;justify-content:space-between;gap:16px}.postNav a{color:var(--muted);font-family:"JetBrains Mono",monospace;font-size:.75rem;text-decoration:none}.postNav a:hover{color:var(--signal)}.eyebrow{margin:36px 0 12px;color:var(--signal);font:700 .68rem "JetBrains Mono",monospace;letter-spacing:.14em}h1{font-family:Archivo,sans-serif;font-size:clamp(1.8rem,5vw,2.8rem);letter-spacing:-.04em;line-height:1.05;margin:0 0 10px}.meta{display:flex;flex-wrap:wrap;gap:10px;color:var(--faint);font:500 .7rem "JetBrains Mono",monospace;margin-bottom:26px}.meta span{border:1px solid var(--line);border-radius:999px;padding:5px 9px}p{color:#c9d2de;margin:0 0 16px;font-size:1.02rem}a{color:var(--link)}.articleActions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:28px 0}.articleActions a{padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:var(--panel);font:700 .7rem/1.25 "JetBrains Mono",monospace;text-decoration:none}.articleActions a:hover{border-color:var(--signal);color:var(--signal)}.notice{border-left:3px solid var(--signal);background:rgba(58,209,122,.07);border-radius:7px;padding:12px 14px;color:#d8dde5;font-size:.85rem;margin-top:30px}.foot{margin-top:34px;color:var(--faint);font-size:.75rem}@media(max-width:560px){.articleActions{grid-template-columns:1fr}}"""
 
 
 def _content_sport(comp_key):
@@ -434,7 +433,6 @@ def regenerate_sitemap():
     rewrite_all_post_files()
     generate_public_content_feed()
     try:
-        from build_research_posts import build_research_posts
         research_posts = build_research_posts()
     except Exception as e:
         print(f"  research posts regen skipped: {e}")

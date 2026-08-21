@@ -489,11 +489,6 @@ class FetchDataWiringTests(unittest.TestCase):
         self.assertEqual(len(called), 1)
         self.assertTrue(called[0].startswith(fd.ODDS_FREE_QUOTA_URL))
 
-
-if __name__ == "__main__":
-    unittest.main()
-
-
 class SpendAccountingTests(unittest.TestCase):
     """What Matchday spent, and on what.
 
@@ -659,3 +654,7 @@ class BudgetRationingTests(unittest.TestCase):
 
     def test_a_missing_policy_file_is_not_an_error(self):
         self.assertEqual(pq.load_budget("no_such_budget_file.json"), {})
+
+
+if __name__ == "__main__":
+    unittest.main()

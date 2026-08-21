@@ -31,6 +31,8 @@ import re
 from pathlib import Path
 from typing import Any
 
+from js_toplevel import top_level_declarations
+
 SCHEMA_VERSION = 1
 
 # The pages a visitor actually loads. mini.html and qa.html are internal
@@ -482,6 +484,61 @@ def audit_render_budget(root: Path, page: str = "index.html") -> list[dict[str, 
 SEVERITY_ORDER = {"blocker": 0, "warn": 1}
 
 
+# The scripts index.html loads, in the order it loads them. They are classic
+# <script> tags, not modules, so all nine share one global lexical scope.
+INDEX_BUNDLE = ("translations.js", "updates.js", "app-1-core.js",
+                "official-selections.js", "app-2-views.js",
+                "app-5-outcome-tree.js", "app-3-panels.js",
+                "app-4-features.js", "research-signals.js")
+
+
+def audit_js_globals(root: str | Path = ".",
+                     bundle: tuple[str, ...] = INDEX_BUNDLE) -> list[dict[str, Any]]:
+    """Two scripts must never declare the same top-level name.
+
+    These files share one global lexical scope, so a `const`/`let`/`class`
+    declared twice across them is a SyntaxError -- and a SyntaxError in a
+    classic script takes the whole app down, not one panel. There is no
+    bundler, linter, or build step in this project to catch it, and the 462
+    top-level declarations currently in the bundle are spread across nine
+    files with no index, so the collision is a live risk every time a helper
+    is added. Nothing was watching; this is.
+
+    `var` and `function` are legal to redeclare, so those are reported at
+    `warn` rather than `blocker`: the app keeps running, but whichever file
+    loads last silently wins, which is its own hard-to-find bug.
+    """
+    base = Path(root)
+    seen: dict[str, tuple[str, int, str]] = {}
+    findings: list[dict[str, Any]] = []
+    for name in bundle:
+        path = base / name
+        if not path.is_file():
+            continue
+        text = path.read_text(encoding="utf-8", errors="replace")
+        for decl in top_level_declarations(text):
+            previous = seen.get(decl.name)
+            if previous is None:
+                seen[decl.name] = (name, decl.line, decl.kind)
+                continue
+            first_file, first_line, first_kind = previous
+            fatal = "const" in (decl.kind, first_kind) or \
+                    "let" in (decl.kind, first_kind) or \
+                    "class" in (decl.kind, first_kind)
+            findings.append(_finding(
+                "js-global-collision",
+                "blocker" if fatal else "warn",
+                name, decl.line,
+                f"`{decl.name}` is declared at the top level of both "
+                f"{first_file}:{first_line} ({first_kind}) and {name}:{decl.line} "
+                f"({decl.kind}); these scripts share one global scope, so this "
+                + ("is a SyntaxError that blanks the entire app"
+                   if fatal else
+                   "silently keeps whichever loads last"),
+                decl.name))
+    return findings
+
+
 def build_report(root: str | Path = ".") -> dict[str, Any]:
     base = Path(root)
     findings: list[dict[str, Any]] = []
@@ -503,6 +560,8 @@ def build_report(root: str | Path = ".") -> dict[str, Any]:
             scanned.append(name)
             findings.extend(audit_js_markup(path, sized, base))
     findings.extend(audit_render_budget(base))
+    findings.extend(audit_js_globals(base))
+    scanned.extend(n for n in INDEX_BUNDLE if (base / n).is_file())
     findings.sort(key=lambda item: (SEVERITY_ORDER.get(item["severity"], 9),
                                     item["file"], item["line"], item["rule"]))
     counts: dict[str, int] = {}

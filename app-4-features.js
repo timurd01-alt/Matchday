@@ -139,23 +139,11 @@ function _v10SideName(m,side){
   if(side==='d')return 'Draw';
   return 'No pick';
 }
-function _v10SideCode(m,side){
-  if(side==='h')return m?.home?.code||m?.home?.name||'H';
-  if(side==='a')return m?.away?.code||m?.away?.name||'A';
-  if(side==='d')return 'Draw';
-  return '—';
-}
 function _v10MarketMap(m){
   const x=(m?.markets||{})['1x2']||{};
   return {h:Number(x.home_pct),d:Number(x.draw_pct),a:Number(x.away_pct)};
 }
 function _v10Has(v){return Number.isFinite(Number(v))}
-function _v10TopSide(map,includeDraw=true){
-  const sides=includeDraw?['h','d','a']:['h','a'];
-  let best='',val=-Infinity;
-  sides.forEach(s=>{const n=Number(map?.[s]);if(Number.isFinite(n)&&n>val){best=s;val=n;}});
-  return best;
-}
 function _v10PctFor(m,side){
   const official=officialPrediction(m);
   if(side===official.side&&Number.isFinite(Number(official.confidence)))return Math.round(Number(official.confidence));

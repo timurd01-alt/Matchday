@@ -130,11 +130,6 @@ class RateLimitFallbackTests(unittest.TestCase):
         multi_fetch._LAST_FAILURE_OUTPUT["ncaaf"] = "HTTP Error 429: Too Many Requests"
         self.assertFalse(multi_fetch._rate_limited_with_last_good("ncaaf"))
 
-
-if __name__ == "__main__":
-    unittest.main()
-
-
 class AnchoredWindowTests(unittest.TestCase):
     """Per-sport anchored refresh windows (see multi_fetch.ANCHOR_HOURS)."""
 
@@ -256,3 +251,7 @@ class AnchoredWindowTests(unittest.TestCase):
         for key, _ in multi_fetch.SPORTS:
             self.assertIn(key, multi_fetch.ANCHOR_HOURS, f"{key} has no anchored windows")
             self.assertIn(key, multi_fetch.SPORT_ZONE, f"{key} has no schedule zone")
+
+
+if __name__ == "__main__":
+    unittest.main()

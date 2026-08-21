@@ -18,10 +18,10 @@ MINIMUM_DURABLE_COVERAGE = 100
 
 
 def refresh_if_missing(adapter=None):
-    fetch_data.COMP_KEY = "NCAAF"
-    fetch_data.COMP = dict(fetch_data.COMPETITIONS["NCAAF"])
-    fetch_data.RATINGS_FILE = "ratings_ncaaf.json"
-    fetch_data._RATINGS = None
+    # Was four lines: COMP_KEY, COMP, RATINGS_FILE and the _RATINGS cache, each
+    # patched by hand because assigning COMP_KEY alone left the rest pointing at
+    # whatever competition was active at import. set_competition does all of it.
+    fetch_data.set_competition("NCAAF")
 
     ratings = fetch_data._load_ratings()
     coverage = sum(

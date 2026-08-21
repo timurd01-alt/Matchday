@@ -18,7 +18,7 @@ import datetime
 import json
 import os
 
-from generate_posts import POST_CSS, SOCIAL_IMAGE_URL, BASE_URL, _esc
+from post_layout import POST_CSS, SOCIAL_IMAGE_URL, BASE_URL, _esc
 
 RESEARCH_POSTS_FILE = "research_posts.json"
 POSTS_DIR = "posts"

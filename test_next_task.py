@@ -256,38 +256,98 @@ class GuardrailTest(unittest.TestCase):
         self.assertIn("never push to main", joined)
         self.assertIn("`requirements`", joined)
 
-
-if __name__ == "__main__":
-    unittest.main()
-
-
 class RequiredSuiteDriftTest(unittest.TestCase):
-    """The prompt's test list must be the one CI actually runs.
+    """The prompt's test command must be the one CI actually runs.
 
     It named four suites while deploy.yml ran twenty-six. An agent following
     the guardrail exactly ran a fraction of the tests its PR would then be
     judged by, and nothing was watching the gap. Asserting the two against
-    each other is what stops it reopening the next time a suite is added.
+    each other is what stops it reopening.
+
+    Both sides are now a discovery command rather than an enumeration, so the
+    remaining failure mode is one of them being narrowed back to a subset --
+    which is exactly what these assertions catch.
     """
 
-    def _workflow_suites(self):
+    def _workflow_test_command(self, workflow="deploy.yml"):
         import re
-        text = Path(".github/workflows/deploy.yml").read_text(encoding="utf-8")
-        match = re.search(r"run: python -m unittest ((?:test_\w+\s*)+)", text)
-        self.assertIsNotNone(match, "deploy.yml has no `python -m unittest` step")
-        return match.group(1).split()
+        text = Path(".github/workflows", workflow).read_text(encoding="utf-8")
+        match = re.search(r"run: (python -m unittest .+)", text)
+        self.assertIsNotNone(match, f"{workflow} has no `python -m unittest` step")
+        return match.group(1).strip()
 
-    def test_required_suites_match_the_workflow(self):
-        from next_task import REQUIRED_SUITES
-        self.assertEqual(list(REQUIRED_SUITES), self._workflow_suites())
+    def _workflows_running_unittest(self):
+        found = []
+        for path in sorted(Path(".github/workflows").glob("*.yml")):
+            if "python -m unittest" in path.read_text(encoding="utf-8"):
+                found.append(path.name)
+        return found
 
-    def test_the_guardrail_text_names_every_required_suite(self):
-        from next_task import GUARDRAILS, REQUIRED_SUITES
+    def test_required_command_matches_the_workflow(self):
+        from next_task import REQUIRED_TEST_COMMAND
+        self.assertEqual(REQUIRED_TEST_COMMAND, self._workflow_test_command())
+
+    def test_the_guardrail_text_names_the_required_command(self):
+        from next_task import GUARDRAILS, REQUIRED_TEST_COMMAND
         line = next(rule for rule in GUARDRAILS if "unittest" in rule)
-        for suite in REQUIRED_SUITES:
-            self.assertIn(suite, line)
+        self.assertIn(REQUIRED_TEST_COMMAND, line)
 
-    def test_every_named_suite_exists(self):
-        from next_task import REQUIRED_SUITES
-        for suite in REQUIRED_SUITES:
-            self.assertTrue(Path(f"{suite}.py").is_file(), f"{suite}.py is missing")
+    def test_the_workflow_runs_discovery_rather_than_a_named_subset(self):
+        # The specific regression this guards: 26 modules / 159 tests sat on
+        # disk gating nothing while CI ran a hand-typed list of 30 names.
+        command = self._workflow_test_command()
+        self.assertIn("discover", command)
+        self.assertNotRegex(
+            command,
+            r"\btest_\w+\b",
+            "deploy.yml names individual suites again; discovery is what keeps "
+            "a newly added test_*.py from gating nothing by default",
+        )
+
+    def test_every_workflow_that_runs_tests_runs_the_same_command(self):
+        # Two workflows run the suite now -- deploy.yml gates the deploy,
+        # tests.yml gates branches and pull requests. A subset creeping into
+        # either one reopens the original gap from the other side.
+        workflows = self._workflows_running_unittest()
+        self.assertIn("tests.yml", workflows)
+        self.assertIn("deploy.yml", workflows)
+        from next_task import REQUIRED_TEST_COMMAND
+        for name in workflows:
+            with self.subTest(workflow=name):
+                self.assertEqual(self._workflow_test_command(name), REQUIRED_TEST_COMMAND)
+
+    def test_branches_and_pull_requests_are_actually_gated(self):
+        # The regression this guards: before tests.yml, deploy.yml triggered
+        # only on schedule, workflow_dispatch and push to main, so a pull
+        # request -- the path AGENTS.md mandates -- ran no tests at all, and
+        # the first run against a change was the one already deploying it.
+        text = Path(".github/workflows/tests.yml").read_text(encoding="utf-8")
+        self.assertIn("pull_request:", text)
+        self.assertIn("branches-ignore:", text)
+        # and it must stay incapable of deploying or writing to the repo.
+        # Checked against the executable lines only -- the header comment
+        # explains what deploy.yml does, and naming `git push` there is not
+        # the same as running it.
+        self.assertIn("contents: read", text)
+        directives = "\n".join(line for line in text.split("\n")
+                               if not line.lstrip().startswith("#"))
+        for forbidden in ("deploy-pages", "git push", "secrets."):
+            with self.subTest(forbidden=forbidden):
+                self.assertNotIn(forbidden, directives)
+
+    def test_discovery_actually_finds_every_suite_on_disk(self):
+        import unittest as _unittest
+        on_disk = {p.stem for p in Path(".").glob("test_*.py")}
+        found = set()
+        stack = [_unittest.defaultTestLoader.discover(".", pattern="test_*.py")]
+        while stack:
+            item = stack.pop()
+            if isinstance(item, _unittest.TestSuite):
+                stack.extend(item)
+            else:
+                found.add(type(item).__module__)
+        self.assertEqual(on_disk, found)
+
+
+if __name__ == "__main__":
+    unittest.main()
