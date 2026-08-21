@@ -278,13 +278,22 @@ names differ, and set the flag in a commit showing that evidence.
 Run before considering prediction/data/provider changes complete:
 
 ```bash
-python -m unittest test_model_inputs test_provider_adapters test_generate_posts test_provider_quota
+python -m unittest discover -p "test_*.py"
 ```
+
+This is the exact command `deploy.yml` runs, and `test_next_task` asserts the two
+stay identical — so what you run locally is what your PR is judged by. Don't
+narrow it to a named subset: this section previously listed four suites while CI
+ran thirty, and the thirty themselves left 26 modules on disk gating nothing.
+
+The suites most worth knowing by name when something fails:
 
 - `test_model_inputs.py` — prediction/model input construction
 - `test_provider_adapters.py` — provider normalization and adapters
 - `test_generate_posts.py` — social post generation
 - `test_provider_quota.py` — persisted quota pacing, reset probes, and provider wiring
+- `test_pick_lock_persistence.py` — the pregame pick lock the scorecard's
+  "locked in public, never rewritten" claim depends on
 
 ## Compliance
 
