@@ -23,6 +23,24 @@ from provider_adapters import CollegeFootballDataAdapter, ProviderError
 
 VENUE_COORDS_FILE = "ncaaf_venue_coords.json"
 MINIMUM_DURABLE_COVERAGE = 400
+
+
+def _cfbd_key() -> str:
+    """The CollegeFootballData key, read the same way fetch_data reads it.
+
+    This used to be `fetch_data.CFBD_KEY`, fetched through an import deferred
+    into the function body -- because fetch_data imports *this* module for its
+    venue lookup, so a top-level import was circular. One API key was the
+    entire reason for the cycle, and the key does not come from fetch_data in
+    the first place: it comes from config_keys, with the same environment
+    fallback used here. Reading it at the source removes the back-edge, and
+    fetch_data now imports this module normally.
+    """
+    try:
+        from config_keys import CFBD_KEY
+    except Exception:
+        return os.environ.get("CFBD_KEY", "")
+    return CFBD_KEY
 SCHEMA_VERSION = 2
 # Two stadiums this far apart are different grounds, not one record with
 # sloppier coordinates. Below it, duplicate rows are treated as the same place.
@@ -94,11 +112,7 @@ def refresh_if_missing(adapter=None, path=VENUE_COORDS_FILE):
         return len(existing)
 
     if adapter is None:
-        # Imported here, not at module scope: fetch_data reads this module's
-        # load() during its own venue lookup, so a top-level import would be
-        # circular.
-        import fetch_data
-        adapter = CollegeFootballDataAdapter(fetch_data.CFBD_KEY)
+        adapter = CollegeFootballDataAdapter(_cfbd_key())
     venues = adapter.venues()
     if not venues:
         raise ProviderError("venue endpoint returned no usable coordinates")
