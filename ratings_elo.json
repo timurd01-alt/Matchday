@@ -862,8 +862,8 @@
    "n": 38
   },
   "soccer:rayo vallecano de madrid": {
-   "r": 1533.0720770561315,
-   "n": 115
+   "r": 1529.937875274146,
+   "n": 116
   },
   "soccer:valencia cf": {
    "r": 1538.5315445995695,
@@ -898,8 +898,8 @@
    "n": 38
   },
   "soccer:deportivo alaves": {
-   "r": 1500.1754061189943,
-   "n": 115
+   "r": 1503.3096079009797,
+   "n": 116
   },
   "soccer:granada cf": {
    "r": 1354.3339237730097,
@@ -286198,6 +286198,7 @@
   "MLB:bdl-mlb-5059674": true,
   "MLB:bdl-mlb-5059675": true,
   "LALIGA:564628": true,
-  "MLB:bdl-mlb-5059676": true
+  "MLB:bdl-mlb-5059676": true,
+  "LALIGA:564638": true
  }
 }
