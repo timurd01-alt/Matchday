@@ -278,7 +278,6 @@ function codeForTeam(name,explicit){if(explicit)return explicit;const n=String(n
 function bracketTeam(name,code,slot,score,win,live){const nm=name||'TBD',cd=codeForTeam(nm,code),fl=uiFlag(cd);return `<div class="bmTeam ${win?'win':''} ${live?'live':''}"><div class="bmName">${slot?`<span class="bmSlot">${esc(slot)}</span>`:''}${fl?`<span class="flag">${fl}</span>`:''}<span class="bmCode">${esc(cd||'')}</span><span>${nm==='TBD'?'<span class="bmTbd">TBD</span>':esc(nm)}</span></div><div class="bmScore">${score!=null?esc(score):''}</div></div>`}
 function compactBracketMatch(km,last=false,side='left',isFinal=false){const pending=km.status==='LIVE',done=km.status==='FINISHED';const hs=km.score?.home,as=km.score?.away;const hw=done&&Number(hs)>Number(as),aw=done&&Number(as)>Number(hs);const cls=`brMini ${done?'done':''} ${isFinal?'finalCard':''} ${last?'':side==='right'?'connectL':'connectR'} ${(!km.home&&!km.away)?'tbd':''}`;return `<div class="${cls}">${isFinal?'<div class="finalBadge">Final</div>':''}<div class="bmMeta"><span>${esc(km.stage||km.round||'Match')}</span><span>${pending?'AWAITING FINAL':done?'FT':km.kickoff?dt(km.kickoff):'TBD'}</span></div>${bracketTeam(km.home,km.home_code||km.homeCode||'',km.home_slot||'',done?hs:null,hw,false)}${bracketTeam(km.away,km.away_code||km.awayCode||'',km.away_slot||'',done?as:null,aw,false)}</div>`}
 /* removed duplicate (compactProjectedMatch) */
-function splitHalf(arr,half){arr=arr||[];const mid=Math.ceil(arr.length/2);return half==='left'?arr.slice(0,mid):arr.slice(mid)}
 /* removed duplicate (roundMatches) */
 function shortRoundName(name){return name.replace('Round of ','R').replace('Quarter-finals','QF').replace('Semi-finals','SF').replace('Third-place playoff','3rd')}
 /* removed duplicate (bracketColumn) */
@@ -303,7 +302,7 @@ function diverseNews(limit=12){
   const result=out.length?out:all.slice(0,limit),fav=favoriteNewsTerm();
   return fav?result.sort((a,b)=>Number(teamKey(`${b.headline||b.title||''} ${b.desc||''}`).includes(fav))-Number(teamKey(`${a.headline||a.title||''} ${a.desc||''}`).includes(fav))):result;
 }
-function renderNews(){const n=DATA.news||[],host=$('#view-news'),links=DATA.social_links||[],diag=DATA.diagnostics||[];const buckets=newsBuckets(),srcs=newsSources();if(NEWS_FILTER!=='all'&&!buckets[NEWS_FILTER])NEWS_FILTER='all';let list=NEWS_FILTER==='all'?diverseNews(Math.max(n.length,18)):buckets[NEWS_FILTER]||[];host.innerHTML=`<div class="vhead">News cycle</div>${links.length?`<div class="seclbl">Social / source quick links</div><div class="socialGrid">${links.map(l=>`<a href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.name)}</a>`).join('')}</div>`:''}<div class="srcCount">${n.length} headlines · ${srcs.length-1} detected sources</div><div class="newsTools">${srcs.map(s=>`<button class="chip ${s==='all'?'allchip':''} ${NEWS_FILTER===s?'on':''}" data-src="${esc(s)}" onclick="NEWS_FILTER=this.dataset.src;renderNews()">${esc(s==='all'?'All sources':s)}<span class="count">${s==='all'?n.length:(buckets[s]||[]).length}</span></button>`).join('')}</div>`+(list.length?`<div class="newsGrid">`+list.map(a=>`<a class="ncard" href="${esc(a.link||a.url||'#')}" target="_blank" rel="noopener"><div class="srcTop"><span class="srcBadge">${esc(sourceName(a))}</span>${feedName(a)?`<span class="feedBadge">via ${esc(feedName(a))}</span>`:''}</div><div class="nhead">${esc(a.headline||a.title||'Untitled')}</div>${a.desc||a.description?`<div class="ndesc">${esc(a.desc||a.description)}</div>`:''}<div class="nmeta">${a.published?ago(a.published):''}</div></a>`).join('')+`</div>`:`<div class="empty">No headlines yet.</div>`)+(diag.length?`<div class="diagList">${diag.filter(d=>String(d).toLowerCase().includes('news')).map(d=>`<div>${esc(d)}</div>`).join('')}</div>`:'')}
+function renderNews(){const n=DATA.news||[],host=$('#view-news'),diag=DATA.diagnostics||[];const buckets=newsBuckets(),srcs=newsSources();if(NEWS_FILTER!=='all'&&!buckets[NEWS_FILTER])NEWS_FILTER='all';let list=NEWS_FILTER==='all'?diverseNews(Math.max(n.length,18)):buckets[NEWS_FILTER]||[];host.innerHTML=`<div class="vhead">News cycle</div><div class="srcCount">${n.length} headlines · ${srcs.length-1} detected sources</div><div class="newsTools">${srcs.map(s=>`<button class="chip ${s==='all'?'allchip':''} ${NEWS_FILTER===s?'on':''}" data-src="${esc(s)}" onclick="NEWS_FILTER=this.dataset.src;renderNews()">${esc(s==='all'?'All sources':s)}<span class="count">${s==='all'?n.length:(buckets[s]||[]).length}</span></button>`).join('')}</div>`+(list.length?`<div class="newsGrid">`+list.map(a=>`<a class="ncard" href="${esc(a.link||a.url||'#')}" target="_blank" rel="noopener"><div class="srcTop"><span class="srcBadge">${esc(sourceName(a))}</span>${feedName(a)?`<span class="feedBadge">via ${esc(feedName(a))}</span>`:''}</div><div class="nhead">${esc(a.headline||a.title||'Untitled')}</div>${a.desc||a.description?`<div class="ndesc">${esc(a.desc||a.description)}</div>`:''}<div class="nmeta">${a.published?ago(a.published):''}</div></a>`).join('')+`</div>`:`<div class="empty">No headlines yet.</div>`)+(diag.length?`<div class="diagList">${diag.filter(d=>String(d).toLowerCase().includes('news')).map(d=>`<div>${esc(d)}</div>`).join('')}</div>`:'')}
 
 
 
@@ -351,7 +350,7 @@ function _bracketSourceMap(rounds){
 }
 function _slotTBD(label){return {slot:label,team:'TBD',code:'',pts:0,gd:0,live:false}}
 function _projectedSlots32(){
-  const src=(DATA.projected_bracket&&Array.isArray(DATA.projected_bracket.slots)&&DATA.projected_bracket.slots.length)?DATA.projected_bracket.slots:getProjectedSlots();
+  const src=getProjectedSlots();
   const out=[];
   for(let i=0;i<32;i++)out.push(src[i]||_slotTBD(`Seed ${i+1}`));
   return out;
@@ -431,9 +430,6 @@ function lineupsPanel(m){
   return `<div class="lineupBoard pitchMode"><div class="seclbl">Lineups</div><div class="emptyStats"><b>${esc(title)}</b><span>${esc(note)}</span></div></div>`;
 }
 function teamSnap(team,side,comp){return `<div class="teamSnap ${side==='away'?'away':''}"><div class="snapCode">${teamFlagHTML(team,side==='away')}${esc(team?.code||side)}</div><div class="snapName">${esc(team?.name||'TBD')}</div><div class="snapMeta">${esc(teamStandingsMeta(team,comp,{diff:true,form:true,hideStaleRecord:['NCAAF','NFL'].includes(String(comp||'').toUpperCase())}).join(' · '))}</div></div>`}
-function oddsTier(p,i){p=Number(p)||0;if(i<3)return'hot';if(p>=7)return'live';if(p>=3)return'chase';return''}
-function oddsTierText(p,i){p=Number(p)||0;if(i<3)return'Contender';if(p>=7)return'In range';if(p>=3)return'Chaser';return'Long shot'}
-function oddsCode(x){return x.code||codeForTeam(x.team||'',x.code||'')||''}
 /* dedup */
 function _v15RenderLeagueTable(st,host){const seen=new Set(),teams=[];(st||[]).forEach(g=>(g.teams||[]).forEach(t=>{const key=String(t.name||t.code||'').toLowerCase();if(key&&!seen.has(key)){seen.add(key);teams.push(t)}}));teams.sort((a,b)=>(Number(a.pos)||999)-(Number(b.pos)||999)||(Number(b.pts)||0)-(Number(a.pts)||0)||(Number(b.gd)||0)-(Number(a.gd)||0));host.innerHTML=`<div class="vhead">Table</div><div class="tablewrap leagueTableWrap"><div class="groupHead">${esc(DATA.competition||'League table')}<span>${teams.length} clubs · full table</span></div><table class="gtable"><thead><tr><th>Team</th><th>P</th><th>W</th><th>D</th><th>L</th><th>GF</th><th>GA</th><th>GD</th><th>Pts</th><th>Form</th></tr></thead><tbody>${teams.map((t,i)=>{const q=t.qual?`<span class="qbadge ${esc(t.qual.status||'')}" title="${esc(t.qual.note||'')}">${esc(t.qual.status||t.qual.note||'')}</span>`:'';return `<tr><td><div class="gteam teamClickable" data-team="${esc(t.name||'')}" onclick="openTeamModal(this.dataset.team)"><span class="pos">${t.pos||i+1}</span><span class="code">${esc(t.code||'')}</span>${esc(t.name||'')} ${q}</div></td><td>${t.pld??'—'}</td><td>${t.w??'—'}</td><td>${t.d??'—'}</td><td>${t.l??'—'}</td><td>${t.gf??'—'}</td><td>${t.ga??'—'}</td><td>${t.gd??'—'}</td><td><b>${t.pts??'—'}</b></td><td class="form">${esc(t.form||'')}</td></tr>`}).join('')}</tbody></table></div>`}
 function _renderUCLLeagueTable(st,host){const teams=(st||[]).flatMap(group=>group.teams||[]).sort((a,b)=>(Number(a.pos)||999)-(Number(b.pos)||999));host.innerHTML=`<div class="vhead">League Phase</div><div class="tablewrap leagueTableWrap"><div class="groupHead">Champions League<span>36 clubs · eight league-phase matches each</span></div><table class="gtable"><thead><tr><th>Team</th><th>P</th><th>W</th><th>D</th><th>L</th><th>GF</th><th>GA</th><th>GD</th><th>Pts</th><th>Form</th></tr></thead><tbody>${teams.map((t,i)=>{const pos=Number(t.pos)||i+1,q=t.qual?`<span class="qbadge ${esc(t.qual.status||'')}" title="${esc(t.qual.note||'')}">${esc(t.qual.status||'')}</span>`:'';return `<tr class="${pos<=8?'qual':pos<=24?'third':''}"><td><div class="gteam teamClickable" data-team="${esc(t.name||'')}" onclick="openTeamModal(this.dataset.team)"><span class="pos">${pos}</span><span class="code">${esc(t.code||'')}</span>${esc(t.name||'')} ${q}</div></td><td>${t.pld??'—'}</td><td>${t.w??'—'}</td><td>${t.d??'—'}</td><td>${t.l??'—'}</td><td>${t.gf??'—'}</td><td>${t.ga??'—'}</td><td>${t.gd??'—'}</td><td><b>${t.pts??'—'}</b></td><td class="form">${esc(t.form||'')}</td></tr>`}).join('')}</tbody></table></div>`}
@@ -488,23 +484,6 @@ function openMatchModal(id){const m=BYID[id]||(DATA.matches||[]).find(x=>String(
 /* ===== MODEL PICK REDESIGN — v3 =====
    This override intentionally avoids the old .pick/.fchip markup inside the modal.
    It prevents vertical letters, cramped chips, and overlap. */
-function modelFactorCardsV3(pr){
-  if(!pr)return'';
-  const labels={pts:'points',gd:scoreDiffLabel(),record:'season record',margin:'scoring margin',rank:'poll rank',srs:'opponent-adjusted rating',form:'form',adv:'home',class:'class',rest:'rest',elo:'elo rating'};
-  const cards=[];
-  if(pr.why){
-    Object.entries(pr.why)
-      .filter(([k,v])=>Math.abs(Number(v)||0)>=0.3&&labels[k])
-      .sort((a,b)=>Math.abs(Number(b[1])||0)-Math.abs(Number(a[1])||0))
-      .forEach(([k,v])=>{
-        v=Number(v)||0;
-        cards.push(`<div class="mpFactor ${v>=0?'pos':'neg'}"><span class="label">${esc(labels[k])}</span><span class="value">${v>0?'+':''}${v.toFixed(1)}</span></div>`);
-      });
-  }
-  if(pr.damp_pct){cards.push(`<div class="mpFactor damp"><span class="label">variance</span><span class="value">−${esc(pr.damp_pct)}%</span></div>`)}
-  if(pr.mkt_pull){const v=Number(pr.mkt_pull)||0;cards.push(`<div class="mpFactor mkt"><span class="label">market pull</span><span class="value">${v>0?'+':''}${v}</span></div>`)}
-  return cards.length?`<div class="mpFactors">${cards.join('')}</div>`:'';
-}
 /* dedup */
 /* dedup */
 
@@ -517,21 +496,8 @@ function _v4PickSideLabel(m,side){
   if(side==='d')return 'Draw';
   return 'No pick';
 }
-function _v4SideCode(m,side){
-  if(side==='h')return m.home?.code||'Home';
-  if(side==='a')return m.away?.code||'Away';
-  if(side==='d')return 'Draw';
-  return '—';
-}
 function _v4ModelProbs(m){
   return officialPredictionProbabilities(m);
-}
-function _v4MarketPct(m,side){
-  const x=(m.markets||{})['1x2']||{};
-  if(side==='h')return x.home_pct;
-  if(side==='a')return x.away_pct;
-  if(side==='d')return x.draw_pct;
-  return null;
 }
 function sportClassMeta(pr,m){
   if(pr?.class_meta)return pr.class_meta;
@@ -580,11 +546,6 @@ function _v4FactorRows(pr,m){
       .forEach(([k])=>rows.push(`<div class="factorRow neu" title="No ${esc(availLabels[k])} were available when this pick locked, so the model could not use them."><span class="fName">${esc(availLabels[k])}</span><span class="fVal">no data</span></div>`));
   }
   return rows.length?rows.join(''):'<div class="factorRow neu"><span class="fName">No factor detail</span><span class="fVal">—</span></div>';
-}
-function _v4ProbabilityLines(m){
-  const p=_v4ModelProbs(m);
-  const rows=[['h',m.home?.code||m.home?.name||'Home','h'],['d','Draw','d'],['a',m.away?.code||m.away?.name||'Away','a']];
-  return rows.map(([side,label,cls])=>{const v=Math.max(0,Math.min(100,Math.round(Number(p[side])||0)));return `<div class="probLine"><span class="sideName">${esc(label)}</span><span class="probTrack"><i class="probFill ${cls}" style="width:${Math.max(3,v)}%"></i></span><span class="pct">${v}%</span></div>`}).join('');
 }
 /* dedup */
 function matchStory(m){const pr=m.prediction;if(!pr)return '';
@@ -682,13 +643,6 @@ function details(m){
   if(isMlbForecastPaused(m))return `<div class="detailGrid v4Detail">${forecastPauseHTML(m)}<div class="detailTop"><div class="readCard forecastMarketCard">${marketPanel(m)}</div></div><div class="detailLow">${statsPanel(m)}${lineupsPanel(m)}</div></div>`;
   return `<div class="detailGrid v4Detail">${matchStory(m)}${pregameContextPanel(m)}<div class="detailTop"><div class="readCard modelReadCard">${modelBlock(m)}</div><div class="readCard forecastMarketCard">${marketPanel(m)}</div></div><div class="detailLow">${statsPanel(m)}${lineupsPanel(m)}</div></div>`;
 }
-function _v4OutcomePct(m,side){
-  const x=(m.markets||{})['1x2']||{},p=_v4ModelProbs(m);
-  if(side==='h')return Number(x.home_pct??p.h??0);
-  if(side==='d')return Number(x.draw_pct??p.d??0);
-  if(side==='a')return Number(x.away_pct??p.a??0);
-  return 0;
-}
 /* dedup */
 function _v4TitleRows(t){
   if(!t.length)return '<div class="emptyForecast">No title-race snapshot yet.</div>';
@@ -735,7 +689,7 @@ function renderTitle(){
   if(titleBySport.length)html+=`<div class="forecastGrid single"><section class="forecastPanel"><div class="forecastPanelHead"><h3>Title forecasts — every sport</h3><span>${titleBySport.length} competitions</span></div><div class="raceList">${_v4TitleBySportRows(titleBySport)}</div></section></div>`;
   html+=_v4AdvancementTable(adv);
   html+=`<div class="forecastNote">Read these as probabilities, not calls: a 38% pick is supposed to lose most of the time.</div></div>`;
-  host=$('#view-title');host.innerHTML=html;
+  const host=$('#view-title');host.innerHTML=html;
 }
 
 
