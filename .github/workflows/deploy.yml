@@ -83,9 +83,15 @@ jobs:
             clv_report.json
             independent_value_report.json
             player_db_*.json
-            posts.json
-            posts_state.json
-            posts/*.html
+            # posts.json / posts_state.json / posts/*.html are NOT cached.
+            # They are git-tracked and committed back below, and caching a
+            # tracked file means the restore-keys fallback lands an older
+            # copy on top of the checked-out one every run -- the clobber
+            # already documented for ratings*.json. It cost 13 consecutive
+            # hourly deploys: generate_posts.py's comp filter culled the
+            # editorial posts, the culled posts.json was cached, and it was
+            # then restored over every fixed checkout, so the source fix
+            # could not take effect.
             fetch_failure_*.json
           key: matchday-fetch-state-${{ github.run_id }}
           restore-keys: matchday-fetch-state-
@@ -376,6 +382,20 @@ jobs:
           git config user.name "matchday-bot"
           git config user.email "actions@github.com"
           git add -- 'ratings*.json' ':!ratings*.backup.json' ':!ratings*.legacy.json' ':!ratings*.raced-preserved.json' 'picks_log*.json'
+          # The published editorial record. posts.json, the due-ledger that
+          # decides whether a recap has already gone out, and the rendered
+          # pages must move together in one commit or the site links posts
+          # whose HTML 404s. Uses the same present-files-only collection as
+          # the ledgers below because `git add` exits 128 on a pathspec that
+          # matches nothing, which would fail the job -- and with it the
+          # deploy -- on a run where nothing was wrong.
+          published=$(ls posts.json posts_state.json 2>/dev/null || true)
+          if [ -n "$published" ]; then
+            git add -- $published
+          fi
+          if ls posts/*.html >/dev/null 2>&1; then
+            git add -- 'posts/*.html' ':!posts/research-*.html'
+          fi
           # Durable and slow-moving: committing it means the one CFBD call
           # never has to be spent again, even on a cold cache.
           if [ -f ncaaf_venue_coords.json ]; then
