@@ -73,6 +73,52 @@ class PregameContextTests(unittest.TestCase):
                               ["starting_pitchers", "lineups"])
         self.assertFalse(context["confidence_guard"]["high_confidence_label_allowed"])
 
+    def test_market_listed_starters_read_as_available_not_missing(self):
+        """The only starter source Matchday actually has must reach the panel.
+
+        SportsGameOdds writes its inference under starter_candidates so a
+        prop-derived name can never be mistaken for a team sheet. Reading only
+        the canonical key reported "missing" on fixtures where a candidate had
+        been collected, and flagged it as a missing critical input.
+        """
+        match = {
+            "status": "UPCOMING", "kickoff": "2026-08-04T12:00:00Z",
+            "markets": {"1x2": {"home_pct": 52, "away_pct": 48}},
+            "lineups": {"home": {"xi": [{"name": "A"}], "confirmed": True},
+                        "away": {"xi": [{"name": "B"}], "confirmed": True}},
+            "personnel": {"starter_candidates": {
+                "home": {"name": "P1", "confirmed": False},
+                "away": {"name": "P2", "confirmed": False}}},
+        }
+        context = pregame_context.build_pregame_context(
+            match, "MLB", "baseball", dt.datetime(2026, 8, 4, 10, tzinfo=dt.timezone.utc))
+        self.assertEqual(context["inputs"]["starting_pitchers"], "available")
+        self.assertEqual(context["missing_critical"], [])
+        self.assertIn("starting_pitchers", context["unconfirmed_critical"])
+        self.assertFalse(context["confidence_guard"]["high_confidence_label_allowed"])
+
+    def test_a_starter_candidate_can_never_read_as_confirmed(self):
+        match = {
+            "status": "UPCOMING", "kickoff": "2026-08-04T12:00:00Z",
+            "markets": {"1x2": {"home_pct": 52, "away_pct": 48}},
+            "personnel": {"starter_candidates": {"home": {"name": "P1"},
+                                                 "away": {"name": "P2"}},
+                          # A stale flag from an earlier licensed run must not
+                          # promote an inference it was never about.
+                          "starting_pitchers_confirmed": True},
+        }
+        context = pregame_context.build_pregame_context(
+            match, "MLB", "baseball", dt.datetime(2026, 8, 4, 10, tzinfo=dt.timezone.utc))
+        self.assertEqual(context["inputs"]["starting_pitchers"], "available")
+
+    def test_starter_candidates_are_frozen_in_the_shadow_snapshot(self):
+        match = {"personnel": {"starter_candidates": {"home": {"name": "P1"}}}}
+        pregame_context.attach_personnel_shadows([match], "baseball")
+        self.assertEqual(
+            match["personnel_shadow"]["features"]["starter_candidates"],
+            {"home": {"name": "P1"}})
+        self.assertEqual(match["personnel_shadow"]["production_weight"], 0)
+
     def test_successfully_checked_zero_injuries_is_available_not_missing(self):
         match = {"status": "UPCOMING", "kickoff": "2026-08-04T12:00:00Z",
                  "markets": {}, "injuries": {"home": [], "away": []},

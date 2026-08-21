@@ -605,7 +605,12 @@ function pregameContextPanel(m){
   const rows=(inWindow?inputPairs:confirmedPairs).map(([key,value])=>`<div class="factorRow ${value==='confirmed'?'pos':'neu'}"><span class="fName">${esc(labels[key]||key)}</span><span class="fVal">${esc(value)}</span></div>`).join('');
   const lead=Number(ctx.lead_time_hours);
   const pendingLine=(!inWindow&&pendingPairs.length)?`<div class="contextPending"><b>Still to arrive</b><span>${pendingPairs.map(([key])=>esc(labels[key]||key)).join(' · ')}</span><small>${lead>0?`Kickoff is ${lead>=48?Math.round(lead/24)+' days':Math.round(lead)+'h'} away — these confirm closer to it.`:'These confirm closer to kickoff.'}</small></div>`:'';
-  const pitchers=m.personnel?.starting_pitchers||{};
+  // Only a licensed feed writes starting_pitchers; SportsGameOdds writes its
+  // market-listed inference under starter_candidates so the two can never be
+  // confused. Reading only the first meant this card showed nothing at all on
+  // every fixture, and the "not confirmed" wording below was unreachable.
+  const pitchers=m.personnel?.starting_pitchers||m.personnel?.starter_candidates||{};
+  const pitchersConfirmed=!!(m.personnel?.starting_pitchers&&m.personnel?.starting_pitchers_confirmed);
   const starterNames=['home','away'].map(side=>pitchers[side]?.name).filter(Boolean);
   const marketHitters=m.personnel?.market_listed_hitters||{};
   const bullpen=m.personnel?.bullpen||{};
@@ -622,7 +627,7 @@ function pregameContextPanel(m){
     return `${esc(team?.code||team?.name||side)} expected: ${players.map(p=>`${esc(p.position||'')} ${esc(p.name||'')}${p.roster_status&&p.roster_status!=='ACT'?` <b>(${esc(p.roster_status)})</b>`:''}`).join(' · ')}`;
   };
   const detailNotes=[];
-  if(starterNames.length)detailNotes.push(`<div class="contextNote"><b>${m.personnel?.starting_pitchers_confirmed?'Confirmed starters':'Starter candidates'}</b><span>${starterNames.map(esc).join(' · ')}</span>${m.personnel?.starting_pitchers_confirmed?'':'<small>Market-listed, not confirmed</small>'}</div>`);
+  if(starterNames.length)detailNotes.push(`<div class="contextNote"><b>${pitchersConfirmed?'Confirmed starters':'Starter candidates'}</b><span>${starterNames.map(esc).join(' · ')}</span>${pitchersConfirmed?'':'<small>Market-listed, not confirmed</small>'}</div>`);
   if((marketHitters.home||[]).length||(marketHitters.away||[]).length)detailNotes.push(`<div class="contextNote"><b>Likely active hitters</b><span>${(marketHitters.home||[]).length} home · ${(marketHitters.away||[]).length} away</span><small>From player markets; unordered and unconfirmed</small></div>`);
   if(injuryCount)detailNotes.push(`<div class="contextNote"><b>Availability report</b><span>${injuryCount} unavailable or questionable player${injuryCount===1?'':'s'}</span></div>`);
   ['home','away'].map(depthLine).filter(Boolean).forEach(line=>detailNotes.push(`<div class="contextNote contextNoteWide"><b>Expected depth</b><span>${line}</span></div>`));

@@ -6767,7 +6767,11 @@ def _merge_sportsdataio_cached_pregame(match, row, *, stale=False):
             for item in (personnel.get(group) or {}).values():
                 if isinstance(item, dict) and not confirmed:
                     item["confirmed"] = False
-        match["personnel"] = personnel
+        # Merge, do not replace. This overlay runs after the SportsGameOdds
+        # overlay and the bullpen-rest proxy, so assigning the cached dict
+        # wholesale silently dropped starter_candidates, market_listed_hitters
+        # and bullpen from every fixture the licensed cache also covered.
+        match.setdefault("personnel", {}).update(personnel)
     if detached.get("injuries_shadow"):
         match["injuries_shadow"] = detached["injuries_shadow"]
     provenance = list(detached.get("pregame_provenance") or [])
@@ -6859,8 +6863,9 @@ def fetch_sportsdataio_pregame_overlay(matches):
 def _merge_sportsgameodds_overlay(match, row):
     """Restore only normalized, non-ESPN fields from the quota-saving cache."""
     if not isinstance(row, dict):
-        return {"markets": 0, "venues": 0, "starting_pitchers": 0, "lineups": 0}
-    markets = venues = pitchers = lineups = 0
+        return {"markets": 0, "venues": 0, "starting_pitchers": 0, "lineups": 0,
+                "starter_candidates": 0}
+    markets = venues = pitchers = lineups = candidates = 0
     incoming = (row.get("markets") or {}).get("1x2")
     if incoming and not (match.get("markets") or {}).get("1x2"):
         match.setdefault("markets", {})["1x2"] = incoming
@@ -6874,6 +6879,7 @@ def _merge_sportsgameodds_overlay(match, row):
     # lineups. Never restore those keys, even from a bounded stale cache.
     if cached_personnel.get("starter_candidates") and not personnel.get("starter_candidates"):
         personnel["starter_candidates"] = cached_personnel["starter_candidates"]
+        candidates += 1
     if cached_personnel.get("market_listed_hitters") and not personnel.get("market_listed_hitters"):
         personnel["market_listed_hitters"] = cached_personnel["market_listed_hitters"]
     provenance = match.setdefault("pregame_provenance", [])
@@ -6881,7 +6887,8 @@ def _merge_sportsgameodds_overlay(match, row):
         if item not in provenance:
             provenance.append(item)
     return {"markets": markets, "venues": venues,
-            "starting_pitchers": pitchers, "lineups": lineups}
+            "starting_pitchers": pitchers, "lineups": lineups,
+            "starter_candidates": candidates}
 
 
 def derive_mlb_bullpen_rest_context(matches, now=None):
@@ -6975,7 +6982,8 @@ def fetch_sportsgameodds_overlay(matches):
         DIAG.append("SportsGameOdds overlay: no missing near-term market")
         result = {"markets": 0, "venues": 0}
         if COMP_KEY == "MLB":
-            result.update({"starting_pitchers": 0, "lineups": 0})
+            result.update({"starting_pitchers": 0, "lineups": 0,
+                           "starter_candidates": 0})
         return result
 
     cached = None
@@ -7035,7 +7043,7 @@ def fetch_sportsgameodds_overlay(matches):
             os.replace(tmp, SPORTSGAMEODDS_CACHE_FILE)
             DIAG.append(f"SportsGameOdds overlay: {result['markets']} market(s), "
                         f"{result['venues']} venue(s), "
-                        f"{result.get('starting_pitchers', 0)} starter candidate(s), "
+                        f"{result.get('starter_candidates', 0)} starter candidate(s), "
                         f"{result.get('lineups', 0)} inferred lineup(s), {len(events)} object(s)")
             return result
         except ProviderError as exc:
@@ -7051,12 +7059,13 @@ def fetch_sportsgameodds_overlay(matches):
                 DIAG.append(f"SportsGameOdds overlay: bounded stale cache after provider error — {_scrub(exc)}")
             except Exception:
                 DIAG.append(f"SportsGameOdds overlay unavailable — {_scrub(exc)}")
-                return {"markets": 0, "venues": 0,
-                        "starting_pitchers": 0, "lineups": 0}
+                return {"markets": 0, "venues": 0, "starting_pitchers": 0,
+                        "lineups": 0, "starter_candidates": 0}
     else:
         DIAG.append("SportsGameOdds overlay: local cache")
 
-    totals = {"markets": 0, "venues": 0, "starting_pitchers": 0, "lineups": 0}
+    totals = {"markets": 0, "venues": 0, "starting_pitchers": 0, "lineups": 0,
+              "starter_candidates": 0}
     rows = cached.get("matches") if isinstance(cached, dict) else {}
     for match in targets:
         added = _merge_sportsgameodds_overlay(match, (rows or {}).get(str(match.get("id"))))

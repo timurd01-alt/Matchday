@@ -1429,6 +1429,27 @@ class SportsDataIOCacheConfirmationTests(unittest.TestCase):
         self.assertTrue(self.match["lineups"]["confirmed"])
         self.assertTrue(self.match["personnel"]["starting_pitchers_confirmed"])
 
+    def test_licensed_cache_does_not_erase_earlier_personnel(self):
+        """This overlay runs last. Replacing the dict dropped what came before.
+
+        The SportsGameOdds overlay and the bullpen-rest proxy both write into
+        personnel earlier in the run, so assigning the cached dict wholesale
+        deleted starter candidates, market-listed hitters and bullpen rest from
+        every fixture the licensed cache also covered.
+        """
+        self.match["personnel"] = {
+            "starter_candidates": {"home": {"name": "Candidate", "confirmed": False}},
+            "market_listed_hitters": {"home": [{"name": "Hitter"}], "away": []},
+            "bullpen": {"home": {"status": "elevated"}},
+            "bullpen_confirmed": False,
+        }
+        fetch_data._merge_sportsdataio_cached_pregame(self.match, self.row())
+        personnel = self.match["personnel"]
+        self.assertEqual(personnel["starter_candidates"]["home"]["name"], "Candidate")
+        self.assertEqual(personnel["market_listed_hitters"]["home"][0]["name"], "Hitter")
+        self.assertEqual(personnel["bullpen"]["home"]["status"], "elevated")
+        self.assertTrue(personnel["starting_pitchers_confirmed"])
+
 
 class SportsGameOddsOverlayTests(unittest.TestCase):
     @staticmethod
@@ -1501,7 +1522,8 @@ class SportsGameOddsOverlayTests(unittest.TestCase):
                                        "upcoming_events", return_value=[]) as upcoming:
                     self.assertEqual(fetch_data.fetch_sportsgameodds_overlay([match]),
                                      {"markets": 0, "venues": 0,
-                                      "starting_pitchers": 0, "lineups": 0})
+                                      "starting_pitchers": 0, "lineups": 0,
+                                      "starter_candidates": 0})
                 upcoming.assert_called_once()
         finally:
             (fetch_data.COMP_KEY, fetch_data.COMP, fetch_data.SPORTSGAMEODDS_KEY,
