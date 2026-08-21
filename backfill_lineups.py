@@ -67,6 +67,8 @@ import os
 import sys
 import time
 
+import fetch_data as fd
+
 
 def _load_data_file(comp_key):
     path = f"data_{comp_key.lower()}.json"
@@ -85,8 +87,11 @@ def main():
     ap.add_argument("--dry-run", action="store_true", help="walk the real plan, spend zero requests")
     a = ap.parse_args()
 
-    os.environ["MATCHDAY_COMP"] = a.comp.upper()
-    import fetch_data as fd  # deferred: needs MATCHDAY_COMP set first, same as backfill_history.py
+    # Was: set MATCHDAY_COMP, then import fetch_data here rather than at
+    # module scope, because fetch_data resolved its competition once at
+    # import and never again. set_competition() replaced that, so the
+    # import is ordinary and the competition is chosen explicitly.
+    fd.set_competition(a.comp)
 
     if fd.COMP.get("sport") != "soccer":
         sys.exit(f"{a.comp} isn't a soccer competition -- lineups/clean sheets are soccer-only")

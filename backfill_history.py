@@ -264,8 +264,12 @@ def run(comps, dry_run=False, elo_file=None, plan=None):
         if not entries:
             print(f"[{comp_key}] no PLAN entry -- skipping")
             continue
-        fd.COMP_KEY = comp_key
-        fd.COMP = dict(fd.COMPETITIONS[comp_key])
+        # Equivalent to the COMP_KEY/COMP pair this replaced -- this loop only
+        # reads Elo, which is not competition-derived (ELO_FILE is overridden
+        # above and set_competition leaves it alone). Routed through the one
+        # switch anyway so a future season loop that does touch the ratings or
+        # picks ledger gets the right paths instead of the import-time ones.
+        fd.set_competition(comp_key)
         is_college = entries[0][1] in {"cfbd", "cbbd"}
         print(f"=== {comp_key}: {len(entries)} season(s), "
               f"{entries[0][0]}-{entries[-1][0]}, oldest first ===")

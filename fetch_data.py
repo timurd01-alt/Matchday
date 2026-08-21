@@ -17,7 +17,7 @@ Run:  python fetch_data.py          (once)
       python fetch_data.py --loop   (hourly result checks)
 """
 
-import json, os, sys, time, datetime, re, unicodedata, urllib.request, urllib.error, urllib.parse, math, traceback
+import json, os, sys, time, datetime, re, unicodedata, urllib.request, urllib.error, urllib.parse, math, traceback, contextlib
 import xml.etree.ElementTree as ET
 from email.utils import parsedate_to_datetime
 from collections import defaultdict
@@ -28,6 +28,7 @@ import mlb_shadow_ledger
 import market_snapshots
 import pregame_context
 import provider_quota
+import refresh_ncaaf_venues
 from pick_integrity import is_official_pick_record
 from advanced_metrics_store import attach_shadow_profiles
 from mlb_challenger_store import attach_mlb_challenger_shadows
@@ -261,38 +262,124 @@ COMPETITIONS = {
             "outright": "basketball_nba_championship_winner", "tournament": False,
             "source": "balldontlie", "has_draws": False},
 }
+# ---- the active competition -------------------------------------------------
+# COMP_KEY is a module-level singleton, and ~15 further module-level values are
+# derived from it: the market URLs, every per-competition cache path, the
+# ratings/opening-odds/picks ledgers, and the news feed set.
+#
+# Those derivations used to run inline at import and never again, so assigning
+# COMP_KEY left the module half-switched -- COMP_KEY reporting NCAAF while
+# RATINGS_FILE still pointed at the World Cup ledger. Every caller that needed
+# to switch competition hand-patched around that to a different depth:
+# refresh_college_talent reset RATINGS_FILE and the _RATINGS cache,
+# backfill_history and audit_model_vs_market reset neither, and nothing
+# anywhere reset RSS_FEEDS. Tests carried the same hazard at scale -- 70
+# assignments to COMP_KEY against 24 restores.
+#
+# _competition_state() below is now the single place any of it is derived, and
+# set_competition() applies it atomically. Switching is an explicit call:
+# assigning the attribute still only moves the key, and
+# test_competition_switch.CallerDisciplineTests fails any production module
+# that tries it.
+_COMP_FLAGS = ("--ucl", "--wc", "--nfl", "--nba", "--ncaaf", "--ncaam", "--epl",
+               "--laliga", "--seriea", "--bundesliga", "--ligue1", "--mlb", "--nhl")
+
 try:
     from config_keys import COMPETITION as _COMP
 except Exception:
     _COMP = "WC"
-if "--ucl" in sys.argv: _COMP = "UCL"
-if "--wc" in sys.argv:  _COMP = "WC"
-if "--nfl" in sys.argv: _COMP = "NFL"
-if "--nba" in sys.argv: _COMP = "NBA"
-if "--ncaaf" in sys.argv: _COMP = "NCAAF"
-if "--ncaam" in sys.argv: _COMP = "NCAAM"
-if "--epl" in sys.argv: _COMP = "EPL"
-if "--laliga" in sys.argv: _COMP = "LALIGA"
-if "--seriea" in sys.argv: _COMP = "SERIEA"
-if "--bundesliga" in sys.argv: _COMP = "BUNDESLIGA"
-if "--ligue1" in sys.argv: _COMP = "LIGUE1"
-if "--mlb" in sys.argv: _COMP = "MLB"
-if "--nhl" in sys.argv: _COMP = "NHL"
+for _flag in _COMP_FLAGS:      # last matching flag wins, as the if-chain did
+    if _flag in sys.argv:
+        _COMP = _flag[2:].upper()
 _env = os.environ.get("MATCHDAY_COMP", "").upper()
 if _env: _COMP = _env
-COMP_KEY = str(_COMP).upper() if str(_COMP).upper() in COMPETITIONS else "WC"
-COMP = COMPETITIONS[COMP_KEY]
 
-ODDS_URL = (f"https://api.the-odds-api.com/v4/sports/{COMP['odds']}/odds/"
-            "?regions=eu&markets=h2h&oddsFormat=decimal")
+
+def normalize_competition(key):
+    """The COMP_KEY this module would use for `key`; unknown keys fall back to WC."""
+    text = str(key or "").upper()
+    return text if text in COMPETITIONS else "WC"
+
+
+def _competition_state(key):
+    """Every module-level value derived from the active competition.
+
+    Both the import-time application further down and set_competition() apply
+    this one dict, so the two cannot drift apart. RSS_FEEDS is built separately
+    by _build_rss_feeds() because it needs helpers defined later in the module.
+    """
+    comp = COMPETITIONS[key]
+    low = key.lower()
+    return {
+        "COMP_KEY": key,
+        "COMP": comp,
+        "ODDS_URL": (f"https://api.the-odds-api.com/v4/sports/{comp['odds']}/odds/"
+                     "?regions=eu&markets=h2h&oddsFormat=decimal"),
+        "OUTRIGHTS_URL": (f"https://api.the-odds-api.com/v4/sports/{comp['outright']}/odds/"
+                          "?regions=eu&markets=outrights&oddsFormat=decimal"),
+        "ODDS_CACHE_FILE": f"odds_market_cache_{low}.json",
+        "OUTRIGHTS_CACHE_FILE": f"outrights_market_cache_{low}.json",
+        "API_FOOTBALL_CACHE_FILE": f"api_football_box_cache_{low}.json",
+        "SPORTSDATAIO_PREGAME_CACHE_FILE": f"sportsdataio_pregame_{low}_cache.json",
+        "BBS_PREGAME_CACHE_FILE": f"bbs_pregame_{low}_cache.json",
+        "PREGAME_CONTEXT_CACHE_FILE": f"pregame_{low}_cache.json",
+        "SPORTSGAMEODDS_CACHE_FILE": f"sportsgameodds_{low}_cache.json",
+        "OPEN_FILE": f"odds_open_{low}.json",          # first-seen ("opening") odds
+        "RATINGS_FILE": f"ratings_{low}.json" if key != "WC" else "ratings.json",
+        "PLAYER_DB_FILE": f"player_db_{low}.json",     # accumulates from lineups + results
+        "PICKS_FILE": f"picks_log_{low}.json",         # committed picks
+        "_news_term": NEWS_TERMS.get(key, comp["label"]),
+    }
+
+
+def set_competition(key):
+    """Point the whole module at `key`, derived values and caches together.
+
+    Returns the normalized COMP_KEY. Safe to call repeatedly. The per-competition
+    load caches (_RATINGS, _OPEN) and the market/news response caches are cleared,
+    because each holds data for the competition that was active when it was filled.
+    """
+    resolved = normalize_competition(key)
+    state = _competition_state(resolved)
+    globals().update(state)
+    globals()["RSS_FEEDS"] = _build_rss_feeds(resolved, state["COMP"], state["_news_term"])
+    globals()["_RATINGS"] = None
+    globals()["_OPEN"] = None
+    _ODDS_CACHE.update({"t": 0.0, "data": {}})
+    _OUT_CACHE.update({"t": 0.0, "data": []})
+    _NEWS_CACHE.update({"t": 0.0, "data": []})
+    return resolved
+
+
+@contextlib.contextmanager
+def competition(key):
+    """Run a block against `key`, restoring the previous competition afterwards.
+
+    The restore is the point: switching by assignment leaks the new competition
+    into whatever runs next, which is how the test suite ended up with 70
+    switches and 24 restores.
+    """
+    previous = COMP_KEY
+    set_competition(key)
+    try:
+        yield COMP_KEY
+    finally:
+        set_competition(previous)
+
+
+# Routing `fetch_data.COMP_KEY = ...` through set_competition() automatically was
+# tried and deliberately rejected: it made an innocuous-looking assignment reset
+# ~15 values and clear caches at a distance, which silently discarded the
+# temp-file RATINGS_FILE override that RatingsLookupTests sets up and wrote test
+# data into the tracked ratings_ncaam.json / ratings_ncaaf.json. Switching is an
+# explicit call instead, and test_competition_switch_is_atomic asserts that
+# production modules use it rather than assigning the attribute.
+
 ODDS_FREE_QUOTA_URL = "https://api.the-odds-api.com/v4/sports/?apiKey="
-ODDS_CACHE_FILE = f"odds_market_cache_{COMP_KEY.lower()}.json"
-OUTRIGHTS_CACHE_FILE = f"outrights_market_cache_{COMP_KEY.lower()}.json"
 PREGAME_ODDS_WINDOW_HOURS = 3
 UA = {"User-Agent": "Mozilla/5.0 (matchday-terminal)"}
 
 API_FOOTBALL_BASE = "https://v3.football.api-sports.io"
-API_FOOTBALL_CACHE_FILE = f"api_football_box_cache_{COMP_KEY.lower()}.json"
 API_FOOTBALL_DAYS_BACK = 10     # recent finished matches to enrich with box scores
 API_FOOTBALL_MAX_STATS = 18     # safety cap for the free daily request budget
 # Lineups share the same free-plan request budget as box stats (100/day,
@@ -311,14 +398,10 @@ API_FOOTBALL_MAX_LINEUPS = 10
 # looks forward from now rather than back from kickoff or from full time.
 API_FOOTBALL_INJURY_PRE_KICKOFF_HOURS = 72
 API_FOOTBALL_MAX_INJURIES = 8
-SPORTSDATAIO_PREGAME_CACHE_FILE = f"sportsdataio_pregame_{COMP_KEY.lower()}_cache.json"
 SPORTSDATAIO_PREGAME_CACHE_MIN = 15
 SPORTSDATAIO_PREGAME_STALE_MAX_HOURS = 6
-BBS_PREGAME_CACHE_FILE = f"bbs_pregame_{COMP_KEY.lower()}_cache.json"
 BBS_PREGAME_CACHE_MIN = 45
 BBS_PREGAME_STALE_MAX_HOURS = 24
-PREGAME_CONTEXT_CACHE_FILE = f"pregame_{COMP_KEY.lower()}_cache.json"
-SPORTSGAMEODDS_CACHE_FILE = f"sportsgameodds_{COMP_KEY.lower()}_cache.json"
 # The free plan is capped at 2,500 returned objects per month across seven
 # Matchday competitions. One request per competition per day, capped at eight
 # events, remains inside that budget; hourly odds polling would not.
@@ -349,8 +432,6 @@ def _is_quota_error(exc):
     return "out_of_usage" in s or "usage quota" in s or "quota has been reached" in s
 _OUT_CACHE  = {"t": 0.0, "data": []}
 _NEWS_CACHE = {"t": 0.0, "data": []}
-OUTRIGHTS_URL = (f"https://api.the-odds-api.com/v4/sports/{COMP['outright']}/odds/"
-                 "?regions=eu&markets=outrights&oddsFormat=decimal")
 # Was 60: a championship-futures market barely moves hour to hour, so an
 # hourly refresh bought nothing but quota risk -- 6 competitions carry an
 # outright market (WC, NFL, NCAAF, NCAAM, MLB, NBA) sharing one 500/month
@@ -480,28 +561,62 @@ def _google_news_feed(source, site, term):
     return source, f"https://news.google.com/rss/search?q={q}&hl=en-US&gl=US&ceid=US:en"
 
 
-_news_term = NEWS_TERMS.get(COMP_KEY, COMP["label"])
-RSS_FEEDS = []
-if COMP["sport"] == "soccer":
-    # Strong direct football feeds, then competition-specific source searches.
-    RSS_FEEDS.extend([
-        ("BBC Sport", "https://feeds.bbci.co.uk/sport/football/rss.xml"),
-        ("The Guardian", "https://www.theguardian.com/football/rss"),
-        ("Sky Sports", "https://www.skysports.com/rss/12040"),
-        ("CBS Sports", "https://www.cbssports.com/rss/headlines/soccer/"),
-        ("FOX Sports", "https://api.foxsports.com/v1/rss?tag=soccer"),
-    ])
+def _build_rss_feeds(key, comp, news_term):
+    """The news feed set for one competition.
 
-# These source-specific searches work across every sport and keep one outlet
-# from taking over when a league's direct RSS feed is unavailable.
-for _source, _site in (
-    ("Reuters", "reuters.com"), ("Associated Press", "apnews.com"),
-    ("CBS Sports", "cbssports.com"), ("FOX Sports", "foxsports.com"),
-    ("NBC Sports", "nbcsports.com"), ("Yahoo Sports", "sports.yahoo.com"),
-):
-    RSS_FEEDS.append(_google_news_feed(_source, _site, _news_term))
-if COMP_KEY == "WC":
-    RSS_FEEDS.append(_google_news_feed("FIFA", "fifa.com", _news_term))
+    Was inline module-level code, which meant it was built once for whatever
+    competition was active at import and never rebuilt -- the one piece of
+    competition-scoped state no caller reset when switching. set_competition()
+    calls this now, so a switch takes the news feeds with it.
+    """
+    feeds = []
+    if comp["sport"] == "soccer":
+        # Strong direct football feeds, then competition-specific source searches.
+        feeds.extend([
+            ("BBC Sport", "https://feeds.bbci.co.uk/sport/football/rss.xml"),
+            ("The Guardian", "https://www.theguardian.com/football/rss"),
+            ("Sky Sports", "https://www.skysports.com/rss/12040"),
+            ("CBS Sports", "https://www.cbssports.com/rss/headlines/soccer/"),
+            ("FOX Sports", "https://api.foxsports.com/v1/rss?tag=soccer"),
+        ])
+
+    # These source-specific searches work across every sport and keep one outlet
+    # from taking over when a league's direct RSS feed is unavailable.
+    for source, site in (
+        ("Reuters", "reuters.com"), ("Associated Press", "apnews.com"),
+        ("CBS Sports", "cbssports.com"), ("FOX Sports", "foxsports.com"),
+        ("NBC Sports", "nbcsports.com"), ("Yahoo Sports", "sports.yahoo.com"),
+    ):
+        feeds.append(_google_news_feed(source, site, news_term))
+    if key == "WC":
+        feeds.append(_google_news_feed("FIFA", "fifa.com", news_term))
+    return feeds
+
+
+# ---- apply the competition resolved at the top of the module ----------------
+# Deferred to here rather than done beside the flag parsing because
+# _competition_state() reads NEWS_TERMS and _build_rss_feeds() needs
+# _google_news_feed, both defined above. Assigned name by name rather than
+# through globals().update() so every constant stays statically visible at the
+# ~50 places in this module that read one.
+_STATE = _competition_state(normalize_competition(_COMP))
+COMP_KEY = _STATE["COMP_KEY"]
+COMP = _STATE["COMP"]
+ODDS_URL = _STATE["ODDS_URL"]
+OUTRIGHTS_URL = _STATE["OUTRIGHTS_URL"]
+ODDS_CACHE_FILE = _STATE["ODDS_CACHE_FILE"]
+OUTRIGHTS_CACHE_FILE = _STATE["OUTRIGHTS_CACHE_FILE"]
+API_FOOTBALL_CACHE_FILE = _STATE["API_FOOTBALL_CACHE_FILE"]
+SPORTSDATAIO_PREGAME_CACHE_FILE = _STATE["SPORTSDATAIO_PREGAME_CACHE_FILE"]
+BBS_PREGAME_CACHE_FILE = _STATE["BBS_PREGAME_CACHE_FILE"]
+PREGAME_CONTEXT_CACHE_FILE = _STATE["PREGAME_CONTEXT_CACHE_FILE"]
+SPORTSGAMEODDS_CACHE_FILE = _STATE["SPORTSGAMEODDS_CACHE_FILE"]
+OPEN_FILE = _STATE["OPEN_FILE"]
+RATINGS_FILE = _STATE["RATINGS_FILE"]
+PLAYER_DB_FILE = _STATE["PLAYER_DB_FILE"]
+PICKS_FILE = _STATE["PICKS_FILE"]
+_news_term = _STATE["_news_term"]
+RSS_FEEDS = _build_rss_feeds(COMP_KEY, COMP, _news_term)
 KO_PLAYOFF_ROUND = "Knockout phase play-offs"
 KO_STAGES = {"LAST_32": "Round of 32", "ROUND_OF_32": "Round of 32", "PLAYOFFS": KO_PLAYOFF_ROUND, "PLAY_OFF_ROUND": KO_PLAYOFF_ROUND, "LAST_16": "Round of 16",
              "QUARTER_FINALS": "Quarter-finals", "QUARTER_FINAL": "Quarter-finals",
@@ -794,7 +909,6 @@ def build_matches(raw, st):
     return out
 
 
-OPEN_FILE = f"odds_open_{COMP_KEY.lower()}.json"   # first-seen ("opening") odds, per competition
 LEGACY_OPEN = "odds_open.json"
 _OPEN = None
 
@@ -976,7 +1090,6 @@ def fetch_odds():
 # Weights for the ratings-based factors (tune freely; 0 disables a factor).
 # Scaled so long-term class roughly balances in-tournament results.
 FACTOR_WEIGHTS = {"fifa": 0.6, "squad_value": 0.35, "star": 0.2}
-RATINGS_FILE = f"ratings_{COMP_KEY.lower()}.json" if COMP_KEY != "WC" else "ratings.json"
 RATINGS_FALLBACK = "ratings.json"
 _RATINGS = None
 
@@ -1224,14 +1337,12 @@ def _college_venue_coords(venue):
     global _COLLEGE_VENUE_COORDS
     if _COLLEGE_VENUE_COORDS is None:
         try:
-            import refresh_ncaaf_venues
             _COLLEGE_VENUE_COORDS = refresh_ncaaf_venues.load()
         except Exception:
             _COLLEGE_VENUE_COORDS = ({}, {})
     by_name_city, by_name = _COLLEGE_VENUE_COORDS
     if not by_name and not by_name_city:
         return None
-    import refresh_ncaaf_venues
     # Exact match on the full name, qualifier included. Names that map to
     # more than one real site were dropped at build time.
     exact = by_name.get(refresh_ncaaf_venues.normalize(venue))
@@ -4254,7 +4365,6 @@ def fetch_news():
 
 
 # ---- player database (accumulates from lineups + results, per competition) ----
-PLAYER_DB_FILE = f"player_db_{COMP_KEY.lower()}.json"
 
 def _formation_roles(formation, n_players):
     """Map XI list order to roles using the formation string.
@@ -4578,7 +4688,6 @@ def fetch_scorers():
     return out
 
 
-PICKS_FILE = f"picks_log_{COMP_KEY.lower()}.json"   # committed picks, per competition
 LEGACY_PICKS = "picks_log.json"
 PICK_SCHEMA_VERSION = 2
 MODEL_CODE_MARKER = "matchday-predictor-integrity-2026-07"
