@@ -32,6 +32,17 @@ SPORT_INPUTS = {
     "hockey": ("market", "injuries", "starting_goalies", "lineups"),
 }
 
+# A canonical personnel key and the unconfirmed inference that stands in for
+# it when no licensed feed supplies the real thing.  SportsGameOdds deliberately
+# writes market-listed starters under their own key so a prop-derived name can
+# never be mistaken for a confirmed team sheet -- but reading only the canonical
+# key reported "starting pitchers: missing" on every MLB fixture, including the
+# ones where a candidate had in fact been collected and cached.  A fallback can
+# only ever reach "available"; see _status.
+FALLBACK_KEYS = {
+    "starting_pitchers": "starter_candidates",
+}
+
 CRITICAL_INPUTS = {
     "baseball": {"market", "starting_pitchers", "lineups"},
     "basketball": {"market", "injuries", "lineups"},
@@ -92,9 +103,14 @@ def _status(match, key):
         available = bool(match.get("venue_context") or match.get("venue"))
         confirmed = available
     else:
-        value = personnel.get(key)
+        canonical = personnel.get(key)
+        value = canonical
+        if not value:
+            value = personnel.get(FALLBACK_KEYS.get(key))
         available = bool(value)
-        confirmed = available and bool(personnel.get(f"{key}_confirmed"))
+        # Only the canonical key can be confirmed. A fallback is by
+        # construction an unconfirmed inference and must never read as more.
+        confirmed = bool(canonical) and bool(personnel.get(f"{key}_confirmed"))
     return "confirmed" if confirmed else "available" if available else "missing"
 
 
@@ -171,7 +187,8 @@ def attach_personnel_shadows(matches, sport):
             "weather": match.get("weather"),
             "venue_context": match.get("venue_context"),
         }
-        for key in ("starting_pitchers", "bullpen", "rotation", "key_players", "starting_goalies"):
+        for key in ("starting_pitchers", "starter_candidates", "bullpen", "rotation",
+                    "key_players", "starting_goalies"):
             if personnel.get(key):
                 fields[key] = personnel[key]
         match["personnel_shadow"] = {

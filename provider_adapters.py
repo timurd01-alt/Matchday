@@ -808,7 +808,7 @@ class SportsGameOddsAdapter:
                 "market_listed_hitters": hitter_rows}
 
     def attach_pregame(self, matches, events, observed_at=None, has_draws=False):
-        attached = venues = 0
+        attached = venues = candidates = 0
         for match in matches:
             event, join_receipt = self._event_join(events, match)
             if not event:
@@ -835,6 +835,7 @@ class SportsGameOddsAdapter:
                 personnel = match.setdefault("personnel", {})
                 if inferred["starter_candidates"]:
                     personnel["starter_candidates"] = inferred["starter_candidates"]
+                    candidates += 1
                 if any(inferred["market_listed_hitters"].values()):
                     personnel["market_listed_hitters"] = inferred["market_listed_hitters"]
             match.setdefault("pregame_provenance", []).append({
@@ -853,7 +854,12 @@ class SportsGameOddsAdapter:
         if self.competition == "MLB":
             # Preserve the public overlay-count contract while making clear
             # that no canonical starting-pitcher or lineup input was attached.
-            result.update({"starting_pitchers": 0, "lineups": 0})
+            # `starter_candidates` is reported separately: the run log used to
+            # print the hardcoded zero above under the words "starter
+            # candidate(s)", so an overlay that had in fact inferred starters
+            # was indistinguishable from one that found none.
+            result.update({"starting_pitchers": 0, "lineups": 0,
+                           "starter_candidates": candidates})
         return result
 
 
