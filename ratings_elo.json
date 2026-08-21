@@ -510,8 +510,8 @@
    "n": 120
   },
   "soccer:arsenal fc": {
-   "r": 1747.1411784834781,
-   "n": 153
+   "r": 1750.6400281592112,
+   "n": 154
   },
   "soccer:psv": {
    "r": 1499.8063650233255,
@@ -534,8 +534,8 @@
    "n": 130
   },
   "soccer:real sociedad de futbol": {
-   "r": 1494.7248972802497,
-   "n": 122
+   "r": 1487.9914995228655,
+   "n": 123
   },
   "soccer:fc internazionale milano": {
    "r": 1757.239269606114,
@@ -622,8 +622,8 @@
    "n": 8
   },
   "soccer:olympique de marseille": {
-   "r": 1589.1772227305144,
-   "n": 110
+   "r": 1598.6189564082592,
+   "n": 111
   },
   "soccer:qarabag agdam fk": {
    "r": 1463.6786283446884,
@@ -886,8 +886,8 @@
    "n": 114
   },
   "soccer:real betis balompie": {
-   "r": 1598.3139431246534,
-   "n": 114
+   "r": 1605.0473408820376,
+   "n": 115
   },
   "soccer:getafe cf": {
    "r": 1492.4774020648238,
@@ -8098,8 +8098,8 @@
    "n": 68
   },
   "soccer:rc strasbourg alsace": {
-   "r": 1573.954057232925,
-   "n": 102
+   "r": 1564.51232355518,
+   "n": 103
   },
   "soccer:olympique lyonnais": {
    "r": 1595.8612248230863,
@@ -8287,6 +8287,10 @@
   },
   "soccer:malaga cf": {
    "r": 1493.7680919610702,
+   "n": 1
+  },
+  "soccer:coventry city fc": {
+   "r": 1496.501150324267,
    "n": 1
   }
  },
@@ -286199,6 +286203,9 @@
   "MLB:bdl-mlb-5059675": true,
   "LALIGA:564628": true,
   "MLB:bdl-mlb-5059676": true,
-  "LALIGA:564638": true
+  "LALIGA:564638": true,
+  "EPL:560542": true,
+  "LALIGA:564647": true,
+  "LIGUE1:559715": true
  }
 }
