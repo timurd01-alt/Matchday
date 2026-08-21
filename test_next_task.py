@@ -269,12 +269,19 @@ class RequiredSuiteDriftTest(unittest.TestCase):
     which is exactly what these assertions catch.
     """
 
-    def _workflow_test_command(self):
+    def _workflow_test_command(self, workflow="deploy.yml"):
         import re
-        text = Path(".github/workflows/deploy.yml").read_text(encoding="utf-8")
+        text = Path(".github/workflows", workflow).read_text(encoding="utf-8")
         match = re.search(r"run: (python -m unittest .+)", text)
-        self.assertIsNotNone(match, "deploy.yml has no `python -m unittest` step")
+        self.assertIsNotNone(match, f"{workflow} has no `python -m unittest` step")
         return match.group(1).strip()
+
+    def _workflows_running_unittest(self):
+        found = []
+        for path in sorted(Path(".github/workflows").glob("*.yml")):
+            if "python -m unittest" in path.read_text(encoding="utf-8"):
+                found.append(path.name)
+        return found
 
     def test_required_command_matches_the_workflow(self):
         from next_task import REQUIRED_TEST_COMMAND
@@ -296,6 +303,37 @@ class RequiredSuiteDriftTest(unittest.TestCase):
             "deploy.yml names individual suites again; discovery is what keeps "
             "a newly added test_*.py from gating nothing by default",
         )
+
+    def test_every_workflow_that_runs_tests_runs_the_same_command(self):
+        # Two workflows run the suite now -- deploy.yml gates the deploy,
+        # tests.yml gates branches and pull requests. A subset creeping into
+        # either one reopens the original gap from the other side.
+        workflows = self._workflows_running_unittest()
+        self.assertIn("tests.yml", workflows)
+        self.assertIn("deploy.yml", workflows)
+        from next_task import REQUIRED_TEST_COMMAND
+        for name in workflows:
+            with self.subTest(workflow=name):
+                self.assertEqual(self._workflow_test_command(name), REQUIRED_TEST_COMMAND)
+
+    def test_branches_and_pull_requests_are_actually_gated(self):
+        # The regression this guards: before tests.yml, deploy.yml triggered
+        # only on schedule, workflow_dispatch and push to main, so a pull
+        # request -- the path AGENTS.md mandates -- ran no tests at all, and
+        # the first run against a change was the one already deploying it.
+        text = Path(".github/workflows/tests.yml").read_text(encoding="utf-8")
+        self.assertIn("pull_request:", text)
+        self.assertIn("branches-ignore:", text)
+        # and it must stay incapable of deploying or writing to the repo.
+        # Checked against the executable lines only -- the header comment
+        # explains what deploy.yml does, and naming `git push` there is not
+        # the same as running it.
+        self.assertIn("contents: read", text)
+        directives = "\n".join(line for line in text.split("\n")
+                               if not line.lstrip().startswith("#"))
+        for forbidden in ("deploy-pages", "git push", "secrets."):
+            with self.subTest(forbidden=forbidden):
+                self.assertNotIn(forbidden, directives)
 
     def test_discovery_actually_finds_every_suite_on_disk(self):
         import unittest as _unittest
