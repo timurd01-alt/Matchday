@@ -1,5 +1,103 @@
 [
  {
+  "id": "mlb-2026-08-21",
+  "comp": "MLB",
+  "comp_label": "MLB",
+  "slug": "mlb-2026-08-21",
+  "title": "MLB model recap — 2026-08-21",
+  "date": "2026-08-21",
+  "summary": "The model went 136/263 (52%) on graded MLB picks.",
+  "record": {
+   "hits": 136,
+   "graded": 263,
+   "pct": 52
+  },
+  "highlights": {
+   "window_days": 7,
+   "matches_considered": 52,
+   "biggest_upset": {
+    "home": "Cleveland Guardians",
+    "away": "San Diego Padres",
+    "score_line": "5-7",
+    "winner": "San Diego Padres",
+    "upset_score": 99,
+    "market_pct": 48.0
+   },
+   "best_call": {
+    "home": "Cleveland Guardians",
+    "away": "San Diego Padres",
+    "pick": "San Diego Padres",
+    "confidence": 59,
+    "edge": 11
+   },
+   "biggest_miss": {
+    "home": "Chicago Cubs",
+    "away": "St. Louis Cardinals",
+    "pick": "Chicago Cubs",
+    "confidence": 66,
+    "actual": "St. Louis Cardinals"
+   },
+   "closest_match": {
+    "home": "Cincinnati Reds",
+    "away": "Miami Marlins",
+    "score_line": "1-0",
+    "margin": 1
+   }
+  },
+  "body": [
+   "Matchday's model graded 263 MLB picks this stretch, hitting on 136 of them (52%). Over the same 158 games with a market line, the betting market favorite hit 52% of the time.",
+   "On calibration: picks stated at 50-60% hit 50% of the time (124 games); picks stated at 60-70% hit 52% of the time (86 games); picks stated at 70-80% hit 56% of the time (43 games); picks stated at 80-90% hit 50% of the time (10 games). A well-calibrated model's stated confidence should roughly match its actual hit rate in each band.",
+   "The strongest signal lately has been opponent-adjusted rating: when it favored a side, that side won 56% of the time (125 games). Championship market power has been the weakest, at 17% (12 games) — a reminder no single factor is decisive on its own.",
+   "Among this week's MLB storylines: the biggest upset was San Diego Padres winning 5-7 against Cleveland Guardians (the market gave that result only about 48%); the model's best call was San Diego Padres in Cleveland Guardians vs San Diego Padres at 59% confidence; its biggest miss was picking Chicago Cubs in Chicago Cubs vs St. Louis Cardinals, but St. Louis Cardinals won instead.",
+   "This is Matchday's own model reporting on itself for anyone to use. Every pick is locked before kickoff and graded automatically once the game finishes; none are rewritten after the fact. See the Q&A page for how the model works."
+  ]
+ },
+ {
+  "id": "laliga-2026-08-21",
+  "comp": "LALIGA",
+  "comp_label": "La Liga",
+  "slug": "laliga-2026-08-21",
+  "title": "La Liga model recap — 2026-08-21",
+  "date": "2026-08-21",
+  "summary": "The model went 4/6 (67%) on graded La Liga picks.",
+  "record": {
+   "hits": 4,
+   "graded": 6,
+   "pct": 67
+  },
+  "highlights": {
+   "window_days": 7,
+   "matches_considered": 6,
+   "biggest_upset": null,
+   "best_call": {
+    "home": "Sevilla FC",
+    "away": "Rayo Vallecano de Madrid",
+    "pick": "Sevilla FC",
+    "confidence": 52,
+    "edge": 15
+   },
+   "biggest_miss": {
+    "home": "Real Racing Club de Santander",
+    "away": "Villarreal CF",
+    "pick": "Villarreal CF",
+    "confidence": 52,
+    "actual": "Draw"
+   },
+   "closest_match": {
+    "home": "Real Racing Club de Santander",
+    "away": "Villarreal CF",
+    "score_line": "2-2",
+    "margin": 0
+   }
+  },
+  "body": [
+   "Matchday's model graded 6 La Liga picks this stretch, hitting on 4 of them (67%). Over the same 6 games with a market line, the betting market favorite hit 67% of the time.",
+   "On calibration: picks stated at <50% hit 67% of the time (3 games). A well-calibrated model's stated confidence should roughly match its actual hit rate in each band.",
+   "Among this week's La Liga storylines: the model's best call was Sevilla FC in Sevilla FC vs Rayo Vallecano de Madrid at 52% confidence; its biggest miss was picking Villarreal CF in Real Racing Club de Santander vs Villarreal CF, but Draw won instead.",
+   "This is Matchday's own model reporting on itself for anyone to use. Every pick is locked before kickoff and graded automatically once the game finishes; none are rewritten after the fact. See the Q&A page for how the model works."
+  ]
+ },
+ {
   "id": "matchday-10-premier-league-2026-08-17",
   "comp": "epl",
   "comp_label": "Premier League · Matchday 10",
