@@ -78,6 +78,28 @@ def _is_public_comp(comp_key):
     return str(comp_key or "").lower() in PUBLIC_CONTENT_KEYS
 
 
+# Whether an ALREADY-PUBLISHED post may stay in posts.json. Deliberately wider
+# than _is_public_comp: that answers "may this competition publish a recap",
+# where "all" is not a competition and must stay rejected. Editorial desk posts
+# (weekly scorecards, market audits, availability trackers, methodology notes)
+# cover the whole board and are stored with comp "all", so reusing the
+# competition gate as a retention filter silently deleted 9 of 13 published
+# posts the first time any competition published a recap -- posts.json is
+# rewritten from this filtered list, so the drop was permanent, and it took
+# out refining-the-record-2026-07-26, which test_analysis_mode pins by id via
+# next(...) -> StopIteration -> "Run required test suite" fails -> the hourly
+# refresh/deploy fails. It presented as intermittent only because whether a
+# given CI run saw a culled posts.json depended on what the actions/cache
+# restore handed it. deploy.yml's site-assembly step already carries this exact
+# allowlist ({"all", "wc", ...}); this is the same rule at the source.
+EDITORIAL_CONTENT_KEY = "all"
+
+
+def _is_public_post(post):
+    comp = str((post or {}).get("comp") or "").lower()
+    return comp == EDITORIAL_CONTENT_KEY or _is_public_comp(comp)
+
+
 def _publication_state(data, match):
     def value(candidate):
         if isinstance(candidate, str):
@@ -399,7 +421,7 @@ def publish_recap_if_due(comp_key, comp_label, scorecard, awards):
     post = build_recap_post(comp_key, comp_label, scorecard, awards)
     if not post:
         return None
-    posts = [post for post in load_posts() if _is_public_comp(post.get("comp"))]
+    posts = [post for post in load_posts() if _is_public_post(post)]
     if any(p.get("id") == post["id"] for p in posts):
         return None  # already published today for this competition
     posts.insert(0, post)
@@ -416,7 +438,7 @@ def publish_recap_if_due(comp_key, comp_label, scorecard, awards):
 def rewrite_all_post_files():
     """Re-render every post's static HTML from posts.json — keeps pages in
     sync if the template changes, without needing to regenerate content."""
-    posts = [post for post in load_posts() if _is_public_comp(post.get("comp"))]
+    posts = [post for post in load_posts() if _is_public_post(post)]
     if not posts:
         return 0
     os.makedirs(POSTS_DIR, exist_ok=True)
@@ -437,7 +459,7 @@ def regenerate_sitemap():
     except Exception as e:
         print(f"  research posts regen skipped: {e}")
         research_posts = []
-    posts = [post for post in load_posts() if _is_public_comp(post.get("comp"))]
+    posts = [post for post in load_posts() if _is_public_post(post)]
     urls = [
         (BASE_URL, "hourly", "1.0", None),
         (BASE_URL + "legal.html", "monthly", "0.3", None),

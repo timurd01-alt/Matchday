@@ -99,6 +99,37 @@ class PublishGateTests(unittest.TestCase):
         self.assertIsNone(again)
         self.assertEqual(len(gp.load_posts()), 1)
 
+    def test_publishing_a_recap_keeps_editorial_all_board_posts(self):
+        # Regression: publish_recap_if_due rewrites posts.json from a filtered
+        # copy of the existing list. That filter used the competition gate,
+        # which rejects "all", so every editorial desk post (weekly scorecard,
+        # market audit, availability tracker, methodology note) was deleted the
+        # first time any competition published -- taking out the post id
+        # test_analysis_mode pins and failing the hourly refresh's test gate.
+        editorial = {"id": "refining-the-record-2026-07-26", "slug": "refining-the-record",
+                     "comp": "all", "type": "methodology", "date": "2026-07-26",
+                     "title": "Refining the record", "body": ""}
+        private = {"id": "internal-note", "slug": "internal-note", "comp": "internal",
+                   "date": "2026-07-26", "title": "Internal", "body": ""}
+        with open(gp.POSTS_FILE, "w", encoding="utf-8") as f:
+            json.dump([editorial, private], f)
+
+        post = gp.publish_recap_if_due("NFL", "NFL", SCORECARD, AWARDS)
+        self.assertIsNotNone(post)
+
+        ids = [p["id"] for p in gp.load_posts()]
+        self.assertIn("refining-the-record-2026-07-26", ids)
+        self.assertIn(post["id"], ids)
+        # the wider retention filter must not become a way to republish
+        # anything that is not on the public allowlist
+        self.assertNotIn("internal-note", ids)
+
+    def test_editorial_scope_is_not_a_publishable_competition(self):
+        # "all" may be RETAINED but must never be treated as a competition that
+        # can publish its own recap.
+        self.assertFalse(gp._is_public_comp("all"))
+        self.assertIsNone(gp.publish_recap_if_due("all", "All sports", SCORECARD, AWARDS))
+
     def test_mlb_publishes_public_recap(self):
         post = gp.publish_recap_if_due("MLB", "MLB", SCORECARD, AWARDS)
         self.assertIsNotNone(post)
