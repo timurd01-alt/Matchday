@@ -346,5 +346,95 @@ class ReportTests(unittest.TestCase):
             self.assertIn("findings", json.load(handle))
 
 
+class JsGlobalCollisionTests(unittest.TestCase):
+    """The rule that watches the one shared global scope the front end has.
+
+    index.html loads nine classic <script> files -- no modules, no bundler, no
+    build step -- so they share one global lexical scope and currently hold 462
+    top-level declarations between them. Two files declaring the same `const`
+    is a SyntaxError, and a SyntaxError in a classic script blanks the entire
+    app rather than breaking one panel. Nothing in the project could catch that
+    before this rule: there is no linter, and no JavaScript runtime in CI.
+    """
+
+    def setUp(self):
+        self.root = tempfile.mkdtemp()
+        self.addCleanup(lambda: __import__("shutil").rmtree(self.root, ignore_errors=True))
+
+    def write(self, name, text):
+        Path(self.root, name).write_text(text, encoding="utf-8")
+
+    def audit(self, bundle):
+        return ui_audit.audit_js_globals(self.root, bundle)
+
+    def test_a_clean_bundle_reports_nothing(self):
+        self.write("a.js", "const alpha=1;\nfunction go(){}\n")
+        self.write("b.js", "const beta=2;\nfunction stop(){}\n")
+        self.assertEqual(self.audit(("a.js", "b.js")), [])
+
+    def test_a_duplicate_const_is_a_blocker(self):
+        self.write("a.js", "const shared=1;\n")
+        self.write("b.js", "const shared=2;\n")
+        findings = self.audit(("a.js", "b.js"))
+        self.assertEqual(len(findings), 1)
+        self.assertEqual(findings[0]["rule"], "js-global-collision")
+        self.assertEqual(findings[0]["severity"], "blocker")
+        self.assertEqual(findings[0]["file"], "b.js")
+        self.assertIn("a.js:1", findings[0]["detail"])
+        self.assertIn("SyntaxError", findings[0]["detail"])
+
+    def test_a_let_colliding_with_a_function_is_a_blocker(self):
+        # Redeclaring a function with `let` is just as fatal as const/const.
+        self.write("a.js", "function shared(){}\n")
+        self.write("b.js", "let shared=2;\n")
+        self.assertEqual(self.audit(("a.js", "b.js"))[0]["severity"], "blocker")
+
+    def test_two_functions_are_a_warning_not_a_blocker(self):
+        # Legal to redeclare, so the app still runs -- but the later file
+        # silently wins, which is its own hard-to-find bug.
+        self.write("a.js", "function shared(){ return 1; }\n")
+        self.write("b.js", "function shared(){ return 2; }\n")
+        findings = self.audit(("a.js", "b.js"))
+        self.assertEqual(len(findings), 1)
+        self.assertEqual(findings[0]["severity"], "warn")
+        self.assertIn("whichever loads last", findings[0]["detail"])
+
+    def test_two_vars_are_a_warning(self):
+        self.write("a.js", "var shared=1;\n")
+        self.write("b.js", "var shared=2;\n")
+        self.assertEqual(self.audit(("a.js", "b.js"))[0]["severity"], "warn")
+
+    def test_the_same_name_in_different_scopes_is_not_a_collision(self):
+        self.write("a.js", "function one(){ const helper=1; return helper; }\n")
+        self.write("b.js", "function two(){ const helper=2; return helper; }\n")
+        self.assertEqual(self.audit(("a.js", "b.js")), [])
+
+    def test_a_name_only_inside_a_template_literal_is_not_a_collision(self):
+        # The false positive that would make this rule untrustworthy on the
+        # real files, which render all their markup from template literals.
+        self.write("a.js", "const real=1;\n")
+        self.write("b.js", "const other=`<div>const real=99</div>`;\n")
+        self.assertEqual(self.audit(("a.js", "b.js")), [])
+
+    def test_a_missing_file_is_skipped_rather_than_raised(self):
+        self.write("a.js", "const alpha=1;\n")
+        self.assertEqual(self.audit(("a.js", "not_here.js")), [])
+
+    def test_the_shipped_bundle_is_currently_free_of_collisions(self):
+        findings = ui_audit.audit_js_globals(Path(__file__).parent)
+        self.assertEqual(findings, [], "\n".join(f["detail"] for f in findings))
+
+    def test_the_rule_runs_as_part_of_the_report(self):
+        # Guards the wiring, not the rule: audit_js_globals passing on its own
+        # is worth nothing if build_report never calls it. Planting a real
+        # collision in a bundle file is the only way to prove it is reached.
+        self.write("app-1-core.js", "const collide=1;\n")
+        self.write("app-2-views.js", "const collide=2;\n")
+        report = ui_audit.build_report(self.root)
+        self.assertEqual(report["by_rule"].get("js-global-collision"), 1)
+        self.assertEqual(report["blockers"], 1)
+        self.assertIn("app-1-core.js", report["scanned"])
+
+
 if __name__ == "__main__":
     unittest.main()
