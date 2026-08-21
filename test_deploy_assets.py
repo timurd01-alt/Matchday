@@ -110,9 +110,14 @@ class CacheClobberTests(unittest.TestCase):
     # here only because dropping them also drops the fallback that covers a
     # ledger whose commit-back lost all three push races. Shrinking this set is
     # safe and welcome. Growing it is the bug.
+    # The forecast ledgers left this set on 2026-08-21: they were covered by
+    # a `forecast_ledger_*.jsonl` cache glob, and the commit-back step globs
+    # the same way, so every new competition's ledger became tracked-and-
+    # cached on its first write. Ligue 1 opening did that unattended and this
+    # test then blocked the hourly deploy. A wildcard cannot be grandfathered
+    # -- the set it covers grows without review -- so the glob was dropped
+    # from the cache instead.
     KNOWN_CACHED_TRACKED_FILES = {
-        "forecast_ledger_laliga.jsonl",
-        "forecast_ledger_mlb.jsonl",
         "market_snapshot_ledger.jsonl",
         "mlb_shadow_ledger.jsonl",
         "ncaaf_venue_coords.json",
