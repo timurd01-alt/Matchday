@@ -523,7 +523,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-22T14:40:33.875393Z",
+   "observed_at": "2026-08-22T18:51:44.211585Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -538,8 +538,8 @@
   "clv": 0.6,
   "closing_market_snapshot": {
    "h": 55.556,
-   "a": 21.212,
-   "d": 23.232
+   "d": 23.232,
+   "a": 21.212
   },
   "closing_market_receipt": {
    "sources": [
@@ -1033,8 +1033,32 @@
    "affects_prediction": false,
    "user_visible": false
   },
-  "result": null,
-  "model_result": null,
-  "market_result": null
+  "result": "h",
+  "model_result": "h",
+  "market_result": "h",
+  "score": "5-2",
+  "result_snapshot": {
+   "display": {
+    "home": 5,
+    "away": 2
+   },
+   "regulation": {
+    "home": 5,
+    "away": 2
+   },
+   "penalties": null,
+   "ultimate_winner": "h",
+   "observed_at": "2026-08-22T18:51:44.211652Z",
+   "source": "provider"
+  },
+  "model_hit": true,
+  "market_hit": null,
+  "market_comparison_hit": true,
+  "upset_hit": false,
+  "brier3": 0.137,
+  "log_loss": 0.357,
+  "brier_advancement": null,
+  "log_loss_advancement": null,
+  "result_corrections": []
  }
 }

@@ -1,5 +1,57 @@
 [
  {
+  "id": "epl-2026-08-22",
+  "comp": "EPL",
+  "comp_label": "Premier League",
+  "slug": "epl-2026-08-22",
+  "title": "Premier League model recap — 2026-08-22",
+  "date": "2026-08-22",
+  "summary": "The model went 1/5 (20%) on graded Premier League picks.",
+  "record": {
+   "hits": 1,
+   "graded": 5,
+   "pct": 20
+  },
+  "highlights": {
+   "window_days": 7,
+   "matches_considered": 5,
+   "biggest_upset": {
+    "home": "Nottingham Forest FC",
+    "away": "Leeds United FC",
+    "score_line": "0-1",
+    "winner": "Leeds United FC",
+    "upset_score": 68,
+    "market_pct": 32.0
+   },
+   "best_call": {
+    "home": "Everton FC",
+    "away": "Crystal Palace FC",
+    "pick": "Everton FC",
+    "confidence": 44,
+    "edge": 2
+   },
+   "biggest_miss": {
+    "home": "Hull City AFC",
+    "away": "Manchester United FC",
+    "pick": "Manchester United FC",
+    "confidence": 67,
+    "actual": "Hull City AFC"
+   },
+   "closest_match": {
+    "home": "Ipswich Town FC",
+    "away": "Sunderland AFC",
+    "score_line": "2-1",
+    "margin": 1
+   }
+  },
+  "body": [
+   "Matchday's model graded 5 Premier League picks this stretch, hitting on 1 of them (20%). Over the same 5 games with a market line, the betting market favorite hit 40% of the time.",
+   "On calibration: picks stated at <50% hit 33% of the time (3 games). A well-calibrated model's stated confidence should roughly match its actual hit rate in each band.",
+   "Among this week's Premier League storylines: the biggest upset was Leeds United FC winning 0-1 against Nottingham Forest FC (the market gave that result only about 32%); the model's best call was Everton FC in Everton FC vs Crystal Palace FC at 44% confidence; its biggest miss was picking Manchester United FC in Hull City AFC vs Manchester United FC, but Hull City AFC won instead.",
+   "This is Matchday's own model reporting on itself for anyone to use. Every pick is locked before kickoff and graded automatically once the game finishes; none are rewritten after the fact. See the Q&A page for how the model works."
+  ]
+ },
+ {
   "id": "mlb-2026-08-21",
   "comp": "MLB",
   "comp_label": "MLB",
