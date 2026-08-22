@@ -506,8 +506,8 @@
    "n": 142
   },
   "soccer:manchester united fc": {
-   "r": 1639.4286091315998,
-   "n": 120
+   "r": 1624.7320571085486,
+   "n": 121
   },
   "soccer:arsenal fc": {
    "r": 1750.6400281592112,
@@ -8291,6 +8291,10 @@
   },
   "soccer:coventry city fc": {
    "r": 1496.501150324267,
+   "n": 1
+  },
+  "soccer:hull city afc": {
+   "r": 1514.6965520230513,
    "n": 1
   }
  },
@@ -286206,6 +286210,7 @@
   "LALIGA:564638": true,
   "EPL:560542": true,
   "LALIGA:564647": true,
-  "LIGUE1:559715": true
+  "LIGUE1:559715": true,
+  "EPL:560543": true
  }
 }
