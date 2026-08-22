@@ -134,5 +134,62 @@ class MLBShadowLedgerTests(unittest.TestCase):
             mlb_shadow_ledger.grade_matches(self.path, [final], after)
 
 
+class LockDecisionReportingTests(unittest.TestCase):
+    """A refusal to lock is permanent, so it has to be visible when it happens.
+
+    Four healthy runs on the evening of 2026-08-19 fetched MLB, committed their
+    output, and locked nothing across a full slate. Nothing in the CI log, the
+    ledger, or the committed tree recorded that -- the only signal was a DIAG
+    entry that is suppressed at zero and written to an untracked file. These
+    tests pin the tally so the next occurrence is diagnosable from the log.
+    """
+
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.path = Path(self.temp.name) / "mlb_shadow_ledger.jsonl"
+
+    def tearDown(self):
+        self.temp.cleanup()
+
+    def test_every_refusal_is_named_and_counted(self):
+        early = fixture()
+        early["id"] = "mlb-early"
+        early["kickoff"] = "2026-08-18T23:00:00Z"
+        started = fixture()
+        started["id"] = "mlb-started"
+        started["kickoff"] = "2026-08-18T17:00:00Z"
+        unweighted = fixture()
+        unweighted["id"] = "mlb-weighted"
+        unweighted["mlb_challenger_shadow"]["production_weight"] = 0.1
+        incomplete = fixture()
+        incomplete["id"] = "mlb-incomplete"
+        incomplete["mlb_challenger_shadow"]["league_home_prior_probability"] = None
+        rows = [fixture(), fixture("FINISHED"), started, unweighted, incomplete, early]
+        predictions = {row["id"]: prediction() for row in rows}
+        state = mlb_shadow_ledger.sync(self.path, rows, predictions, NOW)
+        self.assertEqual(state["locked"], 1)
+        self.assertEqual(state["considered"], 6)
+        self.assertEqual(state["lock_reasons"], {
+            "first_pitch_passed": 1,
+            "incomplete_lock_inputs": 1,
+            "locked": 1,
+            "no_zero_weight_challenger_shadow": 1,
+            "not_upcoming": 1,
+            "before_lock_window": 1,
+        })
+
+    def test_a_quiet_hour_still_reports_why_it_was_quiet(self):
+        too_early = datetime(2026, 8, 18, 17, 0, tzinfo=timezone.utc)
+        state = mlb_shadow_ledger.sync(self.path, [fixture()], {"mlb-1": prediction()}, too_early)
+        self.assertEqual(state["locked"], 0)
+        self.assertEqual(state["lock_reasons"], {"before_lock_window": 1})
+
+    def test_lock_match_keeps_its_boolean_contract(self):
+        self.assertIs(mlb_shadow_ledger.lock_match(
+            self.path, fixture(), prediction(), NOW), True)
+        self.assertIs(mlb_shadow_ledger.lock_match(
+            self.path, fixture(), prediction(), NOW), False)
+
+
 if __name__ == "__main__":
     unittest.main()
