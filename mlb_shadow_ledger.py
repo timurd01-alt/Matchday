@@ -85,23 +85,32 @@ def _existing_locks(events: Iterable[dict[str, Any]]) -> dict[tuple[str, str], d
     return locks
 
 
-def lock_match(path: str | Path, match: dict[str, Any], prediction: dict[str, Any],
-               now: datetime | None = None) -> bool:
-    """Freeze one pregame baseline/challenger pair, idempotently."""
+def _lock_decision(path: str | Path, match: dict[str, Any], prediction: dict[str, Any],
+                   now: datetime | None = None) -> tuple[bool, str]:
+    """Freeze one pregame pair, returning why when nothing was frozen.
+
+    A refusal here is permanent: the lock window closes at first pitch and
+    ``lock_match`` will never accept the fixture again, so a silent skip is
+    evidence destroyed with no trace. Every branch names itself instead, and
+    ``sync`` reports the tally so a zero-lock hour is distinguishable from a
+    healthy one in the CI log.
+    """
     if str(match.get("status") or "").upper() != "UPCOMING":
-        return False
+        return False, "not_upcoming"
     kickoff = _parse_time(match.get("kickoff"))
     current = _utc(now)
     if kickoff is None:
-        return False
+        return False, "unparseable_kickoff"
     lead_seconds = (kickoff - current).total_seconds()
-    if lead_seconds <= 0 or lead_seconds > LOCK_WINDOW_HOURS * 3600:
-        return False
+    if lead_seconds <= 0:
+        return False, "first_pitch_passed"
+    if lead_seconds > LOCK_WINDOW_HOURS * 3600:
+        return False, "before_lock_window"
 
     challenger = match.get("mlb_challenger_shadow") or {}
     if (challenger.get("mode") != "prospective_shadow"
             or challenger.get("production_weight") != 0):
-        return False
+        return False, "no_zero_weight_challenger_shadow"
     model_version = str(challenger.get("model_version") or "")
     artifact_sha256 = str(challenger.get("artifact_sha256") or "")
     feature_schema = challenger.get("feature_schema") or []
@@ -118,13 +127,13 @@ def lock_match(path: str | Path, match: dict[str, Any], prediction: dict[str, An
             or not baseline_model_version or baseline_model_signal_schema is None
             or candidate_home is None or baseline_home is None or independent_home is None
             or league_home_prior is None):
-        return False
+        return False, "incomplete_lock_inputs"
 
     target = Path(path)
     forecast_ledger.validate(target)
     events = forecast_ledger.read_events(target)
     if (str(match.get("id") or ""), model_version) in _existing_locks(events):
-        return False
+        return False, "already_locked"
 
     market = (match.get("markets") or {}).get("1x2") or {}
     market_home = _probability(market.get("home_pct"), percent=True)
@@ -204,6 +213,13 @@ def lock_match(path: str | Path, match: dict[str, Any], prediction: dict[str, An
         identity={"protocol_version": PROTOCOL_VERSION, "model_version": model_version},
         payload=payload,
     )
+    return created, ("locked" if created else "already_locked")
+
+
+def lock_match(path: str | Path, match: dict[str, Any], prediction: dict[str, Any],
+               now: datetime | None = None) -> bool:
+    """Freeze one pregame baseline/challenger pair, idempotently."""
+    created, _ = _lock_decision(path, match, prediction, now)
     return created
 
 
@@ -278,9 +294,15 @@ def sync(path: str | Path, matches: Iterable[dict[str, Any]],
     """Lock eligible forecasts and grade finals in one deterministic pass."""
     rows = list(matches)
     predictions = predictions or {}
-    locked = sum(int(lock_match(path, match, predictions.get(str(match.get("id") or ""), {}), now))
-                 for match in rows)
+    locked = 0
+    reasons: dict[str, int] = {}
+    for match in rows:
+        created, reason = _lock_decision(
+            path, match, predictions.get(str(match.get("id") or ""), {}), now)
+        locked += int(created)
+        reasons[reason] = reasons.get(reason, 0) + 1
     graded = grade_matches(path, rows, now)
     state = forecast_ledger.validate(path)
     return {"locked": locked, "graded": graded, "events": state["events"],
-            "last_hash": state["last_hash"]}
+            "last_hash": state["last_hash"], "considered": len(rows),
+            "lock_reasons": dict(sorted(reasons.items()))}
