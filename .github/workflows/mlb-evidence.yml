@@ -1,0 +1,115 @@
+# MLB research evidence, collected independently of the site deploy.
+#
+# The recovery gate in MLB_RECOVERY.md §2 is graded from mlb_shadow_ledger.jsonl,
+# and that ledger can only be written during the two hours before first pitch:
+# mlb_shadow_ledger.lock_match refuses any fixture whose lead time has reached
+# zero, so a slate missed is evidence destroyed rather than deferred.
+#
+# Until this workflow existed the only writer was "Refresh data and deploy",
+# whose fetch step sits behind a full-repo test gate. Between 2026-08-20 and
+# 2026-08-21 three unrelated regressions -- a REQUIRED_SUITES drift, an
+# editorial recap classifier, and a cache-clobber guard -- held that gate shut
+# for roughly 35 of 48 hours, and every MLB slate inside those windows is now
+# permanently ungradeable. None of the three had anything to do with MLB.
+#
+# So this job deliberately does NOT run the test suite. It publishes nothing:
+# it fetches MLB, lets fetch_data.py append to the append-only ledger, and
+# commits that one file. What guards it is not the suite but the ledger's own
+# hash chain -- forecast_ledger.validate() runs on every append and again
+# below, and a chain that does not verify is never committed.
+name: Collect MLB research evidence
+
+on:
+  schedule:
+    # Offset from the deploy workflow's ':17' so the two interleave at roughly
+    # thirty-minute spacing across the two-hour lock window, and a failure of
+    # either one still leaves the other covering every fixture.
+    - cron: '47 * * * *'
+  workflow_dispatch:
+
+# Shared with "Refresh data and deploy" on purpose. Two jobs appending to a
+# hash-chained ledger concurrently would fork it, and a rebase cannot repair a
+# fork -- the replayed record's previous_hash no longer matches the line above
+# it, which fails validate() for every run afterwards. Serialising is the fix.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.12'
+
+      - name: Write private keys from secrets (never committed)
+        run: |
+          cat > config_keys.py <<EOF
+          CFBD_KEY = "${{ secrets.CFBD_KEY }}"
+          CBBD_KEY = "${{ secrets.CBBD_KEY }}"
+          FOOTBALL_DATA_KEY = "${{ secrets.FOOTBALL_DATA_KEY }}"
+          ODDS_API_KEY = "${{ secrets.ODDS_API_KEY }}"
+          API_FOOTBALL_KEY = "${{ secrets.API_FOOTBALL_KEY }}"
+          BALLDONTLIE_KEY = "${{ secrets.BALLDONTLIE_KEY }}"
+          BBS_API_KEY = "${{ secrets.BBS_API_KEY }}"
+          SPORTSGAMEODDS_KEY = "${{ secrets.SPORTSGAMEODDS_KEY }}"
+          SPORTSDATAIO_KEY = "${{ secrets.SPORTSDATAIO_KEY }}"
+          EOF
+
+      - name: Record the ledger this run started from
+        id: baseline
+        run: |
+          if [ -f mlb_shadow_ledger.jsonl ]; then
+            echo "events=$(grep -c . mlb_shadow_ledger.jsonl)" >> "$GITHUB_OUTPUT"
+          else
+            echo "events=0" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Fetch MLB and freeze any fixture inside its lock window
+        run: python fetch_data.py --mlb
+
+      - name: Verify the ledger's hash chain before trusting it
+        env:
+          EVENTS_BEFORE: ${{ steps.baseline.outputs.events }}
+        run: |
+          if [ ! -f mlb_shadow_ledger.jsonl ]; then
+            echo "no ledger yet; nothing to verify or commit"
+            exit 0
+          fi
+          python -c "import forecast_ledger; state = forecast_ledger.validate('mlb_shadow_ledger.jsonl'); print('ledger verified:', state['events'], 'event(s)')"
+          after=$(grep -c . mlb_shadow_ledger.jsonl)
+          if [ "$after" -lt "$EVENTS_BEFORE" ]; then
+            echo "::error::The ledger shrank from $EVENTS_BEFORE to $after events. Refusing to commit; the append-only record is never allowed to lose a line."
+            exit 1
+          fi
+          echo "ledger grew from $EVENTS_BEFORE to $after event(s)"
+
+      - name: Commit new evidence only
+        run: |
+          git config user.name "matchday-bot"
+          git config user.email "actions@github.com"
+          if [ ! -f mlb_shadow_ledger.jsonl ]; then
+            echo "no ledger to commit"
+            exit 0
+          fi
+          git add -- mlb_shadow_ledger.jsonl
+          if git diff --cached --quiet; then
+            echo "no new locks or grades this run"
+            exit 0
+          fi
+          git commit -m "Collect MLB research evidence [skip ci]"
+          # Deliberately no rebase. This file is a hash chain: replaying our
+          # append on top of someone else's produces a record whose
+          # previous_hash points at a line that is no longer above it, and
+          # validate() would then reject the ledger permanently. Losing one
+          # run's locks is recoverable -- the next run re-locks whatever is
+          # still inside its window -- and a corrupted chain is not.
+          if ! git push origin HEAD:main; then
+            echo "::warning::Lost a push race against main; discarding this run's append rather than rebasing a hash chain. The next run re-locks any fixture still inside its window."
+            git reset --hard origin/main
+          fi
