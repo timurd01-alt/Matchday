@@ -67,16 +67,14 @@ console.log(JSON.stringify(payload));
             self.assertEqual(gated["prediction"]["pick"], "h")
             self.assertNotIn("_forecast_paused", gated)
 
-    def test_consumers_show_notice_and_prune_stale_outcome_tree_legs(self):
+    def test_consumers_show_pause_notice(self):
         core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
         panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
         cards = (ROOT / "app-4-features.js").read_text(encoding="utf-8")
-        tree = (ROOT / "app-5-outcome-tree.js").read_text(encoding="utf-8")
         message = "MLB forecasts are paused pending starting-pitcher data."
         self.assertIn(message, core)
         self.assertIn("forecastPauseHTML(m)", panels)
         self.assertIn("isMlbForecastPaused(m)?forecastPauseHTML(m)", cards)
-        self.assertIn("OUTCOME_TREE_SELECTED.delete(key)", tree)
 
 
 if __name__ == "__main__":

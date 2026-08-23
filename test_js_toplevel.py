@@ -134,7 +134,7 @@ class ShippedBundleTests(unittest.TestCase):
     """Sanity checks against the real files, not synthetic snippets."""
 
     BUNDLE = ("translations.js", "updates.js", "app-1-core.js",
-              "official-selections.js", "app-2-views.js", "app-5-outcome-tree.js",
+              "official-selections.js", "app-2-views.js",
               "app-3-panels.js", "app-4-features.js", "research-signals.js")
 
     def declarations(self):

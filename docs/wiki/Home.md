@@ -2,7 +2,7 @@
 
 Matchday is a multi-sport prediction and analytics product built around a simple public record: analyze the matchup before it starts, lock the model's pick, then grade that exact pick after the official final result.
 
-It combines attributed sports data with Matchday's ratings and probability models to produce matchup forecasts, projected margins, rankings, tournament views, performance tracking, and an Outcome Tree for exploring exact multi-game scenarios. Model outputs are estimates that anyone can use, not official league information or guarantees.
+It combines attributed sports data with Matchday's ratings and probability models to produce matchup forecasts, projected margins, rankings, tournament views, and performance tracking. Model outputs are estimates that anyone can use, not official league information or guarantees.
 
 Matchday is deliberately not an ESPN-style live-score service. In-progress games remain **Result pending** until a provider supplies a final result suitable for grading.
 

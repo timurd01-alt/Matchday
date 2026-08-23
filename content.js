@@ -482,7 +482,7 @@
   function renderRecentLessons(){
     const host=byId('recentLessons');if(!host)return;
     const lessons=learnLessons.filter(item=>activeSport==='all'||item.sport===activeSport);
-    if(!lessons.length){host.innerHTML='<p class="recentLessonsEmpty">The next lesson appears after a sport records a verified final with a complete pregame receipt.</p>';return}
+    if(!lessons.length){host.innerHTML='<div class="recentLessonsEmpty"><span class="recentLessonsEmptyIcon" aria-hidden="true"></span><div><strong>Lessons are being collected</strong><p>The first insight will appear after a verified final has a complete pregame record.</p></div><span class="recentLessonsEmptyStatus">Waiting for a final</span></div>';return}
     host.innerHTML=lessons.map((item,index)=>`<a class="recentLesson" href="${escapeHTML(dashboardUrl(item.compKey,'matches',item.fixtureId))}"><span>${String(index+1).padStart(2,'0')}</span><div><small>${escapeHTML(item.compLabel)} · Locked before the game · <i class="${item.hit?'hit':'miss'}">Model ${item.hit?'hit':'miss'}</i></small><b>${escapeHTML(item.home)} ${escapeHTML(item.homeScore)}–${escapeHTML(item.awayScore)} ${escapeHTML(item.away)}</b><p>${escapeHTML(item.observation)}</p><div class="lessonSignal"><em>${escapeHTML(item.factorLabel)}</em><span><i style="--lesson:${Math.min(100,Math.max(12,Number(item.factorMagnitude)||0))}%"></i></span></div><p>${escapeHTML(item.principle)}</p></div><strong>Open matchup &rarr;</strong></a>`).join('');
   }
 

@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0823L",
+  "tag": "Change",
+  "title": "Outcome Tree removed from every sport",
+  "items": [
+   "Removed the Outcome Tree navigation view and scenario builder from the all-sports experience and every individual sport.",
+   "Removed the retired feature's scripts, styles, tour step, and current documentation so it no longer ships as dead code."
+  ]
+ },
+ {
   "date": "Build 0823K",
   "tag": "Fix",
   "title": "Made college football research signals readable",

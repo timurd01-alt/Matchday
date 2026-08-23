@@ -54,7 +54,7 @@ AUDITED_CSS = ("styles.css", "content.css", "research-signals.css")
 # (lang, viewport) are meaningless across fragments that get composed at
 # runtime in an order this cannot know.
 AUDITED_JS = ("app-1-core.js", "app-2-views.js", "app-3-panels.js",
-              "app-4-features.js", "app-5-outcome-tree.js", "content.js",
+              "app-4-features.js", "content.js",
               "research-signals.js")
 
 # WCAG 2.2 AA: 4.5:1 for body text, 3:1 for large text. Without layout we
@@ -563,8 +563,7 @@ SEVERITY_ORDER = {"blocker": 0, "warn": 1}
 # <script> tags, not modules, so all nine share one global lexical scope.
 INDEX_BUNDLE = ("translations.js", "updates.js", "app-1-core.js",
                 "official-selections.js", "app-2-views.js",
-                "app-5-outcome-tree.js", "app-3-panels.js",
-                "app-4-features.js", "research-signals.js")
+                "app-3-panels.js", "app-4-features.js", "research-signals.js")
 
 
 def audit_js_globals(root: str | Path = ".",

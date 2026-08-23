@@ -24,10 +24,6 @@ No. Matchday is an independent analytics project and does not imply endorsement 
 
 However works for you. Predictions are public probabilistic estimates, and a 70% forecast still assigns a meaningful chance to the other outcome.
 
-## Is Outcome Tree the same as a parlay calculator?
-
-No. Outcome Tree is scenario analysis built from Matchday's published game probabilities. Its compact menu accepts up to five events, then labels each selected branch `X` and every alternative result `Y`. It multiplies exact outcomes under an independence assumption and translates the result into fair model-implied odds only for readability. It does not use sportsbook prices, estimate correlated outcomes, calculate payouts, or recommend a stake. Only one exact outcome can be selected from the same game.
-
 ## Why did a favorite lose?
 
 Probabilities describe uncertainty; they do not guarantee individual results. Upsets are expected over a sufficiently large set of games. Calibration over many forecasts is more informative than one result.
@@ -58,6 +54,5 @@ Providers can correct scores, statuses, player statistics, or event identities a
 - College-football roster talent refreshes through CollegeFootballData. Matchday performs a quota-light talent refresh before the broader data build and persists successful enrichment to tracked ratings, so later rate limits use the last licensed snapshot rather than publishing a fabricated zero edge. During the July 2026 quota outage, already verified 2025 spot checks provide a transparent 15-team bridge (including Michigan State and Toledo) until the full-field refresh succeeds.
 - Market availability is uneven across competitions and dates.
 - Projected margin is inferred from outcome probabilities, not a dedicated exact-score model.
-- Outcome Tree assumes different games are independent; real correlations can make its joint estimate too high or too low.
 
 For bugs or documentation corrections, open an issue in the [Matchday repository](https://github.com/timurd01-alt/Matchday/issues).
