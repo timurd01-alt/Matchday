@@ -36,6 +36,21 @@ class ResearchSignalsUITests(unittest.TestCase):
         self.assertIn("research-signals.js?v=__BUILD__", index)
         self.assertIn("research-signals.css?v=__BUILD__", index)
 
+    def test_cfb_profile_is_plain_language_and_explicitly_descriptive(self):
+        source = (ROOT / "research-signals.js").read_text(encoding="utf-8")
+        for text in ("Advanced CFB profile", "Descriptive context", "Used in today's pick",
+                     "0% weight", "Predicted Points Added", "Offense", "Defense",
+                     "chronological out-of-sample testing", "Show ${rows.length-3} more"):
+            self.assertIn(text, source)
+        self.assertIn("advanced_metrics_meta", source)
+        self.assertIn("Profile unavailable for", source)
+
+    def test_cfb_profile_has_mobile_and_keyboard_affordances(self):
+        css = (ROOT / "research-signals.css").read_text(encoding="utf-8")
+        self.assertIn(".cfbMore summary:focus-visible", css)
+        self.assertIn("min-height:44px", css)
+        self.assertIn("@media(max-width:680px)", css)
+
     def test_ci_builds_and_publishes_derived_research_assets(self):
         workflow = (ROOT / ".github" / "workflows" / "deploy.yml").read_text(encoding="utf-8")
         self.assertIn("python refresh_nfl_advanced_metrics.py", workflow)

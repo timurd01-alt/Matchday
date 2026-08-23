@@ -41,6 +41,46 @@
     }
     return rows.join('');
   }
+  const cfbGroups=[
+    ['Offense',[
+      ['ppa','Predicted Points Added','Quality created per play','number',true],
+      ['success_rate','Success rate','Plays that keep the offense on schedule','percent',true],
+      ['explosiveness','Explosiveness','Impact generated on successful plays','number',true],
+      ['line_yards','Line yards','Rushing push credited to the offensive line','number',true],
+      ['power_success','Power success','Short-yardage runs converted','percent',true],
+      ['stuff_rate','Stuff rate','Runs stopped at or behind the line','percent',false]
+    ]],
+    ['Defense',[
+      ['def_ppa_allowed','PPA allowed','Opponent quality allowed per play','number',false],
+      ['def_success_rate_allowed','Success allowed','Opponent plays kept on schedule','percent',false],
+      ['def_explosiveness_allowed','Explosiveness allowed','Impact conceded on successful plays','number',false]
+    ]]
+  ];
+  function cfbSeasonLabel(meta){
+    const coverage=meta?.coverage||{},season=coverage.season,role=String(coverage.season_role||'').replace(/_/g,' ');
+    if(!season)return 'Completed-season team profile';
+    return `${season} ${role==='prior completed'?'completed-season':role||'season'} profile`;
+  }
+  function cfbMetricRow(metric,home,away){
+    const [key,label,help,type,higher]=metric,hv=finite(home[key]),av=finite(away[key]);
+    if(hv==null&&av==null)return '';
+    const leader=hv==null||av==null||hv===av?'':((higher?hv>av:hv<av)?'home':'away');
+    const direction=higher?'Higher is stronger':'Lower is stronger';
+    return `<div class="cfbMetric" role="row"><div class="cfbMetricLabel" role="rowheader"><b>${esc(label)}</b><span>${esc(help)} · ${esc(direction)}</span></div><div class="cfbMetricValue ${leader==='home'?'stronger':''}" role="cell">${esc(format(hv,type))}${leader==='home'?'<small>Stronger</small>':''}</div><div class="cfbMetricValue ${leader==='away'?'stronger':''}" role="cell">${esc(format(av,type))}${leader==='away'?'<small>Stronger</small>':''}</div></div>`;
+  }
+  function cfbSignalsPanel(m,meta){
+    const profiles=m?.advanced_metrics||{},home=profiles.home||{},away=profiles.away||{};
+    const homeName=m?.home?.code||m?.home?.name||'Home',awayName=m?.away?.code||m?.away?.name||'Away';
+    const groups=cfbGroups.map(([title,items])=>{
+      const rows=items.map(metric=>cfbMetricRow(metric,home,away)).filter(Boolean);
+      if(!rows.length)return '';
+      const visible=rows.slice(0,3).join(''),extra=rows.slice(3).join('');
+      return `<div class="cfbMetricGroup"><h4>${esc(title)}</h4><div class="cfbMetricRows" role="table" aria-label="${esc(title)} advanced profile"><div class="cfbTeamHead" role="row"><span role="columnheader">Metric</span><b role="columnheader">${esc(homeName)}</b><b role="columnheader">${esc(awayName)}</b></div>${visible}${extra?`<details class="cfbMore"><summary>Show ${rows.length-3} more ${esc(title.toLowerCase())} metric${rows.length-3===1?'':'s'}</summary>${extra}</details>`:''}</div></div>`;
+    }).join('');
+    const missing=[];if(!profiles.home)missing.push(homeName);if(!profiles.away)missing.push(awayName);
+    const missingNote=missing.length?`<p class="cfbMissing">Profile unavailable for ${esc(missing.join(' and '))}. Available data is shown without inventing a replacement.</p>`:'';
+    return `<section class="analystPanel researchPanel cfbResearch" aria-labelledby="cfbResearchTitle"><div class="cfbResearchTop"><div><span class="cfbEyebrow">Descriptive context</span><h3 id="cfbResearchTitle">Advanced CFB profile</h3><p>${esc(cfbSeasonLabel(meta))}</p></div><div class="cfbWeight"><span>Used in today's pick</span><b>No</b><small>0% weight</small></div></div><p class="cfbIntro">A side-by-side profile of how each team played. It adds context; it does not change today’s probability or selection.</p>${groups||'<p class="cfbMissing">No matchup-linked advanced metrics are available for either team.</p>'}${missingNote}<div class="cfbReceipt"><span>${esc(meta?.source||'Approved research source')}</span><span>${esc(meta?.generated_at?`Built ${String(meta.generated_at).slice(0,10)}`:'Build date unavailable')}</span></div><p class="researchCaution">These metrics can receive model weight only after chronological out-of-sample testing, prospective evidence, and manual promotion.</p></section>`;
+  }
   function shadowBlock(m){
     const nfl=m?.nfl_challenger_shadow,mlb=m?.mlb_challenger_shadow,shadow=nfl||mlb;if(!shadow)return '';
     const official=finite(m?.prediction?.adjusted?.h??m?.prediction?.regulation_probs?.h??m?.prediction?.model?.h);
@@ -72,6 +112,7 @@
       if(!['NFL','NCAAF','NBA','NCAAM','MLB'].includes(comp))return '';
       return `<section class="analystPanel researchPanel unavailable"><div class="researchHead"><div><span>Research signals</span><b>Authorized profile unavailable</b></div><em>official model unchanged</em></div><p class="researchCaution">This build has no fresh, matchup-linked advanced profile from an approved source. Matchday leaves the signal missing instead of inventing a neutral value.</p></section>`;
     }
+    if(String(m?._comp||DATA?.comp_key||'').toUpperCase()==='NCAAF'&&meta)return cfbSignalsPanel(m,meta);
     const applied=finite(m?.prediction?.research_promotion?.production_weight),weight=applied&&applied>0?`production weight ${(applied*100).toFixed(0)}%`:'production weight 0';
     const historicalPilot=m?.prediction?.research_promotion?.promotion_basis==='historical_oos_pilot';
     const caution=historicalPilot?'A historical out-of-sample gate authorized this small capped pilot. The immutable raw shadow and prospective counter remain separate for auditing.':applied&&applied>0?'A manually reviewed prospective gate authorized this capped blend. The immutable raw shadow remains separate for auditing.':'These fields expand the reasoning record. They do not change the official probability until a frozen out-of-sample and prospective promotion gate passes.';

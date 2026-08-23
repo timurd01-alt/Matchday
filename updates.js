@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0823K",
+  "tag": "Fix",
+  "title": "Made college football research signals readable",
+  "items": [
+   "Replaced the generic advanced-metrics audit table with a CFB-specific offense and defense comparison using plain-language explanations and aligned team columns.",
+   "Made the completed-season context, source date, missing profiles, and zero production weight explicit without changing any official pick or probability.",
+   "Added accessible expandable detail and a mobile layout that keeps metric values readable on narrow screens."
+  ]
+ },
+ {
   "date": "Build 0823J",
   "tag": "Fix",
   "title": "Aligned the in-focus collapse control",
