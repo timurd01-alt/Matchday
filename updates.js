@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0823G",
+  "tag": "Content",
+  "title": "Learn from games on the schedule",
+  "items": [
+   "Learn by Sport now includes compact lessons drawn from recent finished games with verified pregame locks.",
+   "Each lesson shows the score, recorded pick, model hit or miss, strongest stored factor, and a clear reminder that one game does not prove a cause or trend.",
+   "The existing hourly content-feed build refreshes one lesson per sport family with zero additional provider calls; incomplete or unverified evidence fails closed."
+  ]
+ },
+ {
   "date": "Build 0823F",
   "tag": "Fix",
   "title": "Upset Radar finally has a scorecard sample",

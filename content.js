@@ -35,6 +35,7 @@
 
   let datasets=[];
   let posts=[];
+  let learnLessons=[];
   let storyItems=[];
   let activeSport='all';
   let activeType='all';
@@ -478,7 +479,14 @@
     });
   }
 
-  function renderAll(animate=false){renderLatest(animate);renderGameRewind();renderAccountability();renderFreshness();renderGuides();if(animate){replayMotion(byId('gameRewindGrid'));replayMotion(byId('accountabilityGrid'))}}
+  function renderRecentLessons(){
+    const host=byId('recentLessons');if(!host)return;
+    const lessons=learnLessons.filter(item=>activeSport==='all'||item.sport===activeSport);
+    if(!lessons.length){host.innerHTML='<p class="recentLessonsEmpty">The next lesson appears after a sport records a verified final with a complete pregame receipt.</p>';return}
+    host.innerHTML=lessons.map((item,index)=>`<a class="recentLesson" href="${escapeHTML(dashboardUrl(item.compKey,'matches',item.fixtureId))}"><span>${String(index+1).padStart(2,'0')}</span><div><small>${escapeHTML(item.compLabel)} · Locked before the game · <i class="${item.hit?'hit':'miss'}">Model ${item.hit?'hit':'miss'}</i></small><b>${escapeHTML(item.home)} ${escapeHTML(item.homeScore)}–${escapeHTML(item.awayScore)} ${escapeHTML(item.away)}</b><p>${escapeHTML(item.observation)}</p><div class="lessonSignal"><em>${escapeHTML(item.factorLabel)}</em><span><i style="--lesson:${Math.min(100,Math.max(12,Number(item.factorMagnitude)||0))}%"></i></span></div><p>${escapeHTML(item.principle)}</p></div><strong>Open matchup &rarr;</strong></a>`).join('');
+  }
+
+  function renderAll(animate=false){renderLatest(animate);renderGameRewind();renderAccountability();renderFreshness();renderGuides();renderRecentLessons();if(animate){replayMotion(byId('gameRewindGrid'));replayMotion(byId('accountabilityGrid'))}}
 
   function setSport(filter,persist=true){
     activeSport=validSport(filter);
@@ -504,6 +512,7 @@
     }):[];
     const feed=feedResult.status==='fulfilled'&&feedResult.value&&Array.isArray(feedResult.value.datasets)?feedResult.value.datasets:[];
     datasets=feed.filter(dataset=>COMP_BY_KEY[String(dataset?.compKey||'').toLowerCase()]);
+    learnLessons=feedResult.status==='fulfilled'&&Array.isArray(feedResult.value?.learnLessons)?feedResult.value.learnLessons:[];
     storyItems=[...buildPreviewItems(),...buildMatchRecaps(),...buildPostItems(),...GUIDE_ITEMS];
     renderAll();
   }

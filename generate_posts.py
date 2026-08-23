@@ -59,6 +59,64 @@ FACTOR_LABELS = {
 }
 
 
+def _parse_iso(value):
+    try:
+        return datetime.datetime.fromisoformat(str(value).replace("Z", "+00:00"))
+    except (TypeError, ValueError):
+        return None
+
+
+def _learning_lesson(comp_key, comp_label, sport, match, official_pick):
+    """Project one verified final into a non-causal teaching example."""
+    score = match.get("score") or {}
+    home_score, away_score = score.get("home"), score.get("away")
+    if (isinstance(home_score, bool) or isinstance(away_score, bool)
+            or not isinstance(home_score, (int, float))
+            or not isinstance(away_score, (int, float))):
+        return None
+    kickoff, locked_at = _parse_iso(match.get("kickoff")), _parse_iso(official_pick.get("locked_at"))
+    if not kickoff or not locked_at or locked_at >= kickoff:
+        return None
+    hit = official_pick.get("model_hit")
+    if not isinstance(hit, bool):
+        result = str(official_pick.get("result") or "").lower()
+        if result in {"hit", "correct", "won", "win", "true"}:
+            hit = True
+        elif result in {"miss", "incorrect", "lost", "loss", "false"}:
+            hit = False
+        else:
+            return None
+    factors = [(key, float(value)) for key, value in
+               (official_pick.get("factor_snapshot") or {}).items()
+               if key in FACTOR_LABELS and isinstance(value, (int, float))
+               and not isinstance(value, bool)]
+    if not factors:
+        return None
+    factor, factor_value = max(factors, key=lambda item: (abs(item[1]), item[0]))
+    home, away = (match.get("home") or {}).get("name"), (match.get("away") or {}).get("name")
+    pick = official_pick.get("pick_name")
+    confidence = official_pick.get("confidence")
+    if not all((home, away, pick)):
+        return None
+    score_word = {"soccer": "goals", "hockey": "goals", "baseball": "runs"}.get(sport, "points")
+    outcome = "held up" if hit else "did not hold up"
+    return {
+        "id": f"learn-{str(comp_key).lower()}-{match.get('id')}-{factor}",
+        "sport": sport, "compKey": str(comp_key).lower(), "compLabel": comp_label,
+        "fixtureId": match.get("id"), "kickoff": match.get("kickoff"),
+        "home": home, "away": away, "homeScore": home_score, "awayScore": away_score,
+        "pick": pick, "confidence": confidence, "hit": hit,
+        "factor": factor, "factorLabel": FACTOR_LABELS[factor],
+        "factorMagnitude": round(abs(factor_value), 2), "watchability": match.get("watchability") or 0,
+        "observation": (f"The locked pick was {pick}"
+                        f"{' at ' + str(confidence) + '%' if confidence is not None else ''}; "
+                        f"the {home_score}-{away_score} final in {score_word} means that call {outcome}."),
+        "principle": (f"This game illustrates how {FACTOR_LABELS[factor]} enters a forecast; "
+                      "one result does not prove a cause or a trend."),
+        "lockedAt": official_pick.get("locked_at"),
+    }
+
+
 def _load_json(path, default):
     try:
         with open(path, encoding="utf-8") as f:
@@ -294,6 +352,7 @@ def _compact_content_match(match, official_pick=None):
 def generate_public_content_feed():
     """Build one compact input file for every public content competition."""
     datasets = []
+    lesson_candidates = []
     for key, label, sport in PUBLIC_CONTENT_COMPETITIONS:
         data = _load_json(f"data_{key}.json", None)
         if not isinstance(data, dict):
@@ -321,6 +380,12 @@ def generate_public_content_feed():
              and str(match.get("id")) in verified_picks),
             key=lambda match: str(match.get("kickoff") or ""), reverse=True,
         )[:12]
+        for match in finished:
+            lesson = _learning_lesson(
+                key, data.get("competition") or label, sport, match,
+                verified_picks.get(str(match.get("id"))) or {})
+            if lesson:
+                lesson_candidates.append(lesson)
         datasets.append({
             "compKey": key,
             "competition": data.get("competition") or label,
@@ -340,7 +405,14 @@ def generate_public_content_feed():
                 for match in active + finished
             ],
         })
-    _save_json(CONTENT_FEED_FILE, {"datasets": datasets})
+    lessons = []
+    for lesson_sport in sorted({item["sport"] for item in lesson_candidates}):
+        candidates = [item for item in lesson_candidates if item["sport"] == lesson_sport]
+        candidates.sort(key=lambda item: (str(item.get("kickoff") or ""),
+                                          float(item.get("watchability") or 0),
+                                          item["id"]), reverse=True)
+        lessons.append(candidates[0])
+    _save_json(CONTENT_FEED_FILE, {"datasets": datasets, "learnLessons": lessons})
     return len(datasets)
 
 
