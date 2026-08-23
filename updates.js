@@ -4,6 +4,26 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0823B",
+  "tag": "Fix",
+  "title": "Matchday's Top 25 stands on its own",
+  "items": [
+   "The AP Top 25, CFP Rankings, and Coaches Poll now keep their real names instead of appearing under the Matchday label.",
+   "Matchday Top 25 is a separate model ranking built from the site's established power-rating math: preseason roster strength, self-training Elo, and current-season results as the sample grows.",
+   "Both lists remain visible together, making disagreements between the model and the national poll easy to see."
+  ]
+ },
+ {
+  "date": "Build 0823A",
+  "tag": "UI",
+  "title": "A sharper editorial desk",
+  "items": [
+   "The Content hub now opens with a clearer point of view and a stronger visual hierarchy, making the current lead read easier to find.",
+   "Latest Stories now promotes one lead story instead of giving every card identical weight.",
+   "Generated recap cards use their actual standout call, upset, or notable miss for the headline and takeaway instead of repeating date-led model-recap copy."
+  ]
+ },
+ {
   "date": "Build 0819J",
   "tag": "UI",
   "title": "A paused-baseball notice on every other sport",

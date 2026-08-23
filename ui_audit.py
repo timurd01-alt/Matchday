@@ -447,6 +447,81 @@ def audit_js_markup(path: Path, sized_classes: set[str],
     return _image_findings(source, path.name, sized_classes, root)
 
 
+
+# --------------------------------------------------------------------------
+# typography
+# --------------------------------------------------------------------------
+
+# Every family, size and weight ships from the token set defined in the
+# :root of each stylesheet. This is a stated house standard rather than a
+# conformance bar, and it exists because the alternative was measured: before
+# the tokens landed, one screen of the board rendered 28 distinct font sizes,
+# including pairs 0.14px apart, and three different fallback stacks for the
+# same three webfonts. Sizes that close are not a design decision anybody
+# made -- they are drift, and they read as the interface being assembled from
+# unrelated parts.
+_TYPO_SIZE_OK = re.compile(r"^(var\(--fs-|clamp\(|inherit$|0$)", re.I)
+_TYPO_FAMILY_OK = re.compile(r"^(var\(--(sans|display|mono)\)|inherit$)", re.I)
+_TYPO_WEIGHT_OK = re.compile(r"^(var\(--fw-|inherit$|bold$|normal$|bolder$|lighter$)", re.I)
+# The root element's font-size is the basis every rem in the scale is measured
+# against, so it has to stay an absolute length. Expressed as a --fs-* token
+# it would resolve against the browser default instead of itself and rescale
+# the whole page -- which is exactly what happened the first time this ran.
+_TYPO_ROOT_SEL = re.compile(r"(^|[\s,>+~])(html|:root)(\s|$|,)", re.I)
+
+
+def audit_typography(name: str, css: str, line_offset: int = 0
+                     ) -> list[dict[str, Any]]:
+    """Font declarations that bypass the typography tokens."""
+    findings = []
+    for selector, body, line in _rules(css):
+        declarations = _declarations(body)
+        is_root = bool(_TYPO_ROOT_SEL.search(selector))
+        checks = (("font-size", _TYPO_SIZE_OK, is_root),
+                  ("font-family", _TYPO_FAMILY_OK, False),
+                  ("font-weight", _TYPO_WEIGHT_OK, False))
+        for prop, allowed, skip in checks:
+            if skip:
+                continue
+            raw = declarations.get(prop)
+            if raw is None:
+                continue
+            value = raw.replace("!important", "").strip()
+            if value.startswith("--") or allowed.match(value):
+                continue
+            findings.append(_finding(
+                "typography-off-token", "warn", name, line + line_offset,
+                f"{prop}:{value} is a literal rather than a typography token. "
+                f"Use the --fs-*/--fw-*/--sans/--display/--mono set so every "
+                f"section of the interface stays on one scale.", selector))
+        shorthand = declarations.get("font")
+        if shorthand and shorthand.strip() not in ("inherit",):
+            if "var(--fw-" not in shorthand or "var(--" not in shorthand:
+                findings.append(_finding(
+                    "typography-off-token", "warn", name, line + line_offset,
+                    f"font:{shorthand} is a literal shorthand rather than a "
+                    f"typography token. Use the --fs-*/--fw-*/--sans/--display/"
+                    f"--mono set so every section stays on one scale.",
+                    selector))
+    return findings
+
+
+_STYLE_BLOCK = re.compile(r"<style[^>]*>(.*?)</style>", re.S | re.I)
+
+
+def audit_html_typography(path: Path) -> list[dict[str, Any]]:
+    """Same rule over the <style> blocks the standalone pages carry inline."""
+    try:
+        html = path.read_text(encoding="utf-8", errors="replace")
+    except OSError:
+        return []
+    findings = []
+    for match in _STYLE_BLOCK.finditer(html):
+        offset = _line_of(html, match.start(1)) - 1
+        findings.extend(audit_typography(path.name, match.group(1), offset))
+    return findings
+
+
 def audit_render_budget(root: Path, page: str = "index.html") -> list[dict[str, Any]]:
     """Render-blocking bytes referenced from <head>, against a stated budget."""
     path = root / page
@@ -549,11 +624,14 @@ def build_report(root: str | Path = ".") -> dict[str, Any]:
         if path.is_file():
             scanned.append(name)
             findings.extend(audit_html(path, sized, base))
+            findings.extend(audit_html_typography(path))
     for name in AUDITED_CSS:
         path = base / name
         if path.is_file():
             scanned.append(name)
             findings.extend(audit_css(path))
+            findings.extend(audit_typography(
+                name, path.read_text(encoding="utf-8", errors="replace")))
     for name in AUDITED_JS:
         path = base / name
         if path.is_file():

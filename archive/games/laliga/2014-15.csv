@@ -1,0 +1,381 @@
+game_id,comp,season,date_utc,stage,venue,home_name,home_code,away_name,away_code,home_score,away_score,status,source,first_seen
+laliga-openfootball-5ca112ac23e8eb72d8a3b6b9,LALIGA,2014-15,2014-08-23T12:00:00Z,Matchday 1,,Granada CF,,Deportivo La Coruña,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-c0e6a6d344cc8c529d754e17,LALIGA,2014-15,2014-08-23T12:00:00Z,Matchday 1,,Málaga CF,,Athletic Club,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-f70b34bc2156bef7a5978a4b,LALIGA,2014-15,2014-08-23T12:00:00Z,Matchday 1,,UD Almería,,Espanyol Barcelona,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-fdf50e5cac4eda5033ffa33d,LALIGA,2014-15,2014-08-23T12:00:00Z,Matchday 1,,Sevilla FC,,Valencia CF,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-0338d7eee9961a86142e409f,LALIGA,2014-15,2014-08-24T12:00:00Z,Matchday 1,,RC Celta,,Getafe CF,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-3abf7652a8c17b423971f100,LALIGA,2014-15,2014-08-24T12:00:00Z,Matchday 1,,FC Barcelona,,Elche CF,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-3f1a743a475616f793039012,LALIGA,2014-15,2014-08-24T12:00:00Z,Matchday 1,,SD Eibar,,Real Sociedad,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-56b08e59a7a161240aef8a59,LALIGA,2014-15,2014-08-24T12:00:00Z,Matchday 1,,Levante UD,,Villarreal CF,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-7cb159d28da52a5dfbeaddb1,LALIGA,2014-15,2014-08-25T12:00:00Z,Matchday 1,,Real Madrid,,Córdoba CF,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-f0f626e152b25a42635640e6,LALIGA,2014-15,2014-08-25T12:00:00Z,Matchday 1,,Rayo Vallecano,,Atlético Madrid,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-6970c46a16f9523aa0ec5bed,LALIGA,2014-15,2014-08-29T12:00:00Z,Matchday 2,,Valencia CF,,Málaga CF,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-98edf171275190e98fdec37c,LALIGA,2014-15,2014-08-29T12:00:00Z,Matchday 2,,Getafe CF,,UD Almería,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-215fe7e4aaed3f376101a527,LALIGA,2014-15,2014-08-30T12:00:00Z,Matchday 2,,Athletic Club,,Levante UD,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-58f414ec3d58c7ab07d61a5a,LALIGA,2014-15,2014-08-30T12:00:00Z,Matchday 2,,Espanyol Barcelona,,Sevilla FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-7159ad87f1cd5ccb875f31d9,LALIGA,2014-15,2014-08-30T12:00:00Z,Matchday 2,,Atlético Madrid,,SD Eibar,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-a13d16eb112b814b8bb3ac94,LALIGA,2014-15,2014-08-30T12:00:00Z,Matchday 2,,Córdoba CF,,RC Celta,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-4bc79242c514c94b88e3a77f,LALIGA,2014-15,2014-08-31T12:00:00Z,Matchday 2,,Elche CF,,Granada CF,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-5f056586afb5a29092356d09,LALIGA,2014-15,2014-08-31T12:00:00Z,Matchday 2,,Deportivo La Coruña,,Rayo Vallecano,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-6227a905aeb066a5734ec641,LALIGA,2014-15,2014-08-31T12:00:00Z,Matchday 2,,Villarreal CF,,FC Barcelona,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-dda30251a4877b24f8971b6c,LALIGA,2014-15,2014-08-31T12:00:00Z,Matchday 2,,Real Sociedad,,Real Madrid,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-b5c7cf00a591c3d090c658ab,LALIGA,2014-15,2014-09-12T12:00:00Z,Matchday 3,,UD Almería,,Córdoba CF,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-54ae2b4954c97b1f2fef3c09,LALIGA,2014-15,2014-09-13T12:00:00Z,Matchday 3,,FC Barcelona,,Athletic Club,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-cde13f238f01aa4d910d33bb,LALIGA,2014-15,2014-09-13T12:00:00Z,Matchday 3,,RC Celta,,Real Sociedad,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-f87cf5a332fc6a4996792fba,LALIGA,2014-15,2014-09-13T12:00:00Z,Matchday 3,,Málaga CF,,Levante UD,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-fddc9c751307ecaa45062d81,LALIGA,2014-15,2014-09-13T12:00:00Z,Matchday 3,,Real Madrid,,Atlético Madrid,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-229048af9e0a84e7a440527d,LALIGA,2014-15,2014-09-14T12:00:00Z,Matchday 3,,Rayo Vallecano,,Elche CF,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-686d6ca86bf75d40fffb76ce,LALIGA,2014-15,2014-09-14T12:00:00Z,Matchday 3,,Sevilla FC,,Getafe CF,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-928b22736423fce03f5f4b33,LALIGA,2014-15,2014-09-14T12:00:00Z,Matchday 3,,Valencia CF,,Espanyol Barcelona,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-b7487a76095097109b1857a9,LALIGA,2014-15,2014-09-14T12:00:00Z,Matchday 3,,Granada CF,,Villarreal CF,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-ff9187bddc5853542497238b,LALIGA,2014-15,2014-09-15T12:00:00Z,Matchday 3,,SD Eibar,,Deportivo La Coruña,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-0590199a24369ed82f6c8729,LALIGA,2014-15,2014-09-19T12:00:00Z,Matchday 4,,Elche CF,,SD Eibar,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-68585b78970aebeef86bf3c6,LALIGA,2014-15,2014-09-20T12:00:00Z,Matchday 4,,Deportivo La Coruña,,Real Madrid,,2,8,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-97cb77810fbea4877a09838b,LALIGA,2014-15,2014-09-20T12:00:00Z,Matchday 4,,Athletic Club,,Granada CF,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-bd9028b6173eea08cc283c2f,LALIGA,2014-15,2014-09-20T12:00:00Z,Matchday 4,,Atlético Madrid,,RC Celta,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-d8126678798d5101aa3ddc2a,LALIGA,2014-15,2014-09-20T12:00:00Z,Matchday 4,,Espanyol Barcelona,,Málaga CF,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-0dc658f0297bac18e8cdd45c,LALIGA,2014-15,2014-09-21T12:00:00Z,Matchday 4,,Real Sociedad,,UD Almería,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-5ce04f56515525980be37ce8,LALIGA,2014-15,2014-09-21T12:00:00Z,Matchday 4,,Levante UD,,FC Barcelona,,0,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-7c470125fc46f8d81be69320,LALIGA,2014-15,2014-09-21T12:00:00Z,Matchday 4,,Córdoba CF,,Sevilla FC,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-8cbc40fbcbb0603c4781c2e4,LALIGA,2014-15,2014-09-21T12:00:00Z,Matchday 4,,Villarreal CF,,Rayo Vallecano,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-bee46c85e66ca11869bb69eb,LALIGA,2014-15,2014-09-22T12:00:00Z,Matchday 4,,Getafe CF,,Valencia CF,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-fba1bd3a5bfe9d2eb82ccaeb,LALIGA,2014-15,2014-09-23T12:00:00Z,Matchday 5,,Real Madrid,,Elche CF,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-fec2a47ce5d36a4f8ca13ac5,LALIGA,2014-15,2014-09-23T12:00:00Z,Matchday 5,,RC Celta,,Deportivo La Coruña,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-4e76814750d14b6b26944f65,LALIGA,2014-15,2014-09-24T12:00:00Z,Matchday 5,,SD Eibar,,Villarreal CF,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-674b60780efb48bddb9d62cf,LALIGA,2014-15,2014-09-24T12:00:00Z,Matchday 5,,Rayo Vallecano,,Athletic Club,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-6ab43e7e50701d62d9324ab7,LALIGA,2014-15,2014-09-24T12:00:00Z,Matchday 5,,UD Almería,,Atlético Madrid,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-aebaa432a84c1af34e374c76,LALIGA,2014-15,2014-09-24T12:00:00Z,Matchday 5,,Sevilla FC,,Real Sociedad,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-c1780c5bf0b928064b72e844,LALIGA,2014-15,2014-09-24T12:00:00Z,Matchday 5,,Granada CF,,Levante UD,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-cfc5c1a84505c65664e8acb7,LALIGA,2014-15,2014-09-24T12:00:00Z,Matchday 5,,Málaga CF,,FC Barcelona,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-06aa65a31ddf4ab882edc354,LALIGA,2014-15,2014-09-25T12:00:00Z,Matchday 5,,Espanyol Barcelona,,Getafe CF,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-96156666ba2ba341415255a1,LALIGA,2014-15,2014-09-25T12:00:00Z,Matchday 5,,Valencia CF,,Córdoba CF,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-51c16160a3f5f8d458ff3ca1,LALIGA,2014-15,2014-09-26T12:00:00Z,Matchday 6,,Elche CF,,RC Celta,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-12be41f308f85d0fb7b451c9,LALIGA,2014-15,2014-09-27T12:00:00Z,Matchday 6,,Athletic Club,,SD Eibar,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-20b4c0ef943e354a7d96323c,LALIGA,2014-15,2014-09-27T12:00:00Z,Matchday 6,,Villarreal CF,,Real Madrid,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-47ad3b9cc9a253af6ea99647,LALIGA,2014-15,2014-09-27T12:00:00Z,Matchday 6,,Atlético Madrid,,Sevilla FC,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-670e1ea7f8ae659da9cb98bd,LALIGA,2014-15,2014-09-27T12:00:00Z,Matchday 6,,Levante UD,,Rayo Vallecano,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-b33e8fd92ca675cb3636b010,LALIGA,2014-15,2014-09-27T12:00:00Z,Matchday 6,,FC Barcelona,,Granada CF,,6,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-122e3aa557ad49a76133b255,LALIGA,2014-15,2014-09-28T12:00:00Z,Matchday 6,,Getafe CF,,Málaga CF,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-1bf9bd1c6202e89a5f1a3e47,LALIGA,2014-15,2014-09-28T12:00:00Z,Matchday 6,,Deportivo La Coruña,,UD Almería,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-28418a0095035da756354c6a,LALIGA,2014-15,2014-09-28T12:00:00Z,Matchday 6,,Córdoba CF,,Espanyol Barcelona,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-3a72258809f635fff76cccb1,LALIGA,2014-15,2014-09-28T12:00:00Z,Matchday 6,,Real Sociedad,,Valencia CF,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-6ee2aeb0dd1c599384672632,LALIGA,2014-15,2014-10-03T12:00:00Z,Matchday 7,,Getafe CF,,Córdoba CF,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-17ce6b18bc51463419fae18e,LALIGA,2014-15,2014-10-04T12:00:00Z,Matchday 7,,Rayo Vallecano,,FC Barcelona,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-3b5136d4324eeb3f8b2e00d0,LALIGA,2014-15,2014-10-04T12:00:00Z,Matchday 7,,SD Eibar,,Levante UD,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-75302e83387bdb7ff2429afb,LALIGA,2014-15,2014-10-04T12:00:00Z,Matchday 7,,UD Almería,,Elche CF,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-e5431c5ba692161714631d8c,LALIGA,2014-15,2014-10-04T12:00:00Z,Matchday 7,,Málaga CF,,Granada CF,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-ea056b96bcb212937b82a980,LALIGA,2014-15,2014-10-04T12:00:00Z,Matchday 7,,Valencia CF,,Atlético Madrid,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-0c36703e628f1fcecc53fd24,LALIGA,2014-15,2014-10-05T12:00:00Z,Matchday 7,,Sevilla FC,,Deportivo La Coruña,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-400fe67a293eb57a7cc2c4da,LALIGA,2014-15,2014-10-05T12:00:00Z,Matchday 7,,Espanyol Barcelona,,Real Sociedad,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-67438e0b98476a7dd0c76fae,LALIGA,2014-15,2014-10-05T12:00:00Z,Matchday 7,,Real Madrid,,Athletic Club,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-d1c65e2f4ccf03831c37b874,LALIGA,2014-15,2014-10-05T12:00:00Z,Matchday 7,,RC Celta,,Villarreal CF,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-1c8c720a51ea86584f7ffd91,LALIGA,2014-15,2014-10-17T12:00:00Z,Matchday 8,,Granada CF,,Rayo Vallecano,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-340f66fc2f63f23026474d55,LALIGA,2014-15,2014-10-18T12:00:00Z,Matchday 8,,Levante UD,,Real Madrid,,0,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-6754be0fdd2319dbbffd7f85,LALIGA,2014-15,2014-10-18T12:00:00Z,Matchday 8,,FC Barcelona,,SD Eibar,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-b1cb83194aa86b43a494d967,LALIGA,2014-15,2014-10-18T12:00:00Z,Matchday 8,,Athletic Club,,RC Celta,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-f841a99fe3a8ed5a809d394c,LALIGA,2014-15,2014-10-18T12:00:00Z,Matchday 8,,Córdoba CF,,Málaga CF,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-049f0ced2e3788df6b569eff,LALIGA,2014-15,2014-10-19T12:00:00Z,Matchday 8,,Elche CF,,Sevilla FC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-0abff001751be4198f1a3da4,LALIGA,2014-15,2014-10-19T12:00:00Z,Matchday 8,,Villarreal CF,,UD Almería,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-2ed19832e43c58a4d40a642f,LALIGA,2014-15,2014-10-19T12:00:00Z,Matchday 8,,Deportivo La Coruña,,Valencia CF,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-cd00559fe448619c07b9ea51,LALIGA,2014-15,2014-10-19T12:00:00Z,Matchday 8,,Atlético Madrid,,Espanyol Barcelona,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-d40375defda16e5880c21c6a,LALIGA,2014-15,2014-10-20T12:00:00Z,Matchday 8,,Real Sociedad,,Getafe CF,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-2dca0312b7fb8b028df1b916,LALIGA,2014-15,2014-10-24T12:00:00Z,Matchday 9,,RC Celta,,Levante UD,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-11573dfdbb6008e470a839fc,LALIGA,2014-15,2014-10-25T12:00:00Z,Matchday 9,,Valencia CF,,Elche CF,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-4bbae63dd09d1f673619626d,LALIGA,2014-15,2014-10-25T12:00:00Z,Matchday 9,,UD Almería,,Athletic Club,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-7673ea4a4491ad803047ef32,LALIGA,2014-15,2014-10-25T12:00:00Z,Matchday 9,,Real Madrid,,FC Barcelona,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-87c58d96371b8e75a69e8b3a,LALIGA,2014-15,2014-10-25T12:00:00Z,Matchday 9,,SD Eibar,,Granada CF,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-c9a63a2b04b10f85c3a1043d,LALIGA,2014-15,2014-10-25T12:00:00Z,Matchday 9,,Córdoba CF,,Real Sociedad,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-4c772ca449e3f64709174c87,LALIGA,2014-15,2014-10-26T12:00:00Z,Matchday 9,,Sevilla FC,,Villarreal CF,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-83c46f9e798b36659597b4ae,LALIGA,2014-15,2014-10-26T12:00:00Z,Matchday 9,,Málaga CF,,Rayo Vallecano,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-a1d899a93229a4248d6205f6,LALIGA,2014-15,2014-10-26T12:00:00Z,Matchday 9,,Espanyol Barcelona,,Deportivo La Coruña,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-e93a0a2837361d300198e636,LALIGA,2014-15,2014-10-26T12:00:00Z,Matchday 9,,Getafe CF,,Atlético Madrid,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-98d1a08ae159c885d7f9a21f,LALIGA,2014-15,2014-10-31T12:00:00Z,Matchday 10,,Deportivo La Coruña,,Getafe CF,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-1e7e2732e7cac0f091b885c4,LALIGA,2014-15,2014-11-01T12:00:00Z,Matchday 10,,Real Sociedad,,Málaga CF,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-2ef8ff15338872413b47ed39,LALIGA,2014-15,2014-11-01T12:00:00Z,Matchday 10,,FC Barcelona,,RC Celta,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-7b8f3b1654cb8bc0e00f7685,LALIGA,2014-15,2014-11-01T12:00:00Z,Matchday 10,,Granada CF,,Real Madrid,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-d20deb5db2192a661c64560a,LALIGA,2014-15,2014-11-01T12:00:00Z,Matchday 10,,Atlético Madrid,,Córdoba CF,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-65ae2656782c77db57b66dd7,LALIGA,2014-15,2014-11-02T12:00:00Z,Matchday 10,,Levante UD,,UD Almería,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-8658d7a79545f0a73f7c68c6,LALIGA,2014-15,2014-11-02T12:00:00Z,Matchday 10,,Villarreal CF,,Valencia CF,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-b436941823ba1d6071af5f95,LALIGA,2014-15,2014-11-02T12:00:00Z,Matchday 10,,Athletic Club,,Sevilla FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-e3035f363048e5756d9cb685,LALIGA,2014-15,2014-11-02T12:00:00Z,Matchday 10,,Elche CF,,Espanyol Barcelona,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-84f20833dfe4385cab3530dc,LALIGA,2014-15,2014-11-03T12:00:00Z,Matchday 10,,Rayo Vallecano,,SD Eibar,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-6a3d1466affe3cc534acd470,LALIGA,2014-15,2014-11-07T12:00:00Z,Matchday 11,,Córdoba CF,,Deportivo La Coruña,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-0407286dacfa22467a850578,LALIGA,2014-15,2014-11-08T12:00:00Z,Matchday 11,,Getafe CF,,Elche CF,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-5d086a8b9b8cb4a02c9d2489,LALIGA,2014-15,2014-11-08T12:00:00Z,Matchday 11,,UD Almería,,FC Barcelona,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-6928a1302fd3fd3a92c8ba7e,LALIGA,2014-15,2014-11-08T12:00:00Z,Matchday 11,,Real Madrid,,Rayo Vallecano,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-b777d622a13d10a320b4033b,LALIGA,2014-15,2014-11-08T12:00:00Z,Matchday 11,,RC Celta,,Granada CF,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-cdce904535ef80ebc62a53ad,LALIGA,2014-15,2014-11-08T12:00:00Z,Matchday 11,,Málaga CF,,SD Eibar,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-0b4f93cfc71b028942b97053,LALIGA,2014-15,2014-11-09T12:00:00Z,Matchday 11,,Sevilla FC,,Levante UD,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-7c009459240e4b0747c67182,LALIGA,2014-15,2014-11-09T12:00:00Z,Matchday 11,,Valencia CF,,Athletic Club,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-ad0d4a948bfc6657f9a897de,LALIGA,2014-15,2014-11-09T12:00:00Z,Matchday 11,,Real Sociedad,,Atlético Madrid,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-d0180c06945c24173b4b3861,LALIGA,2014-15,2014-11-09T12:00:00Z,Matchday 11,,Espanyol Barcelona,,Villarreal CF,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-cac9ae1a057afcb7d0a0c6ff,LALIGA,2014-15,2014-11-21T12:00:00Z,Matchday 12,,Athletic Club,,Espanyol Barcelona,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-08367ee0a094afd818190dd1,LALIGA,2014-15,2014-11-22T12:00:00Z,Matchday 12,,FC Barcelona,,Sevilla FC,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-9997b500f162bcf308efab97,LALIGA,2014-15,2014-11-22T12:00:00Z,Matchday 12,,Atlético Madrid,,Málaga CF,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-b8794598e6eb68cdc3bd8265,LALIGA,2014-15,2014-11-22T12:00:00Z,Matchday 12,,SD Eibar,,Real Madrid,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-c173b57cb39a6ee07d61f7d7,LALIGA,2014-15,2014-11-22T12:00:00Z,Matchday 12,,Deportivo La Coruña,,Real Sociedad,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-0e215dbbe376fd70b50e842f,LALIGA,2014-15,2014-11-23T12:00:00Z,Matchday 12,,Villarreal CF,,Getafe CF,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-15241d38c5bc0f254484dfc2,LALIGA,2014-15,2014-11-23T12:00:00Z,Matchday 12,,Levante UD,,Valencia CF,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-4c66391896a071730b965b96,LALIGA,2014-15,2014-11-23T12:00:00Z,Matchday 12,,Elche CF,,Córdoba CF,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-588db888b758f47700be2421,LALIGA,2014-15,2014-11-23T12:00:00Z,Matchday 12,,Rayo Vallecano,,RC Celta,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-4da925c6c46b28c04633b3f4,LALIGA,2014-15,2014-11-24T12:00:00Z,Matchday 12,,Granada CF,,UD Almería,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-68ea973e3a57fd7ea6382da7,LALIGA,2014-15,2014-11-28T12:00:00Z,Matchday 13,,Real Sociedad,,Elche CF,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-17c850a15deb1fdbe5ab81bb,LALIGA,2014-15,2014-11-29T12:00:00Z,Matchday 13,,Málaga CF,,Real Madrid,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-25e2c35ede835f3274996a39,LALIGA,2014-15,2014-11-29T12:00:00Z,Matchday 13,,Espanyol Barcelona,,Levante UD,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-3dc768d30d37505fd58b4091,LALIGA,2014-15,2014-11-29T12:00:00Z,Matchday 13,,Getafe CF,,Athletic Club,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-c15f8ca7ac03422fc331efb0,LALIGA,2014-15,2014-11-29T12:00:00Z,Matchday 13,,RC Celta,,SD Eibar,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-33c10e8f8a0d2e3a40f2f795,LALIGA,2014-15,2014-11-30T12:00:00Z,Matchday 13,,Sevilla FC,,Granada CF,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-73f6ae75700587e598791224,LALIGA,2014-15,2014-11-30T12:00:00Z,Matchday 13,,Valencia CF,,FC Barcelona,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-74b2e32fdfbae7372ca60f57,LALIGA,2014-15,2014-11-30T12:00:00Z,Matchday 13,,Córdoba CF,,Villarreal CF,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-c1b8f234fe2e66c6dcd8cf85,LALIGA,2014-15,2014-11-30T12:00:00Z,Matchday 13,,Atlético Madrid,,Deportivo La Coruña,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-b2142b062af5e8a60461e01e,LALIGA,2014-15,2014-12-01T12:00:00Z,Matchday 13,,UD Almería,,Rayo Vallecano,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-088f8a8464e4553d04619254,LALIGA,2014-15,2014-12-06T12:00:00Z,Matchday 14,,Athletic Club,,Córdoba CF,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-b308c7c6c479fd0d6943873a,LALIGA,2014-15,2014-12-06T12:00:00Z,Matchday 14,,Real Madrid,,RC Celta,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-c39ddaad09ae07b004fdb3aa,LALIGA,2014-15,2014-12-06T12:00:00Z,Matchday 14,,Elche CF,,Atlético Madrid,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-dcd758bc84e4e1eca4219c5a,LALIGA,2014-15,2014-12-06T12:00:00Z,Matchday 14,,Deportivo La Coruña,,Málaga CF,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-0e31bebdbbb8068bdcf14720,LALIGA,2014-15,2014-12-07T12:00:00Z,Matchday 14,,Rayo Vallecano,,Sevilla FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-24f6de0d2c90aaed23469a58,LALIGA,2014-15,2014-12-07T12:00:00Z,Matchday 14,,Villarreal CF,,Real Sociedad,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-905c773ae8bfaa843ce8f683,LALIGA,2014-15,2014-12-07T12:00:00Z,Matchday 14,,FC Barcelona,,Espanyol Barcelona,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-f6eeb303ebdae8406d5c3f68,LALIGA,2014-15,2014-12-07T12:00:00Z,Matchday 14,,Granada CF,,Valencia CF,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-255450e1509a8bbee7503ab5,LALIGA,2014-15,2014-12-08T12:00:00Z,Matchday 14,,Levante UD,,Getafe CF,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-9925cfcea375f5e5e2fc333b,LALIGA,2014-15,2014-12-08T12:00:00Z,Matchday 14,,SD Eibar,,UD Almería,,5,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-97003355c61b34a7b17f41dd,LALIGA,2014-15,2014-12-12T12:00:00Z,Matchday 15,,UD Almería,,Real Madrid,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-2f413acc168b7cc1aeacc436,LALIGA,2014-15,2014-12-13T12:00:00Z,Matchday 15,,Málaga CF,,RC Celta,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-89c8e2b540a36efff4d453d1,LALIGA,2014-15,2014-12-13T12:00:00Z,Matchday 15,,Getafe CF,,FC Barcelona,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-c2e49972fe98cc750b1c4d7a,LALIGA,2014-15,2014-12-13T12:00:00Z,Matchday 15,,Córdoba CF,,Levante UD,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-f9f58be326abbf3635ef7f58,LALIGA,2014-15,2014-12-13T12:00:00Z,Matchday 15,,Valencia CF,,Rayo Vallecano,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-039031302421d8f56493587d,LALIGA,2014-15,2014-12-14T12:00:00Z,Matchday 15,,Real Sociedad,,Athletic Club,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-292788b29a91bae25e21d126,LALIGA,2014-15,2014-12-14T12:00:00Z,Matchday 15,,Espanyol Barcelona,,Granada CF,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-36b7a95eab271fc2587cf107,LALIGA,2014-15,2014-12-14T12:00:00Z,Matchday 15,,Sevilla FC,,SD Eibar,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-c8f0bf739e28a106f7b639d8,LALIGA,2014-15,2014-12-14T12:00:00Z,Matchday 15,,Atlético Madrid,,Villarreal CF,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-22b4e9119485b04551ccd067,LALIGA,2014-15,2014-12-15T12:00:00Z,Matchday 15,,Deportivo La Coruña,,Elche CF,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-f504814bf987611c1da7a46a,LALIGA,2014-15,2014-12-19T12:00:00Z,Matchday 16,,RC Celta,,UD Almería,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-2a3f3df4fd26e3743cd02f83,LALIGA,2014-15,2014-12-20T12:00:00Z,Matchday 16,,Rayo Vallecano,,Espanyol Barcelona,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-ab6ed832ae8ace6203597797,LALIGA,2014-15,2014-12-20T12:00:00Z,Matchday 16,,FC Barcelona,,Córdoba CF,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-c32bd6ea6dd5dc2b7f02e271,LALIGA,2014-15,2014-12-20T12:00:00Z,Matchday 16,,Levante UD,,Real Sociedad,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-edd4271feb272e2e0d63bf6f,LALIGA,2014-15,2014-12-20T12:00:00Z,Matchday 16,,SD Eibar,,Valencia CF,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-2c49a0d9eac7c25c986aae91,LALIGA,2014-15,2014-12-21T12:00:00Z,Matchday 16,,Elche CF,,Málaga CF,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-4595aaefed1befce16a3f30a,LALIGA,2014-15,2014-12-21T12:00:00Z,Matchday 16,,Granada CF,,Getafe CF,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-a40da3fc5da4e0c84ba16de5,LALIGA,2014-15,2014-12-21T12:00:00Z,Matchday 16,,Athletic Club,,Atlético Madrid,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-c4feeb581e5c27baed563488,LALIGA,2014-15,2014-12-21T12:00:00Z,Matchday 16,,Villarreal CF,,Deportivo La Coruña,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-135ca4f83f8b1f54409ed2c3,LALIGA,2014-15,2015-01-03T12:00:00Z,Matchday 17,,Deportivo La Coruña,,Athletic Club,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-1cfdefd84132f820e93dd0e4,LALIGA,2014-15,2015-01-03T12:00:00Z,Matchday 17,,Sevilla FC,,RC Celta,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-3c6bc74a285825669fa6d286,LALIGA,2014-15,2015-01-03T12:00:00Z,Matchday 17,,Málaga CF,,UD Almería,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-60e1aee470403d59c2fb97e8,LALIGA,2014-15,2015-01-03T12:00:00Z,Matchday 17,,Elche CF,,Villarreal CF,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-8c33a819fda6765f83a8a23a,LALIGA,2014-15,2015-01-03T12:00:00Z,Matchday 17,,Atlético Madrid,,Levante UD,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-1a0e87983acd9d8cdfd349b1,LALIGA,2014-15,2015-01-04T12:00:00Z,Matchday 17,,Espanyol Barcelona,,SD Eibar,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-54beaeeec2ebcb2a99a1ae58,LALIGA,2014-15,2015-01-04T12:00:00Z,Matchday 17,,Getafe CF,,Rayo Vallecano,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-76ff20ab0616ab6e12203191,LALIGA,2014-15,2015-01-04T12:00:00Z,Matchday 17,,Valencia CF,,Real Madrid,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-7d1d1d58dac8fb7b18055b75,LALIGA,2014-15,2015-01-04T12:00:00Z,Matchday 17,,Real Sociedad,,FC Barcelona,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-4f60bfb7f2492a028087ba10,LALIGA,2014-15,2015-01-05T12:00:00Z,Matchday 17,,Córdoba CF,,Granada CF,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-1cab7c36f57d7b70cefcc7e8,LALIGA,2014-15,2015-01-09T12:00:00Z,Matchday 18,,Levante UD,,Deportivo La Coruña,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-58de6de1565f4204f0c641f5,LALIGA,2014-15,2015-01-10T12:00:00Z,Matchday 18,,RC Celta,,Valencia CF,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-6c97fcfca6273957abab0268,LALIGA,2014-15,2015-01-10T12:00:00Z,Matchday 18,,SD Eibar,,Getafe CF,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-a6c6a4b98e4c38e1fe434201,LALIGA,2014-15,2015-01-10T12:00:00Z,Matchday 18,,Real Madrid,,Espanyol Barcelona,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-ba8baa58217ed0d01a51ac03,LALIGA,2014-15,2015-01-10T12:00:00Z,Matchday 18,,Málaga CF,,Villarreal CF,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-641fe0a68e6dd21922c93661,LALIGA,2014-15,2015-01-11T12:00:00Z,Matchday 18,,UD Almería,,Sevilla FC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-7557bc1855025fef829d7f6e,LALIGA,2014-15,2015-01-11T12:00:00Z,Matchday 18,,Athletic Club,,Elche CF,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-999bbf772387df468d17cb48,LALIGA,2014-15,2015-01-11T12:00:00Z,Matchday 18,,FC Barcelona,,Atlético Madrid,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-fcaf9d7fcc75913feea4dfdc,LALIGA,2014-15,2015-01-11T12:00:00Z,Matchday 18,,Granada CF,,Real Sociedad,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-a8023ddbdeb8146f72670c02,LALIGA,2014-15,2015-01-12T12:00:00Z,Matchday 18,,Rayo Vallecano,,Córdoba CF,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-c174b1740107f2b59c39fba0,LALIGA,2014-15,2015-01-16T12:00:00Z,Matchday 19,,Córdoba CF,,SD Eibar,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-2bd1d7d9f4a6804dda6fb559,LALIGA,2014-15,2015-01-17T12:00:00Z,Matchday 19,,Espanyol Barcelona,,RC Celta,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-351e2921500019e1cd84821d,LALIGA,2014-15,2015-01-17T12:00:00Z,Matchday 19,,Real Sociedad,,Rayo Vallecano,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-41b63efa80f791ee9bdc00e6,LALIGA,2014-15,2015-01-17T12:00:00Z,Matchday 19,,Valencia CF,,UD Almería,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-f1a142a35a8a846e82858679,LALIGA,2014-15,2015-01-17T12:00:00Z,Matchday 19,,Villarreal CF,,Athletic Club,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-8c2775e3b255b09f97b4a63b,LALIGA,2014-15,2015-01-18T12:00:00Z,Matchday 19,,Getafe CF,,Real Madrid,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-936beb142f9fbdd39f0d8fbb,LALIGA,2014-15,2015-01-18T12:00:00Z,Matchday 19,,Elche CF,,Levante UD,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-bb6ba9c797c5a4ed8cadbabf,LALIGA,2014-15,2015-01-18T12:00:00Z,Matchday 19,,Deportivo La Coruña,,FC Barcelona,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-d3d64647675c0c7c091024bc,LALIGA,2014-15,2015-01-18T12:00:00Z,Matchday 19,,Atlético Madrid,,Granada CF,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-d3fd8e29bea85d9f614bb0cd,LALIGA,2014-15,2015-01-18T12:00:00Z,Matchday 19,,Sevilla FC,,Málaga CF,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-4fd79f44c46c839aaebf4529,LALIGA,2014-15,2015-01-24T12:00:00Z,Matchday 20,,Elche CF,,FC Barcelona,,0,6,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-6e043d005be7e31175e57a54,LALIGA,2014-15,2015-01-24T12:00:00Z,Matchday 20,,Atlético Madrid,,Rayo Vallecano,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-95001a42767c47f5cbd826c6,LALIGA,2014-15,2015-01-24T12:00:00Z,Matchday 20,,Real Sociedad,,SD Eibar,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-bc66384525f5a37ae5a45f74,LALIGA,2014-15,2015-01-24T12:00:00Z,Matchday 20,,Córdoba CF,,Real Madrid,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-c4cd6ea5217b2cbc54713b1e,LALIGA,2014-15,2015-01-24T12:00:00Z,Matchday 20,,Villarreal CF,,Levante UD,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-7a57a58caf5026868aea133a,LALIGA,2014-15,2015-01-25T12:00:00Z,Matchday 20,,Athletic Club,,Málaga CF,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-8e82a7ec35cb52bd7a45d33a,LALIGA,2014-15,2015-01-25T12:00:00Z,Matchday 20,,Deportivo La Coruña,,Granada CF,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-91b68353d9f111e472234853,LALIGA,2014-15,2015-01-25T12:00:00Z,Matchday 20,,Valencia CF,,Sevilla FC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-d00a3a48bae2fd7833b0a35b,LALIGA,2014-15,2015-01-25T12:00:00Z,Matchday 20,,Espanyol Barcelona,,UD Almería,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-74cf1c3352c8e159a70ea82a,LALIGA,2014-15,2015-01-26T12:00:00Z,Matchday 20,,Getafe CF,,RC Celta,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-c0e0dbd6ada3c6babba1a699,LALIGA,2014-15,2015-01-30T12:00:00Z,Matchday 21,,Rayo Vallecano,,Deportivo La Coruña,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-0fc90a41f21d01df3ce33c76,LALIGA,2014-15,2015-01-31T12:00:00Z,Matchday 21,,Granada CF,,Elche CF,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-3987e3a317385646de6ff13c,LALIGA,2014-15,2015-01-31T12:00:00Z,Matchday 21,,Real Madrid,,Real Sociedad,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-c71a7ff4e23265ca8fa63756,LALIGA,2014-15,2015-01-31T12:00:00Z,Matchday 21,,RC Celta,,Córdoba CF,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-f3eb1f75c2dae047f03b8d98,LALIGA,2014-15,2015-01-31T12:00:00Z,Matchday 21,,SD Eibar,,Atlético Madrid,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-1f80f79cf7823f0818d27eb8,LALIGA,2014-15,2015-02-01T12:00:00Z,Matchday 21,,FC Barcelona,,Villarreal CF,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-2125aa8d2c0adbeeaee08cb4,LALIGA,2014-15,2015-02-01T12:00:00Z,Matchday 21,,UD Almería,,Getafe CF,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-435e2d0cd2071af8dc4dcac3,LALIGA,2014-15,2015-02-01T12:00:00Z,Matchday 21,,Sevilla FC,,Espanyol Barcelona,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-70d3efa439987b6c01fc4a54,LALIGA,2014-15,2015-02-01T12:00:00Z,Matchday 21,,Levante UD,,Athletic Club,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-c039030785a25a1cecdd1e60,LALIGA,2014-15,2015-02-02T12:00:00Z,Matchday 21,,Málaga CF,,Valencia CF,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-ab51a8a0f9356087978e0029,LALIGA,2014-15,2015-02-04T12:00:00Z,Matchday 16,,Real Madrid,,Sevilla FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-82ce13f1495bfb9b6fdd8812,LALIGA,2014-15,2015-02-06T12:00:00Z,Matchday 22,,Deportivo La Coruña,,SD Eibar,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-3f738c70dd6ed836f1293f2e,LALIGA,2014-15,2015-02-07T12:00:00Z,Matchday 22,,Atlético Madrid,,Real Madrid,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-5f825cf9374f996ef1093132,LALIGA,2014-15,2015-02-07T12:00:00Z,Matchday 22,,Levante UD,,Málaga CF,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-c67da5153fbfe2f4a73083fe,LALIGA,2014-15,2015-02-07T12:00:00Z,Matchday 22,,Real Sociedad,,RC Celta,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-e3b25efd3fc5e7b811e957a2,LALIGA,2014-15,2015-02-07T12:00:00Z,Matchday 22,,Villarreal CF,,Granada CF,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-29e455eb47a4f8c189b11faa,LALIGA,2014-15,2015-02-08T12:00:00Z,Matchday 22,,Athletic Club,,FC Barcelona,,2,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-66044f3457794b58f5f767a1,LALIGA,2014-15,2015-02-08T12:00:00Z,Matchday 22,,Córdoba CF,,UD Almería,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-914722dddc92115bc8a6fa22,LALIGA,2014-15,2015-02-08T12:00:00Z,Matchday 22,,Espanyol Barcelona,,Valencia CF,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-be751819f791ed5c9350a766,LALIGA,2014-15,2015-02-08T12:00:00Z,Matchday 22,,Getafe CF,,Sevilla FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-2d4b71f18f2687da84a65977,LALIGA,2014-15,2015-02-09T12:00:00Z,Matchday 22,,Elche CF,,Rayo Vallecano,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-65000f5a6fd9319582fe3396,LALIGA,2014-15,2015-02-13T12:00:00Z,Matchday 23,,UD Almería,,Real Sociedad,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-1f681eb5fe982f4b8d5651da,LALIGA,2014-15,2015-02-14T12:00:00Z,Matchday 23,,Málaga CF,,Espanyol Barcelona,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-7b098d2a9ba6c5c911d2e944,LALIGA,2014-15,2015-02-14T12:00:00Z,Matchday 23,,Granada CF,,Athletic Club,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-8f918b997efab7912ccaa2b4,LALIGA,2014-15,2015-02-14T12:00:00Z,Matchday 23,,Sevilla FC,,Córdoba CF,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-ae7ce3d44cfe8f16e97f9995,LALIGA,2014-15,2015-02-14T12:00:00Z,Matchday 23,,Real Madrid,,Deportivo La Coruña,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-56b55bc328740d6331b90f7e,LALIGA,2014-15,2015-02-15T12:00:00Z,Matchday 23,,Valencia CF,,Getafe CF,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-90654299c4295b1944d4c7c5,LALIGA,2014-15,2015-02-15T12:00:00Z,Matchday 23,,RC Celta,,Atlético Madrid,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-d517b2bf931fd88819d188c5,LALIGA,2014-15,2015-02-15T12:00:00Z,Matchday 23,,FC Barcelona,,Levante UD,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-dc0d839d3eaf507ef23d1f08,LALIGA,2014-15,2015-02-15T12:00:00Z,Matchday 23,,Rayo Vallecano,,Villarreal CF,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-dfb3b1894f67f10799d4fb24,LALIGA,2014-15,2015-02-16T12:00:00Z,Matchday 23,,SD Eibar,,Elche CF,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-10c2bf49f1d4a91d53640fde,LALIGA,2014-15,2015-02-20T12:00:00Z,Matchday 24,,Getafe CF,,Espanyol Barcelona,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-0c794065ffcfac7fcc64def9,LALIGA,2014-15,2015-02-21T12:00:00Z,Matchday 24,,FC Barcelona,,Málaga CF,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-529eee35ea53d08dd92e8507,LALIGA,2014-15,2015-02-21T12:00:00Z,Matchday 24,,Deportivo La Coruña,,RC Celta,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-99bffba57e25e34559fa7cf2,LALIGA,2014-15,2015-02-21T12:00:00Z,Matchday 24,,Atlético Madrid,,UD Almería,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-a0f71397392df3b3d8f3fdaf,LALIGA,2014-15,2015-02-21T12:00:00Z,Matchday 24,,Córdoba CF,,Valencia CF,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-3c0f0f288bb8e2817fd24519,LALIGA,2014-15,2015-02-22T12:00:00Z,Matchday 24,,Athletic Club,,Rayo Vallecano,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-44d822e3b8b7d0bacfac6537,LALIGA,2014-15,2015-02-22T12:00:00Z,Matchday 24,,Elche CF,,Real Madrid,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-85b1cbadc24e0b883b682a76,LALIGA,2014-15,2015-02-22T12:00:00Z,Matchday 24,,Real Sociedad,,Sevilla FC,,4,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-c4bdc313574d7251b81dad1a,LALIGA,2014-15,2015-02-22T12:00:00Z,Matchday 24,,Villarreal CF,,SD Eibar,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-97c397a86d34e401a29e59dc,LALIGA,2014-15,2015-02-23T12:00:00Z,Matchday 24,,Levante UD,,Granada CF,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-02874f9660bb8ca174614db4,LALIGA,2014-15,2015-02-27T12:00:00Z,Matchday 25,,Espanyol Barcelona,,Córdoba CF,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-8651ba195a24e41aa4bfce92,LALIGA,2014-15,2015-02-28T12:00:00Z,Matchday 25,,Granada CF,,FC Barcelona,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-9cbdd4ef57c13f04cf147f38,LALIGA,2014-15,2015-02-28T12:00:00Z,Matchday 25,,UD Almería,,Deportivo La Coruña,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-c1c8439077000766ec758ec1,LALIGA,2014-15,2015-02-28T12:00:00Z,Matchday 25,,Málaga CF,,Getafe CF,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-d5543af483cafe96254a3735,LALIGA,2014-15,2015-02-28T12:00:00Z,Matchday 25,,Rayo Vallecano,,Levante UD,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-3d6ee4c8654f8ea2402d043f,LALIGA,2014-15,2015-03-01T12:00:00Z,Matchday 25,,Valencia CF,,Real Sociedad,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-700eb7b83012564f3777b779,LALIGA,2014-15,2015-03-01T12:00:00Z,Matchday 25,,SD Eibar,,Athletic Club,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-a687baf92bdeb5b9ada78189,LALIGA,2014-15,2015-03-01T12:00:00Z,Matchday 25,,Real Madrid,,Villarreal CF,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-f4423ba7bb1b48cde3e69a94,LALIGA,2014-15,2015-03-01T12:00:00Z,Matchday 25,,Sevilla FC,,Atlético Madrid,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-ca1db8b9a294222dcc0e64a1,LALIGA,2014-15,2015-03-02T12:00:00Z,Matchday 25,,RC Celta,,Elche CF,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-077fbf1e3712c7a89a648b61,LALIGA,2014-15,2015-03-06T12:00:00Z,Matchday 26,,Levante UD,,SD Eibar,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-89938d564523964894346bba,LALIGA,2014-15,2015-03-07T12:00:00Z,Matchday 26,,Deportivo La Coruña,,Sevilla FC,,3,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-8c2f24e8eac752c164f6a5f4,LALIGA,2014-15,2015-03-07T12:00:00Z,Matchday 26,,Elche CF,,UD Almería,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-d021861f6ab7b1e25cbc92c1,LALIGA,2014-15,2015-03-07T12:00:00Z,Matchday 26,,Athletic Club,,Real Madrid,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-fd8f91902e361760be53655e,LALIGA,2014-15,2015-03-07T12:00:00Z,Matchday 26,,Granada CF,,Málaga CF,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-803f32f317362c4d0662ab06,LALIGA,2014-15,2015-03-08T12:00:00Z,Matchday 26,,Atlético Madrid,,Valencia CF,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-9eb87edf1f12833b4e016a69,LALIGA,2014-15,2015-03-08T12:00:00Z,Matchday 26,,FC Barcelona,,Rayo Vallecano,,6,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-bb38de5cd56ce4a001f9b5ed,LALIGA,2014-15,2015-03-08T12:00:00Z,Matchday 26,,Villarreal CF,,RC Celta,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-bd91436ccecc8ab873238128,LALIGA,2014-15,2015-03-08T12:00:00Z,Matchday 26,,Real Sociedad,,Espanyol Barcelona,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-0aa5f8869a138582199678ae,LALIGA,2014-15,2015-03-09T12:00:00Z,Matchday 26,,Córdoba CF,,Getafe CF,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-adc17cd717869e73f6744a54,LALIGA,2014-15,2015-03-13T12:00:00Z,Matchday 27,,Valencia CF,,Deportivo La Coruña,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-0cfda8dc1aa36d79166394cb,LALIGA,2014-15,2015-03-14T12:00:00Z,Matchday 27,,Rayo Vallecano,,Granada CF,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-33a2a569224d8c2d81aff475,LALIGA,2014-15,2015-03-14T12:00:00Z,Matchday 27,,Espanyol Barcelona,,Atlético Madrid,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-96dbf401ef5f20cf978a9fdb,LALIGA,2014-15,2015-03-14T12:00:00Z,Matchday 27,,SD Eibar,,FC Barcelona,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-e1ef783ccaf31808fb64852c,LALIGA,2014-15,2015-03-14T12:00:00Z,Matchday 27,,RC Celta,,Athletic Club,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-410f7764352265cfa00cc003,LALIGA,2014-15,2015-03-15T12:00:00Z,Matchday 27,,UD Almería,,Villarreal CF,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-b76675b1d23f3a089880c3ed,LALIGA,2014-15,2015-03-15T12:00:00Z,Matchday 27,,Sevilla FC,,Elche CF,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-eddbd2d0921806e3e939c304,LALIGA,2014-15,2015-03-15T12:00:00Z,Matchday 27,,Málaga CF,,Córdoba CF,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-f770536f4252db5756164865,LALIGA,2014-15,2015-03-15T12:00:00Z,Matchday 27,,Real Madrid,,Levante UD,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-dd33b58d7dfd2108ff94965c,LALIGA,2014-15,2015-03-16T12:00:00Z,Matchday 27,,Getafe CF,,Real Sociedad,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-50255578d4aad06c6cb97147,LALIGA,2014-15,2015-03-20T12:00:00Z,Matchday 28,,Elche CF,,Valencia CF,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-079d5fb9098580e492702f4c,LALIGA,2014-15,2015-03-21T12:00:00Z,Matchday 28,,Levante UD,,RC Celta,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-349956390d74f1974fc14fc7,LALIGA,2014-15,2015-03-21T12:00:00Z,Matchday 28,,Athletic Club,,UD Almería,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-65797e4b7c3e5fbd3f81e646,LALIGA,2014-15,2015-03-21T12:00:00Z,Matchday 28,,Rayo Vallecano,,Málaga CF,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-9c3927ab97812c5b911345e1,LALIGA,2014-15,2015-03-21T12:00:00Z,Matchday 28,,Granada CF,,SD Eibar,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-e2f9a0ed126a5e927471a375,LALIGA,2014-15,2015-03-21T12:00:00Z,Matchday 28,,Atlético Madrid,,Getafe CF,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-41ef5d864de1990695f4c1b8,LALIGA,2014-15,2015-03-22T12:00:00Z,Matchday 28,,Deportivo La Coruña,,Espanyol Barcelona,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-45f92b53939a44c462ad4f51,LALIGA,2014-15,2015-03-22T12:00:00Z,Matchday 28,,FC Barcelona,,Real Madrid,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-ad861e05dd56a584bc03c466,LALIGA,2014-15,2015-03-22T12:00:00Z,Matchday 28,,Real Sociedad,,Córdoba CF,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-e9982ea5624e4e2cb673eeab,LALIGA,2014-15,2015-03-22T12:00:00Z,Matchday 28,,Villarreal CF,,Sevilla FC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-3cc58e9d10a4153803226c8c,LALIGA,2014-15,2015-04-03T12:00:00Z,Matchday 29,,SD Eibar,,Rayo Vallecano,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-5f6146d6c3c02a03121df542,LALIGA,2014-15,2015-04-04T12:00:00Z,Matchday 29,,Málaga CF,,Real Sociedad,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-72be2abcb6e84da49997b23c,LALIGA,2014-15,2015-04-04T12:00:00Z,Matchday 29,,Sevilla FC,,Athletic Club,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-a4088c5628d26529af167ab4,LALIGA,2014-15,2015-04-04T12:00:00Z,Matchday 29,,UD Almería,,Levante UD,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-fd4141c47428fe9140ddfd57,LALIGA,2014-15,2015-04-04T12:00:00Z,Matchday 29,,Córdoba CF,,Atlético Madrid,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-5162229c0675739b5ed6849e,LALIGA,2014-15,2015-04-05T12:00:00Z,Matchday 29,,Valencia CF,,Villarreal CF,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-55227397848f8665f2c03375,LALIGA,2014-15,2015-04-05T12:00:00Z,Matchday 29,,Getafe CF,,Deportivo La Coruña,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-71720c02c55b5777a01158cf,LALIGA,2014-15,2015-04-05T12:00:00Z,Matchday 29,,Real Madrid,,Granada CF,,9,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-9be50c7b56e37371e477df4a,LALIGA,2014-15,2015-04-05T12:00:00Z,Matchday 29,,RC Celta,,FC Barcelona,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-1a1037bf7b15ef9209d207fc,LALIGA,2014-15,2015-04-06T12:00:00Z,Matchday 29,,Espanyol Barcelona,,Elche CF,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-0a8f1d3279ec2dd51d07bf24,LALIGA,2014-15,2015-04-07T12:00:00Z,Matchday 30,,Levante UD,,Sevilla FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-45899e38ab5123c634492332,LALIGA,2014-15,2015-04-07T12:00:00Z,Matchday 30,,SD Eibar,,Málaga CF,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-cd3872f7d536dc2c5a1dd1f3,LALIGA,2014-15,2015-04-07T12:00:00Z,Matchday 30,,Atlético Madrid,,Real Sociedad,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-410c5905dc08dd44d5c0ffdb,LALIGA,2014-15,2015-04-08T12:00:00Z,Matchday 30,,Rayo Vallecano,,Real Madrid,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-a989b9b45a1ccc9981057315,LALIGA,2014-15,2015-04-08T12:00:00Z,Matchday 30,,FC Barcelona,,UD Almería,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-bbaaae3c30893f8a8834e118,LALIGA,2014-15,2015-04-08T12:00:00Z,Matchday 30,,Deportivo La Coruña,,Córdoba CF,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-c0dd316ed7a0718b09edb4b1,LALIGA,2014-15,2015-04-08T12:00:00Z,Matchday 30,,Granada CF,,RC Celta,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-27ebb8ffaf459391d60a12a7,LALIGA,2014-15,2015-04-09T12:00:00Z,Matchday 30,,Elche CF,,Getafe CF,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-72b725f704a22141d806a9db,LALIGA,2014-15,2015-04-09T12:00:00Z,Matchday 30,,Athletic Club,,Valencia CF,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-7f480706bfa8e28655dc7d75,LALIGA,2014-15,2015-04-09T12:00:00Z,Matchday 30,,Villarreal CF,,Espanyol Barcelona,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-07cbd4d5af99434b8c4391d0,LALIGA,2014-15,2015-04-11T12:00:00Z,Matchday 31,,Málaga CF,,Atlético Madrid,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-84ceb711feda5447305f6aad,LALIGA,2014-15,2015-04-11T12:00:00Z,Matchday 31,,Real Madrid,,SD Eibar,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-981dfa7d76086bff1104f9df,LALIGA,2014-15,2015-04-11T12:00:00Z,Matchday 31,,Sevilla FC,,FC Barcelona,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-9f06f198d8b7322878fe9e4a,LALIGA,2014-15,2015-04-11T12:00:00Z,Matchday 31,,UD Almería,,Granada CF,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-c41f5cc7431b4fff88653e9c,LALIGA,2014-15,2015-04-11T12:00:00Z,Matchday 31,,RC Celta,,Rayo Vallecano,,6,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-6a552a866932628023bbf7e4,LALIGA,2014-15,2015-04-12T12:00:00Z,Matchday 31,,Espanyol Barcelona,,Athletic Club,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-6e477447d43a61c370c89203,LALIGA,2014-15,2015-04-12T12:00:00Z,Matchday 31,,Getafe CF,,Villarreal CF,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-acac2a6f71f1537e5f16205e,LALIGA,2014-15,2015-04-12T12:00:00Z,Matchday 31,,Real Sociedad,,Deportivo La Coruña,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-e2d7e94ba4657b037d2e873f,LALIGA,2014-15,2015-04-12T12:00:00Z,Matchday 31,,Córdoba CF,,Elche CF,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-e6a9c56512427989c4b0ac73,LALIGA,2014-15,2015-04-13T12:00:00Z,Matchday 31,,Valencia CF,,Levante UD,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-82ba5570f777a6e0e244f027,LALIGA,2014-15,2015-04-17T12:00:00Z,Matchday 32,,Levante UD,,Espanyol Barcelona,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-4340f1089e1536f4b2a9563b,LALIGA,2014-15,2015-04-18T12:00:00Z,Matchday 32,,FC Barcelona,,Valencia CF,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-6f48e76707a151ad97bc6aea,LALIGA,2014-15,2015-04-18T12:00:00Z,Matchday 32,,Athletic Club,,Getafe CF,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-ddf1678fe568fbec5ca2305f,LALIGA,2014-15,2015-04-18T12:00:00Z,Matchday 32,,Deportivo La Coruña,,Atlético Madrid,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-fca5c2d191aea2ad7e517d4c,LALIGA,2014-15,2015-04-18T12:00:00Z,Matchday 32,,Real Madrid,,Málaga CF,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-318481f323bcfd9a74c5fb0e,LALIGA,2014-15,2015-04-19T12:00:00Z,Matchday 32,,Granada CF,,Sevilla FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-48e79ffe76b984337044b59a,LALIGA,2014-15,2015-04-19T12:00:00Z,Matchday 32,,SD Eibar,,RC Celta,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-839f7cd41e135aa4d0a93b69,LALIGA,2014-15,2015-04-19T12:00:00Z,Matchday 32,,Villarreal CF,,Córdoba CF,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-a30ef8e10cb221ef69fcfd1e,LALIGA,2014-15,2015-04-19T12:00:00Z,Matchday 32,,Rayo Vallecano,,UD Almería,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-ec06f412db779c2680c0b9b0,LALIGA,2014-15,2015-04-20T12:00:00Z,Matchday 32,,Elche CF,,Real Sociedad,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-a3fcb5a06b13e841d0834d6e,LALIGA,2014-15,2015-04-24T12:00:00Z,Matchday 33,,Córdoba CF,,Athletic Club,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-15706e0eed0efbd2c479a856,LALIGA,2014-15,2015-04-25T12:00:00Z,Matchday 33,,Atlético Madrid,,Elche CF,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-5bbe9e4a1c46df422edc7e62,LALIGA,2014-15,2015-04-25T12:00:00Z,Matchday 33,,Espanyol Barcelona,,FC Barcelona,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-e6c93982a2b802910ab79015,LALIGA,2014-15,2015-04-25T12:00:00Z,Matchday 33,,Getafe CF,,Levante UD,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-ea416cc8c4552078e5bab1ca,LALIGA,2014-15,2015-04-25T12:00:00Z,Matchday 33,,Real Sociedad,,Villarreal CF,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-0fdbe14ed1a4ac91cefa3630,LALIGA,2014-15,2015-04-26T12:00:00Z,Matchday 33,,Málaga CF,,Deportivo La Coruña,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-479e78acbea0673cc3c87188,LALIGA,2014-15,2015-04-26T12:00:00Z,Matchday 33,,RC Celta,,Real Madrid,,2,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-708d8d33e32f12083f8a2f08,LALIGA,2014-15,2015-04-26T12:00:00Z,Matchday 33,,Sevilla FC,,Rayo Vallecano,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-f41d558fd771075916725718,LALIGA,2014-15,2015-04-26T12:00:00Z,Matchday 33,,UD Almería,,SD Eibar,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-320653472b2a1a63c37a7a01,LALIGA,2014-15,2015-04-27T12:00:00Z,Matchday 33,,Valencia CF,,Granada CF,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-3388c1643a04d0b1a847eaf5,LALIGA,2014-15,2015-04-28T12:00:00Z,Matchday 34,,Athletic Club,,Real Sociedad,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-908fa53ebafa775f11be6540,LALIGA,2014-15,2015-04-28T12:00:00Z,Matchday 34,,Levante UD,,Córdoba CF,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-eae40e1f4895be6fe6c397cb,LALIGA,2014-15,2015-04-28T12:00:00Z,Matchday 34,,FC Barcelona,,Getafe CF,,6,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-0c0214fe6226a4eedd33720d,LALIGA,2014-15,2015-04-29T12:00:00Z,Matchday 34,,SD Eibar,,Sevilla FC,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-25f9484b141ae915d6bcad55,LALIGA,2014-15,2015-04-29T12:00:00Z,Matchday 34,,RC Celta,,Málaga CF,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-6d8957b1c7bfd9f22c6a8f86,LALIGA,2014-15,2015-04-29T12:00:00Z,Matchday 34,,Real Madrid,,UD Almería,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-a013a5a869d776dec2bd1f61,LALIGA,2014-15,2015-04-29T12:00:00Z,Matchday 34,,Elche CF,,Deportivo La Coruña,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-e5fdb965b9c394bc3ecf4cf2,LALIGA,2014-15,2015-04-29T12:00:00Z,Matchday 34,,Villarreal CF,,Atlético Madrid,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-357238af1c0292f3cda8c7c5,LALIGA,2014-15,2015-04-30T12:00:00Z,Matchday 34,,Rayo Vallecano,,Valencia CF,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-a9be6cfcf3627c3e736e623b,LALIGA,2014-15,2015-04-30T12:00:00Z,Matchday 34,,Granada CF,,Espanyol Barcelona,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-964e123c2a5afe893dad6d91,LALIGA,2014-15,2015-05-01T12:00:00Z,Matchday 35,,Real Sociedad,,Levante UD,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-5e9d2fdb5e329b3a519c00fb,LALIGA,2014-15,2015-05-02T12:00:00Z,Matchday 35,,Deportivo La Coruña,,Villarreal CF,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-b6d41986292b5f627dd8f51d,LALIGA,2014-15,2015-05-02T12:00:00Z,Matchday 35,,Atlético Madrid,,Athletic Club,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-e57aa71129f12fdc8539f75c,LALIGA,2014-15,2015-05-02T12:00:00Z,Matchday 35,,Sevilla FC,,Real Madrid,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-f8c5e4b9d217a67d4c114635,LALIGA,2014-15,2015-05-02T12:00:00Z,Matchday 35,,Córdoba CF,,FC Barcelona,,0,8,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-50422061f6a54ac467b3109e,LALIGA,2014-15,2015-05-03T12:00:00Z,Matchday 35,,Valencia CF,,SD Eibar,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-8ed48c29957754e6d8986257,LALIGA,2014-15,2015-05-03T12:00:00Z,Matchday 35,,Getafe CF,,Granada CF,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-bf189e18a0e5e31f3f341842,LALIGA,2014-15,2015-05-03T12:00:00Z,Matchday 35,,Málaga CF,,Elche CF,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-f66f5568148fb89c51df3722,LALIGA,2014-15,2015-05-03T12:00:00Z,Matchday 35,,Espanyol Barcelona,,Rayo Vallecano,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-da081953ffff07ab01fe0461,LALIGA,2014-15,2015-05-04T12:00:00Z,Matchday 35,,UD Almería,,RC Celta,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-85bcd825e905151c55c91f2f,LALIGA,2014-15,2015-05-08T12:00:00Z,Matchday 36,,SD Eibar,,Espanyol Barcelona,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-291ac0a615b6d318696b5fea,LALIGA,2014-15,2015-05-09T12:00:00Z,Matchday 36,,FC Barcelona,,Real Sociedad,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-35ae33a6b9a65d6ef0326a96,LALIGA,2014-15,2015-05-09T12:00:00Z,Matchday 36,,Real Madrid,,Valencia CF,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-3e2ce4e0551a8c54f2acf83e,LALIGA,2014-15,2015-05-09T12:00:00Z,Matchday 36,,Granada CF,,Córdoba CF,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-c51e3cf16d9e13c596811c3c,LALIGA,2014-15,2015-05-09T12:00:00Z,Matchday 36,,Athletic Club,,Deportivo La Coruña,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-57fb344504f722405c16e8b9,LALIGA,2014-15,2015-05-10T12:00:00Z,Matchday 36,,UD Almería,,Málaga CF,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-b25ff1a9f8f3e72b587254ff,LALIGA,2014-15,2015-05-10T12:00:00Z,Matchday 36,,RC Celta,,Sevilla FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-b8728925b2292a580322804f,LALIGA,2014-15,2015-05-10T12:00:00Z,Matchday 36,,Villarreal CF,,Elche CF,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-ff0fdf05aa018dda0755ddb5,LALIGA,2014-15,2015-05-10T12:00:00Z,Matchday 36,,Levante UD,,Atlético Madrid,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-d5a787ffda55e491a2b8a085,LALIGA,2014-15,2015-05-11T12:00:00Z,Matchday 36,,Rayo Vallecano,,Getafe CF,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-26645675dd34f9d4f4ce34da,LALIGA,2014-15,2015-05-17T12:00:00Z,Matchday 37,,Villarreal CF,,Málaga CF,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-3d8c418486ff104f14d58c57,LALIGA,2014-15,2015-05-17T12:00:00Z,Matchday 37,,Espanyol Barcelona,,Real Madrid,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-467d73a7a0dd5ad23cf4d8d9,LALIGA,2014-15,2015-05-17T12:00:00Z,Matchday 37,,Atlético Madrid,,FC Barcelona,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-5fe003809b0e0a3a5a34aaf9,LALIGA,2014-15,2015-05-17T12:00:00Z,Matchday 37,,Real Sociedad,,Granada CF,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-7c6501df8de627cce92ab399,LALIGA,2014-15,2015-05-17T12:00:00Z,Matchday 37,,Valencia CF,,RC Celta,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-7f7040061941148b4f53c5f9,LALIGA,2014-15,2015-05-17T12:00:00Z,Matchday 37,,Getafe CF,,SD Eibar,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-99f30e073b548e8dcf716fbf,LALIGA,2014-15,2015-05-17T12:00:00Z,Matchday 37,,Deportivo La Coruña,,Levante UD,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-b391fc298fc1297031ed6998,LALIGA,2014-15,2015-05-17T12:00:00Z,Matchday 37,,Córdoba CF,,Rayo Vallecano,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-e317933af8750d464a5dafd4,LALIGA,2014-15,2015-05-17T12:00:00Z,Matchday 37,,Elche CF,,Athletic Club,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-f9e2f5e480484a9c18c7be34,LALIGA,2014-15,2015-05-17T12:00:00Z,Matchday 37,,Sevilla FC,,UD Almería,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-06207f704ce55569bc5ca5b7,LALIGA,2014-15,2015-05-23T12:00:00Z,Matchday 38,,Rayo Vallecano,,Real Sociedad,,2,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-0f0d8b78c9dbd805694f96d4,LALIGA,2014-15,2015-05-23T12:00:00Z,Matchday 38,,RC Celta,,Espanyol Barcelona,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-1f1ad606a7f7cda5abc2ea6b,LALIGA,2014-15,2015-05-23T12:00:00Z,Matchday 38,,SD Eibar,,Córdoba CF,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-2b3c2f1fe91edf0d577b0d3f,LALIGA,2014-15,2015-05-23T12:00:00Z,Matchday 38,,Málaga CF,,Sevilla FC,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-2d37305f69b0da31e945720a,LALIGA,2014-15,2015-05-23T12:00:00Z,Matchday 38,,UD Almería,,Valencia CF,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-34e802fe883f9354274dffc2,LALIGA,2014-15,2015-05-23T12:00:00Z,Matchday 38,,FC Barcelona,,Deportivo La Coruña,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-5b578dad474d75b3da8512da,LALIGA,2014-15,2015-05-23T12:00:00Z,Matchday 38,,Real Madrid,,Getafe CF,,7,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-9e771e48e9be8c5e819899ea,LALIGA,2014-15,2015-05-23T12:00:00Z,Matchday 38,,Levante UD,,Elche CF,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-c4651baed9adc44f14873937,LALIGA,2014-15,2015-05-23T12:00:00Z,Matchday 38,,Granada CF,,Atlético Madrid,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-ea946e7ed68dce47e00ba27c,LALIGA,2014-15,2015-05-23T12:00:00Z,Matchday 38,,Athletic Club,,Villarreal CF,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00

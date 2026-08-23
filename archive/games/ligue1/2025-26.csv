@@ -1,0 +1,306 @@
+game_id,comp,season,date_utc,stage,venue,home_name,home_code,away_name,away_code,home_score,away_score,status,source,first_seen
+ligue1-openfootball-0e80558cd6ff7993962f4937,LIGUE1,2025-26,2025-08-15T12:00:00Z,Matchday 1,,Stade Rennais FC 1901,,Olympique de Marseille,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-49227d7e8786d61251730822,LIGUE1,2025-26,2025-08-16T12:00:00Z,Matchday 1,,Racing Club de Lens,,Olympique Lyonnais,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-6ad13935e7bb8f42494c2441,LIGUE1,2025-26,2025-08-16T12:00:00Z,Matchday 1,,AS Monaco FC,,Le Havre AC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-7ac00e71304c357a7446b9be,LIGUE1,2025-26,2025-08-16T12:00:00Z,Matchday 1,,OGC Nice,,Toulouse FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-08b48f39fb399a04eec4459b,LIGUE1,2025-26,2025-08-17T12:00:00Z,Matchday 1,,Stade Brestois 29,,Lille OSC,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-6e1d98688dab30e8ac61f729,LIGUE1,2025-26,2025-08-17T12:00:00Z,Matchday 1,,Angers SCO,,Paris FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-70fbf75ede21640982e540d4,LIGUE1,2025-26,2025-08-17T12:00:00Z,Matchday 1,,AJ Auxerre,,FC Lorient,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-79255781650658736e7fabc3,LIGUE1,2025-26,2025-08-17T12:00:00Z,Matchday 1,,FC Metz,,RC Strasbourg Alsace,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-ea6f2156a324dcbbc611e2b4,LIGUE1,2025-26,2025-08-17T12:00:00Z,Matchday 1,,FC Nantes,,Paris Saint-Germain FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-3816a271303725d9e8ca1a37,LIGUE1,2025-26,2025-08-22T12:00:00Z,Matchday 2,,Paris Saint-Germain FC,,Angers SCO,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-7168d58549742899b7ce2eca,LIGUE1,2025-26,2025-08-23T12:00:00Z,Matchday 2,,Olympique de Marseille,,Paris FC,,5,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-99ae6ae1febc5ef75e5ad049,LIGUE1,2025-26,2025-08-23T12:00:00Z,Matchday 2,,Olympique Lyonnais,,FC Metz,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-ed8a56b00aa8a15cef685fa0,LIGUE1,2025-26,2025-08-23T12:00:00Z,Matchday 2,,OGC Nice,,AJ Auxerre,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-20ac2630edc8268d3be07f21,LIGUE1,2025-26,2025-08-24T12:00:00Z,Matchday 2,,Le Havre AC,,Racing Club de Lens,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-9160cce0ae03a9948c317802,LIGUE1,2025-26,2025-08-24T12:00:00Z,Matchday 2,,Lille OSC,,AS Monaco FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a7dc42b49b0ed3b8ba2aa475,LIGUE1,2025-26,2025-08-24T12:00:00Z,Matchday 2,,RC Strasbourg Alsace,,FC Nantes,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-b62b24b8b0da50aca58b48a3,LIGUE1,2025-26,2025-08-24T12:00:00Z,Matchday 2,,Toulouse FC,,Stade Brestois 29,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-cbe644c14ecca20dda1eb70d,LIGUE1,2025-26,2025-08-24T12:00:00Z,Matchday 2,,FC Lorient,,Stade Rennais FC 1901,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-47aecce3381e32548507e470,LIGUE1,2025-26,2025-08-29T12:00:00Z,Matchday 3,,Racing Club de Lens,,Stade Brestois 29,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-4e5658a4a3b12252600c03c5,LIGUE1,2025-26,2025-08-30T12:00:00Z,Matchday 3,,FC Nantes,,AJ Auxerre,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-71f2a2bfacdc72aed741b7d6,LIGUE1,2025-26,2025-08-30T12:00:00Z,Matchday 3,,FC Lorient,,Lille OSC,,1,7,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-e00680595ceb237f2f3f932c,LIGUE1,2025-26,2025-08-30T12:00:00Z,Matchday 3,,Toulouse FC,,Paris Saint-Germain FC,,3,6,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-1f71f1e762b75785c88498b1,LIGUE1,2025-26,2025-08-31T12:00:00Z,Matchday 3,,Angers SCO,,Stade Rennais FC 1901,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-3cd813c153932e4e4c6ee76f,LIGUE1,2025-26,2025-08-31T12:00:00Z,Matchday 3,,Olympique Lyonnais,,Olympique de Marseille,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-54cba5c2d8db5e33e1fb09ba,LIGUE1,2025-26,2025-08-31T12:00:00Z,Matchday 3,,Le Havre AC,,OGC Nice,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-76b09231d43a950f9c7a3004,LIGUE1,2025-26,2025-08-31T12:00:00Z,Matchday 3,,Paris FC,,FC Metz,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-9ab5a3d487c3988d973126d9,LIGUE1,2025-26,2025-08-31T12:00:00Z,Matchday 3,,AS Monaco FC,,RC Strasbourg Alsace,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-7ecefa3ad6e00a48efa9e975,LIGUE1,2025-26,2025-09-12T12:00:00Z,Matchday 4,,Olympique de Marseille,,FC Lorient,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-2ae1cf2349d65551faa6bd8a,LIGUE1,2025-26,2025-09-13T12:00:00Z,Matchday 4,,AJ Auxerre,,AS Monaco FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-76df0c7ee570430d4f91d902,LIGUE1,2025-26,2025-09-13T12:00:00Z,Matchday 4,,OGC Nice,,FC Nantes,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-160f45d90e178dad48492157,LIGUE1,2025-26,2025-09-14T12:00:00Z,Matchday 4,,Lille OSC,,Toulouse FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-3e5ba545a45ede7930e214cf,LIGUE1,2025-26,2025-09-14T12:00:00Z,Matchday 4,,Paris Saint-Germain FC,,Racing Club de Lens,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-5108f48f13c75c37ed1b9e0a,LIGUE1,2025-26,2025-09-14T12:00:00Z,Matchday 4,,RC Strasbourg Alsace,,Le Havre AC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-6d94db1806d115ab74ef15f9,LIGUE1,2025-26,2025-09-14T12:00:00Z,Matchday 4,,Stade Rennais FC 1901,,Olympique Lyonnais,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-7f441c3a3071a1a0d92db410,LIGUE1,2025-26,2025-09-14T12:00:00Z,Matchday 4,,Stade Brestois 29,,Paris FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-aef7fd997fb8d6b7d4fd8c26,LIGUE1,2025-26,2025-09-14T12:00:00Z,Matchday 4,,FC Metz,,Angers SCO,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-04f41fb42141686c758c8977,LIGUE1,2025-26,2025-09-19T12:00:00Z,Matchday 5,,Olympique Lyonnais,,Angers SCO,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-3dea32eb2f7f7f89d6f542fd,LIGUE1,2025-26,2025-09-20T12:00:00Z,Matchday 5,,Racing Club de Lens,,Lille OSC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-8f24a3bca0ae11603443072a,LIGUE1,2025-26,2025-09-20T12:00:00Z,Matchday 5,,Stade Brestois 29,,OGC Nice,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-b34117e7bde0b82a68cccb5d,LIGUE1,2025-26,2025-09-20T12:00:00Z,Matchday 5,,FC Nantes,,Stade Rennais FC 1901,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-baa6f1cc4951a6472a663a0e,LIGUE1,2025-26,2025-09-21T12:00:00Z,Matchday 5,,AJ Auxerre,,Toulouse FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-cec7ab0bfa5aecbd4aec2f02,LIGUE1,2025-26,2025-09-21T12:00:00Z,Matchday 5,,AS Monaco FC,,FC Metz,,5,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-dcfd6002ea92392de8ac3177,LIGUE1,2025-26,2025-09-21T12:00:00Z,Matchday 5,,Le Havre AC,,FC Lorient,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-f705d3f5a41ede53a7929f76,LIGUE1,2025-26,2025-09-21T12:00:00Z,Matchday 5,,Paris FC,,RC Strasbourg Alsace,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-df6a1c666ea7782eaed75c8c,LIGUE1,2025-26,2025-09-22T12:00:00Z,Matchday 5,,Olympique de Marseille,,Paris Saint-Germain FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-5b87b56f569b7e2373478e29,LIGUE1,2025-26,2025-09-26T12:00:00Z,Matchday 6,,RC Strasbourg Alsace,,Olympique de Marseille,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-4ebb002d0ca503d87a9684cd,LIGUE1,2025-26,2025-09-27T12:00:00Z,Matchday 6,,Toulouse FC,,FC Nantes,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-8eaa2f639bae2ff9ecbe2346,LIGUE1,2025-26,2025-09-27T12:00:00Z,Matchday 6,,Paris Saint-Germain FC,,AJ Auxerre,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-f4c49cc2e97fcca81ea2b8cd,LIGUE1,2025-26,2025-09-27T12:00:00Z,Matchday 6,,FC Lorient,,AS Monaco FC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-671385fa4d3ef5471e14871e,LIGUE1,2025-26,2025-09-28T12:00:00Z,Matchday 6,,Stade Rennais FC 1901,,Racing Club de Lens,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-6b419f46d52cdd93bae2f978,LIGUE1,2025-26,2025-09-28T12:00:00Z,Matchday 6,,Lille OSC,,Olympique Lyonnais,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-810b69c52a69f876268d2fcd,LIGUE1,2025-26,2025-09-28T12:00:00Z,Matchday 6,,FC Metz,,Le Havre AC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d795d20b946489ac37d138fe,LIGUE1,2025-26,2025-09-28T12:00:00Z,Matchday 6,,OGC Nice,,Paris FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-dc60bd14703b78d73ea595ba,LIGUE1,2025-26,2025-09-28T12:00:00Z,Matchday 6,,Angers SCO,,Stade Brestois 29,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c55cc303cf86335f482861e7,LIGUE1,2025-26,2025-10-03T12:00:00Z,Matchday 7,,Paris FC,,FC Lorient,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-5c81c928daf6c71cf7be7850,LIGUE1,2025-26,2025-10-04T12:00:00Z,Matchday 7,,FC Metz,,Olympique de Marseille,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-70fea23bc373c6175e1200eb,LIGUE1,2025-26,2025-10-04T12:00:00Z,Matchday 7,,AJ Auxerre,,Racing Club de Lens,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-8c2aae9f1380acf4ca0250df,LIGUE1,2025-26,2025-10-04T12:00:00Z,Matchday 7,,Stade Brestois 29,,FC Nantes,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-15da680701ce893168f86311,LIGUE1,2025-26,2025-10-05T12:00:00Z,Matchday 7,,Le Havre AC,,Stade Rennais FC 1901,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-19030bb499be5b6e7333f5d7,LIGUE1,2025-26,2025-10-05T12:00:00Z,Matchday 7,,RC Strasbourg Alsace,,Angers SCO,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-35ac85ac43edc5d079d3d9f5,LIGUE1,2025-26,2025-10-05T12:00:00Z,Matchday 7,,Olympique Lyonnais,,Toulouse FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-88586a7ae375eeb479796fe1,LIGUE1,2025-26,2025-10-05T12:00:00Z,Matchday 7,,AS Monaco FC,,OGC Nice,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-ca175daaf0a224d64abfb4a8,LIGUE1,2025-26,2025-10-05T12:00:00Z,Matchday 7,,Lille OSC,,Paris Saint-Germain FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-f52f2747f31b9ebb5d689fb5,LIGUE1,2025-26,2025-10-17T12:00:00Z,Matchday 8,,Paris Saint-Germain FC,,RC Strasbourg Alsace,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-5b54669bf68a00af6a883e7c,LIGUE1,2025-26,2025-10-18T12:00:00Z,Matchday 8,,Angers SCO,,AS Monaco FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-dadaa126c3214f0e76375e11,LIGUE1,2025-26,2025-10-18T12:00:00Z,Matchday 8,,OGC Nice,,Olympique Lyonnais,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-f53b59e0008570fd077550f8,LIGUE1,2025-26,2025-10-18T12:00:00Z,Matchday 8,,Olympique de Marseille,,Le Havre AC,,6,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-569ea2e3276c34ffa636e8bc,LIGUE1,2025-26,2025-10-19T12:00:00Z,Matchday 8,,FC Lorient,,Stade Brestois 29,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-636d865090d25f69a0e7cd00,LIGUE1,2025-26,2025-10-19T12:00:00Z,Matchday 8,,FC Nantes,,Lille OSC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-70470b0723a81dedcb1aefe6,LIGUE1,2025-26,2025-10-19T12:00:00Z,Matchday 8,,Toulouse FC,,FC Metz,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-ce58069f35fe45381cb567f8,LIGUE1,2025-26,2025-10-19T12:00:00Z,Matchday 8,,Racing Club de Lens,,Paris FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-dd5bcfd90cdf9292abd56e63,LIGUE1,2025-26,2025-10-19T12:00:00Z,Matchday 8,,Stade Rennais FC 1901,,AJ Auxerre,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-f8b98a676d89bc1a3733c15d,LIGUE1,2025-26,2025-10-24T12:00:00Z,Matchday 9,,Paris FC,,FC Nantes,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-1e696321a870f656b7b3e094,LIGUE1,2025-26,2025-10-25T12:00:00Z,Matchday 9,,Racing Club de Lens,,Olympique de Marseille,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-5af192167b15bc82ad03c9d8,LIGUE1,2025-26,2025-10-25T12:00:00Z,Matchday 9,,Stade Brestois 29,,Paris Saint-Germain FC,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-f609b1cf42e6fa923b19fc07,LIGUE1,2025-26,2025-10-25T12:00:00Z,Matchday 9,,AS Monaco FC,,Toulouse FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-136d08ac87a7319c4fc45fdc,LIGUE1,2025-26,2025-10-26T12:00:00Z,Matchday 9,,AJ Auxerre,,Le Havre AC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-665381bb2529036eda03544c,LIGUE1,2025-26,2025-10-26T12:00:00Z,Matchday 9,,Lille OSC,,FC Metz,,6,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-af3a1078e8f043012d28d118,LIGUE1,2025-26,2025-10-26T12:00:00Z,Matchday 9,,Stade Rennais FC 1901,,OGC Nice,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-bbb10734346c5564c4f5e662,LIGUE1,2025-26,2025-10-26T12:00:00Z,Matchday 9,,Olympique Lyonnais,,RC Strasbourg Alsace,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-f0b4673dfb23306ab77cdc80,LIGUE1,2025-26,2025-10-26T12:00:00Z,Matchday 9,,Angers SCO,,FC Lorient,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-1db79c5541665c175d50ff04,LIGUE1,2025-26,2025-10-29T12:00:00Z,Matchday 10,,FC Metz,,Racing Club de Lens,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-1ed7ac611a4fc7d6cf8af1ea,LIGUE1,2025-26,2025-10-29T12:00:00Z,Matchday 10,,RC Strasbourg Alsace,,AJ Auxerre,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-45a070508e0d06f854588e7c,LIGUE1,2025-26,2025-10-29T12:00:00Z,Matchday 10,,Olympique de Marseille,,Angers SCO,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-5f4c2f270d074420cdb36408,LIGUE1,2025-26,2025-10-29T12:00:00Z,Matchday 10,,OGC Nice,,Lille OSC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-80cef0afe2f4f81ee52bd84a,LIGUE1,2025-26,2025-10-29T12:00:00Z,Matchday 10,,FC Nantes,,AS Monaco FC,,3,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a445db4d0c5458349cd53857,LIGUE1,2025-26,2025-10-29T12:00:00Z,Matchday 10,,Le Havre AC,,Stade Brestois 29,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-b89eff49f34d1097cc3d7e8d,LIGUE1,2025-26,2025-10-29T12:00:00Z,Matchday 10,,Paris FC,,Olympique Lyonnais,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-dd8e129dc4b79560d50e8c94,LIGUE1,2025-26,2025-10-29T12:00:00Z,Matchday 10,,Toulouse FC,,Stade Rennais FC 1901,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-eaae1c174f44cfac50348fe0,LIGUE1,2025-26,2025-10-29T12:00:00Z,Matchday 10,,FC Lorient,,Paris Saint-Germain FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-47501288214537de2aa231d7,LIGUE1,2025-26,2025-11-01T12:00:00Z,Matchday 11,,Paris Saint-Germain FC,,OGC Nice,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-8f3a715bcf74ac17894caca7,LIGUE1,2025-26,2025-11-01T12:00:00Z,Matchday 11,,AJ Auxerre,,Olympique de Marseille,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-de701d16c38a06d6bd20f8b2,LIGUE1,2025-26,2025-11-01T12:00:00Z,Matchday 11,,AS Monaco FC,,Paris FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-0a26804eaca6136356c12f41,LIGUE1,2025-26,2025-11-02T12:00:00Z,Matchday 11,,Toulouse FC,,Le Havre AC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-34019159b25a29bb349888cd,LIGUE1,2025-26,2025-11-02T12:00:00Z,Matchday 11,,Racing Club de Lens,,FC Lorient,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-46dbe95b9065bc194bc1f458,LIGUE1,2025-26,2025-11-02T12:00:00Z,Matchday 11,,Stade Rennais FC 1901,,RC Strasbourg Alsace,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-7496b0e02bae202716a3ab5a,LIGUE1,2025-26,2025-11-02T12:00:00Z,Matchday 11,,FC Nantes,,FC Metz,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-8d1335fa76a23da35f8faaad,LIGUE1,2025-26,2025-11-02T12:00:00Z,Matchday 11,,Lille OSC,,Angers SCO,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-97fc39627c80c3b0cba8ac6a,LIGUE1,2025-26,2025-11-02T12:00:00Z,Matchday 11,,Stade Brestois 29,,Olympique Lyonnais,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-700faafbdabd9ee9c24f2c8f,LIGUE1,2025-26,2025-11-07T12:00:00Z,Matchday 12,,Paris FC,,Stade Rennais FC 1901,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-477dcda5e73fafa0e08e2c6f,LIGUE1,2025-26,2025-11-08T12:00:00Z,Matchday 12,,AS Monaco FC,,Racing Club de Lens,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-6d7ab08b0cb8eb23a936c3ba,LIGUE1,2025-26,2025-11-08T12:00:00Z,Matchday 12,,Le Havre AC,,FC Nantes,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c88b1b9ebabfe7beab0ca9cd,LIGUE1,2025-26,2025-11-08T12:00:00Z,Matchday 12,,Olympique de Marseille,,Stade Brestois 29,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-0b7e8b75e6ea247370720da1,LIGUE1,2025-26,2025-11-09T12:00:00Z,Matchday 12,,Angers SCO,,AJ Auxerre,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-63f6607e24aacbec509263c2,LIGUE1,2025-26,2025-11-09T12:00:00Z,Matchday 12,,RC Strasbourg Alsace,,Lille OSC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-7791638a21e7de0b5b5817d3,LIGUE1,2025-26,2025-11-09T12:00:00Z,Matchday 12,,Olympique Lyonnais,,Paris Saint-Germain FC,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c45df4fc935a8bacad075624,LIGUE1,2025-26,2025-11-09T12:00:00Z,Matchday 12,,FC Lorient,,Toulouse FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-dd459dd6ea09554185cea32e,LIGUE1,2025-26,2025-11-09T12:00:00Z,Matchday 12,,FC Metz,,OGC Nice,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d96555969c204e76c3a79cd1,LIGUE1,2025-26,2025-11-21T12:00:00Z,Matchday 13,,OGC Nice,,Olympique de Marseille,,1,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-3a155f3faeab7e6e290da042,LIGUE1,2025-26,2025-11-22T12:00:00Z,Matchday 13,,Racing Club de Lens,,RC Strasbourg Alsace,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-4fbd977137023938070907d2,LIGUE1,2025-26,2025-11-22T12:00:00Z,Matchday 13,,Stade Rennais FC 1901,,AS Monaco FC,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-6543776a6374feeb95be867b,LIGUE1,2025-26,2025-11-22T12:00:00Z,Matchday 13,,Paris Saint-Germain FC,,Le Havre AC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-25610b41deac8c605db4fb62,LIGUE1,2025-26,2025-11-23T12:00:00Z,Matchday 13,,AJ Auxerre,,Olympique Lyonnais,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-61600d0d95e4797fd29e11ef,LIGUE1,2025-26,2025-11-23T12:00:00Z,Matchday 13,,Stade Brestois 29,,FC Metz,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d299ed6177806176b4b6c196,LIGUE1,2025-26,2025-11-23T12:00:00Z,Matchday 13,,FC Nantes,,FC Lorient,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d32d10c7bd9940ea03e0e5a4,LIGUE1,2025-26,2025-11-23T12:00:00Z,Matchday 13,,Lille OSC,,Paris FC,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d8a03d8300b7bfad07a29c58,LIGUE1,2025-26,2025-11-23T12:00:00Z,Matchday 13,,Toulouse FC,,Angers SCO,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-f6b8c5404f7e6aa7975ce27b,LIGUE1,2025-26,2025-11-28T12:00:00Z,Matchday 14,,FC Metz,,Stade Rennais FC 1901,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-59b35973e948b13105d75794,LIGUE1,2025-26,2025-11-29T12:00:00Z,Matchday 14,,AS Monaco FC,,Paris Saint-Germain FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-7cc556c43c5b669535894f17,LIGUE1,2025-26,2025-11-29T12:00:00Z,Matchday 14,,Olympique de Marseille,,Toulouse FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-7d5ea432e5fcd495ed628bad,LIGUE1,2025-26,2025-11-29T12:00:00Z,Matchday 14,,Paris FC,,AJ Auxerre,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-7a1ca52458015a15e1be20a6,LIGUE1,2025-26,2025-11-30T12:00:00Z,Matchday 14,,Le Havre AC,,Lille OSC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-8530c9a65d69874994089301,LIGUE1,2025-26,2025-11-30T12:00:00Z,Matchday 14,,Olympique Lyonnais,,FC Nantes,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d08a77a3dcf78d6729165d64,LIGUE1,2025-26,2025-11-30T12:00:00Z,Matchday 14,,Angers SCO,,Racing Club de Lens,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-e0a4ea66bd8e0a3fa2b8126d,LIGUE1,2025-26,2025-11-30T12:00:00Z,Matchday 14,,FC Lorient,,OGC Nice,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-f31547d561e962a2f26192f7,LIGUE1,2025-26,2025-11-30T12:00:00Z,Matchday 14,,RC Strasbourg Alsace,,Stade Brestois 29,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-99485bcd50d0e8e610e9eb5f,LIGUE1,2025-26,2025-12-05T12:00:00Z,Matchday 15,,Lille OSC,,Olympique de Marseille,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-dcb421f9f15854dbc704db1f,LIGUE1,2025-26,2025-12-05T12:00:00Z,Matchday 15,,Stade Brestois 29,,AS Monaco FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-6921d0cf2f4dadfa439e973f,LIGUE1,2025-26,2025-12-06T12:00:00Z,Matchday 15,,FC Nantes,,Racing Club de Lens,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c78abe970556efddc92468a0,LIGUE1,2025-26,2025-12-06T12:00:00Z,Matchday 15,,Paris Saint-Germain FC,,Stade Rennais FC 1901,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-cfa16fb40a1113d50db56b77,LIGUE1,2025-26,2025-12-06T12:00:00Z,Matchday 15,,Toulouse FC,,RC Strasbourg Alsace,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-768f7a337deb2c3fd81f6ed9,LIGUE1,2025-26,2025-12-07T12:00:00Z,Matchday 15,,AJ Auxerre,,FC Metz,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-ddb48c7ebe9280ecba95d8dd,LIGUE1,2025-26,2025-12-07T12:00:00Z,Matchday 15,,Le Havre AC,,Paris FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-de96f8c8c80098c4df07b6fd,LIGUE1,2025-26,2025-12-07T12:00:00Z,Matchday 15,,OGC Nice,,Angers SCO,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-f96d747b6617567e9de3d112,LIGUE1,2025-26,2025-12-07T12:00:00Z,Matchday 15,,FC Lorient,,Olympique Lyonnais,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-66a8770da4f64049be2e6f85,LIGUE1,2025-26,2025-12-12T12:00:00Z,Matchday 16,,Angers SCO,,FC Nantes,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-9cc96bdd97a5f3c9f3edabc5,LIGUE1,2025-26,2025-12-13T12:00:00Z,Matchday 16,,FC Metz,,Paris Saint-Germain FC,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-bc252f96cae774e2b6e5eaf3,LIGUE1,2025-26,2025-12-13T12:00:00Z,Matchday 16,,Paris FC,,Toulouse FC,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-ed8fbe8b3a37c0b4af4fc890,LIGUE1,2025-26,2025-12-13T12:00:00Z,Matchday 16,,Stade Rennais FC 1901,,Stade Brestois 29,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-245220a0187a353136884578,LIGUE1,2025-26,2025-12-14T12:00:00Z,Matchday 16,,RC Strasbourg Alsace,,FC Lorient,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-652359f1e1e00a3d7a047e73,LIGUE1,2025-26,2025-12-14T12:00:00Z,Matchday 16,,Olympique Lyonnais,,Le Havre AC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-ad052236c90a4599bfe0fa9b,LIGUE1,2025-26,2025-12-14T12:00:00Z,Matchday 16,,AJ Auxerre,,Lille OSC,,3,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-bbbdadd8f7827f2c7d5e205d,LIGUE1,2025-26,2025-12-14T12:00:00Z,Matchday 16,,Olympique de Marseille,,AS Monaco FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-ed177957cb91f29a2e098772,LIGUE1,2025-26,2025-12-14T12:00:00Z,Matchday 16,,Racing Club de Lens,,OGC Nice,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-2bbf43eb7d3daf213a0fd18c,LIGUE1,2025-26,2026-01-02T12:00:00Z,Matchday 17,,Toulouse FC,,Racing Club de Lens,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-2d81c620a7c3cf5f6fd1f9bb,LIGUE1,2025-26,2026-01-03T12:00:00Z,Matchday 17,,Lille OSC,,Stade Rennais FC 1901,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-3a3abc773b4e7563fc14d3af,LIGUE1,2025-26,2026-01-03T12:00:00Z,Matchday 17,,AS Monaco FC,,Olympique Lyonnais,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-ff0411d5027b1acb2e804d05,LIGUE1,2025-26,2026-01-03T12:00:00Z,Matchday 17,,OGC Nice,,RC Strasbourg Alsace,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-81712b861a93b7ba4b303739,LIGUE1,2025-26,2026-01-04T12:00:00Z,Matchday 17,,FC Lorient,,FC Metz,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d3576ff76628690b4d82a2a3,LIGUE1,2025-26,2026-01-04T12:00:00Z,Matchday 17,,Olympique de Marseille,,FC Nantes,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d467da6c54c3b0227188bfd1,LIGUE1,2025-26,2026-01-04T12:00:00Z,Matchday 17,,Paris Saint-Germain FC,,Paris FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-e1530add75f6dcf22c562d42,LIGUE1,2025-26,2026-01-04T12:00:00Z,Matchday 17,,Le Havre AC,,Angers SCO,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-fb9b1a26dc3590a941460817,LIGUE1,2025-26,2026-01-04T12:00:00Z,Matchday 17,,Stade Brestois 29,,AJ Auxerre,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a26ec67dedc8a3522d8c1367,LIGUE1,2025-26,2026-01-16T12:00:00Z,Matchday 18,,AS Monaco FC,,FC Lorient,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-b06a8c74cd8ec2dbe1c3d659,LIGUE1,2025-26,2026-01-16T12:00:00Z,Matchday 18,,Paris Saint-Germain FC,,Lille OSC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a1ad937397f0b9f271c5d7ad,LIGUE1,2025-26,2026-01-17T12:00:00Z,Matchday 18,,Angers SCO,,Olympique de Marseille,,2,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-cb11ef5982c7840de25c5149,LIGUE1,2025-26,2026-01-17T12:00:00Z,Matchday 18,,Racing Club de Lens,,AJ Auxerre,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-ea90c7398c9524c5e7d3bf9c,LIGUE1,2025-26,2026-01-17T12:00:00Z,Matchday 18,,Toulouse FC,,OGC Nice,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-3082795576895832f74cd67d,LIGUE1,2025-26,2026-01-18T12:00:00Z,Matchday 18,,RC Strasbourg Alsace,,FC Metz,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-5190c260e2c251fdaa23d70b,LIGUE1,2025-26,2026-01-18T12:00:00Z,Matchday 18,,Stade Rennais FC 1901,,Le Havre AC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-7a877d8f59cf4b345103d617,LIGUE1,2025-26,2026-01-18T12:00:00Z,Matchday 18,,Olympique Lyonnais,,Stade Brestois 29,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-7f50f971820d05af5f245c05,LIGUE1,2025-26,2026-01-18T12:00:00Z,Matchday 18,,FC Nantes,,Paris FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-6d1d0113f25a6788918d1d54,LIGUE1,2025-26,2026-01-23T12:00:00Z,Matchday 19,,AJ Auxerre,,Paris Saint-Germain FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-44b17b35f2779c67c1f515c5,LIGUE1,2025-26,2026-01-24T12:00:00Z,Matchday 19,,Stade Rennais FC 1901,,FC Lorient,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-4f7ba641dc8a360482578413,LIGUE1,2025-26,2026-01-24T12:00:00Z,Matchday 19,,Olympique de Marseille,,Racing Club de Lens,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-b45d7a9cbe329534429a41b3,LIGUE1,2025-26,2026-01-24T12:00:00Z,Matchday 19,,Le Havre AC,,AS Monaco FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-481c1267699292b78baa0fa8,LIGUE1,2025-26,2026-01-25T12:00:00Z,Matchday 19,,FC Nantes,,OGC Nice,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-5e08a68bd79473832ad0d451,LIGUE1,2025-26,2026-01-25T12:00:00Z,Matchday 19,,Stade Brestois 29,,Toulouse FC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-6c7244672e8d92a73720a0da,LIGUE1,2025-26,2026-01-25T12:00:00Z,Matchday 19,,Paris FC,,Angers SCO,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-809d9e30b2b9f2d7724e5353,LIGUE1,2025-26,2026-01-25T12:00:00Z,Matchday 19,,Lille OSC,,RC Strasbourg Alsace,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-96399b77ad09a7f63aedd906,LIGUE1,2025-26,2026-01-25T12:00:00Z,Matchday 19,,FC Metz,,Olympique Lyonnais,,2,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-1d7bcb6687402d51d169f15b,LIGUE1,2025-26,2026-01-30T12:00:00Z,Matchday 20,,Racing Club de Lens,,Le Havre AC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-491374a62efc773ec314a892,LIGUE1,2025-26,2026-01-31T12:00:00Z,Matchday 20,,FC Lorient,,FC Nantes,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d0e862c705b54d20bc108734,LIGUE1,2025-26,2026-01-31T12:00:00Z,Matchday 20,,AS Monaco FC,,Stade Rennais FC 1901,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-def5dad1e9d31bf6144e7116,LIGUE1,2025-26,2026-01-31T12:00:00Z,Matchday 20,,Paris FC,,Olympique de Marseille,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-2136e567e54ef5811f3e6812,LIGUE1,2025-26,2026-02-01T12:00:00Z,Matchday 20,,OGC Nice,,Stade Brestois 29,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-34f2a38089434f524b0fffb4,LIGUE1,2025-26,2026-02-01T12:00:00Z,Matchday 20,,RC Strasbourg Alsace,,Paris Saint-Germain FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-8f425f7173b03d53b2b074d3,LIGUE1,2025-26,2026-02-01T12:00:00Z,Matchday 20,,Angers SCO,,FC Metz,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-bcae960bee82bbe8308382cf,LIGUE1,2025-26,2026-02-01T12:00:00Z,Matchday 20,,Olympique Lyonnais,,Lille OSC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d84825324dab7aef9433e8af,LIGUE1,2025-26,2026-02-01T12:00:00Z,Matchday 20,,Toulouse FC,,AJ Auxerre,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-79b1b1a5e275250330ce254b,LIGUE1,2025-26,2026-02-06T12:00:00Z,Matchday 21,,FC Metz,,Lille OSC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-6b60fac14a6922bf238f9bbb,LIGUE1,2025-26,2026-02-07T12:00:00Z,Matchday 21,,Stade Brestois 29,,FC Lorient,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-8ba8230f5ee3f90b8b239cc6,LIGUE1,2025-26,2026-02-07T12:00:00Z,Matchday 21,,Racing Club de Lens,,Stade Rennais FC 1901,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-bff75ec6c4f93c94e5c7623c,LIGUE1,2025-26,2026-02-07T12:00:00Z,Matchday 21,,FC Nantes,,Olympique Lyonnais,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-b6229747341b733c50696d96,LIGUE1,2025-26,2026-02-08T12:00:00Z,Matchday 21,,AJ Auxerre,,Paris FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c10d76cf28c579e7cc1ca077,LIGUE1,2025-26,2026-02-08T12:00:00Z,Matchday 21,,OGC Nice,,AS Monaco FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c2b895da91c88708cdc9e94e,LIGUE1,2025-26,2026-02-08T12:00:00Z,Matchday 21,,Le Havre AC,,RC Strasbourg Alsace,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-e96eca9f48c2ee56d85c7929,LIGUE1,2025-26,2026-02-08T12:00:00Z,Matchday 21,,Paris Saint-Germain FC,,Olympique de Marseille,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-eb2d7cb2db43a8309e0f7f1c,LIGUE1,2025-26,2026-02-08T12:00:00Z,Matchday 21,,Angers SCO,,Toulouse FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-090b748081b5b0a1d569a0fd,LIGUE1,2025-26,2026-02-13T12:00:00Z,Matchday 22,,Stade Rennais FC 1901,,Paris Saint-Germain FC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-730a277d258ad15c947afd76,LIGUE1,2025-26,2026-02-13T12:00:00Z,Matchday 22,,AS Monaco FC,,FC Nantes,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-534527635a1d921ef7ef3d45,LIGUE1,2025-26,2026-02-14T12:00:00Z,Matchday 22,,Lille OSC,,Stade Brestois 29,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-64390d8dddeab88dce823643,LIGUE1,2025-26,2026-02-14T12:00:00Z,Matchday 22,,Paris FC,,Racing Club de Lens,,0,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-cd935f020e97f2832286ddc8,LIGUE1,2025-26,2026-02-14T12:00:00Z,Matchday 22,,Olympique de Marseille,,RC Strasbourg Alsace,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-0734e9834209d153aca762f2,LIGUE1,2025-26,2026-02-15T12:00:00Z,Matchday 22,,FC Lorient,,Angers SCO,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-1355e6d190a6da01d971118f,LIGUE1,2025-26,2026-02-15T12:00:00Z,Matchday 22,,Le Havre AC,,Toulouse FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-90a52480661ef7d4032533f7,LIGUE1,2025-26,2026-02-15T12:00:00Z,Matchday 22,,Olympique Lyonnais,,OGC Nice,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-9f3e725d25927ebe770e23ed,LIGUE1,2025-26,2026-02-15T12:00:00Z,Matchday 22,,FC Metz,,AJ Auxerre,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-2012a6bb36832643b1ecb865,LIGUE1,2025-26,2026-02-20T12:00:00Z,Matchday 23,,Stade Brestois 29,,Olympique de Marseille,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-595350c7a83eee65c44f4a5f,LIGUE1,2025-26,2026-02-21T12:00:00Z,Matchday 23,,Racing Club de Lens,,AS Monaco FC,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-5a2d1ed31c77b999dd3a4703,LIGUE1,2025-26,2026-02-21T12:00:00Z,Matchday 23,,Toulouse FC,,Paris FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-e7c88f18a2016771ec29e346,LIGUE1,2025-26,2026-02-21T12:00:00Z,Matchday 23,,Paris Saint-Germain FC,,FC Metz,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-41467060bba0acca76d1bfe8,LIGUE1,2025-26,2026-02-22T12:00:00Z,Matchday 23,,OGC Nice,,FC Lorient,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-67e7b688c1a8e270635ebcbd,LIGUE1,2025-26,2026-02-22T12:00:00Z,Matchday 23,,Angers SCO,,Lille OSC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-998f599dbb5d06b4fd79045a,LIGUE1,2025-26,2026-02-22T12:00:00Z,Matchday 23,,AJ Auxerre,,Stade Rennais FC 1901,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c7510b40da8ce1038daa1a44,LIGUE1,2025-26,2026-02-22T12:00:00Z,Matchday 23,,RC Strasbourg Alsace,,Olympique Lyonnais,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-e0b48cacd6651438bf2cdb7d,LIGUE1,2025-26,2026-02-22T12:00:00Z,Matchday 23,,FC Nantes,,Le Havre AC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-bd4bcbc65de02cac1428a56d,LIGUE1,2025-26,2026-02-27T12:00:00Z,Matchday 24,,RC Strasbourg Alsace,,Racing Club de Lens,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-75e435b79cc6c9af3d010df1,LIGUE1,2025-26,2026-02-28T12:00:00Z,Matchday 24,,Stade Rennais FC 1901,,Toulouse FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-bc773b0d600aff95329acb4d,LIGUE1,2025-26,2026-02-28T12:00:00Z,Matchday 24,,Le Havre AC,,Paris Saint-Germain FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-f9064783b6052b03586c877d,LIGUE1,2025-26,2026-02-28T12:00:00Z,Matchday 24,,AS Monaco FC,,Angers SCO,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-13f7bdcfbb2a7b2bd345ca6d,LIGUE1,2025-26,2026-03-01T12:00:00Z,Matchday 24,,FC Metz,,Stade Brestois 29,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-23496aa057e0bfefc21e01fc,LIGUE1,2025-26,2026-03-01T12:00:00Z,Matchday 24,,Lille OSC,,FC Nantes,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-4415787a319ba8ff5da08076,LIGUE1,2025-26,2026-03-01T12:00:00Z,Matchday 24,,Paris FC,,OGC Nice,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-770d98ba335c4f9419381835,LIGUE1,2025-26,2026-03-01T12:00:00Z,Matchday 24,,FC Lorient,,AJ Auxerre,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-8765c37ca17adec17382beec,LIGUE1,2025-26,2026-03-01T12:00:00Z,Matchday 24,,Olympique de Marseille,,Olympique Lyonnais,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-601e887f437f2f76bb3e85bd,LIGUE1,2025-26,2026-03-06T12:00:00Z,Matchday 25,,Paris Saint-Germain FC,,AS Monaco FC,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-3927557bb43b2547edcfb5c7,LIGUE1,2025-26,2026-03-07T12:00:00Z,Matchday 25,,Toulouse FC,,Olympique de Marseille,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-4081b4975bb1305367c6a752,LIGUE1,2025-26,2026-03-07T12:00:00Z,Matchday 25,,FC Nantes,,Angers SCO,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-773e9d3e099d7035523f4ad7,LIGUE1,2025-26,2026-03-07T12:00:00Z,Matchday 25,,AJ Auxerre,,RC Strasbourg Alsace,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-1976cbf7b822ee9ce4f7bdfa,LIGUE1,2025-26,2026-03-08T12:00:00Z,Matchday 25,,OGC Nice,,Stade Rennais FC 1901,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-8809e6a8222c2eeeb402679c,LIGUE1,2025-26,2026-03-08T12:00:00Z,Matchday 25,,Racing Club de Lens,,FC Metz,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-911878ddf88a8b821c7a628c,LIGUE1,2025-26,2026-03-08T12:00:00Z,Matchday 25,,Lille OSC,,FC Lorient,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d1abf97d4dc506f9b3774cf9,LIGUE1,2025-26,2026-03-08T12:00:00Z,Matchday 25,,Stade Brestois 29,,Le Havre AC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-fa0063181d53b6fa064349ac,LIGUE1,2025-26,2026-03-08T12:00:00Z,Matchday 25,,Olympique Lyonnais,,Paris FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-93989eab0e576b0348fc7960,LIGUE1,2025-26,2026-03-13T12:00:00Z,Matchday 26,,Olympique de Marseille,,AJ Auxerre,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-b3c8c043a9178c32098bb13c,LIGUE1,2025-26,2026-03-14T12:00:00Z,Matchday 26,,AS Monaco FC,,Stade Brestois 29,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c3fd235ff088dc10a0bb5844,LIGUE1,2025-26,2026-03-14T12:00:00Z,Matchday 26,,FC Lorient,,Racing Club de Lens,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c67152c70a4df9c708f796df,LIGUE1,2025-26,2026-03-14T12:00:00Z,Matchday 26,,Angers SCO,,OGC Nice,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-00df23e68fae5dde43ef9ce7,LIGUE1,2025-26,2026-03-15T12:00:00Z,Matchday 26,,Stade Rennais FC 1901,,Lille OSC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-13593eeeb9bda33e8d7b59e1,LIGUE1,2025-26,2026-03-15T12:00:00Z,Matchday 26,,Le Havre AC,,Olympique Lyonnais,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-21976eea499734ee7fa648b7,LIGUE1,2025-26,2026-03-15T12:00:00Z,Matchday 26,,RC Strasbourg Alsace,,Paris FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-fb2c567e65d7e72e1d8e4159,LIGUE1,2025-26,2026-03-15T12:00:00Z,Matchday 26,,FC Metz,,Toulouse FC,,3,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-444af8d543017200cc49945d,LIGUE1,2025-26,2026-03-20T12:00:00Z,Matchday 27,,Racing Club de Lens,,Angers SCO,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-159dfe04ab016df8e2a3c1ee,LIGUE1,2025-26,2026-03-21T12:00:00Z,Matchday 27,,OGC Nice,,Paris Saint-Germain FC,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a7408e5bbe02e6d9a571d763,LIGUE1,2025-26,2026-03-21T12:00:00Z,Matchday 27,,AJ Auxerre,,Stade Brestois 29,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-b59dfcee9c41b0792c50bbfa,LIGUE1,2025-26,2026-03-21T12:00:00Z,Matchday 27,,Toulouse FC,,FC Lorient,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-145b5af9a07debcad5b5c998,LIGUE1,2025-26,2026-03-22T12:00:00Z,Matchday 27,,Stade Rennais FC 1901,,FC Metz,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-51b426354c1842d720af0f22,LIGUE1,2025-26,2026-03-22T12:00:00Z,Matchday 27,,Olympique de Marseille,,Lille OSC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-51b4c501721906d8edf02eda,LIGUE1,2025-26,2026-03-22T12:00:00Z,Matchday 27,,Paris FC,,Le Havre AC,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-acde8179d5e1834c182b2437,LIGUE1,2025-26,2026-03-22T12:00:00Z,Matchday 27,,FC Nantes,,RC Strasbourg Alsace,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-fb3cb8f1401acc687d899665,LIGUE1,2025-26,2026-03-22T12:00:00Z,Matchday 27,,Olympique Lyonnais,,AS Monaco FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-50e772a50941310eee90d93a,LIGUE1,2025-26,2026-04-03T12:00:00Z,Matchday 28,,Paris Saint-Germain FC,,Toulouse FC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-0cce0d6d54aca21c1c71d463,LIGUE1,2025-26,2026-04-04T12:00:00Z,Matchday 28,,Stade Brestois 29,,Stade Rennais FC 1901,,3,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-bb43b279f425645c4db9d9ea,LIGUE1,2025-26,2026-04-04T12:00:00Z,Matchday 28,,Lille OSC,,Racing Club de Lens,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d6a971a9ca226cfbe25e1fce,LIGUE1,2025-26,2026-04-04T12:00:00Z,Matchday 28,,RC Strasbourg Alsace,,OGC Nice,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-1781338b75f073f0801c1f06,LIGUE1,2025-26,2026-04-05T12:00:00Z,Matchday 28,,Le Havre AC,,AJ Auxerre,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-17adc7238139b88b27a9f314,LIGUE1,2025-26,2026-04-05T12:00:00Z,Matchday 28,,FC Lorient,,Paris FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-27e010856db313e25ff9032e,LIGUE1,2025-26,2026-04-05T12:00:00Z,Matchday 28,,Angers SCO,,Olympique Lyonnais,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c780ae31c04ab25d86472d9d,LIGUE1,2025-26,2026-04-05T12:00:00Z,Matchday 28,,FC Metz,,FC Nantes,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c7ed72989dcadaad6327372e,LIGUE1,2025-26,2026-04-05T12:00:00Z,Matchday 28,,AS Monaco FC,,Olympique de Marseille,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-54563bbaa195c8c07b706be0,LIGUE1,2025-26,2026-04-10T12:00:00Z,Matchday 29,,Olympique de Marseille,,FC Metz,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-aee716ff6cbc1f868fb66341,LIGUE1,2025-26,2026-04-10T12:00:00Z,Matchday 29,,Paris FC,,AS Monaco FC,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-1f3f63ad1ec24bb259eb6daa,LIGUE1,2025-26,2026-04-11T12:00:00Z,Matchday 29,,AJ Auxerre,,FC Nantes,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-50de643457f32521b0be9d51,LIGUE1,2025-26,2026-04-11T12:00:00Z,Matchday 29,,Stade Rennais FC 1901,,Angers SCO,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-01de9fde40808465f46c7a90,LIGUE1,2025-26,2026-04-12T12:00:00Z,Matchday 29,,Olympique Lyonnais,,FC Lorient,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-4d6d26aa566e45cd4dbdf47a,LIGUE1,2025-26,2026-04-12T12:00:00Z,Matchday 29,,Toulouse FC,,Lille OSC,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-92e05840ea742032d09e15dc,LIGUE1,2025-26,2026-04-12T12:00:00Z,Matchday 29,,OGC Nice,,Le Havre AC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-1f21ceb3a13f023bb84d9831,LIGUE1,2025-26,2026-04-17T12:00:00Z,Matchday 30,,Racing Club de Lens,,Toulouse FC,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-353f0bbe5e57b94f6b3b0f18,LIGUE1,2025-26,2026-04-18T12:00:00Z,Matchday 30,,Angers SCO,,Le Havre AC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d52ced0f0634e7db1eb11dde,LIGUE1,2025-26,2026-04-18T12:00:00Z,Matchday 30,,FC Lorient,,Olympique de Marseille,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-eb7344c5c8941df7a12475ad,LIGUE1,2025-26,2026-04-18T12:00:00Z,Matchday 30,,Lille OSC,,OGC Nice,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-41dc8ab9dc8a66818a45a581,LIGUE1,2025-26,2026-04-19T12:00:00Z,Matchday 30,,RC Strasbourg Alsace,,Stade Rennais FC 1901,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-68f9c763a9a249ec84fc1bc1,LIGUE1,2025-26,2026-04-19T12:00:00Z,Matchday 30,,Paris Saint-Germain FC,,Olympique Lyonnais,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-6c3c6c09b12255b85aaf98e7,LIGUE1,2025-26,2026-04-19T12:00:00Z,Matchday 30,,FC Metz,,Paris FC,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d01fb85768eae7ca8c4e01e7,LIGUE1,2025-26,2026-04-19T12:00:00Z,Matchday 30,,FC Nantes,,Stade Brestois 29,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d15c29a608b353b5d11b5f98,LIGUE1,2025-26,2026-04-19T12:00:00Z,Matchday 30,,AS Monaco FC,,AJ Auxerre,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-29636d3fab484f45e65330a6,LIGUE1,2025-26,2026-04-22T12:00:00Z,Matchday 26,,Paris Saint-Germain FC,,FC Nantes,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-b1b2a690fd7278f0e37c0ea5,LIGUE1,2025-26,2026-04-24T12:00:00Z,Matchday 31,,Stade Brestois 29,,Racing Club de Lens,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-5280de6fdcacb0ead3e22932,LIGUE1,2025-26,2026-04-25T12:00:00Z,Matchday 31,,Olympique Lyonnais,,AJ Auxerre,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-65302c861189e3668b30362c,LIGUE1,2025-26,2026-04-25T12:00:00Z,Matchday 31,,Toulouse FC,,AS Monaco FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-fd77334cdb17ae9db5130d2c,LIGUE1,2025-26,2026-04-25T12:00:00Z,Matchday 31,,Angers SCO,,Paris Saint-Germain FC,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-36b8ad705d496b3728a366e0,LIGUE1,2025-26,2026-04-26T12:00:00Z,Matchday 31,,Olympique de Marseille,,OGC Nice,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-52c1308567a881a94c9a1c45,LIGUE1,2025-26,2026-04-26T12:00:00Z,Matchday 31,,FC Lorient,,RC Strasbourg Alsace,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-5c0db7436a70ff04ace63a8f,LIGUE1,2025-26,2026-04-26T12:00:00Z,Matchday 31,,Paris FC,,Lille OSC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-5c98610d3ee1bae85a0bbb14,LIGUE1,2025-26,2026-04-26T12:00:00Z,Matchday 31,,Le Havre AC,,FC Metz,,4,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d7e48ef51b1a9bb59ee7f0bc,LIGUE1,2025-26,2026-04-26T12:00:00Z,Matchday 31,,Stade Rennais FC 1901,,FC Nantes,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-35f2461e838b654c8c7988f6,LIGUE1,2025-26,2026-05-02T12:00:00Z,Matchday 32,,FC Metz,,AS Monaco FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-4b3f40c6bf367c225af4cde9,LIGUE1,2025-26,2026-05-02T12:00:00Z,Matchday 32,,OGC Nice,,Racing Club de Lens,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-ae39be0a3ba6c8ee8cdb4e75,LIGUE1,2025-26,2026-05-02T12:00:00Z,Matchday 32,,Paris Saint-Germain FC,,FC Lorient,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-f5af53a66ae6ef50395deb67,LIGUE1,2025-26,2026-05-02T12:00:00Z,Matchday 32,,FC Nantes,,Olympique de Marseille,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-0886d381a0d33bba0893fb53,LIGUE1,2025-26,2026-05-03T12:00:00Z,Matchday 32,,Paris FC,,Stade Brestois 29,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-22b3b45bfe405c2419c38d4f,LIGUE1,2025-26,2026-05-03T12:00:00Z,Matchday 32,,RC Strasbourg Alsace,,Toulouse FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-2d6c6334f37cf6206355e878,LIGUE1,2025-26,2026-05-03T12:00:00Z,Matchday 32,,AJ Auxerre,,Angers SCO,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-709e30b0344e6f0c8454edac,LIGUE1,2025-26,2026-05-03T12:00:00Z,Matchday 32,,Olympique Lyonnais,,Stade Rennais FC 1901,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a1857fa2319346c0812c24a2,LIGUE1,2025-26,2026-05-03T12:00:00Z,Matchday 32,,Lille OSC,,Le Havre AC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-63e3859b2b9c7641fa6665ad,LIGUE1,2025-26,2026-05-08T12:00:00Z,Matchday 33,,Racing Club de Lens,,FC Nantes,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-0572d7228e9ce58f6ace179a,LIGUE1,2025-26,2026-05-10T12:00:00Z,Matchday 33,,AS Monaco FC,,Lille OSC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-0fcab8f638361e62df59b79c,LIGUE1,2025-26,2026-05-10T12:00:00Z,Matchday 33,,Angers SCO,,RC Strasbourg Alsace,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-24f0e86e4d569cccd6ef8cb8,LIGUE1,2025-26,2026-05-10T12:00:00Z,Matchday 33,,AJ Auxerre,,OGC Nice,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-56a8270241098d6b9afd04f1,LIGUE1,2025-26,2026-05-10T12:00:00Z,Matchday 33,,Paris Saint-Germain FC,,Stade Brestois 29,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-5a8f91f227b9c71651ce9f47,LIGUE1,2025-26,2026-05-10T12:00:00Z,Matchday 33,,Stade Rennais FC 1901,,Paris FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-785b8b6c3e538d930c164132,LIGUE1,2025-26,2026-05-10T12:00:00Z,Matchday 33,,FC Metz,,FC Lorient,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-ec0f2374b14cf726ffda198c,LIGUE1,2025-26,2026-05-10T12:00:00Z,Matchday 33,,Le Havre AC,,Olympique de Marseille,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-ec9e7b7b9fad937285e59b7f,LIGUE1,2025-26,2026-05-10T12:00:00Z,Matchday 33,,Toulouse FC,,Olympique Lyonnais,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-5c6452e209492c4dcab1d04b,LIGUE1,2025-26,2026-05-13T12:00:00Z,Matchday 29,,Racing Club de Lens,,Paris Saint-Germain FC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-f2f15af2502f690dd59f5735,LIGUE1,2025-26,2026-05-13T12:00:00Z,Matchday 29,,Stade Brestois 29,,RC Strasbourg Alsace,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-1a6cc8f633f0cd8305124454,LIGUE1,2025-26,2026-05-17T12:00:00Z,Matchday 34,,RC Strasbourg Alsace,,AS Monaco FC,,5,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-2c60db96f7348318b5e56fec,LIGUE1,2025-26,2026-05-17T12:00:00Z,Matchday 34,,Olympique Lyonnais,,Racing Club de Lens,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-3394b2ac7962f0c691062a90,LIGUE1,2025-26,2026-05-17T12:00:00Z,Matchday 34,,FC Lorient,,Le Havre AC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-75e881a268aaaae89ea5ba76,LIGUE1,2025-26,2026-05-17T12:00:00Z,Matchday 34,,Paris FC,,Paris Saint-Germain FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-947d7b033586d3a9aab86df4,LIGUE1,2025-26,2026-05-17T12:00:00Z,Matchday 34,,Lille OSC,,AJ Auxerre,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-b29a50f6f59160ed18379828,LIGUE1,2025-26,2026-05-17T12:00:00Z,Matchday 34,,OGC Nice,,FC Metz,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d46a723f0e1eee51c5632bb4,LIGUE1,2025-26,2026-05-17T12:00:00Z,Matchday 34,,Olympique de Marseille,,Stade Rennais FC 1901,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d7bb6ba82245356bf598801f,LIGUE1,2025-26,2026-05-17T12:00:00Z,Matchday 34,,Stade Brestois 29,,Angers SCO,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00

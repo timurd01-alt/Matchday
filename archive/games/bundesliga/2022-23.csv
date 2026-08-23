@@ -1,0 +1,307 @@
+game_id,comp,season,date_utc,stage,venue,home_name,home_code,away_name,away_code,home_score,away_score,status,source,first_seen
+bundesliga-openfootball-604b6a0e06ed4069ca4222c0,BUNDESLIGA,2022-23,2022-08-05T12:00:00Z,Matchday 1,,Eintracht Frankfurt,,FC Bayern München,,1,6,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-02a7dfcda8f3a0443ba975ad,BUNDESLIGA,2022-23,2022-08-06T12:00:00Z,Matchday 1,,1. FC Union Berlin,,Hertha BSC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-29cc80d4058dab7880f1e281,BUNDESLIGA,2022-23,2022-08-06T12:00:00Z,Matchday 1,,Borussia Dortmund,,Bayer 04 Leverkusen,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-370a8e1d6a273ee2cb1726e3,BUNDESLIGA,2022-23,2022-08-06T12:00:00Z,Matchday 1,,FC Augsburg,,SC Freiburg,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-962136434e61ce25a198d67e,BUNDESLIGA,2022-23,2022-08-06T12:00:00Z,Matchday 1,,Borussia Mönchengladbach,,TSG 1899 Hoffenheim,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e2cb79a44c03163ba079e147,BUNDESLIGA,2022-23,2022-08-06T12:00:00Z,Matchday 1,,VfL Wolfsburg,,SV Werder Bremen,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e5ee46e04bc87fae32178f40,BUNDESLIGA,2022-23,2022-08-06T12:00:00Z,Matchday 1,,VfL Bochum 1848,,1. FSV Mainz 05,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-22280f15a68c4b2947e75781,BUNDESLIGA,2022-23,2022-08-07T12:00:00Z,Matchday 1,,VfB Stuttgart,,RB Leipzig,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e468aabe99b73506983408da,BUNDESLIGA,2022-23,2022-08-07T12:00:00Z,Matchday 1,,1. FC Köln,,FC Schalke 04,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-d4deec784ac44406be266cac,BUNDESLIGA,2022-23,2022-08-12T12:00:00Z,Matchday 2,,SC Freiburg,,Borussia Dortmund,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-1aef699e2b376918a05888a9,BUNDESLIGA,2022-23,2022-08-13T12:00:00Z,Matchday 2,,Bayer 04 Leverkusen,,FC Augsburg,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-34522c59e84050e8d40a475e,BUNDESLIGA,2022-23,2022-08-13T12:00:00Z,Matchday 2,,Hertha BSC,,Eintracht Frankfurt,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-479fcf98393a224865298712,BUNDESLIGA,2022-23,2022-08-13T12:00:00Z,Matchday 2,,FC Schalke 04,,Borussia Mönchengladbach,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-76993ba1aaf2ee4b83ca8d42,BUNDESLIGA,2022-23,2022-08-13T12:00:00Z,Matchday 2,,SV Werder Bremen,,VfB Stuttgart,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-914917472711d2a3fa728a07,BUNDESLIGA,2022-23,2022-08-13T12:00:00Z,Matchday 2,,TSG 1899 Hoffenheim,,VfL Bochum 1848,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ba69741f09cd71d79d409a83,BUNDESLIGA,2022-23,2022-08-13T12:00:00Z,Matchday 2,,RB Leipzig,,1. FC Köln,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a5b4dbd625ec1316df74d4d1,BUNDESLIGA,2022-23,2022-08-14T12:00:00Z,Matchday 2,,FC Bayern München,,VfL Wolfsburg,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-affcacc0ac339f0138c26d16,BUNDESLIGA,2022-23,2022-08-14T12:00:00Z,Matchday 2,,1. FSV Mainz 05,,1. FC Union Berlin,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a99acd3cce95a9e5937c24f0,BUNDESLIGA,2022-23,2022-08-19T12:00:00Z,Matchday 3,,Borussia Mönchengladbach,,Hertha BSC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-42d849fe58762443265cc8fd,BUNDESLIGA,2022-23,2022-08-20T12:00:00Z,Matchday 3,,Bayer 04 Leverkusen,,TSG 1899 Hoffenheim,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-4546c63a22fde6426f0930b7,BUNDESLIGA,2022-23,2022-08-20T12:00:00Z,Matchday 3,,1. FC Union Berlin,,RB Leipzig,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-47de647300b3dfdfbcb03f7c,BUNDESLIGA,2022-23,2022-08-20T12:00:00Z,Matchday 3,,VfB Stuttgart,,SC Freiburg,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-4afaa71ff576fa9b7a706d32,BUNDESLIGA,2022-23,2022-08-20T12:00:00Z,Matchday 3,,VfL Wolfsburg,,FC Schalke 04,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-75a86879b843aa6224d66ce6,BUNDESLIGA,2022-23,2022-08-20T12:00:00Z,Matchday 3,,FC Augsburg,,1. FSV Mainz 05,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-fc1ef82862ec9a4db1f6ae85,BUNDESLIGA,2022-23,2022-08-20T12:00:00Z,Matchday 3,,Borussia Dortmund,,SV Werder Bremen,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-229f3dbfd3733bf3115d5d03,BUNDESLIGA,2022-23,2022-08-21T12:00:00Z,Matchday 3,,VfL Bochum 1848,,FC Bayern München,,0,7,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-3b0218f1b191bbc168ae9331,BUNDESLIGA,2022-23,2022-08-21T12:00:00Z,Matchday 3,,Eintracht Frankfurt,,1. FC Köln,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f4bacaf9d3b9f16c57e30a94,BUNDESLIGA,2022-23,2022-08-26T12:00:00Z,Matchday 4,,SC Freiburg,,VfL Bochum 1848,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-28086a5e3914e688d10db3ba,BUNDESLIGA,2022-23,2022-08-27T12:00:00Z,Matchday 4,,1. FSV Mainz 05,,Bayer 04 Leverkusen,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2b1c26f1650a8575c9797ab9,BUNDESLIGA,2022-23,2022-08-27T12:00:00Z,Matchday 4,,FC Bayern München,,Borussia Mönchengladbach,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-33f7f5f2b74dbc357e1c64ba,BUNDESLIGA,2022-23,2022-08-27T12:00:00Z,Matchday 4,,RB Leipzig,,VfL Wolfsburg,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-3ca3bfef0a759bb4992c93f3,BUNDESLIGA,2022-23,2022-08-27T12:00:00Z,Matchday 4,,Hertha BSC,,Borussia Dortmund,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5764e9ff703a066e846cb549,BUNDESLIGA,2022-23,2022-08-27T12:00:00Z,Matchday 4,,FC Schalke 04,,1. FC Union Berlin,,1,6,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5f69cfcbd5389ab783d928cc,BUNDESLIGA,2022-23,2022-08-27T12:00:00Z,Matchday 4,,TSG 1899 Hoffenheim,,FC Augsburg,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-32b79c3e3eb4fa6e557b9265,BUNDESLIGA,2022-23,2022-08-28T12:00:00Z,Matchday 4,,SV Werder Bremen,,Eintracht Frankfurt,,3,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-9969a2e7f83535c9b03ac7d1,BUNDESLIGA,2022-23,2022-08-28T12:00:00Z,Matchday 4,,1. FC Köln,,VfB Stuttgart,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-4db6a1bc46817f435023f555,BUNDESLIGA,2022-23,2022-09-02T12:00:00Z,Matchday 5,,Borussia Dortmund,,TSG 1899 Hoffenheim,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-1e0e402cd63d0fe4b93f1c2a,BUNDESLIGA,2022-23,2022-09-03T12:00:00Z,Matchday 5,,Eintracht Frankfurt,,RB Leipzig,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-3a26bd19e09442c644f99c24,BUNDESLIGA,2022-23,2022-09-03T12:00:00Z,Matchday 5,,VfL Bochum 1848,,SV Werder Bremen,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-63fe0808720917f8c2ec7c45,BUNDESLIGA,2022-23,2022-09-03T12:00:00Z,Matchday 5,,VfL Wolfsburg,,1. FC Köln,,2,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-79293e003ed452c708075404,BUNDESLIGA,2022-23,2022-09-03T12:00:00Z,Matchday 5,,1. FC Union Berlin,,FC Bayern München,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-bd564366a61535ca7687dfd7,BUNDESLIGA,2022-23,2022-09-03T12:00:00Z,Matchday 5,,VfB Stuttgart,,FC Schalke 04,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-cd32147a076425a59c27fdcd,BUNDESLIGA,2022-23,2022-09-03T12:00:00Z,Matchday 5,,Bayer 04 Leverkusen,,SC Freiburg,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-bf568c4f5de4d184e639f39e,BUNDESLIGA,2022-23,2022-09-04T12:00:00Z,Matchday 5,,Borussia Mönchengladbach,,1. FSV Mainz 05,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-dd4535db0755bd9991352074,BUNDESLIGA,2022-23,2022-09-04T12:00:00Z,Matchday 5,,FC Augsburg,,Hertha BSC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-94e848d6a558548d552b9973,BUNDESLIGA,2022-23,2022-09-09T12:00:00Z,Matchday 6,,SV Werder Bremen,,FC Augsburg,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-23ebb84214bb64644514af0b,BUNDESLIGA,2022-23,2022-09-10T12:00:00Z,Matchday 6,,FC Bayern München,,VfB Stuttgart,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-9672271c2e467a7d6bdec21f,BUNDESLIGA,2022-23,2022-09-10T12:00:00Z,Matchday 6,,Eintracht Frankfurt,,VfL Wolfsburg,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b046079969b8ca09c3813d42,BUNDESLIGA,2022-23,2022-09-10T12:00:00Z,Matchday 6,,RB Leipzig,,Borussia Dortmund,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-cef697dc94e5a2681eeac123,BUNDESLIGA,2022-23,2022-09-10T12:00:00Z,Matchday 6,,Hertha BSC,,Bayer 04 Leverkusen,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-d3cafc5b792ac58e280fc23a,BUNDESLIGA,2022-23,2022-09-10T12:00:00Z,Matchday 6,,FC Schalke 04,,VfL Bochum 1848,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e74a44fdd24c872bb9cf3d42,BUNDESLIGA,2022-23,2022-09-10T12:00:00Z,Matchday 6,,TSG 1899 Hoffenheim,,1. FSV Mainz 05,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2310af5f14806c4947d502c7,BUNDESLIGA,2022-23,2022-09-11T12:00:00Z,Matchday 6,,1. FC Köln,,1. FC Union Berlin,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f7b4be548127c6f7c4779677,BUNDESLIGA,2022-23,2022-09-11T12:00:00Z,Matchday 6,,SC Freiburg,,Borussia Mönchengladbach,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-046c4eb51cb2f5d33108ddb4,BUNDESLIGA,2022-23,2022-09-16T12:00:00Z,Matchday 7,,1. FSV Mainz 05,,Hertha BSC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-08392d5b6e0c2bfc0ea7b7ba,BUNDESLIGA,2022-23,2022-09-17T12:00:00Z,Matchday 7,,VfB Stuttgart,,Eintracht Frankfurt,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a0878d34e5158d6e48734b8e,BUNDESLIGA,2022-23,2022-09-17T12:00:00Z,Matchday 7,,Borussia Mönchengladbach,,RB Leipzig,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b1f178eaee4270370b532ce1,BUNDESLIGA,2022-23,2022-09-17T12:00:00Z,Matchday 7,,Bayer 04 Leverkusen,,SV Werder Bremen,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c57dd291e82af558f34805c2,BUNDESLIGA,2022-23,2022-09-17T12:00:00Z,Matchday 7,,FC Augsburg,,FC Bayern München,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-eb3865fbbde1f2760c636dcf,BUNDESLIGA,2022-23,2022-09-17T12:00:00Z,Matchday 7,,Borussia Dortmund,,FC Schalke 04,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2645429ecb8a881b0d6e89fa,BUNDESLIGA,2022-23,2022-09-18T12:00:00Z,Matchday 7,,VfL Bochum 1848,,1. FC Köln,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-415e794df36d58323b5f812d,BUNDESLIGA,2022-23,2022-09-18T12:00:00Z,Matchday 7,,1. FC Union Berlin,,VfL Wolfsburg,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-6d78a96ae863cb6be86e3499,BUNDESLIGA,2022-23,2022-09-18T12:00:00Z,Matchday 7,,TSG 1899 Hoffenheim,,SC Freiburg,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-6ea1cb26e9f37c89f68b752d,BUNDESLIGA,2022-23,2022-09-30T12:00:00Z,Matchday 8,,FC Bayern München,,Bayer 04 Leverkusen,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-060bbd0d5cf276eb6bae15da,BUNDESLIGA,2022-23,2022-10-01T12:00:00Z,Matchday 8,,RB Leipzig,,VfL Bochum 1848,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-1402a66ee34a311e44462509,BUNDESLIGA,2022-23,2022-10-01T12:00:00Z,Matchday 8,,SV Werder Bremen,,Borussia Mönchengladbach,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-3d909ec68f55bde3c6492609,BUNDESLIGA,2022-23,2022-10-01T12:00:00Z,Matchday 8,,Eintracht Frankfurt,,1. FC Union Berlin,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-50e96411095e1f28df328376,BUNDESLIGA,2022-23,2022-10-01T12:00:00Z,Matchday 8,,VfL Wolfsburg,,VfB Stuttgart,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-7b123d38a608c266b31b8a29,BUNDESLIGA,2022-23,2022-10-01T12:00:00Z,Matchday 8,,SC Freiburg,,1. FSV Mainz 05,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f778349ed5147d7ec05bfa0e,BUNDESLIGA,2022-23,2022-10-01T12:00:00Z,Matchday 8,,1. FC Köln,,Borussia Dortmund,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-0fc76e5903a1b5f6e7e94d61,BUNDESLIGA,2022-23,2022-10-02T12:00:00Z,Matchday 8,,FC Schalke 04,,FC Augsburg,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-efa08c4765f0419282a0240c,BUNDESLIGA,2022-23,2022-10-02T12:00:00Z,Matchday 8,,Hertha BSC,,TSG 1899 Hoffenheim,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e1b42f2cc4711d30aa7c296f,BUNDESLIGA,2022-23,2022-10-07T12:00:00Z,Matchday 9,,TSG 1899 Hoffenheim,,SV Werder Bremen,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2b651becce0c28a75516d66a,BUNDESLIGA,2022-23,2022-10-08T12:00:00Z,Matchday 9,,FC Augsburg,,VfL Wolfsburg,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-45f2c7c98a368d4229c991ac,BUNDESLIGA,2022-23,2022-10-08T12:00:00Z,Matchday 9,,1. FSV Mainz 05,,RB Leipzig,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-6e0dc5fc224c09d2e8f1a742,BUNDESLIGA,2022-23,2022-10-08T12:00:00Z,Matchday 9,,Borussia Dortmund,,FC Bayern München,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-890df213fb6a817ea2cdefe6,BUNDESLIGA,2022-23,2022-10-08T12:00:00Z,Matchday 9,,VfL Bochum 1848,,Eintracht Frankfurt,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c4981eb751ddee3ee19cb08c,BUNDESLIGA,2022-23,2022-10-08T12:00:00Z,Matchday 9,,Bayer 04 Leverkusen,,FC Schalke 04,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-02c5c02f8fca7a9a4ee0acc3,BUNDESLIGA,2022-23,2022-10-09T12:00:00Z,Matchday 9,,Borussia Mönchengladbach,,1. FC Köln,,5,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-341bafa50752b395c7c77eae,BUNDESLIGA,2022-23,2022-10-09T12:00:00Z,Matchday 9,,VfB Stuttgart,,1. FC Union Berlin,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f9c6dafad54242ff075f2b6f,BUNDESLIGA,2022-23,2022-10-09T12:00:00Z,Matchday 9,,Hertha BSC,,SC Freiburg,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-47b782bc517be9a5b649759f,BUNDESLIGA,2022-23,2022-10-14T12:00:00Z,Matchday 10,,FC Schalke 04,,TSG 1899 Hoffenheim,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-08d94e6f761c774b32c93dca,BUNDESLIGA,2022-23,2022-10-15T12:00:00Z,Matchday 10,,VfL Wolfsburg,,Borussia Mönchengladbach,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-0d8fb4e6f03642c338a4c870,BUNDESLIGA,2022-23,2022-10-15T12:00:00Z,Matchday 10,,Eintracht Frankfurt,,Bayer 04 Leverkusen,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-1d369f5287ac79bfcb794153,BUNDESLIGA,2022-23,2022-10-15T12:00:00Z,Matchday 10,,RB Leipzig,,Hertha BSC,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-99dc779d314a4c6d7550fa7b,BUNDESLIGA,2022-23,2022-10-15T12:00:00Z,Matchday 10,,VfB Stuttgart,,VfL Bochum 1848,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-9dad318c29d7f69cda3d8c2d,BUNDESLIGA,2022-23,2022-10-15T12:00:00Z,Matchday 10,,SV Werder Bremen,,1. FSV Mainz 05,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-27a9f41cb79a968424ee79fd,BUNDESLIGA,2022-23,2022-10-16T12:00:00Z,Matchday 10,,1. FC Union Berlin,,Borussia Dortmund,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-4b0815530e3fec495e288737,BUNDESLIGA,2022-23,2022-10-16T12:00:00Z,Matchday 10,,1. FC Köln,,FC Augsburg,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-568dd079ee9ebd3b214deaae,BUNDESLIGA,2022-23,2022-10-16T12:00:00Z,Matchday 10,,FC Bayern München,,SC Freiburg,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-831bd09e6a0dce8db5ffe2ce,BUNDESLIGA,2022-23,2022-10-21T12:00:00Z,Matchday 11,,1. FSV Mainz 05,,1. FC Köln,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-41a9c3b5e60aac13ecc4ffc5,BUNDESLIGA,2022-23,2022-10-22T12:00:00Z,Matchday 11,,Bayer 04 Leverkusen,,VfL Wolfsburg,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-9fbe97198733fe6c3ecb2e64,BUNDESLIGA,2022-23,2022-10-22T12:00:00Z,Matchday 11,,TSG 1899 Hoffenheim,,FC Bayern München,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ad6766f99d5f75409610c02e,BUNDESLIGA,2022-23,2022-10-22T12:00:00Z,Matchday 11,,FC Augsburg,,RB Leipzig,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ae6424dcbb552fcd93bb53fe,BUNDESLIGA,2022-23,2022-10-22T12:00:00Z,Matchday 11,,Borussia Mönchengladbach,,Eintracht Frankfurt,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-afa702de66d7286a2a51ddba,BUNDESLIGA,2022-23,2022-10-22T12:00:00Z,Matchday 11,,Borussia Dortmund,,VfB Stuttgart,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-bc4e869e6e3a25bc94b4300a,BUNDESLIGA,2022-23,2022-10-22T12:00:00Z,Matchday 11,,SC Freiburg,,SV Werder Bremen,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-240d535a6b1c1c9461409007,BUNDESLIGA,2022-23,2022-10-23T12:00:00Z,Matchday 11,,Hertha BSC,,FC Schalke 04,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-9703de860d9638d8942b90f5,BUNDESLIGA,2022-23,2022-10-23T12:00:00Z,Matchday 11,,VfL Bochum 1848,,1. FC Union Berlin,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f2808eaf6808eb5fb8215544,BUNDESLIGA,2022-23,2022-10-28T12:00:00Z,Matchday 12,,SV Werder Bremen,,Hertha BSC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-3e7bf044a035915b4267a07d,BUNDESLIGA,2022-23,2022-10-29T12:00:00Z,Matchday 12,,Eintracht Frankfurt,,Borussia Dortmund,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-50e31ceeaf39bc89e5b830bf,BUNDESLIGA,2022-23,2022-10-29T12:00:00Z,Matchday 12,,VfL Wolfsburg,,VfL Bochum 1848,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-989916425dcb9c5adfe23968,BUNDESLIGA,2022-23,2022-10-29T12:00:00Z,Matchday 12,,FC Bayern München,,1. FSV Mainz 05,,6,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c8481e51c8c50a894d31dc49,BUNDESLIGA,2022-23,2022-10-29T12:00:00Z,Matchday 12,,VfB Stuttgart,,FC Augsburg,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f2b724b575cba8de5d4314ac,BUNDESLIGA,2022-23,2022-10-29T12:00:00Z,Matchday 12,,RB Leipzig,,Bayer 04 Leverkusen,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-03648253cbd5b92238541a11,BUNDESLIGA,2022-23,2022-10-30T12:00:00Z,Matchday 12,,1. FC Union Berlin,,Borussia Mönchengladbach,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-922e8f3b19d5a660d770695e,BUNDESLIGA,2022-23,2022-10-30T12:00:00Z,Matchday 12,,1. FC Köln,,TSG 1899 Hoffenheim,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c7fdad4872bf8f02512068b7,BUNDESLIGA,2022-23,2022-10-30T12:00:00Z,Matchday 12,,FC Schalke 04,,SC Freiburg,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-91c658376b9126d49286cfcb,BUNDESLIGA,2022-23,2022-11-04T12:00:00Z,Matchday 13,,Borussia Mönchengladbach,,VfB Stuttgart,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-877b1138abd394d15e9d218f,BUNDESLIGA,2022-23,2022-11-05T12:00:00Z,Matchday 13,,Borussia Dortmund,,VfL Bochum 1848,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-90a058f8a6223fff92fd45cb,BUNDESLIGA,2022-23,2022-11-05T12:00:00Z,Matchday 13,,Hertha BSC,,FC Bayern München,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-94b0552146a64ac435ea5869,BUNDESLIGA,2022-23,2022-11-05T12:00:00Z,Matchday 13,,SV Werder Bremen,,FC Schalke 04,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-999f43c3bf5ecbad618bc445,BUNDESLIGA,2022-23,2022-11-05T12:00:00Z,Matchday 13,,FC Augsburg,,Eintracht Frankfurt,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-dbe98ce6ef0d804196b510fe,BUNDESLIGA,2022-23,2022-11-05T12:00:00Z,Matchday 13,,TSG 1899 Hoffenheim,,RB Leipzig,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ecc3a8913fda945ea1dc7156,BUNDESLIGA,2022-23,2022-11-05T12:00:00Z,Matchday 13,,1. FSV Mainz 05,,VfL Wolfsburg,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2ff8a7a0c809f3a6e8a8cf9a,BUNDESLIGA,2022-23,2022-11-06T12:00:00Z,Matchday 13,,SC Freiburg,,1. FC Köln,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-eb0a2fcd23feb2696befbc2b,BUNDESLIGA,2022-23,2022-11-06T12:00:00Z,Matchday 13,,Bayer 04 Leverkusen,,1. FC Union Berlin,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5737146c636c9850e84a5b0c,BUNDESLIGA,2022-23,2022-11-08T12:00:00Z,Matchday 14,,VfL Bochum 1848,,Borussia Mönchengladbach,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c3fe324688108c71ac4d7626,BUNDESLIGA,2022-23,2022-11-08T12:00:00Z,Matchday 14,,FC Bayern München,,SV Werder Bremen,,6,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-cf2ccd34e5e1cf761c8730b9,BUNDESLIGA,2022-23,2022-11-08T12:00:00Z,Matchday 14,,VfL Wolfsburg,,Borussia Dortmund,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-eab5c57aebce95b5947cefd4,BUNDESLIGA,2022-23,2022-11-08T12:00:00Z,Matchday 14,,VfB Stuttgart,,Hertha BSC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-4540a877d2926190a8818f0c,BUNDESLIGA,2022-23,2022-11-09T12:00:00Z,Matchday 14,,1. FC Köln,,Bayer 04 Leverkusen,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-716c05fa4eaa22283ddb80c0,BUNDESLIGA,2022-23,2022-11-09T12:00:00Z,Matchday 14,,FC Schalke 04,,1. FSV Mainz 05,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-9914e71e937753a95ba4ad7b,BUNDESLIGA,2022-23,2022-11-09T12:00:00Z,Matchday 14,,1. FC Union Berlin,,FC Augsburg,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c8dac112bd0e42ae0102aa23,BUNDESLIGA,2022-23,2022-11-09T12:00:00Z,Matchday 14,,Eintracht Frankfurt,,TSG 1899 Hoffenheim,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-d1ef9409e762f6407907482c,BUNDESLIGA,2022-23,2022-11-09T12:00:00Z,Matchday 14,,RB Leipzig,,SC Freiburg,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ce7682d4e2b7dd279fdb7e12,BUNDESLIGA,2022-23,2022-11-11T12:00:00Z,Matchday 15,,Borussia Mönchengladbach,,Borussia Dortmund,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-3dd023947b7f97a20b008bf9,BUNDESLIGA,2022-23,2022-11-12T12:00:00Z,Matchday 15,,Bayer 04 Leverkusen,,VfB Stuttgart,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-58bebcac01235c0550289080,BUNDESLIGA,2022-23,2022-11-12T12:00:00Z,Matchday 15,,FC Schalke 04,,FC Bayern München,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5985c323b78a9fe53fb3969d,BUNDESLIGA,2022-23,2022-11-12T12:00:00Z,Matchday 15,,Hertha BSC,,1. FC Köln,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-8216fa0424992d8c3e13814e,BUNDESLIGA,2022-23,2022-11-12T12:00:00Z,Matchday 15,,TSG 1899 Hoffenheim,,VfL Wolfsburg,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-baca0f7aeb3b9b1974d9d617,BUNDESLIGA,2022-23,2022-11-12T12:00:00Z,Matchday 15,,SV Werder Bremen,,RB Leipzig,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f7281c1272ee313ae88e3bcb,BUNDESLIGA,2022-23,2022-11-12T12:00:00Z,Matchday 15,,FC Augsburg,,VfL Bochum 1848,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-4bdd2420aa6d1e4b5803522a,BUNDESLIGA,2022-23,2022-11-13T12:00:00Z,Matchday 15,,SC Freiburg,,1. FC Union Berlin,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-d52664b6db0279d56e7e7999,BUNDESLIGA,2022-23,2022-11-13T12:00:00Z,Matchday 15,,1. FSV Mainz 05,,Eintracht Frankfurt,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-55322421361b88dac3fad3f9,BUNDESLIGA,2022-23,2023-01-20T12:00:00Z,Matchday 16,,RB Leipzig,,FC Bayern München,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-0db42c97d7cee631419390fc,BUNDESLIGA,2022-23,2023-01-21T12:00:00Z,Matchday 16,,VfL Bochum 1848,,Hertha BSC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-0f86608fa3632f3d00ef8dd9,BUNDESLIGA,2022-23,2023-01-21T12:00:00Z,Matchday 16,,VfB Stuttgart,,1. FSV Mainz 05,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-52e14e6b26b385caabb406ce,BUNDESLIGA,2022-23,2023-01-21T12:00:00Z,Matchday 16,,VfL Wolfsburg,,SC Freiburg,,6,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-9996009eb3a2f89aa3f6880a,BUNDESLIGA,2022-23,2023-01-21T12:00:00Z,Matchday 16,,Eintracht Frankfurt,,FC Schalke 04,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b2b80bb6a3320e9782f1708e,BUNDESLIGA,2022-23,2023-01-21T12:00:00Z,Matchday 16,,1. FC Union Berlin,,TSG 1899 Hoffenheim,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-dfb2a75db718495e43ce3ae3,BUNDESLIGA,2022-23,2023-01-21T12:00:00Z,Matchday 16,,1. FC Köln,,SV Werder Bremen,,7,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-00eded9232af324aaddee2f8,BUNDESLIGA,2022-23,2023-01-22T12:00:00Z,Matchday 16,,Borussia Mönchengladbach,,Bayer 04 Leverkusen,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-07e62eef17af059069143711,BUNDESLIGA,2022-23,2023-01-22T12:00:00Z,Matchday 16,,Borussia Dortmund,,FC Augsburg,,4,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2520da6729a305948a713834,BUNDESLIGA,2022-23,2023-01-24T12:00:00Z,Matchday 17,,FC Bayern München,,1. FC Köln,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-69c0ae57474486458ebd1f2a,BUNDESLIGA,2022-23,2023-01-24T12:00:00Z,Matchday 17,,TSG 1899 Hoffenheim,,VfB Stuttgart,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-78fbc999cb458afedec26332,BUNDESLIGA,2022-23,2023-01-24T12:00:00Z,Matchday 17,,Hertha BSC,,VfL Wolfsburg,,0,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b066a56af2777bf5a4b1de66,BUNDESLIGA,2022-23,2023-01-24T12:00:00Z,Matchday 17,,FC Schalke 04,,RB Leipzig,,1,6,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-150a8a72ad87aad9c5b65e51,BUNDESLIGA,2022-23,2023-01-25T12:00:00Z,Matchday 17,,SC Freiburg,,Eintracht Frankfurt,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-3496e91692ac974155c8020e,BUNDESLIGA,2022-23,2023-01-25T12:00:00Z,Matchday 17,,FC Augsburg,,Borussia Mönchengladbach,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-4c5c7a3d37dfa7f41356e34e,BUNDESLIGA,2022-23,2023-01-25T12:00:00Z,Matchday 17,,Bayer 04 Leverkusen,,VfL Bochum 1848,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b7b50b1889d2815b56a269a0,BUNDESLIGA,2022-23,2023-01-25T12:00:00Z,Matchday 17,,SV Werder Bremen,,1. FC Union Berlin,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f58441fbded2509ea82820df,BUNDESLIGA,2022-23,2023-01-25T12:00:00Z,Matchday 17,,1. FSV Mainz 05,,Borussia Dortmund,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-0c3caf5d21d5ff454a435432,BUNDESLIGA,2022-23,2023-01-27T12:00:00Z,Matchday 18,,RB Leipzig,,VfB Stuttgart,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-4dcc394091d9b0e8d390a646,BUNDESLIGA,2022-23,2023-01-28T12:00:00Z,Matchday 18,,1. FSV Mainz 05,,VfL Bochum 1848,,5,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a0a065ba6628cb44f495b034,BUNDESLIGA,2022-23,2023-01-28T12:00:00Z,Matchday 18,,SV Werder Bremen,,VfL Wolfsburg,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-aaf0da32218faeea1aef10cc,BUNDESLIGA,2022-23,2023-01-28T12:00:00Z,Matchday 18,,SC Freiburg,,FC Augsburg,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-d52f6ef471dae57b8817094c,BUNDESLIGA,2022-23,2023-01-28T12:00:00Z,Matchday 18,,TSG 1899 Hoffenheim,,Borussia Mönchengladbach,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f59b555d83db310b793419c1,BUNDESLIGA,2022-23,2023-01-28T12:00:00Z,Matchday 18,,Hertha BSC,,1. FC Union Berlin,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ff7f58bac875924718a858d8,BUNDESLIGA,2022-23,2023-01-28T12:00:00Z,Matchday 18,,FC Bayern München,,Eintracht Frankfurt,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-254fac4850b9ac592a1eaafe,BUNDESLIGA,2022-23,2023-01-29T12:00:00Z,Matchday 18,,FC Schalke 04,,1. FC Köln,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-d150f06e88ff9fc50cdbd978,BUNDESLIGA,2022-23,2023-01-29T12:00:00Z,Matchday 18,,Bayer 04 Leverkusen,,Borussia Dortmund,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-3d34e7ff5596fbcca5c3090d,BUNDESLIGA,2022-23,2023-02-03T12:00:00Z,Matchday 19,,FC Augsburg,,Bayer 04 Leverkusen,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-09ce59837cda727a627b4c04,BUNDESLIGA,2022-23,2023-02-04T12:00:00Z,Matchday 19,,VfL Bochum 1848,,TSG 1899 Hoffenheim,,5,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-26c8b291681d6108f9baca50,BUNDESLIGA,2022-23,2023-02-04T12:00:00Z,Matchday 19,,1. FC Köln,,RB Leipzig,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-8f1fb98a6875af398b4255ae,BUNDESLIGA,2022-23,2023-02-04T12:00:00Z,Matchday 19,,Borussia Dortmund,,SC Freiburg,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c23d9885e83cb038c82278e0,BUNDESLIGA,2022-23,2023-02-04T12:00:00Z,Matchday 19,,1. FC Union Berlin,,1. FSV Mainz 05,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c8714267a1dd2969e080bd57,BUNDESLIGA,2022-23,2023-02-04T12:00:00Z,Matchday 19,,Eintracht Frankfurt,,Hertha BSC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-cbfac49cb90e72b40a528bb5,BUNDESLIGA,2022-23,2023-02-04T12:00:00Z,Matchday 19,,Borussia Mönchengladbach,,FC Schalke 04,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-1e11f52e2eccb2095d3c0069,BUNDESLIGA,2022-23,2023-02-05T12:00:00Z,Matchday 19,,VfB Stuttgart,,SV Werder Bremen,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-34c3e5831ee8838acb3d523b,BUNDESLIGA,2022-23,2023-02-05T12:00:00Z,Matchday 19,,VfL Wolfsburg,,FC Bayern München,,2,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-7d17ca2a996e86ce3d99b07e,BUNDESLIGA,2022-23,2023-02-10T12:00:00Z,Matchday 20,,FC Schalke 04,,VfL Wolfsburg,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2abb7cecdaf8f2c8b0bd9eea,BUNDESLIGA,2022-23,2023-02-11T12:00:00Z,Matchday 20,,SV Werder Bremen,,Borussia Dortmund,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2bc1bbcb7991b941f95f0161,BUNDESLIGA,2022-23,2023-02-11T12:00:00Z,Matchday 20,,FC Bayern München,,VfL Bochum 1848,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5ca6da5341b8cde155e302cf,BUNDESLIGA,2022-23,2023-02-11T12:00:00Z,Matchday 20,,RB Leipzig,,1. FC Union Berlin,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5f1f7c68c7fa870579434f89,BUNDESLIGA,2022-23,2023-02-11T12:00:00Z,Matchday 20,,TSG 1899 Hoffenheim,,Bayer 04 Leverkusen,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ae3378389d25e1172028f581,BUNDESLIGA,2022-23,2023-02-11T12:00:00Z,Matchday 20,,SC Freiburg,,VfB Stuttgart,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ea2d23560028ee689c784142,BUNDESLIGA,2022-23,2023-02-11T12:00:00Z,Matchday 20,,1. FSV Mainz 05,,FC Augsburg,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-063cbd9a592247b6bb34eb9b,BUNDESLIGA,2022-23,2023-02-12T12:00:00Z,Matchday 20,,1. FC Köln,,Eintracht Frankfurt,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a57e7f41b63a3c6de8829372,BUNDESLIGA,2022-23,2023-02-12T12:00:00Z,Matchday 20,,Hertha BSC,,Borussia Mönchengladbach,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f7a9d83f894a310c64c6c951,BUNDESLIGA,2022-23,2023-02-17T12:00:00Z,Matchday 21,,FC Augsburg,,TSG 1899 Hoffenheim,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5a52214f415aa15365c32196,BUNDESLIGA,2022-23,2023-02-18T12:00:00Z,Matchday 21,,VfL Bochum 1848,,SC Freiburg,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-9af2ff94cbe3ec71c1346440,BUNDESLIGA,2022-23,2023-02-18T12:00:00Z,Matchday 21,,Eintracht Frankfurt,,SV Werder Bremen,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ceef1d825ddc10996870f082,BUNDESLIGA,2022-23,2023-02-18T12:00:00Z,Matchday 21,,VfB Stuttgart,,1. FC Köln,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-d09806ae5c36a75750c107ef,BUNDESLIGA,2022-23,2023-02-18T12:00:00Z,Matchday 21,,Borussia Mönchengladbach,,FC Bayern München,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e9d7ae171e7ebe7b3ccb0e62,BUNDESLIGA,2022-23,2023-02-18T12:00:00Z,Matchday 21,,VfL Wolfsburg,,RB Leipzig,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2a8c7825d295aa3001ea0330,BUNDESLIGA,2022-23,2023-02-19T12:00:00Z,Matchday 21,,1. FC Union Berlin,,FC Schalke 04,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ca81f64514124ba0f7c54bac,BUNDESLIGA,2022-23,2023-02-19T12:00:00Z,Matchday 21,,Bayer 04 Leverkusen,,1. FSV Mainz 05,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-dcbafcf28b33534fabb77d12,BUNDESLIGA,2022-23,2023-02-19T12:00:00Z,Matchday 21,,Borussia Dortmund,,Hertha BSC,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-350019adb84140de74f1c2ed,BUNDESLIGA,2022-23,2023-02-24T12:00:00Z,Matchday 22,,1. FSV Mainz 05,,Borussia Mönchengladbach,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-1172bd4b8bc20e67464e09c0,BUNDESLIGA,2022-23,2023-02-25T12:00:00Z,Matchday 22,,TSG 1899 Hoffenheim,,Borussia Dortmund,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-23cb0740398978ee6f35f294,BUNDESLIGA,2022-23,2023-02-25T12:00:00Z,Matchday 22,,RB Leipzig,,Eintracht Frankfurt,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-47b4249b6d45007b307a6d4f,BUNDESLIGA,2022-23,2023-02-25T12:00:00Z,Matchday 22,,Hertha BSC,,FC Augsburg,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-56562969e1ffd4f00c744531,BUNDESLIGA,2022-23,2023-02-25T12:00:00Z,Matchday 22,,1. FC Köln,,VfL Wolfsburg,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-68474f75cb44093f2ad264e6,BUNDESLIGA,2022-23,2023-02-25T12:00:00Z,Matchday 22,,FC Schalke 04,,VfB Stuttgart,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-998a1f55802a11cc83bc5b71,BUNDESLIGA,2022-23,2023-02-25T12:00:00Z,Matchday 22,,SV Werder Bremen,,VfL Bochum 1848,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b18a37a1ea9949856896f129,BUNDESLIGA,2022-23,2023-02-26T12:00:00Z,Matchday 22,,FC Bayern München,,1. FC Union Berlin,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e76a9eb903f46595a8b1bc2c,BUNDESLIGA,2022-23,2023-02-26T12:00:00Z,Matchday 22,,SC Freiburg,,Bayer 04 Leverkusen,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5951912c097b2d6fa36293f1,BUNDESLIGA,2022-23,2023-03-03T12:00:00Z,Matchday 23,,Borussia Dortmund,,RB Leipzig,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-0007d4117759c8d16ccc53d7,BUNDESLIGA,2022-23,2023-03-04T12:00:00Z,Matchday 23,,1. FC Union Berlin,,1. FC Köln,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-15e7c6b1985ff0ce7c95d4c2,BUNDESLIGA,2022-23,2023-03-04T12:00:00Z,Matchday 23,,VfL Bochum 1848,,FC Schalke 04,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-7f676cbe7867aced8ccb81b2,BUNDESLIGA,2022-23,2023-03-04T12:00:00Z,Matchday 23,,1. FSV Mainz 05,,TSG 1899 Hoffenheim,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-8c3e3efcb5e473dd95f67278,BUNDESLIGA,2022-23,2023-03-04T12:00:00Z,Matchday 23,,Borussia Mönchengladbach,,SC Freiburg,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-9ae78286529d483f81e98f05,BUNDESLIGA,2022-23,2023-03-04T12:00:00Z,Matchday 23,,FC Augsburg,,SV Werder Bremen,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e9bf3c656f9c69af22b752c9,BUNDESLIGA,2022-23,2023-03-04T12:00:00Z,Matchday 23,,VfB Stuttgart,,FC Bayern München,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-50026c9c7f4acda07ed5d5f2,BUNDESLIGA,2022-23,2023-03-05T12:00:00Z,Matchday 23,,VfL Wolfsburg,,Eintracht Frankfurt,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e50a792c5c9fc9b6e0510427,BUNDESLIGA,2022-23,2023-03-05T12:00:00Z,Matchday 23,,Bayer 04 Leverkusen,,Hertha BSC,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a436d306bc8e28485175f486,BUNDESLIGA,2022-23,2023-03-10T12:00:00Z,Matchday 24,,1. FC Köln,,VfL Bochum 1848,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-3180001229fe98604676e916,BUNDESLIGA,2022-23,2023-03-11T12:00:00Z,Matchday 24,,Hertha BSC,,1. FSV Mainz 05,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-66f107c58f85819f886ca8bb,BUNDESLIGA,2022-23,2023-03-11T12:00:00Z,Matchday 24,,FC Bayern München,,FC Augsburg,,5,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b962fd4d008e00f84dec2a60,BUNDESLIGA,2022-23,2023-03-11T12:00:00Z,Matchday 24,,Eintracht Frankfurt,,VfB Stuttgart,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e657ce6e462b006390ca9329,BUNDESLIGA,2022-23,2023-03-11T12:00:00Z,Matchday 24,,FC Schalke 04,,Borussia Dortmund,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f11e5937b8ce6e3a5763cd34,BUNDESLIGA,2022-23,2023-03-11T12:00:00Z,Matchday 24,,RB Leipzig,,Borussia Mönchengladbach,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-41098fb2d77a217290e1f808,BUNDESLIGA,2022-23,2023-03-12T12:00:00Z,Matchday 24,,VfL Wolfsburg,,1. FC Union Berlin,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-854d41fef3560b156bb71c72,BUNDESLIGA,2022-23,2023-03-12T12:00:00Z,Matchday 24,,SC Freiburg,,TSG 1899 Hoffenheim,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f6472f88c1a9cbd26509fe37,BUNDESLIGA,2022-23,2023-03-12T12:00:00Z,Matchday 24,,SV Werder Bremen,,Bayer 04 Leverkusen,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e4056d5afc140cddbdd43180,BUNDESLIGA,2022-23,2023-03-17T12:00:00Z,Matchday 25,,Borussia Mönchengladbach,,SV Werder Bremen,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-309cc195d4dca29b3d146d5d,BUNDESLIGA,2022-23,2023-03-18T12:00:00Z,Matchday 25,,FC Augsburg,,FC Schalke 04,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-3dc80f4d9f7631f2040ccea6,BUNDESLIGA,2022-23,2023-03-18T12:00:00Z,Matchday 25,,Borussia Dortmund,,1. FC Köln,,6,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-3f047c1d126d846d79fe472d,BUNDESLIGA,2022-23,2023-03-18T12:00:00Z,Matchday 25,,VfB Stuttgart,,VfL Wolfsburg,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-803c46f4a3a1acd9a9748c9a,BUNDESLIGA,2022-23,2023-03-18T12:00:00Z,Matchday 25,,VfL Bochum 1848,,RB Leipzig,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b939ec6cefd83a06ebf782e2,BUNDESLIGA,2022-23,2023-03-18T12:00:00Z,Matchday 25,,TSG 1899 Hoffenheim,,Hertha BSC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-329ac3ec3cd994944efc5535,BUNDESLIGA,2022-23,2023-03-19T12:00:00Z,Matchday 25,,1. FSV Mainz 05,,SC Freiburg,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-40529065ad26cbf27b8edbd9,BUNDESLIGA,2022-23,2023-03-19T12:00:00Z,Matchday 25,,Bayer 04 Leverkusen,,FC Bayern München,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-7f275c05ce96a42f5f0dec38,BUNDESLIGA,2022-23,2023-03-19T12:00:00Z,Matchday 25,,1. FC Union Berlin,,Eintracht Frankfurt,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-03b1c98c3bfa9690d0bfe28f,BUNDESLIGA,2022-23,2023-03-31T12:00:00Z,Matchday 26,,Eintracht Frankfurt,,VfL Bochum 1848,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-1107336349875263d2f7a078,BUNDESLIGA,2022-23,2023-04-01T12:00:00Z,Matchday 26,,RB Leipzig,,1. FSV Mainz 05,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2383d81e77325f4c57189434,BUNDESLIGA,2022-23,2023-04-01T12:00:00Z,Matchday 26,,FC Schalke 04,,Bayer 04 Leverkusen,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-316081e637298e6ad19e8ff4,BUNDESLIGA,2022-23,2023-04-01T12:00:00Z,Matchday 26,,1. FC Union Berlin,,VfB Stuttgart,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-94401bb4dc6c5b65acc42d00,BUNDESLIGA,2022-23,2023-04-01T12:00:00Z,Matchday 26,,VfL Wolfsburg,,FC Augsburg,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f936bcd267848db881786790,BUNDESLIGA,2022-23,2023-04-01T12:00:00Z,Matchday 26,,FC Bayern München,,Borussia Dortmund,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-fd7dc83d9d6d0ea186888a4f,BUNDESLIGA,2022-23,2023-04-01T12:00:00Z,Matchday 26,,SC Freiburg,,Hertha BSC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-4ace5901d1ef6690be3c980e,BUNDESLIGA,2022-23,2023-04-02T12:00:00Z,Matchday 26,,SV Werder Bremen,,TSG 1899 Hoffenheim,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-6f3ed1bc9fba436d01374581,BUNDESLIGA,2022-23,2023-04-02T12:00:00Z,Matchday 26,,1. FC Köln,,Borussia Mönchengladbach,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-12eb40642bebf8d5ec03423d,BUNDESLIGA,2022-23,2023-04-08T12:00:00Z,Matchday 27,,Hertha BSC,,RB Leipzig,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-4156e2d8f2dff727d3bfec48,BUNDESLIGA,2022-23,2023-04-08T12:00:00Z,Matchday 27,,1. FSV Mainz 05,,SV Werder Bremen,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-680980c8d24c6691c1d46f27,BUNDESLIGA,2022-23,2023-04-08T12:00:00Z,Matchday 27,,Borussia Dortmund,,1. FC Union Berlin,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-9423cb962b6e9084c4ae1688,BUNDESLIGA,2022-23,2023-04-08T12:00:00Z,Matchday 27,,FC Augsburg,,1. FC Köln,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-da73d321ccbe0b3cc539046e,BUNDESLIGA,2022-23,2023-04-08T12:00:00Z,Matchday 27,,SC Freiburg,,FC Bayern München,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e21749b092cf0333923ced67,BUNDESLIGA,2022-23,2023-04-08T12:00:00Z,Matchday 27,,Bayer 04 Leverkusen,,Eintracht Frankfurt,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-9983e5b21d5feb66120a00a4,BUNDESLIGA,2022-23,2023-04-09T12:00:00Z,Matchday 27,,VfL Bochum 1848,,VfB Stuttgart,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e072ae0c01eb8a6f42b8b342,BUNDESLIGA,2022-23,2023-04-09T12:00:00Z,Matchday 27,,TSG 1899 Hoffenheim,,FC Schalke 04,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e10ee54705c99888271d5dae,BUNDESLIGA,2022-23,2023-04-09T12:00:00Z,Matchday 27,,Borussia Mönchengladbach,,VfL Wolfsburg,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-44630179d5d284c8f228fd96,BUNDESLIGA,2022-23,2023-04-14T12:00:00Z,Matchday 28,,FC Schalke 04,,Hertha BSC,,5,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-199ad70ab04a6464f01acc73,BUNDESLIGA,2022-23,2023-04-15T12:00:00Z,Matchday 28,,FC Bayern München,,TSG 1899 Hoffenheim,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2a3e93f7c8d4ea951a20bd4f,BUNDESLIGA,2022-23,2023-04-15T12:00:00Z,Matchday 28,,1. FC Köln,,1. FSV Mainz 05,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-9d98774fe971aff85d5ddc7c,BUNDESLIGA,2022-23,2023-04-15T12:00:00Z,Matchday 28,,RB Leipzig,,FC Augsburg,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a5c6492756977d3d1887d478,BUNDESLIGA,2022-23,2023-04-15T12:00:00Z,Matchday 28,,VfB Stuttgart,,Borussia Dortmund,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ffcfed994816a657fc415c09,BUNDESLIGA,2022-23,2023-04-15T12:00:00Z,Matchday 28,,Eintracht Frankfurt,,Borussia Mönchengladbach,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2d5b539d72dd74bbd4662d4f,BUNDESLIGA,2022-23,2023-04-16T12:00:00Z,Matchday 28,,VfL Wolfsburg,,Bayer 04 Leverkusen,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-af3c9ccb40f691730d3760a2,BUNDESLIGA,2022-23,2023-04-16T12:00:00Z,Matchday 28,,SV Werder Bremen,,SC Freiburg,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-d106617e3ab0329a7d5f1282,BUNDESLIGA,2022-23,2023-04-16T12:00:00Z,Matchday 28,,1. FC Union Berlin,,VfL Bochum 1848,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-29b91dd633b6b2513bccd744,BUNDESLIGA,2022-23,2023-04-21T12:00:00Z,Matchday 29,,FC Augsburg,,VfB Stuttgart,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2dbc08142bf1ad026a2e38ac,BUNDESLIGA,2022-23,2023-04-22T12:00:00Z,Matchday 29,,VfL Bochum 1848,,VfL Wolfsburg,,1,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-3244ad193fbf013e4098192f,BUNDESLIGA,2022-23,2023-04-22T12:00:00Z,Matchday 29,,Hertha BSC,,SV Werder Bremen,,2,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-4b2b128de5cf96d720ff3379,BUNDESLIGA,2022-23,2023-04-22T12:00:00Z,Matchday 29,,TSG 1899 Hoffenheim,,1. FC Köln,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-8ca11e657a645aac72eb77e7,BUNDESLIGA,2022-23,2023-04-22T12:00:00Z,Matchday 29,,1. FSV Mainz 05,,FC Bayern München,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-d7a73b3c6481765ddc000115,BUNDESLIGA,2022-23,2023-04-22T12:00:00Z,Matchday 29,,Borussia Dortmund,,Eintracht Frankfurt,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-1004165353e9c341a6fc5495,BUNDESLIGA,2022-23,2023-04-23T12:00:00Z,Matchday 29,,Borussia Mönchengladbach,,1. FC Union Berlin,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-6a1a8027e300caba1ce6d1ef,BUNDESLIGA,2022-23,2023-04-23T12:00:00Z,Matchday 29,,SC Freiburg,,FC Schalke 04,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-7bd8497b2d0e08399910d269,BUNDESLIGA,2022-23,2023-04-23T12:00:00Z,Matchday 29,,Bayer 04 Leverkusen,,RB Leipzig,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-feb655ded77d63611d07cbf1,BUNDESLIGA,2022-23,2023-04-28T12:00:00Z,Matchday 30,,VfL Bochum 1848,,Borussia Dortmund,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2b72f9d3f6eba1c6923ebcc3,BUNDESLIGA,2022-23,2023-04-29T12:00:00Z,Matchday 30,,1. FC Union Berlin,,Bayer 04 Leverkusen,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-3e936a1baf2b0c67c246a616,BUNDESLIGA,2022-23,2023-04-29T12:00:00Z,Matchday 30,,RB Leipzig,,TSG 1899 Hoffenheim,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-4701b3e3df59e8fea942ebc2,BUNDESLIGA,2022-23,2023-04-29T12:00:00Z,Matchday 30,,FC Schalke 04,,SV Werder Bremen,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-82d37c17773d7394c7081a27,BUNDESLIGA,2022-23,2023-04-29T12:00:00Z,Matchday 30,,1. FC Köln,,SC Freiburg,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-947d7ce74ee32893fa047793,BUNDESLIGA,2022-23,2023-04-29T12:00:00Z,Matchday 30,,VfB Stuttgart,,Borussia Mönchengladbach,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b619f2f336fe0469e6408363,BUNDESLIGA,2022-23,2023-04-29T12:00:00Z,Matchday 30,,Eintracht Frankfurt,,FC Augsburg,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-711be41f0f009ccabaab65be,BUNDESLIGA,2022-23,2023-04-30T12:00:00Z,Matchday 30,,FC Bayern München,,Hertha BSC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ea1570ac74b49049c659abdf,BUNDESLIGA,2022-23,2023-04-30T12:00:00Z,Matchday 30,,VfL Wolfsburg,,1. FSV Mainz 05,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-007f792d90aec5e5cb0bf28d,BUNDESLIGA,2022-23,2023-05-05T12:00:00Z,Matchday 31,,Bayer 04 Leverkusen,,1. FC Köln,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-af0e491b5a5fe22b34979e0e,BUNDESLIGA,2022-23,2023-05-05T12:00:00Z,Matchday 31,,1. FSV Mainz 05,,FC Schalke 04,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-05086b956bca8af33f0f307a,BUNDESLIGA,2022-23,2023-05-06T12:00:00Z,Matchday 31,,FC Augsburg,,1. FC Union Berlin,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-16868a9e81ad685f50ea77d8,BUNDESLIGA,2022-23,2023-05-06T12:00:00Z,Matchday 31,,Hertha BSC,,VfB Stuttgart,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-6dcbc88aa6789d7ba574be56,BUNDESLIGA,2022-23,2023-05-06T12:00:00Z,Matchday 31,,Borussia Mönchengladbach,,VfL Bochum 1848,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-79d0352ec9a46cd28ee05613,BUNDESLIGA,2022-23,2023-05-06T12:00:00Z,Matchday 31,,SC Freiburg,,RB Leipzig,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-80ac7061cbd59e007b7ef7e9,BUNDESLIGA,2022-23,2023-05-06T12:00:00Z,Matchday 31,,SV Werder Bremen,,FC Bayern München,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ee1730b36ef7c47a5a132bbf,BUNDESLIGA,2022-23,2023-05-06T12:00:00Z,Matchday 31,,TSG 1899 Hoffenheim,,Eintracht Frankfurt,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-dd6a6a11237d8fd1b8ec57ea,BUNDESLIGA,2022-23,2023-05-07T12:00:00Z,Matchday 31,,Borussia Dortmund,,VfL Wolfsburg,,6,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e18c51f67f3b403149f39132,BUNDESLIGA,2022-23,2023-05-12T12:00:00Z,Matchday 32,,1. FC Köln,,Hertha BSC,,5,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-4b1e0a3b3bd9fb65ff563c59,BUNDESLIGA,2022-23,2023-05-13T12:00:00Z,Matchday 32,,FC Bayern München,,FC Schalke 04,,6,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5809536066e3141e30dff07b,BUNDESLIGA,2022-23,2023-05-13T12:00:00Z,Matchday 32,,Borussia Dortmund,,Borussia Mönchengladbach,,5,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-6e1ad0c9f55436bcbdb495d3,BUNDESLIGA,2022-23,2023-05-13T12:00:00Z,Matchday 32,,Eintracht Frankfurt,,1. FSV Mainz 05,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c02d6d7cabd2284f24fcaa7c,BUNDESLIGA,2022-23,2023-05-13T12:00:00Z,Matchday 32,,VfL Bochum 1848,,FC Augsburg,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-fc1c81f7db493e45d8624b2d,BUNDESLIGA,2022-23,2023-05-13T12:00:00Z,Matchday 32,,VfL Wolfsburg,,TSG 1899 Hoffenheim,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ff0d2e11d0f1698eafcdf223,BUNDESLIGA,2022-23,2023-05-13T12:00:00Z,Matchday 32,,1. FC Union Berlin,,SC Freiburg,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-02478d1b7b6ceb8d44d6058b,BUNDESLIGA,2022-23,2023-05-14T12:00:00Z,Matchday 32,,VfB Stuttgart,,Bayer 04 Leverkusen,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-50c3ee31b701110a183b8859,BUNDESLIGA,2022-23,2023-05-14T12:00:00Z,Matchday 32,,RB Leipzig,,SV Werder Bremen,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-66eddaf4b1fa0caa4ad85fde,BUNDESLIGA,2022-23,2023-05-19T12:00:00Z,Matchday 33,,SC Freiburg,,VfL Wolfsburg,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-3b276794144c557ef7607524,BUNDESLIGA,2022-23,2023-05-20T12:00:00Z,Matchday 33,,FC Bayern München,,RB Leipzig,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-6cb938329403ac10a2c43c88,BUNDESLIGA,2022-23,2023-05-20T12:00:00Z,Matchday 33,,TSG 1899 Hoffenheim,,1. FC Union Berlin,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a0f26264bbaa8e98e23dce4b,BUNDESLIGA,2022-23,2023-05-20T12:00:00Z,Matchday 33,,Hertha BSC,,VfL Bochum 1848,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c5407573ce7b7896cb8916c2,BUNDESLIGA,2022-23,2023-05-20T12:00:00Z,Matchday 33,,FC Schalke 04,,Eintracht Frankfurt,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e16cb2686809ee31a827d68e,BUNDESLIGA,2022-23,2023-05-20T12:00:00Z,Matchday 33,,SV Werder Bremen,,1. FC Köln,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-3ae3768b75f3636ebf95613a,BUNDESLIGA,2022-23,2023-05-21T12:00:00Z,Matchday 33,,Bayer 04 Leverkusen,,Borussia Mönchengladbach,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-615c670fcf3c66c735c3efce,BUNDESLIGA,2022-23,2023-05-21T12:00:00Z,Matchday 33,,1. FSV Mainz 05,,VfB Stuttgart,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-7197d582acccc8f98a5c8b69,BUNDESLIGA,2022-23,2023-05-21T12:00:00Z,Matchday 33,,FC Augsburg,,Borussia Dortmund,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-09a58f738cde6985134c0ef3,BUNDESLIGA,2022-23,2023-05-27T12:00:00Z,Matchday 34,,1. FC Union Berlin,,SV Werder Bremen,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-0f4102b47c7469d53ba7aaef,BUNDESLIGA,2022-23,2023-05-27T12:00:00Z,Matchday 34,,Borussia Dortmund,,1. FSV Mainz 05,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-16380c2bb4c04d586b8f2171,BUNDESLIGA,2022-23,2023-05-27T12:00:00Z,Matchday 34,,VfL Bochum 1848,,Bayer 04 Leverkusen,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-1e7594a4873798a54e413e5e,BUNDESLIGA,2022-23,2023-05-27T12:00:00Z,Matchday 34,,VfL Wolfsburg,,Hertha BSC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-3b8519c1776782adab05ae4b,BUNDESLIGA,2022-23,2023-05-27T12:00:00Z,Matchday 34,,RB Leipzig,,FC Schalke 04,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-7339816ea630496b044cc621,BUNDESLIGA,2022-23,2023-05-27T12:00:00Z,Matchday 34,,Borussia Mönchengladbach,,FC Augsburg,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-807370ec4cb4097d202990ae,BUNDESLIGA,2022-23,2023-05-27T12:00:00Z,Matchday 34,,Eintracht Frankfurt,,SC Freiburg,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-8a0cb277d14e827cceeb62cd,BUNDESLIGA,2022-23,2023-05-27T12:00:00Z,Matchday 34,,VfB Stuttgart,,TSG 1899 Hoffenheim,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a87b8b676e6f6b87fabc1d1b,BUNDESLIGA,2022-23,2023-05-27T12:00:00Z,Matchday 34,,1. FC Köln,,FC Bayern München,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00

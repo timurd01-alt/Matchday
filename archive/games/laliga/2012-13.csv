@@ -1,0 +1,381 @@
+game_id,comp,season,date_utc,stage,venue,home_name,home_code,away_name,away_code,home_score,away_score,status,source,first_seen
+laliga-openfootball-5abc82a4526c7f73a0430217,LALIGA,2012-13,2012-08-18T12:00:00Z,Matchday 1,,RC Celta,,Málaga CF,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-c007e01685f378ed6bcec2eb,LALIGA,2012-13,2012-08-18T12:00:00Z,Matchday 1,,RCD Mallorca,,Espanyol Barcelona,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-dbe4fe093676e5ff9e387abe,LALIGA,2012-13,2012-08-18T12:00:00Z,Matchday 1,,Sevilla FC,,Getafe CF,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-05971a43ea3e1d5740af4c9b,LALIGA,2012-13,2012-08-19T12:00:00Z,Matchday 1,,Real Madrid,,Valencia CF,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-8cd02b714a2cdf075312c724,LALIGA,2012-13,2012-08-19T12:00:00Z,Matchday 1,,FC Barcelona,,Real Sociedad,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-f9601bcb34c72a270a531639,LALIGA,2012-13,2012-08-19T12:00:00Z,Matchday 1,,Levante UD,,Atlético Madrid,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-ff6535c7dd3cc4c83f316c61,LALIGA,2012-13,2012-08-19T12:00:00Z,Matchday 1,,Athletic Club,,Real Betis,,3,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-894bc8d1b3176bb68b0cdac3,LALIGA,2012-13,2012-08-20T12:00:00Z,Matchday 1,,Real Zaragoza,,Real Valladolid,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-b241f2a74b720a9f2205d8d5,LALIGA,2012-13,2012-08-20T12:00:00Z,Matchday 1,,Rayo Vallecano,,Granada CF,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-b4f3c27df412bff6c4f02ed1,LALIGA,2012-13,2012-08-20T12:00:00Z,Matchday 1,,Deportivo La Coruña,,CA Osasuna,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-03f4095c9587479db91aaed7,LALIGA,2012-13,2012-08-25T12:00:00Z,Matchday 2,,Málaga CF,,RCD Mallorca,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-0c4e5f2c405db7a6053a6b66,LALIGA,2012-13,2012-08-25T12:00:00Z,Matchday 2,,Espanyol Barcelona,,Real Zaragoza,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-622aa6eaf2d5cd72ff683fb4,LALIGA,2012-13,2012-08-25T12:00:00Z,Matchday 2,,Real Sociedad,,RC Celta,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-67de3a55520a6ed802706bde,LALIGA,2012-13,2012-08-25T12:00:00Z,Matchday 2,,Real Betis,,Rayo Vallecano,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-4df798b6fe062a78131b8b8e,LALIGA,2012-13,2012-08-26T12:00:00Z,Matchday 2,,Granada CF,,Sevilla FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-4f1e0f948cca828c57c731d4,LALIGA,2012-13,2012-08-26T12:00:00Z,Matchday 2,,Getafe CF,,Real Madrid,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-744b12019a7c8a7b3e07f730,LALIGA,2012-13,2012-08-26T12:00:00Z,Matchday 2,,CA Osasuna,,FC Barcelona,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-fc3d8a8172d82c4b3882996d,LALIGA,2012-13,2012-08-26T12:00:00Z,Matchday 2,,Valencia CF,,Deportivo La Coruña,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-0ee0161b977b460ba32d0cd4,LALIGA,2012-13,2012-08-27T12:00:00Z,Matchday 2,,Atlético Madrid,,Athletic Club,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-339fd62a0d976ef69f9a53cb,LALIGA,2012-13,2012-08-27T12:00:00Z,Matchday 2,,Real Valladolid,,Levante UD,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-55de62beebff372fc8e97c3d,LALIGA,2012-13,2012-09-01T12:00:00Z,Matchday 3,,Deportivo La Coruña,,Getafe CF,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-6b1e62fdffefee3cc99dbc33,LALIGA,2012-13,2012-09-01T12:00:00Z,Matchday 3,,RCD Mallorca,,Real Sociedad,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-7b3849d23de25aac8186dea0,LALIGA,2012-13,2012-09-01T12:00:00Z,Matchday 3,,Real Zaragoza,,Málaga CF,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-db9237aeb17042da228428c8,LALIGA,2012-13,2012-09-01T12:00:00Z,Matchday 3,,RC Celta,,CA Osasuna,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-110c1990cf4b18f58d66f65c,LALIGA,2012-13,2012-09-02T12:00:00Z,Matchday 3,,Athletic Club,,Real Valladolid,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-358ba66f9c11f007179d4c30,LALIGA,2012-13,2012-09-02T12:00:00Z,Matchday 3,,Levante UD,,Espanyol Barcelona,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-4f68b9d2263308050c70cd56,LALIGA,2012-13,2012-09-02T12:00:00Z,Matchday 3,,Rayo Vallecano,,Sevilla FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-8d5ad0a79e4391e10aee19c1,LALIGA,2012-13,2012-09-02T12:00:00Z,Matchday 3,,FC Barcelona,,Valencia CF,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-ed8b010b44b280170d29b81a,LALIGA,2012-13,2012-09-02T12:00:00Z,Matchday 3,,Real Madrid,,Granada CF,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-1a3bd460eabd28425c1ba60f,LALIGA,2012-13,2012-09-15T12:00:00Z,Matchday 4,,Getafe CF,,FC Barcelona,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-557306a58147dfecf5e1f69b,LALIGA,2012-13,2012-09-15T12:00:00Z,Matchday 4,,Valencia CF,,RC Celta,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-6c4c9eed79d0474a6e3c3871,LALIGA,2012-13,2012-09-15T12:00:00Z,Matchday 4,,Málaga CF,,Levante UD,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-85bd481ad416ef6553208235,LALIGA,2012-13,2012-09-15T12:00:00Z,Matchday 4,,Sevilla FC,,Real Madrid,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-3ab13445cf80b1f81d4c86f2,LALIGA,2012-13,2012-09-16T12:00:00Z,Matchday 4,,Granada CF,,Deportivo La Coruña,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-43a503ce3e1498c5f85eba46,LALIGA,2012-13,2012-09-16T12:00:00Z,Matchday 4,,CA Osasuna,,RCD Mallorca,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-78f9ff8afdb0abbf68e2426a,LALIGA,2012-13,2012-09-16T12:00:00Z,Matchday 4,,Atlético Madrid,,Rayo Vallecano,,4,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-e2c6e078811d6e9fd7eeb403,LALIGA,2012-13,2012-09-16T12:00:00Z,Matchday 4,,Espanyol Barcelona,,Athletic Club,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-ea0d03af32dd4faf53d0a582,LALIGA,2012-13,2012-09-16T12:00:00Z,Matchday 4,,Real Sociedad,,Real Zaragoza,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-96765c8da61c1ddd1f36f8d3,LALIGA,2012-13,2012-09-17T12:00:00Z,Matchday 4,,Real Valladolid,,Real Betis,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-3c797fb06241910462ae31db,LALIGA,2012-13,2012-09-22T12:00:00Z,Matchday 5,,Real Betis,,Espanyol Barcelona,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-4c253185dda520c943cf35cd,LALIGA,2012-13,2012-09-22T12:00:00Z,Matchday 5,,FC Barcelona,,Granada CF,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-ad8760d2613183e34eaff1e5,LALIGA,2012-13,2012-09-22T12:00:00Z,Matchday 5,,RC Celta,,Getafe CF,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-cbfee27967830c3baf3e55b0,LALIGA,2012-13,2012-09-22T12:00:00Z,Matchday 5,,Real Zaragoza,,CA Osasuna,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-04ca40d3fd5d0d6d69633079,LALIGA,2012-13,2012-09-23T12:00:00Z,Matchday 5,,Levante UD,,Real Sociedad,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-2354921ad530ccae5a96fb47,LALIGA,2012-13,2012-09-23T12:00:00Z,Matchday 5,,RCD Mallorca,,Valencia CF,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-6234cb70126bb8514ebc6eb2,LALIGA,2012-13,2012-09-23T12:00:00Z,Matchday 5,,Athletic Club,,Málaga CF,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-f535bd8a46cdce9195a4a505,LALIGA,2012-13,2012-09-23T12:00:00Z,Matchday 5,,Atlético Madrid,,Real Valladolid,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-068f00257e114ef160637622,LALIGA,2012-13,2012-09-24T12:00:00Z,Matchday 5,,Rayo Vallecano,,Real Madrid,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-b723a62cba8abf313a4be719,LALIGA,2012-13,2012-09-24T12:00:00Z,Matchday 5,,Deportivo La Coruña,,Sevilla FC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-aabf1055caafe1ae3ed5a2f1,LALIGA,2012-13,2012-09-26T12:00:00Z,Matchday 3,,Real Betis,,Atlético Madrid,,2,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-093021b1a613e819d325c727,LALIGA,2012-13,2012-09-29T12:00:00Z,Matchday 6,,Málaga CF,,Real Betis,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-53a30cfccb0a8802a09b0c72,LALIGA,2012-13,2012-09-29T12:00:00Z,Matchday 6,,Real Sociedad,,Athletic Club,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-b1dcfeea922f12559a78b111,LALIGA,2012-13,2012-09-29T12:00:00Z,Matchday 6,,Valencia CF,,Real Zaragoza,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-fde0252f26d31f2b51ab4e7c,LALIGA,2012-13,2012-09-29T12:00:00Z,Matchday 6,,Sevilla FC,,FC Barcelona,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-51c07fd3349033e05fc234ec,LALIGA,2012-13,2012-09-30T12:00:00Z,Matchday 6,,Real Valladolid,,Rayo Vallecano,,6,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-7ebab30fe728d81b6b0e135b,LALIGA,2012-13,2012-09-30T12:00:00Z,Matchday 6,,Granada CF,,RC Celta,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-cb284a8d0c10b8f425b3a326,LALIGA,2012-13,2012-09-30T12:00:00Z,Matchday 6,,CA Osasuna,,Levante UD,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-edbce1cc7e62e53a75afdf86,LALIGA,2012-13,2012-09-30T12:00:00Z,Matchday 6,,Real Madrid,,Deportivo La Coruña,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-f64e2ce46f677d47c8e6c6aa,LALIGA,2012-13,2012-09-30T12:00:00Z,Matchday 6,,Espanyol Barcelona,,Atlético Madrid,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-2e1c65fbf5789912d8c537c3,LALIGA,2012-13,2012-10-01T12:00:00Z,Matchday 6,,Getafe CF,,RCD Mallorca,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-253e610c2c915db5bf7a0c0a,LALIGA,2012-13,2012-10-05T12:00:00Z,Matchday 7,,RC Celta,,Sevilla FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-63230dfd73fc976062706a27,LALIGA,2012-13,2012-10-06T12:00:00Z,Matchday 7,,Real Valladolid,,Espanyol Barcelona,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-93d3cd4b74db8e7cf2c4f9e4,LALIGA,2012-13,2012-10-06T12:00:00Z,Matchday 7,,Rayo Vallecano,,Deportivo La Coruña,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-99b05ffdd2d2764b261b1538,LALIGA,2012-13,2012-10-06T12:00:00Z,Matchday 7,,Real Betis,,Real Sociedad,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-da7b162fa8669454c36fca5a,LALIGA,2012-13,2012-10-06T12:00:00Z,Matchday 7,,Real Zaragoza,,Getafe CF,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-2a24539b4fe3adbe28adafdf,LALIGA,2012-13,2012-10-07T12:00:00Z,Matchday 7,,Athletic Club,,CA Osasuna,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-3d3a26f8ed4407e5f82afe3b,LALIGA,2012-13,2012-10-07T12:00:00Z,Matchday 7,,RCD Mallorca,,Granada CF,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-53eb5974a1004edc5264f155,LALIGA,2012-13,2012-10-07T12:00:00Z,Matchday 7,,Atlético Madrid,,Málaga CF,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-cb3c4af813cbaf1bfef9f4b7,LALIGA,2012-13,2012-10-07T12:00:00Z,Matchday 7,,Levante UD,,Valencia CF,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-fe6bce0e323a3616b71d155e,LALIGA,2012-13,2012-10-07T12:00:00Z,Matchday 7,,FC Barcelona,,Real Madrid,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-177ccaf51746b278e90ff2bd,LALIGA,2012-13,2012-10-20T12:00:00Z,Matchday 8,,Deportivo La Coruña,,FC Barcelona,,4,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-2cf22d708b3eccb700dc2659,LALIGA,2012-13,2012-10-20T12:00:00Z,Matchday 8,,Valencia CF,,Athletic Club,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-729951788ced2d5b47520d90,LALIGA,2012-13,2012-10-20T12:00:00Z,Matchday 8,,Real Madrid,,RC Celta,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-a77b372c779e0a308422fa37,LALIGA,2012-13,2012-10-20T12:00:00Z,Matchday 8,,Málaga CF,,Real Valladolid,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-5b53a12db7cd70b0fb431ab5,LALIGA,2012-13,2012-10-21T12:00:00Z,Matchday 8,,Espanyol Barcelona,,Rayo Vallecano,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-8b8c0e36c589921aea447ac4,LALIGA,2012-13,2012-10-21T12:00:00Z,Matchday 8,,Getafe CF,,Levante UD,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-99e79e7fda367b800cf7826a,LALIGA,2012-13,2012-10-21T12:00:00Z,Matchday 8,,Granada CF,,Real Zaragoza,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-9fc8c772e19d6c41ebf66ca3,LALIGA,2012-13,2012-10-21T12:00:00Z,Matchday 8,,CA Osasuna,,Real Betis,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-aa2e32731d9ab806e110b32e,LALIGA,2012-13,2012-10-21T12:00:00Z,Matchday 8,,Real Sociedad,,Atlético Madrid,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-7e1bcfaac925061af0452312,LALIGA,2012-13,2012-10-22T12:00:00Z,Matchday 8,,Sevilla FC,,RCD Mallorca,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-091d0e6adb72a41d41748bce,LALIGA,2012-13,2012-10-27T12:00:00Z,Matchday 9,,RC Celta,,Deportivo La Coruña,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-2eb6c1dc5e46c5997ee8f290,LALIGA,2012-13,2012-10-27T12:00:00Z,Matchday 9,,Espanyol Barcelona,,Málaga CF,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-d29cf553d2e573e0483d0dc6,LALIGA,2012-13,2012-10-27T12:00:00Z,Matchday 9,,Rayo Vallecano,,FC Barcelona,,0,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-f66f7bd976e660796a60dabb,LALIGA,2012-13,2012-10-27T12:00:00Z,Matchday 9,,Real Betis,,Valencia CF,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-119f5965a6ce1340a79464ff,LALIGA,2012-13,2012-10-28T12:00:00Z,Matchday 9,,Levante UD,,Granada CF,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-198d700236ade4441889d9a9,LALIGA,2012-13,2012-10-28T12:00:00Z,Matchday 9,,Athletic Club,,Getafe CF,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-222ef626d7b302b657ca7fa9,LALIGA,2012-13,2012-10-28T12:00:00Z,Matchday 9,,Atlético Madrid,,CA Osasuna,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-2d5742d9bf267f0c02c4c3f4,LALIGA,2012-13,2012-10-28T12:00:00Z,Matchday 9,,RCD Mallorca,,Real Madrid,,0,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-3c04e43bbb7d5c11cd049178,LALIGA,2012-13,2012-10-28T12:00:00Z,Matchday 9,,Real Zaragoza,,Sevilla FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-ae9c2a9464b7e8af697ceeb9,LALIGA,2012-13,2012-10-29T12:00:00Z,Matchday 9,,Real Valladolid,,Real Sociedad,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-180cbf037e336517640fc544,LALIGA,2012-13,2012-11-03T12:00:00Z,Matchday 10,,Málaga CF,,Rayo Vallecano,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-7622ad5ad29efcd37e544a99,LALIGA,2012-13,2012-11-03T12:00:00Z,Matchday 10,,Real Madrid,,Real Zaragoza,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-98ecd670f2b46c99e8d3bfda,LALIGA,2012-13,2012-11-03T12:00:00Z,Matchday 10,,Valencia CF,,Atlético Madrid,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-a1f2c8345a75d0372afaec8b,LALIGA,2012-13,2012-11-03T12:00:00Z,Matchday 10,,FC Barcelona,,RC Celta,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-07ea3424d4c3c3b29908cbf3,LALIGA,2012-13,2012-11-04T12:00:00Z,Matchday 10,,Deportivo La Coruña,,RCD Mallorca,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-42eadda68103e48280d608f8,LALIGA,2012-13,2012-11-04T12:00:00Z,Matchday 10,,Sevilla FC,,Levante UD,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-6145e0c6e35cf813d88ee1d3,LALIGA,2012-13,2012-11-04T12:00:00Z,Matchday 10,,Real Sociedad,,Espanyol Barcelona,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-95aeb3af07568f1e94c5cfd7,LALIGA,2012-13,2012-11-04T12:00:00Z,Matchday 10,,CA Osasuna,,Real Valladolid,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-f75efb51851e41694bcb6b99,LALIGA,2012-13,2012-11-04T12:00:00Z,Matchday 10,,Granada CF,,Athletic Club,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-d744ca838840774782962d92,LALIGA,2012-13,2012-11-05T12:00:00Z,Matchday 10,,Getafe CF,,Real Betis,,2,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-7d04caf2abbe691f768a63a6,LALIGA,2012-13,2012-11-09T12:00:00Z,Matchday 11,,Real Betis,,Granada CF,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-830a2095ebbe3dfb8443c24e,LALIGA,2012-13,2012-11-10T12:00:00Z,Matchday 11,,Espanyol Barcelona,,CA Osasuna,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-9b17da33ab82b10ea561c757,LALIGA,2012-13,2012-11-10T12:00:00Z,Matchday 11,,Real Zaragoza,,Deportivo La Coruña,,5,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-be08c894b3cff3da4913f453,LALIGA,2012-13,2012-11-10T12:00:00Z,Matchday 11,,Rayo Vallecano,,RC Celta,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-c3b32d6830baf881f6e94d35,LALIGA,2012-13,2012-11-10T12:00:00Z,Matchday 11,,Málaga CF,,Real Sociedad,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-15582349b5ba6ab321638569,LALIGA,2012-13,2012-11-11T12:00:00Z,Matchday 11,,Athletic Club,,Sevilla FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-1969519a226c1d0350fa2342,LALIGA,2012-13,2012-11-11T12:00:00Z,Matchday 11,,RCD Mallorca,,FC Barcelona,,2,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-2d69e0d3d1d527ce76ea1e91,LALIGA,2012-13,2012-11-11T12:00:00Z,Matchday 11,,Atlético Madrid,,Getafe CF,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-ad1472e1741a67e0d5f2dc09,LALIGA,2012-13,2012-11-11T12:00:00Z,Matchday 11,,Levante UD,,Real Madrid,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-bed44b9200c8bb5ef5715fe0,LALIGA,2012-13,2012-11-11T12:00:00Z,Matchday 11,,Real Valladolid,,Valencia CF,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-205d80ad977cae19ee89d222,LALIGA,2012-13,2012-11-17T12:00:00Z,Matchday 12,,Valencia CF,,Espanyol Barcelona,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-271123204d8fa5de8369e228,LALIGA,2012-13,2012-11-17T12:00:00Z,Matchday 12,,FC Barcelona,,Real Zaragoza,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-7af82504bd4ca0764079dc11,LALIGA,2012-13,2012-11-17T12:00:00Z,Matchday 12,,Real Madrid,,Athletic Club,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-bf84464539d4ddc86592d613,LALIGA,2012-13,2012-11-17T12:00:00Z,Matchday 12,,CA Osasuna,,Málaga CF,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-11adbc3605bfd682d9a92390,LALIGA,2012-13,2012-11-18T12:00:00Z,Matchday 12,,Granada CF,,Atlético Madrid,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-4344deb9c021c94ff3b0d4c0,LALIGA,2012-13,2012-11-18T12:00:00Z,Matchday 12,,Sevilla FC,,Real Betis,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-7bcd819748e371de8f26b13c,LALIGA,2012-13,2012-11-18T12:00:00Z,Matchday 12,,RC Celta,,RCD Mallorca,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-848fef9b74395fbebcb99f5c,LALIGA,2012-13,2012-11-18T12:00:00Z,Matchday 12,,Deportivo La Coruña,,Levante UD,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-deda776b74d71001fe335185,LALIGA,2012-13,2012-11-18T12:00:00Z,Matchday 12,,Getafe CF,,Real Valladolid,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-46ba237a4fb786d0c83bb801,LALIGA,2012-13,2012-11-19T12:00:00Z,Matchday 12,,Real Sociedad,,Rayo Vallecano,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-7aa8caba0d76ee92430ee707,LALIGA,2012-13,2012-11-23T12:00:00Z,Matchday 13,,Real Sociedad,,CA Osasuna,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-4390defcb803fdefb5fdb9dc,LALIGA,2012-13,2012-11-24T12:00:00Z,Matchday 13,,Málaga CF,,Valencia CF,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-8fe535234ac0e7a4bdfbfd6b,LALIGA,2012-13,2012-11-24T12:00:00Z,Matchday 13,,Real Valladolid,,Granada CF,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-c06099d9aaa0f4c8dc51f877,LALIGA,2012-13,2012-11-24T12:00:00Z,Matchday 13,,Rayo Vallecano,,RCD Mallorca,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-daba572b866e3b3c9825c9f1,LALIGA,2012-13,2012-11-24T12:00:00Z,Matchday 13,,Real Betis,,Real Madrid,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-20d62d81511c059cd22ab485,LALIGA,2012-13,2012-11-25T12:00:00Z,Matchday 13,,Atlético Madrid,,Sevilla FC,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-4b4931a1dc179be592c8aece,LALIGA,2012-13,2012-11-25T12:00:00Z,Matchday 13,,Espanyol Barcelona,,Getafe CF,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-7ea0c815a3e5767c1e745821,LALIGA,2012-13,2012-11-25T12:00:00Z,Matchday 13,,Athletic Club,,Deportivo La Coruña,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-b4e7c6b56a4b36be80bfe20e,LALIGA,2012-13,2012-11-25T12:00:00Z,Matchday 13,,Levante UD,,FC Barcelona,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-552398570fe98c003cf0f6c1,LALIGA,2012-13,2012-11-26T12:00:00Z,Matchday 13,,Real Zaragoza,,RC Celta,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-e6aea7131756ebcd002c3e39,LALIGA,2012-13,2012-11-30T12:00:00Z,Matchday 14,,CA Osasuna,,Rayo Vallecano,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-2e85c62c7587f751e7ca7dfd,LALIGA,2012-13,2012-12-01T12:00:00Z,Matchday 14,,FC Barcelona,,Athletic Club,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-797973c13b5f80e8e8ec7487,LALIGA,2012-13,2012-12-01T12:00:00Z,Matchday 14,,Real Madrid,,Atlético Madrid,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-9ff963e6ed33d54a6691f9f0,LALIGA,2012-13,2012-12-01T12:00:00Z,Matchday 14,,Getafe CF,,Málaga CF,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-b23aef86291ac98b4b95f9df,LALIGA,2012-13,2012-12-01T12:00:00Z,Matchday 14,,Valencia CF,,Real Sociedad,,2,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-1b533e6ff03de2a416ec110e,LALIGA,2012-13,2012-12-02T12:00:00Z,Matchday 14,,Deportivo La Coruña,,Real Betis,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-404edd529c485dc0f9490710,LALIGA,2012-13,2012-12-02T12:00:00Z,Matchday 14,,RCD Mallorca,,Real Zaragoza,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-82ba4ba76c17f25c50e10e10,LALIGA,2012-13,2012-12-02T12:00:00Z,Matchday 14,,Granada CF,,Espanyol Barcelona,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-a88fecd4810c64748090fb26,LALIGA,2012-13,2012-12-02T12:00:00Z,Matchday 14,,RC Celta,,Levante UD,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-79e0d0025c5543955792a4db,LALIGA,2012-13,2012-12-03T12:00:00Z,Matchday 14,,Sevilla FC,,Real Valladolid,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-5919441d2882c30fab1bb3b3,LALIGA,2012-13,2012-12-07T12:00:00Z,Matchday 15,,Espanyol Barcelona,,Sevilla FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-00fbe43d63a89255e128bd25,LALIGA,2012-13,2012-12-08T12:00:00Z,Matchday 15,,CA Osasuna,,Valencia CF,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-0f48eeb3b63a007f4def0015,LALIGA,2012-13,2012-12-08T12:00:00Z,Matchday 15,,Real Sociedad,,Getafe CF,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-37481db5e40f171c4f7907d0,LALIGA,2012-13,2012-12-08T12:00:00Z,Matchday 15,,Real Valladolid,,Real Madrid,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-c8441f35cb309378d7042de1,LALIGA,2012-13,2012-12-08T12:00:00Z,Matchday 15,,Málaga CF,,Granada CF,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-378f59c73365874d7cea5e77,LALIGA,2012-13,2012-12-09T12:00:00Z,Matchday 15,,Levante UD,,RCD Mallorca,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-6ed822b82ef5f82b0b02d594,LALIGA,2012-13,2012-12-09T12:00:00Z,Matchday 15,,Athletic Club,,RC Celta,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-9917d110ddce0e4f5746e608,LALIGA,2012-13,2012-12-09T12:00:00Z,Matchday 15,,Atlético Madrid,,Deportivo La Coruña,,6,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-f17a6a2c1a6afebfe82adae6,LALIGA,2012-13,2012-12-09T12:00:00Z,Matchday 15,,Real Betis,,FC Barcelona,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-f19d025f771fe808bd853d25,LALIGA,2012-13,2012-12-10T12:00:00Z,Matchday 15,,Rayo Vallecano,,Real Zaragoza,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-44ad40db411bfd919e27ea3f,LALIGA,2012-13,2012-12-15T12:00:00Z,Matchday 16,,Getafe CF,,CA Osasuna,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-86bc80cbda51fbebad93b295,LALIGA,2012-13,2012-12-15T12:00:00Z,Matchday 16,,Granada CF,,Real Sociedad,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-c36e3148ae8a399aa35a5475,LALIGA,2012-13,2012-12-15T12:00:00Z,Matchday 16,,Sevilla FC,,Málaga CF,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-db8067e3cc8e6bff436c82fe,LALIGA,2012-13,2012-12-15T12:00:00Z,Matchday 16,,RCD Mallorca,,Athletic Club,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-66078e13f7fb833f1f70c4f8,LALIGA,2012-13,2012-12-16T12:00:00Z,Matchday 16,,Real Zaragoza,,Levante UD,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-9a146f74625abf565c3ffa40,LALIGA,2012-13,2012-12-16T12:00:00Z,Matchday 16,,Valencia CF,,Rayo Vallecano,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-b49cc0b03eb3b7d4bc69dfd0,LALIGA,2012-13,2012-12-16T12:00:00Z,Matchday 16,,Real Madrid,,Espanyol Barcelona,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-f669ae3fb1bdf26e0f298c70,LALIGA,2012-13,2012-12-16T12:00:00Z,Matchday 16,,FC Barcelona,,Atlético Madrid,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-18644ca45f28bcb4b7414807,LALIGA,2012-13,2012-12-17T12:00:00Z,Matchday 16,,Deportivo La Coruña,,Real Valladolid,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-3618d0fc6461a6a2dd5d01c5,LALIGA,2012-13,2012-12-17T12:00:00Z,Matchday 16,,RC Celta,,Real Betis,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-66df3a4172ea0606c8d05683,LALIGA,2012-13,2012-12-20T12:00:00Z,Matchday 17,,Real Sociedad,,Sevilla FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-aa820274416e18d765ab4fc3,LALIGA,2012-13,2012-12-20T12:00:00Z,Matchday 17,,Rayo Vallecano,,Levante UD,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-d92c953a2c5065bee9083c05,LALIGA,2012-13,2012-12-20T12:00:00Z,Matchday 17,,Espanyol Barcelona,,Deportivo La Coruña,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-3c5ffceacba75953ebb5b9e5,LALIGA,2012-13,2012-12-21T12:00:00Z,Matchday 17,,Valencia CF,,Getafe CF,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-77b81de117ecd780fd48314a,LALIGA,2012-13,2012-12-21T12:00:00Z,Matchday 17,,Atlético Madrid,,RC Celta,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-27a00cc3f0d4d2605f7e4d58,LALIGA,2012-13,2012-12-22T12:00:00Z,Matchday 17,,Real Betis,,RCD Mallorca,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-3d0b430eb709ddcff13e8768,LALIGA,2012-13,2012-12-22T12:00:00Z,Matchday 17,,Málaga CF,,Real Madrid,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-773ed64bf74d3e6c148635cc,LALIGA,2012-13,2012-12-22T12:00:00Z,Matchday 17,,CA Osasuna,,Granada CF,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-a84b592a1d1be42d23dd154c,LALIGA,2012-13,2012-12-22T12:00:00Z,Matchday 17,,Athletic Club,,Real Zaragoza,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-b4984310b9960154de79db71,LALIGA,2012-13,2012-12-22T12:00:00Z,Matchday 17,,Real Valladolid,,FC Barcelona,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-de7d2b269eb694c17d1f589c,LALIGA,2012-13,2013-01-04T12:00:00Z,Matchday 18,,Real Zaragoza,,Real Betis,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-0aa42c8fe048339fbebe8db5,LALIGA,2012-13,2013-01-05T12:00:00Z,Matchday 18,,Deportivo La Coruña,,Málaga CF,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-43c09e6d119811feb6fb5f7e,LALIGA,2012-13,2013-01-05T12:00:00Z,Matchday 18,,Granada CF,,Valencia CF,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-886c63f24d2cd92428591282,LALIGA,2012-13,2013-01-05T12:00:00Z,Matchday 18,,Levante UD,,Athletic Club,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-91d19522bee0094261df6a9a,LALIGA,2012-13,2013-01-05T12:00:00Z,Matchday 18,,Sevilla FC,,CA Osasuna,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-513c64c49591a390083e303e,LALIGA,2012-13,2013-01-06T12:00:00Z,Matchday 18,,Real Madrid,,Real Sociedad,,4,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-685361579a009c100e2ed412,LALIGA,2012-13,2013-01-06T12:00:00Z,Matchday 18,,RC Celta,,Real Valladolid,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-a7ab921ff99e0af7bc773b0b,LALIGA,2012-13,2013-01-06T12:00:00Z,Matchday 18,,FC Barcelona,,Espanyol Barcelona,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-ab2bdb4afe9d77dc41fff4f9,LALIGA,2012-13,2013-01-06T12:00:00Z,Matchday 18,,RCD Mallorca,,Atlético Madrid,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-9639c90a3158c04babf7ffe1,LALIGA,2012-13,2013-01-07T12:00:00Z,Matchday 18,,Rayo Vallecano,,Getafe CF,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-dfc54327c85247fb12624e86,LALIGA,2012-13,2013-01-11T12:00:00Z,Matchday 19,,Athletic Club,,Rayo Vallecano,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-05737b163b8c327eac80f2b9,LALIGA,2012-13,2013-01-12T12:00:00Z,Matchday 19,,Valencia CF,,Sevilla FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-27e8168ca89a9c6e649ea320,LALIGA,2012-13,2013-01-12T12:00:00Z,Matchday 19,,CA Osasuna,,Real Madrid,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-a760177b190786db2883d72f,LALIGA,2012-13,2013-01-12T12:00:00Z,Matchday 19,,Espanyol Barcelona,,RC Celta,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-cd85b76803b9447654dc83eb,LALIGA,2012-13,2013-01-12T12:00:00Z,Matchday 19,,Real Valladolid,,RCD Mallorca,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-3eedb2ed19ca92a2009be763,LALIGA,2012-13,2013-01-13T12:00:00Z,Matchday 19,,Real Betis,,Levante UD,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-411ddaccaeefbebdabec4417,LALIGA,2012-13,2013-01-13T12:00:00Z,Matchday 19,,Real Sociedad,,Deportivo La Coruña,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-9bfbe81f32b39f3984ed1236,LALIGA,2012-13,2013-01-13T12:00:00Z,Matchday 19,,Atlético Madrid,,Real Zaragoza,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-ce88776063a0e17d2db71a59,LALIGA,2012-13,2013-01-13T12:00:00Z,Matchday 19,,Málaga CF,,FC Barcelona,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-6eb8bbf44d1068ec90a1384e,LALIGA,2012-13,2013-01-14T12:00:00Z,Matchday 19,,Getafe CF,,Granada CF,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-2488bc5205ab374b3b20f454,LALIGA,2012-13,2013-01-18T12:00:00Z,Matchday 20,,Espanyol Barcelona,,RCD Mallorca,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-831d81c3f83b0cd0dbb2e28a,LALIGA,2012-13,2013-01-19T12:00:00Z,Matchday 20,,Getafe CF,,Sevilla FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-8505a696c67b7beb6a852156,LALIGA,2012-13,2013-01-19T12:00:00Z,Matchday 20,,Málaga CF,,RC Celta,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-be534502bd6e33da2ecf2dc9,LALIGA,2012-13,2013-01-19T12:00:00Z,Matchday 20,,Granada CF,,Rayo Vallecano,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-f261dd702fe725bd1c1a267a,LALIGA,2012-13,2013-01-19T12:00:00Z,Matchday 20,,Real Sociedad,,FC Barcelona,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-9e72b6fee9a2afa5128311c8,LALIGA,2012-13,2013-01-20T12:00:00Z,Matchday 20,,Real Valladolid,,Real Zaragoza,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-a2fe521793157c46d72cbbb4,LALIGA,2012-13,2013-01-20T12:00:00Z,Matchday 20,,Valencia CF,,Real Madrid,,0,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-cb21fa84a0d6dc0955f07f85,LALIGA,2012-13,2013-01-20T12:00:00Z,Matchday 20,,CA Osasuna,,Deportivo La Coruña,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-e025db62cceacb8ab8ac2e57,LALIGA,2012-13,2013-01-20T12:00:00Z,Matchday 20,,Atlético Madrid,,Levante UD,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-7a2f5d8cef9cbb24efe166f8,LALIGA,2012-13,2013-01-21T12:00:00Z,Matchday 20,,Real Betis,,Athletic Club,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-8065214118458397e3a2e5e3,LALIGA,2012-13,2013-01-26T12:00:00Z,Matchday 21,,Real Zaragoza,,Espanyol Barcelona,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-a542946c11ae778f555d59f8,LALIGA,2012-13,2013-01-26T12:00:00Z,Matchday 21,,Deportivo La Coruña,,Valencia CF,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-b30adc5bd4d8a44c432b3084,LALIGA,2012-13,2013-01-26T12:00:00Z,Matchday 21,,Levante UD,,Real Valladolid,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-b9abfe1452305627f9059b25,LALIGA,2012-13,2013-01-26T12:00:00Z,Matchday 21,,RC Celta,,Real Sociedad,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-3a0c8c717ddad116901f7d4f,LALIGA,2012-13,2013-01-27T12:00:00Z,Matchday 21,,RCD Mallorca,,Málaga CF,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-7ebdf15f0944ba5e5a64d131,LALIGA,2012-13,2013-01-27T12:00:00Z,Matchday 21,,Athletic Club,,Atlético Madrid,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-94a5555dd66b6a3caf40b302,LALIGA,2012-13,2013-01-27T12:00:00Z,Matchday 21,,FC Barcelona,,CA Osasuna,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-ab7e06944eb5099528e31e18,LALIGA,2012-13,2013-01-27T12:00:00Z,Matchday 21,,Real Madrid,,Getafe CF,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-cae24a93effd629cc2b6c505,LALIGA,2012-13,2013-01-27T12:00:00Z,Matchday 21,,Rayo Vallecano,,Real Betis,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-d1d93179ae40bda357189d66,LALIGA,2012-13,2013-01-28T12:00:00Z,Matchday 21,,Sevilla FC,,Granada CF,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-0a38c7c699fcab436c3cf7ae,LALIGA,2012-13,2013-02-01T12:00:00Z,Matchday 22,,Real Valladolid,,Athletic Club,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-36076ef9f75bc5ececc01016,LALIGA,2012-13,2013-02-02T12:00:00Z,Matchday 22,,CA Osasuna,,RC Celta,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-96c6b67f6bb5e43aec2e23db,LALIGA,2012-13,2013-02-02T12:00:00Z,Matchday 22,,Espanyol Barcelona,,Levante UD,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-9e05edf53f531e15b7abc20b,LALIGA,2012-13,2013-02-02T12:00:00Z,Matchday 22,,Granada CF,,Real Madrid,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-9e19dc30b157cd4d1553176a,LALIGA,2012-13,2013-02-02T12:00:00Z,Matchday 22,,Getafe CF,,Deportivo La Coruña,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-4c69ee80b1810b92bb80723b,LALIGA,2012-13,2013-02-03T12:00:00Z,Matchday 22,,Valencia CF,,FC Barcelona,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-708b37e646e6590590b7f91a,LALIGA,2012-13,2013-02-03T12:00:00Z,Matchday 22,,Málaga CF,,Real Zaragoza,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-761af3920c7aecbbca912e26,LALIGA,2012-13,2013-02-03T12:00:00Z,Matchday 22,,Atlético Madrid,,Real Betis,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-96b6603bc7289d0e849cb9c8,LALIGA,2012-13,2013-02-03T12:00:00Z,Matchday 22,,Sevilla FC,,Rayo Vallecano,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-f9a56cf0533a59c286d6c3e0,LALIGA,2012-13,2013-02-03T12:00:00Z,Matchday 22,,Real Sociedad,,RCD Mallorca,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-057d32263e03d6dee28e95ae,LALIGA,2012-13,2013-02-09T12:00:00Z,Matchday 23,,Levante UD,,Málaga CF,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-1d9311151db69a9fd1ca56e5,LALIGA,2012-13,2013-02-09T12:00:00Z,Matchday 23,,Real Madrid,,Sevilla FC,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-6563b1d90179a25b5d5aa288,LALIGA,2012-13,2013-02-09T12:00:00Z,Matchday 23,,RC Celta,,Valencia CF,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-91b013ef866000b3ce1f8b0d,LALIGA,2012-13,2013-02-09T12:00:00Z,Matchday 23,,Deportivo La Coruña,,Granada CF,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-eec9100b3eb1992b2801d6b4,LALIGA,2012-13,2013-02-09T12:00:00Z,Matchday 23,,RCD Mallorca,,CA Osasuna,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-0cc6c1323034e49eed7667d7,LALIGA,2012-13,2013-02-10T12:00:00Z,Matchday 23,,Athletic Club,,Espanyol Barcelona,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-1c1fb8df67c36411765e3d44,LALIGA,2012-13,2013-02-10T12:00:00Z,Matchday 23,,Rayo Vallecano,,Atlético Madrid,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-6800606b766a87d275d58121,LALIGA,2012-13,2013-02-10T12:00:00Z,Matchday 23,,FC Barcelona,,Getafe CF,,6,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-b96478c90597210220e1d818,LALIGA,2012-13,2013-02-10T12:00:00Z,Matchday 23,,Real Zaragoza,,Real Sociedad,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-69a64a7d61e571475b3cda35,LALIGA,2012-13,2013-02-11T12:00:00Z,Matchday 23,,Real Betis,,Real Valladolid,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-7b7100c4ef7db964d46de522,LALIGA,2012-13,2013-02-15T12:00:00Z,Matchday 24,,Sevilla FC,,Deportivo La Coruña,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-0926f8831c83d3e55008a0c4,LALIGA,2012-13,2013-02-16T12:00:00Z,Matchday 24,,Granada CF,,FC Barcelona,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-aa1417819f335aabd82f1ed8,LALIGA,2012-13,2013-02-16T12:00:00Z,Matchday 24,,Getafe CF,,RC Celta,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-ea98031abb7ca1a1e34f7395,LALIGA,2012-13,2013-02-16T12:00:00Z,Matchday 24,,CA Osasuna,,Real Zaragoza,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-fc85d5830cb4b9ee32214b84,LALIGA,2012-13,2013-02-16T12:00:00Z,Matchday 24,,Málaga CF,,Athletic Club,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-2ef31489eaa04b245e87d048,LALIGA,2012-13,2013-02-17T12:00:00Z,Matchday 24,,Real Valladolid,,Atlético Madrid,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-60de948504f3e7d5be212d03,LALIGA,2012-13,2013-02-17T12:00:00Z,Matchday 24,,Espanyol Barcelona,,Real Betis,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-6df3378b5ea3601ad4e5de21,LALIGA,2012-13,2013-02-17T12:00:00Z,Matchday 24,,Valencia CF,,RCD Mallorca,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-9e4f77f835517769406b9bc9,LALIGA,2012-13,2013-02-17T12:00:00Z,Matchday 24,,Real Madrid,,Rayo Vallecano,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-bce7c38d7416077642e3568b,LALIGA,2012-13,2013-02-17T12:00:00Z,Matchday 24,,Real Sociedad,,Levante UD,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-9270050638d5cfc54f66f407,LALIGA,2012-13,2013-02-22T12:00:00Z,Matchday 25,,Athletic Club,,Real Sociedad,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-5dbc2173540624b696919b0b,LALIGA,2012-13,2013-02-23T12:00:00Z,Matchday 25,,RCD Mallorca,,Getafe CF,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-dc760613d89b89e5e4d00a25,LALIGA,2012-13,2013-02-23T12:00:00Z,Matchday 25,,Deportivo La Coruña,,Real Madrid,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-dd03f6fd0556f900049aa73c,LALIGA,2012-13,2013-02-23T12:00:00Z,Matchday 25,,FC Barcelona,,Sevilla FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-e4468eb9c1b77369b78792a4,LALIGA,2012-13,2013-02-23T12:00:00Z,Matchday 25,,Real Zaragoza,,Valencia CF,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-359f8ea8db0a94bb71ae99a5,LALIGA,2012-13,2013-02-24T12:00:00Z,Matchday 25,,Rayo Vallecano,,Real Valladolid,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-ba233a3d0a1dfc196a8081ef,LALIGA,2012-13,2013-02-24T12:00:00Z,Matchday 25,,Real Betis,,Málaga CF,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-c01cb76f365a2b4cbe0669d1,LALIGA,2012-13,2013-02-24T12:00:00Z,Matchday 25,,Atlético Madrid,,Espanyol Barcelona,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-d6e4e380f883fe5f1381e070,LALIGA,2012-13,2013-02-24T12:00:00Z,Matchday 25,,RC Celta,,Granada CF,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-360567121834153fbcb9206c,LALIGA,2012-13,2013-02-25T12:00:00Z,Matchday 25,,Levante UD,,CA Osasuna,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-de213fd159420b08ad2b7ff7,LALIGA,2012-13,2013-03-01T12:00:00Z,Matchday 26,,Getafe CF,,Real Zaragoza,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-1485ee5e8ce6d7b6c53ff494,LALIGA,2012-13,2013-03-02T12:00:00Z,Matchday 26,,Valencia CF,,Levante UD,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-7258f7cf96a27e5e223cbd1e,LALIGA,2012-13,2013-03-02T12:00:00Z,Matchday 26,,CA Osasuna,,Athletic Club,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-7f211cb0ef6e338c4249824a,LALIGA,2012-13,2013-03-02T12:00:00Z,Matchday 26,,Deportivo La Coruña,,Rayo Vallecano,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-a4924dd6f4aaa51cdd33fd1b,LALIGA,2012-13,2013-03-02T12:00:00Z,Matchday 26,,Real Madrid,,FC Barcelona,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-02af29926248cd1e6cdb10f4,LALIGA,2012-13,2013-03-03T12:00:00Z,Matchday 26,,Real Sociedad,,Real Betis,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-25519924e75fb8727884c9bc,LALIGA,2012-13,2013-03-03T12:00:00Z,Matchday 26,,Espanyol Barcelona,,Real Valladolid,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-693a349d9f380bcf199a9aa8,LALIGA,2012-13,2013-03-03T12:00:00Z,Matchday 26,,Granada CF,,RCD Mallorca,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-fa4aea62d4a8570b7b47f289,LALIGA,2012-13,2013-03-03T12:00:00Z,Matchday 26,,Málaga CF,,Atlético Madrid,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-cb8af787ac0f094d2a32ebc4,LALIGA,2012-13,2013-03-04T12:00:00Z,Matchday 26,,Sevilla FC,,RC Celta,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-030e46a7a7bfa80681eeece7,LALIGA,2012-13,2013-03-08T12:00:00Z,Matchday 27,,Real Betis,,CA Osasuna,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-3694b65f06bfd2680ee268b1,LALIGA,2012-13,2013-03-09T12:00:00Z,Matchday 27,,FC Barcelona,,Deportivo La Coruña,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-4d3bca3189208247a7f3b720,LALIGA,2012-13,2013-03-09T12:00:00Z,Matchday 27,,RCD Mallorca,,Sevilla FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-4e8da0251b931c4c7bdbaeaf,LALIGA,2012-13,2013-03-09T12:00:00Z,Matchday 27,,Rayo Vallecano,,Espanyol Barcelona,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-eb93fd17613a14b3a9b95c9e,LALIGA,2012-13,2013-03-09T12:00:00Z,Matchday 27,,Real Valladolid,,Málaga CF,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-648ad46c11b43c6a9b63862a,LALIGA,2012-13,2013-03-10T12:00:00Z,Matchday 27,,Athletic Club,,Valencia CF,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-8e4ead5352e1b1018c19c4cf,LALIGA,2012-13,2013-03-10T12:00:00Z,Matchday 27,,Levante UD,,Getafe CF,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-d6f1452cf429662ed5429838,LALIGA,2012-13,2013-03-10T12:00:00Z,Matchday 27,,Atlético Madrid,,Real Sociedad,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-f845d820a7a73f1cbf8346fb,LALIGA,2012-13,2013-03-10T12:00:00Z,Matchday 27,,RC Celta,,Real Madrid,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-5347a7102d2639e53193b95c,LALIGA,2012-13,2013-03-11T12:00:00Z,Matchday 27,,Real Zaragoza,,Granada CF,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-290d78e06d0a0b1440ff1927,LALIGA,2012-13,2013-03-15T12:00:00Z,Matchday 28,,Deportivo La Coruña,,RC Celta,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-4a913835d3417f2e27c960c4,LALIGA,2012-13,2013-03-16T12:00:00Z,Matchday 28,,Real Madrid,,RCD Mallorca,,5,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-5f4a94f2ec776243cdde1e72,LALIGA,2012-13,2013-03-16T12:00:00Z,Matchday 28,,Getafe CF,,Athletic Club,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-ceec5f7de700960dd702b97e,LALIGA,2012-13,2013-03-16T12:00:00Z,Matchday 28,,Real Sociedad,,Real Valladolid,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-e63d8a66cc137d1cfb87b071,LALIGA,2012-13,2013-03-16T12:00:00Z,Matchday 28,,Valencia CF,,Real Betis,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-422fe11f5097a7fbe214d0cb,LALIGA,2012-13,2013-03-17T12:00:00Z,Matchday 28,,Granada CF,,Levante UD,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-52f179a236d9ac7efb22c74b,LALIGA,2012-13,2013-03-17T12:00:00Z,Matchday 28,,CA Osasuna,,Atlético Madrid,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-7bc80468fc84cb8e94f15467,LALIGA,2012-13,2013-03-17T12:00:00Z,Matchday 28,,Sevilla FC,,Real Zaragoza,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-b26db0816abe78492f5b2d97,LALIGA,2012-13,2013-03-17T12:00:00Z,Matchday 28,,FC Barcelona,,Rayo Vallecano,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-fd9eb9e040179524babf50de,LALIGA,2012-13,2013-03-17T12:00:00Z,Matchday 28,,Málaga CF,,Espanyol Barcelona,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-7461d9518a546f476885a493,LALIGA,2012-13,2013-03-30T12:00:00Z,Matchday 29,,Real Zaragoza,,Real Madrid,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-89c807c92e28d511efd0a00f,LALIGA,2012-13,2013-03-30T12:00:00Z,Matchday 29,,Levante UD,,Sevilla FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-e10e3de36c389512acdd2815,LALIGA,2012-13,2013-03-30T12:00:00Z,Matchday 29,,RC Celta,,FC Barcelona,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-efb401716a2fe9f11e135da2,LALIGA,2012-13,2013-03-30T12:00:00Z,Matchday 29,,Rayo Vallecano,,Málaga CF,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-251202d0889f4b9625c0940e,LALIGA,2012-13,2013-03-31T12:00:00Z,Matchday 29,,Atlético Madrid,,Valencia CF,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-78c0f4f0683e7007e21d77de,LALIGA,2012-13,2013-03-31T12:00:00Z,Matchday 29,,Espanyol Barcelona,,Real Sociedad,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-aad937f45ef5f469dd1d7f99,LALIGA,2012-13,2013-03-31T12:00:00Z,Matchday 29,,RCD Mallorca,,Deportivo La Coruña,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-e5d99fe6e93f4a79c82c6266,LALIGA,2012-13,2013-03-31T12:00:00Z,Matchday 29,,Real Valladolid,,CA Osasuna,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-29c2dc75ab005a381230b225,LALIGA,2012-13,2013-04-01T12:00:00Z,Matchday 29,,Real Betis,,Getafe CF,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-2cb0060f8621465b752cf0a3,LALIGA,2012-13,2013-04-01T12:00:00Z,Matchday 29,,Athletic Club,,Granada CF,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-d648f82f5dd699c72ee0e85d,LALIGA,2012-13,2013-04-05T12:00:00Z,Matchday 30,,Granada CF,,Real Betis,,1,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-5e37c70c0224905eb291160b,LALIGA,2012-13,2013-04-06T12:00:00Z,Matchday 30,,Real Madrid,,Levante UD,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-67c89e4a0152ab54d988afe6,LALIGA,2012-13,2013-04-06T12:00:00Z,Matchday 30,,Deportivo La Coruña,,Real Zaragoza,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-a9711c308b27d6fce20d8403,LALIGA,2012-13,2013-04-06T12:00:00Z,Matchday 30,,FC Barcelona,,RCD Mallorca,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-e0a5bd67acdf08fac56bc7b6,LALIGA,2012-13,2013-04-06T12:00:00Z,Matchday 30,,Real Sociedad,,Málaga CF,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-24a957fe23e2c243739f2bef,LALIGA,2012-13,2013-04-07T12:00:00Z,Matchday 30,,Valencia CF,,Real Valladolid,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-5e48cbf7c425fc5157599dda,LALIGA,2012-13,2013-04-07T12:00:00Z,Matchday 30,,RC Celta,,Rayo Vallecano,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-677719f6ccec98ce56812210,LALIGA,2012-13,2013-04-07T12:00:00Z,Matchday 30,,Getafe CF,,Atlético Madrid,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-9b601d080755f1a5d3d5ebb5,LALIGA,2012-13,2013-04-07T12:00:00Z,Matchday 30,,CA Osasuna,,Espanyol Barcelona,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-363c6558a3e435d73b90d370,LALIGA,2012-13,2013-04-08T12:00:00Z,Matchday 30,,Sevilla FC,,Athletic Club,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-a5bcf1ebfc8cc65fa13304d3,LALIGA,2012-13,2013-04-12T12:00:00Z,Matchday 31,,Real Betis,,Sevilla FC,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-0f27c266710e87219ebc9c85,LALIGA,2012-13,2013-04-13T12:00:00Z,Matchday 31,,Real Valladolid,,Getafe CF,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-d76490fe40b8990fb6a4a536,LALIGA,2012-13,2013-04-13T12:00:00Z,Matchday 31,,Espanyol Barcelona,,Valencia CF,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-dcd9fcb54049a7a516ba7138,LALIGA,2012-13,2013-04-13T12:00:00Z,Matchday 31,,Levante UD,,Deportivo La Coruña,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-fbe51c6a3247afc4f7c9537f,LALIGA,2012-13,2013-04-13T12:00:00Z,Matchday 31,,Málaga CF,,CA Osasuna,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-04f4fe08e6249978258a409b,LALIGA,2012-13,2013-04-14T12:00:00Z,Matchday 31,,Athletic Club,,Real Madrid,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-994f6f370018be94d35d5ff8,LALIGA,2012-13,2013-04-14T12:00:00Z,Matchday 31,,Atlético Madrid,,Granada CF,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-ad138fd6a7eaee485d472f48,LALIGA,2012-13,2013-04-14T12:00:00Z,Matchday 31,,Rayo Vallecano,,Real Sociedad,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-f04bfce80d48eea00393b2a7,LALIGA,2012-13,2013-04-14T12:00:00Z,Matchday 31,,Real Zaragoza,,FC Barcelona,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-46812555966b2e66b0f1609c,LALIGA,2012-13,2013-04-15T12:00:00Z,Matchday 31,,RCD Mallorca,,RC Celta,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-cc6da09ce1d02318d1acabd1,LALIGA,2012-13,2013-04-19T12:00:00Z,Matchday 32,,RCD Mallorca,,Rayo Vallecano,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-1c3553041d5453ea174bea05,LALIGA,2012-13,2013-04-20T12:00:00Z,Matchday 32,,Real Madrid,,Real Betis,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-2153ca06c3390e12f80bc464,LALIGA,2012-13,2013-04-20T12:00:00Z,Matchday 32,,FC Barcelona,,Levante UD,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-43d4db812a2ead1073c1a9e7,LALIGA,2012-13,2013-04-20T12:00:00Z,Matchday 32,,Valencia CF,,Málaga CF,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-b4ca7fcdae4ac57b4c74eb52,LALIGA,2012-13,2013-04-20T12:00:00Z,Matchday 32,,Granada CF,,Real Valladolid,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-0584d0a849cdedc52ec7d544,LALIGA,2012-13,2013-04-21T12:00:00Z,Matchday 32,,CA Osasuna,,Real Sociedad,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-51607683b1ee7845c35bb403,LALIGA,2012-13,2013-04-21T12:00:00Z,Matchday 32,,Sevilla FC,,Atlético Madrid,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-9c1f17703df3a520745a4915,LALIGA,2012-13,2013-04-21T12:00:00Z,Matchday 32,,Getafe CF,,Espanyol Barcelona,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-d37f08d37efd9af28293e0ca,LALIGA,2012-13,2013-04-21T12:00:00Z,Matchday 32,,Deportivo La Coruña,,Athletic Club,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-05f317555051db3b99c16a2c,LALIGA,2012-13,2013-04-22T12:00:00Z,Matchday 32,,RC Celta,,Real Zaragoza,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-7f6886b38b0778478f75f79b,LALIGA,2012-13,2013-04-26T12:00:00Z,Matchday 33,,Rayo Vallecano,,CA Osasuna,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-1a7cf51ec15f5006af27b84b,LALIGA,2012-13,2013-04-27T12:00:00Z,Matchday 33,,Athletic Club,,FC Barcelona,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-8f36eecd2181515f67bee195,LALIGA,2012-13,2013-04-27T12:00:00Z,Matchday 33,,Real Zaragoza,,RCD Mallorca,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-d3a62aa7d4b5944d71c663a1,LALIGA,2012-13,2013-04-27T12:00:00Z,Matchday 33,,Atlético Madrid,,Real Madrid,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-f17c194abfbb41a57ac71368,LALIGA,2012-13,2013-04-27T12:00:00Z,Matchday 33,,Levante UD,,RC Celta,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-13450e2e60424b23fdf5cf89,LALIGA,2012-13,2013-04-28T12:00:00Z,Matchday 33,,Real Valladolid,,Sevilla FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-4f07688a0dafedd87e818ab1,LALIGA,2012-13,2013-04-28T12:00:00Z,Matchday 33,,Real Sociedad,,Valencia CF,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-9e5727dfdbe40036ece1c433,LALIGA,2012-13,2013-04-28T12:00:00Z,Matchday 33,,Málaga CF,,Getafe CF,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-ba7810838bf99a6bcff32225,LALIGA,2012-13,2013-04-28T12:00:00Z,Matchday 33,,Espanyol Barcelona,,Granada CF,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-1fd4fe66893012893a9495e9,LALIGA,2012-13,2013-04-29T12:00:00Z,Matchday 33,,Real Betis,,Deportivo La Coruña,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-2079205bb01025cc82629e72,LALIGA,2012-13,2013-05-03T12:00:00Z,Matchday 34,,RC Celta,,Athletic Club,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-10ad56dcdbb60da2ba8345fb,LALIGA,2012-13,2013-05-04T12:00:00Z,Matchday 34,,Deportivo La Coruña,,Atlético Madrid,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-69d5f734ddd6e926879255d7,LALIGA,2012-13,2013-05-04T12:00:00Z,Matchday 34,,Valencia CF,,CA Osasuna,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-6c0acefffce9bafb30728eeb,LALIGA,2012-13,2013-05-04T12:00:00Z,Matchday 34,,Real Madrid,,Real Valladolid,,4,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-aca516afc654fba37c39b0dd,LALIGA,2012-13,2013-05-04T12:00:00Z,Matchday 34,,Granada CF,,Málaga CF,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-2b8c6af92313239c87aaef68,LALIGA,2012-13,2013-05-05T12:00:00Z,Matchday 34,,Sevilla FC,,Espanyol Barcelona,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-2ce05c26db35671b295fc240,LALIGA,2012-13,2013-05-05T12:00:00Z,Matchday 34,,FC Barcelona,,Real Betis,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-82033fea03c9c40efae14968,LALIGA,2012-13,2013-05-05T12:00:00Z,Matchday 34,,RCD Mallorca,,Levante UD,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-eb9ce3548d129197e2a9b688,LALIGA,2012-13,2013-05-05T12:00:00Z,Matchday 34,,Real Zaragoza,,Rayo Vallecano,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-a4228c5af9d3491054a90b57,LALIGA,2012-13,2013-05-06T12:00:00Z,Matchday 34,,Getafe CF,,Real Sociedad,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-4a03abfe2d4f91822e038aeb,LALIGA,2012-13,2013-05-08T12:00:00Z,Matchday 36,,RC Celta,,Atlético Madrid,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-fb24cee7233af94c07ca1a3f,LALIGA,2012-13,2013-05-08T12:00:00Z,Matchday 36,,Real Madrid,,Málaga CF,,6,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-08ce91be8f6800da14e34754,LALIGA,2012-13,2013-05-10T12:00:00Z,Matchday 35,,Levante UD,,Real Zaragoza,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-20285f69025a6ceaa477198a,LALIGA,2012-13,2013-05-11T12:00:00Z,Matchday 35,,Athletic Club,,RCD Mallorca,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-260b4199081f4c26f49c5d42,LALIGA,2012-13,2013-05-11T12:00:00Z,Matchday 35,,CA Osasuna,,Getafe CF,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-6a6e0d4c906ee6e89743185e,LALIGA,2012-13,2013-05-11T12:00:00Z,Matchday 35,,Espanyol Barcelona,,Real Madrid,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-ff2b9429a1ee70d0f1e0b19b,LALIGA,2012-13,2013-05-11T12:00:00Z,Matchday 35,,Real Valladolid,,Deportivo La Coruña,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-023d8dc33b465a19f364209f,LALIGA,2012-13,2013-05-12T12:00:00Z,Matchday 35,,Real Betis,,RC Celta,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-759b9a2dbd60083975737d95,LALIGA,2012-13,2013-05-12T12:00:00Z,Matchday 35,,Rayo Vallecano,,Valencia CF,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-aef9a943d2a094520dfe9dcf,LALIGA,2012-13,2013-05-12T12:00:00Z,Matchday 35,,Málaga CF,,Sevilla FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-e496a5cf8109265774627104,LALIGA,2012-13,2013-05-12T12:00:00Z,Matchday 35,,Atlético Madrid,,FC Barcelona,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-80b1820be9f680afc79d6ea9,LALIGA,2012-13,2013-05-13T12:00:00Z,Matchday 35,,Real Sociedad,,Granada CF,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-3ba92b40960fb8fc2c490d9d,LALIGA,2012-13,2013-05-18T12:00:00Z,Matchday 36,,Sevilla FC,,Real Sociedad,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-4a21e8c99b77f97c74017bb7,LALIGA,2012-13,2013-05-18T12:00:00Z,Matchday 36,,Getafe CF,,Valencia CF,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-6f1d2756a81ed8ce90d18bff,LALIGA,2012-13,2013-05-18T12:00:00Z,Matchday 36,,Granada CF,,CA Osasuna,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-5707aa076c367d316000178f,LALIGA,2012-13,2013-05-19T12:00:00Z,Matchday 36,,FC Barcelona,,Real Valladolid,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-b55862e8e1e38a26e8300b49,LALIGA,2012-13,2013-05-19T12:00:00Z,Matchday 36,,Real Zaragoza,,Athletic Club,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-c756eaebae8325fc252c7e9c,LALIGA,2012-13,2013-05-19T12:00:00Z,Matchday 36,,Deportivo La Coruña,,Espanyol Barcelona,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-cb13d3bf7cc8a4f468820423,LALIGA,2012-13,2013-05-19T12:00:00Z,Matchday 36,,Levante UD,,Rayo Vallecano,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-d5ad5d89c1d414fe2a9543aa,LALIGA,2012-13,2013-05-20T12:00:00Z,Matchday 36,,RCD Mallorca,,Real Betis,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-0824f2eb2ee64ef8ee79c030,LALIGA,2012-13,2013-05-26T12:00:00Z,Matchday 37,,Getafe CF,,Rayo Vallecano,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-181ec9c9a734d9e7cbd838d2,LALIGA,2012-13,2013-05-26T12:00:00Z,Matchday 37,,Málaga CF,,Deportivo La Coruña,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-4b9e62bfa9c914813938c17b,LALIGA,2012-13,2013-05-26T12:00:00Z,Matchday 37,,Athletic Club,,Levante UD,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-4e40cc6d777b83384ba9eac5,LALIGA,2012-13,2013-05-26T12:00:00Z,Matchday 37,,Valencia CF,,Granada CF,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-71d2c07e2ff0b26a805c9d85,LALIGA,2012-13,2013-05-26T12:00:00Z,Matchday 37,,Real Sociedad,,Real Madrid,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-7d48d7c2507ed7f7a2f30fb9,LALIGA,2012-13,2013-05-26T12:00:00Z,Matchday 37,,Atlético Madrid,,RCD Mallorca,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-8b7743f264f873ab6cee696f,LALIGA,2012-13,2013-05-26T12:00:00Z,Matchday 37,,CA Osasuna,,Sevilla FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-9a5cd3434b16c6b45eeab173,LALIGA,2012-13,2013-05-26T12:00:00Z,Matchday 37,,Real Valladolid,,RC Celta,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-b9b60c6f2d034b5a29f36682,LALIGA,2012-13,2013-05-26T12:00:00Z,Matchday 37,,Espanyol Barcelona,,FC Barcelona,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-f20960316a2f033bbe7dff40,LALIGA,2012-13,2013-05-26T12:00:00Z,Matchday 37,,Real Betis,,Real Zaragoza,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-0ea106fc7820fdbcee44d4ae,LALIGA,2012-13,2013-06-01T12:00:00Z,Matchday 38,,Real Madrid,,CA Osasuna,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-42045b6695032e26155b6fd8,LALIGA,2012-13,2013-06-01T12:00:00Z,Matchday 38,,Rayo Vallecano,,Athletic Club,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-6d6b2931b88ff7d2aee1b6ea,LALIGA,2012-13,2013-06-01T12:00:00Z,Matchday 38,,Granada CF,,Getafe CF,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-aaa501e6003edc00f96b901d,LALIGA,2012-13,2013-06-01T12:00:00Z,Matchday 38,,RCD Mallorca,,Real Valladolid,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-bbb310c7b1430d39297defcc,LALIGA,2012-13,2013-06-01T12:00:00Z,Matchday 38,,FC Barcelona,,Málaga CF,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-bff39c399310d15a3c6efa49,LALIGA,2012-13,2013-06-01T12:00:00Z,Matchday 38,,Deportivo La Coruña,,Real Sociedad,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-c1aeec501ba1a680228e8e73,LALIGA,2012-13,2013-06-01T12:00:00Z,Matchday 38,,Levante UD,,Real Betis,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-d5156e22ab75a766f8af992c,LALIGA,2012-13,2013-06-01T12:00:00Z,Matchday 38,,Real Zaragoza,,Atlético Madrid,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-ddcb8710116add284bd4043f,LALIGA,2012-13,2013-06-01T12:00:00Z,Matchday 38,,Sevilla FC,,Valencia CF,,4,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-f747df02124ee2a1e7f14d6f,LALIGA,2012-13,2013-06-01T12:00:00Z,Matchday 38,,RC Celta,,Espanyol Barcelona,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00

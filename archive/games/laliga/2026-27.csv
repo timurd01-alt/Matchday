@@ -1,0 +1,8 @@
+game_id,comp,season,date_utc,stage,venue,home_name,home_code,away_name,away_code,home_score,away_score,status,source,first_seen
+laliga-564634,LALIGA,2026-27,2026-08-15T17:30:00Z,Regular Season,,Deportivo Alavés,ALA,Getafe CF,GET,3,0,FINISHED,,2026-08-23T20:49:44+00:00
+laliga-564633,LALIGA,2026-27,2026-08-15T19:30:00Z,Regular Season,,Sevilla FC,SEV,Rayo Vallecano de Madrid,RAY,2,1,FINISHED,,2026-08-23T20:49:44+00:00
+laliga-564629,LALIGA,2026-27,2026-08-16T15:00:00Z,Regular Season,,Real Racing Club de Santander,SAN,Villarreal CF,VIL,2,2,FINISHED,,2026-08-23T20:49:44+00:00
+laliga-564632,LALIGA,2026-27,2026-08-16T17:00:00Z,Regular Season,,RCD Espanyol de Barcelona,ESP,Levante UD,LEV,3,0,FINISHED,,2026-08-23T20:49:44+00:00
+laliga-564635,LALIGA,2026-27,2026-08-17T19:00:00Z,Regular Season,,RC Deportivo La Coruña,DEP,Elche CF,ELC,1,1,FINISHED,,2026-08-23T20:49:44+00:00
+laliga-564628,LALIGA,2026-27,2026-08-19T19:00:00Z,Regular Season,,Club Atlético de Madrid,ATL,Málaga CF,MAL,2,0,FINISHED,,2026-08-23T20:49:44+00:00
+laliga-564638,LALIGA,2026-27,2026-08-20T19:00:00Z,Regular Season,,Rayo Vallecano de Madrid,RAY,Deportivo Alavés,ALA,1,1,FINISHED,,2026-08-23T20:49:44+00:00

@@ -1,0 +1,39 @@
+{
+  "artifact": "mlb-personnel-zero-weight-attestation",
+  "claim": "Every personnel feature carries exactly zero weight in the published MLB forecast. The model reads no confirmed starter, batting order, injury, or reliever-availability input.",
+  "confirmed_source": null,
+  "contract_basis": "MLB_RECOVERY.md \u00a73: a model in which every personnel feature carries zero weight is out of the personnel gate's scope, because blocking it on confirmed-starter coverage gates it on the correctness of data it never consumes.",
+  "prepared_at": "2026-08-23",
+  "protocol_version": "mlb-personnel-zero-weight-1.0.0",
+  "reverts_if": "Any personnel feature takes non-zero weight. At that moment MLB_RECOVERY.md \u00a73 applies in full and this attestation is void.",
+  "schema_version": 1,
+  "status": "ready_for_frozen_review",
+  "verification": [
+    {
+      "check": "no personnel edge is computed for MLB",
+      "location": "fetch_data.py CLASS_SIGNAL_CONFIG['MLB']",
+      "observed": {
+        "edge_available": false,
+        "source": null,
+        "source_key": null
+      }
+    },
+    {
+      "check": "no confirmed-personnel source is contracted",
+      "location": "PROVIDER_COMPLIANCE.md",
+      "observed": "BALLDONTLIE supplies no confirmed lineups; SportsGameOdds player props are market-derived candidates only; schedule-derived bullpen rest is a zero-weight proxy."
+    },
+    {
+      "check": "personnel inputs absent from every graded fixture",
+      "location": "mlb_prospective_scorecard.json coverage.personnel_missing_reasons",
+      "observed": {
+        "bullpen_availability": 15,
+        "confirmed_lineup": 15,
+        "injuries": 15,
+        "lineups": 15,
+        "probable_or_confirmed_starter": 15,
+        "starting_pitchers": 15
+      }
+    }
+  ]
+}

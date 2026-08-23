@@ -1,0 +1,280 @@
+game_id,comp,season,date_utc,stage,venue,home_name,home_code,away_name,away_code,home_score,away_score,status,source,first_seen
+ligue1-openfootball-f2e5c9f9e87fcda139df41e6,LIGUE1,2019-20,2019-08-09T12:00:00Z,Matchday 1,,AS Monaco,,Olympique Lyonnais,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-36d50d1731f888070a3091d0,LIGUE1,2019-20,2019-08-10T12:00:00Z,Matchday 1,,Stade Brestois 29,,Toulouse FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-42c869ca7dfb4a83244e340d,LIGUE1,2019-20,2019-08-10T12:00:00Z,Matchday 1,,Montpellier HSC,,Stade Rennais,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-7e052a89b58702fe109d67c2,LIGUE1,2019-20,2019-08-10T12:00:00Z,Matchday 1,,OGC Nice,,Amiens SC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-87cac35ecb6d2cb6c079231d,LIGUE1,2019-20,2019-08-10T12:00:00Z,Matchday 1,,Dijon FCO,,AS Saint-Étienne,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-9e084a2f78e508f972a4df6b,LIGUE1,2019-20,2019-08-10T12:00:00Z,Matchday 1,,Angers SCO,,Girondins Bordeaux,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a246ab8ceb7201082452b981,LIGUE1,2019-20,2019-08-10T12:00:00Z,Matchday 1,,Olympique Marseille,,Stade de Reims,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-02a798b83f1498f6f334c8cd,LIGUE1,2019-20,2019-08-11T12:00:00Z,Matchday 1,,Paris Saint-Germain,,Nîmes Olympique,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c132ec612ae5c1532fbc729b,LIGUE1,2019-20,2019-08-11T12:00:00Z,Matchday 1,,RC Strasbourg,,FC Metz,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-ff823fce8bea46a9b8089496,LIGUE1,2019-20,2019-08-11T12:00:00Z,Matchday 1,,Lille OSC,,FC Nantes,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-994e8fa55fdbdecc7f144f15,LIGUE1,2019-20,2019-08-16T12:00:00Z,Matchday 2,,Olympique Lyonnais,,Angers SCO,,6,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-40c0bd4f481a138475f700fe,LIGUE1,2019-20,2019-08-17T12:00:00Z,Matchday 2,,Girondins Bordeaux,,Montpellier HSC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-60177edfad5f0f31646225a9,LIGUE1,2019-20,2019-08-17T12:00:00Z,Matchday 2,,Nîmes Olympique,,OGC Nice,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-65631029de6022d425eb724a,LIGUE1,2019-20,2019-08-17T12:00:00Z,Matchday 2,,FC Metz,,AS Monaco,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-9e61b22bd695df22312f76fe,LIGUE1,2019-20,2019-08-17T12:00:00Z,Matchday 2,,Toulouse FC,,Dijon FCO,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-aa1ab6a402858123061dbcf2,LIGUE1,2019-20,2019-08-17T12:00:00Z,Matchday 2,,Amiens SC,,Lille OSC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d0c6558e7fcb22f5535fca67,LIGUE1,2019-20,2019-08-17T12:00:00Z,Matchday 2,,FC Nantes,,Olympique Marseille,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-47e2c7faae8b0c7f104461aa,LIGUE1,2019-20,2019-08-18T12:00:00Z,Matchday 2,,Stade Rennais,,Paris Saint-Germain,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-55d997a00de4f0697bd9b32c,LIGUE1,2019-20,2019-08-18T12:00:00Z,Matchday 2,,Stade de Reims,,RC Strasbourg,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-6a3d9b6518143c12fd627d04,LIGUE1,2019-20,2019-08-18T12:00:00Z,Matchday 2,,AS Saint-Étienne,,Stade Brestois 29,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-07b620d90212241cde9db18c,LIGUE1,2019-20,2019-08-24T12:00:00Z,Matchday 3,,Stade Brestois 29,,Stade de Reims,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-0e139997dfc401d30570a0c7,LIGUE1,2019-20,2019-08-24T12:00:00Z,Matchday 3,,Dijon FCO,,Girondins Bordeaux,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-58573371e9c2ae1059f4a064,LIGUE1,2019-20,2019-08-24T12:00:00Z,Matchday 3,,Angers SCO,,FC Metz,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-9af6886aca9838d62d1836b4,LIGUE1,2019-20,2019-08-24T12:00:00Z,Matchday 3,,Amiens SC,,FC Nantes,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-3f1102b50604bc60c4cc4fe2,LIGUE1,2019-20,2019-08-25T12:00:00Z,Matchday 3,,RC Strasbourg,,Stade Rennais,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-4028ca701046d410401897ca,LIGUE1,2019-20,2019-08-25T12:00:00Z,Matchday 3,,Paris Saint-Germain,,Toulouse FC,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-acd948213e78c33df6babba1,LIGUE1,2019-20,2019-08-25T12:00:00Z,Matchday 3,,AS Monaco,,Nîmes Olympique,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-5e8c0ffbb44c0129bef53063,LIGUE1,2019-20,2019-08-27T12:00:00Z,Matchday 3,,Montpellier HSC,,Olympique Lyonnais,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-97a49af063e24bbe6bf09e9d,LIGUE1,2019-20,2019-08-28T12:00:00Z,Matchday 3,,Lille OSC,,AS Saint-Étienne,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a8b18645c0f49c8a9aa950dd,LIGUE1,2019-20,2019-08-28T12:00:00Z,Matchday 3,,OGC Nice,,Olympique Marseille,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-495b91aa8b629abb77737cbd,LIGUE1,2019-20,2019-08-30T12:00:00Z,Matchday 4,,FC Metz,,Paris Saint-Germain,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-10d3a77d287d753c7bd4ccc5,LIGUE1,2019-20,2019-08-31T12:00:00Z,Matchday 4,,Olympique Lyonnais,,Girondins Bordeaux,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-2d843bc81dde10e8f47fcf64,LIGUE1,2019-20,2019-08-31T12:00:00Z,Matchday 4,,Nîmes Olympique,,Stade Brestois 29,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-44fdd79150e0fda3533db7af,LIGUE1,2019-20,2019-08-31T12:00:00Z,Matchday 4,,FC Nantes,,Montpellier HSC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a25e94fa1467e9c37b303eae,LIGUE1,2019-20,2019-08-31T12:00:00Z,Matchday 4,,Angers SCO,,Dijon FCO,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a971d4f83f734963af857a6e,LIGUE1,2019-20,2019-08-31T12:00:00Z,Matchday 4,,Toulouse FC,,Amiens SC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-4b14b262ee8e98201de7e43a,LIGUE1,2019-20,2019-09-01T12:00:00Z,Matchday 4,,RC Strasbourg,,AS Monaco,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-823449126c1f1ec57d966dfd,LIGUE1,2019-20,2019-09-01T12:00:00Z,Matchday 4,,Olympique Marseille,,AS Saint-Étienne,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-bd2236573f245d97a3cb1190,LIGUE1,2019-20,2019-09-01T12:00:00Z,Matchday 4,,Stade Rennais,,OGC Nice,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-f17dafc90314997186cc8de3,LIGUE1,2019-20,2019-09-01T12:00:00Z,Matchday 4,,Stade de Reims,,Lille OSC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c32cc1ddb4966c43c724612e,LIGUE1,2019-20,2019-09-13T12:00:00Z,Matchday 5,,Amiens SC,,Olympique Lyonnais,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-f8e55e84a518bc135f5556f7,LIGUE1,2019-20,2019-09-13T12:00:00Z,Matchday 5,,Lille OSC,,Angers SCO,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-1000f6377c4e47a78787fb22,LIGUE1,2019-20,2019-09-14T12:00:00Z,Matchday 5,,Girondins Bordeaux,,FC Metz,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-6149c0dd528b8a7f63168f7b,LIGUE1,2019-20,2019-09-14T12:00:00Z,Matchday 5,,Stade Brestois 29,,Stade Rennais,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a6b69733d97081d34e518d17,LIGUE1,2019-20,2019-09-14T12:00:00Z,Matchday 5,,Paris Saint-Germain,,RC Strasbourg,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-b15e28051cf8cac6a962f180,LIGUE1,2019-20,2019-09-14T12:00:00Z,Matchday 5,,Montpellier HSC,,OGC Nice,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-e7376d40ae840aa35c6a0d5d,LIGUE1,2019-20,2019-09-14T12:00:00Z,Matchday 5,,Dijon FCO,,Nîmes Olympique,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-663c9ea054b591e1fc175ce0,LIGUE1,2019-20,2019-09-15T12:00:00Z,Matchday 5,,FC Nantes,,Stade de Reims,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-cccbd1bd6ad2b4bf5c6ff09a,LIGUE1,2019-20,2019-09-15T12:00:00Z,Matchday 5,,AS Monaco,,Olympique Marseille,,3,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-eced435a50013d31af00f5fd,LIGUE1,2019-20,2019-09-15T12:00:00Z,Matchday 5,,AS Saint-Étienne,,Toulouse FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-fcc2d929045cbb9b35603880,LIGUE1,2019-20,2019-09-20T12:00:00Z,Matchday 6,,RC Strasbourg,,FC Nantes,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-3e8ffc938d7a7f0b96501dd8,LIGUE1,2019-20,2019-09-21T12:00:00Z,Matchday 6,,Stade de Reims,,AS Monaco,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-64939c3b14cdb96115a65d1b,LIGUE1,2019-20,2019-09-21T12:00:00Z,Matchday 6,,Girondins Bordeaux,,Stade Brestois 29,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-757b1fff8c9fb41d3be856f2,LIGUE1,2019-20,2019-09-21T12:00:00Z,Matchday 6,,FC Metz,,Amiens SC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-7c3bb7bf5230bf41d59541f6,LIGUE1,2019-20,2019-09-21T12:00:00Z,Matchday 6,,Olympique Marseille,,Montpellier HSC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-f18671e3eb9aca55e2853860,LIGUE1,2019-20,2019-09-21T12:00:00Z,Matchday 6,,Nîmes Olympique,,Toulouse FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-f355fe01343ed6168a442969,LIGUE1,2019-20,2019-09-21T12:00:00Z,Matchday 6,,OGC Nice,,Dijon FCO,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-2a7b46f04d77baebe4e73e68,LIGUE1,2019-20,2019-09-22T12:00:00Z,Matchday 6,,Stade Rennais,,Lille OSC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a3c63447b7f602613b733259,LIGUE1,2019-20,2019-09-22T12:00:00Z,Matchday 6,,Angers SCO,,AS Saint-Étienne,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-e237facf81a48c9297f088e4,LIGUE1,2019-20,2019-09-22T12:00:00Z,Matchday 6,,Olympique Lyonnais,,Paris Saint-Germain,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-375f954dafdc62facadafc6a,LIGUE1,2019-20,2019-09-24T12:00:00Z,Matchday 7,,AS Monaco,,OGC Nice,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-87dbb5f0ca61084501fc45b0,LIGUE1,2019-20,2019-09-24T12:00:00Z,Matchday 7,,Dijon FCO,,Olympique Marseille,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-20de1d4ecf5ed4df49d9bcda,LIGUE1,2019-20,2019-09-25T12:00:00Z,Matchday 7,,Toulouse FC,,Angers SCO,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-228de86f5c73bd23b033dbd1,LIGUE1,2019-20,2019-09-25T12:00:00Z,Matchday 7,,Montpellier HSC,,Nîmes Olympique,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-5d2e57b376cc1cd341f30a3c,LIGUE1,2019-20,2019-09-25T12:00:00Z,Matchday 7,,FC Nantes,,Stade Rennais,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-8604a33813f12f386ef759a4,LIGUE1,2019-20,2019-09-25T12:00:00Z,Matchday 7,,Amiens SC,,Girondins Bordeaux,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-998423267a15a1a7d7dd641b,LIGUE1,2019-20,2019-09-25T12:00:00Z,Matchday 7,,Stade Brestois 29,,Olympique Lyonnais,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-bada2f04fe377a9873861f4a,LIGUE1,2019-20,2019-09-25T12:00:00Z,Matchday 7,,Paris Saint-Germain,,Stade de Reims,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-cba8f5e64354d3bf9c18813c,LIGUE1,2019-20,2019-09-25T12:00:00Z,Matchday 7,,AS Saint-Étienne,,FC Metz,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-dbe8ac3f22a1855fc13abe94,LIGUE1,2019-20,2019-09-25T12:00:00Z,Matchday 7,,Lille OSC,,RC Strasbourg,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-4a5be0ba92d8810d0d5f57f3,LIGUE1,2019-20,2019-09-28T12:00:00Z,Matchday 8,,AS Monaco,,Stade Brestois 29,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-82df4aebd827655b122c0788,LIGUE1,2019-20,2019-09-28T12:00:00Z,Matchday 8,,OGC Nice,,Lille OSC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-8701328a9dfa5272ff0ebd05,LIGUE1,2019-20,2019-09-28T12:00:00Z,Matchday 8,,Angers SCO,,Amiens SC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-8d470612a748198c88317e3e,LIGUE1,2019-20,2019-09-28T12:00:00Z,Matchday 8,,FC Metz,,Toulouse FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-b49c7910b00c4cba632a88f0,LIGUE1,2019-20,2019-09-28T12:00:00Z,Matchday 8,,Stade de Reims,,Dijon FCO,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d0a877640ab8f9958844027a,LIGUE1,2019-20,2019-09-28T12:00:00Z,Matchday 8,,Girondins Bordeaux,,Paris Saint-Germain,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-f740aab0a5c376a3b82e4825,LIGUE1,2019-20,2019-09-28T12:00:00Z,Matchday 8,,Olympique Lyonnais,,FC Nantes,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-b8cea11b1a9028df27f3cae2,LIGUE1,2019-20,2019-09-29T12:00:00Z,Matchday 8,,Olympique Marseille,,Stade Rennais,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d081900ff217b569fcc29ce6,LIGUE1,2019-20,2019-09-29T12:00:00Z,Matchday 8,,Nîmes Olympique,,AS Saint-Étienne,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-f1d71f01bfac1497aea40bbc,LIGUE1,2019-20,2019-09-29T12:00:00Z,Matchday 8,,RC Strasbourg,,Montpellier HSC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-ba7c0b89f00d5ae84f6a8db1,LIGUE1,2019-20,2019-10-04T12:00:00Z,Matchday 9,,Amiens SC,,Olympique Marseille,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-0bce6f22c38230b2437afcaf,LIGUE1,2019-20,2019-10-05T12:00:00Z,Matchday 9,,Stade Brestois 29,,FC Metz,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-5b2fb1645b0a388aff883caf,LIGUE1,2019-20,2019-10-05T12:00:00Z,Matchday 9,,Toulouse FC,,Girondins Bordeaux,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-6be1086e6eb45d11cb388533,LIGUE1,2019-20,2019-10-05T12:00:00Z,Matchday 9,,FC Nantes,,OGC Nice,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-750677a7ed719f037bc864e4,LIGUE1,2019-20,2019-10-05T12:00:00Z,Matchday 9,,Paris Saint-Germain,,Angers SCO,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-df1e11f279a4878003f6b2d0,LIGUE1,2019-20,2019-10-05T12:00:00Z,Matchday 9,,Dijon FCO,,RC Strasbourg,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-e41def4a9d1024fc49a2d18a,LIGUE1,2019-20,2019-10-05T12:00:00Z,Matchday 9,,Montpellier HSC,,AS Monaco,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-72b4ee0f61dad894b43acc63,LIGUE1,2019-20,2019-10-06T12:00:00Z,Matchday 9,,Stade Rennais,,Stade de Reims,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a792f509ca22082eef9d29d9,LIGUE1,2019-20,2019-10-06T12:00:00Z,Matchday 9,,Lille OSC,,Nîmes Olympique,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-ac986004e84e5d97f1c3eb0f,LIGUE1,2019-20,2019-10-06T12:00:00Z,Matchday 9,,AS Saint-Étienne,,Olympique Lyonnais,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-ceba76ea208581d55729cc7e,LIGUE1,2019-20,2019-10-18T12:00:00Z,Matchday 10,,OGC Nice,,Paris Saint-Germain,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-0ab7fbe37ab11649a22e081b,LIGUE1,2019-20,2019-10-19T12:00:00Z,Matchday 10,,Toulouse FC,,Lille OSC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-2f0190931ccb2b6109fcb6c9,LIGUE1,2019-20,2019-10-19T12:00:00Z,Matchday 10,,Nîmes Olympique,,Amiens SC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-6f6076664a6ca3af2c2d9489,LIGUE1,2019-20,2019-10-19T12:00:00Z,Matchday 10,,Angers SCO,,Stade Brestois 29,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-81e7fed11f66da8711c0a2a7,LIGUE1,2019-20,2019-10-19T12:00:00Z,Matchday 10,,Stade de Reims,,Montpellier HSC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-b9ef4f8ddb7d74eff75142aa,LIGUE1,2019-20,2019-10-19T12:00:00Z,Matchday 10,,FC Metz,,FC Nantes,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d3682aa248e8618dbdb05095,LIGUE1,2019-20,2019-10-19T12:00:00Z,Matchday 10,,Olympique Lyonnais,,Dijon FCO,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-2894a4066a7c092787fa3aac,LIGUE1,2019-20,2019-10-20T12:00:00Z,Matchday 10,,Olympique Marseille,,RC Strasbourg,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-4e1a77f7b0f2d46299cd86d3,LIGUE1,2019-20,2019-10-20T12:00:00Z,Matchday 10,,Girondins Bordeaux,,AS Saint-Étienne,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-ed65f53e394437ceb5205b91,LIGUE1,2019-20,2019-10-20T12:00:00Z,Matchday 10,,AS Monaco,,Stade Rennais,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-42104f61cc4d41006d09dd31,LIGUE1,2019-20,2019-10-25T12:00:00Z,Matchday 11,,FC Nantes,,AS Monaco,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-116daedeaae76535bd286297,LIGUE1,2019-20,2019-10-26T12:00:00Z,Matchday 11,,Lille OSC,,Girondins Bordeaux,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-5db5734f48087b3ce1b8c036,LIGUE1,2019-20,2019-10-26T12:00:00Z,Matchday 11,,Montpellier HSC,,Angers SCO,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-8b49e247c5d1962f236f0d5b,LIGUE1,2019-20,2019-10-26T12:00:00Z,Matchday 11,,Stade de Reims,,Nîmes Olympique,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a8919c8c2acb9d006ad9380e,LIGUE1,2019-20,2019-10-26T12:00:00Z,Matchday 11,,Olympique Lyonnais,,FC Metz,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-e47c0b43822c3fbb1fd52a1d,LIGUE1,2019-20,2019-10-26T12:00:00Z,Matchday 11,,RC Strasbourg,,OGC Nice,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-e604cabc8a170d2cb0e3b3fd,LIGUE1,2019-20,2019-10-26T12:00:00Z,Matchday 11,,Stade Brestois 29,,Dijon FCO,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-1a88c16cace990e6f465f772,LIGUE1,2019-20,2019-10-27T12:00:00Z,Matchday 11,,AS Saint-Étienne,,Amiens SC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-6bf2416ce2d2c1e4577a0162,LIGUE1,2019-20,2019-10-27T12:00:00Z,Matchday 11,,Paris Saint-Germain,,Olympique Marseille,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-721baf54fbd95ecce8e47853,LIGUE1,2019-20,2019-10-27T12:00:00Z,Matchday 11,,Stade Rennais,,Toulouse FC,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-bd083660cc0eb7d4255d6488,LIGUE1,2019-20,2019-11-01T12:00:00Z,Matchday 12,,Dijon FCO,,Paris Saint-Germain,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-17428dda6e91e7e8567cb6c8,LIGUE1,2019-20,2019-11-02T12:00:00Z,Matchday 12,,Angers SCO,,RC Strasbourg,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-1920d355a23512201a1483ae,LIGUE1,2019-20,2019-11-02T12:00:00Z,Matchday 12,,Amiens SC,,Stade Brestois 29,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-2c9518e400506b7bc27c8117,LIGUE1,2019-20,2019-11-02T12:00:00Z,Matchday 12,,Olympique Marseille,,Lille OSC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-b3c1132bdc7f491410c638fe,LIGUE1,2019-20,2019-11-02T12:00:00Z,Matchday 12,,Toulouse FC,,Olympique Lyonnais,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c05cf8f78bd3aeff1cfeaedb,LIGUE1,2019-20,2019-11-02T12:00:00Z,Matchday 12,,FC Metz,,Montpellier HSC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-5755593c77568b66fe7488f3,LIGUE1,2019-20,2019-11-03T12:00:00Z,Matchday 12,,OGC Nice,,Stade de Reims,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a0d4f7cd842bbcd6a7b4dd22,LIGUE1,2019-20,2019-11-03T12:00:00Z,Matchday 12,,AS Saint-Étienne,,AS Monaco,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c87d6a78ea77b1c3997f38c6,LIGUE1,2019-20,2019-11-03T12:00:00Z,Matchday 12,,Girondins Bordeaux,,FC Nantes,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-4fd49df9e1863b65e0b14eaf,LIGUE1,2019-20,2019-11-08T12:00:00Z,Matchday 13,,OGC Nice,,Girondins Bordeaux,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-1ee5c8785eb84c1ecca3cdc8,LIGUE1,2019-20,2019-11-09T12:00:00Z,Matchday 13,,Stade Brestois 29,,Paris Saint-Germain,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-21f5d8cf9d05ddaef7debba8,LIGUE1,2019-20,2019-11-09T12:00:00Z,Matchday 13,,RC Strasbourg,,Nîmes Olympique,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-823d3e70729abe0c838b242d,LIGUE1,2019-20,2019-11-09T12:00:00Z,Matchday 13,,Lille OSC,,FC Metz,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-b495a61fbf3c7a35267e0fab,LIGUE1,2019-20,2019-11-09T12:00:00Z,Matchday 13,,Stade de Reims,,Angers SCO,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-e77f8a534733dabb443f9a09,LIGUE1,2019-20,2019-11-09T12:00:00Z,Matchday 13,,AS Monaco,,Dijon FCO,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-07eb70cb57abb6e415d78c8f,LIGUE1,2019-20,2019-11-10T12:00:00Z,Matchday 13,,Montpellier HSC,,Toulouse FC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-4c7eb0fad494aaf589f3bfbe,LIGUE1,2019-20,2019-11-10T12:00:00Z,Matchday 13,,FC Nantes,,AS Saint-Étienne,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-75d4418e35eea2ea6c648719,LIGUE1,2019-20,2019-11-10T12:00:00Z,Matchday 13,,Olympique Marseille,,Olympique Lyonnais,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-9d73251f5a4db562090ba72d,LIGUE1,2019-20,2019-11-10T12:00:00Z,Matchday 13,,Stade Rennais,,Amiens SC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-57b6c8132a35520b4e7a9063,LIGUE1,2019-20,2019-11-22T12:00:00Z,Matchday 14,,Paris Saint-Germain,,Lille OSC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-3b67af1b54ad71e9ac2bfec2,LIGUE1,2019-20,2019-11-23T12:00:00Z,Matchday 14,,Angers SCO,,Nîmes Olympique,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-76b44003988ab159703ba330,LIGUE1,2019-20,2019-11-23T12:00:00Z,Matchday 14,,Stade Brestois 29,,FC Nantes,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a07acbe67a0507e2f13b7c09,LIGUE1,2019-20,2019-11-23T12:00:00Z,Matchday 14,,Dijon FCO,,Stade Rennais,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-b7a6fa1f4ddac6885311bfec,LIGUE1,2019-20,2019-11-23T12:00:00Z,Matchday 14,,FC Metz,,Stade de Reims,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d681f2d88abe9c622c630c4d,LIGUE1,2019-20,2019-11-23T12:00:00Z,Matchday 14,,Amiens SC,,RC Strasbourg,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-e30a835e718c4478e8b4b649,LIGUE1,2019-20,2019-11-23T12:00:00Z,Matchday 14,,Olympique Lyonnais,,OGC Nice,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-8f61b3d24a0e942338e3b042,LIGUE1,2019-20,2019-11-24T12:00:00Z,Matchday 14,,AS Saint-Étienne,,Montpellier HSC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d843f78c454185846985ba2c,LIGUE1,2019-20,2019-11-24T12:00:00Z,Matchday 14,,Toulouse FC,,Olympique Marseille,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-faf6fdf224e0f93c1216564f,LIGUE1,2019-20,2019-11-24T12:00:00Z,Matchday 14,,Girondins Bordeaux,,AS Monaco,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-657065a6fa45b7f56f9ecae9,LIGUE1,2019-20,2019-11-29T12:00:00Z,Matchday 15,,Olympique Marseille,,Stade Brestois 29,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-0a7edc72332cc85dc134d531,LIGUE1,2019-20,2019-11-30T12:00:00Z,Matchday 15,,Montpellier HSC,,Amiens SC,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-2f67bb6e29eb4861ce15b581,LIGUE1,2019-20,2019-11-30T12:00:00Z,Matchday 15,,RC Strasbourg,,Olympique Lyonnais,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-42f57bd7c49af1c051331964,LIGUE1,2019-20,2019-11-30T12:00:00Z,Matchday 15,,Nîmes Olympique,,FC Metz,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-6f2ff08fcc702676604e43c4,LIGUE1,2019-20,2019-11-30T12:00:00Z,Matchday 15,,Lille OSC,,Dijon FCO,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-96098e6da12c4526ce7624c0,LIGUE1,2019-20,2019-11-30T12:00:00Z,Matchday 15,,Stade de Reims,,Girondins Bordeaux,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-96c9893ce60e205f26ecf922,LIGUE1,2019-20,2019-11-30T12:00:00Z,Matchday 15,,OGC Nice,,Angers SCO,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-83fa80f21e12107cc49f5eb7,LIGUE1,2019-20,2019-12-01T12:00:00Z,Matchday 15,,FC Nantes,,Toulouse FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-9ac936a691da95aada50d26b,LIGUE1,2019-20,2019-12-01T12:00:00Z,Matchday 15,,Stade Rennais,,AS Saint-Étienne,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-757e44955caaf63cdb8b65c5,LIGUE1,2019-20,2019-12-03T12:00:00Z,Matchday 16,,Angers SCO,,Olympique Marseille,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a526ae5ceac1c4eb5a3fd907,LIGUE1,2019-20,2019-12-03T12:00:00Z,Matchday 16,,Girondins Bordeaux,,Nîmes Olympique,,6,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-ad2443406a3674e31611761d,LIGUE1,2019-20,2019-12-03T12:00:00Z,Matchday 16,,Olympique Lyonnais,,Lille OSC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-b5bff1021dd9c84598c291b5,LIGUE1,2019-20,2019-12-03T12:00:00Z,Matchday 16,,Stade Brestois 29,,RC Strasbourg,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-0e4ce59bfc3c32f11f2c8a91,LIGUE1,2019-20,2019-12-04T12:00:00Z,Matchday 16,,FC Metz,,Stade Rennais,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-51982d3d4753013bcbb4b333,LIGUE1,2019-20,2019-12-04T12:00:00Z,Matchday 16,,AS Saint-Étienne,,OGC Nice,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-add44c575d6a3e4e7d7d70db,LIGUE1,2019-20,2019-12-04T12:00:00Z,Matchday 16,,Toulouse FC,,AS Monaco,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-ba9dc566925d87df875da45a,LIGUE1,2019-20,2019-12-04T12:00:00Z,Matchday 16,,Paris Saint-Germain,,FC Nantes,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d11296ccefc4587bac6bd3ca,LIGUE1,2019-20,2019-12-04T12:00:00Z,Matchday 16,,Dijon FCO,,Montpellier HSC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-4db4a793af85813057896236,LIGUE1,2019-20,2019-12-06T12:00:00Z,Matchday 17,,Nîmes Olympique,,Olympique Lyonnais,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-97375306c8f88f203c77753a,LIGUE1,2019-20,2019-12-06T12:00:00Z,Matchday 17,,Lille OSC,,Stade Brestois 29,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-2460cc29e35e18591d4f1c5a,LIGUE1,2019-20,2019-12-07T12:00:00Z,Matchday 17,,RC Strasbourg,,Toulouse FC,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-2cd6a521d0063a5fcc9c6315,LIGUE1,2019-20,2019-12-07T12:00:00Z,Matchday 17,,Stade Rennais,,Angers SCO,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-38bcf185df2a1a6ca76d8d6d,LIGUE1,2019-20,2019-12-07T12:00:00Z,Matchday 17,,Montpellier HSC,,Paris Saint-Germain,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-b986b9d3d86140de48f6a6b8,LIGUE1,2019-20,2019-12-07T12:00:00Z,Matchday 17,,OGC Nice,,FC Metz,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-e7f0811a620c51de8c5ff96a,LIGUE1,2019-20,2019-12-07T12:00:00Z,Matchday 17,,AS Monaco,,Amiens SC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-35e4ab06818a108398048ba9,LIGUE1,2019-20,2019-12-08T12:00:00Z,Matchday 17,,Stade de Reims,,AS Saint-Étienne,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c947791e9e8311f01af5fa1d,LIGUE1,2019-20,2019-12-08T12:00:00Z,Matchday 17,,FC Nantes,,Dijon FCO,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d09765db7ec440523cdadee9,LIGUE1,2019-20,2019-12-08T12:00:00Z,Matchday 17,,Olympique Marseille,,Girondins Bordeaux,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-9b364900a7634755c697c670,LIGUE1,2019-20,2019-12-13T12:00:00Z,Matchday 18,,Lille OSC,,Montpellier HSC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-214b77fceb2ea0549140388c,LIGUE1,2019-20,2019-12-14T12:00:00Z,Matchday 18,,Toulouse FC,,Stade de Reims,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-2b39f1600f013d19e70eca31,LIGUE1,2019-20,2019-12-14T12:00:00Z,Matchday 18,,Angers SCO,,AS Monaco,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-5e24fd4cfa35e2128a57ed65,LIGUE1,2019-20,2019-12-14T12:00:00Z,Matchday 18,,Nîmes Olympique,,FC Nantes,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-5ede3a22a19ccff80dd0260c,LIGUE1,2019-20,2019-12-14T12:00:00Z,Matchday 18,,Amiens SC,,Dijon FCO,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-9b2bd1341dd04f4fa2a8b596,LIGUE1,2019-20,2019-12-14T12:00:00Z,Matchday 18,,Stade Brestois 29,,OGC Nice,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-dc3aaaac7c1d68ac332103b0,LIGUE1,2019-20,2019-12-14T12:00:00Z,Matchday 18,,FC Metz,,Olympique Marseille,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-311d4431f1bbe5357af6f3bd,LIGUE1,2019-20,2019-12-15T12:00:00Z,Matchday 18,,Olympique Lyonnais,,Stade Rennais,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-6753901fc1fea28d330bd79e,LIGUE1,2019-20,2019-12-15T12:00:00Z,Matchday 18,,AS Saint-Étienne,,Paris Saint-Germain,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-7cc9588f998e10d64429eeea,LIGUE1,2019-20,2019-12-15T12:00:00Z,Matchday 18,,Girondins Bordeaux,,RC Strasbourg,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-246cd1d783584b7000aff80a,LIGUE1,2019-20,2019-12-21T12:00:00Z,Matchday 19,,Dijon FCO,,FC Metz,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-2813d90b2699145cd5b2784a,LIGUE1,2019-20,2019-12-21T12:00:00Z,Matchday 19,,AS Monaco,,Lille OSC,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-3acd6a76f98cc96aa325d290,LIGUE1,2019-20,2019-12-21T12:00:00Z,Matchday 19,,RC Strasbourg,,AS Saint-Étienne,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-75cdf3427e663b4dd4f6a518,LIGUE1,2019-20,2019-12-21T12:00:00Z,Matchday 19,,Montpellier HSC,,Stade Brestois 29,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-990fdbc70dee395cf44c7a60,LIGUE1,2019-20,2019-12-21T12:00:00Z,Matchday 19,,Paris Saint-Germain,,Amiens SC,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a557abc14156cda7d7d6fed4,LIGUE1,2019-20,2019-12-21T12:00:00Z,Matchday 19,,OGC Nice,,Toulouse FC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c15c8d3566cefad173bdc1a4,LIGUE1,2019-20,2019-12-21T12:00:00Z,Matchday 19,,Olympique Marseille,,Nîmes Olympique,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-e5df0fb6bc3f83fb89089cf0,LIGUE1,2019-20,2019-12-21T12:00:00Z,Matchday 19,,FC Nantes,,Angers SCO,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-f60badcd377f4847059758b6,LIGUE1,2019-20,2019-12-21T12:00:00Z,Matchday 19,,Stade de Reims,,Olympique Lyonnais,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-fc5ada35598c8258664c8d50,LIGUE1,2019-20,2019-12-21T12:00:00Z,Matchday 19,,Stade Rennais,,Girondins Bordeaux,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-fd1a64a25558b9e9a26e7422,LIGUE1,2019-20,2020-01-10T12:00:00Z,Matchday 20,,Stade Rennais,,Olympique Marseille,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-30359bec362be3021568c580,LIGUE1,2019-20,2020-01-11T12:00:00Z,Matchday 20,,Toulouse FC,,Stade Brestois 29,,2,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-76214999f56aaf6e2f91faf2,LIGUE1,2019-20,2020-01-11T12:00:00Z,Matchday 20,,Girondins Bordeaux,,Olympique Lyonnais,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a8ce919343badea31526ec31,LIGUE1,2019-20,2020-01-11T12:00:00Z,Matchday 20,,Angers SCO,,OGC Nice,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-daf03f0c474b4f04e2f97689,LIGUE1,2019-20,2020-01-11T12:00:00Z,Matchday 20,,Nîmes Olympique,,Stade de Reims,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-dd1d308c618eff125907630b,LIGUE1,2019-20,2020-01-11T12:00:00Z,Matchday 20,,Amiens SC,,Montpellier HSC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-f9c22f229349db136a0e12a2,LIGUE1,2019-20,2020-01-11T12:00:00Z,Matchday 20,,FC Metz,,RC Strasbourg,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-1123bfe58d0a979c0c659ee7,LIGUE1,2019-20,2020-01-12T12:00:00Z,Matchday 20,,Dijon FCO,,Lille OSC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-61b0cc6691ca1a32e0ed1045,LIGUE1,2019-20,2020-01-12T12:00:00Z,Matchday 20,,Paris Saint-Germain,,AS Monaco,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-b68c3d4007c5c365ee4bfc81,LIGUE1,2019-20,2020-01-12T12:00:00Z,Matchday 20,,AS Saint-Étienne,,FC Nantes,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-06fded8ed4f44e9200356ee7,LIGUE1,2019-20,2020-01-15T12:00:00Z,Matchday 16,,Amiens SC,,Stade de Reims,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-62a1360d26da52d378ac9df0,LIGUE1,2019-20,2020-01-15T12:00:00Z,Matchday 12,,Nîmes Olympique,,Stade Rennais,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-99eac84afabb4971cd40d82b,LIGUE1,2019-20,2020-01-15T12:00:00Z,Matchday 15,,AS Monaco,,Paris Saint-Germain,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-98c84f3e1b23a28e589b098d,LIGUE1,2019-20,2020-01-24T12:00:00Z,Matchday 21,,OGC Nice,,Stade Rennais,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-4377109b11ab4dd5395b434b,LIGUE1,2019-20,2020-01-25T12:00:00Z,Matchday 21,,Montpellier HSC,,Dijon FCO,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-49d5766460005b640fcd90df,LIGUE1,2019-20,2020-01-25T12:00:00Z,Matchday 21,,Stade Brestois 29,,Amiens SC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-4e06e9e848cc3271f0acbc52,LIGUE1,2019-20,2020-01-25T12:00:00Z,Matchday 21,,AS Monaco,,RC Strasbourg,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-7d7848439cc08c963892f932,LIGUE1,2019-20,2020-01-25T12:00:00Z,Matchday 21,,Olympique Marseille,,Angers SCO,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d345ad724fede81832afbeaf,LIGUE1,2019-20,2020-01-25T12:00:00Z,Matchday 21,,Stade de Reims,,FC Metz,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-df6d053a6c5d1a2cdbc61ca9,LIGUE1,2019-20,2020-01-25T12:00:00Z,Matchday 21,,AS Saint-Étienne,,Nîmes Olympique,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-78e323d28e15dec08c970b55,LIGUE1,2019-20,2020-01-26T12:00:00Z,Matchday 21,,Olympique Lyonnais,,Toulouse FC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a253e88a38a96880ae346a1b,LIGUE1,2019-20,2020-01-26T12:00:00Z,Matchday 21,,FC Nantes,,Girondins Bordeaux,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-fbc87d5e18d83a57ba4b21c5,LIGUE1,2019-20,2020-01-26T12:00:00Z,Matchday 21,,Lille OSC,,Paris Saint-Germain,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-663fe7d31144f4c74e3c980a,LIGUE1,2019-20,2020-01-31T12:00:00Z,Matchday 22,,Stade Rennais,,FC Nantes,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-10f678ca637ed39410fa9db8,LIGUE1,2019-20,2020-02-01T12:00:00Z,Matchday 22,,Angers SCO,,Stade de Reims,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-15a8e3342f56b125b9d6b3fc,LIGUE1,2019-20,2020-02-01T12:00:00Z,Matchday 22,,Amiens SC,,Toulouse FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-41e237b35fee7c71a3c0b224,LIGUE1,2019-20,2020-02-01T12:00:00Z,Matchday 22,,Nîmes Olympique,,AS Monaco,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-8ed0fe25194fa19ead28e8a8,LIGUE1,2019-20,2020-02-01T12:00:00Z,Matchday 22,,Dijon FCO,,Stade Brestois 29,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d33d8b03530c59dcba3f841a,LIGUE1,2019-20,2020-02-01T12:00:00Z,Matchday 22,,RC Strasbourg,,Lille OSC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-e4e765122f23fbeeeb7b11b3,LIGUE1,2019-20,2020-02-01T12:00:00Z,Matchday 22,,Paris Saint-Germain,,Montpellier HSC,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c6143c4e21391712ca87dc4d,LIGUE1,2019-20,2020-02-02T12:00:00Z,Matchday 22,,FC Metz,,AS Saint-Étienne,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-f4f0747ae8397ccd9383f722,LIGUE1,2019-20,2020-02-02T12:00:00Z,Matchday 22,,Girondins Bordeaux,,Olympique Marseille,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-fbe0a09e92858aad62b1d647,LIGUE1,2019-20,2020-02-02T12:00:00Z,Matchday 22,,OGC Nice,,Olympique Lyonnais,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-25b52a2dc1fd6dfb84a068f6,LIGUE1,2019-20,2020-02-04T12:00:00Z,Matchday 23,,Lille OSC,,Stade Rennais,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-7209801986e61907e58c149f,LIGUE1,2019-20,2020-02-04T12:00:00Z,Matchday 23,,FC Nantes,,Paris Saint-Germain,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-b58d2189da6c917a7e780f13,LIGUE1,2019-20,2020-02-04T12:00:00Z,Matchday 23,,AS Monaco,,Angers SCO,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-270dc3812a88cfec12225463,LIGUE1,2019-20,2020-02-05T12:00:00Z,Matchday 23,,Montpellier HSC,,FC Metz,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-3002f095a8834478c90d46a8,LIGUE1,2019-20,2020-02-05T12:00:00Z,Matchday 23,,Nîmes Olympique,,Dijon FCO,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-40467b8644bf1703820a8203,LIGUE1,2019-20,2020-02-05T12:00:00Z,Matchday 23,,Stade Brestois 29,,Girondins Bordeaux,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-65747515eddc689f74d06ddf,LIGUE1,2019-20,2020-02-05T12:00:00Z,Matchday 23,,Stade de Reims,,OGC Nice,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-974d0d4eb45eace68c5a571a,LIGUE1,2019-20,2020-02-05T12:00:00Z,Matchday 23,,Toulouse FC,,RC Strasbourg,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-b4c85ce906baa1926cc0e123,LIGUE1,2019-20,2020-02-05T12:00:00Z,Matchday 23,,Olympique Lyonnais,,Amiens SC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-cb23b0ad4ea804994c222532,LIGUE1,2019-20,2020-02-05T12:00:00Z,Matchday 23,,AS Saint-Étienne,,Olympique Marseille,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-76a100a2b4f79713b80e79f0,LIGUE1,2019-20,2020-02-07T12:00:00Z,Matchday 24,,Angers SCO,,Lille OSC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-08914d4f2a0237917465e199,LIGUE1,2019-20,2020-02-08T12:00:00Z,Matchday 24,,Olympique Marseille,,Toulouse FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-2a5b34ba80922de79780bb8f,LIGUE1,2019-20,2020-02-08T12:00:00Z,Matchday 24,,FC Metz,,Girondins Bordeaux,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-54fa263449ba71aec16ecbe3,LIGUE1,2019-20,2020-02-08T12:00:00Z,Matchday 24,,Amiens SC,,AS Monaco,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-5843921731d12b258c979ede,LIGUE1,2019-20,2020-02-08T12:00:00Z,Matchday 24,,OGC Nice,,Nîmes Olympique,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-6c9b9abc253520789e8edd65,LIGUE1,2019-20,2020-02-08T12:00:00Z,Matchday 24,,Dijon FCO,,FC Nantes,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-f87061f430060deddf9a31e0,LIGUE1,2019-20,2020-02-08T12:00:00Z,Matchday 24,,Stade Rennais,,Stade Brestois 29,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-67b6a84837374da903bc4a73,LIGUE1,2019-20,2020-02-09T12:00:00Z,Matchday 24,,Montpellier HSC,,AS Saint-Étienne,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-69a961e50681e5a5368aa51b,LIGUE1,2019-20,2020-02-09T12:00:00Z,Matchday 24,,Paris Saint-Germain,,Olympique Lyonnais,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-bea5f9a85c347b479c4395d9,LIGUE1,2019-20,2020-02-09T12:00:00Z,Matchday 24,,RC Strasbourg,,Stade de Reims,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-f2d7f8fa16a5b04d4c5667a0,LIGUE1,2019-20,2020-02-14T12:00:00Z,Matchday 25,,AS Monaco,,Montpellier HSC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-31ea546e7298a4624a5f8822,LIGUE1,2019-20,2020-02-15T12:00:00Z,Matchday 25,,Toulouse FC,,OGC Nice,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-33ae42fa537b4a54742b8e9f,LIGUE1,2019-20,2020-02-15T12:00:00Z,Matchday 25,,Amiens SC,,Paris Saint-Germain,,4,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-b991e69af41b096c89f2eb15,LIGUE1,2019-20,2020-02-15T12:00:00Z,Matchday 25,,Girondins Bordeaux,,Dijon FCO,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d99508d2732e2f200f3e9d6d,LIGUE1,2019-20,2020-02-15T12:00:00Z,Matchday 25,,Nîmes Olympique,,Angers SCO,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-f85fd45c4b64d2cfb779f57c,LIGUE1,2019-20,2020-02-15T12:00:00Z,Matchday 25,,FC Nantes,,FC Metz,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-5489a86851ed22bd4ae04e73,LIGUE1,2019-20,2020-02-16T12:00:00Z,Matchday 25,,Lille OSC,,Olympique Marseille,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-cf3a0c6a20b67b49be6ef927,LIGUE1,2019-20,2020-02-16T12:00:00Z,Matchday 25,,Olympique Lyonnais,,RC Strasbourg,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-ee43eb03cac093eac7b8a9d8,LIGUE1,2019-20,2020-02-16T12:00:00Z,Matchday 25,,Stade de Reims,,Stade Rennais,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-eeb9dbcfc9e6df67db731bca,LIGUE1,2019-20,2020-02-16T12:00:00Z,Matchday 25,,Stade Brestois 29,,AS Saint-Étienne,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-9694d87e831c72ac78aee810,LIGUE1,2019-20,2020-02-21T12:00:00Z,Matchday 26,,OGC Nice,,Stade Brestois 29,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a277241131b19b3970a68434,LIGUE1,2019-20,2020-02-21T12:00:00Z,Matchday 26,,FC Metz,,Olympique Lyonnais,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-79b34f3d37ad0410e27f947a,LIGUE1,2019-20,2020-02-22T12:00:00Z,Matchday 26,,Olympique Marseille,,FC Nantes,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-bfef7cd495d5970ea677e8f4,LIGUE1,2019-20,2020-02-22T12:00:00Z,Matchday 26,,RC Strasbourg,,Amiens SC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-da2b379b8c72d99a41c68348,LIGUE1,2019-20,2020-02-22T12:00:00Z,Matchday 26,,Angers SCO,,Montpellier HSC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-e7d2c667002aed2c08b87e30,LIGUE1,2019-20,2020-02-22T12:00:00Z,Matchday 26,,Dijon FCO,,AS Monaco,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-ec4ae5f22ed4b7b664037fba,LIGUE1,2019-20,2020-02-22T12:00:00Z,Matchday 26,,Lille OSC,,Toulouse FC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-70283a81a170d0c70ef00189,LIGUE1,2019-20,2020-02-23T12:00:00Z,Matchday 26,,Paris Saint-Germain,,Girondins Bordeaux,,4,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-caaf46896f987b4defe2078c,LIGUE1,2019-20,2020-02-23T12:00:00Z,Matchday 26,,Stade Rennais,,Nîmes Olympique,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-feb9e85988e231d2a1a70e5c,LIGUE1,2019-20,2020-02-23T12:00:00Z,Matchday 26,,AS Saint-Étienne,,Stade de Reims,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-883d7720e40e89cc056e1b65,LIGUE1,2019-20,2020-02-28T12:00:00Z,Matchday 27,,Nîmes Olympique,,Olympique Marseille,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-1471c854cc9f7eaec0a0f871,LIGUE1,2019-20,2020-02-29T12:00:00Z,Matchday 27,,Stade Brestois 29,,Angers SCO,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-19a7074a43ea59ee4fc5cfdc,LIGUE1,2019-20,2020-02-29T12:00:00Z,Matchday 27,,Paris Saint-Germain,,Dijon FCO,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c3445c207fd95fd09f31c7c1,LIGUE1,2019-20,2020-02-29T12:00:00Z,Matchday 27,,AS Monaco,,Stade de Reims,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c5730c3c658e0a48f77db6fa,LIGUE1,2019-20,2020-02-29T12:00:00Z,Matchday 27,,Toulouse FC,,Stade Rennais,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-dedcb0d902e95a40bcd934f1,LIGUE1,2019-20,2020-02-29T12:00:00Z,Matchday 27,,Montpellier HSC,,RC Strasbourg,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-edebeb653772305918d0a6bf,LIGUE1,2019-20,2020-02-29T12:00:00Z,Matchday 27,,Amiens SC,,FC Metz,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-3c56f108e56fe6d31763aa66,LIGUE1,2019-20,2020-03-01T12:00:00Z,Matchday 27,,FC Nantes,,Lille OSC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-5ccb47f194acd3291d9b21d6,LIGUE1,2019-20,2020-03-01T12:00:00Z,Matchday 27,,Olympique Lyonnais,,AS Saint-Étienne,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c0ceb305456e51b97e12375c,LIGUE1,2019-20,2020-03-01T12:00:00Z,Matchday 27,,Girondins Bordeaux,,OGC Nice,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-9144e6b7c45ac199de635eec,LIGUE1,2019-20,2020-03-06T12:00:00Z,Matchday 28,,Olympique Marseille,,Amiens SC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-36eca9b63cffb237540fc779,LIGUE1,2019-20,2020-03-07T12:00:00Z,Matchday 28,,OGC Nice,,AS Monaco,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-5031e349a5b93b9a135efb34,LIGUE1,2019-20,2020-03-07T12:00:00Z,Matchday 28,,Dijon FCO,,Toulouse FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-61572c90681132474147f713,LIGUE1,2019-20,2020-03-07T12:00:00Z,Matchday 28,,Angers SCO,,FC Nantes,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-87e88dc6283ce930ba24dc63,LIGUE1,2019-20,2020-03-07T12:00:00Z,Matchday 28,,FC Metz,,Nîmes Olympique,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-b4ce9c6d1c3671a064c60671,LIGUE1,2019-20,2020-03-07T12:00:00Z,Matchday 28,,Stade de Reims,,Stade Brestois 29,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a3c337a4fd15ab7ce2632847,LIGUE1,2019-20,2020-03-08T12:00:00Z,Matchday 28,,Lille OSC,,Olympique Lyonnais,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-b8d09060d9d822724bcc1b4c,LIGUE1,2019-20,2020-03-08T12:00:00Z,Matchday 28,,AS Saint-Étienne,,Girondins Bordeaux,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-cc0ef4d5c9279fe5a42f7967,LIGUE1,2019-20,2020-03-08T12:00:00Z,Matchday 28,,Stade Rennais,,Montpellier HSC,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00

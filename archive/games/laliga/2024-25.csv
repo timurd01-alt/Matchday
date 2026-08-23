@@ -1,0 +1,371 @@
+game_id,comp,season,date_utc,stage,venue,home_name,home_code,away_name,away_code,home_score,away_score,status,source,first_seen
+laliga-openfootball-2fc63eb10b28b908d80021a9,LALIGA,2024-25,2024-08-15T12:00:00Z,Matchday 1,,Athletic Club,,Getafe CF,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-9625a22b0c6ffa4280192cd7,LALIGA,2024-25,2024-08-15T12:00:00Z,Matchday 1,,Real Betis Balompié,,Girona FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-1da6b19167f29bf76c3ff610,LALIGA,2024-25,2024-08-16T12:00:00Z,Matchday 1,,RC Celta de Vigo,,Deportivo Alavés,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-a404785cc3a71a1796730f6a,LALIGA,2024-25,2024-08-16T12:00:00Z,Matchday 1,,UD Las Palmas,,Sevilla FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-5e9c5bf8195a33c9052b154d,LALIGA,2024-25,2024-08-17T12:00:00Z,Matchday 1,,CA Osasuna,,CD Leganés,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-d5b3a6523f6d2b400ff77a7e,LALIGA,2024-25,2024-08-17T12:00:00Z,Matchday 1,,Valencia CF,,FC Barcelona,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-0970ac18011ac730df1adeb8,LALIGA,2024-25,2024-08-18T12:00:00Z,Matchday 1,,RCD Mallorca,,Real Madrid CF,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-41c98f4219ebebee947097b6,LALIGA,2024-25,2024-08-18T12:00:00Z,Matchday 1,,Real Sociedad de Fútbol,,Rayo Vallecano de Madrid,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-4b112a8fff56fc5844416dfd,LALIGA,2024-25,2024-08-19T12:00:00Z,Matchday 1,,Villarreal CF,,Club Atlético de Madrid,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-b5e0c5630764ce9803d7940d,LALIGA,2024-25,2024-08-19T12:00:00Z,Matchday 1,,Real Valladolid CF,,RCD Espanyol de Barcelona,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-76cb63f005f78ada1ef67c68,LALIGA,2024-25,2024-08-23T12:00:00Z,Matchday 2,,RC Celta de Vigo,,Valencia CF,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-df3831b176d041521adfd16f,LALIGA,2024-25,2024-08-23T12:00:00Z,Matchday 2,,Sevilla FC,,Villarreal CF,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-2c2147478203f931d38eaa14,LALIGA,2024-25,2024-08-24T12:00:00Z,Matchday 2,,CA Osasuna,,RCD Mallorca,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-41ff3fae41972ca29cfb2efc,LALIGA,2024-25,2024-08-24T12:00:00Z,Matchday 2,,RCD Espanyol de Barcelona,,Real Sociedad de Fútbol,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-4876595f439d87991e33c3bf,LALIGA,2024-25,2024-08-24T12:00:00Z,Matchday 2,,FC Barcelona,,Athletic Club,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-530db79fa11b5247008ae5e2,LALIGA,2024-25,2024-08-24T12:00:00Z,Matchday 2,,Getafe CF,,Rayo Vallecano de Madrid,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-65a7a474f1b8bd6af27583dd,LALIGA,2024-25,2024-08-25T12:00:00Z,Matchday 2,,Deportivo Alavés,,Real Betis Balompié,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-975ea14bcdc0792b8fbdfa68,LALIGA,2024-25,2024-08-25T12:00:00Z,Matchday 2,,Club Atlético de Madrid,,Girona FC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-a23f8c8a43dba1b27ad618d0,LALIGA,2024-25,2024-08-25T12:00:00Z,Matchday 2,,Real Madrid CF,,Real Valladolid CF,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-a506260ea7b5e068cc4c46eb,LALIGA,2024-25,2024-08-25T12:00:00Z,Matchday 2,,CD Leganés,,UD Las Palmas,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-311d5d6e0f4c5706940e2537,LALIGA,2024-25,2024-08-26T12:00:00Z,Matchday 3,,Villarreal CF,,RC Celta de Vigo,,4,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-1d66cc5ccbdf19e814076454,LALIGA,2024-25,2024-08-27T12:00:00Z,Matchday 3,,Rayo Vallecano de Madrid,,FC Barcelona,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-7b94585d62a777bd58766178,LALIGA,2024-25,2024-08-27T12:00:00Z,Matchday 3,,RCD Mallorca,,Sevilla FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-5ac78be84ab998e5969b7b73,LALIGA,2024-25,2024-08-28T12:00:00Z,Matchday 3,,Club Atlético de Madrid,,RCD Espanyol de Barcelona,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-93b942c34cf330c88a1b288e,LALIGA,2024-25,2024-08-28T12:00:00Z,Matchday 3,,Athletic Club,,Valencia CF,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-d659df005a37eea0a9aa500f,LALIGA,2024-25,2024-08-28T12:00:00Z,Matchday 3,,Real Sociedad de Fútbol,,Deportivo Alavés,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-f0503e06e2c55a966fda4cb5,LALIGA,2024-25,2024-08-28T12:00:00Z,Matchday 3,,Real Valladolid CF,,CD Leganés,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-2114e1365a83b636d99fc653,LALIGA,2024-25,2024-08-29T12:00:00Z,Matchday 3,,UD Las Palmas,,Real Madrid CF,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-5cac1970972ad97ebe7e2806,LALIGA,2024-25,2024-08-29T12:00:00Z,Matchday 3,,Girona FC,,CA Osasuna,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-07f77e246ab055f7dfde2560,LALIGA,2024-25,2024-08-31T12:00:00Z,Matchday 4,,FC Barcelona,,Real Valladolid CF,,7,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-7bb6dba08b96a1bdc38e67a9,LALIGA,2024-25,2024-08-31T12:00:00Z,Matchday 4,,CD Leganés,,RCD Mallorca,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-b50db4c3f743f047ac76e183,LALIGA,2024-25,2024-08-31T12:00:00Z,Matchday 4,,Athletic Club,,Club Atlético de Madrid,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-bbec9f9113e10d46afba2fe6,LALIGA,2024-25,2024-08-31T12:00:00Z,Matchday 4,,Valencia CF,,Villarreal CF,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-f1188780ff5b4c520eeddc90,LALIGA,2024-25,2024-08-31T12:00:00Z,Matchday 4,,RCD Espanyol de Barcelona,,Rayo Vallecano de Madrid,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-70145f74878a7223aca1e1df,LALIGA,2024-25,2024-09-01T12:00:00Z,Matchday 4,,Sevilla FC,,Girona FC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-c26eeaf37f1abcd77b4a7c3a,LALIGA,2024-25,2024-09-01T12:00:00Z,Matchday 4,,Real Madrid CF,,Real Betis Balompié,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-cea49b9a23b90dbfbfea6df5,LALIGA,2024-25,2024-09-01T12:00:00Z,Matchday 4,,CA Osasuna,,RC Celta de Vigo,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-d837db7995cf2bcb3fd3751c,LALIGA,2024-25,2024-09-01T12:00:00Z,Matchday 4,,Getafe CF,,Real Sociedad de Fútbol,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-e85ea909aa8c7c744a78bbd3,LALIGA,2024-25,2024-09-01T12:00:00Z,Matchday 4,,Deportivo Alavés,,UD Las Palmas,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-28e365db290c1bf67cf295cf,LALIGA,2024-25,2024-09-13T12:00:00Z,Matchday 5,,Real Betis Balompié,,CD Leganés,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-129a3955d10d446b4fece4a1,LALIGA,2024-25,2024-09-14T12:00:00Z,Matchday 5,,Sevilla FC,,Getafe CF,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-2f03dda57d0f36faaeb0db5c,LALIGA,2024-25,2024-09-14T12:00:00Z,Matchday 5,,RCD Mallorca,,Villarreal CF,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-55f12452b98cd98e2ff0d20c,LALIGA,2024-25,2024-09-14T12:00:00Z,Matchday 5,,Real Sociedad de Fútbol,,Real Madrid CF,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-66efb387eb37fd6bac989019,LALIGA,2024-25,2024-09-14T12:00:00Z,Matchday 5,,RCD Espanyol de Barcelona,,Deportivo Alavés,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-612919718f6dc8714cd6f6c6,LALIGA,2024-25,2024-09-15T12:00:00Z,Matchday 5,,Club Atlético de Madrid,,Valencia CF,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-62bfe4862d05a986edb7ebc7,LALIGA,2024-25,2024-09-15T12:00:00Z,Matchday 5,,UD Las Palmas,,Athletic Club,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-769af4af3995ddec9f72d466,LALIGA,2024-25,2024-09-15T12:00:00Z,Matchday 5,,RC Celta de Vigo,,Real Valladolid CF,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-7f17deaffdc04ea0e18974bd,LALIGA,2024-25,2024-09-15T12:00:00Z,Matchday 5,,Girona FC,,FC Barcelona,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-48547e2f3deef6d9012dc6f0,LALIGA,2024-25,2024-09-16T12:00:00Z,Matchday 5,,Rayo Vallecano de Madrid,,CA Osasuna,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-fdfd768a900fa9fe96c33a8d,LALIGA,2024-25,2024-09-17T12:00:00Z,Matchday 7,,RCD Mallorca,,Real Sociedad de Fútbol,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-89585d4cf2c3b52a8d192098,LALIGA,2024-25,2024-09-18T12:00:00Z,Matchday 3,,Real Betis Balompié,,Getafe CF,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-f85b30f5cb2e13dcdee165b4,LALIGA,2024-25,2024-09-19T12:00:00Z,Matchday 7,,CD Leganés,,Athletic Club,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-dad37e9ea14dcf82071bb511,LALIGA,2024-25,2024-09-20T12:00:00Z,Matchday 6,,Deportivo Alavés,,Sevilla FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-226e7578da18431a2f732bac,LALIGA,2024-25,2024-09-21T12:00:00Z,Matchday 6,,Real Madrid CF,,RCD Espanyol de Barcelona,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-61c6c0bd21068b219de52e54,LALIGA,2024-25,2024-09-21T12:00:00Z,Matchday 6,,Real Valladolid CF,,Real Sociedad de Fútbol,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-ad773cf87591f034ee2663ba,LALIGA,2024-25,2024-09-21T12:00:00Z,Matchday 6,,CA Osasuna,,UD Las Palmas,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-c931ea0ba604799190754813,LALIGA,2024-25,2024-09-21T12:00:00Z,Matchday 6,,Valencia CF,,Girona FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-58cfba0f80de0f3c2d02aa7f,LALIGA,2024-25,2024-09-22T12:00:00Z,Matchday 6,,Athletic Club,,RC Celta de Vigo,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-60d8e8e9c15bed1580424a91,LALIGA,2024-25,2024-09-22T12:00:00Z,Matchday 6,,Rayo Vallecano de Madrid,,Club Atlético de Madrid,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-7e88cc82be65e3a25492e512,LALIGA,2024-25,2024-09-22T12:00:00Z,Matchday 6,,Getafe CF,,CD Leganés,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-f506f864b8797a93a4088165,LALIGA,2024-25,2024-09-22T12:00:00Z,Matchday 6,,Villarreal CF,,FC Barcelona,,1,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-04832a989e47a916b5868b7a,LALIGA,2024-25,2024-09-23T12:00:00Z,Matchday 6,,Real Betis Balompié,,RCD Mallorca,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-03495cad857f90bfc3bb3080,LALIGA,2024-25,2024-09-24T12:00:00Z,Matchday 7,,Real Madrid CF,,Deportivo Alavés,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-d87f108e78eaca8d9194ec62,LALIGA,2024-25,2024-09-24T12:00:00Z,Matchday 7,,Sevilla FC,,Real Valladolid CF,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-f0b38d06bd06e2fb142ce963,LALIGA,2024-25,2024-09-24T12:00:00Z,Matchday 7,,Valencia CF,,CA Osasuna,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-b5eb1aecbe26f77bf4e6c584,LALIGA,2024-25,2024-09-25T12:00:00Z,Matchday 7,,Girona FC,,Rayo Vallecano de Madrid,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-e89625231bee93e2ebf799f8,LALIGA,2024-25,2024-09-25T12:00:00Z,Matchday 7,,FC Barcelona,,Getafe CF,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-92ae13985560092f0bccb0b4,LALIGA,2024-25,2024-09-26T12:00:00Z,Matchday 7,,UD Las Palmas,,Real Betis Balompié,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-e65ed0dad9e62b768f51b8b7,LALIGA,2024-25,2024-09-26T12:00:00Z,Matchday 7,,RCD Espanyol de Barcelona,,Villarreal CF,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-f0ee85b93c39a28cf884ea17,LALIGA,2024-25,2024-09-26T12:00:00Z,Matchday 7,,RC Celta de Vigo,,Club Atlético de Madrid,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-6c3b5a3403618f6bd9b91ccf,LALIGA,2024-25,2024-09-27T12:00:00Z,Matchday 8,,Real Valladolid CF,,RCD Mallorca,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-5582ceb2c14f6c9a33b5be6a,LALIGA,2024-25,2024-09-28T12:00:00Z,Matchday 8,,Real Sociedad de Fútbol,,Valencia CF,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-8e556334e3f45a099caf01fa,LALIGA,2024-25,2024-09-28T12:00:00Z,Matchday 8,,CA Osasuna,,FC Barcelona,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-a63823de126c485b1cc73194,LALIGA,2024-25,2024-09-28T12:00:00Z,Matchday 8,,Rayo Vallecano de Madrid,,CD Leganés,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-ed5f189743d98d8c8f4bca02,LALIGA,2024-25,2024-09-28T12:00:00Z,Matchday 8,,Getafe CF,,Deportivo Alavés,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-6acb1036b2dd635f725ec423,LALIGA,2024-25,2024-09-29T12:00:00Z,Matchday 8,,RC Celta de Vigo,,Girona FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-a3ccaff1722a1a2be6c8018e,LALIGA,2024-25,2024-09-29T12:00:00Z,Matchday 8,,Club Atlético de Madrid,,Real Madrid CF,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-c719a2b5a7dba8fb74c236bd,LALIGA,2024-25,2024-09-29T12:00:00Z,Matchday 8,,Real Betis Balompié,,RCD Espanyol de Barcelona,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-e4714198bfa439094f74debe,LALIGA,2024-25,2024-09-29T12:00:00Z,Matchday 8,,Athletic Club,,Sevilla FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-ebe1e6a931a70cb655c5824a,LALIGA,2024-25,2024-09-30T12:00:00Z,Matchday 8,,Villarreal CF,,UD Las Palmas,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-1c68dcadf596d1ed89090aee,LALIGA,2024-25,2024-10-04T12:00:00Z,Matchday 9,,CD Leganés,,Valencia CF,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-18bb0a0aa159b01537337649,LALIGA,2024-25,2024-10-05T12:00:00Z,Matchday 9,,Real Madrid CF,,Villarreal CF,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-59c0ffd6ebadd9789126921e,LALIGA,2024-25,2024-10-05T12:00:00Z,Matchday 9,,UD Las Palmas,,RC Celta de Vigo,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-8c1d59aaa5f6562f3ef8cabf,LALIGA,2024-25,2024-10-05T12:00:00Z,Matchday 9,,RCD Espanyol de Barcelona,,RCD Mallorca,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-98758b511021f0416b6e47fc,LALIGA,2024-25,2024-10-05T12:00:00Z,Matchday 9,,Getafe CF,,CA Osasuna,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-c3342e8b0cca2c0f4084d36f,LALIGA,2024-25,2024-10-05T12:00:00Z,Matchday 9,,Real Valladolid CF,,Rayo Vallecano de Madrid,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-26a41764ab39f7d127779dd3,LALIGA,2024-25,2024-10-06T12:00:00Z,Matchday 9,,Girona FC,,Athletic Club,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-4c7542ee31da87893bec6ebd,LALIGA,2024-25,2024-10-06T12:00:00Z,Matchday 9,,Real Sociedad de Fútbol,,Club Atlético de Madrid,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-d368f14762f1adeada4379ae,LALIGA,2024-25,2024-10-06T12:00:00Z,Matchday 9,,Sevilla FC,,Real Betis Balompié,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-fad2718f03f943435e1e2a28,LALIGA,2024-25,2024-10-06T12:00:00Z,Matchday 9,,Deportivo Alavés,,FC Barcelona,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-146cde323295f576c81f91eb,LALIGA,2024-25,2024-10-18T12:00:00Z,Matchday 10,,Deportivo Alavés,,Real Valladolid CF,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-245bd3bff43c9027b4ee899a,LALIGA,2024-25,2024-10-19T12:00:00Z,Matchday 10,,Athletic Club,,RCD Espanyol de Barcelona,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-4c8bddb5282f87fcdfe0ddb5,LALIGA,2024-25,2024-10-19T12:00:00Z,Matchday 10,,Girona FC,,Real Sociedad de Fútbol,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-803ccd9f52d797afedc11327,LALIGA,2024-25,2024-10-19T12:00:00Z,Matchday 10,,CA Osasuna,,Real Betis Balompié,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-dfb06a16c9386a980d520c68,LALIGA,2024-25,2024-10-19T12:00:00Z,Matchday 10,,RC Celta de Vigo,,Real Madrid CF,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-9cf1d70bdc1404ecc911ffe0,LALIGA,2024-25,2024-10-20T12:00:00Z,Matchday 10,,FC Barcelona,,Sevilla FC,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-a0f7b5e9314a32771b80f93f,LALIGA,2024-25,2024-10-20T12:00:00Z,Matchday 10,,Villarreal CF,,Getafe CF,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-a65ea00b77bd1d81bd6d8690,LALIGA,2024-25,2024-10-20T12:00:00Z,Matchday 10,,RCD Mallorca,,Rayo Vallecano de Madrid,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-b9b3b544836ac89666776447,LALIGA,2024-25,2024-10-20T12:00:00Z,Matchday 10,,Club Atlético de Madrid,,CD Leganés,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-64d275856e8cae1de887734b,LALIGA,2024-25,2024-10-21T12:00:00Z,Matchday 10,,Valencia CF,,UD Las Palmas,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-04bcd0735293c44a06d289da,LALIGA,2024-25,2024-10-25T12:00:00Z,Matchday 11,,RCD Espanyol de Barcelona,,Sevilla FC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-28af4fee91ee2752b5389ae7,LALIGA,2024-25,2024-10-26T12:00:00Z,Matchday 11,,Real Valladolid CF,,Villarreal CF,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-29382638914164e9e1363d0b,LALIGA,2024-25,2024-10-26T12:00:00Z,Matchday 11,,Rayo Vallecano de Madrid,,Deportivo Alavés,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-5a16764c2df36e4c12aaf9b6,LALIGA,2024-25,2024-10-26T12:00:00Z,Matchday 11,,Real Madrid CF,,FC Barcelona,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-f502907ccbf5e4387c9747ae,LALIGA,2024-25,2024-10-26T12:00:00Z,Matchday 11,,UD Las Palmas,,Girona FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-288ca2586a02b4ea5c6f2a12,LALIGA,2024-25,2024-10-27T12:00:00Z,Matchday 11,,Getafe CF,,Valencia CF,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-31694d3dc54158b2f6ca95dd,LALIGA,2024-25,2024-10-27T12:00:00Z,Matchday 11,,Real Sociedad de Fútbol,,CA Osasuna,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-a91c78313dac4d8fc364fff9,LALIGA,2024-25,2024-10-27T12:00:00Z,Matchday 11,,Real Betis Balompié,,Club Atlético de Madrid,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-af159b8735cc9546fcc151e3,LALIGA,2024-25,2024-10-27T12:00:00Z,Matchday 11,,CD Leganés,,RC Celta de Vigo,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-df1902d31b5f7a4bd0bd9762,LALIGA,2024-25,2024-10-28T12:00:00Z,Matchday 11,,RCD Mallorca,,Athletic Club,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-6292c9d4f70f45ff1623deeb,LALIGA,2024-25,2024-11-01T12:00:00Z,Matchday 12,,Deportivo Alavés,,RCD Mallorca,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-0ed696f17713e4b6ed66c051,LALIGA,2024-25,2024-11-02T12:00:00Z,Matchday 12,,Girona FC,,CD Leganés,,4,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-39e4b6e92b41fd244385f680,LALIGA,2024-25,2024-11-02T12:00:00Z,Matchday 12,,CA Osasuna,,Real Valladolid CF,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-af73526121f789a8a85de6f4,LALIGA,2024-25,2024-11-03T12:00:00Z,Matchday 12,,Club Atlético de Madrid,,UD Las Palmas,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-d779f06b444045b3873b268a,LALIGA,2024-25,2024-11-03T12:00:00Z,Matchday 12,,Sevilla FC,,Real Sociedad de Fútbol,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-e6a0a4825a6a342a5baf1177,LALIGA,2024-25,2024-11-03T12:00:00Z,Matchday 12,,FC Barcelona,,RCD Espanyol de Barcelona,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-f1a9c2daa3238c0342e6fa5d,LALIGA,2024-25,2024-11-03T12:00:00Z,Matchday 12,,Athletic Club,,Real Betis Balompié,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-b8f40f8a1d921178cd6cad9b,LALIGA,2024-25,2024-11-04T12:00:00Z,Matchday 12,,RC Celta de Vigo,,Getafe CF,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-1a5d1298331b6dd9aea2a8bd,LALIGA,2024-25,2024-11-08T12:00:00Z,Matchday 13,,Rayo Vallecano de Madrid,,UD Las Palmas,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-89bdd718a614447ce355cae2,LALIGA,2024-25,2024-11-09T12:00:00Z,Matchday 13,,Villarreal CF,,Deportivo Alavés,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-c529591a54873bf8ee0ca912,LALIGA,2024-25,2024-11-09T12:00:00Z,Matchday 13,,Real Madrid CF,,CA Osasuna,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-d76f4070a012f9eec84f4f7c,LALIGA,2024-25,2024-11-09T12:00:00Z,Matchday 13,,CD Leganés,,Sevilla FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-04f19fc0d604d56b6e5eccf5,LALIGA,2024-25,2024-11-10T12:00:00Z,Matchday 13,,RCD Mallorca,,Club Atlético de Madrid,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-2dede4eca309ebbf2480eda1,LALIGA,2024-25,2024-11-10T12:00:00Z,Matchday 13,,Real Valladolid CF,,Athletic Club,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-67e4368024141e89a3b31632,LALIGA,2024-25,2024-11-10T12:00:00Z,Matchday 13,,Real Sociedad de Fútbol,,FC Barcelona,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-8bf66238295558806c561e6f,LALIGA,2024-25,2024-11-10T12:00:00Z,Matchday 13,,Real Betis Balompié,,RC Celta de Vigo,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-a8b692ff8fefb32d7e2b2365,LALIGA,2024-25,2024-11-10T12:00:00Z,Matchday 13,,Getafe CF,,Girona FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-7a36247e1a001754e50c4bba,LALIGA,2024-25,2024-11-22T12:00:00Z,Matchday 14,,Getafe CF,,Real Valladolid CF,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-09502ec71e72e7b84f40f59f,LALIGA,2024-25,2024-11-23T12:00:00Z,Matchday 14,,UD Las Palmas,,RCD Mallorca,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-19dd3807e383c9ab1e1b0a01,LALIGA,2024-25,2024-11-23T12:00:00Z,Matchday 14,,Valencia CF,,Real Betis Balompié,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-3c1c14996064b7ac713fc14a,LALIGA,2024-25,2024-11-23T12:00:00Z,Matchday 14,,Club Atlético de Madrid,,Deportivo Alavés,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-75bd4607e5166686b45d1d22,LALIGA,2024-25,2024-11-23T12:00:00Z,Matchday 14,,RC Celta de Vigo,,FC Barcelona,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-f2251aa06d3fc7b9eb6b322a,LALIGA,2024-25,2024-11-23T12:00:00Z,Matchday 14,,Girona FC,,RCD Espanyol de Barcelona,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-24efbe7a68ccd93c1a9ad091,LALIGA,2024-25,2024-11-24T12:00:00Z,Matchday 14,,Athletic Club,,Real Sociedad de Fútbol,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-44728e9d7231ddc89a2b4538,LALIGA,2024-25,2024-11-24T12:00:00Z,Matchday 14,,CA Osasuna,,Villarreal CF,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-6b28a4dfd6ccdbd4605f161b,LALIGA,2024-25,2024-11-24T12:00:00Z,Matchday 14,,CD Leganés,,Real Madrid CF,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-7202622a408741f31f0a999c,LALIGA,2024-25,2024-11-24T12:00:00Z,Matchday 14,,Sevilla FC,,Rayo Vallecano de Madrid,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-d4c8a6acc4fe6b55e1d657e9,LALIGA,2024-25,2024-11-29T12:00:00Z,Matchday 15,,RCD Mallorca,,Valencia CF,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-1a7f86ebb8b73a72c81b98fe,LALIGA,2024-25,2024-11-30T12:00:00Z,Matchday 15,,RCD Espanyol de Barcelona,,RC Celta de Vigo,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-617653363f3c46c362033582,LALIGA,2024-25,2024-11-30T12:00:00Z,Matchday 15,,Real Valladolid CF,,Club Atlético de Madrid,,0,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-be7201a501d7e4b56e7a647b,LALIGA,2024-25,2024-11-30T12:00:00Z,Matchday 15,,FC Barcelona,,UD Las Palmas,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-c4c0ad7a25d9b63bec72d913,LALIGA,2024-25,2024-11-30T12:00:00Z,Matchday 15,,Deportivo Alavés,,CD Leganés,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-3984dade409d67947be06570,LALIGA,2024-25,2024-12-01T12:00:00Z,Matchday 15,,Villarreal CF,,Girona FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-8769dcacf9d8c917a34740ca,LALIGA,2024-25,2024-12-01T12:00:00Z,Matchday 15,,Real Sociedad de Fútbol,,Real Betis Balompié,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-ade30ce08e291b8317ff0b55,LALIGA,2024-25,2024-12-01T12:00:00Z,Matchday 15,,Rayo Vallecano de Madrid,,Athletic Club,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-f743fef6d7c8c2691d0b8bcd,LALIGA,2024-25,2024-12-01T12:00:00Z,Matchday 15,,Real Madrid CF,,Getafe CF,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-128ffa848a59e70cc155f4cb,LALIGA,2024-25,2024-12-02T12:00:00Z,Matchday 15,,Sevilla FC,,CA Osasuna,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-ef53d0c72f79b7d87372e849,LALIGA,2024-25,2024-12-03T12:00:00Z,Matchday 19,,RCD Mallorca,,FC Barcelona,,1,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-6b8157b23d59b12bee5134a8,LALIGA,2024-25,2024-12-04T12:00:00Z,Matchday 19,,Athletic Club,,Real Madrid CF,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-f1dc38528f7d4d994d5916a8,LALIGA,2024-25,2024-12-06T12:00:00Z,Matchday 16,,RC Celta de Vigo,,RCD Mallorca,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-41116579f46a7e3793306787,LALIGA,2024-25,2024-12-07T12:00:00Z,Matchday 16,,Valencia CF,,Rayo Vallecano de Madrid,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-84de7c086c9a4bc0224f940b,LALIGA,2024-25,2024-12-07T12:00:00Z,Matchday 16,,Girona FC,,Real Madrid CF,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-c94071518be455d8f53d04c9,LALIGA,2024-25,2024-12-07T12:00:00Z,Matchday 16,,Real Betis Balompié,,FC Barcelona,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-cc34005fde106a480082ce38,LALIGA,2024-25,2024-12-07T12:00:00Z,Matchday 16,,UD Las Palmas,,Real Valladolid CF,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-07ae474cd498f7495ea58a62,LALIGA,2024-25,2024-12-08T12:00:00Z,Matchday 16,,Club Atlético de Madrid,,Sevilla FC,,4,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-311e0b1e9e4467766ed9eb78,LALIGA,2024-25,2024-12-08T12:00:00Z,Matchday 16,,Athletic Club,,Villarreal CF,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-a6a54dd858f3ca5b5e82e46b,LALIGA,2024-25,2024-12-08T12:00:00Z,Matchday 16,,CD Leganés,,Real Sociedad de Fútbol,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-acd2c127ac50394a8a0c4519,LALIGA,2024-25,2024-12-08T12:00:00Z,Matchday 16,,CA Osasuna,,Deportivo Alavés,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-8cc2d7a2bb900bbcefdb1bbb,LALIGA,2024-25,2024-12-09T12:00:00Z,Matchday 16,,Getafe CF,,RCD Espanyol de Barcelona,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-93684ab6477b7483cd0d0f45,LALIGA,2024-25,2024-12-13T12:00:00Z,Matchday 17,,Real Valladolid CF,,Valencia CF,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-52433e07a061a0061bef3889,LALIGA,2024-25,2024-12-14T12:00:00Z,Matchday 17,,Rayo Vallecano de Madrid,,Real Madrid CF,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-6496fe57c1defc160d94f9b8,LALIGA,2024-25,2024-12-14T12:00:00Z,Matchday 17,,RCD Espanyol de Barcelona,,CA Osasuna,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-9f56b080cdeb7b63622a9667,LALIGA,2024-25,2024-12-14T12:00:00Z,Matchday 17,,RCD Mallorca,,Girona FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-c4593dd44f8de2c5239c202e,LALIGA,2024-25,2024-12-14T12:00:00Z,Matchday 17,,Sevilla FC,,RC Celta de Vigo,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-9214733914c2981211ced752,LALIGA,2024-25,2024-12-15T12:00:00Z,Matchday 17,,Deportivo Alavés,,Athletic Club,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-bb4e590fb3e2b4bfe43b26f5,LALIGA,2024-25,2024-12-15T12:00:00Z,Matchday 17,,FC Barcelona,,CD Leganés,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-c7add9e2ae03ac1ef96437eb,LALIGA,2024-25,2024-12-15T12:00:00Z,Matchday 17,,Real Sociedad de Fútbol,,UD Las Palmas,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-ebe8df8ae008f1a262fd6019,LALIGA,2024-25,2024-12-15T12:00:00Z,Matchday 17,,Club Atlético de Madrid,,Getafe CF,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-fc98f129bb691f13b87d23cb,LALIGA,2024-25,2024-12-15T12:00:00Z,Matchday 17,,Villarreal CF,,Real Betis Balompié,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-62fac3f42fadf6f8d5918915,LALIGA,2024-25,2024-12-18T12:00:00Z,Matchday 12,,Villarreal CF,,Rayo Vallecano de Madrid,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-90e41d55961caeaec14e1318,LALIGA,2024-25,2024-12-18T12:00:00Z,Matchday 13,,RCD Espanyol de Barcelona,,Valencia CF,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-5f4da512375422b204073213,LALIGA,2024-25,2024-12-20T12:00:00Z,Matchday 18,,Girona FC,,Real Valladolid CF,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-1d85b3538b99986be833b9cc,LALIGA,2024-25,2024-12-21T12:00:00Z,Matchday 18,,FC Barcelona,,Club Atlético de Madrid,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-1f4ab40de92b4e8a40d55b0a,LALIGA,2024-25,2024-12-21T12:00:00Z,Matchday 18,,Getafe CF,,RCD Mallorca,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-238278b679f4ff30b27c1a23,LALIGA,2024-25,2024-12-21T12:00:00Z,Matchday 18,,RC Celta de Vigo,,Real Sociedad de Fútbol,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-5cb7026a0d1e336abdf66a24,LALIGA,2024-25,2024-12-21T12:00:00Z,Matchday 18,,CA Osasuna,,Athletic Club,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-ac51e032fb3c115457ccf0b3,LALIGA,2024-25,2024-12-22T12:00:00Z,Matchday 18,,Real Madrid CF,,Sevilla FC,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-ac6ee4237e18b4c908ebd3c4,LALIGA,2024-25,2024-12-22T12:00:00Z,Matchday 18,,Real Betis Balompié,,Rayo Vallecano de Madrid,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-e17f9c39461333874adaa960,LALIGA,2024-25,2024-12-22T12:00:00Z,Matchday 18,,Valencia CF,,Deportivo Alavés,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-ea9574ce0d5a5014a3c2f679,LALIGA,2024-25,2024-12-22T12:00:00Z,Matchday 18,,UD Las Palmas,,RCD Espanyol de Barcelona,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-eea9b7cf21cec500ed409aae,LALIGA,2024-25,2024-12-22T12:00:00Z,Matchday 18,,CD Leganés,,Villarreal CF,,2,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-cfcbdea0906fcfe012f80488,LALIGA,2024-25,2025-01-03T12:00:00Z,Matchday 12,,Valencia CF,,Real Madrid CF,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-dde646deb73d1c5d42f7a888,LALIGA,2024-25,2025-01-10T12:00:00Z,Matchday 19,,Rayo Vallecano de Madrid,,RC Celta de Vigo,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-2c798ff81846614c57cea4c6,LALIGA,2024-25,2025-01-11T12:00:00Z,Matchday 19,,Real Valladolid CF,,Real Betis Balompié,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-4075b96acad5b24f7a217d46,LALIGA,2024-25,2025-01-11T12:00:00Z,Matchday 19,,RCD Espanyol de Barcelona,,CD Leganés,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-9f170049cf94c05f8abc52e8,LALIGA,2024-25,2025-01-11T12:00:00Z,Matchday 19,,Sevilla FC,,Valencia CF,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-df6de38c9ec00f81b9da66ef,LALIGA,2024-25,2025-01-11T12:00:00Z,Matchday 19,,Deportivo Alavés,,Girona FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-908eebe1d2462ba2744b649b,LALIGA,2024-25,2025-01-12T12:00:00Z,Matchday 19,,Club Atlético de Madrid,,CA Osasuna,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-ab3464b9529208110fd1bc33,LALIGA,2024-25,2025-01-12T12:00:00Z,Matchday 19,,UD Las Palmas,,Getafe CF,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-ceaf8204c3c3b62e4fdc41d1,LALIGA,2024-25,2025-01-13T12:00:00Z,Matchday 19,,Real Sociedad de Fútbol,,Villarreal CF,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-df0dffb9397ba4ec49dff25f,LALIGA,2024-25,2025-01-17T12:00:00Z,Matchday 20,,RCD Espanyol de Barcelona,,Real Valladolid CF,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-2de59fad7a8d1f727b6eeecd,LALIGA,2024-25,2025-01-18T12:00:00Z,Matchday 20,,Getafe CF,,FC Barcelona,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-3813cc9fe6cbec78c4b85c52,LALIGA,2024-25,2025-01-18T12:00:00Z,Matchday 20,,Girona FC,,Sevilla FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-ab1106f8c52ab8262a1c8b73,LALIGA,2024-25,2025-01-18T12:00:00Z,Matchday 20,,CD Leganés,,Club Atlético de Madrid,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-fc2169dd36918a907f5788c2,LALIGA,2024-25,2025-01-18T12:00:00Z,Matchday 20,,Real Betis Balompié,,Deportivo Alavés,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-313428eabf1413c04485cb41,LALIGA,2024-25,2025-01-19T12:00:00Z,Matchday 20,,Valencia CF,,Real Sociedad de Fútbol,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-582b13b3c7fdbd99ab1599fe,LALIGA,2024-25,2025-01-19T12:00:00Z,Matchday 20,,CA Osasuna,,Rayo Vallecano de Madrid,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-d4b7e93dc8a88668e33b1270,LALIGA,2024-25,2025-01-19T12:00:00Z,Matchday 20,,Real Madrid CF,,UD Las Palmas,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-e46b863ff8a7b182e765a275,LALIGA,2024-25,2025-01-19T12:00:00Z,Matchday 20,,RC Celta de Vigo,,Athletic Club,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-d5848c89af6f7fca33b506e8,LALIGA,2024-25,2025-01-20T12:00:00Z,Matchday 20,,Villarreal CF,,RCD Mallorca,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-355a0dc673d9cc4b2ede9ff6,LALIGA,2024-25,2025-01-24T12:00:00Z,Matchday 21,,UD Las Palmas,,CA Osasuna,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-221c045b21428c37d3dde549,LALIGA,2024-25,2025-01-25T12:00:00Z,Matchday 21,,RCD Mallorca,,Real Betis Balompié,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-867ed039702f267978de706d,LALIGA,2024-25,2025-01-25T12:00:00Z,Matchday 21,,Real Valladolid CF,,Real Madrid CF,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-c1230185248bd516880132a3,LALIGA,2024-25,2025-01-25T12:00:00Z,Matchday 21,,Club Atlético de Madrid,,Villarreal CF,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-c8efd721d9eb012b155a7fb2,LALIGA,2024-25,2025-01-25T12:00:00Z,Matchday 21,,Sevilla FC,,RCD Espanyol de Barcelona,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-bc0b3e824b77099f6a5f1ceb,LALIGA,2024-25,2025-01-26T12:00:00Z,Matchday 21,,FC Barcelona,,Valencia CF,,7,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-db0b340a4e2d972c5f7e5a5e,LALIGA,2024-25,2025-01-26T12:00:00Z,Matchday 21,,Real Sociedad de Fútbol,,Getafe CF,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-e5303c455c2ed0adf4f9dd96,LALIGA,2024-25,2025-01-26T12:00:00Z,Matchday 21,,Athletic Club,,CD Leganés,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-eaa3629f29e63c99a9581e3d,LALIGA,2024-25,2025-01-26T12:00:00Z,Matchday 21,,Rayo Vallecano de Madrid,,Girona FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-dfe85c458962e9121e4057ad,LALIGA,2024-25,2025-01-27T12:00:00Z,Matchday 21,,Deportivo Alavés,,RC Celta de Vigo,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-d49037bae2954bdd98052b5a,LALIGA,2024-25,2025-01-31T12:00:00Z,Matchday 22,,CD Leganés,,Rayo Vallecano de Madrid,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-0dd32ccf4063b5e0b52fd14b,LALIGA,2024-25,2025-02-01T12:00:00Z,Matchday 22,,Getafe CF,,Sevilla FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-4d747a1fedd28dc02e9ce5d7,LALIGA,2024-25,2025-02-01T12:00:00Z,Matchday 22,,Club Atlético de Madrid,,RCD Mallorca,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-bdcce012bcc9d6e1e598c98a,LALIGA,2024-25,2025-02-01T12:00:00Z,Matchday 22,,Villarreal CF,,Real Valladolid CF,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-c5ff12c66aeafa069a0582c9,LALIGA,2024-25,2025-02-01T12:00:00Z,Matchday 22,,RCD Espanyol de Barcelona,,Real Madrid CF,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-0ad25bf75ed15d00bc9ef24b,LALIGA,2024-25,2025-02-02T12:00:00Z,Matchday 22,,CA Osasuna,,Real Sociedad de Fútbol,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-29c5b86b25144651ac10ff0b,LALIGA,2024-25,2025-02-02T12:00:00Z,Matchday 22,,Valencia CF,,RC Celta de Vigo,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-649f089d0b751b4c65b09395,LALIGA,2024-25,2025-02-02T12:00:00Z,Matchday 22,,Real Betis Balompié,,Athletic Club,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-9aa02505c38cb623d3d5c351,LALIGA,2024-25,2025-02-02T12:00:00Z,Matchday 22,,FC Barcelona,,Deportivo Alavés,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-2a86010a18fc96cf7a4a8997,LALIGA,2024-25,2025-02-03T12:00:00Z,Matchday 22,,Girona FC,,UD Las Palmas,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-f98822183f976f9353ffb1ba,LALIGA,2024-25,2025-02-07T12:00:00Z,Matchday 23,,Rayo Vallecano de Madrid,,Real Valladolid CF,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-05936fe7038386a8e67b3aaf,LALIGA,2024-25,2025-02-08T12:00:00Z,Matchday 23,,Athletic Club,,Girona FC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-4caf537dfcc728a6008d52c2,LALIGA,2024-25,2025-02-08T12:00:00Z,Matchday 23,,RC Celta de Vigo,,Real Betis Balompié,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-634c699e40ecfbc76dfb3f90,LALIGA,2024-25,2025-02-08T12:00:00Z,Matchday 23,,UD Las Palmas,,Villarreal CF,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-d46f71618735b9aceb5a52af,LALIGA,2024-25,2025-02-08T12:00:00Z,Matchday 23,,Real Madrid CF,,Club Atlético de Madrid,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-777ae5144ff66e192acfc5ba,LALIGA,2024-25,2025-02-09T12:00:00Z,Matchday 23,,Real Sociedad de Fútbol,,RCD Espanyol de Barcelona,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-897e3a119b2dafd969a646c5,LALIGA,2024-25,2025-02-09T12:00:00Z,Matchday 23,,Deportivo Alavés,,Getafe CF,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-b6363b22a370aee921a291c5,LALIGA,2024-25,2025-02-09T12:00:00Z,Matchday 23,,Valencia CF,,CD Leganés,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-d2a9f91d970948fb71933e00,LALIGA,2024-25,2025-02-09T12:00:00Z,Matchday 23,,Sevilla FC,,FC Barcelona,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-cea21d9624d0c12fae22c4f3,LALIGA,2024-25,2025-02-10T12:00:00Z,Matchday 23,,RCD Mallorca,,CA Osasuna,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-27e7e4c9a368a9075311f71b,LALIGA,2024-25,2025-02-14T12:00:00Z,Matchday 24,,Girona FC,,Getafe CF,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-4f6c6dead2cc261cb400be9e,LALIGA,2024-25,2025-02-15T12:00:00Z,Matchday 24,,CA Osasuna,,Real Madrid CF,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-736290e3629824bf049e6a07,LALIGA,2024-25,2025-02-15T12:00:00Z,Matchday 24,,Club Atlético de Madrid,,RC Celta de Vigo,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-874002743b587aede251430a,LALIGA,2024-25,2025-02-15T12:00:00Z,Matchday 24,,CD Leganés,,Deportivo Alavés,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-b7567a84477e9874ef1441e7,LALIGA,2024-25,2025-02-15T12:00:00Z,Matchday 24,,Villarreal CF,,Valencia CF,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-153e3004903beda7c5b6b1ee,LALIGA,2024-25,2025-02-16T12:00:00Z,Matchday 24,,Real Betis Balompié,,Real Sociedad de Fútbol,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-1aa51efb2c26fe7c81fdb72c,LALIGA,2024-25,2025-02-16T12:00:00Z,Matchday 24,,Real Valladolid CF,,Sevilla FC,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-778b12750d78c85d4ecf4462,LALIGA,2024-25,2025-02-16T12:00:00Z,Matchday 24,,RCD Espanyol de Barcelona,,Athletic Club,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-c98e0e983e94d965d52a980e,LALIGA,2024-25,2025-02-16T12:00:00Z,Matchday 24,,RCD Mallorca,,UD Las Palmas,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-11123d531af3ad5251105ba6,LALIGA,2024-25,2025-02-17T12:00:00Z,Matchday 24,,FC Barcelona,,Rayo Vallecano de Madrid,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-e32ceaf07947abf41302c95a,LALIGA,2024-25,2025-02-21T12:00:00Z,Matchday 25,,RC Celta de Vigo,,CA Osasuna,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-45410c44ce9df4fd5f52fcdf,LALIGA,2024-25,2025-02-22T12:00:00Z,Matchday 25,,Rayo Vallecano de Madrid,,Villarreal CF,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-66053280667fd605183d5e92,LALIGA,2024-25,2025-02-22T12:00:00Z,Matchday 25,,UD Las Palmas,,FC Barcelona,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-b243111b66ad764678f7fec3,LALIGA,2024-25,2025-02-22T12:00:00Z,Matchday 25,,Valencia CF,,Club Atlético de Madrid,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-b81e2b57850c30ef0dc1bbbd,LALIGA,2024-25,2025-02-22T12:00:00Z,Matchday 25,,Deportivo Alavés,,RCD Espanyol de Barcelona,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-1713de0161abd439c75e51ea,LALIGA,2024-25,2025-02-23T12:00:00Z,Matchday 25,,Real Sociedad de Fútbol,,CD Leganés,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-6d39ea6ac4c730dc59bdb9e1,LALIGA,2024-25,2025-02-23T12:00:00Z,Matchday 25,,Getafe CF,,Real Betis Balompié,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-900a90cb43ef720663fe6c82,LALIGA,2024-25,2025-02-23T12:00:00Z,Matchday 25,,Real Madrid CF,,Girona FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-de10d5dc94a0e32e7c31a158,LALIGA,2024-25,2025-02-23T12:00:00Z,Matchday 25,,Athletic Club,,Real Valladolid CF,,7,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-c8b09a3c32a78db9557885ea,LALIGA,2024-25,2025-02-24T12:00:00Z,Matchday 25,,Sevilla FC,,RCD Mallorca,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-78c2988f1603600d87c26a4f,LALIGA,2024-25,2025-02-28T12:00:00Z,Matchday 26,,Real Valladolid CF,,UD Las Palmas,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-0a51ef36df6f9b5a90c341f7,LALIGA,2024-25,2025-03-01T12:00:00Z,Matchday 26,,Club Atlético de Madrid,,Athletic Club,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-2011ac44f647a5c443c346fd,LALIGA,2024-25,2025-03-01T12:00:00Z,Matchday 26,,Real Betis Balompié,,Real Madrid CF,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-359a6ac8f756cb1c44d76571,LALIGA,2024-25,2025-03-01T12:00:00Z,Matchday 26,,Rayo Vallecano de Madrid,,Sevilla FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-636ec5d604eed262f4e63484,LALIGA,2024-25,2025-03-01T12:00:00Z,Matchday 26,,Girona FC,,RC Celta de Vigo,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-1273b4d1e8fdef729a4d12af,LALIGA,2024-25,2025-03-02T12:00:00Z,Matchday 26,,CA Osasuna,,Valencia CF,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-57417ed0442d25fccd43c6e7,LALIGA,2024-25,2025-03-02T12:00:00Z,Matchday 26,,FC Barcelona,,Real Sociedad de Fútbol,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-5d08b4abc21cf80940e77fef,LALIGA,2024-25,2025-03-02T12:00:00Z,Matchday 26,,RCD Mallorca,,Deportivo Alavés,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-89d48c64601137fe9b117817,LALIGA,2024-25,2025-03-02T12:00:00Z,Matchday 26,,CD Leganés,,Getafe CF,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-6821528b77973981dc44afbe,LALIGA,2024-25,2025-03-08T12:00:00Z,Matchday 27,,RC Celta de Vigo,,CD Leganés,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-71eb7fd0942b86c0902dc4ac,LALIGA,2024-25,2025-03-08T12:00:00Z,Matchday 27,,Valencia CF,,Real Valladolid CF,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-846a732cbaa1e47d9674798f,LALIGA,2024-25,2025-03-08T12:00:00Z,Matchday 27,,Deportivo Alavés,,Villarreal CF,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-0b6257a6f600967b937488a9,LALIGA,2024-25,2025-03-09T12:00:00Z,Matchday 27,,Athletic Club,,RCD Mallorca,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-2743f4510332d365bae3d554,LALIGA,2024-25,2025-03-09T12:00:00Z,Matchday 27,,Real Betis Balompié,,UD Las Palmas,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-58780cb4c980b9e6ef494ac4,LALIGA,2024-25,2025-03-09T12:00:00Z,Matchday 27,,Real Madrid CF,,Rayo Vallecano de Madrid,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-a8e729ba9c2c29dc8bf8717a,LALIGA,2024-25,2025-03-09T12:00:00Z,Matchday 27,,Real Sociedad de Fútbol,,Sevilla FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-e4a570d682cde12c6d17024e,LALIGA,2024-25,2025-03-09T12:00:00Z,Matchday 27,,Getafe CF,,Club Atlético de Madrid,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-fb3d2564348ce4beed483dcb,LALIGA,2024-25,2025-03-10T12:00:00Z,Matchday 27,,RCD Espanyol de Barcelona,,Girona FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-2f779aabca194f5d3e2a206b,LALIGA,2024-25,2025-03-14T12:00:00Z,Matchday 28,,UD Las Palmas,,Deportivo Alavés,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-5365d59f2209bed1ab8644c9,LALIGA,2024-25,2025-03-15T12:00:00Z,Matchday 28,,RCD Mallorca,,RCD Espanyol de Barcelona,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-ca54a0b7c12ec5510fc1e586,LALIGA,2024-25,2025-03-15T12:00:00Z,Matchday 28,,Villarreal CF,,Real Madrid CF,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-f2f36d386a0f6819f5bae2b7,LALIGA,2024-25,2025-03-15T12:00:00Z,Matchday 28,,Real Valladolid CF,,RC Celta de Vigo,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-f67a72a4e727b1a18486b25b,LALIGA,2024-25,2025-03-15T12:00:00Z,Matchday 28,,Girona FC,,Valencia CF,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-222102f6b1c17498c487065f,LALIGA,2024-25,2025-03-16T12:00:00Z,Matchday 28,,CD Leganés,,Real Betis Balompié,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-31c873d4815f8685ba8411fe,LALIGA,2024-25,2025-03-16T12:00:00Z,Matchday 28,,Club Atlético de Madrid,,FC Barcelona,,2,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-7fd19be14f5f40a7073aff1c,LALIGA,2024-25,2025-03-16T12:00:00Z,Matchday 28,,Rayo Vallecano de Madrid,,Real Sociedad de Fútbol,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-cbe8c07bafcf1259f2d5c1f4,LALIGA,2024-25,2025-03-16T12:00:00Z,Matchday 28,,Sevilla FC,,Athletic Club,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-e9aa2f73633279338f758dc3,LALIGA,2024-25,2025-03-16T12:00:00Z,Matchday 28,,CA Osasuna,,Getafe CF,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-4f09248c424bbd26b0b03569,LALIGA,2024-25,2025-03-27T12:00:00Z,Matchday 27,,FC Barcelona,,CA Osasuna,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-16189fc9ee4fe803222b3781,LALIGA,2024-25,2025-03-29T12:00:00Z,Matchday 29,,Deportivo Alavés,,Rayo Vallecano de Madrid,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-906fff54124d07d533423ee1,LALIGA,2024-25,2025-03-29T12:00:00Z,Matchday 29,,RCD Espanyol de Barcelona,,Club Atlético de Madrid,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-95b222b69a5cb5b9b161d2ad,LALIGA,2024-25,2025-03-29T12:00:00Z,Matchday 29,,Real Madrid CF,,CD Leganés,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-9c2bf2911d47b577f3dcfaa0,LALIGA,2024-25,2025-03-29T12:00:00Z,Matchday 29,,Real Sociedad de Fútbol,,Real Valladolid CF,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-0200e68214c05880a9d0ef97,LALIGA,2024-25,2025-03-30T12:00:00Z,Matchday 29,,Valencia CF,,RCD Mallorca,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-156a9b6714c00a24b24698e1,LALIGA,2024-25,2025-03-30T12:00:00Z,Matchday 29,,Getafe CF,,Villarreal CF,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-335a7e598c58d3c552544809,LALIGA,2024-25,2025-03-30T12:00:00Z,Matchday 29,,Athletic Club,,CA Osasuna,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-7a848fd7199933fec36bb9af,LALIGA,2024-25,2025-03-30T12:00:00Z,Matchday 29,,FC Barcelona,,Girona FC,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-bd4fbad7a99b01d7119bc6aa,LALIGA,2024-25,2025-03-30T12:00:00Z,Matchday 29,,Real Betis Balompié,,Sevilla FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-1b0e6c742f8370878c289ad9,LALIGA,2024-25,2025-03-31T12:00:00Z,Matchday 29,,RC Celta de Vigo,,UD Las Palmas,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-d80318bb95bd70bdad995eb2,LALIGA,2024-25,2025-04-04T12:00:00Z,Matchday 30,,Rayo Vallecano de Madrid,,RCD Espanyol de Barcelona,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-4c3ec389909de1f2eb0ded48,LALIGA,2024-25,2025-04-05T12:00:00Z,Matchday 30,,FC Barcelona,,Real Betis Balompié,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-6e19568af6ae18abfb1234e1,LALIGA,2024-25,2025-04-05T12:00:00Z,Matchday 30,,Real Madrid CF,,Valencia CF,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-868b114be337260963e180b8,LALIGA,2024-25,2025-04-05T12:00:00Z,Matchday 30,,RCD Mallorca,,RC Celta de Vigo,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-8dd5b895738f26cc4ad7a11b,LALIGA,2024-25,2025-04-05T12:00:00Z,Matchday 30,,Girona FC,,Deportivo Alavés,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-378f62a038e7762a729cad32,LALIGA,2024-25,2025-04-06T12:00:00Z,Matchday 30,,UD Las Palmas,,Real Sociedad de Fútbol,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-5a2e07e5d7d9b3b6c30e6566,LALIGA,2024-25,2025-04-06T12:00:00Z,Matchday 30,,Sevilla FC,,Club Atlético de Madrid,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-a77d147b2da5c53687718327,LALIGA,2024-25,2025-04-06T12:00:00Z,Matchday 30,,Villarreal CF,,Athletic Club,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-d90d2a6c34c0c9601a217953,LALIGA,2024-25,2025-04-06T12:00:00Z,Matchday 30,,Real Valladolid CF,,Getafe CF,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-c697802172be81ddb4424d0a,LALIGA,2024-25,2025-04-07T12:00:00Z,Matchday 30,,CD Leganés,,CA Osasuna,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-3b49f5f3bc944be4a07e4ae0,LALIGA,2024-25,2025-04-11T12:00:00Z,Matchday 31,,Valencia CF,,Sevilla FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-7993796e431e7a77faa85988,LALIGA,2024-25,2025-04-12T12:00:00Z,Matchday 31,,CD Leganés,,FC Barcelona,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-7bbc4e0298988869e080a941,LALIGA,2024-25,2025-04-12T12:00:00Z,Matchday 31,,RC Celta de Vigo,,RCD Espanyol de Barcelona,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-c4456ef329d4869a2a4fbac3,LALIGA,2024-25,2025-04-12T12:00:00Z,Matchday 31,,Real Sociedad de Fútbol,,RCD Mallorca,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-d7d774bf1a6b1448a2cb50da,LALIGA,2024-25,2025-04-12T12:00:00Z,Matchday 31,,Getafe CF,,UD Las Palmas,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-3e82913bcd179fea519a5ff5,LALIGA,2024-25,2025-04-13T12:00:00Z,Matchday 31,,CA Osasuna,,Girona FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-8de76291c4856d6d0db55225,LALIGA,2024-25,2025-04-13T12:00:00Z,Matchday 31,,Deportivo Alavés,,Real Madrid CF,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-c484cb35793ce75bc3f27473,LALIGA,2024-25,2025-04-13T12:00:00Z,Matchday 31,,Real Betis Balompié,,Villarreal CF,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-c8d94c0a7caeb3b511d4eeb9,LALIGA,2024-25,2025-04-13T12:00:00Z,Matchday 31,,Athletic Club,,Rayo Vallecano de Madrid,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-15c5728d758e40a54df65bbe,LALIGA,2024-25,2025-04-14T12:00:00Z,Matchday 31,,Club Atlético de Madrid,,Real Valladolid CF,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-aae2727bcc82e0ccd3d0487e,LALIGA,2024-25,2025-04-18T12:00:00Z,Matchday 32,,RCD Espanyol de Barcelona,,Getafe CF,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-3f95b53c6b71a2285916fd10,LALIGA,2024-25,2025-04-19T12:00:00Z,Matchday 32,,UD Las Palmas,,Club Atlético de Madrid,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-622126f7b893bf7b3a99a7eb,LALIGA,2024-25,2025-04-19T12:00:00Z,Matchday 32,,RCD Mallorca,,CD Leganés,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-9e7a5bd7736f64a88fe41663,LALIGA,2024-25,2025-04-19T12:00:00Z,Matchday 32,,Rayo Vallecano de Madrid,,Valencia CF,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-bee28713bfb7fb175f6df656,LALIGA,2024-25,2025-04-19T12:00:00Z,Matchday 32,,FC Barcelona,,RC Celta de Vigo,,4,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-72ca0a181506e372c151fff3,LALIGA,2024-25,2025-04-20T12:00:00Z,Matchday 32,,Sevilla FC,,Deportivo Alavés,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-85438512be3e1001929d6d04,LALIGA,2024-25,2025-04-20T12:00:00Z,Matchday 32,,Villarreal CF,,Real Sociedad de Fútbol,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-95fc983d1d941c9a895fbcbe,LALIGA,2024-25,2025-04-20T12:00:00Z,Matchday 32,,Real Madrid CF,,Athletic Club,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-ff6f7a8021c1890467f36c9a,LALIGA,2024-25,2025-04-20T12:00:00Z,Matchday 32,,Real Valladolid CF,,CA Osasuna,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-dd1de9c327980ec088e19d0d,LALIGA,2024-25,2025-04-21T12:00:00Z,Matchday 32,,Girona FC,,Real Betis Balompié,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-f4a332c96e67071034c22ac6,LALIGA,2024-25,2025-04-22T12:00:00Z,Matchday 33,,FC Barcelona,,RCD Mallorca,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-fd9d01e0d97e2c9979939c70,LALIGA,2024-25,2025-04-22T12:00:00Z,Matchday 33,,Valencia CF,,RCD Espanyol de Barcelona,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-18d7004dd0cf532ac02cc3eb,LALIGA,2024-25,2025-04-23T12:00:00Z,Matchday 33,,RC Celta de Vigo,,Villarreal CF,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-2565c7dc139e4669532d4d0c,LALIGA,2024-25,2025-04-23T12:00:00Z,Matchday 33,,Athletic Club,,UD Las Palmas,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-62fbe869bf3008f380d0b61e,LALIGA,2024-25,2025-04-23T12:00:00Z,Matchday 33,,Getafe CF,,Real Madrid CF,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-76fcea8b2b127f7545adbe08,LALIGA,2024-25,2025-04-23T12:00:00Z,Matchday 33,,Deportivo Alavés,,Real Sociedad de Fútbol,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-0ce656c24c33350ed9ee2e62,LALIGA,2024-25,2025-04-24T12:00:00Z,Matchday 33,,Real Betis Balompié,,Real Valladolid CF,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-66a3900915acadbd72dabbd4,LALIGA,2024-25,2025-04-24T12:00:00Z,Matchday 33,,Club Atlético de Madrid,,Rayo Vallecano de Madrid,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-85b0bfd1cc9e6e3bd683c2bf,LALIGA,2024-25,2025-04-24T12:00:00Z,Matchday 33,,CD Leganés,,Girona FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-b54fff68bd966d9122629682,LALIGA,2024-25,2025-04-24T12:00:00Z,Matchday 33,,CA Osasuna,,Sevilla FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-e695315d6f461559a3fd2e56,LALIGA,2024-25,2025-04-27T12:00:00Z,Matchday 26,,Villarreal CF,,RCD Espanyol de Barcelona,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-d0f1a058a5230f5dede8795b,LALIGA,2024-25,2025-05-02T12:00:00Z,Matchday 34,,Rayo Vallecano de Madrid,,Getafe CF,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-35baa08ec9019b4d21c850d2,LALIGA,2024-25,2025-05-03T12:00:00Z,Matchday 34,,Real Valladolid CF,,FC Barcelona,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-4330c5122e5d7e3336094d06,LALIGA,2024-25,2025-05-03T12:00:00Z,Matchday 34,,Villarreal CF,,CA Osasuna,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-51c392209be075108465ecd4,LALIGA,2024-25,2025-05-03T12:00:00Z,Matchday 34,,UD Las Palmas,,Valencia CF,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-ace0e04ae5b53f5fac4e401c,LALIGA,2024-25,2025-05-03T12:00:00Z,Matchday 34,,Deportivo Alavés,,Club Atlético de Madrid,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-2a71770526f060043a7cf809,LALIGA,2024-25,2025-05-04T12:00:00Z,Matchday 34,,Real Madrid CF,,RC Celta de Vigo,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-66e4771a285f4b54a03c5919,LALIGA,2024-25,2025-05-04T12:00:00Z,Matchday 34,,RCD Espanyol de Barcelona,,Real Betis Balompié,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-93eb65e01b8167fd6fa0c21d,LALIGA,2024-25,2025-05-04T12:00:00Z,Matchday 34,,Real Sociedad de Fútbol,,Athletic Club,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-f22a2013bbb44105a745f0b2,LALIGA,2024-25,2025-05-04T12:00:00Z,Matchday 34,,Sevilla FC,,CD Leganés,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-c5a896358b92818f5aee9a3b,LALIGA,2024-25,2025-05-05T12:00:00Z,Matchday 34,,Girona FC,,RCD Mallorca,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-bcd288431175109dac5d17c3,LALIGA,2024-25,2025-05-09T12:00:00Z,Matchday 35,,UD Las Palmas,,Rayo Vallecano de Madrid,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-2a1652bf07240f88b746651d,LALIGA,2024-25,2025-05-10T12:00:00Z,Matchday 35,,Club Atlético de Madrid,,Real Sociedad de Fútbol,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-825619cf080e5531baceb91f,LALIGA,2024-25,2025-05-10T12:00:00Z,Matchday 35,,Girona FC,,Villarreal CF,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-b65dd1aa9126ae16ef02eeb0,LALIGA,2024-25,2025-05-10T12:00:00Z,Matchday 35,,Valencia CF,,Getafe CF,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-c2732ad68a886b6709c22425,LALIGA,2024-25,2025-05-10T12:00:00Z,Matchday 35,,RC Celta de Vigo,,Sevilla FC,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-dfdb80df6037db2d46a01299,LALIGA,2024-25,2025-05-10T12:00:00Z,Matchday 35,,RCD Mallorca,,Real Valladolid CF,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-10a5c1cbaa78775db352a73b,LALIGA,2024-25,2025-05-11T12:00:00Z,Matchday 35,,Real Betis Balompié,,CA Osasuna,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-6c9b244b028561663f3b15ac,LALIGA,2024-25,2025-05-11T12:00:00Z,Matchday 35,,CD Leganés,,RCD Espanyol de Barcelona,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-e8bde8b0b2a61efcd25dc362,LALIGA,2024-25,2025-05-11T12:00:00Z,Matchday 35,,FC Barcelona,,Real Madrid CF,,4,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-fc29e2201c2e2e6f9980902e,LALIGA,2024-25,2025-05-11T12:00:00Z,Matchday 35,,Athletic Club,,Deportivo Alavés,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-32407a6b5dfc6c3da5745c5a,LALIGA,2024-25,2025-05-13T12:00:00Z,Matchday 36,,Real Sociedad de Fútbol,,RC Celta de Vigo,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-a8b1fe9c5cc83eb20f78fb81,LALIGA,2024-25,2025-05-13T12:00:00Z,Matchday 36,,Sevilla FC,,UD Las Palmas,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-c5456e67998de795afe1518c,LALIGA,2024-25,2025-05-13T12:00:00Z,Matchday 36,,Real Valladolid CF,,Girona FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-04a7d0356ad79062ba4b2548,LALIGA,2024-25,2025-05-14T12:00:00Z,Matchday 36,,Villarreal CF,,CD Leganés,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-29b4d72ee38f8c097df47685,LALIGA,2024-25,2025-05-14T12:00:00Z,Matchday 36,,Real Madrid CF,,RCD Mallorca,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-cb3e4e20e0bb467f6f1b91c9,LALIGA,2024-25,2025-05-14T12:00:00Z,Matchday 36,,Deportivo Alavés,,Valencia CF,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-901235ef4439c818b9eaa73c,LALIGA,2024-25,2025-05-15T12:00:00Z,Matchday 36,,Getafe CF,,Athletic Club,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-94b4c30ebc6f184a299499a0,LALIGA,2024-25,2025-05-15T12:00:00Z,Matchday 36,,Rayo Vallecano de Madrid,,Real Betis Balompié,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-e06eeef6217fb456ed0fe5b2,LALIGA,2024-25,2025-05-15T12:00:00Z,Matchday 36,,CA Osasuna,,Club Atlético de Madrid,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-ebff9db2f81577f22518eb74,LALIGA,2024-25,2025-05-15T12:00:00Z,Matchday 36,,RCD Espanyol de Barcelona,,FC Barcelona,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-0af86c65601399f2cb88b946,LALIGA,2024-25,2025-05-18T12:00:00Z,Matchday 37,,FC Barcelona,,Villarreal CF,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-3448e16d0016756e45bf8214,LALIGA,2024-25,2025-05-18T12:00:00Z,Matchday 37,,RC Celta de Vigo,,Rayo Vallecano de Madrid,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-3c089f7bf868bd1474d3774f,LALIGA,2024-25,2025-05-18T12:00:00Z,Matchday 37,,CA Osasuna,,RCD Espanyol de Barcelona,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-44499b458058430b37ece55b,LALIGA,2024-25,2025-05-18T12:00:00Z,Matchday 37,,RCD Mallorca,,Getafe CF,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-59ae0fe26ab65de986bb322c,LALIGA,2024-25,2025-05-18T12:00:00Z,Matchday 37,,Real Sociedad de Fútbol,,Girona FC,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-59ea11c59f326aa48e346c53,LALIGA,2024-25,2025-05-18T12:00:00Z,Matchday 37,,Sevilla FC,,Real Madrid CF,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-64ffd20aae9defc4395fc21d,LALIGA,2024-25,2025-05-18T12:00:00Z,Matchday 37,,UD Las Palmas,,CD Leganés,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-66f94ab808c1e454e728b28e,LALIGA,2024-25,2025-05-18T12:00:00Z,Matchday 37,,Club Atlético de Madrid,,Real Betis Balompié,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-7a1da581ddaf699f0fbe171d,LALIGA,2024-25,2025-05-18T12:00:00Z,Matchday 37,,Valencia CF,,Athletic Club,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+laliga-openfootball-8c6fa515a1bbb904481a3caa,LALIGA,2024-25,2025-05-18T12:00:00Z,Matchday 37,,Real Valladolid CF,,Deportivo Alavés,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00

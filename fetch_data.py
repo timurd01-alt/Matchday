@@ -23,6 +23,7 @@ from email.utils import parsedate_to_datetime
 from collections import defaultdict
 import mfti_research
 import forecast_ledger
+import game_archive
 import mlb_recovery
 import mlb_shadow_ledger
 import market_snapshots
@@ -4771,9 +4772,12 @@ def _parse_kickoff(value):
 MLB_FORECAST_PAUSE_MESSAGE = mlb_recovery.PAUSE_MESSAGE
 
 
+MLB_INCUMBENT_IDENTITY = (PREDICTION_MODEL_VERSION, MODEL_SIGNAL_SCHEMA)
+
+
 def _mlb_forecast_publication_paused():
     """Canonical two-key gate; malformed or incomplete approval pauses."""
-    return not mlb_recovery.publication_eligible()
+    return not mlb_recovery.publication_eligible(incumbent=MLB_INCUMBENT_IDENTITY)
 
 
 def _set_prediction_publication_state(match, prediction):
@@ -6144,6 +6148,31 @@ def _append_power_ratings_table(tables):
     return list(tables or []) + ([{"group": "Power Ratings", "table_type": "power_ratings", "teams": teams}] if teams else [])
 
 
+def _matchday_top_25(tables):
+    """Rank college teams by Matchday's own public power-rating signal.
+
+    This is deliberately independent of the provider poll. The rating already
+    blends the preseason class/talent prior, self-training Elo, and current
+    season results with sample-size-aware weights.
+    """
+    teams = [dict(team) for table in tables or []
+             if table.get("table_type") not in {"official_poll", "matchday_top_25"}
+             for team in table.get("teams") or []]
+    seen, unique = set(), []
+    for team in teams:
+        key = norm(team.get("name"))
+        if key and key not in seen and not is_placeholder_team_name(team.get("name")):
+            seen.add(key)
+            unique.append(team)
+    unique.sort(key=lambda team: (-float(team.get("rating") or 0),
+                                  str(team.get("name") or "")))
+    rows = unique[:25]
+    for rank, team in enumerate(rows, 1):
+        team["pos"] = rank
+    return {"group": "Matchday Top 25", "table_type": "matchday_top_25",
+            "projection_current": True, "teams": rows}
+
+
 def compute_us_sport_standings(matches):
     """Derive win-loss(-tie) records, point differential and recent form
     directly from finished game results. Used when the provider's free tier
@@ -6374,7 +6403,9 @@ def fetch_college_bundle():
     # Bumped v6 -> v7 2026-07-27: both NCAAF and NCAAM way-too-early lists now
     # blend the prior final poll with recruiting/roster talent instead of using
     # recruiting alone. The cached ranking must be recomputed immediately.
-    cache_file = f"college_{COMP_KEY.lower()}_bundle_v7_cache.json"
+    # Bumped v7 -> v8 2026-08-23: poll rows now retain their real poll name so
+    # the UI can show AP/CFP separately from Matchday's model Top 25.
+    cache_file = f"college_{COMP_KEY.lower()}_bundle_v8_cache.json"
     bundle = None
     try:
         if os.path.exists(cache_file) and time.time() - os.path.getmtime(cache_file) < COLLEGE_CACHE_MIN * 60:
@@ -7552,7 +7583,7 @@ def build():
         for table in sports_tables:
             for team in table.get("teams") or []:
                 if team.get("name"):
-                    team["rating"] = round(power_rating(team["name"]), 2)
+                    team["rating"] = round(power_rating(team["name"], team), 2)
         # Official standings stay record-sorted. Model opinion gets its own
         # clearly labeled, league-wide table instead of replacing division rank.
         if COMP_KEY in US_PRO_STANDINGS_GROUPS:
@@ -7692,29 +7723,22 @@ def build():
     bracket_projection_current = False
     if COMP_KEY in ("NCAAF", "NCAAM") and COMP.get("source") in {"sportsdataio", "cfbd", "cbbd"}:
         ranks, proj = sports_adapter.rankings(sports_tables) if sports_adapter else ([], None)
-        is_projected = False
         if ranks:
             is_projected = bool(ranks[0].get("projected"))
-            projection_current = is_projected
             rank_rows = [{"name": r["name"], "code": r["code"], "pos": r["rank"],
                           "pld": None, "w": None, "d": None, "l": None, "gf": None, "ga": None,
                           "gd": None, "pts": None, "form": "", "record": r["record"],
                           "qual": ({"status": f"CFP {r['rank']}", "note": "projected playoff seed (straight seeding)"} if COMP_KEY == "NCAAF" and not is_projected and r["rank"] <= 12 else "")}
                          for r in ranks]
-            # A real poll and a recruiting-talent projection are different
-            # kinds of claim -- labeling them the same ("Matchday Top 25")
-            # would present a model estimate as if it were the real AP/
-            # Coaches poll. See CFBD/CBBD's own rankings()/_projected_ranking()
-            # for why this shows up at all: no real current-season poll AND
-            # the season hasn't started yet (confirmed live 2026-07-26, off-
-            # season fallback used to keep reaching backward into an already-
-            # finished season's final poll instead).
-            group_label = "Way-too-early Top 25 (model projection)" if is_projected else "Matchday Top 25"
-            rank_table = {"group": group_label, "teams": rank_rows}
-            if is_projected:
-                rank_table["table_type"] = "model_projection"
-                rank_table["projection_current"] = True
-            standings = [rank_table] + (standings or [])
+            if not is_projected:
+                poll_name = str(ranks[0].get("poll_name") or "National Poll")
+                poll_table = {"group": poll_name, "table_type": "official_poll",
+                              "teams": rank_rows}
+                standings = [poll_table] + (standings or [])
+        model_table = _matchday_top_25(sports_tables)
+        if model_table["teams"]:
+            projection_current = True
+            standings = [model_table] + (standings or [])
         if COMP_KEY == "NCAAF" and proj and not bracket:
             bracket = dict(proj) if isinstance(proj, dict) else proj
             if isinstance(bracket, dict):
@@ -7793,6 +7817,15 @@ def build():
                     else "partial" if blocked_providers else "fresh")
     advancement = (compute_advancement(matches, st, name_map, code_map)
                    if season_context["derived_positions_current"] else [])
+    # Archive the finished games before the payload that holds them is
+    # overwritten. Costs no provider call -- these were already fetched -- and
+    # record_build() swallows its own errors so the deploy never fails here.
+    archived = game_archive.record_build(COMP_KEY, matches, source_provider or "")
+    if archived.get("added"):
+        DIAG.append(f"archive: +{archived['added']} finished game(s) for {COMP_KEY}")
+    if archived.get("conflicts"):
+        DIAG.append(f"archive: {archived['conflicts']} score revision(s) refused; see archive/conflicts.jsonl")
+
     payload = {"updated": generated_at,
                "source_freshness": {
                    "state": source_state,
@@ -7818,7 +7851,8 @@ def build():
                "quota_blocked_providers": blocked_providers,
                "diagnostics": [_scrub(x) for x in DIAG]}
     if COMP_KEY == "MLB":
-        payload["forecast_publication"] = mlb_recovery.publication_decision()
+        payload["forecast_publication"] = mlb_recovery.publication_decision(
+            incumbent=MLB_INCUMBENT_IDENTITY)
     for out in (OUT_FILE, f"data_{COMP_KEY.lower()}.json"):
         tmp = out + ".tmp"
         with open(tmp, "w", encoding="utf-8") as f:

@@ -1,0 +1,307 @@
+game_id,comp,season,date_utc,stage,venue,home_name,home_code,away_name,away_code,home_score,away_score,status,source,first_seen
+bundesliga-openfootball-dccd9912ddcf12f87f643389,BUNDESLIGA,2010-11,2010-08-20T12:00:00Z,Matchday 1,,Bayern München,,VfL Wolfsburg,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-015d60370b624bb8f5cc470a,BUNDESLIGA,2010-11,2010-08-21T12:00:00Z,Matchday 1,,SC Freiburg,,FC St. Pauli,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-280ccf2bdb07e7d9f152b61c,BUNDESLIGA,2010-11,2010-08-21T12:00:00Z,Matchday 1,,Hamburger SV,,FC Schalke 04,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-552da2cea0035b450d1eef3f,BUNDESLIGA,2010-11,2010-08-21T12:00:00Z,Matchday 1,,1899 Hoffenheim,,Werder Bremen,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-58b4ab6ce57ecb723c287190,BUNDESLIGA,2010-11,2010-08-21T12:00:00Z,Matchday 1,,1. FC Köln,,1. FC Kaiserslautern,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-63c282646aa04003958de288,BUNDESLIGA,2010-11,2010-08-21T12:00:00Z,Matchday 1,,Hannover 96,,Eintracht Frankfurt,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f26e76da7d3df3d0ca31ef28,BUNDESLIGA,2010-11,2010-08-21T12:00:00Z,Matchday 1,,Bor. Mönchengladbach,,1. FC Nürnberg,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a512d2695e88701b4eaf1669,BUNDESLIGA,2010-11,2010-08-22T12:00:00Z,Matchday 1,,Borussia Dortmund,,Bayer Leverkusen,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ca2cb87d4bb6e79887473851,BUNDESLIGA,2010-11,2010-08-22T12:00:00Z,Matchday 1,,1. FSV Mainz 05,,VfB Stuttgart,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e83691cafec0ec5109f16d8d,BUNDESLIGA,2010-11,2010-08-27T12:00:00Z,Matchday 2,,1. FC Kaiserslautern,,Bayern München,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-0f5b2bd7e07cae243c2616a7,BUNDESLIGA,2010-11,2010-08-28T12:00:00Z,Matchday 2,,FC St. Pauli,,1899 Hoffenheim,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-4b284cecf2485606d29da90e,BUNDESLIGA,2010-11,2010-08-28T12:00:00Z,Matchday 2,,FC Schalke 04,,Hannover 96,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-546aba9b0253bb4b0b9fea7e,BUNDESLIGA,2010-11,2010-08-28T12:00:00Z,Matchday 2,,Eintracht Frankfurt,,Hamburger SV,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-886fc96e9afe7fd33dd01afb,BUNDESLIGA,2010-11,2010-08-28T12:00:00Z,Matchday 2,,Werder Bremen,,1. FC Köln,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-893cfd258e9af778be2140fe,BUNDESLIGA,2010-11,2010-08-28T12:00:00Z,Matchday 2,,VfL Wolfsburg,,1. FSV Mainz 05,,3,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-9cbf845eada9790662e03c03,BUNDESLIGA,2010-11,2010-08-28T12:00:00Z,Matchday 2,,1. FC Nürnberg,,SC Freiburg,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-9c9d1a04a583251223376855,BUNDESLIGA,2010-11,2010-08-29T12:00:00Z,Matchday 2,,VfB Stuttgart,,Borussia Dortmund,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b09b13b02f0614ae5d46780b,BUNDESLIGA,2010-11,2010-08-29T12:00:00Z,Matchday 2,,Bayer Leverkusen,,Bor. Mönchengladbach,,3,6,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-44246fde18c9b8488bad4590,BUNDESLIGA,2010-11,2010-09-10T12:00:00Z,Matchday 3,,1899 Hoffenheim,,FC Schalke 04,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-1ef33c885347f327736b6671,BUNDESLIGA,2010-11,2010-09-11T12:00:00Z,Matchday 3,,SC Freiburg,,VfB Stuttgart,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-57c91cd20b2a05adc9367413,BUNDESLIGA,2010-11,2010-09-11T12:00:00Z,Matchday 3,,Hamburger SV,,1. FC Nürnberg,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-adb5e4bc28db8b0301b74dc4,BUNDESLIGA,2010-11,2010-09-11T12:00:00Z,Matchday 3,,Bor. Mönchengladbach,,Eintracht Frankfurt,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b9a3915ac89ba1cefb0f6c1d,BUNDESLIGA,2010-11,2010-09-11T12:00:00Z,Matchday 3,,Hannover 96,,Bayer Leverkusen,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-cadb58bf5265fb192cddbe9a,BUNDESLIGA,2010-11,2010-09-11T12:00:00Z,Matchday 3,,Borussia Dortmund,,VfL Wolfsburg,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-fd16c842b3ac3ea9690e63e8,BUNDESLIGA,2010-11,2010-09-11T12:00:00Z,Matchday 3,,Bayern München,,Werder Bremen,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-9ff54762756174c6f550e65d,BUNDESLIGA,2010-11,2010-09-12T12:00:00Z,Matchday 3,,1. FC Köln,,FC St. Pauli,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e2e9240ccf012d735aa5afa0,BUNDESLIGA,2010-11,2010-09-12T12:00:00Z,Matchday 3,,1. FSV Mainz 05,,1. FC Kaiserslautern,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-475c4d402b497713a2aebb6e,BUNDESLIGA,2010-11,2010-09-17T12:00:00Z,Matchday 4,,Eintracht Frankfurt,,SC Freiburg,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-401c1e739d82dbcbe53d4703,BUNDESLIGA,2010-11,2010-09-18T12:00:00Z,Matchday 4,,VfL Wolfsburg,,Hannover 96,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-56a55bf0f1b0b1bce5fe6d36,BUNDESLIGA,2010-11,2010-09-18T12:00:00Z,Matchday 4,,1. FC Kaiserslautern,,1899 Hoffenheim,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5e9664f53c303aec6b554fb9,BUNDESLIGA,2010-11,2010-09-18T12:00:00Z,Matchday 4,,VfB Stuttgart,,Bor. Mönchengladbach,,7,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-d46ae0f7887d3a3841ca1e8a,BUNDESLIGA,2010-11,2010-09-18T12:00:00Z,Matchday 4,,Bayern München,,1. FC Köln,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-fd2b98df4beb5a3684dd0b52,BUNDESLIGA,2010-11,2010-09-18T12:00:00Z,Matchday 4,,Werder Bremen,,1. FSV Mainz 05,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-12666a46013aff626064134c,BUNDESLIGA,2010-11,2010-09-19T12:00:00Z,Matchday 4,,FC Schalke 04,,Borussia Dortmund,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-37986b09feb2dc492080492a,BUNDESLIGA,2010-11,2010-09-19T12:00:00Z,Matchday 4,,FC St. Pauli,,Hamburger SV,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-9d6d9164659cdba8a7a8dd2c,BUNDESLIGA,2010-11,2010-09-19T12:00:00Z,Matchday 4,,Bayer Leverkusen,,1. FC Nürnberg,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-4df6ec3aeb3286c76dfb5681,BUNDESLIGA,2010-11,2010-09-21T12:00:00Z,Matchday 5,,1899 Hoffenheim,,Bayern München,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-caf589de6c573605586b6958,BUNDESLIGA,2010-11,2010-09-21T12:00:00Z,Matchday 5,,1. FSV Mainz 05,,1. FC Köln,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-fb04cfe0da0bdc9ddaa39f7e,BUNDESLIGA,2010-11,2010-09-21T12:00:00Z,Matchday 5,,Hannover 96,,Werder Bremen,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-023fe29bb0a75a04f301e653,BUNDESLIGA,2010-11,2010-09-22T12:00:00Z,Matchday 5,,Hamburger SV,,VfL Wolfsburg,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-29c4610446d41168d167e4de,BUNDESLIGA,2010-11,2010-09-22T12:00:00Z,Matchday 5,,Borussia Dortmund,,1. FC Kaiserslautern,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5941459ecab6dde905a148e1,BUNDESLIGA,2010-11,2010-09-22T12:00:00Z,Matchday 5,,Bor. Mönchengladbach,,FC St. Pauli,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-6621c68ddda67e1153a59030,BUNDESLIGA,2010-11,2010-09-22T12:00:00Z,Matchday 5,,Bayer Leverkusen,,Eintracht Frankfurt,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-70ef76dd2dca4cf5f1a3bd27,BUNDESLIGA,2010-11,2010-09-22T12:00:00Z,Matchday 5,,1. FC Nürnberg,,VfB Stuttgart,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-fe5dfa2143cf3ef215be32aa,BUNDESLIGA,2010-11,2010-09-22T12:00:00Z,Matchday 5,,SC Freiburg,,FC Schalke 04,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-764f868d4260c1c626b23670,BUNDESLIGA,2010-11,2010-09-24T12:00:00Z,Matchday 6,,1. FC Köln,,1899 Hoffenheim,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2725ca62e0ff87df8417bc61,BUNDESLIGA,2010-11,2010-09-25T12:00:00Z,Matchday 6,,Bayern München,,1. FSV Mainz 05,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-3a39b44224b019c77fe3f37a,BUNDESLIGA,2010-11,2010-09-25T12:00:00Z,Matchday 6,,VfB Stuttgart,,Bayer Leverkusen,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-80ea428ace14c23ffe7bf7d5,BUNDESLIGA,2010-11,2010-09-25T12:00:00Z,Matchday 6,,FC St. Pauli,,Borussia Dortmund,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-9e7eb927f0b8c9b0a0e4762f,BUNDESLIGA,2010-11,2010-09-25T12:00:00Z,Matchday 6,,Eintracht Frankfurt,,1. FC Nürnberg,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-aee968e674f94f4382e056af,BUNDESLIGA,2010-11,2010-09-25T12:00:00Z,Matchday 6,,FC Schalke 04,,Bor. Mönchengladbach,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f8c29e81c77308d1fb4f7ff0,BUNDESLIGA,2010-11,2010-09-25T12:00:00Z,Matchday 6,,Werder Bremen,,Hamburger SV,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-41d423f9e8511f61d5afdebd,BUNDESLIGA,2010-11,2010-09-26T12:00:00Z,Matchday 6,,VfL Wolfsburg,,SC Freiburg,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b77739932b25c2c405ef16e0,BUNDESLIGA,2010-11,2010-09-26T12:00:00Z,Matchday 6,,1. FC Kaiserslautern,,Hannover 96,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5f07054d281dcddff98b2a37,BUNDESLIGA,2010-11,2010-10-01T12:00:00Z,Matchday 7,,Hannover 96,,FC St. Pauli,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-08263e0875b58aedd0828741,BUNDESLIGA,2010-11,2010-10-02T12:00:00Z,Matchday 7,,SC Freiburg,,1. FC Köln,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-0d3a3fc205d423fa6fc640ab,BUNDESLIGA,2010-11,2010-10-02T12:00:00Z,Matchday 7,,Hamburger SV,,1. FC Kaiserslautern,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-4a1b6c35483b0e87d446f815,BUNDESLIGA,2010-11,2010-10-02T12:00:00Z,Matchday 7,,1. FC Nürnberg,,FC Schalke 04,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5a7c9f0b2b4b62053e633b16,BUNDESLIGA,2010-11,2010-10-02T12:00:00Z,Matchday 7,,1. FSV Mainz 05,,1899 Hoffenheim,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ff723c5d112ca3e26537a26e,BUNDESLIGA,2010-11,2010-10-02T12:00:00Z,Matchday 7,,Bor. Mönchengladbach,,VfL Wolfsburg,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-0629e3e78259876904aebcf7,BUNDESLIGA,2010-11,2010-10-03T12:00:00Z,Matchday 7,,Borussia Dortmund,,Bayern München,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-0a1f5600df5024cd139db257,BUNDESLIGA,2010-11,2010-10-03T12:00:00Z,Matchday 7,,VfB Stuttgart,,Eintracht Frankfurt,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2688b1492e876e77392552dc,BUNDESLIGA,2010-11,2010-10-03T12:00:00Z,Matchday 7,,Bayer Leverkusen,,Werder Bremen,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a98a777946f58c87fd039285,BUNDESLIGA,2010-11,2010-10-15T12:00:00Z,Matchday 8,,1. FC Köln,,Borussia Dortmund,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-6cee40e04175b886e8fe15a2,BUNDESLIGA,2010-11,2010-10-16T12:00:00Z,Matchday 8,,Werder Bremen,,SC Freiburg,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-6ef69f2c2121680aa94de267,BUNDESLIGA,2010-11,2010-10-16T12:00:00Z,Matchday 8,,Bayern München,,Hannover 96,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-9c0b9d09d7b41f80627df98e,BUNDESLIGA,2010-11,2010-10-16T12:00:00Z,Matchday 8,,FC Schalke 04,,VfB Stuttgart,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a7e24f7cf660de321b3467b2,BUNDESLIGA,2010-11,2010-10-16T12:00:00Z,Matchday 8,,VfL Wolfsburg,,Bayer Leverkusen,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c9d75b2191dd5c6ca9f34eb0,BUNDESLIGA,2010-11,2010-10-16T12:00:00Z,Matchday 8,,FC St. Pauli,,1. FC Nürnberg,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-fcb6979608e42c79b37d7f0d,BUNDESLIGA,2010-11,2010-10-16T12:00:00Z,Matchday 8,,1. FSV Mainz 05,,Hamburger SV,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-94a71f387245ec3dfc2f53ea,BUNDESLIGA,2010-11,2010-10-17T12:00:00Z,Matchday 8,,1. FC Kaiserslautern,,Eintracht Frankfurt,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c95df2745263e8b195d1afe1,BUNDESLIGA,2010-11,2010-10-17T12:00:00Z,Matchday 8,,1899 Hoffenheim,,Bor. Mönchengladbach,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-93eb659ccb04de11b2bbed53,BUNDESLIGA,2010-11,2010-10-22T12:00:00Z,Matchday 9,,Hamburger SV,,Bayern München,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5c5afb28a7ab1f239d4b641b,BUNDESLIGA,2010-11,2010-10-23T12:00:00Z,Matchday 9,,SC Freiburg,,1. FC Kaiserslautern,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ac62f7bfd09556cbd07486e6,BUNDESLIGA,2010-11,2010-10-23T12:00:00Z,Matchday 9,,Bor. Mönchengladbach,,Werder Bremen,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b683e7b9e340354a777e29c4,BUNDESLIGA,2010-11,2010-10-23T12:00:00Z,Matchday 9,,1. FC Nürnberg,,VfL Wolfsburg,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e7ac12cfaf4ca16bc48ede0f,BUNDESLIGA,2010-11,2010-10-23T12:00:00Z,Matchday 9,,Hannover 96,,1. FC Köln,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e86c801f4a48848468b3bc92,BUNDESLIGA,2010-11,2010-10-23T12:00:00Z,Matchday 9,,Eintracht Frankfurt,,FC Schalke 04,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-1799bff7446b2adfea38ad9e,BUNDESLIGA,2010-11,2010-10-24T12:00:00Z,Matchday 9,,Borussia Dortmund,,1899 Hoffenheim,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2a623b8befd991147bfc2ac7,BUNDESLIGA,2010-11,2010-10-24T12:00:00Z,Matchday 9,,VfB Stuttgart,,FC St. Pauli,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-64f34a4dc3d1d1d3fdd1acaa,BUNDESLIGA,2010-11,2010-10-24T12:00:00Z,Matchday 9,,Bayer Leverkusen,,1. FSV Mainz 05,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c5b1ba37903aba346aa42beb,BUNDESLIGA,2010-11,2010-10-29T12:00:00Z,Matchday 10,,Bayern München,,SC Freiburg,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-62c187702d04acb521e3169b,BUNDESLIGA,2010-11,2010-10-30T12:00:00Z,Matchday 10,,1. FC Kaiserslautern,,Bor. Mönchengladbach,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-685aedb276634f2c9a700af4,BUNDESLIGA,2010-11,2010-10-30T12:00:00Z,Matchday 10,,VfL Wolfsburg,,VfB Stuttgart,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-8e2b9dadf685d71cdc51eab2,BUNDESLIGA,2010-11,2010-10-30T12:00:00Z,Matchday 10,,FC Schalke 04,,Bayer Leverkusen,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-999c042958efc2187888e608,BUNDESLIGA,2010-11,2010-10-30T12:00:00Z,Matchday 10,,Werder Bremen,,1. FC Nürnberg,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a2bc7b61c0ded40d31481c21,BUNDESLIGA,2010-11,2010-10-30T12:00:00Z,Matchday 10,,1. FC Köln,,Hamburger SV,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a6ecff3b84ffbf1bd34d26e3,BUNDESLIGA,2010-11,2010-10-30T12:00:00Z,Matchday 10,,FC St. Pauli,,Eintracht Frankfurt,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a60fb237c34e5166ecd47436,BUNDESLIGA,2010-11,2010-10-31T12:00:00Z,Matchday 10,,1899 Hoffenheim,,Hannover 96,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-fd869b332897f35fa90bb862,BUNDESLIGA,2010-11,2010-10-31T12:00:00Z,Matchday 10,,1. FSV Mainz 05,,Borussia Dortmund,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-d0d0afd2247700195cde4f0e,BUNDESLIGA,2010-11,2010-11-05T12:00:00Z,Matchday 11,,FC Schalke 04,,FC St. Pauli,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-8844ea02477f3cf913a23934,BUNDESLIGA,2010-11,2010-11-06T12:00:00Z,Matchday 11,,Bor. Mönchengladbach,,Bayern München,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-921ad5fa916af7f3cac98cca,BUNDESLIGA,2010-11,2010-11-06T12:00:00Z,Matchday 11,,1. FC Nürnberg,,1. FC Köln,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a5d5655917c6300a3ea0b293,BUNDESLIGA,2010-11,2010-11-06T12:00:00Z,Matchday 11,,Eintracht Frankfurt,,VfL Wolfsburg,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b8dd318713c82fb80c5cd086,BUNDESLIGA,2010-11,2010-11-06T12:00:00Z,Matchday 11,,Hamburger SV,,1899 Hoffenheim,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ff47cb3b1544566bda246567,BUNDESLIGA,2010-11,2010-11-06T12:00:00Z,Matchday 11,,SC Freiburg,,1. FSV Mainz 05,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-03c48303439bf77231d7199c,BUNDESLIGA,2010-11,2010-11-07T12:00:00Z,Matchday 11,,Hannover 96,,Borussia Dortmund,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2b9fff344beaab80a9bf995d,BUNDESLIGA,2010-11,2010-11-07T12:00:00Z,Matchday 11,,Bayer Leverkusen,,1. FC Kaiserslautern,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a6b576f7802a9eba3c6ce4c7,BUNDESLIGA,2010-11,2010-11-07T12:00:00Z,Matchday 11,,VfB Stuttgart,,Werder Bremen,,6,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ac8a03d52b24164ab857d7f5,BUNDESLIGA,2010-11,2010-11-12T12:00:00Z,Matchday 12,,Borussia Dortmund,,Hamburger SV,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-24a28b039d53d90db7967cd4,BUNDESLIGA,2010-11,2010-11-13T12:00:00Z,Matchday 12,,VfL Wolfsburg,,FC Schalke 04,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2825bf91813793046613b50f,BUNDESLIGA,2010-11,2010-11-13T12:00:00Z,Matchday 12,,1. FSV Mainz 05,,Hannover 96,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-6250daef67774035162a6eb2,BUNDESLIGA,2010-11,2010-11-13T12:00:00Z,Matchday 12,,FC St. Pauli,,Bayer Leverkusen,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-7c3c065cad4806018283171a,BUNDESLIGA,2010-11,2010-11-13T12:00:00Z,Matchday 12,,Werder Bremen,,Eintracht Frankfurt,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-9f0614c6c200bfd6c23c3f1c,BUNDESLIGA,2010-11,2010-11-13T12:00:00Z,Matchday 12,,1. FC Köln,,Bor. Mönchengladbach,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f53e59dbedcc6a1c9778e1d1,BUNDESLIGA,2010-11,2010-11-13T12:00:00Z,Matchday 12,,1. FC Kaiserslautern,,VfB Stuttgart,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-363f4d51dcd661566ad23232,BUNDESLIGA,2010-11,2010-11-14T12:00:00Z,Matchday 12,,Bayern München,,1. FC Nürnberg,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-83b34b24fd3fcdce7e3aac2f,BUNDESLIGA,2010-11,2010-11-14T12:00:00Z,Matchday 12,,1899 Hoffenheim,,SC Freiburg,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-188a989663d073ad66bf8e5d,BUNDESLIGA,2010-11,2010-11-20T12:00:00Z,Matchday 13,,SC Freiburg,,Borussia Dortmund,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-1a597efc89c2217820f89ea6,BUNDESLIGA,2010-11,2010-11-20T12:00:00Z,Matchday 13,,Eintracht Frankfurt,,1899 Hoffenheim,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a262524efd6cb0d296ce540d,BUNDESLIGA,2010-11,2010-11-20T12:00:00Z,Matchday 13,,Bayer Leverkusen,,Bayern München,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b26d9ed055ff99b42d62e7df,BUNDESLIGA,2010-11,2010-11-20T12:00:00Z,Matchday 13,,FC Schalke 04,,Werder Bremen,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-bed62749cd1c99108b90c1c9,BUNDESLIGA,2010-11,2010-11-20T12:00:00Z,Matchday 13,,1. FC Nürnberg,,1. FC Kaiserslautern,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-cfc32721a24078f0d22281b8,BUNDESLIGA,2010-11,2010-11-20T12:00:00Z,Matchday 13,,Bor. Mönchengladbach,,1. FSV Mainz 05,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e7aea7549b9927ce28a8fca1,BUNDESLIGA,2010-11,2010-11-20T12:00:00Z,Matchday 13,,Hannover 96,,Hamburger SV,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-227ae28fce7275bbf5ff99c7,BUNDESLIGA,2010-11,2010-11-21T12:00:00Z,Matchday 13,,FC St. Pauli,,VfL Wolfsburg,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c1fa9f388079858f7e448023,BUNDESLIGA,2010-11,2010-11-21T12:00:00Z,Matchday 13,,VfB Stuttgart,,1. FC Köln,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-49b012c3c09c7d80a71c010b,BUNDESLIGA,2010-11,2010-11-26T12:00:00Z,Matchday 14,,1. FSV Mainz 05,,1. FC Nürnberg,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-1a47dc48fcff7d0c31053472,BUNDESLIGA,2010-11,2010-11-27T12:00:00Z,Matchday 14,,Bayern München,,Eintracht Frankfurt,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-48316fd49a0734048b59c04d,BUNDESLIGA,2010-11,2010-11-27T12:00:00Z,Matchday 14,,Hannover 96,,SC Freiburg,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-8be5155a415317bb8b3da4be,BUNDESLIGA,2010-11,2010-11-27T12:00:00Z,Matchday 14,,1899 Hoffenheim,,Bayer Leverkusen,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a1591973da21827439e36ec6,BUNDESLIGA,2010-11,2010-11-27T12:00:00Z,Matchday 14,,1. FC Kaiserslautern,,FC Schalke 04,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-d1f35de90b148870a75f6292,BUNDESLIGA,2010-11,2010-11-27T12:00:00Z,Matchday 14,,Hamburger SV,,VfB Stuttgart,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f1132196f576703bbc810bef,BUNDESLIGA,2010-11,2010-11-27T12:00:00Z,Matchday 14,,Borussia Dortmund,,Bor. Mönchengladbach,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-556adab04eed802dabe043f7,BUNDESLIGA,2010-11,2010-11-28T12:00:00Z,Matchday 14,,1. FC Köln,,VfL Wolfsburg,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e25932d44ba3861fed6d864f,BUNDESLIGA,2010-11,2010-11-28T12:00:00Z,Matchday 14,,Werder Bremen,,FC St. Pauli,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ecdd05d37ced34dc70b50ab0,BUNDESLIGA,2010-11,2010-12-03T12:00:00Z,Matchday 15,,FC St. Pauli,,1. FC Kaiserslautern,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-305b127517fd57646d299244,BUNDESLIGA,2010-11,2010-12-04T12:00:00Z,Matchday 15,,Eintracht Frankfurt,,1. FSV Mainz 05,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-412fbf13e291fbc8a14846f0,BUNDESLIGA,2010-11,2010-12-04T12:00:00Z,Matchday 15,,VfL Wolfsburg,,Werder Bremen,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-843b3b12f40eecacd043f2bb,BUNDESLIGA,2010-11,2010-12-04T12:00:00Z,Matchday 15,,VfB Stuttgart,,1899 Hoffenheim,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a91a24b271de0703528f405b,BUNDESLIGA,2010-11,2010-12-04T12:00:00Z,Matchday 15,,SC Freiburg,,Hamburger SV,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b8810f57c4566a954f363247,BUNDESLIGA,2010-11,2010-12-04T12:00:00Z,Matchday 15,,Bor. Mönchengladbach,,Hannover 96,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-cfd844a9a3ca51ba7ed06480,BUNDESLIGA,2010-11,2010-12-04T12:00:00Z,Matchday 15,,FC Schalke 04,,Bayern München,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-87dff7f9bad6961316deb8c3,BUNDESLIGA,2010-11,2010-12-05T12:00:00Z,Matchday 15,,1. FC Nürnberg,,Borussia Dortmund,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a0554685c96e555cbc93f34f,BUNDESLIGA,2010-11,2010-12-05T12:00:00Z,Matchday 15,,Bayer Leverkusen,,1. FC Köln,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-232032a0e266e2a11857f22b,BUNDESLIGA,2010-11,2010-12-10T12:00:00Z,Matchday 16,,Hannover 96,,VfB Stuttgart,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-34692a3e4910f8153ecfeb49,BUNDESLIGA,2010-11,2010-12-11T12:00:00Z,Matchday 16,,1. FC Köln,,Eintracht Frankfurt,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-3a0a1fae3355fc9dabd10ac9,BUNDESLIGA,2010-11,2010-12-11T12:00:00Z,Matchday 16,,Bayern München,,FC St. Pauli,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-601528a08af90ccddd67e753,BUNDESLIGA,2010-11,2010-12-11T12:00:00Z,Matchday 16,,1899 Hoffenheim,,1. FC Nürnberg,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-90ecc969a2fbf8579f7c73e7,BUNDESLIGA,2010-11,2010-12-11T12:00:00Z,Matchday 16,,1. FC Kaiserslautern,,VfL Wolfsburg,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-9372acd19f900ece7488b58b,BUNDESLIGA,2010-11,2010-12-11T12:00:00Z,Matchday 16,,Borussia Dortmund,,Werder Bremen,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f1945c5a029a86f62aeb948a,BUNDESLIGA,2010-11,2010-12-11T12:00:00Z,Matchday 16,,Hamburger SV,,Bayer Leverkusen,,2,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-99f3a81729bd9af5a0b45fac,BUNDESLIGA,2010-11,2010-12-12T12:00:00Z,Matchday 16,,1. FSV Mainz 05,,FC Schalke 04,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a6e997a5e09f3f7c4f9da57d,BUNDESLIGA,2010-11,2010-12-12T12:00:00Z,Matchday 16,,SC Freiburg,,Bor. Mönchengladbach,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-437da6e9df8b6a89e1da4b0b,BUNDESLIGA,2010-11,2010-12-17T12:00:00Z,Matchday 17,,Bor. Mönchengladbach,,Hamburger SV,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-14e40631dd941dfef76aba09,BUNDESLIGA,2010-11,2010-12-18T12:00:00Z,Matchday 17,,FC Schalke 04,,1. FC Köln,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-87736c614ba16ca40f41d4d8,BUNDESLIGA,2010-11,2010-12-18T12:00:00Z,Matchday 17,,Werder Bremen,,1. FC Kaiserslautern,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c2bf99f0338f1733da7e23b8,BUNDESLIGA,2010-11,2010-12-18T12:00:00Z,Matchday 17,,FC St. Pauli,,1. FSV Mainz 05,,2,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-cd7b39ccaea449edb5f6e55f,BUNDESLIGA,2010-11,2010-12-18T12:00:00Z,Matchday 17,,1. FC Nürnberg,,Hannover 96,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-d331c524322650849caa0ddc,BUNDESLIGA,2010-11,2010-12-18T12:00:00Z,Matchday 17,,Eintracht Frankfurt,,Borussia Dortmund,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f97bf18074cffdf4b90ddf95,BUNDESLIGA,2010-11,2010-12-18T12:00:00Z,Matchday 17,,VfL Wolfsburg,,1899 Hoffenheim,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-594b6ba5f0175cadbf2e6e6e,BUNDESLIGA,2010-11,2010-12-19T12:00:00Z,Matchday 17,,VfB Stuttgart,,Bayern München,,3,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f601029277c3d7137c6c35a5,BUNDESLIGA,2010-11,2010-12-19T12:00:00Z,Matchday 17,,Bayer Leverkusen,,SC Freiburg,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e0fd13f2e11840abc3a5281d,BUNDESLIGA,2010-11,2011-01-14T12:00:00Z,Matchday 18,,Bayer Leverkusen,,Borussia Dortmund,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-0de528ed5fe150f43befa6f1,BUNDESLIGA,2010-11,2011-01-15T12:00:00Z,Matchday 18,,VfB Stuttgart,,1. FSV Mainz 05,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-20c6a59564639d778291c18b,BUNDESLIGA,2010-11,2011-01-15T12:00:00Z,Matchday 18,,Werder Bremen,,1899 Hoffenheim,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-47c022d75bb5e66dec817abf,BUNDESLIGA,2010-11,2011-01-15T12:00:00Z,Matchday 18,,1. FC Nürnberg,,Bor. Mönchengladbach,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-6156c7cb7dac77db34a9cda5,BUNDESLIGA,2010-11,2011-01-15T12:00:00Z,Matchday 18,,FC Schalke 04,,Hamburger SV,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-6d53f505d50ce538d5d202d1,BUNDESLIGA,2010-11,2011-01-15T12:00:00Z,Matchday 18,,VfL Wolfsburg,,Bayern München,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-8294c8e6f98336877b05b0f7,BUNDESLIGA,2010-11,2011-01-15T12:00:00Z,Matchday 18,,FC St. Pauli,,SC Freiburg,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5feb0b944dfdab2750385b00,BUNDESLIGA,2010-11,2011-01-16T12:00:00Z,Matchday 18,,Eintracht Frankfurt,,Hannover 96,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-9156bd27383f300c652b9e05,BUNDESLIGA,2010-11,2011-01-16T12:00:00Z,Matchday 18,,1. FC Kaiserslautern,,1. FC Köln,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-73cbc50d2ba64b31d621e4c7,BUNDESLIGA,2010-11,2011-01-21T12:00:00Z,Matchday 19,,Hamburger SV,,Eintracht Frankfurt,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-7a2f9b0353e2b964e29ff9cf,BUNDESLIGA,2010-11,2011-01-22T12:00:00Z,Matchday 19,,Bayern München,,1. FC Kaiserslautern,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-7b8ef08f8027b36c89537810,BUNDESLIGA,2010-11,2011-01-22T12:00:00Z,Matchday 19,,Borussia Dortmund,,VfB Stuttgart,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-94f2f64c31a28ae04d9a0072,BUNDESLIGA,2010-11,2011-01-22T12:00:00Z,Matchday 19,,SC Freiburg,,1. FC Nürnberg,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a18f321e79f81d27342d17c5,BUNDESLIGA,2010-11,2011-01-22T12:00:00Z,Matchday 19,,1. FC Köln,,Werder Bremen,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b5e1330b537a7dc2420b2285,BUNDESLIGA,2010-11,2011-01-22T12:00:00Z,Matchday 19,,1. FSV Mainz 05,,VfL Wolfsburg,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-fb1acefe6d494dd1b641cd1c,BUNDESLIGA,2010-11,2011-01-22T12:00:00Z,Matchday 19,,Hannover 96,,FC Schalke 04,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-1898743300beef8afb921cab,BUNDESLIGA,2010-11,2011-01-23T12:00:00Z,Matchday 19,,1899 Hoffenheim,,FC St. Pauli,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ef4b1a24e98e768ea8bff216,BUNDESLIGA,2010-11,2011-01-23T12:00:00Z,Matchday 19,,Bor. Mönchengladbach,,Bayer Leverkusen,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-8f6b573d7fc6150a12f9d42e,BUNDESLIGA,2010-11,2011-01-28T12:00:00Z,Matchday 20,,Bayer Leverkusen,,Hannover 96,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-673a11c0de2e8ece46d4921a,BUNDESLIGA,2010-11,2011-01-29T12:00:00Z,Matchday 20,,FC St. Pauli,,1. FC Köln,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-95f33d8b710b2bcfd918d883,BUNDESLIGA,2010-11,2011-01-29T12:00:00Z,Matchday 20,,1. FC Nürnberg,,Hamburger SV,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-af0a9a52a9f2cc61631a859e,BUNDESLIGA,2010-11,2011-01-29T12:00:00Z,Matchday 20,,FC Schalke 04,,1899 Hoffenheim,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b2b1d63f8e50ab603d9d0c92,BUNDESLIGA,2010-11,2011-01-29T12:00:00Z,Matchday 20,,1. FC Kaiserslautern,,1. FSV Mainz 05,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c55b9c0f49a646f04c85e0ae,BUNDESLIGA,2010-11,2011-01-29T12:00:00Z,Matchday 20,,VfL Wolfsburg,,Borussia Dortmund,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-d84c4f378adf0e2715bea202,BUNDESLIGA,2010-11,2011-01-29T12:00:00Z,Matchday 20,,Werder Bremen,,Bayern München,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-077f55c6d9a18a0ee19525d1,BUNDESLIGA,2010-11,2011-01-30T12:00:00Z,Matchday 20,,Eintracht Frankfurt,,Bor. Mönchengladbach,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b4e6cfb4d3d8b7f8b5bbd0d4,BUNDESLIGA,2010-11,2011-01-30T12:00:00Z,Matchday 20,,VfB Stuttgart,,SC Freiburg,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5da96d114fc9ea08177a10e4,BUNDESLIGA,2010-11,2011-02-04T12:00:00Z,Matchday 21,,Borussia Dortmund,,FC Schalke 04,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-721eb394dbdbe2e32e776ac2,BUNDESLIGA,2010-11,2011-02-05T12:00:00Z,Matchday 21,,1. FC Nürnberg,,Bayer Leverkusen,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-8835206d9908ced0d7ddc8f8,BUNDESLIGA,2010-11,2011-02-05T12:00:00Z,Matchday 21,,Hannover 96,,VfL Wolfsburg,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a1778436eedeff088831a510,BUNDESLIGA,2010-11,2011-02-05T12:00:00Z,Matchday 21,,Bor. Mönchengladbach,,VfB Stuttgart,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a1a7442d44ef4f4c463e23cf,BUNDESLIGA,2010-11,2011-02-05T12:00:00Z,Matchday 21,,1. FSV Mainz 05,,Werder Bremen,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a8b734f0398bc2f4eff7cd2d,BUNDESLIGA,2010-11,2011-02-05T12:00:00Z,Matchday 21,,1899 Hoffenheim,,1. FC Kaiserslautern,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f02465e626b2205d65b0da51,BUNDESLIGA,2010-11,2011-02-05T12:00:00Z,Matchday 21,,1. FC Köln,,Bayern München,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e93afe7eec7bcb55f45edb66,BUNDESLIGA,2010-11,2011-02-06T12:00:00Z,Matchday 21,,SC Freiburg,,Eintracht Frankfurt,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-035ba43dff7c6e13f7668715,BUNDESLIGA,2010-11,2011-02-12T12:00:00Z,Matchday 22,,Eintracht Frankfurt,,Bayer Leverkusen,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-0f5f57416f2044d296a39107,BUNDESLIGA,2010-11,2011-02-12T12:00:00Z,Matchday 22,,FC St. Pauli,,Bor. Mönchengladbach,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-7d9e1fb9edb96282ecbb4001,BUNDESLIGA,2010-11,2011-02-12T12:00:00Z,Matchday 22,,VfB Stuttgart,,1. FC Nürnberg,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-82b49ed73d1df631dae2870f,BUNDESLIGA,2010-11,2011-02-12T12:00:00Z,Matchday 22,,FC Schalke 04,,SC Freiburg,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-909d43aca7803d305ae75017,BUNDESLIGA,2010-11,2011-02-12T12:00:00Z,Matchday 22,,VfL Wolfsburg,,Hamburger SV,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-be146f1b562a3a5ca2f1eaeb,BUNDESLIGA,2010-11,2011-02-12T12:00:00Z,Matchday 22,,1. FC Kaiserslautern,,Borussia Dortmund,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f65bacf9dd3eda45ce5463c4,BUNDESLIGA,2010-11,2011-02-12T12:00:00Z,Matchday 22,,Bayern München,,1899 Hoffenheim,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-1c007218478cce43124dfcdd,BUNDESLIGA,2010-11,2011-02-13T12:00:00Z,Matchday 22,,1. FC Köln,,1. FSV Mainz 05,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2ebdd6addfcd49305d5d167e,BUNDESLIGA,2010-11,2011-02-13T12:00:00Z,Matchday 22,,Werder Bremen,,Hannover 96,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-1e3b551516c9af1d23a01edd,BUNDESLIGA,2010-11,2011-02-16T12:00:00Z,Matchday 21,,Hamburger SV,,FC St. Pauli,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-dae2ef550a82068cf231923c,BUNDESLIGA,2010-11,2011-02-18T12:00:00Z,Matchday 23,,1. FC Nürnberg,,Eintracht Frankfurt,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-128c2d58e4abaab23872a08d,BUNDESLIGA,2010-11,2011-02-19T12:00:00Z,Matchday 23,,SC Freiburg,,VfL Wolfsburg,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-274f1342bb0ddf1d926a2a64,BUNDESLIGA,2010-11,2011-02-19T12:00:00Z,Matchday 23,,Hamburger SV,,Werder Bremen,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-30e7bb1d9fdf2a5d261078b3,BUNDESLIGA,2010-11,2011-02-19T12:00:00Z,Matchday 23,,1899 Hoffenheim,,1. FC Köln,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-8c6cff8147d17a2cd9c1c129,BUNDESLIGA,2010-11,2011-02-19T12:00:00Z,Matchday 23,,1. FSV Mainz 05,,Bayern München,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ac78f8a75c67b95866489231,BUNDESLIGA,2010-11,2011-02-19T12:00:00Z,Matchday 23,,Borussia Dortmund,,FC St. Pauli,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c501f69f323eab5c3da41797,BUNDESLIGA,2010-11,2011-02-19T12:00:00Z,Matchday 23,,Hannover 96,,1. FC Kaiserslautern,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-17349acb3106e10094ffd0e1,BUNDESLIGA,2010-11,2011-02-20T12:00:00Z,Matchday 23,,Bor. Mönchengladbach,,FC Schalke 04,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e8251808dd4ac4fffcd33b38,BUNDESLIGA,2010-11,2011-02-20T12:00:00Z,Matchday 23,,Bayer Leverkusen,,VfB Stuttgart,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-1c81084edb1fb5d4bc4cb4e4,BUNDESLIGA,2010-11,2011-02-25T12:00:00Z,Matchday 24,,VfL Wolfsburg,,Bor. Mönchengladbach,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-035a0589073317fda9139eb6,BUNDESLIGA,2010-11,2011-02-26T12:00:00Z,Matchday 24,,1. FC Köln,,SC Freiburg,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-23df47886c51342ada166b99,BUNDESLIGA,2010-11,2011-02-26T12:00:00Z,Matchday 24,,FC St. Pauli,,Hannover 96,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5c4aa6e40fb8c0a52970e861,BUNDESLIGA,2010-11,2011-02-26T12:00:00Z,Matchday 24,,1899 Hoffenheim,,1. FSV Mainz 05,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-6d726bf3a9062320cae7d04e,BUNDESLIGA,2010-11,2011-02-26T12:00:00Z,Matchday 24,,Bayern München,,Borussia Dortmund,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a71cd385c0e27741bc787ec7,BUNDESLIGA,2010-11,2011-02-26T12:00:00Z,Matchday 24,,FC Schalke 04,,1. FC Nürnberg,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-eaf94a24bd4a2c8a7467e076,BUNDESLIGA,2010-11,2011-02-26T12:00:00Z,Matchday 24,,1. FC Kaiserslautern,,Hamburger SV,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f2e67474c5b7a609a0785e79,BUNDESLIGA,2010-11,2011-02-27T12:00:00Z,Matchday 24,,Werder Bremen,,Bayer Leverkusen,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ff0dd447addaa9f144eec00d,BUNDESLIGA,2010-11,2011-02-27T12:00:00Z,Matchday 24,,Eintracht Frankfurt,,VfB Stuttgart,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-8d617be25c55c70186161e25,BUNDESLIGA,2010-11,2011-03-04T12:00:00Z,Matchday 25,,Borussia Dortmund,,1. FC Köln,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-4528956bbb1d64bd90d5c244,BUNDESLIGA,2010-11,2011-03-05T12:00:00Z,Matchday 25,,Bayer Leverkusen,,VfL Wolfsburg,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5e2c46a3c381fad2b3803f59,BUNDESLIGA,2010-11,2011-03-05T12:00:00Z,Matchday 25,,Hannover 96,,Bayern München,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-6b1624cb9b44fe3bb30536df,BUNDESLIGA,2010-11,2011-03-05T12:00:00Z,Matchday 25,,VfB Stuttgart,,FC Schalke 04,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-7c06370a0934aa655321d5cb,BUNDESLIGA,2010-11,2011-03-05T12:00:00Z,Matchday 25,,1. FC Nürnberg,,FC St. Pauli,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b48a11e39c2dc972e1c9bb29,BUNDESLIGA,2010-11,2011-03-05T12:00:00Z,Matchday 25,,Bor. Mönchengladbach,,1899 Hoffenheim,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ebeb799ddeb88b544e8ffd75,BUNDESLIGA,2010-11,2011-03-05T12:00:00Z,Matchday 25,,Eintracht Frankfurt,,1. FC Kaiserslautern,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-0ec03232cc4791e919c93b4b,BUNDESLIGA,2010-11,2011-03-06T12:00:00Z,Matchday 25,,SC Freiburg,,Werder Bremen,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-632a6ceae3e5ee51dd08ee4f,BUNDESLIGA,2010-11,2011-03-06T12:00:00Z,Matchday 25,,Hamburger SV,,1. FSV Mainz 05,,2,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e79a2d613e8b5e9598500994,BUNDESLIGA,2010-11,2011-03-11T12:00:00Z,Matchday 26,,1. FC Köln,,Hannover 96,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-540ecda1d835ce4fed75e400,BUNDESLIGA,2010-11,2011-03-12T12:00:00Z,Matchday 26,,FC Schalke 04,,Eintracht Frankfurt,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-6d7ba8103a88bbd748a828bf,BUNDESLIGA,2010-11,2011-03-12T12:00:00Z,Matchday 26,,VfL Wolfsburg,,1. FC Nürnberg,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-71ab8297c6ae58e67e7a463c,BUNDESLIGA,2010-11,2011-03-12T12:00:00Z,Matchday 26,,1899 Hoffenheim,,Borussia Dortmund,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-db98c74d2e9388af852a1560,BUNDESLIGA,2010-11,2011-03-12T12:00:00Z,Matchday 26,,1. FC Kaiserslautern,,SC Freiburg,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ef3b8d47e8b4e7e5eaa2bd03,BUNDESLIGA,2010-11,2011-03-12T12:00:00Z,Matchday 26,,Bayern München,,Hamburger SV,,6,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f0a96a49c135a9ee8e0bc74e,BUNDESLIGA,2010-11,2011-03-12T12:00:00Z,Matchday 26,,Werder Bremen,,Bor. Mönchengladbach,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-36644bca783c63c82c88065f,BUNDESLIGA,2010-11,2011-03-13T12:00:00Z,Matchday 26,,FC St. Pauli,,VfB Stuttgart,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-975ba57455227d669970c752,BUNDESLIGA,2010-11,2011-03-13T12:00:00Z,Matchday 26,,1. FSV Mainz 05,,Bayer Leverkusen,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c2af87e54a4a1c59a4686b92,BUNDESLIGA,2010-11,2011-03-18T12:00:00Z,Matchday 27,,Bor. Mönchengladbach,,1. FC Kaiserslautern,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-17198b38a67a8ade5afe5fa9,BUNDESLIGA,2010-11,2011-03-19T12:00:00Z,Matchday 27,,Hannover 96,,1899 Hoffenheim,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-8c7c005b8678ee82e8564afd,BUNDESLIGA,2010-11,2011-03-19T12:00:00Z,Matchday 27,,Hamburger SV,,1. FC Köln,,6,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-93fc54ed460b8d658cf9c8df,BUNDESLIGA,2010-11,2011-03-19T12:00:00Z,Matchday 27,,Borussia Dortmund,,1. FSV Mainz 05,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c9f2fca602ff0bbd2fb22cd0,BUNDESLIGA,2010-11,2011-03-19T12:00:00Z,Matchday 27,,Eintracht Frankfurt,,FC St. Pauli,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-fa8df3f10b34fc5fbd2fc833,BUNDESLIGA,2010-11,2011-03-19T12:00:00Z,Matchday 27,,1. FC Nürnberg,,Werder Bremen,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-fd53de03ced53d3eb5231cef,BUNDESLIGA,2010-11,2011-03-19T12:00:00Z,Matchday 27,,SC Freiburg,,Bayern München,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-38bcc855cd4219e25fba2dad,BUNDESLIGA,2010-11,2011-03-20T12:00:00Z,Matchday 27,,Bayer Leverkusen,,FC Schalke 04,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-9272013cf13201ea956c1c43,BUNDESLIGA,2010-11,2011-03-20T12:00:00Z,Matchday 27,,VfB Stuttgart,,VfL Wolfsburg,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a169b3a7c9d36c3a19150535,BUNDESLIGA,2010-11,2011-04-01T12:00:00Z,Matchday 28,,FC St. Pauli,,FC Schalke 04,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-0de6ec972e425b92202a3b22,BUNDESLIGA,2010-11,2011-04-02T12:00:00Z,Matchday 28,,1. FC Kaiserslautern,,Bayer Leverkusen,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2d710051a33460efc947987d,BUNDESLIGA,2010-11,2011-04-02T12:00:00Z,Matchday 28,,1899 Hoffenheim,,Hamburger SV,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5a0fbb3cc9fbff3bdbaeb386,BUNDESLIGA,2010-11,2011-04-02T12:00:00Z,Matchday 28,,Borussia Dortmund,,Hannover 96,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-7752ffb65a2bdebcbbedb861,BUNDESLIGA,2010-11,2011-04-02T12:00:00Z,Matchday 28,,Werder Bremen,,VfB Stuttgart,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-91c3d1ca5c2128a2879c103e,BUNDESLIGA,2010-11,2011-04-02T12:00:00Z,Matchday 28,,Bayern München,,Bor. Mönchengladbach,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-dfcfebcf30a5e87b5515027b,BUNDESLIGA,2010-11,2011-04-02T12:00:00Z,Matchday 28,,1. FSV Mainz 05,,SC Freiburg,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b012df887bc9ae7225cd6ab1,BUNDESLIGA,2010-11,2011-04-03T12:00:00Z,Matchday 28,,1. FC Köln,,1. FC Nürnberg,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-d05023205c64d6a75bba7ca2,BUNDESLIGA,2010-11,2011-04-03T12:00:00Z,Matchday 28,,VfL Wolfsburg,,Eintracht Frankfurt,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-04af14b394bf9c90ffee08b2,BUNDESLIGA,2010-11,2011-04-08T12:00:00Z,Matchday 29,,Eintracht Frankfurt,,Werder Bremen,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2edadfe7fbce533a026e9f60,BUNDESLIGA,2010-11,2011-04-09T12:00:00Z,Matchday 29,,VfB Stuttgart,,1. FC Kaiserslautern,,2,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-7991980b86ebe0a475b77480,BUNDESLIGA,2010-11,2011-04-09T12:00:00Z,Matchday 29,,FC Schalke 04,,VfL Wolfsburg,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-7d39a7e5ca90084c9c457aa9,BUNDESLIGA,2010-11,2011-04-09T12:00:00Z,Matchday 29,,SC Freiburg,,1899 Hoffenheim,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-8fae724fe22dd554602813de,BUNDESLIGA,2010-11,2011-04-09T12:00:00Z,Matchday 29,,Hannover 96,,1. FSV Mainz 05,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f3dc0fcd87bb955215216adb,BUNDESLIGA,2010-11,2011-04-09T12:00:00Z,Matchday 29,,1. FC Nürnberg,,Bayern München,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-faf3caaeac6c767f1f2efdd0,BUNDESLIGA,2010-11,2011-04-09T12:00:00Z,Matchday 29,,Hamburger SV,,Borussia Dortmund,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-3ae4d41ed64d16f20296aaec,BUNDESLIGA,2010-11,2011-04-10T12:00:00Z,Matchday 29,,Bayer Leverkusen,,FC St. Pauli,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-7c94ca05f9c5ca4ca3bb07fe,BUNDESLIGA,2010-11,2011-04-10T12:00:00Z,Matchday 29,,Bor. Mönchengladbach,,1. FC Köln,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5f41f8ba0bb5e3039417b471,BUNDESLIGA,2010-11,2011-04-15T12:00:00Z,Matchday 30,,1. FSV Mainz 05,,Bor. Mönchengladbach,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-087dbcf0dde639ed4ddb640f,BUNDESLIGA,2010-11,2011-04-16T12:00:00Z,Matchday 30,,Werder Bremen,,FC Schalke 04,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2c58a227b07d2a1c0f4469ed,BUNDESLIGA,2010-11,2011-04-16T12:00:00Z,Matchday 30,,1899 Hoffenheim,,Eintracht Frankfurt,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-8b4d3ac6c9a5247c9cb709de,BUNDESLIGA,2010-11,2011-04-16T12:00:00Z,Matchday 30,,Hamburger SV,,Hannover 96,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-be084b27fc9ee5aad16cf988,BUNDESLIGA,2010-11,2011-04-16T12:00:00Z,Matchday 30,,1. FC Köln,,VfB Stuttgart,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-cdd51c528225d566d6baac62,BUNDESLIGA,2010-11,2011-04-16T12:00:00Z,Matchday 30,,1. FC Kaiserslautern,,1. FC Nürnberg,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-dbc58e3bbcb87678f6dee716,BUNDESLIGA,2010-11,2011-04-16T12:00:00Z,Matchday 30,,VfL Wolfsburg,,FC St. Pauli,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-1a8c4cc96403c368b65a5a62,BUNDESLIGA,2010-11,2011-04-17T12:00:00Z,Matchday 30,,Borussia Dortmund,,SC Freiburg,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-1bacc1a20f9448446466ea07,BUNDESLIGA,2010-11,2011-04-17T12:00:00Z,Matchday 30,,Bayern München,,Bayer Leverkusen,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-1c2ebd0ea00516a5d563f844,BUNDESLIGA,2010-11,2011-04-21T12:00:00Z,Matchday 31,,SC Freiburg,,Hannover 96,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-0ca9d41b7c931d1abf122f6e,BUNDESLIGA,2010-11,2011-04-23T12:00:00Z,Matchday 31,,Eintracht Frankfurt,,Bayern München,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5f738f065a082e152a26b5aa,BUNDESLIGA,2010-11,2011-04-23T12:00:00Z,Matchday 31,,FC Schalke 04,,1. FC Kaiserslautern,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-613fbce51eb3836de2a9bffc,BUNDESLIGA,2010-11,2011-04-23T12:00:00Z,Matchday 31,,Bor. Mönchengladbach,,Borussia Dortmund,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-639e06ccc1a02dda4e9f5846,BUNDESLIGA,2010-11,2011-04-23T12:00:00Z,Matchday 31,,FC St. Pauli,,Werder Bremen,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-bc9e7432f60de518737d5fce,BUNDESLIGA,2010-11,2011-04-23T12:00:00Z,Matchday 31,,Bayer Leverkusen,,1899 Hoffenheim,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f31e582f914202875adbd6f7,BUNDESLIGA,2010-11,2011-04-23T12:00:00Z,Matchday 31,,VfB Stuttgart,,Hamburger SV,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-0895583df5650a28568a2815,BUNDESLIGA,2010-11,2011-04-24T12:00:00Z,Matchday 31,,VfL Wolfsburg,,1. FC Köln,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-57b5a7742ff6b0419932c687,BUNDESLIGA,2010-11,2011-04-24T12:00:00Z,Matchday 31,,1. FC Nürnberg,,1. FSV Mainz 05,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5946fd7c9bcb9e641ae19048,BUNDESLIGA,2010-11,2011-04-29T12:00:00Z,Matchday 32,,1. FC Kaiserslautern,,FC St. Pauli,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-fa20c13c1916a85da6561d89,BUNDESLIGA,2010-11,2011-04-29T12:00:00Z,Matchday 32,,Werder Bremen,,VfL Wolfsburg,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-184e46492421a6e6559ba428,BUNDESLIGA,2010-11,2011-04-30T12:00:00Z,Matchday 32,,Borussia Dortmund,,1. FC Nürnberg,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-1ea1d922f7da15d86a5fe0f7,BUNDESLIGA,2010-11,2011-04-30T12:00:00Z,Matchday 32,,1. FSV Mainz 05,,Eintracht Frankfurt,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-32374aa338fea1d45ab87592,BUNDESLIGA,2010-11,2011-04-30T12:00:00Z,Matchday 32,,1. FC Köln,,Bayer Leverkusen,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5182442484f4e9d2d830ba4e,BUNDESLIGA,2010-11,2011-04-30T12:00:00Z,Matchday 32,,Hamburger SV,,SC Freiburg,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-68efc94f36487857aa4d722c,BUNDESLIGA,2010-11,2011-04-30T12:00:00Z,Matchday 32,,Hannover 96,,Bor. Mönchengladbach,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ce2cdfb306d25c95b5f9490f,BUNDESLIGA,2010-11,2011-04-30T12:00:00Z,Matchday 32,,Bayern München,,FC Schalke 04,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-cf2a15923f68c2809758b6a1,BUNDESLIGA,2010-11,2011-04-30T12:00:00Z,Matchday 32,,1899 Hoffenheim,,VfB Stuttgart,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-07376d3d4df4da485d971afa,BUNDESLIGA,2010-11,2011-05-07T12:00:00Z,Matchday 33,,Eintracht Frankfurt,,1. FC Köln,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2c5f3ee83b3fcdfcc6129dc8,BUNDESLIGA,2010-11,2011-05-07T12:00:00Z,Matchday 33,,1. FC Nürnberg,,1899 Hoffenheim,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-3d1ff5c796d30e5c91068c15,BUNDESLIGA,2010-11,2011-05-07T12:00:00Z,Matchday 33,,Bayer Leverkusen,,Hamburger SV,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-6ed25251d733c2a9237b53fc,BUNDESLIGA,2010-11,2011-05-07T12:00:00Z,Matchday 33,,Bor. Mönchengladbach,,SC Freiburg,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-99a42152506eabdf91934f47,BUNDESLIGA,2010-11,2011-05-07T12:00:00Z,Matchday 33,,VfB Stuttgart,,Hannover 96,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a5967cb1a92a005cf0fd476b,BUNDESLIGA,2010-11,2011-05-07T12:00:00Z,Matchday 33,,FC Schalke 04,,1. FSV Mainz 05,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a8ddc177c8539e57a6b98f6f,BUNDESLIGA,2010-11,2011-05-07T12:00:00Z,Matchday 33,,FC St. Pauli,,Bayern München,,1,8,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b7aa9bff6c8764741b6529e6,BUNDESLIGA,2010-11,2011-05-07T12:00:00Z,Matchday 33,,Werder Bremen,,Borussia Dortmund,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e4a27879a9bafe844c7d4741,BUNDESLIGA,2010-11,2011-05-07T12:00:00Z,Matchday 33,,VfL Wolfsburg,,1. FC Kaiserslautern,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-208cd0a37ae43bf801658d26,BUNDESLIGA,2010-11,2011-05-14T12:00:00Z,Matchday 34,,Borussia Dortmund,,Eintracht Frankfurt,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-253aff15ee03e99260947030,BUNDESLIGA,2010-11,2011-05-14T12:00:00Z,Matchday 34,,Hamburger SV,,Bor. Mönchengladbach,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-69b032d186846d828f267ed3,BUNDESLIGA,2010-11,2011-05-14T12:00:00Z,Matchday 34,,1. FC Kaiserslautern,,Werder Bremen,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-9ed270f7841b60c187b194c3,BUNDESLIGA,2010-11,2011-05-14T12:00:00Z,Matchday 34,,Hannover 96,,1. FC Nürnberg,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-9f8c9877ae2a21f3a4eb2c1b,BUNDESLIGA,2010-11,2011-05-14T12:00:00Z,Matchday 34,,1899 Hoffenheim,,VfL Wolfsburg,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ba0999cfddbb13f3af3a6c09,BUNDESLIGA,2010-11,2011-05-14T12:00:00Z,Matchday 34,,1. FSV Mainz 05,,FC St. Pauli,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-cf404183047219fe19f22618,BUNDESLIGA,2010-11,2011-05-14T12:00:00Z,Matchday 34,,1. FC Köln,,FC Schalke 04,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ea67f797acbb70fe91b2c637,BUNDESLIGA,2010-11,2011-05-14T12:00:00Z,Matchday 34,,Bayern München,,VfB Stuttgart,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ea774fb7b5ae7a81b6bb12b1,BUNDESLIGA,2010-11,2011-05-14T12:00:00Z,Matchday 34,,SC Freiburg,,Bayer Leverkusen,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00

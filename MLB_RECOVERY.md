@@ -5,6 +5,11 @@ personnel-data gate pass independent review.  Research forecasts may continue
 to run at zero production weight, but they must never enter the official picks
 log, public API forecast fields, alerts, Outcome Tree, or social candidates.
 
+**Current state (2026-08-23): publication resumed on the incumbent route.**  The
+deployed `v6-calibrated` forecast publishes at zero challenger weight and zero
+personnel weight under §2b and §3.  The run-strength challenger remains
+unpromoted and subject to §2 in full.
+
 ## 1. Frozen research evidence
 
 At the normal two-hour MLB lock boundary, Matchday records at most one
@@ -61,6 +66,29 @@ moving forecasts.  Applying it to a calibration fix would keep a known-
 miscalibrated number in production while the evidence to replace it accumulates,
 which inverts the control's purpose.
 
+### 2b. Publishing the incumbent is not a signal promotion
+
+§2 governs promoting a *challenger* into production.  Publishing the already-
+deployed incumbent at zero challenger weight promotes nothing: the forecast that
+resumes is the same one §2 measures every challenger against.  Applying §2's
+500-paired-game bar to it would withhold the baseline while waiting for evidence
+about a signal that carries no weight — the same inversion §2a identifies.
+
+Taking this route is an explicit, signed decision, not a default.  The policy
+must set `model_gate.challenger_weighted` to exactly `false`, may not name a
+`promotion_policy`, and is contradicted outright if any promotion policy is
+approved for non-zero production weight.  A missing, malformed, or non-boolean
+flag is treated as a challenger promotion and §2 applies in full.
+
+The route still requires its own hash-bound manual review of the incumbent's
+measured evidence, and it binds the exact artifact it approved:
+`incumbent_model_version` and `incumbent_model_signal_schema` must match what
+the build ships.  A later model version or signal schema is not what was
+reviewed, and publication returns to paused until it is reviewed again.
+
+This route approves no signal weight for any challenger, now or later, and its
+evidence may never be pooled into a §2 promotion cohort.
+
 ## 3. Personnel-data gate
 
 This gate governs personnel data that a forecast actually reads.  A model in
@@ -98,7 +126,8 @@ predictive evaluation passes.
 
 Publication eligibility is fail closed and requires all of the following:
 
-1. an explicitly approved, hash-bound model policy;
+1. an explicitly approved, hash-bound model policy — either a §2 challenger
+   promotion or a §2b incumbent-only approval;
 2. either an explicitly approved personnel-source policy with a completed
    coverage audit, or a signed zero-weight attestation under §3;
 3. a deliberate production switch naming both approvals;

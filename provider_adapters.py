@@ -1519,8 +1519,11 @@ class CollegeFootballDataAdapter:
             candidates = collect(self._get("/rankings", {"year": self.season - 1, "seasonType": "postseason"}))
         if candidates:
             poll = sorted(candidates, reverse=True, key=lambda x: x[:3])[0][3]
+            poll_name = str(poll.get("poll") or "National Poll")
             ranks = [{"rank": int(row.get("rank") or 0), "name": row.get("school") or "", "code": _short_code(row.get("school")), "record": ""}
                      for row in (poll.get("ranks") or [])[:25] if row.get("school")]
+            for row in ranks:
+                row["poll_name"] = poll_name
         elif not season_started:
             ranks = self._projected_ranking()
         else:
@@ -1890,8 +1893,11 @@ class CollegeBasketballDataAdapter:
             top_week, top_priority = max((w, p) for w, p, _ in candidates)
             rows = [row for w, p, row in candidates if w == top_week and p == top_priority]
             rows.sort(key=lambda r: r["ranking"])
+            poll_name = str(rows[0].get("pollType") or "National Poll") if rows else "National Poll"
             ranks = [{"rank": row["ranking"], "name": row["team"], "code": _short_code(row["team"]), "record": ""}
                      for row in rows[:25]]
+            for row in ranks:
+                row["poll_name"] = poll_name
         elif not season_started:
             ranks = self._projected_ranking()
         else:

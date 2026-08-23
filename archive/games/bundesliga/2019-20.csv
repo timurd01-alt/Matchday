@@ -1,0 +1,307 @@
+game_id,comp,season,date_utc,stage,venue,home_name,home_code,away_name,away_code,home_score,away_score,status,source,first_seen
+bundesliga-openfootball-3936f4db6d91aab01d391efa,BUNDESLIGA,2019-20,2019-08-16T12:00:00Z,Matchday 1,,Bayern München,,Hertha BSC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-3b2e14ca5c6f1a6d1120fbd4,BUNDESLIGA,2019-20,2019-08-17T12:00:00Z,Matchday 1,,SC Freiburg,,1. FSV Mainz 05,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-4d5e2705fc90b6525e80bd2f,BUNDESLIGA,2019-20,2019-08-17T12:00:00Z,Matchday 1,,Werder Bremen,,Fortuna Düsseldorf,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a759f47269b13dc408b6532a,BUNDESLIGA,2019-20,2019-08-17T12:00:00Z,Matchday 1,,Bayer Leverkusen,,SC Paderborn 07,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a77fe635edc9a8984c347e20,BUNDESLIGA,2019-20,2019-08-17T12:00:00Z,Matchday 1,,VfL Wolfsburg,,1. FC Köln,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-aa945f227336a759c83948ff,BUNDESLIGA,2019-20,2019-08-17T12:00:00Z,Matchday 1,,Borussia Dortmund,,FC Augsburg,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c1d1d530dd63cfa839dc0d34,BUNDESLIGA,2019-20,2019-08-17T12:00:00Z,Matchday 1,,Bor. Mönchengladbach,,FC Schalke 04,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-3bb3e11bc0ddc70d9c3fdcc5,BUNDESLIGA,2019-20,2019-08-18T12:00:00Z,Matchday 1,,Eintracht Frankfurt,,1899 Hoffenheim,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-6b21ea7239ba5c982e90df25,BUNDESLIGA,2019-20,2019-08-18T12:00:00Z,Matchday 1,,1. FC Union Berlin,,RB Leipzig,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c5bc3088f20c8f831f35d93a,BUNDESLIGA,2019-20,2019-08-23T12:00:00Z,Matchday 2,,1. FC Köln,,Borussia Dortmund,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-58049dfb296c7942ebc41cb6,BUNDESLIGA,2019-20,2019-08-24T12:00:00Z,Matchday 2,,1899 Hoffenheim,,Werder Bremen,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5f2124ab62c78e741d6e6ebf,BUNDESLIGA,2019-20,2019-08-24T12:00:00Z,Matchday 2,,FC Augsburg,,1. FC Union Berlin,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-68899027a3facd6e86ed0764,BUNDESLIGA,2019-20,2019-08-24T12:00:00Z,Matchday 2,,Fortuna Düsseldorf,,Bayer Leverkusen,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a729cb233393444c62c304e4,BUNDESLIGA,2019-20,2019-08-24T12:00:00Z,Matchday 2,,SC Paderborn 07,,SC Freiburg,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-d8402126bbdf0828a39a1cf0,BUNDESLIGA,2019-20,2019-08-24T12:00:00Z,Matchday 2,,FC Schalke 04,,Bayern München,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-efb5a707b3cb7c32006f2b61,BUNDESLIGA,2019-20,2019-08-24T12:00:00Z,Matchday 2,,1. FSV Mainz 05,,Bor. Mönchengladbach,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2f8f641d264b73bacf12b84f,BUNDESLIGA,2019-20,2019-08-25T12:00:00Z,Matchday 2,,RB Leipzig,,Eintracht Frankfurt,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-d87351043f1fa429b00d59ce,BUNDESLIGA,2019-20,2019-08-25T12:00:00Z,Matchday 2,,Hertha BSC,,VfL Wolfsburg,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-3bc44ae3e9b6215f50755220,BUNDESLIGA,2019-20,2019-08-30T12:00:00Z,Matchday 3,,Bor. Mönchengladbach,,RB Leipzig,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2431d3db8d048d6f611f8b3a,BUNDESLIGA,2019-20,2019-08-31T12:00:00Z,Matchday 3,,SC Freiburg,,1. FC Köln,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-8523ddc7dfc73c55db4d5617,BUNDESLIGA,2019-20,2019-08-31T12:00:00Z,Matchday 3,,Bayern München,,1. FSV Mainz 05,,6,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b62df3c8557939b5f6037e9b,BUNDESLIGA,2019-20,2019-08-31T12:00:00Z,Matchday 3,,FC Schalke 04,,Hertha BSC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b6751070ad49d0973509191e,BUNDESLIGA,2019-20,2019-08-31T12:00:00Z,Matchday 3,,Bayer Leverkusen,,1899 Hoffenheim,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-d9a88d24c750ae4434c6b153,BUNDESLIGA,2019-20,2019-08-31T12:00:00Z,Matchday 3,,VfL Wolfsburg,,SC Paderborn 07,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e4d6b71208cf2478685c314d,BUNDESLIGA,2019-20,2019-08-31T12:00:00Z,Matchday 3,,1. FC Union Berlin,,Borussia Dortmund,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-3c467fff50d209043f46e176,BUNDESLIGA,2019-20,2019-09-01T12:00:00Z,Matchday 3,,Eintracht Frankfurt,,Fortuna Düsseldorf,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-8266130218e612547b163842,BUNDESLIGA,2019-20,2019-09-01T12:00:00Z,Matchday 3,,Werder Bremen,,FC Augsburg,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-d1736a483c8ec0e26def5e54,BUNDESLIGA,2019-20,2019-09-13T12:00:00Z,Matchday 4,,Fortuna Düsseldorf,,VfL Wolfsburg,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-0b67f50519ba3dec27ad544c,BUNDESLIGA,2019-20,2019-09-14T12:00:00Z,Matchday 4,,Borussia Dortmund,,Bayer Leverkusen,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-155446f4a01636644b1312ee,BUNDESLIGA,2019-20,2019-09-14T12:00:00Z,Matchday 4,,1. FC Union Berlin,,Werder Bremen,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-180abf476ba061ccf7bb4291,BUNDESLIGA,2019-20,2019-09-14T12:00:00Z,Matchday 4,,1. FC Köln,,Bor. Mönchengladbach,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-3b58acab5d6b7be917a488f2,BUNDESLIGA,2019-20,2019-09-14T12:00:00Z,Matchday 4,,RB Leipzig,,Bayern München,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-4400edc2773d80212da0b9b2,BUNDESLIGA,2019-20,2019-09-14T12:00:00Z,Matchday 4,,FC Augsburg,,Eintracht Frankfurt,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c68830208ce0331ed6146601,BUNDESLIGA,2019-20,2019-09-14T12:00:00Z,Matchday 4,,1. FSV Mainz 05,,Hertha BSC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2a8125d56b9ea8473eae1765,BUNDESLIGA,2019-20,2019-09-15T12:00:00Z,Matchday 4,,SC Paderborn 07,,FC Schalke 04,,1,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5ad1d3f50d3b69bde0675880,BUNDESLIGA,2019-20,2019-09-15T12:00:00Z,Matchday 4,,1899 Hoffenheim,,SC Freiburg,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-8fc6a4b414b85a601898a655,BUNDESLIGA,2019-20,2019-09-20T12:00:00Z,Matchday 5,,FC Schalke 04,,1. FSV Mainz 05,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-007d44b4a05c34635d2a155a,BUNDESLIGA,2019-20,2019-09-21T12:00:00Z,Matchday 5,,Werder Bremen,,RB Leipzig,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-122a6c6e86c826ee989cf9af,BUNDESLIGA,2019-20,2019-09-21T12:00:00Z,Matchday 5,,Bayer Leverkusen,,1. FC Union Berlin,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-3b5bf96c47325c5d783468f5,BUNDESLIGA,2019-20,2019-09-21T12:00:00Z,Matchday 5,,Bayern München,,1. FC Köln,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-cb2e669d98b78546aa4bda1c,BUNDESLIGA,2019-20,2019-09-21T12:00:00Z,Matchday 5,,Hertha BSC,,SC Paderborn 07,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ec20de1baf93fcc55281bce5,BUNDESLIGA,2019-20,2019-09-21T12:00:00Z,Matchday 5,,SC Freiburg,,FC Augsburg,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-4601320d94821bf49fbd2686,BUNDESLIGA,2019-20,2019-09-22T12:00:00Z,Matchday 5,,Eintracht Frankfurt,,Borussia Dortmund,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f308c91206561d1a3d42d78b,BUNDESLIGA,2019-20,2019-09-22T12:00:00Z,Matchday 5,,Bor. Mönchengladbach,,Fortuna Düsseldorf,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b386890b0656f41a606b9e5f,BUNDESLIGA,2019-20,2019-09-23T12:00:00Z,Matchday 5,,VfL Wolfsburg,,1899 Hoffenheim,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-8b91e638c97b37b9328e0c03,BUNDESLIGA,2019-20,2019-09-27T12:00:00Z,Matchday 6,,1. FC Union Berlin,,Eintracht Frankfurt,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-1706126961cbc190e2424345,BUNDESLIGA,2019-20,2019-09-28T12:00:00Z,Matchday 6,,FC Augsburg,,Bayer Leverkusen,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5952bde66097a3e030e65ac4,BUNDESLIGA,2019-20,2019-09-28T12:00:00Z,Matchday 6,,SC Paderborn 07,,Bayern München,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-648030ddb192fd9f17cbb826,BUNDESLIGA,2019-20,2019-09-28T12:00:00Z,Matchday 6,,1. FSV Mainz 05,,VfL Wolfsburg,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-d558847c03b05366dd6a6c19,BUNDESLIGA,2019-20,2019-09-28T12:00:00Z,Matchday 6,,1899 Hoffenheim,,Bor. Mönchengladbach,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-d6cb943f99d5458c4bb02e01,BUNDESLIGA,2019-20,2019-09-28T12:00:00Z,Matchday 6,,Borussia Dortmund,,Werder Bremen,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ed0940a66d41c3a6083d1c1a,BUNDESLIGA,2019-20,2019-09-28T12:00:00Z,Matchday 6,,RB Leipzig,,FC Schalke 04,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-199df5458c3ce0f3609f6d6e,BUNDESLIGA,2019-20,2019-09-29T12:00:00Z,Matchday 6,,Fortuna Düsseldorf,,SC Freiburg,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-49da37d719891f44543b44a5,BUNDESLIGA,2019-20,2019-09-29T12:00:00Z,Matchday 6,,1. FC Köln,,Hertha BSC,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-97956f879e779eb38905c938,BUNDESLIGA,2019-20,2019-10-04T12:00:00Z,Matchday 7,,Hertha BSC,,Fortuna Düsseldorf,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-527d4bc676de39aa310f5569,BUNDESLIGA,2019-20,2019-10-05T12:00:00Z,Matchday 7,,Bayern München,,1899 Hoffenheim,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-535e208f84c2508044769090,BUNDESLIGA,2019-20,2019-10-05T12:00:00Z,Matchday 7,,SC Freiburg,,Borussia Dortmund,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-65eeddb830e302fec5e092eb,BUNDESLIGA,2019-20,2019-10-05T12:00:00Z,Matchday 7,,Bayer Leverkusen,,RB Leipzig,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-87a0a6b2137ea8ee1adbba14,BUNDESLIGA,2019-20,2019-10-05T12:00:00Z,Matchday 7,,FC Schalke 04,,1. FC Köln,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ac49192f2ad14a1e321cf7c9,BUNDESLIGA,2019-20,2019-10-05T12:00:00Z,Matchday 7,,SC Paderborn 07,,1. FSV Mainz 05,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-0ebeaa38011a32632fbc7145,BUNDESLIGA,2019-20,2019-10-06T12:00:00Z,Matchday 7,,Bor. Mönchengladbach,,FC Augsburg,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-3f58389877484936f7f1b26c,BUNDESLIGA,2019-20,2019-10-06T12:00:00Z,Matchday 7,,Eintracht Frankfurt,,Werder Bremen,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c6a4d75e3919296123381272,BUNDESLIGA,2019-20,2019-10-06T12:00:00Z,Matchday 7,,VfL Wolfsburg,,1. FC Union Berlin,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-387d3cc043f90dc89d9d3ddf,BUNDESLIGA,2019-20,2019-10-18T12:00:00Z,Matchday 8,,Eintracht Frankfurt,,Bayer Leverkusen,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2fd61a60311faf0d011a2ced,BUNDESLIGA,2019-20,2019-10-19T12:00:00Z,Matchday 8,,RB Leipzig,,VfL Wolfsburg,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-401e245c1b29a8eded82dd0b,BUNDESLIGA,2019-20,2019-10-19T12:00:00Z,Matchday 8,,1. FC Union Berlin,,SC Freiburg,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-56c31653487bed40e6196785,BUNDESLIGA,2019-20,2019-10-19T12:00:00Z,Matchday 8,,Fortuna Düsseldorf,,1. FSV Mainz 05,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-8ad299a786411b59532d3132,BUNDESLIGA,2019-20,2019-10-19T12:00:00Z,Matchday 8,,Borussia Dortmund,,Bor. Mönchengladbach,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-9c2a175d0c56b64211174320,BUNDESLIGA,2019-20,2019-10-19T12:00:00Z,Matchday 8,,FC Augsburg,,Bayern München,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f6b2db8dd9195f1f6ac9af58,BUNDESLIGA,2019-20,2019-10-19T12:00:00Z,Matchday 8,,Werder Bremen,,Hertha BSC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-58bc3cc9ce4cb60b7aa09a12,BUNDESLIGA,2019-20,2019-10-20T12:00:00Z,Matchday 8,,1899 Hoffenheim,,FC Schalke 04,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c2d0c4f2eee8bbad04c6716f,BUNDESLIGA,2019-20,2019-10-20T12:00:00Z,Matchday 8,,1. FC Köln,,SC Paderborn 07,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b879318d868745ab1dd906f4,BUNDESLIGA,2019-20,2019-10-25T12:00:00Z,Matchday 9,,1. FSV Mainz 05,,1. FC Köln,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-292ddae74e8c2ca9095135e6,BUNDESLIGA,2019-20,2019-10-26T12:00:00Z,Matchday 9,,Hertha BSC,,1899 Hoffenheim,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-830fa16da1f2e3e221dbad16,BUNDESLIGA,2019-20,2019-10-26T12:00:00Z,Matchday 9,,SC Freiburg,,RB Leipzig,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-8f47bcc2615939846ecce442,BUNDESLIGA,2019-20,2019-10-26T12:00:00Z,Matchday 9,,Bayern München,,1. FC Union Berlin,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a6ea67660242b4548e3582a6,BUNDESLIGA,2019-20,2019-10-26T12:00:00Z,Matchday 9,,SC Paderborn 07,,Fortuna Düsseldorf,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b286d1091826483e83971778,BUNDESLIGA,2019-20,2019-10-26T12:00:00Z,Matchday 9,,Bayer Leverkusen,,Werder Bremen,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c4735a41e2b63a3442c4822e,BUNDESLIGA,2019-20,2019-10-26T12:00:00Z,Matchday 9,,FC Schalke 04,,Borussia Dortmund,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ac1ac98bc9123d80dee24016,BUNDESLIGA,2019-20,2019-10-27T12:00:00Z,Matchday 9,,VfL Wolfsburg,,FC Augsburg,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b7befa837ceaf582109e1f68,BUNDESLIGA,2019-20,2019-10-27T12:00:00Z,Matchday 9,,Bor. Mönchengladbach,,Eintracht Frankfurt,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-7e2d4ab5e43f6b9ce8d0fb4c,BUNDESLIGA,2019-20,2019-11-01T12:00:00Z,Matchday 10,,1899 Hoffenheim,,SC Paderborn 07,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2199321728fb6bcef5610e9c,BUNDESLIGA,2019-20,2019-11-02T12:00:00Z,Matchday 10,,Bayer Leverkusen,,Bor. Mönchengladbach,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5b5fd7b2ad62db80d2b83b20,BUNDESLIGA,2019-20,2019-11-02T12:00:00Z,Matchday 10,,RB Leipzig,,1. FSV Mainz 05,,8,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-96e3b06809a9790b8e640ff5,BUNDESLIGA,2019-20,2019-11-02T12:00:00Z,Matchday 10,,Eintracht Frankfurt,,Bayern München,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-cdcdc6da2195651d72b195a6,BUNDESLIGA,2019-20,2019-11-02T12:00:00Z,Matchday 10,,Borussia Dortmund,,VfL Wolfsburg,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-d5057ace19b5838b7c110914,BUNDESLIGA,2019-20,2019-11-02T12:00:00Z,Matchday 10,,Werder Bremen,,SC Freiburg,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-dbe32141924d825b6753164a,BUNDESLIGA,2019-20,2019-11-02T12:00:00Z,Matchday 10,,1. FC Union Berlin,,Hertha BSC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-15950bff73c412a9809b95f8,BUNDESLIGA,2019-20,2019-11-03T12:00:00Z,Matchday 10,,FC Augsburg,,FC Schalke 04,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-3107f9ea41db42cb6aa2ec76,BUNDESLIGA,2019-20,2019-11-03T12:00:00Z,Matchday 10,,Fortuna Düsseldorf,,1. FC Köln,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ab850467ebd38dcf708c48ee,BUNDESLIGA,2019-20,2019-11-08T12:00:00Z,Matchday 11,,1. FC Köln,,1899 Hoffenheim,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5c9c2edbdab39ae35d41122f,BUNDESLIGA,2019-20,2019-11-09T12:00:00Z,Matchday 11,,Hertha BSC,,RB Leipzig,,2,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-809160ff97f8fd5189742c59,BUNDESLIGA,2019-20,2019-11-09T12:00:00Z,Matchday 11,,SC Paderborn 07,,FC Augsburg,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-871b9acdfcbdcca9d8d64489,BUNDESLIGA,2019-20,2019-11-09T12:00:00Z,Matchday 11,,Bayern München,,Borussia Dortmund,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-8c1fe5fece7088b3880f7c78,BUNDESLIGA,2019-20,2019-11-09T12:00:00Z,Matchday 11,,FC Schalke 04,,Fortuna Düsseldorf,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-d8ef971fdb1ea6382b09a8e9,BUNDESLIGA,2019-20,2019-11-09T12:00:00Z,Matchday 11,,1. FSV Mainz 05,,1. FC Union Berlin,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-24d0bdfe98fcfe2e4891a661,BUNDESLIGA,2019-20,2019-11-10T12:00:00Z,Matchday 11,,Bor. Mönchengladbach,,Werder Bremen,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a7a97a3af158863e06d7acee,BUNDESLIGA,2019-20,2019-11-10T12:00:00Z,Matchday 11,,VfL Wolfsburg,,Bayer Leverkusen,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-d59766a8ca86d243585399d8,BUNDESLIGA,2019-20,2019-11-10T12:00:00Z,Matchday 11,,SC Freiburg,,Eintracht Frankfurt,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-d56f65cff587790dc3018b8e,BUNDESLIGA,2019-20,2019-11-22T12:00:00Z,Matchday 12,,Borussia Dortmund,,SC Paderborn 07,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2d8e7f7788abb50d0d197416,BUNDESLIGA,2019-20,2019-11-23T12:00:00Z,Matchday 12,,Fortuna Düsseldorf,,Bayern München,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2e09ec479b41c9900409e9ec,BUNDESLIGA,2019-20,2019-11-23T12:00:00Z,Matchday 12,,RB Leipzig,,1. FC Köln,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-8321aa5d057bca50fbf269f4,BUNDESLIGA,2019-20,2019-11-23T12:00:00Z,Matchday 12,,Bayer Leverkusen,,SC Freiburg,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-99fae7efd11c7da4e0d274df,BUNDESLIGA,2019-20,2019-11-23T12:00:00Z,Matchday 12,,1. FC Union Berlin,,Bor. Mönchengladbach,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-af53961e63b57e2dc57fd7da,BUNDESLIGA,2019-20,2019-11-23T12:00:00Z,Matchday 12,,Werder Bremen,,FC Schalke 04,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e7bf4f33bae928ac1808a10e,BUNDESLIGA,2019-20,2019-11-23T12:00:00Z,Matchday 12,,Eintracht Frankfurt,,VfL Wolfsburg,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-602d1cddf11c1779ed5f05d6,BUNDESLIGA,2019-20,2019-11-24T12:00:00Z,Matchday 12,,FC Augsburg,,Hertha BSC,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-814268ed1980c37a212e3b2e,BUNDESLIGA,2019-20,2019-11-24T12:00:00Z,Matchday 12,,1899 Hoffenheim,,1. FSV Mainz 05,,1,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-efd52d42f9d49a45886afab2,BUNDESLIGA,2019-20,2019-11-29T12:00:00Z,Matchday 13,,FC Schalke 04,,1. FC Union Berlin,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-42692968bf08a8e1356551c3,BUNDESLIGA,2019-20,2019-11-30T12:00:00Z,Matchday 13,,Bayern München,,Bayer Leverkusen,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-59f668c0a3949e5b4913fad6,BUNDESLIGA,2019-20,2019-11-30T12:00:00Z,Matchday 13,,1899 Hoffenheim,,Fortuna Düsseldorf,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5a517961545137a928ed3952,BUNDESLIGA,2019-20,2019-11-30T12:00:00Z,Matchday 13,,Hertha BSC,,Borussia Dortmund,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c667977d5ae1502ca72b0b92,BUNDESLIGA,2019-20,2019-11-30T12:00:00Z,Matchday 13,,1. FC Köln,,FC Augsburg,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f4f7ac53b35af8cf2aa5f9f5,BUNDESLIGA,2019-20,2019-11-30T12:00:00Z,Matchday 13,,SC Paderborn 07,,RB Leipzig,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-407cbdc80f3d43389c6ef210,BUNDESLIGA,2019-20,2019-12-01T12:00:00Z,Matchday 13,,Bor. Mönchengladbach,,SC Freiburg,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5f51914300835d21035d231d,BUNDESLIGA,2019-20,2019-12-01T12:00:00Z,Matchday 13,,VfL Wolfsburg,,Werder Bremen,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-279a1f34ec5c0a65db201b10,BUNDESLIGA,2019-20,2019-12-02T12:00:00Z,Matchday 13,,1. FSV Mainz 05,,Eintracht Frankfurt,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-78403e12d2863c4a8b14296e,BUNDESLIGA,2019-20,2019-12-06T12:00:00Z,Matchday 14,,Eintracht Frankfurt,,Hertha BSC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-0e2f02adfeff3b8dde596a17,BUNDESLIGA,2019-20,2019-12-07T12:00:00Z,Matchday 14,,RB Leipzig,,1899 Hoffenheim,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-35668598709888a3e9143d4e,BUNDESLIGA,2019-20,2019-12-07T12:00:00Z,Matchday 14,,Bor. Mönchengladbach,,Bayern München,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-91e34d9c058d938f86c3061e,BUNDESLIGA,2019-20,2019-12-07T12:00:00Z,Matchday 14,,SC Freiburg,,VfL Wolfsburg,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c5f2d476463fc681d1d02f0a,BUNDESLIGA,2019-20,2019-12-07T12:00:00Z,Matchday 14,,FC Augsburg,,1. FSV Mainz 05,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c64e647177d2769f648ef42c,BUNDESLIGA,2019-20,2019-12-07T12:00:00Z,Matchday 14,,Borussia Dortmund,,Fortuna Düsseldorf,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e23925a9eb99ffd7ccc752ba,BUNDESLIGA,2019-20,2019-12-07T12:00:00Z,Matchday 14,,Bayer Leverkusen,,FC Schalke 04,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-46cc51baa618299a9101ef23,BUNDESLIGA,2019-20,2019-12-08T12:00:00Z,Matchday 14,,Werder Bremen,,SC Paderborn 07,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c8f297b9ed70b92581febcdd,BUNDESLIGA,2019-20,2019-12-08T12:00:00Z,Matchday 14,,1. FC Union Berlin,,1. FC Köln,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-10a2686fca377da0d4b73ba6,BUNDESLIGA,2019-20,2019-12-13T12:00:00Z,Matchday 15,,1899 Hoffenheim,,FC Augsburg,,2,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-3cda04479feec72ba85d0e95,BUNDESLIGA,2019-20,2019-12-14T12:00:00Z,Matchday 15,,1. FC Köln,,Bayer Leverkusen,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-4dcc2bd79593dffa956f0681,BUNDESLIGA,2019-20,2019-12-14T12:00:00Z,Matchday 15,,1. FSV Mainz 05,,Borussia Dortmund,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-50dbce1a4f8965fb3aae7871,BUNDESLIGA,2019-20,2019-12-14T12:00:00Z,Matchday 15,,Fortuna Düsseldorf,,RB Leipzig,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5260c41d3957e56b59ea45ea,BUNDESLIGA,2019-20,2019-12-14T12:00:00Z,Matchday 15,,SC Paderborn 07,,1. FC Union Berlin,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-77c3c44e5e831cc37305407e,BUNDESLIGA,2019-20,2019-12-14T12:00:00Z,Matchday 15,,Hertha BSC,,SC Freiburg,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b54cb2b559f2b4f8ca7b0ab0,BUNDESLIGA,2019-20,2019-12-14T12:00:00Z,Matchday 15,,Bayern München,,Werder Bremen,,6,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-53df8d4ead5bb9cc563d518c,BUNDESLIGA,2019-20,2019-12-15T12:00:00Z,Matchday 15,,VfL Wolfsburg,,Bor. Mönchengladbach,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ac56b97df08188b6bc82b5f8,BUNDESLIGA,2019-20,2019-12-15T12:00:00Z,Matchday 15,,FC Schalke 04,,Eintracht Frankfurt,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-05bb8758ecaadacfc72e72c2,BUNDESLIGA,2019-20,2019-12-17T12:00:00Z,Matchday 16,,Werder Bremen,,1. FSV Mainz 05,,0,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-34de3a6af29f0b9f8b1d1b96,BUNDESLIGA,2019-20,2019-12-17T12:00:00Z,Matchday 16,,1. FC Union Berlin,,1899 Hoffenheim,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-749a9500f1ac91bdaf90adae,BUNDESLIGA,2019-20,2019-12-17T12:00:00Z,Matchday 16,,Borussia Dortmund,,RB Leipzig,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f680a9c602d0a1399343ee83,BUNDESLIGA,2019-20,2019-12-17T12:00:00Z,Matchday 16,,FC Augsburg,,Fortuna Düsseldorf,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-109a946b3b7aef76e07f0044,BUNDESLIGA,2019-20,2019-12-18T12:00:00Z,Matchday 16,,Bor. Mönchengladbach,,SC Paderborn 07,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-15a50820e9c203c935fcbe41,BUNDESLIGA,2019-20,2019-12-18T12:00:00Z,Matchday 16,,SC Freiburg,,Bayern München,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2b182a75b368c46f05ba3c80,BUNDESLIGA,2019-20,2019-12-18T12:00:00Z,Matchday 16,,Eintracht Frankfurt,,1. FC Köln,,2,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-54e193425c887273ebc8989d,BUNDESLIGA,2019-20,2019-12-18T12:00:00Z,Matchday 16,,Bayer Leverkusen,,Hertha BSC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e13c38a9dcbf2ab537aaee84,BUNDESLIGA,2019-20,2019-12-18T12:00:00Z,Matchday 16,,VfL Wolfsburg,,FC Schalke 04,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-920bd2ca655c1bc7957cfc71,BUNDESLIGA,2019-20,2019-12-20T12:00:00Z,Matchday 17,,1899 Hoffenheim,,Borussia Dortmund,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-0f84a7781fcedb58a390d8d5,BUNDESLIGA,2019-20,2019-12-21T12:00:00Z,Matchday 17,,1. FC Köln,,Werder Bremen,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-24876da23458f06f849c1446,BUNDESLIGA,2019-20,2019-12-21T12:00:00Z,Matchday 17,,Hertha BSC,,Bor. Mönchengladbach,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c6796effd923904639d83bb8,BUNDESLIGA,2019-20,2019-12-21T12:00:00Z,Matchday 17,,FC Schalke 04,,SC Freiburg,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c9d450c9ac72414aa9deff59,BUNDESLIGA,2019-20,2019-12-21T12:00:00Z,Matchday 17,,Bayern München,,VfL Wolfsburg,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-d3346b70ba4c1aaf86475a03,BUNDESLIGA,2019-20,2019-12-21T12:00:00Z,Matchday 17,,1. FSV Mainz 05,,Bayer Leverkusen,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-d45ed5e319dca59deec554e0,BUNDESLIGA,2019-20,2019-12-21T12:00:00Z,Matchday 17,,RB Leipzig,,FC Augsburg,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-49c2f34991293355b103023e,BUNDESLIGA,2019-20,2019-12-22T12:00:00Z,Matchday 17,,Fortuna Düsseldorf,,1. FC Union Berlin,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-8cce5efc4fad9732336844af,BUNDESLIGA,2019-20,2019-12-22T12:00:00Z,Matchday 17,,SC Paderborn 07,,Eintracht Frankfurt,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f7ae9802e0d91f2b2c4c50bc,BUNDESLIGA,2019-20,2020-01-17T12:00:00Z,Matchday 18,,FC Schalke 04,,Bor. Mönchengladbach,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-4b01f6af43845f1f784bef16,BUNDESLIGA,2019-20,2020-01-18T12:00:00Z,Matchday 18,,1. FSV Mainz 05,,SC Freiburg,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-6bbaf91720ccb7990bf88e1e,BUNDESLIGA,2019-20,2020-01-18T12:00:00Z,Matchday 18,,1. FC Köln,,VfL Wolfsburg,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a94769cd673a998b67e8f2e3,BUNDESLIGA,2019-20,2020-01-18T12:00:00Z,Matchday 18,,Fortuna Düsseldorf,,Werder Bremen,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b644cb1f89d8836ae44d2501,BUNDESLIGA,2019-20,2020-01-18T12:00:00Z,Matchday 18,,FC Augsburg,,Borussia Dortmund,,3,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e306ad573ddd6449be260dc5,BUNDESLIGA,2019-20,2020-01-18T12:00:00Z,Matchday 18,,1899 Hoffenheim,,Eintracht Frankfurt,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f2bc772f8d5dcb4fcb043865,BUNDESLIGA,2019-20,2020-01-18T12:00:00Z,Matchday 18,,RB Leipzig,,1. FC Union Berlin,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-0564e6be7be6343470042c1f,BUNDESLIGA,2019-20,2020-01-19T12:00:00Z,Matchday 18,,SC Paderborn 07,,Bayer Leverkusen,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e189ed0e0a04117bdccd16e9,BUNDESLIGA,2019-20,2020-01-19T12:00:00Z,Matchday 18,,Hertha BSC,,Bayern München,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f81f11e337e1fc76d3585548,BUNDESLIGA,2019-20,2020-01-24T12:00:00Z,Matchday 19,,Borussia Dortmund,,1. FC Köln,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-1ab69a1ec54cd3cdfe7b1dc5,BUNDESLIGA,2019-20,2020-01-25T12:00:00Z,Matchday 19,,Bor. Mönchengladbach,,1. FSV Mainz 05,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-6c60c202983d1c44e0d64e9f,BUNDESLIGA,2019-20,2020-01-25T12:00:00Z,Matchday 19,,VfL Wolfsburg,,Hertha BSC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-7a5e0180d02926f105929558,BUNDESLIGA,2019-20,2020-01-25T12:00:00Z,Matchday 19,,Eintracht Frankfurt,,RB Leipzig,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b5b93f0c5180651d56e6d7bc,BUNDESLIGA,2019-20,2020-01-25T12:00:00Z,Matchday 19,,SC Freiburg,,SC Paderborn 07,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c4a1dc4291fcd5930233969f,BUNDESLIGA,2019-20,2020-01-25T12:00:00Z,Matchday 19,,Bayern München,,FC Schalke 04,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e2b0a7f6227bec6b933f59ea,BUNDESLIGA,2019-20,2020-01-25T12:00:00Z,Matchday 19,,1. FC Union Berlin,,FC Augsburg,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-023b67400321397013cf393b,BUNDESLIGA,2019-20,2020-01-26T12:00:00Z,Matchday 19,,Bayer Leverkusen,,Fortuna Düsseldorf,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-622ef7b70fe639bddc0c0a49,BUNDESLIGA,2019-20,2020-01-26T12:00:00Z,Matchday 19,,Werder Bremen,,1899 Hoffenheim,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a7f4b63987e48f06db60bb24,BUNDESLIGA,2019-20,2020-01-31T12:00:00Z,Matchday 20,,Hertha BSC,,FC Schalke 04,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-24cc751edd65c0507433f33f,BUNDESLIGA,2019-20,2020-02-01T12:00:00Z,Matchday 20,,1899 Hoffenheim,,Bayer Leverkusen,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2c9411d0b9c147728f3cc130,BUNDESLIGA,2019-20,2020-02-01T12:00:00Z,Matchday 20,,RB Leipzig,,Bor. Mönchengladbach,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-3aef6139515cb36a29e868a6,BUNDESLIGA,2019-20,2020-02-01T12:00:00Z,Matchday 20,,Fortuna Düsseldorf,,Eintracht Frankfurt,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-83e8d6590b4bdaec2971c98b,BUNDESLIGA,2019-20,2020-02-01T12:00:00Z,Matchday 20,,1. FSV Mainz 05,,Bayern München,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-92241b5c1b88aed86c4900c1,BUNDESLIGA,2019-20,2020-02-01T12:00:00Z,Matchday 20,,FC Augsburg,,Werder Bremen,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c3803454fbbb0e57023837fb,BUNDESLIGA,2019-20,2020-02-01T12:00:00Z,Matchday 20,,Borussia Dortmund,,1. FC Union Berlin,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2609e7f2d071a86648a083fa,BUNDESLIGA,2019-20,2020-02-02T12:00:00Z,Matchday 20,,SC Paderborn 07,,VfL Wolfsburg,,2,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a7b98c7b4cb882109bd25099,BUNDESLIGA,2019-20,2020-02-02T12:00:00Z,Matchday 20,,1. FC Köln,,SC Freiburg,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b058690b576de2a9dbaffa0f,BUNDESLIGA,2019-20,2020-02-07T12:00:00Z,Matchday 21,,Eintracht Frankfurt,,FC Augsburg,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2432afc2c7522ddb3bbe37ce,BUNDESLIGA,2019-20,2020-02-08T12:00:00Z,Matchday 21,,Bayer Leverkusen,,Borussia Dortmund,,4,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-3b9598919877bf7a58c39980,BUNDESLIGA,2019-20,2020-02-08T12:00:00Z,Matchday 21,,Werder Bremen,,1. FC Union Berlin,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-4b9ef90f516019284a365c34,BUNDESLIGA,2019-20,2020-02-08T12:00:00Z,Matchday 21,,VfL Wolfsburg,,Fortuna Düsseldorf,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a21396547147fffcbfb09713,BUNDESLIGA,2019-20,2020-02-08T12:00:00Z,Matchday 21,,FC Schalke 04,,SC Paderborn 07,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b202af3dd56782c938b6ff16,BUNDESLIGA,2019-20,2020-02-08T12:00:00Z,Matchday 21,,SC Freiburg,,1899 Hoffenheim,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ce063135f60145ff952bc8c8,BUNDESLIGA,2019-20,2020-02-08T12:00:00Z,Matchday 21,,Hertha BSC,,1. FSV Mainz 05,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2b643eb2cd16378a7813e265,BUNDESLIGA,2019-20,2020-02-09T12:00:00Z,Matchday 21,,Bayern München,,RB Leipzig,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-de8edc0d5c4ae1cd6d661766,BUNDESLIGA,2019-20,2020-02-14T12:00:00Z,Matchday 22,,Borussia Dortmund,,Eintracht Frankfurt,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-137bb0a5a5a8babb5298dc19,BUNDESLIGA,2019-20,2020-02-15T12:00:00Z,Matchday 22,,1899 Hoffenheim,,VfL Wolfsburg,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b2257472b80583b1042a86df,BUNDESLIGA,2019-20,2020-02-15T12:00:00Z,Matchday 22,,FC Augsburg,,SC Freiburg,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ccc9a9437c031332275ee98f,BUNDESLIGA,2019-20,2020-02-15T12:00:00Z,Matchday 22,,Fortuna Düsseldorf,,Bor. Mönchengladbach,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-cf22d7ef4664838dc694e750,BUNDESLIGA,2019-20,2020-02-15T12:00:00Z,Matchday 22,,1. FC Union Berlin,,Bayer Leverkusen,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-d5027e4d555cccc05a034850,BUNDESLIGA,2019-20,2020-02-15T12:00:00Z,Matchday 22,,RB Leipzig,,Werder Bremen,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-eb843c5ab72247611b65b296,BUNDESLIGA,2019-20,2020-02-15T12:00:00Z,Matchday 22,,SC Paderborn 07,,Hertha BSC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-182ea82f3d8588183f2187b6,BUNDESLIGA,2019-20,2020-02-16T12:00:00Z,Matchday 22,,1. FC Köln,,Bayern München,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ce421918b97cc0f02ffb6012,BUNDESLIGA,2019-20,2020-02-16T12:00:00Z,Matchday 22,,1. FSV Mainz 05,,FC Schalke 04,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c6dfcca76a573db8efb93999,BUNDESLIGA,2019-20,2020-02-21T12:00:00Z,Matchday 23,,Bayern München,,SC Paderborn 07,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-09beadd6039af1f4ec26f926,BUNDESLIGA,2019-20,2020-02-22T12:00:00Z,Matchday 23,,SC Freiburg,,Fortuna Düsseldorf,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-140548e3eee5f56439f66225,BUNDESLIGA,2019-20,2020-02-22T12:00:00Z,Matchday 23,,Werder Bremen,,Borussia Dortmund,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-1c6c3e05ff83861fd7a5c83c,BUNDESLIGA,2019-20,2020-02-22T12:00:00Z,Matchday 23,,Bor. Mönchengladbach,,1899 Hoffenheim,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-962cf87706036947613c9ad5,BUNDESLIGA,2019-20,2020-02-22T12:00:00Z,Matchday 23,,FC Schalke 04,,RB Leipzig,,0,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-98ec46feca3c5519c827cd37,BUNDESLIGA,2019-20,2020-02-22T12:00:00Z,Matchday 23,,Hertha BSC,,1. FC Köln,,0,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c8aea0d6d222fb20e95edd80,BUNDESLIGA,2019-20,2020-02-23T12:00:00Z,Matchday 23,,Bayer Leverkusen,,FC Augsburg,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e70d9af64c4dd68fb883e14c,BUNDESLIGA,2019-20,2020-02-23T12:00:00Z,Matchday 23,,VfL Wolfsburg,,1. FSV Mainz 05,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-348f7faf65f9686e0b4a1b19,BUNDESLIGA,2019-20,2020-02-24T12:00:00Z,Matchday 23,,Eintracht Frankfurt,,1. FC Union Berlin,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-13fd3ef5edfaed12bc8d9fea,BUNDESLIGA,2019-20,2020-02-28T12:00:00Z,Matchday 24,,Fortuna Düsseldorf,,Hertha BSC,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-49c6c1505d157956fda5f0b2,BUNDESLIGA,2019-20,2020-02-29T12:00:00Z,Matchday 24,,1. FSV Mainz 05,,SC Paderborn 07,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-61eb0d24fef6e669f3062316,BUNDESLIGA,2019-20,2020-02-29T12:00:00Z,Matchday 24,,FC Augsburg,,Bor. Mönchengladbach,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-7aeabd3b6bb730cec9a7dd46,BUNDESLIGA,2019-20,2020-02-29T12:00:00Z,Matchday 24,,1899 Hoffenheim,,Bayern München,,0,6,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c2e85929732052e16682d460,BUNDESLIGA,2019-20,2020-02-29T12:00:00Z,Matchday 24,,Borussia Dortmund,,SC Freiburg,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-d13f5a8b0df58b916b382ac5,BUNDESLIGA,2019-20,2020-02-29T12:00:00Z,Matchday 24,,1. FC Köln,,FC Schalke 04,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-958f13b101c9a6bddb8941a1,BUNDESLIGA,2019-20,2020-03-01T12:00:00Z,Matchday 24,,RB Leipzig,,Bayer Leverkusen,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c30a52ada59605d248fcdd52,BUNDESLIGA,2019-20,2020-03-01T12:00:00Z,Matchday 24,,1. FC Union Berlin,,VfL Wolfsburg,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-941182c2b8410f4be2821a72,BUNDESLIGA,2019-20,2020-03-06T12:00:00Z,Matchday 25,,SC Paderborn 07,,1. FC Köln,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-31244e5d5e0fc5458e75f27c,BUNDESLIGA,2019-20,2020-03-07T12:00:00Z,Matchday 25,,SC Freiburg,,1. FC Union Berlin,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a688dd47fcab593b06a080aa,BUNDESLIGA,2019-20,2020-03-07T12:00:00Z,Matchday 25,,Bor. Mönchengladbach,,Borussia Dortmund,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-adb79002300f521faf732e03,BUNDESLIGA,2019-20,2020-03-07T12:00:00Z,Matchday 25,,VfL Wolfsburg,,RB Leipzig,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-bbf1736f1b3284a5cc28a132,BUNDESLIGA,2019-20,2020-03-07T12:00:00Z,Matchday 25,,Bayer Leverkusen,,Eintracht Frankfurt,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ea5e32b19420e2f80b4c1276,BUNDESLIGA,2019-20,2020-03-07T12:00:00Z,Matchday 25,,Hertha BSC,,Werder Bremen,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-efdbd3775381a9026dc3a619,BUNDESLIGA,2019-20,2020-03-07T12:00:00Z,Matchday 25,,FC Schalke 04,,1899 Hoffenheim,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-8ef82fe8a4bbf9fdd196a280,BUNDESLIGA,2019-20,2020-03-08T12:00:00Z,Matchday 25,,Bayern München,,FC Augsburg,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e74ecd154d9e6f2608313435,BUNDESLIGA,2019-20,2020-03-08T12:00:00Z,Matchday 25,,1. FSV Mainz 05,,Fortuna Düsseldorf,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-22fc0f762cacd800872a3d0d,BUNDESLIGA,2019-20,2020-03-11T12:00:00Z,Matchday 21,,Bor. Mönchengladbach,,1. FC Köln,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-4d20b8d24d3f7f59630be58c,BUNDESLIGA,2019-20,2020-05-16T12:00:00Z,Matchday 26,,Borussia Dortmund,,FC Schalke 04,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-549e76997e570edd289cc069,BUNDESLIGA,2019-20,2020-05-16T12:00:00Z,Matchday 26,,1899 Hoffenheim,,Hertha BSC,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a0ff246a843033acb6d06a68,BUNDESLIGA,2019-20,2020-05-16T12:00:00Z,Matchday 26,,FC Augsburg,,VfL Wolfsburg,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a9a1c991514911ae8fc0d0b5,BUNDESLIGA,2019-20,2020-05-16T12:00:00Z,Matchday 26,,Fortuna Düsseldorf,,SC Paderborn 07,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e3daf0adc23ab0a64a5e4bb4,BUNDESLIGA,2019-20,2020-05-16T12:00:00Z,Matchday 26,,Eintracht Frankfurt,,Bor. Mönchengladbach,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f02dfc220f31fc04c0982008,BUNDESLIGA,2019-20,2020-05-16T12:00:00Z,Matchday 26,,RB Leipzig,,SC Freiburg,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-020bd3cb651a22d70f896825,BUNDESLIGA,2019-20,2020-05-17T12:00:00Z,Matchday 26,,1. FC Union Berlin,,Bayern München,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-4885f796c5413a228cfa85c1,BUNDESLIGA,2019-20,2020-05-17T12:00:00Z,Matchday 26,,1. FC Köln,,1. FSV Mainz 05,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-87f21242e8cbdd38005bdd75,BUNDESLIGA,2019-20,2020-05-18T12:00:00Z,Matchday 26,,Werder Bremen,,Bayer Leverkusen,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-21b628104e47b85824f6e7b7,BUNDESLIGA,2019-20,2020-05-22T12:00:00Z,Matchday 27,,Hertha BSC,,1. FC Union Berlin,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-56ab40e65217b1f93af2a2ab,BUNDESLIGA,2019-20,2020-05-23T12:00:00Z,Matchday 27,,SC Paderborn 07,,1899 Hoffenheim,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-847ba24aa352fdb7420cc6b1,BUNDESLIGA,2019-20,2020-05-23T12:00:00Z,Matchday 27,,VfL Wolfsburg,,Borussia Dortmund,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-9a64e8f2661864415068bdff,BUNDESLIGA,2019-20,2020-05-23T12:00:00Z,Matchday 27,,Bayern München,,Eintracht Frankfurt,,5,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-9c166c3ab45becde8d0afce7,BUNDESLIGA,2019-20,2020-05-23T12:00:00Z,Matchday 27,,SC Freiburg,,Werder Bremen,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-aebf8cc751bc5714b865ab07,BUNDESLIGA,2019-20,2020-05-23T12:00:00Z,Matchday 27,,Bor. Mönchengladbach,,Bayer Leverkusen,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-182269c89a1bbec2f031136d,BUNDESLIGA,2019-20,2020-05-24T12:00:00Z,Matchday 27,,1. FSV Mainz 05,,RB Leipzig,,0,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-285c2b0b5f8e57de1663176f,BUNDESLIGA,2019-20,2020-05-24T12:00:00Z,Matchday 27,,1. FC Köln,,Fortuna Düsseldorf,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-878be37f4b7932b638b0b70f,BUNDESLIGA,2019-20,2020-05-24T12:00:00Z,Matchday 27,,FC Schalke 04,,FC Augsburg,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2fccfb6f157af00be3e99587,BUNDESLIGA,2019-20,2020-05-26T12:00:00Z,Matchday 28,,Werder Bremen,,Bor. Mönchengladbach,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-4a24cd542ba3e68378d5f903,BUNDESLIGA,2019-20,2020-05-26T12:00:00Z,Matchday 28,,Bayer Leverkusen,,VfL Wolfsburg,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-93dcc968188e6d9b64d31163,BUNDESLIGA,2019-20,2020-05-26T12:00:00Z,Matchday 28,,Eintracht Frankfurt,,SC Freiburg,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-eeb79a808def4451b74c736e,BUNDESLIGA,2019-20,2020-05-26T12:00:00Z,Matchday 28,,Borussia Dortmund,,Bayern München,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-04a42de4cced30f16ce80dfa,BUNDESLIGA,2019-20,2020-05-27T12:00:00Z,Matchday 28,,1. FC Union Berlin,,1. FSV Mainz 05,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-4b0f60187a2ce07ce67d78ec,BUNDESLIGA,2019-20,2020-05-27T12:00:00Z,Matchday 28,,1899 Hoffenheim,,1. FC Köln,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-51657df46f97465826c48d0b,BUNDESLIGA,2019-20,2020-05-27T12:00:00Z,Matchday 28,,FC Augsburg,,SC Paderborn 07,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5fcfd42ce0768f0b61f997b4,BUNDESLIGA,2019-20,2020-05-27T12:00:00Z,Matchday 28,,RB Leipzig,,Hertha BSC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a813c21142bf2d267f80607a,BUNDESLIGA,2019-20,2020-05-27T12:00:00Z,Matchday 28,,Fortuna Düsseldorf,,FC Schalke 04,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ab49ab1c9e723dc5b26ef93e,BUNDESLIGA,2019-20,2020-05-29T12:00:00Z,Matchday 29,,SC Freiburg,,Bayer Leverkusen,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2fdb7bb2c42331d2b222f73a,BUNDESLIGA,2019-20,2020-05-30T12:00:00Z,Matchday 29,,Bayern München,,Fortuna Düsseldorf,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-41435c01dc54f919cb7af40c,BUNDESLIGA,2019-20,2020-05-30T12:00:00Z,Matchday 29,,VfL Wolfsburg,,Eintracht Frankfurt,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-48c4dc0c407b8778f42e6e00,BUNDESLIGA,2019-20,2020-05-30T12:00:00Z,Matchday 29,,1. FSV Mainz 05,,1899 Hoffenheim,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c7a29df807ac42d38927c0c8,BUNDESLIGA,2019-20,2020-05-30T12:00:00Z,Matchday 29,,FC Schalke 04,,Werder Bremen,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e2db59b6bc19cb66baa974d2,BUNDESLIGA,2019-20,2020-05-30T12:00:00Z,Matchday 29,,Hertha BSC,,FC Augsburg,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-7e9afe0572ff630d119915d1,BUNDESLIGA,2019-20,2020-05-31T12:00:00Z,Matchday 29,,Bor. Mönchengladbach,,1. FC Union Berlin,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-cc57268d25a03fefd034ad3f,BUNDESLIGA,2019-20,2020-05-31T12:00:00Z,Matchday 29,,SC Paderborn 07,,Borussia Dortmund,,1,6,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-888f520ccdfd2e2846c210ee,BUNDESLIGA,2019-20,2020-06-01T12:00:00Z,Matchday 29,,1. FC Köln,,RB Leipzig,,2,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-3c1dd3afdfb11fc461bdada8,BUNDESLIGA,2019-20,2020-06-03T12:00:00Z,Matchday 24,,Werder Bremen,,Eintracht Frankfurt,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-bb23a17712857be1923f37a7,BUNDESLIGA,2019-20,2020-06-05T12:00:00Z,Matchday 30,,SC Freiburg,,Bor. Mönchengladbach,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-232a364c27da33dfb79dbd2c,BUNDESLIGA,2019-20,2020-06-06T12:00:00Z,Matchday 30,,Borussia Dortmund,,Hertha BSC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-55f9dba344e641dc1bcba9a1,BUNDESLIGA,2019-20,2020-06-06T12:00:00Z,Matchday 30,,Eintracht Frankfurt,,1. FSV Mainz 05,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-d99c40f584e3506a5fab87c4,BUNDESLIGA,2019-20,2020-06-06T12:00:00Z,Matchday 30,,Fortuna Düsseldorf,,1899 Hoffenheim,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f5b98f2ae62d59a80817ad5d,BUNDESLIGA,2019-20,2020-06-06T12:00:00Z,Matchday 30,,Bayer Leverkusen,,Bayern München,,2,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f718de2c3cb1916329d9e08a,BUNDESLIGA,2019-20,2020-06-06T12:00:00Z,Matchday 30,,RB Leipzig,,SC Paderborn 07,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a89923a9a322ff0fea02e8b1,BUNDESLIGA,2019-20,2020-06-07T12:00:00Z,Matchday 30,,FC Augsburg,,1. FC Köln,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-aa421280784154bcf2666a65,BUNDESLIGA,2019-20,2020-06-07T12:00:00Z,Matchday 30,,Werder Bremen,,VfL Wolfsburg,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c1e10849faf4b8e68bfdbb9a,BUNDESLIGA,2019-20,2020-06-07T12:00:00Z,Matchday 30,,1. FC Union Berlin,,FC Schalke 04,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b5dc665604792b6603ed7117,BUNDESLIGA,2019-20,2020-06-12T12:00:00Z,Matchday 31,,1899 Hoffenheim,,RB Leipzig,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-6177c3d44ffc9c7bb2a9dca9,BUNDESLIGA,2019-20,2020-06-13T12:00:00Z,Matchday 31,,Hertha BSC,,Eintracht Frankfurt,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-86c4a4220953a2840bd17d0e,BUNDESLIGA,2019-20,2020-06-13T12:00:00Z,Matchday 31,,VfL Wolfsburg,,SC Freiburg,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a4d6ab83bcf5499bd7611cf0,BUNDESLIGA,2019-20,2020-06-13T12:00:00Z,Matchday 31,,Bayern München,,Bor. Mönchengladbach,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-aa2960722b8455769fb9ff5b,BUNDESLIGA,2019-20,2020-06-13T12:00:00Z,Matchday 31,,Fortuna Düsseldorf,,Borussia Dortmund,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ac4a6e25101526c75e429f48,BUNDESLIGA,2019-20,2020-06-13T12:00:00Z,Matchday 31,,1. FC Köln,,1. FC Union Berlin,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c2901166016ef1497091c406,BUNDESLIGA,2019-20,2020-06-13T12:00:00Z,Matchday 31,,SC Paderborn 07,,Werder Bremen,,1,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c1aa6c902e5cc8a3b173c823,BUNDESLIGA,2019-20,2020-06-14T12:00:00Z,Matchday 31,,1. FSV Mainz 05,,FC Augsburg,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-fca1a848b52bf6230d0bbaa3,BUNDESLIGA,2019-20,2020-06-14T12:00:00Z,Matchday 31,,FC Schalke 04,,Bayer Leverkusen,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-18463925207a05dea9a1061f,BUNDESLIGA,2019-20,2020-06-16T12:00:00Z,Matchday 32,,1. FC Union Berlin,,SC Paderborn 07,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-40178975166d5dacef0fa701,BUNDESLIGA,2019-20,2020-06-16T12:00:00Z,Matchday 32,,SC Freiburg,,Hertha BSC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-98465789c71414fc14ad5e1a,BUNDESLIGA,2019-20,2020-06-16T12:00:00Z,Matchday 32,,Bor. Mönchengladbach,,VfL Wolfsburg,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e4d51b98fa96c1e71996ae98,BUNDESLIGA,2019-20,2020-06-16T12:00:00Z,Matchday 32,,Werder Bremen,,Bayern München,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5744403ee49291506cae9747,BUNDESLIGA,2019-20,2020-06-17T12:00:00Z,Matchday 32,,Eintracht Frankfurt,,FC Schalke 04,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-75aaa1a0ffb679432195d8ee,BUNDESLIGA,2019-20,2020-06-17T12:00:00Z,Matchday 32,,RB Leipzig,,Fortuna Düsseldorf,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-98dae83c5e81404d6fd3dd21,BUNDESLIGA,2019-20,2020-06-17T12:00:00Z,Matchday 32,,FC Augsburg,,1899 Hoffenheim,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-bc57933b6445f73252017afb,BUNDESLIGA,2019-20,2020-06-17T12:00:00Z,Matchday 32,,Borussia Dortmund,,1. FSV Mainz 05,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-d9662b90cc7ba1a82dcd4066,BUNDESLIGA,2019-20,2020-06-17T12:00:00Z,Matchday 32,,Bayer Leverkusen,,1. FC Köln,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2987f43e8a238129ebbdef67,BUNDESLIGA,2019-20,2020-06-20T12:00:00Z,Matchday 33,,Bayern München,,SC Freiburg,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-38fd1c444951b198da1c1818,BUNDESLIGA,2019-20,2020-06-20T12:00:00Z,Matchday 33,,Hertha BSC,,Bayer Leverkusen,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-44a3814bc179b4d68fce4977,BUNDESLIGA,2019-20,2020-06-20T12:00:00Z,Matchday 33,,Fortuna Düsseldorf,,FC Augsburg,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-52d93ce18f2a64617ad93196,BUNDESLIGA,2019-20,2020-06-20T12:00:00Z,Matchday 33,,FC Schalke 04,,VfL Wolfsburg,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-69f40cb3e03755bd83e0611a,BUNDESLIGA,2019-20,2020-06-20T12:00:00Z,Matchday 33,,1. FC Köln,,Eintracht Frankfurt,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-88e7248554d4de1a7614994d,BUNDESLIGA,2019-20,2020-06-20T12:00:00Z,Matchday 33,,SC Paderborn 07,,Bor. Mönchengladbach,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a7c165de9b5b21980ace8f3e,BUNDESLIGA,2019-20,2020-06-20T12:00:00Z,Matchday 33,,1. FSV Mainz 05,,Werder Bremen,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-bbd29a79fdf3ef83138ed377,BUNDESLIGA,2019-20,2020-06-20T12:00:00Z,Matchday 33,,RB Leipzig,,Borussia Dortmund,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ccadd37ba7c9d67a4b6ac793,BUNDESLIGA,2019-20,2020-06-20T12:00:00Z,Matchday 33,,1899 Hoffenheim,,1. FC Union Berlin,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-04ad591dbdaa750f14a09e21,BUNDESLIGA,2019-20,2020-06-27T12:00:00Z,Matchday 34,,FC Augsburg,,RB Leipzig,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-304e920bcd85eeb4456ff5ca,BUNDESLIGA,2019-20,2020-06-27T12:00:00Z,Matchday 34,,Werder Bremen,,1. FC Köln,,6,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-3268f945b8bd61f8034681c2,BUNDESLIGA,2019-20,2020-06-27T12:00:00Z,Matchday 34,,1. FC Union Berlin,,Fortuna Düsseldorf,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-40f15003a3458b9e10a62951,BUNDESLIGA,2019-20,2020-06-27T12:00:00Z,Matchday 34,,VfL Wolfsburg,,Bayern München,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-6ef8d26ce40511052fd3e606,BUNDESLIGA,2019-20,2020-06-27T12:00:00Z,Matchday 34,,Borussia Dortmund,,1899 Hoffenheim,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-7ed452d92c8ce178e982b279,BUNDESLIGA,2019-20,2020-06-27T12:00:00Z,Matchday 34,,Bayer Leverkusen,,1. FSV Mainz 05,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-9b0b62e22513513b0b1e46e1,BUNDESLIGA,2019-20,2020-06-27T12:00:00Z,Matchday 34,,Eintracht Frankfurt,,SC Paderborn 07,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a05f7ac88206899e0a3c7f2a,BUNDESLIGA,2019-20,2020-06-27T12:00:00Z,Matchday 34,,SC Freiburg,,FC Schalke 04,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f3ea381d88ee2c4b98767824,BUNDESLIGA,2019-20,2020-06-27T12:00:00Z,Matchday 34,,Bor. Mönchengladbach,,Hertha BSC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00

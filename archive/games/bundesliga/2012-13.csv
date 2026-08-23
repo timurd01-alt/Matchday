@@ -1,0 +1,307 @@
+game_id,comp,season,date_utc,stage,venue,home_name,home_code,away_name,away_code,home_score,away_score,status,source,first_seen
+bundesliga-openfootball-3463e6995cb0c202df168b52,BUNDESLIGA,2012-13,2012-08-24T12:00:00Z,Matchday 1,,Borussia Dortmund,,Werder Bremen,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-15d9814f6167758389547a16,BUNDESLIGA,2012-13,2012-08-25T12:00:00Z,Matchday 1,,Hamburger SV,,1. FC Nürnberg,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2497547ac62391bf7258e840,BUNDESLIGA,2012-13,2012-08-25T12:00:00Z,Matchday 1,,VfB Stuttgart,,VfL Wolfsburg,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-3e13f0f435730e6d14ac2f88,BUNDESLIGA,2012-13,2012-08-25T12:00:00Z,Matchday 1,,Eintracht Frankfurt,,Bayer Leverkusen,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c0e10800a9ddad94f8452796,BUNDESLIGA,2012-13,2012-08-25T12:00:00Z,Matchday 1,,SC Freiburg,,1. FSV Mainz 05,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-dfb07e69be28f3fa352b69aa,BUNDESLIGA,2012-13,2012-08-25T12:00:00Z,Matchday 1,,SpVgg Greuther Fürth,,Bayern München,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ee747fc4690c0684897e5a6f,BUNDESLIGA,2012-13,2012-08-25T12:00:00Z,Matchday 1,,Bor. Mönchengladbach,,1899 Hoffenheim,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f410de24262d7a3c2956aec8,BUNDESLIGA,2012-13,2012-08-25T12:00:00Z,Matchday 1,,FC Augsburg,,Fortuna Düsseldorf,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a7a8f6358da584ed902b478e,BUNDESLIGA,2012-13,2012-08-26T12:00:00Z,Matchday 1,,Hannover 96,,FC Schalke 04,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b79ccde567f3b4152b0c96a9,BUNDESLIGA,2012-13,2012-08-31T12:00:00Z,Matchday 2,,1. FSV Mainz 05,,SpVgg Greuther Fürth,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-46d367fa6fec68fb08b25ffd,BUNDESLIGA,2012-13,2012-09-01T12:00:00Z,Matchday 2,,FC Schalke 04,,FC Augsburg,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-4eb68139e96be6c67c0b5d38,BUNDESLIGA,2012-13,2012-09-01T12:00:00Z,Matchday 2,,1899 Hoffenheim,,Eintracht Frankfurt,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-59533885b55c65edd8c5f530,BUNDESLIGA,2012-13,2012-09-01T12:00:00Z,Matchday 2,,Bayer Leverkusen,,SC Freiburg,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5f1d7105be2834e61948dd45,BUNDESLIGA,2012-13,2012-09-01T12:00:00Z,Matchday 2,,1. FC Nürnberg,,Borussia Dortmund,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-d3eedae61906c327322e921a,BUNDESLIGA,2012-13,2012-09-01T12:00:00Z,Matchday 2,,Fortuna Düsseldorf,,Bor. Mönchengladbach,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-db0556b4cc1748028b9a729d,BUNDESLIGA,2012-13,2012-09-01T12:00:00Z,Matchday 2,,Werder Bremen,,Hamburger SV,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-0632c4c47064e3663184f03c,BUNDESLIGA,2012-13,2012-09-02T12:00:00Z,Matchday 2,,Bayern München,,VfB Stuttgart,,6,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-fce50a6990e65e8e7279f69e,BUNDESLIGA,2012-13,2012-09-02T12:00:00Z,Matchday 2,,VfL Wolfsburg,,Hannover 96,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-3a0ba18a14c43ecbf8b951ae,BUNDESLIGA,2012-13,2012-09-14T12:00:00Z,Matchday 3,,FC Augsburg,,VfL Wolfsburg,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-0f2d4a8166af0e1feedc7bc9,BUNDESLIGA,2012-13,2012-09-15T12:00:00Z,Matchday 3,,Hannover 96,,Werder Bremen,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-4b48b27ea5347ec0d86c706c,BUNDESLIGA,2012-13,2012-09-15T12:00:00Z,Matchday 3,,Bor. Mönchengladbach,,1. FC Nürnberg,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-8d536e1833b5d60d9a251a8f,BUNDESLIGA,2012-13,2012-09-15T12:00:00Z,Matchday 3,,Bayern München,,1. FSV Mainz 05,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a39019ff4ff71b83f9c6c1eb,BUNDESLIGA,2012-13,2012-09-15T12:00:00Z,Matchday 3,,VfB Stuttgart,,Fortuna Düsseldorf,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b3ca3af5ba1c9da48402799a,BUNDESLIGA,2012-13,2012-09-15T12:00:00Z,Matchday 3,,SpVgg Greuther Fürth,,FC Schalke 04,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ea81f1d532ccbf4ab98a35fb,BUNDESLIGA,2012-13,2012-09-15T12:00:00Z,Matchday 3,,Borussia Dortmund,,Bayer Leverkusen,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-02e17868608074aad3718602,BUNDESLIGA,2012-13,2012-09-16T12:00:00Z,Matchday 3,,Eintracht Frankfurt,,Hamburger SV,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-9c945e5195ae7d420c36b35c,BUNDESLIGA,2012-13,2012-09-16T12:00:00Z,Matchday 3,,SC Freiburg,,1899 Hoffenheim,,5,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e5890d4478a5c5a0463f7b42,BUNDESLIGA,2012-13,2012-09-21T12:00:00Z,Matchday 4,,1. FC Nürnberg,,Eintracht Frankfurt,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-110120ae822d1d19ea90ef01,BUNDESLIGA,2012-13,2012-09-22T12:00:00Z,Matchday 4,,VfL Wolfsburg,,SpVgg Greuther Fürth,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-24b291d941e13c9c38cf3401,BUNDESLIGA,2012-13,2012-09-22T12:00:00Z,Matchday 4,,1. FSV Mainz 05,,FC Augsburg,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2777f5c255d886a43e6fe5b4,BUNDESLIGA,2012-13,2012-09-22T12:00:00Z,Matchday 4,,Fortuna Düsseldorf,,SC Freiburg,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-8f2624b11fcb05655141198c,BUNDESLIGA,2012-13,2012-09-22T12:00:00Z,Matchday 4,,Hamburger SV,,Borussia Dortmund,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-96779c179c3ad2fde5354647,BUNDESLIGA,2012-13,2012-09-22T12:00:00Z,Matchday 4,,FC Schalke 04,,Bayern München,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-24359ed5335ea61bd38a9ab9,BUNDESLIGA,2012-13,2012-09-23T12:00:00Z,Matchday 4,,1899 Hoffenheim,,Hannover 96,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-30f4847825327c51c0f98695,BUNDESLIGA,2012-13,2012-09-23T12:00:00Z,Matchday 4,,Bayer Leverkusen,,Bor. Mönchengladbach,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-41f81455f97d3a63d83c52fb,BUNDESLIGA,2012-13,2012-09-23T12:00:00Z,Matchday 4,,Werder Bremen,,VfB Stuttgart,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-6b9077069c7ba59a9154369c,BUNDESLIGA,2012-13,2012-09-25T12:00:00Z,Matchday 5,,Bayern München,,VfL Wolfsburg,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-83d8465c9282a3aa2c6b176b,BUNDESLIGA,2012-13,2012-09-25T12:00:00Z,Matchday 5,,SpVgg Greuther Fürth,,Fortuna Düsseldorf,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a497fa116e6969d41e9924f5,BUNDESLIGA,2012-13,2012-09-25T12:00:00Z,Matchday 5,,Eintracht Frankfurt,,Borussia Dortmund,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ad31b95fea64b43414bcb8ea,BUNDESLIGA,2012-13,2012-09-25T12:00:00Z,Matchday 5,,FC Schalke 04,,1. FSV Mainz 05,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-4d3a3e1aa17d7b10d6e5bb86,BUNDESLIGA,2012-13,2012-09-26T12:00:00Z,Matchday 5,,SC Freiburg,,Werder Bremen,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-7ee903e2af7d8998a0403c91,BUNDESLIGA,2012-13,2012-09-26T12:00:00Z,Matchday 5,,VfB Stuttgart,,1899 Hoffenheim,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-84a17b23bcfd658285dfd9ea,BUNDESLIGA,2012-13,2012-09-26T12:00:00Z,Matchday 5,,FC Augsburg,,Bayer Leverkusen,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-9387ed4c5ae9b3c520bdb5dc,BUNDESLIGA,2012-13,2012-09-26T12:00:00Z,Matchday 5,,Bor. Mönchengladbach,,Hamburger SV,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a8ed2d62731ab40746e772fd,BUNDESLIGA,2012-13,2012-09-26T12:00:00Z,Matchday 5,,Hannover 96,,1. FC Nürnberg,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ef50e3eaa225d8acd669e2b8,BUNDESLIGA,2012-13,2012-09-28T12:00:00Z,Matchday 6,,Fortuna Düsseldorf,,FC Schalke 04,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2a3c6170aee28066f779feb8,BUNDESLIGA,2012-13,2012-09-29T12:00:00Z,Matchday 6,,1899 Hoffenheim,,FC Augsburg,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-495d93f4a46a47fff36bc38e,BUNDESLIGA,2012-13,2012-09-29T12:00:00Z,Matchday 6,,Bayer Leverkusen,,SpVgg Greuther Fürth,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5305d4de8e7235916db0797f,BUNDESLIGA,2012-13,2012-09-29T12:00:00Z,Matchday 6,,Hamburger SV,,Hannover 96,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-7a15d51cf99574098cb37c99,BUNDESLIGA,2012-13,2012-09-29T12:00:00Z,Matchday 6,,1. FC Nürnberg,,VfB Stuttgart,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e202fa6303af7e0b9531b6a1,BUNDESLIGA,2012-13,2012-09-29T12:00:00Z,Matchday 6,,Werder Bremen,,Bayern München,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f0ccaefbbf8a4225ad19bd30,BUNDESLIGA,2012-13,2012-09-29T12:00:00Z,Matchday 6,,Borussia Dortmund,,Bor. Mönchengladbach,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-65112fa1f16d9e05e579b013,BUNDESLIGA,2012-13,2012-09-30T12:00:00Z,Matchday 6,,Eintracht Frankfurt,,SC Freiburg,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-aa01f380c95f054fcba63d46,BUNDESLIGA,2012-13,2012-09-30T12:00:00Z,Matchday 6,,VfL Wolfsburg,,1. FSV Mainz 05,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-47caf031b5e8d8a441618cf0,BUNDESLIGA,2012-13,2012-10-05T12:00:00Z,Matchday 7,,FC Augsburg,,Werder Bremen,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-1c59a2e5a5fe28ada4af3c9c,BUNDESLIGA,2012-13,2012-10-06T12:00:00Z,Matchday 7,,Bayern München,,1899 Hoffenheim,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-467abb6cd500e8abe1824411,BUNDESLIGA,2012-13,2012-10-06T12:00:00Z,Matchday 7,,1. FSV Mainz 05,,Fortuna Düsseldorf,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-67be367c2fbdb4dfc50865bf,BUNDESLIGA,2012-13,2012-10-06T12:00:00Z,Matchday 7,,SpVgg Greuther Fürth,,Hamburger SV,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-6a039a383fd0798ed361a53c,BUNDESLIGA,2012-13,2012-10-06T12:00:00Z,Matchday 7,,FC Schalke 04,,VfL Wolfsburg,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-d1147108fc7df1716ab74c25,BUNDESLIGA,2012-13,2012-10-06T12:00:00Z,Matchday 7,,SC Freiburg,,1. FC Nürnberg,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-58ca4f4abbd42bb8705ba303,BUNDESLIGA,2012-13,2012-10-07T12:00:00Z,Matchday 7,,VfB Stuttgart,,Bayer Leverkusen,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-8b39118954806810257bcbd5,BUNDESLIGA,2012-13,2012-10-07T12:00:00Z,Matchday 7,,Hannover 96,,Borussia Dortmund,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-edf956ed08f1a1313124e2da,BUNDESLIGA,2012-13,2012-10-07T12:00:00Z,Matchday 7,,Bor. Mönchengladbach,,Eintracht Frankfurt,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-90cbc05bc63faea6f85ffa61,BUNDESLIGA,2012-13,2012-10-19T12:00:00Z,Matchday 8,,1899 Hoffenheim,,SpVgg Greuther Fürth,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-0d491bf58bec98d399d5c484,BUNDESLIGA,2012-13,2012-10-20T12:00:00Z,Matchday 8,,Borussia Dortmund,,FC Schalke 04,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-25864f901d918d05e6a3c64e,BUNDESLIGA,2012-13,2012-10-20T12:00:00Z,Matchday 8,,VfL Wolfsburg,,SC Freiburg,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5eba618587290d0b0caa1d14,BUNDESLIGA,2012-13,2012-10-20T12:00:00Z,Matchday 8,,Bayer Leverkusen,,1. FSV Mainz 05,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-87da8cf1799f186ff0ee96b6,BUNDESLIGA,2012-13,2012-10-20T12:00:00Z,Matchday 8,,Werder Bremen,,Bor. Mönchengladbach,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a0d4b25a8b72178c5464e0c0,BUNDESLIGA,2012-13,2012-10-20T12:00:00Z,Matchday 8,,Eintracht Frankfurt,,Hannover 96,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-d2e21019d3ae50e9e554858a,BUNDESLIGA,2012-13,2012-10-20T12:00:00Z,Matchday 8,,Fortuna Düsseldorf,,Bayern München,,0,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-95b7704594928f19c733653f,BUNDESLIGA,2012-13,2012-10-21T12:00:00Z,Matchday 8,,1. FC Nürnberg,,FC Augsburg,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a6d43ed76de9965cd978ac46,BUNDESLIGA,2012-13,2012-10-21T12:00:00Z,Matchday 8,,Hamburger SV,,VfB Stuttgart,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-9b23f522e1ee0aa935a0d52d,BUNDESLIGA,2012-13,2012-10-26T12:00:00Z,Matchday 9,,FC Augsburg,,Hamburger SV,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-578b241f274d14b553fe6cad,BUNDESLIGA,2012-13,2012-10-27T12:00:00Z,Matchday 9,,FC Schalke 04,,1. FC Nürnberg,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-6c017c0a2172fe0d55019c0b,BUNDESLIGA,2012-13,2012-10-27T12:00:00Z,Matchday 9,,SpVgg Greuther Fürth,,Werder Bremen,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-7ba1337426bade4d24250190,BUNDESLIGA,2012-13,2012-10-27T12:00:00Z,Matchday 9,,Fortuna Düsseldorf,,VfL Wolfsburg,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-bacd71de7eb0980ee9c6b868,BUNDESLIGA,2012-13,2012-10-27T12:00:00Z,Matchday 9,,SC Freiburg,,Borussia Dortmund,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ce47aef7c388ffb1080cd2e9,BUNDESLIGA,2012-13,2012-10-27T12:00:00Z,Matchday 9,,1. FSV Mainz 05,,1899 Hoffenheim,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-482258f4a82ec833220f011d,BUNDESLIGA,2012-13,2012-10-28T12:00:00Z,Matchday 9,,Hannover 96,,Bor. Mönchengladbach,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-4ade1f209cab0ce647a3e027,BUNDESLIGA,2012-13,2012-10-28T12:00:00Z,Matchday 9,,VfB Stuttgart,,Eintracht Frankfurt,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a2871bdc6bc58e80c8c4c3f5,BUNDESLIGA,2012-13,2012-10-28T12:00:00Z,Matchday 9,,Bayern München,,Bayer Leverkusen,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-d0e00ebc8b867dafdd3899e7,BUNDESLIGA,2012-13,2012-11-02T12:00:00Z,Matchday 10,,Eintracht Frankfurt,,SpVgg Greuther Fürth,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-03a205488b2c6995d1e694fb,BUNDESLIGA,2012-13,2012-11-03T12:00:00Z,Matchday 10,,Hannover 96,,FC Augsburg,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-0887031f257c966413d63be6,BUNDESLIGA,2012-13,2012-11-03T12:00:00Z,Matchday 10,,Borussia Dortmund,,VfB Stuttgart,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b66af0e0b2a5a44d9e99c948,BUNDESLIGA,2012-13,2012-11-03T12:00:00Z,Matchday 10,,Bor. Mönchengladbach,,SC Freiburg,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b97a6fc0de1ab925139223d3,BUNDESLIGA,2012-13,2012-11-03T12:00:00Z,Matchday 10,,1. FC Nürnberg,,VfL Wolfsburg,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c8712d6322acfe76cae93ac3,BUNDESLIGA,2012-13,2012-11-03T12:00:00Z,Matchday 10,,1899 Hoffenheim,,FC Schalke 04,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ce9bc48cb9e4199db8bd80d2,BUNDESLIGA,2012-13,2012-11-03T12:00:00Z,Matchday 10,,Hamburger SV,,Bayern München,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-6e1efc96b6b36eefca4e0e6b,BUNDESLIGA,2012-13,2012-11-04T12:00:00Z,Matchday 10,,Werder Bremen,,1. FSV Mainz 05,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-91a5f9bf58f5ba0b97543945,BUNDESLIGA,2012-13,2012-11-04T12:00:00Z,Matchday 10,,Bayer Leverkusen,,Fortuna Düsseldorf,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-fc2d2b30d5f888b2fdda100f,BUNDESLIGA,2012-13,2012-11-09T12:00:00Z,Matchday 11,,1. FSV Mainz 05,,1. FC Nürnberg,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-0d04b62e3a0f9ce6855cba8f,BUNDESLIGA,2012-13,2012-11-10T12:00:00Z,Matchday 11,,Bayern München,,Eintracht Frankfurt,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-34acd2233cb189dc75e7cbba,BUNDESLIGA,2012-13,2012-11-10T12:00:00Z,Matchday 11,,Fortuna Düsseldorf,,1899 Hoffenheim,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-71dcec80feece49fc52da1bf,BUNDESLIGA,2012-13,2012-11-10T12:00:00Z,Matchday 11,,SC Freiburg,,Hamburger SV,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-95c4e2e25f568dc71e68106f,BUNDESLIGA,2012-13,2012-11-10T12:00:00Z,Matchday 11,,FC Augsburg,,Borussia Dortmund,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-cebf49d4ba003ca40ac1a5c8,BUNDESLIGA,2012-13,2012-11-10T12:00:00Z,Matchday 11,,FC Schalke 04,,Werder Bremen,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-1e79987c108a8350c613de9f,BUNDESLIGA,2012-13,2012-11-11T12:00:00Z,Matchday 11,,SpVgg Greuther Fürth,,Bor. Mönchengladbach,,2,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-9196a325e83de15a65fbaf89,BUNDESLIGA,2012-13,2012-11-11T12:00:00Z,Matchday 11,,VfL Wolfsburg,,Bayer Leverkusen,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-91e59b8dc8feef9d06b80e7e,BUNDESLIGA,2012-13,2012-11-11T12:00:00Z,Matchday 11,,VfB Stuttgart,,Hannover 96,,2,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-50f6d69e22e35946cbe24d1d,BUNDESLIGA,2012-13,2012-11-17T12:00:00Z,Matchday 12,,Bayer Leverkusen,,FC Schalke 04,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-571ec891f9d9f1d0950d3488,BUNDESLIGA,2012-13,2012-11-17T12:00:00Z,Matchday 12,,Hannover 96,,SC Freiburg,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5c1621da888373f8f99a9642,BUNDESLIGA,2012-13,2012-11-17T12:00:00Z,Matchday 12,,Hamburger SV,,1. FSV Mainz 05,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-6c8b49d13a03a68966e25a3e,BUNDESLIGA,2012-13,2012-11-17T12:00:00Z,Matchday 12,,1. FC Nürnberg,,Bayern München,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-6d8a48a142c74cb9ea35a176,BUNDESLIGA,2012-13,2012-11-17T12:00:00Z,Matchday 12,,Eintracht Frankfurt,,FC Augsburg,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-6f8b8c60ccf767b62ac22f06,BUNDESLIGA,2012-13,2012-11-17T12:00:00Z,Matchday 12,,Bor. Mönchengladbach,,VfB Stuttgart,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b6bb6d4e35427e0c01a1b46b,BUNDESLIGA,2012-13,2012-11-17T12:00:00Z,Matchday 12,,Borussia Dortmund,,SpVgg Greuther Fürth,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ea9eaeae4998cb23ef3a7c32,BUNDESLIGA,2012-13,2012-11-18T12:00:00Z,Matchday 12,,Werder Bremen,,Fortuna Düsseldorf,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f20eaf3de1d70f167a32f42f,BUNDESLIGA,2012-13,2012-11-18T12:00:00Z,Matchday 12,,1899 Hoffenheim,,VfL Wolfsburg,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-489e2df62cba307e5436b1ed,BUNDESLIGA,2012-13,2012-11-23T12:00:00Z,Matchday 13,,Fortuna Düsseldorf,,Hamburger SV,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-01041811cdce635d2e626992,BUNDESLIGA,2012-13,2012-11-24T12:00:00Z,Matchday 13,,SpVgg Greuther Fürth,,1. FC Nürnberg,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-019154fa80be5a7a7be9a2be,BUNDESLIGA,2012-13,2012-11-24T12:00:00Z,Matchday 13,,1. FSV Mainz 05,,Borussia Dortmund,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-65b113f1ea682a0481730c08,BUNDESLIGA,2012-13,2012-11-24T12:00:00Z,Matchday 13,,Bayern München,,Hannover 96,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-935d8b39b2e1be9f2623141b,BUNDESLIGA,2012-13,2012-11-24T12:00:00Z,Matchday 13,,VfL Wolfsburg,,Werder Bremen,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f0f15b80d3e68b07340c0408,BUNDESLIGA,2012-13,2012-11-24T12:00:00Z,Matchday 13,,FC Schalke 04,,Eintracht Frankfurt,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-33a0cf66a86482236b32de05,BUNDESLIGA,2012-13,2012-11-25T12:00:00Z,Matchday 13,,1899 Hoffenheim,,Bayer Leverkusen,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-4098495c88dcf57c9ec6ebde,BUNDESLIGA,2012-13,2012-11-25T12:00:00Z,Matchday 13,,SC Freiburg,,VfB Stuttgart,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c113ff2dcc2e9d7228a8e5a0,BUNDESLIGA,2012-13,2012-11-25T12:00:00Z,Matchday 13,,FC Augsburg,,Bor. Mönchengladbach,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-083036be0992a3ee9a142ba8,BUNDESLIGA,2012-13,2012-11-27T12:00:00Z,Matchday 14,,Borussia Dortmund,,Fortuna Düsseldorf,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-217ac33ec8e607dcb2501fa3,BUNDESLIGA,2012-13,2012-11-27T12:00:00Z,Matchday 14,,Eintracht Frankfurt,,1. FSV Mainz 05,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-4c1fa8a818a707f58e1d1bfb,BUNDESLIGA,2012-13,2012-11-27T12:00:00Z,Matchday 14,,Hamburger SV,,FC Schalke 04,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b401b88b47f3eedbad10e002,BUNDESLIGA,2012-13,2012-11-27T12:00:00Z,Matchday 14,,Hannover 96,,SpVgg Greuther Fürth,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-4b845b4c84ca439041eec5d8,BUNDESLIGA,2012-13,2012-11-28T12:00:00Z,Matchday 14,,Bor. Mönchengladbach,,VfL Wolfsburg,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-d05143c4f1e67f9d22502496,BUNDESLIGA,2012-13,2012-11-28T12:00:00Z,Matchday 14,,SC Freiburg,,Bayern München,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ded1df09235ae80d904000f8,BUNDESLIGA,2012-13,2012-11-28T12:00:00Z,Matchday 14,,Werder Bremen,,Bayer Leverkusen,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e448090e4063fda60b09d3a2,BUNDESLIGA,2012-13,2012-11-28T12:00:00Z,Matchday 14,,1. FC Nürnberg,,1899 Hoffenheim,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ffea0a9954049a396464ae13,BUNDESLIGA,2012-13,2012-11-28T12:00:00Z,Matchday 14,,VfB Stuttgart,,FC Augsburg,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-be7b29c454b03bb8f3bd683c,BUNDESLIGA,2012-13,2012-11-30T12:00:00Z,Matchday 15,,Fortuna Düsseldorf,,Eintracht Frankfurt,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-4a4e75b4bccdd9e15434023b,BUNDESLIGA,2012-13,2012-12-01T12:00:00Z,Matchday 15,,SpVgg Greuther Fürth,,VfB Stuttgart,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-634a6fe5c14b1cfdb21583a5,BUNDESLIGA,2012-13,2012-12-01T12:00:00Z,Matchday 15,,1. FSV Mainz 05,,Hannover 96,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-6edbccb1ce54bf44c3133af1,BUNDESLIGA,2012-13,2012-12-01T12:00:00Z,Matchday 15,,FC Schalke 04,,Bor. Mönchengladbach,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-97a35ee254be90b9f566167b,BUNDESLIGA,2012-13,2012-12-01T12:00:00Z,Matchday 15,,Bayer Leverkusen,,1. FC Nürnberg,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-998f17c0bf8796a9bd13e475,BUNDESLIGA,2012-13,2012-12-01T12:00:00Z,Matchday 15,,Bayern München,,Borussia Dortmund,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c5b2300201809e46f995a683,BUNDESLIGA,2012-13,2012-12-01T12:00:00Z,Matchday 15,,FC Augsburg,,SC Freiburg,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-4b3fb09247d547674caf5df5,BUNDESLIGA,2012-13,2012-12-02T12:00:00Z,Matchday 15,,VfL Wolfsburg,,Hamburger SV,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-4c3957619e003f4e8c664b1f,BUNDESLIGA,2012-13,2012-12-02T12:00:00Z,Matchday 15,,1899 Hoffenheim,,Werder Bremen,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5dcd82c59e3fc48db49ccdfe,BUNDESLIGA,2012-13,2012-12-07T12:00:00Z,Matchday 16,,Hamburger SV,,1899 Hoffenheim,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-0c4cb8efada5b4930cf60359,BUNDESLIGA,2012-13,2012-12-08T12:00:00Z,Matchday 16,,SC Freiburg,,SpVgg Greuther Fürth,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-35b5abc7d6328fe766c41241,BUNDESLIGA,2012-13,2012-12-08T12:00:00Z,Matchday 16,,FC Augsburg,,Bayern München,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-8298d09838ca7b117eb41c37,BUNDESLIGA,2012-13,2012-12-08T12:00:00Z,Matchday 16,,1. FC Nürnberg,,Fortuna Düsseldorf,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-98740cebb5549e2831afbfdc,BUNDESLIGA,2012-13,2012-12-08T12:00:00Z,Matchday 16,,VfB Stuttgart,,FC Schalke 04,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b5a0721d0125d1e7b9340faa,BUNDESLIGA,2012-13,2012-12-08T12:00:00Z,Matchday 16,,Eintracht Frankfurt,,Werder Bremen,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f7eb7c48cee94125f3f4a387,BUNDESLIGA,2012-13,2012-12-08T12:00:00Z,Matchday 16,,Borussia Dortmund,,VfL Wolfsburg,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-1df80c49405ae98c453a9165,BUNDESLIGA,2012-13,2012-12-09T12:00:00Z,Matchday 16,,Bor. Mönchengladbach,,1. FSV Mainz 05,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-381f54563d2c90ccc0b22092,BUNDESLIGA,2012-13,2012-12-09T12:00:00Z,Matchday 16,,Hannover 96,,Bayer Leverkusen,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-921068f706ea3e9c9374ccbf,BUNDESLIGA,2012-13,2012-12-14T12:00:00Z,Matchday 17,,Bayern München,,Bor. Mönchengladbach,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2e23fffb14b62c4120abfa4e,BUNDESLIGA,2012-13,2012-12-15T12:00:00Z,Matchday 17,,1. FSV Mainz 05,,VfB Stuttgart,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5a60d65f706d3e41400c8d58,BUNDESLIGA,2012-13,2012-12-15T12:00:00Z,Matchday 17,,SpVgg Greuther Fürth,,FC Augsburg,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-6ffd19650afd34bd75b2017e,BUNDESLIGA,2012-13,2012-12-15T12:00:00Z,Matchday 17,,Bayer Leverkusen,,Hamburger SV,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-88517c72fbb3638b2e64fc42,BUNDESLIGA,2012-13,2012-12-15T12:00:00Z,Matchday 17,,FC Schalke 04,,SC Freiburg,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-bbff355e12f6b553fe449bec,BUNDESLIGA,2012-13,2012-12-15T12:00:00Z,Matchday 17,,VfL Wolfsburg,,Eintracht Frankfurt,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ed865182eb3677e8677c9c09,BUNDESLIGA,2012-13,2012-12-15T12:00:00Z,Matchday 17,,Fortuna Düsseldorf,,Hannover 96,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5ec9b1d30718bfadff3acea2,BUNDESLIGA,2012-13,2012-12-16T12:00:00Z,Matchday 17,,1899 Hoffenheim,,Borussia Dortmund,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-6db4229894d6d147b34f9f53,BUNDESLIGA,2012-13,2012-12-16T12:00:00Z,Matchday 17,,Werder Bremen,,1. FC Nürnberg,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-109d15836d56232326581775,BUNDESLIGA,2012-13,2013-01-18T12:00:00Z,Matchday 18,,FC Schalke 04,,Hannover 96,,5,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-26641dfd2902372c7fe3fe04,BUNDESLIGA,2012-13,2013-01-19T12:00:00Z,Matchday 18,,Bayer Leverkusen,,Eintracht Frankfurt,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-284c5c5f36e5300059ca4d23,BUNDESLIGA,2012-13,2013-01-19T12:00:00Z,Matchday 18,,1899 Hoffenheim,,Bor. Mönchengladbach,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-3d5a0cf330e2edb663405607,BUNDESLIGA,2012-13,2013-01-19T12:00:00Z,Matchday 18,,Werder Bremen,,Borussia Dortmund,,0,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-8a15674e627942ada1a70e56,BUNDESLIGA,2012-13,2013-01-19T12:00:00Z,Matchday 18,,VfL Wolfsburg,,VfB Stuttgart,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-98b8579ba43fd380a24739af,BUNDESLIGA,2012-13,2013-01-19T12:00:00Z,Matchday 18,,1. FSV Mainz 05,,SC Freiburg,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-d0c235f8cdef345e270c3bde,BUNDESLIGA,2012-13,2013-01-19T12:00:00Z,Matchday 18,,Bayern München,,SpVgg Greuther Fürth,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e19bee48f3e26bf7c462a7d3,BUNDESLIGA,2012-13,2013-01-20T12:00:00Z,Matchday 18,,Fortuna Düsseldorf,,FC Augsburg,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e7d4ae6ff8bf0ea69d9a5604,BUNDESLIGA,2012-13,2013-01-20T12:00:00Z,Matchday 18,,1. FC Nürnberg,,Hamburger SV,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-9e78b3b0833ef1274804f462,BUNDESLIGA,2012-13,2013-01-25T12:00:00Z,Matchday 19,,Borussia Dortmund,,1. FC Nürnberg,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-0220cd7c2bcaba6882f42cb8,BUNDESLIGA,2012-13,2013-01-26T12:00:00Z,Matchday 19,,SpVgg Greuther Fürth,,1. FSV Mainz 05,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-7062d6120f8fc5a7ef4be764,BUNDESLIGA,2012-13,2013-01-26T12:00:00Z,Matchday 19,,Bor. Mönchengladbach,,Fortuna Düsseldorf,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-750a38654d97a4518220946c,BUNDESLIGA,2012-13,2013-01-26T12:00:00Z,Matchday 19,,Eintracht Frankfurt,,1899 Hoffenheim,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-8d7da6bebba643ce0624af93,BUNDESLIGA,2012-13,2013-01-26T12:00:00Z,Matchday 19,,SC Freiburg,,Bayer Leverkusen,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e367daa269da2e3660bba3d0,BUNDESLIGA,2012-13,2013-01-26T12:00:00Z,Matchday 19,,FC Augsburg,,FC Schalke 04,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-eba71f57fe461ddfb23093fc,BUNDESLIGA,2012-13,2013-01-26T12:00:00Z,Matchday 19,,Hannover 96,,VfL Wolfsburg,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-9fbaf99cc0845659c27ef088,BUNDESLIGA,2012-13,2013-01-27T12:00:00Z,Matchday 19,,VfB Stuttgart,,Bayern München,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ccad487d8cf9efc1ab41c790,BUNDESLIGA,2012-13,2013-01-27T12:00:00Z,Matchday 19,,Hamburger SV,,Werder Bremen,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2d2a03a303eef749352c183f,BUNDESLIGA,2012-13,2013-02-01T12:00:00Z,Matchday 20,,Werder Bremen,,Hannover 96,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-05efb4327ca1a56033c9b679,BUNDESLIGA,2012-13,2013-02-02T12:00:00Z,Matchday 20,,Fortuna Düsseldorf,,VfB Stuttgart,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-25ce26e3c4787b41f447abb8,BUNDESLIGA,2012-13,2013-02-02T12:00:00Z,Matchday 20,,Hamburger SV,,Eintracht Frankfurt,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5ff24435b82950e37ee7a969,BUNDESLIGA,2012-13,2013-02-02T12:00:00Z,Matchday 20,,VfL Wolfsburg,,FC Augsburg,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-7aa2c49538ba2d57c7d95cad,BUNDESLIGA,2012-13,2013-02-02T12:00:00Z,Matchday 20,,1899 Hoffenheim,,SC Freiburg,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-917a95abc22244eb992be7bd,BUNDESLIGA,2012-13,2013-02-02T12:00:00Z,Matchday 20,,FC Schalke 04,,SpVgg Greuther Fürth,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-d9b7a5331b438dca2b8522b7,BUNDESLIGA,2012-13,2013-02-02T12:00:00Z,Matchday 20,,1. FSV Mainz 05,,Bayern München,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-0eab5cd6b56f61295c033f74,BUNDESLIGA,2012-13,2013-02-03T12:00:00Z,Matchday 20,,1. FC Nürnberg,,Bor. Mönchengladbach,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ce7578c6ea60bdc7a7a3142f,BUNDESLIGA,2012-13,2013-02-03T12:00:00Z,Matchday 20,,Bayer Leverkusen,,Borussia Dortmund,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2bbed007f22d0b911314b27d,BUNDESLIGA,2012-13,2013-02-09T12:00:00Z,Matchday 21,,Bor. Mönchengladbach,,Bayer Leverkusen,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5b88a24a49d6c4b3b17b1b16,BUNDESLIGA,2012-13,2013-02-09T12:00:00Z,Matchday 21,,SpVgg Greuther Fürth,,VfL Wolfsburg,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b120f61f99d2691db9d871ec,BUNDESLIGA,2012-13,2013-02-09T12:00:00Z,Matchday 21,,Bayern München,,FC Schalke 04,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c41d5c312fedf8f799e6da72,BUNDESLIGA,2012-13,2013-02-09T12:00:00Z,Matchday 21,,Eintracht Frankfurt,,1. FC Nürnberg,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-cb7ef4289465e2f66a377fde,BUNDESLIGA,2012-13,2013-02-09T12:00:00Z,Matchday 21,,VfB Stuttgart,,Werder Bremen,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ceaef361378f180e3b086889,BUNDESLIGA,2012-13,2013-02-09T12:00:00Z,Matchday 21,,Borussia Dortmund,,Hamburger SV,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f0316dd5146f28533600557b,BUNDESLIGA,2012-13,2013-02-09T12:00:00Z,Matchday 21,,Hannover 96,,1899 Hoffenheim,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5ea19e90de5ab387b1880357,BUNDESLIGA,2012-13,2013-02-10T12:00:00Z,Matchday 21,,FC Augsburg,,1. FSV Mainz 05,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-8e52c5a532946a272e2c690c,BUNDESLIGA,2012-13,2013-02-10T12:00:00Z,Matchday 21,,SC Freiburg,,Fortuna Düsseldorf,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5a884830909d1440bdd71a10,BUNDESLIGA,2012-13,2013-02-15T12:00:00Z,Matchday 22,,VfL Wolfsburg,,Bayern München,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-1b4ea1635857b45d5a29012c,BUNDESLIGA,2012-13,2013-02-16T12:00:00Z,Matchday 22,,Hamburger SV,,Bor. Mönchengladbach,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-70086a2b2140b507d064f58c,BUNDESLIGA,2012-13,2013-02-16T12:00:00Z,Matchday 22,,Werder Bremen,,SC Freiburg,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-86dd4ded199d3f6e7a0cc91d,BUNDESLIGA,2012-13,2013-02-16T12:00:00Z,Matchday 22,,Fortuna Düsseldorf,,SpVgg Greuther Fürth,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-aac884e3244abeb9a7a06a79,BUNDESLIGA,2012-13,2013-02-16T12:00:00Z,Matchday 22,,Borussia Dortmund,,Eintracht Frankfurt,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b4e00d4e60d948e5f4eac024,BUNDESLIGA,2012-13,2013-02-16T12:00:00Z,Matchday 22,,1. FSV Mainz 05,,FC Schalke 04,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-dca9809f81d7e8d26ae1ca78,BUNDESLIGA,2012-13,2013-02-16T12:00:00Z,Matchday 22,,Bayer Leverkusen,,FC Augsburg,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5f64a26ffc9644dc72269dd9,BUNDESLIGA,2012-13,2013-02-17T12:00:00Z,Matchday 22,,1899 Hoffenheim,,VfB Stuttgart,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-794ace8672b3fdae9d2b882c,BUNDESLIGA,2012-13,2013-02-17T12:00:00Z,Matchday 22,,1. FC Nürnberg,,Hannover 96,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-693155156e6de5a34e73915b,BUNDESLIGA,2012-13,2013-02-22T12:00:00Z,Matchday 23,,SC Freiburg,,Eintracht Frankfurt,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-24cafa5cc87890d2626b3212,BUNDESLIGA,2012-13,2013-02-23T12:00:00Z,Matchday 23,,FC Augsburg,,1899 Hoffenheim,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2bff538a0af3f24dcfabecaa,BUNDESLIGA,2012-13,2013-02-23T12:00:00Z,Matchday 23,,VfB Stuttgart,,1. FC Nürnberg,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-4b26e3ad671e7e49b9326df0,BUNDESLIGA,2012-13,2013-02-23T12:00:00Z,Matchday 23,,FC Schalke 04,,Fortuna Düsseldorf,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-6b9f7955fb48de8592a64ea0,BUNDESLIGA,2012-13,2013-02-23T12:00:00Z,Matchday 23,,1. FSV Mainz 05,,VfL Wolfsburg,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ce8bbbf54ceaac3e59a3118b,BUNDESLIGA,2012-13,2013-02-23T12:00:00Z,Matchday 23,,Hannover 96,,Hamburger SV,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e549e15ee926d0d1fc632679,BUNDESLIGA,2012-13,2013-02-23T12:00:00Z,Matchday 23,,Bayern München,,Werder Bremen,,6,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c4451c7ae34b483558cad6d9,BUNDESLIGA,2012-13,2013-02-24T12:00:00Z,Matchday 23,,SpVgg Greuther Fürth,,Bayer Leverkusen,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-cf435cea8aad76124aa95bbb,BUNDESLIGA,2012-13,2013-02-24T12:00:00Z,Matchday 23,,Bor. Mönchengladbach,,Borussia Dortmund,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e6280b393b4f7d5ebf39edca,BUNDESLIGA,2012-13,2013-03-01T12:00:00Z,Matchday 24,,Eintracht Frankfurt,,Bor. Mönchengladbach,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-0cdbb9ddff858a5605da7d1a,BUNDESLIGA,2012-13,2013-03-02T12:00:00Z,Matchday 24,,Bayer Leverkusen,,VfB Stuttgart,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-69a833942425b89292a0e3c1,BUNDESLIGA,2012-13,2013-03-02T12:00:00Z,Matchday 24,,Hamburger SV,,SpVgg Greuther Fürth,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-6c2b53d98d18e69280600dd5,BUNDESLIGA,2012-13,2013-03-02T12:00:00Z,Matchday 24,,VfL Wolfsburg,,FC Schalke 04,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-7a09250b6b4edf8158d36ea5,BUNDESLIGA,2012-13,2013-03-02T12:00:00Z,Matchday 24,,Borussia Dortmund,,Hannover 96,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ec372c5efcaaf20fab5fcf45,BUNDESLIGA,2012-13,2013-03-02T12:00:00Z,Matchday 24,,1. FC Nürnberg,,SC Freiburg,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f4636cf282a3c210fa5a1df2,BUNDESLIGA,2012-13,2013-03-02T12:00:00Z,Matchday 24,,Werder Bremen,,FC Augsburg,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-838306d66a5a8570d8211414,BUNDESLIGA,2012-13,2013-03-03T12:00:00Z,Matchday 24,,Fortuna Düsseldorf,,1. FSV Mainz 05,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ab610b2bb3cef8cb54587be7,BUNDESLIGA,2012-13,2013-03-03T12:00:00Z,Matchday 24,,1899 Hoffenheim,,Bayern München,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-93ca005bb37043d4e5e95493,BUNDESLIGA,2012-13,2013-03-08T12:00:00Z,Matchday 25,,FC Augsburg,,1. FC Nürnberg,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-1ad1ebceba881eb0e6c74cb3,BUNDESLIGA,2012-13,2013-03-09T12:00:00Z,Matchday 25,,SpVgg Greuther Fürth,,1899 Hoffenheim,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-23ea57facc1471ec41621e85,BUNDESLIGA,2012-13,2013-03-09T12:00:00Z,Matchday 25,,Bayern München,,Fortuna Düsseldorf,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-286bec7606ba4f7d97c273f4,BUNDESLIGA,2012-13,2013-03-09T12:00:00Z,Matchday 25,,SC Freiburg,,VfL Wolfsburg,,2,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-639b7c59831b74291e705e48,BUNDESLIGA,2012-13,2013-03-09T12:00:00Z,Matchday 25,,FC Schalke 04,,Borussia Dortmund,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-725e48ec0a50fd9d837a826f,BUNDESLIGA,2012-13,2013-03-09T12:00:00Z,Matchday 25,,Bor. Mönchengladbach,,Werder Bremen,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b5e59430d9474f7b5c2d0bc0,BUNDESLIGA,2012-13,2013-03-09T12:00:00Z,Matchday 25,,1. FSV Mainz 05,,Bayer Leverkusen,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-3f79e2fc5cd559397f9f2aeb,BUNDESLIGA,2012-13,2013-03-10T12:00:00Z,Matchday 25,,Hannover 96,,Eintracht Frankfurt,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-557663896f49e0f521adb120,BUNDESLIGA,2012-13,2013-03-10T12:00:00Z,Matchday 25,,VfB Stuttgart,,Hamburger SV,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-7151ba6500f01a18bc470d2b,BUNDESLIGA,2012-13,2013-03-15T12:00:00Z,Matchday 26,,VfL Wolfsburg,,Fortuna Düsseldorf,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-1c296112f9a199be3805c1ae,BUNDESLIGA,2012-13,2013-03-16T12:00:00Z,Matchday 26,,Hamburger SV,,FC Augsburg,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-287b3b6db59bd144eea52a87,BUNDESLIGA,2012-13,2013-03-16T12:00:00Z,Matchday 26,,Bayer Leverkusen,,Bayern München,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5e089d9fd4a3b333e4d55347,BUNDESLIGA,2012-13,2013-03-16T12:00:00Z,Matchday 26,,1. FC Nürnberg,,FC Schalke 04,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-68c79e628be4edd9326e94d3,BUNDESLIGA,2012-13,2013-03-16T12:00:00Z,Matchday 26,,Werder Bremen,,SpVgg Greuther Fürth,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a08c0f48708b832111992425,BUNDESLIGA,2012-13,2013-03-16T12:00:00Z,Matchday 26,,1899 Hoffenheim,,1. FSV Mainz 05,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e5ef30dbff593329cf1ec555,BUNDESLIGA,2012-13,2013-03-16T12:00:00Z,Matchday 26,,Borussia Dortmund,,SC Freiburg,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-17bc17f92d62cacdc64ed6e6,BUNDESLIGA,2012-13,2013-03-17T12:00:00Z,Matchday 26,,Eintracht Frankfurt,,VfB Stuttgart,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-31be36e6f27a5ef48d19f07d,BUNDESLIGA,2012-13,2013-03-17T12:00:00Z,Matchday 26,,Bor. Mönchengladbach,,Hannover 96,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-16f84890305da91ff3cf282a,BUNDESLIGA,2012-13,2013-03-30T12:00:00Z,Matchday 27,,FC Augsburg,,Hannover 96,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-27addf14525e8f33091a99ac,BUNDESLIGA,2012-13,2013-03-30T12:00:00Z,Matchday 27,,VfB Stuttgart,,Borussia Dortmund,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-290707e205f417e5c80cd28d,BUNDESLIGA,2012-13,2013-03-30T12:00:00Z,Matchday 27,,1. FSV Mainz 05,,Werder Bremen,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2d01edbc5ce09d51f1fa08da,BUNDESLIGA,2012-13,2013-03-30T12:00:00Z,Matchday 27,,SC Freiburg,,Bor. Mönchengladbach,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-cce810a0d8ffb2bf5a253719,BUNDESLIGA,2012-13,2013-03-30T12:00:00Z,Matchday 27,,FC Schalke 04,,1899 Hoffenheim,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-d1f56f4035d51c3adf76fa5d,BUNDESLIGA,2012-13,2013-03-30T12:00:00Z,Matchday 27,,Bayern München,,Hamburger SV,,9,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ebb47847a0fda740c9b03abf,BUNDESLIGA,2012-13,2013-03-30T12:00:00Z,Matchday 27,,Fortuna Düsseldorf,,Bayer Leverkusen,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-46f14f1e3cc07960e513caad,BUNDESLIGA,2012-13,2013-03-31T12:00:00Z,Matchday 27,,VfL Wolfsburg,,1. FC Nürnberg,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-8ea99f26ba7f042591798725,BUNDESLIGA,2012-13,2013-03-31T12:00:00Z,Matchday 27,,SpVgg Greuther Fürth,,Eintracht Frankfurt,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-04d1bc2dce03968f9d8ff8e8,BUNDESLIGA,2012-13,2013-04-05T12:00:00Z,Matchday 28,,1899 Hoffenheim,,Fortuna Düsseldorf,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-47f2eb4f9d6badfd65d4a0a1,BUNDESLIGA,2012-13,2013-04-06T12:00:00Z,Matchday 28,,Eintracht Frankfurt,,Bayern München,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-539d6ad2f05e1e7e585aff40,BUNDESLIGA,2012-13,2013-04-06T12:00:00Z,Matchday 28,,Borussia Dortmund,,FC Augsburg,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5b739fd34716157566d1ca76,BUNDESLIGA,2012-13,2013-04-06T12:00:00Z,Matchday 28,,Werder Bremen,,FC Schalke 04,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-7c159edc8bad695a585bf249,BUNDESLIGA,2012-13,2013-04-06T12:00:00Z,Matchday 28,,Bor. Mönchengladbach,,SpVgg Greuther Fürth,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-d25c07363fe915a1bf63d792,BUNDESLIGA,2012-13,2013-04-06T12:00:00Z,Matchday 28,,Bayer Leverkusen,,VfL Wolfsburg,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-dbafdc4288b3b6d65f610129,BUNDESLIGA,2012-13,2013-04-06T12:00:00Z,Matchday 28,,Hamburger SV,,SC Freiburg,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ccb37a9e96222e54d3475b8f,BUNDESLIGA,2012-13,2013-04-07T12:00:00Z,Matchday 28,,1. FC Nürnberg,,1. FSV Mainz 05,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-d32f1b02acb0327f9f83a50a,BUNDESLIGA,2012-13,2013-04-07T12:00:00Z,Matchday 28,,Hannover 96,,VfB Stuttgart,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-8dcbe4d4994dbadc28d023d2,BUNDESLIGA,2012-13,2013-04-12T12:00:00Z,Matchday 29,,SC Freiburg,,Hannover 96,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-0aec2dccfdae09a996c7e4b7,BUNDESLIGA,2012-13,2013-04-13T12:00:00Z,Matchday 29,,Fortuna Düsseldorf,,Werder Bremen,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-3539e7cf7e04a2daf659272d,BUNDESLIGA,2012-13,2013-04-13T12:00:00Z,Matchday 29,,VfL Wolfsburg,,1899 Hoffenheim,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-6c8a84509a9c66522d1c6237,BUNDESLIGA,2012-13,2013-04-13T12:00:00Z,Matchday 29,,Bayern München,,1. FC Nürnberg,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a9aa6028810d9930871d0cc4,BUNDESLIGA,2012-13,2013-04-13T12:00:00Z,Matchday 29,,SpVgg Greuther Fürth,,Borussia Dortmund,,1,6,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b1a82661c554fb1d80420a58,BUNDESLIGA,2012-13,2013-04-13T12:00:00Z,Matchday 29,,FC Schalke 04,,Bayer Leverkusen,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b47d1b7804ab5f8934268944,BUNDESLIGA,2012-13,2013-04-13T12:00:00Z,Matchday 29,,1. FSV Mainz 05,,Hamburger SV,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2079cfb08e31c0ab1f89b49a,BUNDESLIGA,2012-13,2013-04-14T12:00:00Z,Matchday 29,,VfB Stuttgart,,Bor. Mönchengladbach,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-d916c019cee95f58590fd323,BUNDESLIGA,2012-13,2013-04-14T12:00:00Z,Matchday 29,,FC Augsburg,,Eintracht Frankfurt,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-9fc08697bdadaea10eac47e3,BUNDESLIGA,2012-13,2013-04-19T12:00:00Z,Matchday 30,,Bor. Mönchengladbach,,FC Augsburg,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2c367422e12fb3125fb5a97f,BUNDESLIGA,2012-13,2013-04-20T12:00:00Z,Matchday 30,,Werder Bremen,,VfL Wolfsburg,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-30e76e102c94c1221ec23e09,BUNDESLIGA,2012-13,2013-04-20T12:00:00Z,Matchday 30,,Hannover 96,,Bayern München,,1,6,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5bfef24f81f65bbbbd48647c,BUNDESLIGA,2012-13,2013-04-20T12:00:00Z,Matchday 30,,Bayer Leverkusen,,1899 Hoffenheim,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c682b7152d3188e5df42901f,BUNDESLIGA,2012-13,2013-04-20T12:00:00Z,Matchday 30,,Eintracht Frankfurt,,FC Schalke 04,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-d60edd88f3501542ed4b7f83,BUNDESLIGA,2012-13,2013-04-20T12:00:00Z,Matchday 30,,Hamburger SV,,Fortuna Düsseldorf,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e1fb5e758b6cfd9238c31895,BUNDESLIGA,2012-13,2013-04-20T12:00:00Z,Matchday 30,,Borussia Dortmund,,1. FSV Mainz 05,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-0f808236c8d3ac9ddae8370f,BUNDESLIGA,2012-13,2013-04-21T12:00:00Z,Matchday 30,,VfB Stuttgart,,SC Freiburg,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-184da87fc739c50d6581d583,BUNDESLIGA,2012-13,2013-04-21T12:00:00Z,Matchday 30,,1. FC Nürnberg,,SpVgg Greuther Fürth,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a9b543f4d7ae3511e9955875,BUNDESLIGA,2012-13,2013-04-26T12:00:00Z,Matchday 31,,SpVgg Greuther Fürth,,Hannover 96,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-194cd34bf474be895fb0177c,BUNDESLIGA,2012-13,2013-04-27T12:00:00Z,Matchday 31,,FC Augsburg,,VfB Stuttgart,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-221d57c50337960003284f95,BUNDESLIGA,2012-13,2013-04-27T12:00:00Z,Matchday 31,,1899 Hoffenheim,,1. FC Nürnberg,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5a12452559941c4d6ffeb1ad,BUNDESLIGA,2012-13,2013-04-27T12:00:00Z,Matchday 31,,Bayern München,,SC Freiburg,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-7396ef5a9d1f95e8c48aa4bf,BUNDESLIGA,2012-13,2013-04-27T12:00:00Z,Matchday 31,,Bayer Leverkusen,,Werder Bremen,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-afafa15000601f3a337769ac,BUNDESLIGA,2012-13,2013-04-27T12:00:00Z,Matchday 31,,Fortuna Düsseldorf,,Borussia Dortmund,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-d40fe4148a1d07cb6fa68c6c,BUNDESLIGA,2012-13,2013-04-27T12:00:00Z,Matchday 31,,VfL Wolfsburg,,Bor. Mönchengladbach,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-0d3ef0b729de990334046a0b,BUNDESLIGA,2012-13,2013-04-28T12:00:00Z,Matchday 31,,1. FSV Mainz 05,,Eintracht Frankfurt,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2fea3068e7c29a30269db8b0,BUNDESLIGA,2012-13,2013-04-28T12:00:00Z,Matchday 31,,FC Schalke 04,,Hamburger SV,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-692d323ac362d980ce21e725,BUNDESLIGA,2012-13,2013-05-03T12:00:00Z,Matchday 32,,Bor. Mönchengladbach,,FC Schalke 04,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-064cc60686dd5b74ebe6026c,BUNDESLIGA,2012-13,2013-05-04T12:00:00Z,Matchday 32,,Hannover 96,,1. FSV Mainz 05,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-1eeb03c324c6e7499d966cd0,BUNDESLIGA,2012-13,2013-05-04T12:00:00Z,Matchday 32,,1. FC Nürnberg,,Bayer Leverkusen,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-6d54cb6ea7a58cab55c585a9,BUNDESLIGA,2012-13,2013-05-04T12:00:00Z,Matchday 32,,Borussia Dortmund,,Bayern München,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-6d7a93a34f9eb3da0709167b,BUNDESLIGA,2012-13,2013-05-04T12:00:00Z,Matchday 32,,Eintracht Frankfurt,,Fortuna Düsseldorf,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-afdfb8e6d9b99a89da811b92,BUNDESLIGA,2012-13,2013-05-04T12:00:00Z,Matchday 32,,Werder Bremen,,1899 Hoffenheim,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b1149d1aadbb7483107290b8,BUNDESLIGA,2012-13,2013-05-04T12:00:00Z,Matchday 32,,VfB Stuttgart,,SpVgg Greuther Fürth,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-3529f3594d9b4c22480a9cb4,BUNDESLIGA,2012-13,2013-05-05T12:00:00Z,Matchday 32,,SC Freiburg,,FC Augsburg,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-72c0e4c93578692789acd3e0,BUNDESLIGA,2012-13,2013-05-05T12:00:00Z,Matchday 32,,Hamburger SV,,VfL Wolfsburg,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-27b4eb4a9302daca989a775b,BUNDESLIGA,2012-13,2013-05-11T12:00:00Z,Matchday 33,,1. FSV Mainz 05,,Bor. Mönchengladbach,,2,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-4cd5182ff5e3999e669a6653,BUNDESLIGA,2012-13,2013-05-11T12:00:00Z,Matchday 33,,1899 Hoffenheim,,Hamburger SV,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-6247158fd2fd8fbb193b6ee8,BUNDESLIGA,2012-13,2013-05-11T12:00:00Z,Matchday 33,,FC Schalke 04,,VfB Stuttgart,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-6bbe99566aefad7924a45b3d,BUNDESLIGA,2012-13,2013-05-11T12:00:00Z,Matchday 33,,Bayer Leverkusen,,Hannover 96,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-708813703b2af3fcf6e2ccab,BUNDESLIGA,2012-13,2013-05-11T12:00:00Z,Matchday 33,,Bayern München,,FC Augsburg,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-878faf7b9b2ac5dccb11568f,BUNDESLIGA,2012-13,2013-05-11T12:00:00Z,Matchday 33,,VfL Wolfsburg,,Borussia Dortmund,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-8dec4d0466cd99e22110c600,BUNDESLIGA,2012-13,2013-05-11T12:00:00Z,Matchday 33,,Fortuna Düsseldorf,,1. FC Nürnberg,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-da96278605b089796d3dd6cc,BUNDESLIGA,2012-13,2013-05-11T12:00:00Z,Matchday 33,,Werder Bremen,,Eintracht Frankfurt,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ef127dc8e405284b469d06e4,BUNDESLIGA,2012-13,2013-05-11T12:00:00Z,Matchday 33,,SpVgg Greuther Fürth,,SC Freiburg,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-1916ee23f81ed15ab8567fb0,BUNDESLIGA,2012-13,2013-05-18T12:00:00Z,Matchday 34,,FC Augsburg,,SpVgg Greuther Fürth,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-7291b2209d2481d5f91faea8,BUNDESLIGA,2012-13,2013-05-18T12:00:00Z,Matchday 34,,1. FC Nürnberg,,Werder Bremen,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-7581fe86a48c19d5a640002b,BUNDESLIGA,2012-13,2013-05-18T12:00:00Z,Matchday 34,,SC Freiburg,,FC Schalke 04,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a2631b38a46dfcaa20abb587,BUNDESLIGA,2012-13,2013-05-18T12:00:00Z,Matchday 34,,Hannover 96,,Fortuna Düsseldorf,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b2bfb7cae238aa3163adda8c,BUNDESLIGA,2012-13,2013-05-18T12:00:00Z,Matchday 34,,Borussia Dortmund,,1899 Hoffenheim,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ea21213c08470e7ad37667c9,BUNDESLIGA,2012-13,2013-05-18T12:00:00Z,Matchday 34,,VfB Stuttgart,,1. FSV Mainz 05,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f20b4fd07b57fe6956065e3a,BUNDESLIGA,2012-13,2013-05-18T12:00:00Z,Matchday 34,,Hamburger SV,,Bayer Leverkusen,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f51c2550b7640c0f208934d1,BUNDESLIGA,2012-13,2013-05-18T12:00:00Z,Matchday 34,,Bor. Mönchengladbach,,Bayern München,,3,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f903fbe6e3769424fadc992b,BUNDESLIGA,2012-13,2013-05-18T12:00:00Z,Matchday 34,,Eintracht Frankfurt,,VfL Wolfsburg,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00

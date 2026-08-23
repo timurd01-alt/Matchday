@@ -1,0 +1,381 @@
+game_id,comp,season,date_utc,stage,venue,home_name,home_code,away_name,away_code,home_score,away_score,status,source,first_seen
+epl-openfootball-bedeeada35698861de7684c8,EPL,2019-20,2019-07-01T12:00:00Z,Matchday 32,,AFC Bournemouth,,Newcastle United,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c14425f1b5f99b6e6d1e6dd7,EPL,2019-20,2019-07-01T12:00:00Z,Matchday 32,,West Ham United,,Chelsea FC,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-cee920535f6a7b2d544fb0b0,EPL,2019-20,2019-07-01T12:00:00Z,Matchday 32,,Everton FC,,Leicester City,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f45e92ebbe9e508776301c73,EPL,2019-20,2019-07-01T12:00:00Z,Matchday 32,,Arsenal FC,,Norwich City,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c12744c483c76c8bcf9bac71,EPL,2019-20,2019-07-02T12:00:00Z,Matchday 32,,Sheffield United,,Tottenham Hotspur,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f7f0cc84cc40dc4dbbf6a6d5,EPL,2019-20,2019-07-02T12:00:00Z,Matchday 32,,Manchester City,,Liverpool FC,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-1b30b85722be103a6beb4ac3,EPL,2019-20,2019-07-04T12:00:00Z,Matchday 33,,Chelsea FC,,Watford FC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-5a58fa1f5e62a03a0492f713,EPL,2019-20,2019-07-04T12:00:00Z,Matchday 33,,Leicester City,,Crystal Palace,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a19b85dd5dfb5b179cb4cdc5,EPL,2019-20,2019-07-04T12:00:00Z,Matchday 33,,Wolverhampton Wanderers,,Arsenal FC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a9b191ad10c3b4fc5e64f78b,EPL,2019-20,2019-07-04T12:00:00Z,Matchday 33,,Manchester United,,AFC Bournemouth,,5,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-fc2a28e7b9ad036d3f85137b,EPL,2019-20,2019-07-04T12:00:00Z,Matchday 33,,Norwich City,,Brighton & Hove Albion,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-06d434d8304a140263ffa149,EPL,2019-20,2019-07-05T12:00:00Z,Matchday 33,,Burnley FC,,Sheffield United,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-166a0f7d9c9f26fa6ca28994,EPL,2019-20,2019-07-05T12:00:00Z,Matchday 33,,Liverpool FC,,Aston Villa,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8faa63561a388f32a78f4117,EPL,2019-20,2019-07-05T12:00:00Z,Matchday 33,,Southampton FC,,Manchester City,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d20cf4979d489897015010f0,EPL,2019-20,2019-07-05T12:00:00Z,Matchday 33,,Newcastle United,,West Ham United,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d22fff2061de97b99d9a0357,EPL,2019-20,2019-07-06T12:00:00Z,Matchday 33,,Tottenham Hotspur,,Everton FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-09fcc429c1f2fb6ca906f114,EPL,2019-20,2019-07-07T12:00:00Z,Matchday 34,,Arsenal FC,,Leicester City,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-16f7ae17c5ad6391e073ff63,EPL,2019-20,2019-07-07T12:00:00Z,Matchday 34,,Watford FC,,Norwich City,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e360bf897053beb6737f6932,EPL,2019-20,2019-07-07T12:00:00Z,Matchday 34,,Crystal Palace,,Chelsea FC,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-347f514348b194a7d0008205,EPL,2019-20,2019-07-08T12:00:00Z,Matchday 34,,Brighton & Hove Albion,,Liverpool FC,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-45d661b0e63469f44939c4df,EPL,2019-20,2019-07-08T12:00:00Z,Matchday 34,,Manchester City,,Newcastle United,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-9be035c465f5078689b73695,EPL,2019-20,2019-07-08T12:00:00Z,Matchday 34,,West Ham United,,Burnley FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a072a4d2055d67e257f7c5ab,EPL,2019-20,2019-07-08T12:00:00Z,Matchday 34,,Sheffield United,,Wolverhampton Wanderers,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-5e8dde34a38d3fcba8cf4385,EPL,2019-20,2019-07-09T12:00:00Z,Matchday 34,,Everton FC,,Southampton FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8ef7d3e3dbfbbbbca755778d,EPL,2019-20,2019-07-09T12:00:00Z,Matchday 34,,Aston Villa,,Manchester United,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-aab0446a57712eb955db4efd,EPL,2019-20,2019-07-09T12:00:00Z,Matchday 34,,AFC Bournemouth,,Tottenham Hotspur,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-09cda57b19c7c4fd9e662c27,EPL,2019-20,2019-07-11T12:00:00Z,Matchday 35,,Liverpool FC,,Burnley FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-1243d449d20695666392f392,EPL,2019-20,2019-07-11T12:00:00Z,Matchday 35,,Brighton & Hove Albion,,Manchester City,,0,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2fe3ee2c8797ad154e8de116,EPL,2019-20,2019-07-11T12:00:00Z,Matchday 35,,Norwich City,,West Ham United,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4577b87efab1d20d3f5554de,EPL,2019-20,2019-07-11T12:00:00Z,Matchday 35,,Sheffield United,,Chelsea FC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-bdf34a08a31c68995f05d81e,EPL,2019-20,2019-07-11T12:00:00Z,Matchday 35,,Watford FC,,Newcastle United,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-04fa48c6a243449ed49de5e1,EPL,2019-20,2019-07-12T12:00:00Z,Matchday 35,,Tottenham Hotspur,,Arsenal FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-06c3ae085925c7e7cb3a18be,EPL,2019-20,2019-07-12T12:00:00Z,Matchday 35,,Aston Villa,,Crystal Palace,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-428ca7dc64ced40d1e078fb8,EPL,2019-20,2019-07-12T12:00:00Z,Matchday 35,,AFC Bournemouth,,Leicester City,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4864df0ab9ed0cb2db3c2b54,EPL,2019-20,2019-07-12T12:00:00Z,Matchday 35,,Wolverhampton Wanderers,,Everton FC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ac43c68b9da552e63ddcb681,EPL,2019-20,2019-07-13T12:00:00Z,Matchday 35,,Manchester United,,Southampton FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-79d7029e59424772c4cab4a9,EPL,2019-20,2019-07-14T12:00:00Z,Matchday 36,,Chelsea FC,,Norwich City,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0f66ddacae7c5eeb14049ab5,EPL,2019-20,2019-07-15T12:00:00Z,Matchday 36,,Newcastle United,,Tottenham Hotspur,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-af0413337008370232b81740,EPL,2019-20,2019-07-15T12:00:00Z,Matchday 36,,Arsenal FC,,Liverpool FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c95cbab769d5dce7be0bcc62,EPL,2019-20,2019-07-15T12:00:00Z,Matchday 36,,Manchester City,,AFC Bournemouth,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e0341c78810eac8c0e0f3190,EPL,2019-20,2019-07-15T12:00:00Z,Matchday 36,,Burnley FC,,Wolverhampton Wanderers,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-035ddc594224163a7dcc2478,EPL,2019-20,2019-07-16T12:00:00Z,Matchday 36,,Southampton FC,,Brighton & Hove Albion,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-31751667963a6e70600f4749,EPL,2019-20,2019-07-16T12:00:00Z,Matchday 36,,Leicester City,,Sheffield United,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-9b788999b9e9d3c139c69e50,EPL,2019-20,2019-07-16T12:00:00Z,Matchday 36,,Everton FC,,Aston Villa,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e514ed775702782ee5e21828,EPL,2019-20,2019-07-16T12:00:00Z,Matchday 36,,Crystal Palace,,Manchester United,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-5ed718ffba1aad48293449a0,EPL,2019-20,2019-07-17T12:00:00Z,Matchday 36,,West Ham United,,Watford FC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3a040950c30a04a47854b2aa,EPL,2019-20,2019-07-18T12:00:00Z,Matchday 37,,Norwich City,,Burnley FC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2c2890784d0b89e2375622c6,EPL,2019-20,2019-07-19T12:00:00Z,Matchday 37,,Tottenham Hotspur,,Leicester City,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-64804f0d6449297541ee624e,EPL,2019-20,2019-07-19T12:00:00Z,Matchday 37,,AFC Bournemouth,,Southampton FC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3201858e360f15935549e051,EPL,2019-20,2019-07-20T12:00:00Z,Matchday 37,,Sheffield United,,Everton FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7018210239190f8c4fb2adaa,EPL,2019-20,2019-07-20T12:00:00Z,Matchday 37,,Brighton & Hove Albion,,Newcastle United,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-baa3d825af4af34da03e384b,EPL,2019-20,2019-07-20T12:00:00Z,Matchday 37,,Wolverhampton Wanderers,,Crystal Palace,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-78953a45e01a4f254fe9ec49,EPL,2019-20,2019-07-21T12:00:00Z,Matchday 37,,Watford FC,,Manchester City,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8b6a95e4c66401522c5c7899,EPL,2019-20,2019-07-21T12:00:00Z,Matchday 37,,Aston Villa,,Arsenal FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-1f656c9b63fa9d83581e3f31,EPL,2019-20,2019-07-22T12:00:00Z,Matchday 37,,Manchester United,,West Ham United,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c2bc182c740bff781bb2b113,EPL,2019-20,2019-07-22T12:00:00Z,Matchday 37,,Liverpool FC,,Chelsea FC,,5,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-155355bdba75882667ba39bd,EPL,2019-20,2019-07-26T12:00:00Z,Matchday 38,,Crystal Palace,,Tottenham Hotspur,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-63a4d8ec6b6ef519e1fbc3cf,EPL,2019-20,2019-07-26T12:00:00Z,Matchday 38,,Burnley FC,,Brighton & Hove Albion,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-95091bb0c7ea6b801d415c68,EPL,2019-20,2019-07-26T12:00:00Z,Matchday 38,,Everton FC,,AFC Bournemouth,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-95431dabcc2fa25969004133,EPL,2019-20,2019-07-26T12:00:00Z,Matchday 38,,Southampton FC,,Sheffield United,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b6089d91cd58ed9c426f9776,EPL,2019-20,2019-07-26T12:00:00Z,Matchday 38,,Newcastle United,,Liverpool FC,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b9e25ab19dce328d68a45150,EPL,2019-20,2019-07-26T12:00:00Z,Matchday 38,,Manchester City,,Norwich City,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c604115c19f30917a61ef9e8,EPL,2019-20,2019-07-26T12:00:00Z,Matchday 38,,Arsenal FC,,Watford FC,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-da1fe3589691d2273c07f052,EPL,2019-20,2019-07-26T12:00:00Z,Matchday 38,,Leicester City,,Manchester United,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e96a4ed88a0e85c5d4aef58f,EPL,2019-20,2019-07-26T12:00:00Z,Matchday 38,,West Ham United,,Aston Villa,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f4069aef509e758d479611a9,EPL,2019-20,2019-07-26T12:00:00Z,Matchday 38,,Chelsea FC,,Wolverhampton Wanderers,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-69cc1df034e5aac1fbf2537e,EPL,2019-20,2019-08-09T12:00:00Z,Matchday 1,,Liverpool FC,,Norwich City,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-1aad704519131ee838f66c5f,EPL,2019-20,2019-08-10T12:00:00Z,Matchday 1,,Watford FC,,Brighton & Hove Albion,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-212c9d11494901a304af12b0,EPL,2019-20,2019-08-10T12:00:00Z,Matchday 1,,West Ham United,,Manchester City,,0,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8e5189bbf65ee6bbbc30557a,EPL,2019-20,2019-08-10T12:00:00Z,Matchday 1,,AFC Bournemouth,,Sheffield United,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b7b4b045d053e30a6aba07e7,EPL,2019-20,2019-08-10T12:00:00Z,Matchday 1,,Tottenham Hotspur,,Aston Villa,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-dc295bd26b149f82fa9030bb,EPL,2019-20,2019-08-10T12:00:00Z,Matchday 1,,Burnley FC,,Southampton FC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e864904ebf6a324427722f97,EPL,2019-20,2019-08-10T12:00:00Z,Matchday 1,,Crystal Palace,,Everton FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-492a293858ac2a3c3d9f04b4,EPL,2019-20,2019-08-11T12:00:00Z,Matchday 1,,Manchester United,,Chelsea FC,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-5a6abd15631d3f1a26c71584,EPL,2019-20,2019-08-11T12:00:00Z,Matchday 1,,Leicester City,,Wolverhampton Wanderers,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-dec2a1a48a5f9855f7244fb4,EPL,2019-20,2019-08-11T12:00:00Z,Matchday 1,,Newcastle United,,Arsenal FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-004d2363b9fe215d76dfd802,EPL,2019-20,2019-08-17T12:00:00Z,Matchday 2,,Brighton & Hove Albion,,West Ham United,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-232e102ae59cd9cedc8bdc90,EPL,2019-20,2019-08-17T12:00:00Z,Matchday 2,,Arsenal FC,,Burnley FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-392f7f88ba0d87352de27a2d,EPL,2019-20,2019-08-17T12:00:00Z,Matchday 2,,Everton FC,,Watford FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-46d9dde57dfebbb73c7db290,EPL,2019-20,2019-08-17T12:00:00Z,Matchday 2,,Norwich City,,Newcastle United,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6568f6ed0585f08995817637,EPL,2019-20,2019-08-17T12:00:00Z,Matchday 2,,Southampton FC,,Liverpool FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-81c61ad720fb7c5ed7e0d40e,EPL,2019-20,2019-08-17T12:00:00Z,Matchday 2,,Aston Villa,,AFC Bournemouth,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a2d328754265f81fbfd9b480,EPL,2019-20,2019-08-17T12:00:00Z,Matchday 2,,Manchester City,,Tottenham Hotspur,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-403e25dc19a1bf502ab526b2,EPL,2019-20,2019-08-18T12:00:00Z,Matchday 2,,Sheffield United,,Crystal Palace,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-65e7f840352f119354579ae9,EPL,2019-20,2019-08-18T12:00:00Z,Matchday 2,,Chelsea FC,,Leicester City,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c951e3cfda6a06c97ff8dfcb,EPL,2019-20,2019-08-19T12:00:00Z,Matchday 2,,Wolverhampton Wanderers,,Manchester United,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6d672d341e99fb8b0b0c8ed3,EPL,2019-20,2019-08-23T12:00:00Z,Matchday 3,,Aston Villa,,Everton FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3078072c19d4590af6b75625,EPL,2019-20,2019-08-24T12:00:00Z,Matchday 3,,Watford FC,,West Ham United,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-33afbdbab3098009530b3591,EPL,2019-20,2019-08-24T12:00:00Z,Matchday 3,,Liverpool FC,,Arsenal FC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-66e867c427b010a5d0ff4e1e,EPL,2019-20,2019-08-24T12:00:00Z,Matchday 3,,Sheffield United,,Leicester City,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-87083a54ae8fa6f4c990900c,EPL,2019-20,2019-08-24T12:00:00Z,Matchday 3,,Manchester United,,Crystal Palace,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-9a63e69f0e67763579c7e644,EPL,2019-20,2019-08-24T12:00:00Z,Matchday 3,,Norwich City,,Chelsea FC,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f3cc68ad4f8f4f1c041564d1,EPL,2019-20,2019-08-24T12:00:00Z,Matchday 3,,Brighton & Hove Albion,,Southampton FC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6692ead101194fbb2b4b921c,EPL,2019-20,2019-08-25T12:00:00Z,Matchday 3,,Tottenham Hotspur,,Newcastle United,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d3bdfb4015e7bbf7e1114719,EPL,2019-20,2019-08-25T12:00:00Z,Matchday 3,,AFC Bournemouth,,Manchester City,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-da0260640fd3e19e67b5ce80,EPL,2019-20,2019-08-25T12:00:00Z,Matchday 3,,Wolverhampton Wanderers,,Burnley FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2d25248a5f9221eb7f442709,EPL,2019-20,2019-08-31T12:00:00Z,Matchday 4,,Newcastle United,,Watford FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4f785ae89966bf7745c840bf,EPL,2019-20,2019-08-31T12:00:00Z,Matchday 4,,Manchester City,,Brighton & Hove Albion,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-50f5a58aa0c10376499b5bf7,EPL,2019-20,2019-08-31T12:00:00Z,Matchday 4,,West Ham United,,Norwich City,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-57cc55e2fe62ed6824288bf7,EPL,2019-20,2019-08-31T12:00:00Z,Matchday 4,,Crystal Palace,,Aston Villa,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-60865781ba4515d3bff562ee,EPL,2019-20,2019-08-31T12:00:00Z,Matchday 4,,Southampton FC,,Manchester United,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6b81eca021701a650006dbc4,EPL,2019-20,2019-08-31T12:00:00Z,Matchday 4,,Burnley FC,,Liverpool FC,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8f62f93393aa31f85b509a30,EPL,2019-20,2019-08-31T12:00:00Z,Matchday 4,,Chelsea FC,,Sheffield United,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f1907e6bcdd7c6aa77913e6f,EPL,2019-20,2019-08-31T12:00:00Z,Matchday 4,,Leicester City,,AFC Bournemouth,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-397eb4cfac2abd0f6dd39766,EPL,2019-20,2019-09-01T12:00:00Z,Matchday 4,,Arsenal FC,,Tottenham Hotspur,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f8dc174a1fd75b632f7c48e1,EPL,2019-20,2019-09-01T12:00:00Z,Matchday 4,,Everton FC,,Wolverhampton Wanderers,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-00341006dbf53023f081d212,EPL,2019-20,2019-09-14T12:00:00Z,Matchday 5,,Brighton & Hove Albion,,Burnley FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-1535627608320d24fe35f1d3,EPL,2019-20,2019-09-14T12:00:00Z,Matchday 5,,Liverpool FC,,Newcastle United,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-16f64e4c6faa12d36cd050ca,EPL,2019-20,2019-09-14T12:00:00Z,Matchday 5,,Norwich City,,Manchester City,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4f86eee22b16fac609e4a631,EPL,2019-20,2019-09-14T12:00:00Z,Matchday 5,,Wolverhampton Wanderers,,Chelsea FC,,2,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-9781ef31aebe40803917d02a,EPL,2019-20,2019-09-14T12:00:00Z,Matchday 5,,Manchester United,,Leicester City,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e4f6847e725d5ab8189cee4b,EPL,2019-20,2019-09-14T12:00:00Z,Matchday 5,,Sheffield United,,Southampton FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f4594a9db090b8db57816acb,EPL,2019-20,2019-09-14T12:00:00Z,Matchday 5,,Tottenham Hotspur,,Crystal Palace,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-66f2cd39823b9e0cff0d07fa,EPL,2019-20,2019-09-15T12:00:00Z,Matchday 5,,Watford FC,,Arsenal FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e2a69c0634f99913c530068d,EPL,2019-20,2019-09-15T12:00:00Z,Matchday 5,,AFC Bournemouth,,Everton FC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4a1b4adf66a194b03973413a,EPL,2019-20,2019-09-16T12:00:00Z,Matchday 5,,Aston Villa,,West Ham United,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ce9941fe66b0ee64cdf159a8,EPL,2019-20,2019-09-20T12:00:00Z,Matchday 6,,Southampton FC,,AFC Bournemouth,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-536fb52993a3ede8369f710e,EPL,2019-20,2019-09-21T12:00:00Z,Matchday 6,,Manchester City,,Watford FC,,8,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-537d0eba84d1039b479afc16,EPL,2019-20,2019-09-21T12:00:00Z,Matchday 6,,Burnley FC,,Norwich City,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-aa836cef44eec008322dad39,EPL,2019-20,2019-09-21T12:00:00Z,Matchday 6,,Everton FC,,Sheffield United,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-eb281cfa412f3624712567bc,EPL,2019-20,2019-09-21T12:00:00Z,Matchday 6,,Newcastle United,,Brighton & Hove Albion,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f62a31569aa70ebbf424af3c,EPL,2019-20,2019-09-21T12:00:00Z,Matchday 6,,Leicester City,,Tottenham Hotspur,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-1a805865ecbec7089e3d4f26,EPL,2019-20,2019-09-22T12:00:00Z,Matchday 6,,Chelsea FC,,Liverpool FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-891b89054d57edd982931bc0,EPL,2019-20,2019-09-22T12:00:00Z,Matchday 6,,West Ham United,,Manchester United,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8f66707bb26cbef9412b1d4c,EPL,2019-20,2019-09-22T12:00:00Z,Matchday 6,,Crystal Palace,,Wolverhampton Wanderers,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b275650b178dc5aee0987543,EPL,2019-20,2019-09-22T12:00:00Z,Matchday 6,,Arsenal FC,,Aston Villa,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-25418247b27d91f79a271880,EPL,2019-20,2019-09-28T12:00:00Z,Matchday 7,,Everton FC,,Manchester City,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-52504cf9201b39ac99a8e62a,EPL,2019-20,2019-09-28T12:00:00Z,Matchday 7,,Aston Villa,,Burnley FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6f80aa84a5c60804df74a062,EPL,2019-20,2019-09-28T12:00:00Z,Matchday 7,,Sheffield United,,Liverpool FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c8eb5ef682585145a719022a,EPL,2019-20,2019-09-28T12:00:00Z,Matchday 7,,Wolverhampton Wanderers,,Watford FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-cb152b7b0cda9da68b0e2bb0,EPL,2019-20,2019-09-28T12:00:00Z,Matchday 7,,Crystal Palace,,Norwich City,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d8817708649614224d320b41,EPL,2019-20,2019-09-28T12:00:00Z,Matchday 7,,Tottenham Hotspur,,Southampton FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f7829101a3ed4445111b2fcd,EPL,2019-20,2019-09-28T12:00:00Z,Matchday 7,,AFC Bournemouth,,West Ham United,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f8781139dcf7b764858b97e4,EPL,2019-20,2019-09-28T12:00:00Z,Matchday 7,,Chelsea FC,,Brighton & Hove Albion,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0b11e5361b1c15c64b7292af,EPL,2019-20,2019-09-29T12:00:00Z,Matchday 7,,Leicester City,,Newcastle United,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-69e20def089373e3b0bd355d,EPL,2019-20,2019-09-30T12:00:00Z,Matchday 7,,Manchester United,,Arsenal FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0c7297a538564195994b3223,EPL,2019-20,2019-10-05T12:00:00Z,Matchday 8,,West Ham United,,Crystal Palace,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4d168fde91f799a374344fed,EPL,2019-20,2019-10-05T12:00:00Z,Matchday 8,,Burnley FC,,Everton FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-50f150ef3c3b8883957ce0a1,EPL,2019-20,2019-10-05T12:00:00Z,Matchday 8,,Brighton & Hove Albion,,Tottenham Hotspur,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-62f476ff281f882478c655ed,EPL,2019-20,2019-10-05T12:00:00Z,Matchday 8,,Liverpool FC,,Leicester City,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8f3ed8958c5f3b3e7b44d7f9,EPL,2019-20,2019-10-05T12:00:00Z,Matchday 8,,Watford FC,,Sheffield United,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a3bb445d5931adf8848c2c4a,EPL,2019-20,2019-10-05T12:00:00Z,Matchday 8,,Norwich City,,Aston Villa,,1,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-035f528994b2ea89bb58fb47,EPL,2019-20,2019-10-06T12:00:00Z,Matchday 8,,Southampton FC,,Chelsea FC,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3bbd982c3f5e4369acaa0954,EPL,2019-20,2019-10-06T12:00:00Z,Matchday 8,,Newcastle United,,Manchester United,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-5882d8a6d2dfcf86a23696fd,EPL,2019-20,2019-10-06T12:00:00Z,Matchday 8,,Arsenal FC,,AFC Bournemouth,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-bd64586d3cd21f8b77e22160,EPL,2019-20,2019-10-06T12:00:00Z,Matchday 8,,Manchester City,,Wolverhampton Wanderers,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3326440c9c5b99781a3151c6,EPL,2019-20,2019-10-19T12:00:00Z,Matchday 9,,Leicester City,,Burnley FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8aeace5d64607b349c80af84,EPL,2019-20,2019-10-19T12:00:00Z,Matchday 9,,Wolverhampton Wanderers,,Southampton FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a5bad43ae7f3073e0933b1c5,EPL,2019-20,2019-10-19T12:00:00Z,Matchday 9,,Aston Villa,,Brighton & Hove Albion,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a906c3458e94d36c27b9ca02,EPL,2019-20,2019-10-19T12:00:00Z,Matchday 9,,Crystal Palace,,Manchester City,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-adf074fc5909e070e5021c22,EPL,2019-20,2019-10-19T12:00:00Z,Matchday 9,,AFC Bournemouth,,Norwich City,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b0e4f6c7b6df7a3225a6613e,EPL,2019-20,2019-10-19T12:00:00Z,Matchday 9,,Chelsea FC,,Newcastle United,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ea228f3da9c85b2737b72c79,EPL,2019-20,2019-10-19T12:00:00Z,Matchday 9,,Tottenham Hotspur,,Watford FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-fa0273f0e049fd4e8b4cc012,EPL,2019-20,2019-10-19T12:00:00Z,Matchday 9,,Everton FC,,West Ham United,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8ba68a18e2ebbd11c38364ca,EPL,2019-20,2019-10-20T12:00:00Z,Matchday 9,,Manchester United,,Liverpool FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-357a3be66baac33c5bca213a,EPL,2019-20,2019-10-21T12:00:00Z,Matchday 9,,Sheffield United,,Arsenal FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ddba8f79eada1e16ae0ab80a,EPL,2019-20,2019-10-25T12:00:00Z,Matchday 10,,Southampton FC,,Leicester City,,0,9,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-015d1b08f24e2aa9457ee2f5,EPL,2019-20,2019-10-26T12:00:00Z,Matchday 10,,West Ham United,,Sheffield United,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4f8c5c862f69874b038e0dee,EPL,2019-20,2019-10-26T12:00:00Z,Matchday 10,,Watford FC,,AFC Bournemouth,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-5d11f2cb8074a2d23038bd49,EPL,2019-20,2019-10-26T12:00:00Z,Matchday 10,,Brighton & Hove Albion,,Everton FC,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-690b9afa151f35b2c5348e02,EPL,2019-20,2019-10-26T12:00:00Z,Matchday 10,,Manchester City,,Aston Villa,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d82344e89fbcb1f2967b3709,EPL,2019-20,2019-10-26T12:00:00Z,Matchday 10,,Burnley FC,,Chelsea FC,,2,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2e89b85e6ccdccf5d6822129,EPL,2019-20,2019-10-27T12:00:00Z,Matchday 10,,Norwich City,,Manchester United,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3afea7ff399c3d69932817e9,EPL,2019-20,2019-10-27T12:00:00Z,Matchday 10,,Arsenal FC,,Crystal Palace,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-418a10d22d2e89b36b33a01d,EPL,2019-20,2019-10-27T12:00:00Z,Matchday 10,,Newcastle United,,Wolverhampton Wanderers,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c8129289021ba948405e4f68,EPL,2019-20,2019-10-27T12:00:00Z,Matchday 10,,Liverpool FC,,Tottenham Hotspur,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-272f4646ba39b50e2e3097ea,EPL,2019-20,2019-11-02T12:00:00Z,Matchday 11,,Manchester City,,Southampton FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3f846076ef153585258947ce,EPL,2019-20,2019-11-02T12:00:00Z,Matchday 11,,AFC Bournemouth,,Manchester United,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-52a51ecbbb82f68a7f182502,EPL,2019-20,2019-11-02T12:00:00Z,Matchday 11,,Aston Villa,,Liverpool FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-52e60b10c85b5b5fbd7558ed,EPL,2019-20,2019-11-02T12:00:00Z,Matchday 11,,Sheffield United,,Burnley FC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-624f5b12679ee155db5ddab2,EPL,2019-20,2019-11-02T12:00:00Z,Matchday 11,,Brighton & Hove Albion,,Norwich City,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6cd1e91d706bb347142a0033,EPL,2019-20,2019-11-02T12:00:00Z,Matchday 11,,Watford FC,,Chelsea FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6d573e38424e64b9a1149b0b,EPL,2019-20,2019-11-02T12:00:00Z,Matchday 11,,West Ham United,,Newcastle United,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b8c0abc1634f2f9d0990edde,EPL,2019-20,2019-11-02T12:00:00Z,Matchday 11,,Arsenal FC,,Wolverhampton Wanderers,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-736fd771e05aea276c99a580,EPL,2019-20,2019-11-03T12:00:00Z,Matchday 11,,Crystal Palace,,Leicester City,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-fd51b5e0e71b3999b1ef87ad,EPL,2019-20,2019-11-03T12:00:00Z,Matchday 11,,Everton FC,,Tottenham Hotspur,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c02053ee2db6ea2467723a52,EPL,2019-20,2019-11-08T12:00:00Z,Matchday 12,,Norwich City,,Watford FC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2a3a115ac1060fe2b721ecda,EPL,2019-20,2019-11-09T12:00:00Z,Matchday 12,,Chelsea FC,,Crystal Palace,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6e8157ea4cd527e9d07a14ba,EPL,2019-20,2019-11-09T12:00:00Z,Matchday 12,,Newcastle United,,AFC Bournemouth,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-736be587da75d75ada519187,EPL,2019-20,2019-11-09T12:00:00Z,Matchday 12,,Tottenham Hotspur,,Sheffield United,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8e903ac0655ed8434e056f6d,EPL,2019-20,2019-11-09T12:00:00Z,Matchday 12,,Leicester City,,Arsenal FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a02abc01bad2f3fd66162d99,EPL,2019-20,2019-11-09T12:00:00Z,Matchday 12,,Southampton FC,,Everton FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-adc6aa4abb599149cac4c75a,EPL,2019-20,2019-11-09T12:00:00Z,Matchday 12,,Burnley FC,,West Ham United,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4ca9e927ebf8ebc3cb5be14d,EPL,2019-20,2019-11-10T12:00:00Z,Matchday 12,,Manchester United,,Brighton & Hove Albion,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-74a12318e87d79bde196074e,EPL,2019-20,2019-11-10T12:00:00Z,Matchday 12,,Liverpool FC,,Manchester City,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-bfaeaee765baadd63c8b0188,EPL,2019-20,2019-11-10T12:00:00Z,Matchday 12,,Wolverhampton Wanderers,,Aston Villa,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-03b9b132a3b1443d45828663,EPL,2019-20,2019-11-23T12:00:00Z,Matchday 13,,West Ham United,,Tottenham Hotspur,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-24f297f1fa249a5ccec787d8,EPL,2019-20,2019-11-23T12:00:00Z,Matchday 13,,Manchester City,,Chelsea FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-32a1f822fcaf881f3bc4004e,EPL,2019-20,2019-11-23T12:00:00Z,Matchday 13,,Everton FC,,Norwich City,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-55199a30e3c50aeffdc09eb8,EPL,2019-20,2019-11-23T12:00:00Z,Matchday 13,,Watford FC,,Burnley FC,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-63550ed8cc4633d9454569a0,EPL,2019-20,2019-11-23T12:00:00Z,Matchday 13,,Crystal Palace,,Liverpool FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7f6869c7a91368f32265bfc1,EPL,2019-20,2019-11-23T12:00:00Z,Matchday 13,,Arsenal FC,,Southampton FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c8dbe1ae749ca80e48664fb2,EPL,2019-20,2019-11-23T12:00:00Z,Matchday 13,,Brighton & Hove Albion,,Leicester City,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d2897c713ecd572a4ccd93e9,EPL,2019-20,2019-11-23T12:00:00Z,Matchday 13,,AFC Bournemouth,,Wolverhampton Wanderers,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6f038e10770b97c2a3c47b18,EPL,2019-20,2019-11-24T12:00:00Z,Matchday 13,,Sheffield United,,Manchester United,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-45e65cf32386f1b60c39dc6d,EPL,2019-20,2019-11-25T12:00:00Z,Matchday 13,,Aston Villa,,Newcastle United,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-1623409e3e2d635086f34edf,EPL,2019-20,2019-11-30T12:00:00Z,Matchday 14,,Tottenham Hotspur,,AFC Bournemouth,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7c49293d836503a128e8487c,EPL,2019-20,2019-11-30T12:00:00Z,Matchday 14,,Southampton FC,,Watford FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7f4aeed9321a19dbde8b4f11,EPL,2019-20,2019-11-30T12:00:00Z,Matchday 14,,Liverpool FC,,Brighton & Hove Albion,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-9dc0e818e4cf9a430e4b2d44,EPL,2019-20,2019-11-30T12:00:00Z,Matchday 14,,Chelsea FC,,West Ham United,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ab99fc9601f917847fe58ae5,EPL,2019-20,2019-11-30T12:00:00Z,Matchday 14,,Burnley FC,,Crystal Palace,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c61be89fe97c0ed6a7c99c1b,EPL,2019-20,2019-11-30T12:00:00Z,Matchday 14,,Newcastle United,,Manchester City,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-23c09fca242d21d9b25c1136,EPL,2019-20,2019-12-01T12:00:00Z,Matchday 14,,Norwich City,,Arsenal FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2838f8a4579245769d217814,EPL,2019-20,2019-12-01T12:00:00Z,Matchday 14,,Leicester City,,Everton FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ad79db932176f5eff7732105,EPL,2019-20,2019-12-01T12:00:00Z,Matchday 14,,Wolverhampton Wanderers,,Sheffield United,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e50fd858ee7e3d8516912e4a,EPL,2019-20,2019-12-01T12:00:00Z,Matchday 14,,Manchester United,,Aston Villa,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b4f624a24f7de0a86c07b51e,EPL,2019-20,2019-12-03T12:00:00Z,Matchday 15,,Crystal Palace,,AFC Bournemouth,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f6b56f5b26d467593653b209,EPL,2019-20,2019-12-03T12:00:00Z,Matchday 15,,Burnley FC,,Manchester City,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-1b9ff23298124d3e94f645ff,EPL,2019-20,2019-12-04T12:00:00Z,Matchday 15,,Wolverhampton Wanderers,,West Ham United,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-95c5c0c1a8a833a97acebf16,EPL,2019-20,2019-12-04T12:00:00Z,Matchday 15,,Chelsea FC,,Aston Villa,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-bf230546ef5cca50e7d5d95c,EPL,2019-20,2019-12-04T12:00:00Z,Matchday 15,,Manchester United,,Tottenham Hotspur,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e8da5edea0a55d0cd1854fe8,EPL,2019-20,2019-12-04T12:00:00Z,Matchday 15,,Southampton FC,,Norwich City,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ee511821124256ab1b03d35b,EPL,2019-20,2019-12-04T12:00:00Z,Matchday 15,,Liverpool FC,,Everton FC,,5,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f5adf3bbff59cbbccafc3b48,EPL,2019-20,2019-12-04T12:00:00Z,Matchday 15,,Leicester City,,Watford FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0e8c4dc6c77afa0c52d3cfe5,EPL,2019-20,2019-12-05T12:00:00Z,Matchday 15,,Sheffield United,,Newcastle United,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2fd794625dbb4987a4a1e7b2,EPL,2019-20,2019-12-05T12:00:00Z,Matchday 15,,Arsenal FC,,Brighton & Hove Albion,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-1ba4fc2c78d393f8e4267dad,EPL,2019-20,2019-12-07T12:00:00Z,Matchday 16,,Everton FC,,Chelsea FC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4163aa4bfc5c1434bc54c541,EPL,2019-20,2019-12-07T12:00:00Z,Matchday 16,,Manchester City,,Manchester United,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-894234b0322a51563ab8c9c1,EPL,2019-20,2019-12-07T12:00:00Z,Matchday 16,,Tottenham Hotspur,,Burnley FC,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b287cef7bb4e81f0926648cb,EPL,2019-20,2019-12-07T12:00:00Z,Matchday 16,,Watford FC,,Crystal Palace,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-da1a91592ec43b7cd3671974,EPL,2019-20,2019-12-07T12:00:00Z,Matchday 16,,AFC Bournemouth,,Liverpool FC,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-36c6453999a6610fb73496ce,EPL,2019-20,2019-12-08T12:00:00Z,Matchday 16,,Brighton & Hove Albion,,Wolverhampton Wanderers,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-987600fa8d946be2f52a839f,EPL,2019-20,2019-12-08T12:00:00Z,Matchday 16,,Newcastle United,,Southampton FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-bb090109302ae23b72cbba2c,EPL,2019-20,2019-12-08T12:00:00Z,Matchday 16,,Norwich City,,Sheffield United,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d628a3356b70c7e3113388ca,EPL,2019-20,2019-12-08T12:00:00Z,Matchday 16,,Aston Villa,,Leicester City,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f467924d87e23641c14bcced,EPL,2019-20,2019-12-09T12:00:00Z,Matchday 16,,West Ham United,,Arsenal FC,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-086d16eb6ff402d6eeb8363d,EPL,2019-20,2019-12-14T12:00:00Z,Matchday 17,,Burnley FC,,Newcastle United,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-88fcf526f995dcf121b05c54,EPL,2019-20,2019-12-14T12:00:00Z,Matchday 17,,Chelsea FC,,AFC Bournemouth,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-9ad34e00cf5cdc600a2a5f77,EPL,2019-20,2019-12-14T12:00:00Z,Matchday 17,,Southampton FC,,West Ham United,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-9e6be3a9143e7dc275656117,EPL,2019-20,2019-12-14T12:00:00Z,Matchday 17,,Leicester City,,Norwich City,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ccbb4178a1ec8e7165aefa55,EPL,2019-20,2019-12-14T12:00:00Z,Matchday 17,,Liverpool FC,,Watford FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d439d66f137a86638c4daeae,EPL,2019-20,2019-12-14T12:00:00Z,Matchday 17,,Sheffield United,,Aston Villa,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-769b52cdd6d7f100fc9cb991,EPL,2019-20,2019-12-15T12:00:00Z,Matchday 17,,Wolverhampton Wanderers,,Tottenham Hotspur,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b29517a0dcc2c9e906acabdd,EPL,2019-20,2019-12-15T12:00:00Z,Matchday 17,,Arsenal FC,,Manchester City,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-dedc5b16b46564b26f459b87,EPL,2019-20,2019-12-15T12:00:00Z,Matchday 17,,Manchester United,,Everton FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d188780e3a78a756178470a6,EPL,2019-20,2019-12-16T12:00:00Z,Matchday 17,,Crystal Palace,,Brighton & Hove Albion,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-1e10dde699a7dec06b2bfe80,EPL,2019-20,2019-12-21T12:00:00Z,Matchday 18,,Newcastle United,,Crystal Palace,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-565e411b0a0729dbc86d973a,EPL,2019-20,2019-12-21T12:00:00Z,Matchday 18,,Aston Villa,,Southampton FC,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7dfca6edd516ac738dee3c27,EPL,2019-20,2019-12-21T12:00:00Z,Matchday 18,,Everton FC,,Arsenal FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-84e93aa9b70995e57a4631ff,EPL,2019-20,2019-12-21T12:00:00Z,Matchday 18,,Manchester City,,Leicester City,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-893cc1dba917ce072ca16d22,EPL,2019-20,2019-12-21T12:00:00Z,Matchday 18,,Brighton & Hove Albion,,Sheffield United,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-afc3c3432986d3bbc51f25c5,EPL,2019-20,2019-12-21T12:00:00Z,Matchday 18,,Norwich City,,Wolverhampton Wanderers,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e59f1c5de45fb2f3b2f9d27e,EPL,2019-20,2019-12-21T12:00:00Z,Matchday 18,,AFC Bournemouth,,Burnley FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0637a265ec33fc9685812759,EPL,2019-20,2019-12-22T12:00:00Z,Matchday 18,,Watford FC,,Manchester United,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-080724374aada73fdcd7bfb1,EPL,2019-20,2019-12-22T12:00:00Z,Matchday 18,,Tottenham Hotspur,,Chelsea FC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-243e3c51341c0b0a402d796b,EPL,2019-20,2019-12-26T12:00:00Z,Matchday 19,,Tottenham Hotspur,,Brighton & Hove Albion,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2681f92124924a7d8169811a,EPL,2019-20,2019-12-26T12:00:00Z,Matchday 19,,Leicester City,,Liverpool FC,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-32155a3868b9de84ccdf6f25,EPL,2019-20,2019-12-26T12:00:00Z,Matchday 19,,Chelsea FC,,Southampton FC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3f8cf68e4cffa4785d19cad9,EPL,2019-20,2019-12-26T12:00:00Z,Matchday 19,,Sheffield United,,Watford FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-5c96b443a0b8e26040a0e4b5,EPL,2019-20,2019-12-26T12:00:00Z,Matchday 19,,Aston Villa,,Norwich City,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-5dd7f8faf79fa739530808bf,EPL,2019-20,2019-12-26T12:00:00Z,Matchday 19,,AFC Bournemouth,,Arsenal FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e15cc60d6112eadcfd770ea9,EPL,2019-20,2019-12-26T12:00:00Z,Matchday 19,,Crystal Palace,,West Ham United,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f06ce9862a2b701430211e3f,EPL,2019-20,2019-12-26T12:00:00Z,Matchday 19,,Manchester United,,Newcastle United,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-fe27a2c7e8099a0ac253c0ea,EPL,2019-20,2019-12-26T12:00:00Z,Matchday 19,,Everton FC,,Burnley FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-88e968723e8feabe07041d1f,EPL,2019-20,2019-12-27T12:00:00Z,Matchday 19,,Wolverhampton Wanderers,,Manchester City,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6534c679afd0f82015330e4d,EPL,2019-20,2019-12-28T12:00:00Z,Matchday 20,,Burnley FC,,Manchester United,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-77255830f3bde6cefbed8b65,EPL,2019-20,2019-12-28T12:00:00Z,Matchday 20,,Norwich City,,Tottenham Hotspur,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8129666b250424745b88c2a3,EPL,2019-20,2019-12-28T12:00:00Z,Matchday 20,,West Ham United,,Leicester City,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-81906d1eecc5e46710cfa9e6,EPL,2019-20,2019-12-28T12:00:00Z,Matchday 20,,Southampton FC,,Crystal Palace,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-89d743555f568233ad0f5f0c,EPL,2019-20,2019-12-28T12:00:00Z,Matchday 20,,Newcastle United,,Everton FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a1ec14ecefd29d2966a2bb43,EPL,2019-20,2019-12-28T12:00:00Z,Matchday 20,,Brighton & Hove Albion,,AFC Bournemouth,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c62d1a22c88abf728af377b4,EPL,2019-20,2019-12-28T12:00:00Z,Matchday 20,,Watford FC,,Aston Villa,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-5bf2bd163ef7e741e520b829,EPL,2019-20,2019-12-29T12:00:00Z,Matchday 20,,Manchester City,,Sheffield United,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a4abd1dfa4cf783282c7bc1c,EPL,2019-20,2019-12-29T12:00:00Z,Matchday 20,,Arsenal FC,,Chelsea FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d94be54e8ffa7e81f4dce2fb,EPL,2019-20,2019-12-29T12:00:00Z,Matchday 20,,Liverpool FC,,Wolverhampton Wanderers,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3a42e65895a5b0cc0d2ec31b,EPL,2019-20,2020-01-01T12:00:00Z,Matchday 21,,Arsenal FC,,Manchester United,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-5b39c0a8aefcde7f1af37823,EPL,2019-20,2020-01-01T12:00:00Z,Matchday 21,,West Ham United,,AFC Bournemouth,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-5e8e9f3beb21e1d250ab486b,EPL,2019-20,2020-01-01T12:00:00Z,Matchday 21,,Burnley FC,,Aston Villa,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-9ecf5792b71901df2c27c638,EPL,2019-20,2020-01-01T12:00:00Z,Matchday 21,,Brighton & Hove Albion,,Chelsea FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ad252eb708317588680ac94e,EPL,2019-20,2020-01-01T12:00:00Z,Matchday 21,,Watford FC,,Wolverhampton Wanderers,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-bc21a27bdefab57cd75bc545,EPL,2019-20,2020-01-01T12:00:00Z,Matchday 21,,Norwich City,,Crystal Palace,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-bfcaa20d66c552b6bc45356f,EPL,2019-20,2020-01-01T12:00:00Z,Matchday 21,,Newcastle United,,Leicester City,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c02476f5b5509be26de9b54d,EPL,2019-20,2020-01-01T12:00:00Z,Matchday 21,,Manchester City,,Everton FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-cb954be20a96fbe73222cffc,EPL,2019-20,2020-01-01T12:00:00Z,Matchday 21,,Southampton FC,,Tottenham Hotspur,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a96ffab757159fa8e96c9437,EPL,2019-20,2020-01-02T12:00:00Z,Matchday 21,,Liverpool FC,,Sheffield United,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-97c96f8a1242e41c26c4318b,EPL,2019-20,2020-01-10T12:00:00Z,Matchday 22,,Sheffield United,,West Ham United,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0bd325c59f58c20ebe8fbe6f,EPL,2019-20,2020-01-11T12:00:00Z,Matchday 22,,Crystal Palace,,Arsenal FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-29dfdd60b1add3500f51b9be,EPL,2019-20,2020-01-11T12:00:00Z,Matchday 22,,Chelsea FC,,Burnley FC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-5d9063735e47f76e59d61102,EPL,2019-20,2020-01-11T12:00:00Z,Matchday 22,,Everton FC,,Brighton & Hove Albion,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c65866d3a950d95439ac1b18,EPL,2019-20,2020-01-11T12:00:00Z,Matchday 22,,Tottenham Hotspur,,Liverpool FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c74ab21d98394c3922eae0b8,EPL,2019-20,2020-01-11T12:00:00Z,Matchday 22,,Wolverhampton Wanderers,,Newcastle United,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d888cfa2a429129e50bc226b,EPL,2019-20,2020-01-11T12:00:00Z,Matchday 22,,Leicester City,,Southampton FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-decae780117b51c86a470490,EPL,2019-20,2020-01-11T12:00:00Z,Matchday 22,,Manchester United,,Norwich City,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-94c83077cfd6c9c16cb16c80,EPL,2019-20,2020-01-12T12:00:00Z,Matchday 22,,AFC Bournemouth,,Watford FC,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-bc906fb530f0635565b77d9f,EPL,2019-20,2020-01-12T12:00:00Z,Matchday 22,,Aston Villa,,Manchester City,,1,6,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-27c1709049a46914c4c70028,EPL,2019-20,2020-01-18T12:00:00Z,Matchday 23,,Manchester City,,Crystal Palace,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3e394122b567f5ec27a854f5,EPL,2019-20,2020-01-18T12:00:00Z,Matchday 23,,Brighton & Hove Albion,,Aston Villa,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4d6f8a71bf141f754887a96e,EPL,2019-20,2020-01-18T12:00:00Z,Matchday 23,,West Ham United,,Everton FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6fbf0ac7647471d8f9803801,EPL,2019-20,2020-01-18T12:00:00Z,Matchday 23,,Southampton FC,,Wolverhampton Wanderers,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-79f71a3d0ee607434dbbdc6f,EPL,2019-20,2020-01-18T12:00:00Z,Matchday 23,,Newcastle United,,Chelsea FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7c37e238352ed306643008f6,EPL,2019-20,2020-01-18T12:00:00Z,Matchday 23,,Arsenal FC,,Sheffield United,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a9f135bca6ac1f028ba78a77,EPL,2019-20,2020-01-18T12:00:00Z,Matchday 23,,Norwich City,,AFC Bournemouth,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e829770f056f24b0637e5101,EPL,2019-20,2020-01-18T12:00:00Z,Matchday 23,,Watford FC,,Tottenham Hotspur,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3dcc512838055f950af1f1f4,EPL,2019-20,2020-01-19T12:00:00Z,Matchday 23,,Burnley FC,,Leicester City,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-cf059e5fe100cb27b8842a90,EPL,2019-20,2020-01-19T12:00:00Z,Matchday 23,,Liverpool FC,,Manchester United,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-093d516078d9d9a4a112a3bf,EPL,2019-20,2020-01-21T12:00:00Z,Matchday 24,,Crystal Palace,,Southampton FC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-323bfb0195c8ffcf587cf2ae,EPL,2019-20,2020-01-21T12:00:00Z,Matchday 24,,Sheffield United,,Manchester City,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4b637c30ab47fd148d35fb42,EPL,2019-20,2020-01-21T12:00:00Z,Matchday 24,,Everton FC,,Newcastle United,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6fc0148f26e5964efe122295,EPL,2019-20,2020-01-21T12:00:00Z,Matchday 24,,Chelsea FC,,Arsenal FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-edb063553f20fba91056c032,EPL,2019-20,2020-01-21T12:00:00Z,Matchday 24,,AFC Bournemouth,,Brighton & Hove Albion,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-eef9dda298b67102954ba357,EPL,2019-20,2020-01-21T12:00:00Z,Matchday 24,,Aston Villa,,Watford FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-26ccc4aceb5c0a785c3048d0,EPL,2019-20,2020-01-22T12:00:00Z,Matchday 24,,Manchester United,,Burnley FC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-89963ab0ea37f78cb1a4ab1a,EPL,2019-20,2020-01-22T12:00:00Z,Matchday 24,,Leicester City,,West Ham United,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c3df9c924bfc83062ebd4265,EPL,2019-20,2020-01-22T12:00:00Z,Matchday 24,,Tottenham Hotspur,,Norwich City,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-44af443ea081607f70626cc8,EPL,2019-20,2020-01-23T12:00:00Z,Matchday 24,,Wolverhampton Wanderers,,Liverpool FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c3e6edb9a3faa6a0e4deb8ab,EPL,2019-20,2020-01-29T12:00:00Z,Matchday 18,,West Ham United,,Liverpool FC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0f11968b4afc566c2b180db6,EPL,2019-20,2020-02-01T12:00:00Z,Matchday 25,,Leicester City,,Chelsea FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4be389fe58d01cf06af622fb,EPL,2019-20,2020-02-01T12:00:00Z,Matchday 25,,Crystal Palace,,Sheffield United,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-507a26c41a1594512725803f,EPL,2019-20,2020-02-01T12:00:00Z,Matchday 25,,AFC Bournemouth,,Aston Villa,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-5b38c9644751a8455b21edf9,EPL,2019-20,2020-02-01T12:00:00Z,Matchday 25,,Liverpool FC,,Southampton FC,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-686d663cf8559151646d8688,EPL,2019-20,2020-02-01T12:00:00Z,Matchday 25,,Manchester United,,Wolverhampton Wanderers,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7ed9cea0d829967856867545,EPL,2019-20,2020-02-01T12:00:00Z,Matchday 25,,West Ham United,,Brighton & Hove Albion,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-bb6eda5cc08ade7b60062227,EPL,2019-20,2020-02-01T12:00:00Z,Matchday 25,,Watford FC,,Everton FC,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-fdc8eaabacba4c63051596c3,EPL,2019-20,2020-02-01T12:00:00Z,Matchday 25,,Newcastle United,,Norwich City,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a147870135feb870fddab26a,EPL,2019-20,2020-02-02T12:00:00Z,Matchday 25,,Tottenham Hotspur,,Manchester City,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ea516de2be58e4573d495582,EPL,2019-20,2020-02-02T12:00:00Z,Matchday 25,,Burnley FC,,Arsenal FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ba813eb4a22ec1eb6b81d8c8,EPL,2019-20,2020-02-08T12:00:00Z,Matchday 26,,Brighton & Hove Albion,,Watford FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-cc9041afa503ec129d49df60,EPL,2019-20,2020-02-08T12:00:00Z,Matchday 26,,Everton FC,,Crystal Palace,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ce55cf13f6a5ab68ab4390ff,EPL,2019-20,2020-02-09T12:00:00Z,Matchday 26,,Sheffield United,,AFC Bournemouth,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-491f6bab6981cf24e4123983,EPL,2019-20,2020-02-14T12:00:00Z,Matchday 26,,Wolverhampton Wanderers,,Leicester City,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8213f75a3f56ee62b7d778b5,EPL,2019-20,2020-02-15T12:00:00Z,Matchday 26,,Southampton FC,,Burnley FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-fc8857139ebd19dbbf0e6593,EPL,2019-20,2020-02-15T12:00:00Z,Matchday 26,,Norwich City,,Liverpool FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-bdd8b167b7ff682fbb59a96b,EPL,2019-20,2020-02-16T12:00:00Z,Matchday 26,,Aston Villa,,Tottenham Hotspur,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-fb795bb02de37d46a58759ae,EPL,2019-20,2020-02-16T12:00:00Z,Matchday 26,,Arsenal FC,,Newcastle United,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3a1f99d0be6dd86402fb639f,EPL,2019-20,2020-02-17T12:00:00Z,Matchday 26,,Chelsea FC,,Manchester United,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d04c5c4095b457a97573ceaf,EPL,2019-20,2020-02-19T12:00:00Z,Matchday 26,,Manchester City,,West Ham United,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0afdfb3b77e83893a59d2949,EPL,2019-20,2020-02-22T12:00:00Z,Matchday 27,,Chelsea FC,,Tottenham Hotspur,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2e1b204938995a96c6a8548f,EPL,2019-20,2020-02-22T12:00:00Z,Matchday 27,,Leicester City,,Manchester City,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4e6fd8c9b7f35700c5f986ba,EPL,2019-20,2020-02-22T12:00:00Z,Matchday 27,,Burnley FC,,AFC Bournemouth,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7e9f2d1102a8766ed6c975cb,EPL,2019-20,2020-02-22T12:00:00Z,Matchday 27,,Crystal Palace,,Newcastle United,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-9a3d334bb47d90045d8e2557,EPL,2019-20,2020-02-22T12:00:00Z,Matchday 27,,Southampton FC,,Aston Villa,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c922b5b549503151de4fd538,EPL,2019-20,2020-02-22T12:00:00Z,Matchday 27,,Sheffield United,,Brighton & Hove Albion,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4a81b4575ce17f4d7bfa70d7,EPL,2019-20,2020-02-23T12:00:00Z,Matchday 27,,Arsenal FC,,Everton FC,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a054798ada2774a4024e977e,EPL,2019-20,2020-02-23T12:00:00Z,Matchday 27,,Wolverhampton Wanderers,,Norwich City,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e389ce6a32817df0394e1e40,EPL,2019-20,2020-02-23T12:00:00Z,Matchday 27,,Manchester United,,Watford FC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a3ce5a357cc9247d47a5237e,EPL,2019-20,2020-02-24T12:00:00Z,Matchday 27,,Liverpool FC,,West Ham United,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8548e03a5576672e7cef745c,EPL,2019-20,2020-02-28T12:00:00Z,Matchday 28,,Norwich City,,Leicester City,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0b847cf9d2ad80816c4c2dff,EPL,2019-20,2020-02-29T12:00:00Z,Matchday 28,,Brighton & Hove Albion,,Crystal Palace,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0c66029efd9eaabd5ecd7a73,EPL,2019-20,2020-02-29T12:00:00Z,Matchday 28,,AFC Bournemouth,,Chelsea FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-787e20b066e96e23d28baa1e,EPL,2019-20,2020-02-29T12:00:00Z,Matchday 28,,Watford FC,,Liverpool FC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7edd57ab4321327b2b58e14f,EPL,2019-20,2020-02-29T12:00:00Z,Matchday 28,,West Ham United,,Southampton FC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f066f783649611da738a15cb,EPL,2019-20,2020-02-29T12:00:00Z,Matchday 28,,Newcastle United,,Burnley FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4848a8e31328c5f29a40cb22,EPL,2019-20,2020-03-01T12:00:00Z,Matchday 28,,Tottenham Hotspur,,Wolverhampton Wanderers,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d1f8ba6a4f1b91b6593570bd,EPL,2019-20,2020-03-01T12:00:00Z,Matchday 28,,Everton FC,,Manchester United,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-010ef7a541a39055ad734bc8,EPL,2019-20,2020-03-07T12:00:00Z,Matchday 29,,Burnley FC,,Tottenham Hotspur,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-1325cc38ef2955781e616707,EPL,2019-20,2020-03-07T12:00:00Z,Matchday 29,,Southampton FC,,Newcastle United,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-499d65fd20b474e2af44a099,EPL,2019-20,2020-03-07T12:00:00Z,Matchday 29,,Liverpool FC,,AFC Bournemouth,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8f2219fb261c50d3ebe852ee,EPL,2019-20,2020-03-07T12:00:00Z,Matchday 29,,Arsenal FC,,West Ham United,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-aca8c1e15990fdc643121610,EPL,2019-20,2020-03-07T12:00:00Z,Matchday 29,,Wolverhampton Wanderers,,Brighton & Hove Albion,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b7437087683e28bd42a59cfc,EPL,2019-20,2020-03-07T12:00:00Z,Matchday 29,,Crystal Palace,,Watford FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f9a4ae15cc981ace98a9f3a2,EPL,2019-20,2020-03-07T12:00:00Z,Matchday 29,,Sheffield United,,Norwich City,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-72aa67728d0e94efc2fefc56,EPL,2019-20,2020-03-08T12:00:00Z,Matchday 29,,Chelsea FC,,Everton FC,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7cddfdda94519e428f2c48fb,EPL,2019-20,2020-03-08T12:00:00Z,Matchday 29,,Manchester United,,Manchester City,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f73d4fd5db3602289edab73a,EPL,2019-20,2020-03-09T12:00:00Z,Matchday 29,,Leicester City,,Aston Villa,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6a60bea4afa923da027b92a9,EPL,2019-20,2020-06-17T12:00:00Z,Matchday 28,,Manchester City,,Arsenal FC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ba8e108bcd69f9f62f0c697f,EPL,2019-20,2020-06-17T12:00:00Z,Matchday 28,,Aston Villa,,Sheffield United,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-04a8d83aa3e2414b603e4ed8,EPL,2019-20,2020-06-19T12:00:00Z,Matchday 30,,Norwich City,,Southampton FC,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e5c8967de7087eba2a5040d4,EPL,2019-20,2020-06-19T12:00:00Z,Matchday 30,,Tottenham Hotspur,,Manchester United,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0b32146a5bad0a3b7d4ea19d,EPL,2019-20,2020-06-20T12:00:00Z,Matchday 30,,West Ham United,,Wolverhampton Wanderers,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6b827de7de68b883c4d89b62,EPL,2019-20,2020-06-20T12:00:00Z,Matchday 30,,AFC Bournemouth,,Crystal Palace,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8d184c82b0888b02c7427a86,EPL,2019-20,2020-06-20T12:00:00Z,Matchday 30,,Brighton & Hove Albion,,Arsenal FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-bf2a2281927139632192ac60,EPL,2019-20,2020-06-20T12:00:00Z,Matchday 30,,Watford FC,,Leicester City,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2b678db8685af941feea6c3b,EPL,2019-20,2020-06-21T12:00:00Z,Matchday 30,,Aston Villa,,Chelsea FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b6795dc9c93d58336b69ee63,EPL,2019-20,2020-06-21T12:00:00Z,Matchday 30,,Newcastle United,,Sheffield United,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d5eb8e919f68f40e5f0c025a,EPL,2019-20,2020-06-21T12:00:00Z,Matchday 30,,Everton FC,,Liverpool FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-9a45151cc8a7ffff0dd0c07b,EPL,2019-20,2020-06-22T12:00:00Z,Matchday 30,,Manchester City,,Burnley FC,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-5b0172941dc763193a45b9a0,EPL,2019-20,2020-06-23T12:00:00Z,Matchday 31,,Leicester City,,Brighton & Hove Albion,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6e3839a584322011aab5eac9,EPL,2019-20,2020-06-23T12:00:00Z,Matchday 31,,Tottenham Hotspur,,West Ham United,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-26d5cb6fee88a15d17d77f76,EPL,2019-20,2020-06-24T12:00:00Z,Matchday 31,,Manchester United,,Sheffield United,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-371ccca2748f69c78902f1c3,EPL,2019-20,2020-06-24T12:00:00Z,Matchday 31,,Norwich City,,Everton FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-607c21db83d73e738d3e7e05,EPL,2019-20,2020-06-24T12:00:00Z,Matchday 31,,Wolverhampton Wanderers,,AFC Bournemouth,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6706459f837fa4c948b5080e,EPL,2019-20,2020-06-24T12:00:00Z,Matchday 31,,Newcastle United,,Aston Villa,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-823489dd967f65b289868141,EPL,2019-20,2020-06-24T12:00:00Z,Matchday 31,,Liverpool FC,,Crystal Palace,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-289991b1a68dfb62a4a54a00,EPL,2019-20,2020-06-25T12:00:00Z,Matchday 31,,Chelsea FC,,Manchester City,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-76c9558b448afcb8fedc9e45,EPL,2019-20,2020-06-25T12:00:00Z,Matchday 31,,Southampton FC,,Arsenal FC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-909087407ceb8d3707d96e01,EPL,2019-20,2020-06-25T12:00:00Z,Matchday 31,,Burnley FC,,Watford FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b9a32d1e51f9aa8e50a5e6c8,EPL,2019-20,2020-06-27T12:00:00Z,Matchday 32,,Aston Villa,,Wolverhampton Wanderers,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2e115046770f4c5ffa21259c,EPL,2019-20,2020-06-28T12:00:00Z,Matchday 32,,Watford FC,,Southampton FC,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-fc2c4c2a2967fd81f9dd0b44,EPL,2019-20,2020-06-29T12:00:00Z,Matchday 32,,Crystal Palace,,Burnley FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-1f5a0e9162f0fe774b3e33a3,EPL,2019-20,2020-06-30T12:00:00Z,Matchday 32,,Brighton & Hove Albion,,Manchester United,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00

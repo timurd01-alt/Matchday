@@ -816,6 +816,7 @@ class CollegeFootballDataTests(unittest.TestCase):
         self.assertEqual(model["michigan"]["record"], "1-0")
         self.assertEqual(tables[0]["group"], "Big Ten")
         self.assertEqual(ranks[0]["name"], "Michigan")
+        self.assertEqual(ranks[0]["poll_name"], "AP Top 25")
         self.assertIsNone(projection)
         self.assertFalse(model["michigan"]["season_stale"])
 
@@ -1025,6 +1026,7 @@ class CollegeBasketballDataTests(unittest.TestCase):
         # (which would have ranked both teams 1-0/0-1 arbitrarily by name/gd)
         self.assertEqual(ranks[0]["name"], "Duke")
         self.assertEqual(ranks[1]["name"], "North Carolina")
+        self.assertTrue(all(row["poll_name"] == "AP Top 25" for row in ranks))
 
     def test_rankings_season_rolls_over_in_august(self):
         # CBBD numbers a season by its ENDING year -- a July date should

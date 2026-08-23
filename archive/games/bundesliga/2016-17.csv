@@ -1,0 +1,307 @@
+game_id,comp,season,date_utc,stage,venue,home_name,home_code,away_name,away_code,home_score,away_score,status,source,first_seen
+bundesliga-openfootball-fd567926e7f7da09f3ed815d,BUNDESLIGA,2016-17,2016-08-26T12:00:00Z,Matchday 1,,Bayern München,,Werder Bremen,,6,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-1c780e3adb27f962e8fdc3f0,BUNDESLIGA,2016-17,2016-08-27T12:00:00Z,Matchday 1,,Hamburger SV,,FC Ingolstadt 04,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-9fdd0e28ecea4a33d34afff6,BUNDESLIGA,2016-17,2016-08-27T12:00:00Z,Matchday 1,,FC Augsburg,,VfL Wolfsburg,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c67a4d6fece867c73364f72c,BUNDESLIGA,2016-17,2016-08-27T12:00:00Z,Matchday 1,,1. FC Köln,,SV Darmstadt 98,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c7bf010e0a162bf97a658b77,BUNDESLIGA,2016-17,2016-08-27T12:00:00Z,Matchday 1,,Eintracht Frankfurt,,FC Schalke 04,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ca7f3cbcf1938a38df7dab9e,BUNDESLIGA,2016-17,2016-08-27T12:00:00Z,Matchday 1,,Borussia Dortmund,,1. FSV Mainz 05,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-dfb5138861c39d8d5ee0c1d2,BUNDESLIGA,2016-17,2016-08-27T12:00:00Z,Matchday 1,,Bor. Mönchengladbach,,Bayer Leverkusen,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-466a4f113dfdaa646070fbd2,BUNDESLIGA,2016-17,2016-08-28T12:00:00Z,Matchday 1,,1899 Hoffenheim,,RB Leipzig,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e3237974f5e059b8d4015b78,BUNDESLIGA,2016-17,2016-08-28T12:00:00Z,Matchday 1,,Hertha BSC,,SC Freiburg,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ee2ec0f4b817f899fad14095,BUNDESLIGA,2016-17,2016-09-09T12:00:00Z,Matchday 2,,FC Schalke 04,,Bayern München,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-0794c0d9cb11607857c0b2e7,BUNDESLIGA,2016-17,2016-09-10T12:00:00Z,Matchday 2,,SV Darmstadt 98,,Eintracht Frankfurt,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-6eae694a41a5ea637a0a4566,BUNDESLIGA,2016-17,2016-09-10T12:00:00Z,Matchday 2,,Bayer Leverkusen,,Hamburger SV,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a10e92c1cfb1dadb2f26d20d,BUNDESLIGA,2016-17,2016-09-10T12:00:00Z,Matchday 2,,VfL Wolfsburg,,1. FC Köln,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c671a1b100544b039c93133d,BUNDESLIGA,2016-17,2016-09-10T12:00:00Z,Matchday 2,,FC Ingolstadt 04,,Hertha BSC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-d017d18a817f85fe2dc08b5e,BUNDESLIGA,2016-17,2016-09-10T12:00:00Z,Matchday 2,,SC Freiburg,,Bor. Mönchengladbach,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f4baa593cc6b4f0c95e0e433,BUNDESLIGA,2016-17,2016-09-10T12:00:00Z,Matchday 2,,RB Leipzig,,Borussia Dortmund,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-162476e1148bbab9e738a661,BUNDESLIGA,2016-17,2016-09-11T12:00:00Z,Matchday 2,,Werder Bremen,,FC Augsburg,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-28cc14f28b45888da94601e2,BUNDESLIGA,2016-17,2016-09-11T12:00:00Z,Matchday 2,,1. FSV Mainz 05,,1899 Hoffenheim,,4,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-7adafcd94c834e7b86494cdb,BUNDESLIGA,2016-17,2016-09-16T12:00:00Z,Matchday 3,,1. FC Köln,,SC Freiburg,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-136693233cf44f31a0cb2f3f,BUNDESLIGA,2016-17,2016-09-17T12:00:00Z,Matchday 3,,1899 Hoffenheim,,VfL Wolfsburg,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-3a2f0169126e792e5f650ee9,BUNDESLIGA,2016-17,2016-09-17T12:00:00Z,Matchday 3,,Bor. Mönchengladbach,,Werder Bremen,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-98175f18b2fe9bfe18a20b06,BUNDESLIGA,2016-17,2016-09-17T12:00:00Z,Matchday 3,,Borussia Dortmund,,SV Darmstadt 98,,6,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-99cb26169226b5d9349f2697,BUNDESLIGA,2016-17,2016-09-17T12:00:00Z,Matchday 3,,Eintracht Frankfurt,,Bayer Leverkusen,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-baf341ebc4b26af9992fdc0e,BUNDESLIGA,2016-17,2016-09-17T12:00:00Z,Matchday 3,,Bayern München,,FC Ingolstadt 04,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e81e5ec0cdffe58e7fecda52,BUNDESLIGA,2016-17,2016-09-17T12:00:00Z,Matchday 3,,Hamburger SV,,RB Leipzig,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-18df788b8fa4c09be1d0655a,BUNDESLIGA,2016-17,2016-09-18T12:00:00Z,Matchday 3,,Hertha BSC,,FC Schalke 04,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a4615000245eef5ac865fac7,BUNDESLIGA,2016-17,2016-09-18T12:00:00Z,Matchday 3,,FC Augsburg,,1. FSV Mainz 05,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-68d2d29c32d26dfb8ba1490d,BUNDESLIGA,2016-17,2016-09-20T12:00:00Z,Matchday 4,,SV Darmstadt 98,,1899 Hoffenheim,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-7c8094b5ac29dfda6fcc38b8,BUNDESLIGA,2016-17,2016-09-20T12:00:00Z,Matchday 4,,VfL Wolfsburg,,Borussia Dortmund,,1,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a61a9705699409b2e91c9b29,BUNDESLIGA,2016-17,2016-09-20T12:00:00Z,Matchday 4,,SC Freiburg,,Hamburger SV,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-aafef60c84fc04204f816ff0,BUNDESLIGA,2016-17,2016-09-20T12:00:00Z,Matchday 4,,FC Ingolstadt 04,,Eintracht Frankfurt,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-29d125867a1c37fa791bca34,BUNDESLIGA,2016-17,2016-09-21T12:00:00Z,Matchday 4,,Werder Bremen,,1. FSV Mainz 05,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-4105112ba27524d33d294fb1,BUNDESLIGA,2016-17,2016-09-21T12:00:00Z,Matchday 4,,FC Schalke 04,,1. FC Köln,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-44ad390641ae99683b1abd41,BUNDESLIGA,2016-17,2016-09-21T12:00:00Z,Matchday 4,,RB Leipzig,,Bor. Mönchengladbach,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-7958504a1b26123449fc2ea3,BUNDESLIGA,2016-17,2016-09-21T12:00:00Z,Matchday 4,,Bayer Leverkusen,,FC Augsburg,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-83631609e984e13900888780,BUNDESLIGA,2016-17,2016-09-21T12:00:00Z,Matchday 4,,Bayern München,,Hertha BSC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-7ae0e193d40c2c6cf376cb44,BUNDESLIGA,2016-17,2016-09-23T12:00:00Z,Matchday 5,,Borussia Dortmund,,SC Freiburg,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2088c681d0a5cff6286648e3,BUNDESLIGA,2016-17,2016-09-24T12:00:00Z,Matchday 5,,Hamburger SV,,Bayern München,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b61fbc5a4fa642526facaea6,BUNDESLIGA,2016-17,2016-09-24T12:00:00Z,Matchday 5,,Eintracht Frankfurt,,Hertha BSC,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-d5de257e81369acff54b51db,BUNDESLIGA,2016-17,2016-09-24T12:00:00Z,Matchday 5,,FC Augsburg,,SV Darmstadt 98,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-de625fb96a3bef036a2ddbdc,BUNDESLIGA,2016-17,2016-09-24T12:00:00Z,Matchday 5,,Werder Bremen,,VfL Wolfsburg,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ed07ca5b7173b48a97b40df9,BUNDESLIGA,2016-17,2016-09-24T12:00:00Z,Matchday 5,,Bor. Mönchengladbach,,FC Ingolstadt 04,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ed939f9fee2cc8b90fd98581,BUNDESLIGA,2016-17,2016-09-24T12:00:00Z,Matchday 5,,1. FSV Mainz 05,,Bayer Leverkusen,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-3045349284fd09cc6bb8477e,BUNDESLIGA,2016-17,2016-09-25T12:00:00Z,Matchday 5,,1. FC Köln,,RB Leipzig,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-906165316bf0b3d60559dfa8,BUNDESLIGA,2016-17,2016-09-25T12:00:00Z,Matchday 5,,1899 Hoffenheim,,FC Schalke 04,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-18174edd5f8791c124f1f727,BUNDESLIGA,2016-17,2016-09-30T12:00:00Z,Matchday 6,,RB Leipzig,,FC Augsburg,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-11b1a8e9a6280382a0b0d4eb,BUNDESLIGA,2016-17,2016-10-01T12:00:00Z,Matchday 6,,Bayern München,,1. FC Köln,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-7dc43c933083f742298361af,BUNDESLIGA,2016-17,2016-10-01T12:00:00Z,Matchday 6,,FC Ingolstadt 04,,1899 Hoffenheim,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-9ccea1616f77540750558526,BUNDESLIGA,2016-17,2016-10-01T12:00:00Z,Matchday 6,,SC Freiburg,,Eintracht Frankfurt,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ababe8de7504e8519e82e565,BUNDESLIGA,2016-17,2016-10-01T12:00:00Z,Matchday 6,,SV Darmstadt 98,,Werder Bremen,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b73632d1a1edea2c8c8c7a87,BUNDESLIGA,2016-17,2016-10-01T12:00:00Z,Matchday 6,,Hertha BSC,,Hamburger SV,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e8f490f556843787437511af,BUNDESLIGA,2016-17,2016-10-01T12:00:00Z,Matchday 6,,Bayer Leverkusen,,Borussia Dortmund,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-44e16dbb8f3545f7855a92d7,BUNDESLIGA,2016-17,2016-10-02T12:00:00Z,Matchday 6,,VfL Wolfsburg,,1. FSV Mainz 05,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-91cbbd75e7817fc8c5250a38,BUNDESLIGA,2016-17,2016-10-02T12:00:00Z,Matchday 6,,FC Schalke 04,,Bor. Mönchengladbach,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2cd2fe1f93f80fddd5f9d533,BUNDESLIGA,2016-17,2016-10-14T12:00:00Z,Matchday 7,,Borussia Dortmund,,Hertha BSC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-1e05f92e3d2d8fa072af3baa,BUNDESLIGA,2016-17,2016-10-15T12:00:00Z,Matchday 7,,1899 Hoffenheim,,SC Freiburg,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a48bf35f8d4a4086d63ea3fc,BUNDESLIGA,2016-17,2016-10-15T12:00:00Z,Matchday 7,,FC Augsburg,,FC Schalke 04,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b4c6dc9bce276c3bfd6aaa41,BUNDESLIGA,2016-17,2016-10-15T12:00:00Z,Matchday 7,,Bor. Mönchengladbach,,Hamburger SV,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-daaa8037dd3e9af6d8f770dc,BUNDESLIGA,2016-17,2016-10-15T12:00:00Z,Matchday 7,,1. FC Köln,,FC Ingolstadt 04,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e367341bc1647b481a518fa9,BUNDESLIGA,2016-17,2016-10-15T12:00:00Z,Matchday 7,,Werder Bremen,,Bayer Leverkusen,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-fdde3632fffd149e503331ca,BUNDESLIGA,2016-17,2016-10-15T12:00:00Z,Matchday 7,,Eintracht Frankfurt,,Bayern München,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-40348cfd98f512ccdb6b5e9d,BUNDESLIGA,2016-17,2016-10-16T12:00:00Z,Matchday 7,,1. FSV Mainz 05,,SV Darmstadt 98,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b1c116cea857b5dfce449bc5,BUNDESLIGA,2016-17,2016-10-16T12:00:00Z,Matchday 7,,VfL Wolfsburg,,RB Leipzig,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e9161ace64234d9f48d594b1,BUNDESLIGA,2016-17,2016-10-21T12:00:00Z,Matchday 8,,Hamburger SV,,Eintracht Frankfurt,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-498bc1f526cd17a11f327683,BUNDESLIGA,2016-17,2016-10-22T12:00:00Z,Matchday 8,,Hertha BSC,,1. FC Köln,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-568f28a3cc18c0c741b43267,BUNDESLIGA,2016-17,2016-10-22T12:00:00Z,Matchday 8,,Bayern München,,Bor. Mönchengladbach,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5f0f0d8081df99da74e67497,BUNDESLIGA,2016-17,2016-10-22T12:00:00Z,Matchday 8,,SC Freiburg,,FC Augsburg,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-7b4910443d8b5513dd3df12d,BUNDESLIGA,2016-17,2016-10-22T12:00:00Z,Matchday 8,,SV Darmstadt 98,,VfL Wolfsburg,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b1e7c507f2ef7b6ee38637a7,BUNDESLIGA,2016-17,2016-10-22T12:00:00Z,Matchday 8,,Bayer Leverkusen,,1899 Hoffenheim,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-bc0f3db28d76abc979e25373,BUNDESLIGA,2016-17,2016-10-22T12:00:00Z,Matchday 8,,FC Ingolstadt 04,,Borussia Dortmund,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2bf876b3d5896b4060db443d,BUNDESLIGA,2016-17,2016-10-23T12:00:00Z,Matchday 8,,FC Schalke 04,,1. FSV Mainz 05,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-fe0650bf04349e0771ed4077,BUNDESLIGA,2016-17,2016-10-23T12:00:00Z,Matchday 8,,RB Leipzig,,Werder Bremen,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-741461a482fd0da3fbc9d5e0,BUNDESLIGA,2016-17,2016-10-28T12:00:00Z,Matchday 9,,Bor. Mönchengladbach,,Eintracht Frankfurt,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-144261980b8062bbc5588638,BUNDESLIGA,2016-17,2016-10-29T12:00:00Z,Matchday 9,,Borussia Dortmund,,FC Schalke 04,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-289ee88e7657b99c1471f1b1,BUNDESLIGA,2016-17,2016-10-29T12:00:00Z,Matchday 9,,FC Augsburg,,Bayern München,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-93f63dfee37f4368a24f9e2d,BUNDESLIGA,2016-17,2016-10-29T12:00:00Z,Matchday 9,,VfL Wolfsburg,,Bayer Leverkusen,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c5d1fa1602a78f36abfe9ccd,BUNDESLIGA,2016-17,2016-10-29T12:00:00Z,Matchday 9,,1. FSV Mainz 05,,FC Ingolstadt 04,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-cfa6593c7cb8dc7fc4541fb2,BUNDESLIGA,2016-17,2016-10-29T12:00:00Z,Matchday 9,,SV Darmstadt 98,,RB Leipzig,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-dfbe7d4244b4f5bed3bd2d20,BUNDESLIGA,2016-17,2016-10-29T12:00:00Z,Matchday 9,,Werder Bremen,,SC Freiburg,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-791d5aa2b8587ee3b7888b14,BUNDESLIGA,2016-17,2016-10-30T12:00:00Z,Matchday 9,,1899 Hoffenheim,,Hertha BSC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-8dd61e0fb0ca9aba516be3cd,BUNDESLIGA,2016-17,2016-10-30T12:00:00Z,Matchday 9,,1. FC Köln,,Hamburger SV,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5a4efc6fd9e852c53ac944bd,BUNDESLIGA,2016-17,2016-11-04T12:00:00Z,Matchday 10,,Hertha BSC,,Bor. Mönchengladbach,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-6233e665f491f3243941ecc5,BUNDESLIGA,2016-17,2016-11-05T12:00:00Z,Matchday 10,,FC Ingolstadt 04,,FC Augsburg,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-8b24f95453edcac82a1b2cc5,BUNDESLIGA,2016-17,2016-11-05T12:00:00Z,Matchday 10,,Hamburger SV,,Borussia Dortmund,,2,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-988bd886a5731e231c58b3c9,BUNDESLIGA,2016-17,2016-11-05T12:00:00Z,Matchday 10,,Eintracht Frankfurt,,1. FC Köln,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-bf065e2effdc66fe5c232bb6,BUNDESLIGA,2016-17,2016-11-05T12:00:00Z,Matchday 10,,Bayer Leverkusen,,SV Darmstadt 98,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e0fc2f8a03c622abb7e06726,BUNDESLIGA,2016-17,2016-11-05T12:00:00Z,Matchday 10,,SC Freiburg,,VfL Wolfsburg,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e7eb138656abc688b9b5a85b,BUNDESLIGA,2016-17,2016-11-05T12:00:00Z,Matchday 10,,Bayern München,,1899 Hoffenheim,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-61735bedf051ed0d49d279bc,BUNDESLIGA,2016-17,2016-11-06T12:00:00Z,Matchday 10,,RB Leipzig,,1. FSV Mainz 05,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-73de2fbb978cccb50d0ca98b,BUNDESLIGA,2016-17,2016-11-06T12:00:00Z,Matchday 10,,FC Schalke 04,,Werder Bremen,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-4cda43b1e6de526154520be8,BUNDESLIGA,2016-17,2016-11-18T12:00:00Z,Matchday 11,,Bayer Leverkusen,,RB Leipzig,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-0fee993fb52d301a928e9bae,BUNDESLIGA,2016-17,2016-11-19T12:00:00Z,Matchday 11,,SV Darmstadt 98,,FC Ingolstadt 04,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-37e9e149a8c8541e25269239,BUNDESLIGA,2016-17,2016-11-19T12:00:00Z,Matchday 11,,FC Augsburg,,Hertha BSC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-6155794ad0fc1463c39298c4,BUNDESLIGA,2016-17,2016-11-19T12:00:00Z,Matchday 11,,VfL Wolfsburg,,FC Schalke 04,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-77a491f2f6be6799ef65ed5b,BUNDESLIGA,2016-17,2016-11-19T12:00:00Z,Matchday 11,,1. FSV Mainz 05,,SC Freiburg,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ac863632fa41c97e2a9c107f,BUNDESLIGA,2016-17,2016-11-19T12:00:00Z,Matchday 11,,Borussia Dortmund,,Bayern München,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f2a2967dd12108c54980b05f,BUNDESLIGA,2016-17,2016-11-19T12:00:00Z,Matchday 11,,Bor. Mönchengladbach,,1. FC Köln,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-8d6de1187bbff3de111df3b5,BUNDESLIGA,2016-17,2016-11-20T12:00:00Z,Matchday 11,,Werder Bremen,,Eintracht Frankfurt,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ac025612240ed6ecc7ef7ea4,BUNDESLIGA,2016-17,2016-11-20T12:00:00Z,Matchday 11,,1899 Hoffenheim,,Hamburger SV,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-cce4bfa12fad11ba0c209224,BUNDESLIGA,2016-17,2016-11-25T12:00:00Z,Matchday 12,,SC Freiburg,,RB Leipzig,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5e69f9e1c114807d1b9fc1df,BUNDESLIGA,2016-17,2016-11-26T12:00:00Z,Matchday 12,,FC Ingolstadt 04,,VfL Wolfsburg,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-7c637f205040e3f926f5f424,BUNDESLIGA,2016-17,2016-11-26T12:00:00Z,Matchday 12,,Eintracht Frankfurt,,Borussia Dortmund,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-80ac976e1291db0e4d812366,BUNDESLIGA,2016-17,2016-11-26T12:00:00Z,Matchday 12,,1. FC Köln,,FC Augsburg,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-acd7392cc53de948af4d4052,BUNDESLIGA,2016-17,2016-11-26T12:00:00Z,Matchday 12,,Bayern München,,Bayer Leverkusen,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-bd7cefad91f8dfb4e9a5a273,BUNDESLIGA,2016-17,2016-11-26T12:00:00Z,Matchday 12,,Bor. Mönchengladbach,,1899 Hoffenheim,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-dc34ca822d59a56d82bfd82e,BUNDESLIGA,2016-17,2016-11-26T12:00:00Z,Matchday 12,,Hamburger SV,,Werder Bremen,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-180bdb9d5dc3cbc016053b00,BUNDESLIGA,2016-17,2016-11-27T12:00:00Z,Matchday 12,,Hertha BSC,,1. FSV Mainz 05,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-1b2f722dbbff3ac6ef5f663a,BUNDESLIGA,2016-17,2016-11-27T12:00:00Z,Matchday 12,,FC Schalke 04,,SV Darmstadt 98,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-d72312f1329e0d6f7c7a9ead,BUNDESLIGA,2016-17,2016-12-02T12:00:00Z,Matchday 13,,1. FSV Mainz 05,,Bayern München,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5fc8c3860554670df884b4fb,BUNDESLIGA,2016-17,2016-12-03T12:00:00Z,Matchday 13,,1899 Hoffenheim,,1. FC Köln,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-7b0da331f5a6f248a57772ef,BUNDESLIGA,2016-17,2016-12-03T12:00:00Z,Matchday 13,,Bayer Leverkusen,,SC Freiburg,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a3065449c9ed53e606a3c6cf,BUNDESLIGA,2016-17,2016-12-03T12:00:00Z,Matchday 13,,VfL Wolfsburg,,Hertha BSC,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b5c0b86c8714dddf0cd7e143,BUNDESLIGA,2016-17,2016-12-03T12:00:00Z,Matchday 13,,Borussia Dortmund,,Bor. Mönchengladbach,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c1cef63355e3e78c3498c1c3,BUNDESLIGA,2016-17,2016-12-03T12:00:00Z,Matchday 13,,Werder Bremen,,FC Ingolstadt 04,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-cd4e172ffffe3e516cebc3a6,BUNDESLIGA,2016-17,2016-12-03T12:00:00Z,Matchday 13,,RB Leipzig,,FC Schalke 04,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-1f531a4a0ea4c2dc923b88ff,BUNDESLIGA,2016-17,2016-12-04T12:00:00Z,Matchday 13,,SV Darmstadt 98,,Hamburger SV,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b2e4a06f62e44ca18d9be1d2,BUNDESLIGA,2016-17,2016-12-04T12:00:00Z,Matchday 13,,FC Augsburg,,Eintracht Frankfurt,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f6d1f114c393369f3fb806df,BUNDESLIGA,2016-17,2016-12-09T12:00:00Z,Matchday 14,,Eintracht Frankfurt,,1899 Hoffenheim,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-069583b4486ab8b752d9ad4d,BUNDESLIGA,2016-17,2016-12-10T12:00:00Z,Matchday 14,,Hertha BSC,,Werder Bremen,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-0b51a1f2a515233dc45354fc,BUNDESLIGA,2016-17,2016-12-10T12:00:00Z,Matchday 14,,FC Ingolstadt 04,,RB Leipzig,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-158c4c8c2fa0f1a7792f344a,BUNDESLIGA,2016-17,2016-12-10T12:00:00Z,Matchday 14,,SC Freiburg,,SV Darmstadt 98,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-7eb12018bed3a960c13ebd62,BUNDESLIGA,2016-17,2016-12-10T12:00:00Z,Matchday 14,,1. FC Köln,,Borussia Dortmund,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-8001cc76ade966b0dcf5f7fd,BUNDESLIGA,2016-17,2016-12-10T12:00:00Z,Matchday 14,,Hamburger SV,,FC Augsburg,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a5f0566d6a05819ccfb81b59,BUNDESLIGA,2016-17,2016-12-10T12:00:00Z,Matchday 14,,Bayern München,,VfL Wolfsburg,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-0096c5547a0dde6519854203,BUNDESLIGA,2016-17,2016-12-11T12:00:00Z,Matchday 14,,Bor. Mönchengladbach,,1. FSV Mainz 05,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-13d6402a2f807d588c25eafa,BUNDESLIGA,2016-17,2016-12-11T12:00:00Z,Matchday 14,,FC Schalke 04,,Bayer Leverkusen,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a0757e0a8961b20abb2c90aa,BUNDESLIGA,2016-17,2016-12-16T12:00:00Z,Matchday 15,,1899 Hoffenheim,,Borussia Dortmund,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-03f3bd64427a6af4dbeb55fd,BUNDESLIGA,2016-17,2016-12-17T12:00:00Z,Matchday 15,,Werder Bremen,,1. FC Köln,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5b18e7e2260136fdf1aacc4f,BUNDESLIGA,2016-17,2016-12-17T12:00:00Z,Matchday 15,,VfL Wolfsburg,,Eintracht Frankfurt,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-7c20748d491f4bac654496ed,BUNDESLIGA,2016-17,2016-12-17T12:00:00Z,Matchday 15,,FC Schalke 04,,SC Freiburg,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-880da1e6654e3a08fce08c0c,BUNDESLIGA,2016-17,2016-12-17T12:00:00Z,Matchday 15,,FC Augsburg,,Bor. Mönchengladbach,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-93667addaddbd54f8a5327a2,BUNDESLIGA,2016-17,2016-12-17T12:00:00Z,Matchday 15,,RB Leipzig,,Hertha BSC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f691dbfbdacfc8ec8af61e3a,BUNDESLIGA,2016-17,2016-12-17T12:00:00Z,Matchday 15,,1. FSV Mainz 05,,Hamburger SV,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c2c817f4c276d7ac0b77f8d9,BUNDESLIGA,2016-17,2016-12-18T12:00:00Z,Matchday 15,,SV Darmstadt 98,,Bayern München,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e2a20a35be5e99274c2ad0bf,BUNDESLIGA,2016-17,2016-12-18T12:00:00Z,Matchday 15,,Bayer Leverkusen,,FC Ingolstadt 04,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-0d60043400bc7fbdd1b4646b,BUNDESLIGA,2016-17,2016-12-20T12:00:00Z,Matchday 16,,Hamburger SV,,FC Schalke 04,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-33bb59ee18d006994eeaf49c,BUNDESLIGA,2016-17,2016-12-20T12:00:00Z,Matchday 16,,Eintracht Frankfurt,,1. FSV Mainz 05,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5b9a5e706875faab0e8acba4,BUNDESLIGA,2016-17,2016-12-20T12:00:00Z,Matchday 16,,Borussia Dortmund,,FC Augsburg,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e6c7701eec735fe82536ba9b,BUNDESLIGA,2016-17,2016-12-20T12:00:00Z,Matchday 16,,Bor. Mönchengladbach,,VfL Wolfsburg,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-3f0f71bfacd1ebc84a00a4db,BUNDESLIGA,2016-17,2016-12-21T12:00:00Z,Matchday 16,,Bayern München,,RB Leipzig,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-3f5048fb3e30a73ebfd584e7,BUNDESLIGA,2016-17,2016-12-21T12:00:00Z,Matchday 16,,1899 Hoffenheim,,Werder Bremen,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-52a5c63dc099ceaee31f06ba,BUNDESLIGA,2016-17,2016-12-21T12:00:00Z,Matchday 16,,Hertha BSC,,SV Darmstadt 98,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c13f439980fc387fd932c797,BUNDESLIGA,2016-17,2016-12-21T12:00:00Z,Matchday 16,,FC Ingolstadt 04,,SC Freiburg,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-d71001ca3905275657004e3e,BUNDESLIGA,2016-17,2016-12-21T12:00:00Z,Matchday 16,,1. FC Köln,,Bayer Leverkusen,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a125b0546bfdcee5a52c5f11,BUNDESLIGA,2016-17,2017-01-20T12:00:00Z,Matchday 17,,SC Freiburg,,Bayern München,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-211e0f45f07c20072a7a0563,BUNDESLIGA,2016-17,2017-01-21T12:00:00Z,Matchday 17,,FC Augsburg,,1899 Hoffenheim,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-79b4bd81c2307c8970340f39,BUNDESLIGA,2016-17,2017-01-21T12:00:00Z,Matchday 17,,VfL Wolfsburg,,Hamburger SV,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-af68e6801c7ae6dbc4673d6e,BUNDESLIGA,2016-17,2017-01-21T12:00:00Z,Matchday 17,,Werder Bremen,,Borussia Dortmund,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b96d4a21d0dc3c73fc54c894,BUNDESLIGA,2016-17,2017-01-21T12:00:00Z,Matchday 17,,RB Leipzig,,Eintracht Frankfurt,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c6ba7ccde18caff7c16e0389,BUNDESLIGA,2016-17,2017-01-21T12:00:00Z,Matchday 17,,SV Darmstadt 98,,Bor. Mönchengladbach,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f9ebe2dec42dc3dc6d2e72d7,BUNDESLIGA,2016-17,2017-01-21T12:00:00Z,Matchday 17,,FC Schalke 04,,FC Ingolstadt 04,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2f9a9f04dd1139b6d3b336ff,BUNDESLIGA,2016-17,2017-01-22T12:00:00Z,Matchday 17,,Bayer Leverkusen,,Hertha BSC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f8c593191a0b5b89d7f6e383,BUNDESLIGA,2016-17,2017-01-22T12:00:00Z,Matchday 17,,1. FSV Mainz 05,,1. FC Köln,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b2fac28673012db06fe48382,BUNDESLIGA,2016-17,2017-01-27T12:00:00Z,Matchday 18,,FC Schalke 04,,Eintracht Frankfurt,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-051709de1d8d53c8b6d40cb1,BUNDESLIGA,2016-17,2017-01-28T12:00:00Z,Matchday 18,,VfL Wolfsburg,,FC Augsburg,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-076ac0563ef2f7109da344cc,BUNDESLIGA,2016-17,2017-01-28T12:00:00Z,Matchday 18,,SV Darmstadt 98,,1. FC Köln,,1,6,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2db1daf38da5813f592253f3,BUNDESLIGA,2016-17,2017-01-28T12:00:00Z,Matchday 18,,RB Leipzig,,1899 Hoffenheim,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5caac15c76282529b92f5538,BUNDESLIGA,2016-17,2017-01-28T12:00:00Z,Matchday 18,,Bayer Leverkusen,,Bor. Mönchengladbach,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-86881696ed0e5c8c35093d72,BUNDESLIGA,2016-17,2017-01-28T12:00:00Z,Matchday 18,,FC Ingolstadt 04,,Hamburger SV,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c29374d885053bff79f66a81,BUNDESLIGA,2016-17,2017-01-28T12:00:00Z,Matchday 18,,Werder Bremen,,Bayern München,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-341b9e795c60d389d9b98490,BUNDESLIGA,2016-17,2017-01-29T12:00:00Z,Matchday 18,,1. FSV Mainz 05,,Borussia Dortmund,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f54d1fbfa230ca8cfd1041b0,BUNDESLIGA,2016-17,2017-01-29T12:00:00Z,Matchday 18,,SC Freiburg,,Hertha BSC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-4d12a37f976a491d69d1f055,BUNDESLIGA,2016-17,2017-02-03T12:00:00Z,Matchday 19,,Hamburger SV,,Bayer Leverkusen,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-1c82c90a0ebdfe7bdd30607a,BUNDESLIGA,2016-17,2017-02-04T12:00:00Z,Matchday 19,,Borussia Dortmund,,RB Leipzig,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-235ba45f291ccafff1b5975d,BUNDESLIGA,2016-17,2017-02-04T12:00:00Z,Matchday 19,,Bayern München,,FC Schalke 04,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2c661f12ac8d39aba9f9179b,BUNDESLIGA,2016-17,2017-02-04T12:00:00Z,Matchday 19,,Bor. Mönchengladbach,,SC Freiburg,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2fc411bf5d679330df2e43ce,BUNDESLIGA,2016-17,2017-02-04T12:00:00Z,Matchday 19,,1. FC Köln,,VfL Wolfsburg,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-931d4912ff2e7f161ed22487,BUNDESLIGA,2016-17,2017-02-04T12:00:00Z,Matchday 19,,1899 Hoffenheim,,1. FSV Mainz 05,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a7522581356f9d1c58280859,BUNDESLIGA,2016-17,2017-02-04T12:00:00Z,Matchday 19,,Hertha BSC,,FC Ingolstadt 04,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e6b2d8493f2e84b74766f646,BUNDESLIGA,2016-17,2017-02-05T12:00:00Z,Matchday 19,,FC Augsburg,,Werder Bremen,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-efdc1932113e03273a4276b3,BUNDESLIGA,2016-17,2017-02-05T12:00:00Z,Matchday 19,,Eintracht Frankfurt,,SV Darmstadt 98,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-84dedac5f23f7030e7b1072b,BUNDESLIGA,2016-17,2017-02-10T12:00:00Z,Matchday 20,,1. FSV Mainz 05,,FC Augsburg,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-178fef0f1e8229744edaaca8,BUNDESLIGA,2016-17,2017-02-11T12:00:00Z,Matchday 20,,FC Schalke 04,,Hertha BSC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-1fc55a35dbd9ddaf9ebeafe6,BUNDESLIGA,2016-17,2017-02-11T12:00:00Z,Matchday 20,,Bayer Leverkusen,,Eintracht Frankfurt,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-486bc811654f489c6f375c70,BUNDESLIGA,2016-17,2017-02-11T12:00:00Z,Matchday 20,,FC Ingolstadt 04,,Bayern München,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-7281ba904c1f82d961596141,BUNDESLIGA,2016-17,2017-02-11T12:00:00Z,Matchday 20,,Werder Bremen,,Bor. Mönchengladbach,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-db4cb42aa47c5defdab953a4,BUNDESLIGA,2016-17,2017-02-11T12:00:00Z,Matchday 20,,SV Darmstadt 98,,Borussia Dortmund,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f60f23fe0328eb2a9a5e0251,BUNDESLIGA,2016-17,2017-02-11T12:00:00Z,Matchday 20,,RB Leipzig,,Hamburger SV,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-242ad9c1f3c307621dde098d,BUNDESLIGA,2016-17,2017-02-12T12:00:00Z,Matchday 20,,SC Freiburg,,1. FC Köln,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-bbde6a97b30dbf440c3522ea,BUNDESLIGA,2016-17,2017-02-12T12:00:00Z,Matchday 20,,VfL Wolfsburg,,1899 Hoffenheim,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-7d85bc0a9a99f623cf07c57f,BUNDESLIGA,2016-17,2017-02-17T12:00:00Z,Matchday 21,,FC Augsburg,,Bayer Leverkusen,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-0cf656611dfc166f090e8717,BUNDESLIGA,2016-17,2017-02-18T12:00:00Z,Matchday 21,,Hertha BSC,,Bayern München,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-1c5eca0395fd02bbc31fd8e9,BUNDESLIGA,2016-17,2017-02-18T12:00:00Z,Matchday 21,,1. FSV Mainz 05,,Werder Bremen,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-3c4dba1e76a168b0bdc688f7,BUNDESLIGA,2016-17,2017-02-18T12:00:00Z,Matchday 21,,1899 Hoffenheim,,SV Darmstadt 98,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5457faee788d9cc3c38f3fcb,BUNDESLIGA,2016-17,2017-02-18T12:00:00Z,Matchday 21,,Hamburger SV,,SC Freiburg,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-7c12bd996c4bc4fe47368dfb,BUNDESLIGA,2016-17,2017-02-18T12:00:00Z,Matchday 21,,Eintracht Frankfurt,,FC Ingolstadt 04,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-9d35b683f6e4d1ca7ef60cd5,BUNDESLIGA,2016-17,2017-02-18T12:00:00Z,Matchday 21,,Borussia Dortmund,,VfL Wolfsburg,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-3a716bc9f69feda725a2350c,BUNDESLIGA,2016-17,2017-02-19T12:00:00Z,Matchday 21,,Bor. Mönchengladbach,,RB Leipzig,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e0ae4c17469d96a6da9726a0,BUNDESLIGA,2016-17,2017-02-19T12:00:00Z,Matchday 21,,1. FC Köln,,FC Schalke 04,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-13a2fd9446f74d09d431d03d,BUNDESLIGA,2016-17,2017-02-24T12:00:00Z,Matchday 22,,VfL Wolfsburg,,Werder Bremen,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2aa4941d85b8fec76150b747,BUNDESLIGA,2016-17,2017-02-25T12:00:00Z,Matchday 22,,Hertha BSC,,Eintracht Frankfurt,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-441bfa3df6cc6b137e79a2a9,BUNDESLIGA,2016-17,2017-02-25T12:00:00Z,Matchday 22,,SC Freiburg,,Borussia Dortmund,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-55b58becd092b90ea00eb48a,BUNDESLIGA,2016-17,2017-02-25T12:00:00Z,Matchday 22,,RB Leipzig,,1. FC Köln,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-84ada80b84b8f6d202f6a44a,BUNDESLIGA,2016-17,2017-02-25T12:00:00Z,Matchday 22,,Bayern München,,Hamburger SV,,8,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c57fb8243eb486bfb9051736,BUNDESLIGA,2016-17,2017-02-25T12:00:00Z,Matchday 22,,Bayer Leverkusen,,1. FSV Mainz 05,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-dbefe07b2eeff6b3c7559f26,BUNDESLIGA,2016-17,2017-02-25T12:00:00Z,Matchday 22,,SV Darmstadt 98,,FC Augsburg,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a631d1e4b48afeda8dd710d2,BUNDESLIGA,2016-17,2017-02-26T12:00:00Z,Matchday 22,,FC Ingolstadt 04,,Bor. Mönchengladbach,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e2ea3c35367b530bd7a92382,BUNDESLIGA,2016-17,2017-02-26T12:00:00Z,Matchday 22,,FC Schalke 04,,1899 Hoffenheim,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c0cb987a0518e0d0aaeb206b,BUNDESLIGA,2016-17,2017-03-03T12:00:00Z,Matchday 23,,FC Augsburg,,RB Leipzig,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-806afabc0374ba2d428d206a,BUNDESLIGA,2016-17,2017-03-04T12:00:00Z,Matchday 23,,1. FSV Mainz 05,,VfL Wolfsburg,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-83f2d931c2cb244730df02b4,BUNDESLIGA,2016-17,2017-03-04T12:00:00Z,Matchday 23,,Werder Bremen,,SV Darmstadt 98,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-99c34a511dd42f6cfba2152e,BUNDESLIGA,2016-17,2017-03-04T12:00:00Z,Matchday 23,,Bor. Mönchengladbach,,FC Schalke 04,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-af62eb9d09a630cf5080c78d,BUNDESLIGA,2016-17,2017-03-04T12:00:00Z,Matchday 23,,Borussia Dortmund,,Bayer Leverkusen,,6,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-cfdc7967657d6fc53b5e8056,BUNDESLIGA,2016-17,2017-03-04T12:00:00Z,Matchday 23,,1. FC Köln,,Bayern München,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ff5a13bdf17871ce03752c11,BUNDESLIGA,2016-17,2017-03-04T12:00:00Z,Matchday 23,,1899 Hoffenheim,,FC Ingolstadt 04,,5,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-6d010b90b5776902fcdc92b3,BUNDESLIGA,2016-17,2017-03-05T12:00:00Z,Matchday 23,,Hamburger SV,,Hertha BSC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c8320312e6230aee07edc923,BUNDESLIGA,2016-17,2017-03-05T12:00:00Z,Matchday 23,,Eintracht Frankfurt,,SC Freiburg,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-907c22d61c5c50053c24ecc7,BUNDESLIGA,2016-17,2017-03-10T12:00:00Z,Matchday 24,,Bayer Leverkusen,,Werder Bremen,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-1d7e0aaf0f02c6f7419bd404,BUNDESLIGA,2016-17,2017-03-11T12:00:00Z,Matchday 24,,SC Freiburg,,1899 Hoffenheim,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-9d272e8b3aa74878ec11d562,BUNDESLIGA,2016-17,2017-03-11T12:00:00Z,Matchday 24,,Hertha BSC,,Borussia Dortmund,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-bf87559d5a79fea0877c70a4,BUNDESLIGA,2016-17,2017-03-11T12:00:00Z,Matchday 24,,RB Leipzig,,VfL Wolfsburg,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c57d5fa7d87f8f836ec92ccd,BUNDESLIGA,2016-17,2017-03-11T12:00:00Z,Matchday 24,,Bayern München,,Eintracht Frankfurt,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c68a4a5c9f3d430e36a82843,BUNDESLIGA,2016-17,2017-03-11T12:00:00Z,Matchday 24,,SV Darmstadt 98,,1. FSV Mainz 05,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e8b73c8e3ae416f4a7a9755d,BUNDESLIGA,2016-17,2017-03-11T12:00:00Z,Matchday 24,,FC Ingolstadt 04,,1. FC Köln,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-3acee26b9ddea1dafd6f9d74,BUNDESLIGA,2016-17,2017-03-12T12:00:00Z,Matchday 24,,Hamburger SV,,Bor. Mönchengladbach,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-7031c258dff85f0753ce9ba0,BUNDESLIGA,2016-17,2017-03-12T12:00:00Z,Matchday 24,,FC Schalke 04,,FC Augsburg,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-634ad4a70767b35156d7825f,BUNDESLIGA,2016-17,2017-03-17T12:00:00Z,Matchday 25,,Borussia Dortmund,,FC Ingolstadt 04,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-0939c0dabae703867014e8e6,BUNDESLIGA,2016-17,2017-03-18T12:00:00Z,Matchday 25,,VfL Wolfsburg,,SV Darmstadt 98,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-33d09e7eb9f771717092f437,BUNDESLIGA,2016-17,2017-03-18T12:00:00Z,Matchday 25,,Eintracht Frankfurt,,Hamburger SV,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5af2bfaceedc600bcb48e69b,BUNDESLIGA,2016-17,2017-03-18T12:00:00Z,Matchday 25,,1899 Hoffenheim,,Bayer Leverkusen,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-64837915c3ff0488430d95e7,BUNDESLIGA,2016-17,2017-03-18T12:00:00Z,Matchday 25,,FC Augsburg,,SC Freiburg,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-692d44237fda35d09affe380,BUNDESLIGA,2016-17,2017-03-18T12:00:00Z,Matchday 25,,Werder Bremen,,RB Leipzig,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a727a762cc492c64eb9909f1,BUNDESLIGA,2016-17,2017-03-18T12:00:00Z,Matchday 25,,1. FC Köln,,Hertha BSC,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-545eff2028ad014854b2f8a5,BUNDESLIGA,2016-17,2017-03-19T12:00:00Z,Matchday 25,,1. FSV Mainz 05,,FC Schalke 04,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5b23c88f46f000c2fb245ff1,BUNDESLIGA,2016-17,2017-03-19T12:00:00Z,Matchday 25,,Bor. Mönchengladbach,,Bayern München,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-92df3039e532546df46798a2,BUNDESLIGA,2016-17,2017-03-31T12:00:00Z,Matchday 26,,Hertha BSC,,1899 Hoffenheim,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-277f5b84ca401bb398d4719d,BUNDESLIGA,2016-17,2017-04-01T12:00:00Z,Matchday 26,,RB Leipzig,,SV Darmstadt 98,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-27869215b84419fa8637e00a,BUNDESLIGA,2016-17,2017-04-01T12:00:00Z,Matchday 26,,SC Freiburg,,Werder Bremen,,2,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-430779614e6cbda840847f2b,BUNDESLIGA,2016-17,2017-04-01T12:00:00Z,Matchday 26,,FC Schalke 04,,Borussia Dortmund,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-4b5b8ec433b46f17e3cd7fef,BUNDESLIGA,2016-17,2017-04-01T12:00:00Z,Matchday 26,,Hamburger SV,,1. FC Köln,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5a9549b6b52282d0f05eb6c5,BUNDESLIGA,2016-17,2017-04-01T12:00:00Z,Matchday 26,,Eintracht Frankfurt,,Bor. Mönchengladbach,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ff4e7fbee3b0cbed2f12551e,BUNDESLIGA,2016-17,2017-04-01T12:00:00Z,Matchday 26,,Bayern München,,FC Augsburg,,6,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-26819fe01de86ad1c8ba8850,BUNDESLIGA,2016-17,2017-04-02T12:00:00Z,Matchday 26,,FC Ingolstadt 04,,1. FSV Mainz 05,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-7f7f224fa9a1611ad59ee993,BUNDESLIGA,2016-17,2017-04-02T12:00:00Z,Matchday 26,,Bayer Leverkusen,,VfL Wolfsburg,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-11ff355480d8453fa897d79e,BUNDESLIGA,2016-17,2017-04-04T12:00:00Z,Matchday 27,,1. FC Köln,,Eintracht Frankfurt,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-340c82beaba81073e65e6fee,BUNDESLIGA,2016-17,2017-04-04T12:00:00Z,Matchday 27,,1899 Hoffenheim,,Bayern München,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a7a3dffbaac134042915d96c,BUNDESLIGA,2016-17,2017-04-04T12:00:00Z,Matchday 27,,Borussia Dortmund,,Hamburger SV,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-fe79fa6ca903a450b08150c8,BUNDESLIGA,2016-17,2017-04-04T12:00:00Z,Matchday 27,,Werder Bremen,,FC Schalke 04,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-042e32a60142e12a1bf66708,BUNDESLIGA,2016-17,2017-04-05T12:00:00Z,Matchday 27,,Bor. Mönchengladbach,,Hertha BSC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-0c176b239ab759c61837a5f1,BUNDESLIGA,2016-17,2017-04-05T12:00:00Z,Matchday 27,,FC Augsburg,,FC Ingolstadt 04,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b5688f97b58ad35e232fa932,BUNDESLIGA,2016-17,2017-04-05T12:00:00Z,Matchday 27,,VfL Wolfsburg,,SC Freiburg,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-e61912e739759ce279bf47ee,BUNDESLIGA,2016-17,2017-04-05T12:00:00Z,Matchday 27,,1. FSV Mainz 05,,RB Leipzig,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ea100650937a68a3dc6324a3,BUNDESLIGA,2016-17,2017-04-05T12:00:00Z,Matchday 27,,SV Darmstadt 98,,Bayer Leverkusen,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-477bd89e16d2d8dbf2575aeb,BUNDESLIGA,2016-17,2017-04-07T12:00:00Z,Matchday 28,,Eintracht Frankfurt,,Werder Bremen,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-1a5059613f7024abb5b8a3cd,BUNDESLIGA,2016-17,2017-04-08T12:00:00Z,Matchday 28,,FC Schalke 04,,VfL Wolfsburg,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-282b01048b2e12c126cf6151,BUNDESLIGA,2016-17,2017-04-08T12:00:00Z,Matchday 28,,Bayern München,,Borussia Dortmund,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-490f8c676abee74fac618c73,BUNDESLIGA,2016-17,2017-04-08T12:00:00Z,Matchday 28,,1. FC Köln,,Bor. Mönchengladbach,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a0709c3e33233b1fcf62a002,BUNDESLIGA,2016-17,2017-04-08T12:00:00Z,Matchday 28,,Hamburger SV,,1899 Hoffenheim,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-bd9fcf1e02cce9e1e624f86d,BUNDESLIGA,2016-17,2017-04-08T12:00:00Z,Matchday 28,,SC Freiburg,,1. FSV Mainz 05,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ef0951cbba246ad71a827b2a,BUNDESLIGA,2016-17,2017-04-08T12:00:00Z,Matchday 28,,RB Leipzig,,Bayer Leverkusen,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-6028a409a5f3eb948b0fbadd,BUNDESLIGA,2016-17,2017-04-09T12:00:00Z,Matchday 28,,Hertha BSC,,FC Augsburg,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a5c53fd0c8cafbd6d5d67dca,BUNDESLIGA,2016-17,2017-04-09T12:00:00Z,Matchday 28,,FC Ingolstadt 04,,SV Darmstadt 98,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-10232333260d0c89b5e3b57b,BUNDESLIGA,2016-17,2017-04-15T12:00:00Z,Matchday 29,,RB Leipzig,,SC Freiburg,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-20fab809c9f730e75c634b7c,BUNDESLIGA,2016-17,2017-04-15T12:00:00Z,Matchday 29,,Borussia Dortmund,,Eintracht Frankfurt,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-48d399a00fc68e1dabd434f7,BUNDESLIGA,2016-17,2017-04-15T12:00:00Z,Matchday 29,,1899 Hoffenheim,,Bor. Mönchengladbach,,5,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-4b38e67cf2bcc52a09df9edd,BUNDESLIGA,2016-17,2017-04-15T12:00:00Z,Matchday 29,,VfL Wolfsburg,,FC Ingolstadt 04,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-8789f1fc3928c7887aece10a,BUNDESLIGA,2016-17,2017-04-15T12:00:00Z,Matchday 29,,1. FSV Mainz 05,,Hertha BSC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c0955b0923af294d4675b222,BUNDESLIGA,2016-17,2017-04-15T12:00:00Z,Matchday 29,,Bayer Leverkusen,,Bayern München,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f51f92601971d840c6d34f6a,BUNDESLIGA,2016-17,2017-04-15T12:00:00Z,Matchday 29,,FC Augsburg,,1. FC Köln,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-1fd01eb2e8ea5d49e3bca2fd,BUNDESLIGA,2016-17,2017-04-16T12:00:00Z,Matchday 29,,Werder Bremen,,Hamburger SV,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-80cac3984b03490df3abd2eb,BUNDESLIGA,2016-17,2017-04-16T12:00:00Z,Matchday 29,,SV Darmstadt 98,,FC Schalke 04,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-5932f842572f5baccf773d6f,BUNDESLIGA,2016-17,2017-04-21T12:00:00Z,Matchday 30,,1. FC Köln,,1899 Hoffenheim,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2c3506cbe8cf39d268523d90,BUNDESLIGA,2016-17,2017-04-22T12:00:00Z,Matchday 30,,Hamburger SV,,SV Darmstadt 98,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-33f31387053c1f5982962a7a,BUNDESLIGA,2016-17,2017-04-22T12:00:00Z,Matchday 30,,Bayern München,,1. FSV Mainz 05,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-367f7695df03e9b91620ff06,BUNDESLIGA,2016-17,2017-04-22T12:00:00Z,Matchday 30,,FC Ingolstadt 04,,Werder Bremen,,2,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-7790578818e8b199d373f519,BUNDESLIGA,2016-17,2017-04-22T12:00:00Z,Matchday 30,,Bor. Mönchengladbach,,Borussia Dortmund,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-9ebf685e9db0a4148f935330,BUNDESLIGA,2016-17,2017-04-22T12:00:00Z,Matchday 30,,Hertha BSC,,VfL Wolfsburg,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b2bf2909cb4b7c898cf0ab94,BUNDESLIGA,2016-17,2017-04-22T12:00:00Z,Matchday 30,,Eintracht Frankfurt,,FC Augsburg,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-26cfe1217af841a2128ba65c,BUNDESLIGA,2016-17,2017-04-23T12:00:00Z,Matchday 30,,SC Freiburg,,Bayer Leverkusen,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f23ad318422da786cca7711b,BUNDESLIGA,2016-17,2017-04-23T12:00:00Z,Matchday 30,,FC Schalke 04,,RB Leipzig,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-1966456596bdf47fff04defc,BUNDESLIGA,2016-17,2017-04-28T12:00:00Z,Matchday 31,,Bayer Leverkusen,,FC Schalke 04,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-4deb2321ba6f4e95f9be3fcd,BUNDESLIGA,2016-17,2017-04-29T12:00:00Z,Matchday 31,,Werder Bremen,,Hertha BSC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-684a0197a9a5fa87063099b5,BUNDESLIGA,2016-17,2017-04-29T12:00:00Z,Matchday 31,,Borussia Dortmund,,1. FC Köln,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-7deffa447a10ecf695da2308,BUNDESLIGA,2016-17,2017-04-29T12:00:00Z,Matchday 31,,1. FSV Mainz 05,,Bor. Mönchengladbach,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-838b8eef4e03bfc8fc069b15,BUNDESLIGA,2016-17,2017-04-29T12:00:00Z,Matchday 31,,RB Leipzig,,FC Ingolstadt 04,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a2dea41ad2b1ccae676610f1,BUNDESLIGA,2016-17,2017-04-29T12:00:00Z,Matchday 31,,VfL Wolfsburg,,Bayern München,,0,6,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-b03ce456aaaf113f7c7575b7,BUNDESLIGA,2016-17,2017-04-29T12:00:00Z,Matchday 31,,SV Darmstadt 98,,SC Freiburg,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-9de631ca4523b95a8688bc57,BUNDESLIGA,2016-17,2017-04-30T12:00:00Z,Matchday 31,,FC Augsburg,,Hamburger SV,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-bc2f033339547bc0377d6a72,BUNDESLIGA,2016-17,2017-04-30T12:00:00Z,Matchday 31,,1899 Hoffenheim,,Eintracht Frankfurt,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-a543c76bdd930670205e3b5f,BUNDESLIGA,2016-17,2017-05-05T12:00:00Z,Matchday 32,,1. FC Köln,,Werder Bremen,,4,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-23e8e42d8e38130e6e7295fe,BUNDESLIGA,2016-17,2017-05-06T12:00:00Z,Matchday 32,,Borussia Dortmund,,1899 Hoffenheim,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2e9defafabd5023dfe6c1677,BUNDESLIGA,2016-17,2017-05-06T12:00:00Z,Matchday 32,,Bor. Mönchengladbach,,FC Augsburg,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-63a064032f8f7b2d9245b302,BUNDESLIGA,2016-17,2017-05-06T12:00:00Z,Matchday 32,,Eintracht Frankfurt,,VfL Wolfsburg,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-81fd79df60f6417a285628d0,BUNDESLIGA,2016-17,2017-05-06T12:00:00Z,Matchday 32,,FC Ingolstadt 04,,Bayer Leverkusen,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-9a52e8dc9e0bfa7605c13ae8,BUNDESLIGA,2016-17,2017-05-06T12:00:00Z,Matchday 32,,Hertha BSC,,RB Leipzig,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-bb8a41029e11163a99057d1b,BUNDESLIGA,2016-17,2017-05-06T12:00:00Z,Matchday 32,,Bayern München,,SV Darmstadt 98,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-01df1fc78e88e36236c14212,BUNDESLIGA,2016-17,2017-05-07T12:00:00Z,Matchday 32,,Hamburger SV,,1. FSV Mainz 05,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-f58e16ecfe15b440df16bd69,BUNDESLIGA,2016-17,2017-05-07T12:00:00Z,Matchday 32,,SC Freiburg,,FC Schalke 04,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-036386621a6d0bb6d701d5b8,BUNDESLIGA,2016-17,2017-05-13T12:00:00Z,Matchday 33,,Bayer Leverkusen,,1. FC Köln,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-0bec6e761126a4da3c29e6cf,BUNDESLIGA,2016-17,2017-05-13T12:00:00Z,Matchday 33,,SV Darmstadt 98,,Hertha BSC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2f9b99a0e87ccb9546c05288,BUNDESLIGA,2016-17,2017-05-13T12:00:00Z,Matchday 33,,SC Freiburg,,FC Ingolstadt 04,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-41a94994334bc59b8e1315e1,BUNDESLIGA,2016-17,2017-05-13T12:00:00Z,Matchday 33,,FC Schalke 04,,Hamburger SV,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-492b8d8b8df81ce08aa1ab03,BUNDESLIGA,2016-17,2017-05-13T12:00:00Z,Matchday 33,,RB Leipzig,,Bayern München,,4,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-4ca01f3a37b1ec0a85f3bde2,BUNDESLIGA,2016-17,2017-05-13T12:00:00Z,Matchday 33,,1. FSV Mainz 05,,Eintracht Frankfurt,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-ca60611a9059cfec769e5f5e,BUNDESLIGA,2016-17,2017-05-13T12:00:00Z,Matchday 33,,Werder Bremen,,1899 Hoffenheim,,3,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-cf2f1a6b496813b539648865,BUNDESLIGA,2016-17,2017-05-13T12:00:00Z,Matchday 33,,VfL Wolfsburg,,Bor. Mönchengladbach,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-edce03427509d3f7f7a3e50a,BUNDESLIGA,2016-17,2017-05-13T12:00:00Z,Matchday 33,,FC Augsburg,,Borussia Dortmund,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-0fb02b4730d7715e479cb3ce,BUNDESLIGA,2016-17,2017-05-20T12:00:00Z,Matchday 34,,Hertha BSC,,Bayer Leverkusen,,2,6,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-2b8d079866432a0402150979,BUNDESLIGA,2016-17,2017-05-20T12:00:00Z,Matchday 34,,Bayern München,,SC Freiburg,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-315244f6a0a6e9fa198fae6f,BUNDESLIGA,2016-17,2017-05-20T12:00:00Z,Matchday 34,,Hamburger SV,,VfL Wolfsburg,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-3cb76c57e8bf3a861c7fdbc2,BUNDESLIGA,2016-17,2017-05-20T12:00:00Z,Matchday 34,,Bor. Mönchengladbach,,SV Darmstadt 98,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-51cd410a460b0944b6a665f6,BUNDESLIGA,2016-17,2017-05-20T12:00:00Z,Matchday 34,,FC Ingolstadt 04,,FC Schalke 04,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-8b87c5e4d4835e2ac250b630,BUNDESLIGA,2016-17,2017-05-20T12:00:00Z,Matchday 34,,Borussia Dortmund,,Werder Bremen,,4,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-c5926d90d7dfdd76e54ad04f,BUNDESLIGA,2016-17,2017-05-20T12:00:00Z,Matchday 34,,Eintracht Frankfurt,,RB Leipzig,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-cd4c240ec0f3a4c838eb2560,BUNDESLIGA,2016-17,2017-05-20T12:00:00Z,Matchday 34,,1899 Hoffenheim,,FC Augsburg,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+bundesliga-openfootball-fc440c647374a689d110f04a,BUNDESLIGA,2016-17,2017-05-20T12:00:00Z,Matchday 34,,1. FC Köln,,1. FSV Mainz 05,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00

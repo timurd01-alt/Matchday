@@ -1,0 +1,371 @@
+game_id,comp,season,date_utc,stage,venue,home_name,home_code,away_name,away_code,home_score,away_score,status,source,first_seen
+seriea-openfootball-21081b1204506327e8c56cd1,SERIEA,2024-25,2024-08-17T12:00:00Z,Matchday 1,,AC Milan,,Torino FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-303c62865e494fbd490177ba,SERIEA,2024-25,2024-08-17T12:00:00Z,Matchday 1,,Parma Calcio 1913,,ACF Fiorentina,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d17f936f917fe77ed27608cf,SERIEA,2024-25,2024-08-17T12:00:00Z,Matchday 1,,Genoa CFC,,FC Internazionale Milano,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f8c5284bc808c79388a80dba,SERIEA,2024-25,2024-08-17T12:00:00Z,Matchday 1,,Empoli FC,,AC Monza,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-10b55e8ff834e499748e91dd,SERIEA,2024-25,2024-08-18T12:00:00Z,Matchday 1,,Hellas Verona FC,,SSC Napoli,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-52913df7981eff869106a759,SERIEA,2024-25,2024-08-18T12:00:00Z,Matchday 1,,SS Lazio,,Venezia FC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-77ff03ec3686b73c7a295d55,SERIEA,2024-25,2024-08-18T12:00:00Z,Matchday 1,,Bologna FC 1909,,Udinese Calcio,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-801759dd2fcb624df00d7009,SERIEA,2024-25,2024-08-18T12:00:00Z,Matchday 1,,Cagliari Calcio,,AS Roma,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-50c532303229543a51ecfe38,SERIEA,2024-25,2024-08-19T12:00:00Z,Matchday 1,,US Lecce,,Atalanta BC,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-552ea3e897bc5f8f48b8486c,SERIEA,2024-25,2024-08-19T12:00:00Z,Matchday 1,,Juventus FC,,Como 1907,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-71e44cad13d06c8273f9088d,SERIEA,2024-25,2024-08-24T12:00:00Z,Matchday 2,,Parma Calcio 1913,,AC Milan,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-7e7fe43dea4045ba73051b51,SERIEA,2024-25,2024-08-24T12:00:00Z,Matchday 2,,AC Monza,,Genoa CFC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8f5ba2dcab5e09b5ace88f8c,SERIEA,2024-25,2024-08-24T12:00:00Z,Matchday 2,,FC Internazionale Milano,,US Lecce,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b48b9b130ee8cbca9e523125,SERIEA,2024-25,2024-08-24T12:00:00Z,Matchday 2,,Udinese Calcio,,SS Lazio,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-3a66dc134b6492e4763a8ce8,SERIEA,2024-25,2024-08-25T12:00:00Z,Matchday 2,,AS Roma,,Empoli FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9cad30e8ecabdc1a79df9d1c,SERIEA,2024-25,2024-08-25T12:00:00Z,Matchday 2,,ACF Fiorentina,,Venezia FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a32e74e39baa08c9895f3072,SERIEA,2024-25,2024-08-25T12:00:00Z,Matchday 2,,Torino FC,,Atalanta BC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ca9fd2383a429dd6ab159a24,SERIEA,2024-25,2024-08-25T12:00:00Z,Matchday 2,,SSC Napoli,,Bologna FC 1909,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b4d6b2a6c6261ba24a320b08,SERIEA,2024-25,2024-08-26T12:00:00Z,Matchday 2,,Cagliari Calcio,,Como 1907,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c71b451e34a6c99db8af84f9,SERIEA,2024-25,2024-08-26T12:00:00Z,Matchday 2,,Hellas Verona FC,,Juventus FC,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-975a47b27f33c4922b01eaf9,SERIEA,2024-25,2024-08-30T12:00:00Z,Matchday 3,,Venezia FC,,Torino FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a164b3eefd54490d04abcdb3,SERIEA,2024-25,2024-08-30T12:00:00Z,Matchday 3,,FC Internazionale Milano,,Atalanta BC,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-247a1e5350c92f6e4dfd3697,SERIEA,2024-25,2024-08-31T12:00:00Z,Matchday 3,,Bologna FC 1909,,Empoli FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5d1e3120aa797247c6271d15,SERIEA,2024-25,2024-08-31T12:00:00Z,Matchday 3,,SS Lazio,,AC Milan,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-be717ad1ee01cd1890eddbc5,SERIEA,2024-25,2024-08-31T12:00:00Z,Matchday 3,,US Lecce,,Cagliari Calcio,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d3514c26b5c58e46c01a475f,SERIEA,2024-25,2024-08-31T12:00:00Z,Matchday 3,,SSC Napoli,,Parma Calcio 1913,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-556d3a842d2fece49f4d59c6,SERIEA,2024-25,2024-09-01T12:00:00Z,Matchday 3,,ACF Fiorentina,,AC Monza,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6dd0f8c960d3fa09577e0038,SERIEA,2024-25,2024-09-01T12:00:00Z,Matchday 3,,Genoa CFC,,Hellas Verona FC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ce2fa9d6a90ffc3a26050b41,SERIEA,2024-25,2024-09-01T12:00:00Z,Matchday 3,,Juventus FC,,AS Roma,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f67393ec9966cd5b9af1f2d6,SERIEA,2024-25,2024-09-01T12:00:00Z,Matchday 3,,Udinese Calcio,,Como 1907,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c5fd1044adce787b7b96670e,SERIEA,2024-25,2024-09-14T12:00:00Z,Matchday 4,,Empoli FC,,Juventus FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e81e53c95d5364d5706a955d,SERIEA,2024-25,2024-09-14T12:00:00Z,Matchday 4,,AC Milan,,Venezia FC,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-eb1ff2774a378bfab1233a23,SERIEA,2024-25,2024-09-14T12:00:00Z,Matchday 4,,Como 1907,,Bologna FC 1909,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4d020a7efedd0dda99c6e3e2,SERIEA,2024-25,2024-09-15T12:00:00Z,Matchday 4,,Torino FC,,US Lecce,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9bcc2fe80cbcaafdfa082a47,SERIEA,2024-25,2024-09-15T12:00:00Z,Matchday 4,,AC Monza,,FC Internazionale Milano,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9bf972bae96e9ac28c002d03,SERIEA,2024-25,2024-09-15T12:00:00Z,Matchday 4,,Genoa CFC,,AS Roma,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a0eb7a4dab3cb67a8bdc11eb,SERIEA,2024-25,2024-09-15T12:00:00Z,Matchday 4,,Atalanta BC,,ACF Fiorentina,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-eab541eb155fc7d9408d8ca7,SERIEA,2024-25,2024-09-15T12:00:00Z,Matchday 4,,Cagliari Calcio,,SSC Napoli,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2187185bb7cf482b8c4a60fe,SERIEA,2024-25,2024-09-16T12:00:00Z,Matchday 4,,Parma Calcio 1913,,Udinese Calcio,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-798b8a8ea967132891b3c98f,SERIEA,2024-25,2024-09-16T12:00:00Z,Matchday 4,,SS Lazio,,Hellas Verona FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-65978e239b83b0da6fe6be11,SERIEA,2024-25,2024-09-20T12:00:00Z,Matchday 5,,Hellas Verona FC,,Torino FC,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-bb806323166cc2b4d4b863b5,SERIEA,2024-25,2024-09-20T12:00:00Z,Matchday 5,,Cagliari Calcio,,Empoli FC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-0a259bb38518ae19c68f6266,SERIEA,2024-25,2024-09-21T12:00:00Z,Matchday 5,,US Lecce,,Parma Calcio 1913,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4bf25fd77361b17104a084dd,SERIEA,2024-25,2024-09-21T12:00:00Z,Matchday 5,,Juventus FC,,SSC Napoli,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c34d6f72993cb52584da69ed,SERIEA,2024-25,2024-09-21T12:00:00Z,Matchday 5,,Venezia FC,,Genoa CFC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-3b70ea08adb2db5270b28d66,SERIEA,2024-25,2024-09-22T12:00:00Z,Matchday 5,,AS Roma,,Udinese Calcio,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8f1a314ecf20494d581b60e9,SERIEA,2024-25,2024-09-22T12:00:00Z,Matchday 5,,AC Monza,,Bologna FC 1909,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a46891e8fb40897158dbf8a2,SERIEA,2024-25,2024-09-22T12:00:00Z,Matchday 5,,ACF Fiorentina,,SS Lazio,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c13aa8152594186a73b4470d,SERIEA,2024-25,2024-09-22T12:00:00Z,Matchday 5,,FC Internazionale Milano,,AC Milan,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9b34cfdf839479ec8142039f,SERIEA,2024-25,2024-09-24T12:00:00Z,Matchday 5,,Atalanta BC,,Como 1907,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6fab2dff0bf136467af6dc23,SERIEA,2024-25,2024-09-27T12:00:00Z,Matchday 6,,AC Milan,,US Lecce,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-116ef37a5ed4963144ebe105,SERIEA,2024-25,2024-09-28T12:00:00Z,Matchday 6,,Udinese Calcio,,FC Internazionale Milano,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4457b108cacda3cfa00e4c1a,SERIEA,2024-25,2024-09-28T12:00:00Z,Matchday 6,,Genoa CFC,,Juventus FC,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-49ed43392f4b8db802b3aadd,SERIEA,2024-25,2024-09-28T12:00:00Z,Matchday 6,,Bologna FC 1909,,Atalanta BC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-654dd2006ed4e403ad82c070,SERIEA,2024-25,2024-09-29T12:00:00Z,Matchday 6,,SSC Napoli,,AC Monza,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-cdfdc9dcc9e49f18d0773c46,SERIEA,2024-25,2024-09-29T12:00:00Z,Matchday 6,,Torino FC,,SS Lazio,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-da203214a1fa4ab4c8d2b33a,SERIEA,2024-25,2024-09-29T12:00:00Z,Matchday 6,,Como 1907,,Hellas Verona FC,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e059dacef1b9ee5403d7f763,SERIEA,2024-25,2024-09-29T12:00:00Z,Matchday 6,,AS Roma,,Venezia FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e20b6c5df063b3fac8733bb2,SERIEA,2024-25,2024-09-29T12:00:00Z,Matchday 6,,Empoli FC,,ACF Fiorentina,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-7a8bae739529288c9b4955af,SERIEA,2024-25,2024-09-30T12:00:00Z,Matchday 6,,Parma Calcio 1913,,Cagliari Calcio,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4a22def97539d5be1d6ea7ed,SERIEA,2024-25,2024-10-04T12:00:00Z,Matchday 7,,Hellas Verona FC,,Venezia FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-92458aa43ea857a1c0321c37,SERIEA,2024-25,2024-10-04T12:00:00Z,Matchday 7,,SSC Napoli,,Como 1907,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-25ee807833ae133f1f66ca7b,SERIEA,2024-25,2024-10-05T12:00:00Z,Matchday 7,,Atalanta BC,,Genoa CFC,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8624307ac95be160c1f0d1d4,SERIEA,2024-25,2024-10-05T12:00:00Z,Matchday 7,,FC Internazionale Milano,,Torino FC,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9b860c9a8b771ba9cc9970bc,SERIEA,2024-25,2024-10-05T12:00:00Z,Matchday 7,,Udinese Calcio,,US Lecce,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-17e929d96af6ad7ebd48dcf9,SERIEA,2024-25,2024-10-06T12:00:00Z,Matchday 7,,ACF Fiorentina,,AC Milan,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-68f2d996c6739a0fe4a08aae,SERIEA,2024-25,2024-10-06T12:00:00Z,Matchday 7,,Bologna FC 1909,,Parma Calcio 1913,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-756a77ef0a283a8aa8dde967,SERIEA,2024-25,2024-10-06T12:00:00Z,Matchday 7,,SS Lazio,,Empoli FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8576e17187428895289e499c,SERIEA,2024-25,2024-10-06T12:00:00Z,Matchday 7,,AC Monza,,AS Roma,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8b7ff2c69f0d4eab974133ad,SERIEA,2024-25,2024-10-06T12:00:00Z,Matchday 7,,Juventus FC,,Cagliari Calcio,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-3e5ba8d4ca1609dc807a276a,SERIEA,2024-25,2024-10-19T12:00:00Z,Matchday 8,,Juventus FC,,SS Lazio,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5030fa0aa47ba360d4cf063d,SERIEA,2024-25,2024-10-19T12:00:00Z,Matchday 8,,Como 1907,,Parma Calcio 1913,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9981eca5e2758b62d7fb6d78,SERIEA,2024-25,2024-10-19T12:00:00Z,Matchday 8,,Genoa CFC,,Bologna FC 1909,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-fb87dd9887154b8093807530,SERIEA,2024-25,2024-10-19T12:00:00Z,Matchday 8,,AC Milan,,Udinese Calcio,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-1057dd0be21e364133a613c5,SERIEA,2024-25,2024-10-20T12:00:00Z,Matchday 8,,AS Roma,,FC Internazionale Milano,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-16995a5f0379429a863e19f4,SERIEA,2024-25,2024-10-20T12:00:00Z,Matchday 8,,Venezia FC,,Atalanta BC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-33a12016691cf2f429e84207,SERIEA,2024-25,2024-10-20T12:00:00Z,Matchday 8,,US Lecce,,ACF Fiorentina,,0,6,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-555950c01163a5a0d6421116,SERIEA,2024-25,2024-10-20T12:00:00Z,Matchday 8,,Cagliari Calcio,,Torino FC,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5eb1c6d816431dfedf06c6c1,SERIEA,2024-25,2024-10-20T12:00:00Z,Matchday 8,,Empoli FC,,SSC Napoli,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-66fde460a13ee63668138351,SERIEA,2024-25,2024-10-21T12:00:00Z,Matchday 8,,Hellas Verona FC,,AC Monza,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5b3937826f99238815ccfae4,SERIEA,2024-25,2024-10-25T12:00:00Z,Matchday 9,,Torino FC,,Como 1907,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-bb5dbdc1cb955c52c1c5a75a,SERIEA,2024-25,2024-10-25T12:00:00Z,Matchday 9,,Udinese Calcio,,Cagliari Calcio,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c9e7e76adfbf553e489a7acb,SERIEA,2024-25,2024-10-26T12:00:00Z,Matchday 9,,Atalanta BC,,Hellas Verona FC,,6,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d52f4097eb89a3f1f9659eed,SERIEA,2024-25,2024-10-26T12:00:00Z,Matchday 9,,SSC Napoli,,US Lecce,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-628546d5afb7b03b441b616f,SERIEA,2024-25,2024-10-27T12:00:00Z,Matchday 9,,SS Lazio,,Genoa CFC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6e297b3ef3d45bdbd5fd116a,SERIEA,2024-25,2024-10-27T12:00:00Z,Matchday 9,,ACF Fiorentina,,AS Roma,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a0cca7f25e6a499a70a7b677,SERIEA,2024-25,2024-10-27T12:00:00Z,Matchday 9,,FC Internazionale Milano,,Juventus FC,,4,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b804ac773a87d4cd2811895c,SERIEA,2024-25,2024-10-27T12:00:00Z,Matchday 9,,Parma Calcio 1913,,Empoli FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e021b5b456e7b2ef83293ac0,SERIEA,2024-25,2024-10-27T12:00:00Z,Matchday 9,,AC Monza,,Venezia FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-192fd67a218c59b77ddc5fea,SERIEA,2024-25,2024-10-29T12:00:00Z,Matchday 10,,US Lecce,,Hellas Verona FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2b8aeb63730ab2892917746a,SERIEA,2024-25,2024-10-29T12:00:00Z,Matchday 10,,AC Milan,,SSC Napoli,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c2b58f16c854dbf2e5cb75aa,SERIEA,2024-25,2024-10-29T12:00:00Z,Matchday 10,,Cagliari Calcio,,Bologna FC 1909,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6a85f2acdeea03009f645fa0,SERIEA,2024-25,2024-10-30T12:00:00Z,Matchday 10,,Atalanta BC,,AC Monza,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6cd46c28157d5267eea668fc,SERIEA,2024-25,2024-10-30T12:00:00Z,Matchday 10,,Venezia FC,,Udinese Calcio,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-7462a23957e09d7406bd2346,SERIEA,2024-25,2024-10-30T12:00:00Z,Matchday 10,,Juventus FC,,Parma Calcio 1913,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-82d2645cd1b19dadcbb8df10,SERIEA,2024-25,2024-10-30T12:00:00Z,Matchday 10,,Empoli FC,,FC Internazionale Milano,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2a7c0f9e85f0355ec5971b21,SERIEA,2024-25,2024-10-31T12:00:00Z,Matchday 10,,Como 1907,,SS Lazio,,1,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a476f63bd8549721d99326b4,SERIEA,2024-25,2024-10-31T12:00:00Z,Matchday 10,,Genoa CFC,,ACF Fiorentina,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-dd96faffd246d00f759cc597,SERIEA,2024-25,2024-10-31T12:00:00Z,Matchday 10,,AS Roma,,Torino FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5f6489bdec098a14475e3c14,SERIEA,2024-25,2024-11-02T12:00:00Z,Matchday 11,,AC Monza,,AC Milan,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-71cdfc4a751c9cd0d5d0c64a,SERIEA,2024-25,2024-11-02T12:00:00Z,Matchday 11,,Bologna FC 1909,,US Lecce,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-cb91504b3285dfc09681f8e6,SERIEA,2024-25,2024-11-02T12:00:00Z,Matchday 11,,Udinese Calcio,,Juventus FC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-3bbe1c24c037019fb8e65ba7,SERIEA,2024-25,2024-11-03T12:00:00Z,Matchday 11,,Torino FC,,ACF Fiorentina,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-43c5e088ddceda008a4de443,SERIEA,2024-25,2024-11-03T12:00:00Z,Matchday 11,,Hellas Verona FC,,AS Roma,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-601884742a52642b016feaf3,SERIEA,2024-25,2024-11-03T12:00:00Z,Matchday 11,,SSC Napoli,,Atalanta BC,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-aa8ac3b83c9f774e20ecca88,SERIEA,2024-25,2024-11-03T12:00:00Z,Matchday 11,,FC Internazionale Milano,,Venezia FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-3b491f18158cee653a36f121,SERIEA,2024-25,2024-11-04T12:00:00Z,Matchday 11,,Parma Calcio 1913,,Genoa CFC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b6a7e3ff69597eb30bcd65de,SERIEA,2024-25,2024-11-04T12:00:00Z,Matchday 11,,Empoli FC,,Como 1907,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b6cf54b2954463100e21c4cb,SERIEA,2024-25,2024-11-04T12:00:00Z,Matchday 11,,SS Lazio,,Cagliari Calcio,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ee91376b0ed371d14d485389,SERIEA,2024-25,2024-11-07T12:00:00Z,Matchday 12,,Genoa CFC,,Como 1907,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d2f25e2902d79687ae0b3e85,SERIEA,2024-25,2024-11-08T12:00:00Z,Matchday 12,,US Lecce,,Empoli FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9ec4a11242b660a636c28517,SERIEA,2024-25,2024-11-09T12:00:00Z,Matchday 12,,Juventus FC,,Torino FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b64b073154d2e9e49d2f908e,SERIEA,2024-25,2024-11-09T12:00:00Z,Matchday 12,,Venezia FC,,Parma Calcio 1913,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f077a2faa2b98b0cc69d5b22,SERIEA,2024-25,2024-11-09T12:00:00Z,Matchday 12,,Cagliari Calcio,,AC Milan,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-0086d8bee133cb0d9165ee3c,SERIEA,2024-25,2024-11-10T12:00:00Z,Matchday 12,,AC Monza,,SS Lazio,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-0fc153572807500ca08aaf03,SERIEA,2024-25,2024-11-10T12:00:00Z,Matchday 12,,FC Internazionale Milano,,SSC Napoli,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-11e692b07fb3110270f73c7e,SERIEA,2024-25,2024-11-10T12:00:00Z,Matchday 12,,Atalanta BC,,Udinese Calcio,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c7b70fa73eed8ea5753d85b0,SERIEA,2024-25,2024-11-10T12:00:00Z,Matchday 12,,AS Roma,,Bologna FC 1909,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d7a08ef39ffd544714fc7caa,SERIEA,2024-25,2024-11-10T12:00:00Z,Matchday 12,,ACF Fiorentina,,Hellas Verona FC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-15a76f8a65a4a3e012e0a8d2,SERIEA,2024-25,2024-11-23T12:00:00Z,Matchday 13,,Hellas Verona FC,,FC Internazionale Milano,,0,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-55655f4bd6c3e1b7db720265,SERIEA,2024-25,2024-11-23T12:00:00Z,Matchday 13,,Parma Calcio 1913,,Atalanta BC,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b6bb889aa1e8784bfae05217,SERIEA,2024-25,2024-11-23T12:00:00Z,Matchday 13,,AC Milan,,Juventus FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-0ef243b62227daa8b250fc3c,SERIEA,2024-25,2024-11-24T12:00:00Z,Matchday 13,,SSC Napoli,,AS Roma,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-41f24759c4acf3b7599ad35d,SERIEA,2024-25,2024-11-24T12:00:00Z,Matchday 13,,Como 1907,,ACF Fiorentina,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-65c86cc19745b1903f7e8fde,SERIEA,2024-25,2024-11-24T12:00:00Z,Matchday 13,,SS Lazio,,Bologna FC 1909,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6804bb1ccd41ace1b4ac89ce,SERIEA,2024-25,2024-11-24T12:00:00Z,Matchday 13,,Torino FC,,AC Monza,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b51717d80fbf49c826c75c01,SERIEA,2024-25,2024-11-24T12:00:00Z,Matchday 13,,Genoa CFC,,Cagliari Calcio,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-24e90cf3b46f4eac01a09d78,SERIEA,2024-25,2024-11-25T12:00:00Z,Matchday 13,,Venezia FC,,US Lecce,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8a57ce85a308ee0f35cdce4c,SERIEA,2024-25,2024-11-25T12:00:00Z,Matchday 13,,Empoli FC,,Udinese Calcio,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5cf92db4c119deec28dcc501,SERIEA,2024-25,2024-11-29T12:00:00Z,Matchday 14,,Cagliari Calcio,,Hellas Verona FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-56d662c77306febb240bde56,SERIEA,2024-25,2024-11-30T12:00:00Z,Matchday 14,,AC Milan,,Empoli FC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-90215cf056478f93be013fa1,SERIEA,2024-25,2024-11-30T12:00:00Z,Matchday 14,,Bologna FC 1909,,Venezia FC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-cb83c7fb2246d09c010e9cc6,SERIEA,2024-25,2024-11-30T12:00:00Z,Matchday 14,,Como 1907,,AC Monza,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-599ee59b9b7181393e57e4e2,SERIEA,2024-25,2024-12-01T12:00:00Z,Matchday 14,,US Lecce,,Juventus FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-75a74713ea7bcb566af9f5fa,SERIEA,2024-25,2024-12-01T12:00:00Z,Matchday 14,,Udinese Calcio,,Genoa CFC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-932f332cecfe2ce2f92b4572,SERIEA,2024-25,2024-12-01T12:00:00Z,Matchday 14,,Torino FC,,SSC Napoli,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-bc145174adb1a5b7e5a5b3f7,SERIEA,2024-25,2024-12-01T12:00:00Z,Matchday 14,,Parma Calcio 1913,,SS Lazio,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a997e0c6e95acb92c01c1afc,SERIEA,2024-25,2024-12-02T12:00:00Z,Matchday 14,,AS Roma,,Atalanta BC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-1653f324c2a116e56084b837,SERIEA,2024-25,2024-12-06T12:00:00Z,Matchday 15,,FC Internazionale Milano,,Parma Calcio 1913,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-27361acc88fdafacda6dde45,SERIEA,2024-25,2024-12-06T12:00:00Z,Matchday 15,,Atalanta BC,,AC Milan,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-728850fc90f1f56d4411c776,SERIEA,2024-25,2024-12-07T12:00:00Z,Matchday 15,,AS Roma,,US Lecce,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-7adc0fccd3319efb2388e6fa,SERIEA,2024-25,2024-12-07T12:00:00Z,Matchday 15,,Juventus FC,,Bologna FC 1909,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-daf9f2d611668516ff1b8e1d,SERIEA,2024-25,2024-12-07T12:00:00Z,Matchday 15,,Genoa CFC,,Torino FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-890a55468b8c467a6c3d826a,SERIEA,2024-25,2024-12-08T12:00:00Z,Matchday 15,,ACF Fiorentina,,Cagliari Calcio,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9554cb8bcddb051aace1664f,SERIEA,2024-25,2024-12-08T12:00:00Z,Matchday 15,,SSC Napoli,,SS Lazio,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b41e54eea25d34a41100481f,SERIEA,2024-25,2024-12-08T12:00:00Z,Matchday 15,,Venezia FC,,Como 1907,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ff03962c9ed23ffb264d9dea,SERIEA,2024-25,2024-12-08T12:00:00Z,Matchday 15,,Hellas Verona FC,,Empoli FC,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ff982162072d94a414590168,SERIEA,2024-25,2024-12-09T12:00:00Z,Matchday 15,,AC Monza,,Udinese Calcio,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b738ccadfdf530f986d51745,SERIEA,2024-25,2024-12-13T12:00:00Z,Matchday 16,,Empoli FC,,Torino FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4e0aab38b479cfd082d1861d,SERIEA,2024-25,2024-12-14T12:00:00Z,Matchday 16,,Cagliari Calcio,,Atalanta BC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-da808b837a8c01b13b09090f,SERIEA,2024-25,2024-12-14T12:00:00Z,Matchday 16,,Juventus FC,,Venezia FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f532cebaa565b99af1c68cd9,SERIEA,2024-25,2024-12-14T12:00:00Z,Matchday 16,,Udinese Calcio,,SSC Napoli,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-060e4d725af71a2918140e1a,SERIEA,2024-25,2024-12-15T12:00:00Z,Matchday 16,,Como 1907,,AS Roma,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8d96681cf703b201ccfd2b04,SERIEA,2024-25,2024-12-15T12:00:00Z,Matchday 16,,Bologna FC 1909,,ACF Fiorentina,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9f17a32a9059277e45805c75,SERIEA,2024-25,2024-12-15T12:00:00Z,Matchday 16,,Parma Calcio 1913,,Hellas Verona FC,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a32d4893700cf96cb8175794,SERIEA,2024-25,2024-12-15T12:00:00Z,Matchday 16,,US Lecce,,AC Monza,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b27d65c474f2fb9ec9c83c34,SERIEA,2024-25,2024-12-15T12:00:00Z,Matchday 16,,AC Milan,,Genoa CFC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-015f761a519a5d64291edde5,SERIEA,2024-25,2024-12-16T12:00:00Z,Matchday 16,,SS Lazio,,FC Internazionale Milano,,0,6,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2e8c21c132a738b280dfd06e,SERIEA,2024-25,2024-12-20T12:00:00Z,Matchday 17,,Hellas Verona FC,,AC Milan,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-14ce9d8b66226820838d662e,SERIEA,2024-25,2024-12-21T12:00:00Z,Matchday 17,,Genoa CFC,,SSC Napoli,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-38dcc48e3bd7c5e4d6e5fff6,SERIEA,2024-25,2024-12-21T12:00:00Z,Matchday 17,,US Lecce,,SS Lazio,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ae13a295a1b2ca4754f77ef9,SERIEA,2024-25,2024-12-21T12:00:00Z,Matchday 17,,Torino FC,,Bologna FC 1909,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-47dbb02930aadcecc5711443,SERIEA,2024-25,2024-12-22T12:00:00Z,Matchday 17,,AC Monza,,Juventus FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-72a19a2d2563a9076d7f8f14,SERIEA,2024-25,2024-12-22T12:00:00Z,Matchday 17,,AS Roma,,Parma Calcio 1913,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-858233dc414a5152e5b7118c,SERIEA,2024-25,2024-12-22T12:00:00Z,Matchday 17,,Atalanta BC,,Empoli FC,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-cfd6e2b58763ec837c0a85eb,SERIEA,2024-25,2024-12-22T12:00:00Z,Matchday 17,,Venezia FC,,Cagliari Calcio,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d24bdc927b146737b45509c6,SERIEA,2024-25,2024-12-23T12:00:00Z,Matchday 17,,FC Internazionale Milano,,Como 1907,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d41e24eb8f708e73f4fe61f3,SERIEA,2024-25,2024-12-23T12:00:00Z,Matchday 17,,ACF Fiorentina,,Udinese Calcio,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-05cfa1c0d3c0bc1f52b1a549,SERIEA,2024-25,2024-12-28T12:00:00Z,Matchday 18,,Cagliari Calcio,,FC Internazionale Milano,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-573c7628b71ab9530b1dee29,SERIEA,2024-25,2024-12-28T12:00:00Z,Matchday 18,,Parma Calcio 1913,,AC Monza,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-728ec988808dd56c8034a584,SERIEA,2024-25,2024-12-28T12:00:00Z,Matchday 18,,Empoli FC,,Genoa CFC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-993d68e0b894abfaba0cf853,SERIEA,2024-25,2024-12-28T12:00:00Z,Matchday 18,,SS Lazio,,Atalanta BC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-378f9c206336ddabb920e098,SERIEA,2024-25,2024-12-29T12:00:00Z,Matchday 18,,AC Milan,,AS Roma,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-93f0f15577cfa8acc00cd79c,SERIEA,2024-25,2024-12-29T12:00:00Z,Matchday 18,,SSC Napoli,,Venezia FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-bdb82981bf03fa3f0c9ae4b3,SERIEA,2024-25,2024-12-29T12:00:00Z,Matchday 18,,Udinese Calcio,,Torino FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ca1e2e33653dc855806def16,SERIEA,2024-25,2024-12-29T12:00:00Z,Matchday 18,,Juventus FC,,ACF Fiorentina,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-50505e9c9dc282b6a0ecbd4b,SERIEA,2024-25,2024-12-30T12:00:00Z,Matchday 18,,Bologna FC 1909,,Hellas Verona FC,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-58ae2a49436ea77d258603b3,SERIEA,2024-25,2024-12-30T12:00:00Z,Matchday 18,,Como 1907,,US Lecce,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-38cfd8002021ef8eb67e5149,SERIEA,2024-25,2025-01-04T12:00:00Z,Matchday 19,,Venezia FC,,Empoli FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-594f804b8d523d638d1bf1d1,SERIEA,2024-25,2025-01-04T12:00:00Z,Matchday 19,,ACF Fiorentina,,SSC Napoli,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d919ab62da3796b6d1a121c3,SERIEA,2024-25,2025-01-04T12:00:00Z,Matchday 19,,Hellas Verona FC,,Udinese Calcio,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-464e0bd2843f73c24e7f161d,SERIEA,2024-25,2025-01-05T12:00:00Z,Matchday 19,,Torino FC,,Parma Calcio 1913,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-51d19b377d0a34fe394650ad,SERIEA,2024-25,2025-01-05T12:00:00Z,Matchday 19,,AS Roma,,SS Lazio,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5e868880defc54ac7bd0e172,SERIEA,2024-25,2025-01-05T12:00:00Z,Matchday 19,,US Lecce,,Genoa CFC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b98b06a3f9bc5f0fbef59633,SERIEA,2024-25,2025-01-05T12:00:00Z,Matchday 19,,AC Monza,,Cagliari Calcio,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4f5e760078e0afdbeee39c4a,SERIEA,2024-25,2025-01-10T12:00:00Z,Matchday 20,,SS Lazio,,Como 1907,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-314daf4ca3d75a427ad5d64b,SERIEA,2024-25,2025-01-11T12:00:00Z,Matchday 20,,Torino FC,,Juventus FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-cb95569b87d4543e7e0ee347,SERIEA,2024-25,2025-01-11T12:00:00Z,Matchday 20,,AC Milan,,Cagliari Calcio,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-da75cb5c6225a0881598d886,SERIEA,2024-25,2025-01-11T12:00:00Z,Matchday 20,,Udinese Calcio,,Atalanta BC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f3131bc470e242915aa03c90,SERIEA,2024-25,2025-01-11T12:00:00Z,Matchday 20,,Empoli FC,,US Lecce,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5bc3df00129420e3d6f84d07,SERIEA,2024-25,2025-01-12T12:00:00Z,Matchday 20,,SSC Napoli,,Hellas Verona FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9e87ffcd13ed8ece1c9c96e0,SERIEA,2024-25,2025-01-12T12:00:00Z,Matchday 20,,Venezia FC,,FC Internazionale Milano,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f061a994c8a8190d1a803837,SERIEA,2024-25,2025-01-12T12:00:00Z,Matchday 20,,Bologna FC 1909,,AS Roma,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-fe7271fca0e4356200610449,SERIEA,2024-25,2025-01-12T12:00:00Z,Matchday 20,,Genoa CFC,,Parma Calcio 1913,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e2a56213679ffa2d7f117f59,SERIEA,2024-25,2025-01-13T12:00:00Z,Matchday 20,,AC Monza,,ACF Fiorentina,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-043ca3738b362ab41afc03cd,SERIEA,2024-25,2025-01-14T12:00:00Z,Matchday 19,,Como 1907,,AC Milan,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6403c37291a86ed83f450355,SERIEA,2024-25,2025-01-14T12:00:00Z,Matchday 19,,Atalanta BC,,Juventus FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b50ee4cd5d6799f666b03e22,SERIEA,2024-25,2025-01-15T12:00:00Z,Matchday 19,,FC Internazionale Milano,,Bologna FC 1909,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e7411d8954541c9ee2a16169,SERIEA,2024-25,2025-01-17T12:00:00Z,Matchday 21,,AS Roma,,Genoa CFC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-34c5b6e0c6ab1a531835326a,SERIEA,2024-25,2025-01-18T12:00:00Z,Matchday 21,,Bologna FC 1909,,AC Monza,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-61dbbe355f6b20f822f1bbf2,SERIEA,2024-25,2025-01-18T12:00:00Z,Matchday 21,,Atalanta BC,,SSC Napoli,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8027d19375a9124396715954,SERIEA,2024-25,2025-01-18T12:00:00Z,Matchday 21,,Juventus FC,,AC Milan,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-1b211b3d243a6d3dfae597ef,SERIEA,2024-25,2025-01-19T12:00:00Z,Matchday 21,,FC Internazionale Milano,,Empoli FC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-25be7f065b30f672d7f42d60,SERIEA,2024-25,2025-01-19T12:00:00Z,Matchday 21,,ACF Fiorentina,,Torino FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-7a38245c31c533dae300e5e1,SERIEA,2024-25,2025-01-19T12:00:00Z,Matchday 21,,Cagliari Calcio,,US Lecce,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c67b9fee498be5939c9e3f78,SERIEA,2024-25,2025-01-19T12:00:00Z,Matchday 21,,Parma Calcio 1913,,Venezia FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c6a284e46504865e6410668e,SERIEA,2024-25,2025-01-19T12:00:00Z,Matchday 21,,Hellas Verona FC,,SS Lazio,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-595f4fb0a1acaaaccb759c6c,SERIEA,2024-25,2025-01-20T12:00:00Z,Matchday 21,,Como 1907,,Udinese Calcio,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-818a9dbf832b06d2d8b0544e,SERIEA,2024-25,2025-01-24T12:00:00Z,Matchday 22,,Torino FC,,Cagliari Calcio,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6407a93518a0606cd5a2d51e,SERIEA,2024-25,2025-01-25T12:00:00Z,Matchday 22,,Empoli FC,,Bologna FC 1909,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a0bdfec21817a9218b27308c,SERIEA,2024-25,2025-01-25T12:00:00Z,Matchday 22,,SSC Napoli,,Juventus FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a7b8a56502b17880d130e932,SERIEA,2024-25,2025-01-25T12:00:00Z,Matchday 22,,Como 1907,,Atalanta BC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8802d792f377f70d30a25184,SERIEA,2024-25,2025-01-26T12:00:00Z,Matchday 22,,US Lecce,,FC Internazionale Milano,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a9773ce92da0bbd5eb826f72,SERIEA,2024-25,2025-01-26T12:00:00Z,Matchday 22,,SS Lazio,,ACF Fiorentina,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-acfdbdd4aaa7cf08c0dd37e8,SERIEA,2024-25,2025-01-26T12:00:00Z,Matchday 22,,Udinese Calcio,,AS Roma,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e04fd543d923800c5079123a,SERIEA,2024-25,2025-01-26T12:00:00Z,Matchday 22,,AC Milan,,Parma Calcio 1913,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-60da0ce7bc40cd34ef4b9e64,SERIEA,2024-25,2025-01-27T12:00:00Z,Matchday 22,,Venezia FC,,Hellas Verona FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8abdb2b326b7f343036790e9,SERIEA,2024-25,2025-01-27T12:00:00Z,Matchday 22,,Genoa CFC,,AC Monza,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a325905aa65370c3c8b2f636,SERIEA,2024-25,2025-01-31T12:00:00Z,Matchday 23,,Parma Calcio 1913,,US Lecce,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-07773b187f3300612c32f647,SERIEA,2024-25,2025-02-01T12:00:00Z,Matchday 23,,Bologna FC 1909,,Como 1907,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9fe5c5f7ae29ab71f0c25f8b,SERIEA,2024-25,2025-02-01T12:00:00Z,Matchday 23,,Udinese Calcio,,Venezia FC,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ba48cad99e661daf5c700598,SERIEA,2024-25,2025-02-01T12:00:00Z,Matchday 23,,AC Monza,,Hellas Verona FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c6ea6459c1e2f039f0ec80f2,SERIEA,2024-25,2025-02-01T12:00:00Z,Matchday 23,,Atalanta BC,,Torino FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-21c4fa0be5a0c1b3af7ec7cd,SERIEA,2024-25,2025-02-02T12:00:00Z,Matchday 23,,Juventus FC,,Empoli FC,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4a85ce63f36ddaa95683e1dd,SERIEA,2024-25,2025-02-02T12:00:00Z,Matchday 23,,AS Roma,,SSC Napoli,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f0e8551aa3ee9bd5d463f787,SERIEA,2024-25,2025-02-02T12:00:00Z,Matchday 23,,ACF Fiorentina,,Genoa CFC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f45c8f59e2a4877f4fb14fdb,SERIEA,2024-25,2025-02-02T12:00:00Z,Matchday 23,,AC Milan,,FC Internazionale Milano,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-cace4e96546b544c29500499,SERIEA,2024-25,2025-02-03T12:00:00Z,Matchday 23,,Cagliari Calcio,,SS Lazio,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-15185223a06afd0731e1fc03,SERIEA,2024-25,2025-02-06T12:00:00Z,Matchday 14,,ACF Fiorentina,,FC Internazionale Milano,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d0234a886a669dd182b1d63a,SERIEA,2024-25,2025-02-07T12:00:00Z,Matchday 24,,Como 1907,,Juventus FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-1d1475abd859a219583a0504,SERIEA,2024-25,2025-02-08T12:00:00Z,Matchday 24,,Empoli FC,,AC Milan,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-31f762a67b49720d36a3b543,SERIEA,2024-25,2025-02-08T12:00:00Z,Matchday 24,,Torino FC,,Genoa CFC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-98c051b18149470afc534f70,SERIEA,2024-25,2025-02-08T12:00:00Z,Matchday 24,,Hellas Verona FC,,Atalanta BC,,0,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-1adf912fc507108bc985082e,SERIEA,2024-25,2025-02-09T12:00:00Z,Matchday 24,,Venezia FC,,AS Roma,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8d8795878df7c709557160c6,SERIEA,2024-25,2025-02-09T12:00:00Z,Matchday 24,,SSC Napoli,,Udinese Calcio,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a50527dce6c706b5b12531b7,SERIEA,2024-25,2025-02-09T12:00:00Z,Matchday 24,,SS Lazio,,AC Monza,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-cb18824266b4ca8eb326f8fa,SERIEA,2024-25,2025-02-09T12:00:00Z,Matchday 24,,Cagliari Calcio,,Parma Calcio 1913,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e2696bdea9b7811c5ad4abf6,SERIEA,2024-25,2025-02-09T12:00:00Z,Matchday 24,,US Lecce,,Bologna FC 1909,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-abaae4ad2bdc802c0fde775f,SERIEA,2024-25,2025-02-10T12:00:00Z,Matchday 24,,FC Internazionale Milano,,ACF Fiorentina,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c272a002635802d24e3fe866,SERIEA,2024-25,2025-02-14T12:00:00Z,Matchday 25,,Bologna FC 1909,,Torino FC,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2dfb6fa9e0eac47da96fec75,SERIEA,2024-25,2025-02-15T12:00:00Z,Matchday 25,,SS Lazio,,SSC Napoli,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c0235b1957b141d5165b9cad,SERIEA,2024-25,2025-02-15T12:00:00Z,Matchday 25,,AC Milan,,Hellas Verona FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f870cc4245cdf70f55e65df8,SERIEA,2024-25,2025-02-15T12:00:00Z,Matchday 25,,Atalanta BC,,Cagliari Calcio,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-02c836fa36de08ac07e2316d,SERIEA,2024-25,2025-02-16T12:00:00Z,Matchday 25,,AC Monza,,US Lecce,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-122cba78903338fea8eba369,SERIEA,2024-25,2025-02-16T12:00:00Z,Matchday 25,,ACF Fiorentina,,Como 1907,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-65ba4d1b2a20bc3b0172f150,SERIEA,2024-25,2025-02-16T12:00:00Z,Matchday 25,,Parma Calcio 1913,,AS Roma,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-67f7cd9c8b33e8bf87374f8d,SERIEA,2024-25,2025-02-16T12:00:00Z,Matchday 25,,Udinese Calcio,,Empoli FC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-7e4501a2ff98c5fd77f8a3e9,SERIEA,2024-25,2025-02-16T12:00:00Z,Matchday 25,,Juventus FC,,FC Internazionale Milano,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-eb19abc536c3b4a3a53ebd6e,SERIEA,2024-25,2025-02-17T12:00:00Z,Matchday 25,,Genoa CFC,,Venezia FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-cce50aeab8d65ed46665ffc1,SERIEA,2024-25,2025-02-21T12:00:00Z,Matchday 26,,US Lecce,,Udinese Calcio,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-1fa49d2885903eeeb96ef5de,SERIEA,2024-25,2025-02-22T12:00:00Z,Matchday 26,,FC Internazionale Milano,,Genoa CFC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-44cf408b08e6c437155bc706,SERIEA,2024-25,2025-02-22T12:00:00Z,Matchday 26,,Venezia FC,,SS Lazio,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e3f8af5278f19cc23c13f2a4,SERIEA,2024-25,2025-02-22T12:00:00Z,Matchday 26,,Torino FC,,AC Milan,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ff7bcc0a5a89938449daf75a,SERIEA,2024-25,2025-02-22T12:00:00Z,Matchday 26,,Parma Calcio 1913,,Bologna FC 1909,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-095988c2343b988e96e3c267,SERIEA,2024-25,2025-02-23T12:00:00Z,Matchday 26,,Hellas Verona FC,,ACF Fiorentina,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4cdcf4bdb4f6de8caabc6d7f,SERIEA,2024-25,2025-02-23T12:00:00Z,Matchday 26,,Como 1907,,SSC Napoli,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5572234c018fc83a72757f0e,SERIEA,2024-25,2025-02-23T12:00:00Z,Matchday 26,,Empoli FC,,Atalanta BC,,0,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-96ba0f15e519620ce8ed1bca,SERIEA,2024-25,2025-02-23T12:00:00Z,Matchday 26,,Cagliari Calcio,,Juventus FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-1308bf0fd9549a9f05ef88d1,SERIEA,2024-25,2025-02-24T12:00:00Z,Matchday 26,,AS Roma,,AC Monza,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-92f4ab3fac6fc31463331230,SERIEA,2024-25,2025-02-27T12:00:00Z,Matchday 9,,Bologna FC 1909,,AC Milan,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-47466c10f1c44a296e5ebede,SERIEA,2024-25,2025-02-28T12:00:00Z,Matchday 27,,ACF Fiorentina,,US Lecce,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-24c0ed560bf7e63cb6168735,SERIEA,2024-25,2025-03-01T12:00:00Z,Matchday 27,,SSC Napoli,,FC Internazionale Milano,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-37828daa4d86df1d32cde3dc,SERIEA,2024-25,2025-03-01T12:00:00Z,Matchday 27,,Atalanta BC,,Venezia FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a99940c6f97948f99aee5e07,SERIEA,2024-25,2025-03-01T12:00:00Z,Matchday 27,,Udinese Calcio,,Parma Calcio 1913,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-0b2eb64554e52ef962183720,SERIEA,2024-25,2025-03-02T12:00:00Z,Matchday 27,,Genoa CFC,,Empoli FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-683578fb0688c6b635f52a93,SERIEA,2024-25,2025-03-02T12:00:00Z,Matchday 27,,Bologna FC 1909,,Cagliari Calcio,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-74d0b4c52a658f073fb43711,SERIEA,2024-25,2025-03-02T12:00:00Z,Matchday 27,,AC Milan,,SS Lazio,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-dc6d5e86ffddf69f251fd834,SERIEA,2024-25,2025-03-02T12:00:00Z,Matchday 27,,AS Roma,,Como 1907,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-fffce1a5c5d2dd9f337a4fc8,SERIEA,2024-25,2025-03-02T12:00:00Z,Matchday 27,,AC Monza,,Torino FC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-82885fbe88677fde1d73f1a9,SERIEA,2024-25,2025-03-03T12:00:00Z,Matchday 27,,Juventus FC,,Hellas Verona FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2775a3971bd748618cbf88eb,SERIEA,2024-25,2025-03-07T12:00:00Z,Matchday 28,,Cagliari Calcio,,Genoa CFC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8757472b37a66b4c69da276c,SERIEA,2024-25,2025-03-08T12:00:00Z,Matchday 28,,Parma Calcio 1913,,Torino FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-aa7276eb5973d6645fc5c868,SERIEA,2024-25,2025-03-08T12:00:00Z,Matchday 28,,Como 1907,,Venezia FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-abf1b89c2cc10e8910b02bdf,SERIEA,2024-25,2025-03-08T12:00:00Z,Matchday 28,,FC Internazionale Milano,,AC Monza,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f7cf3d78ea88b4f0bd53ca10,SERIEA,2024-25,2025-03-08T12:00:00Z,Matchday 28,,US Lecce,,AC Milan,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-3acc16f3dfc54b7235b87186,SERIEA,2024-25,2025-03-09T12:00:00Z,Matchday 28,,Juventus FC,,Atalanta BC,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ba4afb27cd06b819ef9ae95a,SERIEA,2024-25,2025-03-09T12:00:00Z,Matchday 28,,Empoli FC,,AS Roma,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d5edc303634c207d633d7518,SERIEA,2024-25,2025-03-09T12:00:00Z,Matchday 28,,Hellas Verona FC,,Bologna FC 1909,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-db3a08f02ed5de7b71ed66dd,SERIEA,2024-25,2025-03-09T12:00:00Z,Matchday 28,,SSC Napoli,,ACF Fiorentina,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b02133044f8b9c1713cd91e6,SERIEA,2024-25,2025-03-10T12:00:00Z,Matchday 28,,SS Lazio,,Udinese Calcio,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4da7b7c27730fa9f70cd78d1,SERIEA,2024-25,2025-03-14T12:00:00Z,Matchday 29,,Genoa CFC,,US Lecce,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-496a804bb0f700eeb6733bdb,SERIEA,2024-25,2025-03-15T12:00:00Z,Matchday 29,,AC Monza,,Parma Calcio 1913,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-987046e233c0ea8c70fab7f1,SERIEA,2024-25,2025-03-15T12:00:00Z,Matchday 29,,Torino FC,,Empoli FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-bb69c6c907d929ec067b37da,SERIEA,2024-25,2025-03-15T12:00:00Z,Matchday 29,,Udinese Calcio,,Hellas Verona FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-bfe77b0c5724d8d5ab04f93d,SERIEA,2024-25,2025-03-15T12:00:00Z,Matchday 29,,AC Milan,,Como 1907,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-43c325399f58a850656b2b53,SERIEA,2024-25,2025-03-16T12:00:00Z,Matchday 29,,Atalanta BC,,FC Internazionale Milano,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9a9de7d0ac1704cd13725647,SERIEA,2024-25,2025-03-16T12:00:00Z,Matchday 29,,AS Roma,,Cagliari Calcio,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9cfedec75effdb60016a6443,SERIEA,2024-25,2025-03-16T12:00:00Z,Matchday 29,,Bologna FC 1909,,SS Lazio,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b9fe2bb924808607dd821854,SERIEA,2024-25,2025-03-16T12:00:00Z,Matchday 29,,Venezia FC,,SSC Napoli,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d98c623ca20278cce49135ce,SERIEA,2024-25,2025-03-16T12:00:00Z,Matchday 29,,ACF Fiorentina,,Juventus FC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-291e6333b1a96ad1f5ae8027,SERIEA,2024-25,2025-03-29T12:00:00Z,Matchday 30,,US Lecce,,AS Roma,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4e5648a49cf85a88d4559626,SERIEA,2024-25,2025-03-29T12:00:00Z,Matchday 30,,Como 1907,,Empoli FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c469456df9d71b9d7a10f7c3,SERIEA,2024-25,2025-03-29T12:00:00Z,Matchday 30,,Venezia FC,,Bologna FC 1909,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d7912dd6b46f00e5b9c8f797,SERIEA,2024-25,2025-03-29T12:00:00Z,Matchday 30,,Juventus FC,,Genoa CFC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-23dde44584fb2ad8a0c3293a,SERIEA,2024-25,2025-03-30T12:00:00Z,Matchday 30,,ACF Fiorentina,,Atalanta BC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-50087f425a8b56e6225c3305,SERIEA,2024-25,2025-03-30T12:00:00Z,Matchday 30,,FC Internazionale Milano,,Udinese Calcio,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a28f4df187421854408f814e,SERIEA,2024-25,2025-03-30T12:00:00Z,Matchday 30,,Cagliari Calcio,,AC Monza,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d224db54379d990b92508909,SERIEA,2024-25,2025-03-30T12:00:00Z,Matchday 30,,SSC Napoli,,AC Milan,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-0c327d97177151f7108603f0,SERIEA,2024-25,2025-03-31T12:00:00Z,Matchday 30,,Hellas Verona FC,,Parma Calcio 1913,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ef0f74d5001d1882ea6af1dc,SERIEA,2024-25,2025-03-31T12:00:00Z,Matchday 30,,SS Lazio,,Torino FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8007179c6f3f8328228ff5bc,SERIEA,2024-25,2025-04-04T12:00:00Z,Matchday 31,,Genoa CFC,,Udinese Calcio,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-765d4dafc4e0e73f5682eaf6,SERIEA,2024-25,2025-04-05T12:00:00Z,Matchday 31,,AC Monza,,Como 1907,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-89d4d01e99e76e396f5e6d9a,SERIEA,2024-25,2025-04-05T12:00:00Z,Matchday 31,,AC Milan,,ACF Fiorentina,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-feee02d73e24049f55f0c5cd,SERIEA,2024-25,2025-04-05T12:00:00Z,Matchday 31,,Parma Calcio 1913,,FC Internazionale Milano,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-24e4cfa5952fc527b4c0dfb5,SERIEA,2024-25,2025-04-06T12:00:00Z,Matchday 31,,AS Roma,,Juventus FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-609f618b2ceb352f54d25691,SERIEA,2024-25,2025-04-06T12:00:00Z,Matchday 31,,Atalanta BC,,SS Lazio,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a50b49c6669641939fc8fc94,SERIEA,2024-25,2025-04-06T12:00:00Z,Matchday 31,,US Lecce,,Venezia FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-cd7c3619c42cdb17efed75f9,SERIEA,2024-25,2025-04-06T12:00:00Z,Matchday 31,,Torino FC,,Hellas Verona FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d4e2c4920a5fe70497d817e9,SERIEA,2024-25,2025-04-06T12:00:00Z,Matchday 31,,Empoli FC,,Cagliari Calcio,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-bc005779e4ebff3fca1a66fd,SERIEA,2024-25,2025-04-07T12:00:00Z,Matchday 31,,Bologna FC 1909,,SSC Napoli,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c3ef20ae5bc63fea8cae47a2,SERIEA,2024-25,2025-04-11T12:00:00Z,Matchday 32,,Udinese Calcio,,AC Milan,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5266982e366aeda38b48955e,SERIEA,2024-25,2025-04-12T12:00:00Z,Matchday 32,,Juventus FC,,US Lecce,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-69779784f93c1d0e73eb561c,SERIEA,2024-25,2025-04-12T12:00:00Z,Matchday 32,,FC Internazionale Milano,,Cagliari Calcio,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9a378605e1fafec910bad825,SERIEA,2024-25,2025-04-12T12:00:00Z,Matchday 32,,Venezia FC,,AC Monza,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4dcc79a02091686d20b17cb3,SERIEA,2024-25,2025-04-13T12:00:00Z,Matchday 32,,ACF Fiorentina,,Parma Calcio 1913,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9199ba8dc0e539d4291a12c0,SERIEA,2024-25,2025-04-13T12:00:00Z,Matchday 32,,Como 1907,,Torino FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ab8626487a3f725d0e95c5ca,SERIEA,2024-25,2025-04-13T12:00:00Z,Matchday 32,,Atalanta BC,,Bologna FC 1909,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-cbf32c1504ec96ef2fe465b6,SERIEA,2024-25,2025-04-13T12:00:00Z,Matchday 32,,SS Lazio,,AS Roma,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d9ce7573426679d421ab75ea,SERIEA,2024-25,2025-04-13T12:00:00Z,Matchday 32,,Hellas Verona FC,,Genoa CFC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-186dc30c46e35ae515a0bcfd,SERIEA,2024-25,2025-04-14T12:00:00Z,Matchday 32,,SSC Napoli,,Empoli FC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-1cd43d1dd1cb165b518fcf55,SERIEA,2024-25,2025-04-19T12:00:00Z,Matchday 33,,AS Roma,,Hellas Verona FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-45e53e88a856c44b8b798d32,SERIEA,2024-25,2025-04-19T12:00:00Z,Matchday 33,,AC Monza,,SSC Napoli,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4d9a2a60d7898be4ee90d4fb,SERIEA,2024-25,2025-04-19T12:00:00Z,Matchday 33,,US Lecce,,Como 1907,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-33ba305d37b93f6417f06bfd,SERIEA,2024-25,2025-04-20T12:00:00Z,Matchday 33,,Bologna FC 1909,,FC Internazionale Milano,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-48a82b5379c2f89e952489bd,SERIEA,2024-25,2025-04-20T12:00:00Z,Matchday 33,,AC Milan,,Atalanta BC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-fe7c83c42942264d5265eb79,SERIEA,2024-25,2025-04-20T12:00:00Z,Matchday 33,,Empoli FC,,Venezia FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-04363135d0c9ea239e57868c,SERIEA,2024-25,2025-04-23T12:00:00Z,Matchday 33,,Cagliari Calcio,,ACF Fiorentina,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2b2285f0266f5a14b8570aa9,SERIEA,2024-25,2025-04-23T12:00:00Z,Matchday 33,,Parma Calcio 1913,,Juventus FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-79772575d1d6a18c3b8adae0,SERIEA,2024-25,2025-04-23T12:00:00Z,Matchday 33,,Genoa CFC,,SS Lazio,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b2dc2fd97aa3f8824ea2edf1,SERIEA,2024-25,2025-04-23T12:00:00Z,Matchday 33,,Torino FC,,Udinese Calcio,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-0d71dedad9e3e0b9cb209cd0,SERIEA,2024-25,2025-04-27T12:00:00Z,Matchday 34,,SSC Napoli,,Torino FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-1f876a152d22ecfbc6ab57e1,SERIEA,2024-25,2025-04-27T12:00:00Z,Matchday 34,,Juventus FC,,AC Monza,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-564097641193b1f2b8cb4372,SERIEA,2024-25,2025-04-27T12:00:00Z,Matchday 34,,ACF Fiorentina,,Empoli FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-584664bd8f0e3bac20f48981,SERIEA,2024-25,2025-04-27T12:00:00Z,Matchday 34,,Atalanta BC,,US Lecce,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-7dd409835434fa1e76dd0f92,SERIEA,2024-25,2025-04-27T12:00:00Z,Matchday 34,,Venezia FC,,AC Milan,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-83884a8caec79a229aac17cb,SERIEA,2024-25,2025-04-27T12:00:00Z,Matchday 34,,FC Internazionale Milano,,AS Roma,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-aa46a0d6b4a9b784d192fde3,SERIEA,2024-25,2025-04-27T12:00:00Z,Matchday 34,,Como 1907,,Genoa CFC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-712751cccbd234a9dfded3de,SERIEA,2024-25,2025-04-28T12:00:00Z,Matchday 34,,SS Lazio,,Parma Calcio 1913,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-7f1dd238e62b1d4cd4c6a226,SERIEA,2024-25,2025-04-28T12:00:00Z,Matchday 34,,Udinese Calcio,,Bologna FC 1909,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a90417490063c693a6c6b7a0,SERIEA,2024-25,2025-04-28T12:00:00Z,Matchday 34,,Hellas Verona FC,,Cagliari Calcio,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-1310752110114424009c2bba,SERIEA,2024-25,2025-05-02T12:00:00Z,Matchday 35,,Torino FC,,Venezia FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-14213a6b265b522df1242825,SERIEA,2024-25,2025-05-03T12:00:00Z,Matchday 35,,US Lecce,,SSC Napoli,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-687a54420c0a305a5a7bb541,SERIEA,2024-25,2025-05-03T12:00:00Z,Matchday 35,,FC Internazionale Milano,,Hellas Verona FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-7217bee6ec8ac52b2ab4cdd3,SERIEA,2024-25,2025-05-03T12:00:00Z,Matchday 35,,Parma Calcio 1913,,Como 1907,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f71e38b76131258af9c7fa0d,SERIEA,2024-25,2025-05-03T12:00:00Z,Matchday 35,,Cagliari Calcio,,Udinese Calcio,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-001392c020754ff96742ed2f,SERIEA,2024-25,2025-05-04T12:00:00Z,Matchday 35,,AS Roma,,ACF Fiorentina,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-57105b12e901fd221d1b6fad,SERIEA,2024-25,2025-05-04T12:00:00Z,Matchday 35,,AC Monza,,Atalanta BC,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6bb2a819f7e6bb447e5e8bc7,SERIEA,2024-25,2025-05-04T12:00:00Z,Matchday 35,,Bologna FC 1909,,Juventus FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-81ed3b3f96aaa5fffd11a71c,SERIEA,2024-25,2025-05-04T12:00:00Z,Matchday 35,,Empoli FC,,SS Lazio,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-7b740abdcfb977f9ded255d9,SERIEA,2024-25,2025-05-05T12:00:00Z,Matchday 35,,Genoa CFC,,AC Milan,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f0209247135df8b546a6cb8e,SERIEA,2024-25,2025-05-09T12:00:00Z,Matchday 36,,AC Milan,,Bologna FC 1909,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-22377483c3411da8bd4d6191,SERIEA,2024-25,2025-05-10T12:00:00Z,Matchday 36,,Empoli FC,,Parma Calcio 1913,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6e74c812315e462eee57bb42,SERIEA,2024-25,2025-05-10T12:00:00Z,Matchday 36,,SS Lazio,,Juventus FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-beec9642aa8da7da7212bc14,SERIEA,2024-25,2025-05-10T12:00:00Z,Matchday 36,,Como 1907,,Cagliari Calcio,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-177359768e4959e8302c2dd4,SERIEA,2024-25,2025-05-11T12:00:00Z,Matchday 36,,Udinese Calcio,,AC Monza,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-3fc8fa5b208efadb35162b7a,SERIEA,2024-25,2025-05-11T12:00:00Z,Matchday 36,,SSC Napoli,,Genoa CFC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-411a080f881d2e21648a512a,SERIEA,2024-25,2025-05-11T12:00:00Z,Matchday 36,,Torino FC,,FC Internazionale Milano,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-cb37be95f9f1cefca155cf68,SERIEA,2024-25,2025-05-11T12:00:00Z,Matchday 36,,Hellas Verona FC,,US Lecce,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8e7be0ee9aba70a903a1acfd,SERIEA,2024-25,2025-05-12T12:00:00Z,Matchday 36,,Atalanta BC,,AS Roma,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ba8bab5869f1a1b4876da95f,SERIEA,2024-25,2025-05-12T12:00:00Z,Matchday 36,,Venezia FC,,ACF Fiorentina,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-be8650115f576b7353582081,SERIEA,2024-25,2025-05-17T12:00:00Z,Matchday 37,,Genoa CFC,,Atalanta BC,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-02e9a28f0585569842a86c5e,SERIEA,2024-25,2025-05-18T12:00:00Z,Matchday 37,,Hellas Verona FC,,Como 1907,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-42d83dd6c10c81561991d0bb,SERIEA,2024-25,2025-05-18T12:00:00Z,Matchday 37,,AS Roma,,AC Milan,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6f9757399d228c51a2a7546b,SERIEA,2024-25,2025-05-18T12:00:00Z,Matchday 37,,Parma Calcio 1913,,SSC Napoli,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8d3b568af9944b46f80c0bd4,SERIEA,2024-25,2025-05-18T12:00:00Z,Matchday 37,,US Lecce,,Torino FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b8138ecd4f0c2d6eeba3c90f,SERIEA,2024-25,2025-05-18T12:00:00Z,Matchday 37,,AC Monza,,Empoli FC,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-bb3105257574f61d6859bc3f,SERIEA,2024-25,2025-05-18T12:00:00Z,Matchday 37,,Juventus FC,,Udinese Calcio,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-cd6277bad230ea5809b86a92,SERIEA,2024-25,2025-05-18T12:00:00Z,Matchday 37,,FC Internazionale Milano,,SS Lazio,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-dbbebcc3ae8cd8065227db3e,SERIEA,2024-25,2025-05-18T12:00:00Z,Matchday 37,,Cagliari Calcio,,Venezia FC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f47975e31f917511932f05df,SERIEA,2024-25,2025-05-18T12:00:00Z,Matchday 37,,ACF Fiorentina,,Bologna FC 1909,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00

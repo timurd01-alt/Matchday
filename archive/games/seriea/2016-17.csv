@@ -1,0 +1,381 @@
+game_id,comp,season,date_utc,stage,venue,home_name,home_code,away_name,away_code,home_score,away_score,status,source,first_seen
+seriea-openfootball-6fc25529745dd4d62d53909b,SERIEA,2016-17,2016-08-20T12:00:00Z,Matchday 1,,Juventus,,ACF Fiorentina,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-db41cbfa7cd4532078c21c99,SERIEA,2016-17,2016-08-20T12:00:00Z,Matchday 1,,AS Roma,,Udinese Calcio,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-1026e9ca40d4ee35402cb0c5,SERIEA,2016-17,2016-08-21T12:00:00Z,Matchday 1,,Bologna FC,,FC Crotone,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-1978814bacafaa13286f992a,SERIEA,2016-17,2016-08-21T12:00:00Z,Matchday 1,,Empoli FC,,Sampdoria,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-1e0634a942295bde1d765618,SERIEA,2016-17,2016-08-21T12:00:00Z,Matchday 1,,Delfino Pescara,,SSC Napoli,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2bf6ed35999640b61ced77af,SERIEA,2016-17,2016-08-21T12:00:00Z,Matchday 1,,AC Milan,,Torino FC,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4581c5c96e452d78fd429b90,SERIEA,2016-17,2016-08-21T12:00:00Z,Matchday 1,,Chievo Verona,,Inter,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-88642f49b3043d994fdd59a3,SERIEA,2016-17,2016-08-21T12:00:00Z,Matchday 1,,Atalanta,,Lazio Roma,,3,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8e56598572cf8caf34e20927,SERIEA,2016-17,2016-08-21T12:00:00Z,Matchday 1,,US Palermo,,Sassuolo Calcio,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c62a19418f94dceaa9f22e0f,SERIEA,2016-17,2016-08-21T12:00:00Z,Matchday 1,,Genoa CFC,,Cagliari Calcio,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-7fee376d146fb1572bb60d7a,SERIEA,2016-17,2016-08-27T12:00:00Z,Matchday 2,,Lazio Roma,,Juventus,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-83a6e0734e7694fae065d3c5,SERIEA,2016-17,2016-08-27T12:00:00Z,Matchday 2,,SSC Napoli,,AC Milan,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2bd841ef3f918eb19dfa5cb6,SERIEA,2016-17,2016-08-28T12:00:00Z,Matchday 2,,Udinese Calcio,,Empoli FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-3aa139b386f7785e287fc7e8,SERIEA,2016-17,2016-08-28T12:00:00Z,Matchday 2,,ACF Fiorentina,,Chievo Verona,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-71dc64bee632997720acd349,SERIEA,2016-17,2016-08-28T12:00:00Z,Matchday 2,,Sassuolo Calcio,,Delfino Pescara,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-7e4a0eec5a191b5606c2790c,SERIEA,2016-17,2016-08-28T12:00:00Z,Matchday 2,,Sampdoria,,Atalanta,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9ce88926386adfd494d85512,SERIEA,2016-17,2016-08-28T12:00:00Z,Matchday 2,,Inter,,US Palermo,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a8fdf9728cc4a6f3cb190bfd,SERIEA,2016-17,2016-08-28T12:00:00Z,Matchday 2,,Cagliari Calcio,,AS Roma,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d571b4de862d1dfaab8dfb08,SERIEA,2016-17,2016-08-28T12:00:00Z,Matchday 2,,Torino FC,,Bologna FC,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e2d104f29fd14a0e8ccee06b,SERIEA,2016-17,2016-08-28T12:00:00Z,Matchday 2,,FC Crotone,,Genoa CFC,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-054456f90b318e47e04db649,SERIEA,2016-17,2016-09-10T12:00:00Z,Matchday 3,,Juventus,,Sassuolo Calcio,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a62505afece7bc1aeef2bb2a,SERIEA,2016-17,2016-09-10T12:00:00Z,Matchday 3,,US Palermo,,SSC Napoli,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6060e04d1d9fad1a1eb45f37,SERIEA,2016-17,2016-09-11T12:00:00Z,Matchday 3,,Bologna FC,,Cagliari Calcio,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-86b0f00f119202e02e4ec546,SERIEA,2016-17,2016-09-11T12:00:00Z,Matchday 3,,Atalanta,,Torino FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-beec16ff013efbd988e53e57,SERIEA,2016-17,2016-09-11T12:00:00Z,Matchday 3,,AS Roma,,Sampdoria,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c0f36fa877d8a1241d6aae85,SERIEA,2016-17,2016-09-11T12:00:00Z,Matchday 3,,AC Milan,,Udinese Calcio,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e9d9deb9497261bb203e625a,SERIEA,2016-17,2016-09-11T12:00:00Z,Matchday 3,,Delfino Pescara,,Inter,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f8e3dfe8d628287d32c7edff,SERIEA,2016-17,2016-09-11T12:00:00Z,Matchday 3,,Chievo Verona,,Lazio Roma,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-968ec1322aeb92f9c2f5ddb5,SERIEA,2016-17,2016-09-12T12:00:00Z,Matchday 3,,Empoli FC,,FC Crotone,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9b7c87e53a5710572a5ba6af,SERIEA,2016-17,2016-09-16T12:00:00Z,Matchday 4,,Sampdoria,,AC Milan,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-81a9437f5789397c7d07de1a,SERIEA,2016-17,2016-09-17T12:00:00Z,Matchday 4,,Lazio Roma,,Delfino Pescara,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-bac1ea296222f8269dd7da39,SERIEA,2016-17,2016-09-17T12:00:00Z,Matchday 4,,SSC Napoli,,Bologna FC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-059a73a486a5a8e7a1f53910,SERIEA,2016-17,2016-09-18T12:00:00Z,Matchday 4,,FC Crotone,,US Palermo,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2dff590cb9319f770609b65e,SERIEA,2016-17,2016-09-18T12:00:00Z,Matchday 4,,Udinese Calcio,,Chievo Verona,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-54dc91f3a34cbf2ef236d038,SERIEA,2016-17,2016-09-18T12:00:00Z,Matchday 4,,Sassuolo Calcio,,Genoa CFC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9f675205425a24b0cbd72fd9,SERIEA,2016-17,2016-09-18T12:00:00Z,Matchday 4,,Torino FC,,Empoli FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e49f03007d4160a39de6aff8,SERIEA,2016-17,2016-09-18T12:00:00Z,Matchday 4,,ACF Fiorentina,,AS Roma,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-fa8075e375f184a838e25f57,SERIEA,2016-17,2016-09-18T12:00:00Z,Matchday 4,,Inter,,Juventus,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-fdfac4e802fc392c3535fa5d,SERIEA,2016-17,2016-09-18T12:00:00Z,Matchday 4,,Cagliari Calcio,,Atalanta,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d4634dbadccb65ae143da177,SERIEA,2016-17,2016-09-20T12:00:00Z,Matchday 5,,AC Milan,,Lazio Roma,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-1040f8a1bbfb08bec9581a29,SERIEA,2016-17,2016-09-21T12:00:00Z,Matchday 5,,Empoli FC,,Inter,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-31a121273459982a270a6cf1,SERIEA,2016-17,2016-09-21T12:00:00Z,Matchday 5,,Bologna FC,,Sampdoria,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-3a8a0ad93a8f07448cb29e76,SERIEA,2016-17,2016-09-21T12:00:00Z,Matchday 5,,AS Roma,,FC Crotone,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-45a4a513aec8b5831990f2ac,SERIEA,2016-17,2016-09-21T12:00:00Z,Matchday 5,,Genoa CFC,,SSC Napoli,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-70c7ecbe3900da7dac75a1c6,SERIEA,2016-17,2016-09-21T12:00:00Z,Matchday 5,,Delfino Pescara,,Torino FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8104d82ca8f415ed6367d360,SERIEA,2016-17,2016-09-21T12:00:00Z,Matchday 5,,Chievo Verona,,Sassuolo Calcio,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-94663e1990b9f54c0a314305,SERIEA,2016-17,2016-09-21T12:00:00Z,Matchday 5,,Juventus,,Cagliari Calcio,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-99c4fe683e29ff53ac29830a,SERIEA,2016-17,2016-09-21T12:00:00Z,Matchday 5,,Udinese Calcio,,ACF Fiorentina,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a56e901f71473bcd05a94fa5,SERIEA,2016-17,2016-09-21T12:00:00Z,Matchday 5,,Atalanta,,US Palermo,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-04c37dc16036be8aeeb19423,SERIEA,2016-17,2016-09-24T12:00:00Z,Matchday 6,,US Palermo,,Juventus,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e57ddbbbbfbbb48d20fb10a9,SERIEA,2016-17,2016-09-24T12:00:00Z,Matchday 6,,SSC Napoli,,Chievo Verona,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-23de8d62dd17e4cb3b970543,SERIEA,2016-17,2016-09-25T12:00:00Z,Matchday 6,,Inter,,Bologna FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-81ac26340a92626b32ac78e9,SERIEA,2016-17,2016-09-25T12:00:00Z,Matchday 6,,Genoa CFC,,Delfino Pescara,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9b003f99fe3114640cd44219,SERIEA,2016-17,2016-09-25T12:00:00Z,Matchday 6,,Lazio Roma,,Empoli FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-aa9795cf58958074b55eac3d,SERIEA,2016-17,2016-09-25T12:00:00Z,Matchday 6,,Sassuolo Calcio,,Udinese Calcio,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b7c9d006e113f3370c62bdaa,SERIEA,2016-17,2016-09-25T12:00:00Z,Matchday 6,,Torino FC,,AS Roma,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e2e3ee27fa20d3eb5cecd0b5,SERIEA,2016-17,2016-09-25T12:00:00Z,Matchday 6,,ACF Fiorentina,,AC Milan,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-599bcf9dcad146f84418e7ab,SERIEA,2016-17,2016-09-26T12:00:00Z,Matchday 6,,Cagliari Calcio,,Sampdoria,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b27c04a902266c0c74e60dd6,SERIEA,2016-17,2016-09-26T12:00:00Z,Matchday 6,,FC Crotone,,Atalanta,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-088dbff0b0ba473e4fef9ff7,SERIEA,2016-17,2016-10-01T12:00:00Z,Matchday 7,,Delfino Pescara,,Chievo Verona,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4a4b8e7e43ec59662d8844b2,SERIEA,2016-17,2016-10-01T12:00:00Z,Matchday 7,,Udinese Calcio,,Lazio Roma,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-00b14b080360c928851868ad,SERIEA,2016-17,2016-10-02T12:00:00Z,Matchday 7,,Bologna FC,,Genoa CFC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4bdcc254a90b913d321b321b,SERIEA,2016-17,2016-10-02T12:00:00Z,Matchday 7,,Empoli FC,,Juventus,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-51f895f87ec0852b44a7959f,SERIEA,2016-17,2016-10-02T12:00:00Z,Matchday 7,,AS Roma,,Inter,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-63317c16efe9f8c45ecfc637,SERIEA,2016-17,2016-10-02T12:00:00Z,Matchday 7,,Atalanta,,SSC Napoli,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-7d5151e3b9988491466e99b9,SERIEA,2016-17,2016-10-02T12:00:00Z,Matchday 7,,AC Milan,,Sassuolo Calcio,,4,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-950340f86ff68f77ed97a25a,SERIEA,2016-17,2016-10-02T12:00:00Z,Matchday 7,,Torino FC,,ACF Fiorentina,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c907d9ad12323935cbff1ec3,SERIEA,2016-17,2016-10-02T12:00:00Z,Matchday 7,,Sampdoria,,US Palermo,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ef793cbde22b27739d9e7fa1,SERIEA,2016-17,2016-10-02T12:00:00Z,Matchday 7,,Cagliari Calcio,,FC Crotone,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-29bc09cc8c17ad1392b893d1,SERIEA,2016-17,2016-10-15T12:00:00Z,Matchday 8,,Delfino Pescara,,Sampdoria,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6eddb9fad6962b1522a66c22,SERIEA,2016-17,2016-10-15T12:00:00Z,Matchday 8,,SSC Napoli,,AS Roma,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-cdddf62f06aaf8b5041d44a3,SERIEA,2016-17,2016-10-15T12:00:00Z,Matchday 8,,Juventus,,Udinese Calcio,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2ebf73f3f224da06a6c464db,SERIEA,2016-17,2016-10-16T12:00:00Z,Matchday 8,,ACF Fiorentina,,Atalanta,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-37a693376e4ee735cfd0d901,SERIEA,2016-17,2016-10-16T12:00:00Z,Matchday 8,,Inter,,Cagliari Calcio,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-66412293471d09105cf98d66,SERIEA,2016-17,2016-10-16T12:00:00Z,Matchday 8,,Lazio Roma,,Bologna FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8717f0133cf5cbc14bc57e91,SERIEA,2016-17,2016-10-16T12:00:00Z,Matchday 8,,Genoa CFC,,Empoli FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8afc492f3682edd8337e58c9,SERIEA,2016-17,2016-10-16T12:00:00Z,Matchday 8,,Chievo Verona,,AC Milan,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8bc0e85ec14c8a385534b955,SERIEA,2016-17,2016-10-16T12:00:00Z,Matchday 8,,Sassuolo Calcio,,FC Crotone,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c24936aacd55e90683793da4,SERIEA,2016-17,2016-10-17T12:00:00Z,Matchday 8,,US Palermo,,Torino FC,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-85b4855812647589480d7f43,SERIEA,2016-17,2016-10-22T12:00:00Z,Matchday 9,,Sampdoria,,Genoa CFC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a60dbbaa1e3cc9bd55597202,SERIEA,2016-17,2016-10-22T12:00:00Z,Matchday 9,,AC Milan,,Juventus,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-474e393417a08dd10a54e36a,SERIEA,2016-17,2016-10-23T12:00:00Z,Matchday 9,,Udinese Calcio,,Delfino Pescara,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4a5c0e4b966fe1973685cb20,SERIEA,2016-17,2016-10-23T12:00:00Z,Matchday 9,,FC Crotone,,SSC Napoli,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-52140e87bfba3172c9d9a8b7,SERIEA,2016-17,2016-10-23T12:00:00Z,Matchday 9,,Bologna FC,,Sassuolo Calcio,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-55185f348e5410f6650c331f,SERIEA,2016-17,2016-10-23T12:00:00Z,Matchday 9,,Cagliari Calcio,,ACF Fiorentina,,3,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-64fe00b86e2b9880cde1e35c,SERIEA,2016-17,2016-10-23T12:00:00Z,Matchday 9,,Torino FC,,Lazio Roma,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-7b397bd03fbafff4ccd62188,SERIEA,2016-17,2016-10-23T12:00:00Z,Matchday 9,,AS Roma,,US Palermo,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-946f06a4bce687b8c23d1b02,SERIEA,2016-17,2016-10-23T12:00:00Z,Matchday 9,,Empoli FC,,Chievo Verona,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f47c68ae990405a155eba6ff,SERIEA,2016-17,2016-10-23T12:00:00Z,Matchday 9,,Atalanta,,Inter,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2a8135f85f42539c432c3bbf,SERIEA,2016-17,2016-10-25T12:00:00Z,Matchday 10,,Genoa CFC,,AC Milan,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-05636c6d19ee042d66429985,SERIEA,2016-17,2016-10-26T12:00:00Z,Matchday 10,,Inter,,Torino FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-0ee55ab135f483a9172a56ed,SERIEA,2016-17,2016-10-26T12:00:00Z,Matchday 10,,SSC Napoli,,Empoli FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-3bdcf48b5966840893debc9c,SERIEA,2016-17,2016-10-26T12:00:00Z,Matchday 10,,ACF Fiorentina,,FC Crotone,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-3d0291d4284ca3869eacf403,SERIEA,2016-17,2016-10-26T12:00:00Z,Matchday 10,,Juventus,,Sampdoria,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5f2b4d3c10a9dc2536199f5f,SERIEA,2016-17,2016-10-26T12:00:00Z,Matchday 10,,Lazio Roma,,Cagliari Calcio,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a08dc6cc72ff7eb72633f86e,SERIEA,2016-17,2016-10-26T12:00:00Z,Matchday 10,,Delfino Pescara,,Atalanta,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a213e587153d7ae93ddf9b2f,SERIEA,2016-17,2016-10-26T12:00:00Z,Matchday 10,,Chievo Verona,,Bologna FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a38655e7e4a8d16f52713508,SERIEA,2016-17,2016-10-26T12:00:00Z,Matchday 10,,Sassuolo Calcio,,AS Roma,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-68b1cbb66a81d6ece4f27ffd,SERIEA,2016-17,2016-10-27T12:00:00Z,Matchday 10,,US Palermo,,Udinese Calcio,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6dd136e3a720e385458210c7,SERIEA,2016-17,2016-10-29T12:00:00Z,Matchday 11,,Bologna FC,,ACF Fiorentina,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9ffb2634f0030f7cd7523932,SERIEA,2016-17,2016-10-29T12:00:00Z,Matchday 11,,Juventus,,SSC Napoli,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-149ffb76548a6252c6947352,SERIEA,2016-17,2016-10-30T12:00:00Z,Matchday 11,,FC Crotone,,Chievo Verona,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-53f7e85dcc9df5e16c5e2a37,SERIEA,2016-17,2016-10-30T12:00:00Z,Matchday 11,,AC Milan,,Delfino Pescara,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-63b9ff4ea0a8530775096986,SERIEA,2016-17,2016-10-30T12:00:00Z,Matchday 11,,Sampdoria,,Inter,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8c07ff771623efa33204b6aa,SERIEA,2016-17,2016-10-30T12:00:00Z,Matchday 11,,Empoli FC,,AS Roma,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e306f2ac12a6c28dba82fad0,SERIEA,2016-17,2016-10-30T12:00:00Z,Matchday 11,,Lazio Roma,,Sassuolo Calcio,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f9a82e0cf183b32ac154bcbb,SERIEA,2016-17,2016-10-30T12:00:00Z,Matchday 11,,Atalanta,,Genoa CFC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-1e716a29eeeb35e6e4176fab,SERIEA,2016-17,2016-10-31T12:00:00Z,Matchday 11,,Cagliari Calcio,,US Palermo,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-bef410afea5e05ab8fa3401e,SERIEA,2016-17,2016-10-31T12:00:00Z,Matchday 11,,Udinese Calcio,,Torino FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-64fe5cf5e7100ec3e433ee17,SERIEA,2016-17,2016-11-05T12:00:00Z,Matchday 12,,SSC Napoli,,Lazio Roma,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-68844443e19eefc1c474e38d,SERIEA,2016-17,2016-11-05T12:00:00Z,Matchday 12,,Torino FC,,Cagliari Calcio,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-079a4ae79936bff264c4d642,SERIEA,2016-17,2016-11-06T12:00:00Z,Matchday 12,,Genoa CFC,,Udinese Calcio,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-3dd73415ffc8e989aebc161b,SERIEA,2016-17,2016-11-06T12:00:00Z,Matchday 12,,AS Roma,,Bologna FC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5800fd653b78c0fa6a96e427,SERIEA,2016-17,2016-11-06T12:00:00Z,Matchday 12,,Chievo Verona,,Juventus,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5efdea5189c92ea4aa6977ba,SERIEA,2016-17,2016-11-06T12:00:00Z,Matchday 12,,Inter,,FC Crotone,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-675b0898ded582b9bde9aaaf,SERIEA,2016-17,2016-11-06T12:00:00Z,Matchday 12,,Sassuolo Calcio,,Atalanta,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-87f6b5c30d57e567f171f79c,SERIEA,2016-17,2016-11-06T12:00:00Z,Matchday 12,,ACF Fiorentina,,Sampdoria,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ad87800e031ab0625b1a9df5,SERIEA,2016-17,2016-11-06T12:00:00Z,Matchday 12,,US Palermo,,AC Milan,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c866414b88dc0b2e4d715d7e,SERIEA,2016-17,2016-11-06T12:00:00Z,Matchday 12,,Delfino Pescara,,Empoli FC,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-14e3ef83160dba27f1fa065c,SERIEA,2016-17,2016-11-19T12:00:00Z,Matchday 13,,Juventus,,Delfino Pescara,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-cf9263d019a249c8c00d1332,SERIEA,2016-17,2016-11-19T12:00:00Z,Matchday 13,,Chievo Verona,,Cagliari Calcio,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d103d9eb5880c641bd72ebbe,SERIEA,2016-17,2016-11-19T12:00:00Z,Matchday 13,,Udinese Calcio,,SSC Napoli,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-04cf6268492852e5d94f023d,SERIEA,2016-17,2016-11-20T12:00:00Z,Matchday 13,,Sampdoria,,Sassuolo Calcio,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-0f1d693874569d075ef10f7a,SERIEA,2016-17,2016-11-20T12:00:00Z,Matchday 13,,Lazio Roma,,Genoa CFC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-47da3c0182ee285b9952bcae,SERIEA,2016-17,2016-11-20T12:00:00Z,Matchday 13,,FC Crotone,,Torino FC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5a8c431851db43a739dd93c2,SERIEA,2016-17,2016-11-20T12:00:00Z,Matchday 13,,AC Milan,,Inter,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9d07bb3224c788cbc8f8c22f,SERIEA,2016-17,2016-11-20T12:00:00Z,Matchday 13,,Bologna FC,,US Palermo,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f3f679440c7b122975925d05,SERIEA,2016-17,2016-11-20T12:00:00Z,Matchday 13,,Atalanta,,AS Roma,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-fd46a1c96fcfa3add8eaa413,SERIEA,2016-17,2016-11-20T12:00:00Z,Matchday 13,,Empoli FC,,ACF Fiorentina,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-470bf799902107dc391c32ef,SERIEA,2016-17,2016-11-26T12:00:00Z,Matchday 14,,Empoli FC,,AC Milan,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5ae6dab0be82f8386566c72e,SERIEA,2016-17,2016-11-26T12:00:00Z,Matchday 14,,Torino FC,,Chievo Verona,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-050382aaebcdc4ac0e646ac1,SERIEA,2016-17,2016-11-27T12:00:00Z,Matchday 14,,AS Roma,,Delfino Pescara,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-35525623f389b36205a13fbb,SERIEA,2016-17,2016-11-27T12:00:00Z,Matchday 14,,US Palermo,,Lazio Roma,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4bf08ba2164bfa2dcef3642f,SERIEA,2016-17,2016-11-27T12:00:00Z,Matchday 14,,Cagliari Calcio,,Udinese Calcio,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-58b258857a477adfea86bb56,SERIEA,2016-17,2016-11-27T12:00:00Z,Matchday 14,,FC Crotone,,Sampdoria,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-96bf7c7a4c9155c6daf160d0,SERIEA,2016-17,2016-11-27T12:00:00Z,Matchday 14,,Bologna FC,,Atalanta,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ffa25e316ab8cd1a63723cc4,SERIEA,2016-17,2016-11-27T12:00:00Z,Matchday 14,,Genoa CFC,,Juventus,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-1d80320d453f3db3172875d9,SERIEA,2016-17,2016-11-28T12:00:00Z,Matchday 14,,SSC Napoli,,Sassuolo Calcio,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5388b71099235608531826bc,SERIEA,2016-17,2016-11-28T12:00:00Z,Matchday 14,,Inter,,ACF Fiorentina,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-0fc1342ddb10e5302cdb4603,SERIEA,2016-17,2016-12-02T12:00:00Z,Matchday 15,,SSC Napoli,,Inter,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2630d00e96b1b741cef775fe,SERIEA,2016-17,2016-12-03T12:00:00Z,Matchday 15,,Juventus,,Atalanta,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-3e09f94f0e54081af221d410,SERIEA,2016-17,2016-12-04T12:00:00Z,Matchday 15,,Delfino Pescara,,Cagliari Calcio,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-42cfcb423ad510a115ab4315,SERIEA,2016-17,2016-12-04T12:00:00Z,Matchday 15,,Lazio Roma,,AS Roma,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5c2cbd9d63028b97ed05f39c,SERIEA,2016-17,2016-12-04T12:00:00Z,Matchday 15,,AC Milan,,FC Crotone,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5f2d370f4546f0d8864c3b19,SERIEA,2016-17,2016-12-04T12:00:00Z,Matchday 15,,ACF Fiorentina,,US Palermo,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c3f702e1f135861976d42560,SERIEA,2016-17,2016-12-04T12:00:00Z,Matchday 15,,Sassuolo Calcio,,Empoli FC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e48d5e5a202044ba9584784a,SERIEA,2016-17,2016-12-04T12:00:00Z,Matchday 15,,Sampdoria,,Torino FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-453a77fbe61da8e67a7785fb,SERIEA,2016-17,2016-12-05T12:00:00Z,Matchday 15,,Udinese Calcio,,Bologna FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-875f152a9070410972cb05d2,SERIEA,2016-17,2016-12-05T12:00:00Z,Matchday 15,,Chievo Verona,,Genoa CFC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b9beb07046191aede9c5974d,SERIEA,2016-17,2016-12-10T12:00:00Z,Matchday 16,,Sampdoria,,Lazio Roma,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d50ca5e1a44bcc9792727f0e,SERIEA,2016-17,2016-12-10T12:00:00Z,Matchday 16,,FC Crotone,,Delfino Pescara,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-124309794d975b4e3e92aaf7,SERIEA,2016-17,2016-12-11T12:00:00Z,Matchday 16,,Bologna FC,,Empoli FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-29b537a93bf4fa28cc8e01c6,SERIEA,2016-17,2016-12-11T12:00:00Z,Matchday 16,,Atalanta,,Udinese Calcio,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4ac6ff252f40baafbde42b12,SERIEA,2016-17,2016-12-11T12:00:00Z,Matchday 16,,Torino FC,,Juventus,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-768a242f21e15d84ecc8ddad,SERIEA,2016-17,2016-12-11T12:00:00Z,Matchday 16,,Inter,,Genoa CFC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b1f3ac05129ed72d9388b71a,SERIEA,2016-17,2016-12-11T12:00:00Z,Matchday 16,,Cagliari Calcio,,SSC Napoli,,0,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-fe6ff3bcf043b68fc247a561,SERIEA,2016-17,2016-12-11T12:00:00Z,Matchday 16,,US Palermo,,Chievo Verona,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-628d179abad36fa8f0443e0b,SERIEA,2016-17,2016-12-12T12:00:00Z,Matchday 16,,ACF Fiorentina,,Sassuolo Calcio,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-66b8b5aa7aedb0abb7fb5099,SERIEA,2016-17,2016-12-12T12:00:00Z,Matchday 16,,AS Roma,,AC Milan,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5f3a419338fb2731ec2f3199,SERIEA,2016-17,2016-12-15T12:00:00Z,Matchday 3,,Genoa CFC,,ACF Fiorentina,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-83f26b8c30931c466756c713,SERIEA,2016-17,2016-12-17T12:00:00Z,Matchday 17,,Juventus,,AS Roma,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-bd827e57e6b5932ad93153f7,SERIEA,2016-17,2016-12-17T12:00:00Z,Matchday 17,,AC Milan,,Atalanta,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-cd39932938715e473affcee3,SERIEA,2016-17,2016-12-17T12:00:00Z,Matchday 17,,Empoli FC,,Cagliari Calcio,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-010c78d72f912ec3c54ddcdf,SERIEA,2016-17,2016-12-18T12:00:00Z,Matchday 17,,Chievo Verona,,Sampdoria,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2e51f87a2edaf0a27c2304e2,SERIEA,2016-17,2016-12-18T12:00:00Z,Matchday 17,,Delfino Pescara,,Bologna FC,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-36e2954e84710d0da4a9d227,SERIEA,2016-17,2016-12-18T12:00:00Z,Matchday 17,,Lazio Roma,,ACF Fiorentina,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5a7c1494bb255f5c5d51b7f1,SERIEA,2016-17,2016-12-18T12:00:00Z,Matchday 17,,SSC Napoli,,Torino FC,,5,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-89245f341c6c78544e0ca1e4,SERIEA,2016-17,2016-12-18T12:00:00Z,Matchday 17,,Sassuolo Calcio,,Inter,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8c85b4e973990fe0fe0f8d57,SERIEA,2016-17,2016-12-18T12:00:00Z,Matchday 17,,Udinese Calcio,,FC Crotone,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9bff8ab27b9f3b6eb5220984,SERIEA,2016-17,2016-12-18T12:00:00Z,Matchday 17,,Genoa CFC,,US Palermo,,3,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ad71073c2adafae9e65d93c6,SERIEA,2016-17,2016-12-20T12:00:00Z,Matchday 18,,Atalanta,,Empoli FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2d399c4d63c3fb3cc787bed4,SERIEA,2016-17,2016-12-21T12:00:00Z,Matchday 18,,Inter,,Lazio Roma,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2d30dd885b85153c6df5ac2f,SERIEA,2016-17,2016-12-22T12:00:00Z,Matchday 18,,AS Roma,,Chievo Verona,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-329eb16b24f766e8b0000ab9,SERIEA,2016-17,2016-12-22T12:00:00Z,Matchday 18,,Torino FC,,Genoa CFC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-533b54e473c294caceae35a4,SERIEA,2016-17,2016-12-22T12:00:00Z,Matchday 18,,US Palermo,,Delfino Pescara,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-555f4f4855f484aac186c70a,SERIEA,2016-17,2016-12-22T12:00:00Z,Matchday 18,,ACF Fiorentina,,SSC Napoli,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d3e8afe7a2f4147db95a90bf,SERIEA,2016-17,2016-12-22T12:00:00Z,Matchday 18,,Sampdoria,,Udinese Calcio,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e6fab778b3f75812e475853f,SERIEA,2016-17,2016-12-22T12:00:00Z,Matchday 18,,Cagliari Calcio,,Sassuolo Calcio,,4,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-55e29454d3ea3cb27c87196f,SERIEA,2016-17,2017-01-07T12:00:00Z,Matchday 19,,SSC Napoli,,Sampdoria,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b8b4f582de59a4dbdb7d6002,SERIEA,2016-17,2017-01-07T12:00:00Z,Matchday 19,,Empoli FC,,US Palermo,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2bd8dd73635d587295f2a723,SERIEA,2016-17,2017-01-08T12:00:00Z,Matchday 19,,Chievo Verona,,Atalanta,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-741958d688da0e3cfd312ff7,SERIEA,2016-17,2017-01-08T12:00:00Z,Matchday 19,,Sassuolo Calcio,,Torino FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8bdfbeb4a6f0b565fb268e21,SERIEA,2016-17,2017-01-08T12:00:00Z,Matchday 19,,Udinese Calcio,,Inter,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-93aa808dff09d493c2e23831,SERIEA,2016-17,2017-01-08T12:00:00Z,Matchday 19,,Genoa CFC,,AS Roma,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ae6b38cc3ec3f9448859624c,SERIEA,2016-17,2017-01-08T12:00:00Z,Matchday 19,,Juventus,,Bologna FC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-dc693dc2881c9b6b12d96ec9,SERIEA,2016-17,2017-01-08T12:00:00Z,Matchday 19,,AC Milan,,Cagliari Calcio,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-de53e872a0988495da0840f3,SERIEA,2016-17,2017-01-08T12:00:00Z,Matchday 19,,Lazio Roma,,FC Crotone,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4dcc5976d6cc2735186ef774,SERIEA,2016-17,2017-01-14T12:00:00Z,Matchday 20,,Inter,,Chievo Verona,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-69b9b2f47aed30d1713ea7e5,SERIEA,2016-17,2017-01-14T12:00:00Z,Matchday 20,,FC Crotone,,Bologna FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-365a018383e67aa17def3417,SERIEA,2016-17,2017-01-15T12:00:00Z,Matchday 20,,Sassuolo Calcio,,US Palermo,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-62051318a50ba23e0f938fd4,SERIEA,2016-17,2017-01-15T12:00:00Z,Matchday 20,,SSC Napoli,,Delfino Pescara,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6aa04cb4cc0da4339b58384b,SERIEA,2016-17,2017-01-15T12:00:00Z,Matchday 20,,Sampdoria,,Empoli FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-dd20c2d8b601dba3430d0f6b,SERIEA,2016-17,2017-01-15T12:00:00Z,Matchday 20,,Udinese Calcio,,AS Roma,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e68670799c6513b45a1732a9,SERIEA,2016-17,2017-01-15T12:00:00Z,Matchday 20,,Lazio Roma,,Atalanta,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-eafe1d590e9fbe40ed9eab34,SERIEA,2016-17,2017-01-15T12:00:00Z,Matchday 20,,Cagliari Calcio,,Genoa CFC,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f4078ac08c2860af7353ab37,SERIEA,2016-17,2017-01-15T12:00:00Z,Matchday 20,,ACF Fiorentina,,Juventus,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f9d5332e7336c8f13ce55b6d,SERIEA,2016-17,2017-01-16T12:00:00Z,Matchday 20,,Torino FC,,AC Milan,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a0ae77c32016edf0442a4495,SERIEA,2016-17,2017-01-21T12:00:00Z,Matchday 21,,Chievo Verona,,ACF Fiorentina,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d26f6eecaf3791c5c07ad987,SERIEA,2016-17,2017-01-21T12:00:00Z,Matchday 21,,AC Milan,,SSC Napoli,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-29334ce2d1e6b6be5f3189fd,SERIEA,2016-17,2017-01-22T12:00:00Z,Matchday 21,,AS Roma,,Cagliari Calcio,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4c1191400ac20d490ac3949d,SERIEA,2016-17,2017-01-22T12:00:00Z,Matchday 21,,Delfino Pescara,,Sassuolo Calcio,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5b74deb2c8ab94dd8bd7b94a,SERIEA,2016-17,2017-01-22T12:00:00Z,Matchday 21,,Atalanta,,Sampdoria,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-718e4589b7fc61563e891b96,SERIEA,2016-17,2017-01-22T12:00:00Z,Matchday 21,,Bologna FC,,Torino FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8945d71fea9a8f03e3af0ba1,SERIEA,2016-17,2017-01-22T12:00:00Z,Matchday 21,,Juventus,,Lazio Roma,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9150a047b9d48d9369102366,SERIEA,2016-17,2017-01-22T12:00:00Z,Matchday 21,,Empoli FC,,Udinese Calcio,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d243e9da115033e94abce0d3,SERIEA,2016-17,2017-01-22T12:00:00Z,Matchday 21,,US Palermo,,Inter,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e0edf56ce503a9022d022392,SERIEA,2016-17,2017-01-22T12:00:00Z,Matchday 21,,Genoa CFC,,FC Crotone,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6dd0f30a45e9af095e7fa638,SERIEA,2016-17,2017-01-28T12:00:00Z,Matchday 22,,Inter,,Delfino Pescara,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-bedeb3b9ed57618148d8bfb7,SERIEA,2016-17,2017-01-28T12:00:00Z,Matchday 22,,Lazio Roma,,Chievo Verona,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-1de848cd13fc6c2caf8dff17,SERIEA,2016-17,2017-01-29T12:00:00Z,Matchday 22,,SSC Napoli,,US Palermo,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-3c3cbab117d68474538414a1,SERIEA,2016-17,2017-01-29T12:00:00Z,Matchday 22,,Sampdoria,,AS Roma,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4c317459149dced9ab075875,SERIEA,2016-17,2017-01-29T12:00:00Z,Matchday 22,,Cagliari Calcio,,Bologna FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-69ffd8be4e0451c03a8f5c73,SERIEA,2016-17,2017-01-29T12:00:00Z,Matchday 22,,FC Crotone,,Empoli FC,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-7803ceeaca1276b01ff90c6a,SERIEA,2016-17,2017-01-29T12:00:00Z,Matchday 22,,Sassuolo Calcio,,Juventus,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c1788387f089227b139fd0c1,SERIEA,2016-17,2017-01-29T12:00:00Z,Matchday 22,,Udinese Calcio,,AC Milan,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d803104aaa1cbbcc35a42fd2,SERIEA,2016-17,2017-01-29T12:00:00Z,Matchday 22,,ACF Fiorentina,,Genoa CFC,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f11236c7b8a03d3413f7244d,SERIEA,2016-17,2017-01-29T12:00:00Z,Matchday 22,,Torino FC,,Atalanta,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6cf4247157fb1b10736508e2,SERIEA,2016-17,2017-02-01T12:00:00Z,Matchday 19,,Delfino Pescara,,ACF Fiorentina,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-23bcec207cefdfe21415ac47,SERIEA,2016-17,2017-02-04T12:00:00Z,Matchday 23,,Bologna FC,,SSC Napoli,,1,7,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2b1d69c2d0ed22dabf241cf7,SERIEA,2016-17,2017-02-05T12:00:00Z,Matchday 23,,Atalanta,,Cagliari Calcio,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2e4cc569863d1827aecd9f30,SERIEA,2016-17,2017-02-05T12:00:00Z,Matchday 23,,Empoli FC,,Torino FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b829dca80e1683929b9e2def,SERIEA,2016-17,2017-02-05T12:00:00Z,Matchday 23,,Chievo Verona,,Udinese Calcio,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-cdc1558979997d839f0d0033,SERIEA,2016-17,2017-02-05T12:00:00Z,Matchday 23,,Genoa CFC,,Sassuolo Calcio,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-cfaafa52b7d55430b9f07f55,SERIEA,2016-17,2017-02-05T12:00:00Z,Matchday 23,,US Palermo,,FC Crotone,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e6aa467537e07ced0ff514ed,SERIEA,2016-17,2017-02-05T12:00:00Z,Matchday 23,,Delfino Pescara,,Lazio Roma,,2,6,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f29739648a9bf719c9ba5743,SERIEA,2016-17,2017-02-05T12:00:00Z,Matchday 23,,Juventus,,Inter,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f4de08118b6f019389c158c2,SERIEA,2016-17,2017-02-05T12:00:00Z,Matchday 23,,AC Milan,,Sampdoria,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a8ffce5c057cbd0ecc69032f,SERIEA,2016-17,2017-02-07T12:00:00Z,Matchday 23,,AS Roma,,ACF Fiorentina,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-18f3e7fb4b955b9b43c123b7,SERIEA,2016-17,2017-02-08T12:00:00Z,Matchday 18,,Bologna FC,,AC Milan,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f032e8f10b86f4475059a1cf,SERIEA,2016-17,2017-02-08T12:00:00Z,Matchday 18,,FC Crotone,,Juventus,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f13883b9e2a78e74be5a753a,SERIEA,2016-17,2017-02-10T12:00:00Z,Matchday 24,,SSC Napoli,,Genoa CFC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8064a3d9de91ee66b229f26c,SERIEA,2016-17,2017-02-11T12:00:00Z,Matchday 24,,ACF Fiorentina,,Udinese Calcio,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-48e400462e497454c3d89da5,SERIEA,2016-17,2017-02-12T12:00:00Z,Matchday 24,,FC Crotone,,AS Roma,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5421dad03b2225d3c12f760d,SERIEA,2016-17,2017-02-12T12:00:00Z,Matchday 24,,US Palermo,,Atalanta,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5967654f6c6d7f3b52faeead,SERIEA,2016-17,2017-02-12T12:00:00Z,Matchday 24,,Sassuolo Calcio,,Chievo Verona,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a20727f35c3c133f57e2ad30,SERIEA,2016-17,2017-02-12T12:00:00Z,Matchday 24,,Sampdoria,,Bologna FC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a38a8d7ebe59534231c4fdc9,SERIEA,2016-17,2017-02-12T12:00:00Z,Matchday 24,,Inter,,Empoli FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c72819726ca271a7b921029e,SERIEA,2016-17,2017-02-12T12:00:00Z,Matchday 24,,Torino FC,,Delfino Pescara,,5,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f4f80d9b293ea39a4cba953e,SERIEA,2016-17,2017-02-12T12:00:00Z,Matchday 24,,Cagliari Calcio,,Juventus,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-328ffaa6f2529020517e6c51,SERIEA,2016-17,2017-02-13T12:00:00Z,Matchday 24,,Lazio Roma,,AC Milan,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e0f64ba3cf8074c68f1ec342,SERIEA,2016-17,2017-02-17T12:00:00Z,Matchday 25,,Juventus,,US Palermo,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-0055440b5f4a807040504d1b,SERIEA,2016-17,2017-02-18T12:00:00Z,Matchday 25,,Empoli FC,,Lazio Roma,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-fda99d78165a5abb848c2fa3,SERIEA,2016-17,2017-02-18T12:00:00Z,Matchday 25,,Atalanta,,FC Crotone,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-44d8708af3d9f5b65b471cf5,SERIEA,2016-17,2017-02-19T12:00:00Z,Matchday 25,,AC Milan,,ACF Fiorentina,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-599e0f475441a08092043eb7,SERIEA,2016-17,2017-02-19T12:00:00Z,Matchday 25,,AS Roma,,Torino FC,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-745df08ba5505cbd728cd232,SERIEA,2016-17,2017-02-19T12:00:00Z,Matchday 25,,Chievo Verona,,SSC Napoli,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b4aaf29799c7f8b8a0bbc1fe,SERIEA,2016-17,2017-02-19T12:00:00Z,Matchday 25,,Bologna FC,,Inter,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b6f87d611c8772245deb9a8d,SERIEA,2016-17,2017-02-19T12:00:00Z,Matchday 25,,Sampdoria,,Cagliari Calcio,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e7233b60033e376536d922c5,SERIEA,2016-17,2017-02-19T12:00:00Z,Matchday 25,,Udinese Calcio,,Sassuolo Calcio,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-fa844b4a4336e1d19aaa7382,SERIEA,2016-17,2017-02-19T12:00:00Z,Matchday 25,,Delfino Pescara,,Genoa CFC,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-7774755ed838aa77235313a1,SERIEA,2016-17,2017-02-25T12:00:00Z,Matchday 26,,Juventus,,Empoli FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d60ce2fa51c16b4d37144523,SERIEA,2016-17,2017-02-25T12:00:00Z,Matchday 26,,SSC Napoli,,Atalanta,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-123cbbb3491992181a8b8233,SERIEA,2016-17,2017-02-26T12:00:00Z,Matchday 26,,Chievo Verona,,Delfino Pescara,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-1caa209f38a59543892c2b0e,SERIEA,2016-17,2017-02-26T12:00:00Z,Matchday 26,,Inter,,AS Roma,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-644e7d001d0a24db9d9df5e4,SERIEA,2016-17,2017-02-26T12:00:00Z,Matchday 26,,Genoa CFC,,Bologna FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-64963eb92da9afa94f781347,SERIEA,2016-17,2017-02-26T12:00:00Z,Matchday 26,,US Palermo,,Sampdoria,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6549cc85e370c41971e29903,SERIEA,2016-17,2017-02-26T12:00:00Z,Matchday 26,,Sassuolo Calcio,,AC Milan,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8b074d7b707a8a145d66fbb9,SERIEA,2016-17,2017-02-26T12:00:00Z,Matchday 26,,Lazio Roma,,Udinese Calcio,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9344cd726cb1ffb199255769,SERIEA,2016-17,2017-02-26T12:00:00Z,Matchday 26,,FC Crotone,,Cagliari Calcio,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-1d492e490a874faea2ed3179,SERIEA,2016-17,2017-02-27T12:00:00Z,Matchday 26,,ACF Fiorentina,,Torino FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-37da9b3490c4c859eae5b614,SERIEA,2016-17,2017-03-04T12:00:00Z,Matchday 27,,AC Milan,,Chievo Verona,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6c9adeecd0da5c6977ffd1a6,SERIEA,2016-17,2017-03-04T12:00:00Z,Matchday 27,,AS Roma,,SSC Napoli,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-fb3ffc449c17ab28d61c3af3,SERIEA,2016-17,2017-03-04T12:00:00Z,Matchday 27,,Sampdoria,,Delfino Pescara,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-25e01739f16df83972aba9a7,SERIEA,2016-17,2017-03-05T12:00:00Z,Matchday 27,,Atalanta,,ACF Fiorentina,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5ac348a1d2b839609096e4c4,SERIEA,2016-17,2017-03-05T12:00:00Z,Matchday 27,,Cagliari Calcio,,Inter,,1,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-72d95699640763946c4effe6,SERIEA,2016-17,2017-03-05T12:00:00Z,Matchday 27,,Bologna FC,,Lazio Roma,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8be8ac4dbe1bc4245b343349,SERIEA,2016-17,2017-03-05T12:00:00Z,Matchday 27,,Udinese Calcio,,Juventus,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a22eac722414bbb0c1ed0efa,SERIEA,2016-17,2017-03-05T12:00:00Z,Matchday 27,,Torino FC,,US Palermo,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c1d3aaae07434a619f97358f,SERIEA,2016-17,2017-03-05T12:00:00Z,Matchday 27,,Empoli FC,,Genoa CFC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-cf42ff8dda4c9d423e87e077,SERIEA,2016-17,2017-03-05T12:00:00Z,Matchday 27,,FC Crotone,,Sassuolo Calcio,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6cedbdf33deed3af2fef510a,SERIEA,2016-17,2017-03-10T12:00:00Z,Matchday 28,,Juventus,,AC Milan,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5196e57ada294b4cbf26ad35,SERIEA,2016-17,2017-03-11T12:00:00Z,Matchday 28,,Genoa CFC,,Sampdoria,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-361933e0b45f07314e72ad75,SERIEA,2016-17,2017-03-12T12:00:00Z,Matchday 28,,Sassuolo Calcio,,Bologna FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6bddd95a11d8fc0e4b5ba3de,SERIEA,2016-17,2017-03-12T12:00:00Z,Matchday 28,,Chievo Verona,,Empoli FC,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-73a1f840527aa4a85e4b2fbd,SERIEA,2016-17,2017-03-12T12:00:00Z,Matchday 28,,Delfino Pescara,,Udinese Calcio,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-991b898612eff53d3d60770a,SERIEA,2016-17,2017-03-12T12:00:00Z,Matchday 28,,ACF Fiorentina,,Cagliari Calcio,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-aace6fd0f575d594b43c9c6d,SERIEA,2016-17,2017-03-12T12:00:00Z,Matchday 28,,Inter,,Atalanta,,7,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ce4d3f974e5a37422dd989ea,SERIEA,2016-17,2017-03-12T12:00:00Z,Matchday 28,,US Palermo,,AS Roma,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e140639fa9d1e477b24dba08,SERIEA,2016-17,2017-03-12T12:00:00Z,Matchday 28,,SSC Napoli,,FC Crotone,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5892d72041dd3d225390bd91,SERIEA,2016-17,2017-03-13T12:00:00Z,Matchday 28,,Lazio Roma,,Torino FC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c54d4972a206ec7d930ba204,SERIEA,2016-17,2017-03-18T12:00:00Z,Matchday 29,,Torino FC,,Inter,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-fc152790257a7656cac2203b,SERIEA,2016-17,2017-03-18T12:00:00Z,Matchday 29,,AC Milan,,Genoa CFC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-31c5904d3741789669180cc2,SERIEA,2016-17,2017-03-19T12:00:00Z,Matchday 29,,Cagliari Calcio,,Lazio Roma,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4f1bc5d29c99e5e20cbf09de,SERIEA,2016-17,2017-03-19T12:00:00Z,Matchday 29,,Udinese Calcio,,US Palermo,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-52c8af695fafaace219cc868,SERIEA,2016-17,2017-03-19T12:00:00Z,Matchday 29,,FC Crotone,,ACF Fiorentina,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-70a552bf1828c306bdefb1a1,SERIEA,2016-17,2017-03-19T12:00:00Z,Matchday 29,,Atalanta,,Delfino Pescara,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-902b0b1ef6cdedc7e4607cfa,SERIEA,2016-17,2017-03-19T12:00:00Z,Matchday 29,,Empoli FC,,SSC Napoli,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-92b9744bf9b266e8de37b105,SERIEA,2016-17,2017-03-19T12:00:00Z,Matchday 29,,AS Roma,,Sassuolo Calcio,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-92f390853b1b64b306dee72c,SERIEA,2016-17,2017-03-19T12:00:00Z,Matchday 29,,Sampdoria,,Juventus,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e396ca053c8e8b48ecf23d36,SERIEA,2016-17,2017-03-19T12:00:00Z,Matchday 29,,Bologna FC,,Chievo Verona,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2796aadf17b838c025beff6b,SERIEA,2016-17,2017-04-01T12:00:00Z,Matchday 30,,Sassuolo Calcio,,Lazio Roma,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8cc31417262d7e13bc213d9d,SERIEA,2016-17,2017-04-01T12:00:00Z,Matchday 30,,AS Roma,,Empoli FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-0bef41508cdbd487ec153e11,SERIEA,2016-17,2017-04-02T12:00:00Z,Matchday 30,,Torino FC,,Udinese Calcio,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-52dd22b8264c2920ae7bd659,SERIEA,2016-17,2017-04-02T12:00:00Z,Matchday 30,,US Palermo,,Cagliari Calcio,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-563ee9ea4e00ac8666b124ab,SERIEA,2016-17,2017-04-02T12:00:00Z,Matchday 30,,ACF Fiorentina,,Bologna FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5831853cb1eed31ceab45fc4,SERIEA,2016-17,2017-04-02T12:00:00Z,Matchday 30,,SSC Napoli,,Juventus,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c28c67bebcf6d32e9ee19a55,SERIEA,2016-17,2017-04-02T12:00:00Z,Matchday 30,,Delfino Pescara,,AC Milan,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d89c8df99f7d254ebf784ba9,SERIEA,2016-17,2017-04-02T12:00:00Z,Matchday 30,,Chievo Verona,,FC Crotone,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e559a6d640760fdedf949c6d,SERIEA,2016-17,2017-04-02T12:00:00Z,Matchday 30,,Genoa CFC,,Atalanta,,0,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-081bc3666df0e6bb317d6414,SERIEA,2016-17,2017-04-03T12:00:00Z,Matchday 30,,Inter,,Sampdoria,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2de0cdc27bea2f0853b16247,SERIEA,2016-17,2017-04-08T12:00:00Z,Matchday 31,,Juventus,,Chievo Verona,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9daee8a0d3535146b759481e,SERIEA,2016-17,2017-04-08T12:00:00Z,Matchday 31,,Atalanta,,Sassuolo Calcio,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-aed3b6eba2733cbefb6cff23,SERIEA,2016-17,2017-04-08T12:00:00Z,Matchday 31,,Empoli FC,,Delfino Pescara,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-1936858db0b44dce59f9a03c,SERIEA,2016-17,2017-04-09T12:00:00Z,Matchday 31,,Cagliari Calcio,,Torino FC,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-39344d9a7e25e584663f6ccb,SERIEA,2016-17,2017-04-09T12:00:00Z,Matchday 31,,AC Milan,,US Palermo,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-648da49c0145b0fdac52b207,SERIEA,2016-17,2017-04-09T12:00:00Z,Matchday 31,,FC Crotone,,Inter,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-78b1bc0207540cf1de2703f1,SERIEA,2016-17,2017-04-09T12:00:00Z,Matchday 31,,Lazio Roma,,SSC Napoli,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-afe85fcc60777c026af7a20c,SERIEA,2016-17,2017-04-09T12:00:00Z,Matchday 31,,Bologna FC,,AS Roma,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-db1a7d04c3fdd07893544dde,SERIEA,2016-17,2017-04-09T12:00:00Z,Matchday 31,,Sampdoria,,ACF Fiorentina,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-dd97046814dd6afaee0dd6fd,SERIEA,2016-17,2017-04-09T12:00:00Z,Matchday 31,,Udinese Calcio,,Genoa CFC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-101f4fdd4f84b22e9acd638e,SERIEA,2016-17,2017-04-15T12:00:00Z,Matchday 32,,Sassuolo Calcio,,Sampdoria,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4e16016661bba9add6ee1349,SERIEA,2016-17,2017-04-15T12:00:00Z,Matchday 32,,AS Roma,,Atalanta,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-53901688bff9e47a90bf745a,SERIEA,2016-17,2017-04-15T12:00:00Z,Matchday 32,,Torino FC,,FC Crotone,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9792c0d666074d60fc0032cb,SERIEA,2016-17,2017-04-15T12:00:00Z,Matchday 32,,US Palermo,,Bologna FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a19cfafd3e5a0eda21c91976,SERIEA,2016-17,2017-04-15T12:00:00Z,Matchday 32,,Inter,,AC Milan,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a82f3804de4ba77550837f24,SERIEA,2016-17,2017-04-15T12:00:00Z,Matchday 32,,Genoa CFC,,Lazio Roma,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-cec4c79abbb79badf406046c,SERIEA,2016-17,2017-04-15T12:00:00Z,Matchday 32,,ACF Fiorentina,,Empoli FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d193490b9ce2325594966fa8,SERIEA,2016-17,2017-04-15T12:00:00Z,Matchday 32,,Delfino Pescara,,Juventus,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e54a978243040d1188399ad7,SERIEA,2016-17,2017-04-15T12:00:00Z,Matchday 32,,Cagliari Calcio,,Chievo Verona,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e857e97c02a9e6c6ce9cdbf3,SERIEA,2016-17,2017-04-15T12:00:00Z,Matchday 32,,SSC Napoli,,Udinese Calcio,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-327a7b9a21e27d360885b1bf,SERIEA,2016-17,2017-04-22T12:00:00Z,Matchday 33,,Atalanta,,Bologna FC,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9d2b9ed8a9b665a847fc21aa,SERIEA,2016-17,2017-04-22T12:00:00Z,Matchday 33,,ACF Fiorentina,,Inter,,5,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-69fbb0431f03250bb3757a1f,SERIEA,2016-17,2017-04-23T12:00:00Z,Matchday 33,,Juventus,,Genoa CFC,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-772bfe9a7482bb73bc0dffcd,SERIEA,2016-17,2017-04-23T12:00:00Z,Matchday 33,,Chievo Verona,,Torino FC,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-91d7ba56bfd7e7f0df902621,SERIEA,2016-17,2017-04-23T12:00:00Z,Matchday 33,,Lazio Roma,,US Palermo,,6,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-93b3c52148ef75fa56cce4cd,SERIEA,2016-17,2017-04-23T12:00:00Z,Matchday 33,,Sassuolo Calcio,,SSC Napoli,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9f1bb44ccf25f44567f949d9,SERIEA,2016-17,2017-04-23T12:00:00Z,Matchday 33,,Sampdoria,,FC Crotone,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a8fc8fdf001dbc2e9b9f340e,SERIEA,2016-17,2017-04-23T12:00:00Z,Matchday 33,,AC Milan,,Empoli FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ca3b91982169c9e8cb225453,SERIEA,2016-17,2017-04-23T12:00:00Z,Matchday 33,,Udinese Calcio,,Cagliari Calcio,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f18b163bb445f412ce15bfd8,SERIEA,2016-17,2017-04-24T12:00:00Z,Matchday 33,,Delfino Pescara,,AS Roma,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d5b8d3ac8da9f2ac3d5a0855,SERIEA,2016-17,2017-04-28T12:00:00Z,Matchday 34,,Atalanta,,Juventus,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ed86069b95907ff949f841bb,SERIEA,2016-17,2017-04-29T12:00:00Z,Matchday 34,,Torino FC,,Sampdoria,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-077b8697fef1d85f9c9fe1ed,SERIEA,2016-17,2017-04-30T12:00:00Z,Matchday 34,,Genoa CFC,,Chievo Verona,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-1bc0afc272869199694aa3cf,SERIEA,2016-17,2017-04-30T12:00:00Z,Matchday 34,,AS Roma,,Lazio Roma,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-290eda262f85f8497299bd0b,SERIEA,2016-17,2017-04-30T12:00:00Z,Matchday 34,,US Palermo,,ACF Fiorentina,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2a9d50c5a625d41f3504971e,SERIEA,2016-17,2017-04-30T12:00:00Z,Matchday 34,,FC Crotone,,AC Milan,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2b949dbdefb61de6fbebc7be,SERIEA,2016-17,2017-04-30T12:00:00Z,Matchday 34,,Bologna FC,,Udinese Calcio,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4cfb7f783552126e5b009914,SERIEA,2016-17,2017-04-30T12:00:00Z,Matchday 34,,Inter,,SSC Napoli,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-972e088067f7b822b9ca63ca,SERIEA,2016-17,2017-04-30T12:00:00Z,Matchday 34,,Cagliari Calcio,,Delfino Pescara,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b108d909ab97efc55e284e90,SERIEA,2016-17,2017-04-30T12:00:00Z,Matchday 34,,Empoli FC,,Sassuolo Calcio,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c2f072ed76e417966bd7b2be,SERIEA,2016-17,2017-05-06T12:00:00Z,Matchday 35,,Juventus,,Torino FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c473b92f692d57f097792131,SERIEA,2016-17,2017-05-06T12:00:00Z,Matchday 35,,SSC Napoli,,Cagliari Calcio,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-02c6fa5bf1450cdb8bd8bda5,SERIEA,2016-17,2017-05-07T12:00:00Z,Matchday 35,,Genoa CFC,,Inter,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-16548017f103580e426cee45,SERIEA,2016-17,2017-05-07T12:00:00Z,Matchday 35,,Chievo Verona,,US Palermo,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-269dc534a2e53e4e041a858c,SERIEA,2016-17,2017-05-07T12:00:00Z,Matchday 35,,Delfino Pescara,,FC Crotone,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-34aef910c77ae83429f2a8a9,SERIEA,2016-17,2017-05-07T12:00:00Z,Matchday 35,,Lazio Roma,,Sampdoria,,7,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-47a57c36e80273f3fdcad7f7,SERIEA,2016-17,2017-05-07T12:00:00Z,Matchday 35,,AC Milan,,AS Roma,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6b4cc2269686060374ddca07,SERIEA,2016-17,2017-05-07T12:00:00Z,Matchday 35,,Sassuolo Calcio,,ACF Fiorentina,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9155a5f2fc9324e87e1951c1,SERIEA,2016-17,2017-05-07T12:00:00Z,Matchday 35,,Udinese Calcio,,Atalanta,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-bf63aa0b054fd1aa05fd11f2,SERIEA,2016-17,2017-05-07T12:00:00Z,Matchday 35,,Empoli FC,,Bologna FC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-0dded2668e35e0f450ea165e,SERIEA,2016-17,2017-05-13T12:00:00Z,Matchday 36,,Atalanta,,AC Milan,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-dbfbbd56d3438f09be97110a,SERIEA,2016-17,2017-05-13T12:00:00Z,Matchday 36,,ACF Fiorentina,,Lazio Roma,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-45e9185c1bf69df1ddd19e14,SERIEA,2016-17,2017-05-14T12:00:00Z,Matchday 36,,US Palermo,,Genoa CFC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4ee9fcbac1f59096f521353b,SERIEA,2016-17,2017-05-14T12:00:00Z,Matchday 36,,FC Crotone,,Udinese Calcio,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5bfbbbeb8d6c03a2ab4ed754,SERIEA,2016-17,2017-05-14T12:00:00Z,Matchday 36,,AS Roma,,Juventus,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-7a176e96bc0219c93031c25c,SERIEA,2016-17,2017-05-14T12:00:00Z,Matchday 36,,Bologna FC,,Delfino Pescara,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-7f93cf90594a08f0beb8f3d8,SERIEA,2016-17,2017-05-14T12:00:00Z,Matchday 36,,Cagliari Calcio,,Empoli FC,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9e65796cf4c8ba3e500470d3,SERIEA,2016-17,2017-05-14T12:00:00Z,Matchday 36,,Sampdoria,,Chievo Verona,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c52564dd4dd73625dafeb144,SERIEA,2016-17,2017-05-14T12:00:00Z,Matchday 36,,Torino FC,,SSC Napoli,,0,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-fa017286283574d7367db761,SERIEA,2016-17,2017-05-14T12:00:00Z,Matchday 36,,Inter,,Sassuolo Calcio,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5df275dc2cf4fd02c62908d2,SERIEA,2016-17,2017-05-20T12:00:00Z,Matchday 37,,SSC Napoli,,ACF Fiorentina,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5fe0656ca50e7e77a90d407c,SERIEA,2016-17,2017-05-20T12:00:00Z,Matchday 37,,Chievo Verona,,AS Roma,,3,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-21ccc539bee6e931ae3938cc,SERIEA,2016-17,2017-05-21T12:00:00Z,Matchday 37,,Genoa CFC,,Torino FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-65d38d3c948254d58c33dd06,SERIEA,2016-17,2017-05-21T12:00:00Z,Matchday 37,,Sassuolo Calcio,,Cagliari Calcio,,6,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-7dab2b2b631ec75cf5cc97cb,SERIEA,2016-17,2017-05-21T12:00:00Z,Matchday 37,,Udinese Calcio,,Sampdoria,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8292dcd9ada641490adcf473,SERIEA,2016-17,2017-05-21T12:00:00Z,Matchday 37,,Lazio Roma,,Inter,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a79ff9782e15ff99fe61c9f0,SERIEA,2016-17,2017-05-21T12:00:00Z,Matchday 37,,Empoli FC,,Atalanta,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d6b08f161e4ed3bcf01beb8a,SERIEA,2016-17,2017-05-21T12:00:00Z,Matchday 37,,AC Milan,,Bologna FC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f88ff873aa6c41dce0037d7f,SERIEA,2016-17,2017-05-21T12:00:00Z,Matchday 37,,Juventus,,FC Crotone,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9fe2c2780a81d188b472450e,SERIEA,2016-17,2017-05-22T12:00:00Z,Matchday 37,,Delfino Pescara,,US Palermo,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d3cadfb25fac8c3dfb745d59,SERIEA,2016-17,2017-05-27T12:00:00Z,Matchday 38,,Bologna FC,,Juventus,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-efd707b51b845dc36a2ebee1,SERIEA,2016-17,2017-05-27T12:00:00Z,Matchday 38,,Atalanta,,Chievo Verona,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-445b55391d202e0fd3eb8496,SERIEA,2016-17,2017-05-28T12:00:00Z,Matchday 38,,US Palermo,,Empoli FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-516a6678f96d587219352962,SERIEA,2016-17,2017-05-28T12:00:00Z,Matchday 38,,FC Crotone,,Lazio Roma,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5ba59ee11b098257f994be85,SERIEA,2016-17,2017-05-28T12:00:00Z,Matchday 38,,AS Roma,,Genoa CFC,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9129f4e3063cbbb758a468a8,SERIEA,2016-17,2017-05-28T12:00:00Z,Matchday 38,,ACF Fiorentina,,Delfino Pescara,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9686dd92866c2d3278362190,SERIEA,2016-17,2017-05-28T12:00:00Z,Matchday 38,,Sampdoria,,SSC Napoli,,2,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ba4e8f28556cf1ab23cba11e,SERIEA,2016-17,2017-05-28T12:00:00Z,Matchday 38,,Inter,,Udinese Calcio,,5,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-dc63a6af1bdfaa2c21f9e4a8,SERIEA,2016-17,2017-05-28T12:00:00Z,Matchday 38,,Cagliari Calcio,,AC Milan,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f66c9af9a3287149eff65634,SERIEA,2016-17,2017-05-28T12:00:00Z,Matchday 38,,Torino FC,,Sassuolo Calcio,,5,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00

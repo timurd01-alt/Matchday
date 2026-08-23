@@ -1,0 +1,24 @@
+{
+  "artifact": "mlb-release-review",
+  "decision": "resume MLB forecast publication on the incumbent route",
+  "keys_bound": [
+    "model gate, incumbent route: mlb_incumbent_publication_evidence.json",
+    "personnel gate, zero-weight route: mlb_personnel_zero_weight_attestation.json"
+  ],
+  "known_limitations": [
+    "The incumbent's prospective MLB record is 15 graded fixtures over 2 date blocks.",
+    "The run-strength challenger remains unpromoted and unproven.",
+    "No confirmed starting-pitcher source exists; the forecast reads none."
+  ],
+  "prepared_at": "2026-08-23",
+  "protocol_version": "mlb-release-review-1.0.0",
+  "rollback": "Set publication_approved to false in mlb_recovery_policy.json. The gate is fail closed, so publication stops on the next build. Historical locks and grades are immutable and are not rewritten.",
+  "schema_version": 1,
+  "status": "ready_for_frozen_review",
+  "what_ships": {
+    "challenger_production_weight": 0,
+    "model": "v6-calibrated (model_signal_schema 8), unchanged",
+    "personnel_feature_weight": 0
+  },
+  "why_this_is_not_a_promotion": "No signal is promoted. The forecast that resumes is the one already compared against as the incumbent baseline. MLB_RECOVERY.md §2's 500-paired-game bar governs moving forecasts with an unproven signal; nothing here moves them."
+}

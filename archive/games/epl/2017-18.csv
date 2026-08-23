@@ -1,0 +1,381 @@
+game_id,comp,season,date_utc,stage,venue,home_name,home_code,away_name,away_code,home_score,away_score,status,source,first_seen
+epl-openfootball-3a31e5dc490ea82a7edb6a42,EPL,2017-18,2017-08-11T12:00:00Z,Matchday 1,,Arsenal FC,,Leicester City,,4,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-25cb0076ae247635806ce97f,EPL,2017-18,2017-08-12T12:00:00Z,Matchday 1,,Brighton & Hove Albion,,Manchester City,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-5e5d6863f554c5c030aacd4b,EPL,2017-18,2017-08-12T12:00:00Z,Matchday 1,,Southampton FC,,Swansea City,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-bf8e0c2036b8dbee90cec71f,EPL,2017-18,2017-08-12T12:00:00Z,Matchday 1,,Watford FC,,Liverpool FC,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c66952f51581d1c3db755764,EPL,2017-18,2017-08-12T12:00:00Z,Matchday 1,,Chelsea FC,,Burnley FC,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d1ae3e9618525888e766ea18,EPL,2017-18,2017-08-12T12:00:00Z,Matchday 1,,Crystal Palace,,Huddersfield Town,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e5f209691df464bc5cce4e7a,EPL,2017-18,2017-08-12T12:00:00Z,Matchday 1,,West Bromwich Albion,,AFC Bournemouth,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f4f54351f1f62be2177b5b9d,EPL,2017-18,2017-08-12T12:00:00Z,Matchday 1,,Everton FC,,Stoke City,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-40f60c292a8baf95e63e32b6,EPL,2017-18,2017-08-13T12:00:00Z,Matchday 1,,Newcastle United,,Tottenham Hotspur,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e0637a69d144b903c852e048,EPL,2017-18,2017-08-13T12:00:00Z,Matchday 1,,Manchester United,,West Ham United,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3aa85e3947dcd327f600395e,EPL,2017-18,2017-08-19T12:00:00Z,Matchday 2,,Leicester City,,Brighton & Hove Albion,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-96ef722545dcd2635b3eb568,EPL,2017-18,2017-08-19T12:00:00Z,Matchday 2,,Swansea City,,Manchester United,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-9e26223a902ed4e5b3219ec7,EPL,2017-18,2017-08-19T12:00:00Z,Matchday 2,,Burnley FC,,West Bromwich Albion,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c8dfd041e658fade73c738e7,EPL,2017-18,2017-08-19T12:00:00Z,Matchday 2,,Liverpool FC,,Crystal Palace,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c9c8d0d3d84721cea07ddbce,EPL,2017-18,2017-08-19T12:00:00Z,Matchday 2,,AFC Bournemouth,,Watford FC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ca26ef45fdcb98ef30da40c5,EPL,2017-18,2017-08-19T12:00:00Z,Matchday 2,,Southampton FC,,West Ham United,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-fec36d4fef5ae281a3c5fbcc,EPL,2017-18,2017-08-19T12:00:00Z,Matchday 2,,Stoke City,,Arsenal FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6bc123a8610e175f2ee133cc,EPL,2017-18,2017-08-20T12:00:00Z,Matchday 2,,Huddersfield Town,,Newcastle United,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-96d13103cdc022058034b14f,EPL,2017-18,2017-08-20T12:00:00Z,Matchday 2,,Tottenham Hotspur,,Chelsea FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-1da5c83e3fbc9dc3c5b6945e,EPL,2017-18,2017-08-21T12:00:00Z,Matchday 2,,Manchester City,,Everton FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-10ec3653d0caeeecf78002b6,EPL,2017-18,2017-08-26T12:00:00Z,Matchday 3,,Huddersfield Town,,Southampton FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-21ae1be8a6455318abf4079a,EPL,2017-18,2017-08-26T12:00:00Z,Matchday 3,,Manchester United,,Leicester City,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-56d83db139c7b3072ed4fc81,EPL,2017-18,2017-08-26T12:00:00Z,Matchday 3,,Watford FC,,Brighton & Hove Albion,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-67b3b7b43df88283c8fa7863,EPL,2017-18,2017-08-26T12:00:00Z,Matchday 3,,Crystal Palace,,Swansea City,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8c0357aae036178e400eea22,EPL,2017-18,2017-08-26T12:00:00Z,Matchday 3,,AFC Bournemouth,,Manchester City,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b90426588cd521b75fc76494,EPL,2017-18,2017-08-26T12:00:00Z,Matchday 3,,Newcastle United,,West Ham United,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3e5f3d437f8f9ff128f23d99,EPL,2017-18,2017-08-27T12:00:00Z,Matchday 3,,Chelsea FC,,Everton FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ae39183a4dbbc4d82c5f7c0b,EPL,2017-18,2017-08-27T12:00:00Z,Matchday 3,,West Bromwich Albion,,Stoke City,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-bad6a7fc013cc4706d250c32,EPL,2017-18,2017-08-27T12:00:00Z,Matchday 3,,Liverpool FC,,Arsenal FC,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-bd437b39096fb4c976d34594,EPL,2017-18,2017-08-27T12:00:00Z,Matchday 3,,Tottenham Hotspur,,Burnley FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0f6027724b7437907d7c2140,EPL,2017-18,2017-09-09T12:00:00Z,Matchday 4,,Southampton FC,,Watford FC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-57c91974cc8383841bdaa1c5,EPL,2017-18,2017-09-09T12:00:00Z,Matchday 4,,Everton FC,,Tottenham Hotspur,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-5eb6008f6e3cafe62a7cd8e9,EPL,2017-18,2017-09-09T12:00:00Z,Matchday 4,,Leicester City,,Chelsea FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-aa9645a090386f17e539695b,EPL,2017-18,2017-09-09T12:00:00Z,Matchday 4,,Stoke City,,Manchester United,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f03bfaaf1c293ebf7a372ac4,EPL,2017-18,2017-09-09T12:00:00Z,Matchday 4,,Manchester City,,Liverpool FC,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f3990a6cbdb510591c8ed171,EPL,2017-18,2017-09-09T12:00:00Z,Matchday 4,,Brighton & Hove Albion,,West Bromwich Albion,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ff82b2dd52ff46cc0a8c3956,EPL,2017-18,2017-09-09T12:00:00Z,Matchday 4,,Arsenal FC,,AFC Bournemouth,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-277e77e08a91690f43cb0489,EPL,2017-18,2017-09-10T12:00:00Z,Matchday 4,,Swansea City,,Newcastle United,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-701271dd437d86e133311068,EPL,2017-18,2017-09-10T12:00:00Z,Matchday 4,,Burnley FC,,Crystal Palace,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8897b50890f913210608c00a,EPL,2017-18,2017-09-11T12:00:00Z,Matchday 4,,West Ham United,,Huddersfield Town,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-adfdb3d699d6c1e8a19ca246,EPL,2017-18,2017-09-15T12:00:00Z,Matchday 5,,AFC Bournemouth,,Brighton & Hove Albion,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0c7b99574b6638fa996943e5,EPL,2017-18,2017-09-16T12:00:00Z,Matchday 5,,Crystal Palace,,Southampton FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4ee31e937f50e9ad8bba8d3a,EPL,2017-18,2017-09-16T12:00:00Z,Matchday 5,,Huddersfield Town,,Leicester City,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6f5601cdb8d442ab8cd75376,EPL,2017-18,2017-09-16T12:00:00Z,Matchday 5,,West Bromwich Albion,,West Ham United,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7750271e5b8fbc34a8cd08be,EPL,2017-18,2017-09-16T12:00:00Z,Matchday 5,,Watford FC,,Manchester City,,0,6,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-95e3e76300e4fbef7ff2e7f6,EPL,2017-18,2017-09-16T12:00:00Z,Matchday 5,,Liverpool FC,,Burnley FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c80ae89aa4afd47b6165409c,EPL,2017-18,2017-09-16T12:00:00Z,Matchday 5,,Newcastle United,,Stoke City,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ee7139f08ed7a70159dd74e5,EPL,2017-18,2017-09-16T12:00:00Z,Matchday 5,,Tottenham Hotspur,,Swansea City,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0fec2bf1dcdeae34649fbf9e,EPL,2017-18,2017-09-17T12:00:00Z,Matchday 5,,Chelsea FC,,Arsenal FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d2e18b63b0d8740ee4337113,EPL,2017-18,2017-09-17T12:00:00Z,Matchday 5,,Manchester United,,Everton FC,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-26cc96cedd4ce22fa0ba04a5,EPL,2017-18,2017-09-23T12:00:00Z,Matchday 6,,Burnley FC,,Huddersfield Town,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-280235c9cfa0c3cd93c5a06d,EPL,2017-18,2017-09-23T12:00:00Z,Matchday 6,,West Ham United,,Tottenham Hotspur,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6133ba2ddeb1c2a20fec5b0b,EPL,2017-18,2017-09-23T12:00:00Z,Matchday 6,,Everton FC,,AFC Bournemouth,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6e2e1fb64e24e31901fa7186,EPL,2017-18,2017-09-23T12:00:00Z,Matchday 6,,Swansea City,,Watford FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-71c42e6ea970f219c80823ab,EPL,2017-18,2017-09-23T12:00:00Z,Matchday 6,,Manchester City,,Crystal Palace,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-737d723c470061562a08dca8,EPL,2017-18,2017-09-23T12:00:00Z,Matchday 6,,Stoke City,,Chelsea FC,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c8ecca985d716987b6826ccd,EPL,2017-18,2017-09-23T12:00:00Z,Matchday 6,,Southampton FC,,Manchester United,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-df757b1582f6fa482f973fff,EPL,2017-18,2017-09-23T12:00:00Z,Matchday 6,,Leicester City,,Liverpool FC,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-fcf7d54d1a09489fbb5b4869,EPL,2017-18,2017-09-24T12:00:00Z,Matchday 6,,Brighton & Hove Albion,,Newcastle United,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d91ac8dbff326482c273f6b3,EPL,2017-18,2017-09-25T12:00:00Z,Matchday 6,,Arsenal FC,,West Bromwich Albion,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-03a85ba9e6933e77b3a39163,EPL,2017-18,2017-09-30T12:00:00Z,Matchday 7,,Chelsea FC,,Manchester City,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-10436974db0d5d007482734e,EPL,2017-18,2017-09-30T12:00:00Z,Matchday 7,,Stoke City,,Southampton FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-21786a3bf4843edeb9577889,EPL,2017-18,2017-09-30T12:00:00Z,Matchday 7,,AFC Bournemouth,,Leicester City,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2b4a05780e2b295148c8e85e,EPL,2017-18,2017-09-30T12:00:00Z,Matchday 7,,Huddersfield Town,,Tottenham Hotspur,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2faa4e0a2533f7b3fc187a9f,EPL,2017-18,2017-09-30T12:00:00Z,Matchday 7,,Manchester United,,Crystal Palace,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-686ecb3f2c9a266d367cd4ea,EPL,2017-18,2017-09-30T12:00:00Z,Matchday 7,,West Ham United,,Swansea City,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-bcc5b41d39bc34c00122e43b,EPL,2017-18,2017-09-30T12:00:00Z,Matchday 7,,West Bromwich Albion,,Watford FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-08ba0bf2ce567635a617c182,EPL,2017-18,2017-10-01T12:00:00Z,Matchday 7,,Everton FC,,Burnley FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-426f639a2d74e071c6d5dd4c,EPL,2017-18,2017-10-01T12:00:00Z,Matchday 7,,Newcastle United,,Liverpool FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-52b4e5d069cb71adafb0c4f8,EPL,2017-18,2017-10-01T12:00:00Z,Matchday 7,,Arsenal FC,,Brighton & Hove Albion,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-20f5629ba27073f3806747c4,EPL,2017-18,2017-10-14T12:00:00Z,Matchday 8,,Manchester City,,Stoke City,,7,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-268a4dd7b9dc5203be13898c,EPL,2017-18,2017-10-14T12:00:00Z,Matchday 8,,Crystal Palace,,Chelsea FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3f11df431574c584e6bcfdf9,EPL,2017-18,2017-10-14T12:00:00Z,Matchday 8,,Tottenham Hotspur,,AFC Bournemouth,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-56fb211ae60b3d1b42643327,EPL,2017-18,2017-10-14T12:00:00Z,Matchday 8,,Burnley FC,,West Ham United,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-5b8b66a51db397decaa80550,EPL,2017-18,2017-10-14T12:00:00Z,Matchday 8,,Liverpool FC,,Manchester United,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-99b2818daaa0e38784fc0f1b,EPL,2017-18,2017-10-14T12:00:00Z,Matchday 8,,Swansea City,,Huddersfield Town,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c2f8a0446b10d1c2c76ad81b,EPL,2017-18,2017-10-14T12:00:00Z,Matchday 8,,Watford FC,,Arsenal FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-735e2bcc6beb66bc18241f2d,EPL,2017-18,2017-10-15T12:00:00Z,Matchday 8,,Brighton & Hove Albion,,Everton FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c4dc9f6a71a34243221cf196,EPL,2017-18,2017-10-15T12:00:00Z,Matchday 8,,Southampton FC,,Newcastle United,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-62df4382c3186d1097854787,EPL,2017-18,2017-10-16T12:00:00Z,Matchday 8,,Leicester City,,West Bromwich Albion,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-aa317deab1a3f2c617d31fd6,EPL,2017-18,2017-10-20T12:00:00Z,Matchday 9,,West Ham United,,Brighton & Hove Albion,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-014b1cf80b8e0f5058715d24,EPL,2017-18,2017-10-21T12:00:00Z,Matchday 9,,Southampton FC,,West Bromwich Albion,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-5cbf792e6fe79383f05e92c2,EPL,2017-18,2017-10-21T12:00:00Z,Matchday 9,,Chelsea FC,,Watford FC,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-64ab55081729b3375251097c,EPL,2017-18,2017-10-21T12:00:00Z,Matchday 9,,Swansea City,,Leicester City,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a4016b64816cbb06000a4d1f,EPL,2017-18,2017-10-21T12:00:00Z,Matchday 9,,Newcastle United,,Crystal Palace,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a8e0b739d6ffbc547385acb7,EPL,2017-18,2017-10-21T12:00:00Z,Matchday 9,,Huddersfield Town,,Manchester United,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d4ccd7c183ea6ef0007c3a6d,EPL,2017-18,2017-10-21T12:00:00Z,Matchday 9,,Manchester City,,Burnley FC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-eca75966c533b703bea50469,EPL,2017-18,2017-10-21T12:00:00Z,Matchday 9,,Stoke City,,AFC Bournemouth,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7796ca3b61d975650cf22f8b,EPL,2017-18,2017-10-22T12:00:00Z,Matchday 9,,Everton FC,,Arsenal FC,,2,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-df1c8fe4065de9c93d5effbd,EPL,2017-18,2017-10-22T12:00:00Z,Matchday 9,,Tottenham Hotspur,,Liverpool FC,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-03c443dd72a27d5869aae06f,EPL,2017-18,2017-10-28T12:00:00Z,Matchday 10,,Arsenal FC,,Swansea City,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0a317728c69daaecb2c7ff6b,EPL,2017-18,2017-10-28T12:00:00Z,Matchday 10,,Crystal Palace,,West Ham United,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-1be59b132b3e345f92cb743d,EPL,2017-18,2017-10-28T12:00:00Z,Matchday 10,,Manchester United,,Tottenham Hotspur,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6763a26aac136f268e00d1b1,EPL,2017-18,2017-10-28T12:00:00Z,Matchday 10,,Watford FC,,Stoke City,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6d01b1054c98278ccc988df3,EPL,2017-18,2017-10-28T12:00:00Z,Matchday 10,,West Bromwich Albion,,Manchester City,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-75de06d1f6c2827bd56f5022,EPL,2017-18,2017-10-28T12:00:00Z,Matchday 10,,Liverpool FC,,Huddersfield Town,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-965ab13d9372662587503d6d,EPL,2017-18,2017-10-28T12:00:00Z,Matchday 10,,AFC Bournemouth,,Chelsea FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a8052b27bfadde830f6b8b90,EPL,2017-18,2017-10-29T12:00:00Z,Matchday 10,,Leicester City,,Everton FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-bc8eebe698c768c55b193530,EPL,2017-18,2017-10-29T12:00:00Z,Matchday 10,,Brighton & Hove Albion,,Southampton FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-084e30bc3c2cbcd5f7107b97,EPL,2017-18,2017-10-30T12:00:00Z,Matchday 10,,Burnley FC,,Newcastle United,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-07b6b2932bdc0762bedc973e,EPL,2017-18,2017-11-04T12:00:00Z,Matchday 11,,Newcastle United,,AFC Bournemouth,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4807c6bb09761af8fa456783,EPL,2017-18,2017-11-04T12:00:00Z,Matchday 11,,Swansea City,,Brighton & Hove Albion,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6a6fe2824cfbf5032dbccc1a,EPL,2017-18,2017-11-04T12:00:00Z,Matchday 11,,Huddersfield Town,,West Bromwich Albion,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-98080fd606dc6113c2090dfb,EPL,2017-18,2017-11-04T12:00:00Z,Matchday 11,,Stoke City,,Leicester City,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-debe117105c02f141ce61f68,EPL,2017-18,2017-11-04T12:00:00Z,Matchday 11,,West Ham United,,Liverpool FC,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f27592420ac4dc31baaa8588,EPL,2017-18,2017-11-04T12:00:00Z,Matchday 11,,Southampton FC,,Burnley FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4f1998931807aa2741af3337,EPL,2017-18,2017-11-05T12:00:00Z,Matchday 11,,Manchester City,,Arsenal FC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-506927d3a398aa66447ea040,EPL,2017-18,2017-11-05T12:00:00Z,Matchday 11,,Tottenham Hotspur,,Crystal Palace,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-91f2cea32b8e951b246fffab,EPL,2017-18,2017-11-05T12:00:00Z,Matchday 11,,Chelsea FC,,Manchester United,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b3b307816af3eaf84b7ca488,EPL,2017-18,2017-11-05T12:00:00Z,Matchday 11,,Everton FC,,Watford FC,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-00403735477104cea81369b2,EPL,2017-18,2017-11-18T12:00:00Z,Matchday 12,,Liverpool FC,,Southampton FC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-143d90ed0a5d0bfa81ff202e,EPL,2017-18,2017-11-18T12:00:00Z,Matchday 12,,Burnley FC,,Swansea City,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-47512590e031fe3a501164b5,EPL,2017-18,2017-11-18T12:00:00Z,Matchday 12,,AFC Bournemouth,,Huddersfield Town,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8893e68177dfb4d0886ec5ca,EPL,2017-18,2017-11-18T12:00:00Z,Matchday 12,,Arsenal FC,,Tottenham Hotspur,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ae4771e0eb5069861db89b30,EPL,2017-18,2017-11-18T12:00:00Z,Matchday 12,,Crystal Palace,,Everton FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b2e42ac23e26207e8c73d49e,EPL,2017-18,2017-11-18T12:00:00Z,Matchday 12,,West Bromwich Albion,,Chelsea FC,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b81e90a3efda76daba9e3202,EPL,2017-18,2017-11-18T12:00:00Z,Matchday 12,,Leicester City,,Manchester City,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f388a1d6b8f2d2a6e18b0983,EPL,2017-18,2017-11-18T12:00:00Z,Matchday 12,,Manchester United,,Newcastle United,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f000a22259a2de64660826cd,EPL,2017-18,2017-11-19T12:00:00Z,Matchday 12,,Watford FC,,West Ham United,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-1acaee011991ebbbf1947560,EPL,2017-18,2017-11-20T12:00:00Z,Matchday 12,,Brighton & Hove Albion,,Stoke City,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-687fdbeb0a28e68604cadd6e,EPL,2017-18,2017-11-24T12:00:00Z,Matchday 13,,West Ham United,,Leicester City,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3733746c2cd343d13422d289,EPL,2017-18,2017-11-25T12:00:00Z,Matchday 13,,Newcastle United,,Watford FC,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3fee486a24da4277741a651b,EPL,2017-18,2017-11-25T12:00:00Z,Matchday 13,,Tottenham Hotspur,,West Bromwich Albion,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4530c075c42f38cd9c6b4130,EPL,2017-18,2017-11-25T12:00:00Z,Matchday 13,,Crystal Palace,,Stoke City,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4b610f90c09796ed28a0b581,EPL,2017-18,2017-11-25T12:00:00Z,Matchday 13,,Liverpool FC,,Chelsea FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7a4c466839e813a7c23235a7,EPL,2017-18,2017-11-25T12:00:00Z,Matchday 13,,Swansea City,,AFC Bournemouth,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-da61d06c2f6ba751d99ced7a,EPL,2017-18,2017-11-25T12:00:00Z,Matchday 13,,Manchester United,,Brighton & Hove Albion,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-5e45f138db12a42c675e1c74,EPL,2017-18,2017-11-26T12:00:00Z,Matchday 13,,Southampton FC,,Everton FC,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8e30a1997db3434ff984fe42,EPL,2017-18,2017-11-26T12:00:00Z,Matchday 13,,Burnley FC,,Arsenal FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-9fba6b5d9d738aa069bef621,EPL,2017-18,2017-11-26T12:00:00Z,Matchday 13,,Huddersfield Town,,Manchester City,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-67529c85e901c5ea2e219dc2,EPL,2017-18,2017-11-28T12:00:00Z,Matchday 14,,Watford FC,,Manchester United,,2,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-90db2d31358adb005f0c05d3,EPL,2017-18,2017-11-28T12:00:00Z,Matchday 14,,Brighton & Hove Albion,,Crystal Palace,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-9cb800997512c1e1c71f0f33,EPL,2017-18,2017-11-28T12:00:00Z,Matchday 14,,Leicester City,,Tottenham Hotspur,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f08869a4ac4b5b109e2fc94e,EPL,2017-18,2017-11-28T12:00:00Z,Matchday 14,,West Bromwich Albion,,Newcastle United,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-16efd4da4cf2fdd65d037db1,EPL,2017-18,2017-11-29T12:00:00Z,Matchday 14,,Arsenal FC,,Huddersfield Town,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-77cda68a0b51cdd37d0aae5a,EPL,2017-18,2017-11-29T12:00:00Z,Matchday 14,,Chelsea FC,,Swansea City,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-9c293c0e18a9f35d171abb2a,EPL,2017-18,2017-11-29T12:00:00Z,Matchday 14,,Everton FC,,West Ham United,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c3e891e918e41f8879c4a85f,EPL,2017-18,2017-11-29T12:00:00Z,Matchday 14,,Stoke City,,Liverpool FC,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d7236c66450971c7845ed5bd,EPL,2017-18,2017-11-29T12:00:00Z,Matchday 14,,Manchester City,,Southampton FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f07f7f128f713979729bd74c,EPL,2017-18,2017-11-29T12:00:00Z,Matchday 14,,AFC Bournemouth,,Burnley FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-234b2ccff5d4368dfc41a777,EPL,2017-18,2017-12-02T12:00:00Z,Matchday 15,,Watford FC,,Tottenham Hotspur,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-52739b165781725e92921b84,EPL,2017-18,2017-12-02T12:00:00Z,Matchday 15,,West Bromwich Albion,,Crystal Palace,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-540ee37ee4db342c487127d9,EPL,2017-18,2017-12-02T12:00:00Z,Matchday 15,,Arsenal FC,,Manchester United,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-652bd2c4330019feca0fe8fb,EPL,2017-18,2017-12-02T12:00:00Z,Matchday 15,,Chelsea FC,,Newcastle United,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6695147acee4336cb41bcd89,EPL,2017-18,2017-12-02T12:00:00Z,Matchday 15,,Everton FC,,Huddersfield Town,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7a664aeab6f785b595569295,EPL,2017-18,2017-12-02T12:00:00Z,Matchday 15,,Brighton & Hove Albion,,Liverpool FC,,1,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a82a692d6b64cd8531a21de3,EPL,2017-18,2017-12-02T12:00:00Z,Matchday 15,,Leicester City,,Burnley FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e3a180c9f0c5ad7c6dacc413,EPL,2017-18,2017-12-02T12:00:00Z,Matchday 15,,Stoke City,,Swansea City,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-701fdec2e148e935e688017b,EPL,2017-18,2017-12-03T12:00:00Z,Matchday 15,,AFC Bournemouth,,Southampton FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-9368037e48d4cd7a3a376307,EPL,2017-18,2017-12-03T12:00:00Z,Matchday 15,,Manchester City,,West Ham United,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-02c9ef1ab0a338af855025bf,EPL,2017-18,2017-12-09T12:00:00Z,Matchday 16,,Swansea City,,West Bromwich Albion,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0b80293bd216f4be12fa8dbd,EPL,2017-18,2017-12-09T12:00:00Z,Matchday 16,,Burnley FC,,Watford FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-1401d1c36b56b89d585965fd,EPL,2017-18,2017-12-09T12:00:00Z,Matchday 16,,Huddersfield Town,,Brighton & Hove Albion,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2bbfd444db3ead36e016a0c2,EPL,2017-18,2017-12-09T12:00:00Z,Matchday 16,,Tottenham Hotspur,,Stoke City,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e57e33aa6abab05269e34ad6,EPL,2017-18,2017-12-09T12:00:00Z,Matchday 16,,West Ham United,,Chelsea FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e7afc328a73ec0239e3e9243,EPL,2017-18,2017-12-09T12:00:00Z,Matchday 16,,Newcastle United,,Leicester City,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-fcc2912483cbcd6fc352be41,EPL,2017-18,2017-12-09T12:00:00Z,Matchday 16,,Crystal Palace,,AFC Bournemouth,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-11c789fc71d4228067187687,EPL,2017-18,2017-12-10T12:00:00Z,Matchday 16,,Manchester United,,Manchester City,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-1d5a3d235a1121322cbad662,EPL,2017-18,2017-12-10T12:00:00Z,Matchday 16,,Liverpool FC,,Everton FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-dafa5f285f1274a8b15e0907,EPL,2017-18,2017-12-10T12:00:00Z,Matchday 16,,Southampton FC,,Arsenal FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-1fc7bd8bf62b544d46e8bced,EPL,2017-18,2017-12-12T12:00:00Z,Matchday 17,,Huddersfield Town,,Chelsea FC,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2d053893a47ea2106d41f20b,EPL,2017-18,2017-12-12T12:00:00Z,Matchday 17,,Burnley FC,,Stoke City,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b6456161b3419ad084f071a9,EPL,2017-18,2017-12-12T12:00:00Z,Matchday 17,,Crystal Palace,,Watford FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-5024d72c0af4cfdf1e33af80,EPL,2017-18,2017-12-13T12:00:00Z,Matchday 17,,Liverpool FC,,West Bromwich Albion,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6bf17898c574eb4f4eb862da,EPL,2017-18,2017-12-13T12:00:00Z,Matchday 17,,Southampton FC,,Leicester City,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-84dd059abdc3d023f4831508,EPL,2017-18,2017-12-13T12:00:00Z,Matchday 17,,Newcastle United,,Everton FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b2af7911834c85ed85a2b38f,EPL,2017-18,2017-12-13T12:00:00Z,Matchday 17,,Tottenham Hotspur,,Brighton & Hove Albion,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-bd302d3c4caf34acdba5877c,EPL,2017-18,2017-12-13T12:00:00Z,Matchday 17,,Manchester United,,AFC Bournemouth,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d7d300769f635528f03294b0,EPL,2017-18,2017-12-13T12:00:00Z,Matchday 17,,Swansea City,,Manchester City,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ded0558e812d330ca24edc08,EPL,2017-18,2017-12-13T12:00:00Z,Matchday 17,,West Ham United,,Arsenal FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-04ec883898b0ca69e3dcc882,EPL,2017-18,2017-12-16T12:00:00Z,Matchday 18,,Manchester City,,Tottenham Hotspur,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-13453c6658a799af713a129b,EPL,2017-18,2017-12-16T12:00:00Z,Matchday 18,,Arsenal FC,,Newcastle United,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2f75551297a4dee76f5279fb,EPL,2017-18,2017-12-16T12:00:00Z,Matchday 18,,Leicester City,,Crystal Palace,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-36436e67073ccd83af0314c7,EPL,2017-18,2017-12-16T12:00:00Z,Matchday 18,,Stoke City,,West Ham United,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3c0b0b9a4a50a8827b3da799,EPL,2017-18,2017-12-16T12:00:00Z,Matchday 18,,Watford FC,,Huddersfield Town,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-73ea8ebcb4a075106dabed3e,EPL,2017-18,2017-12-16T12:00:00Z,Matchday 18,,Brighton & Hove Albion,,Burnley FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b3423eaabc0e38276fef7aea,EPL,2017-18,2017-12-16T12:00:00Z,Matchday 18,,Chelsea FC,,Southampton FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-15a178900d9289ddb6939200,EPL,2017-18,2017-12-17T12:00:00Z,Matchday 18,,West Bromwich Albion,,Manchester United,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-bc0699b9c791123d337f78b7,EPL,2017-18,2017-12-17T12:00:00Z,Matchday 18,,AFC Bournemouth,,Liverpool FC,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-68225fd4014a15df9bacef7e,EPL,2017-18,2017-12-18T12:00:00Z,Matchday 18,,Everton FC,,Swansea City,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-26d387f716f34a02e2430866,EPL,2017-18,2017-12-22T12:00:00Z,Matchday 19,,Arsenal FC,,Liverpool FC,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-04284322f0bb17fd496a48ff,EPL,2017-18,2017-12-23T12:00:00Z,Matchday 19,,Manchester City,,AFC Bournemouth,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2c1b851c98adca67ccd9e18e,EPL,2017-18,2017-12-23T12:00:00Z,Matchday 19,,Brighton & Hove Albion,,Watford FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-5c029886ff3b6966e03cd531,EPL,2017-18,2017-12-23T12:00:00Z,Matchday 19,,Southampton FC,,Huddersfield Town,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6eef5df6560d5216a8c62993,EPL,2017-18,2017-12-23T12:00:00Z,Matchday 19,,West Ham United,,Newcastle United,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8885548d181f0d7561709375,EPL,2017-18,2017-12-23T12:00:00Z,Matchday 19,,Leicester City,,Manchester United,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d0ed7317b850a6ada9559c9a,EPL,2017-18,2017-12-23T12:00:00Z,Matchday 19,,Swansea City,,Crystal Palace,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-da4b79efd3e4a4e0969d4f93,EPL,2017-18,2017-12-23T12:00:00Z,Matchday 19,,Stoke City,,West Bromwich Albion,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ea2ecf1399cceedfe2ff1fb3,EPL,2017-18,2017-12-23T12:00:00Z,Matchday 19,,Everton FC,,Chelsea FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ffca91c57b0b62d899bef9f7,EPL,2017-18,2017-12-23T12:00:00Z,Matchday 19,,Burnley FC,,Tottenham Hotspur,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-19ad7476363c4005d2ce3a44,EPL,2017-18,2017-12-26T12:00:00Z,Matchday 20,,West Bromwich Albion,,Everton FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-64c3e13c97ee53b5af72bdcd,EPL,2017-18,2017-12-26T12:00:00Z,Matchday 20,,Chelsea FC,,Brighton & Hove Albion,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6be23f060123ba577d08f9fc,EPL,2017-18,2017-12-26T12:00:00Z,Matchday 20,,AFC Bournemouth,,West Ham United,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-87adb16b47e883364c079cff,EPL,2017-18,2017-12-26T12:00:00Z,Matchday 20,,Liverpool FC,,Swansea City,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8b267ecdb3591a3ae01d7ea8,EPL,2017-18,2017-12-26T12:00:00Z,Matchday 20,,Huddersfield Town,,Stoke City,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a20dac4f389bf8be004ff35e,EPL,2017-18,2017-12-26T12:00:00Z,Matchday 20,,Tottenham Hotspur,,Southampton FC,,5,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d6d26ac1cd625675dbe1d4dc,EPL,2017-18,2017-12-26T12:00:00Z,Matchday 20,,Manchester United,,Burnley FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-dabbed3ab6b401fa706edd4f,EPL,2017-18,2017-12-26T12:00:00Z,Matchday 20,,Watford FC,,Leicester City,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f3209ca1addb9fbb37a2fbec,EPL,2017-18,2017-12-27T12:00:00Z,Matchday 20,,Newcastle United,,Manchester City,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0f631c2ed04084f46b60fd86,EPL,2017-18,2017-12-28T12:00:00Z,Matchday 20,,Crystal Palace,,Arsenal FC,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3e27220a8d115344d38c5279,EPL,2017-18,2017-12-30T12:00:00Z,Matchday 21,,Chelsea FC,,Stoke City,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-50be4ec8a89c4a43c7ce3dbf,EPL,2017-18,2017-12-30T12:00:00Z,Matchday 21,,Newcastle United,,Brighton & Hove Albion,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8e229d0397112cab2a44b55f,EPL,2017-18,2017-12-30T12:00:00Z,Matchday 21,,Huddersfield Town,,Burnley FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-bece5f3e926d584660f9637a,EPL,2017-18,2017-12-30T12:00:00Z,Matchday 21,,Liverpool FC,,Leicester City,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d869ffc527e114f85e7c085d,EPL,2017-18,2017-12-30T12:00:00Z,Matchday 21,,AFC Bournemouth,,Everton FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e1a760973d44d09282ebf1c9,EPL,2017-18,2017-12-30T12:00:00Z,Matchday 21,,Watford FC,,Swansea City,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-fea13c71028e72279a109fd2,EPL,2017-18,2017-12-30T12:00:00Z,Matchday 21,,Manchester United,,Southampton FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8f167cfda4ce05ac671b894b,EPL,2017-18,2017-12-31T12:00:00Z,Matchday 21,,Crystal Palace,,Manchester City,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-cf207f9a42546a7e21e31c48,EPL,2017-18,2017-12-31T12:00:00Z,Matchday 21,,West Bromwich Albion,,Arsenal FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6aa46551015da7b69e118a17,EPL,2017-18,2018-01-01T12:00:00Z,Matchday 22,,Brighton & Hove Albion,,AFC Bournemouth,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6b1e7d83d771d0de2007891c,EPL,2017-18,2018-01-01T12:00:00Z,Matchday 22,,Leicester City,,Huddersfield Town,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a3ad3cc2da36a5966eb45ca7,EPL,2017-18,2018-01-01T12:00:00Z,Matchday 22,,Burnley FC,,Liverpool FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-cbe8ab2f24c8f9b84106c28a,EPL,2017-18,2018-01-01T12:00:00Z,Matchday 22,,Everton FC,,Manchester United,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d222679332b6c6db173c4fe1,EPL,2017-18,2018-01-01T12:00:00Z,Matchday 22,,Stoke City,,Newcastle United,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-73cf009b46fecf7d551a47e1,EPL,2017-18,2018-01-02T12:00:00Z,Matchday 22,,Southampton FC,,Crystal Palace,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ca81a61f1edc369ba885f0a5,EPL,2017-18,2018-01-02T12:00:00Z,Matchday 22,,Manchester City,,Watford FC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d2c283c2422b726e83f57ba6,EPL,2017-18,2018-01-02T12:00:00Z,Matchday 22,,Swansea City,,Tottenham Hotspur,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e3ba0639ca25de5f498547eb,EPL,2017-18,2018-01-02T12:00:00Z,Matchday 22,,West Ham United,,West Bromwich Albion,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-cc130adefb0b978348540306,EPL,2017-18,2018-01-03T12:00:00Z,Matchday 22,,Arsenal FC,,Chelsea FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-99b70a183cc8049c63b2449d,EPL,2017-18,2018-01-04T12:00:00Z,Matchday 21,,Tottenham Hotspur,,West Ham United,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0ce485f46d52e851dac7f2c9,EPL,2017-18,2018-01-13T12:00:00Z,Matchday 23,,Newcastle United,,Swansea City,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-306bf32f06a69dac39d8cb34,EPL,2017-18,2018-01-13T12:00:00Z,Matchday 23,,Huddersfield Town,,West Ham United,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3d207b5b3c634c92723a9b1f,EPL,2017-18,2018-01-13T12:00:00Z,Matchday 23,,Chelsea FC,,Leicester City,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6b9f7568858717fea4f4f7a1,EPL,2017-18,2018-01-13T12:00:00Z,Matchday 23,,Tottenham Hotspur,,Everton FC,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c0f468994412fcefbde1dc02,EPL,2017-18,2018-01-13T12:00:00Z,Matchday 23,,Crystal Palace,,Burnley FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d8a7e8778d28c0c6be650fd0,EPL,2017-18,2018-01-13T12:00:00Z,Matchday 23,,West Bromwich Albion,,Brighton & Hove Albion,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d941692305f981d12e80e807,EPL,2017-18,2018-01-13T12:00:00Z,Matchday 23,,Watford FC,,Southampton FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-43c4abb1e8bebd227ab7b7f0,EPL,2017-18,2018-01-14T12:00:00Z,Matchday 23,,Liverpool FC,,Manchester City,,4,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-cc83868fe4a6034abe4f4845,EPL,2017-18,2018-01-14T12:00:00Z,Matchday 23,,AFC Bournemouth,,Arsenal FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4ac279b413020f061fa7c6a1,EPL,2017-18,2018-01-15T12:00:00Z,Matchday 23,,Manchester United,,Stoke City,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3d56cfb60b2651d69c327582,EPL,2017-18,2018-01-20T12:00:00Z,Matchday 24,,Burnley FC,,Manchester United,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-65b1397de790016289515baa,EPL,2017-18,2018-01-20T12:00:00Z,Matchday 24,,Manchester City,,Newcastle United,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6c39d3b1d30182e376f19365,EPL,2017-18,2018-01-20T12:00:00Z,Matchday 24,,Leicester City,,Watford FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6ca0bc0cde83dab595fd8cd6,EPL,2017-18,2018-01-20T12:00:00Z,Matchday 24,,Everton FC,,West Bromwich Albion,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-94f226a5ff08579c76dea3f4,EPL,2017-18,2018-01-20T12:00:00Z,Matchday 24,,West Ham United,,AFC Bournemouth,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-9e0340f474c5c9eaa429cfed,EPL,2017-18,2018-01-20T12:00:00Z,Matchday 24,,Brighton & Hove Albion,,Chelsea FC,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a5dff1af84865eac8de70cc5,EPL,2017-18,2018-01-20T12:00:00Z,Matchday 24,,Stoke City,,Huddersfield Town,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e0ba72de356b518c66b87563,EPL,2017-18,2018-01-20T12:00:00Z,Matchday 24,,Arsenal FC,,Crystal Palace,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-35e08f54f58fae77a1e9a8d8,EPL,2017-18,2018-01-21T12:00:00Z,Matchday 24,,Southampton FC,,Tottenham Hotspur,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-af989169a4c32d878fd6d8b6,EPL,2017-18,2018-01-22T12:00:00Z,Matchday 24,,Swansea City,,Liverpool FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0b527a53acdb0ac0cdf0500f,EPL,2017-18,2018-01-30T12:00:00Z,Matchday 25,,Swansea City,,Arsenal FC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-886dfacbd8576791a5939b69,EPL,2017-18,2018-01-30T12:00:00Z,Matchday 25,,West Ham United,,Crystal Palace,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e803f0037bc3aabccd456e13,EPL,2017-18,2018-01-30T12:00:00Z,Matchday 25,,Huddersfield Town,,Liverpool FC,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-02f47085be32555e0c8499c2,EPL,2017-18,2018-01-31T12:00:00Z,Matchday 25,,Stoke City,,Watford FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-248503f00abdc915c05e8cc7,EPL,2017-18,2018-01-31T12:00:00Z,Matchday 25,,Manchester City,,West Bromwich Albion,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-386331e1218bcfa3bf9426cf,EPL,2017-18,2018-01-31T12:00:00Z,Matchday 25,,Everton FC,,Leicester City,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-5576b2b2d415963e59d8051d,EPL,2017-18,2018-01-31T12:00:00Z,Matchday 25,,Chelsea FC,,AFC Bournemouth,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-bf6bacd7688c40c84f1237d0,EPL,2017-18,2018-01-31T12:00:00Z,Matchday 25,,Tottenham Hotspur,,Manchester United,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d249753097a8c8ad53b23e93,EPL,2017-18,2018-01-31T12:00:00Z,Matchday 25,,Southampton FC,,Brighton & Hove Albion,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e0ad2cd4f880d853d8249272,EPL,2017-18,2018-01-31T12:00:00Z,Matchday 25,,Newcastle United,,Burnley FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-02c85ed937b342e7ce36f7b2,EPL,2017-18,2018-02-03T12:00:00Z,Matchday 26,,West Bromwich Albion,,Southampton FC,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-165df20259c37e614f242c5d,EPL,2017-18,2018-02-03T12:00:00Z,Matchday 26,,Manchester United,,Huddersfield Town,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-297f877616e2708c230ede0c,EPL,2017-18,2018-02-03T12:00:00Z,Matchday 26,,AFC Bournemouth,,Stoke City,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-31242c63bdc8a08d1163cda2,EPL,2017-18,2018-02-03T12:00:00Z,Matchday 26,,Brighton & Hove Albion,,West Ham United,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-581f11d930d8977f112f4993,EPL,2017-18,2018-02-03T12:00:00Z,Matchday 26,,Leicester City,,Swansea City,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6a5d91e4881ef45479ab3376,EPL,2017-18,2018-02-03T12:00:00Z,Matchday 26,,Arsenal FC,,Everton FC,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ddfefd95278a37212d952310,EPL,2017-18,2018-02-03T12:00:00Z,Matchday 26,,Burnley FC,,Manchester City,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2784743648dc7845de49d2f6,EPL,2017-18,2018-02-04T12:00:00Z,Matchday 26,,Liverpool FC,,Tottenham Hotspur,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-fcdd2e46a6166061ceed054d,EPL,2017-18,2018-02-04T12:00:00Z,Matchday 26,,Crystal Palace,,Newcastle United,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e119f10dcefe7980733bb02f,EPL,2017-18,2018-02-05T12:00:00Z,Matchday 26,,Watford FC,,Chelsea FC,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-314a502dd49b7e12bbefab72,EPL,2017-18,2018-02-10T12:00:00Z,Matchday 27,,Manchester City,,Leicester City,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3a1a9d6f2aa47365f9053dba,EPL,2017-18,2018-02-10T12:00:00Z,Matchday 27,,West Ham United,,Watford FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7ab3e827b6df0de7e4e00210,EPL,2017-18,2018-02-10T12:00:00Z,Matchday 27,,Tottenham Hotspur,,Arsenal FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-bd986ac4a722944b009aa900,EPL,2017-18,2018-02-10T12:00:00Z,Matchday 27,,Stoke City,,Brighton & Hove Albion,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-eceadea4d3d51c8742d1333d,EPL,2017-18,2018-02-10T12:00:00Z,Matchday 27,,Everton FC,,Crystal Palace,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-fbc7ea7ad8b4b09a1c2e8a08,EPL,2017-18,2018-02-10T12:00:00Z,Matchday 27,,Swansea City,,Burnley FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-052caac7daaed9fc31ec1fdb,EPL,2017-18,2018-02-11T12:00:00Z,Matchday 27,,Newcastle United,,Manchester United,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-551319cd6753caa3055e7dd1,EPL,2017-18,2018-02-11T12:00:00Z,Matchday 27,,Huddersfield Town,,AFC Bournemouth,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a5383455e78e3a420c53dd3e,EPL,2017-18,2018-02-11T12:00:00Z,Matchday 27,,Southampton FC,,Liverpool FC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-347c4da8acbf1d8bac1a2bc6,EPL,2017-18,2018-02-12T12:00:00Z,Matchday 27,,Chelsea FC,,West Bromwich Albion,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-060bfb41a8a1002bcc37d3a8,EPL,2017-18,2018-02-24T12:00:00Z,Matchday 28,,Liverpool FC,,West Ham United,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-23efe8bcafcbd3e0dff11470,EPL,2017-18,2018-02-24T12:00:00Z,Matchday 28,,Leicester City,,Stoke City,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-55962b5b12d2b931af597bcd,EPL,2017-18,2018-02-24T12:00:00Z,Matchday 28,,AFC Bournemouth,,Newcastle United,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8ac8fadc6a5414776c228a76,EPL,2017-18,2018-02-24T12:00:00Z,Matchday 28,,Watford FC,,Everton FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ac1d419323412f092ec54152,EPL,2017-18,2018-02-24T12:00:00Z,Matchday 28,,Burnley FC,,Southampton FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b6e546a8e10e9b86772bced6,EPL,2017-18,2018-02-24T12:00:00Z,Matchday 28,,Brighton & Hove Albion,,Swansea City,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-dacaa19dfd744bf3aac12cc8,EPL,2017-18,2018-02-24T12:00:00Z,Matchday 28,,West Bromwich Albion,,Huddersfield Town,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-02bc0e8e513cc677133544e9,EPL,2017-18,2018-02-25T12:00:00Z,Matchday 28,,Manchester United,,Chelsea FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-9ed4e635e64c7d35d94a47ec,EPL,2017-18,2018-02-25T12:00:00Z,Matchday 28,,Crystal Palace,,Tottenham Hotspur,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-fb532173300c99881e3b28f4,EPL,2017-18,2018-03-01T12:00:00Z,Matchday 28,,Arsenal FC,,Manchester City,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2aa99b54876a66416192d44a,EPL,2017-18,2018-03-03T12:00:00Z,Matchday 29,,Southampton FC,,Stoke City,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4c2e9982cfa722091706dd8d,EPL,2017-18,2018-03-03T12:00:00Z,Matchday 29,,Watford FC,,West Bromwich Albion,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-5b0a1377f780627adfe5ef93,EPL,2017-18,2018-03-03T12:00:00Z,Matchday 29,,Burnley FC,,Everton FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-945eb9aff04753bcd0ee9f02,EPL,2017-18,2018-03-03T12:00:00Z,Matchday 29,,Tottenham Hotspur,,Huddersfield Town,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-9c015c645e7a0e50189656a2,EPL,2017-18,2018-03-03T12:00:00Z,Matchday 29,,Swansea City,,West Ham United,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b2b7709049655f9706d37d5f,EPL,2017-18,2018-03-03T12:00:00Z,Matchday 29,,Leicester City,,AFC Bournemouth,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-dde6cad7aee62465e872617a,EPL,2017-18,2018-03-03T12:00:00Z,Matchday 29,,Liverpool FC,,Newcastle United,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-db1b7c58a797e1c6c6735550,EPL,2017-18,2018-03-04T12:00:00Z,Matchday 29,,Brighton & Hove Albion,,Arsenal FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f6bc90584c4c5c1882d82ea2,EPL,2017-18,2018-03-04T12:00:00Z,Matchday 29,,Manchester City,,Chelsea FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-69244b8c5ebfa5a256c40f82,EPL,2017-18,2018-03-05T12:00:00Z,Matchday 29,,Crystal Palace,,Manchester United,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-28fd5ebc53e5358f81b7e493,EPL,2017-18,2018-03-10T12:00:00Z,Matchday 30,,Manchester United,,Liverpool FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3b4af454793f836fa7956495,EPL,2017-18,2018-03-10T12:00:00Z,Matchday 30,,Newcastle United,,Southampton FC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-421d082c794502605018d5f2,EPL,2017-18,2018-03-10T12:00:00Z,Matchday 30,,West Ham United,,Burnley FC,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7ec58b142989a46557784365,EPL,2017-18,2018-03-10T12:00:00Z,Matchday 30,,Chelsea FC,,Crystal Palace,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-dd0187c4a96b458ee0b0f4b2,EPL,2017-18,2018-03-10T12:00:00Z,Matchday 30,,West Bromwich Albion,,Leicester City,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f1f6b91261d37f7a2069ce31,EPL,2017-18,2018-03-10T12:00:00Z,Matchday 30,,Everton FC,,Brighton & Hove Albion,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f6fd780ccf183661c2f8182d,EPL,2017-18,2018-03-10T12:00:00Z,Matchday 30,,Huddersfield Town,,Swansea City,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-241bb5afe21412606d0a3670,EPL,2017-18,2018-03-11T12:00:00Z,Matchday 30,,AFC Bournemouth,,Tottenham Hotspur,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ac63839aeec6d7135f13bf06,EPL,2017-18,2018-03-11T12:00:00Z,Matchday 30,,Arsenal FC,,Watford FC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ecb3e32cea15d12d54d8a9a7,EPL,2017-18,2018-03-12T12:00:00Z,Matchday 30,,Stoke City,,Manchester City,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3dc73470b4d4a0600d8c1b14,EPL,2017-18,2018-03-17T12:00:00Z,Matchday 31,,Stoke City,,Everton FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6136d4aeb0e455ac51be09e3,EPL,2017-18,2018-03-17T12:00:00Z,Matchday 31,,Liverpool FC,,Watford FC,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6fb2648a013c9ec6950f6287,EPL,2017-18,2018-03-17T12:00:00Z,Matchday 31,,AFC Bournemouth,,West Bromwich Albion,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-df4d2c5d8060d40b1bd04133,EPL,2017-18,2018-03-17T12:00:00Z,Matchday 31,,Huddersfield Town,,Crystal Palace,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2a95dfa07b5a95d454b890a1,EPL,2017-18,2018-03-31T12:00:00Z,Matchday 32,,Watford FC,,AFC Bournemouth,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2c98adbe084351d28dad93ba,EPL,2017-18,2018-03-31T12:00:00Z,Matchday 32,,West Bromwich Albion,,Burnley FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-414405e2a10977feee04633b,EPL,2017-18,2018-03-31T12:00:00Z,Matchday 32,,Newcastle United,,Huddersfield Town,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-46f096dcc270302b741bdf85,EPL,2017-18,2018-03-31T12:00:00Z,Matchday 32,,Manchester United,,Swansea City,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-5a1b143ee7387209d2b6b764,EPL,2017-18,2018-03-31T12:00:00Z,Matchday 32,,Brighton & Hove Albion,,Leicester City,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8a04c23a81349a7a219f4792,EPL,2017-18,2018-03-31T12:00:00Z,Matchday 32,,Crystal Palace,,Liverpool FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-db2b0a6a4ab1395205d7711b,EPL,2017-18,2018-03-31T12:00:00Z,Matchday 32,,Everton FC,,Manchester City,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f8f4ee092c40f9355f511685,EPL,2017-18,2018-03-31T12:00:00Z,Matchday 32,,West Ham United,,Southampton FC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-1b3c19024e47802f0fade5e8,EPL,2017-18,2018-04-01T12:00:00Z,Matchday 32,,Chelsea FC,,Tottenham Hotspur,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f5279d09a178261724673870,EPL,2017-18,2018-04-01T12:00:00Z,Matchday 32,,Arsenal FC,,Stoke City,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-015c86f277ac8e8eb1aa406d,EPL,2017-18,2018-04-07T12:00:00Z,Matchday 33,,Manchester City,,Manchester United,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-200a69aaeead80f4a354cc69,EPL,2017-18,2018-04-07T12:00:00Z,Matchday 33,,Stoke City,,Tottenham Hotspur,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4aa527da665ba01da288b1af,EPL,2017-18,2018-04-07T12:00:00Z,Matchday 33,,Brighton & Hove Albion,,Huddersfield Town,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-91d296ef6ff002901cc8ec9d,EPL,2017-18,2018-04-07T12:00:00Z,Matchday 33,,Everton FC,,Liverpool FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-afde85accb37c831652343b8,EPL,2017-18,2018-04-07T12:00:00Z,Matchday 33,,West Bromwich Albion,,Swansea City,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-bbcacce8b871a0e16531d64c,EPL,2017-18,2018-04-07T12:00:00Z,Matchday 33,,Watford FC,,Burnley FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c5bb1156caeaee477a8556f2,EPL,2017-18,2018-04-07T12:00:00Z,Matchday 33,,Leicester City,,Newcastle United,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-fc24b07cde7da33f6cdbedfa,EPL,2017-18,2018-04-07T12:00:00Z,Matchday 33,,AFC Bournemouth,,Crystal Palace,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a4d3d2db3132883e27376fbd,EPL,2017-18,2018-04-08T12:00:00Z,Matchday 33,,Arsenal FC,,Southampton FC,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-aa7a7e779a1c1c5e4bafe24b,EPL,2017-18,2018-04-08T12:00:00Z,Matchday 33,,Chelsea FC,,West Ham United,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-384a8256721043b0ce7cb1a7,EPL,2017-18,2018-04-14T12:00:00Z,Matchday 34,,Tottenham Hotspur,,Manchester City,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-9d3f5b89e093a6dcbb3eb5a9,EPL,2017-18,2018-04-14T12:00:00Z,Matchday 34,,Crystal Palace,,Brighton & Hove Albion,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a2d17c0048a81e7c7b7de0d4,EPL,2017-18,2018-04-14T12:00:00Z,Matchday 34,,Southampton FC,,Chelsea FC,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-afdd94512464d432b01519cf,EPL,2017-18,2018-04-14T12:00:00Z,Matchday 34,,Huddersfield Town,,Watford FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b91878f91cb548a755af491d,EPL,2017-18,2018-04-14T12:00:00Z,Matchday 34,,Swansea City,,Everton FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d85bd640a5d9b399f4c8fe18,EPL,2017-18,2018-04-14T12:00:00Z,Matchday 34,,Burnley FC,,Leicester City,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f4362dbd10dd4be4d238899f,EPL,2017-18,2018-04-14T12:00:00Z,Matchday 34,,Liverpool FC,,AFC Bournemouth,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-9d4c1bb42d6e7f79c19bbf7b,EPL,2017-18,2018-04-15T12:00:00Z,Matchday 34,,Newcastle United,,Arsenal FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-eb3f658026aebbf2130e970d,EPL,2017-18,2018-04-15T12:00:00Z,Matchday 34,,Manchester United,,West Bromwich Albion,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-1bdb24bb15b05e0e39c40fa6,EPL,2017-18,2018-04-16T12:00:00Z,Matchday 34,,West Ham United,,Stoke City,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-56ae157f91ce7473aeee7e61,EPL,2017-18,2018-04-17T12:00:00Z,Matchday 35,,Brighton & Hove Albion,,Tottenham Hotspur,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8a7ce4fef15a19b16c365468,EPL,2017-18,2018-04-18T12:00:00Z,Matchday 35,,AFC Bournemouth,,Manchester United,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4319d6b25d1f938a15998e1e,EPL,2017-18,2018-04-19T12:00:00Z,Matchday 35,,Leicester City,,Southampton FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a7b50d342f9b658d5ad07e4b,EPL,2017-18,2018-04-19T12:00:00Z,Matchday 31,,Burnley FC,,Chelsea FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e3f6ba792c44aa40c5d44a97,EPL,2017-18,2018-04-21T12:00:00Z,Matchday 35,,West Bromwich Albion,,Liverpool FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ee2bbaac88fba013011eb0ff,EPL,2017-18,2018-04-21T12:00:00Z,Matchday 35,,Watford FC,,Crystal Palace,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2915bbe96ab5441e93914303,EPL,2017-18,2018-04-22T12:00:00Z,Matchday 35,,Stoke City,,Burnley FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ae9815a1227185120f71291c,EPL,2017-18,2018-04-22T12:00:00Z,Matchday 35,,Arsenal FC,,West Ham United,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-bf69ad050db8ca9bb23d7872,EPL,2017-18,2018-04-22T12:00:00Z,Matchday 35,,Manchester City,,Swansea City,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4070b4f45fcc6b77cc4e386d,EPL,2017-18,2018-04-23T12:00:00Z,Matchday 35,,Everton FC,,Newcastle United,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2697362821a73ee03fd06e41,EPL,2017-18,2018-04-28T12:00:00Z,Matchday 36,,Huddersfield Town,,Everton FC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3fd95bc18b498035966be940,EPL,2017-18,2018-04-28T12:00:00Z,Matchday 36,,Southampton FC,,AFC Bournemouth,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4ce0b5132eb4be079eabbf06,EPL,2017-18,2018-04-28T12:00:00Z,Matchday 36,,Burnley FC,,Brighton & Hove Albion,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6d7a1cf0340ed8b063be206d,EPL,2017-18,2018-04-28T12:00:00Z,Matchday 36,,Swansea City,,Chelsea FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a235d12f6710a5c09232bfbe,EPL,2017-18,2018-04-28T12:00:00Z,Matchday 36,,Liverpool FC,,Stoke City,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b88a0005daff73edcee4cbfc,EPL,2017-18,2018-04-28T12:00:00Z,Matchday 36,,Crystal Palace,,Leicester City,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b98b0fd3c7f5f919863555e1,EPL,2017-18,2018-04-28T12:00:00Z,Matchday 36,,Newcastle United,,West Bromwich Albion,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ba777c2222f4f228cd768b5d,EPL,2017-18,2018-04-29T12:00:00Z,Matchday 36,,West Ham United,,Manchester City,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e1518bad0a1d939aba87f58b,EPL,2017-18,2018-04-29T12:00:00Z,Matchday 36,,Manchester United,,Arsenal FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-73ed656c1b48191ceeefa062,EPL,2017-18,2018-04-30T12:00:00Z,Matchday 36,,Tottenham Hotspur,,Watford FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-bf8fc50dc540b8e20ee408dc,EPL,2017-18,2018-05-04T12:00:00Z,Matchday 37,,Brighton & Hove Albion,,Manchester United,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0f4758bcc14c57c0ec79e576,EPL,2017-18,2018-05-05T12:00:00Z,Matchday 37,,Leicester City,,West Ham United,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2c2cf41aaceb9b67db6d7564,EPL,2017-18,2018-05-05T12:00:00Z,Matchday 37,,Everton FC,,Southampton FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6a299e65a44e76320cef4c66,EPL,2017-18,2018-05-05T12:00:00Z,Matchday 37,,West Bromwich Albion,,Tottenham Hotspur,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8abb61e8ca1c7d6a8c0e72dc,EPL,2017-18,2018-05-05T12:00:00Z,Matchday 37,,AFC Bournemouth,,Swansea City,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-9e13a56a7c80a5cb784d3e21,EPL,2017-18,2018-05-05T12:00:00Z,Matchday 37,,Watford FC,,Newcastle United,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a6b9f9dabd08fca2681263a4,EPL,2017-18,2018-05-05T12:00:00Z,Matchday 37,,Stoke City,,Crystal Palace,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-05c5ee29da7dd5eeb30c72ae,EPL,2017-18,2018-05-06T12:00:00Z,Matchday 37,,Arsenal FC,,Burnley FC,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7abf70665b9c103ca4899237,EPL,2017-18,2018-05-06T12:00:00Z,Matchday 37,,Manchester City,,Huddersfield Town,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a628c745c3380373be7e18aa,EPL,2017-18,2018-05-06T12:00:00Z,Matchday 37,,Chelsea FC,,Liverpool FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2c30a8f95229102f1063e562,EPL,2017-18,2018-05-08T12:00:00Z,Matchday 31,,Swansea City,,Southampton FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0fa13d4c229d99c19bcde56b,EPL,2017-18,2018-05-09T12:00:00Z,Matchday 31,,Manchester City,,Brighton & Hove Albion,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-21eeb407efe093b9ac366bda,EPL,2017-18,2018-05-09T12:00:00Z,Matchday 31,,Leicester City,,Arsenal FC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6d70a36d8a8b4df4627ce9d8,EPL,2017-18,2018-05-09T12:00:00Z,Matchday 31,,Tottenham Hotspur,,Newcastle United,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b50c79b2c41ffdda05c22d1c,EPL,2017-18,2018-05-09T12:00:00Z,Matchday 35,,Chelsea FC,,Huddersfield Town,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7355404c2a90dcd890b92452,EPL,2017-18,2018-05-10T12:00:00Z,Matchday 31,,West Ham United,,Manchester United,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-168da153536fa65c7e28da8d,EPL,2017-18,2018-05-13T12:00:00Z,Matchday 38,,Huddersfield Town,,Arsenal FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-27b4960003ece00bc5508b26,EPL,2017-18,2018-05-13T12:00:00Z,Matchday 38,,West Ham United,,Everton FC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7a9d8596b2ed29141193e82c,EPL,2017-18,2018-05-13T12:00:00Z,Matchday 38,,Swansea City,,Stoke City,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7ed8a8b23e34b02202df04f6,EPL,2017-18,2018-05-13T12:00:00Z,Matchday 38,,Burnley FC,,AFC Bournemouth,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-942c7dadeccbfd6fb90e4eb3,EPL,2017-18,2018-05-13T12:00:00Z,Matchday 38,,Manchester United,,Watford FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-946cdb1e6b17e62adb887861,EPL,2017-18,2018-05-13T12:00:00Z,Matchday 38,,Crystal Palace,,West Bromwich Albion,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b4f37a7ca1397e1ac203fc3d,EPL,2017-18,2018-05-13T12:00:00Z,Matchday 38,,Newcastle United,,Chelsea FC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b672e7765408419426e7ee31,EPL,2017-18,2018-05-13T12:00:00Z,Matchday 38,,Tottenham Hotspur,,Leicester City,,5,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b724955bae57668fce979bb0,EPL,2017-18,2018-05-13T12:00:00Z,Matchday 38,,Southampton FC,,Manchester City,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-fea3dd1974c3bbcb198d32b9,EPL,2017-18,2018-05-13T12:00:00Z,Matchday 38,,Liverpool FC,,Brighton & Hove Albion,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00

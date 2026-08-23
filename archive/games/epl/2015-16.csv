@@ -1,0 +1,381 @@
+game_id,comp,season,date_utc,stage,venue,home_name,home_code,away_name,away_code,home_score,away_score,status,source,first_seen
+epl-openfootball-0e0084a4a9fab0d3f2695998,EPL,2015-16,2015-08-08T12:00:00Z,Matchday 1,,Manchester United,,Tottenham Hotspur,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-1a7aad26d65086e2f289ba4a,EPL,2015-16,2015-08-08T12:00:00Z,Matchday 1,,Chelsea FC,,Swansea City,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-60fb74f80d235788e7d92d08,EPL,2015-16,2015-08-08T12:00:00Z,Matchday 1,,Leicester City,,Sunderland AFC,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ab5d1902221debdb2665e1f7,EPL,2015-16,2015-08-08T12:00:00Z,Matchday 1,,AFC Bournemouth,,Aston Villa,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-db8ab96b6433e8da6a915f4e,EPL,2015-16,2015-08-08T12:00:00Z,Matchday 1,,Everton FC,,Watford FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f625a5b1982933c0601057a2,EPL,2015-16,2015-08-08T12:00:00Z,Matchday 1,,Norwich City,,Crystal Palace,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0acd29bdfaf79ecbf7a69ac3,EPL,2015-16,2015-08-09T12:00:00Z,Matchday 1,,Newcastle United,,Southampton FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a9467aa327513f9423effc37,EPL,2015-16,2015-08-09T12:00:00Z,Matchday 1,,Arsenal FC,,West Ham United,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b227b38fe20c12b3f616f59f,EPL,2015-16,2015-08-09T12:00:00Z,Matchday 1,,Stoke City,,Liverpool FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-105dc58fd9f8934a86ab3529,EPL,2015-16,2015-08-10T12:00:00Z,Matchday 1,,West Bromwich Albion,,Manchester City,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0dbcb5031e8ea27c092bc264,EPL,2015-16,2015-08-14T12:00:00Z,Matchday 2,,Aston Villa,,Manchester United,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2d558029f56d293f24f8a9b4,EPL,2015-16,2015-08-15T12:00:00Z,Matchday 2,,West Ham United,,Leicester City,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-60c4896030b4933ff198f580,EPL,2015-16,2015-08-15T12:00:00Z,Matchday 2,,Watford FC,,West Bromwich Albion,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-60dff8c7aa1c32e017f1dfaa,EPL,2015-16,2015-08-15T12:00:00Z,Matchday 2,,Tottenham Hotspur,,Stoke City,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-9c70700f41f1ff2730b81e64,EPL,2015-16,2015-08-15T12:00:00Z,Matchday 2,,Sunderland AFC,,Norwich City,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-db69e526b7b127fcb696bcbb,EPL,2015-16,2015-08-15T12:00:00Z,Matchday 2,,Swansea City,,Newcastle United,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e8a80c12105d221b25115cb1,EPL,2015-16,2015-08-15T12:00:00Z,Matchday 2,,Southampton FC,,Everton FC,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a421f9b9690539fa3f92adec,EPL,2015-16,2015-08-16T12:00:00Z,Matchday 2,,Crystal Palace,,Arsenal FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a7db1264927b7b13b6def963,EPL,2015-16,2015-08-16T12:00:00Z,Matchday 2,,Manchester City,,Chelsea FC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d3c2a6b5d00b6da9a5bb0a8b,EPL,2015-16,2015-08-17T12:00:00Z,Matchday 2,,Liverpool FC,,AFC Bournemouth,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-83aae7297176e7ecf84b81d1,EPL,2015-16,2015-08-22T12:00:00Z,Matchday 3,,West Ham United,,AFC Bournemouth,,3,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a0dff5994b6a047597e31da6,EPL,2015-16,2015-08-22T12:00:00Z,Matchday 3,,Norwich City,,Stoke City,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ce169b060599bf0cedabfba2,EPL,2015-16,2015-08-22T12:00:00Z,Matchday 3,,Crystal Palace,,Aston Villa,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e93a760c684bf8b408a7ad4e,EPL,2015-16,2015-08-22T12:00:00Z,Matchday 3,,Sunderland AFC,,Swansea City,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f2bab314e28401f078abbaad,EPL,2015-16,2015-08-22T12:00:00Z,Matchday 3,,Leicester City,,Tottenham Hotspur,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-fb6f1fd3d775c4a080d2203c,EPL,2015-16,2015-08-22T12:00:00Z,Matchday 3,,Manchester United,,Newcastle United,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7010d5c3f9a1b345a8967efa,EPL,2015-16,2015-08-23T12:00:00Z,Matchday 3,,West Bromwich Albion,,Chelsea FC,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b526524937204e545c9f394d,EPL,2015-16,2015-08-23T12:00:00Z,Matchday 3,,Everton FC,,Manchester City,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f1393c3b2a7cfec0bd4f3167,EPL,2015-16,2015-08-23T12:00:00Z,Matchday 3,,Watford FC,,Southampton FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0449b87629a8477e8f8b44eb,EPL,2015-16,2015-08-24T12:00:00Z,Matchday 3,,Arsenal FC,,Liverpool FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-08fdef1dfed46454828f681f,EPL,2015-16,2015-08-29T12:00:00Z,Matchday 4,,Chelsea FC,,Crystal Palace,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0da34213d71da94a7bffc742,EPL,2015-16,2015-08-29T12:00:00Z,Matchday 4,,Aston Villa,,Sunderland AFC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-18da34d3c3e2abe71e4f8e2a,EPL,2015-16,2015-08-29T12:00:00Z,Matchday 4,,Stoke City,,West Bromwich Albion,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-29166936a7ed1a26cc4e0274,EPL,2015-16,2015-08-29T12:00:00Z,Matchday 4,,Tottenham Hotspur,,Everton FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-499425256742d615dd7d8661,EPL,2015-16,2015-08-29T12:00:00Z,Matchday 4,,Liverpool FC,,West Ham United,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c4f2c69f4908e500926c5176,EPL,2015-16,2015-08-29T12:00:00Z,Matchday 4,,AFC Bournemouth,,Leicester City,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e1bc2584b7fc281d4632f8e9,EPL,2015-16,2015-08-29T12:00:00Z,Matchday 4,,Newcastle United,,Arsenal FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ea24e8d9ee7fbe3d2b63ff8e,EPL,2015-16,2015-08-29T12:00:00Z,Matchday 4,,Manchester City,,Watford FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6243354c52dbe29df562ad7d,EPL,2015-16,2015-08-30T12:00:00Z,Matchday 4,,Southampton FC,,Norwich City,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-864c8526ebc47c9f0dc75351,EPL,2015-16,2015-08-30T12:00:00Z,Matchday 4,,Swansea City,,Manchester United,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-04bd49455669cbee4045cee2,EPL,2015-16,2015-09-12T12:00:00Z,Matchday 5,,Arsenal FC,,Stoke City,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0f5b57e2c794832826a7fc04,EPL,2015-16,2015-09-12T12:00:00Z,Matchday 5,,Everton FC,,Chelsea FC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3b3bfc5788cf8767f0676273,EPL,2015-16,2015-09-12T12:00:00Z,Matchday 5,,Watford FC,,Swansea City,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-55044bbbde2c6d956a22957a,EPL,2015-16,2015-09-12T12:00:00Z,Matchday 5,,Crystal Palace,,Manchester City,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-61676e9b835711c3f3d31b7f,EPL,2015-16,2015-09-12T12:00:00Z,Matchday 5,,Manchester United,,Liverpool FC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-9e26d67d9354113782c3ef3b,EPL,2015-16,2015-09-12T12:00:00Z,Matchday 5,,Norwich City,,AFC Bournemouth,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c8f21a51d9498c4f82d6e169,EPL,2015-16,2015-09-12T12:00:00Z,Matchday 5,,West Bromwich Albion,,Southampton FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-426e3e7ff2924cd95f521082,EPL,2015-16,2015-09-13T12:00:00Z,Matchday 5,,Leicester City,,Aston Villa,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4b534e5d8869534e49e61354,EPL,2015-16,2015-09-13T12:00:00Z,Matchday 5,,Sunderland AFC,,Tottenham Hotspur,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-16518c41beb3445b65cd5259,EPL,2015-16,2015-09-14T12:00:00Z,Matchday 5,,West Ham United,,Newcastle United,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0c587514e9d3204a734fe74a,EPL,2015-16,2015-09-19T12:00:00Z,Matchday 6,,Aston Villa,,West Bromwich Albion,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-159f62d62d1af240524465ae,EPL,2015-16,2015-09-19T12:00:00Z,Matchday 6,,AFC Bournemouth,,Sunderland AFC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3a4907e271a91a87b954aedd,EPL,2015-16,2015-09-19T12:00:00Z,Matchday 6,,Swansea City,,Everton FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3c782a766a4b70188d59bf5c,EPL,2015-16,2015-09-19T12:00:00Z,Matchday 6,,Newcastle United,,Watford FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-83465d5c761d6ed78a496cd5,EPL,2015-16,2015-09-19T12:00:00Z,Matchday 6,,Chelsea FC,,Arsenal FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-89e739e9c5e29a6e814f5528,EPL,2015-16,2015-09-19T12:00:00Z,Matchday 6,,Stoke City,,Leicester City,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d4635cae018840ca870f77fa,EPL,2015-16,2015-09-19T12:00:00Z,Matchday 6,,Manchester City,,West Ham United,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2d00f4e06039b8d4e63aa6aa,EPL,2015-16,2015-09-20T12:00:00Z,Matchday 6,,Southampton FC,,Manchester United,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a23de6c12756d9c7eb7d561b,EPL,2015-16,2015-09-20T12:00:00Z,Matchday 6,,Tottenham Hotspur,,Crystal Palace,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f55447205236394b497d2643,EPL,2015-16,2015-09-20T12:00:00Z,Matchday 6,,Liverpool FC,,Norwich City,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-36bd08b64c4252abab2aa3e4,EPL,2015-16,2015-09-26T12:00:00Z,Matchday 7,,Manchester United,,Sunderland AFC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4bf0c78cee3dfa81d678eb23,EPL,2015-16,2015-09-26T12:00:00Z,Matchday 7,,Southampton FC,,Swansea City,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-831ace2707a613feed937b61,EPL,2015-16,2015-09-26T12:00:00Z,Matchday 7,,Stoke City,,AFC Bournemouth,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-854d41c16a57c7272caeba05,EPL,2015-16,2015-09-26T12:00:00Z,Matchday 7,,Tottenham Hotspur,,Manchester City,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-af7b5969d648fe187e3bef99,EPL,2015-16,2015-09-26T12:00:00Z,Matchday 7,,Leicester City,,Arsenal FC,,2,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b3480dfc82e23da2d0d74b80,EPL,2015-16,2015-09-26T12:00:00Z,Matchday 7,,Newcastle United,,Chelsea FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c7d54878735c74a27a586abc,EPL,2015-16,2015-09-26T12:00:00Z,Matchday 7,,West Ham United,,Norwich City,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-cc822236912435e99849c54b,EPL,2015-16,2015-09-26T12:00:00Z,Matchday 7,,Liverpool FC,,Aston Villa,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8a597db7e16a41cb51bc2671,EPL,2015-16,2015-09-27T12:00:00Z,Matchday 7,,Watford FC,,Crystal Palace,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d2b3e4b575874d75bced8915,EPL,2015-16,2015-09-28T12:00:00Z,Matchday 7,,West Bromwich Albion,,Everton FC,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0883b270abdd59570f69ec97,EPL,2015-16,2015-10-03T12:00:00Z,Matchday 8,,Chelsea FC,,Southampton FC,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-122a5c3d3f9f00b1782bade3,EPL,2015-16,2015-10-03T12:00:00Z,Matchday 8,,Manchester City,,Newcastle United,,6,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-20a2b6c588536090c4fb7594,EPL,2015-16,2015-10-03T12:00:00Z,Matchday 8,,Aston Villa,,Stoke City,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-48580920359366219dae8b8b,EPL,2015-16,2015-10-03T12:00:00Z,Matchday 8,,Norwich City,,Leicester City,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8b1e596f7d7be8ddd49e50d7,EPL,2015-16,2015-10-03T12:00:00Z,Matchday 8,,Sunderland AFC,,West Ham United,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8d15dd36716b7ad0be7ef9ef,EPL,2015-16,2015-10-03T12:00:00Z,Matchday 8,,AFC Bournemouth,,Watford FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b9632cda747e4716bbe7a87c,EPL,2015-16,2015-10-03T12:00:00Z,Matchday 8,,Crystal Palace,,West Bromwich Albion,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-290963a3d85c768b3735cb7b,EPL,2015-16,2015-10-04T12:00:00Z,Matchday 8,,Swansea City,,Tottenham Hotspur,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6c42a17321e384444e84f8d2,EPL,2015-16,2015-10-04T12:00:00Z,Matchday 8,,Everton FC,,Liverpool FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7d2f6f26381f3eb642fca5e7,EPL,2015-16,2015-10-04T12:00:00Z,Matchday 8,,Arsenal FC,,Manchester United,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-18b049fd8ba5a3e584b47fe6,EPL,2015-16,2015-10-17T12:00:00Z,Matchday 9,,Everton FC,,Manchester United,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3936974a5a48b71c657300a5,EPL,2015-16,2015-10-17T12:00:00Z,Matchday 9,,Crystal Palace,,West Ham United,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-39b45f582c652f46bdd5a14a,EPL,2015-16,2015-10-17T12:00:00Z,Matchday 9,,Manchester City,,AFC Bournemouth,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-81ff35f6237b730219b4cdd1,EPL,2015-16,2015-10-17T12:00:00Z,Matchday 9,,Chelsea FC,,Aston Villa,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8325623ffa59d4e8ac0ed4cb,EPL,2015-16,2015-10-17T12:00:00Z,Matchday 9,,West Bromwich Albion,,Sunderland AFC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-9bb73481ef359eb8fde39939,EPL,2015-16,2015-10-17T12:00:00Z,Matchday 9,,Watford FC,,Arsenal FC,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a4588b6c068b3582f2a8da62,EPL,2015-16,2015-10-17T12:00:00Z,Matchday 9,,Southampton FC,,Leicester City,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ae41d2743c33b4e76c2210a9,EPL,2015-16,2015-10-17T12:00:00Z,Matchday 9,,Tottenham Hotspur,,Liverpool FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e49b0da5435e2d01712e9bc1,EPL,2015-16,2015-10-18T12:00:00Z,Matchday 9,,Newcastle United,,Norwich City,,6,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-5a110973323acb004c26e303,EPL,2015-16,2015-10-19T12:00:00Z,Matchday 9,,Swansea City,,Stoke City,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0361f15d50ee6f035f7aabfe,EPL,2015-16,2015-10-24T12:00:00Z,Matchday 10,,Norwich City,,West Bromwich Albion,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0db517c476a19fd5bf438d53,EPL,2015-16,2015-10-24T12:00:00Z,Matchday 10,,Arsenal FC,,Everton FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-17c9f7a536878ed80ed389e7,EPL,2015-16,2015-10-24T12:00:00Z,Matchday 10,,Aston Villa,,Swansea City,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-182ee9f868653db87c3dc481,EPL,2015-16,2015-10-24T12:00:00Z,Matchday 10,,West Ham United,,Chelsea FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4dd2c3dfb5b98083c65e3a5c,EPL,2015-16,2015-10-24T12:00:00Z,Matchday 10,,Leicester City,,Crystal Palace,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-84f65643f6561437573888f0,EPL,2015-16,2015-10-24T12:00:00Z,Matchday 10,,Stoke City,,Watford FC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0c23c9974b6bb0b7b3e9cc4f,EPL,2015-16,2015-10-25T12:00:00Z,Matchday 10,,Manchester United,,Manchester City,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4ecbeb8fb05a3f1aea1e9491,EPL,2015-16,2015-10-25T12:00:00Z,Matchday 10,,Liverpool FC,,Southampton FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-607321d209c0d2e93fa13fd1,EPL,2015-16,2015-10-25T12:00:00Z,Matchday 10,,AFC Bournemouth,,Tottenham Hotspur,,1,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c60f382884556ba569ad9eb8,EPL,2015-16,2015-10-25T12:00:00Z,Matchday 10,,Sunderland AFC,,Newcastle United,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0c1c9739e5f016b3a3163fe5,EPL,2015-16,2015-10-31T12:00:00Z,Matchday 11,,Manchester City,,Norwich City,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3712af32d80c9da6e3683101,EPL,2015-16,2015-10-31T12:00:00Z,Matchday 11,,Swansea City,,Arsenal FC,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-5c99e7174c712ce6dc2028cc,EPL,2015-16,2015-10-31T12:00:00Z,Matchday 11,,Crystal Palace,,Manchester United,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b27d37437200ca21328ad9ba,EPL,2015-16,2015-10-31T12:00:00Z,Matchday 11,,West Bromwich Albion,,Leicester City,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b3492c5587b8e2fd948bd2bb,EPL,2015-16,2015-10-31T12:00:00Z,Matchday 11,,Watford FC,,West Ham United,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ba3fb357f72b2fa99a5272a5,EPL,2015-16,2015-10-31T12:00:00Z,Matchday 11,,Chelsea FC,,Liverpool FC,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-df4b678be27d6fa2ce7b2570,EPL,2015-16,2015-10-31T12:00:00Z,Matchday 11,,Newcastle United,,Stoke City,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8ed717dee507e72c2a951167,EPL,2015-16,2015-11-01T12:00:00Z,Matchday 11,,Everton FC,,Sunderland AFC,,6,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b39be6bd807c2441537c3820,EPL,2015-16,2015-11-01T12:00:00Z,Matchday 11,,Southampton FC,,AFC Bournemouth,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-48c2225c1162bf06c7b961af,EPL,2015-16,2015-11-02T12:00:00Z,Matchday 11,,Tottenham Hotspur,,Aston Villa,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-11d914ae3331e93f9d8fb8a6,EPL,2015-16,2015-11-07T12:00:00Z,Matchday 12,,Stoke City,,Chelsea FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-1a7cea70da7bb61fde60da94,EPL,2015-16,2015-11-07T12:00:00Z,Matchday 12,,West Ham United,,Everton FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-36333fd4dea9c23c654f7c8a,EPL,2015-16,2015-11-07T12:00:00Z,Matchday 12,,Leicester City,,Watford FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4ab63e4ad61cfcf9344c9858,EPL,2015-16,2015-11-07T12:00:00Z,Matchday 12,,Norwich City,,Swansea City,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-83d88018e891eb0441c5fdcc,EPL,2015-16,2015-11-07T12:00:00Z,Matchday 12,,Manchester United,,West Bromwich Albion,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a80d8cd1a8e96e691a7ce1cb,EPL,2015-16,2015-11-07T12:00:00Z,Matchday 12,,Sunderland AFC,,Southampton FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-fb8c3eaad14c5abc91073329,EPL,2015-16,2015-11-07T12:00:00Z,Matchday 12,,AFC Bournemouth,,Newcastle United,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-18fb74461e33bbb4ac9b2497,EPL,2015-16,2015-11-08T12:00:00Z,Matchday 12,,Liverpool FC,,Crystal Palace,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e9c4c62304d4ad07b5c5e70f,EPL,2015-16,2015-11-08T12:00:00Z,Matchday 12,,Arsenal FC,,Tottenham Hotspur,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-fe353d9e86bdf4c05b911cec,EPL,2015-16,2015-11-08T12:00:00Z,Matchday 12,,Aston Villa,,Manchester City,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-292dc567e242d46e901aaf01,EPL,2015-16,2015-11-21T12:00:00Z,Matchday 13,,Chelsea FC,,Norwich City,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-34fede1977ce0457ada9c8bd,EPL,2015-16,2015-11-21T12:00:00Z,Matchday 13,,Swansea City,,AFC Bournemouth,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3e7c72a17eebb47495cec2ef,EPL,2015-16,2015-11-21T12:00:00Z,Matchday 13,,Southampton FC,,Stoke City,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-424577ae461498727c18ea80,EPL,2015-16,2015-11-21T12:00:00Z,Matchday 13,,Manchester City,,Liverpool FC,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4ca3d9ecfd7180b87de3aa78,EPL,2015-16,2015-11-21T12:00:00Z,Matchday 13,,West Bromwich Albion,,Arsenal FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a27596b5b8c93bc1a0ba8b1c,EPL,2015-16,2015-11-21T12:00:00Z,Matchday 13,,Everton FC,,Aston Villa,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-de89de31fd8ba76bb5f0a588,EPL,2015-16,2015-11-21T12:00:00Z,Matchday 13,,Watford FC,,Manchester United,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ea9fdf94424b54abda9cccaa,EPL,2015-16,2015-11-21T12:00:00Z,Matchday 13,,Newcastle United,,Leicester City,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f5ebf239ad7fd2933e0a407f,EPL,2015-16,2015-11-22T12:00:00Z,Matchday 13,,Tottenham Hotspur,,West Ham United,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-1097c8a641e56e62a18b2122,EPL,2015-16,2015-11-23T12:00:00Z,Matchday 13,,Crystal Palace,,Sunderland AFC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-769a1e1fb53d41dc6c8e9f99,EPL,2015-16,2015-11-28T12:00:00Z,Matchday 14,,AFC Bournemouth,,Everton FC,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c30011588e5d108f6d6fb0f9,EPL,2015-16,2015-11-28T12:00:00Z,Matchday 14,,Aston Villa,,Watford FC,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d6186ef1b6d9896ec35ad184,EPL,2015-16,2015-11-28T12:00:00Z,Matchday 14,,Crystal Palace,,Newcastle United,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-dffd72806cbcf0cb2ed41280,EPL,2015-16,2015-11-28T12:00:00Z,Matchday 14,,Manchester City,,Southampton FC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f0cffda12fdcab9620d381fa,EPL,2015-16,2015-11-28T12:00:00Z,Matchday 14,,Leicester City,,Manchester United,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f96b0fea5f0812cf3c87b69d,EPL,2015-16,2015-11-28T12:00:00Z,Matchday 14,,Sunderland AFC,,Stoke City,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-38ce05cc562d8ca3343ac044,EPL,2015-16,2015-11-29T12:00:00Z,Matchday 14,,Norwich City,,Arsenal FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7edd1e4cc7841c4587ef4105,EPL,2015-16,2015-11-29T12:00:00Z,Matchday 14,,Tottenham Hotspur,,Chelsea FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a147f1d60ba94e0eb67b746e,EPL,2015-16,2015-11-29T12:00:00Z,Matchday 14,,West Ham United,,West Bromwich Albion,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ccce75f96db1ca068adbcd18,EPL,2015-16,2015-11-29T12:00:00Z,Matchday 14,,Liverpool FC,,Swansea City,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-250ac43d5c81113b9d454b0d,EPL,2015-16,2015-12-05T12:00:00Z,Matchday 15,,West Bromwich Albion,,Tottenham Hotspur,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-27fd55d720a40a8b079fd547,EPL,2015-16,2015-12-05T12:00:00Z,Matchday 15,,Swansea City,,Leicester City,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-48f73e070b4d728d09cccf7e,EPL,2015-16,2015-12-05T12:00:00Z,Matchday 15,,Southampton FC,,Aston Villa,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-54520c3c8afa1b5691aae39a,EPL,2015-16,2015-12-05T12:00:00Z,Matchday 15,,Stoke City,,Manchester City,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7b45da83ecdf541437c4dab8,EPL,2015-16,2015-12-05T12:00:00Z,Matchday 15,,Manchester United,,West Ham United,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b5594454d683dc76ff772336,EPL,2015-16,2015-12-05T12:00:00Z,Matchday 15,,Arsenal FC,,Sunderland AFC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b82896cc3570e62bee0cf622,EPL,2015-16,2015-12-05T12:00:00Z,Matchday 15,,Watford FC,,Norwich City,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ce70804ff3454f82196dbd55,EPL,2015-16,2015-12-05T12:00:00Z,Matchday 15,,Chelsea FC,,AFC Bournemouth,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-da37e2a99685ed12467e7875,EPL,2015-16,2015-12-06T12:00:00Z,Matchday 15,,Newcastle United,,Liverpool FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7a5435a15ce5cd99f53f119b,EPL,2015-16,2015-12-07T12:00:00Z,Matchday 15,,Everton FC,,Crystal Palace,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2a970e64d94acaba7761fd95,EPL,2015-16,2015-12-12T12:00:00Z,Matchday 16,,Sunderland AFC,,Watford FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3a46fded9b43ffec16c1e622,EPL,2015-16,2015-12-12T12:00:00Z,Matchday 16,,West Ham United,,Stoke City,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6ff0e3fc2034a843d4dec22e,EPL,2015-16,2015-12-12T12:00:00Z,Matchday 16,,Manchester City,,Swansea City,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-92c3e1f47a4ea47112bb1e2e,EPL,2015-16,2015-12-12T12:00:00Z,Matchday 16,,Norwich City,,Everton FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a97e78299c668757df136038,EPL,2015-16,2015-12-12T12:00:00Z,Matchday 16,,Crystal Palace,,Southampton FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-bc4ce44ca83d1e514b86dee7,EPL,2015-16,2015-12-12T12:00:00Z,Matchday 16,,AFC Bournemouth,,Manchester United,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-5679760fd97f245e110502e5,EPL,2015-16,2015-12-13T12:00:00Z,Matchday 16,,Tottenham Hotspur,,Newcastle United,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d74f54f34f57bcdda78a4d5b,EPL,2015-16,2015-12-13T12:00:00Z,Matchday 16,,Liverpool FC,,West Bromwich Albion,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ec09f9162bc91b3ac66086e9,EPL,2015-16,2015-12-13T12:00:00Z,Matchday 16,,Aston Villa,,Arsenal FC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6eb59fa993fce6661afe6239,EPL,2015-16,2015-12-14T12:00:00Z,Matchday 16,,Leicester City,,Chelsea FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0cd56ede5f5a1270e43c7af1,EPL,2015-16,2015-12-19T12:00:00Z,Matchday 17,,Stoke City,,Crystal Palace,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4b4dd2acfae22a49258322dc,EPL,2015-16,2015-12-19T12:00:00Z,Matchday 17,,Manchester United,,Norwich City,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6d34881c2efcda8a17fdc35e,EPL,2015-16,2015-12-19T12:00:00Z,Matchday 17,,Chelsea FC,,Sunderland AFC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7bc7342b4651b4b18f26406c,EPL,2015-16,2015-12-19T12:00:00Z,Matchday 17,,Southampton FC,,Tottenham Hotspur,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-88393e5f06e221ce2ccc8930,EPL,2015-16,2015-12-19T12:00:00Z,Matchday 17,,Everton FC,,Leicester City,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-989094dd83660adb2a93add0,EPL,2015-16,2015-12-19T12:00:00Z,Matchday 17,,Newcastle United,,Aston Villa,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-cc7f5bdcfdf1cf17d09460c9,EPL,2015-16,2015-12-19T12:00:00Z,Matchday 17,,West Bromwich Albion,,AFC Bournemouth,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-1b46db5ad273c7bb9cdd0ab6,EPL,2015-16,2015-12-20T12:00:00Z,Matchday 17,,Swansea City,,West Ham United,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-db280cbed616f44f93f37698,EPL,2015-16,2015-12-20T12:00:00Z,Matchday 17,,Watford FC,,Liverpool FC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b050bcad0bb01136d8c9849f,EPL,2015-16,2015-12-21T12:00:00Z,Matchday 17,,Arsenal FC,,Manchester City,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-09e476075e8e47b4e59c68e8,EPL,2015-16,2015-12-26T12:00:00Z,Matchday 18,,Manchester City,,Sunderland AFC,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-39d225df34a70a0507206b24,EPL,2015-16,2015-12-26T12:00:00Z,Matchday 18,,Stoke City,,Manchester United,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3f1e0ef42015c687996d02b3,EPL,2015-16,2015-12-26T12:00:00Z,Matchday 18,,AFC Bournemouth,,Crystal Palace,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4417fc8e1b12e94312891f47,EPL,2015-16,2015-12-26T12:00:00Z,Matchday 18,,Chelsea FC,,Watford FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6e34defc0aab3f61dd96e272,EPL,2015-16,2015-12-26T12:00:00Z,Matchday 18,,Southampton FC,,Arsenal FC,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-73b9792a3ca1e79d07546d87,EPL,2015-16,2015-12-26T12:00:00Z,Matchday 18,,Liverpool FC,,Leicester City,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8524101fd203c1c27bf36fd8,EPL,2015-16,2015-12-26T12:00:00Z,Matchday 18,,Aston Villa,,West Ham United,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8ae965945d68ea729ffe8d93,EPL,2015-16,2015-12-26T12:00:00Z,Matchday 18,,Swansea City,,West Bromwich Albion,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-dbeb3db70c762e61210611ad,EPL,2015-16,2015-12-26T12:00:00Z,Matchday 18,,Newcastle United,,Everton FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e6212f080688516b64e5c3ed,EPL,2015-16,2015-12-26T12:00:00Z,Matchday 18,,Tottenham Hotspur,,Norwich City,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-28c5834da85c11b3784734f4,EPL,2015-16,2015-12-28T12:00:00Z,Matchday 19,,Everton FC,,Stoke City,,3,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-55ed3694edb13191a27911cf,EPL,2015-16,2015-12-28T12:00:00Z,Matchday 19,,Watford FC,,Tottenham Hotspur,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6bc3809916e52858a7ad8b89,EPL,2015-16,2015-12-28T12:00:00Z,Matchday 19,,Arsenal FC,,AFC Bournemouth,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7414b3b8337ee058b147b40b,EPL,2015-16,2015-12-28T12:00:00Z,Matchday 19,,Norwich City,,Aston Villa,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8f34b79edd4744868f0a4549,EPL,2015-16,2015-12-28T12:00:00Z,Matchday 19,,West Ham United,,Southampton FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-93909a2a99f1103bd1d4c73b,EPL,2015-16,2015-12-28T12:00:00Z,Matchday 19,,Manchester United,,Chelsea FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b77debe7dbd4fc4228460d3d,EPL,2015-16,2015-12-28T12:00:00Z,Matchday 19,,Crystal Palace,,Swansea City,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-eff192cf33201cef62499339,EPL,2015-16,2015-12-28T12:00:00Z,Matchday 19,,West Bromwich Albion,,Newcastle United,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b856b9984a6054201df7fe68,EPL,2015-16,2015-12-29T12:00:00Z,Matchday 19,,Leicester City,,Manchester City,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-585e0801dec1caf69f6209b0,EPL,2015-16,2015-12-30T12:00:00Z,Matchday 19,,Sunderland AFC,,Liverpool FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2a3114681900c18ea93bdca7,EPL,2015-16,2016-01-02T12:00:00Z,Matchday 20,,West Bromwich Albion,,Stoke City,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6ab0ea85a9814d477bc08612,EPL,2015-16,2016-01-02T12:00:00Z,Matchday 20,,Sunderland AFC,,Aston Villa,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-88095a88b68f5e372aaab872,EPL,2015-16,2016-01-02T12:00:00Z,Matchday 20,,Watford FC,,Manchester City,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a79cbfbf63baef54e76331ab,EPL,2015-16,2016-01-02T12:00:00Z,Matchday 20,,Arsenal FC,,Newcastle United,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c32db7e6ebb99da66c9b7ac6,EPL,2015-16,2016-01-02T12:00:00Z,Matchday 20,,Leicester City,,AFC Bournemouth,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-cc6263a95a38e5187a0506d0,EPL,2015-16,2016-01-02T12:00:00Z,Matchday 20,,Norwich City,,Southampton FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ce814b179abf7e9c6a3ce606,EPL,2015-16,2016-01-02T12:00:00Z,Matchday 20,,Manchester United,,Swansea City,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ed9ce62dd56974a80591d822,EPL,2015-16,2016-01-02T12:00:00Z,Matchday 20,,West Ham United,,Liverpool FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0f91920aed7ba7cbb1e31b6a,EPL,2015-16,2016-01-03T12:00:00Z,Matchday 20,,Crystal Palace,,Chelsea FC,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c83548cd778b5d1e30a3421d,EPL,2015-16,2016-01-03T12:00:00Z,Matchday 20,,Everton FC,,Tottenham Hotspur,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-172be259bab616c75e3ea9f2,EPL,2015-16,2016-01-12T12:00:00Z,Matchday 21,,Newcastle United,,Manchester United,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4027f269b9f7ba97d1a9a9eb,EPL,2015-16,2016-01-12T12:00:00Z,Matchday 21,,Aston Villa,,Crystal Palace,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d5889a4b755353c16b2b90b9,EPL,2015-16,2016-01-12T12:00:00Z,Matchday 21,,AFC Bournemouth,,West Ham United,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0a0d083509b91d569d103dc1,EPL,2015-16,2016-01-13T12:00:00Z,Matchday 21,,Manchester City,,Everton FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0c232ce8d3bd8eca1bc84406,EPL,2015-16,2016-01-13T12:00:00Z,Matchday 21,,Swansea City,,Sunderland AFC,,2,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0c260f1136dd19479ef5aa64,EPL,2015-16,2016-01-13T12:00:00Z,Matchday 21,,Stoke City,,Norwich City,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-1a7f290ff1b3c59c116fc1da,EPL,2015-16,2016-01-13T12:00:00Z,Matchday 21,,Tottenham Hotspur,,Leicester City,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8ca9f3b7b95866e5d7e644f7,EPL,2015-16,2016-01-13T12:00:00Z,Matchday 21,,Southampton FC,,Watford FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b2b41e4c1d2b4070381c8725,EPL,2015-16,2016-01-13T12:00:00Z,Matchday 21,,Chelsea FC,,West Bromwich Albion,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e3cb05990097a4330a19abb9,EPL,2015-16,2016-01-13T12:00:00Z,Matchday 21,,Liverpool FC,,Arsenal FC,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2756ed9cbd905ea54f80e56c,EPL,2015-16,2016-01-16T12:00:00Z,Matchday 22,,Southampton FC,,West Bromwich Albion,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-50a979a867e2934b7c98bbdb,EPL,2015-16,2016-01-16T12:00:00Z,Matchday 22,,Chelsea FC,,Everton FC,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6fc7cf126a948aed7e96f525,EPL,2015-16,2016-01-16T12:00:00Z,Matchday 22,,Manchester City,,Crystal Palace,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8174c7800046b0d7ffd8c018,EPL,2015-16,2016-01-16T12:00:00Z,Matchday 22,,Aston Villa,,Leicester City,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8ef41bc09627b1fec7454c44,EPL,2015-16,2016-01-16T12:00:00Z,Matchday 22,,Newcastle United,,West Ham United,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-93f8ad2de9a69784829caeea,EPL,2015-16,2016-01-16T12:00:00Z,Matchday 22,,Tottenham Hotspur,,Sunderland AFC,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-bc0c81307e383fbe9c7c895c,EPL,2015-16,2016-01-16T12:00:00Z,Matchday 22,,AFC Bournemouth,,Norwich City,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-5c6d7fcdb90378d053b0d5c6,EPL,2015-16,2016-01-17T12:00:00Z,Matchday 22,,Stoke City,,Arsenal FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-bf6c8d8d3c6efac747e1d10d,EPL,2015-16,2016-01-17T12:00:00Z,Matchday 22,,Liverpool FC,,Manchester United,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e49e602dba7522abde1e3ff4,EPL,2015-16,2016-01-18T12:00:00Z,Matchday 22,,Swansea City,,Watford FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0bad132cb90ffda9bab81d40,EPL,2015-16,2016-01-23T12:00:00Z,Matchday 23,,Crystal Palace,,Tottenham Hotspur,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2fa6446ab787a1077d01f29d,EPL,2015-16,2016-01-23T12:00:00Z,Matchday 23,,West Ham United,,Manchester City,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-430050365c2b5f37a82a359d,EPL,2015-16,2016-01-23T12:00:00Z,Matchday 23,,Sunderland AFC,,AFC Bournemouth,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7606166b0391f20fa0376f13,EPL,2015-16,2016-01-23T12:00:00Z,Matchday 23,,Manchester United,,Southampton FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-87a88095321bd6c2b58b8eec,EPL,2015-16,2016-01-23T12:00:00Z,Matchday 23,,Watford FC,,Newcastle United,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a20269ee366230b5ea978c4d,EPL,2015-16,2016-01-23T12:00:00Z,Matchday 23,,Norwich City,,Liverpool FC,,4,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a91b0f43a925e646c530623f,EPL,2015-16,2016-01-23T12:00:00Z,Matchday 23,,West Bromwich Albion,,Aston Villa,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ecb6aad5ced56f1d2143f754,EPL,2015-16,2016-01-23T12:00:00Z,Matchday 23,,Leicester City,,Stoke City,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-5aace685eecad26b67b9455e,EPL,2015-16,2016-01-24T12:00:00Z,Matchday 23,,Arsenal FC,,Chelsea FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e973677f31741f4f9f9a84f8,EPL,2015-16,2016-01-24T12:00:00Z,Matchday 23,,Everton FC,,Swansea City,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-01570a226874d60b98503037,EPL,2015-16,2016-02-02T12:00:00Z,Matchday 24,,Manchester United,,Stoke City,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3dc1c72e59cd4291ab442f49,EPL,2015-16,2016-02-02T12:00:00Z,Matchday 24,,Leicester City,,Liverpool FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-5ca3bfccd1d32a452b38e098,EPL,2015-16,2016-02-02T12:00:00Z,Matchday 24,,Arsenal FC,,Southampton FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-655852d88cbb7804161121a5,EPL,2015-16,2016-02-02T12:00:00Z,Matchday 24,,Norwich City,,Tottenham Hotspur,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-67c95cf6ac11b5801201c23e,EPL,2015-16,2016-02-02T12:00:00Z,Matchday 24,,Sunderland AFC,,Manchester City,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-847c871db6904957a3d529cd,EPL,2015-16,2016-02-02T12:00:00Z,Matchday 24,,West Bromwich Albion,,Swansea City,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a3b87159a14a4a4e7bf131db,EPL,2015-16,2016-02-02T12:00:00Z,Matchday 24,,Crystal Palace,,AFC Bournemouth,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-bad8e847a99a9329c1849b57,EPL,2015-16,2016-02-02T12:00:00Z,Matchday 24,,West Ham United,,Aston Villa,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-aa83083ddc69d1bbad1b69c2,EPL,2015-16,2016-02-03T12:00:00Z,Matchday 24,,Watford FC,,Chelsea FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e0afec430a5a1fa50faa8c9f,EPL,2015-16,2016-02-03T12:00:00Z,Matchday 24,,Everton FC,,Newcastle United,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-038e7e3820b0dfc173cd1c1f,EPL,2015-16,2016-02-06T12:00:00Z,Matchday 25,,Southampton FC,,West Ham United,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-53c2f20d3bf1ad1e80cf200f,EPL,2015-16,2016-02-06T12:00:00Z,Matchday 25,,Manchester City,,Leicester City,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7d70e89ea313480cff30f88f,EPL,2015-16,2016-02-06T12:00:00Z,Matchday 25,,Swansea City,,Crystal Palace,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-879bb4684be1f028356748d3,EPL,2015-16,2016-02-06T12:00:00Z,Matchday 25,,Stoke City,,Everton FC,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e2e745ee7cad9bd5a74a7709,EPL,2015-16,2016-02-06T12:00:00Z,Matchday 25,,Liverpool FC,,Sunderland AFC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ebbf256af85aca56d6c251bb,EPL,2015-16,2016-02-06T12:00:00Z,Matchday 25,,Newcastle United,,West Bromwich Albion,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ee8a5899b0b7b1161ba0fc9b,EPL,2015-16,2016-02-06T12:00:00Z,Matchday 25,,Tottenham Hotspur,,Watford FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-fd374b01e1b63ccbf1d2bb90,EPL,2015-16,2016-02-06T12:00:00Z,Matchday 25,,Aston Villa,,Norwich City,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-38e21ccf3ff2d9a06ef20a56,EPL,2015-16,2016-02-07T12:00:00Z,Matchday 25,,AFC Bournemouth,,Arsenal FC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c8bd8fb62dca5a9351125a58,EPL,2015-16,2016-02-07T12:00:00Z,Matchday 25,,Chelsea FC,,Manchester United,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0375b3b70b5953044ffbaf38,EPL,2015-16,2016-02-13T12:00:00Z,Matchday 26,,Chelsea FC,,Newcastle United,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-202019b76070eda2423a8d51,EPL,2015-16,2016-02-13T12:00:00Z,Matchday 26,,AFC Bournemouth,,Stoke City,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-638edcaa982fe0f2f1778ccf,EPL,2015-16,2016-02-13T12:00:00Z,Matchday 26,,Everton FC,,West Bromwich Albion,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6ffbd2d71c3d5aac6ad15f45,EPL,2015-16,2016-02-13T12:00:00Z,Matchday 26,,Crystal Palace,,Watford FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b5cd1dcb0a511a540a72b107,EPL,2015-16,2016-02-13T12:00:00Z,Matchday 26,,Sunderland AFC,,Manchester United,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c729d74d7f93e5497202267b,EPL,2015-16,2016-02-13T12:00:00Z,Matchday 26,,Norwich City,,West Ham United,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-cb6dfd2fe433a68595f19ad3,EPL,2015-16,2016-02-13T12:00:00Z,Matchday 26,,Swansea City,,Southampton FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3835ff0fd7343a3d82c1d2b8,EPL,2015-16,2016-02-14T12:00:00Z,Matchday 26,,Aston Villa,,Liverpool FC,,0,6,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3f84c94d5a6f88dfdff3c689,EPL,2015-16,2016-02-14T12:00:00Z,Matchday 26,,Arsenal FC,,Leicester City,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7ab9b9e27902588f006cd8a7,EPL,2015-16,2016-02-14T12:00:00Z,Matchday 26,,Manchester City,,Tottenham Hotspur,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-45e774a9319b1efabc7fc796,EPL,2015-16,2016-02-27T12:00:00Z,Matchday 27,,Stoke City,,Aston Villa,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-58e2f6566ca5cd22e61417c3,EPL,2015-16,2016-02-27T12:00:00Z,Matchday 27,,Southampton FC,,Chelsea FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-69df2203de8dd1b146c9e605,EPL,2015-16,2016-02-27T12:00:00Z,Matchday 27,,Watford FC,,AFC Bournemouth,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8732bf1f3e00307d7b521ad5,EPL,2015-16,2016-02-27T12:00:00Z,Matchday 27,,West Bromwich Albion,,Crystal Palace,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a8180b4aeddf7e468c6f8d88,EPL,2015-16,2016-02-27T12:00:00Z,Matchday 27,,Leicester City,,Norwich City,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f46b493b1fc8622e94da3cc9,EPL,2015-16,2016-02-27T12:00:00Z,Matchday 27,,West Ham United,,Sunderland AFC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-02dcb25a6eceb35d01f927f2,EPL,2015-16,2016-02-28T12:00:00Z,Matchday 27,,Tottenham Hotspur,,Swansea City,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-425a0eb21e855a2a5a6b0bc8,EPL,2015-16,2016-02-28T12:00:00Z,Matchday 27,,Manchester United,,Arsenal FC,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-102fa1713c596b06e927546e,EPL,2015-16,2016-03-01T12:00:00Z,Matchday 28,,Sunderland AFC,,Crystal Palace,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-1630a369420d1d2ebfff2503,EPL,2015-16,2016-03-01T12:00:00Z,Matchday 28,,Aston Villa,,Everton FC,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2fccf09ad3a5a46d8fc92b61,EPL,2015-16,2016-03-01T12:00:00Z,Matchday 28,,Leicester City,,West Bromwich Albion,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-900957dc688e6a68057a8d11,EPL,2015-16,2016-03-01T12:00:00Z,Matchday 28,,AFC Bournemouth,,Southampton FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a0bacdbaa45eeab5941c9c75,EPL,2015-16,2016-03-01T12:00:00Z,Matchday 28,,Norwich City,,Chelsea FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2f996f7d6bc1fe7f5f1c3eab,EPL,2015-16,2016-03-02T12:00:00Z,Matchday 28,,Liverpool FC,,Manchester City,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-578eb566c4f488c59edc265a,EPL,2015-16,2016-03-02T12:00:00Z,Matchday 28,,Stoke City,,Newcastle United,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-5b18faacb804bf66722d97b0,EPL,2015-16,2016-03-02T12:00:00Z,Matchday 28,,Manchester United,,Watford FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-666ea6d0de4d907968fd18cd,EPL,2015-16,2016-03-02T12:00:00Z,Matchday 28,,West Ham United,,Tottenham Hotspur,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7d5273bae2bca9a433fe54b7,EPL,2015-16,2016-03-02T12:00:00Z,Matchday 28,,Arsenal FC,,Swansea City,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-18b52fcbdb265e57c7448791,EPL,2015-16,2016-03-05T12:00:00Z,Matchday 29,,Tottenham Hotspur,,Arsenal FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-24d0dd4c03f945471e84e5d2,EPL,2015-16,2016-03-05T12:00:00Z,Matchday 29,,Everton FC,,West Ham United,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2ac7c999e439b83ee4806178,EPL,2015-16,2016-03-05T12:00:00Z,Matchday 29,,Manchester City,,Aston Villa,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-450b3d6a3a199bc10db62658,EPL,2015-16,2016-03-05T12:00:00Z,Matchday 29,,Watford FC,,Leicester City,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a04508415ae111bdd38c0053,EPL,2015-16,2016-03-05T12:00:00Z,Matchday 29,,Chelsea FC,,Stoke City,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-cc38fed78ec13ad2aa941a0e,EPL,2015-16,2016-03-05T12:00:00Z,Matchday 29,,Newcastle United,,AFC Bournemouth,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e746cc24659efae1244b9927,EPL,2015-16,2016-03-05T12:00:00Z,Matchday 29,,Southampton FC,,Sunderland AFC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e8200c17cadb74d002157d5d,EPL,2015-16,2016-03-05T12:00:00Z,Matchday 29,,Swansea City,,Norwich City,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6febe360b66147354a418d87,EPL,2015-16,2016-03-06T12:00:00Z,Matchday 29,,West Bromwich Albion,,Manchester United,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-bebc4cdfcc2a2e3201c87857,EPL,2015-16,2016-03-06T12:00:00Z,Matchday 29,,Crystal Palace,,Liverpool FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-04f93564cbe96aede21cbcaa,EPL,2015-16,2016-03-12T12:00:00Z,Matchday 30,,Norwich City,,Manchester City,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a8e84fcef054b17384d2c053,EPL,2015-16,2016-03-12T12:00:00Z,Matchday 30,,AFC Bournemouth,,Swansea City,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f9f46f0c6490d564720852d9,EPL,2015-16,2016-03-12T12:00:00Z,Matchday 30,,Stoke City,,Southampton FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6117d1837e5fd109a5e04754,EPL,2015-16,2016-03-13T12:00:00Z,Matchday 30,,Aston Villa,,Tottenham Hotspur,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c15938280b1f38c107b0331a,EPL,2015-16,2016-03-14T12:00:00Z,Matchday 30,,Leicester City,,Newcastle United,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-056f08244835875b98ed4bf2,EPL,2015-16,2016-03-19T12:00:00Z,Matchday 31,,Watford FC,,Stoke City,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-1c57aa346d2b6e6f568fc6f4,EPL,2015-16,2016-03-19T12:00:00Z,Matchday 31,,Everton FC,,Arsenal FC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3f81c2f4c42ccf6dbd589706,EPL,2015-16,2016-03-19T12:00:00Z,Matchday 31,,Chelsea FC,,West Ham United,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-95c1bdf98fd2e7e6c1b5c9a1,EPL,2015-16,2016-03-19T12:00:00Z,Matchday 31,,Crystal Palace,,Leicester City,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-df88cac665e285abbf62f7c9,EPL,2015-16,2016-03-19T12:00:00Z,Matchday 31,,West Bromwich Albion,,Norwich City,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f57054954a5428e79be9b8df,EPL,2015-16,2016-03-19T12:00:00Z,Matchday 31,,Swansea City,,Aston Villa,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3a74f9484f4717ab2775bcd9,EPL,2015-16,2016-03-20T12:00:00Z,Matchday 31,,Tottenham Hotspur,,AFC Bournemouth,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-5d47e6caf7cd3c7515951348,EPL,2015-16,2016-03-20T12:00:00Z,Matchday 31,,Manchester City,,Manchester United,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-91ea0c8875075ce874506485,EPL,2015-16,2016-03-20T12:00:00Z,Matchday 31,,Southampton FC,,Liverpool FC,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b2893ea244798f5db9a22672,EPL,2015-16,2016-03-20T12:00:00Z,Matchday 31,,Newcastle United,,Sunderland AFC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-01fe02bbdb0a6d5dd35abff2,EPL,2015-16,2016-04-02T12:00:00Z,Matchday 32,,Sunderland AFC,,West Bromwich Albion,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-424f7eaefdd380c5844ffa6d,EPL,2015-16,2016-04-02T12:00:00Z,Matchday 32,,Stoke City,,Swansea City,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4e04472346971f0cb164dfb9,EPL,2015-16,2016-04-02T12:00:00Z,Matchday 32,,AFC Bournemouth,,Manchester City,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4f9713e24e6adce30913f7a4,EPL,2015-16,2016-04-02T12:00:00Z,Matchday 32,,Liverpool FC,,Tottenham Hotspur,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-52895124c21cc7ebb3a93ccd,EPL,2015-16,2016-04-02T12:00:00Z,Matchday 32,,West Ham United,,Crystal Palace,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-76a82faadf4e675876b785ff,EPL,2015-16,2016-04-02T12:00:00Z,Matchday 32,,Arsenal FC,,Watford FC,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8812b16073fdd6135fcee704,EPL,2015-16,2016-04-02T12:00:00Z,Matchday 32,,Norwich City,,Newcastle United,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a200ed449048586720cc6f14,EPL,2015-16,2016-04-02T12:00:00Z,Matchday 32,,Aston Villa,,Chelsea FC,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3cf5a9dc521f2b8e33a0fbad,EPL,2015-16,2016-04-03T12:00:00Z,Matchday 32,,Leicester City,,Southampton FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e77aebf8152c854d6c4b9dbd,EPL,2015-16,2016-04-03T12:00:00Z,Matchday 32,,Manchester United,,Everton FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-30565baa1ccea4fa798ca922,EPL,2015-16,2016-04-09T12:00:00Z,Matchday 33,,Watford FC,,Everton FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-50c98df6d2f9dbe0dfebd047,EPL,2015-16,2016-04-09T12:00:00Z,Matchday 33,,Southampton FC,,Newcastle United,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-84e0b5dce6bd6e48a8df3de1,EPL,2015-16,2016-04-09T12:00:00Z,Matchday 33,,West Ham United,,Arsenal FC,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8a2732d29dea8fbfa0fb6fc0,EPL,2015-16,2016-04-09T12:00:00Z,Matchday 33,,Swansea City,,Chelsea FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-99b271fdf5b70424511a5dbb,EPL,2015-16,2016-04-09T12:00:00Z,Matchday 33,,Manchester City,,West Bromwich Albion,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a4f61060d4c81406670fed8b,EPL,2015-16,2016-04-09T12:00:00Z,Matchday 33,,Crystal Palace,,Norwich City,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-fbdafc5ec8e8361abab78708,EPL,2015-16,2016-04-09T12:00:00Z,Matchday 33,,Aston Villa,,AFC Bournemouth,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-1eeeeb6586e41e46435fcffd,EPL,2015-16,2016-04-10T12:00:00Z,Matchday 33,,Tottenham Hotspur,,Manchester United,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8e09b15ba695b624e2ed2eb2,EPL,2015-16,2016-04-10T12:00:00Z,Matchday 33,,Sunderland AFC,,Leicester City,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c95b25130b7d059bfb04a6de,EPL,2015-16,2016-04-10T12:00:00Z,Matchday 33,,Liverpool FC,,Stoke City,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c2c2c252929b105395f69064,EPL,2015-16,2016-04-13T12:00:00Z,Matchday 35,,Crystal Palace,,Everton FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-55c72e509829af5dc60ec690,EPL,2015-16,2016-04-16T12:00:00Z,Matchday 34,,Newcastle United,,Swansea City,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-686c69a8a59981eebaef98d4,EPL,2015-16,2016-04-16T12:00:00Z,Matchday 34,,Chelsea FC,,Manchester City,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8dd6ff69269c76a1feaf9c42,EPL,2015-16,2016-04-16T12:00:00Z,Matchday 34,,Manchester United,,Aston Villa,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-bb420465999155891539b699,EPL,2015-16,2016-04-16T12:00:00Z,Matchday 34,,Norwich City,,Sunderland AFC,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ca0bfc1b1ed31dff0e0090c0,EPL,2015-16,2016-04-16T12:00:00Z,Matchday 34,,West Bromwich Albion,,Watford FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f3d81ba3212b860da871d764,EPL,2015-16,2016-04-16T12:00:00Z,Matchday 34,,Everton FC,,Southampton FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-24d8cf47a451452ac54a5925,EPL,2015-16,2016-04-17T12:00:00Z,Matchday 34,,Arsenal FC,,Crystal Palace,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-607f8d0dc14e3ac9d6dd24e4,EPL,2015-16,2016-04-17T12:00:00Z,Matchday 34,,Leicester City,,West Ham United,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c609cc5494af21779a66b5c7,EPL,2015-16,2016-04-17T12:00:00Z,Matchday 34,,AFC Bournemouth,,Liverpool FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-66be38d15f880401e36f8e07,EPL,2015-16,2016-04-18T12:00:00Z,Matchday 34,,Stoke City,,Tottenham Hotspur,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-1c409103df664223b0acbf4f,EPL,2015-16,2016-04-19T12:00:00Z,Matchday 27,,Newcastle United,,Manchester City,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-692088ebd802bd91b6bee91b,EPL,2015-16,2016-04-20T12:00:00Z,Matchday 30,,Manchester United,,Crystal Palace,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-99c89374b2ec1c9eecb2fefd,EPL,2015-16,2016-04-20T12:00:00Z,Matchday 30,,West Ham United,,Watford FC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d01a1881f4c4ecbedc68a135,EPL,2015-16,2016-04-20T12:00:00Z,Matchday 27,,Liverpool FC,,Everton FC,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-02a19dc8ad07c0a9123ad3a5,EPL,2015-16,2016-04-21T12:00:00Z,Matchday 30,,Arsenal FC,,West Bromwich Albion,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-175874ef58a2b04d8862181d,EPL,2015-16,2016-04-23T12:00:00Z,Matchday 35,,Manchester City,,Stoke City,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-25a3c029659bfa45378e0a6a,EPL,2015-16,2016-04-23T12:00:00Z,Matchday 35,,AFC Bournemouth,,Chelsea FC,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-533f4f5635cb90be9d86a3fd,EPL,2015-16,2016-04-23T12:00:00Z,Matchday 35,,Liverpool FC,,Newcastle United,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a6f76d44f3944bc26e943706,EPL,2015-16,2016-04-23T12:00:00Z,Matchday 35,,Aston Villa,,Southampton FC,,2,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6f0328dc3a97f76a3d941d8c,EPL,2015-16,2016-04-24T12:00:00Z,Matchday 35,,Sunderland AFC,,Arsenal FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7f35d4a68f35b5e478546fb5,EPL,2015-16,2016-04-24T12:00:00Z,Matchday 35,,Leicester City,,Swansea City,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-918e6cc52d0ef3edda2e3aa3,EPL,2015-16,2016-04-25T12:00:00Z,Matchday 35,,Tottenham Hotspur,,West Bromwich Albion,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-080d16993a9bacb26dd54ccb,EPL,2015-16,2016-04-30T12:00:00Z,Matchday 36,,Newcastle United,,Crystal Palace,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-285e3f40f8724ffdc9db6770,EPL,2015-16,2016-04-30T12:00:00Z,Matchday 36,,Everton FC,,AFC Bournemouth,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7e752f0b935a4805201bfaf2,EPL,2015-16,2016-04-30T12:00:00Z,Matchday 36,,Watford FC,,Aston Villa,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7f67e92b9a6c0ea947c09f03,EPL,2015-16,2016-04-30T12:00:00Z,Matchday 36,,Stoke City,,Sunderland AFC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b2413f71a5e963c9e833e2c8,EPL,2015-16,2016-04-30T12:00:00Z,Matchday 36,,West Bromwich Albion,,West Ham United,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ec5a1255b290f733dd3efa92,EPL,2015-16,2016-04-30T12:00:00Z,Matchday 36,,Arsenal FC,,Norwich City,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-bb1ce10414063c0938888415,EPL,2015-16,2016-05-01T12:00:00Z,Matchday 36,,Southampton FC,,Manchester City,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-bbe3d33d66aeb0855545fd72,EPL,2015-16,2016-05-01T12:00:00Z,Matchday 36,,Swansea City,,Liverpool FC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f0a98cdcdce4d14d278d60c6,EPL,2015-16,2016-05-01T12:00:00Z,Matchday 36,,Manchester United,,Leicester City,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f6b373dbee1a017d74d429df,EPL,2015-16,2016-05-02T12:00:00Z,Matchday 36,,Chelsea FC,,Tottenham Hotspur,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-1bca1fb67631159a1946409a,EPL,2015-16,2016-05-07T12:00:00Z,Matchday 37,,Norwich City,,Manchester United,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-375edf92ad6e580503163685,EPL,2015-16,2016-05-07T12:00:00Z,Matchday 37,,Crystal Palace,,Stoke City,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-427c7b7efd1c958bf52a7b70,EPL,2015-16,2016-05-07T12:00:00Z,Matchday 37,,Leicester City,,Everton FC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-84e4e57f4895005edd348aef,EPL,2015-16,2016-05-07T12:00:00Z,Matchday 37,,AFC Bournemouth,,West Bromwich Albion,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-9bf890cf0cf6fff7abdec6fe,EPL,2015-16,2016-05-07T12:00:00Z,Matchday 37,,Aston Villa,,Newcastle United,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b7ecf8c92da642536d912f9f,EPL,2015-16,2016-05-07T12:00:00Z,Matchday 37,,West Ham United,,Swansea City,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-dd63731fcdd6572a5968858c,EPL,2015-16,2016-05-07T12:00:00Z,Matchday 37,,Sunderland AFC,,Chelsea FC,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6398e06e5773ed1f97502f10,EPL,2015-16,2016-05-08T12:00:00Z,Matchday 37,,Manchester City,,Arsenal FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-830bb898ccb3e8cf69271385,EPL,2015-16,2016-05-08T12:00:00Z,Matchday 37,,Liverpool FC,,Watford FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f71af6517f7b09d7b6fff084,EPL,2015-16,2016-05-08T12:00:00Z,Matchday 37,,Tottenham Hotspur,,Southampton FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-5c62aadc4d5ddf3fe42b02ce,EPL,2015-16,2016-05-10T12:00:00Z,Matchday 35,,West Ham United,,Manchester United,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-55d0428082c76ab8e7b8d63b,EPL,2015-16,2016-05-11T12:00:00Z,Matchday 30,,Liverpool FC,,Chelsea FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-9db5d393dc74b470a97384ce,EPL,2015-16,2016-05-11T12:00:00Z,Matchday 35,,Norwich City,,Watford FC,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c1867c9ab672b93fef72b2e6,EPL,2015-16,2016-05-11T12:00:00Z,Matchday 30,,Sunderland AFC,,Everton FC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0b2ecd5dfcdf940f7a864977,EPL,2015-16,2016-05-15T12:00:00Z,Matchday 38,,Chelsea FC,,Leicester City,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-28f6457042decdad11798819,EPL,2015-16,2016-05-15T12:00:00Z,Matchday 38,,Southampton FC,,Crystal Palace,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3690f22b42d3299a46a1b75c,EPL,2015-16,2016-05-15T12:00:00Z,Matchday 38,,Arsenal FC,,Aston Villa,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-66bffee68617feb0dc90a512,EPL,2015-16,2016-05-15T12:00:00Z,Matchday 38,,Newcastle United,,Tottenham Hotspur,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7c776397a3b8ca4c984a8ac0,EPL,2015-16,2016-05-15T12:00:00Z,Matchday 38,,Everton FC,,Norwich City,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c358578fe1870b7d78698c24,EPL,2015-16,2016-05-15T12:00:00Z,Matchday 38,,Watford FC,,Sunderland AFC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-cc997aa15dbf1a554a0e5ee5,EPL,2015-16,2016-05-15T12:00:00Z,Matchday 38,,Stoke City,,West Ham United,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-eda29e98f41de68d9727bdf7,EPL,2015-16,2016-05-15T12:00:00Z,Matchday 38,,West Bromwich Albion,,Liverpool FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f61eeac975309ffc0be3ffc2,EPL,2015-16,2016-05-15T12:00:00Z,Matchday 38,,Swansea City,,Manchester City,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-27c6fe9f1e9c3e2561cbb741,EPL,2015-16,2016-05-17T12:00:00Z,Matchday 38,,Manchester United,,AFC Bournemouth,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00

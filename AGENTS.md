@@ -66,6 +66,59 @@ and conflicts on a large generated JSON. Change the *code* that produces them
 and let the scheduled run regenerate the data. If a branch already carries such
 a change, resolve in favour of `main`'s copy.
 
+## The game archive is the raw record; everything else is derived
+
+`archive/games/<comp>/<season>.csv` is Matchday's own copy of every finished
+game it has seen. It exists because nothing else here keeps one: `data_*.json`,
+every `*_cache.json` and the nflverse play-by-play are all gitignored, so the
+only durable artifacts were *derived* ones (`ratings_elo.json`, `picks_log_*`,
+the ledgers). That had three standing costs — a rating could never be
+recomputed, `backfill_history.py`'s large one-time quota spend produced Elo and
+kept none of the games behind it, and a dark provider meant a dark sport (CFBD
+for three weeks; `ncaam_advanced_metrics.py` still reports that nothing has
+ever fed it live data).
+
+Two tables, because a final score cannot produce an adjusted-efficiency rating:
+`archive/games/` always, and `archive/box/` for team box detail wherever a
+source provides it — possessions (`FGA - ORB + TO + 0.475*FTA`) are what tempo
+and efficiency need. **`archive/box/` is currently empty**: no free source on
+hand carries basketball box detail, and CBBD's box endpoint is quota-limited
+with `MAPPING_VERIFIED = False`. Finding a free one is the open task.
+
+Two writers, deliberately separate:
+
+- **Forward, hourly.** `game_archive.record_build()` is called from
+  `fetch_data.build()` just before `data_<comp>.json` is overwritten. It costs
+  **zero provider calls** — it captures games the fetch already had and was
+  about to discard — and it swallows its own errors, because the archive must
+  never be able to fail a deploy.
+- **Backward, occasional.** `archive_backfill.py` seeds history from sources
+  that cost no quota: the openfootball CC0 history, the BallDontLie/CFBD/CBBD
+  caches already on disk, and nflverse. Safe to re-run at any time; it seeded
+  35,460 games across 11 competitions. `backfill_history.py` is the deliberate
+  opposite — it spends real quota for seasons no free source covers.
+
+Two rules the archive enforces, both learned the hard way:
+
+- **A settled score is never rewritten.** A revision is refused and logged to
+  `archive/conflicts.jsonl` with the original left standing, so a provider
+  cannot retroactively change the inputs behind an already-graded pick.
+- **One provider per (competition, season).** Two sources describe the same
+  game with different ids and different team naming — nflverse's
+  `2021_01_ARI_TEN` between "TEN" and "ARI" versus BallDontLie's
+  `bdl-nfl-423945` between full club names — so nothing downstream can tell
+  they are one game. Before `resolve_overlaps()` existed, NFL collected 1,709
+  rows for 1,424 real games. Resolution keys on the *provider*, not the source
+  label: `"BALLDONTLIE"` and `"balldontlie"` are one id scheme, and treating
+  them as rivals once discarded 1,698 MLB games in favour of 113. Live pipeline
+  sources outrank bulk ones, because `record_build()` keeps collecting those
+  competitions under *their* ids — seeding a season from a bulk source instead
+  would make the hourly hook re-add every game under a second id forever.
+
+Unlike `ratings*.json`, these partitions are append-mostly and sorted by date,
+so a feature branch touching them does not conflict the way a regenerated blob
+does. Validate with `python game_archive.py validate` before committing.
+
 ## Hashed artifacts are byte-sensitive
 
 Three places hash a checked-in file's raw bytes and freeze the digest into

@@ -1,0 +1,90 @@
+{
+  "approves": "resume publication of the incumbent MLB forecast at zero challenger weight",
+  "artifact": "mlb-incumbent-publication-evidence",
+  "calibration_defect": {
+    "cohort_effect": "The incumbent's emitted probabilities changed, so evidence paired against v5-settlement-aware cannot pool with evidence paired against v6-calibrated. Prospective collection restarted against the new incumbent.",
+    "contract_basis": "MLB_RECOVERY.md \u00a72a: correcting a probability the incumbent already emits, with no new input and no new feature, is a defect fix and does not pass through \u00a72.",
+    "landed": "2026-08-18",
+    "model_signal_schema_moved_to": 8,
+    "original_pause_reason": "calibration and starting-pitcher coverage",
+    "remedy": "per-sport independent-probability calibration"
+  },
+  "does_not_approve": [
+    "any non-zero challenger production weight",
+    "any personnel feature taking non-zero weight",
+    "pooling this evidence into a \u00a72 promotion cohort"
+  ],
+  "incumbent": {
+    "model_signal_schema": 8,
+    "model_version": "v6-calibrated",
+    "source": "fetch_data.PREDICTION_MODEL_VERSION / fetch_data.MODEL_SIGNAL_SCHEMA"
+  },
+  "limitations": [
+    "n=15 graded fixtures over 2 game-date blocks. This is a small sample and no calibration claim at scale is made or implied.",
+    "The run-strength challenger has NOT met \u00a72. Its measured paired log-loss delta is positive (worse than the incumbent) and its 95% interval spans zero.",
+    "This evidence supports resuming the incumbent only. It approves no signal weight for any challenger, now or later."
+  ],
+  "measured_record": {
+    "coverage": {
+      "eligible_graded": 15,
+      "event_exclusion_reasons": {
+        "eligible": 15
+      },
+      "independent_official_available": 15,
+      "league_home_prior_available": 15,
+      "market_available": 15,
+      "market_missing_reasons": {},
+      "personnel_missing_reasons": {
+        "bullpen_availability": 15,
+        "confirmed_lineup": 15,
+        "injuries": 15,
+        "lineups": 15,
+        "probable_or_confirmed_starter": 15,
+        "starting_pitchers": 15
+      }
+    },
+    "official_model": {
+      "accuracy": 0.733333,
+      "brier": 0.2308,
+      "calibration": [
+        {
+          "home_win_rate": 0.0,
+          "mean_probability": 0.38,
+          "n": 1,
+          "range": "30-40%"
+        },
+        {
+          "home_win_rate": 0.333333,
+          "mean_probability": 0.476667,
+          "n": 3,
+          "range": "40-50%"
+        },
+        {
+          "home_win_rate": 0.8,
+          "mean_probability": 0.545,
+          "n": 10,
+          "range": "50-60%"
+        },
+        {
+          "home_win_rate": 0.0,
+          "mean_probability": 0.6,
+          "n": 1,
+          "range": "60-70%"
+        }
+      ],
+      "log_loss": 0.654557,
+      "n": 15
+    },
+    "source_report": "mlb_prospective_scorecard.json",
+    "unit": "one uniquely locked, later graded MLB fixture"
+  },
+  "personnel": {
+    "attestation": "mlb_personnel_zero_weight_attestation.json",
+    "features_weighted": false
+  },
+  "prepared_at": "2026-08-23",
+  "protocol_version": "mlb-incumbent-publication-1.0.0",
+  "schema_version": 1,
+  "scope": "Evidence for resuming publication of the ALREADY-DEPLOYED MLB forecast at zero challenger weight. This is not a signal promotion and claims no accuracy improvement over anything. It is the incumbent's own measured record plus the record of the calibration defect that caused the original pause being fixed.",
+  "status": "ready_for_frozen_review"
+}

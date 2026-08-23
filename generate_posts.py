@@ -47,7 +47,7 @@ PUBLIC_CONTENT_COMPETITIONS = (
 )
 PUBLIC_CONTENT_KEYS = {key for key, _, _ in PUBLIC_CONTENT_COMPETITIONS}
 MLB_FORECAST_PAUSE_MESSAGE = (
-    "MLB forecasts paused while calibration and starting-pitcher coverage are being fixed."
+    "MLB picks are on hold while starting-pitcher coverage clears review."
 )
 
 FACTOR_LABELS = {

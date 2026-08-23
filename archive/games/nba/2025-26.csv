@@ -1,0 +1,401 @@
+game_id,comp,season,date_utc,stage,venue,home_name,home_code,away_name,away_code,home_score,away_score,status,source,first_seen
+nba-18446819,NBA,2025-26,2025-10-21T23:30:00Z,Regular Season,,Oklahoma City Thunder,OKC,Houston Rockets,HOU,125,124,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446820,NBA,2025-26,2025-10-22T02:00:00Z,Regular Season,,Los Angeles Lakers,LAL,Golden State Warriors,GSW,109,119,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446821,NBA,2025-26,2025-10-22T23:00:00Z,Regular Season,,New York Knicks,NYK,Cleveland Cavaliers,CLE,119,111,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446823,NBA,2025-26,2025-10-22T23:00:00Z,Regular Season,,Charlotte Hornets,CHA,Brooklyn Nets,BKN,136,117,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446824,NBA,2025-26,2025-10-22T23:00:00Z,Regular Season,,Orlando Magic,ORL,Miami Heat,MIA,125,121,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446825,NBA,2025-26,2025-10-22T23:30:00Z,Regular Season,,Atlanta Hawks,ATL,Toronto Raptors,TOR,118,138,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446826,NBA,2025-26,2025-10-22T23:30:00Z,Regular Season,,Boston Celtics,BOS,Philadelphia 76ers,PHI,116,117,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446827,NBA,2025-26,2025-10-23T00:00:00Z,Regular Season,,Chicago Bulls,CHI,Detroit Pistons,DET,115,111,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446828,NBA,2025-26,2025-10-23T00:00:00Z,Regular Season,,Memphis Grizzlies,MEM,New Orleans Pelicans,NOP,128,122,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446829,NBA,2025-26,2025-10-23T00:00:00Z,Regular Season,,Milwaukee Bucks,MIL,Washington Wizards,WAS,133,120,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446830,NBA,2025-26,2025-10-23T01:00:00Z,Regular Season,,Utah Jazz,UTA,LA Clippers,LAC,129,108,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446822,NBA,2025-26,2025-10-23T01:30:00Z,Regular Season,,Dallas Mavericks,DAL,San Antonio Spurs,SAS,92,125,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446831,NBA,2025-26,2025-10-23T02:00:00Z,Regular Season,,Phoenix Suns,PHX,Sacramento Kings,SAC,120,116,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446832,NBA,2025-26,2025-10-23T02:00:00Z,Regular Season,,Portland Trail Blazers,POR,Minnesota Timberwolves,MIN,114,118,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446833,NBA,2025-26,2025-10-23T23:30:00Z,Regular Season,,Indiana Pacers,IND,Oklahoma City Thunder,OKC,135,141,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446834,NBA,2025-26,2025-10-24T02:00:00Z,Regular Season,,Golden State Warriors,GSW,Denver Nuggets,DEN,137,131,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446839,NBA,2025-26,2025-10-24T22:30:00Z,Regular Season,,Toronto Raptors,TOR,Milwaukee Bucks,MIL,116,122,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446837,NBA,2025-26,2025-10-24T23:00:00Z,Regular Season,,Orlando Magic,ORL,Atlanta Hawks,ATL,107,111,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446835,NBA,2025-26,2025-10-24T23:30:00Z,Regular Season,,New York Knicks,NYK,Boston Celtics,BOS,105,95,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446838,NBA,2025-26,2025-10-24T23:30:00Z,Regular Season,,Brooklyn Nets,BKN,Cleveland Cavaliers,CLE,124,131,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446840,NBA,2025-26,2025-10-25T00:00:00Z,Regular Season,,Houston Rockets,HOU,Detroit Pistons,DET,111,115,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446841,NBA,2025-26,2025-10-25T00:00:00Z,Regular Season,,Memphis Grizzlies,MEM,Miami Heat,MIA,114,146,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446842,NBA,2025-26,2025-10-25T00:00:00Z,Regular Season,,New Orleans Pelicans,NOP,San Antonio Spurs,SAS,116,120,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446843,NBA,2025-26,2025-10-25T00:30:00Z,Regular Season,,Dallas Mavericks,DAL,Washington Wizards,WAS,107,117,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446836,NBA,2025-26,2025-10-25T02:00:00Z,Regular Season,,Los Angeles Lakers,LAL,Minnesota Timberwolves,MIN,128,110,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446844,NBA,2025-26,2025-10-25T02:00:00Z,Regular Season,,Portland Trail Blazers,POR,Golden State Warriors,GSW,139,119,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446845,NBA,2025-26,2025-10-25T02:00:00Z,Regular Season,,Sacramento Kings,SAC,Utah Jazz,UTA,105,104,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446846,NBA,2025-26,2025-10-25T02:30:00Z,Regular Season,,LA Clippers,LAC,Phoenix Suns,PHX,129,102,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446847,NBA,2025-26,2025-10-25T23:00:00Z,Regular Season,,Orlando Magic,ORL,Chicago Bulls,CHI,98,110,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446848,NBA,2025-26,2025-10-25T23:30:00Z,Regular Season,,Atlanta Hawks,ATL,Oklahoma City Thunder,OKC,100,117,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446849,NBA,2025-26,2025-10-25T23:30:00Z,Regular Season,,Philadelphia 76ers,PHI,Charlotte Hornets,CHA,125,121,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446850,NBA,2025-26,2025-10-26T00:00:00Z,Regular Season,,Memphis Grizzlies,MEM,Indiana Pacers,IND,128,103,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446851,NBA,2025-26,2025-10-26T01:00:00Z,Regular Season,,Denver Nuggets,DEN,Phoenix Suns,PHX,133,111,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446852,NBA,2025-26,2025-10-26T18:00:00Z,Regular Season,,San Antonio Spurs,SAS,Brooklyn Nets,BKN,118,107,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446853,NBA,2025-26,2025-10-26T19:30:00Z,Regular Season,,Detroit Pistons,DET,Boston Celtics,BOS,119,113,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446854,NBA,2025-26,2025-10-26T22:00:00Z,Regular Season,,Cleveland Cavaliers,CLE,Milwaukee Bucks,MIL,118,113,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446855,NBA,2025-26,2025-10-26T22:00:00Z,Regular Season,,Miami Heat,MIA,New York Knicks,NYK,115,107,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446856,NBA,2025-26,2025-10-26T22:00:00Z,Regular Season,,Washington Wizards,WAS,Charlotte Hornets,CHA,113,139,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446857,NBA,2025-26,2025-10-26T23:00:00Z,Regular Season,,Minnesota Timberwolves,MIN,Indiana Pacers,IND,114,110,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446858,NBA,2025-26,2025-10-26T23:30:00Z,Regular Season,,Dallas Mavericks,DAL,Toronto Raptors,TOR,139,129,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446859,NBA,2025-26,2025-10-27T01:00:00Z,Regular Season,,LA Clippers,LAC,Portland Trail Blazers,POR,114,107,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446860,NBA,2025-26,2025-10-27T01:00:00Z,Regular Season,,Sacramento Kings,SAC,Los Angeles Lakers,LAL,120,127,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446861,NBA,2025-26,2025-10-27T23:00:00Z,Regular Season,,Detroit Pistons,DET,Cleveland Cavaliers,CLE,95,116,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446863,NBA,2025-26,2025-10-27T23:00:00Z,Regular Season,,Philadelphia 76ers,PHI,Orlando Magic,ORL,136,124,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446864,NBA,2025-26,2025-10-28T00:00:00Z,Regular Season,,Chicago Bulls,CHI,Atlanta Hawks,ATL,128,123,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446865,NBA,2025-26,2025-10-28T00:00:00Z,Regular Season,,Houston Rockets,HOU,Brooklyn Nets,BKN,137,109,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446866,NBA,2025-26,2025-10-28T00:00:00Z,Regular Season,,New Orleans Pelicans,NOP,Boston Celtics,BOS,90,122,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446867,NBA,2025-26,2025-10-28T00:00:00Z,Regular Season,,San Antonio Spurs,SAS,Toronto Raptors,TOR,121,103,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446868,NBA,2025-26,2025-10-28T00:30:00Z,Regular Season,,Dallas Mavericks,DAL,Oklahoma City Thunder,OKC,94,101,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446869,NBA,2025-26,2025-10-28T01:00:00Z,Regular Season,,Utah Jazz,UTA,Phoenix Suns,PHX,138,134,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446862,NBA,2025-26,2025-10-28T01:30:00Z,Regular Season,,Minnesota Timberwolves,MIN,Denver Nuggets,DEN,114,127,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446870,NBA,2025-26,2025-10-28T02:00:00Z,Regular Season,,Golden State Warriors,GSW,Memphis Grizzlies,MEM,131,118,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446871,NBA,2025-26,2025-10-28T02:30:00Z,Regular Season,,Los Angeles Lakers,LAL,Portland Trail Blazers,POR,108,122,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446872,NBA,2025-26,2025-10-28T23:00:00Z,Regular Season,,Washington Wizards,WAS,Philadelphia 76ers,PHI,134,139,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446873,NBA,2025-26,2025-10-28T23:30:00Z,Regular Season,,Miami Heat,MIA,Charlotte Hornets,CHA,144,117,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446874,NBA,2025-26,2025-10-29T00:00:00Z,Regular Season,,Milwaukee Bucks,MIL,New York Knicks,NYK,121,111,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446875,NBA,2025-26,2025-10-29T00:00:00Z,Regular Season,,Oklahoma City Thunder,OKC,Sacramento Kings,SAC,107,101,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446876,NBA,2025-26,2025-10-29T03:00:00Z,Regular Season,,Golden State Warriors,GSW,LA Clippers,LAC,98,79,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446880,NBA,2025-26,2025-10-29T22:30:00Z,Regular Season,,Toronto Raptors,TOR,Houston Rockets,HOU,121,139,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446877,NBA,2025-26,2025-10-29T23:00:00Z,Regular Season,,Boston Celtics,BOS,Cleveland Cavaliers,CLE,125,105,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446878,NBA,2025-26,2025-10-29T23:00:00Z,Regular Season,,Detroit Pistons,DET,Orlando Magic,ORL,135,116,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446879,NBA,2025-26,2025-10-29T23:30:00Z,Regular Season,,Brooklyn Nets,BKN,Atlanta Hawks,ATL,112,117,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446881,NBA,2025-26,2025-10-30T00:00:00Z,Regular Season,,Chicago Bulls,CHI,Sacramento Kings,SAC,126,113,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446882,NBA,2025-26,2025-10-30T00:30:00Z,Regular Season,,Dallas Mavericks,DAL,Indiana Pacers,IND,107,105,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446883,NBA,2025-26,2025-10-30T01:00:00Z,Regular Season,,Denver Nuggets,DEN,New Orleans Pelicans,NOP,122,88,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446884,NBA,2025-26,2025-10-30T01:00:00Z,Regular Season,,Utah Jazz,UTA,Portland Trail Blazers,POR,134,136,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446885,NBA,2025-26,2025-10-30T01:30:00Z,Regular Season,,Minnesota Timberwolves,MIN,Los Angeles Lakers,LAL,115,116,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446886,NBA,2025-26,2025-10-30T02:00:00Z,Regular Season,,Phoenix Suns,PHX,Memphis Grizzlies,MEM,113,114,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446887,NBA,2025-26,2025-10-30T23:00:00Z,Regular Season,,Charlotte Hornets,CHA,Orlando Magic,ORL,107,123,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446888,NBA,2025-26,2025-10-31T00:00:00Z,Regular Season,,Milwaukee Bucks,MIL,Golden State Warriors,GSW,120,110,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446889,NBA,2025-26,2025-10-31T00:00:00Z,Regular Season,,Oklahoma City Thunder,OKC,Washington Wizards,WAS,127,108,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446890,NBA,2025-26,2025-10-31T00:30:00Z,Regular Season,,San Antonio Spurs,SAS,Miami Heat,MIA,107,101,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446891,NBA,2025-26,2025-10-31T23:00:00Z,Regular Season,,Indiana Pacers,IND,Atlanta Hawks,ATL,108,128,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446892,NBA,2025-26,2025-10-31T23:00:00Z,Regular Season,,Philadelphia 76ers,PHI,Boston Celtics,BOS,108,109,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446893,NBA,2025-26,2025-10-31T23:30:00Z,Regular Season,,Cleveland Cavaliers,CLE,Toronto Raptors,TOR,101,112,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446894,NBA,2025-26,2025-11-01T00:00:00Z,Regular Season,,Chicago Bulls,CHI,New York Knicks,NYK,135,125,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446895,NBA,2025-26,2025-11-01T01:30:00Z,Regular Season,,Memphis Grizzlies,MEM,Los Angeles Lakers,LAL,112,117,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446896,NBA,2025-26,2025-11-01T02:00:00Z,Regular Season,,Phoenix Suns,PHX,Utah Jazz,UTA,118,96,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446897,NBA,2025-26,2025-11-01T02:00:00Z,Regular Season,,Portland Trail Blazers,POR,Denver Nuggets,DEN,109,107,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446898,NBA,2025-26,2025-11-01T02:30:00Z,Regular Season,,LA Clippers,LAC,New Orleans Pelicans,NOP,126,124,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446899,NBA,2025-26,2025-11-01T21:00:00Z,Regular Season,,Milwaukee Bucks,MIL,Sacramento Kings,SAC,133,135,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446900,NBA,2025-26,2025-11-01T22:00:00Z,Regular Season,,Charlotte Hornets,CHA,Minnesota Timberwolves,MIN,105,122,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446901,NBA,2025-26,2025-11-01T23:00:00Z,Regular Season,,Indiana Pacers,IND,Golden State Warriors,GSW,114,109,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446902,NBA,2025-26,2025-11-01T23:00:00Z,Regular Season,,Washington Wizards,WAS,Orlando Magic,ORL,94,125,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446903,NBA,2025-26,2025-11-02T00:00:00Z,Regular Season,,Boston Celtics,BOS,Houston Rockets,HOU,101,128,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446904,NBA,2025-26,2025-11-02T02:00:00Z,Regular Season,,Detroit Pistons,DET,Dallas Mavericks,DAL,122,110,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446905,NBA,2025-26,2025-11-02T20:30:00Z,Regular Season,,Oklahoma City Thunder,OKC,New Orleans Pelicans,NOP,137,106,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446906,NBA,2025-26,2025-11-02T23:00:00Z,Regular Season,,Brooklyn Nets,BKN,Philadelphia 76ers,PHI,105,129,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446907,NBA,2025-26,2025-11-02T23:00:00Z,Regular Season,,Charlotte Hornets,CHA,Utah Jazz,UTA,126,103,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446908,NBA,2025-26,2025-11-02T23:00:00Z,Regular Season,,Cleveland Cavaliers,CLE,Atlanta Hawks,ATL,117,109,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446909,NBA,2025-26,2025-11-02T23:00:00Z,Regular Season,,Toronto Raptors,TOR,Memphis Grizzlies,MEM,117,104,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446910,NBA,2025-26,2025-11-03T00:00:00Z,Regular Season,,New York Knicks,NYK,Chicago Bulls,CHI,128,116,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446911,NBA,2025-26,2025-11-03T01:00:00Z,Regular Season,,Phoenix Suns,PHX,San Antonio Spurs,SAS,130,118,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446912,NBA,2025-26,2025-11-03T02:30:00Z,Regular Season,,Los Angeles Lakers,LAL,Miami Heat,MIA,130,120,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446913,NBA,2025-26,2025-11-04T00:00:00Z,Regular Season,,Brooklyn Nets,BKN,Minnesota Timberwolves,MIN,109,125,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446914,NBA,2025-26,2025-11-04T00:00:00Z,Regular Season,,Indiana Pacers,IND,Milwaukee Bucks,MIL,115,117,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446915,NBA,2025-26,2025-11-04T00:30:00Z,Regular Season,,Boston Celtics,BOS,Utah Jazz,UTA,103,105,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446916,NBA,2025-26,2025-11-04T00:30:00Z,Regular Season,,New York Knicks,NYK,Washington Wizards,WAS,119,102,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446917,NBA,2025-26,2025-11-04T01:00:00Z,Regular Season,,Houston Rockets,HOU,Dallas Mavericks,DAL,110,102,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446918,NBA,2025-26,2025-11-04T01:00:00Z,Regular Season,,Memphis Grizzlies,MEM,Detroit Pistons,DET,106,114,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446919,NBA,2025-26,2025-11-04T02:00:00Z,Regular Season,,Denver Nuggets,DEN,Sacramento Kings,SAC,130,124,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446920,NBA,2025-26,2025-11-04T03:00:00Z,Regular Season,,Portland Trail Blazers,POR,Los Angeles Lakers,LAL,115,123,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446921,NBA,2025-26,2025-11-04T03:30:00Z,Regular Season,,LA Clippers,LAC,Miami Heat,MIA,119,120,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446922,NBA,2025-26,2025-11-05T00:30:00Z,Regular Season,,Toronto Raptors,TOR,Milwaukee Bucks,MIL,128,100,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446923,NBA,2025-26,2025-11-05T01:00:00Z,Regular Season,,Atlanta Hawks,ATL,Orlando Magic,ORL,127,112,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446924,NBA,2025-26,2025-11-05T01:00:00Z,Regular Season,,Chicago Bulls,CHI,Philadelphia 76ers,PHI,113,111,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446925,NBA,2025-26,2025-11-05T01:00:00Z,Regular Season,,New Orleans Pelicans,NOP,Charlotte Hornets,CHA,116,112,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446926,NBA,2025-26,2025-11-05T03:00:00Z,Regular Season,,Golden State Warriors,GSW,Phoenix Suns,PHX,118,107,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446927,NBA,2025-26,2025-11-05T04:00:00Z,Regular Season,,LA Clippers,LAC,Oklahoma City Thunder,OKC,107,126,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446928,NBA,2025-26,2025-11-06T00:00:00Z,Regular Season,,Cleveland Cavaliers,CLE,Philadelphia 76ers,PHI,132,121,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446929,NBA,2025-26,2025-11-06T00:00:00Z,Regular Season,,Detroit Pistons,DET,Utah Jazz,UTA,114,103,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446930,NBA,2025-26,2025-11-06T00:00:00Z,Regular Season,,Indiana Pacers,IND,Brooklyn Nets,BKN,103,112,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446931,NBA,2025-26,2025-11-06T00:30:00Z,Regular Season,,Boston Celtics,BOS,Washington Wizards,WAS,136,107,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446932,NBA,2025-26,2025-11-06T00:30:00Z,Regular Season,,New York Knicks,NYK,Minnesota Timberwolves,MIN,137,114,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446933,NBA,2025-26,2025-11-06T01:00:00Z,Regular Season,,Memphis Grizzlies,MEM,Houston Rockets,HOU,109,124,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446934,NBA,2025-26,2025-11-06T01:30:00Z,Regular Season,,Dallas Mavericks,DAL,New Orleans Pelicans,NOP,99,101,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446935,NBA,2025-26,2025-11-06T02:00:00Z,Regular Season,,Denver Nuggets,DEN,Miami Heat,MIA,122,112,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446936,NBA,2025-26,2025-11-06T03:00:00Z,Regular Season,,Los Angeles Lakers,LAL,San Antonio Spurs,SAS,118,116,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446937,NBA,2025-26,2025-11-06T03:00:00Z,Regular Season,,Portland Trail Blazers,POR,Oklahoma City Thunder,OKC,121,119,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446938,NBA,2025-26,2025-11-06T03:00:00Z,Regular Season,,Sacramento Kings,SAC,Golden State Warriors,GSW,121,116,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446939,NBA,2025-26,2025-11-07T02:00:00Z,Regular Season,,Phoenix Suns,PHX,LA Clippers,LAC,115,102,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446940,NBA,2025-26,2025-11-08T00:00:00Z,Regular Season,,Orlando Magic,ORL,Boston Celtics,BOS,123,110,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446941,NBA,2025-26,2025-11-08T00:00:00Z,Regular Season,,Washington Wizards,WAS,Cleveland Cavaliers,CLE,114,148,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446942,NBA,2025-26,2025-11-08T00:30:00Z,Regular Season,,Atlanta Hawks,ATL,Toronto Raptors,TOR,97,109,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446943,NBA,2025-26,2025-11-08T00:30:00Z,Regular Season,,Brooklyn Nets,BKN,Detroit Pistons,DET,107,125,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446944,NBA,2025-26,2025-11-08T00:30:00Z,Regular Season,,San Antonio Spurs,SAS,Houston Rockets,HOU,121,110,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446945,NBA,2025-26,2025-11-08T01:00:00Z,Regular Season,,Miami Heat,MIA,Charlotte Hornets,CHA,126,108,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446946,NBA,2025-26,2025-11-08T01:00:00Z,Regular Season,,Memphis Grizzlies,MEM,Dallas Mavericks,DAL,118,104,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446947,NBA,2025-26,2025-11-08T01:00:00Z,Regular Season,,Milwaukee Bucks,MIL,Chicago Bulls,CHI,126,110,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446948,NBA,2025-26,2025-11-08T01:00:00Z,Regular Season,,Minnesota Timberwolves,MIN,Utah Jazz,UTA,137,97,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446949,NBA,2025-26,2025-11-08T03:00:00Z,Regular Season,,Denver Nuggets,DEN,Golden State Warriors,GSW,129,104,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446950,NBA,2025-26,2025-11-08T03:00:00Z,Regular Season,,Sacramento Kings,SAC,Oklahoma City Thunder,OKC,101,132,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446951,NBA,2025-26,2025-11-09T00:00:00Z,Regular Season,,Washington Wizards,WAS,Dallas Mavericks,DAL,105,111,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446952,NBA,2025-26,2025-11-09T00:30:00Z,Regular Season,,Philadelphia 76ers,PHI,Toronto Raptors,TOR,130,120,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446953,NBA,2025-26,2025-11-09T01:00:00Z,Regular Season,,Atlanta Hawks,ATL,Los Angeles Lakers,LAL,122,102,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446954,NBA,2025-26,2025-11-09T01:00:00Z,Regular Season,,Cleveland Cavaliers,CLE,Chicago Bulls,CHI,128,122,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446955,NBA,2025-26,2025-11-09T01:00:00Z,Regular Season,,Miami Heat,MIA,Portland Trail Blazers,POR,136,131,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446956,NBA,2025-26,2025-11-09T01:00:00Z,Regular Season,,San Antonio Spurs,SAS,New Orleans Pelicans,NOP,126,119,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446957,NBA,2025-26,2025-11-09T02:00:00Z,Regular Season,,Denver Nuggets,DEN,Indiana Pacers,IND,117,100,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446958,NBA,2025-26,2025-11-09T03:30:00Z,Regular Season,,LA Clippers,LAC,Phoenix Suns,PHX,103,114,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446959,NBA,2025-26,2025-11-09T20:30:00Z,Regular Season,,Milwaukee Bucks,MIL,Houston Rockets,HOU,115,122,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446960,NBA,2025-26,2025-11-09T23:00:00Z,Regular Season,,New York Knicks,NYK,Brooklyn Nets,BKN,134,98,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446961,NBA,2025-26,2025-11-09T23:00:00Z,Regular Season,,Orlando Magic,ORL,Boston Celtics,BOS,107,111,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446962,NBA,2025-26,2025-11-09T23:00:00Z,Regular Season,,Memphis Grizzlies,MEM,Oklahoma City Thunder,OKC,100,114,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446963,NBA,2025-26,2025-11-10T00:30:00Z,Regular Season,,Philadelphia 76ers,PHI,Detroit Pistons,DET,108,111,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446964,NBA,2025-26,2025-11-10T01:30:00Z,Regular Season,,Golden State Warriors,GSW,Indiana Pacers,IND,114,83,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446965,NBA,2025-26,2025-11-10T02:00:00Z,Regular Season,,Sacramento Kings,SAC,Minnesota Timberwolves,MIN,117,144,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446966,NBA,2025-26,2025-11-11T00:00:00Z,Regular Season,,Charlotte Hornets,CHA,Los Angeles Lakers,LAL,111,121,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446967,NBA,2025-26,2025-11-11T00:00:00Z,Regular Season,,Detroit Pistons,DET,Washington Wizards,WAS,137,135,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446968,NBA,2025-26,2025-11-11T00:00:00Z,Regular Season,,Orlando Magic,ORL,Portland Trail Blazers,POR,115,112,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446969,NBA,2025-26,2025-11-11T00:30:00Z,Regular Season,,Miami Heat,MIA,Cleveland Cavaliers,CLE,140,138,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446970,NBA,2025-26,2025-11-11T01:00:00Z,Regular Season,,Chicago Bulls,CHI,San Antonio Spurs,SAS,117,121,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446971,NBA,2025-26,2025-11-11T01:30:00Z,Regular Season,,Dallas Mavericks,DAL,Milwaukee Bucks,MIL,114,116,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446972,NBA,2025-26,2025-11-11T02:00:00Z,Regular Season,,Phoenix Suns,PHX,New Orleans Pelicans,NOP,121,98,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446973,NBA,2025-26,2025-11-11T02:00:00Z,Regular Season,,Utah Jazz,UTA,Minnesota Timberwolves,MIN,113,120,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446974,NBA,2025-26,2025-11-11T03:30:00Z,Regular Season,,LA Clippers,LAC,Atlanta Hawks,ATL,102,105,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446975,NBA,2025-26,2025-11-12T00:30:00Z,Regular Season,,Brooklyn Nets,BKN,Toronto Raptors,TOR,109,119,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446976,NBA,2025-26,2025-11-12T00:30:00Z,Regular Season,,New York Knicks,NYK,Memphis Grizzlies,MEM,133,120,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446977,NBA,2025-26,2025-11-12T01:00:00Z,Regular Season,,Philadelphia 76ers,PHI,Boston Celtics,BOS,102,100,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446978,NBA,2025-26,2025-11-12T01:00:00Z,Regular Season,,Oklahoma City Thunder,OKC,Golden State Warriors,GSW,126,102,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446979,NBA,2025-26,2025-11-12T02:00:00Z,Regular Season,,Utah Jazz,UTA,Indiana Pacers,IND,152,128,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446980,NBA,2025-26,2025-11-12T04:00:00Z,Regular Season,,Sacramento Kings,SAC,Denver Nuggets,DEN,108,122,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446981,NBA,2025-26,2025-11-13T00:00:00Z,Regular Season,,Charlotte Hornets,CHA,Milwaukee Bucks,MIL,111,100,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446982,NBA,2025-26,2025-11-13T00:00:00Z,Regular Season,,Detroit Pistons,DET,Chicago Bulls,CHI,124,113,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446983,NBA,2025-26,2025-11-13T00:00:00Z,Regular Season,,New York Knicks,NYK,Orlando Magic,ORL,107,124,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446984,NBA,2025-26,2025-11-13T00:30:00Z,Regular Season,,Boston Celtics,BOS,Memphis Grizzlies,MEM,131,95,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446985,NBA,2025-26,2025-11-13T00:30:00Z,Regular Season,,Miami Heat,MIA,Cleveland Cavaliers,CLE,116,130,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446986,NBA,2025-26,2025-11-13T01:00:00Z,Regular Season,,Houston Rockets,HOU,Washington Wizards,WAS,135,112,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446987,NBA,2025-26,2025-11-13T01:00:00Z,Regular Season,,New Orleans Pelicans,NOP,Portland Trail Blazers,POR,117,125,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446988,NBA,2025-26,2025-11-13T01:00:00Z,Regular Season,,San Antonio Spurs,SAS,Golden State Warriors,GSW,120,125,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446989,NBA,2025-26,2025-11-13T01:30:00Z,Regular Season,,Dallas Mavericks,DAL,Phoenix Suns,PHX,114,123,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446990,NBA,2025-26,2025-11-13T02:30:00Z,Regular Season,,Oklahoma City Thunder,OKC,Los Angeles Lakers,LAL,121,92,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446991,NBA,2025-26,2025-11-13T03:00:00Z,Regular Season,,Sacramento Kings,SAC,Atlanta Hawks,ATL,100,133,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446992,NBA,2025-26,2025-11-13T03:30:00Z,Regular Season,,LA Clippers,LAC,Denver Nuggets,DEN,116,130,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446993,NBA,2025-26,2025-11-14T00:00:00Z,Regular Season,,Cleveland Cavaliers,CLE,Toronto Raptors,TOR,113,126,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446994,NBA,2025-26,2025-11-14T02:00:00Z,Regular Season,,Phoenix Suns,PHX,Indiana Pacers,IND,133,98,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446995,NBA,2025-26,2025-11-14T02:00:00Z,Regular Season,,Utah Jazz,UTA,Atlanta Hawks,ATL,122,132,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446996,NBA,2025-26,2025-11-15T00:00:00Z,Regular Season,,New York Knicks,NYK,Miami Heat,MIA,140,132,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446997,NBA,2025-26,2025-11-15T00:00:00Z,Regular Season,,Orlando Magic,ORL,Brooklyn Nets,BKN,105,98,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446998,NBA,2025-26,2025-11-15T00:30:00Z,Regular Season,,Detroit Pistons,DET,Philadelphia 76ers,PHI,114,105,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18446999,NBA,2025-26,2025-11-15T01:00:00Z,Regular Season,,Houston Rockets,HOU,Portland Trail Blazers,POR,140,116,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447000,NBA,2025-26,2025-11-15T01:00:00Z,Regular Season,,Milwaukee Bucks,MIL,Charlotte Hornets,CHA,147,134,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447001,NBA,2025-26,2025-11-15T01:00:00Z,Regular Season,,Minnesota Timberwolves,MIN,Sacramento Kings,SAC,124,110,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447002,NBA,2025-26,2025-11-15T01:00:00Z,Regular Season,,New Orleans Pelicans,NOP,Los Angeles Lakers,LAL,104,118,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447003,NBA,2025-26,2025-11-15T01:30:00Z,Regular Season,,Dallas Mavericks,DAL,LA Clippers,LAC,127,133,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447004,NBA,2025-26,2025-11-15T02:30:00Z,Regular Season,,San Antonio Spurs,SAS,Golden State Warriors,GSW,108,109,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447005,NBA,2025-26,2025-11-15T22:00:00Z,Regular Season,,Cleveland Cavaliers,CLE,Memphis Grizzlies,MEM,108,100,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447006,NBA,2025-26,2025-11-16T00:00:00Z,Regular Season,,Charlotte Hornets,CHA,Oklahoma City Thunder,OKC,96,109,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447007,NBA,2025-26,2025-11-16T00:00:00Z,Regular Season,,Indiana Pacers,IND,Toronto Raptors,TOR,111,129,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447008,NBA,2025-26,2025-11-16T01:00:00Z,Regular Season,,Milwaukee Bucks,MIL,Los Angeles Lakers,LAL,95,119,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447009,NBA,2025-26,2025-11-16T01:00:00Z,Regular Season,,Minnesota Timberwolves,MIN,Denver Nuggets,DEN,112,123,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447010,NBA,2025-26,2025-11-16T20:30:00Z,Regular Season,,Boston Celtics,BOS,LA Clippers,LAC,121,118,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447011,NBA,2025-26,2025-11-16T21:00:00Z,Regular Season,,San Antonio Spurs,SAS,Sacramento Kings,SAC,123,110,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447012,NBA,2025-26,2025-11-16T23:00:00Z,Regular Season,,Washington Wizards,WAS,Brooklyn Nets,BKN,106,129,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447013,NBA,2025-26,2025-11-17T00:00:00Z,Regular Season,,Houston Rockets,HOU,Orlando Magic,ORL,117,113,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447014,NBA,2025-26,2025-11-17T00:00:00Z,Regular Season,,New Orleans Pelicans,NOP,Golden State Warriors,GSW,106,124,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447015,NBA,2025-26,2025-11-17T00:30:00Z,Regular Season,,Dallas Mavericks,DAL,Portland Trail Blazers,POR,138,133,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447016,NBA,2025-26,2025-11-17T01:00:00Z,Regular Season,,Phoenix Suns,PHX,Atlanta Hawks,ATL,122,124,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447017,NBA,2025-26,2025-11-17T01:00:00Z,Regular Season,,Utah Jazz,UTA,Chicago Bulls,CHI,150,147,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447018,NBA,2025-26,2025-11-18T00:00:00Z,Regular Season,,Cleveland Cavaliers,CLE,Milwaukee Bucks,MIL,118,106,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447019,NBA,2025-26,2025-11-18T00:00:00Z,Regular Season,,Detroit Pistons,DET,Indiana Pacers,IND,127,112,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447020,NBA,2025-26,2025-11-18T00:00:00Z,Regular Season,,Philadelphia 76ers,PHI,LA Clippers,LAC,110,108,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447021,NBA,2025-26,2025-11-18T00:30:00Z,Regular Season,,Miami Heat,MIA,New York Knicks,NYK,115,113,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447022,NBA,2025-26,2025-11-18T00:30:00Z,Regular Season,,Toronto Raptors,TOR,Charlotte Hornets,CHA,110,108,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447023,NBA,2025-26,2025-11-18T01:00:00Z,Regular Season,,Minnesota Timberwolves,MIN,Dallas Mavericks,DAL,120,96,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447024,NBA,2025-26,2025-11-18T01:00:00Z,Regular Season,,New Orleans Pelicans,NOP,Oklahoma City Thunder,OKC,109,126,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447025,NBA,2025-26,2025-11-18T02:00:00Z,Regular Season,,Denver Nuggets,DEN,Chicago Bulls,CHI,127,130,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447026,NBA,2025-26,2025-11-19T00:00:00Z,Regular Season,,Orlando Magic,ORL,Golden State Warriors,GSW,121,113,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447027,NBA,2025-26,2025-11-19T00:30:00Z,Regular Season,,Brooklyn Nets,BKN,Boston Celtics,BOS,99,113,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447028,NBA,2025-26,2025-11-19T00:30:00Z,Regular Season,,Atlanta Hawks,ATL,Detroit Pistons,DET,112,120,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447029,NBA,2025-26,2025-11-19T01:00:00Z,Regular Season,,San Antonio Spurs,SAS,Memphis Grizzlies,MEM,111,101,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447030,NBA,2025-26,2025-11-19T03:30:00Z,Regular Season,,Los Angeles Lakers,LAL,Utah Jazz,UTA,140,126,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447031,NBA,2025-26,2025-11-19T04:00:00Z,Regular Season,,Portland Trail Blazers,POR,Phoenix Suns,PHX,110,127,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447032,NBA,2025-26,2025-11-20T00:00:00Z,Regular Season,,Cleveland Cavaliers,CLE,Houston Rockets,HOU,104,114,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447033,NBA,2025-26,2025-11-20T00:00:00Z,Regular Season,,Indiana Pacers,IND,Charlotte Hornets,CHA,127,118,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447035,NBA,2025-26,2025-11-20T00:00:00Z,Regular Season,,Philadelphia 76ers,PHI,Toronto Raptors,TOR,112,121,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447034,NBA,2025-26,2025-11-20T00:30:00Z,Regular Season,,Miami Heat,MIA,Golden State Warriors,GSW,110,96,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447036,NBA,2025-26,2025-11-20T01:00:00Z,Regular Season,,Minnesota Timberwolves,MIN,Washington Wizards,WAS,120,109,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447037,NBA,2025-26,2025-11-20T01:00:00Z,Regular Season,,New Orleans Pelicans,NOP,Denver Nuggets,DEN,118,125,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447038,NBA,2025-26,2025-11-20T01:00:00Z,Regular Season,,Oklahoma City Thunder,OKC,Sacramento Kings,SAC,113,99,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447039,NBA,2025-26,2025-11-20T02:30:00Z,Regular Season,,Dallas Mavericks,DAL,New York Knicks,NYK,111,113,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447040,NBA,2025-26,2025-11-20T03:00:00Z,Regular Season,,Portland Trail Blazers,POR,Chicago Bulls,CHI,121,122,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447041,NBA,2025-26,2025-11-21T00:00:00Z,Regular Season,,Orlando Magic,ORL,LA Clippers,LAC,129,101,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447042,NBA,2025-26,2025-11-21T01:00:00Z,Regular Season,,Memphis Grizzlies,MEM,Sacramento Kings,SAC,137,96,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447043,NBA,2025-26,2025-11-21T01:00:00Z,Regular Season,,Milwaukee Bucks,MIL,Philadelphia 76ers,PHI,114,123,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447044,NBA,2025-26,2025-11-21T01:00:00Z,Regular Season,,San Antonio Spurs,SAS,Atlanta Hawks,ATL,135,126,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447045,NBA,2025-26,2025-11-22T00:00:00Z,Regular Season,,Cleveland Cavaliers,CLE,Indiana Pacers,IND,120,109,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447046,NBA,2025-26,2025-11-22T00:30:00Z,Regular Season,,Boston Celtics,BOS,Brooklyn Nets,BKN,105,113,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447047,NBA,2025-26,2025-11-22T00:30:00Z,Regular Season,,Toronto Raptors,TOR,Washington Wizards,WAS,140,110,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447048,NBA,2025-26,2025-11-22T01:00:00Z,Regular Season,,Chicago Bulls,CHI,Miami Heat,MIA,107,143,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447049,NBA,2025-26,2025-11-22T01:30:00Z,Regular Season,,Dallas Mavericks,DAL,New Orleans Pelicans,NOP,118,115,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447050,NBA,2025-26,2025-11-22T02:00:00Z,Regular Season,,Phoenix Suns,PHX,Minnesota Timberwolves,MIN,114,113,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447051,NBA,2025-26,2025-11-22T02:30:00Z,Regular Season,,Houston Rockets,HOU,Denver Nuggets,DEN,109,112,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447052,NBA,2025-26,2025-11-22T03:00:00Z,Regular Season,,Utah Jazz,UTA,Oklahoma City Thunder,OKC,112,144,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447053,NBA,2025-26,2025-11-22T03:00:00Z,Regular Season,,Golden State Warriors,GSW,Portland Trail Blazers,POR,123,127,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447054,NBA,2025-26,2025-11-22T18:00:00Z,Regular Season,,Charlotte Hornets,CHA,LA Clippers,LAC,116,131,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447055,NBA,2025-26,2025-11-22T22:00:00Z,Regular Season,,Orlando Magic,ORL,New York Knicks,NYK,133,121,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447056,NBA,2025-26,2025-11-23T00:00:00Z,Regular Season,,New Orleans Pelicans,NOP,Atlanta Hawks,ATL,98,115,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447057,NBA,2025-26,2025-11-23T01:00:00Z,Regular Season,,Chicago Bulls,CHI,Washington Wizards,WAS,121,120,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447058,NBA,2025-26,2025-11-23T01:00:00Z,Regular Season,,Milwaukee Bucks,MIL,Detroit Pistons,DET,116,129,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447059,NBA,2025-26,2025-11-23T01:30:00Z,Regular Season,,Dallas Mavericks,DAL,Memphis Grizzlies,MEM,96,102,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447060,NBA,2025-26,2025-11-23T03:00:00Z,Regular Season,,Denver Nuggets,DEN,Sacramento Kings,SAC,123,128,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447061,NBA,2025-26,2025-11-23T18:00:00Z,Regular Season,,Philadelphia 76ers,PHI,Miami Heat,MIA,117,127,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447062,NBA,2025-26,2025-11-23T23:00:00Z,Regular Season,,Atlanta Hawks,ATL,Charlotte Hornets,CHA,113,110,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447063,NBA,2025-26,2025-11-23T23:00:00Z,Regular Season,,Boston Celtics,BOS,Orlando Magic,ORL,138,129,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447064,NBA,2025-26,2025-11-23T23:00:00Z,Regular Season,,Cleveland Cavaliers,CLE,LA Clippers,LAC,120,105,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447065,NBA,2025-26,2025-11-23T23:00:00Z,Regular Season,,Toronto Raptors,TOR,Brooklyn Nets,BKN,119,109,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447066,NBA,2025-26,2025-11-24T00:00:00Z,Regular Season,,Oklahoma City Thunder,OKC,Portland Trail Blazers,POR,122,95,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447067,NBA,2025-26,2025-11-24T01:00:00Z,Regular Season,,Phoenix Suns,PHX,San Antonio Spurs,SAS,111,102,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447068,NBA,2025-26,2025-11-24T01:00:00Z,Regular Season,,Utah Jazz,UTA,Los Angeles Lakers,LAL,106,108,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447069,NBA,2025-26,2025-11-25T00:00:00Z,Regular Season,,Indiana Pacers,IND,Detroit Pistons,DET,117,122,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447070,NBA,2025-26,2025-11-25T00:00:00Z,Regular Season,,Toronto Raptors,TOR,Cleveland Cavaliers,CLE,110,99,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447071,NBA,2025-26,2025-11-25T00:30:00Z,Regular Season,,Brooklyn Nets,BKN,New York Knicks,NYK,100,113,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447072,NBA,2025-26,2025-11-25T00:30:00Z,Regular Season,,Miami Heat,MIA,Dallas Mavericks,DAL,106,102,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447073,NBA,2025-26,2025-11-25T01:00:00Z,Regular Season,,Memphis Grizzlies,MEM,Denver Nuggets,DEN,115,125,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447074,NBA,2025-26,2025-11-25T01:00:00Z,Regular Season,,Milwaukee Bucks,MIL,Portland Trail Blazers,POR,103,115,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447075,NBA,2025-26,2025-11-25T01:00:00Z,Regular Season,,New Orleans Pelicans,NOP,Chicago Bulls,CHI,143,130,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447076,NBA,2025-26,2025-11-25T02:30:00Z,Regular Season,,Phoenix Suns,PHX,Houston Rockets,HOU,92,114,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447077,NBA,2025-26,2025-11-25T03:00:00Z,Regular Season,,Golden State Warriors,GSW,Utah Jazz,UTA,134,117,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447078,NBA,2025-26,2025-11-25T03:00:00Z,Regular Season,,Sacramento Kings,SAC,Minnesota Timberwolves,MIN,117,112,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447079,NBA,2025-26,2025-11-26T00:00:00Z,Regular Season,,Washington Wizards,WAS,Atlanta Hawks,ATL,132,113,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447080,NBA,2025-26,2025-11-26T01:00:00Z,Regular Season,,Philadelphia 76ers,PHI,Orlando Magic,ORL,103,144,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447081,NBA,2025-26,2025-11-26T04:00:00Z,Regular Season,,Los Angeles Lakers,LAL,LA Clippers,LAC,135,118,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447082,NBA,2025-26,2025-11-26T22:00:00Z,Regular Season,,Boston Celtics,BOS,Detroit Pistons,DET,117,114,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447083,NBA,2025-26,2025-11-27T00:00:00Z,Regular Season,,Charlotte Hornets,CHA,New York Knicks,NYK,101,129,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447084,NBA,2025-26,2025-11-27T00:30:00Z,Regular Season,,Miami Heat,MIA,Milwaukee Bucks,MIL,106,103,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447085,NBA,2025-26,2025-11-27T00:30:00Z,Regular Season,,Toronto Raptors,TOR,Indiana Pacers,IND,97,95,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447086,NBA,2025-26,2025-11-27T00:30:00Z,Regular Season,,Oklahoma City Thunder,OKC,Minnesota Timberwolves,MIN,113,105,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447087,NBA,2025-26,2025-11-27T01:00:00Z,Regular Season,,New Orleans Pelicans,NOP,Memphis Grizzlies,MEM,128,133,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447088,NBA,2025-26,2025-11-27T03:00:00Z,Regular Season,,Golden State Warriors,GSW,Houston Rockets,HOU,100,104,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447089,NBA,2025-26,2025-11-27T03:00:00Z,Regular Season,,Portland Trail Blazers,POR,San Antonio Spurs,SAS,102,115,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447090,NBA,2025-26,2025-11-27T03:00:00Z,Regular Season,,Sacramento Kings,SAC,Phoenix Suns,PHX,100,112,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447091,NBA,2025-26,2025-11-29T00:30:00Z,Regular Season,,Atlanta Hawks,ATL,Cleveland Cavaliers,CLE,130,123,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447092,NBA,2025-26,2025-11-29T00:30:00Z,Regular Season,,Brooklyn Nets,BKN,Philadelphia 76ers,PHI,103,115,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447093,NBA,2025-26,2025-11-29T00:30:00Z,Regular Season,,Charlotte Hornets,CHA,Chicago Bulls,CHI,123,116,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447094,NBA,2025-26,2025-11-29T00:30:00Z,Regular Season,,Detroit Pistons,DET,Orlando Magic,ORL,109,112,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447095,NBA,2025-26,2025-11-29T00:30:00Z,Regular Season,,Indiana Pacers,IND,Washington Wizards,WAS,119,86,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447096,NBA,2025-26,2025-11-29T00:30:00Z,Regular Season,,New York Knicks,NYK,Milwaukee Bucks,MIL,118,109,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447097,NBA,2025-26,2025-11-29T02:30:00Z,Regular Season,,Oklahoma City Thunder,OKC,Phoenix Suns,PHX,123,119,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447098,NBA,2025-26,2025-11-29T02:30:00Z,Regular Season,,Denver Nuggets,DEN,San Antonio Spurs,SAS,136,139,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447099,NBA,2025-26,2025-11-29T02:30:00Z,Regular Season,,Utah Jazz,UTA,Sacramento Kings,SAC,128,119,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447100,NBA,2025-26,2025-11-29T03:00:00Z,Regular Season,,Los Angeles Lakers,LAL,Dallas Mavericks,DAL,129,119,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447101,NBA,2025-26,2025-11-29T03:00:00Z,Regular Season,,LA Clippers,LAC,Memphis Grizzlies,MEM,107,112,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447102,NBA,2025-26,2025-11-29T22:00:00Z,Regular Season,,Minnesota Timberwolves,MIN,Boston Celtics,BOS,119,115,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447103,NBA,2025-26,2025-11-29T23:00:00Z,Regular Season,,Charlotte Hornets,CHA,Toronto Raptors,TOR,118,111,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447104,NBA,2025-26,2025-11-30T00:30:00Z,Regular Season,,Indiana Pacers,IND,Chicago Bulls,CHI,103,101,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447105,NBA,2025-26,2025-11-30T01:00:00Z,Regular Season,,Miami Heat,MIA,Detroit Pistons,DET,135,138,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447106,NBA,2025-26,2025-11-30T01:00:00Z,Regular Season,,Milwaukee Bucks,MIL,Brooklyn Nets,BKN,116,99,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447107,NBA,2025-26,2025-11-30T01:30:00Z,Regular Season,,Golden State Warriors,GSW,New Orleans Pelicans,NOP,104,96,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447108,NBA,2025-26,2025-11-30T02:00:00Z,Regular Season,,Phoenix Suns,PHX,Denver Nuggets,DEN,112,130,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447109,NBA,2025-26,2025-11-30T03:00:00Z,Regular Season,,LA Clippers,LAC,Dallas Mavericks,DAL,110,114,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447110,NBA,2025-26,2025-11-30T20:00:00Z,Regular Season,,Utah Jazz,UTA,Houston Rockets,HOU,101,129,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447111,NBA,2025-26,2025-11-30T23:00:00Z,Regular Season,,Cleveland Cavaliers,CLE,Boston Celtics,BOS,115,117,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447112,NBA,2025-26,2025-11-30T23:00:00Z,Regular Season,,New York Knicks,NYK,Toronto Raptors,TOR,116,94,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447113,NBA,2025-26,2025-11-30T23:00:00Z,Regular Season,,Philadelphia 76ers,PHI,Atlanta Hawks,ATL,134,142,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447114,NBA,2025-26,2025-11-30T23:00:00Z,Regular Season,,Portland Trail Blazers,POR,Oklahoma City Thunder,OKC,115,123,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447115,NBA,2025-26,2025-12-01T00:00:00Z,Regular Season,,Minnesota Timberwolves,MIN,San Antonio Spurs,SAS,125,112,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447116,NBA,2025-26,2025-12-01T02:00:00Z,Regular Season,,Sacramento Kings,SAC,Memphis Grizzlies,MEM,107,115,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447117,NBA,2025-26,2025-12-01T02:30:00Z,Regular Season,,Los Angeles Lakers,LAL,New Orleans Pelicans,NOP,133,121,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447118,NBA,2025-26,2025-12-02T00:00:00Z,Regular Season,,Detroit Pistons,DET,Atlanta Hawks,ATL,99,98,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447119,NBA,2025-26,2025-12-02T00:00:00Z,Regular Season,,Indiana Pacers,IND,Cleveland Cavaliers,CLE,119,135,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447120,NBA,2025-26,2025-12-02T00:00:00Z,Regular Season,,Washington Wizards,WAS,Milwaukee Bucks,MIL,129,126,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447121,NBA,2025-26,2025-12-02T00:30:00Z,Regular Season,,Brooklyn Nets,BKN,Charlotte Hornets,CHA,116,103,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447122,NBA,2025-26,2025-12-02T00:30:00Z,Regular Season,,Miami Heat,MIA,LA Clippers,LAC,140,123,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447123,NBA,2025-26,2025-12-02T00:30:00Z,Regular Season,,Orlando Magic,ORL,Chicago Bulls,CHI,125,120,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447124,NBA,2025-26,2025-12-02T02:00:00Z,Regular Season,,Denver Nuggets,DEN,Dallas Mavericks,DAL,121,131,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447125,NBA,2025-26,2025-12-02T02:00:00Z,Regular Season,,Utah Jazz,UTA,Houston Rockets,HOU,133,125,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447126,NBA,2025-26,2025-12-02T03:00:00Z,Regular Season,,Los Angeles Lakers,LAL,Phoenix Suns,PHX,108,125,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447127,NBA,2025-26,2025-12-03T00:00:00Z,Regular Season,,Philadelphia 76ers,PHI,Washington Wizards,WAS,121,102,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447128,NBA,2025-26,2025-12-03T00:30:00Z,Regular Season,,Toronto Raptors,TOR,Portland Trail Blazers,POR,121,118,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447129,NBA,2025-26,2025-12-03T01:00:00Z,Regular Season,,Boston Celtics,BOS,New York Knicks,NYK,123,117,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447130,NBA,2025-26,2025-12-03T01:00:00Z,Regular Season,,New Orleans Pelicans,NOP,Minnesota Timberwolves,MIN,142,149,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447131,NBA,2025-26,2025-12-03T01:00:00Z,Regular Season,,San Antonio Spurs,SAS,Memphis Grizzlies,MEM,126,119,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447132,NBA,2025-26,2025-12-03T04:00:00Z,Regular Season,,Golden State Warriors,GSW,Oklahoma City Thunder,OKC,112,124,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447133,NBA,2025-26,2025-12-04T00:00:00Z,Regular Season,,Cleveland Cavaliers,CLE,Portland Trail Blazers,POR,110,122,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447134,NBA,2025-26,2025-12-04T00:00:00Z,Regular Season,,Indiana Pacers,IND,Denver Nuggets,DEN,120,135,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447135,NBA,2025-26,2025-12-04T00:00:00Z,Regular Season,,Orlando Magic,ORL,San Antonio Spurs,SAS,112,114,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447136,NBA,2025-26,2025-12-04T00:30:00Z,Regular Season,,Atlanta Hawks,ATL,LA Clippers,LAC,92,115,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447137,NBA,2025-26,2025-12-04T00:30:00Z,Regular Season,,New York Knicks,NYK,Charlotte Hornets,CHA,119,104,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447138,NBA,2025-26,2025-12-04T01:00:00Z,Regular Season,,Chicago Bulls,CHI,Brooklyn Nets,BKN,103,113,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447139,NBA,2025-26,2025-12-04T01:00:00Z,Regular Season,,Houston Rockets,HOU,Sacramento Kings,SAC,121,95,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447140,NBA,2025-26,2025-12-04T01:00:00Z,Regular Season,,Milwaukee Bucks,MIL,Detroit Pistons,DET,113,109,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447141,NBA,2025-26,2025-12-04T01:30:00Z,Regular Season,,Dallas Mavericks,DAL,Miami Heat,MIA,118,108,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447142,NBA,2025-26,2025-12-05T00:00:00Z,Regular Season,,Philadelphia 76ers,PHI,Golden State Warriors,GSW,99,98,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447143,NBA,2025-26,2025-12-05T00:00:00Z,Regular Season,,Washington Wizards,WAS,Boston Celtics,BOS,101,146,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447144,NBA,2025-26,2025-12-05T00:30:00Z,Regular Season,,Brooklyn Nets,BKN,Utah Jazz,UTA,110,123,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447145,NBA,2025-26,2025-12-05T00:30:00Z,Regular Season,,Toronto Raptors,TOR,Los Angeles Lakers,LAL,120,123,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447146,NBA,2025-26,2025-12-05T01:00:00Z,Regular Season,,New Orleans Pelicans,NOP,Minnesota Timberwolves,MIN,116,125,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447147,NBA,2025-26,2025-12-06T00:00:00Z,Regular Season,,Boston Celtics,BOS,Los Angeles Lakers,LAL,126,105,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447148,NBA,2025-26,2025-12-06T00:00:00Z,Regular Season,,Orlando Magic,ORL,Miami Heat,MIA,106,105,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447149,NBA,2025-26,2025-12-06T00:30:00Z,Regular Season,,Atlanta Hawks,ATL,Denver Nuggets,DEN,133,134,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447150,NBA,2025-26,2025-12-06T00:30:00Z,Regular Season,,Cleveland Cavaliers,CLE,San Antonio Spurs,SAS,130,117,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447151,NBA,2025-26,2025-12-06T00:30:00Z,Regular Season,,Detroit Pistons,DET,Portland Trail Blazers,POR,122,116,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447152,NBA,2025-26,2025-12-06T00:30:00Z,Regular Season,,New York Knicks,NYK,Utah Jazz,UTA,146,112,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447153,NBA,2025-26,2025-12-06T00:30:00Z,Regular Season,,Toronto Raptors,TOR,Charlotte Hornets,CHA,86,111,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447154,NBA,2025-26,2025-12-06T01:00:00Z,Regular Season,,Chicago Bulls,CHI,Indiana Pacers,IND,105,120,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447155,NBA,2025-26,2025-12-06T01:00:00Z,Regular Season,,Houston Rockets,HOU,Phoenix Suns,PHX,117,98,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447156,NBA,2025-26,2025-12-06T01:00:00Z,Regular Season,,Memphis Grizzlies,MEM,LA Clippers,LAC,107,98,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447157,NBA,2025-26,2025-12-06T01:00:00Z,Regular Season,,Milwaukee Bucks,MIL,Philadelphia 76ers,PHI,101,116,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447158,NBA,2025-26,2025-12-06T02:30:00Z,Regular Season,,Oklahoma City Thunder,OKC,Dallas Mavericks,DAL,132,111,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447159,NBA,2025-26,2025-12-06T22:00:00Z,Regular Season,,Brooklyn Nets,BKN,New Orleans Pelicans,NOP,119,101,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447160,NBA,2025-26,2025-12-07T00:00:00Z,Regular Season,,Washington Wizards,WAS,Atlanta Hawks,ATL,116,131,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447161,NBA,2025-26,2025-12-07T00:30:00Z,Regular Season,,Cleveland Cavaliers,CLE,Golden State Warriors,GSW,94,99,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447162,NBA,2025-26,2025-12-07T00:30:00Z,Regular Season,,Detroit Pistons,DET,Milwaukee Bucks,MIL,124,112,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447163,NBA,2025-26,2025-12-07T01:00:00Z,Regular Season,,Miami Heat,MIA,Sacramento Kings,SAC,111,127,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447164,NBA,2025-26,2025-12-07T01:00:00Z,Regular Season,,Minnesota Timberwolves,MIN,LA Clippers,LAC,109,106,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447165,NBA,2025-26,2025-12-07T01:30:00Z,Regular Season,,Dallas Mavericks,DAL,Houston Rockets,HOU,122,109,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447166,NBA,2025-26,2025-12-07T17:00:00Z,Regular Season,,New York Knicks,NYK,Orlando Magic,ORL,106,100,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447167,NBA,2025-26,2025-12-07T20:30:00Z,Regular Season,,Toronto Raptors,TOR,Boston Celtics,BOS,113,121,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447168,NBA,2025-26,2025-12-07T23:00:00Z,Regular Season,,Charlotte Hornets,CHA,Denver Nuggets,DEN,106,115,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447169,NBA,2025-26,2025-12-07T23:00:00Z,Regular Season,,Memphis Grizzlies,MEM,Portland Trail Blazers,POR,119,96,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447170,NBA,2025-26,2025-12-08T00:00:00Z,Regular Season,,Chicago Bulls,CHI,Golden State Warriors,GSW,91,123,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447171,NBA,2025-26,2025-12-08T00:30:00Z,Regular Season,,Philadelphia 76ers,PHI,Los Angeles Lakers,LAL,108,112,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447172,NBA,2025-26,2025-12-08T01:00:00Z,Regular Season,,Utah Jazz,UTA,Oklahoma City Thunder,OKC,101,131,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447173,NBA,2025-26,2025-12-09T00:00:00Z,Regular Season,,Indiana Pacers,IND,Sacramento Kings,SAC,116,105,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447174,NBA,2025-26,2025-12-09T00:30:00Z,Regular Season,,Minnesota Timberwolves,MIN,Phoenix Suns,PHX,105,108,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447175,NBA,2025-26,2025-12-09T01:00:00Z,Regular Season,,New Orleans Pelicans,NOP,San Antonio Spurs,SAS,132,135,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-20054033,NBA,2025-26,2025-12-09T23:00:00Z,Regular Season,,Orlando Magic,ORL,Miami Heat,MIA,117,108,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-20054034,NBA,2025-26,2025-12-10T01:30:00Z,Regular Season,,Toronto Raptors,TOR,New York Knicks,NYK,101,117,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-20054035,NBA,2025-26,2025-12-11T00:30:00Z,Regular Season,,Oklahoma City Thunder,OKC,Phoenix Suns,PHX,138,89,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-20054036,NBA,2025-26,2025-12-11T03:00:00Z,Regular Season,,Los Angeles Lakers,LAL,San Antonio Spurs,SAS,119,132,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-20054958,NBA,2025-26,2025-12-12T01:00:00Z,Regular Season,,Houston Rockets,HOU,LA Clippers,LAC,115,113,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-20054959,NBA,2025-26,2025-12-12T01:00:00Z,Regular Season,,Milwaukee Bucks,MIL,Boston Celtics,BOS,116,101,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-20054960,NBA,2025-26,2025-12-12T01:00:00Z,Regular Season,,New Orleans Pelicans,NOP,Portland Trail Blazers,POR,143,120,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-20054961,NBA,2025-26,2025-12-12T03:00:00Z,Regular Season,,Sacramento Kings,SAC,Denver Nuggets,DEN,105,136,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-20054962,NBA,2025-26,2025-12-13T00:00:00Z,Regular Season,,Charlotte Hornets,CHA,Chicago Bulls,CHI,126,129,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-20054963,NBA,2025-26,2025-12-13T00:00:00Z,Regular Season,,Detroit Pistons,DET,Atlanta Hawks,ATL,142,115,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-20054964,NBA,2025-26,2025-12-13T00:00:00Z,Regular Season,,Philadelphia 76ers,PHI,Indiana Pacers,IND,115,105,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-20054965,NBA,2025-26,2025-12-13T00:00:00Z,Regular Season,,Washington Wizards,WAS,Cleveland Cavaliers,CLE,126,130,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-20054966,NBA,2025-26,2025-12-13T01:00:00Z,Regular Season,,Memphis Grizzlies,MEM,Utah Jazz,UTA,126,130,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-20054967,NBA,2025-26,2025-12-13T01:30:00Z,Regular Season,,Dallas Mavericks,DAL,Brooklyn Nets,BKN,119,111,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-20054968,NBA,2025-26,2025-12-13T03:00:00Z,Regular Season,,Golden State Warriors,GSW,Minnesota Timberwolves,MIN,120,127,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-20290668,NBA,2025-26,2025-12-13T22:30:00Z,Regular Season,,Orlando Magic,ORL,New York Knicks,NYK,120,132,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-20314126,NBA,2025-26,2025-12-14T02:00:00Z,Regular Season,,Oklahoma City Thunder,OKC,San Antonio Spurs,SAS,109,111,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-20054969,NBA,2025-26,2025-12-14T20:00:00Z,Regular Season,,Indiana Pacers,IND,Washington Wizards,WAS,89,108,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-20054971,NBA,2025-26,2025-12-14T20:30:00Z,Regular Season,,Cleveland Cavaliers,CLE,Charlotte Hornets,CHA,111,119,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-20054970,NBA,2025-26,2025-12-14T23:00:00Z,Regular Season,,Atlanta Hawks,ATL,Philadelphia 76ers,PHI,120,117,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-20054972,NBA,2025-26,2025-12-14T23:00:00Z,Regular Season,,Brooklyn Nets,BKN,Milwaukee Bucks,MIL,127,82,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-20054973,NBA,2025-26,2025-12-15T00:00:00Z,Regular Season,,Minnesota Timberwolves,MIN,Sacramento Kings,SAC,117,103,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-20054976,NBA,2025-26,2025-12-15T00:00:00Z,Regular Season,,Chicago Bulls,CHI,New Orleans Pelicans,NOP,104,114,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-20314134,NBA,2025-26,2025-12-15T01:00:00Z,Regular Season,,Phoenix Suns,PHX,Los Angeles Lakers,LAL,114,116,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-20054974,NBA,2025-26,2025-12-15T02:00:00Z,Regular Season,,Portland Trail Blazers,POR,Golden State Warriors,GSW,136,131,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-20054975,NBA,2025-26,2025-12-16T00:00:00Z,Regular Season,,Boston Celtics,BOS,Detroit Pistons,DET,105,112,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-20290680,NBA,2025-26,2025-12-16T00:30:00Z,Regular Season,,Miami Heat,MIA,Toronto Raptors,TOR,96,106,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-20054977,NBA,2025-26,2025-12-16T02:00:00Z,Regular Season,,Utah Jazz,UTA,Dallas Mavericks,DAL,140,133,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-20054978,NBA,2025-26,2025-12-16T02:30:00Z,Regular Season,,Denver Nuggets,DEN,Houston Rockets,HOU,128,125,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-20054979,NBA,2025-26,2025-12-16T03:30:00Z,Regular Season,,LA Clippers,LAC,Memphis Grizzlies,MEM,103,121,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-20377171,NBA,2025-26,2025-12-17T01:30:00Z,Regular Season,,New York Knicks,NYK,San Antonio Spurs,SAS,124,113,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447176,NBA,2025-26,2025-12-18T01:00:00Z,Regular Season,,Chicago Bulls,CHI,Cleveland Cavaliers,CLE,127,111,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447177,NBA,2025-26,2025-12-18T01:00:00Z,Regular Season,,Minnesota Timberwolves,MIN,Memphis Grizzlies,MEM,110,116,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447180,NBA,2025-26,2025-12-19T00:00:00Z,Regular Season,,Charlotte Hornets,CHA,Atlanta Hawks,ATL,133,126,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447181,NBA,2025-26,2025-12-19T00:00:00Z,Regular Season,,Indiana Pacers,IND,New York Knicks,NYK,113,114,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447182,NBA,2025-26,2025-12-19T00:30:00Z,Regular Season,,Brooklyn Nets,BKN,Miami Heat,MIA,95,106,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447178,NBA,2025-26,2025-12-19T01:00:00Z,Regular Season,,Oklahoma City Thunder,OKC,LA Clippers,LAC,122,101,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447179,NBA,2025-26,2025-12-19T01:00:00Z,Regular Season,,San Antonio Spurs,SAS,Washington Wizards,WAS,119,94,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447183,NBA,2025-26,2025-12-19T01:00:00Z,Regular Season,,Milwaukee Bucks,MIL,Toronto Raptors,TOR,105,111,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447184,NBA,2025-26,2025-12-19T01:00:00Z,Regular Season,,New Orleans Pelicans,NOP,Houston Rockets,HOU,133,128,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447185,NBA,2025-26,2025-12-19T01:30:00Z,Regular Season,,Dallas Mavericks,DAL,Detroit Pistons,DET,116,114,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447186,NBA,2025-26,2025-12-19T02:00:00Z,Regular Season,,Denver Nuggets,DEN,Orlando Magic,ORL,126,115,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nba-18447187,NBA,2025-26,2025-12-19T02:00:00Z,Regular Season,,Phoenix Suns,PHX,Golden State Warriors,GSW,99,98,FINISHED,balldontlie,2026-08-23T20:56:09+00:00

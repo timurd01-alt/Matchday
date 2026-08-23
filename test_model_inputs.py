@@ -376,8 +376,12 @@ class ModelInputTests(unittest.TestCase):
                       "upset": {"score": 75}, "totals": {"pick": "over"},
                       "neutral_venue_probs": {"h": 40, "d": 0, "a": 60}}
 
-        fetch_data._set_prediction_publication_state(match, prediction)
-        decision = fetch_data._lock_decision(match, now)
+        # Pin the gate: these assert pause *behaviour*, which must keep working
+        # as the rollback path no matter what the committed policy says.
+        with mock.patch.object(fetch_data, "_mlb_forecast_publication_paused",
+                               return_value=True):
+            fetch_data._set_prediction_publication_state(match, prediction)
+            decision = fetch_data._lock_decision(match, now)
 
         self.assertEqual(decision["state"], "wait")
         self.assertEqual(decision["reason"], "mlb_official_forecasts_paused")
@@ -386,12 +390,29 @@ class ModelInputTests(unittest.TestCase):
         self.assertTrue(prediction["research_shadow_available"])
         self.assertEqual(
             prediction["publication_message"],
-            "MLB forecasts paused while calibration and starting-pitcher coverage are being fixed.")
+            "MLB picks are on hold while starting-pitcher coverage clears review.")
         for key in ("pick", "confidence", "model", "adjusted", "edge",
                     "predicted_margin", "upset", "totals", "neutral_venue_probs"):
             self.assertNotIn(key, prediction)
         self.assertNotIn("watchability", match)
         self.assertEqual(match["mlb_challenger_shadow"], {"home_win_probability": 0.61})
+
+    def test_eligible_gate_publishes_upcoming_mlb_normally(self):
+        # The committed policy takes the incumbent route, so an upcoming MLB
+        # fixture reaches a normal publication state rather than the shell.
+        match = {"_comp": "MLB", "status": "UPCOMING",
+                 "kickoff": "2026-07-24T14:00:00Z",
+                 "pregame_context": {"phase": "lock_window"},
+                 "watchability": 88}
+        prediction = {"pick": "a", "confidence": 77,
+                      "adjusted": {"h": 23, "d": 0, "a": 77}}
+
+        fetch_data._set_prediction_publication_state(match, prediction)
+
+        self.assertNotEqual(prediction["publication_state"], "paused")
+        self.assertEqual(prediction["pick"], "a")
+        self.assertEqual(prediction["confidence"], 77)
+        self.assertEqual(match["watchability"], 88)
 
     def test_paused_upcoming_mlb_does_not_create_pick_log_entry(self):
         now = fetch_data.datetime.datetime.now(fetch_data.datetime.timezone.utc)
@@ -401,6 +422,8 @@ class ModelInputTests(unittest.TestCase):
                  "markets": {}, "prediction": {"pick": "h", "confidence": 70}}
         picks = {}
         with mock.patch.object(fetch_data, "_load_picks", return_value=picks), \
+             mock.patch.object(fetch_data, "_mlb_forecast_publication_paused",
+                               return_value=True), \
              mock.patch.object(fetch_data, "_save_picks") as save:
             fetch_data.update_scorecard([match])
         self.assertEqual(picks, {})
@@ -440,7 +463,10 @@ class ModelInputTests(unittest.TestCase):
             fetch_data.apply_locked_picks([match])
         self.assertEqual(match["prediction"]["publication_state"], "locked")
 
-        self.assertEqual(fetch_data._enforce_mlb_pause_after_locked_picks([match]), 1)
+        with mock.patch.object(fetch_data, "_mlb_forecast_publication_paused",
+                               return_value=True):
+            self.assertEqual(
+                fetch_data._enforce_mlb_pause_after_locked_picks([match]), 1)
 
         self.assertEqual(match["prediction"]["publication_state"], "paused")
         self.assertNotIn("pick", match["prediction"])
@@ -1701,6 +1727,19 @@ class ProStandingsFormattingTests(unittest.TestCase):
         self.assertEqual(
             division_positions,
             {t["name"]: t["pos"] for g in payload[:-1] for t in g["teams"]})
+
+    def test_matchday_top_25_is_model_sorted_and_separate_from_poll(self):
+        tables = [{"group": "Conference", "teams": [
+            {"name": "Model One", "rating": 8.4, "record": "8-1"},
+            {"name": "AP Number One", "rating": 7.1, "record": "9-0"},
+            {"name": "Model Two", "rating": 7.9, "record": "7-2"},
+        ]}]
+        table = fetch_data._matchday_top_25(tables)
+        self.assertEqual(table["group"], "Matchday Top 25")
+        self.assertEqual(table["table_type"], "matchday_top_25")
+        self.assertEqual([team["name"] for team in table["teams"]],
+                         ["Model One", "Model Two", "AP Number One"])
+        self.assertEqual([team["pos"] for team in table["teams"]], [1, 2, 3])
 
     def test_placeholder_teams_are_not_rendered_as_a_real_division(self):
         tables = self._flat_table("MLB")

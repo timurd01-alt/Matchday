@@ -15,7 +15,7 @@ from typing import Any
 
 POLICY_PATH = Path(__file__).with_name("mlb_recovery_policy.json")
 PAUSE_MESSAGE = (
-    "MLB forecasts paused while calibration and starting-pitcher coverage are being fixed."
+    "MLB picks are on hold while starting-pitcher coverage clears review."
 )
 
 
@@ -41,7 +41,8 @@ def _review_passed(value: Any, root: Path) -> bool:
     ).lower()
 
 
-def publication_decision(path: str | Path = POLICY_PATH) -> dict[str, Any]:
+def publication_decision(path: str | Path = POLICY_PATH,
+                         incumbent: tuple[str, Any] | None = None) -> dict[str, Any]:
     """Return canonical eligibility; every malformed/incomplete state pauses."""
     source = Path(path).resolve()
     root = source.parent
@@ -61,21 +62,56 @@ def publication_decision(path: str | Path = POLICY_PATH) -> dict[str, Any]:
     if payload.get("status") != "approved" or payload.get("publication_approved") is not True:
         reasons.append("publication_not_approved")
     model_review_ok = _review_passed(model.get("manual_review"), root)
+    # The model gate has two routes, mirroring the personnel gate below.
+    #
+    # The challenger route promotes a new signal into production and must carry
+    # the hash-bound §2 promotion policy, whose 500-paired-game bar exists to
+    # stop an unproven signal from moving forecasts.
+    #
+    # The incumbent route publishes the already-deployed model at zero
+    # challenger weight. Nothing is being promoted there, so §2's bar has
+    # nothing to bind to: applying it anyway would withhold the incumbent's
+    # forecasts -- the very baseline the challenger is measured against -- while
+    # waiting for evidence about a signal that carries no weight.
+    #
+    # Fail closed in both directions: a missing, malformed, or non-boolean flag
+    # is treated as a challenger promotion; the incumbent route still needs its
+    # own signed, hash-bound review of the published model's measured evidence;
+    # and it is contradicted outright if anything is approved for production
+    # weight while it is in use.
+    challenger_weighted = model.get("challenger_weighted") is not False
     promotion_ok = False
-    promotion_path = (root / str(model.get("promotion_policy") or "")).resolve()
-    if promotion_path.parent == root and promotion_path.is_file():
+    if challenger_weighted:
+        promotion_path = (root / str(model.get("promotion_policy") or "")).resolve()
+        if promotion_path.parent == root and promotion_path.is_file():
+            try:
+                from mlb_model_promotion import load_mlb_promotion_policy
+                approved_promotion = load_mlb_promotion_policy(promotion_path)
+                promotion_ok = bool(
+                    approved_promotion
+                    and approved_promotion.get("verified_report_sha256")
+                    == str((model.get("manual_review") or {}).get("evidence_sha256") or "").lower()
+                )
+            except (OSError, ValueError, TypeError):
+                promotion_ok = False
+    else:
+        if model.get("promotion_policy"):
+            reasons.append("challenger_zero_weight_contradicted_by_promotion")
         try:
             from mlb_model_promotion import load_mlb_promotion_policy
-            approved_promotion = load_mlb_promotion_policy(promotion_path)
-            promotion_ok = bool(
-                approved_promotion
-                and approved_promotion.get("verified_report_sha256")
-                == str((model.get("manual_review") or {}).get("evidence_sha256") or "").lower()
-            )
+            promotion_ok = load_mlb_promotion_policy(root / "mlb_model_promotion.json") is None
         except (OSError, ValueError, TypeError):
             promotion_ok = False
     if model.get("status") != "approved" or not model_review_ok or not promotion_ok:
         reasons.append("model_evidence_not_approved")
+    # The approval names the exact published artifact it reviewed. If the
+    # incumbent later changes version or signal schema, the approval no longer
+    # covers what would ship, and publication returns to paused until reviewed.
+    if incumbent is not None:
+        approved_incumbent = (str(model.get("incumbent_model_version") or ""),
+                              model.get("incumbent_model_signal_schema"))
+        if approved_incumbent != (str(incumbent[0]), incumbent[1]):
+            reasons.append("incumbent_artifact_not_the_reviewed_one")
     # The personnel gate exists to stop unverified starter data from reaching a
     # forecast. It was originally evaluated unconditionally, which meant a
     # published model that consumes NO personnel feature was still blocked on a
@@ -137,8 +173,10 @@ def publication_decision(path: str | Path = POLICY_PATH) -> dict[str, Any]:
         "model_gate_status": model.get("status") or "missing",
         "personnel_gate_status": personnel.get("status") or "missing",
         "personnel_features_weighted": personnel_weighted,
+        "model_challenger_weighted": challenger_weighted,
     }
 
 
-def publication_eligible(path: str | Path = POLICY_PATH) -> bool:
-    return publication_decision(path)["official_publication_eligible"] is True
+def publication_eligible(path: str | Path = POLICY_PATH,
+                         incumbent: tuple[str, Any] | None = None) -> bool:
+    return publication_decision(path, incumbent)["official_publication_eligible"] is True

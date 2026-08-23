@@ -72,7 +72,7 @@ const FIXTURE_PAGE_SIZE=40;
 // row is denser reading than a match card.
 const MODEL_PAGE_SIZE=25;
 let MATCH_VISIBLE=FIXTURE_PAGE_SIZE,RESULT_VISIBLE=FIXTURE_PAGE_SIZE,MODEL_VISIBLE=MODEL_PAGE_SIZE;
-const MLB_FORECAST_PAUSE_MESSAGE='MLB forecasts paused while calibration and starting-pitcher coverage are being fixed.';
+const MLB_FORECAST_PAUSE_MESSAGE='MLB picks are on hold while starting-pitcher coverage clears review.';
 
 function forecastPublicationState(payload,match){
   const value=x=>typeof x==='string'?x:(x&&typeof x==='object'?(x.state||x.status||x.publication_state):'');
@@ -107,7 +107,10 @@ function applyForecastPublicationPauses(payload){
   return payload;
 }
 function forecastPauseHTML(match){
-  return isMlbForecastPaused(match)?`<div class="emptyForecast forecastPaused"><b>Forecast paused</b><span>${esc(MLB_FORECAST_PAUSE_MESSAGE)}</span></div>`:'';
+  // Two inline children with no rule of their own rendered as one run-on line
+  // ("Forecast pausedPicks are on hold..."). Block them out and give the notice
+  // the same warn treatment the top-of-view banner already uses.
+  return isMlbForecastPaused(match)?`<div class="emptyForecast forecastPaused" role="status"><b>Forecast paused</b><span>${esc(MLB_FORECAST_PAUSE_MESSAGE)}</span><em>Live scores, results and market odds are unaffected.</em></div>`:'';
 }
 
 // Providers can keep the season that just ended until the next schedule

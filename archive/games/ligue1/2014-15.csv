@@ -1,0 +1,381 @@
+game_id,comp,season,date_utc,stage,venue,home_name,home_code,away_name,away_code,home_score,away_score,status,source,first_seen
+ligue1-openfootball-3b254eaf299dbcd026454e21,LIGUE1,2014-15,2014-08-08T12:00:00Z,Matchday 1,,Stade de Reims,,Paris Saint-Germain,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-282260a307abfa56eb7c7118,LIGUE1,2014-15,2014-08-09T12:00:00Z,Matchday 1,,EA Guingamp,,AS Saint-Étienne,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-2936917a260106234f017377,LIGUE1,2014-15,2014-08-09T12:00:00Z,Matchday 1,,Lille OSC,,FC Metz,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-6fc9f36028e76ccae9448198,LIGUE1,2014-15,2014-08-09T12:00:00Z,Matchday 1,,FC Nantes,,RC Lens,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-8c673c99c7ff2dd1089e1f03,LIGUE1,2014-15,2014-08-09T12:00:00Z,Matchday 1,,SC Bastia,,Olympique Marseille,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-9512b55b3a8c2ec231e92482,LIGUE1,2014-15,2014-08-09T12:00:00Z,Matchday 1,,Évian Thonon Gaillard,,SM Caen,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c819d4104b6b7cb534c6eda7,LIGUE1,2014-15,2014-08-09T12:00:00Z,Matchday 1,,OGC Nice,,Toulouse FC,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-e4ff7b2c1cfebe0eeb82ebe6,LIGUE1,2014-15,2014-08-09T12:00:00Z,Matchday 1,,Montpellier HSC,,Girondins Bordeaux,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-581463f8cd9172fa15ea819f,LIGUE1,2014-15,2014-08-10T12:00:00Z,Matchday 1,,AS Monaco,,FC Lorient,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-f44ae0c68b80223054bed6f7,LIGUE1,2014-15,2014-08-10T12:00:00Z,Matchday 1,,Olympique Lyonnais,,Stade Rennais,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-11b6538300e316d623373172,LIGUE1,2014-15,2014-08-15T12:00:00Z,Matchday 2,,SM Caen,,Lille OSC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-2208c4e59180053990c2abfc,LIGUE1,2014-15,2014-08-16T12:00:00Z,Matchday 2,,FC Lorient,,OGC Nice,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-36c471b71a2093e482d34f75,LIGUE1,2014-15,2014-08-16T12:00:00Z,Matchday 2,,Paris Saint-Germain,,SC Bastia,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-5c1c1697cf0ff0186c128d5a,LIGUE1,2014-15,2014-08-16T12:00:00Z,Matchday 2,,RC Lens,,EA Guingamp,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-6abd5544f0ce44f59f3e52e6,LIGUE1,2014-15,2014-08-16T12:00:00Z,Matchday 2,,Stade Rennais,,Évian Thonon Gaillard,,6,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-9c3a8ccdefa7b50ca3c4dea1,LIGUE1,2014-15,2014-08-16T12:00:00Z,Matchday 2,,FC Metz,,FC Nantes,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-cde7f273babebd66c2654bb4,LIGUE1,2014-15,2014-08-16T12:00:00Z,Matchday 2,,Toulouse FC,,Olympique Lyonnais,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-085bdded24b2b720f679803a,LIGUE1,2014-15,2014-08-17T12:00:00Z,Matchday 2,,Olympique Marseille,,Montpellier HSC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-4473b8f735050d5bac0ea2c0,LIGUE1,2014-15,2014-08-17T12:00:00Z,Matchday 2,,Girondins Bordeaux,,AS Monaco,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-860215ec193d036a3240c099,LIGUE1,2014-15,2014-08-17T12:00:00Z,Matchday 2,,AS Saint-Étienne,,Stade de Reims,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-87e584dbb8e22ca3c82d87b4,LIGUE1,2014-15,2014-08-22T12:00:00Z,Matchday 3,,Évian Thonon Gaillard,,Paris Saint-Germain,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-0e142d02aebf3718bf3133df,LIGUE1,2014-15,2014-08-23T12:00:00Z,Matchday 3,,Montpellier HSC,,FC Metz,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-39c69e6a2ddbd7d950b2ec31,LIGUE1,2014-15,2014-08-23T12:00:00Z,Matchday 3,,Stade de Reims,,SM Caen,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-5a0ee70e54c8ee708476cdb5,LIGUE1,2014-15,2014-08-23T12:00:00Z,Matchday 3,,Lille OSC,,FC Lorient,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-7aa58a762db0e27b8a39e968,LIGUE1,2014-15,2014-08-23T12:00:00Z,Matchday 3,,EA Guingamp,,Olympique Marseille,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-84fc015e7f1bd82c65c2901d,LIGUE1,2014-15,2014-08-23T12:00:00Z,Matchday 3,,OGC Nice,,Girondins Bordeaux,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-8d99ae7c04e7b6e0461acb5e,LIGUE1,2014-15,2014-08-23T12:00:00Z,Matchday 3,,SC Bastia,,Toulouse FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-663a69a4666b93fa1c6736d1,LIGUE1,2014-15,2014-08-24T12:00:00Z,Matchday 3,,AS Saint-Étienne,,Stade Rennais,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-e9b47b3e6eb52e90bc604106,LIGUE1,2014-15,2014-08-24T12:00:00Z,Matchday 3,,FC Nantes,,AS Monaco,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-fbada7acfec49e8723e238c8,LIGUE1,2014-15,2014-08-24T12:00:00Z,Matchday 3,,Olympique Lyonnais,,RC Lens,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-efba61feb4d2d469acdd447e,LIGUE1,2014-15,2014-08-29T12:00:00Z,Matchday 4,,Olympique Marseille,,OGC Nice,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-82575375cf8919957606030a,LIGUE1,2014-15,2014-08-30T12:00:00Z,Matchday 4,,AS Monaco,,Lille OSC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-88f3472151ee758e51a544e9,LIGUE1,2014-15,2014-08-30T12:00:00Z,Matchday 4,,SM Caen,,Stade Rennais,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a769cc9ba1b838ad9892aa60,LIGUE1,2014-15,2014-08-30T12:00:00Z,Matchday 4,,RC Lens,,Stade de Reims,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-cc7b78bdbc03868fa3023164,LIGUE1,2014-15,2014-08-30T12:00:00Z,Matchday 4,,Toulouse FC,,Évian Thonon Gaillard,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-e6acf7cbc8d413f43be147dd,LIGUE1,2014-15,2014-08-30T12:00:00Z,Matchday 4,,FC Lorient,,EA Guingamp,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-ee7b8659905cb123f0bc6878,LIGUE1,2014-15,2014-08-30T12:00:00Z,Matchday 4,,FC Nantes,,Montpellier HSC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-001ffeab8b7fb47b018105b8,LIGUE1,2014-15,2014-08-31T12:00:00Z,Matchday 4,,Girondins Bordeaux,,SC Bastia,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-60da696d1ee24372325999e2,LIGUE1,2014-15,2014-08-31T12:00:00Z,Matchday 4,,Paris Saint-Germain,,AS Saint-Étienne,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-99833a705d362dfc84f9c35e,LIGUE1,2014-15,2014-08-31T12:00:00Z,Matchday 4,,FC Metz,,Olympique Lyonnais,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-5f7bf1427043f195d10145c3,LIGUE1,2014-15,2014-09-12T12:00:00Z,Matchday 5,,Olympique Lyonnais,,AS Monaco,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-48d73584d3f2f6f938adf444,LIGUE1,2014-15,2014-09-13T12:00:00Z,Matchday 5,,SC Bastia,,RC Lens,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-52eb30ae636cae646fb8075f,LIGUE1,2014-15,2014-09-13T12:00:00Z,Matchday 5,,AS Saint-Étienne,,SM Caen,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-7b8420a9b4570684881b4192,LIGUE1,2014-15,2014-09-13T12:00:00Z,Matchday 5,,Montpellier HSC,,FC Lorient,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-abb499978fa70cb6fdfa96be,LIGUE1,2014-15,2014-09-13T12:00:00Z,Matchday 5,,Stade Rennais,,Paris Saint-Germain,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-dcb08d00bf638f68f6f71464,LIGUE1,2014-15,2014-09-13T12:00:00Z,Matchday 5,,Stade de Reims,,Toulouse FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-e1f41e2bfc9d8b5da3129a65,LIGUE1,2014-15,2014-09-13T12:00:00Z,Matchday 5,,OGC Nice,,FC Metz,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-1cc37716accb9be95c508968,LIGUE1,2014-15,2014-09-14T12:00:00Z,Matchday 5,,EA Guingamp,,Girondins Bordeaux,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-50fcd22200751042742ee6b7,LIGUE1,2014-15,2014-09-14T12:00:00Z,Matchday 5,,Évian Thonon Gaillard,,Olympique Marseille,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-6d2fb68c676a710adc2c96f1,LIGUE1,2014-15,2014-09-14T12:00:00Z,Matchday 5,,Lille OSC,,FC Nantes,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-0e65d02904cdf31a73396917,LIGUE1,2014-15,2014-09-19T12:00:00Z,Matchday 6,,Girondins Bordeaux,,Évian Thonon Gaillard,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-04baaab91dccec2f885fd6b1,LIGUE1,2014-15,2014-09-20T12:00:00Z,Matchday 6,,Toulouse FC,,SM Caen,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-51344f2d406275f0da565dda,LIGUE1,2014-15,2014-09-20T12:00:00Z,Matchday 6,,Olympique Marseille,,Stade Rennais,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-7466eec971e0ba69a4680271,LIGUE1,2014-15,2014-09-20T12:00:00Z,Matchday 6,,FC Nantes,,OGC Nice,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-9c63cc9cb8a00e3b6a427dd6,LIGUE1,2014-15,2014-09-20T12:00:00Z,Matchday 6,,FC Metz,,SC Bastia,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a847943736ebd53caa08ccd7,LIGUE1,2014-15,2014-09-20T12:00:00Z,Matchday 6,,FC Lorient,,Stade de Reims,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-2907a8604cdb16bea0b9c188,LIGUE1,2014-15,2014-09-21T12:00:00Z,Matchday 6,,AS Monaco,,EA Guingamp,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-2e3edf0a3329fd7423990097,LIGUE1,2014-15,2014-09-21T12:00:00Z,Matchday 6,,Paris Saint-Germain,,Olympique Lyonnais,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-8055c5c97648dc54f4007cf3,LIGUE1,2014-15,2014-09-21T12:00:00Z,Matchday 6,,RC Lens,,AS Saint-Étienne,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-93963a34e5392fbf7452715d,LIGUE1,2014-15,2014-09-21T12:00:00Z,Matchday 6,,Lille OSC,,Montpellier HSC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-1c0d8bd63375cdae2db7f9c4,LIGUE1,2014-15,2014-09-23T12:00:00Z,Matchday 7,,Stade Rennais,,Toulouse FC,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-8e3f814828942d46154019ef,LIGUE1,2014-15,2014-09-23T12:00:00Z,Matchday 7,,Stade de Reims,,Olympique Marseille,,0,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-2d6f5532e261e19ed3c6083d,LIGUE1,2014-15,2014-09-24T12:00:00Z,Matchday 7,,SM Caen,,Paris Saint-Germain,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-30c0e063c44d0f5f296a42aa,LIGUE1,2014-15,2014-09-24T12:00:00Z,Matchday 7,,OGC Nice,,Lille OSC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-38aaf8abd4e2431af5eb1aba,LIGUE1,2014-15,2014-09-24T12:00:00Z,Matchday 7,,Évian Thonon Gaillard,,RC Lens,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-61c513d0583758bf45ee47a6,LIGUE1,2014-15,2014-09-24T12:00:00Z,Matchday 7,,Olympique Lyonnais,,FC Lorient,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-63af86e1d044f8cb2e1574d2,LIGUE1,2014-15,2014-09-24T12:00:00Z,Matchday 7,,SC Bastia,,FC Nantes,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-6813df50777ed33f1073410d,LIGUE1,2014-15,2014-09-24T12:00:00Z,Matchday 7,,Montpellier HSC,,AS Monaco,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c43d4c1d65d6507ca3190a1f,LIGUE1,2014-15,2014-09-24T12:00:00Z,Matchday 7,,EA Guingamp,,FC Metz,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-7ef7db1b3e9dfbc54506e080,LIGUE1,2014-15,2014-09-25T12:00:00Z,Matchday 7,,AS Saint-Étienne,,Girondins Bordeaux,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-36966e56d84f3fcaea97675c,LIGUE1,2014-15,2014-09-27T12:00:00Z,Matchday 8,,Montpellier HSC,,EA Guingamp,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-3762f5a00490af86d07f7bfb,LIGUE1,2014-15,2014-09-27T12:00:00Z,Matchday 8,,FC Lorient,,Évian Thonon Gaillard,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-407f6425c400722ffb6518f5,LIGUE1,2014-15,2014-09-27T12:00:00Z,Matchday 8,,Lille OSC,,SC Bastia,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-6f97d44a85c8f2f411219fb0,LIGUE1,2014-15,2014-09-27T12:00:00Z,Matchday 8,,Toulouse FC,,Paris Saint-Germain,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-7656bb62947f9f5d71e2823a,LIGUE1,2014-15,2014-09-27T12:00:00Z,Matchday 8,,FC Metz,,Stade de Reims,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a5a061226ff9b157bb816ed2,LIGUE1,2014-15,2014-09-27T12:00:00Z,Matchday 8,,AS Monaco,,OGC Nice,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-15311dc3d32b2fe17e6aa291,LIGUE1,2014-15,2014-09-28T12:00:00Z,Matchday 8,,FC Nantes,,Olympique Lyonnais,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-57f43b23bc78346f6a6c11ad,LIGUE1,2014-15,2014-09-28T12:00:00Z,Matchday 8,,Girondins Bordeaux,,Stade Rennais,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-7c6300140e90f5e64c7829b7,LIGUE1,2014-15,2014-09-28T12:00:00Z,Matchday 8,,RC Lens,,SM Caen,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a72142f5873e2ba2bc3889c8,LIGUE1,2014-15,2014-09-28T12:00:00Z,Matchday 8,,Olympique Marseille,,AS Saint-Étienne,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-74b5c26fdcc59eaee37a5c7d,LIGUE1,2014-15,2014-10-03T12:00:00Z,Matchday 9,,Stade de Reims,,Girondins Bordeaux,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-38adb0a2b3f64ea85d361e28,LIGUE1,2014-15,2014-10-04T12:00:00Z,Matchday 9,,SC Bastia,,FC Lorient,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-5b225a4aa7a42e03bd4c1b99,LIGUE1,2014-15,2014-10-04T12:00:00Z,Matchday 9,,SM Caen,,Olympique Marseille,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-5d2ffb3fbd3ac04b4bf32e5d,LIGUE1,2014-15,2014-10-04T12:00:00Z,Matchday 9,,OGC Nice,,Montpellier HSC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-932fc8cecae53a4ebc20c8f5,LIGUE1,2014-15,2014-10-04T12:00:00Z,Matchday 9,,Évian Thonon Gaillard,,FC Metz,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-fc46adff13e84b947c94d4db,LIGUE1,2014-15,2014-10-04T12:00:00Z,Matchday 9,,Stade Rennais,,RC Lens,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-085cde5803d1f08874d068f1,LIGUE1,2014-15,2014-10-05T12:00:00Z,Matchday 9,,Paris Saint-Germain,,AS Monaco,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-bcd833a30890497237c188ab,LIGUE1,2014-15,2014-10-05T12:00:00Z,Matchday 9,,Olympique Lyonnais,,Lille OSC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c1f4d7d8868e9aa6682b98d9,LIGUE1,2014-15,2014-10-05T12:00:00Z,Matchday 9,,AS Saint-Étienne,,Toulouse FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-fef5f4a0e6e61f67e1979e05,LIGUE1,2014-15,2014-10-05T12:00:00Z,Matchday 9,,EA Guingamp,,FC Nantes,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-ab213dee4ef04a79c1e799e3,LIGUE1,2014-15,2014-10-17T12:00:00Z,Matchday 10,,RC Lens,,Paris Saint-Germain,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-771272bcf54c5b92741e340e,LIGUE1,2014-15,2014-10-18T12:00:00Z,Matchday 10,,Lille OSC,,EA Guingamp,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-7e0215f66559bce51c2401c7,LIGUE1,2014-15,2014-10-18T12:00:00Z,Matchday 10,,AS Monaco,,Évian Thonon Gaillard,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-974488e030b88561a1aee927,LIGUE1,2014-15,2014-10-18T12:00:00Z,Matchday 10,,FC Metz,,Stade Rennais,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-e12c25b5a257dc17dc3f3946,LIGUE1,2014-15,2014-10-18T12:00:00Z,Matchday 10,,FC Nantes,,Stade de Reims,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-e83ad02c7221baa74e0468f5,LIGUE1,2014-15,2014-10-18T12:00:00Z,Matchday 10,,OGC Nice,,SC Bastia,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-f9a34721a8727c2a4ce09c00,LIGUE1,2014-15,2014-10-18T12:00:00Z,Matchday 10,,FC Lorient,,AS Saint-Étienne,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-3f6f6713ff3958d302b41166,LIGUE1,2014-15,2014-10-19T12:00:00Z,Matchday 10,,Olympique Marseille,,Toulouse FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-4acdd7dc378c143935aee42c,LIGUE1,2014-15,2014-10-19T12:00:00Z,Matchday 10,,Olympique Lyonnais,,Montpellier HSC,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d66bc152463bce077cd47dc7,LIGUE1,2014-15,2014-10-19T12:00:00Z,Matchday 10,,Girondins Bordeaux,,SM Caen,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-ca487a321c66dfc16b1b6be2,LIGUE1,2014-15,2014-10-24T12:00:00Z,Matchday 11,,Toulouse FC,,RC Lens,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-1557bd034e20e037871d0090,LIGUE1,2014-15,2014-10-25T12:00:00Z,Matchday 11,,Évian Thonon Gaillard,,FC Nantes,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-7973f2c3682db472f3e0f1f1,LIGUE1,2014-15,2014-10-25T12:00:00Z,Matchday 11,,Paris Saint-Germain,,Girondins Bordeaux,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-90fafc5bad53ed7e28c8a4ff,LIGUE1,2014-15,2014-10-25T12:00:00Z,Matchday 11,,SM Caen,,FC Lorient,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-bc3e294737efbad037ee89fa,LIGUE1,2014-15,2014-10-25T12:00:00Z,Matchday 11,,Stade de Reims,,Montpellier HSC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-ef7d452c8d3367e188b1a8d2,LIGUE1,2014-15,2014-10-25T12:00:00Z,Matchday 11,,SC Bastia,,AS Monaco,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-14446c0e78bcf6a1be69bcf4,LIGUE1,2014-15,2014-10-26T12:00:00Z,Matchday 11,,EA Guingamp,,OGC Nice,,2,7,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-37b77c4f20ebb735358d69be,LIGUE1,2014-15,2014-10-26T12:00:00Z,Matchday 11,,AS Saint-Étienne,,FC Metz,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a4de3e17b795b9f1b3860669,LIGUE1,2014-15,2014-10-26T12:00:00Z,Matchday 11,,Olympique Lyonnais,,Olympique Marseille,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d3ea9cb0aa7afde4d84110d6,LIGUE1,2014-15,2014-10-26T12:00:00Z,Matchday 11,,Stade Rennais,,Lille OSC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-176ba06ef1c450baa8ea357e,LIGUE1,2014-15,2014-10-31T12:00:00Z,Matchday 12,,AS Monaco,,Stade de Reims,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-9f27a27684543384017fae9e,LIGUE1,2014-15,2014-11-01T12:00:00Z,Matchday 12,,FC Lorient,,Paris Saint-Germain,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-bd1af5d852442e5df9f61ab5,LIGUE1,2014-15,2014-11-01T12:00:00Z,Matchday 12,,FC Metz,,SM Caen,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c2315b74ccb030b605b7de9e,LIGUE1,2014-15,2014-11-01T12:00:00Z,Matchday 12,,Montpellier HSC,,Évian Thonon Gaillard,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c517c8d4dcf03394300fb32a,LIGUE1,2014-15,2014-11-01T12:00:00Z,Matchday 12,,EA Guingamp,,SC Bastia,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c85f4a0e687c5c8e98293d1d,LIGUE1,2014-15,2014-11-01T12:00:00Z,Matchday 12,,Lille OSC,,AS Saint-Étienne,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-f0660ae0842dcd7fe2916182,LIGUE1,2014-15,2014-11-01T12:00:00Z,Matchday 12,,OGC Nice,,Olympique Lyonnais,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-15381d10b2d41f837c512b6a,LIGUE1,2014-15,2014-11-02T12:00:00Z,Matchday 12,,Olympique Marseille,,RC Lens,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-985381e4f87c95ee94a98360,LIGUE1,2014-15,2014-11-02T12:00:00Z,Matchday 12,,Girondins Bordeaux,,Toulouse FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-bccc934703221ccbffc0554f,LIGUE1,2014-15,2014-11-02T12:00:00Z,Matchday 12,,FC Nantes,,Stade Rennais,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-2de66cf121963a541ada3278,LIGUE1,2014-15,2014-11-07T12:00:00Z,Matchday 13,,Stade Rennais,,FC Lorient,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-0aa4a5774e81bc0acfd1f2cf,LIGUE1,2014-15,2014-11-08T12:00:00Z,Matchday 13,,SM Caen,,FC Nantes,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-16b24277260c3e874add2360,LIGUE1,2014-15,2014-11-08T12:00:00Z,Matchday 13,,Évian Thonon Gaillard,,OGC Nice,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-22347fe13e918ac78c681bb7,LIGUE1,2014-15,2014-11-08T12:00:00Z,Matchday 13,,RC Lens,,Girondins Bordeaux,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-65665514efafeba92b346427,LIGUE1,2014-15,2014-11-08T12:00:00Z,Matchday 13,,Toulouse FC,,FC Metz,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c294c76b72e554c322b0898b,LIGUE1,2014-15,2014-11-08T12:00:00Z,Matchday 13,,SC Bastia,,Montpellier HSC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-2384ba5244bb8a25504c61a8,LIGUE1,2014-15,2014-11-09T12:00:00Z,Matchday 13,,AS Saint-Étienne,,AS Monaco,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-67e26396b80c76b09f98939a,LIGUE1,2014-15,2014-11-09T12:00:00Z,Matchday 13,,Olympique Lyonnais,,EA Guingamp,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d159982a7d5553c07d64a484,LIGUE1,2014-15,2014-11-09T12:00:00Z,Matchday 13,,Paris Saint-Germain,,Olympique Marseille,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-fb4156b5f0588fed4d723efd,LIGUE1,2014-15,2014-11-09T12:00:00Z,Matchday 13,,Stade de Reims,,Lille OSC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-e92960b21d353bbe2e117099,LIGUE1,2014-15,2014-11-21T12:00:00Z,Matchday 14,,FC Metz,,Paris Saint-Germain,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-28cefaae3a2a566e18b97130,LIGUE1,2014-15,2014-11-22T12:00:00Z,Matchday 14,,FC Lorient,,RC Lens,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-344d39acafa75e3acfb4e25f,LIGUE1,2014-15,2014-11-22T12:00:00Z,Matchday 14,,EA Guingamp,,Stade Rennais,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-6234b4f2d7c07faf7387ae0d,LIGUE1,2014-15,2014-11-22T12:00:00Z,Matchday 14,,SC Bastia,,Olympique Lyonnais,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-99090b1bb0dcb67feb666cc4,LIGUE1,2014-15,2014-11-22T12:00:00Z,Matchday 14,,OGC Nice,,Stade de Reims,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-db844bbd8a8852855b0166d7,LIGUE1,2014-15,2014-11-22T12:00:00Z,Matchday 14,,AS Monaco,,SM Caen,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-357f4500884981b75e228ddf,LIGUE1,2014-15,2014-11-23T12:00:00Z,Matchday 14,,Olympique Marseille,,Girondins Bordeaux,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-67837fa2562e1ab9ad88a4ae,LIGUE1,2014-15,2014-11-23T12:00:00Z,Matchday 14,,Montpellier HSC,,Toulouse FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-ff7e86f63c6efa287db98734,LIGUE1,2014-15,2014-11-23T12:00:00Z,Matchday 14,,FC Nantes,,AS Saint-Étienne,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a761287a7146623dc0fc027d,LIGUE1,2014-15,2014-11-28T12:00:00Z,Matchday 15,,Olympique Marseille,,FC Nantes,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-204344caee94906c53b50d74,LIGUE1,2014-15,2014-11-29T12:00:00Z,Matchday 15,,Toulouse FC,,FC Lorient,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-2bbcf1fddae7cbb5859b3ba0,LIGUE1,2014-15,2014-11-29T12:00:00Z,Matchday 15,,Paris Saint-Germain,,OGC Nice,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-9d9c25db9bbf892da0c04bfc,LIGUE1,2014-15,2014-11-29T12:00:00Z,Matchday 15,,Stade de Reims,,SC Bastia,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a760448d1ea45b65b97b0bd3,LIGUE1,2014-15,2014-11-29T12:00:00Z,Matchday 15,,SM Caen,,Montpellier HSC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-db9c072cf04de63945c11eed,LIGUE1,2014-15,2014-11-29T12:00:00Z,Matchday 15,,Stade Rennais,,AS Monaco,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-eb24c80a4bff0041167156b4,LIGUE1,2014-15,2014-11-29T12:00:00Z,Matchday 15,,RC Lens,,FC Metz,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-41c864e143aa8b4da20b752f,LIGUE1,2014-15,2014-11-30T12:00:00Z,Matchday 15,,AS Saint-Étienne,,Olympique Lyonnais,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-4933201858cf06871be19bf1,LIGUE1,2014-15,2014-11-30T12:00:00Z,Matchday 15,,Évian Thonon Gaillard,,EA Guingamp,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-9f737e916f641a242bd5836a,LIGUE1,2014-15,2014-11-30T12:00:00Z,Matchday 15,,Girondins Bordeaux,,Lille OSC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-54789831104482a5e137a77a,LIGUE1,2014-15,2014-12-02T12:00:00Z,Matchday 16,,FC Lorient,,Olympique Marseille,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-62b82817c968c6476882d1fd,LIGUE1,2014-15,2014-12-02T12:00:00Z,Matchday 16,,FC Nantes,,Toulouse FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-e8ac0cab186ac0ab86439906,LIGUE1,2014-15,2014-12-02T12:00:00Z,Matchday 16,,AS Monaco,,RC Lens,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-340a272c220cd1167c358122,LIGUE1,2014-15,2014-12-03T12:00:00Z,Matchday 16,,EA Guingamp,,SM Caen,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-7245fa9f284c3acc5ab1630d,LIGUE1,2014-15,2014-12-03T12:00:00Z,Matchday 16,,FC Metz,,Girondins Bordeaux,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-7ce653179f988679835b48ce,LIGUE1,2014-15,2014-12-03T12:00:00Z,Matchday 16,,SC Bastia,,Évian Thonon Gaillard,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-9ff3a4688fbc54628fd9dc63,LIGUE1,2014-15,2014-12-03T12:00:00Z,Matchday 16,,OGC Nice,,Stade Rennais,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a616ddb1ec6e9d598249c92c,LIGUE1,2014-15,2014-12-03T12:00:00Z,Matchday 16,,Lille OSC,,Paris Saint-Germain,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-ae7787be8d88b108d8cd5e9b,LIGUE1,2014-15,2014-12-03T12:00:00Z,Matchday 16,,Montpellier HSC,,AS Saint-Étienne,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-ce9e1269eea89855678f1381,LIGUE1,2014-15,2014-12-04T12:00:00Z,Matchday 16,,Olympique Lyonnais,,Stade de Reims,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-45fbf466b8d47c2bec003f35,LIGUE1,2014-15,2014-12-05T12:00:00Z,Matchday 17,,Toulouse FC,,AS Monaco,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-7e684b60e27dab25bd0caa0a,LIGUE1,2014-15,2014-12-06T12:00:00Z,Matchday 17,,Stade Rennais,,Montpellier HSC,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-b24928cbb9171a52604eafa5,LIGUE1,2014-15,2014-12-06T12:00:00Z,Matchday 17,,SM Caen,,OGC Nice,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-cbd808a8b15c24267d993670,LIGUE1,2014-15,2014-12-06T12:00:00Z,Matchday 17,,Paris Saint-Germain,,FC Nantes,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-cd2cb6ef5953b54fc508e2ce,LIGUE1,2014-15,2014-12-06T12:00:00Z,Matchday 17,,Girondins Bordeaux,,FC Lorient,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-e3fc0bc0589bc1bab550b41b,LIGUE1,2014-15,2014-12-06T12:00:00Z,Matchday 17,,AS Saint-Étienne,,SC Bastia,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-27ed3128352e53a46021c18a,LIGUE1,2014-15,2014-12-07T12:00:00Z,Matchday 17,,Évian Thonon Gaillard,,Olympique Lyonnais,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-46d8c4d1d6eac29c71d0c477,LIGUE1,2014-15,2014-12-07T12:00:00Z,Matchday 17,,RC Lens,,Lille OSC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-84b20e0e45e1b53484033eb1,LIGUE1,2014-15,2014-12-07T12:00:00Z,Matchday 17,,Olympique Marseille,,FC Metz,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a62d99fc46ec6e301d88ff8a,LIGUE1,2014-15,2014-12-07T12:00:00Z,Matchday 17,,Stade de Reims,,EA Guingamp,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-7a89874714dcea43fa10d40c,LIGUE1,2014-15,2014-12-12T12:00:00Z,Matchday 18,,Olympique Lyonnais,,SM Caen,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-0168b3d4155ed8cd59a7da0b,LIGUE1,2014-15,2014-12-13T12:00:00Z,Matchday 18,,FC Lorient,,FC Metz,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-05b253ce03b1942b36070be4,LIGUE1,2014-15,2014-12-13T12:00:00Z,Matchday 18,,SC Bastia,,Stade Rennais,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-183e7cede7a861d1d82d25af,LIGUE1,2014-15,2014-12-13T12:00:00Z,Matchday 18,,FC Nantes,,Girondins Bordeaux,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-7b8f32b1f42f0ec2553d3949,LIGUE1,2014-15,2014-12-13T12:00:00Z,Matchday 18,,Montpellier HSC,,RC Lens,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-cf4ce17aefe4e7923b28374c,LIGUE1,2014-15,2014-12-13T12:00:00Z,Matchday 18,,Stade de Reims,,Évian Thonon Gaillard,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-0128298d2f2917b564bdb410,LIGUE1,2014-15,2014-12-14T12:00:00Z,Matchday 18,,OGC Nice,,AS Saint-Étienne,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-8c09a31b755e5b88d8014104,LIGUE1,2014-15,2014-12-14T12:00:00Z,Matchday 18,,Lille OSC,,Toulouse FC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-bf1fe490af3fd8d04917f240,LIGUE1,2014-15,2014-12-14T12:00:00Z,Matchday 18,,EA Guingamp,,Paris Saint-Germain,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-ebeae522737606357ca1dff9,LIGUE1,2014-15,2014-12-14T12:00:00Z,Matchday 18,,AS Monaco,,Olympique Marseille,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-b2a5d802dee315c385b90151,LIGUE1,2014-15,2014-12-19T12:00:00Z,Matchday 19,,RC Lens,,OGC Nice,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-017f9236b87752ce97c6eb04,LIGUE1,2014-15,2014-12-20T12:00:00Z,Matchday 19,,FC Metz,,AS Monaco,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-164938ce7b28eb82f0c161c1,LIGUE1,2014-15,2014-12-20T12:00:00Z,Matchday 19,,Paris Saint-Germain,,Montpellier HSC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-48411a573dc4058c5b27051c,LIGUE1,2014-15,2014-12-20T12:00:00Z,Matchday 19,,SM Caen,,SC Bastia,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-5fad7b80d6cd2d90d5dd2390,LIGUE1,2014-15,2014-12-20T12:00:00Z,Matchday 19,,Toulouse FC,,EA Guingamp,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c83852dddacd494db9f0ac35,LIGUE1,2014-15,2014-12-20T12:00:00Z,Matchday 19,,Stade Rennais,,Stade de Reims,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d00bf083575b8420a6a52b0f,LIGUE1,2014-15,2014-12-20T12:00:00Z,Matchday 19,,FC Lorient,,FC Nantes,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-2a379790498f5229c549a370,LIGUE1,2014-15,2014-12-21T12:00:00Z,Matchday 19,,Olympique Marseille,,Lille OSC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-360d8ae2ae5aa253c6345927,LIGUE1,2014-15,2014-12-21T12:00:00Z,Matchday 19,,AS Saint-Étienne,,Évian Thonon Gaillard,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-57ad86b73395c7bb4c3ef966,LIGUE1,2014-15,2014-12-21T12:00:00Z,Matchday 19,,Girondins Bordeaux,,Olympique Lyonnais,,0,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-01be9f654d2ef537422ee372,LIGUE1,2014-15,2015-01-07T12:00:00Z,Matchday 14,,Lille OSC,,Évian Thonon Gaillard,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-dd2b3ea90f9448ae7bbcd1c2,LIGUE1,2014-15,2015-01-09T12:00:00Z,Matchday 20,,Montpellier HSC,,Olympique Marseille,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-45e834dedf9284b52d661d62,LIGUE1,2014-15,2015-01-10T12:00:00Z,Matchday 20,,OGC Nice,,FC Lorient,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-81f84f0693b931b662b5ffc4,LIGUE1,2014-15,2015-01-10T12:00:00Z,Matchday 20,,Évian Thonon Gaillard,,Stade Rennais,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-82d964fc612e0344648abcc9,LIGUE1,2014-15,2015-01-10T12:00:00Z,Matchday 20,,SC Bastia,,Paris Saint-Germain,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-83261a7b82506b3c35aab0cc,LIGUE1,2014-15,2015-01-10T12:00:00Z,Matchday 20,,Stade de Reims,,AS Saint-Étienne,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-b983917661f4ca6114578a26,LIGUE1,2014-15,2015-01-10T12:00:00Z,Matchday 20,,Lille OSC,,SM Caen,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-f06c7d54207fd877a94ac943,LIGUE1,2014-15,2015-01-10T12:00:00Z,Matchday 20,,EA Guingamp,,RC Lens,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-143924907fa0427b6a10a152,LIGUE1,2014-15,2015-01-11T12:00:00Z,Matchday 20,,AS Monaco,,Girondins Bordeaux,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-bf05c59ab62bd9142e176f37,LIGUE1,2014-15,2015-01-11T12:00:00Z,Matchday 20,,Olympique Lyonnais,,Toulouse FC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-cb256d2d44b2be88228f0e8e,LIGUE1,2014-15,2015-01-11T12:00:00Z,Matchday 20,,FC Nantes,,FC Metz,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c5676d178c5e4afe1dc91a12,LIGUE1,2014-15,2015-01-16T12:00:00Z,Matchday 21,,Girondins Bordeaux,,OGC Nice,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-3f55c8a17eddb048455ae8e4,LIGUE1,2014-15,2015-01-17T12:00:00Z,Matchday 21,,FC Metz,,Montpellier HSC,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-6448d3bcb8c8248ba0eebd3a,LIGUE1,2014-15,2015-01-17T12:00:00Z,Matchday 21,,Toulouse FC,,SC Bastia,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-93992f74d0b93a47aac2210a,LIGUE1,2014-15,2015-01-17T12:00:00Z,Matchday 21,,RC Lens,,Olympique Lyonnais,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-dfd025d9dd2d1d790eca1ec8,LIGUE1,2014-15,2015-01-17T12:00:00Z,Matchday 21,,AS Monaco,,FC Nantes,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-edfdd15413e9db6b7419e465,LIGUE1,2014-15,2015-01-17T12:00:00Z,Matchday 21,,FC Lorient,,Lille OSC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-f5638a1d1ea4482f377a3ad7,LIGUE1,2014-15,2015-01-17T12:00:00Z,Matchday 21,,SM Caen,,Stade de Reims,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-3938b3b8f2c3aa4eecf81a92,LIGUE1,2014-15,2015-01-18T12:00:00Z,Matchday 21,,Paris Saint-Germain,,Évian Thonon Gaillard,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-519516af38a6acfcc165a5f8,LIGUE1,2014-15,2015-01-18T12:00:00Z,Matchday 21,,Stade Rennais,,AS Saint-Étienne,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-88f1be3d3959239ff4d64380,LIGUE1,2014-15,2015-01-18T12:00:00Z,Matchday 21,,Olympique Marseille,,EA Guingamp,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-7b44a45c3f71a11edd5e6b38,LIGUE1,2014-15,2015-01-23T12:00:00Z,Matchday 22,,OGC Nice,,Olympique Marseille,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-1017735c394a76caf32a3501,LIGUE1,2014-15,2015-01-24T12:00:00Z,Matchday 22,,SC Bastia,,Girondins Bordeaux,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-b0147deb13417f2baba8e3e6,LIGUE1,2014-15,2015-01-24T12:00:00Z,Matchday 22,,Montpellier HSC,,FC Nantes,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-b0bfeceb40741dd08c9a4e07,LIGUE1,2014-15,2015-01-24T12:00:00Z,Matchday 22,,Lille OSC,,AS Monaco,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-e13747349ff0d14b03d10879,LIGUE1,2014-15,2015-01-24T12:00:00Z,Matchday 22,,EA Guingamp,,FC Lorient,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-03176cb2728d5779dfb4f194,LIGUE1,2014-15,2015-01-25T12:00:00Z,Matchday 22,,Stade de Reims,,RC Lens,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-21a0fb8bfe895e9049f4d009,LIGUE1,2014-15,2015-01-25T12:00:00Z,Matchday 22,,Stade Rennais,,SM Caen,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-7eb66cba25ab3a059b016ed1,LIGUE1,2014-15,2015-01-25T12:00:00Z,Matchday 22,,Olympique Lyonnais,,FC Metz,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c5e4a318f1af1746b2c7b3cf,LIGUE1,2014-15,2015-01-25T12:00:00Z,Matchday 22,,Évian Thonon Gaillard,,Toulouse FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-ff5ced77461b7d88b40d2a3e,LIGUE1,2014-15,2015-01-25T12:00:00Z,Matchday 22,,AS Saint-Étienne,,Paris Saint-Germain,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c5b238b73212b0969363a039,LIGUE1,2014-15,2015-01-30T12:00:00Z,Matchday 23,,Paris Saint-Germain,,Stade Rennais,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-43f8d99b302d89dccc6d0871,LIGUE1,2014-15,2015-01-31T12:00:00Z,Matchday 23,,FC Metz,,OGC Nice,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-63980e966a802e5a0e5853dc,LIGUE1,2014-15,2015-01-31T12:00:00Z,Matchday 23,,RC Lens,,SC Bastia,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-8c98b31820b50107ac2a3e4a,LIGUE1,2014-15,2015-01-31T12:00:00Z,Matchday 23,,FC Nantes,,Lille OSC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-91ff5557339e8e9dc9c85d5b,LIGUE1,2014-15,2015-01-31T12:00:00Z,Matchday 23,,FC Lorient,,Montpellier HSC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-9f5ccfae1657665a95a6d815,LIGUE1,2014-15,2015-01-31T12:00:00Z,Matchday 23,,Toulouse FC,,Stade de Reims,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c47c687c46c42866efc45e5d,LIGUE1,2014-15,2015-01-31T12:00:00Z,Matchday 23,,Olympique Marseille,,Évian Thonon Gaillard,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-1bf04fc4afddd8888f33aac7,LIGUE1,2014-15,2015-02-01T12:00:00Z,Matchday 23,,Girondins Bordeaux,,EA Guingamp,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c5aa90b44158e00bdc4356d3,LIGUE1,2014-15,2015-02-01T12:00:00Z,Matchday 23,,SM Caen,,AS Saint-Étienne,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-db6518ffd90c1de6165eafbd,LIGUE1,2014-15,2015-02-01T12:00:00Z,Matchday 23,,AS Monaco,,Olympique Lyonnais,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-e394a0eb2c0f9f534bd272c8,LIGUE1,2014-15,2015-02-06T12:00:00Z,Matchday 24,,AS Saint-Étienne,,RC Lens,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-1a02db08c3b936f3eb08c3c6,LIGUE1,2014-15,2015-02-07T12:00:00Z,Matchday 24,,Stade Rennais,,Olympique Marseille,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-1f93ba1b41ca44547722da9a,LIGUE1,2014-15,2015-02-07T12:00:00Z,Matchday 24,,Évian Thonon Gaillard,,Girondins Bordeaux,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-4b432ed86b2de9a2598e25e3,LIGUE1,2014-15,2015-02-07T12:00:00Z,Matchday 24,,SC Bastia,,FC Metz,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-6e57e1566505347c3fa200b5,LIGUE1,2014-15,2015-02-07T12:00:00Z,Matchday 24,,Stade de Reims,,FC Lorient,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-abee26ed2a4be8397db4a41f,LIGUE1,2014-15,2015-02-07T12:00:00Z,Matchday 24,,SM Caen,,Toulouse FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-df0c0d98b3b28ac1480740dc,LIGUE1,2014-15,2015-02-07T12:00:00Z,Matchday 24,,Montpellier HSC,,Lille OSC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-26f88e0546d227f817915fcd,LIGUE1,2014-15,2015-02-08T12:00:00Z,Matchday 24,,EA Guingamp,,AS Monaco,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-701c9213d6ec2f70b8610f93,LIGUE1,2014-15,2015-02-08T12:00:00Z,Matchday 24,,Olympique Lyonnais,,Paris Saint-Germain,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-913e61218f20cb1d01e91697,LIGUE1,2014-15,2015-02-08T12:00:00Z,Matchday 24,,OGC Nice,,FC Nantes,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c85e914b3b8e44c95f330e45,LIGUE1,2014-15,2015-02-13T12:00:00Z,Matchday 25,,Olympique Marseille,,Stade de Reims,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-33b27230104a42f739041658,LIGUE1,2014-15,2015-02-14T12:00:00Z,Matchday 25,,Paris Saint-Germain,,SM Caen,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-8a03e8af97a4f2673c26c095,LIGUE1,2014-15,2015-02-14T12:00:00Z,Matchday 25,,Toulouse FC,,Stade Rennais,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-8e2cff68ae969f2e1665d3b5,LIGUE1,2014-15,2015-02-14T12:00:00Z,Matchday 25,,RC Lens,,Évian Thonon Gaillard,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a50c795f9f7cf6c6e2aca2a2,LIGUE1,2014-15,2015-02-14T12:00:00Z,Matchday 25,,FC Nantes,,SC Bastia,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-f3d1d536cb065197e8f61171,LIGUE1,2014-15,2015-02-14T12:00:00Z,Matchday 25,,Lille OSC,,OGC Nice,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a2db6935845f30b033332518,LIGUE1,2014-15,2015-02-15T12:00:00Z,Matchday 25,,Girondins Bordeaux,,AS Saint-Étienne,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c107d193fd98186d28699dc0,LIGUE1,2014-15,2015-02-15T12:00:00Z,Matchday 25,,FC Lorient,,Olympique Lyonnais,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-ddc0ad289d9c2941d76dbffd,LIGUE1,2014-15,2015-02-15T12:00:00Z,Matchday 25,,FC Metz,,EA Guingamp,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-7452fcb88e27aceed6562176,LIGUE1,2014-15,2015-02-20T12:00:00Z,Matchday 26,,OGC Nice,,AS Monaco,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-6eeec856dc4fc62478aecabe,LIGUE1,2014-15,2015-02-21T12:00:00Z,Matchday 26,,SM Caen,,RC Lens,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a4970a9d7d0191f50f61e6c9,LIGUE1,2014-15,2015-02-21T12:00:00Z,Matchday 26,,SC Bastia,,Lille OSC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d58fd09751c22042967ce2cd,LIGUE1,2014-15,2015-02-21T12:00:00Z,Matchday 26,,Paris Saint-Germain,,Toulouse FC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-fdae10c5c8d84113f55e3ba0,LIGUE1,2014-15,2015-02-21T12:00:00Z,Matchday 26,,Stade Rennais,,Girondins Bordeaux,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-15ca895740216745a4d0937c,LIGUE1,2014-15,2015-02-22T12:00:00Z,Matchday 26,,Stade de Reims,,FC Metz,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-1ec14dc44f347bec16b6156c,LIGUE1,2014-15,2015-02-22T12:00:00Z,Matchday 26,,EA Guingamp,,Montpellier HSC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-975bd8a1ae26044ec0a46e4d,LIGUE1,2014-15,2015-02-22T12:00:00Z,Matchday 26,,AS Saint-Étienne,,Olympique Marseille,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-f3d171bdbbac267a3a6dfb33,LIGUE1,2014-15,2015-02-22T12:00:00Z,Matchday 26,,Olympique Lyonnais,,FC Nantes,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-4838162399c6d890d28438fd,LIGUE1,2014-15,2015-02-27T12:00:00Z,Matchday 27,,Olympique Marseille,,SM Caen,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-9f4960f9a14d0269851391ed,LIGUE1,2014-15,2015-02-28T12:00:00Z,Matchday 27,,FC Metz,,Évian Thonon Gaillard,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-abbf08ae1f7da2386156cbe3,LIGUE1,2014-15,2015-02-28T12:00:00Z,Matchday 27,,Girondins Bordeaux,,Stade de Reims,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c4fe73d76cc1113329d0d7aa,LIGUE1,2014-15,2015-02-28T12:00:00Z,Matchday 27,,FC Lorient,,SC Bastia,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d10a9c4ffa9ff3aa92c81f8b,LIGUE1,2014-15,2015-02-28T12:00:00Z,Matchday 27,,RC Lens,,Stade Rennais,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d5c93766ae514d9069483760,LIGUE1,2014-15,2015-02-28T12:00:00Z,Matchday 27,,Lille OSC,,Olympique Lyonnais,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-e25719762bcf0e95849e7b41,LIGUE1,2014-15,2015-02-28T12:00:00Z,Matchday 27,,Toulouse FC,,AS Saint-Étienne,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-542ddcab7272fd441097b026,LIGUE1,2014-15,2015-03-01T12:00:00Z,Matchday 27,,AS Monaco,,Paris Saint-Germain,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-bbf51547351a8b28d19d137b,LIGUE1,2014-15,2015-03-01T12:00:00Z,Matchday 27,,Montpellier HSC,,OGC Nice,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-ceeaa496245c04dfae7e94c9,LIGUE1,2014-15,2015-03-01T12:00:00Z,Matchday 27,,FC Nantes,,EA Guingamp,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-ba0b31d8e988e087b857cb09,LIGUE1,2014-15,2015-03-04T12:00:00Z,Matchday 26,,Évian Thonon Gaillard,,FC Lorient,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-4a50e54f81bd1c4a766211fc,LIGUE1,2014-15,2015-03-06T12:00:00Z,Matchday 28,,Toulouse FC,,Olympique Marseille,,1,6,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-04ef7d3d1793d1f55db14725,LIGUE1,2014-15,2015-03-07T12:00:00Z,Matchday 28,,Stade Rennais,,FC Metz,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-83891dc4d3d91ae9ca473870,LIGUE1,2014-15,2015-03-07T12:00:00Z,Matchday 28,,Stade de Reims,,FC Nantes,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-96dbc1fb55f239c17fb4f1cc,LIGUE1,2014-15,2015-03-07T12:00:00Z,Matchday 28,,Évian Thonon Gaillard,,AS Monaco,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-b74c99e25150dee8c0e74da5,LIGUE1,2014-15,2015-03-07T12:00:00Z,Matchday 28,,SM Caen,,Girondins Bordeaux,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c2df2aaccabf477bf9b001ea,LIGUE1,2014-15,2015-03-07T12:00:00Z,Matchday 28,,Paris Saint-Germain,,RC Lens,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c3243e11255360cdd9aa5a7f,LIGUE1,2014-15,2015-03-07T12:00:00Z,Matchday 28,,SC Bastia,,OGC Nice,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-17efc594151a76e139622556,LIGUE1,2014-15,2015-03-08T12:00:00Z,Matchday 28,,EA Guingamp,,Lille OSC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-3d488abcc9bcaa739d55c1ce,LIGUE1,2014-15,2015-03-08T12:00:00Z,Matchday 28,,AS Saint-Étienne,,FC Lorient,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-9b6dec7be79f32ef001a57f3,LIGUE1,2014-15,2015-03-08T12:00:00Z,Matchday 28,,Montpellier HSC,,Olympique Lyonnais,,1,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a4801795a33257508eeed56f,LIGUE1,2014-15,2015-03-13T12:00:00Z,Matchday 29,,OGC Nice,,EA Guingamp,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a534eaf53046d38f91030d84,LIGUE1,2014-15,2015-03-13T12:00:00Z,Matchday 29,,AS Monaco,,SC Bastia,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-070f2dab3f87bfc2f5d0e4a0,LIGUE1,2014-15,2015-03-14T12:00:00Z,Matchday 29,,RC Lens,,Toulouse FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-663959147f6418ab7e7c6d2e,LIGUE1,2014-15,2015-03-14T12:00:00Z,Matchday 29,,FC Lorient,,SM Caen,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-b1826432647e256badff928a,LIGUE1,2014-15,2015-03-14T12:00:00Z,Matchday 29,,FC Metz,,AS Saint-Étienne,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c9c9d973593585fd5c868a62,LIGUE1,2014-15,2015-03-14T12:00:00Z,Matchday 29,,Montpellier HSC,,Stade de Reims,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-cf1f57706712ebc5e7af07de,LIGUE1,2014-15,2015-03-14T12:00:00Z,Matchday 29,,FC Nantes,,Évian Thonon Gaillard,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-4eec4559cdf03186c34a8574,LIGUE1,2014-15,2015-03-15T12:00:00Z,Matchday 29,,Olympique Marseille,,Olympique Lyonnais,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-5c25a8c6818f75efcbbdf300,LIGUE1,2014-15,2015-03-15T12:00:00Z,Matchday 29,,Lille OSC,,Stade Rennais,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-b666a3980d5cad332f6587d3,LIGUE1,2014-15,2015-03-15T12:00:00Z,Matchday 29,,Girondins Bordeaux,,Paris Saint-Germain,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-430add0427d81256a7acf6d7,LIGUE1,2014-15,2015-03-20T12:00:00Z,Matchday 30,,Paris Saint-Germain,,FC Lorient,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-003f80339aa55763c327d829,LIGUE1,2014-15,2015-03-21T12:00:00Z,Matchday 30,,Évian Thonon Gaillard,,Montpellier HSC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-25b9412ce012e6720f19de1c,LIGUE1,2014-15,2015-03-21T12:00:00Z,Matchday 30,,SC Bastia,,EA Guingamp,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-45abf2335fdfde9d1344525d,LIGUE1,2014-15,2015-03-21T12:00:00Z,Matchday 30,,SM Caen,,FC Metz,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-6e6614578215df2c20607e95,LIGUE1,2014-15,2015-03-21T12:00:00Z,Matchday 30,,Stade Rennais,,FC Nantes,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-b42bceb7ad4c38c56feb7990,LIGUE1,2014-15,2015-03-21T12:00:00Z,Matchday 30,,Toulouse FC,,Girondins Bordeaux,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-f72ba1eba5b6badd3c511a3c,LIGUE1,2014-15,2015-03-21T12:00:00Z,Matchday 30,,Olympique Lyonnais,,OGC Nice,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-b3770c8ca3735e7c7206294d,LIGUE1,2014-15,2015-03-22T12:00:00Z,Matchday 30,,RC Lens,,Olympique Marseille,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d15de2c706a7b5b45e817940,LIGUE1,2014-15,2015-03-22T12:00:00Z,Matchday 30,,Stade de Reims,,AS Monaco,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-fe9d49424068a346b1f23bd8,LIGUE1,2014-15,2015-03-22T12:00:00Z,Matchday 30,,AS Saint-Étienne,,Lille OSC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-466804506b761fead32eacab,LIGUE1,2014-15,2015-04-03T12:00:00Z,Matchday 31,,AS Monaco,,AS Saint-Étienne,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-0bad66f53adf8ba1637dfae3,LIGUE1,2014-15,2015-04-04T12:00:00Z,Matchday 31,,OGC Nice,,Évian Thonon Gaillard,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-152b5f5a3864cf5dd3481d46,LIGUE1,2014-15,2015-04-04T12:00:00Z,Matchday 31,,FC Metz,,Toulouse FC,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-1b77c41d017fa2e3bfa64612,LIGUE1,2014-15,2015-04-04T12:00:00Z,Matchday 31,,Montpellier HSC,,SC Bastia,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-274fc5274ca864f457dfc781,LIGUE1,2014-15,2015-04-04T12:00:00Z,Matchday 31,,EA Guingamp,,Olympique Lyonnais,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-7f187dbfa27233cd2848e532,LIGUE1,2014-15,2015-04-04T12:00:00Z,Matchday 31,,Lille OSC,,Stade de Reims,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-b91312e13ac36a5c61a19d23,LIGUE1,2014-15,2015-04-04T12:00:00Z,Matchday 31,,FC Lorient,,Stade Rennais,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c460367b48d42cf54cb21cf4,LIGUE1,2014-15,2015-04-05T12:00:00Z,Matchday 31,,Olympique Marseille,,Paris Saint-Germain,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d40a8504ebfbd56cd0fa3ff5,LIGUE1,2014-15,2015-04-05T12:00:00Z,Matchday 31,,Girondins Bordeaux,,RC Lens,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-e3e211dc0d696f33ef73be73,LIGUE1,2014-15,2015-04-05T12:00:00Z,Matchday 31,,FC Nantes,,SM Caen,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d34e62adbb0661ab0e697086,LIGUE1,2014-15,2015-04-07T12:00:00Z,Matchday 25,,AS Monaco,,Montpellier HSC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-39767c7dba074fa9e205339f,LIGUE1,2014-15,2015-04-10T12:00:00Z,Matchday 32,,SM Caen,,AS Monaco,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-017df7edfc2f6cf2f240b303,LIGUE1,2014-15,2015-04-12T12:00:00Z,Matchday 32,,Girondins Bordeaux,,Olympique Marseille,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-5f4bc56d7c4839c98e72bd75,LIGUE1,2014-15,2015-04-12T12:00:00Z,Matchday 32,,Stade de Reims,,OGC Nice,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-8e49cb3ce4e0c8d65891d4dc,LIGUE1,2014-15,2015-04-12T12:00:00Z,Matchday 32,,AS Saint-Étienne,,FC Nantes,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-997897951dfd8a0c541164cd,LIGUE1,2014-15,2015-04-12T12:00:00Z,Matchday 32,,Stade Rennais,,EA Guingamp,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-aa3e6468c1bc15e1b3944e31,LIGUE1,2014-15,2015-04-12T12:00:00Z,Matchday 32,,Évian Thonon Gaillard,,Lille OSC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-e0f96b57bc334730fcf26e2c,LIGUE1,2014-15,2015-04-12T12:00:00Z,Matchday 32,,RC Lens,,FC Lorient,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-f066b9ef412afa3145e4bc16,LIGUE1,2014-15,2015-04-12T12:00:00Z,Matchday 32,,Toulouse FC,,Montpellier HSC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-81e1bec2ad8faac582c13c0a,LIGUE1,2014-15,2015-04-15T12:00:00Z,Matchday 32,,Olympique Lyonnais,,SC Bastia,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a5de9cc18f51c4afe47369f8,LIGUE1,2014-15,2015-04-17T12:00:00Z,Matchday 33,,FC Nantes,,Olympique Marseille,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-5aa6a037628c596be23f0cb6,LIGUE1,2014-15,2015-04-18T12:00:00Z,Matchday 33,,FC Lorient,,Toulouse FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-841ee51761ec390058a90527,LIGUE1,2014-15,2015-04-18T12:00:00Z,Matchday 33,,EA Guingamp,,Évian Thonon Gaillard,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-97e633a05f082bb2b485e295,LIGUE1,2014-15,2015-04-18T12:00:00Z,Matchday 33,,FC Metz,,RC Lens,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-ac4405e9b5afe83b18858022,LIGUE1,2014-15,2015-04-18T12:00:00Z,Matchday 33,,SC Bastia,,Stade de Reims,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d6197c4d51b3b6ff96edd5d4,LIGUE1,2014-15,2015-04-18T12:00:00Z,Matchday 33,,OGC Nice,,Paris Saint-Germain,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-ed3d05b5fa29d72eb5ea1211,LIGUE1,2014-15,2015-04-18T12:00:00Z,Matchday 33,,AS Monaco,,Stade Rennais,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-44297cb4a9acebc52c203518,LIGUE1,2014-15,2015-04-19T12:00:00Z,Matchday 33,,Montpellier HSC,,SM Caen,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-6261600a696040bc3bba19e9,LIGUE1,2014-15,2015-04-19T12:00:00Z,Matchday 33,,Olympique Lyonnais,,AS Saint-Étienne,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-7e04b7a824aa0fa1f54ef28b,LIGUE1,2014-15,2015-04-19T12:00:00Z,Matchday 33,,Lille OSC,,Girondins Bordeaux,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d47a5fc55da80b8f980ab291,LIGUE1,2014-15,2015-04-24T12:00:00Z,Matchday 34,,Olympique Marseille,,FC Lorient,,3,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-2c443eb518d8bc0f0f1916e7,LIGUE1,2014-15,2015-04-25T12:00:00Z,Matchday 34,,Stade Rennais,,OGC Nice,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-33bcd9e9979c798a2f465dd5,LIGUE1,2014-15,2015-04-25T12:00:00Z,Matchday 34,,SM Caen,,EA Guingamp,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-5996e435b35441646d35d86f,LIGUE1,2014-15,2015-04-25T12:00:00Z,Matchday 34,,Paris Saint-Germain,,Lille OSC,,6,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-6ac9f1250fc618ba662e39e0,LIGUE1,2014-15,2015-04-25T12:00:00Z,Matchday 34,,Évian Thonon Gaillard,,SC Bastia,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-78961ef0fecbb69ae95d756e,LIGUE1,2014-15,2015-04-25T12:00:00Z,Matchday 34,,Girondins Bordeaux,,FC Metz,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-e798356b8745b7a00d74e8fe,LIGUE1,2014-15,2015-04-25T12:00:00Z,Matchday 34,,Toulouse FC,,FC Nantes,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-095fb65cb8efed454a752396,LIGUE1,2014-15,2015-04-26T12:00:00Z,Matchday 34,,Stade de Reims,,Olympique Lyonnais,,2,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-373bda65e54ba2873d03a331,LIGUE1,2014-15,2015-04-26T12:00:00Z,Matchday 34,,RC Lens,,AS Monaco,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-3daf5ae34512d2397f0b05f9,LIGUE1,2014-15,2015-04-26T12:00:00Z,Matchday 34,,AS Saint-Étienne,,Montpellier HSC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-88460512513e3351e616de05,LIGUE1,2014-15,2015-04-28T12:00:00Z,Matchday 32,,Paris Saint-Germain,,FC Metz,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a7c8305707c2a6152798962a,LIGUE1,2014-15,2015-05-01T12:00:00Z,Matchday 35,,FC Metz,,Olympique Marseille,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-2e919c3c160ef76e34cd8c02,LIGUE1,2014-15,2015-05-02T12:00:00Z,Matchday 35,,SC Bastia,,AS Saint-Étienne,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-51b14ea1f39315a44de75b1f,LIGUE1,2014-15,2015-05-02T12:00:00Z,Matchday 35,,FC Lorient,,Girondins Bordeaux,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-5446330c8ce87d555bb4e146,LIGUE1,2014-15,2015-05-02T12:00:00Z,Matchday 35,,Montpellier HSC,,Stade Rennais,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-5510a59d101cde2ea50601cb,LIGUE1,2014-15,2015-05-02T12:00:00Z,Matchday 35,,EA Guingamp,,Stade de Reims,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-836339543b30c719001cc7dc,LIGUE1,2014-15,2015-05-02T12:00:00Z,Matchday 35,,Olympique Lyonnais,,Évian Thonon Gaillard,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-b7aa9b1d17e8a1b81144f556,LIGUE1,2014-15,2015-05-02T12:00:00Z,Matchday 35,,OGC Nice,,SM Caen,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-2eae82d41dd489f95e772817,LIGUE1,2014-15,2015-05-03T12:00:00Z,Matchday 35,,FC Nantes,,Paris Saint-Germain,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-689e8aacc015fcae7fc7d3d6,LIGUE1,2014-15,2015-05-03T12:00:00Z,Matchday 35,,Lille OSC,,RC Lens,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c567859a62884e462b6b1cda,LIGUE1,2014-15,2015-05-03T12:00:00Z,Matchday 35,,AS Monaco,,Toulouse FC,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-312d3a3e0fce044c83edd51e,LIGUE1,2014-15,2015-05-08T12:00:00Z,Matchday 36,,Paris Saint-Germain,,EA Guingamp,,6,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-239463f64ac5a014fed81817,LIGUE1,2014-15,2015-05-09T12:00:00Z,Matchday 36,,SM Caen,,Olympique Lyonnais,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-93a1f3a37d1064b49bac4970,LIGUE1,2014-15,2015-05-09T12:00:00Z,Matchday 36,,Girondins Bordeaux,,FC Nantes,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-cf5c91b4d79245bead29e855,LIGUE1,2014-15,2015-05-09T12:00:00Z,Matchday 36,,FC Metz,,FC Lorient,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d256369527aeae71824b5b02,LIGUE1,2014-15,2015-05-09T12:00:00Z,Matchday 36,,Évian Thonon Gaillard,,Stade de Reims,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-de27716332a4808763c0d7df,LIGUE1,2014-15,2015-05-09T12:00:00Z,Matchday 36,,Toulouse FC,,Lille OSC,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-df88beaec0c5544ef842ca68,LIGUE1,2014-15,2015-05-09T12:00:00Z,Matchday 36,,Stade Rennais,,SC Bastia,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-5618e4deac6af051b352e99b,LIGUE1,2014-15,2015-05-10T12:00:00Z,Matchday 36,,AS Saint-Étienne,,OGC Nice,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-645955b5975b048d251cb612,LIGUE1,2014-15,2015-05-10T12:00:00Z,Matchday 36,,RC Lens,,Montpellier HSC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-82fba7ca0b9b6a36a64d7431,LIGUE1,2014-15,2015-05-10T12:00:00Z,Matchday 36,,Olympique Marseille,,AS Monaco,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-0220622ab07dccf908c50294,LIGUE1,2014-15,2015-05-16T12:00:00Z,Matchday 37,,Évian Thonon Gaillard,,AS Saint-Étienne,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-247f079e1a6cc7da827dd891,LIGUE1,2014-15,2015-05-16T12:00:00Z,Matchday 37,,SC Bastia,,SM Caen,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-2637f04f5744d36b0b46d0d0,LIGUE1,2014-15,2015-05-16T12:00:00Z,Matchday 37,,Stade de Reims,,Stade Rennais,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-483a857c90a102a3b97b2b7a,LIGUE1,2014-15,2015-05-16T12:00:00Z,Matchday 37,,EA Guingamp,,Toulouse FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-5d0bb28539db02291378d10b,LIGUE1,2014-15,2015-05-16T12:00:00Z,Matchday 37,,FC Nantes,,FC Lorient,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-64d8d4ff1dd944a09795efb7,LIGUE1,2014-15,2015-05-16T12:00:00Z,Matchday 37,,OGC Nice,,RC Lens,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-7266be4bab1c8a1635104252,LIGUE1,2014-15,2015-05-16T12:00:00Z,Matchday 37,,Olympique Lyonnais,,Girondins Bordeaux,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-ae90d6cd599846109c5c1bcd,LIGUE1,2014-15,2015-05-16T12:00:00Z,Matchday 37,,Lille OSC,,Olympique Marseille,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c295715e8e768cfeaf566243,LIGUE1,2014-15,2015-05-16T12:00:00Z,Matchday 37,,Montpellier HSC,,Paris Saint-Germain,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c659d19c493b04b03e0a775e,LIGUE1,2014-15,2015-05-16T12:00:00Z,Matchday 37,,AS Monaco,,FC Metz,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-11c7f7a25df4cfb53f0dad5b,LIGUE1,2014-15,2015-05-23T12:00:00Z,Matchday 38,,FC Metz,,Lille OSC,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-2392be3ad2778c30d9b56863,LIGUE1,2014-15,2015-05-23T12:00:00Z,Matchday 38,,Paris Saint-Germain,,Stade de Reims,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-4d90a50231bc6c49855088ab,LIGUE1,2014-15,2015-05-23T12:00:00Z,Matchday 38,,Toulouse FC,,OGC Nice,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-7b1b29b529bdefeece3df362,LIGUE1,2014-15,2015-05-23T12:00:00Z,Matchday 38,,Stade Rennais,,Olympique Lyonnais,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-905591dde0d0e8a76d9ab355,LIGUE1,2014-15,2015-05-23T12:00:00Z,Matchday 38,,RC Lens,,FC Nantes,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a3150f8c3684289dd08dea83,LIGUE1,2014-15,2015-05-23T12:00:00Z,Matchday 38,,AS Saint-Étienne,,EA Guingamp,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-b3f71be10c5f7e16e60f4b89,LIGUE1,2014-15,2015-05-23T12:00:00Z,Matchday 38,,SM Caen,,Évian Thonon Gaillard,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-b8b6bb064e5bd4de6a54d8b9,LIGUE1,2014-15,2015-05-23T12:00:00Z,Matchday 38,,Olympique Marseille,,SC Bastia,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d7eb24a9ae2c02ece4332c8b,LIGUE1,2014-15,2015-05-23T12:00:00Z,Matchday 38,,Girondins Bordeaux,,Montpellier HSC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-eb0bd6558214d3ac5de68a25,LIGUE1,2014-15,2015-05-23T12:00:00Z,Matchday 38,,FC Lorient,,AS Monaco,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00

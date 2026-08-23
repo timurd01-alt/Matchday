@@ -72,7 +72,7 @@ console.log(JSON.stringify(payload));
         panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
         cards = (ROOT / "app-4-features.js").read_text(encoding="utf-8")
         tree = (ROOT / "app-5-outcome-tree.js").read_text(encoding="utf-8")
-        message = "MLB forecasts paused while calibration and starting-pitcher coverage are being fixed."
+        message = "MLB picks are on hold while starting-pitcher coverage clears review."
         self.assertIn(message, core)
         self.assertIn("forecastPauseHTML(m)", panels)
         self.assertIn("isMlbForecastPaused(m)?forecastPauseHTML(m)", cards)

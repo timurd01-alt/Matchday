@@ -1,0 +1,381 @@
+game_id,comp,season,date_utc,stage,venue,home_name,home_code,away_name,away_code,home_score,away_score,status,source,first_seen
+seriea-openfootball-48542e79aa7124be34064214,SERIEA,2014-15,2014-08-30T12:00:00Z,Matchday 1,,Chievo Verona,,Juventus,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a9c3a735ecde4262d0911f7f,SERIEA,2014-15,2014-08-30T12:00:00Z,Matchday 1,,AS Roma,,ACF Fiorentina,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-1ec46fc379fd9bc143441f62,SERIEA,2014-15,2014-08-31T12:00:00Z,Matchday 1,,Sassuolo Calcio,,Cagliari Calcio,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-679072704d50d2683424b253,SERIEA,2014-15,2014-08-31T12:00:00Z,Matchday 1,,Atalanta,,Hellas Verona,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-74c508527863f6ad236d10b8,SERIEA,2014-15,2014-08-31T12:00:00Z,Matchday 1,,Udinese Calcio,,Empoli FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-7540195f2c6e0f0d198965f7,SERIEA,2014-15,2014-08-31T12:00:00Z,Matchday 1,,AC Cesena,,Parma FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-87728fa3a4fbb5b6d858fc96,SERIEA,2014-15,2014-08-31T12:00:00Z,Matchday 1,,Torino FC,,Inter,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8a31f3b1fa6ac1ab9896ed6b,SERIEA,2014-15,2014-08-31T12:00:00Z,Matchday 1,,Genoa CFC,,SSC Napoli,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-bfd472681357e39e8e8bd700,SERIEA,2014-15,2014-08-31T12:00:00Z,Matchday 1,,AC Milan,,Lazio Roma,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c0093e88c413cd6d262b7f6f,SERIEA,2014-15,2014-08-31T12:00:00Z,Matchday 1,,US Palermo,,Sampdoria,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-531999d69a6112ae6954a337,SERIEA,2014-15,2014-09-13T12:00:00Z,Matchday 2,,Juventus,,Udinese Calcio,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-cdbeb32c28111c96ba45adf3,SERIEA,2014-15,2014-09-13T12:00:00Z,Matchday 2,,Empoli FC,,AS Roma,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-04bb5224fa6e032e3de57974,SERIEA,2014-15,2014-09-14T12:00:00Z,Matchday 2,,ACF Fiorentina,,Genoa CFC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-26579b64bea521c966328557,SERIEA,2014-15,2014-09-14T12:00:00Z,Matchday 2,,Sampdoria,,Torino FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-3927ca1cb8b41d78121e4d55,SERIEA,2014-15,2014-09-14T12:00:00Z,Matchday 2,,Lazio Roma,,AC Cesena,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-3b00523db88ff393174b24d3,SERIEA,2014-15,2014-09-14T12:00:00Z,Matchday 2,,SSC Napoli,,Chievo Verona,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-bdc9145adade1514fdb0006c,SERIEA,2014-15,2014-09-14T12:00:00Z,Matchday 2,,Cagliari Calcio,,Atalanta,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-efe27d178f8b4db37381d259,SERIEA,2014-15,2014-09-14T12:00:00Z,Matchday 2,,Inter,,Sassuolo Calcio,,7,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ff63b783b3a3cfaed658d7b3,SERIEA,2014-15,2014-09-14T12:00:00Z,Matchday 2,,Parma FC,,AC Milan,,4,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-24781a47159af6e16a8c8bde,SERIEA,2014-15,2014-09-15T12:00:00Z,Matchday 2,,Hellas Verona,,US Palermo,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-08c622b815b5a248b1e9d19c,SERIEA,2014-15,2014-09-20T12:00:00Z,Matchday 3,,AC Cesena,,Empoli FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d4a4255e1c4ab7f4bf9150c5,SERIEA,2014-15,2014-09-20T12:00:00Z,Matchday 3,,AC Milan,,Juventus,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-0ee280f5eda73a0747dfe6ee,SERIEA,2014-15,2014-09-21T12:00:00Z,Matchday 3,,Udinese Calcio,,SSC Napoli,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-532a1f3fa098b55349130ef3,SERIEA,2014-15,2014-09-21T12:00:00Z,Matchday 3,,Genoa CFC,,Lazio Roma,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-53a842c6271dd2d6c91a136a,SERIEA,2014-15,2014-09-21T12:00:00Z,Matchday 3,,Torino FC,,Hellas Verona,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-626d4e1e46c9c44d33da406a,SERIEA,2014-15,2014-09-21T12:00:00Z,Matchday 3,,Sassuolo Calcio,,Sampdoria,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8ccca2533b8d256ffc4b07f4,SERIEA,2014-15,2014-09-21T12:00:00Z,Matchday 3,,Chievo Verona,,Parma FC,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e13b85e8bcda01ea5100594f,SERIEA,2014-15,2014-09-21T12:00:00Z,Matchday 3,,AS Roma,,Cagliari Calcio,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e584290b4e4ea39f26e63248,SERIEA,2014-15,2014-09-21T12:00:00Z,Matchday 3,,Atalanta,,ACF Fiorentina,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-fa1fd15e6c26fb487d1ecd90,SERIEA,2014-15,2014-09-21T12:00:00Z,Matchday 3,,US Palermo,,Inter,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-292aaf227254f96f035fa9dc,SERIEA,2014-15,2014-09-23T12:00:00Z,Matchday 4,,Empoli FC,,AC Milan,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-02afcfa1974d2adb9e2e2bfd,SERIEA,2014-15,2014-09-24T12:00:00Z,Matchday 4,,Juventus,,AC Cesena,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-09b65bd8b6a3be79df8286ed,SERIEA,2014-15,2014-09-24T12:00:00Z,Matchday 4,,Hellas Verona,,Genoa CFC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-19d4f87d2909adadb1acf261,SERIEA,2014-15,2014-09-24T12:00:00Z,Matchday 4,,SSC Napoli,,US Palermo,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6a6ad25ac7e43d617b8864e9,SERIEA,2014-15,2014-09-24T12:00:00Z,Matchday 4,,ACF Fiorentina,,Sassuolo Calcio,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-bf342b3fd38e404f94748693,SERIEA,2014-15,2014-09-24T12:00:00Z,Matchday 4,,Parma FC,,AS Roma,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e258848029d14ef40d3e7e30,SERIEA,2014-15,2014-09-24T12:00:00Z,Matchday 4,,Sampdoria,,Chievo Verona,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f5dcb9e39fe73b6a0df6c642,SERIEA,2014-15,2014-09-24T12:00:00Z,Matchday 4,,Inter,,Atalanta,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-fa07a09878f4d69a9004f0c2,SERIEA,2014-15,2014-09-24T12:00:00Z,Matchday 4,,Cagliari Calcio,,Torino FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c0f669d7d7a460ec9787185d,SERIEA,2014-15,2014-09-25T12:00:00Z,Matchday 4,,Lazio Roma,,Udinese Calcio,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8704eab1e44a86557f62f322,SERIEA,2014-15,2014-09-27T12:00:00Z,Matchday 5,,Atalanta,,Juventus,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d540acaf00037b9739b8d3d1,SERIEA,2014-15,2014-09-27T12:00:00Z,Matchday 5,,AS Roma,,Hellas Verona,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-163d991b9b139e6f99f136ff,SERIEA,2014-15,2014-09-28T12:00:00Z,Matchday 5,,AC Cesena,,AC Milan,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-437dccab1b0ecee65f0fef9a,SERIEA,2014-15,2014-09-28T12:00:00Z,Matchday 5,,Torino FC,,ACF Fiorentina,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-46eb82caa1e419418709563a,SERIEA,2014-15,2014-09-28T12:00:00Z,Matchday 5,,Sassuolo Calcio,,SSC Napoli,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-533201e077cb2c70dcb0f631,SERIEA,2014-15,2014-09-28T12:00:00Z,Matchday 5,,Inter,,Cagliari Calcio,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-67c9c5ae013553457bfdf773,SERIEA,2014-15,2014-09-28T12:00:00Z,Matchday 5,,Genoa CFC,,Sampdoria,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e11d7a47b20015385643ef43,SERIEA,2014-15,2014-09-28T12:00:00Z,Matchday 5,,Chievo Verona,,Empoli FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2b86aab734fadf3c4df535d2,SERIEA,2014-15,2014-09-29T12:00:00Z,Matchday 5,,US Palermo,,Lazio Roma,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-fd010715d6079b336c1a13c5,SERIEA,2014-15,2014-09-29T12:00:00Z,Matchday 5,,Udinese Calcio,,Parma FC,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-93cb4ab9d62e07c645fcfd3d,SERIEA,2014-15,2014-10-04T12:00:00Z,Matchday 6,,AC Milan,,Chievo Verona,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b98a8adfd59bf10f17752cf4,SERIEA,2014-15,2014-10-04T12:00:00Z,Matchday 6,,Hellas Verona,,Cagliari Calcio,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-0e5ebec51fbd230fb63ca3b7,SERIEA,2014-15,2014-10-05T12:00:00Z,Matchday 6,,Lazio Roma,,Sassuolo Calcio,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-17b5dfb2eddb15003bf7cb67,SERIEA,2014-15,2014-10-05T12:00:00Z,Matchday 6,,Empoli FC,,US Palermo,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-1dc19159c50946de373d61a6,SERIEA,2014-15,2014-10-05T12:00:00Z,Matchday 6,,ACF Fiorentina,,Inter,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-37311ae0b710ff7b3d84e219,SERIEA,2014-15,2014-10-05T12:00:00Z,Matchday 6,,Udinese Calcio,,AC Cesena,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-3fa176e4672e822eebf1f9b6,SERIEA,2014-15,2014-10-05T12:00:00Z,Matchday 6,,Juventus,,AS Roma,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a45997c633616120550889b0,SERIEA,2014-15,2014-10-05T12:00:00Z,Matchday 6,,Sampdoria,,Atalanta,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ab5a68b65ceedf33e0431ca5,SERIEA,2014-15,2014-10-05T12:00:00Z,Matchday 6,,Parma FC,,Genoa CFC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-deeffca968b1e9024b8c3c5d,SERIEA,2014-15,2014-10-05T12:00:00Z,Matchday 6,,SSC Napoli,,Torino FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-3b109bb0ef5ef844ae31da72,SERIEA,2014-15,2014-10-18T12:00:00Z,Matchday 7,,AS Roma,,Chievo Verona,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b5b3921cacdd4ed932116c2b,SERIEA,2014-15,2014-10-18T12:00:00Z,Matchday 7,,Sassuolo Calcio,,Juventus,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5b76915416f77ab152ac083c,SERIEA,2014-15,2014-10-19T12:00:00Z,Matchday 7,,Torino FC,,Udinese Calcio,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8ad5eb21b8d7350e4dfebe37,SERIEA,2014-15,2014-10-19T12:00:00Z,Matchday 7,,Hellas Verona,,AC Milan,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-99c771b2c98392c543082afb,SERIEA,2014-15,2014-10-19T12:00:00Z,Matchday 7,,US Palermo,,AC Cesena,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-99da590206854343f9dac2e4,SERIEA,2014-15,2014-10-19T12:00:00Z,Matchday 7,,ACF Fiorentina,,Lazio Roma,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9d48f115ac17a58890cb779d,SERIEA,2014-15,2014-10-19T12:00:00Z,Matchday 7,,Atalanta,,Parma FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ced821610a4adbae89770a70,SERIEA,2014-15,2014-10-19T12:00:00Z,Matchday 7,,Inter,,SSC Napoli,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f4e800361537fa7c5b9ad1ba,SERIEA,2014-15,2014-10-19T12:00:00Z,Matchday 7,,Cagliari Calcio,,Sampdoria,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e864bf4b7cb4fa0459b595e6,SERIEA,2014-15,2014-10-20T12:00:00Z,Matchday 7,,Genoa CFC,,Empoli FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-113171c57c8e13386b2dd80a,SERIEA,2014-15,2014-10-25T12:00:00Z,Matchday 8,,Sampdoria,,AS Roma,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-caa2fa62bf594c23f9028037,SERIEA,2014-15,2014-10-25T12:00:00Z,Matchday 8,,Empoli FC,,Cagliari Calcio,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-cdf2b9854d85e8310aad19c5,SERIEA,2014-15,2014-10-25T12:00:00Z,Matchday 8,,Parma FC,,Sassuolo Calcio,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-1e06762862ab7f76c74e52b2,SERIEA,2014-15,2014-10-26T12:00:00Z,Matchday 8,,SSC Napoli,,Hellas Verona,,6,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-47c7c4149eb700e1d0edebb0,SERIEA,2014-15,2014-10-26T12:00:00Z,Matchday 8,,Lazio Roma,,Torino FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-aa5addc0c9869e2b5b2cba18,SERIEA,2014-15,2014-10-26T12:00:00Z,Matchday 8,,Chievo Verona,,Genoa CFC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b4a2902058211b30352d604e,SERIEA,2014-15,2014-10-26T12:00:00Z,Matchday 8,,Udinese Calcio,,Atalanta,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b775ee8625e50ca674fbe34b,SERIEA,2014-15,2014-10-26T12:00:00Z,Matchday 8,,Juventus,,US Palermo,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-bb672c2097ea162518cc329e,SERIEA,2014-15,2014-10-26T12:00:00Z,Matchday 8,,AC Cesena,,Inter,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f694ddf79dfa8f951ec8985e,SERIEA,2014-15,2014-10-26T12:00:00Z,Matchday 8,,AC Milan,,ACF Fiorentina,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-1b208241cb636b8edbef41bc,SERIEA,2014-15,2014-10-28T12:00:00Z,Matchday 9,,Sassuolo Calcio,,Empoli FC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-11ed3f1242264c2427d3d77e,SERIEA,2014-15,2014-10-29T12:00:00Z,Matchday 9,,Cagliari Calcio,,AC Milan,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2e4da8bfc1d90f03397e3348,SERIEA,2014-15,2014-10-29T12:00:00Z,Matchday 9,,Atalanta,,SSC Napoli,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-448e0ca7f1d60cb5b349a3a0,SERIEA,2014-15,2014-10-29T12:00:00Z,Matchday 9,,Inter,,Sampdoria,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4b5ea05589459509763a8317,SERIEA,2014-15,2014-10-29T12:00:00Z,Matchday 9,,Genoa CFC,,Juventus,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6badd3088abc8c6130416c7a,SERIEA,2014-15,2014-10-29T12:00:00Z,Matchday 9,,AS Roma,,AC Cesena,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-914414418a86df0136ab20a1,SERIEA,2014-15,2014-10-29T12:00:00Z,Matchday 9,,ACF Fiorentina,,Udinese Calcio,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c6cb451892ee0e499895fb9b,SERIEA,2014-15,2014-10-29T12:00:00Z,Matchday 9,,US Palermo,,Chievo Verona,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-cd78b2d3717726080c9fc918,SERIEA,2014-15,2014-10-29T12:00:00Z,Matchday 9,,Torino FC,,Parma FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-05d75c7dc6d96ef14d17d364,SERIEA,2014-15,2014-10-30T12:00:00Z,Matchday 9,,Hellas Verona,,Lazio Roma,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-bcc17fac2e0ee2a99b23d678,SERIEA,2014-15,2014-11-01T12:00:00Z,Matchday 10,,Parma FC,,Inter,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c3a7b55bd5fe3e6338493508,SERIEA,2014-15,2014-11-01T12:00:00Z,Matchday 10,,SSC Napoli,,AS Roma,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d54c8b41b408225eacffab9f,SERIEA,2014-15,2014-11-01T12:00:00Z,Matchday 10,,Empoli FC,,Juventus,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-1d52bfdbb655cc584c80f670,SERIEA,2014-15,2014-11-02T12:00:00Z,Matchday 10,,AC Milan,,US Palermo,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-22e807163888543d77e0efc9,SERIEA,2014-15,2014-11-02T12:00:00Z,Matchday 10,,Chievo Verona,,Sassuolo Calcio,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5a6db9245c5e396b0c3b140d,SERIEA,2014-15,2014-11-02T12:00:00Z,Matchday 10,,Sampdoria,,ACF Fiorentina,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f628eaa90003ecc22e7e09b0,SERIEA,2014-15,2014-11-02T12:00:00Z,Matchday 10,,Udinese Calcio,,Genoa CFC,,2,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-fbad4b2fd3f63f36ed030d7c,SERIEA,2014-15,2014-11-02T12:00:00Z,Matchday 10,,Torino FC,,Atalanta,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-918b340858103702771af090,SERIEA,2014-15,2014-11-03T12:00:00Z,Matchday 10,,Lazio Roma,,Cagliari Calcio,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-bd168103d59f234550e05a34,SERIEA,2014-15,2014-11-03T12:00:00Z,Matchday 10,,AC Cesena,,Hellas Verona,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4af6ff1354d5b043ef3838a6,SERIEA,2014-15,2014-11-08T12:00:00Z,Matchday 11,,Sassuolo Calcio,,Atalanta,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-532acc1818a63a4be5ad33fe,SERIEA,2014-15,2014-11-08T12:00:00Z,Matchday 11,,Sampdoria,,AC Milan,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-0b88ca98cc87ba4972a80cfe,SERIEA,2014-15,2014-11-09T12:00:00Z,Matchday 11,,US Palermo,,Udinese Calcio,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-19cbe0662459ebf08181b585,SERIEA,2014-15,2014-11-09T12:00:00Z,Matchday 11,,Inter,,Hellas Verona,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2c95d861de751e80dbf58d80,SERIEA,2014-15,2014-11-09T12:00:00Z,Matchday 11,,Cagliari Calcio,,Genoa CFC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-368aa5e9dc9a7d09b324b246,SERIEA,2014-15,2014-11-09T12:00:00Z,Matchday 11,,ACF Fiorentina,,SSC Napoli,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9364aaa7591b4334ee04267e,SERIEA,2014-15,2014-11-09T12:00:00Z,Matchday 11,,Chievo Verona,,AC Cesena,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9da4126ea04d37c930db1931,SERIEA,2014-15,2014-11-09T12:00:00Z,Matchday 11,,AS Roma,,Torino FC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b507419c8a2ddfdce45161ba,SERIEA,2014-15,2014-11-09T12:00:00Z,Matchday 11,,Juventus,,Parma FC,,7,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-fda525c70eba9a73fba334ce,SERIEA,2014-15,2014-11-09T12:00:00Z,Matchday 11,,Empoli FC,,Lazio Roma,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-13ba38d04e12be320f097675,SERIEA,2014-15,2014-11-22T12:00:00Z,Matchday 12,,Lazio Roma,,Juventus,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b4f4bcad8fd14c251857706b,SERIEA,2014-15,2014-11-22T12:00:00Z,Matchday 12,,Atalanta,,AS Roma,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-53f67d12c5520f5dc502c404,SERIEA,2014-15,2014-11-23T12:00:00Z,Matchday 12,,AC Milan,,Inter,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-80ad5362581c4e55c8f25ac8,SERIEA,2014-15,2014-11-23T12:00:00Z,Matchday 12,,Hellas Verona,,ACF Fiorentina,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8cb861f06f2e5a7c1c68cb8f,SERIEA,2014-15,2014-11-23T12:00:00Z,Matchday 12,,SSC Napoli,,Cagliari Calcio,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c566775f5c9856efd5e4a9ca,SERIEA,2014-15,2014-11-23T12:00:00Z,Matchday 12,,Udinese Calcio,,Chievo Verona,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-dda7db55dc0ad12be663f747,SERIEA,2014-15,2014-11-23T12:00:00Z,Matchday 12,,Parma FC,,Empoli FC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f157031d90b6b3bb5e05553a,SERIEA,2014-15,2014-11-23T12:00:00Z,Matchday 12,,Torino FC,,Sassuolo Calcio,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f8ac08e3bcfa7f57f37f0e16,SERIEA,2014-15,2014-11-23T12:00:00Z,Matchday 12,,AC Cesena,,Sampdoria,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-164cff84dfc468a089026eb2,SERIEA,2014-15,2014-11-24T12:00:00Z,Matchday 12,,Genoa CFC,,US Palermo,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6f0b3e463d0280dae8bd8686,SERIEA,2014-15,2014-11-29T12:00:00Z,Matchday 13,,Sassuolo Calcio,,Hellas Verona,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ce22ff7d2d9b1b7e5d352e9e,SERIEA,2014-15,2014-11-29T12:00:00Z,Matchday 13,,Chievo Verona,,Lazio Roma,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-41d030974d8cdd0653cd6956,SERIEA,2014-15,2014-11-30T12:00:00Z,Matchday 13,,AC Milan,,Udinese Calcio,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-46635585afeb7d6a3e7ecc6c,SERIEA,2014-15,2014-11-30T12:00:00Z,Matchday 13,,Empoli FC,,Atalanta,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-482d5edd7282dd5c8f9ca0f3,SERIEA,2014-15,2014-11-30T12:00:00Z,Matchday 13,,AC Cesena,,Genoa CFC,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-69b556ec2d79d47118cbac21,SERIEA,2014-15,2014-11-30T12:00:00Z,Matchday 13,,Juventus,,Torino FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-7d04c7c225cdcfb30a1d63ec,SERIEA,2014-15,2014-11-30T12:00:00Z,Matchday 13,,AS Roma,,Inter,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a15274cd8092af4b2eff3a38,SERIEA,2014-15,2014-11-30T12:00:00Z,Matchday 13,,Cagliari Calcio,,ACF Fiorentina,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e7930e4abf47cb48d38c3f0e,SERIEA,2014-15,2014-11-30T12:00:00Z,Matchday 13,,US Palermo,,Parma FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-76c2a73af4c2d18bf038a32b,SERIEA,2014-15,2014-12-01T12:00:00Z,Matchday 13,,Sampdoria,,SSC Napoli,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c90121a8aacd4a8ef5107415,SERIEA,2014-15,2014-12-05T12:00:00Z,Matchday 14,,ACF Fiorentina,,Juventus,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-55513fdaced16c200b14d8d4,SERIEA,2014-15,2014-12-06T12:00:00Z,Matchday 14,,Torino FC,,US Palermo,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-99eec015cbb7d9eecf233df9,SERIEA,2014-15,2014-12-06T12:00:00Z,Matchday 14,,AS Roma,,Sassuolo Calcio,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-309e3c9f98b8d281c52797b1,SERIEA,2014-15,2014-12-07T12:00:00Z,Matchday 14,,Parma FC,,Lazio Roma,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-86a2081fdf6ccc6a9d90df3d,SERIEA,2014-15,2014-12-07T12:00:00Z,Matchday 14,,SSC Napoli,,Empoli FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-96f89536a119cb4320cd3067,SERIEA,2014-15,2014-12-07T12:00:00Z,Matchday 14,,Atalanta,,AC Cesena,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-cb5adc4075b2c067fc436938,SERIEA,2014-15,2014-12-07T12:00:00Z,Matchday 14,,Genoa CFC,,AC Milan,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-fc02fd3ed974308f2eaf7b1f,SERIEA,2014-15,2014-12-07T12:00:00Z,Matchday 14,,Inter,,Udinese Calcio,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-3e7f7851b3904af53d249a20,SERIEA,2014-15,2014-12-08T12:00:00Z,Matchday 14,,Hellas Verona,,Sampdoria,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-41f4caee2132870cfd7bbab6,SERIEA,2014-15,2014-12-08T12:00:00Z,Matchday 14,,Cagliari Calcio,,Chievo Verona,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-1d474c89879a25d2c02f30aa,SERIEA,2014-15,2014-12-13T12:00:00Z,Matchday 15,,US Palermo,,Sassuolo Calcio,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-260f287e06ebbb20c2a6d2ed,SERIEA,2014-15,2014-12-13T12:00:00Z,Matchday 15,,Lazio Roma,,Atalanta,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-16d0a68e2b1dece5e7e18230,SERIEA,2014-15,2014-12-14T12:00:00Z,Matchday 15,,AC Milan,,SSC Napoli,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4efbddc904ae75ff18a1be1a,SERIEA,2014-15,2014-12-14T12:00:00Z,Matchday 15,,AC Cesena,,ACF Fiorentina,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5b5384ada19f997bb3844f53,SERIEA,2014-15,2014-12-14T12:00:00Z,Matchday 15,,Parma FC,,Cagliari Calcio,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c2d2cf56b3861b18d0298ac8,SERIEA,2014-15,2014-12-14T12:00:00Z,Matchday 15,,Udinese Calcio,,Hellas Verona,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c91533270e690d389b5f026e,SERIEA,2014-15,2014-12-14T12:00:00Z,Matchday 15,,Genoa CFC,,AS Roma,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-cbfb47593fa91d51360e11ac,SERIEA,2014-15,2014-12-14T12:00:00Z,Matchday 15,,Juventus,,Sampdoria,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-767d4e8363eb42e99ad5fade,SERIEA,2014-15,2014-12-15T12:00:00Z,Matchday 15,,Empoli FC,,Torino FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-819e64b48e08b7b138e0a231,SERIEA,2014-15,2014-12-15T12:00:00Z,Matchday 15,,Chievo Verona,,Inter,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-09e83c6515c7d879e7a10319,SERIEA,2014-15,2014-12-18T12:00:00Z,Matchday 16,,SSC Napoli,,Parma FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-177d560f3d62d8c0c868579d,SERIEA,2014-15,2014-12-18T12:00:00Z,Matchday 16,,Cagliari Calcio,,Juventus,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5122d8ba733ea73386a71fab,SERIEA,2014-15,2014-12-20T12:00:00Z,Matchday 16,,AS Roma,,AC Milan,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a56b9792c178e4ec0103522e,SERIEA,2014-15,2014-12-20T12:00:00Z,Matchday 16,,Sassuolo Calcio,,AC Cesena,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-237112120a9e41e12360365e,SERIEA,2014-15,2014-12-21T12:00:00Z,Matchday 16,,Inter,,Lazio Roma,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-465566046c02074b88d37890,SERIEA,2014-15,2014-12-21T12:00:00Z,Matchday 16,,Atalanta,,US Palermo,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-488bd9258f653b9b6c708af4,SERIEA,2014-15,2014-12-21T12:00:00Z,Matchday 16,,Sampdoria,,Udinese Calcio,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a8816d9aa10c8ffd1aaefa35,SERIEA,2014-15,2014-12-21T12:00:00Z,Matchday 16,,Hellas Verona,,Chievo Verona,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b449f645e87af2bcb00e9a48,SERIEA,2014-15,2014-12-21T12:00:00Z,Matchday 16,,ACF Fiorentina,,Empoli FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-fcfcd07feba09ff4d017780a,SERIEA,2014-15,2014-12-21T12:00:00Z,Matchday 16,,Torino FC,,Genoa CFC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8d21e53a321e0de8e81c9a52,SERIEA,2014-15,2015-01-05T12:00:00Z,Matchday 17,,Lazio Roma,,Sampdoria,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-124913bc512fec9e1acda43a,SERIEA,2014-15,2015-01-06T12:00:00Z,Matchday 17,,Chievo Verona,,Torino FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2f04bb38ac58db8982f1f9cc,SERIEA,2014-15,2015-01-06T12:00:00Z,Matchday 17,,AC Cesena,,SSC Napoli,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-307c5b80dc2c4f9c26630fdf,SERIEA,2014-15,2015-01-06T12:00:00Z,Matchday 17,,Udinese Calcio,,AS Roma,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6858653adea2a5f30c9b7a5f,SERIEA,2014-15,2015-01-06T12:00:00Z,Matchday 17,,US Palermo,,Cagliari Calcio,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9154e2601b3838c16262ced4,SERIEA,2014-15,2015-01-06T12:00:00Z,Matchday 17,,AC Milan,,Sassuolo Calcio,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9d1a87867b5956061a50d767,SERIEA,2014-15,2015-01-06T12:00:00Z,Matchday 17,,Empoli FC,,Hellas Verona,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a159b7867d5ad2c252da258f,SERIEA,2014-15,2015-01-06T12:00:00Z,Matchday 17,,Genoa CFC,,Atalanta,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ca6a7ec6b0cfd51d815238c1,SERIEA,2014-15,2015-01-06T12:00:00Z,Matchday 17,,Juventus,,Inter,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-de2df0982d11fa914bde840b,SERIEA,2014-15,2015-01-06T12:00:00Z,Matchday 17,,Parma FC,,ACF Fiorentina,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-bd035710bd6e52c7c60f80b9,SERIEA,2014-15,2015-01-10T12:00:00Z,Matchday 18,,Sassuolo Calcio,,Udinese Calcio,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e053e473b12cb20235331171,SERIEA,2014-15,2015-01-10T12:00:00Z,Matchday 18,,Torino FC,,AC Milan,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-0ab93500bd13227749b0edcd,SERIEA,2014-15,2015-01-11T12:00:00Z,Matchday 18,,SSC Napoli,,Juventus,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-0f0105dd23956928b7142805,SERIEA,2014-15,2015-01-11T12:00:00Z,Matchday 18,,Hellas Verona,,Parma FC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-646404f7c802f69ff7b6f110,SERIEA,2014-15,2015-01-11T12:00:00Z,Matchday 18,,AS Roma,,Lazio Roma,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6ba1253abc89b73229c97db6,SERIEA,2014-15,2015-01-11T12:00:00Z,Matchday 18,,Cagliari Calcio,,AC Cesena,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8dc432138b377f265cbced93,SERIEA,2014-15,2015-01-11T12:00:00Z,Matchday 18,,Inter,,Genoa CFC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e94061c8626c2717d4082b5a,SERIEA,2014-15,2015-01-11T12:00:00Z,Matchday 18,,Atalanta,,Chievo Verona,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ecd0017bf6fd0de2cc5ed356,SERIEA,2014-15,2015-01-11T12:00:00Z,Matchday 18,,Sampdoria,,Empoli FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-fb78d016a461f5ef6563b7ec,SERIEA,2014-15,2015-01-11T12:00:00Z,Matchday 18,,ACF Fiorentina,,US Palermo,,4,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5aaa1465c9a65111cb9360bb,SERIEA,2014-15,2015-01-17T12:00:00Z,Matchday 19,,US Palermo,,AS Roma,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b72384643a245009ef303c88,SERIEA,2014-15,2015-01-17T12:00:00Z,Matchday 19,,Empoli FC,,Inter,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-15d5ac121da3605fe8e9f928,SERIEA,2014-15,2015-01-18T12:00:00Z,Matchday 19,,Chievo Verona,,ACF Fiorentina,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-246f3950998bde439e0cdd29,SERIEA,2014-15,2015-01-18T12:00:00Z,Matchday 19,,AC Cesena,,Torino FC,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-7bd7457d0bc61bcc3bd000f9,SERIEA,2014-15,2015-01-18T12:00:00Z,Matchday 19,,Lazio Roma,,SSC Napoli,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-82f0925e74ce2b10890b991b,SERIEA,2014-15,2015-01-18T12:00:00Z,Matchday 19,,Parma FC,,Sampdoria,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-92e95d9c047dee3e58d47239,SERIEA,2014-15,2015-01-18T12:00:00Z,Matchday 19,,AC Milan,,Atalanta,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-bd6ed5c4d0d2eb6c508ddc58,SERIEA,2014-15,2015-01-18T12:00:00Z,Matchday 19,,Genoa CFC,,Sassuolo Calcio,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d5a0b097d76ba2fcf4c0ac8d,SERIEA,2014-15,2015-01-18T12:00:00Z,Matchday 19,,Juventus,,Hellas Verona,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f9c674b27111d15dd3f872b5,SERIEA,2014-15,2015-01-18T12:00:00Z,Matchday 19,,Udinese Calcio,,Cagliari Calcio,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-981b7457eaae3c6ecb1caf13,SERIEA,2014-15,2015-01-24T12:00:00Z,Matchday 20,,Cagliari Calcio,,Sassuolo Calcio,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b1232e83eb3f1deb4d13ef16,SERIEA,2014-15,2015-01-24T12:00:00Z,Matchday 20,,Lazio Roma,,AC Milan,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-070e690d4f357705ba4b4ba0,SERIEA,2014-15,2015-01-25T12:00:00Z,Matchday 20,,Inter,,Torino FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-10c083cd6c09290f6af3114a,SERIEA,2014-15,2015-01-25T12:00:00Z,Matchday 20,,Hellas Verona,,Atalanta,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8b6a7309d28ea21e68611e21,SERIEA,2014-15,2015-01-25T12:00:00Z,Matchday 20,,Sampdoria,,US Palermo,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ed60371b1d7154add4123b71,SERIEA,2014-15,2015-01-25T12:00:00Z,Matchday 20,,ACF Fiorentina,,AS Roma,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f7f661065a140d9a7ce50c19,SERIEA,2014-15,2015-01-25T12:00:00Z,Matchday 20,,Parma FC,,AC Cesena,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-fd7784ec388bbbbda495e516,SERIEA,2014-15,2015-01-25T12:00:00Z,Matchday 20,,Juventus,,Chievo Verona,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-7f39b68739d959faa1fbd46b,SERIEA,2014-15,2015-01-26T12:00:00Z,Matchday 20,,Empoli FC,,Udinese Calcio,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-cbc8c50ffbcbee2ef8ba21cd,SERIEA,2014-15,2015-01-26T12:00:00Z,Matchday 20,,SSC Napoli,,Genoa CFC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-52671e3117f4713b1087f6c7,SERIEA,2014-15,2015-01-31T12:00:00Z,Matchday 21,,Genoa CFC,,ACF Fiorentina,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6ebcadfc4bae456dfc76fbbd,SERIEA,2014-15,2015-01-31T12:00:00Z,Matchday 21,,AS Roma,,Empoli FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-065ca0162920eb4c8d18e56b,SERIEA,2014-15,2015-02-01T12:00:00Z,Matchday 21,,Chievo Verona,,SSC Napoli,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-7a0fb6eef09a7bee6bc1b5b6,SERIEA,2014-15,2015-02-01T12:00:00Z,Matchday 21,,Udinese Calcio,,Juventus,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-96681f360403b28754b911eb,SERIEA,2014-15,2015-02-01T12:00:00Z,Matchday 21,,US Palermo,,Hellas Verona,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ca761eaf304a7d4765c1e20d,SERIEA,2014-15,2015-02-01T12:00:00Z,Matchday 21,,Sassuolo Calcio,,Inter,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-cfbc06d3b328e54d4bdb98c5,SERIEA,2014-15,2015-02-01T12:00:00Z,Matchday 21,,Atalanta,,Cagliari Calcio,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e77b859149b10a97c5e8a530,SERIEA,2014-15,2015-02-01T12:00:00Z,Matchday 21,,AC Cesena,,Lazio Roma,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ee64d2092c48a27bdbb4c0eb,SERIEA,2014-15,2015-02-01T12:00:00Z,Matchday 21,,Torino FC,,Sampdoria,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-fc2c7c167e5b6241a77d6b60,SERIEA,2014-15,2015-02-01T12:00:00Z,Matchday 21,,AC Milan,,Parma FC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-afd6e2afa8b665776a435027,SERIEA,2014-15,2015-02-07T12:00:00Z,Matchday 22,,Hellas Verona,,Torino FC,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e138437f1fe1399e7ed0c447,SERIEA,2014-15,2015-02-07T12:00:00Z,Matchday 22,,Juventus,,AC Milan,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-0eb30ae56fef70db5660875c,SERIEA,2014-15,2015-02-08T12:00:00Z,Matchday 22,,ACF Fiorentina,,Atalanta,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-50268853cb37bab7974d68d3,SERIEA,2014-15,2015-02-08T12:00:00Z,Matchday 22,,Empoli FC,,AC Cesena,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-7aac0fc93a785c26b5cf48aa,SERIEA,2014-15,2015-02-08T12:00:00Z,Matchday 22,,SSC Napoli,,Udinese Calcio,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b09e17b1eb71768f1fb9cb68,SERIEA,2014-15,2015-02-08T12:00:00Z,Matchday 22,,Sampdoria,,Sassuolo Calcio,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b50037d0bb4867ddbc8cd68c,SERIEA,2014-15,2015-02-08T12:00:00Z,Matchday 22,,Cagliari Calcio,,AS Roma,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c96221ce8e1d44b97fe647c0,SERIEA,2014-15,2015-02-08T12:00:00Z,Matchday 22,,Inter,,US Palermo,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ca462c4b075354478ed44c15,SERIEA,2014-15,2015-02-09T12:00:00Z,Matchday 22,,Lazio Roma,,Genoa CFC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6083d6a9b4ad92578778d86d,SERIEA,2014-15,2015-02-11T12:00:00Z,Matchday 22,,Parma FC,,Chievo Verona,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-90a24c026e0d2d8bbd09b5e9,SERIEA,2014-15,2015-02-14T12:00:00Z,Matchday 23,,US Palermo,,SSC Napoli,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-fe996a49ca13bd94b71ed778,SERIEA,2014-15,2015-02-14T12:00:00Z,Matchday 23,,Sassuolo Calcio,,ACF Fiorentina,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-74140187afc3507db5d05834,SERIEA,2014-15,2015-02-15T12:00:00Z,Matchday 23,,Torino FC,,Cagliari Calcio,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-98998825d0edb4760af3e95b,SERIEA,2014-15,2015-02-15T12:00:00Z,Matchday 23,,AC Milan,,Empoli FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c8f334c6bb22396e71e0ec24,SERIEA,2014-15,2015-02-15T12:00:00Z,Matchday 23,,AS Roma,,Parma FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d397ed7382f095a0eb2df46a,SERIEA,2014-15,2015-02-15T12:00:00Z,Matchday 23,,Chievo Verona,,Sampdoria,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e39892d65d4172ca90a0967c,SERIEA,2014-15,2015-02-15T12:00:00Z,Matchday 23,,AC Cesena,,Juventus,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e87cd8d4e991d7da570956bb,SERIEA,2014-15,2015-02-15T12:00:00Z,Matchday 23,,Genoa CFC,,Hellas Verona,,5,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-eb35ac959c9c4ca56dc6ca79,SERIEA,2014-15,2015-02-15T12:00:00Z,Matchday 23,,Atalanta,,Inter,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ee212c46ad9d3e6bf946baed,SERIEA,2014-15,2015-02-15T12:00:00Z,Matchday 23,,Udinese Calcio,,Lazio Roma,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5f9b6628b4a4b5901dc06abd,SERIEA,2014-15,2015-02-20T12:00:00Z,Matchday 24,,Juventus,,Atalanta,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-499ac78e2d2bd4b356708593,SERIEA,2014-15,2015-02-22T12:00:00Z,Matchday 24,,Empoli FC,,Chievo Verona,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5ce3a759e848f37e8d90fba0,SERIEA,2014-15,2015-02-22T12:00:00Z,Matchday 24,,Hellas Verona,,AS Roma,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8476b6c8162387b2f7283ef1,SERIEA,2014-15,2015-02-22T12:00:00Z,Matchday 24,,AC Milan,,AC Cesena,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8ffe54fd173e564442895521,SERIEA,2014-15,2015-02-22T12:00:00Z,Matchday 24,,Lazio Roma,,US Palermo,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9c6788e9e07252b319cd4f38,SERIEA,2014-15,2015-02-22T12:00:00Z,Matchday 24,,ACF Fiorentina,,Torino FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-730a39e0762dbda6715f67d5,SERIEA,2014-15,2015-02-23T12:00:00Z,Matchday 24,,Cagliari Calcio,,Inter,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-dcf9c27610cccbb744e63d9c,SERIEA,2014-15,2015-02-23T12:00:00Z,Matchday 24,,SSC Napoli,,Sassuolo Calcio,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b08749f140fab18ac99f39d8,SERIEA,2014-15,2015-02-24T12:00:00Z,Matchday 24,,Sampdoria,,Genoa CFC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-cba9fa8c40345615d9f0c208,SERIEA,2014-15,2015-02-28T12:00:00Z,Matchday 25,,Chievo Verona,,AC Milan,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-0d0e7d0c2a46db6f5baf196a,SERIEA,2014-15,2015-03-01T12:00:00Z,Matchday 25,,Sassuolo Calcio,,Lazio Roma,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-264ea8e010b1c9abfcf41e98,SERIEA,2014-15,2015-03-01T12:00:00Z,Matchday 25,,US Palermo,,Empoli FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2a5488951693f26432d8fcef,SERIEA,2014-15,2015-03-01T12:00:00Z,Matchday 25,,Cagliari Calcio,,Hellas Verona,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-3edf222a350728c893b4fce6,SERIEA,2014-15,2015-03-01T12:00:00Z,Matchday 25,,Atalanta,,Sampdoria,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-62855fdcec5b5df46bab3c39,SERIEA,2014-15,2015-03-01T12:00:00Z,Matchday 25,,AC Cesena,,Udinese Calcio,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6a2adb6f3a54fbcc8585f114,SERIEA,2014-15,2015-03-01T12:00:00Z,Matchday 25,,Inter,,ACF Fiorentina,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8d0754ac2e51e413c30df5f2,SERIEA,2014-15,2015-03-01T12:00:00Z,Matchday 25,,Torino FC,,SSC Napoli,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-0dedce46c3d91cb7ac5483a7,SERIEA,2014-15,2015-03-02T12:00:00Z,Matchday 25,,AS Roma,,Juventus,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2b60c5a338dba99f3c59f91b,SERIEA,2014-15,2015-03-07T12:00:00Z,Matchday 26,,AC Milan,,Hellas Verona,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a0ddd6e8da575dd68792a13c,SERIEA,2014-15,2015-03-07T12:00:00Z,Matchday 26,,Sampdoria,,Cagliari Calcio,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-58a7bd93a82c5204f3803b6b,SERIEA,2014-15,2015-03-08T12:00:00Z,Matchday 26,,AC Cesena,,US Palermo,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-669ee831cdd79094162f3e37,SERIEA,2014-15,2015-03-08T12:00:00Z,Matchday 26,,Empoli FC,,Genoa CFC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-800cca82f0a25a8f9ad9cdf0,SERIEA,2014-15,2015-03-08T12:00:00Z,Matchday 26,,Chievo Verona,,AS Roma,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-afcb772e58cca8080ade9dde,SERIEA,2014-15,2015-03-08T12:00:00Z,Matchday 26,,SSC Napoli,,Inter,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f6073e9810f7cce6089e362c,SERIEA,2014-15,2015-03-08T12:00:00Z,Matchday 26,,Udinese Calcio,,Torino FC,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-fd8c662178c1e0f8adb30923,SERIEA,2014-15,2015-03-08T12:00:00Z,Matchday 26,,Parma FC,,Atalanta,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2e2bdbbb67c44adbb839e82f,SERIEA,2014-15,2015-03-09T12:00:00Z,Matchday 26,,Juventus,,Sassuolo Calcio,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-49e2be7c5d646ddc14945eeb,SERIEA,2014-15,2015-03-09T12:00:00Z,Matchday 26,,Lazio Roma,,ACF Fiorentina,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c7fe01d764b62aeaa4345d2f,SERIEA,2014-15,2015-03-14T12:00:00Z,Matchday 27,,US Palermo,,Juventus,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ed516ad02455efe58aed56f9,SERIEA,2014-15,2015-03-14T12:00:00Z,Matchday 27,,Cagliari Calcio,,Empoli FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-137a9e82ee0a39f3b5efc41b,SERIEA,2014-15,2015-03-15T12:00:00Z,Matchday 27,,Sassuolo Calcio,,Parma FC,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4c9d37067a43b17d32a50c1c,SERIEA,2014-15,2015-03-15T12:00:00Z,Matchday 27,,Genoa CFC,,Chievo Verona,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-93b95255ae62ff61fc3565e8,SERIEA,2014-15,2015-03-15T12:00:00Z,Matchday 27,,Atalanta,,Udinese Calcio,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9e5a62aff3ab815c921423e8,SERIEA,2014-15,2015-03-15T12:00:00Z,Matchday 27,,Hellas Verona,,SSC Napoli,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-bb150b05500b4b099f096f21,SERIEA,2014-15,2015-03-15T12:00:00Z,Matchday 27,,Inter,,AC Cesena,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-00074927e4d374ffb74eb535,SERIEA,2014-15,2015-03-16T12:00:00Z,Matchday 27,,Torino FC,,Lazio Roma,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5d7718bde6ed01b94f74fa81,SERIEA,2014-15,2015-03-16T12:00:00Z,Matchday 27,,AS Roma,,Sampdoria,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c0b0cae3bb5180c1ab000286,SERIEA,2014-15,2015-03-16T12:00:00Z,Matchday 27,,ACF Fiorentina,,AC Milan,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6659f74ffade91785bbb040f,SERIEA,2014-15,2015-03-21T12:00:00Z,Matchday 28,,Chievo Verona,,US Palermo,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9097b16014371ffa02881866,SERIEA,2014-15,2015-03-21T12:00:00Z,Matchday 28,,AC Milan,,Cagliari Calcio,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-25520b24478e0c7cb501f4df,SERIEA,2014-15,2015-03-22T12:00:00Z,Matchday 28,,Juventus,,Genoa CFC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-43ad83e36c8709c8f393f61c,SERIEA,2014-15,2015-03-22T12:00:00Z,Matchday 28,,Empoli FC,,Sassuolo Calcio,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4dbf482d855c6ac953ed9867,SERIEA,2014-15,2015-03-22T12:00:00Z,Matchday 28,,SSC Napoli,,Atalanta,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b500f8e3eeb7c39d779ce643,SERIEA,2014-15,2015-03-22T12:00:00Z,Matchday 28,,Parma FC,,Torino FC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d05fc16e2cad1995b7cb1ebb,SERIEA,2014-15,2015-03-22T12:00:00Z,Matchday 28,,Sampdoria,,Inter,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d65aad2c80943fff1a263ef5,SERIEA,2014-15,2015-03-22T12:00:00Z,Matchday 28,,Udinese Calcio,,ACF Fiorentina,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e8049f4541a0a7ca3e40d9c9,SERIEA,2014-15,2015-03-22T12:00:00Z,Matchday 28,,Lazio Roma,,Hellas Verona,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-fc274496fa63efb36c6d2959,SERIEA,2014-15,2015-03-22T12:00:00Z,Matchday 28,,AC Cesena,,AS Roma,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-0dfd4903801c80124b5db4d6,SERIEA,2014-15,2015-04-04T12:00:00Z,Matchday 29,,Sassuolo Calcio,,Chievo Verona,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2a997cdf28166775c6ea8d65,SERIEA,2014-15,2015-04-04T12:00:00Z,Matchday 29,,Juventus,,Empoli FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2b1ce2c512e66ab22c03b552,SERIEA,2014-15,2015-04-04T12:00:00Z,Matchday 29,,Cagliari Calcio,,Lazio Roma,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-3eae8e0ddcdce007ffba8ffd,SERIEA,2014-15,2015-04-04T12:00:00Z,Matchday 29,,Atalanta,,Torino FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4a4e2ab521150e2cdf62db7d,SERIEA,2014-15,2015-04-04T12:00:00Z,Matchday 29,,Hellas Verona,,AC Cesena,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-7214308e9a64f1714dfdac67,SERIEA,2014-15,2015-04-04T12:00:00Z,Matchday 29,,Genoa CFC,,Udinese Calcio,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9868c8eec702f3438bcb33d0,SERIEA,2014-15,2015-04-04T12:00:00Z,Matchday 29,,Inter,,Parma FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-bdf51a2649747fc09151e707,SERIEA,2014-15,2015-04-04T12:00:00Z,Matchday 29,,US Palermo,,AC Milan,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c24e4398c8b057b91ba068ce,SERIEA,2014-15,2015-04-04T12:00:00Z,Matchday 29,,ACF Fiorentina,,Sampdoria,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-da02c62010c29e4741365479,SERIEA,2014-15,2015-04-04T12:00:00Z,Matchday 29,,AS Roma,,SSC Napoli,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e9abcaea55c0c961572c2b64,SERIEA,2014-15,2015-04-08T12:00:00Z,Matchday 24,,Parma FC,,Udinese Calcio,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-815708f79aa2bfc1b0e8cc7b,SERIEA,2014-15,2015-04-11T12:00:00Z,Matchday 30,,Genoa CFC,,Cagliari Calcio,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c48703e4e275abc2d3926cbe,SERIEA,2014-15,2015-04-11T12:00:00Z,Matchday 30,,Hellas Verona,,Inter,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e34105c181735e30022f4ad8,SERIEA,2014-15,2015-04-11T12:00:00Z,Matchday 30,,Parma FC,,Juventus,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4e45439f7ea74cc4c45505aa,SERIEA,2014-15,2015-04-12T12:00:00Z,Matchday 30,,SSC Napoli,,ACF Fiorentina,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5e749f936660e1e0e9bc03cb,SERIEA,2014-15,2015-04-12T12:00:00Z,Matchday 30,,Lazio Roma,,Empoli FC,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-7f83cb94b517138c7a0d3b99,SERIEA,2014-15,2015-04-12T12:00:00Z,Matchday 30,,Udinese Calcio,,US Palermo,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b2f6a5f4c515ec960f60787c,SERIEA,2014-15,2015-04-12T12:00:00Z,Matchday 30,,AC Milan,,Sampdoria,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d4d08e277608bdbc37cf551d,SERIEA,2014-15,2015-04-12T12:00:00Z,Matchday 30,,AC Cesena,,Chievo Verona,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e8a42f2119f7c52349c6ddc5,SERIEA,2014-15,2015-04-12T12:00:00Z,Matchday 30,,Torino FC,,AS Roma,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f020e3ca7be1266f9debaef0,SERIEA,2014-15,2015-04-12T12:00:00Z,Matchday 30,,Atalanta,,Sassuolo Calcio,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6dd165ab795a510ec05d7d43,SERIEA,2014-15,2015-04-15T12:00:00Z,Matchday 25,,Genoa CFC,,Parma FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6d77c0f353fdf97f9ef3a38b,SERIEA,2014-15,2015-04-18T12:00:00Z,Matchday 31,,Juventus,,Lazio Roma,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e7d729f03a9654a4d5ae046e,SERIEA,2014-15,2015-04-18T12:00:00Z,Matchday 31,,Sampdoria,,AC Cesena,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-03bf1964d797408cdf9a4861,SERIEA,2014-15,2015-04-19T12:00:00Z,Matchday 31,,Cagliari Calcio,,SSC Napoli,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2852f4d84b8991e849f4e700,SERIEA,2014-15,2015-04-19T12:00:00Z,Matchday 31,,Inter,,AC Milan,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-43f320c32098cd6955866d08,SERIEA,2014-15,2015-04-19T12:00:00Z,Matchday 31,,Sassuolo Calcio,,Torino FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-473d024b043f4290276e0f47,SERIEA,2014-15,2015-04-19T12:00:00Z,Matchday 31,,US Palermo,,Genoa CFC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4a37fbb997935387761586ee,SERIEA,2014-15,2015-04-19T12:00:00Z,Matchday 31,,AS Roma,,Atalanta,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ed02a9c79ff9ff736fcfdb21,SERIEA,2014-15,2015-04-19T12:00:00Z,Matchday 31,,Empoli FC,,Parma FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-eff178cc3658dff11c293617,SERIEA,2014-15,2015-04-19T12:00:00Z,Matchday 31,,Chievo Verona,,Udinese Calcio,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-97297ef6fc5fa6d87ba4e7bc,SERIEA,2014-15,2015-04-20T12:00:00Z,Matchday 31,,ACF Fiorentina,,Hellas Verona,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-3511cdda53bdbfa61f5a75ea,SERIEA,2014-15,2015-04-25T12:00:00Z,Matchday 32,,Inter,,AS Roma,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e0d2df74dc31666e8dff7324,SERIEA,2014-15,2015-04-25T12:00:00Z,Matchday 32,,Udinese Calcio,,AC Milan,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-09ff2914bed2e82ba21ce178,SERIEA,2014-15,2015-04-26T12:00:00Z,Matchday 32,,ACF Fiorentina,,Cagliari Calcio,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-12e31c4d7af6e10da414a881,SERIEA,2014-15,2015-04-26T12:00:00Z,Matchday 32,,Parma FC,,US Palermo,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-13d2413de7558895a2af6638,SERIEA,2014-15,2015-04-26T12:00:00Z,Matchday 32,,Hellas Verona,,Sassuolo Calcio,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2411b9085cf236533be62808,SERIEA,2014-15,2015-04-26T12:00:00Z,Matchday 32,,Torino FC,,Juventus,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-86a969449494c18a13d4967a,SERIEA,2014-15,2015-04-26T12:00:00Z,Matchday 32,,SSC Napoli,,Sampdoria,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-db07557b0fa652eb5f97a55f,SERIEA,2014-15,2015-04-26T12:00:00Z,Matchday 32,,Atalanta,,Empoli FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e3d2d9bfce949d824887d918,SERIEA,2014-15,2015-04-26T12:00:00Z,Matchday 32,,Lazio Roma,,Chievo Verona,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e58c51a4de49dec8b1191e3c,SERIEA,2014-15,2015-04-26T12:00:00Z,Matchday 32,,Genoa CFC,,AC Cesena,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a04bb7a6f6660374970cfba4,SERIEA,2014-15,2015-04-28T12:00:00Z,Matchday 33,,Udinese Calcio,,Inter,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-105c8fe8eacf243ce12de922,SERIEA,2014-15,2015-04-29T12:00:00Z,Matchday 33,,US Palermo,,Torino FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-13ad309ed1912db70957312a,SERIEA,2014-15,2015-04-29T12:00:00Z,Matchday 33,,Lazio Roma,,Parma FC,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-51b7a0f74e2a2d1a042ec79a,SERIEA,2014-15,2015-04-29T12:00:00Z,Matchday 33,,Chievo Verona,,Cagliari Calcio,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5c4f510b45082c592119ad07,SERIEA,2014-15,2015-04-29T12:00:00Z,Matchday 33,,Juventus,,ACF Fiorentina,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6aabc683721d03fc524fef99,SERIEA,2014-15,2015-04-29T12:00:00Z,Matchday 33,,AC Cesena,,Atalanta,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b84de3955b53f7b0cd909193,SERIEA,2014-15,2015-04-29T12:00:00Z,Matchday 33,,AC Milan,,Genoa CFC,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-da4a0e279c7e9f1d9a75bbe8,SERIEA,2014-15,2015-04-29T12:00:00Z,Matchday 33,,Sampdoria,,Hellas Verona,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f14b906ff2ac1b343ffe8132,SERIEA,2014-15,2015-04-29T12:00:00Z,Matchday 33,,Sassuolo Calcio,,AS Roma,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e2246b93f2c8c3632323a4df,SERIEA,2014-15,2015-04-30T12:00:00Z,Matchday 33,,Empoli FC,,SSC Napoli,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8a5278f643db6299c4cb2e64,SERIEA,2014-15,2015-05-02T12:00:00Z,Matchday 34,,Sampdoria,,Juventus,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f1340f4d6d511b30c8bced73,SERIEA,2014-15,2015-05-02T12:00:00Z,Matchday 34,,Sassuolo Calcio,,US Palermo,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-0af818a0889309b6d1ff387d,SERIEA,2014-15,2015-05-03T12:00:00Z,Matchday 34,,Atalanta,,Lazio Roma,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-19d9dffe2b238b2587c16f70,SERIEA,2014-15,2015-05-03T12:00:00Z,Matchday 34,,Hellas Verona,,Udinese Calcio,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-1b270cb22ad032034d427b79,SERIEA,2014-15,2015-05-03T12:00:00Z,Matchday 34,,ACF Fiorentina,,AC Cesena,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-677d4f4790617ae6ce012ef4,SERIEA,2014-15,2015-05-03T12:00:00Z,Matchday 34,,Inter,,Chievo Verona,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8f31f55ae389cc67b8dcf6fc,SERIEA,2014-15,2015-05-03T12:00:00Z,Matchday 34,,SSC Napoli,,AC Milan,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f9f0c4455766b6b768c9b120,SERIEA,2014-15,2015-05-03T12:00:00Z,Matchday 34,,AS Roma,,Genoa CFC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e19493ecededb2f4a4a006b5,SERIEA,2014-15,2015-05-04T12:00:00Z,Matchday 34,,Cagliari Calcio,,Parma FC,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-aa19188ddd9c3aad95704189,SERIEA,2014-15,2015-05-06T12:00:00Z,Matchday 34,,Torino FC,,Empoli FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-306899b7d8cacfe84486df6a,SERIEA,2014-15,2015-05-09T12:00:00Z,Matchday 35,,AC Milan,,AS Roma,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-937fbedc07e0ce11e5257ded,SERIEA,2014-15,2015-05-09T12:00:00Z,Matchday 35,,Juventus,,Cagliari Calcio,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-0e21ce66062ed89a1b848324,SERIEA,2014-15,2015-05-10T12:00:00Z,Matchday 35,,Empoli FC,,ACF Fiorentina,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6c20cf4df52583a03f8b1246,SERIEA,2014-15,2015-05-10T12:00:00Z,Matchday 35,,AC Cesena,,Sassuolo Calcio,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-74e50700f1d7329c7be8d7ec,SERIEA,2014-15,2015-05-10T12:00:00Z,Matchday 35,,Udinese Calcio,,Sampdoria,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9ba726df02e8e43966ee9b3b,SERIEA,2014-15,2015-05-10T12:00:00Z,Matchday 35,,US Palermo,,Atalanta,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9d17ad776d64afc21a651be3,SERIEA,2014-15,2015-05-10T12:00:00Z,Matchday 35,,Chievo Verona,,Hellas Verona,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d92874d263c15c768f5a79b4,SERIEA,2014-15,2015-05-10T12:00:00Z,Matchday 35,,Lazio Roma,,Inter,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ebfa8c98a3b05a5e25263856,SERIEA,2014-15,2015-05-10T12:00:00Z,Matchday 35,,Parma FC,,SSC Napoli,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e4b579fb214a9aa7f96f5023,SERIEA,2014-15,2015-05-11T12:00:00Z,Matchday 35,,Genoa CFC,,Torino FC,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-248d444cb766aa4a11e2eca6,SERIEA,2014-15,2015-05-16T12:00:00Z,Matchday 36,,Sampdoria,,Lazio Roma,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c609eeab61f7c7ae28c84365,SERIEA,2014-15,2015-05-16T12:00:00Z,Matchday 36,,Inter,,Juventus,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-3723de4b7f1fed2b6030553e,SERIEA,2014-15,2015-05-17T12:00:00Z,Matchday 36,,Sassuolo Calcio,,AC Milan,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4cfb48446031279f2fe34bc5,SERIEA,2014-15,2015-05-17T12:00:00Z,Matchday 36,,Atalanta,,Genoa CFC,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-72bb7aeb43059a17255fa31e,SERIEA,2014-15,2015-05-17T12:00:00Z,Matchday 36,,Torino FC,,Chievo Verona,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e6ca0b2aef85a91885421d34,SERIEA,2014-15,2015-05-17T12:00:00Z,Matchday 36,,Cagliari Calcio,,US Palermo,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-eb40c8b475ae74b6c6e7aef7,SERIEA,2014-15,2015-05-17T12:00:00Z,Matchday 36,,AS Roma,,Udinese Calcio,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-fd069ce2d58fb5955af93211,SERIEA,2014-15,2015-05-17T12:00:00Z,Matchday 36,,Hellas Verona,,Empoli FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-84d3351495ef91737b39df1d,SERIEA,2014-15,2015-05-18T12:00:00Z,Matchday 36,,ACF Fiorentina,,Parma FC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-de538acddf044f7f0208a42c,SERIEA,2014-15,2015-05-18T12:00:00Z,Matchday 36,,SSC Napoli,,AC Cesena,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-234334159937831a9e392e3e,SERIEA,2014-15,2015-05-23T12:00:00Z,Matchday 37,,Juventus,,SSC Napoli,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4fcfc5ef5d91b26a4dff2e50,SERIEA,2014-15,2015-05-23T12:00:00Z,Matchday 37,,Genoa CFC,,Inter,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-308918be5dfe0cbc5d212b20,SERIEA,2014-15,2015-05-24T12:00:00Z,Matchday 37,,Parma FC,,Hellas Verona,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-68c3b6eb723cc424a644ca26,SERIEA,2014-15,2015-05-24T12:00:00Z,Matchday 37,,Udinese Calcio,,Sassuolo Calcio,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-7080fbe690e96212aa04126c,SERIEA,2014-15,2015-05-24T12:00:00Z,Matchday 37,,US Palermo,,ACF Fiorentina,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8e32756da7889ea3c2303cdd,SERIEA,2014-15,2015-05-24T12:00:00Z,Matchday 37,,Chievo Verona,,Atalanta,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9319961684ee6fd6e6ce30d2,SERIEA,2014-15,2015-05-24T12:00:00Z,Matchday 37,,Empoli FC,,Sampdoria,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-bce824a13723220ff89cce67,SERIEA,2014-15,2015-05-24T12:00:00Z,Matchday 37,,AC Milan,,Torino FC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-de21bea1348ddf0ffdca4c3d,SERIEA,2014-15,2015-05-24T12:00:00Z,Matchday 37,,AC Cesena,,Cagliari Calcio,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-93f6913a3427ab0a180f7396,SERIEA,2014-15,2015-05-25T12:00:00Z,Matchday 37,,Lazio Roma,,AS Roma,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-60dc73d29d44c9f333b3eaf1,SERIEA,2014-15,2015-05-30T12:00:00Z,Matchday 38,,Hellas Verona,,Juventus,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-cd9684b9680f7baac541d2fb,SERIEA,2014-15,2015-05-30T12:00:00Z,Matchday 38,,Atalanta,,AC Milan,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4f17fa4c9b74284fca0cd81e,SERIEA,2014-15,2015-05-31T12:00:00Z,Matchday 38,,AS Roma,,US Palermo,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6b52e17533cff958235ccff6,SERIEA,2014-15,2015-05-31T12:00:00Z,Matchday 38,,Sampdoria,,Parma FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6b687efb91e3670e2b2914b6,SERIEA,2014-15,2015-05-31T12:00:00Z,Matchday 38,,SSC Napoli,,Lazio Roma,,2,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-cdb48a79dfa7402c1ba59a0c,SERIEA,2014-15,2015-05-31T12:00:00Z,Matchday 38,,Torino FC,,AC Cesena,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d3795caee97bc092a692a56f,SERIEA,2014-15,2015-05-31T12:00:00Z,Matchday 38,,Sassuolo Calcio,,Genoa CFC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e23a54c5da968adb3dcff69e,SERIEA,2014-15,2015-05-31T12:00:00Z,Matchday 38,,Cagliari Calcio,,Udinese Calcio,,4,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e30a92319bd50bc1eac7a739,SERIEA,2014-15,2015-05-31T12:00:00Z,Matchday 38,,ACF Fiorentina,,Chievo Verona,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-faa0d95f4c3abc12f9dc7d97,SERIEA,2014-15,2015-05-31T12:00:00Z,Matchday 38,,Inter,,Empoli FC,,4,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00

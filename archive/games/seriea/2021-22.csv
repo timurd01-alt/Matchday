@@ -1,0 +1,381 @@
+game_id,comp,season,date_utc,stage,venue,home_name,home_code,away_name,away_code,home_score,away_score,status,source,first_seen
+seriea-openfootball-2969c2ca88174561bac6ccce,SERIEA,2021-22,2021-08-21T12:00:00Z,Matchday 1,,Torino FC,,Atalanta BC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6d758d7430116f340acf5e40,SERIEA,2021-22,2021-08-21T12:00:00Z,Matchday 1,,FC Internazionale Milano,,Genoa CFC,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-912b9f4cddc7776291b2dc6b,SERIEA,2021-22,2021-08-21T12:00:00Z,Matchday 1,,Hellas Verona FC,,US Sassuolo Calcio,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9a380ab7495d32e20c6f7291,SERIEA,2021-22,2021-08-21T12:00:00Z,Matchday 1,,Empoli FC,,SS Lazio,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-412e105ad134007c34e28eeb,SERIEA,2021-22,2021-08-22T12:00:00Z,Matchday 1,,Udinese Calcio,,Juventus FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5b0a7d83a699fa55234e149a,SERIEA,2021-22,2021-08-22T12:00:00Z,Matchday 1,,SSC Napoli,,Venezia FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-bed7bd69430e072c28b9f25a,SERIEA,2021-22,2021-08-22T12:00:00Z,Matchday 1,,Bologna FC 1909,,US Salernitana 1919,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d9ccaf4cb91f0e3d1ed068ba,SERIEA,2021-22,2021-08-22T12:00:00Z,Matchday 1,,AS Roma,,ACF Fiorentina,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-410fd5fa04c0ad4437f1d0da,SERIEA,2021-22,2021-08-23T12:00:00Z,Matchday 1,,Cagliari Calcio,,Spezia Calcio,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-67a4cdd4bc1aa6ec42eacc40,SERIEA,2021-22,2021-08-23T12:00:00Z,Matchday 1,,UC Sampdoria,,AC Milan,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2aa492694cebcd3bc6281c08,SERIEA,2021-22,2021-08-27T12:00:00Z,Matchday 2,,Hellas Verona FC,,FC Internazionale Milano,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f32af67430d16dba812af338,SERIEA,2021-22,2021-08-27T12:00:00Z,Matchday 2,,Udinese Calcio,,Venezia FC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2727ba417a0a2852dc7fd0e6,SERIEA,2021-22,2021-08-28T12:00:00Z,Matchday 2,,ACF Fiorentina,,Torino FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-40199d2f2e05168ad8d4f2a6,SERIEA,2021-22,2021-08-28T12:00:00Z,Matchday 2,,SS Lazio,,Spezia Calcio,,6,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4af913a71d1c6900a75a1fe4,SERIEA,2021-22,2021-08-28T12:00:00Z,Matchday 2,,Atalanta BC,,Bologna FC 1909,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f58d6f4aa7b325655507d1b1,SERIEA,2021-22,2021-08-28T12:00:00Z,Matchday 2,,Juventus FC,,Empoli FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-248838211164b0568769536a,SERIEA,2021-22,2021-08-29T12:00:00Z,Matchday 2,,Genoa CFC,,SSC Napoli,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-37a086df64179db82e4936ac,SERIEA,2021-22,2021-08-29T12:00:00Z,Matchday 2,,US Salernitana 1919,,AS Roma,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-54e2ce05794b27f0fb906327,SERIEA,2021-22,2021-08-29T12:00:00Z,Matchday 2,,AC Milan,,Cagliari Calcio,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-843f2cb88b0d617e95680c0c,SERIEA,2021-22,2021-08-29T12:00:00Z,Matchday 2,,US Sassuolo Calcio,,UC Sampdoria,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-14055c13add3b7b1dbe1b608,SERIEA,2021-22,2021-09-11T12:00:00Z,Matchday 3,,Atalanta BC,,ACF Fiorentina,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-1ed8d0a1f3bcd14a90ed14da,SERIEA,2021-22,2021-09-11T12:00:00Z,Matchday 3,,SSC Napoli,,Juventus FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ee19c9ca197ac4da51778391,SERIEA,2021-22,2021-09-11T12:00:00Z,Matchday 3,,Empoli FC,,Venezia FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-15ca54105dddaa62de30e379,SERIEA,2021-22,2021-09-12T12:00:00Z,Matchday 3,,Cagliari Calcio,,Genoa CFC,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-381e1aa8c0ec78674d9cc306,SERIEA,2021-22,2021-09-12T12:00:00Z,Matchday 3,,UC Sampdoria,,FC Internazionale Milano,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-7f5b82c0684df6ffcb4547da,SERIEA,2021-22,2021-09-12T12:00:00Z,Matchday 3,,AC Milan,,SS Lazio,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a7345324219afa37d9940caf,SERIEA,2021-22,2021-09-12T12:00:00Z,Matchday 3,,Torino FC,,US Salernitana 1919,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ddcbafb8b23924d893e54674,SERIEA,2021-22,2021-09-12T12:00:00Z,Matchday 3,,AS Roma,,US Sassuolo Calcio,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-fa450267f8a932ad5a4ede3e,SERIEA,2021-22,2021-09-12T12:00:00Z,Matchday 3,,Spezia Calcio,,Udinese Calcio,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8e078acc62bfe0eae2d2d293,SERIEA,2021-22,2021-09-13T12:00:00Z,Matchday 3,,Bologna FC 1909,,Hellas Verona FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a8c42c9e66a2ffe17aae35d2,SERIEA,2021-22,2021-09-17T12:00:00Z,Matchday 4,,US Sassuolo Calcio,,Torino FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-11cefc2e53a95b900de4ae95,SERIEA,2021-22,2021-09-18T12:00:00Z,Matchday 4,,Genoa CFC,,ACF Fiorentina,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-15514e0541913ddf2331aefb,SERIEA,2021-22,2021-09-18T12:00:00Z,Matchday 4,,US Salernitana 1919,,Atalanta BC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-400d01672fffc49c5c8ca55e,SERIEA,2021-22,2021-09-18T12:00:00Z,Matchday 4,,FC Internazionale Milano,,Bologna FC 1909,,6,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2dea8f9afa1de9515706f070,SERIEA,2021-22,2021-09-19T12:00:00Z,Matchday 4,,Juventus FC,,AC Milan,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5d610f2b5b3e8fe20278d005,SERIEA,2021-22,2021-09-19T12:00:00Z,Matchday 4,,Venezia FC,,Spezia Calcio,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5db0a9eb6b252e883f4de28f,SERIEA,2021-22,2021-09-19T12:00:00Z,Matchday 4,,SS Lazio,,Cagliari Calcio,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e7bb8941ff839ca9bb8af183,SERIEA,2021-22,2021-09-19T12:00:00Z,Matchday 4,,Empoli FC,,UC Sampdoria,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f67f1db9be1ed2e321bec7a1,SERIEA,2021-22,2021-09-19T12:00:00Z,Matchday 4,,Hellas Verona FC,,AS Roma,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-0649fc0b654c667a82cc8368,SERIEA,2021-22,2021-09-20T12:00:00Z,Matchday 4,,Udinese Calcio,,SSC Napoli,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5e994cf93a7615c36860392e,SERIEA,2021-22,2021-09-21T12:00:00Z,Matchday 5,,ACF Fiorentina,,FC Internazionale Milano,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-88ec6217abd4d0fdc845ef75,SERIEA,2021-22,2021-09-21T12:00:00Z,Matchday 5,,Bologna FC 1909,,Genoa CFC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f41a2cb140435a7a88ca8430,SERIEA,2021-22,2021-09-21T12:00:00Z,Matchday 5,,Atalanta BC,,US Sassuolo Calcio,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-1eecf6ab35092a4b9490e8a9,SERIEA,2021-22,2021-09-22T12:00:00Z,Matchday 5,,AC Milan,,Venezia FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-3923373f0fb7037392f14e62,SERIEA,2021-22,2021-09-22T12:00:00Z,Matchday 5,,US Salernitana 1919,,Hellas Verona FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4d2b8b4efdec9693136ba4ef,SERIEA,2021-22,2021-09-22T12:00:00Z,Matchday 5,,Spezia Calcio,,Juventus FC,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-da0df7857a8c8e548b6a4502,SERIEA,2021-22,2021-09-22T12:00:00Z,Matchday 5,,Cagliari Calcio,,Empoli FC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6d0cd88011fd8cca16907f9a,SERIEA,2021-22,2021-09-23T12:00:00Z,Matchday 5,,AS Roma,,Udinese Calcio,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b2acf5723abaf492a58d88f9,SERIEA,2021-22,2021-09-23T12:00:00Z,Matchday 5,,Torino FC,,SS Lazio,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f8652271be8bb1c62fbba9e7,SERIEA,2021-22,2021-09-23T12:00:00Z,Matchday 5,,UC Sampdoria,,SSC Napoli,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-046254f3755a7d8137a0995f,SERIEA,2021-22,2021-09-25T12:00:00Z,Matchday 6,,Spezia Calcio,,AC Milan,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-3bd38bc6c144f9bfac3f0e31,SERIEA,2021-22,2021-09-25T12:00:00Z,Matchday 6,,FC Internazionale Milano,,Atalanta BC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6e3910e0a17c2f4781fb0ced,SERIEA,2021-22,2021-09-25T12:00:00Z,Matchday 6,,Genoa CFC,,Hellas Verona FC,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-182112ccf541e1ebf30ca4c9,SERIEA,2021-22,2021-09-26T12:00:00Z,Matchday 6,,Juventus FC,,UC Sampdoria,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5334a65824907ab445eadb45,SERIEA,2021-22,2021-09-26T12:00:00Z,Matchday 6,,Empoli FC,,Bologna FC 1909,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-67ed30f621ac72ba3352c614,SERIEA,2021-22,2021-09-26T12:00:00Z,Matchday 6,,US Sassuolo Calcio,,US Salernitana 1919,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8187072e1368b3f357afee79,SERIEA,2021-22,2021-09-26T12:00:00Z,Matchday 6,,SSC Napoli,,Cagliari Calcio,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-bb618ef099570686f6417965,SERIEA,2021-22,2021-09-26T12:00:00Z,Matchday 6,,Udinese Calcio,,ACF Fiorentina,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f595538af3f6939f401df47a,SERIEA,2021-22,2021-09-26T12:00:00Z,Matchday 6,,SS Lazio,,AS Roma,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-531f170fd7b069eda212ea04,SERIEA,2021-22,2021-09-27T12:00:00Z,Matchday 6,,Venezia FC,,Torino FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-81b1be75944331f754e0f503,SERIEA,2021-22,2021-10-01T12:00:00Z,Matchday 7,,Cagliari Calcio,,Venezia FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-50aa107fad6fd444c4c10e6e,SERIEA,2021-22,2021-10-02T12:00:00Z,Matchday 7,,Torino FC,,Juventus FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-59f62b6fdf5967c4c1d40c8b,SERIEA,2021-22,2021-10-02T12:00:00Z,Matchday 7,,US Salernitana 1919,,Genoa CFC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-96625d950e1014bf8a8019c7,SERIEA,2021-22,2021-10-02T12:00:00Z,Matchday 7,,US Sassuolo Calcio,,FC Internazionale Milano,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-21e737de3258277941ef5673,SERIEA,2021-22,2021-10-03T12:00:00Z,Matchday 7,,Hellas Verona FC,,Spezia Calcio,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-53588cd2b332526cf27dc696,SERIEA,2021-22,2021-10-03T12:00:00Z,Matchday 7,,AS Roma,,Empoli FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5b9993ab072f62378303240c,SERIEA,2021-22,2021-10-03T12:00:00Z,Matchday 7,,ACF Fiorentina,,SSC Napoli,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ced8140175d5f5870218df1e,SERIEA,2021-22,2021-10-03T12:00:00Z,Matchday 7,,UC Sampdoria,,Udinese Calcio,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-df9ed9269223937f811fdb69,SERIEA,2021-22,2021-10-03T12:00:00Z,Matchday 7,,Bologna FC 1909,,SS Lazio,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-fcfc95528cac9ff97eebc516,SERIEA,2021-22,2021-10-03T12:00:00Z,Matchday 7,,Atalanta BC,,AC Milan,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-08076a005b98cc9e585d766c,SERIEA,2021-22,2021-10-16T12:00:00Z,Matchday 8,,Spezia Calcio,,US Salernitana 1919,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-0b7be3c01bcca35a217d935f,SERIEA,2021-22,2021-10-16T12:00:00Z,Matchday 8,,SS Lazio,,FC Internazionale Milano,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9134c023daaac2502057fe05,SERIEA,2021-22,2021-10-16T12:00:00Z,Matchday 8,,AC Milan,,Hellas Verona FC,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4033515a66c5ba330dd664c3,SERIEA,2021-22,2021-10-17T12:00:00Z,Matchday 8,,Genoa CFC,,US Sassuolo Calcio,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4830173bacdc1dd2baf67fa7,SERIEA,2021-22,2021-10-17T12:00:00Z,Matchday 8,,Empoli FC,,Atalanta BC,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-63273f50bd91dae0bcee99dc,SERIEA,2021-22,2021-10-17T12:00:00Z,Matchday 8,,Udinese Calcio,,Bologna FC 1909,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b51a4491bce9965904a3ea65,SERIEA,2021-22,2021-10-17T12:00:00Z,Matchday 8,,SSC Napoli,,Torino FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b6f4ed7b930843cd12b83617,SERIEA,2021-22,2021-10-17T12:00:00Z,Matchday 8,,Juventus FC,,AS Roma,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-cf7d68832e2af9bf7955e7ec,SERIEA,2021-22,2021-10-17T12:00:00Z,Matchday 8,,Cagliari Calcio,,UC Sampdoria,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b17a4f71677b4bd588628d71,SERIEA,2021-22,2021-10-18T12:00:00Z,Matchday 8,,Venezia FC,,ACF Fiorentina,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c2d796cc453f3498a1684a22,SERIEA,2021-22,2021-10-22T12:00:00Z,Matchday 9,,Torino FC,,Genoa CFC,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-cf56b49860d58b6235b100d8,SERIEA,2021-22,2021-10-22T12:00:00Z,Matchday 9,,UC Sampdoria,,Spezia Calcio,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-077e34dc732b1b4b7cfdc7ea,SERIEA,2021-22,2021-10-23T12:00:00Z,Matchday 9,,US Salernitana 1919,,Empoli FC,,2,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5f4843681cd7c6490706301b,SERIEA,2021-22,2021-10-23T12:00:00Z,Matchday 9,,Bologna FC 1909,,AC Milan,,2,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-85c5c62c7baa530ac7b773ec,SERIEA,2021-22,2021-10-23T12:00:00Z,Matchday 9,,US Sassuolo Calcio,,Venezia FC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-288ab2641ac5c4600173425c,SERIEA,2021-22,2021-10-24T12:00:00Z,Matchday 9,,FC Internazionale Milano,,Juventus FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a7b10502968b6891ae1c8b90,SERIEA,2021-22,2021-10-24T12:00:00Z,Matchday 9,,ACF Fiorentina,,Cagliari Calcio,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a94ef49ba60355f6bca3bf99,SERIEA,2021-22,2021-10-24T12:00:00Z,Matchday 9,,Atalanta BC,,Udinese Calcio,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c9adf24348a872134187ee3f,SERIEA,2021-22,2021-10-24T12:00:00Z,Matchday 9,,AS Roma,,SSC Napoli,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d49cdf0738177ac8131c3685,SERIEA,2021-22,2021-10-24T12:00:00Z,Matchday 9,,Hellas Verona FC,,SS Lazio,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-18881ea02dd207ad2432cb8c,SERIEA,2021-22,2021-10-26T12:00:00Z,Matchday 10,,AC Milan,,Torino FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8fd3e592dda33bfda7776c8c,SERIEA,2021-22,2021-10-26T12:00:00Z,Matchday 10,,Venezia FC,,US Salernitana 1919,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e4e07ad96e556ffb2d45b46c,SERIEA,2021-22,2021-10-26T12:00:00Z,Matchday 10,,Spezia Calcio,,Genoa CFC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-027eb62617cb3931d2bacab9,SERIEA,2021-22,2021-10-27T12:00:00Z,Matchday 10,,Udinese Calcio,,Hellas Verona FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-37d1f2198e9664cab9091271,SERIEA,2021-22,2021-10-27T12:00:00Z,Matchday 10,,UC Sampdoria,,Atalanta BC,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5e5d589db0841d2f4a51881a,SERIEA,2021-22,2021-10-27T12:00:00Z,Matchday 10,,SS Lazio,,ACF Fiorentina,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8bd8d64ee141f7a6f80ab48d,SERIEA,2021-22,2021-10-27T12:00:00Z,Matchday 10,,Juventus FC,,US Sassuolo Calcio,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8f89eebf298b2c79d6fc0728,SERIEA,2021-22,2021-10-27T12:00:00Z,Matchday 10,,Cagliari Calcio,,AS Roma,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-eac1b44d567c6690afe57fe5,SERIEA,2021-22,2021-10-27T12:00:00Z,Matchday 10,,Empoli FC,,FC Internazionale Milano,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ba5cdf57827c297ff2090c84,SERIEA,2021-22,2021-10-28T12:00:00Z,Matchday 10,,SSC Napoli,,Bologna FC 1909,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-3cec2b690221cd666397bb9d,SERIEA,2021-22,2021-10-30T12:00:00Z,Matchday 11,,Torino FC,,UC Sampdoria,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5594e00697a2ee768df06af9,SERIEA,2021-22,2021-10-30T12:00:00Z,Matchday 11,,Atalanta BC,,SS Lazio,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e4e2d832a2a5d9b5ef0e3f03,SERIEA,2021-22,2021-10-30T12:00:00Z,Matchday 11,,Hellas Verona FC,,Juventus FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-1f7b27d11640b1c43683a419,SERIEA,2021-22,2021-10-31T12:00:00Z,Matchday 11,,US Salernitana 1919,,SSC Napoli,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-47c0d6a4ca3259c3b44197a8,SERIEA,2021-22,2021-10-31T12:00:00Z,Matchday 11,,US Sassuolo Calcio,,Empoli FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5a0577b85264108c698ff563,SERIEA,2021-22,2021-10-31T12:00:00Z,Matchday 11,,AS Roma,,AC Milan,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d0481d888537a90100992bdb,SERIEA,2021-22,2021-10-31T12:00:00Z,Matchday 11,,ACF Fiorentina,,Spezia Calcio,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-fd7c956b6e12b72fd56ddbad,SERIEA,2021-22,2021-10-31T12:00:00Z,Matchday 11,,FC Internazionale Milano,,Udinese Calcio,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ff578fa92037be03ba13e4f9,SERIEA,2021-22,2021-10-31T12:00:00Z,Matchday 11,,Genoa CFC,,Venezia FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-645a07af7cfa3068b6dc265b,SERIEA,2021-22,2021-11-01T12:00:00Z,Matchday 11,,Bologna FC 1909,,Cagliari Calcio,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d35e826c2f14658a33960307,SERIEA,2021-22,2021-11-05T12:00:00Z,Matchday 12,,Empoli FC,,Genoa CFC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ceceba9157bb4b60f592e2db,SERIEA,2021-22,2021-11-06T12:00:00Z,Matchday 12,,Spezia Calcio,,Torino FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e36b8e486b39d618cc31f52a,SERIEA,2021-22,2021-11-06T12:00:00Z,Matchday 12,,Cagliari Calcio,,Atalanta BC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-eccaf04a34dfb20bbefce337,SERIEA,2021-22,2021-11-06T12:00:00Z,Matchday 12,,Juventus FC,,ACF Fiorentina,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-3baa285f9180dcf4c37f271b,SERIEA,2021-22,2021-11-07T12:00:00Z,Matchday 12,,AC Milan,,FC Internazionale Milano,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-41cd1f52dbe19747facfd508,SERIEA,2021-22,2021-11-07T12:00:00Z,Matchday 12,,SS Lazio,,US Salernitana 1919,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6db1aa1698b57de47ddd37c1,SERIEA,2021-22,2021-11-07T12:00:00Z,Matchday 12,,Venezia FC,,AS Roma,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-913886ca22e9018655d115a4,SERIEA,2021-22,2021-11-07T12:00:00Z,Matchday 12,,UC Sampdoria,,Bologna FC 1909,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e42b99004e162c9d7f140f41,SERIEA,2021-22,2021-11-07T12:00:00Z,Matchday 12,,Udinese Calcio,,US Sassuolo Calcio,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f7ff1b7797bb72540b7f864a,SERIEA,2021-22,2021-11-07T12:00:00Z,Matchday 12,,SSC Napoli,,Hellas Verona FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-49f50a78a0ef02b4bd4266aa,SERIEA,2021-22,2021-11-20T12:00:00Z,Matchday 13,,SS Lazio,,Juventus FC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-641d7715629efed0573add8e,SERIEA,2021-22,2021-11-20T12:00:00Z,Matchday 13,,ACF Fiorentina,,AC Milan,,4,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f2928671b98b81ddd1e4277b,SERIEA,2021-22,2021-11-20T12:00:00Z,Matchday 13,,Atalanta BC,,Spezia Calcio,,5,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-1fbbafe9dad695c2cb1b1da0,SERIEA,2021-22,2021-11-21T12:00:00Z,Matchday 13,,Genoa CFC,,AS Roma,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5e5fc245e9b6677143bf8122,SERIEA,2021-22,2021-11-21T12:00:00Z,Matchday 13,,FC Internazionale Milano,,SSC Napoli,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9fbb7f7cea321e910331f478,SERIEA,2021-22,2021-11-21T12:00:00Z,Matchday 13,,US Salernitana 1919,,UC Sampdoria,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ee288cc8ca9e6becf952f64b,SERIEA,2021-22,2021-11-21T12:00:00Z,Matchday 13,,US Sassuolo Calcio,,Cagliari Calcio,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-fdf578940dfe1ac06ae1fa68,SERIEA,2021-22,2021-11-21T12:00:00Z,Matchday 13,,Bologna FC 1909,,Venezia FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-14cd2cc6f1c091ddce5e5401,SERIEA,2021-22,2021-11-22T12:00:00Z,Matchday 13,,Torino FC,,Udinese Calcio,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-fc6ec7c84b95299d9b7457dd,SERIEA,2021-22,2021-11-22T12:00:00Z,Matchday 13,,Hellas Verona FC,,Empoli FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b9a2bcb0c43d22295d0d98a7,SERIEA,2021-22,2021-11-26T12:00:00Z,Matchday 14,,Cagliari Calcio,,US Salernitana 1919,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-19b69bbb0c417dfefc75f3be,SERIEA,2021-22,2021-11-27T12:00:00Z,Matchday 14,,Empoli FC,,ACF Fiorentina,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-1a16933143ff9e08988b8fe4,SERIEA,2021-22,2021-11-27T12:00:00Z,Matchday 14,,Juventus FC,,Atalanta BC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-312b870012dc26c7c86f527e,SERIEA,2021-22,2021-11-27T12:00:00Z,Matchday 14,,Venezia FC,,FC Internazionale Milano,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-747418319113883cae87b371,SERIEA,2021-22,2021-11-27T12:00:00Z,Matchday 14,,UC Sampdoria,,Hellas Verona FC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-493a16936f56738a84920ba8,SERIEA,2021-22,2021-11-28T12:00:00Z,Matchday 14,,Spezia Calcio,,Bologna FC 1909,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-57337d753bfbb17435378099,SERIEA,2021-22,2021-11-28T12:00:00Z,Matchday 14,,AC Milan,,US Sassuolo Calcio,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d41ec0bb1d8ec26f1ecdb4f1,SERIEA,2021-22,2021-11-28T12:00:00Z,Matchday 14,,AS Roma,,Torino FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f811406bd5f882eb82cbd1ba,SERIEA,2021-22,2021-11-28T12:00:00Z,Matchday 14,,SSC Napoli,,SS Lazio,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-fd0af6fe2f9ab6e5b57a90ac,SERIEA,2021-22,2021-11-28T12:00:00Z,Matchday 14,,Udinese Calcio,,Genoa CFC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-318e45ea7ca0f2431680c829,SERIEA,2021-22,2021-11-30T12:00:00Z,Matchday 15,,Atalanta BC,,Venezia FC,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-dd4105556987afb6dff8fb79,SERIEA,2021-22,2021-11-30T12:00:00Z,Matchday 15,,Hellas Verona FC,,Cagliari Calcio,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-dd77d183dbeff077438d6f8d,SERIEA,2021-22,2021-11-30T12:00:00Z,Matchday 15,,US Salernitana 1919,,Juventus FC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ed41ac305b7395e557dd26e1,SERIEA,2021-22,2021-11-30T12:00:00Z,Matchday 15,,ACF Fiorentina,,UC Sampdoria,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6b9816a68344960a3b1d02fd,SERIEA,2021-22,2021-12-01T12:00:00Z,Matchday 15,,Genoa CFC,,AC Milan,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-75e0bbb3ef4d15b0f5fe197c,SERIEA,2021-22,2021-12-01T12:00:00Z,Matchday 15,,US Sassuolo Calcio,,SSC Napoli,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b3a6894972c7d74be8f72f66,SERIEA,2021-22,2021-12-01T12:00:00Z,Matchday 15,,FC Internazionale Milano,,Spezia Calcio,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d92513f51629a8a14dd8a587,SERIEA,2021-22,2021-12-01T12:00:00Z,Matchday 15,,Bologna FC 1909,,AS Roma,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-55dbbb27385a5b69c7eca87f,SERIEA,2021-22,2021-12-02T12:00:00Z,Matchday 15,,SS Lazio,,Udinese Calcio,,4,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c5a25ad7df7c35f58bd73a17,SERIEA,2021-22,2021-12-02T12:00:00Z,Matchday 15,,Torino FC,,Empoli FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-112f783d7a9a84012e4058dd,SERIEA,2021-22,2021-12-04T12:00:00Z,Matchday 16,,AS Roma,,FC Internazionale Milano,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-bb80d322d833fb9f658625a3,SERIEA,2021-22,2021-12-04T12:00:00Z,Matchday 16,,AC Milan,,US Salernitana 1919,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ed4da032bd8a2146e7562b91,SERIEA,2021-22,2021-12-04T12:00:00Z,Matchday 16,,SSC Napoli,,Atalanta BC,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2001e50c4af9f570cef2b7b9,SERIEA,2021-22,2021-12-05T12:00:00Z,Matchday 16,,Venezia FC,,Hellas Verona FC,,3,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-84c39589a48054c8dc4815b6,SERIEA,2021-22,2021-12-05T12:00:00Z,Matchday 16,,UC Sampdoria,,SS Lazio,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a9ca9c1f588bd60a2d0e802e,SERIEA,2021-22,2021-12-05T12:00:00Z,Matchday 16,,Spezia Calcio,,US Sassuolo Calcio,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ba3fa3c89800535d83a1940a,SERIEA,2021-22,2021-12-05T12:00:00Z,Matchday 16,,Juventus FC,,Genoa CFC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d2e4822c1553ce172ce56b18,SERIEA,2021-22,2021-12-05T12:00:00Z,Matchday 16,,Bologna FC 1909,,ACF Fiorentina,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-45c77841b47b24ac592aae75,SERIEA,2021-22,2021-12-06T12:00:00Z,Matchday 16,,Empoli FC,,Udinese Calcio,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-7b0671e6d285a5d4f2802987,SERIEA,2021-22,2021-12-06T12:00:00Z,Matchday 16,,Cagliari Calcio,,Torino FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8cc84fdf876f48869b9a5b4e,SERIEA,2021-22,2021-12-10T12:00:00Z,Matchday 17,,Genoa CFC,,UC Sampdoria,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6e1a64fea22d4d68f5937767,SERIEA,2021-22,2021-12-11T12:00:00Z,Matchday 17,,Udinese Calcio,,AC Milan,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-cdc5680c68f0c8ec54595a0f,SERIEA,2021-22,2021-12-11T12:00:00Z,Matchday 17,,ACF Fiorentina,,US Salernitana 1919,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-eac186930a188e5b94b08628,SERIEA,2021-22,2021-12-11T12:00:00Z,Matchday 17,,Venezia FC,,Juventus FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6a2a3fa399d047a9703033d9,SERIEA,2021-22,2021-12-12T12:00:00Z,Matchday 17,,FC Internazionale Milano,,Cagliari Calcio,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-7a410f754cd7b1272095dc2f,SERIEA,2021-22,2021-12-12T12:00:00Z,Matchday 17,,Hellas Verona FC,,Atalanta BC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-998b9997bd2036690d59a8e4,SERIEA,2021-22,2021-12-12T12:00:00Z,Matchday 17,,SSC Napoli,,Empoli FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9fd5926054c101173e59b0ba,SERIEA,2021-22,2021-12-12T12:00:00Z,Matchday 17,,US Sassuolo Calcio,,SS Lazio,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f99057361106257c6f0098fa,SERIEA,2021-22,2021-12-12T12:00:00Z,Matchday 17,,Torino FC,,Bologna FC 1909,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-0f7f343462cbb353ec65fcac,SERIEA,2021-22,2021-12-13T12:00:00Z,Matchday 17,,AS Roma,,Spezia Calcio,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-79b8613c30ec625fc8681625,SERIEA,2021-22,2021-12-17T12:00:00Z,Matchday 18,,US Salernitana 1919,,FC Internazionale Milano,,0,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-7b9389e9812d0c83d88198de,SERIEA,2021-22,2021-12-17T12:00:00Z,Matchday 18,,SS Lazio,,Genoa CFC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-19fccf897c6aeed23f584e2f,SERIEA,2021-22,2021-12-18T12:00:00Z,Matchday 18,,Cagliari Calcio,,Udinese Calcio,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b5741dca7931a8532cc10e04,SERIEA,2021-22,2021-12-18T12:00:00Z,Matchday 18,,Bologna FC 1909,,Juventus FC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c47a7a4cd6f26f292c9431ba,SERIEA,2021-22,2021-12-18T12:00:00Z,Matchday 18,,Atalanta BC,,AS Roma,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2685073be1f367f697ec4067,SERIEA,2021-22,2021-12-19T12:00:00Z,Matchday 18,,ACF Fiorentina,,US Sassuolo Calcio,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-53634fd47cb581411da25253,SERIEA,2021-22,2021-12-19T12:00:00Z,Matchday 18,,UC Sampdoria,,Venezia FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-619013c2774e897bec77ed2d,SERIEA,2021-22,2021-12-19T12:00:00Z,Matchday 18,,Torino FC,,Hellas Verona FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-852377211c9224fa0ad2cde9,SERIEA,2021-22,2021-12-19T12:00:00Z,Matchday 18,,Spezia Calcio,,Empoli FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b35311c2b16a7a272bad7bb6,SERIEA,2021-22,2021-12-19T12:00:00Z,Matchday 18,,AC Milan,,SSC Napoli,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-95875f1e3a8b7d4d48921835,SERIEA,2021-22,2021-12-21T12:00:00Z,Matchday 19,,Juventus FC,,Cagliari Calcio,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f3b817a9949522f157e0e257,SERIEA,2021-22,2021-12-21T12:00:00Z,Matchday 19,,Genoa CFC,,Atalanta BC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-07414f548fc007c091a490b9,SERIEA,2021-22,2021-12-22T12:00:00Z,Matchday 19,,AS Roma,,UC Sampdoria,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2a249f1e040bac56b4d046bf,SERIEA,2021-22,2021-12-22T12:00:00Z,Matchday 19,,US Sassuolo Calcio,,Bologna FC 1909,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6b1f4f2799a1a3957852be63,SERIEA,2021-22,2021-12-22T12:00:00Z,Matchday 19,,Empoli FC,,AC Milan,,2,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-7ebb8b4a5fe8916702be6197,SERIEA,2021-22,2021-12-22T12:00:00Z,Matchday 19,,Venezia FC,,SS Lazio,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-81794e4a01c83e5fd2b17096,SERIEA,2021-22,2021-12-22T12:00:00Z,Matchday 19,,FC Internazionale Milano,,Torino FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d0b6b030825ffe222c68fb93,SERIEA,2021-22,2021-12-22T12:00:00Z,Matchday 19,,Hellas Verona FC,,ACF Fiorentina,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e14a3a6491b708072b9bf721,SERIEA,2021-22,2021-12-22T12:00:00Z,Matchday 19,,SSC Napoli,,Spezia Calcio,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-1bcc589d58ff4a485f87eda7,SERIEA,2021-22,2022-01-06T12:00:00Z,Matchday 20,,US Sassuolo Calcio,,Genoa CFC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-32c560b49ea8c00734213fbe,SERIEA,2021-22,2022-01-06T12:00:00Z,Matchday 20,,AC Milan,,AS Roma,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-3770563d9559baa40ad74665,SERIEA,2021-22,2022-01-06T12:00:00Z,Matchday 20,,Juventus FC,,SSC Napoli,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6eed3e4a0395aaaba88ea9cb,SERIEA,2021-22,2022-01-06T12:00:00Z,Matchday 20,,Spezia Calcio,,Hellas Verona FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-abd10be886203777f0696387,SERIEA,2021-22,2022-01-06T12:00:00Z,Matchday 20,,SS Lazio,,Empoli FC,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f2cef0512a46ab20e51df17e,SERIEA,2021-22,2022-01-06T12:00:00Z,Matchday 20,,UC Sampdoria,,Cagliari Calcio,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-09e8f1ead09ab963942a87e9,SERIEA,2021-22,2022-01-09T12:00:00Z,Matchday 21,,AS Roma,,Juventus FC,,3,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-1df8f04bbe1e975e9851d3e6,SERIEA,2021-22,2022-01-09T12:00:00Z,Matchday 21,,Empoli FC,,US Sassuolo Calcio,,1,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-62272457ef75d6023c751a94,SERIEA,2021-22,2022-01-09T12:00:00Z,Matchday 21,,SSC Napoli,,UC Sampdoria,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-70346e97faf74572a2e60792,SERIEA,2021-22,2022-01-09T12:00:00Z,Matchday 21,,Hellas Verona FC,,US Salernitana 1919,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-78d25779c2327a2e6caa24f2,SERIEA,2021-22,2022-01-09T12:00:00Z,Matchday 21,,Udinese Calcio,,Atalanta BC,,2,6,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8053d3685bf7deb910d7c0eb,SERIEA,2021-22,2022-01-09T12:00:00Z,Matchday 21,,Venezia FC,,AC Milan,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ef26a613a4aec194953aa819,SERIEA,2021-22,2022-01-09T12:00:00Z,Matchday 21,,Genoa CFC,,Spezia Calcio,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f2497b80fb24572e9a4d2522,SERIEA,2021-22,2022-01-09T12:00:00Z,Matchday 21,,FC Internazionale Milano,,SS Lazio,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-57189a67244e6f7aa31d78fd,SERIEA,2021-22,2022-01-10T12:00:00Z,Matchday 21,,Torino FC,,ACF Fiorentina,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-35698fc73ca7c3adefc8c588,SERIEA,2021-22,2022-01-11T12:00:00Z,Matchday 21,,Cagliari Calcio,,Bologna FC 1909,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2bb5e7948b68750f4fd5e5d8,SERIEA,2021-22,2022-01-15T12:00:00Z,Matchday 22,,Juventus FC,,Udinese Calcio,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-93ab7656bf35c8410579b6a4,SERIEA,2021-22,2022-01-15T12:00:00Z,Matchday 22,,US Salernitana 1919,,SS Lazio,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d9947361c49ba3d05d81f7c0,SERIEA,2021-22,2022-01-15T12:00:00Z,Matchday 22,,UC Sampdoria,,Torino FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-29aceff57891453d808ca5a5,SERIEA,2021-22,2022-01-16T12:00:00Z,Matchday 22,,US Sassuolo Calcio,,Hellas Verona FC,,2,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9d6911ece060ace296095748,SERIEA,2021-22,2022-01-16T12:00:00Z,Matchday 22,,Venezia FC,,Empoli FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b406c54616d101ff701e383c,SERIEA,2021-22,2022-01-16T12:00:00Z,Matchday 22,,AS Roma,,Cagliari Calcio,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ba0191ae4c16f96bdfde12b8,SERIEA,2021-22,2022-01-16T12:00:00Z,Matchday 22,,Atalanta BC,,FC Internazionale Milano,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-156110642f45a27f87f895a4,SERIEA,2021-22,2022-01-17T12:00:00Z,Matchday 22,,Bologna FC 1909,,SSC Napoli,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-1d619304931789631df5d0f6,SERIEA,2021-22,2022-01-17T12:00:00Z,Matchday 22,,AC Milan,,Spezia Calcio,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d67fa68e58ff0bb632ed3977,SERIEA,2021-22,2022-01-17T12:00:00Z,Matchday 22,,ACF Fiorentina,,Genoa CFC,,6,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-1e19b61503cd5660b5e4ce87,SERIEA,2021-22,2022-01-21T12:00:00Z,Matchday 23,,Hellas Verona FC,,Bologna FC 1909,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-79e7c86e8e8c9a4040510176,SERIEA,2021-22,2022-01-22T12:00:00Z,Matchday 23,,SS Lazio,,Atalanta BC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9d8a0a77b269a4b2839533bb,SERIEA,2021-22,2022-01-22T12:00:00Z,Matchday 23,,Genoa CFC,,Udinese Calcio,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c815852941940bb046386715,SERIEA,2021-22,2022-01-22T12:00:00Z,Matchday 23,,FC Internazionale Milano,,Venezia FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-048a8dfa5a937376f43898ed,SERIEA,2021-22,2022-01-23T12:00:00Z,Matchday 23,,Cagliari Calcio,,ACF Fiorentina,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-0ec302a1d67022d7dbe39ae5,SERIEA,2021-22,2022-01-23T12:00:00Z,Matchday 23,,Empoli FC,,AS Roma,,2,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2dd4b9954f0bcf2c6ecef66f,SERIEA,2021-22,2022-01-23T12:00:00Z,Matchday 23,,Torino FC,,US Sassuolo Calcio,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-680fd0d6ae501bb92f1554c1,SERIEA,2021-22,2022-01-23T12:00:00Z,Matchday 23,,AC Milan,,Juventus FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b5c15962690b995394a5e10e,SERIEA,2021-22,2022-01-23T12:00:00Z,Matchday 23,,Spezia Calcio,,UC Sampdoria,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-cbf76f500d0fc367e4b7fb95,SERIEA,2021-22,2022-01-23T12:00:00Z,Matchday 23,,SSC Napoli,,US Salernitana 1919,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4aaa16e8dc6d4a075e005280,SERIEA,2021-22,2022-02-05T12:00:00Z,Matchday 24,,FC Internazionale Milano,,AC Milan,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ae47e97d8b8652afbe274f49,SERIEA,2021-22,2022-02-05T12:00:00Z,Matchday 24,,ACF Fiorentina,,SS Lazio,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-fdc3ab6ff23f14590f247937,SERIEA,2021-22,2022-02-05T12:00:00Z,Matchday 24,,AS Roma,,Genoa CFC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-39192e9bbbdc8c02175619e3,SERIEA,2021-22,2022-02-06T12:00:00Z,Matchday 24,,Atalanta BC,,Cagliari Calcio,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-75124beee6dc9f0753c8543b,SERIEA,2021-22,2022-02-06T12:00:00Z,Matchday 24,,Bologna FC 1909,,Empoli FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8b5c40b79954cfa2020c38a9,SERIEA,2021-22,2022-02-06T12:00:00Z,Matchday 24,,Udinese Calcio,,Torino FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-93aad8ca75fdb71cd101b262,SERIEA,2021-22,2022-02-06T12:00:00Z,Matchday 24,,UC Sampdoria,,US Sassuolo Calcio,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b98cffbd1783021b00b7868c,SERIEA,2021-22,2022-02-06T12:00:00Z,Matchday 24,,Juventus FC,,Hellas Verona FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d99d3ccd8633df9df2bec0f0,SERIEA,2021-22,2022-02-06T12:00:00Z,Matchday 24,,Venezia FC,,SSC Napoli,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b90a5d6572557eeac6d213d9,SERIEA,2021-22,2022-02-07T12:00:00Z,Matchday 24,,US Salernitana 1919,,Spezia Calcio,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2941434049d3f5d1543fc506,SERIEA,2021-22,2022-02-12T12:00:00Z,Matchday 25,,SS Lazio,,Bologna FC 1909,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4d5f84dd00b10176cb12c921,SERIEA,2021-22,2022-02-12T12:00:00Z,Matchday 25,,SSC Napoli,,FC Internazionale Milano,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-dd830f9ffd973341da04fdb7,SERIEA,2021-22,2022-02-12T12:00:00Z,Matchday 25,,Torino FC,,Venezia FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-020f604e4b422222fff2728f,SERIEA,2021-22,2022-02-13T12:00:00Z,Matchday 25,,Empoli FC,,Cagliari Calcio,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-198ad96ecfd6c5f84d032bad,SERIEA,2021-22,2022-02-13T12:00:00Z,Matchday 25,,US Sassuolo Calcio,,AS Roma,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2e186a0d81d2355f5f720d58,SERIEA,2021-22,2022-02-13T12:00:00Z,Matchday 25,,Atalanta BC,,Juventus FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9a28090d3eb0482e9e42d726,SERIEA,2021-22,2022-02-13T12:00:00Z,Matchday 25,,Genoa CFC,,US Salernitana 1919,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b579b63f98820c3172f19d91,SERIEA,2021-22,2022-02-13T12:00:00Z,Matchday 25,,Hellas Verona FC,,Udinese Calcio,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d6062493dbe02b485e930afd,SERIEA,2021-22,2022-02-13T12:00:00Z,Matchday 25,,AC Milan,,UC Sampdoria,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2e3224cbaba0707177d8e6aa,SERIEA,2021-22,2022-02-14T12:00:00Z,Matchday 25,,Spezia Calcio,,ACF Fiorentina,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-73687ea8cde395fa6329b7cf,SERIEA,2021-22,2022-02-18T12:00:00Z,Matchday 26,,Juventus FC,,Torino FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4a1242ffe43f66be27a8f263,SERIEA,2021-22,2022-02-19T12:00:00Z,Matchday 26,,US Salernitana 1919,,AC Milan,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-63182a5fab2b63fcb29cfba6,SERIEA,2021-22,2022-02-19T12:00:00Z,Matchday 26,,AS Roma,,Hellas Verona FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ad5aa7fbb84da806a58ba220,SERIEA,2021-22,2022-02-19T12:00:00Z,Matchday 26,,UC Sampdoria,,Empoli FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4ff716b8d0e3457268eabbcf,SERIEA,2021-22,2022-02-20T12:00:00Z,Matchday 26,,Udinese Calcio,,SS Lazio,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-550b3203f5b571ac137da44c,SERIEA,2021-22,2022-02-20T12:00:00Z,Matchday 26,,FC Internazionale Milano,,US Sassuolo Calcio,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-964bb8118058cf0c3b91f081,SERIEA,2021-22,2022-02-20T12:00:00Z,Matchday 26,,ACF Fiorentina,,Atalanta BC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-bb78d380910dcab3a5ca1689,SERIEA,2021-22,2022-02-20T12:00:00Z,Matchday 26,,Venezia FC,,Genoa CFC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-104ef4de55c2b0f1c2dbc11d,SERIEA,2021-22,2022-02-21T12:00:00Z,Matchday 26,,Bologna FC 1909,,Spezia Calcio,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2482dd6dbea51cd9a8407245,SERIEA,2021-22,2022-02-21T12:00:00Z,Matchday 26,,Cagliari Calcio,,SSC Napoli,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b2d0394961cdc41ebdb0db09,SERIEA,2021-22,2022-02-25T12:00:00Z,Matchday 27,,AC Milan,,Udinese Calcio,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e10f8e909a55c34d72d4e015,SERIEA,2021-22,2022-02-25T12:00:00Z,Matchday 27,,Genoa CFC,,FC Internazionale Milano,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-52cf909512fa16f15b6a5a49,SERIEA,2021-22,2022-02-26T12:00:00Z,Matchday 27,,Empoli FC,,Juventus FC,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5674407f684f77fb3a658e4c,SERIEA,2021-22,2022-02-26T12:00:00Z,Matchday 27,,US Sassuolo Calcio,,ACF Fiorentina,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f358dee55ace599a9906049e,SERIEA,2021-22,2022-02-26T12:00:00Z,Matchday 27,,US Salernitana 1919,,Bologna FC 1909,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-1db0b240bb8f84ab835f7319,SERIEA,2021-22,2022-02-27T12:00:00Z,Matchday 27,,Spezia Calcio,,AS Roma,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-24b155958692e6a41043e07a,SERIEA,2021-22,2022-02-27T12:00:00Z,Matchday 27,,Torino FC,,Cagliari Calcio,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-76a183d1ef8c9a5a8b16ef0c,SERIEA,2021-22,2022-02-27T12:00:00Z,Matchday 27,,Hellas Verona FC,,Venezia FC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-cc5cdf7ba8fefb859f280f76,SERIEA,2021-22,2022-02-27T12:00:00Z,Matchday 27,,SS Lazio,,SSC Napoli,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-af2001a35f9fda7ddc1d42db,SERIEA,2021-22,2022-02-28T12:00:00Z,Matchday 27,,Atalanta BC,,UC Sampdoria,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-eacde9cfb1dcc0091b4ddac5,SERIEA,2021-22,2022-03-04T12:00:00Z,Matchday 28,,FC Internazionale Milano,,US Salernitana 1919,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-49429412de8ce63ac324064b,SERIEA,2021-22,2022-03-05T12:00:00Z,Matchday 28,,AS Roma,,Atalanta BC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6e6c55e302204ee30a8a2810,SERIEA,2021-22,2022-03-05T12:00:00Z,Matchday 28,,Cagliari Calcio,,SS Lazio,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9a6508d20f339d9879d04bc6,SERIEA,2021-22,2022-03-05T12:00:00Z,Matchday 28,,Udinese Calcio,,UC Sampdoria,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-05d1e3a4a7324192613a37e0,SERIEA,2021-22,2022-03-06T12:00:00Z,Matchday 28,,Juventus FC,,Spezia Calcio,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-0839b3e6065d783c6d04117b,SERIEA,2021-22,2022-03-06T12:00:00Z,Matchday 28,,ACF Fiorentina,,Hellas Verona FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-166320f2254c968bda33781d,SERIEA,2021-22,2022-03-06T12:00:00Z,Matchday 28,,Bologna FC 1909,,Torino FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-48f48fea6b24f717e193c65e,SERIEA,2021-22,2022-03-06T12:00:00Z,Matchday 28,,SSC Napoli,,AC Milan,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a904c56de24a1021d288393e,SERIEA,2021-22,2022-03-06T12:00:00Z,Matchday 28,,Genoa CFC,,Empoli FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e827ea7c47ee5d4faa82f595,SERIEA,2021-22,2022-03-06T12:00:00Z,Matchday 28,,Venezia FC,,US Sassuolo Calcio,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-0232af5d751d04ef7622320d,SERIEA,2021-22,2022-03-12T12:00:00Z,Matchday 29,,UC Sampdoria,,Juventus FC,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-7ce23c955f4a20deb84d1a98,SERIEA,2021-22,2022-03-12T12:00:00Z,Matchday 29,,Spezia Calcio,,Cagliari Calcio,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-aa78e9e1d969bb0009ffb72a,SERIEA,2021-22,2022-03-12T12:00:00Z,Matchday 29,,US Salernitana 1919,,US Sassuolo Calcio,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-bb696e8dcca12f6305680faa,SERIEA,2021-22,2022-03-12T12:00:00Z,Matchday 29,,AC Milan,,Empoli FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-008678d94b0b63464454cf09,SERIEA,2021-22,2022-03-13T12:00:00Z,Matchday 29,,Udinese Calcio,,AS Roma,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-1d983cd390f4674384ad14ba,SERIEA,2021-22,2022-03-13T12:00:00Z,Matchday 29,,Atalanta BC,,Genoa CFC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2b9fcd7308b0f6380ef83280,SERIEA,2021-22,2022-03-13T12:00:00Z,Matchday 29,,Hellas Verona FC,,SSC Napoli,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5d29aca2b15a1160c8a08d2c,SERIEA,2021-22,2022-03-13T12:00:00Z,Matchday 29,,ACF Fiorentina,,Bologna FC 1909,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-83cf2e19a508606a347397bc,SERIEA,2021-22,2022-03-13T12:00:00Z,Matchday 29,,Torino FC,,FC Internazionale Milano,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-fae9433cb4a85a30a5f87336,SERIEA,2021-22,2022-03-14T12:00:00Z,Matchday 29,,SS Lazio,,Venezia FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-51594f025817cee8761b332d,SERIEA,2021-22,2022-03-18T12:00:00Z,Matchday 30,,Genoa CFC,,Torino FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e1557b4cf0c242b25779ffaa,SERIEA,2021-22,2022-03-18T12:00:00Z,Matchday 30,,US Sassuolo Calcio,,Spezia Calcio,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-35518e5f6c8f6b9aef0313b8,SERIEA,2021-22,2022-03-19T12:00:00Z,Matchday 30,,FC Internazionale Milano,,ACF Fiorentina,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d0b38b3e3b2bf72383b4e392,SERIEA,2021-22,2022-03-19T12:00:00Z,Matchday 30,,SSC Napoli,,Udinese Calcio,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e527b63d1ab19af9e0b563d6,SERIEA,2021-22,2022-03-19T12:00:00Z,Matchday 30,,Cagliari Calcio,,AC Milan,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4c656f277f134fee41ae96f9,SERIEA,2021-22,2022-03-20T12:00:00Z,Matchday 30,,AS Roma,,SS Lazio,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4fc8977e2902ad3bc1d47a06,SERIEA,2021-22,2022-03-20T12:00:00Z,Matchday 30,,Empoli FC,,Hellas Verona FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a8a9fb249f2adfffcfb852a2,SERIEA,2021-22,2022-03-20T12:00:00Z,Matchday 30,,Venezia FC,,UC Sampdoria,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b19baf0f768c1e8359c4a3e4,SERIEA,2021-22,2022-03-20T12:00:00Z,Matchday 30,,Bologna FC 1909,,Atalanta BC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e078fa958d00c3500ce7da05,SERIEA,2021-22,2022-03-20T12:00:00Z,Matchday 30,,Juventus FC,,US Salernitana 1919,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-95cd38bd5cb7cae7a957bb32,SERIEA,2021-22,2022-04-02T12:00:00Z,Matchday 31,,SS Lazio,,US Sassuolo Calcio,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a2c18a4fb452b55258d89ff2,SERIEA,2021-22,2022-04-02T12:00:00Z,Matchday 31,,US Salernitana 1919,,Torino FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b5b761e779e70e99eeddf4cf,SERIEA,2021-22,2022-04-02T12:00:00Z,Matchday 31,,Spezia Calcio,,Venezia FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-43645becb962298219c39a14,SERIEA,2021-22,2022-04-03T12:00:00Z,Matchday 31,,Juventus FC,,FC Internazionale Milano,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5cc38eec844741e3e4e3db5d,SERIEA,2021-22,2022-04-03T12:00:00Z,Matchday 31,,Atalanta BC,,SSC Napoli,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6b1fca5c27213868b7922498,SERIEA,2021-22,2022-04-03T12:00:00Z,Matchday 31,,UC Sampdoria,,AS Roma,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-78427a3babcf2910252b3ceb,SERIEA,2021-22,2022-04-03T12:00:00Z,Matchday 31,,ACF Fiorentina,,Empoli FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-dcd2a1da03e10d001a5c01b9,SERIEA,2021-22,2022-04-03T12:00:00Z,Matchday 31,,Udinese Calcio,,Cagliari Calcio,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4396ca07885a0cc97bb07a1f,SERIEA,2021-22,2022-04-04T12:00:00Z,Matchday 31,,AC Milan,,Bologna FC 1909,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c6cebae5c0fcbb6d5596b4b6,SERIEA,2021-22,2022-04-04T12:00:00Z,Matchday 31,,Hellas Verona FC,,Genoa CFC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8d07e4dfe209940f5206a2a4,SERIEA,2021-22,2022-04-09T12:00:00Z,Matchday 32,,Empoli FC,,Spezia Calcio,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f8ed8706019814ed7384cc47,SERIEA,2021-22,2022-04-09T12:00:00Z,Matchday 32,,FC Internazionale Milano,,Hellas Verona FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-fd46bea60e8a9fc5d2f0110a,SERIEA,2021-22,2022-04-09T12:00:00Z,Matchday 32,,Cagliari Calcio,,Juventus FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-030d15051d9bf914dc421194,SERIEA,2021-22,2022-04-10T12:00:00Z,Matchday 32,,Genoa CFC,,SS Lazio,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-04aff9c98923e058ba466ed1,SERIEA,2021-22,2022-04-10T12:00:00Z,Matchday 32,,Torino FC,,AC Milan,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-36fc8435e1f4adbc376f7848,SERIEA,2021-22,2022-04-10T12:00:00Z,Matchday 32,,SSC Napoli,,ACF Fiorentina,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-3c433c7194f22f09dd76d686,SERIEA,2021-22,2022-04-10T12:00:00Z,Matchday 32,,US Sassuolo Calcio,,Atalanta BC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-bc51004e2e1a08187502bfea,SERIEA,2021-22,2022-04-10T12:00:00Z,Matchday 32,,AS Roma,,US Salernitana 1919,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c8d8d8238a156be0b632ddaf,SERIEA,2021-22,2022-04-10T12:00:00Z,Matchday 32,,Venezia FC,,Udinese Calcio,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5396e01f9cd750c0a94d8136,SERIEA,2021-22,2022-04-11T12:00:00Z,Matchday 32,,Bologna FC 1909,,UC Sampdoria,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-88e57155535798e5d05e131f,SERIEA,2021-22,2022-04-15T12:00:00Z,Matchday 33,,Spezia Calcio,,FC Internazionale Milano,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ea3303a9d87fafea40ca16ac,SERIEA,2021-22,2022-04-15T12:00:00Z,Matchday 33,,AC Milan,,Genoa CFC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-1b7bbf7e0c6ae50b50f4a037,SERIEA,2021-22,2022-04-16T12:00:00Z,Matchday 33,,ACF Fiorentina,,Venezia FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2a2caa58ceff4ab049b1d39c,SERIEA,2021-22,2022-04-16T12:00:00Z,Matchday 33,,Cagliari Calcio,,US Sassuolo Calcio,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ae57d3388f029ddb0907b8de,SERIEA,2021-22,2022-04-16T12:00:00Z,Matchday 33,,UC Sampdoria,,US Salernitana 1919,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d011566c21ac6ca7821b85cc,SERIEA,2021-22,2022-04-16T12:00:00Z,Matchday 33,,Juventus FC,,Bologna FC 1909,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ea8290c4e4c9176b3029b895,SERIEA,2021-22,2022-04-16T12:00:00Z,Matchday 33,,SS Lazio,,Torino FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f4965e2b64056f4c4effacbd,SERIEA,2021-22,2022-04-16T12:00:00Z,Matchday 33,,Udinese Calcio,,Empoli FC,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2a78cab08a25236fa3b09964,SERIEA,2021-22,2022-04-18T12:00:00Z,Matchday 33,,SSC Napoli,,AS Roma,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6aa61e6e919fa319a35e668d,SERIEA,2021-22,2022-04-18T12:00:00Z,Matchday 33,,Atalanta BC,,Hellas Verona FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-0a1e137dbcbccb7c13bb798b,SERIEA,2021-22,2022-04-20T12:00:00Z,Matchday 19,,Udinese Calcio,,US Salernitana 1919,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-35d78cc2fab13a3863ef6686,SERIEA,2021-22,2022-04-23T12:00:00Z,Matchday 34,,FC Internazionale Milano,,AS Roma,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-571f97a6cb32399f3afa7145,SERIEA,2021-22,2022-04-23T12:00:00Z,Matchday 34,,Torino FC,,Spezia Calcio,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-93a18cd0ab04b2bdc8def5a3,SERIEA,2021-22,2022-04-23T12:00:00Z,Matchday 34,,Venezia FC,,Atalanta BC,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d9e733ddaf0a746ade08d642,SERIEA,2021-22,2022-04-23T12:00:00Z,Matchday 34,,Hellas Verona FC,,UC Sampdoria,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-3769372b64a0d7ae94e27b08,SERIEA,2021-22,2022-04-24T12:00:00Z,Matchday 34,,US Salernitana 1919,,ACF Fiorentina,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-3f63d1c0ec752d2dbfe2b1c6,SERIEA,2021-22,2022-04-24T12:00:00Z,Matchday 34,,Bologna FC 1909,,Udinese Calcio,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-64c4c5aa6d1ec0a722b026e6,SERIEA,2021-22,2022-04-24T12:00:00Z,Matchday 34,,SS Lazio,,AC Milan,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6e677ca7c00f87a0c0461a54,SERIEA,2021-22,2022-04-24T12:00:00Z,Matchday 34,,Genoa CFC,,Cagliari Calcio,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f86d75a022c4e968274efa73,SERIEA,2021-22,2022-04-24T12:00:00Z,Matchday 34,,Empoli FC,,SSC Napoli,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a7d73e992da678b70076df52,SERIEA,2021-22,2022-04-25T12:00:00Z,Matchday 34,,US Sassuolo Calcio,,Juventus FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-3d51bded97e1ea578e84312b,SERIEA,2021-22,2022-04-27T12:00:00Z,Matchday 20,,Bologna FC 1909,,FC Internazionale Milano,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-58a9b046c19a9aec83b42958,SERIEA,2021-22,2022-04-27T12:00:00Z,Matchday 20,,ACF Fiorentina,,Udinese Calcio,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-77ecb7549d843867065ac1dc,SERIEA,2021-22,2022-04-27T12:00:00Z,Matchday 20,,Atalanta BC,,Torino FC,,4,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-1be40d76404ba63a8a759fbe,SERIEA,2021-22,2022-04-30T12:00:00Z,Matchday 35,,SSC Napoli,,US Sassuolo Calcio,,6,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4b3f251b6363a5c3655a03e1,SERIEA,2021-22,2022-04-30T12:00:00Z,Matchday 35,,Cagliari Calcio,,Hellas Verona FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6bb1f1398d338ec3d4c3b5af,SERIEA,2021-22,2022-04-30T12:00:00Z,Matchday 35,,UC Sampdoria,,Genoa CFC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c4972ff1fc7c9e5352ff9ab9,SERIEA,2021-22,2022-04-30T12:00:00Z,Matchday 35,,Spezia Calcio,,SS Lazio,,3,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-09684a0e005715205ba25bfe,SERIEA,2021-22,2022-05-01T12:00:00Z,Matchday 35,,Udinese Calcio,,FC Internazionale Milano,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-29e134f6205c7103f71ff6ad,SERIEA,2021-22,2022-05-01T12:00:00Z,Matchday 35,,AC Milan,,ACF Fiorentina,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-361d7f63148290bc0eb4c902,SERIEA,2021-22,2022-05-01T12:00:00Z,Matchday 35,,Empoli FC,,Torino FC,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e33490d261a7315e76b91433,SERIEA,2021-22,2022-05-01T12:00:00Z,Matchday 35,,Juventus FC,,Venezia FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ebee7e0ac4ae3a5eb0d48937,SERIEA,2021-22,2022-05-01T12:00:00Z,Matchday 35,,AS Roma,,Bologna FC 1909,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f5e96e00383ac6c9270ee973,SERIEA,2021-22,2022-05-02T12:00:00Z,Matchday 35,,Atalanta BC,,US Salernitana 1919,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e4db12118cc1b350ce254dad,SERIEA,2021-22,2022-05-05T12:00:00Z,Matchday 20,,US Salernitana 1919,,Venezia FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-088beff0663ec7582ec84c16,SERIEA,2021-22,2022-05-06T12:00:00Z,Matchday 36,,Genoa CFC,,Juventus FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-52795e442b20961dd072b5ac,SERIEA,2021-22,2022-05-06T12:00:00Z,Matchday 36,,FC Internazionale Milano,,Empoli FC,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2937aef5f26cd124988a657b,SERIEA,2021-22,2022-05-07T12:00:00Z,Matchday 36,,Torino FC,,SSC Napoli,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-99116c82af68e10f61c0f297,SERIEA,2021-22,2022-05-07T12:00:00Z,Matchday 36,,US Sassuolo Calcio,,Udinese Calcio,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c381c52349ec4edbf6411735,SERIEA,2021-22,2022-05-07T12:00:00Z,Matchday 36,,SS Lazio,,UC Sampdoria,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-115f639d885fff2eca2883bf,SERIEA,2021-22,2022-05-08T12:00:00Z,Matchday 36,,Spezia Calcio,,Atalanta BC,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a5647e78daa7f290b2968a87,SERIEA,2021-22,2022-05-08T12:00:00Z,Matchday 36,,US Salernitana 1919,,Cagliari Calcio,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-dce0a4217dfb9e9a837ab1c9,SERIEA,2021-22,2022-05-08T12:00:00Z,Matchday 36,,Hellas Verona FC,,AC Milan,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-dce77a00ceb9361014ddb4f5,SERIEA,2021-22,2022-05-08T12:00:00Z,Matchday 36,,Venezia FC,,Bologna FC 1909,,4,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-97942ce1bcf354556677e4b9,SERIEA,2021-22,2022-05-09T12:00:00Z,Matchday 36,,ACF Fiorentina,,AS Roma,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5e31560f07a6cbe2b25af5f4,SERIEA,2021-22,2022-05-14T12:00:00Z,Matchday 37,,Hellas Verona FC,,Torino FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b0ba28451f7a05b7865a9d10,SERIEA,2021-22,2022-05-14T12:00:00Z,Matchday 37,,Udinese Calcio,,Spezia Calcio,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c00e588805270c3cb78e50bb,SERIEA,2021-22,2022-05-14T12:00:00Z,Matchday 37,,Empoli FC,,US Salernitana 1919,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c42d723b325b4a1cd601eab4,SERIEA,2021-22,2022-05-14T12:00:00Z,Matchday 37,,AS Roma,,Venezia FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-374fa5b33aa76d1ffff4157a,SERIEA,2021-22,2022-05-15T12:00:00Z,Matchday 37,,Cagliari Calcio,,FC Internazionale Milano,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-3e1ea11c50e4fd89e39395a8,SERIEA,2021-22,2022-05-15T12:00:00Z,Matchday 37,,SSC Napoli,,Genoa CFC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-57fae29718ef122592122b89,SERIEA,2021-22,2022-05-15T12:00:00Z,Matchday 37,,AC Milan,,Atalanta BC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-bf62d47fa4900cc3cd9cd7d8,SERIEA,2021-22,2022-05-15T12:00:00Z,Matchday 37,,Bologna FC 1909,,US Sassuolo Calcio,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-96ecf216bb39243d312ebfb3,SERIEA,2021-22,2022-05-16T12:00:00Z,Matchday 37,,Juventus FC,,SS Lazio,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-feaa289bf26fd4f318c1e002,SERIEA,2021-22,2022-05-16T12:00:00Z,Matchday 37,,UC Sampdoria,,ACF Fiorentina,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-01350bb73a5d8e9a8d1d5125,SERIEA,2021-22,2022-05-20T12:00:00Z,Matchday 38,,Torino FC,,AS Roma,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-1f4792d22b5d332a0562f978,SERIEA,2021-22,2022-05-21T12:00:00Z,Matchday 38,,ACF Fiorentina,,Juventus FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-340b9452b738de65b05d03be,SERIEA,2021-22,2022-05-21T12:00:00Z,Matchday 38,,Genoa CFC,,Bologna FC 1909,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-3dd8385e0573e4e80c95e65b,SERIEA,2021-22,2022-05-21T12:00:00Z,Matchday 38,,SS Lazio,,Hellas Verona FC,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ec77d7bdd185b7c9aa55173d,SERIEA,2021-22,2022-05-21T12:00:00Z,Matchday 38,,Atalanta BC,,Empoli FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-0f30e5d250016eddf3895459,SERIEA,2021-22,2022-05-22T12:00:00Z,Matchday 38,,US Salernitana 1919,,Udinese Calcio,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-580cad6d15ee4f41724be276,SERIEA,2021-22,2022-05-22T12:00:00Z,Matchday 38,,FC Internazionale Milano,,UC Sampdoria,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6ca378708b9ac736d3ddf21d,SERIEA,2021-22,2022-05-22T12:00:00Z,Matchday 38,,Spezia Calcio,,SSC Napoli,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b43db35593e91b3be84c2286,SERIEA,2021-22,2022-05-22T12:00:00Z,Matchday 38,,Venezia FC,,Cagliari Calcio,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e836f71faf38006af7152433,SERIEA,2021-22,2022-05-22T12:00:00Z,Matchday 38,,US Sassuolo Calcio,,AC Milan,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00

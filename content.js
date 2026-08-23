@@ -295,8 +295,11 @@
       const meta=compMeta(post.comp),words=(Array.isArray(post.body)?post.body.join(' '):'').split(/\s+/).filter(Boolean).length;
       const isRanking=post.type==='ranking',isAvailability=post.type==='availability',isSimulation=post.type==='simulation',isMarketAudit=post.type==='market-audit',isMethodology=post.type==='methodology';
       const storyType=isRanking?'preview':(isAvailability||isSimulation||isMarketAudit||isMethodology)?'learn':'recap';
+      const highlights=post.highlights||{},best=highlights.best_call,miss=highlights.biggest_miss,upset=highlights.biggest_upset;
+      const recapTitle=upset?.winner?`${upset.winner} broke the script in ${meta.label}`:best?.pick?`${best.pick} delivered ${meta.label}'s clearest call`:(post.title||`${meta.label}: the week in review`);
+      const recapTakeaway=best?.pick&&miss?.pick?`${best.pick} supplied the standout call; ${miss.pick} was the miss that kept the record honest.`:best?.pick?`${best.pick} was the clearest verified call in this edition.`:miss?.pick?`${miss.pick} was the miss worth revisiting in this edition.`:'The record is published with the misses intact.';
       return {id:`post-${post.id||post.slug}`,type:storyType,badgeType:isAvailability?'availability':isRanking?'ranking':isSimulation?'simulation':isMarketAudit?'market-audit':isMethodology?'methodology':null,sports:[meta.sport],comp:meta.key,compLabel:post.comp_label||meta.label,
-        title:post.title||`${meta.label} model recap`,summary:post.summary||'The latest locked-pick model recap.',takeaway:isAvailability?'A sourced status check that separates confirmed news from what the current feed cannot establish.':isRanking?'A current ordering, its opening-fixture context, and the limits of the available evidence.':isSimulation?'A clearly labeled fictional scenario with fixed inputs, sensitivity cases, and no forecast claim.':isMarketAudit?'A quality-gated comparison that states plainly when current market evidence is too thin to publish.':isMethodology?'An accountability note explaining how Matchday locks, grades, and evaluates its predictions.':'A weekly review of the calls, misses, and calibration lessons.',
+        title:storyType==='recap'?recapTitle:(post.title||`${meta.label} analysis`),summary:post.summary||'The latest locked-pick model recap.',takeaway:isAvailability?'What is confirmed, what remains unknown, and why it matters before kickoff.':isRanking?'The current order, the fixture context, and the gaps in the available evidence.':isSimulation?'A fixed-input scenario showing which assumptions actually move the outcome.':isMarketAudit?'A direct check of whether the available market evidence is strong enough to publish.':isMethodology?'How Matchday locks, grades, and pressure-tests its own predictions.':recapTakeaway,
         updated:`${post.date||''}T12:00:00Z`,dataUpdated:`${post.date||''}T12:00:00Z`,sortTime:timestamp(`${post.date||''}T12:00:00Z`),minutes:Math.max(3,Math.ceil(words/180)),
         url:`posts/${encodeURIComponent(post.slug||post.id||'')}.html`,resultLabel:isAvailability?'Availability desk':isRanking?'Ranked list':isSimulation?'Simulation':isMarketAudit?'Market audit':isMethodology?'Methodology':'Weekly recap'};
     });
@@ -325,7 +328,7 @@
     const list=filteredItems(),grid=byId('latestGrid'),empty=byId('contentEmpty'),count=byId('contentCount');
     if(grid)grid.innerHTML=list.map(storyCard).join('');
     if(empty)empty.hidden=!!list.length;
-    if(count)count.textContent=list.length?`${list.length} ${list.length===1?'story':'stories'} shown`:'No matching stories';
+    if(count)count.textContent=list.length?`${list.length} ${list.length===1?'story':'stories'} in this edition`:'No matching stories';
     renderFeatured(list);
     if(animate){replayMotion(grid);replayMotion(byId('featuredStory'),'featuredSwap')}
   }

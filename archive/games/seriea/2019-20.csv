@@ -1,0 +1,283 @@
+game_id,comp,season,date_utc,stage,venue,home_name,home_code,away_name,away_code,home_score,away_score,status,source,first_seen
+seriea-openfootball-a82030a50088c5d3ed6e5c0c,SERIEA,2019-20,2019-08-24T12:00:00Z,Matchday 1,,Parma Calcio 1913,,Juventus,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-bc8dce87c426acc63a748d67,SERIEA,2019-20,2019-08-24T12:00:00Z,Matchday 1,,ACF Fiorentina,,SSC Napoli,,3,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-0ab206a53a7256ff837ff046,SERIEA,2019-20,2019-08-25T12:00:00Z,Matchday 1,,Udinese Calcio,,AC Milan,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-12f162af1b97fd0cd747486f,SERIEA,2019-20,2019-08-25T12:00:00Z,Matchday 1,,Torino FC,,Sassuolo Calcio,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5115a46deb30cd63d089d66a,SERIEA,2019-20,2019-08-25T12:00:00Z,Matchday 1,,SPAL 2013 Ferrara,,Atalanta,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-65448ddeac975f5801efd18b,SERIEA,2019-20,2019-08-25T12:00:00Z,Matchday 1,,Hellas Verona,,Bologna FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-be9f3ef92177853648aabeaa,SERIEA,2019-20,2019-08-25T12:00:00Z,Matchday 1,,Sampdoria,,Lazio Roma,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d1c5de728b8857da2531e9ee,SERIEA,2019-20,2019-08-25T12:00:00Z,Matchday 1,,AS Roma,,Genoa CFC,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d761e857d4775ee03fde67ad,SERIEA,2019-20,2019-08-25T12:00:00Z,Matchday 1,,Cagliari Calcio,,Brescia Calcio,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-32025a326277c7a45a2d8321,SERIEA,2019-20,2019-08-26T12:00:00Z,Matchday 1,,Inter,,US Lecce,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d6894cbfdbe43bbcadafb842,SERIEA,2019-20,2019-08-30T12:00:00Z,Matchday 2,,Bologna FC,,SPAL 2013 Ferrara,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-06a3267f5be06b6f1a4981c4,SERIEA,2019-20,2019-08-31T12:00:00Z,Matchday 2,,Juventus,,SSC Napoli,,4,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8abbb8db2953a6705e293bd1,SERIEA,2019-20,2019-08-31T12:00:00Z,Matchday 2,,AC Milan,,Brescia Calcio,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-17af4574807189f1c7b8a18c,SERIEA,2019-20,2019-09-01T12:00:00Z,Matchday 2,,Cagliari Calcio,,Inter,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2c0f8941fc8a2be51cbac613,SERIEA,2019-20,2019-09-01T12:00:00Z,Matchday 2,,Lazio Roma,,AS Roma,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-53b947649b965cb8257d818c,SERIEA,2019-20,2019-09-01T12:00:00Z,Matchday 2,,US Lecce,,Hellas Verona,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9b53949b72d78cabc0151981,SERIEA,2019-20,2019-09-01T12:00:00Z,Matchday 2,,Genoa CFC,,ACF Fiorentina,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a68bdc409cd0fcf1e32c940d,SERIEA,2019-20,2019-09-01T12:00:00Z,Matchday 2,,Udinese Calcio,,Parma Calcio 1913,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e26ddfd14a0b962b3be5b26c,SERIEA,2019-20,2019-09-01T12:00:00Z,Matchday 2,,Atalanta,,Torino FC,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-eb8f2f8391f5f55e7b06db5b,SERIEA,2019-20,2019-09-01T12:00:00Z,Matchday 2,,Sassuolo Calcio,,Sampdoria,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-3b762254f78e46395b98f837,SERIEA,2019-20,2019-09-14T12:00:00Z,Matchday 3,,Inter,,Udinese Calcio,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ebfda10d990377eeefc30421,SERIEA,2019-20,2019-09-14T12:00:00Z,Matchday 3,,SSC Napoli,,Sampdoria,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f15febca5d47c78c23e46ffa,SERIEA,2019-20,2019-09-14T12:00:00Z,Matchday 3,,ACF Fiorentina,,Juventus,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-305fa037118d875909b3395c,SERIEA,2019-20,2019-09-15T12:00:00Z,Matchday 3,,Parma Calcio 1913,,Cagliari Calcio,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-591888dd83d83ab3526aab7b,SERIEA,2019-20,2019-09-15T12:00:00Z,Matchday 3,,Brescia Calcio,,Bologna FC,,3,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-65d30323a8d634cf03df53d3,SERIEA,2019-20,2019-09-15T12:00:00Z,Matchday 3,,Genoa CFC,,Atalanta,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-72c754f092bc8dcb0608b6b0,SERIEA,2019-20,2019-09-15T12:00:00Z,Matchday 3,,SPAL 2013 Ferrara,,Lazio Roma,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-96d297428dbed8e8a596a135,SERIEA,2019-20,2019-09-15T12:00:00Z,Matchday 3,,AS Roma,,Sassuolo Calcio,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-fb558a70da2b2367fb2b54e3,SERIEA,2019-20,2019-09-15T12:00:00Z,Matchday 3,,Hellas Verona,,AC Milan,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e03b600abbe4b2d05205604d,SERIEA,2019-20,2019-09-16T12:00:00Z,Matchday 3,,Torino FC,,US Lecce,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-256c2e96bf513955f219d711,SERIEA,2019-20,2019-09-20T12:00:00Z,Matchday 4,,Cagliari Calcio,,Genoa CFC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-55537b3b78f0df211c372e5b,SERIEA,2019-20,2019-09-21T12:00:00Z,Matchday 4,,Udinese Calcio,,Brescia Calcio,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-577d93e4c4db7526075e47fa,SERIEA,2019-20,2019-09-21T12:00:00Z,Matchday 4,,Juventus,,Hellas Verona,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-7b4a77d2303e41110926b16d,SERIEA,2019-20,2019-09-21T12:00:00Z,Matchday 4,,AC Milan,,Inter,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-43a11b99aaa6bed87446c57a,SERIEA,2019-20,2019-09-22T12:00:00Z,Matchday 4,,Lazio Roma,,Parma Calcio 1913,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4d4ef16d9a6114d1a29de21e,SERIEA,2019-20,2019-09-22T12:00:00Z,Matchday 4,,Bologna FC,,AS Roma,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-50c4afa7aad233929f431f51,SERIEA,2019-20,2019-09-22T12:00:00Z,Matchday 4,,Sampdoria,,Torino FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6f4b5e16c5c5a44a24695337,SERIEA,2019-20,2019-09-22T12:00:00Z,Matchday 4,,Atalanta,,ACF Fiorentina,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b9e49c8c5367e69befe74cb8,SERIEA,2019-20,2019-09-22T12:00:00Z,Matchday 4,,Sassuolo Calcio,,SPAL 2013 Ferrara,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e27bff44f7b4aafce751f265,SERIEA,2019-20,2019-09-22T12:00:00Z,Matchday 4,,US Lecce,,SSC Napoli,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-75358f54abc16d57fce4d411,SERIEA,2019-20,2019-09-24T12:00:00Z,Matchday 5,,Brescia Calcio,,Juventus,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-88cbb3331609b279cb9b18b8,SERIEA,2019-20,2019-09-24T12:00:00Z,Matchday 5,,Hellas Verona,,Udinese Calcio,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-100be822dfffde8e2374cc98,SERIEA,2019-20,2019-09-25T12:00:00Z,Matchday 5,,SPAL 2013 Ferrara,,US Lecce,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-1bf51e691264ee0bab5df364,SERIEA,2019-20,2019-09-25T12:00:00Z,Matchday 5,,AS Roma,,Atalanta,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-29e06b2012b63bd7c21a9c7f,SERIEA,2019-20,2019-09-25T12:00:00Z,Matchday 5,,SSC Napoli,,Cagliari Calcio,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4c7ac084d4eb52fd070402e8,SERIEA,2019-20,2019-09-25T12:00:00Z,Matchday 5,,Genoa CFC,,Bologna FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-99a22f9ca181c785c7698f42,SERIEA,2019-20,2019-09-25T12:00:00Z,Matchday 5,,ACF Fiorentina,,Sampdoria,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a9dfdf810422b54701469ee6,SERIEA,2019-20,2019-09-25T12:00:00Z,Matchday 5,,Parma Calcio 1913,,Sassuolo Calcio,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f88ea957b51b846fc7a6ba57,SERIEA,2019-20,2019-09-25T12:00:00Z,Matchday 5,,Inter,,Lazio Roma,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-106dd98e2f4d4edebdf75f4a,SERIEA,2019-20,2019-09-26T12:00:00Z,Matchday 5,,Torino FC,,AC Milan,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-307329606611786f06965d40,SERIEA,2019-20,2019-09-28T12:00:00Z,Matchday 6,,Juventus,,SPAL 2013 Ferrara,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8ebb6210822962e6ab69f8ec,SERIEA,2019-20,2019-09-28T12:00:00Z,Matchday 6,,Sassuolo Calcio,,Atalanta,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e236f4a17f27a156629a4ee8,SERIEA,2019-20,2019-09-28T12:00:00Z,Matchday 6,,Sampdoria,,Inter,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-0078154cdc7d1d1e8ee32a84,SERIEA,2019-20,2019-09-29T12:00:00Z,Matchday 6,,Lazio Roma,,Genoa CFC,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-064dd703a0e77990bfac39c1,SERIEA,2019-20,2019-09-29T12:00:00Z,Matchday 6,,SSC Napoli,,Brescia Calcio,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-0d3cad50a5a5aba554eb65c0,SERIEA,2019-20,2019-09-29T12:00:00Z,Matchday 6,,US Lecce,,AS Roma,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-7a4e90e008de699f1cf1f415,SERIEA,2019-20,2019-09-29T12:00:00Z,Matchday 6,,Udinese Calcio,,Bologna FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b684fa3ba01eb1a0f0276059,SERIEA,2019-20,2019-09-29T12:00:00Z,Matchday 6,,Cagliari Calcio,,Hellas Verona,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f94ef8c03a79010b8ea0a875,SERIEA,2019-20,2019-09-29T12:00:00Z,Matchday 6,,AC Milan,,ACF Fiorentina,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-1772580ed732d0a50004ef61,SERIEA,2019-20,2019-09-30T12:00:00Z,Matchday 6,,Parma Calcio 1913,,Torino FC,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-124722e15f0636250ccf10ad,SERIEA,2019-20,2019-10-05T12:00:00Z,Matchday 7,,Hellas Verona,,Sampdoria,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c7a90bf61a07bd24daea5d43,SERIEA,2019-20,2019-10-05T12:00:00Z,Matchday 7,,Genoa CFC,,AC Milan,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ede42561779e49a78f3244cb,SERIEA,2019-20,2019-10-05T12:00:00Z,Matchday 7,,SPAL 2013 Ferrara,,Parma Calcio 1913,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-1e72f49d4d701fab7463680c,SERIEA,2019-20,2019-10-06T12:00:00Z,Matchday 7,,AS Roma,,Cagliari Calcio,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2c457c2a553795fde7ac3056,SERIEA,2019-20,2019-10-06T12:00:00Z,Matchday 7,,Bologna FC,,Lazio Roma,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-7cc54dc594cd3f403f1f64f8,SERIEA,2019-20,2019-10-06T12:00:00Z,Matchday 7,,Torino FC,,SSC Napoli,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a5386d0c1d4ab9c0cfc056b8,SERIEA,2019-20,2019-10-06T12:00:00Z,Matchday 7,,ACF Fiorentina,,Udinese Calcio,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b68d4faf542bd1f5f9cfdd27,SERIEA,2019-20,2019-10-06T12:00:00Z,Matchday 7,,Atalanta,,US Lecce,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d2e2c08d1557e16b8e66b565,SERIEA,2019-20,2019-10-06T12:00:00Z,Matchday 7,,Inter,,Juventus,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-09a7a9f7dc7a188155dc7aa6,SERIEA,2019-20,2019-10-19T12:00:00Z,Matchday 8,,Juventus,,Bologna FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a638e5939e9afd6d7ff1029b,SERIEA,2019-20,2019-10-19T12:00:00Z,Matchday 8,,Lazio Roma,,Atalanta,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ca0a7d92cac22bdda81f9414,SERIEA,2019-20,2019-10-19T12:00:00Z,Matchday 8,,SSC Napoli,,Hellas Verona,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-07c06ea4ae56bb7ceca905fb,SERIEA,2019-20,2019-10-20T12:00:00Z,Matchday 8,,AC Milan,,US Lecce,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-50c4fae9ab31d1f9d284ac35,SERIEA,2019-20,2019-10-20T12:00:00Z,Matchday 8,,Sampdoria,,AS Roma,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5acc2d7fb9d4bbc6975e65b9,SERIEA,2019-20,2019-10-20T12:00:00Z,Matchday 8,,Sassuolo Calcio,,Inter,,3,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6e9c16117e31a1d00192d01d,SERIEA,2019-20,2019-10-20T12:00:00Z,Matchday 8,,Udinese Calcio,,Torino FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-7e9da3aed32fd15859246f15,SERIEA,2019-20,2019-10-20T12:00:00Z,Matchday 8,,Cagliari Calcio,,SPAL 2013 Ferrara,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a911598192a7758aaa9c9ea4,SERIEA,2019-20,2019-10-20T12:00:00Z,Matchday 8,,Parma Calcio 1913,,Genoa CFC,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-762b7a0fbdb239413c02dfe2,SERIEA,2019-20,2019-10-21T12:00:00Z,Matchday 8,,Brescia Calcio,,ACF Fiorentina,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b757b36b15c7ca3441b22852,SERIEA,2019-20,2019-10-25T12:00:00Z,Matchday 9,,Hellas Verona,,Sassuolo Calcio,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-0b763b7179ee86484168059b,SERIEA,2019-20,2019-10-26T12:00:00Z,Matchday 9,,Inter,,Parma Calcio 1913,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5ffd85f0f243cd185aaf8694,SERIEA,2019-20,2019-10-26T12:00:00Z,Matchday 9,,US Lecce,,Juventus,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-8ab5f69cab3ad9b6cd03bb66,SERIEA,2019-20,2019-10-26T12:00:00Z,Matchday 9,,Genoa CFC,,Brescia Calcio,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-27508734011bb724aa4680bf,SERIEA,2019-20,2019-10-27T12:00:00Z,Matchday 9,,AS Roma,,AC Milan,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-81dff2771b2f666964e1f351,SERIEA,2019-20,2019-10-27T12:00:00Z,Matchday 9,,Torino FC,,Cagliari Calcio,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a59bc35009ec3196be87e1d3,SERIEA,2019-20,2019-10-27T12:00:00Z,Matchday 9,,SPAL 2013 Ferrara,,SSC Napoli,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-dfafc03464b68ccb369087f2,SERIEA,2019-20,2019-10-27T12:00:00Z,Matchday 9,,Atalanta,,Udinese Calcio,,7,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e10045ad49b3d4bb48bde372,SERIEA,2019-20,2019-10-27T12:00:00Z,Matchday 9,,Bologna FC,,Sampdoria,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f7ab4eb3d47ad14af6ed8751,SERIEA,2019-20,2019-10-27T12:00:00Z,Matchday 9,,ACF Fiorentina,,Lazio Roma,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-066f10187b2f259782f00014,SERIEA,2019-20,2019-10-29T12:00:00Z,Matchday 10,,Brescia Calcio,,Inter,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-36c5b91bc510d806c42a667e,SERIEA,2019-20,2019-10-29T12:00:00Z,Matchday 10,,Parma Calcio 1913,,Hellas Verona,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-123d5bdc738ba4f1a7add078,SERIEA,2019-20,2019-10-30T12:00:00Z,Matchday 10,,Cagliari Calcio,,Bologna FC,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4ecdf0cfaed6f06f2ba76b97,SERIEA,2019-20,2019-10-30T12:00:00Z,Matchday 10,,Juventus,,Genoa CFC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-7796e2005836020e981e10f0,SERIEA,2019-20,2019-10-30T12:00:00Z,Matchday 10,,Sassuolo Calcio,,ACF Fiorentina,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ab9ea0ac8f82291612a0259b,SERIEA,2019-20,2019-10-30T12:00:00Z,Matchday 10,,SSC Napoli,,Atalanta,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ae9c0ac008e0131e93f74f95,SERIEA,2019-20,2019-10-30T12:00:00Z,Matchday 10,,Udinese Calcio,,AS Roma,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b7af3e4bc085e9dc09f0d1a5,SERIEA,2019-20,2019-10-30T12:00:00Z,Matchday 10,,Lazio Roma,,Torino FC,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c98e03b8b8ebeea3927f792c,SERIEA,2019-20,2019-10-30T12:00:00Z,Matchday 10,,Sampdoria,,US Lecce,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9aae819e7727e248efc5f591,SERIEA,2019-20,2019-10-31T12:00:00Z,Matchday 10,,AC Milan,,SPAL 2013 Ferrara,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-17ae9a473aa10ba6a7927827,SERIEA,2019-20,2019-11-02T12:00:00Z,Matchday 11,,AS Roma,,SSC Napoli,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2376f763184b56796b37fa4e,SERIEA,2019-20,2019-11-02T12:00:00Z,Matchday 11,,Bologna FC,,Inter,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-35333900f934e9d3dab725a0,SERIEA,2019-20,2019-11-02T12:00:00Z,Matchday 11,,Torino FC,,Juventus,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-3ed7dc4be4f38a777b63d615,SERIEA,2019-20,2019-11-03T12:00:00Z,Matchday 11,,ACF Fiorentina,,Parma Calcio 1913,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-78761dc3649cc6f06a99493a,SERIEA,2019-20,2019-11-03T12:00:00Z,Matchday 11,,Hellas Verona,,Brescia Calcio,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-abb71f83a69a3e66eed9aaad,SERIEA,2019-20,2019-11-03T12:00:00Z,Matchday 11,,AC Milan,,Lazio Roma,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b29da88e3c73fee22d6237a8,SERIEA,2019-20,2019-11-03T12:00:00Z,Matchday 11,,US Lecce,,Sassuolo Calcio,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f5b676ea5c84551b9e006b86,SERIEA,2019-20,2019-11-03T12:00:00Z,Matchday 11,,Atalanta,,Cagliari Calcio,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-fb858c3d1ade00e88931afd1,SERIEA,2019-20,2019-11-03T12:00:00Z,Matchday 11,,Genoa CFC,,Udinese Calcio,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a42a868c0aeff34887253dbe,SERIEA,2019-20,2019-11-04T12:00:00Z,Matchday 11,,SPAL 2013 Ferrara,,Sampdoria,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ada1f019516afe87fef67bf4,SERIEA,2019-20,2019-11-08T12:00:00Z,Matchday 12,,Sassuolo Calcio,,Bologna FC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-1014d19fea9ebe3fccf7db28,SERIEA,2019-20,2019-11-09T12:00:00Z,Matchday 12,,Brescia Calcio,,Torino FC,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6a2fb9e351a1a54a343ff3b5,SERIEA,2019-20,2019-11-09T12:00:00Z,Matchday 12,,Inter,,Hellas Verona,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-790db5e5babca4de13957944,SERIEA,2019-20,2019-11-09T12:00:00Z,Matchday 12,,SSC Napoli,,Genoa CFC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-45da011ec0449700ddcd391b,SERIEA,2019-20,2019-11-10T12:00:00Z,Matchday 12,,Udinese Calcio,,SPAL 2013 Ferrara,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-653d2c89821886e7d34f526d,SERIEA,2019-20,2019-11-10T12:00:00Z,Matchday 12,,Cagliari Calcio,,ACF Fiorentina,,5,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9861eaf82d35b804b10b253e,SERIEA,2019-20,2019-11-10T12:00:00Z,Matchday 12,,Parma Calcio 1913,,AS Roma,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a2e1546435ecc4134055d888,SERIEA,2019-20,2019-11-10T12:00:00Z,Matchday 12,,Lazio Roma,,US Lecce,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a2fa16e52dedc6ccec067a9a,SERIEA,2019-20,2019-11-10T12:00:00Z,Matchday 12,,Sampdoria,,Atalanta,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-fec1dbd4a3d879658dfb84ce,SERIEA,2019-20,2019-11-10T12:00:00Z,Matchday 12,,Juventus,,AC Milan,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-331bb1c8a5f0fa0d53a3756d,SERIEA,2019-20,2019-11-23T12:00:00Z,Matchday 13,,Atalanta,,Juventus,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5fb41e528ce6c61a0ad41cef,SERIEA,2019-20,2019-11-23T12:00:00Z,Matchday 13,,AC Milan,,SSC Napoli,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e7d546e8ce98b82b05f43d5e,SERIEA,2019-20,2019-11-23T12:00:00Z,Matchday 13,,Torino FC,,Inter,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-212a943279ea3a250ad343f3,SERIEA,2019-20,2019-11-24T12:00:00Z,Matchday 13,,AS Roma,,Brescia Calcio,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-917fc3b74dd5e8f0467f0460,SERIEA,2019-20,2019-11-24T12:00:00Z,Matchday 13,,Sampdoria,,Udinese Calcio,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-aa670ea2f38771686689f20e,SERIEA,2019-20,2019-11-24T12:00:00Z,Matchday 13,,Sassuolo Calcio,,Lazio Roma,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e7d9717f47ae6fcc5f36d87a,SERIEA,2019-20,2019-11-24T12:00:00Z,Matchday 13,,Hellas Verona,,ACF Fiorentina,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ec3a0996e25be8d2900d4db7,SERIEA,2019-20,2019-11-24T12:00:00Z,Matchday 13,,Bologna FC,,Parma Calcio 1913,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-747016cb3a9f6016aec0c351,SERIEA,2019-20,2019-11-25T12:00:00Z,Matchday 13,,SPAL 2013 Ferrara,,Genoa CFC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9a6eb708fc74ec0ef82529f1,SERIEA,2019-20,2019-11-25T12:00:00Z,Matchday 13,,US Lecce,,Cagliari Calcio,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-16b27a8ef62924978ea56d9b,SERIEA,2019-20,2019-11-30T12:00:00Z,Matchday 14,,Genoa CFC,,Torino FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-7e887079cd2f48335a3b6451,SERIEA,2019-20,2019-11-30T12:00:00Z,Matchday 14,,Brescia Calcio,,Atalanta,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a6f7261b7ea3887b631af967,SERIEA,2019-20,2019-11-30T12:00:00Z,Matchday 14,,ACF Fiorentina,,US Lecce,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-35cb4b8aeb28dabc4e597240,SERIEA,2019-20,2019-12-01T12:00:00Z,Matchday 14,,Hellas Verona,,AS Roma,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5b6a0b67fa114bbf8ab3eab7,SERIEA,2019-20,2019-12-01T12:00:00Z,Matchday 14,,Parma Calcio 1913,,AC Milan,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-7dd5ece46540ff36a99742a4,SERIEA,2019-20,2019-12-01T12:00:00Z,Matchday 14,,Inter,,SPAL 2013 Ferrara,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-82f24007ed199a6044d02dc3,SERIEA,2019-20,2019-12-01T12:00:00Z,Matchday 14,,Juventus,,Sassuolo Calcio,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b8d2bf84886cd232b963b1cb,SERIEA,2019-20,2019-12-01T12:00:00Z,Matchday 14,,Lazio Roma,,Udinese Calcio,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-cad877ee6d33cd8f77ca35b7,SERIEA,2019-20,2019-12-01T12:00:00Z,Matchday 14,,SSC Napoli,,Bologna FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-dfce22c0ec90cec5d7ad35e1,SERIEA,2019-20,2019-12-02T12:00:00Z,Matchday 14,,Cagliari Calcio,,Sampdoria,,4,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-77bef1a5594975fecd63545d,SERIEA,2019-20,2019-12-06T12:00:00Z,Matchday 15,,Inter,,AS Roma,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-65cf0da67792c4ee680924ba,SERIEA,2019-20,2019-12-07T12:00:00Z,Matchday 15,,Lazio Roma,,Juventus,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-77a309caa393302fd72ccf36,SERIEA,2019-20,2019-12-07T12:00:00Z,Matchday 15,,Atalanta,,Hellas Verona,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-cf001f2e9dce4d53fb524ab3,SERIEA,2019-20,2019-12-07T12:00:00Z,Matchday 15,,Udinese Calcio,,SSC Napoli,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-1908f20516506fc22773dbf4,SERIEA,2019-20,2019-12-08T12:00:00Z,Matchday 15,,Bologna FC,,AC Milan,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-1f48573108c3ef8f0f63b741,SERIEA,2019-20,2019-12-08T12:00:00Z,Matchday 15,,US Lecce,,Genoa CFC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-38f88c27b48c577427f10749,SERIEA,2019-20,2019-12-08T12:00:00Z,Matchday 15,,SPAL 2013 Ferrara,,Brescia Calcio,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-573c840dfa62a9ae1f905021,SERIEA,2019-20,2019-12-08T12:00:00Z,Matchday 15,,Sassuolo Calcio,,Cagliari Calcio,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-70b6762081c2cb586faa85f7,SERIEA,2019-20,2019-12-08T12:00:00Z,Matchday 15,,Torino FC,,ACF Fiorentina,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-dd5d40dc00793d3070bc9cf6,SERIEA,2019-20,2019-12-08T12:00:00Z,Matchday 15,,Sampdoria,,Parma Calcio 1913,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-7b4fd6bf5674e04cddae94c7,SERIEA,2019-20,2019-12-14T12:00:00Z,Matchday 16,,Genoa CFC,,Sampdoria,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c3d9ead474685cb82392d8c5,SERIEA,2019-20,2019-12-14T12:00:00Z,Matchday 16,,SSC Napoli,,Parma Calcio 1913,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c7f794279e41272d1d5056a2,SERIEA,2019-20,2019-12-14T12:00:00Z,Matchday 16,,Brescia Calcio,,US Lecce,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-00b8b4b6d79065e299e654a2,SERIEA,2019-20,2019-12-15T12:00:00Z,Matchday 16,,Bologna FC,,Atalanta,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-10a35138fb44a111c22c3dec,SERIEA,2019-20,2019-12-15T12:00:00Z,Matchday 16,,ACF Fiorentina,,Inter,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-10a67819b2ef37aec51cf732,SERIEA,2019-20,2019-12-15T12:00:00Z,Matchday 16,,Juventus,,Udinese Calcio,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-32b8e597538217ee576ebd83,SERIEA,2019-20,2019-12-15T12:00:00Z,Matchday 16,,AS Roma,,SPAL 2013 Ferrara,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4cda1553139c62c984f6b30b,SERIEA,2019-20,2019-12-15T12:00:00Z,Matchday 16,,Hellas Verona,,Torino FC,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b5ae1231fbfd98e30d4f4c2d,SERIEA,2019-20,2019-12-15T12:00:00Z,Matchday 16,,AC Milan,,Sassuolo Calcio,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-eda073de26416c6298518e0c,SERIEA,2019-20,2019-12-16T12:00:00Z,Matchday 16,,Cagliari Calcio,,Lazio Roma,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-1176c1686df11aa34bc88ac8,SERIEA,2019-20,2019-12-18T12:00:00Z,Matchday 17,,Sampdoria,,Juventus,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-cd274433618dacbcbf847014,SERIEA,2019-20,2019-12-18T12:00:00Z,Matchday 7,,Brescia Calcio,,Sassuolo Calcio,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-456239bd5e71da2b610d24a4,SERIEA,2019-20,2019-12-20T12:00:00Z,Matchday 17,,ACF Fiorentina,,AS Roma,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6aacbbbb63ed85bff2dbf915,SERIEA,2019-20,2019-12-21T12:00:00Z,Matchday 17,,Udinese Calcio,,Cagliari Calcio,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a70e04b274e75fb2d5b2454a,SERIEA,2019-20,2019-12-21T12:00:00Z,Matchday 17,,Inter,,Genoa CFC,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f5210da4891dc684b864d30f,SERIEA,2019-20,2019-12-21T12:00:00Z,Matchday 17,,Torino FC,,SPAL 2013 Ferrara,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-68b21d21fe90e9750bea7712,SERIEA,2019-20,2019-12-22T12:00:00Z,Matchday 17,,Sassuolo Calcio,,SSC Napoli,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9ccc6dd9867d94d16c23417b,SERIEA,2019-20,2019-12-22T12:00:00Z,Matchday 17,,Atalanta,,AC Milan,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d077471f93107936c10757e0,SERIEA,2019-20,2019-12-22T12:00:00Z,Matchday 17,,US Lecce,,Bologna FC,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-fb5b442be09f50abeec09ef3,SERIEA,2019-20,2019-12-22T12:00:00Z,Matchday 17,,Parma Calcio 1913,,Brescia Calcio,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-1fac96db9ded8402fdf655f2,SERIEA,2019-20,2020-01-05T12:00:00Z,Matchday 18,,SPAL 2013 Ferrara,,Hellas Verona,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-693e6ddde085b1092a02a39e,SERIEA,2019-20,2020-01-05T12:00:00Z,Matchday 18,,AS Roma,,Torino FC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-7816ada607adf1d0582a65e1,SERIEA,2019-20,2020-01-05T12:00:00Z,Matchday 18,,Genoa CFC,,Sassuolo Calcio,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e9b5726e7a3247091e2145d1,SERIEA,2019-20,2020-01-05T12:00:00Z,Matchday 18,,Brescia Calcio,,Lazio Roma,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-16d4922290fafacc982d6f11,SERIEA,2019-20,2020-01-06T12:00:00Z,Matchday 18,,Atalanta,,Parma Calcio 1913,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4e8b8ddf99d5d0948141720c,SERIEA,2019-20,2020-01-06T12:00:00Z,Matchday 18,,AC Milan,,Sampdoria,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5a62f8919c8d612a8fb6c495,SERIEA,2019-20,2020-01-06T12:00:00Z,Matchday 18,,SSC Napoli,,Inter,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b7fc17b1a92deb8b7c784d8f,SERIEA,2019-20,2020-01-06T12:00:00Z,Matchday 18,,Bologna FC,,ACF Fiorentina,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-bfdcdb1414aca2eb589aed8a,SERIEA,2019-20,2020-01-06T12:00:00Z,Matchday 18,,US Lecce,,Udinese Calcio,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-db9c2eb840aaaa6ae315b15b,SERIEA,2019-20,2020-01-06T12:00:00Z,Matchday 18,,Juventus,,Cagliari Calcio,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-36cbc1f00629a1c5f2b808d6,SERIEA,2019-20,2020-01-11T12:00:00Z,Matchday 19,,Inter,,Atalanta,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-cf924984fe9e0c5d536ea6af,SERIEA,2019-20,2020-01-11T12:00:00Z,Matchday 19,,Cagliari Calcio,,AC Milan,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d6000e6c2b8f955dd9d8a331,SERIEA,2019-20,2020-01-11T12:00:00Z,Matchday 19,,Lazio Roma,,SSC Napoli,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-03310aa03ebf102232d821a8,SERIEA,2019-20,2020-01-12T12:00:00Z,Matchday 19,,ACF Fiorentina,,SPAL 2013 Ferrara,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-593d48f0ee3cad6ab6752d3d,SERIEA,2019-20,2020-01-12T12:00:00Z,Matchday 19,,Sampdoria,,Brescia Calcio,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-64c9b910a71993c0a74072da,SERIEA,2019-20,2020-01-12T12:00:00Z,Matchday 19,,Udinese Calcio,,Sassuolo Calcio,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-7c78fc3204d89f79f9c4fbda,SERIEA,2019-20,2020-01-12T12:00:00Z,Matchday 19,,Hellas Verona,,Genoa CFC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-7fb21915f86c0e67da1b93e9,SERIEA,2019-20,2020-01-12T12:00:00Z,Matchday 19,,Torino FC,,Bologna FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e6fe50481db8225816f635a7,SERIEA,2019-20,2020-01-12T12:00:00Z,Matchday 19,,AS Roma,,Juventus,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ab16ab61846b6428faaff8eb,SERIEA,2019-20,2020-01-13T12:00:00Z,Matchday 19,,Parma Calcio 1913,,US Lecce,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-bc51bfa29e78aa661ecef329,SERIEA,2019-20,2020-01-18T12:00:00Z,Matchday 20,,SSC Napoli,,ACF Fiorentina,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-dacc1c8a612a43cd2a004e38,SERIEA,2019-20,2020-01-18T12:00:00Z,Matchday 20,,Sassuolo Calcio,,Torino FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f50be896b9d7cfa7599a2300,SERIEA,2019-20,2020-01-18T12:00:00Z,Matchday 20,,Lazio Roma,,Sampdoria,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-463aa32883d710e02df003d2,SERIEA,2019-20,2020-01-19T12:00:00Z,Matchday 20,,Bologna FC,,Hellas Verona,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4b1d91335b98a1f4cd1ca2a4,SERIEA,2019-20,2020-01-19T12:00:00Z,Matchday 20,,US Lecce,,Inter,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-837db14332545c2b84c3a7c1,SERIEA,2019-20,2020-01-19T12:00:00Z,Matchday 20,,Genoa CFC,,AS Roma,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-881a1d3bcad9f9ae65cd5cc9,SERIEA,2019-20,2020-01-19T12:00:00Z,Matchday 20,,Juventus,,Parma Calcio 1913,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-928c67e36cb26a0add08ab97,SERIEA,2019-20,2020-01-19T12:00:00Z,Matchday 20,,Brescia Calcio,,Cagliari Calcio,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b9f41573a40cff4bc6639a59,SERIEA,2019-20,2020-01-19T12:00:00Z,Matchday 20,,AC Milan,,Udinese Calcio,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2cdf22c82706ab3b7bc345d0,SERIEA,2019-20,2020-01-20T12:00:00Z,Matchday 20,,Atalanta,,SPAL 2013 Ferrara,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-595eecbcde7f7f57751c2973,SERIEA,2019-20,2020-01-24T12:00:00Z,Matchday 21,,Brescia Calcio,,AC Milan,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2ed96f067f80b58dc937cd58,SERIEA,2019-20,2020-01-25T12:00:00Z,Matchday 21,,Torino FC,,Atalanta,,0,7,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-653a34f218c452816461c6d5,SERIEA,2019-20,2020-01-25T12:00:00Z,Matchday 21,,SPAL 2013 Ferrara,,Bologna FC,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b638e97bd3a6d8e4946579a5,SERIEA,2019-20,2020-01-25T12:00:00Z,Matchday 21,,ACF Fiorentina,,Genoa CFC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-09073e5a74c57170e2da11b8,SERIEA,2019-20,2020-01-26T12:00:00Z,Matchday 21,,Parma Calcio 1913,,Udinese Calcio,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-373803764c510b16ae23dcb0,SERIEA,2019-20,2020-01-26T12:00:00Z,Matchday 21,,AS Roma,,Lazio Roma,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-3ae5823c24fdf0b3d3958bd1,SERIEA,2019-20,2020-01-26T12:00:00Z,Matchday 21,,Sampdoria,,Sassuolo Calcio,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-7d3319558f6ba4a0c80e1e40,SERIEA,2019-20,2020-01-26T12:00:00Z,Matchday 21,,SSC Napoli,,Juventus,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a3b9dee2b9d9057a239bec5e,SERIEA,2019-20,2020-01-26T12:00:00Z,Matchday 21,,Hellas Verona,,US Lecce,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a9fbe4069c5bc2e1db48b826,SERIEA,2019-20,2020-01-26T12:00:00Z,Matchday 21,,Inter,,Cagliari Calcio,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-71f95f56e383db6021a16d9c,SERIEA,2019-20,2020-02-01T12:00:00Z,Matchday 22,,Cagliari Calcio,,Parma Calcio 1913,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ded58c483813d7c1aae60153,SERIEA,2019-20,2020-02-01T12:00:00Z,Matchday 22,,Bologna FC,,Brescia Calcio,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f2b3696eb2271ad932e3e3bf,SERIEA,2019-20,2020-02-01T12:00:00Z,Matchday 22,,Sassuolo Calcio,,AS Roma,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-27c9491bdf7002eec0862e4b,SERIEA,2019-20,2020-02-02T12:00:00Z,Matchday 22,,Lazio Roma,,SPAL 2013 Ferrara,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-acb8975b078f4ee44b2e7ed0,SERIEA,2019-20,2020-02-02T12:00:00Z,Matchday 22,,Udinese Calcio,,Inter,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-cb4f4914425abfee2a32181e,SERIEA,2019-20,2020-02-02T12:00:00Z,Matchday 22,,US Lecce,,Torino FC,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d077ade8ac9f3d1413c84cd7,SERIEA,2019-20,2020-02-02T12:00:00Z,Matchday 22,,Atalanta,,Genoa CFC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d0ab29d62f92cfea6ab95406,SERIEA,2019-20,2020-02-02T12:00:00Z,Matchday 22,,AC Milan,,Hellas Verona,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f2e0d668821de14a3d230de6,SERIEA,2019-20,2020-02-02T12:00:00Z,Matchday 22,,Juventus,,ACF Fiorentina,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2660120883053970af9814d0,SERIEA,2019-20,2020-02-03T12:00:00Z,Matchday 22,,Sampdoria,,SSC Napoli,,2,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b8256d5246ff9c2117022efa,SERIEA,2019-20,2020-02-05T12:00:00Z,Matchday 17,,Lazio Roma,,Hellas Verona,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-519a285113b2fff006365d15,SERIEA,2019-20,2020-02-07T12:00:00Z,Matchday 23,,AS Roma,,Bologna FC,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5f62edab64781b83e74b9b40,SERIEA,2019-20,2020-02-08T12:00:00Z,Matchday 23,,ACF Fiorentina,,Atalanta,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-7604ad6c719f8c7a869ae92c,SERIEA,2019-20,2020-02-08T12:00:00Z,Matchday 23,,Hellas Verona,,Juventus,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f8d5d7c63ac9a7cefe82be32,SERIEA,2019-20,2020-02-08T12:00:00Z,Matchday 23,,Torino FC,,Sampdoria,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-0963e3bc6eec8b273509ed4b,SERIEA,2019-20,2020-02-09T12:00:00Z,Matchday 23,,SSC Napoli,,US Lecce,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-3b99d05206174e557d06e5cb,SERIEA,2019-20,2020-02-09T12:00:00Z,Matchday 23,,Brescia Calcio,,Udinese Calcio,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-60fe1b40eb2ddd6e6d80ac2a,SERIEA,2019-20,2020-02-09T12:00:00Z,Matchday 23,,Inter,,AC Milan,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c581c8b02d0de84a066e69ed,SERIEA,2019-20,2020-02-09T12:00:00Z,Matchday 23,,Parma Calcio 1913,,Lazio Roma,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-dad84cdb156507c4c789f238,SERIEA,2019-20,2020-02-09T12:00:00Z,Matchday 23,,Genoa CFC,,Cagliari Calcio,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e065bf43cc111f020dbe94c9,SERIEA,2019-20,2020-02-09T12:00:00Z,Matchday 23,,SPAL 2013 Ferrara,,Sassuolo Calcio,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-36b0dfb42040b914c84c50b4,SERIEA,2019-20,2020-02-15T12:00:00Z,Matchday 24,,Bologna FC,,Genoa CFC,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a86965bde524586462be33c5,SERIEA,2019-20,2020-02-15T12:00:00Z,Matchday 24,,Atalanta,,AS Roma,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c7db8168a09979861ca0bb55,SERIEA,2019-20,2020-02-15T12:00:00Z,Matchday 24,,US Lecce,,SPAL 2013 Ferrara,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-1e4ce3804db799948302169a,SERIEA,2019-20,2020-02-16T12:00:00Z,Matchday 24,,Cagliari Calcio,,SSC Napoli,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-27f598858a45659e2aac6283,SERIEA,2019-20,2020-02-16T12:00:00Z,Matchday 24,,Sampdoria,,ACF Fiorentina,,1,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5b2178595d2284b585e7e807,SERIEA,2019-20,2020-02-16T12:00:00Z,Matchday 24,,Sassuolo Calcio,,Parma Calcio 1913,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5cfdae9a1654a1b19ba34a41,SERIEA,2019-20,2020-02-16T12:00:00Z,Matchday 24,,Juventus,,Brescia Calcio,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9e129e8c73cb18a56a1624bc,SERIEA,2019-20,2020-02-16T12:00:00Z,Matchday 24,,Lazio Roma,,Inter,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c3feeecc3ee762ca4929d456,SERIEA,2019-20,2020-02-16T12:00:00Z,Matchday 24,,Udinese Calcio,,Hellas Verona,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-836717dbaa02866b448bd282,SERIEA,2019-20,2020-02-17T12:00:00Z,Matchday 24,,AC Milan,,Torino FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-b979fff77b198116fe4ae419,SERIEA,2019-20,2020-02-21T12:00:00Z,Matchday 25,,Brescia Calcio,,SSC Napoli,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-53083803f073a4583d91ddf9,SERIEA,2019-20,2020-02-22T12:00:00Z,Matchday 25,,SPAL 2013 Ferrara,,Juventus,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ea07122d3930a41955fea83b,SERIEA,2019-20,2020-02-22T12:00:00Z,Matchday 25,,Bologna FC,,Udinese Calcio,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-fb53f12a2364c5fa38d6e7c1,SERIEA,2019-20,2020-02-22T12:00:00Z,Matchday 25,,ACF Fiorentina,,AC Milan,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-093bcf869fc44ef1ff22e89a,SERIEA,2019-20,2020-02-23T12:00:00Z,Matchday 25,,AS Roma,,US Lecce,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-cc2f3b3954cea8164f6c617b,SERIEA,2019-20,2020-02-23T12:00:00Z,Matchday 25,,Genoa CFC,,Lazio Roma,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-30c8f1f96c63d75fc943a35c,SERIEA,2019-20,2020-02-29T12:00:00Z,Matchday 26,,SSC Napoli,,Torino FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-e4bea1d6a0aace7228a2bd45,SERIEA,2019-20,2020-02-29T12:00:00Z,Matchday 26,,Lazio Roma,,Bologna FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-3482bde982bd603e57bcf7c1,SERIEA,2019-20,2020-03-01T12:00:00Z,Matchday 26,,Cagliari Calcio,,AS Roma,,3,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ccdc17590b7442ca2d8a0c30,SERIEA,2019-20,2020-03-01T12:00:00Z,Matchday 26,,US Lecce,,Atalanta,,2,7,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-1f8146a9df8d0b8eb8fda2a8,SERIEA,2019-20,2020-03-08T12:00:00Z,Matchday 26,,Udinese Calcio,,ACF Fiorentina,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5260908c55dc9c2fdd2cf3ee,SERIEA,2019-20,2020-03-08T12:00:00Z,Matchday 26,,Juventus,,Inter,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-94ad1b66216553bca9532589,SERIEA,2019-20,2020-03-08T12:00:00Z,Matchday 26,,Sampdoria,,Hellas Verona,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d4334e23dbed647980ec7f76,SERIEA,2019-20,2020-03-08T12:00:00Z,Matchday 26,,Parma Calcio 1913,,SPAL 2013 Ferrara,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-ef89ea91f6eeb3c3e1e5c3fc,SERIEA,2019-20,2020-03-08T12:00:00Z,Matchday 26,,AC Milan,,Genoa CFC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-11d6c85ae31cdc8075768461,SERIEA,2019-20,2020-03-09T12:00:00Z,Matchday 26,,Sassuolo Calcio,,Brescia Calcio,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d33dc16d0fd62371d60187a2,SERIEA,2019-20,2020-06-20T12:00:00Z,Matchday 25,,Hellas Verona,,Cagliari Calcio,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d658f305a13644b3d5248842,SERIEA,2019-20,2020-06-20T12:00:00Z,Matchday 25,,Torino FC,,Parma Calcio 1913,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-3e211563b94e5af910dbabb1,SERIEA,2019-20,2020-06-21T12:00:00Z,Matchday 25,,Atalanta,,Sassuolo Calcio,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-bc94d6a412a8d3b09468f384,SERIEA,2019-20,2020-06-21T12:00:00Z,Matchday 25,,Inter,,Sampdoria,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-3fbd78c07ff12459bd664575,SERIEA,2019-20,2020-06-22T12:00:00Z,Matchday 27,,ACF Fiorentina,,Brescia Calcio,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-a327115bf66242fd19c43431,SERIEA,2019-20,2020-06-22T12:00:00Z,Matchday 27,,Bologna FC,,Juventus,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-d03ce89a04f8d47d14c3729e,SERIEA,2019-20,2020-06-22T12:00:00Z,Matchday 27,,US Lecce,,AC Milan,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-4e550c89a674ee1afa7cce49,SERIEA,2019-20,2020-06-23T12:00:00Z,Matchday 27,,SPAL 2013 Ferrara,,Cagliari Calcio,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-5769af6302b85e3893d9da85,SERIEA,2019-20,2020-06-23T12:00:00Z,Matchday 27,,Genoa CFC,,Parma Calcio 1913,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-740f5c738c8a37e75ca16214,SERIEA,2019-20,2020-06-23T12:00:00Z,Matchday 27,,Torino FC,,Udinese Calcio,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c3a9455ad3f2b1dce2f0d401,SERIEA,2019-20,2020-06-23T12:00:00Z,Matchday 27,,Hellas Verona,,SSC Napoli,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-47d428d00bfe9a45715a4975,SERIEA,2019-20,2020-06-24T12:00:00Z,Matchday 27,,Inter,,Sassuolo Calcio,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-9903d7f3aa4765292d32bb1a,SERIEA,2019-20,2020-06-24T12:00:00Z,Matchday 27,,Atalanta,,Lazio Roma,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f332aa11ed89d5afc9a167b5,SERIEA,2019-20,2020-06-24T12:00:00Z,Matchday 27,,AS Roma,,Sampdoria,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c073f79f3c5765d9ebd6c895,SERIEA,2019-20,2020-06-26T12:00:00Z,Matchday 28,,Juventus,,US Lecce,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-41ffb9ec026028d57b599ba5,SERIEA,2019-20,2020-06-27T12:00:00Z,Matchday 28,,Lazio Roma,,ACF Fiorentina,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-6a0d2c60386334af1a26e0cd,SERIEA,2019-20,2020-06-27T12:00:00Z,Matchday 28,,Cagliari Calcio,,Torino FC,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-dc49ca9b3bbeee5f90730487,SERIEA,2019-20,2020-06-27T12:00:00Z,Matchday 28,,Brescia Calcio,,Genoa CFC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-2f538c47c56f9e8a0df0345f,SERIEA,2019-20,2020-06-28T12:00:00Z,Matchday 28,,Udinese Calcio,,Atalanta,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-351b2afac37d51c78c0a538b,SERIEA,2019-20,2020-06-28T12:00:00Z,Matchday 28,,Sassuolo Calcio,,Hellas Verona,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-53cd670a5e4b17ac538199d4,SERIEA,2019-20,2020-06-28T12:00:00Z,Matchday 28,,AC Milan,,AS Roma,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-95ce100fd6eb3fae3dec1dc6,SERIEA,2019-20,2020-06-28T12:00:00Z,Matchday 28,,Sampdoria,,Bologna FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-da8f5aae9342aaa1d0d55eb7,SERIEA,2019-20,2020-06-28T12:00:00Z,Matchday 28,,Parma Calcio 1913,,Inter,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-f5f452f3d7ed5c27e4160140,SERIEA,2019-20,2020-06-28T12:00:00Z,Matchday 28,,SSC Napoli,,SPAL 2013 Ferrara,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-58743d836cfd588db2d11a94,SERIEA,2019-20,2020-06-30T12:00:00Z,Matchday 29,,Genoa CFC,,Juventus,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+seriea-openfootball-c9aaf953f360ef649b79c98f,SERIEA,2019-20,2020-06-30T12:00:00Z,Matchday 29,,Torino FC,,Lazio Roma,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00

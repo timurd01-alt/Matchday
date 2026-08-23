@@ -1,0 +1,381 @@
+game_id,comp,season,date_utc,stage,venue,home_name,home_code,away_name,away_code,home_score,away_score,status,source,first_seen
+ligue1-openfootball-6134cc5fc6925de4c59adb3c,LIGUE1,2016-17,2016-08-12T12:00:00Z,Matchday 1,,AS Monaco,,EA Guingamp,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-daed2a75ffc34a2b8535fa48,LIGUE1,2016-17,2016-08-12T12:00:00Z,Matchday 1,,SC Bastia,,Paris Saint-Germain,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-2758004ed413b3f6fa955b52,LIGUE1,2016-17,2016-08-13T12:00:00Z,Matchday 1,,Montpellier HSC,,Angers SCO,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-30b0407cf3f04700ea6c7684,LIGUE1,2016-17,2016-08-13T12:00:00Z,Matchday 1,,SM Caen,,FC Lorient,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-7dfe8da02e28149a66a04794,LIGUE1,2016-17,2016-08-13T12:00:00Z,Matchday 1,,FC Metz,,Lille OSC,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-e65ddbb42d73e42b863aa668,LIGUE1,2016-17,2016-08-13T12:00:00Z,Matchday 1,,Dijon FCO,,FC Nantes,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-ea70a630142c96a3c2307f9e,LIGUE1,2016-17,2016-08-13T12:00:00Z,Matchday 1,,Girondins Bordeaux,,AS Saint-Étienne,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-0078569db4ad97b316376953,LIGUE1,2016-17,2016-08-14T12:00:00Z,Matchday 1,,AS Nancy Lorraine,,Olympique Lyonnais,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-0be11bee8ab67c7b81f8fc5a,LIGUE1,2016-17,2016-08-14T12:00:00Z,Matchday 1,,Olympique Marseille,,Toulouse FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a351316b73f714b0eeb671b0,LIGUE1,2016-17,2016-08-14T12:00:00Z,Matchday 1,,OGC Nice,,Stade Rennais,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d8d84c5167f2493f4887da96,LIGUE1,2016-17,2016-08-19T12:00:00Z,Matchday 2,,Olympique Lyonnais,,SM Caen,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-19ae1fe57c2efb05db05ab0a,LIGUE1,2016-17,2016-08-20T12:00:00Z,Matchday 2,,Lille OSC,,Dijon FCO,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-7c4b2cd557d718d286b4ca92,LIGUE1,2016-17,2016-08-20T12:00:00Z,Matchday 2,,FC Lorient,,SC Bastia,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-99e36fb3997a46d74de29b26,LIGUE1,2016-17,2016-08-20T12:00:00Z,Matchday 2,,Angers SCO,,OGC Nice,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a28931c4c232f397859d1f7d,LIGUE1,2016-17,2016-08-20T12:00:00Z,Matchday 2,,Toulouse FC,,Girondins Bordeaux,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-bcb1a59d496f63003a2e71d7,LIGUE1,2016-17,2016-08-20T12:00:00Z,Matchday 2,,FC Nantes,,AS Monaco,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-ddac581d38db44fc00e18fb4,LIGUE1,2016-17,2016-08-20T12:00:00Z,Matchday 2,,Stade Rennais,,AS Nancy Lorraine,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-16ef0f7f6ca0db44a26e6568,LIGUE1,2016-17,2016-08-21T12:00:00Z,Matchday 2,,EA Guingamp,,Olympique Marseille,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-27a097f835001b3933883a0a,LIGUE1,2016-17,2016-08-21T12:00:00Z,Matchday 2,,AS Saint-Étienne,,Montpellier HSC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c9ce5db0d773a1b747f2bf5e,LIGUE1,2016-17,2016-08-21T12:00:00Z,Matchday 2,,Paris Saint-Germain,,FC Metz,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-93dec9f1487a3df2bee22a9f,LIGUE1,2016-17,2016-08-26T12:00:00Z,Matchday 3,,Olympique Marseille,,FC Lorient,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-003c9f7a4b71c35e94333704,LIGUE1,2016-17,2016-08-27T12:00:00Z,Matchday 3,,AS Nancy Lorraine,,EA Guingamp,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-152f9fbc65b5c1b9bd23a186,LIGUE1,2016-17,2016-08-27T12:00:00Z,Matchday 3,,FC Metz,,Angers SCO,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-39efb80fca6ecbbb20d880df,LIGUE1,2016-17,2016-08-27T12:00:00Z,Matchday 3,,Dijon FCO,,Olympique Lyonnais,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-4624306f95a27ce98d7b68b5,LIGUE1,2016-17,2016-08-27T12:00:00Z,Matchday 3,,SM Caen,,SC Bastia,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-b179f1d416b4a0bed645b074,LIGUE1,2016-17,2016-08-27T12:00:00Z,Matchday 3,,OGC Nice,,Lille OSC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d800eb72b6e393256ea0b51d,LIGUE1,2016-17,2016-08-27T12:00:00Z,Matchday 3,,Montpellier HSC,,Stade Rennais,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-03edafdf187d677f12fc43e5,LIGUE1,2016-17,2016-08-28T12:00:00Z,Matchday 3,,AS Saint-Étienne,,Toulouse FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-51e63bdd6bf3340f8de6132a,LIGUE1,2016-17,2016-08-28T12:00:00Z,Matchday 3,,Girondins Bordeaux,,FC Nantes,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a3f6d155a5f67fd6ca5559f2,LIGUE1,2016-17,2016-08-28T12:00:00Z,Matchday 3,,AS Monaco,,Paris Saint-Germain,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-db45c5d3e1f89c0eb95b0ce4,LIGUE1,2016-17,2016-09-09T12:00:00Z,Matchday 4,,Paris Saint-Germain,,AS Saint-Étienne,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-79ba9186f2d0f10b0972ebb6,LIGUE1,2016-17,2016-09-10T12:00:00Z,Matchday 4,,FC Lorient,,AS Nancy Lorraine,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-95f0884653ca373d25074b19,LIGUE1,2016-17,2016-09-10T12:00:00Z,Matchday 4,,SC Bastia,,Toulouse FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a582b9f3287f87ab62a0662b,LIGUE1,2016-17,2016-09-10T12:00:00Z,Matchday 4,,Lille OSC,,AS Monaco,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c1088ad3b0a8eee9dc015384,LIGUE1,2016-17,2016-09-10T12:00:00Z,Matchday 4,,EA Guingamp,,Montpellier HSC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d405987c0581a3cfa7e7ba7d,LIGUE1,2016-17,2016-09-10T12:00:00Z,Matchday 4,,Angers SCO,,Dijon FCO,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-f61818edf7156bb1ffe0d925,LIGUE1,2016-17,2016-09-10T12:00:00Z,Matchday 4,,Olympique Lyonnais,,Girondins Bordeaux,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-0ba86da8d2c119fa9d1a8aff,LIGUE1,2016-17,2016-09-11T12:00:00Z,Matchday 4,,Stade Rennais,,SM Caen,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-7b298d6894c0aae6d36b5a07,LIGUE1,2016-17,2016-09-11T12:00:00Z,Matchday 4,,FC Nantes,,FC Metz,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a2c40f6b1bc4c822cff0a2dc,LIGUE1,2016-17,2016-09-11T12:00:00Z,Matchday 4,,OGC Nice,,Olympique Marseille,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a31efbfca43e5fc05b267955,LIGUE1,2016-17,2016-09-16T12:00:00Z,Matchday 5,,SM Caen,,Paris Saint-Germain,,0,6,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-1b4e2b18431753d8854a7b4f,LIGUE1,2016-17,2016-09-17T12:00:00Z,Matchday 5,,Dijon FCO,,FC Metz,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-853ad63189a53ca1e56fa872,LIGUE1,2016-17,2016-09-17T12:00:00Z,Matchday 5,,Toulouse FC,,EA Guingamp,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-8a9ac8a55a85040e3e1c3ef5,LIGUE1,2016-17,2016-09-17T12:00:00Z,Matchday 5,,FC Lorient,,Lille OSC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-cd0bca770246643104e67815,LIGUE1,2016-17,2016-09-17T12:00:00Z,Matchday 5,,Girondins Bordeaux,,Angers SCO,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-e61f295b2b7a5a370cfa3885,LIGUE1,2016-17,2016-09-17T12:00:00Z,Matchday 5,,AS Monaco,,Stade Rennais,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-f21966e75edba5752ac26f5b,LIGUE1,2016-17,2016-09-17T12:00:00Z,Matchday 5,,AS Nancy Lorraine,,FC Nantes,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-4861f51547de3b84bb016000,LIGUE1,2016-17,2016-09-18T12:00:00Z,Matchday 5,,AS Saint-Étienne,,SC Bastia,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-6eeb410478fa05ad4574d2cc,LIGUE1,2016-17,2016-09-18T12:00:00Z,Matchday 5,,Montpellier HSC,,OGC Nice,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c39e8bf4785f2cabb596c794,LIGUE1,2016-17,2016-09-18T12:00:00Z,Matchday 5,,Olympique Marseille,,Olympique Lyonnais,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-001e779c5a4af6b0a16cd2f5,LIGUE1,2016-17,2016-09-20T12:00:00Z,Matchday 6,,Lille OSC,,Toulouse FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-bf7ee1f6d7719614aa2c1106,LIGUE1,2016-17,2016-09-20T12:00:00Z,Matchday 6,,Paris Saint-Germain,,Dijon FCO,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-0ccf1178624d8dc8fc8018ee,LIGUE1,2016-17,2016-09-21T12:00:00Z,Matchday 6,,OGC Nice,,AS Monaco,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-1600d42468408896c941aa86,LIGUE1,2016-17,2016-09-21T12:00:00Z,Matchday 6,,FC Nantes,,AS Saint-Étienne,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-22fb35265a48bbf51dbca073,LIGUE1,2016-17,2016-09-21T12:00:00Z,Matchday 6,,Olympique Lyonnais,,Montpellier HSC,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-36ce9da4170e011327809dfa,LIGUE1,2016-17,2016-09-21T12:00:00Z,Matchday 6,,SC Bastia,,AS Nancy Lorraine,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-5f191259e942aa805b068533,LIGUE1,2016-17,2016-09-21T12:00:00Z,Matchday 6,,EA Guingamp,,FC Lorient,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-79ccc9cc75ad77fe367072b1,LIGUE1,2016-17,2016-09-21T12:00:00Z,Matchday 6,,Angers SCO,,SM Caen,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c739c1a4f2e5ed3908938e77,LIGUE1,2016-17,2016-09-21T12:00:00Z,Matchday 6,,Stade Rennais,,Olympique Marseille,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d68be0e8a30f5f574e8c6ccb,LIGUE1,2016-17,2016-09-21T12:00:00Z,Matchday 6,,FC Metz,,Girondins Bordeaux,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-6f2e8cbbbc77611611eaf78c,LIGUE1,2016-17,2016-09-23T12:00:00Z,Matchday 7,,Toulouse FC,,Paris Saint-Germain,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-13d3ad7ee901d371c1fa5ebf,LIGUE1,2016-17,2016-09-24T12:00:00Z,Matchday 7,,Girondins Bordeaux,,SM Caen,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-59fa82c13372ffd9a12def49,LIGUE1,2016-17,2016-09-24T12:00:00Z,Matchday 7,,Dijon FCO,,Stade Rennais,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-6638dd75382f3df09d28d4ad,LIGUE1,2016-17,2016-09-24T12:00:00Z,Matchday 7,,SC Bastia,,EA Guingamp,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-71e454152fd38881001e0a4e,LIGUE1,2016-17,2016-09-24T12:00:00Z,Matchday 7,,AS Monaco,,Angers SCO,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-e025f719a1121c1eb111bcf1,LIGUE1,2016-17,2016-09-24T12:00:00Z,Matchday 7,,Montpellier HSC,,FC Metz,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-e45df0514bf31013eda86c77,LIGUE1,2016-17,2016-09-24T12:00:00Z,Matchday 7,,FC Lorient,,Olympique Lyonnais,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-38bba255e2e141462bde2dfe,LIGUE1,2016-17,2016-09-25T12:00:00Z,Matchday 7,,Olympique Marseille,,FC Nantes,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-aa515a29d325ed14416d381c,LIGUE1,2016-17,2016-09-25T12:00:00Z,Matchday 7,,AS Nancy Lorraine,,OGC Nice,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-bb645523ece79429d18c377f,LIGUE1,2016-17,2016-09-25T12:00:00Z,Matchday 7,,AS Saint-Étienne,,Lille OSC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c6b2527a58bccf76d1e43215,LIGUE1,2016-17,2016-09-30T12:00:00Z,Matchday 8,,Stade Rennais,,EA Guingamp,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-2c3824ce05026e2a7312ffce,LIGUE1,2016-17,2016-10-01T12:00:00Z,Matchday 8,,SM Caen,,Toulouse FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-57551e0e03ac485b58ccd07e,LIGUE1,2016-17,2016-10-01T12:00:00Z,Matchday 8,,Dijon FCO,,Montpellier HSC,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-66929c9e27433abd586a43f8,LIGUE1,2016-17,2016-10-01T12:00:00Z,Matchday 8,,FC Metz,,AS Monaco,,0,7,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-9a0e843f15a903206f848c77,LIGUE1,2016-17,2016-10-01T12:00:00Z,Matchday 8,,FC Nantes,,SC Bastia,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-b316d0fb103368abc0d0dcca,LIGUE1,2016-17,2016-10-01T12:00:00Z,Matchday 8,,Lille OSC,,AS Nancy Lorraine,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-fd30cb83bab4223d61ea32b5,LIGUE1,2016-17,2016-10-01T12:00:00Z,Matchday 8,,Paris Saint-Germain,,Girondins Bordeaux,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-5d4bc6175ad7c1debb173f72,LIGUE1,2016-17,2016-10-02T12:00:00Z,Matchday 8,,Olympique Lyonnais,,AS Saint-Étienne,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-b502ca2c26fd625e81731c23,LIGUE1,2016-17,2016-10-02T12:00:00Z,Matchday 8,,Angers SCO,,Olympique Marseille,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-b7255637468c778a69be386e,LIGUE1,2016-17,2016-10-02T12:00:00Z,Matchday 8,,OGC Nice,,FC Lorient,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-3299d9aaf480a896cfea8be0,LIGUE1,2016-17,2016-10-14T12:00:00Z,Matchday 9,,OGC Nice,,Olympique Lyonnais,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-7d33f62705ef31813bb024ef,LIGUE1,2016-17,2016-10-14T12:00:00Z,Matchday 9,,Toulouse FC,,AS Monaco,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-04cb9fd010e3b94fae987275,LIGUE1,2016-17,2016-10-15T12:00:00Z,Matchday 9,,AS Nancy Lorraine,,Paris Saint-Germain,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-11b9aa55715bd5c32d0c07ae,LIGUE1,2016-17,2016-10-15T12:00:00Z,Matchday 9,,FC Lorient,,FC Nantes,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a9625ccd0b5142caa2885fff,LIGUE1,2016-17,2016-10-15T12:00:00Z,Matchday 9,,SC Bastia,,Angers SCO,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-dfbdceb491cdc518f93c0905,LIGUE1,2016-17,2016-10-15T12:00:00Z,Matchday 9,,Montpellier HSC,,SM Caen,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-fa2977932b490db6941e97be,LIGUE1,2016-17,2016-10-15T12:00:00Z,Matchday 9,,EA Guingamp,,Lille OSC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-38fe7080ac605ee326a94277,LIGUE1,2016-17,2016-10-16T12:00:00Z,Matchday 9,,Stade Rennais,,Girondins Bordeaux,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-bdebad2b4733d1841b7d61a8,LIGUE1,2016-17,2016-10-16T12:00:00Z,Matchday 9,,Olympique Marseille,,FC Metz,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d452596bf26ba9cf878586f1,LIGUE1,2016-17,2016-10-16T12:00:00Z,Matchday 9,,AS Saint-Étienne,,Dijon FCO,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a60754de03f29741e0cfb319,LIGUE1,2016-17,2016-10-21T12:00:00Z,Matchday 10,,AS Monaco,,Montpellier HSC,,6,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-1c7049cc82c6608bd6cec7ec,LIGUE1,2016-17,2016-10-22T12:00:00Z,Matchday 10,,Lille OSC,,SC Bastia,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-213225a76ff39249d91d7296,LIGUE1,2016-17,2016-10-22T12:00:00Z,Matchday 10,,Dijon FCO,,FC Lorient,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-7ffdb35cb60cd7b0e3a09589,LIGUE1,2016-17,2016-10-22T12:00:00Z,Matchday 10,,Girondins Bordeaux,,AS Nancy Lorraine,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-b2fcfcfd16f14afad59212c3,LIGUE1,2016-17,2016-10-22T12:00:00Z,Matchday 10,,Angers SCO,,Toulouse FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d5fd61d51d792d691152af7f,LIGUE1,2016-17,2016-10-22T12:00:00Z,Matchday 10,,Olympique Lyonnais,,EA Guingamp,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-e346285320e0716f37ef12db,LIGUE1,2016-17,2016-10-22T12:00:00Z,Matchday 10,,FC Nantes,,Stade Rennais,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-35731b38ba3045aad638c988,LIGUE1,2016-17,2016-10-23T12:00:00Z,Matchday 10,,FC Metz,,OGC Nice,,2,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-485707279d96a3a3f2402f2c,LIGUE1,2016-17,2016-10-23T12:00:00Z,Matchday 10,,SM Caen,,AS Saint-Étienne,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-530549edbf8e98e1a87e7a35,LIGUE1,2016-17,2016-10-23T12:00:00Z,Matchday 10,,Paris Saint-Germain,,Olympique Marseille,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-ca978903411c61bc470c0bb9,LIGUE1,2016-17,2016-10-28T12:00:00Z,Matchday 11,,Lille OSC,,Paris Saint-Germain,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-0ffd21109eed546fe0f0e264,LIGUE1,2016-17,2016-10-29T12:00:00Z,Matchday 11,,AS Nancy Lorraine,,SM Caen,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-301251975de21edf40cee186,LIGUE1,2016-17,2016-10-29T12:00:00Z,Matchday 11,,Toulouse FC,,Olympique Lyonnais,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-6de269ee2c5d8d9b8b637234,LIGUE1,2016-17,2016-10-29T12:00:00Z,Matchday 11,,AS Saint-Étienne,,AS Monaco,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c62aa32fcae118c333623866,LIGUE1,2016-17,2016-10-29T12:00:00Z,Matchday 11,,SC Bastia,,Dijon FCO,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-e7ba772efc23a523455ddaae,LIGUE1,2016-17,2016-10-29T12:00:00Z,Matchday 11,,FC Lorient,,Montpellier HSC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-e7cafd35f6eaade701f7755d,LIGUE1,2016-17,2016-10-29T12:00:00Z,Matchday 11,,EA Guingamp,,Angers SCO,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-931e4e880d49c8d0bffe3a4b,LIGUE1,2016-17,2016-10-30T12:00:00Z,Matchday 11,,Olympique Marseille,,Girondins Bordeaux,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c2ed39d1e4955fcee19a7d5c,LIGUE1,2016-17,2016-10-30T12:00:00Z,Matchday 11,,OGC Nice,,FC Nantes,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-e8c24e93850ab6c80963ba46,LIGUE1,2016-17,2016-10-30T12:00:00Z,Matchday 11,,Stade Rennais,,FC Metz,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-ba5a78737ded0665a4ab4160,LIGUE1,2016-17,2016-11-04T12:00:00Z,Matchday 12,,Montpellier HSC,,Olympique Marseille,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-1f461750429df081bc53e013,LIGUE1,2016-17,2016-11-05T12:00:00Z,Matchday 12,,Angers SCO,,Lille OSC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-3ee878ac8a1b46bda7950618,LIGUE1,2016-17,2016-11-05T12:00:00Z,Matchday 12,,Girondins Bordeaux,,FC Lorient,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-404cc350ee180f50207fc9ab,LIGUE1,2016-17,2016-11-05T12:00:00Z,Matchday 12,,Olympique Lyonnais,,SC Bastia,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-64f05d626a3c3d7dbbab5197,LIGUE1,2016-17,2016-11-05T12:00:00Z,Matchday 12,,Dijon FCO,,EA Guingamp,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-88860bfb50be8ced24b2eaa5,LIGUE1,2016-17,2016-11-05T12:00:00Z,Matchday 12,,AS Monaco,,AS Nancy Lorraine,,6,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-8cf3327aa99f1d53f99138c5,LIGUE1,2016-17,2016-11-05T12:00:00Z,Matchday 12,,FC Nantes,,Toulouse FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-5c17a53d6d074cec6ae7ba00,LIGUE1,2016-17,2016-11-06T12:00:00Z,Matchday 12,,Paris Saint-Germain,,Stade Rennais,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a132719d2aa945949190736c,LIGUE1,2016-17,2016-11-06T12:00:00Z,Matchday 12,,SM Caen,,OGC Nice,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-ce24c46f8b7685c88cfa986e,LIGUE1,2016-17,2016-11-06T12:00:00Z,Matchday 12,,FC Metz,,AS Saint-Étienne,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-7cf9e7433a178adb1885ac6c,LIGUE1,2016-17,2016-11-18T12:00:00Z,Matchday 13,,Lille OSC,,Olympique Lyonnais,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-83955c9ce2a2271adceee797,LIGUE1,2016-17,2016-11-18T12:00:00Z,Matchday 13,,FC Lorient,,AS Monaco,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-06ab6b0d0911c27ea4b8ef6c,LIGUE1,2016-17,2016-11-19T12:00:00Z,Matchday 13,,Paris Saint-Germain,,FC Nantes,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-1c0977a01602f6fabbab9baf,LIGUE1,2016-17,2016-11-19T12:00:00Z,Matchday 13,,AS Nancy Lorraine,,Dijon FCO,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-4be2008db616d49978d646ae,LIGUE1,2016-17,2016-11-19T12:00:00Z,Matchday 13,,SC Bastia,,Montpellier HSC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a2f7646edeb79052ecd72c30,LIGUE1,2016-17,2016-11-19T12:00:00Z,Matchday 13,,Toulouse FC,,FC Metz,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d08a25bcb9327f81c7e1060c,LIGUE1,2016-17,2016-11-19T12:00:00Z,Matchday 13,,Stade Rennais,,Angers SCO,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-16cb6714b35c9b909431f3a4,LIGUE1,2016-17,2016-11-20T12:00:00Z,Matchday 13,,Olympique Marseille,,SM Caen,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-23e08e03b37435e9ab6973c5,LIGUE1,2016-17,2016-11-20T12:00:00Z,Matchday 13,,AS Saint-Étienne,,OGC Nice,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c9888a112590d538e0445d70,LIGUE1,2016-17,2016-11-20T12:00:00Z,Matchday 13,,EA Guingamp,,Girondins Bordeaux,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-9b776a44405f0b5de35c5381,LIGUE1,2016-17,2016-11-25T12:00:00Z,Matchday 14,,Stade Rennais,,Toulouse FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-1b3459eb1abfd5e10209237f,LIGUE1,2016-17,2016-11-26T12:00:00Z,Matchday 14,,FC Nantes,,Lille OSC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-2afac82018f5a12513d8d40e,LIGUE1,2016-17,2016-11-26T12:00:00Z,Matchday 14,,FC Metz,,FC Lorient,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-50747b67f2b8c0dad26035eb,LIGUE1,2016-17,2016-11-26T12:00:00Z,Matchday 14,,AS Monaco,,Olympique Marseille,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-5d8c982006cbb3f954494691,LIGUE1,2016-17,2016-11-26T12:00:00Z,Matchday 14,,Montpellier HSC,,AS Nancy Lorraine,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-9cbfa2b8c85b97742489e065,LIGUE1,2016-17,2016-11-26T12:00:00Z,Matchday 14,,Girondins Bordeaux,,Dijon FCO,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-aab00010daf3a1feb1047ba5,LIGUE1,2016-17,2016-11-26T12:00:00Z,Matchday 14,,SM Caen,,EA Guingamp,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-23cb5316895b4a57f669421a,LIGUE1,2016-17,2016-11-27T12:00:00Z,Matchday 14,,Angers SCO,,AS Saint-Étienne,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-27abdc016a6bc3240c46c436,LIGUE1,2016-17,2016-11-27T12:00:00Z,Matchday 14,,Olympique Lyonnais,,Paris Saint-Germain,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-4738f2bd1c90eb622405a6c6,LIGUE1,2016-17,2016-11-27T12:00:00Z,Matchday 14,,OGC Nice,,SC Bastia,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-05c5b11cebb5cb01a1616ed3,LIGUE1,2016-17,2016-11-29T12:00:00Z,Matchday 15,,Dijon FCO,,AS Monaco,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a58c57f8c3b293e66caad912,LIGUE1,2016-17,2016-11-29T12:00:00Z,Matchday 15,,FC Lorient,,Stade Rennais,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-dd92ad2c9648fa85b82b764b,LIGUE1,2016-17,2016-11-29T12:00:00Z,Matchday 15,,Lille OSC,,SM Caen,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-028e67423230c4e978b9dfdb,LIGUE1,2016-17,2016-11-30T12:00:00Z,Matchday 15,,AS Nancy Lorraine,,FC Metz,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-50a459dfd1e6b06c60f995e0,LIGUE1,2016-17,2016-11-30T12:00:00Z,Matchday 15,,Toulouse FC,,Montpellier HSC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-5d99e82156e1710173f17cc7,LIGUE1,2016-17,2016-11-30T12:00:00Z,Matchday 15,,EA Guingamp,,OGC Nice,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-9ce2a9bddcb742d4773a6cfa,LIGUE1,2016-17,2016-11-30T12:00:00Z,Matchday 15,,Paris Saint-Germain,,Angers SCO,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-e80d9107146936b27019874b,LIGUE1,2016-17,2016-11-30T12:00:00Z,Matchday 15,,AS Saint-Étienne,,Olympique Marseille,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-f2c04d83201d23e38b7b41fd,LIGUE1,2016-17,2016-11-30T12:00:00Z,Matchday 15,,SC Bastia,,Girondins Bordeaux,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-f741e69bf7ed124aa7ca9b0d,LIGUE1,2016-17,2016-11-30T12:00:00Z,Matchday 15,,FC Nantes,,Olympique Lyonnais,,0,6,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-5f5dd0db1d72ce298539033f,LIGUE1,2016-17,2016-12-02T12:00:00Z,Matchday 16,,SM Caen,,Dijon FCO,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-5e203502a36d56784297c20e,LIGUE1,2016-17,2016-12-03T12:00:00Z,Matchday 16,,EA Guingamp,,FC Nantes,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-9286a1e4aa4770beff639180,LIGUE1,2016-17,2016-12-03T12:00:00Z,Matchday 16,,AS Monaco,,SC Bastia,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a740df48f3958ddf23626857,LIGUE1,2016-17,2016-12-03T12:00:00Z,Matchday 16,,Girondins Bordeaux,,Lille OSC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-cb45d0612a346b1eadbcd8b0,LIGUE1,2016-17,2016-12-03T12:00:00Z,Matchday 16,,Montpellier HSC,,Paris Saint-Germain,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d31f6cb2c732991edccac01c,LIGUE1,2016-17,2016-12-03T12:00:00Z,Matchday 16,,Angers SCO,,FC Lorient,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-7651e9875138eeb247230d05,LIGUE1,2016-17,2016-12-04T12:00:00Z,Matchday 16,,Stade Rennais,,AS Saint-Étienne,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-95710ef7499884aa28e0f80a,LIGUE1,2016-17,2016-12-04T12:00:00Z,Matchday 16,,OGC Nice,,Toulouse FC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d5cb7f6624fd2a938f7f5aa7,LIGUE1,2016-17,2016-12-04T12:00:00Z,Matchday 16,,Olympique Marseille,,AS Nancy Lorraine,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-140fe64d0472476c951b3ffa,LIGUE1,2016-17,2016-12-10T12:00:00Z,Matchday 17,,Lille OSC,,Montpellier HSC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-20afc44c7e423e0c5042caaf,LIGUE1,2016-17,2016-12-10T12:00:00Z,Matchday 17,,AS Nancy Lorraine,,Angers SCO,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-22bbafc0945c39ac1c3ab57a,LIGUE1,2016-17,2016-12-10T12:00:00Z,Matchday 17,,Dijon FCO,,Olympique Marseille,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-782738e3f4d127f89101f9b1,LIGUE1,2016-17,2016-12-10T12:00:00Z,Matchday 17,,Toulouse FC,,FC Lorient,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d7697c3b06cc71873e0f548b,LIGUE1,2016-17,2016-12-10T12:00:00Z,Matchday 17,,SC Bastia,,FC Metz,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-e03936d1b55a0ee4c70157f1,LIGUE1,2016-17,2016-12-10T12:00:00Z,Matchday 17,,Girondins Bordeaux,,AS Monaco,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-49f59d758f81843030b17cf0,LIGUE1,2016-17,2016-12-11T12:00:00Z,Matchday 17,,AS Saint-Étienne,,EA Guingamp,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c9d0a45827a34ed8f7fda8a4,LIGUE1,2016-17,2016-12-11T12:00:00Z,Matchday 17,,Olympique Lyonnais,,Stade Rennais,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-f4a064fe23d08ed7fe939e56,LIGUE1,2016-17,2016-12-11T12:00:00Z,Matchday 17,,Paris Saint-Germain,,OGC Nice,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-55af9844e2bb814a77bff70e,LIGUE1,2016-17,2016-12-16T12:00:00Z,Matchday 18,,Angers SCO,,FC Nantes,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-1c47677c37f489e76eca2c81,LIGUE1,2016-17,2016-12-17T12:00:00Z,Matchday 18,,EA Guingamp,,Paris Saint-Germain,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-248d6660d7fd999488978555,LIGUE1,2016-17,2016-12-17T12:00:00Z,Matchday 18,,Toulouse FC,,AS Nancy Lorraine,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-500d38b45b7c3abbdbefbeeb,LIGUE1,2016-17,2016-12-17T12:00:00Z,Matchday 18,,Montpellier HSC,,Girondins Bordeaux,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-b20b09b841b8bcb003d24144,LIGUE1,2016-17,2016-12-17T12:00:00Z,Matchday 18,,Stade Rennais,,SC Bastia,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-f1f65829f1bf917201c0c304,LIGUE1,2016-17,2016-12-17T12:00:00Z,Matchday 18,,FC Lorient,,AS Saint-Étienne,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-0166c9289fab2baf6c1056ec,LIGUE1,2016-17,2016-12-18T12:00:00Z,Matchday 18,,SM Caen,,FC Metz,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-2c31614981d63264e8c46345,LIGUE1,2016-17,2016-12-18T12:00:00Z,Matchday 18,,OGC Nice,,Dijon FCO,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-89a53d4600ed77c89b60d58f,LIGUE1,2016-17,2016-12-18T12:00:00Z,Matchday 18,,Olympique Marseille,,Lille OSC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a7a27c61e4c59d649d75b656,LIGUE1,2016-17,2016-12-18T12:00:00Z,Matchday 18,,AS Monaco,,Olympique Lyonnais,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-219a486890128afe8cae09b0,LIGUE1,2016-17,2016-12-21T12:00:00Z,Matchday 19,,FC Metz,,EA Guingamp,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-3216bd7fbc4636dfeca5595d,LIGUE1,2016-17,2016-12-21T12:00:00Z,Matchday 19,,AS Saint-Étienne,,AS Nancy Lorraine,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-3cf3c0923858b31d4f006119,LIGUE1,2016-17,2016-12-21T12:00:00Z,Matchday 19,,Olympique Lyonnais,,Angers SCO,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-66cdc79c9df953ab1b4188af,LIGUE1,2016-17,2016-12-21T12:00:00Z,Matchday 19,,Lille OSC,,Stade Rennais,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-8cb71b192185fbfdc40db0a3,LIGUE1,2016-17,2016-12-21T12:00:00Z,Matchday 19,,FC Nantes,,Montpellier HSC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-974029d9dd192137e6330d05,LIGUE1,2016-17,2016-12-21T12:00:00Z,Matchday 19,,Paris Saint-Germain,,FC Lorient,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a9eaa36c0d1fadba3d64d947,LIGUE1,2016-17,2016-12-21T12:00:00Z,Matchday 19,,SC Bastia,,Olympique Marseille,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-e91d471c254288a03ad714e3,LIGUE1,2016-17,2016-12-21T12:00:00Z,Matchday 19,,Girondins Bordeaux,,OGC Nice,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-fa6a3f5e290996e7c6376765,LIGUE1,2016-17,2016-12-21T12:00:00Z,Matchday 19,,AS Monaco,,SM Caen,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-fac951894000bb2dd9d69a23,LIGUE1,2016-17,2016-12-21T12:00:00Z,Matchday 19,,Dijon FCO,,Toulouse FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-9f37a02d19890ef10e728b64,LIGUE1,2016-17,2017-01-13T12:00:00Z,Matchday 20,,Lille OSC,,AS Saint-Étienne,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-2e67a3262d69653dc464419b,LIGUE1,2016-17,2017-01-14T12:00:00Z,Matchday 20,,FC Lorient,,EA Guingamp,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-45ab60eda6a47311255a435e,LIGUE1,2016-17,2017-01-14T12:00:00Z,Matchday 20,,Angers SCO,,Girondins Bordeaux,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-60f47590e200babfef317390,LIGUE1,2016-17,2017-01-14T12:00:00Z,Matchday 20,,Toulouse FC,,FC Nantes,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-76d2202436afbcf87a3d040b,LIGUE1,2016-17,2017-01-14T12:00:00Z,Matchday 20,,Montpellier HSC,,Dijon FCO,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-e4ed3d90694616cf8bba76d4,LIGUE1,2016-17,2017-01-14T12:00:00Z,Matchday 20,,Stade Rennais,,Paris Saint-Germain,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-fe680e2410a81391c6a54162,LIGUE1,2016-17,2017-01-14T12:00:00Z,Matchday 20,,AS Nancy Lorraine,,SC Bastia,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-3f9950ea09b3616352ef5858,LIGUE1,2016-17,2017-01-15T12:00:00Z,Matchday 20,,SM Caen,,Olympique Lyonnais,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-6e51d97dd3b14bb3f1117f5c,LIGUE1,2016-17,2017-01-15T12:00:00Z,Matchday 20,,Olympique Marseille,,AS Monaco,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d8493c112906bddc6e476cb2,LIGUE1,2016-17,2017-01-15T12:00:00Z,Matchday 20,,OGC Nice,,FC Metz,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-9fba0feb3efce0951d2a5dd9,LIGUE1,2016-17,2017-01-18T12:00:00Z,Matchday 17,,FC Nantes,,SM Caen,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a59f9236c049957428af1c42,LIGUE1,2016-17,2017-01-20T12:00:00Z,Matchday 21,,SC Bastia,,OGC Nice,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-3f7586b86fcc0b0274eccbf1,LIGUE1,2016-17,2017-01-21T12:00:00Z,Matchday 21,,Girondins Bordeaux,,Toulouse FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-6d115535743a9b26523ea8a3,LIGUE1,2016-17,2017-01-21T12:00:00Z,Matchday 21,,Dijon FCO,,Lille OSC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d763d41411bcef6e4a3cd020,LIGUE1,2016-17,2017-01-21T12:00:00Z,Matchday 21,,FC Nantes,,Paris Saint-Germain,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-e1557b310eb07d603191636d,LIGUE1,2016-17,2017-01-21T12:00:00Z,Matchday 21,,EA Guingamp,,Stade Rennais,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-edb91029a3746646f3251c08,LIGUE1,2016-17,2017-01-21T12:00:00Z,Matchday 21,,FC Metz,,Montpellier HSC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-2bf8a92249f8ac9d1f62f720,LIGUE1,2016-17,2017-01-22T12:00:00Z,Matchday 21,,AS Saint-Étienne,,Angers SCO,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-6bd199b92713c25a6cf0d458,LIGUE1,2016-17,2017-01-22T12:00:00Z,Matchday 21,,AS Monaco,,FC Lorient,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-9adaebe0ec3014674cf81efa,LIGUE1,2016-17,2017-01-22T12:00:00Z,Matchday 21,,Olympique Lyonnais,,Olympique Marseille,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-02dfa5d332bf037dd79410cd,LIGUE1,2016-17,2017-01-27T12:00:00Z,Matchday 22,,Olympique Marseille,,Montpellier HSC,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-444f3d46ae98b73415c8e1ca,LIGUE1,2016-17,2017-01-28T12:00:00Z,Matchday 22,,Stade Rennais,,FC Nantes,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-5bf5f1f8ce640074b4787295,LIGUE1,2016-17,2017-01-28T12:00:00Z,Matchday 22,,SC Bastia,,SM Caen,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-6bdc5e4831f0d5d822de15bb,LIGUE1,2016-17,2017-01-28T12:00:00Z,Matchday 22,,Olympique Lyonnais,,Lille OSC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-cde9b674ef37c4f47c577f58,LIGUE1,2016-17,2017-01-28T12:00:00Z,Matchday 22,,AS Nancy Lorraine,,Girondins Bordeaux,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-f67966792d71f233b3e6f2bb,LIGUE1,2016-17,2017-01-28T12:00:00Z,Matchday 22,,FC Lorient,,Dijon FCO,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-fff54a06460e82a12e61918c,LIGUE1,2016-17,2017-01-28T12:00:00Z,Matchday 22,,Angers SCO,,FC Metz,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-1c3d705256689b95e3a47e1b,LIGUE1,2016-17,2017-01-29T12:00:00Z,Matchday 22,,OGC Nice,,EA Guingamp,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-4db1ad63526c1685b648df97,LIGUE1,2016-17,2017-01-29T12:00:00Z,Matchday 22,,Toulouse FC,,AS Saint-Étienne,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-ed27b4ea99fb3008b1d26840,LIGUE1,2016-17,2017-01-29T12:00:00Z,Matchday 22,,Paris Saint-Germain,,AS Monaco,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-30cd1108bf8a665bf089102b,LIGUE1,2016-17,2017-02-03T12:00:00Z,Matchday 23,,FC Metz,,Olympique Marseille,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-17ad259f0371499a562a1d58,LIGUE1,2016-17,2017-02-04T12:00:00Z,Matchday 23,,Montpellier HSC,,SC Bastia,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-1b0bcf174f8d67ee5ba837dc,LIGUE1,2016-17,2017-02-04T12:00:00Z,Matchday 23,,EA Guingamp,,SM Caen,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-5fe196c0ccdbfbab890c675e,LIGUE1,2016-17,2017-02-04T12:00:00Z,Matchday 23,,Lille OSC,,FC Lorient,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-8c1628540f5e33714c8ba7d9,LIGUE1,2016-17,2017-02-04T12:00:00Z,Matchday 23,,Dijon FCO,,Paris Saint-Germain,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-cdbcf1c83a585cc828b7510c,LIGUE1,2016-17,2017-02-04T12:00:00Z,Matchday 23,,AS Monaco,,OGC Nice,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-eb5b2a216b61bcc04570dbe9,LIGUE1,2016-17,2017-02-04T12:00:00Z,Matchday 23,,Girondins Bordeaux,,Stade Rennais,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-041c04c39962637e85e6642d,LIGUE1,2016-17,2017-02-05T12:00:00Z,Matchday 23,,FC Nantes,,AS Nancy Lorraine,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-1ff3e605834db1a4b3f8946d,LIGUE1,2016-17,2017-02-05T12:00:00Z,Matchday 23,,Toulouse FC,,Angers SCO,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-88e66ca29b576c8d150a6907,LIGUE1,2016-17,2017-02-05T12:00:00Z,Matchday 23,,AS Saint-Étienne,,Olympique Lyonnais,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-077fd944110a55167319ca7f,LIGUE1,2016-17,2017-02-07T12:00:00Z,Matchday 24,,Montpellier HSC,,AS Monaco,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-abf67e8cef1cd211398a7dd9,LIGUE1,2016-17,2017-02-07T12:00:00Z,Matchday 24,,Paris Saint-Germain,,Lille OSC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-e33045f36cd0215cbed449b7,LIGUE1,2016-17,2017-02-07T12:00:00Z,Matchday 24,,SM Caen,,Girondins Bordeaux,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-0145ab3f6bf7cf9b6643032f,LIGUE1,2016-17,2017-02-08T12:00:00Z,Matchday 24,,FC Lorient,,Toulouse FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-22f1db5ecfc8a3999a82d7d3,LIGUE1,2016-17,2017-02-08T12:00:00Z,Matchday 24,,Olympique Lyonnais,,AS Nancy Lorraine,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-4b0cd8b188f1331948d75e07,LIGUE1,2016-17,2017-02-08T12:00:00Z,Matchday 24,,FC Metz,,Dijon FCO,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-9a323ad0b0d3060edd890e60,LIGUE1,2016-17,2017-02-08T12:00:00Z,Matchday 24,,OGC Nice,,AS Saint-Étienne,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-b873b5e0e6a92447f73d46d1,LIGUE1,2016-17,2017-02-08T12:00:00Z,Matchday 24,,Olympique Marseille,,EA Guingamp,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-ed6f5eb9492a488c5c145bda,LIGUE1,2016-17,2017-02-08T12:00:00Z,Matchday 24,,Angers SCO,,Stade Rennais,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-6acc86b855ea266a7db94c91,LIGUE1,2016-17,2017-02-10T12:00:00Z,Matchday 25,,Girondins Bordeaux,,Paris Saint-Germain,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-55bc3f9c238e42428c7044a0,LIGUE1,2016-17,2017-02-11T12:00:00Z,Matchday 25,,Toulouse FC,,SC Bastia,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-72c1325cca56bf60e4e19d29,LIGUE1,2016-17,2017-02-11T12:00:00Z,Matchday 25,,AS Nancy Lorraine,,Montpellier HSC,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-7c1e514071cf9864a6dafa22,LIGUE1,2016-17,2017-02-11T12:00:00Z,Matchday 25,,Lille OSC,,Angers SCO,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d3d7e3426b513ccf21f6ea04,LIGUE1,2016-17,2017-02-11T12:00:00Z,Matchday 25,,EA Guingamp,,Olympique Lyonnais,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-df235a812a70d9b83c3a9b20,LIGUE1,2016-17,2017-02-11T12:00:00Z,Matchday 25,,Dijon FCO,,SM Caen,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-ec5dad90c9f5ba4054202065,LIGUE1,2016-17,2017-02-11T12:00:00Z,Matchday 25,,AS Monaco,,FC Metz,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-608a6de87e5b55f3c9b18815,LIGUE1,2016-17,2017-02-12T12:00:00Z,Matchday 25,,Stade Rennais,,OGC Nice,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-6999cbcadd0bc2adf028faec,LIGUE1,2016-17,2017-02-12T12:00:00Z,Matchday 25,,FC Nantes,,Olympique Marseille,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-785a323b956fcf430fbf9c3d,LIGUE1,2016-17,2017-02-12T12:00:00Z,Matchday 25,,AS Saint-Étienne,,FC Lorient,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-5c0d84f6f1fdfec17c5ac3cc,LIGUE1,2016-17,2017-02-17T12:00:00Z,Matchday 26,,SC Bastia,,AS Monaco,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-4d2a78b237be5cccba515d4e,LIGUE1,2016-17,2017-02-18T12:00:00Z,Matchday 26,,Angers SCO,,AS Nancy Lorraine,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-73520c77ae3f6d61b3474687,LIGUE1,2016-17,2017-02-18T12:00:00Z,Matchday 26,,FC Lorient,,OGC Nice,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-9b8833a4494f4737709c11c7,LIGUE1,2016-17,2017-02-18T12:00:00Z,Matchday 26,,FC Metz,,FC Nantes,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a500cbd514b9c1a6142a3872,LIGUE1,2016-17,2017-02-18T12:00:00Z,Matchday 26,,SM Caen,,Lille OSC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a8713b911f0fa3ecd77d974e,LIGUE1,2016-17,2017-02-18T12:00:00Z,Matchday 26,,Olympique Marseille,,Stade Rennais,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-41c15c210fcd7ed96ce8011b,LIGUE1,2016-17,2017-02-19T12:00:00Z,Matchday 26,,Montpellier HSC,,AS Saint-Étienne,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-4fe7424c38f886bb9adc94bb,LIGUE1,2016-17,2017-02-19T12:00:00Z,Matchday 26,,Girondins Bordeaux,,EA Guingamp,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-5e6ee3a29ecfa724cf842751,LIGUE1,2016-17,2017-02-19T12:00:00Z,Matchday 26,,Paris Saint-Germain,,Toulouse FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-f8e4ac81e7e40f90596ee49a,LIGUE1,2016-17,2017-02-19T12:00:00Z,Matchday 26,,Olympique Lyonnais,,Dijon FCO,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-20cf6418edbc03a8853d8a29,LIGUE1,2016-17,2017-02-21T12:00:00Z,Matchday 21,,SM Caen,,AS Nancy Lorraine,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-46a04d3386084db745eff2d0,LIGUE1,2016-17,2017-02-24T12:00:00Z,Matchday 27,,FC Nantes,,Dijon FCO,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-65de4840f8b02742df89306c,LIGUE1,2016-17,2017-02-24T12:00:00Z,Matchday 27,,OGC Nice,,Montpellier HSC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-14d2b22b734096c2d1873411,LIGUE1,2016-17,2017-02-25T12:00:00Z,Matchday 27,,Stade Rennais,,FC Lorient,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-2946e1d2db380bf26aa359c8,LIGUE1,2016-17,2017-02-25T12:00:00Z,Matchday 27,,AS Nancy Lorraine,,Toulouse FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-43b4c22ddacccad73368187a,LIGUE1,2016-17,2017-02-25T12:00:00Z,Matchday 27,,Angers SCO,,SC Bastia,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-716021746d0ef70ef8e59140,LIGUE1,2016-17,2017-02-25T12:00:00Z,Matchday 27,,EA Guingamp,,AS Monaco,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-aaee4819fd0c663f2adfc3c6,LIGUE1,2016-17,2017-02-25T12:00:00Z,Matchday 27,,Lille OSC,,Girondins Bordeaux,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-24165904c6b7133bc29b6ed5,LIGUE1,2016-17,2017-02-26T12:00:00Z,Matchday 27,,Olympique Lyonnais,,FC Metz,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-296c14f7a0cc3bfb33264a95,LIGUE1,2016-17,2017-02-26T12:00:00Z,Matchday 27,,AS Saint-Étienne,,SM Caen,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-b8563aef05cc6de89f9a7457,LIGUE1,2016-17,2017-02-26T12:00:00Z,Matchday 27,,Olympique Marseille,,Paris Saint-Germain,,1,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c2755ad003fb6357bc50d4d1,LIGUE1,2016-17,2017-03-01T12:00:00Z,Matchday 24,,SC Bastia,,FC Nantes,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c21a48f73ec053cf4c5a09f7,LIGUE1,2016-17,2017-03-03T12:00:00Z,Matchday 28,,Girondins Bordeaux,,Olympique Lyonnais,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-0a7779148d1de91fd86197a2,LIGUE1,2016-17,2017-03-04T12:00:00Z,Matchday 28,,FC Metz,,Stade Rennais,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-3e9508840cd7cb6ac29d95e0,LIGUE1,2016-17,2017-03-04T12:00:00Z,Matchday 28,,Paris Saint-Germain,,AS Nancy Lorraine,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-8bbf9c43e8c52b69332f5039,LIGUE1,2016-17,2017-03-04T12:00:00Z,Matchday 28,,Dijon FCO,,OGC Nice,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-9b8b2d2be654f68114b4bd9f,LIGUE1,2016-17,2017-03-04T12:00:00Z,Matchday 28,,SC Bastia,,AS Saint-Étienne,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c9c9213bc99309991a679fb0,LIGUE1,2016-17,2017-03-04T12:00:00Z,Matchday 28,,SM Caen,,Angers SCO,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-fffcd91584fbad94d3e84759,LIGUE1,2016-17,2017-03-04T12:00:00Z,Matchday 28,,Montpellier HSC,,EA Guingamp,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-824b68aa9b754f5938b1e51b,LIGUE1,2016-17,2017-03-05T12:00:00Z,Matchday 28,,AS Monaco,,FC Nantes,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a0fe262fbff18004cd78fa92,LIGUE1,2016-17,2017-03-05T12:00:00Z,Matchday 28,,FC Lorient,,Olympique Marseille,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-fba10236aba655b6b6728ecb,LIGUE1,2016-17,2017-03-05T12:00:00Z,Matchday 28,,Toulouse FC,,Lille OSC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-81f3a1691464fcd34d8888e7,LIGUE1,2016-17,2017-03-10T12:00:00Z,Matchday 29,,OGC Nice,,SM Caen,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-ed8f0529d3b2be4d4a8b5dbd,LIGUE1,2016-17,2017-03-10T12:00:00Z,Matchday 29,,Olympique Marseille,,Angers SCO,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-69dd706719f53d0f6426ca41,LIGUE1,2016-17,2017-03-11T12:00:00Z,Matchday 29,,Montpellier HSC,,FC Nantes,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-76659067d42ce6747f01eeb3,LIGUE1,2016-17,2017-03-11T12:00:00Z,Matchday 29,,AS Nancy Lorraine,,Lille OSC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-76a1d97b4d098c1d9f70bf23,LIGUE1,2016-17,2017-03-11T12:00:00Z,Matchday 29,,AS Monaco,,Girondins Bordeaux,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-b058e63aba502f5569051453,LIGUE1,2016-17,2017-03-11T12:00:00Z,Matchday 29,,EA Guingamp,,SC Bastia,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d3ffe3a3475d0d1ccec83d07,LIGUE1,2016-17,2017-03-11T12:00:00Z,Matchday 29,,Stade Rennais,,Dijon FCO,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-25c9df07425dcceb9c5c5ee9,LIGUE1,2016-17,2017-03-12T12:00:00Z,Matchday 29,,AS Saint-Étienne,,FC Metz,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-bb98aa94c68c31eb8f8da038,LIGUE1,2016-17,2017-03-12T12:00:00Z,Matchday 29,,FC Lorient,,Paris Saint-Germain,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-f6f1f7d485a81f77ee07b821,LIGUE1,2016-17,2017-03-12T12:00:00Z,Matchday 29,,Olympique Lyonnais,,Toulouse FC,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-442cb77f471bea9b4cef391b,LIGUE1,2016-17,2017-03-17T12:00:00Z,Matchday 30,,Lille OSC,,Olympique Marseille,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-4f766fb3b9a7618573c72d83,LIGUE1,2016-17,2017-03-17T12:00:00Z,Matchday 30,,FC Metz,,SC Bastia,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-4b2b2986afb7e74750a11ffa,LIGUE1,2016-17,2017-03-18T12:00:00Z,Matchday 30,,FC Nantes,,OGC Nice,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-5030f8c32c7221c4976e6d8b,LIGUE1,2016-17,2017-03-18T12:00:00Z,Matchday 30,,Girondins Bordeaux,,Montpellier HSC,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-52453c4338f0f4a4be672200,LIGUE1,2016-17,2017-03-18T12:00:00Z,Matchday 30,,Toulouse FC,,Stade Rennais,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-603f1fd4005fc7957818fb28,LIGUE1,2016-17,2017-03-18T12:00:00Z,Matchday 30,,Angers SCO,,EA Guingamp,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d7d0b847f8353f29c4e370d6,LIGUE1,2016-17,2017-03-18T12:00:00Z,Matchday 30,,AS Nancy Lorraine,,FC Lorient,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-0e25631b4b8703fab280d225,LIGUE1,2016-17,2017-03-19T12:00:00Z,Matchday 30,,Paris Saint-Germain,,Olympique Lyonnais,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-49e632bcb228647398580d6d,LIGUE1,2016-17,2017-03-19T12:00:00Z,Matchday 30,,SM Caen,,AS Monaco,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-75c3dd7572821f04f5a0b726,LIGUE1,2016-17,2017-03-19T12:00:00Z,Matchday 30,,Dijon FCO,,AS Saint-Étienne,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-02f2e8cc7326d0023c46c6e3,LIGUE1,2016-17,2017-03-31T12:00:00Z,Matchday 31,,EA Guingamp,,AS Nancy Lorraine,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-980f634b21eea42ef830eed7,LIGUE1,2016-17,2017-04-01T12:00:00Z,Matchday 31,,Olympique Marseille,,Dijon FCO,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c01f225e838bb4dad40ade58,LIGUE1,2016-17,2017-04-01T12:00:00Z,Matchday 31,,SC Bastia,,Lille OSC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-aad7745c06bee11d7953e2c5,LIGUE1,2016-17,2017-04-02T12:00:00Z,Matchday 31,,Stade Rennais,,Olympique Lyonnais,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c32d3f4ac5a6323d7a14d77d,LIGUE1,2016-17,2017-04-02T12:00:00Z,Matchday 31,,OGC Nice,,Girondins Bordeaux,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-e571b6f7f0e5030489c2a1e2,LIGUE1,2016-17,2017-04-02T12:00:00Z,Matchday 31,,FC Nantes,,Angers SCO,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-f52aeda85849da2d888fbdd0,LIGUE1,2016-17,2017-04-02T12:00:00Z,Matchday 31,,Montpellier HSC,,Toulouse FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-ff3185483d4079db9ee68359,LIGUE1,2016-17,2017-04-02T12:00:00Z,Matchday 31,,FC Lorient,,SM Caen,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-3898856e59783a77d8e479dc,LIGUE1,2016-17,2017-04-05T12:00:00Z,Matchday 16,,FC Metz,,Olympique Lyonnais,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-332b4c74f34c4db9f6331420,LIGUE1,2016-17,2017-04-07T12:00:00Z,Matchday 32,,Lille OSC,,OGC Nice,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-063039ed9a0a56d0bbfc2805,LIGUE1,2016-17,2017-04-08T12:00:00Z,Matchday 32,,Angers SCO,,AS Monaco,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-50f4e78bf04161307b856bb8,LIGUE1,2016-17,2017-04-08T12:00:00Z,Matchday 32,,AS Nancy Lorraine,,Stade Rennais,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a7e62b126df14ddb1c336128,LIGUE1,2016-17,2017-04-08T12:00:00Z,Matchday 32,,SM Caen,,Montpellier HSC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-b73de16f45897b63cd420944,LIGUE1,2016-17,2017-04-08T12:00:00Z,Matchday 32,,Olympique Lyonnais,,FC Lorient,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c38771ca2241dfac4a6d8db2,LIGUE1,2016-17,2017-04-08T12:00:00Z,Matchday 32,,Dijon FCO,,SC Bastia,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c6dd9a97955553e9983af6a3,LIGUE1,2016-17,2017-04-08T12:00:00Z,Matchday 32,,Girondins Bordeaux,,FC Metz,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-281f2834123e08c89c943f31,LIGUE1,2016-17,2017-04-09T12:00:00Z,Matchday 32,,Toulouse FC,,Olympique Marseille,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-a8f85d31ad8ecd2ae06bc332,LIGUE1,2016-17,2017-04-09T12:00:00Z,Matchday 32,,Paris Saint-Germain,,EA Guingamp,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-e13687ac01e00d806c654382,LIGUE1,2016-17,2017-04-09T12:00:00Z,Matchday 32,,AS Saint-Étienne,,FC Nantes,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-03137f374232e42b658bc2f0,LIGUE1,2016-17,2017-04-14T12:00:00Z,Matchday 33,,Angers SCO,,Paris Saint-Germain,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-38a0f0b7ffff4b4e8a438ffb,LIGUE1,2016-17,2017-04-15T12:00:00Z,Matchday 33,,Montpellier HSC,,FC Lorient,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-805fefe19d8ddeb9d6585942,LIGUE1,2016-17,2017-04-15T12:00:00Z,Matchday 33,,EA Guingamp,,Toulouse FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-993bfa0d33d11e54bbc897fb,LIGUE1,2016-17,2017-04-15T12:00:00Z,Matchday 33,,Stade Rennais,,Lille OSC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-9aca27b04ff00f09c9ed1dde,LIGUE1,2016-17,2017-04-15T12:00:00Z,Matchday 33,,OGC Nice,,AS Nancy Lorraine,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-b283d0d8b6f4c892d39591c5,LIGUE1,2016-17,2017-04-15T12:00:00Z,Matchday 33,,FC Metz,,SM Caen,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-c4e4c04ee2e1e801c7a8b9a3,LIGUE1,2016-17,2017-04-15T12:00:00Z,Matchday 33,,AS Monaco,,Dijon FCO,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-0a3e3785b5cf280bbbf43ac1,LIGUE1,2016-17,2017-04-16T12:00:00Z,Matchday 33,,FC Nantes,,Girondins Bordeaux,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-6c620041916fb36ef5d7e4b5,LIGUE1,2016-17,2017-04-16T12:00:00Z,Matchday 33,,Olympique Marseille,,AS Saint-Étienne,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-8624ac781adcb705aa3a217a,LIGUE1,2016-17,2017-04-16T12:00:00Z,Matchday 33,,SC Bastia,,Olympique Lyonnais,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-9c1a2eee7a6ccef8ec403d53,LIGUE1,2016-17,2017-04-18T12:00:00Z,Matchday 31,,FC Metz,,Paris Saint-Germain,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-acc1274b0631bae60975c7a9,LIGUE1,2016-17,2017-04-21T12:00:00Z,Matchday 34,,AS Nancy Lorraine,,Olympique Marseille,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-1c09ae7ccaf13ee78e558099,LIGUE1,2016-17,2017-04-22T12:00:00Z,Matchday 34,,Paris Saint-Germain,,Montpellier HSC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-3607bef8422aff67683023d1,LIGUE1,2016-17,2017-04-22T12:00:00Z,Matchday 34,,SM Caen,,FC Nantes,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-4a300d8776959ace2f0845b5,LIGUE1,2016-17,2017-04-22T12:00:00Z,Matchday 34,,FC Lorient,,FC Metz,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-4fe9e9b0ddc37d157830913a,LIGUE1,2016-17,2017-04-22T12:00:00Z,Matchday 34,,Girondins Bordeaux,,SC Bastia,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-5736b30dbc5be6dbc5d72a1c,LIGUE1,2016-17,2017-04-22T12:00:00Z,Matchday 34,,Dijon FCO,,Angers SCO,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-b5f8d01933ecaae7a17e5fef,LIGUE1,2016-17,2017-04-22T12:00:00Z,Matchday 34,,Lille OSC,,EA Guingamp,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-01e41ee26575f82fe62d2665,LIGUE1,2016-17,2017-04-23T12:00:00Z,Matchday 34,,AS Saint-Étienne,,Stade Rennais,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-187fc4ca78b35dfe35dda728,LIGUE1,2016-17,2017-04-23T12:00:00Z,Matchday 34,,Olympique Lyonnais,,AS Monaco,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-b7b0aaeebc397ac874b6e751,LIGUE1,2016-17,2017-04-23T12:00:00Z,Matchday 34,,Toulouse FC,,OGC Nice,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-cb624f37bb4db32c96ffc2df,LIGUE1,2016-17,2017-04-28T12:00:00Z,Matchday 35,,Angers SCO,,Olympique Lyonnais,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-2143d7990007439ae8960361,LIGUE1,2016-17,2017-04-29T12:00:00Z,Matchday 35,,FC Metz,,AS Nancy Lorraine,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-2c63ef2a99dbba4e5249b1b3,LIGUE1,2016-17,2017-04-29T12:00:00Z,Matchday 35,,Montpellier HSC,,Lille OSC,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-7b4d424eff8d2a0203ab0bdf,LIGUE1,2016-17,2017-04-29T12:00:00Z,Matchday 35,,AS Monaco,,Toulouse FC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-8dca744efeb31a63556a3411,LIGUE1,2016-17,2017-04-29T12:00:00Z,Matchday 35,,EA Guingamp,,AS Saint-Étienne,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-de0ae24962db2147e13d08fa,LIGUE1,2016-17,2017-04-29T12:00:00Z,Matchday 35,,FC Nantes,,FC Lorient,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-f025149ce7613dc6715a37dd,LIGUE1,2016-17,2017-04-29T12:00:00Z,Matchday 35,,SC Bastia,,Stade Rennais,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-31c7148698e519d8cc9204c3,LIGUE1,2016-17,2017-04-30T12:00:00Z,Matchday 35,,SM Caen,,Olympique Marseille,,1,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-e77ddfcbfbf8895fdfe901f6,LIGUE1,2016-17,2017-04-30T12:00:00Z,Matchday 35,,Dijon FCO,,Girondins Bordeaux,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-ef2a39f19eb3661a43bd9681,LIGUE1,2016-17,2017-04-30T12:00:00Z,Matchday 35,,OGC Nice,,Paris Saint-Germain,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-5a2eeb213cd6a7690b5128bf,LIGUE1,2016-17,2017-05-05T12:00:00Z,Matchday 36,,AS Saint-Étienne,,Girondins Bordeaux,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-20127edcb3f48483425392da,LIGUE1,2016-17,2017-05-06T12:00:00Z,Matchday 36,,FC Lorient,,Angers SCO,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-33d558b4fc24049533d7926d,LIGUE1,2016-17,2017-05-06T12:00:00Z,Matchday 36,,EA Guingamp,,Dijon FCO,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-59aa02c0f18bdfe5ff4b5d23,LIGUE1,2016-17,2017-05-06T12:00:00Z,Matchday 36,,AS Nancy Lorraine,,AS Monaco,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-6f9edf635d8b6da6e49c8ec7,LIGUE1,2016-17,2017-05-06T12:00:00Z,Matchday 36,,Toulouse FC,,SM Caen,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-aa66da5e155bb3fa145d89a3,LIGUE1,2016-17,2017-05-06T12:00:00Z,Matchday 36,,Paris Saint-Germain,,SC Bastia,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-b7f172bc19584d1a18ab7bc3,LIGUE1,2016-17,2017-05-06T12:00:00Z,Matchday 36,,Lille OSC,,FC Metz,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-0c9ae15c675a9fc7e807b365,LIGUE1,2016-17,2017-05-07T12:00:00Z,Matchday 36,,Olympique Lyonnais,,FC Nantes,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-6b7dd194fd58e78aa8f10829,LIGUE1,2016-17,2017-05-07T12:00:00Z,Matchday 36,,Olympique Marseille,,OGC Nice,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-e7c5beeceeca5cd817b16d73,LIGUE1,2016-17,2017-05-07T12:00:00Z,Matchday 36,,Stade Rennais,,Montpellier HSC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-40102adf79c7572857a277a4,LIGUE1,2016-17,2017-05-14T12:00:00Z,Matchday 37,,FC Nantes,,EA Guingamp,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-444a8d0c6805819b23830cdd,LIGUE1,2016-17,2017-05-14T12:00:00Z,Matchday 37,,FC Metz,,Toulouse FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-5f19039304166091dcabecbf,LIGUE1,2016-17,2017-05-14T12:00:00Z,Matchday 37,,SC Bastia,,FC Lorient,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-6b70f929ec7f8dd6f13d20da,LIGUE1,2016-17,2017-05-14T12:00:00Z,Matchday 37,,Montpellier HSC,,Olympique Lyonnais,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-898ff7a51279e14faed9322c,LIGUE1,2016-17,2017-05-14T12:00:00Z,Matchday 37,,OGC Nice,,Angers SCO,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-99e59adf6b9e2c76f160d04a,LIGUE1,2016-17,2017-05-14T12:00:00Z,Matchday 37,,SM Caen,,Stade Rennais,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-b19ead74ed0010e6e0700351,LIGUE1,2016-17,2017-05-14T12:00:00Z,Matchday 37,,AS Monaco,,Lille OSC,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-ea87a862537e81e1642abdb9,LIGUE1,2016-17,2017-05-14T12:00:00Z,Matchday 37,,Girondins Bordeaux,,Olympique Marseille,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-ef87504f4e301b54665e06ef,LIGUE1,2016-17,2017-05-14T12:00:00Z,Matchday 37,,AS Saint-Étienne,,Paris Saint-Germain,,0,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-f1bd4528fce6970990df35b9,LIGUE1,2016-17,2017-05-14T12:00:00Z,Matchday 37,,Dijon FCO,,AS Nancy Lorraine,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-84bd736826a8279ea17e25cd,LIGUE1,2016-17,2017-05-17T12:00:00Z,Matchday 31,,AS Monaco,,AS Saint-Étienne,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-023db8b6faf9590314b7bd59,LIGUE1,2016-17,2017-05-20T12:00:00Z,Matchday 38,,EA Guingamp,,FC Metz,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-246860c02c58effdc04278f4,LIGUE1,2016-17,2017-05-20T12:00:00Z,Matchday 38,,FC Lorient,,Girondins Bordeaux,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-42d4d1bed520c96e60e59f98,LIGUE1,2016-17,2017-05-20T12:00:00Z,Matchday 38,,Stade Rennais,,AS Monaco,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-483c515a814ec556d8a7d363,LIGUE1,2016-17,2017-05-20T12:00:00Z,Matchday 38,,Lille OSC,,FC Nantes,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-63eaaf698873eae7c97c47cb,LIGUE1,2016-17,2017-05-20T12:00:00Z,Matchday 38,,Olympique Marseille,,SC Bastia,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-819206adefe4c41982e39873,LIGUE1,2016-17,2017-05-20T12:00:00Z,Matchday 38,,Angers SCO,,Montpellier HSC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-8e9978c04cb04b7d1e336394,LIGUE1,2016-17,2017-05-20T12:00:00Z,Matchday 38,,Olympique Lyonnais,,OGC Nice,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-9b857d653d30c9697234a949,LIGUE1,2016-17,2017-05-20T12:00:00Z,Matchday 38,,Toulouse FC,,Dijon FCO,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-ab2dd5f126d64432200a1902,LIGUE1,2016-17,2017-05-20T12:00:00Z,Matchday 38,,Paris Saint-Germain,,SM Caen,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+ligue1-openfootball-d1dd44726dfd9739ac701a4e,LIGUE1,2016-17,2017-05-20T12:00:00Z,Matchday 38,,AS Nancy Lorraine,,AS Saint-Étienne,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00

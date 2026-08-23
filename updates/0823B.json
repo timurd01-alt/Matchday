@@ -1,0 +1,11 @@
+{
+  "rank": 169,
+  "date": "Build 0823B",
+  "tag": "Fix",
+  "title": "Matchday's Top 25 stands on its own",
+  "items": [
+    "The AP Top 25, CFP Rankings, and Coaches Poll now keep their real names instead of appearing under the Matchday label.",
+    "Matchday Top 25 is a separate model ranking built from the site's established power-rating math: preseason roster strength, self-training Elo, and current-season results as the sample grows.",
+    "Both lists remain visible together, making disagreements between the model and the national poll easy to see."
+  ]
+}

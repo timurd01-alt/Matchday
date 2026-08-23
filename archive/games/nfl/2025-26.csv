@@ -1,0 +1,286 @@
+game_id,comp,season,date_utc,stage,venue,home_name,home_code,away_name,away_code,home_score,away_score,status,source,first_seen
+nfl-423945,NFL,2025-26,2025-09-05T00:20:00Z,Week 1,Lincoln Financial Field,Philadelphia Eagles,PHI,Dallas Cowboys,DAL,24,20,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-423946,NFL,2025-26,2025-09-06T00:00:00Z,Week 1,Corinthians Arena,Los Angeles Chargers,LAC,Kansas City Chiefs,KC,27,21,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-423947,NFL,2025-26,2025-09-07T17:00:00Z,Week 1,Mercedes-Benz Stadium,Atlanta Falcons,ATL,Tampa Bay Buccaneers,TB,20,23,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-423948,NFL,2025-26,2025-09-07T17:00:00Z,Week 1,Huntington Bank Field,Cleveland Browns,CLE,Cincinnati Bengals,CIN,16,17,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-423949,NFL,2025-26,2025-09-07T17:00:00Z,Week 1,Lucas Oil Stadium,Indianapolis Colts,IND,Miami Dolphins,MIA,33,8,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-423950,NFL,2025-26,2025-09-07T17:00:00Z,Week 1,Gillette Stadium,New England Patriots,NE,Las Vegas Raiders,LV,13,20,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-423951,NFL,2025-26,2025-09-07T17:00:00Z,Week 1,Caesars Superdome,New Orleans Saints,NO,Arizona Cardinals,ARI,13,20,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-423952,NFL,2025-26,2025-09-07T17:00:00Z,Week 1,MetLife Stadium,New York Jets,NYJ,Pittsburgh Steelers,PIT,32,34,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-423953,NFL,2025-26,2025-09-07T17:00:00Z,Week 1,Northwest Stadium,Washington Commanders,WSH,New York Giants,NYG,21,6,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-423954,NFL,2025-26,2025-09-07T17:00:00Z,Week 1,EverBank Stadium,Jacksonville Jaguars,JAX,Carolina Panthers,CAR,26,10,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-423955,NFL,2025-26,2025-09-07T20:05:00Z,Week 1,Empower Field at Mile High,Denver Broncos,DEN,Tennessee Titans,TEN,20,12,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-423956,NFL,2025-26,2025-09-07T20:05:00Z,Week 1,Lumen Field,Seattle Seahawks,SEA,San Francisco 49ers,SF,13,17,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-423957,NFL,2025-26,2025-09-07T20:25:00Z,Week 1,Lambeau Field,Green Bay Packers,GB,Detroit Lions,DET,27,13,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-423958,NFL,2025-26,2025-09-07T20:25:00Z,Week 1,SoFi Stadium,Los Angeles Rams,LAR,Houston Texans,HOU,14,9,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-423959,NFL,2025-26,2025-09-08T00:20:00Z,Week 1,Highmark Stadium,Buffalo Bills,BUF,Baltimore Ravens,BAL,41,40,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-423960,NFL,2025-26,2025-09-09T00:15:00Z,Week 1,Soldier Field,Chicago Bears,CHI,Minnesota Vikings,MIN,24,27,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-423961,NFL,2025-26,2025-09-12T00:15:00Z,Week 2,Lambeau Field,Green Bay Packers,GB,Washington Commanders,WSH,27,18,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-423962,NFL,2025-26,2025-09-14T17:00:00Z,Week 2,Paycor Stadium,Cincinnati Bengals,CIN,Jacksonville Jaguars,JAX,31,27,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-423963,NFL,2025-26,2025-09-14T17:00:00Z,Week 2,AT&T Stadium,Dallas Cowboys,DAL,New York Giants,NYG,40,37,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-423964,NFL,2025-26,2025-09-14T17:00:00Z,Week 2,Ford Field,Detroit Lions,DET,Chicago Bears,CHI,52,21,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-423965,NFL,2025-26,2025-09-14T17:00:00Z,Week 2,Nissan Stadium,Tennessee Titans,TEN,Los Angeles Rams,LAR,19,33,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-423966,NFL,2025-26,2025-09-14T17:00:00Z,Week 2,Hard Rock Stadium,Miami Dolphins,MIA,New England Patriots,NE,27,33,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-423967,NFL,2025-26,2025-09-14T17:00:00Z,Week 2,Caesars Superdome,New Orleans Saints,NO,San Francisco 49ers,SF,21,26,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-423968,NFL,2025-26,2025-09-14T17:00:00Z,Week 2,MetLife Stadium,New York Jets,NYJ,Buffalo Bills,BUF,10,30,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-423969,NFL,2025-26,2025-09-14T17:00:00Z,Week 2,Acrisure Stadium,Pittsburgh Steelers,PIT,Seattle Seahawks,SEA,17,31,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-423970,NFL,2025-26,2025-09-14T17:00:00Z,Week 2,M&T Bank Stadium,Baltimore Ravens,BAL,Cleveland Browns,CLE,41,17,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-423971,NFL,2025-26,2025-09-14T20:05:00Z,Week 2,Lucas Oil Stadium,Indianapolis Colts,IND,Denver Broncos,DEN,29,28,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-423972,NFL,2025-26,2025-09-14T20:05:00Z,Week 2,State Farm Stadium,Arizona Cardinals,ARI,Carolina Panthers,CAR,27,22,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-423973,NFL,2025-26,2025-09-14T20:25:00Z,Week 2,GEHA Field at Arrowhead Stadium,Kansas City Chiefs,KC,Philadelphia Eagles,PHI,17,20,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-423974,NFL,2025-26,2025-09-15T00:20:00Z,Week 2,U.S. Bank Stadium,Minnesota Vikings,MIN,Atlanta Falcons,ATL,6,22,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-423975,NFL,2025-26,2025-09-15T23:00:00Z,Week 2,NRG Stadium,Houston Texans,HOU,Tampa Bay Buccaneers,TB,19,20,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-423976,NFL,2025-26,2025-09-16T02:00:00Z,Week 2,Allegiant Stadium,Las Vegas Raiders,LV,Los Angeles Chargers,LAC,9,20,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-423977,NFL,2025-26,2025-09-19T00:15:00Z,Week 3,Highmark Stadium,Buffalo Bills,BUF,Miami Dolphins,MIA,31,21,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-423978,NFL,2025-26,2025-09-21T17:00:00Z,Week 3,Huntington Bank Field,Cleveland Browns,CLE,Green Bay Packers,GB,13,10,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-423979,NFL,2025-26,2025-09-21T17:00:00Z,Week 3,Nissan Stadium,Tennessee Titans,TEN,Indianapolis Colts,IND,20,41,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-423980,NFL,2025-26,2025-09-21T17:00:00Z,Week 3,U.S. Bank Stadium,Minnesota Vikings,MIN,Cincinnati Bengals,CIN,48,10,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-423981,NFL,2025-26,2025-09-21T17:00:00Z,Week 3,Gillette Stadium,New England Patriots,NE,Pittsburgh Steelers,PIT,14,21,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-423982,NFL,2025-26,2025-09-21T17:00:00Z,Week 3,Lincoln Financial Field,Philadelphia Eagles,PHI,Los Angeles Rams,LAR,33,26,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-423983,NFL,2025-26,2025-09-21T17:00:00Z,Week 3,Raymond James Stadium,Tampa Bay Buccaneers,TB,New York Jets,NYJ,29,27,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-423984,NFL,2025-26,2025-09-21T17:00:00Z,Week 3,Northwest Stadium,Washington Commanders,WSH,Las Vegas Raiders,LV,41,24,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-423985,NFL,2025-26,2025-09-21T17:00:00Z,Week 3,Bank of America Stadium,Carolina Panthers,CAR,Atlanta Falcons,ATL,30,0,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-423986,NFL,2025-26,2025-09-21T17:00:00Z,Week 3,EverBank Stadium,Jacksonville Jaguars,JAX,Houston Texans,HOU,17,10,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-423987,NFL,2025-26,2025-09-21T20:05:00Z,Week 3,SoFi Stadium,Los Angeles Chargers,LAC,Denver Broncos,DEN,23,20,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-423988,NFL,2025-26,2025-09-21T20:05:00Z,Week 3,Lumen Field,Seattle Seahawks,SEA,New Orleans Saints,NO,44,13,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-423989,NFL,2025-26,2025-09-21T20:25:00Z,Week 3,Soldier Field,Chicago Bears,CHI,Dallas Cowboys,DAL,31,14,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-423990,NFL,2025-26,2025-09-21T20:25:00Z,Week 3,Levi's Stadium,San Francisco 49ers,SF,Arizona Cardinals,ARI,16,15,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-423991,NFL,2025-26,2025-09-22T00:20:00Z,Week 3,MetLife Stadium,New York Giants,NYG,Kansas City Chiefs,KC,9,22,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-423992,NFL,2025-26,2025-09-23T00:15:00Z,Week 3,M&T Bank Stadium,Baltimore Ravens,BAL,Detroit Lions,DET,30,38,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-423993,NFL,2025-26,2025-09-26T00:15:00Z,Week 4,State Farm Stadium,Arizona Cardinals,ARI,Seattle Seahawks,SEA,20,23,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-423994,NFL,2025-26,2025-09-28T13:30:00Z,Week 4,Croke Park,Pittsburgh Steelers,PIT,Minnesota Vikings,MIN,24,21,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-423995,NFL,2025-26,2025-09-28T17:00:00Z,Week 4,Mercedes-Benz Stadium,Atlanta Falcons,ATL,Washington Commanders,WSH,34,27,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-423996,NFL,2025-26,2025-09-28T17:00:00Z,Week 4,Highmark Stadium,Buffalo Bills,BUF,New Orleans Saints,NO,31,19,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-423997,NFL,2025-26,2025-09-28T17:00:00Z,Week 4,Ford Field,Detroit Lions,DET,Cleveland Browns,CLE,34,10,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-423998,NFL,2025-26,2025-09-28T17:00:00Z,Week 4,Gillette Stadium,New England Patriots,NE,Carolina Panthers,CAR,42,13,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-423999,NFL,2025-26,2025-09-28T17:00:00Z,Week 4,MetLife Stadium,New York Giants,NYG,Los Angeles Chargers,LAC,21,18,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424000,NFL,2025-26,2025-09-28T17:00:00Z,Week 4,Raymond James Stadium,Tampa Bay Buccaneers,TB,Philadelphia Eagles,PHI,25,31,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424001,NFL,2025-26,2025-09-28T17:00:00Z,Week 4,NRG Stadium,Houston Texans,HOU,Tennessee Titans,TEN,26,0,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424002,NFL,2025-26,2025-09-28T20:05:00Z,Week 4,SoFi Stadium,Los Angeles Rams,LAR,Indianapolis Colts,IND,27,20,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424003,NFL,2025-26,2025-09-28T20:05:00Z,Week 4,Levi's Stadium,San Francisco 49ers,SF,Jacksonville Jaguars,JAX,21,26,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424004,NFL,2025-26,2025-09-28T20:25:00Z,Week 4,GEHA Field at Arrowhead Stadium,Kansas City Chiefs,KC,Baltimore Ravens,BAL,37,20,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424005,NFL,2025-26,2025-09-28T20:25:00Z,Week 4,Allegiant Stadium,Las Vegas Raiders,LV,Chicago Bears,CHI,24,25,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424006,NFL,2025-26,2025-09-29T00:20:00Z,Week 4,AT&T Stadium,Dallas Cowboys,DAL,Green Bay Packers,GB,40,40,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424007,NFL,2025-26,2025-09-29T23:15:00Z,Week 4,Hard Rock Stadium,Miami Dolphins,MIA,New York Jets,NYJ,27,21,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424008,NFL,2025-26,2025-09-30T00:15:00Z,Week 4,Empower Field at Mile High,Denver Broncos,DEN,Cincinnati Bengals,CIN,28,3,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424009,NFL,2025-26,2025-10-03T00:15:00Z,Week 5,SoFi Stadium,Los Angeles Rams,LAR,San Francisco 49ers,SF,23,26,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424010,NFL,2025-26,2025-10-05T13:30:00Z,Week 5,Tottenham Hotspur Stadium,Cleveland Browns,CLE,Minnesota Vikings,MIN,17,21,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424011,NFL,2025-26,2025-10-05T17:00:00Z,Week 5,Lucas Oil Stadium,Indianapolis Colts,IND,Las Vegas Raiders,LV,40,6,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424012,NFL,2025-26,2025-10-05T17:00:00Z,Week 5,Caesars Superdome,New Orleans Saints,NO,New York Giants,NYG,26,14,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424013,NFL,2025-26,2025-10-05T17:00:00Z,Week 5,MetLife Stadium,New York Jets,NYJ,Dallas Cowboys,DAL,22,37,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424014,NFL,2025-26,2025-10-05T17:00:00Z,Week 5,Lincoln Financial Field,Philadelphia Eagles,PHI,Denver Broncos,DEN,17,21,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424015,NFL,2025-26,2025-10-05T17:00:00Z,Week 5,Bank of America Stadium,Carolina Panthers,CAR,Miami Dolphins,MIA,27,24,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424016,NFL,2025-26,2025-10-05T17:00:00Z,Week 5,M&T Bank Stadium,Baltimore Ravens,BAL,Houston Texans,HOU,10,44,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424017,NFL,2025-26,2025-10-05T20:05:00Z,Week 5,State Farm Stadium,Arizona Cardinals,ARI,Tennessee Titans,TEN,21,22,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424018,NFL,2025-26,2025-10-05T20:05:00Z,Week 5,Lumen Field,Seattle Seahawks,SEA,Tampa Bay Buccaneers,TB,35,38,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424019,NFL,2025-26,2025-10-05T20:25:00Z,Week 5,Paycor Stadium,Cincinnati Bengals,CIN,Detroit Lions,DET,24,37,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424020,NFL,2025-26,2025-10-05T20:25:00Z,Week 5,SoFi Stadium,Los Angeles Chargers,LAC,Washington Commanders,WSH,10,27,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424021,NFL,2025-26,2025-10-06T00:20:00Z,Week 5,Highmark Stadium,Buffalo Bills,BUF,New England Patriots,NE,20,23,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424022,NFL,2025-26,2025-10-07T00:15:00Z,Week 5,EverBank Stadium,Jacksonville Jaguars,JAX,Kansas City Chiefs,KC,31,28,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424023,NFL,2025-26,2025-10-10T00:15:00Z,Week 6,MetLife Stadium,New York Giants,NYG,Philadelphia Eagles,PHI,34,17,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424024,NFL,2025-26,2025-10-12T13:30:00Z,Week 6,Tottenham Hotspur Stadium,New York Jets,NYJ,Denver Broncos,DEN,11,13,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424025,NFL,2025-26,2025-10-12T17:00:00Z,Week 6,Lucas Oil Stadium,Indianapolis Colts,IND,Arizona Cardinals,ARI,31,27,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424026,NFL,2025-26,2025-10-12T17:00:00Z,Week 6,Hard Rock Stadium,Miami Dolphins,MIA,Los Angeles Chargers,LAC,27,29,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424027,NFL,2025-26,2025-10-12T17:00:00Z,Week 6,Acrisure Stadium,Pittsburgh Steelers,PIT,Cleveland Browns,CLE,23,9,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424029,NFL,2025-26,2025-10-12T17:00:00Z,Week 6,Bank of America Stadium,Carolina Panthers,CAR,Dallas Cowboys,DAL,30,27,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424030,NFL,2025-26,2025-10-12T17:00:00Z,Week 6,EverBank Stadium,Jacksonville Jaguars,JAX,Seattle Seahawks,SEA,12,20,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424031,NFL,2025-26,2025-10-12T17:00:00Z,Week 6,M&T Bank Stadium,Baltimore Ravens,BAL,Los Angeles Rams,LAR,3,17,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424034,NFL,2025-26,2025-10-12T17:00:00Z,Week 6,Caesars Superdome,New Orleans Saints,NO,New England Patriots,NE,19,25,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424032,NFL,2025-26,2025-10-12T20:05:00Z,Week 6,Allegiant Stadium,Las Vegas Raiders,LV,Tennessee Titans,TEN,20,10,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424028,NFL,2025-26,2025-10-12T20:25:00Z,Week 6,Raymond James Stadium,Tampa Bay Buccaneers,TB,San Francisco 49ers,SF,30,19,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424033,NFL,2025-26,2025-10-12T20:25:00Z,Week 6,Lambeau Field,Green Bay Packers,GB,Cincinnati Bengals,CIN,27,18,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424035,NFL,2025-26,2025-10-13T00:20:00Z,Week 6,GEHA Field at Arrowhead Stadium,Kansas City Chiefs,KC,Detroit Lions,DET,30,17,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424036,NFL,2025-26,2025-10-13T23:15:00Z,Week 6,Mercedes-Benz Stadium,Atlanta Falcons,ATL,Buffalo Bills,BUF,24,14,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424037,NFL,2025-26,2025-10-14T00:15:00Z,Week 6,Northwest Stadium,Washington Commanders,WSH,Chicago Bears,CHI,24,25,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424038,NFL,2025-26,2025-10-17T00:15:00Z,Week 7,Paycor Stadium,Cincinnati Bengals,CIN,Pittsburgh Steelers,PIT,33,31,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424039,NFL,2025-26,2025-10-19T13:30:00Z,Week 7,Wembley Stadium,Jacksonville Jaguars,JAX,Los Angeles Rams,LAR,7,35,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424040,NFL,2025-26,2025-10-19T17:00:00Z,Week 7,Soldier Field,Chicago Bears,CHI,New Orleans Saints,NO,26,14,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424041,NFL,2025-26,2025-10-19T17:00:00Z,Week 7,Huntington Bank Field,Cleveland Browns,CLE,Miami Dolphins,MIA,31,6,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424042,NFL,2025-26,2025-10-19T17:00:00Z,Week 7,Nissan Stadium,Tennessee Titans,TEN,New England Patriots,NE,13,31,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424043,NFL,2025-26,2025-10-19T17:00:00Z,Week 7,GEHA Field at Arrowhead Stadium,Kansas City Chiefs,KC,Las Vegas Raiders,LV,31,0,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424044,NFL,2025-26,2025-10-19T17:00:00Z,Week 7,U.S. Bank Stadium,Minnesota Vikings,MIN,Philadelphia Eagles,PHI,22,28,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424045,NFL,2025-26,2025-10-19T17:00:00Z,Week 7,MetLife Stadium,New York Jets,NYJ,Carolina Panthers,CAR,6,13,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424046,NFL,2025-26,2025-10-19T20:05:00Z,Week 7,Empower Field at Mile High,Denver Broncos,DEN,New York Giants,NYG,33,32,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424047,NFL,2025-26,2025-10-19T20:05:00Z,Week 7,SoFi Stadium,Los Angeles Chargers,LAC,Indianapolis Colts,IND,24,38,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424048,NFL,2025-26,2025-10-19T20:25:00Z,Week 7,AT&T Stadium,Dallas Cowboys,DAL,Washington Commanders,WSH,44,22,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424049,NFL,2025-26,2025-10-19T20:25:00Z,Week 7,State Farm Stadium,Arizona Cardinals,ARI,Green Bay Packers,GB,23,27,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424050,NFL,2025-26,2025-10-20T00:20:00Z,Week 7,Levi's Stadium,San Francisco 49ers,SF,Atlanta Falcons,ATL,20,10,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424051,NFL,2025-26,2025-10-20T23:00:00Z,Week 7,Ford Field,Detroit Lions,DET,Tampa Bay Buccaneers,TB,24,9,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424052,NFL,2025-26,2025-10-21T02:00:00Z,Week 7,Lumen Field,Seattle Seahawks,SEA,Houston Texans,HOU,27,19,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424053,NFL,2025-26,2025-10-24T00:15:00Z,Week 8,SoFi Stadium,Los Angeles Chargers,LAC,Minnesota Vikings,MIN,37,10,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424054,NFL,2025-26,2025-10-26T17:00:00Z,Week 8,Mercedes-Benz Stadium,Atlanta Falcons,ATL,Miami Dolphins,MIA,10,34,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424055,NFL,2025-26,2025-10-26T17:00:00Z,Week 8,Paycor Stadium,Cincinnati Bengals,CIN,New York Jets,NYJ,38,39,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424056,NFL,2025-26,2025-10-26T17:00:00Z,Week 8,Gillette Stadium,New England Patriots,NE,Cleveland Browns,CLE,32,13,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424057,NFL,2025-26,2025-10-26T17:00:00Z,Week 8,Lincoln Financial Field,Philadelphia Eagles,PHI,New York Giants,NYG,38,20,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424058,NFL,2025-26,2025-10-26T17:00:00Z,Week 8,Bank of America Stadium,Carolina Panthers,CAR,Buffalo Bills,BUF,9,40,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424059,NFL,2025-26,2025-10-26T17:00:00Z,Week 8,M&T Bank Stadium,Baltimore Ravens,BAL,Chicago Bears,CHI,30,16,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424060,NFL,2025-26,2025-10-26T17:00:00Z,Week 8,NRG Stadium,Houston Texans,HOU,San Francisco 49ers,SF,26,15,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424061,NFL,2025-26,2025-10-26T20:05:00Z,Week 8,Caesars Superdome,New Orleans Saints,NO,Tampa Bay Buccaneers,TB,3,23,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424062,NFL,2025-26,2025-10-26T20:25:00Z,Week 8,Empower Field at Mile High,Denver Broncos,DEN,Dallas Cowboys,DAL,44,24,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424063,NFL,2025-26,2025-10-26T20:25:00Z,Week 8,Lucas Oil Stadium,Indianapolis Colts,IND,Tennessee Titans,TEN,38,14,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424064,NFL,2025-26,2025-10-27T00:20:00Z,Week 8,Acrisure Stadium,Pittsburgh Steelers,PIT,Green Bay Packers,GB,25,35,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424065,NFL,2025-26,2025-10-28T00:15:00Z,Week 8,GEHA Field at Arrowhead Stadium,Kansas City Chiefs,KC,Washington Commanders,WSH,28,7,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424066,NFL,2025-26,2025-10-31T00:15:00Z,Week 9,Hard Rock Stadium,Miami Dolphins,MIA,Baltimore Ravens,BAL,6,28,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424067,NFL,2025-26,2025-11-02T18:00:00Z,Week 9,Paycor Stadium,Cincinnati Bengals,CIN,Chicago Bears,CHI,42,47,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424068,NFL,2025-26,2025-11-02T18:00:00Z,Week 9,Ford Field,Detroit Lions,DET,Minnesota Vikings,MIN,24,27,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424069,NFL,2025-26,2025-11-02T18:00:00Z,Week 9,Lambeau Field,Green Bay Packers,GB,Carolina Panthers,CAR,13,16,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424070,NFL,2025-26,2025-11-02T18:00:00Z,Week 9,Nissan Stadium,Tennessee Titans,TEN,Los Angeles Chargers,LAC,20,27,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424071,NFL,2025-26,2025-11-02T18:00:00Z,Week 9,Gillette Stadium,New England Patriots,NE,Atlanta Falcons,ATL,24,23,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424072,NFL,2025-26,2025-11-02T18:00:00Z,Week 9,MetLife Stadium,New York Giants,NYG,San Francisco 49ers,SF,24,34,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424073,NFL,2025-26,2025-11-02T18:00:00Z,Week 9,Acrisure Stadium,Pittsburgh Steelers,PIT,Indianapolis Colts,IND,27,20,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424074,NFL,2025-26,2025-11-02T18:00:00Z,Week 9,NRG Stadium,Houston Texans,HOU,Denver Broncos,DEN,15,18,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424075,NFL,2025-26,2025-11-02T21:05:00Z,Week 9,Allegiant Stadium,Las Vegas Raiders,LV,Jacksonville Jaguars,JAX,29,30,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424076,NFL,2025-26,2025-11-02T21:05:00Z,Week 9,SoFi Stadium,Los Angeles Rams,LAR,New Orleans Saints,NO,34,10,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424077,NFL,2025-26,2025-11-02T21:25:00Z,Week 9,Highmark Stadium,Buffalo Bills,BUF,Kansas City Chiefs,KC,28,21,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424078,NFL,2025-26,2025-11-03T01:20:00Z,Week 9,Northwest Stadium,Washington Commanders,WSH,Seattle Seahawks,SEA,14,38,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424079,NFL,2025-26,2025-11-04T01:15:00Z,Week 9,AT&T Stadium,Dallas Cowboys,DAL,Arizona Cardinals,ARI,17,27,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424080,NFL,2025-26,2025-11-07T01:15:00Z,Week 10,Empower Field at Mile High,Denver Broncos,DEN,Las Vegas Raiders,LV,10,7,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424081,NFL,2025-26,2025-11-09T14:30:00Z,Week 10,Olympic Stadium Berlin,Indianapolis Colts,IND,Atlanta Falcons,ATL,31,25,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424082,NFL,2025-26,2025-11-09T18:00:00Z,Week 10,Soldier Field,Chicago Bears,CHI,New York Giants,NYG,24,20,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424083,NFL,2025-26,2025-11-09T18:00:00Z,Week 10,Hard Rock Stadium,Miami Dolphins,MIA,Buffalo Bills,BUF,30,13,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424084,NFL,2025-26,2025-11-09T18:00:00Z,Week 10,U.S. Bank Stadium,Minnesota Vikings,MIN,Baltimore Ravens,BAL,19,27,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424085,NFL,2025-26,2025-11-09T18:00:00Z,Week 10,MetLife Stadium,New York Jets,NYJ,Cleveland Browns,CLE,27,20,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424086,NFL,2025-26,2025-11-09T18:00:00Z,Week 10,Raymond James Stadium,Tampa Bay Buccaneers,TB,New England Patriots,NE,23,28,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424087,NFL,2025-26,2025-11-09T18:00:00Z,Week 10,Bank of America Stadium,Carolina Panthers,CAR,New Orleans Saints,NO,7,17,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424088,NFL,2025-26,2025-11-09T18:00:00Z,Week 10,NRG Stadium,Houston Texans,HOU,Jacksonville Jaguars,JAX,36,29,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424089,NFL,2025-26,2025-11-09T21:05:00Z,Week 10,Lumen Field,Seattle Seahawks,SEA,Arizona Cardinals,ARI,44,22,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424090,NFL,2025-26,2025-11-09T21:25:00Z,Week 10,Levi's Stadium,San Francisco 49ers,SF,Los Angeles Rams,LAR,26,42,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424091,NFL,2025-26,2025-11-09T21:25:00Z,Week 10,Northwest Stadium,Washington Commanders,WSH,Detroit Lions,DET,22,44,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424092,NFL,2025-26,2025-11-10T01:20:00Z,Week 10,SoFi Stadium,Los Angeles Chargers,LAC,Pittsburgh Steelers,PIT,25,10,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424093,NFL,2025-26,2025-11-11T01:15:00Z,Week 10,Lambeau Field,Green Bay Packers,GB,Philadelphia Eagles,PHI,7,10,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424094,NFL,2025-26,2025-11-14T01:15:00Z,Week 11,Gillette Stadium,New England Patriots,NE,New York Jets,NYJ,27,14,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424095,NFL,2025-26,2025-11-16T14:30:00Z,Week 11,Santiago Bernabéu,Miami Dolphins,MIA,Washington Commanders,WSH,16,13,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424096,NFL,2025-26,2025-11-16T18:00:00Z,Week 11,Mercedes-Benz Stadium,Atlanta Falcons,ATL,Carolina Panthers,CAR,27,30,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424097,NFL,2025-26,2025-11-16T18:00:00Z,Week 11,Highmark Stadium,Buffalo Bills,BUF,Tampa Bay Buccaneers,TB,44,32,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424098,NFL,2025-26,2025-11-16T18:00:00Z,Week 11,Nissan Stadium,Tennessee Titans,TEN,Houston Texans,HOU,13,16,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424099,NFL,2025-26,2025-11-16T18:00:00Z,Week 11,U.S. Bank Stadium,Minnesota Vikings,MIN,Chicago Bears,CHI,17,19,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424100,NFL,2025-26,2025-11-16T18:00:00Z,Week 11,MetLife Stadium,New York Giants,NYG,Green Bay Packers,GB,20,27,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424101,NFL,2025-26,2025-11-16T18:00:00Z,Week 11,Acrisure Stadium,Pittsburgh Steelers,PIT,Cincinnati Bengals,CIN,34,12,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424102,NFL,2025-26,2025-11-16T18:00:00Z,Week 11,EverBank Stadium,Jacksonville Jaguars,JAX,Los Angeles Chargers,LAC,35,6,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424103,NFL,2025-26,2025-11-16T21:05:00Z,Week 11,SoFi Stadium,Los Angeles Rams,LAR,Seattle Seahawks,SEA,21,19,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424104,NFL,2025-26,2025-11-16T21:05:00Z,Week 11,State Farm Stadium,Arizona Cardinals,ARI,San Francisco 49ers,SF,22,41,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424105,NFL,2025-26,2025-11-16T21:25:00Z,Week 11,Huntington Bank Field,Cleveland Browns,CLE,Baltimore Ravens,BAL,16,23,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424106,NFL,2025-26,2025-11-16T21:25:00Z,Week 11,Empower Field at Mile High,Denver Broncos,DEN,Kansas City Chiefs,KC,22,19,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424107,NFL,2025-26,2025-11-17T01:20:00Z,Week 11,Lincoln Financial Field,Philadelphia Eagles,PHI,Detroit Lions,DET,16,9,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424108,NFL,2025-26,2025-11-18T01:15:00Z,Week 11,Allegiant Stadium,Las Vegas Raiders,LV,Dallas Cowboys,DAL,16,33,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424109,NFL,2025-26,2025-11-21T01:15:00Z,Week 12,NRG Stadium,Houston Texans,HOU,Buffalo Bills,BUF,23,19,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424110,NFL,2025-26,2025-11-23T18:00:00Z,Week 12,Soldier Field,Chicago Bears,CHI,Pittsburgh Steelers,PIT,31,28,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424111,NFL,2025-26,2025-11-23T18:00:00Z,Week 12,Paycor Stadium,Cincinnati Bengals,CIN,New England Patriots,NE,20,26,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424112,NFL,2025-26,2025-11-23T18:00:00Z,Week 12,Ford Field,Detroit Lions,DET,New York Giants,NYG,34,27,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424113,NFL,2025-26,2025-11-23T18:00:00Z,Week 12,Lambeau Field,Green Bay Packers,GB,Minnesota Vikings,MIN,23,6,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424114,NFL,2025-26,2025-11-23T18:00:00Z,Week 12,Nissan Stadium,Tennessee Titans,TEN,Seattle Seahawks,SEA,24,30,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424115,NFL,2025-26,2025-11-23T18:00:00Z,Week 12,GEHA Field at Arrowhead Stadium,Kansas City Chiefs,KC,Indianapolis Colts,IND,23,20,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424116,NFL,2025-26,2025-11-23T18:00:00Z,Week 12,M&T Bank Stadium,Baltimore Ravens,BAL,New York Jets,NYJ,23,10,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424117,NFL,2025-26,2025-11-23T21:05:00Z,Week 12,Allegiant Stadium,Las Vegas Raiders,LV,Cleveland Browns,CLE,10,24,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424118,NFL,2025-26,2025-11-23T21:05:00Z,Week 12,State Farm Stadium,Arizona Cardinals,ARI,Jacksonville Jaguars,JAX,24,27,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424119,NFL,2025-26,2025-11-23T21:25:00Z,Week 12,AT&T Stadium,Dallas Cowboys,DAL,Philadelphia Eagles,PHI,24,21,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424120,NFL,2025-26,2025-11-23T21:25:00Z,Week 12,Caesars Superdome,New Orleans Saints,NO,Atlanta Falcons,ATL,10,24,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424121,NFL,2025-26,2025-11-24T01:20:00Z,Week 12,SoFi Stadium,Los Angeles Rams,LAR,Tampa Bay Buccaneers,TB,34,7,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424122,NFL,2025-26,2025-11-25T01:15:00Z,Week 12,Levi's Stadium,San Francisco 49ers,SF,Carolina Panthers,CAR,20,9,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424123,NFL,2025-26,2025-11-27T18:00:00Z,Week 13,Ford Field,Detroit Lions,DET,Green Bay Packers,GB,24,31,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424124,NFL,2025-26,2025-11-27T21:30:00Z,Week 13,AT&T Stadium,Dallas Cowboys,DAL,Kansas City Chiefs,KC,31,28,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424125,NFL,2025-26,2025-11-28T01:20:00Z,Week 13,M&T Bank Stadium,Baltimore Ravens,BAL,Cincinnati Bengals,CIN,14,32,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424126,NFL,2025-26,2025-11-28T20:00:00Z,Week 13,Lincoln Financial Field,Philadelphia Eagles,PHI,Chicago Bears,CHI,15,24,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424127,NFL,2025-26,2025-11-30T18:00:00Z,Week 13,Huntington Bank Field,Cleveland Browns,CLE,San Francisco 49ers,SF,8,26,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424128,NFL,2025-26,2025-11-30T18:00:00Z,Week 13,Nissan Stadium,Tennessee Titans,TEN,Jacksonville Jaguars,JAX,3,25,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424129,NFL,2025-26,2025-11-30T18:00:00Z,Week 13,Lucas Oil Stadium,Indianapolis Colts,IND,Houston Texans,HOU,16,20,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424130,NFL,2025-26,2025-11-30T18:00:00Z,Week 13,Hard Rock Stadium,Miami Dolphins,MIA,New Orleans Saints,NO,21,17,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424131,NFL,2025-26,2025-11-30T18:00:00Z,Week 13,MetLife Stadium,New York Jets,NYJ,Atlanta Falcons,ATL,27,24,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424132,NFL,2025-26,2025-11-30T18:00:00Z,Week 13,Raymond James Stadium,Tampa Bay Buccaneers,TB,Arizona Cardinals,ARI,20,17,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424133,NFL,2025-26,2025-11-30T18:00:00Z,Week 13,Bank of America Stadium,Carolina Panthers,CAR,Los Angeles Rams,LAR,31,28,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424134,NFL,2025-26,2025-11-30T21:05:00Z,Week 13,Lumen Field,Seattle Seahawks,SEA,Minnesota Vikings,MIN,26,0,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424135,NFL,2025-26,2025-11-30T21:25:00Z,Week 13,Acrisure Stadium,Pittsburgh Steelers,PIT,Buffalo Bills,BUF,7,26,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424136,NFL,2025-26,2025-11-30T21:25:00Z,Week 13,SoFi Stadium,Los Angeles Chargers,LAC,Las Vegas Raiders,LV,31,14,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424137,NFL,2025-26,2025-12-01T01:20:00Z,Week 13,Northwest Stadium,Washington Commanders,WSH,Denver Broncos,DEN,26,27,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424138,NFL,2025-26,2025-12-02T01:15:00Z,Week 13,Gillette Stadium,New England Patriots,NE,New York Giants,NYG,33,15,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424139,NFL,2025-26,2025-12-05T01:15:00Z,Week 14,Ford Field,Detroit Lions,DET,Dallas Cowboys,DAL,44,30,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424140,NFL,2025-26,2025-12-07T18:00:00Z,Week 14,Mercedes-Benz Stadium,Atlanta Falcons,ATL,Seattle Seahawks,SEA,9,37,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424141,NFL,2025-26,2025-12-07T18:00:00Z,Week 14,Huntington Bank Field,Cleveland Browns,CLE,Tennessee Titans,TEN,29,31,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424143,NFL,2025-26,2025-12-07T18:00:00Z,Week 14,U.S. Bank Stadium,Minnesota Vikings,MIN,Washington Commanders,WSH,31,0,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424144,NFL,2025-26,2025-12-07T18:00:00Z,Week 14,MetLife Stadium,New York Jets,NYJ,Miami Dolphins,MIA,10,34,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424145,NFL,2025-26,2025-12-07T18:00:00Z,Week 14,Raymond James Stadium,Tampa Bay Buccaneers,TB,New Orleans Saints,NO,20,24,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424146,NFL,2025-26,2025-12-07T18:00:00Z,Week 14,EverBank Stadium,Jacksonville Jaguars,JAX,Indianapolis Colts,IND,36,19,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424147,NFL,2025-26,2025-12-07T18:00:00Z,Week 14,M&T Bank Stadium,Baltimore Ravens,BAL,Pittsburgh Steelers,PIT,22,27,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424149,NFL,2025-26,2025-12-07T18:00:00Z,Week 14,Highmark Stadium,Buffalo Bills,BUF,Cincinnati Bengals,CIN,39,34,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424148,NFL,2025-26,2025-12-07T21:05:00Z,Week 14,Allegiant Stadium,Las Vegas Raiders,LV,Denver Broncos,DEN,17,24,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424142,NFL,2025-26,2025-12-07T21:25:00Z,Week 14,Lambeau Field,Green Bay Packers,GB,Chicago Bears,CHI,28,21,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424150,NFL,2025-26,2025-12-07T21:25:00Z,Week 14,State Farm Stadium,Arizona Cardinals,ARI,Los Angeles Rams,LAR,17,45,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424151,NFL,2025-26,2025-12-08T01:20:00Z,Week 14,GEHA Field at Arrowhead Stadium,Kansas City Chiefs,KC,Houston Texans,HOU,10,20,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424152,NFL,2025-26,2025-12-09T01:15:00Z,Week 14,SoFi Stadium,Los Angeles Chargers,LAC,Philadelphia Eagles,PHI,22,19,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424153,NFL,2025-26,2025-12-12T01:15:00Z,Week 15,Raymond James Stadium,Tampa Bay Buccaneers,TB,Atlanta Falcons,ATL,28,29,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424154,NFL,2025-26,2025-12-14T18:00:00Z,Week 15,Soldier Field,Chicago Bears,CHI,Cleveland Browns,CLE,31,3,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424155,NFL,2025-26,2025-12-14T18:00:00Z,Week 15,Paycor Stadium,Cincinnati Bengals,CIN,Baltimore Ravens,BAL,0,24,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424156,NFL,2025-26,2025-12-14T18:00:00Z,Week 15,GEHA Field at Arrowhead Stadium,Kansas City Chiefs,KC,Los Angeles Chargers,LAC,13,16,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424157,NFL,2025-26,2025-12-14T18:00:00Z,Week 15,Gillette Stadium,New England Patriots,NE,Buffalo Bills,BUF,31,35,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424158,NFL,2025-26,2025-12-14T18:00:00Z,Week 15,MetLife Stadium,New York Giants,NYG,Washington Commanders,WSH,21,29,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424159,NFL,2025-26,2025-12-14T18:00:00Z,Week 15,Lincoln Financial Field,Philadelphia Eagles,PHI,Las Vegas Raiders,LV,31,0,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424160,NFL,2025-26,2025-12-14T18:00:00Z,Week 15,EverBank Stadium,Jacksonville Jaguars,JAX,New York Jets,NYJ,48,20,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424161,NFL,2025-26,2025-12-14T18:00:00Z,Week 15,NRG Stadium,Houston Texans,HOU,Arizona Cardinals,ARI,40,20,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424162,NFL,2025-26,2025-12-14T21:25:00Z,Week 15,Empower Field at Mile High,Denver Broncos,DEN,Green Bay Packers,GB,34,26,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424163,NFL,2025-26,2025-12-14T21:25:00Z,Week 15,SoFi Stadium,Los Angeles Rams,LAR,Detroit Lions,DET,41,34,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424164,NFL,2025-26,2025-12-14T21:25:00Z,Week 15,Caesars Superdome,New Orleans Saints,NO,Carolina Panthers,CAR,20,17,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424165,NFL,2025-26,2025-12-14T21:25:00Z,Week 15,Levi's Stadium,San Francisco 49ers,SF,Tennessee Titans,TEN,37,24,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424166,NFL,2025-26,2025-12-14T21:25:00Z,Week 15,Lumen Field,Seattle Seahawks,SEA,Indianapolis Colts,IND,18,16,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424167,NFL,2025-26,2025-12-15T01:20:00Z,Week 15,AT&T Stadium,Dallas Cowboys,DAL,Minnesota Vikings,MIN,26,34,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424168,NFL,2025-26,2025-12-16T01:15:00Z,Week 15,Acrisure Stadium,Pittsburgh Steelers,PIT,Miami Dolphins,MIA,28,15,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424169,NFL,2025-26,2025-12-19T01:15:00Z,Week 16,Lumen Field,Seattle Seahawks,SEA,Los Angeles Rams,LAR,38,37,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424171,NFL,2025-26,2025-12-20T22:00:00Z,Week 16,Northwest Stadium,Washington Commanders,WSH,Philadelphia Eagles,PHI,18,29,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424170,NFL,2025-26,2025-12-21T01:20:00Z,Week 16,Soldier Field,Chicago Bears,CHI,Green Bay Packers,GB,22,16,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424172,NFL,2025-26,2025-12-21T18:00:00Z,Week 16,Huntington Bank Field,Cleveland Browns,CLE,Buffalo Bills,BUF,20,23,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424173,NFL,2025-26,2025-12-21T18:00:00Z,Week 16,AT&T Stadium,Dallas Cowboys,DAL,Los Angeles Chargers,LAC,17,34,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424174,NFL,2025-26,2025-12-21T18:00:00Z,Week 16,Nissan Stadium,Tennessee Titans,TEN,Kansas City Chiefs,KC,26,9,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424175,NFL,2025-26,2025-12-21T18:00:00Z,Week 16,Caesars Superdome,New Orleans Saints,NO,New York Jets,NYJ,29,6,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424176,NFL,2025-26,2025-12-21T18:00:00Z,Week 16,MetLife Stadium,New York Giants,NYG,Minnesota Vikings,MIN,13,16,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424177,NFL,2025-26,2025-12-21T18:00:00Z,Week 16,Bank of America Stadium,Carolina Panthers,CAR,Tampa Bay Buccaneers,TB,23,20,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424183,NFL,2025-26,2025-12-21T18:00:00Z,Week 16,Hard Rock Stadium,Miami Dolphins,MIA,Cincinnati Bengals,CIN,21,45,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424179,NFL,2025-26,2025-12-21T21:05:00Z,Week 16,Empower Field at Mile High,Denver Broncos,DEN,Jacksonville Jaguars,JAX,20,34,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424180,NFL,2025-26,2025-12-21T21:05:00Z,Week 16,State Farm Stadium,Arizona Cardinals,ARI,Atlanta Falcons,ATL,19,26,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424181,NFL,2025-26,2025-12-21T21:25:00Z,Week 16,Ford Field,Detroit Lions,DET,Pittsburgh Steelers,PIT,24,29,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424182,NFL,2025-26,2025-12-21T21:25:00Z,Week 16,NRG Stadium,Houston Texans,HOU,Las Vegas Raiders,LV,23,21,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424178,NFL,2025-26,2025-12-22T01:20:00Z,Week 16,M&T Bank Stadium,Baltimore Ravens,BAL,New England Patriots,NE,24,28,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424184,NFL,2025-26,2025-12-23T01:15:00Z,Week 16,Lucas Oil Stadium,Indianapolis Colts,IND,San Francisco 49ers,SF,27,48,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424185,NFL,2025-26,2025-12-25T18:00:00Z,Week 17,Northwest Stadium,Washington Commanders,WSH,Dallas Cowboys,DAL,23,30,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424186,NFL,2025-26,2025-12-25T21:30:00Z,Week 17,U.S. Bank Stadium,Minnesota Vikings,MIN,Detroit Lions,DET,23,10,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424187,NFL,2025-26,2025-12-26T01:15:00Z,Week 17,GEHA Field at Arrowhead Stadium,Kansas City Chiefs,KC,Denver Broncos,DEN,13,20,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424191,NFL,2025-26,2025-12-27T21:30:00Z,Week 17,SoFi Stadium,Los Angeles Chargers,LAC,Houston Texans,HOU,16,20,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424189,NFL,2025-26,2025-12-28T01:00:00Z,Week 17,Lambeau Field,Green Bay Packers,GB,Baltimore Ravens,BAL,24,41,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424188,NFL,2025-26,2025-12-28T18:00:00Z,Week 17,Paycor Stadium,Cincinnati Bengals,CIN,Arizona Cardinals,ARI,37,14,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424192,NFL,2025-26,2025-12-28T18:00:00Z,Week 17,Bank of America Stadium,Carolina Panthers,CAR,Seattle Seahawks,SEA,10,27,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424193,NFL,2025-26,2025-12-28T18:00:00Z,Week 17,Huntington Bank Field,Cleveland Browns,CLE,Pittsburgh Steelers,PIT,13,6,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424194,NFL,2025-26,2025-12-28T18:00:00Z,Week 17,Nissan Stadium,Tennessee Titans,TEN,New Orleans Saints,NO,26,34,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424195,NFL,2025-26,2025-12-28T18:00:00Z,Week 17,Lucas Oil Stadium,Indianapolis Colts,IND,Jacksonville Jaguars,JAX,17,23,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424196,NFL,2025-26,2025-12-28T18:00:00Z,Week 17,Hard Rock Stadium,Miami Dolphins,MIA,Tampa Bay Buccaneers,TB,20,17,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424197,NFL,2025-26,2025-12-28T18:00:00Z,Week 17,MetLife Stadium,New York Jets,NYJ,New England Patriots,NE,10,42,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424190,NFL,2025-26,2025-12-28T21:05:00Z,Week 17,Allegiant Stadium,Las Vegas Raiders,LV,New York Giants,NYG,10,34,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424198,NFL,2025-26,2025-12-28T21:25:00Z,Week 17,Highmark Stadium,Buffalo Bills,BUF,Philadelphia Eagles,PHI,12,13,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424199,NFL,2025-26,2025-12-29T01:20:00Z,Week 17,Levi's Stadium,San Francisco 49ers,SF,Chicago Bears,CHI,42,38,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424200,NFL,2025-26,2025-12-30T01:15:00Z,Week 17,Mercedes-Benz Stadium,Atlanta Falcons,ATL,Los Angeles Rams,LAR,27,24,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424214,NFL,2025-26,2026-01-03T21:30:00Z,Week 18,Raymond James Stadium,Tampa Bay Buccaneers,TB,Carolina Panthers,CAR,16,14,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424213,NFL,2025-26,2026-01-04T01:00:00Z,Week 18,Levi's Stadium,San Francisco 49ers,SF,Seattle Seahawks,SEA,3,13,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424201,NFL,2025-26,2026-01-04T18:00:00Z,Week 18,Mercedes-Benz Stadium,Atlanta Falcons,ATL,New Orleans Saints,NO,19,17,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424204,NFL,2025-26,2026-01-04T18:00:00Z,Week 18,Paycor Stadium,Cincinnati Bengals,CIN,Cleveland Browns,CLE,18,20,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424208,NFL,2025-26,2026-01-04T18:00:00Z,Week 18,U.S. Bank Stadium,Minnesota Vikings,MIN,Green Bay Packers,GB,16,3,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424210,NFL,2025-26,2026-01-04T18:00:00Z,Week 18,MetLife Stadium,New York Giants,NYG,Dallas Cowboys,DAL,34,17,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424215,NFL,2025-26,2026-01-04T18:00:00Z,Week 18,EverBank Stadium,Jacksonville Jaguars,JAX,Tennessee Titans,TEN,41,7,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424216,NFL,2025-26,2026-01-04T18:00:00Z,Week 18,NRG Stadium,Houston Texans,HOU,Indianapolis Colts,IND,38,30,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424202,NFL,2025-26,2026-01-04T21:25:00Z,Week 18,Highmark Stadium,Buffalo Bills,BUF,New York Jets,NYJ,35,8,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424203,NFL,2025-26,2026-01-04T21:25:00Z,Week 18,Soldier Field,Chicago Bears,CHI,Detroit Lions,DET,16,19,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424205,NFL,2025-26,2026-01-04T21:25:00Z,Week 18,Empower Field at Mile High,Denver Broncos,DEN,Los Angeles Chargers,LAC,19,3,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424206,NFL,2025-26,2026-01-04T21:25:00Z,Week 18,Allegiant Stadium,Las Vegas Raiders,LV,Kansas City Chiefs,KC,14,12,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424207,NFL,2025-26,2026-01-04T21:25:00Z,Week 18,SoFi Stadium,Los Angeles Rams,LAR,Arizona Cardinals,ARI,37,20,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424209,NFL,2025-26,2026-01-04T21:25:00Z,Week 18,Gillette Stadium,New England Patriots,NE,Miami Dolphins,MIA,38,10,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424211,NFL,2025-26,2026-01-04T21:25:00Z,Week 18,Lincoln Financial Field,Philadelphia Eagles,PHI,Washington Commanders,WSH,17,24,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-424212,NFL,2025-26,2026-01-05T01:20:00Z,Week 18,Acrisure Stadium,Pittsburgh Steelers,PIT,Baltimore Ravens,BAL,26,24,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-1256288,NFL,2025-26,2026-01-10T21:30:00Z,Week 1,Bank of America Stadium,Carolina Panthers,CAR,Los Angeles Rams,LAR,31,34,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-1256289,NFL,2025-26,2026-01-11T01:00:00Z,Week 1,Soldier Field,Chicago Bears,CHI,Green Bay Packers,GB,31,27,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-1256290,NFL,2025-26,2026-01-11T18:00:00Z,Week 1,EverBank Stadium,Jacksonville Jaguars,JAX,Buffalo Bills,BUF,24,27,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-1254495,NFL,2025-26,2026-01-11T21:30:00Z,Week 1,Lincoln Financial Field,Philadelphia Eagles,PHI,San Francisco 49ers,SF,19,23,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-1254494,NFL,2025-26,2026-01-12T01:15:00Z,Week 1,Gillette Stadium,New England Patriots,NE,Los Angeles Chargers,LAC,16,3,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-1256293,NFL,2025-26,2026-01-13T01:15:00Z,Week 1,Acrisure Stadium,Pittsburgh Steelers,PIT,Houston Texans,HOU,6,30,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-1286916,NFL,2025-26,2026-01-17T21:30:00Z,Week 2,Empower Field at Mile High,Denver Broncos,DEN,Buffalo Bills,BUF,33,30,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-1286917,NFL,2025-26,2026-01-18T01:00:00Z,Week 2,Lumen Field,Seattle Seahawks,SEA,San Francisco 49ers,SF,41,6,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-1292787,NFL,2025-26,2026-01-18T20:00:00Z,Week 2,Gillette Stadium,New England Patriots,NE,Houston Texans,HOU,28,16,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-1286918,NFL,2025-26,2026-01-18T23:30:00Z,Week 2,Soldier Field,Chicago Bears,CHI,Los Angeles Rams,LAR,17,20,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-1315611,NFL,2025-26,2026-01-25T20:00:00Z,Week 3,Empower Field at Mile High,Denver Broncos,DEN,New England Patriots,NE,7,10,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-1316670,NFL,2025-26,2026-01-25T23:30:00Z,Week 3,Lumen Field,Seattle Seahawks,SEA,Los Angeles Rams,LAR,31,27,FINISHED,balldontlie,2026-08-23T20:56:09+00:00
+nfl-1341307,NFL,2025-26,2026-02-08T23:30:00Z,Week 5,Levi's Stadium,New England Patriots,NE,Seattle Seahawks,SEA,13,29,FINISHED,balldontlie,2026-08-23T20:56:09+00:00

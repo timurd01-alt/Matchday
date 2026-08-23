@@ -1,0 +1,381 @@
+game_id,comp,season,date_utc,stage,venue,home_name,home_code,away_name,away_code,home_score,away_score,status,source,first_seen
+epl-openfootball-47d1e5947117fcaf27e28cd5,EPL,2012-13,2012-08-18T12:00:00Z,Matchday 1,,Fulham FC,,Norwich City,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-977cde08424c77551e1f9c34,EPL,2012-13,2012-08-18T12:00:00Z,Matchday 1,,West Ham United,,Aston Villa,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c9027e8a0582bf2e7f526602,EPL,2012-13,2012-08-18T12:00:00Z,Matchday 1,,Newcastle United,,Tottenham Hotspur,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d1b8da6fe8eb89884524853d,EPL,2012-13,2012-08-18T12:00:00Z,Matchday 1,,Arsenal FC,,Sunderland AFC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d5e756d0c7be15e8777ae2c5,EPL,2012-13,2012-08-18T12:00:00Z,Matchday 1,,Reading FC,,Stoke City,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e293b2546b2d27b591a935ee,EPL,2012-13,2012-08-18T12:00:00Z,Matchday 1,,Queens Park Rangers,,Swansea City,,0,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f3346a5ab4ae1c01b0352363,EPL,2012-13,2012-08-18T12:00:00Z,Matchday 1,,West Bromwich Albion,,Liverpool FC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-20bc9b2be84a29784f1d37c3,EPL,2012-13,2012-08-19T12:00:00Z,Matchday 1,,Manchester City,,Southampton FC,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-24741c54f35e6422bc1bd794,EPL,2012-13,2012-08-19T12:00:00Z,Matchday 1,,Wigan Athletic,,Chelsea FC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-79c3f52180bcf3cc9897828e,EPL,2012-13,2012-08-20T12:00:00Z,Matchday 1,,Everton FC,,Manchester United,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b041ec3261d3aeb839b761d0,EPL,2012-13,2012-08-22T12:00:00Z,Matchday 3,,Chelsea FC,,Reading FC,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-23d7c57b1a84cebff6817d57,EPL,2012-13,2012-08-25T12:00:00Z,Matchday 2,,Norwich City,,Queens Park Rangers,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-297d7742f3e38d197571cb78,EPL,2012-13,2012-08-25T12:00:00Z,Matchday 2,,Chelsea FC,,Newcastle United,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-54db11d8fc2c1d4e1cef8423,EPL,2012-13,2012-08-25T12:00:00Z,Matchday 2,,Manchester United,,Fulham FC,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-97b087f761c93c4edb19e55a,EPL,2012-13,2012-08-25T12:00:00Z,Matchday 2,,Aston Villa,,Everton FC,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a3c47f13e7b32d541c7d6adf,EPL,2012-13,2012-08-25T12:00:00Z,Matchday 2,,Swansea City,,West Ham United,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e72fcc56ac53dd133b716604,EPL,2012-13,2012-08-25T12:00:00Z,Matchday 2,,Southampton FC,,Wigan Athletic,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-fa69a63d6c91956ac74e32f0,EPL,2012-13,2012-08-25T12:00:00Z,Matchday 2,,Tottenham Hotspur,,West Bromwich Albion,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0845bd99095f06bdde7c343b,EPL,2012-13,2012-08-26T12:00:00Z,Matchday 2,,Liverpool FC,,Manchester City,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c50f9c2cd6de93ed3af6696a,EPL,2012-13,2012-08-26T12:00:00Z,Matchday 2,,Stoke City,,Arsenal FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-151769b59c2158eb258fde51,EPL,2012-13,2012-09-01T12:00:00Z,Matchday 3,,Swansea City,,Sunderland AFC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-27a0806a8d40839c3438f9e4,EPL,2012-13,2012-09-01T12:00:00Z,Matchday 3,,Tottenham Hotspur,,Norwich City,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-945aed144ec92d8ba4aff836,EPL,2012-13,2012-09-01T12:00:00Z,Matchday 3,,Manchester City,,Queens Park Rangers,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a929e766e998374683616a77,EPL,2012-13,2012-09-01T12:00:00Z,Matchday 3,,Wigan Athletic,,Stoke City,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b2a374ba77017490a0a1f34a,EPL,2012-13,2012-09-01T12:00:00Z,Matchday 3,,West Bromwich Albion,,Everton FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c851e7d14278823242a3989b,EPL,2012-13,2012-09-01T12:00:00Z,Matchday 3,,West Ham United,,Fulham FC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-646b63242030e53ff577ac76,EPL,2012-13,2012-09-02T12:00:00Z,Matchday 3,,Southampton FC,,Manchester United,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b34993725fff30383a411410,EPL,2012-13,2012-09-02T12:00:00Z,Matchday 3,,Newcastle United,,Aston Villa,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-dda4cb816fb1b12b42d7bfff,EPL,2012-13,2012-09-02T12:00:00Z,Matchday 3,,Liverpool FC,,Arsenal FC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-303a82a9fd0dc3f3da84a6d3,EPL,2012-13,2012-09-15T12:00:00Z,Matchday 4,,Arsenal FC,,Southampton FC,,6,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-352f6f27b16abba3c62bba9a,EPL,2012-13,2012-09-15T12:00:00Z,Matchday 4,,Stoke City,,Manchester City,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-37cd91351ace61a1d51c817e,EPL,2012-13,2012-09-15T12:00:00Z,Matchday 4,,Queens Park Rangers,,Chelsea FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-40dc3e322d52f570c965dc6b,EPL,2012-13,2012-09-15T12:00:00Z,Matchday 4,,Manchester United,,Wigan Athletic,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-882d2d2814cd3b020ad0edda,EPL,2012-13,2012-09-15T12:00:00Z,Matchday 4,,Norwich City,,West Ham United,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b8fbc13cee34074f5c7ec6ae,EPL,2012-13,2012-09-15T12:00:00Z,Matchday 4,,Fulham FC,,West Bromwich Albion,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c40406e175639b4b81c92488,EPL,2012-13,2012-09-15T12:00:00Z,Matchday 4,,Sunderland AFC,,Liverpool FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c4a92cac23b25e14a3ac22a7,EPL,2012-13,2012-09-15T12:00:00Z,Matchday 4,,Aston Villa,,Swansea City,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d5b12ff1faf23cb5bf250da2,EPL,2012-13,2012-09-16T12:00:00Z,Matchday 4,,Reading FC,,Tottenham Hotspur,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e78688c01e46e9ddc27fcbc6,EPL,2012-13,2012-09-17T12:00:00Z,Matchday 4,,Everton FC,,Newcastle United,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-08978bde31ce613e332c253f,EPL,2012-13,2012-09-22T12:00:00Z,Matchday 5,,Wigan Athletic,,Fulham FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-172c8dce8cd35392ba989bb9,EPL,2012-13,2012-09-22T12:00:00Z,Matchday 5,,Chelsea FC,,Stoke City,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-1fe561e953fd8f313c8224ed,EPL,2012-13,2012-09-22T12:00:00Z,Matchday 5,,Southampton FC,,Aston Villa,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b24ea3f69932fca3f00537c2,EPL,2012-13,2012-09-22T12:00:00Z,Matchday 5,,Swansea City,,Everton FC,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-cac9f95c7ec3432d47ed7144,EPL,2012-13,2012-09-22T12:00:00Z,Matchday 5,,West Bromwich Albion,,Reading FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ed5079d72ada29ca43aa3ee7,EPL,2012-13,2012-09-22T12:00:00Z,Matchday 5,,West Ham United,,Sunderland AFC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2b45e542244c8bcbf9389390,EPL,2012-13,2012-09-23T12:00:00Z,Matchday 5,,Newcastle United,,Norwich City,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-606f5fddb38d7d18f54add4d,EPL,2012-13,2012-09-23T12:00:00Z,Matchday 5,,Manchester City,,Arsenal FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c3589a7279209833b0a4f4cf,EPL,2012-13,2012-09-23T12:00:00Z,Matchday 5,,Tottenham Hotspur,,Queens Park Rangers,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-eecda9ee68124b86382b54e3,EPL,2012-13,2012-09-23T12:00:00Z,Matchday 5,,Liverpool FC,,Manchester United,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0279dcd6bd9088dc694756ff,EPL,2012-13,2012-09-29T12:00:00Z,Matchday 6,,Arsenal FC,,Chelsea FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4527270d85260103a6395405,EPL,2012-13,2012-09-29T12:00:00Z,Matchday 6,,Manchester United,,Tottenham Hotspur,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7eab58ae7d0f1b8ab02058d7,EPL,2012-13,2012-09-29T12:00:00Z,Matchday 6,,Norwich City,,Liverpool FC,,2,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-9aadefa1b38cb7512495d196,EPL,2012-13,2012-09-29T12:00:00Z,Matchday 6,,Stoke City,,Swansea City,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b26c33d20298f0ab1491c821,EPL,2012-13,2012-09-29T12:00:00Z,Matchday 6,,Reading FC,,Newcastle United,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b9563ff66011972893d81b16,EPL,2012-13,2012-09-29T12:00:00Z,Matchday 6,,Sunderland AFC,,Wigan Athletic,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c8186b49d2983c8d24b1b411,EPL,2012-13,2012-09-29T12:00:00Z,Matchday 6,,Everton FC,,Southampton FC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-da1020b1319bd2f966c039a6,EPL,2012-13,2012-09-29T12:00:00Z,Matchday 6,,Fulham FC,,Manchester City,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-567c6f458e21d711c62433a5,EPL,2012-13,2012-09-30T12:00:00Z,Matchday 6,,Aston Villa,,West Bromwich Albion,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4b553ac0423003a24ede92cf,EPL,2012-13,2012-10-01T12:00:00Z,Matchday 6,,Queens Park Rangers,,West Ham United,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-387387d1c3c8334786f5821b,EPL,2012-13,2012-10-06T12:00:00Z,Matchday 7,,Manchester City,,Sunderland AFC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6ed8ddb13b81bdb6899cfc17,EPL,2012-13,2012-10-06T12:00:00Z,Matchday 7,,West Bromwich Albion,,Queens Park Rangers,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7142a69eea10e8afb14677c9,EPL,2012-13,2012-10-06T12:00:00Z,Matchday 7,,West Ham United,,Arsenal FC,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8bd378606065307ffcdc6df7,EPL,2012-13,2012-10-06T12:00:00Z,Matchday 7,,Wigan Athletic,,Everton FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8d0510f41f54845a1a31f9cb,EPL,2012-13,2012-10-06T12:00:00Z,Matchday 7,,Swansea City,,Reading FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a045260dbb8f3bb4212d738d,EPL,2012-13,2012-10-06T12:00:00Z,Matchday 7,,Chelsea FC,,Norwich City,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2be5dc2cb8e1c19d2e443d97,EPL,2012-13,2012-10-07T12:00:00Z,Matchday 7,,Newcastle United,,Manchester United,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3541a778d0bb58b34ac47459,EPL,2012-13,2012-10-07T12:00:00Z,Matchday 7,,Tottenham Hotspur,,Aston Villa,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3ad6a0006073d84cc7ae5eef,EPL,2012-13,2012-10-07T12:00:00Z,Matchday 7,,Southampton FC,,Fulham FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-dfadd59398b55639508bf7c7,EPL,2012-13,2012-10-07T12:00:00Z,Matchday 7,,Liverpool FC,,Stoke City,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-338735ce021cd7cf5cad1247,EPL,2012-13,2012-10-20T12:00:00Z,Matchday 8,,Manchester United,,Stoke City,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-35e0326c51134a2aa2244b41,EPL,2012-13,2012-10-20T12:00:00Z,Matchday 8,,West Bromwich Albion,,Manchester City,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7cdb9edfc364954ecd2fa2e1,EPL,2012-13,2012-10-20T12:00:00Z,Matchday 8,,Tottenham Hotspur,,Chelsea FC,,2,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7e22e11c704ca217c0595685,EPL,2012-13,2012-10-20T12:00:00Z,Matchday 8,,West Ham United,,Southampton FC,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8d970555c8611eb26b7e89b7,EPL,2012-13,2012-10-20T12:00:00Z,Matchday 8,,Swansea City,,Wigan Athletic,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a67843a4c1d08b1435b1bc2a,EPL,2012-13,2012-10-20T12:00:00Z,Matchday 8,,Fulham FC,,Aston Villa,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b4382a6fc42887e090d6ced3,EPL,2012-13,2012-10-20T12:00:00Z,Matchday 8,,Liverpool FC,,Reading FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-dfd4e3bd6fe217a5d37e588d,EPL,2012-13,2012-10-20T12:00:00Z,Matchday 8,,Norwich City,,Arsenal FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7e6b6c974f74fd3bd498d6e4,EPL,2012-13,2012-10-21T12:00:00Z,Matchday 8,,Sunderland AFC,,Newcastle United,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-908c760213b42dcd3493f29b,EPL,2012-13,2012-10-21T12:00:00Z,Matchday 8,,Queens Park Rangers,,Everton FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6d9b28b2d8afce039738ddad,EPL,2012-13,2012-10-27T12:00:00Z,Matchday 9,,Reading FC,,Fulham FC,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b0c861ad0600787b8ee97806,EPL,2012-13,2012-10-27T12:00:00Z,Matchday 9,,Aston Villa,,Norwich City,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b1695233f9eaed3a355c2f71,EPL,2012-13,2012-10-27T12:00:00Z,Matchday 9,,Stoke City,,Sunderland AFC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d912130ddf93b166fa937333,EPL,2012-13,2012-10-27T12:00:00Z,Matchday 9,,Arsenal FC,,Queens Park Rangers,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e3056c1d3fac6cc6058b6e49,EPL,2012-13,2012-10-27T12:00:00Z,Matchday 9,,Manchester City,,Swansea City,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e4b56639caa5ea532d0a390e,EPL,2012-13,2012-10-27T12:00:00Z,Matchday 9,,Wigan Athletic,,West Ham United,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0e26624246761b72b4b394b6,EPL,2012-13,2012-10-28T12:00:00Z,Matchday 9,,Southampton FC,,Tottenham Hotspur,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3e0320287102f302651a7431,EPL,2012-13,2012-10-28T12:00:00Z,Matchday 9,,Chelsea FC,,Manchester United,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-81638b2c8d04a3e09e1d1e19,EPL,2012-13,2012-10-28T12:00:00Z,Matchday 9,,Everton FC,,Liverpool FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a1498ed16a114eec6dd726cb,EPL,2012-13,2012-10-28T12:00:00Z,Matchday 9,,Newcastle United,,West Bromwich Albion,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0af57d24764578bd9dc35f97,EPL,2012-13,2012-11-03T12:00:00Z,Matchday 10,,West Ham United,,Manchester City,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-572d45cee26c5d0cdc807b3c,EPL,2012-13,2012-11-03T12:00:00Z,Matchday 10,,Swansea City,,Chelsea FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-9fde4344d4b5b8f0d1b0955c,EPL,2012-13,2012-11-03T12:00:00Z,Matchday 10,,Tottenham Hotspur,,Wigan Athletic,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d622ecbce84b599bf6ce12ed,EPL,2012-13,2012-11-03T12:00:00Z,Matchday 10,,Sunderland AFC,,Aston Villa,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d76cd97e4af923c73485ffa4,EPL,2012-13,2012-11-03T12:00:00Z,Matchday 10,,Manchester United,,Arsenal FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e2e55438d138441cbdde73e8,EPL,2012-13,2012-11-03T12:00:00Z,Matchday 10,,Fulham FC,,Everton FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-fe2e7fb3c4de0fc0b51a47d6,EPL,2012-13,2012-11-03T12:00:00Z,Matchday 10,,Norwich City,,Stoke City,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-14c4524a8f4bfefb20278f72,EPL,2012-13,2012-11-04T12:00:00Z,Matchday 10,,Liverpool FC,,Newcastle United,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-93f60675a6d55a3f1e7d2185,EPL,2012-13,2012-11-04T12:00:00Z,Matchday 10,,Queens Park Rangers,,Reading FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e454ff27d3f47156e0180a08,EPL,2012-13,2012-11-05T12:00:00Z,Matchday 10,,West Bromwich Albion,,Southampton FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-25e7f6db2b7e3460d71425c5,EPL,2012-13,2012-11-10T12:00:00Z,Matchday 11,,Stoke City,,Queens Park Rangers,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8c33ba7181e75fe7f7f9980c,EPL,2012-13,2012-11-10T12:00:00Z,Matchday 11,,Aston Villa,,Manchester United,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-939b417ae8d7fcc0751162bc,EPL,2012-13,2012-11-10T12:00:00Z,Matchday 11,,Southampton FC,,Swansea City,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-985fb41a0399b13832e47732,EPL,2012-13,2012-11-10T12:00:00Z,Matchday 11,,Arsenal FC,,Fulham FC,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c395ba6f0b19ced4e17b08f0,EPL,2012-13,2012-11-10T12:00:00Z,Matchday 11,,Wigan Athletic,,West Bromwich Albion,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d4dabdd979a1105cee9610a7,EPL,2012-13,2012-11-10T12:00:00Z,Matchday 11,,Everton FC,,Sunderland AFC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ea1e42176818e63bc19efafb,EPL,2012-13,2012-11-10T12:00:00Z,Matchday 11,,Reading FC,,Norwich City,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3d17d58f66d26c5a67c70036,EPL,2012-13,2012-11-11T12:00:00Z,Matchday 11,,Chelsea FC,,Liverpool FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8cbc9d5153358e97bfe0584a,EPL,2012-13,2012-11-11T12:00:00Z,Matchday 11,,Manchester City,,Tottenham Hotspur,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-bf6f7889b2b06efa90a82475,EPL,2012-13,2012-11-11T12:00:00Z,Matchday 11,,Newcastle United,,West Ham United,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0b45abe8f00b8b5e93bc7d6a,EPL,2012-13,2012-11-17T12:00:00Z,Matchday 12,,Newcastle United,,Swansea City,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-20188b66700d26277f42ec55,EPL,2012-13,2012-11-17T12:00:00Z,Matchday 12,,Arsenal FC,,Tottenham Hotspur,,5,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2b0c321b8664389347450231,EPL,2012-13,2012-11-17T12:00:00Z,Matchday 12,,Manchester City,,Aston Villa,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-419f6cedeb32c68e92a64c3e,EPL,2012-13,2012-11-17T12:00:00Z,Matchday 12,,Reading FC,,Everton FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-44823ad53c8060b3d34b5536,EPL,2012-13,2012-11-17T12:00:00Z,Matchday 12,,Queens Park Rangers,,Southampton FC,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-9276bf506ad41adadd71d39a,EPL,2012-13,2012-11-17T12:00:00Z,Matchday 12,,Liverpool FC,,Wigan Athletic,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e708e70a6ed4b4c91bb8fd63,EPL,2012-13,2012-11-17T12:00:00Z,Matchday 12,,Norwich City,,Manchester United,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e9ebdc072e5a4798206a7838,EPL,2012-13,2012-11-17T12:00:00Z,Matchday 12,,West Bromwich Albion,,Chelsea FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-5e89260aabb4515f55623ac6,EPL,2012-13,2012-11-18T12:00:00Z,Matchday 12,,Fulham FC,,Sunderland AFC,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d26ab89ba7c5def9d18b816e,EPL,2012-13,2012-11-19T12:00:00Z,Matchday 12,,West Ham United,,Stoke City,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-273a050f7e1a8b5b3e5c974e,EPL,2012-13,2012-11-24T12:00:00Z,Matchday 13,,Wigan Athletic,,Reading FC,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2c3c73d9a4512ddd5e900155,EPL,2012-13,2012-11-24T12:00:00Z,Matchday 13,,Sunderland AFC,,West Bromwich Albion,,2,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6453eddc117773f23cad89f6,EPL,2012-13,2012-11-24T12:00:00Z,Matchday 13,,Manchester United,,Queens Park Rangers,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-99b59e44849f3250f89068b4,EPL,2012-13,2012-11-24T12:00:00Z,Matchday 13,,Everton FC,,Norwich City,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c77dab820ff5a032312931b1,EPL,2012-13,2012-11-24T12:00:00Z,Matchday 13,,Aston Villa,,Arsenal FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e07a9950fe3119c50c4f3ca9,EPL,2012-13,2012-11-24T12:00:00Z,Matchday 13,,Stoke City,,Fulham FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-5d06c19990d366b73a24dce5,EPL,2012-13,2012-11-25T12:00:00Z,Matchday 13,,Chelsea FC,,Manchester City,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8136727cbcb0e9c97596fc34,EPL,2012-13,2012-11-25T12:00:00Z,Matchday 13,,Southampton FC,,Newcastle United,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a3f7d4d895a1e4c5552c85af,EPL,2012-13,2012-11-25T12:00:00Z,Matchday 13,,Swansea City,,Liverpool FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d95cad147816531ec2e7ad00,EPL,2012-13,2012-11-25T12:00:00Z,Matchday 13,,Tottenham Hotspur,,West Ham United,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-1de6ef86584854232885869b,EPL,2012-13,2012-11-27T12:00:00Z,Matchday 14,,Aston Villa,,Reading FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ab7b58cd8a4259ebe3c0b7ea,EPL,2012-13,2012-11-27T12:00:00Z,Matchday 14,,Sunderland AFC,,Queens Park Rangers,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-891d0c336f664cb77f2949b6,EPL,2012-13,2012-11-28T12:00:00Z,Matchday 14,,Everton FC,,Arsenal FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c8df8f2023c3e027fcb9d75e,EPL,2012-13,2012-11-28T12:00:00Z,Matchday 14,,Southampton FC,,Norwich City,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-cddf4bdd8904b20dde0ac6f9,EPL,2012-13,2012-11-28T12:00:00Z,Matchday 14,,Wigan Athletic,,Manchester City,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-da39a7c8f6866aae1a7fe353,EPL,2012-13,2012-11-28T12:00:00Z,Matchday 14,,Stoke City,,Newcastle United,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e6701e6a9f71a8fb9f109044,EPL,2012-13,2012-11-28T12:00:00Z,Matchday 14,,Manchester United,,West Ham United,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ea5357f0eae9a2f62a9b358f,EPL,2012-13,2012-11-28T12:00:00Z,Matchday 14,,Chelsea FC,,Fulham FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ee64ec9663dbc66d7e1a78a9,EPL,2012-13,2012-11-28T12:00:00Z,Matchday 14,,Swansea City,,West Bromwich Albion,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f818b050d1665f141bc5c730,EPL,2012-13,2012-11-28T12:00:00Z,Matchday 14,,Tottenham Hotspur,,Liverpool FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-1713801fc90ae342a0ae26d7,EPL,2012-13,2012-12-01T12:00:00Z,Matchday 15,,Manchester City,,Everton FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-1dc38f2c8f3c03cc21c3a445,EPL,2012-13,2012-12-01T12:00:00Z,Matchday 15,,West Ham United,,Chelsea FC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-40b8dec8ce4ac123862ba3a3,EPL,2012-13,2012-12-01T12:00:00Z,Matchday 15,,Reading FC,,Manchester United,,3,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4d0a2d1c3c1ad2f8c28a9c30,EPL,2012-13,2012-12-01T12:00:00Z,Matchday 15,,Liverpool FC,,Southampton FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-58b22671bb4530fbcffa027c,EPL,2012-13,2012-12-01T12:00:00Z,Matchday 15,,Arsenal FC,,Swansea City,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-93203673d6572e8d9c180943,EPL,2012-13,2012-12-01T12:00:00Z,Matchday 15,,Queens Park Rangers,,Aston Villa,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-939bbedc7dd1010ee07c1abe,EPL,2012-13,2012-12-01T12:00:00Z,Matchday 15,,West Bromwich Albion,,Stoke City,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ebc027b79aa03b02e890c47c,EPL,2012-13,2012-12-01T12:00:00Z,Matchday 15,,Fulham FC,,Tottenham Hotspur,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e3970f3529526e5a17789e93,EPL,2012-13,2012-12-02T12:00:00Z,Matchday 15,,Norwich City,,Sunderland AFC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e466d10017d1b66309bc48ef,EPL,2012-13,2012-12-03T12:00:00Z,Matchday 15,,Newcastle United,,Wigan Athletic,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-212b29bf33ef0345072e0826,EPL,2012-13,2012-12-08T12:00:00Z,Matchday 16,,Sunderland AFC,,Chelsea FC,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4d8ecf8ca0a618659771c4d8,EPL,2012-13,2012-12-08T12:00:00Z,Matchday 16,,Aston Villa,,Stoke City,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-84b8c5c82f6f5be8a8519cde,EPL,2012-13,2012-12-08T12:00:00Z,Matchday 16,,Swansea City,,Norwich City,,3,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8e01c27c20a60fa157488c06,EPL,2012-13,2012-12-08T12:00:00Z,Matchday 16,,Southampton FC,,Reading FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a3806af4f0b8a1085217792c,EPL,2012-13,2012-12-08T12:00:00Z,Matchday 16,,Wigan Athletic,,Queens Park Rangers,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f120349a88d4e3ba69946832,EPL,2012-13,2012-12-08T12:00:00Z,Matchday 16,,Arsenal FC,,West Bromwich Albion,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6acb6dc0b1529ad051329596,EPL,2012-13,2012-12-09T12:00:00Z,Matchday 16,,West Ham United,,Liverpool FC,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b63f6e41006b7e37540bde7e,EPL,2012-13,2012-12-09T12:00:00Z,Matchday 16,,Everton FC,,Tottenham Hotspur,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e50c3550a370a3cf9211e4bd,EPL,2012-13,2012-12-09T12:00:00Z,Matchday 16,,Manchester City,,Manchester United,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-68328c38696b96e291546dcc,EPL,2012-13,2012-12-10T12:00:00Z,Matchday 16,,Fulham FC,,Newcastle United,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3dfba0226c01e5c6df13a8c2,EPL,2012-13,2012-12-11T12:00:00Z,Matchday 2,,Sunderland AFC,,Reading FC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0f4dfd1b147004ce5b9ddffe,EPL,2012-13,2012-12-15T12:00:00Z,Matchday 17,,Queens Park Rangers,,Fulham FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-1a421bbad49ae7a59f2d997c,EPL,2012-13,2012-12-15T12:00:00Z,Matchday 17,,Manchester United,,Sunderland AFC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-63d857758f16d407386e295d,EPL,2012-13,2012-12-15T12:00:00Z,Matchday 17,,Liverpool FC,,Aston Villa,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-cddc5a7886d926fda97c444e,EPL,2012-13,2012-12-15T12:00:00Z,Matchday 17,,Norwich City,,Wigan Athletic,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d8ac549a82abc6090e629cd4,EPL,2012-13,2012-12-15T12:00:00Z,Matchday 17,,Stoke City,,Everton FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-dbd50f5065589ea8f8427803,EPL,2012-13,2012-12-15T12:00:00Z,Matchday 17,,Newcastle United,,Manchester City,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6980d387993bc0868bed1e15,EPL,2012-13,2012-12-16T12:00:00Z,Matchday 17,,West Bromwich Albion,,West Ham United,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6e3869e4adf69367b8614763,EPL,2012-13,2012-12-16T12:00:00Z,Matchday 17,,Tottenham Hotspur,,Swansea City,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e16dbfbc0c38e5698ee1a9ef,EPL,2012-13,2012-12-17T12:00:00Z,Matchday 17,,Reading FC,,Arsenal FC,,2,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-1ef04143399e68f45a62b9be,EPL,2012-13,2012-12-22T12:00:00Z,Matchday 18,,Manchester City,,Reading FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-407aeccbffd1511abce47a49,EPL,2012-13,2012-12-22T12:00:00Z,Matchday 18,,Wigan Athletic,,Arsenal FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-5031b2b258fcb32ffdabeefd,EPL,2012-13,2012-12-22T12:00:00Z,Matchday 18,,Southampton FC,,Sunderland AFC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-82adf2311d9a043a0b7086a6,EPL,2012-13,2012-12-22T12:00:00Z,Matchday 18,,West Ham United,,Everton FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-99e270ed747c68057b6421f5,EPL,2012-13,2012-12-22T12:00:00Z,Matchday 18,,Newcastle United,,Queens Park Rangers,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-9af3de0a60ca98c6d804afd7,EPL,2012-13,2012-12-22T12:00:00Z,Matchday 18,,West Bromwich Albion,,Norwich City,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ceb45525ab01d96dc3fb5c29,EPL,2012-13,2012-12-22T12:00:00Z,Matchday 18,,Liverpool FC,,Fulham FC,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e673e29f7415160a2e1913cb,EPL,2012-13,2012-12-22T12:00:00Z,Matchday 18,,Tottenham Hotspur,,Stoke City,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6159dd9278d4a8952708614b,EPL,2012-13,2012-12-23T12:00:00Z,Matchday 18,,Chelsea FC,,Aston Villa,,8,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-629ac914e7a02dc55b3ce3bf,EPL,2012-13,2012-12-23T12:00:00Z,Matchday 18,,Swansea City,,Manchester United,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-039c939217a2d376b2b9b06b,EPL,2012-13,2012-12-26T12:00:00Z,Matchday 19,,Fulham FC,,Southampton FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-03d6b05f010e5237b79d5850,EPL,2012-13,2012-12-26T12:00:00Z,Matchday 19,,Manchester United,,Newcastle United,,4,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-1b89153cf2dcc882d6b50548,EPL,2012-13,2012-12-26T12:00:00Z,Matchday 19,,Everton FC,,Wigan Athletic,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-30469eadb225d2c649870937,EPL,2012-13,2012-12-26T12:00:00Z,Matchday 19,,Aston Villa,,Tottenham Hotspur,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-518f4458bb2ec7c2e6452b31,EPL,2012-13,2012-12-26T12:00:00Z,Matchday 19,,Queens Park Rangers,,West Bromwich Albion,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-9b6f80d42f940cc978ecc242,EPL,2012-13,2012-12-26T12:00:00Z,Matchday 19,,Reading FC,,Swansea City,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-9f208dca4c54c823fd81a768,EPL,2012-13,2012-12-26T12:00:00Z,Matchday 19,,Sunderland AFC,,Manchester City,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b1ef517d3edafc59f12c19ed,EPL,2012-13,2012-12-26T12:00:00Z,Matchday 19,,Stoke City,,Liverpool FC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-da06c5d26f752f60dbecb9c5,EPL,2012-13,2012-12-26T12:00:00Z,Matchday 19,,Norwich City,,Chelsea FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-43d5b1bcb6a1246ae754701c,EPL,2012-13,2012-12-29T12:00:00Z,Matchday 20,,Arsenal FC,,Newcastle United,,7,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-741a1f2102d70b0efb4ab534,EPL,2012-13,2012-12-29T12:00:00Z,Matchday 20,,Fulham FC,,Swansea City,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7ce606b8aebbb8be79cc7c8e,EPL,2012-13,2012-12-29T12:00:00Z,Matchday 20,,Reading FC,,West Ham United,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-80771f3cbac0ab55378e554e,EPL,2012-13,2012-12-29T12:00:00Z,Matchday 20,,Norwich City,,Manchester City,,3,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b3893985bc8a9da9498c38ef,EPL,2012-13,2012-12-29T12:00:00Z,Matchday 20,,Manchester United,,West Bromwich Albion,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-be2cf3ec9b2e07aa29676bb8,EPL,2012-13,2012-12-29T12:00:00Z,Matchday 20,,Sunderland AFC,,Tottenham Hotspur,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-db8a4778c5daf2a90526fc7f,EPL,2012-13,2012-12-29T12:00:00Z,Matchday 20,,Stoke City,,Southampton FC,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-eb60177d7acc9954b59d7d09,EPL,2012-13,2012-12-29T12:00:00Z,Matchday 20,,Aston Villa,,Wigan Athletic,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-20673967dfdb959959094b83,EPL,2012-13,2012-12-30T12:00:00Z,Matchday 20,,Queens Park Rangers,,Liverpool FC,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-68b3cabe9546dbae63c113c8,EPL,2012-13,2012-12-30T12:00:00Z,Matchday 20,,Everton FC,,Chelsea FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0cfaaff4ee501f341991da0d,EPL,2012-13,2013-01-01T12:00:00Z,Matchday 21,,Manchester City,,Stoke City,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-1de5211cbc77d2df3bd050a2,EPL,2012-13,2013-01-01T12:00:00Z,Matchday 21,,West Bromwich Albion,,Fulham FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-27e8b714c18fe88d1ad6280a,EPL,2012-13,2013-01-01T12:00:00Z,Matchday 21,,Swansea City,,Aston Villa,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-409e3ff4e6e28f09a765c27a,EPL,2012-13,2013-01-01T12:00:00Z,Matchday 21,,West Ham United,,Norwich City,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-44e81e970b1715a4f271abcc,EPL,2012-13,2013-01-01T12:00:00Z,Matchday 21,,Wigan Athletic,,Manchester United,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7ba310b53beb1ac700dff0b3,EPL,2012-13,2013-01-01T12:00:00Z,Matchday 21,,Southampton FC,,Arsenal FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-bbc42048da536b8cb52e65b8,EPL,2012-13,2013-01-01T12:00:00Z,Matchday 21,,Tottenham Hotspur,,Reading FC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-18291c6928375febff8d149a,EPL,2012-13,2013-01-02T12:00:00Z,Matchday 21,,Chelsea FC,,Queens Park Rangers,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-22109ba01806600517e4dde4,EPL,2012-13,2013-01-02T12:00:00Z,Matchday 21,,Newcastle United,,Everton FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6b59552a913ac3fe41183831,EPL,2012-13,2013-01-02T12:00:00Z,Matchday 21,,Liverpool FC,,Sunderland AFC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-02731178ea0c7ec3bfe5b891,EPL,2012-13,2013-01-12T12:00:00Z,Matchday 22,,Reading FC,,West Bromwich Albion,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-25004a5bff7d75ab17bbf710,EPL,2012-13,2013-01-12T12:00:00Z,Matchday 22,,Fulham FC,,Wigan Athletic,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-283a7c99e3aa85f8e0e018ec,EPL,2012-13,2013-01-12T12:00:00Z,Matchday 22,,Queens Park Rangers,,Tottenham Hotspur,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4dabf3da77f67be1444f1bf5,EPL,2012-13,2013-01-12T12:00:00Z,Matchday 22,,Sunderland AFC,,West Ham United,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6f52765327e92c8bc1476f62,EPL,2012-13,2013-01-12T12:00:00Z,Matchday 22,,Aston Villa,,Southampton FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-70a03d392c61eea14499f833,EPL,2012-13,2013-01-12T12:00:00Z,Matchday 22,,Everton FC,,Swansea City,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8c8ed0215ea3537ab0d7bc0d,EPL,2012-13,2013-01-12T12:00:00Z,Matchday 22,,Norwich City,,Newcastle United,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d4424910bbc833be0ad60f17,EPL,2012-13,2013-01-12T12:00:00Z,Matchday 22,,Stoke City,,Chelsea FC,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-06567aedfa39e32ac7155340,EPL,2012-13,2013-01-13T12:00:00Z,Matchday 22,,Manchester United,,Liverpool FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c5a95146c96123e26a467698,EPL,2012-13,2013-01-13T12:00:00Z,Matchday 22,,Arsenal FC,,Manchester City,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-27d9a7baabddc4dc53396632,EPL,2012-13,2013-01-16T12:00:00Z,Matchday 17,,Chelsea FC,,Southampton FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-00104302576d8e2dc9ee64b3,EPL,2012-13,2013-01-19T12:00:00Z,Matchday 23,,Swansea City,,Stoke City,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-07165b23920fdae39c23b273,EPL,2012-13,2013-01-19T12:00:00Z,Matchday 23,,West Bromwich Albion,,Aston Villa,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-133b3325e512119a859901a1,EPL,2012-13,2013-01-19T12:00:00Z,Matchday 23,,West Ham United,,Queens Park Rangers,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3bc667fbc334c2d56bcd9a2e,EPL,2012-13,2013-01-19T12:00:00Z,Matchday 23,,Manchester City,,Fulham FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-595a626072e7efed0c051ce9,EPL,2012-13,2013-01-19T12:00:00Z,Matchday 23,,Liverpool FC,,Norwich City,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-da3d3fb7251a290104238327,EPL,2012-13,2013-01-19T12:00:00Z,Matchday 23,,Newcastle United,,Reading FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e0114e4761e2bf6180b0fe97,EPL,2012-13,2013-01-19T12:00:00Z,Matchday 23,,Wigan Athletic,,Sunderland AFC,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7e6cc7aecd939fc0646799e3,EPL,2012-13,2013-01-20T12:00:00Z,Matchday 23,,Chelsea FC,,Arsenal FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ff02c26a07618a52ca735897,EPL,2012-13,2013-01-20T12:00:00Z,Matchday 23,,Tottenham Hotspur,,Manchester United,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-303d9619e1f8f594b8a3bab5,EPL,2012-13,2013-01-21T12:00:00Z,Matchday 23,,Southampton FC,,Everton FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c8ea8e34d35ab22692e1396b,EPL,2012-13,2013-01-23T12:00:00Z,Matchday 19,,Arsenal FC,,West Ham United,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3a069f43da7b6b0f6d0f1159,EPL,2012-13,2013-01-29T12:00:00Z,Matchday 24,,Sunderland AFC,,Swansea City,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-9f445167d4acce0755857dcb,EPL,2012-13,2013-01-29T12:00:00Z,Matchday 24,,Stoke City,,Wigan Athletic,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a60910a934d950740fb895fb,EPL,2012-13,2013-01-29T12:00:00Z,Matchday 24,,Queens Park Rangers,,Manchester City,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-afc26f17127a13607b85ed6f,EPL,2012-13,2013-01-29T12:00:00Z,Matchday 24,,Aston Villa,,Newcastle United,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-18a8562eb3c1179ad7244180,EPL,2012-13,2013-01-30T12:00:00Z,Matchday 24,,Reading FC,,Chelsea FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-36947e98594f7ab4a42a79c1,EPL,2012-13,2013-01-30T12:00:00Z,Matchday 24,,Arsenal FC,,Liverpool FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-715283aa2a0695df5983c8aa,EPL,2012-13,2013-01-30T12:00:00Z,Matchday 24,,Everton FC,,West Bromwich Albion,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-80ddb45a9d4d05db9a59eecd,EPL,2012-13,2013-01-30T12:00:00Z,Matchday 24,,Norwich City,,Tottenham Hotspur,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c2aa7dff2f1a62b0447abf76,EPL,2012-13,2013-01-30T12:00:00Z,Matchday 24,,Fulham FC,,West Ham United,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c45c384848a4a4964f40ef99,EPL,2012-13,2013-01-30T12:00:00Z,Matchday 24,,Manchester United,,Southampton FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-00d95166d3ee73f5d6b2f94b,EPL,2012-13,2013-02-02T12:00:00Z,Matchday 25,,Queens Park Rangers,,Norwich City,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-02175c9e7d93a3e144f40286,EPL,2012-13,2013-02-02T12:00:00Z,Matchday 25,,Arsenal FC,,Stoke City,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-07b1570796898da605844f82,EPL,2012-13,2013-02-02T12:00:00Z,Matchday 25,,West Ham United,,Swansea City,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0afe8595c1d28905e275331e,EPL,2012-13,2013-02-02T12:00:00Z,Matchday 25,,Everton FC,,Aston Villa,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2fa2f77e6ae21b6463aecc53,EPL,2012-13,2013-02-02T12:00:00Z,Matchday 25,,Fulham FC,,Manchester United,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3bfec7ff85aefbc6e6600204,EPL,2012-13,2013-02-02T12:00:00Z,Matchday 25,,Newcastle United,,Chelsea FC,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-408b220985d04816ab552612,EPL,2012-13,2013-02-02T12:00:00Z,Matchday 25,,Reading FC,,Sunderland AFC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-57d7de0b1cfadbc7a7177ede,EPL,2012-13,2013-02-02T12:00:00Z,Matchday 25,,Wigan Athletic,,Southampton FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4c37bf19dcd7ef7a84b5c792,EPL,2012-13,2013-02-03T12:00:00Z,Matchday 25,,West Bromwich Albion,,Tottenham Hotspur,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-9f962a01e5ae697d96141da3,EPL,2012-13,2013-02-03T12:00:00Z,Matchday 25,,Manchester City,,Liverpool FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4220c667b69f4f1eda558f28,EPL,2012-13,2013-02-09T12:00:00Z,Matchday 26,,Norwich City,,Fulham FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-482712b919d268b12685f141,EPL,2012-13,2013-02-09T12:00:00Z,Matchday 26,,Tottenham Hotspur,,Newcastle United,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4f053646dc997aa0dc79a63b,EPL,2012-13,2013-02-09T12:00:00Z,Matchday 26,,Stoke City,,Reading FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7a321f79c6f1ce8be7f9aa51,EPL,2012-13,2013-02-09T12:00:00Z,Matchday 26,,Sunderland AFC,,Arsenal FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-83f8babc5ddc4e82440efaf1,EPL,2012-13,2013-02-09T12:00:00Z,Matchday 26,,Southampton FC,,Manchester City,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-87a8207ed15a071dbdac2b2a,EPL,2012-13,2013-02-09T12:00:00Z,Matchday 26,,Chelsea FC,,Wigan Athletic,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b4204a0f8ad7549c0c00c4d7,EPL,2012-13,2013-02-09T12:00:00Z,Matchday 26,,Swansea City,,Queens Park Rangers,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7730ba94b3a5d995c50e1af7,EPL,2012-13,2013-02-10T12:00:00Z,Matchday 26,,Manchester United,,Everton FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-cbe628742135057739947636,EPL,2012-13,2013-02-10T12:00:00Z,Matchday 26,,Aston Villa,,West Ham United,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4a76b9b59daad701fa97d5a2,EPL,2012-13,2013-02-11T12:00:00Z,Matchday 26,,Liverpool FC,,West Bromwich Albion,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e41c65677af4ff97a277207f,EPL,2012-13,2013-02-17T12:00:00Z,Matchday 27,,Liverpool FC,,Swansea City,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4a3b079ff3436af885af20ef,EPL,2012-13,2013-02-23T12:00:00Z,Matchday 27,,Arsenal FC,,Aston Villa,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4cd551e2c88da52da8d0752b,EPL,2012-13,2013-02-23T12:00:00Z,Matchday 27,,Queens Park Rangers,,Manchester United,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7423e407a107596c13b1a97d,EPL,2012-13,2013-02-23T12:00:00Z,Matchday 27,,Reading FC,,Wigan Athletic,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-76fa9c871fa4125656c6b284,EPL,2012-13,2013-02-23T12:00:00Z,Matchday 27,,West Bromwich Albion,,Sunderland AFC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-884d10d122e4943cfcb6a689,EPL,2012-13,2013-02-23T12:00:00Z,Matchday 27,,Fulham FC,,Stoke City,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f19cc9d0a45b5f28dd3a6895,EPL,2012-13,2013-02-23T12:00:00Z,Matchday 27,,Norwich City,,Everton FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-9fb5cf49ab5c87ed3b3731c1,EPL,2012-13,2013-02-24T12:00:00Z,Matchday 27,,Manchester City,,Chelsea FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ac2950ab6ac2a9ed172bd26c,EPL,2012-13,2013-02-24T12:00:00Z,Matchday 27,,Newcastle United,,Southampton FC,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-12921fece7ee68213a4152c1,EPL,2012-13,2013-02-25T12:00:00Z,Matchday 27,,West Ham United,,Tottenham Hotspur,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-04b5050e6b25c35be38f1104,EPL,2012-13,2013-03-02T12:00:00Z,Matchday 28,,Manchester United,,Norwich City,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2082835247262ea0eed823bc,EPL,2012-13,2013-03-02T12:00:00Z,Matchday 28,,Southampton FC,,Queens Park Rangers,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-39a2e8b49699d326f6d4b083,EPL,2012-13,2013-03-02T12:00:00Z,Matchday 28,,Wigan Athletic,,Liverpool FC,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3cd013927f02ba67dad0f5c7,EPL,2012-13,2013-03-02T12:00:00Z,Matchday 28,,Stoke City,,West Ham United,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4bd97a9b64ac2b7f11b87724,EPL,2012-13,2013-03-02T12:00:00Z,Matchday 28,,Sunderland AFC,,Fulham FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4cdf35ebc328ab87ea8c38f2,EPL,2012-13,2013-03-02T12:00:00Z,Matchday 28,,Everton FC,,Reading FC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e9686293b0ed9fb1d3fdd531,EPL,2012-13,2013-03-02T12:00:00Z,Matchday 28,,Chelsea FC,,West Bromwich Albion,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f9f6821cca779abdf4ec472d,EPL,2012-13,2013-03-02T12:00:00Z,Matchday 28,,Swansea City,,Newcastle United,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c4d6dfc67490f5d04d9ebcf8,EPL,2012-13,2013-03-03T12:00:00Z,Matchday 28,,Tottenham Hotspur,,Arsenal FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-97399a6871f222e5f9a82d8e,EPL,2012-13,2013-03-04T12:00:00Z,Matchday 28,,Aston Villa,,Manchester City,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-735827e4b100f79c52854830,EPL,2012-13,2013-03-09T12:00:00Z,Matchday 29,,Queens Park Rangers,,Sunderland AFC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a966c1045def20a641630adf,EPL,2012-13,2013-03-09T12:00:00Z,Matchday 29,,Reading FC,,Aston Villa,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e8330ac8bc9929ea16ab4036,EPL,2012-13,2013-03-09T12:00:00Z,Matchday 29,,West Bromwich Albion,,Swansea City,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f80a15e31dd8d56c3b9fb0c0,EPL,2012-13,2013-03-09T12:00:00Z,Matchday 29,,Norwich City,,Southampton FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ac1acfefdade26019242c835,EPL,2012-13,2013-03-10T12:00:00Z,Matchday 29,,Liverpool FC,,Tottenham Hotspur,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ce5d8e567c9f243288cd417a,EPL,2012-13,2013-03-10T12:00:00Z,Matchday 29,,Newcastle United,,Stoke City,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-16efe6e18fbca1687068cc64,EPL,2012-13,2013-03-16T12:00:00Z,Matchday 30,,Everton FC,,Manchester City,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-35d1d42996a64fcbfd2db014,EPL,2012-13,2013-03-16T12:00:00Z,Matchday 30,,Southampton FC,,Liverpool FC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-88382fe895397836c6765922,EPL,2012-13,2013-03-16T12:00:00Z,Matchday 30,,Manchester United,,Reading FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b471ed1aca6a5e3bc3c64815,EPL,2012-13,2013-03-16T12:00:00Z,Matchday 30,,Aston Villa,,Queens Park Rangers,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e91993063ba49ef247784c1d,EPL,2012-13,2013-03-16T12:00:00Z,Matchday 30,,Swansea City,,Arsenal FC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-fb685d1455a7841a0a71e681,EPL,2012-13,2013-03-16T12:00:00Z,Matchday 30,,Stoke City,,West Bromwich Albion,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-1bddbc3e20237b706d13f42f,EPL,2012-13,2013-03-17T12:00:00Z,Matchday 30,,Sunderland AFC,,Norwich City,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-208b3da7526c2d67bbf377de,EPL,2012-13,2013-03-17T12:00:00Z,Matchday 30,,Tottenham Hotspur,,Fulham FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-47f36aaa904096d6ee1c890c,EPL,2012-13,2013-03-17T12:00:00Z,Matchday 30,,Chelsea FC,,West Ham United,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ea20238bd42df0a12a146313,EPL,2012-13,2013-03-17T12:00:00Z,Matchday 30,,Wigan Athletic,,Newcastle United,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-1e3154b48343f5e7be5a2c9b,EPL,2012-13,2013-03-30T12:00:00Z,Matchday 31,,Manchester City,,Newcastle United,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3ac80e49b69787049741c075,EPL,2012-13,2013-03-30T12:00:00Z,Matchday 31,,Swansea City,,Tottenham Hotspur,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7da56148a1dc8855fd7d8864,EPL,2012-13,2013-03-30T12:00:00Z,Matchday 31,,Southampton FC,,Chelsea FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-bce332cb8674470733c33fc9,EPL,2012-13,2013-03-30T12:00:00Z,Matchday 31,,Sunderland AFC,,Manchester United,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-becb692fb3fb991159e20513,EPL,2012-13,2013-03-30T12:00:00Z,Matchday 31,,Everton FC,,Stoke City,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c5a5c6a716ef5651bbc2ffe9,EPL,2012-13,2013-03-30T12:00:00Z,Matchday 31,,Arsenal FC,,Reading FC,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-df466b91e078f3123f3fb94f,EPL,2012-13,2013-03-30T12:00:00Z,Matchday 31,,West Ham United,,West Bromwich Albion,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e4dc7f5bbc90b144edd38a12,EPL,2012-13,2013-03-30T12:00:00Z,Matchday 31,,Wigan Athletic,,Norwich City,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8fcfa3d0c9d82cd473bd66d1,EPL,2012-13,2013-03-31T12:00:00Z,Matchday 31,,Aston Villa,,Liverpool FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f4409a56b3183a8c2fa4a7f3,EPL,2012-13,2013-04-01T12:00:00Z,Matchday 31,,Fulham FC,,Queens Park Rangers,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4ea8b0332e124a3e3c088ba3,EPL,2012-13,2013-04-06T12:00:00Z,Matchday 32,,West Bromwich Albion,,Arsenal FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-552e050d8cc33b716865834f,EPL,2012-13,2013-04-06T12:00:00Z,Matchday 32,,Stoke City,,Aston Villa,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-bf776e81e6cc7a6cf1b1c7f8,EPL,2012-13,2013-04-06T12:00:00Z,Matchday 32,,Norwich City,,Swansea City,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-cbe86b9979e3b2b95a573bb6,EPL,2012-13,2013-04-06T12:00:00Z,Matchday 32,,Reading FC,,Southampton FC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2db19ae4a8f98f8844887a74,EPL,2012-13,2013-04-07T12:00:00Z,Matchday 32,,Liverpool FC,,West Ham United,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4f05553fee9fdb11440e4bb1,EPL,2012-13,2013-04-07T12:00:00Z,Matchday 32,,Tottenham Hotspur,,Everton FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7bd0aaef7b43a6eaeb3f16b6,EPL,2012-13,2013-04-07T12:00:00Z,Matchday 32,,Chelsea FC,,Sunderland AFC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-884e87fc65db0e60abb0ae93,EPL,2012-13,2013-04-07T12:00:00Z,Matchday 32,,Queens Park Rangers,,Wigan Athletic,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f274de496c4909b8a7d3ed4c,EPL,2012-13,2013-04-07T12:00:00Z,Matchday 32,,Newcastle United,,Fulham FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-45f87c5fd31c4340c723a59a,EPL,2012-13,2013-04-08T12:00:00Z,Matchday 32,,Manchester United,,Manchester City,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0b122b11b0e4c1ed2df2f76f,EPL,2012-13,2013-04-13T12:00:00Z,Matchday 33,,Arsenal FC,,Norwich City,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-14643df10a135642df33a90d,EPL,2012-13,2013-04-13T12:00:00Z,Matchday 33,,Aston Villa,,Fulham FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-800635e596c554848c1a5b53,EPL,2012-13,2013-04-13T12:00:00Z,Matchday 33,,Reading FC,,Liverpool FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e8cc9652fcece1bb28ba69d1,EPL,2012-13,2013-04-13T12:00:00Z,Matchday 33,,Southampton FC,,West Ham United,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f6604fe217361792f42e91bc,EPL,2012-13,2013-04-13T12:00:00Z,Matchday 33,,Everton FC,,Queens Park Rangers,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-bd2dbd83878449879e546395,EPL,2012-13,2013-04-14T12:00:00Z,Matchday 33,,Newcastle United,,Sunderland AFC,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e0512a3a363a8529337b4d95,EPL,2012-13,2013-04-14T12:00:00Z,Matchday 33,,Stoke City,,Manchester United,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-24c7590dcab434662799257f,EPL,2012-13,2013-04-16T12:00:00Z,Matchday 29,,Arsenal FC,,Everton FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-405e8c742fe9b274b7618be5,EPL,2012-13,2013-04-17T12:00:00Z,Matchday 29,,West Ham United,,Manchester United,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6b1bde31445966f99ec3f67f,EPL,2012-13,2013-04-17T12:00:00Z,Matchday 29,,Manchester City,,Wigan Athletic,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-89c499fefb959a4d9a53b278,EPL,2012-13,2013-04-17T12:00:00Z,Matchday 29,,Fulham FC,,Chelsea FC,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4fa9319190c92d2e88bf0381,EPL,2012-13,2013-04-20T12:00:00Z,Matchday 34,,Fulham FC,,Arsenal FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-665bdb14325736535076d55b,EPL,2012-13,2013-04-20T12:00:00Z,Matchday 34,,Swansea City,,Southampton FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-9305bf039929d3228a1d1cae,EPL,2012-13,2013-04-20T12:00:00Z,Matchday 34,,Queens Park Rangers,,Stoke City,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-93b3462bc7043f6be4850972,EPL,2012-13,2013-04-20T12:00:00Z,Matchday 34,,Norwich City,,Reading FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c84805b0a1186918d7d9a5ad,EPL,2012-13,2013-04-20T12:00:00Z,Matchday 34,,West Bromwich Albion,,Newcastle United,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e477120f566063aff1317fd0,EPL,2012-13,2013-04-20T12:00:00Z,Matchday 34,,Sunderland AFC,,Everton FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ea393a602a370630721d7190,EPL,2012-13,2013-04-20T12:00:00Z,Matchday 34,,West Ham United,,Wigan Athletic,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-564de8ca7e375f79359c75a7,EPL,2012-13,2013-04-21T12:00:00Z,Matchday 34,,Tottenham Hotspur,,Manchester City,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-cc4c8eda5d7868593515336f,EPL,2012-13,2013-04-21T12:00:00Z,Matchday 34,,Liverpool FC,,Chelsea FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-989a04de8b0f42eb6f2b2ea4,EPL,2012-13,2013-04-22T12:00:00Z,Matchday 34,,Manchester United,,Aston Villa,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-21f9a526f890e651f55c5f02,EPL,2012-13,2013-04-27T12:00:00Z,Matchday 35,,Newcastle United,,Liverpool FC,,0,6,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-66754f890ff29dbc92abaa3e,EPL,2012-13,2013-04-27T12:00:00Z,Matchday 35,,Manchester City,,West Ham United,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7f62fd09e665ae20ace5b7e1,EPL,2012-13,2013-04-27T12:00:00Z,Matchday 35,,Wigan Athletic,,Tottenham Hotspur,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-893b68b6ad03f8c774d1f57c,EPL,2012-13,2013-04-27T12:00:00Z,Matchday 35,,Southampton FC,,West Bromwich Albion,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b4085f20a474dd68786dc116,EPL,2012-13,2013-04-27T12:00:00Z,Matchday 35,,Stoke City,,Norwich City,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e6978d017f5f1119f88f1650,EPL,2012-13,2013-04-27T12:00:00Z,Matchday 35,,Everton FC,,Fulham FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-684ab048ba0af4ab80fb4412,EPL,2012-13,2013-04-28T12:00:00Z,Matchday 35,,Reading FC,,Queens Park Rangers,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-87b985d8847731a2ebe04c88,EPL,2012-13,2013-04-28T12:00:00Z,Matchday 35,,Chelsea FC,,Swansea City,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d0adcdaf6abcca79b469d755,EPL,2012-13,2013-04-28T12:00:00Z,Matchday 35,,Arsenal FC,,Manchester United,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-5f0720873b7aed45d243b318,EPL,2012-13,2013-04-29T12:00:00Z,Matchday 35,,Aston Villa,,Sunderland AFC,,6,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3b98aeb90d97d7c6d58fafe8,EPL,2012-13,2013-05-04T12:00:00Z,Matchday 36,,West Bromwich Albion,,Wigan Athletic,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-5c5aab7a0fe77fc6c176b152,EPL,2012-13,2013-05-04T12:00:00Z,Matchday 36,,West Ham United,,Newcastle United,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6532246dd3cd576c69ca9da8,EPL,2012-13,2013-05-04T12:00:00Z,Matchday 36,,Norwich City,,Aston Villa,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6dd6c3372aee9d5e16adad5d,EPL,2012-13,2013-05-04T12:00:00Z,Matchday 36,,Swansea City,,Manchester City,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8aee5b2e13ebf0840082e433,EPL,2012-13,2013-05-04T12:00:00Z,Matchday 36,,Fulham FC,,Reading FC,,2,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ad0ee0c1c58b77564023f7f3,EPL,2012-13,2013-05-04T12:00:00Z,Matchday 36,,Tottenham Hotspur,,Southampton FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b5b7599618a0025ad04abf6e,EPL,2012-13,2013-05-04T12:00:00Z,Matchday 36,,Queens Park Rangers,,Arsenal FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-643da8c37c92424a997361fc,EPL,2012-13,2013-05-05T12:00:00Z,Matchday 36,,Liverpool FC,,Everton FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a8998dd7dd18417df98efa61,EPL,2012-13,2013-05-05T12:00:00Z,Matchday 36,,Manchester United,,Chelsea FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4d7529f0892f16045306f996,EPL,2012-13,2013-05-06T12:00:00Z,Matchday 36,,Sunderland AFC,,Stoke City,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6b16420806f5dba009f65bdf,EPL,2012-13,2013-05-07T12:00:00Z,Matchday 33,,Wigan Athletic,,Swansea City,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ab341e3c8aef43bec8a846c8,EPL,2012-13,2013-05-07T12:00:00Z,Matchday 33,,Manchester City,,West Bromwich Albion,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-fdaa99e92243a84e423d72be,EPL,2012-13,2013-05-08T12:00:00Z,Matchday 33,,Chelsea FC,,Tottenham Hotspur,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d1152c8224129d67a3c1728e,EPL,2012-13,2013-05-11T12:00:00Z,Matchday 37,,Aston Villa,,Chelsea FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0e2f03a8c366e1882feae06a,EPL,2012-13,2013-05-12T12:00:00Z,Matchday 37,,Manchester United,,Swansea City,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-49ae4b87bd3940c0e71999de,EPL,2012-13,2013-05-12T12:00:00Z,Matchday 37,,Sunderland AFC,,Southampton FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-59591bbe222f8a166703c154,EPL,2012-13,2013-05-12T12:00:00Z,Matchday 37,,Norwich City,,West Bromwich Albion,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6e901b9dd6ce6fbb49b85d0e,EPL,2012-13,2013-05-12T12:00:00Z,Matchday 37,,Fulham FC,,Liverpool FC,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7107e2cf97d18ea877d3914a,EPL,2012-13,2013-05-12T12:00:00Z,Matchday 37,,Everton FC,,West Ham United,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c788811d313a910591189444,EPL,2012-13,2013-05-12T12:00:00Z,Matchday 37,,Stoke City,,Tottenham Hotspur,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f44220b33c7f9fa2c6463d68,EPL,2012-13,2013-05-12T12:00:00Z,Matchday 37,,Queens Park Rangers,,Newcastle United,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3f08e3a176ac12144296e984,EPL,2012-13,2013-05-14T12:00:00Z,Matchday 37,,Reading FC,,Manchester City,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-acfed0294b4e2c54c0ef96ff,EPL,2012-13,2013-05-14T12:00:00Z,Matchday 37,,Arsenal FC,,Wigan Athletic,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-083559cb0169364bad933f8f,EPL,2012-13,2013-05-19T12:00:00Z,Matchday 38,,Wigan Athletic,,Aston Villa,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-548b83ff3c7ac673abc8777c,EPL,2012-13,2013-05-19T12:00:00Z,Matchday 38,,West Bromwich Albion,,Manchester United,,5,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-55b9cda684ab6eaa1aec02f9,EPL,2012-13,2013-05-19T12:00:00Z,Matchday 38,,Liverpool FC,,Queens Park Rangers,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-63726cc096eb8973c5d286c5,EPL,2012-13,2013-05-19T12:00:00Z,Matchday 38,,Swansea City,,Fulham FC,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-66eb1d30cb242b87e657f28d,EPL,2012-13,2013-05-19T12:00:00Z,Matchday 38,,Tottenham Hotspur,,Sunderland AFC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-79046032d1b9b862a4509ac6,EPL,2012-13,2013-05-19T12:00:00Z,Matchday 38,,Southampton FC,,Stoke City,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a2ed5309dde7fefea91d367b,EPL,2012-13,2013-05-19T12:00:00Z,Matchday 38,,Chelsea FC,,Everton FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b96f09afb76c6d1c76e4b801,EPL,2012-13,2013-05-19T12:00:00Z,Matchday 38,,West Ham United,,Reading FC,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e0c323891680af05474ef8e8,EPL,2012-13,2013-05-19T12:00:00Z,Matchday 38,,Manchester City,,Norwich City,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-fe23167548969e386f4d4775,EPL,2012-13,2013-05-19T12:00:00Z,Matchday 38,,Newcastle United,,Arsenal FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00

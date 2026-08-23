@@ -50,8 +50,19 @@ class MLBRecoveryGateTests(unittest.TestCase):
     def policy():
         return approved_policy(hashlib.sha256(b"frozen evidence").hexdigest())
 
-    def test_committed_policy_is_paused(self):
-        self.assertFalse(mlb_recovery.publication_eligible())
+    def test_committed_policy_publishes_the_reviewed_incumbent_only(self):
+        decision = mlb_recovery.publication_decision(incumbent=("v6-calibrated", 8))
+        self.assertTrue(decision["official_publication_eligible"], decision["reasons"])
+        self.assertFalse(decision["model_challenger_weighted"])
+        self.assertFalse(decision["personnel_features_weighted"])
+
+    def test_committed_policy_repauses_if_the_shipped_incumbent_changes(self):
+        # The approval names the exact artifact it reviewed. A later model
+        # version or signal schema is not what was signed off.
+        for identity in (("v7-next", 8), ("v6-calibrated", 9)):
+            decision = mlb_recovery.publication_decision(incumbent=identity)
+            self.assertFalse(decision["official_publication_eligible"])
+            self.assertIn("incumbent_artifact_not_the_reviewed_one", decision["reasons"])
 
     def test_all_three_reviews_and_coverage_are_required(self):
         decision = self.decision(self.policy())
@@ -137,6 +148,75 @@ class MLBRecoveryGateTests(unittest.TestCase):
             self.assertFalse(decision["official_publication_eligible"])
             self.assertTrue(decision["personnel_features_weighted"])
             self.assertIn("confirmed_personnel_not_approved", decision["reasons"])
+
+    @staticmethod
+    def incumbent_policy():
+        """Publication of the already-deployed model at zero challenger weight.
+
+        The §2 promotion bar exists to stop an unproven *signal* from moving
+        forecasts. When nothing is promoted there is no such signal, and
+        applying the bar anyway withholds the incumbent -- the very baseline the
+        challenger is measured against -- over evidence about a signal that
+        carries no weight. This route drops the promotion policy and binds the
+        incumbent's own reviewed evidence instead.
+        """
+        payload = MLBRecoveryGateTests.zero_weight_policy()
+        payload["model_gate"]["challenger_weighted"] = False
+        payload["model_gate"]["promotion_policy"] = None
+        return payload
+
+    def incumbent_decision(self, payload, promotion=None):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "evidence.json").write_text("frozen evidence", encoding="utf-8")
+            path = root / "policy.json"
+            path.write_text(json.dumps(payload), encoding="utf-8")
+            with mock.patch("mlb_model_promotion.load_mlb_promotion_policy",
+                            return_value=promotion):
+                return mlb_recovery.publication_decision(path)
+
+    def test_incumbent_route_publishes_without_a_promoted_challenger(self):
+        decision = self.incumbent_decision(self.incumbent_policy())
+        self.assertTrue(decision["official_publication_eligible"], decision["reasons"])
+        self.assertFalse(decision["model_challenger_weighted"])
+
+    def test_incumbent_route_still_fails_closed(self):
+        # An approved promotion carrying production weight contradicts the claim
+        # that no challenger is weighted -- the policy must say which is true.
+        decision = self.incumbent_decision(
+            self.incumbent_policy(), promotion={"verified_report_sha256": "b" * 64})
+        self.assertFalse(decision["official_publication_eligible"])
+        self.assertIn("model_evidence_not_approved", decision["reasons"])
+
+        for mutation in (
+            # Naming a promotion policy is the same contradiction.
+            lambda p: p["model_gate"].update(promotion_policy="promotion.json"),
+            # The incumbent route still needs its own signed, hash-bound review.
+            lambda p: p["model_gate"].pop("manual_review"),
+            lambda p: p["model_gate"]["manual_review"].update(decision="waived"),
+            lambda p: p["model_gate"]["manual_review"].update(reviewer=""),
+            lambda p: p["model_gate"]["manual_review"].update(evidence_sha256="c" * 64),
+            lambda p: p["model_gate"].update(status="collecting"),
+            # The release review still has to bind to that evidence hash.
+            lambda p: p["release_review"].update(model_evidence_sha256="d" * 64),
+        ):
+            payload = self.incumbent_policy()
+            mutation(payload)
+            self.assertFalse(self.incumbent_decision(payload)["official_publication_eligible"])
+
+    def test_absent_or_malformed_challenger_flag_is_treated_as_a_promotion(self):
+        # Same fail-closed default as the personnel flag: only an explicit
+        # `false` takes the incumbent route.
+        for flag in (None, "false", 0, "", "no"):
+            payload = self.incumbent_policy()
+            if flag is None:
+                payload["model_gate"].pop("challenger_weighted")
+            else:
+                payload["model_gate"]["challenger_weighted"] = flag
+            decision = self.incumbent_decision(payload)
+            self.assertFalse(decision["official_publication_eligible"])
+            self.assertTrue(decision["model_challenger_weighted"])
+            self.assertIn("model_evidence_not_approved", decision["reasons"])
 
     def test_missing_or_malformed_policy_fails_closed(self):
         with tempfile.TemporaryDirectory() as directory:

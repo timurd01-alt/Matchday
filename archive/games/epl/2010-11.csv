@@ -1,0 +1,381 @@
+game_id,comp,season,date_utc,stage,venue,home_name,home_code,away_name,away_code,home_score,away_score,status,source,first_seen
+epl-openfootball-2ae96b478b578a8ee7379830,EPL,2010-11,2010-08-14T12:00:00Z,Matchday 1,,Chelsea FC,,West Bromwich Albion,,6,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-51828af650a5acba5e3345d5,EPL,2010-11,2010-08-14T12:00:00Z,Matchday 1,,Blackburn Rovers,,Everton FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6b23a0532d61da364fd4ad20,EPL,2010-11,2010-08-14T12:00:00Z,Matchday 1,,Wolverhampton Wanderers,,Stoke City,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-72dbf7f0038874e1414371e5,EPL,2010-11,2010-08-14T12:00:00Z,Matchday 1,,Sunderland AFC,,Birmingham City,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d733ddcebdf716d954becdfd,EPL,2010-11,2010-08-14T12:00:00Z,Matchday 1,,Wigan Athletic,,Blackpool FC,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e145ec008e2e778c8c41a1a0,EPL,2010-11,2010-08-14T12:00:00Z,Matchday 1,,Tottenham Hotspur,,Manchester City,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-fc68f3c7d41effcc79ee0311,EPL,2010-11,2010-08-14T12:00:00Z,Matchday 1,,Bolton Wanderers,,Fulham FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ffce16c785fae11dcb793eb8,EPL,2010-11,2010-08-14T12:00:00Z,Matchday 1,,Aston Villa,,West Ham United,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b5bf7d74b2caae3e69cf1f74,EPL,2010-11,2010-08-15T12:00:00Z,Matchday 1,,Liverpool FC,,Arsenal FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2a306e65c076165177f441b0,EPL,2010-11,2010-08-16T12:00:00Z,Matchday 1,,Manchester United,,Newcastle United,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-1ea4e2e7379cb9a60e213f45,EPL,2010-11,2010-08-21T12:00:00Z,Matchday 2,,West Ham United,,Bolton Wanderers,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-420f6457b30685307c7d860a,EPL,2010-11,2010-08-21T12:00:00Z,Matchday 2,,Everton FC,,Wolverhampton Wanderers,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7516234eba1abdb6be85a1da,EPL,2010-11,2010-08-21T12:00:00Z,Matchday 2,,Stoke City,,Tottenham Hotspur,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-83f543f47b9baa035a143682,EPL,2010-11,2010-08-21T12:00:00Z,Matchday 2,,Birmingham City,,Blackburn Rovers,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d2d18e801e1d8d834567b89b,EPL,2010-11,2010-08-21T12:00:00Z,Matchday 2,,West Bromwich Albion,,Sunderland AFC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-edfd22c07e7df2e87b320301,EPL,2010-11,2010-08-21T12:00:00Z,Matchday 2,,Arsenal FC,,Blackpool FC,,6,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-fe223fce263c767f52eb6fe2,EPL,2010-11,2010-08-21T12:00:00Z,Matchday 2,,Wigan Athletic,,Chelsea FC,,0,6,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c023c142856e06236f3ddd07,EPL,2010-11,2010-08-22T12:00:00Z,Matchday 2,,Newcastle United,,Aston Villa,,6,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ef8d7eb93365e386b64844f4,EPL,2010-11,2010-08-22T12:00:00Z,Matchday 2,,Fulham FC,,Manchester United,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-fa18992bb909d6675e9410ee,EPL,2010-11,2010-08-23T12:00:00Z,Matchday 2,,Manchester City,,Liverpool FC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-683c9b3f0c57da7ef652faa3,EPL,2010-11,2010-08-28T12:00:00Z,Matchday 3,,Blackpool FC,,Fulham FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7a2fadbfa429a4f27c99ceab,EPL,2010-11,2010-08-28T12:00:00Z,Matchday 3,,Wolverhampton Wanderers,,Newcastle United,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b9cd6a6d890050a32284b213,EPL,2010-11,2010-08-28T12:00:00Z,Matchday 3,,Chelsea FC,,Stoke City,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-bbc9ace791eb3237e4b6dc78,EPL,2010-11,2010-08-28T12:00:00Z,Matchday 3,,Tottenham Hotspur,,Wigan Athletic,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e6bcc0e4abe0b7e78fc4a65f,EPL,2010-11,2010-08-28T12:00:00Z,Matchday 3,,Manchester United,,West Ham United,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ef374cb27b6a207675d9e504,EPL,2010-11,2010-08-28T12:00:00Z,Matchday 3,,Blackburn Rovers,,Arsenal FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-09c8147b63a144752ee3ff99,EPL,2010-11,2010-08-29T12:00:00Z,Matchday 3,,Bolton Wanderers,,Birmingham City,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-17d9290ee1a93fe29fb58135,EPL,2010-11,2010-08-29T12:00:00Z,Matchday 3,,Sunderland AFC,,Manchester City,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-46de14993a7f9f3b73272640,EPL,2010-11,2010-08-29T12:00:00Z,Matchday 3,,Liverpool FC,,West Bromwich Albion,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f64aa266dca6dc7aacd6bcd0,EPL,2010-11,2010-08-29T12:00:00Z,Matchday 3,,Aston Villa,,Everton FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-16baedcf8c7ae026390377c1,EPL,2010-11,2010-09-11T12:00:00Z,Matchday 4,,West Bromwich Albion,,Tottenham Hotspur,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-43f683fe460c4823cf399499,EPL,2010-11,2010-09-11T12:00:00Z,Matchday 4,,Manchester City,,Blackburn Rovers,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-5d5dfdd070f53b23cf0fe9f6,EPL,2010-11,2010-09-11T12:00:00Z,Matchday 4,,Everton FC,,Manchester United,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-66a56e4483d45edcc5eaa09c,EPL,2010-11,2010-09-11T12:00:00Z,Matchday 4,,West Ham United,,Chelsea FC,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c9ced09576d18dc274520d8b,EPL,2010-11,2010-09-11T12:00:00Z,Matchday 4,,Newcastle United,,Blackpool FC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-df9a9cbfb3ff1f24a75bd0bb,EPL,2010-11,2010-09-11T12:00:00Z,Matchday 4,,Arsenal FC,,Bolton Wanderers,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f9118e2d3e4bc6c9bd6ee43a,EPL,2010-11,2010-09-11T12:00:00Z,Matchday 4,,Wigan Athletic,,Sunderland AFC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-fd7937941297cadd8a211939,EPL,2010-11,2010-09-11T12:00:00Z,Matchday 4,,Fulham FC,,Wolverhampton Wanderers,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f045e6ee33be6d9aba01ad1b,EPL,2010-11,2010-09-12T12:00:00Z,Matchday 4,,Birmingham City,,Liverpool FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-04c17ef0c82e94dcc345371c,EPL,2010-11,2010-09-13T12:00:00Z,Matchday 4,,Stoke City,,Aston Villa,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-245d0a09341eb045e97e5807,EPL,2010-11,2010-09-18T12:00:00Z,Matchday 5,,Sunderland AFC,,Arsenal FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-730e675eb8e58f07a02ced9a,EPL,2010-11,2010-09-18T12:00:00Z,Matchday 5,,Everton FC,,Newcastle United,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a0ee315eaf935ed8932ac5e8,EPL,2010-11,2010-09-18T12:00:00Z,Matchday 5,,Blackburn Rovers,,Fulham FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-dcac86afe6bf938e869f819a,EPL,2010-11,2010-09-18T12:00:00Z,Matchday 5,,West Bromwich Albion,,Birmingham City,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e426c1cabe6fe01031e4bbe9,EPL,2010-11,2010-09-18T12:00:00Z,Matchday 5,,Tottenham Hotspur,,Wolverhampton Wanderers,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e50138f0723a541665805ad9,EPL,2010-11,2010-09-18T12:00:00Z,Matchday 5,,Aston Villa,,Bolton Wanderers,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f3da1f11b0f2377ef60275fe,EPL,2010-11,2010-09-18T12:00:00Z,Matchday 5,,Stoke City,,West Ham United,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-5e5b45dd8466b8af034d03bc,EPL,2010-11,2010-09-19T12:00:00Z,Matchday 5,,Chelsea FC,,Blackpool FC,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-9d2462f98cc098558a63e4b1,EPL,2010-11,2010-09-19T12:00:00Z,Matchday 5,,Manchester United,,Liverpool FC,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f3b4aae9950d3757dcc4ff43,EPL,2010-11,2010-09-19T12:00:00Z,Matchday 5,,Wigan Athletic,,Manchester City,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-264ef89cbecb54443f0b23b7,EPL,2010-11,2010-09-25T12:00:00Z,Matchday 6,,Arsenal FC,,West Bromwich Albion,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-344c5ccec1b99a578381fc8d,EPL,2010-11,2010-09-25T12:00:00Z,Matchday 6,,Birmingham City,,Wigan Athletic,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4861d49092a324550637cf77,EPL,2010-11,2010-09-25T12:00:00Z,Matchday 6,,Fulham FC,,Everton FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-572e39bd27cd45911978b829,EPL,2010-11,2010-09-25T12:00:00Z,Matchday 6,,Manchester City,,Chelsea FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-9b90e831dcf075ac03a76477,EPL,2010-11,2010-09-25T12:00:00Z,Matchday 6,,Blackpool FC,,Blackburn Rovers,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a5d9bfd888ebc040ff541e93,EPL,2010-11,2010-09-25T12:00:00Z,Matchday 6,,Liverpool FC,,Sunderland AFC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e076132d6bcf277b68557d96,EPL,2010-11,2010-09-25T12:00:00Z,Matchday 6,,West Ham United,,Tottenham Hotspur,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0d5e7bcd95dd2e910bf5d020,EPL,2010-11,2010-09-26T12:00:00Z,Matchday 6,,Wolverhampton Wanderers,,Aston Villa,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6c2013c85c11d8fc0a59c67b,EPL,2010-11,2010-09-26T12:00:00Z,Matchday 6,,Newcastle United,,Stoke City,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d98e6b375ce60497fbf7b202,EPL,2010-11,2010-09-26T12:00:00Z,Matchday 6,,Bolton Wanderers,,Manchester United,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-229d3c77fcc532a3258403b2,EPL,2010-11,2010-10-02T12:00:00Z,Matchday 7,,Tottenham Hotspur,,Aston Villa,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2d8b6dd11364ccde8769e919,EPL,2010-11,2010-10-02T12:00:00Z,Matchday 7,,West Ham United,,Fulham FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-30a1fb6f43b43e715d919b06,EPL,2010-11,2010-10-02T12:00:00Z,Matchday 7,,Sunderland AFC,,Manchester United,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-651a1d0b0534e4185dc0b464,EPL,2010-11,2010-10-02T12:00:00Z,Matchday 7,,Wigan Athletic,,Wolverhampton Wanderers,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c7a2cca0d285cb4674e2c8ea,EPL,2010-11,2010-10-02T12:00:00Z,Matchday 7,,Stoke City,,Blackburn Rovers,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e9d4eac38af3d49e445550e3,EPL,2010-11,2010-10-02T12:00:00Z,Matchday 7,,West Bromwich Albion,,Bolton Wanderers,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-fa3d993d1285822c769f3f60,EPL,2010-11,2010-10-02T12:00:00Z,Matchday 7,,Birmingham City,,Everton FC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-58e06d51f8054989ea922eb0,EPL,2010-11,2010-10-03T12:00:00Z,Matchday 7,,Liverpool FC,,Blackpool FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c39b41edaa8555b1a54f05b2,EPL,2010-11,2010-10-03T12:00:00Z,Matchday 7,,Manchester City,,Newcastle United,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e32ddd0b308f2fc5f50b7027,EPL,2010-11,2010-10-03T12:00:00Z,Matchday 7,,Chelsea FC,,Arsenal FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-04940740ef7bfb2329a749e0,EPL,2010-11,2010-10-16T12:00:00Z,Matchday 8,,Arsenal FC,,Birmingham City,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-391b2c70b040199425b77444,EPL,2010-11,2010-10-16T12:00:00Z,Matchday 8,,Wolverhampton Wanderers,,West Ham United,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4d4d379ee13690fc88829860,EPL,2010-11,2010-10-16T12:00:00Z,Matchday 8,,Manchester United,,West Bromwich Albion,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8724b6a66fd7ed0f6cb5b14a,EPL,2010-11,2010-10-16T12:00:00Z,Matchday 8,,Bolton Wanderers,,Stoke City,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8a6c4d2d15566ae87836044c,EPL,2010-11,2010-10-16T12:00:00Z,Matchday 8,,Newcastle United,,Wigan Athletic,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a00ad979d1ee7d93efc72184,EPL,2010-11,2010-10-16T12:00:00Z,Matchday 8,,Fulham FC,,Tottenham Hotspur,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-cb5ab62ecf8fb9d7024b8947,EPL,2010-11,2010-10-16T12:00:00Z,Matchday 8,,Aston Villa,,Chelsea FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0e10bb38a02bd4380ab52c57,EPL,2010-11,2010-10-17T12:00:00Z,Matchday 8,,Blackpool FC,,Manchester City,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-98ca225381954e69e174fafe,EPL,2010-11,2010-10-17T12:00:00Z,Matchday 8,,Everton FC,,Liverpool FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-1ba55b3fbd36fa31cd82d195,EPL,2010-11,2010-10-18T12:00:00Z,Matchday 8,,Blackburn Rovers,,Sunderland AFC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0aa59b8b5e9bc809ac02dd91,EPL,2010-11,2010-10-23T12:00:00Z,Matchday 9,,Sunderland AFC,,Aston Villa,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0bacf79e8a7d97d559b1d5ec,EPL,2010-11,2010-10-23T12:00:00Z,Matchday 9,,Tottenham Hotspur,,Everton FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0fa19442aa6293dc277c9f9a,EPL,2010-11,2010-10-23T12:00:00Z,Matchday 9,,West Bromwich Albion,,Fulham FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-41ce718aa5f1885556fd9c35,EPL,2010-11,2010-10-23T12:00:00Z,Matchday 9,,Chelsea FC,,Wolverhampton Wanderers,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8321bce0e290f128400d42a0,EPL,2010-11,2010-10-23T12:00:00Z,Matchday 9,,West Ham United,,Newcastle United,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-96b4d40c2ba83a77366ee2b0,EPL,2010-11,2010-10-23T12:00:00Z,Matchday 9,,Birmingham City,,Blackpool FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ea5769c92fc458446c5842b5,EPL,2010-11,2010-10-23T12:00:00Z,Matchday 9,,Wigan Athletic,,Bolton Wanderers,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-268f09e867371d5263efc661,EPL,2010-11,2010-10-24T12:00:00Z,Matchday 9,,Stoke City,,Manchester United,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-9bcb0050a090f91f61a16318,EPL,2010-11,2010-10-24T12:00:00Z,Matchday 9,,Manchester City,,Arsenal FC,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-dc02682db88c1ac266cf7b4b,EPL,2010-11,2010-10-24T12:00:00Z,Matchday 9,,Liverpool FC,,Blackburn Rovers,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-99b38f32b4180f3b19c4c5fe,EPL,2010-11,2010-10-30T12:00:00Z,Matchday 10,,Fulham FC,,Wigan Athletic,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a381c90e47b7a12204f3e96f,EPL,2010-11,2010-10-30T12:00:00Z,Matchday 10,,Everton FC,,Stoke City,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a80c82a81a723194b38096fa,EPL,2010-11,2010-10-30T12:00:00Z,Matchday 10,,Blackburn Rovers,,Chelsea FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c8339a339d23682312b0ed6e,EPL,2010-11,2010-10-30T12:00:00Z,Matchday 10,,Manchester United,,Tottenham Hotspur,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d31a779da6afd84037b908cb,EPL,2010-11,2010-10-30T12:00:00Z,Matchday 10,,Wolverhampton Wanderers,,Manchester City,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f4fdc05c768b0e19406868be,EPL,2010-11,2010-10-30T12:00:00Z,Matchday 10,,Arsenal FC,,West Ham United,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2348d34b346f6bf6262df430,EPL,2010-11,2010-10-31T12:00:00Z,Matchday 10,,Aston Villa,,Birmingham City,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-5925a9818bde3ff4a81f8aa2,EPL,2010-11,2010-10-31T12:00:00Z,Matchday 10,,Newcastle United,,Sunderland AFC,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-5cadadc2227745b2a8c67d10,EPL,2010-11,2010-10-31T12:00:00Z,Matchday 10,,Bolton Wanderers,,Liverpool FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e922e28ec6e10e708e828561,EPL,2010-11,2010-11-01T12:00:00Z,Matchday 10,,Blackpool FC,,West Bromwich Albion,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-114eb413cef7c5939fa99c69,EPL,2010-11,2010-11-06T12:00:00Z,Matchday 11,,Sunderland AFC,,Stoke City,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-15500fbd2f1a6422f8253466,EPL,2010-11,2010-11-06T12:00:00Z,Matchday 11,,Fulham FC,,Aston Villa,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4059898b25c0d2583e2fceb1,EPL,2010-11,2010-11-06T12:00:00Z,Matchday 11,,Blackburn Rovers,,Wigan Athletic,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4d8f3f6e99cde29cae28ca36,EPL,2010-11,2010-11-06T12:00:00Z,Matchday 11,,Bolton Wanderers,,Tottenham Hotspur,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-83cabe7b8ce04c670a210525,EPL,2010-11,2010-11-06T12:00:00Z,Matchday 11,,Manchester United,,Wolverhampton Wanderers,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a700bfc347fd57623aa4b395,EPL,2010-11,2010-11-06T12:00:00Z,Matchday 11,,Birmingham City,,West Ham United,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a7a416deb91d7f09e068329b,EPL,2010-11,2010-11-06T12:00:00Z,Matchday 11,,Blackpool FC,,Everton FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-52f3d076a645ee32654a350c,EPL,2010-11,2010-11-07T12:00:00Z,Matchday 11,,West Bromwich Albion,,Manchester City,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-9bc81909a9b5b568e14e3d2d,EPL,2010-11,2010-11-07T12:00:00Z,Matchday 11,,Liverpool FC,,Chelsea FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a5ac031c457ae9065957aabe,EPL,2010-11,2010-11-07T12:00:00Z,Matchday 11,,Arsenal FC,,Newcastle United,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-1b36e5ad7b2bd853db30492e,EPL,2010-11,2010-11-09T12:00:00Z,Matchday 12,,Tottenham Hotspur,,Sunderland AFC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-80bb0105989384729afcbe48,EPL,2010-11,2010-11-09T12:00:00Z,Matchday 12,,Stoke City,,Birmingham City,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-1de7f04aef04b2e425a509ac,EPL,2010-11,2010-11-10T12:00:00Z,Matchday 12,,Aston Villa,,Blackpool FC,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-5efac7ecee013b3a44bfdf7b,EPL,2010-11,2010-11-10T12:00:00Z,Matchday 12,,Everton FC,,Bolton Wanderers,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-68ab1adf4a85a82f1e5ba05d,EPL,2010-11,2010-11-10T12:00:00Z,Matchday 12,,Wigan Athletic,,Liverpool FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-735fdb2d7b87d25aa75d9455,EPL,2010-11,2010-11-10T12:00:00Z,Matchday 12,,Manchester City,,Manchester United,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-9d43722fc369a41f2010a798,EPL,2010-11,2010-11-10T12:00:00Z,Matchday 12,,West Ham United,,West Bromwich Albion,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-bdc5651cc0497321b9736728,EPL,2010-11,2010-11-10T12:00:00Z,Matchday 12,,Wolverhampton Wanderers,,Arsenal FC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ec699c04a3ade1aa9f12fc77,EPL,2010-11,2010-11-10T12:00:00Z,Matchday 12,,Chelsea FC,,Fulham FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f3f7164fe376848ef2d368d4,EPL,2010-11,2010-11-10T12:00:00Z,Matchday 12,,Newcastle United,,Blackburn Rovers,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-23e8e14e6a10063ca882b4d4,EPL,2010-11,2010-11-13T12:00:00Z,Matchday 13,,Wolverhampton Wanderers,,Bolton Wanderers,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-5036ecf927ab522bf3e3285c,EPL,2010-11,2010-11-13T12:00:00Z,Matchday 13,,Wigan Athletic,,West Bromwich Albion,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-5d7f788274fe435fcba5843b,EPL,2010-11,2010-11-13T12:00:00Z,Matchday 13,,Newcastle United,,Fulham FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7bac7d87b4517ad578be9ca4,EPL,2010-11,2010-11-13T12:00:00Z,Matchday 13,,West Ham United,,Blackpool FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7bc2cfc54bd9bd2cc38d94ae,EPL,2010-11,2010-11-13T12:00:00Z,Matchday 13,,Tottenham Hotspur,,Blackburn Rovers,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-86ac17b780f3c921971f9518,EPL,2010-11,2010-11-13T12:00:00Z,Matchday 13,,Manchester City,,Birmingham City,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ad66424aa32a6f110918a4d8,EPL,2010-11,2010-11-13T12:00:00Z,Matchday 13,,Stoke City,,Liverpool FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f082811c0b5bd2f95c5a6901,EPL,2010-11,2010-11-13T12:00:00Z,Matchday 13,,Aston Villa,,Manchester United,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0c3acf7ebc4eb394ea95e604,EPL,2010-11,2010-11-14T12:00:00Z,Matchday 13,,Everton FC,,Arsenal FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3d1980a178751a7f2ddd37b4,EPL,2010-11,2010-11-14T12:00:00Z,Matchday 13,,Chelsea FC,,Sunderland AFC,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-318c77902c4e8758de4e8ee7,EPL,2010-11,2010-11-20T12:00:00Z,Matchday 14,,Birmingham City,,Chelsea FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-44fb2048fee91f25b8b1a3cf,EPL,2010-11,2010-11-20T12:00:00Z,Matchday 14,,Bolton Wanderers,,Newcastle United,,5,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-501ad793c44c3b4421d846c5,EPL,2010-11,2010-11-20T12:00:00Z,Matchday 14,,West Bromwich Albion,,Stoke City,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-9883092ddf09ed266ab0447b,EPL,2010-11,2010-11-20T12:00:00Z,Matchday 14,,Blackpool FC,,Wolverhampton Wanderers,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a834579e863ddc03fea803e1,EPL,2010-11,2010-11-20T12:00:00Z,Matchday 14,,Manchester United,,Wigan Athletic,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-bd940b6d01918c28899c7e6e,EPL,2010-11,2010-11-20T12:00:00Z,Matchday 14,,Liverpool FC,,West Ham United,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c997f681ecddcd40d1ebceed,EPL,2010-11,2010-11-20T12:00:00Z,Matchday 14,,Arsenal FC,,Tottenham Hotspur,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3e60eef6a66b25b8318468ce,EPL,2010-11,2010-11-21T12:00:00Z,Matchday 14,,Blackburn Rovers,,Aston Villa,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-67cdb18660354ac95d51cac1,EPL,2010-11,2010-11-21T12:00:00Z,Matchday 14,,Fulham FC,,Manchester City,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-5c9445283fdd6a866df1590a,EPL,2010-11,2010-11-22T12:00:00Z,Matchday 14,,Sunderland AFC,,Everton FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-003f8bf327a2cb21d2ebc626,EPL,2010-11,2010-11-27T12:00:00Z,Matchday 15,,Wolverhampton Wanderers,,Sunderland AFC,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-1ed1110352e9f03aa10fee7a,EPL,2010-11,2010-11-27T12:00:00Z,Matchday 15,,Aston Villa,,Arsenal FC,,2,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2b68fc80bc2d1b37a21a51ca,EPL,2010-11,2010-11-27T12:00:00Z,Matchday 15,,Bolton Wanderers,,Blackpool FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-49491285c91d3a215256c877,EPL,2010-11,2010-11-27T12:00:00Z,Matchday 15,,Manchester United,,Blackburn Rovers,,7,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c115c01556bf00fc2532fb0f,EPL,2010-11,2010-11-27T12:00:00Z,Matchday 15,,West Ham United,,Wigan Athletic,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d4479377a3e0dedfcf6a44eb,EPL,2010-11,2010-11-27T12:00:00Z,Matchday 15,,Stoke City,,Manchester City,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ecdfc74d1971dbde7debac2f,EPL,2010-11,2010-11-27T12:00:00Z,Matchday 15,,Fulham FC,,Birmingham City,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-fac830fcd4573cea1a039db5,EPL,2010-11,2010-11-27T12:00:00Z,Matchday 15,,Everton FC,,West Bromwich Albion,,1,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-338435cd47db45756e6b2d9f,EPL,2010-11,2010-11-28T12:00:00Z,Matchday 15,,Newcastle United,,Chelsea FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-871f96c97135da9932543af1,EPL,2010-11,2010-11-28T12:00:00Z,Matchday 15,,Tottenham Hotspur,,Liverpool FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4542eafde3fc43ee9cb48162,EPL,2010-11,2010-12-04T12:00:00Z,Matchday 16,,Birmingham City,,Tottenham Hotspur,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-5c643cd11a49a9a035b827d1,EPL,2010-11,2010-12-04T12:00:00Z,Matchday 16,,Wigan Athletic,,Stoke City,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8474dddff7fa64671ab538ff,EPL,2010-11,2010-12-04T12:00:00Z,Matchday 16,,Chelsea FC,,Everton FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-938b327a123929a9ba07ac99,EPL,2010-11,2010-12-04T12:00:00Z,Matchday 16,,Manchester City,,Bolton Wanderers,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a87c68f3f37a2651c5965da8,EPL,2010-11,2010-12-04T12:00:00Z,Matchday 16,,Blackburn Rovers,,Wolverhampton Wanderers,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e163e76f2ce372ca090e2758,EPL,2010-11,2010-12-04T12:00:00Z,Matchday 16,,Arsenal FC,,Fulham FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-30919ca2fd050dd3d7969c3c,EPL,2010-11,2010-12-05T12:00:00Z,Matchday 16,,West Bromwich Albion,,Newcastle United,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-9b78e53aefabed5bd5cb0005,EPL,2010-11,2010-12-05T12:00:00Z,Matchday 16,,Sunderland AFC,,West Ham United,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-28112bbf1738a73394b77847,EPL,2010-11,2010-12-06T12:00:00Z,Matchday 16,,Liverpool FC,,Aston Villa,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3c9a6192b0519d2382889d48,EPL,2010-11,2010-12-11T12:00:00Z,Matchday 17,,West Ham United,,Manchester City,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-48ac1d0041ddff8a5bc4870f,EPL,2010-11,2010-12-11T12:00:00Z,Matchday 17,,Aston Villa,,West Bromwich Albion,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-4a857d2ad018d98b4d31f9c6,EPL,2010-11,2010-12-11T12:00:00Z,Matchday 17,,Stoke City,,Blackpool FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-715c68f30146d47bc03cd9ba,EPL,2010-11,2010-12-11T12:00:00Z,Matchday 17,,Everton FC,,Wigan Athletic,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-bef9501397a8d4eadade7b74,EPL,2010-11,2010-12-11T12:00:00Z,Matchday 17,,Newcastle United,,Liverpool FC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e647ec0b73540559f4334e03,EPL,2010-11,2010-12-11T12:00:00Z,Matchday 17,,Fulham FC,,Sunderland AFC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-12b1eb605707fbaaa4fe18f0,EPL,2010-11,2010-12-12T12:00:00Z,Matchday 17,,Wolverhampton Wanderers,,Birmingham City,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-41e39df3f95b58638781a533,EPL,2010-11,2010-12-12T12:00:00Z,Matchday 17,,Tottenham Hotspur,,Chelsea FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-cae0dfe9c3a61b62d645af03,EPL,2010-11,2010-12-12T12:00:00Z,Matchday 17,,Bolton Wanderers,,Blackburn Rovers,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-319f23538e7a14bdb7e6e87b,EPL,2010-11,2010-12-13T12:00:00Z,Matchday 17,,Manchester United,,Arsenal FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6f624e754da366bfca7594fc,EPL,2010-11,2010-12-18T12:00:00Z,Matchday 18,,Sunderland AFC,,Bolton Wanderers,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f8e7fdb9b8084d5d6ec17bde,EPL,2010-11,2010-12-18T12:00:00Z,Matchday 18,,Blackburn Rovers,,West Ham United,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2a28244cc927616264883641,EPL,2010-11,2010-12-20T12:00:00Z,Matchday 18,,Manchester City,,Everton FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-39d6b1453c1e5c18360167f1,EPL,2010-11,2010-12-26T12:00:00Z,Matchday 19,,Fulham FC,,West Ham United,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8648cdf03df2d50fac655a71,EPL,2010-11,2010-12-26T12:00:00Z,Matchday 19,,Blackburn Rovers,,Stoke City,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8701231db407b713681e4296,EPL,2010-11,2010-12-26T12:00:00Z,Matchday 19,,Aston Villa,,Tottenham Hotspur,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c85301585ccd1ce1763ba24c,EPL,2010-11,2010-12-26T12:00:00Z,Matchday 19,,Manchester United,,Sunderland AFC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d6a6ab767c74ea1d9f953c88,EPL,2010-11,2010-12-26T12:00:00Z,Matchday 19,,Wolverhampton Wanderers,,Wigan Athletic,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-dd00944a736795378c01bc72,EPL,2010-11,2010-12-26T12:00:00Z,Matchday 19,,Newcastle United,,Manchester City,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-efa70a7702f90f77d8aa6ff4,EPL,2010-11,2010-12-26T12:00:00Z,Matchday 19,,Bolton Wanderers,,West Bromwich Albion,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2074c7f76d1a0509f8047317,EPL,2010-11,2010-12-27T12:00:00Z,Matchday 19,,Arsenal FC,,Chelsea FC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-127298cdadb1833b92ad4794,EPL,2010-11,2010-12-28T12:00:00Z,Matchday 20,,Stoke City,,Fulham FC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-68e7cb660f020fe73567688a,EPL,2010-11,2010-12-28T12:00:00Z,Matchday 20,,West Bromwich Albion,,Blackburn Rovers,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8509c46502a2aaea19610ed5,EPL,2010-11,2010-12-28T12:00:00Z,Matchday 20,,West Ham United,,Everton FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-89d75fd89fed7612d94df31c,EPL,2010-11,2010-12-28T12:00:00Z,Matchday 20,,Tottenham Hotspur,,Newcastle United,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-959680ada85f58655c27bdc2,EPL,2010-11,2010-12-28T12:00:00Z,Matchday 20,,Birmingham City,,Manchester United,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b4084aecbff63121fe02017e,EPL,2010-11,2010-12-28T12:00:00Z,Matchday 20,,Sunderland AFC,,Blackpool FC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b8c3797d3f48e54f604d15d4,EPL,2010-11,2010-12-28T12:00:00Z,Matchday 20,,Manchester City,,Aston Villa,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-1bd42b427d79dc8890ac41e5,EPL,2010-11,2010-12-29T12:00:00Z,Matchday 20,,Wigan Athletic,,Arsenal FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-21f9466b2e1c27e1809053bd,EPL,2010-11,2010-12-29T12:00:00Z,Matchday 20,,Chelsea FC,,Bolton Wanderers,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3828f0f84daf401d871ed2d5,EPL,2010-11,2010-12-29T12:00:00Z,Matchday 20,,Liverpool FC,,Wolverhampton Wanderers,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-08e24f06c5330910fadcb163,EPL,2010-11,2011-01-01T12:00:00Z,Matchday 21,,Sunderland AFC,,Blackburn Rovers,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-117b4c30e0b323d765afd3c6,EPL,2010-11,2011-01-01T12:00:00Z,Matchday 21,,West Ham United,,Wolverhampton Wanderers,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2ad295392488118599a5c7fd,EPL,2010-11,2011-01-01T12:00:00Z,Matchday 21,,Tottenham Hotspur,,Fulham FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3f0e3d50c8ad6b3728115d2d,EPL,2010-11,2011-01-01T12:00:00Z,Matchday 21,,West Bromwich Albion,,Manchester United,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-507b8f7bd4f8cd6598f2dd8c,EPL,2010-11,2011-01-01T12:00:00Z,Matchday 21,,Stoke City,,Everton FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-53cb90eab845664d25dfb51b,EPL,2010-11,2011-01-01T12:00:00Z,Matchday 21,,Birmingham City,,Arsenal FC,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c03c8ca933333839cdd1cb1b,EPL,2010-11,2011-01-01T12:00:00Z,Matchday 21,,Manchester City,,Blackpool FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f95be2593054fb095a90623d,EPL,2010-11,2011-01-01T12:00:00Z,Matchday 21,,Liverpool FC,,Bolton Wanderers,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-230d063a3bcf937ecf4b79fb,EPL,2010-11,2011-01-02T12:00:00Z,Matchday 21,,Chelsea FC,,Aston Villa,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-28aa9807b45e5343a0e236f8,EPL,2010-11,2011-01-02T12:00:00Z,Matchday 21,,Wigan Athletic,,Newcastle United,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2c040b1f67ae27cdb9cf0763,EPL,2010-11,2011-01-04T12:00:00Z,Matchday 22,,Fulham FC,,West Bromwich Albion,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-41735582d358ce635528f517,EPL,2010-11,2011-01-04T12:00:00Z,Matchday 22,,Manchester United,,Stoke City,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f7b9c130c7871a9a4c29a006,EPL,2010-11,2011-01-04T12:00:00Z,Matchday 22,,Blackpool FC,,Birmingham City,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2c08a19f4cbb7b99cf25c12b,EPL,2010-11,2011-01-05T12:00:00Z,Matchday 22,,Blackburn Rovers,,Liverpool FC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2d3cca2a331ae4b407c348c8,EPL,2010-11,2011-01-05T12:00:00Z,Matchday 22,,Bolton Wanderers,,Wigan Athletic,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a4e919eefbf7b59e26f58685,EPL,2010-11,2011-01-05T12:00:00Z,Matchday 22,,Aston Villa,,Sunderland AFC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b266703dba8287c5ea7b9e7d,EPL,2010-11,2011-01-05T12:00:00Z,Matchday 22,,Wolverhampton Wanderers,,Chelsea FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b7429114e84dbc2dc2f71604,EPL,2010-11,2011-01-05T12:00:00Z,Matchday 22,,Newcastle United,,West Ham United,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d38721bf5c6bc9eb3c0bfa09,EPL,2010-11,2011-01-05T12:00:00Z,Matchday 22,,Arsenal FC,,Manchester City,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d4fd218db26c96ef50e354c0,EPL,2010-11,2011-01-05T12:00:00Z,Matchday 22,,Everton FC,,Tottenham Hotspur,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-cb284b06a9877625bc3714b5,EPL,2010-11,2011-01-12T12:00:00Z,Matchday 19,,Blackpool FC,,Liverpool FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-107dc75cf3af9d45ef695ae5,EPL,2010-11,2011-01-15T12:00:00Z,Matchday 23,,West Bromwich Albion,,Blackpool FC,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6870f793412d28d2cadd7f51,EPL,2010-11,2011-01-15T12:00:00Z,Matchday 23,,Wigan Athletic,,Fulham FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d185cf0ba59333c66cc766bb,EPL,2010-11,2011-01-15T12:00:00Z,Matchday 23,,Stoke City,,Bolton Wanderers,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d3c2886950113a9de668fe26,EPL,2010-11,2011-01-15T12:00:00Z,Matchday 23,,Chelsea FC,,Blackburn Rovers,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-efc944b5adcb24b3782dd19d,EPL,2010-11,2011-01-15T12:00:00Z,Matchday 23,,West Ham United,,Arsenal FC,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f2d727ca5f9016dc622d0ef0,EPL,2010-11,2011-01-15T12:00:00Z,Matchday 23,,Manchester City,,Wolverhampton Wanderers,,4,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0870eee6e500289ff714cbe8,EPL,2010-11,2011-01-16T12:00:00Z,Matchday 23,,Tottenham Hotspur,,Manchester United,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-14a9eb78488418bc41c44441,EPL,2010-11,2011-01-16T12:00:00Z,Matchday 23,,Liverpool FC,,Everton FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7a8ac09cbadd5b64c61da043,EPL,2010-11,2011-01-16T12:00:00Z,Matchday 23,,Birmingham City,,Aston Villa,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c2b7df6b2f13d5883fa2a402,EPL,2010-11,2011-01-16T12:00:00Z,Matchday 23,,Sunderland AFC,,Newcastle United,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-1c24695a2e1676d8a40d752f,EPL,2010-11,2011-01-22T12:00:00Z,Matchday 24,,Manchester United,,Birmingham City,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-218b5f563c3a96dfc8fbf17e,EPL,2010-11,2011-01-22T12:00:00Z,Matchday 24,,Fulham FC,,Stoke City,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2850d33936611f594ef5b5d6,EPL,2010-11,2011-01-22T12:00:00Z,Matchday 24,,Everton FC,,West Ham United,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-48c16ab81abd1c83808eb177,EPL,2010-11,2011-01-22T12:00:00Z,Matchday 24,,Arsenal FC,,Wigan Athletic,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-726c45bc1a2c7de5bb76fb34,EPL,2010-11,2011-01-22T12:00:00Z,Matchday 24,,Wolverhampton Wanderers,,Liverpool FC,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d08c4b166a023d306477f06c,EPL,2010-11,2011-01-22T12:00:00Z,Matchday 24,,Newcastle United,,Tottenham Hotspur,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ed4828f66a105bcb9c1cb1f8,EPL,2010-11,2011-01-22T12:00:00Z,Matchday 24,,Blackpool FC,,Sunderland AFC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f09c3d04eb9c2175ac8e54e0,EPL,2010-11,2011-01-22T12:00:00Z,Matchday 24,,Aston Villa,,Manchester City,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a68e89f7ed22e86ff1a9ded9,EPL,2010-11,2011-01-23T12:00:00Z,Matchday 24,,Blackburn Rovers,,West Bromwich Albion,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-80969dead5b92b02b5b4c1c8,EPL,2010-11,2011-01-24T12:00:00Z,Matchday 24,,Bolton Wanderers,,Chelsea FC,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d5828f19695cd18b58df53f8,EPL,2010-11,2011-01-25T12:00:00Z,Matchday 18,,Wigan Athletic,,Aston Villa,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-eb1f50e49f25ad097401cde9,EPL,2010-11,2011-01-25T12:00:00Z,Matchday 16,,Blackpool FC,,Manchester United,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-502a9d3fabca8b45d8ab3351,EPL,2010-11,2011-01-26T12:00:00Z,Matchday 18,,Liverpool FC,,Fulham FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-04d1900231cad176945abb9f,EPL,2010-11,2011-02-01T12:00:00Z,Matchday 25,,Arsenal FC,,Everton FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-49b89b5603aaaeca909c735e,EPL,2010-11,2011-02-01T12:00:00Z,Matchday 25,,Manchester United,,Aston Villa,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c24a8ce72e3b8338a0f1a767,EPL,2010-11,2011-02-01T12:00:00Z,Matchday 25,,West Bromwich Albion,,Wigan Athletic,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f84ea6331a2e2ecb7e210862,EPL,2010-11,2011-02-01T12:00:00Z,Matchday 25,,Sunderland AFC,,Chelsea FC,,2,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-1a32a576452a0b88d792bae0,EPL,2010-11,2011-02-02T12:00:00Z,Matchday 25,,Liverpool FC,,Stoke City,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7d144a21808cf7c413ec9500,EPL,2010-11,2011-02-02T12:00:00Z,Matchday 25,,Bolton Wanderers,,Wolverhampton Wanderers,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-89e3adaf183d1ee3bb46733b,EPL,2010-11,2011-02-02T12:00:00Z,Matchday 25,,Blackpool FC,,West Ham United,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-902e5259d1bbba5c0476d3f7,EPL,2010-11,2011-02-02T12:00:00Z,Matchday 25,,Birmingham City,,Manchester City,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-97825e63a1cfd0ba768ff001,EPL,2010-11,2011-02-02T12:00:00Z,Matchday 25,,Fulham FC,,Newcastle United,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d330e53d63d27e06976a7ef0,EPL,2010-11,2011-02-02T12:00:00Z,Matchday 25,,Blackburn Rovers,,Tottenham Hotspur,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-177d39a7b29ed992fa6a5d1d,EPL,2010-11,2011-02-05T12:00:00Z,Matchday 26,,Wolverhampton Wanderers,,Manchester United,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3863273b4700b2a6fd9131f8,EPL,2010-11,2011-02-05T12:00:00Z,Matchday 26,,Manchester City,,West Bromwich Albion,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-47f9d9c5948593ebc020ad03,EPL,2010-11,2011-02-05T12:00:00Z,Matchday 26,,Wigan Athletic,,Blackburn Rovers,,4,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-69bf869b4b338111070e4dad,EPL,2010-11,2011-02-05T12:00:00Z,Matchday 26,,Stoke City,,Sunderland AFC,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-9c5bc92c81f32c6986048766,EPL,2010-11,2011-02-05T12:00:00Z,Matchday 26,,Tottenham Hotspur,,Bolton Wanderers,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-9f01ae6faa82c3b4492f22b7,EPL,2010-11,2011-02-05T12:00:00Z,Matchday 26,,Aston Villa,,Fulham FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b11472ac92cd06c5cf77f53f,EPL,2010-11,2011-02-05T12:00:00Z,Matchday 26,,Everton FC,,Blackpool FC,,5,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-bc09fe87ffdffc6ba43e11ac,EPL,2010-11,2011-02-05T12:00:00Z,Matchday 26,,Newcastle United,,Arsenal FC,,4,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8f49b7c562ef0b7312c15f0b,EPL,2010-11,2011-02-06T12:00:00Z,Matchday 26,,West Ham United,,Birmingham City,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-deaae42a2d4c587a0c200f4a,EPL,2010-11,2011-02-06T12:00:00Z,Matchday 26,,Chelsea FC,,Liverpool FC,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-318a12fba5c57d028ee384a1,EPL,2010-11,2011-02-12T12:00:00Z,Matchday 27,,Sunderland AFC,,Tottenham Hotspur,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-691a26ecddac25a845df50b3,EPL,2010-11,2011-02-12T12:00:00Z,Matchday 27,,Blackburn Rovers,,Newcastle United,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6bfb5ed1c79e8b7e0d3a51a0,EPL,2010-11,2011-02-12T12:00:00Z,Matchday 27,,Manchester United,,Manchester City,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6d8e6206d72c66ebc76bdf07,EPL,2010-11,2011-02-12T12:00:00Z,Matchday 27,,Blackpool FC,,Aston Villa,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-770ef6a2f1da68c515b7eebf,EPL,2010-11,2011-02-12T12:00:00Z,Matchday 27,,Birmingham City,,Stoke City,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-796b941be057f1d294ab4dcb,EPL,2010-11,2011-02-12T12:00:00Z,Matchday 27,,West Bromwich Albion,,West Ham United,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-afccc827fe4131a55c81b99a,EPL,2010-11,2011-02-12T12:00:00Z,Matchday 27,,Liverpool FC,,Wigan Athletic,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b748220bc971124cc3a3f036,EPL,2010-11,2011-02-12T12:00:00Z,Matchday 27,,Arsenal FC,,Wolverhampton Wanderers,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7d38862b602f57f08cad1926,EPL,2010-11,2011-02-13T12:00:00Z,Matchday 27,,Bolton Wanderers,,Everton FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-5ca5fcc50c27857d9d58f87b,EPL,2010-11,2011-02-14T12:00:00Z,Matchday 27,,Fulham FC,,Chelsea FC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-efa991ad86a38b1bda7fd8f3,EPL,2010-11,2011-02-15T12:00:00Z,Matchday 18,,Birmingham City,,Newcastle United,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6b064cb5e842bbaa79cd2a93,EPL,2010-11,2011-02-20T12:00:00Z,Matchday 18,,West Bromwich Albion,,Wolverhampton Wanderers,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-72da3ee8f89b4a6f90a5f2aa,EPL,2010-11,2011-02-22T12:00:00Z,Matchday 18,,Blackpool FC,,Tottenham Hotspur,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-9f3fd3418d2f702be1f62ef8,EPL,2010-11,2011-02-23T12:00:00Z,Matchday 18,,Arsenal FC,,Stoke City,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0e50847f6195d4c9edd4f862,EPL,2010-11,2011-02-26T12:00:00Z,Matchday 28,,Wolverhampton Wanderers,,Blackpool FC,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-286a71bdc24b46f5bc53b3fc,EPL,2010-11,2011-02-26T12:00:00Z,Matchday 28,,Wigan Athletic,,Manchester United,,0,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-48e4544264ed4a5cf8002853,EPL,2010-11,2011-02-26T12:00:00Z,Matchday 28,,Everton FC,,Sunderland AFC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-65e9ab39a1e83d1679b15908,EPL,2010-11,2011-02-26T12:00:00Z,Matchday 28,,Newcastle United,,Bolton Wanderers,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7a85683db8c65b2ef9979e39,EPL,2010-11,2011-02-26T12:00:00Z,Matchday 28,,Aston Villa,,Blackburn Rovers,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-09f94eaac9f0be27fa3959ac,EPL,2010-11,2011-02-27T12:00:00Z,Matchday 28,,West Ham United,,Liverpool FC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-911ec4772b7cf76605e8988d,EPL,2010-11,2011-02-27T12:00:00Z,Matchday 28,,Manchester City,,Fulham FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-939a9d5f4cb6a74e2543bbbb,EPL,2010-11,2011-02-28T12:00:00Z,Matchday 28,,Stoke City,,West Bromwich Albion,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-bb1df8caf7bf9ed6a58a0463,EPL,2010-11,2011-03-01T12:00:00Z,Matchday 18,,Chelsea FC,,Manchester United,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-409fe5e64a0e223b70486a08,EPL,2010-11,2011-03-05T12:00:00Z,Matchday 29,,Arsenal FC,,Sunderland AFC,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7cf6cd505387a17f229715d7,EPL,2010-11,2011-03-05T12:00:00Z,Matchday 29,,Bolton Wanderers,,Aston Villa,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8e5d0631c160b3c75694f5ff,EPL,2010-11,2011-03-05T12:00:00Z,Matchday 29,,Birmingham City,,West Bromwich Albion,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-aa7573ac24300bf98ed7267b,EPL,2010-11,2011-03-05T12:00:00Z,Matchday 29,,Manchester City,,Wigan Athletic,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-aca617eb0518ec04228716fb,EPL,2010-11,2011-03-05T12:00:00Z,Matchday 29,,Newcastle United,,Everton FC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b89d2856315636a610316124,EPL,2010-11,2011-03-05T12:00:00Z,Matchday 29,,West Ham United,,Stoke City,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f0ae5a13220f7a974d0cdc48,EPL,2010-11,2011-03-05T12:00:00Z,Matchday 29,,Fulham FC,,Blackburn Rovers,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3215496712fd21cca94aa0f3,EPL,2010-11,2011-03-06T12:00:00Z,Matchday 29,,Liverpool FC,,Manchester United,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-42b27c0e3292dd121a84dbde,EPL,2010-11,2011-03-06T12:00:00Z,Matchday 29,,Wolverhampton Wanderers,,Tottenham Hotspur,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-522a959f53e90407eac57ae8,EPL,2010-11,2011-03-07T12:00:00Z,Matchday 29,,Blackpool FC,,Chelsea FC,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-dde3f84a5c495561d566c03a,EPL,2010-11,2011-03-09T12:00:00Z,Matchday 19,,Everton FC,,Birmingham City,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2095201e68b9bfc757ed1d8c,EPL,2010-11,2011-03-19T12:00:00Z,Matchday 30,,Blackburn Rovers,,Blackpool FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-32c27f4e5c30a51ccedf73a6,EPL,2010-11,2011-03-19T12:00:00Z,Matchday 30,,Manchester United,,Bolton Wanderers,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-695cc32cc9d4dd23b4b99200,EPL,2010-11,2011-03-19T12:00:00Z,Matchday 30,,Aston Villa,,Wolverhampton Wanderers,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6f236366a8960f89d07d6585,EPL,2010-11,2011-03-19T12:00:00Z,Matchday 30,,Stoke City,,Newcastle United,,4,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-83ef52d4802a9d3465d9a613,EPL,2010-11,2011-03-19T12:00:00Z,Matchday 30,,Wigan Athletic,,Birmingham City,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-93d5be0aa9e5a58638d2926d,EPL,2010-11,2011-03-19T12:00:00Z,Matchday 30,,Everton FC,,Fulham FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-afd048bd142ceef3884d64aa,EPL,2010-11,2011-03-19T12:00:00Z,Matchday 30,,Tottenham Hotspur,,West Ham United,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ed0d357e21ccb0f5c20bbff8,EPL,2010-11,2011-03-19T12:00:00Z,Matchday 30,,West Bromwich Albion,,Arsenal FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-5e69f5b179165e735075dfe6,EPL,2010-11,2011-03-20T12:00:00Z,Matchday 30,,Sunderland AFC,,Liverpool FC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6692ca272d1c0bed3fa82ffd,EPL,2010-11,2011-03-20T12:00:00Z,Matchday 30,,Chelsea FC,,Manchester City,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-14c4b660ad9764a57b56ef77,EPL,2010-11,2011-04-02T12:00:00Z,Matchday 31,,Wigan Athletic,,Tottenham Hotspur,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2bd1f67bdde1bf82bf9dde3b,EPL,2010-11,2011-04-02T12:00:00Z,Matchday 31,,Birmingham City,,Bolton Wanderers,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-35cf21d5f8e6b461d55cc76e,EPL,2010-11,2011-04-02T12:00:00Z,Matchday 31,,Arsenal FC,,Blackburn Rovers,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7615d93bbb25c8e4073a3f0d,EPL,2010-11,2011-04-02T12:00:00Z,Matchday 31,,Stoke City,,Chelsea FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-766a9387f6ff349b3ab5338d,EPL,2010-11,2011-04-02T12:00:00Z,Matchday 31,,Everton FC,,Aston Villa,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-808d818e36932ca03b1dbbfb,EPL,2010-11,2011-04-02T12:00:00Z,Matchday 31,,Newcastle United,,Wolverhampton Wanderers,,4,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8eda6d43e25d94f93c064b44,EPL,2010-11,2011-04-02T12:00:00Z,Matchday 31,,West Bromwich Albion,,Liverpool FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f4c28d716955f481ce8c41c7,EPL,2010-11,2011-04-02T12:00:00Z,Matchday 31,,West Ham United,,Manchester United,,2,4,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-cfad9f3476bc5fa6125629f8,EPL,2010-11,2011-04-03T12:00:00Z,Matchday 31,,Manchester City,,Sunderland AFC,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f3f27ce03d9a400779d43804,EPL,2010-11,2011-04-03T12:00:00Z,Matchday 31,,Fulham FC,,Blackpool FC,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-189ef0407064e915aa8ccba8,EPL,2010-11,2011-04-09T12:00:00Z,Matchday 32,,Sunderland AFC,,West Bromwich Albion,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2fc1cce5f8a76c9972c451d7,EPL,2010-11,2011-04-09T12:00:00Z,Matchday 32,,Chelsea FC,,Wigan Athletic,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-44b875d0583b51298d544ff2,EPL,2010-11,2011-04-09T12:00:00Z,Matchday 32,,Blackburn Rovers,,Birmingham City,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6459b9eae3a5185ead2939ee,EPL,2010-11,2011-04-09T12:00:00Z,Matchday 32,,Tottenham Hotspur,,Stoke City,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-816c7f69a79167d4722bc3ef,EPL,2010-11,2011-04-09T12:00:00Z,Matchday 32,,Manchester United,,Fulham FC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a8748dd1bc926a785a032056,EPL,2010-11,2011-04-09T12:00:00Z,Matchday 32,,Bolton Wanderers,,West Ham United,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b0af5545aba5788fd6651e70,EPL,2010-11,2011-04-09T12:00:00Z,Matchday 32,,Wolverhampton Wanderers,,Everton FC,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-36f19f6114c66579173447d9,EPL,2010-11,2011-04-10T12:00:00Z,Matchday 32,,Aston Villa,,Newcastle United,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-9a62144803753f4d16d8a46a,EPL,2010-11,2011-04-10T12:00:00Z,Matchday 32,,Blackpool FC,,Arsenal FC,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b938f3536a50f39dc94c8a57,EPL,2010-11,2011-04-11T12:00:00Z,Matchday 32,,Liverpool FC,,Manchester City,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-357cc2028a2af477fb956824,EPL,2010-11,2011-04-16T12:00:00Z,Matchday 33,,West Ham United,,Aston Villa,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-60c30576f2ecbcb3ebc085c2,EPL,2010-11,2011-04-16T12:00:00Z,Matchday 33,,Birmingham City,,Sunderland AFC,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c22d48e7d5412dc023ba395f,EPL,2010-11,2011-04-16T12:00:00Z,Matchday 33,,West Bromwich Albion,,Chelsea FC,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e60cc2cb40b44c4324a6263a,EPL,2010-11,2011-04-16T12:00:00Z,Matchday 33,,Everton FC,,Blackburn Rovers,,2,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-f7c911540030962c56152f2a,EPL,2010-11,2011-04-16T12:00:00Z,Matchday 33,,Blackpool FC,,Wigan Athletic,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7cad570c394d2249bf61b76a,EPL,2010-11,2011-04-17T12:00:00Z,Matchday 33,,Arsenal FC,,Liverpool FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-1073dd3326d85cd00a2461f5,EPL,2010-11,2011-04-19T12:00:00Z,Matchday 33,,Newcastle United,,Manchester United,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-09bfe076287dc8a551eae763,EPL,2010-11,2011-04-20T12:00:00Z,Matchday 28,,Chelsea FC,,Birmingham City,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2b46667767c1922ef9339783,EPL,2010-11,2011-04-20T12:00:00Z,Matchday 28,,Tottenham Hotspur,,Arsenal FC,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0dd5d8c5b1af94f464987d66,EPL,2010-11,2011-04-23T12:00:00Z,Matchday 34,,Liverpool FC,,Birmingham City,,5,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-1cb2265c7a0635f0338e5011,EPL,2010-11,2011-04-23T12:00:00Z,Matchday 34,,Chelsea FC,,West Ham United,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-1cc74810d7749ecf71d2e5d4,EPL,2010-11,2011-04-23T12:00:00Z,Matchday 34,,Sunderland AFC,,Wigan Athletic,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-24ff9fe5bce31972370a8653,EPL,2010-11,2011-04-23T12:00:00Z,Matchday 34,,Manchester United,,Everton FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3d108a27cbfbcd86c85e29f3,EPL,2010-11,2011-04-23T12:00:00Z,Matchday 34,,Blackpool FC,,Newcastle United,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-46f8815e42d5d6fb2ced403f,EPL,2010-11,2011-04-23T12:00:00Z,Matchday 34,,Tottenham Hotspur,,West Bromwich Albion,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-70dd487ac95d47f74358d78f,EPL,2010-11,2011-04-23T12:00:00Z,Matchday 34,,Aston Villa,,Stoke City,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e37f29a0c026d8ba983be920,EPL,2010-11,2011-04-23T12:00:00Z,Matchday 34,,Wolverhampton Wanderers,,Fulham FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-ded8bd016ddfce960e6bbb98,EPL,2010-11,2011-04-24T12:00:00Z,Matchday 34,,Bolton Wanderers,,Arsenal FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a457dad224899138ef0e0266,EPL,2010-11,2011-04-25T12:00:00Z,Matchday 34,,Blackburn Rovers,,Manchester City,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-771704fd1206d96ae9f96f3b,EPL,2010-11,2011-04-26T12:00:00Z,Matchday 33,,Stoke City,,Wolverhampton Wanderers,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-df70c09f8fa026382725ce7e,EPL,2010-11,2011-04-27T12:00:00Z,Matchday 33,,Fulham FC,,Bolton Wanderers,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-104a3f1dc7299433367ea80d,EPL,2010-11,2011-04-30T12:00:00Z,Matchday 35,,Blackburn Rovers,,Bolton Wanderers,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-67fb8aca02ea6d858c95df4e,EPL,2010-11,2011-04-30T12:00:00Z,Matchday 35,,Chelsea FC,,Tottenham Hotspur,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6fb164316cbe28cfb7567319,EPL,2010-11,2011-04-30T12:00:00Z,Matchday 35,,Sunderland AFC,,Fulham FC,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-9b58c5d05282369da85e4325,EPL,2010-11,2011-04-30T12:00:00Z,Matchday 35,,Wigan Athletic,,Everton FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d3b5f727d8ce783ae55a8787,EPL,2010-11,2011-04-30T12:00:00Z,Matchday 35,,Blackpool FC,,Stoke City,,0,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-fe9c7939e267b3083d335690,EPL,2010-11,2011-04-30T12:00:00Z,Matchday 35,,West Bromwich Albion,,Aston Villa,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-83bee85019e4e5b25478d19a,EPL,2010-11,2011-05-01T12:00:00Z,Matchday 35,,Birmingham City,,Wolverhampton Wanderers,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b3dcfac2057a872f4ac6906b,EPL,2010-11,2011-05-01T12:00:00Z,Matchday 35,,Liverpool FC,,Newcastle United,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b4b54ba70944d1f207dca60d,EPL,2010-11,2011-05-01T12:00:00Z,Matchday 35,,Manchester City,,West Ham United,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d4f9d05eeef414618c5f1ad5,EPL,2010-11,2011-05-01T12:00:00Z,Matchday 35,,Arsenal FC,,Manchester United,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-2c418102ee4100bc954ed688,EPL,2010-11,2011-05-07T12:00:00Z,Matchday 36,,Aston Villa,,Wigan Athletic,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-6c3f238d5caf3aa1e33f7f4c,EPL,2010-11,2011-05-07T12:00:00Z,Matchday 36,,Tottenham Hotspur,,Blackpool FC,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-9d710c766a897f1b9c68fbcb,EPL,2010-11,2011-05-07T12:00:00Z,Matchday 36,,Everton FC,,Manchester City,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a43ce1f2e5d8402f5c8f7890,EPL,2010-11,2011-05-07T12:00:00Z,Matchday 36,,Bolton Wanderers,,Sunderland AFC,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d065d1de15d3e410dc51ec39,EPL,2010-11,2011-05-07T12:00:00Z,Matchday 36,,West Ham United,,Blackburn Rovers,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e14cd7997a9e45a754c3626e,EPL,2010-11,2011-05-07T12:00:00Z,Matchday 36,,Newcastle United,,Birmingham City,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-166bff90a2ed42bede22456c,EPL,2010-11,2011-05-08T12:00:00Z,Matchday 36,,Manchester United,,Chelsea FC,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c53068666b8c0a010cda0b7c,EPL,2010-11,2011-05-08T12:00:00Z,Matchday 36,,Wolverhampton Wanderers,,West Bromwich Albion,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-e38b8e81fbab3a15f6632f5a,EPL,2010-11,2011-05-08T12:00:00Z,Matchday 36,,Stoke City,,Arsenal FC,,3,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-718dd4d910732201f15cc6aa,EPL,2010-11,2011-05-09T12:00:00Z,Matchday 36,,Fulham FC,,Liverpool FC,,2,5,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d81bb73764c37a0e1676cd71,EPL,2010-11,2011-05-10T12:00:00Z,Matchday 33,,Manchester City,,Tottenham Hotspur,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-15fce50a095fd4db7211811e,EPL,2010-11,2011-05-14T12:00:00Z,Matchday 37,,Blackpool FC,,Bolton Wanderers,,4,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-67d0acfaf02b1c8287982a3a,EPL,2010-11,2011-05-14T12:00:00Z,Matchday 37,,Blackburn Rovers,,Manchester United,,1,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a52e1d6a48d2dd9cbe76a2ae,EPL,2010-11,2011-05-14T12:00:00Z,Matchday 37,,Sunderland AFC,,Wolverhampton Wanderers,,1,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b0b967ec0686950d5c7beed5,EPL,2010-11,2011-05-14T12:00:00Z,Matchday 37,,West Bromwich Albion,,Everton FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-1a6643faff9fa961ed566d82,EPL,2010-11,2011-05-15T12:00:00Z,Matchday 37,,Liverpool FC,,Tottenham Hotspur,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3a91016a816b330507876e41,EPL,2010-11,2011-05-15T12:00:00Z,Matchday 37,,Chelsea FC,,Newcastle United,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-7d0880672ffc570bc10b9b01,EPL,2010-11,2011-05-15T12:00:00Z,Matchday 37,,Birmingham City,,Fulham FC,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-936cd43323d8062f5bef5b81,EPL,2010-11,2011-05-15T12:00:00Z,Matchday 37,,Arsenal FC,,Aston Villa,,1,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d9235043be21c8fef9d16b41,EPL,2010-11,2011-05-15T12:00:00Z,Matchday 37,,Wigan Athletic,,West Ham United,,3,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-d1ea813bf2949df0c5a086a6,EPL,2010-11,2011-05-17T12:00:00Z,Matchday 37,,Manchester City,,Stoke City,,3,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-0d68f8eea3b6bb5a663bb581,EPL,2010-11,2011-05-22T12:00:00Z,Matchday 38,,Aston Villa,,Liverpool FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-284a71c86b8bc097bde91a62,EPL,2010-11,2011-05-22T12:00:00Z,Matchday 38,,Tottenham Hotspur,,Birmingham City,,2,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-31a4f0543b0553b639b4cd4d,EPL,2010-11,2011-05-22T12:00:00Z,Matchday 38,,Bolton Wanderers,,Manchester City,,0,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-3d7652328a9a3fb9a78ba3ef,EPL,2010-11,2011-05-22T12:00:00Z,Matchday 38,,Wolverhampton Wanderers,,Blackburn Rovers,,2,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-5b908dbfa23fcb12225dd9cf,EPL,2010-11,2011-05-22T12:00:00Z,Matchday 38,,Fulham FC,,Arsenal FC,,2,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-63c45ff7e9ad19d2bae373c0,EPL,2010-11,2011-05-22T12:00:00Z,Matchday 38,,Stoke City,,Wigan Athletic,,0,1,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-8ab7410743d1cafc0f792f3f,EPL,2010-11,2011-05-22T12:00:00Z,Matchday 38,,West Ham United,,Sunderland AFC,,0,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-a1a01c537aa2766d6491d068,EPL,2010-11,2011-05-22T12:00:00Z,Matchday 38,,Newcastle United,,West Bromwich Albion,,3,3,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-b0d42aa90f67ea275c6001c7,EPL,2010-11,2011-05-22T12:00:00Z,Matchday 38,,Everton FC,,Chelsea FC,,1,0,FINISHED,openfootball,2026-08-23T20:56:35+00:00
+epl-openfootball-c3bab2c7696777a76fdb351f,EPL,2010-11,2011-05-22T12:00:00Z,Matchday 38,,Manchester United,,Blackpool FC,,4,2,FINISHED,openfootball,2026-08-23T20:56:35+00:00
