@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0823J",
+  "tag": "Fix",
+  "title": "Aligned the in-focus collapse control",
+  "items": [
+   "The collapse arrow now follows the responsive width of the in-focus rail instead of remaining fixed at 340 pixels.",
+   "The arrow sits directly on the rail edge across supported desktop widths."
+  ]
+ },
+ {
   "date": "Build 0823I",
   "tag": "Fix",
   "title": "Compact MLB pause notice in the in-focus rail",

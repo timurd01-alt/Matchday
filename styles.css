@@ -1667,7 +1667,6 @@ body.modalOpen{overflow:hidden}.matchModal{position:fixed;inset:0;z-index:99;dis
 
 @media(min-width:1181px){
   .app{grid-template-columns:112px minmax(0,1fr) clamp(288px,22vw,320px)}
-  .railToggle{right:clamp(288px,22vw,320px)}
   .app.noinsight{grid-template-columns:112px minmax(0,1fr) 0}
   .sidebar{width:112px;padding:8px 0;overflow-x:hidden;overflow-y:auto;scrollbar-width:thin}
   .navbtn,.navExternal{width:112px;height:42px;padding:0 12px;gap:9px}
@@ -1848,6 +1847,7 @@ html{color-scheme:dark}
 .railToggle svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .18s}
 .app.noinsight .railToggle{right:0;border-radius:8px 0 0 8px}
 .app.noinsight .railToggle svg{transform:rotate(180deg)}
+@media(min-width:1181px){.app:not(.noinsight) .railToggle{right:clamp(288px,22vw,320px)}}
 @media(max-width:920px){.railToggle{display:none}}
 @media(prefers-reduced-motion:reduce){.railToggle,.railToggle svg{transition:none}}
 
