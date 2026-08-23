@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0823G",
+  "tag": "Fix",
+  "title": "Removed a dead More tab from desktop navigation",
+  "items": [
+   "More now appears only on phones, where it opens the compact navigation sheet; desktop keeps every destination directly available in the sidebar."
+  ]
+ },
+ {
   "date": "Build 0823F",
   "tag": "Fix",
   "title": "Upset Radar finally has a scorecard sample",
