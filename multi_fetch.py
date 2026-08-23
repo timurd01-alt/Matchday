@@ -100,6 +100,91 @@ def _missing_fields(key):
         return True
 
 
+# ---- pre-kickoff lock window --------------------------------------------
+# The interval tiers above answer "how often" and the anchors below answer
+# "when", but neither can promise a run lands inside a fixture's *lock window*
+# -- the couple of hours before kickoff in which pregame_context still calls a
+# fixture UPCOMING and an official forecast can still be locked. Soccer's
+# window is 2h (pregame_context.LOCK_WINDOWS_HOURS) while SOON_EVERY only
+# promises a refetch every hour, and the day-level anchors (10:00/15:00/22:30
+# UTC) are far too coarse to land inside it.
+#
+# Both gates passed and EPL 560548/560549 (kickoff 2026-08-23T13:00Z) were
+# still never locked: the last fetch was 10:38Z, the next CI run fired at
+# 11:33Z -- 55 min later, under the 1h gate -- and was skipped as "not due
+# yet", GitHub dropped the ~12:17Z scheduled run, and by the 13:00Z run
+# build_pregame_context called both fixtures "closed", so no forecast_locked
+# event was ever written for them.
+#
+# So treat an imminent kickoff as its own reason to refetch, independent of
+# the interval. Quota cost is bounded twice over: a fixture only qualifies
+# while it is genuinely inside its own competition's lock window, and it stops
+# qualifying the moment a pick exists for it -- so this can add at most one
+# fetch per run, for the couple of hours before a fixture this sport has not
+# locked yet.
+def _lock_window_hours(key):
+    try:
+        from pregame_context import lock_window_hours
+        return lock_window_hours(key)
+    except Exception:
+        return 2.0
+
+
+def _locked_fixture_ids(key):
+    """Fixture ids this sport has already written an official pick for.
+
+    picks_log_<key>.json is the committed pick record fetch_data.py writes
+    (its PICKS_FILE); no file yet simply means nothing has been locked.
+    """
+    try:
+        with open(f"picks_log_{key}.json", encoding="utf-8") as f:
+            picks = json.load(f)
+    except Exception:
+        return set()
+    if not isinstance(picks, dict):
+        return set()
+    ids = set()
+    for fixture_id, record in picks.items():
+        ids.add(str(fixture_id))
+        if isinstance(record, dict) and record.get("fixture_id") is not None:
+            ids.add(str(record["fixture_id"]))
+    return ids
+
+
+def _lock_window_due(key, now=None):
+    """True when an unlocked fixture sits inside its competition's lock window."""
+    try:
+        with open(f"data_{key}.json", encoding="utf-8") as f:
+            payload = json.load(f)
+    except Exception:
+        return False
+    current = now or datetime.datetime.now(datetime.timezone.utc)
+    locked = None
+    for m in payload.get("matches") or []:
+        if m.get("status") != "UPCOMING" or not m.get("kickoff"):
+            continue
+        try:
+            ko = datetime.datetime.fromisoformat(str(m["kickoff"]).replace("Z", "+00:00"))
+        except Exception:
+            continue
+        if ko.tzinfo is None:
+            ko = ko.replace(tzinfo=datetime.timezone.utc)
+        # Past kickoff there is nothing left to lock -- scoring urgency is
+        # already handled by PAST_DUE_SCORE_GRACE_HOURS in _interval_for.
+        context = m.get("pregame_context") or {}
+        try:
+            window = float(context["lock_window_hours"])
+        except (KeyError, TypeError, ValueError):
+            window = _lock_window_hours(key)
+        if not 0 <= (ko - current).total_seconds() / 3600.0 <= window:
+            continue
+        if locked is None:
+            locked = _locked_fixture_ids(key)
+        if str(m.get("id") or "") not in locked:
+            return True
+    return False
+
+
 # ---- per-sport anchored refresh windows ---------------------------------
 # The adaptive intervals below answer "how often", but not "when". A sport
 # whose next game is a few days out sits on the 6h tier, so on the morning of
@@ -326,10 +411,13 @@ def loop():
         now = time.time()
         for key, flag in SPORTS:
             anchor = _anchor_due(key, served_anchors.get(key))
-            if now < next_due[key] and not anchor:
+            lock_due = _lock_window_due(key)
+            if now < next_due[key] and not anchor and not lock_due:
                 continue
             if anchor:
                 print(f"  [{key}] anchored refresh window {anchor}")
+            if lock_due:
+                print(f"  [{key}] lock window refresh (unlocked fixture near kickoff)")
             ok = _run_one(key, flag)
             if ok:
                 if anchor:
@@ -364,12 +452,17 @@ def run_once(state_path=".ci_fetch_state.json", force=False):
     last_fetched = {k: v for k, v in state.items() if isinstance(v, (int, float))}
     print(f"Multi-sport fetcher (one-shot): {', '.join(k for k, _ in SPORTS)}")
     anchors_now = {k: _anchor_due(k, served_anchors.get(k)) for k, _ in SPORTS}
+    locks_now = {k: _lock_window_due(k) for k, _ in SPORTS}
     due = [(k, f) for k, f in SPORTS if force or k in FORCE_REFETCH_ONCE or not os.path.exists(f"data_{k}.json")
-           or _stale_source(k) or _missing_fields(k) or anchors_now.get(k)
+           or _stale_source(k) or _missing_fields(k) or anchors_now.get(k) or locks_now.get(k)
            or time.time() - last_fetched.get(k, 0) >= _interval_for(k)]
+    due_keys_now = {k for k, _ in due}
     for key, anchor in anchors_now.items():
-        if anchor and any(key == k for k, _ in due):
+        if anchor and key in due_keys_now:
             print(f"  [{key}] anchored refresh window {anchor}")
+    for key, lock_due in locks_now.items():
+        if lock_due and key in due_keys_now:
+            print(f"  [{key}] lock window refresh (unlocked fixture near kickoff)")
     failed = []
     degraded = []
     for i, (key, flag) in enumerate(due):
@@ -396,8 +489,7 @@ def run_once(state_path=".ci_fetch_state.json", force=False):
             failed.append(key)
         if i < len(due) - 1:
             time.sleep(SPACING)
-    due_keys = {k for k, _ in due}
-    skipped = [k for k, _ in SPORTS if k not in due_keys]
+    skipped = [k for k, _ in SPORTS if k not in due_keys_now]
     if skipped:
         print(f"  skipped (not due yet): {', '.join(skipped)}")
     if degraded:
