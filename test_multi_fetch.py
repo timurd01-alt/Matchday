@@ -253,5 +253,106 @@ class AnchoredWindowTests(unittest.TestCase):
             self.assertIn(key, multi_fetch.SPORT_ZONE, f"{key} has no schedule zone")
 
 
+class LockWindowRefreshTests(unittest.TestCase):
+    """An unlocked fixture near kickoff forces a refetch (multi_fetch._lock_window_due).
+
+    Timeline under test is the live one that lost EPL 560548 (Man City v
+    Bournemouth) and 560549 (Brighton v Aston Villa): both kicked off
+    2026-08-23T13:00Z, EPL was last fetched at 10:38Z, the next CI run fired
+    at 11:33:16Z -- 55 min later, inside the 1h SOON_EVERY gate -- and was
+    skipped as "not due yet", GitHub dropped the ~12:17Z run, and the 13:00:26Z
+    run was already past kickoff. Neither fixture ever reached the ledger.
+    """
+
+    KICKOFF = "2026-08-23T13:00:00Z"
+
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.cwd = os.getcwd()
+        os.chdir(self.temp.name)
+        self.addCleanup(os.chdir, self.cwd)
+        self._fixtures()
+
+    def _fixtures(self, status="UPCOMING"):
+        Path("data_epl.json").write_text(json.dumps({
+            "competition": "EPL",
+            "matches": [{"id": fixture_id, "status": status, "kickoff": self.KICKOFF,
+                         "pregame_context": {"lock_window_hours": 2.0}}
+                        for fixture_id in ("560548", "560549")],
+        }), encoding="utf-8")
+
+    def _picks(self, *fixture_ids):
+        Path("picks_log_epl.json").write_text(json.dumps(
+            {fid: {"fixture_id": fid, "competition": "EPL"} for fid in fixture_ids}),
+            encoding="utf-8")
+
+    def _at(self, iso):
+        return datetime.datetime.fromisoformat(iso)
+
+    def test_run_inside_the_lock_window_is_due_despite_the_hourly_gate(self):
+        # 11:33:16Z is 1h27m before kickoff: inside EPL's 2h lock window, and
+        # only 55 min after the 10:38Z fetch, so the interval gate alone
+        # skipped it.
+        self.assertTrue(multi_fetch._lock_window_due(
+            "epl", self._at("2026-08-23T11:33:16+00:00")))
+
+    def test_run_before_the_lock_window_stays_on_the_normal_cadence(self):
+        # The 10:38Z fetch was 2h22m out -- outside the window, so nothing is
+        # forced and the sport keeps paying only its usual hourly cost.
+        self.assertFalse(multi_fetch._lock_window_due(
+            "epl", self._at("2026-08-23T10:38:00+00:00")))
+
+    def test_already_locked_fixtures_do_not_force_a_refetch(self):
+        # Quota safety: once both fixtures have a committed pick, the same
+        # in-window moment must stop forcing anything.
+        self._picks("560548", "560549")
+        self.assertFalse(multi_fetch._lock_window_due(
+            "epl", self._at("2026-08-23T11:33:16+00:00")))
+
+    def test_one_still_unlocked_fixture_is_enough(self):
+        self._picks("560548")
+        self.assertTrue(multi_fetch._lock_window_due(
+            "epl", self._at("2026-08-23T11:33:16+00:00")))
+
+    def test_past_kickoff_no_longer_forces_a_lock_refresh(self):
+        # 13:00:26Z is past kickoff; nothing can be locked any more, and score
+        # urgency is _interval_for's job (PAST_DUE_SCORE_GRACE_HOURS).
+        self.assertFalse(multi_fetch._lock_window_due(
+            "epl", self._at("2026-08-23T13:00:26+00:00")))
+
+    def test_non_upcoming_fixtures_are_ignored(self):
+        self._fixtures(status="LIVE")
+        self.assertFalse(multi_fetch._lock_window_due(
+            "epl", self._at("2026-08-23T11:33:16+00:00")))
+
+    def test_missing_data_file_is_not_due(self):
+        Path("data_epl.json").unlink()
+        self.assertFalse(multi_fetch._lock_window_due(
+            "epl", self._at("2026-08-23T11:33:16+00:00")))
+
+    def test_lock_window_forces_a_sport_the_interval_gate_would_skip(self):
+        state = Path("state.json")
+        state.write_text(json.dumps({"epl": 9e9}), encoding="utf-8")  # fetched "just now"
+        runner = mock.Mock(return_value=True)
+        with mock.patch.object(multi_fetch, "SPORTS", [("epl", "--epl")]),              mock.patch.object(multi_fetch, "FORCE_REFETCH_ONCE", set()),              mock.patch.object(multi_fetch, "_missing_fields", return_value=False),              mock.patch.object(multi_fetch, "_run_one", runner),              mock.patch.object(multi_fetch, "_anchor_due", return_value=None),              mock.patch.object(multi_fetch, "_lock_window_due", return_value=True),              mock.patch("generate_posts.generate_public_content_feed", return_value=0),              mock.patch("generate_posts.regenerate_sitemap", return_value=0):
+            multi_fetch.run_once(str(state))
+        self.assertEqual(runner.call_count, 1)
+
+    def test_no_lock_window_leaves_the_interval_gate_in_charge(self):
+        state = Path("state.json")
+        state.write_text(json.dumps({"epl": 9e9}), encoding="utf-8")
+        runner = mock.Mock(return_value=True)
+        with mock.patch.object(multi_fetch, "SPORTS", [("epl", "--epl")]),              mock.patch.object(multi_fetch, "FORCE_REFETCH_ONCE", set()),              mock.patch.object(multi_fetch, "_missing_fields", return_value=False),              mock.patch.object(multi_fetch, "_run_one", runner),              mock.patch.object(multi_fetch, "_anchor_due", return_value=None),              mock.patch.object(multi_fetch, "_lock_window_due", return_value=False),              mock.patch("generate_posts.generate_public_content_feed", return_value=0),              mock.patch("generate_posts.regenerate_sitemap", return_value=0):
+            multi_fetch.run_once(str(state))
+        self.assertEqual(runner.call_count, 0)
+
+    def test_every_scheduled_sport_has_a_lock_window(self):
+        from pregame_context import LOCK_WINDOWS_HOURS
+        for key, _ in multi_fetch.SPORTS:
+            self.assertIn(key.upper(), LOCK_WINDOWS_HOURS,
+                          f"{key} has no lock window to schedule against")
+
+
 if __name__ == "__main__":
     unittest.main()
