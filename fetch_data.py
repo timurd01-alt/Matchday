@@ -1999,6 +1999,14 @@ POWER_PRIOR_FADE_GAMES = 40
 # franchise identity rather than "how good is this team right now".
 POWER_SEASON_MAX_WEIGHT = 0.45
 POWER_SEASON_FULL_TRUST_GAMES = 40
+POWER_SEASON_FULL_TRUST_BY_COMP = {
+    # A college-football regular season is only 12 games. Requiring the
+    # cross-sport 40-game default meant current results could claim at most
+    # 13.5% of the rating before bowl season, regardless of how much evidence
+    # the team had actually produced.
+    "NCAAF": 12,
+    "NCAAM": 30,
+}
 
 
 def _season_form_points(record):
@@ -2043,8 +2051,10 @@ def power_rating(name, record=None):
     season_w = 0.0
     if season is not None:
         played = int((record or {}).get("pld") or 0)
+        full_trust_games = POWER_SEASON_FULL_TRUST_BY_COMP.get(
+            COMP_KEY, POWER_SEASON_FULL_TRUST_GAMES)
         season_w = (POWER_SEASON_MAX_WEIGHT
-                    * min(1.0, played / float(POWER_SEASON_FULL_TRUST_GAMES)))
+                    * min(1.0, played / float(full_trust_games)))
     if not known:
         if elo_conf <= 0:
             # Nothing but the generic default and possibly a record.
@@ -6164,7 +6174,29 @@ def _matchday_top_25(tables):
         if key and key not in seen and not is_placeholder_team_name(team.get("name")):
             seen.add(key)
             unique.append(team)
-    unique.sort(key=lambda team: (-float(team.get("rating") or 0),
+    # Keep the established power rating as the backbone, then let current-
+    # season opponent-adjusted SRS claim up to 25% of the ordering as its
+    # sample grows. Rank-normalizing both signals avoids mixing Elo/rating and
+    # point-margin units directly. Before games are played, SRS has zero
+    # weight and the preseason list remains fully reproducible.
+    def percentile_ranks(rows, value):
+        ordered = sorted(rows, key=lambda team: (-float(value(team) or 0),
+                                                  str(team.get("name") or "")))
+        count = max(1, len(ordered) - 1)
+        return {norm(team.get("name")): (len(ordered) - 1 - index) / count
+                for index, team in enumerate(ordered)}
+
+    rating_pct = percentile_ranks(unique, lambda team: team.get("rating"))
+    srs_teams = [team for team in unique if int(team.get("srs_games") or 0) > 0]
+    srs_pct = percentile_ranks(srs_teams, lambda team: team.get("srs"))
+    for team in unique:
+        key = norm(team.get("name"))
+        srs_weight = (0.25 * min(1.0, int(team.get("srs_games") or 0) / 12.0)
+                      if key in srs_pct else 0.0)
+        team["ranking_score"] = round(
+            rating_pct.get(key, 0.0) * (1.0 - srs_weight)
+            + srs_pct.get(key, 0.0) * srs_weight, 6)
+    unique.sort(key=lambda team: (-float(team.get("ranking_score") or 0),
                                   str(team.get("name") or "")))
     rows = unique[:25]
     for rank, team in enumerate(rows, 1):
@@ -7414,6 +7446,18 @@ def build():
         if mark_stale_offseason_records(st, sports_tables, training_matches, matches, COMP_KEY):
             DIAG.append("NFL records: prior season retained as a dampened model prior; hidden as current context")
         srs_ratings = compute_srs(training_matches) if COMP["sport"] != "soccer" else {}
+        # Match cards already receive SRS below. Put the same evidence on the
+        # standings rows so the independent college Top 25 can compare every
+        # FBS/D1 team, including teams outside this run's display window.
+        if COMP_KEY in {"NCAAF", "NCAAM"}:
+            for table in sports_tables:
+                for team in table.get("teams") or []:
+                    srs = srs_ratings.get(norm(team.get("name")))
+                    if srs:
+                        team["srs"], team["srs_games"] = srs["rating"], srs["games"]
+                        rec = st.get(norm(team.get("name")))
+                        if rec is not None:
+                            rec["srs"], rec["srs_games"] = srs["rating"], srs["games"]
         rank_map = {}
         if COMP_KEY in ("NCAAF", "NCAAM") and sports_adapter:
             try:

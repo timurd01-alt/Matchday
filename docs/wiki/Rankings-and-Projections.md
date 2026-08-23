@@ -9,7 +9,7 @@ Matchday displays two separate lists:
 - **Matchday Top 25** is the site's model ranking. It uses the same public power-rating signal as Matchday's forecasts: preseason roster/class strength, self-training Elo, and current-season results with sample-size-aware weighting.
 - **AP Top 25**, **CFP Rankings**, or **Coaches Poll** is the provider-authored national poll, labeled by its actual name. It does not replace or get relabeled as Matchday's calculation.
 
-Before games begin, the Matchday ranking is necessarily driven mostly by its preseason and historical inputs. Current-season results gain weight as the sample grows.
+Before games begin, the Matchday ranking is necessarily driven mostly by its preseason and historical inputs. Current-season results gain weight across the 12-game college-football regular season and can supply up to 45% of the public power rating. Opponent-adjusted SRS enters the ranking separately, growing from zero to 25% as a team reaches 12 current-season games, so one early result cannot overwhelm the prior.
 
 The earlier offseason-only projection blended two normalized signals:
 

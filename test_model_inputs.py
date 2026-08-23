@@ -1741,6 +1741,35 @@ class ProStandingsFormattingTests(unittest.TestCase):
                          ["Model One", "Model Two", "AP Number One"])
         self.assertEqual([team["pos"] for team in table["teams"]], [1, 2, 3])
 
+    def test_matchday_top_25_adds_sample_weighted_opponent_adjustment(self):
+        tables = [{"group": "Conference", "teams": [
+            {"name": "Prior Leader", "rating": 9.0, "srs": -10.0, "srs_games": 12},
+            {"name": "Strong Schedule", "rating": 8.9, "srs": 12.0, "srs_games": 12},
+            {"name": "Thin Sample", "rating": 8.8, "srs": 5.0, "srs_games": 1},
+            {"name": "Fourth", "rating": 7.0, "srs": -2.0, "srs_games": 12},
+            {"name": "Fifth", "rating": 6.0, "srs": -8.0, "srs_games": 12},
+        ]}]
+        table = fetch_data._matchday_top_25(tables)
+        self.assertEqual(table["teams"][0]["name"], "Strong Schedule")
+        self.assertLess(table["teams"][2]["ranking_score"],
+                        table["teams"][0]["ranking_score"])
+
+    def test_ncaaf_current_season_weight_reaches_full_strength_in_twelve_games(self):
+        original_key = fetch_data.COMP_KEY
+        original_ratings = fetch_data._RATINGS
+        original_elo = fetch_data._ELO
+        try:
+            fetch_data.set_competition("NCAAF")
+            fetch_data._RATINGS = {"example": {"squad_value_m": 500, "star_value_m": 100}}
+            fetch_data._ELO = {"_version": fetch_data.ELO_STORE_VERSION, "teams": {}, "seen": {}}
+            twelve = fetch_data.power_rating("Example", {"pld": 12, "w": 12, "d": 0})
+            forty = fetch_data.power_rating("Example", {"pld": 40, "w": 40, "d": 0})
+            self.assertAlmostEqual(twelve, forty)
+        finally:
+            fetch_data.set_competition(original_key)
+            fetch_data._RATINGS = original_ratings
+            fetch_data._ELO = original_elo
+
     def test_placeholder_teams_are_not_rendered_as_a_real_division(self):
         tables = self._flat_table("MLB")
         tables[0]["teams"].append({"name": "Unknown", "pld": 0, "w": 0, "l": 0})

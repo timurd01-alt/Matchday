@@ -18,6 +18,7 @@
   const MATCH_RECAPS_PER_COMP=2;
   const SECOND_RECAP_MIN_WATCHABILITY=55;
   const REWIND_CARD_LIMIT=3;
+  const LATEST_STORY_LIMIT=10;
   const SCORE_LABELS={soccer:['goal','goals'],hockey:['goal','goals'],baseball:['run','runs'],nfl:['point','points'],ncaaf:['point','points'],basketball:['point','points']};
   // `updated` is hand-maintained: nothing regenerates it. Revise the stamp in
   // the same commit that edits the tactics or Q&A page it points at, or the
@@ -193,7 +194,7 @@
   function filteredItems(){
     const query=searchQuery.trim().toLowerCase();
     const filtered=storyItems.filter(item=>matchesSport(item)&&(activeType==='all'||item.type===activeType)&&(!query||itemSearchText(item).includes(query)));
-    if(activeType!=='all')return filtered.sort((a,b)=>activeType==='preview'?previewOrder(a,b):b.sortTime-a.sortTime).slice(0,18);
+    if(activeType!=='all')return filtered.sort((a,b)=>activeType==='preview'?previewOrder(a,b):b.sortTime-a.sortTime).slice(0,LATEST_STORY_LIMIT);
     const buckets={preview:[],recap:[],learn:[]};filtered.sort((a,b)=>b.sortTime-a.sortTime).forEach(item=>(buckets[item.type]||buckets.learn).push(item));
     buckets.preview.sort(previewOrder);
     // The evergreen explainers never change, so giving them one slot in every
@@ -201,7 +202,7 @@
     // round keeps them discoverable without crowding out dated coverage.
     const diverse=[],seen=new Set();
     let learnRound=0;
-    for(let round=0;diverse.length<18;round++){
+    for(let round=0;diverse.length<LATEST_STORY_LIMIT;round++){
       let added=false;
       const types=round%2===1?['preview','recap','learn']:['preview','recap'];
       types.forEach(type=>{
@@ -210,7 +211,7 @@
       });
       if(!added)break;
     }
-    return diverse.slice(0,18);
+    return diverse.slice(0,LATEST_STORY_LIMIT);
   }
 
   function statusMeta(item){
@@ -330,7 +331,16 @@
     if(empty)empty.hidden=!!list.length;
     if(count)count.textContent=list.length?`${list.length} ${list.length===1?'story':'stories'} in this edition`:'No matching stories';
     renderFeatured(list);
+    renderEditionGraphic(list);
     if(animate){replayMotion(grid);replayMotion(byId('featuredStory'),'featuredSwap')}
+  }
+
+  function renderEditionGraphic(list){
+    const host=byId('editionGraphic');if(!host)return;
+    const counts={preview:0,recap:0,learn:0};list.forEach(item=>{if(counts[item.type]!==undefined)counts[item.type]++});
+    const total=Math.max(1,list.length),lead=list[0];
+    const lane=(type,label,color)=>`<div class="editionLane"><div><span>${escapeHTML(label)}</span><b>${counts[type]}</b></div><i style="--lane:${Math.round(100*counts[type]/total)}%;--lane-color:${color}"></i></div>`;
+    host.innerHTML=`<div class="editionOrbit" aria-hidden="true"><span>${list.length}</span><i></i></div><div class="editionCopy"><small>EDITION MIX</small><h3>${lead?escapeHTML(lead.compLabel||'Matchday'):'The live desk'}</h3><p>${lead?escapeHTML(lead.type==='preview'?'The board is leaning forward: upcoming reads lead this edition.':lead.type==='recap'?'Results lead this edition, with the record kept in view.':'A deeper explainer leads this edition.'):'Choose a broader filter to rebuild the edition.'}</p></div><div class="editionLanes">${lane('preview','Ahead','#4cc2ff')}${lane('recap','After','#3ad17a')}${lane('learn','Deeper','#c58aff')}</div>`;
   }
 
   function filteredDatasets(){return activeSport==='all'?datasets:datasets.filter(dataset=>compMeta(dataset.compKey).sport===activeSport)}
@@ -401,6 +411,17 @@
     </article>`;
   }
 
+  function postRewindCard(post){
+    const meta=compMeta(post.comp),highlight=post.highlights?.biggest_upset||post.highlights?.best_call||post.highlights?.biggest_miss;
+    if(!highlight?.home||!highlight?.away)return '';
+    const score=String(highlight.score_line||'').split(/[-–]/).map(value=>value.trim()),hasScore=score.length===2&&score.every(value=>/^\d+$/.test(value));
+    const winner=post.highlights?.biggest_upset?.winner,call=post.highlights?.best_call,miss=post.highlights?.biggest_miss;
+    const title=`${highlight.home} vs ${highlight.away}`;
+    const takeaway=winner?`${winner} supplied the edition's biggest upset.`:call?.pick?`${call.pick} was the clearest model call in the published recap.`:`${miss?.pick||'The model call'} was the miss worth revisiting.`;
+    const titleId=`rewind-post-${String(post.id||post.slug).replace(/[^a-zA-Z0-9_-]/g,'-')}`;
+    return `<article class="rewindCard rewindFromPost" aria-labelledby="${escapeHTML(titleId)}"><div class="rewindVisual"><span class="rewindFinal">Published recap</span><div class="rewindMatchup"><div class="rewindTeam"><span class="rewindInitials">${escapeHTML(teamInitials(highlight.home))}</span><span class="rewindTeamName">${escapeHTML(highlight.home)}</span><span class="rewindScore">${hasScore?escapeHTML(score[0]):'—'}</span></div><span class="rewindVs">–</span><div class="rewindTeam"><span class="rewindInitials">${escapeHTML(teamInitials(highlight.away))}</span><span class="rewindTeamName">${escapeHTML(highlight.away)}</span><span class="rewindScore">${hasScore?escapeHTML(score[1]):'—'}</span></div></div><div class="rewindPulse"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div><div class="rewindCopy"><div class="rewindHeader"><span>${escapeHTML(post.comp_label||meta.label)}</span><span>${escapeHTML(formattedDate(`${post.date}T12:00:00Z`))}</span></div><h3 id="${escapeHTML(titleId)}">${escapeHTML(title)}</h3><p>${escapeHTML(post.summary||'Published result review.')}</p><div class="rewindVerdict ${winner?'hit':miss?'miss':'push'}">${escapeHTML(takeaway)}</div><a href="posts/${encodeURIComponent(post.slug||post.id)}.html">Read the full recap &rarr;</a></div></article>`;
+  }
+
   function renderGameRewind(){
     const host=byId('gameRewindGrid');if(!host)return;
     if(activeType==='preview'||activeType==='learn'){
@@ -408,6 +429,8 @@
     }
     const finals=moduleRows().filter(row=>hasFinalScore(row.match)).sort((a,b)=>timestamp(b.match.kickoff)-timestamp(a.match.kickoff));
     if(!finals.length){
+      const postRecaps=posts.filter(post=>matchesSport({sports:[compMeta(post.comp).sport]})&&post.highlights&&(post.highlights.biggest_upset||post.highlights.best_call||post.highlights.biggest_miss)).sort((a,b)=>timestamp(`${b.date}T12:00:00Z`)-timestamp(`${a.date}T12:00:00Z`)).map(postRewindCard).filter(Boolean);
+      if(postRecaps.length){host.innerHTML=postRecaps.slice(0,REWIND_CARD_LIMIT).join('');return}
       const scope=activeSport==='all'?'this view':SPORT_LABELS[activeSport];
       const reason=searchQuery.trim()?`No final score matches “${searchQuery.trim()}” in ${scope}.`:`No complete final scores are available for ${scope} yet.`;
       host.innerHTML=moduleEmpty('No game rewind available',reason);return;

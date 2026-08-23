@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0823C",
+  "tag": "Fix",
+  "title": "Rewind restored, card wall reduced",
+  "items": [
+   "Game Rewind now falls back to the verified evidence already published in recap posts when the lightweight live feed contains only upcoming fixtures.",
+   "The Latest notebook is capped at ten stories instead of eighteen, reducing repeated boxes without hiding sport and type filters.",
+   "A new edition graphic shows the balance of upcoming reads, recaps, and explainers at a glance."
+  ]
+ },
+ {
   "date": "Build 0823B",
   "tag": "Fix",
   "title": "Matchday's Top 25 stands on its own",
