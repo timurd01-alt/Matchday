@@ -25,6 +25,30 @@ AWARDS = {
 
 
 class RecapContentTests(unittest.TestCase):
+    def test_learning_lesson_requires_a_real_pregame_lock_and_factor(self):
+        match = {"id": "g1", "kickoff": "2026-08-20T20:00:00Z",
+                 "home": {"name": "Alpha"}, "away": {"name": "Beta"},
+                 "score": {"home": 2, "away": 1}, "watchability": 70}
+        pick = {"pick_name": "Alpha", "confidence": 61, "model_hit": True,
+                "locked_at": "2026-08-20T18:00:00Z", "factor_snapshot": {"elo": 24}}
+        lesson = gp._learning_lesson("epl", "Premier League", "soccer", match, pick)
+        self.assertTrue(lesson["hit"])
+        self.assertEqual(lesson["factorLabel"], "Elo rating")
+        self.assertIn("one result does not prove", lesson["principle"])
+        pick["locked_at"] = "2026-08-20T21:00:00Z"
+        self.assertIsNone(gp._learning_lesson("epl", "Premier League", "soccer", match, pick))
+
+    def test_learning_lesson_fails_closed_without_grade_score_or_allowed_factor(self):
+        match = {"id": "g1", "kickoff": "2026-08-20T20:00:00Z",
+                 "home": {"name": "Alpha"}, "away": {"name": "Beta"},
+                 "score": {"home": 2, "away": 1}}
+        base = {"pick_name": "Alpha", "locked_at": "2026-08-20T18:00:00Z",
+                "model_hit": True, "factor_snapshot": {"elo": 4}}
+        for change in ({"model_hit": None}, {"factor_snapshot": {"unknown": 4}}):
+            self.assertIsNone(gp._learning_lesson(
+                "epl", "Premier League", "soccer", match, base | change))
+        self.assertIsNone(gp._learning_lesson(
+            "epl", "Premier League", "soccer", match | {"score": {"home": None, "away": 1}}, base))
     def test_content_sport_routes_mlb_posts_to_baseball(self):
         self.assertEqual(gp._content_sport("MLB"), "baseball")
 
@@ -241,6 +265,31 @@ class RenderAndSitemapTests(unittest.TestCase):
                          {"home": 1, "away": 1, "winner": "h"})
         self.assertTrue(compact["verified-game"]["official_pick"]["model_hit"])
         self.assertNotIn("legacy-game", compact)
+
+    def test_public_content_feed_emits_one_deterministic_lesson_per_sport(self):
+        matches, picks = [], []
+        for fixture_id, kickoff, watchability in (
+                ("older", "2026-08-19T20:00:00Z", 99),
+                ("newer", "2026-08-20T20:00:00Z", 40)):
+            matches.append({"id": fixture_id, "kickoff": kickoff, "status": "FINISHED",
+                            "home": {"name": "Alpha"}, "away": {"name": "Beta"},
+                            "score": {"home": 2, "away": 1, "winner": "h"},
+                            "watchability": watchability})
+            picks.append({"fixture_id": fixture_id, "integrity_eligible": True,
+                          "integrity_status": "verified", "legacy": False,
+                          "pick": "h", "pick_name": "Alpha", "confidence": 61,
+                          "model_hit": True, "result": "hit",
+                          "factor_snapshot": {"elo": 20},
+                          "locked_at": kickoff.replace("20:00", "18:00")})
+        with open("data_epl.json", "w", encoding="utf-8") as f:
+            json.dump({"competition": "Premier League", "scorecard": {"picks": picks},
+                       "matches": matches}, f)
+        gp.generate_public_content_feed()
+        with open(gp.CONTENT_FEED_FILE, encoding="utf-8") as f:
+            lessons = json.load(f)["learnLessons"]
+        self.assertEqual(len(lessons), 1)
+        self.assertEqual(lessons[0]["fixtureId"], "newer")
+        self.assertEqual(lessons[0]["compKey"], "epl")
 
     def test_public_content_feed_excludes_in_progress_games(self):
         live = {
