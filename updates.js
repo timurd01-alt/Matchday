@@ -4,6 +4,26 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0823E",
+  "tag": "Content",
+  "title": "Editorial analysis, stated plainly",
+  "items": [
+   "The editorial hub now describes its pregame analysis, postgame reviews, and model explainers in direct language.",
+   "The page makes clear that predictions are recorded before games and compared with final results afterward.",
+   "The desktop analysis rail is wider so dense model context is easier to read."
+  ]
+ },
+ {
+  "date": "Build 0823D",
+  "tag": "Model",
+  "title": "The Top 25 learns on a college-football clock",
+  "items": [
+   "Current-season results now reach their intended weight over 12 NCAAF games instead of using a 40-game professional-sports timeline that no college team could reach.",
+   "Opponent-adjusted SRS joins the independent Matchday Top 25 gradually, reaching its full influence only after a 12-game sample.",
+   "The deep historical Elo reference remains intact while recent on-field evidence can now move the ranking meaningfully within one season."
+  ]
+ },
+ {
   "date": "Build 0823C",
   "tag": "Fix",
   "title": "Rewind restored, card wall reduced",
