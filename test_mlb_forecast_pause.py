@@ -41,7 +41,7 @@ console.log(JSON.stringify(payload));
                  "markets": {"1x2": {"home_pct": 54, "away_pct": 46}}}
         gated = self.run_pause_gate({"comp_key": "MLB", "matches": [match]})["matches"][0]
         self.assertTrue(gated["_forecast_paused"])
-        self.assertIn("starting-pitcher coverage", gated["_forecast_pause_message"])
+        self.assertIn("starting-pitcher data", gated["_forecast_pause_message"])
         self.assertEqual(gated["markets"]["1x2"]["home_pct"], 54)
         for key in ("prediction", "watchability", "predicted_margin", "model_vs_market_alert"):
             self.assertNotIn(key, gated)
@@ -72,7 +72,7 @@ console.log(JSON.stringify(payload));
         panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
         cards = (ROOT / "app-4-features.js").read_text(encoding="utf-8")
         tree = (ROOT / "app-5-outcome-tree.js").read_text(encoding="utf-8")
-        message = "MLB picks are on hold while starting-pitcher coverage clears review."
+        message = "MLB forecasts are paused pending starting-pitcher data."
         self.assertIn(message, core)
         self.assertIn("forecastPauseHTML(m)", panels)
         self.assertIn("isMlbForecastPaused(m)?forecastPauseHTML(m)", cards)
