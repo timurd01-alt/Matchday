@@ -6,9 +6,11 @@ soccer, NFL, NBA, MLB, NHL, and college football/basketball. Flask backend (`app
 
 ## Production delivery
 
-When the owner asks to push, ship, deploy, or finish a change, completion means
-the verified work is merged into `main`, pushed to `origin/main`, and the
-production deployment is checked. Pushing only a feature branch is not delivery.
+Every requested repository change is a production-delivery request unless the
+owner explicitly says not to publish it. Completion means the verified work is
+merged into `main`, pushed to `origin/main`, and the production deployment is
+checked. Do not stop after editing, testing, committing, or pushing only a
+feature branch.
 Before merging, update from the current remote `main` and preserve its bot-owned
 generated data. Never force-push production.
 
