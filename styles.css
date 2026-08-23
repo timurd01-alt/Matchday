@@ -1667,6 +1667,7 @@ body.modalOpen{overflow:hidden}.matchModal{position:fixed;inset:0;z-index:99;dis
 
 @media(min-width:1181px){
   .app{grid-template-columns:112px minmax(0,1fr) clamp(288px,22vw,320px)}
+  .railToggle{right:clamp(288px,22vw,320px)}
   .app.noinsight{grid-template-columns:112px minmax(0,1fr) 0}
   .sidebar{width:112px;padding:8px 0;overflow-x:hidden;overflow-y:auto;scrollbar-width:thin}
   .navbtn,.navExternal{width:112px;height:42px;padding:0 12px;gap:9px}

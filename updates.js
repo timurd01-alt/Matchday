@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0823I",
+  "tag": "Fix",
+  "title": "Compact MLB pause notice in the in-focus rail",
+  "items": [
+   "Restored the in-focus rail to its original desktop width after an oversized layout change crowded the main board.",
+   "Reduced the MLB pause notice padding, type size, and copy so the warning occupies less space.",
+   "Aligned the collapse arrow with the responsive edge of the rail."
+  ]
+ },
+ {
   "date": "Build 0823H",
   "tag": "Fix",
   "title": "Removed a dead More tab from desktop navigation",
