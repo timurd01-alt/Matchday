@@ -7664,10 +7664,22 @@ def build():
     if COMP_KEY == "MLB":
         shadow_state = mlb_shadow_ledger.sync(
             _mlb_shadow_ledger_path(), matches, mlb_research_predictions)
-        if shadow_state.get("locked") or shadow_state.get("graded"):
-            DIAG.append(
-                "MLB private research ledger: "
-                f"locked={shadow_state['locked']}, graded={shadow_state['graded']}")
+        # Printed every run, including the zero-lock ones. A missed lock window
+        # is evidence that cannot be recovered -- first pitch closes it for good
+        # -- and until this line existed a run that locked nothing looked exactly
+        # like a healthy one, because the DIAG entry below only fired when
+        # something was written and lands in an untracked data file either way.
+        # The 2026-08-19 evening slate went unlocked across four healthy runs
+        # and left no trace anywhere to diagnose it from.
+        reasons = shadow_state.get("lock_reasons") or {}
+        print("  MLB research ledger: locked={} graded={} of {} fixture(s) · {}".format(
+            shadow_state["locked"], shadow_state["graded"],
+            shadow_state.get("considered", len(matches)),
+            ", ".join(f"{reason}={count}" for reason, count in reasons.items()) or "no fixtures"))
+        DIAG.append(
+            "MLB private research ledger: "
+            f"locked={shadow_state['locked']}, graded={shadow_state['graded']}, "
+            + ", ".join(f"{reason}={count}" for reason, count in reasons.items()))
     print(f"  merged odds onto {merged} fixtures ({fuzzy} via name-variant match) · predictions on all {len(matches)}")
 
     print("Fetching title odds + news…")

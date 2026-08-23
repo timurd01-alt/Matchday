@@ -822,7 +822,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-22T15:36:45.173924Z",
+   "observed_at": "2026-08-23T20:39:53.107662Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -1655,7 +1655,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-22T15:36:45.173980Z",
+   "observed_at": "2026-08-23T20:39:53.107718Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -2306,7 +2306,7 @@
    },
    "penalties": null,
    "ultimate_winner": "d",
-   "observed_at": "2026-08-22T15:36:45.174021Z",
+   "observed_at": "2026-08-23T20:39:53.107752Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -2965,7 +2965,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-22T15:36:45.174055Z",
+   "observed_at": "2026-08-23T20:39:53.107782Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -3497,7 +3497,7 @@
    },
    "penalties": null,
    "ultimate_winner": "d",
-   "observed_at": "2026-08-22T15:36:45.174088Z",
+   "observed_at": "2026-08-23T20:39:53.107812Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -4038,7 +4038,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-22T15:36:45.174119Z",
+   "observed_at": "2026-08-23T20:39:53.107838Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -4052,9 +4052,9 @@
   "result_corrections": [],
   "clv": 0.0,
   "closing_market_snapshot": {
+   "a": 14.0,
    "h": 65.0,
-   "d": 21.0,
-   "a": 14.0
+   "d": 21.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -4562,9 +4562,33 @@
    "affects_prediction": false,
    "user_visible": false
   },
-  "result": null,
-  "model_result": null,
-  "market_result": null
+  "result": "a",
+  "model_result": "a",
+  "market_result": "a",
+  "score": "1-3",
+  "result_snapshot": {
+   "display": {
+    "home": 1,
+    "away": 3
+   },
+   "regulation": {
+    "home": 1,
+    "away": 3
+   },
+   "penalties": null,
+   "ultimate_winner": "a",
+   "observed_at": "2026-08-23T20:39:53.107864Z",
+   "source": "provider"
+  },
+  "model_hit": true,
+  "market_hit": null,
+  "market_comparison_hit": true,
+  "upset_hit": false,
+  "brier3": 0.598,
+  "log_loss": 0.994,
+  "brier_advancement": null,
+  "log_loss_advancement": null,
+  "result_corrections": []
  },
  "564643": {
   "schema_ver": 2,
@@ -5038,6 +5062,2252 @@
      "mean_log_loss": 0.950897,
      "brier_skill_vs_uniform": 0.15505,
      "log_skill_vs_uniform": 0.134456
+    }
+   },
+   "event_readiness": {
+    "available": false,
+    "score": null,
+    "missing_components": [
+     "scenario_stability",
+     "availability",
+     "freshness",
+     "model_stability"
+    ]
+   },
+   "components": {
+    "scenario_stability": {
+     "available": false,
+     "score": null,
+     "reason": "scenario_forecasts_not_captured"
+    },
+    "availability": {
+     "available": false,
+     "score": null,
+     "reason": "availability_probabilities_not_captured"
+    },
+    "freshness": {
+     "available": false,
+     "score": null,
+     "reason": "input_freshness_not_captured"
+    },
+    "model_stability": {
+     "available": false,
+     "score": null,
+     "reason": "independent_model_outputs_not_captured"
+    }
+   },
+   "missing_components": [
+    "historical_evidence",
+    "scenario_stability",
+    "availability",
+    "freshness",
+    "model_stability"
+   ],
+   "affects_prediction": false,
+   "user_visible": false
+  },
+  "result": "d",
+  "model_result": "d",
+  "market_result": "d",
+  "score": "0-0",
+  "result_snapshot": {
+   "display": {
+    "home": 0,
+    "away": 0
+   },
+   "regulation": {
+    "home": 0,
+    "away": 0
+   },
+   "penalties": null,
+   "ultimate_winner": "d",
+   "observed_at": "2026-08-23T20:39:53.107888Z",
+   "source": "provider"
+  },
+  "model_hit": false,
+  "market_hit": false,
+  "market_comparison_hit": false,
+  "upset_hit": false,
+  "brier3": 0.737,
+  "log_loss": 1.204,
+  "brier_advancement": null,
+  "log_loss_advancement": null,
+  "result_corrections": [],
+  "clv": 0.6,
+  "closing_market_snapshot": {
+   "a": 30.693,
+   "h": 38.614,
+   "d": 30.693
+  },
+  "closing_market_receipt": {
+   "sources": [
+    "The Odds API consensus"
+   ],
+   "source_count": 1,
+   "event_ids": [
+    "8a4a335c1fd9fcbf20b853f26e10920c461e257db857e89f1f0c5e195523526f"
+   ],
+   "observed_at": [
+    "2026-08-22T16:41:31.162996Z"
+   ]
+  }
+ },
+ "564645": {
+  "schema_ver": 2,
+  "fixture_id": "564645",
+  "competition": "LALIGA",
+  "home": "RCD Espanyol de Barcelona",
+  "away": "Real Madrid CF",
+  "stage": "Regular Season",
+  "kickoff": "2026-08-22T19:30:00Z",
+  "pick": "a",
+  "pick_name": "Real Madrid CF",
+  "confidence": 61,
+  "edge": -7,
+  "base_pick": "a",
+  "base_pick_name": "Real Madrid CF",
+  "probs": {
+   "h": 17,
+   "d": 22,
+   "a": 61
+  },
+  "advancement_probs": null,
+  "regulation_probs": {
+   "h": 17,
+   "d": 22,
+   "a": 61
+  },
+  "regulation_pick": "a",
+  "market_comparison_pick": "a",
+  "market_comparison_basis": "regulation_1x2",
+  "outcome_basis": "regulation",
+  "market_basis": "regulation_1x2",
+  "market_pick": "a",
+  "market_pct": 68,
+  "pick_mkt": 68,
+  "value_side": null,
+  "value_edge": null,
+  "value_mkt": null,
+  "value_name": null,
+  "upset_candidate": "h",
+  "upset_name": "RCD Espanyol de Barcelona",
+  "upset_score": 20,
+  "upset_candidate_pct": 17,
+  "upset_triggered": false,
+  "upset_temperature": 1.23,
+  "upset_reason": "underdog momentum",
+  "factor_snapshot": {
+   "adv": 1.2,
+   "elo": -6.79,
+   "gd": 0.75,
+   "form": 1.5,
+   "pts": 1.8,
+   "rest": 0.3,
+   "class": -17.21
+  },
+  "market_snapshot": {
+   "h": 12,
+   "d": 19,
+   "a": 68
+  },
+  "market_snapshot_at": "2026-08-22T18:50:27.306301Z",
+  "market_snapshot_recorded_at": "2026-08-22T18:50:32.041905Z",
+  "market_snapshot_receipt": {
+   "source": "The Odds API consensus",
+   "source_reference": "https://the-odds-api.com/",
+   "observed_at": "2026-08-22T18:50:27.306301Z",
+   "recorded_at": "2026-08-22T18:50:32.041905Z",
+   "snapshot_id": null,
+   "books": 21,
+   "spread": 3
+  },
+  "market_gap": 56.0,
+  "upset_snapshot": {
+   "candidate": "RCD Espanyol de Barcelona",
+   "class": "solid",
+   "market_dog_pct": 12.0,
+   "model_dog_pct": 17.0,
+   "upset_edge": 5.0,
+   "independent_model_dog_pct": 16.0,
+   "independent_model_lead_pct": -50.0,
+   "independent_edge": 4.0,
+   "edge_threshold": 8.0,
+   "supporting_signals": [
+    "adv",
+    "form",
+    "gd",
+    "pts",
+    "rest"
+   ],
+   "personnel_gate": true,
+   "personnel_blockers": [],
+   "radar": false,
+   "standings_candidate": null,
+   "standings_gap_pct": null,
+   "gate": "none",
+   "box_score_edge": 0.0
+  },
+  "box_score_available": false,
+  "data_availability": {
+   "market": "available",
+   "box_score": "unavailable",
+   "lineups": "unavailable",
+   "injuries": "unavailable",
+   "weather": "unavailable",
+   "personnel": "unavailable",
+   "venue_context": "unavailable"
+  },
+  "damp_pct": 0,
+  "mkt_pull": -5,
+  "model_ver": "v6-calibrated",
+  "model_code_marker": "matchday-predictor-integrity-2026-07",
+  "model_signal_schema": 8,
+  "reproducibility": {
+   "model_version": "v6-calibrated",
+   "model_signal_schema": 8,
+   "probability_basis": "regulation",
+   "market_comparison_basis": "regulation_1x2",
+   "market_comparison_pick": "a"
+  },
+  "locked_at": "2026-08-22T18:50:32.041905Z",
+  "lead_time_seconds": 2367.958,
+  "lead_time_hours": 0.657766,
+  "lock_window_hours": 2.0,
+  "status_at_lock": "UPCOMING",
+  "integrity_eligible": true,
+  "integrity_status": "verified",
+  "integrity_reason": "verified_pregame_window",
+  "prediction_snapshot": {
+   "pick": "a",
+   "pick_name": "Real Madrid CF",
+   "confidence": 61,
+   "model_version": "v6-calibrated",
+   "model_signal_schema": 8,
+   "base_pick": "a",
+   "base_pick_name": "Real Madrid CF",
+   "model": {
+    "h": 16,
+    "a": 66,
+    "d": 18
+   },
+   "base_blend": {
+    "h": 14,
+    "d": 19,
+    "a": 67
+   },
+   "blend": {
+    "h": 17,
+    "d": 22,
+    "a": 61
+   },
+   "adjusted": {
+    "h": 17,
+    "d": 22,
+    "a": 61
+   },
+   "is_knockout": false,
+   "advancement": null,
+   "regulation_pick": "a",
+   "market_comparison_pick": "a",
+   "market_comparison_basis": "regulation_1x2",
+   "regulation_pick_name": "Real Madrid CF",
+   "regulation_confidence": 61,
+   "regulation_probs": {
+    "h": 17,
+    "d": 22,
+    "a": 61
+   },
+   "edge": -7,
+   "note": "model rates this lower than the market",
+   "why": {
+    "adv": 1.2,
+    "elo": -6.79,
+    "gd": 0.75,
+    "form": 1.5,
+    "pts": 1.8,
+    "rest": 0.3,
+    "class": -17.21
+   },
+   "damp_pct": 0,
+   "mkt_pull": -5,
+   "market_weight": 0.6,
+   "upset": {
+    "candidate": "h",
+    "candidate_name": "RCD Espanyol de Barcelona",
+    "favorite": "a",
+    "favorite_name": "Real Madrid CF",
+    "score": 20,
+    "upset_class": "solid",
+    "market_dog_pct": 12.0,
+    "model_dog_pct": 17.0,
+    "upset_edge": 5.0,
+    "radar": false,
+    "standings_candidate": null,
+    "standings_gap_pct": null,
+    "standings_sample_ok": false,
+    "temperature": 1.23,
+    "variance_pct": 14,
+    "low_goal_pct": 50,
+    "draw_pct": 19,
+    "favorite_pct": 61,
+    "candidate_pct": 17,
+    "margin_pct": 44,
+    "learn_bias_pct": 0.0,
+    "market_gap_pct": 56.0,
+    "market_gate": false,
+    "market_quality_gate": true,
+    "independent_model_dog_pct": 16.0,
+    "independent_model_lead_pct": -50.0,
+    "independent_edge": 4.0,
+    "edge_threshold": 8.0,
+    "independent_pick_gate": false,
+    "playability_gate": false,
+    "evidence_gate": true,
+    "supporting_signals": [
+     "adv",
+     "form",
+     "gd",
+     "pts",
+     "rest"
+    ],
+    "personnel_gate": true,
+    "personnel_blockers": [],
+    "box_score_edge": 0.0,
+    "strong_box_signal": false,
+    "blocked": false,
+    "triggered": false,
+    "reason": "underdog momentum"
+   },
+   "data_quality": {
+    "level": "preseason",
+    "games": {
+     "home": 1,
+     "away": 0
+    },
+    "signals": [
+     "class",
+     "form",
+     "elo",
+     "rest",
+     "market"
+    ],
+    "market_available": true,
+    "market_books": 21,
+    "market_spread": 3,
+    "market_weight": 0.6,
+    "note": "Limited current-season evidence; probability is intentionally conservative."
+   },
+   "predicted_margin": {
+    "value": -0.7,
+    "unit": "goals",
+    "favored": "a",
+    "label": "-0.7 goals"
+   },
+   "class_meta": {
+    "label": "Squad edge",
+    "source": "Curated squad and star-player values",
+    "available": false,
+    "coverage": "partial",
+    "home_available": false,
+    "away_available": true,
+    "note": "Squad value, star quality, and ranking are a preseason prior; missing clubs are not assigned a fabricated edge.",
+    "edge_available": true,
+    "coverage_label": null
+   },
+   "publication_state": "locked",
+   "lock_readiness": {
+    "schema_ver": 1,
+    "sport": "soccer",
+    "competition": "LALIGA",
+    "phase": "lock_window",
+    "lock_window_hours": 2.0,
+    "lead_time_hours": 0.66,
+    "inputs": {
+     "market": "confirmed",
+     "injuries": "missing",
+     "lineups": "missing",
+     "weather": "missing"
+    },
+    "missing_critical": [
+     "injuries",
+     "lineups"
+    ],
+    "unconfirmed_critical": [
+     "injuries",
+     "lineups"
+    ],
+    "coverage_pct": 25,
+    "confirmed_pct": 25,
+    "provenance": [],
+    "confidence_guard": {
+     "high_confidence_label_allowed": false,
+     "reason": "critical pregame inputs not confirmed"
+    },
+    "production_weight": 0,
+    "research_mode": "prospective_shadow"
+   },
+   "neutral_venue_probs": {
+    "h": 16,
+    "d": 21,
+    "a": 63
+   },
+   "totals": {
+    "expected": 2.74,
+    "basis": "preseason_rating"
+   },
+   "data_availability": {
+    "market": "available",
+    "box_score": "unavailable",
+    "lineups": "unavailable",
+    "injuries": "unavailable",
+    "weather": "unavailable",
+    "personnel": "unavailable",
+    "venue_context": "unavailable"
+   }
+  },
+  "input_snapshot": {
+   "competition": "LALIGA",
+   "competition_config": {
+    "label": "La Liga",
+    "sport": "soccer",
+    "fd": "PD",
+    "odds": "soccer_spain_la_liga",
+    "outright": null,
+    "tournament": false,
+    "source": "fd",
+    "has_draws": true,
+    "league_zones": {
+     "ucl": 4,
+     "uel": 1,
+     "rel": 3
+    }
+   },
+   "match": {
+    "id": "564645",
+    "stage": "Regular Season",
+    "kickoff": "2026-08-22T19:30:00Z",
+    "status": "UPCOMING",
+    "venue": "",
+    "home": {
+     "name": "RCD Espanyol de Barcelona",
+     "code": "ESP",
+     "group": "",
+     "pos": null,
+     "pld": 1,
+     "w": 1,
+     "d": 0,
+     "l": 0,
+     "gf": 3,
+     "ga": 0,
+     "gd": 3,
+     "pts": 3,
+     "form": "W",
+     "rating": 4.75,
+     "rest_days": 6,
+     "form_home": "W",
+     "form_away": ""
+    },
+    "away": {
+     "name": "Real Madrid CF",
+     "code": "RMA",
+     "group": "",
+     "pos": null,
+     "pld": 0,
+     "w": 0,
+     "d": 0,
+     "l": 0,
+     "gf": 0,
+     "ga": 0,
+     "gd": 0,
+     "pts": 0,
+     "form": "",
+     "rating": 9.0
+    },
+    "markets": {
+     "1x2": {
+      "home_pct": 12,
+      "draw_pct": 19,
+      "away_pct": 68,
+      "books": 21,
+      "source": "The Odds API consensus",
+      "source_reference": "https://the-odds-api.com/",
+      "observed_at": "2026-08-22T18:50:27.306301Z",
+      "spread": 3,
+      "spread_lo": 11,
+      "spread_hi": 14,
+      "confidence": "tight",
+      "open": {
+       "h": 12,
+       "d": 19,
+       "a": 68
+      },
+      "move": {
+       "h": 0,
+       "d": 0,
+       "a": 0
+      }
+     }
+    },
+    "weather": null,
+    "injuries": {
+     "home": [],
+     "away": []
+    },
+    "lineups": null,
+    "h2h": [],
+    "stats": null,
+    "stats_extra": null,
+    "data_source": null,
+    "advanced_metrics": null,
+    "advanced_metrics_meta": null,
+    "nfl_challenger_shadow": null,
+    "mlb_challenger_shadow": null,
+    "personnel": null,
+    "personnel_shadow": {
+     "schema_ver": 1,
+     "sport": "soccer",
+     "production_weight": 0,
+     "mode": "prospective_shadow",
+     "features": {
+      "injury_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineup_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineups_confirmed": false,
+      "rest_days": {
+       "home": 6,
+       "away": null
+      },
+      "weather": null,
+      "venue_context": null
+     }
+    },
+    "pregame_context": {
+     "schema_ver": 1,
+     "sport": "soccer",
+     "competition": "LALIGA",
+     "phase": "lock_window",
+     "lock_window_hours": 2.0,
+     "lead_time_hours": 0.66,
+     "inputs": {
+      "market": "confirmed",
+      "injuries": "missing",
+      "lineups": "missing",
+      "weather": "missing"
+     },
+     "missing_critical": [
+      "injuries",
+      "lineups"
+     ],
+     "unconfirmed_critical": [
+      "injuries",
+      "lineups"
+     ],
+     "coverage_pct": 25,
+     "confirmed_pct": 25,
+     "provenance": [],
+     "confidence_guard": {
+      "high_confidence_label_allowed": false,
+      "reason": "critical pregame inputs not confirmed"
+     },
+     "production_weight": 0,
+     "research_mode": "prospective_shadow"
+    },
+    "pregame_provenance": null,
+    "venue_context": null,
+    "model_signal_schema": null
+   }
+  },
+  "mfti_shadow": {
+   "spec_version": "MFTI-0.1.1-shadow",
+   "mode": "shadow_research_only",
+   "captured_at": "2026-08-22T18:50:32.041905Z",
+   "status": "incomplete",
+   "score": null,
+   "historical_evidence": {
+    "available": false,
+    "score": null,
+    "reason": "frozen_normalization_and_rolling_recalibration_not_fitted",
+    "diagnostics": {
+     "eligible_prior_forecasts": 7,
+     "mean_brier": 0.568229,
+     "mean_log_loss": 0.957091,
+     "brier_skill_vs_uniform": 0.147657,
+     "log_skill_vs_uniform": 0.128818
+    }
+   },
+   "event_readiness": {
+    "available": false,
+    "score": null,
+    "missing_components": [
+     "scenario_stability",
+     "availability",
+     "freshness",
+     "model_stability"
+    ]
+   },
+   "components": {
+    "scenario_stability": {
+     "available": false,
+     "score": null,
+     "reason": "scenario_forecasts_not_captured"
+    },
+    "availability": {
+     "available": false,
+     "score": null,
+     "reason": "availability_probabilities_not_captured"
+    },
+    "freshness": {
+     "available": false,
+     "score": null,
+     "reason": "input_freshness_not_captured"
+    },
+    "model_stability": {
+     "available": false,
+     "score": null,
+     "reason": "independent_model_outputs_not_captured"
+    }
+   },
+   "missing_components": [
+    "historical_evidence",
+    "scenario_stability",
+    "availability",
+    "freshness",
+    "model_stability"
+   ],
+   "affects_prediction": false,
+   "user_visible": false
+  },
+  "result": "a",
+  "model_result": "a",
+  "market_result": "a",
+  "score": "1-2",
+  "result_snapshot": {
+   "display": {
+    "home": 1,
+    "away": 2
+   },
+   "regulation": {
+    "home": 1,
+    "away": 2
+   },
+   "penalties": null,
+   "ultimate_winner": "a",
+   "observed_at": "2026-08-23T20:39:53.107913Z",
+   "source": "provider"
+  },
+  "model_hit": true,
+  "market_hit": true,
+  "market_comparison_hit": true,
+  "upset_hit": false,
+  "brier3": 0.229,
+  "log_loss": 0.494,
+  "brier_advancement": null,
+  "log_loss_advancement": null,
+  "result_corrections": [],
+  "clv": 0.7,
+  "closing_market_snapshot": {
+   "a": 68.687,
+   "h": 12.121,
+   "d": 19.192
+  },
+  "closing_market_receipt": {
+   "sources": [
+    "The Odds API consensus"
+   ],
+   "source_count": 1,
+   "event_ids": [
+    "af92df2db22eeed9cb4d9f5a63d83153a2167d2c8ea44e1699aeb5842ada21fa"
+   ],
+   "observed_at": [
+    "2026-08-22T18:50:27.306301Z"
+   ]
+  }
+ },
+ "564646": {
+  "schema_ver": 2,
+  "fixture_id": "564646",
+  "competition": "LALIGA",
+  "home": "Club Atlético de Madrid",
+  "away": "Villarreal CF",
+  "stage": "Regular Season",
+  "kickoff": "2026-08-23T15:00:00Z",
+  "pick": "h",
+  "pick_name": "Club Atlético de Madrid",
+  "confidence": 40,
+  "edge": null,
+  "base_pick": "h",
+  "base_pick_name": "Club Atlético de Madrid",
+  "probs": {
+   "h": 40,
+   "d": 27,
+   "a": 33
+  },
+  "advancement_probs": null,
+  "regulation_probs": {
+   "h": 40,
+   "d": 27,
+   "a": 33
+  },
+  "regulation_pick": "h",
+  "market_comparison_pick": "h",
+  "market_comparison_basis": "regulation_1x2",
+  "outcome_basis": "regulation",
+  "market_basis": "regulation_1x2",
+  "market_pick": null,
+  "market_pct": null,
+  "pick_mkt": null,
+  "value_side": null,
+  "value_edge": null,
+  "value_mkt": null,
+  "value_name": null,
+  "upset_candidate": "a",
+  "upset_name": "Villarreal CF",
+  "upset_score": 68,
+  "upset_candidate_pct": 33,
+  "upset_triggered": false,
+  "upset_temperature": 1.41,
+  "upset_reason": "draw pressure",
+  "factor_snapshot": {
+   "elo": 0.05,
+   "form": 1.0,
+   "rest": -0.45,
+   "pts": 1.2,
+   "adv": 1.2,
+   "gd": 0.5,
+   "class": 2.02
+  },
+  "market_snapshot": null,
+  "market_snapshot_at": null,
+  "market_snapshot_recorded_at": null,
+  "market_snapshot_receipt": null,
+  "market_gap": null,
+  "upset_snapshot": {
+   "candidate": "Villarreal CF",
+   "class": "unknown",
+   "market_dog_pct": null,
+   "model_dog_pct": 33.0,
+   "upset_edge": null,
+   "independent_model_dog_pct": null,
+   "independent_model_lead_pct": null,
+   "independent_edge": null,
+   "edge_threshold": 8.0,
+   "supporting_signals": [
+    "rest"
+   ],
+   "personnel_gate": true,
+   "personnel_blockers": [],
+   "radar": false,
+   "standings_candidate": null,
+   "standings_gap_pct": null,
+   "gate": "none",
+   "box_score_edge": 0.0
+  },
+  "box_score_available": false,
+  "data_availability": {
+   "market": "unavailable",
+   "box_score": "unavailable",
+   "lineups": "unavailable",
+   "injuries": "unavailable",
+   "weather": "unavailable",
+   "personnel": "unavailable",
+   "venue_context": "unavailable"
+  },
+  "damp_pct": 0,
+  "mkt_pull": 0,
+  "model_ver": "v6-calibrated",
+  "model_code_marker": "matchday-predictor-integrity-2026-07",
+  "model_signal_schema": 8,
+  "reproducibility": {
+   "model_version": "v6-calibrated",
+   "model_signal_schema": 8,
+   "probability_basis": "regulation",
+   "market_comparison_basis": "regulation_1x2",
+   "market_comparison_pick": "h"
+  },
+  "locked_at": "2026-08-23T13:02:58.425908Z",
+  "lead_time_seconds": 7021.574,
+  "lead_time_hours": 1.950437,
+  "lock_window_hours": 2.0,
+  "status_at_lock": "UPCOMING",
+  "integrity_eligible": true,
+  "integrity_status": "verified",
+  "integrity_reason": "verified_pregame_window",
+  "prediction_snapshot": {
+   "pick": "h",
+   "pick_name": "Club Atlético de Madrid",
+   "confidence": 40,
+   "model_version": "v6-calibrated",
+   "model_signal_schema": 8,
+   "base_pick": "h",
+   "base_pick_name": "Club Atlético de Madrid",
+   "model": {
+    "h": 43,
+    "a": 33,
+    "d": 24
+   },
+   "base_blend": {
+    "h": 43,
+    "d": 24,
+    "a": 33
+   },
+   "blend": {
+    "h": 40,
+    "d": 27,
+    "a": 33
+   },
+   "adjusted": {
+    "h": 40,
+    "d": 27,
+    "a": 33
+   },
+   "is_knockout": false,
+   "advancement": null,
+   "regulation_pick": "h",
+   "market_comparison_pick": "h",
+   "market_comparison_basis": "regulation_1x2",
+   "regulation_pick_name": "Club Atlético de Madrid",
+   "regulation_confidence": 40,
+   "regulation_probs": {
+    "h": 40,
+    "d": 27,
+    "a": 33
+   },
+   "edge": null,
+   "note": "no market to compare against",
+   "why": {
+    "elo": 0.05,
+    "form": 1.0,
+    "rest": -0.45,
+    "pts": 1.2,
+    "adv": 1.2,
+    "gd": 0.5,
+    "class": 2.02
+   },
+   "damp_pct": 0,
+   "mkt_pull": 0,
+   "market_weight": 0.0,
+   "upset": {
+    "candidate": "a",
+    "candidate_name": "Villarreal CF",
+    "favorite": "h",
+    "favorite_name": "Club Atlético de Madrid",
+    "score": 68,
+    "upset_class": "unknown",
+    "market_dog_pct": null,
+    "model_dog_pct": 33.0,
+    "upset_edge": null,
+    "radar": false,
+    "standings_candidate": null,
+    "standings_gap_pct": null,
+    "standings_sample_ok": false,
+    "temperature": 1.41,
+    "variance_pct": 41,
+    "low_goal_pct": 52,
+    "draw_pct": 24,
+    "favorite_pct": 40,
+    "candidate_pct": 33,
+    "margin_pct": 7,
+    "learn_bias_pct": 0.0,
+    "market_gap_pct": null,
+    "market_gate": false,
+    "market_quality_gate": false,
+    "independent_model_dog_pct": null,
+    "independent_model_lead_pct": null,
+    "independent_edge": null,
+    "edge_threshold": 8.0,
+    "independent_pick_gate": false,
+    "playability_gate": false,
+    "evidence_gate": false,
+    "supporting_signals": [
+     "rest"
+    ],
+    "personnel_gate": true,
+    "personnel_blockers": [],
+    "box_score_edge": 0.0,
+    "strong_box_signal": false,
+    "blocked": false,
+    "triggered": false,
+    "reason": "draw pressure"
+   },
+   "data_quality": {
+    "level": "established",
+    "games": {
+     "home": 1,
+     "away": 1
+    },
+    "signals": [
+     "class",
+     "form",
+     "elo",
+     "rest"
+    ],
+    "market_available": false,
+    "market_books": 0,
+    "market_spread": null,
+    "market_weight": 0.0,
+    "note": "Current-season sample and opponent-adjusted results are available."
+   },
+   "predicted_margin": {
+    "value": 0.1,
+    "unit": "goals",
+    "favored": "h",
+    "label": "+0.1 goals"
+   },
+   "class_meta": {
+    "label": "Squad edge",
+    "source": "Curated squad and star-player values",
+    "available": true,
+    "coverage": "complete",
+    "home_available": true,
+    "away_available": true,
+    "note": "Squad value, star quality, and ranking are a preseason prior; missing clubs are not assigned a fabricated edge.",
+    "edge_available": true,
+    "coverage_label": null
+   },
+   "publication_state": "locked",
+   "lock_readiness": {
+    "schema_ver": 1,
+    "sport": "soccer",
+    "competition": "LALIGA",
+    "phase": "lock_window",
+    "lock_window_hours": 2.0,
+    "lead_time_hours": 1.95,
+    "inputs": {
+     "market": "missing",
+     "injuries": "missing",
+     "lineups": "missing",
+     "weather": "missing"
+    },
+    "missing_critical": [
+     "market",
+     "injuries",
+     "lineups"
+    ],
+    "unconfirmed_critical": [
+     "market",
+     "injuries",
+     "lineups"
+    ],
+    "coverage_pct": 0,
+    "confirmed_pct": 0,
+    "provenance": [],
+    "confidence_guard": {
+     "high_confidence_label_allowed": false,
+     "reason": "critical pregame inputs not confirmed"
+    },
+    "production_weight": 0,
+    "research_mode": "prospective_shadow"
+   },
+   "neutral_venue_probs": {
+    "h": 40,
+    "d": 27,
+    "a": 33
+   },
+   "totals": {
+    "expected": 2.77,
+    "basis": "preseason_rating"
+   },
+   "data_availability": {
+    "market": "unavailable",
+    "box_score": "unavailable",
+    "lineups": "unavailable",
+    "injuries": "unavailable",
+    "weather": "unavailable",
+    "personnel": "unavailable",
+    "venue_context": "unavailable"
+   }
+  },
+  "input_snapshot": {
+   "competition": "LALIGA",
+   "competition_config": {
+    "label": "La Liga",
+    "sport": "soccer",
+    "fd": "PD",
+    "odds": "soccer_spain_la_liga",
+    "outright": null,
+    "tournament": false,
+    "source": "fd",
+    "has_draws": true,
+    "league_zones": {
+     "ucl": 4,
+     "uel": 1,
+     "rel": 3
+    }
+   },
+   "match": {
+    "id": "564646",
+    "stage": "Regular Season",
+    "kickoff": "2026-08-23T15:00:00Z",
+    "status": "UPCOMING",
+    "venue": "",
+    "home": {
+     "name": "Club Atlético de Madrid",
+     "code": "ATL",
+     "group": "",
+     "pos": null,
+     "pld": 1,
+     "w": 1,
+     "d": 0,
+     "l": 0,
+     "gf": 2,
+     "ga": 0,
+     "gd": 2,
+     "pts": 3,
+     "form": "W",
+     "rating": 7.17,
+     "rest_days": 4,
+     "form_home": "W",
+     "form_away": ""
+    },
+    "away": {
+     "name": "Villarreal CF",
+     "code": "VIL",
+     "group": "",
+     "pos": null,
+     "pld": 1,
+     "w": 0,
+     "d": 1,
+     "l": 0,
+     "gf": 2,
+     "ga": 2,
+     "gd": 0,
+     "pts": 1,
+     "form": "D",
+     "rating": 7.08,
+     "rest_days": 7,
+     "form_home": "",
+     "form_away": "D"
+    },
+    "markets": {},
+    "weather": null,
+    "injuries": {
+     "home": [],
+     "away": []
+    },
+    "lineups": null,
+    "h2h": [],
+    "stats": null,
+    "stats_extra": null,
+    "data_source": null,
+    "advanced_metrics": null,
+    "advanced_metrics_meta": null,
+    "nfl_challenger_shadow": null,
+    "mlb_challenger_shadow": null,
+    "personnel": null,
+    "personnel_shadow": {
+     "schema_ver": 1,
+     "sport": "soccer",
+     "production_weight": 0,
+     "mode": "prospective_shadow",
+     "features": {
+      "injury_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineup_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineups_confirmed": false,
+      "rest_days": {
+       "home": 4,
+       "away": 7
+      },
+      "weather": null,
+      "venue_context": null
+     }
+    },
+    "pregame_context": {
+     "schema_ver": 1,
+     "sport": "soccer",
+     "competition": "LALIGA",
+     "phase": "lock_window",
+     "lock_window_hours": 2.0,
+     "lead_time_hours": 1.95,
+     "inputs": {
+      "market": "missing",
+      "injuries": "missing",
+      "lineups": "missing",
+      "weather": "missing"
+     },
+     "missing_critical": [
+      "market",
+      "injuries",
+      "lineups"
+     ],
+     "unconfirmed_critical": [
+      "market",
+      "injuries",
+      "lineups"
+     ],
+     "coverage_pct": 0,
+     "confirmed_pct": 0,
+     "provenance": [],
+     "confidence_guard": {
+      "high_confidence_label_allowed": false,
+      "reason": "critical pregame inputs not confirmed"
+     },
+     "production_weight": 0,
+     "research_mode": "prospective_shadow"
+    },
+    "pregame_provenance": null,
+    "venue_context": null,
+    "model_signal_schema": null
+   }
+  },
+  "mfti_shadow": {
+   "spec_version": "MFTI-0.1.1-shadow",
+   "mode": "shadow_research_only",
+   "captured_at": "2026-08-23T13:02:58.425908Z",
+   "status": "incomplete",
+   "score": null,
+   "historical_evidence": {
+    "available": false,
+    "score": null,
+    "reason": "frozen_normalization_and_rolling_recalibration_not_fitted",
+    "diagnostics": {
+     "eligible_prior_forecasts": 9,
+     "mean_brier": 0.549311,
+     "mean_log_loss": 0.933101,
+     "brier_skill_vs_uniform": 0.176033,
+     "log_skill_vs_uniform": 0.150655
+    }
+   },
+   "event_readiness": {
+    "available": false,
+    "score": null,
+    "missing_components": [
+     "scenario_stability",
+     "availability",
+     "freshness",
+     "model_stability"
+    ]
+   },
+   "components": {
+    "scenario_stability": {
+     "available": false,
+     "score": null,
+     "reason": "scenario_forecasts_not_captured"
+    },
+    "availability": {
+     "available": false,
+     "score": null,
+     "reason": "availability_probabilities_not_captured"
+    },
+    "freshness": {
+     "available": false,
+     "score": null,
+     "reason": "input_freshness_not_captured"
+    },
+    "model_stability": {
+     "available": false,
+     "score": null,
+     "reason": "independent_model_outputs_not_captured"
+    }
+   },
+   "missing_components": [
+    "historical_evidence",
+    "scenario_stability",
+    "availability",
+    "freshness",
+    "model_stability"
+   ],
+   "affects_prediction": false,
+   "user_visible": false
+  },
+  "result": "d",
+  "model_result": "d",
+  "market_result": "d",
+  "score": "2-2",
+  "result_snapshot": {
+   "display": {
+    "home": 2,
+    "away": 2
+   },
+   "regulation": {
+    "home": 2,
+    "away": 2
+   },
+   "penalties": null,
+   "ultimate_winner": "d",
+   "observed_at": "2026-08-23T20:39:53.107937Z",
+   "source": "provider"
+  },
+  "model_hit": false,
+  "market_hit": null,
+  "market_comparison_hit": false,
+  "upset_hit": false,
+  "brier3": 0.802,
+  "log_loss": 1.309,
+  "brier_advancement": null,
+  "log_loss_advancement": null,
+  "result_corrections": []
+ },
+ "564644": {
+  "schema_ver": 2,
+  "fixture_id": "564644",
+  "competition": "LALIGA",
+  "home": "Getafe CF",
+  "away": "Real Racing Club de Santander",
+  "stage": "Regular Season",
+  "kickoff": "2026-08-23T17:30:00Z",
+  "pick": "a",
+  "pick_name": "Real Racing Club de Santander",
+  "confidence": 34,
+  "edge": 8,
+  "base_pick": "h",
+  "base_pick_name": "Getafe CF",
+  "probs": {
+   "h": 36,
+   "d": 30,
+   "a": 34
+  },
+  "advancement_probs": null,
+  "regulation_probs": {
+   "h": 36,
+   "d": 30,
+   "a": 34
+  },
+  "regulation_pick": "h",
+  "market_comparison_pick": "a",
+  "market_comparison_basis": "regulation_1x2",
+  "outcome_basis": "regulation",
+  "market_basis": "regulation_1x2",
+  "market_pick": "h",
+  "market_pct": 43,
+  "pick_mkt": 26,
+  "value_side": "a",
+  "value_edge": 8,
+  "value_mkt": 26,
+  "value_name": "Real Racing Club de Santander",
+  "upset_candidate": "a",
+  "upset_name": "Real Racing Club de Santander",
+  "upset_score": 88,
+  "upset_candidate_pct": 34,
+  "upset_triggered": true,
+  "upset_temperature": 1.54,
+  "upset_reason": "independent model ranks the market underdog first · model edge 20 pts · draw pressure · narrow team gap · underdog momentum",
+  "factor_snapshot": {
+   "gd": -0.75,
+   "adv": 1.2,
+   "form": -0.5,
+   "rest": 0.0,
+   "pts": -0.6,
+   "elo": -0.2,
+   "class": 0.0
+  },
+  "market_snapshot": {
+   "h": 43,
+   "d": 31,
+   "a": 26
+  },
+  "market_snapshot_at": "2026-08-23T15:37:53.929084Z",
+  "market_snapshot_recorded_at": "2026-08-23T15:38:01.637928Z",
+  "market_snapshot_receipt": {
+   "source": "The Odds API consensus",
+   "source_reference": "https://the-odds-api.com/",
+   "observed_at": "2026-08-23T15:37:53.929084Z",
+   "recorded_at": "2026-08-23T15:38:01.637928Z",
+   "snapshot_id": null,
+   "books": 21,
+   "spread": 2
+  },
+  "market_gap": 17.0,
+  "upset_snapshot": {
+   "candidate": "Real Racing Club de Santander",
+   "class": "minor",
+   "market_dog_pct": 26.0,
+   "model_dog_pct": 34.0,
+   "upset_edge": 8.0,
+   "independent_model_dog_pct": 46.0,
+   "independent_model_lead_pct": 15.0,
+   "independent_edge": 20.0,
+   "edge_threshold": 8.0,
+   "supporting_signals": [
+    "elo",
+    "form",
+    "gd",
+    "pts"
+   ],
+   "personnel_gate": true,
+   "personnel_blockers": [],
+   "radar": false,
+   "standings_candidate": null,
+   "standings_gap_pct": null,
+   "gate": "open",
+   "box_score_edge": 0.0
+  },
+  "box_score_available": false,
+  "data_availability": {
+   "market": "available",
+   "box_score": "unavailable",
+   "lineups": "unavailable",
+   "injuries": "unavailable",
+   "weather": "unavailable",
+   "personnel": "unavailable",
+   "venue_context": "unavailable"
+  },
+  "damp_pct": 0,
+  "mkt_pull": -12,
+  "model_ver": "v6-calibrated",
+  "model_code_marker": "matchday-predictor-integrity-2026-07",
+  "model_signal_schema": 8,
+  "reproducibility": {
+   "model_version": "v6-calibrated",
+   "model_signal_schema": 8,
+   "probability_basis": "regulation",
+   "market_comparison_basis": "regulation_1x2",
+   "market_comparison_pick": "a"
+  },
+  "locked_at": "2026-08-23T15:38:01.637928Z",
+  "lead_time_seconds": 6718.362,
+  "lead_time_hours": 1.866212,
+  "lock_window_hours": 2.0,
+  "status_at_lock": "UPCOMING",
+  "integrity_eligible": true,
+  "integrity_status": "verified",
+  "integrity_reason": "verified_pregame_window",
+  "prediction_snapshot": {
+   "pick": "a",
+   "pick_name": "Real Racing Club de Santander",
+   "confidence": 34,
+   "model_version": "v6-calibrated",
+   "model_signal_schema": 8,
+   "base_pick": "h",
+   "base_pick_name": "Getafe CF",
+   "model": {
+    "h": 31,
+    "a": 46,
+    "d": 23
+   },
+   "base_blend": {
+    "h": 38,
+    "d": 28,
+    "a": 34
+   },
+   "blend": {
+    "h": 36,
+    "d": 30,
+    "a": 34
+   },
+   "adjusted": {
+    "h": 36,
+    "d": 30,
+    "a": 34
+   },
+   "is_knockout": false,
+   "advancement": null,
+   "regulation_pick": "h",
+   "market_comparison_pick": "a",
+   "market_comparison_basis": "regulation_1x2",
+   "regulation_pick_name": "Getafe CF",
+   "regulation_confidence": 36,
+   "regulation_probs": {
+    "h": 36,
+    "d": 30,
+    "a": 34
+   },
+   "edge": 8,
+   "note": "upset formula triggered — volatility makes the underdog playable",
+   "why": {
+    "gd": -0.75,
+    "adv": 1.2,
+    "form": -0.5,
+    "rest": 0.0,
+    "pts": -0.6,
+    "elo": -0.2,
+    "class": 0.0
+   },
+   "damp_pct": 0,
+   "mkt_pull": -12,
+   "market_weight": 0.6,
+   "upset": {
+    "candidate": "a",
+    "candidate_name": "Real Racing Club de Santander",
+    "favorite": "h",
+    "favorite_name": "Getafe CF",
+    "score": 88,
+    "upset_class": "minor",
+    "market_dog_pct": 26.0,
+    "model_dog_pct": 34.0,
+    "upset_edge": 8.0,
+    "radar": false,
+    "standings_candidate": null,
+    "standings_gap_pct": null,
+    "standings_sample_ok": false,
+    "temperature": 1.54,
+    "variance_pct": 60,
+    "low_goal_pct": 54,
+    "draw_pct": 28,
+    "favorite_pct": 36,
+    "candidate_pct": 34,
+    "margin_pct": 2,
+    "learn_bias_pct": 0.0,
+    "market_gap_pct": 17.0,
+    "market_gate": true,
+    "market_quality_gate": true,
+    "independent_model_dog_pct": 46.0,
+    "independent_model_lead_pct": 15.0,
+    "independent_edge": 20.0,
+    "edge_threshold": 8.0,
+    "independent_pick_gate": true,
+    "playability_gate": true,
+    "evidence_gate": true,
+    "supporting_signals": [
+     "elo",
+     "form",
+     "gd",
+     "pts"
+    ],
+    "personnel_gate": true,
+    "personnel_blockers": [],
+    "box_score_edge": 0.0,
+    "strong_box_signal": false,
+    "blocked": false,
+    "triggered": true,
+    "reason": "independent model ranks the market underdog first · model edge 20 pts · draw pressure · narrow team gap · underdog momentum"
+   },
+   "data_quality": {
+    "level": "established",
+    "games": {
+     "home": 1,
+     "away": 1
+    },
+    "signals": [
+     "form",
+     "elo",
+     "market"
+    ],
+    "market_available": true,
+    "market_books": 21,
+    "market_spread": 2,
+    "market_weight": 0.6,
+    "note": "Current-season sample and opponent-adjusted results are available."
+   },
+   "predicted_margin": {
+    "value": 0.0,
+    "unit": "goals",
+    "favored": null,
+    "label": "Even matchup"
+   },
+   "class_meta": {
+    "label": "Squad edge",
+    "source": "Curated squad and star-player values",
+    "available": false,
+    "coverage": "unavailable",
+    "home_available": false,
+    "away_available": false,
+    "note": "Squad value, star quality, and ranking are a preseason prior; missing clubs are not assigned a fabricated edge.",
+    "edge_available": true,
+    "coverage_label": null
+   },
+   "publication_state": "locked",
+   "lock_readiness": {
+    "schema_ver": 1,
+    "sport": "soccer",
+    "competition": "LALIGA",
+    "phase": "lock_window",
+    "lock_window_hours": 2.0,
+    "lead_time_hours": 1.87,
+    "inputs": {
+     "market": "confirmed",
+     "injuries": "missing",
+     "lineups": "missing",
+     "weather": "missing"
+    },
+    "missing_critical": [
+     "injuries",
+     "lineups"
+    ],
+    "unconfirmed_critical": [
+     "injuries",
+     "lineups"
+    ],
+    "coverage_pct": 25,
+    "confirmed_pct": 25,
+    "provenance": [],
+    "confidence_guard": {
+     "high_confidence_label_allowed": false,
+     "reason": "critical pregame inputs not confirmed"
+    },
+    "production_weight": 0,
+    "research_mode": "prospective_shadow"
+   },
+   "neutral_venue_probs": {
+    "h": 32,
+    "d": 27,
+    "a": 41
+   },
+   "totals": {
+    "expected": 2.6,
+    "basis": "preseason_rating"
+   },
+   "data_availability": {
+    "market": "available",
+    "box_score": "unavailable",
+    "lineups": "unavailable",
+    "injuries": "unavailable",
+    "weather": "unavailable",
+    "personnel": "unavailable",
+    "venue_context": "unavailable"
+   }
+  },
+  "input_snapshot": {
+   "competition": "LALIGA",
+   "competition_config": {
+    "label": "La Liga",
+    "sport": "soccer",
+    "fd": "PD",
+    "odds": "soccer_spain_la_liga",
+    "outright": null,
+    "tournament": false,
+    "source": "fd",
+    "has_draws": true,
+    "league_zones": {
+     "ucl": 4,
+     "uel": 1,
+     "rel": 3
+    }
+   },
+   "match": {
+    "id": "564644",
+    "stage": "Regular Season",
+    "kickoff": "2026-08-23T17:30:00Z",
+    "status": "UPCOMING",
+    "venue": "",
+    "home": {
+     "name": "Getafe CF",
+     "code": "GET",
+     "group": "",
+     "pos": null,
+     "pld": 1,
+     "w": 0,
+     "d": 0,
+     "l": 1,
+     "gf": 0,
+     "ga": 3,
+     "gd": -3,
+     "pts": 0,
+     "form": "L",
+     "rating": 4.82,
+     "rest_days": 8,
+     "form_home": "",
+     "form_away": "L"
+    },
+    "away": {
+     "name": "Real Racing Club de Santander",
+     "code": "SAN",
+     "group": "",
+     "pos": null,
+     "pld": 1,
+     "w": 0,
+     "d": 1,
+     "l": 0,
+     "gf": 2,
+     "ga": 2,
+     "gd": 0,
+     "pts": 1,
+     "form": "D",
+     "rating": 5.04,
+     "rest_days": 7,
+     "form_home": "D",
+     "form_away": ""
+    },
+    "markets": {
+     "1x2": {
+      "home_pct": 43,
+      "draw_pct": 31,
+      "away_pct": 26,
+      "books": 21,
+      "source": "The Odds API consensus",
+      "source_reference": "https://the-odds-api.com/",
+      "observed_at": "2026-08-23T15:37:53.929084Z",
+      "spread": 2,
+      "spread_lo": 42,
+      "spread_hi": 44,
+      "confidence": "tight",
+      "open": {
+       "h": 43,
+       "d": 32,
+       "a": 24
+      },
+      "move": {
+       "h": 0,
+       "d": -1,
+       "a": 2
+      }
+     }
+    },
+    "weather": null,
+    "injuries": {
+     "home": [],
+     "away": []
+    },
+    "lineups": null,
+    "h2h": [],
+    "stats": null,
+    "stats_extra": null,
+    "data_source": null,
+    "advanced_metrics": null,
+    "advanced_metrics_meta": null,
+    "nfl_challenger_shadow": null,
+    "mlb_challenger_shadow": null,
+    "personnel": null,
+    "personnel_shadow": {
+     "schema_ver": 1,
+     "sport": "soccer",
+     "production_weight": 0,
+     "mode": "prospective_shadow",
+     "features": {
+      "injury_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineup_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineups_confirmed": false,
+      "rest_days": {
+       "home": 8,
+       "away": 7
+      },
+      "weather": null,
+      "venue_context": null
+     }
+    },
+    "pregame_context": {
+     "schema_ver": 1,
+     "sport": "soccer",
+     "competition": "LALIGA",
+     "phase": "lock_window",
+     "lock_window_hours": 2.0,
+     "lead_time_hours": 1.87,
+     "inputs": {
+      "market": "confirmed",
+      "injuries": "missing",
+      "lineups": "missing",
+      "weather": "missing"
+     },
+     "missing_critical": [
+      "injuries",
+      "lineups"
+     ],
+     "unconfirmed_critical": [
+      "injuries",
+      "lineups"
+     ],
+     "coverage_pct": 25,
+     "confirmed_pct": 25,
+     "provenance": [],
+     "confidence_guard": {
+      "high_confidence_label_allowed": false,
+      "reason": "critical pregame inputs not confirmed"
+     },
+     "production_weight": 0,
+     "research_mode": "prospective_shadow"
+    },
+    "pregame_provenance": null,
+    "venue_context": null,
+    "model_signal_schema": null
+   }
+  },
+  "mfti_shadow": {
+   "spec_version": "MFTI-0.1.1-shadow",
+   "mode": "shadow_research_only",
+   "captured_at": "2026-08-23T15:38:01.637928Z",
+   "status": "incomplete",
+   "score": null,
+   "historical_evidence": {
+    "available": false,
+    "score": null,
+    "reason": "frozen_normalization_and_rolling_recalibration_not_fitted",
+    "diagnostics": {
+     "eligible_prior_forecasts": 9,
+     "mean_brier": 0.549311,
+     "mean_log_loss": 0.933101,
+     "brier_skill_vs_uniform": 0.176033,
+     "log_skill_vs_uniform": 0.150655
+    }
+   },
+   "event_readiness": {
+    "available": false,
+    "score": null,
+    "missing_components": [
+     "scenario_stability",
+     "availability",
+     "freshness",
+     "model_stability"
+    ]
+   },
+   "components": {
+    "scenario_stability": {
+     "available": false,
+     "score": null,
+     "reason": "scenario_forecasts_not_captured"
+    },
+    "availability": {
+     "available": false,
+     "score": null,
+     "reason": "availability_probabilities_not_captured"
+    },
+    "freshness": {
+     "available": false,
+     "score": null,
+     "reason": "input_freshness_not_captured"
+    },
+    "model_stability": {
+     "available": false,
+     "score": null,
+     "reason": "independent_model_outputs_not_captured"
+    }
+   },
+   "missing_components": [
+    "historical_evidence",
+    "scenario_stability",
+    "availability",
+    "freshness",
+    "model_stability"
+   ],
+   "affects_prediction": false,
+   "user_visible": false
+  },
+  "result": "h",
+  "model_result": "h",
+  "market_result": "h",
+  "score": "1-0",
+  "result_snapshot": {
+   "display": {
+    "home": 1,
+    "away": 0
+   },
+   "regulation": {
+    "home": 1,
+    "away": 0
+   },
+   "penalties": null,
+   "ultimate_winner": "h",
+   "observed_at": "2026-08-23T20:39:53.107961Z",
+   "source": "provider"
+  },
+  "model_hit": false,
+  "market_hit": true,
+  "market_comparison_hit": false,
+  "upset_hit": false,
+  "brier3": 0.615,
+  "log_loss": 1.022,
+  "brier_advancement": null,
+  "log_loss_advancement": null,
+  "value_hit": false,
+  "result_corrections": [],
+  "clv": 0.0,
+  "closing_market_snapshot": {
+   "a": 26.0,
+   "h": 43.0,
+   "d": 31.0
+  },
+  "closing_market_receipt": {
+   "sources": [
+    "The Odds API consensus"
+   ],
+   "source_count": 1,
+   "event_ids": [
+    "ef60648e4ffe4b7aec194ebbd85a03e181e023b70d82946e1d056854cf42fe11"
+   ],
+   "observed_at": [
+    "2026-08-23T15:37:53.929084Z"
+   ]
+  }
+ },
+ "564642": {
+  "schema_ver": 2,
+  "fixture_id": "564642",
+  "competition": "LALIGA",
+  "home": "Elche CF",
+  "away": "FC Barcelona",
+  "stage": "Regular Season",
+  "kickoff": "2026-08-23T19:30:00Z",
+  "pick": "a",
+  "pick_name": "FC Barcelona",
+  "confidence": 67,
+  "edge": -5,
+  "base_pick": "a",
+  "base_pick_name": "FC Barcelona",
+  "probs": {
+   "h": 14,
+   "d": 19,
+   "a": 67
+  },
+  "advancement_probs": null,
+  "regulation_probs": {
+   "h": 14,
+   "d": 19,
+   "a": 67
+  },
+  "regulation_pick": "a",
+  "market_comparison_pick": "a",
+  "market_comparison_basis": "regulation_1x2",
+  "outcome_basis": "regulation",
+  "market_basis": "regulation_1x2",
+  "market_pick": "a",
+  "market_pct": 72,
+  "pick_mkt": 72,
+  "value_side": null,
+  "value_edge": null,
+  "value_mkt": null,
+  "value_name": null,
+  "upset_candidate": "h",
+  "upset_name": "Elche CF",
+  "upset_score": 12,
+  "upset_candidate_pct": 14,
+  "upset_triggered": false,
+  "upset_temperature": 1.2,
+  "upset_reason": "underdog momentum",
+  "factor_snapshot": {
+   "form": 0.5,
+   "pts": 0.6,
+   "gd": 0.0,
+   "adv": 1.2,
+   "rest": 0.3,
+   "elo": -7.51,
+   "class": -16.28
+  },
+  "market_snapshot": {
+   "h": 11,
+   "d": 17,
+   "a": 72
+  },
+  "market_snapshot_at": "2026-08-23T18:49:52.514843Z",
+  "market_snapshot_recorded_at": "2026-08-23T18:49:58.050931Z",
+  "market_snapshot_receipt": {
+   "source": "The Odds API consensus",
+   "source_reference": "https://the-odds-api.com/",
+   "observed_at": "2026-08-23T18:49:52.514843Z",
+   "recorded_at": "2026-08-23T18:49:58.050931Z",
+   "snapshot_id": null,
+   "books": 21,
+   "spread": 3
+  },
+  "market_gap": 61.0,
+  "upset_snapshot": {
+   "candidate": "Elche CF",
+   "class": "major",
+   "market_dog_pct": 11.0,
+   "model_dog_pct": 14.0,
+   "upset_edge": 3.0,
+   "independent_model_dog_pct": 10.0,
+   "independent_model_lead_pct": -64.0,
+   "independent_edge": -1.0,
+   "edge_threshold": 8.0,
+   "supporting_signals": [
+    "adv",
+    "form",
+    "pts",
+    "rest"
+   ],
+   "personnel_gate": true,
+   "personnel_blockers": [],
+   "radar": false,
+   "standings_candidate": null,
+   "standings_gap_pct": null,
+   "gate": "none",
+   "box_score_edge": 0.0
+  },
+  "box_score_available": false,
+  "data_availability": {
+   "market": "available",
+   "box_score": "unavailable",
+   "lineups": "unavailable",
+   "injuries": "unavailable",
+   "weather": "unavailable",
+   "personnel": "unavailable",
+   "venue_context": "unavailable"
+  },
+  "damp_pct": 0,
+  "mkt_pull": -7,
+  "model_ver": "v6-calibrated",
+  "model_code_marker": "matchday-predictor-integrity-2026-07",
+  "model_signal_schema": 8,
+  "reproducibility": {
+   "model_version": "v6-calibrated",
+   "model_signal_schema": 8,
+   "probability_basis": "regulation",
+   "market_comparison_basis": "regulation_1x2",
+   "market_comparison_pick": "a"
+  },
+  "locked_at": "2026-08-23T18:49:58.050931Z",
+  "lead_time_seconds": 2401.949,
+  "lead_time_hours": 0.667208,
+  "lock_window_hours": 2.0,
+  "status_at_lock": "UPCOMING",
+  "integrity_eligible": true,
+  "integrity_status": "verified",
+  "integrity_reason": "verified_pregame_window",
+  "prediction_snapshot": {
+   "pick": "a",
+   "pick_name": "FC Barcelona",
+   "confidence": 67,
+   "model_version": "v6-calibrated",
+   "model_signal_schema": 8,
+   "base_pick": "a",
+   "base_pick_name": "FC Barcelona",
+   "model": {
+    "h": 10,
+    "a": 74,
+    "d": 15
+   },
+   "base_blend": {
+    "h": 11,
+    "d": 16,
+    "a": 73
+   },
+   "blend": {
+    "h": 14,
+    "d": 19,
+    "a": 67
+   },
+   "adjusted": {
+    "h": 14,
+    "d": 19,
+    "a": 67
+   },
+   "is_knockout": false,
+   "advancement": null,
+   "regulation_pick": "a",
+   "market_comparison_pick": "a",
+   "market_comparison_basis": "regulation_1x2",
+   "regulation_pick_name": "FC Barcelona",
+   "regulation_confidence": 67,
+   "regulation_probs": {
+    "h": 14,
+    "d": 19,
+    "a": 67
+   },
+   "edge": -5,
+   "note": "model agrees with the market",
+   "why": {
+    "form": 0.5,
+    "pts": 0.6,
+    "gd": 0.0,
+    "adv": 1.2,
+    "rest": 0.3,
+    "elo": -7.51,
+    "class": -16.28
+   },
+   "damp_pct": 0,
+   "mkt_pull": -7,
+   "market_weight": 0.6,
+   "upset": {
+    "candidate": "h",
+    "candidate_name": "Elche CF",
+    "favorite": "a",
+    "favorite_name": "FC Barcelona",
+    "score": 12,
+    "upset_class": "major",
+    "market_dog_pct": 11.0,
+    "model_dog_pct": 14.0,
+    "upset_edge": 3.0,
+    "radar": false,
+    "standings_candidate": null,
+    "standings_gap_pct": null,
+    "standings_sample_ok": false,
+    "temperature": 1.2,
+    "variance_pct": 11,
+    "low_goal_pct": 49,
+    "draw_pct": 16,
+    "favorite_pct": 67,
+    "candidate_pct": 14,
+    "margin_pct": 53,
+    "learn_bias_pct": 0.0,
+    "market_gap_pct": 61.0,
+    "market_gate": false,
+    "market_quality_gate": true,
+    "independent_model_dog_pct": 10.0,
+    "independent_model_lead_pct": -64.0,
+    "independent_edge": -1.0,
+    "edge_threshold": 8.0,
+    "independent_pick_gate": false,
+    "playability_gate": false,
+    "evidence_gate": true,
+    "supporting_signals": [
+     "adv",
+     "form",
+     "pts",
+     "rest"
+    ],
+    "personnel_gate": true,
+    "personnel_blockers": [],
+    "box_score_edge": 0.0,
+    "strong_box_signal": false,
+    "blocked": false,
+    "triggered": false,
+    "reason": "underdog momentum"
+   },
+   "data_quality": {
+    "level": "preseason",
+    "games": {
+     "home": 1,
+     "away": 0
+    },
+    "signals": [
+     "class",
+     "form",
+     "elo",
+     "rest",
+     "market"
+    ],
+    "market_available": true,
+    "market_books": 21,
+    "market_spread": 3,
+    "market_weight": 0.6,
+    "note": "Limited current-season evidence; probability is intentionally conservative."
+   },
+   "predicted_margin": {
+    "value": -0.9,
+    "unit": "goals",
+    "favored": "a",
+    "label": "-0.9 goals"
+   },
+   "class_meta": {
+    "label": "Squad edge",
+    "source": "Curated squad and star-player values",
+    "available": false,
+    "coverage": "partial",
+    "home_available": false,
+    "away_available": true,
+    "note": "Squad value, star quality, and ranking are a preseason prior; missing clubs are not assigned a fabricated edge.",
+    "edge_available": true,
+    "coverage_label": null
+   },
+   "publication_state": "locked",
+   "lock_readiness": {
+    "schema_ver": 1,
+    "sport": "soccer",
+    "competition": "LALIGA",
+    "phase": "lock_window",
+    "lock_window_hours": 2.0,
+    "lead_time_hours": 0.67,
+    "inputs": {
+     "market": "confirmed",
+     "injuries": "missing",
+     "lineups": "missing",
+     "weather": "missing"
+    },
+    "missing_critical": [
+     "injuries",
+     "lineups"
+    ],
+    "unconfirmed_critical": [
+     "injuries",
+     "lineups"
+    ],
+    "coverage_pct": 25,
+    "confirmed_pct": 25,
+    "provenance": [],
+    "confidence_guard": {
+     "high_confidence_label_allowed": false,
+     "reason": "critical pregame inputs not confirmed"
+    },
+    "production_weight": 0,
+    "research_mode": "prospective_shadow"
+   },
+   "neutral_venue_probs": {
+    "h": 12,
+    "d": 19,
+    "a": 69
+   },
+   "totals": {
+    "expected": 2.78,
+    "basis": "preseason_rating"
+   },
+   "data_availability": {
+    "market": "available",
+    "box_score": "unavailable",
+    "lineups": "unavailable",
+    "injuries": "unavailable",
+    "weather": "unavailable",
+    "personnel": "unavailable",
+    "venue_context": "unavailable"
+   }
+  },
+  "input_snapshot": {
+   "competition": "LALIGA",
+   "competition_config": {
+    "label": "La Liga",
+    "sport": "soccer",
+    "fd": "PD",
+    "odds": "soccer_spain_la_liga",
+    "outright": null,
+    "tournament": false,
+    "source": "fd",
+    "has_draws": true,
+    "league_zones": {
+     "ucl": 4,
+     "uel": 1,
+     "rel": 3
+    }
+   },
+   "match": {
+    "id": "564642",
+    "stage": "Regular Season",
+    "kickoff": "2026-08-23T19:30:00Z",
+    "status": "UPCOMING",
+    "venue": "",
+    "home": {
+     "name": "Elche CF",
+     "code": "ELC",
+     "group": "",
+     "pos": null,
+     "pld": 1,
+     "w": 0,
+     "d": 1,
+     "l": 0,
+     "gf": 1,
+     "ga": 1,
+     "gd": 0,
+     "pts": 1,
+     "form": "D",
+     "rating": 4.89,
+     "rest_days": 6,
+     "form_home": "",
+     "form_away": "D"
+    },
+    "away": {
+     "name": "FC Barcelona",
+     "code": "FCB",
+     "group": "",
+     "pos": null,
+     "pld": 0,
+     "w": 0,
+     "d": 0,
+     "l": 0,
+     "gf": 0,
+     "ga": 0,
+     "gd": 0,
+     "pts": 0,
+     "form": "",
+     "rating": 9.66
+    },
+    "markets": {
+     "1x2": {
+      "home_pct": 11,
+      "draw_pct": 17,
+      "away_pct": 72,
+      "books": 21,
+      "source": "The Odds API consensus",
+      "source_reference": "https://the-odds-api.com/",
+      "observed_at": "2026-08-23T18:49:52.514843Z",
+      "spread": 3,
+      "spread_lo": 10,
+      "spread_hi": 13,
+      "confidence": "tight",
+      "open": {
+       "h": 11,
+       "d": 17,
+       "a": 72
+      },
+      "move": {
+       "h": 0,
+       "d": 0,
+       "a": 0
+      }
+     }
+    },
+    "weather": null,
+    "injuries": {
+     "home": [],
+     "away": []
+    },
+    "lineups": null,
+    "h2h": [],
+    "stats": null,
+    "stats_extra": null,
+    "data_source": null,
+    "advanced_metrics": null,
+    "advanced_metrics_meta": null,
+    "nfl_challenger_shadow": null,
+    "mlb_challenger_shadow": null,
+    "personnel": null,
+    "personnel_shadow": {
+     "schema_ver": 1,
+     "sport": "soccer",
+     "production_weight": 0,
+     "mode": "prospective_shadow",
+     "features": {
+      "injury_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineup_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineups_confirmed": false,
+      "rest_days": {
+       "home": 6,
+       "away": null
+      },
+      "weather": null,
+      "venue_context": null
+     }
+    },
+    "pregame_context": {
+     "schema_ver": 1,
+     "sport": "soccer",
+     "competition": "LALIGA",
+     "phase": "lock_window",
+     "lock_window_hours": 2.0,
+     "lead_time_hours": 0.67,
+     "inputs": {
+      "market": "confirmed",
+      "injuries": "missing",
+      "lineups": "missing",
+      "weather": "missing"
+     },
+     "missing_critical": [
+      "injuries",
+      "lineups"
+     ],
+     "unconfirmed_critical": [
+      "injuries",
+      "lineups"
+     ],
+     "coverage_pct": 25,
+     "confirmed_pct": 25,
+     "provenance": [],
+     "confidence_guard": {
+      "high_confidence_label_allowed": false,
+      "reason": "critical pregame inputs not confirmed"
+     },
+     "production_weight": 0,
+     "research_mode": "prospective_shadow"
+    },
+    "pregame_provenance": null,
+    "venue_context": null,
+    "model_signal_schema": null
+   }
+  },
+  "mfti_shadow": {
+   "spec_version": "MFTI-0.1.1-shadow",
+   "mode": "shadow_research_only",
+   "captured_at": "2026-08-23T18:49:58.050931Z",
+   "status": "incomplete",
+   "score": null,
+   "historical_evidence": {
+    "available": false,
+    "score": null,
+    "reason": "frozen_normalization_and_rolling_recalibration_not_fitted",
+    "diagnostics": {
+     "eligible_prior_forecasts": 10,
+     "mean_brier": 0.57456,
+     "mean_log_loss": 0.970724,
+     "brier_skill_vs_uniform": 0.13816,
+     "log_skill_vs_uniform": 0.116409
     }
    },
    "event_readiness": {
