@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0823F",
+  "tag": "Fix",
+  "title": "Upset Radar finally has a scorecard sample",
+  "items": [
+   "The scorecard now reports how often genuine market underdogs won across every settled, verified locked forecast instead of waiting for the much narrower live Radar flag to fire.",
+   "Pick'em and unknown-market fixtures remain excluded, while official upset picks are still reported separately.",
+   "Upset Radar labels now describe the denominator clearly so its record is interpretable at a glance."
+  ]
+ },
+ {
   "date": "Build 0823E",
   "tag": "Content",
   "title": "Editorial analysis, stated plainly",

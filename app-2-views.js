@@ -403,10 +403,10 @@ function renderDeepDive(sc){const tab=window._scTab||'overview';
     h+=need(20,'Signal quality')||`<div class="seclbl">When a factor favoured the pick, did the pick hit?</div>`+Object.entries(sc.signal_quality||{}).filter(([k,v])=>v.n).map(([k,v])=>{const L={class:'Talent / squad quality',market_power:'Championship market power',form:'Recent form',gd:'Score difference',rest:'Rest',pts:'Points',record:'Season record',margin:'Scoring margin',rank:'Poll rank',srs:'Opponent-adjusted rating',elo:'Elo rating'}[k]||k;const pct=Math.round(v.hits/v.n*100);return `<div class="ddrow"><span>${L}</span><div class="ddbarwrap"><div class="ddbar ${pct>=55?'good':pct<45?'bad':''}" style="width:${pct}%"></div></div><span>${v.hits}/${v.n} <i class="ssnote">${pct}%</i></span></div>`;}).join('');
   } else if(tab==='upsets'){
     const u=sc.upset||{};h+=`<div class="status-grid">
-      <div class="statuscard info"><span class="slbl">Upsets watched</span><div class="sval">${u.watched||0}</div><div class="hint">flagged on the radar</div></div>
-      <div class="statuscard ${u.hits?'ok':'info'}"><span class="slbl">Radar hits</span><div class="sval">${u.hits||0}/${u.watched||0}</div><div class="hint">flagged underdog won</div></div>
+      <div class="statuscard info"><span class="slbl">Underdogs tracked</span><div class="sval">${u.watched||0}</div><div class="hint">genuine market underdogs</div></div>
+      <div class="statuscard ${u.hits?'ok':'info'}"><span class="slbl">Underdog wins</span><div class="sval">${u.hits||0}/${u.watched||0}</div><div class="hint">tracked underdog won</div></div>
       <div class="statuscard info"><span class="slbl">Triggered picks</span><div class="sval">${u.triggered_hits||0}/${u.triggered||0}</div><div class="hint">upset became the pick</div></div>
-      <div class="statuscard info"><span class="slbl">Avg score</span><div class="sval">${u.avg_score??'—'}</div><div class="hint">of watched upsets</div></div></div>`;
+      <div class="statuscard info"><span class="slbl">Avg score</span><div class="sval">${u.avg_score??'—'}</div><div class="hint">of tracked underdogs</div></div></div>`;
   } else if(tab==='errors'){
     h+=(sc.misses&&sc.misses.length)?`<div class="seclbl">Recent misses — with the evidence at lock time</div>`+sc.misses.map(m=>`<div class="ddmiss"><b>${esc(m.home)} v ${esc(m.away)}</b><span>picked ${m.pick==='h'?esc(m.home):m.pick==='a'?esc(m.away):'Draw'}${m.upset?` · upset flag: ${esc(m.upset)}`:''}${m.gap!=null?` · market gap ${m.gap}`:''}</span></div>`).join(''):`<div class="empty">No graded misses yet — or none captured with evidence. New picks capture full evidence.</div>`;
   }

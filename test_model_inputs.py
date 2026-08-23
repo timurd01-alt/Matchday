@@ -636,6 +636,34 @@ class ModelInputTests(unittest.TestCase):
         self.assertEqual(scorecard["legacy"]["model_hits"], 1)
         self.assertIn("Legacy/unverified", scorecard["picks"][0]["stage"])
 
+    def test_scorecard_tracks_classified_underdogs_without_requiring_radar_flag(self):
+        picks = {
+            "dog": {
+                "fixture_id": "dog", "home": "A", "away": "B",
+                "pick": "h", "result": "h", "model_hit": True,
+                "upset_candidate": "a", "upset_hit": False,
+                "upset_score": 58, "upset_triggered": False,
+                "upset_snapshot": {"class": "solid", "radar": False},
+                "integrity_eligible": True, "integrity_status": "verified",
+            },
+            "pickem": {
+                "fixture_id": "pickem", "home": "C", "away": "D",
+                "pick": "a", "result": "a", "model_hit": True,
+                "upset_candidate": "h", "upset_hit": False,
+                "upset_score": 52, "upset_triggered": False,
+                "upset_snapshot": {"class": "pickem", "radar": False},
+                "integrity_eligible": True, "integrity_status": "verified",
+            },
+        }
+        with mock.patch.object(fetch_data, "_load_picks", return_value=picks), \
+             mock.patch.object(fetch_data, "_save_picks"), \
+             mock.patch.object(fetch_data, "_record_is_official", return_value=True), \
+             mock.patch.object(fetch_data, "_refresh_record_clv", return_value=False):
+            scorecard = fetch_data.update_scorecard([])
+        self.assertEqual(scorecard["upset"]["watched"], 1)
+        self.assertEqual(scorecard["upset"]["hits"], 0)
+        self.assertEqual(scorecard["upset"]["avg_score"], 58.0)
+
     def test_unverifiable_ucl_advancement_receipt_is_excluded_from_all_accuracy(self):
         fetch_data.COMP_KEY = "UCL"
         fetch_data.COMP = dict(fetch_data.COMPETITIONS["UCL"])

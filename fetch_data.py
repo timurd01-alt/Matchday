@@ -5782,9 +5782,14 @@ def update_scorecard(matches):
             row["legacy"] = True
         rows.append(row)
     probability_metrics = _probability_metric_summary(graded)
+    # Score every genuine market underdog identified by the locked receipt,
+    # not only the exceptionally narrow subset that fired the live radar.
+    # Requiring `radar` here left the scorecard empty even while the ledger
+    # contained settled underdog forecasts. Pick'ems and unknown markets stay
+    # excluded by the immutable classification captured at lock time.
     upset_watched = [p for p in graded if p.get("upset_candidate")
-                     and (p.get("upset_snapshot") or {}).get("radar")
-                     and (p.get("upset_snapshot") or {}).get("standings_gap_pct") is not None]
+                     and (p.get("upset_snapshot") or {}).get("class")
+                     in ("minor", "solid", "major")]
     upset_triggered = [p for p in upset_watched if p.get("upset_triggered")]
     # calibration bands: stated confidence vs actual hit rate
     bands = [("<50", 0, 50), ("50-60", 50, 60), ("60-70", 60, 70),
