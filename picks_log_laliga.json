@@ -822,7 +822,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-22T22:39:09.811683Z",
+   "observed_at": "2026-08-23T13:02:58.482447Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -1655,7 +1655,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-22T22:39:09.811753Z",
+   "observed_at": "2026-08-23T13:02:58.482500Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -2306,7 +2306,7 @@
    },
    "penalties": null,
    "ultimate_winner": "d",
-   "observed_at": "2026-08-22T22:39:09.811791Z",
+   "observed_at": "2026-08-23T13:02:58.482540Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -2965,7 +2965,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-22T22:39:09.811823Z",
+   "observed_at": "2026-08-23T13:02:58.482574Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -3497,7 +3497,7 @@
    },
    "penalties": null,
    "ultimate_winner": "d",
-   "observed_at": "2026-08-22T22:39:09.811853Z",
+   "observed_at": "2026-08-23T13:02:58.482606Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -4038,7 +4038,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-22T22:39:09.811881Z",
+   "observed_at": "2026-08-23T13:02:58.482636Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -4052,9 +4052,9 @@
   "result_corrections": [],
   "clv": 0.0,
   "closing_market_snapshot": {
-   "a": 14.0,
+   "d": 21.0,
    "h": 65.0,
-   "d": 21.0
+   "a": 14.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -4577,7 +4577,7 @@
    },
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-22T22:39:09.811910Z",
+   "observed_at": "2026-08-23T13:02:58.482667Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -5121,7 +5121,7 @@
    },
    "penalties": null,
    "ultimate_winner": "d",
-   "observed_at": "2026-08-22T22:39:09.811938Z",
+   "observed_at": "2026-08-23T13:02:58.482696Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -5135,9 +5135,9 @@
   "result_corrections": [],
   "clv": 0.6,
   "closing_market_snapshot": {
-   "a": 30.693,
+   "d": 30.693,
    "h": 38.614,
-   "d": 30.693
+   "a": 30.693
   },
   "closing_market_receipt": {
    "sources": [
@@ -5697,7 +5697,7 @@
    },
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-22T22:39:09.811966Z",
+   "observed_at": "2026-08-23T13:02:58.482725Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -5711,9 +5711,9 @@
   "result_corrections": [],
   "clv": 0.7,
   "closing_market_snapshot": {
-   "a": 68.687,
+   "d": 19.192,
    "h": 12.121,
-   "d": 19.192
+   "a": 68.687
   },
   "closing_market_receipt": {
    "sources": [
@@ -5727,5 +5727,501 @@
     "2026-08-22T18:50:27.306301Z"
    ]
   }
+ },
+ "564646": {
+  "schema_ver": 2,
+  "fixture_id": "564646",
+  "competition": "LALIGA",
+  "home": "Club Atlético de Madrid",
+  "away": "Villarreal CF",
+  "stage": "Regular Season",
+  "kickoff": "2026-08-23T15:00:00Z",
+  "pick": "h",
+  "pick_name": "Club Atlético de Madrid",
+  "confidence": 40,
+  "edge": null,
+  "base_pick": "h",
+  "base_pick_name": "Club Atlético de Madrid",
+  "probs": {
+   "h": 40,
+   "d": 27,
+   "a": 33
+  },
+  "advancement_probs": null,
+  "regulation_probs": {
+   "h": 40,
+   "d": 27,
+   "a": 33
+  },
+  "regulation_pick": "h",
+  "market_comparison_pick": "h",
+  "market_comparison_basis": "regulation_1x2",
+  "outcome_basis": "regulation",
+  "market_basis": "regulation_1x2",
+  "market_pick": null,
+  "market_pct": null,
+  "pick_mkt": null,
+  "value_side": null,
+  "value_edge": null,
+  "value_mkt": null,
+  "value_name": null,
+  "upset_candidate": "a",
+  "upset_name": "Villarreal CF",
+  "upset_score": 68,
+  "upset_candidate_pct": 33,
+  "upset_triggered": false,
+  "upset_temperature": 1.41,
+  "upset_reason": "draw pressure",
+  "factor_snapshot": {
+   "elo": 0.05,
+   "form": 1.0,
+   "rest": -0.45,
+   "pts": 1.2,
+   "adv": 1.2,
+   "gd": 0.5,
+   "class": 2.02
+  },
+  "market_snapshot": null,
+  "market_snapshot_at": null,
+  "market_snapshot_recorded_at": null,
+  "market_snapshot_receipt": null,
+  "market_gap": null,
+  "upset_snapshot": {
+   "candidate": "Villarreal CF",
+   "class": "unknown",
+   "market_dog_pct": null,
+   "model_dog_pct": 33.0,
+   "upset_edge": null,
+   "independent_model_dog_pct": null,
+   "independent_model_lead_pct": null,
+   "independent_edge": null,
+   "edge_threshold": 8.0,
+   "supporting_signals": [
+    "rest"
+   ],
+   "personnel_gate": true,
+   "personnel_blockers": [],
+   "radar": false,
+   "standings_candidate": null,
+   "standings_gap_pct": null,
+   "gate": "none",
+   "box_score_edge": 0.0
+  },
+  "box_score_available": false,
+  "data_availability": {
+   "market": "unavailable",
+   "box_score": "unavailable",
+   "lineups": "unavailable",
+   "injuries": "unavailable",
+   "weather": "unavailable",
+   "personnel": "unavailable",
+   "venue_context": "unavailable"
+  },
+  "damp_pct": 0,
+  "mkt_pull": 0,
+  "model_ver": "v6-calibrated",
+  "model_code_marker": "matchday-predictor-integrity-2026-07",
+  "model_signal_schema": 8,
+  "reproducibility": {
+   "model_version": "v6-calibrated",
+   "model_signal_schema": 8,
+   "probability_basis": "regulation",
+   "market_comparison_basis": "regulation_1x2",
+   "market_comparison_pick": "h"
+  },
+  "locked_at": "2026-08-23T13:02:58.425908Z",
+  "lead_time_seconds": 7021.574,
+  "lead_time_hours": 1.950437,
+  "lock_window_hours": 2.0,
+  "status_at_lock": "UPCOMING",
+  "integrity_eligible": true,
+  "integrity_status": "verified",
+  "integrity_reason": "verified_pregame_window",
+  "prediction_snapshot": {
+   "pick": "h",
+   "pick_name": "Club Atlético de Madrid",
+   "confidence": 40,
+   "model_version": "v6-calibrated",
+   "model_signal_schema": 8,
+   "base_pick": "h",
+   "base_pick_name": "Club Atlético de Madrid",
+   "model": {
+    "h": 43,
+    "a": 33,
+    "d": 24
+   },
+   "base_blend": {
+    "h": 43,
+    "d": 24,
+    "a": 33
+   },
+   "blend": {
+    "h": 40,
+    "d": 27,
+    "a": 33
+   },
+   "adjusted": {
+    "h": 40,
+    "d": 27,
+    "a": 33
+   },
+   "is_knockout": false,
+   "advancement": null,
+   "regulation_pick": "h",
+   "market_comparison_pick": "h",
+   "market_comparison_basis": "regulation_1x2",
+   "regulation_pick_name": "Club Atlético de Madrid",
+   "regulation_confidence": 40,
+   "regulation_probs": {
+    "h": 40,
+    "d": 27,
+    "a": 33
+   },
+   "edge": null,
+   "note": "no market to compare against",
+   "why": {
+    "elo": 0.05,
+    "form": 1.0,
+    "rest": -0.45,
+    "pts": 1.2,
+    "adv": 1.2,
+    "gd": 0.5,
+    "class": 2.02
+   },
+   "damp_pct": 0,
+   "mkt_pull": 0,
+   "market_weight": 0.0,
+   "upset": {
+    "candidate": "a",
+    "candidate_name": "Villarreal CF",
+    "favorite": "h",
+    "favorite_name": "Club Atlético de Madrid",
+    "score": 68,
+    "upset_class": "unknown",
+    "market_dog_pct": null,
+    "model_dog_pct": 33.0,
+    "upset_edge": null,
+    "radar": false,
+    "standings_candidate": null,
+    "standings_gap_pct": null,
+    "standings_sample_ok": false,
+    "temperature": 1.41,
+    "variance_pct": 41,
+    "low_goal_pct": 52,
+    "draw_pct": 24,
+    "favorite_pct": 40,
+    "candidate_pct": 33,
+    "margin_pct": 7,
+    "learn_bias_pct": 0.0,
+    "market_gap_pct": null,
+    "market_gate": false,
+    "market_quality_gate": false,
+    "independent_model_dog_pct": null,
+    "independent_model_lead_pct": null,
+    "independent_edge": null,
+    "edge_threshold": 8.0,
+    "independent_pick_gate": false,
+    "playability_gate": false,
+    "evidence_gate": false,
+    "supporting_signals": [
+     "rest"
+    ],
+    "personnel_gate": true,
+    "personnel_blockers": [],
+    "box_score_edge": 0.0,
+    "strong_box_signal": false,
+    "blocked": false,
+    "triggered": false,
+    "reason": "draw pressure"
+   },
+   "data_quality": {
+    "level": "established",
+    "games": {
+     "home": 1,
+     "away": 1
+    },
+    "signals": [
+     "class",
+     "form",
+     "elo",
+     "rest"
+    ],
+    "market_available": false,
+    "market_books": 0,
+    "market_spread": null,
+    "market_weight": 0.0,
+    "note": "Current-season sample and opponent-adjusted results are available."
+   },
+   "predicted_margin": {
+    "value": 0.1,
+    "unit": "goals",
+    "favored": "h",
+    "label": "+0.1 goals"
+   },
+   "class_meta": {
+    "label": "Squad edge",
+    "source": "Curated squad and star-player values",
+    "available": true,
+    "coverage": "complete",
+    "home_available": true,
+    "away_available": true,
+    "note": "Squad value, star quality, and ranking are a preseason prior; missing clubs are not assigned a fabricated edge.",
+    "edge_available": true,
+    "coverage_label": null
+   },
+   "publication_state": "locked",
+   "lock_readiness": {
+    "schema_ver": 1,
+    "sport": "soccer",
+    "competition": "LALIGA",
+    "phase": "lock_window",
+    "lock_window_hours": 2.0,
+    "lead_time_hours": 1.95,
+    "inputs": {
+     "market": "missing",
+     "injuries": "missing",
+     "lineups": "missing",
+     "weather": "missing"
+    },
+    "missing_critical": [
+     "market",
+     "injuries",
+     "lineups"
+    ],
+    "unconfirmed_critical": [
+     "market",
+     "injuries",
+     "lineups"
+    ],
+    "coverage_pct": 0,
+    "confirmed_pct": 0,
+    "provenance": [],
+    "confidence_guard": {
+     "high_confidence_label_allowed": false,
+     "reason": "critical pregame inputs not confirmed"
+    },
+    "production_weight": 0,
+    "research_mode": "prospective_shadow"
+   },
+   "neutral_venue_probs": {
+    "h": 40,
+    "d": 27,
+    "a": 33
+   },
+   "totals": {
+    "expected": 2.77,
+    "basis": "preseason_rating"
+   },
+   "data_availability": {
+    "market": "unavailable",
+    "box_score": "unavailable",
+    "lineups": "unavailable",
+    "injuries": "unavailable",
+    "weather": "unavailable",
+    "personnel": "unavailable",
+    "venue_context": "unavailable"
+   }
+  },
+  "input_snapshot": {
+   "competition": "LALIGA",
+   "competition_config": {
+    "label": "La Liga",
+    "sport": "soccer",
+    "fd": "PD",
+    "odds": "soccer_spain_la_liga",
+    "outright": null,
+    "tournament": false,
+    "source": "fd",
+    "has_draws": true,
+    "league_zones": {
+     "ucl": 4,
+     "uel": 1,
+     "rel": 3
+    }
+   },
+   "match": {
+    "id": "564646",
+    "stage": "Regular Season",
+    "kickoff": "2026-08-23T15:00:00Z",
+    "status": "UPCOMING",
+    "venue": "",
+    "home": {
+     "name": "Club Atlético de Madrid",
+     "code": "ATL",
+     "group": "",
+     "pos": null,
+     "pld": 1,
+     "w": 1,
+     "d": 0,
+     "l": 0,
+     "gf": 2,
+     "ga": 0,
+     "gd": 2,
+     "pts": 3,
+     "form": "W",
+     "rating": 7.17,
+     "rest_days": 4,
+     "form_home": "W",
+     "form_away": ""
+    },
+    "away": {
+     "name": "Villarreal CF",
+     "code": "VIL",
+     "group": "",
+     "pos": null,
+     "pld": 1,
+     "w": 0,
+     "d": 1,
+     "l": 0,
+     "gf": 2,
+     "ga": 2,
+     "gd": 0,
+     "pts": 1,
+     "form": "D",
+     "rating": 7.08,
+     "rest_days": 7,
+     "form_home": "",
+     "form_away": "D"
+    },
+    "markets": {},
+    "weather": null,
+    "injuries": {
+     "home": [],
+     "away": []
+    },
+    "lineups": null,
+    "h2h": [],
+    "stats": null,
+    "stats_extra": null,
+    "data_source": null,
+    "advanced_metrics": null,
+    "advanced_metrics_meta": null,
+    "nfl_challenger_shadow": null,
+    "mlb_challenger_shadow": null,
+    "personnel": null,
+    "personnel_shadow": {
+     "schema_ver": 1,
+     "sport": "soccer",
+     "production_weight": 0,
+     "mode": "prospective_shadow",
+     "features": {
+      "injury_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineup_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineups_confirmed": false,
+      "rest_days": {
+       "home": 4,
+       "away": 7
+      },
+      "weather": null,
+      "venue_context": null
+     }
+    },
+    "pregame_context": {
+     "schema_ver": 1,
+     "sport": "soccer",
+     "competition": "LALIGA",
+     "phase": "lock_window",
+     "lock_window_hours": 2.0,
+     "lead_time_hours": 1.95,
+     "inputs": {
+      "market": "missing",
+      "injuries": "missing",
+      "lineups": "missing",
+      "weather": "missing"
+     },
+     "missing_critical": [
+      "market",
+      "injuries",
+      "lineups"
+     ],
+     "unconfirmed_critical": [
+      "market",
+      "injuries",
+      "lineups"
+     ],
+     "coverage_pct": 0,
+     "confirmed_pct": 0,
+     "provenance": [],
+     "confidence_guard": {
+      "high_confidence_label_allowed": false,
+      "reason": "critical pregame inputs not confirmed"
+     },
+     "production_weight": 0,
+     "research_mode": "prospective_shadow"
+    },
+    "pregame_provenance": null,
+    "venue_context": null,
+    "model_signal_schema": null
+   }
+  },
+  "mfti_shadow": {
+   "spec_version": "MFTI-0.1.1-shadow",
+   "mode": "shadow_research_only",
+   "captured_at": "2026-08-23T13:02:58.425908Z",
+   "status": "incomplete",
+   "score": null,
+   "historical_evidence": {
+    "available": false,
+    "score": null,
+    "reason": "frozen_normalization_and_rolling_recalibration_not_fitted",
+    "diagnostics": {
+     "eligible_prior_forecasts": 9,
+     "mean_brier": 0.549311,
+     "mean_log_loss": 0.933101,
+     "brier_skill_vs_uniform": 0.176033,
+     "log_skill_vs_uniform": 0.150655
+    }
+   },
+   "event_readiness": {
+    "available": false,
+    "score": null,
+    "missing_components": [
+     "scenario_stability",
+     "availability",
+     "freshness",
+     "model_stability"
+    ]
+   },
+   "components": {
+    "scenario_stability": {
+     "available": false,
+     "score": null,
+     "reason": "scenario_forecasts_not_captured"
+    },
+    "availability": {
+     "available": false,
+     "score": null,
+     "reason": "availability_probabilities_not_captured"
+    },
+    "freshness": {
+     "available": false,
+     "score": null,
+     "reason": "input_freshness_not_captured"
+    },
+    "model_stability": {
+     "available": false,
+     "score": null,
+     "reason": "independent_model_outputs_not_captured"
+    }
+   },
+   "missing_components": [
+    "historical_evidence",
+    "scenario_stability",
+    "availability",
+    "freshness",
+    "model_stability"
+   ],
+   "affects_prediction": false,
+   "user_visible": false
+  },
+  "result": null,
+  "model_result": null,
+  "market_result": null
  }
 }
