@@ -526,7 +526,7 @@
    },
    "penalties": null,
    "ultimate_winner": "d",
-   "observed_at": "2026-08-23T14:40:18.818678Z",
+   "observed_at": "2026-08-23T18:50:35.775222Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -541,8 +541,8 @@
   "clv": 0.0,
   "closing_market_snapshot": {
    "h": 20.0,
-   "d": 28.0,
-   "a": 52.0
+   "a": 52.0,
+   "d": 28.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -1048,7 +1048,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-23T14:40:18.818709Z",
+   "observed_at": "2026-08-23T18:50:35.775280Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -1545,9 +1545,33 @@
    "affects_prediction": false,
    "user_visible": false
   },
-  "result": null,
-  "model_result": null,
-  "market_result": null
+  "result": "a",
+  "model_result": "a",
+  "market_result": "a",
+  "score": "0-1",
+  "result_snapshot": {
+   "display": {
+    "home": 0,
+    "away": 1
+   },
+   "regulation": {
+    "home": 0,
+    "away": 1
+   },
+   "penalties": null,
+   "ultimate_winner": "a",
+   "observed_at": "2026-08-23T18:50:35.775322Z",
+   "source": "provider"
+  },
+  "model_hit": true,
+  "market_hit": null,
+  "market_comparison_hit": true,
+  "upset_hit": false,
+  "brier3": 0.052,
+  "log_loss": 0.186,
+  "brier_advancement": null,
+  "log_loss_advancement": null,
+  "result_corrections": []
  },
  "558637": {
   "schema_ver": 2,
@@ -2032,8 +2056,32 @@
    "affects_prediction": false,
    "user_visible": false
   },
-  "result": null,
-  "model_result": null,
-  "market_result": null
+  "result": "a",
+  "model_result": "a",
+  "market_result": "a",
+  "score": "0-2",
+  "result_snapshot": {
+   "display": {
+    "home": 0,
+    "away": 2
+   },
+   "regulation": {
+    "home": 0,
+    "away": 2
+   },
+   "penalties": null,
+   "ultimate_winner": "a",
+   "observed_at": "2026-08-23T18:50:35.775357Z",
+   "source": "provider"
+  },
+  "model_hit": false,
+  "market_hit": null,
+  "market_comparison_hit": false,
+  "upset_hit": true,
+  "brier3": 0.911,
+  "log_loss": 1.427,
+  "brier_advancement": null,
+  "log_loss_advancement": null,
+  "result_corrections": []
  }
 }
