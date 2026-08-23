@@ -896,6 +896,10 @@ body.modalOpen{overflow:hidden}.matchModal{position:fixed;inset:0;z-index:99;dis
 #insight .forecastPaused b{font-size:var(--fs-2xs);line-height:1.2}
 #insight .forecastPaused span{font-size:var(--fs-xs);line-height:1.25}
 #insight .forecastPaused em{font-size:var(--fs-3xs);line-height:1.2}
+.card .forecastPaused{gap:3px;margin-top:8px;padding:6px 10px;border-radius:9px}
+.card .forecastPaused b{font-size:var(--fs-2xs);line-height:1.2}
+.card .forecastPaused span{font-size:var(--fs-xs);line-height:1.25}
+.card .forecastPaused em{font-size:var(--fs-3xs);line-height:1.2}
 
 
 /* ===== UPSET MODEL PATCH — v6 =====

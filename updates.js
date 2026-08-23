@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0823M",
+  "tag": "Fix",
+  "title": "Compact MLB pause notices on matchup cards",
+  "items": [
+   "Reduced the height, padding, type size, and internal spacing of the MLB forecast-pause notice on matchup cards while adding clear separation from the fixture header."
+  ]
+ },
+ {
   "date": "Build 0823L",
   "tag": "Change",
   "title": "Outcome Tree removed from every sport",
