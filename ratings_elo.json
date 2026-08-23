@@ -890,8 +890,8 @@
    "n": 115
   },
   "soccer:getafe cf": {
-   "r": 1492.4774020648238,
-   "n": 115
+   "r": 1502.7577409712842,
+   "n": 116
   },
   "soccer:cadiz cf": {
    "r": 1428.7039624848308,
@@ -8278,8 +8278,8 @@
    "n": 1
   },
   "soccer:real racing club de santander": {
-   "r": 1502.3430215035,
-   "n": 1
+   "r": 1492.0626825970396,
+   "n": 2
   },
   "soccer:rc deportivo la coruna": {
    "r": 1497.649339446535,
@@ -286243,6 +286243,7 @@
   "LALIGA:564646": true,
   "SERIEA:558635": true,
   "SERIEA:558637": true,
-  "LIGUE1:559719": true
+  "LIGUE1:559719": true,
+  "LALIGA:564644": true
  }
 }

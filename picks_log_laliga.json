@@ -822,7 +822,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-23T18:49:58.107263Z",
+   "observed_at": "2026-08-23T20:39:53.107662Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -1655,7 +1655,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-23T18:49:58.107329Z",
+   "observed_at": "2026-08-23T20:39:53.107718Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -2306,7 +2306,7 @@
    },
    "penalties": null,
    "ultimate_winner": "d",
-   "observed_at": "2026-08-23T18:49:58.107371Z",
+   "observed_at": "2026-08-23T20:39:53.107752Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -2965,7 +2965,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-23T18:49:58.107410Z",
+   "observed_at": "2026-08-23T20:39:53.107782Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -3497,7 +3497,7 @@
    },
    "penalties": null,
    "ultimate_winner": "d",
-   "observed_at": "2026-08-23T18:49:58.107444Z",
+   "observed_at": "2026-08-23T20:39:53.107812Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -4038,7 +4038,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-23T18:49:58.107498Z",
+   "observed_at": "2026-08-23T20:39:53.107838Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -4052,8 +4052,8 @@
   "result_corrections": [],
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 65.0,
    "a": 14.0,
+   "h": 65.0,
    "d": 21.0
   },
   "closing_market_receipt": {
@@ -4577,7 +4577,7 @@
    },
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-23T18:49:58.107544Z",
+   "observed_at": "2026-08-23T20:39:53.107864Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -5121,7 +5121,7 @@
    },
    "penalties": null,
    "ultimate_winner": "d",
-   "observed_at": "2026-08-23T18:49:58.107578Z",
+   "observed_at": "2026-08-23T20:39:53.107888Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -5135,8 +5135,8 @@
   "result_corrections": [],
   "clv": 0.6,
   "closing_market_snapshot": {
-   "h": 38.614,
    "a": 30.693,
+   "h": 38.614,
    "d": 30.693
   },
   "closing_market_receipt": {
@@ -5697,7 +5697,7 @@
    },
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-23T18:49:58.107610Z",
+   "observed_at": "2026-08-23T20:39:53.107913Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -5711,8 +5711,8 @@
   "result_corrections": [],
   "clv": 0.7,
   "closing_market_snapshot": {
-   "h": 12.121,
    "a": 68.687,
+   "h": 12.121,
    "d": 19.192
   },
   "closing_market_receipt": {
@@ -6235,7 +6235,7 @@
    },
    "penalties": null,
    "ultimate_winner": "d",
-   "observed_at": "2026-08-23T18:49:58.107643Z",
+   "observed_at": "2026-08-23T20:39:53.107937Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -6777,9 +6777,52 @@
    "affects_prediction": false,
    "user_visible": false
   },
-  "result": null,
-  "model_result": null,
-  "market_result": null
+  "result": "h",
+  "model_result": "h",
+  "market_result": "h",
+  "score": "1-0",
+  "result_snapshot": {
+   "display": {
+    "home": 1,
+    "away": 0
+   },
+   "regulation": {
+    "home": 1,
+    "away": 0
+   },
+   "penalties": null,
+   "ultimate_winner": "h",
+   "observed_at": "2026-08-23T20:39:53.107961Z",
+   "source": "provider"
+  },
+  "model_hit": false,
+  "market_hit": true,
+  "market_comparison_hit": false,
+  "upset_hit": false,
+  "brier3": 0.615,
+  "log_loss": 1.022,
+  "brier_advancement": null,
+  "log_loss_advancement": null,
+  "value_hit": false,
+  "result_corrections": [],
+  "clv": 0.0,
+  "closing_market_snapshot": {
+   "a": 26.0,
+   "h": 43.0,
+   "d": 31.0
+  },
+  "closing_market_receipt": {
+   "sources": [
+    "The Odds API consensus"
+   ],
+   "source_count": 1,
+   "event_ids": [
+    "ef60648e4ffe4b7aec194ebbd85a03e181e023b70d82946e1d056854cf42fe11"
+   ],
+   "observed_at": [
+    "2026-08-23T15:37:53.929084Z"
+   ]
+  }
  },
  "564642": {
   "schema_ver": 2,
