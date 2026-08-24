@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0823N",
+  "tag": "Notice",
+  "title": "Development pause posted",
+  "items": [
+   "Added a persistent notice explaining that active development is temporarily paused while data licensing and permission requirements are worked through, with a link to the data sources and legal notice."
+  ]
+ },
+ {
   "date": "Build 0823M",
   "tag": "Fix",
   "title": "Compact MLB pause notices on matchup cards",

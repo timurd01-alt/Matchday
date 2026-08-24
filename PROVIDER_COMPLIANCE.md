@@ -1,5 +1,11 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-08-23 (development-pause notice only. The notice accurately
+describes unresolved data licensing and permission requirements without
+asserting unlawful prior acquisition, changing a provider, endpoint, source,
+retained payload, redistribution scope, or the operating state of existing
+forecasts and feeds.)
+
 Reviewed: 2026-08-18 (MLB recovery and personnel-semantics hardening only. No
 provider, endpoint, key, contracted tier, retained raw payload, or
 redistribution scope changed. SportsGameOdds pitcher and hitter prop identities
