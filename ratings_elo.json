@@ -450,8 +450,8 @@
    "n": 14
   },
   "soccer:ss lazio": {
-   "r": 1572.7760639959058,
-   "n": 122
+   "r": 1586.641778301325,
+   "n": 123
   },
   "soccer:club atletico de madrid": {
    "r": 1626.1254335797946,
@@ -578,8 +578,8 @@
    "n": 113
   },
   "soccer:bologna fc 1909": {
-   "r": 1567.235705717895,
-   "n": 122
+   "r": 1553.3699914124757,
+   "n": 123
   },
   "soccer:ac sparta praha": {
    "r": 1448.3790216390244,
@@ -286248,6 +286248,7 @@
   "LALIGA:564642": true,
   "SERIEA:558633": true,
   "SERIEA:558634": true,
-  "LIGUE1:559713": true
+  "LIGUE1:559713": true,
+  "SERIEA:558630": true
  }
 }

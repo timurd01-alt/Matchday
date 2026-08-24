@@ -1,5 +1,56 @@
 [
  {
+  "id": "seriea-2026-08-24",
+  "comp": "SERIEA",
+  "comp_label": "Serie A",
+  "slug": "seriea-2026-08-24",
+  "title": "Serie A model recap — 2026-08-24",
+  "date": "2026-08-24",
+  "summary": "The model went 3/5 (60%) on graded Serie A picks.",
+  "record": {
+   "hits": 3,
+   "graded": 5,
+   "pct": 60
+  },
+  "highlights": {
+   "window_days": 7,
+   "matches_considered": 5,
+   "biggest_upset": {
+    "home": "Venezia FC",
+    "away": "US Lecce",
+    "score_line": "0-2",
+    "winner": "US Lecce",
+    "upset_score": 31,
+    "market_pct": null
+   },
+   "best_call": {
+    "home": "FC Internazionale Milano",
+    "away": "AC Monza",
+    "pick": "FC Internazionale Milano",
+    "confidence": 84,
+    "edge": 0
+   },
+   "biggest_miss": {
+    "home": "Venezia FC",
+    "away": "US Lecce",
+    "pick": "Venezia FC",
+    "confidence": 53,
+    "actual": "US Lecce"
+   },
+   "closest_match": {
+    "home": "Udinese Calcio",
+    "away": "Como 1907",
+    "score_line": "1-1",
+    "margin": 0
+   }
+  },
+  "body": [
+   "Matchday's model graded 5 Serie A picks this stretch, hitting on 3 of them (60%).",
+   "Among this week's Serie A storylines: the biggest upset was US Lecce winning 0-2 against Venezia FC (the market gave that result only about 0%); the model's best call was FC Internazionale Milano in FC Internazionale Milano vs AC Monza at 84% confidence; its biggest miss was picking Venezia FC in Venezia FC vs US Lecce, but US Lecce won instead.",
+   "This is Matchday's own model reporting on itself for anyone to use. Every pick is locked before kickoff and graded automatically once the game finishes; none are rewritten after the fact. See the Q&A page for how the model works."
+  ]
+ },
+ {
   "id": "epl-2026-08-22",
   "comp": "EPL",
   "comp_label": "Premier League",

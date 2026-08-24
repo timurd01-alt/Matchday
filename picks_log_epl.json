@@ -527,7 +527,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-24T17:47:47.360991Z",
+   "observed_at": "2026-08-24T18:59:50.135504Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -1085,7 +1085,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-24T17:47:47.361043Z",
+   "observed_at": "2026-08-24T18:59:50.135573Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -1644,7 +1644,7 @@
    },
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-24T17:47:47.361082Z",
+   "observed_at": "2026-08-24T18:59:50.135610Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -2198,7 +2198,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-24T17:47:47.361117Z",
+   "observed_at": "2026-08-24T18:59:50.135641Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -2761,7 +2761,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-24T17:47:47.361148Z",
+   "observed_at": "2026-08-24T18:59:50.135670Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -3325,7 +3325,7 @@
    },
    "penalties": null,
    "ultimate_winner": "d",
-   "observed_at": "2026-08-24T17:47:47.361180Z",
+   "observed_at": "2026-08-24T18:59:50.135700Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -3386,13 +3386,13 @@
   "market_comparison_basis": "regulation_1x2",
   "outcome_basis": "regulation",
   "market_basis": "regulation_1x2",
-  "market_pick": null,
-  "market_pct": null,
-  "pick_mkt": null,
-  "value_side": null,
-  "value_edge": null,
-  "value_mkt": null,
-  "value_name": null,
+  "market_pick": "a",
+  "market_pct": 47,
+  "pick_mkt": 47,
+  "value_side": "a",
+  "value_edge": 16,
+  "value_mkt": 47,
+  "value_name": "Chelsea FC",
   "upset_candidate": "h",
   "upset_name": "Fulham FC",
   "upset_score": 16,
@@ -3842,6 +3842,21 @@
   },
   "result": null,
   "model_result": null,
-  "market_result": null
+  "market_result": null,
+  "post_lock_market_snapshot": {
+   "h": 26,
+   "d": 27,
+   "a": 47
+  },
+  "market_backfilled_at": "2026-08-24T18:59:50.005221Z",
+  "post_lock_market_receipt": {
+   "source": "The Odds API consensus",
+   "source_reference": "https://the-odds-api.com/",
+   "observed_at": "2026-08-24T18:59:44.791864Z",
+   "recorded_at": "2026-08-24T18:59:50.005221Z",
+   "snapshot_id": null,
+   "books": 24,
+   "spread": 2
+  }
  }
 }
