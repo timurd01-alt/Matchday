@@ -822,7 +822,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-25T18:57:57.597659Z",
+   "observed_at": "2026-08-25T22:45:52.134359Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -1655,7 +1655,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-25T18:57:57.597735Z",
+   "observed_at": "2026-08-25T22:45:52.134411Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -2306,7 +2306,7 @@
    },
    "penalties": null,
    "ultimate_winner": "d",
-   "observed_at": "2026-08-25T18:57:57.597774Z",
+   "observed_at": "2026-08-25T22:45:52.134439Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -2965,7 +2965,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-25T18:57:57.597806Z",
+   "observed_at": "2026-08-25T22:45:52.134463Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -3497,7 +3497,7 @@
    },
    "penalties": null,
    "ultimate_winner": "d",
-   "observed_at": "2026-08-25T18:57:57.597837Z",
+   "observed_at": "2026-08-25T22:45:52.134484Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -4038,7 +4038,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-25T18:57:57.597866Z",
+   "observed_at": "2026-08-25T22:45:52.134505Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -4052,9 +4052,9 @@
   "result_corrections": [],
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 65.0,
+   "a": 14.0,
    "d": 21.0,
-   "a": 14.0
+   "h": 65.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -4577,7 +4577,7 @@
    },
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-25T18:57:57.597895Z",
+   "observed_at": "2026-08-25T22:45:52.134524Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -5121,7 +5121,7 @@
    },
    "penalties": null,
    "ultimate_winner": "d",
-   "observed_at": "2026-08-25T18:57:57.597923Z",
+   "observed_at": "2026-08-25T22:45:52.134542Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -5135,9 +5135,9 @@
   "result_corrections": [],
   "clv": 0.6,
   "closing_market_snapshot": {
-   "h": 38.614,
+   "a": 30.693,
    "d": 30.693,
-   "a": 30.693
+   "h": 38.614
   },
   "closing_market_receipt": {
    "sources": [
@@ -5697,7 +5697,7 @@
    },
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-25T18:57:57.597951Z",
+   "observed_at": "2026-08-25T22:45:52.134559Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -5711,9 +5711,9 @@
   "result_corrections": [],
   "clv": 0.7,
   "closing_market_snapshot": {
-   "h": 12.121,
+   "a": 68.687,
    "d": 19.192,
-   "a": 68.687
+   "h": 12.121
   },
   "closing_market_receipt": {
    "sources": [
@@ -6235,7 +6235,7 @@
    },
    "penalties": null,
    "ultimate_winner": "d",
-   "observed_at": "2026-08-25T18:57:57.597978Z",
+   "observed_at": "2026-08-25T22:45:52.134575Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -6792,7 +6792,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-25T18:57:57.598004Z",
+   "observed_at": "2026-08-25T22:45:52.134592Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -6807,9 +6807,9 @@
   "result_corrections": [],
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 43.0,
+   "a": 26.0,
    "d": 31.0,
-   "a": 26.0
+   "h": 43.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -7367,7 +7367,7 @@
    },
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-25T18:57:57.598030Z",
+   "observed_at": "2026-08-25T22:45:52.134609Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -7381,9 +7381,9 @@
   "result_corrections": [],
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 11.0,
+   "a": 72.0,
    "d": 17.0,
-   "a": 72.0
+   "h": 11.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -7902,7 +7902,7 @@
    },
    "penalties": null,
    "ultimate_winner": "d",
-   "observed_at": "2026-08-25T18:57:57.598058Z",
+   "observed_at": "2026-08-25T22:45:52.134626Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -8421,7 +8421,7 @@
    },
    "penalties": null,
    "ultimate_winner": "d",
-   "observed_at": "2026-08-25T18:57:57.598085Z",
+   "observed_at": "2026-08-25T22:45:52.134643Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -8926,9 +8926,9 @@
    "affects_prediction": false,
    "user_visible": false
   },
-  "result": null,
-  "model_result": null,
-  "market_result": null,
+  "result": "a",
+  "model_result": "a",
+  "market_result": "a",
   "post_lock_market_snapshot": {
    "h": 36,
    "d": 30,
@@ -8943,6 +8943,31 @@
    "snapshot_id": null,
    "books": 20,
    "spread": 4
-  }
+  },
+  "score": "0-1",
+  "result_snapshot": {
+   "display": {
+    "home": 0,
+    "away": 1
+   },
+   "regulation": {
+    "home": 0,
+    "away": 1
+   },
+   "penalties": null,
+   "ultimate_winner": "a",
+   "observed_at": "2026-08-25T22:45:52.134660Z",
+   "source": "provider"
+  },
+  "model_hit": true,
+  "market_hit": false,
+  "market_comparison_hit": true,
+  "upset_hit": false,
+  "brier3": 0.228,
+  "log_loss": 0.494,
+  "brier_advancement": null,
+  "log_loss_advancement": null,
+  "value_hit": true,
+  "result_corrections": []
  }
 }
