@@ -203590,7 +203590,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-25T05:14:07.324240Z",
+   "observed_at": "2026-08-25T07:15:19.633467Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -205447,7 +205447,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-25T05:14:07.324302Z",
+   "observed_at": "2026-08-25T07:15:19.633514Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -207314,7 +207314,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-25T05:14:07.324339Z",
+   "observed_at": "2026-08-25T07:15:19.633539Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -209189,7 +209189,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-25T05:14:07.324372Z",
+   "observed_at": "2026-08-25T07:15:19.633560Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -211067,7 +211067,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-25T05:14:07.324402Z",
+   "observed_at": "2026-08-25T07:15:19.633581Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -212971,7 +212971,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-25T05:14:07.324432Z",
+   "observed_at": "2026-08-25T07:15:19.633614Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -214862,7 +214862,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-25T05:14:07.324461Z",
+   "observed_at": "2026-08-25T07:15:19.633633Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -216771,7 +216771,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-25T05:14:07.324490Z",
+   "observed_at": "2026-08-25T07:15:19.633652Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -218696,7 +218696,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-25T05:14:07.324518Z",
+   "observed_at": "2026-08-25T07:15:19.633671Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -220584,9 +220584,50 @@
    "affects_prediction": false,
    "user_visible": false
   },
-  "result": null,
-  "model_result": null,
-  "market_result": null
+  "result": "a",
+  "model_result": "a",
+  "market_result": "a",
+  "score": "2-3",
+  "result_snapshot": {
+   "display": {
+    "home": 2,
+    "away": 3
+   },
+   "regulation": null,
+   "penalties": null,
+   "ultimate_winner": "a",
+   "observed_at": "2026-08-25T07:15:19.633690Z",
+   "source": "provider"
+  },
+  "model_hit": false,
+  "market_hit": false,
+  "market_comparison_hit": false,
+  "upset_hit": true,
+  "brier3": 0.562,
+  "log_loss": 0.755,
+  "brier_advancement": null,
+  "log_loss_advancement": null,
+  "result_corrections": [],
+  "clv": -0.5,
+  "closing_market_snapshot": {
+   "h": 50.5,
+   "a": 49.5
+  },
+  "closing_market_receipt": {
+   "sources": [
+    "SportsGameOdds consensus",
+    "The Odds API consensus"
+   ],
+   "source_count": 2,
+   "event_ids": [
+    "1617f4177294b58b00afb53f96226367723e0d5097599b026c2c8808f0ebaf2a",
+    "02da301d50b8ee8fbe16a421b0ef9db0f9d2293b4544aa204cabd0ae27bc4621"
+   ],
+   "observed_at": [
+    "2026-08-24T23:56:41.413286Z",
+    "2026-08-24T15:07:32.171141Z"
+   ]
+  }
  },
  "bdl-mlb-11378826": {
   "schema_ver": 2,
@@ -222451,7 +222492,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-25T05:14:07.324546Z",
+   "observed_at": "2026-08-25T07:15:19.633708Z",
    "source": "provider"
   },
   "model_hit": false,
