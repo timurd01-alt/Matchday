@@ -494,8 +494,8 @@
    "n": 16
   },
   "soccer:real madrid cf": {
-   "r": 1745.9841034032295,
-   "n": 156
+   "r": 1749.3003567411438,
+   "n": 157
   },
   "soccer:1 fc union berlin": {
    "r": 1469.8091162214016,
@@ -534,8 +534,8 @@
    "n": 131
   },
   "soccer:real sociedad de futbol": {
-   "r": 1487.9914995228655,
-   "n": 123
+   "r": 1484.6752461849512,
+   "n": 124
   },
   "soccer:fc internazionale milano": {
    "r": 1758.5940731204166,
@@ -286254,6 +286254,7 @@
   "SERIEA:558638": true,
   "EPL:560551": true,
   "LALIGA:564640": true,
-  "LALIGA:564637": true
+  "LALIGA:564637": true,
+  "LALIGA:564631": true
  }
 }
