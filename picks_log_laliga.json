@@ -822,7 +822,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-25T22:45:52.134359Z",
+   "observed_at": "2026-08-26T17:00:23.092525Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -1655,7 +1655,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-25T22:45:52.134411Z",
+   "observed_at": "2026-08-26T17:00:23.092575Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -2306,7 +2306,7 @@
    },
    "penalties": null,
    "ultimate_winner": "d",
-   "observed_at": "2026-08-25T22:45:52.134439Z",
+   "observed_at": "2026-08-26T17:00:23.092599Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -2965,7 +2965,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-25T22:45:52.134463Z",
+   "observed_at": "2026-08-26T17:00:23.092620Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -3497,7 +3497,7 @@
    },
    "penalties": null,
    "ultimate_winner": "d",
-   "observed_at": "2026-08-25T22:45:52.134484Z",
+   "observed_at": "2026-08-26T17:00:23.092638Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -4038,7 +4038,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-25T22:45:52.134505Z",
+   "observed_at": "2026-08-26T17:00:23.092655Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -4052,9 +4052,9 @@
   "result_corrections": [],
   "clv": 0.0,
   "closing_market_snapshot": {
-   "a": 14.0,
    "d": 21.0,
-   "h": 65.0
+   "h": 65.0,
+   "a": 14.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -4577,7 +4577,7 @@
    },
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-25T22:45:52.134524Z",
+   "observed_at": "2026-08-26T17:00:23.092673Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -5121,7 +5121,7 @@
    },
    "penalties": null,
    "ultimate_winner": "d",
-   "observed_at": "2026-08-25T22:45:52.134542Z",
+   "observed_at": "2026-08-26T17:00:23.092688Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -5135,9 +5135,9 @@
   "result_corrections": [],
   "clv": 0.6,
   "closing_market_snapshot": {
-   "a": 30.693,
    "d": 30.693,
-   "h": 38.614
+   "h": 38.614,
+   "a": 30.693
   },
   "closing_market_receipt": {
    "sources": [
@@ -5697,7 +5697,7 @@
    },
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-25T22:45:52.134559Z",
+   "observed_at": "2026-08-26T17:00:23.092703Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -5711,9 +5711,9 @@
   "result_corrections": [],
   "clv": 0.7,
   "closing_market_snapshot": {
-   "a": 68.687,
    "d": 19.192,
-   "h": 12.121
+   "h": 12.121,
+   "a": 68.687
   },
   "closing_market_receipt": {
    "sources": [
@@ -6235,7 +6235,7 @@
    },
    "penalties": null,
    "ultimate_winner": "d",
-   "observed_at": "2026-08-25T22:45:52.134575Z",
+   "observed_at": "2026-08-26T17:00:23.092718Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -6792,7 +6792,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-25T22:45:52.134592Z",
+   "observed_at": "2026-08-26T17:00:23.092733Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -6807,9 +6807,9 @@
   "result_corrections": [],
   "clv": 0.0,
   "closing_market_snapshot": {
-   "a": 26.0,
    "d": 31.0,
-   "h": 43.0
+   "h": 43.0,
+   "a": 26.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -7367,7 +7367,7 @@
    },
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-25T22:45:52.134609Z",
+   "observed_at": "2026-08-26T17:00:23.092748Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -7381,9 +7381,9 @@
   "result_corrections": [],
   "clv": 0.0,
   "closing_market_snapshot": {
-   "a": 72.0,
    "d": 17.0,
-   "h": 11.0
+   "h": 11.0,
+   "a": 72.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -7902,7 +7902,7 @@
    },
    "penalties": null,
    "ultimate_winner": "d",
-   "observed_at": "2026-08-25T22:45:52.134626Z",
+   "observed_at": "2026-08-26T17:00:23.092763Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -8421,7 +8421,7 @@
    },
    "penalties": null,
    "ultimate_winner": "d",
-   "observed_at": "2026-08-25T22:45:52.134643Z",
+   "observed_at": "2026-08-26T17:00:23.092779Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -8956,7 +8956,7 @@
    },
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-25T22:45:52.134660Z",
+   "observed_at": "2026-08-26T17:00:23.092792Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -8969,5 +8969,534 @@
   "log_loss_advancement": null,
   "value_hit": true,
   "result_corrections": []
+ },
+ "564631": {
+  "schema_ver": 2,
+  "fixture_id": "564631",
+  "competition": "LALIGA",
+  "home": "Real Madrid CF",
+  "away": "Real Sociedad de Fútbol",
+  "stage": "Regular Season",
+  "kickoff": "2026-08-26T19:00:00Z",
+  "pick": "h",
+  "pick_name": "Real Madrid CF",
+  "confidence": 64,
+  "edge": -15,
+  "base_pick": "h",
+  "base_pick_name": "Real Madrid CF",
+  "probs": {
+   "h": 64,
+   "d": 19,
+   "a": 17
+  },
+  "advancement_probs": null,
+  "regulation_probs": {
+   "h": 64,
+   "d": 19,
+   "a": 17
+  },
+  "regulation_pick": "h",
+  "market_comparison_pick": "h",
+  "market_comparison_basis": "regulation_1x2",
+  "outcome_basis": "regulation",
+  "market_basis": "regulation_1x2",
+  "market_pick": "h",
+  "market_pct": 79,
+  "pick_mkt": 79,
+  "value_side": "a",
+  "value_edge": 9,
+  "value_mkt": 8,
+  "value_name": "Real Sociedad de Fútbol",
+  "upset_candidate": "a",
+  "upset_name": "Real Sociedad de Fútbol",
+  "upset_score": 16,
+  "upset_candidate_pct": 17,
+  "upset_triggered": false,
+  "upset_temperature": 1.2,
+  "upset_reason": "model edge 14 pts",
+  "factor_snapshot": {
+   "gd": 0.5,
+   "adv": 1.2,
+   "form": 1.5,
+   "rest": -0.15,
+   "pts": 1.8,
+   "elo": 6.66,
+   "class": 6.7
+  },
+  "market_snapshot": {
+   "h": 79,
+   "d": 14,
+   "a": 8
+  },
+  "market_snapshot_at": "2026-08-26T17:00:15.593707Z",
+  "market_snapshot_recorded_at": "2026-08-26T17:00:23.030593Z",
+  "market_snapshot_receipt": {
+   "source": "The Odds API consensus",
+   "source_reference": "https://the-odds-api.com/",
+   "observed_at": "2026-08-26T17:00:15.593707Z",
+   "recorded_at": "2026-08-26T17:00:23.030593Z",
+   "snapshot_id": null,
+   "books": 21,
+   "spread": 4
+  },
+  "market_gap": 71.0,
+  "upset_snapshot": {
+   "candidate": "Real Sociedad de Fútbol",
+   "class": "major",
+   "market_dog_pct": 8.0,
+   "model_dog_pct": 17.0,
+   "upset_edge": 9.0,
+   "independent_model_dog_pct": 22.0,
+   "independent_model_lead_pct": -37.0,
+   "independent_edge": 14.0,
+   "edge_threshold": 8.0,
+   "supporting_signals": [
+    "rest"
+   ],
+   "personnel_gate": true,
+   "personnel_blockers": [],
+   "radar": false,
+   "standings_candidate": null,
+   "standings_gap_pct": null,
+   "gate": "none",
+   "box_score_edge": 0.0
+  },
+  "box_score_available": false,
+  "data_availability": {
+   "market": "available",
+   "box_score": "unavailable",
+   "lineups": "unavailable",
+   "injuries": "unavailable",
+   "weather": "unavailable",
+   "personnel": "unavailable",
+   "venue_context": "unavailable"
+  },
+  "damp_pct": 0,
+  "mkt_pull": 5,
+  "model_ver": "v6-calibrated",
+  "model_code_marker": "matchday-predictor-integrity-2026-07",
+  "model_signal_schema": 8,
+  "reproducibility": {
+   "model_version": "v6-calibrated",
+   "model_signal_schema": 8,
+   "probability_basis": "regulation",
+   "market_comparison_basis": "regulation_1x2",
+   "market_comparison_pick": "h"
+  },
+  "locked_at": "2026-08-26T17:00:23.030593Z",
+  "lead_time_seconds": 7176.969,
+  "lead_time_hours": 1.993603,
+  "lock_window_hours": 2.0,
+  "status_at_lock": "UPCOMING",
+  "integrity_eligible": true,
+  "integrity_status": "verified",
+  "integrity_reason": "verified_pregame_window",
+  "prediction_snapshot": {
+   "pick": "h",
+   "pick_name": "Real Madrid CF",
+   "confidence": 64,
+   "model_version": "v6-calibrated",
+   "model_signal_schema": 8,
+   "base_pick": "h",
+   "base_pick_name": "Real Madrid CF",
+   "model": {
+    "h": 59,
+    "a": 22,
+    "d": 20
+   },
+   "base_blend": {
+    "h": 70,
+    "d": 16,
+    "a": 14
+   },
+   "blend": {
+    "h": 64,
+    "d": 19,
+    "a": 17
+   },
+   "adjusted": {
+    "h": 64,
+    "d": 19,
+    "a": 17
+   },
+   "is_knockout": false,
+   "advancement": null,
+   "regulation_pick": "h",
+   "market_comparison_pick": "h",
+   "market_comparison_basis": "regulation_1x2",
+   "regulation_pick_name": "Real Madrid CF",
+   "regulation_confidence": 64,
+   "regulation_probs": {
+    "h": 64,
+    "d": 19,
+    "a": 17
+   },
+   "edge": -15,
+   "note": "model rates this lower than the market",
+   "why": {
+    "gd": 0.5,
+    "adv": 1.2,
+    "form": 1.5,
+    "rest": -0.15,
+    "pts": 1.8,
+    "elo": 6.66,
+    "class": 6.7
+   },
+   "damp_pct": 0,
+   "mkt_pull": 5,
+   "market_weight": 0.6,
+   "upset": {
+    "candidate": "a",
+    "candidate_name": "Real Sociedad de Fútbol",
+    "favorite": "h",
+    "favorite_name": "Real Madrid CF",
+    "score": 16,
+    "upset_class": "major",
+    "market_dog_pct": 8.0,
+    "model_dog_pct": 17.0,
+    "upset_edge": 9.0,
+    "radar": false,
+    "standings_candidate": null,
+    "standings_gap_pct": null,
+    "standings_sample_ok": false,
+    "temperature": 1.2,
+    "variance_pct": 11,
+    "low_goal_pct": 49,
+    "draw_pct": 16,
+    "favorite_pct": 64,
+    "candidate_pct": 17,
+    "margin_pct": 47,
+    "learn_bias_pct": 0.0,
+    "market_gap_pct": 71.0,
+    "market_gate": true,
+    "market_quality_gate": true,
+    "independent_model_dog_pct": 22.0,
+    "independent_model_lead_pct": -37.0,
+    "independent_edge": 14.0,
+    "edge_threshold": 8.0,
+    "independent_pick_gate": false,
+    "playability_gate": false,
+    "evidence_gate": false,
+    "supporting_signals": [
+     "rest"
+    ],
+    "personnel_gate": true,
+    "personnel_blockers": [],
+    "box_score_edge": 0.0,
+    "strong_box_signal": false,
+    "blocked": false,
+    "triggered": false,
+    "reason": "model edge 14 pts"
+   },
+   "data_quality": {
+    "level": "established",
+    "games": {
+     "home": 1,
+     "away": 1
+    },
+    "signals": [
+     "class",
+     "form",
+     "elo",
+     "rest",
+     "market"
+    ],
+    "market_available": true,
+    "market_books": 21,
+    "market_spread": 4,
+    "market_weight": 0.6,
+    "note": "Current-season sample and opponent-adjusted results are available."
+   },
+   "predicted_margin": {
+    "value": 0.7,
+    "unit": "goals",
+    "favored": "h",
+    "label": "+0.7 goals"
+   },
+   "class_meta": {
+    "label": "Squad edge",
+    "source": "Curated squad and star-player values",
+    "available": true,
+    "coverage": "complete",
+    "home_available": true,
+    "away_available": true,
+    "note": "Squad value, star quality, and ranking are a preseason prior; missing clubs are not assigned a fabricated edge.",
+    "edge_available": true,
+    "coverage_label": null
+   },
+   "publication_state": "locked",
+   "lock_readiness": {
+    "schema_ver": 1,
+    "sport": "soccer",
+    "competition": "LALIGA",
+    "phase": "lock_window",
+    "lock_window_hours": 2.0,
+    "lead_time_hours": 2.0,
+    "inputs": {
+     "market": "confirmed",
+     "injuries": "missing",
+     "lineups": "missing",
+     "weather": "missing"
+    },
+    "missing_critical": [
+     "injuries",
+     "lineups"
+    ],
+    "unconfirmed_critical": [
+     "injuries",
+     "lineups"
+    ],
+    "coverage_pct": 25,
+    "confirmed_pct": 25,
+    "provenance": [],
+    "confidence_guard": {
+     "high_confidence_label_allowed": false,
+     "reason": "critical pregame inputs not confirmed"
+    },
+    "production_weight": 0,
+    "research_mode": "prospective_shadow"
+   },
+   "neutral_venue_probs": {
+    "h": 64,
+    "d": 19,
+    "a": 17
+   },
+   "totals": {
+    "expected": 2.75,
+    "basis": "preseason_rating"
+   },
+   "data_availability": {
+    "market": "available",
+    "box_score": "unavailable",
+    "lineups": "unavailable",
+    "injuries": "unavailable",
+    "weather": "unavailable",
+    "personnel": "unavailable",
+    "venue_context": "unavailable"
+   }
+  },
+  "input_snapshot": {
+   "competition": "LALIGA",
+   "competition_config": {
+    "label": "La Liga",
+    "sport": "soccer",
+    "fd": "PD",
+    "odds": "soccer_spain_la_liga",
+    "outright": null,
+    "tournament": false,
+    "source": "fd",
+    "has_draws": true,
+    "league_zones": {
+     "ucl": 4,
+     "uel": 1,
+     "rel": 3
+    }
+   },
+   "match": {
+    "id": "564631",
+    "stage": "Regular Season",
+    "kickoff": "2026-08-26T19:00:00Z",
+    "status": "UPCOMING",
+    "venue": "",
+    "home": {
+     "name": "Real Madrid CF",
+     "code": "RMA",
+     "group": "",
+     "pos": null,
+     "pld": 1,
+     "w": 1,
+     "d": 0,
+     "l": 0,
+     "gf": 2,
+     "ga": 1,
+     "gd": 1,
+     "pts": 3,
+     "form": "W",
+     "rating": 9.11,
+     "rest_days": 4,
+     "form_home": "",
+     "form_away": "W"
+    },
+    "away": {
+     "name": "Real Sociedad de Fútbol",
+     "code": "RSO",
+     "group": "",
+     "pos": null,
+     "pld": 1,
+     "w": 0,
+     "d": 0,
+     "l": 1,
+     "gf": 0,
+     "ga": 1,
+     "gd": -1,
+     "pts": 0,
+     "form": "L",
+     "rating": 4.75,
+     "rest_days": 5,
+     "form_home": "",
+     "form_away": "L"
+    },
+    "markets": {
+     "1x2": {
+      "home_pct": 79,
+      "draw_pct": 14,
+      "away_pct": 8,
+      "books": 21,
+      "source": "The Odds API consensus",
+      "source_reference": "https://the-odds-api.com/",
+      "observed_at": "2026-08-26T17:00:15.593707Z",
+      "spread": 4,
+      "spread_lo": 76,
+      "spread_hi": 80,
+      "confidence": "tight",
+      "open": {
+       "h": 79,
+       "d": 14,
+       "a": 8
+      },
+      "move": {
+       "h": 0,
+       "d": 0,
+       "a": 0
+      }
+     }
+    },
+    "weather": null,
+    "injuries": {
+     "home": [],
+     "away": []
+    },
+    "lineups": null,
+    "h2h": [],
+    "stats": null,
+    "stats_extra": null,
+    "data_source": null,
+    "advanced_metrics": null,
+    "advanced_metrics_meta": null,
+    "nfl_challenger_shadow": null,
+    "mlb_challenger_shadow": null,
+    "personnel": null,
+    "personnel_shadow": {
+     "schema_ver": 1,
+     "sport": "soccer",
+     "production_weight": 0,
+     "mode": "prospective_shadow",
+     "features": {
+      "injury_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineup_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineups_confirmed": false,
+      "rest_days": {
+       "home": 4,
+       "away": 5
+      },
+      "weather": null,
+      "venue_context": null
+     }
+    },
+    "pregame_context": {
+     "schema_ver": 1,
+     "sport": "soccer",
+     "competition": "LALIGA",
+     "phase": "lock_window",
+     "lock_window_hours": 2.0,
+     "lead_time_hours": 2.0,
+     "inputs": {
+      "market": "confirmed",
+      "injuries": "missing",
+      "lineups": "missing",
+      "weather": "missing"
+     },
+     "missing_critical": [
+      "injuries",
+      "lineups"
+     ],
+     "unconfirmed_critical": [
+      "injuries",
+      "lineups"
+     ],
+     "coverage_pct": 25,
+     "confirmed_pct": 25,
+     "provenance": [],
+     "confidence_guard": {
+      "high_confidence_label_allowed": false,
+      "reason": "critical pregame inputs not confirmed"
+     },
+     "production_weight": 0,
+     "research_mode": "prospective_shadow"
+    },
+    "pregame_provenance": null,
+    "venue_context": null,
+    "model_signal_schema": null
+   }
+  },
+  "mfti_shadow": {
+   "spec_version": "MFTI-0.1.1-shadow",
+   "mode": "shadow_research_only",
+   "captured_at": "2026-08-26T17:00:23.030593Z",
+   "status": "incomplete",
+   "score": null,
+   "historical_evidence": {
+    "available": false,
+    "score": null,
+    "reason": "frozen_normalization_and_rolling_recalibration_not_fitted",
+    "diagnostics": {
+     "eligible_prior_forecasts": 15,
+     "mean_brier": 0.571707,
+     "mean_log_loss": 0.968759,
+     "brier_skill_vs_uniform": 0.14244,
+     "log_skill_vs_uniform": 0.118197
+    }
+   },
+   "event_readiness": {
+    "available": false,
+    "score": null,
+    "missing_components": [
+     "scenario_stability",
+     "availability",
+     "freshness",
+     "model_stability"
+    ]
+   },
+   "components": {
+    "scenario_stability": {
+     "available": false,
+     "score": null,
+     "reason": "scenario_forecasts_not_captured"
+    },
+    "availability": {
+     "available": false,
+     "score": null,
+     "reason": "availability_probabilities_not_captured"
+    },
+    "freshness": {
+     "available": false,
+     "score": null,
+     "reason": "input_freshness_not_captured"
+    },
+    "model_stability": {
+     "available": false,
+     "score": null,
+     "reason": "independent_model_outputs_not_captured"
+    }
+   },
+   "missing_components": [
+    "historical_evidence",
+    "scenario_stability",
+    "availability",
+    "freshness",
+    "model_stability"
+   ],
+   "affects_prediction": false,
+   "user_visible": false
+  },
+  "result": null,
+  "model_result": null,
+  "market_result": null
  }
 }
