@@ -203590,7 +203590,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-25T23:45:32.963338Z",
+   "observed_at": "2026-08-26T02:13:09.376564Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -205447,7 +205447,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-25T23:45:32.963397Z",
+   "observed_at": "2026-08-26T02:13:09.376618Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -207314,7 +207314,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-25T23:45:32.963430Z",
+   "observed_at": "2026-08-26T02:13:09.376649Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -209189,7 +209189,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-25T23:45:32.963472Z",
+   "observed_at": "2026-08-26T02:13:09.376686Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -211067,7 +211067,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-25T23:45:32.963500Z",
+   "observed_at": "2026-08-26T02:13:09.376712Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -212971,7 +212971,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-25T23:45:32.963527Z",
+   "observed_at": "2026-08-26T02:13:09.376738Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -214862,7 +214862,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-25T23:45:32.963550Z",
+   "observed_at": "2026-08-26T02:13:09.376763Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -216771,7 +216771,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-25T23:45:32.963575Z",
+   "observed_at": "2026-08-26T02:13:09.376787Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -218696,7 +218696,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-25T23:45:32.963599Z",
+   "observed_at": "2026-08-26T02:13:09.376811Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -220596,7 +220596,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-25T23:45:32.963622Z",
+   "observed_at": "2026-08-26T02:13:09.376834Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -222492,7 +222492,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-25T23:45:32.963644Z",
+   "observed_at": "2026-08-26T02:13:09.376857Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -226869,9 +226869,50 @@
    "affects_prediction": false,
    "user_visible": false
   },
-  "result": null,
-  "model_result": null,
-  "market_result": null
+  "result": "h",
+  "model_result": "h",
+  "market_result": "h",
+  "score": "4-1",
+  "result_snapshot": {
+   "display": {
+    "home": 4,
+    "away": 1
+   },
+   "regulation": null,
+   "penalties": null,
+   "ultimate_winner": "h",
+   "observed_at": "2026-08-26T02:13:09.376879Z",
+   "source": "provider"
+  },
+  "model_hit": false,
+  "market_hit": true,
+  "market_comparison_hit": false,
+  "upset_hit": false,
+  "brier3": 0.52,
+  "log_loss": 0.713,
+  "brier_advancement": null,
+  "log_loss_advancement": null,
+  "result_corrections": [],
+  "clv": 3.5,
+  "closing_market_snapshot": {
+   "h": 48.5,
+   "a": 51.5
+  },
+  "closing_market_receipt": {
+   "sources": [
+    "SportsGameOdds consensus",
+    "The Odds API consensus"
+   ],
+   "source_count": 2,
+   "event_ids": [
+    "58224f3edafb991e58ad28878d717d936325a2d67f09b4c7d5aa5fcf726e1d76",
+    "a47f7082a729e11896cff2d28ac936ea15a2218fe284dd570ba9a3e87bd391b9"
+   ],
+   "observed_at": [
+    "2026-08-25T21:50:40.103613Z",
+    "2026-08-25T19:04:24.162197Z"
+   ]
+  }
  },
  "bdl-mlb-5059752": {
   "schema_ver": 2,
@@ -229029,9 +229070,50 @@
    "affects_prediction": false,
    "user_visible": false
   },
-  "result": null,
-  "model_result": null,
-  "market_result": null
+  "result": "a",
+  "model_result": "a",
+  "market_result": "a",
+  "score": "1-3",
+  "result_snapshot": {
+   "display": {
+    "home": 1,
+    "away": 3
+   },
+   "regulation": null,
+   "penalties": null,
+   "ultimate_winner": "a",
+   "observed_at": "2026-08-26T02:13:09.376903Z",
+   "source": "provider"
+  },
+  "model_hit": false,
+  "market_hit": false,
+  "market_comparison_hit": false,
+  "upset_hit": true,
+  "brier3": 0.65,
+  "log_loss": 0.844,
+  "brier_advancement": null,
+  "log_loss_advancement": null,
+  "result_corrections": [],
+  "clv": 0.0,
+  "closing_market_snapshot": {
+   "h": 58.0,
+   "a": 42.0
+  },
+  "closing_market_receipt": {
+   "sources": [
+    "SportsGameOdds consensus",
+    "The Odds API consensus"
+   ],
+   "source_count": 2,
+   "event_ids": [
+    "58224f3edafb991e58ad28878d717d936325a2d67f09b4c7d5aa5fcf726e1d76",
+    "a47f7082a729e11896cff2d28ac936ea15a2218fe284dd570ba9a3e87bd391b9"
+   ],
+   "observed_at": [
+    "2026-08-25T21:50:40.103613Z",
+    "2026-08-25T19:04:24.162197Z"
+   ]
+  }
  },
  "bdl-mlb-5059753": {
   "schema_ver": 2,
@@ -237620,9 +237702,50 @@
    "affects_prediction": false,
    "user_visible": false
   },
-  "result": null,
-  "model_result": null,
-  "market_result": null
+  "result": "h",
+  "model_result": "h",
+  "market_result": "h",
+  "score": "4-3",
+  "result_snapshot": {
+   "display": {
+    "home": 4,
+    "away": 3
+   },
+   "regulation": null,
+   "penalties": null,
+   "ultimate_winner": "h",
+   "observed_at": "2026-08-26T02:13:09.376928Z",
+   "source": "provider"
+  },
+  "model_hit": false,
+  "market_hit": false,
+  "market_comparison_hit": false,
+  "upset_hit": true,
+  "brier3": 0.562,
+  "log_loss": 0.755,
+  "brier_advancement": null,
+  "log_loss_advancement": null,
+  "result_corrections": [],
+  "clv": 2.5,
+  "closing_market_snapshot": {
+   "h": 43.5,
+   "a": 56.5
+  },
+  "closing_market_receipt": {
+   "sources": [
+    "SportsGameOdds consensus",
+    "The Odds API consensus"
+   ],
+   "source_count": 2,
+   "event_ids": [
+    "58224f3edafb991e58ad28878d717d936325a2d67f09b4c7d5aa5fcf726e1d76",
+    "a47f7082a729e11896cff2d28ac936ea15a2218fe284dd570ba9a3e87bd391b9"
+   ],
+   "observed_at": [
+    "2026-08-25T21:50:40.103613Z",
+    "2026-08-25T19:04:24.162197Z"
+   ]
+  }
  },
  "bdl-mlb-5059757": {
   "schema_ver": 2,
