@@ -1,5 +1,104 @@
 [
  {
+  "id": "mlb-2026-08-28",
+  "comp": "MLB",
+  "comp_label": "MLB",
+  "slug": "mlb-2026-08-28",
+  "title": "MLB model recap — 2026-08-28",
+  "date": "2026-08-28",
+  "summary": "The model went 149/297 (50%) on graded MLB picks.",
+  "record": {
+   "hits": 149,
+   "graded": 297,
+   "pct": 50
+  },
+  "highlights": {
+   "window_days": 7,
+   "matches_considered": 34,
+   "biggest_upset": {
+    "home": "Detroit Tigers",
+    "away": "Tampa Bay Rays",
+    "score_line": "0-3",
+    "winner": "Tampa Bay Rays",
+    "upset_score": 84,
+    "market_pct": 47.0
+   },
+   "best_call": {
+    "home": "Arizona Diamondbacks",
+    "away": "Chicago Cubs",
+    "pick": "Chicago Cubs",
+    "confidence": 52,
+    "edge": 1
+   },
+   "biggest_miss": {
+    "home": "Washington Nationals",
+    "away": "Colorado Rockies",
+    "pick": "Washington Nationals",
+    "confidence": 57,
+    "actual": "Colorado Rockies"
+   },
+   "closest_match": {
+    "home": "San Diego Padres",
+    "away": "Pittsburgh Pirates",
+    "score_line": "2-3",
+    "margin": 1
+   }
+  },
+  "body": [
+   "Matchday's model graded 297 MLB picks this stretch, hitting on 149 of them (50%). Over the same 191 games with a market line, the betting market favorite hit 52% of the time.",
+   "On calibration: picks stated at 50-60% hit 47% of the time (157 games); picks stated at 60-70% hit 53% of the time (87 games); picks stated at 70-80% hit 56% of the time (43 games); picks stated at 80-90% hit 50% of the time (10 games). A well-calibrated model's stated confidence should roughly match its actual hit rate in each band.",
+   "The strongest signal lately has been opponent-adjusted rating: when it favored a side, that side won 55% of the time (143 games). Championship market power has been the weakest, at 15% (13 games) — a reminder no single factor is decisive on its own.",
+   "Among this week's MLB storylines: the biggest upset was Tampa Bay Rays winning 0-3 against Detroit Tigers (the market gave that result only about 47%); the model's best call was Chicago Cubs in Arizona Diamondbacks vs Chicago Cubs at 52% confidence; its biggest miss was picking Washington Nationals in Washington Nationals vs Colorado Rockies, but Colorado Rockies won instead.",
+   "This is Matchday's own model reporting on itself for anyone to use. Every pick is locked before kickoff and graded automatically once the game finishes; none are rewritten after the fact. See the Q&A page for how the model works."
+  ]
+ },
+ {
+  "id": "laliga-2026-08-28",
+  "comp": "LALIGA",
+  "comp_label": "La Liga",
+  "slug": "laliga-2026-08-28",
+  "title": "La Liga model recap — 2026-08-28",
+  "date": "2026-08-28",
+  "summary": "The model went 9/16 (56%) on graded La Liga picks.",
+  "record": {
+   "hits": 9,
+   "graded": 16,
+   "pct": 56
+  },
+  "highlights": {
+   "window_days": 7,
+   "matches_considered": 10,
+   "biggest_upset": null,
+   "best_call": {
+    "home": "Athletic Club",
+    "away": "Sevilla FC",
+    "pick": "Sevilla FC",
+    "confidence": 37,
+    "edge": 0
+   },
+   "biggest_miss": {
+    "home": "CA Osasuna",
+    "away": "Levante UD",
+    "pick": "CA Osasuna",
+    "confidence": 57,
+    "actual": "Draw"
+   },
+   "closest_match": {
+    "home": "Valencia CF",
+    "away": "RC Celta de Vigo",
+    "score_line": "0-0",
+    "margin": 0
+   }
+  },
+  "body": [
+   "Matchday's model graded 16 La Liga picks this stretch, hitting on 9 of them (56%). Over the same 11 games with a market line, the betting market favorite hit 73% of the time.",
+   "On calibration: picks stated at <50% hit 38% of the time (8 games); picks stated at 50-60% hit 33% of the time (3 games); picks stated at 60-70% hit 100% of the time (5 games). A well-calibrated model's stated confidence should roughly match its actual hit rate in each band.",
+   "The strongest signal lately has been Elo rating: when it favored a side, that side won 83% of the time (6 games). Goal difference has been the weakest, at 20% (5 games) — a reminder no single factor is decisive on its own.",
+   "Among this week's La Liga storylines: the model's best call was Sevilla FC in Athletic Club vs Sevilla FC at 37% confidence; its biggest miss was picking CA Osasuna in CA Osasuna vs Levante UD, but Draw won instead.",
+   "This is Matchday's own model reporting on itself for anyone to use. Every pick is locked before kickoff and graded automatically once the game finishes; none are rewritten after the fact. See the Q&A page for how the model works."
+  ]
+ },
+ {
   "id": "seriea-2026-08-24",
   "comp": "SERIEA",
   "comp_label": "Serie A",
