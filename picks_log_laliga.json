@@ -822,7 +822,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-29T18:30:59.081743Z",
+   "observed_at": "2026-08-29T21:46:27.378741Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -1655,7 +1655,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-29T18:30:59.081838Z",
+   "observed_at": "2026-08-29T21:46:27.378800Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -2306,7 +2306,7 @@
    },
    "penalties": null,
    "ultimate_winner": "d",
-   "observed_at": "2026-08-29T18:30:59.081888Z",
+   "observed_at": "2026-08-29T21:46:27.378827Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -2965,7 +2965,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-29T18:30:59.081926Z",
+   "observed_at": "2026-08-29T21:46:27.378849Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -3497,7 +3497,7 @@
    },
    "penalties": null,
    "ultimate_winner": "d",
-   "observed_at": "2026-08-29T18:30:59.081963Z",
+   "observed_at": "2026-08-29T21:46:27.378870Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -4038,7 +4038,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-29T18:30:59.081999Z",
+   "observed_at": "2026-08-29T21:46:27.378890Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -4053,8 +4053,8 @@
   "clv": 0.0,
   "closing_market_snapshot": {
    "d": 21.0,
-   "h": 65.0,
-   "a": 14.0
+   "a": 14.0,
+   "h": 65.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -4577,7 +4577,7 @@
    },
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-29T18:30:59.082035Z",
+   "observed_at": "2026-08-29T21:46:27.378910Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -5121,7 +5121,7 @@
    },
    "penalties": null,
    "ultimate_winner": "d",
-   "observed_at": "2026-08-29T18:30:59.082069Z",
+   "observed_at": "2026-08-29T21:46:27.378927Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -5136,8 +5136,8 @@
   "clv": 0.6,
   "closing_market_snapshot": {
    "d": 30.693,
-   "h": 38.614,
-   "a": 30.693
+   "a": 30.693,
+   "h": 38.614
   },
   "closing_market_receipt": {
    "sources": [
@@ -5697,7 +5697,7 @@
    },
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-29T18:30:59.082103Z",
+   "observed_at": "2026-08-29T21:46:27.378943Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -5712,8 +5712,8 @@
   "clv": 0.7,
   "closing_market_snapshot": {
    "d": 19.192,
-   "h": 12.121,
-   "a": 68.687
+   "a": 68.687,
+   "h": 12.121
   },
   "closing_market_receipt": {
    "sources": [
@@ -6235,7 +6235,7 @@
    },
    "penalties": null,
    "ultimate_winner": "d",
-   "observed_at": "2026-08-29T18:30:59.082135Z",
+   "observed_at": "2026-08-29T21:46:27.378960Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -6792,7 +6792,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-29T18:30:59.082168Z",
+   "observed_at": "2026-08-29T21:46:27.378979Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -6808,8 +6808,8 @@
   "clv": 0.0,
   "closing_market_snapshot": {
    "d": 31.0,
-   "h": 43.0,
-   "a": 26.0
+   "a": 26.0,
+   "h": 43.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -7367,7 +7367,7 @@
    },
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-29T18:30:59.082201Z",
+   "observed_at": "2026-08-29T21:46:27.378995Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -7382,8 +7382,8 @@
   "clv": 0.0,
   "closing_market_snapshot": {
    "d": 17.0,
-   "h": 11.0,
-   "a": 72.0
+   "a": 72.0,
+   "h": 11.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -7902,7 +7902,7 @@
    },
    "penalties": null,
    "ultimate_winner": "d",
-   "observed_at": "2026-08-29T18:30:59.082234Z",
+   "observed_at": "2026-08-29T21:46:27.379011Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -8421,7 +8421,7 @@
    },
    "penalties": null,
    "ultimate_winner": "d",
-   "observed_at": "2026-08-29T18:30:59.082269Z",
+   "observed_at": "2026-08-29T21:46:27.379027Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -8956,7 +8956,7 @@
    },
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-29T18:30:59.082302Z",
+   "observed_at": "2026-08-29T21:46:27.379043Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -9510,7 +9510,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-29T18:30:59.082334Z",
+   "observed_at": "2026-08-29T21:46:27.379060Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -9541,8 +9541,8 @@
   "clv": -0.8,
   "closing_market_snapshot": {
    "d": 13.861,
-   "h": 78.218,
-   "a": 7.921
+   "a": 7.921,
+   "h": 78.218
   },
   "closing_market_receipt": {
    "sources": [
@@ -10072,7 +10072,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-29T18:30:59.082369Z",
+   "observed_at": "2026-08-29T21:46:27.379078Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -10594,7 +10594,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-29T18:30:59.082400Z",
+   "observed_at": "2026-08-29T21:46:27.379095Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -11105,8 +11105,32 @@
    "affects_prediction": false,
    "user_visible": false
   },
-  "result": null,
-  "model_result": null,
-  "market_result": null
+  "result": "a",
+  "model_result": "a",
+  "market_result": "a",
+  "score": "1-3",
+  "result_snapshot": {
+   "display": {
+    "home": 1,
+    "away": 3
+   },
+   "regulation": {
+    "home": 1,
+    "away": 3
+   },
+   "penalties": null,
+   "ultimate_winner": "a",
+   "observed_at": "2026-08-29T21:46:27.379111Z",
+   "source": "provider"
+  },
+  "model_hit": true,
+  "market_hit": null,
+  "market_comparison_hit": true,
+  "upset_hit": false,
+  "brier3": 0.561,
+  "log_loss": 0.942,
+  "brier_advancement": null,
+  "log_loss_advancement": null,
+  "result_corrections": []
  }
 }

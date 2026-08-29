@@ -203590,7 +203590,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-29T18:42:20.478334Z",
+   "observed_at": "2026-08-29T21:57:29.832989Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -205447,7 +205447,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-29T18:42:20.478401Z",
+   "observed_at": "2026-08-29T21:57:29.833027Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -205461,8 +205461,8 @@
   "result_corrections": [],
   "clv": 0.5,
   "closing_market_snapshot": {
-   "h": 46.5,
-   "a": 53.5
+   "a": 53.5,
+   "h": 46.5
   },
   "closing_market_receipt": {
    "sources": [
@@ -207314,7 +207314,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-29T18:42:20.478442Z",
+   "observed_at": "2026-08-29T21:57:29.833046Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -207328,8 +207328,8 @@
   "result_corrections": [],
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 45.0,
-   "a": 55.0
+   "a": 55.0,
+   "h": 45.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -209189,7 +209189,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-29T18:42:20.478483Z",
+   "observed_at": "2026-08-29T21:57:29.833062Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -209203,8 +209203,8 @@
   "result_corrections": [],
   "clv": -0.5,
   "closing_market_snapshot": {
-   "h": 63.5,
-   "a": 36.5
+   "a": 36.5,
+   "h": 63.5
   },
   "closing_market_receipt": {
    "sources": [
@@ -211067,7 +211067,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-29T18:42:20.478515Z",
+   "observed_at": "2026-08-29T21:57:29.833077Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -211081,8 +211081,8 @@
   "result_corrections": [],
   "clv": -2.5,
   "closing_market_snapshot": {
-   "h": 52.5,
-   "a": 47.5
+   "a": 47.5,
+   "h": 52.5
   },
   "closing_market_receipt": {
    "sources": [
@@ -212971,7 +212971,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-29T18:42:20.478547Z",
+   "observed_at": "2026-08-29T21:57:29.833092Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -212985,8 +212985,8 @@
   "result_corrections": [],
   "clv": 2.5,
   "closing_market_snapshot": {
-   "h": 42.5,
-   "a": 57.5
+   "a": 57.5,
+   "h": 42.5
   },
   "closing_market_receipt": {
    "sources": [
@@ -214862,7 +214862,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-29T18:42:20.478583Z",
+   "observed_at": "2026-08-29T21:57:29.833105Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -214876,8 +214876,8 @@
   "result_corrections": [],
   "clv": 3.0,
   "closing_market_snapshot": {
-   "h": 46.0,
-   "a": 54.0
+   "a": 54.0,
+   "h": 46.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -216771,7 +216771,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-29T18:42:20.478615Z",
+   "observed_at": "2026-08-29T21:57:29.833118Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -216785,8 +216785,8 @@
   "result_corrections": [],
   "clv": 0.5,
   "closing_market_snapshot": {
-   "h": 41.5,
-   "a": 58.5
+   "a": 58.5,
+   "h": 41.5
   },
   "closing_market_receipt": {
    "sources": [
@@ -218696,7 +218696,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-29T18:42:20.478644Z",
+   "observed_at": "2026-08-29T21:57:29.833133Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -218710,8 +218710,8 @@
   "result_corrections": [],
   "clv": 1.5,
   "closing_market_snapshot": {
-   "h": 50.5,
-   "a": 49.5
+   "a": 49.5,
+   "h": 50.5
   },
   "closing_market_receipt": {
    "sources": [
@@ -220596,7 +220596,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-29T18:42:20.478676Z",
+   "observed_at": "2026-08-29T21:57:29.833147Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -220610,8 +220610,8 @@
   "result_corrections": [],
   "clv": -0.5,
   "closing_market_snapshot": {
-   "h": 50.5,
-   "a": 49.5
+   "a": 49.5,
+   "h": 50.5
   },
   "closing_market_receipt": {
    "sources": [
@@ -222492,7 +222492,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-29T18:42:20.478708Z",
+   "observed_at": "2026-08-29T21:57:29.833160Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -222506,8 +222506,8 @@
   "result_corrections": [],
   "clv": 4.5,
   "closing_market_snapshot": {
-   "h": 45.5,
-   "a": 54.5
+   "a": 54.5,
+   "h": 45.5
   },
   "closing_market_receipt": {
    "sources": [
@@ -224714,7 +224714,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-29T18:42:20.478736Z",
+   "observed_at": "2026-08-29T21:57:29.833174Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -224728,8 +224728,8 @@
   "result_corrections": [],
   "clv": -1.0,
   "closing_market_snapshot": {
-   "h": 42.0,
-   "a": 58.0
+   "a": 58.0,
+   "h": 42.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -226922,7 +226922,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-29T18:42:20.478764Z",
+   "observed_at": "2026-08-29T21:57:29.833188Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -226936,8 +226936,8 @@
   "result_corrections": [],
   "clv": 3.5,
   "closing_market_snapshot": {
-   "h": 48.5,
-   "a": 51.5
+   "a": 51.5,
+   "h": 48.5
   },
   "closing_market_receipt": {
    "sources": [
@@ -229123,7 +229123,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-29T18:42:20.478793Z",
+   "observed_at": "2026-08-29T21:57:29.833200Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -229137,8 +229137,8 @@
   "result_corrections": [],
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 58.0,
-   "a": 42.0
+   "a": 42.0,
+   "h": 58.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -231327,7 +231327,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-29T18:42:20.478849Z",
+   "observed_at": "2026-08-29T21:57:29.833222Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -231341,8 +231341,8 @@
   "result_corrections": [],
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 57.0,
-   "a": 43.0
+   "a": 43.0,
+   "h": 57.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -233548,7 +233548,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-29T18:42:20.478882Z",
+   "observed_at": "2026-08-29T21:57:29.833239Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -233562,8 +233562,8 @@
   "result_corrections": [],
   "clv": 0.5,
   "closing_market_snapshot": {
-   "h": 54.5,
-   "a": 45.5
+   "a": 45.5,
+   "h": 54.5
   },
   "closing_market_receipt": {
    "sources": [
@@ -235713,7 +235713,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-29T18:42:20.478912Z",
+   "observed_at": "2026-08-29T21:57:29.833253Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -235727,8 +235727,8 @@
   "result_corrections": [],
   "clv": 0.5,
   "closing_market_snapshot": {
-   "h": 40.5,
-   "a": 59.5
+   "a": 59.5,
+   "h": 40.5
   },
   "closing_market_receipt": {
    "sources": [
@@ -237878,7 +237878,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-29T18:42:20.478940Z",
+   "observed_at": "2026-08-29T21:57:29.833267Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -237892,8 +237892,8 @@
   "result_corrections": [],
   "clv": 2.5,
   "closing_market_snapshot": {
-   "h": 43.5,
-   "a": 56.5
+   "a": 56.5,
+   "h": 43.5
   },
   "closing_market_receipt": {
    "sources": [
@@ -240044,7 +240044,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-29T18:42:20.478968Z",
+   "observed_at": "2026-08-29T21:57:29.833280Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -240058,8 +240058,8 @@
   "result_corrections": [],
   "clv": -3.0,
   "closing_market_snapshot": {
-   "h": 52.0,
-   "a": 48.0
+   "a": 48.0,
+   "h": 52.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -242188,7 +242188,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-29T18:42:20.478996Z",
+   "observed_at": "2026-08-29T21:57:29.833294Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -242202,8 +242202,8 @@
   "result_corrections": [],
   "clv": 2.0,
   "closing_market_snapshot": {
-   "h": 52.0,
-   "a": 48.0
+   "a": 48.0,
+   "h": 52.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -244369,7 +244369,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-29T18:42:20.479024Z",
+   "observed_at": "2026-08-29T21:57:29.833307Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -244383,8 +244383,8 @@
   "result_corrections": [],
   "clv": 0.5,
   "closing_market_snapshot": {
-   "h": 43.5,
-   "a": 56.5
+   "a": 56.5,
+   "h": 43.5
   },
   "closing_market_receipt": {
    "sources": [
@@ -246543,7 +246543,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-29T18:42:20.479052Z",
+   "observed_at": "2026-08-29T21:57:29.833319Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -246557,8 +246557,8 @@
   "result_corrections": [],
   "clv": 0.5,
   "closing_market_snapshot": {
-   "h": 49.5,
-   "a": 50.5
+   "a": 50.5,
+   "h": 49.5
   },
   "closing_market_receipt": {
    "sources": [
@@ -248720,7 +248720,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-29T18:42:20.479079Z",
+   "observed_at": "2026-08-29T21:57:29.833333Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -248734,8 +248734,8 @@
   "result_corrections": [],
   "clv": 1.0,
   "closing_market_snapshot": {
-   "h": 43.0,
-   "a": 57.0
+   "a": 57.0,
+   "h": 43.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -250894,7 +250894,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-29T18:42:20.479107Z",
+   "observed_at": "2026-08-29T21:57:29.833345Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -250908,8 +250908,8 @@
   "result_corrections": [],
   "clv": -2.0,
   "closing_market_snapshot": {
-   "h": 48.0,
-   "a": 52.0
+   "a": 52.0,
+   "h": 48.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -253083,7 +253083,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-29T18:42:20.479135Z",
+   "observed_at": "2026-08-29T21:57:29.833358Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -253097,8 +253097,8 @@
   "result_corrections": [],
   "clv": -0.5,
   "closing_market_snapshot": {
-   "h": 53.5,
-   "a": 46.5
+   "a": 46.5,
+   "h": 53.5
   },
   "closing_market_receipt": {
    "sources": [
@@ -255260,7 +255260,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-29T18:42:20.479163Z",
+   "observed_at": "2026-08-29T21:57:29.833371Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -255274,8 +255274,8 @@
   "result_corrections": [],
   "clv": 0.5,
   "closing_market_snapshot": {
-   "h": 50.5,
-   "a": 49.5
+   "a": 49.5,
+   "h": 50.5
   },
   "closing_market_receipt": {
    "sources": [
@@ -257521,7 +257521,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-29T18:42:20.479191Z",
+   "observed_at": "2026-08-29T21:57:29.833384Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -257535,8 +257535,8 @@
   "result_corrections": [],
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 53.0,
-   "a": 47.0
+   "a": 47.0,
+   "h": 53.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -259890,7 +259890,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-29T18:42:20.479219Z",
+   "observed_at": "2026-08-29T21:57:29.833397Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -259904,8 +259904,8 @@
   "result_corrections": [],
   "clv": -1.0,
   "closing_market_snapshot": {
-   "h": 49.0,
-   "a": 51.0
+   "a": 51.0,
+   "h": 49.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -262260,7 +262260,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-29T18:42:20.479247Z",
+   "observed_at": "2026-08-29T21:57:29.833409Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -262274,8 +262274,8 @@
   "result_corrections": [],
   "clv": -0.5,
   "closing_market_snapshot": {
-   "h": 51.5,
-   "a": 48.5
+   "a": 48.5,
+   "h": 51.5
   },
   "closing_market_receipt": {
    "sources": [
@@ -264634,7 +264634,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-29T18:42:20.479275Z",
+   "observed_at": "2026-08-29T21:57:29.833422Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -264648,8 +264648,8 @@
   "result_corrections": [],
   "clv": 0.0,
   "closing_market_snapshot": {
-   "h": 44.0,
-   "a": 56.0
+   "a": 56.0,
+   "h": 44.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -267005,7 +267005,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-29T18:42:20.479304Z",
+   "observed_at": "2026-08-29T21:57:29.833435Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -267019,8 +267019,8 @@
   "result_corrections": [],
   "clv": -1.0,
   "closing_market_snapshot": {
-   "h": 45.0,
-   "a": 55.0
+   "a": 55.0,
+   "h": 45.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -269383,7 +269383,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-29T18:42:20.479331Z",
+   "observed_at": "2026-08-29T21:57:29.833447Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -269397,8 +269397,8 @@
   "result_corrections": [],
   "clv": -0.5,
   "closing_market_snapshot": {
-   "h": 55.5,
-   "a": 44.5
+   "a": 44.5,
+   "h": 55.5
   },
   "closing_market_receipt": {
    "sources": [
@@ -271794,7 +271794,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-29T18:42:20.479365Z",
+   "observed_at": "2026-08-29T21:57:29.833463Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -271808,8 +271808,8 @@
   "result_corrections": [],
   "clv": -1.0,
   "closing_market_snapshot": {
-   "h": 49.0,
-   "a": 51.0
+   "a": 51.0,
+   "h": 49.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -274185,7 +274185,7 @@
    "regulation": null,
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-29T18:42:20.479392Z",
+   "observed_at": "2026-08-29T21:57:29.833475Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -274199,8 +274199,8 @@
   "result_corrections": [],
   "clv": 0.5,
   "closing_market_snapshot": {
-   "h": 44.5,
-   "a": 55.5
+   "a": 55.5,
+   "h": 44.5
   },
   "closing_market_receipt": {
    "sources": [
@@ -291071,6 +291071,5108 @@
    "spec_version": "MFTI-0.1.1-shadow",
    "mode": "shadow_research_only",
    "captured_at": "2026-08-29T18:42:20.391390Z",
+   "status": "incomplete",
+   "score": null,
+   "historical_evidence": {
+    "available": false,
+    "score": null,
+    "reason": "frozen_normalization_and_rolling_recalibration_not_fitted",
+    "diagnostics": {
+     "eligible_prior_forecasts": 297,
+     "mean_brier": 0.522723,
+     "mean_log_loss": 0.719276,
+     "brier_skill_vs_uniform": 0.215916,
+     "log_skill_vs_uniform": 0.345287
+    }
+   },
+   "event_readiness": {
+    "available": false,
+    "score": null,
+    "missing_components": [
+     "scenario_stability",
+     "availability",
+     "freshness",
+     "model_stability"
+    ]
+   },
+   "components": {
+    "scenario_stability": {
+     "available": false,
+     "score": null,
+     "reason": "scenario_forecasts_not_captured"
+    },
+    "availability": {
+     "available": false,
+     "score": null,
+     "reason": "availability_probabilities_not_captured"
+    },
+    "freshness": {
+     "available": false,
+     "score": null,
+     "reason": "input_freshness_not_captured"
+    },
+    "model_stability": {
+     "available": false,
+     "score": null,
+     "reason": "independent_model_outputs_not_captured"
+    }
+   },
+   "missing_components": [
+    "historical_evidence",
+    "scenario_stability",
+    "availability",
+    "freshness",
+    "model_stability"
+   ],
+   "affects_prediction": false,
+   "user_visible": false
+  },
+  "result": null,
+  "model_result": null,
+  "market_result": null
+ },
+ "bdl-mlb-5059812": {
+  "schema_ver": 2,
+  "fixture_id": "bdl-mlb-5059812",
+  "competition": "MLB",
+  "home": "New York Yankees",
+  "away": "Boston Red Sox",
+  "stage": "Regular",
+  "kickoff": "2026-08-29T23:15:00Z",
+  "pick": "h",
+  "pick_name": "New York Yankees",
+  "confidence": 54,
+  "edge": -3,
+  "base_pick": "h",
+  "base_pick_name": "New York Yankees",
+  "probs": {
+   "h": 54,
+   "d": 0,
+   "a": 46
+  },
+  "advancement_probs": null,
+  "regulation_probs": {
+   "h": 54,
+   "d": 0,
+   "a": 46
+  },
+  "regulation_pick": "h",
+  "market_comparison_pick": "h",
+  "market_comparison_basis": "regulation_1x2",
+  "outcome_basis": "regulation",
+  "market_basis": "regulation_1x2",
+  "market_pick": "h",
+  "market_pct": 57,
+  "pick_mkt": 57,
+  "value_side": null,
+  "value_edge": null,
+  "value_mkt": null,
+  "value_name": null,
+  "upset_candidate": "a",
+  "upset_name": "Boston Red Sox",
+  "upset_score": 60,
+  "upset_candidate_pct": 46,
+  "upset_triggered": false,
+  "upset_temperature": 1.15,
+  "upset_reason": "favorite profile is cleaner",
+  "factor_snapshot": {
+   "record": 0.2,
+   "elo": -0.59,
+   "rank": 0.0,
+   "rest": 0.0,
+   "margin": -0.04,
+   "market_power": 0.22,
+   "form": 0.56,
+   "class": 0.0,
+   "adv": 0.25,
+   "srs": 0.0,
+   "h2h": -0.09
+  },
+  "market_snapshot": {
+   "h": 57,
+   "d": 0,
+   "a": 43
+  },
+  "market_snapshot_at": "2026-08-29T21:56:56.376699Z",
+  "market_snapshot_recorded_at": "2026-08-29T21:57:29.796457Z",
+  "market_snapshot_receipt": {
+   "source": "SportsGameOdds consensus",
+   "source_reference": "https://sportsgameodds.com/",
+   "observed_at": "2026-08-29T21:56:56.376699Z",
+   "recorded_at": "2026-08-29T21:57:29.796457Z",
+   "snapshot_id": null,
+   "books": 8,
+   "spread": 1
+  },
+  "market_gap": 14.0,
+  "upset_snapshot": {
+   "candidate": "Boston Red Sox",
+   "class": "pickem",
+   "market_dog_pct": 43.0,
+   "model_dog_pct": 46.0,
+   "upset_edge": 3.0,
+   "independent_model_dog_pct": 49.0,
+   "independent_model_lead_pct": -2.0,
+   "independent_edge": 6.0,
+   "edge_threshold": 10.0,
+   "supporting_signals": [
+    "elo",
+    "h2h"
+   ],
+   "personnel_gate": false,
+   "personnel_blockers": [
+    "confirmed starting pitchers missing"
+   ],
+   "radar": false,
+   "standings_candidate": null,
+   "standings_gap_pct": 2.5,
+   "gate": "none",
+   "box_score_edge": 0.0
+  },
+  "box_score_available": false,
+  "data_availability": {
+   "market": "available",
+   "box_score": "unavailable",
+   "lineups": "unavailable",
+   "injuries": "unavailable",
+   "weather": "available",
+   "personnel": "available",
+   "venue_context": "available"
+  },
+  "damp_pct": 0,
+  "mkt_pull": 3,
+  "model_ver": "v6-calibrated",
+  "model_code_marker": "matchday-predictor-integrity-2026-07",
+  "model_signal_schema": 8,
+  "reproducibility": {
+   "model_version": "v6-calibrated",
+   "model_signal_schema": 8,
+   "probability_basis": "regulation",
+   "market_comparison_basis": "regulation_1x2",
+   "market_comparison_pick": "h"
+  },
+  "locked_at": "2026-08-29T21:57:29.796457Z",
+  "lead_time_seconds": 4650.204,
+  "lead_time_hours": 1.291723,
+  "lock_window_hours": 2.0,
+  "status_at_lock": "UPCOMING",
+  "integrity_eligible": true,
+  "integrity_status": "verified",
+  "integrity_reason": "verified_pregame_window",
+  "prediction_snapshot": {
+   "pick": "h",
+   "pick_name": "New York Yankees",
+   "confidence": 54,
+   "model_version": "v6-calibrated",
+   "model_signal_schema": 8,
+   "base_pick": "h",
+   "base_pick_name": "New York Yankees",
+   "model": {
+    "h": 51,
+    "d": 0,
+    "a": 49
+   },
+   "base_blend": {
+    "h": 55,
+    "d": 0,
+    "a": 45
+   },
+   "blend": {
+    "h": 54,
+    "d": 0,
+    "a": 46
+   },
+   "adjusted": {
+    "h": 54,
+    "d": 0,
+    "a": 46
+   },
+   "is_knockout": false,
+   "advancement": null,
+   "regulation_pick": "h",
+   "market_comparison_pick": "h",
+   "market_comparison_basis": "regulation_1x2",
+   "regulation_pick_name": "New York Yankees",
+   "regulation_confidence": 54,
+   "regulation_probs": {
+    "h": 54,
+    "d": 0,
+    "a": 46
+   },
+   "edge": -3,
+   "note": "favorite, but upset watch",
+   "why": {
+    "record": 0.2,
+    "elo": -0.59,
+    "rank": 0.0,
+    "rest": 0.0,
+    "margin": -0.04,
+    "market_power": 0.22,
+    "form": 0.56,
+    "class": 0.0,
+    "adv": 0.25,
+    "srs": 0.0,
+    "h2h": -0.09
+   },
+   "damp_pct": 0,
+   "mkt_pull": 3,
+   "market_weight": 0.6,
+   "upset": {
+    "candidate": "a",
+    "candidate_name": "Boston Red Sox",
+    "favorite": "h",
+    "favorite_name": "New York Yankees",
+    "score": 60,
+    "upset_class": "pickem",
+    "market_dog_pct": 43.0,
+    "model_dog_pct": 46.0,
+    "upset_edge": 3.0,
+    "radar": false,
+    "standings_candidate": null,
+    "standings_gap_pct": 2.5,
+    "standings_sample_ok": true,
+    "temperature": 1.15,
+    "variance_pct": 11,
+    "low_goal_pct": 42,
+    "draw_pct": 0,
+    "favorite_pct": 54,
+    "candidate_pct": 46,
+    "margin_pct": 8,
+    "learn_bias_pct": 0.0,
+    "market_gap_pct": 14.0,
+    "market_gate": false,
+    "market_quality_gate": true,
+    "independent_model_dog_pct": 49.0,
+    "independent_model_lead_pct": -2.0,
+    "independent_edge": 6.0,
+    "edge_threshold": 10.0,
+    "independent_pick_gate": false,
+    "playability_gate": true,
+    "evidence_gate": true,
+    "supporting_signals": [
+     "elo",
+     "h2h"
+    ],
+    "personnel_gate": false,
+    "personnel_blockers": [
+     "confirmed starting pitchers missing"
+    ],
+    "box_score_edge": 0.0,
+    "strong_box_signal": false,
+    "blocked": false,
+    "triggered": false,
+    "reason": "favorite profile is cleaner"
+   },
+   "data_quality": {
+    "level": "established",
+    "games": {
+     "home": 125,
+     "away": 127
+    },
+    "signals": [
+     "market_power",
+     "record",
+     "margin",
+     "form",
+     "elo",
+     "market"
+    ],
+    "market_available": true,
+    "market_books": 8,
+    "market_spread": 1,
+    "market_weight": 0.6,
+    "note": "Current-season sample and opponent-adjusted results are available."
+   },
+   "predicted_margin": {
+    "value": 0.2,
+    "unit": "runs",
+    "favored": "h",
+    "label": "New York Yankees by 0.2"
+   },
+   "class_meta": {
+    "label": "Personnel edge",
+    "source": null,
+    "available": false,
+    "coverage": "unavailable",
+    "home_available": false,
+    "away_available": false,
+    "note": "Market-listed starter/hitter candidates and schedule-derived bullpen rest are collected at zero weight; confirmed batting orders, injuries, and individual reliever availability remain unavailable.",
+    "edge_available": false,
+    "coverage_label": null
+   },
+   "publication_state": "locked",
+   "lock_readiness": {
+    "schema_ver": 1,
+    "sport": "baseball",
+    "competition": "MLB",
+    "phase": "lock_window",
+    "lock_window_hours": 2.0,
+    "lead_time_hours": 1.3,
+    "inputs": {
+     "market": "confirmed",
+     "injuries": "missing",
+     "starting_pitchers": "available",
+     "lineups": "missing",
+     "bullpen": "available",
+     "weather": "confirmed",
+     "venue": "confirmed"
+    },
+    "missing_critical": [
+     "lineups"
+    ],
+    "unconfirmed_critical": [
+     "starting_pitchers",
+     "lineups"
+    ],
+    "coverage_pct": 71,
+    "confirmed_pct": 43,
+    "provenance": [
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-21T21:03:33.594163Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-21T21:41:56.082971Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-21T23:42:54.314867Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T01:57:15.926663Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T03:17:16.233216Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T04:56:16.532156Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T07:07:18.281586Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T08:59:25.597434Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T10:46:59.444711Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T13:07:32.313600Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T14:45:22.282967Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T15:42:31.449702Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T17:41:24.759387Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T18:56:29.279077Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T20:48:19.028583Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T21:44:14.019414Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T23:40:51.204589Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T02:06:44.845325Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T03:23:39.392554Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T04:59:30.220734Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T07:07:52.330700Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T08:55:15.148809Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T10:47:19.113411Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T13:10:59.862474Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T14:46:26.183460Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T15:44:37.563424Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T17:39:15.318241Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T18:56:12.093709Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T20:44:49.198830Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T21:40:36.057626Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T23:41:17.683518Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-24T02:18:17.747749Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-24T04:13:22.552461Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-24T05:58:33.331095Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-24T07:38:47.299871Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-24T09:11:32.364383Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-24T11:02:08.096774Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-24T13:31:03.450815Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-24T15:07:33.041079Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-24T17:02:44.094019Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-24T19:17:41.580516Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-24T20:55:41.845657Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-24T21:48:56.071778Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-24T23:56:41.860624Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-25T01:59:44.411740Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-25T03:21:28.506955Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-25T05:13:34.631729Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-25T07:14:52.967042Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-25T09:06:27.981247Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-25T11:07:05.203378Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-25T13:17:31.158511Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-25T15:20:48.564028Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-25T17:01:29.927766Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-25T19:04:24.906994Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-25T21:02:50.258698Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-25T21:50:40.416931Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-25T23:44:58.465676Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-26T02:12:32.975498Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-26T03:27:03.574450Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-26T05:04:07.916453Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-26T07:15:16.283462Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-26T09:11:37.832877Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-26T10:59:09.387036Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-26T13:23:34.036763Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-26T16:02:57.552723Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-26T19:30:27.474524Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-26T23:41:37.210261Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-27T10:10:23.820930Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-27T20:52:25.575421Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-28T05:49:04.792161Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "fixture_join",
+      "source": "SportsGameOdds",
+      "join": {
+       "match_provider_ids": [
+        "5059812",
+        "bdl-mlb-5059812"
+       ],
+       "match_kickoff": "2026-08-29T23:15:00Z",
+       "candidate_event_ids": [
+        "dQ9RPCIS2TPeDUtK3Qef",
+        "1B3rpkWiQxtRrtFLc9Mv"
+       ],
+       "status": "rejected",
+       "reason": "ambiguous_same_team_fixture"
+      },
+      "fetched_at": "2026-08-28T19:05:15.923424Z"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-28T19:05:21.523312Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-29T02:22:23.030798Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "market_and_inferred_personnel",
+      "source": "SportsGameOdds",
+      "source_reference": "https://sportsgameodds.com/",
+      "fetched_at": "2026-08-29T09:19:13.490345Z",
+      "provider_event_id": "Jxi4qrcNLiZN5hCLRdvu",
+      "join": {
+       "match_provider_ids": [
+        "5059812",
+        "bdl-mlb-5059812"
+       ],
+       "match_kickoff": "2026-08-29T23:15:00Z",
+       "candidate_event_ids": [
+        "1B3rpkWiQxtRrtFLc9Mv",
+        "Jxi4qrcNLiZN5hCLRdvu"
+       ],
+       "status": "matched",
+       "strategy": "teams_and_start_time",
+       "provider_event_id": "Jxi4qrcNLiZN5hCLRdvu",
+       "provider_start": "2026-08-29T23:15:00Z"
+      },
+      "espn_excluded": true,
+      "personnel_semantics": "player-market inference; not official lineup/injury data"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-29T09:19:14.050145Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-29T14:39:59.377019Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-29T18:41:38.233329Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "market_and_inferred_personnel",
+      "source": "SportsGameOdds",
+      "source_reference": "https://sportsgameodds.com/",
+      "fetched_at": "2026-08-29T21:56:56.376699Z",
+      "provider_event_id": "Jxi4qrcNLiZN5hCLRdvu",
+      "join": {
+       "match_provider_ids": [
+        "5059812",
+        "bdl-mlb-5059812"
+       ],
+       "match_kickoff": "2026-08-29T23:15:00Z",
+       "candidate_event_ids": [
+        "Jxi4qrcNLiZN5hCLRdvu",
+        "fmlaPSuh9xc1LWoboj8r"
+       ],
+       "status": "matched",
+       "strategy": "teams_and_start_time",
+       "provider_event_id": "Jxi4qrcNLiZN5hCLRdvu",
+       "provider_start": "2026-08-29T23:15:00Z"
+      },
+      "espn_excluded": true,
+      "personnel_semantics": "player-market inference; not official lineup/injury data"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-29T21:56:56.719084Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     }
+    ],
+    "confidence_guard": {
+     "high_confidence_label_allowed": false,
+     "reason": "critical pregame inputs not confirmed"
+    },
+    "production_weight": 0,
+    "research_mode": "prospective_shadow"
+   },
+   "neutral_venue_probs": {
+    "h": 54,
+    "d": 0,
+    "a": 46
+   },
+   "totals": {
+    "expected": 8.24,
+    "basis": "season_rate"
+   },
+   "data_availability": {
+    "market": "available",
+    "box_score": "unavailable",
+    "lineups": "unavailable",
+    "injuries": "unavailable",
+    "weather": "available",
+    "personnel": "available",
+    "venue_context": "available"
+   }
+  },
+  "input_snapshot": {
+   "competition": "MLB",
+   "competition_config": {
+    "label": "MLB",
+    "sport": "baseball",
+    "fd": null,
+    "odds": "baseball_mlb",
+    "outright": "baseball_mlb_world_series_winner",
+    "tournament": false,
+    "source": "balldontlie",
+    "has_draws": false
+   },
+   "match": {
+    "id": "bdl-mlb-5059812",
+    "stage": "Regular",
+    "kickoff": "2026-08-29T23:15:00Z",
+    "status": "UPCOMING",
+    "venue": "Yankee Stadium",
+    "home": {
+     "name": "New York Yankees",
+     "code": "NYY",
+     "pts": 210,
+     "gd": 87,
+     "form": "L L L W W",
+     "pos": 2,
+     "group": "American League East",
+     "gf": 554,
+     "ga": 467,
+     "pld": 125,
+     "w": 70,
+     "d": 0,
+     "l": 55,
+     "srs": 0.574,
+     "srs_games": 125,
+     "rest_days": 11,
+     "rating": 5.71,
+     "form_home": "W L W W L",
+     "form_away": "W L L W W"
+    },
+    "away": {
+     "name": "Boston Red Sox",
+     "code": "BOS",
+     "pts": 204,
+     "gd": 95,
+     "form": "W L W W L",
+     "pos": 3,
+     "group": "American League East",
+     "gf": 575,
+     "ga": 480,
+     "pld": 127,
+     "w": 68,
+     "d": 0,
+     "l": 59,
+     "srs": 0.57,
+     "srs_games": 127,
+     "rest_days": 10,
+     "rating": 6.31,
+     "form_home": "L L W W L",
+     "form_away": "L W L W L"
+    },
+    "markets": {
+     "1x2": {
+      "home_pct": 57,
+      "draw_pct": 0,
+      "away_pct": 43,
+      "books": 8,
+      "observed_at": "2026-08-29T21:56:56.376699Z",
+      "source": "SportsGameOdds consensus",
+      "source_reference": "https://sportsgameodds.com/",
+      "provider_event_id": "Jxi4qrcNLiZN5hCLRdvu",
+      "espn_excluded": true,
+      "spread": 1,
+      "spread_lo": 56,
+      "spread_hi": 57,
+      "confidence": "tight"
+     }
+    },
+    "weather": {
+     "temp_c": 24,
+     "wind_kph": 7,
+     "rain_pct": 0,
+     "source": "Open-Meteo",
+     "source_url": "https://open-meteo.com/"
+    },
+    "injuries": {
+     "home": [],
+     "away": []
+    },
+    "lineups": null,
+    "h2h": [],
+    "stats": null,
+    "stats_extra": null,
+    "data_source": "BALLDONTLIE",
+    "advanced_metrics": null,
+    "advanced_metrics_meta": null,
+    "nfl_challenger_shadow": null,
+    "mlb_challenger_shadow": {
+     "schema_version": 1,
+     "model_version": "retrosheet-mlb-challenger-0.1.0",
+     "artifact_sha256": "f0177891dd2fe0d870b1ec62e7f6aae259158bf33e5151856e89100e88975bb9",
+     "feature_schema": [
+      "pythagorean_diff",
+      "run_diff_per_game_diff"
+     ],
+     "feature_schema_version": 1,
+     "transformation_version": "mlb-run-strength-standardization-1",
+     "mode": "prospective_shadow",
+     "production_weight": 0,
+     "home_win_probability": 0.533184,
+     "away_win_probability": 0.466816,
+     "league_home_prior_probability": 0.534621,
+     "features": {
+      "pythagorean_diff": -0.004347,
+      "run_diff_per_game_diff": -0.052031
+     },
+     "top_contributions": [
+      {
+       "feature": "run_diff_per_game_diff",
+       "contribution": -0.00322,
+       "direction": "away"
+      },
+      {
+       "feature": "pythagorean_diff",
+       "contribution": -0.00255,
+       "direction": "away"
+      }
+     ],
+     "live_feature_source": "licensed BALLDONTLIE season team totals through prior completed games",
+     "historical_training_source": "Retrosheet event files and game logs",
+     "retrosheet_notice": "The information used here was obtained free of charge from and is copyrighted by Retrosheet. Interested parties may contact Retrosheet at \"www.retrosheet.org\".",
+     "trained_through": "2025-09-28",
+     "home_games": 125,
+     "away_games": 127,
+     "historical_validation": {
+      "checks": {
+       "brier_not_worse_than_elo": true,
+       "log_loss_better_than_elo": true,
+       "minimum_out_of_sample_games": true,
+       "minimum_test_seasons": true,
+       "paired_interval_below_zero": true
+      },
+      "decision": "eligible_for_prospective_shadow",
+      "elo": {
+       "accuracy": 0.564356,
+       "brier": 0.246335,
+       "log_loss": 0.686457,
+       "n": 9090
+      },
+      "features": [
+       "pythagorean_diff",
+       "run_diff_per_game_diff"
+      ],
+      "model": {
+       "accuracy": 0.560176,
+       "brier": 0.244584,
+       "log_loss": 0.682207,
+       "n": 9090
+      },
+      "paired_vs_elo": {
+       "blocks": 683,
+       "ci95": [
+        -0.007292,
+        -0.001244
+       ],
+       "mean_log_loss_delta": -0.00425,
+       "method": "deterministic game-date block bootstrap",
+       "n": 9090
+      }
+     },
+     "promotion_status": "eligible_for_prospective_shadow_not_production",
+     "missing_personnel": [
+      "probable_or_confirmed_starter",
+      "confirmed_lineup",
+      "bullpen_availability"
+     ]
+    },
+    "personnel": {
+     "bullpen": {
+      "home": {
+       "status": "elevated",
+       "games_last_72h": 3,
+       "hours_since_last_game": 6.2,
+       "basis": "schedule-derived rest pressure; reliever usage unavailable",
+       "confirmed": false,
+       "observed_at": "2026-08-29T21:56:56.719084Z"
+      },
+      "away": {
+       "status": "elevated",
+       "games_last_72h": 2,
+       "hours_since_last_game": 6.2,
+       "basis": "schedule-derived rest pressure; reliever usage unavailable",
+       "confirmed": false,
+       "observed_at": "2026-08-29T21:56:56.719084Z"
+      }
+     },
+     "bullpen_confirmed": false,
+     "starter_candidates": {
+      "home": {
+       "player_id": "MAX_FRIED_1_MLB",
+       "name": "Max Fried",
+       "status": "market-listed starter candidate",
+       "confirmed": false,
+       "source": "SportsGameOdds player markets",
+       "observed_at": "2026-08-29T21:56:56.376699Z"
+      }
+     },
+     "market_listed_hitters": {
+      "home": [
+       {
+        "player_id": "AUSTIN_WELLS_1_MLB",
+        "name": "Austin Wells"
+       },
+       {
+        "player_id": "BENJAMIN_RICE_1_MLB",
+        "name": "Ben Rice"
+       },
+       {
+        "player_id": "CODY_BELLINGER_1_MLB",
+        "name": "Cody Bellinger"
+       },
+       {
+        "player_id": "JASRADO_CHISHOLM_1_MLB",
+        "name": "Jazz Chisholm Jr."
+       },
+       {
+        "player_id": "JOSE_CABALLERO_1_MLB",
+        "name": "José Caballero"
+       },
+       {
+        "player_id": "SPENCER_JONES_1_MLB",
+        "name": "Spencer Jones"
+       },
+       {
+        "player_id": "TRENT_GRISHAM_1_MLB",
+        "name": "Trent Grisham"
+       }
+      ],
+      "away": [
+       {
+        "player_id": "ANDRUW_MONASTERIO_1_MLB",
+        "name": "Andruw Monasterio"
+       },
+       {
+        "player_id": "CALEB_DURBIN_1_MLB",
+        "name": "Caleb Durbin"
+       },
+       {
+        "player_id": "CEDDANNE_RAFAELA_1_MLB",
+        "name": "Ceddanne Rafaela"
+       },
+       {
+        "player_id": "CONNOR_WONG_1_MLB",
+        "name": "Connor Wong"
+       },
+       {
+        "player_id": "JAHMAI_JONES_1_MLB",
+        "name": "Jahmai Jones"
+       },
+       {
+        "player_id": "NICK_SOGARD_1_MLB",
+        "name": "Nick Sogard"
+       },
+       {
+        "player_id": "WILLSON_CONTRERAS_1_MLB",
+        "name": "Willson Contreras"
+       },
+       {
+        "player_id": "WILYER_ABREU_1_MLB",
+        "name": "Wilyer Abreu"
+       }
+      ]
+     }
+    },
+    "personnel_shadow": {
+     "schema_ver": 1,
+     "sport": "baseball",
+     "production_weight": 0,
+     "mode": "prospective_shadow",
+     "features": {
+      "injury_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineup_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineups_confirmed": false,
+      "rest_days": {
+       "home": 11,
+       "away": 10
+      },
+      "weather": {
+       "temp_c": 24,
+       "wind_kph": 7,
+       "rain_pct": 0,
+       "source": "Open-Meteo",
+       "source_url": "https://open-meteo.com/"
+      },
+      "venue_context": {
+       "sample_games": 58,
+       "league_total_avg": 8.957,
+       "venue_total_avg": 8.788,
+       "factor": 0.9811,
+       "label": "park factor",
+       "production_weight": 0,
+       "method": "prior finals, 10-game shrinkage"
+      },
+      "starter_candidates": {
+       "home": {
+        "player_id": "MAX_FRIED_1_MLB",
+        "name": "Max Fried",
+        "status": "market-listed starter candidate",
+        "confirmed": false,
+        "source": "SportsGameOdds player markets",
+        "observed_at": "2026-08-29T21:56:56.376699Z"
+       }
+      },
+      "bullpen": {
+       "home": {
+        "status": "elevated",
+        "games_last_72h": 3,
+        "hours_since_last_game": 6.2,
+        "basis": "schedule-derived rest pressure; reliever usage unavailable",
+        "confirmed": false,
+        "observed_at": "2026-08-29T21:56:56.719084Z"
+       },
+       "away": {
+        "status": "elevated",
+        "games_last_72h": 2,
+        "hours_since_last_game": 6.2,
+        "basis": "schedule-derived rest pressure; reliever usage unavailable",
+        "confirmed": false,
+        "observed_at": "2026-08-29T21:56:56.719084Z"
+       }
+      }
+     }
+    },
+    "pregame_context": {
+     "schema_ver": 1,
+     "sport": "baseball",
+     "competition": "MLB",
+     "phase": "lock_window",
+     "lock_window_hours": 2.0,
+     "lead_time_hours": 1.3,
+     "inputs": {
+      "market": "confirmed",
+      "injuries": "missing",
+      "starting_pitchers": "available",
+      "lineups": "missing",
+      "bullpen": "available",
+      "weather": "confirmed",
+      "venue": "confirmed"
+     },
+     "missing_critical": [
+      "lineups"
+     ],
+     "unconfirmed_critical": [
+      "starting_pitchers",
+      "lineups"
+     ],
+     "coverage_pct": 71,
+     "confirmed_pct": 43,
+     "provenance": [
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-21T21:03:33.594163Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-21T21:41:56.082971Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-21T23:42:54.314867Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-22T01:57:15.926663Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-22T03:17:16.233216Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-22T04:56:16.532156Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-22T07:07:18.281586Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-22T08:59:25.597434Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-22T10:46:59.444711Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-22T13:07:32.313600Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-22T14:45:22.282967Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-22T15:42:31.449702Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-22T17:41:24.759387Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-22T18:56:29.279077Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-22T20:48:19.028583Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-22T21:44:14.019414Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-22T23:40:51.204589Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-23T02:06:44.845325Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-23T03:23:39.392554Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-23T04:59:30.220734Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-23T07:07:52.330700Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-23T08:55:15.148809Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-23T10:47:19.113411Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-23T13:10:59.862474Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-23T14:46:26.183460Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-23T15:44:37.563424Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-23T17:39:15.318241Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-23T18:56:12.093709Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-23T20:44:49.198830Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-23T21:40:36.057626Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-23T23:41:17.683518Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-24T02:18:17.747749Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-24T04:13:22.552461Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-24T05:58:33.331095Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-24T07:38:47.299871Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-24T09:11:32.364383Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-24T11:02:08.096774Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-24T13:31:03.450815Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-24T15:07:33.041079Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-24T17:02:44.094019Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-24T19:17:41.580516Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-24T20:55:41.845657Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-24T21:48:56.071778Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-24T23:56:41.860624Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-25T01:59:44.411740Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-25T03:21:28.506955Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-25T05:13:34.631729Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-25T07:14:52.967042Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-25T09:06:27.981247Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-25T11:07:05.203378Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-25T13:17:31.158511Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-25T15:20:48.564028Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-25T17:01:29.927766Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-25T19:04:24.906994Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-25T21:02:50.258698Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-25T21:50:40.416931Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-25T23:44:58.465676Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-26T02:12:32.975498Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-26T03:27:03.574450Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-26T05:04:07.916453Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-26T07:15:16.283462Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-26T09:11:37.832877Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-26T10:59:09.387036Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-26T13:23:34.036763Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-26T16:02:57.552723Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-26T19:30:27.474524Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-26T23:41:37.210261Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-27T10:10:23.820930Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-27T20:52:25.575421Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-28T05:49:04.792161Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "fixture_join",
+       "source": "SportsGameOdds",
+       "join": {
+        "match_provider_ids": [
+         "5059812",
+         "bdl-mlb-5059812"
+        ],
+        "match_kickoff": "2026-08-29T23:15:00Z",
+        "candidate_event_ids": [
+         "dQ9RPCIS2TPeDUtK3Qef",
+         "1B3rpkWiQxtRrtFLc9Mv"
+        ],
+        "status": "rejected",
+        "reason": "ambiguous_same_team_fixture"
+       },
+       "fetched_at": "2026-08-28T19:05:15.923424Z"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-28T19:05:21.523312Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-29T02:22:23.030798Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "market_and_inferred_personnel",
+       "source": "SportsGameOdds",
+       "source_reference": "https://sportsgameodds.com/",
+       "fetched_at": "2026-08-29T09:19:13.490345Z",
+       "provider_event_id": "Jxi4qrcNLiZN5hCLRdvu",
+       "join": {
+        "match_provider_ids": [
+         "5059812",
+         "bdl-mlb-5059812"
+        ],
+        "match_kickoff": "2026-08-29T23:15:00Z",
+        "candidate_event_ids": [
+         "1B3rpkWiQxtRrtFLc9Mv",
+         "Jxi4qrcNLiZN5hCLRdvu"
+        ],
+        "status": "matched",
+        "strategy": "teams_and_start_time",
+        "provider_event_id": "Jxi4qrcNLiZN5hCLRdvu",
+        "provider_start": "2026-08-29T23:15:00Z"
+       },
+       "espn_excluded": true,
+       "personnel_semantics": "player-market inference; not official lineup/injury data"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-29T09:19:14.050145Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-29T14:39:59.377019Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-29T18:41:38.233329Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "market_and_inferred_personnel",
+       "source": "SportsGameOdds",
+       "source_reference": "https://sportsgameodds.com/",
+       "fetched_at": "2026-08-29T21:56:56.376699Z",
+       "provider_event_id": "Jxi4qrcNLiZN5hCLRdvu",
+       "join": {
+        "match_provider_ids": [
+         "5059812",
+         "bdl-mlb-5059812"
+        ],
+        "match_kickoff": "2026-08-29T23:15:00Z",
+        "candidate_event_ids": [
+         "Jxi4qrcNLiZN5hCLRdvu",
+         "fmlaPSuh9xc1LWoboj8r"
+        ],
+        "status": "matched",
+        "strategy": "teams_and_start_time",
+        "provider_event_id": "Jxi4qrcNLiZN5hCLRdvu",
+        "provider_start": "2026-08-29T23:15:00Z"
+       },
+       "espn_excluded": true,
+       "personnel_semantics": "player-market inference; not official lineup/injury data"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-29T21:56:56.719084Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      }
+     ],
+     "confidence_guard": {
+      "high_confidence_label_allowed": false,
+      "reason": "critical pregame inputs not confirmed"
+     },
+     "production_weight": 0,
+     "research_mode": "prospective_shadow"
+    },
+    "pregame_provenance": [
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-21T21:03:33.594163Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-21T21:41:56.082971Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-21T23:42:54.314867Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T01:57:15.926663Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T03:17:16.233216Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T04:56:16.532156Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T07:07:18.281586Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T08:59:25.597434Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T10:46:59.444711Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T13:07:32.313600Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T14:45:22.282967Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T15:42:31.449702Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T17:41:24.759387Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T18:56:29.279077Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T20:48:19.028583Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T21:44:14.019414Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T23:40:51.204589Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T02:06:44.845325Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T03:23:39.392554Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T04:59:30.220734Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T07:07:52.330700Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T08:55:15.148809Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T10:47:19.113411Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T13:10:59.862474Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T14:46:26.183460Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T15:44:37.563424Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T17:39:15.318241Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T18:56:12.093709Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T20:44:49.198830Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T21:40:36.057626Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T23:41:17.683518Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-24T02:18:17.747749Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-24T04:13:22.552461Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-24T05:58:33.331095Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-24T07:38:47.299871Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-24T09:11:32.364383Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-24T11:02:08.096774Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-24T13:31:03.450815Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-24T15:07:33.041079Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-24T17:02:44.094019Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-24T19:17:41.580516Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-24T20:55:41.845657Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-24T21:48:56.071778Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-24T23:56:41.860624Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-25T01:59:44.411740Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-25T03:21:28.506955Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-25T05:13:34.631729Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-25T07:14:52.967042Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-25T09:06:27.981247Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-25T11:07:05.203378Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-25T13:17:31.158511Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-25T15:20:48.564028Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-25T17:01:29.927766Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-25T19:04:24.906994Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-25T21:02:50.258698Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-25T21:50:40.416931Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-25T23:44:58.465676Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-26T02:12:32.975498Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-26T03:27:03.574450Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-26T05:04:07.916453Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-26T07:15:16.283462Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-26T09:11:37.832877Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-26T10:59:09.387036Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-26T13:23:34.036763Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-26T16:02:57.552723Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-26T19:30:27.474524Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-26T23:41:37.210261Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-27T10:10:23.820930Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-27T20:52:25.575421Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-28T05:49:04.792161Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "fixture_join",
+      "source": "SportsGameOdds",
+      "join": {
+       "match_provider_ids": [
+        "5059812",
+        "bdl-mlb-5059812"
+       ],
+       "match_kickoff": "2026-08-29T23:15:00Z",
+       "candidate_event_ids": [
+        "dQ9RPCIS2TPeDUtK3Qef",
+        "1B3rpkWiQxtRrtFLc9Mv"
+       ],
+       "status": "rejected",
+       "reason": "ambiguous_same_team_fixture"
+      },
+      "fetched_at": "2026-08-28T19:05:15.923424Z"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-28T19:05:21.523312Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-29T02:22:23.030798Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "market_and_inferred_personnel",
+      "source": "SportsGameOdds",
+      "source_reference": "https://sportsgameodds.com/",
+      "fetched_at": "2026-08-29T09:19:13.490345Z",
+      "provider_event_id": "Jxi4qrcNLiZN5hCLRdvu",
+      "join": {
+       "match_provider_ids": [
+        "5059812",
+        "bdl-mlb-5059812"
+       ],
+       "match_kickoff": "2026-08-29T23:15:00Z",
+       "candidate_event_ids": [
+        "1B3rpkWiQxtRrtFLc9Mv",
+        "Jxi4qrcNLiZN5hCLRdvu"
+       ],
+       "status": "matched",
+       "strategy": "teams_and_start_time",
+       "provider_event_id": "Jxi4qrcNLiZN5hCLRdvu",
+       "provider_start": "2026-08-29T23:15:00Z"
+      },
+      "espn_excluded": true,
+      "personnel_semantics": "player-market inference; not official lineup/injury data"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-29T09:19:14.050145Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-29T14:39:59.377019Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-29T18:41:38.233329Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "market_and_inferred_personnel",
+      "source": "SportsGameOdds",
+      "source_reference": "https://sportsgameodds.com/",
+      "fetched_at": "2026-08-29T21:56:56.376699Z",
+      "provider_event_id": "Jxi4qrcNLiZN5hCLRdvu",
+      "join": {
+       "match_provider_ids": [
+        "5059812",
+        "bdl-mlb-5059812"
+       ],
+       "match_kickoff": "2026-08-29T23:15:00Z",
+       "candidate_event_ids": [
+        "Jxi4qrcNLiZN5hCLRdvu",
+        "fmlaPSuh9xc1LWoboj8r"
+       ],
+       "status": "matched",
+       "strategy": "teams_and_start_time",
+       "provider_event_id": "Jxi4qrcNLiZN5hCLRdvu",
+       "provider_start": "2026-08-29T23:15:00Z"
+      },
+      "espn_excluded": true,
+      "personnel_semantics": "player-market inference; not official lineup/injury data"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-29T21:56:56.719084Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     }
+    ],
+    "venue_context": {
+     "sample_games": 58,
+     "league_total_avg": 8.957,
+     "venue_total_avg": 8.788,
+     "factor": 0.9811,
+     "label": "park factor",
+     "production_weight": 0,
+     "method": "prior finals, 10-game shrinkage"
+    },
+    "model_signal_schema": null
+   }
+  },
+  "mfti_shadow": {
+   "spec_version": "MFTI-0.1.1-shadow",
+   "mode": "shadow_research_only",
+   "captured_at": "2026-08-29T21:57:29.796457Z",
+   "status": "incomplete",
+   "score": null,
+   "historical_evidence": {
+    "available": false,
+    "score": null,
+    "reason": "frozen_normalization_and_rolling_recalibration_not_fitted",
+    "diagnostics": {
+     "eligible_prior_forecasts": 297,
+     "mean_brier": 0.522723,
+     "mean_log_loss": 0.719276,
+     "brier_skill_vs_uniform": 0.215916,
+     "log_skill_vs_uniform": 0.345287
+    }
+   },
+   "event_readiness": {
+    "available": false,
+    "score": null,
+    "missing_components": [
+     "scenario_stability",
+     "availability",
+     "freshness",
+     "model_stability"
+    ]
+   },
+   "components": {
+    "scenario_stability": {
+     "available": false,
+     "score": null,
+     "reason": "scenario_forecasts_not_captured"
+    },
+    "availability": {
+     "available": false,
+     "score": null,
+     "reason": "availability_probabilities_not_captured"
+    },
+    "freshness": {
+     "available": false,
+     "score": null,
+     "reason": "input_freshness_not_captured"
+    },
+    "model_stability": {
+     "available": false,
+     "score": null,
+     "reason": "independent_model_outputs_not_captured"
+    }
+   },
+   "missing_components": [
+    "historical_evidence",
+    "scenario_stability",
+    "availability",
+    "freshness",
+    "model_stability"
+   ],
+   "affects_prediction": false,
+   "user_visible": false
+  },
+  "result": null,
+  "model_result": null,
+  "market_result": null
+ },
+ "bdl-mlb-5059813": {
+  "schema_ver": 2,
+  "fixture_id": "bdl-mlb-5059813",
+  "competition": "MLB",
+  "home": "Milwaukee Brewers",
+  "away": "Texas Rangers",
+  "stage": "Regular",
+  "kickoff": "2026-08-29T23:15:00Z",
+  "pick": "h",
+  "pick_name": "Milwaukee Brewers",
+  "confidence": 60,
+  "edge": -1,
+  "base_pick": "h",
+  "base_pick_name": "Milwaukee Brewers",
+  "probs": {
+   "h": 60,
+   "d": 0,
+   "a": 40
+  },
+  "advancement_probs": null,
+  "regulation_probs": {
+   "h": 60,
+   "d": 0,
+   "a": 40
+  },
+  "regulation_pick": "h",
+  "market_comparison_pick": "h",
+  "market_comparison_basis": "regulation_1x2",
+  "outcome_basis": "regulation",
+  "market_basis": "regulation_1x2",
+  "market_pick": "h",
+  "market_pct": 61,
+  "pick_mkt": 61,
+  "value_side": null,
+  "value_edge": null,
+  "value_mkt": null,
+  "value_name": null,
+  "upset_candidate": "a",
+  "upset_name": "Texas Rangers",
+  "upset_score": 45,
+  "upset_candidate_pct": 40,
+  "upset_triggered": false,
+  "upset_temperature": 1.08,
+  "upset_reason": "favorite profile is cleaner",
+  "factor_snapshot": {
+   "record": 1.02,
+   "elo": 2.07,
+   "rank": 0.0,
+   "rest": 0.0,
+   "margin": 1.27,
+   "market_power": 0.27,
+   "form": 1.97,
+   "class": 0.0,
+   "adv": 0.25,
+   "srs": 1.44
+  },
+  "market_snapshot": {
+   "h": 61,
+   "d": 0,
+   "a": 39
+  },
+  "market_snapshot_at": "2026-08-29T21:56:56.376699Z",
+  "market_snapshot_recorded_at": "2026-08-29T21:57:29.799002Z",
+  "market_snapshot_receipt": {
+   "source": "SportsGameOdds consensus",
+   "source_reference": "https://sportsgameodds.com/",
+   "observed_at": "2026-08-29T21:56:56.376699Z",
+   "recorded_at": "2026-08-29T21:57:29.799002Z",
+   "snapshot_id": null,
+   "books": 8,
+   "spread": 1
+  },
+  "market_gap": 22.0,
+  "upset_snapshot": {
+   "candidate": "Texas Rangers",
+   "class": "minor",
+   "market_dog_pct": 39.0,
+   "model_dog_pct": 40.0,
+   "upset_edge": 1.0,
+   "independent_model_dog_pct": 38.0,
+   "independent_model_lead_pct": -24.0,
+   "independent_edge": -1.0,
+   "edge_threshold": 10.0,
+   "supporting_signals": [],
+   "personnel_gate": false,
+   "personnel_blockers": [
+    "confirmed starting pitchers missing"
+   ],
+   "radar": false,
+   "standings_candidate": "a",
+   "standings_gap_pct": 12.7,
+   "gate": "none",
+   "box_score_edge": 0.0
+  },
+  "box_score_available": false,
+  "data_availability": {
+   "market": "available",
+   "box_score": "unavailable",
+   "lineups": "unavailable",
+   "injuries": "unavailable",
+   "weather": "available",
+   "personnel": "available",
+   "venue_context": "available"
+  },
+  "damp_pct": 0,
+  "mkt_pull": -2,
+  "model_ver": "v6-calibrated",
+  "model_code_marker": "matchday-predictor-integrity-2026-07",
+  "model_signal_schema": 8,
+  "reproducibility": {
+   "model_version": "v6-calibrated",
+   "model_signal_schema": 8,
+   "probability_basis": "regulation",
+   "market_comparison_basis": "regulation_1x2",
+   "market_comparison_pick": "h"
+  },
+  "locked_at": "2026-08-29T21:57:29.799002Z",
+  "lead_time_seconds": 4650.201,
+  "lead_time_hours": 1.291722,
+  "lock_window_hours": 2.0,
+  "status_at_lock": "UPCOMING",
+  "integrity_eligible": true,
+  "integrity_status": "verified",
+  "integrity_reason": "verified_pregame_window",
+  "prediction_snapshot": {
+   "pick": "h",
+   "pick_name": "Milwaukee Brewers",
+   "confidence": 60,
+   "model_version": "v6-calibrated",
+   "model_signal_schema": 8,
+   "base_pick": "h",
+   "base_pick_name": "Milwaukee Brewers",
+   "model": {
+    "h": 62,
+    "d": 0,
+    "a": 38
+   },
+   "base_blend": {
+    "h": 61,
+    "d": 0,
+    "a": 39
+   },
+   "blend": {
+    "h": 60,
+    "d": 0,
+    "a": 40
+   },
+   "adjusted": {
+    "h": 60,
+    "d": 0,
+    "a": 40
+   },
+   "is_knockout": false,
+   "advancement": null,
+   "regulation_pick": "h",
+   "market_comparison_pick": "h",
+   "market_comparison_basis": "regulation_1x2",
+   "regulation_pick_name": "Milwaukee Brewers",
+   "regulation_confidence": 60,
+   "regulation_probs": {
+    "h": 60,
+    "d": 0,
+    "a": 40
+   },
+   "edge": -1,
+   "note": "model agrees with the market",
+   "why": {
+    "record": 1.02,
+    "elo": 2.07,
+    "rank": 0.0,
+    "rest": 0.0,
+    "margin": 1.27,
+    "market_power": 0.27,
+    "form": 1.97,
+    "class": 0.0,
+    "adv": 0.25,
+    "srs": 1.44
+   },
+   "damp_pct": 0,
+   "mkt_pull": -2,
+   "market_weight": 0.6,
+   "upset": {
+    "candidate": "a",
+    "candidate_name": "Texas Rangers",
+    "favorite": "h",
+    "favorite_name": "Milwaukee Brewers",
+    "score": 45,
+    "upset_class": "minor",
+    "market_dog_pct": 39.0,
+    "model_dog_pct": 40.0,
+    "upset_edge": 1.0,
+    "radar": false,
+    "standings_candidate": "a",
+    "standings_gap_pct": 12.7,
+    "standings_sample_ok": true,
+    "temperature": 1.08,
+    "variance_pct": 0,
+    "low_goal_pct": 42,
+    "draw_pct": 0,
+    "favorite_pct": 60,
+    "candidate_pct": 40,
+    "margin_pct": 20,
+    "learn_bias_pct": 0.0,
+    "market_gap_pct": 22.0,
+    "market_gate": false,
+    "market_quality_gate": true,
+    "independent_model_dog_pct": 38.0,
+    "independent_model_lead_pct": -24.0,
+    "independent_edge": -1.0,
+    "edge_threshold": 10.0,
+    "independent_pick_gate": false,
+    "playability_gate": false,
+    "evidence_gate": false,
+    "supporting_signals": [],
+    "personnel_gate": false,
+    "personnel_blockers": [
+     "confirmed starting pitchers missing"
+    ],
+    "box_score_edge": 0.0,
+    "strong_box_signal": false,
+    "blocked": false,
+    "triggered": false,
+    "reason": "favorite profile is cleaner"
+   },
+   "data_quality": {
+    "level": "established",
+    "games": {
+     "home": 126,
+     "away": 126
+    },
+    "signals": [
+     "market_power",
+     "record",
+     "margin",
+     "form",
+     "srs",
+     "elo",
+     "market"
+    ],
+    "market_available": true,
+    "market_books": 8,
+    "market_spread": 1,
+    "market_weight": 0.6,
+    "note": "Current-season sample and opponent-adjusted results are available."
+   },
+   "predicted_margin": {
+    "value": 0.4,
+    "unit": "runs",
+    "favored": "h",
+    "label": "Milwaukee Brewers by 0.4"
+   },
+   "class_meta": {
+    "label": "Personnel edge",
+    "source": null,
+    "available": false,
+    "coverage": "unavailable",
+    "home_available": false,
+    "away_available": false,
+    "note": "Market-listed starter/hitter candidates and schedule-derived bullpen rest are collected at zero weight; confirmed batting orders, injuries, and individual reliever availability remain unavailable.",
+    "edge_available": false,
+    "coverage_label": null
+   },
+   "publication_state": "locked",
+   "lock_readiness": {
+    "schema_ver": 1,
+    "sport": "baseball",
+    "competition": "MLB",
+    "phase": "lock_window",
+    "lock_window_hours": 2.0,
+    "lead_time_hours": 1.3,
+    "inputs": {
+     "market": "confirmed",
+     "injuries": "missing",
+     "starting_pitchers": "available",
+     "lineups": "missing",
+     "bullpen": "available",
+     "weather": "confirmed",
+     "venue": "confirmed"
+    },
+    "missing_critical": [
+     "lineups"
+    ],
+    "unconfirmed_critical": [
+     "starting_pitchers",
+     "lineups"
+    ],
+    "coverage_pct": 71,
+    "confirmed_pct": 43,
+    "provenance": [
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-21T21:03:33.594163Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-21T21:41:56.082971Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-21T23:42:54.314867Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T01:57:15.926663Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T03:17:16.233216Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T04:56:16.532156Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T07:07:18.281586Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T08:59:25.597434Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T10:46:59.444711Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T13:07:32.313600Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T14:45:22.282967Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T15:42:31.449702Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T17:41:24.759387Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T18:56:29.279077Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T20:48:19.028583Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T21:44:14.019414Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T23:40:51.204589Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T02:06:44.845325Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T03:23:39.392554Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T04:59:30.220734Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T07:07:52.330700Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T08:55:15.148809Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T10:47:19.113411Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T13:10:59.862474Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T14:46:26.183460Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T15:44:37.563424Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T17:39:15.318241Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T18:56:12.093709Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T20:44:49.198830Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T21:40:36.057626Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T23:41:17.683518Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-24T02:18:17.747749Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-24T04:13:22.552461Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-24T05:58:33.331095Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-24T07:38:47.299871Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-24T09:11:32.364383Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-24T11:02:08.096774Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-24T13:31:03.450815Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-24T15:07:33.041079Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-24T17:02:44.094019Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-24T19:17:41.580516Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-24T20:55:41.845657Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-24T21:48:56.071778Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-24T23:56:41.860624Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-25T01:59:44.411740Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-25T03:21:28.506955Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-25T05:13:34.631729Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-25T07:14:52.967042Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-25T09:06:27.981247Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-25T11:07:05.203378Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-25T13:17:31.158511Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-25T15:20:48.564028Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-25T17:01:29.927766Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-25T19:04:24.906994Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-25T21:02:50.258698Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-25T21:50:40.416931Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-25T23:44:58.465676Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-26T02:12:32.975498Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-26T03:27:03.574450Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-26T05:04:07.916453Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-26T07:15:16.283462Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-26T09:11:37.832877Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-26T10:59:09.387036Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-26T13:23:34.036763Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-26T16:02:57.552723Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-26T19:30:27.474524Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-26T23:41:37.210261Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-27T10:10:23.820930Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-27T20:52:25.575421Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-28T05:49:04.792161Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-28T19:05:21.523312Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-29T02:22:23.030798Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "market_and_inferred_personnel",
+      "source": "SportsGameOdds",
+      "source_reference": "https://sportsgameodds.com/",
+      "fetched_at": "2026-08-29T09:19:13.490345Z",
+      "provider_event_id": "sdMc1PGVD1QMkUpChxpo",
+      "join": {
+       "match_provider_ids": [
+        "5059813",
+        "bdl-mlb-5059813"
+       ],
+       "match_kickoff": "2026-08-29T23:15:00Z",
+       "candidate_event_ids": [
+        "sdMc1PGVD1QMkUpChxpo"
+       ],
+       "status": "matched",
+       "strategy": "teams_and_start_time",
+       "provider_event_id": "sdMc1PGVD1QMkUpChxpo",
+       "provider_start": "2026-08-29T23:15:00Z"
+      },
+      "espn_excluded": true,
+      "personnel_semantics": "player-market inference; not official lineup/injury data"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-29T09:19:14.050145Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-29T14:39:59.377019Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-29T18:41:38.233329Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "market_and_inferred_personnel",
+      "source": "SportsGameOdds",
+      "source_reference": "https://sportsgameodds.com/",
+      "fetched_at": "2026-08-29T21:56:56.376699Z",
+      "provider_event_id": "sdMc1PGVD1QMkUpChxpo",
+      "join": {
+       "match_provider_ids": [
+        "5059813",
+        "bdl-mlb-5059813"
+       ],
+       "match_kickoff": "2026-08-29T23:15:00Z",
+       "candidate_event_ids": [
+        "sdMc1PGVD1QMkUpChxpo",
+        "O9OAP8LgEnEDA2yFQSu1"
+       ],
+       "status": "matched",
+       "strategy": "teams_and_start_time",
+       "provider_event_id": "sdMc1PGVD1QMkUpChxpo",
+       "provider_start": "2026-08-29T23:15:00Z"
+      },
+      "espn_excluded": true,
+      "personnel_semantics": "player-market inference; not official lineup/injury data"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-29T21:56:56.719084Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     }
+    ],
+    "confidence_guard": {
+     "high_confidence_label_allowed": false,
+     "reason": "critical pregame inputs not confirmed"
+    },
+    "production_weight": 0,
+    "research_mode": "prospective_shadow"
+   },
+   "neutral_venue_probs": {
+    "h": 60,
+    "d": 0,
+    "a": 40
+   },
+   "totals": {
+    "expected": 8.6,
+    "basis": "season_rate"
+   },
+   "data_availability": {
+    "market": "available",
+    "box_score": "unavailable",
+    "lineups": "unavailable",
+    "injuries": "unavailable",
+    "weather": "available",
+    "personnel": "available",
+    "venue_context": "available"
+   }
+  },
+  "input_snapshot": {
+   "competition": "MLB",
+   "competition_config": {
+    "label": "MLB",
+    "sport": "baseball",
+    "fd": null,
+    "odds": "baseball_mlb",
+    "outright": "baseball_mlb_world_series_winner",
+    "tournament": false,
+    "source": "balldontlie",
+    "has_draws": false
+   },
+   "match": {
+    "id": "bdl-mlb-5059813",
+    "stage": "Regular",
+    "kickoff": "2026-08-29T23:15:00Z",
+    "status": "UPCOMING",
+    "venue": "American Family Field",
+    "home": {
+     "name": "Milwaukee Brewers",
+     "code": "MIL",
+     "pts": 234,
+     "gd": 158,
+     "form": "W L W W W",
+     "pos": 1,
+     "group": "National League Central",
+     "gf": 630,
+     "ga": 472,
+     "pld": 126,
+     "w": 78,
+     "d": 0,
+     "l": 48,
+     "srs": 1.062,
+     "srs_games": 126,
+     "rest_days": 11,
+     "rating": 6.32,
+     "form_home": "W L W W W",
+     "form_away": "L W L W W"
+    },
+    "away": {
+     "name": "Texas Rangers",
+     "code": "TEX",
+     "pts": 186,
+     "gd": -42,
+     "form": "L L W L W",
+     "pos": 2,
+     "group": "American League West",
+     "gf": 512,
+     "ga": 554,
+     "pld": 126,
+     "w": 62,
+     "d": 0,
+     "l": 64,
+     "srs": -0.435,
+     "srs_games": 126,
+     "rest_days": 11,
+     "rating": 4.25,
+     "form_home": "W W W L W",
+     "form_away": "L L L W L"
+    },
+    "markets": {
+     "1x2": {
+      "home_pct": 61,
+      "draw_pct": 0,
+      "away_pct": 39,
+      "books": 8,
+      "observed_at": "2026-08-29T21:56:56.376699Z",
+      "source": "SportsGameOdds consensus",
+      "source_reference": "https://sportsgameodds.com/",
+      "provider_event_id": "sdMc1PGVD1QMkUpChxpo",
+      "espn_excluded": true,
+      "spread": 1,
+      "spread_lo": 60,
+      "spread_hi": 61,
+      "confidence": "tight"
+     }
+    },
+    "weather": {
+     "temp_c": 24,
+     "wind_kph": 9,
+     "rain_pct": 19,
+     "source": "Open-Meteo",
+     "source_url": "https://open-meteo.com/"
+    },
+    "injuries": {
+     "home": [],
+     "away": []
+    },
+    "lineups": null,
+    "h2h": [],
+    "stats": null,
+    "stats_extra": null,
+    "data_source": "BALLDONTLIE",
+    "advanced_metrics": null,
+    "advanced_metrics_meta": null,
+    "nfl_challenger_shadow": null,
+    "mlb_challenger_shadow": {
+     "schema_version": 1,
+     "model_version": "retrosheet-mlb-challenger-0.1.0",
+     "artifact_sha256": "f0177891dd2fe0d870b1ec62e7f6aae259158bf33e5151856e89100e88975bb9",
+     "feature_schema": [
+      "pythagorean_diff",
+      "run_diff_per_game_diff"
+     ],
+     "feature_schema_version": 1,
+     "transformation_version": "mlb-run-strength-standardization-1",
+     "mode": "prospective_shadow",
+     "production_weight": 0,
+     "home_win_probability": 0.606685,
+     "away_win_probability": 0.393315,
+     "league_home_prior_probability": 0.534621,
+     "features": {
+      "pythagorean_diff": 0.165116,
+      "run_diff_per_game_diff": 1.587302
+     },
+     "top_contributions": [
+      {
+       "feature": "pythagorean_diff",
+       "contribution": 0.14975,
+       "direction": "home"
+      },
+      {
+       "feature": "run_diff_per_game_diff",
+       "contribution": 0.14494,
+       "direction": "home"
+      }
+     ],
+     "live_feature_source": "licensed BALLDONTLIE season team totals through prior completed games",
+     "historical_training_source": "Retrosheet event files and game logs",
+     "retrosheet_notice": "The information used here was obtained free of charge from and is copyrighted by Retrosheet. Interested parties may contact Retrosheet at \"www.retrosheet.org\".",
+     "trained_through": "2025-09-28",
+     "home_games": 126,
+     "away_games": 126,
+     "historical_validation": {
+      "checks": {
+       "brier_not_worse_than_elo": true,
+       "log_loss_better_than_elo": true,
+       "minimum_out_of_sample_games": true,
+       "minimum_test_seasons": true,
+       "paired_interval_below_zero": true
+      },
+      "decision": "eligible_for_prospective_shadow",
+      "elo": {
+       "accuracy": 0.564356,
+       "brier": 0.246335,
+       "log_loss": 0.686457,
+       "n": 9090
+      },
+      "features": [
+       "pythagorean_diff",
+       "run_diff_per_game_diff"
+      ],
+      "model": {
+       "accuracy": 0.560176,
+       "brier": 0.244584,
+       "log_loss": 0.682207,
+       "n": 9090
+      },
+      "paired_vs_elo": {
+       "blocks": 683,
+       "ci95": [
+        -0.007292,
+        -0.001244
+       ],
+       "mean_log_loss_delta": -0.00425,
+       "method": "deterministic game-date block bootstrap",
+       "n": 9090
+      }
+     },
+     "promotion_status": "eligible_for_prospective_shadow_not_production",
+     "missing_personnel": [
+      "probable_or_confirmed_starter",
+      "confirmed_lineup",
+      "bullpen_availability"
+     ]
+    },
+    "personnel": {
+     "bullpen": {
+      "home": {
+       "status": "normal",
+       "games_last_72h": 2,
+       "hours_since_last_game": 23.6,
+       "basis": "schedule-derived rest pressure; reliever usage unavailable",
+       "confirmed": false,
+       "observed_at": "2026-08-29T21:56:56.719084Z"
+      },
+      "away": {
+       "status": "normal",
+       "games_last_72h": 2,
+       "hours_since_last_game": 23.6,
+       "basis": "schedule-derived rest pressure; reliever usage unavailable",
+       "confirmed": false,
+       "observed_at": "2026-08-29T21:56:56.719084Z"
+      }
+     },
+     "bullpen_confirmed": false,
+     "starter_candidates": {
+      "home": {
+       "player_id": "SHANE_DROHAN_1_MLB",
+       "name": "Shane Drohan",
+       "status": "market-listed starter candidate",
+       "confirmed": false,
+       "source": "SportsGameOdds player markets",
+       "observed_at": "2026-08-29T21:56:56.376699Z"
+      },
+      "away": {
+       "player_id": "CAL_QUANTRILL_1_MLB",
+       "name": "Cal Quantrill",
+       "status": "market-listed starter candidate",
+       "confirmed": false,
+       "source": "SportsGameOdds player markets",
+       "observed_at": "2026-08-29T21:56:56.376699Z"
+      }
+     },
+     "market_listed_hitters": {
+      "home": [
+       {
+        "player_id": "BRICE_TURANG_1_MLB",
+        "name": "Brice Turang"
+       },
+       {
+        "player_id": "CHRISTIAN_YELICH_1_MLB",
+        "name": "Christian Yelich"
+       },
+       {
+        "player_id": "COOPER_PRATT_1_MLB",
+        "name": "Cooper Pratt"
+       },
+       {
+        "player_id": "DAVID_HAMILTON_1_MLB",
+        "name": "David Hamilton"
+       },
+       {
+        "player_id": "GARRETT_MITCHELL_1_MLB",
+        "name": "Garrett Mitchell"
+       },
+       {
+        "player_id": "JACKSON_CHOURIO_1_MLB",
+        "name": "Jackson Chourio"
+       },
+       {
+        "player_id": "JAKE_BAUERS_1_MLB",
+        "name": "Jake Bauers"
+       },
+       {
+        "player_id": "LUIS_LARA_1_MLB",
+        "name": "Luis Lara"
+       },
+       {
+        "player_id": "SAL_FRELICK_1_MLB",
+        "name": "Sal Frelick"
+       },
+       {
+        "player_id": "WILLIAM_CONTRERAS_1_MLB",
+        "name": "William Contreras"
+       }
+      ],
+      "away": [
+       {
+        "player_id": "BRANDON_NIMMO_1_MLB",
+        "name": "Brandon Nimmo"
+       },
+       {
+        "player_id": "CODY_FREEMAN_1_MLB",
+        "name": "Cody Freeman"
+       },
+       {
+        "player_id": "COREY_SEAGER_1_MLB",
+        "name": "Corey Seager"
+       },
+       {
+        "player_id": "EZEQUIEL_DURAN_1_MLB",
+        "name": "Ezequiel Duran"
+       },
+       {
+        "player_id": "JACOB_BURGER_1_MLB",
+        "name": "Jake Burger"
+       },
+       {
+        "player_id": "JUSTIN_FOSCUE_1_MLB",
+        "name": "Justin Foscue"
+       },
+       {
+        "player_id": "DANNY_JANSEN_1_MLB",
+        "name": "Kenley Jansen"
+       },
+       {
+        "player_id": "LOGAN_OHOPPE_1_MLB",
+        "name": "Logan O'Hoppe"
+       },
+       {
+        "player_id": "WYATT_LANGFORD_1_MLB",
+        "name": "Wyatt Langford"
+       }
+      ]
+     }
+    },
+    "personnel_shadow": {
+     "schema_ver": 1,
+     "sport": "baseball",
+     "production_weight": 0,
+     "mode": "prospective_shadow",
+     "features": {
+      "injury_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineup_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineups_confirmed": false,
+      "rest_days": {
+       "home": 11,
+       "away": 11
+      },
+      "weather": {
+       "temp_c": 24,
+       "wind_kph": 9,
+       "rain_pct": 19,
+       "source": "Open-Meteo",
+       "source_url": "https://open-meteo.com/"
+      },
+      "venue_context": {
+       "sample_games": 64,
+       "league_total_avg": 8.957,
+       "venue_total_avg": 8.791,
+       "factor": 0.9815,
+       "label": "park factor",
+       "production_weight": 0,
+       "method": "prior finals, 10-game shrinkage"
+      },
+      "starter_candidates": {
+       "home": {
+        "player_id": "SHANE_DROHAN_1_MLB",
+        "name": "Shane Drohan",
+        "status": "market-listed starter candidate",
+        "confirmed": false,
+        "source": "SportsGameOdds player markets",
+        "observed_at": "2026-08-29T21:56:56.376699Z"
+       },
+       "away": {
+        "player_id": "CAL_QUANTRILL_1_MLB",
+        "name": "Cal Quantrill",
+        "status": "market-listed starter candidate",
+        "confirmed": false,
+        "source": "SportsGameOdds player markets",
+        "observed_at": "2026-08-29T21:56:56.376699Z"
+       }
+      },
+      "bullpen": {
+       "home": {
+        "status": "normal",
+        "games_last_72h": 2,
+        "hours_since_last_game": 23.6,
+        "basis": "schedule-derived rest pressure; reliever usage unavailable",
+        "confirmed": false,
+        "observed_at": "2026-08-29T21:56:56.719084Z"
+       },
+       "away": {
+        "status": "normal",
+        "games_last_72h": 2,
+        "hours_since_last_game": 23.6,
+        "basis": "schedule-derived rest pressure; reliever usage unavailable",
+        "confirmed": false,
+        "observed_at": "2026-08-29T21:56:56.719084Z"
+       }
+      }
+     }
+    },
+    "pregame_context": {
+     "schema_ver": 1,
+     "sport": "baseball",
+     "competition": "MLB",
+     "phase": "lock_window",
+     "lock_window_hours": 2.0,
+     "lead_time_hours": 1.3,
+     "inputs": {
+      "market": "confirmed",
+      "injuries": "missing",
+      "starting_pitchers": "available",
+      "lineups": "missing",
+      "bullpen": "available",
+      "weather": "confirmed",
+      "venue": "confirmed"
+     },
+     "missing_critical": [
+      "lineups"
+     ],
+     "unconfirmed_critical": [
+      "starting_pitchers",
+      "lineups"
+     ],
+     "coverage_pct": 71,
+     "confirmed_pct": 43,
+     "provenance": [
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-21T21:03:33.594163Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-21T21:41:56.082971Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-21T23:42:54.314867Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-22T01:57:15.926663Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-22T03:17:16.233216Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-22T04:56:16.532156Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-22T07:07:18.281586Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-22T08:59:25.597434Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-22T10:46:59.444711Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-22T13:07:32.313600Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-22T14:45:22.282967Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-22T15:42:31.449702Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-22T17:41:24.759387Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-22T18:56:29.279077Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-22T20:48:19.028583Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-22T21:44:14.019414Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-22T23:40:51.204589Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-23T02:06:44.845325Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-23T03:23:39.392554Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-23T04:59:30.220734Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-23T07:07:52.330700Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-23T08:55:15.148809Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-23T10:47:19.113411Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-23T13:10:59.862474Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-23T14:46:26.183460Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-23T15:44:37.563424Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-23T17:39:15.318241Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-23T18:56:12.093709Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-23T20:44:49.198830Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-23T21:40:36.057626Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-23T23:41:17.683518Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-24T02:18:17.747749Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-24T04:13:22.552461Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-24T05:58:33.331095Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-24T07:38:47.299871Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-24T09:11:32.364383Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-24T11:02:08.096774Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-24T13:31:03.450815Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-24T15:07:33.041079Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-24T17:02:44.094019Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-24T19:17:41.580516Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-24T20:55:41.845657Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-24T21:48:56.071778Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-24T23:56:41.860624Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-25T01:59:44.411740Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-25T03:21:28.506955Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-25T05:13:34.631729Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-25T07:14:52.967042Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-25T09:06:27.981247Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-25T11:07:05.203378Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-25T13:17:31.158511Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-25T15:20:48.564028Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-25T17:01:29.927766Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-25T19:04:24.906994Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-25T21:02:50.258698Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-25T21:50:40.416931Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-25T23:44:58.465676Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-26T02:12:32.975498Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-26T03:27:03.574450Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-26T05:04:07.916453Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-26T07:15:16.283462Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-26T09:11:37.832877Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-26T10:59:09.387036Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-26T13:23:34.036763Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-26T16:02:57.552723Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-26T19:30:27.474524Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-26T23:41:37.210261Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-27T10:10:23.820930Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-27T20:52:25.575421Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-28T05:49:04.792161Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-28T19:05:21.523312Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-29T02:22:23.030798Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "market_and_inferred_personnel",
+       "source": "SportsGameOdds",
+       "source_reference": "https://sportsgameodds.com/",
+       "fetched_at": "2026-08-29T09:19:13.490345Z",
+       "provider_event_id": "sdMc1PGVD1QMkUpChxpo",
+       "join": {
+        "match_provider_ids": [
+         "5059813",
+         "bdl-mlb-5059813"
+        ],
+        "match_kickoff": "2026-08-29T23:15:00Z",
+        "candidate_event_ids": [
+         "sdMc1PGVD1QMkUpChxpo"
+        ],
+        "status": "matched",
+        "strategy": "teams_and_start_time",
+        "provider_event_id": "sdMc1PGVD1QMkUpChxpo",
+        "provider_start": "2026-08-29T23:15:00Z"
+       },
+       "espn_excluded": true,
+       "personnel_semantics": "player-market inference; not official lineup/injury data"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-29T09:19:14.050145Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-29T14:39:59.377019Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-29T18:41:38.233329Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      },
+      {
+       "input": "market_and_inferred_personnel",
+       "source": "SportsGameOdds",
+       "source_reference": "https://sportsgameodds.com/",
+       "fetched_at": "2026-08-29T21:56:56.376699Z",
+       "provider_event_id": "sdMc1PGVD1QMkUpChxpo",
+       "join": {
+        "match_provider_ids": [
+         "5059813",
+         "bdl-mlb-5059813"
+        ],
+        "match_kickoff": "2026-08-29T23:15:00Z",
+        "candidate_event_ids": [
+         "sdMc1PGVD1QMkUpChxpo",
+         "O9OAP8LgEnEDA2yFQSu1"
+        ],
+        "status": "matched",
+        "strategy": "teams_and_start_time",
+        "provider_event_id": "sdMc1PGVD1QMkUpChxpo",
+        "provider_start": "2026-08-29T23:15:00Z"
+       },
+       "espn_excluded": true,
+       "personnel_semantics": "player-market inference; not official lineup/injury data"
+      },
+      {
+       "input": "bullpen_rest_proxy",
+       "source": "Matchday schedule history",
+       "fetched_at": "2026-08-29T21:56:56.719084Z",
+       "confirmed": false,
+       "semantics": "team schedule load only; not individual reliever availability"
+      }
+     ],
+     "confidence_guard": {
+      "high_confidence_label_allowed": false,
+      "reason": "critical pregame inputs not confirmed"
+     },
+     "production_weight": 0,
+     "research_mode": "prospective_shadow"
+    },
+    "pregame_provenance": [
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-21T21:03:33.594163Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-21T21:41:56.082971Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-21T23:42:54.314867Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T01:57:15.926663Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T03:17:16.233216Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T04:56:16.532156Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T07:07:18.281586Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T08:59:25.597434Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T10:46:59.444711Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T13:07:32.313600Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T14:45:22.282967Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T15:42:31.449702Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T17:41:24.759387Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T18:56:29.279077Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T20:48:19.028583Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T21:44:14.019414Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-22T23:40:51.204589Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T02:06:44.845325Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T03:23:39.392554Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T04:59:30.220734Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T07:07:52.330700Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T08:55:15.148809Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T10:47:19.113411Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T13:10:59.862474Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T14:46:26.183460Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T15:44:37.563424Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T17:39:15.318241Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T18:56:12.093709Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T20:44:49.198830Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T21:40:36.057626Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-23T23:41:17.683518Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-24T02:18:17.747749Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-24T04:13:22.552461Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-24T05:58:33.331095Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-24T07:38:47.299871Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-24T09:11:32.364383Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-24T11:02:08.096774Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-24T13:31:03.450815Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-24T15:07:33.041079Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-24T17:02:44.094019Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-24T19:17:41.580516Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-24T20:55:41.845657Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-24T21:48:56.071778Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-24T23:56:41.860624Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-25T01:59:44.411740Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-25T03:21:28.506955Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-25T05:13:34.631729Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-25T07:14:52.967042Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-25T09:06:27.981247Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-25T11:07:05.203378Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-25T13:17:31.158511Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-25T15:20:48.564028Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-25T17:01:29.927766Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-25T19:04:24.906994Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-25T21:02:50.258698Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-25T21:50:40.416931Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-25T23:44:58.465676Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-26T02:12:32.975498Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-26T03:27:03.574450Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-26T05:04:07.916453Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-26T07:15:16.283462Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-26T09:11:37.832877Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-26T10:59:09.387036Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-26T13:23:34.036763Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-26T16:02:57.552723Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-26T19:30:27.474524Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-26T23:41:37.210261Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-27T10:10:23.820930Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-27T20:52:25.575421Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-28T05:49:04.792161Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-28T19:05:21.523312Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-29T02:22:23.030798Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "market_and_inferred_personnel",
+      "source": "SportsGameOdds",
+      "source_reference": "https://sportsgameodds.com/",
+      "fetched_at": "2026-08-29T09:19:13.490345Z",
+      "provider_event_id": "sdMc1PGVD1QMkUpChxpo",
+      "join": {
+       "match_provider_ids": [
+        "5059813",
+        "bdl-mlb-5059813"
+       ],
+       "match_kickoff": "2026-08-29T23:15:00Z",
+       "candidate_event_ids": [
+        "sdMc1PGVD1QMkUpChxpo"
+       ],
+       "status": "matched",
+       "strategy": "teams_and_start_time",
+       "provider_event_id": "sdMc1PGVD1QMkUpChxpo",
+       "provider_start": "2026-08-29T23:15:00Z"
+      },
+      "espn_excluded": true,
+      "personnel_semantics": "player-market inference; not official lineup/injury data"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-29T09:19:14.050145Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-29T14:39:59.377019Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-29T18:41:38.233329Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     },
+     {
+      "input": "market_and_inferred_personnel",
+      "source": "SportsGameOdds",
+      "source_reference": "https://sportsgameodds.com/",
+      "fetched_at": "2026-08-29T21:56:56.376699Z",
+      "provider_event_id": "sdMc1PGVD1QMkUpChxpo",
+      "join": {
+       "match_provider_ids": [
+        "5059813",
+        "bdl-mlb-5059813"
+       ],
+       "match_kickoff": "2026-08-29T23:15:00Z",
+       "candidate_event_ids": [
+        "sdMc1PGVD1QMkUpChxpo",
+        "O9OAP8LgEnEDA2yFQSu1"
+       ],
+       "status": "matched",
+       "strategy": "teams_and_start_time",
+       "provider_event_id": "sdMc1PGVD1QMkUpChxpo",
+       "provider_start": "2026-08-29T23:15:00Z"
+      },
+      "espn_excluded": true,
+      "personnel_semantics": "player-market inference; not official lineup/injury data"
+     },
+     {
+      "input": "bullpen_rest_proxy",
+      "source": "Matchday schedule history",
+      "fetched_at": "2026-08-29T21:56:56.719084Z",
+      "confirmed": false,
+      "semantics": "team schedule load only; not individual reliever availability"
+     }
+    ],
+    "venue_context": {
+     "sample_games": 64,
+     "league_total_avg": 8.957,
+     "venue_total_avg": 8.791,
+     "factor": 0.9815,
+     "label": "park factor",
+     "production_weight": 0,
+     "method": "prior finals, 10-game shrinkage"
+    },
+    "model_signal_schema": null
+   }
+  },
+  "mfti_shadow": {
+   "spec_version": "MFTI-0.1.1-shadow",
+   "mode": "shadow_research_only",
+   "captured_at": "2026-08-29T21:57:29.799002Z",
    "status": "incomplete",
    "score": null,
    "historical_evidence": {
