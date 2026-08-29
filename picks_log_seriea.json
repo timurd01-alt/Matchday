@@ -526,7 +526,7 @@
    },
    "penalties": null,
    "ultimate_winner": "d",
-   "observed_at": "2026-08-28T18:44:29.919462Z",
+   "observed_at": "2026-08-29T02:13:18.117884Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -540,9 +540,9 @@
   "result_corrections": [],
   "clv": 0.0,
   "closing_market_snapshot": {
+   "d": 28.0,
    "h": 20.0,
-   "a": 52.0,
-   "d": 28.0
+   "a": 52.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -1048,7 +1048,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-28T18:44:29.919514Z",
+   "observed_at": "2026-08-29T02:13:18.117950Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -1560,7 +1560,7 @@
    },
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-28T18:44:29.919553Z",
+   "observed_at": "2026-08-29T02:13:18.117982Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -2071,7 +2071,7 @@
    },
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-28T18:44:29.919586Z",
+   "observed_at": "2026-08-29T02:13:18.118006Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -2583,7 +2583,7 @@
    },
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-28T18:44:29.919616Z",
+   "observed_at": "2026-08-29T02:13:18.118031Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -3091,7 +3091,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-28T18:44:29.919646Z",
+   "observed_at": "2026-08-29T02:13:18.118054Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -3591,8 +3591,32 @@
    "affects_prediction": false,
    "user_visible": false
   },
-  "result": null,
-  "model_result": null,
-  "market_result": null
+  "result": "h",
+  "model_result": "h",
+  "market_result": "h",
+  "score": "2-0",
+  "result_snapshot": {
+   "display": {
+    "home": 2,
+    "away": 0
+   },
+   "regulation": {
+    "home": 2,
+    "away": 0
+   },
+   "penalties": null,
+   "ultimate_winner": "h",
+   "observed_at": "2026-08-29T02:13:18.118075Z",
+   "source": "provider"
+  },
+  "model_hit": true,
+  "market_hit": null,
+  "market_comparison_hit": true,
+  "upset_hit": false,
+  "brier3": 0.048,
+  "log_loss": 0.174,
+  "brier_advancement": null,
+  "log_loss_advancement": null,
+  "result_corrections": []
  }
 }
