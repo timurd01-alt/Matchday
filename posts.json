@@ -1,5 +1,56 @@
 [
  {
+  "id": "ligue1-2026-08-29",
+  "comp": "LIGUE1",
+  "comp_label": "Ligue 1",
+  "slug": "ligue1-2026-08-29",
+  "title": "Ligue 1 model recap — 2026-08-29",
+  "date": "2026-08-29",
+  "summary": "The model went 3/5 (60%) on graded Ligue 1 picks.",
+  "record": {
+   "hits": 3,
+   "graded": 5,
+   "pct": 60
+  },
+  "highlights": {
+   "window_days": 7,
+   "matches_considered": 3,
+   "biggest_upset": {
+    "home": "RC Strasbourg Alsace",
+    "away": "Racing Club de Lens",
+    "score_line": "2-1",
+    "winner": "RC Strasbourg Alsace",
+    "upset_score": 31,
+    "market_pct": null
+   },
+   "best_call": {
+    "home": "Le Havre AC",
+    "away": "AS Monaco FC",
+    "pick": "AS Monaco FC",
+    "confidence": 75,
+    "edge": 0
+   },
+   "biggest_miss": {
+    "home": "RC Strasbourg Alsace",
+    "away": "Racing Club de Lens",
+    "pick": "Racing Club de Lens",
+    "confidence": 53,
+    "actual": "RC Strasbourg Alsace"
+   },
+   "closest_match": {
+    "home": "Stade Rennais FC 1901",
+    "away": "Paris Saint-Germain FC",
+    "score_line": "2-2",
+    "margin": 0
+   }
+  },
+  "body": [
+   "Matchday's model graded 5 Ligue 1 picks this stretch, hitting on 3 of them (60%).",
+   "Among this week's Ligue 1 storylines: the biggest upset was RC Strasbourg Alsace winning 2-1 against Racing Club de Lens (the market gave that result only about 0%); the model's best call was AS Monaco FC in Le Havre AC vs AS Monaco FC at 75% confidence; its biggest miss was picking Racing Club de Lens in RC Strasbourg Alsace vs Racing Club de Lens, but RC Strasbourg Alsace won instead.",
+   "This is Matchday's own model reporting on itself for anyone to use. Every pick is locked before kickoff and graded automatically once the game finishes; none are rewritten after the fact. See the Q&A page for how the model works."
+  ]
+ },
+ {
   "id": "mlb-2026-08-28",
   "comp": "MLB",
   "comp_label": "MLB",
