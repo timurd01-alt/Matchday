@@ -566,8 +566,8 @@
    "n": 147
   },
   "soccer:liverpool fc": {
-   "r": 1617.9980652040083,
-   "n": 137
+   "r": 1612.9307523970488,
+   "n": 138
   },
   "soccer:sporting clube de portugal": {
    "r": 1529.6317345709354,
@@ -734,8 +734,8 @@
    "n": 76
   },
   "soccer:nottingham forest fc": {
-   "r": 1521.4926479145931,
-   "n": 115
+   "r": 1526.5599607215527,
+   "n": 116
   },
   "soccer:afc bournemouth": {
    "r": 1604.2102971151328,
@@ -286263,6 +286263,7 @@
   "LALIGA:564648": true,
   "SERIEA:558625": true,
   "BUNDESLIGA:565776": true,
-  "LIGUE1:559702": true
+  "LIGUE1:559702": true,
+  "EPL:560552": true
  }
 }
