@@ -5,6 +5,7 @@ import unittest
 from unittest import mock
 
 import fetch_data
+import forecast_pause
 import provider_adapters
 import refresh_college_talent
 
@@ -201,6 +202,12 @@ class ModelInputTests(unittest.TestCase):
         self.old_comp = fetch_data.COMP
         fetch_data.COMP_KEY = "NCAAM"
         fetch_data.COMP = dict(fetch_data.COMPETITIONS["NCAAM"])
+        # These cover the per-sport publication and locking gates, which must
+        # keep working for the day publication resumes. The site-wide pause that
+        # currently sits above them is covered in test_forecast_pause.py.
+        pause = mock.patch.object(forecast_pause, "PAUSE_ACTIVE", False)
+        pause.start()
+        self.addCleanup(pause.stop)
 
     def tearDown(self):
         fetch_data.COMP_KEY = self.old_key
@@ -378,28 +385,26 @@ class ModelInputTests(unittest.TestCase):
 
         # Pin the gate: these assert pause *behaviour*, which must keep working
         # as the rollback path no matter what the committed policy says.
-        with mock.patch.object(fetch_data, "_mlb_forecast_publication_paused",
-                               return_value=True):
+        with mock.patch.object(forecast_pause, "PAUSE_ACTIVE", True):
             fetch_data._set_prediction_publication_state(match, prediction)
             decision = fetch_data._lock_decision(match, now)
 
         self.assertEqual(decision["state"], "wait")
-        self.assertEqual(decision["reason"], "mlb_official_forecasts_paused")
+        self.assertEqual(decision["reason"], "official_forecasts_paused")
         self.assertEqual(prediction["publication_state"], "paused")
         self.assertFalse(prediction["official_publication_eligible"])
         self.assertTrue(prediction["research_shadow_available"])
-        self.assertEqual(
-            prediction["publication_message"],
-            "MLB picks are on hold while starting-pitcher coverage clears review.")
+        self.assertEqual(prediction["publication_message"],
+                         forecast_pause.PAUSE_MESSAGE)
         for key in ("pick", "confidence", "model", "adjusted", "edge",
                     "predicted_margin", "upset", "totals", "neutral_venue_probs"):
             self.assertNotIn(key, prediction)
         self.assertNotIn("watchability", match)
         self.assertEqual(match["mlb_challenger_shadow"], {"home_win_probability": 0.61})
 
-    def test_eligible_gate_publishes_upcoming_mlb_normally(self):
-        # The committed policy takes the incumbent route, so an upcoming MLB
-        # fixture reaches a normal publication state rather than the shell.
+    def test_unpaused_upcoming_fixture_publishes_normally(self):
+        # With the site-wide pause lifted, an upcoming fixture reaches a normal
+        # publication state rather than the paused shell.
         match = {"_comp": "MLB", "status": "UPCOMING",
                  "kickoff": "2026-07-24T14:00:00Z",
                  "pregame_context": {"phase": "lock_window"},
@@ -422,8 +427,7 @@ class ModelInputTests(unittest.TestCase):
                  "markets": {}, "prediction": {"pick": "h", "confidence": 70}}
         picks = {}
         with mock.patch.object(fetch_data, "_load_picks", return_value=picks), \
-             mock.patch.object(fetch_data, "_mlb_forecast_publication_paused",
-                               return_value=True), \
+             mock.patch.object(forecast_pause, "PAUSE_ACTIVE", True), \
              mock.patch.object(fetch_data, "_save_picks") as save:
             fetch_data.update_scorecard([match])
         self.assertEqual(picks, {})
@@ -463,10 +467,9 @@ class ModelInputTests(unittest.TestCase):
             fetch_data.apply_locked_picks([match])
         self.assertEqual(match["prediction"]["publication_state"], "locked")
 
-        with mock.patch.object(fetch_data, "_mlb_forecast_publication_paused",
-                               return_value=True):
+        with mock.patch.object(forecast_pause, "PAUSE_ACTIVE", True):
             self.assertEqual(
-                fetch_data._enforce_mlb_pause_after_locked_picks([match]), 1)
+                fetch_data._enforce_forecast_pause_after_locked_picks([match]), 1)
 
         self.assertEqual(match["prediction"]["publication_state"], "paused")
         self.assertNotIn("pick", match["prediction"])
@@ -485,13 +488,13 @@ class ModelInputTests(unittest.TestCase):
              mock.patch.object(fetch_data, "_record_is_official", return_value=True):
             fetch_data.apply_locked_picks([match])
 
-        self.assertEqual(fetch_data._enforce_mlb_pause_after_locked_picks([match]), 0)
+        self.assertEqual(fetch_data._enforce_forecast_pause_after_locked_picks([match]), 0)
 
         self.assertEqual(match["prediction"]["publication_state"], "locked")
         self.assertEqual(match["prediction"]["pick"], "a")
         self.assertEqual(match["prediction"]["confidence"], 58)
 
-    def test_non_mlb_publication_and_lock_behavior_is_unchanged(self):
+    def test_publication_and_locking_resume_when_the_pause_lifts(self):
         now = fetch_data.datetime.datetime(2026, 7, 24, 12, tzinfo=fetch_data.datetime.timezone.utc)
         match = {"_comp": "NBA", "status": "UPCOMING",
                  "kickoff": "2026-07-24T14:00:00Z",
@@ -501,23 +504,6 @@ class ModelInputTests(unittest.TestCase):
         self.assertEqual(prediction["publication_state"], "lock_candidate")
         self.assertEqual(fetch_data._lock_decision(match, now)["state"], "eligible")
         self.assertNotIn("publication_message", prediction)
-
-    def test_verified_canonical_gate_restores_normal_publication_and_locking(self):
-        now = fetch_data.datetime.datetime(2026, 7, 24, 12, tzinfo=fetch_data.datetime.timezone.utc)
-        match = {"_comp": "MLB", "status": "UPCOMING",
-                 "kickoff": "2026-07-24T14:00:00Z",
-                 "pregame_context": {"phase": "lock_window"}}
-        prediction = {"pick": "h", "confidence": 55,
-                      "adjusted": {"h": 55, "d": 0, "a": 45}}
-
-        with mock.patch.object(fetch_data.mlb_recovery, "publication_eligible", return_value=True):
-            fetch_data._set_prediction_publication_state(match, prediction)
-            decision = fetch_data._lock_decision(match, now)
-
-        self.assertEqual(prediction["publication_state"], "lock_candidate")
-        self.assertEqual(prediction["pick"], "h")
-        self.assertEqual(prediction["confidence"], 55)
-        self.assertEqual(decision["state"], "eligible")
 
     def test_legacy_record_is_moved_and_never_official(self):
         picks = {"fixture-1": {"pick": "h", "result": "h", "home": "A", "away": "B"}}

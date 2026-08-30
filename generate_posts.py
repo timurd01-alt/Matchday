@@ -19,6 +19,7 @@ import os
 
 # Re-exported: defined here until build_research_posts needed them too,
 # which made the two modules import each other. See post_layout.
+import forecast_pause
 from post_layout import BASE_URL, POST_CSS, SOCIAL_IMAGE_URL, _esc
 from build_research_posts import build_research_posts
 
@@ -46,9 +47,7 @@ PUBLIC_CONTENT_COMPETITIONS = (
     ("mlb", "MLB", "baseball"),
 )
 PUBLIC_CONTENT_KEYS = {key for key, _, _ in PUBLIC_CONTENT_COMPETITIONS}
-MLB_FORECAST_PAUSE_MESSAGE = (
-    "MLB picks are on hold while starting-pitcher coverage clears review."
-)
+FORECAST_PAUSE_MESSAGE = forecast_pause.PAUSE_MESSAGE
 
 FACTOR_LABELS = {
     "class": "talent or squad quality", "market_power": "championship market power",
@@ -185,11 +184,15 @@ def _publication_state(data, match):
 
 
 def _forecast_is_paused(data, match):
+    """Never build a pick post out of a forecast the site is not publishing."""
+    if match.get("status") != "UPCOMING":
+        return False
     comp = str(match.get("_comp") or data.get("comp_key") or "").upper()
-    # Fail closed: MLB is publishable only when the canonical backend payload
+    if forecast_pause.paused(comp):
+        return True
+    # Fail closed: a pick is publishable only when the canonical backend payload
     # explicitly says eligible. Missing/stale payloads cannot resurrect picks.
-    return (comp == "MLB" and match.get("status") == "UPCOMING"
-            and _publication_state(data, match) != "eligible")
+    return _publication_state(data, match) != "eligible"
 
 
 def load_posts():

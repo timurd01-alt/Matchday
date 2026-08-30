@@ -5,7 +5,9 @@ import shutil
 import tempfile
 import unittest
 
+import forecast_pause
 import generate_posts as gp
+from unittest import mock
 
 SCORECARD = {
     "graded": 13, "model_hits": 9,
@@ -52,11 +54,28 @@ class RecapContentTests(unittest.TestCase):
     def test_content_sport_routes_mlb_posts_to_baseball(self):
         self.assertEqual(gp._content_sport("MLB"), "baseball")
 
-    def test_mlb_publication_state_uses_canonical_dataset_eligibility(self):
-        for phase in ("preliminary", "lock_candidate", "locked"):
-            data = {"comp_key": "MLB", "forecast_publication": {"state": "eligible"}}
-            match = {"status": "UPCOMING", "prediction": {"publication_state": phase}}
-            self.assertFalse(gp._forecast_is_paused(data, match))
+    def test_publication_state_uses_canonical_dataset_eligibility(self):
+        # With the site-wide pause lifted, the dataset marker decides -- and it
+        # decides the same way for every competition.
+        with mock.patch.object(forecast_pause, "PAUSE_ACTIVE", False):
+            for comp in ("MLB", "EPL", "NFL"):
+                for phase in ("preliminary", "lock_candidate", "locked"):
+                    data = {"comp_key": comp,
+                            "forecast_publication": {"state": "eligible"}}
+                    match = {"status": "UPCOMING",
+                             "prediction": {"publication_state": phase}}
+                    self.assertFalse(gp._forecast_is_paused(data, match), comp)
+
+    def test_site_wide_pause_withholds_every_upcoming_pick(self):
+        # No competition is exempt, and an "eligible" marker cannot override it.
+        for comp in ("MLB", "EPL", "NFL", "NBA"):
+            data = {"comp_key": comp, "forecast_publication": {"state": "eligible"}}
+            match = {"status": "UPCOMING", "prediction": {"publication_state": "locked"}}
+            self.assertTrue(gp._forecast_is_paused(data, match), comp)
+        # A finished game keeps the pick it was graded on.
+        self.assertFalse(gp._forecast_is_paused(
+            {"comp_key": "EPL"},
+            {"status": "FINISHED", "prediction": {"publication_state": "locked"}}))
 
     def test_no_post_when_nothing_graded(self):
         self.assertIsNone(gp.build_recap_post("NFL", "NFL", {"graded": 0}, None))
@@ -205,6 +224,10 @@ class RenderAndSitemapTests(unittest.TestCase):
         ET.fromstring(xml)  # raises if malformed
 
     def test_public_content_feed_is_compact_and_includes_mlb(self):
+        # Feed shape, not pause behaviour: give it a publishable slate to shape.
+        pause = mock.patch.object(forecast_pause, "PAUSE_ACTIVE", False)
+        pause.start()
+        self.addCleanup(pause.stop)
         match = {
             "id": "game-1", "kickoff": "2026-07-25T20:00:00Z", "status": "UPCOMING",
             "home": {"name": "Alpha", "code": "ALP"}, "away": {"name": "Beta", "code": "BET"},
@@ -216,7 +239,9 @@ class RenderAndSitemapTests(unittest.TestCase):
         for key in ("nfl", "mlb"):
             with open(f"data_{key}.json", "w", encoding="utf-8") as f:
                 json.dump({"competition": key.upper(), "updated": "2026-07-25T12:00:00Z",
-                           "forecast_publication": ({"state": "eligible"} if key == "mlb" else None),
+                           # The pipeline now stamps this on every dataset, so
+                           # both competitions carry the same marker.
+                           "forecast_publication": {"state": "eligible"},
                            "scorecard": SCORECARD, "matches": [match], "standings": ["drop me"]}, f)
         self.assertEqual(gp.generate_public_content_feed(), 2)
         with open(gp.CONTENT_FEED_FILE, encoding="utf-8") as f:
