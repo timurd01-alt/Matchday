@@ -451,8 +451,7 @@ jobs:
         run: |
           rm -f config_keys.py
           mkdir -p _site
-          cp index.html styles.css research-signals.css content.css content.js article-links.js translations.js updates.js legal.html qa.html content.html manifest.json _site/
-          cp tactics-soccer.html tactics-football.html tactics-basketball.html tactics-hockey.html tactics-baseball.html _site/
+          cp index.html styles.css research-signals.css article-links.js translations.js updates.js legal.html qa.html manifest.json _site/
           cp robots.txt sitemap.xml _site/
           cp app-1-core.js app-2-views.js app-3-panels.js app-4-features.js research-signals.js official-selections.js _site/
           cp favicon.ico favicon-16.png favicon-32.png matchday.ico _site/
@@ -510,7 +509,7 @@ jobs:
 
       - name: Stamp asset URLs with this commit's SHA (cache-busting)
         run: |
-          sed -i "s/__BUILD__/${GITHUB_SHA::8}/g" _site/index.html _site/content.html _site/tactics-*.html
+          sed -i "s/__BUILD__/${GITHUB_SHA::8}/g" _site/index.html
 
       # v3's action.yml internally calls actions/upload-artifact@v4 (an
       # unpinned tag) to build the artifact -- fine on its own, but the repo's
