@@ -7,6 +7,7 @@ import unittest
 from unittest import mock
 
 import fetch_data
+import forecast_pause
 
 
 def eligible_match():
@@ -38,6 +39,12 @@ class PickLockPersistenceTests(unittest.TestCase):
         patcher = mock.patch.object(fetch_data, "PICKS_FILE", str(self.ledger))
         patcher.start()
         self.addCleanup(patcher.stop)
+        # These cover the lock/grade machinery itself, which has to keep working
+        # for the day publication resumes. The site-wide pause that currently
+        # withholds every pick is covered in test_forecast_pause.py.
+        pause = mock.patch.object(forecast_pause, "PAUSE_ACTIVE", False)
+        pause.start()
+        self.addCleanup(pause.stop)
 
     def test_eligible_pick_is_written_and_reloadable_as_official(self):
         fetch_data.update_scorecard([eligible_match()])

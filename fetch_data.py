@@ -24,7 +24,7 @@ from collections import defaultdict
 import mfti_research
 import forecast_ledger
 import game_archive
-import mlb_recovery
+import forecast_pause
 import mlb_shadow_ledger
 import market_snapshots
 import pregame_context
@@ -4779,15 +4779,12 @@ def _parse_kickoff(value):
     return parsed.astimezone(datetime.timezone.utc)
 
 
-MLB_FORECAST_PAUSE_MESSAGE = mlb_recovery.PAUSE_MESSAGE
+FORECAST_PAUSE_MESSAGE = forecast_pause.PAUSE_MESSAGE
 
 
-MLB_INCUMBENT_IDENTITY = (PREDICTION_MODEL_VERSION, MODEL_SIGNAL_SCHEMA)
-
-
-def _mlb_forecast_publication_paused():
-    """Canonical two-key gate; malformed or incomplete approval pauses."""
-    return not mlb_recovery.publication_eligible(incumbent=MLB_INCUMBENT_IDENTITY)
+def _forecast_publication_paused(competition=None):
+    """Site-wide publication pause. No competition is exempt from it."""
+    return forecast_pause.paused(competition)
 
 
 def _set_prediction_publication_state(match, prediction):
@@ -4796,8 +4793,7 @@ def _set_prediction_publication_state(match, prediction):
     context = (match or {}).get("pregame_context") or {}
     competition = str((match or {}).get("_comp") or COMP_KEY).upper()
     status = str((match or {}).get("status") or "").upper()
-    if (_mlb_forecast_publication_paused()
-            and competition == "MLB" and status == "UPCOMING"):
+    if _forecast_publication_paused(competition) and status != "FINISHED":
         # Do not merely label the regular prediction: API consumers historically
         # read pick/confidence/probability fields without checking publication
         # state. Clear the production output into a minimal shell. The separate
@@ -4805,7 +4801,7 @@ def _set_prediction_publication_state(match, prediction):
         prediction.clear()
         prediction.update({
             "publication_state": "paused",
-            "publication_message": MLB_FORECAST_PAUSE_MESSAGE,
+            "publication_message": FORECAST_PAUSE_MESSAGE,
             "official_publication_eligible": False,
             "research_shadow_available": bool((match or {}).get("mlb_challenger_shadow")),
         })
@@ -4818,15 +4814,13 @@ def _set_prediction_publication_state(match, prediction):
     return prediction
 
 
-def _enforce_mlb_pause_after_locked_picks(matches):
-    """Hide legacy upcoming MLB locks without touching finished receipts."""
-    if not _mlb_forecast_publication_paused():
-        return 0
+def _enforce_forecast_pause_after_locked_picks(matches):
+    """Hide legacy upcoming locks without touching finished receipts."""
     paused = 0
     for match in matches or []:
         competition = str((match or {}).get("_comp") or COMP_KEY).upper()
         status = str((match or {}).get("status") or "").upper()
-        if competition != "MLB" or status != "UPCOMING":
+        if status == "FINISHED" or not _forecast_publication_paused(competition):
             continue
         match["prediction"] = _set_prediction_publication_state(
             match, match.get("prediction"))
@@ -4842,13 +4836,14 @@ def _lock_decision(match, now=None):
         return {"state": "quarantine", "reason": f"first_seen_{status.lower() or 'unknown'}",
                 "status_at_lock": status or None, "kickoff": kickoff}
     competition = str((match or {}).get("_comp") or COMP_KEY).upper()
-    # Product safety pause: MLB's current production forecast lacks reliable
-    # confirmed-starter coverage and has not yet earned calibration claims.
-    # Keep computing the research shadow, but do not admit a new MLB receipt
-    # to the official immutable pick ledger. Existing receipts still flow
-    # through apply_locked_picks() and every historical grading path below.
-    if _mlb_forecast_publication_paused() and competition == "MLB":
-        return {"state": "wait", "reason": "mlb_official_forecasts_paused",
+    # Product safety pause: published forecasting is on hold site-wide while
+    # the model is rebuilt on the Bet Better data engine (see forecast_pause).
+    # No competition is exempt. Do not admit a new receipt to the official
+    # immutable pick ledger -- a paused pick that was never shown must not later
+    # be graded as though it had been. Existing receipts still flow through
+    # apply_locked_picks() and every historical grading path below.
+    if _forecast_publication_paused(competition):
+        return {"state": "wait", "reason": "official_forecasts_paused",
                 "status_at_lock": status, "kickoff": kickoff,
                 "publication_state": "paused"}
     if kickoff is None:
@@ -7828,7 +7823,7 @@ def build():
     apply_locked_picks(matches)
     # A historical upcoming lock may predate the pause. Keep its immutable
     # receipt for later grading, but never republish its official model output.
-    _enforce_mlb_pause_after_locked_picks(matches)
+    _enforce_forecast_pause_after_locked_picks(matches)
     # Top-level marker survives immutable legacy prediction snapshots and lets
     # multi_fetch detect that an otherwise fresh JSON file predates a model
     # input/schema change. Bump only when every sport needs one clean rebuild.
@@ -7911,9 +7906,7 @@ def build():
                "markets_quota_out": MARKET_STATE["quota_out"],
                "quota_blocked_providers": blocked_providers,
                "diagnostics": [_scrub(x) for x in DIAG]}
-    if COMP_KEY == "MLB":
-        payload["forecast_publication"] = mlb_recovery.publication_decision(
-            incumbent=MLB_INCUMBENT_IDENTITY)
+    payload["forecast_publication"] = forecast_pause.publication_decision(COMP_KEY)
     for out in (OUT_FILE, f"data_{COMP_KEY.lower()}.json"):
         tmp = out + ".tmp"
         with open(tmp, "w", encoding="utf-8") as f:

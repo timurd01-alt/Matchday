@@ -4,7 +4,7 @@ function _insightFocusHTML(focus){
     h+=`<div class="ins-match">${esc(focus.home?.name||'Home')} <span class="evs">v</span> ${esc(focus.away?.name||'Away')}</div><div class="ins-sub">${focus.status==='LIVE'?'Awaiting final':focus.status==='FINISHED'?`Final · ${esc(scorePlainText(focus))}`:`${esc(focus.stage||'')} · ${kickIn(focus.kickoff)}`}</div>`;
     h+=insightModelBlock(focus);
     const x=(focus.markets||{})['1x2']||{};
-    if(isMlbForecastPaused(focus)&&x.home_pct!=null)h+='<div class="seclbl" style="margin-top:12px">Market odds</div>';
+    if(isForecastPaused(focus)&&x.home_pct!=null)h+='<div class="seclbl" style="margin-top:12px">Market odds</div>';
     if(x.home_pct!=null){const twoWay=_isTwoWay(focus);h+=`<div class="prob insightProb"><div class="problbl"><span>${esc(focus.home?.code||'H')}</span>${twoWay?'':'<span>draw</span>'}<span>${esc(focus.away?.code||'A')}</span></div>${bar1x2(x.home_pct,twoWay?null:x.draw_pct,x.away_pct)}</div>`;}
     const bd=edgeBreakdown(focus);
     if(bd)h+=`<div class="seclbl" style="margin-top:16px">Model read</div><div class="ins-summary"><p>${esc(bd)}</p></div>`;
@@ -232,7 +232,7 @@ function _v6UpsetBox(m){
 }
 /* dedup */
 function insightModelBlock(m){
-  if(isMlbForecastPaused(m))return forecastPauseHTML(m);
+  if(isForecastPaused(m))return forecastPauseHTML(m);
   const pr=m&&m.prediction;
   if(!pr)return '<div class="seclbl">Model pick</div><div class="nomk">No model pick yet.</div>';
   const op=_v10OfficialPick(m),edge=_v10OfficialEdge(m,op);
@@ -256,7 +256,7 @@ function cardHTML(m,opts){
   const threeWay=hasThreeWayProbabilities(m);
   const pickLabel=leadsUnderHalf(m,op?.confidence)?'Most likely':'Pick';
   const modelBar=threeWay?`<div class="prob modelRead"><div class="problbl"><span>${esc(m.home.code||m.home.name)}</span><span>Model read</span><span>${esc(m.away.code||m.away.name)}</span></div>${bar1x2(modelProbs.h,modelProbs.d,modelProbs.a)}</div>`:'';
-  const pick=isMlbForecastPaused(m)?forecastPauseHTML(m):(!opts.hidePick&&op)?`<div class="pick ${edge!=null&&Math.abs(edge)>=6?'edge':''} ${op.blocked?'gate':''}"><span class="pl">${esc(pickLabel)}</span><span class="pn">${esc(op.name)}</span><span class="pc">${esc(op.confidence??'—')}%</span><span class="pnote">${esc(op.note||'')}</span>${trend}</div>${modelBar}`:'';
+  const pick=isForecastPaused(m)?forecastPauseHTML(m):(!opts.hidePick&&op)?`<div class="pick ${edge!=null&&Math.abs(edge)>=6?'edge':''} ${op.blocked?'gate':''}"><span class="pl">${esc(pickLabel)}</span><span class="pn">${esc(op.name)}</span><span class="pc">${esc(op.confidence??'—')}%</span><span class="pnote">${esc(op.note||'')}</span>${trend}</div>${modelBar}`:'';
   const probChanged=!!probabilityMovement(m);
   const timing=pending?'score after final':m.status==='FINISHED'?'postgame':stale?'past kickoff':kickIn(m.kickoff);
   return `<article class="card${SETTINGS.showDetails?'':' compactCard'}${probChanged?' probChanged':''}" data-id="${esc(m.id)}"><div class="head" onclick="openMatchModal(this.closest('article').dataset.id)"><div class="metarow"><span class="stage">${esc(m.stage||'Fixture')}</span>${m._comp&&!DATA_FILE?`<span class="compTag">${esc(m._comp)}</span>`:''}<span class="wstar ${wlHas(m.home.name)||wlHas(m.away.name)?'on':''}" onclick="event.stopPropagation();wlToggle('${esc(m.home.name)}')" title="Watch">&#9733;</span>${m.weather?`<a class="wxchip" href="${esc(m.weather.source_url||'https://open-meteo.com/')}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" title="Weather data by Open-Meteo"><b>${m.weather.temp_c}&deg;</b>${m.weather.wind_kph>=20?` ${m.weather.wind_kph}km/h`:''}${m.weather.rain_pct>=40?` &#9730;${m.weather.rain_pct}%`:''}<small> Open-Meteo</small></a>`:''}<span class="spacer"></span><span class="pill ${esc(statusClass)}">${esc(displayStatus)}</span></div><div class="fixture"><div class="side"><div class="tname">${teamMarkHTML(m.home)}<span class="teamNameText">${hfl}${esc(m.home.name)}</span></div><div class="tsub"><span>${esc(m.home.code)}</span>${teamStandingsMeta(m.home,m._comp).map(p=>`<span>${esc(p)}</span>`).join('')}</div></div><div class="center"><div class="score">${scoreText(m)}</div><div class="kick">${timing}</div></div><div class="side away"><div class="tname"><span class="teamNameText">${esc(m.away.name)}${afl}</span>${teamMarkHTML(m.away,'away')}</div><div class="tsub"><span>${esc(m.away.code)}</span>${teamStandingsMeta(m.away,m._comp).map(p=>`<span>${esc(p)}</span>`).join('')}</div></div></div>${probTop}${pick}<div class="expander"></div></div></article>`;

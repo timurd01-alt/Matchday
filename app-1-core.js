@@ -72,7 +72,11 @@ const FIXTURE_PAGE_SIZE=40;
 // row is denser reading than a match card.
 const MODEL_PAGE_SIZE=25;
 let MATCH_VISIBLE=FIXTURE_PAGE_SIZE,RESULT_VISIBLE=FIXTURE_PAGE_SIZE,MODEL_VISIBLE=MODEL_PAGE_SIZE;
-const MLB_FORECAST_PAUSE_MESSAGE='MLB forecasts are paused pending starting-pitcher data.';
+// Site-wide publication pause, mirroring forecast_pause.py. One flag: clear
+// FORECAST_PAUSE_ACTIVE when the coverage gaps close and every sport falls back
+// to its own gate below rather than publishing unconditionally.
+const FORECAST_PAUSE_ACTIVE=true;
+const FORECAST_PAUSE_MESSAGE='Predictions are paused while the model is rebuilt on a new data engine.';
 
 function forecastPublicationState(payload,match){
   const value=x=>typeof x==='string'?x:(x&&typeof x==='object'?(x.state||x.status||x.publication_state):'');
@@ -88,17 +92,24 @@ function forecastPublicationState(payload,match){
   if(dataset==='eligible')return 'eligible';
   return states[0]||'';
 }
-function isMlbForecastPaused(match,payload=DATA){
-  const comp=String(match?._comp||payload?.comp_key||'').toUpperCase();
-  // Fail closed: stale or marker-free MLB payloads never regain forecasts.
-  return comp==='MLB'&&match?.status==='UPCOMING'&&forecastPublicationState(payload,match)!=='eligible';
+function isForecastPaused(match,payload=DATA){
+  // Finished matches keep the pick they were graded on: that is the public
+  // record, and hiding it would scrub the model's own results. Everything not
+  // yet settled -- upcoming and in-play alike -- loses its forecast, because an
+  // in-play pick is still an ungraded model call being presented as live
+  // analysis, percentages included.
+  if(String(match?.status||'').toUpperCase()==='FINISHED')return false;
+  if(FORECAST_PAUSE_ACTIVE)return true;
+  // Fail closed: stale or marker-free payloads never regain forecasts. No
+  // competition has an exemption -- the pause applies to all of them equally.
+  return forecastPublicationState(payload,match)!=='eligible';
 }
 function applyForecastPublicationPauses(payload){
   if(!payload||!Array.isArray(payload.matches))return payload;
   payload.matches.forEach(match=>{
-    if(!isMlbForecastPaused(match,payload))return;
+    if(!isForecastPaused(match,payload))return;
     match._forecast_paused=true;
-    match._forecast_pause_message=MLB_FORECAST_PAUSE_MESSAGE;
+    match._forecast_pause_message=FORECAST_PAUSE_MESSAGE;
     ['prediction','locked_prediction','prediction_snapshot','official_pick','model_pick','model_confidence',
      'confidence','edge','upset','watchability','watch_score','forecast','predicted_score',
      'predicted_home_score','predicted_away_score','predicted_margin','expected_margin','model_margin',
@@ -110,7 +121,7 @@ function forecastPauseHTML(match){
   // Two inline children with no rule of their own rendered as one run-on line
   // ("Forecast pausedPicks are on hold..."). Block them out and give the notice
   // the same warn treatment the top-of-view banner already uses.
-  return isMlbForecastPaused(match)?`<div class="emptyForecast forecastPaused" role="status"><b>Forecast paused</b><span>${esc(MLB_FORECAST_PAUSE_MESSAGE)}</span><em>Scores, results and odds remain available.</em></div>`:'';
+  return isForecastPaused(match)?`<div class="emptyForecast forecastPaused" role="status"><b>Forecast paused</b><span>${esc(FORECAST_PAUSE_MESSAGE)}</span><em>Scores, results, stats and market odds are all still here.</em></div>`:'';
 }
 
 // Providers can keep the season that just ended until the next schedule
@@ -392,14 +403,14 @@ function lockedPredictionSnapshot(m){
   return found?.prediction&&typeof found.prediction==='object'?found.prediction:(found||{});
 }
 function officialPrediction(m){
-  if(isMlbForecastPaused(m))return {side:'',name:'',confidence:null,locked:{}};
+  if(isForecastPaused(m))return {side:'',name:'',confidence:null,locked:{}};
   const pr=m?.prediction||{},locked=lockedPredictionSnapshot(m);
   const side=locked.pick??pr.pick??'';
   const name=locked.pick_name??pr.pick_name??(side==='h'?m?.home?.name:side==='a'?m?.away?.name:side==='d'?'Draw':'');
   return {side,name,confidence:locked.confidence??pr.confidence??null,locked};
 }
 function officialPredictionProbabilities(m){
-  if(isMlbForecastPaused(m))return {};
+  if(isForecastPaused(m))return {};
   const pr=m?.prediction||{},locked=lockedPredictionSnapshot(m);
   return locked.adjusted||locked.blend||locked.probs||pr.adjusted||pr.blend||pr.model||{};
 }
@@ -524,13 +535,19 @@ function renderWelcomeStats(){
   const M=DATA.matches||[];
   const upcoming=M.filter(isVisibleUpcoming);
   if(!upcoming.length){host.innerHTML='';return}
-  const priced=upcoming.filter(m=>!isMlbForecastPaused(m)&&((typeof officialPrediction==='function'&&officialPrediction(m))||m.prediction)).length;
+  const priced=upcoming.filter(m=>!isForecastPaused(m)&&((typeof officialPrediction==='function'&&officialPrediction(m))||m.prediction)).length;
   // Competitions is the product's breadth, not the current selection's -- the
   // gate is the front door for all of it, and a single-sport view would
   // otherwise read "1 competitions".
+  // While picks are paused, "0% model coverage" is a true number that reads
+  // like a broken site. Say what is actually happening instead, and let the
+  // graded record carry the third slot.
+  const graded=Number(DATA.scorecard?.graded)||0;
   const cells=[[upcoming.length,'fixtures ahead'],
                [Object.keys(SPORT_LABELS).length,'competitions'],
-               [`${Math.round(priced/upcoming.length*100)}%`,'model coverage']];
+               FORECAST_PAUSE_ACTIVE
+                 ?[graded||'—','picks on the record']
+                 :[`${Math.round(priced/upcoming.length*100)}%`,'model coverage']];
   host.innerHTML=cells.map(([v,l])=>`<div><b>${esc(v)}</b><span>${esc(l)}</span></div>`).join('');
 }
 // Slight parallax on the preview card. Pointer-only and opt-out aware, so it
@@ -729,7 +746,7 @@ function renderMatches(){const M=DATA.matches||[];
   const missing=DATA._missing?`<div class="banner" style="grid-column:1/-1"><b>No ${esc(DATA.competition||'this sport')} data yet.</b> Fetch it once its season is available — run the matching start file (e.g. start_ucl.bat) or keep an eye out when the season begins.</div>`:'';
   const intro=isAll
     ?`<div class="viewIntro"><div><div class="vhead">Top matchups</div><p>The strongest and closest games across every sport. Choose a sport above to see its complete schedule.</p></div><span>${shown.length} featured</span></div>`
-    :`<div class="viewIntro"><div><div class="vhead">${t('Fixtures')}</div><p>Pregame model reads now; final scores and grading after the game.</p></div><span>${capped.length} games</span></div>`;
+    :`<div class="viewIntro"><div><div class="vhead">${t('Fixtures')}</div><p>${FORECAST_PAUSE_ACTIVE?'Fixtures, scores and market odds. Model picks are paused.':'Pregame model reads now; final scores and grading after the game.'}</p></div><span>${capped.length} games</span></div>`;
   const html=missing+landingHero()+intro+
     (shown.length?(isAll?groupedBoardHTML(shown):shown.map(cardHTML).join('')):`<div class="empty" style="grid-column:1/-1">No upcoming matches to analyze.</div>`)+
     (remaining?`<div class="fixturePager"><span>Showing ${shown.length} of ${capped.length} fixtures</span><button class="actionbtn" onclick="MATCH_VISIBLE+=FIXTURE_PAGE_SIZE;renderMatches()">Load ${Math.min(FIXTURE_PAGE_SIZE,remaining)} more</button></div>`:'');
