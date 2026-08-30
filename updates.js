@@ -4,6 +4,18 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0830A",
+  "tag": "Change",
+  "title": "Matchday narrows to college sports",
+  "items": [
+   "Coverage is now college football and men's college basketball only. Every other competition has been removed from the sport picker.",
+   "The board is Upcoming games, Results, Scorecard, Bracket, Rankings and Community. Model, Sandbox, News, Insights, Status, Updates, Customize, Thirds and Team of the Tournament are gone, along with the Content hub and the five tactics pages.",
+   "The scorecard is now just picks won and picks lost. Brier, log loss, calibration, CLV and the audit buckets are still computed and still reported by the research modules; they are no longer on this page.",
+   "No college pick has ever been graded, so the record starts at zero rather than borrowing another sport's history. Picks graded before the pivot stay on disk and stay in the ledgers; they are only unlinked from the interface.",
+   "The site now says plainly what it is: a personal hub for one analyst's college-sports work, published openly, and not advice."
+  ]
+ },
+ {
   "date": "Build 0823N",
   "tag": "Notice",
   "title": "Development pause posted",

@@ -1,42 +1,48 @@
 function scorecardAuditCount(v,preferred='total'){if(v==null)return 0;if(typeof v==='object')return Number(v[preferred]??v.total??v.graded??v.count)||0;return Number(v)||0}
 function scorecardMarketComparisonPick(p){if(['h','d','a'].includes(p?.market_comparison_pick))return p.market_comparison_pick;return p?.outcome_basis==='ultimate_winner'||p?.prediction_snapshot?.is_knockout?p?.regulation_pick:p?.pick}
 function scorecardUnderdogTag(p){if(!p?.upset_score||!p?.upset_snapshot?.radar||p?.upset_snapshot?.standings_gap_pct==null)return'';const name=esc(p.upset_name||'Underdog'),score=esc(p.upset_score);if(!p.upset_triggered)return` <i class="scsplit upsetTag">underdog risk · ${name} ${score}/100</i>`;const outcome=p.result?(p.upset_hit?' &#10003;':' &#10007;'):'';return` <i class="scsplit upsetTag">upset pick · ${name} ${score}/100${outcome}</i>`}
-function renderScore(){const sc=DATA.scorecard,host=$('#view-score');const auditCount=sc&&(scorecardAuditCount(sc.legacy,'graded')+scorecardAuditCount(sc.quarantined)+scorecardAuditCount(sc.late_unverifiable)+scorecardAuditCount(sc.excluded));if(!sc||(!sc.graded&&!sc.pending&&!auditCount)){host.innerHTML=`<div class="vhead">Scorecard</div><div class="empty">Verified picks lock before kickoff and are graded when the result is final.<br>Run the fetcher and check back after the next final whistle.</div>`;return}
-const pctf=(h,n)=>n?Math.round(h/n*100)+'%':'—';
-// "0/0" reads as a record that exists and is going badly; it actually means
-// nothing has been graded in this scope yet. Show a dash and say so instead.
-const recf=(h,n)=>n?`${h}/${n}`:'—';
-let h=`<div class="vhead">Scorecard</div>${renderDeepDive(sc)}<div class="status-grid">
-<div class="statuscard info"><span class="slbl">Model record <button class="miniReload" title="Reload latest results" onclick="load(true)">\u21bb</button></span><div class="sval">${recf(sc.model_hits,sc.graded)}</div><div class="hint">${sc.graded?`${pctf(sc.model_hits,sc.graded)} of graded picks correct \u2014 verified pregame-locked picks only`:'no verified pregame picks graded yet \u2014 builds as locked picks finish'}</div></div>${sc.combined&&sc.combined.graded?`<div class="statuscard warn" title="${esc(sc.combined.note||'')}"><span class="slbl">All-time total ${metricHelp('All-time total','Verified pregame-locked picks plus legacy picks that graded correctly but have no recoverable proof of when the pick was actually made. Shown separately from Model record so the verified number is never padded by unverifiable picks \u2014 see the pick log below for which is which.')}</span><div class="sval">${sc.combined.model_hits}/${sc.combined.graded}</div><div class="hint">${pctf(sc.combined.model_hits,sc.combined.graded)} incl. legacy \u00b7 verified ${sc.combined.verified_hits}/${sc.combined.verified_graded} \u00b7 legacy ${sc.combined.legacy_hits}/${sc.combined.legacy_graded}</div></div>`:''}
-<div class="statuscard info"><span class="slbl">Regulation market at model lock ${metricHelp('Regulation market benchmark','Grades the regulation-time market favorite from a quote captured by model lock. Advancement picks use a different target and are not compared as if the outcomes were identical. The published Matchday forecast may include a bounded blend of this same market.')}</span><div class="sval">${recf(sc.market_hits,sc.market_graded)}</div><div class="hint">${sc.market_graded?`${pctf(sc.market_hits,sc.market_graded)} correct — same fixtures and information cutoff`:sc.post_lock_market_graded?`${sc.post_lock_market_graded} later market snapshots excluded — not a fair same-time benchmark`:'needs a timestamped market quote captured by model lock'}</div></div>
-<div class="statuscard ${sc.disagree&&sc.disagree_hits/Math.max(1,sc.disagree)>=.5?'ok':'info'}"><span class="slbl">Same-lock regulation disagreements</span><div class="sval">${recf(sc.disagree_hits,sc.disagree)}</div><div class="hint">${sc.disagree?'regulation forecast record where model and same-time market differed':'no compatible same-time disagreement sample yet'}</div></div>
-<div class="statuscard info"><span class="slbl">Pending</span><div class="sval">${sc.pending}</div><div class="hint">picks locked, awaiting results</div></div></div>`;
-const auditCards=[
-  ['legacy','Legacy graded','older graded picks without complete lock evidence','graded'],
-  ['quarantined','Quarantined','removed from the official record','total'],
-  ['late_unverifiable','Late / unverifiable','excluded because pregame timing cannot be proved','total'],
-  ['excluded','Other exclusions','not included in verified accuracy','total']
-].filter(([key])=>sc[key]!=null).map(([key,label,hint,preferred])=>{const value=sc[key];const legacy=key==='legacy'&&value&&typeof value==='object';const shown=legacy&&value.graded?`${Number(value.model_hits)||0}/${Number(value.graded)||0}`:scorecardAuditCount(value,preferred);const detail=legacy&&value.market_graded?`${hint} · regulation market ${Number(value.market_hits)||0}/${Number(value.market_graded)||0}`:hint;return `<div class="statuscard warn"><span class="slbl">${label}</span><div class="sval">${shown}</div><div class="hint">${detail}</div></div>`}).join('');
-if(auditCards)h+=`<div class="status-grid" style="margin-top:10px">${auditCards}</div>`;
-const small=sc.graded<30?` <i class="ssnote">small sample</i>`:'';
-const marketAgreement=sc.market_agreement||{};
-const probabilityRows=[];
-const metricSample=n=>`<i class="ssnote">(${n})${n<30?' small sample':''}</i>`;
-if(sc.brier3!=null){const bn=Number(sc.brier3_graded)||0,ln=Number(sc.log_loss_graded)||0;probabilityRows.push(`Game outcome: Brier <b>${sc.brier3}</b> ${metricSample(bn)}${sc.log_loss!=null?` · log loss ${sc.log_loss} ${metricSample(ln)}`:''}`)}
-if(sc.brier_advancement!=null){const bn=Number(sc.advancement_graded)||0,ln=Number(sc.log_loss_advancement_graded)||0;probabilityRows.push(`Advancement: Brier <b>${sc.brier_advancement}</b> ${metricSample(bn)}${sc.log_loss_advancement!=null?` · log loss ${sc.log_loss_advancement} ${metricSample(ln)}`:''}`)}
-if(!probabilityRows.length&&sc.brier!=null){const n=Number(sc.brier_graded)||0;probabilityRows.push(`Picked outcome: <b>${sc.brier}</b> ${metricSample(n)}`)}
-h+=`<div class="status-grid" style="margin-top:10px">
-	<div class="statuscard ${sc.clv_avg>0?'ok':'info'}"><span class="slbl">Closing line movement ${metricHelp('Closing line movement','Change in the no-vig market probability for the recorded comparison side, from the same-lock quote to the latest eligible pre-kickoff snapshot. Positive means the market moved toward that side.')}</span><div class="sval">${sc.clv_avg!=null?(sc.clv_avg>0?'+':'')+sc.clv_avg+' pp':'—'}</div><div class="hint">${sc.clv_n?`positive movement ${sc.clv_beat}/${sc.clv_n}${sc.clv_n<30?' <i class="ssnote">small sample</i>':''}`:'builds when eligible lock and pre-kickoff snapshots exist'}</div></div>
-	<div class="statuscard ${[sc.brier3,sc.brier_advancement].some(v=>v!=null&&v<.55)?'ok':'info'}"><span class="slbl">Probability scores ${metricHelp('Probability scores','Brier score and log loss grade the complete probability forecast, not just whether the top pick won. Game-outcome and advancement forecasts are different targets, so they are reported separately. Lower is better.')}</span><div class="sval" style="font-size:var(--fs-base);line-height:1.7">${probabilityRows.join('<br>')||'—'}</div><div class="hint">separate cohorts and sample sizes</div></div>
-	<div class="statuscard ${(sc.upset?.watched&&sc.upset.hits/sc.upset.watched>=.35)?'ok':'info'}"><span class="slbl">Upset radar</span><div class="sval">${sc.upset?.watched?`${sc.upset.hits}/${sc.upset.watched}`:'—'}</div><div class="hint">market underdogs that won${sc.upset?.triggered?` · active picks ${sc.upset.triggered_hits}/${sc.upset.triggered}`:''}${sc.upset?.avg_score!=null?` · avg radar score ${sc.upset.avg_score}`:''}</div></div>
-	<div class="statuscard info"><span class="slbl">Calibration ${metricHelp('Calibration','Checks whether events predicted at a given probability happen about that often.')}</span><div class="sval" style="font-size:var(--fs-base);line-height:1.7">${(sc.calibration||[]).map(c=>`${c.band}%: <b>${Math.round(c.hits/c.n*100)}%</b> <i class="ssnote">(${c.n})</i>`).join('<br>')||'—'}</div><div class="hint">when we say X%, how often it happens</div></div>
-	<div class="statuscard info"><span class="slbl">Home vs. away ${metricHelp('Home vs. away','Hit rate split by whether the model picked the home or away side.')}</span><div class="sval" style="font-size:var(--fs-base);line-height:1.7">Home: <b>${pctf(sc.home_away?.home?.hits,sc.home_away?.home?.n)}</b> <i class="ssnote">(${sc.home_away?.home?.n||0})</i><br>Away: <b>${pctf(sc.home_away?.away?.hits,sc.home_away?.away?.n)}</b> <i class="ssnote">(${sc.home_away?.away?.n||0})</i></div><div class="hint">accuracy by picked side</div></div>
-	<div class="statuscard info"><span class="slbl">Market agreement ${metricHelp('Market agreement','Splits regulation-outcome accuracy by whether the model and same-lock regulation market selected the same outcome. Draws and pick’em prices are not mislabeled as underdogs; incompatible advancement targets are excluded.')}</span><div class="sval" style="font-size:var(--fs-base);line-height:1.7">Agreed: <b>${pctf(marketAgreement.agree?.hits,marketAgreement.agree?.n)}</b> <i class="ssnote">(${marketAgreement.agree?.n||0})</i><br>Differed: <b>${pctf(marketAgreement.disagree?.hits,marketAgreement.disagree?.n)}</b> <i class="ssnote">(${marketAgreement.disagree?.n||0})</i></div><div class="hint">regulation accuracy by same-lock market agreement</div></div></div>`;
-h+=`<div class="seclbl" style="margin-top:16px">Pick log</div>`+(sc.picks||[]).map(p=>{const done=!!p.result;const cls=done?(p.model_hit?'hit':'miss'):'wait';const badge=done?(p.model_hit?'HIT':'MISS'):'PENDING';const comparisonPick=scorecardMarketComparisonPick(p);return `<div class="scrow ${cls}"><span class="scst">${esc(p.stage||'')}</span><span class="scmatch">${esc(p.home)} v ${esc(p.away)}${p.score?` <b>${esc(p.score)}</b>`:''}</span><span class="scpick">${esc(p.pick_name||'')}${p.confidence?' · '+p.confidence+'%':''}${p.market_pick&&comparisonPick!==p.market_pick?' <i class="scsplit">regulation vs market</i>':''}${p.value_side&&p.value_side!==comparisonPick?` <i class="scsplit vtag ${p.market_result?(p.value_hit?'vhit':'vmiss'):''}">regulation chance: ${esc(p.value_name||'')} +${p.value_edge}${p.market_result?(p.value_hit?' &#10003;':' &#10007;'):''}</i>`:''}${scorecardUnderdogTag(p)}</span><span class="sctag ${cls}">${badge}</span>${p.legacy?`<span class="sctag legacy" title="${esc(p.integrity_label||'')}">LEGACY</span>`:''}</div>`}).join('');
-h+=`<div class="edisc">Verified pregame picks are the official record. Late or unverifiable legacy picks are excluded from accuracy. In knockout games, model picks are graded by who advances after extra time or penalties. Displayed scores remain factual and unchanged; market comparisons follow each market's settlement rules. Use the information however works for you; probabilities remain estimates, and Matchday has no stake in any outcome.</div>`;
-host.innerHTML=h}
+// The scorecard is deliberately two numbers.
+//
+// It used to carry Brier, log loss, calibration bands, CLV, upset radar,
+// home/away splits and four audit buckets. Those are real measurements and the
+// modules that compute them are untouched -- market_benchmark.py and the
+// research posts still report them. They are not on this page any more because
+// a reader asking "is it any good" wants a record, and thirty cards answered a
+// question nobody had asked yet.
+//
+// Won and lost come from graded picks only. A pick that is locked but not yet
+// final is pending and counts toward neither.
+function renderScore(){
+  const sc=DATA.scorecard||{},host=$('#view-score');
+  const graded=Number(sc.graded)||0;
+  const won=Number(sc.model_hits)||0;
+  const lost=Math.max(0,graded-won);
+  const pending=Number(sc.pending)||0;
+  const graded_rows=(sc.picks||[]).filter(p=>p.result);
+
+  // Nothing graded is the honest state right now: no college pick has ever
+  // been graded, and forecasting is paused, so the record starts at zero
+  // rather than borrowing another sport's history.
+  const note=graded
+    ? `<div class="hint" style="margin-top:10px">${graded} graded${pending?` \u00b7 ${pending} awaiting a final score`:''}</div>`
+    : `<div class="empty">No picks graded yet. Picks lock before kickoff and are graded once the game is final.${pending?` ${pending} locked and awaiting a result.`:''}</div>`;
+
+  const log=graded_rows.length
+    ? `<div class="seclbl" style="margin-top:16px">Pick log</div>`+graded_rows.map(p=>{
+        const hit=!!p.model_hit;
+        return `<div class="scrow ${hit?'hit':'miss'}"><span class="scmatch">${esc(p.home)} v ${esc(p.away)}</span><span class="scbadge">${hit?'WON':'LOST'}</span></div>`;
+      }).join('')
+    : '';
+
+  host.innerHTML=`<div class="vhead">Scorecard</div>
+<div class="status-grid">
+  <div class="statuscard ${won?'ok':'info'}"><span class="slbl">Picks won</span><div class="sval">${won}</div></div>
+  <div class="statuscard info"><span class="slbl">Picks lost</span><div class="sval">${lost}</div></div>
+</div>${note}${log}
+<div class="edisc">Only picks locked before kickoff are graded. Displayed scores are factual and unchanged. Probabilities remain estimates.</div>`;
+}
 function highlightFavoriteRows(){if(!favoriteTeam())return;document.querySelectorAll('.gtable .gteam').forEach(cell=>{if(teamKey(cell.textContent).includes(teamKey(favoriteTeam())))cell.closest('tr')?.classList.add('favoriteTeamRow')})}
-function renderCurrent(){captureSignalsIfFresh();({matches:renderMatches,results:renderResults,tott:renderTOTT,groups:renderStandings,title:renderTitle,edge:renderEdge,score:renderScore,bracket:renderBracket,third:renderThird,news:renderNews,insights:renderInsights,status:renderStatus,updates:renderSystemUpdates,community:renderCommunity,sandbox:renderSandbox,customize:renderCustomize}[VIEW]||renderMatches)();renderWelcome();highlightFavoriteRows();applyStaticI18n()}
+function renderCurrent(){captureSignalsIfFresh();({matches:renderMatches,results:renderResults,groups:renderStandings,bracket:renderBracket,score:renderScore,community:renderCommunity}[VIEW]||renderMatches)();renderWelcome();highlightFavoriteRows();applyStaticI18n()}
 function renderStrip(){const M=DATA.matches||[],next=M.filter(isVisibleUpcoming).sort((a,b)=>(a.kickoff||'').localeCompare(b.kickoff||''))[0];const parts=[];
 const isSample=(DATA.source_note||'').toLowerCase().includes('sample');
 const freshness=DATA.source_freshness||{},fallback=freshness.state==='fallback';
@@ -46,7 +52,7 @@ if(streakStats.streak>=2)parts.push(`<span class="ls-streak" title="Beat the Mod
 if(next)parts.push(`<span class="ls-next ls-clickable" data-mid="${esc(next.id)}" onclick="openMatchModal(this.dataset.mid)" role="button" tabindex="0" title="Open expanded view">Next · <b>${esc(next.home.code)} v ${esc(next.away.code)}</b> ${kickIn(next.kickoff)}</span>`);else parts.push(`<span class="ls-next">No upcoming fixtures</span>`);parts.push(`<span class="ls-upd">${fallback?`<b class="stale">fallback snapshot ${ago(freshness.last_successful_at||DATA.updated)}</b> · `:(()=>{try{const a=(Date.now()-new Date(DATA.updated))/60000;if(a>360)return `<b class="stale">data ${ago(DATA.updated)}</b> · `;}catch(e){}return 'Updated '+ago(DATA.updated)+' · ';})()}${t("independent · built for fans")} · <b style="color:var(--signal)">build ${currentBuild()}</b></span>`);$('#strip').innerHTML=parts.join('')}
 /* removed duplicate (diverseNews) */
 /* removed duplicate (renderInsight) */
-function setView(v){VIEW=v;if(typeof closeNavSheet==='function')closeNavSheet();
+function setView(v){VIEW=safeView(v);v=VIEW;if(typeof closeNavSheet==='function')closeNavSheet();
   // Leaving the board is the signal that the visitor wants more than the board
   // payload holds. Renders now from what's loaded, then again once the full
   // per-sport files arrive.

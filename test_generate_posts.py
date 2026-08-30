@@ -204,22 +204,19 @@ class RenderAndSitemapTests(unittest.TestCase):
         self.assertEqual(ld["@type"], "Article")
         self.assertEqual(ld["headline"], post["title"])
         self.assertIn("View matchup", html)
-        self.assertIn("See model prediction", html)
         self.assertIn("Open scorecard", html)
-        self.assertIn("Explore similar games", html)
-        self.assertIn("sport=nfl&amp;view=edge", html)
+        self.assertIn("sport=nfl&amp;view=score", html)
         self.assertIn("pregame predictions, market context and postgame grading", html)
         self.assertNotIn("live scores", html.lower())
 
     def test_regenerate_sitemap_includes_base_pages_and_every_post(self):
         gp.publish_recap_if_due("NFL", "NFL", SCORECARD, AWARDS)
         n = gp.regenerate_sitemap()
-        self.assertEqual(n, 10)  # index, legal, qa, content hub, 5 public tactics pages, one post
+        self.assertEqual(n, 4)  # index, legal, qa, one post
         with open("sitemap.xml", encoding="utf-8") as f:
             xml = f.read()
         self.assertIn("qa.html", xml)
         self.assertIn("posts/nfl-", xml)
-        self.assertIn("tactics-baseball.html", xml)
         import xml.etree.ElementTree as ET
         ET.fromstring(xml)  # raises if malformed
 

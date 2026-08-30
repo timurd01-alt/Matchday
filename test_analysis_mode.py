@@ -131,94 +131,6 @@ class AnalysisModeTests(unittest.TestCase):
         self.assertNotIn("model_rank??m?.home?.pos", source)
         self.assertNotIn("model_rank??m?.away?.pos", source)
 
-    def test_public_shell_promises_pregame_and_postgame_analysis(self):
-        html = (ROOT / "index.html").read_text(encoding="utf-8")
-        content = (ROOT / "content.html").read_text(encoding="utf-8")
-        manifest = (ROOT / "manifest.json").read_text(encoding="utf-8")
-        public_copy = "\n".join((html, content, manifest)).lower()
-        self.assertIn("Sports Predictions &amp; Matchup Analysis", html)
-        self.assertIn("Pregame model picks, probability forecasts, matchup analysis", html)
-        self.assertIn("Sports Prediction Recaps &amp; Analysis", content)
-        for unsupported_promise in (
-            "live scores", "live scoreboard", "real-time scores", "live feed"
-        ):
-            self.assertNotIn(unsupported_promise, public_copy)
-
-    def test_content_rewind_uses_locked_receipts_and_renders_every_filter_change(self):
-        html = (ROOT / "content.html").read_text(encoding="utf-8")
-        js = (ROOT / "content.js").read_text(encoding="utf-8")
-        css = (ROOT / "content.css").read_text(encoding="utf-8")
-        scheduler = (ROOT / "multi_fetch.py").read_text(encoding="utf-8")
-        self.assertIn('id="gameRewindGrid"', html)
-        self.assertIn("function verifiedModelCall", js)
-        self.assertIn("match?.official_pick", js)
-        self.assertIn("function officialPickHit", js)
-        self.assertIn("renderGameRewind()", js)
-        self.assertIn(".rewindVisual", css)
-        self.assertIn(".rewindCopy", css)
-        self.assertIn("generate_public_content_feed()", scheduler)
-
-    def test_content_hub_does_not_re_render_dashboard_only_sections(self):
-        """The hub is an archive, tactics index, and SEO landing page.
-
-        Signal lab, Fun stats, and the Daily brief were second renderings of
-        `index.html`'s edge and score views over the same feed, which is what
-        made the page read as a large surface that showed nothing new. Keep
-        them out: the dashboard owns live probabilities and the scorecard.
-        """
-        html = (ROOT / "content.html").read_text(encoding="utf-8")
-        js = (ROOT / "content.js").read_text(encoding="utf-8")
-        css = (ROOT / "content.css").read_text(encoding="utf-8")
-        for removed_id in ('id="signal-lab"', 'id="signalLabGrid"',
-                           'id="fun-stats"', 'id="funStatsGrid"',
-                           'id="brief"', 'id="briefGrid"'):
-            self.assertNotIn(removed_id, html)
-        for removed_fn in ("renderSignalLab", "renderFunStats", "renderBrief",
-                           "movementHighlight"):
-            self.assertNotIn(removed_fn, js)
-        for removed_rule in (".signalLabGrid", ".funStatsGrid", ".briefGrid",
-                             ".briefCard", ".boardDonut"):
-            self.assertNotIn(removed_rule, css)
-        # What the page still owns.
-        self.assertIn('id="latestGrid"', html)
-        self.assertIn('id="gameRewindGrid"', html)
-        self.assertIn('id="accountabilityGrid"', html)
-        self.assertIn('href="tactics-soccer.html"', html)
-        jump_nav = html.split('class="jumpnav"', 1)[1].split("</nav>", 1)[0]
-        for dead_anchor in ("#signal-lab", "#fun-stats", "#brief"):
-            self.assertNotIn(dead_anchor, jump_nav)
-
-    def test_content_hub_states_no_freshness_it_cannot_back(self):
-        """A page branded on verified grading must not fake an update stamp.
-
-        The Learn cards hardcoded "Updated Jul 24" while the tactics pages they
-        link to were last revised Aug 1, and nothing regenerates those labels.
-        The HTML no longer claims a date at all, and the JS stamps that drive
-        the Latest feed carry a comment tying them to the linked page's edit.
-        """
-        import re
-
-        html = (ROOT / "content.html").read_text(encoding="utf-8")
-        js = (ROOT / "content.js").read_text(encoding="utf-8")
-        self.assertEqual([], re.findall(r"Updated \w{3} \d{1,2}", html))
-        self.assertIn("`updated` is hand-maintained", js)
-        # An evergreen explainer is not stale data; it has no live feed behind
-        # it, so it must not be labelled with the feed's freshness state.
-        self.assertIn("item.type==='learn'?null:dataStatus", js)
-
-    def test_editorial_features_are_not_classified_as_weekly_recaps(self):
-        content = (ROOT / "content.js").read_text(encoding="utf-8")
-        views = (ROOT / "app-2-views.js").read_text(encoding="utf-8")
-        posts = json.loads((ROOT / "posts.json").read_text(encoding="utf-8"))
-        refining = next(post for post in posts if post["id"] == "refining-the-record-2026-07-26")
-        self.assertIn("const storyType=isRanking?'preview'", content)
-        self.assertNotIn("type:'recap',badgeType", content)
-        self.assertIn("INSIGHT_FEATURE_TYPES", views)
-        self.assertIn('id="featuresList"', views)
-        self.assertIn("posts.filter(isWeeklyRecapPost)", views)
-        self.assertIn("sort(newestPostFirst)", views)
-        self.assertEqual("methodology", refining["type"])
-
     def test_live_aggregate_and_live_filter_are_not_rendered(self):
         panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
         self.assertNotIn("more live", panels)
@@ -285,22 +197,6 @@ class AnalysisModeTests(unittest.TestCase):
         # Retiring a sport from the fetch must not strip its name, so restoring
         # it stays a one-line change rather than a hunt.
         self.assertIn("nhl:'NHL'", core)
-
-    def test_all_sports_scorecard_uses_metric_denominators(self):
-        panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
-        self.assertIn("weighted('brier','brier_graded',3,true)", panels)
-        self.assertIn("weighted('brier3','brier3_graded',3,true)", panels)
-        self.assertIn("weighted('log_loss','log_loss_graded',3,true)", panels)
-        self.assertIn("weighted('log_loss_advancement','log_loss_advancement_graded',3,true)", panels)
-        self.assertIn("Number(sc.log_loss_advancement_graded)", panels)
-        self.assertIn("separate cohorts and sample sizes", panels)
-
-    def test_scorecard_market_copy_uses_compatible_claims(self):
-        panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
-        self.assertIn("Market agreement", panels)
-        self.assertIn("Draws and pick’em prices are not mislabeled as underdogs", panels)
-        self.assertIn("Change in the no-vig market probability", panels)
-        self.assertNotIn("the sharps' favourite metric", panels)
 
     def test_scheduled_deploy_is_hourly(self):
         workflow = (ROOT / ".github" / "workflows" / "deploy.yml").read_text(encoding="utf-8")

@@ -38,10 +38,7 @@ SCHEMA_VERSION = 1
 # The pages a visitor actually loads. mini.html and qa.html are internal
 # diagnostic surfaces, deliberately excluded: holding a debug view to the
 # product's interface bar generates work nobody wants done.
-AUDITED_HTML = ("index.html", "content.html", "legal.html",
-                "tactics-baseball.html", "tactics-basketball.html",
-                "tactics-football.html", "tactics-hockey.html",
-                "tactics-soccer.html")
+AUDITED_HTML = ("index.html", "legal.html", "qa.html", "mini.html")
 AUDITED_CSS = ("styles.css", "content.css", "research-signals.css")
 
 # Most of this interface is rendered from template literals in these files, not

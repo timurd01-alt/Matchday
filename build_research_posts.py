@@ -174,7 +174,7 @@ def render_research_post_html(post):
 </head>
 <body>
 <div class="wrap">
-<nav class="postNav"><a href="../content.html">&larr; Back to Content</a><a href="../index.html">Dashboard</a></nav>
+<nav class="postNav"><a href="../index.html">&larr; Back to Matchday</a></nav>
 <p class="eyebrow">MATCHDAY RESEARCH</p>
 <h1>{_esc(post['title'])}</h1>
 <div class="meta"><span>{_esc(post['date'])}</span><span>Research</span></div>

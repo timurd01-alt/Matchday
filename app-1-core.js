@@ -163,18 +163,24 @@ function stripPastSeasonCompetitionViews(payload,now=new Date()){
 // ---- per-sport sidebar (data-driven, follows the SELECTION) ---------------
 // Each sport declares exactly which views exist for it, in order.
 const NAV_DEF={
-  all:         ['matches','results','score','community','tree','news','insights','status','updates','customize'],
-  soccer_cup:  ['matches','results','groups','title','edge','score','bracket','third','tott','community','tree','sandbox','news','insights','status','updates','customize'],
-  soccer_club: ['matches','results','groups','title','edge','score','bracket','tott','community','tree','sandbox','news','insights','status','updates','customize'],
-  us_sport:    ['matches','results','groups','title','edge','score','community','tree','sandbox','news','insights','status','updates','customize'],
-  college:     ['matches','results','groups','bracket','title','edge','score','community','tree','sandbox','news','insights','status','updates','customize'],
-  college_basketball:['matches','results','groups','bracket','title','edge','score','community','tree','sandbox','news','insights','status','updates','customize'],
-  soccer_league:['matches','results','groups','title','edge','score','tott','community','tree','sandbox','news','insights','status','updates','customize']
+  // Matchday covers college football and men's college basketball only. Every
+  // profile is the same six views; the pair is kept because NAV_LABELS still
+  // names them differently per sport (Rankings/CFP Bracket vs
+  // Conferences/Bracketology), which is the whole reason the table survives.
+  all:               ['matches','results','groups','bracket','score','community'],
+  college:           ['matches','results','groups','bracket','score','community'],
+  college_basketball:['matches','results','groups','bracket','score','community']
 };
-const SPORT_KIND={'':'all',wc:'soccer_cup',ucl:'soccer_club',epl:'soccer_league',laliga:'soccer_league',seriea:'soccer_league',bundesliga:'soccer_league',ligue1:'soccer_league',nfl:'us_sport',ncaaf:'college',ncaam:'college_basketball',nba:'us_sport',mlb:'us_sport',nhl:'us_sport'};
+// The only views that exist after the college pivot. A stored defaultView or a
+// bookmarked hash can still name a removed one (Customize let people save
+// 'news' or 'updates' for years), so every entry point clamps through this
+// rather than trusting what it was handed and rendering into a null host.
+const VIEWS=new Set(['matches','results','groups','bracket','score','community']);
+function safeView(v){return VIEWS.has(v)?v:'matches';}
+const SPORT_KIND={'':'all',ncaaf:'college',ncaam:'college_basketball'};
 function currentSportKey(){const m=(DATA_FILE||'').match(/data_(\w+)\.json/);return m?m[1]:'';}
 function navProfile(){return SPORT_KIND[currentSportKey()]||'all';}
-const NAV_LABELS={soccer_club:{groups:'League Phase'},us_sport:{groups:'Standings'},college:{groups:'Rankings',bracket:'CFP Bracket'},college_basketball:{groups:'Conferences',bracket:'Bracketology'},soccer_league:{groups:'Table',tott:'Team of the Season'}};
+const NAV_LABELS={all:{groups:'Rankings',bracket:'Bracket'},college:{groups:'Rankings',bracket:'CFP Bracket'},college_basketball:{groups:'Conferences',bracket:'Bracketology'}};
 // A domestic league plays a season, not a tournament. The nav button already
 // said so via NAV_LABELS; the view's own heading did not.
 function tottTitle(){return navProfile()==='soccer_league'?'Team of the Season':'Team of the Tournament'}

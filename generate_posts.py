@@ -469,16 +469,14 @@ def render_post_html(post):
 </head>
 <body>
 <div class="wrap">
-<nav class="postNav"><a href="../content.html">&larr; Back to Content</a><a href="../index.html">Dashboard</a></nav>
+<nav class="postNav"><a href="../index.html">&larr; Back to Matchday</a></nav>
 <p class="eyebrow">MATCHDAY MODEL RECAP</p>
 <h1>{_esc(post['title'])}</h1>
 <div class="meta"><span>{_esc(post['date'])}</span><span>{_esc(post['comp_label'])}</span><span>Auto-generated</span></div>
 {body_html}
 <nav class="articleActions" aria-label="Continue exploring">
 <a href="../index.html?sport={_esc(comp_key)}&amp;view=matches">View matchup</a>
-<a href="../index.html?sport={_esc(comp_key)}&amp;view=edge">See model prediction</a>
 <a href="../index.html?sport={_esc(comp_key)}&amp;view=score">Open scorecard</a>
-<a href="../content.html?sport={_esc(content_sport)}#latest">Explore similar games</a>
 </nav>
 <div class="notice"><strong>Use the information your way.</strong> Matchday publishes probabilities, market context, and a public track record. See the <a href="../qa.html">Q&amp;A page</a> for how predictions are built and the <a href="../legal.html">data sources and legal notice</a>.</div>
 <p class="foot"><a href="../index.html">Matchday</a> — pregame predictions, market context and postgame grading.</p>
@@ -539,12 +537,6 @@ def regenerate_sitemap():
         (BASE_URL, "hourly", "1.0", None),
         (BASE_URL + "legal.html", "monthly", "0.3", None),
         (BASE_URL + "qa.html", "monthly", "0.5", None),
-        (BASE_URL + "content.html", "weekly", "0.5", None),
-        (BASE_URL + "tactics-soccer.html", "monthly", "0.5", None),
-        (BASE_URL + "tactics-football.html", "monthly", "0.5", None),
-        (BASE_URL + "tactics-basketball.html", "monthly", "0.5", None),
-        (BASE_URL + "tactics-hockey.html", "monthly", "0.5", None),
-        (BASE_URL + "tactics-baseball.html", "monthly", "0.5", None),
     ]
     for post in posts:
         urls.append((f"{BASE_URL}posts/{post['slug']}.html", "never", "0.6", post.get("date")))

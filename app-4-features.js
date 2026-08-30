@@ -718,7 +718,7 @@ if(Object.prototype.hasOwnProperty.call(SPORT_LABELS,requestedSport)){
 }
 // Insights left the sidebar (it duplicates the Content hub); it stays reachable
 // by ?view=insights, but a stale saved default should no longer land there.
-const savedView=SETTINGS.defaultView==='insights'?'matches':(SETTINGS.defaultView||'matches');
+const savedView=safeView(SETTINGS.defaultView||'matches');
 const initialView=requestedView&&document.getElementById('view-'+requestedView)?requestedView:savedView;
 applySettings();applySportNav();setView(initialView);
 bootAccount(); // resolves a returning sign-in redirect, or restores an existing session

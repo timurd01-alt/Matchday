@@ -16,36 +16,6 @@
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://matchdayterminal.com/content.html</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://matchdayterminal.com/tactics-soccer.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://matchdayterminal.com/tactics-football.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://matchdayterminal.com/tactics-basketball.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://matchdayterminal.com/tactics-hockey.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://matchdayterminal.com/tactics-baseball.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
     <loc>https://matchdayterminal.com/posts/matchday-10-premier-league-2026-08-17.html</loc>
     <lastmod>2026-08-17</lastmod>
     <changefreq>never</changefreq>

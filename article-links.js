@@ -2,11 +2,6 @@
   'use strict';
   const file=(location.pathname.split('/').pop()||'').toLowerCase();
   const map={
-    'tactics-soccer.html':{sport:'soccer',comp:'ucl'},
-    'tactics-football.html':{sport:'nfl',comp:'nfl'},
-    'tactics-basketball.html':{sport:'basketball',comp:'nba'},
-    'tactics-baseball.html':{sport:'baseball',comp:'mlb'},
-    'tactics-hockey.html':{sport:'hockey',comp:'nhl'}
   };
   const context=map[file];if(!context)return;
   const style=document.createElement('style');
@@ -14,7 +9,7 @@
   document.head.appendChild(style);
   const nav=document.createElement('nav');nav.className='articleLoop';nav.setAttribute('aria-label','Continue exploring');
   const query=value=>encodeURIComponent(value);
-  nav.innerHTML=`<span class="articleLoopLabel">Continue with Matchday</span><a href="index.html?sport=${query(context.comp)}&view=matches">View matchup</a><a href="index.html?sport=${query(context.comp)}&view=edge">See model prediction</a><a href="index.html?sport=${query(context.comp)}&view=score">Open scorecard</a><a href="content.html?sport=${query(context.sport)}#latest">Explore similar games</a>`;
+  nav.innerHTML=`<span class="articleLoopLabel">Continue with Matchday</span><a href="index.html?sport=${query(context.comp)}&view=matches">View matchup</a><a href="index.html?sport=${query(context.comp)}&view=score">Open scorecard</a>`;
   const foot=document.querySelector('.foot'),wrap=document.querySelector('.wrap')||document.body;
   if(foot)foot.before(nav);else wrap.appendChild(nav);
 })();
