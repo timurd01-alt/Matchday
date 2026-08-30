@@ -527,7 +527,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-29T18:30:17.589253Z",
+   "observed_at": "2026-08-30T12:56:16.143529Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -541,9 +541,9 @@
   "result_corrections": [],
   "clv": 0.0,
   "closing_market_snapshot": {
-   "d": 18.0,
+   "a": 71.0,
    "h": 11.0,
-   "a": 71.0
+   "d": 18.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -1085,7 +1085,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-29T18:30:17.589326Z",
+   "observed_at": "2026-08-30T12:56:16.143606Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -1100,9 +1100,9 @@
   "result_corrections": [],
   "clv": 0.0,
   "closing_market_snapshot": {
-   "d": 30.0,
+   "a": 36.0,
    "h": 34.0,
-   "a": 36.0
+   "d": 30.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -1644,7 +1644,7 @@
    },
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-29T18:30:17.589369Z",
+   "observed_at": "2026-08-30T12:56:16.143651Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -1658,9 +1658,9 @@
   "result_corrections": [],
   "clv": -0.4,
   "closing_market_snapshot": {
-   "d": 29.703,
+   "a": 31.683,
    "h": 38.614,
-   "a": 31.683
+   "d": 29.703
   },
   "closing_market_receipt": {
    "sources": [
@@ -2198,7 +2198,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-29T18:30:17.589408Z",
+   "observed_at": "2026-08-30T12:56:16.143688Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -2212,9 +2212,9 @@
   "result_corrections": [],
   "clv": 0.4,
   "closing_market_snapshot": {
-   "d": 28.283,
+   "a": 29.293,
    "h": 42.424,
-   "a": 29.293
+   "d": 28.283
   },
   "closing_market_receipt": {
    "sources": [
@@ -2761,7 +2761,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-29T18:30:17.589443Z",
+   "observed_at": "2026-08-30T12:56:16.143724Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -2776,9 +2776,9 @@
   "result_corrections": [],
   "clv": 1.0,
   "closing_market_snapshot": {
-   "d": 26.0,
+   "a": 30.0,
    "h": 44.0,
-   "a": 30.0
+   "d": 26.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -3325,7 +3325,7 @@
    },
    "penalties": null,
    "ultimate_winner": "d",
-   "observed_at": "2026-08-29T18:30:17.589480Z",
+   "observed_at": "2026-08-30T12:56:16.143760Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -3339,9 +3339,9 @@
   "result_corrections": [],
   "clv": 0.0,
   "closing_market_snapshot": {
-   "d": 24.0,
+   "a": 51.0,
    "h": 25.0,
-   "a": 51.0
+   "d": 24.0
   },
   "closing_market_receipt": {
    "sources": [
@@ -3870,7 +3870,7 @@
    },
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-29T18:30:17.589515Z",
+   "observed_at": "2026-08-30T12:56:16.143792Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -4393,7 +4393,7 @@
    },
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-29T18:30:17.589549Z",
+   "observed_at": "2026-08-30T12:56:16.143825Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -4927,5 +4927,1489 @@
   "brier_advancement": null,
   "log_loss_advancement": null,
   "result_corrections": []
+ },
+ "560554": {
+  "schema_ver": 2,
+  "fixture_id": "560554",
+  "competition": "EPL",
+  "home": "Sunderland AFC",
+  "away": "Fulham FC",
+  "stage": "Regular Season",
+  "kickoff": "2026-08-30T13:00:00Z",
+  "pick": "h",
+  "pick_name": "Sunderland AFC",
+  "confidence": 47,
+  "edge": null,
+  "base_pick": "h",
+  "base_pick_name": "Sunderland AFC",
+  "probs": {
+   "h": 47,
+   "d": 24,
+   "a": 29
+  },
+  "advancement_probs": null,
+  "regulation_probs": {
+   "h": 47,
+   "d": 24,
+   "a": 29
+  },
+  "regulation_pick": "h",
+  "market_comparison_pick": "h",
+  "market_comparison_basis": "regulation_1x2",
+  "outcome_basis": "regulation",
+  "market_basis": "regulation_1x2",
+  "market_pick": null,
+  "market_pct": null,
+  "pick_mkt": null,
+  "value_side": null,
+  "value_edge": null,
+  "value_mkt": null,
+  "value_name": null,
+  "upset_candidate": "a",
+  "upset_name": "Fulham FC",
+  "upset_score": 44,
+  "upset_candidate_pct": 29,
+  "upset_triggered": false,
+  "upset_temperature": 1.26,
+  "upset_reason": "favorite profile is cleaner",
+  "factor_snapshot": {
+   "gd": 0.0,
+   "rest": 0.15,
+   "pts": 0.0,
+   "adv": 1.2,
+   "elo": 0.17,
+   "form": 0.0,
+   "class": 0.0
+  },
+  "market_snapshot": null,
+  "market_snapshot_at": null,
+  "market_snapshot_recorded_at": null,
+  "market_snapshot_receipt": null,
+  "market_gap": null,
+  "upset_snapshot": {
+   "candidate": "Fulham FC",
+   "class": "unknown",
+   "market_dog_pct": null,
+   "model_dog_pct": 29.0,
+   "upset_edge": null,
+   "independent_model_dog_pct": null,
+   "independent_model_lead_pct": null,
+   "independent_edge": null,
+   "edge_threshold": 8.0,
+   "supporting_signals": [],
+   "personnel_gate": true,
+   "personnel_blockers": [],
+   "radar": false,
+   "standings_candidate": null,
+   "standings_gap_pct": null,
+   "gate": "none",
+   "box_score_edge": 0.0
+  },
+  "box_score_available": false,
+  "data_availability": {
+   "market": "unavailable",
+   "box_score": "unavailable",
+   "lineups": "unavailable",
+   "injuries": "unavailable",
+   "weather": "unavailable",
+   "personnel": "unavailable",
+   "venue_context": "unavailable"
+  },
+  "damp_pct": 0,
+  "mkt_pull": 0,
+  "model_ver": "v6-calibrated",
+  "model_code_marker": "matchday-predictor-integrity-2026-07",
+  "model_signal_schema": 8,
+  "reproducibility": {
+   "model_version": "v6-calibrated",
+   "model_signal_schema": 8,
+   "probability_basis": "regulation",
+   "market_comparison_basis": "regulation_1x2",
+   "market_comparison_pick": "h"
+  },
+  "locked_at": "2026-08-30T12:56:15.981982Z",
+  "lead_time_seconds": 224.018,
+  "lead_time_hours": 0.062227,
+  "lock_window_hours": 2.0,
+  "status_at_lock": "UPCOMING",
+  "integrity_eligible": true,
+  "integrity_status": "verified",
+  "integrity_reason": "verified_pregame_window",
+  "prediction_snapshot": {
+   "pick": "h",
+   "pick_name": "Sunderland AFC",
+   "confidence": 47,
+   "model_version": "v6-calibrated",
+   "model_signal_schema": 8,
+   "base_pick": "h",
+   "base_pick_name": "Sunderland AFC",
+   "model": {
+    "h": 51,
+    "a": 27,
+    "d": 22
+   },
+   "base_blend": {
+    "h": 51,
+    "d": 22,
+    "a": 27
+   },
+   "blend": {
+    "h": 47,
+    "d": 24,
+    "a": 29
+   },
+   "adjusted": {
+    "h": 47,
+    "d": 24,
+    "a": 29
+   },
+   "is_knockout": false,
+   "advancement": null,
+   "regulation_pick": "h",
+   "market_comparison_pick": "h",
+   "market_comparison_basis": "regulation_1x2",
+   "regulation_pick_name": "Sunderland AFC",
+   "regulation_confidence": 47,
+   "regulation_probs": {
+    "h": 47,
+    "d": 24,
+    "a": 29
+   },
+   "edge": null,
+   "note": "no market to compare against",
+   "why": {
+    "gd": 0.0,
+    "rest": 0.15,
+    "pts": 0.0,
+    "adv": 1.2,
+    "elo": 0.17,
+    "form": 0.0,
+    "class": 0.0
+   },
+   "damp_pct": 0,
+   "mkt_pull": 0,
+   "market_weight": 0.0,
+   "upset": {
+    "candidate": "a",
+    "candidate_name": "Fulham FC",
+    "favorite": "h",
+    "favorite_name": "Sunderland AFC",
+    "score": 44,
+    "upset_class": "unknown",
+    "market_dog_pct": null,
+    "model_dog_pct": 29.0,
+    "upset_edge": null,
+    "radar": false,
+    "standings_candidate": null,
+    "standings_gap_pct": null,
+    "standings_sample_ok": false,
+    "temperature": 1.26,
+    "variance_pct": 18,
+    "low_goal_pct": 51,
+    "draw_pct": 22,
+    "favorite_pct": 47,
+    "candidate_pct": 29,
+    "margin_pct": 18,
+    "learn_bias_pct": 0.0,
+    "market_gap_pct": null,
+    "market_gate": false,
+    "market_quality_gate": false,
+    "independent_model_dog_pct": null,
+    "independent_model_lead_pct": null,
+    "independent_edge": null,
+    "edge_threshold": 8.0,
+    "independent_pick_gate": false,
+    "playability_gate": false,
+    "evidence_gate": false,
+    "supporting_signals": [],
+    "personnel_gate": true,
+    "personnel_blockers": [],
+    "box_score_edge": 0.0,
+    "strong_box_signal": false,
+    "blocked": false,
+    "triggered": false,
+    "reason": "favorite profile is cleaner"
+   },
+   "data_quality": {
+    "level": "established",
+    "games": {
+     "home": 1,
+     "away": 1
+    },
+    "signals": [
+     "elo",
+     "rest"
+    ],
+    "market_available": false,
+    "market_books": 0,
+    "market_spread": null,
+    "market_weight": 0.0,
+    "note": "Current-season sample and opponent-adjusted results are available."
+   },
+   "predicted_margin": {
+    "value": 0.3,
+    "unit": "goals",
+    "favored": "h",
+    "label": "+0.3 goals"
+   },
+   "class_meta": {
+    "label": "Squad edge",
+    "source": "Curated squad and star-player values",
+    "available": false,
+    "coverage": "unavailable",
+    "home_available": false,
+    "away_available": false,
+    "note": "Squad value, star quality, and ranking are a preseason prior; missing clubs are not assigned a fabricated edge.",
+    "edge_available": true,
+    "coverage_label": null
+   },
+   "publication_state": "locked",
+   "lock_readiness": {
+    "schema_ver": 1,
+    "sport": "soccer",
+    "competition": "EPL",
+    "phase": "lock_window",
+    "lock_window_hours": 2.0,
+    "lead_time_hours": 0.06,
+    "inputs": {
+     "market": "missing",
+     "injuries": "missing",
+     "lineups": "missing",
+     "weather": "missing"
+    },
+    "missing_critical": [
+     "market",
+     "injuries",
+     "lineups"
+    ],
+    "unconfirmed_critical": [
+     "market",
+     "injuries",
+     "lineups"
+    ],
+    "coverage_pct": 0,
+    "confirmed_pct": 0,
+    "provenance": [],
+    "confidence_guard": {
+     "high_confidence_label_allowed": false,
+     "reason": "critical pregame inputs not confirmed"
+    },
+    "production_weight": 0,
+    "research_mode": "prospective_shadow"
+   },
+   "neutral_venue_probs": {
+    "h": 39,
+    "d": 27,
+    "a": 34
+   },
+   "totals": {
+    "expected": 4.0,
+    "basis": "season_rate"
+   },
+   "data_availability": {
+    "market": "unavailable",
+    "box_score": "unavailable",
+    "lineups": "unavailable",
+    "injuries": "unavailable",
+    "weather": "unavailable",
+    "personnel": "unavailable",
+    "venue_context": "unavailable"
+   }
+  },
+  "input_snapshot": {
+   "competition": "EPL",
+   "competition_config": {
+    "label": "Premier League",
+    "sport": "soccer",
+    "fd": "PL",
+    "odds": "soccer_epl",
+    "outright": null,
+    "tournament": false,
+    "source": "fd",
+    "has_draws": true,
+    "league_zones": {
+     "ucl": 4,
+     "uel": 1,
+     "rel": 3
+    }
+   },
+   "match": {
+    "id": "560554",
+    "stage": "Regular Season",
+    "kickoff": "2026-08-30T13:00:00Z",
+    "status": "UPCOMING",
+    "venue": "",
+    "home": {
+     "name": "Sunderland AFC",
+     "code": "SUN",
+     "group": "",
+     "pos": null,
+     "pld": 1,
+     "w": 0,
+     "d": 0,
+     "l": 1,
+     "gf": 1,
+     "ga": 2,
+     "gd": -1,
+     "pts": 0,
+     "form": "L",
+     "rating": 5.47,
+     "rest_days": 8,
+     "form_home": "",
+     "form_away": "L"
+    },
+    "away": {
+     "name": "Fulham FC",
+     "code": "FUL",
+     "group": "",
+     "pos": null,
+     "pld": 1,
+     "w": 0,
+     "d": 0,
+     "l": 1,
+     "gf": 2,
+     "ga": 3,
+     "gd": -1,
+     "pts": 0,
+     "form": "L",
+     "rating": 5.36,
+     "rest_days": 6,
+     "form_home": "L",
+     "form_away": ""
+    },
+    "markets": {},
+    "weather": null,
+    "injuries": {
+     "home": [],
+     "away": []
+    },
+    "lineups": null,
+    "h2h": [],
+    "stats": null,
+    "stats_extra": null,
+    "data_source": null,
+    "advanced_metrics": null,
+    "advanced_metrics_meta": null,
+    "nfl_challenger_shadow": null,
+    "mlb_challenger_shadow": null,
+    "personnel": null,
+    "personnel_shadow": {
+     "schema_ver": 1,
+     "sport": "soccer",
+     "production_weight": 0,
+     "mode": "prospective_shadow",
+     "features": {
+      "injury_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineup_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineups_confirmed": false,
+      "rest_days": {
+       "home": 8,
+       "away": 6
+      },
+      "weather": null,
+      "venue_context": null
+     }
+    },
+    "pregame_context": {
+     "schema_ver": 1,
+     "sport": "soccer",
+     "competition": "EPL",
+     "phase": "lock_window",
+     "lock_window_hours": 2.0,
+     "lead_time_hours": 0.06,
+     "inputs": {
+      "market": "missing",
+      "injuries": "missing",
+      "lineups": "missing",
+      "weather": "missing"
+     },
+     "missing_critical": [
+      "market",
+      "injuries",
+      "lineups"
+     ],
+     "unconfirmed_critical": [
+      "market",
+      "injuries",
+      "lineups"
+     ],
+     "coverage_pct": 0,
+     "confirmed_pct": 0,
+     "provenance": [],
+     "confidence_guard": {
+      "high_confidence_label_allowed": false,
+      "reason": "critical pregame inputs not confirmed"
+     },
+     "production_weight": 0,
+     "research_mode": "prospective_shadow"
+    },
+    "pregame_provenance": null,
+    "venue_context": null,
+    "model_signal_schema": null
+   }
+  },
+  "mfti_shadow": {
+   "spec_version": "MFTI-0.1.1-shadow",
+   "mode": "shadow_research_only",
+   "captured_at": "2026-08-30T12:56:15.981982Z",
+   "status": "incomplete",
+   "score": null,
+   "historical_evidence": {
+    "available": false,
+    "score": null,
+    "reason": "frozen_normalization_and_rolling_recalibration_not_fitted",
+    "diagnostics": {
+     "eligible_prior_forecasts": 9,
+     "mean_brier": 0.625289,
+     "mean_log_loss": 1.052795,
+     "brier_skill_vs_uniform": 0.062067,
+     "log_skill_vs_uniform": 0.041705
+    }
+   },
+   "event_readiness": {
+    "available": false,
+    "score": null,
+    "missing_components": [
+     "scenario_stability",
+     "availability",
+     "freshness",
+     "model_stability"
+    ]
+   },
+   "components": {
+    "scenario_stability": {
+     "available": false,
+     "score": null,
+     "reason": "scenario_forecasts_not_captured"
+    },
+    "availability": {
+     "available": false,
+     "score": null,
+     "reason": "availability_probabilities_not_captured"
+    },
+    "freshness": {
+     "available": false,
+     "score": null,
+     "reason": "input_freshness_not_captured"
+    },
+    "model_stability": {
+     "available": false,
+     "score": null,
+     "reason": "independent_model_outputs_not_captured"
+    }
+   },
+   "missing_components": [
+    "historical_evidence",
+    "scenario_stability",
+    "availability",
+    "freshness",
+    "model_stability"
+   ],
+   "affects_prediction": false,
+   "user_visible": false
+  },
+  "result": null,
+  "model_result": null,
+  "market_result": null
+ },
+ "560556": {
+  "schema_ver": 2,
+  "fixture_id": "560556",
+  "competition": "EPL",
+  "home": "Chelsea FC",
+  "away": "Brighton & Hove Albion FC",
+  "stage": "Regular Season",
+  "kickoff": "2026-08-30T13:00:00Z",
+  "pick": "h",
+  "pick_name": "Chelsea FC",
+  "confidence": 38,
+  "edge": null,
+  "base_pick": "h",
+  "base_pick_name": "Chelsea FC",
+  "probs": {
+   "h": 38,
+   "d": 27,
+   "a": 35
+  },
+  "advancement_probs": null,
+  "regulation_probs": {
+   "h": 38,
+   "d": 27,
+   "a": 35
+  },
+  "regulation_pick": "h",
+  "market_comparison_pick": "h",
+  "market_comparison_basis": "regulation_1x2",
+  "outcome_basis": "regulation",
+  "market_basis": "regulation_1x2",
+  "market_pick": null,
+  "market_pct": null,
+  "pick_mkt": null,
+  "value_side": null,
+  "value_edge": null,
+  "value_mkt": null,
+  "value_name": null,
+  "upset_candidate": "a",
+  "upset_name": "Brighton & Hove Albion FC",
+  "upset_score": 80,
+  "upset_candidate_pct": 35,
+  "upset_triggered": false,
+  "upset_temperature": 1.48,
+  "upset_reason": "draw pressure · narrow team gap",
+  "factor_snapshot": {
+   "gd": -0.75,
+   "rest": -0.15,
+   "pts": 0.0,
+   "adv": 1.2,
+   "elo": -0.18,
+   "form": 0.0,
+   "class": 3.06
+  },
+  "market_snapshot": null,
+  "market_snapshot_at": null,
+  "market_snapshot_recorded_at": null,
+  "market_snapshot_receipt": null,
+  "market_gap": null,
+  "upset_snapshot": {
+   "candidate": "Brighton & Hove Albion FC",
+   "class": "unknown",
+   "market_dog_pct": null,
+   "model_dog_pct": 35.0,
+   "upset_edge": null,
+   "independent_model_dog_pct": null,
+   "independent_model_lead_pct": null,
+   "independent_edge": null,
+   "edge_threshold": 8.0,
+   "supporting_signals": [
+    "elo",
+    "gd",
+    "rest"
+   ],
+   "personnel_gate": true,
+   "personnel_blockers": [],
+   "radar": false,
+   "standings_candidate": null,
+   "standings_gap_pct": null,
+   "gate": "none",
+   "box_score_edge": 0.0
+  },
+  "box_score_available": false,
+  "data_availability": {
+   "market": "unavailable",
+   "box_score": "unavailable",
+   "lineups": "unavailable",
+   "injuries": "unavailable",
+   "weather": "unavailable",
+   "personnel": "unavailable",
+   "venue_context": "unavailable"
+  },
+  "damp_pct": 0,
+  "mkt_pull": 0,
+  "model_ver": "v6-calibrated",
+  "model_code_marker": "matchday-predictor-integrity-2026-07",
+  "model_signal_schema": 8,
+  "reproducibility": {
+   "model_version": "v6-calibrated",
+   "model_signal_schema": 8,
+   "probability_basis": "regulation",
+   "market_comparison_basis": "regulation_1x2",
+   "market_comparison_pick": "h"
+  },
+  "locked_at": "2026-08-30T12:56:15.982953Z",
+  "lead_time_seconds": 224.017,
+  "lead_time_hours": 0.062227,
+  "lock_window_hours": 2.0,
+  "status_at_lock": "UPCOMING",
+  "integrity_eligible": true,
+  "integrity_status": "verified",
+  "integrity_reason": "verified_pregame_window",
+  "prediction_snapshot": {
+   "pick": "h",
+   "pick_name": "Chelsea FC",
+   "confidence": 38,
+   "model_version": "v6-calibrated",
+   "model_signal_schema": 8,
+   "base_pick": "h",
+   "base_pick_name": "Chelsea FC",
+   "model": {
+    "h": 41,
+    "a": 35,
+    "d": 25
+   },
+   "base_blend": {
+    "h": 40,
+    "d": 25,
+    "a": 35
+   },
+   "blend": {
+    "h": 38,
+    "d": 27,
+    "a": 35
+   },
+   "adjusted": {
+    "h": 38,
+    "d": 27,
+    "a": 35
+   },
+   "is_knockout": false,
+   "advancement": null,
+   "regulation_pick": "h",
+   "market_comparison_pick": "h",
+   "market_comparison_basis": "regulation_1x2",
+   "regulation_pick_name": "Chelsea FC",
+   "regulation_confidence": 38,
+   "regulation_probs": {
+    "h": 38,
+    "d": 27,
+    "a": 35
+   },
+   "edge": null,
+   "note": "no market to compare against",
+   "why": {
+    "gd": -0.75,
+    "rest": -0.15,
+    "pts": 0.0,
+    "adv": 1.2,
+    "elo": -0.18,
+    "form": 0.0,
+    "class": 3.06
+   },
+   "damp_pct": 0,
+   "mkt_pull": 0,
+   "market_weight": 0.0,
+   "upset": {
+    "candidate": "a",
+    "candidate_name": "Brighton & Hove Albion FC",
+    "favorite": "h",
+    "favorite_name": "Chelsea FC",
+    "score": 80,
+    "upset_class": "unknown",
+    "market_dog_pct": null,
+    "model_dog_pct": 35.0,
+    "upset_edge": null,
+    "radar": false,
+    "standings_candidate": null,
+    "standings_gap_pct": null,
+    "standings_sample_ok": false,
+    "temperature": 1.48,
+    "variance_pct": 53,
+    "low_goal_pct": 52,
+    "draw_pct": 25,
+    "favorite_pct": 38,
+    "candidate_pct": 35,
+    "margin_pct": 3,
+    "learn_bias_pct": 0.0,
+    "market_gap_pct": null,
+    "market_gate": false,
+    "market_quality_gate": false,
+    "independent_model_dog_pct": null,
+    "independent_model_lead_pct": null,
+    "independent_edge": null,
+    "edge_threshold": 8.0,
+    "independent_pick_gate": false,
+    "playability_gate": true,
+    "evidence_gate": true,
+    "supporting_signals": [
+     "elo",
+     "gd",
+     "rest"
+    ],
+    "personnel_gate": true,
+    "personnel_blockers": [],
+    "box_score_edge": 0.0,
+    "strong_box_signal": false,
+    "blocked": false,
+    "triggered": false,
+    "reason": "draw pressure · narrow team gap"
+   },
+   "data_quality": {
+    "level": "established",
+    "games": {
+     "home": 1,
+     "away": 1
+    },
+    "signals": [
+     "class",
+     "elo",
+     "rest"
+    ],
+    "market_available": false,
+    "market_books": 0,
+    "market_spread": null,
+    "market_weight": 0.0,
+    "note": "Current-season sample and opponent-adjusted results are available."
+   },
+   "predicted_margin": {
+    "value": 0.0,
+    "unit": "goals",
+    "favored": null,
+    "label": "Even matchup"
+   },
+   "class_meta": {
+    "label": "Squad edge",
+    "source": "Curated squad and star-player values",
+    "available": true,
+    "coverage": "complete",
+    "home_available": true,
+    "away_available": true,
+    "note": "Squad value, star quality, and ranking are a preseason prior; missing clubs are not assigned a fabricated edge.",
+    "edge_available": true,
+    "coverage_label": null
+   },
+   "publication_state": "locked",
+   "lock_readiness": {
+    "schema_ver": 1,
+    "sport": "soccer",
+    "competition": "EPL",
+    "phase": "lock_window",
+    "lock_window_hours": 2.0,
+    "lead_time_hours": 0.06,
+    "inputs": {
+     "market": "missing",
+     "injuries": "missing",
+     "lineups": "missing",
+     "weather": "missing"
+    },
+    "missing_critical": [
+     "market",
+     "injuries",
+     "lineups"
+    ],
+    "unconfirmed_critical": [
+     "market",
+     "injuries",
+     "lineups"
+    ],
+    "coverage_pct": 0,
+    "confirmed_pct": 0,
+    "provenance": [],
+    "confidence_guard": {
+     "high_confidence_label_allowed": false,
+     "reason": "critical pregame inputs not confirmed"
+    },
+    "production_weight": 0,
+    "research_mode": "prospective_shadow"
+   },
+   "neutral_venue_probs": {
+    "h": 38,
+    "d": 27,
+    "a": 35
+   },
+   "totals": {
+    "expected": 2.69,
+    "basis": "preseason_rating"
+   },
+   "data_availability": {
+    "market": "unavailable",
+    "box_score": "unavailable",
+    "lineups": "unavailable",
+    "injuries": "unavailable",
+    "weather": "unavailable",
+    "personnel": "unavailable",
+    "venue_context": "unavailable"
+   }
+  },
+  "input_snapshot": {
+   "competition": "EPL",
+   "competition_config": {
+    "label": "Premier League",
+    "sport": "soccer",
+    "fd": "PL",
+    "odds": "soccer_epl",
+    "outright": null,
+    "tournament": false,
+    "source": "fd",
+    "has_draws": true,
+    "league_zones": {
+     "ucl": 4,
+     "uel": 1,
+     "rel": 3
+    }
+   },
+   "match": {
+    "id": "560556",
+    "stage": "Regular Season",
+    "kickoff": "2026-08-30T13:00:00Z",
+    "status": "UPCOMING",
+    "venue": "",
+    "home": {
+     "name": "Chelsea FC",
+     "code": "CHE",
+     "group": "",
+     "pos": null,
+     "pld": 1,
+     "w": 1,
+     "d": 0,
+     "l": 0,
+     "gf": 3,
+     "ga": 2,
+     "gd": 1,
+     "pts": 3,
+     "form": "W",
+     "rating": 6.16,
+     "rest_days": 6,
+     "form_home": "",
+     "form_away": "W"
+    },
+    "away": {
+     "name": "Brighton & Hove Albion FC",
+     "code": "BHA",
+     "group": "",
+     "pos": null,
+     "pld": 1,
+     "w": 1,
+     "d": 0,
+     "l": 0,
+     "gf": 4,
+     "ga": 0,
+     "gd": 4,
+     "pts": 3,
+     "form": "W",
+     "rating": 6.28,
+     "rest_days": 7,
+     "form_home": "W",
+     "form_away": ""
+    },
+    "markets": {},
+    "weather": null,
+    "injuries": {
+     "home": [],
+     "away": []
+    },
+    "lineups": null,
+    "h2h": [],
+    "stats": null,
+    "stats_extra": null,
+    "data_source": null,
+    "advanced_metrics": null,
+    "advanced_metrics_meta": null,
+    "nfl_challenger_shadow": null,
+    "mlb_challenger_shadow": null,
+    "personnel": null,
+    "personnel_shadow": {
+     "schema_ver": 1,
+     "sport": "soccer",
+     "production_weight": 0,
+     "mode": "prospective_shadow",
+     "features": {
+      "injury_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineup_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineups_confirmed": false,
+      "rest_days": {
+       "home": 6,
+       "away": 7
+      },
+      "weather": null,
+      "venue_context": null
+     }
+    },
+    "pregame_context": {
+     "schema_ver": 1,
+     "sport": "soccer",
+     "competition": "EPL",
+     "phase": "lock_window",
+     "lock_window_hours": 2.0,
+     "lead_time_hours": 0.06,
+     "inputs": {
+      "market": "missing",
+      "injuries": "missing",
+      "lineups": "missing",
+      "weather": "missing"
+     },
+     "missing_critical": [
+      "market",
+      "injuries",
+      "lineups"
+     ],
+     "unconfirmed_critical": [
+      "market",
+      "injuries",
+      "lineups"
+     ],
+     "coverage_pct": 0,
+     "confirmed_pct": 0,
+     "provenance": [],
+     "confidence_guard": {
+      "high_confidence_label_allowed": false,
+      "reason": "critical pregame inputs not confirmed"
+     },
+     "production_weight": 0,
+     "research_mode": "prospective_shadow"
+    },
+    "pregame_provenance": null,
+    "venue_context": null,
+    "model_signal_schema": null
+   }
+  },
+  "mfti_shadow": {
+   "spec_version": "MFTI-0.1.1-shadow",
+   "mode": "shadow_research_only",
+   "captured_at": "2026-08-30T12:56:15.982953Z",
+   "status": "incomplete",
+   "score": null,
+   "historical_evidence": {
+    "available": false,
+    "score": null,
+    "reason": "frozen_normalization_and_rolling_recalibration_not_fitted",
+    "diagnostics": {
+     "eligible_prior_forecasts": 9,
+     "mean_brier": 0.625289,
+     "mean_log_loss": 1.052795,
+     "brier_skill_vs_uniform": 0.062067,
+     "log_skill_vs_uniform": 0.041705
+    }
+   },
+   "event_readiness": {
+    "available": false,
+    "score": null,
+    "missing_components": [
+     "scenario_stability",
+     "availability",
+     "freshness",
+     "model_stability"
+    ]
+   },
+   "components": {
+    "scenario_stability": {
+     "available": false,
+     "score": null,
+     "reason": "scenario_forecasts_not_captured"
+    },
+    "availability": {
+     "available": false,
+     "score": null,
+     "reason": "availability_probabilities_not_captured"
+    },
+    "freshness": {
+     "available": false,
+     "score": null,
+     "reason": "input_freshness_not_captured"
+    },
+    "model_stability": {
+     "available": false,
+     "score": null,
+     "reason": "independent_model_outputs_not_captured"
+    }
+   },
+   "missing_components": [
+    "historical_evidence",
+    "scenario_stability",
+    "availability",
+    "freshness",
+    "model_stability"
+   ],
+   "affects_prediction": false,
+   "user_visible": false
+  },
+  "result": null,
+  "model_result": null,
+  "market_result": null
+ },
+ "560559": {
+  "schema_ver": 2,
+  "fixture_id": "560559",
+  "competition": "EPL",
+  "home": "Leeds United FC",
+  "away": "Brentford FC",
+  "stage": "Regular Season",
+  "kickoff": "2026-08-30T13:00:00Z",
+  "pick": "h",
+  "pick_name": "Leeds United FC",
+  "confidence": 36,
+  "edge": null,
+  "base_pick": "h",
+  "base_pick_name": "Leeds United FC",
+  "probs": {
+   "h": 36,
+   "d": 29,
+   "a": 35
+  },
+  "advancement_probs": null,
+  "regulation_probs": {
+   "h": 36,
+   "d": 29,
+   "a": 35
+  },
+  "regulation_pick": "h",
+  "market_comparison_pick": "h",
+  "market_comparison_basis": "regulation_1x2",
+  "outcome_basis": "regulation",
+  "market_basis": "regulation_1x2",
+  "market_pick": null,
+  "market_pct": null,
+  "pick_mkt": null,
+  "value_side": null,
+  "value_edge": null,
+  "value_mkt": null,
+  "value_name": null,
+  "upset_candidate": "a",
+  "upset_name": "Brentford FC",
+  "upset_score": 81,
+  "upset_candidate_pct": 35,
+  "upset_triggered": false,
+  "upset_temperature": 1.53,
+  "upset_reason": "draw pressure · narrow team gap",
+  "factor_snapshot": {
+   "gd": -0.5,
+   "rest": 0.0,
+   "pts": 0.0,
+   "adv": 1.2,
+   "elo": -0.24,
+   "form": 0.0,
+   "class": 0.0
+  },
+  "market_snapshot": null,
+  "market_snapshot_at": null,
+  "market_snapshot_recorded_at": null,
+  "market_snapshot_receipt": null,
+  "market_gap": null,
+  "upset_snapshot": {
+   "candidate": "Brentford FC",
+   "class": "unknown",
+   "market_dog_pct": null,
+   "model_dog_pct": 35.0,
+   "upset_edge": null,
+   "independent_model_dog_pct": null,
+   "independent_model_lead_pct": null,
+   "independent_edge": null,
+   "edge_threshold": 8.0,
+   "supporting_signals": [
+    "elo",
+    "gd"
+   ],
+   "personnel_gate": true,
+   "personnel_blockers": [],
+   "radar": false,
+   "standings_candidate": null,
+   "standings_gap_pct": null,
+   "gate": "none",
+   "box_score_edge": 0.0
+  },
+  "box_score_available": false,
+  "data_availability": {
+   "market": "unavailable",
+   "box_score": "unavailable",
+   "lineups": "unavailable",
+   "injuries": "unavailable",
+   "weather": "unavailable",
+   "personnel": "unavailable",
+   "venue_context": "unavailable"
+  },
+  "damp_pct": 0,
+  "mkt_pull": 0,
+  "model_ver": "v6-calibrated",
+  "model_code_marker": "matchday-predictor-integrity-2026-07",
+  "model_signal_schema": 8,
+  "reproducibility": {
+   "model_version": "v6-calibrated",
+   "model_signal_schema": 8,
+   "probability_basis": "regulation",
+   "market_comparison_basis": "regulation_1x2",
+   "market_comparison_pick": "h"
+  },
+  "locked_at": "2026-08-30T12:56:15.983834Z",
+  "lead_time_seconds": 224.016,
+  "lead_time_hours": 0.062227,
+  "lock_window_hours": 2.0,
+  "status_at_lock": "UPCOMING",
+  "integrity_eligible": true,
+  "integrity_status": "verified",
+  "integrity_reason": "verified_pregame_window",
+  "prediction_snapshot": {
+   "pick": "h",
+   "pick_name": "Leeds United FC",
+   "confidence": 36,
+   "model_version": "v6-calibrated",
+   "model_signal_schema": 8,
+   "base_pick": "h",
+   "base_pick_name": "Leeds United FC",
+   "model": {
+    "h": 38,
+    "a": 36,
+    "d": 26
+   },
+   "base_blend": {
+    "h": 38,
+    "d": 26,
+    "a": 36
+   },
+   "blend": {
+    "h": 36,
+    "d": 29,
+    "a": 35
+   },
+   "adjusted": {
+    "h": 36,
+    "d": 29,
+    "a": 35
+   },
+   "is_knockout": false,
+   "advancement": null,
+   "regulation_pick": "h",
+   "market_comparison_pick": "h",
+   "market_comparison_basis": "regulation_1x2",
+   "regulation_pick_name": "Leeds United FC",
+   "regulation_confidence": 36,
+   "regulation_probs": {
+    "h": 36,
+    "d": 29,
+    "a": 35
+   },
+   "edge": null,
+   "note": "no market to compare against",
+   "why": {
+    "gd": -0.5,
+    "rest": 0.0,
+    "pts": 0.0,
+    "adv": 1.2,
+    "elo": -0.24,
+    "form": 0.0,
+    "class": 0.0
+   },
+   "damp_pct": 0,
+   "mkt_pull": 0,
+   "market_weight": 0.0,
+   "upset": {
+    "candidate": "a",
+    "candidate_name": "Brentford FC",
+    "favorite": "h",
+    "favorite_name": "Leeds United FC",
+    "score": 81,
+    "upset_class": "unknown",
+    "market_dog_pct": null,
+    "model_dog_pct": 35.0,
+    "upset_edge": null,
+    "radar": false,
+    "standings_candidate": null,
+    "standings_gap_pct": null,
+    "standings_sample_ok": false,
+    "temperature": 1.53,
+    "variance_pct": 61,
+    "low_goal_pct": 53,
+    "draw_pct": 26,
+    "favorite_pct": 36,
+    "candidate_pct": 35,
+    "margin_pct": 1,
+    "learn_bias_pct": 0.0,
+    "market_gap_pct": null,
+    "market_gate": false,
+    "market_quality_gate": false,
+    "independent_model_dog_pct": null,
+    "independent_model_lead_pct": null,
+    "independent_edge": null,
+    "edge_threshold": 8.0,
+    "independent_pick_gate": false,
+    "playability_gate": true,
+    "evidence_gate": true,
+    "supporting_signals": [
+     "elo",
+     "gd"
+    ],
+    "personnel_gate": true,
+    "personnel_blockers": [],
+    "box_score_edge": 0.0,
+    "strong_box_signal": false,
+    "blocked": false,
+    "triggered": false,
+    "reason": "draw pressure · narrow team gap"
+   },
+   "data_quality": {
+    "level": "established",
+    "games": {
+     "home": 1,
+     "away": 1
+    },
+    "signals": [
+     "elo"
+    ],
+    "market_available": false,
+    "market_books": 0,
+    "market_spread": null,
+    "market_weight": 0.0,
+    "note": "Current-season sample and opponent-adjusted results are available."
+   },
+   "predicted_margin": {
+    "value": 0.0,
+    "unit": "goals",
+    "favored": null,
+    "label": "Even matchup"
+   },
+   "class_meta": {
+    "label": "Squad edge",
+    "source": "Curated squad and star-player values",
+    "available": false,
+    "coverage": "unavailable",
+    "home_available": false,
+    "away_available": false,
+    "note": "Squad value, star quality, and ranking are a preseason prior; missing clubs are not assigned a fabricated edge.",
+    "edge_available": true,
+    "coverage_label": null
+   },
+   "publication_state": "locked",
+   "lock_readiness": {
+    "schema_ver": 1,
+    "sport": "soccer",
+    "competition": "EPL",
+    "phase": "lock_window",
+    "lock_window_hours": 2.0,
+    "lead_time_hours": 0.06,
+    "inputs": {
+     "market": "missing",
+     "injuries": "missing",
+     "lineups": "missing",
+     "weather": "missing"
+    },
+    "missing_critical": [
+     "market",
+     "injuries",
+     "lineups"
+    ],
+    "unconfirmed_critical": [
+     "market",
+     "injuries",
+     "lineups"
+    ],
+    "coverage_pct": 0,
+    "confirmed_pct": 0,
+    "provenance": [],
+    "confidence_guard": {
+     "high_confidence_label_allowed": false,
+     "reason": "critical pregame inputs not confirmed"
+    },
+    "production_weight": 0,
+    "research_mode": "prospective_shadow"
+   },
+   "neutral_venue_probs": {
+    "h": 35,
+    "d": 27,
+    "a": 38
+   },
+   "totals": {
+    "expected": 2.68,
+    "basis": "preseason_rating"
+   },
+   "data_availability": {
+    "market": "unavailable",
+    "box_score": "unavailable",
+    "lineups": "unavailable",
+    "injuries": "unavailable",
+    "weather": "unavailable",
+    "personnel": "unavailable",
+    "venue_context": "unavailable"
+   }
+  },
+  "input_snapshot": {
+   "competition": "EPL",
+   "competition_config": {
+    "label": "Premier League",
+    "sport": "soccer",
+    "fd": "PL",
+    "odds": "soccer_epl",
+    "outright": null,
+    "tournament": false,
+    "source": "fd",
+    "has_draws": true,
+    "league_zones": {
+     "ucl": 4,
+     "uel": 1,
+     "rel": 3
+    }
+   },
+   "match": {
+    "id": "560559",
+    "stage": "Regular Season",
+    "kickoff": "2026-08-30T13:00:00Z",
+    "status": "UPCOMING",
+    "venue": "",
+    "home": {
+     "name": "Leeds United FC",
+     "code": "LEE",
+     "group": "",
+     "pos": null,
+     "pld": 1,
+     "w": 1,
+     "d": 0,
+     "l": 0,
+     "gf": 1,
+     "ga": 0,
+     "gd": 1,
+     "pts": 3,
+     "form": "W",
+     "rating": 5.97,
+     "rest_days": 8,
+     "form_home": "",
+     "form_away": "W"
+    },
+    "away": {
+     "name": "Brentford FC",
+     "code": "BRE",
+     "group": "",
+     "pos": null,
+     "pld": 1,
+     "w": 1,
+     "d": 0,
+     "l": 0,
+     "gf": 3,
+     "ga": 0,
+     "gd": 3,
+     "pts": 3,
+     "form": "W",
+     "rating": 6.13,
+     "rest_days": 8,
+     "form_home": "W",
+     "form_away": ""
+    },
+    "markets": {},
+    "weather": null,
+    "injuries": {
+     "home": [],
+     "away": []
+    },
+    "lineups": null,
+    "h2h": [],
+    "stats": null,
+    "stats_extra": null,
+    "data_source": null,
+    "advanced_metrics": null,
+    "advanced_metrics_meta": null,
+    "nfl_challenger_shadow": null,
+    "mlb_challenger_shadow": null,
+    "personnel": null,
+    "personnel_shadow": {
+     "schema_ver": 1,
+     "sport": "soccer",
+     "production_weight": 0,
+     "mode": "prospective_shadow",
+     "features": {
+      "injury_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineup_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineups_confirmed": false,
+      "rest_days": {
+       "home": 8,
+       "away": 8
+      },
+      "weather": null,
+      "venue_context": null
+     }
+    },
+    "pregame_context": {
+     "schema_ver": 1,
+     "sport": "soccer",
+     "competition": "EPL",
+     "phase": "lock_window",
+     "lock_window_hours": 2.0,
+     "lead_time_hours": 0.06,
+     "inputs": {
+      "market": "missing",
+      "injuries": "missing",
+      "lineups": "missing",
+      "weather": "missing"
+     },
+     "missing_critical": [
+      "market",
+      "injuries",
+      "lineups"
+     ],
+     "unconfirmed_critical": [
+      "market",
+      "injuries",
+      "lineups"
+     ],
+     "coverage_pct": 0,
+     "confirmed_pct": 0,
+     "provenance": [],
+     "confidence_guard": {
+      "high_confidence_label_allowed": false,
+      "reason": "critical pregame inputs not confirmed"
+     },
+     "production_weight": 0,
+     "research_mode": "prospective_shadow"
+    },
+    "pregame_provenance": null,
+    "venue_context": null,
+    "model_signal_schema": null
+   }
+  },
+  "mfti_shadow": {
+   "spec_version": "MFTI-0.1.1-shadow",
+   "mode": "shadow_research_only",
+   "captured_at": "2026-08-30T12:56:15.983834Z",
+   "status": "incomplete",
+   "score": null,
+   "historical_evidence": {
+    "available": false,
+    "score": null,
+    "reason": "frozen_normalization_and_rolling_recalibration_not_fitted",
+    "diagnostics": {
+     "eligible_prior_forecasts": 9,
+     "mean_brier": 0.625289,
+     "mean_log_loss": 1.052795,
+     "brier_skill_vs_uniform": 0.062067,
+     "log_skill_vs_uniform": 0.041705
+    }
+   },
+   "event_readiness": {
+    "available": false,
+    "score": null,
+    "missing_components": [
+     "scenario_stability",
+     "availability",
+     "freshness",
+     "model_stability"
+    ]
+   },
+   "components": {
+    "scenario_stability": {
+     "available": false,
+     "score": null,
+     "reason": "scenario_forecasts_not_captured"
+    },
+    "availability": {
+     "available": false,
+     "score": null,
+     "reason": "availability_probabilities_not_captured"
+    },
+    "freshness": {
+     "available": false,
+     "score": null,
+     "reason": "input_freshness_not_captured"
+    },
+    "model_stability": {
+     "available": false,
+     "score": null,
+     "reason": "independent_model_outputs_not_captured"
+    }
+   },
+   "missing_components": [
+    "historical_evidence",
+    "scenario_stability",
+    "availability",
+    "freshness",
+    "model_stability"
+   ],
+   "affects_prediction": false,
+   "user_visible": false
+  },
+  "result": null,
+  "model_result": null,
+  "market_result": null
  }
 }
