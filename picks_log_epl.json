@@ -527,7 +527,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-30T12:56:16.143529Z",
+   "observed_at": "2026-08-30T17:30:17.099058Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -1085,7 +1085,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-30T12:56:16.143606Z",
+   "observed_at": "2026-08-30T17:30:17.099112Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -1644,7 +1644,7 @@
    },
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-30T12:56:16.143651Z",
+   "observed_at": "2026-08-30T17:30:17.099143Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -2198,7 +2198,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-30T12:56:16.143688Z",
+   "observed_at": "2026-08-30T17:30:17.099168Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -2761,7 +2761,7 @@
    },
    "penalties": null,
    "ultimate_winner": "h",
-   "observed_at": "2026-08-30T12:56:16.143724Z",
+   "observed_at": "2026-08-30T17:30:17.099191Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -3325,7 +3325,7 @@
    },
    "penalties": null,
    "ultimate_winner": "d",
-   "observed_at": "2026-08-30T12:56:16.143760Z",
+   "observed_at": "2026-08-30T17:30:17.099218Z",
    "source": "provider"
   },
   "model_hit": false,
@@ -3870,7 +3870,7 @@
    },
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-30T12:56:16.143792Z",
+   "observed_at": "2026-08-30T17:30:17.099241Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -4393,7 +4393,7 @@
    },
    "penalties": null,
    "ultimate_winner": "a",
-   "observed_at": "2026-08-30T12:56:16.143825Z",
+   "observed_at": "2026-08-30T17:30:17.099262Z",
    "source": "provider"
   },
   "model_hit": true,
@@ -5414,9 +5414,33 @@
    "affects_prediction": false,
    "user_visible": false
   },
-  "result": null,
-  "model_result": null,
-  "market_result": null
+  "result": "h",
+  "model_result": "h",
+  "market_result": "h",
+  "score": "1-0",
+  "result_snapshot": {
+   "display": {
+    "home": 1,
+    "away": 0
+   },
+   "regulation": {
+    "home": 1,
+    "away": 0
+   },
+   "penalties": null,
+   "ultimate_winner": "h",
+   "observed_at": "2026-08-30T17:30:17.099285Z",
+   "source": "provider"
+  },
+  "model_hit": true,
+  "market_hit": null,
+  "market_comparison_hit": true,
+  "upset_hit": false,
+  "brier3": 0.423,
+  "log_loss": 0.755,
+  "brier_advancement": null,
+  "log_loss_advancement": null,
+  "result_corrections": []
  },
  "560556": {
   "schema_ver": 2,
@@ -5913,9 +5937,33 @@
    "affects_prediction": false,
    "user_visible": false
   },
-  "result": null,
-  "model_result": null,
-  "market_result": null
+  "result": "h",
+  "model_result": "h",
+  "market_result": "h",
+  "score": "4-3",
+  "result_snapshot": {
+   "display": {
+    "home": 4,
+    "away": 3
+   },
+   "regulation": {
+    "home": 4,
+    "away": 3
+   },
+   "penalties": null,
+   "ultimate_winner": "h",
+   "observed_at": "2026-08-30T17:30:17.099306Z",
+   "source": "provider"
+  },
+  "model_hit": true,
+  "market_hit": null,
+  "market_comparison_hit": true,
+  "upset_hit": false,
+  "brier3": 0.58,
+  "log_loss": 0.968,
+  "brier_advancement": null,
+  "log_loss_advancement": null,
+  "result_corrections": []
  },
  "560559": {
   "schema_ver": 2,
@@ -6408,8 +6456,32 @@
    "affects_prediction": false,
    "user_visible": false
   },
-  "result": null,
-  "model_result": null,
-  "market_result": null
+  "result": "d",
+  "model_result": "d",
+  "market_result": "d",
+  "score": "1-1",
+  "result_snapshot": {
+   "display": {
+    "home": 1,
+    "away": 1
+   },
+   "regulation": {
+    "home": 1,
+    "away": 1
+   },
+   "penalties": null,
+   "ultimate_winner": "d",
+   "observed_at": "2026-08-30T17:30:17.099326Z",
+   "source": "provider"
+  },
+  "model_hit": false,
+  "market_hit": null,
+  "market_comparison_hit": false,
+  "upset_hit": false,
+  "brier3": 0.756,
+  "log_loss": 1.238,
+  "brier_advancement": null,
+  "log_loss_advancement": null,
+  "result_corrections": []
  }
 }

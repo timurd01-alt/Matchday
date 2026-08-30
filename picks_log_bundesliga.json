@@ -983,8 +983,32 @@
    "affects_prediction": false,
    "user_visible": false
   },
-  "result": null,
-  "model_result": null,
-  "market_result": null
+  "result": "h",
+  "model_result": "h",
+  "market_result": "h",
+  "score": "4-1",
+  "result_snapshot": {
+   "display": {
+    "home": 4,
+    "away": 1
+   },
+   "regulation": {
+    "home": 4,
+    "away": 1
+   },
+   "penalties": null,
+   "ultimate_winner": "h",
+   "observed_at": "2026-08-30T17:32:09.323529Z",
+   "source": "provider"
+  },
+  "model_hit": true,
+  "market_hit": null,
+  "market_comparison_hit": true,
+  "upset_hit": false,
+  "brier3": 0.052,
+  "log_loss": 0.186,
+  "brier_advancement": null,
+  "log_loss_advancement": null,
+  "result_corrections": []
  }
 }

@@ -1,5 +1,51 @@
 [
  {
+  "id": "epl-2026-08-30",
+  "comp": "EPL",
+  "comp_label": "Premier League",
+  "slug": "epl-2026-08-30",
+  "title": "Premier League model recap — 2026-08-30",
+  "date": "2026-08-30",
+  "summary": "The model went 6/12 (50%) on graded Premier League picks.",
+  "record": {
+   "hits": 6,
+   "graded": 12,
+   "pct": 50
+  },
+  "highlights": {
+   "window_days": 7,
+   "matches_considered": 5,
+   "biggest_upset": null,
+   "best_call": {
+    "home": "Fulham FC",
+    "away": "Chelsea FC",
+    "pick": "Chelsea FC",
+    "confidence": 63,
+    "edge": 0
+   },
+   "biggest_miss": {
+    "home": "Leeds United FC",
+    "away": "Brentford FC",
+    "pick": "Leeds United FC",
+    "confidence": 36,
+    "actual": "Draw"
+   },
+   "closest_match": {
+    "home": "Leeds United FC",
+    "away": "Brentford FC",
+    "score_line": "1-1",
+    "margin": 0
+   }
+  },
+  "body": [
+   "Matchday's model graded 12 Premier League picks this stretch, hitting on 6 of them (50%). Over the same 6 games with a market line, the betting market favorite hit 33% of the time.",
+   "On calibration: picks stated at <50% hit 50% of the time (8 games). A well-calibrated model's stated confidence should roughly match its actual hit rate in each band.",
+   "The strongest signal lately has been talent or squad quality: when it favored a side, that side won 50% of the time (6 games). Elo rating has been the weakest, at 40% (5 games) — a reminder no single factor is decisive on its own.",
+   "Among this week's Premier League storylines: the model's best call was Chelsea FC in Fulham FC vs Chelsea FC at 63% confidence; its biggest miss was picking Leeds United FC in Leeds United FC vs Brentford FC, but Draw won instead.",
+   "This is Matchday's own model reporting on itself for anyone to use. Every pick is locked before kickoff and graded automatically once the game finishes; none are rewritten after the fact. See the Q&A page for how the model works."
+  ]
+ },
+ {
   "id": "ligue1-2026-08-29",
   "comp": "LIGUE1",
   "comp_label": "Ligue 1",
