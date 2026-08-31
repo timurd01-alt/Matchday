@@ -31,6 +31,13 @@ const MATCHDAY_CFB_SNAPSHOT={
       {home:'Oregon Ducks',away:'First-round winner',home_slot:'4',away_slot:'path',status:'PROJECTED',score:{}}
     ]}
   ],
+  rankings:[
+    ['Indiana Hoosiers',1881.9],['Ohio State Buckeyes',1843.6],['Notre Dame Fighting Irish',1831.6],['Oregon Ducks',1827.1],['Georgia Bulldogs',1818.8],
+    ['Miami Hurricanes',1805.3],['Ole Miss Rebels',1795.1],['Texas Longhorns',1761.6],['Texas Tech Red Raiders',1759.9],['Alabama Crimson Tide',1729.3],
+    ['Texas A&M Aggies',1698.4],['BYU Cougars',1687.2],['James Madison Dukes',1686.6],['Utah Utes',1681.8],['Penn State Nittany Lions',1680.3],
+    ['Oklahoma Sooners',1673.3],['SMU Mustangs',1662.8],['Michigan Wolverines',1658.6],['Louisville Cardinals',1653.8],['Tennessee Volunteers',1644.9],
+    ['Navy Midshipmen',1644.4],['Vanderbilt Commodores',1640.5],['Ohio Bobcats',1632.6],['USC Trojans',1632.5],['NC State Wolfpack',1631.6]
+  ].map((r,i)=>({rank:i+1,name:r[0],rating:r[1]})),
   records:[
     ['North Carolina Tar Heels','UNC',1,0,15,10],['USC Trojans','USC',1,0,42,26],['Virginia Cavaliers','UVA',1,0,34,8],
     ['North Dakota State Bison','NDSU',1,0,33,7],['Eastern Michigan Eagles','EMU',1,0,28,17],['Stanford Cardinal','STAN',1,0,37,27],
@@ -41,7 +48,7 @@ const MATCHDAY_CFB_SNAPSHOT={
 };
 
 const MATCHDAY_NCAAM_SNAPSHOT={
-  updated:'2026-08-30',
+  updated:'2026-08-31T00:41:38Z',
   rankings:[
     ['Michigan Wolverines',40.06,37,3],['Duke Blue Devils',39.84,35,3],['Arizona Wildcats',37.54,36,3],['Illinois Fighting Illini',34.83,28,9],
     ['Florida Gators',34.76,27,8],['Houston Cougars',34.73,30,7],['Iowa State Cyclones',34.07,29,8],['Gonzaga Bulldogs',32.94,31,4],

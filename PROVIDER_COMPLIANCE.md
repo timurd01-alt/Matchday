@@ -1,5 +1,11 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-08-30 (college standings presentation correction. The public
+conference tables no longer expose Matchday's incomplete local power rating;
+they show only the compact analytical rating already present in the imported
+college snapshot, with uncovered teams explicitly unavailable. No raw payload,
+provider-only field, new endpoint, article content, or ESPN data was added.)
+
 Reviewed: 2026-08-30 (college transition correction only. The existing news
 surface still displays short headline metadata with direct publisher links;
 three current NCAA.com/AP links were included in the college snapshot to keep

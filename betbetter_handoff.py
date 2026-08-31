@@ -47,7 +47,9 @@ from typing import Any
 
 # Handoff major versions this reader understands. A document outside this set
 # is refused whole: a partly-understood pick is worse than no pick.
-SUPPORTED_VERSIONS = frozenset({1})
+# 2 added `rankings` (the published Top 25 per sport). A v1 document is
+# still readable -- it simply carries no rankings -- so both are accepted.
+SUPPORTED_VERSIONS = frozenset({1, 2})
 
 DEFAULT_HANDOFF_PATH = "betbetter_picks.json"
 
@@ -170,6 +172,23 @@ def load(path: str = DEFAULT_HANDOFF_PATH) -> dict[str, Any] | None:
                 f"{path} contains a pick with basis {pick.get('basis')!r}; "
                 f"this reader accepts only {LIVE_BASIS!r}")
     return document
+
+
+def rankings(document: dict[str, Any] | None, sport: str) -> dict[str, Any]:
+    """The published Top 25 for one sport, or why there is none.
+
+    The ranking is computed by the Bet Better engine and only rendered here.
+    It is an *edition* with a date on it, so it is read as published rather
+    than recomputed -- a table that changed between two page loads would not
+    be a poll.
+    """
+    if not document:
+        return {"available": False, "sport": sport, "reason": "no handoff loaded"}
+    entry = (document.get("rankings") or {}).get(sport)
+    if not entry:
+        return {"available": False, "sport": sport,
+                "reason": f"handoff carries no ranking for {sport}"}
+    return entry
 
 
 def index(document: dict[str, Any] | None) -> dict[str, list[dict[str, Any]]]:

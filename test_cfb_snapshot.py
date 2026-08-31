@@ -33,6 +33,23 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         self.assertIn("buildNcaamBracketology", panels)
         self.assertIn("applyCurrentNcaamSnapshot(DATA)", panels)
 
+    def test_external_ratings_freshness_and_expanded_view(self):
+        snapshot = (ROOT / "matchday-cfb-snapshot.js").read_text(encoding="utf-8")
+        panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
+        features = (ROOT / "app-4-features.js").read_text(encoding="utf-8")
+        self.assertIn("rankings:[", snapshot)
+        self.assertIn("rating:ranked?.rating??null", panels)
+        self.assertIn("payload.updated=MATCHDAY_CFB_SNAPSHOT.updated", panels)
+        # renderInsight() lives in app-4-features.js, so it cannot bound a slice of
+        # app-3-panels.js. _v4TitleRows is the function that actually follows
+        # details() in this file.
+        details = panels[panels.index("function details(m){"):panels.index("function _v4TitleRows(")]
+        self.assertNotIn("pregameContextPanel(m)", details)
+        self.assertIn("modernExpandedView", details)
+        self.assertIn("modernMatchSheet", features)
+        self.assertIn("Imported analytical rating", panels)
+
+
 
 if __name__ == "__main__":
     unittest.main()
