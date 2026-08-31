@@ -727,7 +727,7 @@ function modUpsetOfWeek(){
   const p=u&&u.available?u.pick:null;
   if(!p)return '';
   const model=Number(p.model_pct),market=Number(p.market_pct);
-  return `<section class="boardMod modUpset"><header><h3>Upset of the week</h3><span>one a week &middot; editorial</span></header>
+  return `<section class="boardMod modUpset"><header><h3>Upset of the week</h3><span>one a week</span></header>
 <div class="modPickTeam">${esc(p.selection||'')}</div>
 <div class="modPickGame">${esc(p.away||'')} at ${esc(p.home||'')}</div>
 <div class="upsetBars">
