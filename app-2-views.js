@@ -460,6 +460,15 @@ function collegeRankingTable(){
   if(key==='ncaam')return typeof MATCHDAY_NCAAM_RANKINGS!=='undefined'?MATCHDAY_NCAAM_RANKINGS:null;
   return typeof MATCHDAY_CFB_RANKINGS!=='undefined'?MATCHDAY_CFB_RANKINGS:null;
 }
+
+function formPips(form){
+  const chars=String(form||'').slice(-6).split('');
+  if(!chars.length)return '';
+  return `<span class="pips">`+chars.map(c=>{
+    const cls=c==='W'?'pw':c==='L'?'pl':'pd';
+    return `<i class="${cls}" title="${c}"></i>`;
+  }).join('')+`</span>`;
+}
 function movementTag(row){
   const m=Number(row?.movement);
   if(!Number.isFinite(m)||m===0)return '<i class="mvFlat">—</i>';
@@ -473,10 +482,19 @@ function modTop25(){
   const caption=stale
     ?`<div class="modWarn">Projection — the season has not started. This ranks the completed season.</div>`
     :'';
-  const body=rows.map(r=>`<li><b>${r.rank}</b><span class="modTeam">${esc(r.name)}</span>`
-    +`<span class="modNum">${Number(r.rating).toFixed(2)}</span>`
-    +`<span class="modSos">${Number.isFinite(Number(r.sos))?'SoS '+Number(r.sos).toFixed(2):''}</span>`
-    +movementTag(r)+`</li>`).join('');
+  const ratings=rows.map(r=>Number(r.rating)).filter(Number.isFinite);
+  const hi=Math.max(...ratings,0),lo=Math.min(...ratings,0);
+  const span=(hi-lo)||1;
+  const body=rows.map(r=>{
+    const v=Number(r.rating);
+    const pct=Number.isFinite(v)?Math.max(4,Math.round(((v-lo)/span)*100)):0;
+    return `<li class="${r.rank<=4?'seedTop':''}"><b>${r.rank}</b>`
+      +`<span class="modTeam">${esc(r.name)}${formPips(r.recent_form)}</span>`
+      +`<span class="ratingCell"><i class="ratingBar" style="width:${pct}%"></i>`
+      +`<span class="modNum">${Number.isFinite(v)?v.toFixed(2):'—'}</span></span>`
+      +`<span class="modSos">${Number.isFinite(Number(r.sos))?'SoS '+Number(r.sos).toFixed(2):''}</span>`
+      +movementTag(r)+`</li>`;
+  }).join('');
   return `<section class="boardMod modTop25"><header><h3>Top 25</h3>`
     +`<span>${esc(table.basis?.label||'Model rating')}</span></header>${caption}`
     +`<ol class="modList">${body}</ol>`

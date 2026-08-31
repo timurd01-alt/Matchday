@@ -2013,3 +2013,21 @@ html{color-scheme:dark}
 .modStatSub{font-size:var(--fs-md);color:var(--muted)}
 .modStatSub b{color:var(--signal)}
 .modStatFoot{font-family:var(--mono);font-size:var(--fs-xs);color:var(--faint);border-top:1px solid var(--line);padding-top:7px}
+/* Module polish: an accent rule per card, a bar behind each rating, form pips. */
+.boardMod{position:relative;overflow:hidden}
+.boardMod::before{content:"";position:absolute;inset:0 0 auto 0;height:2px;background:linear-gradient(90deg,var(--signal),transparent 70%)}
+.modPick::before{background:linear-gradient(90deg,var(--win),transparent 70%)}
+.modStat::before{background:linear-gradient(90deg,var(--live),transparent 70%)}
+.modScores::before{background:linear-gradient(90deg,var(--link,#76caff),transparent 70%)}
+.modList li.seedTop b{color:var(--signal)}
+.modList li.seedTop{background:linear-gradient(90deg,rgba(58,209,122,.07),transparent 60%)}
+.ratingCell{position:relative;display:flex;align-items:center;justify-content:flex-end;gap:6px;min-width:96px;flex:0 0 auto;padding:2px 0}
+.ratingBar{position:absolute;right:0;top:50%;transform:translateY(-50%);height:14px;border-radius:3px;background:linear-gradient(90deg,rgba(58,209,122,.14),rgba(58,209,122,.4));z-index:0}
+.ratingCell .modNum{position:relative;z-index:1}
+.pips{display:inline-flex;gap:2px;margin-left:6px;vertical-align:middle}
+.pips i{width:5px;height:5px;border-radius:1px;display:block}
+.pips .pw{background:var(--win)}
+.pips .pl{background:var(--loss)}
+.pips .pd{background:var(--faint)}
+.boardMod:hover{border-color:var(--line2)}
+@media(max-width:600px){.modSos{display:none}.ratingCell{min-width:72px}}

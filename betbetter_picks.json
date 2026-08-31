@@ -1,7 +1,7 @@
 {
   "handoff_version": 2,
   "source": "betbetter",
-  "generated_at": "2026-08-31T05:10:48.844463+00:00",
+  "generated_at": "2026-08-31T05:11:24.987081+00:00",
   "sports": [
     "ncaaf",
     "ncaam"
@@ -4927,106 +4927,6 @@
           "movement": null,
           "preseason_rank": 133,
           "movement_since_preseason": 0
-        },
-        {
-          "team_key": "ncaaf:2433",
-          "team_name": "UL Monroe Warhawks",
-          "division": "fbs",
-          "rating": -9.41,
-          "adj_o": 20.38,
-          "adj_d": 29.79,
-          "sos": 0.95,
-          "wins": 0,
-          "losses": 0,
-          "draws": 0,
-          "season_games": 0,
-          "scoring_margin": null,
-          "recent_form": "",
-          "rank": 134,
-          "previous_rank": null,
-          "movement": null,
-          "preseason_rank": null,
-          "movement_since_preseason": null
-        },
-        {
-          "team_key": "ncaaf:2534",
-          "team_name": "Sam Houston Bearkats",
-          "division": "fbs",
-          "rating": -10.04,
-          "adj_o": 21.15,
-          "adj_d": 31.19,
-          "sos": -0.53,
-          "wins": 0,
-          "losses": 0,
-          "draws": 0,
-          "season_games": 0,
-          "scoring_margin": null,
-          "recent_form": "",
-          "rank": 135,
-          "previous_rank": null,
-          "movement": null,
-          "preseason_rank": null,
-          "movement_since_preseason": null
-        },
-        {
-          "team_key": "ncaaf:2309",
-          "team_name": "Kent State Golden Flashes",
-          "division": "fbs",
-          "rating": -10.6,
-          "adj_o": 22.78,
-          "adj_d": 33.37,
-          "sos": 0.1,
-          "wins": 0,
-          "losses": 0,
-          "draws": 0,
-          "season_games": 0,
-          "scoring_margin": null,
-          "recent_form": "",
-          "rank": 136,
-          "previous_rank": null,
-          "movement": null,
-          "preseason_rank": null,
-          "movement_since_preseason": null
-        },
-        {
-          "team_key": "ncaaf:2429",
-          "team_name": "Charlotte 49ers",
-          "division": "fbs",
-          "rating": -11.36,
-          "adj_o": 20.14,
-          "adj_d": 31.5,
-          "sos": 3.93,
-          "wins": 0,
-          "losses": 0,
-          "draws": 0,
-          "season_games": 0,
-          "scoring_margin": null,
-          "recent_form": "",
-          "rank": 137,
-          "previous_rank": null,
-          "movement": null,
-          "preseason_rank": null,
-          "movement_since_preseason": null
-        },
-        {
-          "team_key": "ncaaf:113",
-          "team_name": "Massachusetts Minutemen",
-          "division": "fbs",
-          "rating": -16.93,
-          "adj_o": 18.49,
-          "adj_d": 35.42,
-          "sos": 0.51,
-          "wins": 0,
-          "losses": 0,
-          "draws": 0,
-          "season_games": 0,
-          "scoring_margin": null,
-          "recent_form": "",
-          "rank": 138,
-          "previous_rank": null,
-          "movement": null,
-          "preseason_rank": null,
-          "movement_since_preseason": null
         }
       ],
       "note": "Ranked by opponent-adjusted scoring margin, points per game better than an average team against an average opponent, solved from our own results — last season carried forward at 65% as the preseason prior, then moved by every result since. Strength of schedule is solved alongside it and travels with each row.. Ranked teams average 0.0 game(s) this season, so this is mostly what carried over rather than current form.",
@@ -5051,7 +4951,39 @@
         "days_since_last_result": 2,
         "first_poll": true,
         "is_preseason_edition": false
-      }
+      },
+      "withheld": [
+        {
+          "team_name": "North Dakota State Bison",
+          "fcs_share": 0.907,
+          "rating": 16.61,
+          "reason": "rating earned mostly against FCS opposition"
+        },
+        {
+          "team_name": "Sacramento State Hornets",
+          "fcs_share": 0.889,
+          "rating": 0.33,
+          "reason": "rating earned mostly against FCS opposition"
+        },
+        {
+          "team_name": "Delaware Blue Hens",
+          "fcs_share": 0.738,
+          "rating": -0.55,
+          "reason": "rating earned mostly against FCS opposition"
+        },
+        {
+          "team_name": "Kennesaw State Owls",
+          "fcs_share": 0.508,
+          "rating": -1.03,
+          "reason": "rating earned mostly against FCS opposition"
+        },
+        {
+          "team_name": "Missouri State Bears",
+          "fcs_share": 0.678,
+          "rating": -1.46,
+          "reason": "rating earned mostly against FCS opposition"
+        }
+      ]
     },
     "ncaam": {
       "available": true,
@@ -18909,7 +18841,8 @@
         "days_since_last_result": 147,
         "first_poll": false,
         "is_preseason_edition": false
-      }
+      },
+      "withheld": []
     }
   },
   "coverage": {
