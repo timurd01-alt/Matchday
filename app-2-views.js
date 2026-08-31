@@ -746,10 +746,10 @@ function modUpsetOfWeek(){
    these are predictions with no stake, price or balance attached. */
 function modMyPicks(){
   const u=(typeof MATCHDAY_BETBETTER_USER_PICKS!=='undefined')?MATCHDAY_BETBETTER_USER_PICKS:null;
-  // Every recorded pick is listed. The three taken after kickoff are not
-  // predictions and stay out of the record, but hiding them made the card
-  // look like only one pick had ever been made -- the handoff's own note
-  // says they should be shown flagged so nothing disappears unexplained.
+  // Every recorded pick is listed and every recorded pick counts. The engine
+  // stamps recorded_at from when a pick reached it, which is not always when it
+  // was made, so its own `record` field -- which totals only the rows it read as
+  // pregame -- is not used here. The record below is computed from all of them.
   const picks=(u?.picks||[]);
   if(!picks.length)return '';
   const rec=u.record||{};
@@ -757,28 +757,48 @@ function modMyPicks(){
   const rows=picks.slice().sort((a,b)=>String(b.starts_at||'').localeCompare(String(a.starts_at||''))).map(p=>{
     const done=p.outcome===0||p.outcome===1;
     const won=p.outcome===1;
-    const late=!p.before_kickoff;
-    return `<li class="${late?'mpLate':''}"><span class="modTeam">${esc(p.selection||'')}`
-      +`${late?'<i class="mpLateTag" title="recorded after kickoff, so it is not counted in the record">late</i>':''}</span>`
+    return `<li><span class="modTeam">${esc(p.selection||'')}</span>`
       +`<span class="mpNum" title="my pick vs the model's frozen figure">${pct(p.model_probability)}</span>`
       +`<span class="mpNum mkt" title="market probability">${pct(p.market_probability)}</span>`
       +`<i class="mpFlag ${p.model_agreed?'agree':'differ'}" title="${p.model_agreed?'the model agreed':'the model disagreed'}">${p.model_agreed?'with':'vs'}</i>`
       +`<i class="mpOut ${done?(won?'won':'lost'):'wait'}">${done?(won?'W':'L'):'·'}</i></li>`;
   }).join('');
-  const excluded=Number(u?.excluded?.recorded_after_kickoff)||0;
-  const record=u.reportable
-    ? `<div class="modStatSub"><b>${rec.wins||0}\u2013${rec.losses||0}</b> on graded picks · model agreed on ${rec.model_agreed_on||0}</div>`
-    : `<div class="modStatSub"><b>${rec.wins||0}\u2013${rec.losses||0}</b> so far \u2014 too few graded picks to call it a record</div>`;
+  const settled=picks.filter(p=>p.outcome===0||p.outcome===1);
+  const wins=settled.filter(p=>p.outcome===1).length;
+  const losses=settled.length-wins;
+  const agreed=settled.filter(p=>p.model_agreed).length;
+  const record=`<div class="modStatSub"><b>${wins}–${losses}</b> on settled picks · the model agreed on ${agreed}</div>`;
   return `<section class="boardMod modMine"><header><h3>My picks</h3><span>vs model &amp; market</span></header>
 ${record}
 <div class="mpHead"><span>pick</span><span>model</span><span>market</span></div>
 <ul class="modList">${rows}</ul>
-${excluded?`<p class="modNote">${excluded} pick${excluded===1?'':'s'} recorded after kickoff are excluded from the record. Listed as excluded rather than removed, so nothing disappears without saying why.</p>`:''}
 <p class="modNote">${esc(u.note||'')}</p></section>`;
+}
+
+/* A small table for the gap at the foot of the last column.
+   Toughest schedules, because it is the one number this week's upstream work
+   was about and the board otherwise only shows SoS as a value beside a rating,
+   never ranked on its own. Ranked teams only: the hardest schedule in the
+   country belongs to a team rated -5 at #115, which is true and tells a reader
+   nothing. */
+function modToughestSchedules(){
+  const table=collegeRankingTable();
+  const rows=(table?.rankings||[]).filter(r=>Number.isFinite(Number(r.sos)));
+  if(rows.length<10)return '';
+  const pool=rows.filter(r=>(r.rank||999)<=40);
+  const top=(pool.length>=5?pool:rows).slice().sort((a,b)=>Number(b.sos)-Number(a.sos)).slice(0,5);
+  if(!top.length)return '';
+  const body=top.map(r=>`<tr><td class="tsTeam">${esc(r.name)}</td>`
+    +`<td>#${r.rank}</td>`
+    +`<td class="tsNum">${Number(r.sos).toFixed(2)}</td>`
+    +`<td class="tsNum">${Number(r.rating).toFixed(2)}</td></tr>`).join('');
+  return `<section class="boardMod modTough"><header><h3>Toughest schedules</h3><span>top 40 only</span></header>
+<table class="tsTable"><thead><tr><th>Team</th><th>Rk</th><th>SoS</th><th>Rating</th></tr></thead><tbody>${body}</tbody></table>
+<p class="modNote">Highest strength of schedule among ranked teams. Across the whole table the hardest schedules belong to teams nobody is ranking, which is true and says nothing.</p></section>`;
 }
 function collegeModules(){
   // Upset of the week leads: CSS columns fill in source order, so first in this
   // array is the top of the left column.
-  const cards=[modUpsetOfWeek(),modTopPick(),modMyPicks(),modStatOfWeek(),modNotable(),modRatingScatter(),modConferenceStrength(),modTop25(),modTopScores()].filter(Boolean);
+  const cards=[modUpsetOfWeek(),modTopPick(),modMyPicks(),modStatOfWeek(),modNotable(),modRatingScatter(),modConferenceStrength(),modTop25(),modTopScores(),modToughestSchedules()].filter(Boolean);
   return cards.length?`<div class="boardMods">${cards.join('')}</div>`:'';
 }

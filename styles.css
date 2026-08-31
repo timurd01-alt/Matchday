@@ -2170,3 +2170,13 @@ html{color-scheme:dark}
 .cmpRow em{font-style:normal;text-align:right;color:var(--text)}
 .mpLateTag{font-style:normal;font-family:var(--mono);font-size:var(--fs-3xs);color:var(--warn);border:1px solid var(--line2);border-radius:4px;padding:0 3px;margin-left:5px}
 .mpLate{opacity:.72}
+/* Compact stat table that fills the tail of the last column. */
+.modTough::before{background:linear-gradient(90deg,var(--warn),transparent 70%)}
+.tsTable{width:100%;border-collapse:collapse;font-size:var(--fs-sm)}
+.tsTable th{font-family:var(--mono);font-size:var(--fs-3xs);text-transform:uppercase;letter-spacing:.06em;color:var(--faint);padding:5px 6px;text-align:right;font-weight:var(--fw-bold)}
+.tsTable td{padding:6px;border-bottom:1px solid var(--line);text-align:right;font-variant-numeric:tabular-nums}
+.tsTable tr:last-child td{border-bottom:0}
+.tsTable th:first-child,.tsTable td:first-child{text-align:left}
+.tsTeam{font-weight:var(--fw-semibold);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:9.5em}
+.tsNum{font-family:var(--mono);color:var(--signal)}
+.tsTable td:nth-child(2){font-family:var(--mono);color:var(--faint)}

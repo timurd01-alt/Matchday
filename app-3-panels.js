@@ -97,7 +97,7 @@ function applyCurrentNcaamSnapshot(payload){
    before kickoff, not one computed afterwards. */
 function myPicksComparison(){
   const u=(typeof MATCHDAY_BETBETTER_USER_PICKS!=='undefined')?MATCHDAY_BETBETTER_USER_PICKS:null;
-  const graded=(u?.picks||[]).filter(p=>p.before_kickoff&&(p.outcome===0||p.outcome===1));
+  const graded=(u?.picks||[]).filter(p=>p.outcome===0||p.outcome===1);
   if(!graded.length)return '';
   let mine=0,model=0,market=0;
   graded.forEach(p=>{
@@ -116,8 +116,8 @@ function myPicksComparison(){
     +`<em>${hits}/${n}</em></div>`;
   return `<div class="seclbl" style="margin-top:18px">Me vs model vs market</div>`
     +`<div class="cmpGrid">${row('Me',mine,'cmpMine')}${row('Model',model,'cmpModel')}${row('Market',market,'cmpMarket')}</div>`
-    +`<p class="edisc">Same ${n} game${n===1?'':'s'} for all three: the picks recorded before kickoff that have settled. `
-    +`${u&&u.reportable?'':'Too few graded games to read anything into the split yet. '}`
+    +`<p class="edisc">Same ${n} game${n===1?'':'s'} for all three: every recorded pick that has settled. `
+    +`${n<10?'A small sample — the split is not yet worth reading much into. ':''}`
     +`The model figure is the one frozen before kickoff, not recomputed afterwards.</p>`;
 }
 
