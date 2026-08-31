@@ -135,6 +135,12 @@ def build(path: pathlib.Path = SNAPSHOT) -> str:
             payload["projected_bracket"] = cfp_bracket(entry)
         blocks.append(f"  const {const}={json.dumps(payload, ensure_ascii=False)};")
 
+    picks = [p for p in (document.get("picks") or [])
+             if str(p.get("basis") or "") == betbetter_handoff.LIVE_BASIS
+             and not p.get("official_pick")]
+    blocks.append("  const MATCHDAY_BETBETTER_PICKS="
+                  + json.dumps(picks, ensure_ascii=False) + ";")
+
     text = path.read_text(encoding="utf-8")
     start, stop = text.index(BEGIN), text.index(END)
     generated = BEGIN + "\n" + "\n".join(blocks) + "\n"

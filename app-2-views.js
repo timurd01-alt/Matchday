@@ -517,8 +517,16 @@ function modTopScores(){
   return `<section class="boardMod modScores"><header><h3>Top scores</h3><span>most recent finals</span></header><ul class="modList">${rows}</ul></section>`;
 }
 function modTopPick(){
-  const picks=(DATA.matches||[]).filter(m=>m.status==='UPCOMING'&&m.betbetter_pick)
-    .map(m=>({m,p:m.betbetter_pick}))
+  // Two sources on purpose. A scheduled build attaches the pick to the fixture;
+  // a push build does not run the fetch that does so. The handoff is committed,
+  // so fall back to it rather than let the card blink out of existence
+  // depending on which kind of deploy shipped last.
+  const attached=(DATA.matches||[]).filter(m=>m.status==='UPCOMING'&&m.betbetter_pick)
+    .map(m=>({m,p:m.betbetter_pick}));
+  const baked=attached.length?[]:(typeof MATCHDAY_BETBETTER_PICKS!=='undefined'?MATCHDAY_BETBETTER_PICKS:[])
+    .filter(p=>new Date(p.kickoff)>new Date())
+    .map(p=>({m:{home:{name:p.home},away:{name:p.away}},p}));
+  const picks=attached.concat(baked)
     .filter(x=>Number.isFinite(Number(x.p.model_pct)))
     // Sorted by the model's own probability. Deliberately NOT by edge_points.
     .sort((a,b)=>Number(b.p.model_pct)-Number(a.p.model_pct));
@@ -540,7 +548,17 @@ function modStatOfWeek(){
   if(!rows.length)return '';
   const riser=rows.slice().sort((a,b)=>Number(b.movement_since_preseason)-Number(a.movement_since_preseason))[0];
   const faller=rows.slice().sort((a,b)=>Number(a.movement_since_preseason)-Number(b.movement_since_preseason))[0];
-  if(!riser||Number(riser.movement_since_preseason)<=0)return '';
+  // Before anything has moved, movement is not a statistic. The toughest
+  // schedule is, and it is the number the ingest fix exists to make readable.
+  if(!riser||Number(riser.movement_since_preseason)<=0){
+    const sos=(table?.rankings||[]).filter(r=>Number.isFinite(Number(r.sos)));
+    if(!sos.length)return '';
+    const hardest=sos.slice().sort((a,b)=>Number(b.sos)-Number(a.sos))[0];
+    return `<section class="boardMod modStat"><header><h3>Statistic of the week</h3><span>toughest schedule</span></header>`
+      +`<div class="modStatBig">${esc(hardest.name)}</div>`
+      +`<div class="modStatSub">strength of schedule <b>${Number(hardest.sos).toFixed(2)}</b>, rated ${Number(hardest.rating).toFixed(2)} at #${hardest.rank}</div>`
+      +`<div class="modStatFoot">Nothing has moved yet — this is the preseason edition, so the ranking has no week-to-week change to report.</div></section>`;
+  }
   return `<section class="boardMod modStat"><header><h3>Statistic of the week</h3><span>since the preseason edition</span></header>`
     +`<div class="modStatBig">${esc(riser.name)}</div>`
     +`<div class="modStatSub">up <b>${Number(riser.movement_since_preseason)}</b> places to #${riser.rank}, rating ${Number(riser.rating).toFixed(2)}</div>`
