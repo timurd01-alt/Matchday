@@ -513,8 +513,16 @@ function modTop25(){
     +`<p class="modNote">${esc(String(table.note||'').replace(/\.\./g,'.'))}</p></section>`;
 }
 function modTopScores(){
-  const done=(DATA.matches||[]).filter(m=>m.status==='FINISHED'
+  let done=(DATA.matches||[]).filter(m=>m.status==='FINISHED'
     &&Number.isFinite(Number(m.score?.home))&&Number.isFinite(Number(m.score?.away)));
+  // If the fixture feed carries no finals -- which it does not while the
+  // provider quota is spent -- read the handoff's own results instead.
+  if(!done.length&&typeof MATCHDAY_BETBETTER_RESULTS!=='undefined'){
+    done=MATCHDAY_BETBETTER_RESULTS.slice()
+      .sort((a,b)=>String(b.played_on||'').localeCompare(String(a.played_on||'')))
+      .map(r=>({home:{name:r.home},away:{name:r.away},kickoff:r.kickoff||r.played_on,
+                status:'FINISHED',score:{home:Number(r.home_score),away:Number(r.away_score)}}));
+  }
   if(!done.length)return '';
   // Most recent first; the margin is shown because a 3-point game and a
   // 40-point game are not the same result and the score alone buries that.

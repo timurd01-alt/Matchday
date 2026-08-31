@@ -25,10 +25,14 @@ export const SAFE_ORIGINS = new Set([
 
 // Handles stay assigned, never free text: a public board with user-typed names
 // is an open door for offensive ones, and moderation is not a thing we staff.
+// College names only, to match what the site covers. These are retired college
+// greats rather than current players: a handle assigned at random to a stranger
+// should not read as a living student athlete's account, and a list of current
+// names would need rewriting every year as rosters turn over.
 export const HANDLE_POOL = [
-  "Patrick Mahomes", "Josh Allen", "Nikola Jokic", "A'ja Wilson",
-  "Shohei Ohtani", "Aaron Judge", "Connor McDavid", "Alex Morgan",
-  "Marta", "Lionel Messi", "Kylian Mbappe", "Jude Bellingham",
+  "Herschel Walker", "Doug Flutie", "Charlie Ward", "Vince Young",
+  "Bo Jackson", "Tim Tebow", "Pete Maravich", "Christian Laettner",
+  "Danny Manning", "Grant Hill", "Tyler Hansbrough", "Bill Bradley",
 ];
 
 export const DEVICE_RE = /^mdx-[a-z0-9]{12,60}$/;

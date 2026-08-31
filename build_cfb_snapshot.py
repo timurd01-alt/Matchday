@@ -32,6 +32,37 @@ BEGIN = "  /* BEGIN GENERATED RANKINGS -- build_cfb_snapshot.py */"
 END = "  /* END GENERATED RANKINGS */"
 
 
+def _dedupe(rows: list[dict], entry: dict) -> list[dict]:
+    """One edition per table.
+
+    The NCAAM handoff currently concatenates two rankings into one array -- the
+    completed season and a new preseason poll -- so 433 ranks appear twice
+    (Michigan is #1 with 40 games played and #1 again with 0). Rendering that
+    would show every ranked team twice with two different ratings.
+
+    The envelope says which edition the table is describing, so that is the one
+    kept: when the note reports a completed season, prefer the rows that
+    actually played games. Reported upstream; this guard should outlive the fix
+    because a duplicate rank is never correct here.
+    """
+    completed = entry.get("season_in_progress") is False
+    best: dict[int, dict] = {}
+    for row in rows:
+        rank = row.get("rank")
+        if rank is None:
+            continue
+        played = row.get("season_games") or 0
+        current = best.get(rank)
+        if current is None:
+            best[rank] = row
+            continue
+        current_played = current.get("season_games") or 0
+        take = played > current_played if completed else played < current_played
+        if take:
+            best[rank] = row
+    return [best[k] for k in sorted(best)]
+
+
 def _rows(entry: dict) -> list[dict]:
     """The ranked rows, carrying the schedule each rating was earned against.
 
@@ -139,13 +170,19 @@ def build(path: pathlib.Path = SNAPSHOT) -> str:
     for sport, const in (("ncaaf", "MATCHDAY_CFB_RANKINGS"),
                          ("ncaam", "MATCHDAY_NCAAM_RANKINGS")):
         entry = betbetter_handoff.rankings(document, sport)
-        rows = _rows(entry)
+        rows = _dedupe(_rows(entry), entry)
         payload = {**_meta(entry), "rankings": rows,
                    # The published poll is the first 25 of the same table.
                    "top25": [r for r in rows if (r.get("rank") or 999) <= 25]}
         if sport == "ncaaf":
             payload["projected_bracket"] = cfp_bracket(entry)
         blocks.append(f"  const {const}={json.dumps(payload, ensure_ascii=False)};")
+
+    results = [r for r in (document.get("results") or [])
+               if r.get("home") and r.get("away")
+               and r.get("home_score") is not None and r.get("away_score") is not None]
+    blocks.append("  const MATCHDAY_BETBETTER_RESULTS="
+                  + json.dumps(results, ensure_ascii=False) + ";")
 
     picks = [p for p in (document.get("picks") or [])
              if str(p.get("basis") or "") == betbetter_handoff.LIVE_BASIS

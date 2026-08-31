@@ -8,6 +8,30 @@ function applyCurrentCfbSnapshot(payload){
   payload.news=[...(MATCHDAY_CFB_SNAPSHOT.news||[]),...(payload.news||[])];
   payload.updated=MATCHDAY_CFB_SNAPSHOT.updated;
   if(comp==='ALL')return payload;
+  // Settle finished games from the handoff.
+  //
+  // The fixture feed cannot do this right now: CFBD is at 0 calls for the month
+  // so data_ncaaf.json is frozen at its 23 August snapshot, and every game
+  // played since is still stamped UPCOMING with no score. The handoff carries
+  // those results with scores, so they are applied here rather than leaving a
+  // played game displayed as though it had not kicked off.
+  //
+  // Matched on both team names and the calendar day, and only ever applied to a
+  // fixture that is not already FINISHED -- a settled score is never rewritten.
+  const settled=(typeof MATCHDAY_BETBETTER_RESULTS!=='undefined'?MATCHDAY_BETBETTER_RESULTS:[]);
+  if(settled.length){
+    const byGame=new Map();
+    settled.forEach(r=>byGame.set(`${teamKey(r.home)}|${teamKey(r.away)}|${String(r.played_on||'').slice(0,10)}`,r));
+    (payload.matches||[]).forEach(m=>{
+      if(m.status==='FINISHED')return;
+      const day=String(m.kickoff||'').slice(0,10);
+      const hit=byGame.get(`${teamKey(m.home?.name)}|${teamKey(m.away?.name)}|${day}`);
+      if(!hit)return;
+      m.status='FINISHED';
+      m.score={...(m.score||{}),home:Number(hit.home_score),away:Number(hit.away_score)};
+      m._settled_from='betbetter_results';
+    });
+  }
   const records=new Map((MATCHDAY_CFB_SNAPSHOT.records||[]).map(t=>[teamKey(t.name),t]));
   const externalRating=name=>{const key=teamKey(name);return (MATCHDAY_CFB_SNAPSHOT.rankings||[]).find(row=>{const rk=teamKey(row.name);return rk===key||rk.startsWith(key+' ')||key.startsWith(rk+' ')})};
   payload.standings=(payload.standings||[]).filter(g=>g.group!=='Matchday Top 25').map(g=>{
