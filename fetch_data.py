@@ -572,26 +572,30 @@ def _build_rss_feeds(key, comp, news_term):
     calls this now, so a switch takes the news feeds with it.
     """
     feeds = []
+    # College competitions take ESPN's public college feeds and nothing else.
+    # The soccer outlets and the cross-sport Google News searches below covered
+    # sports this site no longer publishes, and their college coverage arrived
+    # as general sports headlines rather than college ones.
+    #
+    # Only the headline and the link are stored (see _rss_items): no article
+    # text, no images, no bulk redistribution. ESPN is credited by name on every
+    # item. See the ESPN sourcing rule in PROVIDER_COMPLIANCE.md.
+    if key == "NCAAF":
+        feeds.append(("ESPN College Football", "https://www.espn.com/espn/rss/ncf/news"))
+        return feeds
+    if key == "NCAAM":
+        feeds.append(("ESPN College Basketball", "https://www.espn.com/espn/rss/ncb/news"))
+        return feeds
+
     if comp["sport"] == "soccer":
-        # Strong direct football feeds, then competition-specific source searches.
         feeds.extend([
             ("BBC Sport", "https://feeds.bbci.co.uk/sport/football/rss.xml"),
             ("The Guardian", "https://www.theguardian.com/football/rss"),
-            ("Sky Sports", "https://www.skysports.com/rss/12040"),
-            ("CBS Sports", "https://www.cbssports.com/rss/headlines/soccer/"),
-            ("FOX Sports", "https://api.foxsports.com/v1/rss?tag=soccer"),
         ])
-
-    # These source-specific searches work across every sport and keep one outlet
-    # from taking over when a league's direct RSS feed is unavailable.
     for source, site in (
         ("Reuters", "reuters.com"), ("Associated Press", "apnews.com"),
-        ("CBS Sports", "cbssports.com"), ("FOX Sports", "foxsports.com"),
-        ("NBC Sports", "nbcsports.com"), ("Yahoo Sports", "sports.yahoo.com"),
     ):
         feeds.append(_google_news_feed(source, site, news_term))
-    if key == "WC":
-        feeds.append(_google_news_feed("FIFA", "fifa.com", news_term))
     return feeds
 
 
@@ -4200,23 +4204,6 @@ def _source_label(item):
     return src[:38] if src else "News"
 
 
-def _is_espn(item, label=None):
-    """True if this news item is ESPN-branded under any spelling.
-
-    ESPN is excluded outright everywhere in the news pipeline (see
-    PROVIDER_COMPLIANCE.md -- no licensed ESPN developer feed). An exact
-    `label == "ESPN"` check only catches the one canonical string that
-    _source_label() itself produces (from the "espn fc" fix-up); it misses
-    every other ESPN-branded source string Google News' <source> tag can
-    hand back for syndicated/regional ESPN content -- "ESPN.com", "ESPN NFL
-    Nation", "ESPN Deportes", "ESPN India", lowercase "espn", etc. Check the
-    raw source/feed fields too, not just the post-_source_label() label, so
-    nothing ESPN-branded slips through before normalization collapses it.
-    """
-    candidates = [label, item.get("source"), item.get("feed")]
-    return any(re.search(r"\bespn\b", str(c), re.IGNORECASE) for c in candidates if c)
-
-
 def _news_key(item):
     h = re.sub(r"\s+", " ", (item.get("headline") or "").lower()).strip()
     link = (item.get("link") or "").split("?")[0].split("#")[0].strip().lower()
@@ -4261,15 +4248,6 @@ def _balanced_news(items, limit=48):
             continue
         item = dict(item)
         item["source"] = _source_label(item)
-        if _is_espn(item, item["source"]):
-            # ESPN is excluded outright, not just deprioritized -- otherwise a
-            # stale ESPN item sitting in a previous run's cached data.json
-            # (loaded via _load_previous_news for feed-diversity carryover)
-            # would keep resurfacing here even though add_item() already
-            # rejects it on fresh intake. _is_espn() matches any ESPN-branded
-            # source string, not just an exact "ESPN" label -- see its
-            # docstring for why the exact-match version wasn't enough.
-            continue
         item.setdefault("feed", item["source"])
         item.setdefault("competition", COMP_KEY)
         item.setdefault("sport", COMP["sport"])
@@ -4316,8 +4294,6 @@ def fetch_news():
         if not _news_relevant(item):
             return False
         item["source"] = _source_label(item)
-        if _is_espn(item, item["source"]):
-            return False
         item.setdefault("competition", COMP_KEY)
         item.setdefault("sport", COMP["sport"])
         k = _news_key(item)

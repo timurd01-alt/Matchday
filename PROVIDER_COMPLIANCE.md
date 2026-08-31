@@ -230,7 +230,16 @@ legal advice.
   expose a key in browser JavaScript, generated JSON, screenshots, or Git.
 - **ESPN sourcing rule:** Direct ESPN site/API access, scraping, images, video,
   article text, and bulk redistribution remain excluded because Matchday has
-  no licensed ESPN developer feed. A narrowly reviewed, openly licensed
+  no licensed ESPN developer feed.
+
+  **Amended 2026-08-31 by the owner:** the News-tab exclusion is lifted. ESPN's
+  public college RSS feeds (`/espn/rss/ncf/news`, `/espn/rss/ncb/news`) are now
+  the college news source, and the `_is_espn()` intake rejection is removed.
+  Only the headline and the link are stored -- no article text, no images, no
+  bulk redistribution -- and ESPN is credited by name on every item. The
+  residual risk is that these are publicly published feeds consumed without a
+  licence agreement rather than under one; that is a decision the owner has
+  taken knowingly. Every other clause of this rule still stands. A narrowly reviewed, openly licensed
   secondary release may be used only when its ESPN provenance is explicit,
   the exact asset/schema/cadence has been verified, Matchday publishes only a
   normalized analytical view rather than the raw feed, and the UI identifies
