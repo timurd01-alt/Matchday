@@ -103,15 +103,12 @@ console.log(JSON.stringify(payload));
                 active=False)["matches"][0]
             self.assertEqual(published["prediction"]["pick"], "h", comp)
 
-    def test_consumers_show_the_pause_notice(self):
+    def test_global_pause_banner_is_removed(self):
         core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
         panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
         cards = (ROOT / "app-4-features.js").read_text(encoding="utf-8")
-        self.assertIn(forecast_pause.PAUSE_MESSAGE, core)
-        self.assertIn("forecastPauseHTML(m)", panels)
-        self.assertIn("isForecastPaused(m)?forecastPauseHTML(m)", cards)
-        # The banner must not be gated on a single competition any more.
-        self.assertIn("(DATA.matches||[]).some(m=>isForecastPaused(m))", panels)
+        self.assertNotIn("Predictions are paused.</b>", panels)
+        self.assertNotIn("$('#banner')", panels)
         # And no competition keeps a private exemption from the pause.
         self.assertNotIn("isMlbForecastPaused", core)
         self.assertNotIn("comp==='MLB'", core)
@@ -121,6 +118,7 @@ console.log(JSON.stringify(payload));
         core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
         gate = core[core.index("const FORECAST_PAUSE_ACTIVE="):
                     core.index("// Providers can keep the season")]
+        gate = gate.replace("const FORECAST_PAUSE_ACTIVE=false", "const FORECAST_PAUSE_ACTIVE=true")
         accessors = core[core.index("function lockedPredictionSnapshot(m){"):
                          core.index("function duo(xl,xv,yl,yv){")]
         script = f"""

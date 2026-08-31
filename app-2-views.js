@@ -47,7 +47,7 @@ function communityPickProbs(m){
   if(market&&market.home_pct!=null)return {h:+market.home_pct,d:+(market.draw_pct||0),a:+market.away_pct,source:'market'};
   const prediction=m.prediction||{};
   const model=prediction.regulation_probs||prediction.adjusted||prediction.blend||prediction.model;
-  if(!model||model.h==null||model.a==null)return null;
+  if(!model||model.h==null||model.a==null)return {h:null,d:null,a:null,source:'none'};
   return {h:+model.h,d:+(model.d||0),a:+model.a,source:'model'};
 }
 function btmChallenge(db){
@@ -143,14 +143,14 @@ function renderAccountRow(){
 }
 function renderCommunity(){ensureHandle();const host=$('#view-community');const fullDb=btmGrade();const db=btmScoped(fullDb);const s=btmStats(db);
   const scopeName=communityScope()==='ALL'?'All sports':(DATA.competition||DATA.comp_key||'This sport');
-  const eligible=(DATA.matches||[]).filter(m=>isCommunityPickOpen(m)&&m.prediction&&communityPickProbs(m)).sort((a,b)=>(a.kickoff||'').localeCompare(b.kickoff||''));
+  const eligible=(DATA.matches||[]).filter(m=>isCommunityPickOpen(m)).sort((a,b)=>(a.kickoff||'').localeCompare(b.kickoff||''));
   const firstKick=eligible.length?kickMs(eligible[0]):0;
   // A missing market can expose an entire season at once. Show the next
   // fixture slate instead of rendering hundreds of model-only cards.
   const open=eligible.filter(m=>communityPickProbs(m).source==='market'||kickMs(m)<=firstKick+4*864e5).slice(0,40);
   const picks=db.picks||{};
   let h=`<div class="vhead">Community &middot; ${esc(scopeName)}</div>
-  <div class="banner"><b>Lock your pick before kickoff.</b> ${communityScope()==='ALL'?'Your combined record across every sport is shown here.':'This record and its picks belong only to '+esc(scopeName)+'.'} You, the model and the market are graded side by side.</div>
+  <div class="banner"><b>Games open seven days before kickoff.</b> Pick any listed matchup before it starts. When available, the model and market are graded beside you.</div>
   ${renderWeeklyAwards()}
   <div class="status-grid">
    <div class="statuscard ${s.you>=s.model&&s.n?'ok':'info'}"><span class="slbl">Your record</span><div class="sval">${s.you}/${s.n||0}</div><div class="hint">${s.n?Math.round(s.you/s.n*100)+'% correct':'no graded picks yet'}</div></div>
@@ -188,13 +188,13 @@ function renderCommunity(){ensureHandle();const host=$('#view-community');const 
   const ch=btmChallenge(db);
   if(ch)h+=`<div class="challengeCard" onclick="openMatchModal('${ch.id}')"><div class="challengeTag">Today's call</div><div class="challengeMatch">${esc(ch.home)} v ${esc(ch.away)}</div><div class="challengeLine">${ch.line}</div><div class="challengeHint">tap to make your pick →</div></div>`;
   h+=`<div class="seclbl" style="margin-top:18px">Make your picks</div>`;
-  if(!open.length)h+=`<div class="empty">No upcoming matches with a model line right now.<br><span class="faintline">New fixtures appear here before kickoff — lock a pick and see if you can out-read the model.</span></div>`;
+  if(!open.length)h+=`<div class="empty">No games are inside the seven-day pick window yet.<br><span class="faintline">They appear automatically one week before kickoff.</span></div>`;
   open.forEach(m=>{const p=picks[m.id],x=communityPickProbs(m),official=officialPrediction(m);
     const sideBtn=(side,label,pct)=>{const locked=p&&p.pick===side;const disabled=p?'disabled':'';
       return `<button class="btmbtn ${locked?'locked':''}" ${disabled} onclick="pickBtm('${m.id}','${side}')">${esc(label)}${pct!=null?` <b>${pct}%</b>`:''}</button>`;};
     h+=`<div class="btmcard"><div class="btmmatch">${esc(m.home.name)} <span class="mvvs">v</span> ${esc(m.away.name)}${p?`<span class="btmlocked">your pick: ${esc(p.pick==='h'?m.home.code:p.pick==='a'?m.away.code:'Draw')}</span>`:''}</div>
       <div class="btmrow">${sideBtn('h',m.home.code||'Home',x.h)}${x.d>0?sideBtn('d',t('Draw'),x.d):''}${sideBtn('a',m.away.code||'Away',x.a)}</div>
-      <div class="btmmeta">model: <b>${esc(official.name)}</b> ${official.confidence??'—'}% &middot; ${x.source==='model'?'model probabilities · market unavailable · ':''}${p?'locked — graded when final':'pick before kickoff to play'}</div></div>`;});
+      <div class="btmmeta">${official.side?`model: <b>${esc(official.name)}</b> ${official.confidence??'—'}% &middot; `:'model pick pending &middot; '}${x.source==='model'?'model probabilities · market unavailable · ':x.source==='none'?'probabilities pending · ':''}${p?'locked — graded when final':'pick before kickoff to play'}</div></div>`;});
   const graded=Object.values(picks).filter(p=>p.result).sort((a,b)=>b.ts-a.ts);
   if(graded.length){h+=`<div class="seclbl" style="margin-top:18px">Your results</div>`+graded.slice(0,20).map(p=>{
     const nm=p.pick==='h'?p.code.h:p.pick==='a'?p.code.a:'Draw';

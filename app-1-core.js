@@ -1113,7 +1113,7 @@ function communityScope(){const k=String(DATA?.comp_key||'ALL').toUpperCase();re
 function btmScoped(db){const scope=communityScope();if(scope==='ALL')return db;
   const picks={};Object.entries(db.picks||{}).forEach(([id,p])=>{if(String(p.comp||'WC').toUpperCase()===scope)picks[id]=p;});
   return {...db,picks};}
-function isCommunityPickOpen(m){const kickoff=kickMs(m);return m?.status==='UPCOMING'&&kickoff> Date.now()&&!isStaleUpcoming(m)}
+function isCommunityPickOpen(m){const kickoff=kickMs(m),now=Date.now();return m?.status==='UPCOMING'&&kickoff>now&&kickoff-now<=7*864e5&&!isStaleUpcoming(m)}
 async function lockGlobalPick(matchId,pick,comp){
   const d=await lbPost('pick',{deviceId:deviceId(),matchId:String(matchId),pick,comp:String(comp||'').toLowerCase()});
   if(d&&d.ok)applyAccount(d);

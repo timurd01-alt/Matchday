@@ -1,5 +1,11 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-08-30 (college transition correction only. The existing news
+surface still displays short headline metadata with direct publisher links;
+three current NCAA.com/AP links were included in the college snapshot to keep
+the feed useful while the normal provider refresh is rate-limited. No article
+body, restricted provider field, new endpoint, or ESPN content was added.)
+
 Reviewed: 2026-08-23 (development-pause notice only. The notice accurately
 describes unresolved data licensing and permission requirements without
 asserting unlawful prior acquisition, changing a provider, endpoint, source,

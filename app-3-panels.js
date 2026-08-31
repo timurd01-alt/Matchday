@@ -1,6 +1,18 @@
 function scorecardAuditCount(v,preferred='total'){if(v==null)return 0;if(typeof v==='object')return Number(v[preferred]??v.total??v.graded??v.count)||0;return Number(v)||0}
 function scorecardMarketComparisonPick(p){if(['h','d','a'].includes(p?.market_comparison_pick))return p.market_comparison_pick;return p?.outcome_basis==='ultimate_winner'||p?.prediction_snapshot?.is_knockout?p?.regulation_pick:p?.pick}
 function scorecardUnderdogTag(p){if(!p?.upset_score||!p?.upset_snapshot?.radar||p?.upset_snapshot?.standings_gap_pct==null)return'';const name=esc(p.upset_name||'Underdog'),score=esc(p.upset_score);if(!p.upset_triggered)return` <i class="scsplit upsetTag">underdog risk · ${name} ${score}/100</i>`;const outcome=p.result?(p.upset_hit?' &#10003;':' &#10007;'):'';return` <i class="scsplit upsetTag">upset pick · ${name} ${score}/100${outcome}</i>`}
+function applyCurrentCfbSnapshot(payload){
+  const comp=String(payload?.comp_key||'').toUpperCase();
+  if(!['NCAAF','ALL'].includes(comp)||typeof MATCHDAY_CFB_SNAPSHOT==='undefined')return payload;
+  payload.scorecard=MATCHDAY_CFB_SNAPSHOT.scorecard;
+  payload.news=[...(MATCHDAY_CFB_SNAPSHOT.news||[]),...(payload.news||[])];
+  if(comp==='ALL')return payload;
+  payload.standings=MATCHDAY_CFB_SNAPSHOT.standings;
+  payload.bracket=[];
+  payload.bracketology=null;
+  payload.position_views_note='Current-season results only. The playoff projection is recalibrating.';
+  return payload;
+}
 // The scorecard is deliberately two numbers.
 //
 // It used to carry Brier, log loss, calibration bands, CLV, upset radar,
@@ -167,17 +179,17 @@ async function load(manual=false){if(LOAD_TIMER){clearTimeout(LOAD_TIMER);LOAD_T
       if(top)titleBySport.push({comp,label:compLabel,team:top.team,code:top.code,pct:top.pct});});
     if(!base){const r0=await fetch('data.json',REVALIDATE);if(!r0.ok)throw new Error('no data files yet — run a fetch');base=await r0.json();(base.matches||[]).forEach(m=>merged.push(m));news=base.news||[];latest=base.updated;}
     merged.sort((a,b)=>(a.kickoff||'').localeCompare(b.kickoff||''));
-    DATA=Object.assign({},base,{matches:merged,news:news,updated:latest,competition:'All sports',comp_key:'ALL',standings:[],third_race:[],scorers:[],leaders:{},scorecard:aggregateScorecards(results.some(Boolean)?results:[base]),title_by_sport:titleBySport});
+    DATA=Object.assign({},base,{matches:merged,news:news,updated:latest,competition:'All college',comp_key:'ALL',standings:[],bracket:[],bracketology:null,third_race:[],scorers:[],leaders:{},scorecard:aggregateScorecards(results.filter((d,i)=>d&&COLLEGE_BOARD_KEYS.has(keys[i]))),title_by_sport:titleBySport});
   } else {
     const r=await fetch(DATA_FILE,REVALIDATE);if(!r.ok)throw new Error('HTTP '+r.status);DATA=stripPastSeasonCompetitionViews(await r.json());applyForecastPublicationPauses(DATA);
-  }DATA.news=(DATA.news||[]).filter(isFreshNews).sort((a,b)=>newsTime(b)-newsTime(a));BYID={};(DATA.matches||[]).forEach(m=>BYID[m.id]=m);LAST_OK=true;LAST_ERROR='';const cn=$('#compName');if(cn)cn.textContent=DATA.competition?' · '+DATA.competition:'';const tb=document.querySelector('.navbtn[data-v="third"]');if(tb)tb.style.display=(DATA.third_race&&DATA.third_race.length)?'':'none';const gb2=document.querySelector('.navbtn[data-v="groups"]');if(gb2)gb2.style.display=(DATA.standings&&DATA.standings.length)?'':'none';// .some() passes (element,index): the index landed on isForecastPaused's
+  }applyCurrentCfbSnapshot(DATA);DATA.news=(DATA.news||[]).filter(isFreshNews).sort((a,b)=>newsTime(b)-newsTime(a));BYID={};(DATA.matches||[]).forEach(m=>BYID[m.id]=m);LAST_OK=true;LAST_ERROR='';const cn=$('#compName');if(cn)cn.textContent=DATA.competition?' · '+DATA.competition:'';const tb=document.querySelector('.navbtn[data-v="third"]');if(tb)tb.style.display=(DATA.third_race&&DATA.third_race.length)?'':'none';const gb2=document.querySelector('.navbtn[data-v="groups"]');if(gb2)gb2.style.display=(DATA.standings&&DATA.standings.length)?'':'none';// .some() passes (element,index): the index landed on isForecastPaused's
   // `payload` parameter, so the competition check read match._comp, which only
   // the merged build sets -- the banner fired on every board except MLB's own.
   // Scoped to the MLB board as well: in the merged "All sports" view MLB's
   // fixtures sit alongside eleven other competitions, and announcing "Forecast
   // paused" above all of them read as the whole site being down. Paused MLB
   // cards still carry their own pause shell there.
-  const paused=(DATA.matches||[]).some(m=>isForecastPaused(m));$('#banner').innerHTML=paused?`<div class="marketBanner"><b>Predictions are paused.</b> ${esc(FORECAST_PAUSE_MESSAGE)} Everything else is unaffected: live scores, final results, standings, stats, Elo and market odds all keep updating. <a href="qa.html#pause">Why, and what comes next</a></div>`:DATA.markets_quota_out?`<div class="marketBanner"><b>Market odds temporarily unavailable.</b> Our monthly betting-market data quota is used up, so market comparisons are paused. The model's own predictions still work normally — market lines return when the quota resets.</div>`:'';applySportNav();renderStrip();renderInsight();renderCurrent();applyStaticI18n();renderAlerts()}catch(e){console.error(e);applySportNav();
+  applySportNav();renderStrip();renderInsight();renderCurrent();applyStaticI18n();renderAlerts()}catch(e){console.error(e);applySportNav();
   const sel=currentSportKey();
   if(sel&&(!DATA||((DATA.comp_key||'').toLowerCase()!==sel))){
     DATA={matches:[],news:[],standings:[],third_race:[],bracket:null,scorecard:null,title_odds:[],scorers:[],team_of_tournament:null,
@@ -708,7 +720,7 @@ function _v4AdvancementTable(adv){
 function renderTitle(){
   const t=DATA.title_odds||[],adv=DATA.advancement||[],sc=DATA.scorers||[],upsets=_v4UpsetRows();
   const upcoming=(DATA.matches||[]).filter(m=>m.status!=='FINISHED'&&!isStaleUpcoming(m)).length;
-  let html=`<div class="forecastShell"><div class="marketBanner"><b>Still calibrating.</b> Much of Matchday is still being built, and the model runs on free-tier data for now, so some of these forecasts are rougher than they will be. Treat this board as a testing ground rather than a finished read. Accuracy should improve as the data sources and tuning improve.</div><div class="forecastHero"><div><h2>Forecast board</h2><p>Tournament probabilities, upset risk, advancement paths, and scorer races, in one place.</p></div><div class="forecastKpis"><div class="forecastKpi"><span>Upcoming</span><b>${upcoming}</b></div><div class="forecastKpi"><span>Upset watch</span><b>${upsets.length}</b></div><div class="forecastKpi"><span>Title teams</span><b>${t.length||'—'}</b></div></div></div>`;
+  let html=`<div class="forecastShell"><div class="forecastHero"><div><h2>Forecast board</h2><p>Tournament probabilities, upset risk, advancement paths, and scorer races, in one place.</p></div><div class="forecastKpis"><div class="forecastKpi"><span>Upcoming</span><b>${upcoming}</b></div><div class="forecastKpi"><span>Upset watch</span><b>${upsets.length}</b></div><div class="forecastKpi"><span>Title teams</span><b>${t.length||'—'}</b></div></div></div>`;
   const leaderPanel=_v13LeaderPanel(sc);
   html+=`<div class="forecastGrid ${leaderPanel?'':'single'}"><section class="forecastPanel"><div class="forecastPanelHead"><h3>Upset radar</h3><span>${upsets.length} matches</span></div><div class="upsetList">${upsets.length?upsets.map(x=>`<div class="upsetRow" onclick="openMatchModal('${esc(String(x.m.id||''))}')"><div><div class="upsetMatch">${esc(x.m.home?.code||x.m.home?.name||'H')} v ${esc(x.m.away?.code||x.m.away?.name||'A')}</div><div class="upsetWhy">${esc(x.reason)}</div></div><div class="upsetWhy">${esc(x.m.stage||'')} · ${kickIn(x.m.kickoff)}</div><span class="riskPill ${x.cls}">${x.triggered?'active upset pick':x.risk>=70?'high variance':x.risk>=50?'medium variance':'low variance'}</span></div>`).join(''):'<div class="emptyForecast">No upcoming matches to analyze.</div>'}</div></section>${leaderPanel}</div>`;
   const titleBySport=DATA.title_by_sport||[];

@@ -22,8 +22,12 @@ class CommunityPickAvailabilityTests(unittest.TestCase):
             line for line in self.source.splitlines()
             if "const eligible=(DATA.matches||[]).filter" in line
         )
-        self.assertIn("communityPickProbs(m)", eligible_filter)
         self.assertNotIn("m.markets", eligible_filter)
+        self.assertNotIn("m.prediction", eligible_filter)
+
+    def test_games_open_one_week_before_kickoff(self):
+        core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
+        self.assertIn("kickoff-now<=7*864e5", core)
 
     def test_model_fallback_is_limited_to_the_next_fixture_slate(self):
         self.assertIn("firstKick+4*864e5", self.source)
@@ -32,6 +36,7 @@ class CommunityPickAvailabilityTests(unittest.TestCase):
     def test_model_only_picks_explain_missing_market_benchmark(self):
         self.assertIn("No bookmaker line is available", self.source)
         self.assertIn("market unavailable", self.source)
+        self.assertIn("model pick pending", self.source)
 
 
 if __name__ == "__main__":
