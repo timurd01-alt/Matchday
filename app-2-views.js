@@ -818,9 +818,45 @@ function modTierSplit(){
 <table class="tsTable"><thead><tr><th>Tier</th><th>Teams</th><th>Mean</th><th>Best</th></tr></thead><tbody>${body}</tbody></table>
 <p class="modNote">A measured offset put both tiers on one scale: across 521 cross-tier games the model had been crediting non-power teams points they had not earned. This is the gap that remains once that is corrected.</p></section>`;
 }
+
+/* Closest games on the upcoming slate.
+   Built from two things the board already has -- the fixture list and the rated
+   table -- rather than a new feed: the smallest gap in opponent-adjusted rating
+   between two rated teams is the closest thing to a toss-up the model knows of.
+   It is the natural opposite of Top pick, which shows the most lopsided read,
+   and it is a rating difference rather than a probability, so it is not a pick
+   and does not pretend to be one. */
+function modClosestGames(){
+  const table=collegeRankingTable();
+  const rows=table?.rankings||[];
+  const fixtures=(typeof MATCHDAY_BETBETTER_FIXTURES!=='undefined')?MATCHDAY_BETBETTER_FIXTURES:[];
+  if(!rows.length||!fixtures.length)return '';
+  const byName={};
+  rows.forEach(r=>{if(Number.isFinite(Number(r.rating)))byName[teamKey(r.name)]=r});
+  const look=n=>{const k=teamKey(n);if(byName[k])return byName[k];
+    const hit=Object.keys(byName).find(x=>x.startsWith(k+' ')||k.startsWith(x+' '));
+    return hit?byName[hit]:null};
+  const horizon=Date.now()+9*86400000;
+  const games=[];
+  fixtures.forEach(f=>{
+    const t=Date.parse(f.kickoff);
+    if(!Number.isFinite(t)||t>horizon)return;
+    const h=look(f.home),a=look(f.away);
+    if(!h||!a)return;
+    games.push({home:f.home,away:f.away,gap:Math.abs(Number(h.rating)-Number(a.rating)),
+      hr:h.rank,ar:a.rank,kick:f.kickoff});
+  });
+  if(games.length<3)return '';
+  const top=games.sort((x,y)=>x.gap-y.gap).slice(0,5);
+  const body=top.map(g=>`<tr><td class="tsTeam">${esc(g.away)} at ${esc(g.home)}</td>`
+    +`<td>#${g.ar}/#${g.hr}</td><td class="tsNum">${g.gap.toFixed(2)}</td></tr>`).join('');
+  return `<section class="boardMod modClose"><header><h3>Closest matchups</h3><span>next nine days</span></header>
+<table class="tsTable"><thead><tr><th>Game</th><th>Ranks</th><th>Gap</th></tr></thead><tbody>${body}</tbody></table>
+<p class="modNote">The smallest gap in opponent-adjusted rating between two rated teams — the nearest thing to a toss-up on the slate. A rating difference, not a probability, so it is not a pick.</p></section>`;
+}
 function collegeModules(){
   // Upset of the week leads: CSS columns fill in source order, so first in this
   // array is the top of the left column.
-  const cards=[modUpsetOfWeek(),modTopPick(),modMyPicks(),modStatOfWeek(),modNotable(),modRatingScatter(),modConferenceStrength(),modTop25(),modTopScores(),modToughestSchedules(),modTierSplit()].filter(Boolean);
+  const cards=[modUpsetOfWeek(),modTopPick(),modMyPicks(),modStatOfWeek(),modNotable(),modRatingScatter(),modConferenceStrength(),modTop25(),modTopScores(),modToughestSchedules(),modTierSplit(),modClosestGames()].filter(Boolean);
   return cards.length?`<div class="boardMods">${cards.join('')}</div>`:'';
 }
