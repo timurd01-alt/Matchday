@@ -2185,3 +2185,4 @@ html{color-scheme:dark}
 .welcomeNotice strong{flex:0 0 auto;color:var(--link,#76caff);font-family:var(--display)}
 @media(max-width:600px){.welcomeNotice{display:block}.welcomeNotice strong{display:block;margin-bottom:4px}}
 .modClose::before{background:linear-gradient(90deg,var(--signal),transparent 70%)}
+.modParity::before{background:linear-gradient(90deg,var(--link,#76caff),transparent 70%)}

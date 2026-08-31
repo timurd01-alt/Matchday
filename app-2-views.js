@@ -754,7 +754,11 @@ function modMyPicks(){
   if(!picks.length)return '';
   const rec=u.record||{};
   const pct=v=>Number.isFinite(Number(v))?(Number(v)*100).toFixed(0)+'%':'—';
-  const rows=picks.slice().sort((a,b)=>String(b.starts_at||'').localeCompare(String(a.starts_at||''))).map(p=>{
+  // Newest first and capped. A record that keeps growing should not make this
+  // card keep growing with it -- the older rows are still in the totals above.
+  const MAX_ROWS=6;
+  const ordered=picks.slice().sort((a,b)=>String(b.starts_at||'').localeCompare(String(a.starts_at||'')));
+  const rows=ordered.slice(0,MAX_ROWS).map(p=>{
     const done=p.outcome===0||p.outcome===1;
     const won=p.outcome===1;
     return `<li><span class="modTeam">${esc(p.selection||'')}</span>`
@@ -772,6 +776,7 @@ function modMyPicks(){
 ${record}
 <div class="mpHead"><span>pick</span><span>model</span><span>market</span></div>
 <ul class="modList">${rows}</ul>
+${ordered.length>MAX_ROWS?`<p class="modNote">Showing the ${MAX_ROWS} most recent of ${ordered.length}. The record above counts them all.</p>`:''}
 <p class="modNote">${esc(u.note||'')}</p></section>`;
 }
 
@@ -819,44 +824,41 @@ function modTierSplit(){
 <p class="modNote">A measured offset put both tiers on one scale: across 521 cross-tier games the model had been crediting non-power teams points they had not earned. This is the gap that remains once that is corrected.</p></section>`;
 }
 
-/* Closest games on the upcoming slate.
-   Built from two things the board already has -- the fixture list and the rated
-   table -- rather than a new feed: the smallest gap in opponent-adjusted rating
-   between two rated teams is the closest thing to a toss-up the model knows of.
-   It is the natural opposite of Top pick, which shows the most lopsided read,
-   and it is a rating difference rather than a probability, so it is not a pick
-   and does not pretend to be one. */
-function modClosestGames(){
+
+/* Conference parity.
+   Conference strength already answers "which league is best" with a mean. This
+   answers a question no other card asks: how far apart its own teams are. A
+   league can be strong and lopsided (a couple of giants dragging the average up)
+   or weaker and tightly packed, and the mean cannot tell those apart.
+
+   Spread is the population standard deviation of the rated teams' ratings, with
+   the best and worst in the same row so the number has something to stand on. */
+function modConferenceParity(){
   const table=collegeRankingTable();
-  const rows=table?.rankings||[];
-  const fixtures=(typeof MATCHDAY_BETBETTER_FIXTURES!=='undefined')?MATCHDAY_BETBETTER_FIXTURES:[];
-  if(!rows.length||!fixtures.length)return '';
-  const byName={};
-  rows.forEach(r=>{if(Number.isFinite(Number(r.rating)))byName[teamKey(r.name)]=r});
-  const look=n=>{const k=teamKey(n);if(byName[k])return byName[k];
-    const hit=Object.keys(byName).find(x=>x.startsWith(k+' ')||k.startsWith(x+' '));
-    return hit?byName[hit]:null};
-  const horizon=Date.now()+9*86400000;
-  const games=[];
-  fixtures.forEach(f=>{
-    const t=Date.parse(f.kickoff);
-    if(!Number.isFinite(t)||t>horizon)return;
-    const h=look(f.home),a=look(f.away);
-    if(!h||!a)return;
-    games.push({home:f.home,away:f.away,gap:Math.abs(Number(h.rating)-Number(a.rating)),
-      hr:h.rank,ar:a.rank,kick:f.kickoff});
-  });
-  if(games.length<3)return '';
-  const top=games.sort((x,y)=>x.gap-y.gap).slice(0,5);
-  const body=top.map(g=>`<tr><td class="tsTeam">${esc(g.away)} at ${esc(g.home)}</td>`
-    +`<td>#${g.ar}/#${g.hr}</td><td class="tsNum">${g.gap.toFixed(2)}</td></tr>`).join('');
-  return `<section class="boardMod modClose"><header><h3>Closest matchups</h3><span>next nine days</span></header>
-<table class="tsTable"><thead><tr><th>Game</th><th>Ranks</th><th>Gap</th></tr></thead><tbody>${body}</tbody></table>
-<p class="modNote">The smallest gap in opponent-adjusted rating between two rated teams — the nearest thing to a toss-up on the slate. A rating difference, not a probability, so it is not a pick.</p></section>`;
+  const rows=(table?.rankings||[]).filter(r=>r.conference&&Number.isFinite(Number(r.rating)));
+  if(rows.length<30)return '';
+  const by={};
+  rows.forEach(r=>{(by[r.conference]||=[]).push(Number(r.rating))});
+  const stats=Object.entries(by).filter(([,v])=>v.length>=6).map(([name,v])=>{
+    const mean=v.reduce((a,b)=>a+b,0)/v.length;
+    const sd=Math.sqrt(v.reduce((a,b)=>a+(b-mean)**2,0)/v.length);
+    const sorted=v.slice().sort((a,b)=>b-a);
+    return {name,sd,top:sorted[0],bottom:sorted[sorted.length-1],n:v.length};
+  }).sort((a,b)=>b.sd-a.sd);
+  if(stats.length<3)return '';
+  const show=[...stats.slice(0,2),...stats.slice(-2)];
+  const seen=new Set();
+  const body=show.filter(c=>!seen.has(c.name)&&seen.add(c.name)).map((c,i,arr)=>
+    `<tr><td class="tsTeam">${esc(c.name)}</td>`
+    +`<td class="tsNum">${c.sd.toFixed(1)}</td>`
+    +`<td>${c.top.toFixed(1)}</td><td>${c.bottom.toFixed(1)}</td></tr>`).join('');
+  return `<section class="boardMod modParity"><header><h3>Conference parity</h3><span>most and least spread</span></header>
+<table class="tsTable"><thead><tr><th>Conference</th><th>Spread</th><th>Best</th><th>Worst</th></tr></thead><tbody>${body}</tbody></table>
+<p class="modNote">How far apart a conference's own teams are, not how good it is. A high spread means a couple of teams carrying the average; a low one means the league is tightly packed top to bottom.</p></section>`;
 }
 function collegeModules(){
   // Upset of the week leads: CSS columns fill in source order, so first in this
   // array is the top of the left column.
-  const cards=[modUpsetOfWeek(),modTopPick(),modMyPicks(),modStatOfWeek(),modNotable(),modRatingScatter(),modConferenceStrength(),modTop25(),modTopScores(),modToughestSchedules(),modTierSplit(),modClosestGames()].filter(Boolean);
+  const cards=[modUpsetOfWeek(),modTopPick(),modMyPicks(),modStatOfWeek(),modNotable(),modRatingScatter(),modConferenceStrength(),modTop25(),modTopScores(),modToughestSchedules(),modTierSplit(),modConferenceParity()].filter(Boolean);
   return cards.length?`<div class="boardMods">${cards.join('')}</div>`:'';
 }
