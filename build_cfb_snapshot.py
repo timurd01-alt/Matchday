@@ -61,6 +61,15 @@ def _rows(entry: dict) -> list[dict]:
             # side from a ranked FBS one; the truncated-ingest bug was exactly a
             # failure to make that distinction visible.
             "division": row.get("division"),
+            # Tier and its offset travel together. A measured correction put the
+            # Power Four and Group of Five on one scale -- across 521 cross-tier
+            # games the model had been crediting non-power teams +8.91 points
+            # they had not earned -- and the unadjusted rating is kept beside it
+            # so the correction is inspectable rather than invisible.
+            "tier": row.get("tier"),
+            "tier_offset": row.get("tier_offset"),
+            "rating_unadjusted": row.get("rating_unadjusted"),
+            "conference": row.get("conference"),
             "fcs_schedule_share": row.get("fcs_schedule_share"),
             "rated_games": row.get("rated_games"),
             "recent_form": row.get("recent_form") or "",
@@ -84,6 +93,9 @@ def _meta(entry: dict) -> dict:
         "note": entry.get("note") or "",
         "basis": entry.get("basis") or {},
         "coverage": entry.get("coverage") or {},
+        # Teams held out of the ranking, each with its reason. Publishing the
+        # exclusions is the difference between a filtered table and a quiet one.
+        "withheld": entry.get("withheld") or [],
     }
 
 

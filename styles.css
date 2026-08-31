@@ -2045,3 +2045,29 @@ html{color-scheme:dark}
 .modTop25 .modList{max-height:360px}
 .modPick,.modStat{align-self:start}
 @media(max-width:900px){.modSos{display:none}.ratingCell{min-width:66px}}
+/* Rating-vs-schedule scatter. Inline SVG, themed from the same tokens. */
+.scatter{width:100%;height:auto;display:block}
+.scAx{stroke:var(--line2);stroke-width:1}
+.scMed{stroke:var(--line);stroke-width:1;stroke-dasharray:3 3}
+.dotP{fill:var(--signal);fill-opacity:.85}
+.dotG{fill:var(--live);fill-opacity:.8}
+.scLbl{fill:var(--muted);font:600 7px var(--mono)}
+.scAxLbl{fill:var(--faint);font:600 7px var(--mono);text-anchor:middle}
+.scLegend{display:flex;flex-wrap:wrap;align-items:center;gap:10px;font-family:var(--mono);font-size:var(--fs-2xs);color:var(--muted)}
+.scLegend i{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:4px}
+.dotKeyP{background:var(--signal)}
+.dotKeyG{background:var(--live)}
+.scHint{color:var(--faint);margin-left:auto}
+.modScatter::before{background:linear-gradient(90deg,var(--warn),transparent 70%)}
+.sosTag{display:block;font-family:var(--mono);font-size:var(--fs-3xs);color:var(--faint);font-style:normal;margin-top:1px}
+/* Conference strength bars and the Notable list. */
+.confBarWrap{flex:1 1 auto;min-width:40px;height:8px;border-radius:999px;background:var(--bg2);border:1px solid var(--line);overflow:hidden}
+.confBar{display:block;height:100%;background:linear-gradient(90deg,rgba(58,209,122,.45),var(--signal))}
+.modConf::before{background:linear-gradient(90deg,var(--link,#76caff),transparent 70%)}
+.modNotable::before{background:linear-gradient(90deg,var(--win),transparent 70%)}
+.notableList{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
+.notableList li{display:grid;gap:2px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.notableList li:last-child{border-bottom:0;padding-bottom:0}
+.ntKey{font-family:var(--mono);font-size:var(--fs-3xs);letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+.notableList b{font-family:var(--display);font-size:var(--fs-lg);line-height:1.15}
+.ntDetail{font-family:var(--mono);font-size:var(--fs-xs);color:var(--muted)}

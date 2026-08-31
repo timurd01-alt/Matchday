@@ -51,7 +51,11 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         self.assertNotIn("pregameContextPanel(m)", details)
         self.assertIn("modernExpandedView", details)
         self.assertIn("modernMatchSheet", features)
-        self.assertIn("Imported analytical rating", panels)
+        # The caption used to call this rating "context only" and a preseason
+        # tiebreaker, which was false -- the model does use it. It now names the
+        # rating and ships the schedule beside it.
+        self.assertIn("Opponent-adjusted rating and strength of schedule", panels)
+        self.assertIn("sosTag", panels)
 
 
 

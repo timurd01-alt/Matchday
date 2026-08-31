@@ -520,9 +520,30 @@ const _renderCollegeGroups=renderGroups;
 renderGroups=function(){
   _renderCollegeGroups();
   if(!['NCAAF','NCAAM'].includes(String(DATA.comp_key||'').toUpperCase()))return;
-  document.querySelectorAll('#view-groups .groupHead span').forEach(el=>el.textContent='Imported analytical rating · unavailable teams show —');
+  // The old caption said this rating was "context only" and a preseason
+  // tiebreaker. That was wrong and misleading: it is the model's own
+  // opponent-adjusted rating and the model does use it. Say what it is.
+  document.querySelectorAll('#view-groups .groupHead span').forEach(el=>el.textContent='Opponent-adjusted rating and strength of schedule');
   document.querySelectorAll('#view-groups .gtable').forEach(table=>table.classList.add('collegeConferenceTable'));
-  document.querySelectorAll('#view-groups .gtable th:nth-child(2)').forEach(th=>{th.textContent='Rating';th.title='Imported analytical rating used only as context and a preseason tiebreaker.'});
+  document.querySelectorAll('#view-groups .gtable th:nth-child(2)').forEach(th=>{
+    th.textContent='Rating · SoS';
+    th.title='Opponent-adjusted scoring margin, with the strength of schedule it was earned against.';
+  });
+  // A rating without its schedule is misleading, so the two never appear apart.
+  const table=String(DATA.comp_key||'').toUpperCase()==='NCAAM'
+    ?(typeof MATCHDAY_NCAAM_RANKINGS!=='undefined'?MATCHDAY_NCAAM_RANKINGS:null)
+    :(typeof MATCHDAY_CFB_RANKINGS!=='undefined'?MATCHDAY_CFB_RANKINGS:null);
+  const bySos={};(table?.rankings||[]).forEach(r=>{if(Number.isFinite(Number(r.sos)))bySos[teamKey(r.name)]=Number(r.sos)});
+  document.querySelectorAll('#view-groups .gtable tbody tr').forEach(tr=>{
+    const name=tr.querySelector('.gteam')?.textContent||'';
+    const cell=tr.children[1];
+    const sos=bySos[teamKey(name)];
+    if(cell&&Number.isFinite(sos)&&!cell.querySelector('.sosTag')){
+      const tag=document.createElement('i');
+      tag.className='sosTag';tag.textContent='SoS '+sos.toFixed(2);
+      cell.appendChild(tag);
+    }
+  });
 };
 /* dedup */
 // Sports whose expanded view has a research-signals panel (see research-signals

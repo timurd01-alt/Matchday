@@ -554,8 +554,9 @@ function modStatOfWeek(){
   if(!riser||Number(riser.movement_since_preseason)<=0){
     const sos=(table?.rankings||[]).filter(r=>Number.isFinite(Number(r.sos)));
     if(!sos.length)return '';
-    const hardest=sos.slice().sort((a,b)=>Number(b.sos)-Number(a.sos))[0];
-    return `<section class="boardMod modStat"><header><h3>Statistic of the week</h3><span>toughest schedule</span></header>`
+    const ranked=sos.filter(r=>(r.rank||999)<=25);
+    const hardest=(ranked.length?ranked:sos).slice().sort((a,b)=>Number(b.sos)-Number(a.sos))[0];
+    return `<section class="boardMod modStat"><header><h3>Statistic of the week</h3><span>most tested contender</span></header>`
       +`<div class="modStatBig">${esc(hardest.name)}</div>`
       +`<div class="modStatSub">strength of schedule <b>${Number(hardest.sos).toFixed(2)}</b>, rated ${Number(hardest.rating).toFixed(2)} at #${hardest.rank}</div>`
       +`<div class="modStatFoot">Nothing has moved yet — this is the preseason edition, so the ranking has no week-to-week change to report.</div></section>`;
@@ -567,7 +568,93 @@ function modStatOfWeek(){
       ?`<div class="modStatFoot">Biggest fall: ${esc(faller.name)}, down ${Math.abs(Number(faller.movement_since_preseason))} to #${faller.rank}</div>`:'')
     +`</section>`;
 }
+
+/* Rating against strength of schedule.
+   A rating without its schedule is misleading, and this is the chart that says
+   so at a glance: high and to the right is earned, high and to the left is
+   padded. Drawn as inline SVG because the page ships no chart library and one
+   scatter does not justify adding one.
+
+   Tier colour is not decoration. A measured offset put the Power Four and the
+   Group of Five on one scale, and the shape of the two groups is the evidence
+   for that correction being real rather than asserted. */
+function modRatingScatter(){
+  const table=collegeRankingTable();
+  const rows=(table?.rankings||[]).filter(r=>Number.isFinite(Number(r.rating))&&Number.isFinite(Number(r.sos)));
+  if(rows.length<12)return '';
+  const W=320,H=210,PL=34,PR=10,PT=12,PB=26;
+  const xs=rows.map(r=>Number(r.sos)),ys=rows.map(r=>Number(r.rating));
+  const x0=Math.min(...xs),x1=Math.max(...xs),y0=Math.min(...ys),y1=Math.max(...ys);
+  const sx=v=>PL+((v-x0)/((x1-x0)||1))*(W-PL-PR);
+  const sy=v=>H-PB-((v-y0)/((y1-y0)||1))*(H-PT-PB);
+  const med=a=>{const b=a.slice().sort((m,n)=>m-n);return b[Math.floor(b.length/2)]};
+  const mx=sx(med(xs)),my=sy(med(ys));
+  const dots=rows.map(r=>{
+    const power=String(r.tier||'')==='power';
+    return `<circle cx="${sx(Number(r.sos)).toFixed(1)}" cy="${sy(Number(r.rating)).toFixed(1)}" r="${r.rank<=25?3.1:2.2}" class="${power?'dotP':'dotG'}"><title>${esc(r.name)} — rating ${Number(r.rating).toFixed(2)}, SoS ${Number(r.sos).toFixed(2)}${r.conference?' · '+esc(r.conference):''}</title></circle>`;
+  }).join('');
+  const labels=rows.slice(0,4).map(r=>
+    `<text class="scLbl" x="${(sx(Number(r.sos))+5).toFixed(1)}" y="${(sy(Number(r.rating))+3).toFixed(1)}">${esc(String(r.name).split(' ')[0])}</text>`).join('');
+  const anyG5=rows.some(r=>String(r.tier||'')&&String(r.tier)!=='power');
+  return `<section class="boardMod modScatter"><header><h3>Rating vs schedule</h3><span>every rated team</span></header>
+<svg viewBox="0 0 ${W} ${H}" class="scatter" role="img" aria-label="Scatter plot of team rating against strength of schedule">
+  <line class="scAx" x1="${PL}" y1="${H-PB}" x2="${W-PR}" y2="${H-PB}"/>
+  <line class="scAx" x1="${PL}" y1="${PT}" x2="${PL}" y2="${H-PB}"/>
+  <line class="scMed" x1="${mx.toFixed(1)}" y1="${PT}" x2="${mx.toFixed(1)}" y2="${H-PB}"/>
+  <line class="scMed" x1="${PL}" y1="${my.toFixed(1)}" x2="${W-PR}" y2="${my.toFixed(1)}"/>
+  ${dots}${labels}
+  <text class="scAxLbl" x="${(W/2).toFixed(0)}" y="${H-6}">strength of schedule →</text>
+  <text class="scAxLbl" transform="rotate(-90 10 ${(H/2).toFixed(0)})" x="10" y="${(H/2).toFixed(0)}">rating →</text>
+</svg>
+<div class="scLegend"><span><i class="dotKeyP"></i>Power</span>${anyG5?'<span><i class="dotKeyG"></i>Group of Five</span>':''}<span class="scHint">lines are medians</span></div>
+<p class="modNote">Up and to the right is a strong rating earned against a hard schedule. Up and to the left is a rating built on a soft one — which is exactly what a rating alone would hide.</p></section>`;
+}
+
+function modConferenceStrength(){
+  const table=collegeRankingTable();
+  const rows=(table?.rankings||[]).filter(r=>r.conference&&Number.isFinite(Number(r.rating)));
+  if(rows.length<20)return '';
+  const byConf={};
+  rows.forEach(r=>{(byConf[r.conference]||=[]).push(Number(r.rating))});
+  // Mean, not best team: one outlier should not make a conference look deep.
+  const confs=Object.entries(byConf)
+    .filter(([,v])=>v.length>=4)
+    .map(([name,v])=>({name,mean:v.reduce((a,b)=>a+b,0)/v.length,n:v.length}))
+    .sort((a,b)=>b.mean-a.mean).slice(0,8);
+  if(confs.length<3)return '';
+  const hi=Math.max(...confs.map(c=>c.mean)),lo=Math.min(...confs.map(c=>c.mean));
+  const span=(hi-lo)||1;
+  const bars=confs.map(c=>{
+    const pct=Math.max(4,Math.round(((c.mean-lo)/span)*100));
+    return `<li><span class="modTeam">${esc(c.name)}</span>`
+      +`<span class="confBarWrap"><i class="confBar" style="width:${pct}%"></i></span>`
+      +`<span class="modNum">${c.mean.toFixed(1)}</span><span class="modSos">${c.n}</span></li>`;
+  }).join('');
+  return `<section class="boardMod modConf"><header><h3>Conference strength</h3><span>mean rating</span></header>`
+    +`<ul class="modList">${bars}</ul>`
+    +`<p class="modNote">Average opponent-adjusted rating across each conference's rated teams, with the number of teams counted. A mean rather than a best team, so one outlier cannot make a conference look deep.</p></section>`;
+}
+function modNotable(){
+  const table=collegeRankingTable();
+  const rows=(table?.rankings||[]).filter(r=>Number.isFinite(Number(r.rating)));
+  if(!rows.length)return '';
+  const best=(key,dir)=>rows.filter(r=>Number.isFinite(Number(r[key])))
+    .slice().sort((a,b)=>dir*(Number(b[key])-Number(a[key])))[0];
+  const off=best('adj_o',1),def=best('adj_d',-1);
+  const nonPower=rows.filter(r=>r.tier&&String(r.tier)!=='power')
+    .slice().sort((a,b)=>Number(b.rating)-Number(a.rating))[0];
+  const withheld=(table?.withheld||[]).length;
+  const items=[];
+  if(off)items.push(['Best offence',`${off.name}`,`${Number(off.adj_o).toFixed(1)} adj. points scored`]);
+  if(def)items.push(['Best defence',`${def.name}`,`${Number(def.adj_d).toFixed(1)} adj. points allowed`]);
+  if(nonPower)items.push(['Best outside the power tier',`${nonPower.name}`,`rated ${Number(nonPower.rating).toFixed(2)} at #${nonPower.rank}`]);
+  if(!items.length)return '';
+  return `<section class="boardMod modNotable"><header><h3>Notable</h3><span>from the full table</span></header>`
+    +`<ul class="notableList">${items.map(([k,v,d])=>`<li><span class="ntKey">${esc(k)}</span><b>${esc(v)}</b><span class="ntDetail">${esc(d)}</span></li>`).join('')}</ul>`
+    +(withheld?`<p class="modNote">${withheld} team${withheld===1?' is':'s are'} held out of the ranking — ratings earned mostly against FCS opposition, which the table would otherwise flatter.</p>`:'')
+    +`</section>`;
+}
 function collegeModules(){
-  const cards=[modTopPick(),modStatOfWeek(),modTop25(),modTopScores()].filter(Boolean);
+  const cards=[modTopPick(),modStatOfWeek(),modNotable(),modRatingScatter(),modConferenceStrength(),modTop25(),modTopScores()].filter(Boolean);
   return cards.length?`<div class="boardMods">${cards.join('')}</div>`:'';
 }
