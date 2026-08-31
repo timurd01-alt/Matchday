@@ -182,7 +182,7 @@ function safeView(v){return VIEWS.has(v)?v:'matches';}
 const SPORT_KIND={'':'all',ncaaf:'college',ncaam:'college_basketball'};
 function currentSportKey(){const m=(DATA_FILE||'').match(/data_(\w+)\.json/);return m?m[1]:'';}
 function navProfile(){return SPORT_KIND[currentSportKey()]||'all';}
-const NAV_LABELS={all:{groups:'Rankings',bracket:'Bracket'},college:{groups:'Rankings',bracket:'CFP Bracket'},college_basketball:{groups:'Conferences',bracket:'Bracketology'}};
+const NAV_LABELS={all:{groups:'Conferences',bracket:'Playoffs'},college:{groups:'Conferences',bracket:'CFP Playoff'},college_basketball:{groups:'Conferences',bracket:'Bracketology'}};
 // A domestic league plays a season, not a tournament. The nav button already
 // said so via NAV_LABELS; the view's own heading did not.
 function tottTitle(){return navProfile()==='soccer_league'?'Team of the Season':'Team of the Tournament'}

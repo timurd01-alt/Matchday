@@ -4,6 +4,18 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0830E",
+  "tag": "Fix",
+  "title": "College conferences and playoffs restored",
+  "items": [
+   "Restored traditional conference-by-conference standings for College Football and men's college basketball.",
+   "Applied current CFB records inside each conference and reset preseason NCAAM conference records to 0-0.",
+   "Restored a provisional 12-team CFP playoff from the current Matchday Top 25 snapshot.",
+   "Built provisional NCAAM bracketology from the imported rankings snapshot until the new season supplies a full field.",
+   "Kept the unrelated World Cup bracket out of the All College board."
+  ]
+ },
+ {
   "date": "Build 0830D",
   "tag": "Update",
   "title": "College board catches up",
