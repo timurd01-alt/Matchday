@@ -727,13 +727,15 @@ function matchStory(m){const pr=m.prediction;if(!pr)return '';
   const magnitude={major:'a heavy underdog',solid:'a real underdog',minor:'a live underdog'}[cls]||'the underdog';
   if(up.triggered&&up.candidate_name&&up.candidate===official.side){
     lead=`<b>${esc(up.candidate_name)}</b> is the upset call — ${magnitude} the model rates high enough to back outright.`;
-  }else if(radar&&up.candidate_name){
-    lead=`<b>${pickName}</b> is the official pick${conf?` at ${conf}%`:''}, but <b>${esc(up.candidate_name)}</b> is on the upset radar — ${magnitude} the model prices ${edge>0?`${edge} points above`:'above'} the market.${up.market_gate===false?' The gap is too wide to make it the pick, so it remains a watch signal.':''}`;
   }else if(cls==='pickem'){
     lead=`<b>${pickName}</b> is the lean in what is essentially a coin-flip — the market can barely separate these two.`;
   }else{
     lead=`<b>${pickName}</b> is the model's pick${conf?` at ${conf}%`:''}${conf&&conf>=60?' — a confident, clean call with no live upset threat':''}. ${esc(pr.note||'')}.`;
   }
+  // The upset radar only appears when the model actually backs the underdog
+  // (up.triggered, above). A radar candidate the model declined to pick is an
+  // internal signal, and narrating it read as a recommendation the model had
+  // not made.
   // why bullets from factor attribution (top 3 by magnitude)
   const L={pts:'points on the table',gd:scoreDiffLabel(m),record:'season record',margin:'per-game scoring margin',rank:'poll rank',srs:'opponent-adjusted rating',elo:'Elo rating',form:'recent form',adv:'home-listing edge',class:'squad class and ranking',rest:'rest advantage'};
   const why=pr.why||{};
@@ -741,8 +743,6 @@ function matchStory(m){const pr=m.prediction;if(!pr)return '';
     .map(([k,v])=>{const who=v>0?esc(m.home.name):esc(m.away.name);return `<li>${who} leads on ${L[k]}</li>`;});
   if(pr.damp_pct>=10)bullets.push(`<li>Knockout/conditions variance is damping confidence by ${pr.damp_pct}%</li>`);
   if(up.triggered&&up.candidate===official.side)bullets.push(`<li>Upset gate: OPEN — backing ${esc(up.candidate_name)} as the locked pick</li>`);
-  else if(up.radar&&up.market_gate===false)bullets.push(`<li>Upset radar: ${esc(up.candidate_name)} is underpriced by the market but the gap is too wide to back outright</li>`);
-  else if(up.radar)bullets.push(`<li>Upset radar: model rates ${esc(up.candidate_name)} ${up.upset_edge>0?'+'+up.upset_edge:up.upset_edge} vs the market</li>`);
   const tot=(m.prediction||{}).totals||null;
   const totalsUnit=_totalsUnit(m);
   let goals='';
