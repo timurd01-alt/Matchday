@@ -1,0 +1,1 @@
+{"rank":184,"date":"Build 0830C","tag":"Fix","title":"Pause banner stays gone","items":["Made the restored publication switch authoritative so a stale paused marker in a last-good data file cannot bring the forecast banner back."]}

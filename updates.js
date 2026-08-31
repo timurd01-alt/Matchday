@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0830C",
+  "tag": "Fix",
+  "title": "Pause banner stays gone",
+  "items": [
+   "Made the restored publication switch authoritative so a stale paused marker in a last-good data file cannot bring the forecast banner back."
+  ]
+ },
+ {
   "date": "Build 0830B",
   "tag": "Fix",
   "title": "College forecasts and news return",

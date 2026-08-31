@@ -88,15 +88,13 @@ console.log(JSON.stringify(payload));
                                          "matches": [match]})["matches"][0]
             self.assertNotIn("prediction", gated, comp)
 
-    def test_with_the_switch_off_publication_follows_the_dataset_marker(self):
-        # No sport has a private exemption in either direction. With the switch
-        # cleared, a pick returns only where the backend says it is eligible.
+    def test_with_the_switch_off_stale_payload_markers_cannot_restore_pause(self):
         for comp in ("MLB", "EPL", "NBA"):
             still_paused = self.run_pause_gate(
                 {"comp_key": comp, "matches": [{"id": "m", "status": "UPCOMING",
                                                 "prediction": {"pick": "h"}}]},
                 active=False)["matches"][0]
-            self.assertNotIn("prediction", still_paused, comp)
+            self.assertEqual(still_paused["prediction"]["pick"], "h", comp)
 
             published = self.run_pause_gate(
                 {"comp_key": comp, "forecast_publication": {"state": "eligible"},

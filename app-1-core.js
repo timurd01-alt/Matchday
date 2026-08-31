@@ -101,9 +101,10 @@ function isForecastPaused(match,payload=DATA){
   // analysis, percentages included.
   if(String(match?.status||'').toUpperCase()==='FINISHED')return false;
   if(FORECAST_PAUSE_ACTIVE)return true;
-  // Fail closed: stale or marker-free payloads never regain forecasts. No
-  // competition has an exemption -- the pause applies to all of them equally.
-  return forecastPublicationState(payload,match)!=='eligible';
+  // The site switch is authoritative. A last-good dataset can retain yesterday's
+  // paused marker when a provider refresh is rate-limited; it must not resurrect
+  // a banner after publication has deliberately resumed.
+  return false;
 }
 function applyForecastPublicationPauses(payload){
   if(!payload||!Array.isArray(payload.matches))return payload;
