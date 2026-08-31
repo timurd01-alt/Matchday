@@ -8,6 +8,31 @@ function applyCurrentCfbSnapshot(payload){
   payload.news=[...(MATCHDAY_CFB_SNAPSHOT.news||[]),...(payload.news||[])];
   payload.updated=MATCHDAY_CFB_SNAPSHOT.updated;
   if(comp==='ALL')return payload;
+  // Add fixtures the schedule feed has not caught up with.
+  //
+  // Matchday's own fixture provider has a monthly ceiling, and when it is spent
+  // data_ncaaf.json simply stops changing -- the board then shows a schedule
+  // that ends on whatever day the allowance ran out. The engine already holds
+  // the same fixtures from an ingest that was paid for, so they are merged in
+  // here: anything already present is left alone, and only genuinely missing
+  // games are added.
+  const upcoming=(typeof MATCHDAY_BETBETTER_FIXTURES!=='undefined'?MATCHDAY_BETBETTER_FIXTURES:[]);
+  if(upcoming.length){
+    const have=new Set((payload.matches||[]).map(m=>
+      `${teamKey(m.home?.name)}|${teamKey(m.away?.name)}|${String(m.kickoff||'').slice(0,10)}`));
+    const added=[];
+    upcoming.forEach(f=>{
+      const day=String(f.kickoff||'').slice(0,10);
+      const key=`${teamKey(f.home)}|${teamKey(f.away)}|${day}`;
+      if(have.has(key))return;
+      have.add(key);
+      added.push({id:`bb-${f.event_id}`,_comp:'NCAAF',competition:f.competition||'NCAAF',
+        kickoff:f.kickoff,status:'UPCOMING',
+        home:{name:f.home},away:{name:f.away},score:{},_from:'betbetter_fixtures'});
+    });
+    if(added.length)payload.matches=(payload.matches||[]).concat(added);
+  }
+
   // Settle finished games from the handoff.
   //
   // The fixture feed cannot do this right now: CFBD is at 0 calls for the month
@@ -32,7 +57,21 @@ function applyCurrentCfbSnapshot(payload){
       m._settled_from='betbetter_results';
     });
   }
+  // Records come from the ranking rows first.
+  //
+  // MATCHDAY_CFB_SNAPSHOT.records is a hand-maintained list of sixteen teams,
+  // so every other conference row showed 0-0 however many games had been
+  // played. The handoff carries wins, losses, games and form for all 133 rated
+  // teams and is regenerated with the ratings, so it is the better source and
+  // the hand list is only the fallback for anything it does not rate.
   const records=new Map((MATCHDAY_CFB_SNAPSHOT.records||[]).map(t=>[teamKey(t.name),t]));
+  ((typeof MATCHDAY_CFB_RANKINGS!=='undefined'&&MATCHDAY_CFB_RANKINGS.rankings)||[]).forEach(r=>{
+    const w=Number(r.wins)||0,l=Number(r.losses)||0,d=Number(r.draws)||0;
+    const played=Number(r.season_games)||(w+l+d);
+    if(!played)return;
+    records.set(teamKey(r.name),{name:r.name,pld:played,w,d,l,gf:0,ga:0,gd:0,pts:w*3+d,
+      form:String(r.recent_form||'').slice(-5),record:`${w}-${l}`});
+  });
   const externalRating=name=>{const key=teamKey(name);return (MATCHDAY_CFB_SNAPSHOT.rankings||[]).find(row=>{const rk=teamKey(row.name);return rk===key||rk.startsWith(key+' ')||key.startsWith(rk+' ')})};
   payload.standings=(payload.standings||[]).filter(g=>g.group!=='Matchday Top 25').map(g=>{
     const teams=(g.teams||[]).map((team,index)=>{

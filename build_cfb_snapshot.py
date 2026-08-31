@@ -188,6 +188,11 @@ def build(path: pathlib.Path = SNAPSHOT) -> str:
     # the upset carries a caveat that must be rendered verbatim, and the picks
     # carry their own exclusions and a reportability flag that decide how the
     # record may be described.
+    fixtures = [f for f in (document.get("fixtures") or [])
+                if f.get("home") and f.get("away") and f.get("kickoff")]
+    blocks.append("  const MATCHDAY_BETBETTER_FIXTURES="
+                  + json.dumps(fixtures, ensure_ascii=False) + ";")
+
     blocks.append("  const MATCHDAY_BETBETTER_UPSET="
                   + json.dumps(document.get("upset_of_the_week") or {}, ensure_ascii=False) + ";")
     blocks.append("  const MATCHDAY_BETBETTER_USER_PICKS="

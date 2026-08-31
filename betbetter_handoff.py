@@ -47,9 +47,11 @@ from typing import Any
 
 # Handoff major versions this reader understands. A document outside this set
 # is refused whole: a partly-understood pick is worse than no pick.
+# 6 added `fixtures` (the upcoming schedule the engine already holds, so the
+# board survives Matchday's own fixture provider running out of quota).
 # 2 added `rankings` (the published Top 25 per sport). A v1 document is
 # still readable -- it simply carries no rankings -- so both are accepted.
-SUPPORTED_VERSIONS = frozenset({1, 2, 3, 4, 5})
+SUPPORTED_VERSIONS = frozenset({1, 2, 3, 4, 5, 6})
 
 DEFAULT_HANDOFF_PATH = "betbetter_picks.json"
 
