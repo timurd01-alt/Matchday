@@ -29,8 +29,8 @@ from typing import Any
 # published yet is skipped silently -- an off-season or not-yet-fetched file is a
 # normal state, not an error.
 SPORT_KEYS = [
-    "wc", "ucl", "epl", "laliga", "seriea", "bundesliga", "ligue1",
-    "nfl", "ncaaf", "ncaam", "nba", "mlb",
+    "ncaaf",
+    "ncaam",
 ]
 COLLEGE_BOARD_KEYS = {"ncaaf", "ncaam"}
 

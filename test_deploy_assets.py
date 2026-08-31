@@ -72,7 +72,10 @@ class RuntimeDataAssetTests(unittest.TestCase):
         literal = re.search(r"const ALL_SPORT_KEYS=\[([^\]]*)\]", core)
         self.assertIsNotNone(literal, "ALL_SPORT_KEYS not found in app-1-core.js")
         keys = re.findall(r"'([a-z]+)'", literal.group(1))
-        self.assertGreater(len(keys), 5, "sanity check: too few sport keys to be real")
+        # Two: the site covers NCAAF and NCAAM. The floor guards against the list
+        # being emptied or the regex silently matching nothing, not against the
+        # pivot that deliberately reduced it.
+        self.assertGreaterEqual(len(keys), 2, "sanity check: too few sport keys to be real")
         missing = [f"data_{key}.json" for key in keys if f"data_{key}.json" not in workflow]
         self.assertEqual(missing, [],
                          f"the app fetches {missing} when a visitor picks that sport, "

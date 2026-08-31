@@ -102,26 +102,28 @@ class BuildSummaryTests(unittest.TestCase):
         self.addCleanup(self.tmp.cleanup)
 
     def test_merges_sports_and_sorts_by_kickoff(self):
-        write_sport(self.root, "nfl", {
-            "comp_key": "NFL", "competition": "NFL", "updated": "2026-08-19T10:00:00Z",
+        write_sport(self.root, "ncaam", {
+            "comp_key": "NCAAM", "competition": "Men's College Basketball",
+            "updated": "2026-08-19T10:00:00Z",
             "matches": [match("n1", "2026-08-24T18:00:00Z")],
         })
-        write_sport(self.root, "epl", {
-            "comp_key": "EPL", "competition": "Premier League", "updated": "2026-08-19T12:00:00Z",
+        write_sport(self.root, "ncaaf", {
+            "comp_key": "NCAAF", "competition": "College Football", "updated": "2026-08-19T12:00:00Z",
             "matches": [match("e1", "2026-08-21T18:00:00Z")],
         })
         summary = bbs.build_summary(self.root, today=dt.date(2026, 8, 19))
-        self.assertEqual([m["id"] for m in summary["matches"]], [])
+        # Sorted by kickoff: e1 on the 21st precedes n1 on the 24th.
+        self.assertEqual([m["id"] for m in summary["matches"]], ["e1", "n1"])
         self.assertEqual(summary["comp_key"], "ALL")
         self.assertEqual(summary["competition"], "All sports")
         # latest wins, so the interface's "updated" stamp stays truthful
         self.assertEqual(summary["updated"], "2026-08-19T12:00:00Z")
-        self.assertEqual(summary["sports"], ["epl", "nfl"])
+        self.assertEqual(sorted(summary["sports"]), ["ncaaf", "ncaam"])
 
     def test_scorecard_sources_carry_the_shape_aggregate_expects(self):
         # aggregateScorecards() in app-3-panels.js reads d.scorecard and
         # d.comp_key off whole datasets, not bare scorecards.
-        write_sport(self.root, "mlb", {
+        write_sport(self.root, "ncaam", {
             "comp_key": "MLB", "competition": "MLB",
             "matches": [match("m1", "2026-08-20T18:00:00Z")],
             "scorecard": {"graded": 10, "model_hits": 6, "brier": 0.24},
@@ -135,7 +137,7 @@ class BuildSummaryTests(unittest.TestCase):
     def test_scorecard_survives_even_when_every_fixture_is_out_of_window(self):
         # An off-season sport still owns a graded record, and dropping it would
         # quietly shrink the public scorecard.
-        write_sport(self.root, "nba", {
+        write_sport(self.root, "ncaam", {
             "comp_key": "NBA", "competition": "NBA",
             "matches": [match("b1", "2026-12-25T18:00:00Z")],
             "scorecard": {"graded": 40, "model_hits": 22},
@@ -164,16 +166,16 @@ class BuildSummaryTests(unittest.TestCase):
         self.assertEqual(len(summary["matches"]), 1)
 
     def test_corrupt_sport_file_does_not_sink_the_build(self):
-        with open(os.path.join(self.root, "data_nfl.json"), "w", encoding="utf-8") as handle:
+        with open(os.path.join(self.root, "data_ncaaf.json"), "w", encoding="utf-8") as handle:
             handle.write("{not json")
-        write_sport(self.root, "mlb", {
+        write_sport(self.root, "ncaam", {
             "comp_key": "MLB", "matches": [match("m1", "2026-08-20T18:00:00Z")],
         })
         summary = bbs.build_summary(self.root, today=dt.date(2026, 8, 19))
-        self.assertEqual(summary["sports"], ["mlb"])
+        self.assertEqual(summary["sports"], ["ncaam"])
 
     def test_detail_fields_are_absent_from_the_published_payload(self):
-        write_sport(self.root, "nfl", {
+        write_sport(self.root, "ncaaf", {
             "comp_key": "NFL",
             "matches": [match(
                 "n1", "2026-08-20T18:00:00Z",
@@ -187,15 +189,15 @@ class BuildSummaryTests(unittest.TestCase):
         self.assertNotIn("nfl_challenger_shadow", blob)
 
     def test_title_by_sport_keeps_the_label_the_view_renders(self):
-        write_sport(self.root, "epl", {
-            "comp_key": "EPL", "competition": "Premier League",
+        write_sport(self.root, "ncaaf", {
+            "comp_key": "NCAAF", "competition": "College Football",
             "matches": [match("e1", "2026-08-20T18:00:00Z")],
             "title_odds": [{"team": "Arsenal FC", "code": "ARS", "pct": 31}],
         })
         summary = bbs.build_summary(self.root, today=dt.date(2026, 8, 19))
         entry = summary["title_by_sport"][0]
-        self.assertEqual(entry["comp"], "EPL")
-        self.assertEqual(entry["label"], "Premier League")
+        self.assertEqual(entry["comp"], "NCAAF")
+        self.assertEqual(entry["label"], "College Football")
         self.assertEqual(entry["team"], "Arsenal FC")
 
 

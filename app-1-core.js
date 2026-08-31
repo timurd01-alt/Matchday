@@ -61,7 +61,7 @@ function applyStaticI18n(){
 function t(s){if(!LANG||!window.MD_I18N||!MD_I18N[LANG])return s;return translateUiText(s,MD_I18N[LANG]);}
 function setLang(v){LANG=v;try{localStorage.setItem('matchday.lang',v)}catch(e){};renderStrip();renderCurrent();renderInsight&&renderInsight();applyStaticI18n();renderAlerts();}
 let DATA_FILE='';try{DATA_FILE=localStorage.getItem('matchday.sport')||'';if(/^data_nhl\.json$/i.test(DATA_FILE)){DATA_FILE='';localStorage.setItem('matchday.sport','')}}catch(e){}
-const SPORT_LABELS={ncaaf:'College Football',ncaam:"Men's College Basketball"};
+const SPORT_LABELS={wc:'World Cup',ucl:'Champions League',epl:'Premier League',laliga:'La Liga',seriea:'Serie A',bundesliga:'Bundesliga',ligue1:'Ligue 1',nfl:'NFL',ncaaf:'College Football',ncaam:"Men's College Basketball",nba:'NBA',mlb:'MLB',nhl:'NHL'};
 // The sports we actually publish data for. SPORT_LABELS above still knows about
 // NHL so a restored sport picks up its name for free, but nothing fetches a file
 // that isn't there.
@@ -552,7 +552,7 @@ function renderWelcomeStats(){
   // graded record carry the third slot.
   const graded=Number(DATA.scorecard?.graded)||0;
   const cells=[[upcoming.length,'fixtures ahead'],
-               [Object.keys(SPORT_LABELS).length,'competitions'],
+               [ALL_SPORT_KEYS.length,'competitions'],
                FORECAST_PAUSE_ACTIVE
                  ?[graded||'—','picks on the record']
                  :[`${Math.round(priced/upcoming.length*100)}%`,'model coverage']];
@@ -661,8 +661,11 @@ function enhanceMatchCards(host){
     head.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();openMatchModal(card.dataset.id);setFinishedLabel()}});
   });
 }
-const MARQUEE_COUNT=16;
-const MARQUEE_PER_COMP=3;
+// Six highlighted games. The per-competition cap has to reach six on its own
+// now: with only two competitions -- and often just one of them in season --
+// a cap of three meant the board could never fill the strip from NCAAF alone.
+const MARQUEE_COUNT=6;
+const MARQUEE_PER_COMP=6;
 // Watchability alone doesn't know or care how far away a game is -- an
 // off-season fixture months out can outscore something happening this week.
 // Narrow to the soonest reasonable window before ranking by watchability,

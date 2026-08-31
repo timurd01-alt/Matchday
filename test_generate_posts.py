@@ -58,7 +58,7 @@ class RecapContentTests(unittest.TestCase):
         # With the site-wide pause lifted, the dataset marker decides -- and it
         # decides the same way for every competition.
         with mock.patch.object(forecast_pause, "PAUSE_ACTIVE", False):
-            for comp in ("MLB", "EPL", "NFL"):
+            for comp in ("NCAAM", "EPL", "NCAAF"):
                 for phase in ("preliminary", "lock_candidate", "locked"):
                     data = {"comp_key": comp,
                             "forecast_publication": {"state": "eligible"}}
@@ -69,7 +69,7 @@ class RecapContentTests(unittest.TestCase):
     def test_site_wide_pause_withholds_every_upcoming_pick(self):
         # No competition is exempt, and an "eligible" marker cannot override it.
         with mock.patch.object(forecast_pause, "PAUSE_ACTIVE", True):
-            for comp in ("MLB", "EPL", "NFL", "NBA"):
+            for comp in ("NCAAM", "EPL", "NCAAF", "NBA"):
                 data = {"comp_key": comp, "forecast_publication": {"state": "eligible"}}
                 match = {"status": "UPCOMING", "prediction": {"publication_state": "locked"}}
                 self.assertTrue(gp._forecast_is_paused(data, match), comp)
@@ -79,10 +79,10 @@ class RecapContentTests(unittest.TestCase):
             {"status": "FINISHED", "prediction": {"publication_state": "locked"}}))
 
     def test_no_post_when_nothing_graded(self):
-        self.assertIsNone(gp.build_recap_post("NFL", "NFL", {"graded": 0}, None))
+        self.assertIsNone(gp.build_recap_post("NCAAF", "NCAAF", {"graded": 0}, None))
 
     def test_recap_includes_hit_rate_calibration_signal_and_awards(self):
-        post = gp.build_recap_post("NFL", "NFL", SCORECARD, AWARDS)
+        post = gp.build_recap_post("NCAAF", "NCAAF", SCORECARD, AWARDS)
         self.assertIsNotNone(post)
         text = " ".join(post["body"])
         self.assertIn("9", text)
@@ -92,7 +92,7 @@ class RecapContentTests(unittest.TestCase):
         self.assertIn("opponent-adjusted", text)  # srs is the hottest signal (6/8)
         self.assertIn("Beta", text)  # biggest upset winner
         self.assertIn("for anyone to use", text.lower())
-        self.assertEqual(post["slug"], f"nfl-{datetime.date.today().isoformat()}")
+        self.assertEqual(post["slug"], f"ncaaf-{datetime.date.today().isoformat()}")
         self.assertEqual(post["record"], {"hits": 9, "graded": 13, "pct": 69})
         self.assertEqual(post["highlights"]["best_call"]["pick"], "Gamma")
 
@@ -115,31 +115,31 @@ class PublishGateTests(unittest.TestCase):
         shutil.rmtree(self.tmp, ignore_errors=True)
 
     def test_first_post_needs_minimum_graded_picks(self):
-        self.assertFalse(gp.should_publish("NFL", {"graded": 2}))
-        self.assertTrue(gp.should_publish("NFL", {"graded": 5}))
+        self.assertFalse(gp.should_publish("NCAAF", {"graded": 2}))
+        self.assertTrue(gp.should_publish("NCAAF", {"graded": 5}))
 
     def test_second_post_gated_on_days_and_new_results(self):
         today = datetime.date.today().isoformat()
         with open(gp.STATE_FILE, "w", encoding="utf-8") as f:
-            json.dump({"NFL": {"last_post_date": today, "graded_at_post": 10}}, f)
+            json.dump({"NCAAF": {"last_post_date": today, "graded_at_post": 10}}, f)
         # same day, plenty of new results -- still blocked by the day gate
-        self.assertFalse(gp.should_publish("NFL", {"graded": 20}))
+        self.assertFalse(gp.should_publish("NCAAF", {"graded": 20}))
         # far enough back in time, but not enough new graded picks
         old = (datetime.date.today() - datetime.timedelta(days=10)).isoformat()
         with open(gp.STATE_FILE, "w", encoding="utf-8") as f:
-            json.dump({"NFL": {"last_post_date": old, "graded_at_post": 10}}, f)
-        self.assertFalse(gp.should_publish("NFL", {"graded": 12}))
-        self.assertTrue(gp.should_publish("NFL", {"graded": 16}))
+            json.dump({"NCAAF": {"last_post_date": old, "graded_at_post": 10}}, f)
+        self.assertFalse(gp.should_publish("NCAAF", {"graded": 12}))
+        self.assertTrue(gp.should_publish("NCAAF", {"graded": 16}))
 
     def test_publish_recap_if_due_writes_post_json_state_and_html_file(self):
-        post = gp.publish_recap_if_due("NFL", "NFL", SCORECARD, AWARDS)
+        post = gp.publish_recap_if_due("NCAAF", "NCAAF", SCORECARD, AWARDS)
         self.assertIsNotNone(post)
         self.assertEqual(gp.load_posts(), [post])
         state = gp.load_state()
-        self.assertEqual(state["NFL"]["graded_at_post"], 13)
+        self.assertEqual(state["NCAAF"]["graded_at_post"], 13)
         self.assertTrue(os.path.exists(os.path.join(gp.POSTS_DIR, f"{post['slug']}.html")))
         # calling again immediately (same day, gate not met) publishes nothing new
-        again = gp.publish_recap_if_due("NFL", "NFL", SCORECARD, AWARDS)
+        again = gp.publish_recap_if_due("NCAAF", "NCAAF", SCORECARD, AWARDS)
         self.assertIsNone(again)
         self.assertEqual(len(gp.load_posts()), 1)
 
@@ -158,7 +158,7 @@ class PublishGateTests(unittest.TestCase):
         with open(gp.POSTS_FILE, "w", encoding="utf-8") as f:
             json.dump([editorial, private], f)
 
-        post = gp.publish_recap_if_due("NFL", "NFL", SCORECARD, AWARDS)
+        post = gp.publish_recap_if_due("NCAAF", "NCAAF", SCORECARD, AWARDS)
         self.assertIsNotNone(post)
 
         ids = [p["id"] for p in gp.load_posts()]
@@ -174,10 +174,10 @@ class PublishGateTests(unittest.TestCase):
         self.assertFalse(gp._is_public_comp("all"))
         self.assertIsNone(gp.publish_recap_if_due("all", "All sports", SCORECARD, AWARDS))
 
-    def test_mlb_publishes_public_recap(self):
-        post = gp.publish_recap_if_due("MLB", "MLB", SCORECARD, AWARDS)
+    def test_ncaam_publishes_public_recap(self):
+        post = gp.publish_recap_if_due("NCAAM", "NCAAM", SCORECARD, AWARDS)
         self.assertIsNotNone(post)
-        self.assertEqual(post["comp"], "MLB")
+        self.assertEqual(post["comp"], "NCAAM")
         self.assertEqual(gp.load_posts(), [post])
 
 
@@ -192,7 +192,7 @@ class RenderAndSitemapTests(unittest.TestCase):
         shutil.rmtree(self.tmp, ignore_errors=True)
 
     def test_render_post_html_has_required_seo_tags_and_valid_json_ld(self):
-        post = gp.build_recap_post("NFL", "NFL", SCORECARD, AWARDS)
+        post = gp.build_recap_post("NCAAF", "NCAAF", SCORECARD, AWARDS)
         html = gp.render_post_html(post)
         self.assertIn("<title>", html)
         self.assertIn('rel="canonical"', html)
@@ -206,22 +206,22 @@ class RenderAndSitemapTests(unittest.TestCase):
         self.assertEqual(ld["headline"], post["title"])
         self.assertIn("View matchup", html)
         self.assertIn("Open scorecard", html)
-        self.assertIn("sport=nfl&amp;view=score", html)
+        self.assertIn("sport=ncaaf&amp;view=score", html)
         self.assertIn("pregame predictions, market context and postgame grading", html)
         self.assertNotIn("live scores", html.lower())
 
     def test_regenerate_sitemap_includes_base_pages_and_every_post(self):
-        gp.publish_recap_if_due("NFL", "NFL", SCORECARD, AWARDS)
+        gp.publish_recap_if_due("NCAAF", "NCAAF", SCORECARD, AWARDS)
         n = gp.regenerate_sitemap()
         self.assertEqual(n, 4)  # index, legal, qa, one post
         with open("sitemap.xml", encoding="utf-8") as f:
             xml = f.read()
         self.assertIn("qa.html", xml)
-        self.assertIn("posts/nfl-", xml)
+        self.assertIn("posts/ncaaf-", xml)
         import xml.etree.ElementTree as ET
         ET.fromstring(xml)  # raises if malformed
 
-    def test_public_content_feed_is_compact_and_includes_mlb(self):
+    def test_public_content_feed_is_compact_and_includes_ncaam(self):
         # Feed shape, not pause behaviour: give it a publishable slate to shape.
         pause = mock.patch.object(forecast_pause, "PAUSE_ACTIVE", False)
         pause.start()
@@ -234,7 +234,7 @@ class RenderAndSitemapTests(unittest.TestCase):
                            "note": "Small lean", "why": {"elo": 4}, "private": "drop me"},
             "watchability": 72, "news": ["large dashboard-only payload"],
         }
-        for key in ("nfl", "mlb"):
+        for key in ("ncaaf", "ncaam"):
             with open(f"data_{key}.json", "w", encoding="utf-8") as f:
                 json.dump({"competition": key.upper(), "updated": "2026-07-25T12:00:00Z",
                            # The pipeline now stamps this on every dataset, so
@@ -244,7 +244,7 @@ class RenderAndSitemapTests(unittest.TestCase):
         self.assertEqual(gp.generate_public_content_feed(), 2)
         with open(gp.CONTENT_FEED_FILE, encoding="utf-8") as f:
             feed = json.load(f)
-        self.assertEqual([item["compKey"] for item in feed["datasets"]], ["nfl", "mlb"])
+        self.assertEqual([item["compKey"] for item in feed["datasets"]], ["ncaaf", "ncaam"])
         public_match = feed["datasets"][0]["matches"][0]
         self.assertNotIn("news", public_match)
         self.assertNotIn("private", public_match["prediction"])
@@ -270,8 +270,8 @@ class RenderAndSitemapTests(unittest.TestCase):
                           "pick": "h", "pick_name": "Alpha", "confidence": 61,
                           "model_hit": True, "result": "hit",
                           "factor_snapshot": {"elo": 4}, "locked_at": "2026-07-25T18:00:00Z"})
-        with open("data_mlb.json", "w", encoding="utf-8") as f:
-            json.dump({"competition": "MLB", "updated": "2026-07-25T20:30:00Z",
+        with open("data_ncaam.json", "w", encoding="utf-8") as f:
+            json.dump({"competition": "NCAAM", "updated": "2026-07-25T20:30:00Z",
                        "scorecard": {"graded": 1, "model_hits": 1, "picks": picks},
                        "matches": matches}, f)
         self.assertEqual(gp.generate_public_content_feed(), 1)
@@ -304,15 +304,15 @@ class RenderAndSitemapTests(unittest.TestCase):
                           "model_hit": True, "result": "hit",
                           "factor_snapshot": {"elo": 20},
                           "locked_at": kickoff.replace("20:00", "18:00")})
-        with open("data_epl.json", "w", encoding="utf-8") as f:
-            json.dump({"competition": "Premier League", "scorecard": {"picks": picks},
+        with open("data_ncaaf.json", "w", encoding="utf-8") as f:
+            json.dump({"competition": "College Football", "scorecard": {"picks": picks},
                        "matches": matches}, f)
         gp.generate_public_content_feed()
         with open(gp.CONTENT_FEED_FILE, encoding="utf-8") as f:
             lessons = json.load(f)["learnLessons"]
         self.assertEqual(len(lessons), 1)
         self.assertEqual(lessons[0]["fixtureId"], "newer")
-        self.assertEqual(lessons[0]["compKey"], "epl")
+        self.assertEqual(lessons[0]["compKey"], "ncaaf")
 
     def test_public_content_feed_excludes_in_progress_games(self):
         live = {
@@ -321,15 +321,15 @@ class RenderAndSitemapTests(unittest.TestCase):
             "score": {"home": 1, "away": 0},
             "prediction": {"pick": "h", "pick_name": "Alpha", "confidence": 61},
         }
-        with open("data_mlb.json", "w", encoding="utf-8") as f:
-            json.dump({"competition": "MLB", "updated": "2026-07-25T20:30:00Z",
+        with open("data_ncaam.json", "w", encoding="utf-8") as f:
+            json.dump({"competition": "NCAAM", "updated": "2026-07-25T20:30:00Z",
                        "scorecard": SCORECARD, "matches": [live]}, f)
         self.assertEqual(gp.generate_public_content_feed(), 1)
         with open(gp.CONTENT_FEED_FILE, encoding="utf-8") as f:
             feed = json.load(f)
         self.assertEqual(feed["datasets"][0]["matches"], [])
 
-    def test_public_content_feed_excludes_stale_unmarked_mlb_forecasts_but_keeps_receipts(self):
+    def test_public_content_feed_excludes_stale_unmarked_ncaam_forecasts_but_keeps_receipts(self):
         upcoming = {
             "id": "future", "kickoff": "2026-08-18T20:00:00Z", "status": "UPCOMING",
             "home": {"name": "Alpha"}, "away": {"name": "Beta"},
@@ -345,8 +345,8 @@ class RenderAndSitemapTests(unittest.TestCase):
                    "integrity_status": "verified", "legacy": False,
                    "pick": "h", "pick_name": "Gamma", "confidence": 57,
                    "model_hit": True, "result": "hit", "locked_at": "2026-08-16T18:00:00Z"}
-        with open("data_mlb.json", "w", encoding="utf-8") as f:
-            json.dump({"comp_key": "MLB", "competition": "MLB",
+        with open("data_ncaam.json", "w", encoding="utf-8") as f:
+            json.dump({"comp_key": "NCAAM", "competition": "NCAAM",
                        "scorecard": {"graded": 1, "model_hits": 1, "picks": [receipt]},
                        "matches": [upcoming, finished]}, f)
         self.assertEqual(gp.generate_public_content_feed(), 1)
