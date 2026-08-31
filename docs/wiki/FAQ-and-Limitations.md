@@ -6,7 +6,7 @@ No. Matchday publishes pregame model analysis and postgame accountability. In-pr
 
 ## When does a pick lock?
 
-A prediction becomes eligible for a verified public lock inside 12 hours of scheduled kickoff. The selected side and confidence do not change after that lock. Market-comparison fields can be filled later if odds arrive, but they cannot rewrite the pick.
+A prediction becomes eligible for a verified public lock inside a sport-aware pregame window — three hours before kickoff for college football and college basketball, two hours for the other competitions still fetched. The selected side and confidence do not change after that lock. Market-comparison fields can be filled later if odds arrive, but they cannot rewrite the pick.
 
 ## Why is a game still result pending after it ended?
 
@@ -50,7 +50,7 @@ Providers can correct scores, statuses, player statistics, or event identities a
 - Injuries, transfers, and lineups are only incorporated when reliable licensed data is available.
 - Elo and head-to-head signals need time to earn full weight.
 - A recruiting rating cannot fully measure development, coaching, or transfer impact.
-- MLB, NFL, NBA, and NHL do not display a roster/personnel edge until their configured feeds provide the required player, depth-chart, lineup, or starter coverage. Championship futures are labeled separately as market power rather than being passed off as talent.
+- Outside college football and college basketball, the other competitions still fetched do not display a roster/personnel edge until their configured feeds provide the required player, depth-chart, lineup, or starter coverage. Championship futures are labeled separately as market power rather than being passed off as talent.
 - College-football roster talent refreshes through CollegeFootballData. Matchday performs a quota-light talent refresh before the broader data build and persists successful enrichment to tracked ratings, so later rate limits use the last licensed snapshot rather than publishing a fabricated zero edge. During the July 2026 quota outage, already verified 2025 spot checks provide a transparent 15-team bridge (including Michigan State and Toledo) until the full-field refresh succeeds.
 - Market availability is uneven across competitions and dates.
 - Projected margin is inferred from outcome probabilities, not a dedicated exact-score model.

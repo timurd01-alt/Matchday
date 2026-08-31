@@ -8,8 +8,9 @@ Matchday is primarily a Python data pipeline and static web application, with sm
 - `multi_fetch.py` schedules adaptive pregame and result-pending fetches
 - `provider_adapters.py` translates provider responses into Matchday contracts
 - `app-1-core.js` through `app-4-features.js` power the main interface
-- `content.js` and `generate_posts.py` publish pregame analysis and verified postgame recaps
-- `index.html`, `content.html`, `qa.html`, and `styles.css` define the public product surfaces
+- `build_research_posts.py` and `generate_posts.py` publish pregame analysis and verified postgame recaps
+- `index.html`, `legal.html`, `qa.html`, and `styles.css` define the public product surfaces
+- `scripts/windows/` holds the Windows launcher and one-off fetch scripts
 - `api/` and `server/` contain optional online components
 
 ## Local setup
@@ -25,10 +26,10 @@ For each eligible upcoming fixture, the fetch must persist a verified pregame lo
 For prediction, provider, scheduling, article, or grading changes, run:
 
 ```bash
-python -m unittest test_analysis_mode test_news_freshness test_score_refresh test_multi_fetch test_pick_lock_persistence test_recovered_mlb_picks test_model_inputs test_provider_adapters test_security test_generate_posts test_backfill_history
+python -m unittest discover -p "test_*.py"
 ```
 
-This suite covers the pregame/postgame presentation, seven-day news cutoff, hourly result-fetch policy, lock persistence, recovered picks, final-result grading, provider contracts, generated-content accountability, and historical backfill behavior.
+This is the whole suite, and it is the exact command `deploy.yml` and `tests.yml` run — `test_next_task.RequiredSuiteDriftTest` asserts the two stay identical. Run it in full rather than a hand-picked subset: a subset is how a required suite silently drifts out of coverage.
 
 Tests should accompany changes to ranking logic, provider normalization, grading, locking, or confidence behavior. A provider failure should degrade honestly—usually to an empty, result-pending, or explicitly projected state—rather than fabricate data.
 

@@ -44,8 +44,8 @@ NHL is intentionally excluded while its provider access remains unresolved. Cove
 Run one competition directly:
 
 ```powershell
-python fetch_data.py --mlb
-python fetch_data.py --epl
+python fetch_data.py --ncaaf
+python fetch_data.py --ncaam
 ```
 
 Run one adaptive round for every public competition:
@@ -83,8 +83,10 @@ The news feed accepts dated articles no more than seven days old. Undated or sta
 ## Test the integrity path
 
 ```powershell
-python -m unittest test_analysis_mode test_news_freshness test_score_refresh test_multi_fetch test_pick_lock_persistence test_recovered_mlb_picks test_model_inputs test_provider_adapters test_pregame_context test_security test_generate_posts test_backfill_history
+python -m unittest discover -p "test_*.py"
 ```
+
+That is the full suite, and the exact command CI runs. Requires Python 3.12 or newer.
 
 See the [Wiki](https://github.com/timurd01-alt/Matchday/wiki) for product behavior and [PROVIDER_COMPLIANCE.md](PROVIDER_COMPLIANCE.md) for provider-specific notes.
 

@@ -2,13 +2,18 @@
 
 Matchday uses provider APIs and licensed or permissively licensed datasets. Coverage differs by sport and account tier.
 
-Current provider families include:
+The sources behind the college model:
+
+- CollegeFootballData for NCAA football schedules, records, rankings, and roster-talent composites
+- CollegeBasketballData for NCAA men's basketball schedules, team information, recruiting ratings, and box scores
+- The Odds API for available pregame market information
+- Open-Meteo for venue weather forecasts
+
+Still fetched for the remaining competitions, and attributed for as long as they are:
 
 - football-data.org for supported soccer competition data
 - UEFA's published Technical Observer Team of the Season for the attributed completed-season Champions League XI
-- The Odds API for available pregame market information
 - BALLDONTLIE for supported NFL, NBA, and MLB feeds
-- CollegeFootballData and CollegeBasketballData for NCAA data
 - Sportmonks and API-FOOTBALL for optional supported soccer detail
 - nflverse-data for supported NFL player-stat categories
 

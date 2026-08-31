@@ -1,5 +1,5 @@
 @echo off
-cd /d "%~dp0"
+cd /d "%~dp0..\..\"
 echo Rebuilding data.json with football-data.org + The Odds API...
 python fetch_data.py
 echo.

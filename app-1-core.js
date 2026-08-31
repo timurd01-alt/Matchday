@@ -751,7 +751,7 @@ function renderMatches(){const M=DATA.matches||[];
   const active=M.filter(m=>!isCompleteOrPast(m)).sort(isAll?watchabilityFixtureSort:favoriteFixtureSort);
   const capped=isAll?marqueeSelect(active):active;
   const shown=capped.slice(0,MATCH_VISIBLE),remaining=Math.max(0,capped.length-shown.length);
-  const missing=DATA._missing?`<div class="banner" style="grid-column:1/-1"><b>No ${esc(DATA.competition||'this sport')} data yet.</b> Fetch it once its season is available — run the matching start file (e.g. start_ucl.bat) or keep an eye out when the season begins.</div>`:'';
+  const missing=DATA._missing?`<div class="banner" style="grid-column:1/-1"><b>No ${esc(DATA.competition||'this sport')} data yet.</b> Fetch it once its season is available — run the matching start file (e.g. scripts/windows/start_ncaaf.bat) or keep an eye out when the season begins.</div>`:'';
   const intro=isAll
     ?`<div class="viewIntro"><div><div class="vhead">Top matchups</div><p>The strongest and closest games across every sport. Choose a sport above to see its complete schedule.</p></div><span>${shown.length} featured</span></div>`
     :`<div class="viewIntro"><div><div class="vhead">${t('Fixtures')}</div><p>${FORECAST_PAUSE_ACTIVE?'Fixtures, scores and market odds. Model picks are paused.':'Pregame model reads now; final scores and grading after the game.'}</p></div><span>${capped.length} games</span></div>`;

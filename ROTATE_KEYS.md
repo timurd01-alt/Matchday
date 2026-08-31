@@ -58,7 +58,7 @@ seasons/results are skipped automatically).
   whether the app happens to be using it right now.
 
 ## Then
-- Run one fetch (fetch_once_show_errors.bat) and confirm the diagnostics show
+- Run one fetch (scripts\windows\fetch_once_show_errors.bat) and confirm the diagnostics show
   fixtures, odds and box stats loading. That's the whole verification.
 - From now on: keys never get pasted into chats or uploaded. When sharing the
   app folder with an AI, config_keys.py stays home (the shipped zips already

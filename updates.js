@@ -4,6 +4,18 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0831A",
+  "tag": "Docs",
+  "title": "College focus, clearer legal page, and a tidier repo",
+  "items": [
+   "Matchday is now documented as what it actually is: a college football and college basketball forecasting desk.",
+   "The legal page drops the betting framing and the standalone responsible-gambling section, keeping one line to a free, confidential helpline.",
+   "Data-source credits now lead with the college providers; every other provider attribution stays in force while the pipeline still fetches that competition.",
+   "Support section now reaches a real destination — X: @iamtimurety — instead of an address that was never there.",
+   "Windows launchers moved into scripts/windows/, and the loose notes into Readmes/."
+  ]
+ },
+ {
   "date": "Build 0830F",
   "tag": "Fix",
   "title": "College ratings and matchup view corrected",

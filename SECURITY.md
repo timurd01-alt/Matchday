@@ -9,7 +9,7 @@ Your keys are like house keys. `config_keys.py` is the only place they belong, i
 never leaves your computer, and it's excluded from everything the app shares.
 
 ## Before you ever put this online or send the folder to anyone
-Double-click **`check_security.bat`** and read the report.
+Double-click **`scripts\windows\check_security.bat`** and read the report.
 - Green "All clear" = safe to share.
 - "[STOP]" = it found something unsafe and tells you exactly what and how to fix it.
 Run it every single time before publishing. It changes nothing — it only checks.

@@ -1,12 +1,25 @@
 # Matchday
 
-Transparent sports forecasting and intelligence.
+Transparent college football and college basketball forecasting.
 
 ## Philosophy
 
 Probability, not certainty. Matchday isn't a sportsbook, a tipster, or an "AI that knows
 the future" — it's a forecasting desk that publishes a probability before a game and
 grades itself against the real result afterward.
+
+## Focus
+
+Matchday is a college-sports desk. Two competitions get the model's full attention:
+
+- **College football (NCAAF)** — ratings, matchup forecasts, conference races, and
+  playoff projections
+- **College basketball (NCAAM)** — opponent-adjusted efficiency, four-factors profiles,
+  and model bracketology
+
+Everything below describes those two. The data pipeline still fetches several other
+competitions, and their provider attributions remain in
+[legal.html](legal.html) for as long as it does — but they are not where the work goes.
 
 ## Transparency
 
@@ -20,15 +33,14 @@ grades itself against the real result afterward.
 
 ## What it does
 
-- Pregame match forecasts and probability breakdowns, with the real factors behind
-  each pick (points, form, ratings, injuries, and more)
+- Pregame matchup forecasts and probability breakdowns, with the real factors behind
+  each pick (ratings, form, efficiency, venue, and more)
+- Conference standings, playoff and tournament projections, and model bracketology
 - Model vs. market comparison — where the forecast agrees or disagrees with the market,
   and whether that's actually meant anything historically
 - A verified prediction history with postgame grading, never edited after the fact
 - Advanced model views: outcome exploration, a neutral-venue "what if" toggle backed
   by a real second model run (not a fake slider), and a public Model Scorecard
-- Coverage across soccer (World Cup, Champions League, and major domestic leagues),
-  NFL, college football, NBA, college basketball, and MLB
 
 ## Current status
 
@@ -37,6 +49,10 @@ data sources today; upgrades happen when a real, measured improvement justifies 
 cost — see [docs/experiments.json](docs/experiments.json) and
 [docs/PREDICTION_RESEARCH_ROADMAP.md](docs/PREDICTION_RESEARCH_ROADMAP.md) for the
 actual experiment record: what's been tested, what got kept, and what got rejected.
+
+The NCAAM model is pre-registered ahead of the 2026-27 season in
+[ncaam_preregistration.json](ncaam_preregistration.json) — the hypothesis and its
+success bar were sealed before the model was built, on purpose.
 
 ## Research
 
@@ -49,11 +65,16 @@ straight from the real pick history rather than hand-written claims. See
 
 [matchdayterminal.com](https://matchdayterminal.com/)
 
+## Contact
+
+X: [@iamtimurety](https://x.com/iamtimurety)
+
 ## Local development
 
 See [SETUP.md](SETUP.md) for running the interface locally and adding provider
-credentials. Data-provider terms, licensing, and attribution requirements are tracked
-in [PROVIDER_COMPLIANCE.md](PROVIDER_COMPLIANCE.md).
+credentials. Windows launchers live in [scripts/windows/](scripts/windows/).
+Data-provider terms, licensing, and attribution requirements are tracked in
+[PROVIDER_COMPLIANCE.md](PROVIDER_COMPLIANCE.md).
 
 ## License
 
