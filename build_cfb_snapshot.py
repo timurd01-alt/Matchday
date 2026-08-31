@@ -184,6 +184,15 @@ def build(path: pathlib.Path = SNAPSHOT) -> str:
     blocks.append("  const MATCHDAY_BETBETTER_RESULTS="
                   + json.dumps(results, ensure_ascii=False) + ";")
 
+    # The editorial underdog call and the owner's own picks. Both ship whole --
+    # the upset carries a caveat that must be rendered verbatim, and the picks
+    # carry their own exclusions and a reportability flag that decide how the
+    # record may be described.
+    blocks.append("  const MATCHDAY_BETBETTER_UPSET="
+                  + json.dumps(document.get("upset_of_the_week") or {}, ensure_ascii=False) + ";")
+    blocks.append("  const MATCHDAY_BETBETTER_USER_PICKS="
+                  + json.dumps(document.get("user_picks") or {}, ensure_ascii=False) + ";")
+
     picks = [p for p in (document.get("picks") or [])
              if str(p.get("basis") or "") == betbetter_handoff.LIVE_BASIS
              and not p.get("official_pick")]

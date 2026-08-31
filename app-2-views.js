@@ -715,7 +715,62 @@ function fitRankingCard(){
   const note=card.querySelector('.modNote:last-of-type');
   if(note)note.textContent=`Top ${keep} shown. Full table of every rated team on the Rankings tab.`;
 }
+
+/* The week's upset call.
+   Editorial, and labelled that way in the card rather than only in a tooltip.
+   The engine ships a caveat with this pick saying disagreement of exactly this
+   kind has historically predicted WORSE results on graded college samples, and
+   that it must never be published as a recommended bet. That text is rendered
+   as written -- paraphrasing a warning is how warnings get softened. */
+function modUpsetOfWeek(){
+  const u=(typeof MATCHDAY_BETBETTER_UPSET!=='undefined')?MATCHDAY_BETBETTER_UPSET:null;
+  const p=u&&u.available?u.pick:null;
+  if(!p)return '';
+  const model=Number(p.model_pct),market=Number(p.market_pct);
+  return `<section class="boardMod modUpset"><header><h3>Upset of the week</h3><span>editorial</span></header>
+<div class="modPickTeam">${esc(p.selection||'')}</div>
+<div class="modPickGame">${esc(p.away||'')} at ${esc(p.home||'')}</div>
+<div class="upsetBars">
+  <div><span>model</span><i style="width:${Math.max(2,Math.min(100,model))}%"></i><b>${Number.isFinite(model)?model.toFixed(1)+'%':'—'}</b></div>
+  <div class="mkt"><span>market</span><i style="width:${Math.max(2,Math.min(100,market))}%"></i><b>${Number.isFinite(market)?market.toFixed(1)+'%':'—'}</b></div>
+</div>
+<div class="modPickNums">${esc(u.basis||'')} · ${u.considered||0} games considered</div>
+<div class="modWarn">${esc(u.caveat||'')}</div></section>`;
+}
+
+/* My picks, against the model and the market.
+   Three honesty constraints ship with this data and all three are obeyed:
+   `reportable` false means the sample is too small to state a record as though
+   it meant something; `excluded` counts picks recorded after kickoff, which are
+   listed rather than dropped so nothing disappears silently; and `note` says
+   these are predictions with no stake, price or balance attached. */
+function modMyPicks(){
+  const u=(typeof MATCHDAY_BETBETTER_USER_PICKS!=='undefined')?MATCHDAY_BETBETTER_USER_PICKS:null;
+  const picks=(u?.picks||[]).filter(p=>p.before_kickoff);
+  if(!picks.length)return '';
+  const rec=u.record||{};
+  const pct=v=>Number.isFinite(Number(v))?(Number(v)*100).toFixed(0)+'%':'—';
+  const rows=picks.slice().sort((a,b)=>String(b.starts_at||'').localeCompare(String(a.starts_at||''))).map(p=>{
+    const done=p.outcome===0||p.outcome===1;
+    const won=p.outcome===1;
+    return `<li><span class="modTeam">${esc(p.selection||'')}</span>`
+      +`<span class="mpNum" title="my pick vs the model's frozen figure">${pct(p.model_probability)}</span>`
+      +`<span class="mpNum mkt" title="market probability">${pct(p.market_probability)}</span>`
+      +`<i class="mpFlag ${p.model_agreed?'agree':'differ'}" title="${p.model_agreed?'the model agreed':'the model disagreed'}">${p.model_agreed?'with':'vs'}</i>`
+      +`<i class="mpOut ${done?(won?'won':'lost'):'wait'}">${done?(won?'W':'L'):'·'}</i></li>`;
+  }).join('');
+  const excluded=Number(u?.excluded?.recorded_after_kickoff)||0;
+  const record=u.reportable
+    ? `<div class="modStatSub"><b>${rec.wins||0}\u2013${rec.losses||0}</b> on graded picks · model agreed on ${rec.model_agreed_on||0}</div>`
+    : `<div class="modStatSub"><b>${rec.wins||0}\u2013${rec.losses||0}</b> so far \u2014 too few graded picks to call it a record</div>`;
+  return `<section class="boardMod modMine"><header><h3>My picks</h3><span>vs model &amp; market</span></header>
+${record}
+<div class="mpHead"><span>pick</span><span>model</span><span>market</span></div>
+<ul class="modList">${rows}</ul>
+${excluded?`<p class="modNote">${excluded} pick${excluded===1?'':'s'} recorded after kickoff are excluded from the record. Listed as excluded rather than removed, so nothing disappears without saying why.</p>`:''}
+<p class="modNote">${esc(u.note||'')}</p></section>`;
+}
 function collegeModules(){
-  const cards=[modTopPick(),modStatOfWeek(),modNotable(),modRatingScatter(),modConferenceStrength(),modTop25(),modTopScores()].filter(Boolean);
+  const cards=[modTopPick(),modUpsetOfWeek(),modMyPicks(),modStatOfWeek(),modNotable(),modRatingScatter(),modConferenceStrength(),modTop25(),modTopScores()].filter(Boolean);
   return cards.length?`<div class="boardMods">${cards.join('')}</div>`:'';
 }

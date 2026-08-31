@@ -2139,3 +2139,23 @@ html{color-scheme:dark}
 @media(max-width:720px){.boardMods{column-count:1}}
 /* The ranking card is trimmed to fit by fitRankingCard(); nothing here caps it. */
 .modTop25 .modList{max-height:none;overflow:visible}
+/* Upset of the week, and my picks against the model and market. */
+.modUpset::before{background:linear-gradient(90deg,var(--live),transparent 70%)}
+.modMine::before{background:linear-gradient(90deg,var(--link,#76caff),transparent 70%)}
+.upsetBars{display:grid;gap:6px}
+.upsetBars>div{display:grid;grid-template-columns:46px 1fr 48px;align-items:center;gap:7px;font-family:var(--mono);font-size:var(--fs-2xs);color:var(--muted)}
+.upsetBars i{display:block;height:8px;border-radius:999px;background:var(--signal)}
+.upsetBars .mkt i{background:var(--faint)}
+.upsetBars b{text-align:right;color:var(--text);font-size:var(--fs-sm)}
+.mpHead{display:flex;gap:8px;font-family:var(--mono);font-size:var(--fs-3xs);text-transform:uppercase;letter-spacing:.06em;color:var(--faint)}
+.mpHead span:first-child{flex:1 1 auto}
+.mpHead span+span{width:44px;text-align:right}
+.mpNum{font-family:var(--mono);font-variant-numeric:tabular-nums;width:44px;text-align:right;flex:0 0 auto;color:var(--signal)}
+.mpNum.mkt{color:var(--faint)}
+.mpFlag{font-style:normal;font-family:var(--mono);font-size:var(--fs-3xs);width:30px;text-align:center;flex:0 0 auto}
+.mpFlag.agree{color:var(--win)}
+.mpFlag.differ{color:var(--live)}
+.mpOut{font-style:normal;font-family:var(--mono);font-weight:var(--fw-bold);width:16px;text-align:right;flex:0 0 auto}
+.mpOut.won{color:var(--win)}
+.mpOut.lost{color:var(--loss)}
+.mpOut.wait{color:var(--faint)}
