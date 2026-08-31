@@ -1,6 +1,21 @@
 function scorecardAuditCount(v,preferred='total'){if(v==null)return 0;if(typeof v==='object')return Number(v[preferred]??v.total??v.graded??v.count)||0;return Number(v)||0}
 function scorecardMarketComparisonPick(p){if(['h','d','a'].includes(p?.market_comparison_pick))return p.market_comparison_pick;return p?.outcome_basis==='ultimate_winner'||p?.prediction_snapshot?.is_knockout?p?.regulation_pick:p?.pick}
 function scorecardUnderdogTag(p){if(!p?.upset_score||!p?.upset_snapshot?.radar||p?.upset_snapshot?.standings_gap_pct==null)return'';const name=esc(p.upset_name||'Underdog'),score=esc(p.upset_score);if(!p.upset_triggered)return` <i class="scsplit upsetTag">underdog risk · ${name} ${score}/100</i>`;const outcome=p.result?(p.upset_hit?' &#10003;':' &#10007;'):'';return` <i class="scsplit upsetTag">upset pick · ${name} ${score}/100${outcome}</i>`}
+// One team-name matcher for everything the handoff feeds.
+//
+// The fixture feed calls a team "Virginia"; the engine calls it "Virginia
+// Cavaliers". externalRating() already tolerated that with prefix matching, but
+// the records map and the results settling keyed on an exact match and so
+// silently matched nothing -- ratings appeared while every record stayed 0-0
+// and no played game ever settled.
+function bbNameKey(name){return teamKey(name);}
+function bbNameMatches(a,b){
+  const x=bbNameKey(a),y=bbNameKey(b);
+  if(!x||!y)return false;
+  return x===y||x.startsWith(y+' ')||y.startsWith(x+' ');
+}
+function _bbShiftDay(day,delta){const t=Date.parse(day+'T12:00:00Z');return Number.isFinite(t)?new Date(t+delta*86400000).toISOString().slice(0,10):day;}
+function bbFindByName(list,name){return (list||[]).find(r=>bbNameMatches(r.name||r.team_name,name))||null;}
 function applyCurrentCfbSnapshot(payload){
   const comp=String(payload?.comp_key||'').toUpperCase();
   if(!['NCAAF','ALL'].includes(comp)||typeof MATCHDAY_CFB_SNAPSHOT==='undefined')return payload;
@@ -25,6 +40,8 @@ function applyCurrentCfbSnapshot(payload){
       const day=String(f.kickoff||'').slice(0,10);
       const key=`${teamKey(f.home)}|${teamKey(f.away)}|${day}`;
       if(have.has(key))return;
+      if((payload.matches||[]).some(m=>String(m.kickoff||'').slice(0,10)===day
+        &&bbNameMatches(m.home?.name,f.home)&&bbNameMatches(m.away?.name,f.away)))return;
       have.add(key);
       added.push({id:`bb-${f.event_id}`,_comp:'NCAAF',competition:f.competition||'NCAAF',
         kickoff:f.kickoff,status:'UPCOMING',
@@ -45,12 +62,15 @@ function applyCurrentCfbSnapshot(payload){
   // fixture that is not already FINISHED -- a settled score is never rewritten.
   const settled=(typeof MATCHDAY_BETBETTER_RESULTS!=='undefined'?MATCHDAY_BETBETTER_RESULTS:[]);
   if(settled.length){
-    const byGame=new Map();
-    settled.forEach(r=>byGame.set(`${teamKey(r.home)}|${teamKey(r.away)}|${String(r.played_on||'').slice(0,10)}`,r));
+    const byDay=new Map();
+    settled.forEach(r=>{const d=String(r.played_on||'').slice(0,10);(byDay.get(d)||byDay.set(d,[]).get(d)).push(r)});
     (payload.matches||[]).forEach(m=>{
       if(m.status==='FINISHED')return;
       const day=String(m.kickoff||'').slice(0,10);
-      const hit=byGame.get(`${teamKey(m.home?.name)}|${teamKey(m.away?.name)}|${day}`);
+      // A day either side, because a late kickoff and its result can land on
+      // opposite sides of midnight UTC.
+      const near=[day,_bbShiftDay(day,-1),_bbShiftDay(day,1)].flatMap(d=>byDay.get(d)||[]);
+      const hit=near.find(r=>bbNameMatches(r.home,m.home?.name)&&bbNameMatches(r.away,m.away?.name));
       if(!hit)return;
       m.status='FINISHED';
       m.score={...(m.score||{}),home:Number(hit.home_score),away:Number(hit.away_score)};
@@ -76,7 +96,12 @@ function applyCurrentCfbSnapshot(payload){
   payload.standings=(payload.standings||[]).filter(g=>g.group!=='Matchday Top 25').map(g=>{
     const teams=(g.teams||[]).map((team,index)=>{
       const current=records.get(teamKey(team.name));
-      const ranked=externalRating(team.name);return {...team,pos:index+1,rating:ranked?.rating??null,external_rank:ranked?.rank??null,pld:current?.pld||0,w:current?.w||0,d:0,l:current?.l||0,
+      const ranked=externalRating(team.name);
+      // Prefer the ranking row's own record: it is regenerated with the
+      // ratings and covers every rated team, where the hand list covers 16.
+      const rw=Number(ranked?.wins),rl=Number(ranked?.losses),rg=Number(ranked?.season_games);
+      const useRanked=Number.isFinite(rg)&&rg>0;
+      return {...team,pos:index+1,rating:ranked?.rating??null,external_rank:ranked?.rank??null,pld:useRanked?rg:(current?.pld||0),w:useRanked?rw:(current?.w||0),d:0,l:useRanked?rl:(current?.l||0),
         gf:current?.gf||0,ga:current?.ga||0,gd:current?.gd||0,pts:current?.pts||0,
         form:current?.form||'',record:current?.record||'0-0'};
     }).sort((a,b)=>{// A conference table is standings: record and its tiebreakers decide it.
@@ -648,7 +673,7 @@ function collegeRankingTableHTML(){
   return `<section class="pollSection"><div class="pollHead">
       <div><div class="vhead" style="margin:0">${String(DATA.comp_key||'').toUpperCase()==='NCAAM'?'Basketball ranking':'Football ranking'}</div>
       <p class="pollMeta">${esc(table.basis?.label||'Model rating')} · ${rows.length} rated teams${table.published_on?` · published ${esc(table.published_on)}`:''}</p></div>
-      ${preseason?'<span class="pollBadge">Preseason edition</span>':''}
+      
     </div>
     ${table.season_in_progress===false?'<div class="modWarn">Projection — the season has not started. This ranks the completed season.</div>':''}
     <div class="pollScroll"><table class="pollTable"><thead><tr>
