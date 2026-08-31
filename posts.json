@@ -1,5 +1,58 @@
 [
  {
+  "id": "seriea-2026-08-31",
+  "comp": "SERIEA",
+  "comp_label": "Serie A",
+  "slug": "seriea-2026-08-31",
+  "title": "Serie A model recap — 2026-08-31",
+  "date": "2026-08-31",
+  "summary": "The model went 10/13 (77%) on graded Serie A picks.",
+  "record": {
+   "hits": 10,
+   "graded": 13,
+   "pct": 77
+  },
+  "highlights": {
+   "window_days": 7,
+   "matches_considered": 7,
+   "biggest_upset": {
+    "home": "ACF Fiorentina",
+    "away": "Frosinone Calcio",
+    "score_line": "0-3",
+    "winner": "Frosinone Calcio",
+    "upset_score": 1,
+    "market_pct": null
+   },
+   "best_call": {
+    "home": "Bologna FC 1909",
+    "away": "SS Lazio",
+    "pick": "SS Lazio",
+    "confidence": 58,
+    "edge": 0
+   },
+   "biggest_miss": {
+    "home": "ACF Fiorentina",
+    "away": "Frosinone Calcio",
+    "pick": "ACF Fiorentina",
+    "confidence": 83,
+    "actual": "Frosinone Calcio"
+   },
+   "closest_match": {
+    "home": "Bologna FC 1909",
+    "away": "SS Lazio",
+    "score_line": "0-1",
+    "margin": 1
+   }
+  },
+  "body": [
+   "Matchday's model graded 13 Serie A picks this stretch, hitting on 10 of them (77%).",
+   "On calibration: picks stated at 50-60% hit 67% of the time (3 games); picks stated at 80-90% hit 80% of the time (5 games). A well-calibrated model's stated confidence should roughly match its actual hit rate in each band.",
+   "The strongest signal lately has been goal difference: when it favored a side, that side won 100% of the time (5 games).",
+   "Among this week's Serie A storylines: the biggest upset was Frosinone Calcio winning 0-3 against ACF Fiorentina (the market gave that result only about 0%); the model's best call was SS Lazio in Bologna FC 1909 vs SS Lazio at 58% confidence; its biggest miss was picking ACF Fiorentina in ACF Fiorentina vs Frosinone Calcio, but Frosinone Calcio won instead.",
+   "This is Matchday's own model reporting on itself for anyone to use. Every pick is locked before kickoff and graded automatically once the game finishes; none are rewritten after the fact. See the Q&A page for how the model works."
+  ]
+ },
+ {
   "id": "epl-2026-08-30",
   "comp": "EPL",
   "comp_label": "Premier League",
