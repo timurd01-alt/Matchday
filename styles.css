@@ -2031,3 +2031,17 @@ html{color-scheme:dark}
 .pips .pd{background:var(--faint)}
 .boardMod:hover{border-color:var(--line2)}
 @media(max-width:600px){.modSos{display:none}.ratingCell{min-width:72px}}
+/* Module layout corrections.
+   Short cards were stretching to match the tall Top 25 card, the team name was
+   losing its width to a rating cell and an all-dash movement column, and the
+   engine's note ran past the card edge instead of wrapping. */
+.boardMods{align-items:start}
+.boardMod{max-width:100%}
+.modNote{overflow-wrap:anywhere;word-break:normal;hyphens:auto}
+.modList li{min-width:0}
+.modTeam{flex:1 1 auto;min-width:5.5em}
+.ratingCell{min-width:74px}
+.modSos{font-size:var(--fs-3xs);opacity:.85;white-space:nowrap}
+.modTop25 .modList{max-height:360px}
+.modPick,.modStat{align-self:start}
+@media(max-width:900px){.modSos{display:none}.ratingCell{min-width:66px}}

@@ -462,7 +462,7 @@ jobs:
             done
           fi
           cp data.json _site/
-          for data_file in data_wc.json data_ucl.json data_epl.json data_laliga.json data_seriea.json data_bundesliga.json data_ligue1.json data_nfl.json data_ncaaf.json data_ncaam.json data_nba.json data_mlb.json; do
+          for data_file in data_ncaaf.json data_ncaam.json; do
             [ ! -f "$data_file" ] || cp "$data_file" _site/
           done
           # The landing board's own payload, built from the files just copied.

@@ -32,19 +32,10 @@ MIN_NEW_GRADED_SINCE_LAST_POST = 5
 MIN_DAYS_SINCE_LAST_POST = 7
 
 PUBLIC_CONTENT_COMPETITIONS = (
-    ("wc", "World Cup", "soccer"),
-    ("ucl", "Champions League", "soccer"),
-    ("epl", "Premier League", "soccer"),
-    ("laliga", "La Liga", "soccer"),
-    ("seriea", "Serie A", "soccer"),
-    ("bundesliga", "Bundesliga", "soccer"),
-    ("ligue1", "Ligue 1", "soccer"),
-    ("nfl", "NFL", "nfl"),
+    # College only. The hourly job was still writing Serie A recaps for a site
+    # that no longer publishes Serie A.
     ("ncaaf", "College Football", "ncaaf"),
     ("ncaam", "Men's College Basketball", "basketball"),
-    ("nba", "NBA", "basketball"),
-    ("nhl", "NHL", "hockey"),
-    ("mlb", "MLB", "baseball"),
 )
 PUBLIC_CONTENT_KEYS = {key for key, _, _ in PUBLIC_CONTENT_COMPETITIONS}
 FORECAST_PAUSE_MESSAGE = forecast_pause.PAUSE_MESSAGE

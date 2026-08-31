@@ -482,6 +482,7 @@ function modTop25(){
   const caption=stale
     ?`<div class="modWarn">Projection — the season has not started. This ranks the completed season.</div>`
     :'';
+  const anyMovement=rows.some(r=>Number.isFinite(Number(r.movement))&&Number(r.movement)!==0);
   const ratings=rows.map(r=>Number(r.rating)).filter(Number.isFinite);
   const hi=Math.max(...ratings,0),lo=Math.min(...ratings,0);
   const span=(hi-lo)||1;
@@ -493,12 +494,12 @@ function modTop25(){
       +`<span class="ratingCell"><i class="ratingBar" style="width:${pct}%"></i>`
       +`<span class="modNum">${Number.isFinite(v)?v.toFixed(2):'—'}</span></span>`
       +`<span class="modSos">${Number.isFinite(Number(r.sos))?'SoS '+Number(r.sos).toFixed(2):''}</span>`
-      +movementTag(r)+`</li>`;
+      +(anyMovement?movementTag(r):'')+`</li>`;
   }).join('');
   return `<section class="boardMod modTop25"><header><h3>Top 25</h3>`
     +`<span>${esc(table.basis?.label||'Model rating')}</span></header>${caption}`
     +`<ol class="modList">${body}</ol>`
-    +`<p class="modNote">${esc(table.note||'')}</p></section>`;
+    +`<p class="modNote">${esc(String(table.note||'').replace(/\.\./g,'.'))}</p></section>`;
 }
 function modTopScores(){
   const done=(DATA.matches||[]).filter(m=>m.status==='FINISHED'

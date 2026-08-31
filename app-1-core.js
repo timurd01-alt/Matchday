@@ -61,11 +61,11 @@ function applyStaticI18n(){
 function t(s){if(!LANG||!window.MD_I18N||!MD_I18N[LANG])return s;return translateUiText(s,MD_I18N[LANG]);}
 function setLang(v){LANG=v;try{localStorage.setItem('matchday.lang',v)}catch(e){};renderStrip();renderCurrent();renderInsight&&renderInsight();applyStaticI18n();renderAlerts();}
 let DATA_FILE='';try{DATA_FILE=localStorage.getItem('matchday.sport')||'';if(/^data_nhl\.json$/i.test(DATA_FILE)){DATA_FILE='';localStorage.setItem('matchday.sport','')}}catch(e){}
-const SPORT_LABELS={wc:'World Cup',ucl:'Champions League',epl:'Premier League',laliga:'La Liga',seriea:'Serie A',bundesliga:'Bundesliga',ligue1:'Ligue 1',nfl:'NFL',ncaaf:'College Football',ncaam:"Men's College Basketball",nba:'NBA',mlb:'MLB',nhl:'NHL'};
+const SPORT_LABELS={ncaaf:'College Football',ncaam:"Men's College Basketball"};
 // The sports we actually publish data for. SPORT_LABELS above still knows about
 // NHL so a restored sport picks up its name for free, but nothing fetches a file
 // that isn't there.
-const ALL_SPORT_KEYS=['wc','ucl','epl','laliga','seriea','bundesliga','ligue1','nfl','ncaaf','ncaam','nba','mlb'];
+const ALL_SPORT_KEYS=['ncaaf','ncaam'];
 const COLLEGE_BOARD_KEYS=new Set(['ncaaf','ncaam']);
 const FIXTURE_PAGE_SIZE=40;
 // The model board used to render every pick in one scroll (1,300+ rows on a
