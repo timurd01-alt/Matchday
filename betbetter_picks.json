@@ -1,7 +1,7 @@
 {
   "handoff_version": 5,
   "source": "betbetter",
-  "generated_at": "2026-08-31T20:26:07.340408+00:00",
+  "generated_at": "2026-08-31T21:06:25.998766+00:00",
   "sports": [
     "ncaaf",
     "ncaam"
@@ -18910,6 +18910,38 @@
   "user_picks": {
     "picks": [
       {
+        "event_id": "401862693",
+        "sport": "ncaaf",
+        "event_name": "Memphis Tigers at UNLV Rebels",
+        "starts_at": "2026-08-30T02:00Z",
+        "selection": "UNLV Rebels",
+        "note": null,
+        "recorded_at": "2026-08-31T21:06:08.769259+00:00",
+        "before_kickoff": false,
+        "outcome": 0,
+        "settled_at": "2026-08-30T05:20:00+00:00",
+        "model_probability": null,
+        "market_probability": null,
+        "model_locked_at": null,
+        "model_agreed": null
+      },
+      {
+        "event_id": "401864570",
+        "sport": "ncaaf",
+        "event_name": "New Mexico State Aggies at Florida State Seminoles",
+        "starts_at": "2026-08-29T23:00Z",
+        "selection": "Florida State Seminoles",
+        "note": null,
+        "recorded_at": "2026-08-31T21:06:08.769259+00:00",
+        "before_kickoff": false,
+        "outcome": 1,
+        "settled_at": "2026-08-30T02:15:00+00:00",
+        "model_probability": null,
+        "market_probability": null,
+        "model_locked_at": null,
+        "model_agreed": null
+      },
+      {
         "event_id": "24941bb5e2e6f79d944530b0b8ea4be5",
         "sport": "ncaaf",
         "event_name": "Hawaii Rainbow Warriors at Stanford Cardinal",
@@ -18983,7 +19015,7 @@
       "model_disagreed_on": 1
     },
     "excluded": {
-      "recorded_after_kickoff": 3,
+      "recorded_after_kickoff": 5,
       "reason": "A pick recorded after kickoff is not a prediction and is kept out of the record. It is still listed, flagged, so nothing disappears without saying why."
     },
     "reportable": false,

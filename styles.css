@@ -2180,3 +2180,4 @@ html{color-scheme:dark}
 .tsTeam{font-weight:var(--fw-semibold);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:9.5em}
 .tsNum{font-family:var(--mono);color:var(--signal)}
 .tsTable td:nth-child(2){font-family:var(--mono);color:var(--faint)}
+.modTier::before{background:linear-gradient(90deg,var(--live),transparent 70%)}
