@@ -2102,3 +2102,27 @@ html{color-scheme:dark}
 .modTop25 .modList{max-height:296px;overflow-y:auto;overscroll-behavior:contain}
 .modConf .modList,.modScores .modList{max-height:296px;overflow-y:auto}
 .boardMods{column-fill:balance}
+.mvNew{color:var(--signal);font-style:normal;font-family:var(--mono);font-size:var(--fs-3xs);flex:0 0 auto;min-width:30px;opacity:.9}
+/* Once balanceBoardMods() has packed the cards, the container is a plain flex
+   row of columns; the column-count rules above only apply before that runs. */
+.boardMods.balanced{display:flex;column-count:auto;gap:11px;align-items:flex-start}
+.boardMods.balanced .modsCol{flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:11px}
+.boardMods.balanced .boardMod{margin:0}
+.modTop25 .modList{max-height:none;overflow:visible}
+.modConf .modList,.modScores .modList{max-height:none;overflow:visible}
+/* The published poll on the Rankings tab. */
+.pollSection{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:14px;margin-bottom:14px}
+.pollHead{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px}
+.pollMeta{margin:3px 0 0;font-family:var(--mono);font-size:var(--fs-xs);color:var(--faint)}
+.pollBadge{flex:0 0 auto;border:1px solid var(--line2);border-radius:999px;padding:4px 9px;font-family:var(--mono);font-size:var(--fs-3xs);text-transform:uppercase;letter-spacing:.08em;color:var(--signal)}
+.pollScroll{overflow-x:auto;max-height:560px;overflow-y:auto;border:1px solid var(--line);border-radius:10px;margin-top:6px}
+.pollTable{width:100%;border-collapse:collapse;font-size:var(--fs-sm)}
+.pollTable th{position:sticky;top:0;background:var(--bg2);z-index:1;font-family:var(--mono);font-size:var(--fs-3xs);text-transform:uppercase;letter-spacing:.06em;color:var(--faint);padding:8px 9px;text-align:right;white-space:nowrap}
+.pollTable td{padding:7px 9px;border-bottom:1px solid var(--line);text-align:right;font-variant-numeric:tabular-nums}
+.pollTable th:nth-child(2),.pollTable td:nth-child(2),.pollTable th:nth-child(3),.pollTable td:nth-child(3){text-align:left}
+.pollRank{font-family:var(--mono);color:var(--faint);width:44px}
+.pollRanked .pollRank{color:var(--signal);font-weight:var(--fw-bold)}
+.pollTeam{font-weight:var(--fw-semibold);white-space:nowrap}
+.pollTier{font-style:normal;font-family:var(--mono);font-size:var(--fs-3xs);color:var(--live);border:1px solid var(--line2);border-radius:4px;padding:0 3px;margin-left:4px}
+.pollNum{font-family:var(--mono)}
+@media(max-width:640px){.pollTable th:nth-child(3),.pollTable td:nth-child(3),.pollTable th:nth-child(6),.pollTable td:nth-child(6),.pollTable th:nth-child(7),.pollTable td:nth-child(7){display:none}}

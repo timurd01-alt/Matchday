@@ -469,21 +469,27 @@ function formPips(form){
     return `<i class="${cls}" title="${c}"></i>`;
   }).join('')+`</span>`;
 }
-// Week-to-week movement is null in a first-poll edition -- there is no previous
-// week to have moved from. movement_since_preseason is populated in exactly that
-// case, so it is the fallback rather than showing a column of dashes. The two
-// answer different questions, so the title says which one is on screen.
+// Two fields, two questions, never merged:
+//   movement                 = churn since last week's edition
+//   movement_since_preseason = distance from where the ratings opened a team
+// A team can be flat week to week and still sit twenty places off its preseason
+// mark, so falling back from one to the other would answer a question nobody
+// asked and label it as this week's move.
+//
+// Season 2026's NCAAF poll has been published once. Every row therefore has
+// movement=null and previous_rank=null, and there is no week-over-week movement
+// to draw. An unranked-before row is marked "new"; everything else shows
+// nothing at all rather than an arrow it has not earned.
 function movementTag(row){
-  const week=Number(row?.movement);
-  const pre=Number(row?.movement_since_preseason);
-  const useWeek=Number.isFinite(week);
-  const m=useWeek?week:pre;
-  const since=useWeek?'since last edition':'since the preseason edition';
-  if(!Number.isFinite(m))return '<i class="mvFlat" title="no previous ranking">·</i>';
-  if(m===0)return `<i class="mvFlat" title="unchanged ${since}">—</i>`;
-  return m>0
-    ?`<i class="mvUp" title="up ${m} ${since}">▲${m}</i>`
-    :`<i class="mvDown" title="down ${Math.abs(m)} ${since}">▼${Math.abs(m)}</i>`;
+  const m=Number(row?.movement);
+  if(Number.isFinite(m)){
+    if(m===0)return '<i class="mvFlat" title="unchanged since last edition">—</i>';
+    return m>0
+      ?`<i class="mvUp" title="up ${m} since last edition">▲${m}</i>`
+      :`<i class="mvDown" title="down ${Math.abs(m)} since last edition">▼${Math.abs(m)}</i>`;
+  }
+  if(row?.previous_rank==null)return '<i class="mvNew" title="first edition of this poll">new</i>';
+  return '';
 }
 function modTop25(){
   const table=collegeRankingTable();
@@ -493,7 +499,9 @@ function modTop25(){
   const caption=stale
     ?`<div class="modWarn">Projection — the season has not started. This ranks the completed season.</div>`
     :'';
-  const anyMovement=rows.some(r=>{const w=Number(r.movement),p=Number(r.movement_since_preseason);return (Number.isFinite(w)&&w!==0)||(Number.isFinite(p)&&p!==0)});
+  // Only when a previous edition exists. In a first poll this is false and
+  // the column is absent, rather than a row of dashes standing in for it.
+  const anyMovement=rows.some(r=>Number.isFinite(Number(r.movement)));
   const ratings=rows.map(r=>Number(r.rating)).filter(Number.isFinite);
   const hi=Math.max(...ratings,0),lo=Math.min(...ratings,0);
   const span=(hi-lo)||1;
@@ -575,10 +583,10 @@ function modStatOfWeek(){
     if(!sos.length)return '';
     const ranked=sos.filter(r=>(r.rank||999)<=25);
     const hardest=(ranked.length?ranked:sos).slice().sort((a,b)=>Number(b.sos)-Number(a.sos))[0];
-    return `<section class="boardMod modStat"><header><h3>Statistic of the week</h3><span>most tested contender</span></header>`
+    return `<section class="boardMod modStat"><header><h3>Statistic of the week</h3><span>where teams start</span></header>`
       +`<div class="modStatBig">${esc(hardest.name)}</div>`
       +`<div class="modStatSub">strength of schedule <b>${Number(hardest.sos).toFixed(2)}</b>, rated ${Number(hardest.rating).toFixed(2)} at #${hardest.rank}</div>`
-      +`<div class="modStatFoot">Nothing has moved yet — this is the preseason edition, so the ranking has no week-to-week change to report.</div></section>`;
+      +`<div class="modStatFoot">This is the preseason edition: the poll has been published once, so there is no week-over-week movement to report yet.</div></section>`;
   }
   return `<section class="boardMod modStat"><header><h3>Statistic of the week</h3><span>since the preseason edition</span></header>`
     +`<div class="modStatBig">${esc(riser.name)}</div>`
@@ -673,6 +681,43 @@ function modNotable(){
     +(withheld?`<p class="modNote">${withheld} team${withheld===1?' is':'s are'} held out of the ranking — ratings earned mostly against FCS opposition, which the table would otherwise flatter.</p>`:'')
     +`</section>`;
 }
+
+/* Real masonry, because CSS could not do it here.
+   Multi-column cannot split a card (break-inside:avoid), so the tallest card
+   sets its column's height and every shorter column ends in mid-air -- which is
+   the dead space, and no amount of column-fill fixes it.
+
+   So the cards are measured after render and packed into the shortest column
+   each time. That is the only way to know the heights: they depend on wrapped
+   text and how many rows each table happened to get. */
+function balanceBoardMods(){
+  const wrap=document.querySelector('.boardMods');
+  if(!wrap)return;
+  const cards=Array.from(wrap.querySelectorAll('.boardMod'));
+  if(!cards.length)return;
+  const width=wrap.clientWidth||window.innerWidth;
+  const cols=width<720?1:width<1180?2:3;
+  const columns=[];
+  for(let i=0;i<cols;i++){
+    const col=document.createElement('div');
+    col.className='modsCol';
+    columns.push({el:col,h:0});
+  }
+  // Tallest first: packing a big card into an already-filled column is what
+  // creates the ragged bottom, and greedy-by-height avoids it.
+  cards.slice().sort((a,b)=>b.offsetHeight-a.offsetHeight).forEach(card=>{
+    const target=columns.reduce((m,c)=>c.h<m.h?c:m,columns[0]);
+    target.el.appendChild(card);
+    target.h+=card.offsetHeight+11;
+  });
+  wrap.classList.add('balanced');
+  wrap.replaceChildren(...columns.map(c=>c.el));
+}
+let _modBalanceTimer=null;
+window.addEventListener('resize',()=>{
+  clearTimeout(_modBalanceTimer);
+  _modBalanceTimer=setTimeout(()=>{if(typeof renderCurrent==='function'&&VIEW==='matches')renderMatches()},180);
+});
 function collegeModules(){
   const cards=[modTopPick(),modStatOfWeek(),modNotable(),modRatingScatter(),modConferenceStrength(),modTop25(),modTopScores()].filter(Boolean);
   return cards.length?`<div class="boardMods">${cards.join('')}</div>`:'';

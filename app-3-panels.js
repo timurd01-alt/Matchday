@@ -540,10 +540,56 @@ function _renderProStandings(st,host){
 }
 function renderStandings(){const comp=String(DATA.comp_key||'').toUpperCase();if(comp==='UCL'){const host=$('#view-groups'),st=deriveStandings();if(!st.length){host.innerHTML='<div class="vhead">League Phase</div><div class="empty">No current league-phase standings yet.</div>';return}_renderUCLLeagueTable(st,host);return}if(['MLB','NFL','NBA'].includes(comp)){const host=$('#view-groups'),st=deriveStandings();if(!st.length){host.innerHTML='<div class="vhead">Standings</div><div class="empty">No standings data found yet.</div>';return}_renderProStandings(st,host);return}renderGroups()}
 function renderGroups(){const st=deriveStandings(),host=$('#view-groups'),sc=DATA.scorers||[];if(!st.length){host.innerHTML=`<div class="vhead">${['NCAAF','NCAAM'].includes(DATA.comp_key)?'Conferences':navProfile()==='soccer_league'?'Table':'Groups'}</div><div class="empty">No group data found yet.</div>`;return}if(navProfile()==='soccer_league'){_v15RenderLeagueTable(st,host);return}if(DATA.comp_key==='NCAAM'){host.innerHTML=`<div class="vhead">Conferences</div>`+st.map(g=>`<div class="tablewrap"><div class="groupHead">${esc(g.group)}<span>Power breaks 0-0 ties</span></div><table class="gtable ncaamTable"><thead><tr><th>Team</th><th title="0–10 blend of talent, Elo and season results">Power</th><th>Record</th><th>Win%</th><th>PF/G</th><th>PA/G</th><th>Diff</th><th>Streak</th></tr></thead><tbody>${(g.teams||[]).map(t=>`<tr><td><div class="gteam teamClickable" data-team="${esc(t.name||'')}" onclick="openTeamModal(this.dataset.team)"><span class="pos">${t.pos||''}</span><span class="code">${esc(t.code||'')}</span>${esc(t.name||'')}</div></td><td>${t.rating!=null?Number(t.rating).toFixed(2):'—'}</td><td><b>${esc(t.record||`${t.w??'—'}-${t.l??'—'}`)}</b></td><td>${t.win_pct!=null?(Number(t.win_pct)*100).toFixed(1)+'%':'—'}</td><td>${t.avg_pf!=null&&Number(t.avg_pf)?Number(t.avg_pf).toFixed(1):'—'}</td><td>${t.avg_pa!=null&&Number(t.avg_pa)?Number(t.avg_pa).toFixed(1):'—'}</td><td>${t.gd!=null?esc(t.gd):'—'}</td><td class="form">${esc(t.form||'—')}</td></tr>`).join('')}</tbody></table></div>`).join('');return}const groupsTwoWay=SANDBOX_TWO_WAY.has(String(DATA.comp_key||'').toLowerCase());const americanSport=navProfile()==='us_sport'||navProfile()==='college';const ratingSorted=['nfl','nba','mlb'].includes(String(DATA.comp_key||'').toLowerCase());const US_SCORE_UNIT={nfl:['PF','PA'],nba:['PF','PA'],ncaaf:['PF','PA'],mlb:['RF','RA'],nhl:['GF','GA']};const[fLabel,aLabel]=US_SCORE_UNIT[String(DATA.comp_key||'').toLowerCase()]||['GF','GA'];const winPct=t=>t.pld?((Number(t.w)||0)/t.pld*100).toFixed(1)+'%':'—';host.innerHTML=`<div class="vhead">${DATA.comp_key==='NCAAF'?'Conferences':americanSport?'Standings':'Groups'}</div>`+st.map(g=>`<div class="tablewrap"><div class="groupHead">${americanSport?esc(g.group||'Full table'):esc(g.group)}<span>${DATA.comp_key==='NCAAF'?'Power breaks tied records':americanSport?(ratingSorted?'ranked by model rating':'ranked by win rate'):'Top 2 · 3rd'}</span></div><table class="gtable"><thead><tr><th>Team</th>${americanSport?'<th title="0–10 blend of talent, Elo and season results">Power</th>':''}<th>P</th><th>W</th>${groupsTwoWay?'':'<th>D</th>'}<th>L</th><th>${fLabel}</th><th>${aLabel}</th><th>${americanSport?'Diff':'GD'}</th><th>${americanSport?'Win%':'Pts'}</th><th>Form</th></tr></thead><tbody>${(g.teams||[]).map(t=>{const fl=uiFlag(t.code);const q=t.qual?`<span class="qbadge ${esc(t.qual.status)}" title="${esc(t.qual.note)}">${esc(t.qual.note)}</span>`:'';return `<tr class="${americanSport?'':(t.pos<=2?'qual':t.pos===3?'third':'')}"><td><div class="gteam teamClickable" data-team="${esc(t.name||'')}" onclick="openTeamModal(this.dataset.team)"><span class="pos">${t.pos||''}</span>${fl?`<span class="flagIcon">${fl}</span>`:''}<span class="code">${esc(t.code||'')}</span>${esc(t.name)} ${t.live?'<span class="liveMark">*</span>':''}${q}</div></td>${americanSport?`<td>${t.rating!=null?Number(t.rating).toFixed(2):'—'}</td>`:''}<td>${t.pld??'—'}</td><td>${t.w??'—'}</td>${groupsTwoWay?'':`<td>${t.d??'—'}</td>`}<td>${t.l??'—'}</td><td>${t.gf??'—'}</td><td>${t.ga??'—'}</td><td>${t.gd??'—'}</td><td><b>${americanSport?winPct(t):(t.pts??'—')}</b></td><td class="form">${esc(t.form||'')}</td></tr>`}).join('')}</tbody></table></div>`).join('')}
+
+/* The published poll, on the Rankings tab.
+   The tab previously held conference tables only, so the ranking that the whole
+   site is built on existed nowhere outside the home board. This renders the
+   full rated table -- not just the 25 -- because the handoff carries every
+   rated team and "who is 61st" is a real question a conference table cannot
+   answer.
+
+   Strength of schedule sits beside every rating, and no movement is drawn:
+   season 2026's poll has been published once, so movement and previous_rank are
+   null on every row and there is nothing to have moved from. */
+function collegeRankingTableHTML(){
+  const table=String(DATA.comp_key||'').toUpperCase()==='NCAAM'
+    ?(typeof MATCHDAY_NCAAM_RANKINGS!=='undefined'?MATCHDAY_NCAAM_RANKINGS:null)
+    :(typeof MATCHDAY_CFB_RANKINGS!=='undefined'?MATCHDAY_CFB_RANKINGS:null);
+  const rows=table?.rankings||[];
+  if(!rows.length)return '';
+  const preseason=table?.coverage?.is_preseason_edition||table?.coverage?.first_poll;
+  const num=(v,d=2)=>Number.isFinite(Number(v))?Number(v).toFixed(d):'—';
+  const body=rows.map(r=>`<tr${r.rank<=25?' class="pollRanked"':''}>`
+    +`<td class="pollRank">${r.rank}</td>`
+    +`<td class="pollTeam">${esc(r.name)}${r.tier&&r.tier!=='power'?' <i class="pollTier">G5</i>':''}</td>`
+    +`<td>${esc(r.conference||'—')}</td>`
+    +`<td class="pollNum">${num(r.rating)}</td>`
+    +`<td class="pollNum">${num(r.sos)}</td>`
+    +`<td class="pollNum">${num(r.adj_o,1)}</td>`
+    +`<td class="pollNum">${num(r.adj_d,1)}</td>`
+    +`<td>${esc(r.record||'')}</td></tr>`).join('');
+  const withheld=(table?.withheld||[]).map(w=>`${esc(w.team_name)}`).join(', ');
+  return `<section class="pollSection"><div class="pollHead">
+      <div><div class="vhead" style="margin:0">${String(DATA.comp_key||'').toUpperCase()==='NCAAM'?'Basketball ranking':'Football ranking'}</div>
+      <p class="pollMeta">${esc(table.basis?.label||'Model rating')} · ${rows.length} rated teams${table.published_on?` · published ${esc(table.published_on)}`:''}</p></div>
+      ${preseason?'<span class="pollBadge">Preseason edition</span>':''}
+    </div>
+    ${table.season_in_progress===false?'<div class="modWarn">Projection — the season has not started. This ranks the completed season.</div>':''}
+    <div class="pollScroll"><table class="pollTable"><thead><tr>
+      <th>#</th><th>Team</th><th>Conference</th><th>Rating</th><th>SoS</th><th>Off</th><th>Def</th><th>Rec</th>
+    </tr></thead><tbody>${body}</tbody></table></div>
+    <p class="modNote">${esc(String(table.note||'').replace(/\.\./g,'.'))}</p>
+    ${withheld?`<p class="modNote">Held out of the ranking: ${withheld} — ratings earned mostly against FCS opposition.</p>`:''}
+  </section>`;
+}
 const _renderCollegeGroups=renderGroups;
 renderGroups=function(){
   _renderCollegeGroups();
   if(!['NCAAF','NCAAM'].includes(String(DATA.comp_key||'').toUpperCase()))return;
+  // The poll goes above the conference tables: it is the headline answer this
+  // tab was missing, and the conferences are the breakdown beneath it.
+  const host=$('#view-groups'),poll=collegeRankingTableHTML();
+  if(poll&&!host.querySelector('.pollSection'))host.insertAdjacentHTML('afterbegin',poll);
   // The old caption said this rating was "context only" and a preseason
   // tiebreaker. That was wrong and misleading: it is the model's own
   // opponent-adjusted rating and the model does use it. Say what it is.
