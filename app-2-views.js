@@ -647,7 +647,7 @@ function modConferenceStrength(){
   const confs=Object.entries(byConf)
     .filter(([,v])=>v.length>=4)
     .map(([name,v])=>({name,mean:v.reduce((a,b)=>a+b,0)/v.length,n:v.length}))
-    .sort((a,b)=>b.mean-a.mean).slice(0,8);
+    .sort((a,b)=>b.mean-a.mean).slice(0,5);
   if(confs.length<3)return '';
   const hi=Math.max(...confs.map(c=>c.mean)),lo=Math.min(...confs.map(c=>c.mean));
   const span=(hi-lo)||1;
@@ -735,7 +735,7 @@ function modUpsetOfWeek(){
   <div class="mkt"><span>market</span><i style="width:${Math.max(2,Math.min(100,market))}%"></i><b>${Number.isFinite(market)?market.toFixed(1)+'%':'—'}</b></div>
 </div>
 <div class="modPickNums">One call a week, picked from ${u.considered||0} games inside ${u.horizon_days||7} days: ${esc(u.basis||'')}.</div>
-<div class="modWarn">${esc(u.caveat||'')}</div></section>`;
+</section>`;
 }
 
 /* My picks, against the model and the market.
@@ -746,14 +746,20 @@ function modUpsetOfWeek(){
    these are predictions with no stake, price or balance attached. */
 function modMyPicks(){
   const u=(typeof MATCHDAY_BETBETTER_USER_PICKS!=='undefined')?MATCHDAY_BETBETTER_USER_PICKS:null;
-  const picks=(u?.picks||[]).filter(p=>p.before_kickoff);
+  // Every recorded pick is listed. The three taken after kickoff are not
+  // predictions and stay out of the record, but hiding them made the card
+  // look like only one pick had ever been made -- the handoff's own note
+  // says they should be shown flagged so nothing disappears unexplained.
+  const picks=(u?.picks||[]);
   if(!picks.length)return '';
   const rec=u.record||{};
   const pct=v=>Number.isFinite(Number(v))?(Number(v)*100).toFixed(0)+'%':'—';
   const rows=picks.slice().sort((a,b)=>String(b.starts_at||'').localeCompare(String(a.starts_at||''))).map(p=>{
     const done=p.outcome===0||p.outcome===1;
     const won=p.outcome===1;
-    return `<li><span class="modTeam">${esc(p.selection||'')}</span>`
+    const late=!p.before_kickoff;
+    return `<li class="${late?'mpLate':''}"><span class="modTeam">${esc(p.selection||'')}`
+      +`${late?'<i class="mpLateTag" title="recorded after kickoff, so it is not counted in the record">late</i>':''}</span>`
       +`<span class="mpNum" title="my pick vs the model's frozen figure">${pct(p.model_probability)}</span>`
       +`<span class="mpNum mkt" title="market probability">${pct(p.market_probability)}</span>`
       +`<i class="mpFlag ${p.model_agreed?'agree':'differ'}" title="${p.model_agreed?'the model agreed':'the model disagreed'}">${p.model_agreed?'with':'vs'}</i>`

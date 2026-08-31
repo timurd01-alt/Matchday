@@ -667,8 +667,8 @@ function enhanceMatchCards(host){
 // Six highlighted games. The per-competition cap has to reach six on its own
 // now: with only two competitions -- and often just one of them in season --
 // a cap of three meant the board could never fill the strip from NCAAF alone.
-const MARQUEE_COUNT=6;
-const MARQUEE_PER_COMP=6;
+const MARQUEE_COUNT=8;
+const MARQUEE_PER_COMP=8;
 // Watchability alone doesn't know or care how far away a game is -- an
 // off-season fixture months out can outscore something happening this week.
 // Narrow to the soonest reasonable window before ranking by watchability,

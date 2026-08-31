@@ -2168,3 +2168,5 @@ html{color-scheme:dark}
 .cmpModel .cmpBar b{background:var(--link,#76caff)}
 .cmpMarket .cmpBar b{background:var(--warn)}
 .cmpRow em{font-style:normal;text-align:right;color:var(--text)}
+.mpLateTag{font-style:normal;font-family:var(--mono);font-size:var(--fs-3xs);color:var(--warn);border:1px solid var(--line2);border-radius:4px;padding:0 3px;margin-left:5px}
+.mpLate{opacity:.72}
