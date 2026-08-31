@@ -580,11 +580,22 @@ def _build_rss_feeds(key, comp, news_term):
     # Only the headline and the link are stored (see _rss_items): no article
     # text, no images, no bulk redistribution. ESPN is credited by name on every
     # item. See the ESPN sourcing rule in PROVIDER_COMPLIANCE.md.
+    # Three outlets per sport, so diverseNews() has something to round-robin
+    # across. One feed would have made "Latest from multiple sources" a label
+    # for a single source.
     if key == "NCAAF":
-        feeds.append(("ESPN College Football", "https://www.espn.com/espn/rss/ncf/news"))
+        feeds.extend([
+            ("ESPN College Football", "https://www.espn.com/espn/rss/ncf/news"),
+            ("CBS Sports", "https://www.cbssports.com/rss/headlines/college-football/"),
+            ("Yahoo Sports", "https://sports.yahoo.com/college-football/rss.xml"),
+        ])
         return feeds
     if key == "NCAAM":
-        feeds.append(("ESPN College Basketball", "https://www.espn.com/espn/rss/ncb/news"))
+        feeds.extend([
+            ("ESPN College Basketball", "https://www.espn.com/espn/rss/ncb/news"),
+            ("CBS Sports", "https://www.cbssports.com/rss/headlines/college-basketball/"),
+            ("Yahoo Sports", "https://sports.yahoo.com/college-basketball/rss.xml"),
+        ])
         return feeds
 
     if comp["sport"] == "soccer":

@@ -1,7 +1,7 @@
 {
-  "handoff_version": 4,
+  "handoff_version": 5,
   "source": "betbetter",
-  "generated_at": "2026-08-31T17:12:10.453869+00:00",
+  "generated_at": "2026-08-31T17:15:56.830717+00:00",
   "sports": [
     "ncaaf",
     "ncaam"
@@ -32820,6 +32820,26 @@
     },
     "reportable": false,
     "note": "Predictions only — no stake, price or balance is published. The model's figure is the one frozen an hour before kickoff, not a rating computed afterwards."
+  },
+  "upset_of_the_week": {
+    "available": true,
+    "pick": {
+      "event_id": "2da3627714934ad966d548980bb69658",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Tulsa Golden Hurricane",
+      "away": "Oklahoma State Cowboys",
+      "kickoff": "2026-09-05T19:45:00Z",
+      "selection": "Tulsa Golden Hurricane",
+      "model_pct": 29.3,
+      "market_pct": 17.9,
+      "disagreement_points": 11.4,
+      "best_price": 5.6
+    },
+    "considered": 39,
+    "horizon_days": 7,
+    "basis": "largest model-minus-market gap on a side the market has as an underdog",
+    "caveat": "Editorial, not advice. This is the model's most contrarian call of the week, and disagreement of this kind has historically predicted WORSE results on our graded college samples, not better. Publish it as something to watch and grade afterwards, never as a recommended bet."
   },
   "coverage": {
     "picks": 53,

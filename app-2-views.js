@@ -469,10 +469,21 @@ function formPips(form){
     return `<i class="${cls}" title="${c}"></i>`;
   }).join('')+`</span>`;
 }
+// Week-to-week movement is null in a first-poll edition -- there is no previous
+// week to have moved from. movement_since_preseason is populated in exactly that
+// case, so it is the fallback rather than showing a column of dashes. The two
+// answer different questions, so the title says which one is on screen.
 function movementTag(row){
-  const m=Number(row?.movement);
-  if(!Number.isFinite(m)||m===0)return '<i class="mvFlat">—</i>';
-  return m>0?`<i class="mvUp">▲${m}</i>`:`<i class="mvDown">▼${Math.abs(m)}</i>`;
+  const week=Number(row?.movement);
+  const pre=Number(row?.movement_since_preseason);
+  const useWeek=Number.isFinite(week);
+  const m=useWeek?week:pre;
+  const since=useWeek?'since last edition':'since the preseason edition';
+  if(!Number.isFinite(m))return '<i class="mvFlat" title="no previous ranking">·</i>';
+  if(m===0)return `<i class="mvFlat" title="unchanged ${since}">—</i>`;
+  return m>0
+    ?`<i class="mvUp" title="up ${m} ${since}">▲${m}</i>`
+    :`<i class="mvDown" title="down ${Math.abs(m)} ${since}">▼${Math.abs(m)}</i>`;
 }
 function modTop25(){
   const table=collegeRankingTable();
@@ -482,7 +493,7 @@ function modTop25(){
   const caption=stale
     ?`<div class="modWarn">Projection — the season has not started. This ranks the completed season.</div>`
     :'';
-  const anyMovement=rows.some(r=>Number.isFinite(Number(r.movement))&&Number(r.movement)!==0);
+  const anyMovement=rows.some(r=>{const w=Number(r.movement),p=Number(r.movement_since_preseason);return (Number.isFinite(w)&&w!==0)||(Number.isFinite(p)&&p!==0)});
   const ratings=rows.map(r=>Number(r.rating)).filter(Number.isFinite);
   const hi=Math.max(...ratings,0),lo=Math.min(...ratings,0);
   const span=(hi-lo)||1;

@@ -49,7 +49,7 @@ from typing import Any
 # is refused whole: a partly-understood pick is worse than no pick.
 # 2 added `rankings` (the published Top 25 per sport). A v1 document is
 # still readable -- it simply carries no rankings -- so both are accepted.
-SUPPORTED_VERSIONS = frozenset({1, 2, 3, 4})
+SUPPORTED_VERSIONS = frozenset({1, 2, 3, 4, 5})
 
 DEFAULT_HANDOFF_PATH = "betbetter_picks.json"
 

@@ -2095,3 +2095,10 @@ html{color-scheme:dark}
 .modTop25 .modList{max-height:none}
 @media(max-width:1180px){.boardMods{column-count:2}}
 @media(max-width:720px){.boardMods{column-count:1}}
+/* The Top 25 card is the tall one, and break-inside:avoid means a column
+   cannot split it -- so it set the column height and every shorter card ended
+   in mid-air. Bounding its list (it scrolls internally) makes the cards
+   comparable, which is what actually balances the columns. */
+.modTop25 .modList{max-height:296px;overflow-y:auto;overscroll-behavior:contain}
+.modConf .modList,.modScores .modList{max-height:296px;overflow-y:auto}
+.boardMods{column-fill:balance}
