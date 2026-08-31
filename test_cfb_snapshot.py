@@ -37,7 +37,11 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         snapshot = (ROOT / "matchday-cfb-snapshot.js").read_text(encoding="utf-8")
         panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
         features = (ROOT / "app-4-features.js").read_text(encoding="utf-8")
-        self.assertIn("rankings:[", snapshot)
+        # The rankings are generated from the Bet Better handoff now, not typed
+        # into the file, so the marker and the reference are what to assert on.
+        self.assertIn("BEGIN GENERATED RANKINGS", snapshot)
+        self.assertIn("rankings:MATCHDAY_CFB_RANKINGS.rankings", snapshot)
+        self.assertIn('"sos"', snapshot)
         self.assertIn("rating:ranked?.rating??null", panels)
         self.assertIn("payload.updated=MATCHDAY_CFB_SNAPSHOT.updated", panels)
         # renderInsight() lives in app-4-features.js, so it cannot bound a slice of

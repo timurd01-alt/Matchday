@@ -16,7 +16,10 @@ function applyCurrentCfbSnapshot(payload){
       const ranked=externalRating(team.name);return {...team,pos:index+1,rating:ranked?.rating??null,external_rank:ranked?.rank??null,pld:current?.pld||0,w:current?.w||0,d:0,l:current?.l||0,
         gf:current?.gf||0,ga:current?.ga||0,gd:current?.gd||0,pts:current?.pts||0,
         form:current?.form||'',record:current?.record||'0-0'};
-    }).sort((a,b)=>(b.w-a.w)||(a.l-b.l)||(b.gd-a.gd)||((Number(b.rating)||0)-(Number(a.rating)||0))||a.name.localeCompare(b.name));
+    }).sort((a,b)=>{// A conference table is standings: record and its tiebreakers decide it.
+      // The imported rating is context, so it only separates teams still level
+      // on every real tiebreaker -- which before kickoff is all of them.
+      return (b.w-a.w)||(a.l-b.l)||(b.gd-a.gd)||(b.pts-a.pts)||((Number(b.rating)||0)-(Number(a.rating)||0))||a.name.localeCompare(b.name);});
     teams.forEach((team,index)=>team.pos=index+1);
     return {...g,teams};
   });
@@ -40,7 +43,7 @@ function buildNcaamBracketology(rankings){
 function applyCurrentNcaamSnapshot(payload){
   if(String(payload?.comp_key||'').toUpperCase()!=='NCAAM'||typeof MATCHDAY_NCAAM_SNAPSHOT==='undefined')return payload;
   const externalRating=name=>{const key=teamKey(name);return (MATCHDAY_NCAAM_SNAPSHOT.rankings||[]).find(row=>{const rk=teamKey(row.name);return rk===key||rk.startsWith(key+' ')||key.startsWith(rk+' ')})};
-  payload.standings=(payload.standings||[]).filter(g=>g.group!=='Matchday Top 25').map(g=>{const teams=(g.teams||[]).map(team=>{const ranked=externalRating(team.name);return {...team,rating:ranked?.model_score??null,external_rank:ranked?.rank??null,pld:0,w:0,d:0,l:0,gf:0,ga:0,gd:0,pts:0,form:'',record:'0-0',win_pct:0,avg_pf:0,avg_pa:0}}).sort((a,b)=>(Number(a.external_rank)||999)-(Number(b.external_rank)||999)||a.name.localeCompare(b.name));teams.forEach((team,index)=>team.pos=index+1);return {...g,teams};});
+  payload.standings=(payload.standings||[]).filter(g=>g.group!=='Matchday Top 25').map(g=>{const teams=(g.teams||[]).map(team=>{const ranked=externalRating(team.name);return {...team,rating:ranked?.model_score??null,external_rank:ranked?.rank??null,pld:0,w:0,d:0,l:0,gf:0,ga:0,gd:0,pts:0,form:'',record:'0-0',win_pct:0,avg_pf:0,avg_pa:0}}).sort((a,b)=>(b.w-a.w)||(a.l-b.l)||(b.gd-a.gd)||((Number(b.rating)||0)-(Number(a.rating)||0))||a.name.localeCompare(b.name));teams.forEach((team,index)=>team.pos=index+1);return {...g,teams};});
   payload.bracketology=buildNcaamBracketology(MATCHDAY_NCAAM_SNAPSHOT.rankings);
   payload.bracket=[];
   payload.updated=MATCHDAY_NCAAM_SNAPSHOT.updated;
