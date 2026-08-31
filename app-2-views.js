@@ -727,14 +727,14 @@ function modUpsetOfWeek(){
   const p=u&&u.available?u.pick:null;
   if(!p)return '';
   const model=Number(p.model_pct),market=Number(p.market_pct);
-  return `<section class="boardMod modUpset"><header><h3>Upset of the week</h3><span>editorial</span></header>
+  return `<section class="boardMod modUpset"><header><h3>Upset of the week</h3><span>one a week &middot; editorial</span></header>
 <div class="modPickTeam">${esc(p.selection||'')}</div>
 <div class="modPickGame">${esc(p.away||'')} at ${esc(p.home||'')}</div>
 <div class="upsetBars">
   <div><span>model</span><i style="width:${Math.max(2,Math.min(100,model))}%"></i><b>${Number.isFinite(model)?model.toFixed(1)+'%':'—'}</b></div>
   <div class="mkt"><span>market</span><i style="width:${Math.max(2,Math.min(100,market))}%"></i><b>${Number.isFinite(market)?market.toFixed(1)+'%':'—'}</b></div>
 </div>
-<div class="modPickNums">${esc(u.basis||'')} · ${u.considered||0} games considered</div>
+<div class="modPickNums">One call a week, picked from ${u.considered||0} games inside ${u.horizon_days||7} days: ${esc(u.basis||'')}.</div>
 <div class="modWarn">${esc(u.caveat||'')}</div></section>`;
 }
 
@@ -771,6 +771,8 @@ ${excluded?`<p class="modNote">${excluded} pick${excluded===1?'':'s'} recorded a
 <p class="modNote">${esc(u.note||'')}</p></section>`;
 }
 function collegeModules(){
-  const cards=[modTopPick(),modUpsetOfWeek(),modMyPicks(),modStatOfWeek(),modNotable(),modRatingScatter(),modConferenceStrength(),modTop25(),modTopScores()].filter(Boolean);
+  // Upset of the week leads: CSS columns fill in source order, so first in this
+  // array is the top of the left column.
+  const cards=[modUpsetOfWeek(),modTopPick(),modMyPicks(),modStatOfWeek(),modNotable(),modRatingScatter(),modConferenceStrength(),modTop25(),modTopScores()].filter(Boolean);
   return cards.length?`<div class="boardMods">${cards.join('')}</div>`:'';
 }
