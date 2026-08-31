@@ -56,6 +56,13 @@ def _rows(entry: dict) -> list[dict]:
             "losses": row.get("losses"),
             "season_games": row.get("season_games"),
             "record": f"{row.get('wins') or 0}-{row.get('losses') or 0}",
+            "scoring_margin": row.get("scoring_margin"),
+            # Division and FCS schedule share are how a reader tells a 1-0 FCS
+            # side from a ranked FBS one; the truncated-ingest bug was exactly a
+            # failure to make that distinction visible.
+            "division": row.get("division"),
+            "fcs_schedule_share": row.get("fcs_schedule_share"),
+            "rated_games": row.get("rated_games"),
             "recent_form": row.get("recent_form") or "",
             "previous_rank": row.get("previous_rank"),
             "movement": row.get("movement"),
@@ -120,7 +127,10 @@ def build(path: pathlib.Path = SNAPSHOT) -> str:
     for sport, const in (("ncaaf", "MATCHDAY_CFB_RANKINGS"),
                          ("ncaam", "MATCHDAY_NCAAM_RANKINGS")):
         entry = betbetter_handoff.rankings(document, sport)
-        payload = {**_meta(entry), "rankings": _rows(entry)}
+        rows = _rows(entry)
+        payload = {**_meta(entry), "rankings": rows,
+                   # The published poll is the first 25 of the same table.
+                   "top25": [r for r in rows if (r.get("rank") or 999) <= 25]}
         if sport == "ncaaf":
             payload["projected_bracket"] = cfp_bracket(entry)
         blocks.append(f"  const {const}={json.dumps(payload, ensure_ascii=False)};")

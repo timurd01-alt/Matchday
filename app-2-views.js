@@ -440,3 +440,97 @@ renderCustomize=function(){
     grid.append(alerts);
   }
 };
+
+/* ---- College board modules -------------------------------------------------
+   Four cards above the fixture board. Everything numeric here is read from the
+   Bet Better handoff baked into matchday-cfb-snapshot.js by
+   build_cfb_snapshot.py; nothing on this page recomputes a rating.
+
+   Two rules shape what these may say:
+   * edge_points is reported, never ranked on. On graded college samples a wider
+     model-market gap predicted WORSE results -- the sign is inverted -- so the
+     top pick is chosen by model probability and the gap is shown as context
+     with its warning attached.
+   * A poll for a season that has not started is not a poll about this season.
+     season_in_progress drives the caveat, and the engine's own `note` is
+     rendered rather than paraphrased.
+---------------------------------------------------------------------------- */
+function collegeRankingTable(){
+  const key=(typeof currentSportKey==='function'?currentSportKey():'')||'';
+  if(key==='ncaam')return typeof MATCHDAY_NCAAM_RANKINGS!=='undefined'?MATCHDAY_NCAAM_RANKINGS:null;
+  return typeof MATCHDAY_CFB_RANKINGS!=='undefined'?MATCHDAY_CFB_RANKINGS:null;
+}
+function movementTag(row){
+  const m=Number(row?.movement);
+  if(!Number.isFinite(m)||m===0)return '<i class="mvFlat">—</i>';
+  return m>0?`<i class="mvUp">▲${m}</i>`:`<i class="mvDown">▼${Math.abs(m)}</i>`;
+}
+function modTop25(){
+  const table=collegeRankingTable();
+  const rows=(table?.top25||[]).slice(0,25);
+  if(!rows.length)return '';
+  const stale=table.season_in_progress===false;
+  const caption=stale
+    ?`<div class="modWarn">Projection — the season has not started. This ranks the completed season.</div>`
+    :'';
+  const body=rows.map(r=>`<li><b>${r.rank}</b><span class="modTeam">${esc(r.name)}</span>`
+    +`<span class="modNum">${Number(r.rating).toFixed(2)}</span>`
+    +`<span class="modSos">${Number.isFinite(Number(r.sos))?'SoS '+Number(r.sos).toFixed(2):''}</span>`
+    +movementTag(r)+`</li>`).join('');
+  return `<section class="boardMod modTop25"><header><h3>Top 25</h3>`
+    +`<span>${esc(table.basis?.label||'Model rating')}</span></header>${caption}`
+    +`<ol class="modList">${body}</ol>`
+    +`<p class="modNote">${esc(table.note||'')}</p></section>`;
+}
+function modTopScores(){
+  const done=(DATA.matches||[]).filter(m=>m.status==='FINISHED'
+    &&Number.isFinite(Number(m.score?.home))&&Number.isFinite(Number(m.score?.away)));
+  if(!done.length)return '';
+  // Most recent first; the margin is shown because a 3-point game and a
+  // 40-point game are not the same result and the score alone buries that.
+  const rows=done.sort((a,b)=>(b.kickoff||'').localeCompare(a.kickoff||'')).slice(0,6).map(m=>{
+    const h=Number(m.score.home),a=Number(m.score.away);
+    const homeWon=h>a;
+    return `<li><span class="modTeam ${homeWon?'won':''}">${esc(m.home?.name||m.home||'')}</span>`
+      +`<span class="modScore">${h}–${a}</span>`
+      +`<span class="modTeam ${homeWon?'':'won'}">${esc(m.away?.name||m.away||'')}</span>`
+      +`<i class="modMargin">${Math.abs(h-a)}</i></li>`;
+  }).join('');
+  return `<section class="boardMod modScores"><header><h3>Top scores</h3><span>most recent finals</span></header><ul class="modList">${rows}</ul></section>`;
+}
+function modTopPick(){
+  const picks=(DATA.matches||[]).filter(m=>m.status==='UPCOMING'&&m.betbetter_pick)
+    .map(m=>({m,p:m.betbetter_pick}))
+    .filter(x=>Number.isFinite(Number(x.p.model_pct)))
+    // Sorted by the model's own probability. Deliberately NOT by edge_points.
+    .sort((a,b)=>Number(b.p.model_pct)-Number(a.p.model_pct));
+  if(!picks.length)return '';
+  const {m,p}=picks[0];
+  const gap=Number(p.edge_points);
+  return `<section class="boardMod modPick"><header><h3>Top pick</h3><span>live shadow read</span></header>`
+    +`<div class="modPickTeam">${esc(p.pick_name||'')}</div>`
+    +`<div class="modPickGame">${esc(m.home?.name||m.home||'')} v ${esc(m.away?.name||m.away||'')}</div>`
+    +`<div class="modPickBar"><i style="width:${Math.max(0,Math.min(100,Number(p.model_pct)))}%"></i></div>`
+    +`<div class="modPickNums"><b>${Number(p.model_pct).toFixed(1)}%</b> model`
+    +(Number.isFinite(Number(p.market_pct))?` · <b>${Number(p.market_pct).toFixed(1)}%</b> market`:'')
+    +(Number.isFinite(gap)?` · gap ${gap>0?'+':''}${gap.toFixed(1)}`:'')+`</div>`
+    +`<p class="modNote">Not an official pick — a live model read that keeps moving until kickoff, and it is not graded. A wider model-market gap has predicted worse results on this engine's graded college samples, so the gap is context, not a signal.</p></section>`;
+}
+function modStatOfWeek(){
+  const table=collegeRankingTable();
+  const rows=(table?.rankings||[]).filter(r=>Number.isFinite(Number(r.movement_since_preseason)));
+  if(!rows.length)return '';
+  const riser=rows.slice().sort((a,b)=>Number(b.movement_since_preseason)-Number(a.movement_since_preseason))[0];
+  const faller=rows.slice().sort((a,b)=>Number(a.movement_since_preseason)-Number(b.movement_since_preseason))[0];
+  if(!riser||Number(riser.movement_since_preseason)<=0)return '';
+  return `<section class="boardMod modStat"><header><h3>Statistic of the week</h3><span>since the preseason edition</span></header>`
+    +`<div class="modStatBig">${esc(riser.name)}</div>`
+    +`<div class="modStatSub">up <b>${Number(riser.movement_since_preseason)}</b> places to #${riser.rank}, rating ${Number(riser.rating).toFixed(2)}</div>`
+    +(faller&&Number(faller.movement_since_preseason)<0
+      ?`<div class="modStatFoot">Biggest fall: ${esc(faller.name)}, down ${Math.abs(Number(faller.movement_since_preseason))} to #${faller.rank}</div>`:'')
+    +`</section>`;
+}
+function collegeModules(){
+  const cards=[modTopPick(),modStatOfWeek(),modTop25(),modTopScores()].filter(Boolean);
+  return cards.length?`<div class="boardMods">${cards.join('')}</div>`:'';
+}
