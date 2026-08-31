@@ -693,14 +693,29 @@ function watchabilityFixtureSort(a,b){return Number(isFavoriteMatch(b))-Number(i
 // so the very biggest games still lead. Favorite-team matches are pinned
 // to the very front regardless.
 function balancedMarquee(active){
-  const picked=marqueeSelect(active);
+  // Select from each horizon separately.
+  //
+  // The first version of this filtered marqueeSelect()'s output, which cannot
+  // change the split: if that call already returned two near-term games and
+  // four distant ones, partitioning its six gave back two and four. The pools
+  // have to be divided first and ranked independently, so each horizon gets its
+  // own share of the strip.
   const soon=Date.now()+7*86400000;
-  const near=picked.filter(m=>kickMs(m)&&kickMs(m)<soon);
-  const far=picked.filter(m=>!near.includes(m));
+  const isNear=m=>{const k=kickMs(m);return !!k&&k<soon};
   const half=Math.ceil(MARQUEE_COUNT/2);
-  // Take half from each horizon; if one is short, the other backfills so the
-  // strip still fills rather than leaving a gap.
-  const out=[...near.slice(0,half),...far.slice(0,MARQUEE_COUNT-Math.min(near.length,half))];
+  const near=marqueeSelect(active.filter(isNear)).slice(0,half);
+  const far=marqueeSelect(active.filter(m=>!isNear(m))).slice(0,MARQUEE_COUNT-near.length);
+  const out=[...near,...far];
+  // One horizon can be genuinely short -- a quiet week, or a schedule that only
+  // reaches so far. Backfill from the other rather than leave the strip ragged.
+  if(out.length<MARQUEE_COUNT){
+    const seen=new Set(out);
+    for(const m of marqueeSelect(active)){
+      if(seen.has(m))continue;
+      out.push(m);
+      if(out.length>=MARQUEE_COUNT)break;
+    }
+  }
   return out.slice(0,MARQUEE_COUNT);
 }
 function marqueeSelect(active){
