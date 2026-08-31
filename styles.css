@@ -2071,3 +2071,27 @@ html{color-scheme:dark}
 .ntKey{font-family:var(--mono);font-size:var(--fs-3xs);letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
 .notableList b{font-family:var(--display);font-size:var(--fs-lg);line-height:1.15}
 .ntDetail{font-family:var(--mono);font-size:var(--fs-xs);color:var(--muted)}
+/* Bet Better matchup panel inside the expanded view. */
+.bbMatchupCard .readHead{display:flex;flex-direction:column;gap:2px;margin-bottom:9px}
+.bbMatchupCard .readHead span{font-family:var(--mono);font-size:var(--fs-3xs);letter-spacing:.1em;text-transform:uppercase;color:var(--signal)}
+.bbMatchupCard .readHead b{font-family:var(--display);font-size:var(--fs-lg)}
+.bbGap{font-family:var(--mono);font-size:var(--fs-sm);color:var(--muted);margin-bottom:9px}
+.bbGap b{color:var(--signal)}
+.bbTable{width:100%;border-collapse:collapse;font-size:var(--fs-sm)}
+.bbTable th,.bbTable td{padding:6px 6px;border-bottom:1px solid var(--line);text-align:right;font-variant-numeric:tabular-nums}
+.bbTable th{font-family:var(--mono);font-size:var(--fs-3xs);text-transform:uppercase;letter-spacing:.06em;color:var(--faint);font-weight:var(--fw-bold)}
+.bbTable th:first-child,.bbTable td:first-child{text-align:left}
+.bbKey{color:var(--muted);font-family:var(--mono);font-size:var(--fs-xs)}
+.bbNote{margin:9px 0 0;font-size:var(--fs-xs);color:var(--faint);line-height:1.5}
+/* Masonry, not grid.
+   A grid sizes every row to its tallest card, so a short card (Statistic of the
+   week) left a hole beneath it as tall as the Top 25 card beside it. Columns
+   let each card take only the height it needs and the next one flow up into
+   the space, which is what removes the dead area rather than hiding it. */
+.boardMods{display:block;column-count:3;column-gap:11px;margin-bottom:14px}
+.boardMod{display:block;break-inside:avoid;-webkit-column-break-inside:avoid;page-break-inside:avoid;margin:0 0 11px;width:100%}
+.boardMod>*+*{margin-top:9px}
+.boardMod header{display:flex;align-items:baseline;justify-content:space-between;gap:9px}
+.modTop25 .modList{max-height:none}
+@media(max-width:1180px){.boardMods{column-count:2}}
+@media(max-width:720px){.boardMods{column-count:1}}

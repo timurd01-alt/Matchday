@@ -743,9 +743,51 @@ function pregameContextPanel(m){
   const missingBlock=(inWindow&&missing.length)?`<div class="contextAlert"><span aria-hidden="true">!</span><div><b>Needed before lock</b><p>${missing.map(x=>esc(x)).join(' · ')}</p></div></div>`:'';
   return `<div class="readCard pregameContextCard"><div class="seclbl">Pregame context</div><div class="pick insightPick ${state==='locked'?'':'gate'}"><span class="pl">State</span><span class="pn">${esc(stateLabel)}</span><span class="pc">${esc(ctx.coverage_pct??0)}%</span><span class="pnote">${inWindow?`input coverage · locks on the first successful refresh inside the ${esc(ctx.lock_window_hours??2)}h pregame window`:`input coverage so far · the pick locks inside the ${esc(ctx.lock_window_hours??2)}h window before kickoff`}</span></div>${rows?`<div class="factorRows contextFactorRows">${rows}</div>`:''}${pendingLine}<div class="contextDetails">${bullpenBlock}${detailNotes.length?`<div class="contextNoteGrid">${detailNotes.join('')}</div>`:''}${missingBlock}</div><div class="contextResearch"><span>Research-only</span><p>New personnel and venue inputs are tracked, but do not change the model yet.</p></div></div>`;
 }
+
+/* Bet Better's own read on one fixture.
+   The expanded view previously showed provider stats and a market price and
+   nothing from the model that the rest of this site is built on. These are the
+   same rated rows the Top 25 and the scatter draw, looked up per team, so the
+   number in a matchup and the number in the ranking cannot disagree.
+
+   Strength of schedule sits next to every rating here for the same reason it
+   does everywhere else: a rating without the schedule behind it flatters
+   whoever played nobody. */
+function betbetterTeamRow(name){
+  const key=String(DATA.comp_key||'').toUpperCase()==='NCAAM'
+    ?(typeof MATCHDAY_NCAAM_RANKINGS!=='undefined'?MATCHDAY_NCAAM_RANKINGS:null)
+    :(typeof MATCHDAY_CFB_RANKINGS!=='undefined'?MATCHDAY_CFB_RANKINGS:null);
+  const want=teamKey(name);
+  return (key?.rankings||[]).find(r=>{
+    const rk=teamKey(r.name);
+    return rk===want||rk.startsWith(want+' ')||want.startsWith(rk+' ');
+  })||null;
+}
+function betbetterMatchupPanel(m){
+  const h=betbetterTeamRow(m?.home?.name||m?.home),a=betbetterTeamRow(m?.away?.name||m?.away);
+  if(!h&&!a)return '';
+  const num=(v,d=2)=>Number.isFinite(Number(v))?Number(v).toFixed(d):'—';
+  const rows=[
+    ['Rank',h?('#'+h.rank):'—',a?('#'+a.rank):'—'],
+    ['Rating',num(h?.rating),num(a?.rating)],
+    ['Offence',num(h?.adj_o,1),num(a?.adj_o,1)],
+    ['Defence',num(h?.adj_d,1),num(a?.adj_d,1)],
+    ['Strength of schedule',num(h?.sos),num(a?.sos)],
+    ['Conference',h?.conference||'—',a?.conference||'—'],
+  ];
+  const gap=(Number.isFinite(Number(h?.rating))&&Number.isFinite(Number(a?.rating)))
+    ?Number(h.rating)-Number(a.rating):null;
+  const lead=gap==null?'':`<div class="bbGap">${esc(gap>=0?(m?.home?.name||'Home'):(m?.away?.name||'Away'))} by <b>${Math.abs(gap).toFixed(2)}</b> on rating</div>`;
+  return `<div class="readCard bbMatchupCard"><div class="readHead"><span>Model</span><b>Opponent-adjusted matchup</b></div>
+${lead}
+<table class="bbTable"><thead><tr><th></th><th>${esc(m?.home?.name||'Home')}</th><th>${esc(m?.away?.name||'Away')}</th></tr></thead>
+<tbody>${rows.map(([k,x,y])=>`<tr><td class="bbKey">${esc(k)}</td><td>${esc(x)}</td><td>${esc(y)}</td></tr>`).join('')}</tbody></table>
+<p class="bbNote">Opponent-adjusted scoring margin and the schedule it was earned against, from the same table the ranking is drawn from. A rating difference is not a prediction.</p>
+${typeof matchdayLivePickHTML==='function'?matchdayLivePickHTML(m):''}</div>`;
+}
 function details(m){
-  if(isForecastPaused(m))return `<div class="detailGrid v4Detail">${forecastPauseHTML(m)}<div class="detailTop"><div class="readCard forecastMarketCard">${marketPanel(m)}</div></div><div class="detailLow">${statsPanel(m)}${lineupsPanel(m)}</div></div>`;
-  return `<div class="detailGrid v4Detail modernExpandedView"><div class="expandedSectionHead"><div><span>Matchday analysis</span><b>Model, market and matchup</b></div><em>Updated before kickoff</em></div>${matchStory(m)}<div class="detailTop"><div class="readCard modelReadCard">${modelBlock(m)}</div><div class="readCard forecastMarketCard">${marketPanel(m)}</div></div><div class="detailLow">${statsPanel(m)}${lineupsPanel(m)}</div></div>`;
+  if(isForecastPaused(m))return `<div class="detailGrid v4Detail">${forecastPauseHTML(m)}<div class="detailTop">${betbetterMatchupPanel(m)}<div class="readCard forecastMarketCard">${marketPanel(m)}</div></div><div class="detailLow">${statsPanel(m)}${lineupsPanel(m)}</div></div>`;
+  return `<div class="detailGrid v4Detail modernExpandedView"><div class="expandedSectionHead"><div><span>Matchday analysis</span><b>Model, market and matchup</b></div><em>Updated before kickoff</em></div>${matchStory(m)}<div class="detailTop"><div class="readCard modelReadCard">${modelBlock(m)}</div><div class="readCard forecastMarketCard">${marketPanel(m)}</div></div><div class="detailTop">${betbetterMatchupPanel(m)}</div><div class="detailLow">${statsPanel(m)}${lineupsPanel(m)}</div></div>`;
 }
 /* dedup */
 function _v4TitleRows(t){

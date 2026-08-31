@@ -692,6 +692,17 @@ function watchabilityFixtureSort(a,b){return Number(isFavoriteMatch(b))-Number(i
 // MARQUEE_PER_COMP each. Within each round, higher watchability goes first
 // so the very biggest games still lead. Favorite-team matches are pinned
 // to the very front regardless.
+function balancedMarquee(active){
+  const picked=marqueeSelect(active);
+  const soon=Date.now()+7*86400000;
+  const near=picked.filter(m=>kickMs(m)&&kickMs(m)<soon);
+  const far=picked.filter(m=>!near.includes(m));
+  const half=Math.ceil(MARQUEE_COUNT/2);
+  // Take half from each horizon; if one is short, the other backfills so the
+  // strip still fills rather than leaving a gap.
+  const out=[...near.slice(0,half),...far.slice(0,MARQUEE_COUNT-Math.min(near.length,half))];
+  return out.slice(0,MARQUEE_COUNT);
+}
 function marqueeSelect(active){
   const favs=active.filter(isFavoriteMatch);
   // favorites stay eligible regardless of how far out they are; the
@@ -752,7 +763,11 @@ function renderMatches(){const M=DATA.matches||[];
   // Picking a specific sport still shows its full schedule.
   const isAll=String(DATA.comp_key||'ALL').toUpperCase()==='ALL';
   const active=M.filter(m=>!isCompleteOrPast(m)).sort(isAll?watchabilityFixtureSort:favoriteFixtureSort);
-  const capped=isAll?marqueeSelect(active):active;
+  // Balance the marquee across horizons so the board reads 3 and 3 rather
+  // than whatever the fixture calendar happens to produce. Selecting the
+  // halves separately keeps the 'This week' heading honest -- nothing is
+  // relabelled to fill a column.
+  const capped=isAll?balancedMarquee(active):active;
   const shown=capped.slice(0,MATCH_VISIBLE),remaining=Math.max(0,capped.length-shown.length);
   const missing=DATA._missing?`<div class="banner" style="grid-column:1/-1"><b>No ${esc(DATA.competition||'this sport')} data yet.</b> Fetch it once its season is available — run the matching start file (e.g. start_ucl.bat) or keep an eye out when the season begins.</div>`:'';
   const intro=isAll

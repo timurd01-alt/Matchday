@@ -38,10 +38,19 @@ class ResearchSignalsUITests(unittest.TestCase):
 
     def test_cfb_profile_is_plain_language_and_explicitly_descriptive(self):
         source = (ROOT / "research-signals.js").read_text(encoding="utf-8")
-        for text in ("Advanced CFB profile", "Descriptive context", "Used in today's pick",
-                     "0% weight", "Predicted Points Added", "Offense", "Defense",
-                     "chronological out-of-sample testing", "Show ${rows.length-3} more"):
+        # The panel no longer claims these metrics are inert. The engine solves
+        # its ratings from the same opponent-adjusted work, so "0% weight" and
+        # "does not change today's probability" were misleading in the one
+        # direction that matters.
+        for text in ("Advanced CFB profile", "Team profile", "Predicted Points Added",
+                     "Offense", "Defense", "Show ${rows.length-3} more"):
             self.assertIn(text, source)
+        # Scoped to the CFB panel: the retired MLB and NFL shadow blocks still
+        # describe their own weighting, and those claims are true of them.
+        panel = source[source.index("cfbResearchTop"):source.index("function shadowBlock")]
+        for gone in ("Used in today's pick", "0% weight", "Descriptive context",
+                     "does not change today"):
+            self.assertNotIn(gone, panel)
         self.assertIn("advanced_metrics_meta", source)
         self.assertIn("Profile unavailable for", source)
 

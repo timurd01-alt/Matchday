@@ -23,10 +23,10 @@ import sys
 import time
 
 SPORTS = [
-    ("wc", "--wc"), ("epl", "--epl"), ("laliga", "--laliga"), ("seriea", "--seriea"),
-    ("bundesliga", "--bundesliga"), ("ligue1", "--ligue1"), ("ucl", "--ucl"),
-    ("nfl", "--nfl"), ("ncaaf", "--ncaaf"), ("ncaam", "--ncaam"), ("nba", "--nba"),
-    ("mlb", "--mlb"),
+    # College only. Every round previously fetched twelve competitions, which
+    # spent the shared provider budget on sports this site no longer publishes
+    # and left NCAAF unable to refresh once CFBD hit its monthly ceiling.
+    ("ncaaf", "--ncaaf"), ("ncaam", "--ncaam"),
 ]
 # NHL deliberately excluded: not reachable from the sport picker (see
 # app-3-panels.js), and its schedule source (SportsDataIO) has an unresolved
