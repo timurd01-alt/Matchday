@@ -518,7 +518,7 @@ function modTop25(){
   return `<section class="boardMod modTop25"><header><h3>Top 25</h3>`
     +`<span>${esc(table.basis?.label||'Model rating')}</span></header>${caption}`
     +`<ol class="modList">${body}</ol>`
-    +`<p class="modNote">${esc(String(table.note||'').replace(/\.\./g,'.'))}</p></section>`;
+    +`<p class="modNote">${esc(String(table.note||'').replace(/\.\./g,'.'))}</p>`+`<p class="modNote">Full table of every rated team on the Rankings tab.</p></section>`;
 }
 function modTopScores(){
   let done=(DATA.matches||[]).filter(m=>m.status==='FINISHED'
@@ -682,42 +682,39 @@ function modNotable(){
     +`</section>`;
 }
 
-/* Real masonry, because CSS could not do it here.
-   Multi-column cannot split a card (break-inside:avoid), so the tallest card
-   sets its column's height and every shorter column ends in mid-air -- which is
-   the dead space, and no amount of column-fill fixes it.
 
-   So the cards are measured after render and packed into the shortest column
-   each time. That is the only way to know the heights: they depend on wrapped
-   text and how many rows each table happened to get. */
-function balanceBoardMods(){
-  const wrap=document.querySelector('.boardMods');
-  if(!wrap)return;
-  const cards=Array.from(wrap.querySelectorAll('.boardMod'));
-  if(!cards.length)return;
-  const width=wrap.clientWidth||window.innerWidth;
-  const cols=width<720?1:width<1180?2:3;
-  const columns=[];
-  for(let i=0;i<cols;i++){
-    const col=document.createElement('div');
-    col.className='modsCol';
-    columns.push({el:col,h:0});
-  }
-  // Tallest first: packing a big card into an already-filled column is what
-  // creates the ragged bottom, and greedy-by-height avoids it.
-  cards.slice().sort((a,b)=>b.offsetHeight-a.offsetHeight).forEach(card=>{
-    const target=columns.reduce((m,c)=>c.h<m.h?c:m,columns[0]);
-    target.el.appendChild(card);
-    target.h+=card.offsetHeight+11;
-  });
-  wrap.classList.add('balanced');
-  wrap.replaceChildren(...columns.map(c=>c.el));
+/* Trim the ranking card to fit, rather than to a number someone liked.
+   The board is three CSS columns and a column is as tall as what is in it, so
+   the ranking card -- the only one whose length is arbitrary -- is what decides
+   whether the other columns end in mid-air. Rather than guess a row count, the
+   other cards are measured after layout and the list is cut to the largest
+   number of rows that still fits inside the tallest of them.
+
+   Everything cut is still reachable: the full rated table is on the Rankings
+   tab, and the card says so. */
+function fitRankingCard(){
+  const card=document.querySelector('.boardMods .modTop25');
+  const list=card?.querySelector('.modList');
+  if(!card||!list)return;
+  const others=Array.from(document.querySelectorAll('.boardMods .boardMod'))
+    .filter(el=>el!==card).map(el=>el.offsetHeight).filter(h=>h>0);
+  if(!others.length)return;
+  const items=Array.from(list.children);
+  if(items.length<2)return;
+  const rowHeight=items[1].offsetHeight||items[0].offsetHeight;
+  if(!rowHeight)return;
+  // Room the list may occupy = tallest other card, minus this card's own
+  // header, caption and notes.
+  const budget=Math.max(...others)-(card.offsetHeight-list.offsetHeight);
+  const fits=Math.floor(budget/rowHeight);
+  // A ranking shorter than ten is not a ranking; longer than what we rendered
+  // is not available. Between those, the layout decides.
+  const keep=Math.max(10,Math.min(items.length,fits));
+  if(keep>=items.length)return;
+  items.slice(keep).forEach(el=>el.remove());
+  const note=card.querySelector('.modNote:last-of-type');
+  if(note)note.textContent=`Top ${keep} shown. Full table of every rated team on the Rankings tab.`;
 }
-let _modBalanceTimer=null;
-window.addEventListener('resize',()=>{
-  clearTimeout(_modBalanceTimer);
-  _modBalanceTimer=setTimeout(()=>{if(typeof renderCurrent==='function'&&VIEW==='matches')renderMatches()},180);
-});
 function collegeModules(){
   const cards=[modTopPick(),modStatOfWeek(),modNotable(),modRatingScatter(),modConferenceStrength(),modTop25(),modTopScores()].filter(Boolean);
   return cards.length?`<div class="boardMods">${cards.join('')}</div>`:'';

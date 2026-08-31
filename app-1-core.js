@@ -776,7 +776,7 @@ function renderMatches(){const M=DATA.matches||[];
   const html=missing+landingHero()+(typeof collegeModules==='function'?collegeModules():'')+intro+
     (shown.length?(isAll?groupedBoardHTML(shown):shown.map(cardHTML).join('')):`<div class="empty" style="grid-column:1/-1">No upcoming matches to analyze.</div>`)+
     (remaining?`<div class="fixturePager"><span>Showing ${shown.length} of ${capped.length} fixtures</span><button class="actionbtn" onclick="MATCH_VISIBLE+=FIXTURE_PAGE_SIZE;renderMatches()">Load ${Math.min(FIXTURE_PAGE_SIZE,remaining)} more</button></div>`:'');
-  $('#view-matches').innerHTML=html;enhanceMatchCards($('#view-matches'));if(typeof balanceBoardMods==='function')balanceBoardMods();}
+  $('#view-matches').innerHTML=html;enhanceMatchCards($('#view-matches'));if(typeof fitRankingCard==='function')fitRankingCard();}
 function renderResults(){const M=DATA.matches||[];
   const past=M.filter(isCompleteOrPast).sort((a,b)=>Number(isFavoriteMatch(b))-Number(isFavoriteMatch(a))||(b.kickoff||'').localeCompare(a.kickoff||''));
   const shown=past.slice(0,RESULT_VISIBLE),remaining=Math.max(0,past.length-shown.length);

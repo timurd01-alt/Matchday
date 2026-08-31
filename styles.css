@@ -2126,3 +2126,16 @@ html{color-scheme:dark}
 .pollTier{font-style:normal;font-family:var(--mono);font-size:var(--fs-3xs);color:var(--live);border:1px solid var(--line2);border-radius:4px;padding:0 3px;margin-left:4px}
 .pollNum{font-family:var(--mono)}
 @media(max-width:640px){.pollTable th:nth-child(3),.pollTable td:nth-child(3),.pollTable th:nth-child(6),.pollTable td:nth-child(6),.pollTable th:nth-child(7),.pollTable td:nth-child(7){display:none}}
+/* Back to three CSS columns. The JS packer measured heights while the cards
+   were still laid out at a different width, so it balanced against numbers that
+   were wrong and left a worse gap than it replaced. Keeping the cards close in
+   height is what makes plain columns work: the board card is 15 rows and the
+   full table lives on the Rankings tab. */
+.boardMods.balanced{display:block}
+.boardMods{display:block;column-count:3;column-gap:11px;column-fill:balance}
+.boardMods .modsCol{display:contents}
+.modTop25 .modList,.modConf .modList,.modScores .modList{max-height:none;overflow:visible}
+@media(max-width:1180px){.boardMods{column-count:2}}
+@media(max-width:720px){.boardMods{column-count:1}}
+/* The ranking card is trimmed to fit by fitRankingCard(); nothing here caps it. */
+.modTop25 .modList{max-height:none;overflow:visible}
