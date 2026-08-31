@@ -68,10 +68,11 @@ class RecapContentTests(unittest.TestCase):
 
     def test_site_wide_pause_withholds_every_upcoming_pick(self):
         # No competition is exempt, and an "eligible" marker cannot override it.
-        for comp in ("MLB", "EPL", "NFL", "NBA"):
-            data = {"comp_key": comp, "forecast_publication": {"state": "eligible"}}
-            match = {"status": "UPCOMING", "prediction": {"publication_state": "locked"}}
-            self.assertTrue(gp._forecast_is_paused(data, match), comp)
+        with mock.patch.object(forecast_pause, "PAUSE_ACTIVE", True):
+            for comp in ("MLB", "EPL", "NFL", "NBA"):
+                data = {"comp_key": comp, "forecast_publication": {"state": "eligible"}}
+                match = {"status": "UPCOMING", "prediction": {"publication_state": "locked"}}
+                self.assertTrue(gp._forecast_is_paused(data, match), comp)
         # A finished game keeps the pick it was graded on.
         self.assertFalse(gp._forecast_is_paused(
             {"comp_key": "EPL"},

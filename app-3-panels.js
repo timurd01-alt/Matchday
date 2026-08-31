@@ -42,7 +42,7 @@ function renderScore(){
 <div class="edisc">Only picks locked before kickoff are graded. Displayed scores are factual and unchanged. Probabilities remain estimates.</div>`;
 }
 function highlightFavoriteRows(){if(!favoriteTeam())return;document.querySelectorAll('.gtable .gteam').forEach(cell=>{if(teamKey(cell.textContent).includes(teamKey(favoriteTeam())))cell.closest('tr')?.classList.add('favoriteTeamRow')})}
-function renderCurrent(){captureSignalsIfFresh();({matches:renderMatches,results:renderResults,groups:renderStandings,bracket:renderBracket,score:renderScore,community:renderCommunity}[VIEW]||renderMatches)();renderWelcome();highlightFavoriteRows();applyStaticI18n()}
+function renderCurrent(){captureSignalsIfFresh();({matches:renderMatches,results:renderResults,groups:renderStandings,bracket:renderBracket,score:renderScore,news:renderNews,community:renderCommunity}[VIEW]||renderMatches)();renderWelcome();highlightFavoriteRows();applyStaticI18n()}
 function renderStrip(){const M=DATA.matches||[],next=M.filter(isVisibleUpcoming).sort((a,b)=>(a.kickoff||'').localeCompare(b.kickoff||''))[0];const parts=[];
 const isSample=(DATA.source_note||'').toLowerCase().includes('sample');
 const freshness=DATA.source_freshness||{},fallback=freshness.state==='fallback';
@@ -158,11 +158,10 @@ async function load(manual=false){if(LOAD_TIMER){clearTimeout(LOAD_TIMER);LOAD_T
     let base=null;const merged=[];let news=[];let latest='';
     const titleBySport=[];
     results.forEach((d,i)=>{if(!d)return;applyForecastPublicationPauses(d);if(!base)base=d;
-      (d.matches||[]).forEach(m=>{m._comp=(d.comp_key||keys[i].toUpperCase());merged.push(m);});
+      if(COLLEGE_BOARD_KEYS.has(keys[i]))(d.matches||[]).forEach(m=>{m._comp=(d.comp_key||keys[i].toUpperCase());merged.push(m);});
       const comp=d.comp_key||keys[i].toUpperCase();
       const compLabel=SPORT_LABELS[String(comp).toLowerCase()]||d.competition||comp;
-      const currentNews=(d.news||[]).filter(isFreshNews).sort((a,b)=>newsTime(b)-newsTime(a));
-      news=news.concat(currentNews.slice(0,8).map(a=>({...a,_comp:a.competition||comp,feed:compLabel})));
+      if(COLLEGE_BOARD_KEYS.has(keys[i])){const currentNews=(d.news||[]).filter(isFreshNews).sort((a,b)=>newsTime(b)-newsTime(a));news=news.concat(currentNews.slice(0,8).map(a=>({...a,_comp:a.competition||comp,feed:compLabel})));}
       if((d.updated||'')>latest)latest=d.updated;
       const top=(d.title_odds||[])[0];
       if(top)titleBySport.push({comp,label:compLabel,team:top.team,code:top.code,pct:top.pct});});

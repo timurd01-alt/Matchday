@@ -32,6 +32,7 @@ SPORT_KEYS = [
     "wc", "ucl", "epl", "laliga", "seriea", "bundesliga", "ligue1",
     "nfl", "ncaaf", "ncaam", "nba", "mlb",
 ]
+COLLEGE_BOARD_KEYS = {"ncaaf", "ncaam"}
 
 # Per-match fields only the expanded match view reads (research-signals.js).
 # Dropping them is where most of the saving comes from: on a recent NFL file
@@ -161,15 +162,16 @@ def build_summary(root: str = ".", today: dt.date | None = None) -> dict[str, An
             }
 
         for match in data.get("matches") or []:
-            if in_window(match, today):
+            if key in COLLEGE_BOARD_KEYS and in_window(match, today):
                 matches.append(slim_match(match, comp))
 
         label = SPORT_LABELS.get(key) or data.get("competition") or comp
-        for article in (data.get("news") or [])[:NEWS_PER_COMPETITION]:
-            item = dict(article)
-            item["_comp"] = article.get("competition") or comp
-            item["feed"] = label
-            news.append(item)
+        if key in COLLEGE_BOARD_KEYS:
+            for article in (data.get("news") or [])[:NEWS_PER_COMPETITION]:
+                item = dict(article)
+                item["_comp"] = article.get("competition") or comp
+                item["feed"] = label
+                news.append(item)
 
         scorecard = data.get("scorecard")
         if scorecard:

@@ -15,22 +15,15 @@ if not NODE:
 
 
 class ForecastPausePolicyTests(unittest.TestCase):
-    def test_pause_covers_every_competition_not_just_mlb(self):
+    def test_publication_is_restored_for_every_competition(self):
         for comp in ("EPL", "MLB", "NBA", "NFL", "NCAAF", "NHL", "WC", None):
-            self.assertTrue(forecast_pause.paused(comp), comp)
-            self.assertFalse(forecast_pause.publication_eligible(comp), comp)
+            self.assertFalse(forecast_pause.paused(comp), comp)
+            self.assertTrue(forecast_pause.publication_eligible(comp), comp)
 
-    def test_decision_payload_states_the_pause_and_carries_its_evidence(self):
+    def test_decision_payload_restores_eligibility(self):
         decision = forecast_pause.publication_decision("EPL")
-        self.assertEqual(decision["state"], "paused")
-        self.assertIs(decision["official_publication_eligible"], False)
-        self.assertEqual(decision["scope"], "all_competitions")
-        self.assertTrue(decision["message"])
-        evidence = decision["evidence"]
-        # The bar for coming back is recorded, not left to memory.
-        self.assertEqual(evidence["forecasts_promoted_to_published"], 0)
-        self.assertIn("mlb", evidence["uncovered_published_sports"])
-        self.assertGreater(evidence["model_brier"], evidence["market_brier"])
+        self.assertEqual(decision["state"], "eligible")
+        self.assertIs(decision["official_publication_eligible"], True)
 
 
 @unittest.skipUnless(NODE, "Node.js is required for frontend behavior tests")
@@ -40,10 +33,8 @@ class ForecastPauseFrontendTests(unittest.TestCase):
         start = core.index("const FORECAST_PAUSE_ACTIVE=")
         end = core.index("// Providers can keep the season", start)
         source = core[start:end]
-        if not active:
-            # Exercise the per-sport gates that remain underneath the switch.
-            source = source.replace("const FORECAST_PAUSE_ACTIVE=true",
-                                    "const FORECAST_PAUSE_ACTIVE=false", 1)
+        source = source.replace("const FORECAST_PAUSE_ACTIVE=false",
+                                f"const FORECAST_PAUSE_ACTIVE={str(active).lower()}", 1)
         script = f"""
 let DATA={{}};
 function esc(value){{return String(value ?? '');}}
@@ -192,10 +183,10 @@ class PauseIsExplainedToReadersTests(unittest.TestCase):
                          "When do predictions come back?"):
             self.assertIn(question, names)
 
-    def test_front_page_notice_states_the_pause_without_hiding_the_site(self):
+    def test_front_page_pause_banner_is_removed(self):
         index = (ROOT / "index.html").read_text(encoding="utf-8")
-        self.assertIn("Predictions are paused", index)
-        self.assertIn("qa.html#pause", index)
+        self.assertNotIn("Predictions are paused", index)
+        self.assertNotIn("developmentPause", index)
         self.assertNotIn("Development pause", index)
 
 

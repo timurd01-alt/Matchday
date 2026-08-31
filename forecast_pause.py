@@ -37,7 +37,7 @@ from typing import Any
 
 # The one switch. Flip to False when the coverage gaps above are closed and the
 # replacement model has cleared its own promotion gate.
-PAUSE_ACTIVE = True
+PAUSE_ACTIVE = False
 
 PAUSE_REASON = "rebuilding_on_betbetter_data_engine"
 

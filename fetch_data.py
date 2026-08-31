@@ -24,6 +24,7 @@ from collections import defaultdict
 import mfti_research
 import forecast_ledger
 import game_archive
+import betbetter_handoff
 import forecast_pause
 import mlb_shadow_ledger
 import market_snapshots
@@ -7824,6 +7825,9 @@ def build():
     # A historical upcoming lock may predate the pause. Keep its immutable
     # receipt for later grading, but never republish its official model output.
     _enforce_forecast_pause_after_locked_picks(matches)
+    _betbetter = betbetter_handoff.attach_from_file(matches)
+    if _betbetter["attached"]:
+        DIAG.append(f"matchday live picks: attached {_betbetter['attached']}")
     # Top-level marker survives immutable legacy prediction snapshots and lets
     # multi_fetch detect that an otherwise fresh JSON file predates a model
     # input/schema change. Bump only when every sport needs one clean rebuild.
@@ -7907,6 +7911,7 @@ def build():
                "quota_blocked_providers": blocked_providers,
                "diagnostics": [_scrub(x) for x in DIAG]}
     payload["forecast_publication"] = forecast_pause.publication_decision(COMP_KEY)
+    payload["betbetter_handoff"] = _betbetter
     for out in (OUT_FILE, f"data_{COMP_KEY.lower()}.json"):
         tmp = out + ".tmp"
         with open(tmp, "w", encoding="utf-8") as f:

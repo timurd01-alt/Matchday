@@ -4,6 +4,17 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0830B",
+  "tag": "Fix",
+  "title": "College forecasts and news return",
+  "items": [
+   "Restored forecast publication and removed the pause notices.",
+   "Restored News for the college football and men's college basketball desk.",
+   "Added Matchday live picks with model-versus-market context to upcoming schedule cards.",
+   "Kept the combined board college-only and simplified the welcome screen."
+  ]
+ },
+ {
   "date": "Build 0830A",
   "tag": "Change",
   "title": "Matchday narrows to college sports",

@@ -66,6 +66,7 @@ const SPORT_LABELS={wc:'World Cup',ucl:'Champions League',epl:'Premier League',l
 // NHL so a restored sport picks up its name for free, but nothing fetches a file
 // that isn't there.
 const ALL_SPORT_KEYS=['wc','ucl','epl','laliga','seriea','bundesliga','ligue1','nfl','ncaaf','ncaam','nba','mlb'];
+const COLLEGE_BOARD_KEYS=new Set(['ncaaf','ncaam']);
 const FIXTURE_PAGE_SIZE=40;
 // The model board used to render every pick in one scroll (1,300+ rows on a
 // full slate). Same pager the fixture list already uses, smaller page: a pick
@@ -75,7 +76,7 @@ let MATCH_VISIBLE=FIXTURE_PAGE_SIZE,RESULT_VISIBLE=FIXTURE_PAGE_SIZE,MODEL_VISIB
 // Site-wide publication pause, mirroring forecast_pause.py. One flag: clear
 // FORECAST_PAUSE_ACTIVE when the coverage gaps close and every sport falls back
 // to its own gate below rather than publishing unconditionally.
-const FORECAST_PAUSE_ACTIVE=true;
+const FORECAST_PAUSE_ACTIVE=false;
 const FORECAST_PAUSE_MESSAGE='Predictions are paused while the model is rebuilt on a new data engine.';
 
 function forecastPublicationState(payload,match){
@@ -167,15 +168,15 @@ const NAV_DEF={
   // profile is the same six views; the pair is kept because NAV_LABELS still
   // names them differently per sport (Rankings/CFP Bracket vs
   // Conferences/Bracketology), which is the whole reason the table survives.
-  all:               ['matches','results','groups','bracket','score','community'],
-  college:           ['matches','results','groups','bracket','score','community'],
-  college_basketball:['matches','results','groups','bracket','score','community']
+  all:               ['matches','results','groups','bracket','score','news','community'],
+  college:           ['matches','results','groups','bracket','score','news','community'],
+  college_basketball:['matches','results','groups','bracket','score','news','community']
 };
 // The only views that exist after the college pivot. A stored defaultView or a
 // bookmarked hash can still name a removed one (Customize let people save
 // 'news' or 'updates' for years), so every entry point clamps through this
 // rather than trusting what it was handed and rendering into a null host.
-const VIEWS=new Set(['matches','results','groups','bracket','score','community']);
+const VIEWS=new Set(['matches','results','groups','bracket','score','news','community']);
 function safeView(v){return VIEWS.has(v)?v:'matches';}
 const SPORT_KIND={'':'all',ncaaf:'college',ncaam:'college_basketball'};
 function currentSportKey(){const m=(DATA_FILE||'').match(/data_(\w+)\.json/);return m?m[1]:'';}

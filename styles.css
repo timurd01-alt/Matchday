@@ -51,6 +51,7 @@ body.modalOpen{overflow:hidden}.matchModal{position:fixed;inset:0;z-index:99;dis
    handles spacing, so the card's own margin-bottom is zeroed here. */
 .newsGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:10px;align-items:start}
 .newsGrid .ncard{margin-bottom:0}
+.pick.matchdayLivePick{border-color:rgba(58,209,122,.45);background:rgba(58,209,122,.07)}.pick.matchdayLivePick .pl{color:var(--signal)}
 
 
 /* UI polish: live strip spacing/overflow fixes */

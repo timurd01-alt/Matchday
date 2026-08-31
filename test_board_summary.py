@@ -111,7 +111,7 @@ class BuildSummaryTests(unittest.TestCase):
             "matches": [match("e1", "2026-08-21T18:00:00Z")],
         })
         summary = bbs.build_summary(self.root, today=dt.date(2026, 8, 19))
-        self.assertEqual([m["id"] for m in summary["matches"]], ["e1", "n1"])
+        self.assertEqual([m["id"] for m in summary["matches"]], [])
         self.assertEqual(summary["comp_key"], "ALL")
         self.assertEqual(summary["competition"], "All sports")
         # latest wins, so the interface's "updated" stamp stays truthful
@@ -145,22 +145,22 @@ class BuildSummaryTests(unittest.TestCase):
         self.assertEqual(summary["scorecard_sources"][0]["scorecard"]["graded"], 40)
 
     def test_news_is_capped_and_labelled_per_competition(self):
-        write_sport(self.root, "epl", {
-            "comp_key": "EPL", "competition": "Premier League",
-            "matches": [match("e1", "2026-08-20T18:00:00Z")],
+        write_sport(self.root, "ncaaf", {
+            "comp_key": "NCAAF", "competition": "College Football",
+            "matches": [match("c1", "2026-08-20T18:00:00Z")],
             "news": [{"title": f"story {i}"} for i in range(12)],
         })
         summary = bbs.build_summary(self.root, today=dt.date(2026, 8, 19))
         self.assertEqual(len(summary["news"]), bbs.NEWS_PER_COMPETITION)
-        self.assertEqual(summary["news"][0]["feed"], "Premier League")
-        self.assertEqual(summary["news"][0]["_comp"], "EPL")
+        self.assertEqual(summary["news"][0]["feed"], "College Football")
+        self.assertEqual(summary["news"][0]["_comp"], "NCAAF")
 
     def test_missing_sport_files_are_skipped_quietly(self):
-        write_sport(self.root, "mlb", {
-            "comp_key": "MLB", "matches": [match("m1", "2026-08-20T18:00:00Z")],
+        write_sport(self.root, "ncaaf", {
+            "comp_key": "NCAAF", "matches": [match("c1", "2026-08-20T18:00:00Z")],
         })
         summary = bbs.build_summary(self.root, today=dt.date(2026, 8, 19))
-        self.assertEqual(summary["sports"], ["mlb"])
+        self.assertEqual(summary["sports"], ["ncaaf"])
         self.assertEqual(len(summary["matches"]), 1)
 
     def test_corrupt_sport_file_does_not_sink_the_build(self):
