@@ -614,8 +614,8 @@
    "n": 8
   },
   "soccer:athletic club": {
-   "r": 1491.7740351648608,
-   "n": 162
+   "r": 1507.132765607471,
+   "n": 163
   },
   "soccer:royale union saint gilloise": {
    "r": 1488.12159057392,
@@ -878,8 +878,8 @@
    "n": 114
   },
   "soccer:rc celta de vigo": {
-   "r": 1531.6851413460695,
-   "n": 116
+   "r": 1516.3264109034594,
+   "n": 117
   },
   "soccer:ca osasuna": {
    "r": 1486.4905942444395,
@@ -286306,6 +286306,7 @@
   "SERIEA:558626": true,
   "SERIEA:558622": true,
   "SERIEA:558623": true,
-  "LIGUE1:559703": true
+  "LIGUE1:559703": true,
+  "LALIGA:564652": true
  }
 }
