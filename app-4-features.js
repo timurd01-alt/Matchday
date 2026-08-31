@@ -534,32 +534,13 @@ function renderBracket(){
   if(!host)return;
   if(DATA.comp_key==='NCAAM'&&DATA.bracketology){_v14RenderBracketology(host,DATA.bracketology);return}
   if(DATA.comp_key==='NCAAF'){_renderCFPBracket(host);return}
-  if(DATA.comp_key==='UCL'){_renderUCLBracket(host);return}
-  if(navProfile()==='us_sport'){
-    // NFL/NBA/MLB/NHL playoffs are real single-elimination brackets, but
-    // nothing in the backend computes their seeding (no NFL wild-card/bye
-    // logic, no NBA/NHL conference bracket, no MLB Division/Championship
-    // Series structure) the way CFP and March Madness projections exist.
-    // Falling through to the generic renderer below would silently show
-    // the same fake 32-team World Cup group-into-knockout shape here too,
-    // built from standings data that isn't even grouped for these sports
-    // -- an honest "not available" beats a wrong bracket.
-    host.innerHTML=`<div class="vhead">Playoff Bracket</div><div class="empty">Playoff bracket projections aren\'t built for this league yet.</div>`;
-    return;
-  }
-  const mode=window.__bracketMode||'view';
-  const toggle=`<button class="btmbtn" onclick="window.__bracketMode='${mode==='view'?'simulate':'view'}';renderBracket();">${mode==='view'?'Simulate the bracket':'Back to bracket view'}</button>`;
-  if(mode==='simulate'){renderBracketSim(host,toggle);return;}
-  const official=Array.isArray(DATA.bracket)&&DATA.bracket.some(r=>(r.matches||[]).length);
-  const rounds=typeof _completeRounds==='function'?_completeRounds():projectedRounds();
-  const names=['Round of 32','Round of 16','Quarter-finals','Semi-finals','Final','Third-place playoff'];
-  const projectedCount=(()=>{try{return Math.min(getProjectedSlots().length,32)}catch(e){return 0}})();
-  host.innerHTML=`<div class="bracketStageHeader"><div class="vhead">Tournament bracket</div><div class="bracketLegend">${toggle}${official?'Official + projected paths':'Projected bracket'}</div></div><div class="bracketWideHint"><span><b>${projectedCount}</b> projected qualifiers · cards stay readable instead of shrinking</span>${_bracketScrollControls()}</div><div class="bracketWideShell"><div class="bracketWideBoard">${names.map(n=>_v11RoundCol(rounds,n)).join('')}</div></div>`;
+  // Everything else fell through to a generic 32-team group-into-knockout
+  // renderer -- a World Cup shape. Drawn over college conference standings it
+  // produced a "Round of 32" seeded by conference, which no college postseason
+  // has, and on the merged board it was reachable with no sport selected at
+  // all. There is no bracket to show here, and saying so beats inventing one.
+  host.innerHTML=`<div class="vhead">Bracket</div><div class="empty">Choose College Football or Men's College Basketball to see its bracket projection.</div>`;
 }
-
-
-
-/* ===== MODEL OUTCOME PROBABILITY CARD — v12 ===== */
 function _v12Round(v){return Math.max(0,Math.min(100,Math.round(Number(v)||0)))}
 function _v12ProbTile(label,pct,side,active){
   const cls=side==='h'?'home':side==='d'?'draw':'away';

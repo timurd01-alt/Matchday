@@ -84,6 +84,43 @@ function applyCurrentNcaamSnapshot(payload){
 //
 // Won and lost come from graded picks only. A pick that is locked but not yet
 // final is pending and counts toward neither.
+
+/* Me, the model and the market on the same graded games.
+   The scorecard is two numbers by design, so this sits under them rather than
+   replacing them. It exists because "did I beat the market" is the question the
+   record is actually for, and a hit rate with nothing to compare it against
+   cannot answer it.
+
+   All three are scored on exactly the same fixtures -- the ones I picked before
+   kickoff that have since settled. The market column is whether the side the
+   market priced as favourite won; the model column is the figure frozen an hour
+   before kickoff, not one computed afterwards. */
+function myPicksComparison(){
+  const u=(typeof MATCHDAY_BETBETTER_USER_PICKS!=='undefined')?MATCHDAY_BETBETTER_USER_PICKS:null;
+  const graded=(u?.picks||[]).filter(p=>p.before_kickoff&&(p.outcome===0||p.outcome===1));
+  if(!graded.length)return '';
+  let mine=0,model=0,market=0;
+  graded.forEach(p=>{
+    const won=p.outcome===1;
+    if(won)mine++;
+    const mp=Number(p.model_probability),kp=Number(p.market_probability);
+    // The model and the market "took" my side when they priced it above even,
+    // so each is right when that agrees with what actually happened.
+    if(Number.isFinite(mp)&&((mp>=0.5)===won))model++;
+    if(Number.isFinite(kp)&&((kp>=0.5)===won))market++;
+  });
+  const n=graded.length;
+  const row=(label,hits,cls)=>`<div class="cmpRow ${cls}">`
+    +`<span>${label}</span>`
+    +`<i class="cmpBar"><b style="width:${Math.round(hits/n*100)}%"></b></i>`
+    +`<em>${hits}/${n}</em></div>`;
+  return `<div class="seclbl" style="margin-top:18px">Me vs model vs market</div>`
+    +`<div class="cmpGrid">${row('Me',mine,'cmpMine')}${row('Model',model,'cmpModel')}${row('Market',market,'cmpMarket')}</div>`
+    +`<p class="edisc">Same ${n} game${n===1?'':'s'} for all three: the picks recorded before kickoff that have settled. `
+    +`${u&&u.reportable?'':'Too few graded games to read anything into the split yet. '}`
+    +`The model figure is the one frozen before kickoff, not recomputed afterwards.</p>`;
+}
+
 function renderScore(){
   const sc=DATA.scorecard||{},host=$('#view-score');
   const graded=Number(sc.graded)||0;

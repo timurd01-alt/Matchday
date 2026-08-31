@@ -2159,3 +2159,12 @@ html{color-scheme:dark}
 .mpOut.won{color:var(--win)}
 .mpOut.lost{color:var(--loss)}
 .mpOut.wait{color:var(--faint)}
+/* Me / model / market, on the same graded games. */
+.cmpGrid{display:grid;gap:7px}
+.cmpRow{display:grid;grid-template-columns:58px 1fr 52px;align-items:center;gap:9px;font-family:var(--mono);font-size:var(--fs-sm);color:var(--muted)}
+.cmpBar{display:block;height:9px;border-radius:999px;background:var(--bg2);border:1px solid var(--line);overflow:hidden}
+.cmpBar b{display:block;height:100%;background:var(--faint)}
+.cmpMine .cmpBar b{background:var(--signal)}
+.cmpModel .cmpBar b{background:var(--link,#76caff)}
+.cmpMarket .cmpBar b{background:var(--warn)}
+.cmpRow em{font-style:normal;text-align:right;color:var(--text)}

@@ -17,19 +17,6 @@ class AnalysisModeTests(unittest.TestCase):
         self.assertIn("payload.bracketology=null", core)
         self.assertIn("DATA=stripPastSeasonCompetitionViews(await r.json())", panels)
 
-    def test_champions_league_uses_its_own_knockout_shape(self):
-        cards = (ROOT / "app-4-features.js").read_text(encoding="utf-8")
-        panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
-        self.assertIn("function _renderUCLBracket", cards)
-        self.assertIn("['Knockout phase play-offs','Round of 16','Quarter-finals','Semi-finals','Final']", cards)
-        self.assertIn("if(DATA.comp_key==='UCL'){_renderUCLBracket(host);return}", cards)
-        self.assertIn("function _renderUCLLeagueTable", panels)
-        self.assertIn("No current league-phase standings yet", panels)
-        self.assertIn("eight league-phase matches each", panels)
-        renderer = cards.split("function _renderUCLBracket", 1)[1].split("function renderBracket", 1)[0]
-        self.assertNotIn("Round of 32", renderer)
-        self.assertNotIn("Third-place playoff", renderer)
-
     def test_mobile_metric_help_is_tap_safe_and_stays_onscreen(self):
         core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
         css = (ROOT / "styles.css").read_text(encoding="utf-8")

@@ -169,9 +169,12 @@ const NAV_DEF={
   // profile is the same six views; the pair is kept because NAV_LABELS still
   // names them differently per sport (Rankings/CFP Bracket vs
   // Conferences/Bracketology), which is the whole reason the table survives.
-  all:               ['matches','results','groups','bracket','score','news','community'],
-  college:           ['matches','results','groups','bracket','score','news','community'],
-  college_basketball:['matches','results','groups','bracket','score','news','community']
+  // No bracket on the merged board: 'All college' spans two sports with
+  // separate postseasons, and with no competition selected the view fell
+  // through to a generic knockout shape drawn over college conferences.
+  all:               ['matches','results','groups','score','community'],
+  college:           ['matches','results','groups','bracket','score','community'],
+  college_basketball:['matches','results','groups','bracket','score','community']
 };
 // The only views that exist after the college pivot. A stored defaultView or a
 // bookmarked hash can still name a removed one (Customize let people save
