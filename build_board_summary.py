@@ -1,6 +1,6 @@
 """Build the small payload the landing board actually needs.
 
-The "All sports" board is what every first-time visitor lands on, and it used to
+The "All college" board is what every first-time visitor lands on, and it used to
 be assembled in the browser by downloading every per-sport data file in full --
 3.6 MB across a dozen requests to render one hero fixture and roughly sixteen
 match cards. Most of that payload is per-match research detail that only the
@@ -206,7 +206,7 @@ def build_summary(root: str = ".", today: dt.date | None = None) -> dict[str, An
         "scorecard_sources": scorecard_sources,
         "title_by_sport": title_by_sport,
         "updated": latest,
-        "competition": "All sports",
+        "competition": "All college",
         "comp_key": "ALL",
         "sports": covered,
         "generated_at": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"),
