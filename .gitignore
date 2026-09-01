@@ -97,3 +97,13 @@ independent_value_report.json
 # regenerated, never authored.
 ui_audit_report.json
 data_coverage_report.json
+
+# Built by build_board_summary.py from the data files, into _site/ at deploy
+# time (deploy.yml). _site is assembled from an explicit copy allowlist that
+# never includes this path, so the repo copy was never published -- it only
+# served local `python -m http.server` runs, and nothing refreshed it. The one
+# tracked copy was committed 2026-08-19 and still held the pre-pivot board
+# (MLB, NFL and soccer fixtures), so a local run painted retired sports before
+# the college files replaced them. Regenerate it locally when you want the
+# fast path: python build_board_summary.py --output board_summary.json
+board_summary.json
