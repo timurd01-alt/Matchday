@@ -240,7 +240,7 @@ function insightModelBlock(m){
   const cls=(edge!=null&&Math.abs(edge)>=6?'edge ':'')+(op.blocked?'gate':'');
   return live+`<div class="seclbl">Locked model pick</div><div class="pick insightPick ${cls}"><span class="pl">Pick</span><span class="pn">${esc(op.name)}</span><span class="pc">${esc(op.confidence??'—')}%</span><span class="pnote">${esc(op.note)}</span></div>`;
 }
-function matchdayLivePickHTML(m){const p=m?.betbetter_pick;if(!p||m?.status!=='UPCOMING')return'';const model=Number(p.model_pct),market=Number(p.market_pct),gap=Number(p.edge_points);const note=Number.isFinite(model)&&Number.isFinite(market)?`Model ${model.toFixed(1)}% · market ${market.toFixed(1)}%${Number.isFinite(gap)?` · ${gap>0?'+':''}${gap.toFixed(1)} pts`:''}`:'Live analytical read';return `<div class="pick matchdayLivePick"><span class="pl">Matchday live pick</span><span class="pn">${esc(p.pick_name||'No pick')}</span><span class="pc">${Number.isFinite(model)?model.toFixed(1)+'%':'—'}</span><span class="pnote">${esc(note)} · updates until kickoff</span></div>`}
+function matchdayLivePickHTML(m){const p=m?.betbetter_pick;if(!p||m?.status!=='UPCOMING')return'';const model=Number(p.model_pct),market=Number(p.market_pct),gap=Number(p.edge_points);const note=Number.isFinite(model)&&Number.isFinite(market)?`Model ${model.toFixed(1)}% · market ${market.toFixed(1)}%${Number.isFinite(gap)?` · ${gap>0?'+':''}${gap.toFixed(1)} pts`:''}`:'Live analytical read';return `<div class="pick matchdayLivePick"><span class="pl">Model</span><span class="pn">${esc(p.pick_name||'No pick')}</span><span class="pc">${Number.isFinite(model)?model.toFixed(1)+'%':'—'}</span><span class="pnote">${esc(note)} · updates until kickoff</span></div>`}
 function cardHTML(m,opts){
   opts=opts||{};
   const pending=m.status==='LIVE',stale=isStaleUpcoming(m);
@@ -248,18 +248,16 @@ function cardHTML(m,opts){
   const statusClass=stale?'PAST_REFRESH':pending?'RESULT_PENDING':m.status;
   const x=(m.markets&&m.markets['1x2'])||{};const hfl=teamFlagHTML(m.home),afl=teamFlagHTML(m.away,true);
   const probTop=x.home_pct!=null?`<div class="prob"><div class="problbl"><span>${esc(m.home.code||m.home.name)}</span><span>Market read</span><span>${esc(m.away.code||m.away.name)}</span></div>${bar1x2(x.home_pct,_isTwoWay(m)?null:x.draw_pct,x.away_pct)}</div>`:`<div class="prob"><div class="nomk">${esc(oddsEtaLabel(m)||'No market snapshot yet')}</div></div>`;
-  const pr=m.prediction;const op=pr?_v10OfficialPick(m):null;const edge=op?_v10OfficialEdge(m,op):null;const trend=probabilitySparkline(m);
-  // A three-way market makes a leading outcome of 37% perfectly normal, but a
-  // lone "Pick ... 37%" reads as a broken model to anyone who hasn't thought
-  // about the draw. Where draws exist, label it "Most likely" and show the whole
-  // distribution underneath -- the same treatment the market read gets directly
-  // above, so the two are comparable at a glance.
-  const modelProbs=officialPredictionProbabilities(m);
-  const threeWay=hasThreeWayProbabilities(m);
-  const pickLabel=leadsUnderHalf(m,op?.confidence)?'Most likely':'Pick';
-  const modelBar=threeWay?`<div class="prob modelRead"><div class="problbl"><span>${esc(m.home.code||m.home.name)}</span><span>Model read</span><span>${esc(m.away.code||m.away.name)}</span></div>${bar1x2(modelProbs.h,modelProbs.d,modelProbs.a)}</div>`:'';
-  const livePick=opts.hidePick?'':matchdayLivePickHTML(m);const officialPick=(!opts.hidePick&&op)?`<div class="pick ${edge!=null&&Math.abs(edge)>=6?'edge':''} ${op.blocked?'gate':''}"><span class="pl">${esc(pickLabel)}</span><span class="pn">${esc(op.name)}</span><span class="pc">${esc(op.confidence??'—')}%</span><span class="pnote">${esc(op.note||'')}</span>${trend}</div>${modelBar}`:'';
-  const pick=isForecastPaused(m)?forecastPauseHTML(m):livePick+officialPick;
+  // One pick per card, and it is the model's. The card used to stack two rows
+  // from two different prediction systems: the Bet Better model out of
+  // betbetter_picks.json, and `m.prediction` out of the data payload. They are
+  // not the same model and they disagree -- Florida State v SMU read "Florida
+  // State 60.4%" above "SMU 53%" on the same card -- so a reader had no way to
+  // know which one the site actually stands behind. `m.prediction` stays in the
+  // payload and in the match modal, where it is labelled as its own thing; the
+  // card states the model's pick once.
+  const livePick=opts.hidePick?'':matchdayLivePickHTML(m);
+  const pick=isForecastPaused(m)?forecastPauseHTML(m):livePick;
   const probChanged=!!probabilityMovement(m);
   const timing=pending?'score after final':m.status==='FINISHED'?'postgame':stale?'past kickoff':kickIn(m.kickoff);
   return `<article class="card${SETTINGS.showDetails?'':' compactCard'}${probChanged?' probChanged':''}" data-id="${esc(m.id)}"><div class="head" onclick="openMatchModal(this.closest('article').dataset.id)"><div class="metarow"><span class="stage">${esc(m.stage||'Fixture')}</span>${m._comp&&!DATA_FILE?`<span class="compTag">${esc(m._comp)}</span>`:''}<span class="wstar ${wlHas(m.home.name)||wlHas(m.away.name)?'on':''}" onclick="event.stopPropagation();wlToggle('${esc(m.home.name)}')" title="Watch">&#9733;</span>${m.weather?`<a class="wxchip" href="${esc(m.weather.source_url||'https://open-meteo.com/')}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" title="Weather data by Open-Meteo"><b>${m.weather.temp_c}&deg;</b>${m.weather.wind_kph>=20?` ${m.weather.wind_kph}km/h`:''}${m.weather.rain_pct>=40?` &#9730;${m.weather.rain_pct}%`:''}<small> Open-Meteo</small></a>`:''}<span class="spacer"></span><span class="pill ${esc(statusClass)}">${esc(displayStatus)}</span></div><div class="fixture"><div class="side"><div class="tname">${teamMarkHTML(m.home)}<span class="teamNameText">${hfl}${esc(m.home.name)}</span></div><div class="tsub"><span>${esc(m.home.code)}</span>${teamStandingsMeta(m.home,m._comp).map(p=>`<span>${esc(p)}</span>`).join('')}</div></div><div class="center"><div class="score">${scoreText(m)}</div><div class="kick">${timing}</div></div><div class="side away"><div class="tname"><span class="teamNameText">${esc(m.away.name)}${afl}</span>${teamMarkHTML(m.away,'away')}</div><div class="tsub"><span>${esc(m.away.code)}</span>${teamStandingsMeta(m.away,m._comp).map(p=>`<span>${esc(p)}</span>`).join('')}</div></div></div>${probTop}${pick}<div class="expander"></div></div></article>`;
