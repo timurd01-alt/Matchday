@@ -2186,3 +2186,4 @@ html{color-scheme:dark}
 @media(max-width:600px){.welcomeNotice{display:block}.welcomeNotice strong{display:block;margin-bottom:4px}}
 .modClose::before{background:linear-gradient(90deg,var(--signal),transparent 70%)}
 .modParity::before{background:linear-gradient(90deg,var(--link,#76caff),transparent 70%)}
+.modPad::before{background:linear-gradient(90deg,var(--loss),transparent 70%)}

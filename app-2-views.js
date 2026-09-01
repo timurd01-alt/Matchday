@@ -856,9 +856,33 @@ function modConferenceParity(){
 <table class="tsTable"><thead><tr><th>Conference</th><th>Spread</th><th>Best</th><th>Worst</th></tr></thead><tbody>${body}</tbody></table>
 <p class="modNote">How far apart a conference's own teams are, not how good it is. A high spread means a couple of teams carrying the average; a low one means the league is tightly packed top to bottom.</p></section>`;
 }
+
+/* How much of a schedule is FCS opposition.
+   fcs_schedule_share ships on all 133 rows and nothing else on the board reads
+   it. It is a different fact from strength of schedule: SoS says how good the
+   opponents were on average, this says how much of the slate was against teams
+   from the tier below, which is the specific structural thing that inflated
+   ratings before the ingest was fixed.
+
+   James Madison is the point of the card -- the best-rated team outside the
+   power tier, with better than a quarter of its schedule against FCS sides. */
+function modSchedulePadding(){
+  const table=collegeRankingTable();
+  const rows=(table?.rankings||[]).filter(r=>Number.isFinite(Number(r.fcs_schedule_share)));
+  if(rows.length<20)return '';
+  const top=rows.slice().sort((a,b)=>Number(b.fcs_schedule_share)-Number(a.fcs_schedule_share)).slice(0,6);
+  if(!top.length||Number(top[0].fcs_schedule_share)<=0)return '';
+  const body=top.map(r=>`<tr><td class="tsTeam">${esc(r.name)}</td>`
+    +`<td>#${r.rank}</td>`
+    +`<td class="tsNum">${Math.round(Number(r.fcs_schedule_share)*100)}%</td>`
+    +`<td>${Number.isFinite(Number(r.sos))?Number(r.sos).toFixed(2):'—'}</td></tr>`).join('');
+  return `<section class="boardMod modPad"><header><h3>Schedule padding</h3><span>share against FCS</span></header>
+<table class="tsTable"><thead><tr><th>Team</th><th>Rk</th><th>FCS</th><th>SoS</th></tr></thead><tbody>${body}</tbody></table>
+<p class="modNote">How much of each schedule is played against the tier below. Strength of schedule says how good the opponents were; this says how many of them were not FBS at all — the specific thing that inflated ratings before the ingest was corrected.</p></section>`;
+}
 function collegeModules(){
   // Upset of the week leads: CSS columns fill in source order, so first in this
   // array is the top of the left column.
-  const cards=[modUpsetOfWeek(),modTopPick(),modMyPicks(),modStatOfWeek(),modNotable(),modRatingScatter(),modConferenceStrength(),modTop25(),modTopScores(),modToughestSchedules(),modTierSplit(),modConferenceParity()].filter(Boolean);
+  const cards=[modUpsetOfWeek(),modTopPick(),modMyPicks(),modStatOfWeek(),modNotable(),modRatingScatter(),modConferenceStrength(),modTop25(),modTopScores(),modToughestSchedules(),modTierSplit(),modConferenceParity(),modSchedulePadding()].filter(Boolean);
   return cards.length?`<div class="boardMods">${cards.join('')}</div>`:'';
 }
