@@ -343,6 +343,22 @@ class QuotaModuleTests(unittest.TestCase):
         self.assertTrue(any("cfbd" in line for line in lines))
 
 
+
+def _ignore_pace(test):
+    """Take the spend-pace guard out of the way for reconciliation tests.
+
+    The pace check allows `limit * elapsed_fraction` calls, so at the very start
+    of a window it allows about zero and any reconciled usage reads as "ahead of
+    pace" -- these tests passed all through August and failed on 1 September, a
+    property of the calendar rather than of the code they cover. Back-dating the
+    period instead is wrong: _resets_since() then treats the window as rolled
+    over and the stale-zero reconciliation never runs, which is the exact path
+    under test. So the guard itself is stubbed, and only here.
+    """
+    real = pq._pace_reason
+    pq._pace_reason = lambda *a, **k: None
+    test.addCleanup(setattr, pq, "_pace_reason", real)
+
 class ProviderAdaptersWiringTests(unittest.TestCase):
     """The pre-flight refusal must surface as ProviderError -- every existing
     fallback/degraded-handling path in fetch_data.py already catches that
@@ -361,6 +377,7 @@ class ProviderAdaptersWiringTests(unittest.TestCase):
     def test_cfbd_stale_zero_reconciles_through_free_info_endpoint(self):
         import provider_adapters as pa
         pq.record_response("cfbd", {"X-CallLimit-Remaining": "0"})
+        _ignore_pace(self)
         called = []
 
         class Response:
@@ -391,6 +408,7 @@ class ProviderAdaptersWiringTests(unittest.TestCase):
     def test_cfbd_info_confirming_zero_still_blocks_paid_request(self):
         import provider_adapters as pa
         pq.record_response("cfbd", {"X-CallLimit-Remaining": "0"})
+        _ignore_pace(self)
         called = []
 
         class Response:
@@ -432,6 +450,7 @@ class FetchDataWiringTests(unittest.TestCase):
     def test_fetch_data_reconciles_stale_odds_ledger_through_free_endpoint(self):
         import fetch_data as fd
         pq.record_response("odds_api", {"x-requests-remaining": "0", "x-requests-used": "500"})
+        _ignore_pace(self)
         called = []
 
         class Response:
