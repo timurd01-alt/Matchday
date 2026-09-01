@@ -654,11 +654,13 @@ function enhanceMatchCards(host){
     if(isFavoriteMatch(m)){card.classList.add('favoriteMatch');if(!head.querySelector('.favoriteTag'))head.insertAdjacentHTML('beforeend',`<span class="favoriteTag">${t('My team')}</span>`)}
     head.setAttribute('role','button');head.setAttribute('tabindex','0');
     if(m)head.setAttribute('aria-label',`Open ${m.home?.name||'home'} versus ${m.away?.name||'away'}`);
-    if(card.classList.contains('compactCard')&&m?.prediction){
-      const op=_v10OfficialPick(m),edge=_v10OfficialEdge(m,op),label=card.querySelector('.pick .pl'),note=card.querySelector('.pick .pnote');
-      if(label)label.textContent=leadsUnderHalf(m,op.confidence)?'Most likely':'Model';
-      if(note&&op.marketPct!=null){note.textContent=`market ${op.marketPct}%${edge==null?'':` · ${edge>0?'+':''}${edge} pt`}`;note.classList.add('compactSignal')}
-    }
+    // This used to relabel the card's first `.pick` row as "Model" and rewrite
+    // its note with `m.prediction`'s market and edge. Once a card carried both
+    // prediction systems, the first row was the Bet Better pick, so the site
+    // model's label and market numbers were stamped onto a different model's
+    // pick -- which is how "MODEL Florida State 60.4%" came to sit above
+    // "PICK SMU 53%". cardHTML now renders one pick row that labels and
+    // annotates itself from its own source, so there is nothing to restate.
     const setFinishedLabel=()=>{if(m?.status!=='FINISHED')return;const status=document.querySelector('.matchModal.show .modalStatus');if(status)status.textContent='FT'};
     if(m?.status==='FINISHED'){const when=card.querySelector('.center>.kick');if(when)when.textContent='FT';head.addEventListener('click',setFinishedLabel)}
     head.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();openMatchModal(card.dataset.id);setFinishedLabel()}});
