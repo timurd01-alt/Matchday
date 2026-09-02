@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0830I",
+  "tag": "Fix",
+  "title": "Social cards rebuilt for the phone feed",
+  "items": [
+   "Rebuilt all three weekly social graphics at a mobile-first 1080×1350 ratio that X displays fully for a single-image post.",
+   "Increased headline, matchup, ranking, and logo sizes while removing decorative rules and desktop-dashboard density.",
+   "Simplified each card to one focal message and protected long team names from colliding with ratings."
+  ]
+ },
+ {
   "date": "Build 0830H",
   "tag": "Update",
   "title": "Social graphics join the internet tailgate",
