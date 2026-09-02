@@ -1,0 +1,83 @@
+name: Export the week's numbers
+
+# Produces the data behind the weekly X posts -- slate.json and brief.txt --
+# for someone else to design from. It renders nothing and installs nothing.
+#
+# Independent by construction:
+#   * No provider quota. social_export.py reads the committed handoff only, so
+#     the week's numbers exist even while CFBD's monthly pacer is refusing calls.
+#   * No publishing. It writes files and stops; promote-on-x.yml stays paused.
+#   * No dependencies. Standard library only, so this shares deploy.yml's
+#     Python and cannot break it.
+#
+# Tuesday 13:00 UTC (09:00 ET) opens the new college week, so the export covers
+# a full Tuesday-to-Monday window with the weekend still ahead of it.
+on:
+  schedule:
+    - cron: '0 13 * * 2'
+  workflow_dispatch:
+    inputs:
+      games:
+        description: 'How many games to list'
+        required: false
+        default: '10'
+      upsets:
+        description: 'How many upsets to list'
+        required: false
+        default: '3'
+
+concurrency:
+  group: matchday-weekly-slate
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.12'
+
+      # Full discovery rather than naming this suite: test_next_task enforces
+      # one test command across every workflow, because a hand-named list is how
+      # this repository once ended up with 26 modules gating nothing.
+      - name: Run the test suite
+        run: python -m unittest discover -p "test_*.py"
+
+      - name: Export the week's numbers
+        run: python social_export.py --games "${{ inputs.games || '10' }}" --upsets "${{ inputs.upsets || '3' }}"
+
+      # Printed into the run log as well as committed, so the numbers can be
+      # read straight off the Actions page without cloning anything.
+      - name: Show the brief in the run log
+        run: python social_export.py --print
+
+      - name: Commit the week's numbers
+        run: |
+          set -euo pipefail
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- social
+          if git diff --cached --quiet; then
+            echo "no change in this week's numbers"
+            exit 0
+          fi
+          git commit -m "Export the week's slate numbers [skip ci]"
+          for attempt in 1 2 3; do
+            if git push origin HEAD:main; then
+              exit 0
+            fi
+            echo "export push attempt $attempt lost a race; rebasing against latest main"
+            if ! git pull --rebase --autostash origin main; then
+              git rebase --abort 2>/dev/null || true
+            fi
+          done
+          echo "::error::could not persist the week's numbers after 3 attempts"
+          exit 1
