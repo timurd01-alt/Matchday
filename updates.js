@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0830G",
+  "tag": "New",
+  "title": "Weekly social graphics kit",
+  "items": [
+   "Added consistent 1600×900 templates for the Matchday Model Top 25, one-game Upset Watch, and editorial Top 5 Slate.",
+   "A single weekly data file refreshes all three graphics, with downloadable PNG exports and safe team-logo fallbacks."
+  ]
+ },
+ {
   "date": "Build 0830F",
   "tag": "Fix",
   "title": "College ratings and matchup view corrected",
