@@ -139,26 +139,82 @@ class FanRanking(unittest.TestCase):
 
 
 class UpsetSelection(unittest.TestCase):
-    def test_only_sides_the_market_has_as_underdogs(self):
-        games = [
-            {"model_pct": 64.0, "market_pct": 48.2, "day": "Sun", "home": "Cal",
-             "away": "UCLA", "pick": "Cal", "best_price": 2.05},
-            {"model_pct": 91.0, "market_pct": 88.0, "day": "Sat", "home": "A",
-             "away": "B", "pick": "A", "best_price": 1.1},
-        ]
-        upsets = social_export.weekly_upsets(games, 3)
+    """An upset is a property of a game, not of the model's pick.
+
+    Each game prices two sides and only one can be below even money, so there is
+    exactly one upset candidate per game. Scoring the model's *chosen* side
+    instead is the bug these tests pin: it hides the clearest upset on the
+    board whenever the model picks the favourite while still rating the
+    underdog far above the market.
+    """
+
+    TULSA = {
+        "kickoff": "2026-09-05T19:45:00Z", "day": "Sat",
+        "home": "Tulsa", "away": "Oklahoma State", "pick": "Oklahoma State",
+        "model_pct": 56.9, "market_pct": 82.1,
+        "sides": [
+            {"selection": "Tulsa", "model_pct": 43.1, "market_pct": 17.9, "best_price": 5.6},
+            {"selection": "Oklahoma State", "model_pct": 56.9, "market_pct": 82.1,
+             "best_price": 1.18},
+        ],
+    }
+
+    def test_the_underdog_is_found_even_when_the_model_picks_the_favourite(self):
+        dog = social_export.underdog_side(self.TULSA)
+        self.assertIsNotNone(dog)
+        self.assertEqual(dog["selection"], "Tulsa")
+
+    def test_a_game_the_old_pick_side_filter_dropped_is_now_the_top_upset(self):
+        """The regression this rewrite exists for.
+
+        The model picks Oklahoma State at 56.9%, whose market_pct is 82.1 -- so
+        filtering on the picked side excluded the game entirely, losing a 25.2
+        point disagreement about Tulsa.
+        """
+        upsets = social_export.weekly_upsets([self.TULSA], 3)
         self.assertEqual(len(upsets), 1)
-        self.assertEqual(upsets[0]["pick"], "Cal")
-        self.assertAlmostEqual(upsets[0]["disagreement_points"], 15.8, places=1)
+        self.assertEqual(upsets[0]["underdog"], "Tulsa")
+        self.assertAlmostEqual(upsets[0]["disagreement_points"], 25.2, places=1)
+        self.assertGreaterEqual(self.TULSA["market_pct"], 50,
+                                "the picked side is the market favourite, which is the point")
 
-    def test_missing_percentages_are_skipped(self):
-        self.assertEqual(
-            social_export.weekly_upsets([{"model_pct": None, "market_pct": 20}], 3), [])
+    def test_exactly_one_candidate_per_game(self):
+        upsets = social_export.weekly_upsets([self.TULSA, self.TULSA], 10)
+        self.assertEqual(len(upsets), 2, "one per game, never one per side")
 
-    def test_upsets_come_from_the_weekly_list_so_they_inherit_the_date_filter(self):
-        """The handoff's own upset_of_the_week looks 7 days ahead on its own
-        clock, which can name a game outside this window. Deriving upsets from
-        the already-filtered weekly list is what stops that."""
+    def test_the_model_must_like_the_underdog_more_than_the_market_does(self):
+        agreeing = dict(self.TULSA, sides=[
+            {"selection": "Tulsa", "model_pct": 12.0, "market_pct": 17.9},
+            {"selection": "Oklahoma State", "model_pct": 88.0, "market_pct": 82.1},
+        ])
+        self.assertEqual(social_export.weekly_upsets([agreeing], 3), [])
+
+    def test_a_pick_em_game_has_no_underdog(self):
+        even = dict(self.TULSA, sides=[
+            {"selection": "A", "model_pct": 60.0, "market_pct": 50.0},
+            {"selection": "B", "model_pct": 40.0, "market_pct": 50.0},
+        ])
+        self.assertIsNone(social_export.underdog_side(even))
+
+    def test_missing_or_partial_side_prices_are_skipped(self):
+        self.assertIsNone(social_export.underdog_side({"sides": []}))
+        self.assertIsNone(social_export.underdog_side(
+            {"sides": [{"selection": "A", "model_pct": 40.0, "market_pct": 20.0}]}))
+        self.assertIsNone(social_export.underdog_side({"sides": [
+            {"selection": "A", "model_pct": None, "market_pct": 20.0},
+            {"selection": "B", "model_pct": 60.0, "market_pct": 80.0}]}))
+
+    def test_upsets_are_ranked_by_the_size_of_the_disagreement(self):
+        small = dict(self.TULSA, kickoff="2026-09-05T00:00:00Z", sides=[
+            {"selection": "Dog", "model_pct": 30.0, "market_pct": 25.0},
+            {"selection": "Fav", "model_pct": 70.0, "market_pct": 75.0}])
+        ranked = social_export.weekly_upsets([small, self.TULSA], 5)
+        self.assertEqual([u["underdog"] for u in ranked], ["Tulsa", "Dog"])
+
+    def test_upsets_inherit_the_weekly_date_filter(self):
+        """Derived from the already-filtered list, so a November game cannot
+        appear here even though the handoff's own upset block looks ahead on
+        its own clock."""
         games = social_export.weekly_games(
             DOCUMENT, BY_NAME, social_export.week_window(NOW))
         for upset in social_export.weekly_upsets(games, 5):

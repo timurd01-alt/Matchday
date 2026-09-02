@@ -1,5 +1,5 @@
 COLLEGE MATCHDAY -- WEEK OF 2026-09-02
-Games from 2026-09-02T21:49Z to 2026-09-07T23:59Z (UTC).
+Games from 2026-09-02T22:01Z to 2026-09-07T23:59Z (UTC).
 59 of 72 picks in the handoff fall in this window; the rest are later dates and are excluded.
 Ratings published 2026-08-31 -- Opponent-adjusted scoring margin.
 
@@ -38,16 +38,13 @@ Sun   #3 Notre Dame Fighting Irish     Wisconsin Badgers                89.6%   
 Sat   Stanford Cardinal                #6 Miami Hurricanes              76.2%    92.4%    Miami Hurricanes
 Sat   #4 Oregon Ducks                  Boise State Broncos              91.1%    92.8%    Oregon Ducks
 Sat   #10 Alabama Crimson Tide         East Carolina Pirates            85.9%    94.5%    Alabama Crimson Tide
-Fri   #9 Utah Utes                     Idaho Vandals                    99.3%    90.8%    Utah Utes
-Sat   #11 Texas Longhorns              Texas State Bobcats              88.7%    95.2%    Texas Longhorns
-Mon   Florida State Seminoles          #15 SMU Mustangs                 50.7%    44.1%    Florida State Seminoles
-Sat   #12 Penn State Nittany Lions     Marshall Thundering Herd         91.7%    92.7%    Penn State Nittany Lions
-Sun   #14 Washington Huskies           Washington State Cougars         86.3%    91.6%    Washington Huskies
 
 == UPSET WATCH ==
-Sun   UCLA Bruins at California Golden Bears
-      pick California Golden Bears -- model 64.0% vs market 48.2% (+15.8 pts)  best price 2.05
-Mon   SMU Mustangs at Florida State Seminoles
-      pick Florida State Seminoles -- model 50.7% vs market 44.1% (+6.6 pts)  best price 2.3
+Sat   Oklahoma State Cowboys at Tulsa Golden Hurricane
+      underdog Tulsa Golden Hurricane -- model 43.1% vs market 17.9% (+25.2 pts)  best price 5.6
+Sat   Clemson Tigers at LSU Tigers
+      underdog Clemson Tigers -- model 42.7% vs market 22.7% (+20.0 pts)  best price 4.6
+Sat   Toledo Rockets at Michigan State Spartans
+      underdog Toledo Rockets -- model 39.6% vs market 22.2% (+17.4 pts)  best price 4.5
 
 Data: CollegeFootballData. Ratings solved by Matchday. Editorial, not advice.

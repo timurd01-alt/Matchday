@@ -154,28 +154,67 @@ def weekly_games(document: dict, by_name: dict[str, dict],
             "market_pct": market,
             "edge_points": pick.get("edge_points"),
             "best_price": pick.get("best_price"),
+            "sides": pick.get("sides") or [],
             "fan_score": fan_score(home_pts, away_pts),
         })
     out.sort(key=lambda g: (-g["fan_score"], g["kickoff"]))
     return out
 
 
-def weekly_upsets(games: list[dict], limit: int) -> list[dict]:
-    """Games where the model most disagrees with the market on the underdog.
+def underdog_side(game: dict) -> dict | None:
+    """The one side the market has as the underdog, or None.
 
-    Read off the same weekly list rather than the handoff's own
-    upset_of_the_week, which looks 7 days ahead on its own clock and so can name
-    a game outside this window.
+    Exactly one per game: the market prices two sides, and only one of them can
+    be below even money. That is what makes an upset a property of a game rather
+    than of a pick.
+    """
+    sides = [s for s in (game.get("sides") or []) if isinstance(s, dict)]
+    priced = [s for s in sides
+              if isinstance(s.get("market_pct"), (int, float))
+              and isinstance(s.get("model_pct"), (int, float))]
+    if len(priced) != 2:
+        return None
+    dog = min(priced, key=lambda s: s["market_pct"])
+    return dog if dog["market_pct"] < 50 else None
+
+
+def weekly_upsets(games: list[dict], limit: int) -> list[dict]:
+    """Games where the model rates the market's underdog far above the market.
+
+    This asks a question about the *game*, not about the pick, and that
+    distinction was worth getting wrong once. Filtering on the model's chosen
+    side hides the clearest upset on the board: in Tulsa v Oklahoma State the
+    model picks Oklahoma State, so a pick-side filter drops the game entirely --
+    and misses that the model has Tulsa at 43.1% where the market has them at
+    17.9%. The model does not have to pick the underdog outright to be saying
+    something loudly about them.
+
+    So: take each game's one underdog side and score the gap between the model
+    and the market on it. One candidate per game, and only where the model is
+    the more optimistic of the two.
+
+    Derived from the already-filtered weekly list rather than the handoff's own
+    upset_of_the_week, which looks seven days ahead on its own clock (so it can
+    name a game outside this window) and, being written by the engine rather
+    than recomputed, can still carry pre-correction numbers.
     """
     candidates = []
     for game in games:
-        model, market = game.get("model_pct"), game.get("market_pct")
-        if not isinstance(model, (int, float)) or not isinstance(market, (int, float)):
+        dog = underdog_side(game)
+        if dog is None:
             continue
-        if market >= 50:  # the model's side is already the market's favourite
-            continue
-        candidates.append(dict(game, disagreement_points=round(model - market, 1)))
-    candidates.sort(key=lambda g: -g["disagreement_points"])
+        gap = round(dog["model_pct"] - dog["market_pct"], 1)
+        if gap <= 0:
+            continue  # the model agrees with the market, or likes them less
+        candidates.append(dict(
+            game,
+            underdog=dog.get("selection"),
+            underdog_model_pct=dog["model_pct"],
+            underdog_market_pct=dog["market_pct"],
+            underdog_best_price=dog.get("best_price"),
+            disagreement_points=gap,
+        ))
+    candidates.sort(key=lambda g: (-g["disagreement_points"], g["kickoff"]))
     return candidates[:limit]
 
 
@@ -253,10 +292,11 @@ def brief(payload: dict) -> str:
         lines.append("No game this week has the model backing a side the market has as an underdog.")
     for game in payload["upsets"]:
         lines.append("%-5s %s at %s" % (game["day"], game["away"], game["home"]))
-        lines.append("      pick %s -- model %s vs market %s (+%s pts)%s" % (
-            game["pick"], _pct(game["model_pct"]), _pct(game["market_pct"]),
-            game["disagreement_points"],
-            ("  best price %s" % game["best_price"]) if game.get("best_price") else ""))
+        lines.append("      underdog %s -- model %s vs market %s (+%s pts)%s" % (
+            game["underdog"], _pct(game["underdog_model_pct"]),
+            _pct(game["underdog_market_pct"]), game["disagreement_points"],
+            ("  best price %s" % game["underdog_best_price"])
+            if game.get("underdog_best_price") else ""))
     lines.append("")
     lines.append("Data: CollegeFootballData. Ratings solved by Matchday. "
                  "Editorial, not advice.")
