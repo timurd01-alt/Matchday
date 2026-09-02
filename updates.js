@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0830J",
+  "tag": "Fix",
+  "title": "Every social export now uses the mobile layout",
+  "items": [
+   "Replaced the remaining desktop-format Top 25, Upset Watch, and Top 5 Slate exports with their 1080×1350 X-feed versions.",
+   "Standard and Matchday-named downloads now resolve to the same large-type, logo-forward mobile design."
+  ]
+ },
+ {
   "date": "Build 0830I",
   "tag": "Fix",
   "title": "Social cards rebuilt for the phone feed",
