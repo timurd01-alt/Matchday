@@ -1,7 +1,7 @@
 {
   "handoff_version": 6,
   "source": "betbetter",
-  "generated_at": "2026-08-31T22:06:56.983315+00:00",
+  "generated_at": "2026-09-02T01:58:52.746445+00:00",
   "sports": [
     "ncaaf",
     "ncaam"
@@ -19629,12 +19629,345 @@
   ],
   "fixtures": [
     {
+      "event_id": "401908891",
+      "sport": "ncaaf",
+      "competition": "regular",
+      "kickoff": "2026-09-03T21:00:00.000Z",
+      "home": "Montclair State",
+      "away": "Merchant Marine",
+      "status": "pre"
+    },
+    {
+      "event_id": "401868269",
+      "sport": "ncaaf",
+      "competition": "regular",
+      "kickoff": "2026-09-03T22:00:00.000Z",
+      "home": "Morehead State",
+      "away": "Kentucky Christian",
+      "status": "pre"
+    },
+    {
+      "event_id": "401907838",
+      "sport": "ncaaf",
+      "competition": "regular",
+      "kickoff": "2026-09-03T22:00:00.000Z",
+      "home": "Olivet",
+      "away": "Millikin",
+      "status": "pre"
+    },
+    {
+      "event_id": "401907484",
+      "sport": "ncaaf",
+      "competition": "regular",
+      "kickoff": "2026-09-03T22:00:00.000Z",
+      "home": "Assumption",
+      "away": "Kutztown",
+      "status": "pre"
+    },
+    {
+      "event_id": "401907493",
+      "sport": "ncaaf",
+      "competition": "regular",
+      "kickoff": "2026-09-03T22:00:00.000Z",
+      "home": "Fairmont State",
+      "away": "Bloomsburg",
+      "status": "pre"
+    },
+    {
+      "event_id": "401907516",
+      "sport": "ncaaf",
+      "competition": "regular",
+      "kickoff": "2026-09-03T22:00:00.000Z",
+      "home": "California (PA)",
+      "away": "Charleston (WV)",
+      "status": "pre"
+    },
+    {
+      "event_id": "401907526",
+      "sport": "ncaaf",
+      "competition": "regular",
+      "kickoff": "2026-09-03T22:00:00.000Z",
+      "home": "Clarion",
+      "away": "West Virginia Wesleyan",
+      "status": "pre"
+    },
+    {
+      "event_id": "401907610",
+      "sport": "ncaaf",
+      "competition": "regular",
+      "kickoff": "2026-09-03T22:00:00.000Z",
+      "home": "Glenville State",
+      "away": "Millersville",
+      "status": "pre"
+    },
+    {
+      "event_id": "401907412",
+      "sport": "ncaaf",
+      "competition": "regular",
+      "kickoff": "2026-09-03T22:00:00.000Z",
+      "home": "Carson Newman",
+      "away": "Thomas",
+      "status": "pre"
+    },
+    {
+      "event_id": "401858423",
+      "sport": "ncaaf",
+      "competition": "regular",
+      "kickoff": "2026-09-03T22:00:00.000Z",
+      "home": "Rutgers",
+      "away": "Massachusetts",
+      "status": "pre"
+    },
+    {
+      "event_id": "401906880",
+      "sport": "ncaaf",
+      "competition": "regular",
+      "kickoff": "2026-09-03T22:00:00.000Z",
+      "home": "Wayne State (MI)",
+      "away": "Northwood",
+      "status": "pre"
+    },
+    {
       "event_id": "401858423",
       "sport": "ncaaf",
       "competition": null,
       "kickoff": "2026-09-03T22:00Z",
       "home": "Rutgers Scarlet Knights",
       "away": "Massachusetts Minutemen",
+      "status": "pre"
+    },
+    {
+      "event_id": "401906526",
+      "sport": "ncaaf",
+      "competition": "regular",
+      "kickoff": "2026-09-03T23:00:00.000Z",
+      "home": "Arkansas Monticello",
+      "away": "Southeastern Oklahoma State",
+      "status": "pre"
+    },
+    {
+      "event_id": "401864424",
+      "sport": "ncaaf",
+      "competition": "regular",
+      "kickoff": "2026-09-03T23:00:00.000Z",
+      "home": "Delaware",
+      "away": "Merrimack",
+      "status": "pre"
+    },
+    {
+      "event_id": "401906545",
+      "sport": "ncaaf",
+      "competition": "regular",
+      "kickoff": "2026-09-03T23:00:00.000Z",
+      "home": "Harding",
+      "away": "Northwestern (OK)",
+      "status": "pre"
+    },
+    {
+      "event_id": "401906553",
+      "sport": "ncaaf",
+      "competition": "regular",
+      "kickoff": "2026-09-03T23:00:00.000Z",
+      "home": "Southern Nazarene",
+      "away": "Henderson State",
+      "status": "pre"
+    },
+    {
+      "event_id": "401906603",
+      "sport": "ncaaf",
+      "competition": "regular",
+      "kickoff": "2026-09-03T23:00:00.000Z",
+      "home": "Valdosta State",
+      "away": "Warner",
+      "status": "pre"
+    },
+    {
+      "event_id": "401906649",
+      "sport": "ncaaf",
+      "competition": "regular",
+      "kickoff": "2026-09-03T23:00:00.000Z",
+      "home": "Edinboro",
+      "away": "Ohio Dominican",
+      "status": "pre"
+    },
+    {
+      "event_id": "401864425",
+      "sport": "ncaaf",
+      "competition": "regular",
+      "kickoff": "2026-09-03T23:00:00.000Z",
+      "home": "Kennesaw State",
+      "away": "West Georgia",
+      "status": "pre"
+    },
+    {
+      "event_id": "401907697",
+      "sport": "ncaaf",
+      "competition": "regular",
+      "kickoff": "2026-09-03T23:00:00.000Z",
+      "home": "Northern State",
+      "away": "Winona State",
+      "status": "pre"
+    },
+    {
+      "event_id": "401906877",
+      "sport": "ncaaf",
+      "competition": "regular",
+      "kickoff": "2026-09-03T23:00:00.000Z",
+      "home": "Ashland",
+      "away": "IU Pennsylvania",
+      "status": "pre"
+    },
+    {
+      "event_id": "401858204",
+      "sport": "ncaaf",
+      "competition": "regular",
+      "kickoff": "2026-09-03T23:00:00.000Z",
+      "home": "Wake Forest",
+      "away": "Akron",
+      "status": "pre"
+    },
+    {
+      "event_id": "401907995",
+      "sport": "ncaaf",
+      "competition": "regular",
+      "kickoff": "2026-09-03T23:00:00.000Z",
+      "home": "Wisconsin River Falls",
+      "away": "Southern Virginia",
+      "status": "pre"
+    },
+    {
+      "event_id": "401907003",
+      "sport": "ncaaf",
+      "competition": "regular",
+      "kickoff": "2026-09-03T23:00:00.000Z",
+      "home": "Grand Valley State",
+      "away": "West Texas",
+      "status": "pre"
+    },
+    {
+      "event_id": "401908854",
+      "sport": "ncaaf",
+      "competition": "regular",
+      "kickoff": "2026-09-03T23:00:00.000Z",
+      "home": "Wooster",
+      "away": "Wilmington (OH)",
+      "status": "pre"
+    },
+    {
+      "event_id": "401908789",
+      "sport": "ncaaf",
+      "competition": "regular",
+      "kickoff": "2026-09-03T23:00:00.000Z",
+      "home": "Marietta",
+      "away": "Westminster (PA)",
+      "status": "pre"
+    },
+    {
+      "event_id": "401856767",
+      "sport": "ncaaf",
+      "competition": "regular",
+      "kickoff": "2026-09-03T23:00:00.000Z",
+      "home": "UCF",
+      "away": "Bethune-Cookman",
+      "status": "pre"
+    },
+    {
+      "event_id": "401907644",
+      "sport": "ncaaf",
+      "competition": "regular",
+      "kickoff": "2026-09-03T23:00:00.000Z",
+      "home": "Minnesota Duluth",
+      "away": "Augustana (SD)",
+      "status": "pre"
+    },
+    {
+      "event_id": "401907666",
+      "sport": "ncaaf",
+      "competition": "regular",
+      "kickoff": "2026-09-03T23:00:00.000Z",
+      "home": "Trine",
+      "away": "Chicago",
+      "status": "pre"
+    },
+    {
+      "event_id": "401908346",
+      "sport": "ncaaf",
+      "competition": "regular",
+      "kickoff": "2026-09-03T23:00:00.000Z",
+      "home": "Juniata",
+      "away": "Gettysburg",
+      "status": "pre"
+    },
+    {
+      "event_id": "401907871",
+      "sport": "ncaaf",
+      "competition": "regular",
+      "kickoff": "2026-09-03T23:00:00.000Z",
+      "home": "Brockport",
+      "away": "Buffalo State",
+      "status": "pre"
+    },
+    {
+      "event_id": "401866409",
+      "sport": "ncaaf",
+      "competition": "regular",
+      "kickoff": "2026-09-03T23:00:00.000Z",
+      "home": "Buffalo",
+      "away": "UAlbany",
+      "status": "pre"
+    },
+    {
+      "event_id": "401907727",
+      "sport": "ncaaf",
+      "competition": "regular",
+      "kickoff": "2026-09-03T23:00:00.000Z",
+      "home": "Minot State",
+      "away": "Wayne State (NE)",
+      "status": "pre"
+    },
+    {
+      "event_id": "401866622",
+      "sport": "ncaaf",
+      "competition": "regular",
+      "kickoff": "2026-09-03T23:00:00.000Z",
+      "home": "Stony Brook",
+      "away": "Lindenwood",
+      "status": "pre"
+    },
+    {
+      "event_id": "401908216",
+      "sport": "ncaaf",
+      "competition": "regular",
+      "kickoff": "2026-09-03T23:00:00.000Z",
+      "home": "Ohio Wesleyan",
+      "away": "Bluffton",
+      "status": "pre"
+    },
+    {
+      "event_id": "401867889",
+      "sport": "ncaaf",
+      "competition": "regular",
+      "kickoff": "2026-09-03T23:00:00.000Z",
+      "home": "Samford",
+      "away": "Southern Illinois",
+      "status": "pre"
+    },
+    {
+      "event_id": "401908201",
+      "sport": "ncaaf",
+      "competition": "regular",
+      "kickoff": "2026-09-03T23:00:00.000Z",
+      "home": "King's",
+      "away": "Wilkes",
+      "status": "pre"
+    },
+    {
+      "event_id": "401907677",
+      "sport": "ncaaf",
+      "competition": "regular",
+      "kickoff": "2026-09-03T23:00:00.000Z",
+      "home": "Minnesota St Moorhead",
+      "away": "Concordia St. Paul",
       "status": "pre"
     },
     {
@@ -19784,7 +20117,7 @@
     {
       "event_id": "401858206",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-05T01:00Z",
       "home": "Stanford Cardinal",
       "away": "Miami Hurricanes",
@@ -19793,7 +20126,7 @@
     {
       "event_id": "401858436",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-05T01:00Z",
       "home": "USC Trojans",
       "away": "Fresno State Bulldogs",
@@ -19802,7 +20135,7 @@
     {
       "event_id": "401858425",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-05T16:00Z",
       "home": "Indiana Hoosiers",
       "away": "North Texas Mean Green",
@@ -19811,7 +20144,7 @@
     {
       "event_id": "401856634",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-05T16:00Z",
       "home": "Alabama Crimson Tide",
       "away": "East Carolina Pirates",
@@ -19820,7 +20153,7 @@
     {
       "event_id": "401856778",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-05T16:00Z",
       "home": "Houston Cougars",
       "away": "Oregon State Beavers",
@@ -19829,7 +20162,7 @@
     {
       "event_id": "401856780",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-05T16:00Z",
       "home": "West Virginia Mountaineers",
       "away": "Coastal Carolina Chanticleers",
@@ -19838,7 +20171,7 @@
     {
       "event_id": "401858208",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-05T16:00Z",
       "home": "Syracuse Orange",
       "away": "New Hampshire Wildcats",
@@ -19847,7 +20180,7 @@
     {
       "event_id": "401858430",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-05T16:00Z",
       "home": "Nebraska Cornhuskers",
       "away": "Ohio Bobcats",
@@ -19856,7 +20189,7 @@
     {
       "event_id": "401861962",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-05T16:00Z",
       "home": "UConn Huskies",
       "away": "Lafayette Leopards",
@@ -19865,7 +20198,7 @@
     {
       "event_id": "401862701",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-05T16:00Z",
       "home": "Army Black Knights",
       "away": "Bryant Bulldogs",
@@ -19874,7 +20207,7 @@
     {
       "event_id": "401866410",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-05T16:00Z",
       "home": "Bowling Green Falcons",
       "away": "Tarleton State Texans",
@@ -19883,7 +20216,7 @@
     {
       "event_id": "401869960",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-05T16:00Z",
       "home": "James Madison Dukes",
       "away": "Liberty Flames",
@@ -19892,7 +20225,7 @@
     {
       "event_id": "401858432",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-05T16:30Z",
       "home": "Ohio State Buckeyes",
       "away": "Ball State Cardinals",
@@ -19901,7 +20234,7 @@
     {
       "event_id": "401858207",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-05T16:30Z",
       "home": "Pittsburgh Panthers",
       "away": "Miami (OH) RedHawks",
@@ -19910,7 +20243,7 @@
     {
       "event_id": "401856665",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-05T16:45Z",
       "home": "South Carolina Gamecocks",
       "away": "Kent State Golden Flashes",
@@ -19919,7 +20252,7 @@
     {
       "event_id": "401856659",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-05T17:00Z",
       "home": "Kentucky Wildcats",
       "away": "Youngstown State Penguins",
@@ -19928,7 +20261,7 @@
     {
       "event_id": "401856779",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-05T17:00Z",
       "home": "Iowa State Cyclones",
       "away": "Southeast Missouri State Redhawks",
@@ -19937,7 +20270,7 @@
     {
       "event_id": "401864496",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-05T17:00Z",
       "home": "Air Force Falcons",
       "away": "Duquesne Dukes",
@@ -19946,7 +20279,7 @@
     {
       "event_id": "401862698",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-05T18:00Z",
       "home": "Temple Owls",
       "away": "Rhode Island Rams",
@@ -19955,7 +20288,7 @@
     {
       "event_id": "401856658",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-05T19:00Z",
       "home": "Georgia Bulldogs",
       "away": "Tennessee State Tigers",
@@ -19964,7 +20297,7 @@
     {
       "event_id": "401858433",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-05T19:30Z",
       "home": "Oregon Ducks",
       "away": "Boise State Broncos",
@@ -19973,7 +20306,7 @@
     {
       "event_id": "401856667",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-05T19:30Z",
       "home": "Texas Longhorns",
       "away": "Texas State Bobcats",
@@ -19982,7 +20315,7 @@
     {
       "event_id": "401858434",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-05T19:30Z",
       "home": "Penn State Nittany Lions",
       "away": "Marshall Thundering Herd",
@@ -19991,7 +20324,7 @@
     {
       "event_id": "401856666",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-05T19:30Z",
       "home": "Tennessee Volunteers",
       "away": "Furman Paladins",
@@ -20000,7 +20333,7 @@
     {
       "event_id": "401856636",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-05T19:30Z",
       "home": "Auburn Tigers",
       "away": "Baylor Bears",
@@ -20009,7 +20342,7 @@
     {
       "event_id": "401856777",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-05T19:30Z",
       "home": "Cincinnati Bearcats",
       "away": "Boston College Eagles",
@@ -20018,7 +20351,7 @@
     {
       "event_id": "401858209",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-05T19:30Z",
       "home": "Duke Blue Devils",
       "away": "Tulane Green Wave",
@@ -22894,339 +23227,6 @@
       "home": "Coastal Carolina Chanticleers",
       "away": "Georgia Southern Eagles",
       "status": "pre"
-    },
-    {
-      "event_id": "401869956",
-      "sport": "ncaaf",
-      "competition": "ncaaf",
-      "kickoff": "2026-10-03T04:00Z",
-      "home": "Georgia State Panthers",
-      "away": "Old Dominion Monarchs",
-      "status": "pre"
-    },
-    {
-      "event_id": "401869962",
-      "sport": "ncaaf",
-      "competition": "ncaaf",
-      "kickoff": "2026-10-03T04:00Z",
-      "home": "James Madison Dukes",
-      "away": "Marshall Thundering Herd",
-      "status": "pre"
-    },
-    {
-      "event_id": "401871089",
-      "sport": "ncaaf",
-      "competition": "ncaaf",
-      "kickoff": "2026-10-03T04:00Z",
-      "home": "South Alabama Jaguars",
-      "away": "UL Monroe Warhawks",
-      "status": "pre"
-    },
-    {
-      "event_id": "401858252",
-      "sport": "ncaaf",
-      "competition": "ncaaf",
-      "kickoff": "2026-10-03T16:00Z",
-      "home": "UConn Huskies",
-      "away": "Syracuse Orange",
-      "status": "pre"
-    },
-    {
-      "event_id": "401862791",
-      "sport": "ncaaf",
-      "competition": "ncaaf",
-      "kickoff": "2026-10-03T16:00Z",
-      "home": "Air Force Falcons",
-      "away": "Navy Midshipmen",
-      "status": "pre"
-    },
-    {
-      "event_id": "401858247",
-      "sport": "ncaaf",
-      "competition": "ncaaf",
-      "kickoff": "2026-10-03T19:30Z",
-      "home": "UNLV Rebels",
-      "away": "California Golden Bears",
-      "status": "pre"
-    },
-    {
-      "event_id": "401862793",
-      "sport": "ncaaf",
-      "competition": "ncaaf",
-      "kickoff": "2026-10-03T19:30Z",
-      "home": "UAB Blazers",
-      "away": "Samford Bulldogs",
-      "status": "pre"
-    },
-    {
-      "event_id": "401864515",
-      "sport": "ncaaf",
-      "competition": "ncaaf",
-      "kickoff": "2026-10-03T19:30Z",
-      "home": "North Dakota State Bison",
-      "away": "Wyoming Cowboys",
-      "status": "pre"
-    },
-    {
-      "event_id": "401860899",
-      "sport": "ncaaf",
-      "competition": "ncaaf",
-      "kickoff": "2026-10-03T22:00Z",
-      "home": "Colorado State Rams",
-      "away": "Oregon State Beavers",
-      "status": "pre"
-    },
-    {
-      "event_id": "401862790",
-      "sport": "ncaaf",
-      "competition": "ncaaf",
-      "kickoff": "2026-10-03T22:00Z",
-      "home": "Florida Atlantic Owls",
-      "away": "Texas Southern Tigers",
-      "status": "pre"
-    },
-    {
-      "event_id": "401860898",
-      "sport": "ncaaf",
-      "competition": "ncaaf",
-      "kickoff": "2026-10-03T23:30Z",
-      "home": "Boise State Broncos",
-      "away": "Utah State Aggies",
-      "status": "pre"
-    },
-    {
-      "event_id": "401856706",
-      "sport": "ncaaf",
-      "competition": "ncaaf",
-      "kickoff": "2026-10-03T23:45Z",
-      "home": "LSU Tigers",
-      "away": "McNeese Cowboys",
-      "status": "pre"
-    },
-    {
-      "event_id": "401858477",
-      "sport": "ncaaf",
-      "competition": "ncaaf",
-      "kickoff": "2026-10-04T00:00Z",
-      "home": "Rutgers Scarlet Knights",
-      "away": "Indiana Hoosiers",
-      "status": "pre"
-    },
-    {
-      "event_id": "401860921",
-      "sport": "ncaaf",
-      "competition": "ncaaf",
-      "kickoff": "2026-10-04T01:30Z",
-      "home": "Washington State Cougars",
-      "away": "Fresno State Bulldogs",
-      "status": "pre"
-    },
-    {
-      "event_id": "401860900",
-      "sport": "ncaaf",
-      "competition": "ncaaf",
-      "kickoff": "2026-10-04T02:30Z",
-      "home": "San Diego State Aztecs",
-      "away": "Texas State Bobcats",
-      "status": "pre"
-    },
-    {
-      "event_id": "401864513",
-      "sport": "ncaaf",
-      "competition": "ncaaf",
-      "kickoff": "2026-10-04T03:59Z",
-      "home": "Hawai'i Rainbow Warriors",
-      "away": "San José State Spartans",
-      "status": "pre"
-    },
-    {
-      "event_id": "401871090",
-      "sport": "ncaaf",
-      "competition": "ncaaf",
-      "kickoff": "2026-10-07T00:00Z",
-      "home": "Troy Trojans",
-      "away": "Southern Miss Golden Eagles",
-      "status": "pre"
-    },
-    {
-      "event_id": "401871066",
-      "sport": "ncaaf",
-      "competition": "ncaaf",
-      "kickoff": "2026-10-07T23:30Z",
-      "home": "Florida International Panthers",
-      "away": "New Mexico State Aggies",
-      "status": "pre"
-    },
-    {
-      "event_id": "401870766",
-      "sport": "ncaaf",
-      "competition": "ncaaf",
-      "kickoff": "2026-10-08T23:00Z",
-      "home": "Liberty Flames",
-      "away": "Sam Houston Bearkats",
-      "status": "pre"
-    },
-    {
-      "event_id": "401871052",
-      "sport": "ncaaf",
-      "competition": "ncaaf",
-      "kickoff": "2026-10-08T23:00Z",
-      "home": "Western Kentucky Hilltoppers",
-      "away": "Missouri State Bears",
-      "status": "pre"
-    },
-    {
-      "event_id": "401862794",
-      "sport": "ncaaf",
-      "competition": "ncaaf",
-      "kickoff": "2026-10-08T23:30Z",
-      "home": "UTSA Roadrunners",
-      "away": "South Florida Bulls",
-      "status": "pre"
-    },
-    {
-      "event_id": "401869933",
-      "sport": "ncaaf",
-      "competition": "ncaaf",
-      "kickoff": "2026-10-08T23:30Z",
-      "home": "Arkansas State Red Wolves",
-      "away": "South Alabama Jaguars",
-      "status": "pre"
-    },
-    {
-      "event_id": "401858254",
-      "sport": "ncaaf",
-      "competition": "ncaaf",
-      "kickoff": "2026-10-09T23:00Z",
-      "home": "Louisville Cardinals",
-      "away": "Florida State Seminoles",
-      "status": "pre"
-    },
-    {
-      "event_id": "401858487",
-      "sport": "ncaaf",
-      "competition": "ncaaf",
-      "kickoff": "2026-10-10T01:00Z",
-      "home": "Washington Huskies",
-      "away": "Iowa Hawkeyes",
-      "status": "pre"
-    },
-    {
-      "event_id": "401860922",
-      "sport": "ncaaf",
-      "competition": "ncaaf",
-      "kickoff": "2026-10-10T01:00Z",
-      "home": "Utah State Aggies",
-      "away": "Washington State Cougars",
-      "status": "pre"
-    },
-    {
-      "event_id": "401864519",
-      "sport": "ncaaf",
-      "competition": "ncaaf",
-      "kickoff": "2026-10-10T01:00Z",
-      "home": "San José State Spartans",
-      "away": "Wyoming Cowboys",
-      "status": "pre"
-    },
-    {
-      "event_id": "401856826",
-      "sport": "ncaaf",
-      "competition": "ncaaf",
-      "kickoff": "2026-10-10T02:15Z",
-      "home": "BYU Cougars",
-      "away": "Iowa State Cyclones",
-      "status": "pre"
-    },
-    {
-      "event_id": "401858483",
-      "sport": "ncaaf",
-      "competition": "ncaaf",
-      "kickoff": "2026-10-10T04:00Z",
-      "home": "Ohio State Buckeyes",
-      "away": "Maryland Terrapins",
-      "status": "pre"
-    },
-    {
-      "event_id": "401858484",
-      "sport": "ncaaf",
-      "competition": "ncaaf",
-      "kickoff": "2026-10-10T04:00Z",
-      "home": "Oregon Ducks",
-      "away": "UCLA Bruins",
-      "status": "pre"
-    },
-    {
-      "event_id": "401856712",
-      "sport": "ncaaf",
-      "competition": "ncaaf",
-      "kickoff": "2026-10-10T04:00Z",
-      "home": "Alabama Crimson Tide",
-      "away": "Georgia Bulldogs",
-      "status": "pre"
-    },
-    {
-      "event_id": "401858481",
-      "sport": "ncaaf",
-      "competition": "ncaaf",
-      "kickoff": "2026-10-10T04:00Z",
-      "home": "Nebraska Cornhuskers",
-      "away": "Indiana Hoosiers",
-      "status": "pre"
-    },
-    {
-      "event_id": "401856716",
-      "sport": "ncaaf",
-      "competition": "ncaaf",
-      "kickoff": "2026-10-10T04:00Z",
-      "home": "Missouri Tigers",
-      "away": "Texas A&M Aggies",
-      "status": "pre"
-    },
-    {
-      "event_id": "401856718",
-      "sport": "ncaaf",
-      "competition": "ncaaf",
-      "kickoff": "2026-10-10T04:00Z",
-      "home": "Vanderbilt Commodores",
-      "away": "Ole Miss Rebels",
-      "status": "pre"
-    },
-    {
-      "event_id": "401856715",
-      "sport": "ncaaf",
-      "competition": "ncaaf",
-      "kickoff": "2026-10-10T04:00Z",
-      "home": "Kentucky Wildcats",
-      "away": "LSU Tigers",
-      "status": "pre"
-    },
-    {
-      "event_id": "401858485",
-      "sport": "ncaaf",
-      "competition": "ncaaf",
-      "kickoff": "2026-10-10T04:00Z",
-      "home": "Penn State Nittany Lions",
-      "away": "USC Trojans",
-      "status": "pre"
-    },
-    {
-      "event_id": "401856713",
-      "sport": "ncaaf",
-      "competition": "ncaaf",
-      "kickoff": "2026-10-10T04:00Z",
-      "home": "Arkansas Razorbacks",
-      "away": "Tennessee Volunteers",
-      "status": "pre"
-    },
-    {
-      "event_id": "401856827",
-      "sport": "ncaaf",
-      "competition": "ncaaf",
-      "kickoff": "2026-10-10T04:00Z",
-      "home": "Utah Utes",
-      "away": "Kansas Jayhawks",
-      "status": "pre"
     }
   ],
   "user_picks": {
@@ -23358,7 +23358,7 @@
       "disagreement_points": 31.7,
       "best_price": 5.6
     },
-    "considered": 35,
+    "considered": 36,
     "horizon_days": 7,
     "basis": "largest model-minus-market gap on a side the market has as an underdog",
     "caveat": "Editorial, not advice. This is the model's most contrarian call of the week, and disagreement of this kind has historically predicted WORSE results on our graded college samples, not better. Publish it as something to watch and grade afterwards, never as a recommended bet."
