@@ -2,6 +2,25 @@ window.MATCHDAY_SOCIAL = {
   week: "WEEK 1",
   season: "2026 SEASON",
   published: "2026-09-01",
+  logos: {
+    "Indiana Hoosiers":"logos/indiana.png", "Ohio State Buckeyes":"logos/ohioState.png",
+    "Notre Dame Fighting Irish":"logos/notreDame.png", "Oregon Ducks":"logos/oregon.png",
+    "Texas Tech Red Raiders":"logos/texasTech.png", "Miami Hurricanes":"logos/miami.png",
+    "Ole Miss Rebels":"logos/oleMiss.png", "Georgia Bulldogs":"logos/georgia.png",
+    "Utah Utes":"logos/utah.png", "Alabama Crimson Tide":"logos/alabama.png",
+    "Texas Longhorns":"logos/texas.png", "Penn State Nittany Lions":"logos/pennState.png",
+    "Texas A&M Aggies":"logos/texasAM.png", "Washington Huskies":"logos/washington.png",
+    "SMU Mustangs":"logos/smu.png", "Tennessee Volunteers":"logos/tennessee.png",
+    "Iowa Hawkeyes":"logos/iowa.png", "USC Trojans":"logos/usc.png", "BYU Cougars":"logos/byu.png",
+    "Oklahoma Sooners":"logos/oklahoma.png", "Vanderbilt Commodores":"logos/vanderbilt.png",
+    "Michigan Wolverines":"logos/michigan.png", "Louisville Cardinals":"logos/louisville.png",
+    "Missouri Tigers":"logos/missouri.png", "Clemson Tigers":"logos/clemson.png",
+    "Florida State":"logos/floridaState.png", "Florida State Seminoles":"logos/floridaState.png",
+    "SMU":"logos/smu.png", "Clemson":"logos/clemson.png", "LSU":"logos/lsu.png",
+    "Notre Dame":"logos/notreDame.png", "Miami":"logos/miami.png", "Texas":"logos/texas.png",
+    "Ohio State":"logos/ohioState.png", "Alabama":"logos/alabama.png", "Syracuse":"logos/syracuse.png",
+    "Tennessee":"logos/tennessee.png"
+  },
   top25: [
     ["Indiana Hoosiers", 23.1], ["Ohio State Buckeyes", 22.3], ["Notre Dame Fighting Irish", 20.6],
     ["Oregon Ducks", 18.9], ["Texas Tech Red Raiders", 17.2], ["Miami Hurricanes", 17.1],
@@ -34,4 +53,3 @@ window.MATCHDAY_SOCIAL = {
     { rank: 5, away: "SYRACUSE", home: "TENNESSEE", time: "SAT · 12:00 PM", hook: "Points could fly" }
   ]
 };
-

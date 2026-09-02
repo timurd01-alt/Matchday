@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0830H",
+  "tag": "Update",
+  "title": "Social graphics join the internet tailgate",
+  "items": [
+   "Redesigned the weekly Top 25, Upset Watch, and Top 5 Slate with playful community-poll energy, Matchday's high-energy color palette, and fan-forward copy.",
+   "Added real team-logo assets for every program used by the current templates, with a safe fallback for future unmapped teams.",
+   "Kept the single-file weekly update workflow while stripping away the dashboard-style presentation."
+  ]
+ },
+ {
   "date": "Build 0830G",
   "tag": "New",
   "title": "Weekly social graphics kit",
