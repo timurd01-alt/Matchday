@@ -45,6 +45,8 @@ Usage:
     python social_export.py --out somewhere/
     python social_export.py --print             # brief.txt to stdout, writes nothing
     python social_export.py --games 8 --upsets 3
+    python social_export.py --twitter           # the Top 25 as postable blocks
+    python social_export.py --js                # also refresh social/weekly-data.js
 """
 from __future__ import annotations
 
@@ -312,6 +314,8 @@ def main(argv: list[str] | None = None) -> int:
                         help="print the brief and write nothing")
     parser.add_argument("--js", action="store_true",
                         help="also regenerate social/weekly-data.js for the canvas graphics")
+    parser.add_argument("--twitter", action="store_true",
+                        help="print the Top 25 as ready-to-paste posts, and write nothing")
     args = parser.parse_args(argv)
 
     try:
@@ -319,6 +323,14 @@ def main(argv: list[str] | None = None) -> int:
     except ExportError as exc:
         print("social_export: %s" % exc, file=sys.stderr)
         return 1
+
+    if args.twitter:
+        for post in twitter_thread(payload):
+            print("-" * 46)
+            print(post)
+            print("-" * 46)
+            print("   %d/%d characters\n" % (len(post), POST_LIMIT))
+        return 0
 
     text = brief(payload)
     if args.to_stdout:
@@ -336,8 +348,14 @@ def main(argv: list[str] | None = None) -> int:
         handle.write("\n")
     with open(text_path, "w", encoding="utf-8", newline="\n") as handle:
         handle.write(text + "\n")
-    print("wrote %s and %s (%d games in window)"
-          % (json_path, text_path, payload["week"]["games_in_window"]))
+
+    # Separated by a blank line and nothing else, so each post can be selected
+    # and pasted without stripping decoration off it first.
+    thread_path = os.path.join(out_dir, "top25-thread.txt")
+    with open(thread_path, "w", encoding="utf-8", newline="\n") as handle:
+        handle.write("\n\n".join(twitter_thread(payload)) + "\n")
+    print("wrote %s, %s and %s (%d games in window)"
+          % (json_path, text_path, thread_path, payload["week"]["games_in_window"]))
 
     if args.js:
         window = week_window()
@@ -512,6 +530,91 @@ def weekly_data_js(payload: dict, window: tuple[dt.datetime, dt.datetime],
             "// current playing week. Regenerate with: python social_export.py --js\n"
             "window.MATCHDAY_SOCIAL = %s;\n"
             % json.dumps(data, indent=2, ensure_ascii=False))
+
+# ---------------------------------------------------------------------------
+# Copy-paste output for X
+#
+# A 25-row list does not fit in one post: at roughly 17 characters a row it is
+# comfortably past 280 before the header. So this packs rows into as few posts
+# as will hold them and prints each one separately with its own character count,
+# which is the number that actually decides whether a post can be sent.
+#
+# The limit is enforced here rather than trusted. Team names change length
+# between weeks -- "SMU" one week, "Southern Mississippi" the next -- so a
+# layout that fits today can silently overflow later, and the failure would show
+# up as a rejected post rather than as anything visible in this file.
+# ---------------------------------------------------------------------------
+
+POST_LIMIT = 280
+# Room kept free for the "(n/N)" counter appended to every post.
+COUNTER_ROOM = 8
+
+
+def _post_rows(payload: dict) -> list[str]:
+    rows = []
+    for row in payload["top25"]:
+        rating = row["rating"]
+        rows.append("%d. %s %s" % (
+            row["rank"], short_name(row["team"]),
+            ("%+.1f" % rating) if isinstance(rating, (int, float)) else "--"))
+    return rows
+
+
+def twitter_thread(payload: dict, limit: int = POST_LIMIT) -> list[str]:
+    """The Top 25 as posts that each fit, header on the first one.
+
+    Packs greedily and never splits a team across two posts. Raises rather than
+    emitting an over-length post, because a silently truncated ranking is worse
+    than a loud failure.
+    """
+    week = payload["week"]
+    header = "Model Top 25 -- college football, week of %s\n%s\n" % (
+        week["from"][:10], payload.get("basis") or "Model rating")
+    footer = ("\nRatings solved from results, not votes. "
+              "Full board at matchdayterminal.com")
+
+    rows = _post_rows(payload)
+
+    # Balanced rather than greedy. Packing each post to the brim leaves the
+    # remainder in the last one, which is how the first version produced a
+    # third post containing nothing but the sign-off -- a post nobody would
+    # send. Find the fewest posts the rows fit in, then spread them evenly
+    # across exactly that many, so the header and the sign-off always travel
+    # with real content.
+    def attempt(count: int) -> list[str] | None:
+        size, extra = divmod(len(rows), count)
+        chunks, at = [], 0
+        for i in range(count):
+            take = size + (1 if i < extra else 0)
+            chunks.append(rows[at:at + take])
+            at += take
+        built = []
+        for i, chunk in enumerate(chunks):
+            body = "\n".join(chunk)
+            post = (header + body) if i == 0 else body
+            if i == count - 1:
+                post += footer
+            if len(post) + COUNTER_ROOM > limit:
+                return None
+            built.append(post)
+        return built
+
+    posts = None
+    for count in range(1, len(rows) + 1):
+        posts = attempt(count)
+        if posts:
+            break
+    if not posts:
+        raise ExportError("the Top 25 cannot be split into posts under %d characters" % limit)
+
+    total = len(posts)
+    numbered = ["%s\n(%d/%d)" % (post, i + 1, total) for i, post in enumerate(posts)]
+    for i, post in enumerate(numbered):
+        if len(post) > limit:
+            raise ExportError("post %d/%d is %d characters, over the %d limit"
+                              % (i + 1, total, len(post), limit))
+    return numbered
+
 
 if __name__ == "__main__":
     raise SystemExit(main())

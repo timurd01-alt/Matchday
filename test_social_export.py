@@ -316,5 +316,79 @@ class WeekLabel(unittest.TestCase):
             label = social_export.week_label(social_export.week_window(NOW))
         self.assertTrue(label.startswith("WEEK OF "), label)
 
+class TwitterThread(unittest.TestCase):
+    """Posts have to fit, and the limit is checked rather than assumed.
+
+    Team names change length week to week, so a layout that fits today can
+    overflow later -- and that failure would surface as a rejected post, not as
+    anything visible in the repository.
+    """
+
+    PAYLOAD = {
+        "week": {"from": "2026-09-03T17:11Z", "to": "2026-09-07T23:59Z",
+                 "games_in_window": 59, "picks_in_handoff": 72},
+        "basis": "Opponent-adjusted scoring margin",
+        "top25": [{"rank": i + 1, "team": name, "rating": 25.0 - i}
+                  for i, name in enumerate([
+                      "Indiana Hoosiers", "Ohio State Buckeyes", "Notre Dame Fighting Irish",
+                      "Oregon Ducks", "Texas Tech Red Raiders", "Miami Hurricanes",
+                      "Ole Miss Rebels", "Georgia Bulldogs", "Utah Utes",
+                      "Alabama Crimson Tide", "Texas Longhorns", "Penn State Nittany Lions",
+                      "Texas A&M Aggies", "Washington Huskies", "SMU Mustangs",
+                      "Tennessee Volunteers", "Iowa Hawkeyes", "USC Trojans",
+                      "BYU Cougars", "Oklahoma Sooners", "Vanderbilt Commodores",
+                      "Michigan Wolverines", "Louisville Cardinals", "Missouri Tigers",
+                      "Clemson Tigers"])],
+        "slate": [], "upsets": [],
+    }
+
+    def test_every_post_fits(self):
+        for post in social_export.twitter_thread(self.PAYLOAD):
+            self.assertLessEqual(len(post), social_export.POST_LIMIT, post)
+
+    def test_all_twenty_five_teams_appear_exactly_once(self):
+        joined = "\n".join(social_export.twitter_thread(self.PAYLOAD))
+        for rank in range(1, 26):
+            occurrences = joined.count("\n%d. " % rank) + int(joined.startswith("%d. " % rank))
+            self.assertEqual(occurrences, 1,
+                             "rank %d is not present exactly once" % rank)
+
+    def test_no_post_is_only_the_signoff(self):
+        """The first version packed greedily and left a third post containing
+        nothing but the footer -- a post nobody would send."""
+        posts = social_export.twitter_thread(self.PAYLOAD)
+        for post in posts:
+            self.assertRegex(post, r"\d+\. ", "a post with no ranking rows: %r" % post)
+
+    def test_posts_are_numbered(self):
+        posts = social_export.twitter_thread(self.PAYLOAD)
+        total = len(posts)
+        for i, post in enumerate(posts):
+            self.assertTrue(post.rstrip().endswith("(%d/%d)" % (i + 1, total)), post)
+
+    def test_the_header_and_signoff_travel_with_content(self):
+        posts = social_export.twitter_thread(self.PAYLOAD)
+        self.assertIn("Model Top 25", posts[0])
+        self.assertIn("matchdayterminal.com", posts[-1])
+        self.assertIn("1. Indiana", posts[0])
+        self.assertIn("25. Clemson", posts[-1])
+
+    def test_a_tighter_limit_produces_more_posts_that_still_fit(self):
+        posts = social_export.twitter_thread(self.PAYLOAD, limit=140)
+        self.assertGreater(len(posts), 3)
+        for post in posts:
+            self.assertLessEqual(len(post), 140, post)
+
+    def test_an_impossible_limit_raises_rather_than_truncating(self):
+        """A silently shortened ranking is worse than a loud failure."""
+        with self.assertRaises(social_export.ExportError):
+            social_export.twitter_thread(self.PAYLOAD, limit=40)
+
+    def test_mascots_are_stripped_so_rows_stay_short(self):
+        joined = "\n".join(social_export.twitter_thread(self.PAYLOAD))
+        self.assertIn("3. Notre Dame ", joined)
+        self.assertNotIn("Fighting Irish", joined)
+
+
 if __name__ == "__main__":
     unittest.main()

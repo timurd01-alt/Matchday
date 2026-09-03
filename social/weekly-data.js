@@ -5,7 +5,7 @@ window.MATCHDAY_SOCIAL = {
   "week": "WEEK 1",
   "season": "2026 SEASON",
   "published": "2026-08-31",
-  "generated_at": "2026-09-03T17:14:06Z",
+  "generated_at": "2026-09-03T17:21:42Z",
   "logos": {
     "Indiana Hoosiers": "logos/indiana.png",
     "INDIANA": "logos/indiana.png",
