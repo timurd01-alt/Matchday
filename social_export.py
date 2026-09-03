@@ -310,6 +310,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--upsets", type=int, default=3, help="how many upsets to list")
     parser.add_argument("--print", dest="to_stdout", action="store_true",
                         help="print the brief and write nothing")
+    parser.add_argument("--js", action="store_true",
+                        help="also regenerate social/weekly-data.js for the canvas graphics")
     args = parser.parse_args(argv)
 
     try:
@@ -336,8 +338,180 @@ def main(argv: list[str] | None = None) -> int:
         handle.write(text + "\n")
     print("wrote %s and %s (%d games in window)"
           % (json_path, text_path, payload["week"]["games_in_window"]))
+
+    if args.js:
+        window = week_window()
+        with open(JS_FILE, "w", encoding="utf-8", newline="\n") as handle:
+            handle.write(weekly_data_js(payload, window))
+        print("wrote %s" % JS_FILE)
     return 0
 
+
+
+
+# ---------------------------------------------------------------------------
+# social/weekly-data.js -- the canvas graphics' input
+#
+# That file was written by hand, and hand-written data rots silently. When this
+# generator was added it still claimed a slate of Notre Dame v Miami, Texas at
+# Ohio State, Alabama at Florida State and Syracuse at Tennessee. Checked
+# against the handoff's 400 fixtures: two of those games do not exist anywhere
+# in the schedule, and the other two are 12 and 19 September -- one and two
+# weeks out. Its upset was still the 50.7%/44.1% coin flip an earlier and wrong
+# reading of "upset" produced. Only the Top 25 happened to be current, and only
+# because nothing had moved it yet.
+#
+# So the numbers are generated from the same functions the brief uses, and the
+# only hand-maintained thing left is the logo artwork itself.
+# ---------------------------------------------------------------------------
+
+LOGO_DIR = os.path.join("social", "logos")
+JS_FILE = os.path.join("social", "weekly-data.js")
+
+# Mirrors short() in social/graphics.js so a name shortened here is one the
+# renderer would have shortened the same way.
+MASCOTS = (
+    " Fighting Irish", " Crimson Tide", " Nittany Lions", " Red Raiders", " Golden Hurricane",
+    " Scarlet Knights", " Demon Deacons", " Yellow Jackets", " Mountaineers", " Thundering Herd",
+    " Rainbow Warriors", " Green Wave", " Blue Devils", " Golden Bears", " Wolf Pack",
+    " Hilltoppers", " Buckeyes", " Commodores", " Wolverines", " Volunteers", " Cardinals",
+    " Hurricanes", " Bulldogs", " Cougars", " Sooners", " Trojans", " Hawkeyes", " Huskies",
+    " Mustangs", " Longhorns", " Aggies", " Tigers", " Ducks", " Utes", " Rebels", " Hoosiers",
+    " Seminoles", " Broncos", " Badgers", " Cardinal", " Pirates", " Bobcats", " Vandals",
+    " Cowboys", " Spartans", " Rockets", " Bruins", " Panthers", " Gamecocks", " Razorbacks",
+    " Wildcats", " Knights", " Owls", " Bears", " Eagles", " Falcons", " Raiders", " Lions",
+)
+
+
+def short_name(name: str) -> str:
+    out = str(name or "")
+    for mascot in MASCOTS:
+        if out.endswith(mascot):
+            return out[: -len(mascot)]
+    return out
+
+
+def _slug(value: str) -> str:
+    return "".join(ch for ch in str(value).lower() if ch.isalnum())
+
+
+def logo_map(names: list[str], logo_dir: str = LOGO_DIR) -> dict[str, str]:
+    """Match team names to the committed artwork by normalised name.
+
+    Both the full name and the shortened one are emitted, because graphics.js
+    looks the logo up by whatever string it is about to draw -- the Top 25 draws
+    full names, the slate draws short ones.
+    """
+    try:
+        files = [f for f in os.listdir(logo_dir) if f.lower().endswith(".png")]
+    except OSError:
+        return {}
+    by_slug = {_slug(os.path.splitext(f)[0]): f for f in files}
+    mapping = {}
+    for name in names:
+        for candidate in (name, short_name(name)):
+            slug = _slug(candidate)
+            match = by_slug.get(slug)
+            if match is None:
+                match = next((f for s, f in by_slug.items() if s and slug.startswith(s)), None)
+            if match:
+                mapping[candidate] = "logos/%s" % match
+                mapping[short_name(candidate).upper()] = "logos/%s" % match
+    return mapping
+
+
+def week_label(window: tuple[dt.datetime, dt.datetime]) -> str:
+    """"WEEK 1", taken from the fixture payload's own stage labels.
+
+    Falls back to a date when that payload has nothing to say, which is honest:
+    a wrong week number on a graphic is worse than no week number.
+    """
+    start, end = window
+    try:
+        with open("data_ncaaf.json", encoding="utf-8") as handle:
+            payload = json.load(handle)
+    except (OSError, ValueError):
+        payload = {}
+    stages: dict[str, int] = {}
+    for match in payload.get("matches") or []:
+        kickoff = parse_kickoff(match.get("kickoff"))
+        stage = match.get("stage")
+        if kickoff and stage and start <= kickoff <= end:
+            stages[str(stage)] = stages.get(str(stage), 0) + 1
+    if stages:
+        return max(stages.items(), key=lambda kv: kv[1])[0].upper()
+    return "WEEK OF %s" % start.strftime("%b %d").upper()
+
+
+def _et(kickoff_iso: str) -> str:
+    """Kickoff as US Eastern, which is how a college audience reads a time."""
+    moment = parse_kickoff(kickoff_iso)
+    if moment is None:
+        return ""
+    # Second Sunday in March to first Sunday in November is EDT (UTC-4).
+    eastern = moment - dt.timedelta(hours=4 if 3 <= moment.month <= 10 else 5)
+    hour = eastern.hour % 12 or 12
+    return "%s · %d:%02d %s ET" % (eastern.strftime("%a").upper(), hour, eastern.minute,
+                                   "PM" if eastern.hour >= 12 else "AM")
+
+
+def _hook(game: dict) -> str:
+    """A factual one-liner, not invented colour commentary."""
+    home_rank, away_rank = game.get("home_rank"), game.get("away_rank")
+    if home_rank and away_rank:
+        return "#%d vs #%d" % (away_rank, home_rank)
+    if home_rank or away_rank:
+        return "RANKED #%d ON THE ROAD" % away_rank if away_rank else "RANKED #%d AT HOME" % home_rank
+    return "%s KICKOFF" % game.get("day", "").upper()
+
+
+def weekly_data_js(payload: dict, window: tuple[dt.datetime, dt.datetime],
+                   slate_size: int = 5) -> str:
+    slate = payload["slate"][:slate_size]
+    upsets = payload["upsets"]
+    names = [row["team"] for row in payload["top25"]]
+    for game in slate:
+        names += [game["home"], game["away"]]
+    for game in upsets[:1]:
+        names += [game["home"], game["away"]]
+
+    upset_block = None
+    if upsets:
+        top = upsets[0]
+        dog = top["underdog"]
+        fav = top["home"] if short_name(top["home"]) != short_name(dog) else top["away"]
+        upset_block = {
+            "eyebrow": "MODEL UPSET WATCH",
+            "underdog": short_name(dog).upper(),
+            "favorite": short_name(fav).upper(),
+            "kickoff": _et(top["kickoff"]),
+            "modelPct": top["underdog_model_pct"],
+            "marketPct": top["underdog_market_pct"],
+            "note": "The model gives %s %.1f%% where the market gives %.1f%%." % (
+                short_name(dog), top["underdog_model_pct"], top["underdog_market_pct"]),
+        }
+
+    data = {
+        "week": week_label(window),
+        "season": "%s SEASON" % payload.get("season", ""),
+        "published": payload.get("ranking_published_on"),
+        "generated_at": payload.get("generated_at"),
+        "logos": logo_map(names),
+        "top25": [[row["team"], row["rating"]] for row in payload["top25"]],
+        "upset": upset_block,
+        "slate": [{
+            "rank": i + 1,
+            "away": short_name(game["away"]).upper(),
+            "home": short_name(game["home"]).upper(),
+            "time": _et(game["kickoff"]),
+            "hook": _hook(game),
+        } for i, game in enumerate(slate)],
+    }
+    return ("// GENERATED by social_export.py -- do not edit by hand.\n"
+            "// Every number here comes from betbetter_picks.json, filtered to the\n"
+            "// current playing week. Regenerate with: python social_export.py --js\n"
+            "window.MATCHDAY_SOCIAL = %s;\n"
+            % json.dumps(data, indent=2, ensure_ascii=False))
 
 if __name__ == "__main__":
     raise SystemExit(main())

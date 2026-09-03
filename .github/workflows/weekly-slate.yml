@@ -51,8 +51,10 @@ jobs:
       - name: Run the test suite
         run: python -m unittest discover -p "test_*.py"
 
+      # --js also regenerates social/weekly-data.js, the canvas graphics'
+      # input, so the rendered cards cannot drift from the week's numbers.
       - name: Export the week's numbers
-        run: python social_export.py --games "${{ inputs.games || '10' }}" --upsets "${{ inputs.upsets || '3' }}"
+        run: python social_export.py --games "${{ inputs.games || '10' }}" --upsets "${{ inputs.upsets || '3' }}" --js
 
       # Printed into the run log as well as committed, so the numbers can be
       # read straight off the Actions page without cloning anything.
