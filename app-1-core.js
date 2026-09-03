@@ -832,7 +832,23 @@ const SYSTEM_UPDATES=Array.isArray(window.SYSTEM_UPDATES)?window.SYSTEM_UPDATES:
 // one hand-edits a build string in two places and leaves them disagreeing --
 // which is exactly what had happened: the strip said 0728B while the Updates
 // page said 0730A.
-function currentBuild(){return String(SYSTEM_UPDATES[0]?.date||'').replace(/^Build\s*/i,'').trim()||'dev';}
+// "0830F" alone cannot be tracked back to anything: it carries no year, its
+// letter suffix only orders builds within one day, and nothing ties it to the
+// commit that actually shipped -- so a report of "broken on 0830F" could not be
+// matched to a deploy. deploy.yml already substitutes the commit's short SHA
+// into index.html for asset cache-busting; reading it back out of a meta tag
+// gives the label a commit to point at, with no second string to keep in sync.
+// Locally the placeholder is never substituted, so it is dropped rather than
+// shown to a developer as "__BUILD__".
+function buildSha(){
+  const raw=document.querySelector('meta[name="matchday-build-sha"]')?.content||'';
+  return /^[0-9a-f]{7,40}$/i.test(raw)?raw:'';
+}
+function currentBuild(){
+  const label=String(SYSTEM_UPDATES[0]?.date||'').replace(/^Build\s*/i,'').trim()||'dev';
+  const sha=buildSha();
+  return sha?`${label} · ${sha}`:label;
+}
 const UPDATES_PAGE_SIZE=10;
 let UPDATES_EXPANDED=false;
 function toggleUpdatesHistory(){UPDATES_EXPANDED=!UPDATES_EXPANDED;renderSystemUpdates()}

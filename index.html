@@ -21,6 +21,10 @@
 <meta name="twitter:image" content="https://matchdayterminal.com/icon-512.png">
 <meta name="twitter:image:alt" content="College Matchday logo">
 <meta name="theme-color" content="#070a0f">
+<!-- deploy.yml rewrites every __BUILD__ in this file to the deployed commit's
+     short SHA. Carrying it in a meta tag as well as the asset query strings
+     lets the UI name the commit that is actually live. -->
+<meta name="matchday-build-sha" content="__BUILD__">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="College Matchday">
