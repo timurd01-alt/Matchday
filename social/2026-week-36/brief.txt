@@ -1,0 +1,50 @@
+COLLEGE MATCHDAY -- WEEK OF 2026-09-03
+Games from 2026-09-03T17:21Z to 2026-09-07T23:59Z (UTC).
+59 of 72 picks in the handoff fall in this window; the rest are later dates and are excluded.
+Ratings published 2026-08-31 -- Opponent-adjusted scoring margin.
+
+== TOP 25 ==
+#    TEAM                           RATING   CONFERENCE           SoS
+1    Indiana Hoosiers               +23.1    Big Ten              6.0
+2    Ohio State Buckeyes            +22.3    Big Ten              7.31
+3    Notre Dame Fighting Irish      +20.6    FBS Independents     5.42
+4    Oregon Ducks                   +18.9    Big Ten              7.88
+5    Texas Tech Red Raiders         +17.2    Big 12               3.86
+6    Miami Hurricanes               +17.1    ACC                  6.51
+7    Ole Miss Rebels                +16.2    SEC                  6.07
+8    Georgia Bulldogs               +15.8    SEC                  7.09
+9    Utah Utes                      +14.7    Big 12               3.55
+10   Alabama Crimson Tide           +13.7    SEC                  8.14
+11   Texas Longhorns                +13.1    SEC                  6.6
+12   Penn State Nittany Lions       +12.8    Big Ten              6.5
+13   Texas A&M Aggies               +12.7    SEC                  6.66
+14   Washington Huskies             +11.9    Big Ten              5.43
+15   SMU Mustangs                   +11.6    ACC                  3.65
+16   Tennessee Volunteers           +11.6    SEC                  5.03
+17   Iowa Hawkeyes                  +11.2    Big Ten              5.56
+18   USC Trojans                    +11.1    Big Ten              4.85
+19   BYU Cougars                    +11.0    Big 12               5.11
+20   Oklahoma Sooners               +10.9    SEC                  7.09
+21   Vanderbilt Commodores          +10.4    SEC                  5.64
+22   Michigan Wolverines            +10.2    Big Ten              7.01
+23   Louisville Cardinals           +10.0    ACC                  6.04
+24   Missouri Tigers                +9.6     SEC                  4.91
+25   Clemson Tigers                 +8.8     ACC                  4.96
+
+== THIS WEEK'S GAMES ==
+DAY   HOME                             AWAY                             MODEL    MARKET   PICK
+Sun   #7 Ole Miss Rebels               #23 Louisville Cardinals         70.7%    68.3%    Ole Miss Rebels
+Sun   #3 Notre Dame Fighting Irish     Wisconsin Badgers                89.6%    90.7%    Notre Dame Fighting Irish
+Sat   Stanford Cardinal                #6 Miami Hurricanes              76.2%    92.4%    Miami Hurricanes
+Sat   #4 Oregon Ducks                  Boise State Broncos              91.1%    92.8%    Oregon Ducks
+Sat   #10 Alabama Crimson Tide         East Carolina Pirates            85.9%    94.5%    Alabama Crimson Tide
+
+== UPSET WATCH ==
+Sat   Oklahoma State Cowboys at Tulsa Golden Hurricane
+      underdog Tulsa Golden Hurricane -- model 43.1% vs market 17.9% (+25.2 pts)  best price 5.6
+Sat   Clemson Tigers at LSU Tigers
+      underdog Clemson Tigers -- model 42.7% vs market 22.7% (+20.0 pts)  best price 4.6
+Sat   Toledo Rockets at Michigan State Spartans
+      underdog Toledo Rockets -- model 39.6% vs market 22.2% (+17.4 pts)  best price 4.5
+
+Data: CollegeFootballData. Ratings solved by Matchday. Editorial, not advice.
