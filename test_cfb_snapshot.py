@@ -43,7 +43,15 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         self.assertIn("rankings:MATCHDAY_CFB_RANKINGS.rankings", snapshot)
         self.assertIn('"sos"', snapshot)
         self.assertIn("rating:ranked?.rating??null", panels)
-        self.assertIn("payload.updated=MATCHDAY_CFB_SNAPSHOT.updated", panels)
+        # The snapshot's stamp is reconciled with the payload's, not written
+        # over it. It used to overwrite, and because the snapshot is rebuilt
+        # only when a new handoff arrives while data_*.json is refetched hourly,
+        # the board reported itself days stale whenever the handoff was the
+        # older of the two -- "data 4 days ago" above fixtures fetched that
+        # morning. See test_data_age.py.
+        self.assertIn(
+            "payload.updated=_freshestUpdated(payload.updated,MATCHDAY_CFB_SNAPSHOT.updated)",
+            panels)
         # renderInsight() lives in app-4-features.js, so it cannot bound a slice of
         # app-3-panels.js. _v4TitleRows is the function that actually follows
         # details() in this file.

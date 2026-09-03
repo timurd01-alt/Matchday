@@ -16,12 +16,27 @@ function bbNameMatches(a,b){
 }
 function _bbShiftDay(day,delta){const t=Date.parse(day+'T12:00:00Z');return Number.isFinite(t)?new Date(t+delta*86400000).toISOString().slice(0,10):day;}
 function bbFindByName(list,name){return (list||[]).find(r=>bbNameMatches(r.name||r.team_name,name))||null;}
+// The snapshots are rebuilt only when a new Bet Better handoff is taken in;
+// data_*.json is refetched hourly. Stamping the snapshot's date over the
+// payload's therefore reported the whole board as stale whenever the handoff
+// was older than the last fetch -- on 2026-09-03 the strip read "data 4 days
+// ago" while the fixtures and scores under it were two hours old, because the
+// snapshot still carried 2026-08-31. The board is both sources, so the age it
+// shows is the newer of the two, not whichever was written last. Compared as
+// instants, not strings: these stamps arrive in mixed formats ("...Z" from the
+// snapshot, "...+00:00" from the fetch) that do not sort lexicographically.
+function _freshestUpdated(current,incoming){
+  const a=Date.parse(current||''),b=Date.parse(incoming||'');
+  if(!Number.isFinite(b))return current;
+  if(!Number.isFinite(a))return incoming;
+  return b>a?incoming:current;
+}
 function applyCurrentCfbSnapshot(payload){
   const comp=String(payload?.comp_key||'').toUpperCase();
   if(!['NCAAF','ALL'].includes(comp)||typeof MATCHDAY_CFB_SNAPSHOT==='undefined')return payload;
   payload.scorecard=MATCHDAY_CFB_SNAPSHOT.scorecard;
   payload.news=[...(MATCHDAY_CFB_SNAPSHOT.news||[]),...(payload.news||[])];
-  payload.updated=MATCHDAY_CFB_SNAPSHOT.updated;
+  payload.updated=_freshestUpdated(payload.updated,MATCHDAY_CFB_SNAPSHOT.updated);
   if(comp==='ALL')return payload;
   // Add fixtures the schedule feed has not caught up with.
   //
@@ -134,7 +149,7 @@ function applyCurrentNcaamSnapshot(payload){
   payload.standings=(payload.standings||[]).filter(g=>g.group!=='Matchday Top 25').map(g=>{const teams=(g.teams||[]).map(team=>{const ranked=externalRating(team.name);return {...team,rating:ranked?.model_score??null,external_rank:ranked?.rank??null,pld:0,w:0,d:0,l:0,gf:0,ga:0,gd:0,pts:0,form:'',record:'0-0',win_pct:0,avg_pf:0,avg_pa:0}}).sort((a,b)=>(b.w-a.w)||(a.l-b.l)||(b.gd-a.gd)||((Number(b.rating)||0)-(Number(a.rating)||0))||a.name.localeCompare(b.name));teams.forEach((team,index)=>team.pos=index+1);return {...g,teams};});
   payload.bracketology=buildNcaamBracketology(MATCHDAY_NCAAM_SNAPSHOT.rankings);
   payload.bracket=[];
-  payload.updated=MATCHDAY_NCAAM_SNAPSHOT.updated;
+  payload.updated=_freshestUpdated(payload.updated,MATCHDAY_NCAAM_SNAPSHOT.updated);
   return payload;
 }
 // The scorecard is deliberately two numbers.
