@@ -2040,6 +2040,18 @@ html{color-scheme:dark}
 .modNote{overflow-wrap:anywhere;word-break:normal;hyphens:auto}
 .modList li{min-width:0}
 .modTeam{flex:1 1 auto;min-width:5.5em}
+/* Top scores is a scoreboard, so its columns have to line up down the card.
+   As a flex row with both team names on `flex:1 1 auto`, the score sat
+   wherever two variable-length names happened to balance -- "Florida State"
+   against "New Mexico State" pushed it several characters off where
+   "UNLV v Memphis" put it, and the eye reads that as a broken column. A grid
+   pins the score and the margin to fixed tracks; the names take the space
+   that is left and ellipsize into it. Scoped to .modScores so the Top 25,
+   conference and schedule lists keep their own flex layout. */
+.modScores .modList li{display:grid;grid-template-columns:minmax(0,1fr) 5em minmax(0,1fr) 2.25em;align-items:center;gap:8px}
+.modScores .modTeam{min-width:0}
+.modScores .modScore{text-align:center}
+.modScores .modMargin{text-align:right}
 .ratingCell{min-width:74px}
 .modSos{font-size:var(--fs-3xs);opacity:.85;white-space:nowrap}
 .modTop25 .modList{max-height:360px}
