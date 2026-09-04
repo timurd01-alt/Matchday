@@ -1,467 +1,55 @@
 [
  {
-  "id": "seriea-2026-08-31",
-  "comp": "SERIEA",
-  "comp_label": "Serie A",
-  "slug": "seriea-2026-08-31",
-  "title": "Serie A model recap — 2026-08-31",
-  "date": "2026-08-31",
-  "summary": "The model went 10/13 (77%) on graded Serie A picks.",
-  "record": {
-   "hits": 10,
-   "graded": 13,
-   "pct": 77
-  },
-  "highlights": {
-   "window_days": 7,
-   "matches_considered": 7,
-   "biggest_upset": {
-    "home": "ACF Fiorentina",
-    "away": "Frosinone Calcio",
-    "score_line": "0-3",
-    "winner": "Frosinone Calcio",
-    "upset_score": 1,
-    "market_pct": null
-   },
-   "best_call": {
-    "home": "Bologna FC 1909",
-    "away": "SS Lazio",
-    "pick": "SS Lazio",
-    "confidence": 58,
-    "edge": 0
-   },
-   "biggest_miss": {
-    "home": "ACF Fiorentina",
-    "away": "Frosinone Calcio",
-    "pick": "ACF Fiorentina",
-    "confidence": 83,
-    "actual": "Frosinone Calcio"
-   },
-   "closest_match": {
-    "home": "Bologna FC 1909",
-    "away": "SS Lazio",
-    "score_line": "0-1",
-    "margin": 1
-   }
-  },
-  "body": [
-   "Matchday's model graded 13 Serie A picks this stretch, hitting on 10 of them (77%).",
-   "On calibration: picks stated at 50-60% hit 67% of the time (3 games); picks stated at 80-90% hit 80% of the time (5 games). A well-calibrated model's stated confidence should roughly match its actual hit rate in each band.",
-   "The strongest signal lately has been goal difference: when it favored a side, that side won 100% of the time (5 games).",
-   "Among this week's Serie A storylines: the biggest upset was Frosinone Calcio winning 0-3 against ACF Fiorentina (the market gave that result only about 0%); the model's best call was SS Lazio in Bologna FC 1909 vs SS Lazio at 58% confidence; its biggest miss was picking ACF Fiorentina in ACF Fiorentina vs Frosinone Calcio, but Frosinone Calcio won instead.",
-   "This is Matchday's own model reporting on itself for anyone to use. Every pick is locked before kickoff and graded automatically once the game finishes; none are rewritten after the fact. See the Q&A page for how the model works."
-  ]
- },
- {
-  "id": "epl-2026-08-30",
-  "comp": "EPL",
-  "comp_label": "Premier League",
-  "slug": "epl-2026-08-30",
-  "title": "Premier League model recap — 2026-08-30",
-  "date": "2026-08-30",
-  "summary": "The model went 6/12 (50%) on graded Premier League picks.",
-  "record": {
-   "hits": 6,
-   "graded": 12,
-   "pct": 50
-  },
-  "highlights": {
-   "window_days": 7,
-   "matches_considered": 5,
-   "biggest_upset": null,
-   "best_call": {
-    "home": "Fulham FC",
-    "away": "Chelsea FC",
-    "pick": "Chelsea FC",
-    "confidence": 63,
-    "edge": 0
-   },
-   "biggest_miss": {
-    "home": "Leeds United FC",
-    "away": "Brentford FC",
-    "pick": "Leeds United FC",
-    "confidence": 36,
-    "actual": "Draw"
-   },
-   "closest_match": {
-    "home": "Leeds United FC",
-    "away": "Brentford FC",
-    "score_line": "1-1",
-    "margin": 0
-   }
-  },
-  "body": [
-   "Matchday's model graded 12 Premier League picks this stretch, hitting on 6 of them (50%). Over the same 6 games with a market line, the betting market favorite hit 33% of the time.",
-   "On calibration: picks stated at <50% hit 50% of the time (8 games). A well-calibrated model's stated confidence should roughly match its actual hit rate in each band.",
-   "The strongest signal lately has been talent or squad quality: when it favored a side, that side won 50% of the time (6 games). Elo rating has been the weakest, at 40% (5 games) — a reminder no single factor is decisive on its own.",
-   "Among this week's Premier League storylines: the model's best call was Chelsea FC in Fulham FC vs Chelsea FC at 63% confidence; its biggest miss was picking Leeds United FC in Leeds United FC vs Brentford FC, but Draw won instead.",
-   "This is Matchday's own model reporting on itself for anyone to use. Every pick is locked before kickoff and graded automatically once the game finishes; none are rewritten after the fact. See the Q&A page for how the model works."
-  ]
- },
- {
-  "id": "ligue1-2026-08-29",
-  "comp": "LIGUE1",
-  "comp_label": "Ligue 1",
-  "slug": "ligue1-2026-08-29",
-  "title": "Ligue 1 model recap — 2026-08-29",
-  "date": "2026-08-29",
-  "summary": "The model went 3/5 (60%) on graded Ligue 1 picks.",
-  "record": {
-   "hits": 3,
-   "graded": 5,
-   "pct": 60
-  },
-  "highlights": {
-   "window_days": 7,
-   "matches_considered": 3,
-   "biggest_upset": {
-    "home": "RC Strasbourg Alsace",
-    "away": "Racing Club de Lens",
-    "score_line": "2-1",
-    "winner": "RC Strasbourg Alsace",
-    "upset_score": 31,
-    "market_pct": null
-   },
-   "best_call": {
-    "home": "Le Havre AC",
-    "away": "AS Monaco FC",
-    "pick": "AS Monaco FC",
-    "confidence": 75,
-    "edge": 0
-   },
-   "biggest_miss": {
-    "home": "RC Strasbourg Alsace",
-    "away": "Racing Club de Lens",
-    "pick": "Racing Club de Lens",
-    "confidence": 53,
-    "actual": "RC Strasbourg Alsace"
-   },
-   "closest_match": {
-    "home": "Stade Rennais FC 1901",
-    "away": "Paris Saint-Germain FC",
-    "score_line": "2-2",
-    "margin": 0
-   }
-  },
-  "body": [
-   "Matchday's model graded 5 Ligue 1 picks this stretch, hitting on 3 of them (60%).",
-   "Among this week's Ligue 1 storylines: the biggest upset was RC Strasbourg Alsace winning 2-1 against Racing Club de Lens (the market gave that result only about 0%); the model's best call was AS Monaco FC in Le Havre AC vs AS Monaco FC at 75% confidence; its biggest miss was picking Racing Club de Lens in RC Strasbourg Alsace vs Racing Club de Lens, but RC Strasbourg Alsace won instead.",
-   "This is Matchday's own model reporting on itself for anyone to use. Every pick is locked before kickoff and graded automatically once the game finishes; none are rewritten after the fact. See the Q&A page for how the model works."
-  ]
- },
- {
-  "id": "mlb-2026-08-28",
-  "comp": "MLB",
-  "comp_label": "MLB",
-  "slug": "mlb-2026-08-28",
-  "title": "MLB model recap — 2026-08-28",
-  "date": "2026-08-28",
-  "summary": "The model went 149/297 (50%) on graded MLB picks.",
-  "record": {
-   "hits": 149,
-   "graded": 297,
-   "pct": 50
-  },
-  "highlights": {
-   "window_days": 7,
-   "matches_considered": 34,
-   "biggest_upset": {
-    "home": "Detroit Tigers",
-    "away": "Tampa Bay Rays",
-    "score_line": "0-3",
-    "winner": "Tampa Bay Rays",
-    "upset_score": 84,
-    "market_pct": 47.0
-   },
-   "best_call": {
-    "home": "Arizona Diamondbacks",
-    "away": "Chicago Cubs",
-    "pick": "Chicago Cubs",
-    "confidence": 52,
-    "edge": 1
-   },
-   "biggest_miss": {
-    "home": "Washington Nationals",
-    "away": "Colorado Rockies",
-    "pick": "Washington Nationals",
-    "confidence": 57,
-    "actual": "Colorado Rockies"
-   },
-   "closest_match": {
-    "home": "San Diego Padres",
-    "away": "Pittsburgh Pirates",
-    "score_line": "2-3",
-    "margin": 1
-   }
-  },
-  "body": [
-   "Matchday's model graded 297 MLB picks this stretch, hitting on 149 of them (50%). Over the same 191 games with a market line, the betting market favorite hit 52% of the time.",
-   "On calibration: picks stated at 50-60% hit 47% of the time (157 games); picks stated at 60-70% hit 53% of the time (87 games); picks stated at 70-80% hit 56% of the time (43 games); picks stated at 80-90% hit 50% of the time (10 games). A well-calibrated model's stated confidence should roughly match its actual hit rate in each band.",
-   "The strongest signal lately has been opponent-adjusted rating: when it favored a side, that side won 55% of the time (143 games). Championship market power has been the weakest, at 15% (13 games) — a reminder no single factor is decisive on its own.",
-   "Among this week's MLB storylines: the biggest upset was Tampa Bay Rays winning 0-3 against Detroit Tigers (the market gave that result only about 47%); the model's best call was Chicago Cubs in Arizona Diamondbacks vs Chicago Cubs at 52% confidence; its biggest miss was picking Washington Nationals in Washington Nationals vs Colorado Rockies, but Colorado Rockies won instead.",
-   "This is Matchday's own model reporting on itself for anyone to use. Every pick is locked before kickoff and graded automatically once the game finishes; none are rewritten after the fact. See the Q&A page for how the model works."
-  ]
- },
- {
-  "id": "laliga-2026-08-28",
-  "comp": "LALIGA",
-  "comp_label": "La Liga",
-  "slug": "laliga-2026-08-28",
-  "title": "La Liga model recap — 2026-08-28",
-  "date": "2026-08-28",
-  "summary": "The model went 9/16 (56%) on graded La Liga picks.",
+  "id": "ncaaf-2026-09-04",
+  "comp": "NCAAF",
+  "comp_label": "College Football",
+  "slug": "ncaaf-2026-09-04",
+  "title": "College Football model recap — 2026-09-04",
+  "date": "2026-09-04",
+  "summary": "The model went 9/11 (82%) on graded College Football picks.",
   "record": {
    "hits": 9,
-   "graded": 16,
-   "pct": 56
+   "graded": 11,
+   "pct": 82
   },
   "highlights": {
    "window_days": 7,
-   "matches_considered": 10,
-   "biggest_upset": null,
-   "best_call": {
-    "home": "Athletic Club",
-    "away": "Sevilla FC",
-    "pick": "Sevilla FC",
-    "confidence": 37,
-    "edge": 0
-   },
-   "biggest_miss": {
-    "home": "CA Osasuna",
-    "away": "Levante UD",
-    "pick": "CA Osasuna",
-    "confidence": 57,
-    "actual": "Draw"
-   },
-   "closest_match": {
-    "home": "Valencia CF",
-    "away": "RC Celta de Vigo",
-    "score_line": "0-0",
-    "margin": 0
-   }
-  },
-  "body": [
-   "Matchday's model graded 16 La Liga picks this stretch, hitting on 9 of them (56%). Over the same 11 games with a market line, the betting market favorite hit 73% of the time.",
-   "On calibration: picks stated at <50% hit 38% of the time (8 games); picks stated at 50-60% hit 33% of the time (3 games); picks stated at 60-70% hit 100% of the time (5 games). A well-calibrated model's stated confidence should roughly match its actual hit rate in each band.",
-   "The strongest signal lately has been Elo rating: when it favored a side, that side won 83% of the time (6 games). Goal difference has been the weakest, at 20% (5 games) — a reminder no single factor is decisive on its own.",
-   "Among this week's La Liga storylines: the model's best call was Sevilla FC in Athletic Club vs Sevilla FC at 37% confidence; its biggest miss was picking CA Osasuna in CA Osasuna vs Levante UD, but Draw won instead.",
-   "This is Matchday's own model reporting on itself for anyone to use. Every pick is locked before kickoff and graded automatically once the game finishes; none are rewritten after the fact. See the Q&A page for how the model works."
-  ]
- },
- {
-  "id": "seriea-2026-08-24",
-  "comp": "SERIEA",
-  "comp_label": "Serie A",
-  "slug": "seriea-2026-08-24",
-  "title": "Serie A model recap — 2026-08-24",
-  "date": "2026-08-24",
-  "summary": "The model went 3/5 (60%) on graded Serie A picks.",
-  "record": {
-   "hits": 3,
-   "graded": 5,
-   "pct": 60
-  },
-  "highlights": {
-   "window_days": 7,
-   "matches_considered": 5,
+   "matches_considered": 11,
    "biggest_upset": {
-    "home": "Venezia FC",
-    "away": "US Lecce",
-    "score_line": "0-2",
-    "winner": "US Lecce",
-    "upset_score": 31,
-    "market_pct": null
-   },
-   "best_call": {
-    "home": "FC Internazionale Milano",
-    "away": "AC Monza",
-    "pick": "FC Internazionale Milano",
-    "confidence": 84,
-    "edge": 0
-   },
-   "biggest_miss": {
-    "home": "Venezia FC",
-    "away": "US Lecce",
-    "pick": "Venezia FC",
-    "confidence": 53,
-    "actual": "US Lecce"
-   },
-   "closest_match": {
-    "home": "Udinese Calcio",
-    "away": "Como 1907",
-    "score_line": "1-1",
-    "margin": 0
-   }
-  },
-  "body": [
-   "Matchday's model graded 5 Serie A picks this stretch, hitting on 3 of them (60%).",
-   "Among this week's Serie A storylines: the biggest upset was US Lecce winning 0-2 against Venezia FC (the market gave that result only about 0%); the model's best call was FC Internazionale Milano in FC Internazionale Milano vs AC Monza at 84% confidence; its biggest miss was picking Venezia FC in Venezia FC vs US Lecce, but US Lecce won instead.",
-   "This is Matchday's own model reporting on itself for anyone to use. Every pick is locked before kickoff and graded automatically once the game finishes; none are rewritten after the fact. See the Q&A page for how the model works."
-  ]
- },
- {
-  "id": "epl-2026-08-22",
-  "comp": "EPL",
-  "comp_label": "Premier League",
-  "slug": "epl-2026-08-22",
-  "title": "Premier League model recap — 2026-08-22",
-  "date": "2026-08-22",
-  "summary": "The model went 1/5 (20%) on graded Premier League picks.",
-  "record": {
-   "hits": 1,
-   "graded": 5,
-   "pct": 20
-  },
-  "highlights": {
-   "window_days": 7,
-   "matches_considered": 5,
-   "biggest_upset": {
-    "home": "Nottingham Forest FC",
-    "away": "Leeds United FC",
-    "score_line": "0-1",
-    "winner": "Leeds United FC",
-    "upset_score": 68,
+    "home": "Georgia Tech",
+    "away": "Colorado",
+    "score_line": "13-14",
+    "winner": "Colorado",
+    "upset_score": 41,
     "market_pct": 32.0
    },
    "best_call": {
-    "home": "Everton FC",
-    "away": "Crystal Palace FC",
-    "pick": "Everton FC",
-    "confidence": 44,
-    "edge": 2
+    "home": "Utah",
+    "away": "Idaho",
+    "pick": "Utah",
+    "confidence": 92,
+    "edge": -2
    },
    "biggest_miss": {
-    "home": "Hull City AFC",
-    "away": "Manchester United FC",
-    "pick": "Manchester United FC",
-    "confidence": 67,
-    "actual": "Hull City AFC"
+    "home": "Rutgers",
+    "away": "Massachusetts",
+    "pick": "Rutgers",
+    "confidence": 88,
+    "actual": "Massachusetts"
    },
    "closest_match": {
-    "home": "Ipswich Town FC",
-    "away": "Sunderland AFC",
-    "score_line": "2-1",
+    "home": "Georgia Tech",
+    "away": "Colorado",
+    "score_line": "13-14",
     "margin": 1
    }
   },
   "body": [
-   "Matchday's model graded 5 Premier League picks this stretch, hitting on 1 of them (20%). Over the same 5 games with a market line, the betting market favorite hit 40% of the time.",
-   "On calibration: picks stated at <50% hit 33% of the time (3 games). A well-calibrated model's stated confidence should roughly match its actual hit rate in each band.",
-   "Among this week's Premier League storylines: the biggest upset was Leeds United FC winning 0-1 against Nottingham Forest FC (the market gave that result only about 32%); the model's best call was Everton FC in Everton FC vs Crystal Palace FC at 44% confidence; its biggest miss was picking Manchester United FC in Hull City AFC vs Manchester United FC, but Hull City AFC won instead.",
+   "Matchday's model graded 11 College Football picks this stretch, hitting on 9 of them (82%). Over the same 10 games with a market line, the betting market favorite hit 90% of the time.",
+   "On calibration: picks stated at 70-80% hit 100% of the time (3 games); picks stated at 80-90% hit 67% of the time (3 games); picks stated at 90+% hit 100% of the time (4 games). A well-calibrated model's stated confidence should roughly match its actual hit rate in each band.",
+   "The strongest signal lately has been talent or squad quality: when it favored a side, that side won 90% of the time (10 games).",
+   "Among this week's College Football storylines: the biggest upset was Colorado winning 13-14 against Georgia Tech (the market gave that result only about 32%); the model's best call was Utah in Utah vs Idaho at 92% confidence; its biggest miss was picking Rutgers in Rutgers vs Massachusetts, but Massachusetts won instead.",
    "This is Matchday's own model reporting on itself for anyone to use. Every pick is locked before kickoff and graded automatically once the game finishes; none are rewritten after the fact. See the Q&A page for how the model works."
-  ]
- },
- {
-  "id": "mlb-2026-08-21",
-  "comp": "MLB",
-  "comp_label": "MLB",
-  "slug": "mlb-2026-08-21",
-  "title": "MLB model recap — 2026-08-21",
-  "date": "2026-08-21",
-  "summary": "The model went 136/263 (52%) on graded MLB picks.",
-  "record": {
-   "hits": 136,
-   "graded": 263,
-   "pct": 52
-  },
-  "highlights": {
-   "window_days": 7,
-   "matches_considered": 52,
-   "biggest_upset": {
-    "home": "Cleveland Guardians",
-    "away": "San Diego Padres",
-    "score_line": "5-7",
-    "winner": "San Diego Padres",
-    "upset_score": 99,
-    "market_pct": 48.0
-   },
-   "best_call": {
-    "home": "Cleveland Guardians",
-    "away": "San Diego Padres",
-    "pick": "San Diego Padres",
-    "confidence": 59,
-    "edge": 11
-   },
-   "biggest_miss": {
-    "home": "Chicago Cubs",
-    "away": "St. Louis Cardinals",
-    "pick": "Chicago Cubs",
-    "confidence": 66,
-    "actual": "St. Louis Cardinals"
-   },
-   "closest_match": {
-    "home": "Cincinnati Reds",
-    "away": "Miami Marlins",
-    "score_line": "1-0",
-    "margin": 1
-   }
-  },
-  "body": [
-   "Matchday's model graded 263 MLB picks this stretch, hitting on 136 of them (52%). Over the same 158 games with a market line, the betting market favorite hit 52% of the time.",
-   "On calibration: picks stated at 50-60% hit 50% of the time (124 games); picks stated at 60-70% hit 52% of the time (86 games); picks stated at 70-80% hit 56% of the time (43 games); picks stated at 80-90% hit 50% of the time (10 games). A well-calibrated model's stated confidence should roughly match its actual hit rate in each band.",
-   "The strongest signal lately has been opponent-adjusted rating: when it favored a side, that side won 56% of the time (125 games). Championship market power has been the weakest, at 17% (12 games) — a reminder no single factor is decisive on its own.",
-   "Among this week's MLB storylines: the biggest upset was San Diego Padres winning 5-7 against Cleveland Guardians (the market gave that result only about 48%); the model's best call was San Diego Padres in Cleveland Guardians vs San Diego Padres at 59% confidence; its biggest miss was picking Chicago Cubs in Chicago Cubs vs St. Louis Cardinals, but St. Louis Cardinals won instead.",
-   "This is Matchday's own model reporting on itself for anyone to use. Every pick is locked before kickoff and graded automatically once the game finishes; none are rewritten after the fact. See the Q&A page for how the model works."
-  ]
- },
- {
-  "id": "laliga-2026-08-21",
-  "comp": "LALIGA",
-  "comp_label": "La Liga",
-  "slug": "laliga-2026-08-21",
-  "title": "La Liga model recap — 2026-08-21",
-  "date": "2026-08-21",
-  "summary": "The model went 4/6 (67%) on graded La Liga picks.",
-  "record": {
-   "hits": 4,
-   "graded": 6,
-   "pct": 67
-  },
-  "highlights": {
-   "window_days": 7,
-   "matches_considered": 6,
-   "biggest_upset": null,
-   "best_call": {
-    "home": "Sevilla FC",
-    "away": "Rayo Vallecano de Madrid",
-    "pick": "Sevilla FC",
-    "confidence": 52,
-    "edge": 15
-   },
-   "biggest_miss": {
-    "home": "Real Racing Club de Santander",
-    "away": "Villarreal CF",
-    "pick": "Villarreal CF",
-    "confidence": 52,
-    "actual": "Draw"
-   },
-   "closest_match": {
-    "home": "Real Racing Club de Santander",
-    "away": "Villarreal CF",
-    "score_line": "2-2",
-    "margin": 0
-   }
-  },
-  "body": [
-   "Matchday's model graded 6 La Liga picks this stretch, hitting on 4 of them (67%). Over the same 6 games with a market line, the betting market favorite hit 67% of the time.",
-   "On calibration: picks stated at <50% hit 67% of the time (3 games). A well-calibrated model's stated confidence should roughly match its actual hit rate in each band.",
-   "Among this week's La Liga storylines: the model's best call was Sevilla FC in Sevilla FC vs Rayo Vallecano de Madrid at 52% confidence; its biggest miss was picking Villarreal CF in Real Racing Club de Santander vs Villarreal CF, but Draw won instead.",
-   "This is Matchday's own model reporting on itself for anyone to use. Every pick is locked before kickoff and graded automatically once the game finishes; none are rewritten after the fact. See the Q&A page for how the model works."
-  ]
- },
- {
-  "id": "matchday-10-premier-league-2026-08-17",
-  "comp": "epl",
-  "comp_label": "Premier League · Matchday 10",
-  "type": "ranking",
-  "slug": "matchday-10-premier-league-2026-08-17",
-  "title": "Matchday 10: The Opening Ledger",
-  "date": "2026-08-17",
-  "summary": "A Premier League opening board ordered by current Matchday ratings, with the preseason gaps left visible.",
-  "body": [
-   "This is the first Premier League Matchday 10, selected because its August 21 opening slate is the best-supported active schedule after the prior College Football board remained on a July 24 snapshot.",
-   "The current order is Arsenal, Manchester City, Liverpool, Manchester United, Chelsea, Aston Villa, Newcastle, Bournemouth, Brighton, and Tottenham — the ten highest current Matchday team ratings.",
-   "All ten opening fixtures are preseason reads with no available market or bookmaker, listed injury, lineup entry, current-season form, separate full schedule-strength grade, or prior-model series."
   ]
  },
  {
@@ -606,21 +194,6 @@
    "The completed July 26–August 1 audit counted 62 verified locked, graded MLB picks: 34 hits and 28 misses. Accuracy alone is not an improvement claim.",
    "The seven 80–89% calls won only 42.9%, against 81.1% average stated confidence. The official model-versus-market comparison is not valid because no timestamped market cohort exists.",
    "The scorecard reports multiclass Brier (0.554), log loss (0.759), calibration, corrections, and the append-only-ledger reconciliation limitation without mixing legacy records."
-  ]
- },
- {
-  "id": "hypothetical-bills-lions-2026-08-01",
-  "comp": "nfl",
-  "comp_label": "NFL · Hypothetical Matchup",
-  "type": "simulation",
-  "slug": "hypothetical-bills-lions-2026-08-01",
-  "title": "Hypothetical Matchup: Bills vs. Lions, Under a Closed Roof",
-  "date": "2026-08-01",
-  "summary": "A transparent neutral-site simulation of two 2025 team profiles — clearly not a forecast or real fixture.",
-  "body": [
-   "A fictional neutral-site game between the 2025 Buffalo Bills and Detroit Lions profiles produces a 55.1% to 44.9% simulated split.",
-   "The scenario freezes 2025 team-era inputs, uses equal rest and a roofed neutral venue, and makes no present-day roster, injury, market, or fixture claim.",
-   "Sensitivity cases show that home field or small changes to the passing and explosive-play assumptions can reverse or sharply narrow the result."
   ]
  },
  {
