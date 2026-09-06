@@ -262,6 +262,13 @@
   "squad_value_m": 0,
   "star_value_m": 0
  },
+ "florida": {
+  "fifa_rank": 45,
+  "squad_value_m": 151,
+  "star_value_m": 20,
+  "talent_source": "cbbd_recruiting",
+  "talent_strength": 0.5523
+ },
  "florida atlantic": {
   "fifa_rank": 45,
   "squad_value_m": 151,
