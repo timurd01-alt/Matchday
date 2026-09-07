@@ -115,7 +115,7 @@ class BuildSummaryTests(unittest.TestCase):
         # Sorted by kickoff: e1 on the 21st precedes n1 on the 24th.
         self.assertEqual([m["id"] for m in summary["matches"]], ["e1", "n1"])
         self.assertEqual(summary["comp_key"], "ALL")
-        self.assertEqual(summary["competition"], "All sports")
+        self.assertEqual(summary["competition"], "All college")
         # latest wins, so the interface's "updated" stamp stays truthful
         self.assertEqual(summary["updated"], "2026-08-19T12:00:00Z")
         self.assertEqual(sorted(summary["sports"]), ["ncaaf", "ncaam"])
