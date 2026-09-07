@@ -1,7 +1,7 @@
 {
   "handoff_version": 6,
   "source": "betbetter",
-  "generated_at": "2026-09-07T02:19:50.325824+00:00",
+  "generated_at": "2026-09-07T02:25:17.123390+00:00",
   "sports": [
     "ncaaf",
     "ncaam"
@@ -28935,21 +28935,21 @@
   "upset_of_the_week": {
     "available": true,
     "pick": {
-      "event_id": "a2b7711390532d0014249f295a6d02b8",
+      "event_id": "b38f4f63351c15767e64a76a73589574",
       "sport": "ncaaf",
       "competition": "NCAAF",
-      "home": "Florida International Panthers",
-      "away": "Buffalo Bulls",
-      "kickoff": "2026-09-12T22:00:00Z",
-      "selection": "Buffalo Bulls",
-      "model_pct": 56.1,
-      "market_pct": 22.9,
-      "disagreement_points": 33.2,
-      "best_price": 4.5
+      "home": "Michigan Wolverines",
+      "away": "Oklahoma Sooners",
+      "kickoff": "2026-09-12T16:00:00Z",
+      "selection": "Michigan Wolverines",
+      "model_pct": 72.2,
+      "market_pct": 42.5,
+      "disagreement_points": 29.7,
+      "best_price": 3.15
     },
-    "considered": 42,
+    "considered": 29,
     "horizon_days": 7,
-    "basis": "largest model-minus-market gap on a side the market has as an underdog",
+    "basis": "largest model-minus-market gap on a side the market has as an underdog, in an FBS game involving at least one Power Four team",
     "caveat": "Editorial, not advice. This is the model's most contrarian call of the week, and disagreement of this kind has historically predicted WORSE results on our graded college samples, not better. Publish it as something to watch and grade afterwards, never as a recommended bet."
   },
   "coverage": {
