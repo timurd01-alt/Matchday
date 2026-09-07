@@ -198,6 +198,14 @@ def build(path: pathlib.Path = SNAPSHOT) -> str:
     blocks.append("  const MATCHDAY_BETBETTER_USER_PICKS="
                   + json.dumps(document.get("user_picks") or {}, ensure_ascii=False) + ";")
 
+    # The engine's graded record. The block this replaces was eight games typed
+    # into the snapshot by hand on the day the site went college-only, sitting
+    # outside the generated region so nothing ever refreshed it -- it still
+    # described the 29 August slate weeks later. Generated now, so it moves.
+    blocks.append("  const MATCHDAY_BETBETTER_SCORECARD="
+                  + json.dumps(document.get("scorecard") or {},
+                               ensure_ascii=False) + ";")
+
     picks = [p for p in (document.get("picks") or [])
              if str(p.get("basis") or "") == betbetter_handoff.LIVE_BASIS
              and not p.get("official_pick")]
