@@ -38,3 +38,11 @@
 
 # Response headers (CSP, X-Frame-Options, cache-control) applied to /api/*.
 !/vercel.json
+
+# Vercel's zero-config static step wants an output directory. Before the
+# allowlist above, the repo root doubled as one because index.html and the
+# app bundles sat there. With those excluded the root is empty, so give it a
+# real (tiny) one rather than leaving the build to guess. It is also what the
+# Vercel origin now serves at /: a pointer to the real site, instead of the
+# stale unstamped mirror of index.html that used to answer there.
+!/public

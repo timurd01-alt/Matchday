@@ -1,6 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "ignoreCommand": "git diff --quiet HEAD^ HEAD -- api package.json vercel.json .vercelignore",
+  "ignoreCommand": "git diff --quiet HEAD^ HEAD -- api package.json vercel.json .vercelignore || exit 1",
   "headers": [
     {
       "source": "/(.*)",
