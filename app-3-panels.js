@@ -971,9 +971,112 @@ ${lead}
 <p class="bbNote">Opponent-adjusted scoring margin and the schedule it was earned against, from the same table the ranking is drawn from. A rating difference is not a prediction.</p>
 ${typeof matchdayLivePickHTML==='function'?matchdayLivePickHTML(m):''}</div>`;
 }
+/* The model read, from the engine the rest of this board already quotes.
+
+   The expanded view rendered `m.prediction` under the heading "Model read".
+   That is Matchday's own forecast, not the engine behind the card, the Top 25,
+   the rating scatter and the top-pick module -- so a card reading "Florida
+   State 54.5%" opened onto a panel reading "TCU 55%": two different models
+   under one name, and no way for a reader to tell which one the site stands
+   behind. The heading now resolves to the Bet Better read, and `m.prediction`
+   is not shown beside it as a second opinion, for the same reason the card
+   stopped stacking two pick rows.
+
+   Nothing changes for a sport with no handoff -- soccer, MLB, NFL find no read
+   and fall back to modelBlock() below. */
+function betbetterReadFor(m){
+  // Only UPCOMING, matching what the handoff itself will attach: a live
+  // forecast on a played game reads as a call that was made in advance.
+  if(!m||String(m.status||'').toUpperCase()!=='UPCOMING')return null;
+  // Two sources on purpose, as in modTopPick(): a scheduled build attaches the
+  // pick to the fixture, a push build does not run the fetch that does, and the
+  // handoff is committed either way.
+  if(m.betbetter_pick)return m.betbetter_pick;
+  const list=(typeof MATCHDAY_BETBETTER_PICKS!=='undefined')?MATCHDAY_BETBETTER_PICKS:null;
+  const day=String(m.kickoff||'').slice(0,10);
+  if(!list||!list.length||!day)return null;
+  const sport=String(m._comp||DATA.comp_key||'').toLowerCase();
+  // A day either side, for the same reason the results settling allows it: a
+  // late kickoff and its listed date land on opposite sides of midnight UTC.
+  const days=[day,_bbShiftDay(day,-1),_bbShiftDay(day,1)];
+  return list.find(p=>(!p.sport||!sport||String(p.sport).toLowerCase()===sport)
+    &&days.includes(String(p.kickoff||'').slice(0,10))
+    &&bbNameMatches(p.home,m.home?.name||m.home)
+    &&bbNameMatches(p.away,m.away?.name||m.away))||null;
+}
+// Whether this sport is the engine's at all. On a sport it covers, a fixture it
+// has not priced gets an empty state -- Matchday's own forecast is not quietly
+// promoted into the heading the engine owns. On every other sport there is no
+// Bet Better read to be confused with, and modelBlock() renders as before.
+function betbetterCoversSport(m){
+  const list=(typeof MATCHDAY_BETBETTER_SPORTS!=='undefined')?MATCHDAY_BETBETTER_SPORTS:[];
+  const sport=String(m?._comp||DATA.comp_key||'').toLowerCase();
+  return !!sport&&(list||[]).some(s=>String(s).toLowerCase()===sport);
+}
+function betbetterNoReadPanel(){
+  return `<section class="analystPanel"><div class="analystTop"><div class="analystTitle">Model read</div>`
+    +`<div class="analystBadge">not priced</div></div>`
+    +`<div class="emptyForecast">No model read on this fixture yet. The engine publishes a read once the game is priced; `
+    +`the opponent-adjusted ratings for both teams are in the matchup table below.</div></section>`;
+}
+function _bbNum(v){const n=Number(v);return Number.isFinite(n)?n:null;}
+function _bbPct(v,d=1){const n=_bbNum(v);return n==null?'\u2014':n.toFixed(d)+'%';}
+function _bbStamp(v){const t=Date.parse(v||'');return Number.isFinite(t)?new Date(t).toLocaleString():'';}
+// The caveat belongs to the handoff document, so an attached pick carries it and
+// a baked one reads it off the snapshot. Never retyped here: if the engine
+// changes its wording, the page changes with it.
+function bbEdgeWarning(p){
+  return p?.edge_warning
+    ||(typeof MATCHDAY_BETBETTER_EDGE_WARNING!=='undefined'?MATCHDAY_BETBETTER_EDGE_WARNING:'')
+    ||'';
+}
+function betbetterModelRead(m,p){
+  const model=_bbNum(p.model_pct),market=_bbNum(p.market_pct),gap=_bbNum(p.edge_points);
+  const books=_bbNum(p.book_count),price=_bbNum(p.best_price),american=_bbNum(p.best_american);
+  const engine=p.model_name||'Bet Better model';
+  const when=_bbStamp(p.generated_at);
+  const marketText=market==null?'No market snapshot on this side':`Market on this side: ${market.toFixed(1)}%`;
+  // Both sides, not the pick alone. A 54.5% pick is a near coin-flip, and the
+  // other side's number is the only thing on the panel that says so.
+  const rows=(p.sides||[]).map(s=>`<tr><td class="bbKey">${esc(s.selection||'')}</td>`
+    +`<td>${_bbPct(s.model_pct)}</td><td>${_bbPct(s.market_pct)}</td>`
+    +`<td>${_bbNum(s.best_price)==null?'\u2014':_bbNum(s.best_price).toFixed(2)}</td></tr>`).join('');
+  const sideBox=rows
+    ?`<div class="analystBox"><div class="analystBoxTitle">Both sides</div>`
+      +`<table class="bbTable"><thead><tr><th></th><th>Model</th><th>Market</th><th>Best price</th></tr></thead>`
+      +`<tbody>${rows}</tbody></table></div>`
+    :'';
+  // Every row is neutral on purpose. Colouring the gap green would endorse the
+  // number the warning underneath exists to say must not be staked on.
+  const stat=(name,val)=>`<div class="factorRow neu"><span class="fName">${esc(name)}</span><span class="fVal">${esc(val)}</span></div>`;
+  const warn=bbEdgeWarning(p);
+  const marketBox=`<div class="analystBox"><div class="analystBoxTitle">Model against market</div><div class="factorRows">`
+    +stat('Model',_bbPct(model))
+    +stat('Market',_bbPct(market))
+    +stat('Gap',gap==null?'\u2014':`${gap>0?'+':''}${gap.toFixed(1)} pts`)
+    +stat('Best price',price==null?'\u2014':`${price.toFixed(2)}${american==null?'':` (${american>0?'+':''}${american})`}`)
+    +stat('Books priced',books==null?'\u2014':String(books))
+    +`</div>${warn?`<p class="bbNote">${esc(warn)}</p>`:''}</div>`;
+  return `<section class="analystPanel"><div class="analystTop"><div class="analystTitle">Model read</div>`
+    +`<div class="analystBadge">live shadow read</div></div>`
+    +`<div class="analystHero"><div class="analystMain"><div class="analystLabel">Model pick</div>`
+    +`<div class="analystPick">${esc(p.pick_name||'No pick')}</div>`
+    +`<p class="analystNote">${esc(engine)}${when?`, read at ${esc(when)}`:''}. This is the same read the card and the board modules quote.</p></div>`
+    +`<div class="analystConfidence"><b>${_bbPct(model)}</b><span>model probability</span>`
+    +`<small>${esc(marketText)}</small>${p.model_version?`<small>${esc(p.model_version)}</small>`:''}</div></div>`
+    +`<div class="analystGrid">${sideBox}${marketBox}</div>`
+    +(p.integrity_note?`<p class="analystSummary">${esc(p.integrity_note)}</p>`:'')+`</section>`;
+}
 function details(m){
   if(isForecastPaused(m))return `<div class="detailGrid v4Detail">${forecastPauseHTML(m)}<div class="detailTop">${betbetterMatchupPanel(m)}<div class="readCard forecastMarketCard">${marketPanel(m)}</div></div><div class="detailLow">${statsPanel(m)}${lineupsPanel(m)}</div></div>`;
-  return `<div class="detailGrid v4Detail modernExpandedView"><div class="expandedSectionHead"><div><span>Matchday analysis</span><b>Model, market and matchup</b></div><em>Updated before kickoff</em></div>${matchStory(m)}<div class="detailTop"><div class="readCard modelReadCard">${modelBlock(m)}</div><div class="readCard forecastMarketCard">${marketPanel(m)}</div></div><div class="detailTop">${betbetterMatchupPanel(m)}</div><div class="detailLow">${statsPanel(m)}${lineupsPanel(m)}</div></div>`;
+  const bb=betbetterReadFor(m);
+  const covered=betbetterCoversSport(m);
+  // matchStory() narrates `m.prediction` as "the model's pick", so it is
+  // suppressed on any sport the engine owns -- otherwise the paragraph and the
+  // panel under it name different sides in the same view.
+  const story=(bb||covered)?'':matchStory(m);
+  const read=bb?betbetterModelRead(m,bb):(covered?betbetterNoReadPanel():modelBlock(m));
+  return `<div class="detailGrid v4Detail modernExpandedView"><div class="expandedSectionHead"><div><span>Matchday analysis</span><b>Model, market and matchup</b></div><em>Updated before kickoff</em></div>${story}<div class="detailTop"><div class="readCard modelReadCard">${read}</div><div class="readCard forecastMarketCard">${marketPanel(m)}</div></div><div class="detailTop">${betbetterMatchupPanel(m)}</div><div class="detailLow">${statsPanel(m)}${lineupsPanel(m)}</div></div>`;
 }
 /* dedup */
 function _v4TitleRows(t){
