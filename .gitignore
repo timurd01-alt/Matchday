@@ -97,3 +97,25 @@ independent_value_report.json
 # regenerated, never authored.
 ui_audit_report.json
 data_coverage_report.json
+
+# Per-competition provider caches. The existing *_cache.json above cannot
+# match these: they put "cache" BEFORE the competition suffix, so fnmatch on
+# 'outrights_market_cache_ncaam.json' against '*_cache.json' is False -- the
+# same gap deploy.yml documents at its actions/cache step, where these files
+# are listed as CI-cache-owned. They must stay untracked: a tracked copy would
+# be checked out over the restored cache every run.
+odds_market_cache_*.json
+outrights_market_cache_*.json
+api_football_box_cache_*.json
+
+# Local runtime state, regenerated and never authored. fetch_failure_*.json is
+# a crash record the pacing guard drops on a failed fetch and nothing reads it
+# back; fixture_count_history.json is the trailing slate-size window used for
+# anomaly detection, which degrades to {} when absent.
+fetch_failure_*.json
+fixture_count_history.json
+
+# Rendered exports from the social/index.html graphics tool. Nothing in the
+# site, the build or the allowlist references them, and they are ~130KB each.
+# social/logos/*.png stays tracked -- this only matches the folder root.
+/social/*.png
