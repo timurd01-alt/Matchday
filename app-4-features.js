@@ -636,38 +636,36 @@ function _v15RankLabel(m){
   if(sources.includes('poll'))return 'Poll rank';
   return ['NCAAF','NCAAM'].includes(_v15CompetitionKey(m))?'Poll / model rank':'Model rank';
 }
-function _v15MatchProfile(m,op){
-  const pr=m?.prediction||{},probs=_v4ModelProbs(m)||{},side=op?.side||'';
-  const quality=pr.data_quality||{},sample=quality.games||{};
-  const ordered=['h','d','a'].map(k=>_v15Num(probs[k])).filter(v=>v!=null).sort((a,b)=>b-a);
-  const separation=ordered.length>1?Math.max(0,Math.round(ordered[0]-ordered[1])):null;
-  const base=pr.base_blend||pr.model||{};
-  const basePick=_v15Num(base[side]),official=_v15Num(op?.confidence);
-  const adjustment=basePick!=null&&official!=null?Math.round(official-basePick):null;
+/* The team comparison from the expanded view, restored without the model.
+
+   This card used to sit inside modelBlock(), so deleting that panel took it out
+   too -- and most of it had nothing to do with the forecast. Its four KPIs did:
+   model separation, probability adjustment, the modelled expected total, and the
+   sample the model had to work from. Those are gone with the model that
+   produced them.
+
+   Everything below them is the two teams' own record: results, placement,
+   opponent-adjusted rating, scoring for and against, form, and who is listed
+   out. That is worth reading whoever is forecasting the game, so it comes back
+   on its own. */
+function matchProfilePanel(m){
   const unit=_totalsUnit(m);
-  const expected=_v15Num(pr?.totals?.expected);
-  const hScored=_v15Rate(m?.home,'gf'),aScored=_v15Rate(m?.away,'gf');
-  const scoringBaseline=expected!=null?expected:(hScored!=null&&aScored!=null?Number(hScored)+Number(aScored):null);
-  const totalLabel=expected!=null?'Expected total':'Scoring baseline';
   const homeOut=Array.isArray(m?.injuries?.home)?m.injuries.home.length:0;
   const awayOut=Array.isArray(m?.injuries?.away)?m.injuries.away.length:0;
-  const kpis=[
-    ['Model separation',separation!=null?`${separation} pts`:'—','Gap between the two most likely model outcomes.'],
-    ['Probability adjustment',adjustment!=null?`${adjustment>0?'+':''}${adjustment} pts`:'—','Difference between the raw model and the final official probability.'],
-    [totalLabel,scoringBaseline!=null?`${Number(scoringBaseline).toFixed(1)} ${unit}`:'Not modeled'],
-    ['Data sample',sample.home!=null&&sample.away!=null?`${sample.home} / ${sample.away} games`:'Not reported',quality.note||'Current-season games available to the model.']
-  ].map(([label,value,help])=>`<div class="profileKpi"><span>${esc(label)}${help?metricHelp(label,help):''}</span><b>${esc(value)}</b></div>`).join('');
   const rows=[
     _v15CompareRow('Record',_v15Record(m?.home,m),_v15Record(m?.away,m)),
     _v15CompareRow(_v15PlacementLabel(m),_v15Placement(m?.home),_v15Placement(m?.away)),
     _v15CompareRow(_v15RankLabel(m),_v15Num(m?.home?.model_rank)!=null?`#${m.home.model_rank}`:null,_v15Num(m?.away?.model_rank)!=null?`#${m.away.model_rank}`:null),
     _v15CompareRow('Opponent-adjusted rating',_v15Num(m?.home?.srs)!=null?Number(m.home.srs).toFixed(1):null,_v15Num(m?.away?.srs)!=null?Number(m.away.srs).toFixed(1):null),
-    _v15CompareRow(`Avg ${unit} scored`,hScored,aScored),
+    _v15CompareRow(`Avg ${unit} scored`,_v15Rate(m?.home,'gf'),_v15Rate(m?.away,'gf')),
     _v15CompareRow(`Avg ${unit} allowed`,_v15Rate(m?.home,'ga'),_v15Rate(m?.away,'ga')),
     _v15CompareRow('Recent form',_v15Form(m?.home),_v15Form(m?.away),true),
     _v15CompareRow('Listed absences',String(homeOut),String(awayOut))
-  ].join('');
-  return `<div class="analystBox matchProfileCard"><div class="analystBoxTitle">Match profile</div><div class="profileKpis">${kpis}</div><div class="profileCompareHead"><b>${esc(m?.home?.code||m?.home?.name||'Home')}</b><span>team comparison</span><b>${esc(m?.away?.code||m?.away?.name||'Away')}</b></div><div class="profileCompareRows">${rows}</div></div>`;
+  ].filter(Boolean).join('');
+  // Every row can be absent -- a team with no games played has no record, no
+  // form and no rates -- and an empty card is worse than no card.
+  if(!rows)return '';
+  return `<div class="readCard matchProfileCard"><div class="readHead"><span>Profile</span><b>Team comparison</b></div><div class="profileCompareHead"><b>${esc(m?.home?.code||m?.home?.name||'Home')}</b><span>this season</span><b>${esc(m?.away?.code||m?.away?.name||'Away')}</b></div><div class="profileCompareRows">${rows}</div></div>`;
 }
 function neutralVenuePanel(m){
   // pr.neutral_venue_probs is a real second predict() run with the home-
