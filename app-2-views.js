@@ -461,6 +461,26 @@ function collegeRankingTable(){
   return typeof MATCHDAY_CFB_RANKINGS!=='undefined'?MATCHDAY_CFB_RANKINGS:null;
 }
 
+// One board, two sports, one handoff.
+//
+// The ranking cards already switch on collegeRankingTable(), but the four cards
+// fed straight from the handoff globals did not, and those globals hold every
+// sport at once. The basketball board therefore led with a football upset of the
+// week, a football top pick, football finals under "Top scores" and a football
+// betting record -- Oklahoma State at Tulsa, sitting above a Top 25 of
+// basketball teams.
+//
+// Every section of the handoff stamps `sport` on each row, so this filters on it
+// rather than guessing. A row that carries no sport is dropped on a sport's own
+// board: if the engine ever stops stamping it, a card goes missing, which is the
+// safer of the two failures.
+function bbSportRows(rows){
+  const key=(typeof currentSportKey==='function'?currentSportKey():'')||'';
+  // The mixed board makes no claim about which sport it is showing, so there is
+  // nothing there for a row to be wrong about.
+  if(!key)return rows||[];
+  return (rows||[]).filter(r=>String(r?.sport||'').toLowerCase()===key);
+}
 function formPips(form){
   const chars=String(form||'').slice(-6).split('');
   if(!chars.length)return '';
@@ -526,7 +546,7 @@ function modTopScores(){
   // If the fixture feed carries no finals -- which it does not while the
   // provider quota is spent -- read the handoff's own results instead.
   if(!done.length&&typeof MATCHDAY_BETBETTER_RESULTS!=='undefined'){
-    done=MATCHDAY_BETBETTER_RESULTS.slice()
+    done=bbSportRows(MATCHDAY_BETBETTER_RESULTS).slice()
       .sort((a,b)=>String(b.played_on||'').localeCompare(String(a.played_on||'')))
       .map(r=>({home:{name:r.home},away:{name:r.away},kickoff:r.kickoff||r.played_on,
                 status:'FINISHED',score:{home:Number(r.home_score),away:Number(r.away_score)}}));
@@ -551,7 +571,7 @@ function modTopPick(){
   // depending on which kind of deploy shipped last.
   const attached=(DATA.matches||[]).filter(m=>m.status==='UPCOMING'&&m.betbetter_pick)
     .map(m=>({m,p:m.betbetter_pick}));
-  const baked=attached.length?[]:(typeof MATCHDAY_BETBETTER_PICKS!=='undefined'?MATCHDAY_BETBETTER_PICKS:[])
+  const baked=attached.length?[]:bbSportRows(typeof MATCHDAY_BETBETTER_PICKS!=='undefined'?MATCHDAY_BETBETTER_PICKS:[])
     .filter(p=>new Date(p.kickoff)>new Date())
     .map(p=>({m:{home:{name:p.home},away:{name:p.away}},p}));
   const picks=attached.concat(baked)
@@ -725,7 +745,7 @@ function fitRankingCard(){
 function modUpsetOfWeek(){
   const u=(typeof MATCHDAY_BETBETTER_UPSET!=='undefined')?MATCHDAY_BETBETTER_UPSET:null;
   const p=u&&u.available?u.pick:null;
-  if(!p)return '';
+  if(!p||!bbSportRows([p]).length)return '';
   const model=Number(p.model_pct),market=Number(p.market_pct);
   return `<section class="boardMod modUpset"><header><h3>Upset of the week</h3><span>one a week</span></header>
 <div class="modPickTeam">${esc(p.selection||'')}</div>
@@ -750,7 +770,7 @@ function modMyPicks(){
   // stamps recorded_at from when a pick reached it, which is not always when it
   // was made, so its own `record` field -- which totals only the rows it read as
   // pregame -- is not used here. The record below is computed from all of them.
-  const picks=(u?.picks||[]);
+  const picks=bbSportRows(u?.picks||[]);
   if(!picks.length)return '';
   const rec=u.record||{};
   const pct=v=>Number.isFinite(Number(v))?(Number(v)*100).toFixed(0)+'%':'—';
