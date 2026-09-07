@@ -47,11 +47,15 @@ from typing import Any
 
 # Handoff major versions this reader understands. A document outside this set
 # is refused whole: a partly-understood pick is worse than no pick.
+# 7 added `play_metrics` on settled results -- EPA per snap and success rate
+# for each side, so a scoreline can be shown next to how the game was played.
+# The key is absent, not null, on games with no play-by-play behind them, so
+# "not measured" stays distinguishable from "measured as zero".
 # 6 added `fixtures` (the upcoming schedule the engine already holds, so the
 # board survives Matchday's own fixture provider running out of quota).
 # 2 added `rankings` (the published Top 25 per sport). A v1 document is
 # still readable -- it simply carries no rankings -- so both are accepted.
-SUPPORTED_VERSIONS = frozenset({1, 2, 3, 4, 5, 6})
+SUPPORTED_VERSIONS = frozenset({1, 2, 3, 4, 5, 6, 7})
 
 DEFAULT_HANDOFF_PATH = "betbetter_picks.json"
 
