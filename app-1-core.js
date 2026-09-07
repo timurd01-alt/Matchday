@@ -553,7 +553,7 @@ function renderWelcomeStats(){
   // While picks are paused, "0% model coverage" is a true number that reads
   // like a broken site. Say what is actually happening instead, and let the
   // graded record carry the third slot.
-  const graded=Number(DATA.scorecard?.graded)||0;
+  const graded=Number((typeof betbetterScorecard==='function'?betbetterScorecard():null)?.record?.picks)||0;
   const cells=[[upcoming.length,'fixtures ahead'],
                [ALL_SPORT_KEYS.length,'competitions'],
                FORECAST_PAUSE_ACTIVE
@@ -612,7 +612,9 @@ function heroMarquee(){
   </div>`;
 }
 function landingHero(){
-  const sc=DATA.scorecard;
+  // The engine's graded record, not the hand-typed block this used to read.
+  const sc=typeof betbetterScorecard==='function'?betbetterScorecard():null;
+  const gradedPicks=Number(sc?.record?.picks)||0;
   const slim=heroSeen();
   // What leads here is the property that is true regardless of how the model is
   // performing this month: the pick was published before kickoff and graded from
@@ -624,7 +626,7 @@ function landingHero(){
   // Both halves live in one baseline-aligned group: the count is set larger than
   // the words around it, so centring the two spans as separate flex items lined
   // up their boxes and left the second line's text visibly riding high.
-  const rec=`<span class="heroRecLine">${sc&&sc.graded?`<span class="heroRec"><b>${sc.graded}</b> picks locked pregame and graded</span><span class="heroRec faintline">never edited after the result</span>`:`<span class="heroRec faintline">Model record begins as completed picks are graded</span>`}</span>`;
+  const rec=`<span class="heroRecLine">${gradedPicks?`<span class="heroRec"><b>${gradedPicks}</b> picks locked pregame and graded</span><span class="heroRec faintline">never edited after the result</span>`:`<span class="heroRec faintline">Model record begins as completed picks are graded</span>`}</span>`;
   if(slim)return `<div class="heroSlim">${rec}<button class="heroSlimLink" type="button" onclick="setView('score')">Open scorecard <span aria-hidden="true">→</span></button></div>`;
   return `<div class="heroBand">
     <img src="icon-192.png?v=4" class="heroLogo" alt="Matchday" width="192" height="192">

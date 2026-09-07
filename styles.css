@@ -2132,6 +2132,29 @@ html{color-scheme:dark}
    .gtable's frame but keeps the rank column tight and left-aligns the team, and
    it is deliberately not .pollTable -- that class is the full rated table above
    and its column rules are indexed. */
+/* Scorecard, generated from the engine's locked cards.
+   The hit rate and the rate the model expected share one tile on purpose: they
+   are a single comparison, and a layout that separates them is how the hit rate
+   gets quoted on its own. The calibration gap is styled neutrally in both
+   directions -- hitting more than forecast is not a win, it is a miscalibration
+   the same as hitting less. */
+.scHeadline{align-items:stretch}
+.scRateCard .sval{display:flex;flex-direction:column;gap:2px;line-height:1.1}
+.scVs{font-family:var(--mono);font-size:var(--fs-xs);color:var(--muted);font-weight:var(--fw-bold)}
+.scDash{padding:0 .12em;color:var(--faint)}
+.statuscard small{display:block;margin-top:7px;font-family:var(--mono);font-size:var(--fs-3xs);color:var(--faint);line-height:1.45}
+.scGap{font-family:var(--mono);font-weight:var(--fw-bold);color:var(--muted)}
+.scGap.over,.scGap.under,.scGap.flat{color:var(--muted)}
+.scCaveat{line-height:1.55}
+.scTableWrap{overflow-x:auto;margin-top:8px}
+.scTable{width:100%;border-collapse:collapse;font-size:var(--fs-sm)}
+.scTable th,.scTable td{padding:7px 9px;border-bottom:1px solid var(--line);text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.scTable th{font-family:var(--mono);font-size:var(--fs-3xs);text-transform:uppercase;letter-spacing:.06em;color:var(--faint);font-weight:var(--fw-bold)}
+.scTable th:first-child,.scTable td:first-child{text-align:left}
+.scBand{font-family:var(--mono);color:var(--text)}
+.scscore{font-family:var(--mono);font-size:var(--fs-xs);color:var(--muted);font-variant-numeric:tabular-nums}
+.scbadge{font-family:var(--mono);font-size:var(--fs-3xs);letter-spacing:.08em;font-weight:var(--fw-bold)}
+.scrow.hit .scbadge{color:var(--win)}.scrow.miss .scbadge{color:var(--loss)}
 .officialPollTable td:first-child,.officialPollTable th:first-child{width:2.5rem;text-align:right;color:var(--faint);font-family:var(--mono);font-variant-numeric:tabular-nums}
 .officialPollTable td:nth-child(2),.officialPollTable th:nth-child(2){text-align:left}
 .officialPollTable td:nth-child(3),.officialPollTable th:nth-child(3),

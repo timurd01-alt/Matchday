@@ -69,7 +69,6 @@ function _freshestUpdated(current,incoming){
 function applyCurrentCfbSnapshot(payload){
   const comp=String(payload?.comp_key||'').toUpperCase();
   if(!['NCAAF','ALL'].includes(comp)||typeof MATCHDAY_CFB_SNAPSHOT==='undefined')return payload;
-  payload.scorecard=MATCHDAY_CFB_SNAPSHOT.scorecard;
   payload.news=[...(MATCHDAY_CFB_SNAPSHOT.news||[]),...(payload.news||[])];
   payload.updated=_freshestUpdated(payload.updated,MATCHDAY_CFB_SNAPSHOT.updated);
   if(comp==='ALL')return payload;
@@ -195,18 +194,25 @@ function applyCurrentNcaamSnapshot(payload){
   payload.updated=_freshestUpdated(payload.updated,MATCHDAY_NCAAM_SNAPSHOT.updated);
   return payload;
 }
-// The scorecard is deliberately two numbers.
-//
-// It used to carry Brier, log loss, calibration bands, CLV, upset radar,
-// home/away splits and four audit buckets. Those are real measurements and the
-// modules that compute them are untouched -- market_benchmark.py and the
-// research posts still report them. They are not on this page any more because
-// a reader asking "is it any good" wants a record, and thirty cards answered a
-// question nobody had asked yet.
-//
-// Won and lost come from graded picks only. A pick that is locked but not yet
-// final is pending and counts toward neither.
+/* The scorecard is the engine's, and it is generated.
 
+   What was here before was eight games typed into matchday-cfb-snapshot.js on
+   the day the site went college-only. That block sits outside the file's
+   BEGIN/END GENERATED markers, so build_cfb_snapshot.py never touched it and
+   nothing else ever wrote it: weeks later the page still showed the 29 August
+   slate and called six of eight "model hits" for a model this site no longer
+   publishes.
+
+   The handoff carries the real one -- cards frozen an hour before kickoff and
+   never rewritten -- so the page reads that instead.
+
+   One rule travels with the data and is obeyed here rather than paraphrased:
+   the hit rate is never rendered on its own. These cards are mostly heavy
+   favourites, so a high hit rate is what the model already expected; the
+   number that says whether it is any good is the distance between what it hit
+   and what it expected to hit, and whether it beat the price. Expected sits
+   beside actual in the same tile, and the engine's own caveat is printed
+   underneath. */
 /* Me, the model and the market on the same graded games.
    The scorecard is two numbers by design, so this sits under them rather than
    replacing them. It exists because "did I beat the market" is the question the
@@ -243,34 +249,132 @@ function myPicksComparison(){
     +`The model figure is the one frozen before kickoff, not recomputed afterwards.</p>`;
 }
 
+function betbetterScorecard(){
+  const all=(typeof MATCHDAY_BETBETTER_SCORECARD!=='undefined')?MATCHDAY_BETBETTER_SCORECARD:null;
+  if(!all)return null;
+  const key=(typeof currentSportKey==='function'?currentSportKey():'')||'';
+  const sport=key?(all.sports||{})[key]:null;
+  return sport?{...sport,caveat:all.caveat}:null;
+}
+// The engine's caveat is addressed partly to whoever renders it -- it names its
+// own JSON fields. The warning is printed as written except for those
+// identifiers, which are swapped for the words the page uses for the same
+// numbers. Nothing is softened, dropped or reordered: a reader gets the same
+// sentence, and the structural half of the instruction ("never render the hit
+// rate on its own") is obeyed by the layout above rather than by editing it out.
+const SCORECARD_FIELD_WORDS={
+  hit_rate_pct:'the hit rate',
+  expected_hit_rate_pct:'what it expected to hit',
+  beat_market_pct:'how often it beat the price',
+  calibration_gap_points:'the calibration gap',
+};
+function scorecardCaveat(text){
+  let out=String(text||'');
+  // Longest field name first: hit_rate_pct is a substring of
+  // expected_hit_rate_pct, and replacing the short one first turns the long one
+  // into "expected_the hit rate".
+  Object.keys(SCORECARD_FIELD_WORDS).sort((a,b)=>b.length-a.length)
+    .forEach(k=>{out=out.split(k).join(SCORECARD_FIELD_WORDS[k])});
+  // The closing sentence is an instruction to whoever builds this page, not a
+  // fact about the record, and the layout above already obeys it. It is dropped
+  // from the reader's copy; nothing that describes the numbers is.
+  return out.replace(/\s*Never render[^.]*\.\s*$/,'').trim();
+}
+function _scNum(v,d=1){const n=Number(v);return Number.isFinite(n)?n.toFixed(d):null;}
+function _scGap(v){
+  const n=Number(v);
+  if(!Number.isFinite(n))return '<span class="scGap flat">—</span>';
+  // Above expectation is not "good" and below is not "bad" -- a model that hits
+  // exactly what it forecast is the calibrated one. Neutral styling, signed
+  // number, no colour that reads as a verdict.
+  return `<span class="scGap ${n>0?'over':n<0?'under':'flat'}">${n>0?'+':''}${n.toFixed(1)} pts</span>`;
+}
+function _scBands(bands){
+  if(!bands||!bands.length)return '';
+  const rows=bands.map(b=>{
+    const hit=Number(b.hit_rate_pct),exp=Number(b.expected_hit_rate_pct);
+    return `<tr><td class="scBand">${esc(b.band||'')}</td><td>${esc(b.picks??'—')}</td>`
+      +`<td>${Number.isFinite(hit)?hit.toFixed(1)+'%':'—'}</td>`
+      +`<td>${Number.isFinite(exp)?exp.toFixed(1)+'%':'—'}</td>`
+      +`<td>${_scGap(b.calibration_gap_points)}</td></tr>`;
+  }).join('');
+  return `<div class="seclbl" style="margin-top:18px">Calibration by confidence</div>`
+    +`<div class="scTableWrap"><table class="scTable"><thead><tr><th>Band</th><th>Picks</th>`
+    +`<th>Hit</th><th>Expected</th><th>Gap</th></tr></thead><tbody>${rows}</tbody></table></div>`
+    +`<p class="edisc">Each band is the model's own stated confidence against what actually happened. `
+    +`A band that hits what it forecast is calibrated; a wide gap in either direction is not.</p>`;
+}
+function _scVersusMarket(vm){
+  if(!vm)return '';
+  const beat=Number(vm.beat_market_pct);
+  const n=Number(vm.graded_priced_selections);
+  if(!Number.isFinite(beat))return '';
+  return `<div class="seclbl" style="margin-top:18px">Against the price</div>`
+    +`<div class="status-grid"><div class="statuscard info"><span class="slbl">Beat the market</span>`
+    +`<div class="sval">${beat.toFixed(1)}%</div></div>`
+    +`<div class="statuscard info"><span class="slbl">Priced selections graded</span>`
+    +`<div class="sval">${Number.isFinite(n)?n:'—'}</div></div></div>`
+    +`<p class="edisc">${beat<50?'Below half: on the games that carried a price, the model beat it less often than not. ':''}`
+    +`${esc(vm.basis||'')}${vm.disagreement_share_pct!=null?` · it disagreed with the market on ${esc(vm.disagreement_share_pct)}% of them`:''}.</p>`;
+}
+function _scRecent(rows){
+  if(!rows||!rows.length)return '';
+  return `<div class="seclbl" style="margin-top:18px">Recent graded cards</div>`
+    +rows.slice(0,10).map(r=>{
+      const won=String(r.result||'').toLowerCase()==='win';
+      const p=Number(r.probability_pct);
+      return `<div class="scrow ${won?'hit':'miss'}"><span class="scmatch">${esc(r.event_name||'')}</span>`
+        +`<span class="scpick">${esc(r.selection||'')}${Number.isFinite(p)?` · ${p.toFixed(1)}%`:''}</span>`
+        +`<span class="scscore">${esc(r.score||'')}</span>`
+        +`<span class="scbadge">${won?'WON':'LOST'}</span></div>`;
+    }).join('');
+}
 function renderScore(){
-  const sc=DATA.scorecard||{},host=$('#view-score');
-  const graded=Number(sc.graded)||0;
-  const won=Number(sc.model_hits)||0;
-  const lost=Math.max(0,graded-won);
-  const pending=Number(sc.pending)||0;
-  const graded_rows=(sc.picks||[]).filter(p=>p.result);
-
-  // Nothing graded is the honest state right now: no college pick has ever
-  // been graded, and forecasting is paused, so the record starts at zero
-  // rather than borrowing another sport's history.
-  const note=graded
-    ? `<div class="hint" style="margin-top:10px">${graded} graded${pending?` \u00b7 ${pending} awaiting a final score`:''}</div>`
-    : `<div class="empty">No picks graded yet. Picks lock before kickoff and are graded once the game is final.${pending?` ${pending} locked and awaiting a result.`:''}</div>`;
-
-  const log=graded_rows.length
-    ? `<div class="seclbl" style="margin-top:16px">Pick log</div>`+graded_rows.map(p=>{
-        const hit=!!p.model_hit;
-        return `<div class="scrow ${hit?'hit':'miss'}"><span class="scmatch">${esc(p.home)} v ${esc(p.away)}</span><span class="scbadge">${hit?'WON':'LOST'}</span></div>`;
-      }).join('')
+  const host=$('#view-score'),sc=betbetterScorecard();
+  if(!sc||sc.available===false){
+    // The engine states its own reason ("no locked cards stored for ncaam"),
+    // which is the honest one and better than a generic empty state -- but it is
+    // a field value, not a sentence, so it is capitalised and closed here.
+    const why=String(sc?.reason||'no graded record for this sport yet');
+    host.innerHTML=`<div class="vhead">Scorecard</div><div class="empty">`
+      +`<b>${esc(why.charAt(0).toUpperCase()+why.slice(1).replace(/\.$/,''))}.</b> `
+      +`Cards freeze an hour before kickoff and are graded once the game is final.</div>`;
+    return;
+  }
+  const rec=sc.record||{},totals=sc.totals||{};
+  const hit=Number(rec.hit_rate_pct),exp=Number(rec.expected_hit_rate_pct);
+  const ci=Array.isArray(rec.confidence_interval_pct)?rec.confidence_interval_pct:null;
+  // Hit and expected share a tile. They are not two facts, they are one
+  // comparison, and splitting them is how the hit rate ends up quoted alone.
+  const record=`<div class="status-grid scHeadline">`
+    +`<div class="statuscard info"><span class="slbl">Record</span>`
+    +`<div class="sval">${esc(rec.wins??'—')}<span class="scDash">–</span>${esc(rec.losses??'—')}</div>`
+    +`<small>${esc(rec.picks??'—')} graded picks</small></div>`
+    +`<div class="statuscard info scRateCard"><span class="slbl">Hit rate vs expected</span>`
+    +`<div class="sval">${Number.isFinite(hit)?hit.toFixed(1)+'%':'—'}`
+    +`<span class="scVs">vs ${Number.isFinite(exp)?exp.toFixed(1)+'%':'—'} expected</span></div>`
+    +`<small>${_scGap(rec.calibration_gap_points)} against its own forecast`
+    +`${ci?` · 95% CI ${_scNum(ci[0])}–${_scNum(ci[1])}%`:''}</small></div></div>`;
+  const pending=Number(totals.awaiting_result)||0;
+  const note=`<div class="hint" style="margin-top:10px">`
+    +`${esc(totals.graded_selections??'—')} graded selections from ${esc(totals.locked_events??'—')} locked cards`
+    +`${pending?` \u00b7 ${pending} awaiting a final score`:''}</div>`;
+  const reportable=sc.reportable===false
+    ? `<div class="banner" style="margin-top:12px"><b>Not yet a reportable record.</b> `
+      +`Fewer than ${esc(sc.minimum_picks_to_read??'the minimum')} graded picks, so the rate above is not a measurement yet.</div>`
     : '';
-
-  host.innerHTML=`<div class="vhead">Scorecard</div>
-<div class="status-grid">
-  <div class="statuscard ${won?'ok':'info'}"><span class="slbl">Picks won</span><div class="sval">${won}</div></div>
-  <div class="statuscard info"><span class="slbl">Picks lost</span><div class="sval">${lost}</div></div>
-</div>${note}${log}
-<div class="edisc">Only picks locked before kickoff are graded. Displayed scores are factual and unchanged. Probabilities remain estimates.</div>`;
+  const lock=sc.lock_policy?.rule
+    ? `<p class="edisc">${esc(sc.lock_policy.rule)}</p>` : '';
+  host.innerHTML=`<div class="vhead">Scorecard</div>`
+    +`${record}${note}${reportable}`
+    +(sc.caveat?`<div class="banner scCaveat" style="margin-top:12px">${esc(scorecardCaveat(sc.caveat))}</div>`:'')
+    +_scVersusMarket(sc.versus_market)
+    +_scBands(sc.by_confidence)
+    +_scRecent(sc.recent)
+    +myPicksComparison()
+    +`${lock}`
+    +`<div class="edisc">Only cards frozen before kickoff are graded, and a graded card is never rewritten. `
+    +`Displayed scores are factual. Probabilities remain estimates.</div>`;
 }
 function highlightFavoriteRows(){if(!favoriteTeam())return;document.querySelectorAll('.gtable .gteam').forEach(cell=>{if(teamKey(cell.textContent).includes(teamKey(favoriteTeam())))cell.closest('tr')?.classList.add('favoriteTeamRow')})}
 function renderCurrent(){captureSignalsIfFresh();({matches:renderMatches,results:renderResults,groups:renderStandings,bracket:renderBracket,score:renderScore,news:renderNews,community:renderCommunity}[VIEW]||renderMatches)();renderWelcome();highlightFavoriteRows();applyStaticI18n()}
