@@ -1069,7 +1069,7 @@ function details(m){
   if(isForecastPaused(m))return `<div class="detailGrid v4Detail">${forecastPauseHTML(m)}<div class="detailTop">${betbetterMatchupPanel(m)}<div class="readCard forecastMarketCard">${marketPanel(m)}</div></div><div class="detailLow">${statsPanel(m)}${lineupsPanel(m)}</div></div>`;
   const bb=betbetterReadFor(m);
   const read=bb?betbetterModelRead(m,bb):betbetterNoReadPanel();
-  return `<div class="detailGrid v4Detail modernExpandedView"><div class="expandedSectionHead"><div><span>Matchday analysis</span><b>Model, market and matchup</b></div><em>Updated before kickoff</em></div><div class="detailTop"><div class="readCard modelReadCard">${read}</div><div class="readCard forecastMarketCard">${marketPanel(m)}</div></div><div class="detailTop">${betbetterMatchupPanel(m)}</div><div class="detailLow">${statsPanel(m)}${lineupsPanel(m)}</div></div>`;
+  return `<div class="detailGrid v4Detail modernExpandedView"><div class="expandedSectionHead"><div><span>Matchday analysis</span><b>Model, market and matchup</b></div><em>Updated before kickoff</em></div><div class="detailTop"><div class="readCard modelReadCard">${read}</div><div class="readCard forecastMarketCard">${marketPanel(m)}</div></div><div class="detailTop">${betbetterMatchupPanel(m)}${matchProfilePanel(m)}</div><div class="detailLow">${statsPanel(m)}${lineupsPanel(m)}</div></div>`;
 }
 /* dedup */
 function _v4TitleRows(t){
