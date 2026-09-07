@@ -9,10 +9,36 @@ function scorecardUnderdogTag(p){if(!p?.upset_score||!p?.upset_snapshot?.radar||
 // silently matched nothing -- ratings appeared while every record stayed 0-0
 // and no played game ever settled.
 function bbNameKey(name){return teamKey(name);}
+// A parenthetical is part of the identity, not decoration. "Miami" and
+// "Miami (OH)" are two different schools that both play, and whole-string
+// prefixing matched them to each other -- the fixture feed's "Miami" against the
+// engine's "Miami (OH) RedHawks" -- which is how a result gets settled onto the
+// wrong game.
+function bbNameQualifier(name){
+  const m=/\(([^)]*)\)/.exec(String(name||''));
+  return m?teamKey(m[1]):'';
+}
+// Matched word by word, with the shorter name's last word allowed to be an
+// abbreviation of the longer's.
+//
+// Whole-string prefixing needed a space at the boundary, so the fixture feed's
+// "Southern Miss" never reached the engine's "Southern Mississippi Golden
+// Eagles" -- "southern mississippi..." does not start with "southern miss ".
+// Same for "App State" against "Appalachian State Mountaineers". Comparing per
+// word instead lets "miss" match "mississippi" and "app" match "appalachian",
+// while still requiring every earlier word to line up.
+//
+// What it does NOT fix, and neither did the old one: "Ohio" still matches "Ohio
+// State", because one school's whole name really is a prefix of the other's and
+// nothing in the strings can separate them. Two things keep that from settling a
+// score onto the wrong game -- both teams must match, and the kickoff has to be
+// within a day -- but a name table is the only real answer if it ever bites.
 function bbNameMatches(a,b){
-  const x=bbNameKey(a),y=bbNameKey(b);
-  if(!x||!y)return false;
-  return x===y||x.startsWith(y+' ')||y.startsWith(x+' ');
+  if(bbNameQualifier(a)!==bbNameQualifier(b))return false;
+  const x=bbNameKey(a).split(' ').filter(Boolean),y=bbNameKey(b).split(' ').filter(Boolean);
+  if(!x.length||!y.length)return false;
+  const [short,long]=x.length<=y.length?[x,y]:[y,x];
+  return short.every((word,i)=>long[i].startsWith(word));
 }
 /* A poll is not a conference, and its order is not ours to re-derive.
 
