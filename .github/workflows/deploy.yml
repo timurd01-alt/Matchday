@@ -30,6 +30,11 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    # Published so the freshness alarm can go red in its own job. Failing the
+    # build over stale data would skip the deploy entirely and leave the site
+    # on even older content -- the opposite of the fix.
+    outputs:
+      freshness: ${{ steps.freshness.outcome }}
     env:
       # Scheduled runs fail closed on a cold cache. A human may explicitly
       # authorize one bootstrap response so real provider headers can seed the
@@ -225,6 +230,24 @@ jobs:
         run: |
           echo "::warning::One or more providers failed after retry. Deploying the structurally validated last-good fixture snapshots recovered before refresh."
 
+      # The browser repairs a quota-starved NCAAF board from the Bet Better
+      # handoff (see applyCurrentCfbSnapshot in app-3-panels.js), but only as
+      # far as whatever `matchday-cfb-snapshot.js` happens to contain -- and
+      # nothing in this workflow ever rebuilt it. The snapshot was therefore
+      # frozen at whenever someone last ran the builder by hand, so the one
+      # mechanism that covers for a dead fixture feed went stale in exactly the
+      # circumstances it exists for. Rebuilding it here costs no provider quota:
+      # the handoff is a committed file, not a fetch.
+      - name: Rebuild the Bet Better repair layer from the committed handoff
+        if: github.event_name != 'push'
+        continue-on-error: true
+        run: |
+          if [ -f betbetter_picks.json ]; then
+            python build_cfb_snapshot.py
+          else
+            echo "::warning::betbetter_picks.json is absent; the NCAAF board keeps whatever repair layer is committed."
+          fi
+
       - name: Grade frozen MLB challenger evidence
         if: github.event_name != 'push'
         run: |
@@ -327,6 +350,27 @@ jobs:
                                    "ready_for_manual_review", "ready"):
                   print(f"::warning::{gate['summary']}")
           PY
+
+      # The one step that answers "did this run actually publish current data?"
+      #
+      # Every refresh step above is `continue-on-error`, and the fetch failure
+      # handler downgrades a dead provider to a warning so the site can still
+      # serve its last-good snapshot. That is right for one bad hour and wrong
+      # for the fiftieth in a row, and nothing distinguished the two: NCAAF
+      # went five days without a published result while every run stayed green.
+      #
+      # So this reports, and it is allowed to go red. It reads only what is on
+      # disk -- no provider calls, no quota -- and it judges results *after* the
+      # Bet Better repair layer, because that is what a reader actually sees. It
+      # runs before the deploy but does not gate it: the site still ships, and
+      # `continue-on-error` here keeps the result on the job while the final
+      # step below is what turns a sustained stall into a failed run someone
+      # gets mailed about.
+      - name: Check the data the site is about to serve is current
+        if: github.event_name != 'push'
+        id: freshness
+        continue-on-error: true
+        run: python data_freshness.py --output data_freshness_report.json --github
 
       - name: Populate authorized research reasoning into cached fixtures
         run: python populate_research_signals.py
@@ -540,3 +584,27 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5.0.0
+
+  # Turns a sustained stall into something a human is told about.
+  #
+  # This is the whole point of the freshness check: the site had been serving a
+  # frozen NCAAF board for five days across roughly 120 consecutive green runs,
+  # because every refresh step is allowed to fail softly and nothing ever
+  # asserted the result. This job asserts it.
+  #
+  # It runs after the deploy and the deploy does not depend on it, so a red
+  # alarm never costs the site a publish -- the current content ships either
+  # way, and the failure is the notification. `if: always()` so a stall is still
+  # reported when an earlier job went down for its own reasons.
+  freshness-alarm:
+    needs: [build, deploy]
+    if: always() && needs.build.result == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fail the run when the deployed data is stale
+        run: |
+          if [ "${{ needs.build.outputs.freshness }}" = "failure" ]; then
+            echo "::error::Deployed data is stale -- see the 'Check the data the site is about to serve is current' step for which competitions and which fixtures. The site still deployed its last-good content."
+            exit 1
+          fi
+          echo "Data freshness check passed."
