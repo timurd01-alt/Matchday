@@ -2128,6 +2128,14 @@ html{color-scheme:dark}
 .pollMeta{margin:3px 0 0;font-family:var(--mono);font-size:var(--fs-xs);color:var(--faint)}
 .pollBadge{flex:0 0 auto;border:1px solid var(--line2);border-radius:999px;padding:4px 9px;font-family:var(--mono);font-size:var(--fs-3xs);text-transform:uppercase;letter-spacing:.08em;color:var(--signal)}
 .pollScroll{overflow-x:auto;max-height:560px;overflow-y:auto;border:1px solid var(--line);border-radius:10px;margin-top:6px}
+/* A published poll, rendered as its own table on the Conferences tab. It reuses
+   .gtable's frame but keeps the rank column tight and left-aligns the team, and
+   it is deliberately not .pollTable -- that class is the full rated table above
+   and its column rules are indexed. */
+.officialPollTable td:first-child,.officialPollTable th:first-child{width:2.5rem;text-align:right;color:var(--faint);font-family:var(--mono);font-variant-numeric:tabular-nums}
+.officialPollTable td:nth-child(2),.officialPollTable th:nth-child(2){text-align:left}
+.officialPollTable td:nth-child(3),.officialPollTable th:nth-child(3),
+.officialPollTable td:nth-child(4),.officialPollTable th:nth-child(4){text-align:right;font-variant-numeric:tabular-nums}
 .pollTable{width:100%;border-collapse:collapse;font-size:var(--fs-sm)}
 .pollTable th{position:sticky;top:0;background:var(--bg2);z-index:1;font-family:var(--mono);font-size:var(--fs-3xs);text-transform:uppercase;letter-spacing:.06em;color:var(--faint);padding:8px 9px;text-align:right;white-space:nowrap}
 .pollTable td{padding:7px 9px;border-bottom:1px solid var(--line);text-align:right;font-variant-numeric:tabular-nums}
