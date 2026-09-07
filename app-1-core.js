@@ -902,8 +902,8 @@ function captureMatchSignals(matches){
   const previous=_alertReadJSON('matchday.signalSnapshot',{}),next={},history=_alertReadJSON('matchday.modelHistory',{}),now=Date.now();
   MATCH_SIGNAL_CHANGES={};SCORE_SIGNAL_CHANGES={};LIVE_ENTRY_CHANGES={};
   (matches||[]).filter(m=>m&&m.status!=='FINISHED').slice(0,220).forEach(m=>{
-    const id=_signalId(m),op=typeof _v10OfficialPick==='function'?_v10OfficialPick(m):null;
-    const confidence=Number(op?.confidence??m.prediction?.confidence),market=Number(op?.marketPct);
+    const id=_signalId(m),bb=typeof betbetterReadFor==='function'?betbetterReadFor(m):null;
+    const confidence=Number(bb?.model_pct),market=Number(bb?.market_pct);
     const score=`${m.score?.home??''}-${m.score?.away??''}`;
     next[id]={confidence:Number.isFinite(confidence)?confidence:null,market:Number.isFinite(market)?market:null,status:m.status,score,at:now};
     const old=previous[id];
@@ -920,7 +920,7 @@ function captureMatchSignals(matches){
   MODEL_HISTORY=history;
   try{localStorage.setItem('matchday.signalSnapshot',JSON.stringify(next));localStorage.setItem('matchday.modelHistory',JSON.stringify(history))}catch(e){}
 }
-function captureSignalsIfFresh(){const fingerprint=(DATA.matches||[]).slice(0,80).map(m=>`${m.id}:${m.prediction?.confidence??''}:${m.status}:${m.score?.home??''}-${m.score?.away??''}`).join('|');const token=`${DATA.comp_key||''}:${DATA.updated||''}:${fingerprint}`;if(token!==LAST_SIGNAL_CAPTURE){LAST_SIGNAL_CAPTURE=token;captureMatchSignals(DATA.matches||[])}}
+function captureSignalsIfFresh(){const fingerprint=(DATA.matches||[]).slice(0,80).map(m=>`${m.id}:${m.betbetter_pick?.model_pct??''}:${m.status}:${m.score?.home??''}-${m.score?.away??''}`).join('|');const token=`${DATA.comp_key||''}:${DATA.updated||''}:${fingerprint}`;if(token!==LAST_SIGNAL_CAPTURE){LAST_SIGNAL_CAPTURE=token;captureMatchSignals(DATA.matches||[])}}
 function probabilityMovement(m){return MATCH_SIGNAL_CHANGES[_signalId(m)]||null}
 function probabilitySparkline(m){
   const points=MODEL_HISTORY[_signalId(m)]||[];if(points.length<2)return '';
@@ -939,16 +939,19 @@ function computeSignalAlerts(){
   if(_alertEnabled('data')&&Array.isArray(DATA.quota_blocked_providers)&&DATA.quota_blocked_providers.length)out.push({t:'data',txt:`Some data is limited this run — ${DATA.quota_blocked_providers.join(', ')} hit its safety reserve, so a few signals may be missing even though the timestamp looks fresh.`,id:'quota'});
   if(_alertEnabled('data')&&DATA.fixture_count_check?.anomaly)out.push({t:'data',txt:`Fewer fixtures than usual this run (${DATA.fixture_count_check.current} vs. a recent average of ${DATA.fixture_count_check.trailing_avg}) — a provider may be returning a partial slate.`,id:'fixture-count'});
   (DATA.matches||[]).forEach(m=>{
-    const watched=watchedNames.has(m.home?.name)||watchedNames.has(m.away?.name)||isFavoriteMatch(m),up=m.prediction?.upset;
-    if(_alertEnabled('upset')&&m.status==='LIVE'&&up&&up.radar)out.push({t:'upset',txt:`${up.candidate_name||'Underdog'} is on the live upset radar.`,id:m.id});
+    const watched=watchedNames.has(m.home?.name)||watchedNames.has(m.away?.name)||isFavoriteMatch(m);
     if(!watched)return;
     if(_alertEnabled('live')&&m.status==='LIVE')out.push({t:'live',txt:`${m.home?.code||m.home?.name} ${m.score?.home??0}-${m.score?.away??0} ${m.away?.code||m.away?.name} is live.`,id:m.id});
     if(_alertEnabled('soon')&&m.status==='UPCOMING'&&m.kickoff){const mins=Math.round((new Date(m.kickoff)-now)/60000);if(mins>0&&mins<=90)out.push({t:'soon',txt:`${m.home?.name} v ${m.away?.name} starts in ${mins}m.`,id:m.id});}
-    const change=probabilityMovement(m);
-    if(_alertEnabled('model')&&change)out.push({t:'model',txt:`${m.prediction?.pick_name||'Model pick'} moved ${change.delta>0?'+':''}${change.delta} probability points.`,id:m.id});
-    if(_alertEnabled('market')&&m.prediction&&typeof _v10OfficialPick==='function'){
-      const op=_v10OfficialPick(m),edge=_v10OfficialEdge(m,op);
-      if(edge!=null&&Math.abs(edge)>=8)out.push({t:'market',txt:`Model and market differ by ${Math.abs(edge)} points on ${op.name}.`,id:m.id});
+    // Both alerts describe the engine's read, because that is the only read the
+    // site publishes. The gap alert deliberately states the two numbers rather
+    // than ranking on the gap: the engine's own caveat says a wider gap has
+    // predicted worse results, so it is context, never a call to act.
+    const change=probabilityMovement(m),bb=typeof betbetterReadFor==='function'?betbetterReadFor(m):null;
+    if(_alertEnabled('model')&&change&&bb)out.push({t:'model',txt:`${bb.pick_name||'Model read'} moved ${change.delta>0?'+':''}${change.delta} probability points.`,id:m.id});
+    if(_alertEnabled('market')&&bb){
+      const gap=Number(bb.edge_points);
+      if(Number.isFinite(gap)&&Math.abs(gap)>=8)out.push({t:'market',txt:`Model ${Number(bb.model_pct).toFixed(1)}% and market ${Number(bb.market_pct).toFixed(1)}% on ${bb.pick_name}.`,id:m.id});
     }
   });
   return out.filter((a,i,list)=>list.findIndex(b=>_alertKey(b)===_alertKey(a))===i).slice(0,12);
