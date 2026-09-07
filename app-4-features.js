@@ -6,8 +6,6 @@ function _insightFocusHTML(focus){
     const x=(focus.markets||{})['1x2']||{};
     if(isForecastPaused(focus)&&x.home_pct!=null)h+='<div class="seclbl" style="margin-top:12px">Market odds</div>';
     if(x.home_pct!=null){const twoWay=_isTwoWay(focus);h+=`<div class="prob insightProb"><div class="problbl"><span>${esc(focus.home?.code||'H')}</span>${twoWay?'':'<span>draw</span>'}<span>${esc(focus.away?.code||'A')}</span></div>${bar1x2(x.home_pct,twoWay?null:x.draw_pct,x.away_pct)}</div>`;}
-    const bd=edgeBreakdown(focus);
-    if(bd)h+=`<div class="seclbl" style="margin-top:16px">Model read</div><div class="ins-summary"><p>${esc(bd)}</p></div>`;
   }else{
     h+=`<div class="faintline">No match in focus yet.</div>`;
   }
@@ -231,14 +229,15 @@ function _v6UpsetBox(m){
   return `<div class="analystBox upsetBox"><div class="analystBoxTitle">Upset radar</div><div class="upsetHero"><div class="candidate"><span>candidate</span><b>${esc(u.candidate_name||'Underdog')}</b></div><div class="upsetScoreDial ${cls}"><b>${esc(u.score??'—')}</b><small>/100</small></div></div><div class="probLines"><div class="probLine"><span class="sideName">${esc(u.favorite_name||'Favorite')}</span><span class="probTrack"><i class="probFill h" style="width:${Math.max(3,Number(u.favorite_pct)||0)}%"></i></span><span class="pct">${esc(u.favorite_pct??'—')}%</span></div><div class="probLine"><span class="sideName">${esc(u.candidate_name||'Underdog')}</span><span class="probTrack"><i class="probFill a" style="width:${Math.max(3,Number(u.candidate_pct)||0)}%"></i></span><span class="pct">${esc(u.candidate_pct??'—')}%</span></div></div><div class="upsetMath"><span>Temp<b class="hot">T ${esc(u.temperature??'—')}</b></span><span>Variance<b>${esc(u.variance_pct??'—')}%</b></span><span>${upsetTwoWay?'Low scoring':'Low goals'}<b>${esc(u.low_goal_pct??'—')}%</b></span></div><p class="upsetReason">${esc(reason)}</p><span class="upsetTriggered ${op.blocked?'blocked':shownActive?'':'watch'}">${esc(status)}</span></div>`;
 }
 /* dedup */
+// The rail shows the engine's read or it shows nothing. Matchday's own
+// `prediction` used to sit beneath it under "Locked model pick" -- a second
+// model under the same word, and on a college fixture with no market it printed
+// a confidence beside "no market to compare against" for a number this site
+// does not stand behind.
 function insightModelBlock(m){
   if(isForecastPaused(m))return forecastPauseHTML(m);
-  const live=matchdayLivePickHTML(m);
-  const pr=m&&m.prediction;
-  if(!pr)return live||'<div class="seclbl">Model pick</div><div class="nomk">No model pick yet.</div>';
-  const op=_v10OfficialPick(m),edge=_v10OfficialEdge(m,op);
-  const cls=(edge!=null&&Math.abs(edge)>=6?'edge ':'')+(op.blocked?'gate':'');
-  return live+`<div class="seclbl">Locked model pick</div><div class="pick insightPick ${cls}"><span class="pl">Pick</span><span class="pn">${esc(op.name)}</span><span class="pc">${esc(op.confidence??'—')}%</span><span class="pnote">${esc(op.note)}</span></div>`;
+  return matchdayLivePickHTML(m)
+    ||'<div class="seclbl">Model read</div><div class="nomk">No model read on this fixture yet.</div>';
 }
 // Same lookup the expanded view uses, so the row on the card and the panel it
 // opens onto cannot name different sides. It used to read m.betbetter_pick
@@ -257,9 +256,9 @@ function cardHTML(m,opts){
   // betbetter_picks.json, and `m.prediction` out of the data payload. They are
   // not the same model and they disagree -- Florida State v SMU read "Florida
   // State 60.4%" above "SMU 53%" on the same card -- so a reader had no way to
-  // know which one the site actually stands behind. `m.prediction` stays in the
-  // payload and in the match modal, where it is labelled as its own thing; the
-  // card states the model's pick once.
+  // know which one the site actually stands behind. `m.prediction` is no longer
+  // rendered anywhere: the card, the rail and the expanded view all read the
+  // engine, and a fixture it has not priced says so instead.
   const livePick=opts.hidePick?'':matchdayLivePickHTML(m);
   const pick=isForecastPaused(m)?forecastPauseHTML(m):livePick;
   const probChanged=!!probabilityMovement(m);
@@ -289,10 +288,13 @@ function _v4UpsetRows(){
     }
   }).sort((a,b)=>b.risk-a.risk).slice(0,6);
 }
+// The panel details() falls back to if it throws. It carried its own copy of the
+// prediction-driven "Model read" card; it now shows the same engine read the
+// real expanded view does, so a render error cannot resurrect the other model.
 function simpleMatchFallbackPanel(m){
-  const pr=m?.prediction||{},op=_v10OfficialPick(m);const x=(m?.markets||{})['1x2']||{};const probs=officialPredictionProbabilities(m);
-  const pH=Math.round(Number(probs.h??x.home_pct??0));const pD=Math.round(Number(probs.d??x.draw_pct??0));const pA=Math.round(Number(probs.a??x.away_pct??0));
-  return `<div class="detailGrid v8Fallback"><div class="readCard"><div class="seclbl">Model read</div><div class="pick insightPick ${op.blocked?'gate':''}"><span class="pl">Pick</span><span class="pn">${esc(op.name||'No pick')}</span><span class="pc">${esc(op.confidence??'—')}%</span><span class="pnote">${esc(op.note||'')}</span></div><div class="prob" style="margin-top:12px"><div class="problbl"><span>${esc(m?.home?.code||'Home')}</span><span>draw</span><span>${esc(m?.away?.code||'Away')}</span></div>${bar1x2(pH,pD,pA)}</div>${edgeBreakdown(m)?`<div class="ins-summary" style="margin-top:12px"><p>${esc(edgeBreakdown(m))}</p></div>`:''}</div><div class="readCard">${marketPanel(m)}</div><div class="statsBoard">${statsPanel(m)}</div><div class="lineupBoard">${lineupsPanel(m)}</div></div>`;
+  const bb=typeof betbetterReadFor==='function'?betbetterReadFor(m):null;
+  const read=bb?betbetterModelRead(m,bb):betbetterNoReadPanel();
+  return `<div class="detailGrid v8Fallback"><div class="readCard modelReadCard">${read}</div><div class="readCard">${marketPanel(m)}</div><div class="statsBoard">${statsPanel(m)}</div><div class="lineupBoard">${lineupsPanel(m)}</div></div>`;
 }
 
 
@@ -683,17 +685,6 @@ function neutralVenuePanel(m){
   const pickName=esc(_v4PickSideLabel(m,side));
   return `<div class="analystBox neutralVenueBox"><div class="analystBoxTitle">Neutral venue <span class="hypotheticalTag">hypothetical, not the official forecast</span></div><div class="neutralVenueRow"><span>Current (home field)</span><b>${pickName} ${Math.round(cur)}%</b></div><div class="neutralVenueRow"><span>If this were a neutral site</span><b>${pickName} ${Math.round(neu)}%</b></div><div class="neutralVenueDelta ${delta<0?'down':delta>0?'up':''}">${delta===0?'No change — home field isn’t moving this pick':`${delta>0?'+':''}${delta} point${Math.abs(delta)===1?'':'s'} from removing home advantage`}</div></div>`;
 }
-function modelBlock(m){
-  const pr=m?.prediction;
-  if(!pr)return '<section class="analystPanel"><div class="analystTop"><div class="analystTitle">Model read</div></div><div class="emptyForecast">No model pick yet.</div></section>';
-  const op=_v10OfficialPick(m);
-  const marketText=op.marketPct!=null?`Consensus snapshot: ${op.marketPct}%`:'No consensus snapshot';
-  const summary=edgeBreakdown(m)||`${op.name} is the official model side${op.confidence!=null?` at ${op.confidence}%`:''}.`;
-  const base=op.blocked?`<small>Raw upset trigger: ${esc(op.rawName)}</small>`:(pr.base_pick&&pr.base_pick!==op.side?`<small>Base favorite: ${esc(pr.base_pick_name||_v4PickSideLabel(m,pr.base_pick))}</small>`:'');
-  const gate=op.blocked?`<div class="upsetGateNotice"><b>Upset watch only:</b> ${esc(op.candidateName)} was flagged by volatility, but ${esc(op.gateReason)}. The official pick remains ${esc(op.name)}.</div>`:'';
-  return `<section class="analystPanel"><div class="analystTop"><div class="analystTitle">Model read</div><div class="analystBadge ${op.blocked?'gate':''}">${op.blocked?'upset gate':'official probabilities'}</div></div><div class="analystHero"><div class="analystMain"><div class="analystLabel">Official pick</div><div class="analystPick">${esc(op.name)}</div><p class="analystNote">${esc(op.note)}</p>${gate}</div><div class="analystConfidence"><b>${esc(op.confidence??'—')}%</b><span>official probability</span><small>${esc(marketText)}</small>${base}</div></div><div class="analystGrid upsetGrid"><div class="modelReadColumn">${_v12OutcomeCard(m,op)}${_v15MatchProfile(m,op)}</div><div class="modelReadColumn">${_v6UpsetBox(m)}<div class="analystBox driversBox"><div class="analystBoxTitle">Main drivers</div><div class="factorRows">${_v4FactorRows(pr,m)}</div></div>${neutralVenuePanel(m)}</div></div><p class="analystSummary">${esc(summary)}</p></section>`;
-}
-
 const startupParams=new URLSearchParams(window.location.search);
 const requestedView=startupParams.get('view');
 const requestedSport=String(startupParams.get('sport')||'').toLowerCase();

@@ -875,44 +875,6 @@ function _v4FactorRows(pr,m){
   }
   return rows.length?rows.join(''):'<div class="factorRow neu"><span class="fName">No factor detail</span><span class="fVal">—</span></div>';
 }
-/* dedup */
-function matchStory(m){const pr=m.prediction;if(!pr)return '';
-  const up=pr.upset||{},official=officialPrediction(m),conf=official.confidence;
-  const pickName=esc(official.name||'');
-  // lead sentence
-  let lead;
-  const cls=up.upset_class||'unknown';
-  const radar=up.radar;const edge=up.upset_edge;
-  const magnitude={major:'a heavy underdog',solid:'a real underdog',minor:'a live underdog'}[cls]||'the underdog';
-  if(up.triggered&&up.candidate_name&&up.candidate===official.side){
-    lead=`<b>${esc(up.candidate_name)}</b> is the upset call — ${magnitude} the model rates high enough to back outright.`;
-  }else if(cls==='pickem'){
-    lead=`<b>${pickName}</b> is the lean in what is essentially a coin-flip — the market can barely separate these two.`;
-  }else{
-    lead=`<b>${pickName}</b> is the model's pick${conf?` at ${conf}%`:''}${conf&&conf>=60?' — a confident, clean call with no live upset threat':''}. ${esc(pr.note||'')}.`;
-  }
-  // The upset radar only appears when the model actually backs the underdog
-  // (up.triggered, above). A radar candidate the model declined to pick is an
-  // internal signal, and narrating it read as a recommendation the model had
-  // not made.
-  // why bullets from factor attribution (top 3 by magnitude)
-  const L={pts:'points on the table',gd:scoreDiffLabel(m),record:'season record',margin:'per-game scoring margin',rank:'poll rank',srs:'opponent-adjusted rating',elo:'Elo rating',form:'recent form',adv:'home-listing edge',class:'squad class and ranking',rest:'rest advantage'};
-  const why=pr.why||{};
-  const bullets=Object.entries(why).filter(([k,v])=>Math.abs(v)>=0.4&&L[k]).sort((a,b)=>Math.abs(b[1])-Math.abs(a[1])).slice(0,3)
-    .map(([k,v])=>{const who=v>0?esc(m.home.name):esc(m.away.name);return `<li>${who} leads on ${L[k]}</li>`;});
-  if(pr.damp_pct>=10)bullets.push(`<li>Knockout/conditions variance is damping confidence by ${pr.damp_pct}%</li>`);
-  if(up.triggered&&up.candidate===official.side)bullets.push(`<li>Upset gate: OPEN — backing ${esc(up.candidate_name)} as the locked pick</li>`);
-  const tot=(m.prediction||{}).totals||null;
-  const totalsUnit=_totalsUnit(m);
-  let goals='';
-  if(m.markets&&m.markets.totals){
-    const mktLean=m.markets.totals.over_pct>=m.markets.totals.under_pct?'over':'under';
-    const extra=(tot&&tot.pick)?(tot.pick===mktLean?` · model agrees (${tot.expected} expected)`:` · model leans ${tot.pick} instead (${tot.expected} expected)`):'';
-    goals=`<li>Market leans ${mktLean} ${esc(m.markets.totals.line)} ${totalsUnit}${extra}</li>`;
-  } else if(tot&&tot.expected!=null){
-    goals=`<li>Model expects ${tot.expected} ${totalsUnit} — no market line yet</li>`;
-  }
-  return `<div class="storyCard"><div class="storyTag">Match Story</div><p class="storyLead">${lead}</p>${(bullets.length||goals)?`<ul class="storyWhy">${bullets.join('')}${goals}</ul>`:''}</div>`;}
 function pregameContextPanel(m){
   const ctx=m.pregame_context||m.prediction?.lock_readiness;
   if(!ctx)return `<div class="readCard pregameContextCard"><div class="seclbl">Pregame context</div><div class="emptyStats"><b>No readiness receipt for this fixture</b><span>This forecast was published before Matchday started recording which pregame inputs it had. The pick still stands as locked; only the receipt is missing.</span></div></div>`;
@@ -1025,8 +987,10 @@ ${typeof matchdayLivePickHTML==='function'?matchdayLivePickHTML(m):''}</div>`;
    is not shown beside it as a second opinion, for the same reason the card
    stopped stacking two pick rows.
 
-   Nothing changes for a sport with no handoff -- soccer, MLB, NFL find no read
-   and fall back to modelBlock() below. */
+   Matchday publishes college football and college basketball only, and the
+   engine covers both, so there is no sport left for a second forecast to serve.
+   A fixture it has not priced gets an empty state rather than another model's
+   number under the engine's heading. */
 function betbetterReadFor(m){
   // Only UPCOMING, matching what the handoff itself will attach: a live
   // forecast on a played game reads as a call that was made in advance.
@@ -1046,15 +1010,6 @@ function betbetterReadFor(m){
     &&days.includes(String(p.kickoff||'').slice(0,10))
     &&bbNameMatches(p.home,m.home?.name||m.home)
     &&bbNameMatches(p.away,m.away?.name||m.away))||null;
-}
-// Whether this sport is the engine's at all. On a sport it covers, a fixture it
-// has not priced gets an empty state -- Matchday's own forecast is not quietly
-// promoted into the heading the engine owns. On every other sport there is no
-// Bet Better read to be confused with, and modelBlock() renders as before.
-function betbetterCoversSport(m){
-  const list=(typeof MATCHDAY_BETBETTER_SPORTS!=='undefined')?MATCHDAY_BETBETTER_SPORTS:[];
-  const sport=String(m?._comp||DATA.comp_key||'').toLowerCase();
-  return !!sport&&(list||[]).some(s=>String(s).toLowerCase()===sport);
 }
 function betbetterNoReadPanel(){
   return `<section class="analystPanel"><div class="analystTop"><div class="analystTitle">Model read</div>`
@@ -1113,13 +1068,8 @@ function betbetterModelRead(m,p){
 function details(m){
   if(isForecastPaused(m))return `<div class="detailGrid v4Detail">${forecastPauseHTML(m)}<div class="detailTop">${betbetterMatchupPanel(m)}<div class="readCard forecastMarketCard">${marketPanel(m)}</div></div><div class="detailLow">${statsPanel(m)}${lineupsPanel(m)}</div></div>`;
   const bb=betbetterReadFor(m);
-  const covered=betbetterCoversSport(m);
-  // matchStory() narrates `m.prediction` as "the model's pick", so it is
-  // suppressed on any sport the engine owns -- otherwise the paragraph and the
-  // panel under it name different sides in the same view.
-  const story=(bb||covered)?'':matchStory(m);
-  const read=bb?betbetterModelRead(m,bb):(covered?betbetterNoReadPanel():modelBlock(m));
-  return `<div class="detailGrid v4Detail modernExpandedView"><div class="expandedSectionHead"><div><span>Matchday analysis</span><b>Model, market and matchup</b></div><em>Updated before kickoff</em></div>${story}<div class="detailTop"><div class="readCard modelReadCard">${read}</div><div class="readCard forecastMarketCard">${marketPanel(m)}</div></div><div class="detailTop">${betbetterMatchupPanel(m)}</div><div class="detailLow">${statsPanel(m)}${lineupsPanel(m)}</div></div>`;
+  const read=bb?betbetterModelRead(m,bb):betbetterNoReadPanel();
+  return `<div class="detailGrid v4Detail modernExpandedView"><div class="expandedSectionHead"><div><span>Matchday analysis</span><b>Model, market and matchup</b></div><em>Updated before kickoff</em></div><div class="detailTop"><div class="readCard modelReadCard">${read}</div><div class="readCard forecastMarketCard">${marketPanel(m)}</div></div><div class="detailTop">${betbetterMatchupPanel(m)}</div><div class="detailLow">${statsPanel(m)}${lineupsPanel(m)}</div></div>`;
 }
 /* dedup */
 function _v4TitleRows(t){
