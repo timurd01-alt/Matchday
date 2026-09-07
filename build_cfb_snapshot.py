@@ -130,34 +130,106 @@ def _meta(entry: dict) -> dict:
     }
 
 
+# A conference title is what earns an automatic bid, so a listing that is not a
+# conference cannot produce a champion. Independents reach the field only as an
+# at-large -- which is exactly how Notre Dame gets in when it is ranked high
+# enough, and how it misses when it is not.
+NON_CONFERENCE_GROUPS = frozenset({"FBS Independents"})
+
+CFP_FIELD = 12
+# The five highest-ranked conference champions are seeded into the field
+# automatically; the remaining seven places are at-large.
+CFP_AUTO_BIDS = 5
+
+# 5v12, 6v11, 7v10, 8v9, higher seed at home. The four winners meet the seeds on
+# bye in the order below -- 1 plays the 8/9 winner, not whoever it likes.
+CFP_FIRST_ROUND = ((5, 12), (6, 11), (7, 10), (8, 9))
+CFP_QUARTERS = ((1, (8, 9)), (2, (7, 10)), (3, (6, 11)), (4, (5, 12)))
+
+
+def projected_champions(rows: list[dict]) -> dict[str, dict]:
+    """The best-rated team in each conference, as that conference's projected
+    champion.
+
+    No title game has been played, so this is a projection like everything else
+    in the bracket. It is the only piece the ratings cannot state directly: a
+    champion is decided on a field, and the highest-rated team in a conference
+    is the honest stand-in for one until it is.
+    """
+    best: dict[str, dict] = {}
+    for row in rows:
+        conference = str(row.get("conference") or "").strip()
+        rank = row.get("rank")
+        if not conference or conference in NON_CONFERENCE_GROUPS or not rank:
+            continue
+        if conference not in best or rank < best[conference]["rank"]:
+            best[conference] = row
+    return best
+
+
+def cfp_field(entry: dict) -> list[dict]:
+    """The projected twelve, in seed order.
+
+    The format, and why each part of it is here rather than a top-twelve cut:
+
+      * Five automatic bids go to the five highest-ranked conference champions.
+        With any realistic rating set that resolves to the four Power Four
+        champions plus the best Group of Five champion, which is how the format
+        is usually described -- but the rule is what is implemented, so a year
+        in which two Group of Five champions outrank a Power Four champion
+        comes out right instead of forcing a bid the format does not guarantee.
+      * Seven at-large places follow, by ranking, from everyone not already in.
+      * Then straight seeding: the twelve are seeded 1-12 by ranking, not by
+        whether they won anything. A champion ranked outside the top four does
+        not take a bye from a higher-ranked at-large -- that changed for the
+        2025 season and the old bracket still seeded the old way by accident,
+        because it never modelled champions at all.
+
+    A top-twelve-by-rating cut gets the Group of Five bid wrong every time: the
+    best G5 team this season is ranked 55th, so it was simply absent, and one of
+    the twelve teams shown had taken its place.
+    """
+    rows = sorted((r for r in (entry.get("rankings") or []) if r.get("rank")),
+                  key=lambda r: r["rank"])
+    if len(rows) < CFP_FIELD:
+        return []
+    champions = projected_champions(rows)
+    auto = sorted(champions.values(), key=lambda r: r["rank"])[:CFP_AUTO_BIDS]
+    taken = {r["team_key"] for r in auto}
+    at_large = [r for r in rows if r["team_key"] not in taken][:CFP_FIELD - len(auto)]
+    field = sorted(auto + at_large, key=lambda r: r["rank"])
+    if len(field) < CFP_FIELD:
+        return []
+    for seed, row in enumerate(field, 1):
+        row["cfp_seed"] = seed
+        row["cfp_bid"] = "champion" if row["team_key"] in taken else "at-large"
+    return field
+
+
 def cfp_bracket(entry: dict) -> list[dict]:
-    """A 12-team CFP field seeded from the current ratings, labelled a projection.
+    """A 12-team CFP field, selected and seeded the way the format selects and
+    seeds one, and labelled a projection throughout.
 
     This is a projection in the strict sense: no selection committee has met and
     no conference championship has been played, so nothing here is a result.
     Every round says so in its own title, because a bracket screenshotted out of
     context has no other way to carry the caveat.
-
-    What it deliberately does NOT do is model the five conference-champion
-    auto-bids. That needs conference membership and a champion per conference;
-    seeding purely by rating would quietly present an at-large-only field as if
-    it were the real format. Until that lands this is "the top twelve by
-    rating", and it is named that way rather than dressed up as bracketology.
     """
-    rows = [r for r in (entry.get("rankings") or []) if r.get("rank")][:12]
-    if len(rows) < 12:
+    field = cfp_field(entry)
+    if not field:
         return []
-    seed = {r["rank"]: r["team_name"] for r in rows}
-    first = [(5, 12), (6, 11), (7, 10), (8, 9)]
+    seed = {row["cfp_seed"]: row for row in field}
+    name = lambda n: seed[n]["team_name"]
     return [
-        {"round": "CFP First Round — projected, top 12 by rating",
-         "matches": [{"home": seed[h], "away": seed[a], "home_slot": str(h),
+        {"round": "CFP First Round — projected: five conference champions, seven at-large",
+         "matches": [{"home": name(h), "away": name(a), "home_slot": str(h),
                       "away_slot": str(a), "status": "PROJECTED", "score": {}}
-                     for h, a in first]},
-        {"round": "CFP Quarter-finals — projected, top 4 seeds on bye",
-         "matches": [{"home": seed[n], "away": "First-round winner", "home_slot": str(n),
-                      "away_slot": "path", "status": "PROJECTED", "score": {}}
-                     for n in (1, 2, 3, 4)]},
+                     for h, a in CFP_FIRST_ROUND]},
+        {"round": "CFP Quarter-finals — projected, top four seeds on bye",
+         "matches": [{"home": name(n), "away": f"Winner {a} v {b}",
+                      "home_slot": str(n), "away_slot": f"{a}/{b}",
+                      "status": "PROJECTED", "score": {}}
+                     for n, (a, b) in CFP_QUARTERS]},
     ]
 
 
