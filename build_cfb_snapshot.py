@@ -204,6 +204,21 @@ def build(path: pathlib.Path = SNAPSHOT) -> str:
     blocks.append("  const MATCHDAY_BETBETTER_PICKS="
                   + json.dumps(picks, ensure_ascii=False) + ";")
 
+    # Which sports the engine actually covers. The expanded view needs it to
+    # tell "Bet Better has not priced this fixture" apart from "this sport has
+    # no Bet Better read at all, so Matchday's own forecast is the model read".
+    blocks.append("  const MATCHDAY_BETBETTER_SPORTS="
+                  + json.dumps(document.get("sports") or [],
+                               ensure_ascii=False) + ";")
+
+    # The gap caveat lives on the document, not on each pick, so a baked pick
+    # arrives without it -- `_display_block` only copies it onto picks the fetch
+    # attaches. The expanded view renders the gap either way, so the warning
+    # that must travel with it is baked once here rather than retyped in JS.
+    blocks.append("  const MATCHDAY_BETBETTER_EDGE_WARNING="
+                  + json.dumps(document.get("edge_warning") or "",
+                               ensure_ascii=False) + ";")
+
     text = path.read_text(encoding="utf-8")
     start, stop = text.index(BEGIN), text.index(END)
     generated = BEGIN + "\n" + "\n".join(blocks) + "\n"

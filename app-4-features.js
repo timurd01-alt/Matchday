@@ -240,7 +240,11 @@ function insightModelBlock(m){
   const cls=(edge!=null&&Math.abs(edge)>=6?'edge ':'')+(op.blocked?'gate':'');
   return live+`<div class="seclbl">Locked model pick</div><div class="pick insightPick ${cls}"><span class="pl">Pick</span><span class="pn">${esc(op.name)}</span><span class="pc">${esc(op.confidence??'—')}%</span><span class="pnote">${esc(op.note)}</span></div>`;
 }
-function matchdayLivePickHTML(m){const p=m?.betbetter_pick;if(!p||m?.status!=='UPCOMING')return'';const model=Number(p.model_pct),market=Number(p.market_pct),gap=Number(p.edge_points);const note=Number.isFinite(model)&&Number.isFinite(market)?`Model ${model.toFixed(1)}% · market ${market.toFixed(1)}%${Number.isFinite(gap)?` · ${gap>0?'+':''}${gap.toFixed(1)} pts`:''}`:'Live analytical read';return `<div class="pick matchdayLivePick"><span class="pl">Model</span><span class="pn">${esc(p.pick_name||'No pick')}</span><span class="pc">${Number.isFinite(model)?model.toFixed(1)+'%':'—'}</span><span class="pnote">${esc(note)} · updates until kickoff</span></div>`}
+// Same lookup the expanded view uses, so the row on the card and the panel it
+// opens onto cannot name different sides. It used to read m.betbetter_pick
+// alone, which only a scheduled build writes -- on a push deploy the card
+// therefore carried no pick at all while the expanded view still showed one.
+function matchdayLivePickHTML(m){const p=betbetterReadFor(m);if(!p)return'';const model=Number(p.model_pct),market=Number(p.market_pct),gap=Number(p.edge_points);const note=Number.isFinite(model)&&Number.isFinite(market)?`Model ${model.toFixed(1)}% · market ${market.toFixed(1)}%${Number.isFinite(gap)?` · ${gap>0?'+':''}${gap.toFixed(1)} pts`:''}`:'Live analytical read';return `<div class="pick matchdayLivePick"><span class="pl">Model</span><span class="pn">${esc(p.pick_name||'No pick')}</span><span class="pc">${Number.isFinite(model)?model.toFixed(1)+'%':'—'}</span><span class="pnote">${esc(note)} · updates until kickoff</span></div>`}
 function cardHTML(m,opts){
   opts=opts||{};
   const pending=m.status==='LIVE',stale=isStaleUpcoming(m);
