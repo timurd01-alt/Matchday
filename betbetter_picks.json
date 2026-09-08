@@ -1,7 +1,7 @@
 {
-  "handoff_version": 8,
+  "handoff_version": 9,
   "source": "betbetter",
-  "generated_at": "2026-09-07T19:42:27.839933+00:00",
+  "generated_at": "2026-09-07T22:26:14.153947+00:00",
   "sports": [
     "ncaaf",
     "ncaam"
@@ -31782,6 +31782,42 @@
     "horizon_days": 7,
     "basis": "largest model-minus-market gap on a side the market has as an underdog, in an FBS game involving at least one Power Four team, excluding teams outplayed on EPA in their most recent game",
     "caveat": "Editorial, not advice. This is the model's most contrarian call of the week, and disagreement of this kind has historically predicted WORSE results on our graded college samples, not better. Publish it as something to watch and grade afterwards, never as a recommended bet."
+  },
+  "game_of_the_week": {
+    "available": true,
+    "game": {
+      "event_id": "08c34029ecc85b4a6d519f90f9082e56",
+      "competition": "NCAAF",
+      "kickoff": "2026-09-12T23:30:00Z",
+      "home": {
+        "team": "Texas Longhorns",
+        "rating": 23.82,
+        "rank": 6,
+        "conference": "SEC",
+        "tier": "power",
+        "record": "1-0",
+        "last_game_epa_per_play": 0.4671
+      },
+      "away": {
+        "team": "Ohio State Buckeyes",
+        "rating": 30.87,
+        "rank": 2,
+        "conference": "Big Ten",
+        "tier": "power",
+        "record": "1-0",
+        "last_game_epa_per_play": 0.4596
+      },
+      "rating_gap": 7.05,
+      "mean_rating": 27.34,
+      "matchup_score": 20.29,
+      "model_pick": "Ohio State Buckeyes",
+      "model_pct": 58.0,
+      "market_pct": 48.5
+    },
+    "considered": 30,
+    "horizon_days": 7,
+    "basis": "highest mean rating minus rating gap, among games inside the horizon where both teams are rated and the model is under 85.0% — the best matchup on the board, not the most confident pick",
+    "caveat": "Editorial, not advice. The game is chosen for how close and how strong the two teams are by our own ratings; the model's read on it is reported alongside, not used to select it. It is a live shadow forecast like every other pick here and carries no frozen receipt."
   },
   "coverage": {
     "picks": 65,
