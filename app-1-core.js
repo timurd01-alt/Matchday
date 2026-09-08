@@ -607,6 +607,36 @@ function renderWelcomeStats(){
 // on the board carried a model read again, and the front door still told first
 // -time visitors there were no forecasts. Render it from the flag instead, so
 // it cannot describe a state the site is not in.
+// The week's upset call, from the same handoff as everything else. The engine
+// attaches a caveat to this one that the board already honours and the gate has
+// to as well: disagreement of this kind has predicted WORSE results on its
+// graded college samples, and it is to be published as something to watch and
+// graded afterwards, never as a recommended bet. So it is labelled UPSET WATCH,
+// it says what it is in a line underneath, and it never borrows the word "pick"
+// from the locked read above it.
+function renderWelcomeUpset(){
+  const host=$('#welcomeUpset');if(!host)return;
+  const u=(typeof MATCHDAY_BETBETTER_UPSET!=='undefined')?MATCHDAY_BETBETTER_UPSET:null;
+  const p=u&&u.available?u.pick:null;
+  const sport=(typeof currentSportKey==='function'?currentSportKey():'')||'';
+  // Scoped to the board being shown: an NCAAF upset above an NCAAM board would
+  // be a call about a sport the visitor is not looking at.
+  if(!p||(sport&&String(p.sport||'').toLowerCase()!==sport)){host.hidden=true;host.innerHTML='';return}
+  const model=Number(p.model_pct),market=Number(p.market_pct),gap=Number(p.disagreement_points);
+  if(!Number.isFinite(model)){host.hidden=true;host.innerHTML='';return}
+  const bar=(cls,label,v)=>`<div class="${cls}"><span>${label}</span><i style="width:${Math.max(2,Math.min(100,v))}%"></i><b>${Number.isFinite(v)?v.toFixed(1)+'%':'—'}</b></div>`;
+  host.hidden=false;
+  // Name the opponent, not the fixture: the selection is already the headline,
+  // so "Iowa State Cyclones / Iowa State Cyclones at Iowa Hawkeyes" said it twice.
+  const norm=v=>String(v||'').toLowerCase();
+  const sel=norm(p.selection);
+  const opponent=sel&&norm(p.home)===sel?p.away:(sel&&norm(p.away)===sel?p.home:`${p.away||''} at ${p.home||''}`);
+  const away=sel&&norm(p.away)===sel;
+  host.innerHTML=`<div class="wuTop"><span>UPSET WATCH</span>${Number.isFinite(gap)?`<em class="wuGap">+${gap.toFixed(1)} pts clear of the market</em>`:'<em>one call a week</em>'}</div>`
+    +`<div class="wuPick"><b>${esc(p.selection||'')}</b><span>${away?'at':'vs'} ${esc(opponent)}${p.kickoff?` · ${esc(kickIn(p.kickoff))}`:''}</span></div>`
+    +`<div class="wuBars">${bar('','model',model)}${Number.isFinite(market)?bar('mkt','market',market):''}</div>`
+    +`<p class="wuNote">The model's most contrarian call of the week — to watch and grade, not a recommended bet.</p>`;
+}
 function renderWelcomeStatusNote(){
   const host=$('#welcomeStatusNote');if(!host)return;
   const totals=scorecardTotals();
@@ -636,7 +666,7 @@ function bindWelcomeTilt(){
 function renderWelcome(){
   const gate=$('#welcomeGate');if(!gate)return;
   const dismissed=welcomeDismissed();gate.hidden=dismissed;document.body.classList.toggle('welcomeOpen',!dismissed);if(dismissed){runCarousel('welcome',null);return}
-  renderWelcomeStats();renderWelcomeStatusNote();bindWelcomeTilt();
+  renderWelcomeStats();renderWelcomeStatusNote();renderWelcomeUpset();bindWelcomeTilt();
   // The card only ever shows a fixture the engine has priced. It is a model
   // read, so a game without one has nothing to say here -- an out-of-season
   // board (nothing 55 days out is priced) gets the standing panel below rather
