@@ -2265,3 +2265,10 @@ html{color-scheme:dark}
    thin strip of texture, while a crop of the bowl still reads as a stadium. */
 @media(max-width:900px){.welcomeScene svg{width:190%;left:-45%}
   .welcomeScene::after{background:radial-gradient(120% 60% at 50% 34%,rgba(5,9,14,.92),rgba(5,9,14,.7) 50%,rgba(5,9,14,.35) 100%),linear-gradient(180deg,rgba(5,9,14,.8),rgba(5,9,14,.4) 40%,transparent 70%)}}
+/* The signal row is a three-column grid built for "PICK 66.5% | market 66.7%".
+   The empty state has no number, so its label wrapped to two lines inside the
+   narrow middle column while the explanation overran the third. Give it its own
+   shape: label, then the sentence on the line below, spanning. */
+.welcomeSignal.noRead{grid-template-columns:auto minmax(0,1fr);row-gap:4px}
+.welcomeSignal.noRead b{font-size:var(--fs-md);white-space:nowrap;color:var(--muted)}
+.welcomeSignal.noRead i{grid-column:1/-1;font-size:var(--fs-2xs);line-height:1.45;color:var(--faint)}
