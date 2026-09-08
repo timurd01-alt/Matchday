@@ -179,6 +179,28 @@ class PauseIsExplainedToReadersTests(unittest.TestCase):
                          "When do predictions come back?"):
             self.assertIn(question, names)
 
+    def test_the_welcome_gate_never_hardcodes_the_pause_state(self):
+        """The gate must not state the pause state in fixed copy.
+
+        It did, and the sentence outlived the pause: PAUSE_ACTIVE went back to
+        False, every fixture on the board carried a model read again, and the
+        front door still told first-time visitors that published picks were
+        paused and that there were no forecasts to see. The state has exactly
+        one source, so the copy has to be rendered from it.
+        """
+        index = (ROOT / "index.html").read_text(encoding="utf-8")
+        core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
+        gate = index[index.index('id="welcomeGate"'):index.index('id="alertCenter"')]
+        for claim in ("picks are paused", "rather than a forecast"):
+            self.assertNotIn(claim, gate,
+                             "the welcome gate states the pause state in fixed "
+                             "copy; render it from FORECAST_PAUSE_ACTIVE instead")
+        self.assertIn('id="welcomeStatusNote"', gate)
+        note = core[core.index("function renderWelcomeStatusNote"):]
+        note = note[:note.index(chr(10) + "function ", 1)]
+        self.assertIn("FORECAST_PAUSE_ACTIVE", note,
+                      "the gate's status note must branch on the pause flag")
+
     def test_front_page_pause_banner_is_removed(self):
         index = (ROOT / "index.html").read_text(encoding="utf-8")
         self.assertNotIn("Predictions are paused", index)

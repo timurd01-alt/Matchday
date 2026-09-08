@@ -541,25 +541,51 @@ function _welcomeCardHTML(m){
 }
 // Real coverage numbers, counted from the slate that just loaded. Deliberately
 // three short figures rather than another paragraph of claims.
+// Every sport's graded record, not just the loaded board's. The scorecard is a
+// static script carrying all of them, so this costs nothing -- and the gate is
+// the front door for the whole site, where a per-sport figure understates it.
+function scorecardTotals(){
+  const all=(typeof MATCHDAY_BETBETTER_SCORECARD!=='undefined')?MATCHDAY_BETBETTER_SCORECARD:null;
+  const sports=Object.values(all?.sports||{}).filter(s=>s?.available);
+  return {picks:sports.reduce((n,s)=>n+(Number(s.record?.picks)||0),0),
+          lockMinutes:sports.map(s=>Number(s.lock_policy?.lead_minutes)).find(Number.isFinite)??null};
+}
 function renderWelcomeStats(){
   const host=$('#welcomeStats');if(!host)return;
   const M=DATA.matches||[];
   const upcoming=M.filter(isVisibleUpcoming);
   if(!upcoming.length){host.innerHTML='';return}
-  const priced=upcoming.filter(m=>!isForecastPaused(m)&&((typeof officialPrediction==='function'&&officialPrediction(m))||m.prediction)).length;
-  // Competitions is the product's breadth, not the current selection's -- the
-  // gate is the front door for all of it, and a single-sport view would
-  // otherwise read "1 competitions".
-  // While picks are paused, "0% model coverage" is a true number that reads
-  // like a broken site. Say what is actually happening instead, and let the
-  // graded record carry the third slot.
-  const graded=Number((typeof betbetterScorecard==='function'?betbetterScorecard():null)?.record?.picks)||0;
-  const cells=[[upcoming.length,'fixtures ahead'],
-               [ALL_SPORT_KEYS.length,'competitions'],
-               FORECAST_PAUSE_ACTIVE
-                 ?[graded||'—','picks on the record']
-                 :[`${Math.round(priced/upcoming.length*100)}%`,'model coverage']];
+  // The first two cells used to disagree about what they were counting: the
+  // fixture count came from whichever board was loaded while the second cell
+  // read a constant ("2 competitions") for the whole product. A board is one
+  // sport now, so the fixture count says which sport it is counting, and the
+  // product-wide claim is the graded record, which really is product-wide.
+  // "Model coverage" is gone: it was 100% on every board that had a model at
+  // all, which is not information, and 0% while picks were paused, which read
+  // like a broken site.
+  const sportLabel=SPORT_LABELS[currentSportKey()]||DATA.competition||'fixtures';
+  const totals=scorecardTotals();
+  const cells=[[upcoming.length,`${sportLabel} fixtures`]];
+  if(totals.picks)cells.push([totals.picks,'picks graded in public']);
+  if(FORECAST_PAUSE_ACTIVE)cells.push(['paused','new picks while rebuilding']);
+  else if(totals.lockMinutes)cells.push([`${totals.lockMinutes} min`,'locked before kickoff']);
+  else cells.push([ALL_SPORT_KEYS.length,'sports covered']);
   host.innerHTML=cells.map(([v,l])=>`<div><b>${esc(v)}</b><span>${esc(l)}</span></div>`).join('');
+}
+// The gate used to state in hand-written copy that published picks were paused.
+// That sentence outlived the pause: the flag went back to false, every fixture
+// on the board carried a model read again, and the front door still told first
+// -time visitors there were no forecasts. Render it from the flag instead, so
+// it cannot describe a state the site is not in.
+function renderWelcomeStatusNote(){
+  const host=$('#welcomeStatusNote');if(!host)return;
+  const totals=scorecardTotals();
+  host.innerHTML=FORECAST_PAUSE_ACTIVE
+    ?`<p>The site covers college football and men's college basketball only. Publishing new
+      picks is paused while the model is rebuilt, so what you see is ratings, rankings and the
+      market's own number rather than a forecast.</p>`
+    :`<p>The site covers college football and men's college basketball only. Fixtures on the
+      board carry a model probability alongside the market's own number where one is priced${totals.lockMinutes?`, locked ${totals.lockMinutes} minutes before kickoff`:''}${totals.picks?` — ${totals.picks} of them have been graded against the result so far`:''}.</p>`;
 }
 // Slight parallax on the preview card. Pointer-only and opt-out aware, so it
 // never interferes with touch scrolling or reduced-motion preferences.
@@ -580,7 +606,7 @@ function bindWelcomeTilt(){
 function renderWelcome(){
   const gate=$('#welcomeGate');if(!gate)return;
   const dismissed=welcomeDismissed();gate.hidden=dismissed;document.body.classList.toggle('welcomeOpen',!dismissed);if(dismissed){runCarousel('welcome',null);return}
-  renderWelcomeStats();bindWelcomeTilt();
+  renderWelcomeStats();renderWelcomeStatusNote();bindWelcomeTilt();
   const upcoming=(DATA.matches||[]).filter(isVisibleUpcoming);
   const soonest=[...upcoming].sort(fixtureSort)[0],host=$('#welcomeNext');
   if(!host)return;

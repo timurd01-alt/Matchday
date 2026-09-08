@@ -2230,3 +2230,49 @@ html{color-scheme:dark}
 .modClose::before{background:linear-gradient(90deg,var(--signal),transparent 70%)}
 .modParity::before{background:linear-gradient(90deg,var(--link,#76caff),transparent 70%)}
 .modPad::before{background:linear-gradient(90deg,var(--loss),transparent 70%)}
+
+/* ---- welcome gate: the stadium scene -------------------------------------
+   The gate was type on a gradient. This puts a place behind it: stadium light
+   bloom, a crowd bank, a field falling away to the horizon, and two players --
+   a back mid-stride and a rising dunk, one per sport the site covers.
+
+   The figures are drawn here rather than photographed on purpose. A photo of a
+   college athlete carries both the photographer's copyright and the player's
+   own publicity/NIL rights, neither of which a prediction site has; silhouettes
+   we author owe nothing to anyone and cannot be mistaken for an endorsement.
+
+   Everything sits behind .welcomeShell (z-index 1) and is masked away from the
+   top of the frame, so the headline and the preview card keep their contrast at
+   every width. */
+.welcomeScene{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;
+  mask-image:linear-gradient(to bottom,transparent 0,rgba(0,0,0,.6) 16%,#000 34%);
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0,rgba(0,0,0,.6) 16%,#000 34%)}
+.welcomeScene svg{position:absolute;left:0;bottom:0;width:100%;height:auto;max-height:none}
+.welcomeScene::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(62% 62% at 16% 42%,rgba(5,8,12,.9),rgba(5,8,12,.35) 55%,transparent 78%),
+             linear-gradient(180deg,rgba(5,8,12,.5),transparent 24%)}
+.wsLights{opacity:.85;animation:wsFlicker 7.5s ease-in-out infinite}
+.wsCrowd circle{opacity:.26}
+.wsField path{stroke-width:1.4}
+/* The players read as depth, not as illustration: low contrast against the
+   background, with a single rim light along the edge facing the stadium
+   lights. Raised opacity on wide screens only -- on a phone the shell covers
+   most of the frame and a stronger figure just muddies the text behind it. */
+.wsPlayer{opacity:.88}
+.wsPlayerA{animation:wsDrift 13s ease-in-out infinite}
+.wsPlayerB{animation:wsDrift 16s ease-in-out -4s infinite}
+@media(min-width:1100px){.wsPlayer{opacity:1}}
+@keyframes wsDrift{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+@keyframes wsFlicker{0%,100%{opacity:.85}44%{opacity:.72}52%{opacity:.95}}
+@media(prefers-reduced-motion:reduce){.wsLights,.wsPlayerA,.wsPlayerB{animation:none}}
+/* Under ~820px the shell stacks and fills the viewport; the scene would only
+   show through the copy. Keep the light bloom, drop the figures. */
+@media(max-width:820px){.welcomeScene svg{width:170%;left:-35%}.wsPlayer{opacity:.5}}
+@media(max-width:620px){.welcomeScene{display:none}}
+/* The rim light is a hard drop-shadow rather than a stroke: a stroke thickens
+   every limb and closes the gaps between them, which is exactly what makes a
+   silhouette stop reading as a body. */
+.wsPlayerA{filter:drop-shadow(-2px -3px 0 rgba(58,209,122,.8)) drop-shadow(0 26px 46px rgba(0,0,0,.6))}
+.wsPlayerB{filter:drop-shadow(2px -3px 0 rgba(76,194,255,.75)) drop-shadow(0 26px 46px rgba(0,0,0,.6))}
+.wsShadow{fill:#000;opacity:.34}
+.wsBall{fill:none;stroke:#4cc2ff;stroke-opacity:.85;stroke-width:3.5}
