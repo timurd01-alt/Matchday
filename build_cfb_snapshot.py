@@ -265,6 +265,13 @@ def build(path: pathlib.Path = SNAPSHOT) -> str:
     blocks.append("  const MATCHDAY_BETBETTER_FIXTURES="
                   + json.dumps(fixtures, ensure_ascii=False) + ";")
 
+    # The marquee game. Distinct from the upset: that one is the model's most
+    # contrarian call and carries the inverted-sign warning, this one is simply
+    # the best matchup on the board and is not selected on the market at all.
+    blocks.append("  const MATCHDAY_BETBETTER_GAME_OF_THE_WEEK="
+                  + json.dumps(document.get("game_of_the_week") or {},
+                               ensure_ascii=False) + ";")
+
     blocks.append("  const MATCHDAY_BETBETTER_UPSET="
                   + json.dumps(document.get("upset_of_the_week") or {}, ensure_ascii=False) + ";")
     blocks.append("  const MATCHDAY_BETBETTER_USER_PICKS="

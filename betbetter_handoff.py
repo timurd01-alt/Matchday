@@ -47,6 +47,10 @@ from typing import Any
 
 # Handoff major versions this reader understands. A document outside this set
 # is refused whole: a partly-understood pick is worse than no pick.
+# 9 added `game_of_the_week` -- the best matchup on the board, chosen on the
+# two teams' ratings and the gap between them rather than on the model's
+# confidence. Confidence alone always names a Power Four side hosting an FCS
+# opponent at 97-99%, which is not a call.
 # 8 added `scorecard` -- the graded record of the cards frozen an hour before
 # kickoff, per sport, with the caveat that must be rendered beside it. The
 # college scorecard on this site was eight games typed in by hand and never
@@ -59,7 +63,7 @@ from typing import Any
 # board survives Matchday's own fixture provider running out of quota).
 # 2 added `rankings` (the published Top 25 per sport). A v1 document is
 # still readable -- it simply carries no rankings -- so both are accepted.
-SUPPORTED_VERSIONS = frozenset({1, 2, 3, 4, 5, 6, 7, 8})
+SUPPORTED_VERSIONS = frozenset({1, 2, 3, 4, 5, 6, 7, 8, 9})
 
 DEFAULT_HANDOFF_PATH = "betbetter_picks.json"
 
