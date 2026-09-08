@@ -543,9 +543,11 @@ function _welcomeCardHTML(m){
   const pick=bb?.pick_name||'';
   const model=Number(bb?.model_pct),market=Number(bb?.market_pct),edge=Number(bb?.edge_points);
   const meter=Number.isFinite(model)?`<div class="welcomeMeter" aria-hidden="true"><i style="--welcome-p:${pct(model)}%"></i></div>`:'';
+  // renderWelcome only ever hands this a priced fixture, so there is no
+  // no-number branch: a game without a read is not shown at all.
   const signal=pick&&Number.isFinite(model)
     ?`<div class="welcomeSignal"><span>MODEL</span><b>${esc(pick)} ${model.toFixed(1)}%</b>${Number.isFinite(market)?`<i>market ${market.toFixed(1)}%${Number.isFinite(edge)?` · ${edge>0?'+':''}${edge.toFixed(1)} pt`:''}</i>`:''}</div>${meter}`
-    :`<div class="welcomeSignal noRead"><span>MODEL</span><b>Not priced yet</b><i>the engine publishes a read once the game is priced</i></div>`;
+    :'';
   return `<div class="welcomeMatchMeta"><span>${esc(m._comp||DATA.comp_key||m.stage||'NEXT')}</span><span>${kickIn(m.kickoff)}</span></div><div class="welcomeTeams"><div><small>${esc(m.home?.code||'HOME')}</small><b>${esc(m.home?.name||'Home')}</b></div><em>v</em><div class="away"><small>${esc(m.away?.code||'AWAY')}</small><b>${esc(m.away?.name||'Away')}</b></div></div>${signal}`;
 }
 
@@ -617,23 +619,23 @@ function renderWelcome(){
   const gate=$('#welcomeGate');if(!gate)return;
   const dismissed=welcomeDismissed();gate.hidden=dismissed;document.body.classList.toggle('welcomeOpen',!dismissed);if(dismissed){runCarousel('welcome',null);return}
   renderWelcomeStats();renderWelcomeStatusNote();bindWelcomeTilt();
-  const upcoming=(DATA.matches||[]).filter(isVisibleUpcoming);
-  const soonest=[...upcoming].sort(fixtureSort)[0],host=$('#welcomeNext');
+  // The card only ever shows a fixture the engine has priced. It is a model
+  // read, so a game without one has nothing to say here -- an out-of-season
+  // board (nothing 55 days out is priced) gets the standing panel below rather
+  // than a fixture with an empty number beside it.
+  const priced=(DATA.matches||[]).filter(m=>isVisibleUpcoming(m)&&(typeof betbetterReadFor==='function'&&betbetterReadFor(m)));
+  const soonest=[...priced].sort(fixtureSort)[0],host=$('#welcomeNext');
   if(!host)return;
   if(!soonest){
-    host.innerHTML=`<div class="welcomeFallback"><span class="welcomeFallbackKicker">BOARD READY</span><strong>Fresh reads appear as matchups are published.</strong><p>Explore the dashboard for completed scorecards, model methodology, and every available competition.</p><div aria-hidden="true"><i></i><i></i><i></i></div></div>`;
+    host.innerHTML=`<div class="welcomeFallback"><span class="welcomeFallbackKicker">BOARD READY</span><strong>Model reads appear as games are priced.</strong><p>Nothing on this board is priced yet. The scorecard, ratings and every graded pick are inside.</p><div aria-hidden="true"><i></i><i></i><i></i></div></div>`;
     const state=$('#welcomeFeedState');if(state)state.textContent='ANALYSIS';
     return;
   }
-  // Soonest kickoff first, then a small near-term pool behind it. A fixture the
-  // engine has priced leads: the card exists to show a model read, and opening
-  // on "not priced yet" when a priced game is available wastes the slot.
-  const hasRead=m=>!!(typeof betbetterReadFor==='function'&&betbetterReadFor(m));
-  const featured=nearTermPool(upcoming.filter(m=>m.id!==soonest.id),4)
-    .sort((a,b)=>Number(hasRead(b))-Number(hasRead(a))||(b.watchability||0)-(a.watchability||0)).slice(0,4);
-  const lead=hasRead(soonest)?soonest:(featured.find(hasRead)||soonest);
-  const pool=[lead,...[soonest,...featured].filter(m=>m!==lead)];
-  host.innerHTML=_welcomeCardHTML(lead);
+  // Soonest kickoff leads, then a small near-term pool behind it.
+  const featured=nearTermPool(priced.filter(m=>m.id!==soonest.id),4)
+    .sort((a,b)=>(b.watchability||0)-(a.watchability||0)).slice(0,4);
+  const pool=[soonest,...featured];
+  host.innerHTML=_welcomeCardHTML(soonest);
   runCarousel('welcome',pool,host,_welcomeCardHTML,4500);
   const state=$('#welcomeFeedState');if(state)state.textContent='PREGAME';
 }

@@ -42,9 +42,16 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
             self.assertNotIn(banned, body,
                              f"the welcome card reads {banned} -- that is the other "
                              "model, and the site publishes one")
-        self.assertIn("Not priced yet", body,
-                      "a fixture the engine has not priced needs an empty state, "
-                      "not another model's number in its place")
+        # The card shows a model read or it shows nothing: renderWelcome only
+        # ever hands it a fixture the engine has priced, so an out-of-season
+        # board falls through to the standing panel instead of putting a
+        # fixture on screen with no number beside it.
+        render = core[core.index("function renderWelcome()"):]
+        render = render[:render.index(chr(10) + "}")]
+        self.assertIn("betbetterReadFor", render,
+                      "renderWelcome must filter the card's pool to priced fixtures")
+        self.assertIn("welcomeFallback", render,
+                      "with nothing priced the gate needs its standing panel")
 
     def test_there_is_no_merged_all_college_board(self):
         # The merged board showed both sports' fixtures with every sport-specific
