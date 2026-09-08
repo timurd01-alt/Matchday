@@ -509,11 +509,6 @@ jobs:
           for data_file in data_ncaaf.json data_ncaam.json; do
             [ ! -f "$data_file" ] || cp "$data_file" _site/
           done
-          # The landing board's own payload, built from the files just copied.
-          # Without it the interface merges the full per-sport files in the
-          # browser as it always did -- slower, but correct -- so a failure here
-          # degrades performance rather than taking the board down.
-          python build_board_summary.py --output _site/board_summary.json || echo "::warning::board_summary.json not built; the board will fall back to merging full sport files client-side."
           # Failure tracebacks stay in the private Actions cache/log. Publishing
           # internal paths and provider error bodies to the public site creates
           # avoidable information disclosure even after credential scrubbing.

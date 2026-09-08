@@ -142,7 +142,7 @@ function renderAccountRow(){
     <span class="acctBtns">${buttons}</span>${note}</div>`;
 }
 function renderCommunity(){ensureHandle();const host=$('#view-community');const fullDb=btmGrade();const db=btmScoped(fullDb);const s=btmStats(db);
-  const scopeName=communityScope()==='ALL'?'All sports':(DATA.competition||DATA.comp_key||'This sport');
+  const scopeName=DATA.competition||DATA.comp_key||'This sport';
   const eligible=(DATA.matches||[]).filter(m=>isCommunityPickOpen(m)).sort((a,b)=>(a.kickoff||'').localeCompare(b.kickoff||''));
   const firstKick=eligible.length?kickMs(eligible[0]):0;
   // A missing market can expose an entire season at once. Show the next
@@ -281,9 +281,7 @@ function renderSandbox(){
   const host=$('#view-sandbox');
   const teams=sandboxTeams();
   if(teams.length<2){
-    const msg=String(DATA.comp_key||'').toUpperCase()==='ALL'
-      ?'Pick a specific sport (not "All sports") to build a matchup — standings aren\'t loaded for a merged view.'
-      :'No teams to build a matchup with yet — check back once fixtures are scheduled for this sport.';
+    const msg='No teams to build a matchup with yet — check back once fixtures are scheduled for this sport.';
     host.innerHTML=`<div class="vhead">Matchup Sandbox</div><div class="empty">${msg}</div>`;return;
   }
   const sorted=teams.slice().sort((a,b)=>a.name.localeCompare(b.name));

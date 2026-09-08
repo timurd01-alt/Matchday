@@ -60,13 +60,17 @@ function applyStaticI18n(){
 }
 function t(s){if(!LANG||!window.MD_I18N||!MD_I18N[LANG])return s;return translateUiText(s,MD_I18N[LANG]);}
 function setLang(v){LANG=v;try{localStorage.setItem('matchday.lang',v)}catch(e){};renderStrip();renderCurrent();renderInsight&&renderInsight();applyStaticI18n();renderAlerts();}
-let DATA_FILE='';try{DATA_FILE=localStorage.getItem('matchday.sport')||'';if(/^data_nhl\.json$/i.test(DATA_FILE)){DATA_FILE='';localStorage.setItem('matchday.sport','')}}catch(e){}
+// Every board is a single sport's. A stored selection from before the merged
+// "All college" board was removed (or from a sport we no longer publish) names
+// a file nothing would load, so it is migrated to the default rather than left
+// to fail: an empty DATA_FILE has no meaning now.
+const DEFAULT_SPORT_FILE='data_ncaaf.json';
+let DATA_FILE=DEFAULT_SPORT_FILE;try{const saved=localStorage.getItem('matchday.sport')||'';DATA_FILE=/^data_(ncaaf|ncaam)\.json$/i.test(saved)?saved:DEFAULT_SPORT_FILE;if(DATA_FILE!==saved)localStorage.setItem('matchday.sport',DATA_FILE)}catch(e){}
 const SPORT_LABELS={wc:'World Cup',ucl:'Champions League',epl:'Premier League',laliga:'La Liga',seriea:'Serie A',bundesliga:'Bundesliga',ligue1:'Ligue 1',nfl:'NFL',ncaaf:'College Football',ncaam:"Men's College Basketball",nba:'NBA',mlb:'MLB',nhl:'NHL'};
 // The sports we actually publish data for. SPORT_LABELS above still knows about
 // NHL so a restored sport picks up its name for free, but nothing fetches a file
 // that isn't there.
 const ALL_SPORT_KEYS=['ncaaf','ncaam'];
-const COLLEGE_BOARD_KEYS=new Set(['ncaaf','ncaam']);
 const FIXTURE_PAGE_SIZE=40;
 // The model board used to render every pick in one scroll (1,300+ rows on a
 // full slate). Same pager the fixture list already uses, smaller page: a pick
@@ -136,7 +140,7 @@ function competitionSeasonCutoff(comp,now=new Date()){
   return new Date(Date.UTC(startYear,6,1));
 }
 function stripPastSeasonCompetitionViews(payload,now=new Date()){
-  if(!payload||String(payload.comp_key||'').toUpperCase()==='ALL')return payload;
+  if(!payload)return payload;
   if(payload.season_context?.position_views_current===true)return payload;
   const key=String(payload.comp_key||'').toUpperCase(),cutoff=competitionSeasonCutoff(key,now);
   const matches=Array.isArray(payload.matches)?payload.matches:[];
@@ -169,10 +173,6 @@ const NAV_DEF={
   // profile is the same six views; the pair is kept because NAV_LABELS still
   // names them differently per sport (Rankings/CFP Bracket vs
   // Conferences/Bracketology), which is the whole reason the table survives.
-  // No bracket on the merged board: 'All college' spans two sports with
-  // separate postseasons, and with no competition selected the view fell
-  // through to a generic knockout shape drawn over college conferences.
-  all:               ['matches','results','groups','score','community'],
   college:           ['matches','results','groups','bracket','score','community'],
   college_basketball:['matches','results','groups','bracket','score','community']
 };
@@ -182,10 +182,10 @@ const NAV_DEF={
 // rather than trusting what it was handed and rendering into a null host.
 const VIEWS=new Set(['matches','results','groups','bracket','score','news','community']);
 function safeView(v){return VIEWS.has(v)?v:'matches';}
-const SPORT_KIND={'':'all',ncaaf:'college',ncaam:'college_basketball'};
+const SPORT_KIND={ncaaf:'college',ncaam:'college_basketball'};
 function currentSportKey(){const m=(DATA_FILE||'').match(/data_(\w+)\.json/);return m?m[1]:'';}
-function navProfile(){return SPORT_KIND[currentSportKey()]||'all';}
-const NAV_LABELS={all:{groups:'Conferences',bracket:'Playoffs'},college:{groups:'Conferences',bracket:'CFP Playoff'},college_basketball:{groups:'Conferences',bracket:'Bracketology'}};
+function navProfile(){return SPORT_KIND[currentSportKey()]||'college';}
+const NAV_LABELS={college:{groups:'Conferences',bracket:'CFP Playoff'},college_basketball:{groups:'Conferences',bracket:'Bracketology'}};
 // A domestic league plays a season, not a tournament. The nav button already
 // said so via NAV_LABELS; the view's own heading did not.
 function tottTitle(){return navProfile()==='soccer_league'?'Team of the Season':'Team of the Tournament'}
@@ -215,7 +215,7 @@ function showMatchLoading(){const host=$('#view-matches');if(host)host.innerHTML
 function clearCompetitionViewsForLoad(){
   ['groups','bracket','third'].forEach(view=>{const host=$('#view-'+view);if(host)host.innerHTML='<div class="empty">Loading current-season data…</div>'});
 }
-function changeSport(v){DATA_FILE=v?('data_'+v+'.json'):'';MATCH_VISIBLE=FIXTURE_PAGE_SIZE;RESULT_VISIBLE=FIXTURE_PAGE_SIZE;MODEL_VISIBLE=MODEL_PAGE_SIZE;try{localStorage.setItem('matchday.sport',DATA_FILE)}catch(e){};applySportNav();showMatchLoading();clearCompetitionViewsForLoad();load(true);}
+function changeSport(v){DATA_FILE=/^(ncaaf|ncaam)$/.test(v)?('data_'+v+'.json'):DEFAULT_SPORT_FILE;MATCH_VISIBLE=FIXTURE_PAGE_SIZE;RESULT_VISIBLE=FIXTURE_PAGE_SIZE;MODEL_VISIBLE=MODEL_PAGE_SIZE;try{localStorage.setItem('matchday.sport',DATA_FILE)}catch(e){};applySportNav();showMatchLoading();clearCompetitionViewsForLoad();load(true);}
 
 const COLORS={orange:'#ffb02e',blue:'#4cc2ff',green:'#3ad17a',red:'#ff4d5e',purple:'#b16cff'};
 function saveSettings(){localStorage.setItem('matchday.settings',JSON.stringify(SETTINGS))}
@@ -459,7 +459,7 @@ function enterMatchday(targetView='',startWithTour=false){
 
 // ---- guided tour (first-visit walkthrough) --------------------------------
 const TOUR_STEPS=[
-  {target:'#sportSel',title:'Start here',body:'Pick a competition to see its pregame predictions, accuracy tracking and brackets. "All sports" shows everything in one feed.'},
+  {target:'#sportSel',title:'Start here',body:'Switch between College Football and Men’s College Basketball. Each has its own predictions, accuracy tracking and playoff picture.'},
   {target:'.navbtn[data-v="matches"]',title:'Matches',body:'Every upcoming fixture with the model’s locked pregame pick shown next to the market’s.'},
   {target:'.navbtn[data-v="edge"]',title:'Model',body:'See exactly why the model favors a side — points, form, ratings, injuries and more, broken down factor by factor.'},
   {target:'.navbtn[data-v="score"]',title:'Scorecard',body:'Every locked pick, tracked in public. Nothing gets rewritten after the fact — good calls or bad ones.'},
@@ -668,16 +668,11 @@ function enhanceMatchCards(host){
     head.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();openMatchModal(card.dataset.id);setFinishedLabel()}});
   });
 }
-// Six highlighted games. The per-competition cap has to reach six on its own
-// now: with only two competitions -- and often just one of them in season --
-// a cap of three meant the board could never fill the strip from NCAAF alone.
-const MARQUEE_COUNT=8;
-const MARQUEE_PER_COMP=8;
-// Watchability alone doesn't know or care how far away a game is -- an
-// off-season fixture months out can outscore something happening this week.
-// Narrow to the soonest reasonable window before ranking by watchability,
-// widening only if that window doesn't have enough candidates (e.g. every
-// active sport is between seasons at once).
+// A fixture's own kickoff says nothing about whether the schedule around it is
+// busy: between seasons, the nearest game can be months out. Widen the window
+// in steps until enough candidates exist, so the welcome card and the in-focus
+// rail feature this week's games when there are any and fall back gracefully
+// when there are not.
 const NEAR_TERM_WINDOWS_DAYS=[14,30,60,120];
 function nearTermPool(matches,minCount){
   const now=Date.now();
@@ -688,76 +683,14 @@ function nearTermPool(matches,minCount){
   }
   return matches;
 }
-function watchabilityFixtureSort(a,b){return Number(isFavoriteMatch(b))-Number(isFavoriteMatch(a))||(Number(b.watchability)||0)-(Number(a.watchability)||0)||fixtureSort(a,b)}
-// Marquee selection for the merged "All sports" board. A pure global
-// watchability ranking buries whole sports: soccer's team ratings sit on a
-// higher numeric scale than the US sports', so its ~5 leagues at 90+ fill
-// every slot before NFL (tops ~82) or college football (~62) get a look.
-// Instead, round-robin by competition -- take each active competition's
-// TOP game first, then everyone's 2nd, then 3rd -- so every sport with
-// games showing gets its marquee matchup surfaced, capped at
-// MARQUEE_PER_COMP each. Within each round, higher watchability goes first
-// so the very biggest games still lead. Favorite-team matches are pinned
-// to the very front regardless.
-function balancedMarquee(active){
-  // Select from each horizon separately.
-  //
-  // The first version of this filtered marqueeSelect()'s output, which cannot
-  // change the split: if that call already returned two near-term games and
-  // four distant ones, partitioning its six gave back two and four. The pools
-  // have to be divided first and ranked independently, so each horizon gets its
-  // own share of the strip.
-  const soon=Date.now()+7*86400000;
-  const isNear=m=>{const k=kickMs(m);return !!k&&k<soon};
-  const half=Math.ceil(MARQUEE_COUNT/2);
-  const near=marqueeSelect(active.filter(isNear)).slice(0,half);
-  const far=marqueeSelect(active.filter(m=>!isNear(m))).slice(0,MARQUEE_COUNT-near.length);
-  const out=[...near,...far];
-  // One horizon can be genuinely short -- a quiet week, or a schedule that only
-  // reaches so far. Backfill from the other rather than leave the strip ragged.
-  if(out.length<MARQUEE_COUNT){
-    const seen=new Set(out);
-    for(const m of marqueeSelect(active)){
-      if(seen.has(m))continue;
-      out.push(m);
-      if(out.length>=MARQUEE_COUNT)break;
-    }
-  }
-  return out.slice(0,MARQUEE_COUNT);
-}
-function marqueeSelect(active){
-  const favs=active.filter(isFavoriteMatch);
-  // favorites stay eligible regardless of how far out they are; the
-  // watchability-ranked rest gets narrowed to a near-term window first, so a
-  // months-away fixture can't outrank something happening this week
-  const rest=active.filter(m=>!isFavoriteMatch(m));
-  const byComp={};
-  rest.forEach(m=>{const c=m._comp||m.competition||'OTHER';(byComp[c]||=[]).push(m);});
-  // Widen each competition's window independently rather than pooling every
-  // sport together first: a high-volume in-season sport (e.g. MLB in July)
-  // satisfies a combined count threshold at the narrowest window on its own,
-  // which permanently starved every other sport of ever widening far enough
-  // to reach its own next fixture and let one sport fill every marquee slot.
-  Object.keys(byComp).forEach(c=>{byComp[c]=nearTermPool(byComp[c],MARQUEE_PER_COMP)});
-  Object.values(byComp).forEach(list=>list.sort((a,b)=>(Number(b.watchability)||0)-(Number(a.watchability)||0)));
-  const picked=[...favs];const seen=new Set(favs);
-  for(let round=0;round<MARQUEE_PER_COMP&&picked.length<MARQUEE_COUNT;round++){
-    // order this round's competitions by their round-th game's watchability,
-    // so the strongest leagues still appear earlier within each pass
-    const contenders=Object.values(byComp).filter(list=>list[round])
-      .sort((a,b)=>(Number(b[round].watchability)||0)-(Number(a[round].watchability)||0));
-    for(const list of contenders){
-      if(picked.length>=MARQUEE_COUNT)break;
-      const m=list[round];if(seen.has(m))continue;picked.push(m);seen.add(m);
-    }
-  }
-  return picked;
-}
-// The marquee board deliberately reaches months ahead when a sport is between
-// seasons (see nearTermPool), which is right -- an empty NBA slot would be worse
-// than a distant one. What it lacked was any cue that it had done so, leaving a
-// game 62 days out looking exactly like one tomorrow and the whole board reading
-// as stale. Group by horizon so a quiet week is legible as a quiet week.
+// The merged "All college" board is gone, and with it the cross-sport marquee:
+// watchability ranking, the per-competition round-robin and the widening
+// near-term window all existed to stop one sport filling a shared strip. A
+// single sport's board shows that sport's own schedule in kickoff order,
+// grouped by horizon below.
+// A schedule can reach months ahead, and a game 62 days out looked exactly like
+// one tomorrow, leaving the whole board reading as stale. Group by horizon so a
+// quiet week is legible as a quiet week.
 const BOARD_HORIZONS=[
   {key:'live',  label:'In play',        test:(m,now)=>m.status==='LIVE'},
   {key:'today', label:'Today',          test:(m,now)=>kickMs(m)&&kickMs(m)<now+86400000},
@@ -777,27 +710,17 @@ function groupedBoardHTML(list){
   }).join('');
 }
 function renderMatches(){const M=DATA.matches||[];
-  // "All sports" merges every competition's fixtures into one list (often
-  // 1000+ matches) -- instead of dumping everything, rank by a
-  // watchability score (team class rating, how close the model's own
-  // probabilities are, upset potential, knockout stakes) and show the
-  // biggest games, capped per competition so no one sport dominates.
-  // Picking a specific sport still shows its full schedule.
-  const isAll=String(DATA.comp_key||'ALL').toUpperCase()==='ALL';
-  const active=M.filter(m=>!isCompleteOrPast(m)).sort(isAll?watchabilityFixtureSort:favoriteFixtureSort);
-  // Balance the marquee across horizons so the board reads 3 and 3 rather
-  // than whatever the fixture calendar happens to produce. Selecting the
-  // halves separately keeps the 'This week' heading honest -- nothing is
-  // relabelled to fill a column.
-  const capped=isAll?balancedMarquee(active):active;
-  const shown=capped.slice(0,MATCH_VISIBLE),remaining=Math.max(0,capped.length-shown.length);
+  // One sport's full schedule, in kickoff order with favorites pinned. The
+  // horizon headings below (In play / Today / This week) do the work the old
+  // merged board needed a watchability ranking for: a long schedule stays
+  // readable because it is grouped by when it happens, not trimmed.
+  const active=M.filter(m=>!isCompleteOrPast(m)).sort(favoriteFixtureSort);
+  const shown=active.slice(0,MATCH_VISIBLE),remaining=Math.max(0,active.length-shown.length);
   const missing=DATA._missing?`<div class="banner" style="grid-column:1/-1"><b>No ${esc(DATA.competition||'this sport')} data yet.</b> Fetch it once its season is available — run the matching start file (e.g. start_ucl.bat) or keep an eye out when the season begins.</div>`:'';
-  const intro=isAll
-    ?`<div class="viewIntro"><div><div class="vhead">Top matchups</div><p>The strongest and closest games across every sport. Choose a sport above to see its complete schedule.</p></div><span>${shown.length} featured</span></div>`
-    :`<div class="viewIntro"><div><div class="vhead">${t('Fixtures')}</div><p>${FORECAST_PAUSE_ACTIVE?'Fixtures, scores and market odds. Model picks are paused.':'Pregame model reads now; final scores and grading after the game.'}</p></div><span>${capped.length} games</span></div>`;
+  const intro=`<div class="viewIntro"><div><div class="vhead">${t('Fixtures')}</div><p>${FORECAST_PAUSE_ACTIVE?'Fixtures, scores and market odds. Model picks are paused.':'Pregame model reads now; final scores and grading after the game.'}</p></div><span>${active.length} games</span></div>`;
   const html=missing+landingHero()+(typeof collegeModules==='function'?collegeModules():'')+intro+
-    (shown.length?(isAll?groupedBoardHTML(shown):shown.map(cardHTML).join('')):`<div class="empty" style="grid-column:1/-1">No upcoming matches to analyze.</div>`)+
-    (remaining?`<div class="fixturePager"><span>Showing ${shown.length} of ${capped.length} fixtures</span><button class="actionbtn" onclick="MATCH_VISIBLE+=FIXTURE_PAGE_SIZE;renderMatches()">Load ${Math.min(FIXTURE_PAGE_SIZE,remaining)} more</button></div>`:'');
+    (shown.length?groupedBoardHTML(shown):`<div class="empty" style="grid-column:1/-1">No upcoming matches to analyze.</div>`)+
+    (remaining?`<div class="fixturePager"><span>Showing ${shown.length} of ${active.length} fixtures</span><button class="actionbtn" onclick="MATCH_VISIBLE+=FIXTURE_PAGE_SIZE;renderMatches()">Load ${Math.min(FIXTURE_PAGE_SIZE,remaining)} more</button></div>`:'');
   $('#view-matches').innerHTML=html;enhanceMatchCards($('#view-matches'));if(typeof fitRankingCard==='function')fitRankingCard();}
 function renderResults(){const M=DATA.matches||[];
   const past=M.filter(isCompleteOrPast).sort((a,b)=>Number(isFavoriteMatch(b))-Number(isFavoriteMatch(a))||(b.kickoff||'').localeCompare(a.kickoff||''));
@@ -876,7 +799,7 @@ function renderSystemUpdates(){
   shell.append(hero,timeline);host.replaceChildren(shell);
 }
 
-function renderStatus(){const host=$('#view-status'),M=DATA.matches||[],st=deriveStandings(),third=getThirdRace(),fresh=DATA.source_freshness||{};const up=M.filter(m=>m.status==='UPCOMING').length,fin=M.filter(m=>m.status==='FINISHED').length;const next=M.filter(isVisibleUpcoming).sort((a,b)=>(a.kickoff||'').localeCompare(b.kickoff||''))[0];host.innerHTML=`<div class="vhead">App Status</div><div class="hint" style="margin-bottom:10px">menu profile: <b>${esc(navProfile())}</b> · sport file: <b>${esc(DATA_FILE||'all (merged)')}</b></div><div class="status-grid"><div class="statuscard ${LAST_OK?'ok':'warn'}"><span class="slbl">Data file</span><div class="sval">${LAST_OK?'loaded':'not loaded'}</div><div class="hint">${LAST_ERROR?esc(LAST_ERROR):'Loaded'}</div></div><div class="statuscard info"><span class="slbl">Source</span><div class="sval">${esc(DATA.source_note||'unknown')}</div><div class="hint">${esc(fresh.primary_provider||'')}</div></div><div class="statuscard ${fresh.state==='fresh'?'ok':fresh.state?'warn':'info'}"><span class="slbl">Source freshness</span><div class="sval">${esc(fresh.state||'legacy snapshot')}</div><div class="hint">${esc(fresh.note||DATA.updated||'No source-age receipt')}</div></div><div class="statuscard info"><span class="slbl">Last successful</span><div class="sval">${fresh.last_successful_at?ago(fresh.last_successful_at):DATA.updated?ago(DATA.updated):'unknown'}</div><div class="hint">${esc(fresh.last_successful_at||DATA.updated||'—')}</div></div><div class="statuscard ${(DATA.quota_blocked_providers||[]).length?'warn':'ok'}"><span class="slbl">Provider quota</span><div class="sval">${(DATA.quota_blocked_providers||[]).length?'limited':'ok'}</div><div class="hint">${(DATA.quota_blocked_providers||[]).length?`${esc((DATA.quota_blocked_providers||[]).join(', '))} hit its safety reserve this run`:'no provider hit its safety reserve this run'}</div></div><div class="statuscard ${DATA.fixture_count_check?.anomaly?'warn':'ok'}"><span class="slbl">Fixture count</span><div class="sval">${DATA.fixture_count_check?.current??'—'}</div><div class="hint">${DATA.fixture_count_check?.anomaly?`well below the recent average of ${DATA.fixture_count_check.trailing_avg} — possible partial slate`:DATA.fixture_count_check?.trailing_avg!=null?`recent average ${DATA.fixture_count_check.trailing_avg}`:'building trailing history'}</div></div><div class="statuscard info"><span class="slbl">Matches</span><div class="sval">${M.length}</div><div class="hint">${up} upcoming · ${fin} final</div></div><div class="statuscard info"><span class="slbl">Groups</span><div class="sval">${st.length}</div><div class="hint">${third.length} third-place teams tracked</div></div><div class="statuscard info"><span class="slbl">News Items</span><div class="sval">${(DATA.news||[]).length}</div><div class="hint">${newsSources().filter(s=>s!=='all').join(' · ')}</div></div></div><div class="btnline"><button class="actionbtn" onclick="load(true)">Reload Data Now</button><button class="actionbtn" onclick="setView('groups')">Open Groups</button><button class="actionbtn" onclick="setView('third')">Open Thirds</button><button class="actionbtn" onclick="setView('updates')">System Updates</button></div>`}
+function renderStatus(){const host=$('#view-status'),M=DATA.matches||[],st=deriveStandings(),third=getThirdRace(),fresh=DATA.source_freshness||{};const up=M.filter(m=>m.status==='UPCOMING').length,fin=M.filter(m=>m.status==='FINISHED').length;const next=M.filter(isVisibleUpcoming).sort((a,b)=>(a.kickoff||'').localeCompare(b.kickoff||''))[0];host.innerHTML=`<div class="vhead">App Status</div><div class="hint" style="margin-bottom:10px">menu profile: <b>${esc(navProfile())}</b> · sport file: <b>${esc(DATA_FILE)}</b></div><div class="status-grid"><div class="statuscard ${LAST_OK?'ok':'warn'}"><span class="slbl">Data file</span><div class="sval">${LAST_OK?'loaded':'not loaded'}</div><div class="hint">${LAST_ERROR?esc(LAST_ERROR):'Loaded'}</div></div><div class="statuscard info"><span class="slbl">Source</span><div class="sval">${esc(DATA.source_note||'unknown')}</div><div class="hint">${esc(fresh.primary_provider||'')}</div></div><div class="statuscard ${fresh.state==='fresh'?'ok':fresh.state?'warn':'info'}"><span class="slbl">Source freshness</span><div class="sval">${esc(fresh.state||'legacy snapshot')}</div><div class="hint">${esc(fresh.note||DATA.updated||'No source-age receipt')}</div></div><div class="statuscard info"><span class="slbl">Last successful</span><div class="sval">${fresh.last_successful_at?ago(fresh.last_successful_at):DATA.updated?ago(DATA.updated):'unknown'}</div><div class="hint">${esc(fresh.last_successful_at||DATA.updated||'—')}</div></div><div class="statuscard ${(DATA.quota_blocked_providers||[]).length?'warn':'ok'}"><span class="slbl">Provider quota</span><div class="sval">${(DATA.quota_blocked_providers||[]).length?'limited':'ok'}</div><div class="hint">${(DATA.quota_blocked_providers||[]).length?`${esc((DATA.quota_blocked_providers||[]).join(', '))} hit its safety reserve this run`:'no provider hit its safety reserve this run'}</div></div><div class="statuscard ${DATA.fixture_count_check?.anomaly?'warn':'ok'}"><span class="slbl">Fixture count</span><div class="sval">${DATA.fixture_count_check?.current??'—'}</div><div class="hint">${DATA.fixture_count_check?.anomaly?`well below the recent average of ${DATA.fixture_count_check.trailing_avg} — possible partial slate`:DATA.fixture_count_check?.trailing_avg!=null?`recent average ${DATA.fixture_count_check.trailing_avg}`:'building trailing history'}</div></div><div class="statuscard info"><span class="slbl">Matches</span><div class="sval">${M.length}</div><div class="hint">${up} upcoming · ${fin} final</div></div><div class="statuscard info"><span class="slbl">Groups</span><div class="sval">${st.length}</div><div class="hint">${third.length} third-place teams tracked</div></div><div class="statuscard info"><span class="slbl">News Items</span><div class="sval">${(DATA.news||[]).length}</div><div class="hint">${newsSources().filter(s=>s!=='all').join(' · ')}</div></div></div><div class="btnline"><button class="actionbtn" onclick="load(true)">Reload Data Now</button><button class="actionbtn" onclick="setView('groups')">Open Groups</button><button class="actionbtn" onclick="setView('third')">Open Thirds</button><button class="actionbtn" onclick="setView('updates')">System Updates</button></div>`}
 function lopt(v,label,cur){return `<option value="${v}" ${v===cur?'selected':''}>${label}</option>`}
 function opt(v,label,cur){return `<option value="${v}" ${String(cur)===String(v)?'selected':''}>${label}</option>`}function checked(v){return v?'checked':''}
 
@@ -1168,8 +1091,8 @@ function lbPeriod(){try{return localStorage.getItem('matchday.lbPeriod')||'all'}
 function setLbPeriod(p){try{localStorage.setItem('matchday.lbPeriod',p)}catch(e){};renderCommunity();}
 function btmLoad(){try{return JSON.parse(localStorage.getItem('matchday.btm')||'{}')}catch(e){return {}}}
 function btmSave(o){try{localStorage.setItem('matchday.btm',JSON.stringify(o))}catch(e){}}
-function communityScope(){const k=String(DATA?.comp_key||'ALL').toUpperCase();return k==='ALL'?'ALL':k;}
-function btmScoped(db){const scope=communityScope();if(scope==='ALL')return db;
+function communityScope(){return String(DATA?.comp_key||'').toUpperCase();}
+function btmScoped(db){const scope=communityScope();if(!scope)return db;
   const picks={};Object.entries(db.picks||{}).forEach(([id,p])=>{if(String(p.comp||'WC').toUpperCase()===scope)picks[id]=p;});
   return {...db,picks};}
 function isCommunityPickOpen(m){const kickoff=kickMs(m),now=Date.now();return m?.status==='UPCOMING'&&kickoff>now&&kickoff-now<=7*864e5&&!isStaleUpcoming(m)}

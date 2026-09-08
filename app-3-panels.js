@@ -94,10 +94,9 @@ function _freshestUpdated(current,incoming){
 }
 function applyCurrentCfbSnapshot(payload){
   const comp=String(payload?.comp_key||'').toUpperCase();
-  if(!['NCAAF','ALL'].includes(comp)||typeof MATCHDAY_CFB_SNAPSHOT==='undefined')return payload;
+  if(comp!=='NCAAF'||typeof MATCHDAY_CFB_SNAPSHOT==='undefined')return payload;
   payload.news=[...(MATCHDAY_CFB_SNAPSHOT.news||[]),...(payload.news||[])];
   payload.updated=_freshestUpdated(payload.updated,MATCHDAY_CFB_SNAPSHOT.updated);
-  if(comp==='ALL')return payload;
   // Add fixtures the schedule feed has not caught up with.
   //
   // Matchday's own fixture provider has a monthly ceiling, and when it is spent
@@ -414,58 +413,11 @@ if(next)parts.push(`<span class="ls-next ls-clickable" data-mid="${esc(next.id)}
 /* removed duplicate (diverseNews) */
 /* removed duplicate (renderInsight) */
 function setView(v){VIEW=safeView(v);v=VIEW;if(typeof closeNavSheet==='function')closeNavSheet();
-  // Leaving the board is the signal that the visitor wants more than the board
-  // payload holds. Renders now from what's loaded, then again once the full
-  // per-sport files arrive.
-  if(!DATA_FILE&&DATA?._summary&&VIEWS_NEEDING_FULL_DATA.has(v))escalateAllSports();document.querySelectorAll('.navbtn[data-v]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===v));document.querySelectorAll('.view').forEach(el=>el.style.display=el.id==='view-'+v?((v==='matches'||v==='results')?'grid':'block'):'none');renderCurrent();const active=$('#view-'+v);if(active){active.classList.remove('viewEntering');void active.offsetWidth;active.classList.add('viewEntering')}}
+  document.querySelectorAll('.navbtn[data-v]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===v));document.querySelectorAll('.view').forEach(el=>el.style.display=el.id==='view-'+v?((v==='matches'||v==='results')?'grid':'block'):'none');renderCurrent();const active=$('#view-'+v);if(active){active.classList.remove('viewEntering');void active.offsetWidth;active.classList.add('viewEntering')}}
 $('#nav').addEventListener('click',e=>{const b=e.target.closest('.navbtn[data-v]');if(b?.dataset.v)setView(b.dataset.v)});
-function aggregateScorecards(datasets){
-  const sources=(datasets||[]).filter(d=>d?.scorecard).map(d=>({comp:d.comp_key||d.competition||'',sc:d.scorecard}));
-  if(!sources.length)return null;
-  const sum=key=>sources.reduce((n,x)=>n+(Number(x.sc[key])||0),0);
-  const weighted=(key,countKey='graded',digits=3,strictCount=false)=>{let total=0,n=0;sources.forEach(({sc})=>{const v=Number(sc[key]),w=Number(strictCount?sc[countKey]:(sc[countKey]??sc.graded));if(Number.isFinite(v)&&w>0){total+=v*w;n+=w}});return n?Number((total/n).toFixed(digits)):null};
-  const out={graded:sum('graded'),pending:sum('pending'),model_hits:sum('model_hits'),
-    market_graded:sum('market_graded'),market_hits:sum('market_hits'),
-    post_lock_market_graded:sum('post_lock_market_graded'),post_lock_market_hits:sum('post_lock_market_hits'),
-    disagree:sum('disagree'),disagree_hits:sum('disagree_hits')};
-  out.brier_graded=sum('brier_graded');out.brier=weighted('brier','brier_graded',3,true);out.brier3_graded=sum('brier3_graded');out.log_loss_graded=sum('log_loss_graded');out.brier3=weighted('brier3','brier3_graded',3,true);out.log_loss=weighted('log_loss','log_loss_graded',3,true);
-  out.advancement_graded=sum('advancement_graded');out.log_loss_advancement_graded=sum('log_loss_advancement_graded');out.brier_advancement=weighted('brier_advancement','advancement_graded',3,true);out.log_loss_advancement=weighted('log_loss_advancement','log_loss_advancement_graded',3,true);
-  out.clv_n=sum('clv_n');out.clv_avg=weighted('clv_avg','clv_n',1);out.clv_beat=sum('clv_beat');
-
-  const bands=new Map();sources.forEach(({sc})=>(sc.calibration||[]).forEach(c=>{const row=bands.get(c.band)||{band:c.band,n:0,hits:0};row.n+=Number(c.n)||0;row.hits+=Number(c.hits)||0;bands.set(c.band,row)}));
-  out.calibration=[...bands.values()];
-  const combineSplit=key=>{const merged={};sources.forEach(({sc})=>Object.entries(sc[key]||{}).forEach(([side,v])=>{const row=merged[side]||{n:0,hits:0};row.n+=Number(v?.n)||0;row.hits+=Number(v?.hits)||0;merged[side]=row}));return merged};
-  out.home_away=combineSplit('home_away');
-  out.market_agreement=combineSplit('market_agreement');
-  const combineRate=(path)=>{let n=0,hits=0,beTotal=0,beN=0;sources.forEach(({sc})=>{const v=path.reduce((o,k)=>o?.[k],sc)||{};const vn=Number(v.n)||0;n+=vn;hits+=Number(v.hits)||0;if(v.be!=null&&vn){beTotal+=Number(v.be)*vn;beN+=vn}});return {n,hits,be:beN?Math.round(beTotal/beN):null}};
-  out.value={all:combineRate(['value','all']),chances:combineRate(['value','chances']),pending:sources.reduce((n,{sc})=>n+(Number(sc.value?.pending)||0),0)};
-  out.signal_quality={};sources.forEach(({sc})=>Object.entries(sc.signal_quality||{}).forEach(([k,v])=>{const row=out.signal_quality[k]||{n:0,hits:0};row.n+=Number(v.n)||0;row.hits+=Number(v.hits)||0;out.signal_quality[k]=row}));
-  const upsetWatched=sources.reduce((n,{sc})=>n+(Number(sc.upset?.watched)||0),0);
-  const upsetScoreTotal=sources.reduce((n,{sc})=>n+((Number(sc.upset?.avg_score)||0)*(Number(sc.upset?.watched)||0)),0);
-  out.upset={watched:upsetWatched,hits:sources.reduce((n,{sc})=>n+(Number(sc.upset?.hits)||0),0),triggered:sources.reduce((n,{sc})=>n+(Number(sc.upset?.triggered)||0),0),triggered_hits:sources.reduce((n,{sc})=>n+(Number(sc.upset?.triggered_hits)||0),0),avg_score:upsetWatched?Number((upsetScoreTotal/upsetWatched).toFixed(1)):null};
-  out.picks=sources.flatMap(({comp,sc})=>(sc.picks||[]).map(p=>({...p,_comp:comp}))).sort((a,b)=>String(b.kickoff||'').localeCompare(String(a.kickoff||''))).slice(0,80);
-  out.misses=sources.flatMap(({comp,sc})=>(sc.misses||[]).map(m=>({...m,_comp:comp}))).slice(0,20);
-
-  // Newer scorecards expose provenance exclusions. Keep each class separate;
-  // never fold unverifiable history into the official graded denominator.
-  const provenance={legacy:['legacy','legacy_count','legacy_picks'],quarantined:['quarantined','quarantined_count','quarantined_picks'],late_unverifiable:['late_unverifiable','late_unverifiable_count'],excluded:['excluded','excluded_count']};
-  Object.entries(provenance).forEach(([name,keys])=>{let present=false,scalar=0,nested=null;sources.forEach(({sc})=>{for(const key of keys){const v=sc[key]??sc.provenance?.[key];if(v==null)continue;present=true;if(v&&typeof v==='object'&&!Array.isArray(v)){nested=nested||{};['total','graded','pending','model_hits','count'].forEach(k=>{if(v[k]!=null)nested[k]=(Number(nested[k])||0)+(Number(v[k])||0)});if(v.label&&!nested.label)nested.label=v.label}else scalar+=Array.isArray(v)?v.length:(Number(v)||0);break}});if(present){if(nested){nested.total=(Number(nested.total)||0)+scalar;if(nested.graded&&nested.model_hits!=null)nested.accuracy=Number((nested.model_hits/nested.graded*100).toFixed(1));out[name]=nested}else out[name]=scalar}});
-  // The all-time tally has to be rebuilt from the merged per-sport figures,
-  // not summed from each sport's own `combined` block: on the All-sports
-  // board (the default view) this aggregate IS the scorecard, so without
-  // this the "All-time total" card silently disappears on the exact screen
-  // most people land on, which is where it's most worth showing.
-  const legacyGraded=Number(out.legacy?.graded ?? out.quarantined?.graded)||0;
-  const legacyHits=Number(out.legacy?.model_hits ?? out.quarantined?.model_hits)||0;
-  const combinedGraded=(Number(out.graded)||0)+legacyGraded;
-  const combinedHits=(Number(out.model_hits)||0)+legacyHits;
-  out.combined={graded:combinedGraded,model_hits:combinedHits,
-    accuracy:combinedGraded?Number((combinedHits/combinedGraded*100).toFixed(1)):null,
-    verified_graded:Number(out.graded)||0,verified_hits:Number(out.model_hits)||0,
-    legacy_graded:legacyGraded,legacy_hits:legacyHits,
-    note:'Includes legacy/migrated picks without recoverable proof of pregame timing alongside verified pregame-locked picks. See the pick log below for which is which.'};
-  return out;
-}
+// aggregateScorecards() lived here: it merged every sport's scorecard into the
+// one the merged "All college" board showed. Each board now reads its own
+// sport's scorecard straight from that sport's data file.
 // A unique ?_=<timestamp> on every poll made each request a distinct URL, so
 // no browser or CDN cache could ever serve or revalidate it: each refresh
 // re-downloaded the full payload -- 9.8MB across the all-sports view -- to
@@ -476,68 +428,15 @@ function aggregateScorecards(datasets){
 // megabytes. Not 'no-store', which would forbid keeping a copy to revalidate
 // against and put us straight back to full downloads.
 const REVALIDATE={cache:'no-cache'};
-// Views that need more than the landing board holds -- full season history, the
-// research detail behind a pick, standings. Opening one escalates the merged
-// "All sports" view from the summary payload to the real per-sport files.
-const VIEWS_NEEDING_FULL_DATA=new Set(['results','groups','title','edge','score','bracket','third','tott','tree','sandbox']);
-let ALL_SPORTS_FULL=false;
-function allSportsNeedsFull(){return ALL_SPORTS_FULL||VIEWS_NEEDING_FULL_DATA.has(VIEW)}
-// Escalate on demand: called when a visitor leaves the board or opens a match,
-// so the cost of the full files is paid by people who asked for what's in them.
-async function escalateAllSports(){
-  if(DATA_FILE||!DATA?._summary||ALL_SPORTS_FULL)return;
-  ALL_SPORTS_FULL=true;
-  await load(true);
-}
 async function load(manual=false){if(LOAD_TIMER){clearTimeout(LOAD_TIMER);LOAD_TIMER=null}try{
-  let usedSummary=false;
-  if(!DATA_FILE&&!allSportsNeedsFull()){
-    // The landing board needs a slate and a scorecard, not twelve seasons of
-    // fixtures and the research detail behind every one of them. board_summary
-    // .json carries exactly what this view renders; if it is missing or stale
-    // the merge below still works, just slowly, so a failed build degrades to
-    // the old behaviour rather than to an empty page.
-    const summary=await fetch('board_summary.json',REVALIDATE).then(r=>r.ok?r.json():null).catch(()=>null);
-    if(summary&&(summary.matches||[]).length){
-      applyForecastPublicationPauses(summary);
-      DATA=Object.assign({},summary,{
-        scorecard:aggregateScorecards(summary.scorecard_sources||[]),
-        standings:[],third_race:[],scorers:[],leaders:{},bracket:[],
-        _summary:true});
-      delete DATA.scorecard_sources;
-      usedSummary=true;
-    }
-  }
-  if(usedSummary){/* board payload already in DATA */}
-  else if(!DATA_FILE){ // ALL SPORTS: merge every sport file that exists
-    // NHL is retired for now: data_nhl.json is not published, so asking for it
-    // cost every visitor a 404 on every load. The NHL entries elsewhere (labels,
-    // score units, sandbox sizes) stay put so restoring the sport is a one-word
-    // change here rather than a hunt.
-    const keys=ALL_SPORT_KEYS;
-    const results=await Promise.all(keys.map(k=>fetch('data_'+k+'.json',REVALIDATE).then(r=>r.ok?r.json():null).catch(()=>null)));
-    let base=null;const merged=[];let news=[];let latest='';
-    const titleBySport=[];
-    results.forEach((d,i)=>{if(!d)return;applyForecastPublicationPauses(d);if(!base)base=d;
-      if(COLLEGE_BOARD_KEYS.has(keys[i]))(d.matches||[]).forEach(m=>{m._comp=(d.comp_key||keys[i].toUpperCase());merged.push(m);});
-      const comp=d.comp_key||keys[i].toUpperCase();
-      const compLabel=SPORT_LABELS[String(comp).toLowerCase()]||d.competition||comp;
-      if(COLLEGE_BOARD_KEYS.has(keys[i])){const currentNews=(d.news||[]).filter(isFreshNews).sort((a,b)=>newsTime(b)-newsTime(a));news=news.concat(currentNews.slice(0,8).map(a=>({...a,_comp:a.competition||comp,feed:compLabel})));}
-      if((d.updated||'')>latest)latest=d.updated;
-      const top=(d.title_odds||[])[0];
-      if(top)titleBySport.push({comp,label:compLabel,team:top.team,code:top.code,pct:top.pct});});
-    if(!base){const r0=await fetch('data.json',REVALIDATE);if(!r0.ok)throw new Error('no data files yet — run a fetch');base=await r0.json();(base.matches||[]).forEach(m=>merged.push(m));news=base.news||[];latest=base.updated;}
-    merged.sort((a,b)=>(a.kickoff||'').localeCompare(b.kickoff||''));
-    DATA=Object.assign({},base,{matches:merged,news:news,updated:latest,competition:'All college',comp_key:'ALL',standings:[],bracket:[],bracketology:null,third_race:[],scorers:[],leaders:{},scorecard:aggregateScorecards(results.filter((d,i)=>d&&COLLEGE_BOARD_KEYS.has(keys[i]))),title_by_sport:titleBySport});
-  } else {
-    const r=await fetch(DATA_FILE,REVALIDATE);if(!r.ok)throw new Error('HTTP '+r.status);DATA=stripPastSeasonCompetitionViews(await r.json());applyForecastPublicationPauses(DATA);
-  }applyCurrentCfbSnapshot(DATA);applyCurrentNcaamSnapshot(DATA);DATA.news=(DATA.news||[]).filter(isFreshNews).sort((a,b)=>newsTime(b)-newsTime(a));BYID={};(DATA.matches||[]).forEach(m=>BYID[m.id]=m);LAST_OK=true;LAST_ERROR='';const cn=$('#compName');if(cn)cn.textContent=DATA.competition?' · '+DATA.competition:'';const tb=document.querySelector('.navbtn[data-v="third"]');if(tb)tb.style.display=(DATA.third_race&&DATA.third_race.length)?'':'none';const gb2=document.querySelector('.navbtn[data-v="groups"]');if(gb2)gb2.style.display=(DATA.standings&&DATA.standings.length)?'':'none';// .some() passes (element,index): the index landed on isForecastPaused's
+  // One board, one file. The merged "All college" view used to assemble itself
+  // here out of board_summary.json (or, failing that, every per-sport file at
+  // once) and then escalate to the full files when a visitor left the board;
+  // none of that machinery is needed to load a single sport.
+  const r=await fetch(DATA_FILE,REVALIDATE);if(!r.ok)throw new Error('HTTP '+r.status);DATA=stripPastSeasonCompetitionViews(await r.json());applyForecastPublicationPauses(DATA);
+  applyCurrentCfbSnapshot(DATA);applyCurrentNcaamSnapshot(DATA);DATA.news=(DATA.news||[]).filter(isFreshNews).sort((a,b)=>newsTime(b)-newsTime(a));BYID={};(DATA.matches||[]).forEach(m=>BYID[m.id]=m);LAST_OK=true;LAST_ERROR='';const cn=$('#compName');if(cn)cn.textContent=DATA.competition?' · '+DATA.competition:'';const tb=document.querySelector('.navbtn[data-v="third"]');if(tb)tb.style.display=(DATA.third_race&&DATA.third_race.length)?'':'none';const gb2=document.querySelector('.navbtn[data-v="groups"]');if(gb2)gb2.style.display=(DATA.standings&&DATA.standings.length)?'':'none';// .some() passes (element,index): the index landed on isForecastPaused's
   // `payload` parameter, so the competition check read match._comp, which only
-  // the merged build sets -- the banner fired on every board except MLB's own.
-  // Scoped to the MLB board as well: in the merged "All sports" view MLB's
-  // fixtures sit alongside eleven other competitions, and announcing "Forecast
-  // paused" above all of them read as the whole site being down. Paused MLB
-  // cards still carry their own pause shell there.
+  // the merged build set -- the banner fired on every board except MLB's own.
   applySportNav();renderStrip();renderInsight();renderCurrent();applyStaticI18n();renderAlerts()}catch(e){console.error(e);applySportNav();
   const sel=currentSportKey();
   if(sel&&(!DATA||((DATA.comp_key||'').toLowerCase()!==sel))){
@@ -545,7 +444,7 @@ async function load(manual=false){if(LOAD_TIMER){clearTimeout(LOAD_TIMER);LOAD_T
           comp_key:sel.toUpperCase(),competition:(SPORT_LABELS[sel]||sel),updated:'',_missing:true};
     BYID={};
   }
-  applySportNav();LAST_OK=false;LAST_ERROR=String(e.message||e);$('#strip').textContent='no data';const selKey=(DATA_FILE.match(/data_(\w+)\.json/)||[])[1];$('#view-matches').innerHTML=`<div class="empty" style="grid-column:1/-1">${selKey?`No ${esc(SPORT_LABELS[selKey]||selKey.toUpperCase())} data yet.<br><span class="faintline">Run start_${esc(selKey)}.bat once to pull it, or <a href="#" onclick="changeSport('');return false" style="color:var(--signal)">switch back to Auto</a>.</span>`:`Data file not loaded.<br><span class="faintline">${esc(LAST_ERROR)}</span>`}</div>`;if(VIEW==='status')renderStatus()}finally{const ss=$('#sportSel');if(ss)ss.value=(DATA_FILE.match(/data_(\w+)\.json/)||['',''])[1];scheduleNextLoad()}}
+  applySportNav();LAST_OK=false;LAST_ERROR=String(e.message||e);$('#strip').textContent='no data';const selKey=(DATA_FILE.match(/data_(\w+)\.json/)||[])[1];$('#view-matches').innerHTML=`<div class="empty" style="grid-column:1/-1">${selKey?`No ${esc(SPORT_LABELS[selKey]||selKey.toUpperCase())} data yet.<br><span class="faintline">Run start_${esc(selKey)}.bat once to pull it, or pick the other sport above.</span>`:`Data file not loaded.<br><span class="faintline">${esc(LAST_ERROR)}</span>`}</div>`;if(VIEW==='status')renderStatus()}finally{const ss=$('#sportSel');if(ss)ss.value=(DATA_FILE.match(/data_(\w+)\.json/)||['','ncaaf'])[1];scheduleNextLoad()}}
 function scheduleNextLoad(){if(LOAD_TIMER)clearTimeout(LOAD_TIMER);LOAD_TIMER=setTimeout(()=>load(),Math.max(30,Number(SETTINGS.refresh)||60)*1000)}
 
 
@@ -673,9 +572,9 @@ function feedName(a){const f=_srcClean(a.feed||'');return f&&f!==sourceName(a)?f
 function newsBuckets(){const buckets={};(DATA.news||[]).filter(isFreshNews).forEach((a,i)=>{const src=sourceName(a);(buckets[src] ||= []).push({...a,_idx:i})});Object.values(buckets).forEach(items=>items.sort((a,b)=>newsTime(b)-newsTime(a)));return buckets}
 function newsSources(){const buckets=newsBuckets();return ['all',...Object.keys(buckets).sort((a,b)=>a.localeCompare(b))]}
 function diverseNews(limit=12){
-  const all=(DATA.news||[]).filter(isFreshNews),allSports=DATA.comp_key==='ALL'||DATA.competition==='All sports';
+  const all=(DATA.news||[]).filter(isFreshNews);
   const buckets={};
-  all.forEach((a,i)=>{const key=allSports?(a._comp||a.competition||'OTHER'):sourceName(a);(buckets[key]||=[]).push({...a,_idx:i})});
+  all.forEach((a,i)=>{const key=sourceName(a);(buckets[key]||=[]).push({...a,_idx:i})});
   Object.values(buckets).forEach(items=>items.sort((a,b)=>newsTime(b)-newsTime(a)));
   const keys=Object.keys(buckets).sort((a,b)=>newsTime(buckets[b][0])-newsTime(buckets[a][0])),out=[];let row=0;
   while(out.length<limit&&keys.length){let moved=false;for(const key of keys){const item=buckets[key][row];if(item){out.push(item);moved=true;if(out.length>=limit)break}}if(!moved)break;row++}
@@ -905,35 +804,9 @@ renderGroups=function(){
   });
 };
 /* dedup */
-// Sports whose expanded view has a research-signals panel (see research-signals
-// .js). Only these are worth re-fetching a full sport file for when the board is
-// running on the summary payload -- everywhere else the summary already holds
-// everything the modal renders.
-const RESEARCH_SIGNAL_COMPS=new Set(['NFL','NCAAF','NBA','NCAAM','MLB']);
-const SPORT_FILE_CACHE={};
-function fetchSportFile(key){
-  if(!key)return Promise.resolve(null);
-  if(!SPORT_FILE_CACHE[key])SPORT_FILE_CACHE[key]=fetch('data_'+key+'.json',REVALIDATE).then(r=>r.ok?r.json():null).catch(()=>null);
-  return SPORT_FILE_CACHE[key];
-}
-// Fill in the detail fields the summary payload leaves out, for one match only.
-// Mutates the match in place so BYID and DATA.matches see it too.
-async function hydrateMatchDetail(m){
-  const key=String(m?._comp||'').toLowerCase();
-  const full=await fetchSportFile(key);
-  const hit=(full?.matches||[]).find(x=>String(x.id)===String(m.id));
-  if(!hit)return false;
-  Object.assign(m,hit,{_comp:m._comp});
-  return true;
-}
-// True when this match is being shown from the summary payload and its sport
-// has a research panel whose fields the summary leaves out. app-4-features.js
-// overrides openMatchModal with a hardened version; the hook lives there.
-function needsDetailHydration(m){
-  if(!DATA?._summary||!m)return false;
-  if(!RESEARCH_SIGNAL_COMPS.has(String(m._comp||'').toUpperCase()))return false;
-  return !m.advanced_metrics&&!m.nfl_challenger_shadow&&!m.mlb_challenger_shadow;
-}
+// The board loads its sport's full data file, so every match on screen already
+// carries the research detail the expanded view reads. The summary payload and
+// the per-match hydration it needed went with the merged board.
 function openMatchModal(id){const m=BYID[id]||(DATA.matches||[]).find(x=>String(x.id)===String(id));if(!m)return;const modal=ensureMatchModal();const hmeta=t=>esc(teamStandingsMeta(t,m._comp,{form:true}).join(' · '));modal.innerHTML=`<section class="matchSheet" role="dialog" aria-modal="true"><div class="modalHero"><button class="modalClose" onclick="closeMatchModal()" aria-label="Close">×</button><div class="modalStage">${esc(m.stage||'Fixture')} · ${esc(m.status==='LIVE'?'AWAITING FINAL':m.status||'')}</div><div class="modalFixture"><div class="modalTeam"><div class="modalCode">${teamFlagHTML(m.home)}${esc(m.home?.code||'HOME')}</div><div class="modalName">${esc(m.home?.name||'Home')}</div><div class="modalMeta">${hmeta(m.home)}</div></div><div class="modalScore"><div class="bigScore">${esc(scorePlainText(m))}</div><div class="modalStatus">${m.status==='LIVE'?'Score shown after final':kickIn(m.kickoff)}</div></div><div class="modalTeam away"><div class="modalCode">${esc(m.away?.code||'AWAY')}${teamFlagHTML(m.away,true)}</div><div class="modalName">${esc(m.away?.name||'Away')}</div><div class="modalMeta">${hmeta(m.away)}</div></div></div></div><div class="modalBody">${details(m)}</div></section>`;modal.classList.add('show');document.body.classList.add('modalOpen')}
 
 
@@ -1207,10 +1080,6 @@ function _v4TitleRows(t){
   const max=Number(t[0].pct)||1;
   return t.slice(0,12).map((x,i)=>`<div class="raceRow"><span class="raceRank">${i+1}</span><div><div class="raceTeam">${uiFlag(x.code)?`<span class="flagIcon">${uiFlag(x.code)}</span>`:''}${esc(x.team)}</div><div class="raceMeta">title probability snapshot</div></div><span class="raceBar"><i style="width:${Math.max(4,Math.round((Number(x.pct)||0)/max*100))}%"></i></span><span class="racePct">${esc(x.pct??'—')}%</span></div>`).join('');
 }
-function _v4TitleBySportRows(list){
-  if(!list||!list.length)return '<div class="emptyForecast">No per-sport title snapshot yet.</div>';
-  return list.map(x=>`<div class="raceRow"><span class="raceRank">${esc(x.label||x.comp||'')}</span><div><div class="raceTeam">${uiFlag(x.code)?`<span class="flagIcon">${uiFlag(x.code)}</span>`:''}${esc(x.team||'—')}</div><div class="raceMeta">favorite to win it all</div></div><span class="raceBar"><i style="width:${Math.max(4,Math.round(Number(x.pct)||0))}%"></i></span><span class="racePct">${esc(x.pct??'—')}%</span></div>`).join('');
-}
 function _v4ScorerRows(sc){
   if(!sc.length)return '<div class="emptyForecast">No scorer data yet.</div>';
   return sc.slice(0,10).map((p,i)=>`<div class="scorerRow"><span class="scorerRank">${i+1}</span><div><div class="scorerName">${esc(p.name||'')}</div><div class="scorerMeta">${esc(p.code||p.team||'')}</div></div><span class="scorerGoals">${esc(p.goals??0)} G${p.assists?` · ${esc(p.assists)} A`:''}</span></div>`).join('');
@@ -1242,9 +1111,7 @@ function renderTitle(){
   let html=`<div class="forecastShell"><div class="forecastHero"><div><h2>Forecast board</h2><p>Tournament probabilities, upset risk, advancement paths, and scorer races, in one place.</p></div><div class="forecastKpis"><div class="forecastKpi"><span>Upcoming</span><b>${upcoming}</b></div><div class="forecastKpi"><span>Upset watch</span><b>${upsets.length}</b></div><div class="forecastKpi"><span>Title teams</span><b>${t.length||'—'}</b></div></div></div>`;
   const leaderPanel=_v13LeaderPanel(sc);
   html+=`<div class="forecastGrid ${leaderPanel?'':'single'}"><section class="forecastPanel"><div class="forecastPanelHead"><h3>Upset radar</h3><span>${upsets.length} matches</span></div><div class="upsetList">${upsets.length?upsets.map(x=>`<div class="upsetRow" onclick="openMatchModal('${esc(String(x.m.id||''))}')"><div><div class="upsetMatch">${esc(x.m.home?.code||x.m.home?.name||'H')} v ${esc(x.m.away?.code||x.m.away?.name||'A')}</div><div class="upsetWhy">${esc(x.reason)}</div></div><div class="upsetWhy">${esc(x.m.stage||'')} · ${kickIn(x.m.kickoff)}</div><span class="riskPill ${x.cls}">${x.triggered?'active upset pick':x.risk>=70?'high variance':x.risk>=50?'medium variance':'low variance'}</span></div>`).join(''):'<div class="emptyForecast">No upcoming matches to analyze.</div>'}</div></section>${leaderPanel}</div>`;
-  const titleBySport=DATA.title_by_sport||[];
   html+=`<div class="forecastGrid"><section class="forecastPanel"><div class="forecastPanelHead"><h3>Title race</h3><span>probability snapshot</span></div><div class="raceList">${_v4TitleRows(t)}</div></section><section class="forecastPanel"><div class="forecastPanelHead"><h3>Match snapshots</h3><span>next fixtures</span></div><div class="matchSnapList">${_v4MatchSnapshots()}</div></section></div>`;
-  if(titleBySport.length)html+=`<div class="forecastGrid single"><section class="forecastPanel"><div class="forecastPanelHead"><h3>Title forecasts — every sport</h3><span>${titleBySport.length} competitions</span></div><div class="raceList">${_v4TitleBySportRows(titleBySport)}</div></section></div>`;
   html+=_v4AdvancementTable(adv);
   html+=`<div class="forecastNote">Read these as probabilities, not calls: a 38% pick is supposed to lose most of the time.</div></div>`;
   const host=$('#view-title');host.innerHTML=html;

@@ -108,18 +108,6 @@ window.openMatchModal=function(id){
     modal.dataset.matchId=key;
     modal.classList.add('show');
     document.body.classList.add('modalOpen');
-    // When the board is running on the summary payload, this match is missing
-    // the research detail the expanded view shows for some sports. The modal is
-    // already on screen with the score, the pick and the market read; fetch that
-    // sport's full file behind it and re-render once, rather than making the
-    // visitor wait on a multi-megabyte download to see anything at all.
-    if(typeof needsDetailHydration==='function'&&needsDetailHydration(m)){
-      hydrateMatchDetail(m).then(ok=>{
-        if(!ok)return;
-        const open=document.getElementById('matchModal');
-        if(open?.classList.contains('show')&&open.dataset.matchId===key)window.openMatchModal(key);
-      });
-    }
   }catch(err){
     console.error('openMatchModal failed:',err);
     alert('Expanded view failed to open. Check the browser console for details.');

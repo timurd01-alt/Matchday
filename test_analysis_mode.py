@@ -152,24 +152,30 @@ class AnalysisModeTests(unittest.TestCase):
         self.assertIn("Verified locked pregame picks", panels)
         self.assertIn("const eligible=M.filter(m=>!_modelIsPast(m)||_modelHasVerifiedLock(m))", features)
 
-    def test_all_sports_merge_covers_every_published_sport(self):
-        """The all-sports load must request exactly what the deploy ships.
+    def test_sport_picker_covers_every_published_sport(self):
+        """The sport picker must offer exactly what the deploy ships.
 
-        This pinned the literal key list `'nba','mlb','nhl'`, which broke the
-        moment NHL was retired -- data_nhl.json is not in the deploy allowlist,
-        so asking for it cost every visitor a 404 on every load. Pin the real
-        invariant instead: the merge reads one shared key list, and that list
-        matches the data files the workflow actually publishes.
+        This used to pin the all-sports merge's key list, which is gone with the
+        merged board. The invariant survives it: every sport a visitor can
+        select has to have a published data file, or picking it takes a 404.
         """
         core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
-        panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
+        html = (ROOT / "index.html").read_text(encoding="utf-8")
         workflow = (ROOT / ".github" / "workflows" / "deploy.yml").read_text(encoding="utf-8")
 
-        self.assertIn("const keys=ALL_SPORT_KEYS;", panels)
         declared = re.search(r"const ALL_SPORT_KEYS=\[([^\]]*)\]", core)
         self.assertIsNotNone(declared, "app-1-core.js must declare ALL_SPORT_KEYS")
         keys = re.findall(r"'([a-z0-9]+)'", declared.group(1))
         self.assertTrue(keys, "ALL_SPORT_KEYS must not be empty")
+
+        picker = re.search(r'<select id="sportSel".*?</select>', html, re.S)
+        self.assertIsNotNone(picker, "index.html must have the sport picker")
+        offered = re.findall(r'<option value="([a-z0-9]*)"', picker.group(0))
+        self.assertEqual(sorted(offered), sorted(keys),
+                         "the sport picker and ALL_SPORT_KEYS have drifted")
+        self.assertNotIn("", offered,
+                         'the picker must not offer an empty value: the merged '
+                         '"All college" board it selected no longer exists')
 
         shipped = re.search(r"for data_file in ((?:data_\w+\.json ?)+); do", workflow)
         self.assertIsNotNone(shipped, "deploy.yml must copy the data files in a loop")
@@ -177,9 +183,9 @@ class AnalysisModeTests(unittest.TestCase):
                      for name in shipped.group(1).split()]
         self.assertEqual(
             sorted(published), sorted(keys),
-            "the all-sports merge and the deploy allowlist have drifted: "
-            "every requested key must have a published data file, or visitors "
-            "take a 404 on every load",
+            "the sport picker and the deploy allowlist have drifted: every "
+            "selectable sport must have a published data file, or visitors "
+            "take a 404 when they pick it",
         )
         # Retiring a sport from the fetch must not strip its name, so restoring
         # it stays a one-line change rather than a hunt.

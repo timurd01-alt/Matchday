@@ -23,10 +23,16 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
         self.assertIn('data-primary data-v="news"', html)
 
-    def test_all_college_never_inherits_a_legacy_bracket(self):
+    def test_there_is_no_merged_all_college_board(self):
+        # The merged board showed both sports' fixtures with every sport-specific
+        # view stripped out -- a strictly smaller version of the sport pages it
+        # sat above. Nothing may reintroduce it: each board is one sport's file.
         panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
-        self.assertIn("competition:'All college'", panels)
-        self.assertIn("standings:[],bracket:[],bracketology:null", panels)
+        core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
+        html = (ROOT / "index.html").read_text(encoding="utf-8")
+        self.assertNotIn("competition:'All college'", panels)
+        self.assertNotIn('<option value="">', html)
+        self.assertIn("const DEFAULT_SPORT_FILE=", core)
 
     def test_ncaam_keeps_conferences_and_gets_rankings_bracketology(self):
         snapshot = (ROOT / "matchday-cfb-snapshot.js").read_text(encoding="utf-8")
