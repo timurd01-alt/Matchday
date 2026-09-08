@@ -23,6 +23,29 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
         self.assertIn('data-primary data-v="news"', html)
 
+    def test_the_welcome_cards_model_read_is_bet_betters(self):
+        """The gate quotes one model, the same one every other screen quotes.
+
+        The IN FOCUS card read m.prediction through _v10OfficialPick -- that is
+        Matchday's own forecast, not the engine behind the card, the Top 25 and
+        the expanded view. On one live fixture the two disagreed 96.5% to 50%,
+        under the same word, MODEL, on the first screen a visitor ever sees.
+        Same rule as the card and the expanded panel: the engine's read, or no
+        number at all.
+        """
+        core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
+        start = core.index("function _welcomeCardHTML(m){")
+        body = core[start:core.index(chr(10) + "function ", start + 1)]
+        self.assertIn("betbetterReadFor", body,
+                      "the welcome card must resolve its read through the engine")
+        for banned in ("_v10OfficialPick", "officialPrediction", "m.prediction"):
+            self.assertNotIn(banned, body,
+                             f"the welcome card reads {banned} -- that is the other "
+                             "model, and the site publishes one")
+        self.assertIn("Not priced yet", body,
+                      "a fixture the engine has not priced needs an empty state, "
+                      "not another model's number in its place")
+
     def test_there_is_no_merged_all_college_board(self):
         # The merged board showed both sports' fixtures with every sport-specific
         # view stripped out -- a strictly smaller version of the sport pages it

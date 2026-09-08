@@ -532,13 +532,23 @@ function tourPositionCard(target,card){
   card.style.left=left+'px';card.style.top=top+'px';
 }
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.body.classList.contains('tourOpen'))tourEnd();});
+// The gate's IN FOCUS card is a model read like any other on the site, so it
+// comes from the same engine as every other one: Bet Better's. It used to read
+// m.prediction through _v10OfficialPick -- Matchday's own forecast -- so the
+// front door quoted one model and every screen behind it quoted another, under
+// the same word, "MODEL". A fixture the engine has not priced now shows the
+// fixture with no number, rather than another model's number in its place.
 function _welcomeCardHTML(m){
-  const pr=m.prediction||{},op=(typeof _v10OfficialPick==='function'&&m.prediction)?_v10OfficialPick(m):null;
-  const pick=op?.name||pr.pick_name||'',model=op?.confidence??pr.confidence,market=op?.marketPct;
-  const edge=model!=null&&market!=null?Math.round(Number(model)-Number(market)):null;
-  const meter=model!=null?`<div class="welcomeMeter" aria-hidden="true"><i style="--welcome-p:${pct(model)}%"></i></div>`:'';
-  return `<div class="welcomeMatchMeta"><span>${esc(m._comp||DATA.comp_key||m.stage||'NEXT')}</span><span>${kickIn(m.kickoff)}</span></div><div class="welcomeTeams"><div><small>${esc(m.home?.code||'HOME')}</small><b>${esc(m.home?.name||'Home')}</b></div><em>v</em><div class="away"><small>${esc(m.away?.code||'AWAY')}</small><b>${esc(m.away?.name||'Away')}</b></div></div>${pick?`<div class="welcomeSignal"><span>${_isTwoWay(m)||!(Number(model)<50)?'MODEL':'MOST LIKELY'}</span><b>${esc(pick)} ${model!=null?esc(model)+'%':''}</b>${market!=null?`<i>market ${esc(market)}%${edge!=null?` · ${edge>0?'+':''}${edge} pt`:''}</i>`:''}</div>${meter}`:''}`;
+  const bb=typeof betbetterReadFor==='function'?betbetterReadFor(m):null;
+  const pick=bb?.pick_name||'';
+  const model=Number(bb?.model_pct),market=Number(bb?.market_pct),edge=Number(bb?.edge_points);
+  const meter=Number.isFinite(model)?`<div class="welcomeMeter" aria-hidden="true"><i style="--welcome-p:${pct(model)}%"></i></div>`:'';
+  const signal=pick&&Number.isFinite(model)
+    ?`<div class="welcomeSignal"><span>MODEL</span><b>${esc(pick)} ${model.toFixed(1)}%</b>${Number.isFinite(market)?`<i>market ${market.toFixed(1)}%${Number.isFinite(edge)?` · ${edge>0?'+':''}${edge.toFixed(1)} pt`:''}</i>`:''}</div>${meter}`
+    :`<div class="welcomeSignal noRead"><span>MODEL</span><b>Not priced yet</b><i>the engine publishes a read once the game is priced</i></div>`;
+  return `<div class="welcomeMatchMeta"><span>${esc(m._comp||DATA.comp_key||m.stage||'NEXT')}</span><span>${kickIn(m.kickoff)}</span></div><div class="welcomeTeams"><div><small>${esc(m.home?.code||'HOME')}</small><b>${esc(m.home?.name||'Home')}</b></div><em>v</em><div class="away"><small>${esc(m.away?.code||'AWAY')}</small><b>${esc(m.away?.name||'Away')}</b></div></div>${signal}`;
 }
+
 // Real coverage numbers, counted from the slate that just loaded. Deliberately
 // three short figures rather than another paragraph of claims.
 // Every sport's graded record, not just the loaded board's. The scorecard is a
@@ -615,13 +625,15 @@ function renderWelcome(){
     const state=$('#welcomeFeedState');if(state)state.textContent='ANALYSIS';
     return;
   }
-  // most urgent kickoff shown first, then rotates through a small pool of
-  // the other featured games (by watchability, narrowed to a near-term
-  // window so a months-away fixture can't outrank this week's games)
+  // Soonest kickoff first, then a small near-term pool behind it. A fixture the
+  // engine has priced leads: the card exists to show a model read, and opening
+  // on "not priced yet" when a priced game is available wastes the slot.
+  const hasRead=m=>!!(typeof betbetterReadFor==='function'&&betbetterReadFor(m));
   const featured=nearTermPool(upcoming.filter(m=>m.id!==soonest.id),4)
-    .sort((a,b)=>(b.watchability||0)-(a.watchability||0)).slice(0,4);
-  const pool=[soonest,...featured];
-  host.innerHTML=_welcomeCardHTML(soonest);
+    .sort((a,b)=>Number(hasRead(b))-Number(hasRead(a))||(b.watchability||0)-(a.watchability||0)).slice(0,4);
+  const lead=hasRead(soonest)?soonest:(featured.find(hasRead)||soonest);
+  const pool=[lead,...[soonest,...featured].filter(m=>m!==lead)];
+  host.innerHTML=_welcomeCardHTML(lead);
   runCarousel('welcome',pool,host,_welcomeCardHTML,4500);
   const state=$('#welcomeFeedState');if(state)state.textContent='PREGAME';
 }
