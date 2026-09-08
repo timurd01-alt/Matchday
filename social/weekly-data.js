@@ -2,10 +2,10 @@
 // Every number here comes from betbetter_picks.json, filtered to the
 // current playing week. Regenerate with: python social_export.py --js
 window.MATCHDAY_SOCIAL = {
-  "week": "WEEK 1",
+  "week": "WEEK OF SEP 08",
   "season": "2026 SEASON",
-  "published": "2026-08-31",
-  "generated_at": "2026-09-03T17:39:00Z",
+  "published": "2026-09-07",
+  "generated_at": "2026-09-08T17:01:33Z",
   "logos": {
     "Indiana Hoosiers": "logos/indiana.png",
     "INDIANA": "logos/indiana.png",
@@ -19,66 +19,65 @@ window.MATCHDAY_SOCIAL = {
     "Oregon Ducks": "logos/oregon.png",
     "OREGON": "logos/oregon.png",
     "Oregon": "logos/oregon.png",
-    "Texas Tech Red Raiders": "logos/texas.png",
-    "TEXAS TECH": "logos/texasTech.png",
-    "Texas Tech": "logos/texasTech.png",
     "Miami Hurricanes": "logos/miami.png",
     "MIAMI": "logos/miami.png",
     "Miami": "logos/miami.png",
-    "Ole Miss Rebels": "logos/oleMiss.png",
-    "OLE MISS": "logos/oleMiss.png",
-    "Ole Miss": "logos/oleMiss.png",
+    "Texas Longhorns": "logos/texas.png",
+    "TEXAS": "logos/texas.png",
+    "Texas": "logos/texas.png",
     "Georgia Bulldogs": "logos/georgia.png",
     "GEORGIA": "logos/georgia.png",
     "Georgia": "logos/georgia.png",
     "Utah Utes": "logos/utah.png",
     "UTAH": "logos/utah.png",
     "Utah": "logos/utah.png",
+    "Ole Miss Rebels": "logos/oleMiss.png",
+    "OLE MISS": "logos/oleMiss.png",
+    "Ole Miss": "logos/oleMiss.png",
+    "Texas Tech Red Raiders": "logos/texas.png",
+    "TEXAS TECH": "logos/texasTech.png",
+    "Texas Tech": "logos/texasTech.png",
     "Alabama Crimson Tide": "logos/alabama.png",
     "ALABAMA": "logos/alabama.png",
     "Alabama": "logos/alabama.png",
-    "Texas Longhorns": "logos/texas.png",
-    "TEXAS": "logos/texas.png",
-    "Texas": "logos/texas.png",
     "Penn State Nittany Lions": "logos/pennState.png",
     "PENN STATE": "logos/pennState.png",
     "Penn State": "logos/pennState.png",
     "Texas A&M Aggies": "logos/texas.png",
     "TEXAS A&M": "logos/texasAM.png",
     "Texas A&M": "logos/texasAM.png",
-    "Washington Huskies": "logos/washington.png",
-    "WASHINGTON": "logos/washington.png",
-    "Washington": "logos/washington.png",
-    "SMU Mustangs": "logos/smu.png",
-    "SMU": "logos/smu.png",
-    "Tennessee Volunteers": "logos/tennessee.png",
-    "TENNESSEE": "logos/tennessee.png",
-    "Tennessee": "logos/tennessee.png",
+    "USC Trojans": "logos/usc.png",
+    "USC": "logos/usc.png",
     "Iowa Hawkeyes": "logos/iowa.png",
     "IOWA": "logos/iowa.png",
     "Iowa": "logos/iowa.png",
-    "USC Trojans": "logos/usc.png",
-    "USC": "logos/usc.png",
-    "BYU Cougars": "logos/byu.png",
-    "BYU": "logos/byu.png",
     "Oklahoma Sooners": "logos/oklahoma.png",
     "OKLAHOMA": "logos/oklahoma.png",
     "Oklahoma": "logos/oklahoma.png",
-    "Vanderbilt Commodores": "logos/vanderbilt.png",
-    "VANDERBILT": "logos/vanderbilt.png",
-    "Vanderbilt": "logos/vanderbilt.png",
+    "Washington Huskies": "logos/washington.png",
+    "WASHINGTON": "logos/washington.png",
+    "Washington": "logos/washington.png",
+    "Tennessee Volunteers": "logos/tennessee.png",
+    "TENNESSEE": "logos/tennessee.png",
+    "Tennessee": "logos/tennessee.png",
+    "BYU Cougars": "logos/byu.png",
+    "BYU": "logos/byu.png",
+    "SMU Mustangs": "logos/smu.png",
+    "SMU": "logos/smu.png",
     "Michigan Wolverines": "logos/michigan.png",
     "MICHIGAN": "logos/michigan.png",
     "Michigan": "logos/michigan.png",
+    "LSU Tigers": "logos/lsu.png",
+    "LSU": "logos/lsu.png",
     "Louisville Cardinals": "logos/louisville.png",
     "LOUISVILLE": "logos/louisville.png",
     "Louisville": "logos/louisville.png",
+    "Vanderbilt Commodores": "logos/vanderbilt.png",
+    "VANDERBILT": "logos/vanderbilt.png",
+    "Vanderbilt": "logos/vanderbilt.png",
     "Missouri Tigers": "logos/missouri.png",
     "MISSOURI": "logos/missouri.png",
     "Missouri": "logos/missouri.png",
-    "Clemson Tigers": "logos/clemson.png",
-    "CLEMSON": "logos/clemson.png",
-    "Clemson": "logos/clemson.png",
     "Oklahoma State Cowboys": "logos/oklahoma.png",
     "OKLAHOMA STATE": "logos/oklahoma.png",
     "Oklahoma State": "logos/oklahoma.png"
@@ -86,149 +85,149 @@ window.MATCHDAY_SOCIAL = {
   "top25": [
     [
       "Indiana Hoosiers",
-      23.1
+      31.35
     ],
     [
       "Ohio State Buckeyes",
-      22.31
+      30.87
     ],
     [
       "Notre Dame Fighting Irish",
-      20.6
+      29.05
     ],
     [
       "Oregon Ducks",
-      18.88
-    ],
-    [
-      "Texas Tech Red Raiders",
-      17.21
+      25.65
     ],
     [
       "Miami Hurricanes",
-      17.11
-    ],
-    [
-      "Ole Miss Rebels",
-      16.24
-    ],
-    [
-      "Georgia Bulldogs",
-      15.78
-    ],
-    [
-      "Utah Utes",
-      14.65
-    ],
-    [
-      "Alabama Crimson Tide",
-      13.73
+      25.01
     ],
     [
       "Texas Longhorns",
-      13.09
+      23.82
+    ],
+    [
+      "Georgia Bulldogs",
+      23.55
+    ],
+    [
+      "Utah Utes",
+      23.25
+    ],
+    [
+      "Ole Miss Rebels",
+      23.22
+    ],
+    [
+      "Texas Tech Red Raiders",
+      23.0
+    ],
+    [
+      "Alabama Crimson Tide",
+      22.37
     ],
     [
       "Penn State Nittany Lions",
-      12.76
+      22.2
     ],
     [
       "Texas A&M Aggies",
-      12.66
-    ],
-    [
-      "Washington Huskies",
-      11.87
-    ],
-    [
-      "SMU Mustangs",
-      11.6
-    ],
-    [
-      "Tennessee Volunteers",
-      11.56
-    ],
-    [
-      "Iowa Hawkeyes",
-      11.22
+      21.77
     ],
     [
       "USC Trojans",
-      11.05
+      21.08
     ],
     [
-      "BYU Cougars",
-      10.98
+      "Iowa Hawkeyes",
+      20.28
     ],
     [
       "Oklahoma Sooners",
-      10.93
+      20.07
     ],
     [
-      "Vanderbilt Commodores",
-      10.38
+      "Washington Huskies",
+      19.33
+    ],
+    [
+      "Tennessee Volunteers",
+      19.04
+    ],
+    [
+      "BYU Cougars",
+      18.51
+    ],
+    [
+      "SMU Mustangs",
+      18.32
     ],
     [
       "Michigan Wolverines",
-      10.21
+      17.99
+    ],
+    [
+      "LSU Tigers",
+      17.11
     ],
     [
       "Louisville Cardinals",
-      9.97
+      16.87
+    ],
+    [
+      "Vanderbilt Commodores",
+      16.76
     ],
     [
       "Missouri Tigers",
-      9.57
-    ],
-    [
-      "Clemson Tigers",
-      8.77
+      16.64
     ]
   ],
   "upset": {
     "eyebrow": "MODEL UPSET WATCH",
-    "underdog": "TULSA",
-    "favorite": "OKLAHOMA STATE",
-    "kickoff": "SAT · 3:45 PM ET",
-    "modelPct": 43.1,
-    "marketPct": 17.9,
-    "note": "The model gives Tulsa 43.1% where the market gives 17.9%."
+    "underdog": "BUFFALO BULLS",
+    "favorite": "FLORIDA INTERNATIONAL",
+    "kickoff": "SAT · 6:00 PM ET",
+    "modelPct": 56.1,
+    "marketPct": 22.9,
+    "note": "The model gives Buffalo Bulls 56.1% where the market gives 22.9%."
   },
   "slate": [
     {
       "rank": 1,
-      "away": "LOUISVILLE",
-      "home": "OLE MISS",
-      "time": "SUN · 7:30 PM ET",
-      "hook": "#23 vs #7"
+      "away": "OHIO STATE",
+      "home": "TEXAS",
+      "time": "SAT · 7:30 PM ET",
+      "hook": "#2 vs #6"
     },
     {
       "rank": 2,
-      "away": "WISCONSIN",
-      "home": "NOTRE DAME",
-      "time": "SUN · 7:30 PM ET",
-      "hook": "RANKED #3 AT HOME"
+      "away": "OREGON",
+      "home": "OKLAHOMA STATE",
+      "time": "SAT · 12:00 PM ET",
+      "hook": "RANKED #4 ON THE ROAD"
     },
     {
       "rank": 3,
-      "away": "MIAMI",
-      "home": "STANFORD",
-      "time": "FRI · 9:00 PM ET",
-      "hook": "RANKED #6 ON THE ROAD"
+      "away": "OKLAHOMA",
+      "home": "MICHIGAN",
+      "time": "SAT · 12:00 PM ET",
+      "hook": "#16 vs #21"
     },
     {
       "rank": 4,
-      "away": "BOISE STATE",
-      "home": "OREGON",
+      "away": "RICE",
+      "home": "NOTRE DAME",
       "time": "SAT · 3:30 PM ET",
-      "hook": "RANKED #4 AT HOME"
+      "hook": "RANKED #3 AT HOME"
     },
     {
       "rank": 5,
-      "away": "EAST CAROLINA",
-      "home": "ALABAMA",
+      "away": "ARKANSAS",
+      "home": "UTAH",
       "time": "SAT · 12:00 PM ET",
-      "hook": "RANKED #10 AT HOME"
+      "hook": "RANKED #8 AT HOME"
     }
   ]
 };
