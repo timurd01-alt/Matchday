@@ -541,15 +541,33 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.body.class
 function _welcomeCardHTML(m){
   const bb=typeof betbetterReadFor==='function'?betbetterReadFor(m):null;
   const pick=bb?.pick_name||'';
-  const model=Number(bb?.model_pct),market=Number(bb?.market_pct),edge=Number(bb?.edge_points);
-  const meter=Number.isFinite(model)?`<div class="welcomeMeter" aria-hidden="true"><i style="--welcome-p:${pct(model)}%"></i></div>`:'';
+  // Number(null) is 0, and the handoff writes null for a fixture it never got
+  // a price on -- straight through Number.isFinite, that renders "market 0.0%"
+  // and "0.0 pts vs market" for a game with no market at all. A missing number
+  // has to stay missing.
+  const num=v=>{const n=Number(v);return v==null||v===''||!Number.isFinite(n)?NaN:n};
+  const model=num(bb?.model_pct),market=num(bb?.market_pct),edge=num(bb?.edge_points);
   // renderWelcome only ever hands this a priced fixture, so there is no
   // no-number branch: a game without a read is not shown at all.
-  const signal=pick&&Number.isFinite(model)
-    ?`<div class="welcomeSignal"><span>MODEL</span><b>${esc(pick)} ${model.toFixed(1)}%</b>${Number.isFinite(market)?`<i>market ${market.toFixed(1)}%${Number.isFinite(edge)?` · ${edge>0?'+':''}${edge.toFixed(1)} pt`:''}</i>`:''}</div>${meter}`
+  const hasEdge=Number.isFinite(edge)&&Number.isFinite(market);
+  const edgeChip=hasEdge
+    ?`<em class="welcomeEdge ${edge>0?'up':edge<0?'down':''}">${edge>0?'+':''}${edge.toFixed(1)} pts vs market</em>`
     :'';
-  return `<div class="welcomeMatchMeta"><span>${esc(m._comp||DATA.comp_key||m.stage||'NEXT')}</span><span>${kickIn(m.kickoff)}</span></div><div class="welcomeTeams"><div><small>${esc(m.home?.code||'HOME')}</small><b>${esc(m.home?.name||'Home')}</b></div><em>v</em><div class="away"><small>${esc(m.away?.code||'AWAY')}</small><b>${esc(m.away?.name||'Away')}</b></div></div>${signal}`;
+  // Two numbers on one bar rather than two numbers in a sentence: the fill is
+  // the model's probability and the notch is the market's, so the gap between
+  // them -- the only thing the pair is actually saying -- is the thing you see.
+  const meter=Number.isFinite(model)
+    ?`<div class="welcomeMeter" aria-hidden="true"><i style="--welcome-p:${pct(model)}%"></i>${Number.isFinite(market)?`<u style="--welcome-m:${pct(market)}%"></u>`:''}</div>
+      <div class="welcomeMeterKey"><span><b></b>model ${model.toFixed(1)}%</span>${Number.isFinite(market)?`<span><i></i>market ${market.toFixed(1)}%</span>`:''}</div>`
+    :'';
+  const read=pick&&Number.isFinite(model)
+    ?`<div class="welcomeRead"><div class="welcomeReadTop"><span>MODEL PICK</span>${edgeChip}</div>
+       <div class="welcomeReadPick"><b>${esc(pick)}</b><strong>${model.toFixed(1)}<small>%</small></strong></div>
+       ${meter}</div>`
+    :'';
+  return `<div class="welcomeMatchMeta"><span>${esc(m._comp||DATA.comp_key||m.stage||'NEXT')}</span><span>${kickIn(m.kickoff)}</span></div><div class="welcomeTeams"><div><small>${esc(m.home?.code||'HOME')}</small><b>${esc(m.home?.name||'Home')}</b></div><em>v</em><div class="away"><small>${esc(m.away?.code||'AWAY')}</small><b>${esc(m.away?.name||'Away')}</b></div></div>${read}`;
 }
+
 
 // Real coverage numbers, counted from the slate that just loaded. Deliberately
 // three short figures rather than another paragraph of claims.

@@ -2265,3 +2265,66 @@ html{color-scheme:dark}
    thin strip of texture, while a crop of the bowl still reads as a stadium. */
 @media(max-width:900px){.welcomeScene svg{width:190%;left:-45%}
   .welcomeScene::after{background:radial-gradient(120% 60% at 50% 34%,rgba(5,9,14,.92),rgba(5,9,14,.7) 50%,rgba(5,9,14,.35) 100%),linear-gradient(180deg,rgba(5,9,14,.8),rgba(5,9,14,.4) 40%,transparent 70%)}}
+
+/* ---- welcome gate: fill the frame ----------------------------------------
+   The scene was bottom-anchored at its own aspect ratio (width:100%,
+   height:auto), so on a tall or very wide window it left a dead band above the
+   bowl and, on short ones, below the field. Cover the gate instead -- scale to
+   the larger of the two ratios and crop the overflow, anchored to the bottom so
+   the field and the near stands are what survive the crop. */
+.welcomeScene svg{position:absolute;inset:0;width:100%;height:100%;transform:none}
+
+/* ---- welcome gate: the IN FOCUS card --------------------------------------
+   The card was the narrower half of the shell and carried the site's whole
+   proposition -- a fixture, the model's number, the market's, the record -- in
+   type one step off the smallest size in the system. Give it the room: a wider
+   column, a wider shell, and a read laid out as a read rather than as a row of
+   values that happened to fit. */
+.welcomeShell{width:min(1300px,100%);grid-template-columns:minmax(0,1fr) minmax(430px,.86fr);align-items:center}
+.welcomePreview{padding:26px 26px 22px;border-radius:24px}
+.welcomePreviewTop{font-size:var(--fs-2xs)}
+.welcomeNext{margin:18px 0 22px;padding:22px 22px 20px;border-radius:16px}
+.welcomeTeams{margin:20px 0 18px;gap:16px}
+.welcomeTeams b{font-size:clamp(1.15rem,1.5vw,1.5rem);letter-spacing:-.02em}
+.welcomeTeams small{font-size:var(--fs-xs)}
+
+/* the read */
+.welcomeRead{border-top:1px solid var(--line);margin-top:4px;padding-top:15px}
+.welcomeReadTop{display:flex;align-items:center;justify-content:space-between;gap:10px;
+  font-family:var(--mono);font-size:var(--fs-3xs);letter-spacing:.14em;color:var(--signal);font-weight:var(--fw-bold)}
+.welcomeEdge{font-style:normal;font-family:var(--mono);font-size:var(--fs-3xs);letter-spacing:.06em;
+  padding:4px 8px;border-radius:999px;border:1px solid var(--line2);color:var(--muted);white-space:nowrap}
+.welcomeEdge.up{color:var(--signal);border-color:rgba(58,209,122,.42);background:rgba(58,209,122,.09)}
+.welcomeEdge.down{color:var(--loss,#ff6b6b);border-color:rgba(255,107,107,.38);background:rgba(255,107,107,.08)}
+.welcomeReadPick{display:flex;align-items:baseline;justify-content:space-between;gap:14px;margin:11px 0 14px}
+.welcomeReadPick b{font-family:var(--display);font-size:clamp(1.1rem,1.45vw,1.45rem);line-height:1.1;letter-spacing:-.02em}
+.welcomeReadPick strong{font-family:var(--display);font-size:clamp(1.9rem,2.7vw,2.7rem);line-height:.9;
+  letter-spacing:-.04em;color:var(--signal);font-variant-numeric:tabular-nums;white-space:nowrap}
+.welcomeReadPick strong small{font-size:var(--fs-lg);margin-left:2px;color:var(--muted)}
+/* One bar carries both numbers: the fill is the model, the notch is the market,
+   so the distance between them is the claim. */
+.welcomeMeter{position:relative;height:9px;border-radius:999px;background:var(--bg2);overflow:visible}
+.welcomeMeter i{display:block;width:var(--welcome-p);height:100%;border-radius:999px;
+  background:linear-gradient(90deg,var(--signal),#7ef0b0);animation:welcomeMeterIn .65s cubic-bezier(.2,.8,.2,1) both}
+.welcomeMeter u{position:absolute;top:-4px;bottom:-4px;left:var(--welcome-m);width:2px;border-radius:2px;
+  background:#cfe6ff;box-shadow:0 0 0 2px rgba(10,16,24,.85)}
+.welcomeMeterKey{display:flex;gap:16px;margin-top:10px;font-family:var(--mono);font-size:var(--fs-3xs);
+  letter-spacing:.06em;color:var(--faint)}
+.welcomeMeterKey span{display:inline-flex;align-items:center;gap:6px}
+.welcomeMeterKey b{width:9px;height:9px;border-radius:3px;background:var(--signal)}
+.welcomeMeterKey i{width:2px;height:11px;border-radius:2px;background:#cfe6ff}
+.welcomeStats{gap:10px;margin:0 0 20px}
+.welcomeStats>div{padding:14px 10px;border-radius:13px}
+.welcomeProof>div{padding:15px 2px}
+@media(max-width:980px){.welcomeShell{grid-template-columns:1fr}}
+@media(max-width:760px){.welcomePreview{padding:18px}.welcomeNext{padding:16px}
+  .welcomeReadPick{flex-direction:column;align-items:flex-start;gap:2px}}
+
+/* The crowd: each row is split into three interleaved sets on staggered
+   delays, so what moves is people shifting in their seats rather than a row of
+   dots sliding in unison. Transform and opacity only -- no layout, no paint. */
+.wsFans{animation:wsFans 3.6s ease-in-out infinite;animation-delay:var(--d,0s);will-change:transform,opacity}
+@keyframes wsFans{0%,100%{transform:translateY(0);opacity:1}
+  38%{transform:translateY(-2.4px);opacity:.72}
+  64%{transform:translateY(1.4px);opacity:1}}
+@media(prefers-reduced-motion:reduce){.wsFans{animation:none}}
