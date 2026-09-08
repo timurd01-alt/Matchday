@@ -2250,9 +2250,9 @@ html{color-scheme:dark}
    left, where the copy is, and to the top, where the sky would otherwise sit
    right behind the first line of type. */
 .welcomeScene::after{content:"";position:absolute;inset:0;
-  background:radial-gradient(78% 76% at 22% 44%,rgba(5,9,14,.92),rgba(5,9,14,.62) 46%,rgba(5,9,14,.12) 78%),
-             linear-gradient(180deg,rgba(5,9,14,.82),rgba(5,9,14,.3) 26%,transparent 46%),
-             linear-gradient(0deg,rgba(5,9,14,.55),transparent 26%)}
+  background:radial-gradient(70% 72% at 20% 42%,rgba(5,9,14,.92),rgba(5,9,14,.58) 46%,rgba(5,9,14,.08) 76%),
+             radial-gradient(44% 34% at 16% 86%,rgba(5,9,14,.86),rgba(5,9,14,.4) 52%,transparent 76%),
+             linear-gradient(180deg,rgba(5,9,14,.78),rgba(5,9,14,.24) 24%,transparent 42%)}
 .wsCrowd{animation:wsCrowdShift 11s ease-in-out infinite}
 .wsLamps{filter:drop-shadow(0 0 7px rgba(216,255,233,.9))}
 .wsTowerL,.wsTowerR{animation:wsFlicker 7.5s ease-in-out infinite}
@@ -2328,3 +2328,30 @@ html{color-scheme:dark}
   38%{transform:translateY(-2.4px);opacity:.72}
   64%{transform:translateY(1.4px);opacity:1}}
 @media(prefers-reduced-motion:reduce){.wsFans{animation:none}}
+
+/* ---- welcome gate: match the type to the card -----------------------------
+   Widening the card without touching its type left 9px labels (--fs-3xs) on a
+   surface twice their old size, which reads as a big empty table rather than a
+   big card. Pull the card back a step and bring its own scale up two: on the
+   gate this panel is a hero surface, not a dense one. */
+.welcomeShell{width:min(1180px,100%);grid-template-columns:minmax(0,1fr) minmax(400px,.8fr)}
+.welcomePreview{padding:20px 20px 16px;border-radius:20px}
+.welcomeNext{margin:14px 0 18px;padding:18px 18px 16px}
+.welcomePreviewTop,.welcomeMatchMeta{font-size:var(--fs-xs)}
+.welcomeTeams{margin:16px 0 15px}
+.welcomeTeams small{font-size:var(--fs-sm)}
+.welcomeTeams b{font-size:clamp(1.1rem,1.35vw,1.35rem)}
+.welcomeRead{padding-top:13px}
+.welcomeReadTop,.welcomeEdge,.welcomeMeterKey{font-size:var(--fs-xs)}
+.welcomeReadPick{margin:9px 0 12px}
+.welcomeReadPick b{font-size:clamp(1.05rem,1.3vw,1.3rem)}
+.welcomeReadPick strong{font-size:clamp(1.8rem,2.4vw,2.4rem)}
+.welcomeStats{gap:9px;margin:0 0 16px}
+.welcomeStats>div{padding:12px 9px}
+.welcomeStats b{font-size:var(--fs-3xl)}
+.welcomeStats span{font-size:var(--fs-xs);margin-top:6px}
+.welcomeProof>div{padding:13px 2px}
+.welcomeProof span{font-size:var(--fs-base)}
+.welcomeProof small{font-size:var(--fs-sm)}
+.welcomeProof b{font-size:var(--fs-xs)}
+.welcomeProofLink{font-size:var(--fs-xs)}
