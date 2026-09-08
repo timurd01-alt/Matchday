@@ -2419,3 +2419,24 @@ html{color-scheme:dark}
   .welcomeUpset{margin-top:20px}
   .wuBars>div{grid-template-columns:46px minmax(0,1fr) 46px}
 }
+
+/* ---- welcome gate: the backdrop must not scroll away ----------------------
+   The gate is a fixed, scrollable panel, and these three layers were
+   position:absolute inside it -- which anchors them to the top of the
+   scrollable CONTENT, not to the viewport. Any window short enough to scroll
+   (a 942px-tall screen once the upset block landed) slid the stadium up out of
+   frame on the first scroll and left the gate's own flat background below it.
+   That black band was read as dead space in the scene and it was not in the
+   scene at all: no amount of lighting the turf could reach it.
+
+   position:fixed pins them to the viewport, so the backdrop stays put while the
+   copy scrolls over it. The gate has no transformed ancestor, so fixed resolves
+   against the viewport as intended. */
+.welcomeScene,.welcomeBlobs,.welcomeNoise{position:fixed;inset:0}
+
+/* While proving that out: the carousel's fade leaves the card at opacity 0 for
+   its whole run, so any browser that throttles animations -- a background tab,
+   a low-power mode, a paused compositor -- can strand the front door's headline
+   card invisible. Start the fade from visible instead; it still reads as a
+   fade, and it can no longer resolve to a blank card. */
+@keyframes carouselIn{from{opacity:.25;transform:translateY(5px)}to{opacity:1;transform:none}}
