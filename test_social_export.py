@@ -25,12 +25,26 @@ import social_export
 NOW = dt.datetime(2026, 9, 2, 21, 45, tzinfo=dt.timezone.utc)
 
 RANKING_ROWS = [
-    {"rank": 3, "team_name": "Notre Dame", "tier": "power", "conference": "Ind"},
-    {"rank": 7, "team_name": "Ole Miss", "tier": "power", "conference": "SEC"},
-    {"rank": 9, "team_name": "Utah", "tier": "power", "conference": "Big 12"},
-    {"rank": 23, "team_name": "Louisville", "tier": "power", "conference": "ACC"},
-    {"rank": 40, "team_name": "Wisconsin", "tier": "power", "conference": "Big Ten"},
-    {"rank": 90, "team_name": "Boise State", "tier": "group_of_five", "conference": "MW"},
+    {"rank": 3, "team_name": "Notre Dame", "tier": "power", "conference": "Ind",
+     "division": "fbs"},
+    {"rank": 7, "team_name": "Ole Miss", "tier": "power", "conference": "SEC",
+     "division": "fbs"},
+    {"rank": 9, "team_name": "Utah", "tier": "power", "conference": "Big 12",
+     "division": "fbs"},
+    {"rank": 23, "team_name": "Louisville", "tier": "power", "conference": "ACC",
+     "division": "fbs"},
+    {"rank": 40, "team_name": "Wisconsin", "tier": "power", "conference": "Big Ten",
+     "division": "fbs"},
+    {"rank": 90, "team_name": "Boise State", "tier": "group_of_five", "conference": "MW",
+     "division": "fbs"},
+    # The upset fixture's two sides. Tulsa is the Group of Five underdog and
+    # Oklahoma State the Power Four side that makes the game eligible.
+    {"rank": 116, "team_name": "Tulsa", "tier": "group_of_five", "conference": "AAC",
+     "division": "fbs"},
+    {"rank": 55, "team_name": "Oklahoma State", "tier": "power", "conference": "Big 12",
+     "division": "fbs"},
+    {"rank": 70, "team_name": "UNLV", "tier": "group_of_five", "conference": "MW",
+     "division": "fbs"},
 ]
 BY_NAME = {r["team_name"]: r for r in RANKING_ROWS}
 
@@ -174,7 +188,7 @@ class UpsetSelection(unittest.TestCase):
         filtering on the picked side excluded the game entirely, losing a 25.2
         point disagreement about Tulsa.
         """
-        upsets = social_export.weekly_upsets([self.TULSA], 3)
+        upsets = social_export.weekly_upsets([self.TULSA], BY_NAME, 3)
         self.assertEqual(len(upsets), 1)
         self.assertEqual(upsets[0]["underdog"], "Tulsa")
         self.assertAlmostEqual(upsets[0]["disagreement_points"], 25.2, places=1)
@@ -182,7 +196,7 @@ class UpsetSelection(unittest.TestCase):
                                 "the picked side is the market favourite, which is the point")
 
     def test_exactly_one_candidate_per_game(self):
-        upsets = social_export.weekly_upsets([self.TULSA, self.TULSA], 10)
+        upsets = social_export.weekly_upsets([self.TULSA, self.TULSA], BY_NAME, 10)
         self.assertEqual(len(upsets), 2, "one per game, never one per side")
 
     def test_the_model_must_like_the_underdog_more_than_the_market_does(self):
@@ -190,7 +204,7 @@ class UpsetSelection(unittest.TestCase):
             {"selection": "Tulsa", "model_pct": 12.0, "market_pct": 17.9},
             {"selection": "Oklahoma State", "model_pct": 88.0, "market_pct": 82.1},
         ])
-        self.assertEqual(social_export.weekly_upsets([agreeing], 3), [])
+        self.assertEqual(social_export.weekly_upsets([agreeing], BY_NAME, 3), [])
 
     def test_a_pick_em_game_has_no_underdog(self):
         even = dict(self.TULSA, sides=[
@@ -211,8 +225,65 @@ class UpsetSelection(unittest.TestCase):
         small = dict(self.TULSA, kickoff="2026-09-05T00:00:00Z", sides=[
             {"selection": "Dog", "model_pct": 30.0, "market_pct": 25.0},
             {"selection": "Fav", "model_pct": 70.0, "market_pct": 75.0}])
-        ranked = social_export.weekly_upsets([small, self.TULSA], 5)
+        ranked = social_export.weekly_upsets([small, self.TULSA], BY_NAME, 5)
         self.assertEqual([u["underdog"] for u in ranked], ["Tulsa", "Dog"])
+
+    def test_the_engines_own_pick_leads_the_list(self):
+        """The two surfaces must not rank the same board differently.
+
+        The engine drops a team outplayed per snap last time out; this page
+        cannot, because the handoff carries no EPA per pick. Old Dominion at
+        Virginia Tech is the case that exposed it -- the largest disagreement
+        on the board at 38.8 points, excluded by the engine on a last-game EPA
+        of -0.0004, and so the page's headline card and the engine's pick of
+        the week named different games.
+        """
+        bigger = dict(self.TULSA, home="Louisville", away="Boise State", sides=[
+            {"selection": "Boise State", "model_pct": 50.3, "market_pct": 11.5},
+            {"selection": "Louisville", "model_pct": 49.7, "market_pct": 88.5}])
+        featured = {"home": "Tulsa", "away": "Oklahoma State"}
+        ranked = social_export.weekly_upsets(
+            [bigger, self.TULSA], BY_NAME, 5, featured=featured)
+        self.assertEqual(ranked[0]["underdog"], "Tulsa",
+                         "the engine's pick leads even on the smaller gap")
+        self.assertEqual(ranked[1]["underdog"], "Boise State",
+                         "and the rest still follow by size")
+
+    def test_a_featured_game_outside_the_window_changes_nothing(self):
+        featured = {"home": "Some Team", "away": "Another Team"}
+        ranked = social_export.weekly_upsets([self.TULSA], BY_NAME, 5, featured=featured)
+        self.assertEqual([u["underdog"] for u in ranked], ["Tulsa"])
+
+    def test_a_game_against_an_fcs_opponent_is_not_an_upset(self):
+        """The artefact this filter exists to stop.
+
+        Unfiltered, this page named Nevada at 98.8% against a market price of
+        36.8% -- their opponent was Montana State, which is FCS. A rating
+        earned against FCS opposition sits on another scale entirely, so the
+        disagreement is an artefact of the scale, not a read on the game.
+        """
+        fcs = dict(self.TULSA, home="Nevada", away="Montana State", sides=[
+            {"selection": "Nevada", "model_pct": 98.8, "market_pct": 36.8},
+            {"selection": "Montana State", "model_pct": 1.2, "market_pct": 63.2}])
+        by_name = dict(BY_NAME)
+        by_name["Nevada"] = {"team_name": "Nevada", "tier": "group_of_five",
+                             "division": "fbs"}
+        # Montana State is absent from the poll, which ranks every FBS side.
+        self.assertEqual(social_export.weekly_upsets([fcs], by_name, 3), [])
+
+    def test_two_group_of_five_teams_are_a_disagreement_not_a_story(self):
+        g5 = dict(self.TULSA, home="UNLV", away="Tulsa", sides=[
+            {"selection": "Tulsa", "model_pct": 45.0, "market_pct": 20.0},
+            {"selection": "UNLV", "model_pct": 55.0, "market_pct": 80.0}])
+        self.assertEqual(social_export.weekly_upsets([g5], BY_NAME, 3), [])
+
+    def test_a_near_even_side_is_a_close_game_not_an_underdog(self):
+        # 47.6% is the price that put Ohio State on the engine's upset block
+        # when its own threshold was 50. The slate already covers close games.
+        close = dict(self.TULSA, home="Ole Miss", away="Notre Dame", sides=[
+            {"selection": "Notre Dame", "model_pct": 74.2, "market_pct": 47.6},
+            {"selection": "Ole Miss", "model_pct": 25.8, "market_pct": 52.4}])
+        self.assertEqual(social_export.weekly_upsets([close], BY_NAME, 3), [])
 
     def test_upsets_inherit_the_weekly_date_filter(self):
         """Derived from the already-filtered list, so a November game cannot
@@ -220,7 +291,7 @@ class UpsetSelection(unittest.TestCase):
         its own clock."""
         games = social_export.weekly_games(
             DOCUMENT, BY_NAME, social_export.week_window(NOW))
-        for upset in social_export.weekly_upsets(games, 5):
+        for upset in social_export.weekly_upsets(games, BY_NAME, 5):
             self.assertLess(upset["kickoff"], "2026-09-08")
 
 
