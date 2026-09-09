@@ -168,6 +168,38 @@ class ReportTests(unittest.TestCase):
         finding = data_freshness.inspect_payload("ncaam", [], NOW, self.root)
         self.assertEqual(finding["state"], "stale")
 
+    def test_out_of_season_sport_is_judged_on_its_own_cadence(self):
+        """NCAAM out of season is fetched every 12h, so 10h old is not a problem.
+
+        The uniform 3h warning made a dormant sport permanently "aging" for
+        obeying the fetcher, and the 12h failure line sat exactly on its 12h
+        probe interval -- so an ordinary late probe flipped it to "stale" and
+        failed the run.
+        """
+        _write(self.root, "ncaam", "2026-09-05T01:30:00+00:00",
+               [_match("Duke", "Kansas", "2026-11-02T05:00:00Z")])
+        finding = data_freshness.inspect_payload("ncaam", [], NOW, self.root)
+        self.assertEqual(finding["cadence_hours"], 12.0)
+        self.assertEqual(finding["state"], "ok")
+        self.assertEqual(finding["problems"], [])
+
+    def test_dormant_sport_still_fails_once_it_misses_four_probes(self):
+        """Scaling the threshold must not amount to switching the check off."""
+        _write(self.root, "ncaam", "2026-09-03T00:00:00+00:00",
+               [_match("Duke", "Kansas", "2026-11-02T05:00:00Z")])
+        finding = data_freshness.inspect_payload("ncaam", [], NOW, self.root)
+        self.assertEqual(finding["state"], "stale")
+
+    def test_in_season_sport_keeps_the_hourly_thresholds(self):
+        """A game inside 48h puts the sport back on an hourly fetch."""
+        _write(self.root, "ncaaf", "2026-09-05T07:30:00+00:00",
+               [_match("Rutgers", "Massachusetts", "2026-09-06T22:00:00Z")])
+        finding = data_freshness.inspect_payload("ncaaf", [], NOW, self.root)
+        self.assertEqual(finding["cadence_hours"], 1.0)
+        self.assertEqual(finding["state"], "aging")
+        self.assertEqual(finding["warn_hours"], 3.0)
+        self.assertEqual(finding["fail_hours"], 12.0)
+
     def test_missing_payload_is_reported_not_crashed(self):
         finding = data_freshness.inspect_payload("ncaaf", [], NOW, self.root)
         self.assertEqual(finding["state"], "missing")

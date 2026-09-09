@@ -57,6 +57,18 @@ SNAPSHOT_PATH = pathlib.Path("matchday-cfb-snapshot.js")
 PAYLOAD_WARN_HOURS = 3.0
 PAYLOAD_FAIL_HOURS = 12.0
 
+# Those two floors assume the sport is being fetched every hour, which is only
+# true while it has a game inside 48h. multi_fetch deliberately drops an
+# out-of-season sport to NEAR_EVERY (6h) or DORMANT_EVERY (12h) to save quota,
+# and judging a 12h-cadence sport against a 3h warning made NCAAM permanently
+# "aging" and tipped it to "stale" -- failing the whole run -- whenever a probe
+# landed just over 12h after the last one. Since the fetcher's cadence is the
+# schedule, the thresholds are counted in *missed refreshes* rather than hours:
+# two misses warns, four fails, and neither is ever tighter than the in-season
+# floors above.
+PAYLOAD_WARN_INTERVALS = 2.0
+PAYLOAD_FAIL_INTERVALS = 4.0
+
 # Mirrors multi_fetch.PAST_DUE_SCORE_GRACE_HOURS. A final score is not expected
 # the instant a game ends -- the provider has to publish it and the next
 # adaptive round has to pick it up -- so a fixture is only "unsettled" once it
@@ -85,6 +97,22 @@ def _sports() -> list[str]:
         return [key for key, _flag in multi_fetch.SPORTS]
     except Exception:
         return ["ncaaf", "ncaam"]
+
+
+def _cadence_hours(payload: dict, now: datetime.datetime) -> float:
+    """How often the fetcher intends to refresh this payload, in hours.
+
+    Read from multi_fetch for the same reason _sports() is: the fetcher owns
+    the schedule, and a threshold that disagrees with it reports a sport as
+    stale for doing exactly what it was told to do. Falls back to hourly, the
+    tightest tier, so a broken import can only make this check stricter.
+    """
+    try:
+        import multi_fetch
+
+        return max(multi_fetch.interval_for_payload(payload, now) / 3600.0, 1.0)
+    except Exception:
+        return 1.0
 
 
 def _parse_iso(value: Any) -> datetime.datetime | None:
@@ -284,14 +312,25 @@ def inspect_payload(
         for m in remaining[:5]
     ]
 
+    cadence = _cadence_hours(payload, now)
+    warn_at = max(PAYLOAD_WARN_HOURS, PAYLOAD_WARN_INTERVALS * cadence)
+    fail_at = max(PAYLOAD_FAIL_HOURS, PAYLOAD_FAIL_INTERVALS * cadence)
+    finding["cadence_hours"] = round(cadence, 2)
+    finding["warn_hours"] = round(warn_at, 2)
+    finding["fail_hours"] = round(fail_at, 2)
+
     if age is None:
         finding["problems"].append("payload has no usable `updated` stamp")
         finding["state"] = "stale"
-    elif age >= PAYLOAD_FAIL_HOURS:
-        finding["problems"].append(f"payload is {age:.1f}h old (fails at {PAYLOAD_FAIL_HOURS:.0f}h)")
+    elif age >= fail_at:
+        finding["problems"].append(
+            f"payload is {age:.1f}h old (fails at {fail_at:.0f}h on a {cadence:.0f}h refresh)"
+        )
         finding["state"] = "stale"
-    elif age >= PAYLOAD_WARN_HOURS:
-        finding["problems"].append(f"payload is {age:.1f}h old (warns at {PAYLOAD_WARN_HOURS:.0f}h)")
+    elif age >= warn_at:
+        finding["problems"].append(
+            f"payload is {age:.1f}h old (warns at {warn_at:.0f}h on a {cadence:.0f}h refresh)"
+        )
         finding["state"] = "aging"
 
     if remaining:
