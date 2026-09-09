@@ -63,6 +63,12 @@ SPORT = "ncaaf"
 TIER_POINTS = {"power": 6, "group_of_five": 2}
 RANKED_DEPTH = 25
 
+# A side the market prices below this is an underdog. Anything up to even money
+# is a close game, which the slate already covers -- and the engine that writes
+# the handoff uses the same 35.0 for the same reason, so the two surfaces do not
+# disagree about what the word means.
+UNDERDOG_MARKET_PCT = 35.0
+
 
 class ExportError(RuntimeError):
     pass
@@ -180,7 +186,36 @@ def underdog_side(game: dict) -> dict | None:
     return dog if dog["market_pct"] < 50 else None
 
 
-def weekly_upsets(games: list[dict], limit: int) -> list[dict]:
+def eligible_upset(home: str, away: str, by_name: dict[str, dict]) -> bool:
+    """Is this a game an upset call can honestly be made about?
+
+    Two editorial conditions, both borrowed from the engine that writes the
+    handoff, because a page that publishes a different answer from the same
+    data is worse than either answer alone.
+
+    **Both teams must be FBS.** A rating earned against FCS opposition is on
+    another scale -- roughly 23 points of it -- so a cross-division game shows
+    an enormous apparent disagreement that is an artefact of the scale rather
+    than a read on the game. Unfiltered, this page named Nevada at 98.8%
+    against a market price of 36.8% because their opponent was Montana State,
+    and had Illinois State at Northern Illinois right behind it. The engine
+    learned the same lesson from Mercyhurst.
+
+    A team absent from the published rankings is treated as not FBS. The poll
+    ranks every FBS side, so absence is the same statement, and it fails closed.
+
+    **At least one must be Power Four.** Two Group of Five teams disagreeing
+    with the market is a real disagreement but not a story anyone reading this
+    page has a stake in.
+    """
+    rows = [by_name.get(home), by_name.get(away)]
+    if any(row is None or row.get("division") != "fbs" for row in rows):
+        return False
+    return any(row.get("tier") == "power" for row in rows)
+
+
+def weekly_upsets(games: list[dict], by_name: dict[str, dict],
+                  limit: int, featured: dict | None = None) -> list[dict]:
     """Games where the model rates the market's underdog far above the market.
 
     This asks a question about the *game*, not about the pick, and that
@@ -199,11 +234,29 @@ def weekly_upsets(games: list[dict], limit: int) -> list[dict]:
     upset_of_the_week, which looks seven days ahead on its own clock (so it can
     name a game outside this window) and, being written by the engine rather
     than recomputed, can still carry pre-correction numbers.
+
+    `featured` reconciles that with the engine anyway. The engine applies one
+    filter this page cannot -- it drops a team outplayed per snap in its last
+    outing, which needs EPA the handoff does not carry per pick -- so the two
+    can rank the same board differently. Old Dominion at Virginia Tech is the
+    case: a 38.8 point disagreement, the largest on the board, and the engine
+    excluded it on a last-game EPA of -0.0004.
+
+    So when the engine's pick is inside this window and survives the filters
+    above, it leads the list; everything else follows by gap. The numbers still
+    come from the recomputed side, not from the block, so the page cannot show
+    a stale one. A featured game outside the window changes nothing, which is
+    what the objection above was really about.
     """
     candidates = []
     for game in games:
         dog = underdog_side(game)
         if dog is None:
+            continue
+        if dog["market_pct"] >= UNDERDOG_MARKET_PCT:
+            continue  # a close game, not an underdog
+        if not eligible_upset(str(game.get("home") or ""),
+                              str(game.get("away") or ""), by_name):
             continue
         gap = round(dog["model_pct"] - dog["market_pct"], 1)
         if gap <= 0:
@@ -217,6 +270,11 @@ def weekly_upsets(games: list[dict], limit: int) -> list[dict]:
             disagreement_points=gap,
         ))
     candidates.sort(key=lambda g: (-g["disagreement_points"], g["kickoff"]))
+    if featured:
+        home, away = str(featured.get("home") or ""), str(featured.get("away") or "")
+        lead = [g for g in candidates if g.get("home") == home and g.get("away") == away]
+        if lead:
+            candidates = lead + [g for g in candidates if g is not lead[0]]
     return candidates[:limit]
 
 
@@ -251,7 +309,9 @@ def build(games_limit: int, upsets_limit: int) -> dict:
         "season": ranking.get("season"),
         "top25": top25,
         "slate": games[:games_limit],
-        "upsets": weekly_upsets(games, upsets_limit),
+        "upsets": weekly_upsets(
+            games, by_name, upsets_limit,
+            featured=((document.get("upset_of_the_week") or {}).get("pick"))),
     }
 
 

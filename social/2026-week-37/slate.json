@@ -1,214 +1,214 @@
 {
-  "generated_at": "2026-09-08T17:01:33Z",
-  "handoff_generated_at": "2026-09-07T22:26:14.153947+00:00",
+  "generated_at": "2026-09-09T02:27:25Z",
+  "handoff_generated_at": "2026-09-09T02:07:08.676605+00:00",
   "week": {
-    "from": "2026-09-08T17:01Z",
+    "from": "2026-09-09T02:27Z",
     "to": "2026-09-14T23:59Z",
-    "games_in_window": 54,
-    "picks_in_handoff": 65
+    "games_in_window": 77,
+    "picks_in_handoff": 87
   },
   "basis": "Opponent-adjusted scoring margin",
-  "ranking_published_on": "2026-09-07",
+  "ranking_published_on": "2026-09-08",
   "season": 2026,
   "top25": [
     {
       "rank": 1,
       "team": "Indiana Hoosiers",
-      "rating": 31.35,
+      "rating": 31.3,
       "conference": "Big Ten",
-      "sos": 12.78,
+      "sos": 12.72,
       "record": "1-0"
     },
     {
       "rank": 2,
       "team": "Ohio State Buckeyes",
-      "rating": 30.87,
+      "rating": 30.84,
       "conference": "Big Ten",
-      "sos": 12.18,
+      "sos": 12.15,
       "record": "1-0"
     },
     {
       "rank": 3,
       "team": "Notre Dame Fighting Irish",
-      "rating": 29.05,
+      "rating": 29.02,
       "conference": "FBS Independents",
-      "sos": 12.33,
+      "sos": 12.31,
       "record": "1-0"
     },
     {
       "rank": 4,
       "team": "Oregon Ducks",
-      "rating": 25.65,
+      "rating": 25.61,
       "conference": "Big Ten",
-      "sos": 14.22,
+      "sos": 14.19,
       "record": "1-0"
     },
     {
       "rank": 5,
       "team": "Miami Hurricanes",
-      "rating": 25.01,
+      "rating": 24.98,
       "conference": "ACC",
-      "sos": 11.74,
+      "sos": 11.72,
       "record": "1-0"
     },
     {
       "rank": 6,
       "team": "Texas Longhorns",
-      "rating": 23.82,
+      "rating": 23.79,
       "conference": "SEC",
-      "sos": 13.7,
+      "sos": 13.67,
       "record": "1-0"
     },
     {
       "rank": 7,
       "team": "Georgia Bulldogs",
-      "rating": 23.55,
+      "rating": 23.53,
       "conference": "SEC",
-      "sos": 9.69,
+      "sos": 9.67,
       "record": "1-0"
     },
     {
       "rank": 8,
-      "team": "Utah Utes",
-      "rating": 23.25,
-      "conference": "Big 12",
-      "sos": 7.16,
+      "team": "Ole Miss Rebels",
+      "rating": 23.2,
+      "conference": "SEC",
+      "sos": 13.04,
       "record": "1-0"
     },
     {
       "rank": 9,
-      "team": "Ole Miss Rebels",
-      "rating": 23.22,
-      "conference": "SEC",
-      "sos": 13.05,
+      "team": "Utah Utes",
+      "rating": 23.16,
+      "conference": "Big 12",
+      "sos": 7.05,
       "record": "1-0"
     },
     {
       "rank": 10,
       "team": "Texas Tech Red Raiders",
-      "rating": 23.0,
+      "rating": 22.96,
       "conference": "Big 12",
-      "sos": 7.4,
+      "sos": 7.35,
       "record": "1-0"
     },
     {
       "rank": 11,
       "team": "Alabama Crimson Tide",
-      "rating": 22.37,
+      "rating": 22.34,
       "conference": "SEC",
-      "sos": 13.81,
+      "sos": 13.79,
       "record": "1-0"
     },
     {
       "rank": 12,
       "team": "Penn State Nittany Lions",
-      "rating": 22.2,
+      "rating": 22.17,
       "conference": "Big Ten",
-      "sos": 12.34,
+      "sos": 12.31,
       "record": "1-0"
     },
     {
       "rank": 13,
       "team": "Texas A&M Aggies",
-      "rating": 21.77,
+      "rating": 21.74,
       "conference": "SEC",
-      "sos": 11.61,
+      "sos": 11.58,
       "record": "1-0"
     },
     {
       "rank": 14,
       "team": "USC Trojans",
-      "rating": 21.08,
+      "rating": 21.05,
       "conference": "Big Ten",
-      "sos": 12.2,
+      "sos": 12.17,
       "record": "2-0"
     },
     {
       "rank": 15,
       "team": "Iowa Hawkeyes",
-      "rating": 20.28,
+      "rating": 20.25,
       "conference": "Big Ten",
-      "sos": 10.97,
+      "sos": 10.95,
       "record": "1-0"
     },
     {
       "rank": 16,
       "team": "Oklahoma Sooners",
-      "rating": 20.07,
+      "rating": 20.05,
       "conference": "SEC",
-      "sos": 11.77,
+      "sos": 11.75,
       "record": "1-0"
     },
     {
       "rank": 17,
       "team": "Washington Huskies",
-      "rating": 19.33,
+      "rating": 19.3,
       "conference": "Big Ten",
-      "sos": 11.74,
+      "sos": 11.71,
       "record": "1-0"
     },
     {
       "rank": 18,
       "team": "Tennessee Volunteers",
-      "rating": 19.04,
+      "rating": 19.02,
       "conference": "SEC",
-      "sos": 7.61,
+      "sos": 7.6,
       "record": "1-0"
     },
     {
       "rank": 19,
-      "team": "BYU Cougars",
-      "rating": 18.51,
-      "conference": "Big 12",
-      "sos": 6.6,
+      "team": "SMU Mustangs",
+      "rating": 18.31,
+      "conference": "ACC",
+      "sos": 9.45,
       "record": "1-0"
     },
     {
       "rank": 20,
-      "team": "SMU Mustangs",
-      "rating": 18.32,
-      "conference": "ACC",
-      "sos": 8.93,
-      "record": "0-0"
+      "team": "BYU Cougars",
+      "rating": 18.18,
+      "conference": "Big 12",
+      "sos": 6.11,
+      "record": "1-0"
     },
     {
       "rank": 21,
       "team": "Michigan Wolverines",
-      "rating": 17.99,
+      "rating": 17.96,
       "conference": "Big Ten",
-      "sos": 14.54,
+      "sos": 14.5,
       "record": "1-0"
     },
     {
       "rank": 22,
       "team": "LSU Tigers",
-      "rating": 17.11,
+      "rating": 17.09,
       "conference": "SEC",
-      "sos": 12.96,
+      "sos": 12.95,
       "record": "1-0"
     },
     {
       "rank": 23,
       "team": "Louisville Cardinals",
-      "rating": 16.87,
+      "rating": 16.85,
       "conference": "ACC",
-      "sos": 12.68,
+      "sos": 12.66,
       "record": "0-1"
     },
     {
       "rank": 24,
       "team": "Vanderbilt Commodores",
-      "rating": 16.76,
+      "rating": 16.75,
       "conference": "SEC",
-      "sos": 9.39,
+      "sos": 9.37,
       "record": "1-0"
     },
     {
       "rank": 25,
       "team": "Missouri Tigers",
-      "rating": 16.64,
+      "rating": 16.62,
       "conference": "SEC",
-      "sos": 7.61,
+      "sos": 7.6,
       "record": "1-0"
     }
   ],
@@ -221,24 +221,24 @@
       "home_rank": 6,
       "away_rank": 2,
       "pick": "Ohio State Buckeyes",
-      "model_pct": 58.0,
-      "market_pct": 48.5,
-      "edge_points": 9.5,
-      "best_price": 2.0,
+      "model_pct": 74.2,
+      "market_pct": 47.2,
+      "edge_points": 27.0,
+      "best_price": 2.07,
       "sides": [
         {
           "selection": "Texas Longhorns",
           "is_home": true,
-          "model_pct": 42.0,
-          "market_pct": 51.5,
-          "best_price": 1.91
+          "model_pct": 25.8,
+          "market_pct": 52.8,
+          "best_price": 1.83
         },
         {
           "selection": "Ohio State Buckeyes",
           "is_home": false,
-          "model_pct": 58.0,
-          "market_pct": 48.5,
-          "best_price": 2.0
+          "model_pct": 74.2,
+          "market_pct": 47.2,
+          "best_price": 2.07
         }
       ],
       "fan_score": 146
@@ -251,24 +251,24 @@
       "home_rank": null,
       "away_rank": 4,
       "pick": "Oregon Ducks",
-      "model_pct": 73.6,
-      "market_pct": 89.5,
-      "edge_points": -15.9,
-      "best_price": 1.11,
+      "model_pct": 99.5,
+      "market_pct": 91.7,
+      "edge_points": 7.9,
+      "best_price": 1.05,
       "sides": [
         {
           "selection": "Oklahoma State Cowboys",
           "is_home": true,
-          "model_pct": 26.4,
-          "market_pct": 10.5,
-          "best_price": 12.5
+          "model_pct": 0.5,
+          "market_pct": 8.3,
+          "best_price": 12.6
         },
         {
           "selection": "Oregon Ducks",
           "is_home": false,
-          "model_pct": 73.6,
-          "market_pct": 89.5,
-          "best_price": 1.11
+          "model_pct": 99.5,
+          "market_pct": 91.7,
+          "best_price": 1.05
         }
       ],
       "fan_score": 62
@@ -280,28 +280,58 @@
       "away": "Oklahoma Sooners",
       "home_rank": 21,
       "away_rank": 16,
-      "pick": "Michigan Wolverines",
-      "model_pct": 72.2,
-      "market_pct": 42.5,
-      "edge_points": 29.7,
-      "best_price": 3.15,
+      "pick": "Oklahoma Sooners",
+      "model_pct": 54.9,
+      "market_pct": 66.5,
+      "edge_points": -11.6,
+      "best_price": 1.47,
       "sides": [
         {
           "selection": "Michigan Wolverines",
           "is_home": true,
-          "model_pct": 72.2,
-          "market_pct": 42.5,
-          "best_price": 3.15
+          "model_pct": 45.1,
+          "market_pct": 33.5,
+          "best_price": 2.94
         },
         {
           "selection": "Oklahoma Sooners",
           "is_home": false,
-          "model_pct": 27.8,
-          "market_pct": 57.5,
-          "best_price": 2.0
+          "model_pct": 54.9,
+          "market_pct": 66.5,
+          "best_price": 1.47
         }
       ],
       "fan_score": 58
+    },
+    {
+      "kickoff": "2026-09-12T16:00:00Z",
+      "day": "Sat",
+      "home": "Indiana Hoosiers",
+      "away": "Howard Bison",
+      "home_rank": 1,
+      "away_rank": null,
+      "pick": "Indiana Hoosiers",
+      "model_pct": 100.0,
+      "market_pct": null,
+      "edge_points": null,
+      "best_price": null,
+      "sides": [
+        {
+          "selection": "Indiana Hoosiers",
+          "is_home": true,
+          "model_pct": 100.0,
+          "market_pct": null,
+          "best_price": null
+        },
+        {
+          "selection": "Howard Bison",
+          "is_home": false,
+          "model_pct": 0.0,
+          "market_pct": null,
+          "best_price": null
+        }
+      ],
+      "fan_score": 56
     },
     {
       "kickoff": "2026-09-12T19:30:00Z",
@@ -311,7 +341,7 @@
       "home_rank": 3,
       "away_rank": null,
       "pick": "Notre Dame Fighting Irish",
-      "model_pct": 99.4,
+      "model_pct": 100.0,
       "market_pct": null,
       "edge_points": null,
       "best_price": null,
@@ -319,14 +349,14 @@
         {
           "selection": "Notre Dame Fighting Irish",
           "is_home": true,
-          "model_pct": 99.4,
+          "model_pct": 100.0,
           "market_pct": null,
           "best_price": null
         },
         {
           "selection": "Rice Owls",
           "is_home": false,
-          "model_pct": 0.6,
+          "model_pct": 0.0,
           "market_pct": null,
           "best_price": null
         }
@@ -334,34 +364,34 @@
       "fan_score": 56
     },
     {
-      "kickoff": "2026-09-12T16:00:00Z",
-      "day": "Sat",
+      "kickoff": "2026-09-13T02:15:00Z",
+      "day": "Sun",
       "home": "Utah Utes",
       "away": "Arkansas Razorbacks",
-      "home_rank": 8,
+      "home_rank": 9,
       "away_rank": null,
       "pick": "Utah Utes",
-      "model_pct": 74.0,
-      "market_pct": 76.3,
-      "edge_points": -2.3,
-      "best_price": 1.32,
+      "model_pct": 94.3,
+      "market_pct": 79.7,
+      "edge_points": 14.6,
+      "best_price": 1.21,
       "sides": [
         {
           "selection": "Utah Utes",
           "is_home": true,
-          "model_pct": 74.0,
-          "market_pct": 76.3,
-          "best_price": 1.32
+          "model_pct": 94.3,
+          "market_pct": 79.7,
+          "best_price": 1.21
         },
         {
           "selection": "Arkansas Razorbacks",
           "is_home": false,
-          "model_pct": 26.0,
-          "market_pct": 23.7,
-          "best_price": 4.75
+          "model_pct": 5.7,
+          "market_pct": 20.3,
+          "best_price": 4.85
         }
       ],
-      "fan_score": 54
+      "fan_score": 52
     },
     {
       "kickoff": "2026-09-11T00:00:00Z",
@@ -371,7 +401,7 @@
       "home_rank": 5,
       "away_rank": null,
       "pick": "Miami Hurricanes",
-      "model_pct": 99.7,
+      "model_pct": 100.0,
       "market_pct": null,
       "edge_points": null,
       "best_price": null,
@@ -379,14 +409,14 @@
         {
           "selection": "Miami Hurricanes",
           "is_home": true,
-          "model_pct": 99.7,
+          "model_pct": 100.0,
           "market_pct": null,
           "best_price": null
         },
         {
           "selection": "Florida A&M Rattlers",
           "is_home": false,
-          "model_pct": 0.3,
+          "model_pct": 0.0,
           "market_pct": null,
           "best_price": null
         }
@@ -401,7 +431,7 @@
       "home_rank": 7,
       "away_rank": null,
       "pick": "Georgia Bulldogs",
-      "model_pct": 98.3,
+      "model_pct": 98.0,
       "market_pct": null,
       "edge_points": null,
       "best_price": null,
@@ -409,14 +439,14 @@
         {
           "selection": "Georgia Bulldogs",
           "is_home": true,
-          "model_pct": 98.3,
+          "model_pct": 98.0,
           "market_pct": null,
           "best_price": null
         },
         {
           "selection": "Western Kentucky Hilltoppers",
           "is_home": false,
-          "model_pct": 1.7,
+          "model_pct": 2.0,
           "market_pct": null,
           "best_price": null
         }
@@ -431,67 +461,37 @@
       "home_rank": null,
       "away_rank": 11,
       "pick": "Alabama Crimson Tide",
-      "model_pct": 72.4,
-      "market_pct": 77.1,
-      "edge_points": -4.7,
-      "best_price": 1.27,
+      "model_pct": 84.4,
+      "market_pct": 77.2,
+      "edge_points": 7.2,
+      "best_price": 1.25,
       "sides": [
         {
           "selection": "Kentucky Wildcats",
           "is_home": true,
-          "model_pct": 27.6,
-          "market_pct": 22.9,
-          "best_price": 4.5
+          "model_pct": 15.6,
+          "market_pct": 22.8,
+          "best_price": 4.3
         },
         {
           "selection": "Alabama Crimson Tide",
           "is_home": false,
-          "model_pct": 72.4,
-          "market_pct": 77.1,
-          "best_price": 1.27
+          "model_pct": 84.4,
+          "market_pct": 77.2,
+          "best_price": 1.25
         }
       ],
       "fan_score": 48
-    },
-    {
-      "kickoff": "2026-09-12T16:00:00Z",
-      "day": "Sat",
-      "home": "Texas A&M Aggies",
-      "away": "Arizona State Sun Devils",
-      "home_rank": 13,
-      "away_rank": null,
-      "pick": "Texas A&M Aggies",
-      "model_pct": 76.6,
-      "market_pct": 83.3,
-      "edge_points": -6.6,
-      "best_price": 1.17,
-      "sides": [
-        {
-          "selection": "Texas A&M Aggies",
-          "is_home": true,
-          "model_pct": 76.6,
-          "market_pct": 83.3,
-          "best_price": 1.17
-        },
-        {
-          "selection": "Arizona State Sun Devils",
-          "is_home": false,
-          "model_pct": 23.4,
-          "market_pct": 16.7,
-          "best_price": 6.1
-        }
-      ],
-      "fan_score": 44
     },
     {
       "kickoff": "2026-09-12T23:45:00Z",
       "day": "Sat",
       "home": "Ole Miss Rebels",
       "away": "Charlotte 49ers",
-      "home_rank": 9,
+      "home_rank": 8,
       "away_rank": null,
       "pick": "Ole Miss Rebels",
-      "model_pct": 99.5,
+      "model_pct": 100.0,
       "market_pct": null,
       "edge_points": null,
       "best_price": null,
@@ -499,126 +499,126 @@
         {
           "selection": "Ole Miss Rebels",
           "is_home": true,
-          "model_pct": 99.5,
+          "model_pct": 100.0,
           "market_pct": null,
           "best_price": null
         },
         {
           "selection": "Charlotte 49ers",
           "is_home": false,
-          "model_pct": 0.5,
+          "model_pct": 0.0,
           "market_pct": null,
           "best_price": null
         }
       ],
-      "fan_score": 44
+      "fan_score": 46
     }
   ],
   "upsets": [
     {
-      "kickoff": "2026-09-12T22:00:00Z",
+      "kickoff": "2026-09-12T23:15:00Z",
       "day": "Sat",
-      "home": "Florida International Panthers",
-      "away": "Buffalo Bulls",
+      "home": "UCLA Bruins",
+      "away": "San Diego State Aztecs",
       "home_rank": null,
       "away_rank": null,
-      "pick": "Buffalo Bulls",
-      "model_pct": 56.1,
-      "market_pct": 22.9,
-      "edge_points": 33.2,
-      "best_price": 4.5,
+      "pick": "UCLA Bruins",
+      "model_pct": 54.9,
+      "market_pct": 79.5,
+      "edge_points": -24.6,
+      "best_price": 1.22,
       "sides": [
         {
-          "selection": "Florida International Panthers",
+          "selection": "UCLA Bruins",
           "is_home": true,
-          "model_pct": 43.9,
-          "market_pct": 77.1,
-          "best_price": 1.27
+          "model_pct": 54.9,
+          "market_pct": 79.5,
+          "best_price": 1.22
         },
         {
-          "selection": "Buffalo Bulls",
+          "selection": "San Diego State Aztecs",
           "is_home": false,
-          "model_pct": 56.1,
-          "market_pct": 22.9,
-          "best_price": 4.5
+          "model_pct": 45.1,
+          "market_pct": 20.5,
+          "best_price": 4.85
         }
       ],
-      "fan_score": 6,
-      "underdog": "Buffalo Bulls",
-      "underdog_model_pct": 56.1,
-      "underdog_market_pct": 22.9,
-      "underdog_best_price": 4.5,
-      "disagreement_points": 33.2
+      "fan_score": 10,
+      "underdog": "San Diego State Aztecs",
+      "underdog_model_pct": 45.1,
+      "underdog_market_pct": 20.5,
+      "underdog_best_price": 4.85,
+      "disagreement_points": 24.6
     },
     {
       "kickoff": "2026-09-12T16:00:00Z",
       "day": "Sat",
-      "home": "Michigan Wolverines",
-      "away": "Oklahoma Sooners",
-      "home_rank": 21,
-      "away_rank": 16,
-      "pick": "Michigan Wolverines",
-      "model_pct": 72.2,
-      "market_pct": 42.5,
-      "edge_points": 29.7,
-      "best_price": 3.15,
+      "home": "Virginia Tech Hokies",
+      "away": "Old Dominion Monarchs",
+      "home_rank": null,
+      "away_rank": null,
+      "pick": "Old Dominion Monarchs",
+      "model_pct": 50.3,
+      "market_pct": 11.5,
+      "edge_points": 38.8,
+      "best_price": 9.0,
       "sides": [
         {
-          "selection": "Michigan Wolverines",
+          "selection": "Virginia Tech Hokies",
           "is_home": true,
-          "model_pct": 72.2,
-          "market_pct": 42.5,
-          "best_price": 3.15
+          "model_pct": 49.7,
+          "market_pct": 88.5,
+          "best_price": 1.09
         },
         {
-          "selection": "Oklahoma Sooners",
+          "selection": "Old Dominion Monarchs",
           "is_home": false,
-          "model_pct": 27.8,
-          "market_pct": 57.5,
-          "best_price": 2.0
+          "model_pct": 50.3,
+          "market_pct": 11.5,
+          "best_price": 9.0
         }
       ],
-      "fan_score": 58,
-      "underdog": "Michigan Wolverines",
-      "underdog_model_pct": 72.2,
-      "underdog_market_pct": 42.5,
-      "underdog_best_price": 3.15,
-      "disagreement_points": 29.7
+      "fan_score": 10,
+      "underdog": "Old Dominion Monarchs",
+      "underdog_model_pct": 50.3,
+      "underdog_market_pct": 11.5,
+      "underdog_best_price": 9.0,
+      "disagreement_points": 38.8
     },
     {
       "kickoff": "2026-09-12T23:00:00Z",
       "day": "Sat",
-      "home": "Kennesaw State Owls",
-      "away": "Georgia State Panthers",
+      "home": "Georgia Tech Yellow Jackets",
+      "away": "Tennessee Volunteers",
       "home_rank": null,
-      "away_rank": null,
-      "pick": "Georgia State Panthers",
-      "model_pct": 53.2,
-      "market_pct": 25.8,
-      "edge_points": 27.4,
-      "best_price": 3.8,
+      "away_rank": 18,
+      "pick": "Tennessee Volunteers",
+      "model_pct": 58.7,
+      "market_pct": 80.0,
+      "edge_points": -21.3,
+      "best_price": 1.21,
       "sides": [
         {
-          "selection": "Kennesaw State Owls",
+          "selection": "Georgia Tech Yellow Jackets",
           "is_home": true,
-          "model_pct": 46.8,
-          "market_pct": 74.2,
-          "best_price": 1.31
+          "model_pct": 41.3,
+          "market_pct": 20.0,
+          "best_price": 4.9
         },
         {
-          "selection": "Georgia State Panthers",
+          "selection": "Tennessee Volunteers",
           "is_home": false,
-          "model_pct": 53.2,
-          "market_pct": 25.8,
-          "best_price": 3.8
+          "model_pct": 58.7,
+          "market_pct": 80.0,
+          "best_price": 1.21
         }
       ],
-      "fan_score": 2,
-      "underdog": "Georgia State Panthers",
-      "underdog_model_pct": 53.2,
-      "underdog_market_pct": 25.8,
-      "underdog_best_price": 3.8,
-      "disagreement_points": 27.4
+      "fan_score": 34,
+      "underdog": "Georgia Tech Yellow Jackets",
+      "underdog_model_pct": 41.3,
+      "underdog_market_pct": 20.0,
+      "underdog_best_price": 4.9,
+      "disagreement_points": 21.3
     }
   ]
 }

@@ -2,10 +2,10 @@
 // Every number here comes from betbetter_picks.json, filtered to the
 // current playing week. Regenerate with: python social_export.py --js
 window.MATCHDAY_SOCIAL = {
-  "week": "WEEK OF SEP 08",
+  "week": "WEEK OF SEP 09",
   "season": "2026 SEASON",
-  "published": "2026-09-07",
-  "generated_at": "2026-09-08T17:01:33Z",
+  "published": "2026-09-08",
+  "generated_at": "2026-09-09T02:27:25Z",
   "logos": {
     "Indiana Hoosiers": "logos/indiana.png",
     "INDIANA": "logos/indiana.png",
@@ -28,12 +28,12 @@ window.MATCHDAY_SOCIAL = {
     "Georgia Bulldogs": "logos/georgia.png",
     "GEORGIA": "logos/georgia.png",
     "Georgia": "logos/georgia.png",
-    "Utah Utes": "logos/utah.png",
-    "UTAH": "logos/utah.png",
-    "Utah": "logos/utah.png",
     "Ole Miss Rebels": "logos/oleMiss.png",
     "OLE MISS": "logos/oleMiss.png",
     "Ole Miss": "logos/oleMiss.png",
+    "Utah Utes": "logos/utah.png",
+    "UTAH": "logos/utah.png",
+    "Utah": "logos/utah.png",
     "Texas Tech Red Raiders": "logos/texas.png",
     "TEXAS TECH": "logos/texasTech.png",
     "Texas Tech": "logos/texasTech.png",
@@ -60,10 +60,10 @@ window.MATCHDAY_SOCIAL = {
     "Tennessee Volunteers": "logos/tennessee.png",
     "TENNESSEE": "logos/tennessee.png",
     "Tennessee": "logos/tennessee.png",
-    "BYU Cougars": "logos/byu.png",
-    "BYU": "logos/byu.png",
     "SMU Mustangs": "logos/smu.png",
     "SMU": "logos/smu.png",
+    "BYU Cougars": "logos/byu.png",
+    "BYU": "logos/byu.png",
     "Michigan Wolverines": "logos/michigan.png",
     "MICHIGAN": "logos/michigan.png",
     "Michigan": "logos/michigan.png",
@@ -85,113 +85,113 @@ window.MATCHDAY_SOCIAL = {
   "top25": [
     [
       "Indiana Hoosiers",
-      31.35
+      31.3
     ],
     [
       "Ohio State Buckeyes",
-      30.87
+      30.84
     ],
     [
       "Notre Dame Fighting Irish",
-      29.05
+      29.02
     ],
     [
       "Oregon Ducks",
-      25.65
+      25.61
     ],
     [
       "Miami Hurricanes",
-      25.01
+      24.98
     ],
     [
       "Texas Longhorns",
-      23.82
+      23.79
     ],
     [
       "Georgia Bulldogs",
-      23.55
-    ],
-    [
-      "Utah Utes",
-      23.25
+      23.53
     ],
     [
       "Ole Miss Rebels",
-      23.22
+      23.2
+    ],
+    [
+      "Utah Utes",
+      23.16
     ],
     [
       "Texas Tech Red Raiders",
-      23.0
+      22.96
     ],
     [
       "Alabama Crimson Tide",
-      22.37
+      22.34
     ],
     [
       "Penn State Nittany Lions",
-      22.2
+      22.17
     ],
     [
       "Texas A&M Aggies",
-      21.77
+      21.74
     ],
     [
       "USC Trojans",
-      21.08
+      21.05
     ],
     [
       "Iowa Hawkeyes",
-      20.28
+      20.25
     ],
     [
       "Oklahoma Sooners",
-      20.07
+      20.05
     ],
     [
       "Washington Huskies",
-      19.33
+      19.3
     ],
     [
       "Tennessee Volunteers",
-      19.04
-    ],
-    [
-      "BYU Cougars",
-      18.51
+      19.02
     ],
     [
       "SMU Mustangs",
-      18.32
+      18.31
+    ],
+    [
+      "BYU Cougars",
+      18.18
     ],
     [
       "Michigan Wolverines",
-      17.99
+      17.96
     ],
     [
       "LSU Tigers",
-      17.11
+      17.09
     ],
     [
       "Louisville Cardinals",
-      16.87
+      16.85
     ],
     [
       "Vanderbilt Commodores",
-      16.76
+      16.75
     ],
     [
       "Missouri Tigers",
-      16.64
+      16.62
     ]
   ],
   "upset": {
     "eyebrow": "MODEL UPSET WATCH",
-    "underdog": "BUFFALO BULLS",
-    "favorite": "FLORIDA INTERNATIONAL",
-    "kickoff": "SAT · 6:00 PM ET",
-    "modelPct": 56.1,
-    "marketPct": 22.9,
-    "note": "The model gives Buffalo Bulls 56.1% where the market gives 22.9%."
+    "underdog": "SAN DIEGO STATE AZTECS",
+    "favorite": "UCLA",
+    "kickoff": "SAT · 7:15 PM ET",
+    "modelPct": 45.1,
+    "marketPct": 20.5,
+    "note": "The model gives San Diego State Aztecs 45.1% where the market gives 20.5%."
   },
   "slate": [
     {
@@ -217,17 +217,17 @@ window.MATCHDAY_SOCIAL = {
     },
     {
       "rank": 4,
+      "away": "HOWARD BISON",
+      "home": "INDIANA",
+      "time": "SAT · 12:00 PM ET",
+      "hook": "RANKED #1 AT HOME"
+    },
+    {
+      "rank": 5,
       "away": "RICE",
       "home": "NOTRE DAME",
       "time": "SAT · 3:30 PM ET",
       "hook": "RANKED #3 AT HOME"
-    },
-    {
-      "rank": 5,
-      "away": "ARKANSAS",
-      "home": "UTAH",
-      "time": "SAT · 12:00 PM ET",
-      "hook": "RANKED #8 AT HOME"
     }
   ]
 };
