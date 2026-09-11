@@ -1,5 +1,26 @@
 [
  {
+  "id": "ncaaf-2026-09-11",
+  "comp": "NCAAF",
+  "comp_label": "College Football",
+  "slug": "ncaaf-2026-09-11",
+  "title": "College Football model recap — 2026-09-11",
+  "date": "2026-09-11",
+  "summary": "The model went 16/19 (84%) on graded College Football picks.",
+  "record": {
+   "hits": 16,
+   "graded": 19,
+   "pct": 84
+  },
+  "highlights": {},
+  "body": [
+   "Matchday's model graded 19 College Football picks this stretch, hitting on 16 of them (84%). Over the same 18 games with a market line, the betting market favorite hit 89% of the time.",
+   "On calibration: picks stated at 70-80% hit 100% of the time (5 games); picks stated at 80-90% hit 80% of the time (5 games); picks stated at 90+% hit 100% of the time (6 games). A well-calibrated model's stated confidence should roughly match its actual hit rate in each band.",
+   "The strongest signal lately has been talent or squad quality: when it favored a side, that side won 89% of the time (18 games).",
+   "This is Matchday's own model reporting on itself for anyone to use. Every pick is locked before kickoff and graded automatically once the game finishes; none are rewritten after the fact. See the Q&A page for how the model works."
+  ]
+ },
+ {
   "id": "ncaaf-2026-09-04",
   "comp": "NCAAF",
   "comp_label": "College Football",
