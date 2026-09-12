@@ -304,15 +304,17 @@ def _anchor_due(key, served, now=None):
     return None
 
 
-def _interval_for(key):
-    """Decide the refetch interval from the sport's own data file."""
-    path = f"data_{key}.json"
-    try:
-        with open(path, encoding="utf-8") as f:
-            d = json.load(f)
-    except Exception:
-        return DORMANT_EVERY  # no file yet: probe twice a day until a season exists
-    now = datetime.datetime.now(datetime.timezone.utc)
+def interval_for_payload(d, now=None):
+    """Decide the refetch interval from an already-loaded fixture payload.
+
+    Split out of _interval_for so a reader that has the payload in hand can
+    ask the same question without re-reading the file -- data_freshness sizes
+    its staleness thresholds off this, so a sport the fetcher deliberately
+    probes twice a day is not judged against an hourly one's expectations.
+    That caller already has its own `now`; passing it keeps the cadence and
+    the age it is compared against on one clock.
+    """
+    now = now or datetime.datetime.now(datetime.timezone.utc)
     soonest = None
     for m in d.get("matches", []):
         if m.get("status") == "LIVE":
@@ -337,6 +339,17 @@ def _interval_for(key):
         if hours <= 14 * 24:
             return NEAR_EVERY
     return DORMANT_EVERY
+
+
+def _interval_for(key):
+    """Decide the refetch interval from the sport's own data file."""
+    path = f"data_{key}.json"
+    try:
+        with open(path, encoding="utf-8") as f:
+            d = json.load(f)
+    except Exception:
+        return DORMANT_EVERY  # no file yet: probe twice a day until a season exists
+    return interval_for_payload(d)
 
 
 def _run_one(key, flag):
