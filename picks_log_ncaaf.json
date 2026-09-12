@@ -51344,5 +51344,7162 @@
   "result": null,
   "model_result": null,
   "market_result": null
+ },
+ "cfbd-401858221": {
+  "schema_ver": 2,
+  "fixture_id": "cfbd-401858221",
+  "competition": "NCAAF",
+  "home": "Virginia Tech",
+  "away": "Old Dominion",
+  "stage": "Week 2",
+  "kickoff": "2026-09-12T16:00:00Z",
+  "pick": "h",
+  "pick_name": "Virginia Tech",
+  "confidence": 77,
+  "edge": -12,
+  "base_pick": "h",
+  "base_pick_name": "Virginia Tech",
+  "probs": {
+   "h": 77,
+   "d": 0,
+   "a": 23
+  },
+  "advancement_probs": null,
+  "regulation_probs": {
+   "h": 77,
+   "d": 0,
+   "a": 23
+  },
+  "regulation_pick": "h",
+  "market_comparison_pick": "h",
+  "market_comparison_basis": "regulation_1x2",
+  "outcome_basis": "regulation",
+  "market_basis": "regulation_1x2",
+  "market_pick": "h",
+  "market_pct": 89,
+  "pick_mkt": 89,
+  "value_side": "a",
+  "value_edge": 12,
+  "value_mkt": 11,
+  "value_name": "Old Dominion",
+  "upset_candidate": "a",
+  "upset_name": "Old Dominion",
+  "upset_score": 15,
+  "upset_candidate_pct": 23,
+  "upset_triggered": false,
+  "upset_temperature": 1.08,
+  "upset_reason": "model edge 24 pts",
+  "factor_snapshot": {
+   "margin": 0.0,
+   "adv": 0.45,
+   "class": 4.41,
+   "form": 0.0,
+   "rest": 0.0,
+   "srs": 0.0,
+   "record": 0.0,
+   "rank": 0.0,
+   "market_power": 0.0,
+   "elo": 0.55
+  },
+  "market_snapshot": {
+   "h": 89,
+   "d": 0,
+   "a": 11
+  },
+  "market_snapshot_at": "2026-09-12T13:44:35.998506Z",
+  "market_snapshot_recorded_at": "2026-09-12T13:44:47.437965Z",
+  "market_snapshot_receipt": {
+   "source": "The Odds API consensus",
+   "source_reference": "https://the-odds-api.com/",
+   "observed_at": "2026-09-12T13:44:35.998506Z",
+   "recorded_at": "2026-09-12T13:44:47.437965Z",
+   "snapshot_id": null,
+   "books": 16,
+   "spread": 3
+  },
+  "market_gap": 78.0,
+  "upset_snapshot": {
+   "candidate": "Old Dominion",
+   "class": "major",
+   "market_dog_pct": 11.0,
+   "model_dog_pct": 23.0,
+   "upset_edge": 12.0,
+   "independent_model_dog_pct": 35.0,
+   "independent_model_lead_pct": -30.0,
+   "independent_edge": 24.0,
+   "edge_threshold": 8.0,
+   "supporting_signals": [],
+   "personnel_gate": true,
+   "personnel_blockers": [],
+   "radar": false,
+   "standings_candidate": null,
+   "standings_gap_pct": null,
+   "gate": "none",
+   "box_score_edge": 0.0
+  },
+  "box_score_available": false,
+  "data_availability": {
+   "market": "available",
+   "box_score": "unavailable",
+   "lineups": "unavailable",
+   "injuries": "unavailable",
+   "weather": "available",
+   "personnel": "unavailable",
+   "venue_context": "available"
+  },
+  "damp_pct": 0,
+  "mkt_pull": 12,
+  "model_ver": "v6-calibrated",
+  "model_code_marker": "matchday-predictor-integrity-2026-07",
+  "model_signal_schema": 8,
+  "reproducibility": {
+   "model_version": "v6-calibrated",
+   "model_signal_schema": 8,
+   "probability_basis": "regulation",
+   "market_comparison_basis": "regulation_1x2",
+   "market_comparison_pick": "h"
+  },
+  "locked_at": "2026-09-12T13:44:47.437965Z",
+  "lead_time_seconds": 8112.562,
+  "lead_time_hours": 2.253489,
+  "lock_window_hours": 3.0,
+  "status_at_lock": "UPCOMING",
+  "integrity_eligible": true,
+  "integrity_status": "verified",
+  "integrity_reason": "verified_pregame_window",
+  "prediction_snapshot": {
+   "pick": "h",
+   "pick_name": "Virginia Tech",
+   "confidence": 77,
+   "model_version": "v6-calibrated",
+   "model_signal_schema": 8,
+   "base_pick": "h",
+   "base_pick_name": "Virginia Tech",
+   "model": {
+    "h": 65,
+    "a": 35,
+    "d": 0
+   },
+   "base_blend": {
+    "h": 79,
+    "d": 0,
+    "a": 21
+   },
+   "blend": {
+    "h": 77,
+    "d": 0,
+    "a": 23
+   },
+   "adjusted": {
+    "h": 77,
+    "d": 0,
+    "a": 23
+   },
+   "is_knockout": false,
+   "advancement": null,
+   "regulation_pick": "h",
+   "market_comparison_pick": "h",
+   "market_comparison_basis": "regulation_1x2",
+   "regulation_pick_name": "Virginia Tech",
+   "regulation_confidence": 77,
+   "regulation_probs": {
+    "h": 77,
+    "d": 0,
+    "a": 23
+   },
+   "edge": -12,
+   "note": "model rates this lower than the market",
+   "why": {
+    "margin": 0.0,
+    "adv": 0.45,
+    "class": 4.41,
+    "form": 0.0,
+    "rest": 0.0,
+    "srs": 0.0,
+    "record": 0.0,
+    "rank": 0.0,
+    "market_power": 0.0,
+    "elo": 0.55
+   },
+   "damp_pct": 0,
+   "mkt_pull": 12,
+   "market_weight": 0.6,
+   "upset": {
+    "candidate": "a",
+    "candidate_name": "Old Dominion",
+    "favorite": "h",
+    "favorite_name": "Virginia Tech",
+    "score": 15,
+    "upset_class": "major",
+    "market_dog_pct": 11.0,
+    "model_dog_pct": 23.0,
+    "upset_edge": 12.0,
+    "radar": false,
+    "standings_candidate": null,
+    "standings_gap_pct": null,
+    "standings_sample_ok": false,
+    "temperature": 1.08,
+    "variance_pct": 0,
+    "low_goal_pct": 42,
+    "draw_pct": 0,
+    "favorite_pct": 77,
+    "candidate_pct": 23,
+    "margin_pct": 54,
+    "learn_bias_pct": 0.0,
+    "market_gap_pct": 78.0,
+    "market_gate": true,
+    "market_quality_gate": true,
+    "independent_model_dog_pct": 35.0,
+    "independent_model_lead_pct": -30.0,
+    "independent_edge": 24.0,
+    "edge_threshold": 8.0,
+    "independent_pick_gate": false,
+    "playability_gate": false,
+    "evidence_gate": false,
+    "supporting_signals": [],
+    "personnel_gate": true,
+    "personnel_blockers": [],
+    "box_score_edge": 0.0,
+    "strong_box_signal": false,
+    "blocked": false,
+    "triggered": false,
+    "reason": "model edge 24 pts"
+   },
+   "data_quality": {
+    "level": "preseason",
+    "games": {
+     "home": 0,
+     "away": 0
+    },
+    "signals": [
+     "class",
+     "elo",
+     "market"
+    ],
+    "market_available": true,
+    "market_books": 16,
+    "market_spread": 3,
+    "market_weight": 0.6,
+    "note": "Limited current-season evidence; probability is intentionally conservative."
+   },
+   "predicted_margin": {
+    "value": 7.3,
+    "unit": "points",
+    "favored": "h",
+    "label": "Virginia Tech by 7.3"
+   },
+   "class_meta": {
+    "label": "Roster talent edge",
+    "source": "247Sports Team Talent Composite via CollegeFootballData",
+    "available": true,
+    "coverage": "complete",
+    "home_available": true,
+    "away_available": true,
+    "note": "Multi-year current-roster talent composite; it measures roster quality, not program prestige.",
+    "edge_available": true,
+    "coverage_label": null
+   },
+   "publication_state": "locked",
+   "lock_readiness": {
+    "schema_ver": 1,
+    "sport": "football",
+    "competition": "NCAAF",
+    "phase": "lock_window",
+    "lock_window_hours": 3.0,
+    "lead_time_hours": 2.26,
+    "inputs": {
+     "market": "confirmed",
+     "injuries": "missing",
+     "key_players": "missing",
+     "weather": "confirmed"
+    },
+    "missing_critical": [
+     "injuries",
+     "key_players"
+    ],
+    "unconfirmed_critical": [
+     "injuries",
+     "key_players"
+    ],
+    "coverage_pct": 50,
+    "confirmed_pct": 50,
+    "provenance": [
+     {
+      "input": "market",
+      "source": "SportsGameOdds",
+      "source_reference": "https://sportsgameodds.com/",
+      "fetched_at": "2026-09-11T04:44:46.687320Z",
+      "provider_event_id": "53iwNeuGelbw4MWU2Lpr",
+      "join": {
+       "match_provider_ids": [
+        "401858221",
+        "cfbd-401858221"
+       ],
+       "match_kickoff": "2026-09-12T16:00:00Z",
+       "candidate_event_ids": [
+        "53iwNeuGelbw4MWU2Lpr"
+       ],
+       "status": "matched",
+       "strategy": "teams_and_start_time",
+       "provider_event_id": "53iwNeuGelbw4MWU2Lpr",
+       "provider_start": "2026-09-12T16:00:00Z"
+      },
+      "espn_excluded": true,
+      "personnel_semantics": null
+     },
+     {
+      "input": "market",
+      "source": "SportsGameOdds",
+      "source_reference": "https://sportsgameodds.com/",
+      "fetched_at": "2026-09-11T18:34:51.478728Z",
+      "provider_event_id": "53iwNeuGelbw4MWU2Lpr",
+      "join": {
+       "match_provider_ids": [
+        "401858221",
+        "cfbd-401858221"
+       ],
+       "match_kickoff": "2026-09-12T16:00:00Z",
+       "candidate_event_ids": [
+        "53iwNeuGelbw4MWU2Lpr"
+       ],
+       "status": "matched",
+       "strategy": "teams_and_start_time",
+       "provider_event_id": "53iwNeuGelbw4MWU2Lpr",
+       "provider_start": "2026-09-12T16:00:00Z"
+      },
+      "espn_excluded": true,
+      "personnel_semantics": null
+     }
+    ],
+    "confidence_guard": {
+     "high_confidence_label_allowed": false,
+     "reason": "critical pregame inputs not confirmed"
+    },
+    "production_weight": 0,
+    "research_mode": "prospective_shadow"
+   },
+   "neutral_venue_probs": {
+    "h": 77,
+    "d": 0,
+    "a": 23
+   },
+   "totals": {
+    "expected": 55.89,
+    "basis": "preseason_rating"
+   },
+   "data_availability": {
+    "market": "available",
+    "box_score": "unavailable",
+    "lineups": "unavailable",
+    "injuries": "unavailable",
+    "weather": "available",
+    "personnel": "unavailable",
+    "venue_context": "available"
+   }
+  },
+  "input_snapshot": {
+   "competition": "NCAAF",
+   "competition_config": {
+    "label": "College Football",
+    "sport": "football",
+    "fd": null,
+    "odds": "americanfootball_ncaaf",
+    "outright": "americanfootball_ncaaf_championship_winner",
+    "tournament": false,
+    "source": "cfbd",
+    "has_draws": false
+   },
+   "match": {
+    "id": "cfbd-401858221",
+    "stage": "Week 2",
+    "kickoff": "2026-09-12T16:00:00Z",
+    "status": "UPCOMING",
+    "venue": "Lane Stadium",
+    "home": {
+     "name": "Virginia Tech",
+     "code": "VT",
+     "pts": 0,
+     "gd": 0,
+     "form": "",
+     "pos": 15,
+     "group": "ACC",
+     "gf": 0,
+     "ga": 0,
+     "pld": 0,
+     "w": 0,
+     "d": 0,
+     "l": 0,
+     "record": "0-0",
+     "win_pct": 0.0,
+     "season_stale": false,
+     "rating": 5.71
+    },
+    "away": {
+     "name": "Old Dominion",
+     "code": "OD",
+     "pts": 0,
+     "gd": 0,
+     "form": "",
+     "pos": 10,
+     "group": "Sun Belt",
+     "gf": 0,
+     "ga": 0,
+     "pld": 0,
+     "w": 0,
+     "d": 0,
+     "l": 0,
+     "record": "0-0",
+     "win_pct": 0.0,
+     "season_stale": false,
+     "rating": 5.37
+    },
+    "markets": {
+     "1x2": {
+      "home_pct": 89,
+      "draw_pct": 0,
+      "away_pct": 11,
+      "books": 16,
+      "source": "The Odds API consensus",
+      "source_reference": "https://the-odds-api.com/",
+      "observed_at": "2026-09-12T13:44:35.998506Z",
+      "spread": 3,
+      "spread_lo": 88,
+      "spread_hi": 90,
+      "confidence": "tight",
+      "open": {
+       "h": 89,
+       "d": 0,
+       "a": 11
+      },
+      "move": {
+       "h": 0,
+       "d": 0,
+       "a": 0
+      }
+     }
+    },
+    "weather": {
+     "temp_c": 25,
+     "wind_kph": 11,
+     "rain_pct": 5,
+     "source": "Open-Meteo",
+     "source_url": "https://open-meteo.com/"
+    },
+    "injuries": {
+     "home": [],
+     "away": []
+    },
+    "lineups": null,
+    "h2h": [],
+    "stats": null,
+    "stats_extra": null,
+    "data_source": "CollegeFootballData",
+    "advanced_metrics": null,
+    "advanced_metrics_meta": null,
+    "nfl_challenger_shadow": null,
+    "mlb_challenger_shadow": null,
+    "personnel": null,
+    "personnel_shadow": {
+     "schema_ver": 1,
+     "sport": "football",
+     "production_weight": 0,
+     "mode": "prospective_shadow",
+     "features": {
+      "injury_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineup_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineups_confirmed": false,
+      "rest_days": {
+       "home": null,
+       "away": null
+      },
+      "weather": {
+       "temp_c": 25,
+       "wind_kph": 11,
+       "rain_pct": 5,
+       "source": "Open-Meteo",
+       "source_url": "https://open-meteo.com/"
+      },
+      "venue_context": {
+       "sample_games": 0,
+       "league_total_avg": 53.407,
+       "venue_total_avg": 53.407,
+       "factor": 1.0,
+       "label": "venue scoring context",
+       "production_weight": 0,
+       "method": "prior finals, 10-game shrinkage"
+      }
+     }
+    },
+    "pregame_context": {
+     "schema_ver": 1,
+     "sport": "football",
+     "competition": "NCAAF",
+     "phase": "lock_window",
+     "lock_window_hours": 3.0,
+     "lead_time_hours": 2.26,
+     "inputs": {
+      "market": "confirmed",
+      "injuries": "missing",
+      "key_players": "missing",
+      "weather": "confirmed"
+     },
+     "missing_critical": [
+      "injuries",
+      "key_players"
+     ],
+     "unconfirmed_critical": [
+      "injuries",
+      "key_players"
+     ],
+     "coverage_pct": 50,
+     "confirmed_pct": 50,
+     "provenance": [
+      {
+       "input": "market",
+       "source": "SportsGameOdds",
+       "source_reference": "https://sportsgameodds.com/",
+       "fetched_at": "2026-09-11T04:44:46.687320Z",
+       "provider_event_id": "53iwNeuGelbw4MWU2Lpr",
+       "join": {
+        "match_provider_ids": [
+         "401858221",
+         "cfbd-401858221"
+        ],
+        "match_kickoff": "2026-09-12T16:00:00Z",
+        "candidate_event_ids": [
+         "53iwNeuGelbw4MWU2Lpr"
+        ],
+        "status": "matched",
+        "strategy": "teams_and_start_time",
+        "provider_event_id": "53iwNeuGelbw4MWU2Lpr",
+        "provider_start": "2026-09-12T16:00:00Z"
+       },
+       "espn_excluded": true,
+       "personnel_semantics": null
+      },
+      {
+       "input": "market",
+       "source": "SportsGameOdds",
+       "source_reference": "https://sportsgameodds.com/",
+       "fetched_at": "2026-09-11T18:34:51.478728Z",
+       "provider_event_id": "53iwNeuGelbw4MWU2Lpr",
+       "join": {
+        "match_provider_ids": [
+         "401858221",
+         "cfbd-401858221"
+        ],
+        "match_kickoff": "2026-09-12T16:00:00Z",
+        "candidate_event_ids": [
+         "53iwNeuGelbw4MWU2Lpr"
+        ],
+        "status": "matched",
+        "strategy": "teams_and_start_time",
+        "provider_event_id": "53iwNeuGelbw4MWU2Lpr",
+        "provider_start": "2026-09-12T16:00:00Z"
+       },
+       "espn_excluded": true,
+       "personnel_semantics": null
+      }
+     ],
+     "confidence_guard": {
+      "high_confidence_label_allowed": false,
+      "reason": "critical pregame inputs not confirmed"
+     },
+     "production_weight": 0,
+     "research_mode": "prospective_shadow"
+    },
+    "pregame_provenance": [
+     {
+      "input": "market",
+      "source": "SportsGameOdds",
+      "source_reference": "https://sportsgameodds.com/",
+      "fetched_at": "2026-09-11T04:44:46.687320Z",
+      "provider_event_id": "53iwNeuGelbw4MWU2Lpr",
+      "join": {
+       "match_provider_ids": [
+        "401858221",
+        "cfbd-401858221"
+       ],
+       "match_kickoff": "2026-09-12T16:00:00Z",
+       "candidate_event_ids": [
+        "53iwNeuGelbw4MWU2Lpr"
+       ],
+       "status": "matched",
+       "strategy": "teams_and_start_time",
+       "provider_event_id": "53iwNeuGelbw4MWU2Lpr",
+       "provider_start": "2026-09-12T16:00:00Z"
+      },
+      "espn_excluded": true,
+      "personnel_semantics": null
+     },
+     {
+      "input": "market",
+      "source": "SportsGameOdds",
+      "source_reference": "https://sportsgameodds.com/",
+      "fetched_at": "2026-09-11T18:34:51.478728Z",
+      "provider_event_id": "53iwNeuGelbw4MWU2Lpr",
+      "join": {
+       "match_provider_ids": [
+        "401858221",
+        "cfbd-401858221"
+       ],
+       "match_kickoff": "2026-09-12T16:00:00Z",
+       "candidate_event_ids": [
+        "53iwNeuGelbw4MWU2Lpr"
+       ],
+       "status": "matched",
+       "strategy": "teams_and_start_time",
+       "provider_event_id": "53iwNeuGelbw4MWU2Lpr",
+       "provider_start": "2026-09-12T16:00:00Z"
+      },
+      "espn_excluded": true,
+      "personnel_semantics": null
+     }
+    ],
+    "venue_context": {
+     "sample_games": 0,
+     "league_total_avg": 53.407,
+     "venue_total_avg": 53.407,
+     "factor": 1.0,
+     "label": "venue scoring context",
+     "production_weight": 0,
+     "method": "prior finals, 10-game shrinkage"
+    },
+    "model_signal_schema": null
+   }
+  },
+  "mfti_shadow": {
+   "spec_version": "MFTI-0.1.1-shadow",
+   "mode": "shadow_research_only",
+   "captured_at": "2026-09-12T13:44:47.437965Z",
+   "status": "incomplete",
+   "score": null,
+   "historical_evidence": {
+    "available": false,
+    "score": null,
+    "reason": "frozen_normalization_and_rolling_recalibration_not_fitted",
+    "diagnostics": {
+     "eligible_prior_forecasts": 19,
+     "mean_brier": 0.212,
+     "mean_log_loss": 0.365112,
+     "brier_skill_vs_uniform": 0.682,
+     "log_skill_vs_uniform": 0.667661
+    }
+   },
+   "event_readiness": {
+    "available": false,
+    "score": null,
+    "missing_components": [
+     "scenario_stability",
+     "availability",
+     "freshness",
+     "model_stability"
+    ]
+   },
+   "components": {
+    "scenario_stability": {
+     "available": false,
+     "score": null,
+     "reason": "scenario_forecasts_not_captured"
+    },
+    "availability": {
+     "available": false,
+     "score": null,
+     "reason": "availability_probabilities_not_captured"
+    },
+    "freshness": {
+     "available": false,
+     "score": null,
+     "reason": "input_freshness_not_captured"
+    },
+    "model_stability": {
+     "available": false,
+     "score": null,
+     "reason": "independent_model_outputs_not_captured"
+    }
+   },
+   "missing_components": [
+    "historical_evidence",
+    "scenario_stability",
+    "availability",
+    "freshness",
+    "model_stability"
+   ],
+   "affects_prediction": false,
+   "user_visible": false
+  },
+  "result": null,
+  "model_result": null,
+  "market_result": null
+ },
+ "cfbd-401862702": {
+  "schema_ver": 2,
+  "fixture_id": "cfbd-401862702",
+  "competition": "NCAAF",
+  "home": "Army",
+  "away": "South Florida",
+  "stage": "Week 2",
+  "kickoff": "2026-09-12T16:00:00Z",
+  "pick": "a",
+  "pick_name": "South Florida",
+  "confidence": 51,
+  "edge": 11,
+  "base_pick": "a",
+  "base_pick_name": "South Florida",
+  "probs": {
+   "h": 49,
+   "d": 0,
+   "a": 51
+  },
+  "advancement_probs": null,
+  "regulation_probs": {
+   "h": 49,
+   "d": 0,
+   "a": 51
+  },
+  "regulation_pick": "a",
+  "market_comparison_pick": "a",
+  "market_comparison_basis": "regulation_1x2",
+  "outcome_basis": "regulation",
+  "market_basis": "regulation_1x2",
+  "market_pick": "h",
+  "market_pct": 60,
+  "pick_mkt": 40,
+  "value_side": "a",
+  "value_edge": 11,
+  "value_mkt": 40,
+  "value_name": "South Florida",
+  "upset_candidate": "a",
+  "upset_name": "South Florida",
+  "upset_score": 72,
+  "upset_candidate_pct": 51,
+  "upset_triggered": false,
+  "upset_temperature": 1.22,
+  "upset_reason": "independent model ranks the market underdog first · model edge 28 pts · narrow team gap · fewer than two supporting model factors",
+  "factor_snapshot": {
+   "margin": 0.0,
+   "adv": 0.45,
+   "class": -6.62,
+   "form": 0.0,
+   "rest": 0.0,
+   "srs": 0.0,
+   "record": 0.0,
+   "rank": 0.0,
+   "market_power": 0.0,
+   "elo": 1.6
+  },
+  "market_snapshot": {
+   "h": 60,
+   "d": 0,
+   "a": 40
+  },
+  "market_snapshot_at": "2026-09-12T13:44:35.998506Z",
+  "market_snapshot_recorded_at": "2026-09-12T13:44:47.438749Z",
+  "market_snapshot_receipt": {
+   "source": "The Odds API consensus",
+   "source_reference": "https://the-odds-api.com/",
+   "observed_at": "2026-09-12T13:44:35.998506Z",
+   "recorded_at": "2026-09-12T13:44:47.438749Z",
+   "snapshot_id": null,
+   "books": 16,
+   "spread": 2
+  },
+  "market_gap": 20.0,
+  "upset_snapshot": {
+   "candidate": "South Florida",
+   "class": "minor",
+   "market_dog_pct": 40.0,
+   "model_dog_pct": 51.0,
+   "upset_edge": 11.0,
+   "independent_model_dog_pct": 68.0,
+   "independent_model_lead_pct": 36.0,
+   "independent_edge": 28.0,
+   "edge_threshold": 8.0,
+   "supporting_signals": [
+    "class"
+   ],
+   "personnel_gate": true,
+   "personnel_blockers": [],
+   "radar": false,
+   "standings_candidate": null,
+   "standings_gap_pct": null,
+   "gate": "blocked",
+   "box_score_edge": 0.0
+  },
+  "box_score_available": false,
+  "data_availability": {
+   "market": "available",
+   "box_score": "unavailable",
+   "lineups": "unavailable",
+   "injuries": "unavailable",
+   "weather": "available",
+   "personnel": "unavailable",
+   "venue_context": "available"
+  },
+  "damp_pct": 0,
+  "mkt_pull": -17,
+  "model_ver": "v6-calibrated",
+  "model_code_marker": "matchday-predictor-integrity-2026-07",
+  "model_signal_schema": 8,
+  "reproducibility": {
+   "model_version": "v6-calibrated",
+   "model_signal_schema": 8,
+   "probability_basis": "regulation",
+   "market_comparison_basis": "regulation_1x2",
+   "market_comparison_pick": "a"
+  },
+  "locked_at": "2026-09-12T13:44:47.438749Z",
+  "lead_time_seconds": 8112.561,
+  "lead_time_hours": 2.253489,
+  "lock_window_hours": 3.0,
+  "status_at_lock": "UPCOMING",
+  "integrity_eligible": true,
+  "integrity_status": "verified",
+  "integrity_reason": "verified_pregame_window",
+  "prediction_snapshot": {
+   "pick": "a",
+   "pick_name": "South Florida",
+   "confidence": 51,
+   "model_version": "v6-calibrated",
+   "model_signal_schema": 8,
+   "base_pick": "a",
+   "base_pick_name": "South Florida",
+   "model": {
+    "h": 32,
+    "a": 68,
+    "d": 0
+   },
+   "base_blend": {
+    "h": 49,
+    "d": 0,
+    "a": 51
+   },
+   "blend": {
+    "h": 49,
+    "d": 0,
+    "a": 51
+   },
+   "adjusted": {
+    "h": 49,
+    "d": 0,
+    "a": 51
+   },
+   "is_knockout": false,
+   "advancement": null,
+   "regulation_pick": "a",
+   "market_comparison_pick": "a",
+   "market_comparison_basis": "regulation_1x2",
+   "regulation_pick_name": "South Florida",
+   "regulation_confidence": 51,
+   "regulation_probs": {
+    "h": 49,
+    "d": 0,
+    "a": 51
+   },
+   "edge": 11,
+   "note": "model rates this higher than the market",
+   "why": {
+    "margin": 0.0,
+    "adv": 0.45,
+    "class": -6.62,
+    "form": 0.0,
+    "rest": 0.0,
+    "srs": 0.0,
+    "record": 0.0,
+    "rank": 0.0,
+    "market_power": 0.0,
+    "elo": 1.6
+   },
+   "damp_pct": 0,
+   "mkt_pull": -17,
+   "market_weight": 0.6,
+   "upset": {
+    "candidate": "a",
+    "candidate_name": "South Florida",
+    "favorite": "h",
+    "favorite_name": "Army",
+    "score": 72,
+    "upset_class": "minor",
+    "market_dog_pct": 40.0,
+    "model_dog_pct": 51.0,
+    "upset_edge": 11.0,
+    "radar": false,
+    "standings_candidate": null,
+    "standings_gap_pct": null,
+    "standings_sample_ok": false,
+    "temperature": 1.22,
+    "variance_pct": 23,
+    "low_goal_pct": 42,
+    "draw_pct": 0,
+    "favorite_pct": 49,
+    "candidate_pct": 51,
+    "margin_pct": 0,
+    "learn_bias_pct": 0.0,
+    "market_gap_pct": 20.0,
+    "market_gate": true,
+    "market_quality_gate": true,
+    "independent_model_dog_pct": 68.0,
+    "independent_model_lead_pct": 36.0,
+    "independent_edge": 28.0,
+    "edge_threshold": 8.0,
+    "independent_pick_gate": true,
+    "playability_gate": true,
+    "evidence_gate": false,
+    "supporting_signals": [
+     "class"
+    ],
+    "personnel_gate": true,
+    "personnel_blockers": [],
+    "box_score_edge": 0.0,
+    "strong_box_signal": false,
+    "blocked": true,
+    "triggered": false,
+    "reason": "independent model ranks the market underdog first · model edge 28 pts · narrow team gap · fewer than two supporting model factors"
+   },
+   "data_quality": {
+    "level": "preseason",
+    "games": {
+     "home": 0,
+     "away": 0
+    },
+    "signals": [
+     "class",
+     "elo",
+     "market"
+    ],
+    "market_available": true,
+    "market_books": 16,
+    "market_spread": 2,
+    "market_weight": 0.6,
+    "note": "Limited current-season evidence; probability is intentionally conservative."
+   },
+   "predicted_margin": {
+    "value": -0.2,
+    "unit": "points",
+    "favored": "a",
+    "label": "South Florida by 0.2"
+   },
+   "class_meta": {
+    "label": "Roster talent edge",
+    "source": "247Sports Team Talent Composite via CollegeFootballData",
+    "available": true,
+    "coverage": "complete",
+    "home_available": true,
+    "away_available": true,
+    "note": "Multi-year current-roster talent composite; it measures roster quality, not program prestige.",
+    "edge_available": true,
+    "coverage_label": null
+   },
+   "publication_state": "locked",
+   "lock_readiness": {
+    "schema_ver": 1,
+    "sport": "football",
+    "competition": "NCAAF",
+    "phase": "lock_window",
+    "lock_window_hours": 3.0,
+    "lead_time_hours": 2.26,
+    "inputs": {
+     "market": "confirmed",
+     "injuries": "missing",
+     "key_players": "missing",
+     "weather": "confirmed"
+    },
+    "missing_critical": [
+     "injuries",
+     "key_players"
+    ],
+    "unconfirmed_critical": [
+     "injuries",
+     "key_players"
+    ],
+    "coverage_pct": 50,
+    "confirmed_pct": 50,
+    "provenance": [],
+    "confidence_guard": {
+     "high_confidence_label_allowed": false,
+     "reason": "critical pregame inputs not confirmed"
+    },
+    "production_weight": 0,
+    "research_mode": "prospective_shadow"
+   },
+   "neutral_venue_probs": {
+    "h": 48,
+    "d": 0,
+    "a": 52
+   },
+   "totals": {
+    "expected": 56.4,
+    "basis": "preseason_rating"
+   },
+   "data_availability": {
+    "market": "available",
+    "box_score": "unavailable",
+    "lineups": "unavailable",
+    "injuries": "unavailable",
+    "weather": "available",
+    "personnel": "unavailable",
+    "venue_context": "available"
+   }
+  },
+  "input_snapshot": {
+   "competition": "NCAAF",
+   "competition_config": {
+    "label": "College Football",
+    "sport": "football",
+    "fd": null,
+    "odds": "americanfootball_ncaaf",
+    "outright": "americanfootball_ncaaf_championship_winner",
+    "tournament": false,
+    "source": "cfbd",
+    "has_draws": false
+   },
+   "match": {
+    "id": "cfbd-401862702",
+    "stage": "Week 2",
+    "kickoff": "2026-09-12T16:00:00Z",
+    "status": "UPCOMING",
+    "venue": "Michie Stadium",
+    "home": {
+     "name": "Army",
+     "code": "A",
+     "pts": 0,
+     "gd": 0,
+     "form": "",
+     "pos": 2,
+     "group": "American Athletic",
+     "gf": 0,
+     "ga": 0,
+     "pld": 0,
+     "w": 0,
+     "d": 0,
+     "l": 0,
+     "record": "0-0",
+     "win_pct": 0.0,
+     "season_stale": false,
+     "rating": 6.35
+    },
+    "away": {
+     "name": "South Florida",
+     "code": "SF",
+     "pts": 0,
+     "gd": 0,
+     "form": "",
+     "pos": 9,
+     "group": "American Athletic",
+     "gf": 0,
+     "ga": 0,
+     "pld": 0,
+     "w": 0,
+     "d": 0,
+     "l": 0,
+     "record": "0-0",
+     "win_pct": 0.0,
+     "season_stale": false,
+     "rating": 5.35
+    },
+    "markets": {
+     "1x2": {
+      "home_pct": 60,
+      "draw_pct": 0,
+      "away_pct": 40,
+      "books": 16,
+      "source": "The Odds API consensus",
+      "source_reference": "https://the-odds-api.com/",
+      "observed_at": "2026-09-12T13:44:35.998506Z",
+      "spread": 2,
+      "spread_lo": 59,
+      "spread_hi": 61,
+      "confidence": "tight",
+      "open": {
+       "h": 60,
+       "d": 0,
+       "a": 40
+      },
+      "move": {
+       "h": 0,
+       "d": 0,
+       "a": 0
+      }
+     }
+    },
+    "weather": {
+     "temp_c": 22,
+     "wind_kph": 9,
+     "rain_pct": 0,
+     "source": "Open-Meteo",
+     "source_url": "https://open-meteo.com/"
+    },
+    "injuries": {
+     "home": [],
+     "away": []
+    },
+    "lineups": null,
+    "h2h": [],
+    "stats": null,
+    "stats_extra": null,
+    "data_source": "CollegeFootballData",
+    "advanced_metrics": null,
+    "advanced_metrics_meta": null,
+    "nfl_challenger_shadow": null,
+    "mlb_challenger_shadow": null,
+    "personnel": null,
+    "personnel_shadow": {
+     "schema_ver": 1,
+     "sport": "football",
+     "production_weight": 0,
+     "mode": "prospective_shadow",
+     "features": {
+      "injury_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineup_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineups_confirmed": false,
+      "rest_days": {
+       "home": null,
+       "away": null
+      },
+      "weather": {
+       "temp_c": 22,
+       "wind_kph": 9,
+       "rain_pct": 0,
+       "source": "Open-Meteo",
+       "source_url": "https://open-meteo.com/"
+      },
+      "venue_context": {
+       "sample_games": 0,
+       "league_total_avg": 53.407,
+       "venue_total_avg": 53.407,
+       "factor": 1.0,
+       "label": "venue scoring context",
+       "production_weight": 0,
+       "method": "prior finals, 10-game shrinkage"
+      }
+     }
+    },
+    "pregame_context": {
+     "schema_ver": 1,
+     "sport": "football",
+     "competition": "NCAAF",
+     "phase": "lock_window",
+     "lock_window_hours": 3.0,
+     "lead_time_hours": 2.26,
+     "inputs": {
+      "market": "confirmed",
+      "injuries": "missing",
+      "key_players": "missing",
+      "weather": "confirmed"
+     },
+     "missing_critical": [
+      "injuries",
+      "key_players"
+     ],
+     "unconfirmed_critical": [
+      "injuries",
+      "key_players"
+     ],
+     "coverage_pct": 50,
+     "confirmed_pct": 50,
+     "provenance": [],
+     "confidence_guard": {
+      "high_confidence_label_allowed": false,
+      "reason": "critical pregame inputs not confirmed"
+     },
+     "production_weight": 0,
+     "research_mode": "prospective_shadow"
+    },
+    "pregame_provenance": null,
+    "venue_context": {
+     "sample_games": 0,
+     "league_total_avg": 53.407,
+     "venue_total_avg": 53.407,
+     "factor": 1.0,
+     "label": "venue scoring context",
+     "production_weight": 0,
+     "method": "prior finals, 10-game shrinkage"
+    },
+    "model_signal_schema": null
+   }
+  },
+  "mfti_shadow": {
+   "spec_version": "MFTI-0.1.1-shadow",
+   "mode": "shadow_research_only",
+   "captured_at": "2026-09-12T13:44:47.438749Z",
+   "status": "incomplete",
+   "score": null,
+   "historical_evidence": {
+    "available": false,
+    "score": null,
+    "reason": "frozen_normalization_and_rolling_recalibration_not_fitted",
+    "diagnostics": {
+     "eligible_prior_forecasts": 19,
+     "mean_brier": 0.212,
+     "mean_log_loss": 0.365112,
+     "brier_skill_vs_uniform": 0.682,
+     "log_skill_vs_uniform": 0.667661
+    }
+   },
+   "event_readiness": {
+    "available": false,
+    "score": null,
+    "missing_components": [
+     "scenario_stability",
+     "availability",
+     "freshness",
+     "model_stability"
+    ]
+   },
+   "components": {
+    "scenario_stability": {
+     "available": false,
+     "score": null,
+     "reason": "scenario_forecasts_not_captured"
+    },
+    "availability": {
+     "available": false,
+     "score": null,
+     "reason": "availability_probabilities_not_captured"
+    },
+    "freshness": {
+     "available": false,
+     "score": null,
+     "reason": "input_freshness_not_captured"
+    },
+    "model_stability": {
+     "available": false,
+     "score": null,
+     "reason": "independent_model_outputs_not_captured"
+    }
+   },
+   "missing_components": [
+    "historical_evidence",
+    "scenario_stability",
+    "availability",
+    "freshness",
+    "model_stability"
+   ],
+   "affects_prediction": false,
+   "user_visible": false
+  },
+  "result": null,
+  "model_result": null,
+  "market_result": null
+ },
+ "cfbd-401856782": {
+  "schema_ver": 2,
+  "fixture_id": "cfbd-401856782",
+  "competition": "NCAAF",
+  "home": "Oklahoma State",
+  "away": "Oregon",
+  "stage": "Week 2",
+  "kickoff": "2026-09-12T16:00:00Z",
+  "pick": "a",
+  "pick_name": "Oregon",
+  "confidence": 82,
+  "edge": -10,
+  "base_pick": "a",
+  "base_pick_name": "Oregon",
+  "probs": {
+   "h": 18,
+   "d": 0,
+   "a": 82
+  },
+  "advancement_probs": null,
+  "regulation_probs": {
+   "h": 18,
+   "d": 0,
+   "a": 82
+  },
+  "regulation_pick": "a",
+  "market_comparison_pick": "a",
+  "market_comparison_basis": "regulation_1x2",
+  "outcome_basis": "regulation",
+  "market_basis": "regulation_1x2",
+  "market_pick": "a",
+  "market_pct": 92,
+  "pick_mkt": 92,
+  "value_side": "h",
+  "value_edge": 10,
+  "value_mkt": 8,
+  "value_name": "Oklahoma State",
+  "upset_candidate": "h",
+  "upset_name": "Oklahoma State",
+  "upset_score": 9,
+  "upset_candidate_pct": 18,
+  "upset_triggered": false,
+  "upset_temperature": 1.08,
+  "upset_reason": "model edge 21 pts",
+  "factor_snapshot": {
+   "margin": 0.0,
+   "adv": 0.45,
+   "class": -1.7,
+   "form": 0.0,
+   "rest": 0.0,
+   "srs": 0.0,
+   "record": 0.0,
+   "rank": -3.07,
+   "market_power": -2.55,
+   "elo": -11.14
+  },
+  "market_snapshot": {
+   "h": 8,
+   "d": 0,
+   "a": 92
+  },
+  "market_snapshot_at": "2026-09-12T13:44:35.998506Z",
+  "market_snapshot_recorded_at": "2026-09-12T13:44:47.439406Z",
+  "market_snapshot_receipt": {
+   "source": "The Odds API consensus",
+   "source_reference": "https://the-odds-api.com/",
+   "observed_at": "2026-09-12T13:44:35.998506Z",
+   "recorded_at": "2026-09-12T13:44:47.439406Z",
+   "snapshot_id": null,
+   "books": 16,
+   "spread": 4
+  },
+  "market_gap": 84.0,
+  "upset_snapshot": {
+   "candidate": "Oklahoma State",
+   "class": "major",
+   "market_dog_pct": 8.0,
+   "model_dog_pct": 18.0,
+   "upset_edge": 10.0,
+   "independent_model_dog_pct": 29.0,
+   "independent_model_lead_pct": -42.0,
+   "independent_edge": 21.0,
+   "edge_threshold": 8.0,
+   "supporting_signals": [
+    "adv"
+   ],
+   "personnel_gate": true,
+   "personnel_blockers": [],
+   "radar": false,
+   "standings_candidate": null,
+   "standings_gap_pct": null,
+   "gate": "none",
+   "box_score_edge": 0.0
+  },
+  "box_score_available": false,
+  "data_availability": {
+   "market": "available",
+   "box_score": "unavailable",
+   "lineups": "unavailable",
+   "injuries": "unavailable",
+   "weather": "available",
+   "personnel": "unavailable",
+   "venue_context": "available"
+  },
+  "damp_pct": 0,
+  "mkt_pull": 11,
+  "model_ver": "v6-calibrated",
+  "model_code_marker": "matchday-predictor-integrity-2026-07",
+  "model_signal_schema": 8,
+  "reproducibility": {
+   "model_version": "v6-calibrated",
+   "model_signal_schema": 8,
+   "probability_basis": "regulation",
+   "market_comparison_basis": "regulation_1x2",
+   "market_comparison_pick": "a"
+  },
+  "locked_at": "2026-09-12T13:44:47.439406Z",
+  "lead_time_seconds": 8112.561,
+  "lead_time_hours": 2.253489,
+  "lock_window_hours": 3.0,
+  "status_at_lock": "UPCOMING",
+  "integrity_eligible": true,
+  "integrity_status": "verified",
+  "integrity_reason": "verified_pregame_window",
+  "prediction_snapshot": {
+   "pick": "a",
+   "pick_name": "Oregon",
+   "confidence": 82,
+   "model_version": "v6-calibrated",
+   "model_signal_schema": 8,
+   "base_pick": "a",
+   "base_pick_name": "Oregon",
+   "model": {
+    "h": 29,
+    "a": 71,
+    "d": 0
+   },
+   "base_blend": {
+    "h": 16,
+    "d": 0,
+    "a": 84
+   },
+   "blend": {
+    "h": 18,
+    "d": 0,
+    "a": 82
+   },
+   "adjusted": {
+    "h": 18,
+    "d": 0,
+    "a": 82
+   },
+   "is_knockout": false,
+   "advancement": null,
+   "regulation_pick": "a",
+   "market_comparison_pick": "a",
+   "market_comparison_basis": "regulation_1x2",
+   "regulation_pick_name": "Oregon",
+   "regulation_confidence": 82,
+   "regulation_probs": {
+    "h": 18,
+    "d": 0,
+    "a": 82
+   },
+   "edge": -10,
+   "note": "model rates this lower than the market",
+   "why": {
+    "margin": 0.0,
+    "adv": 0.45,
+    "class": -1.7,
+    "form": 0.0,
+    "rest": 0.0,
+    "srs": 0.0,
+    "record": 0.0,
+    "rank": -3.07,
+    "market_power": -2.55,
+    "elo": -11.14
+   },
+   "damp_pct": 0,
+   "mkt_pull": 11,
+   "market_weight": 0.6,
+   "upset": {
+    "candidate": "h",
+    "candidate_name": "Oklahoma State",
+    "favorite": "a",
+    "favorite_name": "Oregon",
+    "score": 9,
+    "upset_class": "major",
+    "market_dog_pct": 8.0,
+    "model_dog_pct": 18.0,
+    "upset_edge": 10.0,
+    "radar": false,
+    "standings_candidate": null,
+    "standings_gap_pct": null,
+    "standings_sample_ok": false,
+    "temperature": 1.08,
+    "variance_pct": 0,
+    "low_goal_pct": 42,
+    "draw_pct": 0,
+    "favorite_pct": 82,
+    "candidate_pct": 18,
+    "margin_pct": 64,
+    "learn_bias_pct": 0.0,
+    "market_gap_pct": 84.0,
+    "market_gate": true,
+    "market_quality_gate": true,
+    "independent_model_dog_pct": 29.0,
+    "independent_model_lead_pct": -42.0,
+    "independent_edge": 21.0,
+    "edge_threshold": 8.0,
+    "independent_pick_gate": false,
+    "playability_gate": false,
+    "evidence_gate": false,
+    "supporting_signals": [
+     "adv"
+    ],
+    "personnel_gate": true,
+    "personnel_blockers": [],
+    "box_score_edge": 0.0,
+    "strong_box_signal": false,
+    "blocked": false,
+    "triggered": false,
+    "reason": "model edge 21 pts"
+   },
+   "data_quality": {
+    "level": "preseason",
+    "games": {
+     "home": 0,
+     "away": 0
+    },
+    "signals": [
+     "class",
+     "market_power",
+     "rank",
+     "elo",
+     "market"
+    ],
+    "market_available": true,
+    "market_books": 16,
+    "market_spread": 4,
+    "market_weight": 0.6,
+    "note": "Limited current-season evidence; probability is intentionally conservative."
+   },
+   "predicted_margin": {
+    "value": -9.2,
+    "unit": "points",
+    "favored": "a",
+    "label": "Oregon by 9.2"
+   },
+   "class_meta": {
+    "label": "Roster talent edge",
+    "source": "247Sports Team Talent Composite via CollegeFootballData",
+    "available": true,
+    "coverage": "complete",
+    "home_available": true,
+    "away_available": true,
+    "note": "Multi-year current-roster talent composite; it measures roster quality, not program prestige.",
+    "edge_available": true,
+    "coverage_label": null
+   },
+   "publication_state": "locked",
+   "lock_readiness": {
+    "schema_ver": 1,
+    "sport": "football",
+    "competition": "NCAAF",
+    "phase": "lock_window",
+    "lock_window_hours": 3.0,
+    "lead_time_hours": 2.26,
+    "inputs": {
+     "market": "confirmed",
+     "injuries": "missing",
+     "key_players": "missing",
+     "weather": "confirmed"
+    },
+    "missing_critical": [
+     "injuries",
+     "key_players"
+    ],
+    "unconfirmed_critical": [
+     "injuries",
+     "key_players"
+    ],
+    "coverage_pct": 50,
+    "confirmed_pct": 50,
+    "provenance": [],
+    "confidence_guard": {
+     "high_confidence_label_allowed": false,
+     "reason": "critical pregame inputs not confirmed"
+    },
+    "production_weight": 0,
+    "research_mode": "prospective_shadow"
+   },
+   "neutral_venue_probs": {
+    "h": 18,
+    "d": 0,
+    "a": 82
+   },
+   "totals": {
+    "expected": 61.6,
+    "basis": "preseason_rating"
+   },
+   "data_availability": {
+    "market": "available",
+    "box_score": "unavailable",
+    "lineups": "unavailable",
+    "injuries": "unavailable",
+    "weather": "available",
+    "personnel": "unavailable",
+    "venue_context": "available"
+   }
+  },
+  "input_snapshot": {
+   "competition": "NCAAF",
+   "competition_config": {
+    "label": "College Football",
+    "sport": "football",
+    "fd": null,
+    "odds": "americanfootball_ncaaf",
+    "outright": "americanfootball_ncaaf_championship_winner",
+    "tournament": false,
+    "source": "cfbd",
+    "has_draws": false
+   },
+   "match": {
+    "id": "cfbd-401856782",
+    "stage": "Week 2",
+    "kickoff": "2026-09-12T16:00:00Z",
+    "status": "UPCOMING",
+    "venue": "Boone Pickens Stadium",
+    "home": {
+     "name": "Oklahoma State",
+     "code": "OKST",
+     "pts": 0,
+     "gd": 0,
+     "form": "",
+     "pos": 13,
+     "group": "Big 12",
+     "gf": 0,
+     "ga": 0,
+     "pld": 0,
+     "w": 0,
+     "d": 0,
+     "l": 0,
+     "record": "0-0",
+     "win_pct": 0.0,
+     "season_stale": false,
+     "rating": 6.11
+    },
+    "away": {
+     "name": "Oregon",
+     "code": "O",
+     "pts": 0,
+     "gd": 0,
+     "form": "",
+     "pos": 13,
+     "group": "Big Ten",
+     "gf": 0,
+     "ga": 0,
+     "pld": 0,
+     "w": 0,
+     "d": 0,
+     "l": 0,
+     "record": "0-0",
+     "win_pct": 0.0,
+     "season_stale": false,
+     "model_rank": 2,
+     "rank_source": "poll",
+     "rating": 13.07
+    },
+    "markets": {
+     "1x2": {
+      "home_pct": 8,
+      "draw_pct": 0,
+      "away_pct": 92,
+      "books": 16,
+      "source": "The Odds API consensus",
+      "source_reference": "https://the-odds-api.com/",
+      "observed_at": "2026-09-12T13:44:35.998506Z",
+      "spread": 4,
+      "spread_lo": 6,
+      "spread_hi": 10,
+      "confidence": "tight",
+      "open": {
+       "h": 8,
+       "d": 0,
+       "a": 92
+      },
+      "move": {
+       "h": 0,
+       "d": 0,
+       "a": 0
+      }
+     }
+    },
+    "weather": {
+     "temp_c": 29,
+     "wind_kph": 8,
+     "rain_pct": 7,
+     "source": "Open-Meteo",
+     "source_url": "https://open-meteo.com/"
+    },
+    "injuries": {
+     "home": [],
+     "away": []
+    },
+    "lineups": null,
+    "h2h": [],
+    "stats": null,
+    "stats_extra": null,
+    "data_source": "CollegeFootballData",
+    "advanced_metrics": null,
+    "advanced_metrics_meta": null,
+    "nfl_challenger_shadow": null,
+    "mlb_challenger_shadow": null,
+    "personnel": null,
+    "personnel_shadow": {
+     "schema_ver": 1,
+     "sport": "football",
+     "production_weight": 0,
+     "mode": "prospective_shadow",
+     "features": {
+      "injury_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineup_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineups_confirmed": false,
+      "rest_days": {
+       "home": null,
+       "away": null
+      },
+      "weather": {
+       "temp_c": 29,
+       "wind_kph": 8,
+       "rain_pct": 7,
+       "source": "Open-Meteo",
+       "source_url": "https://open-meteo.com/"
+      },
+      "venue_context": {
+       "sample_games": 0,
+       "league_total_avg": 53.407,
+       "venue_total_avg": 53.407,
+       "factor": 1.0,
+       "label": "venue scoring context",
+       "production_weight": 0,
+       "method": "prior finals, 10-game shrinkage"
+      }
+     }
+    },
+    "pregame_context": {
+     "schema_ver": 1,
+     "sport": "football",
+     "competition": "NCAAF",
+     "phase": "lock_window",
+     "lock_window_hours": 3.0,
+     "lead_time_hours": 2.26,
+     "inputs": {
+      "market": "confirmed",
+      "injuries": "missing",
+      "key_players": "missing",
+      "weather": "confirmed"
+     },
+     "missing_critical": [
+      "injuries",
+      "key_players"
+     ],
+     "unconfirmed_critical": [
+      "injuries",
+      "key_players"
+     ],
+     "coverage_pct": 50,
+     "confirmed_pct": 50,
+     "provenance": [],
+     "confidence_guard": {
+      "high_confidence_label_allowed": false,
+      "reason": "critical pregame inputs not confirmed"
+     },
+     "production_weight": 0,
+     "research_mode": "prospective_shadow"
+    },
+    "pregame_provenance": null,
+    "venue_context": {
+     "sample_games": 0,
+     "league_total_avg": 53.407,
+     "venue_total_avg": 53.407,
+     "factor": 1.0,
+     "label": "venue scoring context",
+     "production_weight": 0,
+     "method": "prior finals, 10-game shrinkage"
+    },
+    "model_signal_schema": null
+   }
+  },
+  "mfti_shadow": {
+   "spec_version": "MFTI-0.1.1-shadow",
+   "mode": "shadow_research_only",
+   "captured_at": "2026-09-12T13:44:47.439406Z",
+   "status": "incomplete",
+   "score": null,
+   "historical_evidence": {
+    "available": false,
+    "score": null,
+    "reason": "frozen_normalization_and_rolling_recalibration_not_fitted",
+    "diagnostics": {
+     "eligible_prior_forecasts": 19,
+     "mean_brier": 0.212,
+     "mean_log_loss": 0.365112,
+     "brier_skill_vs_uniform": 0.682,
+     "log_skill_vs_uniform": 0.667661
+    }
+   },
+   "event_readiness": {
+    "available": false,
+    "score": null,
+    "missing_components": [
+     "scenario_stability",
+     "availability",
+     "freshness",
+     "model_stability"
+    ]
+   },
+   "components": {
+    "scenario_stability": {
+     "available": false,
+     "score": null,
+     "reason": "scenario_forecasts_not_captured"
+    },
+    "availability": {
+     "available": false,
+     "score": null,
+     "reason": "availability_probabilities_not_captured"
+    },
+    "freshness": {
+     "available": false,
+     "score": null,
+     "reason": "input_freshness_not_captured"
+    },
+    "model_stability": {
+     "available": false,
+     "score": null,
+     "reason": "independent_model_outputs_not_captured"
+    }
+   },
+   "missing_components": [
+    "historical_evidence",
+    "scenario_stability",
+    "availability",
+    "freshness",
+    "model_stability"
+   ],
+   "affects_prediction": false,
+   "user_visible": false
+  },
+  "result": null,
+  "model_result": null,
+  "market_result": null
+ },
+ "cfbd-401856683": {
+  "schema_ver": 2,
+  "fixture_id": "cfbd-401856683",
+  "competition": "NCAAF",
+  "home": "Texas A&M",
+  "away": "Arizona State",
+  "stage": "Week 2",
+  "kickoff": "2026-09-12T16:00:00Z",
+  "pick": "h",
+  "pick_name": "Texas A&M",
+  "confidence": 72,
+  "edge": -12,
+  "base_pick": "h",
+  "base_pick_name": "Texas A&M",
+  "probs": {
+   "h": 72,
+   "d": 0,
+   "a": 28
+  },
+  "advancement_probs": null,
+  "regulation_probs": {
+   "h": 72,
+   "d": 0,
+   "a": 28
+  },
+  "regulation_pick": "h",
+  "market_comparison_pick": "h",
+  "market_comparison_basis": "regulation_1x2",
+  "outcome_basis": "regulation",
+  "market_basis": "regulation_1x2",
+  "market_pick": "h",
+  "market_pct": 84,
+  "pick_mkt": 84,
+  "value_side": "a",
+  "value_edge": 12,
+  "value_mkt": 16,
+  "value_name": "Arizona State",
+  "upset_candidate": "a",
+  "upset_name": "Arizona State",
+  "upset_score": 22,
+  "upset_candidate_pct": 28,
+  "upset_triggered": false,
+  "upset_temperature": 1.08,
+  "upset_reason": "model edge 26 pts",
+  "factor_snapshot": {
+   "margin": 0.0,
+   "adv": 0.45,
+   "class": 1.19,
+   "form": 0.0,
+   "rest": 0.0,
+   "srs": 0.0,
+   "record": 0.0,
+   "rank": 2.3,
+   "market_power": 0.04,
+   "elo": 3.3
+  },
+  "market_snapshot": {
+   "h": 84,
+   "d": 0,
+   "a": 16
+  },
+  "market_snapshot_at": "2026-09-12T13:44:35.998506Z",
+  "market_snapshot_recorded_at": "2026-09-12T13:44:47.440003Z",
+  "market_snapshot_receipt": {
+   "source": "The Odds API consensus",
+   "source_reference": "https://the-odds-api.com/",
+   "observed_at": "2026-09-12T13:44:35.998506Z",
+   "recorded_at": "2026-09-12T13:44:47.440003Z",
+   "snapshot_id": null,
+   "books": 16,
+   "spread": 3
+  },
+  "market_gap": 68.0,
+  "upset_snapshot": {
+   "candidate": "Arizona State",
+   "class": "solid",
+   "market_dog_pct": 16.0,
+   "model_dog_pct": 28.0,
+   "upset_edge": 12.0,
+   "independent_model_dog_pct": 42.0,
+   "independent_model_lead_pct": -16.0,
+   "independent_edge": 26.0,
+   "edge_threshold": 8.0,
+   "supporting_signals": [],
+   "personnel_gate": true,
+   "personnel_blockers": [],
+   "radar": false,
+   "standings_candidate": null,
+   "standings_gap_pct": null,
+   "gate": "none",
+   "box_score_edge": 0.0
+  },
+  "box_score_available": false,
+  "data_availability": {
+   "market": "available",
+   "box_score": "unavailable",
+   "lineups": "unavailable",
+   "injuries": "unavailable",
+   "weather": "available",
+   "personnel": "unavailable",
+   "venue_context": "available"
+  },
+  "damp_pct": 10,
+  "mkt_pull": 14,
+  "model_ver": "v6-calibrated",
+  "model_code_marker": "matchday-predictor-integrity-2026-07",
+  "model_signal_schema": 8,
+  "reproducibility": {
+   "model_version": "v6-calibrated",
+   "model_signal_schema": 8,
+   "probability_basis": "regulation",
+   "market_comparison_basis": "regulation_1x2",
+   "market_comparison_pick": "h"
+  },
+  "locked_at": "2026-09-12T13:44:47.440003Z",
+  "lead_time_seconds": 8112.56,
+  "lead_time_hours": 2.253489,
+  "lock_window_hours": 3.0,
+  "status_at_lock": "UPCOMING",
+  "integrity_eligible": true,
+  "integrity_status": "verified",
+  "integrity_reason": "verified_pregame_window",
+  "prediction_snapshot": {
+   "pick": "h",
+   "pick_name": "Texas A&M",
+   "confidence": 72,
+   "model_version": "v6-calibrated",
+   "model_signal_schema": 8,
+   "base_pick": "h",
+   "base_pick_name": "Texas A&M",
+   "model": {
+    "h": 58,
+    "a": 42,
+    "d": 0
+   },
+   "base_blend": {
+    "h": 74,
+    "d": 0,
+    "a": 26
+   },
+   "blend": {
+    "h": 72,
+    "d": 0,
+    "a": 28
+   },
+   "adjusted": {
+    "h": 72,
+    "d": 0,
+    "a": 28
+   },
+   "is_knockout": false,
+   "advancement": null,
+   "regulation_pick": "h",
+   "market_comparison_pick": "h",
+   "market_comparison_basis": "regulation_1x2",
+   "regulation_pick_name": "Texas A&M",
+   "regulation_confidence": 72,
+   "regulation_probs": {
+    "h": 72,
+    "d": 0,
+    "a": 28
+   },
+   "edge": -12,
+   "note": "model rates this lower than the market",
+   "why": {
+    "margin": 0.0,
+    "adv": 0.45,
+    "class": 1.19,
+    "form": 0.0,
+    "rest": 0.0,
+    "srs": 0.0,
+    "record": 0.0,
+    "rank": 2.3,
+    "market_power": 0.04,
+    "elo": 3.3
+   },
+   "damp_pct": 10,
+   "mkt_pull": 14,
+   "market_weight": 0.6,
+   "upset": {
+    "candidate": "a",
+    "candidate_name": "Arizona State",
+    "favorite": "h",
+    "favorite_name": "Texas A&M",
+    "score": 22,
+    "upset_class": "solid",
+    "market_dog_pct": 16.0,
+    "model_dog_pct": 28.0,
+    "upset_edge": 12.0,
+    "radar": false,
+    "standings_candidate": null,
+    "standings_gap_pct": null,
+    "standings_sample_ok": false,
+    "temperature": 1.08,
+    "variance_pct": 0,
+    "low_goal_pct": 42,
+    "draw_pct": 0,
+    "favorite_pct": 72,
+    "candidate_pct": 28,
+    "margin_pct": 44,
+    "learn_bias_pct": 0.0,
+    "market_gap_pct": 68.0,
+    "market_gate": true,
+    "market_quality_gate": true,
+    "independent_model_dog_pct": 42.0,
+    "independent_model_lead_pct": -16.0,
+    "independent_edge": 26.0,
+    "edge_threshold": 8.0,
+    "independent_pick_gate": false,
+    "playability_gate": false,
+    "evidence_gate": false,
+    "supporting_signals": [],
+    "personnel_gate": true,
+    "personnel_blockers": [],
+    "box_score_edge": 0.0,
+    "strong_box_signal": false,
+    "blocked": false,
+    "triggered": false,
+    "reason": "model edge 26 pts"
+   },
+   "data_quality": {
+    "level": "preseason",
+    "games": {
+     "home": 0,
+     "away": 0
+    },
+    "signals": [
+     "class",
+     "market_power",
+     "rank",
+     "elo",
+     "market"
+    ],
+    "market_available": true,
+    "market_books": 16,
+    "market_spread": 3,
+    "market_weight": 0.6,
+    "note": "Limited current-season evidence; probability is intentionally conservative."
+   },
+   "predicted_margin": {
+    "value": 5.7,
+    "unit": "points",
+    "favored": "h",
+    "label": "Texas A&M by 5.7"
+   },
+   "class_meta": {
+    "label": "Roster talent edge",
+    "source": "247Sports Team Talent Composite via CollegeFootballData",
+    "available": true,
+    "coverage": "complete",
+    "home_available": true,
+    "away_available": true,
+    "note": "Multi-year current-roster talent composite; it measures roster quality, not program prestige.",
+    "edge_available": true,
+    "coverage_label": null
+   },
+   "publication_state": "locked",
+   "lock_readiness": {
+    "schema_ver": 1,
+    "sport": "football",
+    "competition": "NCAAF",
+    "phase": "lock_window",
+    "lock_window_hours": 3.0,
+    "lead_time_hours": 2.26,
+    "inputs": {
+     "market": "confirmed",
+     "injuries": "missing",
+     "key_players": "missing",
+     "weather": "confirmed"
+    },
+    "missing_critical": [
+     "injuries",
+     "key_players"
+    ],
+    "unconfirmed_critical": [
+     "injuries",
+     "key_players"
+    ],
+    "coverage_pct": 50,
+    "confirmed_pct": 50,
+    "provenance": [],
+    "confidence_guard": {
+     "high_confidence_label_allowed": false,
+     "reason": "critical pregame inputs not confirmed"
+    },
+    "production_weight": 0,
+    "research_mode": "prospective_shadow"
+   },
+   "neutral_venue_probs": {
+    "h": 72,
+    "d": 0,
+    "a": 28
+   },
+   "totals": {
+    "expected": 61.6,
+    "basis": "preseason_rating"
+   },
+   "data_availability": {
+    "market": "available",
+    "box_score": "unavailable",
+    "lineups": "unavailable",
+    "injuries": "unavailable",
+    "weather": "available",
+    "personnel": "unavailable",
+    "venue_context": "available"
+   }
+  },
+  "input_snapshot": {
+   "competition": "NCAAF",
+   "competition_config": {
+    "label": "College Football",
+    "sport": "football",
+    "fd": null,
+    "odds": "americanfootball_ncaaf",
+    "outright": "americanfootball_ncaaf_championship_winner",
+    "tournament": false,
+    "source": "cfbd",
+    "has_draws": false
+   },
+   "match": {
+    "id": "cfbd-401856683",
+    "stage": "Week 2",
+    "kickoff": "2026-09-12T16:00:00Z",
+    "status": "UPCOMING",
+    "venue": "Kyle Field",
+    "home": {
+     "name": "Texas A&M",
+     "code": "TAMU",
+     "pts": 0,
+     "gd": 0,
+     "form": "",
+     "pos": 15,
+     "group": "SEC",
+     "gf": 0,
+     "ga": 0,
+     "pld": 0,
+     "w": 0,
+     "d": 0,
+     "l": 0,
+     "record": "0-0",
+     "win_pct": 0.0,
+     "season_stale": false,
+     "model_rank": 8,
+     "rank_source": "poll",
+     "rating": 10.62
+    },
+    "away": {
+     "name": "Arizona State",
+     "code": "ASU",
+     "pts": 0,
+     "gd": 0,
+     "form": "",
+     "pos": 6,
+     "group": "Big 12",
+     "gf": 0,
+     "ga": 0,
+     "pld": 0,
+     "w": 0,
+     "d": 0,
+     "l": 0,
+     "record": "0-0",
+     "win_pct": 0.0,
+     "season_stale": false,
+     "rating": 8.55
+    },
+    "markets": {
+     "1x2": {
+      "home_pct": 84,
+      "draw_pct": 0,
+      "away_pct": 16,
+      "books": 16,
+      "source": "The Odds API consensus",
+      "source_reference": "https://the-odds-api.com/",
+      "observed_at": "2026-09-12T13:44:35.998506Z",
+      "spread": 3,
+      "spread_lo": 83,
+      "spread_hi": 86,
+      "confidence": "tight",
+      "open": {
+       "h": 84,
+       "d": 0,
+       "a": 16
+      },
+      "move": {
+       "h": 0,
+       "d": 0,
+       "a": 0
+      }
+     }
+    },
+    "weather": {
+     "temp_c": 33,
+     "wind_kph": 17,
+     "rain_pct": 1,
+     "source": "Open-Meteo",
+     "source_url": "https://open-meteo.com/"
+    },
+    "injuries": {
+     "home": [],
+     "away": []
+    },
+    "lineups": null,
+    "h2h": [],
+    "stats": null,
+    "stats_extra": null,
+    "data_source": "CollegeFootballData",
+    "advanced_metrics": null,
+    "advanced_metrics_meta": null,
+    "nfl_challenger_shadow": null,
+    "mlb_challenger_shadow": null,
+    "personnel": null,
+    "personnel_shadow": {
+     "schema_ver": 1,
+     "sport": "football",
+     "production_weight": 0,
+     "mode": "prospective_shadow",
+     "features": {
+      "injury_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineup_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineups_confirmed": false,
+      "rest_days": {
+       "home": null,
+       "away": null
+      },
+      "weather": {
+       "temp_c": 33,
+       "wind_kph": 17,
+       "rain_pct": 1,
+       "source": "Open-Meteo",
+       "source_url": "https://open-meteo.com/"
+      },
+      "venue_context": {
+       "sample_games": 0,
+       "league_total_avg": 53.407,
+       "venue_total_avg": 53.407,
+       "factor": 1.0,
+       "label": "venue scoring context",
+       "production_weight": 0,
+       "method": "prior finals, 10-game shrinkage"
+      }
+     }
+    },
+    "pregame_context": {
+     "schema_ver": 1,
+     "sport": "football",
+     "competition": "NCAAF",
+     "phase": "lock_window",
+     "lock_window_hours": 3.0,
+     "lead_time_hours": 2.26,
+     "inputs": {
+      "market": "confirmed",
+      "injuries": "missing",
+      "key_players": "missing",
+      "weather": "confirmed"
+     },
+     "missing_critical": [
+      "injuries",
+      "key_players"
+     ],
+     "unconfirmed_critical": [
+      "injuries",
+      "key_players"
+     ],
+     "coverage_pct": 50,
+     "confirmed_pct": 50,
+     "provenance": [],
+     "confidence_guard": {
+      "high_confidence_label_allowed": false,
+      "reason": "critical pregame inputs not confirmed"
+     },
+     "production_weight": 0,
+     "research_mode": "prospective_shadow"
+    },
+    "pregame_provenance": null,
+    "venue_context": {
+     "sample_games": 0,
+     "league_total_avg": 53.407,
+     "venue_total_avg": 53.407,
+     "factor": 1.0,
+     "label": "venue scoring context",
+     "production_weight": 0,
+     "method": "prior finals, 10-game shrinkage"
+    },
+    "model_signal_schema": null
+   }
+  },
+  "mfti_shadow": {
+   "spec_version": "MFTI-0.1.1-shadow",
+   "mode": "shadow_research_only",
+   "captured_at": "2026-09-12T13:44:47.440003Z",
+   "status": "incomplete",
+   "score": null,
+   "historical_evidence": {
+    "available": false,
+    "score": null,
+    "reason": "frozen_normalization_and_rolling_recalibration_not_fitted",
+    "diagnostics": {
+     "eligible_prior_forecasts": 19,
+     "mean_brier": 0.212,
+     "mean_log_loss": 0.365112,
+     "brier_skill_vs_uniform": 0.682,
+     "log_skill_vs_uniform": 0.667661
+    }
+   },
+   "event_readiness": {
+    "available": false,
+    "score": null,
+    "missing_components": [
+     "scenario_stability",
+     "availability",
+     "freshness",
+     "model_stability"
+    ]
+   },
+   "components": {
+    "scenario_stability": {
+     "available": false,
+     "score": null,
+     "reason": "scenario_forecasts_not_captured"
+    },
+    "availability": {
+     "available": false,
+     "score": null,
+     "reason": "availability_probabilities_not_captured"
+    },
+    "freshness": {
+     "available": false,
+     "score": null,
+     "reason": "input_freshness_not_captured"
+    },
+    "model_stability": {
+     "available": false,
+     "score": null,
+     "reason": "independent_model_outputs_not_captured"
+    }
+   },
+   "missing_components": [
+    "historical_evidence",
+    "scenario_stability",
+    "availability",
+    "freshness",
+    "model_stability"
+   ],
+   "affects_prediction": false,
+   "user_visible": false
+  },
+  "result": null,
+  "model_result": null,
+  "market_result": null
+ },
+ "cfbd-401856679": {
+  "schema_ver": 2,
+  "fixture_id": "cfbd-401856679",
+  "competition": "NCAAF",
+  "home": "Michigan",
+  "away": "Oklahoma",
+  "stage": "Week 2",
+  "kickoff": "2026-09-12T16:00:00Z",
+  "pick": "a",
+  "pick_name": "Oklahoma",
+  "confidence": 58,
+  "edge": -7,
+  "base_pick": "a",
+  "base_pick_name": "Oklahoma",
+  "probs": {
+   "h": 42,
+   "d": 0,
+   "a": 58
+  },
+  "advancement_probs": null,
+  "regulation_probs": {
+   "h": 42,
+   "d": 0,
+   "a": 58
+  },
+  "regulation_pick": "a",
+  "market_comparison_pick": "a",
+  "market_comparison_basis": "regulation_1x2",
+  "outcome_basis": "regulation",
+  "market_basis": "regulation_1x2",
+  "market_pick": "a",
+  "market_pct": 65,
+  "pick_mkt": 65,
+  "value_side": "h",
+  "value_edge": 7,
+  "value_mkt": 35,
+  "value_name": "Michigan",
+  "upset_candidate": "h",
+  "upset_name": "Michigan",
+  "upset_score": 50,
+  "upset_candidate_pct": 42,
+  "upset_triggered": false,
+  "upset_temperature": 1.08,
+  "upset_reason": "model edge 14 pts",
+  "factor_snapshot": {
+   "margin": -0.3,
+   "adv": 0.45,
+   "class": 0.04,
+   "form": 0.0,
+   "rest": -0.08,
+   "srs": -0.0,
+   "record": -0.4,
+   "rank": -0.75,
+   "market_power": -0.05,
+   "elo": 0.49
+  },
+  "market_snapshot": {
+   "h": 35,
+   "d": 0,
+   "a": 65
+  },
+  "market_snapshot_at": "2026-09-12T13:44:35.998506Z",
+  "market_snapshot_recorded_at": "2026-09-12T13:44:47.440611Z",
+  "market_snapshot_receipt": {
+   "source": "The Odds API consensus",
+   "source_reference": "https://the-odds-api.com/",
+   "observed_at": "2026-09-12T13:44:35.998506Z",
+   "recorded_at": "2026-09-12T13:44:47.440611Z",
+   "snapshot_id": null,
+   "books": 15,
+   "spread": 2
+  },
+  "market_gap": 30.0,
+  "upset_snapshot": {
+   "candidate": "Michigan",
+   "class": "minor",
+   "market_dog_pct": 35.0,
+   "model_dog_pct": 42.0,
+   "upset_edge": 7.0,
+   "independent_model_dog_pct": 49.0,
+   "independent_model_lead_pct": -2.0,
+   "independent_edge": 14.0,
+   "edge_threshold": 8.0,
+   "supporting_signals": [
+    "adv",
+    "elo"
+   ],
+   "personnel_gate": true,
+   "personnel_blockers": [],
+   "radar": false,
+   "standings_candidate": null,
+   "standings_gap_pct": null,
+   "gate": "none",
+   "box_score_edge": 0.0
+  },
+  "box_score_available": false,
+  "data_availability": {
+   "market": "available",
+   "box_score": "unavailable",
+   "lineups": "unavailable",
+   "injuries": "unavailable",
+   "weather": "available",
+   "personnel": "unavailable",
+   "venue_context": "available"
+  },
+  "damp_pct": 0,
+  "mkt_pull": 7,
+  "model_ver": "v6-calibrated",
+  "model_code_marker": "matchday-predictor-integrity-2026-07",
+  "model_signal_schema": 8,
+  "reproducibility": {
+   "model_version": "v6-calibrated",
+   "model_signal_schema": 8,
+   "probability_basis": "regulation",
+   "market_comparison_basis": "regulation_1x2",
+   "market_comparison_pick": "a"
+  },
+  "locked_at": "2026-09-12T13:44:47.440611Z",
+  "lead_time_seconds": 8112.559,
+  "lead_time_hours": 2.253489,
+  "lock_window_hours": 3.0,
+  "status_at_lock": "UPCOMING",
+  "integrity_eligible": true,
+  "integrity_status": "verified",
+  "integrity_reason": "verified_pregame_window",
+  "prediction_snapshot": {
+   "pick": "a",
+   "pick_name": "Oklahoma",
+   "confidence": 58,
+   "model_version": "v6-calibrated",
+   "model_signal_schema": 8,
+   "base_pick": "a",
+   "base_pick_name": "Oklahoma",
+   "model": {
+    "h": 49,
+    "a": 51,
+    "d": 0
+   },
+   "base_blend": {
+    "h": 41,
+    "d": 0,
+    "a": 59
+   },
+   "blend": {
+    "h": 42,
+    "d": 0,
+    "a": 58
+   },
+   "adjusted": {
+    "h": 42,
+    "d": 0,
+    "a": 58
+   },
+   "is_knockout": false,
+   "advancement": null,
+   "regulation_pick": "a",
+   "market_comparison_pick": "a",
+   "market_comparison_basis": "regulation_1x2",
+   "regulation_pick_name": "Oklahoma",
+   "regulation_confidence": 58,
+   "regulation_probs": {
+    "h": 42,
+    "d": 0,
+    "a": 58
+   },
+   "edge": -7,
+   "note": "model rates this lower than the market",
+   "why": {
+    "margin": -0.3,
+    "adv": 0.45,
+    "class": 0.04,
+    "form": 0.0,
+    "rest": -0.08,
+    "srs": -0.0,
+    "record": -0.4,
+    "rank": -0.75,
+    "market_power": -0.05,
+    "elo": 0.49
+   },
+   "damp_pct": 0,
+   "mkt_pull": 7,
+   "market_weight": 0.6,
+   "upset": {
+    "candidate": "h",
+    "candidate_name": "Michigan",
+    "favorite": "a",
+    "favorite_name": "Oklahoma",
+    "score": 50,
+    "upset_class": "minor",
+    "market_dog_pct": 35.0,
+    "model_dog_pct": 42.0,
+    "upset_edge": 7.0,
+    "radar": false,
+    "standings_candidate": null,
+    "standings_gap_pct": null,
+    "standings_sample_ok": false,
+    "temperature": 1.08,
+    "variance_pct": 0,
+    "low_goal_pct": 42,
+    "draw_pct": 0,
+    "favorite_pct": 58,
+    "candidate_pct": 42,
+    "margin_pct": 16,
+    "learn_bias_pct": 0.0,
+    "market_gap_pct": 30.0,
+    "market_gate": true,
+    "market_quality_gate": true,
+    "independent_model_dog_pct": 49.0,
+    "independent_model_lead_pct": -2.0,
+    "independent_edge": 14.0,
+    "edge_threshold": 8.0,
+    "independent_pick_gate": false,
+    "playability_gate": false,
+    "evidence_gate": true,
+    "supporting_signals": [
+     "adv",
+     "elo"
+    ],
+    "personnel_gate": true,
+    "personnel_blockers": [],
+    "box_score_edge": 0.0,
+    "strong_box_signal": false,
+    "blocked": false,
+    "triggered": false,
+    "reason": "model edge 14 pts"
+   },
+   "data_quality": {
+    "level": "preseason",
+    "games": {
+     "home": 0,
+     "away": 1
+    },
+    "signals": [
+     "class",
+     "market_power",
+     "record",
+     "margin",
+     "rank",
+     "elo",
+     "rest",
+     "market"
+    ],
+    "market_available": true,
+    "market_books": 15,
+    "market_spread": 2,
+    "market_weight": 0.6,
+    "note": "Limited current-season evidence; probability is intentionally conservative."
+   },
+   "predicted_margin": {
+    "value": -2.0,
+    "unit": "points",
+    "favored": "a",
+    "label": "Oklahoma by 2.0"
+   },
+   "class_meta": {
+    "label": "Roster talent edge",
+    "source": "247Sports Team Talent Composite via CollegeFootballData",
+    "available": true,
+    "coverage": "complete",
+    "home_available": true,
+    "away_available": true,
+    "note": "Multi-year current-roster talent composite; it measures roster quality, not program prestige.",
+    "edge_available": true,
+    "coverage_label": null
+   },
+   "publication_state": "locked",
+   "lock_readiness": {
+    "schema_ver": 1,
+    "sport": "football",
+    "competition": "NCAAF",
+    "phase": "lock_window",
+    "lock_window_hours": 3.0,
+    "lead_time_hours": 2.26,
+    "inputs": {
+     "market": "confirmed",
+     "injuries": "missing",
+     "key_players": "missing",
+     "weather": "confirmed"
+    },
+    "missing_critical": [
+     "injuries",
+     "key_players"
+    ],
+    "unconfirmed_critical": [
+     "injuries",
+     "key_players"
+    ],
+    "coverage_pct": 50,
+    "confirmed_pct": 50,
+    "provenance": [
+     {
+      "input": "market",
+      "source": "SportsGameOdds",
+      "source_reference": "https://sportsgameodds.com/",
+      "fetched_at": "2026-09-11T04:44:46.687320Z",
+      "provider_event_id": "AH0pqoDo39T8h4SWooJU",
+      "join": {
+       "match_provider_ids": [
+        "401856679",
+        "cfbd-401856679"
+       ],
+       "match_kickoff": "2026-09-12T16:00:00Z",
+       "candidate_event_ids": [
+        "AH0pqoDo39T8h4SWooJU"
+       ],
+       "status": "matched",
+       "strategy": "teams_and_start_time",
+       "provider_event_id": "AH0pqoDo39T8h4SWooJU",
+       "provider_start": "2026-09-12T16:00:00Z"
+      },
+      "espn_excluded": true,
+      "personnel_semantics": null
+     },
+     {
+      "input": "market",
+      "source": "SportsGameOdds",
+      "source_reference": "https://sportsgameodds.com/",
+      "fetched_at": "2026-09-11T18:34:51.478728Z",
+      "provider_event_id": "AH0pqoDo39T8h4SWooJU",
+      "join": {
+       "match_provider_ids": [
+        "401856679",
+        "cfbd-401856679"
+       ],
+       "match_kickoff": "2026-09-12T16:00:00Z",
+       "candidate_event_ids": [
+        "AH0pqoDo39T8h4SWooJU"
+       ],
+       "status": "matched",
+       "strategy": "teams_and_start_time",
+       "provider_event_id": "AH0pqoDo39T8h4SWooJU",
+       "provider_start": "2026-09-12T16:00:00Z"
+      },
+      "espn_excluded": true,
+      "personnel_semantics": null
+     }
+    ],
+    "confidence_guard": {
+     "high_confidence_label_allowed": false,
+     "reason": "critical pregame inputs not confirmed"
+    },
+    "production_weight": 0,
+    "research_mode": "prospective_shadow"
+   },
+   "neutral_venue_probs": {
+    "h": 42,
+    "d": 0,
+    "a": 58
+   },
+   "totals": {
+    "expected": 61.6,
+    "basis": "preseason_rating"
+   },
+   "data_availability": {
+    "market": "available",
+    "box_score": "unavailable",
+    "lineups": "unavailable",
+    "injuries": "unavailable",
+    "weather": "available",
+    "personnel": "unavailable",
+    "venue_context": "available"
+   }
+  },
+  "input_snapshot": {
+   "competition": "NCAAF",
+   "competition_config": {
+    "label": "College Football",
+    "sport": "football",
+    "fd": null,
+    "odds": "americanfootball_ncaaf",
+    "outright": "americanfootball_ncaaf_championship_winner",
+    "tournament": false,
+    "source": "cfbd",
+    "has_draws": false
+   },
+   "match": {
+    "id": "cfbd-401856679",
+    "stage": "Week 2",
+    "kickoff": "2026-09-12T16:00:00Z",
+    "status": "UPCOMING",
+    "venue": "Michigan Stadium",
+    "home": {
+     "name": "Michigan",
+     "code": "M",
+     "pts": 0,
+     "gd": 0,
+     "form": "",
+     "pos": 9,
+     "group": "Big Ten",
+     "gf": 0,
+     "ga": 0,
+     "pld": 0,
+     "w": 0,
+     "d": 0,
+     "l": 0,
+     "record": "0-0",
+     "win_pct": 0.0,
+     "season_stale": false,
+     "model_rank": 16,
+     "rank_source": "poll",
+     "rating": 11.9
+    },
+    "away": {
+     "name": "Oklahoma",
+     "code": "O",
+     "pts": 3,
+     "gd": 51,
+     "form": "",
+     "pos": 1,
+     "group": "SEC",
+     "gf": 51,
+     "ga": 0,
+     "pld": 1,
+     "w": 1,
+     "d": 0,
+     "l": 0,
+     "record": "1-0",
+     "win_pct": 1.0,
+     "season_stale": false,
+     "srs": 0.015,
+     "srs_games": 1,
+     "model_rank": 10,
+     "rank_source": "poll",
+     "rest_days": 8,
+     "rating": 11.59,
+     "form_home": "W",
+     "form_away": ""
+    },
+    "markets": {
+     "1x2": {
+      "home_pct": 35,
+      "draw_pct": 0,
+      "away_pct": 65,
+      "books": 15,
+      "source": "The Odds API consensus",
+      "source_reference": "https://the-odds-api.com/",
+      "observed_at": "2026-09-12T13:44:35.998506Z",
+      "spread": 2,
+      "spread_lo": 34,
+      "spread_hi": 36,
+      "confidence": "tight",
+      "open": {
+       "h": 35,
+       "d": 0,
+       "a": 65
+      },
+      "move": {
+       "h": 0,
+       "d": 0,
+       "a": 0
+      }
+     }
+    },
+    "weather": {
+     "temp_c": 24,
+     "wind_kph": 12,
+     "rain_pct": 0,
+     "source": "Open-Meteo",
+     "source_url": "https://open-meteo.com/"
+    },
+    "injuries": {
+     "home": [],
+     "away": []
+    },
+    "lineups": null,
+    "h2h": [],
+    "stats": null,
+    "stats_extra": null,
+    "data_source": "CollegeFootballData",
+    "advanced_metrics": {
+     "away": {
+      "plays": 33,
+      "drives": 5,
+      "ppa": 0.5081,
+      "success_rate": 0.5455,
+      "explosiveness": 1.4208,
+      "line_yards": 2.9789,
+      "power_success": 0.3333,
+      "stuff_rate": 0.2632,
+      "def_ppa_allowed": -0.3068,
+      "def_success_rate_allowed": 0.3784,
+      "def_explosiveness_allowed": 0.8687
+     }
+    },
+    "advanced_metrics_meta": {
+     "schema_version": 1,
+     "source": "CollegeFootballData /stats/season/advanced",
+     "license": "active CFBD API tier",
+     "generated_at": "2026-09-05T16:12:06.515199Z",
+     "coverage": {
+      "season": 2026,
+      "season_role": "current",
+      "teams": 40,
+      "garbage_time_excluded": true
+     },
+     "shadow_only": true,
+     "production_weight": 0,
+     "profile_file": "advanced_metrics_ncaaf.json"
+    },
+    "nfl_challenger_shadow": null,
+    "mlb_challenger_shadow": null,
+    "personnel": null,
+    "personnel_shadow": {
+     "schema_ver": 1,
+     "sport": "football",
+     "production_weight": 0,
+     "mode": "prospective_shadow",
+     "features": {
+      "injury_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineup_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineups_confirmed": false,
+      "rest_days": {
+       "home": null,
+       "away": 8
+      },
+      "weather": {
+       "temp_c": 24,
+       "wind_kph": 12,
+       "rain_pct": 0,
+       "source": "Open-Meteo",
+       "source_url": "https://open-meteo.com/"
+      },
+      "venue_context": {
+       "sample_games": 0,
+       "league_total_avg": 53.407,
+       "venue_total_avg": 53.407,
+       "factor": 1.0,
+       "label": "venue scoring context",
+       "production_weight": 0,
+       "method": "prior finals, 10-game shrinkage"
+      }
+     }
+    },
+    "pregame_context": {
+     "schema_ver": 1,
+     "sport": "football",
+     "competition": "NCAAF",
+     "phase": "lock_window",
+     "lock_window_hours": 3.0,
+     "lead_time_hours": 2.26,
+     "inputs": {
+      "market": "confirmed",
+      "injuries": "missing",
+      "key_players": "missing",
+      "weather": "confirmed"
+     },
+     "missing_critical": [
+      "injuries",
+      "key_players"
+     ],
+     "unconfirmed_critical": [
+      "injuries",
+      "key_players"
+     ],
+     "coverage_pct": 50,
+     "confirmed_pct": 50,
+     "provenance": [
+      {
+       "input": "market",
+       "source": "SportsGameOdds",
+       "source_reference": "https://sportsgameodds.com/",
+       "fetched_at": "2026-09-11T04:44:46.687320Z",
+       "provider_event_id": "AH0pqoDo39T8h4SWooJU",
+       "join": {
+        "match_provider_ids": [
+         "401856679",
+         "cfbd-401856679"
+        ],
+        "match_kickoff": "2026-09-12T16:00:00Z",
+        "candidate_event_ids": [
+         "AH0pqoDo39T8h4SWooJU"
+        ],
+        "status": "matched",
+        "strategy": "teams_and_start_time",
+        "provider_event_id": "AH0pqoDo39T8h4SWooJU",
+        "provider_start": "2026-09-12T16:00:00Z"
+       },
+       "espn_excluded": true,
+       "personnel_semantics": null
+      },
+      {
+       "input": "market",
+       "source": "SportsGameOdds",
+       "source_reference": "https://sportsgameodds.com/",
+       "fetched_at": "2026-09-11T18:34:51.478728Z",
+       "provider_event_id": "AH0pqoDo39T8h4SWooJU",
+       "join": {
+        "match_provider_ids": [
+         "401856679",
+         "cfbd-401856679"
+        ],
+        "match_kickoff": "2026-09-12T16:00:00Z",
+        "candidate_event_ids": [
+         "AH0pqoDo39T8h4SWooJU"
+        ],
+        "status": "matched",
+        "strategy": "teams_and_start_time",
+        "provider_event_id": "AH0pqoDo39T8h4SWooJU",
+        "provider_start": "2026-09-12T16:00:00Z"
+       },
+       "espn_excluded": true,
+       "personnel_semantics": null
+      }
+     ],
+     "confidence_guard": {
+      "high_confidence_label_allowed": false,
+      "reason": "critical pregame inputs not confirmed"
+     },
+     "production_weight": 0,
+     "research_mode": "prospective_shadow"
+    },
+    "pregame_provenance": [
+     {
+      "input": "market",
+      "source": "SportsGameOdds",
+      "source_reference": "https://sportsgameodds.com/",
+      "fetched_at": "2026-09-11T04:44:46.687320Z",
+      "provider_event_id": "AH0pqoDo39T8h4SWooJU",
+      "join": {
+       "match_provider_ids": [
+        "401856679",
+        "cfbd-401856679"
+       ],
+       "match_kickoff": "2026-09-12T16:00:00Z",
+       "candidate_event_ids": [
+        "AH0pqoDo39T8h4SWooJU"
+       ],
+       "status": "matched",
+       "strategy": "teams_and_start_time",
+       "provider_event_id": "AH0pqoDo39T8h4SWooJU",
+       "provider_start": "2026-09-12T16:00:00Z"
+      },
+      "espn_excluded": true,
+      "personnel_semantics": null
+     },
+     {
+      "input": "market",
+      "source": "SportsGameOdds",
+      "source_reference": "https://sportsgameodds.com/",
+      "fetched_at": "2026-09-11T18:34:51.478728Z",
+      "provider_event_id": "AH0pqoDo39T8h4SWooJU",
+      "join": {
+       "match_provider_ids": [
+        "401856679",
+        "cfbd-401856679"
+       ],
+       "match_kickoff": "2026-09-12T16:00:00Z",
+       "candidate_event_ids": [
+        "AH0pqoDo39T8h4SWooJU"
+       ],
+       "status": "matched",
+       "strategy": "teams_and_start_time",
+       "provider_event_id": "AH0pqoDo39T8h4SWooJU",
+       "provider_start": "2026-09-12T16:00:00Z"
+      },
+      "espn_excluded": true,
+      "personnel_semantics": null
+     }
+    ],
+    "venue_context": {
+     "sample_games": 0,
+     "league_total_avg": 53.407,
+     "venue_total_avg": 53.407,
+     "factor": 1.0,
+     "label": "venue scoring context",
+     "production_weight": 0,
+     "method": "prior finals, 10-game shrinkage"
+    },
+    "model_signal_schema": null
+   }
+  },
+  "mfti_shadow": {
+   "spec_version": "MFTI-0.1.1-shadow",
+   "mode": "shadow_research_only",
+   "captured_at": "2026-09-12T13:44:47.440611Z",
+   "status": "incomplete",
+   "score": null,
+   "historical_evidence": {
+    "available": false,
+    "score": null,
+    "reason": "frozen_normalization_and_rolling_recalibration_not_fitted",
+    "diagnostics": {
+     "eligible_prior_forecasts": 19,
+     "mean_brier": 0.212,
+     "mean_log_loss": 0.365112,
+     "brier_skill_vs_uniform": 0.682,
+     "log_skill_vs_uniform": 0.667661
+    }
+   },
+   "event_readiness": {
+    "available": false,
+    "score": null,
+    "missing_components": [
+     "scenario_stability",
+     "availability",
+     "freshness",
+     "model_stability"
+    ]
+   },
+   "components": {
+    "scenario_stability": {
+     "available": false,
+     "score": null,
+     "reason": "scenario_forecasts_not_captured"
+    },
+    "availability": {
+     "available": false,
+     "score": null,
+     "reason": "availability_probabilities_not_captured"
+    },
+    "freshness": {
+     "available": false,
+     "score": null,
+     "reason": "input_freshness_not_captured"
+    },
+    "model_stability": {
+     "available": false,
+     "score": null,
+     "reason": "independent_model_outputs_not_captured"
+    }
+   },
+   "missing_components": [
+    "historical_evidence",
+    "scenario_stability",
+    "availability",
+    "freshness",
+    "model_stability"
+   ],
+   "affects_prediction": false,
+   "user_visible": false
+  },
+  "result": null,
+  "model_result": null,
+  "market_result": null
+ },
+ "cfbd-401856781": {
+  "schema_ver": 2,
+  "fixture_id": "cfbd-401856781",
+  "competition": "NCAAF",
+  "home": "Kansas State",
+  "away": "Washington State",
+  "stage": "Week 2",
+  "kickoff": "2026-09-12T16:00:00Z",
+  "pick": "h",
+  "pick_name": "Kansas State",
+  "confidence": 73,
+  "edge": -14,
+  "base_pick": "h",
+  "base_pick_name": "Kansas State",
+  "probs": {
+   "h": 73,
+   "d": 0,
+   "a": 27
+  },
+  "advancement_probs": null,
+  "regulation_probs": {
+   "h": 73,
+   "d": 0,
+   "a": 27
+  },
+  "regulation_pick": "h",
+  "market_comparison_pick": "h",
+  "market_comparison_basis": "regulation_1x2",
+  "outcome_basis": "regulation",
+  "market_basis": "regulation_1x2",
+  "market_pick": "h",
+  "market_pct": 87,
+  "pick_mkt": 87,
+  "value_side": "a",
+  "value_edge": 14,
+  "value_mkt": 13,
+  "value_name": "Washington State",
+  "upset_candidate": "a",
+  "upset_name": "Washington State",
+  "upset_score": 21,
+  "upset_candidate_pct": 27,
+  "upset_triggered": false,
+  "upset_temperature": 1.08,
+  "upset_reason": "model edge 31 pts",
+  "factor_snapshot": {
+   "margin": 0.0,
+   "adv": 0.45,
+   "class": 0.62,
+   "form": 0.0,
+   "rest": 0.0,
+   "srs": 0.0,
+   "record": 0.0,
+   "rank": 0.0,
+   "market_power": 0.0,
+   "elo": 2.63
+  },
+  "market_snapshot": {
+   "h": 87,
+   "d": 0,
+   "a": 13
+  },
+  "market_snapshot_at": "2026-09-12T13:44:35.998506Z",
+  "market_snapshot_recorded_at": "2026-09-12T13:44:47.441322Z",
+  "market_snapshot_receipt": {
+   "source": "The Odds API consensus",
+   "source_reference": "https://the-odds-api.com/",
+   "observed_at": "2026-09-12T13:44:35.998506Z",
+   "recorded_at": "2026-09-12T13:44:47.441322Z",
+   "snapshot_id": null,
+   "books": 16,
+   "spread": 2
+  },
+  "market_gap": 74.0,
+  "upset_snapshot": {
+   "candidate": "Washington State",
+   "class": "solid",
+   "market_dog_pct": 13.0,
+   "model_dog_pct": 27.0,
+   "upset_edge": 14.0,
+   "independent_model_dog_pct": 44.0,
+   "independent_model_lead_pct": -12.0,
+   "independent_edge": 31.0,
+   "edge_threshold": 8.0,
+   "supporting_signals": [],
+   "personnel_gate": true,
+   "personnel_blockers": [],
+   "radar": false,
+   "standings_candidate": null,
+   "standings_gap_pct": null,
+   "gate": "none",
+   "box_score_edge": 0.0
+  },
+  "box_score_available": false,
+  "data_availability": {
+   "market": "available",
+   "box_score": "unavailable",
+   "lineups": "unavailable",
+   "injuries": "unavailable",
+   "weather": "available",
+   "personnel": "unavailable",
+   "venue_context": "available"
+  },
+  "damp_pct": 0,
+  "mkt_pull": 17,
+  "model_ver": "v6-calibrated",
+  "model_code_marker": "matchday-predictor-integrity-2026-07",
+  "model_signal_schema": 8,
+  "reproducibility": {
+   "model_version": "v6-calibrated",
+   "model_signal_schema": 8,
+   "probability_basis": "regulation",
+   "market_comparison_basis": "regulation_1x2",
+   "market_comparison_pick": "h"
+  },
+  "locked_at": "2026-09-12T13:44:47.441322Z",
+  "lead_time_seconds": 8112.559,
+  "lead_time_hours": 2.253489,
+  "lock_window_hours": 3.0,
+  "status_at_lock": "UPCOMING",
+  "integrity_eligible": true,
+  "integrity_status": "verified",
+  "integrity_reason": "verified_pregame_window",
+  "prediction_snapshot": {
+   "pick": "h",
+   "pick_name": "Kansas State",
+   "confidence": 73,
+   "model_version": "v6-calibrated",
+   "model_signal_schema": 8,
+   "base_pick": "h",
+   "base_pick_name": "Kansas State",
+   "model": {
+    "h": 56,
+    "a": 44,
+    "d": 0
+   },
+   "base_blend": {
+    "h": 75,
+    "d": 0,
+    "a": 25
+   },
+   "blend": {
+    "h": 73,
+    "d": 0,
+    "a": 27
+   },
+   "adjusted": {
+    "h": 73,
+    "d": 0,
+    "a": 27
+   },
+   "is_knockout": false,
+   "advancement": null,
+   "regulation_pick": "h",
+   "market_comparison_pick": "h",
+   "market_comparison_basis": "regulation_1x2",
+   "regulation_pick_name": "Kansas State",
+   "regulation_confidence": 73,
+   "regulation_probs": {
+    "h": 73,
+    "d": 0,
+    "a": 27
+   },
+   "edge": -14,
+   "note": "model rates this lower than the market",
+   "why": {
+    "margin": 0.0,
+    "adv": 0.45,
+    "class": 0.62,
+    "form": 0.0,
+    "rest": 0.0,
+    "srs": 0.0,
+    "record": 0.0,
+    "rank": 0.0,
+    "market_power": 0.0,
+    "elo": 2.63
+   },
+   "damp_pct": 0,
+   "mkt_pull": 17,
+   "market_weight": 0.6,
+   "upset": {
+    "candidate": "a",
+    "candidate_name": "Washington State",
+    "favorite": "h",
+    "favorite_name": "Kansas State",
+    "score": 21,
+    "upset_class": "solid",
+    "market_dog_pct": 13.0,
+    "model_dog_pct": 27.0,
+    "upset_edge": 14.0,
+    "radar": false,
+    "standings_candidate": null,
+    "standings_gap_pct": null,
+    "standings_sample_ok": false,
+    "temperature": 1.08,
+    "variance_pct": 0,
+    "low_goal_pct": 42,
+    "draw_pct": 0,
+    "favorite_pct": 73,
+    "candidate_pct": 27,
+    "margin_pct": 46,
+    "learn_bias_pct": 0.0,
+    "market_gap_pct": 74.0,
+    "market_gate": true,
+    "market_quality_gate": true,
+    "independent_model_dog_pct": 44.0,
+    "independent_model_lead_pct": -12.0,
+    "independent_edge": 31.0,
+    "edge_threshold": 8.0,
+    "independent_pick_gate": false,
+    "playability_gate": false,
+    "evidence_gate": false,
+    "supporting_signals": [],
+    "personnel_gate": true,
+    "personnel_blockers": [],
+    "box_score_edge": 0.0,
+    "strong_box_signal": false,
+    "blocked": false,
+    "triggered": false,
+    "reason": "model edge 31 pts"
+   },
+   "data_quality": {
+    "level": "preseason",
+    "games": {
+     "home": 0,
+     "away": 0
+    },
+    "signals": [
+     "class",
+     "elo",
+     "market"
+    ],
+    "market_available": true,
+    "market_books": 16,
+    "market_spread": 2,
+    "market_weight": 0.6,
+    "note": "Limited current-season evidence; probability is intentionally conservative."
+   },
+   "predicted_margin": {
+    "value": 6.0,
+    "unit": "points",
+    "favored": "h",
+    "label": "Kansas State by 6.0"
+   },
+   "class_meta": {
+    "label": "Roster talent edge",
+    "source": "247Sports Team Talent Composite via CollegeFootballData",
+    "available": true,
+    "coverage": "complete",
+    "home_available": true,
+    "away_available": true,
+    "note": "Multi-year current-roster talent composite; it measures roster quality, not program prestige.",
+    "edge_available": true,
+    "coverage_label": null
+   },
+   "publication_state": "locked",
+   "lock_readiness": {
+    "schema_ver": 1,
+    "sport": "football",
+    "competition": "NCAAF",
+    "phase": "lock_window",
+    "lock_window_hours": 3.0,
+    "lead_time_hours": 2.26,
+    "inputs": {
+     "market": "confirmed",
+     "injuries": "missing",
+     "key_players": "missing",
+     "weather": "confirmed"
+    },
+    "missing_critical": [
+     "injuries",
+     "key_players"
+    ],
+    "unconfirmed_critical": [
+     "injuries",
+     "key_players"
+    ],
+    "coverage_pct": 50,
+    "confirmed_pct": 50,
+    "provenance": [],
+    "confidence_guard": {
+     "high_confidence_label_allowed": false,
+     "reason": "critical pregame inputs not confirmed"
+    },
+    "production_weight": 0,
+    "research_mode": "prospective_shadow"
+   },
+   "neutral_venue_probs": {
+    "h": 72,
+    "d": 0,
+    "a": 28
+   },
+   "totals": {
+    "expected": 59.77,
+    "basis": "preseason_rating"
+   },
+   "data_availability": {
+    "market": "available",
+    "box_score": "unavailable",
+    "lineups": "unavailable",
+    "injuries": "unavailable",
+    "weather": "available",
+    "personnel": "unavailable",
+    "venue_context": "available"
+   }
+  },
+  "input_snapshot": {
+   "competition": "NCAAF",
+   "competition_config": {
+    "label": "College Football",
+    "sport": "football",
+    "fd": null,
+    "odds": "americanfootball_ncaaf",
+    "outright": "americanfootball_ncaaf_championship_winner",
+    "tournament": false,
+    "source": "cfbd",
+    "has_draws": false
+   },
+   "match": {
+    "id": "cfbd-401856781",
+    "stage": "Week 2",
+    "kickoff": "2026-09-12T16:00:00Z",
+    "status": "UPCOMING",
+    "venue": "Bill Snyder Family Stadium",
+    "home": {
+     "name": "Kansas State",
+     "code": "KSU",
+     "pts": 0,
+     "gd": 0,
+     "form": "",
+     "pos": 12,
+     "group": "Big 12",
+     "gf": 0,
+     "ga": 0,
+     "pld": 0,
+     "w": 0,
+     "d": 0,
+     "l": 0,
+     "record": "0-0",
+     "win_pct": 0.0,
+     "season_stale": false,
+     "rating": 8.71
+    },
+    "away": {
+     "name": "Washington State",
+     "code": "WSU",
+     "pts": 0,
+     "gd": 0,
+     "form": "",
+     "pos": 7,
+     "group": "Pac-12",
+     "gf": 0,
+     "ga": 0,
+     "pld": 0,
+     "w": 0,
+     "d": 0,
+     "l": 0,
+     "record": "0-0",
+     "win_pct": 0.0,
+     "season_stale": false,
+     "rating": 7.07
+    },
+    "markets": {
+     "1x2": {
+      "home_pct": 87,
+      "draw_pct": 0,
+      "away_pct": 13,
+      "books": 16,
+      "source": "The Odds API consensus",
+      "source_reference": "https://the-odds-api.com/",
+      "observed_at": "2026-09-12T13:44:35.998506Z",
+      "spread": 2,
+      "spread_lo": 86,
+      "spread_hi": 88,
+      "confidence": "tight",
+      "open": {
+       "h": 87,
+       "d": 0,
+       "a": 13
+      },
+      "move": {
+       "h": 0,
+       "d": 0,
+       "a": 0
+      }
+     }
+    },
+    "weather": {
+     "temp_c": 27,
+     "wind_kph": 18,
+     "rain_pct": 9,
+     "source": "Open-Meteo",
+     "source_url": "https://open-meteo.com/"
+    },
+    "injuries": {
+     "home": [],
+     "away": []
+    },
+    "lineups": null,
+    "h2h": [],
+    "stats": null,
+    "stats_extra": null,
+    "data_source": "CollegeFootballData",
+    "advanced_metrics": null,
+    "advanced_metrics_meta": null,
+    "nfl_challenger_shadow": null,
+    "mlb_challenger_shadow": null,
+    "personnel": null,
+    "personnel_shadow": {
+     "schema_ver": 1,
+     "sport": "football",
+     "production_weight": 0,
+     "mode": "prospective_shadow",
+     "features": {
+      "injury_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineup_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineups_confirmed": false,
+      "rest_days": {
+       "home": null,
+       "away": null
+      },
+      "weather": {
+       "temp_c": 27,
+       "wind_kph": 18,
+       "rain_pct": 9,
+       "source": "Open-Meteo",
+       "source_url": "https://open-meteo.com/"
+      },
+      "venue_context": {
+       "sample_games": 0,
+       "league_total_avg": 53.407,
+       "venue_total_avg": 53.407,
+       "factor": 1.0,
+       "label": "venue scoring context",
+       "production_weight": 0,
+       "method": "prior finals, 10-game shrinkage"
+      }
+     }
+    },
+    "pregame_context": {
+     "schema_ver": 1,
+     "sport": "football",
+     "competition": "NCAAF",
+     "phase": "lock_window",
+     "lock_window_hours": 3.0,
+     "lead_time_hours": 2.26,
+     "inputs": {
+      "market": "confirmed",
+      "injuries": "missing",
+      "key_players": "missing",
+      "weather": "confirmed"
+     },
+     "missing_critical": [
+      "injuries",
+      "key_players"
+     ],
+     "unconfirmed_critical": [
+      "injuries",
+      "key_players"
+     ],
+     "coverage_pct": 50,
+     "confirmed_pct": 50,
+     "provenance": [],
+     "confidence_guard": {
+      "high_confidence_label_allowed": false,
+      "reason": "critical pregame inputs not confirmed"
+     },
+     "production_weight": 0,
+     "research_mode": "prospective_shadow"
+    },
+    "pregame_provenance": null,
+    "venue_context": {
+     "sample_games": 0,
+     "league_total_avg": 53.407,
+     "venue_total_avg": 53.407,
+     "factor": 1.0,
+     "label": "venue scoring context",
+     "production_weight": 0,
+     "method": "prior finals, 10-game shrinkage"
+    },
+    "model_signal_schema": null
+   }
+  },
+  "mfti_shadow": {
+   "spec_version": "MFTI-0.1.1-shadow",
+   "mode": "shadow_research_only",
+   "captured_at": "2026-09-12T13:44:47.441322Z",
+   "status": "incomplete",
+   "score": null,
+   "historical_evidence": {
+    "available": false,
+    "score": null,
+    "reason": "frozen_normalization_and_rolling_recalibration_not_fitted",
+    "diagnostics": {
+     "eligible_prior_forecasts": 19,
+     "mean_brier": 0.212,
+     "mean_log_loss": 0.365112,
+     "brier_skill_vs_uniform": 0.682,
+     "log_skill_vs_uniform": 0.667661
+    }
+   },
+   "event_readiness": {
+    "available": false,
+    "score": null,
+    "missing_components": [
+     "scenario_stability",
+     "availability",
+     "freshness",
+     "model_stability"
+    ]
+   },
+   "components": {
+    "scenario_stability": {
+     "available": false,
+     "score": null,
+     "reason": "scenario_forecasts_not_captured"
+    },
+    "availability": {
+     "available": false,
+     "score": null,
+     "reason": "availability_probabilities_not_captured"
+    },
+    "freshness": {
+     "available": false,
+     "score": null,
+     "reason": "input_freshness_not_captured"
+    },
+    "model_stability": {
+     "available": false,
+     "score": null,
+     "reason": "independent_model_outputs_not_captured"
+    }
+   },
+   "missing_components": [
+    "historical_evidence",
+    "scenario_stability",
+    "availability",
+    "freshness",
+    "model_stability"
+   ],
+   "affects_prediction": false,
+   "user_visible": false
+  },
+  "result": null,
+  "model_result": null,
+  "market_result": null
+ },
+ "cfbd-401858218": {
+  "schema_ver": 2,
+  "fixture_id": "cfbd-401858218",
+  "competition": "NCAAF",
+  "home": "North Carolina",
+  "away": "East Tennessee State",
+  "stage": "Week 2",
+  "kickoff": "2026-09-12T16:00:00Z",
+  "pick": "h",
+  "pick_name": "North Carolina",
+  "confidence": 92,
+  "edge": -5,
+  "base_pick": "h",
+  "base_pick_name": "North Carolina",
+  "probs": {
+   "h": 92,
+   "d": 0,
+   "a": 8
+  },
+  "advancement_probs": null,
+  "regulation_probs": {
+   "h": 92,
+   "d": 0,
+   "a": 8
+  },
+  "regulation_pick": "h",
+  "market_comparison_pick": "h",
+  "market_comparison_basis": "regulation_1x2",
+  "outcome_basis": "regulation",
+  "market_basis": "regulation_1x2",
+  "market_pick": "h",
+  "market_pct": 97,
+  "pick_mkt": 97,
+  "value_side": null,
+  "value_edge": null,
+  "value_mkt": null,
+  "value_name": null,
+  "upset_candidate": "a",
+  "upset_name": "East Tennessee State",
+  "upset_score": 2,
+  "upset_candidate_pct": 8,
+  "upset_triggered": false,
+  "upset_temperature": 1.08,
+  "upset_reason": "favorite profile is cleaner",
+  "factor_snapshot": {
+   "margin": 0.07,
+   "adv": 0.45,
+   "class": 7.17,
+   "form": 0.0,
+   "rest": 0.35,
+   "srs": 0.0,
+   "record": 0.4,
+   "rank": 0.0,
+   "market_power": 0.0,
+   "elo": 4.65
+  },
+  "market_snapshot": {
+   "h": 97,
+   "d": 0,
+   "a": 3
+  },
+  "market_snapshot_at": "2026-09-12T13:44:35.998506Z",
+  "market_snapshot_recorded_at": "2026-09-12T13:44:47.441912Z",
+  "market_snapshot_receipt": {
+   "source": "The Odds API consensus",
+   "source_reference": "https://the-odds-api.com/",
+   "observed_at": "2026-09-12T13:44:35.998506Z",
+   "recorded_at": "2026-09-12T13:44:47.441912Z",
+   "snapshot_id": null,
+   "books": 1,
+   "spread": null
+  },
+  "market_gap": 94.0,
+  "upset_snapshot": {
+   "candidate": "East Tennessee State",
+   "class": "major",
+   "market_dog_pct": 3.0,
+   "model_dog_pct": 8.0,
+   "upset_edge": 5.0,
+   "independent_model_dog_pct": 10.0,
+   "independent_model_lead_pct": -80.0,
+   "independent_edge": 7.0,
+   "edge_threshold": 8.0,
+   "supporting_signals": [],
+   "personnel_gate": true,
+   "personnel_blockers": [],
+   "radar": false,
+   "standings_candidate": null,
+   "standings_gap_pct": null,
+   "gate": "none",
+   "box_score_edge": 0.0
+  },
+  "box_score_available": false,
+  "data_availability": {
+   "market": "available",
+   "box_score": "unavailable",
+   "lineups": "unavailable",
+   "injuries": "unavailable",
+   "weather": "available",
+   "personnel": "unavailable",
+   "venue_context": "available"
+  },
+  "damp_pct": 0,
+  "mkt_pull": 2,
+  "model_ver": "v6-calibrated",
+  "model_code_marker": "matchday-predictor-integrity-2026-07",
+  "model_signal_schema": 8,
+  "reproducibility": {
+   "model_version": "v6-calibrated",
+   "model_signal_schema": 8,
+   "probability_basis": "regulation",
+   "market_comparison_basis": "regulation_1x2",
+   "market_comparison_pick": "h"
+  },
+  "locked_at": "2026-09-12T13:44:47.441912Z",
+  "lead_time_seconds": 8112.558,
+  "lead_time_hours": 2.253488,
+  "lock_window_hours": 3.0,
+  "status_at_lock": "UPCOMING",
+  "integrity_eligible": true,
+  "integrity_status": "verified",
+  "integrity_reason": "verified_pregame_window",
+  "prediction_snapshot": {
+   "pick": "h",
+   "pick_name": "North Carolina",
+   "confidence": 92,
+   "model_version": "v6-calibrated",
+   "model_signal_schema": 8,
+   "base_pick": "h",
+   "base_pick_name": "North Carolina",
+   "model": {
+    "h": 90,
+    "a": 10,
+    "d": 0
+   },
+   "base_blend": {
+    "h": 93,
+    "d": 0,
+    "a": 7
+   },
+   "blend": {
+    "h": 92,
+    "d": 0,
+    "a": 8
+   },
+   "adjusted": {
+    "h": 92,
+    "d": 0,
+    "a": 8
+   },
+   "is_knockout": false,
+   "advancement": null,
+   "regulation_pick": "h",
+   "market_comparison_pick": "h",
+   "market_comparison_basis": "regulation_1x2",
+   "regulation_pick_name": "North Carolina",
+   "regulation_confidence": 92,
+   "regulation_probs": {
+    "h": 92,
+    "d": 0,
+    "a": 8
+   },
+   "edge": -5,
+   "note": "model agrees with the market",
+   "why": {
+    "margin": 0.07,
+    "adv": 0.45,
+    "class": 7.17,
+    "form": 0.0,
+    "rest": 0.35,
+    "srs": 0.0,
+    "record": 0.4,
+    "rank": 0.0,
+    "market_power": 0.0,
+    "elo": 4.65
+   },
+   "damp_pct": 0,
+   "mkt_pull": 2,
+   "market_weight": 0.42,
+   "upset": {
+    "candidate": "a",
+    "candidate_name": "East Tennessee State",
+    "favorite": "h",
+    "favorite_name": "North Carolina",
+    "score": 2,
+    "upset_class": "major",
+    "market_dog_pct": 3.0,
+    "model_dog_pct": 8.0,
+    "upset_edge": 5.0,
+    "radar": false,
+    "standings_candidate": null,
+    "standings_gap_pct": null,
+    "standings_sample_ok": false,
+    "temperature": 1.08,
+    "variance_pct": 0,
+    "low_goal_pct": 42,
+    "draw_pct": 0,
+    "favorite_pct": 92,
+    "candidate_pct": 8,
+    "margin_pct": 84,
+    "learn_bias_pct": 0.0,
+    "market_gap_pct": 94.0,
+    "market_gate": false,
+    "market_quality_gate": false,
+    "independent_model_dog_pct": 10.0,
+    "independent_model_lead_pct": -80.0,
+    "independent_edge": 7.0,
+    "edge_threshold": 8.0,
+    "independent_pick_gate": false,
+    "playability_gate": false,
+    "evidence_gate": false,
+    "supporting_signals": [],
+    "personnel_gate": true,
+    "personnel_blockers": [],
+    "box_score_edge": 0.0,
+    "strong_box_signal": false,
+    "blocked": false,
+    "triggered": false,
+    "reason": "favorite profile is cleaner"
+   },
+   "data_quality": {
+    "level": "preseason",
+    "games": {
+     "home": 1,
+     "away": 0
+    },
+    "signals": [
+     "class",
+     "record",
+     "margin",
+     "elo",
+     "rest",
+     "market"
+    ],
+    "market_available": true,
+    "market_books": 1,
+    "market_spread": null,
+    "market_weight": 0.42,
+    "note": "Limited current-season evidence; probability is intentionally conservative."
+   },
+   "predicted_margin": {
+    "value": 14.8,
+    "unit": "points",
+    "favored": "h",
+    "label": "North Carolina by 14.8"
+   },
+   "class_meta": {
+    "label": "Roster talent edge",
+    "source": "247Sports Team Talent Composite via CollegeFootballData",
+    "available": true,
+    "coverage": "complete",
+    "home_available": true,
+    "away_available": true,
+    "note": "Multi-year current-roster talent composite; it measures roster quality, not program prestige.",
+    "edge_available": true,
+    "coverage_label": null
+   },
+   "publication_state": "locked",
+   "lock_readiness": {
+    "schema_ver": 1,
+    "sport": "football",
+    "competition": "NCAAF",
+    "phase": "lock_window",
+    "lock_window_hours": 3.0,
+    "lead_time_hours": 2.26,
+    "inputs": {
+     "market": "confirmed",
+     "injuries": "missing",
+     "key_players": "missing",
+     "weather": "confirmed"
+    },
+    "missing_critical": [
+     "injuries",
+     "key_players"
+    ],
+    "unconfirmed_critical": [
+     "injuries",
+     "key_players"
+    ],
+    "coverage_pct": 50,
+    "confirmed_pct": 50,
+    "provenance": [],
+    "confidence_guard": {
+     "high_confidence_label_allowed": false,
+     "reason": "critical pregame inputs not confirmed"
+    },
+    "production_weight": 0,
+    "research_mode": "prospective_shadow"
+   },
+   "neutral_venue_probs": {
+    "h": 90,
+    "d": 0,
+    "a": 10
+   },
+   "totals": {
+    "expected": 54.31,
+    "basis": "preseason_rating"
+   },
+   "data_availability": {
+    "market": "available",
+    "box_score": "unavailable",
+    "lineups": "unavailable",
+    "injuries": "unavailable",
+    "weather": "available",
+    "personnel": "unavailable",
+    "venue_context": "available"
+   }
+  },
+  "input_snapshot": {
+   "competition": "NCAAF",
+   "competition_config": {
+    "label": "College Football",
+    "sport": "football",
+    "fd": null,
+    "odds": "americanfootball_ncaaf",
+    "outright": "americanfootball_ncaaf_championship_winner",
+    "tournament": false,
+    "source": "cfbd",
+    "has_draws": false
+   },
+   "match": {
+    "id": "cfbd-401858218",
+    "stage": "Week 2",
+    "kickoff": "2026-09-12T16:00:00Z",
+    "status": "UPCOMING",
+    "venue": "Kenan Stadium",
+    "home": {
+     "name": "North Carolina",
+     "code": "NC",
+     "pts": 3,
+     "gd": 5,
+     "form": "",
+     "pos": 5,
+     "group": "ACC",
+     "gf": 15,
+     "ga": 10,
+     "pld": 1,
+     "w": 1,
+     "d": 0,
+     "l": 0,
+     "record": "1-0",
+     "win_pct": 1.0,
+     "season_stale": false,
+     "srs": 0.015,
+     "srs_games": 1,
+     "rest_days": 14,
+     "rating": 7.11,
+     "form_home": "",
+     "form_away": "W"
+    },
+    "away": {
+     "name": "East Tennessee State",
+     "code": "ETS",
+     "pts": null,
+     "gd": null,
+     "form": "",
+     "pos": null,
+     "group": "Southern",
+     "rating": 2.06
+    },
+    "markets": {
+     "1x2": {
+      "home_pct": 97,
+      "draw_pct": 0,
+      "away_pct": 3,
+      "books": 1,
+      "source": "The Odds API consensus",
+      "source_reference": "https://the-odds-api.com/",
+      "observed_at": "2026-09-12T13:44:35.998506Z",
+      "open": {
+       "h": 97,
+       "d": 0,
+       "a": 3
+      },
+      "move": {
+       "h": 0,
+       "d": 0,
+       "a": 0
+      }
+     }
+    },
+    "weather": {
+     "temp_c": 31,
+     "wind_kph": 8,
+     "rain_pct": 15,
+     "source": "Open-Meteo",
+     "source_url": "https://open-meteo.com/"
+    },
+    "injuries": {
+     "home": [],
+     "away": []
+    },
+    "lineups": null,
+    "h2h": [],
+    "stats": null,
+    "stats_extra": null,
+    "data_source": "CollegeFootballData",
+    "advanced_metrics": {
+     "home": {
+      "plays": 58,
+      "drives": 10,
+      "ppa": 0.1072,
+      "success_rate": 0.4655,
+      "explosiveness": 0.9193,
+      "line_yards": 3.4259,
+      "power_success": 0.0,
+      "stuff_rate": 0.1481,
+      "def_ppa_allowed": -0.0459,
+      "def_success_rate_allowed": 0.3333,
+      "def_explosiveness_allowed": 1.2162
+     }
+    },
+    "advanced_metrics_meta": {
+     "schema_version": 1,
+     "source": "CollegeFootballData /stats/season/advanced",
+     "license": "active CFBD API tier",
+     "generated_at": "2026-09-05T16:12:06.515199Z",
+     "coverage": {
+      "season": 2026,
+      "season_role": "current",
+      "teams": 40,
+      "garbage_time_excluded": true
+     },
+     "shadow_only": true,
+     "production_weight": 0,
+     "profile_file": "advanced_metrics_ncaaf.json"
+    },
+    "nfl_challenger_shadow": null,
+    "mlb_challenger_shadow": null,
+    "personnel": null,
+    "personnel_shadow": {
+     "schema_ver": 1,
+     "sport": "football",
+     "production_weight": 0,
+     "mode": "prospective_shadow",
+     "features": {
+      "injury_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineup_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineups_confirmed": false,
+      "rest_days": {
+       "home": 14,
+       "away": null
+      },
+      "weather": {
+       "temp_c": 31,
+       "wind_kph": 8,
+       "rain_pct": 15,
+       "source": "Open-Meteo",
+       "source_url": "https://open-meteo.com/"
+      },
+      "venue_context": {
+       "sample_games": 0,
+       "league_total_avg": 53.407,
+       "venue_total_avg": 53.407,
+       "factor": 1.0,
+       "label": "venue scoring context",
+       "production_weight": 0,
+       "method": "prior finals, 10-game shrinkage"
+      }
+     }
+    },
+    "pregame_context": {
+     "schema_ver": 1,
+     "sport": "football",
+     "competition": "NCAAF",
+     "phase": "lock_window",
+     "lock_window_hours": 3.0,
+     "lead_time_hours": 2.26,
+     "inputs": {
+      "market": "confirmed",
+      "injuries": "missing",
+      "key_players": "missing",
+      "weather": "confirmed"
+     },
+     "missing_critical": [
+      "injuries",
+      "key_players"
+     ],
+     "unconfirmed_critical": [
+      "injuries",
+      "key_players"
+     ],
+     "coverage_pct": 50,
+     "confirmed_pct": 50,
+     "provenance": [],
+     "confidence_guard": {
+      "high_confidence_label_allowed": false,
+      "reason": "critical pregame inputs not confirmed"
+     },
+     "production_weight": 0,
+     "research_mode": "prospective_shadow"
+    },
+    "pregame_provenance": null,
+    "venue_context": {
+     "sample_games": 0,
+     "league_total_avg": 53.407,
+     "venue_total_avg": 53.407,
+     "factor": 1.0,
+     "label": "venue scoring context",
+     "production_weight": 0,
+     "method": "prior finals, 10-game shrinkage"
+    },
+    "model_signal_schema": null
+   }
+  },
+  "mfti_shadow": {
+   "spec_version": "MFTI-0.1.1-shadow",
+   "mode": "shadow_research_only",
+   "captured_at": "2026-09-12T13:44:47.441912Z",
+   "status": "incomplete",
+   "score": null,
+   "historical_evidence": {
+    "available": false,
+    "score": null,
+    "reason": "frozen_normalization_and_rolling_recalibration_not_fitted",
+    "diagnostics": {
+     "eligible_prior_forecasts": 19,
+     "mean_brier": 0.212,
+     "mean_log_loss": 0.365112,
+     "brier_skill_vs_uniform": 0.682,
+     "log_skill_vs_uniform": 0.667661
+    }
+   },
+   "event_readiness": {
+    "available": false,
+    "score": null,
+    "missing_components": [
+     "scenario_stability",
+     "availability",
+     "freshness",
+     "model_stability"
+    ]
+   },
+   "components": {
+    "scenario_stability": {
+     "available": false,
+     "score": null,
+     "reason": "scenario_forecasts_not_captured"
+    },
+    "availability": {
+     "available": false,
+     "score": null,
+     "reason": "availability_probabilities_not_captured"
+    },
+    "freshness": {
+     "available": false,
+     "score": null,
+     "reason": "input_freshness_not_captured"
+    },
+    "model_stability": {
+     "available": false,
+     "score": null,
+     "reason": "independent_model_outputs_not_captured"
+    }
+   },
+   "missing_components": [
+    "historical_evidence",
+    "scenario_stability",
+    "availability",
+    "freshness",
+    "model_stability"
+   ],
+   "affects_prediction": false,
+   "user_visible": false
+  },
+  "result": null,
+  "model_result": null,
+  "market_result": null
+ },
+ "cfbd-401866416": {
+  "schema_ver": 2,
+  "fixture_id": "cfbd-401866416",
+  "competition": "NCAAF",
+  "home": "Kent State",
+  "away": "Wofford",
+  "stage": "Week 2",
+  "kickoff": "2026-09-12T16:00:00Z",
+  "pick": "h",
+  "pick_name": "Kent State",
+  "confidence": 66,
+  "edge": -12,
+  "base_pick": "h",
+  "base_pick_name": "Kent State",
+  "probs": {
+   "h": 66,
+   "d": 0,
+   "a": 34
+  },
+  "advancement_probs": null,
+  "regulation_probs": {
+   "h": 66,
+   "d": 0,
+   "a": 34
+  },
+  "regulation_pick": "h",
+  "market_comparison_pick": "h",
+  "market_comparison_basis": "regulation_1x2",
+  "outcome_basis": "regulation",
+  "market_basis": "regulation_1x2",
+  "market_pick": "h",
+  "market_pct": 78,
+  "pick_mkt": 78,
+  "value_side": "a",
+  "value_edge": 12,
+  "value_mkt": 22,
+  "value_name": "Wofford",
+  "upset_candidate": "a",
+  "upset_name": "Wofford",
+  "upset_score": 33,
+  "upset_candidate_pct": 34,
+  "upset_triggered": false,
+  "upset_temperature": 1.08,
+  "upset_reason": "model edge 27 pts",
+  "factor_snapshot": {
+   "margin": 0.0,
+   "adv": 0.45,
+   "class": 2.32,
+   "form": 0.0,
+   "rest": 0.0,
+   "srs": 0.0,
+   "record": -0.0,
+   "rank": 0.0,
+   "market_power": 0.0,
+   "elo": -1.72
+  },
+  "market_snapshot": {
+   "h": 78,
+   "d": 0,
+   "a": 22
+  },
+  "market_snapshot_at": "2026-09-12T13:44:35.998506Z",
+  "market_snapshot_recorded_at": "2026-09-12T13:44:47.442570Z",
+  "market_snapshot_receipt": {
+   "source": "The Odds API consensus",
+   "source_reference": "https://the-odds-api.com/",
+   "observed_at": "2026-09-12T13:44:35.998506Z",
+   "recorded_at": "2026-09-12T13:44:47.442570Z",
+   "snapshot_id": null,
+   "books": 9,
+   "spread": 7
+  },
+  "market_gap": 56.0,
+  "upset_snapshot": {
+   "candidate": "Wofford",
+   "class": "solid",
+   "market_dog_pct": 22.0,
+   "model_dog_pct": 34.0,
+   "upset_edge": 12.0,
+   "independent_model_dog_pct": 49.0,
+   "independent_model_lead_pct": -2.0,
+   "independent_edge": 27.0,
+   "edge_threshold": 8.0,
+   "supporting_signals": [
+    "elo"
+   ],
+   "personnel_gate": true,
+   "personnel_blockers": [],
+   "radar": false,
+   "standings_candidate": null,
+   "standings_gap_pct": null,
+   "gate": "none",
+   "box_score_edge": 0.0
+  },
+  "box_score_available": false,
+  "data_availability": {
+   "market": "available",
+   "box_score": "unavailable",
+   "lineups": "unavailable",
+   "injuries": "unavailable",
+   "weather": "available",
+   "personnel": "unavailable",
+   "venue_context": "available"
+  },
+  "damp_pct": 0,
+  "mkt_pull": 15,
+  "model_ver": "v6-calibrated",
+  "model_code_marker": "matchday-predictor-integrity-2026-07",
+  "model_signal_schema": 8,
+  "reproducibility": {
+   "model_version": "v6-calibrated",
+   "model_signal_schema": 8,
+   "probability_basis": "regulation",
+   "market_comparison_basis": "regulation_1x2",
+   "market_comparison_pick": "h"
+  },
+  "locked_at": "2026-09-12T13:44:47.442570Z",
+  "lead_time_seconds": 8112.557,
+  "lead_time_hours": 2.253488,
+  "lock_window_hours": 3.0,
+  "status_at_lock": "UPCOMING",
+  "integrity_eligible": true,
+  "integrity_status": "verified",
+  "integrity_reason": "verified_pregame_window",
+  "prediction_snapshot": {
+   "pick": "h",
+   "pick_name": "Kent State",
+   "confidence": 66,
+   "model_version": "v6-calibrated",
+   "model_signal_schema": 8,
+   "base_pick": "h",
+   "base_pick_name": "Kent State",
+   "model": {
+    "h": 51,
+    "a": 49,
+    "d": 0
+   },
+   "base_blend": {
+    "h": 67,
+    "d": 0,
+    "a": 33
+   },
+   "blend": {
+    "h": 66,
+    "d": 0,
+    "a": 34
+   },
+   "adjusted": {
+    "h": 66,
+    "d": 0,
+    "a": 34
+   },
+   "is_knockout": false,
+   "advancement": null,
+   "regulation_pick": "h",
+   "market_comparison_pick": "h",
+   "market_comparison_basis": "regulation_1x2",
+   "regulation_pick_name": "Kent State",
+   "regulation_confidence": 66,
+   "regulation_probs": {
+    "h": 66,
+    "d": 0,
+    "a": 34
+   },
+   "edge": -12,
+   "note": "model rates this lower than the market",
+   "why": {
+    "margin": 0.0,
+    "adv": 0.45,
+    "class": 2.32,
+    "form": 0.0,
+    "rest": 0.0,
+    "srs": 0.0,
+    "record": -0.0,
+    "rank": 0.0,
+    "market_power": 0.0,
+    "elo": -1.72
+   },
+   "damp_pct": 0,
+   "mkt_pull": 15,
+   "market_weight": 0.6,
+   "upset": {
+    "candidate": "a",
+    "candidate_name": "Wofford",
+    "favorite": "h",
+    "favorite_name": "Kent State",
+    "score": 33,
+    "upset_class": "solid",
+    "market_dog_pct": 22.0,
+    "model_dog_pct": 34.0,
+    "upset_edge": 12.0,
+    "radar": false,
+    "standings_candidate": null,
+    "standings_gap_pct": null,
+    "standings_sample_ok": false,
+    "temperature": 1.08,
+    "variance_pct": 0,
+    "low_goal_pct": 42,
+    "draw_pct": 0,
+    "favorite_pct": 66,
+    "candidate_pct": 34,
+    "margin_pct": 32,
+    "learn_bias_pct": 0.0,
+    "market_gap_pct": 56.0,
+    "market_gate": true,
+    "market_quality_gate": true,
+    "independent_model_dog_pct": 49.0,
+    "independent_model_lead_pct": -2.0,
+    "independent_edge": 27.0,
+    "edge_threshold": 8.0,
+    "independent_pick_gate": false,
+    "playability_gate": false,
+    "evidence_gate": false,
+    "supporting_signals": [
+     "elo"
+    ],
+    "personnel_gate": true,
+    "personnel_blockers": [],
+    "box_score_edge": 0.0,
+    "strong_box_signal": false,
+    "blocked": false,
+    "triggered": false,
+    "reason": "model edge 27 pts"
+   },
+   "data_quality": {
+    "level": "preseason",
+    "games": {
+     "home": 0,
+     "away": 0
+    },
+    "signals": [
+     "class",
+     "elo",
+     "market"
+    ],
+    "market_available": true,
+    "market_books": 9,
+    "market_spread": 7,
+    "market_weight": 0.6,
+    "note": "Limited current-season evidence; probability is intentionally conservative."
+   },
+   "predicted_margin": {
+    "value": 4.0,
+    "unit": "points",
+    "favored": "h",
+    "label": "Kent State by 4.0"
+   },
+   "class_meta": {
+    "label": "Roster talent edge",
+    "source": "247Sports Team Talent Composite via CollegeFootballData",
+    "available": false,
+    "coverage": "partial",
+    "home_available": true,
+    "away_available": false,
+    "note": "Multi-year current-roster talent composite; it measures roster quality, not program prestige.",
+    "edge_available": true,
+    "coverage_label": null
+   },
+   "publication_state": "locked",
+   "lock_readiness": {
+    "schema_ver": 1,
+    "sport": "football",
+    "competition": "NCAAF",
+    "phase": "lock_window",
+    "lock_window_hours": 3.0,
+    "lead_time_hours": 2.26,
+    "inputs": {
+     "market": "confirmed",
+     "injuries": "missing",
+     "key_players": "missing",
+     "weather": "confirmed"
+    },
+    "missing_critical": [
+     "injuries",
+     "key_players"
+    ],
+    "unconfirmed_critical": [
+     "injuries",
+     "key_players"
+    ],
+    "coverage_pct": 50,
+    "confirmed_pct": 50,
+    "provenance": [
+     {
+      "input": "market",
+      "source": "SportsGameOdds",
+      "source_reference": "https://sportsgameodds.com/",
+      "fetched_at": "2026-09-11T04:44:46.687320Z",
+      "provider_event_id": "0VeOnMAdt8EhE3m3OcHr",
+      "join": {
+       "match_provider_ids": [
+        "401866416",
+        "cfbd-401866416"
+       ],
+       "match_kickoff": "2026-09-12T16:00:00Z",
+       "candidate_event_ids": [
+        "0VeOnMAdt8EhE3m3OcHr"
+       ],
+       "status": "matched",
+       "strategy": "teams_and_start_time",
+       "provider_event_id": "0VeOnMAdt8EhE3m3OcHr",
+       "provider_start": "2026-09-12T16:00:00Z"
+      },
+      "espn_excluded": true,
+      "personnel_semantics": null
+     },
+     {
+      "input": "market",
+      "source": "SportsGameOdds",
+      "source_reference": "https://sportsgameodds.com/",
+      "fetched_at": "2026-09-11T18:34:51.478728Z",
+      "provider_event_id": "0VeOnMAdt8EhE3m3OcHr",
+      "join": {
+       "match_provider_ids": [
+        "401866416",
+        "cfbd-401866416"
+       ],
+       "match_kickoff": "2026-09-12T16:00:00Z",
+       "candidate_event_ids": [
+        "0VeOnMAdt8EhE3m3OcHr"
+       ],
+       "status": "matched",
+       "strategy": "teams_and_start_time",
+       "provider_event_id": "0VeOnMAdt8EhE3m3OcHr",
+       "provider_start": "2026-09-12T16:00:00Z"
+      },
+      "espn_excluded": true,
+      "personnel_semantics": null
+     }
+    ],
+    "confidence_guard": {
+     "high_confidence_label_allowed": false,
+     "reason": "critical pregame inputs not confirmed"
+    },
+    "production_weight": 0,
+    "research_mode": "prospective_shadow"
+   },
+   "neutral_venue_probs": {
+    "h": 66,
+    "d": 0,
+    "a": 34
+   },
+   "totals": {
+    "expected": 50.1,
+    "basis": "preseason_rating"
+   },
+   "data_availability": {
+    "market": "available",
+    "box_score": "unavailable",
+    "lineups": "unavailable",
+    "injuries": "unavailable",
+    "weather": "available",
+    "personnel": "unavailable",
+    "venue_context": "available"
+   }
+  },
+  "input_snapshot": {
+   "competition": "NCAAF",
+   "competition_config": {
+    "label": "College Football",
+    "sport": "football",
+    "fd": null,
+    "odds": "americanfootball_ncaaf",
+    "outright": "americanfootball_ncaaf_championship_winner",
+    "tournament": false,
+    "source": "cfbd",
+    "has_draws": false
+   },
+   "match": {
+    "id": "cfbd-401866416",
+    "stage": "Week 2",
+    "kickoff": "2026-09-12T16:00:00Z",
+    "status": "UPCOMING",
+    "venue": "Dix Stadium",
+    "home": {
+     "name": "Kent State",
+     "code": "KENT",
+     "pts": 0,
+     "gd": 0,
+     "form": "",
+     "pos": 7,
+     "group": "Mid-American",
+     "gf": 0,
+     "ga": 0,
+     "pld": 0,
+     "w": 0,
+     "d": 0,
+     "l": 0,
+     "record": "0-0",
+     "win_pct": 0.0,
+     "season_stale": false,
+     "rating": 1.75
+    },
+    "away": {
+     "name": "Wofford",
+     "code": "W",
+     "pts": null,
+     "gd": null,
+     "form": "",
+     "pos": null,
+     "group": "Southern",
+     "rating": 2.31
+    },
+    "markets": {
+     "1x2": {
+      "home_pct": 78,
+      "draw_pct": 0,
+      "away_pct": 22,
+      "books": 9,
+      "source": "The Odds API consensus",
+      "source_reference": "https://the-odds-api.com/",
+      "observed_at": "2026-09-12T13:44:35.998506Z",
+      "spread": 7,
+      "spread_lo": 73,
+      "spread_hi": 80,
+      "confidence": "tight",
+      "open": {
+       "h": 78,
+       "d": 0,
+       "a": 22
+      },
+      "move": {
+       "h": 0,
+       "d": 0,
+       "a": 0
+      }
+     }
+    },
+    "weather": {
+     "temp_c": 25,
+     "wind_kph": 14,
+     "rain_pct": 13,
+     "source": "Open-Meteo",
+     "source_url": "https://open-meteo.com/"
+    },
+    "injuries": {
+     "home": [],
+     "away": []
+    },
+    "lineups": null,
+    "h2h": [],
+    "stats": null,
+    "stats_extra": null,
+    "data_source": "CollegeFootballData",
+    "advanced_metrics": null,
+    "advanced_metrics_meta": null,
+    "nfl_challenger_shadow": null,
+    "mlb_challenger_shadow": null,
+    "personnel": null,
+    "personnel_shadow": {
+     "schema_ver": 1,
+     "sport": "football",
+     "production_weight": 0,
+     "mode": "prospective_shadow",
+     "features": {
+      "injury_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineup_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineups_confirmed": false,
+      "rest_days": {
+       "home": null,
+       "away": null
+      },
+      "weather": {
+       "temp_c": 25,
+       "wind_kph": 14,
+       "rain_pct": 13,
+       "source": "Open-Meteo",
+       "source_url": "https://open-meteo.com/"
+      },
+      "venue_context": {
+       "sample_games": 0,
+       "league_total_avg": 53.407,
+       "venue_total_avg": 53.407,
+       "factor": 1.0,
+       "label": "venue scoring context",
+       "production_weight": 0,
+       "method": "prior finals, 10-game shrinkage"
+      }
+     }
+    },
+    "pregame_context": {
+     "schema_ver": 1,
+     "sport": "football",
+     "competition": "NCAAF",
+     "phase": "lock_window",
+     "lock_window_hours": 3.0,
+     "lead_time_hours": 2.26,
+     "inputs": {
+      "market": "confirmed",
+      "injuries": "missing",
+      "key_players": "missing",
+      "weather": "confirmed"
+     },
+     "missing_critical": [
+      "injuries",
+      "key_players"
+     ],
+     "unconfirmed_critical": [
+      "injuries",
+      "key_players"
+     ],
+     "coverage_pct": 50,
+     "confirmed_pct": 50,
+     "provenance": [
+      {
+       "input": "market",
+       "source": "SportsGameOdds",
+       "source_reference": "https://sportsgameodds.com/",
+       "fetched_at": "2026-09-11T04:44:46.687320Z",
+       "provider_event_id": "0VeOnMAdt8EhE3m3OcHr",
+       "join": {
+        "match_provider_ids": [
+         "401866416",
+         "cfbd-401866416"
+        ],
+        "match_kickoff": "2026-09-12T16:00:00Z",
+        "candidate_event_ids": [
+         "0VeOnMAdt8EhE3m3OcHr"
+        ],
+        "status": "matched",
+        "strategy": "teams_and_start_time",
+        "provider_event_id": "0VeOnMAdt8EhE3m3OcHr",
+        "provider_start": "2026-09-12T16:00:00Z"
+       },
+       "espn_excluded": true,
+       "personnel_semantics": null
+      },
+      {
+       "input": "market",
+       "source": "SportsGameOdds",
+       "source_reference": "https://sportsgameodds.com/",
+       "fetched_at": "2026-09-11T18:34:51.478728Z",
+       "provider_event_id": "0VeOnMAdt8EhE3m3OcHr",
+       "join": {
+        "match_provider_ids": [
+         "401866416",
+         "cfbd-401866416"
+        ],
+        "match_kickoff": "2026-09-12T16:00:00Z",
+        "candidate_event_ids": [
+         "0VeOnMAdt8EhE3m3OcHr"
+        ],
+        "status": "matched",
+        "strategy": "teams_and_start_time",
+        "provider_event_id": "0VeOnMAdt8EhE3m3OcHr",
+        "provider_start": "2026-09-12T16:00:00Z"
+       },
+       "espn_excluded": true,
+       "personnel_semantics": null
+      }
+     ],
+     "confidence_guard": {
+      "high_confidence_label_allowed": false,
+      "reason": "critical pregame inputs not confirmed"
+     },
+     "production_weight": 0,
+     "research_mode": "prospective_shadow"
+    },
+    "pregame_provenance": [
+     {
+      "input": "market",
+      "source": "SportsGameOdds",
+      "source_reference": "https://sportsgameodds.com/",
+      "fetched_at": "2026-09-11T04:44:46.687320Z",
+      "provider_event_id": "0VeOnMAdt8EhE3m3OcHr",
+      "join": {
+       "match_provider_ids": [
+        "401866416",
+        "cfbd-401866416"
+       ],
+       "match_kickoff": "2026-09-12T16:00:00Z",
+       "candidate_event_ids": [
+        "0VeOnMAdt8EhE3m3OcHr"
+       ],
+       "status": "matched",
+       "strategy": "teams_and_start_time",
+       "provider_event_id": "0VeOnMAdt8EhE3m3OcHr",
+       "provider_start": "2026-09-12T16:00:00Z"
+      },
+      "espn_excluded": true,
+      "personnel_semantics": null
+     },
+     {
+      "input": "market",
+      "source": "SportsGameOdds",
+      "source_reference": "https://sportsgameodds.com/",
+      "fetched_at": "2026-09-11T18:34:51.478728Z",
+      "provider_event_id": "0VeOnMAdt8EhE3m3OcHr",
+      "join": {
+       "match_provider_ids": [
+        "401866416",
+        "cfbd-401866416"
+       ],
+       "match_kickoff": "2026-09-12T16:00:00Z",
+       "candidate_event_ids": [
+        "0VeOnMAdt8EhE3m3OcHr"
+       ],
+       "status": "matched",
+       "strategy": "teams_and_start_time",
+       "provider_event_id": "0VeOnMAdt8EhE3m3OcHr",
+       "provider_start": "2026-09-12T16:00:00Z"
+      },
+      "espn_excluded": true,
+      "personnel_semantics": null
+     }
+    ],
+    "venue_context": {
+     "sample_games": 0,
+     "league_total_avg": 53.407,
+     "venue_total_avg": 53.407,
+     "factor": 1.0,
+     "label": "venue scoring context",
+     "production_weight": 0,
+     "method": "prior finals, 10-game shrinkage"
+    },
+    "model_signal_schema": null
+   }
+  },
+  "mfti_shadow": {
+   "spec_version": "MFTI-0.1.1-shadow",
+   "mode": "shadow_research_only",
+   "captured_at": "2026-09-12T13:44:47.442570Z",
+   "status": "incomplete",
+   "score": null,
+   "historical_evidence": {
+    "available": false,
+    "score": null,
+    "reason": "frozen_normalization_and_rolling_recalibration_not_fitted",
+    "diagnostics": {
+     "eligible_prior_forecasts": 19,
+     "mean_brier": 0.212,
+     "mean_log_loss": 0.365112,
+     "brier_skill_vs_uniform": 0.682,
+     "log_skill_vs_uniform": 0.667661
+    }
+   },
+   "event_readiness": {
+    "available": false,
+    "score": null,
+    "missing_components": [
+     "scenario_stability",
+     "availability",
+     "freshness",
+     "model_stability"
+    ]
+   },
+   "components": {
+    "scenario_stability": {
+     "available": false,
+     "score": null,
+     "reason": "scenario_forecasts_not_captured"
+    },
+    "availability": {
+     "available": false,
+     "score": null,
+     "reason": "availability_probabilities_not_captured"
+    },
+    "freshness": {
+     "available": false,
+     "score": null,
+     "reason": "input_freshness_not_captured"
+    },
+    "model_stability": {
+     "available": false,
+     "score": null,
+     "reason": "independent_model_outputs_not_captured"
+    }
+   },
+   "missing_components": [
+    "historical_evidence",
+    "scenario_stability",
+    "availability",
+    "freshness",
+    "model_stability"
+   ],
+   "affects_prediction": false,
+   "user_visible": false
+  },
+  "result": null,
+  "model_result": null,
+  "market_result": null
+ },
+ "cfbd-401864571": {
+  "schema_ver": 2,
+  "fixture_id": "cfbd-401864571",
+  "competition": "NCAAF",
+  "home": "East Carolina",
+  "away": "App State",
+  "stage": "Week 2",
+  "kickoff": "2026-09-12T16:00:00Z",
+  "pick": "h",
+  "pick_name": "East Carolina",
+  "confidence": 52,
+  "edge": null,
+  "base_pick": "h",
+  "base_pick_name": "East Carolina",
+  "probs": {
+   "h": 52,
+   "d": 0,
+   "a": 48
+  },
+  "advancement_probs": null,
+  "regulation_probs": {
+   "h": 52,
+   "d": 0,
+   "a": 48
+  },
+  "regulation_pick": "h",
+  "market_comparison_pick": "h",
+  "market_comparison_basis": "regulation_1x2",
+  "outcome_basis": "regulation",
+  "market_basis": "regulation_1x2",
+  "market_pick": null,
+  "market_pct": null,
+  "pick_mkt": null,
+  "value_side": null,
+  "value_edge": null,
+  "value_mkt": null,
+  "value_name": null,
+  "upset_candidate": "a",
+  "upset_name": "App State",
+  "upset_score": 65,
+  "upset_candidate_pct": 48,
+  "upset_triggered": false,
+  "upset_temperature": 1.2,
+  "upset_reason": "narrow team gap",
+  "factor_snapshot": {
+   "margin": 0.0,
+   "adv": 0.45,
+   "class": 0.09,
+   "form": 0.0,
+   "rest": 0.0,
+   "srs": 0.0,
+   "record": 0.0,
+   "rank": 0.0,
+   "market_power": 0.0,
+   "elo": 0.18
+  },
+  "market_snapshot": null,
+  "market_snapshot_at": null,
+  "market_snapshot_recorded_at": null,
+  "market_snapshot_receipt": null,
+  "market_gap": null,
+  "upset_snapshot": {
+   "candidate": "App State",
+   "class": "unknown",
+   "market_dog_pct": null,
+   "model_dog_pct": 48.0,
+   "upset_edge": null,
+   "independent_model_dog_pct": null,
+   "independent_model_lead_pct": null,
+   "independent_edge": null,
+   "edge_threshold": 8.0,
+   "supporting_signals": [],
+   "personnel_gate": true,
+   "personnel_blockers": [],
+   "radar": false,
+   "standings_candidate": null,
+   "standings_gap_pct": null,
+   "gate": "none",
+   "box_score_edge": 0.0
+  },
+  "box_score_available": false,
+  "data_availability": {
+   "market": "unavailable",
+   "box_score": "unavailable",
+   "lineups": "unavailable",
+   "injuries": "unavailable",
+   "weather": "available",
+   "personnel": "unavailable",
+   "venue_context": "available"
+  },
+  "damp_pct": 0,
+  "mkt_pull": 0,
+  "model_ver": "v6-calibrated",
+  "model_code_marker": "matchday-predictor-integrity-2026-07",
+  "model_signal_schema": 8,
+  "reproducibility": {
+   "model_version": "v6-calibrated",
+   "model_signal_schema": 8,
+   "probability_basis": "regulation",
+   "market_comparison_basis": "regulation_1x2",
+   "market_comparison_pick": "h"
+  },
+  "locked_at": "2026-09-12T13:44:47.443234Z",
+  "lead_time_seconds": 8112.557,
+  "lead_time_hours": 2.253488,
+  "lock_window_hours": 3.0,
+  "status_at_lock": "UPCOMING",
+  "integrity_eligible": true,
+  "integrity_status": "verified",
+  "integrity_reason": "verified_pregame_window",
+  "prediction_snapshot": {
+   "pick": "h",
+   "pick_name": "East Carolina",
+   "confidence": 52,
+   "model_version": "v6-calibrated",
+   "model_signal_schema": 8,
+   "base_pick": "h",
+   "base_pick_name": "East Carolina",
+   "model": {
+    "h": 52,
+    "a": 48,
+    "d": 0
+   },
+   "base_blend": {
+    "h": 52,
+    "d": 0,
+    "a": 48
+   },
+   "blend": {
+    "h": 52,
+    "d": 0,
+    "a": 48
+   },
+   "adjusted": {
+    "h": 52,
+    "d": 0,
+    "a": 48
+   },
+   "is_knockout": false,
+   "advancement": null,
+   "regulation_pick": "h",
+   "market_comparison_pick": "h",
+   "market_comparison_basis": "regulation_1x2",
+   "regulation_pick_name": "East Carolina",
+   "regulation_confidence": 52,
+   "regulation_probs": {
+    "h": 52,
+    "d": 0,
+    "a": 48
+   },
+   "edge": null,
+   "note": "no market to compare against",
+   "why": {
+    "margin": 0.0,
+    "adv": 0.45,
+    "class": 0.09,
+    "form": 0.0,
+    "rest": 0.0,
+    "srs": 0.0,
+    "record": 0.0,
+    "rank": 0.0,
+    "market_power": 0.0,
+    "elo": 0.18
+   },
+   "damp_pct": 0,
+   "mkt_pull": 0,
+   "market_weight": 0.0,
+   "upset": {
+    "candidate": "a",
+    "candidate_name": "App State",
+    "favorite": "h",
+    "favorite_name": "East Carolina",
+    "score": 65,
+    "upset_class": "unknown",
+    "market_dog_pct": null,
+    "model_dog_pct": 48.0,
+    "upset_edge": null,
+    "radar": false,
+    "standings_candidate": null,
+    "standings_gap_pct": null,
+    "standings_sample_ok": false,
+    "temperature": 1.2,
+    "variance_pct": 19,
+    "low_goal_pct": 42,
+    "draw_pct": 0,
+    "favorite_pct": 52,
+    "candidate_pct": 48,
+    "margin_pct": 4,
+    "learn_bias_pct": 0.0,
+    "market_gap_pct": null,
+    "market_gate": false,
+    "market_quality_gate": false,
+    "independent_model_dog_pct": null,
+    "independent_model_lead_pct": null,
+    "independent_edge": null,
+    "edge_threshold": 8.0,
+    "independent_pick_gate": false,
+    "playability_gate": true,
+    "evidence_gate": false,
+    "supporting_signals": [],
+    "personnel_gate": true,
+    "personnel_blockers": [],
+    "box_score_edge": 0.0,
+    "strong_box_signal": false,
+    "blocked": false,
+    "triggered": false,
+    "reason": "narrow team gap"
+   },
+   "data_quality": {
+    "level": "preseason",
+    "games": {
+     "home": 0,
+     "away": 0
+    },
+    "signals": [
+     "class",
+     "elo"
+    ],
+    "market_available": false,
+    "market_books": 0,
+    "market_spread": null,
+    "market_weight": 0.0,
+    "note": "Limited current-season evidence; probability is intentionally conservative."
+   },
+   "predicted_margin": {
+    "value": 0.5,
+    "unit": "points",
+    "favored": "h",
+    "label": "East Carolina by 0.5"
+   },
+   "class_meta": {
+    "label": "Roster talent edge",
+    "source": "247Sports Team Talent Composite via CollegeFootballData",
+    "available": true,
+    "coverage": "complete",
+    "home_available": true,
+    "away_available": true,
+    "note": "Multi-year current-roster talent composite; it measures roster quality, not program prestige.",
+    "edge_available": true,
+    "coverage_label": null
+   },
+   "publication_state": "locked",
+   "lock_readiness": {
+    "schema_ver": 1,
+    "sport": "football",
+    "competition": "NCAAF",
+    "phase": "lock_window",
+    "lock_window_hours": 3.0,
+    "lead_time_hours": 2.26,
+    "inputs": {
+     "market": "missing",
+     "injuries": "missing",
+     "key_players": "missing",
+     "weather": "confirmed"
+    },
+    "missing_critical": [
+     "market",
+     "injuries",
+     "key_players"
+    ],
+    "unconfirmed_critical": [
+     "market",
+     "injuries",
+     "key_players"
+    ],
+    "coverage_pct": 25,
+    "confirmed_pct": 25,
+    "provenance": [],
+    "confidence_guard": {
+     "high_confidence_label_allowed": false,
+     "reason": "critical pregame inputs not confirmed"
+    },
+    "production_weight": 0,
+    "research_mode": "prospective_shadow"
+   },
+   "neutral_venue_probs": {
+    "h": 51,
+    "d": 0,
+    "a": 49
+   },
+   "totals": {
+    "expected": 55.84,
+    "basis": "preseason_rating"
+   },
+   "data_availability": {
+    "market": "unavailable",
+    "box_score": "unavailable",
+    "lineups": "unavailable",
+    "injuries": "unavailable",
+    "weather": "available",
+    "personnel": "unavailable",
+    "venue_context": "available"
+   }
+  },
+  "input_snapshot": {
+   "competition": "NCAAF",
+   "competition_config": {
+    "label": "College Football",
+    "sport": "football",
+    "fd": null,
+    "odds": "americanfootball_ncaaf",
+    "outright": "americanfootball_ncaaf_championship_winner",
+    "tournament": false,
+    "source": "cfbd",
+    "has_draws": false
+   },
+   "match": {
+    "id": "cfbd-401864571",
+    "stage": "Week 2",
+    "kickoff": "2026-09-12T16:00:00Z",
+    "status": "UPCOMING",
+    "venue": "Dowdy-Ficklen Stadium",
+    "home": {
+     "name": "East Carolina",
+     "code": "EC",
+     "pts": 0,
+     "gd": 0,
+     "form": "",
+     "pos": 4,
+     "group": "American Athletic",
+     "gf": 0,
+     "ga": 0,
+     "pld": 0,
+     "w": 0,
+     "d": 0,
+     "l": 0,
+     "record": "0-0",
+     "win_pct": 0.0,
+     "season_stale": false,
+     "rating": 5.57
+    },
+    "away": {
+     "name": "App State",
+     "code": "APP",
+     "pts": 0,
+     "gd": 0,
+     "form": "",
+     "pos": 2,
+     "group": "Sun Belt",
+     "gf": 0,
+     "ga": 0,
+     "pld": 0,
+     "w": 0,
+     "d": 0,
+     "l": 0,
+     "record": "0-0",
+     "win_pct": 0.0,
+     "season_stale": false,
+     "rating": 5.45
+    },
+    "markets": {},
+    "weather": {
+     "temp_c": 31,
+     "wind_kph": 10,
+     "rain_pct": 7,
+     "source": "Open-Meteo",
+     "source_url": "https://open-meteo.com/"
+    },
+    "injuries": {
+     "home": [],
+     "away": []
+    },
+    "lineups": null,
+    "h2h": [],
+    "stats": null,
+    "stats_extra": null,
+    "data_source": "CollegeFootballData",
+    "advanced_metrics": null,
+    "advanced_metrics_meta": null,
+    "nfl_challenger_shadow": null,
+    "mlb_challenger_shadow": null,
+    "personnel": {},
+    "personnel_shadow": {
+     "schema_ver": 1,
+     "sport": "football",
+     "production_weight": 0,
+     "mode": "prospective_shadow",
+     "features": {
+      "injury_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineup_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineups_confirmed": false,
+      "rest_days": {
+       "home": null,
+       "away": null
+      },
+      "weather": {
+       "temp_c": 31,
+       "wind_kph": 10,
+       "rain_pct": 7,
+       "source": "Open-Meteo",
+       "source_url": "https://open-meteo.com/"
+      },
+      "venue_context": {
+       "sample_games": 0,
+       "league_total_avg": 53.407,
+       "venue_total_avg": 53.407,
+       "factor": 1.0,
+       "label": "venue scoring context",
+       "production_weight": 0,
+       "method": "prior finals, 10-game shrinkage"
+      }
+     }
+    },
+    "pregame_context": {
+     "schema_ver": 1,
+     "sport": "football",
+     "competition": "NCAAF",
+     "phase": "lock_window",
+     "lock_window_hours": 3.0,
+     "lead_time_hours": 2.26,
+     "inputs": {
+      "market": "missing",
+      "injuries": "missing",
+      "key_players": "missing",
+      "weather": "confirmed"
+     },
+     "missing_critical": [
+      "market",
+      "injuries",
+      "key_players"
+     ],
+     "unconfirmed_critical": [
+      "market",
+      "injuries",
+      "key_players"
+     ],
+     "coverage_pct": 25,
+     "confirmed_pct": 25,
+     "provenance": [],
+     "confidence_guard": {
+      "high_confidence_label_allowed": false,
+      "reason": "critical pregame inputs not confirmed"
+     },
+     "production_weight": 0,
+     "research_mode": "prospective_shadow"
+    },
+    "pregame_provenance": [],
+    "venue_context": {
+     "sample_games": 0,
+     "league_total_avg": 53.407,
+     "venue_total_avg": 53.407,
+     "factor": 1.0,
+     "label": "venue scoring context",
+     "production_weight": 0,
+     "method": "prior finals, 10-game shrinkage"
+    },
+    "model_signal_schema": null
+   }
+  },
+  "mfti_shadow": {
+   "spec_version": "MFTI-0.1.1-shadow",
+   "mode": "shadow_research_only",
+   "captured_at": "2026-09-12T13:44:47.443234Z",
+   "status": "incomplete",
+   "score": null,
+   "historical_evidence": {
+    "available": false,
+    "score": null,
+    "reason": "frozen_normalization_and_rolling_recalibration_not_fitted",
+    "diagnostics": {
+     "eligible_prior_forecasts": 19,
+     "mean_brier": 0.212,
+     "mean_log_loss": 0.365112,
+     "brier_skill_vs_uniform": 0.682,
+     "log_skill_vs_uniform": 0.667661
+    }
+   },
+   "event_readiness": {
+    "available": false,
+    "score": null,
+    "missing_components": [
+     "scenario_stability",
+     "availability",
+     "freshness",
+     "model_stability"
+    ]
+   },
+   "components": {
+    "scenario_stability": {
+     "available": false,
+     "score": null,
+     "reason": "scenario_forecasts_not_captured"
+    },
+    "availability": {
+     "available": false,
+     "score": null,
+     "reason": "availability_probabilities_not_captured"
+    },
+    "freshness": {
+     "available": false,
+     "score": null,
+     "reason": "input_freshness_not_captured"
+    },
+    "model_stability": {
+     "available": false,
+     "score": null,
+     "reason": "independent_model_outputs_not_captured"
+    }
+   },
+   "missing_components": [
+    "historical_evidence",
+    "scenario_stability",
+    "availability",
+    "freshness",
+    "model_stability"
+   ],
+   "affects_prediction": false,
+   "user_visible": false
+  },
+  "result": null,
+  "model_result": null,
+  "market_result": null
+ },
+ "cfbd-401858224": {
+  "schema_ver": 2,
+  "fixture_id": "cfbd-401858224",
+  "competition": "NCAAF",
+  "home": "Purdue",
+  "away": "Wake Forest",
+  "stage": "Week 2",
+  "kickoff": "2026-09-12T16:00:00Z",
+  "pick": "a",
+  "pick_name": "Wake Forest",
+  "confidence": 56,
+  "edge": -1,
+  "base_pick": "a",
+  "base_pick_name": "Wake Forest",
+  "probs": {
+   "h": 44,
+   "d": 0,
+   "a": 56
+  },
+  "advancement_probs": null,
+  "regulation_probs": {
+   "h": 44,
+   "d": 0,
+   "a": 56
+  },
+  "regulation_pick": "a",
+  "market_comparison_pick": "a",
+  "market_comparison_basis": "regulation_1x2",
+  "outcome_basis": "regulation",
+  "market_basis": "regulation_1x2",
+  "market_pick": "a",
+  "market_pct": 57,
+  "pick_mkt": 57,
+  "value_side": null,
+  "value_edge": null,
+  "value_mkt": null,
+  "value_name": null,
+  "upset_candidate": "h",
+  "upset_name": "Purdue",
+  "upset_score": 55,
+  "upset_candidate_pct": 44,
+  "upset_triggered": false,
+  "upset_temperature": 1.12,
+  "upset_reason": "favorite profile is cleaner",
+  "factor_snapshot": {
+   "margin": 0.0,
+   "adv": 0.45,
+   "class": 0.41,
+   "form": 0.03,
+   "rest": -0.08,
+   "srs": 0.0,
+   "record": 0.0,
+   "rank": 0.0,
+   "market_power": 0.0,
+   "elo": -3.63
+  },
+  "market_snapshot": {
+   "h": 43,
+   "d": 0,
+   "a": 57
+  },
+  "market_snapshot_at": "2026-09-12T13:44:35.998506Z",
+  "market_snapshot_recorded_at": "2026-09-12T13:44:47.443807Z",
+  "market_snapshot_receipt": {
+   "source": "The Odds API consensus",
+   "source_reference": "https://the-odds-api.com/",
+   "observed_at": "2026-09-12T13:44:35.998506Z",
+   "recorded_at": "2026-09-12T13:44:47.443807Z",
+   "snapshot_id": null,
+   "books": 16,
+   "spread": 3
+  },
+  "market_gap": 14.0,
+  "upset_snapshot": {
+   "candidate": "Purdue",
+   "class": "pickem",
+   "market_dog_pct": 43.0,
+   "model_dog_pct": 44.0,
+   "upset_edge": 1.0,
+   "independent_model_dog_pct": 44.0,
+   "independent_model_lead_pct": -12.0,
+   "independent_edge": 1.0,
+   "edge_threshold": 8.0,
+   "supporting_signals": [
+    "adv",
+    "class"
+   ],
+   "personnel_gate": true,
+   "personnel_blockers": [],
+   "radar": false,
+   "standings_candidate": null,
+   "standings_gap_pct": null,
+   "gate": "none",
+   "box_score_edge": 0.0
+  },
+  "box_score_available": false,
+  "data_availability": {
+   "market": "available",
+   "box_score": "unavailable",
+   "lineups": "unavailable",
+   "injuries": "unavailable",
+   "weather": "available",
+   "personnel": "unavailable",
+   "venue_context": "available"
+  },
+  "damp_pct": 0,
+  "mkt_pull": 0,
+  "model_ver": "v6-calibrated",
+  "model_code_marker": "matchday-predictor-integrity-2026-07",
+  "model_signal_schema": 8,
+  "reproducibility": {
+   "model_version": "v6-calibrated",
+   "model_signal_schema": 8,
+   "probability_basis": "regulation",
+   "market_comparison_basis": "regulation_1x2",
+   "market_comparison_pick": "a"
+  },
+  "locked_at": "2026-09-12T13:44:47.443807Z",
+  "lead_time_seconds": 8112.556,
+  "lead_time_hours": 2.253488,
+  "lock_window_hours": 3.0,
+  "status_at_lock": "UPCOMING",
+  "integrity_eligible": true,
+  "integrity_status": "verified",
+  "integrity_reason": "verified_pregame_window",
+  "prediction_snapshot": {
+   "pick": "a",
+   "pick_name": "Wake Forest",
+   "confidence": 56,
+   "model_version": "v6-calibrated",
+   "model_signal_schema": 8,
+   "base_pick": "a",
+   "base_pick_name": "Wake Forest",
+   "model": {
+    "h": 44,
+    "a": 56,
+    "d": 0
+   },
+   "base_blend": {
+    "h": 43,
+    "d": 0,
+    "a": 57
+   },
+   "blend": {
+    "h": 44,
+    "d": 0,
+    "a": 56
+   },
+   "adjusted": {
+    "h": 44,
+    "d": 0,
+    "a": 56
+   },
+   "is_knockout": false,
+   "advancement": null,
+   "regulation_pick": "a",
+   "market_comparison_pick": "a",
+   "market_comparison_basis": "regulation_1x2",
+   "regulation_pick_name": "Wake Forest",
+   "regulation_confidence": 56,
+   "regulation_probs": {
+    "h": 44,
+    "d": 0,
+    "a": 56
+   },
+   "edge": -1,
+   "note": "model agrees with the market",
+   "why": {
+    "margin": 0.0,
+    "adv": 0.45,
+    "class": 0.41,
+    "form": 0.03,
+    "rest": -0.08,
+    "srs": 0.0,
+    "record": 0.0,
+    "rank": 0.0,
+    "market_power": 0.0,
+    "elo": -3.63
+   },
+   "damp_pct": 0,
+   "mkt_pull": 0,
+   "market_weight": 0.6,
+   "upset": {
+    "candidate": "h",
+    "candidate_name": "Purdue",
+    "favorite": "a",
+    "favorite_name": "Wake Forest",
+    "score": 55,
+    "upset_class": "pickem",
+    "market_dog_pct": 43.0,
+    "model_dog_pct": 44.0,
+    "upset_edge": 1.0,
+    "radar": false,
+    "standings_candidate": null,
+    "standings_gap_pct": null,
+    "standings_sample_ok": false,
+    "temperature": 1.12,
+    "variance_pct": 5,
+    "low_goal_pct": 42,
+    "draw_pct": 0,
+    "favorite_pct": 56,
+    "candidate_pct": 44,
+    "margin_pct": 12,
+    "learn_bias_pct": 0.0,
+    "market_gap_pct": 14.0,
+    "market_gate": false,
+    "market_quality_gate": true,
+    "independent_model_dog_pct": 44.0,
+    "independent_model_lead_pct": -12.0,
+    "independent_edge": 1.0,
+    "edge_threshold": 8.0,
+    "independent_pick_gate": false,
+    "playability_gate": true,
+    "evidence_gate": true,
+    "supporting_signals": [
+     "adv",
+     "class"
+    ],
+    "personnel_gate": true,
+    "personnel_blockers": [],
+    "box_score_edge": 0.0,
+    "strong_box_signal": false,
+    "blocked": false,
+    "triggered": false,
+    "reason": "favorite profile is cleaner"
+   },
+   "data_quality": {
+    "level": "early",
+    "games": {
+     "home": 1,
+     "away": 1
+    },
+    "signals": [
+     "class",
+     "form",
+     "elo",
+     "rest",
+     "market"
+    ],
+    "market_available": true,
+    "market_books": 16,
+    "market_spread": 3,
+    "market_weight": 0.6,
+    "note": "Limited current-season evidence; probability is intentionally conservative."
+   },
+   "predicted_margin": {
+    "value": -1.5,
+    "unit": "points",
+    "favored": "a",
+    "label": "Wake Forest by 1.5"
+   },
+   "class_meta": {
+    "label": "Roster talent edge",
+    "source": "247Sports Team Talent Composite via CollegeFootballData",
+    "available": true,
+    "coverage": "complete",
+    "home_available": true,
+    "away_available": true,
+    "note": "Multi-year current-roster talent composite; it measures roster quality, not program prestige.",
+    "edge_available": true,
+    "coverage_label": null
+   },
+   "publication_state": "locked",
+   "lock_readiness": {
+    "schema_ver": 1,
+    "sport": "football",
+    "competition": "NCAAF",
+    "phase": "lock_window",
+    "lock_window_hours": 3.0,
+    "lead_time_hours": 2.26,
+    "inputs": {
+     "market": "confirmed",
+     "injuries": "missing",
+     "key_players": "missing",
+     "weather": "confirmed"
+    },
+    "missing_critical": [
+     "injuries",
+     "key_players"
+    ],
+    "unconfirmed_critical": [
+     "injuries",
+     "key_players"
+    ],
+    "coverage_pct": 50,
+    "confirmed_pct": 50,
+    "provenance": [],
+    "confidence_guard": {
+     "high_confidence_label_allowed": false,
+     "reason": "critical pregame inputs not confirmed"
+    },
+    "production_weight": 0,
+    "research_mode": "prospective_shadow"
+   },
+   "neutral_venue_probs": {
+    "h": 44,
+    "d": 0,
+    "a": 56
+   },
+   "totals": {
+    "expected": 58.5,
+    "basis": "season_rate"
+   },
+   "data_availability": {
+    "market": "available",
+    "box_score": "unavailable",
+    "lineups": "unavailable",
+    "injuries": "unavailable",
+    "weather": "available",
+    "personnel": "unavailable",
+    "venue_context": "available"
+   }
+  },
+  "input_snapshot": {
+   "competition": "NCAAF",
+   "competition_config": {
+    "label": "College Football",
+    "sport": "football",
+    "fd": null,
+    "odds": "americanfootball_ncaaf",
+    "outright": "americanfootball_ncaaf_championship_winner",
+    "tournament": false,
+    "source": "cfbd",
+    "has_draws": false
+   },
+   "match": {
+    "id": "cfbd-401858224",
+    "stage": "Week 2",
+    "kickoff": "2026-09-12T16:00:00Z",
+    "status": "UPCOMING",
+    "venue": "Ross-Ade Stadium",
+    "home": {
+     "name": "Purdue",
+     "code": "P",
+     "pts": 3,
+     "gd": 25,
+     "form": "",
+     "pos": 3,
+     "group": "Big Ten",
+     "gf": 44,
+     "ga": 19,
+     "pld": 1,
+     "w": 1,
+     "d": 0,
+     "l": 0,
+     "record": "1-0",
+     "win_pct": 1.0,
+     "season_stale": false,
+     "srs": 0.015,
+     "srs_games": 1,
+     "rest_days": 8,
+     "rating": 4.64,
+     "form_home": "W",
+     "form_away": ""
+    },
+    "away": {
+     "name": "Wake Forest",
+     "code": "WF",
+     "pts": 3,
+     "gd": 22,
+     "form": "",
+     "pos": 3,
+     "group": "ACC",
+     "gf": 38,
+     "ga": 16,
+     "pld": 1,
+     "w": 1,
+     "d": 0,
+     "l": 0,
+     "record": "1-0",
+     "win_pct": 1.0,
+     "season_stale": false,
+     "srs": 0.015,
+     "srs_games": 1,
+     "rest_days": 9,
+     "rating": 7.0,
+     "form_home": "W",
+     "form_away": ""
+    },
+    "markets": {
+     "1x2": {
+      "home_pct": 43,
+      "draw_pct": 0,
+      "away_pct": 57,
+      "books": 16,
+      "source": "The Odds API consensus",
+      "source_reference": "https://the-odds-api.com/",
+      "observed_at": "2026-09-12T13:44:35.998506Z",
+      "spread": 3,
+      "spread_lo": 41,
+      "spread_hi": 44,
+      "confidence": "tight",
+      "open": {
+       "h": 43,
+       "d": 0,
+       "a": 57
+      },
+      "move": {
+       "h": 0,
+       "d": 0,
+       "a": 0
+      }
+     }
+    },
+    "weather": {
+     "temp_c": 26,
+     "wind_kph": 10,
+     "rain_pct": 8,
+     "source": "Open-Meteo",
+     "source_url": "https://open-meteo.com/"
+    },
+    "injuries": {
+     "home": [],
+     "away": []
+    },
+    "lineups": null,
+    "h2h": [],
+    "stats": null,
+    "stats_extra": null,
+    "data_source": "CollegeFootballData",
+    "advanced_metrics": {
+     "home": {
+      "plays": 55,
+      "drives": 8,
+      "ppa": 0.4383,
+      "success_rate": 0.4909,
+      "explosiveness": 1.2977,
+      "line_yards": 3.6654,
+      "power_success": 1.0,
+      "stuff_rate": 0.0385,
+      "def_ppa_allowed": -0.0638,
+      "def_success_rate_allowed": 0.2162,
+      "def_explosiveness_allowed": 2.0736
+     },
+     "away": {
+      "plays": 57,
+      "drives": 10,
+      "ppa": 0.5466,
+      "success_rate": 0.4211,
+      "explosiveness": 1.6747,
+      "line_yards": 3.6833,
+      "power_success": 0.8,
+      "stuff_rate": 0.125,
+      "def_ppa_allowed": -0.0521,
+      "def_success_rate_allowed": 0.4118,
+      "def_explosiveness_allowed": 0.8581
+     }
+    },
+    "advanced_metrics_meta": {
+     "schema_version": 1,
+     "source": "CollegeFootballData /stats/season/advanced",
+     "license": "active CFBD API tier",
+     "generated_at": "2026-09-05T16:12:06.515199Z",
+     "coverage": {
+      "season": 2026,
+      "season_role": "current",
+      "teams": 40,
+      "garbage_time_excluded": true
+     },
+     "shadow_only": true,
+     "production_weight": 0,
+     "profile_file": "advanced_metrics_ncaaf.json"
+    },
+    "nfl_challenger_shadow": null,
+    "mlb_challenger_shadow": null,
+    "personnel": null,
+    "personnel_shadow": {
+     "schema_ver": 1,
+     "sport": "football",
+     "production_weight": 0,
+     "mode": "prospective_shadow",
+     "features": {
+      "injury_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineup_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineups_confirmed": false,
+      "rest_days": {
+       "home": 8,
+       "away": 9
+      },
+      "weather": {
+       "temp_c": 26,
+       "wind_kph": 10,
+       "rain_pct": 8,
+       "source": "Open-Meteo",
+       "source_url": "https://open-meteo.com/"
+      },
+      "venue_context": {
+       "sample_games": 1,
+       "league_total_avg": 53.407,
+       "venue_total_avg": 54.279,
+       "factor": 1.0163,
+       "label": "venue scoring context",
+       "production_weight": 0,
+       "method": "prior finals, 10-game shrinkage"
+      }
+     }
+    },
+    "pregame_context": {
+     "schema_ver": 1,
+     "sport": "football",
+     "competition": "NCAAF",
+     "phase": "lock_window",
+     "lock_window_hours": 3.0,
+     "lead_time_hours": 2.26,
+     "inputs": {
+      "market": "confirmed",
+      "injuries": "missing",
+      "key_players": "missing",
+      "weather": "confirmed"
+     },
+     "missing_critical": [
+      "injuries",
+      "key_players"
+     ],
+     "unconfirmed_critical": [
+      "injuries",
+      "key_players"
+     ],
+     "coverage_pct": 50,
+     "confirmed_pct": 50,
+     "provenance": [],
+     "confidence_guard": {
+      "high_confidence_label_allowed": false,
+      "reason": "critical pregame inputs not confirmed"
+     },
+     "production_weight": 0,
+     "research_mode": "prospective_shadow"
+    },
+    "pregame_provenance": null,
+    "venue_context": {
+     "sample_games": 1,
+     "league_total_avg": 53.407,
+     "venue_total_avg": 54.279,
+     "factor": 1.0163,
+     "label": "venue scoring context",
+     "production_weight": 0,
+     "method": "prior finals, 10-game shrinkage"
+    },
+    "model_signal_schema": null
+   }
+  },
+  "mfti_shadow": {
+   "spec_version": "MFTI-0.1.1-shadow",
+   "mode": "shadow_research_only",
+   "captured_at": "2026-09-12T13:44:47.443807Z",
+   "status": "incomplete",
+   "score": null,
+   "historical_evidence": {
+    "available": false,
+    "score": null,
+    "reason": "frozen_normalization_and_rolling_recalibration_not_fitted",
+    "diagnostics": {
+     "eligible_prior_forecasts": 19,
+     "mean_brier": 0.212,
+     "mean_log_loss": 0.365112,
+     "brier_skill_vs_uniform": 0.682,
+     "log_skill_vs_uniform": 0.667661
+    }
+   },
+   "event_readiness": {
+    "available": false,
+    "score": null,
+    "missing_components": [
+     "scenario_stability",
+     "availability",
+     "freshness",
+     "model_stability"
+    ]
+   },
+   "components": {
+    "scenario_stability": {
+     "available": false,
+     "score": null,
+     "reason": "scenario_forecasts_not_captured"
+    },
+    "availability": {
+     "available": false,
+     "score": null,
+     "reason": "availability_probabilities_not_captured"
+    },
+    "freshness": {
+     "available": false,
+     "score": null,
+     "reason": "input_freshness_not_captured"
+    },
+    "model_stability": {
+     "available": false,
+     "score": null,
+     "reason": "independent_model_outputs_not_captured"
+    }
+   },
+   "missing_components": [
+    "historical_evidence",
+    "scenario_stability",
+    "availability",
+    "freshness",
+    "model_stability"
+   ],
+   "affects_prediction": false,
+   "user_visible": false
+  },
+  "result": null,
+  "model_result": null,
+  "market_result": null
+ },
+ "cfbd-401858442": {
+  "schema_ver": 2,
+  "fixture_id": "cfbd-401858442",
+  "competition": "NCAAF",
+  "home": "Temple",
+  "away": "Penn State",
+  "stage": "Week 2",
+  "kickoff": "2026-09-12T16:00:00Z",
+  "pick": "a",
+  "pick_name": "Penn State",
+  "confidence": 85,
+  "edge": -8,
+  "base_pick": "a",
+  "base_pick_name": "Penn State",
+  "probs": {
+   "h": 15,
+   "d": 0,
+   "a": 85
+  },
+  "advancement_probs": null,
+  "regulation_probs": {
+   "h": 15,
+   "d": 0,
+   "a": 85
+  },
+  "regulation_pick": "a",
+  "market_comparison_pick": "a",
+  "market_comparison_basis": "regulation_1x2",
+  "outcome_basis": "regulation",
+  "market_basis": "regulation_1x2",
+  "market_pick": "a",
+  "market_pct": 93,
+  "pick_mkt": 93,
+  "value_side": "h",
+  "value_edge": 8,
+  "value_mkt": 7,
+  "value_name": "Temple",
+  "upset_candidate": "h",
+  "upset_name": "Temple",
+  "upset_score": 6,
+  "upset_candidate_pct": 15,
+  "upset_triggered": false,
+  "upset_temperature": 1.08,
+  "upset_reason": "model edge 16 pts",
+  "factor_snapshot": {
+   "margin": 0.0,
+   "adv": 0.45,
+   "class": -2.96,
+   "form": 0.0,
+   "rest": 0.0,
+   "srs": 0.0,
+   "record": 0.0,
+   "rank": -1.02,
+   "market_power": -0.0,
+   "elo": -11.6
+  },
+  "market_snapshot": {
+   "h": 7,
+   "d": 0,
+   "a": 93
+  },
+  "market_snapshot_at": "2026-09-12T13:44:35.998506Z",
+  "market_snapshot_recorded_at": "2026-09-12T13:44:47.444448Z",
+  "market_snapshot_receipt": {
+   "source": "The Odds API consensus",
+   "source_reference": "https://the-odds-api.com/",
+   "observed_at": "2026-09-12T13:44:35.998506Z",
+   "recorded_at": "2026-09-12T13:44:47.444448Z",
+   "snapshot_id": null,
+   "books": 15,
+   "spread": 4
+  },
+  "market_gap": 86.0,
+  "upset_snapshot": {
+   "candidate": "Temple",
+   "class": "major",
+   "market_dog_pct": 7.0,
+   "model_dog_pct": 15.0,
+   "upset_edge": 8.0,
+   "independent_model_dog_pct": 23.0,
+   "independent_model_lead_pct": -54.0,
+   "independent_edge": 16.0,
+   "edge_threshold": 8.0,
+   "supporting_signals": [
+    "adv"
+   ],
+   "personnel_gate": true,
+   "personnel_blockers": [],
+   "radar": false,
+   "standings_candidate": null,
+   "standings_gap_pct": null,
+   "gate": "none",
+   "box_score_edge": 0.0
+  },
+  "box_score_available": false,
+  "data_availability": {
+   "market": "available",
+   "box_score": "unavailable",
+   "lineups": "unavailable",
+   "injuries": "unavailable",
+   "weather": "available",
+   "personnel": "unavailable",
+   "venue_context": "available"
+  },
+  "damp_pct": 0,
+  "mkt_pull": 8,
+  "model_ver": "v6-calibrated",
+  "model_code_marker": "matchday-predictor-integrity-2026-07",
+  "model_signal_schema": 8,
+  "reproducibility": {
+   "model_version": "v6-calibrated",
+   "model_signal_schema": 8,
+   "probability_basis": "regulation",
+   "market_comparison_basis": "regulation_1x2",
+   "market_comparison_pick": "a"
+  },
+  "locked_at": "2026-09-12T13:44:47.444448Z",
+  "lead_time_seconds": 8112.556,
+  "lead_time_hours": 2.253488,
+  "lock_window_hours": 3.0,
+  "status_at_lock": "UPCOMING",
+  "integrity_eligible": true,
+  "integrity_status": "verified",
+  "integrity_reason": "verified_pregame_window",
+  "prediction_snapshot": {
+   "pick": "a",
+   "pick_name": "Penn State",
+   "confidence": 85,
+   "model_version": "v6-calibrated",
+   "model_signal_schema": 8,
+   "base_pick": "a",
+   "base_pick_name": "Penn State",
+   "model": {
+    "h": 23,
+    "a": 77,
+    "d": 0
+   },
+   "base_blend": {
+    "h": 13,
+    "d": 0,
+    "a": 87
+   },
+   "blend": {
+    "h": 15,
+    "d": 0,
+    "a": 85
+   },
+   "adjusted": {
+    "h": 15,
+    "d": 0,
+    "a": 85
+   },
+   "is_knockout": false,
+   "advancement": null,
+   "regulation_pick": "a",
+   "market_comparison_pick": "a",
+   "market_comparison_basis": "regulation_1x2",
+   "regulation_pick_name": "Penn State",
+   "regulation_confidence": 85,
+   "regulation_probs": {
+    "h": 15,
+    "d": 0,
+    "a": 85
+   },
+   "edge": -8,
+   "note": "model rates this lower than the market",
+   "why": {
+    "margin": 0.0,
+    "adv": 0.45,
+    "class": -2.96,
+    "form": 0.0,
+    "rest": 0.0,
+    "srs": 0.0,
+    "record": 0.0,
+    "rank": -1.02,
+    "market_power": -0.0,
+    "elo": -11.6
+   },
+   "damp_pct": 0,
+   "mkt_pull": 8,
+   "market_weight": 0.6,
+   "upset": {
+    "candidate": "h",
+    "candidate_name": "Temple",
+    "favorite": "a",
+    "favorite_name": "Penn State",
+    "score": 6,
+    "upset_class": "major",
+    "market_dog_pct": 7.0,
+    "model_dog_pct": 15.0,
+    "upset_edge": 8.0,
+    "radar": false,
+    "standings_candidate": null,
+    "standings_gap_pct": null,
+    "standings_sample_ok": false,
+    "temperature": 1.08,
+    "variance_pct": 0,
+    "low_goal_pct": 42,
+    "draw_pct": 0,
+    "favorite_pct": 85,
+    "candidate_pct": 15,
+    "margin_pct": 70,
+    "learn_bias_pct": 0.0,
+    "market_gap_pct": 86.0,
+    "market_gate": true,
+    "market_quality_gate": true,
+    "independent_model_dog_pct": 23.0,
+    "independent_model_lead_pct": -54.0,
+    "independent_edge": 16.0,
+    "edge_threshold": 8.0,
+    "independent_pick_gate": false,
+    "playability_gate": false,
+    "evidence_gate": false,
+    "supporting_signals": [
+     "adv"
+    ],
+    "personnel_gate": true,
+    "personnel_blockers": [],
+    "box_score_edge": 0.0,
+    "strong_box_signal": false,
+    "blocked": false,
+    "triggered": false,
+    "reason": "model edge 16 pts"
+   },
+   "data_quality": {
+    "level": "preseason",
+    "games": {
+     "home": 0,
+     "away": 0
+    },
+    "signals": [
+     "class",
+     "rank",
+     "elo",
+     "market"
+    ],
+    "market_available": true,
+    "market_books": 15,
+    "market_spread": 4,
+    "market_weight": 0.6,
+    "note": "Limited current-season evidence; probability is intentionally conservative."
+   },
+   "predicted_margin": {
+    "value": -10.5,
+    "unit": "points",
+    "favored": "a",
+    "label": "Penn State by 10.5"
+   },
+   "class_meta": {
+    "label": "Roster talent edge",
+    "source": "247Sports Team Talent Composite via CollegeFootballData",
+    "available": true,
+    "coverage": "complete",
+    "home_available": true,
+    "away_available": true,
+    "note": "Multi-year current-roster talent composite; it measures roster quality, not program prestige.",
+    "edge_available": true,
+    "coverage_label": null
+   },
+   "publication_state": "locked",
+   "lock_readiness": {
+    "schema_ver": 1,
+    "sport": "football",
+    "competition": "NCAAF",
+    "phase": "lock_window",
+    "lock_window_hours": 3.0,
+    "lead_time_hours": 2.26,
+    "inputs": {
+     "market": "confirmed",
+     "injuries": "missing",
+     "key_players": "missing",
+     "weather": "confirmed"
+    },
+    "missing_critical": [
+     "injuries",
+     "key_players"
+    ],
+    "unconfirmed_critical": [
+     "injuries",
+     "key_players"
+    ],
+    "coverage_pct": 50,
+    "confirmed_pct": 50,
+    "provenance": [],
+    "confidence_guard": {
+     "high_confidence_label_allowed": false,
+     "reason": "critical pregame inputs not confirmed"
+    },
+    "production_weight": 0,
+    "research_mode": "prospective_shadow"
+   },
+   "neutral_venue_probs": {
+    "h": 15,
+    "d": 0,
+    "a": 85
+   },
+   "totals": {
+    "expected": 57.79,
+    "basis": "preseason_rating"
+   },
+   "data_availability": {
+    "market": "available",
+    "box_score": "unavailable",
+    "lineups": "unavailable",
+    "injuries": "unavailable",
+    "weather": "available",
+    "personnel": "unavailable",
+    "venue_context": "available"
+   }
+  },
+  "input_snapshot": {
+   "competition": "NCAAF",
+   "competition_config": {
+    "label": "College Football",
+    "sport": "football",
+    "fd": null,
+    "odds": "americanfootball_ncaaf",
+    "outright": "americanfootball_ncaaf_championship_winner",
+    "tournament": false,
+    "source": "cfbd",
+    "has_draws": false
+   },
+   "match": {
+    "id": "cfbd-401858442",
+    "stage": "Week 2",
+    "kickoff": "2026-09-12T16:00:00Z",
+    "status": "UPCOMING",
+    "venue": "Lincoln Financial Field",
+    "home": {
+     "name": "Temple",
+     "code": "T",
+     "pts": 0,
+     "gd": 0,
+     "form": "",
+     "pos": 10,
+     "group": "American Athletic",
+     "gf": 0,
+     "ga": 0,
+     "pld": 0,
+     "w": 0,
+     "d": 0,
+     "l": 0,
+     "record": "0-0",
+     "win_pct": 0.0,
+     "season_stale": false,
+     "rating": 3.07
+    },
+    "away": {
+     "name": "Penn State",
+     "code": "PSU",
+     "pts": 0,
+     "gd": 0,
+     "form": "",
+     "pos": 14,
+     "group": "Big Ten",
+     "gf": 0,
+     "ga": 0,
+     "pld": 0,
+     "w": 0,
+     "d": 0,
+     "l": 0,
+     "record": "0-0",
+     "win_pct": 0.0,
+     "season_stale": false,
+     "model_rank": 18,
+     "rank_source": "poll",
+     "rating": 10.32
+    },
+    "markets": {
+     "1x2": {
+      "home_pct": 7,
+      "draw_pct": 0,
+      "away_pct": 93,
+      "books": 15,
+      "source": "The Odds API consensus",
+      "source_reference": "https://the-odds-api.com/",
+      "observed_at": "2026-09-12T13:44:35.998506Z",
+      "spread": 4,
+      "spread_lo": 5,
+      "spread_hi": 9,
+      "confidence": "tight",
+      "open": {
+       "h": 7,
+       "d": 0,
+       "a": 93
+      },
+      "move": {
+       "h": 0,
+       "d": 0,
+       "a": 0
+      }
+     }
+    },
+    "weather": {
+     "temp_c": 24,
+     "wind_kph": 12,
+     "rain_pct": 0,
+     "source": "Open-Meteo",
+     "source_url": "https://open-meteo.com/"
+    },
+    "injuries": {
+     "home": [],
+     "away": []
+    },
+    "lineups": null,
+    "h2h": [],
+    "stats": null,
+    "stats_extra": null,
+    "data_source": "CollegeFootballData",
+    "advanced_metrics": null,
+    "advanced_metrics_meta": null,
+    "nfl_challenger_shadow": null,
+    "mlb_challenger_shadow": null,
+    "personnel": null,
+    "personnel_shadow": {
+     "schema_ver": 1,
+     "sport": "football",
+     "production_weight": 0,
+     "mode": "prospective_shadow",
+     "features": {
+      "injury_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineup_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineups_confirmed": false,
+      "rest_days": {
+       "home": null,
+       "away": null
+      },
+      "weather": {
+       "temp_c": 24,
+       "wind_kph": 12,
+       "rain_pct": 0,
+       "source": "Open-Meteo",
+       "source_url": "https://open-meteo.com/"
+      },
+      "venue_context": {
+       "sample_games": 0,
+       "league_total_avg": 53.407,
+       "venue_total_avg": 53.407,
+       "factor": 1.0,
+       "label": "venue scoring context",
+       "production_weight": 0,
+       "method": "prior finals, 10-game shrinkage"
+      }
+     }
+    },
+    "pregame_context": {
+     "schema_ver": 1,
+     "sport": "football",
+     "competition": "NCAAF",
+     "phase": "lock_window",
+     "lock_window_hours": 3.0,
+     "lead_time_hours": 2.26,
+     "inputs": {
+      "market": "confirmed",
+      "injuries": "missing",
+      "key_players": "missing",
+      "weather": "confirmed"
+     },
+     "missing_critical": [
+      "injuries",
+      "key_players"
+     ],
+     "unconfirmed_critical": [
+      "injuries",
+      "key_players"
+     ],
+     "coverage_pct": 50,
+     "confirmed_pct": 50,
+     "provenance": [],
+     "confidence_guard": {
+      "high_confidence_label_allowed": false,
+      "reason": "critical pregame inputs not confirmed"
+     },
+     "production_weight": 0,
+     "research_mode": "prospective_shadow"
+    },
+    "pregame_provenance": null,
+    "venue_context": {
+     "sample_games": 0,
+     "league_total_avg": 53.407,
+     "venue_total_avg": 53.407,
+     "factor": 1.0,
+     "label": "venue scoring context",
+     "production_weight": 0,
+     "method": "prior finals, 10-game shrinkage"
+    },
+    "model_signal_schema": null
+   }
+  },
+  "mfti_shadow": {
+   "spec_version": "MFTI-0.1.1-shadow",
+   "mode": "shadow_research_only",
+   "captured_at": "2026-09-12T13:44:47.444448Z",
+   "status": "incomplete",
+   "score": null,
+   "historical_evidence": {
+    "available": false,
+    "score": null,
+    "reason": "frozen_normalization_and_rolling_recalibration_not_fitted",
+    "diagnostics": {
+     "eligible_prior_forecasts": 19,
+     "mean_brier": 0.212,
+     "mean_log_loss": 0.365112,
+     "brier_skill_vs_uniform": 0.682,
+     "log_skill_vs_uniform": 0.667661
+    }
+   },
+   "event_readiness": {
+    "available": false,
+    "score": null,
+    "missing_components": [
+     "scenario_stability",
+     "availability",
+     "freshness",
+     "model_stability"
+    ]
+   },
+   "components": {
+    "scenario_stability": {
+     "available": false,
+     "score": null,
+     "reason": "scenario_forecasts_not_captured"
+    },
+    "availability": {
+     "available": false,
+     "score": null,
+     "reason": "availability_probabilities_not_captured"
+    },
+    "freshness": {
+     "available": false,
+     "score": null,
+     "reason": "input_freshness_not_captured"
+    },
+    "model_stability": {
+     "available": false,
+     "score": null,
+     "reason": "independent_model_outputs_not_captured"
+    }
+   },
+   "missing_components": [
+    "historical_evidence",
+    "scenario_stability",
+    "availability",
+    "freshness",
+    "model_stability"
+   ],
+   "affects_prediction": false,
+   "user_visible": false
+  },
+  "result": null,
+  "model_result": null,
+  "market_result": null
+ },
+ "cfbd-401858439": {
+  "schema_ver": 2,
+  "fixture_id": "cfbd-401858439",
+  "competition": "NCAAF",
+  "home": "Indiana",
+  "away": "Howard",
+  "stage": "Week 2",
+  "kickoff": "2026-09-12T16:00:00Z",
+  "pick": "h",
+  "pick_name": "Indiana",
+  "confidence": 95,
+  "edge": -4,
+  "base_pick": "h",
+  "base_pick_name": "Indiana",
+  "probs": {
+   "h": 95,
+   "d": 0,
+   "a": 5
+  },
+  "advancement_probs": null,
+  "regulation_probs": {
+   "h": 95,
+   "d": 0,
+   "a": 5
+  },
+  "regulation_pick": "h",
+  "market_comparison_pick": "h",
+  "market_comparison_basis": "regulation_1x2",
+  "outcome_basis": "regulation",
+  "market_basis": "regulation_1x2",
+  "market_pick": "h",
+  "market_pct": 99,
+  "pick_mkt": 99,
+  "value_side": null,
+  "value_edge": null,
+  "value_mkt": null,
+  "value_name": null,
+  "upset_candidate": "a",
+  "upset_name": "Howard",
+  "upset_score": 1,
+  "upset_candidate_pct": 5,
+  "upset_triggered": false,
+  "upset_temperature": 1.08,
+  "upset_reason": "favorite profile is cleaner",
+  "factor_snapshot": {
+   "margin": 0.0,
+   "adv": 0.45,
+   "class": 6.72,
+   "form": 0.0,
+   "rest": 0.0,
+   "srs": 0.0,
+   "record": -0.0,
+   "rank": 2.56,
+   "market_power": 2.37,
+   "elo": 12.12
+  },
+  "market_snapshot": {
+   "h": 99,
+   "d": 0,
+   "a": 1
+  },
+  "market_snapshot_at": "2026-09-12T13:44:35.998506Z",
+  "market_snapshot_recorded_at": "2026-09-12T13:44:47.445037Z",
+  "market_snapshot_receipt": {
+   "source": "The Odds API consensus",
+   "source_reference": "https://the-odds-api.com/",
+   "observed_at": "2026-09-12T13:44:35.998506Z",
+   "recorded_at": "2026-09-12T13:44:47.445037Z",
+   "snapshot_id": null,
+   "books": 3,
+   "spread": 1
+  },
+  "market_gap": 98.0,
+  "upset_snapshot": {
+   "candidate": "Howard",
+   "class": "major",
+   "market_dog_pct": 1.0,
+   "model_dog_pct": 5.0,
+   "upset_edge": 4.0,
+   "independent_model_dog_pct": 7.0,
+   "independent_model_lead_pct": -86.0,
+   "independent_edge": 6.0,
+   "edge_threshold": 8.0,
+   "supporting_signals": [],
+   "personnel_gate": true,
+   "personnel_blockers": [],
+   "radar": false,
+   "standings_candidate": null,
+   "standings_gap_pct": null,
+   "gate": "none",
+   "box_score_edge": 0.0
+  },
+  "box_score_available": false,
+  "data_availability": {
+   "market": "available",
+   "box_score": "unavailable",
+   "lineups": "unavailable",
+   "injuries": "unavailable",
+   "weather": "available",
+   "personnel": "unavailable",
+   "venue_context": "available"
+  },
+  "damp_pct": 0,
+  "mkt_pull": 2,
+  "model_ver": "v6-calibrated",
+  "model_code_marker": "matchday-predictor-integrity-2026-07",
+  "model_signal_schema": 8,
+  "reproducibility": {
+   "model_version": "v6-calibrated",
+   "model_signal_schema": 8,
+   "probability_basis": "regulation",
+   "market_comparison_basis": "regulation_1x2",
+   "market_comparison_pick": "h"
+  },
+  "locked_at": "2026-09-12T13:44:47.445037Z",
+  "lead_time_seconds": 8112.555,
+  "lead_time_hours": 2.253487,
+  "lock_window_hours": 3.0,
+  "status_at_lock": "UPCOMING",
+  "integrity_eligible": true,
+  "integrity_status": "verified",
+  "integrity_reason": "verified_pregame_window",
+  "prediction_snapshot": {
+   "pick": "h",
+   "pick_name": "Indiana",
+   "confidence": 95,
+   "model_version": "v6-calibrated",
+   "model_signal_schema": 8,
+   "base_pick": "h",
+   "base_pick_name": "Indiana",
+   "model": {
+    "h": 93,
+    "a": 7,
+    "d": 0
+   },
+   "base_blend": {
+    "h": 96,
+    "d": 0,
+    "a": 4
+   },
+   "blend": {
+    "h": 95,
+    "d": 0,
+    "a": 5
+   },
+   "adjusted": {
+    "h": 95,
+    "d": 0,
+    "a": 5
+   },
+   "is_knockout": false,
+   "advancement": null,
+   "regulation_pick": "h",
+   "market_comparison_pick": "h",
+   "market_comparison_basis": "regulation_1x2",
+   "regulation_pick_name": "Indiana",
+   "regulation_confidence": 95,
+   "regulation_probs": {
+    "h": 95,
+    "d": 0,
+    "a": 5
+   },
+   "edge": -4,
+   "note": "model agrees with the market",
+   "why": {
+    "margin": 0.0,
+    "adv": 0.45,
+    "class": 6.72,
+    "form": 0.0,
+    "rest": 0.0,
+    "srs": 0.0,
+    "record": -0.0,
+    "rank": 2.56,
+    "market_power": 2.37,
+    "elo": 12.12
+   },
+   "damp_pct": 0,
+   "mkt_pull": 2,
+   "market_weight": 0.5,
+   "upset": {
+    "candidate": "a",
+    "candidate_name": "Howard",
+    "favorite": "h",
+    "favorite_name": "Indiana",
+    "score": 1,
+    "upset_class": "major",
+    "market_dog_pct": 1.0,
+    "model_dog_pct": 5.0,
+    "upset_edge": 4.0,
+    "radar": false,
+    "standings_candidate": null,
+    "standings_gap_pct": null,
+    "standings_sample_ok": false,
+    "temperature": 1.08,
+    "variance_pct": 0,
+    "low_goal_pct": 42,
+    "draw_pct": 0,
+    "favorite_pct": 95,
+    "candidate_pct": 5,
+    "margin_pct": 90,
+    "learn_bias_pct": 0.0,
+    "market_gap_pct": 98.0,
+    "market_gate": false,
+    "market_quality_gate": true,
+    "independent_model_dog_pct": 7.0,
+    "independent_model_lead_pct": -86.0,
+    "independent_edge": 6.0,
+    "edge_threshold": 8.0,
+    "independent_pick_gate": false,
+    "playability_gate": false,
+    "evidence_gate": false,
+    "supporting_signals": [],
+    "personnel_gate": true,
+    "personnel_blockers": [],
+    "box_score_edge": 0.0,
+    "strong_box_signal": false,
+    "blocked": false,
+    "triggered": false,
+    "reason": "favorite profile is cleaner"
+   },
+   "data_quality": {
+    "level": "preseason",
+    "games": {
+     "home": 0,
+     "away": 0
+    },
+    "signals": [
+     "class",
+     "market_power",
+     "rank",
+     "elo",
+     "market"
+    ],
+    "market_available": true,
+    "market_books": 3,
+    "market_spread": 1,
+    "market_weight": 0.5,
+    "note": "Limited current-season evidence; probability is intentionally conservative."
+   },
+   "predicted_margin": {
+    "value": 17.9,
+    "unit": "points",
+    "favored": "h",
+    "label": "Indiana by 17.9"
+   },
+   "class_meta": {
+    "label": "Roster talent edge",
+    "source": "247Sports Team Talent Composite via CollegeFootballData",
+    "available": false,
+    "coverage": "partial",
+    "home_available": true,
+    "away_available": false,
+    "note": "Multi-year current-roster talent composite; it measures roster quality, not program prestige.",
+    "edge_available": true,
+    "coverage_label": null
+   },
+   "publication_state": "locked",
+   "lock_readiness": {
+    "schema_ver": 1,
+    "sport": "football",
+    "competition": "NCAAF",
+    "phase": "lock_window",
+    "lock_window_hours": 3.0,
+    "lead_time_hours": 2.26,
+    "inputs": {
+     "market": "confirmed",
+     "injuries": "missing",
+     "key_players": "missing",
+     "weather": "confirmed"
+    },
+    "missing_critical": [
+     "injuries",
+     "key_players"
+    ],
+    "unconfirmed_critical": [
+     "injuries",
+     "key_players"
+    ],
+    "coverage_pct": 50,
+    "confirmed_pct": 50,
+    "provenance": [],
+    "confidence_guard": {
+     "high_confidence_label_allowed": false,
+     "reason": "critical pregame inputs not confirmed"
+    },
+    "production_weight": 0,
+    "research_mode": "prospective_shadow"
+   },
+   "neutral_venue_probs": {
+    "h": 95,
+    "d": 0,
+    "a": 5
+   },
+   "totals": {
+    "expected": 55.89,
+    "basis": "preseason_rating"
+   },
+   "data_availability": {
+    "market": "available",
+    "box_score": "unavailable",
+    "lineups": "unavailable",
+    "injuries": "unavailable",
+    "weather": "available",
+    "personnel": "unavailable",
+    "venue_context": "available"
+   }
+  },
+  "input_snapshot": {
+   "competition": "NCAAF",
+   "competition_config": {
+    "label": "College Football",
+    "sport": "football",
+    "fd": null,
+    "odds": "americanfootball_ncaaf",
+    "outright": "americanfootball_ncaaf_championship_winner",
+    "tournament": false,
+    "source": "cfbd",
+    "has_draws": false
+   },
+   "match": {
+    "id": "cfbd-401858439",
+    "stage": "Week 2",
+    "kickoff": "2026-09-12T16:00:00Z",
+    "status": "UPCOMING",
+    "venue": "Memorial Stadium (Bloomington, IN)",
+    "home": {
+     "name": "Indiana",
+     "code": "I",
+     "pts": 0,
+     "gd": 0,
+     "form": "",
+     "pos": 6,
+     "group": "Big Ten",
+     "gf": 0,
+     "ga": 0,
+     "pld": 0,
+     "w": 0,
+     "d": 0,
+     "l": 0,
+     "record": "0-0",
+     "win_pct": 0.0,
+     "season_stale": false,
+     "model_rank": 6,
+     "rank_source": "poll",
+     "rating": 9.45
+    },
+    "away": {
+     "name": "Howard",
+     "code": "H",
+     "pts": null,
+     "gd": null,
+     "form": "",
+     "pos": null,
+     "group": "MEAC",
+     "rating": 1.62
+    },
+    "markets": {
+     "1x2": {
+      "home_pct": 99,
+      "draw_pct": 0,
+      "away_pct": 1,
+      "books": 3,
+      "source": "The Odds API consensus",
+      "source_reference": "https://the-odds-api.com/",
+      "observed_at": "2026-09-12T13:44:35.998506Z",
+      "spread": 1,
+      "spread_lo": 98,
+      "spread_hi": 99,
+      "confidence": "tight",
+      "open": {
+       "h": 99,
+       "d": 0,
+       "a": 1
+      },
+      "move": {
+       "h": 0,
+       "d": 0,
+       "a": 0
+      }
+     }
+    },
+    "weather": {
+     "temp_c": 24,
+     "wind_kph": 11,
+     "rain_pct": 10,
+     "source": "Open-Meteo",
+     "source_url": "https://open-meteo.com/"
+    },
+    "injuries": {
+     "home": [],
+     "away": []
+    },
+    "lineups": null,
+    "h2h": [],
+    "stats": null,
+    "stats_extra": null,
+    "data_source": "CollegeFootballData",
+    "advanced_metrics": null,
+    "advanced_metrics_meta": null,
+    "nfl_challenger_shadow": null,
+    "mlb_challenger_shadow": null,
+    "personnel": null,
+    "personnel_shadow": {
+     "schema_ver": 1,
+     "sport": "football",
+     "production_weight": 0,
+     "mode": "prospective_shadow",
+     "features": {
+      "injury_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineup_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineups_confirmed": false,
+      "rest_days": {
+       "home": null,
+       "away": null
+      },
+      "weather": {
+       "temp_c": 24,
+       "wind_kph": 11,
+       "rain_pct": 10,
+       "source": "Open-Meteo",
+       "source_url": "https://open-meteo.com/"
+      },
+      "venue_context": {
+       "sample_games": 0,
+       "league_total_avg": 53.407,
+       "venue_total_avg": 53.407,
+       "factor": 1.0,
+       "label": "venue scoring context",
+       "production_weight": 0,
+       "method": "prior finals, 10-game shrinkage"
+      }
+     }
+    },
+    "pregame_context": {
+     "schema_ver": 1,
+     "sport": "football",
+     "competition": "NCAAF",
+     "phase": "lock_window",
+     "lock_window_hours": 3.0,
+     "lead_time_hours": 2.26,
+     "inputs": {
+      "market": "confirmed",
+      "injuries": "missing",
+      "key_players": "missing",
+      "weather": "confirmed"
+     },
+     "missing_critical": [
+      "injuries",
+      "key_players"
+     ],
+     "unconfirmed_critical": [
+      "injuries",
+      "key_players"
+     ],
+     "coverage_pct": 50,
+     "confirmed_pct": 50,
+     "provenance": [],
+     "confidence_guard": {
+      "high_confidence_label_allowed": false,
+      "reason": "critical pregame inputs not confirmed"
+     },
+     "production_weight": 0,
+     "research_mode": "prospective_shadow"
+    },
+    "pregame_provenance": null,
+    "venue_context": {
+     "sample_games": 0,
+     "league_total_avg": 53.407,
+     "venue_total_avg": 53.407,
+     "factor": 1.0,
+     "label": "venue scoring context",
+     "production_weight": 0,
+     "method": "prior finals, 10-game shrinkage"
+    },
+    "model_signal_schema": null
+   }
+  },
+  "mfti_shadow": {
+   "spec_version": "MFTI-0.1.1-shadow",
+   "mode": "shadow_research_only",
+   "captured_at": "2026-09-12T13:44:47.445037Z",
+   "status": "incomplete",
+   "score": null,
+   "historical_evidence": {
+    "available": false,
+    "score": null,
+    "reason": "frozen_normalization_and_rolling_recalibration_not_fitted",
+    "diagnostics": {
+     "eligible_prior_forecasts": 19,
+     "mean_brier": 0.212,
+     "mean_log_loss": 0.365112,
+     "brier_skill_vs_uniform": 0.682,
+     "log_skill_vs_uniform": 0.667661
+    }
+   },
+   "event_readiness": {
+    "available": false,
+    "score": null,
+    "missing_components": [
+     "scenario_stability",
+     "availability",
+     "freshness",
+     "model_stability"
+    ]
+   },
+   "components": {
+    "scenario_stability": {
+     "available": false,
+     "score": null,
+     "reason": "scenario_forecasts_not_captured"
+    },
+    "availability": {
+     "available": false,
+     "score": null,
+     "reason": "availability_probabilities_not_captured"
+    },
+    "freshness": {
+     "available": false,
+     "score": null,
+     "reason": "input_freshness_not_captured"
+    },
+    "model_stability": {
+     "available": false,
+     "score": null,
+     "reason": "independent_model_outputs_not_captured"
+    }
+   },
+   "missing_components": [
+    "historical_evidence",
+    "scenario_stability",
+    "availability",
+    "freshness",
+    "model_stability"
+   ],
+   "affects_prediction": false,
+   "user_visible": false
+  },
+  "result": null,
+  "model_result": null,
+  "market_result": null
  }
 }
