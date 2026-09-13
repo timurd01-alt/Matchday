@@ -9,7 +9,7 @@ from collections import defaultdict
 from typing import Any, Iterable, Sequence
 
 from advanced_metrics import _mean, _number, cfbd_advanced_game_records
-from nfl_challenger import fit_logistic, predict_probability
+from logistic import fit_logistic, predict_probability
 
 
 MODEL_VERSION = "cfbd-advanced-challenger-0.1.0"

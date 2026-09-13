@@ -1,7 +1,8 @@
 # Matchday
 
 Sports-prediction analytics site (Elo/SRS-derived picks, probabilities, bracketology) covering
-soccer, NFL, NBA, MLB, NHL, and college football/basketball. Flask backend (`app.py`,
+college football and men's college basketball only. Soccer, NFL, NBA, MLB and NHL were removed
+entirely on 2026-09-13; do not reintroduce them. Flask backend (`app.py`,
 `server/server_app.py`), static JS/HTML/CSS frontend, provider data cached to JSON.
 
 ## Production delivery

@@ -15,13 +15,13 @@ class RunOnceTests(unittest.TestCase):
         self.addCleanup(temp.cleanup)
         state = Path(temp.name) / "state.json"
         if cached_payload is not None:
-            (Path(temp.name) / "data_mlb.json").write_text(
+            (Path(temp.name) / "data_ncaam.json").write_text(
                 json.dumps(cached_payload), encoding="utf-8")
         runner = mock.Mock(side_effect=outcomes)
         patches = [
-            mock.patch.object(multi_fetch, "SPORTS", [("mlb", "--mlb")]),
+            mock.patch.object(multi_fetch, "SPORTS", [("ncaam", "--ncaam")]),
             mock.patch.object(multi_fetch, "ONCE_RETRY_DELAY", 0),
-            mock.patch.object(multi_fetch, "FORCE_REFETCH_ONCE", {"mlb"}),
+            mock.patch.object(multi_fetch, "FORCE_REFETCH_ONCE", {"ncaam"}),
             mock.patch.object(multi_fetch, "_run_one", runner),
             mock.patch.object(multi_fetch, "_deployable_last_good",
                               return_value=cached_payload is not None),
@@ -35,7 +35,7 @@ class RunOnceTests(unittest.TestCase):
 
     def test_retries_and_fails_instead_of_deploying_stale_data(self):
         state, runner = self._run([False, False])
-        with self.assertRaisesRegex(RuntimeError, "mlb"):
+        with self.assertRaisesRegex(RuntimeError, "ncaam"):
             multi_fetch.run_once(str(state))
         self.assertEqual(runner.call_count, 2)
         self.assertEqual(json.loads(state.read_text(encoding="utf-8")), {})
@@ -44,27 +44,27 @@ class RunOnceTests(unittest.TestCase):
         state, runner = self._run([False, True])
         multi_fetch.run_once(str(state))
         self.assertEqual(runner.call_count, 2)
-        self.assertGreater(json.loads(state.read_text(encoding="utf-8"))["mlb"], 0)
+        self.assertGreater(json.loads(state.read_text(encoding="utf-8"))["ncaam"], 0)
 
     def test_rate_limit_preserves_valid_last_good_and_does_not_retry(self):
-        payload = {"updated": "2026-07-29T00:00:00Z", "competition": "MLB", "matches": []}
+        payload = {"updated": "2026-07-29T00:00:00Z", "competition": "NCAAM", "matches": []}
         state, runner = self._run([False], cached_payload=payload)
-        multi_fetch._LAST_FAILURE_OUTPUT["mlb"] = "HTTP Error 429: Too Many Requests"
+        multi_fetch._LAST_FAILURE_OUTPUT["ncaam"] = "HTTP Error 429: Too Many Requests"
         with mock.patch.object(multi_fetch, "_rate_limited_with_last_good", return_value=True):
             multi_fetch.run_once(str(state))
         self.assertEqual(runner.call_count, 1)
         self.assertEqual(json.loads(state.read_text(encoding="utf-8")), {})
 
     def test_non_rate_limit_still_fails_with_valid_cache(self):
-        payload = {"updated": "2026-07-29T00:00:00Z", "competition": "MLB", "matches": []}
+        payload = {"updated": "2026-07-29T00:00:00Z", "competition": "NCAAM", "matches": []}
         state, runner = self._run([False, False], cached_payload=payload)
-        with self.assertRaisesRegex(RuntimeError, "mlb"):
+        with self.assertRaisesRegex(RuntimeError, "ncaam"):
             multi_fetch.run_once(str(state))
         self.assertEqual(runner.call_count, 2)
 
     def test_force_rebuild_ignores_recent_cadence_state(self):
         state, runner = self._run([True])
-        state.write_text(json.dumps({"mlb": 9e9}), encoding="utf-8")
+        state.write_text(json.dumps({"ncaam": 9e9}), encoding="utf-8")
         with mock.patch.object(multi_fetch, "FORCE_REFETCH_ONCE", set()):
             multi_fetch.run_once(str(state), force=True)
         self.assertEqual(runner.call_count, 1)
@@ -190,18 +190,18 @@ class AnchoredWindowTests(unittest.TestCase):
                 "ncaaf", None, self._at("2026-09-05T16:30:00+00:00")))
 
     def test_small_hours_anchor_closes_out_the_previous_game_day(self):
-        # MLB's 02:00 ET anchor grades West Coast finals from the day before,
-        # so it must match against that game day, not the calendar date it
-        # fires on.
-        self._schedule("mlb", ["2026-07-29T23:10:00Z"])
+        # The 01:00 ET basketball anchor grades West Coast finals from the day
+        # before, so it must match against that game day, not the calendar
+        # date it fires on.
+        self._schedule("ncaam", ["2026-01-29T23:10:00Z"])
         with self._eastern():
             self.assertEqual(
-                multi_fetch._anchor_due("mlb", None, self._at("2026-07-30T06:10:00+00:00")),
-                "2026-07-29:02:00")
+                multi_fetch._anchor_due("ncaam", None, self._at("2026-01-30T06:10:00+00:00")),
+                "2026-01-29:01:00")
 
     def test_zone_lookup_never_raises_without_a_tz_database(self):
         with mock.patch.dict("sys.modules", {"zoneinfo": None}):
-            self.assertEqual(multi_fetch._zone_for("mlb"), datetime.timezone.utc)
+            self.assertEqual(multi_fetch._zone_for("unknown-sport"), datetime.timezone.utc)
 
     def test_anchor_forces_a_sport_that_is_not_otherwise_due(self):
         self._schedule("ncaaf", ["2026-09-05T16:00:00Z"])
@@ -235,17 +235,17 @@ class AnchoredWindowTests(unittest.TestCase):
         self.assertNotIn("_anchors", json.loads(state.read_text(encoding="utf-8")))
 
     def test_legacy_state_file_without_anchors_still_loads(self):
-        self._schedule("mlb", [])
+        self._schedule("ncaam", [])
         state = Path("state.json")
-        state.write_text(json.dumps({"mlb": 1.0}), encoding="utf-8")
+        state.write_text(json.dumps({"ncaam": 1.0}), encoding="utf-8")
         runner = mock.Mock(return_value=True)
-        with mock.patch.object(multi_fetch, "SPORTS", [("mlb", "--mlb")]), \
+        with mock.patch.object(multi_fetch, "SPORTS", [("ncaam", "--ncaam")]), \
              mock.patch.object(multi_fetch, "FORCE_REFETCH_ONCE", set()), \
              mock.patch.object(multi_fetch, "_run_one", runner), \
              mock.patch("generate_posts.generate_public_content_feed", return_value=0), \
              mock.patch("generate_posts.regenerate_sitemap", return_value=0):
             multi_fetch.run_once(str(state))
-        self.assertGreater(json.loads(state.read_text(encoding="utf-8"))["mlb"], 1.0)
+        self.assertGreater(json.loads(state.read_text(encoding="utf-8"))["ncaam"], 1.0)
 
     def test_every_scheduled_sport_has_anchor_hours(self):
         for key, _ in multi_fetch.SPORTS:
@@ -275,16 +275,16 @@ class LockWindowRefreshTests(unittest.TestCase):
         self._fixtures()
 
     def _fixtures(self, status="UPCOMING"):
-        Path("data_epl.json").write_text(json.dumps({
-            "competition": "EPL",
+        Path("data_ncaaf.json").write_text(json.dumps({
+            "competition": "NCAAF",
             "matches": [{"id": fixture_id, "status": status, "kickoff": self.KICKOFF,
                          "pregame_context": {"lock_window_hours": 2.0}}
                         for fixture_id in ("560548", "560549")],
         }), encoding="utf-8")
 
     def _picks(self, *fixture_ids):
-        Path("picks_log_epl.json").write_text(json.dumps(
-            {fid: {"fixture_id": fid, "competition": "EPL"} for fid in fixture_ids}),
+        Path("picks_log_ncaaf.json").write_text(json.dumps(
+            {fid: {"fixture_id": fid, "competition": "NCAAF"} for fid in fixture_ids}),
             encoding="utf-8")
 
     def _at(self, iso):
@@ -295,55 +295,55 @@ class LockWindowRefreshTests(unittest.TestCase):
         # only 55 min after the 10:38Z fetch, so the interval gate alone
         # skipped it.
         self.assertTrue(multi_fetch._lock_window_due(
-            "epl", self._at("2026-08-23T11:33:16+00:00")))
+            "ncaaf", self._at("2026-08-23T11:33:16+00:00")))
 
     def test_run_before_the_lock_window_stays_on_the_normal_cadence(self):
         # The 10:38Z fetch was 2h22m out -- outside the window, so nothing is
         # forced and the sport keeps paying only its usual hourly cost.
         self.assertFalse(multi_fetch._lock_window_due(
-            "epl", self._at("2026-08-23T10:38:00+00:00")))
+            "ncaaf", self._at("2026-08-23T10:38:00+00:00")))
 
     def test_already_locked_fixtures_do_not_force_a_refetch(self):
         # Quota safety: once both fixtures have a committed pick, the same
         # in-window moment must stop forcing anything.
         self._picks("560548", "560549")
         self.assertFalse(multi_fetch._lock_window_due(
-            "epl", self._at("2026-08-23T11:33:16+00:00")))
+            "ncaaf", self._at("2026-08-23T11:33:16+00:00")))
 
     def test_one_still_unlocked_fixture_is_enough(self):
         self._picks("560548")
         self.assertTrue(multi_fetch._lock_window_due(
-            "epl", self._at("2026-08-23T11:33:16+00:00")))
+            "ncaaf", self._at("2026-08-23T11:33:16+00:00")))
 
     def test_past_kickoff_no_longer_forces_a_lock_refresh(self):
         # 13:00:26Z is past kickoff; nothing can be locked any more, and score
         # urgency is _interval_for's job (PAST_DUE_SCORE_GRACE_HOURS).
         self.assertFalse(multi_fetch._lock_window_due(
-            "epl", self._at("2026-08-23T13:00:26+00:00")))
+            "ncaaf", self._at("2026-08-23T13:00:26+00:00")))
 
     def test_non_upcoming_fixtures_are_ignored(self):
         self._fixtures(status="LIVE")
         self.assertFalse(multi_fetch._lock_window_due(
-            "epl", self._at("2026-08-23T11:33:16+00:00")))
+            "ncaaf", self._at("2026-08-23T11:33:16+00:00")))
 
     def test_missing_data_file_is_not_due(self):
-        Path("data_epl.json").unlink()
+        Path("data_ncaaf.json").unlink()
         self.assertFalse(multi_fetch._lock_window_due(
-            "epl", self._at("2026-08-23T11:33:16+00:00")))
+            "ncaaf", self._at("2026-08-23T11:33:16+00:00")))
 
     def test_lock_window_forces_a_sport_the_interval_gate_would_skip(self):
         state = Path("state.json")
-        state.write_text(json.dumps({"epl": 9e9}), encoding="utf-8")  # fetched "just now"
+        state.write_text(json.dumps({"ncaaf": 9e9}), encoding="utf-8")  # fetched "just now"
         runner = mock.Mock(return_value=True)
-        with mock.patch.object(multi_fetch, "SPORTS", [("epl", "--epl")]),              mock.patch.object(multi_fetch, "FORCE_REFETCH_ONCE", set()),              mock.patch.object(multi_fetch, "_missing_fields", return_value=False),              mock.patch.object(multi_fetch, "_run_one", runner),              mock.patch.object(multi_fetch, "_anchor_due", return_value=None),              mock.patch.object(multi_fetch, "_lock_window_due", return_value=True),              mock.patch("generate_posts.generate_public_content_feed", return_value=0),              mock.patch("generate_posts.regenerate_sitemap", return_value=0):
+        with mock.patch.object(multi_fetch, "SPORTS", [("ncaaf", "--ncaaf")]),              mock.patch.object(multi_fetch, "FORCE_REFETCH_ONCE", set()),              mock.patch.object(multi_fetch, "_missing_fields", return_value=False),              mock.patch.object(multi_fetch, "_run_one", runner),              mock.patch.object(multi_fetch, "_anchor_due", return_value=None),              mock.patch.object(multi_fetch, "_lock_window_due", return_value=True),              mock.patch("generate_posts.generate_public_content_feed", return_value=0),              mock.patch("generate_posts.regenerate_sitemap", return_value=0):
             multi_fetch.run_once(str(state))
         self.assertEqual(runner.call_count, 1)
 
     def test_no_lock_window_leaves_the_interval_gate_in_charge(self):
         state = Path("state.json")
-        state.write_text(json.dumps({"epl": 9e9}), encoding="utf-8")
+        state.write_text(json.dumps({"ncaaf": 9e9}), encoding="utf-8")
         runner = mock.Mock(return_value=True)
-        with mock.patch.object(multi_fetch, "SPORTS", [("epl", "--epl")]),              mock.patch.object(multi_fetch, "FORCE_REFETCH_ONCE", set()),              mock.patch.object(multi_fetch, "_missing_fields", return_value=False),              mock.patch.object(multi_fetch, "_run_one", runner),              mock.patch.object(multi_fetch, "_anchor_due", return_value=None),              mock.patch.object(multi_fetch, "_lock_window_due", return_value=False),              mock.patch("generate_posts.generate_public_content_feed", return_value=0),              mock.patch("generate_posts.regenerate_sitemap", return_value=0):
+        with mock.patch.object(multi_fetch, "SPORTS", [("ncaaf", "--ncaaf")]),              mock.patch.object(multi_fetch, "FORCE_REFETCH_ONCE", set()),              mock.patch.object(multi_fetch, "_missing_fields", return_value=False),              mock.patch.object(multi_fetch, "_run_one", runner),              mock.patch.object(multi_fetch, "_anchor_due", return_value=None),              mock.patch.object(multi_fetch, "_lock_window_due", return_value=False),              mock.patch("generate_posts.generate_public_content_feed", return_value=0),              mock.patch("generate_posts.regenerate_sitemap", return_value=0):
             multi_fetch.run_once(str(state))
         self.assertEqual(runner.call_count, 0)
 

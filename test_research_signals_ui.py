@@ -5,33 +5,18 @@ import unittest
 from pathlib import Path
 
 from populate_research_signals import populate
-from refresh_nfl_advanced_metrics import candidate_seasons
 
 
 ROOT = Path(__file__).parent
 
 
 class ResearchSignalsUITests(unittest.TestCase):
-    def test_nfl_refresh_uses_active_or_last_completed_season(self):
-        self.assertEqual(candidate_seasons(dt.date(2026, 7, 29)), [2025, 2024])
-        self.assertEqual(candidate_seasons(dt.date(2026, 10, 1)), [2026, 2025])
-
     def test_expanded_view_is_explicitly_zero_weight(self):
         source = (ROOT / "research-signals.js").read_text(encoding="utf-8")
         self.assertIn("advanced_metrics", source)
-        self.assertIn("nfl_challenger_shadow", source)
-        self.assertIn("mlb_challenger_shadow", source)
-        self.assertIn("cleared historical out-of-sample testing", source)
-        self.assertIn("Prospective evidence", source)
-        self.assertIn("eligible_games", source)
-        self.assertIn("kickoff_week_blocks", source)
-        self.assertIn("Calibrated Elo beat raw Elo", source)
-        self.assertIn("historical_oos_pilot", source)
-        self.assertIn("Capped adjustment", source)
-        self.assertIn("research_promotion", source)
-        self.assertIn("manually reviewed prospective gate", source)
         self.assertIn("production weight 0", source)
-        self.assertIn("failed learned NFL residual", source)
+        for gone in ("nfl_challenger_shadow", "mlb_challenger_shadow"):
+            self.assertNotIn(gone, source)
         index = (ROOT / "index.html").read_text(encoding="utf-8")
         self.assertIn("research-signals.js?v=__BUILD__", index)
         self.assertIn("research-signals.css?v=__BUILD__", index)
@@ -45,9 +30,7 @@ class ResearchSignalsUITests(unittest.TestCase):
         for text in ("Advanced CFB profile", "Team profile", "Predicted Points Added",
                      "Offense", "Defense", "Show ${rows.length-3} more"):
             self.assertIn(text, source)
-        # Scoped to the CFB panel: the retired MLB and NFL shadow blocks still
-        # describe their own weighting, and those claims are true of them.
-        panel = source[source.index("cfbResearchTop"):source.index("function shadowBlock")]
+        panel = source[source.index("cfbResearchTop"):source.index("function coverageText")]
         for gone in ("Used in today's pick", "0% weight", "Descriptive context",
                      "does not change today"):
             self.assertNotIn(gone, panel)
@@ -62,70 +45,29 @@ class ResearchSignalsUITests(unittest.TestCase):
 
     def test_ci_builds_and_publishes_derived_research_assets(self):
         workflow = (ROOT / ".github" / "workflows" / "deploy.yml").read_text(encoding="utf-8")
-        self.assertIn("python refresh_nfl_advanced_metrics.py", workflow)
         self.assertIn("python populate_research_signals.py", workflow)
-        self.assertIn("python build_nfl_prospective_scorecard.py", workflow)
         self.assertIn("forecast_ledger_*.jsonl", workflow)
-        refresh_step = workflow.index("Refresh authorized NFL research profile")
-        refresh_command = workflow.index("python refresh_nfl_advanced_metrics.py")
-        self.assertIn("if: github.event_name != 'push'", workflow[refresh_step:refresh_command])
         self.assertIn("research-signals.js", workflow)
         self.assertIn("research-signals.css", workflow)
 
     def test_cached_fixture_population_needs_no_provider_refresh(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            (root / "data_nfl.json").write_text(json.dumps({"matches": [{
-                "home": {"name": "Kansas City Chiefs"},
-                "away": {"name": "Buffalo Bills"},
+            (root / "data_ncaaf.json").write_text(json.dumps({"matches": [{
+                "home": {"name": "Alabama Crimson Tide", "code": "ALA"},
+                "away": {"name": "Georgia Bulldogs", "code": "UGA"},
             }]}), encoding="utf-8")
-            (root / "advanced_metrics_nfl.json").write_text(json.dumps({
+            (root / "advanced_metrics_ncaaf.json").write_text(json.dumps({
                 "schema_version": 1, "shadow_only": True, "attach_live": True,
-                "source": "nflverse-data pbp release", "license": "CC BY 4.0",
-                "profiles": {"KC": {"epa_per_play": .2}, "BUF": {"epa_per_play": .1}},
+                "source": "CollegeFootballData advanced team stats", "license": "research",
+                "profiles": {"Alabama Crimson Tide": {"epa_per_play": .2},
+                             "Georgia Bulldogs": {"epa_per_play": .1}},
             }), encoding="utf-8")
             result = populate(root)
-            payload = json.loads((root / "data_nfl.json").read_text(encoding="utf-8"))
-            self.assertEqual(result["nfl"]["advanced"], 1)
+            payload = json.loads((root / "data_ncaaf.json").read_text(encoding="utf-8"))
+            self.assertEqual(result["ncaaf"]["advanced"], 1)
             self.assertEqual(payload["matches"][0]["research_signal_schema"], 1)
             self.assertEqual(payload["matches"][0]["advanced_metrics"]["home"]["epa_per_play"], .2)
-
-    def test_mlb_population_exposes_only_scorecard_summary(self):
-        with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
-            (root / "data_mlb.json").write_text(json.dumps({"matches": []}), encoding="utf-8")
-            (root / "mlb_prospective_scorecard.json").write_text(json.dumps({
-                "schema_version": 1, "protocol_version": "mlb-prospective-shadow-1.0.0",
-                "status": "collecting_prospective_evidence",
-                "evaluation_contract": {"minimum_games": 500, "minimum_game_date_blocks": 30},
-                "models": {"official": {"n": 12, "log_loss": .69},
-                           "run_strength_challenger": {"n": 12, "log_loss": .68}},
-                "comparisons": {"run_strength_vs_official": {"blocks": 3, "ci95": [-.02, .01]}},
-            }), encoding="utf-8")
-            populate(root)
-            payload = json.loads((root / "data_mlb.json").read_text(encoding="utf-8"))
-            summary = payload["research_scorecards"]["mlb"]
-            self.assertEqual(summary["eligible_games"], 12)
-            self.assertEqual(summary["game_date_blocks"], 3)
-            self.assertEqual(summary["production_weight"], 0)
-
-    def test_nfl_population_exposes_prospective_counter_even_before_first_grade(self):
-        with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
-            (root / "data_nfl.json").write_text(json.dumps({"matches": []}), encoding="utf-8")
-            (root / "nfl_challenger_model.json").write_text(
-                (ROOT / "nfl_challenger_model.json").read_text(encoding="utf-8"),
-                encoding="utf-8",
-            )
-            populate(root)
-            payload = json.loads((root / "data_nfl.json").read_text(encoding="utf-8"))
-            summary = payload["research_scorecards"]["nfl"]
-            self.assertEqual(summary["eligible_games"], 0)
-            self.assertEqual(summary["required_games"], 256)
-            self.assertEqual(summary["kickoff_week_blocks"], 0)
-            self.assertEqual(summary["required_kickoff_week_blocks"], 16)
-            self.assertEqual(summary["production_weight"], 0)
-
 
 if __name__ == "__main__":
     unittest.main()

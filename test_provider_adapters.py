@@ -1,16 +1,9 @@
-import csv
 import datetime as dt
-import gzip
-import io
 import unittest
-import urllib.parse
-from unittest import mock
 
-from provider_adapters import (BallDontLieAdapter, BigBallsSportsAdapter,
-                               CollegeBasketballDataAdapter,
-                               CollegeFootballDataAdapter, NflverseAdapter,
-                               NflversePregameAdapter, ProviderError,
-                               SportsDataIOAdapter, SportsGameOddsAdapter, SportmonksAdapter,
+from provider_adapters import (CollegeBasketballDataAdapter,
+                               CollegeFootballDataAdapter, ProviderError,
+                               SportsDataIOAdapter, SportsGameOddsAdapter,
                                _iso_utc, normalized_score)
 
 
@@ -38,60 +31,6 @@ class ScoreNormalizationTests(unittest.TestCase):
     def test_unqualified_et_uses_daylight_saving_time(self):
         self.assertEqual(_iso_utc("2026-07-04T13:00:00"), "2026-07-04T17:00:00Z")
         self.assertEqual(_iso_utc("2026-12-04T13:00:00"), "2026-12-04T18:00:00Z")
-
-
-class BigBallsSportsTests(unittest.TestCase):
-    def setUp(self):
-        self.rows = [{
-            "player": {"id": "p1", "name": "Current Star",
-                       "team": {"name": "Boston Celtics", "abbreviation": "BOS"}},
-            "status": "Out", "injury_type": "Knee",
-            "return_date": "2026-12-01", "updated_at": "2026-10-20T12:00:00Z",
-        }, {
-            "player": {"id": "p2", "name": "Recovered Player",
-                       "team": {"name": "Boston Celtics", "abbreviation": "BOS"}},
-            "status": "Out", "injury_type": "Ankle",
-            "return_date": "2026-10-01", "updated_at": "2026-09-15T12:00:00Z",
-        }, {
-            "player": {"id": "p3", "name": "Away Doubt",
-                       "team": {"name": "New York Knicks", "abbreviation": "NYK"}},
-            "status": "Questionable", "injury_type": "Illness",
-            "return_date": None, "updated_at": "2026-10-20T12:00:00Z",
-        }]
-
-    def getter(self, url, headers):
-        self.assertIn("/v1/injuries?sport=basketball", url)
-        self.assertEqual(headers["Authorization"], "Bearer test-key")
-        return {"data": {"sport": "basketball", "injuries": self.rows}}
-
-    @staticmethod
-    def match():
-        return {"id": "game-1", "kickoff": "2026-10-25T23:00:00Z",
-                "home": {"name": "Boston Celtics", "code": "BOS"},
-                "away": {"name": "New York Knicks", "code": "NYK"},
-                "injuries": {"home": [], "away": []}}
-
-    def test_active_reports_attach_by_team_and_expired_return_is_excluded(self):
-        match = self.match()
-        count = BigBallsSportsAdapter("test-key", "NBA", getter=self.getter).attach_availability(
-            [match], observed_at="2026-10-20T12:00:00Z")
-        self.assertEqual(count, 2)
-        self.assertEqual(match["injuries"]["home"], ["Current Star (Out - Knee)"])
-        self.assertEqual(match["injuries"]["away"], ["Away Doubt (Questionable - Illness)"])
-        self.assertTrue(match["personnel"]["injuries_feed_checked"])
-        self.assertTrue(match["personnel"]["injuries_confirmed"])
-        self.assertEqual(match["pregame_provenance"][0]["source"], "Big Balls Sports Data")
-
-    def test_successful_empty_report_still_marks_feed_checked(self):
-        match = self.match()
-        adapter = BigBallsSportsAdapter("test-key", "NHL", getter=lambda *_: {"data": {"injuries": []}})
-        self.assertEqual(adapter.attach_availability([match]), 0)
-        self.assertTrue(match["personnel"]["injuries_feed_checked"])
-        self.assertFalse(any(match["injuries"].values()))
-
-    def test_unsupported_injury_sport_is_rejected_instead_of_faked(self):
-        with self.assertRaises(ProviderError):
-            BigBallsSportsAdapter("test-key", "MLB", getter=self.getter)
 
 
 class SportsGameOddsTests(unittest.TestCase):
@@ -139,7 +78,7 @@ class SportsGameOddsTests(unittest.TestCase):
             "away": {"name": "New York Knicks", "code": "NYK"},
             "markets": {}, "injuries": {"home": [], "away": []}, "lineups": None,
         }
-        adapter = SportsGameOddsAdapter("test-key", "NBA", getter=lambda *_: {})
+        adapter = SportsGameOddsAdapter("test-key", "NCAAM", getter=lambda *_: {})
         result = adapter.attach_pregame(
             [match], [self.event()], observed_at="2026-08-08T12:00:00Z")
         self.assertEqual(result, {"markets": 1, "venues": 1})
@@ -147,64 +86,6 @@ class SportsGameOddsTests(unittest.TestCase):
         self.assertIsNone(match["lineups"])
         self.assertFalse(any(match["injuries"].values()))
         self.assertNotIn("players", match)
-
-    def test_mlb_player_markets_attach_only_unconfirmed_inferences(self):
-        home_ids = [f"HOME_{i}_MLB" for i in range(1, 8)]
-        away_ids = [f"AWAY_{i}_MLB" for i in range(1, 8)]
-        players = {
-            **{player_id: {"name": f"Home Hitter {i}", "teamID": "BOSTON_RED_SOX_MLB"}
-               for i, player_id in enumerate(home_ids, 1)},
-            **{player_id: {"name": f"Away Hitter {i}", "teamID": "NEW_YORK_YANKEES_MLB"}
-               for i, player_id in enumerate(away_ids, 1)},
-            "HOME_P_MLB": {"name": "Home Pitcher", "teamID": "BOSTON_RED_SOX_MLB"},
-            "AWAY_P_MLB": {"name": "Away Pitcher", "teamID": "NEW_YORK_YANKEES_MLB"},
-        }
-        odds = {
-            "home": self._odd("home", {"fanduel": "+110", "espnbet": "-500"}),
-            "away": self._odd("away", {"fanduel": "-120", "espnbet": "+350"}),
-        }
-        for player_id in home_ids + away_ids:
-            odds["hit-" + player_id] = {
-                "statID": "batting_hits", "playerID": player_id,
-                "byBookmaker": {"fanduel": {"odds": "-110", "available": True}},
-            }
-        for player_id in ("HOME_P_MLB", "AWAY_P_MLB"):
-            odds["pitch-" + player_id] = {
-                "statID": "pitching_strikeouts", "playerID": player_id,
-                "byBookmaker": {"draftkings": {"odds": "+100", "available": True}},
-            }
-        event = {
-            "eventID": "mlb-1",
-            "teams": {
-                "home": {"teamID": "BOSTON_RED_SOX_MLB", "names": {"long": "Boston Red Sox"}},
-                "away": {"teamID": "NEW_YORK_YANKEES_MLB", "names": {"long": "New York Yankees"}},
-            },
-            "players": players, "odds": odds,
-        }
-        match = {"id": "m1", "home": {"name": "Boston Red Sox", "code": "BOS"},
-                 "away": {"name": "New York Yankees", "code": "NYY"},
-                 "markets": {}, "lineups": None, "injuries": {"home": [], "away": []}}
-        result = SportsGameOddsAdapter("test-key", "MLB", getter=lambda *_: {}).attach_pregame(
-            [match], [event], observed_at="2026-08-12T12:00:00Z")
-        self.assertEqual(result["starting_pitchers"], 0)
-        self.assertEqual(result["lineups"], 0)
-        self.assertEqual(match["personnel"]["starter_candidates"]["home"]["name"],
-                         "Home Pitcher")
-        self.assertNotIn("starting_pitchers", match["personnel"])
-        self.assertIsNone(match["lineups"])
-        self.assertEqual(len(match["personnel"]["market_listed_hitters"]["away"]), 7)
-        self.assertFalse(any(match["injuries"].values()))
-
-    def test_mlb_inference_rejects_espn_only_player_markets(self):
-        event = {
-            "teams": {"home": {"teamID": "HOME_MLB"}, "away": {"teamID": "AWAY_MLB"}},
-            "players": {"P_MLB": {"name": "Pitcher", "teamID": "HOME_MLB"}},
-            "odds": {"pitch": {"statID": "pitching_strikeouts", "playerID": "P_MLB",
-                                "byBookmaker": {"espnbet": {"odds": "-110", "available": True}}}},
-        }
-        inferred = SportsGameOddsAdapter.mlb_personnel(event)
-        self.assertEqual(inferred["starter_candidates"], {})
-        self.assertEqual(inferred["market_listed_hitters"], {"home": [], "away": []})
 
     def test_same_team_doubleheader_requires_exact_event_time(self):
         first = self.event()
@@ -215,7 +96,7 @@ class SportsGameOddsTests(unittest.TestCase):
                  "home": {"name": "Boston Celtics", "code": "BOS"},
                  "away": {"name": "New York Knicks", "code": "NYK"},
                  "markets": {}, "lineups": None}
-        adapter = SportsGameOddsAdapter("test-key", "NBA", getter=lambda *_: {})
+        adapter = SportsGameOddsAdapter("test-key", "NCAAM", getter=lambda *_: {})
         adapter.attach_pregame([match], [first, second], observed_at="2026-08-12T12:00:00Z")
         receipt = match["pregame_provenance"][0]["join"]
         self.assertEqual(receipt["strategy"], "teams_and_start_time")
@@ -253,7 +134,7 @@ class SportsGameOddsTests(unittest.TestCase):
                  "home": {"name": "Boston Celtics", "code": "BOS"},
                  "away": {"name": "New York Knicks", "code": "NYK"},
                  "markets": {}, "lineups": None}
-        adapter = SportsGameOddsAdapter("test-key", "NBA", getter=lambda *_: {})
+        adapter = SportsGameOddsAdapter("test-key", "NCAAM", getter=lambda *_: {})
         adapter.attach_pregame([match], [first, second], observed_at="2026-08-12T12:00:00Z")
         receipt = match["pregame_provenance"][0]["join"]
         self.assertEqual(receipt["strategy"], "teams_and_start_time")
@@ -266,23 +147,11 @@ class SportsGameOddsTests(unittest.TestCase):
             return {"data": {"rateLimits": {"per-month": {
                 "max-entities": 2500, "current-entities": 2395,
             }}}}
-        adapter = SportsGameOddsAdapter("test-key", "MLB", getter=getter)
+        adapter = SportsGameOddsAdapter("test-key", "NCAAM", getter=getter)
         with self.assertRaisesRegex(ProviderError, "reserve reached"):
             adapter.upcoming_events("2026-08-08T00:00:00Z", "2026-08-09T12:00:00Z")
         self.assertEqual(len(calls), 1)
         self.assertIn("/account/usage", calls[0])
-
-    def test_ucl_market_requires_same_three_non_espn_books(self):
-        event = self.event()
-        event["odds"] = {
-            "home": self._odd("home", {"fanduel": "+150", "betmgm": "+160"}, draw=True),
-            "draw": self._odd("draw", {"fanduel": "+220", "betmgm": "+230"}, draw=True),
-            "away": self._odd("away", {"fanduel": "+180", "betmgm": "+175"}, draw=True),
-        }
-        market = SportsGameOddsAdapter.market(event, has_draws=True)
-        self.assertEqual(market["books"], 2)
-        self.assertEqual(market["home_pct"] + market["draw_pct"] + market["away_pct"], 100)
-
 
 class SportsDataIOTests(unittest.TestCase):
     def setUp(self):
@@ -331,461 +200,14 @@ class SportsDataIOTests(unittest.TestCase):
                 return payload
         raise AssertionError(url)
 
-    def test_schedule_normalizes_match_contract(self):
-        adapter = SportsDataIOAdapter("test-key", "NBA", getter=self.getter)
-        match = adapter.schedule()[0]
-        self.assertEqual(match["home"]["name"], "Boston Celtics")
-        self.assertEqual(match["status"], "LIVE")
-        self.assertEqual(match["score"], {"home": 71, "away": 69})
-        self.assertEqual(match["data_source"], "SportsDataIO")
-
-    def test_standings_normalize_model_and_ui_contracts(self):
-        adapter = SportsDataIOAdapter("test-key", "NBA", getter=self.getter)
-        model, tables = adapter.standings()
-        self.assertIn("boston celtics", model)
-        self.assertEqual(tables[0]["group"], "Eastern Atlantic")
-        self.assertEqual(tables[0]["teams"][0]["record"], "10-2")
-
-    def test_availability_and_leaders_use_stats_product(self):
-        adapter = SportsDataIOAdapter("test-key", "NBA", getter=self.getter)
-        matches = adapter.schedule()
-        self.assertEqual(adapter.attach_availability(matches), 1)
-        self.assertIn("Questionable", matches[0]["injuries_shadow"]["home"][0])
-        self.assertFalse(any(matches[0]["injuries"].values()))
-        leaders = adapter.leaders()
-        self.assertEqual(leaders["source"], "SportsDataIO")
-        self.assertEqual(leaders["categories"][0]["leaders"][0]["value"], 30.0)
-
     def test_availability_maps_cross_provider_team_name_not_only_short_code(self):
-        adapter = SportsDataIOAdapter("test-key", "NBA", getter=self.getter)
+        adapter = SportsDataIOAdapter("test-key", "NCAAM", getter=self.getter)
         matches = [{"home": {"name": "Boston Celtics", "code": "B"},
                     "away": {"name": "New York Knicks", "code": "N"},
                     "personnel": {}}]
         self.assertEqual(adapter.attach_availability(matches), 1)
         self.assertEqual(matches[0]["personnel"]["injury_details"]["home"][0]["name"],
                          "Example Player")
-
-    def test_starting_lineups_are_normalized_with_confirmation(self):
-        adapter = SportsDataIOAdapter("test-key", "NBA", getter=self.getter)
-        rows = adapter.starting_lineups("2026-11-01")
-        self.assertEqual(rows[0]["home"]["xi"][0]["name"], "Home Starter")
-        self.assertEqual(len(rows[0]["home"]["xi"]), 1)
-        self.assertTrue(rows[0]["confirmed"])
-
-    def test_mlb_batting_lineups_and_pitchers_follow_official_schema(self):
-        def getter(url, headers):
-            if "/projections/json/StartingLineupsByDate/" in url:
-                return [{"GameID": 7, "HomeTeam": "BOS", "AwayTeam": "NYY",
-                         "DateTime": "2026-08-03T19:10:00",
-                         "Updated": "2026-08-03T17:00:00",
-                         "HomeBattingLineup": [{"PlayerID": 1, "Name": "Home Batter",
-                                                 "Starting": True, "Confirmed": True}],
-                         "AwayBattingLineup": [{"PlayerID": 2, "Name": "Away Batter",
-                                                 "Starting": True, "Confirmed": True}],
-                         "HomeStartingPitcher": {"PlayerID": 3, "Name": "Home Pitcher",
-                                                   "Confirmed": True, "IsOpener": True},
-                         "AwayStartingPitcher": {"PlayerID": 4, "Name": "Away Pitcher",
-                                                   "Confirmed": False}}]
-            raise AssertionError(url)
-        row = SportsDataIOAdapter("test-key", "MLB", getter=getter).starting_lineups("2026-08-03")[0]
-        self.assertEqual(row["home"]["xi"][0]["name"], "Home Batter")
-        self.assertEqual(row["provider_game_id"], 7)
-        self.assertEqual(row["scheduled_at"], "2026-08-03T23:10:00Z")
-        self.assertEqual(row["provider_updated_at"], "2026-08-03T21:00:00Z")
-        self.assertTrue(row["home"]["xi"][0]["confirmed"])
-        self.assertTrue(row["home_starting_pitcher"]["confirmed"])
-        self.assertTrue(row["home_starting_pitcher"]["opener"])
-        self.assertFalse(row["away_starting_pitcher"]["confirmed"])
-        self.assertFalse(row["confirmed"])
-        self.assertFalse(row["home"]["confirmed"])
-
-    def test_sportsdata_doubleheader_join_rejects_ambiguous_team_only_match(self):
-        rows = [
-            {"provider_game_id": 11, "home_code": "BOS", "away_code": "NYY",
-             "scheduled_at": "2026-08-03T17:00:00Z"},
-            {"provider_game_id": 12, "home_code": "BOS", "away_code": "NYY",
-             "scheduled_at": "2026-08-03T23:00:00Z"},
-        ]
-        match = {"id": "local", "kickoff": "2026-08-03T20:00:00Z",
-                 "home": {"code": "BOS"}, "away": {"code": "NYY"}}
-        row, receipt = SportsDataIOAdapter._lineup_join(rows, match)
-        self.assertIsNone(row)
-        self.assertEqual(receipt["reason"], "ambiguous_same_team_fixture")
-        match["kickoff"] = "2026-08-03T23:00:00Z"
-        row, receipt = SportsDataIOAdapter._lineup_join(rows, match)
-        self.assertEqual(row["provider_game_id"], 12)
-        self.assertEqual(receipt["strategy"], "teams_and_start_time")
-
-    def test_nhl_leaders_include_offense_and_defense_extras(self):
-        # PlusMinus can be negative -- confirm a real leader (best plus/minus)
-        # still ranks correctly and a worse-but-still-nonzero value doesn't
-        # get treated as falsy/dropped.
-        payloads = {
-            "/stats/json/PlayerSeasonStats/": [
-                {"Name": "Skater One", "Games": 20, "Points": 30, "Goals": 15, "Assists": 15,
-                 "GoaltendingSavePercentage": 0, "PlusMinus": 12, "Hits": 40, "Takeaways": 22,
-                 "ShotsOnGoal": 90},
-                {"Name": "Skater Two", "Games": 20, "Points": 20, "Goals": 8, "Assists": 12,
-                 "GoaltendingSavePercentage": 0, "PlusMinus": -4, "Hits": 60, "Takeaways": 10,
-                 "ShotsOnGoal": 70},
-            ],
-        }
-        def getter(url, headers):
-            for marker, payload in payloads.items():
-                if marker in url:
-                    return payload
-            raise AssertionError(url)
-        adapter = SportsDataIOAdapter("test-key", "NHL", getter=getter)
-        leaders = adapter.leaders()
-        by_key = {c["key"]: c for c in leaders["categories"]}
-        self.assertEqual(by_key["PlusMinus"]["leaders"][0]["name"], "Skater One")
-        self.assertEqual(by_key["PlusMinus"]["leaders"][0]["value"], 12)
-        self.assertEqual(by_key["Hits"]["leaders"][0]["name"], "Skater Two")
-
-    def test_nhl_starting_goalies_are_normalized(self):
-        def getter(url, headers):
-            if "/projections/json/StartingGoaltendersByDate/" in url:
-                return [{"GameID": 9, "HomeTeam": "BOS", "AwayTeam": "NYR",
-                         "HomeGoaltender": {"PlayerID": 1, "FirstName": "Home", "LastName": "Goalie",
-                                             "Confirmed": True},
-                         "AwayGoaltender": {"PlayerID": 2, "FirstName": "Away", "LastName": "Goalie",
-                                             "Confirmed": False}}]
-            raise AssertionError(url)
-        rows = SportsDataIOAdapter("test-key", "NHL", getter=getter).starting_goalies("2026-OCT-10")
-        self.assertEqual(rows[0]["home"]["name"], "Home Goalie")
-        self.assertTrue(rows[0]["home"]["confirmed"])
-        self.assertFalse(rows[0]["away"]["confirmed"])
-
-
-class NflverseAdapterTests(unittest.TestCase):
-    def test_leaders_include_offense_and_defense_categories(self):
-        rows = [
-            {"player_id": "1", "player_display_name": "Passer One", "passing_yards": "3500",
-             "passing_tds": "28", "rushing_yards": "0", "rushing_tds": "0",
-             "receiving_yards": "0", "receiving_tds": "0", "def_sacks": "0",
-             "def_interceptions": "0", "def_tackles_solo": "0", "def_tackles_for_loss": "0",
-             "def_qb_hits": "0"},
-            {"player_id": "2", "player_display_name": "Backer One", "passing_yards": "0",
-             "passing_tds": "0", "rushing_yards": "0", "rushing_tds": "0",
-             "receiving_yards": "0", "receiving_tds": "0", "def_sacks": "12.5",
-             "def_interceptions": "3", "def_tackles_solo": "85", "def_tackles_for_loss": "14",
-             "def_qb_hits": "20"},
-            # team-level aggregate artifact row -- no player_id, must be dropped
-            {"player_id": "", "player_display_name": "", "def_sacks": "999"},
-        ]
-        adapter = NflverseAdapter(getter=lambda url, headers: "\r\n".join(
-            [",".join(rows[0].keys())] + [",".join(row.values()) for row in rows]
-        ), today=dt.date(2026, 7, 25))
-        leaders = adapter.leaders()
-        by_key = {c["key"]: c for c in leaders["categories"]}
-        self.assertEqual(by_key["PassingYards"]["leaders"][0]["name"], "Passer One")
-        self.assertEqual(by_key["Sacks"]["leaders"][0]["name"], "Backer One")
-        self.assertEqual(by_key["Sacks"]["leaders"][0]["value"], 12.5)
-        self.assertEqual(by_key["TacklesForLoss"]["leaders"][0]["value"], 14)
-        names = [entry["name"] for cat in leaders["categories"] for entry in cat["leaders"]]
-        self.assertNotIn("", names)  # the aggregate artifact row never surfaces
-
-    def test_pregame_snapshot_uses_newest_depth_chart_and_roster_status(self):
-        depth_rows = [
-            {"dt": "2026-08-09T07:00:00Z", "team": "SEA", "player_name": "Old QB",
-             "gsis_id": "old", "pos_grp": "Offense", "pos_name": "Quarterback",
-             "pos_abb": "QB", "pos_slot": "1", "pos_rank": "1"},
-            {"dt": "2026-08-10T07:00:00Z", "team": "SEA", "player_name": "Current QB",
-             "gsis_id": "new", "pos_grp": "Offense", "pos_name": "Quarterback",
-             "pos_abb": "QB", "pos_slot": "1", "pos_rank": "1"},
-            {"dt": "2026-08-10T07:00:00Z", "team": "SEA", "player_name": "Backup QB",
-             "gsis_id": "backup", "pos_grp": "Offense", "pos_name": "Quarterback",
-             "pos_abb": "QB", "pos_slot": "1", "pos_rank": "2"},
-        ]
-        roster_rows = [
-            {"season": "2026", "team": "SEA", "position": "QB", "status": "ACT",
-             "full_name": "Current QB", "gsis_id": "new", "week": "1",
-             "status_description_abbr": "A01"},
-            {"season": "2026", "team": "SEA", "position": "QB", "status": "RES",
-             "full_name": "Current QB", "gsis_id": "new", "week": "2",
-             "status_description_abbr": "R09"},
-        ]
-
-        def zipped(rows):
-            buffer = io.StringIO(newline="")
-            writer = csv.DictWriter(buffer, fieldnames=list(rows[0]))
-            writer.writeheader()
-            writer.writerows(rows)
-            return gzip.compress(buffer.getvalue().encode("utf-8"))
-
-        def getter(url, headers):
-            return zipped(roster_rows if "weekly_rosters" in url else depth_rows)
-
-        snapshot = NflversePregameAdapter(
-            getter=getter, today=dt.date(2026, 8, 11)).snapshot()
-        self.assertEqual(snapshot["season"], 2026)
-        self.assertEqual(snapshot["week"], 2)
-        self.assertEqual(snapshot["observed_at"], "2026-08-10T07:00:00Z")
-        self.assertEqual([p["name"] for p in snapshot["teams"]["SEA"]["starters"]],
-                         ["Current QB"])
-        self.assertEqual(snapshot["teams"]["SEA"]["starters"][0]["roster_status"], "RES")
-
-
-class BallDontLieTests(unittest.TestCase):
-    def getter(self, url, headers):
-        self.assertEqual(headers["Authorization"], "test-key")
-        self.assertIn("dates%5B%5D=", url)
-        return {"data": [{
-            "id": 501, "date": "2026-07-17T22:00:00.000Z", "season": 2026,
-            "status": "STATUS_FINAL", "period": 9, "display_clock": "0:00",
-            "venue": "Example Park", "season_type": "regular",
-            "home_team": {"display_name": "Boston Red Sox", "abbreviation": "BOS"},
-            "away_team": {"display_name": "New York Yankees", "abbreviation": "NYY"},
-            "home_team_data": {"runs": 4}, "away_team_data": {"runs": 2},
-        }], "meta": {"per_page": 100}}
-
-    def test_free_games_normalize_without_inventing_paid_sections(self):
-        adapter = BallDontLieAdapter("test-key", "MLB", getter=self.getter,
-                                    today=dt.date(2026, 7, 17))
-        match = adapter.schedule()[0]
-        self.assertEqual(match["status"], "FINISHED")
-        self.assertEqual(match["score"], {"home": 4, "away": 2, "winner": "h"})
-        self.assertEqual(match["data_source"], "BALLDONTLIE")
-        self.assertEqual(adapter.standings(), ({}, []))
-        self.assertEqual(adapter.leaders(), {})
-
-    def test_postponed_game_resolves_to_finished_with_no_fabricated_score(self):
-        def postponed_getter(url, headers):
-            return {"data": [{
-                "id": 502, "date": "2026-07-19T00:08:00.000Z", "season": 2026,
-                "status": "STATUS_POSTPONED", "period": None, "display_clock": None,
-                "venue": "Yankee Stadium", "season_type": "regular",
-                "home_team": {"display_name": "New York Yankees", "abbreviation": "NYY"},
-                "away_team": {"display_name": "Los Angeles Dodgers", "abbreviation": "LAD"},
-                # BALLDONTLIE's schema still reports a numeric 0 for an unplayed
-                # game rather than omitting the field -- naively trusting that
-                # as a real score would grade a postponed game as a false 0-0.
-                "home_team_data": {"runs": 0}, "away_team_data": {"runs": 0},
-            }], "meta": {"per_page": 100}}
-
-        adapter = BallDontLieAdapter("test-key", "MLB", getter=postponed_getter,
-                                    today=dt.date(2026, 7, 26))
-        match = adapter.schedule()[0]
-        # Terminal (not UPCOMING forever), but with no real score to grade against.
-        self.assertEqual(match["status"], "FINISHED")
-        self.assertEqual(match["score"], {"home": None, "away": None})
-
-    def test_placeholder_team_name_drops_the_game_instead_of_inventing_a_team(self):
-        def placeholder_getter(url, headers):
-            return {"data": [
-                {
-                    "id": 8712499, "date": "2026-07-15T00:00:00.000Z", "season": 2026,
-                    "status": "STATUS_FINAL", "period": 9, "venue": "Citizens Bank Park",
-                    "season_type": "regular",
-                    "home_team": {"display_name": "Unknown", "abbreviation": "UNK"},
-                    "away_team": {"display_name": "Unknown", "abbreviation": "UNK"},
-                    "home_team_data": {"runs": 0}, "away_team_data": {"runs": 4},
-                },
-                {
-                    "id": 503, "date": "2026-07-15T00:00:00.000Z", "season": 2026,
-                    "status": "STATUS_FINAL", "period": 9, "venue": "Fenway Park",
-                    "season_type": "regular",
-                    "home_team": {"display_name": "Boston Red Sox", "abbreviation": "BOS"},
-                    "away_team": {"display_name": "TBD", "abbreviation": ""},
-                    "home_team_data": {"runs": 3}, "away_team_data": {"runs": 1},
-                },
-            ], "meta": {"per_page": 100}}
-
-        adapter = BallDontLieAdapter("test-key", "MLB", getter=placeholder_getter,
-                                    today=dt.date(2026, 7, 15))
-        # A placeholder is not a resolvable club: crediting it created a 31st
-        # MLB "team" in the standings table and a real Elo entry trained on
-        # real results, so both rows are dropped at the provider boundary.
-        self.assertEqual(adapter.schedule(), [])
-
-    def test_season_games_pages_through_results_and_drops_preseason(self):
-        calls = []
-
-        def paged_getter(url, headers):
-            self.assertEqual(headers["Authorization"], "test-key")
-            cursor = dict(urllib.parse.parse_qsl(urllib.parse.urlsplit(url).query)).get("cursor")
-            calls.append(cursor)
-            if cursor is None:
-                return {"data": [{
-                    "id": 1, "date": "2026-04-01T22:00:00.000Z", "season": 2026,
-                    "status": "STATUS_FINAL", "season_type": "preseason",
-                    "home_team": {"display_name": "Boston Red Sox"},
-                    "away_team": {"display_name": "New York Yankees"},
-                    "home_team_data": {"runs": 1}, "away_team_data": {"runs": 0},
-                }], "meta": {"next_cursor": "page2"}}
-            return {"data": [{
-                "id": 2, "date": "2026-05-01T22:00:00.000Z", "season": 2026,
-                "status": "STATUS_FINAL", "season_type": "regular",
-                "home_team": {"display_name": "Boston Red Sox"},
-                "away_team": {"display_name": "New York Yankees"},
-                "home_team_data": {"runs": 5}, "away_team_data": {"runs": 3},
-            }], "meta": {}}
-
-        adapter = BallDontLieAdapter("test-key", "MLB", getter=paged_getter,
-                                    today=dt.date(2026, 7, 17))
-        with mock.patch("provider_adapters.time.sleep") as sleep_mock:
-            games = adapter.season_games()
-        self.assertEqual(len(calls), 2)
-        sleep_mock.assert_called_once_with(BallDontLieAdapter.SEASON_PAGE_DELAY_SEC)
-        self.assertEqual(len(games), 1)
-        self.assertEqual(games[0]["score"], {"home": 5, "away": 3, "winner": "h"})
-
-    def test_season_games_recovers_from_a_single_transient_page_failure(self):
-        calls = []
-
-        def flaky_once_getter(url, headers):
-            cursor = dict(urllib.parse.parse_qsl(urllib.parse.urlsplit(url).query)).get("cursor")
-            calls.append(cursor)
-            if cursor is None:
-                return {"data": [{
-                    "id": 1, "date": "2026-05-01T22:00:00.000Z", "season": 2026,
-                    "status": "STATUS_FINAL", "season_type": "regular",
-                    "home_team": {"display_name": "Boston Red Sox"},
-                    "away_team": {"display_name": "New York Yankees"},
-                    "home_team_data": {"runs": 5}, "away_team_data": {"runs": 3},
-                }], "meta": {"next_cursor": "page2"}}
-            if calls.count("page2") == 1:  # fail once on page 2, then succeed
-                raise ProviderError("429 rate limited")
-            return {"data": [{
-                "id": 2, "date": "2026-05-02T22:00:00.000Z", "season": 2026,
-                "status": "STATUS_FINAL", "season_type": "regular",
-                "home_team": {"display_name": "Cubs"}, "away_team": {"display_name": "Cardinals"},
-                "home_team_data": {"runs": 2}, "away_team_data": {"runs": 1},
-            }], "meta": {}}
-
-        adapter = BallDontLieAdapter("test-key", "MLB", getter=flaky_once_getter,
-                                    today=dt.date(2026, 7, 17))
-        with mock.patch("provider_adapters.time.sleep"):
-            games = adapter.season_games()
-        # one retry consumed on page 2, so the getter saw it 3 times total (page1, page2 fail, page2 retry)
-        self.assertEqual(len(calls), 3)
-        self.assertEqual(len(games), 2)
-
-    def test_season_games_raises_instead_of_caching_a_truncated_season(self):
-        calls = []
-
-        def always_fails_page2(url, headers):
-            cursor = dict(urllib.parse.parse_qsl(urllib.parse.urlsplit(url).query)).get("cursor")
-            calls.append(cursor)
-            if cursor is None:
-                return {"data": [{
-                    "id": 1, "date": "2026-05-01T22:00:00.000Z", "season": 2026,
-                    "status": "STATUS_FINAL", "season_type": "regular",
-                    "home_team": {"display_name": "Boston Red Sox"},
-                    "away_team": {"display_name": "New York Yankees"},
-                    "home_team_data": {"runs": 5}, "away_team_data": {"runs": 3},
-                }], "meta": {"next_cursor": "page2"}}
-            raise ProviderError("429 rate limited")
-
-        adapter = BallDontLieAdapter("test-key", "MLB", getter=always_fails_page2,
-                                    today=dt.date(2026, 7, 17))
-        with mock.patch("provider_adapters.time.sleep"):
-            with self.assertRaises(ProviderError):
-                adapter.season_games()
-        # page 1 (once) + page 2 (initial attempt + one retry, both failing)
-        self.assertEqual(len(calls), 3)
-
-    def test_historical_season_uses_seasons_filter_and_pages_to_completion(self):
-        # backfill_history.py's one-time historical pull, distinct from
-        # season_games()'s date-window approach used by the hourly build().
-        # Live-verified 2026-07-26 that BALLDONTLIE's `seasons[]` filter
-        # returns a real season in full via cursor pagination (2010 NFL:
-        # exactly 267 games over 3 pages) -- this test pins that contract.
-        calls = []
-
-        def paged_getter(url, headers):
-            qs = dict(urllib.parse.parse_qsl(urllib.parse.urlsplit(url).query))
-            self.assertEqual(qs.get("seasons[]"), "2010")
-            cursor = qs.get("cursor")
-            calls.append(cursor)
-            if cursor is None:
-                return {"data": [{
-                    "id": 1, "date": "2010-09-10T00:30:00.000Z", "season": 2010,
-                    "status": "STATUS_FINAL", "season_type": "regular",
-                    "home_team": {"display_name": "New Orleans Saints"},
-                    "visitor_team": {"display_name": "Minnesota Vikings"},
-                    "home_team_score": 14, "visitor_team_score": 9,
-                }], "meta": {"next_cursor": "page2"}}
-            return {"data": [{
-                "id": 2, "date": "2011-02-06T23:29:00.000Z", "season": 2010,
-                "status": "STATUS_FINAL", "season_type": "postseason",
-                "home_team": {"display_name": "Green Bay Packers"},
-                "visitor_team": {"display_name": "Pittsburgh Steelers"},
-                "home_team_score": 31, "visitor_team_score": 25,
-            }], "meta": {}}
-
-        adapter = BallDontLieAdapter("test-key", "NFL", getter=paged_getter)
-        with mock.patch("provider_adapters.time.sleep") as sleep_mock:
-            games = adapter.historical_season(2010)
-        self.assertEqual(len(calls), 2)
-        sleep_mock.assert_called_once_with(BallDontLieAdapter.SEASON_PAGE_DELAY_SEC)
-        self.assertEqual(len(games), 2)
-        self.assertEqual(games[0]["home"]["name"], "New Orleans Saints")
-        self.assertEqual(games[0]["score"], {"home": 14, "away": 9, "winner": "h"})
-        self.assertEqual(games[1]["score"], {"home": 31, "away": 25, "winner": "h"})
-
-    def test_historical_season_drops_preseason_like_season_games(self):
-        def getter(url, headers):
-            return {"data": [{
-                "id": 1, "date": "2019-08-01T00:00:00.000Z", "season": 2019,
-                "status": "STATUS_FINAL", "season_type": "preseason",
-                "home_team": {"display_name": "Boston Red Sox"},
-                "away_team": {"display_name": "New York Yankees"},
-                "home_team_score": 1, "visitor_team_score": 0,
-            }], "meta": {}}
-        adapter = BallDontLieAdapter("test-key", "MLB", getter=getter)
-        with mock.patch("provider_adapters.time.sleep"):
-            games = adapter.historical_season(2019)
-        self.assertEqual(games, [])
-
-    def test_historical_season_recovers_from_a_single_transient_page_failure(self):
-        calls = []
-
-        def flaky_once_getter(url, headers):
-            cursor = dict(urllib.parse.parse_qsl(urllib.parse.urlsplit(url).query)).get("cursor")
-            calls.append(cursor)
-            if cursor is None:
-                return {"data": [{
-                    "id": 1, "date": "2015-09-01T00:00:00.000Z", "season": 2015,
-                    "status": "STATUS_FINAL", "season_type": "regular",
-                    "home_team": {"display_name": "Boston Celtics"},
-                    "visitor_team": {"display_name": "New York Knicks"},
-                    "home_team_score": 100, "visitor_team_score": 90,
-                }], "meta": {"next_cursor": "page2"}}
-            if calls.count("page2") == 1:
-                raise ProviderError("429 rate limited")
-            return {"data": [{
-                "id": 2, "date": "2015-09-02T00:00:00.000Z", "season": 2015,
-                "status": "STATUS_FINAL", "season_type": "regular",
-                "home_team": {"display_name": "Chicago Bulls"},
-                "visitor_team": {"display_name": "Miami Heat"},
-                "home_team_score": 95, "visitor_team_score": 90,
-            }], "meta": {}}
-
-        adapter = BallDontLieAdapter("test-key", "NBA", getter=flaky_once_getter)
-        with mock.patch("provider_adapters.time.sleep"):
-            games = adapter.historical_season(2015)
-        self.assertEqual(len(calls), 3)
-        self.assertEqual(len(games), 2)
-
-    def test_historical_season_raises_instead_of_caching_a_truncated_season(self):
-        def always_fails_page2(url, headers):
-            cursor = dict(urllib.parse.parse_qsl(urllib.parse.urlsplit(url).query)).get("cursor")
-            if cursor is None:
-                return {"data": [{
-                    "id": 1, "date": "2015-09-01T00:00:00.000Z", "season": 2015,
-                    "status": "STATUS_FINAL", "season_type": "regular",
-                    "home_team": {"display_name": "Boston Celtics"},
-                    "visitor_team": {"display_name": "New York Knicks"},
-                    "home_team_score": 100, "visitor_team_score": 90,
-                }], "meta": {"next_cursor": "page2"}}
-            raise ProviderError("429 rate limited")
-
-        adapter = BallDontLieAdapter("test-key", "NBA", getter=always_fails_page2)
-        with mock.patch("provider_adapters.time.sleep"):
-            with self.assertRaises(ProviderError):
-                adapter.historical_season(2015)
-
 
 class CollegeFootballDataTests(unittest.TestCase):
     def getter(self, url, headers):
@@ -1126,32 +548,6 @@ class CollegeBasketballDataTests(unittest.TestCase):
         self.assertEqual(by_key["StealsPerGame"]["leaders"][0]["name"], "Player A")
         names_steals = [entry["name"] for entry in by_key["StealsPerGame"]["leaders"]]
         self.assertNotIn("Player B", names_steals)  # non-D1, excluded despite the higher raw total
-
-
-class SportmonksTests(unittest.TestCase):
-    def getter(self, url, headers):
-        return {"data": [{
-            "id": 99,
-            "participants": [
-                {"id": 1, "name": "Arsenal", "meta": {"location": "home"}},
-                {"id": 2, "name": "Chelsea", "meta": {"location": "away"}},
-            ],
-            "statistics": [
-                {"participant_id": 1, "type": {"code": "shots-total"}, "data": {"value": 12}},
-                {"participant_id": 2, "type": {"code": "shots-total"}, "data": {"value": 8}},
-            ],
-            "lineups": [], "sidelined": [],
-        }]}
-
-    def test_enrichment_attaches_box_stats(self):
-        matches = [{"kickoff": "2026-07-17T19:00:00Z", "status": "FINISHED",
-                    "home": {"name": "Arsenal"}, "away": {"name": "Chelsea"},
-                    "injuries": {"home": [], "away": []}}]
-        adapter = SportmonksAdapter("test-key", getter=self.getter)
-        attached = adapter.enrich(matches, lambda left, right: left.lower() == right.lower())
-        self.assertEqual(attached, 1)
-        self.assertEqual(matches[0]["stats_extra"]["home"]["shots"], 12)
-        self.assertEqual(matches[0]["stats_extra"]["source"], "Sportmonks")
 
 
 if __name__ == "__main__":

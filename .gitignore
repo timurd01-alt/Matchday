@@ -88,7 +88,6 @@ mlb_challenger_rows.jsonl
 mlb_challenger_report.json
 
 # Derived from the cache-restored scorecards each run; regenerated, never authored.
-promotion_readiness.json
 next_task.json
 clv_report.json
 independent_value_report.json

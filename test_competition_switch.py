@@ -8,7 +8,7 @@ again, so assigning COMP_KEY moved the key and left everything else pointing at
 whichever competition was active when the module was first imported.
 
 That was a live defect, not a theoretical one: audit_model_vs_market loops over
-twelve competitions calling predict(), and predict() reads the ratings through
+the competitions calling predict(), and predict() reads the ratings through
 RATINGS_FILE -- so every competition after the first was scored against the
 wrong ratings file. refresh_college_talent had hand-patched around it by also
 resetting RATINGS_FILE and the _RATINGS cache; backfill_history and
@@ -47,13 +47,10 @@ def _serves(hosts, domain):
 DERIVED_PATHS = (
     "ODDS_CACHE_FILE",
     "OUTRIGHTS_CACHE_FILE",
-    "API_FOOTBALL_CACHE_FILE",
     "SPORTSDATAIO_PREGAME_CACHE_FILE",
-    "BBS_PREGAME_CACHE_FILE",
     "PREGAME_CONTEXT_CACHE_FILE",
     "SPORTSGAMEODDS_CACHE_FILE",
     "OPEN_FILE",
-    "PLAYER_DB_FILE",
     "PICKS_FILE",
 )
 
@@ -73,56 +70,53 @@ class DerivedStateTests(unittest.TestCase):
         fetch_data.set_competition("NCAAF")
         self.assertEqual(fetch_data.RATINGS_FILE, "ratings_ncaaf.json")
 
-    def test_the_world_cup_keeps_its_unsuffixed_ratings_filename(self):
-        # ratings.json, not ratings_wc.json -- the tracked file predates the
-        # per-competition naming and the deploy workflow commits it by name.
-        fetch_data.set_competition("WC")
-        self.assertEqual(fetch_data.RATINGS_FILE, "ratings.json")
-
     def test_the_market_urls_follow_the_competition(self):
-        fetch_data.set_competition("MLB")
-        self.assertIn(fetch_data.COMPETITIONS["MLB"]["odds"], fetch_data.ODDS_URL)
-        self.assertIn(fetch_data.COMPETITIONS["MLB"]["outright"], fetch_data.OUTRIGHTS_URL)
+        fetch_data.set_competition("NCAAM")
+        self.assertIn(fetch_data.COMPETITIONS["NCAAM"]["odds"], fetch_data.ODDS_URL)
+        self.assertIn(fetch_data.COMPETITIONS["NCAAM"]["outright"], fetch_data.OUTRIGHTS_URL)
 
     def test_the_news_feed_set_follows_the_competition(self):
         # The one piece of competition-scoped state no caller ever reset,
         # because it was built by inline module-level code rather than by a
         # function anything could call again.
-        fetch_data.set_competition("WC")
-        world_cup = list(fetch_data.RSS_FEEDS)
+        fetch_data.set_competition("NCAAM")
+        basketball = list(fetch_data.RSS_FEEDS)
         fetch_data.set_competition("NCAAF")
-        college = list(fetch_data.RSS_FEEDS)
-        self.assertNotEqual(world_cup, college)
-        # Soccer gets direct football feeds; a football competition does not.
-        self.assertTrue(_serves(_feed_hosts(world_cup), "bbci.co.uk"))
-        self.assertFalse(_serves(_feed_hosts(college), "bbci.co.uk"))
+        football = list(fetch_data.RSS_FEEDS)
+        self.assertNotEqual(basketball, football)
+        self.assertTrue(_serves(_feed_hosts(football), "espn.com"))
 
     def test_switching_clears_the_previous_competitions_load_caches(self):
-        fetch_data.set_competition("WC")
+        fetch_data.set_competition("NCAAF")
         fetch_data._RATINGS = {"sentinel": True}
         fetch_data._OPEN = {"sentinel": True}
-        fetch_data.set_competition("MLB")
+        fetch_data.set_competition("NCAAM")
         self.assertIsNone(fetch_data._RATINGS)
         self.assertIsNone(fetch_data._OPEN)
 
     def test_switching_clears_the_previous_competitions_market_and_news_caches(self):
-        fetch_data.set_competition("WC")
+        fetch_data.set_competition("NCAAF")
         fetch_data._ODDS_CACHE.update({"t": 9e9, "data": {"stale": 1}})
         fetch_data._NEWS_CACHE.update({"t": 9e9, "data": ["stale"]})
         fetch_data._OUT_CACHE.update({"t": 9e9, "data": ["stale"]})
-        fetch_data.set_competition("NHL")
+        fetch_data.set_competition("NCAAM")
         self.assertEqual(fetch_data._ODDS_CACHE, {"t": 0.0, "data": {}})
         self.assertEqual(fetch_data._NEWS_CACHE, {"t": 0.0, "data": []})
         self.assertEqual(fetch_data._OUT_CACHE, {"t": 0.0, "data": []})
 
-    def test_an_unknown_competition_falls_back_to_the_world_cup(self):
-        self.assertEqual(fetch_data.set_competition("NOT_A_COMPETITION"), "WC")
-        self.assertEqual(fetch_data.COMP_KEY, "WC")
-        self.assertEqual(fetch_data.RATINGS_FILE, "ratings.json")
+    def test_an_unknown_competition_falls_back_to_college_football(self):
+        self.assertEqual(fetch_data.set_competition("NOT_A_COMPETITION"), "NCAAF")
+        self.assertEqual(fetch_data.COMP_KEY, "NCAAF")
+        self.assertEqual(fetch_data.RATINGS_FILE, "ratings_ncaaf.json")
+
+    def test_a_removed_competition_is_not_reachable(self):
+        for key in ("WC", "EPL", "NFL", "NBA", "MLB", "NHL"):
+            with self.subTest(competition=key):
+                self.assertEqual(fetch_data.set_competition(key), "NCAAF")
 
     def test_a_lowercase_key_is_accepted(self):
-        self.assertEqual(fetch_data.set_competition("mlb"), "MLB")
-        self.assertEqual(fetch_data.PICKS_FILE, "picks_log_mlb.json")
+        self.assertEqual(fetch_data.set_competition("ncaam"), "NCAAM")
+        self.assertEqual(fetch_data.PICKS_FILE, "picks_log_ncaam.json")
 
     def test_every_competition_switches_without_leaving_a_stale_value(self):
         # The regression in one assertion: no reachable competition may leave a
@@ -142,31 +136,31 @@ class CompetitionContextManagerTests(unittest.TestCase):
         self.addCleanup(fetch_data.set_competition, self.original)
 
     def test_the_previous_competition_is_restored_on_exit(self):
-        fetch_data.set_competition("WC")
+        fetch_data.set_competition("NCAAM")
         with fetch_data.competition("NCAAF") as active:
             self.assertEqual(active, "NCAAF")
             self.assertEqual(fetch_data.RATINGS_FILE, "ratings_ncaaf.json")
-        self.assertEqual(fetch_data.COMP_KEY, "WC")
-        self.assertEqual(fetch_data.RATINGS_FILE, "ratings.json")
+        self.assertEqual(fetch_data.COMP_KEY, "NCAAM")
+        self.assertEqual(fetch_data.RATINGS_FILE, "ratings_ncaam.json")
 
     def test_the_previous_competition_is_restored_after_an_exception(self):
         # The reason to prefer this over an assignment pair: a failing
         # assertion mid-test must not leak the competition into the next test.
-        fetch_data.set_competition("WC")
+        fetch_data.set_competition("NCAAF")
         with self.assertRaises(RuntimeError):
-            with fetch_data.competition("MLB"):
+            with fetch_data.competition("NCAAM"):
                 raise RuntimeError("boom")
-        self.assertEqual(fetch_data.COMP_KEY, "WC")
-        self.assertEqual(fetch_data.RATINGS_FILE, "ratings.json")
+        self.assertEqual(fetch_data.COMP_KEY, "NCAAF")
+        self.assertEqual(fetch_data.RATINGS_FILE, "ratings_ncaaf.json")
 
     def test_nesting_restores_each_level(self):
-        fetch_data.set_competition("WC")
-        with fetch_data.competition("NFL"):
-            with fetch_data.competition("NHL"):
-                self.assertEqual(fetch_data.COMP_KEY, "NHL")
-            self.assertEqual(fetch_data.COMP_KEY, "NFL")
-            self.assertEqual(fetch_data.PICKS_FILE, "picks_log_nfl.json")
-        self.assertEqual(fetch_data.COMP_KEY, "WC")
+        fetch_data.set_competition("NCAAF")
+        with fetch_data.competition("NCAAM"):
+            with fetch_data.competition("NCAAF"):
+                self.assertEqual(fetch_data.COMP_KEY, "NCAAF")
+            self.assertEqual(fetch_data.COMP_KEY, "NCAAM")
+            self.assertEqual(fetch_data.PICKS_FILE, "picks_log_ncaam.json")
+        self.assertEqual(fetch_data.COMP_KEY, "NCAAF")
 
 
 class CallerDisciplineTests(unittest.TestCase):

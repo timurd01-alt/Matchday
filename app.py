@@ -2,11 +2,8 @@
 Matchday Analysis — safe launcher
 ---------------------------------
 Starts the local server and opens Matchday in an Edge/Chrome app-style window.
-This version uses football-data.org for soccer fixtures/scores and BALLDONTLIE
-for free NBA/NFL schedules and scores. CollegeFootballData and
-CollegeBasketballData supply NCAAF/NCAAM. Sportmonks supplies optional
-soccer detail, and The Odds API supplies
-market comparison and title odds.
+CollegeFootballData and CollegeBasketballData supply NCAAF/NCAAM fixtures and
+scores, and The Odds API supplies market comparison and title odds.
 
 Run:                  python app.py
 Plain browser:        python app.py --browser
@@ -85,9 +82,7 @@ def wait_for_server(port: int, timeout: float = 8.0) -> None:
 
 def keys_are_set() -> bool:
     return (
-        "PASTE_" not in getattr(fetch_data, "FOOTBALL_DATA_KEY", "PASTE_")
-        and "PASTE_" not in getattr(fetch_data, "ODDS_API_KEY", "PASTE_")
-        and bool(getattr(fetch_data, "FOOTBALL_DATA_KEY", ""))
+        "PASTE_" not in getattr(fetch_data, "ODDS_API_KEY", "PASTE_")
         and bool(getattr(fetch_data, "ODDS_API_KEY", ""))
     )
 
@@ -204,9 +199,7 @@ def main() -> None:
     if "--no-fetch" in sys.argv:
         print("Live fetcher disabled for this launch.")
     elif keys_are_set():
-        _single = any(f in sys.argv for f in ("--wc", "--ucl", "--epl", "--laliga", "--seriea",
-                                               "--bundesliga", "--ligue1", "--nfl", "--ncaaf", "--ncaam", "--nba",
-                                               "--mlb", "--nhl"))
+        _single = any(f in sys.argv for f in ("--ncaaf", "--ncaam"))
         if _single:
             threading.Thread(target=fetch_loop, daemon=True).start()
         else:

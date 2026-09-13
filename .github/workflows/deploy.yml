@@ -58,22 +58,15 @@ jobs:
             odds_open*.json
             title_open*.json
             *_cache.json
-            # odds_market_cache_<comp>.json / outrights_market_cache_<comp>.json /
-            # api_football_box_cache_<comp>.json put "cache" BEFORE the per-
-            # competition suffix, so *_cache.json (which needs the filename to
-            # END in "_cache.json") never matched them -- confirmed via
-            # fnmatch: 'odds_market_cache_wc.json' against '*_cache.json' is
-            # False. Their on-disk caches (see ODDS_CACHE_MIN / OUTRIGHTS_CACHE_MIN
-            # in fetch_data.py) were therefore never actually restored between
-            # hourly runs; every run re-fetched from the provider regardless of
-            # the intended cache window, silently burning Odds API / API-Football
-            # quota faster than the cache durations were designed for.
+            # odds_market_cache_<comp>.json / outrights_market_cache_<comp>.json
+            # put "cache" BEFORE the per-competition suffix, so *_cache.json
+            # (which needs the filename to END in "_cache.json") never matched
+            # them, and every run re-fetched from the provider regardless of
+            # the intended cache window.
             odds_market_cache_*.json
             outrights_market_cache_*.json
-            api_football_box_cache_*.json
             advanced_metrics_*.json
             ncaaf_venue_coords.json
-            nflverse_pbp_*.csv.gz
             # forecast_ledger_*.jsonl is NOT cached. Every ledger it
             # matches is git-tracked and committed back by the ledger
             # step below, whose own `ls forecast_ledger_*.jsonl` glob
@@ -85,19 +78,13 @@ jobs:
             # took the hourly deploy down until the glob was removed.
             # A wildcard here cannot be grandfathered safely: the set
             # it covers grows on its own.
-            mlb_shadow_ledger.jsonl
             market_snapshot_ledger.jsonl
             market_benchmark_report.json
-            nfl_availability_ledger.jsonl
-            nfl_prospective_scorecard.json
-            mlb_prospective_scorecard.json
-            promotion_readiness.json
             next_task.json
             ui_audit_report.json
             data_coverage_report.json
             clv_report.json
             independent_value_report.json
-            player_db_*.json
             # posts.json / posts_state.json / posts/*.html are NOT cached.
             # They are git-tracked and committed back below, and caching a
             # tracked file means the restore-keys fallback lands an older
@@ -144,11 +131,7 @@ jobs:
           cat > config_keys.py <<EOF
           CFBD_KEY = "${{ secrets.CFBD_KEY }}"
           CBBD_KEY = "${{ secrets.CBBD_KEY }}"
-          FOOTBALL_DATA_KEY = "${{ secrets.FOOTBALL_DATA_KEY }}"
           ODDS_API_KEY = "${{ secrets.ODDS_API_KEY }}"
-          API_FOOTBALL_KEY = "${{ secrets.API_FOOTBALL_KEY }}"
-          BALLDONTLIE_KEY = "${{ secrets.BALLDONTLIE_KEY }}"
-          BBS_API_KEY = "${{ secrets.BBS_API_KEY }}"
           SPORTSGAMEODDS_KEY = "${{ secrets.SPORTSGAMEODDS_KEY }}"
           SPORTSDATAIO_KEY = "${{ secrets.SPORTSDATAIO_KEY }}"
           EOF
@@ -187,10 +170,6 @@ jobs:
         if: github.event_name != 'push'
         continue-on-error: true
         run: python ncaam_advanced_metrics.py
-
-      - name: Refresh authorized NFL research profile
-        if: github.event_name != 'push'
-        run: python refresh_nfl_advanced_metrics.py
 
       # The "ONE-TIME seed merge" step that used to live here was removed
       # 2026-07-27. It was never actually one-time -- it ran on EVERY run and
@@ -246,26 +225,6 @@ jobs:
             python build_cfb_snapshot.py
           else
             echo "::warning::betbetter_picks.json is absent; the NCAAF board keeps whatever repair layer is committed."
-          fi
-
-      - name: Grade frozen MLB challenger evidence
-        if: github.event_name != 'push'
-        run: |
-          if [ -f mlb_shadow_ledger.jsonl ]; then
-            python build_mlb_prospective_scorecard.py --ledger mlb_shadow_ledger.jsonl --output mlb_prospective_scorecard.json
-          elif [ -f forecast_ledger_mlb.jsonl ]; then
-            python build_mlb_prospective_scorecard.py --ledger forecast_ledger_mlb.jsonl --output mlb_prospective_scorecard.json
-          else
-            echo "no MLB shadow or legacy forecast ledger yet; prospective scorecard remains pending"
-          fi
-
-      - name: Grade frozen NFL calibrated-Elo evidence
-        if: github.event_name != 'push'
-        run: |
-          if [ -f forecast_ledger_nfl.jsonl ]; then
-            python build_nfl_prospective_scorecard.py --ledger forecast_ledger_nfl.jsonl --output nfl_prospective_scorecard.json
-          else
-            echo "no NFL forecast ledger yet; prospective scorecard remains pending"
           fi
 
       - name: Segment model losses against the closing market
@@ -329,27 +288,12 @@ jobs:
         continue-on-error: true
         run: python data_coverage.py --output data_coverage_report.json
 
-      # Runs after every grading/benchmark step above so it reads this run's
-      # freshly rebuilt scorecards, and before the deploy so a gate that just
-      # came ready is visible in the same run that produced the evidence. It
-      # never edits a promotion policy and never blocks the build: a gate
-      # needing a human decision is information, not a broken build, and
-      # failing the hourly deploy over it would take the live site down for a
-      # research question. --fail-on-actionable is deliberately not passed.
-      - name: Evaluate frozen promotion gates against accumulated evidence
+      # Runs after every report step above so it ranks this run's evidence.
+      # Never blocks the build.
+      - name: Rank the next task from accumulated evidence
         if: github.event_name != 'push'
         continue-on-error: true
-        run: |
-          python check_promotion_readiness.py
-          python next_task.py --output next_task.json
-          python - <<'PY'
-          import json, pathlib
-          report = json.loads(pathlib.Path("promotion_readiness.json").read_text(encoding="utf-8"))
-          for gate in report["gates"]:
-              if gate["state"] in ("policy_missing", "blocked", "evidence_against",
-                                   "ready_for_manual_review", "ready"):
-                  print(f"::warning::{gate['summary']}")
-          PY
+        run: python next_task.py --output next_task.json
 
       # The one step that answers "did this run actually publish current data?"
       #

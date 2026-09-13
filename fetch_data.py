@@ -1,12 +1,12 @@
 """
 matchday fetcher  (v5)
 ----------------------
-  football-data.org  -> fixtures + final scores      (required key)
-  The Odds API       -> pregame win probabilities     (required key)
-  BALLDONTLIE        -> NBA/NFL/MLB fixtures + scores  (free launch key)
   College data APIs  -> NCAAF/NCAAM schedules + tables (shared free key)
-  SportsDataIO       -> dormant development feeds       (trial/licensed key)
-  Sportmonks         -> soccer detail + availability   (licensed token)
+  The Odds API       -> pregame win probabilities     (required key)
+  SportsDataIO       -> dormant pregame overlay        (trial/licensed key)
+  SportsGameOdds     -> fallback market context        (licensed key)
+
+College football and men's college basketball are the only competitions.
 
 The product is intentionally pregame/postgame rather than a live-score feed:
   * predictions lock before kickoff and are not rewritten during games;
@@ -26,24 +26,16 @@ import forecast_ledger
 import game_archive
 import betbetter_handoff
 import forecast_pause
-import mlb_shadow_ledger
 import market_snapshots
 import pregame_context
 import provider_quota
 import refresh_ncaaf_venues
 from pick_integrity import is_official_pick_record
 from advanced_metrics_store import attach_shadow_profiles
-from mlb_challenger_store import attach_mlb_challenger_shadows
-from mlb_model_promotion import apply_mlb_promotion, load_mlb_promotion_policy
-from nfl_model_adjustment import apply_nfl_adjustment, load_nfl_adjustment_policy
-from nfl_challenger_store import attach_nfl_challenger_shadows
-from provider_adapters import (ProviderError, BallDontLieAdapter,
-                               BigBallsSportsAdapter,
+from provider_adapters import (ProviderError,
                                CollegeBasketballDataAdapter,
-                               CollegeFootballDataAdapter, NflverseAdapter,
-                               NflversePregameAdapter,
-                               SportsDataIOAdapter, SportsGameOddsAdapter, SportmonksAdapter,
-                               APISportsAdapter, normalized_score,
+                               CollegeFootballDataAdapter,
+                               SportsDataIOAdapter, SportsGameOddsAdapter, normalized_score,
                                season_form_from_matches, blend_season_history,
                                is_placeholder_team_name)
 
@@ -57,11 +49,10 @@ except Exception:
 
 # ============================================================
 #  PRIVATE KEYS
-#  - football-data.org + The Odds API power fixtures/probabilities
-#  - SportsDataIO and Sportmonks replace the former public/ambiguous feeds
+#  - CFBD/CBBD power fixtures and tables; The Odds API powers probabilities
 # ============================================================
 try:
-    from config_keys import FOOTBALL_DATA_KEY, ODDS_API_KEY
+    from config_keys import ODDS_API_KEY
 except Exception as _cfg_err:
     import os as _os
     if _os.path.exists("config_keys.py"):
@@ -72,20 +63,11 @@ except Exception as _cfg_err:
         print("!! Check the exact filename (View > File name extensions in Explorer —")
         print("!! watch for config_keys.py.txt or config_keys(3).py) and that it sits")
         print("!! next to fetch_data.py.\n")
-    FOOTBALL_DATA_KEY = "PASTE_FOOTBALL_DATA_KEY_IN_config_keys.py"
     ODDS_API_KEY = "PASTE_ODDS_API_KEY_IN_config_keys.py"
-try:
-    from config_keys import API_FOOTBALL_KEY
-except Exception:
-    API_FOOTBALL_KEY = os.environ.get("API_FOOTBALL_KEY", "")
 try:
     from config_keys import SPORTSDATAIO_KEY
 except Exception:
     SPORTSDATAIO_KEY = os.environ.get("SPORTSDATAIO_KEY", "")
-try:
-    from config_keys import SPORTMONKS_KEY
-except Exception:
-    SPORTMONKS_KEY = os.environ.get("SPORTMONKS_KEY", "")
 try:
     from config_keys import SPORTSDATAIO_PREGAME_ENABLED
 except Exception:
@@ -93,19 +75,6 @@ except Exception:
 SPORTSDATAIO_PREGAME_ENABLED = str(SPORTSDATAIO_PREGAME_ENABLED).lower() in {
     "1", "true", "yes", "on"
 }
-try:
-    from config_keys import BALLDONTLIE_KEY
-except Exception:
-    BALLDONTLIE_KEY = os.environ.get("BALLDONTLIE_KEY", "")
-try:
-    from config_keys import BBS_API_KEY
-except Exception:
-    BBS_API_KEY = os.environ.get("BBS_API_KEY", "")
-try:
-    from config_keys import BBS_PREGAME_ENABLED
-except Exception:
-    BBS_PREGAME_ENABLED = os.environ.get("BBS_PREGAME_ENABLED", "")
-BBS_PREGAME_ENABLED = str(BBS_PREGAME_ENABLED).lower() in {"1", "true", "yes", "on"}
 try:
     from config_keys import SPORTSGAMEODDS_KEY
 except Exception:
@@ -131,26 +100,10 @@ PREDICTION_MODEL_VERSION = "v6-calibrated"
 # a sport whose true single-game win probability rarely leaves 35-65% produce
 # stated confidences far wider than the sport can support.
 #
-# Measured on the 255 graded MLB fixtures in picks_log_mlb.json (2026-07-27 ..
-# 2026-08-17, the full ledger), the uncalibrated model was worse than saying
-# 50/50 every time: mean log loss 0.7215 vs 0.6931, AUC 0.525, and a stated
-# 70-74% bucket that hit 54.7% (n=53). Shrinking the independent read toward
-# an even split improves log loss monotonically down to ~0.2. Leave-one-
-# game-date-out cross-validation (22 folds) chose a shrink in 0.05-0.30 on
-# EVERY fold and cut held-out log loss from 0.7290 to 0.6986, so the direction
-# is robust even though 255 games cannot pin the value down.
-#
-# 0.35 is deliberately above every fold's choice: it is the conservative end
-# of the supported range, so it under-corrects rather than asserting more
-# shrinkage than the sample proves. It is not a claim that MLB is 65% noise --
-# it is a claim that this particular signal has not earned a wider spread.
-#
 # Sports with no graded evidence stay at 1.0 (exact previous behavior). Do not
 # add an entry here without a measured ledger to justify it -- an unmeasured
 # calibration constant is the same mistake as an unmeasured factor weight.
-PROB_CALIBRATION = {
-    "MLB": 0.35,
-}
+PROB_CALIBRATION = {}
 DEFAULT_PROB_CALIBRATION = 1.0
 
 
@@ -174,95 +127,16 @@ def _calibrate_probs(probs, factor):
                            "d": float(probs.get("d") or 0.0),
                            "a": mid + (a - mid) * factor})
 
-FD_BASE  = "https://api.football-data.org/v4"
-
 # ---- competition selection --------------------------------------------------
-# Default is the World Cup. To run the Champions League instead, either add
-#     COMPETITION = "UCL"
-# to config_keys.py, or launch with:  python fetch_data.py --ucl
+# College football is the default. Launch with --ncaam (or MATCHDAY_COMP=NCAAM)
+# for men's college basketball. These are the only two competitions.
 COMPETITIONS = {
-    "WC":  {"label": "World Cup 2026",   "sport": "soccer", "fd": "WC", "odds": "soccer_fifa_world_cup",
-            "outright": "soccer_fifa_world_cup_winner", "tournament": True,
-            "source": "fd", "has_draws": True, "single_elimination": True},
-    # UCL's "outright" key below was removed after live verification against
-    # The Odds API's own /v4/sports catalog (GET /v4/sports/?all=true, which
-    # -- per their docs -- costs no usage credits, so this was checked for
-    # real on 2026-07-25 without touching the exhausted monthly quota). That
-    # catalog lists exactly 12 sport_keys with has_outrights=true across every
-    # sport the account can see, and "soccer_uefa_champs_league_winner" is not
-    # one of them (the only soccer entry present at all is
-    # "soccer_fifa_world_cup_winner", used by WC above). The key had been
-    # sitting in this dict since the initial commit, apparently guessed rather
-    # than verified -- it was never reachable via the source-gated enrichment
-    # path (apply_market_strength() only runs for sportsdataio/balldontlie/
-    # cfbd/cbbd/apisports sources, and UCL's source is "fd"), but the
-    # unconditional "fetch title odds for display" fallback later in build()
-    # called fetch_outrights() with this fake key every single run regardless
-    # -- a guaranteed-failing Odds-API request every ~hour this competition's
-    # process ran, for a "title odds" UI panel that could therefore never
-    # have shown real Champions League title-race data. Leaving the key out
-    # makes fetch_outrights() take its normal, cheap "no outright market for
-    # this competition" no-op path instead (see fetch_outrights()'s first
-    # line) until/unless The Odds API actually adds this market.
-    "UCL": {"label": "Champions League", "sport": "soccer", "fd": "CL", "odds": "soccer_uefa_champs_league",
-            "outright": None, "tournament": False,
-            "source": "fd", "has_draws": True},
-    # Free launch feeds. BALLDONTLIE supplies real schedules and scores; paid
-    # standings/player endpoints stay hidden when unavailable.
-    "NFL": {"label": "NFL", "sport": "football", "fd": None, "odds": "americanfootball_nfl",
-            "outright": "americanfootball_nfl_super_bowl_winner", "tournament": False,
-            "source": "balldontlie", "has_draws": False},
-    # EPL/LALIGA/SERIEA/BUNDESLIGA/LIGUE1's "outright" keys below were removed
-    # for the same reason documented on UCL above: none of
-    # "soccer_epl_winner" / "soccer_spain_la_liga_winner" /
-    # "soccer_italy_serie_a_winner" / "soccer_germany_bundesliga_winner" /
-    # "soccer_france_ligue_one_winner" exist in The Odds API's live
-    # /v4/sports catalog (verified 2026-07-25, see UCL's comment above for
-    # how). A domestic league's own championship-winner futures market
-    # (the soccer equivalent of the americanfootball_nfl_super_bowl_winner
-    # market these American leagues genuinely have) is simply not a market
-    # this provider currently offers -- so apply_market_strength() cannot be
-    # extended to these leagues via The Odds API the way it is for
-    # NFL/NBA/MLB/NHL/NCAAF/NCAAM (see apply_market_strength()'s docstring
-    # and the source-gated call site in build()). The real fix for these
-    # leagues' ratings-coverage gap (most of a 18-20 team domestic table
-    # having no ratings_<league>.json entry at all, so both sides of a
-    # matchup involving an uncurated team fall back to the exact same flat
-    # neutral defaults -- see rating_boost()/rating_parts()) has to be either
-    # a genuinely different data source with real per-team squad-value/
-    # strength coverage, or expanding the hand-curated ratings files
-    # themselves; it is not "wire up an outright market" like it was for the
-    # American sports, because no such market exists here to wire up.
-    "EPL": {"label": "Premier League", "sport": "soccer", "fd": "PL", "odds": "soccer_epl",
-            "outright": None, "tournament": False,
-            "source": "fd", "has_draws": True, "league_zones": {"ucl": 4, "uel": 1, "rel": 3}},
-    "LALIGA": {"label": "La Liga", "sport": "soccer", "fd": "PD", "odds": "soccer_spain_la_liga",
-            "outright": None, "tournament": False,
-            "source": "fd", "has_draws": True, "league_zones": {"ucl": 4, "uel": 1, "rel": 3}},
-    "SERIEA": {"label": "Serie A", "sport": "soccer", "fd": "SA", "odds": "soccer_italy_serie_a",
-            "outright": None, "tournament": False,
-            "source": "fd", "has_draws": True, "league_zones": {"ucl": 4, "uel": 1, "rel": 3}},
-    "BUNDESLIGA": {"label": "Bundesliga", "sport": "soccer", "fd": "BL1", "odds": "soccer_germany_bundesliga",
-            "outright": None, "tournament": False,
-            "source": "fd", "has_draws": True, "league_zones": {"ucl": 4, "uel": 1, "rel": 2}},
-    "LIGUE1": {"label": "Ligue 1", "sport": "soccer", "fd": "FL1", "odds": "soccer_france_ligue_one",
-            "outright": None, "tournament": False,
-            "source": "fd", "has_draws": True, "league_zones": {"ucl": 4, "uel": 1, "rel": 2}},
     "NCAAF": {"label": "College Football", "sport": "football", "fd": None, "odds": "americanfootball_ncaaf",
             "outright": "americanfootball_ncaaf_championship_winner", "tournament": False,
             "source": "cfbd", "has_draws": False},
     "NCAAM": {"label": "Men's College Basketball", "sport": "basketball", "fd": None, "odds": "basketball_ncaab",
             "outright": "basketball_ncaab_championship_winner", "tournament": False,
             "source": "cbbd", "has_draws": False},
-    "MLB": {"label": "MLB", "sport": "baseball", "fd": None, "odds": "baseball_mlb",
-            "outright": "baseball_mlb_world_series_winner", "tournament": False,
-            "source": "balldontlie", "has_draws": False},
-    "NHL": {"label": "NHL", "sport": "hockey", "fd": None, "odds": "icehockey_nhl",
-            "outright": "icehockey_nhl_championship_winner", "tournament": False,
-            "source": "sportsdataio", "has_draws": False},
-    "NBA": {"label": "NBA", "sport": "basketball", "fd": None, "odds": "basketball_nba",
-            "outright": "basketball_nba_championship_winner", "tournament": False,
-            "source": "balldontlie", "has_draws": False},
 }
 # ---- the active competition -------------------------------------------------
 # COMP_KEY is a module-level singleton, and ~15 further module-level values are
@@ -283,13 +157,12 @@ COMPETITIONS = {
 # assigning the attribute still only moves the key, and
 # test_competition_switch.CallerDisciplineTests fails any production module
 # that tries it.
-_COMP_FLAGS = ("--ucl", "--wc", "--nfl", "--nba", "--ncaaf", "--ncaam", "--epl",
-               "--laliga", "--seriea", "--bundesliga", "--ligue1", "--mlb", "--nhl")
+_COMP_FLAGS = ("--ncaaf", "--ncaam")
 
 try:
     from config_keys import COMPETITION as _COMP
 except Exception:
-    _COMP = "WC"
+    _COMP = "NCAAF"
 for _flag in _COMP_FLAGS:      # last matching flag wins, as the if-chain did
     if _flag in sys.argv:
         _COMP = _flag[2:].upper()
@@ -298,9 +171,9 @@ if _env: _COMP = _env
 
 
 def normalize_competition(key):
-    """The COMP_KEY this module would use for `key`; unknown keys fall back to WC."""
+    """The COMP_KEY this module would use for `key`; unknown keys fall back to NCAAF."""
     text = str(key or "").upper()
-    return text if text in COMPETITIONS else "WC"
+    return text if text in COMPETITIONS else "NCAAF"
 
 
 def _competition_state(key):
@@ -321,14 +194,11 @@ def _competition_state(key):
                           "?regions=eu&markets=outrights&oddsFormat=decimal"),
         "ODDS_CACHE_FILE": f"odds_market_cache_{low}.json",
         "OUTRIGHTS_CACHE_FILE": f"outrights_market_cache_{low}.json",
-        "API_FOOTBALL_CACHE_FILE": f"api_football_box_cache_{low}.json",
         "SPORTSDATAIO_PREGAME_CACHE_FILE": f"sportsdataio_pregame_{low}_cache.json",
-        "BBS_PREGAME_CACHE_FILE": f"bbs_pregame_{low}_cache.json",
         "PREGAME_CONTEXT_CACHE_FILE": f"pregame_{low}_cache.json",
         "SPORTSGAMEODDS_CACHE_FILE": f"sportsgameodds_{low}_cache.json",
         "OPEN_FILE": f"odds_open_{low}.json",          # first-seen ("opening") odds
-        "RATINGS_FILE": f"ratings_{low}.json" if key != "WC" else "ratings.json",
-        "PLAYER_DB_FILE": f"player_db_{low}.json",     # accumulates from lineups + results
+        "RATINGS_FILE": f"ratings_{low}.json",
         "PICKS_FILE": f"picks_log_{low}.json",         # committed picks
         "_news_term": NEWS_TERMS.get(key, comp["label"]),
     }
@@ -381,29 +251,9 @@ ODDS_FREE_QUOTA_URL = "https://api.the-odds-api.com/v4/sports/?apiKey="
 PREGAME_ODDS_WINDOW_HOURS = 3
 UA = {"User-Agent": "Mozilla/5.0 (matchday-terminal)"}
 
-API_FOOTBALL_BASE = "https://v3.football.api-sports.io"
-API_FOOTBALL_DAYS_BACK = 10     # recent finished matches to enrich with box scores
-API_FOOTBALL_MAX_STATS = 18     # safety cap for the free daily request budget
-# Lineups share the same free-plan request budget as box stats (100/day,
-# across every soccer competition using this key), so this gets its own
-# smaller, separate cap rather than doubling the existing one. Lineups are
-# also fetched for a different window than stats: they're posted shortly
-# before kickoff, so upcoming fixtures near kickoff matter here in a way
-# they don't for stats (which only exist once a game has actually started).
-API_FOOTBALL_LINEUP_DAYS_BACK = 2
-API_FOOTBALL_LINEUP_PRE_KICKOFF_HOURS = 2
-API_FOOTBALL_MAX_LINEUPS = 10
-# Injuries share the same budget too, so this is the smallest cap of the
-# three. Unlike stats (only exist once a game starts) or lineups (posted
-# ~1h before kickoff), injury/team-news reports firm up over the days before
-# a match and have zero predictive value once it's FINISHED, so the window
-# looks forward from now rather than back from kickoff or from full time.
-API_FOOTBALL_INJURY_PRE_KICKOFF_HOURS = 72
 API_FOOTBALL_MAX_INJURIES = 8
 SPORTSDATAIO_PREGAME_CACHE_MIN = 15
 SPORTSDATAIO_PREGAME_STALE_MAX_HOURS = 6
-BBS_PREGAME_CACHE_MIN = 45
-BBS_PREGAME_STALE_MAX_HOURS = 24
 # The free plan is capped at 2,500 returned objects per month across seven
 # Matchday competitions. One request per competition per day, capped at eight
 # events, remains inside that budget; hourly odds polling would not.
@@ -446,10 +296,6 @@ OUTRIGHTS_CACHE_MIN = 360
 NEWS_CACHE_MIN = 20
 NEWS_MAX_AGE_DAYS = 7
 NEWS_FUTURE_TOLERANCE_HOURS = 24
-BALLDONTLIE_CACHE_MIN = 10
-BALLDONTLIE_ACTIVE_CACHE_MIN = 2
-BALLDONTLIE_SEASON_CACHE_MIN = 240  # season-to-date pull re-pages the whole season; cache for hours
-APISPORTS_CACHE_MIN = 30  # api-sports.io free tier caps at 100 req/day per sport
 COLLEGE_CACHE_MIN = 480  # eight-hour cache keeps both college feeds within a shared free-key quota
 # Roster talent/recruiting changes far more slowly than schedules.  Keep the
 # last successful whole-field snapshot for a week so a transient provider
@@ -464,52 +310,15 @@ COLLEGE_CLASS_CACHE_MIN = 10080  # seven days; stale data is still a safe fallba
 # bundle rather than refetching on the bundle's 8-hour cadence.
 COLLEGE_LEADERS_CACHE_MIN = 1440  # 24 hours
 COLLEGE_ADVANCED_CACHE_MIN = 1440  # one league-wide CFBD shadow refresh per day
-# nflverse-data's stats_player release is a public, unauthenticated GitHub
-# release CSV (no API key, no per-request quota) that moves slowly within a
-# season -- one CSV covers the whole league, refreshed by nflverse on their
-# own schedule, not ours. Cache for a day so build() doesn't re-download a
-# multi-hundred-KB file every run for data that barely changes hour to hour.
-NFLVERSE_LEADERS_CACHE_MIN = 1440  # 24 hours
-NFLVERSE_PREGAME_CACHE_MIN = 1440  # current assets are published daily
 NFLVERSE_TEAM_CODE_MAP = {"WSH": "WAS", "LAR": "LA"}
-NEWS_TERMS = {
-    "WC": "FIFA World Cup", "UCL": "UEFA Champions League",
-    "EPL": "Premier League soccer", "LALIGA": "La Liga soccer",
-    "SERIEA": "Serie A soccer", "BUNDESLIGA": "Bundesliga soccer",
-    "LIGUE1": "Ligue 1 soccer", "NFL": "NFL", "NCAAF": "college football", "NCAAM": "men's college basketball",
-    "NBA": "NBA", "MLB": "MLB baseball", "NHL": "NHL hockey",
-}
-_EPL_CLUBS = "premier_league epl arsenal aston_villa bournemouth brentford brighton chelsea crystal_palace everton fulham liverpool manchester_city manchester_united newcastle nottingham_forest sunderland tottenham west_ham wolves leeds burnley"
-_LALIGA_CLUBS = "la_liga laliga real_madrid barcelona atletico_madrid sevilla valencia villarreal real_sociedad athletic_bilbao real_betis girona celta_vigo osasuna mallorca getafe rayo_vallecano"
-_SERIEA_CLUBS = "serie_a juventus inter_milan ac_milan napoli roma lazio atalanta fiorentina bologna torino udinese genoa sassuolo"
-_BUNDESLIGA_CLUBS = "bundesliga bayern_munich borussia_dortmund rb_leipzig bayer_leverkusen eintracht_frankfurt wolfsburg borussia_monchengladbach freiburg union_berlin hoffenheim stuttgart mainz augsburg werder_bremen"
-_LIGUE1_CLUBS = "ligue_1 psg paris_saint_germain marseille lyon monaco lille nice rennes lens strasbourg toulouse"
-_UCL_CLUBS = "champions_league ucl uefa " + " ".join([_EPL_CLUBS, _LALIGA_CLUBS, _SERIEA_CLUBS, _BUNDESLIGA_CLUBS, _LIGUE1_CLUBS])
+NEWS_TERMS = {"NCAAF": "college football", "NCAAM": "men's college basketball"}
 NEWS_RELEVANCE = {
-    "NFL": "nfl super_bowl quarterback touchdown chiefs eagles bills ravens bengals browns steelers texans colts jaguars titans broncos chargers raiders cowboys giants commanders packers lions vikings bears falcons panthers saints buccaneers cardinals rams 49ers seahawks jets dolphins patriots",
     "NCAAF": "college_football ncaa cfp bowl heisman alabama georgia ohio_state michigan notre_dame oregon texas usc lsu clemson penn_state florida_state tennessee oklahoma auburn hurricanes",
     "NCAAM": "college_basketball ncaa march_madness final_four duke north_carolina kansas_jayhawks kentucky uconn gonzaga houston_cougars purdue villanova arizona_wildcats michigan_state",
-    "NBA": "nba basketball lebron giannis luka curry durant jokic wembanyama celtics lakers knicks nets 76ers raptors bulls cavaliers pistons pacers bucks heat magic hawks hornets wizards warriors clippers nuggets timberwolves thunder blazers jazz mavericks rockets grizzlies pelicans spurs suns kings",
-    "MLB": "mlb baseball world_series yankees red_sox blue_jays orioles rays guardians tigers twins white_sox royals astros mariners rangers athletics angels braves mets phillies nationals marlins cubs cardinals brewers reds pirates dodgers padres giants diamondbacks rockies",
-    "NHL": "nhl hockey stanley_cup bruins sabres red_wings panthers canadiens senators lightning maple_leafs hurricanes blue_jackets devils islanders rangers flyers penguins capitals blackhawks avalanche stars wild predators blues jets ducks flames oilers kings sharks kraken canucks golden_knights",
-    "EPL": _EPL_CLUBS, "LALIGA": _LALIGA_CLUBS, "SERIEA": _SERIEA_CLUBS,
-    "BUNDESLIGA": _BUNDESLIGA_CLUBS, "LIGUE1": _LIGUE1_CLUBS, "UCL": _UCL_CLUBS,
-    "WC": "world_cup fifa national_team qualifier brazil argentina france england spain germany portugal netherlands belgium croatia morocco japan mexico usmnt",
 }
 NEWS_STRONG_RELEVANCE = {
-    "NFL": "nfl super_bowl quarterback touchdown chiefs eagles ravens bengals steelers texans colts jaguars titans broncos chargers raiders cowboys commanders packers vikings buccaneers 49ers seahawks patriots",
     "NCAAF": "college_football ncaa cfp heisman alabama ohio_state notre_dame penn_state florida_state",
     "NCAAM": "college_basketball ncaa march_madness final_four duke north_carolina kansas_jayhawks kentucky uconn gonzaga houston_cougars purdue",
-    "NBA": "nba basketball lebron giannis luka curry durant jokic wembanyama celtics lakers knicks 76ers raptors cavaliers pistons pacers bucks warriors clippers nuggets timberwolves thunder mavericks grizzlies pelicans spurs",
-    "MLB": "mlb baseball world_series yankees red_sox blue_jays orioles guardians white_sox royals astros mariners braves mets phillies marlins cubs brewers pirates dodgers padres diamondbacks rockies",
-    "NHL": "nhl hockey stanley_cup bruins sabres red_wings canadiens senators lightning maple_leafs blue_jackets devils islanders flyers penguins capitals blackhawks avalanche predators kraken canucks golden_knights",
-    "EPL": "premier_league epl arsenal chelsea liverpool manchester_city manchester_united tottenham newcastle",
-    "LALIGA": "la_liga laliga real_madrid barcelona atletico_madrid",
-    "SERIEA": "serie_a juventus inter_milan ac_milan napoli roma",
-    "BUNDESLIGA": "bundesliga bayern_munich borussia_dortmund",
-    "LIGUE1": "ligue_1 psg paris_saint_germain marseille",
-    "UCL": "champions_league ucl uefa real_madrid manchester_city bayern_munich barcelona liverpool psg",
-    "WC": "world_cup fifa national_team",
 }
 # Bare city names (kansas/houston/arizona/etc) collide with a pro team from a
 # DIFFERENT sport in the same city -- confirmed live 2026-07-26: NCAAM's feed
@@ -521,30 +330,11 @@ NEWS_STRONG_RELEVANCE = {
 NEWS_CROSS_SPORT_VETO = {
     "NCAAF": "royals chiefs astros texans rockets nba nhl mlb",
     "NCAAM": "royals chiefs astros texans rockets cardinals diamondbacks suns nfl mlb nhl",
-    "NBA": "royals chiefs astros texans nfl mlb nhl",
-    "MLB": "chiefs texans nfl nhl",
-    "NHL": "royals chiefs astros texans nfl mlb",
-    "EPL": "nfl mlb nba nhl fantasy_football touchdown quarterback",
-    "LALIGA": "nfl mlb nba nhl fantasy_football touchdown quarterback",
-    "SERIEA": "nfl mlb nba nhl fantasy_football touchdown quarterback",
-    "BUNDESLIGA": "nfl mlb nba nhl fantasy_football touchdown quarterback",
-    "LIGUE1": "nfl mlb nba nhl fantasy_football touchdown quarterback",
-    "UCL": "nfl mlb nba nhl fantasy_football touchdown quarterback",
 }
 
 
 def _news_relevant(item):
-    """Reject obvious cross-sport leakage from broad publisher feeds.
-
-    Confirmed live 2026-07-26: soccer competitions (EPL/UCL/LaLiga/SerieA/
-    Bundesliga/Ligue1/WC) had no entry in NEWS_RELEVANCE at all, so
-    `terms = NEWS_RELEVANCE.get(COMP_KEY)` was None and this returned True
-    unconditionally for every soccer feed -- zero filtering. That let NFL
-    fantasy-football and MLB trade-deadline articles from the broad
-    site:cbssports.com/site:foxsports.com Google News searches straight onto
-    EPL/UCL's News tab. Added real club/league term lists for every soccer
-    competition, same shape as the US sports already had.
-    """
+    """Reject obvious cross-sport leakage from broad publisher feeds."""
     text = _clean(f"{item.get('headline', '')} {item.get('desc', '')}").lower()
     veto = NEWS_CROSS_SPORT_VETO.get(COMP_KEY)
     if veto and any(re.search(rf"\b{re.escape(term.replace('_', ' '))}\b", text) for term in veto.split()):
@@ -598,11 +388,6 @@ def _build_rss_feeds(key, comp, news_term):
         ])
         return feeds
 
-    if comp["sport"] == "soccer":
-        feeds.extend([
-            ("BBC Sport", "https://feeds.bbci.co.uk/sport/football/rss.xml"),
-            ("The Guardian", "https://www.theguardian.com/football/rss"),
-        ])
     for source, site in (
         ("Reuters", "reuters.com"), ("Associated Press", "apnews.com"),
     ):
@@ -623,14 +408,11 @@ ODDS_URL = _STATE["ODDS_URL"]
 OUTRIGHTS_URL = _STATE["OUTRIGHTS_URL"]
 ODDS_CACHE_FILE = _STATE["ODDS_CACHE_FILE"]
 OUTRIGHTS_CACHE_FILE = _STATE["OUTRIGHTS_CACHE_FILE"]
-API_FOOTBALL_CACHE_FILE = _STATE["API_FOOTBALL_CACHE_FILE"]
 SPORTSDATAIO_PREGAME_CACHE_FILE = _STATE["SPORTSDATAIO_PREGAME_CACHE_FILE"]
-BBS_PREGAME_CACHE_FILE = _STATE["BBS_PREGAME_CACHE_FILE"]
 PREGAME_CONTEXT_CACHE_FILE = _STATE["PREGAME_CONTEXT_CACHE_FILE"]
 SPORTSGAMEODDS_CACHE_FILE = _STATE["SPORTSGAMEODDS_CACHE_FILE"]
 OPEN_FILE = _STATE["OPEN_FILE"]
 RATINGS_FILE = _STATE["RATINGS_FILE"]
-PLAYER_DB_FILE = _STATE["PLAYER_DB_FILE"]
 PICKS_FILE = _STATE["PICKS_FILE"]
 _news_term = _STATE["_news_term"]
 RSS_FEEDS = _build_rss_feeds(COMP_KEY, COMP, _news_term)
@@ -657,9 +439,7 @@ def _scrub(s):
     s = re.sub(r"((?:apiKey|api_token)=)[^&\s]+", r"\1***", s, flags=re.I)
     s = re.sub(r"(X-Auth-Token['\"]?\s*[:=]\s*['\"]?)[A-Za-z0-9]+", r"\1***", s)
     s = re.sub(r"(x-apisports-key['\"]?\s*[:=]\s*['\"]?)[A-Za-z0-9]+", r"\1***", s)
-    for k in (FOOTBALL_DATA_KEY, ODDS_API_KEY, API_FOOTBALL_KEY,
-              SPORTSDATAIO_KEY, SPORTMONKS_KEY, BALLDONTLIE_KEY, BBS_API_KEY,
-              SPORTSGAMEODDS_KEY, CFBD_KEY, CBBD_KEY):
+    for k in (ODDS_API_KEY, SPORTSDATAIO_KEY, SPORTSGAMEODDS_KEY, CFBD_KEY, CBBD_KEY):
         if k and len(str(k)) > 8:
             s = s.replace(str(k), "***")
     return s
@@ -777,10 +557,6 @@ def find_odds(odds, home, away):
     return None, "none"
 
 
-def fetch_raw_matches():
-    return _get(f"{FD_BASE}/competitions/{COMP["fd"]}/matches", {"X-Auth-Token": FOOTBALL_DATA_KEY}, provider="football_data").get("matches", [])
-
-
 def _resolve_score(m):
     """Return (home_goals, away_goals, winner) using regulation/ET score for the
     displayed scoreline, but resolving the winner via penalties if it went to a
@@ -817,116 +593,6 @@ def _resolve_score(m):
     return hg, ag, winner, (pens.get("home"), pens.get("away")), (r90h, r90a)
 
 
-def fetch_football_data_historical_season(comp_key, season):
-    """One-time historical pull for backfill_history.py -- NOT used by
-    build()/fetch_raw_matches(), which always wants the live/current season.
-
-    football-data.org's free plan supports `?season=YYYY` on `/matches`
-    (live-verified 2026-07-26: `?season=2023` on PL returned the complete
-    380-match 2023-24 season in one call, `resultSet.played` confirming full
-    coverage) but only back to season 2023 -- season 2022 and earlier 403 on
-    this plan for every competition, including the 2022 World Cup itself, so
-    backfill_history.py's plan never asks this function for a season before
-    2023 (2022 is covered by API-FOOTBALL instead -- see
-    fetch_api_football_historical_season below -- to avoid double-counting
-    the seasons both providers can reach, 2023/2024, into Elo).
-    """
-    fd_code = COMPETITIONS[comp_key]["fd"]
-    url = f"{FD_BASE}/competitions/{fd_code}/matches?season={season}&status=FINISHED"
-    raw = _get(url, {"X-Auth-Token": FOOTBALL_DATA_KEY}, provider="football_data").get("matches", [])
-    matches = []
-    for m in raw:
-        h = m.get("homeTeam") or {}
-        a = m.get("awayTeam") or {}
-        if not h.get("name") or not a.get("name"):
-            continue
-        hg, ag, win, pens, _reg = _resolve_score(m)
-        matches.append({
-            "id": str(m.get("id")), "kickoff": m.get("utcDate"),
-            "status": "FINISHED" if m.get("status") == "FINISHED" else "UPCOMING",
-            "home": {"name": h["name"]}, "away": {"name": a["name"]},
-            "score": {"home": hg, "away": ag,
-                      "pens": ({"home": pens[0], "away": pens[1]} if pens[0] is not None else None),
-                      "winner": win},
-        })
-    matches.sort(key=lambda match: match.get("kickoff") or "")
-    return matches
-
-
-def compute_standings(raw):
-    T = defaultdict(lambda: {"group": None, "pld": 0, "w": 0, "d": 0, "l": 0,
-                             "gf": 0, "ga": 0, "pts": 0, "results": []})
-    for m in raw:
-        # The Champions League endpoint includes the knockout rounds in the
-        # same season payload.  Those results must remain in the match list,
-        # but they are not league-phase games and must never alter (or add
-        # teams to) the league table.
-        if COMP_KEY == "UCL" and str(m.get("stage") or "").upper() != "LEAGUE_STAGE":
-            continue
-        h = (m.get("homeTeam") or {}).get("name"); a = (m.get("awayTeam") or {}).get("name")
-        if not h or not a: continue
-        # touch both teams so every scheduled team gets a row even with 0
-        # games played -- otherwise a domestic league with no fixtures
-        # finished yet (preseason) ends up with an empty T, and no amount of
-        # zones-bypassing in build_league_table can fix a table with zero rows
-        T[norm(h)]; T[norm(a)]
-        if m.get("group"): T[norm(h)]["group"] = m["group"]; T[norm(a)]["group"] = m["group"]
-        hs, as_, _win, _, _r90 = _resolve_score(m)
-        if m.get("status") in ("FINISHED", "IN_PLAY", "PAUSED", "LIVE") and hs is not None and as_ is not None:
-            for t, gf, ga in [(norm(h), hs, as_), (norm(a), as_, hs)]:
-                r = T[t]; r["pld"] += 1; r["gf"] += gf; r["ga"] += ga
-                if gf > ga: r["w"] += 1; r["pts"] += 3; res = "W"
-                elif gf < ga: r["l"] += 1; res = "L"
-                else: r["d"] += 1; r["pts"] += 1; res = "D"  # group stage: draw stands
-                r["results"].append((m.get("utcDate") or "", res))
-    for t, r in T.items():
-        r["results"].sort(key=lambda x: x[0])
-        r["form"] = " ".join(res for _, res in r["results"][-5:]); r["gd"] = r["gf"] - r["ga"]
-    bg = defaultdict(list)
-    for t, r in T.items():
-        if r["group"]: bg[r["group"]].append(t)
-    for grp, ts in bg.items():
-        ts.sort(key=lambda t: (-T[t]["pts"], -T[t]["gd"], -T[t]["gf"]))
-        for i, t in enumerate(ts, 1): T[t]["pos"] = i
-    return T
-
-
-def pretty_group(g):
-    return (g or "").replace("GROUP_", "Group ").replace("_", " ").title() if g else ""
-
-
-def build_matches(raw, st):
-    smap = {"FINISHED": "FINISHED", "IN_PLAY": "LIVE", "PAUSED": "LIVE", "LIVE": "LIVE"}
-    out = []
-    for m in raw:
-        h = m.get("homeTeam") or {}; a = m.get("awayTeam") or {}
-        if not h.get("name") or not a.get("name"): continue
-        hg, ag, _win, _pens, _reg = _resolve_score(m)
-        sh = st.get(norm(h["name"]), {}); sa = st.get(norm(a["name"]), {})
-
-        def side(t, s):
-            return {"name": t.get("name"), "code": t.get("tla") or "",
-                    "group": pretty_group(s.get("group")), "pos": s.get("pos"),
-                    "pld": s.get("pld", 0), "w": s.get("w", 0), "d": s.get("d", 0), "l": s.get("l", 0),
-                    "gf": s.get("gf", 0), "ga": s.get("ga", 0), "gd": s.get("gd", 0),
-                    "pts": s.get("pts", 0), "form": s.get("form", ""),
-                    "rating": round(power_rating(t.get("name"), s), 2)}
-
-        out.append({"id": str(m.get("id")),
-                    "stage": pretty_group(m.get("group")) or (m.get("stage", "") or "").replace("_", " ").title(),
-                    "kickoff": m.get("utcDate"), "status": smap.get(m.get("status"), "UPCOMING"),
-                    "minute": (m.get("minute") if isinstance(m.get("minute"), int) else None),
-                    "venue": m.get("venue") or "", "home": side(h, sh), "away": side(a, sa),
-                    "score": {"home": hg, "away": ag,
-                              "pens": ({"home": _pens[0], "away": _pens[1]} if _pens[0] is not None else None),
-                              "reg": ({"home": _reg[0], "away": _reg[1]} if _reg[0] is not None else None),
-                              "winner": _win},
-                    "markets": {}, "prediction": None, "h2h": [], "stats_extra": None,
-                    "injuries": {"home": [], "away": []}, "lineups": None})
-    return out
-
-
-LEGACY_OPEN = "odds_open.json"
 _OPEN = None
 
 def pairkey(a, b):
@@ -935,7 +601,7 @@ def pairkey(a, b):
 def _load_open():
     global _OPEN
     if _OPEN is None:
-        for path in ([OPEN_FILE, LEGACY_OPEN] if COMP_KEY == "WC" else [OPEN_FILE]):
+        for path in (OPEN_FILE,):
             try:
                 with open(path, encoding="utf-8") as f:
                     _OPEN = json.load(f)
@@ -1107,7 +773,6 @@ def fetch_odds():
 # Weights for the ratings-based factors (tune freely; 0 disables a factor).
 # Scaled so long-term class roughly balances in-tournament results.
 FACTOR_WEIGHTS = {"fifa": 0.6, "squad_value": 0.35, "star": 0.2}
-RATINGS_FALLBACK = "ratings.json"
 _RATINGS = None
 
 def _load_ratings():
@@ -1115,7 +780,7 @@ def _load_ratings():
     if _RATINGS is None:
         _RATINGS = {}
         try:
-            path = RATINGS_FILE if os.path.exists(RATINGS_FILE) else RATINGS_FALLBACK
+            path = RATINGS_FILE
             with open(path, encoding="utf-8") as f:
                 raw = json.load(f)
             for name, rec in raw.items():
@@ -1660,8 +1325,7 @@ def normalize_match_results(matches):
     return matches
 
 
-SRS_MARGIN_CAP = {"NFL": 28, "NCAAF": 35, "NBA": 30, "NCAAM": 30,
-                  "MLB": 8, "NHL": 5}
+SRS_MARGIN_CAP = {"NCAAF": 35, "NCAAM": 30}
 
 
 def compute_srs(matches):
@@ -1731,35 +1395,6 @@ CLASS_SIGNAL_CONFIG = {
         "source": "CollegeBasketballData team recruiting ratings",
         "source_key": "cbbd_recruiting",
         "note": "Recruiting quality is a preseason prior, not a complete current-roster or transfer-portal measure.",
-    },
-    "MLB": {
-        "label": "Personnel edge",
-        "source": None,
-        "source_key": None,
-        "edge_available": False,
-        "note": "Market-listed starter/hitter candidates and schedule-derived bullpen rest are collected at zero weight; confirmed batting orders, injuries, and individual reliever availability remain unavailable.",
-    },
-    "NFL": {
-        "label": "Roster edge",
-        "source": "nflverse expected depth charts",
-        "source_key": None,
-        "edge_available": False,
-        "coverage_label": "Roster coverage",
-        "note": "Expected depth charts can confirm coverage, but they do not contain validated player-quality grades and therefore cannot produce a numerical roster edge.",
-    },
-    "NBA": {
-        "label": "Star / rotation edge",
-        "source": None,
-        "source_key": None,
-        "edge_available": False,
-        "note": "Requires current rotations, active-player quality, and availability; the configured feed does not provide full coverage.",
-    },
-    "NHL": {
-        "label": "Roster / goalie edge",
-        "source": None,
-        "source_key": None,
-        "edge_available": False,
-        "note": "Requires current lines, starting goalie, and player availability before it can be treated as a real personnel signal.",
     },
 }
 
@@ -2302,10 +1937,7 @@ def _scorecard_upset_bias():
         return 0.0
 
 
-UNDERDOG_EDGE_THRESHOLDS = {
-    "NFL": 8.0, "NCAAF": 8.0, "NBA": 8.0, "NCAAM": 8.0,
-    "MLB": 10.0, "NHL": 9.0,
-}
+UNDERDOG_EDGE_THRESHOLDS = {"NCAAF": 8.0, "NCAAM": 8.0}
 
 
 def _upset_adjustment(home, away, markets, m, why, blend, two_way=False,
@@ -2648,14 +2280,9 @@ def _market_blend_weight(market):
 
 def predict(home, away, markets, m=None, neutral_venue=False):
     two_way = not COMP.get("has_draws", True)
-    american = COMP["sport"] != "soccer"
     american_cfg = {
-        "NFL": {"full": 10, "margin": 10.0, "home": 0.50, "rest": 7},
         "NCAAF": {"full": 10, "margin": 14.0, "home": 0.45, "rest": 7},
-        "NBA": {"full": 20, "margin": 12.0, "home": 0.40, "rest": 2},
         "NCAAM": {"full": 18, "margin": 10.0, "home": 0.45, "rest": 2},
-        "MLB": {"full": 30, "margin": 2.5, "home": 0.25, "rest": 1},
-        "NHL": {"full": 20, "margin": 1.5, "home": 0.25, "rest": 2},
     }.get(COMP_KEY, {"full": 15, "margin": 10.0, "home": 0.35, "rest": 3})
 
     # When a season has barely started, record/margin/form/srs are all
@@ -2669,14 +2296,7 @@ def predict(home, away, markets, m=None, neutral_venue=False):
     # signals have the least to say, tapering back to 1x (no change at all)
     # once the season is established -- this is a no-op for every
     # already-passing established-season test/scenario.
-    # Soccer's pts/gd/form are correctly zero pre-season too (they're read
-    # directly with no reliability gate at all, unlike the American branch),
-    # so the same starved-of-signal problem hits soccer predictions just as
-    # hard -- a full domestic-league table takes ~34-38 games, but a team is
-    # clearly no longer a blank slate a few weeks in, so 12 games (roughly a
-    # third of a season) is used as "established" here rather than the full
-    # table length.
-    full = float(american_cfg["full"]) if american else 12.0
+    full = float(american_cfg["full"])
     home_pld = max(0, int(home.get("pld") or 0)) if home else 0
     away_pld = max(0, int(away.get("pld") or 0)) if away else 0
     avg_reliability = min(1.0, ((home_pld + away_pld) / 2.0) / full)
@@ -2687,24 +2307,11 @@ def predict(home, away, markets, m=None, neutral_venue=False):
         form_str = (s.get("form_home") if adv else s.get("form_away")) or s.get("form", "")
         fp = _weighted_form_score(form_str)
         rest = s.get("rest_days")
-        rp = rating_parts(s.get("name"))
         rating_record = _ratings_lookup(s.get("name")) or {}
         elo_pts, elo_conf = elo_strength(s.get("name"))
-        # Unknown teams (no ratings-file entry, even after the club-suffix
-        # fallback) receive no invented class prior rather than a default --
-        # true of both branches below. The American branch already gated its
-        # single combined "class" figure on this; soccer's fifa/value/star
-        # were applied unconditionally (see rating_boost()/rating_parts()'s
-        # neutral fallback: fifa_rank=45, squad_value_m=120, star_value_m=25),
-        # so two teams with no curated entry -- common for any domestic-league
-        # club outside the hand-curated top few per league -- silently got the
-        # exact same non-zero "class" figure, which looks like real signal but
-        # is a coin-flip default wearing a rating's clothes. Gating it to zero
-        # for real unknowns is honest: it hands the matchup to the signals
-        # that ARE real for every team (pts/gd/form/elo) instead of padding
-        # both sides with an identical phantom number.
-        known_rating = bool(rating_record)
-        if american:
+        # Unknown teams (no ratings-file entry) receive no invented class
+        # prior: _college_talent_points() is zero without a record.
+        if True:
             pld = max(0, int(s.get("pld") or 0))
             reliability = min(1.0, pld / float(american_cfg["full"]))
             if s.get("season_stale"):
@@ -2729,11 +2336,9 @@ def predict(home, away, markets, m=None, neutral_venue=False):
                           if poll_rank else 0.0)
             talent_points = _college_talent_points(rating_record)
             market_points = max(0.0, float(rating_record.get("market_strength") or 0.0))
-            # College futures and recruiting/talent are correlated, so the
-            # market signal remains a small independent cross-check there.
-            # Pro sports have no verified roster-quality feed today, making
-            # market power their full (but explicitly named) long-term prior.
-            market_scale = 0.35 if COMP_KEY in {"NCAAF", "NCAAM"} else 1.0
+            # Futures and recruiting/talent are correlated, so the market
+            # signal remains a small independent cross-check.
+            market_scale = 0.35
             # Whatever confidence the current season hasn't earned is offered to
             # the recency-weighted multi-season history, when the provider layer
             # supplied one (college only today -- see
@@ -2759,15 +2364,6 @@ def predict(home, away, markets, m=None, neutral_venue=False):
                 "margin": margin_signal * 2.0,
                 "form": (fp - form_center) * 0.22 * reliability if form_games else 0.0,
                 "adv": american_cfg["home"] if adv else 0.0,
-                # rp["fifa"] is a soccer-only signal -- American sports never
-                # populate a real fifa_rank (apply_recruiting_strength/
-                # apply_market_strength only ever write squad_value_m/
-                # star_value_m, so fifa_rank stays at rating_parts()'s
-                # neutral default forever). Including it here added an
-                # identical, non-differentiating constant to BOTH sides'
-                # class figure -- dead weight that only diluted the one
-                # real signal (value/star, both talent-share derived)
-                # preseason predictions have to work with.
                 "class": talent_points * prior_boost,
                 "market_power": market_points * market_scale * prior_boost,
                 "rank": poll_prior * prior_boost,
@@ -2776,13 +2372,7 @@ def predict(home, away, markets, m=None, neutral_venue=False):
                 "rest": (0.0 if rest is None else
                          _clamp((rest - american_cfg["rest"]) * 0.08, -0.35, 0.35)),
             }
-        class_scale = prior_boost if known_rating else 0.0
-        return {"base": 1.0, "pts": (s.get("pts") or 0)*0.6, "gd": (s.get("gd") or 0)*0.25,
-                "form": fp*0.5, "adv": adv,
-                "fifa": rp["fifa"]*class_scale, "value": rp["value"]*class_scale, "star": rp["star"]*class_scale,
-                "elo": elo_pts*elo_conf*prior_boost,
-                "rest": 0.0 if rest is None else max(-0.6, min(0.45, (rest - 4) * 0.15))}
-    home_adv = 0.0 if neutral_venue else (american_cfg["home"] if american else 1.2)
+    home_adv = 0.0 if neutral_venue else american_cfg["home"]
     ph, pa = parts(home, home_adv), parts(away, 0.0)
     # A flat "base" anchor identical on both sides mathematically caps how
     # far ANY signal, however lopsided, can push the sh/(sh+sa) ratio --
@@ -2807,7 +2397,7 @@ def predict(home, away, markets, m=None, neutral_venue=False):
     # true in-season StrengthFloorTests-style gap is already diluted by
     # real record/margin/srs by the time it would reach GAP_LO, so this
     # essentially never engages once games have been played.
-    if american:
+    if True:
         # Either a real talent prior or the separately attributed futures
         # prior may reveal a large preseason mismatch.  Keeping both in this
         # anchor calculation preserves the previous conservative-floor
@@ -2833,14 +2423,8 @@ def predict(home, away, markets, m=None, neutral_venue=False):
     # Jaguars(13-5) vs Browns(5-12) and Chargers(11-7) vs Cardinals(3-14) both
     # rounded to 99/1 under the new base with the old floor, vs. a sane ~80/20
     # hand-reconstructed at the old base -- see EloSportScopeTests' sibling,
-    # StrengthFloorTests, for the regression coverage). Soccer's branch never
-    # had its own "base" touched this session (still 1.0) and empirically
-    # doesn't produce sums anywhere near this floor for real data, so it keeps
-    # the original epsilon-only floor; only the American branch, where this
-    # was actually validated (0/224 cached NFL fixtures now round to a
-    # >=99%/<=1% split, down from 33/224, with the same-session confidence
-    # improvement over the pre-fix baseline still intact), gets the higher one.
-    strength_floor = 1.5 if american else 0.1
+    # StrengthFloorTests, for the regression coverage).
+    strength_floor = 1.5
     sh, sa = max(strength_floor, sum(ph.values())), max(strength_floor, sum(pa.values()))
     # H2H is inherently pairwise (depends on both teams at once), so unlike
     # the other factors it can't be split into independent home/away parts
@@ -2852,11 +2436,10 @@ def predict(home, away, markets, m=None, neutral_venue=False):
     # Injury/availability nudge: reduce a team's strength when key players are
     # OUT. Deliberately small and capped — the market already prices injuries, and
     # we blend 50/50 with it, so this only needs to catch the rare case the odds
-    # underrate. Per-sport weight: one player swings basketball far more than
-    # baseball. Only hard "out" statuses count (not questionable/day-to-day).
+    # underrate. Only hard "out" statuses count (not questionable/day-to-day).
     inj_h = inj_a = 0.0
     if m:
-        w = {"NBA": 2.2, "NHL": 1.2, "NFL": 1.6, "MLB": 0.7}.get(COMP_KEY, 1.5)  # soccer default 1.5
+        w = 1.5
         def _out_count(lst):
             n = 0
             for p in (lst or []):
@@ -2876,8 +2459,6 @@ def predict(home, away, markets, m=None, neutral_venue=False):
     # factor attribution: how much each factor tilts home-vs-away (strength pts)
     keys = set(ph) | set(pa)
     why = {k: round(ph.get(k, 0) - pa.get(k, 0), 2) for k in keys if k != "base"}
-    if not american:
-        why["class"] = round(why.pop("fifa", 0) + why.pop("value", 0) + why.pop("star", 0), 2)
     if inj_h or inj_a:
         # positive = injuries hurt away more (helps home), matching other factors' sign
         why["injuries"] = round(inj_a - inj_h, 2)
@@ -2888,13 +2469,6 @@ def predict(home, away, markets, m=None, neutral_venue=False):
     # much of this in, and we blend with them, so stacking over-corrects.
     damp = 0.0
     if m:
-        # Third occurrence of the same knockout-detection bug fixed above --
-        # this one damps the prediction toward a 50/50 split for "one-off
-        # knockouts" but was misfiring on every domestic league match too
-        # (a league's "Regular Season"/"Matchday N" stage never starts with
-        # "group" either), flattening every single EPL/LaLiga/SerieA/
-        # Bundesliga/Ligue1 prediction toward a coin flip before the draw
-        # carve-out even runs.
         if _is_knockout_stage((m.get("stage") or "").lower()): damp = 0.12
         wx = m.get("weather") or {}
         if wx.get("temp_c", 0) >= 32 or wx.get("wind_kph", 0) >= 30:
@@ -2902,17 +2476,7 @@ def predict(home, away, markets, m=None, neutral_venue=False):
     if damp:
         mean = (sh + sa) / 2
         sh, sa = sh + (mean - sh)*damp, sa + (mean - sa)*damp
-    # Draw probability was a flat 0.26 for every match regardless of how
-    # lopsided the two sides are -- real soccer draws happen far less often
-    # in a genuine mismatch than in an even game. Scale it down as the
-    # pre-draw split moves away from 50/50, same shape as the rest of this
-    # function's clamped-linear adjustments; 0.26 at a dead-even split,
-    # tapering to 0.12 at a maximally lopsided one.
-    if two_way:
-        draw = 0.0
-    else:
-        pre_draw_gap = abs(sh / max(0.1, sh + sa) - 0.5) * 2.0  # 0 even .. 1 maximal
-        draw = 0.26 - _clamp(pre_draw_gap, 0.0, 1.0) * 0.14
+    draw = 0.0
     tot = sh+sa
     model = {"h": round(sh/tot*(1-draw)*100), "a": round(sa/tot*(1-draw)*100), "d": round(draw*100)}
     # Calibrate the independent read BEFORE the market blend. The over-
@@ -2974,31 +2538,27 @@ def predict(home, away, markets, m=None, neutral_venue=False):
     # sportsbook) -- derived from the official win/draw/loss probabilities
     # already computed above via the standard odds<->margin relationship
     # (margin = scale * log10(odds ratio)), not a new model. `scale` reuses
-    # american_cfg["margin"] -- already each American sport's tuned typical
-    # single-game point/goal-margin unit -- for NFL/NCAAF/NBA/NCAAM/MLB/NHL,
-    # and a real average soccer winning margin (~1.3 goals) for two-way
-    # soccer probabilities alike. Works identically preseason, since it only
-    # needs the probabilities predict() already produces at pld=0.
+    # american_cfg["margin"], each sport's tuned typical single-game margin.
+    # Works identically preseason, since it only needs the probabilities
+    # predict() already produces at pld=0.
     h_frac = _clamp(official_probs["h"] / max(1e-6, official_probs["h"] + official_probs["a"]), 0.02, 0.98)
-    margin_scale = float(american_cfg["margin"]) if american else 1.3
+    margin_scale = float(american_cfg["margin"])
     margin_pts = round(margin_scale * math.log10(h_frac / (1 - h_frac)), 1)
-    margin_unit = ({"NFL": "points", "NCAAF": "points", "NBA": "points", "NCAAM": "points",
-                    "MLB": "runs", "NHL": "goals"}.get(COMP_KEY, "points") if american else "goals")
+    margin_unit = "points"
     if abs(margin_pts) < 0.05:
         margin_label = "Even matchup"
         margin_favored = None
     else:
         margin_favored = "h" if margin_pts > 0 else "a"
         fav_name = home.get("name") if margin_pts > 0 else away.get("name")
-        margin_label = (f"{fav_name} by {abs(margin_pts):.1f}" if american else
-                         f"{'+' if margin_pts >= 0 else ''}{margin_pts:.1f} goals")
+        margin_label = f"{fav_name} by {abs(margin_pts):.1f}"
     predicted_margin = {"value": margin_pts, "unit": margin_unit,
                          "favored": margin_favored, "label": margin_label}
     sample = {"home": int(home.get("pld") or 0), "away": int(away.get("pld") or 0)}
     min_sample = min(sample.values())
     any_stale = bool(home.get("season_stale") or away.get("season_stale"))
     quality_level = ("preseason" if min_sample == 0 or any_stale else "early"
-                     if american and min_sample < american_cfg["full"] else "established")
+                     if min_sample < american_cfg["full"] else "established")
     signals = [key for key in ("class", "market_power", "record", "margin", "form", "rank", "srs", "elo", "rest", "injuries")
                if abs(float(why.get(key) or 0)) > 0.001]
     if mk:
@@ -3030,8 +2590,7 @@ def predict(home, away, markets, m=None, neutral_venue=False):
             "class_meta": class_meta}
 
 
-LEAGUE_AVG_TOTAL = {"NFL": 44.5, "NCAAF": 55.0, "NBA": 224.0, "NCAAM": 140.0,
-                     "MLB": 8.6, "NHL": 6.0}
+LEAGUE_AVG_TOTAL = {"NCAAF": 55.0, "NCAAM": 140.0}
 
 
 def _preseason_expected_total(home, away):
@@ -3149,33 +2708,6 @@ def compute_watchability(m):
     return round(min(100.0, max(0.0, score)), 1)
 
 
-# -------- API-FOOTBALL : box-score team statistics ------------------------
-def _api_football_get(path, params=None):
-    if not API_FOOTBALL_KEY:
-        raise RuntimeError("missing API_FOOTBALL_KEY")
-    q = urllib.parse.urlencode(params or {})
-    url = API_FOOTBALL_BASE + path + (("?" + q) if q else "")
-    headers = dict(UA)
-    headers["x-apisports-key"] = API_FOOTBALL_KEY
-    return _get(url, headers)
-
-
-# league ids for API-FOOTBALL's /fixtures?league=...&season=... -- confirmed
-# live 2026-07-26 against the real endpoint (each returned the right
-# competition name and a plausible match count for a completed season: WC 59
-# FT/AET/PEN fixtures for 2022 -- Qatar vs Ecuador opener through the Croatia
-# vs Morocco third-place match; UCL 203; EPL/La Liga/Ligue 1 380; Serie A
-# 381; Bundesliga 308). Used only by backfill_history.py, and only for
-# season 2022 there (API-FOOTBALL's free plan works for seasons 2022-2024,
-# 2021 and 2025 both fail -- confirmed live the same day) -- domestic
-# leagues/UCL's 2023-2025 seasons come from football-data.org instead (see
-# fetch_football_data_historical_season above) to avoid double-counting the
-# 2023/2024 seasons both providers can reach.
-API_FOOTBALL_LEAGUE_ID = {"WC": 1, "UCL": 2, "EPL": 39, "LALIGA": 140,
-                           "SERIEA": 135, "BUNDESLIGA": 78, "LIGUE1": 61}
-_AF_FINISHED_STATUSES = {"FT", "AET", "PEN"}
-
-
 _DURABLE_PREGAME_FIELDS = (
     "weather", "injuries", "lineups", "personnel", "pregame_provenance",
     "venue_context",
@@ -3266,83 +2798,6 @@ def save_pregame_snapshots(matches, path=None, now=None):
     return len(fixtures)
 
 
-def fetch_api_football_historical_season(comp_key, season):
-    """One-time historical pull for backfill_history.py -- shares the same
-    API-FOOTBALL key/quota as box scores, lineups, and injuries, but this is
-    a bulk historical pull (one /fixtures call, budgeted separately -- see
-    PROVIDER_COMPLIANCE.md), a meaningfully different usage pattern than
-    those hourly per-fixture calls.
-
-    No `status=` filter is sent -- API-FOOTBALL's dash-joined status-list
-    query syntax wasn't live-verified, so this fetches the whole season and
-    filters client-side on `fixture.status.short` instead, treating FT/AET/
-    PEN as finished (a knockout-stage match decided in extra time or on
-    penalties is still a real final result) and everything else (NS, PST,
-    CANC, ...) as not finished.
-    """
-    league = API_FOOTBALL_LEAGUE_ID.get(comp_key)
-    if not league:
-        raise RuntimeError(f"no API-FOOTBALL league id mapped for {comp_key}")
-    payload = _api_football_get("/fixtures", {"league": league, "season": season})
-    rows = payload.get("response") if isinstance(payload, dict) else []
-    matches = []
-    for row in rows or []:
-        fx = row.get("fixture") or {}
-        teams = row.get("teams") or {}
-        home, away = teams.get("home") or {}, teams.get("away") or {}
-        if not home.get("name") or not away.get("name"):
-            continue
-        status_short = (fx.get("status") or {}).get("short") or ""
-        finished = status_short in _AF_FINISHED_STATUSES
-        goals = row.get("goals") or {}
-        score = normalized_score(goals.get("home"), goals.get("away"), finished)
-        if finished and score.get("winner") == "d":
-            pen = (row.get("score") or {}).get("penalty") or {}
-            ph, pa = pen.get("home"), pen.get("away")
-            if ph is not None and pa is not None and ph != pa:
-                score["winner"] = "h" if ph > pa else "a"
-        matches.append({
-            "id": f"af-{fx.get('id')}", "kickoff": fx.get("date"),
-            "status": "FINISHED" if finished else "UPCOMING",
-            "home": {"name": str(home.get("name"))}, "away": {"name": str(away.get("name"))},
-            "score": score,
-        })
-    matches.sort(key=lambda match: match.get("kickoff") or "")
-    return matches
-
-
-def _load_box_cache():
-    try:
-        with open(API_FOOTBALL_CACHE_FILE, encoding="utf-8") as f:
-            d = json.load(f)
-        if isinstance(d, dict):
-            d.setdefault("dates", {})
-            d.setdefault("stats", {})
-            d.setdefault("lineups", {})
-            d.setdefault("injuries", {})
-            return d
-    except Exception:
-        pass
-    return {"dates": {}, "stats": {}, "lineups": {}, "injuries": {}}
-
-
-def _save_box_cache(cache):
-    try:
-        tmp = API_FOOTBALL_CACHE_FILE + ".tmp"
-        with open(tmp, "w", encoding="utf-8") as f:
-            json.dump(cache, f, ensure_ascii=False, indent=1)
-        os.replace(tmp, API_FOOTBALL_CACHE_FILE)
-    except Exception as e:
-        DIAG.append(f"box stats cache save failed: {_scrub(e)}")
-
-
-def _match_date_utc(m):
-    try:
-        return datetime.datetime.fromisoformat((m.get("kickoff") or "").replace("Z", "+00:00")).date().isoformat()
-    except Exception:
-        return ""
-
-
 def _num_from_stat(v):
     if v is None or v == "":
         return 0
@@ -3393,32 +2848,6 @@ def _parse_af_stats(payload, m, fixture_id):
     return out
 
 
-def _parse_af_lineups(payload, m):
-    """API-FOOTBALL /fixtures/lineups -> the same {home,away,subs} shape the
-    Sportmonks adapter already produces, so the frontend pitch view doesn't
-    need to know which provider supplied it."""
-    rows = payload.get("response") or []
-    if len(rows) < 2:
-        return None
-    sides = {}
-    subs = []
-    for row in rows:
-        tname = ((row.get("team") or {}).get("name")) or ""
-        side = "home" if _name_match(tname, m["home"]["name"]) else ("away" if _name_match(tname, m["away"]["name"]) else "")
-        if not side:
-            continue
-        xi = [{"n": (p.get("player") or {}).get("number") or "",
-               "name": (p.get("player") or {}).get("name") or "", "out": False}
-              for p in (row.get("startXI") or []) if (p.get("player") or {}).get("name")]
-        if len(xi) < 7:
-            continue
-        sides[side] = {"formation": row.get("formation") or "", "xi": xi[:11]}
-        subs.extend((p.get("player") or {}).get("name") or "" for p in (row.get("substitutes") or []))
-    if "home" not in sides or "away" not in sides:
-        return None
-    return {"home": sides["home"], "away": sides["away"], "subs": [s for s in subs if s]}
-
-
 def _parse_af_injuries(payload, m, fixture_id):
     """API-FOOTBALL /injuries -> {home:[...], away:[...]} strings shaped like
     every other adapter's m['injuries'] (see SportsDataIOAdapter.attach_availability
@@ -3464,271 +2893,6 @@ def _parse_af_injuries(payload, m, fixture_id):
         tag = f"{label} - {reason}" if reason else label
         out[side].append(f"{name} ({tag})")
     return out
-
-
-def _af_fixture_id_for_match(m, events):
-    target = pair(m["home"]["name"], m["away"]["name"])
-    # Exact pair first.
-    for ev in events:
-        teams = ev.get("teams") or {}
-        hn = ((teams.get("home") or {}).get("name")) or ""
-        an = ((teams.get("away") or {}).get("name")) or ""
-        if hn and an and pair(hn, an) == target:
-            return ((ev.get("fixture") or {}).get("id"))
-    # Softer fuzzy fallback.
-    for ev in events:
-        teams = ev.get("teams") or {}
-        hn = ((teams.get("home") or {}).get("name")) or ""
-        an = ((teams.get("away") or {}).get("name")) or ""
-        if (hn and an and
-            ((_name_match(hn, m["home"]["name"]) and _name_match(an, m["away"]["name"])) or
-             (_name_match(hn, m["away"]["name"]) and _name_match(an, m["home"]["name"])))):
-            return ((ev.get("fixture") or {}).get("id"))
-    return None
-
-
-def _hours_until_kickoff(m, now):
-    try:
-        ko = datetime.datetime.fromisoformat((m.get("kickoff") or "").replace("Z", "+00:00"))
-        return (ko - now).total_seconds() / 3600.0
-    except Exception:
-        return None
-
-
-def fetch_api_football_box_scores(matches):
-    """Attach m['stats_extra'] for LIVE/recent-FINISHED soccer matches, and
-    m['lineups'] for LIVE, near-kickoff UPCOMING, and very-recent FINISHED
-    matches -- the only currently-active lineup source, since Sportmonks
-    (the licensed alternative) needs a key that isn't configured and every
-    other provider adapter hardcodes lineups to None. Both share the same
-    free-plan request budget (100/day across every soccer competition using
-    this key), so lineups get their own smaller cap and shorter window
-    rather than doubling the existing stats budget.
-
-    API-FOOTBALL uses its own fixture ids, so we first fetch fixtures by date
-    (shared between stats and lineups to avoid duplicate requests), fuzzy-
-    match the teams, then fetch /fixtures/statistics and /fixtures/lineups
-    for matched fixtures. Results are cached to protect the daily limit.
-    """
-    if COMP.get("sport") != "soccer":
-        return
-    if not API_FOOTBALL_KEY:
-        DIAG.append("box stats(API-FOOTBALL): missing API_FOOTBALL_KEY")
-        return
-
-    now = datetime.datetime.now(datetime.timezone.utc)
-    today = now.date()
-    stat_targets, lineup_targets = [], []
-    for m in matches:
-        status = m.get("status")
-        mdate_s = _match_date_utc(m)
-        if not mdate_s:
-            continue
-        try:
-            mdate = datetime.date.fromisoformat(mdate_s)
-        except Exception:
-            continue
-        age = (today - mdate).days
-        if status == "LIVE" or (status == "FINISHED" and 0 <= age <= API_FOOTBALL_DAYS_BACK):
-            stat_targets.append(m)
-        hrs = _hours_until_kickoff(m, now)
-        if (status == "LIVE"
-                or (status == "FINISHED" and 0 <= age <= API_FOOTBALL_LINEUP_DAYS_BACK)
-                or (status == "UPCOMING" and hrs is not None and 0 <= hrs <= API_FOOTBALL_LINEUP_PRE_KICKOFF_HOURS)):
-            lineup_targets.append(m)
-    stat_targets = sorted(stat_targets, key=lambda x: x.get("kickoff") or "", reverse=True)[:API_FOOTBALL_MAX_STATS]
-    lineup_targets = sorted(lineup_targets, key=lambda x: x.get("kickoff") or "", reverse=True)[:API_FOOTBALL_MAX_LINEUPS]
-    if not stat_targets and not lineup_targets:
-        DIAG.append("box stats(API-FOOTBALL): no live/recent/upcoming fixtures")
-        return
-
-    cache = _load_box_cache()
-    attached = 0
-    matched = 0
-    date_requests = 0
-    stat_requests = 0
-    now_ts = time.time()
-
-    all_dates = {_match_date_utc(m) for m in (stat_targets + lineup_targets) if _match_date_utc(m)}
-    events_by_date = {}
-    for d in sorted(all_dates):
-        rec = (cache.get("dates") or {}).get(d)
-        if rec and now_ts - float(rec.get("t") or 0) < 6 * 3600:
-            events_by_date[d] = rec.get("events") or []
-            continue
-        try:
-            payload = _api_football_get("/fixtures", {"date": d})
-            events = payload.get("response") or []
-            events_by_date[d] = events
-            cache.setdefault("dates", {})[d] = {"t": now_ts, "events": events}
-            date_requests += 1
-        except Exception as e:
-            DIAG.append(f"box stats(API-FOOTBALL): fixture date {d} FAILED — {_scrub(e)}")
-            events_by_date[d] = rec.get("events") if rec else []
-
-    lineup_matched = 0
-    lineup_attached = 0
-    lineup_requests = 0
-    for m in lineup_targets:
-        d = _match_date_utc(m)
-        fid = _af_fixture_id_for_match(m, events_by_date.get(d) or [])
-        if not fid:
-            continue
-        lineup_matched += 1
-        fid = str(fid)
-        lrec = (cache.get("lineups") or {}).get(fid)
-        # Lineups are announced once and don't change after kickoff, so a
-        # cache hit of any age is trusted for a FINISHED/LIVE match; only
-        # a still-UPCOMING fixture needs re-checking (lineups may not be
-        # posted yet on an earlier pass).
-        lineup_checked = False
-        if lrec and (m.get("status") != "UPCOMING" or now_ts - float(lrec.get("t") or 0) < 900):
-            lineups = lrec.get("lineups")
-            lineup_checked = True
-        else:
-            try:
-                payload = _api_football_get("/fixtures/lineups", {"fixture": fid})
-                lineups = _parse_af_lineups(payload, m)
-                cache.setdefault("lineups", {})[fid] = {"t": now_ts, "lineups": lineups}
-                lineup_requests += 1
-                lineup_checked = True
-            except Exception as e:
-                DIAG.append(f"lineups(API-FOOTBALL): fixture {fid} FAILED — {_scrub(e)}")
-                lineups = lrec.get("lineups") if lrec else None
-                lineup_checked = bool(lrec)
-        if lineup_checked:
-            m.setdefault("personnel", {})["lineups_feed_checked"] = True
-        if lineups:
-            m["lineups"] = lineups
-            lineup_attached += 1
-
-    # Postgame stats intentionally run after the pregame lineup pass. They
-    # are useful for review and training, but must not consume the last free
-    # requests before an imminent fixture's starting XI can be checked.
-    for m in stat_targets:
-        d = _match_date_utc(m)
-        fid = _af_fixture_id_for_match(m, events_by_date.get(d) or [])
-        if not fid:
-            continue
-        matched += 1
-        fid = str(fid)
-        srec = (cache.get("stats") or {}).get(fid)
-        live = m.get("status") == "LIVE"
-        if srec and ((not live) or now_ts - float(srec.get("t") or 0) < 90):
-            stats = srec.get("stats_extra")
-        else:
-            try:
-                payload = _api_football_get("/fixtures/statistics", {"fixture": fid})
-                stats = _parse_af_stats(payload, m, fid)
-                cache.setdefault("stats", {})[fid] = {"t": now_ts, "stats_extra": stats}
-                stat_requests += 1
-            except Exception as e:
-                DIAG.append(f"box stats(API-FOOTBALL): stats {fid} FAILED — {_scrub(e)}")
-                stats = srec.get("stats_extra") if srec else None
-        if stats:
-            m["stats_extra"] = stats
-            m["stats"] = stats
-            attached += 1
-
-    _save_box_cache(cache)
-    DIAG.append(f"box stats(API-FOOTBALL): matched {matched}, attached {attached}, requests {date_requests}+{stat_requests}")
-    DIAG.append(f"lineups(API-FOOTBALL): matched {lineup_matched}, attached {lineup_attached}, requests {lineup_requests}")
-
-
-def fetch_api_football_injuries(matches):
-    """Attach m['injuries'] for LIVE and pre-kickoff UPCOMING soccer matches
-    from API-FOOTBALL's /injuries endpoint -- feeding predict()'s existing
-    injury-weighting nudge (fetch_data.py, the `w = {...}.get(COMP_KEY, 1.5)`
-    block) real data for soccer for the first time; every soccer adapter
-    path previously left m['injuries'] at its empty default.
-
-    Shares the same free-plan key and 100/day budget as
-    fetch_api_football_box_scores() above. It runs first in build(), so the
-    lineup/box-score pass reuses this function's date cache and the pregame
-    injury check cannot be starved by postgame statistics.
-
-    Only LIVE and near-kickoff UPCOMING fixtures are targeted: injuries are
-    forward-looking team news with no predictive value (and no quota worth
-    spending) once a match is FINISHED, unlike box stats/lineups which are
-    also useful as a post-match record.
-    """
-    if COMP.get("sport") != "soccer":
-        return
-    if not API_FOOTBALL_KEY:
-        DIAG.append("injuries(API-FOOTBALL): missing API_FOOTBALL_KEY")
-        return
-
-    now = datetime.datetime.now(datetime.timezone.utc)
-    targets = []
-    for m in matches:
-        status = m.get("status")
-        if status == "LIVE":
-            targets.append(m)
-            continue
-        if status == "UPCOMING":
-            hrs = _hours_until_kickoff(m, now)
-            if hrs is not None and 0 <= hrs <= API_FOOTBALL_INJURY_PRE_KICKOFF_HOURS:
-                targets.append(m)
-    # soonest kickoff first -- if the daily cap bites, the fixtures closest
-    # to being locked in for a prediction are the ones worth spending on
-    targets = sorted(targets, key=lambda x: x.get("kickoff") or "")[:API_FOOTBALL_MAX_INJURIES]
-    if not targets:
-        DIAG.append("injuries(API-FOOTBALL): no live/pre-kickoff fixtures")
-        return
-
-    cache = _load_box_cache()
-    now_ts = time.time()
-    all_dates = {_match_date_utc(m) for m in targets if _match_date_utc(m)}
-    events_by_date = {}
-    date_requests = 0
-    for d in sorted(all_dates):
-        rec = (cache.get("dates") or {}).get(d)
-        if rec and now_ts - float(rec.get("t") or 0) < 6 * 3600:
-            events_by_date[d] = rec.get("events") or []
-            continue
-        try:
-            payload = _api_football_get("/fixtures", {"date": d})
-            events = payload.get("response") or []
-            events_by_date[d] = events
-            cache.setdefault("dates", {})[d] = {"t": now_ts, "events": events}
-            date_requests += 1
-        except Exception as e:
-            DIAG.append(f"injuries(API-FOOTBALL): fixture date {d} FAILED — {_scrub(e)}")
-            events_by_date[d] = rec.get("events") if rec else []
-
-    matched = 0
-    attached = 0
-    inj_requests = 0
-    for m in targets:
-        d = _match_date_utc(m)
-        fid = _af_fixture_id_for_match(m, events_by_date.get(d) or [])
-        if not fid:
-            continue
-        matched += 1
-        fid = str(fid)
-        irec = (cache.get("injuries") or {}).get(fid)
-        if irec and now_ts - float(irec.get("t") or 0) < 6 * 3600:
-            injuries = irec.get("injuries")
-        else:
-            try:
-                payload = _api_football_get("/injuries", {"fixture": fid})
-                injuries = _parse_af_injuries(payload, m, fid)
-                cache.setdefault("injuries", {})[fid] = {"t": now_ts, "injuries": injuries}
-                inj_requests += 1
-            except Exception as e:
-                DIAG.append(f"injuries(API-FOOTBALL): fixture {fid} FAILED — {_scrub(e)}")
-                injuries = irec.get("injuries") if irec else None
-        if injuries is not None:
-            m["injuries"] = injuries
-            m.setdefault("personnel", {})["injuries_feed_checked"] = True
-            m.setdefault("pregame_provenance", []).append({
-                "input": "injuries", "source": "API-FOOTBALL",
-                "fetched_at": datetime.datetime.now(datetime.timezone.utc).isoformat().replace("+00:00", "Z"),
-            })
-            attached += 1
-
-    _save_box_cache(cache)
-    DIAG.append(f"injuries(API-FOOTBALL): matched {matched}, attached {attached}, requests {date_requests}+{inj_requests}")
 
 
 def _talent_share_curve(share):
@@ -4066,73 +3230,6 @@ def fetch_outrights(code_map):
     return out
 
 
-# -------- knockout bracket + best-third race ------------------------------
-def build_league_table(st, name_map, code_map, zones=None):
-    """One-table league standings. zones (from the competition config) marks
-    European/relegation places for domestic leagues; without zones, Swiss-model
-    Champions-League chips apply for 24+ team fields."""
-    rows = []
-    for t, r in st.items():
-        # Domestic leagues should show their complete table before opening day.
-        # Tournament/league-phase tables still wait for actual participation.
-        if r.get("pld", 0) < 1 and not zones: continue
-        rows.append({"name": name_map.get(t, t.title()), "code": code_map.get(t, ""),
-                     "pld": r["pld"], "w": r["w"], "d": r["d"], "l": r["l"],
-                     "gf": r["gf"], "ga": r["ga"], "gd": r["gd"], "pts": r["pts"],
-                     "form": r.get("form", ""), "pos": None, "_official": r.get("pos"), "qual": "",
-                     "rating": round(power_rating(name_map.get(t, t), r), 2)})
-    if not rows:
-        return []
-    rows.sort(key=lambda x: ((x.get("_official") or 99), -x["pts"], -x["gd"], -x["gf"], x["name"]))
-    n = len(rows)
-    season_started = any((row.get("pld") or 0) > 0 for row in rows)
-    for i, row in enumerate(rows):
-        row["pos"] = row.get("_official") or (i + 1)
-        row.pop("_official", None)
-        if zones and season_started:
-            ucl, uel, rel = zones.get("ucl", 0), zones.get("uel", 0), zones.get("rel", 0)
-            if i < ucl:
-                row["qual"] = {"status": "UCL", "note": "Champions League places"}
-            elif i < ucl + uel:
-                row["qual"] = {"status": "UEL", "note": "Europa League place"}
-            elif rel and i >= n - rel:
-                row["qual"] = {"status": "REL", "note": "relegation zone"}
-        elif n >= 24:
-            if i < 8:
-                row["qual"] = {"status": "R16", "note": "Top 8 — straight to the Round of 16"}
-            elif i < 24:
-                row["qual"] = {"status": "Playoffs", "note": "Places 9-24 enter the knockout playoff round"}
-            else:
-                row["qual"] = {"status": "Out", "note": "Places 25-36 are eliminated"}
-    return [{"group": "League phase", "teams": rows}]
-
-
-def build_bracket(raw):
-    smap = {"FINISHED": "FINISHED", "IN_PLAY": "LIVE", "PAUSED": "LIVE", "LIVE": "LIVE"}
-    rounds = defaultdict(list)
-    for m in raw:
-        rn = KO_STAGES.get(m.get("stage"))
-        if not rn: continue
-        h = m.get("homeTeam") or {}; a = m.get("awayTeam") or {}
-        ft = (m.get("score", {}) or {}).get("fullTime", {}) or {}
-        rounds[rn].append({"home": h.get("name") or "TBD", "away": a.get("name") or "TBD",
-                           "score": {"home": ft.get("home"), "away": ft.get("away")},
-                           "status": smap.get(m.get("status"), "UPCOMING"), "kickoff": m.get("utcDate")})
-    return [{"round": rn, "matches": rounds[rn]} for rn in KO_ORDER if rounds.get(rn)]
-
-
-def third_race(st, name_map, code_map):
-    rows = []
-    for t, r in st.items():
-        if r.get("pos") == 3:
-            rows.append({"team": name_map.get(t, t.title()), "code": code_map.get(t, ""),
-                         "group": pretty_group(r.get("group")), "pts": r["pts"],
-                         "gd": r["gd"], "gf": r["gf"]})
-    rows.sort(key=lambda x: (-x["pts"], -x["gd"], -x["gf"]))
-    for i, row in enumerate(rows): row["in"] = i < 8
-    return rows
-
-
 # -------- ESPN news + RSS feeds (keyless) : diverse updates --------------
 def _news_datetime(value):
     text = str(value or "").strip()
@@ -4365,104 +3462,6 @@ def fetch_news():
 
 # ---- player database (accumulates from lineups + results, per competition) ----
 
-def _formation_roles(formation, n_players):
-    """Map XI list order to roles using the formation string.
-    Convention across feeds: GK first, then defenders, mids, forwards per formation
-    segments, e.g. '4-2-3-1' -> 1 GK, 4 DEF, then mids, last segment FWD."""
-    try:
-        segs = [int(x) for x in str(formation or "").split("-") if x.strip().isdigit()]
-    except Exception:
-        segs = []
-    roles = ["GK"]
-    if segs and sum(segs) == n_players - 1:
-        for i, seg in enumerate(segs):
-            role = "DEF" if i == 0 else ("FWD" if i == len(segs) - 1 else "MID")
-            roles += [role] * seg
-    else:
-        roles += ["DEF"] * 4 + ["MID"] * 3 + ["FWD"] * (max(0, n_players - 8))
-    return roles[:n_players]
-
-def _current_soccer_season_label():
-    """European club season label ("2025-26"), by the same Aug-start
-    convention every domestic league/UCL actually uses. WC only runs one
-    short window every four years, so this label is mostly a no-op there --
-    harmless, since a reset can only ever fire between two WC tournaments
-    fetched years apart, never mid-tournament."""
-    today = datetime.date.today()
-    start_year = today.year if today.month >= 8 else today.year - 1
-    return f"{start_year}-{str(start_year + 1)[2:]}"
-
-
-def _load_player_db():
-    try:
-        with open(PLAYER_DB_FILE, encoding="utf-8") as f: return json.load(f)
-    except Exception:
-        return {"_matches": [], "players": {}}
-
-def update_player_db(matches):
-    """Fold finished matches' lineups + scores into the per-competition player DB.
-    Tracks apps, starts, clean sheets (team conceded 0 while player started),
-    and role from the formation. Idempotent per match id.
-
-    Resets to a blank slate at each season boundary (see
-    _current_soccer_season_label): this file previously had no season concept
-    at all, so it would have kept accumulating a single club's clean sheets
-    across every season forever, past and future blended into one number --
-    dishonest for a feature literally named "Team of the TOURNAMENT". Caught
-    while investigating why UCL's 2025-26 season (already finished) couldn't
-    show real defenders: the fix for THAT was a data-availability gap
-    (backfill_lineups.py, blocked by provider plan tier), but this is a
-    separate, real bug this file always had, worth fixing at the same time
-    rather than letting next season quietly inherit this one's numbers.
-    """
-    if COMP["sport"] != "soccer":
-        return None
-    db = _load_player_db()
-    season = _current_soccer_season_label()
-    if db.get("_season") != season:
-        db = {"_matches": [], "players": {}}
-    db["_season"] = season
-    seen = set(db.get("_matches", []))
-    added = 0
-    for m in matches:
-        mid = str(m.get("id"))
-        if m.get("status") != "FINISHED" or mid in seen:
-            continue
-        sc = m.get("score") or {}
-        if sc.get("home") is None:
-            continue
-        lus = m.get("lineups") or {}
-        got_any = False
-        for side, opp_goals, team in (("home", sc.get("away"), m["home"]["name"]),
-                                      ("away", sc.get("home"), m["away"]["name"])):
-            lu = lus.get(side) or {}
-            xi = lu.get("xi") or []
-            if not xi:
-                continue
-            roles = _formation_roles(lu.get("formation"), len(xi))
-            cs = (opp_goals == 0)
-            for idx, p in enumerate(xi):
-                nm = (p.get("name") or "").strip()
-                if not nm:
-                    continue
-                key = norm(nm) + "|" + norm(team)
-                rec = db["players"].setdefault(key, {"name": nm, "team": team,
-                                                     "role": roles[idx] if idx < len(roles) else "MID",
-                                                     "apps": 0, "starts": 0, "clean_sheets": 0})
-                rec["apps"] += 1; rec["starts"] += 1
-                if cs and roles[idx] in ("GK", "DEF"):
-                    rec["clean_sheets"] += 1
-                got_any = True
-        if got_any:
-            seen.add(mid); added += 1
-    db["_matches"] = sorted(seen)
-    if added:
-        with open(PLAYER_DB_FILE, "w", encoding="utf-8") as f:
-            json.dump(db, f, ensure_ascii=False, indent=1)
-    DIAG.append(f"player db: {len(db['players'])} players from {len(seen)} matches (+{added} new)")
-    return db
-
-
 def build_weekly_awards(matches, scorecard=None):
     """Four storylines from the last 7 days of finished results -- a "come
     back Monday to see what happened" hook for Community, built entirely
@@ -4591,107 +3590,9 @@ def build_weekly_awards(matches, scorecard=None):
             "biggest_miss": biggest_miss, "closest_match": closest_match}
 
 
-# fetch_api_football_box_scores() now attaches m['lineups'] from
-# API-FOOTBALL's free-tier /fixtures/lineups (2026-07-25) -- the first real,
-# currently-fetching lineup source since ESPN's was removed for licensing
-# reasons (Sportmonks, the other source this codebase knows how to use,
-# still needs a key that isn't configured). Gate the defense/keeper backfill
-# on this explicitly rather than on the player DB happening to be empty: a
-# prior fix (2026-07-20) tried to make the backfill "stay dormant" without a
-# real lineup source, but stale entries from when ESPN lineups WERE flowing
-# kept silently feeding it anyway, since nothing actually enforced the
-# dormancy. Coverage is intentionally narrow per run (LIVE, near-kickoff
-# upcoming, and matches finished within the last 2 days, capped at 10
-# fixtures) to protect the shared 100/day free-plan quota, so the player DB
-# builds up gradually across runs rather than backfilling a full season at
-# once -- defender/keeper rankings should be treated as still-warming-up
-# until more matches have been captured.
-LINEUP_BACKFILL_ENABLED = True
-
-
-def build_team_of_tournament(matches, scorers, standings):
-    """Honest impact XI from real data: players ranked by goals, assists and team
-    strength, grouped by their REAL positions (from football-data). Lines we have
-    no data for (e.g. goalkeepers rarely score) are simply not shown — we never
-    relabel an attacker into a fake slot."""
-    if not scorers:
-        return None
-    def role_of(p):
-        pos = (p.get("position") or "").lower()
-        if "keeper" in pos or pos == "goalkeeper": return "GK"
-        if "defen" in pos or "back" in pos: return "DEF"
-        if "midfield" in pos: return "MID"
-        if pos: return "FWD"
-        return "FWD"  # scorers with unknown position are overwhelmingly attackers
-    ranked = []
-    for s in scorers:
-        g, a = s.get("goals", 0), s.get("assists", 0)
-        pld = max(1, s.get("played", 1))
-        impact = g * 3 + a * 2
-        score = impact + (impact / pld) * 2.0 + rating_boost(s.get("team")) * 0.4
-        ranked.append({"name": s.get("name"), "team": s.get("team"), "code": s.get("code"),
-                       "goals": g, "assists": a, "played": s.get("played", 0),
-                       "role": role_of(s), "score": round(score, 1)})
-    ranked.sort(key=lambda x: -x["score"])
-    # A balanced model XI is a 4-3-3: the old caps allowed 12 players
-    # (3 FWD + 4 MID + 4 DEF + 1 GK) while still labeling the result an XI.
-    caps = {"FWD": 3, "MID": 3, "DEF": 4, "GK": 1}
-    xi = []
-    for role, cap in caps.items():
-        xi += [p for p in ranked if p["role"] == role][:cap]
-    bench = [p for p in ranked if p not in xi][:5]
-    # Fill missing DEF/GK from the player DB via clean sheets -- but only when
-    # LINEUP_BACKFILL_ENABLED says a real lineup source is actually active.
-    # Never fall back to "the file happens to have entries in it": stale data
-    # from a since-removed provider must never silently resurface here.
-    db = _load_player_db() if LINEUP_BACKFILL_ENABLED else {}
-    backfilled = 0
-    if LINEUP_BACKFILL_ENABLED and db.get("players"):
-        pool = sorted(db["players"].values(),
-                      key=lambda r: (-r.get("clean_sheets", 0), -r.get("starts", 0)))
-        xi_names = {norm(p["name"] or "") for p in xi}
-        for role, cap in (("DEF", 4), ("GK", 1)):
-            need = cap - sum(1 for q in xi if q["role"] == role)
-            for r in pool:
-                if need <= 0: break
-                if r.get("role") != role or r.get("clean_sheets", 0) < 1: continue
-                if norm(r["name"]) in xi_names: continue
-                xi.append({"name": r["name"], "team": r["team"], "code": "",
-                           "goals": 0, "assists": 0, "played": r.get("starts", 0),
-                           "role": role, "score": r.get("clean_sheets", 0),
-                           "cs": r.get("clean_sheets", 0)})
-                xi_names.add(norm(r["name"])); need -= 1; backfilled += 1
-    DIAG.append(f"team of tournament: {len(xi)} players "
-                f"({', '.join(sorted(set(p['role'] for p in xi)))})")
-    note = "Attack ranked by goals, assists and team strength."
-    note += (" Defence and goalkeeper ranked by clean sheets from accumulated lineups."
-              if backfilled else
-              " Defenders and keepers only appear once one registers a goal or assist this"
-              " tournament — we don't have a lineup data source to rank them by clean sheets"
-              " yet, so we don't fake it.")
-    return {"xi": xi, "bench": bench, "v": 2, "note": note}
-
-def fetch_scorers():
-    try:
-        d = _get(f"{FD_BASE}/competitions/{COMP["fd"]}/scorers?limit=20", {"X-Auth-Token": FOOTBALL_DATA_KEY}, provider="football_data")
-    except Exception as e:
-        DIAG.append(f"scorers: FAILED — {e}"); return []
-    out = []
-    for s in d.get("scorers", []):
-        pl = s.get("player", {}) or {}; tm = s.get("team", {}) or {}
-        out.append({"name": pl.get("name"), "team": tm.get("name"), "code": tm.get("tla") or "",
-                    "goals": s.get("goals") or 0, "assists": s.get("assists") or 0,
-                    "played": s.get("playedMatches") or 0,
-                    "position": pl.get("position") or pl.get("section") or ""})
-    DIAG.append(f"scorers: {len(out)}")
-    return out
-
-
 LEGACY_PICKS = "picks_log.json"
 PICK_SCHEMA_VERSION = 2
 MODEL_CODE_MARKER = "matchday-predictor-integrity-2026-07"
-WC_RESULT_MIGRATION_FILE = "wc_result_migration.json"
-
 FIXTURE_COUNT_HISTORY_FILE = "fixture_count_history.json"
 FIXTURE_COUNT_HISTORY_LEN = 8
 FIXTURE_COUNT_MIN_TRAILING = 5      # don't flag naturally-small competitions
@@ -4953,11 +3854,6 @@ def _forecast_ledger_path():
     directory = os.path.dirname(os.path.abspath(PICKS_FILE))
     return os.path.join(directory, f"forecast_ledger_{COMP_KEY.lower()}.jsonl")
 
-
-def _mlb_shadow_ledger_path():
-    """Keep paused MLB research evidence separate from official picks."""
-    directory = os.path.dirname(os.path.abspath(PICKS_FILE))
-    return os.path.join(directory, "mlb_shadow_ledger.jsonl")
 
 def _market_fields(pr, mk):
     """Derive the market-comparison fields for a pick from current market odds.
@@ -5314,39 +4210,6 @@ def _is_advancement_fixture(match, locked_pick=None):
                 and _is_knockout_stage(stage))
 
 
-def _is_incompatible_legacy_ucl_receipt(match=None, locked_pick=None):
-    """True when an old per-leg UCL advancement target cannot be settled safely."""
-    locked_pick = locked_pick or {}
-    snap = locked_pick.get("prediction_snapshot") or {}
-    competition = str(locked_pick.get("competition") or
-                      (match or {}).get("_comp") or COMP_KEY).upper()
-    stage = (match or {}).get("stage") or locked_pick.get("stage")
-    label = " ".join(str(stage or "").strip().lower().replace("_", " ").split())
-    legacy_advancement = (snap.get("is_knockout") is True or
-                          locked_pick.get("outcome_basis") == "ultimate_winner")
-    # Before the settlement-aware schema, every UCL knockout leg could be
-    # frozen as an advancement forecast. A leg score cannot prove who advanced
-    # across a two-match tie, so those receipts must not be reinterpreted as
-    # regulation picks. The single-match Final remains unambiguous.
-    return bool(competition == "UCL" and label != "final" and legacy_advancement)
-
-
-def _quarantine_incompatible_ucl_receipts(picks):
-    changed = False
-    for rec in picks.values():
-        if not isinstance(rec, dict) or not _is_incompatible_legacy_ucl_receipt({}, rec):
-            continue
-        before = (rec.get("integrity_eligible"), rec.get("integrity_status"),
-                  rec.get("quarantine_reason"))
-        rec["integrity_eligible"] = False
-        rec["integrity_status"] = "quarantined"
-        rec["quarantine_reason"] = "legacy_ucl_advancement_target_unverifiable"
-        after = (rec.get("integrity_eligible"), rec.get("integrity_status"),
-                 rec.get("quarantine_reason"))
-        changed = changed or before != after
-    return changed
-
-
 def _scorecard_results(match, locked_pick=None):
     """Return separate (model, market) settlement results.
 
@@ -5354,9 +4217,6 @@ def _scorecard_results(match, locked_pick=None):
     or advances after extra time or penalties. The 1X2 market comparison remains
     settled on the regulation result. Neither result changes the stored score.
     """
-    if _is_incompatible_legacy_ucl_receipt(match, locked_pick):
-        return None, None
-
     sc_obj = match.get("score") or {}
     shown_home, shown_away = sc_obj.get("home"), sc_obj.get("away")
     pens = sc_obj.get("pens") or {}
@@ -5424,46 +4284,6 @@ def _refresh_record_result(rec, score, source="provider", observed_at=None):
                 history.append(previous)
         rec["score"] = rendered
         rec["result_snapshot"] = current
-
-
-def _load_wc_result_migration():
-    if COMP_KEY != "WC":
-        return {}
-    try:
-        with open(WC_RESULT_MIGRATION_FILE, encoding="utf-8") as handle:
-            payload = json.load(handle)
-        return payload.get("fixtures") or {}
-    except Exception as exc:
-        DIAG.append(f"WC result migration unavailable: {exc}")
-        return {}
-
-
-def _apply_wc_result_migration(picks):
-    fixtures = _load_wc_result_migration()
-    changed = False
-    for rec in picks.values():
-        fixture_id = str(rec.get("fixture_id") or "")
-        migrated = fixtures.get(fixture_id)
-        if not migrated:
-            continue
-        score = migrated.get("score") or {}
-        before = (rec.get("score"), rec.get("result"), rec.get("market_result"),
-                  rec.get("model_hit"), rec.get("market_hit"),
-                  rec.get("result_snapshot"), rec.get("result_verification"))
-        match = {"stage": rec.get("stage"), "score": score}
-        model_result, market_result = _scorecard_results(match, rec)
-        _refresh_record_result(rec, score, source=migrated.get("source") or "wc_result_migration",
-                               observed_at=migrated.get("verified_at"))
-        if model_result:
-            _apply_scorecard_grade(rec, model_result, market_result)
-        rec["result_verification"] = {"status": "authoritative_result_verified",
-                                      "source": migrated.get("source"),
-                                      "verified_at": migrated.get("verified_at")}
-        after = (rec.get("score"), rec.get("result"), rec.get("market_result"),
-                 rec.get("model_hit"), rec.get("market_hit"),
-                 rec.get("result_snapshot"), rec.get("result_verification"))
-        changed = changed or before != after
-    return changed
 
 
 def _apply_scorecard_grade(rec, model_result, market_result):
@@ -5553,15 +4373,6 @@ def _refresh_market_comparison_grade(rec):
                                     else None)
     return before != rec.get("market_comparison_hit")
 
-def _hours_to_kickoff(m):
-    """None if kickoff is missing/unparseable, else hours from now to kickoff
-    (negative once kickoff has passed)."""
-    try:
-        ko = datetime.datetime.fromisoformat(str(m.get("kickoff") or "").replace("Z", "+00:00"))
-    except Exception:
-        return None
-    return (ko - datetime.datetime.now(datetime.timezone.utc)).total_seconds() / 3600.0
-
 def update_scorecard(matches):
     """Lock a pick once the match is within LOCK_WINDOW_HOURS of kickoff, so
     the model can use as much pre-game information as possible (form, injuries,
@@ -5570,11 +4381,9 @@ def update_scorecard(matches):
     fields backfill once odds appear if they weren't in yet at lock time.
     A fixture first seen after kickoff is never admitted to the official record."""
     picks = _load_picks()
-    dirty = _quarantine_incompatible_ucl_receipts(picks)
-    dirty = _quarantine_legacy_records(picks) or dirty
+    dirty = _quarantine_legacy_records(picks)
     expected_locks = set()
     expected_grades = set()
-    dirty = _apply_wc_result_migration(picks) or dirty
     by_fixture = defaultdict(list)
     for key, stored in picks.items():
         fixture_id = str(stored.get("fixture_id") or ("" if str(key).startswith("legacy:") else key))
@@ -5864,39 +4673,6 @@ def update_scorecard(matches):
             "picks": rows[:80]}
 
 
-def qual_scenarios(teams, third_in=None, third_out=None):
-    """Top-2 qualification status per team, reconciled with the best-thirds race."""
-    def rem(t): return max(0, 3 - (t.get("pld") or 0))
-    def guaranteed(t, others):
-        P = t["pts"]; return sum(1 for o in others if o["pts"] + 3*rem(o) > P) <= 1
-    def eliminated(t, others):
-        maxT = t["pts"] + 3*rem(t); return sum(1 for o in others if o["pts"] > maxT) >= 2
-    for t in teams:
-        others = [o for o in teams if o is not t]
-        if guaranteed(t, others):
-            t["qual"] = {"status": "q", "note": "Through"}
-        elif eliminated(t, others):
-            nk = norm(t.get("name"))
-            if third_in and nk in third_in:
-                t["qual"] = {"status": "q", "note": "Through as 3rd"}
-            elif third_out is not None and nk not in (third_in or set()) and nk in third_out:
-                t["qual"] = {"status": "out", "note": "Out — 3rd-place race"}
-            elif (t.get("pos") == 3 and third_in is None):
-                t["qual"] = {"status": "live", "note": "In 3rd-place race"}
-            else:
-                t["qual"] = {"status": "out", "note": "Eliminated"}
-        else:
-            note = "In contention"
-            if rem(t) > 0:
-                t2 = {**t, "pts": t["pts"] + 3, "pld": (t.get("pld") or 0) + 1}
-                if guaranteed(t2, others):
-                    note = "Win to go through"
-            t["qual"] = {"status": "live", "note": note}
-    return teams
-
-
-
-
 def build_ncaam_bracketology(standings_payload):
     """Create Matchday's transparent 68-team projection from raw results.
 
@@ -6016,134 +4792,9 @@ def build_ncaam_bracketology(standings_payload):
     }
 
 
-def fetch_sportsdataio_bundle():
-    """Fetch licensed US/college schedules and standings in Matchday shapes."""
-    adapter = SportsDataIOAdapter(SPORTSDATAIO_KEY, COMP_KEY)
-    all_matches = adapter.schedule()
-    today = datetime.datetime.now(datetime.timezone.utc)
-    start = today - datetime.timedelta(days=8)
-    end = today + datetime.timedelta(days=45)
-    matches = []
-    for match in all_matches:
-        try:
-            kickoff = datetime.datetime.fromisoformat((match.get("kickoff") or "").replace("Z", "+00:00"))
-        except Exception:
-            continue
-        if start <= kickoff <= end:
-            matches.append(match)
-    st, tables = adapter.standings()
-    # Provider adapters do not know Matchday's punctuation-insensitive keying.
-    st = {norm(name): row for name, row in st.items()}
-    DIAG.append(f"SportsDataIO fixtures: {len(matches)} in display window ({len(all_matches)} season total)")
-    DIAG.append(f"SportsDataIO standings: {sum(len(g.get('teams') or []) for g in tables)} teams")
-    if SPORTSDATAIO_PREGAME_ENABLED:
-        try:
-            attached = adapter.attach_pregame(matches)
-            DIAG.append(f"SportsDataIO availability: {attached['injuries']} player labels, "
-                        f"{attached['lineups']} lineup(s)")
-            for error in attached.get("errors") or []:
-                DIAG.append(f"SportsDataIO {error.get('input')} unavailable: "
-                            f"{_scrub(error.get('error'))}")
-        except ProviderError as exc:
-            DIAG.append(f"SportsDataIO availability unavailable on this plan: {_scrub(exc)}")
-    else:
-        DIAG.append("SportsDataIO availability: disabled until a live redistribution tier is confirmed")
-    return adapter, matches, st, tables
-
-
-US_PRO_STANDINGS_GROUPS = {
-    "MLB": {
-        "American League East": ["New York Yankees", "Boston Red Sox", "Toronto Blue Jays", "Tampa Bay Rays", "Baltimore Orioles"],
-        "American League Central": ["Cleveland Guardians", "Detroit Tigers", "Kansas City Royals", "Minnesota Twins", "Chicago White Sox"],
-        "American League West": ["Houston Astros", "Seattle Mariners", "Texas Rangers", "Los Angeles Angels", "Oakland Athletics", "Athletics"],
-        "National League East": ["Atlanta Braves", "Miami Marlins", "New York Mets", "Philadelphia Phillies", "Washington Nationals"],
-        "National League Central": ["Chicago Cubs", "Cincinnati Reds", "Milwaukee Brewers", "Pittsburgh Pirates", "St. Louis Cardinals"],
-        "National League West": ["Arizona Diamondbacks", "Colorado Rockies", "Los Angeles Dodgers", "San Diego Padres", "San Francisco Giants"],
-    },
-    "NFL": {
-        "AFC East": ["Buffalo Bills", "Miami Dolphins", "New England Patriots", "New York Jets"],
-        "AFC North": ["Baltimore Ravens", "Cincinnati Bengals", "Cleveland Browns", "Pittsburgh Steelers"],
-        "AFC South": ["Houston Texans", "Indianapolis Colts", "Jacksonville Jaguars", "Tennessee Titans"],
-        "AFC West": ["Denver Broncos", "Kansas City Chiefs", "Las Vegas Raiders", "Los Angeles Chargers"],
-        "NFC East": ["Dallas Cowboys", "New York Giants", "Philadelphia Eagles", "Washington Commanders"],
-        "NFC North": ["Chicago Bears", "Detroit Lions", "Green Bay Packers", "Minnesota Vikings"],
-        "NFC South": ["Atlanta Falcons", "Carolina Panthers", "New Orleans Saints", "Tampa Bay Buccaneers"],
-        "NFC West": ["Arizona Cardinals", "Los Angeles Rams", "San Francisco 49ers", "Seattle Seahawks"],
-    },
-    "NBA": {
-        "Eastern Conference": ["Atlanta Hawks", "Boston Celtics", "Brooklyn Nets", "Charlotte Hornets", "Chicago Bulls", "Cleveland Cavaliers", "Detroit Pistons", "Indiana Pacers", "Miami Heat", "Milwaukee Bucks", "New York Knicks", "Orlando Magic", "Philadelphia 76ers", "Toronto Raptors", "Washington Wizards"],
-        "Western Conference": ["Dallas Mavericks", "Denver Nuggets", "Golden State Warriors", "Houston Rockets", "Los Angeles Clippers", "LA Clippers", "Los Angeles Lakers", "Memphis Grizzlies", "Minnesota Timberwolves", "New Orleans Pelicans", "Oklahoma City Thunder", "Phoenix Suns", "Portland Trail Blazers", "Sacramento Kings", "San Antonio Spurs", "Utah Jazz"],
-    },
-}
-
-
 def _pro_standings_pct(team):
     played = max(1.0, float(team.get("pld") or 0))
     return (float(team.get("w") or 0) + 0.5 * float(team.get("d") or 0)) / played
-
-
-def _group_us_pro_standings(tables, competition):
-    """Return conventional pro-league standings groups, never model-sorted.
-
-    Some free providers expose results but no division metadata. Pro-league
-    membership is fixed league structure, so a local map is safer than showing
-    a fabricated flat table. Unknown expansion/renamed teams remain visible in
-    an explicit unassigned table instead of silently disappearing.
-    """
-    layout = US_PRO_STANDINGS_GROUPS.get(competition)
-    if not layout:
-        return tables
-    rows = {}
-    for table in tables or []:
-        if table.get("table_type") == "power_ratings":
-            continue
-        for team in table.get("teams") or []:
-            if team.get("name") and not is_placeholder_team_name(team.get("name")):
-                rows[norm(team["name"])] = dict(team)
-    membership = {norm(name): group for group, names in layout.items() for name in names}
-    grouped = {group: [] for group in layout}
-    unassigned = []
-    for key, team in rows.items():
-        group = membership.get(key)
-        (grouped[group] if group else unassigned).append(team)
-    payload = []
-    for group in layout:
-        teams = grouped[group]
-        if not teams:
-            continue
-        teams.sort(key=lambda t: (-_pro_standings_pct(t),
-                                  -float(t.get("gd") or 0), str(t.get("name") or "")))
-        for i, team in enumerate(teams, 1):
-            team["pos"] = i
-            team["group"] = group
-            team["win_pct"] = round(_pro_standings_pct(team), 6)
-        payload.append({"group": group, "table_type": "official_standings", "teams": teams})
-    if unassigned:
-        unassigned.sort(key=lambda t: (-_pro_standings_pct(t),
-                                       str(t.get("name") or "")))
-        for i, team in enumerate(unassigned, 1):
-            team["pos"] = i
-            team["group"] = "League standings"
-            team["win_pct"] = round(_pro_standings_pct(team), 6)
-        payload.append({"group": "League standings", "table_type": "official_standings", "teams": unassigned})
-    return payload
-
-
-def _append_power_ratings_table(tables):
-    teams = [dict(team) for table in tables or []
-             if table.get("table_type") != "power_ratings"
-             for team in table.get("teams") or []]
-    seen, unique = set(), []
-    for team in teams:
-        key = norm(team.get("name"))
-        if key and key not in seen:
-            seen.add(key)
-            unique.append(team)
-    teams = unique
-    teams.sort(key=lambda t: (-float(t.get("rating") or 0), str(t.get("name") or "")))
-    for i, team in enumerate(teams, 1):
-        team["pos"] = i
-    return list(tables or []) + ([{"group": "Power Ratings", "table_type": "power_ratings", "teams": teams}] if teams else [])
 
 
 def _matchday_top_25(tables):
@@ -6241,159 +4892,6 @@ def compute_us_sport_standings(matches):
         rec["pos"] = i
     tables = [{"group": "", "teams": ranked}] if ranked else []
     return model, tables
-
-
-def _balldontlie_cache_seconds(matches, now=None):
-    """Use a short schedule cache around games, a longer one otherwise."""
-    current = now or datetime.datetime.now(datetime.timezone.utc)
-    for match in matches or []:
-        if match.get("status") == "LIVE":
-            return BALLDONTLIE_ACTIVE_CACHE_MIN * 60
-        if match.get("status") != "UPCOMING":
-            continue
-        kickoff = _parse_kickoff(match.get("kickoff"))
-        if kickoff is None:
-            continue
-        hours = (kickoff - current).total_seconds() / 3600.0
-        if -8 <= hours <= 4:
-            return BALLDONTLIE_ACTIVE_CACHE_MIN * 60
-    return BALLDONTLIE_CACHE_MIN * 60
-
-
-def fetch_balldontlie_bundle():
-    """Fetch real free-tier schedules/scores without paid-only substitutions."""
-    adapter = BallDontLieAdapter(BALLDONTLIE_KEY, COMP_KEY)
-    cache_file = f"balldontlie_games_{COMP_KEY.lower()}_cache.json"
-    matches = None
-    try:
-        if os.path.exists(cache_file):
-            with open(cache_file, encoding="utf-8") as handle:
-                cached_matches = json.load(handle)
-            cache_age = time.time() - os.path.getmtime(cache_file)
-            if cache_age < _balldontlie_cache_seconds(cached_matches):
-                matches = cached_matches
-                DIAG.append("BALLDONTLIE fixtures: local cache")
-    except Exception:
-        matches = None
-    schedule_fetched_live = matches is None
-    if matches is None:
-        try:
-            matches = adapter.schedule()
-            tmp = cache_file + ".tmp"
-            with open(tmp, "w", encoding="utf-8") as handle:
-                json.dump(matches, handle, ensure_ascii=False)
-            os.replace(tmp, cache_file)
-        except ProviderError:
-            # A stale cache is preferable to blanking the dashboard on a 429.
-            if not os.path.exists(cache_file):
-                raise
-            with open(cache_file, encoding="utf-8") as handle:
-                matches = json.load(handle)
-            DIAG.append("BALLDONTLIE fixtures: stale cache after provider limit/error")
-
-    if schedule_fetched_live:
-        # Give the free tier's rate-limit window room to breathe before the
-        # much longer season-to-date pagination starts below -- schedule()
-        # just made several rapid requests of its own.
-        time.sleep(BallDontLieAdapter.SEASON_PAGE_DELAY_SEC)
-
-    # schedule()'s narrow window keeps the display list fresh but starves
-    # standings/SRS/Elo of real season sample size. Pull season-to-date
-    # results separately, cached for hours since a full pull re-pages
-    # through the whole season (see BallDontLieAdapter.season_games).
-    season_cache_file = f"balldontlie_season_{COMP_KEY.lower()}_cache.json"
-    season_matches = None
-    try:
-        if (os.path.exists(season_cache_file)
-                and time.time() - os.path.getmtime(season_cache_file) < BALLDONTLIE_SEASON_CACHE_MIN * 60):
-            with open(season_cache_file, encoding="utf-8") as handle:
-                season_matches = json.load(handle)
-            DIAG.append("BALLDONTLIE season-to-date: local cache")
-    except Exception:
-        season_matches = None
-    if season_matches is None:
-        try:
-            season_matches = adapter.season_games()
-            tmp = season_cache_file + ".tmp"
-            with open(tmp, "w", encoding="utf-8") as handle:
-                json.dump(season_matches, handle, ensure_ascii=False)
-            os.replace(tmp, season_cache_file)
-            DIAG.append(f"BALLDONTLIE season-to-date: fetched {len(season_matches)} finished games")
-        except ProviderError as e:
-            if os.path.exists(season_cache_file):
-                with open(season_cache_file, encoding="utf-8") as handle:
-                    season_matches = json.load(handle)
-                DIAG.append(f"BALLDONTLIE season-to-date: stale cache after provider limit/error — {_scrub(e)}")
-            else:
-                # Better a narrow-window standings table than none at all.
-                season_matches = matches
-                DIAG.append(f"BALLDONTLIE season-to-date: unavailable, using display window — {_scrub(e)}")
-
-    st, tables = compute_us_sport_standings(season_matches)
-    adapter._model_history = season_matches
-    DIAG.append(f"BALLDONTLIE fixtures: {len(matches)} in free-tier display window")
-    DIAG.append(f"BALLDONTLIE standings: {sum(r['pld'] for r in st.values())} team-games from "
-                f"{len(season_matches)} season-to-date finished games (no standings endpoint on free tier)")
-    return adapter, matches, st, tables
-
-
-def fetch_apisports_bundle():
-    """Fetch NFL/NBA schedules+standings via API-Sports (api-sports.io).
-
-    Same account/key as API_FOOTBALL_KEY — no separate signup needed.
-    """
-    adapter = APISportsAdapter(API_FOOTBALL_KEY, COMP_KEY)
-    cache_file = f"apisports_games_{COMP_KEY.lower()}_cache.json"
-    matches = None
-    try:
-        if os.path.exists(cache_file) and time.time() - os.path.getmtime(cache_file) < APISPORTS_CACHE_MIN * 60:
-            with open(cache_file, encoding="utf-8") as handle:
-                matches = json.load(handle)
-            DIAG.append("API-Sports fixtures: local cache")
-    except Exception:
-        matches = None
-    if matches is None:
-        try:
-            matches = adapter.schedule()
-            tmp = cache_file + ".tmp"
-            with open(tmp, "w", encoding="utf-8") as handle:
-                json.dump(matches, handle, ensure_ascii=False)
-            os.replace(tmp, cache_file)
-        except ProviderError:
-            if not os.path.exists(cache_file):
-                raise
-            with open(cache_file, encoding="utf-8") as handle:
-                matches = json.load(handle)
-            DIAG.append("API-Sports fixtures: stale cache after provider limit/error")
-    st, tables = adapter.standings()
-    if COMP_KEY == "NBA":
-        # NBA's /standings endpoint doesn't expose points-for/against (unlike
-        # NFL's), so the adapter leaves gf/ga at 0 -- derive real per-team
-        # scoring averages from finished games instead, same approach the
-        # CFBD/CBBD adapters already use.
-        agg = {}
-        for row in matches:
-            if row.get("status") != "FINISHED":
-                continue
-            sc = row.get("score") or {}
-            hs, as_ = sc.get("home"), sc.get("away")
-            if hs is None or as_ is None:
-                continue
-            for name, gf, ga in ((row["home"]["name"], hs, as_), (row["away"]["name"], as_, hs)):
-                a = agg.setdefault(name.lower(), {"gf": 0, "ga": 0, "pld": 0})
-                a["gf"] += gf; a["ga"] += ga; a["pld"] += 1
-        for key, rec in st.items():
-            a = agg.get(key)
-            if a and a["pld"]:
-                rec["gf"], rec["ga"] = a["gf"], a["ga"]
-        for table in tables:
-            for team in table.get("teams") or []:
-                a = agg.get((team.get("name") or "").lower())
-                if a and a["pld"]:
-                    team["gf"], team["ga"] = a["gf"], a["ga"]
-        DIAG.append(f"API-Sports NBA: derived real gf/ga for {sum(1 for a in agg.values() if a['pld'])} teams from finished games")
-    DIAG.append(f"API-Sports fixtures: {len(matches)} loaded")
-    return adapter, matches, st, tables
 
 
 def fetch_college_bundle():
@@ -6635,141 +5133,6 @@ def fetch_college_leaders(adapter, provider_name):
     return leaders
 
 
-def fetch_nflverse_leaders():
-    """Cache NFL season player-stat leaders from nflverse-data's public,
-    unauthenticated `stats_player` release (CC BY 4.0; ESPN's separate
-    `espn_data` release is never touched -- see NflverseAdapter's docstring
-    in provider_adapters.py and PROVIDER_COMPLIANCE.md).
-
-    Mirrors fetch_college_leaders()'s cache-then-fetch-then-fall-back-to-
-    stale-cache-on-provider-error shape so an nflverse hiccup degrades to
-    the last good leaderboard instead of blanking the panel.
-    """
-    cache_file = "nflverse_leaders_cache.json"
-    leaders = None
-    try:
-        if os.path.exists(cache_file) and time.time() - os.path.getmtime(cache_file) < NFLVERSE_LEADERS_CACHE_MIN * 60:
-            with open(cache_file, encoding="utf-8") as handle:
-                leaders = json.load(handle)
-            DIAG.append("nflverse leaders: local cache")
-    except Exception:
-        leaders = None
-    if leaders is None:
-        try:
-            leaders = NflverseAdapter().leaders()
-            tmp = cache_file + ".tmp"
-            with open(tmp, "w", encoding="utf-8") as handle:
-                json.dump(leaders, handle, ensure_ascii=False)
-            os.replace(tmp, cache_file)
-            count = sum(len(c.get("leaders") or []) for c in (leaders.get("categories") or []))
-            DIAG.append(f"nflverse leaders: fetched {count} leaderboard entries across "
-                        f"{len(leaders.get('categories') or [])} categories (season {leaders.get('season')})")
-        except ProviderError as exc:
-            if os.path.exists(cache_file):
-                with open(cache_file, encoding="utf-8") as handle:
-                    leaders = json.load(handle)
-                DIAG.append(f"nflverse leaders: stale cache after provider limit/error — {_scrub(exc)}")
-            else:
-                DIAG.append(f"nflverse leaders unavailable: {_scrub(exc)}")
-                leaders = {}
-    return leaders
-
-
-def fetch_nflverse_pregame_overlay(matches):
-    """Attach current NFL starter hierarchy and roster availability.
-
-    Depth charts are ESPN-derived through nflverse and are explicitly marked
-    expected/unconfirmed.  A non-active weekly-roster status is shown as an
-    availability flag, not converted into a medical diagnosis or a confirmed
-    gameday inactive.  The normalized daily cache keeps the 8 MB GitHub asset
-    out of hourly rebuilds and preserves the last successful snapshot.
-    """
-    if COMP_KEY != "NFL":
-        return {"matches": 0, "starters": 0, "availability_flags": 0}
-    cache_file = "nflverse_pregame_cache.json"
-    snapshot = None
-    try:
-        if (os.path.exists(cache_file) and
-                time.time() - os.path.getmtime(cache_file) < NFLVERSE_PREGAME_CACHE_MIN * 60):
-            with open(cache_file, encoding="utf-8") as handle:
-                snapshot = json.load(handle)
-            DIAG.append("nflverse pregame: daily cache")
-    except Exception:
-        snapshot = None
-    if snapshot is None:
-        try:
-            snapshot = NflversePregameAdapter().snapshot()
-            tmp = cache_file + ".tmp"
-            with open(tmp, "w", encoding="utf-8") as handle:
-                json.dump(snapshot, handle, ensure_ascii=False)
-            os.replace(tmp, cache_file)
-            DIAG.append(f"nflverse pregame: fetched season {snapshot.get('season')} "
-                        f"depth charts observed {snapshot.get('observed_at')}")
-        except ProviderError as exc:
-            if os.path.exists(cache_file):
-                with open(cache_file, encoding="utf-8") as handle:
-                    snapshot = json.load(handle)
-                DIAG.append(f"nflverse pregame: stale cache after fetch failure — {_scrub(exc)}")
-            else:
-                DIAG.append(f"nflverse pregame unavailable: {_scrub(exc)}")
-                return {"matches": 0, "starters": 0, "availability_flags": 0}
-
-    teams = snapshot.get("teams") or {}
-    matched = starters = flags = 0
-    for match in matches:
-        if match.get("status") not in {"UPCOMING", "LIVE"}:
-            continue
-        personnel = match.setdefault("personnel", {})
-        chart_sides = personnel.setdefault("depth_chart", {})
-        key_sides = personnel.setdefault("key_players", {})
-        for side in ("home", "away"):
-            code = str((match.get(side) or {}).get("code") or "").upper()
-            code = NFLVERSE_TEAM_CODE_MAP.get(code, code)
-            chart = teams.get(code)
-            if not chart:
-                continue
-            players = chart.get("starters") or []
-            chart_sides[side] = {
-                "status": "expected_depth_chart",
-                "confirmed": False,
-                "observed_at": chart.get("observed_at") or snapshot.get("observed_at"),
-                "players": players,
-            }
-            key_sides[side] = [
-                {"name": player.get("name"), "position": player.get("position"),
-                 "roster_status": player.get("roster_status")}
-                for player in players if player.get("name")
-            ]
-            starters += len(players)
-            flags += sum(bool(player.get("roster_status") and
-                              player.get("roster_status") != "ACT") for player in players)
-        if chart_sides:
-            matched += 1
-            personnel["key_players_confirmed"] = False
-            match.setdefault("pregame_provenance", []).append({
-                "input": "key_players",
-                "source": snapshot.get("source"),
-                "source_url": snapshot.get("source_url"),
-                "observed_at": snapshot.get("observed_at"),
-                "season": snapshot.get("season"),
-                "week": snapshot.get("week"),
-                "status": "expected, not confirmed gameday lineup",
-            })
-    return {"matches": matched, "starters": starters, "availability_flags": flags}
-
-
-def fetch_sportmonks_enrichment(matches):
-    """Attach licensed soccer stats, lineups and availability when configured."""
-    if not SPORTMONKS_KEY:
-        DIAG.append("Sportmonks enrichment: key not configured")
-        return
-    try:
-        attached = SportmonksAdapter(SPORTMONKS_KEY).enrich(matches, _name_match)
-        DIAG.append(f"Sportmonks enrichment: attached {attached} fixtures")
-    except ProviderError as exc:
-        DIAG.append(f"Sportmonks enrichment failed: {_scrub(exc)}")
-
-
 def _sportsdataio_cache_identity(match):
     return {
         "fixture_id": str(match.get("id") or ""),
@@ -6954,69 +5317,6 @@ def _merge_sportsgameodds_overlay(match, row):
             "starter_candidates": candidates}
 
 
-def derive_mlb_bullpen_rest_context(matches, now=None):
-    """Attach a conservative bullpen-rest proxy from Matchday game history.
-
-    This does not claim to know which relievers threw or are unavailable. It
-    reports only team schedule load before the target game and stays at zero
-    model weight until a richer licensed pitch-usage feed exists.
-    """
-    if COMP_KEY != "MLB":
-        return 0
-    observed_at = (now or datetime.datetime.now(datetime.timezone.utc))
-    if observed_at.tzinfo is None:
-        observed_at = observed_at.replace(tzinfo=datetime.timezone.utc)
-    finished = []
-    for row in matches:
-        if row.get("status") != "FINISHED":
-            continue
-        when = _parse_kickoff(row.get("kickoff"))
-        if not when:
-            continue
-        for side in ("home", "away"):
-            team = row.get(side) or {}
-            for identity in (team.get("name"), team.get("code")):
-                key = norm(identity)
-                if key:
-                    finished.append((key, when))
-    attached = 0
-    for match in matches:
-        if match.get("status") != "UPCOMING":
-            continue
-        kickoff = _parse_kickoff(match.get("kickoff"))
-        if not kickoff:
-            continue
-        bullpen = {}
-        for side in ("home", "away"):
-            team = match.get(side) or {}
-            identities = {norm(team.get("name")), norm(team.get("code"))} - {""}
-            prior = sorted({when for key, when in finished
-                            if key in identities and when < kickoff}, reverse=True)
-            recent = [when for when in prior if (kickoff - when).total_seconds() <= 72 * 3600]
-            hours = round((kickoff - prior[0]).total_seconds() / 3600, 1) if prior else None
-            load = len(recent)
-            pressure = "elevated" if load >= 3 or (hours is not None and hours < 20) else (
-                "normal" if prior else "unknown")
-            bullpen[side] = {
-                "status": pressure,
-                "games_last_72h": load,
-                "hours_since_last_game": hours,
-                "basis": "schedule-derived rest pressure; reliever usage unavailable",
-                "confirmed": False,
-                "observed_at": observed_at.isoformat().replace("+00:00", "Z"),
-            }
-        match.setdefault("personnel", {})["bullpen"] = bullpen
-        match["personnel"]["bullpen_confirmed"] = False
-        match.setdefault("pregame_provenance", []).append({
-            "input": "bullpen_rest_proxy", "source": "Matchday schedule history",
-            "fetched_at": observed_at.isoformat().replace("+00:00", "Z"),
-            "confirmed": False,
-            "semantics": "team schedule load only; not individual reliever availability",
-        })
-        attached += 1
-    return attached
-
-
 def fetch_sportsgameodds_overlay(matches):
     """Fill market gaps and infer MLB personnel from the licensed odds feed.
 
@@ -7137,110 +5437,6 @@ def fetch_sportsgameodds_overlay(matches):
     return totals
 
 
-def _merge_bbs_overlay(match, row):
-    """Merge cached BBS fields without deleting a richer licensed overlay."""
-    if not isinstance(row, dict):
-        return
-    incoming = row.get("injuries") or {}
-    target = match.setdefault("injuries", {"home": [], "away": []})
-    for side in ("home", "away"):
-        for label in incoming.get(side) or []:
-            if label not in target.setdefault(side, []):
-                target[side].append(label)
-    personnel = match.setdefault("personnel", {})
-    cached_personnel = row.get("personnel") or {}
-    for key in ("injuries_feed_checked", "injuries_confirmed", "injuries_source"):
-        if cached_personnel.get(key) is not None:
-            personnel.setdefault(key, cached_personnel[key])
-    details = personnel.setdefault("injury_details", {"home": [], "away": []})
-    cached_details = cached_personnel.get("injury_details") or {}
-    for side in ("home", "away"):
-        seen = {str(item.get("player_id") or item.get("name") or "").lower()
-                for item in details.get(side) or [] if isinstance(item, dict)}
-        for item in cached_details.get(side) or []:
-            if not isinstance(item, dict):
-                continue
-            identity = str(item.get("player_id") or item.get("name") or "").lower()
-            if identity not in seen:
-                details.setdefault(side, []).append(item)
-                seen.add(identity)
-    provenance = match.setdefault("pregame_provenance", [])
-    for item in row.get("pregame_provenance") or []:
-        if item not in provenance:
-            provenance.append(item)
-
-
-def fetch_bbs_pregame_overlay(matches):
-    """Attach verified free-tier NBA/NHL injury reports near prediction lock.
-
-    Big Balls currently documents NBA and NHL injury ingestion as active. Its
-    OpenAPI contract explicitly says stored lineups are not ingested yet, so
-    this overlay is intentionally injury-only and never clears lineup,
-    starting-pitcher, goalie, or other readiness flags.
-    """
-    if COMP_KEY not in BigBallsSportsAdapter.INJURY_SPORTS:
-        return {"injuries": 0}
-    if not BBS_PREGAME_ENABLED:
-        DIAG.append("Big Balls pregame overlay: disabled until upstream provenance is confirmed")
-        return {"injuries": 0}
-    if not BBS_API_KEY or "PASTE_" in str(BBS_API_KEY):
-        DIAG.append("Big Balls pregame overlay: key not configured")
-        return {"injuries": 0}
-    now = datetime.datetime.now(datetime.timezone.utc)
-    near = []
-    for match in matches:
-        kickoff = _parse_kickoff(match.get("kickoff"))
-        if match.get("status") == "UPCOMING" and kickoff:
-            hours = (kickoff - now).total_seconds() / 3600
-            if 0 <= hours <= 72:
-                near.append(match)
-    if not near:
-        DIAG.append("Big Balls pregame overlay: no upcoming fixture inside 72h")
-        return {"injuries": 0}
-
-    cached = None
-    try:
-        if (os.path.exists(BBS_PREGAME_CACHE_FILE) and
-                time.time() - os.path.getmtime(BBS_PREGAME_CACHE_FILE) <
-                BBS_PREGAME_CACHE_MIN * 60):
-            with open(BBS_PREGAME_CACHE_FILE, encoding="utf-8") as handle:
-                cached = json.load(handle)
-    except Exception:
-        cached = None
-    if cached is None:
-        try:
-            attached = BigBallsSportsAdapter(BBS_API_KEY, COMP_KEY).attach_availability(near)
-            cached = {str(match.get("id")): {
-                "injuries": match.get("injuries"),
-                "personnel": match.get("personnel"),
-                "pregame_provenance": [item for item in match.get("pregame_provenance") or []
-                                         if item.get("source") == "Big Balls Sports Data"],
-            } for match in near}
-            tmp = BBS_PREGAME_CACHE_FILE + ".tmp"
-            with open(tmp, "w", encoding="utf-8") as handle:
-                json.dump(cached, handle, ensure_ascii=False)
-            os.replace(tmp, BBS_PREGAME_CACHE_FILE)
-            DIAG.append(f"Big Balls pregame overlay: {attached} injury label(s)")
-            return {"injuries": attached}
-        except ProviderError as exc:
-            try:
-                age_seconds = time.time() - os.path.getmtime(BBS_PREGAME_CACHE_FILE)
-                if age_seconds > BBS_PREGAME_STALE_MAX_HOURS * 3600:
-                    raise OSError("pregame cache exceeds bounded stale window")
-                with open(BBS_PREGAME_CACHE_FILE, encoding="utf-8") as handle:
-                    cached = json.load(handle)
-                DIAG.append(f"Big Balls pregame overlay: stale cache after provider error — {_scrub(exc)}")
-            except Exception:
-                DIAG.append(f"Big Balls pregame overlay unavailable — {_scrub(exc)}")
-                return {"injuries": 0}
-    else:
-        DIAG.append("Big Balls pregame overlay: local cache")
-    for match in near:
-        _merge_bbs_overlay(match, cached.get(str(match.get("id"))) if isinstance(cached, dict) else None)
-    return {"injuries": sum(len((match.get("injuries") or {}).get(side) or [])
-                            for match in near for side in ("home", "away"))}
-
-
 def _has_injuries(match):
     injuries = match.get("injuries") or {}
     return isinstance(injuries, dict) and any(injuries.get(side) for side in ("home", "away"))
@@ -7317,80 +5513,6 @@ def record_market_snapshots(matches):
 
 
 
-def compute_advancement(matches, st, name_map, code_map):
-    """Model-derived advancement odds: roll the strength model through the
-    remaining knockout rounds. Current-round matchups are exact; later rounds
-    use a field-weighted average opponent (honest approximation, no fixed
-    bracket-path assumption)."""
-    if not COMP["tournament"]:
-        return []
-    ko = [m for m in matches if m.get("stage") and not m["stage"].lower().startswith("group")
-          and m.get("status") in ("UPCOMING", "LIVE")
-          and m["home"].get("name") and m["away"].get("name")
-          and "winner" not in (m["home"]["name"] or "").lower()
-          and "winner" not in (m["away"]["name"] or "").lower()]
-    if not ko:
-        return []
-    # the earliest unresolved knockout round = current round
-    order = {r: i for i, r in enumerate(KO_ORDER)}
-    ko.sort(key=lambda m: order.get(canonical_knockout_round(m.get("stage")), 99))
-    cur_stage = canonical_knockout_round(ko[0].get("stage"))
-    cur = [m for m in ko if canonical_knockout_round(m.get("stage")) == cur_stage
-           and cur_stage != "Third-place playoff"]
-    rounds_after = [r for r in KO_ORDER if order.get(r, 99) > order.get(cur_stage, -1)
-                    and r != "Third-place playoff"]
-
-    def s_of(team):
-        rec = st.get(norm(team.get("name")), {}) if isinstance(st, dict) else {}
-        base = 1.0 + rec.get("pts", 0)*0.6 + rec.get("gd", 0)*0.25
-        fp = sum({"W": 3, "D": 1, "L": 0}.get(r, 0) for r in (rec.get("form", "").split()))
-        return max(0.1, base + fp*0.5 + rating_boost(team.get("name")))
-
-    def p_beat(sa, sb):
-        p = sa / (sa + sb)
-        return 0.5 + (p - 0.5) * 0.88   # knockout variance damp
-
-    strength, codes = {}, {}
-    prob = {}
-    for m in cur:
-        for side, opp in (("home", "away"), ("away", "home")):
-            t = m[side]; k = norm(t["name"])
-            strength[k] = s_of(t)
-            codes[k] = t.get("code") or code_map.get(k, "")
-    for m in cur:
-        hk, ak = norm(m["home"]["name"]), norm(m["away"]["name"])
-        ph = p_beat(strength[hk], strength[ak])
-        prob[hk] = ph; prob[ak] = 1 - ph
-
-    rows = {k: {"team": name_map.get(k, k.title()), "code": codes.get(k, ""),
-                "stages": {}} for k in prob}
-    if rounds_after:
-        for k in prob: rows[k]["stages"][rounds_after[0]] = prob[k]
-    else:
-        # the Final itself is the current round
-        for k in prob: rows[k]["stages"]["Champion"] = prob[k]
-    # later rounds vs the probability-weighted field
-    p_now = dict(prob)
-    for idx, r in enumerate(rounds_after[1:] + (["Champion"] if rounds_after else [])):
-        p_next = {}
-        for k in p_now:
-            tot_w = sum(p_now[o] for o in p_now if o != k)
-            if tot_w <= 0:
-                p_next[k] = p_now[k]; continue
-            exp_win = sum(p_now[o] * p_beat(strength[k], strength[o]) for o in p_now if o != k) / tot_w
-            p_next[k] = p_now[k] * exp_win
-        p_now = p_next
-        for k in p_now: rows[k]["stages"][r] = p_now[k]
-    out = []
-    for k, r in rows.items():
-        r["stages"] = {sg: round(v*100, 1) for sg, v in r["stages"].items()}
-        r["win"] = r["stages"].get("Champion", 0)
-        out.append(r)
-    out.sort(key=lambda x: -x["win"])
-    DIAG.append(f"advancement: {len(out)} teams from {cur_stage}")
-    return out
-
-
 def _due_for_odds(match, now_utc=None):
     """Only upcoming fixtures close enough to produce a lockable pregame pick.
 
@@ -7415,37 +5537,15 @@ def build():
     provider_quota.BLOCKED_THIS_RUN.clear()
     MARKET_STATE["quota_out"] = False
     print("Fetching fixtures…")
-    sports_adapter = None
-    if COMP.get("source") in {"sportsdataio", "balldontlie", "cfbd", "cbbd", "apisports"}:
-        raw = []
-        if COMP.get("source") == "balldontlie":
-            sports_adapter, matches, st, sports_tables = fetch_balldontlie_bundle()
-            provider_name = "BALLDONTLIE"
-        elif COMP.get("source") == "apisports":
-            sports_adapter, matches, st, sports_tables = fetch_apisports_bundle()
-            provider_name = "API-Sports"
-        elif COMP.get("source") in {"cfbd", "cbbd"}:
-            sports_adapter, matches, st, sports_tables = fetch_college_bundle()
-            provider_name = "CollegeFootballData" if COMP_KEY == "NCAAF" else "CollegeBasketballData"
-        else:
-            sports_adapter, matches, st, sports_tables = fetch_sportsdataio_bundle()
-            provider_name = "SportsDataIO"
-        if COMP_KEY in US_PRO_STANDINGS_GROUPS:
-            sports_tables = _group_us_pro_standings(sports_tables, COMP_KEY)
-            # Keep match hydration/model inputs aligned with the official table
-            # group and within-group rank shown to users.
-            for table in sports_tables:
-                for team in table.get("teams") or []:
-                    rec = st.get(norm(team.get("name")))
-                    if rec is not None:
-                        rec["group"] = table.get("group")
-                        rec["pos"] = team.get("pos")
+    raw = []
+    sports_adapter, matches, st, sports_tables = fetch_college_bundle()
+    provider_name = "CollegeFootballData" if COMP_KEY == "NCAAF" else "CollegeBasketballData"
+    if True:
         print(f"  got {len(matches)} fixtures ({provider_name})")
         training_matches = normalize_match_results(
             getattr(sports_adapter, "_model_history", matches))
-        if mark_stale_offseason_records(st, sports_tables, training_matches, matches, COMP_KEY):
-            DIAG.append("NFL records: prior season retained as a dampened model prior; hidden as current context")
-        srs_ratings = compute_srs(training_matches) if COMP["sport"] != "soccer" else {}
+        mark_stale_offseason_records(st, sports_tables, training_matches, matches, COMP_KEY)
+        srs_ratings = compute_srs(training_matches)
         # Match cards already receive SRS below. Put the same evidence on the
         # standings rows so the independent college Top 25 can compare every
         # FBS/D1 team, including teams outside this run's display window.
@@ -7498,15 +5598,6 @@ def build():
             for team in table.get("teams") or []:
                 if team.get("name"):
                     name_map.setdefault(norm(team["name"]), team["name"])
-    else:
-        raw = fetch_raw_matches(); print(f"  got {len(raw)} raw fixtures")
-        st = compute_standings(raw)
-        matches = build_matches(raw, st)
-        training_matches = normalize_match_results(matches)
-        name_map = {}
-        for m in raw:
-            for t in (m.get("homeTeam"), m.get("awayTeam")):
-                if t and t.get("name"): name_map[norm(t["name"])] = t["name"]
 
     DIAG.append(f"ratings: {len(_load_ratings())} teams loaded")
     restored_context = restore_pregame_snapshots(matches)
@@ -7545,36 +5636,10 @@ def build():
             if how == "fuzzy": fuzzy += 1
     print("Fetching fallback market context (SportsGameOdds)…")
     fetch_sportsgameodds_overlay(matches)
-    if COMP_KEY == "MLB":
-        bullpen_context = derive_mlb_bullpen_rest_context(matches)
-        DIAG.append(f"MLB bullpen rest proxy: {bullpen_context} upcoming match(es), production weight 0")
     record_market_snapshots(matches)
 
-    if COMP["sport"] == "soccer":
-        print("Fetching soccer detail (Sportmonks)…")
-        fetch_sportmonks_enrichment(matches)
-        # Pregame information gets the shared free allowance before postgame
-        # enrichment. The injury pass populates the date/id cache, which the
-        # lineup/box-score pass immediately reuses.
-        print("Fetching soccer injuries (API-FOOTBALL)…")
-        fetch_api_football_injuries(matches)
-        print("Fetching soccer lineups + box scores (API-FOOTBALL)…")
-        fetch_api_football_box_scores(matches)
-    elif COMP.get("source") != "sportsdataio":
-        print("Fetching sport-specific personnel context (SportsDataIO)…")
-        fetch_sportsdataio_pregame_overlay(matches)
-
-    # The adapter is coverage-safe but remains disabled until the provider
-    # identifies the upstream injury source and Matchday can exclude ESPN
-    # origin. Unsupported sports always no-op and remain honestly missing.
-    print("Fetching free-tier injury context (Big Balls Sports Data)…")
-    fetch_bbs_pregame_overlay(matches)
-
-    if COMP_KEY == "NFL":
-        print("Fetching current NFL depth charts + weekly rosters (nflverse)…")
-        nfl_context = fetch_nflverse_pregame_overlay(matches)
-        DIAG.append("nflverse pregame context: " + ", ".join(
-            f"{key}={value}" for key, value in nfl_context.items()))
+    print("Fetching sport-specific personnel context (SportsDataIO)…")
+    fetch_sportsdataio_pregame_overlay(matches)
 
     venue_shadow = pregame_context.derive_venue_context(matches, training_matches, COMP["sport"])
     if venue_shadow.get("matches"):
@@ -7583,8 +5648,8 @@ def build():
     if saved_context:
         DIAG.append(f"pregame snapshots: retained {saved_context} active fixture(s)")
 
-    # for US sports, pull championship odds first and fold them into team strength
-    # so predictions use market-implied strength (their soccer-value equivalent)
+    # pull championship odds first and fold them into team strength so
+    # predictions use market-implied strength
     code_map = {}
     for m in matches:
         code_map[norm(m["home"]["name"])] = m["home"]["code"]
@@ -7604,12 +5669,12 @@ def build():
             DIAG.append(f"{provider_name} recruiting unavailable: {_scrub(exc)}")
 
     title = None
-    if COMP.get("source") in {"sportsdataio", "balldontlie", "cfbd", "cbbd", "apisports"} and COMP.get("outright"):
+    if COMP.get("outright"):
         print("Fetching championship odds (team strength)…")
         title = fetch_outrights(code_map)
         apply_market_strength(title, known_names)
 
-    if COMP.get("source") in {"sportsdataio", "balldontlie", "cfbd", "cbbd", "apisports"}:
+    if True:
         # class/power-rating, computed now that apply_recruiting_strength()/
         # apply_market_strength() above have folded this run's talent and
         # championship-odds data into the ratings store predict() reads --
@@ -7628,10 +5693,6 @@ def build():
             for team in table.get("teams") or []:
                 if team.get("name"):
                     team["rating"] = round(power_rating(team["name"], team), 2)
-        # Official standings stay record-sorted. Model opinion gets its own
-        # clearly labeled, league-wide table instead of replacing division rank.
-        if COMP_KEY in US_PRO_STANDINGS_GROUPS:
-            sports_tables = _append_power_ratings_table(sports_tables)
 
     # train the self-updating factors (Elo, H2H) on this run's finished
     # results, and derive home/away split form -- all from the same
@@ -7664,24 +5725,8 @@ def build():
     shadow = attach_shadow_profiles(matches, COMP_KEY, COMP["sport"])
     if shadow.get("matches"):
         DIAG.append(f"advanced metrics shadow: {shadow['teams']} team profiles on {shadow['matches']} match(es)")
-    if COMP_KEY == "NFL":
-        challenger = attach_nfl_challenger_shadows(matches)
-        if challenger.get("matches"):
-            DIAG.append(f"NFL learned challenger shadow: {challenger['matches']} match(es), production weight 0")
-    elif COMP_KEY == "MLB":
-        challenger = attach_mlb_challenger_shadows(matches)
-        if challenger.get("matches"):
-            DIAG.append(f"MLB run-strength challenger shadow: {challenger['matches']} match(es), production weight 0")
-    mlb_promotion_policy = load_mlb_promotion_policy() if COMP_KEY == "MLB" else None
-    nfl_adjustment_policy = load_nfl_adjustment_policy() if COMP_KEY == "NFL" else None
-    promoted_matches = 0
-    mlb_research_predictions = {}
     for m in matches:
         m["prediction"] = predict(m["home"], m["away"], m["markets"], m)
-        if COMP_KEY == "MLB":
-            # This detached raw baseline exists only long enough to reach the
-            # private research ledger. The pause shell clears the public copy.
-            mlb_research_predictions[str(m.get("id") or "")] = _json_safe(m["prediction"])
         m["prediction"] = _set_prediction_publication_state(m, m["prediction"])
         if m["prediction"].get("publication_state") == "paused":
             continue
@@ -7696,34 +5741,8 @@ def build():
             m["prediction"]["neutral_venue_probs"] = predict(
                 m["home"], m["away"], m["markets"], m, neutral_venue=True
             )["adjusted"]
-        if mlb_promotion_policy and apply_mlb_promotion(m, m["prediction"], mlb_promotion_policy):
-            promoted_matches += 1
-        if nfl_adjustment_policy and apply_nfl_adjustment(m, m["prediction"], nfl_adjustment_policy):
-            promoted_matches += 1
         m["prediction"]["totals"] = predict_totals(m["home"], m["away"], m["markets"])
         m["watchability"] = compute_watchability(m)
-    if promoted_matches:
-        label = "NFL calibrated-Elo historical pilot" if COMP_KEY == "NFL" else "MLB reviewed challenger blend"
-        DIAG.append(f"{label} applied to {promoted_matches} match(es)")
-    if COMP_KEY == "MLB":
-        shadow_state = mlb_shadow_ledger.sync(
-            _mlb_shadow_ledger_path(), matches, mlb_research_predictions)
-        # Printed every run, including the zero-lock ones. A missed lock window
-        # is evidence that cannot be recovered -- first pitch closes it for good
-        # -- and until this line existed a run that locked nothing looked exactly
-        # like a healthy one, because the DIAG entry below only fired when
-        # something was written and lands in an untracked data file either way.
-        # The 2026-08-19 evening slate went unlocked across four healthy runs
-        # and left no trace anywhere to diagnose it from.
-        reasons = shadow_state.get("lock_reasons") or {}
-        print("  MLB research ledger: locked={} graded={} of {} fixture(s) · {}".format(
-            shadow_state["locked"], shadow_state["graded"],
-            shadow_state.get("considered", len(matches)),
-            ", ".join(f"{reason}={count}" for reason, count in reasons.items()) or "no fixtures"))
-        DIAG.append(
-            "MLB private research ledger: "
-            f"locked={shadow_state['locked']}, graded={shadow_state['graded']}, "
-            + ", ".join(f"{reason}={count}" for reason, count in reasons.items()))
     print(f"  merged odds onto {merged} fixtures ({fuzzy} via name-variant match) · predictions on all {len(matches)}")
 
     print("Fetching title odds + news…")
@@ -7734,50 +5753,14 @@ def build():
         if title:
             DIAG.append(f"title race: no market odds available, estimated from model ratings for {len(title)} teams")
     news = fetch_news()
-    bracket = build_bracket(raw)
-    third = third_race(st, name_map, code_map) if COMP["tournament"] else []
+    bracket = []
+    third = []
 
-    # This groups-from-`st` builder predates the American-sports providers and
-    # was only ever meant for soccer's GROUP_-tagged group stages (World Cup/
-    # UCL). cfbd/cbbd/sportsdataio/balldontlie/apisports all tag each team
-    # with its own real conference/division via the SAME "group" field, so
-    # this fired for them too and its output silently WON over the adapter's
-    # own sports_tables in the `if not standings: ...` fallback chain below --
-    # even though sports_tables is the adapter's correctly-sorted, fully
-    # populated table (win_pct, record, qual) and this rebuild drops all of
-    # that down to a narrow field list. Worse, it sorted by `x["pos"] or 99`,
-    # but CollegeFootballDataAdapter/CollegeBasketballDataAdapter's `model`
-    # dict (this function's `st`) held every team's position frozen at the
-    # pre-sort None (see the fix in provider_adapters.py's standings()) --
-    # every team fell back to 99 either way, and Python's stable sort just
-    # kept the API response order, live-observed as leagues that looked
-    # completely unordered. Skip this generic path for the providers that
-    # already return a real, sorted, fully-populated table of their own.
-    groups = defaultdict(list)
-    if COMP.get("source") not in {"cfbd", "cbbd", "sportsdataio", "balldontlie", "apisports"}:
-        for t, r in st.items():
-            gkey = r.get("group")
-            if gkey:
-                groups[gkey].append({
-                    "name": name_map.get(t, t.title()), "code": code_map.get(t, ""),
-                    "pos": r.get("pos"), "pld": r["pld"], "w": r["w"], "d": r["d"], "l": r["l"],
-                    "gf": r["gf"], "ga": r["ga"], "gd": r["gd"], "pts": r["pts"], "form": r["form"],
-                    "rating": round(power_rating(name_map.get(t, t)), 2),
-                    "season_stale": bool(r.get("season_stale"))})
-    third_in = {norm(x.get("team")) for x in third if x.get("in")} or None
-    third_out = {norm(x.get("team")) for x in third if not x.get("in")} if third else None
-    def _annotate(teams):
-        return qual_scenarios(teams, third_in, third_out) if COMP["tournament"] else teams
-    standings = [{"group": pretty_group(g), "teams": _annotate(sorted(groups[g], key=lambda x: (x["pos"] or 99)))}
-                 for g in sorted(groups)]
-    if not standings and COMP["sport"] == "soccer":
-        standings = build_league_table(st, name_map, code_map, COMP.get("league_zones"))
-    if not standings and COMP.get("source") in {"sportsdataio", "balldontlie", "cfbd", "cbbd", "apisports"}:
-        standings = sports_tables
+    standings = sports_tables
     bracketology = None
     projection_current = False
     bracket_projection_current = False
-    if COMP_KEY in ("NCAAF", "NCAAM") and COMP.get("source") in {"sportsdataio", "cfbd", "cbbd"}:
+    if True:
         ranks, proj = sports_adapter.rankings(sports_tables) if sports_adapter else ([], None)
         if ranks:
             is_projected = bool(ranks[0].get("projected"))
@@ -7840,42 +5823,21 @@ def build():
             DIAG.append(f"posts: published '{post['title']}'")
     except Exception as e:
         DIAG.append(f"posts: skipped — {e}")
-    update_player_db(matches)
     scorers = []
-    if COMP.get("fd"):
-        print("Fetching top scorers…")
-        scorers = fetch_scorers()
     leaders = {}
-    if COMP.get("source") == "sportsdataio":
-        print("Fetching season leaders (SportsDataIO)…")
-        try:
-            leaders = sports_adapter.leaders() if sports_adapter else {}
-        except ProviderError as exc:
-            DIAG.append(f"SportsDataIO leaders unavailable on this plan: {_scrub(exc)}")
-            leaders = {}
-    elif COMP.get("source") in {"cfbd", "cbbd"} and sports_adapter:
+    if sports_adapter:
         print(f"Fetching season leaders ({provider_name})…")
         leaders = fetch_college_leaders(sports_adapter, provider_name)
-    elif COMP_KEY == "NFL":
-        # Independent of NFL's schedule/score source (BALLDONTLIE): nflverse
-        # is a separate, unauthenticated, public CC-BY-4.0 feed added purely
-        # for player-stat leaders, so it applies regardless of which
-        # provider is filling `matches` for this competition.
-        print("Fetching season leaders (nflverse)…")
-        leaders = fetch_nflverse_leaders()
 
     live = sum(1 for m in matches if m["status"] == "LIVE")
-    source_note = "sample" if COMP.get("source") == "sportsdataio" else "live"
+    source_note = "live"
     fixture_count_check = _check_and_record_fixture_count(COMP_KEY, len(matches))
     generated_at = datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds")
-    source_provider = {"fd": "football_data", "cfbd": "cfbd", "cbbd": "cbbd",
-                       "balldontlie": "balldontlie", "apisports": "api_football",
-                       "sportsdataio": "sportsdataio"}.get(COMP.get("source"), COMP.get("source"))
+    source_provider = COMP.get("source")
     blocked_providers = list(provider_quota.BLOCKED_THIS_RUN)
     source_state = ("quota_limited" if source_provider in blocked_providers
                     else "partial" if blocked_providers else "fresh")
-    advancement = (compute_advancement(matches, st, name_map, code_map)
-                   if season_context["derived_positions_current"] else [])
+    advancement = []
     # Archive the finished games before the payload that holds them is
     # overwritten. Costs no provider call -- these were already fetched -- and
     # record_build() swallows its own errors so the deploy never fails here.
@@ -7903,7 +5865,7 @@ def build():
                "season_context": season_context,
                "source_note": source_note, "competition": COMP["label"], "comp_key": COMP_KEY, "matches": matches,
                "title_odds": title, "news": news, "news_scope": COMP_KEY, "bracket": bracket, "bracketology": bracketology,
-               "third_race": third, "standings": standings, "scorers": scorers, "leaders": leaders, "team_of_tournament": build_team_of_tournament(matches, scorers, standings), "scorecard": scorecard,
+               "third_race": third, "standings": standings, "scorers": scorers, "leaders": leaders, "team_of_tournament": None, "scorecard": scorecard,
                "advancement": advancement,
                "weekly_awards": weekly_awards,
                "markets_quota_out": MARKET_STATE["quota_out"],
@@ -7924,7 +5886,7 @@ def build():
 
 
 def main():
-    if not FOOTBALL_DATA_KEY or not ODDS_API_KEY or "PASTE_" in FOOTBALL_DATA_KEY or "PASTE_" in ODDS_API_KEY:
+    if not ODDS_API_KEY or "PASTE_" in ODDS_API_KEY:
         print("\n  Stop: keys not loaded — fix config_keys.py (see the !! lines above).\n"); sys.exit(1)
     loop = "--loop" in sys.argv
     # A caught build() exception here used to only print to a CI log nobody

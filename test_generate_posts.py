@@ -51,9 +51,6 @@ class RecapContentTests(unittest.TestCase):
                 "epl", "Premier League", "soccer", match, base | change))
         self.assertIsNone(gp._learning_lesson(
             "epl", "Premier League", "soccer", match | {"score": {"home": None, "away": 1}}, base))
-    def test_content_sport_routes_mlb_posts_to_baseball(self):
-        self.assertEqual(gp._content_sport("MLB"), "baseball")
-
     def test_publication_state_uses_canonical_dataset_eligibility(self):
         # With the site-wide pause lifted, the dataset marker decides -- and it
         # decides the same way for every competition.

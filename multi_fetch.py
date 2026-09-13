@@ -23,23 +23,10 @@ import sys
 import time
 
 SPORTS = [
-    # College only. Every round previously fetched twelve competitions, which
-    # spent the shared provider budget on sports this site no longer publishes
-    # and left NCAAF unable to refresh once CFBD hit its monthly ceiling.
+    # College football and men's college basketball are the only sports.
     ("ncaaf", "--ncaaf"), ("ncaam", "--ncaam"),
 ]
-# NHL deliberately excluded: not reachable from the sport picker (see
-# app-3-panels.js), and its schedule source (SportsDataIO) has an unresolved
-# plan/billing status -- see ROTATE_KEYS.md and PROVIDER_COMPLIANCE.md.
 SPACING = 30          # seconds between two sports' fetches (quota safety)
-# Bumped 20 -> 30 2026-07-26: EPL/UCL/LaLiga/SerieA/Bundesliga/Ligue1/WC all
-# share one football-data.org key with a real published 10-req/min limit --
-# forcing 6+ of them to refetch in the same run (see FORCE_REFETCH_ONCE
-# above) at 20s spacing risks enough requests landing in the same rolling
-# minute to trip that limit; confirmed live 2026-07-26 that a run forcing
-# every soccer competition at once left EPL/UCL's data un-refreshed (their
-# fetch didn't complete) while other, non-soccer forced sports succeeded in
-# the same run.
 TICK = 15             # scheduler wake-up interval
 RETRY_AFTER_ERROR = 15 * 60
 ONCE_RETRIES = 2
@@ -60,7 +47,7 @@ PAST_DUE_SCORE_GRACE_HOURS = 8
 # old one still looks "recently fetched" to the interval check below and
 # never gets refreshed. Force a refetch whenever the on-disk file's actual
 # source doesn't match what the sport is currently configured to use.
-EXPECTED_SOURCE = {"nfl": "BALLDONTLIE", "nba": "BALLDONTLIE", "mlb": "BALLDONTLIE"}
+EXPECTED_SOURCE = {}
 
 
 def _stale_source(key):
@@ -203,36 +190,15 @@ def _lock_window_due(key, now=None):
 # Hours are local to the zone each sport's schedule is really keyed to, so
 # they stay correct across daylight-saving changes rather than drifting an
 # hour twice a year the way fixed UTC hours would.
-SPORT_ZONE = {
-    "nfl": "America/New_York", "ncaaf": "America/New_York",
-    "nba": "America/New_York", "ncaam": "America/New_York",
-    "mlb": "America/New_York",
-    "wc": "UTC", "ucl": "UTC", "epl": "UTC", "laliga": "UTC",
-    "seriea": "UTC", "bundesliga": "UTC", "ligue1": "UTC",
-}
+SPORT_ZONE = {"ncaaf": "America/New_York", "ncaam": "America/New_York"}
 # (pregame, mid-slate, post-slate) in each sport's own zone.
 ANCHOR_HOURS = {
     # Sat slates run noon-to-midnight ET, with Thu/Fri night games. 10:00
     # precedes the earliest kickoff; 23:30 lands after West Coast finals
     # rather than at 22:00, when late games are still in the fourth quarter.
     "ncaaf": ((10, 0), (15, 0), (23, 30)),
-    # 11:00 is after the 90-minute inactive reports for the 13:00 ET window.
-    "nfl": ((11, 0), (16, 0), (23, 30)),
-    # Tips 19:00-22:30 ET; the latest West Coast games end after 01:00.
-    "nba": ((17, 0), (23, 0), (3, 30)),
+    # Tips run into the late evening ET; West Coast games end after midnight.
     "ncaam": ((11, 0), (18, 0), (1, 0)),
-    # Probable pitchers and lineups post through the late morning; West Coast
-    # games finish around 01:00-02:00 ET.
-    "mlb": ((11, 0), (17, 0), (2, 0)),
-    # European kickoffs, kept in UTC: early Saturday games from ~11:30 UTC,
-    # late Sunday/midweek kickoffs finishing by ~22:00 UTC.
-    "wc": ((10, 0), (15, 0), (22, 30)),
-    "ucl": ((10, 0), (15, 0), (22, 30)),
-    "epl": ((10, 0), (15, 0), (22, 30)),
-    "laliga": ((10, 0), (15, 0), (22, 30)),
-    "seriea": ((10, 0), (15, 0), (22, 30)),
-    "bundesliga": ((10, 0), (15, 0), (22, 30)),
-    "ligue1": ((10, 0), (15, 0), (22, 30)),
 }
 # An anchor stays claimable for this long, so the hourly CI job (which fires
 # at :17) still serves a :00 or :30 anchor instead of missing it outright.
@@ -291,7 +257,7 @@ def _anchor_due(key, served, now=None):
         return None
     for hour, minute in anchors:
         at = local_now.replace(hour=hour, minute=minute, second=0, microsecond=0)
-        # A post-slate anchor in the small hours (MLB 02:00, NBA 03:30) closes
+        # A post-slate anchor in the small hours (NCAAM 01:00) closes
         # out the PREVIOUS day's games, so it belongs to that game day.
         game_day = at.date() - datetime.timedelta(days=1) if hour < 6 else at.date()
         if not any(ko.date() == game_day for ko in kickoffs):

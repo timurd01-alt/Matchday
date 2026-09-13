@@ -58,14 +58,9 @@ EVERGREEN_POSTS = (
         f"{BASE_URL}content.html"
     ),
     (
-        "From soccer and football to basketball and baseball, Matchday Terminal "
+        "From college football to college basketball, Matchday Terminal "
         "turns model signals into readable matchup analysis. "
         f"{BASE_URL}"
-    ),
-    (
-        "Pressing, rest, form, and schedule strength all shape a soccer matchup. "
-        "See how Matchday Terminal reads them. "
-        f"{BASE_URL}tactics-soccer.html"
     ),
     (
         "Pace, spacing, and back-to-backs can change a basketball forecast. "

@@ -141,19 +141,9 @@ BOX_FIELDS: tuple[str, ...] = (
 
 # Competitions whose season spans a calendar boundary, with the month (1-12) on
 # or after which a game belongs to the season named for that starting year.
-# MLB runs inside one calendar year, so it is deliberately absent.
 _SEASON_START_MONTH: dict[str, int] = {
-    "NFL": 3,
     "NCAAF": 3,
-    "NBA": 7,
     "NCAAM": 7,
-    "NHL": 7,
-    "EPL": 7,
-    "LALIGA": 7,
-    "SERIEA": 7,
-    "BUNDESLIGA": 7,
-    "LIGUE1": 7,
-    "UCL": 7,
 }
 
 

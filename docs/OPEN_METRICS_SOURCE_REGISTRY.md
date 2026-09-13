@@ -1,5 +1,11 @@
 # Matchday open-metrics source registry
 
+> **Retired sports (2026-09-13).** Matchday now covers college football and men's
+> college basketball only. Entries below about soccer, NFL, NBA, MLB and NHL -- and the
+> football-data.org, API-Football, BALLDONTLIE, Sportmonks, Big Balls and nflverse
+> providers -- are kept as the historical compliance record; none of those providers is
+> called any more.
+
 Reviewed: 2026-08-10
 
 Status: research allowlist; every production integration still requires a fresh terms/tier check

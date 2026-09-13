@@ -5,60 +5,10 @@ from advanced_metrics import (
     basketball_team_profiles,
     cfbd_advanced_game_records,
     cfbd_advanced_team_profiles,
-    nflverse_team_profiles,
-    retrosheet_event_profiles,
-    statsbomb_match_records,
-    statsbomb_team_profiles,
 )
 
 
 class AdvancedMetricTests(unittest.TestCase):
-    def test_nflverse_profiles_include_requested_families(self):
-        rows = []
-        for play in range(4):
-            rows.append({"game_id": "g1", "posteam": "AAA", "defteam": "BBB", "pass_attempt": 1,
-                         "rush_attempt": 0, "epa": 0.2, "success": 1, "yards_gained": 22,
-                         "cpoe": 4, "down": 1, "fixed_drive": 1, "game_seconds_remaining": 3600 - play * 30})
-        profile = nflverse_team_profiles(rows, min_plays=1)["AAA"]
-        self.assertEqual(profile["epa_per_play"], 0.2)
-        self.assertEqual(profile["success_rate"], 1.0)
-        self.assertEqual(profile["explosive_play_rate"], 1.0)
-        self.assertEqual(profile["cpoe"], 4.0)
-        self.assertEqual(profile["seconds_per_play"], 30.0)
-
-    def test_statsbomb_xg_and_pressure(self):
-        events = [
-            {"match_id": 1, "team": {"name": "A"}, "type": {"name": "Shot"}, "shot": {"statsbomb_xg": 0.3, "type": {"name": "Open Play"}}, "possession": 1, "possession_team": {"name": "A"}},
-            {"match_id": 1, "team": {"name": "A"}, "type": {"name": "Pressure"}, "possession": 2, "possession_team": {"name": "B"}},
-            {"match_id": 1, "team": {"name": "B"}, "type": {"name": "Shot"}, "shot": {"statsbomb_xg": 0.1, "type": {"name": "Open Play"}}, "possession": 2, "possession_team": {"name": "B"}},
-        ]
-        profiles = statsbomb_team_profiles(events)
-        self.assertEqual(profiles["A"]["xg_difference_per90"], 0.2)
-        self.assertEqual(profiles["A"]["pressures_per90"], 1.0)
-
-    def test_statsbomb_records_grade_regulation_not_extra_time(self):
-        matches = [{"match_id": 1, "match_date": "2025-01-01",
-                    "home_team": {"home_team_name": "A"},
-                    "away_team": {"away_team_name": "B"},
-                    "home_score": 2, "away_score": 1}]
-        events = []
-        for team in ("A", "B"):
-            events.extend([
-                {"match_id": 1, "period": 1, "team": {"name": team},
-                 "type": {"name": "Starting XI"}, "tactics": {"lineup": [
-                     {"player": {"id": f"{team}-{number}"}} for number in range(11)]}},
-                {"match_id": 1, "period": 1, "team": {"name": team},
-                 "type": {"name": "Shot"}, "shot": {"statsbomb_xg": .2,
-                 "type": {"name": "Open Play"}, "outcome": {"name": "Goal"}}},
-            ])
-        events.append({"match_id": 1, "period": 3, "team": {"name": "A"},
-                       "type": {"name": "Shot"}, "shot": {"statsbomb_xg": .3,
-                       "outcome": {"name": "Goal"}}})
-        rows = statsbomb_match_records(matches, events)
-        self.assertEqual(len(rows), 2)
-        self.assertEqual({row["goals"] for row in rows}, {1})
-        self.assertEqual(next(row for row in rows if row["is_home"])["lineup_count"], 11)
-
     def test_basketball_four_factors(self):
         rows = []
         for game in range(3):
@@ -109,16 +59,6 @@ class AdvancedMetricTests(unittest.TestCase):
             {"gameId": 1, "team": "A", "offense": offense},
             {"gameId": 1, "team": "B", "offense": offense},
         ]), [])
-
-    def test_retrosheet_event_rates(self):
-        lines = ["id,G1", "info,visteam,AAA", "info,hometeam,BBB",
-                 "play,1,0,p,00,,K", "play,1,0,p,00,,W", "play,1,0,p,00,,HR",
-                 "play,1,1,p,00,,S7"]
-        profiles = retrosheet_event_profiles(lines, min_plate_appearances=1)
-        self.assertEqual(profiles["AAA"]["plate_appearances"], 3)
-        self.assertAlmostEqual(profiles["AAA"]["strikeout_rate"], 1 / 3, places=4)
-        self.assertAlmostEqual(profiles["AAA"]["home_run_rate"], 1 / 3, places=4)
-
 
 if __name__ == "__main__":
     unittest.main()

@@ -66,10 +66,8 @@ function setLang(v){LANG=v;try{localStorage.setItem('matchday.lang',v)}catch(e){
 // to fail: an empty DATA_FILE has no meaning now.
 const DEFAULT_SPORT_FILE='data_ncaaf.json';
 let DATA_FILE=DEFAULT_SPORT_FILE;try{const saved=localStorage.getItem('matchday.sport')||'';DATA_FILE=/^data_(ncaaf|ncaam)\.json$/i.test(saved)?saved:DEFAULT_SPORT_FILE;if(DATA_FILE!==saved)localStorage.setItem('matchday.sport',DATA_FILE)}catch(e){}
-const SPORT_LABELS={wc:'World Cup',ucl:'Champions League',epl:'Premier League',laliga:'La Liga',seriea:'Serie A',bundesliga:'Bundesliga',ligue1:'Ligue 1',nfl:'NFL',ncaaf:'College Football',ncaam:"Men's College Basketball",nba:'NBA',mlb:'MLB',nhl:'NHL'};
-// The sports we actually publish data for. SPORT_LABELS above still knows about
-// NHL so a restored sport picks up its name for free, but nothing fetches a file
-// that isn't there.
+const SPORT_LABELS={ncaaf:'College Football',ncaam:"Men's College Basketball"};
+// The only sports Matchday covers.
 const ALL_SPORT_KEYS=['ncaaf','ncaam'];
 const FIXTURE_PAGE_SIZE=40;
 // The model board used to render every pick in one scroll (1,300+ rows on a
@@ -135,7 +133,6 @@ function forecastPauseHTML(match){
 // the new season's live competition state.
 function competitionSeasonCutoff(comp,now=new Date()){
   const key=String(comp||'').toUpperCase(),year=now.getUTCFullYear();
-  if(key==='MLB')return new Date(Date.UTC(year,0,1));
   const startYear=now.getUTCMonth()>=6?year:year-1;
   return new Date(Date.UTC(startYear,6,1));
 }
@@ -186,9 +183,7 @@ const SPORT_KIND={ncaaf:'college',ncaam:'college_basketball'};
 function currentSportKey(){const m=(DATA_FILE||'').match(/data_(\w+)\.json/);return m?m[1]:'';}
 function navProfile(){return SPORT_KIND[currentSportKey()]||'college';}
 const NAV_LABELS={college:{groups:'Conferences',bracket:'CFP Playoff'},college_basketball:{groups:'Conferences',bracket:'Bracketology'}};
-// A domestic league plays a season, not a tournament. The nav button already
-// said so via NAV_LABELS; the view's own heading did not.
-function tottTitle(){return navProfile()==='soccer_league'?'Team of the Season':'Team of the Tournament'}
+function tottTitle(){return 'Team of the Tournament'}
 function applySportNav(){
   const prof=navProfile();
   const allowed=NAV_DEF[prof];
@@ -358,15 +353,13 @@ function favoriteTeamsControl(){
   const picker=`<select class="favAdd" onchange="if(this.value){toggleFavoriteTeam(this.value);this.value=''}" aria-label="${esc('Add a team to follow')}"><option value="">${t('Add a team')}…</option>${available.map(name=>`<option value="${esc(name)}">${esc(name)}</option>`).join('')}</select>`;
   return `<div class="favChips">${chips}</div>${picker}`;
 }
-const SCORE_DIFF_TERM={mlb:'run diff',nfl:'point diff',nba:'point diff',ncaaf:'point diff',ncaam:'point diff',nhl:'goal diff'};
-function scoreDiffLabel(m){return SCORE_DIFF_TERM[String(m?._comp||DATA.comp_key||'').toLowerCase()]||'goal diff';}
-const SCORE_DIFF_ABBR={mlb:'RD',nfl:'PD',nba:'PD',ncaaf:'PD',ncaam:'PD',nhl:'GD'};
-// Only league/cup tables that actually award standings points have a real
-// "pts" column. Every US sport ranks on win-loss record, so the pts value the
-// pipeline derives for them (wins x 3) is an artefact of the soccer-shaped
-// schema, not a number any fan of that sport recognises -- NCAAF showed
-// "27 pts" for a 9-4 team. Show the record those sports rank on instead.
-const TABLE_POINTS_COMPS=new Set(['WC','UCL','EPL','LALIGA','SERIEA','BUNDESLIGA','LIGUE1']);
+const SCORE_DIFF_TERM={ncaaf:'point diff',ncaam:'point diff'};
+function scoreDiffLabel(m){return SCORE_DIFF_TERM[String(m?._comp||DATA.comp_key||'').toLowerCase()]||'point diff';}
+const SCORE_DIFF_ABBR={ncaaf:'PD',ncaam:'PD'};
+// College tables rank on win-loss record, so the pts value the pipeline derives
+// (wins x 3) is not a number any fan recognises -- NCAAF showed "27 pts" for a
+// 9-4 team. No competition shows a standings-points column.
+const TABLE_POINTS_COMPS=new Set();
 function usesTablePoints(comp){return TABLE_POINTS_COMPS.has(String(comp??DATA.comp_key??'').toUpperCase())}
 function teamRecordText(team){
   if(team?.record)return String(team.record);
@@ -393,7 +386,7 @@ function teamStandingsMeta(team,comp,opts){
     const gd=Number(team?.gd);
     // A team whose provider gave no scoring data at all reads gd 0 with gf/ga
     // 0 -- that is "unknown", not "dead even", so leave the row off entirely.
-    if(Number.isFinite(gd)&&(gd||Number(team?.gf)||Number(team?.ga)))parts.push(`${SCORE_DIFF_ABBR[String(comp??DATA.comp_key??'').toLowerCase()]||'GD'} ${gd>0?'+':''}${gd}`);
+    if(Number.isFinite(gd)&&(gd||Number(team?.gf)||Number(team?.ga)))parts.push(`${SCORE_DIFF_ABBR[String(comp??DATA.comp_key??'').toLowerCase()]||'PD'} ${gd>0?'+':''}${gd}`);
   }
   const form=String(team?.form||'').trim();
   if(opts.form&&form)parts.push(form);
@@ -1132,8 +1125,6 @@ async function bootAccount(){
 // have live data for it; a curated pool otherwise), with exactly one
 // reshuffle allowed if they don't like the draw.
 const US_SPORT_NAME_POOL={
-  nfl:['Patrick Mahomes','Josh Allen','Christian McCaffrey','Justin Jefferson','Myles Garrett','CeeDee Lamb','Micah Parsons','Tyreek Hill','Nick Bosa',"Ja'Marr Chase"],
-  nba:['Nikola Jokic','Luka Doncic','Shai Gilgeous-Alexander','Giannis Antetokounmpo','Jayson Tatum','Anthony Edwards','Victor Wembanyama','Devin Booker','Tyrese Haliburton','Anthony Davis'],
   ncaaf:['Arch Manning','Carson Beck','Dylan Raiola','Jeremiah Smith','Ryan Williams'],
   ncaam:['Cooper Flagg','Ace Bailey','Cameron Boozer','Darryn Peterson'],
 };
@@ -1197,7 +1188,7 @@ function btmLoad(){try{return JSON.parse(localStorage.getItem('matchday.btm')||'
 function btmSave(o){try{localStorage.setItem('matchday.btm',JSON.stringify(o))}catch(e){}}
 function communityScope(){return String(DATA?.comp_key||'').toUpperCase();}
 function btmScoped(db){const scope=communityScope();if(!scope)return db;
-  const picks={};Object.entries(db.picks||{}).forEach(([id,p])=>{if(String(p.comp||'WC').toUpperCase()===scope)picks[id]=p;});
+  const picks={};Object.entries(db.picks||{}).forEach(([id,p])=>{if(String(p.comp||'NCAAF').toUpperCase()===scope)picks[id]=p;});
   return {...db,picks};}
 function isCommunityPickOpen(m){const kickoff=kickMs(m),now=Date.now();return m?.status==='UPCOMING'&&kickoff>now&&kickoff-now<=7*864e5&&!isStaleUpcoming(m)}
 async function lockGlobalPick(matchId,pick,comp){

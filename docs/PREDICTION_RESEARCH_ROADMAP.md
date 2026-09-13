@@ -1,5 +1,11 @@
 # Matchday prediction research roadmap
 
+> **Retired sports (2026-09-13).** Matchday now covers college football and men's
+> college basketball only. Entries below about soccer, NFL, NBA, MLB and NHL -- and the
+> football-data.org, API-Football, BALLDONTLIE, Sportmonks, Big Balls and nflverse
+> providers -- are kept as the historical compliance record; none of those providers is
+> called any more.
+
 Status: active research contract
 
 Date: 2026-07-29

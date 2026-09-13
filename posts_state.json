@@ -1,24 +1,4 @@
 {
- "LALIGA": {
-  "last_post_date": "2026-08-28",
-  "graded_at_post": 16
- },
- "MLB": {
-  "last_post_date": "2026-08-28",
-  "graded_at_post": 297
- },
- "EPL": {
-  "last_post_date": "2026-08-30",
-  "graded_at_post": 12
- },
- "SERIEA": {
-  "last_post_date": "2026-08-31",
-  "graded_at_post": 13
- },
- "LIGUE1": {
-  "last_post_date": "2026-08-29",
-  "graded_at_post": 5
- },
  "NCAAF": {
   "last_post_date": "2026-09-11",
   "graded_at_post": 19

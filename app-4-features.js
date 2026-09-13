@@ -101,7 +101,7 @@ window.openMatchModal=function(id){
       modal.addEventListener('click',e=>{if(e.target===modal)window.closeMatchModal()});
       document.body.appendChild(modal);
     }
-    const hmeta=t=>esc(teamStandingsMeta(t,m._comp,{form:true,hideStaleRecord:['NCAAF','NFL'].includes(_v15CompetitionKey(m))}).join(' · '));
+    const hmeta=t=>esc(teamStandingsMeta(t,m._comp,{form:true,hideStaleRecord:_v15CompetitionKey(m)==='NCAAF'}).join(' · '));
     const rawScore=scorePlainText(m).trim()||'TBD';
     const body=safeMatchDetails(m);
     modal.innerHTML=`<section class="matchSheet modernMatchSheet" role="dialog" aria-modal="true" aria-label="Expanded matchup analysis"><div class="modalHero"><button class="modalClose" onclick="closeMatchModal()" aria-label="Close">×</button><div class="modalStage"><span>${esc(m.stage||'Matchup')}</span><b>${esc(m.status==='LIVE'?'LIVE':m.status||'UPCOMING')}</b></div><div class="modalFixture"><div class="modalTeam"><div class="modalCode">${teamFlagHTML(m.home)}${esc(m.home?.code||'HOME')}</div><div class="modalName">${esc(m.home?.name||'Home')}</div><div class="modalMeta">${hmeta(m.home)}</div></div><div class="modalScore"><div class="bigScore">${esc(rawScore)}</div><div class="modalStatus">${m.status==='LIVE'?'Final score pending':kickIn(m.kickoff)}</div></div><div class="modalTeam away"><div class="modalCode">${esc(m.away?.code||'AWAY')}${teamFlagHTML(m.away,true)}</div><div class="modalName">${esc(m.away?.name||'Away')}</div><div class="modalMeta">${hmeta(m.away)}</div></div></div></div><div class="modalBody">${body}</div></section>`;
@@ -167,7 +167,7 @@ function _v10OfficialEdge(m,op){
   return Math.round(Number(op.confidence)-mk);
 }
 function _isTwoWay(m){return SANDBOX_TWO_WAY.has(String(m?._comp||DATA.comp_key||'').toLowerCase());}
-const US_SCORE_TERM={nfl:'points',nba:'points',ncaaf:'points',ncaam:'points',mlb:'runs',nhl:'goals'};
+const US_SCORE_TERM={ncaaf:'points',ncaam:'points'};
 function _totalsUnit(m){return US_SCORE_TERM[String(m?._comp||DATA.comp_key||'').toLowerCase()]||'goals';}
 function edgeBreakdown(m){
   const pr=m?.prediction, x=(m?.markets||{})['1x2']||{};
@@ -482,45 +482,6 @@ function _renderCFPBracket(host){
   const rounds=_cfpBracketRounds();
   host.innerHTML=`<div class="bracketStageHeader"><div class="vhead">CFP Bracket</div><div class="bracketLegend">${official?'Official + projected paths':'Projected bracket (model seeding)'}</div></div><div class="bracketWideShell"><div class="bracketWideBoard">${rounds.map(r=>`<section class="brWideRound"><div class="brWideTitle"><b>${esc(r.label)}</b><span>${r.matches.length||0}</span></div><div class="brWideStack">${(r.matches.length?r.matches:[null]).map(m=>_v11MatchCard(m,r.label)).join('')}</div></section>`).join('')}</div></div>`;
 }
-function _uclRoundTies(fixtures,singleMatch=false){
-  if(singleMatch)return (fixtures||[]).map((match,index)=>({key:`final-${index}`,legs:[match],teams:[match.home,match.away]}));
-  const ties=new Map();
-  (fixtures||[]).forEach((match,index)=>{
-    const teams=[match.home,match.away].filter(Boolean);
-    const key=teams.length===2?teams.map(team=>String(team).toLowerCase()).sort().join('|'):`unknown-${index}`;
-    if(!ties.has(key))ties.set(key,{key,legs:[],teams:[match.home,match.away]});
-    ties.get(key).legs.push(match);
-  });
-  return [...ties.values()];
-}
-function _uclTieCard(tie,roundName){
-  if(roundName==='Final')return _v11MatchCard(tie.legs[0],roundName);
-  const teams=tie.teams||[],totals=new Map(teams.map(team=>[String(team||''),0]));
-  let scoredLegs=0;
-  (tie.legs||[]).forEach(leg=>{
-    const hs=Number(leg?.score?.home),as=Number(leg?.score?.away);
-    if(Number.isFinite(hs)&&Number.isFinite(as)){
-      totals.set(String(leg.home||''),(totals.get(String(leg.home||''))||0)+hs);
-      totals.set(String(leg.away||''),(totals.get(String(leg.away||''))||0)+as);
-      scoredLegs+=1;
-    }
-  });
-  const legNote=(tie.legs||[]).map((leg,index)=>{
-    const hs=leg?.score?.home,as=leg?.score?.away,score=hs!=null&&as!=null?`${hs}–${as}`:_v11StatusText(leg);
-    return `Leg ${index+1}: ${leg.home||'TBD'} ${score} ${leg.away||'TBD'}`;
-  }).join(' · ');
-  const row=team=>`<div class="brWideTeam"><div class="brWideName"><span class="brWideCode">${esc(codeForTeam(team,'')||'')}</span><span class="brWideText">${esc(team||'TBD')}</span></div><div class="brWideScore">${scoredLegs?esc(totals.get(String(team||''))||0):''}</div></div>`;
-  return `<article class="brWideMatch ${scoredLegs===2?'done':''}"><div class="brWideMeta"><span>${scoredLegs?'Aggregate':'Two-leg tie'}</span><span class="brWideStatus">${scoredLegs}/2 legs</span></div>${teams.map(row).join('')}<div class="faintline">${esc(legNote)}</div></article>`;
-}
-function _renderUCLBracket(host){
-  const rounds=_bracketSourceMap(DATA.bracket||[]);
-  const names=['Knockout phase play-offs','Round of 16','Quarter-finals','Semi-finals','Final'];
-  const columns=names.filter(name=>(rounds[name]||[]).length).map(name=>{
-    const ties=_uclRoundTies(rounds[name]||[],name==='Final');
-    return `<section class="brWideRound"><div class="brWideTitle"><b>${esc(name)}</b><span>${ties.length} ${ties.length===1?'tie':'ties'}</span></div><div class="brWideStack">${ties.map(tie=>_uclTieCard(tie,name)).join('')}</div></section>`;
-  }).join('');
-  host.innerHTML=`<div class="bracketStageHeader"><div class="vhead">Champions League knockout bracket</div><div class="bracketLegend">Official knockout ties</div></div><div class="bracketWideHint"><span>Playoffs through semifinals are decided on aggregate over two legs. The final is one match.</span>${_bracketScrollControls()}</div><div class="bracketWideShell"><div class="bracketWideBoard">${columns}</div></div>`;
-}
 function renderBracket(){
   const host=$('#view-bracket');
   if(!host)return;
@@ -577,7 +538,7 @@ function _v15Num(v){
   const n=Number(v);return Number.isFinite(n)?n:null;
 }
 function _v15Record(team,m){
-  if(['NCAAF','NFL'].includes(_v15CompetitionKey(m))&&team?.season_stale)return null;
+  if(_v15CompetitionKey(m)==='NCAAF'&&team?.season_stale)return null;
   const p=_v15Num(team?.pld),w=_v15Num(team?.w),d=_v15Num(team?.d),l=_v15Num(team?.l);
   if(!p||w==null||l==null)return null;
   const twoWay=SANDBOX_TWO_WAY.has(String(m?._comp||DATA.comp_key||'').toLowerCase());
@@ -601,9 +562,7 @@ function _v15CompetitionKey(m){
 }
 function _v15PlacementLabel(m){
   const comp=_v15CompetitionKey(m);
-  if(['WC','UCL','EPL','LALIGA','SERIEA','BUNDESLIGA','LIGUE1'].includes(comp))return 'Table position';
-  if(['NFL','MLB','NHL'].includes(comp))return 'Division position';
-  if(['NBA','NCAAF','NCAAM'].includes(comp))return 'Conference position';
+  if(['NCAAF','NCAAM'].includes(comp))return 'Conference position';
   return 'Standings position';
 }
 function _v15Ordinal(value){

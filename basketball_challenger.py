@@ -10,7 +10,7 @@ from datetime import date
 from typing import Any, Iterable, Sequence
 
 from advanced_metrics import _mean, basketball_game_records
-from nfl_challenger import fit_logistic, predict_probability
+from logistic import fit_logistic, predict_probability
 
 
 MODEL_VERSION = "basketball-boxscore-challenger-0.1.0"
