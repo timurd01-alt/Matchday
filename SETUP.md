@@ -60,7 +60,7 @@ The production workflow runs hourly. The scheduler may use longer caches for dis
 ## Prediction lifecycle
 
 1. Upcoming fixtures receive a model probability and selected outcome.
-2. Early forecasts are labeled preliminary while late information is still missing. The official pick is written to the competition's `picks_log*.json` ledger inside the three-hour lock window before kickoff.
+2. Early forecasts are labeled preliminary while late information is still missing. The official pick is written to the competition's `picks_log*.json` ledger inside the 24-hour lock window before kickoff.
 3. The selected side and confidence are not rewritten. If odds arrive later, market-comparison fields may be added without changing the locked pick.
 4. In-progress games are shown as result pending, not as a live scoreboard.
 5. After the provider marks a game final, the locked record is graded and persisted. A failed persistence check fails the fetch instead of silently publishing an ungraded result.

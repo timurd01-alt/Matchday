@@ -272,6 +272,13 @@ def build(path: pathlib.Path = SNAPSHOT) -> str:
                   + json.dumps(document.get("game_of_the_week") or {},
                                ensure_ascii=False) + ";")
 
+    # This season's per-team offense and defense from the engine's own
+    # play-by-play. The expanded view's profile used a previous-season CFBD file
+    # that never refreshed; these move every week with the ratings.
+    blocks.append("  const MATCHDAY_BETBETTER_TEAM_PROFILES="
+                  + json.dumps((document.get("team_profiles") or {}).get("ncaaf") or {},
+                               ensure_ascii=False) + ";")
+
     blocks.append("  const MATCHDAY_BETBETTER_UPSET="
                   + json.dumps(document.get("upset_of_the_week") or {}, ensure_ascii=False) + ";")
     blocks.append("  const MATCHDAY_BETBETTER_USER_PICKS="

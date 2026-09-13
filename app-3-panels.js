@@ -151,6 +151,58 @@ function applyCurrentCfbSnapshot(payload){
       m._settled_from='betbetter_results';
     });
   }
+  // This season's advanced profile on every fixture, from the engine's own
+  // play-by-play. It replaces a previous-season CFBD file that stopped
+  // refreshing, which is why the expanded view mostly said "unavailable".
+  const profiles=(typeof MATCHDAY_BETBETTER_TEAM_PROFILES!=='undefined'&&MATCHDAY_BETBETTER_TEAM_PROFILES)||{};
+  const profileTeams=profiles.teams||{};
+  const profileNames=Object.keys(profileTeams);
+  if(profileNames.length){
+    const byKey=new Map(profileNames.map(n=>[teamKey(n),n]));
+    const profileFor=name=>{
+      const exact=byKey.get(teamKey(name));if(exact)return profileTeams[exact];
+      const words=n=>bbNameKey(n).split(' ').filter(Boolean).length;
+      const hits=profileNames.filter(n=>bbNameMatches(n,name)).sort((a,b)=>Math.abs(words(a)-words(name))-Math.abs(words(b)-words(name)));
+      if(hits.length===1||(hits.length>1&&Math.abs(words(hits[0])-words(name))<Math.abs(words(hits[1])-words(name))))return profileTeams[hits[0]];
+      return null;
+    };
+    (payload.matches||[]).forEach(m=>{
+      const home=profileFor(m.home?.name),away=profileFor(m.away?.name);
+      if(!home&&!away)return;
+      m.advanced_metrics={...(home?{home}:{}),...(away?{away}:{})};
+      m.advanced_metrics_meta={source:profiles.source||'Bet Better play-by-play',
+        generated_at:profiles.generated_through||null,shadow_only:true,production_weight:0,
+        coverage:{season:profiles.season,season_role:'current',teams:profileNames.length}};
+    });
+  }
+
+  // Team records on every fixture, from the ranking rows.
+  //
+  // The fixture feed's standings are CFBD's, and while its quota is spent they
+  // stay at their preseason 0-0, so the expanded view showed Ohio State 0-0 after
+  // two games. The handoff's ranking rows carry each rated team's current
+  // wins, losses, games and form, so they replace the feed's numbers here.
+  const rankRows=((typeof MATCHDAY_CFB_RANKINGS!=='undefined'&&MATCHDAY_CFB_RANKINGS.rankings)||[]);
+  const rankByKey=new Map(rankRows.map(r=>[teamKey(r.name),r]));
+  const rankFor=name=>{
+    const exact=rankByKey.get(teamKey(name));
+    if(exact)return exact;
+    const extra=r=>bbNameKey(r.name).split(' ').filter(Boolean).length-bbNameKey(name).split(' ').filter(Boolean).length;
+    const hits=rankRows.filter(r=>bbNameMatches(r.name,name)).sort((a,b)=>Math.abs(extra(a))-Math.abs(extra(b)));
+    // "Texas" matches Texas Longhorns and Texas Tech Red Raiders; take the
+    // closest name only when it is unambiguous.
+    if(hits.length===1||(hits.length>1&&Math.abs(extra(hits[0]))<Math.abs(extra(hits[1]))))return hits[0];
+    return null;
+  };
+  (payload.matches||[]).forEach(m=>['home','away'].forEach(side=>{
+    const team=m[side];if(!team?.name)return;
+    const row=rankFor(team.name);if(!row)return;
+    const w=Number(row.wins)||0,l=Number(row.losses)||0,played=Number(row.season_games)||(w+l);
+    Object.assign(team,{w,l,d:0,pld:played,record:`${w}-${l}`,win_pct:played?w/played:0,
+      form:String(row.recent_form||team.form||'').slice(-5),season_stale:false,
+      model_rank:row.rank<=25?row.rank:(team.model_rank??null),_record_from:'betbetter_rankings'});
+  }));
+
   // Records come from the ranking rows first.
   //
   // MATCHDAY_CFB_SNAPSHOT.records is a hand-maintained list of sixteen teams,
@@ -434,7 +486,7 @@ async function load(manual=false){if(LOAD_TIMER){clearTimeout(LOAD_TIMER);LOAD_T
   // once) and then escalate to the full files when a visitor left the board;
   // none of that machinery is needed to load a single sport.
   const r=await fetch(DATA_FILE,REVALIDATE);if(!r.ok)throw new Error('HTTP '+r.status);DATA=stripPastSeasonCompetitionViews(await r.json());applyForecastPublicationPauses(DATA);
-  applyCurrentCfbSnapshot(DATA);applyCurrentNcaamSnapshot(DATA);DATA.news=(DATA.news||[]).filter(isFreshNews).sort((a,b)=>newsTime(b)-newsTime(a));BYID={};(DATA.matches||[]).forEach(m=>BYID[m.id]=m);LAST_OK=true;LAST_ERROR='';const cn=$('#compName');if(cn)cn.textContent=DATA.competition?' · '+DATA.competition:'';const tb=document.querySelector('.navbtn[data-v="third"]');if(tb)tb.style.display=(DATA.third_race&&DATA.third_race.length)?'':'none';const gb2=document.querySelector('.navbtn[data-v="groups"]');if(gb2)gb2.style.display=(DATA.standings&&DATA.standings.length)?'':'none';// .some() passes (element,index): the index landed on isForecastPaused's
+  applyCurrentCfbSnapshot(DATA);applyCurrentNcaamSnapshot(DATA);decodeNewsEntities(DATA);DATA.news=(DATA.news||[]).filter(isFreshNews).sort((a,b)=>newsTime(b)-newsTime(a));BYID={};(DATA.matches||[]).forEach(m=>BYID[m.id]=m);LAST_OK=true;LAST_ERROR='';const cn=$('#compName');if(cn)cn.textContent=DATA.competition?' · '+DATA.competition:'';const tb=document.querySelector('.navbtn[data-v="third"]');if(tb)tb.style.display=(DATA.third_race&&DATA.third_race.length)?'':'none';const gb2=document.querySelector('.navbtn[data-v="groups"]');if(gb2)gb2.style.display=(DATA.standings&&DATA.standings.length)?'':'none';// .some() passes (element,index): the index landed on isForecastPaused's
   // `payload` parameter, so the competition check read match._comp, which only
   // the merged build set -- the banner fired on every board except MLB's own.
   applySportNav();renderStrip();renderInsight();renderCurrent();applyStaticI18n();renderAlerts()}catch(e){console.error(e);applySportNav();
@@ -715,9 +767,8 @@ function renderGroups(){const _tables=deriveStandings(),polls=_tables.filter(isP
    rated team and "who is 61st" is a real question a conference table cannot
    answer.
 
-   Strength of schedule sits beside every rating, and no movement is drawn:
-   season 2026's poll has been published once, so movement and previous_rank are
-   null on every row and there is nothing to have moved from. */
+   Strength of schedule sits beside every rating, and the move column shows the
+   change against last week's edition once there is one to compare with. */
 function collegeRankingTableHTML(){
   const table=String(DATA.comp_key||'').toUpperCase()==='NCAAM'
     ?(typeof MATCHDAY_NCAAM_RANKINGS!=='undefined'?MATCHDAY_NCAAM_RANKINGS:null)
@@ -726,8 +777,10 @@ function collegeRankingTableHTML(){
   if(!rows.length)return '';
   const preseason=table?.coverage?.is_preseason_edition||table?.coverage?.first_poll;
   const num=(v,d=2)=>Number.isFinite(Number(v))?Number(v).toFixed(d):'—';
+  const moved=rows.some(r=>r.movement!=null&&Number.isFinite(Number(r.movement)));
   const body=rows.map(r=>`<tr${r.rank<=25?' class="pollRanked"':''}>`
     +`<td class="pollRank">${r.rank}</td>`
+    +(moved?`<td class="pollMove">${movementTag(r)}</td>`:'')
     +`<td class="pollTeam">${esc(r.name)}${r.tier&&r.tier!=='power'?' <i class="pollTier">G5</i>':''}</td>`
     +`<td>${esc(r.conference||'—')}</td>`
     +`<td class="pollNum">${num(r.rating)}</td>`
@@ -743,7 +796,7 @@ function collegeRankingTableHTML(){
     </div>
     ${table.season_in_progress===false?'<div class="modWarn">Projection — the season has not started. This ranks the completed season.</div>':''}
     <div class="pollScroll"><table class="pollTable"><thead><tr>
-      <th>#</th><th>Team</th><th>Conference</th><th>Rating</th><th>SoS</th><th>Off</th><th>Def</th><th>Rec</th>
+      <th>#</th>${moved?'<th title="Change since last week">Move</th>':''}<th>Team</th><th>Conference</th><th>Rating</th><th>SoS</th><th>Off</th><th>Def</th><th>Rec</th>
     </tr></thead><tbody>${body}</tbody></table></div>
     <p class="modNote">${esc(String(table.note||'').replace(/\.\./g,'.'))}</p>
     ${withheld?`<p class="modNote">Held out of the ranking: ${withheld} — ratings earned mostly against FCS opposition.</p>`:''}

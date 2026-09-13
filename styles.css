@@ -2420,3 +2420,5 @@ html{color-scheme:dark}
    card invisible. Start the fade from visible instead; it still reads as a
    fade, and it can no longer resolve to a blank card. */
 @keyframes carouselIn{from{opacity:.25;transform:translateY(5px)}to{opacity:1;transform:none}}
+.ls-brandHome{background:none;border:0;padding:0;margin:0;color:inherit;font:inherit;cursor:pointer;display:inline-flex;align-items:center;gap:inherit;text-transform:inherit;letter-spacing:inherit}.ls-brandHome:hover{color:var(--signal)}.ls-brandHome:focus-visible{outline:2px solid var(--signal);outline-offset:3px;border-radius:4px}
+.pollMove{white-space:nowrap;text-align:center;width:48px}.pollMove i{min-width:0}

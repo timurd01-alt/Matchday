@@ -18,6 +18,7 @@ Run:  python fetch_data.py          (once)
 """
 
 import json, os, sys, time, datetime, re, unicodedata, urllib.request, urllib.error, urllib.parse, math, traceback, contextlib
+import html
 import xml.etree.ElementTree as ET
 from email.utils import parsedate_to_datetime
 from collections import defaultdict
@@ -501,8 +502,15 @@ def _get_text(url, headers=None):
 
 
 def _clean(s):
+    # Feeds double-encode entities ("Ducks&amp;#39;"), so unescape until stable:
+    # a headline read "Oregon Ducks&#39; national title odds".
     s = re.sub(r"<[^>]+>", "", s or "")
-    return re.sub(r"\s+", " ", s.replace("&nbsp;", " ")).strip()
+    for _ in range(3):
+        unescaped = html.unescape(s)
+        if unescaped == s:
+            break
+        s = unescaped
+    return re.sub(r"\s+", " ", s.replace(" ", " ")).strip()
 
 
 def _rfc_iso(s):

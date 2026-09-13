@@ -244,7 +244,8 @@ class ModelInputTests(unittest.TestCase):
         base = {"status": "UPCOMING", "kickoff": "2026-07-24T14:00:00Z"}
         self.assertEqual(fetch_data._lock_decision(base, now)["state"], "eligible")
         self.assertEqual(fetch_data._lock_decision({**base, "kickoff": "2026-07-24T12:00:00Z"}, now)["state"], "eligible")
-        self.assertEqual(fetch_data._lock_decision({**base, "kickoff": "2026-07-25T00:00:01Z"}, now)["state"], "wait")
+        self.assertEqual(fetch_data._lock_decision({**base, "kickoff": "2026-07-25T00:00:01Z"}, now)["state"], "eligible")
+        self.assertEqual(fetch_data._lock_decision({**base, "kickoff": "2026-07-25T12:00:01Z"}, now)["state"], "wait")
         self.assertEqual(fetch_data._lock_decision({**base, "kickoff": "bad"}, now)["state"], "wait")
         self.assertEqual(fetch_data._lock_decision({**base, "kickoff": "2026-07-24T11:59:59Z"}, now)["state"], "quarantine")
         for status in ("LIVE", "FINISHED"):

@@ -50,6 +50,12 @@
       ['power_success','Power success','Short-yardage runs converted','percent',true],
       ['stuff_rate','Stuff rate','Runs stopped at or behind the line','percent',false]
     ]],
+    ['Ratings',[
+      ['rating','Adjusted margin','Points better than an average team, schedule-adjusted','points',true],
+      ['adj_o','Adjusted offense','Points scored against an average defense','points',true],
+      ['adj_d','Adjusted defense','Points allowed against an average offense','points',false],
+      ['sos','Strength of schedule','How hard the schedule has been','points',true]
+    ]],
     ['Defense',[
       ['def_ppa_allowed','PPA allowed','Opponent quality allowed per play','number',false],
       ['def_success_rate_allowed','Success allowed','Opponent plays kept on schedule','percent',false],
@@ -59,6 +65,7 @@
   function cfbSeasonLabel(meta){
     const coverage=meta?.coverage||{},season=coverage.season,role=String(coverage.season_role||'').replace(/_/g,' ');
     if(!season)return 'Completed-season team profile';
+    if(role==='current')return `${season} season to date`;
     return `${season} ${role==='prior completed'?'completed-season':role||'season'} profile`;
   }
   function cfbMetricRow(metric,home,away){
@@ -91,6 +98,7 @@
   }
   function researchSignalsPanel(m){
     const metrics=metricRows(m),meta=m?.advanced_metrics_meta;
+    if(String(m?._comp||DATA?.comp_key||'').toUpperCase()==='NCAAF'&&meta)return cfbSignalsPanel(m,meta);
     if(!metrics){
       // The match's own competition, not the board's. On the merged "All
       // sports" board DATA.comp_key is 'ALL', so every one of these sports

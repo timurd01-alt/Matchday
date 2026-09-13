@@ -4,7 +4,7 @@ Matchday's public record has three phases: **pregame analysis**, **result pendin
 
 ## 1. Pregame analysis and lock
 
-Upcoming fixtures first receive a **preliminary forecast**. Matchday refreshes sport-native late information—such as injury availability, weather, and the near-kickoff market—where an authorized provider actually supplies it. The official pick is written to the durable ledger inside the three-hour lock window before kickoff.
+Upcoming fixtures first receive a **preliminary forecast**. Matchday refreshes sport-native late information—such as injury availability, weather, and the near-kickoff market—where an authorized provider actually supplies it. The official pick is written to the durable ledger inside the 24-hour lock window before kickoff.
 
 The readiness receipt records every required input as confirmed, available, or missing, along with provenance and coverage. Missing data is not converted into a neutral observation. Newly collected personnel, workload, and venue context stays at zero production weight until prospective evaluation clears the existing promotion gates.
 

@@ -8,9 +8,11 @@ features until Matchday's prospective promotion checks show an improvement.
 import datetime as dt
 
 
+# Picks lock a day before kickoff, so each week's calls are public well before
+# the games rather than in the last few hours.
 LOCK_WINDOWS_HOURS = {
-    "NCAAF": 3.0,
-    "NCAAM": 3.0,
+    "NCAAF": 24.0,
+    "NCAAM": 24.0,
 }
 
 SPORT_INPUTS = {

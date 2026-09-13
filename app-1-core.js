@@ -233,6 +233,10 @@ function toggleInsightRail(){
 }
 function updateSetting(k,v){if(k==='refresh')return;if(k==='showInsight'||k==='showDetails'||k==='showFinished'||k.startsWith('alerts'))v=!!v;SETTINGS[k]=v;saveSettings();applySettings();renderCurrent();if((k==='favoriteTeam'||k==='favoriteTeams')&&typeof renderInsight==='function')renderInsight();if(k.startsWith('alerts'))renderAlerts();scheduleNextLoad()}
 function resetSettings(){SETTINGS={...DEFAULT_SETTINGS};saveSettings();applySettings();setView(SETTINGS.defaultView);scheduleNextLoad()}
+// Feeds hand over headlines with HTML entities still in them ("Ducks&#39;"),
+// and esc() would then print the entity itself. Decode once, on load.
+function decodeEntities(s){const t=String(s??'');if(!/&(#\d+|#x[0-9a-f]+|[a-z]+);/i.test(t))return t;const el=document.createElement('textarea');let out=t;for(let i=0;i<3;i++){el.innerHTML=out;const next=el.value;if(next===out)break;out=next}return out}
+function decodeNewsEntities(payload){(payload?.news||[]).forEach(a=>{for(const k of ['headline','title','desc','source','feed'])if(typeof a[k]==='string')a[k]=decodeEntities(a[k])});return payload}
 function esc(s){return String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
 function uiLocale(){return({es:'es',fr:'fr',de:'de',pt:'pt-BR',ru:'ru'})[LANG]||undefined}
 function relativeTime(value,unit){return new Intl.RelativeTimeFormat(uiLocale(),{numeric:'auto'}).format(value,unit)}
@@ -432,6 +436,8 @@ let HERO_FIRST_VISIT=false;try{HERO_FIRST_VISIT=!localStorage.getItem('matchday.
 function heroSeen(){try{return localStorage.getItem('matchday.heroSeen')==='1'||!HERO_FIRST_VISIT}catch(e){return false}}
 function heroDismiss(){try{localStorage.setItem('matchday.heroSeen','1')}catch(e){};renderCurrent();}
 function welcomeDismissed(){try{return sessionStorage.getItem('matchday.welcome.entered')==='1'}catch(e){return false}}
+// The Matchday wordmark in the top bar takes a fan back to the welcome page.
+function openWelcome(){try{sessionStorage.removeItem('matchday.welcome.entered')}catch(e){}renderWelcome();window.scrollTo?.(0,0);document.getElementById('welcomeGate')?.focus?.()}
 function enterMatchday(targetView='',startWithTour=false){
   try{sessionStorage.setItem('matchday.welcome.entered','1');localStorage.setItem('matchday.heroSeen','1')}catch(e){}
   const gate=$('#welcomeGate'),app=$('#app');

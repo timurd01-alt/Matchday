@@ -46,6 +46,6 @@ Upset Radar identifies market underdogs that the model rates more competitively 
 
 ## Locking and evaluation
 
-Predictions become eligible for a verified public lock on the first successful refresh inside the three-hour pregame window. The selected side and confidence are immutable after that lock. Final results grade the saved record; in-progress games remain result pending.
+Predictions become eligible for a verified public lock on the first successful refresh inside the 24-hour pregame window. The selected side and confidence are immutable after that lock. Final results grade the saved record; in-progress games remain result pending.
 
 Matchday emphasizes probability-focused evaluation—including Brier score, log loss, calibration, confidence intervals, and out-of-sample testing—rather than judging a model only by raw win rate. See [Prediction Lifecycle](Prediction-Lifecycle) for the persistence guarantees behind the public scorecard.

@@ -3,7 +3,7 @@
 A personal analytics hub for college football and men's college basketball.
 
 Live at [matchdayterminal.com](https://matchdayterminal.com) · by
-[@iamtimurety](https://x.com/iamtimurety)
+[@timurknowsball](https://x.com/timurknowsball)
 
 ## What this is
 

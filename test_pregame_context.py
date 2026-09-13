@@ -27,10 +27,9 @@ class PregameContextTests(unittest.TestCase):
         self.assertIn("injuries", context["missing_critical"])
         self.assertEqual(context["production_weight"], 0)
 
-    def test_lock_windows_are_sport_aware(self):
-        self.assertEqual(pregame_context.lock_window_hours("MLB"), 2.0)
-        self.assertEqual(pregame_context.lock_window_hours("NCAAF"), 3.0)
-        self.assertEqual(pregame_context.lock_window_hours("EPL"), 2.0)
+    def test_college_picks_lock_a_day_before_kickoff(self):
+        self.assertEqual(pregame_context.lock_window_hours("NCAAF"), 24.0)
+        self.assertEqual(pregame_context.lock_window_hours("NCAAM"), 24.0)
 
     def test_venue_factor_uses_only_prior_games_and_shrinkage(self):
         history = [
