@@ -6454,6 +6454,18 @@ def fetch_college_bundle():
             DIAG.append(f"{provider_name}: stale cache after provider limit/error")
     all_matches = bundle.get("matches") or []
     normalize_match_results(all_matches)
+    # A cached bundle never learns a result, and CFBD's quota can be spent for
+    # weeks. Final scores only, for fixtures already on this schedule -- see
+    # score_fallback.py and the 2026-09-12 amendment in PROVIDER_COMPLIANCE.md.
+    if COMP_KEY == "NCAAF":
+        try:
+            import score_fallback
+            filled = score_fallback.settle(all_matches, COMP_KEY)
+            DIAG.append(f"final-score fallback: settled {filled['settled']} of "
+                        f"{filled['candidates']} past fixture(s) across {filled['days']} day(s)"
+                        + (f"; {len(filled['errors'])} day(s) failed" if filled["errors"] else ""))
+        except Exception as exc:
+            DIAG.append(f"final-score fallback: skipped ({exc})")
     # Retain the complete licensed season only in memory for local aggregate
     # model training; the public dashboard still receives the bounded window.
     adapter._model_history = all_matches
