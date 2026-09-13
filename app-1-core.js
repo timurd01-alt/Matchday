@@ -235,7 +235,10 @@ function updateSetting(k,v){if(k==='refresh')return;if(k==='showInsight'||k==='s
 function resetSettings(){SETTINGS={...DEFAULT_SETTINGS};saveSettings();applySettings();setView(SETTINGS.defaultView);scheduleNextLoad()}
 // Feeds hand over headlines with HTML entities still in them ("Ducks&#39;"),
 // and esc() would then print the entity itself. Decode once, on load.
-function decodeEntities(s){const t=String(s??'');if(!/&(#\d+|#x[0-9a-f]+|[a-z]+);/i.test(t))return t;const el=document.createElement('textarea');let out=t;for(let i=0;i<3;i++){el.innerHTML=out;const next=el.value;if(next===out)break;out=next}return out}
+const _NAMED_ENTITIES={amp:'&',lt:'<',gt:'>',quot:'"',apos:"'",nbsp:' ',rsquo:'\u2019',lsquo:'\u2018',rdquo:'\u201d',ldquo:'\u201c',ndash:'\u2013',mdash:'\u2014',hellip:'\u2026'};
+// Pure string decoding: the text never passes through the DOM, so a headline
+// can never be reinterpreted as markup. Callers still esc() before rendering.
+function decodeEntities(s){let out=String(s??'');for(let i=0;i<3;i++){const next=out.replace(/&(#\d+|#x[0-9a-f]+|[a-z]+);/gi,(whole,body)=>{if(body[0]==='#'){const code=body[1]==='x'||body[1]==='X'?parseInt(body.slice(2),16):parseInt(body.slice(1),10);return Number.isFinite(code)&&code>0&&code<=0x10ffff?String.fromCodePoint(code):whole}const named=_NAMED_ENTITIES[body.toLowerCase()];return named===undefined?whole:named});if(next===out)break;out=next}return out}
 function decodeNewsEntities(payload){(payload?.news||[]).forEach(a=>{for(const k of ['headline','title','desc','source','feed'])if(typeof a[k]==='string')a[k]=decodeEntities(a[k])});return payload}
 function esc(s){return String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
 function uiLocale(){return({es:'es',fr:'fr',de:'de',pt:'pt-BR',ru:'ru'})[LANG]||undefined}
