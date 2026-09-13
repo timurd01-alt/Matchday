@@ -614,6 +614,18 @@ function renderWelcomeStats(){
 // graded afterwards, never as a recommended bet. So it is labelled UPSET WATCH,
 // it says what it is in a line underneath, and it never borrows the word "pick"
 // from the locked read above it.
+// "Won 24–17" / "Lost 10–31" with the selection's score first, "result
+// pending" once kicked off without one, otherwise the countdown.
+function upsetStatusText(p,selectionIsAway){
+  if(!p)return'';
+  const hs=Number(p.home_score),as=Number(p.away_score);
+  if((p.result==='won'||p.result==='lost')&&p.home_score!=null&&p.away_score!=null&&Number.isFinite(hs)&&Number.isFinite(as)){
+    const mine=selectionIsAway?as:hs,theirs=selectionIsAway?hs:as;
+    return `${p.result==='won'?'Won':'Lost'} ${mine}–${theirs}`;
+  }
+  if(!p.kickoff)return'';
+  return Date.parse(p.kickoff)<=Date.now()?'result pending':kickIn(p.kickoff);
+}
 function renderWelcomeUpset(){
   const host=$('#welcomeUpset');if(!host)return;
   const u=(typeof MATCHDAY_BETBETTER_UPSET!=='undefined')?MATCHDAY_BETBETTER_UPSET:null;
@@ -632,8 +644,12 @@ function renderWelcomeUpset(){
   const sel=norm(p.selection);
   const opponent=sel&&norm(p.home)===sel?p.away:(sel&&norm(p.away)===sel?p.home:`${p.away||''} at ${p.home||''}`);
   const away=sel&&norm(p.away)===sel;
+  // The week's recorded call stays up after kickoff, so a countdown would read
+  // "now" all Saturday night. Past kickoff it shows the result, or that one is
+  // still to come.
+  const when=upsetStatusText(p,away);
   host.innerHTML=`<div class="wuTop"><span>UPSET WATCH</span>${Number.isFinite(gap)?`<em class="wuGap">+${gap.toFixed(1)} pts clear of the market</em>`:'<em>one call a week</em>'}</div>`
-    +`<div class="wuPick"><b>${esc(p.selection||'')}</b><span>${away?'at':'vs'} ${esc(opponent)}${p.kickoff?` · ${esc(kickIn(p.kickoff))}`:''}</span></div>`
+    +`<div class="wuPick"><b>${esc(p.selection||'')}</b><span>${away?'at':'vs'} ${esc(opponent)}${when?` · ${esc(when)}`:''}</span></div>`
     +`<div class="wuBars">${bar('','model',model)}${Number.isFinite(market)?bar('mkt','market',market):''}</div>`
     +`<p class="wuNote">The model's most contrarian call of the week — to watch and grade, not a recommended bet.</p>`;
 }

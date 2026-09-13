@@ -747,7 +747,7 @@ function modUpsetOfWeek(){
   const model=Number(p.model_pct),market=Number(p.market_pct);
   return `<section class="boardMod modUpset"><header><h3>Upset of the week</h3><span>one a week</span></header>
 <div class="modPickTeam">${esc(p.selection||'')}</div>
-<div class="modPickGame">${esc(p.away||'')} at ${esc(p.home||'')}</div>
+<div class="modPickGame">${esc(p.away||'')} at ${esc(p.home||'')}${(()=>{const s=typeof upsetStatusText==='function'?upsetStatusText(p,String(p.selection||'').toLowerCase()===String(p.away||'').toLowerCase()):'';return s?` · ${esc(s)}`:''})()}</div>
 <div class="upsetBars">
   <div><span>model</span><i style="width:${Math.max(2,Math.min(100,model))}%"></i><b>${Number.isFinite(model)?model.toFixed(1)+'%':'—'}</b></div>
   <div class="mkt"><span>market</span><i style="width:${Math.max(2,Math.min(100,market))}%"></i><b>${Number.isFinite(market)?market.toFixed(1)+'%':'—'}</b></div>

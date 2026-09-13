@@ -239,7 +239,22 @@ legal advice.
   bulk redistribution -- and ESPN is credited by name on every item. The
   residual risk is that these are publicly published feeds consumed without a
   licence agreement rather than under one; that is a decision the owner has
-  taken knowingly. Every other clause of this rule still stands. A narrowly reviewed, openly licensed
+  taken knowingly. Every other clause of this rule still stands.
+
+  **Amended 2026-09-12 by the owner: final scores.** A game's final score and
+  its finished status may come from ESPN's public college scoreboard
+  (`site.api.espn.com/.../scoreboard`), and may reach Matchday indirectly
+  through the Bet Better handoff's `results`, which are ESPN-sourced for NCAAF
+  while CollegeFootballData's monthly quota is spent. The owner's reasoning: a
+  final score is a public fact available from any outlet, not ESPN's content.
+  The scope is exactly that -- home score, away score, and "finished" -- and
+  only for a fixture already on Matchday's own schedule whose kickoff has
+  passed. No schedule, odds, statistics, team data, logos, text, or raw payload
+  is taken or stored, and the scoreboard is never the source of a fixture
+  list. The residual risk is the same as the news amendment: the endpoint is
+  undocumented and used without an agreement, so ESPN's site terms still
+  apply to the request itself even though the fact it returns does not belong
+  to them. A narrowly reviewed, openly licensed
   secondary release may be used only when its ESPN provenance is explicit,
   the exact asset/schema/cadence has been verified, Matchday publishes only a
   normalized analytical view rather than the raw feed, and the UI identifies
