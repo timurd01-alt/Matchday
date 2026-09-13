@@ -9,46 +9,23 @@ import datetime as dt
 
 
 LOCK_WINDOWS_HOURS = {
-    "MLB": 2.0,
-    "NBA": 2.0,
-    "NFL": 2.0,
-    "NHL": 2.0,
     "NCAAF": 3.0,
     "NCAAM": 3.0,
-    "WC": 2.0,
-    "UCL": 2.0,
-    "EPL": 2.0,
-    "LALIGA": 2.0,
-    "SERIEA": 2.0,
-    "BUNDESLIGA": 2.0,
-    "LIGUE1": 2.0,
 }
 
 SPORT_INPUTS = {
-    "baseball": ("market", "injuries", "starting_pitchers", "lineups", "bullpen", "weather", "venue"),
     "basketball": ("market", "injuries", "lineups", "rotation"),
     "football": ("market", "injuries", "key_players", "weather"),
-    "soccer": ("market", "injuries", "lineups", "weather"),
-    "hockey": ("market", "injuries", "starting_goalies", "lineups"),
 }
 
-# A canonical personnel key and the unconfirmed inference that stands in for
-# it when no licensed feed supplies the real thing.  SportsGameOdds deliberately
-# writes market-listed starters under their own key so a prop-derived name can
-# never be mistaken for a confirmed team sheet -- but reading only the canonical
-# key reported "starting pitchers: missing" on every MLB fixture, including the
-# ones where a candidate had in fact been collected and cached.  A fallback can
-# only ever reach "available"; see _status.
-FALLBACK_KEYS = {
-    "starting_pitchers": "starter_candidates",
-}
+# A canonical personnel key and the unconfirmed inference that stands in for it
+# when no licensed feed supplies the real thing. A fallback can only ever reach
+# "available"; see _status.
+FALLBACK_KEYS = {}
 
 CRITICAL_INPUTS = {
-    "baseball": {"market", "starting_pitchers", "lineups"},
     "basketball": {"market", "injuries", "lineups"},
     "football": {"market", "injuries", "key_players"},
-    "soccer": {"market", "injuries", "lineups"},
-    "hockey": {"market", "injuries", "starting_goalies"},
 }
 
 
@@ -187,8 +164,7 @@ def attach_personnel_shadows(matches, sport):
             "weather": match.get("weather"),
             "venue_context": match.get("venue_context"),
         }
-        for key in ("starting_pitchers", "starter_candidates", "bullpen", "rotation",
-                    "key_players", "starting_goalies"):
+        for key in ("rotation", "key_players"):
             if personnel.get(key):
                 fields[key] = personnel[key]
         match["personnel_shadow"] = {
@@ -231,7 +207,7 @@ def derive_venue_context(matches, history, sport):
             "league_total_avg": round(league_avg, 3),
             "venue_total_avg": round(venue_avg, 3),
             "factor": round(venue_avg / league_avg, 4) if league_avg else 1.0,
-            "label": "park factor" if sport == "baseball" else "venue scoring context",
+            "label": "venue scoring context",
             "production_weight": 0,
             "method": "prior finals, 10-game shrinkage",
         }

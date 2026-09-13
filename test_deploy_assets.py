@@ -182,7 +182,7 @@ class CacheClobberTests(unittest.TestCase):
         import json
         import subprocess
         posts = json.loads((ROOT / "posts.json").read_text(encoding="utf-8"))
-        self.assertGreater(len(posts), 5, "sanity check: posts.json parsed as too short")
+        self.assertGreater(len(posts), 0, "sanity check: posts.json parsed as empty")
         committed = set(subprocess.run(["git", "ls-files", "posts/"], cwd=ROOT,
                                        capture_output=True, text=True, check=True).stdout.split())
         missing = [post["id"] for post in posts

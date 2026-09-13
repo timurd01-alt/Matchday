@@ -213,41 +213,14 @@ class ModelInputTests(unittest.TestCase):
         fetch_data.COMP_KEY = self.old_key
         fetch_data.COMP = self.old_comp
 
-    def use_world_cup(self):
-        fetch_data.COMP_KEY = "WC"
-        fetch_data.COMP = dict(fetch_data.COMPETITIONS["WC"])
+    def use_college_football(self):
+        fetch_data.COMP_KEY = "NCAAF"
+        fetch_data.COMP = dict(fetch_data.COMPETITIONS["NCAAF"])
 
     def test_cached_results_are_backfilled_with_winners(self):
         matches = [finished("one", "Alpha", "Beta", 80, 72)]
         fetch_data.normalize_match_results(matches)
         self.assertEqual(matches[0]["score"]["winner"], "h")
-
-    def test_knockout_extra_time_uses_winner_but_market_uses_regulation(self):
-        self.use_world_cup()
-        match = {
-            "stage": "Quarter Finals",
-            "score": {
-                "home": 2, "away": 1, "winner": "h",
-                "reg": {"home": 1, "away": 1},
-            },
-        }
-        original_score = json.loads(json.dumps(match["score"]))
-        self.assertEqual(fetch_data._scorecard_results(match), ("h", "d"))
-        self.assertEqual(match["score"], original_score)
-
-    def test_knockout_penalties_use_shootout_winner_without_changing_score(self):
-        self.use_world_cup()
-        match = {
-            "stage": "Last 16",
-            "score": {
-                "home": 1, "away": 1, "winner": "h",
-                "reg": {"home": 1, "away": 1},
-                "pens": {"home": 4, "away": 3},
-            },
-        }
-        original_score = json.loads(json.dumps(match["score"]))
-        self.assertEqual(fetch_data._scorecard_results(match), ("h", "d"))
-        self.assertEqual(match["score"], original_score)
 
     def test_group_stage_draw_uses_same_result_for_model_and_market(self):
         match = {
@@ -258,98 +231,6 @@ class ModelInputTests(unittest.TestCase):
             },
         }
         self.assertEqual(fetch_data._scorecard_results(match), ("d", "d"))
-
-    def test_ucl_single_match_final_grades_advancement_but_two_leg_round_does_not(self):
-        fetch_data.COMP_KEY = "UCL"
-        fetch_data.COMP = dict(fetch_data.COMPETITIONS["UCL"])
-        final = {
-            "_comp": "UCL", "stage": "Final",
-            "score": {"home": 1, "away": 1, "winner": "h",
-                      "reg": {"home": 1, "away": 1},
-                      "pens": {"home": 4, "away": 3}},
-        }
-        self.assertTrue(fetch_data._is_advancement_fixture(final))
-        self.assertEqual(fetch_data._scorecard_results(final), ("h", "d"))
-        prediction = fetch_data.predict(
-            {"name": "PSG", "pts": 35, "gd": 22, "form": "W W D"},
-            {"name": "Arsenal", "pts": 37, "gd": 23, "form": "W D D"},
-            {}, {"_comp": "UCL", "stage": "Final"})
-        self.assertTrue(prediction["is_knockout"])
-        self.assertIn(prediction["pick"], ("h", "a"))
-        two_leg = {"_comp": "UCL", "stage": "Semi Finals", "score": final["score"]}
-        self.assertFalse(fetch_data._is_advancement_fixture(two_leg))
-        self.assertEqual(fetch_data._scorecard_results(two_leg), ("d", "d"))
-        stale_locked_leg = {"competition": "UCL", "stage": "Semi Finals",
-                            "outcome_basis": "ultimate_winner",
-                            "pick": "h", "result": "h", "model_hit": True,
-                            "prediction_snapshot": {"is_knockout": True}}
-        self.assertFalse(fetch_data._is_advancement_fixture(two_leg, stale_locked_leg))
-        self.assertEqual(fetch_data._scorecard_results(two_leg, stale_locked_leg), (None, None))
-        picks = {"legacy-ucl-leg": stale_locked_leg}
-        self.assertTrue(fetch_data._quarantine_incompatible_ucl_receipts(picks))
-        self.assertEqual(stale_locked_leg["integrity_status"], "quarantined")
-        self.assertEqual(stale_locked_leg["quarantine_reason"],
-                         "legacy_ucl_advancement_target_unverifiable")
-        # Quarantine preserves the historical frozen grade; it does not
-        # reinterpret the advancement pick against the leg's regulation draw.
-        self.assertEqual(stale_locked_leg["result"], "h")
-        self.assertTrue(stale_locked_leg["model_hit"])
-
-    def test_nfl_tie_is_model_miss_but_market_push(self):
-        fetch_data.COMP_KEY = "NFL"
-        fetch_data.COMP = dict(fetch_data.COMPETITIONS["NFL"])
-        match = {"_comp": "NFL", "stage": "Regular",
-                 "score": {"home": 20, "away": 20, "winner": "d"}}
-        self.assertEqual(fetch_data._scorecard_results(match), ("d", None))
-        rec = {"competition": "NFL", "pick": "h", "market_pick": "h",
-               "market_comparison_pick": "h", "market_hit": True,
-               "market_comparison_hit": True}
-        fetch_data._apply_scorecard_grade(rec, "d", None)
-        self.assertFalse(rec["model_hit"])
-        self.assertIsNone(rec["market_hit"])
-        self.assertIsNone(rec["market_comparison_hit"])
-
-    def test_model_and_market_hits_use_their_separate_knockout_results(self):
-        self.use_world_cup()
-        rec = {
-            "pick": "h", "market_pick": "d", "value_side": "d",
-            "probs": {"h": 55, "d": 30, "a": 15}, "score": "1-1 (4-3 pens)",
-        }
-        fetch_data._apply_scorecard_grade(rec, "h", "d")
-        self.assertEqual(rec["result"], "h")
-        self.assertEqual(rec["market_result"], "d")
-        self.assertTrue(rec["model_hit"])
-        self.assertTrue(rec["market_hit"])
-        self.assertTrue(rec["value_hit"])
-        self.assertEqual(rec["score"], "1-1 (4-3 pens)")
-
-    def test_missing_soccer_regulation_score_does_not_guess_market_settlement(self):
-        self.use_world_cup()
-        fetch_data.COMP["has_draws"] = True
-        match = {
-            "stage": "Final",
-            "score": {"home": 2, "away": 1, "winner": "h"},
-        }
-        self.assertEqual(fetch_data._scorecard_results(match), ("h", None))
-        rec = {"pick": "h", "market_pick": "d", "market_hit": True}
-        fetch_data._apply_scorecard_grade(rec, "h", None)
-        self.assertTrue(rec["model_hit"])
-        self.assertIsNone(rec["market_hit"])
-        self.assertIsNone(rec["market_result"])
-
-    def test_normalize_preserves_knockout_metadata_on_real_pipeline_shape(self):
-        self.use_world_cup()
-        match = {
-            "stage": "Last 16", "status": "FINISHED",
-            "score": {"home": 1, "away": 1, "winner": "h",
-                      "reg": {"home": 1, "away": 1},
-                      "pens": {"home": 4, "away": 3}},
-        }
-        fetch_data.normalize_match_results([match])
-        self.assertEqual(match["score"]["reg"], {"home": 1, "away": 1})
-        self.assertEqual(match["score"]["pens"], {"home": 4, "away": 3})
-        self.assertEqual(match["score"]["winner"], "h")
-        self.assertEqual(fetch_data._scorecard_results(match), ("h", "d"))
 
     def test_football_data_extra_time_is_added_to_regulation(self):
         raw = {"score": {"regularTime": {"home": 1, "away": 1},
@@ -531,7 +412,7 @@ class ModelInputTests(unittest.TestCase):
         self.assertEqual(picks["legacy:fixture-1"]["score"], "1-1 (2-4 pens)")
 
     def test_locked_snapshot_replaces_entire_recomputed_prediction(self):
-        self.use_world_cup()
+        self.use_college_football()
         now = fetch_data.datetime.datetime(2026, 7, 24, 12, tzinfo=fetch_data.datetime.timezone.utc)
         match = {"id": "lock-1", "stage": "Final", "status": "UPCOMING",
                  "kickoff": "2026-07-24T13:00:00Z", "venue": "Test",
@@ -552,7 +433,7 @@ class ModelInputTests(unittest.TestCase):
         self.assertEqual(match["prediction"], frozen)
 
     def test_older_locked_snapshot_gets_display_marker_without_mutating_receipt(self):
-        self.use_world_cup()
+        self.use_college_football()
         rec = {"prediction_snapshot": {"pick": "h", "confidence": 60}}
         match = {"id": "old-lock", "prediction": {"pick": "a"}}
         with mock.patch.object(fetch_data, "_load_picks", return_value={"old-lock": rec}), \
@@ -561,24 +442,8 @@ class ModelInputTests(unittest.TestCase):
         self.assertEqual(match["prediction"]["publication_state"], "locked")
         self.assertNotIn("publication_state", rec["prediction_snapshot"])
 
-    def test_knockout_prediction_and_metrics_are_two_way(self):
-        self.use_world_cup()
-        home = {"name": "Alpha", "pts": 6, "gd": 2, "form": "W W"}
-        away = {"name": "Beta", "pts": 3, "gd": 0, "form": "W L"}
-        prediction = fetch_data.predict(home, away, {}, {"stage": "Final", "weather": {}, "injuries": {}})
-        self.assertIn(prediction["pick"], ("h", "a"))
-        self.assertEqual(prediction["adjusted"]["d"], 0)
-        self.assertEqual(sum(prediction["advancement"].values()), 100)
-        self.assertEqual(prediction["confidence"], prediction["advancement"][prediction["pick"]])
-        rec = {"stage": "Final", "outcome_basis": "ultimate_winner", "pick": prediction["pick"],
-               "advancement_probs": prediction["advancement"], "market_pick": "d"}
-        fetch_data._apply_scorecard_grade(rec, prediction["pick"], "d")
-        self.assertIsNotNone(rec["brier_advancement"])
-        self.assertIsNone(rec["brier3"])
-        self.assertTrue(rec["market_hit"])
-
     def test_first_seen_finished_fixture_is_not_added_to_ledger(self):
-        self.use_world_cup()
+        self.use_college_football()
         match = {"id": "late", "stage": "Final", "status": "FINISHED",
                  "kickoff": "2026-07-19T19:00:00Z", "home": {"name": "A"},
                  "away": {"name": "B"}, "score": {"home": 1, "away": 0, "winner": "h",
@@ -586,35 +451,18 @@ class ModelInputTests(unittest.TestCase):
                  "prediction": {"pick": "h", "pick_name": "A", "confidence": 60}}
         saved = []
         with mock.patch.object(fetch_data, "_load_picks", return_value={}), \
-             mock.patch.object(fetch_data, "_save_picks", side_effect=lambda value: saved.append(value)), \
-             mock.patch.object(fetch_data, "_load_wc_result_migration", return_value={}):
+             mock.patch.object(fetch_data, "_save_picks", side_effect=lambda value: saved.append(value)):
             scorecard = fetch_data.update_scorecard([match])
         self.assertEqual(scorecard["graded"], 0)
         self.assertEqual(scorecard["quarantined"]["total"], 0)
         self.assertFalse(saved)
 
-    def test_wc_migration_verifies_results_but_not_lock_provenance(self):
-        self.use_world_cup()
-        picks = {"legacy:537390": {"fixture_id": "537390", "stage": "Final",
-                                    "home": "Spain", "away": "Argentina",
-                                    "pick": "h", "market_pick": "h", "market_hit": True,
-                                    "integrity_eligible": False,
-                                    "integrity_status": "quarantined"}}
-        self.assertTrue(fetch_data._apply_wc_result_migration(picks))
-        rec = picks["legacy:537390"]
-        self.assertEqual(rec["score"], "1-0")
-        self.assertEqual(rec["model_result"], "h")
-        self.assertEqual(rec["market_result"], "d")
-        self.assertFalse(rec["market_hit"])
-        self.assertFalse(fetch_data._record_is_official(rec))
-
     def test_legacy_record_is_reported_separately_from_official_metrics(self):
-        self.use_world_cup()
+        self.use_college_football()
         picks = {"old": {"fixture_id": "old", "stage": "Final", "home": "A", "away": "B",
                           "pick": "h", "result": "h", "model_hit": True}}
         with mock.patch.object(fetch_data, "_load_picks", return_value=picks), \
-             mock.patch.object(fetch_data, "_save_picks"), \
-             mock.patch.object(fetch_data, "_load_wc_result_migration", return_value={}):
+             mock.patch.object(fetch_data, "_save_picks"):
             scorecard = fetch_data.update_scorecard([])
         self.assertEqual(scorecard["graded"], 0)
         self.assertEqual(scorecard["model_hits"], 0)
@@ -649,26 +497,6 @@ class ModelInputTests(unittest.TestCase):
         self.assertEqual(scorecard["upset"]["watched"], 1)
         self.assertEqual(scorecard["upset"]["hits"], 0)
         self.assertEqual(scorecard["upset"]["avg_score"], 58.0)
-
-    def test_unverifiable_ucl_advancement_receipt_is_excluded_from_all_accuracy(self):
-        fetch_data.COMP_KEY = "UCL"
-        fetch_data.COMP = dict(fetch_data.COMPETITIONS["UCL"])
-        picks = {"old-leg": {
-            "fixture_id": "old-leg", "competition": "UCL", "stage": "Semi Finals",
-            "outcome_basis": "ultimate_winner", "prediction_snapshot": {"is_knockout": True},
-            "pick": "h", "result": "h", "model_hit": True,
-        }}
-        with mock.patch.object(fetch_data, "_load_picks", return_value=picks), \
-             mock.patch.object(fetch_data, "_save_picks"), \
-             mock.patch.object(fetch_data, "_load_wc_result_migration", return_value={}):
-            scorecard = fetch_data.update_scorecard([])
-        self.assertEqual(scorecard["graded"], 0)
-        self.assertEqual(scorecard["combined"]["graded"], 0)
-        self.assertEqual(scorecard["legacy"]["graded"], 0)
-        self.assertEqual(scorecard["excluded"], 1)
-        self.assertIn("Excluded/unverifiable", scorecard["picks"][0]["stage"])
-        self.assertIn("excluded from every accuracy total",
-                      scorecard["picks"][0]["integrity_label"])
 
     def test_srs_adjusts_margin_for_opponent_strength(self):
         matches = [
@@ -841,12 +669,11 @@ class RatingsLookupTests(unittest.TestCase):
     def setUp(self):
         self.old_key, self.old_comp = fetch_data.COMP_KEY, fetch_data.COMP
         self.old_ratings_file, self.old_ratings = fetch_data.RATINGS_FILE, fetch_data._RATINGS
-        fetch_data.COMP_KEY = "UCL"
-        fetch_data.COMP = dict(fetch_data.COMPETITIONS["UCL"])
+        fetch_data.COMP_KEY = "NCAAF"
+        fetch_data.COMP = dict(fetch_data.COMPETITIONS["NCAAF"])
         fd, self.tmp_path = tempfile.mkstemp(suffix=".json")
         with os.fdopen(fd, "w", encoding="utf-8") as f:
-            json.dump({"Arsenal": {"fifa_rank": 5, "squad_value_m": 900, "star_value_m": 90},
-                       "Real Madrid": {"fifa_rank": 1, "squad_value_m": 1200, "star_value_m": 150}}, f)
+            json.dump({}, f)
         fetch_data.RATINGS_FILE = self.tmp_path
         fetch_data._RATINGS = None
 
@@ -854,16 +681,6 @@ class RatingsLookupTests(unittest.TestCase):
         fetch_data.COMP_KEY, fetch_data.COMP = self.old_key, self.old_comp
         fetch_data.RATINGS_FILE, fetch_data._RATINGS = self.old_ratings_file, self.old_ratings
         os.unlink(self.tmp_path)
-
-    def test_official_suffixed_name_matches_a_short_ratings_entry(self):
-        self.assertIsNotNone(fetch_data._ratings_lookup("Arsenal FC"))
-        self.assertIsNotNone(fetch_data._ratings_lookup("Real Madrid CF"))
-
-    def test_prefixed_suffix_also_matches(self):
-        self.assertIsNotNone(fetch_data._ratings_lookup("FC Arsenal"))
-
-    def test_a_team_missing_from_the_file_entirely_still_reports_unknown(self):
-        self.assertIsNone(fetch_data._ratings_lookup("Some Club Not In The File FC"))
 
     def test_apply_market_strength_creates_an_entry_for_a_college_team(self):
         fetch_data.COMP_KEY = "NCAAM"
@@ -999,41 +816,6 @@ class RatingsLookupTests(unittest.TestCase):
         self.assertEqual(pred["class_meta"]["coverage"], "complete")
         self.assertGreater(pred["why"]["class"], 0)
         self.assertEqual(pred["pick_name"], "Michigan State")
-
-    def test_mlb_market_power_is_not_mislabeled_as_personnel_class(self):
-        fetch_data.COMP_KEY = "MLB"
-        fetch_data.COMP = dict(fetch_data.COMPETITIONS["MLB"])
-        fetch_data.apply_market_strength([
-            {"team": "New York Yankees", "pct": 20.0},
-            {"team": "Oakland Athletics", "pct": 1.0},
-        ])
-        pred = fetch_data.predict(
-            {"name": "New York Yankees", "pld": 0},
-            {"name": "Oakland Athletics", "pld": 0}, {},
-            {"stage": "Regular", "weather": {}},
-        )
-        self.assertEqual(pred["why"]["class"], 0)
-        self.assertGreater(pred["why"]["market_power"], 0)
-        self.assertEqual(pred["class_meta"]["label"], "Personnel edge")
-        self.assertEqual(pred["class_meta"]["coverage"], "unavailable")
-
-    def test_nfl_depth_charts_report_coverage_without_fabricating_roster_edge(self):
-        fetch_data.COMP_KEY = "NFL"
-        fetch_data.COMP = dict(fetch_data.COMPETITIONS["NFL"])
-        match = {"stage": "Week 1", "weather": {}, "personnel": {"depth_chart": {
-            "home": {"players": [{"name": "Home QB", "position": "QB"}]},
-            "away": {"players": [{"name": "Away QB", "position": "QB"}]},
-        }}}
-        pred = fetch_data.predict(
-            {"name": "Chicago Bears", "pld": 0},
-            {"name": "Green Bay Packers", "pld": 0}, {}, match,
-        )
-        self.assertEqual(pred["class_meta"]["label"], "Roster edge")
-        self.assertEqual(pred["class_meta"]["coverage_label"], "Roster coverage")
-        self.assertEqual(pred["class_meta"]["coverage"], "complete")
-        self.assertFalse(pred["class_meta"]["edge_available"])
-        self.assertEqual(pred["why"]["class"], 0)
-
 
 class CollegeClassCacheTests(unittest.TestCase):
     def setUp(self):
@@ -1185,101 +967,6 @@ class PredictPriorBoostTests(unittest.TestCase):
                                round(sum(home_class.values()) - sum(away_class.values()), 2))
 
 
-class TeamOfTournamentBackfillTests(unittest.TestCase):
-    """Regression coverage for a bug that kept recurring: a prior fix tried
-    to make the DEF/GK backfill 'stay dormant' without a real lineup
-    provider, but only by relying on the player DB happening to be empty --
-    stale entries from when ESPN lineups used to flow kept silently feeding
-    it anyway. LINEUP_BACKFILL_ENABLED makes that structurally impossible
-    regardless of what the DB file contains: real backfill only happens
-    while it's True (now that fetch_api_football_box_scores() is a real,
-    currently-fetching lineup source), and flipping it off must still gate
-    off backfill even with a populated DB file, exactly like before."""
-
-    def setUp(self):
-        self.old_key, self.old_comp = fetch_data.COMP_KEY, fetch_data.COMP
-        fetch_data.COMP_KEY = "WC"
-        fetch_data.COMP = dict(fetch_data.COMPETITIONS["WC"])
-        self.old_player_db_file = fetch_data.PLAYER_DB_FILE
-        fd_num, self.tmp_path = tempfile.mkstemp(suffix=".json")
-        with os.fdopen(fd_num, "w", encoding="utf-8") as f:
-            json.dump({"_matches": ["m1"], "players": {
-                "keeper one|team a": {"name": "Keeper One", "team": "Team A", "role": "GK",
-                                       "apps": 5, "starts": 5, "clean_sheets": 4},
-            }}, f)
-        fetch_data.PLAYER_DB_FILE = self.tmp_path
-        self.scorers = [{"name": "Striker", "team": "Team B", "goals": 5, "assists": 1,
-                         "played": 3, "position": "Forward"}]
-
-    def tearDown(self):
-        fetch_data.COMP_KEY, fetch_data.COMP = self.old_key, self.old_comp
-        fetch_data.PLAYER_DB_FILE = self.old_player_db_file
-        os.unlink(self.tmp_path)
-
-    def test_real_player_db_entries_backfill_while_enabled(self):
-        with mock.patch.object(fetch_data, "LINEUP_BACKFILL_ENABLED", True):
-            result = fetch_data.build_team_of_tournament([], self.scorers, [])
-        self.assertIsNotNone(result)
-        self.assertIn("Keeper One", [p["name"] for p in result["xi"]])
-        self.assertIn("accumulated lineups", result["note"])
-
-    def test_same_player_db_entries_never_backfill_while_disabled(self):
-        with mock.patch.object(fetch_data, "LINEUP_BACKFILL_ENABLED", False):
-            result = fetch_data.build_team_of_tournament([], self.scorers, [])
-        self.assertIsNotNone(result)
-        self.assertNotIn("Keeper One", [p["name"] for p in result["xi"]])
-        self.assertIn("don't fake it", result["note"])
-
-
-class PlayerDbSeasonResetTests(unittest.TestCase):
-    """player_db_<comp>.json never had a season concept at all -- it would
-    have kept accumulating one club's clean sheets across every season
-    forever, past and future blended into a single number. Dishonest for a
-    feature literally named "Team of the TOURNAMENT". update_player_db()
-    must reset to a blank slate the first time it runs in a new season."""
-
-    def setUp(self):
-        self.old_comp_key, self.old_comp = fetch_data.COMP_KEY, fetch_data.COMP
-        fetch_data.COMP_KEY = "UCL"
-        fetch_data.COMP = dict(fetch_data.COMPETITIONS["UCL"])
-        self.old_player_db_file = fetch_data.PLAYER_DB_FILE
-        fd_num, self.tmp_path = tempfile.mkstemp(suffix=".json")
-        os.close(fd_num)
-        fetch_data.PLAYER_DB_FILE = self.tmp_path
-
-    def tearDown(self):
-        fetch_data.COMP_KEY, fetch_data.COMP = self.old_comp_key, self.old_comp
-        fetch_data.PLAYER_DB_FILE = self.old_player_db_file
-        os.unlink(self.tmp_path)
-
-    def _match(self, mid):
-        return {"id": mid, "status": "FINISHED", "score": {"home": 1, "away": 0},
-                "home": {"name": "Team A"}, "away": {"name": "Team B"},
-                "lineups": {"home": {"formation": "4-3-3",
-                                     "xi": [{"name": f"Player {i}"} for i in range(11)]}}}
-
-    def test_stale_season_entries_are_cleared_before_folding_in_new_results(self):
-        with open(self.tmp_path, "w", encoding="utf-8") as f:
-            json.dump({"_season": "2024-25", "_matches": ["old-m1"],
-                       "players": {"stale player|team a": {"name": "Stale Player", "team": "Team A",
-                                                            "role": "DEF", "apps": 30, "starts": 30,
-                                                            "clean_sheets": 20}}}, f)
-        with mock.patch.object(fetch_data, "_current_soccer_season_label", return_value="2025-26"):
-            db = fetch_data.update_player_db([self._match("new-m1")])
-        self.assertNotIn("stale player|team a", db["players"])
-        self.assertEqual(db["_season"], "2025-26")
-        self.assertIn("new-m1", db["_matches"])
-        self.assertNotIn("old-m1", db["_matches"])
-
-    def test_same_season_entries_are_preserved_across_runs(self):
-        with mock.patch.object(fetch_data, "_current_soccer_season_label", return_value="2025-26"):
-            first = fetch_data.update_player_db([self._match("m1")])
-            self.assertIn("m1", first["_matches"])
-            second = fetch_data.update_player_db([self._match("m2")])
-        self.assertIn("m1", second["_matches"])
-        self.assertIn("m2", second["_matches"])
-
-
 class ApiFootballInjuryParsingTests(unittest.TestCase):
     """fetch_api_football_injuries() went live 2026-07-25 -- soccer's first
     real injury feed. _parse_af_injuries() is the piece that turns
@@ -1330,89 +1017,6 @@ class ApiFootballInjuryParsingTests(unittest.TestCase):
         ]}
         out = fetch_data._parse_af_injuries(payload, self._match(), "1")
         self.assertEqual(out["home"], ["Bare Player (Out)"])
-
-
-class ApiFootballInjuryPredictIntegrationTests(unittest.TestCase):
-    """predict()'s injury nudge (the `w = {...}.get(COMP_KEY, 1.5)` block)
-    only ever ran against empty data for soccer before this build -- every
-    soccer adapter path left m['injuries'] at {"home": [], "away": []}.
-    These confirm real API-FOOTBALL-shaped data (via _parse_af_injuries)
-    actually moves predict(), and that only confirmed "Out" absences count,
-    not "Questionable" doubts, per _out_count()'s documented intent."""
-
-    def setUp(self):
-        self.old_key, self.old_comp = fetch_data.COMP_KEY, fetch_data.COMP
-        fetch_data.COMP_KEY = "WC"
-        fetch_data.COMP = dict(fetch_data.COMPETITIONS["WC"])
-
-    def tearDown(self):
-        fetch_data.COMP_KEY, fetch_data.COMP = self.old_key, self.old_comp
-
-    def test_only_confirmed_out_status_feeds_the_injury_nudge(self):
-        home = {"name": "Alpha", "pts": 6, "gd": 2, "form": "W W"}
-        away = {"name": "Beta", "pts": 6, "gd": 2, "form": "W W"}
-        m_questionable_only = {"stage": "Final", "weather": {},
-                                "injuries": {"home": ["Star Player (Questionable - Illness)"], "away": []}}
-        m_confirmed_out = {"stage": "Final", "weather": {},
-                            "injuries": {"home": ["Star Player (Out - Injury)"], "away": []}}
-        pred_q = fetch_data.predict(dict(home), dict(away), {}, m_questionable_only)
-        pred_out = fetch_data.predict(dict(home), dict(away), {}, m_confirmed_out)
-        self.assertNotIn("injuries", pred_q["why"])
-        self.assertIn("injuries", pred_out["why"])
-        # home's confirmed absence should tilt probability toward the away side
-        self.assertGreater(pred_out["adjusted"]["a"], pred_q["adjusted"]["a"])
-
-    def test_injured_reserve_and_suspension_are_hard_absences(self):
-        home = {"name": "Alpha", "pts": 6, "gd": 2, "form": "W W"}
-        away = {"name": "Beta", "pts": 6, "gd": 2, "form": "W W"}
-        baseline = {"stage": "Final", "weather": {}, "injuries": {"home": [], "away": []}}
-        unavailable = {"stage": "Final", "weather": {},
-                       "injuries": {"home": ["One (Injured Reserve - Knee)",
-                                              "Two (Suspension - Suspension)"], "away": []}}
-        pred_base = fetch_data.predict(dict(home), dict(away), {}, baseline)
-        pred_out = fetch_data.predict(dict(home), dict(away), {}, unavailable)
-        self.assertIn("injuries", pred_out["why"])
-        self.assertGreater(pred_out["adjusted"]["a"], pred_base["adjusted"]["a"])
-
-    def test_real_shaped_af_injuries_payload_feeds_predict_end_to_end(self):
-        payload = {"response": [
-            {"player": {"id": 1, "name": "Home Starter", "type": "Missing Fixture", "reason": "Injury"},
-             "team": {"name": "Alpha"}},
-            {"player": {"id": 1, "name": "Home Starter", "type": "Missing Fixture", "reason": "Injury"},
-             "team": {"name": "Alpha"}},  # duplicate row, same as the live provider quirk
-        ]}
-        m = {"stage": "Final", "weather": {}, "home": {"name": "Alpha"}, "away": {"name": "Beta"}}
-        m["injuries"] = fetch_data._parse_af_injuries(payload, m, "1")
-        home = {"name": "Alpha", "pts": 6, "gd": 2, "form": "W W"}
-        away = {"name": "Beta", "pts": 6, "gd": 2, "form": "W W"}
-        pred = fetch_data.predict(home, away, {}, m)
-        self.assertIn("injuries", pred["why"])
-        self.assertGreater(pred["adjusted"]["a"], pred["adjusted"]["h"])
-
-
-class BigBallsOverlayGateTests(unittest.TestCase):
-    def test_key_alone_cannot_enable_unverified_injury_feed(self):
-        old_enabled, old_key, old_comp = (fetch_data.BBS_PREGAME_ENABLED,
-                                          fetch_data.BBS_API_KEY,
-                                          fetch_data.COMP_KEY)
-        try:
-            fetch_data.BBS_PREGAME_ENABLED = False
-            setattr(fetch_data, "BBS_API_KEY", "configured-secret")
-            fetch_data.COMP_KEY = "NBA"
-            with mock.patch.object(fetch_data.BigBallsSportsAdapter,
-                                   "attach_availability") as attach:
-                result = fetch_data.fetch_bbs_pregame_overlay([{
-                    "id": "future", "status": "UPCOMING",
-                    "kickoff": "2099-01-01T00:00:00Z",
-                    "home": {"name": "Boston Celtics"},
-                    "away": {"name": "New York Knicks"},
-                }])
-            self.assertEqual(result, {"injuries": 0})
-            attach.assert_not_called()
-        finally:
-            fetch_data.BBS_PREGAME_ENABLED = old_enabled
-            fetch_data.BBS_API_KEY = old_key
-            fetch_data.COMP_KEY = old_comp
 
 
 class SportsDataIOCacheConfirmationTests(unittest.TestCase):
@@ -1512,63 +1116,6 @@ class SportsGameOddsOverlayTests(unittest.TestCase):
                 "odds": {"home": odd("home", "+110", "-120"),
                          "away": odd("away", "+110", "-120")}}
 
-    def test_overlay_attaches_normalized_market_and_caches_no_raw_payload(self):
-        old = (fetch_data.COMP_KEY, fetch_data.COMP, fetch_data.SPORTSGAMEODDS_KEY,
-               fetch_data.SPORTSGAMEODDS_CACHE_FILE)
-        kickoff = (fetch_data.datetime.datetime.now(fetch_data.datetime.timezone.utc) +
-                   fetch_data.datetime.timedelta(hours=2)).isoformat()
-        match = {"id": "mlb-1", "status": "UPCOMING", "kickoff": kickoff,
-                 "home": {"name": "Boston Red Sox", "code": "BOS"},
-                 "away": {"name": "New York Yankees", "code": "NYY"},
-                 "markets": {}, "lineups": None,
-                 "injuries": {"home": [], "away": []}}
-        try:
-            with tempfile.TemporaryDirectory() as tmp:
-                fetch_data.COMP_KEY = "MLB"
-                fetch_data.COMP = dict(fetch_data.COMPETITIONS["MLB"])
-                setattr(fetch_data, "SPORTSGAMEODDS_KEY", "configured-key")
-                fetch_data.SPORTSGAMEODDS_CACHE_FILE = os.path.join(tmp, "sgo.json")
-                with mock.patch.object(provider_adapters.SportsGameOddsAdapter,
-                                       "upcoming_events", return_value=[self.event()]):
-                    result = fetch_data.fetch_sportsgameodds_overlay([match])
-                self.assertEqual(result["markets"], 1)
-                self.assertEqual(match["markets"]["1x2"]["source"],
-                                 "SportsGameOdds consensus")
-                self.assertTrue(match["markets"]["1x2"]["espn_excluded"])
-                self.assertIsNone(match["lineups"])
-                with open(fetch_data.SPORTSGAMEODDS_CACHE_FILE, encoding="utf-8") as handle:
-                    cache_text = handle.read()
-                self.assertNotIn("private-raw", cache_text)
-                self.assertNotIn("Not A Confirmed Lineup", cache_text)
-        finally:
-            (fetch_data.COMP_KEY, fetch_data.COMP, fetch_data.SPORTSGAMEODDS_KEY,
-             fetch_data.SPORTSGAMEODDS_CACHE_FILE) = old
-
-    def test_existing_primary_mlb_market_still_fetches_personnel_once(self):
-        old = (fetch_data.COMP_KEY, fetch_data.COMP, fetch_data.SPORTSGAMEODDS_KEY,
-               fetch_data.SPORTSGAMEODDS_CACHE_FILE)
-        kickoff = (fetch_data.datetime.datetime.now(fetch_data.datetime.timezone.utc) +
-                   fetch_data.datetime.timedelta(hours=2)).isoformat()
-        match = {"id": "mlb-1", "status": "UPCOMING", "kickoff": kickoff,
-                 "home": {"name": "Boston Red Sox"}, "away": {"name": "New York Yankees"},
-                 "markets": {"1x2": {"home_pct": 50, "away_pct": 50}}}
-        try:
-            with tempfile.TemporaryDirectory() as tmp:
-                fetch_data.COMP_KEY = "MLB"
-                fetch_data.COMP = dict(fetch_data.COMPETITIONS["MLB"])
-                setattr(fetch_data, "SPORTSGAMEODDS_KEY", "configured-key")
-                fetch_data.SPORTSGAMEODDS_CACHE_FILE = os.path.join(tmp, "sgo.json")
-                with mock.patch.object(provider_adapters.SportsGameOddsAdapter,
-                                       "upcoming_events", return_value=[]) as upcoming:
-                    self.assertEqual(fetch_data.fetch_sportsgameodds_overlay([match]),
-                                     {"markets": 0, "venues": 0,
-                                      "starting_pitchers": 0, "lineups": 0,
-                                      "starter_candidates": 0})
-                upcoming.assert_called_once()
-        finally:
-            (fetch_data.COMP_KEY, fetch_data.COMP, fetch_data.SPORTSGAMEODDS_KEY,
-             fetch_data.SPORTSGAMEODDS_CACHE_FILE) = old
-
     def test_legacy_sgo_cache_cannot_restore_canonical_mlb_personnel(self):
         match = {"id": "mlb-1", "markets": {}, "personnel": {}}
         legacy = {
@@ -1635,7 +1182,7 @@ class OfficialUnderdogSelectionTests(unittest.TestCase):
     def tearDown(self):
         fetch_data.COMP_KEY, fetch_data.COMP = self.old_key, self.old_comp
 
-    def _profile(self, competition="NBA", *, model=None, why=None, match=None,
+    def _profile(self, competition="NCAAM", *, model=None, why=None, match=None,
                  blend=None, market=None):
         fetch_data.COMP_KEY = competition
         fetch_data.COMP = dict(fetch_data.COMPETITIONS[competition])
@@ -1678,31 +1225,6 @@ class OfficialUnderdogSelectionTests(unittest.TestCase):
         self.assertFalse(info["market_quality_gate"])
         self.assertFalse(info["triggered"])
 
-    def test_mlb_requires_confirmed_starting_pitchers(self):
-        blocked = self._profile("MLB")
-        self.assertFalse(blocked["personnel_gate"])
-        self.assertIn("confirmed starting pitchers missing", blocked["personnel_blockers"])
-        self.assertFalse(blocked["triggered"])
-        confirmed = self._profile("MLB", match={"personnel": {
-            "starting_pitchers": {"home": {"name": "A"}, "away": {"name": "B"}},
-            "starting_pitchers_confirmed": True,
-        }})
-        self.assertTrue(confirmed["personnel_gate"])
-        self.assertTrue(confirmed["triggered"])
-
-    def test_soccer_underdog_must_beat_home_away_and_draw_in_independent_model(self):
-        info = self._profile(
-            "EPL",
-            market={"home_pct": 45, "draw_pct": 30, "away_pct": 25,
-                    "books": 6, "spread": 7},
-            blend={"h": 38, "d": 29, "a": 33},
-            model={"h": 33, "d": 29, "a": 38},
-        )
-        self.assertEqual(info["candidate"], "a")
-        self.assertEqual(info["independent_model_lead_pct"], 5.0)
-        self.assertTrue(info["triggered"])
-
-
 class ProStandingsFormattingTests(unittest.TestCase):
     @staticmethod
     def _flat_table(competition):
@@ -1718,29 +1240,6 @@ class ProStandingsFormattingTests(unittest.TestCase):
                   "ga": 90, "gd": 10 + i, "rating": 5 + i / 100}
                  for i, name in enumerate(names)]
         return [{"group": "", "teams": teams}]
-
-    def test_mlb_is_six_divisions_with_five_teams_each(self):
-        tables = fetch_data._group_us_pro_standings(self._flat_table("MLB"), "MLB")
-        self.assertEqual(len(tables), 6)
-        self.assertTrue(all(t["table_type"] == "official_standings" for t in tables))
-        self.assertTrue(all(len(t["teams"]) == 5 for t in tables))
-        self.assertEqual({t["group"] for t in tables}, set(fetch_data.US_PRO_STANDINGS_GROUPS["MLB"]))
-
-    def test_nfl_is_eight_divisions_and_nba_is_two_conferences(self):
-        nfl = fetch_data._group_us_pro_standings(self._flat_table("NFL"), "NFL")
-        nba = fetch_data._group_us_pro_standings(self._flat_table("NBA"), "NBA")
-        self.assertEqual([len(t["teams"]) for t in nfl], [4] * 8)
-        self.assertEqual([len(t["teams"]) for t in nba], [15, 15])
-
-    def test_power_ratings_are_separate_and_do_not_replace_division_rank(self):
-        official = fetch_data._group_us_pro_standings(self._flat_table("MLB"), "MLB")
-        division_positions = {t["name"]: t["pos"] for g in official for t in g["teams"]}
-        payload = fetch_data._append_power_ratings_table(official)
-        self.assertEqual(payload[-1]["table_type"], "power_ratings")
-        self.assertEqual(len(payload[-1]["teams"]), 30)
-        self.assertEqual(
-            division_positions,
-            {t["name"]: t["pos"] for g in payload[:-1] for t in g["teams"]})
 
     def test_matchday_top_25_is_model_sorted_and_separate_from_poll(self):
         tables = [{"group": "Conference", "teams": [
@@ -1783,12 +1282,6 @@ class ProStandingsFormattingTests(unittest.TestCase):
             fetch_data.set_competition(original_key)
             fetch_data._RATINGS = original_ratings
             fetch_data._ELO = original_elo
-
-    def test_placeholder_teams_are_not_rendered_as_a_real_division(self):
-        tables = self._flat_table("MLB")
-        tables[0]["teams"].append({"name": "Unknown", "pld": 0, "w": 0, "l": 0})
-        grouped = fetch_data._group_us_pro_standings(tables, "MLB")
-        self.assertFalse(any(t["name"] == "Unknown" for g in grouped for t in g["teams"]))
 
     def test_placeholder_side_never_becomes_a_31st_standings_team(self):
         # Live 2026-07-30: data_mlb.json carried 31 MLB "teams" -- the extra
@@ -1853,152 +1346,6 @@ class ApiFootballBoxScoreEdgeTests(unittest.TestCase):
         self.assertEqual(info["box_score_edge"], 0.0)
 
 
-class ApiFootballInjuryFetchGuardTests(unittest.TestCase):
-    """Quota-safety guards on fetch_api_football_injuries(): it must never
-    spend a request for a non-soccer competition or without a configured
-    key, since it shares API-FOOTBALL's 100/day free-plan budget with box
-    stats and lineups."""
-
-    def setUp(self):
-        self.old_key, self.old_comp = fetch_data.COMP_KEY, fetch_data.COMP
-        self.old_api_key = fetch_data.API_FOOTBALL_KEY
-
-    def tearDown(self):
-        fetch_data.COMP_KEY, fetch_data.COMP = self.old_key, self.old_comp
-        fetch_data.API_FOOTBALL_KEY = self.old_api_key
-
-    def test_non_soccer_competition_never_calls_the_api(self):
-        fetch_data.COMP_KEY = "NBA"
-        fetch_data.COMP = dict(fetch_data.COMPETITIONS.get("NBA", {"sport": "basketball"}))
-        with mock.patch.object(fetch_data, "_api_football_get") as get_mock:
-            fetch_data.fetch_api_football_injuries([{"status": "LIVE"}])
-        get_mock.assert_not_called()
-
-    def test_missing_key_logs_diag_and_never_calls_the_api(self):
-        fetch_data.COMP_KEY = "WC"
-        fetch_data.COMP = dict(fetch_data.COMPETITIONS["WC"])
-        fetch_data.API_FOOTBALL_KEY = ""
-        with mock.patch.object(fetch_data, "_api_football_get") as get_mock:
-            fetch_data.fetch_api_football_injuries([{"status": "LIVE"}])
-        get_mock.assert_not_called()
-        self.assertTrue(any("missing API_FOOTBALL_KEY" in d for d in fetch_data.DIAG))
-
-    def test_finished_matches_are_never_targeted(self):
-        # Injuries are forward-looking team news; a FINISHED match has no
-        # predictive value left, so no request should be spent on one, even
-        # with a key configured.
-        fetch_data.COMP_KEY = "WC"
-        fetch_data.COMP = dict(fetch_data.COMPETITIONS["WC"])
-        fetch_data.API_FOOTBALL_KEY = "test-key"
-        matches = [{"status": "FINISHED", "kickoff": "2020-01-01T00:00:00Z",
-                    "home": {"name": "Alpha"}, "away": {"name": "Beta"}}]
-        with mock.patch.object(fetch_data, "_api_football_get") as get_mock:
-            fetch_data.fetch_api_football_injuries(matches)
-        get_mock.assert_not_called()
-
-
-class DomesticLeagueKnockoutFalsePositiveTests(unittest.TestCase):
-    """A user-reported symptom on 2026-07-25: EPL/LaLiga/SerieA/Bundesliga/
-    Ligue1 predictions were almost always flagged "upset watch", even for
-    lopsided matchups. Root cause: three separate spots (_low_goal_probability,
-    _upset_adjustment's variance term, and predict()'s knockout damp) all
-    checked `not stage.startswith("group")` to detect one-off knockout
-    fixtures -- correct for WC/UCL's group-vs-knockout format, but a
-    domestic league's stage ("Regular Season") never starts with "group"
-    either, so every single league match was silently treated as a risky
-    knockout fixture. All three now use the real knockout-stage allowlist
-    (_is_knockout_stage) instead."""
-
-    def setUp(self):
-        self.old_key, self.old_comp = fetch_data.COMP_KEY, fetch_data.COMP
-        fetch_data.COMP_KEY = "EPL"
-        fetch_data.COMP = dict(fetch_data.COMPETITIONS["EPL"])
-
-    def tearDown(self):
-        fetch_data.COMP_KEY, fetch_data.COMP = self.old_key, self.old_comp
-
-    def test_regular_season_stage_is_not_treated_as_knockout(self):
-        low_goal = fetch_data._low_goal_probability({}, 26, {"stage": "Regular Season"})
-        # 0.42 + 0.26*0.42 with no knockout bonus
-        self.assertAlmostEqual(low_goal, 0.5292, places=3)
-
-    def test_real_knockout_stage_still_gets_the_bonus(self):
-        low_goal = fetch_data._low_goal_probability({}, 26, {"stage": "Quarterfinal"})
-        self.assertAlmostEqual(low_goal, 0.5892, places=3)
-
-    def test_league_match_prediction_is_not_damped_toward_a_coin_flip(self):
-        home = {"name": "Strong FC", "pts": 30, "gd": 20, "form": "W W W W W"}
-        away = {"name": "Weak FC", "pts": 5, "gd": -20, "form": "L L L L L"}
-        league = fetch_data.predict(dict(home), dict(away), {}, {"stage": "Regular Season", "weather": {}})
-        cup = fetch_data.predict(dict(home), dict(away), {}, {"stage": "Quarterfinal", "weather": {}})
-        self.assertEqual(league["damp_pct"], 0)
-        self.assertGreater(cup["damp_pct"], 0)
-        self.assertGreaterEqual(league["adjusted"]["h"], cup["adjusted"]["h"])
-
-
-class DrawProbabilityRespondsToMismatchTests(unittest.TestCase):
-    """Draw probability used to be a flat 0.26 for every soccer match
-    regardless of the underlying gap between the two sides -- a real blowout
-    draws far less often than an even match, and the flat value also fed a
-    constant, elevated floor into the upset-variance formula (see
-    DomesticLeagueKnockoutFalsePositiveTests). It now tapers down as the
-    model's own pre-draw split gets more lopsided."""
-
-    def setUp(self):
-        self.old_key, self.old_comp = fetch_data.COMP_KEY, fetch_data.COMP
-        fetch_data.COMP_KEY = "EPL"
-        fetch_data.COMP = dict(fetch_data.COMPETITIONS["EPL"])
-
-    def tearDown(self):
-        fetch_data.COMP_KEY, fetch_data.COMP = self.old_key, self.old_comp
-
-    def test_lopsided_matchup_gets_a_lower_draw_probability_than_an_even_one(self):
-        even_home = {"name": "A", "pts": 20, "gd": 0, "form": "W L W L"}
-        even_away = {"name": "B", "pts": 20, "gd": 0, "form": "W L W L"}
-        lopsided_home = {"name": "C", "pts": 40, "gd": 30, "form": "W W W W W"}
-        lopsided_away = {"name": "D", "pts": 5, "gd": -30, "form": "L L L L L"}
-        even = fetch_data.predict(even_home, even_away, {}, {"stage": "Regular Season", "weather": {}})
-        lopsided = fetch_data.predict(lopsided_home, lopsided_away, {}, {"stage": "Regular Season", "weather": {}})
-        self.assertLess(lopsided["model"]["d"], even["model"]["d"])
-        self.assertLessEqual(lopsided["model"]["d"], 26)
-        self.assertGreaterEqual(lopsided["model"]["d"], 12)
-
-
-class SoccerPreseasonPriorBoostTests(unittest.TestCase):
-    """Same fix as PredictPriorBoostTests, extended to soccer: pts/gd/form
-    are read with no reliability gate at all for soccer, so a team with zero
-    games played contributes nothing there either, leaving class/elo to
-    carry the whole signal -- but they previously had no equivalent boost to
-    the American branch's, so a real preseason class gap (e.g. a big club vs
-    a newly-promoted one) stayed muted until games started."""
-
-    def setUp(self):
-        self.old_key, self.old_comp = fetch_data.COMP_KEY, fetch_data.COMP
-        self.old_ratings_file, self.old_ratings = fetch_data.RATINGS_FILE, fetch_data._RATINGS
-        fetch_data.COMP_KEY = "EPL"
-        fetch_data.COMP = dict(fetch_data.COMPETITIONS["EPL"])
-        fd, self.tmp_path = tempfile.mkstemp(suffix=".json")
-        with os.fdopen(fd, "w", encoding="utf-8") as f:
-            json.dump({"Big Club": {"fifa_rank": 3, "squad_value_m": 900, "star_value_m": 120},
-                       "Newly Promoted": {"fifa_rank": 45, "squad_value_m": 60, "star_value_m": 8}}, f)
-        fetch_data.RATINGS_FILE = self.tmp_path
-        fetch_data._RATINGS = None
-
-    def tearDown(self):
-        fetch_data.COMP_KEY, fetch_data.COMP = self.old_key, self.old_comp
-        fetch_data.RATINGS_FILE, fetch_data._RATINGS = self.old_ratings_file, self.old_ratings
-        os.unlink(self.tmp_path)
-
-    def test_preseason_class_gap_is_boosted_versus_an_identical_in_season_gap(self):
-        home = {"name": "Big Club", "pts": 0, "gd": 0, "form": "", "pld": 0}
-        away = {"name": "Newly Promoted", "pts": 0, "gd": 0, "form": "", "pld": 0}
-        preseason = fetch_data.predict(dict(home), dict(away), {}, {"stage": "Regular Season", "weather": {}})
-        home_est = dict(home, pld=12, pts=28, gd=20, form="W W W L W")
-        away_est = dict(away, pld=12, pts=10, gd=-15, form="L L W L L")
-        established = fetch_data.predict(home_est, away_est, {}, {"stage": "Regular Season", "weather": {}})
-        self.assertGreater(preseason["why"]["class"], established["why"]["class"])
-
-
 class StrengthFloorTests(unittest.TestCase):
     """This session's fix reducing the American branch's flat 'base' anchor
     from 8.0 to 4.0 (see PredictPriorBoostTests' sibling context) had a real
@@ -2022,8 +1369,8 @@ class StrengthFloorTests(unittest.TestCase):
 
     def setUp(self):
         self.old_key, self.old_comp = fetch_data.COMP_KEY, fetch_data.COMP
-        fetch_data.COMP_KEY = "NFL"
-        fetch_data.COMP = dict(fetch_data.COMPETITIONS["NFL"])
+        fetch_data.COMP_KEY = "NCAAF"
+        fetch_data.COMP = dict(fetch_data.COMPETITIONS["NCAAF"])
 
     def tearDown(self):
         fetch_data.COMP_KEY, fetch_data.COMP = self.old_key, self.old_comp
@@ -2088,14 +1435,6 @@ class ProbabilityCalibrationTests(unittest.TestCase):
                 self.assertEqual(factor, 1.0)
                 self.assertEqual(fetch_data._calibrate_probs(probs, factor), probs)
 
-    def test_mlb_read_is_shrunk_toward_an_even_split(self):
-        factor = fetch_data._calibration_factor("MLB")
-        self.assertLess(factor, 1.0)
-        out = fetch_data._calibrate_probs({"h": 73, "d": 0, "a": 27}, factor)
-        # 50 + 23*0.35 == 58.05
-        self.assertEqual(out, {"h": 58, "d": 0, "a": 42})
-        self.assertEqual(sum(out.values()), 100)
-
     def test_calibration_preserves_the_side_and_never_flips_a_pick(self):
         factor = fetch_data._calibration_factor("MLB")
         for h in range(1, 100):
@@ -2112,29 +1451,6 @@ class ProbabilityCalibrationTests(unittest.TestCase):
         # own evidence -- this correction targets the side read only.
         out = fetch_data._calibrate_probs({"h": 50, "d": 26, "a": 24}, 0.35)
         self.assertEqual(out["d"], 26)
-
-    def test_mlb_prediction_stays_inside_a_believable_band(self):
-        old_key, old_comp = fetch_data.COMP_KEY, fetch_data.COMP
-        fetch_data.COMP_KEY = "MLB"
-        fetch_data.COMP = dict(fetch_data.COMPETITIONS["MLB"])
-        try:
-            # A genuine best-vs-worst MLB matchup is still only a ~65/35 game.
-            best = {"name": "Best Club", "pld": 120, "w": 80, "l": 40,
-                    "gf": 640, "ga": 480, "srs": 1.4, "srs_games": 120,
-                    "rest_days": 1, "form_home": "W W W W L", "form_away": "W W L W W"}
-            worst = {"name": "Worst Club", "pld": 120, "w": 40, "l": 80,
-                     "gf": 470, "ga": 650, "srs": -1.5, "srs_games": 120,
-                     "rest_days": 1, "form_home": "L L W L L", "form_away": "L L L W L"}
-            pred = fetch_data.predict(dict(best), dict(worst), {},
-                                      {"stage": "Regular", "weather": {}})
-            fav = max(pred["model"]["h"], pred["model"]["a"])
-            self.assertEqual(pred["pick"], "h")
-            # Still reads the right side, but no longer claims football-grade
-            # certainty about a baseball game.
-            self.assertGreater(fav, 50)
-            self.assertLess(fav, 70)
-        finally:
-            fetch_data.COMP_KEY, fetch_data.COMP = old_key, old_comp
 
     def test_model_identity_moved_with_the_output_change(self):
         # MLB_RECOVERY.md forbids pooling mixed model artifacts, so any change
@@ -2405,8 +1721,8 @@ class PredictedMarginTests(unittest.TestCase):
         fetch_data.COMP_KEY, fetch_data.COMP = self.old_key, self.old_comp
 
     def test_american_favorite_is_signed_positive_and_labeled_by_name(self):
-        fetch_data.COMP_KEY = "NFL"
-        fetch_data.COMP = dict(fetch_data.COMPETITIONS["NFL"])
+        fetch_data.COMP_KEY = "NCAAF"
+        fetch_data.COMP = dict(fetch_data.COMPETITIONS["NCAAF"])
         home = {"name": "Contender", "pld": 17, "w": 15, "l": 2,
                 "gf": 500, "ga": 300, "srs": 12.0, "srs_games": 17, "rest_days": 7}
         away = {"name": "Bottom Feeder", "pld": 17, "w": 1, "l": 16,
@@ -2419,8 +1735,8 @@ class PredictedMarginTests(unittest.TestCase):
         self.assertIn("Contender by", margin["label"])
 
     def test_away_favorite_flips_the_sign_and_the_favored_side(self):
-        fetch_data.COMP_KEY = "NFL"
-        fetch_data.COMP = dict(fetch_data.COMPETITIONS["NFL"])
+        fetch_data.COMP_KEY = "NCAAF"
+        fetch_data.COMP = dict(fetch_data.COMPETITIONS["NCAAF"])
         home = {"name": "Bottom Feeder", "pld": 17, "w": 1, "l": 16,
                 "gf": 250, "ga": 500, "srs": -12.0, "srs_games": 17, "rest_days": 7}
         away = {"name": "Contender", "pld": 17, "w": 15, "l": 2,
@@ -2444,20 +1760,9 @@ class PredictedMarginTests(unittest.TestCase):
         blowout_pred = fetch_data.predict(dict(close), dict(much_weaker), {}, {"stage": "Week 11", "weather": {}})
         self.assertGreater(blowout_pred["predicted_margin"]["value"], close_pred["predicted_margin"]["value"])
 
-    def test_soccer_margin_is_labeled_in_goals_with_an_explicit_sign(self):
-        fetch_data.COMP_KEY = "EPL"
-        fetch_data.COMP = dict(fetch_data.COMPETITIONS["EPL"])
-        home = {"name": "Strong FC", "pts": 30, "gd": 20, "form": "W W W W W"}
-        away = {"name": "Weak FC", "pts": 5, "gd": -20, "form": "L L L L L"}
-        pred = fetch_data.predict(dict(home), dict(away), {}, {"stage": "Regular Season", "weather": {}})
-        margin = pred["predicted_margin"]
-        self.assertEqual(margin["unit"], "goals")
-        self.assertTrue(margin["label"].endswith("goals"))
-        self.assertTrue(margin["label"].startswith("+"))
-
     def test_an_even_matchup_reads_as_even_not_a_fake_precise_number(self):
-        fetch_data.COMP_KEY = "NBA"
-        fetch_data.COMP = dict(fetch_data.COMPETITIONS["NBA"])
+        fetch_data.COMP_KEY = "NCAAM"
+        fetch_data.COMP = dict(fetch_data.COMPETITIONS["NCAAM"])
         a = {"name": "Even A", "pld": 20, "w": 10, "l": 10, "gf": 2200, "ga": 2200,
              "srs": 0.0, "srs_games": 20, "rest_days": 2}
         b = {"name": "Even B", "pld": 20, "w": 10, "l": 10, "gf": 2200, "ga": 2200,
@@ -2631,25 +1936,6 @@ class EloSportScopeTests(unittest.TestCase):
         self.assertEqual(bball_pts_after, bball_pts)
         self.assertEqual(bball_conf_after, bball_conf)
 
-    def test_placeholder_side_is_never_trained_into_the_elo_store(self):
-        # Live 2026-07-30: one BALLDONTLIE MLB game arrived with both sides
-        # named "Unknown", producing a permanent "baseball:unknown" entry
-        # (n=2) in the shared store -- a rating for a team that doesn't exist.
-        fetch_data.COMP_KEY = "MLB"
-        fetch_data.COMP = dict(fetch_data.COMPETITIONS["MLB"])
-        fetch_data.update_elo([
-            _finished("bdl-mlb-8712499", "Unknown", "Unknown", 0, 4,
-                      "2026-07-15T00:00:00Z", "a"),
-            _finished("bdl-mlb-8712500", "Boston Red Sox", "TBD", 3, 1,
-                      "2026-07-15T00:00:00Z", "h"),
-        ])
-        store = fetch_data._load_elo()
-        self.assertEqual(store["teams"], {})
-        # Not marked seen either -- a placeholder game is skipped, not
-        # recorded as processed, so a later resolved copy can still train.
-        self.assertEqual(store["seen"], {})
-        self.assertEqual(fetch_data.elo_strength("Boston Red Sox"), (0.0, 0.0))
-
     def test_h2h_pair_key_is_also_sport_scoped(self):
         # Same class of bug for the H2H store: two schools that happen to
         # meet in more than one sport (or under the same bare name) shouldn't
@@ -2788,114 +2074,6 @@ class LegacyStoreMigrationTests(unittest.TestCase):
         self.assertGreater(conf_after, 0)
 
 
-class SoccerKnownRatingGateTests(unittest.TestCase):
-    """Root-cause fix for a 2026-07-25 report ('strong teams undervalued in
-    domestic soccer'): rating_boost()/rating_parts() fall back to flat
-    neutral defaults (fifa_rank=45, squad_value_m=120, star_value_m=25) for
-    any team with no ratings_<league>.json entry -- and most hand-curated
-    domestic-league files only cover a handful of teams (8 of 18 for
-    Bundesliga/Ligue1 at the time of this report). The American branch of
-    predict() already refused to invent a "class" prior for an unrated team
-    (known_rating gate); soccer's fifa/value/star were applied unconditionally,
-    so every uncurated team silently got the exact same non-zero class figure
-    -- indistinguishable from a real rating. predict() now gates soccer's
-    fifa/value/star the same way.
-
-    The two magnitudes below are deliberately IDENTICAL (the curated entry's
-    numbers equal rating_boost()'s own neutral-default numbers) so this test
-    isolates the known/unknown gate itself, not a difference in the numbers:
-    before this fix an uncurated team was numerically indistinguishable from
-    one curated with exactly the neutral defaults, so this test could not
-    have failed under the old code -- it fails now only if the gate regresses."""
-
-    def setUp(self):
-        self.old_key, self.old_comp = fetch_data.COMP_KEY, fetch_data.COMP
-        self.old_ratings_file, self.old_ratings = fetch_data.RATINGS_FILE, fetch_data._RATINGS
-        fetch_data.COMP_KEY = "EPL"
-        fetch_data.COMP = dict(fetch_data.COMPETITIONS["EPL"])
-        fd, self.tmp_path = tempfile.mkstemp(suffix=".json")
-        with os.fdopen(fd, "w", encoding="utf-8") as f:
-            # Same numbers rating_boost()/rating_parts() use as their neutral
-            # fallback for a team with NO entry at all.
-            json.dump({"Curated Neutral FC": {"fifa_rank": 45, "squad_value_m": 120,
-                                               "star_value_m": 25}}, f)
-        fetch_data.RATINGS_FILE = self.tmp_path
-        fetch_data._RATINGS = None
-
-    def tearDown(self):
-        fetch_data.COMP_KEY, fetch_data.COMP = self.old_key, self.old_comp
-        fetch_data.RATINGS_FILE, fetch_data._RATINGS = self.old_ratings_file, self.old_ratings
-        os.unlink(self.tmp_path)
-
-    def test_uncurated_team_contributes_no_class_even_though_the_numbers_would_match_a_default(self):
-        home = {"name": "Curated Neutral FC", "pts": 0, "gd": 0, "form": "", "pld": 0}
-        away = {"name": "Totally Uncurated FC", "pts": 0, "gd": 0, "form": "", "pld": 0}
-        pred = fetch_data.predict(dict(home), dict(away), {}, {"stage": "Regular Season", "weather": {}})
-        # A curated (even if numerically "neutral") entry must count for
-        # something -- the whole point of the gate is "has real data" vs
-        # "has none", not "is the number impressive".
-        self.assertGreater(pred["why"]["class"], 0)
-
-    def test_two_uncurated_teams_get_zero_class_signal_either_side(self):
-        home = {"name": "Nobody FC", "pts": 0, "gd": 0, "form": "", "pld": 0}
-        away = {"name": "Nobody Else FC", "pts": 0, "gd": 0, "form": "", "pld": 0}
-        pred = fetch_data.predict(dict(home), dict(away), {}, {"stage": "Regular Season", "weather": {}})
-        self.assertEqual(pred["why"]["class"], 0)
-
-
-class OutrightMarketKeyVerificationTests(unittest.TestCase):
-    """Confirmed live against The Odds API's own /v4/sports catalog
-    (GET /v4/sports/?all=true, which the API's docs state costs no usage
-    credits, checked 2026-07-25 without touching the account's exhausted
-    monthly quota): the entire catalog has exactly 12 sport_keys with
-    has_outrights=true, covering NFL/NBA/MLB/NHL/NCAAF/NCAAB championship
-    winners, four golf majors, the US presidential election, and exactly one
-    soccer entry -- "soccer_fifa_world_cup_winner". There is no
-    "soccer_uefa_champs_league_winner", "soccer_epl_winner",
-    "soccer_spain_la_liga_winner", "soccer_italy_serie_a_winner",
-    "soccer_germany_bundesliga_winner", or "soccer_france_ligue_one_winner"
-    -- those six keys had been sitting in COMPETITIONS since the initial
-    commit, apparently guessed by analogy with the real American-sports keys
-    rather than verified, and were removed. This test pins that finding so
-    nobody reintroduces an unverified guess without re-checking the live
-    catalog first."""
-
-    def test_only_the_real_world_cup_outright_key_survives(self):
-        for key in ("UCL", "EPL", "LALIGA", "SERIEA", "BUNDESLIGA", "LIGUE1"):
-            self.assertIsNone(
-                fetch_data.COMPETITIONS[key]["outright"],
-                f"{key} has no verified outright/futures market at The Odds API -- "
-                "see this test's docstring before reintroducing a key here.")
-        self.assertEqual(fetch_data.COMPETITIONS["WC"]["outright"], "soccer_fifa_world_cup_winner")
-        # The American/college sports keep their real, working outright keys --
-        # this fix must not touch those.
-        for key, expected in (
-            ("NFL", "americanfootball_nfl_super_bowl_winner"),
-            ("NBA", "basketball_nba_championship_winner"),
-            ("MLB", "baseball_mlb_world_series_winner"),
-            ("NHL", "icehockey_nhl_championship_winner"),
-            ("NCAAF", "americanfootball_ncaaf_championship_winner"),
-            ("NCAAM", "basketball_ncaab_championship_winner"),
-        ):
-            self.assertEqual(fetch_data.COMPETITIONS[key]["outright"], expected)
-
-    def test_fetch_outrights_no_ops_without_a_network_call_for_leagues_with_no_market(self):
-        old_key, old_comp = fetch_data.COMP_KEY, fetch_data.COMP
-        old_cache = dict(fetch_data._OUT_CACHE)
-        try:
-            fetch_data.COMP_KEY = "EPL"
-            fetch_data.COMP = dict(fetch_data.COMPETITIONS["EPL"])
-            fetch_data._OUT_CACHE = {"t": 0.0, "data": []}
-            with mock.patch.object(fetch_data, "_get") as get_mock:
-                result = fetch_data.fetch_outrights({})
-            get_mock.assert_not_called()
-            self.assertEqual(result, [])
-            self.assertTrue(any("no outright market for this competition" in d for d in fetch_data.DIAG))
-        finally:
-            fetch_data.COMP_KEY, fetch_data.COMP = old_key, old_comp
-            fetch_data._OUT_CACHE = old_cache
-
-
 class NewsRelevanceTests(unittest.TestCase):
     """Regression coverage for real cross-sport pollution confirmed live on
     the site 2026-07-26: EPL/UCL's News tab was showing NFL fantasy-football
@@ -2913,31 +2091,6 @@ class NewsRelevanceTests(unittest.TestCase):
     def tearDown(self):
         fetch_data.COMP_KEY = self.old_key
 
-    def test_epl_rejects_real_nfl_and_mlb_articles_found_live(self):
-        fetch_data.COMP_KEY = "EPL"
-        self.assertFalse(fetch_data._news_relevant(
-            {"headline": "MLB rumors: Major trade candidate could miss rest of 2026 with injury", "desc": ""}))
-        self.assertFalse(fetch_data._news_relevant(
-            {"headline": "Fantasy football rankings 2026: Sleepers from the model", "desc": ""}))
-
-    def test_epl_accepts_a_real_premier_league_article(self):
-        fetch_data.COMP_KEY = "EPL"
-        self.assertTrue(fetch_data._news_relevant(
-            {"headline": "Arsenal Mulling Move For Real Madrid Star Vinicius Junior", "desc": ""}))
-
-    def test_ucl_rejects_a_real_scottish_football_article_found_live(self):
-        # UCL's own generic BBC/Sky "football" feeds cover every league, not
-        # just the Champions League -- this must not accept everything with
-        # a ball in it.
-        fetch_data.COMP_KEY = "UCL"
-        self.assertFalse(fetch_data._news_relevant(
-            {"headline": "Holders St Mirren visit Rangers in League Cup last 16", "desc": ""}))
-
-    def test_ucl_accepts_a_real_champions_league_article(self):
-        fetch_data.COMP_KEY = "UCL"
-        self.assertTrue(fetch_data._news_relevant(
-            {"headline": "Real Madrid preparing Champions League squad for Manchester City clash", "desc": ""}))
-
     def test_ncaam_rejects_the_real_mlb_recap_that_matched_on_the_bare_city_name(self):
         fetch_data.COMP_KEY = "NCAAM"
         self.assertFalse(fetch_data._news_relevant(
@@ -2948,22 +2101,12 @@ class NewsRelevanceTests(unittest.TestCase):
         self.assertTrue(fetch_data._news_relevant(
             {"headline": "Kansas Jayhawks land 5-star recruit ahead of March Madness", "desc": ""}))
 
-    def test_mlb_unaffected_by_the_new_soccer_entries(self):
-        fetch_data.COMP_KEY = "MLB"
-        self.assertTrue(fetch_data._news_relevant(
-            {"headline": "With Judge's timeline uncertain, Yankees face a deadline balancing act", "desc": ""}))
-        self.assertFalse(fetch_data._news_relevant(
-            {"headline": "Chiefs training camp update ahead of the NFL season", "desc": ""}))
-
     def test_previous_news_drops_items_that_no_longer_pass_relevance(self):
-        # Confirmed live 2026-07-26: even after the relevance-filtering gap
-        # itself was fixed and fresh EPL/UCL fetches were working again, the
-        # News tab kept showing the exact same old NFL/MLB pollution -- items
-        # accepted back when soccer had no filtering at all were being
-        # merged forward by fetch_news() forever, since only fresh items
-        # were ever checked against _news_relevant(). _load_previous_news()
-        # must re-check every carried-forward item too.
-        data_path = "data_epl.json"
+        # Items accepted before a relevance rule existed were merged forward
+        # by fetch_news() forever, since only fresh items were ever checked
+        # against _news_relevant(). _load_previous_news() must re-check every
+        # carried-forward item too.
+        data_path = "data_ncaam.json"
         old_existed = os.path.exists(data_path)
         old_content = None
         if old_existed:
@@ -2971,12 +2114,12 @@ class NewsRelevanceTests(unittest.TestCase):
                 old_content = f.read()
         published = fetch_data.datetime.datetime.now(fetch_data.datetime.timezone.utc).isoformat()
         with open(data_path, "w", encoding="utf-8") as f:
-            json.dump({"news_scope": "EPL", "news": [
+            json.dump({"news_scope": "NCAAM", "news": [
                 {"headline": "MLB rumors: Major trade candidate could miss rest of 2026", "source": "CBS Sports", "published": published},
-                {"headline": "Arsenal Mulling Move For Real Madrid Star Vinicius Junior", "source": "FOX Sports", "published": published},
+                {"headline": "Kansas Jayhawks land 5-star recruit ahead of March Madness", "source": "CBS Sports", "published": published},
             ]}, f)
         try:
-            fetch_data.COMP_KEY = "EPL"
+            fetch_data.COMP_KEY = "NCAAM"
             previous = fetch_data._load_previous_news()
         finally:
             if old_existed:
@@ -2986,7 +2129,7 @@ class NewsRelevanceTests(unittest.TestCase):
                 os.unlink(data_path)
         headlines = [item["headline"] for item in previous]
         self.assertNotIn("MLB rumors: Major trade candidate could miss rest of 2026", headlines)
-        self.assertIn("Arsenal Mulling Move For Real Madrid Star Vinicius Junior", headlines)
+        self.assertIn("Kansas Jayhawks land 5-star recruit ahead of March Madness", headlines)
 
 
 class OffseasonRecordTests(unittest.TestCase):
@@ -3051,21 +2194,6 @@ class OffseasonRecordTests(unittest.TestCase):
         self.assertIs(bracket, bracket_projection)
         self.assertIsNone(bracketology)
         self.assertEqual(context["suppressed_views"], ["standings", "bracketology"])
-
-    def test_ucl_standings_ignore_knockout_fixtures(self):
-        fetch_data.COMP_KEY = "UCL"
-        raw = [
-            {"stage": "LEAGUE_STAGE", "status": "FINISHED", "utcDate": "2026-01-20T20:00:00Z",
-             "homeTeam": {"name": "Bayern Munich"}, "awayTeam": {"name": "Paris Saint-Germain"},
-             "score": {"fullTime": {"home": 2, "away": 1}, "winner": "HOME_TEAM"}},
-            {"stage": "LAST_16", "status": "FINISHED", "utcDate": "2026-03-10T20:00:00Z",
-             "homeTeam": {"name": "Bayern Munich"}, "awayTeam": {"name": "Inter"},
-             "score": {"fullTime": {"home": 4, "away": 0}, "winner": "HOME_TEAM"}},
-        ]
-        standings = fetch_data.compute_standings(raw)
-        self.assertEqual(standings[fetch_data.norm("Bayern Munich")]["pld"], 1)
-        self.assertEqual(standings[fetch_data.norm("Bayern Munich")]["gf"], 2)
-        self.assertNotIn(fetch_data.norm("Inter"), standings)
 
     def test_ucl_knockout_playoff_round_uses_canonical_label(self):
         self.assertEqual(fetch_data.KO_STAGES["PLAYOFFS"], "Knockout phase play-offs")

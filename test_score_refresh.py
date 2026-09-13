@@ -66,16 +66,5 @@ class ScoreRefreshTests(unittest.TestCase):
                 self.assertEqual(fetch_data.fetch_odds(), {})
                 get.assert_not_called()
 
-    def test_balldontlie_live_and_near_games_use_short_cache(self):
-        now = datetime.datetime(2026, 7, 27, 20, 0, tzinfo=datetime.timezone.utc)
-        live = [{"status": "LIVE", "kickoff": "2026-07-27T19:00:00Z"}]
-        near = [{"status": "UPCOMING", "kickoff": "2026-07-27T22:00:00Z"}]
-        far = [{"status": "UPCOMING", "kickoff": "2026-07-29T22:00:00Z"}]
-        short = fetch_data.BALLDONTLIE_ACTIVE_CACHE_MIN * 60
-        self.assertEqual(fetch_data._balldontlie_cache_seconds(live, now), short)
-        self.assertEqual(fetch_data._balldontlie_cache_seconds(near, now), short)
-        self.assertEqual(fetch_data._balldontlie_cache_seconds(far, now), fetch_data.BALLDONTLIE_CACHE_MIN * 60)
-
-
 if __name__ == "__main__":
     unittest.main()

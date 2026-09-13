@@ -48,7 +48,7 @@ class AnalysisModeTests(unittest.TestCase):
             self.assertNotIn("pts??0} pts", source, f"{name} still prints a fabricated pts value")
         self.assertIn("teamStandingsMeta(m.home,m._comp)", cards)
         self.assertIn("teamStandingsMeta(m.away,m._comp)", cards)
-        self.assertIn("hideStaleRecord:['NCAAF','NFL'].includes(_v15CompetitionKey(m))", cards)
+        self.assertIn("hideStaleRecord:_v15CompetitionKey(m)==='NCAAF'", cards)
         self.assertIn("teamStandingsMeta(team,comp,{diff:true,form:true,hideStaleRecord:", panels)
 
     def test_expanded_football_views_hide_prior_season_records(self):
@@ -56,8 +56,8 @@ class AnalysisModeTests(unittest.TestCase):
         cards = (ROOT / "app-4-features.js").read_text(encoding="utf-8")
         panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
         self.assertIn("opts.hideStaleRecord&&team?.season_stale", core)
-        self.assertIn("['NCAAF','NFL'].includes(_v15CompetitionKey(m))&&team?.season_stale", cards)
-        self.assertIn("hideStaleRecord:['NCAAF','NFL'].includes(String(comp||'').toUpperCase())", panels)
+        self.assertIn("_v15CompetitionKey(m)==='NCAAF'&&team?.season_stale", cards)
+        self.assertIn("hideStaleRecord:String(comp||'').toUpperCase()==='NCAAF'", panels)
         self.assertIn("teamStandingsMeta(m.home,m._comp).map", cards)
         self.assertIn("teamStandingsMeta(m.away,m._comp).map", cards)
 
@@ -65,12 +65,8 @@ class AnalysisModeTests(unittest.TestCase):
         panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
         self.assertIn("This published snapshot predates pregame-context tracking", panels)
         self.assertIn("No cleared lineup feed for this competition", panels)
-        self.assertIn("Provider checked — no confirmed lineup", panels)
-        self.assertIn("Injuries inside 72h · lineups inside 2h", panels)
         self.assertIn("Needed before lock", panels)
-        self.assertIn("Bullpen workload", panels)
         css = (ROOT / "styles.css").read_text(encoding="utf-8")
-        self.assertIn(".bullpenGrid{display:grid", css)
         self.assertIn(".contextAlert{display:grid", css)
 
     def test_neutral_venue_comparison_has_responsive_layout(self):
@@ -100,18 +96,15 @@ class AnalysisModeTests(unittest.TestCase):
         # Must stay reachable once collapsed, or the rail can't be reopened.
         self.assertIn(".app.noinsight .railToggle{right:0", css)
 
-    def test_leagues_say_team_of_the_season(self):
+    def test_team_view_title_comes_from_one_helper(self):
         core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
         views = (ROOT / "app-2-views.js").read_text(encoding="utf-8")
         self.assertIn("function tottTitle()", core)
-        self.assertIn("'Team of the Season'", core)
         self.assertNotIn('<div class="vhead">Team of the Tournament</div>', views)
         self.assertIn("${esc(tottTitle())}", views)
 
     def test_match_profile_separates_standings_position_from_rank(self):
         source = (ROOT / "app-4-features.js").read_text(encoding="utf-8")
-        self.assertIn("return 'Table position'", source)
-        self.assertIn("return 'Division position'", source)
         self.assertIn("return 'Conference position'", source)
         self.assertIn("_v15CompareRow(_v15PlacementLabel(m),_v15Placement(m?.home),_v15Placement(m?.away))", source)
         self.assertIn("_v15CompareRow(_v15RankLabel(m),_v15Num(m?.home?.model_rank)", source)
@@ -187,9 +180,6 @@ class AnalysisModeTests(unittest.TestCase):
             "selectable sport must have a published data file, or visitors "
             "take a 404 when they pick it",
         )
-        # Retiring a sport from the fetch must not strip its name, so restoring
-        # it stays a one-line change rather than a hunt.
-        self.assertIn("nhl:'NHL'", core)
 
     def test_scheduled_deploy_is_hourly(self):
         workflow = (ROOT / ".github" / "workflows" / "deploy.yml").read_text(encoding="utf-8")

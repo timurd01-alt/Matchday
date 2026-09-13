@@ -88,7 +88,7 @@ def _learning_lesson(comp_key, comp_label, sport, match, official_pick):
     confidence = official_pick.get("confidence")
     if not all((home, away, pick)):
         return None
-    score_word = {"soccer": "goals", "hockey": "goals", "baseball": "runs"}.get(sport, "points")
+    score_word = "points"
     outcome = "held up" if hit else "did not hold up"
     return {
         "id": f"learn-{str(comp_key).lower()}-{match.get('id')}-{factor}",
@@ -304,12 +304,9 @@ def build_recap_post(comp_key, comp_label, scorecard, awards):
 
 def _content_sport(comp_key):
     key = str(comp_key or "").lower()
-    if key in {"wc", "ucl", "epl", "laliga", "seriea", "bundesliga", "ligue1"}:
-        return "soccer"
-    if key in {"ncaam", "nba"}:
+    if key == "ncaam":
         return "basketball"
-    return {"nfl": "nfl", "ncaaf": "ncaaf", "nhl": "hockey",
-            "mlb": "baseball"}.get(key, "all")
+    return {"ncaaf": "ncaaf"}.get(key, "all")
 
 
 def _compact_content_match(match, official_pick=None):

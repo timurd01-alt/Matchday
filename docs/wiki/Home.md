@@ -17,7 +17,7 @@ Matchday is deliberately not an ESPN-style live-score service. In-progress games
 
 ## Current public coverage
 
-The public pipeline covers the World Cup, Champions League, Premier League, La Liga, Serie A, Bundesliga, Ligue 1, NFL, NCAA football, NBA, NCAA men's basketball, and MLB. NHL is excluded while provider access remains unresolved. Availability still varies by provider, season, and subscription tier; unavailable fields remain blank rather than being fabricated.
+The public pipeline covers NCAA football and NCAA men's basketball, and nothing else. Availability still varies by provider, season, and subscription tier; unavailable fields remain blank rather than being fabricated.
 
 ## Official data and Matchday outputs
 

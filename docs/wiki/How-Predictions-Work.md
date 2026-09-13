@@ -25,11 +25,6 @@ Signals are coverage-aware. A new team, stale season record, or small head-to-he
 | --- | --- | --- |
 | College football | **Roster talent edge** | Multi-year blend of 247Sports Team Talent Composite roster snapshots supplied by CollegeFootballData. Successful enrichment is persisted to the tracked ratings file so a later provider rate limit cannot turn the signal into zero. |
 | Men's college basketball | **Recruiting edge** | CollegeBasketballData team recruiting ratings. This is explicitly a recruiting prior, not a claim to measure the entire current roster or transfer portal. |
-| Soccer | **Squad edge** | Curated squad value, star-player value, and ranking data for covered clubs or national teams. Uncovered teams receive no fabricated squad edge. |
-| MLB | **Personnel edge** | Not published with the current feed. A legitimate version needs probable starting pitchers, projected or confirmed batting orders, and bullpen availability. |
-| NFL | **Roster edge** | Not published with the current feed. It requires complete current depth charts plus player quality and availability. |
-| NBA | **Star / rotation edge** | Not published with the current feed. It requires active rotations, player quality, minutes expectations, and availability. |
-| NHL | **Roster / goalie edge** | Not published until current lines, starting goalie, and availability are covered. |
 
 Championship futures remain useful as a long-term team-strength prior, but the model records them as **championship market power**, never as talent or class. For college matchups that already have a real talent or recruiting signal, futures receive reduced weight because the two inputs are correlated.
 
@@ -51,6 +46,6 @@ Upset Radar identifies market underdogs that the model rates more competitively 
 
 ## Locking and evaluation
 
-Predictions become eligible for a verified public lock on the first successful refresh inside the sport-aware pregame window: two hours for professional sports and soccer, and three hours for college sports. The selected side and confidence are immutable after that lock. Final results grade the saved record; in-progress games remain result pending.
+Predictions become eligible for a verified public lock on the first successful refresh inside the three-hour pregame window. The selected side and confidence are immutable after that lock. Final results grade the saved record; in-progress games remain result pending.
 
 Matchday emphasizes probability-focused evaluation—including Brier score, log loss, calibration, confidence intervals, and out-of-sample testing—rather than judging a model only by raw win rate. See [Prediction Lifecycle](Prediction-Lifecycle) for the persistence guarantees behind the public scorecard.

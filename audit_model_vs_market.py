@@ -12,11 +12,7 @@ from pathlib import Path
 import fetch_data as fd
 import market_benchmark
 
-# WC/UCL/EPL/LALIGA/SERIEA/BUNDESLIGA/LIGUE1/NFL/NCAAF/NCAAM/NBA/MLB per the
-# explicit scope handed down this session. NHL is being disabled from the
-# live site this session and is intentionally excluded.
-COMPS = ["WC", "UCL", "EPL", "LALIGA", "SERIEA", "BUNDESLIGA", "LIGUE1",
-         "NFL", "NCAAF", "NCAAM", "NBA", "MLB"]
+COMPS = ["NCAAF", "NCAAM"]
 
 DATA_FILE = {c: f"data_{c.lower()}.json" for c in COMPS}
 ODDS_FILE = {c: f"odds_open_{c.lower()}.json" for c in COMPS}
@@ -32,8 +28,6 @@ def _load_json(path):
 
 def _load_odds_cache(comp):
     paths = [ODDS_FILE[comp]]
-    if comp == "WC":
-        paths.append("odds_open.json")  # legacy shared WC file, same convention as fetch_data._load_open
     for p in paths:
         d = _load_json(p)
         if d:

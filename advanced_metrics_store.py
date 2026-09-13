@@ -8,36 +8,6 @@ from pathlib import Path
 from typing import Any
 
 
-NFL_ALIASES = {
-    "ARI": "Arizona Cardinals", "ATL": "Atlanta Falcons", "BAL": "Baltimore Ravens",
-    "BUF": "Buffalo Bills", "CAR": "Carolina Panthers", "CHI": "Chicago Bears",
-    "CIN": "Cincinnati Bengals", "CLE": "Cleveland Browns", "DAL": "Dallas Cowboys",
-    "DEN": "Denver Broncos", "DET": "Detroit Lions", "GB": "Green Bay Packers",
-    "HOU": "Houston Texans", "IND": "Indianapolis Colts", "JAX": "Jacksonville Jaguars",
-    "JAC": "Jacksonville Jaguars", "KC": "Kansas City Chiefs", "LA": "Los Angeles Rams",
-    "LAR": "Los Angeles Rams", "LAC": "Los Angeles Chargers", "LV": "Las Vegas Raiders",
-    "MIA": "Miami Dolphins", "MIN": "Minnesota Vikings", "NE": "New England Patriots",
-    "NO": "New Orleans Saints", "NYG": "New York Giants", "NYJ": "New York Jets",
-    "PHI": "Philadelphia Eagles", "PIT": "Pittsburgh Steelers", "SEA": "Seattle Seahawks",
-    "SF": "San Francisco 49ers", "TB": "Tampa Bay Buccaneers", "TEN": "Tennessee Titans",
-    "WAS": "Washington Commanders",
-}
-
-MLB_ALIASES = {
-    "ARI": "Arizona Diamondbacks", "ATL": "Atlanta Braves", "BAL": "Baltimore Orioles",
-    "BOS": "Boston Red Sox", "CHA": "Chicago White Sox", "CHN": "Chicago Cubs",
-    "CIN": "Cincinnati Reds", "CLE": "Cleveland Guardians", "COL": "Colorado Rockies",
-    "DET": "Detroit Tigers", "HOU": "Houston Astros", "KCA": "Kansas City Royals",
-    "ANA": "Los Angeles Angels", "LAA": "Los Angeles Angels", "LAN": "Los Angeles Dodgers", "MIA": "Miami Marlins",
-    "MIL": "Milwaukee Brewers", "MIN": "Minnesota Twins", "NYA": "New York Yankees",
-    "NYN": "New York Mets", "OAK": "Oakland Athletics", "ATH": "Oakland Athletics",
-    "PHI": "Philadelphia Phillies", "PIT": "Pittsburgh Pirates", "SDN": "San Diego Padres",
-    "SEA": "Seattle Mariners", "SFN": "San Francisco Giants", "SLN": "St. Louis Cardinals",
-    "TBA": "Tampa Bay Rays", "TEX": "Texas Rangers", "TOR": "Toronto Blue Jays",
-    "WAS": "Washington Nationals",
-}
-
-
 def normalize_team(value: Any) -> str:
     return re.sub(r"[^a-z0-9]+", "", str(value or "").lower())
 
@@ -82,12 +52,7 @@ def attach_shadow_profiles(matches, competition: str, sport: str, directory: str
     if not payload:
         return {"file": None, "matches": 0, "teams": 0}
 
-    aliases = NFL_ALIASES if competition == "NFL" else MLB_ALIASES if competition == "MLB" else {}
-    index = {}
-    for name, profile in payload["profiles"].items():
-        index[normalize_team(name)] = profile
-        if str(name).upper() in aliases:
-            index[normalize_team(aliases[str(name).upper()])] = profile
+    index = {normalize_team(name): profile for name, profile in payload["profiles"].items()}
     attached_matches = 0
     attached_teams = 0
     for match in matches:

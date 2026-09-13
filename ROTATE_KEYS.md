@@ -1,65 +1,42 @@
 # Rotating your API keys (do before anything goes public)
 
-All seven keys in config_keys.py have appeared in AI chats at one point or
-another, which means every one of them should be treated as exposed — not
-just the three this doc originally covered. Rotation = generate new key,
-paste into config_keys.py, done. Nothing else in the app changes — the code
-reads keys only from that file.
+Every key in config_keys.py that has appeared in an AI chat should be treated as
+exposed. Rotation = generate new key, paste into config_keys.py, done. Nothing
+else in the app changes -- the code reads keys only from that file.
 
-`backfill_history.py` (a manually-run, one-time historical Elo seed script —
-see PROVIDER_COMPLIANCE.md's 2026-07-26 entry) reads the same
-CFBD_KEY/CBBD_KEY, BALLDONTLIE_KEY, FOOTBALL_DATA_KEY, and API_FOOTBALL_KEY
-from config_keys.py as everything else here — rotation works exactly the
-same way for it, nothing extra to do. It just pulls a lot more data per run
-than the hourly fetch does, so if you rotate a key while a backfill run is
-in progress, that run will start failing mid-way (it's safe to just stop it
-and re-run the same command after pasting the new key — already-applied
-seasons/results are skipped automatically).
+`backfill_history.py` (a manually-run, one-time historical Elo seed script)
+reads the same CFBD_KEY/CBBD_KEY from config_keys.py. If you rotate a key while
+a backfill run is in progress, that run will start failing mid-way; stop it and
+re-run the same command after pasting the new key -- already-applied seasons
+are skipped automatically.
 
-## 1. football-data.org  (soccer fixtures)
-- Log in at https://www.football-data.org/client/home
-- My Account -> there is a "regenerate token" / contact option; if no self-serve
-  button exists on your plan, email their support asking to reissue the token
-  (they do this routinely).
-- Paste the new token into config_keys.py as FOOTBALL_DATA_KEY.
+Matchday covers college football and men's college basketball only. The
+football-data.org, API-Football, BALLDONTLIE, Sportmonks and Big Balls keys are
+no longer read by anything; revoke them at the provider rather than rotating.
 
-## 2. The Odds API  (odds)
+## 1. The Odds API  (odds)
 - Log in at https://the-odds-api.com/ (account/dashboard page)
 - Use "regenerate API key" on the dashboard.
 - Paste into config_keys.py as ODDS_API_KEY.
 
-## 3. API-Football / api-sports  (soccer box scores, lineups, injuries)
-- Log in at https://dashboard.api-football.com/
-- Profile -> "Regenerate API Key".
-- Paste into config_keys.py as API_FOOTBALL_KEY.
-
-## 4. BALLDONTLIE  (NFL / NBA / MLB fixtures)
-- Log in at https://app.balldontlie.io/
-- Account/API settings -> regenerate key; if there's no self-serve button,
-  contact their support to reissue it.
-- Paste into config_keys.py as BALLDONTLIE_KEY.
-
-## 5. CollegeFootballData / CollegeBasketballData  (NCAAF / NCAAM)
+## 2. CollegeFootballData / CollegeBasketballData  (NCAAF / NCAAM)
 - These two share one key from the same account (that's why CFBD_KEY and
-  CBBD_KEY are identical in config_keys.py today) — one new key covers both.
-- Request/regenerate at https://collegefootballdata.com/key (their key signup
-  is request-based rather than a dashboard toggle on the free tier; check
-  their site for the current process if that's changed).
+  CBBD_KEY are identical in config_keys.py today) -- one new key covers both.
+- Request/regenerate at https://collegefootballdata.com/key.
 - Paste the same new key into config_keys.py as both CFBD_KEY and CBBD_KEY.
 
-## 6. SportsDataIO  (NHL, currently not reachable from the live site)
+## 3. SportsGameOdds  (fallback market context)
+- Regenerate in the SportsGameOdds dashboard.
+- Paste into config_keys.py as SPORTSGAMEODDS_KEY.
+
+## 4. SportsDataIO  (dormant college injury overlay)
 - Log in at https://dashboard.sportsdata.io/
 - Account/API keys -> regenerate; contact support if your plan requires them
   to reissue it manually.
 - Paste into config_keys.py as SPORTSDATAIO_KEY.
-- Worth doing anyway even though nothing on the live site currently reads
-  this key (NHL is hidden from the sport picker) — it's still a live,
-  working credential on your account and exposure risk doesn't depend on
-  whether the app happens to be using it right now.
 
 ## Then
 - Run one fetch (fetch_once_show_errors.bat) and confirm the diagnostics show
-  fixtures, odds and box stats loading. That's the whole verification.
-- From now on: keys never get pasted into chats or uploaded. When sharing the
-  app folder with an AI, config_keys.py stays home (the shipped zips already
-  exclude it, and .gitignore now protects any future GitHub repo).
+  fixtures and odds loading. That's the whole verification.
+- From now on: keys never get pasted into chats or uploaded. config_keys.py
+  stays home, and .gitignore protects it.

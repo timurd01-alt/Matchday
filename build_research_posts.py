@@ -91,7 +91,7 @@ def _experiments_post():
     }
 
 
-def _calibration_post(comp_key="mlb", comp_label="MLB"):
+def _calibration_post(comp_key="ncaaf", comp_label="College Football"):
     picks = _load_json(f"picks_log_{comp_key}.json", {})
     graded = [p for p in picks.values()
               if isinstance(p, dict) and p.get("result")

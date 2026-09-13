@@ -4,13 +4,9 @@ Matchday uses provider APIs and licensed or permissively licensed datasets. Cove
 
 Current provider families include:
 
-- football-data.org for supported soccer competition data
-- UEFA's published Technical Observer Team of the Season for the attributed completed-season Champions League XI
-- The Odds API for available pregame market information
-- BALLDONTLIE for supported NFL, NBA, and MLB feeds
 - CollegeFootballData and CollegeBasketballData for NCAA data
-- Sportmonks and API-FOOTBALL for optional supported soccer detail
-- nflverse-data for supported NFL player-stat categories
+- The Odds API for available pregame market information
+- SportsGameOdds for fallback market context
 
 Matchday does not use ESPN as a data source.
 

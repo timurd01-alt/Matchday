@@ -227,13 +227,13 @@ function renderCommunity(){ensureHandle();const host=$('#view-community');const 
    no injuries or market data, since there's no real scheduled game to
    attach any of that to). Runs entirely in the browser against
    DATA.standings, or DATA.matches when standings are empty (preseason). */
-const SANDBOX_TWO_WAY=new Set(['nfl','ncaaf','ncaam','mlb','nhl','nba']);
+const SANDBOX_TWO_WAY=new Set(['ncaaf','ncaam']);
 // Same full-season game counts predict() uses server-side, so a team's
 // record/form don't get full-confidence weight off a handful of games --
 // and season_stale (provider had no current-season sample yet and fell
 // back to last season's final record) dents it further, matching the
 // backend fix for the same P4-loses-class-edge-to-a-stale-record bug.
-const SANDBOX_FULL_GAMES={nfl:10,ncaaf:10,nba:20,ncaam:18,mlb:30,nhl:20};
+const SANDBOX_FULL_GAMES={ncaaf:10,ncaam:18};
 function sandboxTeams(){
   const fromStandings=(DATA.standings||[]).filter(g=>g.table_type!=='power_ratings').flatMap(g=>g.teams||[]);
   if(fromStandings.length)return fromStandings;
