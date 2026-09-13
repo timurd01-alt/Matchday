@@ -1,92 +1,12 @@
 {
   "handoff_version": 9,
   "source": "betbetter",
-  "generated_at": "2026-09-13T00:38:16.910974+00:00",
+  "generated_at": "2026-09-13T01:01:35.711120+00:00",
   "sports": [
     "ncaaf",
     "ncaam"
   ],
   "picks": [
-    {
-      "event_id": "0a6b6423d89be9817a0c8cd830e8cc0d",
-      "sport": "ncaaf",
-      "competition": "NCAAF",
-      "home": "Auburn Tigers",
-      "away": "Southern Mississippi Golden Eagles",
-      "kickoff": "2026-09-13T00:40:00Z",
-      "pick_name": "Auburn Tigers",
-      "pick": "h",
-      "model_pct": 93.0,
-      "market_pct": 96.1,
-      "edge_points": -3.1,
-      "best_price": 1.01,
-      "best_american": -10000,
-      "book_count": 2,
-      "price_seen_at": "2026-09-13T00:35:47.426182+00:00",
-      "model_name": "NCAAF statistical baseline",
-      "model_version": "spplus-normal-fallback",
-      "generated_at": "2026-09-09T01:02:29.850617+00:00",
-      "official_pick": false,
-      "basis": "live_shadow_forecast",
-      "moves_until_kickoff": false,
-      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
-      "sides": [
-        {
-          "selection": "Auburn Tigers",
-          "is_home": true,
-          "model_pct": 93.0,
-          "market_pct": 96.1,
-          "best_price": 1.01
-        },
-        {
-          "selection": "Southern Mississippi Golden Eagles",
-          "is_home": false,
-          "model_pct": 7.0,
-          "market_pct": 3.9,
-          "best_price": 31.0
-        }
-      ]
-    },
-    {
-      "event_id": "e61b38634c2ba45e99bdba191ef5dea1",
-      "sport": "ncaaf",
-      "competition": "NCAAF",
-      "home": "UTEP Miners",
-      "away": "Texas Southern Tigers",
-      "kickoff": "2026-09-13T01:00:00Z",
-      "pick_name": "UTEP Miners",
-      "pick": "h",
-      "model_pct": 97.1,
-      "market_pct": 94.1,
-      "edge_points": 3.0,
-      "best_price": 1.03,
-      "best_american": -3333,
-      "book_count": 4,
-      "price_seen_at": "2026-09-13T00:35:47.426182+00:00",
-      "model_name": "NCAAF adjusted-margin model",
-      "model_version": "ncaaf-adjusted-v1",
-      "generated_at": "2026-09-13T00:13:36.548741+00:00",
-      "official_pick": false,
-      "basis": "live_shadow_forecast",
-      "moves_until_kickoff": false,
-      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
-      "sides": [
-        {
-          "selection": "UTEP Miners",
-          "is_home": true,
-          "model_pct": 97.1,
-          "market_pct": 94.1,
-          "best_price": 1.03
-        },
-        {
-          "selection": "Texas Southern Tigers",
-          "is_home": false,
-          "model_pct": 2.9,
-          "market_pct": 5.9,
-          "best_price": 18.5
-        }
-      ]
-    },
     {
       "event_id": "a8283159aa27932e7a640f6158b2ca98",
       "sport": "ncaaf",
@@ -102,7 +22,7 @@
       "best_price": 1.08,
       "best_american": -1250,
       "book_count": 8,
-      "price_seen_at": "2026-09-13T00:35:47.426182+00:00",
+      "price_seen_at": "2026-09-13T00:46:48.655464+00:00",
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
       "generated_at": "2026-09-09T01:02:18.003952+00:00",
@@ -142,13 +62,13 @@
       "best_price": 1.91,
       "best_american": -110,
       "book_count": 9,
-      "price_seen_at": "2026-09-13T00:35:47.426182+00:00",
+      "price_seen_at": "2026-09-13T00:46:48.655464+00:00",
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
-      "generated_at": "2026-09-13T00:13:39.173601+00:00",
+      "generated_at": "2026-09-13T00:47:09.792900+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
-      "moves_until_kickoff": true,
+      "moves_until_kickoff": false,
       "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
       "sides": [
         {
@@ -182,10 +102,10 @@
       "best_price": 1.22,
       "best_american": -455,
       "book_count": 8,
-      "price_seen_at": "2026-09-13T00:35:47.426182+00:00",
+      "price_seen_at": "2026-09-13T00:46:48.655464+00:00",
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
-      "generated_at": "2026-09-13T00:13:41.677880+00:00",
+      "generated_at": "2026-09-13T00:47:11.906703+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -222,10 +142,10 @@
       "best_price": 2.8,
       "best_american": 180,
       "book_count": 6,
-      "price_seen_at": "2026-09-13T00:35:47.426182+00:00",
+      "price_seen_at": "2026-09-13T00:46:48.655464+00:00",
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
-      "generated_at": "2026-09-13T00:13:44.086273+00:00",
+      "generated_at": "2026-09-13T00:47:14.463048+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -262,10 +182,10 @@
       "best_price": 1.11,
       "best_american": -909,
       "book_count": 9,
-      "price_seen_at": "2026-09-13T00:35:47.426182+00:00",
+      "price_seen_at": "2026-09-13T00:46:48.655464+00:00",
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
-      "generated_at": "2026-09-13T00:13:46.566955+00:00",
+      "generated_at": "2026-09-13T00:47:17.102772+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -302,10 +222,10 @@
       "best_price": 1.02,
       "best_american": -5000,
       "book_count": 7,
-      "price_seen_at": "2026-09-13T00:35:47.426182+00:00",
+      "price_seen_at": "2026-09-13T00:46:48.655464+00:00",
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
-      "generated_at": "2026-09-13T00:13:49.159989+00:00",
+      "generated_at": "2026-09-13T00:47:19.430823+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -14566,6 +14486,23 @@
       "postseason": null
     },
     {
+      "event_id": "401856672",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "season": null,
+      "played_on": "2026-09-12",
+      "kickoff": "2026-09-12T21:30Z",
+      "home": "Florida Gators",
+      "away": "Campbell Fighting Camels",
+      "home_score": 52.0,
+      "away_score": 3.0,
+      "margin": 49.0,
+      "winner": "Florida Gators",
+      "neutral": null,
+      "conference_game": null,
+      "postseason": null
+    },
+    {
       "event_id": "401908347",
       "sport": "ncaaf",
       "competition": "NCAAF",
@@ -25925,51 +25862,6 @@
   ],
   "fixtures": [
     {
-      "event_id": "401864505",
-      "sport": "ncaaf",
-      "competition": "regular",
-      "kickoff": "2026-09-13T01:00:00.000Z",
-      "home": "UTEP",
-      "away": "Texas Southern",
-      "status": "pre"
-    },
-    {
-      "event_id": "401864504",
-      "sport": "ncaaf",
-      "competition": "regular",
-      "kickoff": "2026-09-13T01:00:00.000Z",
-      "home": "San José State",
-      "away": "Cal Poly",
-      "status": "pre"
-    },
-    {
-      "event_id": "401907009",
-      "sport": "ncaaf",
-      "competition": "regular",
-      "kickoff": "2026-09-13T01:00:00.000Z",
-      "home": "Central Washington",
-      "away": "Ferris State",
-      "status": "pre"
-    },
-    {
-      "event_id": "401864504",
-      "sport": "ncaaf",
-      "competition": "ncaaf",
-      "kickoff": "2026-09-13T01:00Z",
-      "home": "San José State Spartans",
-      "away": "Cal Poly Mustangs",
-      "status": "pre"
-    },
-    {
-      "event_id": "401864505",
-      "sport": "ncaaf",
-      "competition": "ncaaf",
-      "kickoff": "2026-09-13T01:00Z",
-      "home": "UTEP Miners",
-      "away": "Texas Southern Tigers",
-      "status": "pre"
-    },
-    {
       "event_id": "401858219",
       "sport": "ncaaf",
       "competition": null,
@@ -29523,6 +29415,51 @@
       "home": "Texas State Bobcats",
       "away": "Utah State Aggies",
       "status": "pre"
+    },
+    {
+      "event_id": "401864527",
+      "sport": "ncaaf",
+      "competition": "ncaaf",
+      "kickoff": "2026-10-25T02:00Z",
+      "home": "New Mexico Lobos",
+      "away": "North Dakota State Bison",
+      "status": "pre"
+    },
+    {
+      "event_id": "401871071",
+      "sport": "ncaaf",
+      "competition": "ncaaf",
+      "kickoff": "2026-10-27T23:00Z",
+      "home": "Western Kentucky Hilltoppers",
+      "away": "Delaware Blue Hens",
+      "status": "pre"
+    },
+    {
+      "event_id": "401871072",
+      "sport": "ncaaf",
+      "competition": "ncaaf",
+      "kickoff": "2026-10-28T00:00Z",
+      "home": "Missouri State Bears",
+      "away": "Sam Houston Bearkats",
+      "status": "pre"
+    },
+    {
+      "event_id": "401871058",
+      "sport": "ncaaf",
+      "competition": "ncaaf",
+      "kickoff": "2026-10-28T23:00Z",
+      "home": "Middle Tennessee Blue Raiders",
+      "away": "Kennesaw State Owls",
+      "status": "pre"
+    },
+    {
+      "event_id": "401871057",
+      "sport": "ncaaf",
+      "competition": "ncaaf",
+      "kickoff": "2026-10-29T00:00Z",
+      "home": "New Mexico State Aggies",
+      "away": "Jacksonville State Gamecocks",
+      "status": "pre"
     }
   ],
   "user_picks": {
@@ -29769,22 +29706,27 @@
   },
   "upset_of_the_week": {
     "available": true,
+    "recorded": true,
+    "week": "2026-W37",
     "pick": {
-      "event_id": "01e9c4d460a55375a75d025e2b1ddbf5",
+      "event_id": "14620ae05bec8eaa19ca94156c71dff2",
       "sport": "ncaaf",
       "competition": "NCAAF",
-      "home": "Arkansas Razorbacks",
-      "away": "Georgia Bulldogs",
-      "kickoff": "2026-09-19T16:00:00Z",
-      "selection": "Arkansas Razorbacks",
-      "model_pct": 17.8,
-      "market_pct": 13.7,
-      "disagreement_points": 4.1,
-      "best_price": 7.0
+      "home": "UCLA Bruins",
+      "away": "San Diego State Aztecs",
+      "kickoff": "2026-09-12T23:15:00Z",
+      "selection": "San Diego State Aztecs",
+      "model_pct": 45.1,
+      "market_pct": 20.5,
+      "disagreement_points": 24.6,
+      "best_price": 4.85,
+      "result": null,
+      "home_score": null,
+      "away_score": null
     },
-    "considered": 3,
+    "considered": 12,
     "horizon_days": 7,
-    "basis": "largest model-minus-market gap on a side the market has as an underdog, in an FBS game involving at least one Power Four team, excluding teams outplayed on EPA in their most recent game",
+    "basis": "recorded when the week's pick was made: largest model-minus-market gap on a side the market has as an underdog, in an FBS game involving at least one Power Four team, excluding teams outplayed on EPA in their most recent game",
     "caveat": "Editorial, not advice. This is the model's most contrarian call of the week, and disagreement of this kind has historically predicted WORSE results on our graded college samples, not better. Publish it as something to watch and grade afterwards, never as a recommended bet."
   },
   "game_of_the_week": {
@@ -29824,8 +29766,8 @@
     "caveat": "Editorial, not advice. The game is chosen for how close and how strong the two teams are by our own ratings; the model's read on it is reported alongside, not used to select it. It is a live shadow forecast like every other pick here and carries no frozen receipt."
   },
   "coverage": {
-    "picks": 18,
-    "games_without_a_pick": 2,
+    "picks": 16,
+    "games_without_a_pick": 1,
     "competitions": [
       "NCAAF"
     ],
@@ -29833,7 +29775,7 @@
       "ncaaf",
       "ncaam"
     ],
-    "results": 553,
+    "results": 554,
     "fixtures": 400
   },
   "publication": {
