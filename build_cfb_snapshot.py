@@ -279,6 +279,12 @@ def build(path: pathlib.Path = SNAPSHOT) -> str:
                   + json.dumps((document.get("team_profiles") or {}).get("ncaaf") or {},
                                ensure_ascii=False) + ";")
 
+    # The season's biggest upsets, judged against the closing price, for the
+    # board card that used to list the most recent finals.
+    blocks.append("  const MATCHDAY_BETBETTER_UPSETS="
+                  + json.dumps((document.get("upsets") or {}).get("ncaaf") or {},
+                               ensure_ascii=False) + ";")
+
     blocks.append("  const MATCHDAY_BETBETTER_UPSET="
                   + json.dumps(document.get("upset_of_the_week") or {}, ensure_ascii=False) + ";")
     blocks.append("  const MATCHDAY_BETBETTER_USER_PICKS="
