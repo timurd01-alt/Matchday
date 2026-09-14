@@ -75,6 +75,19 @@ PAYLOAD_FAIL_INTERVALS = 4.0
 # is this far past kickoff.
 SETTLE_GRACE_HOURS = 8.0
 
+# The fixture feed each sport spends quota on. CFBD is 1,000 calls a month, and
+# provider_quota refuses a fetch whenever usage runs ahead of the month's pace.
+# That refusal is the pacer doing its job, yet this check read the resulting
+# age as a dead feed: the payload crossed 12h most afternoons and failed the
+# run on nearly every Saturday-to-Monday stretch, while the handoff kept every
+# result on the page current. A held-back payload is therefore reported as
+# "paced", a warning, for as long as the hold is plausible. Played games with
+# no result still fail on their own, and past QUOTA_HOLD_FAIL_HOURS the fixture
+# list itself is too old to trust -- next Saturday's slate would be missing --
+# so age fails again no matter why.
+SPORT_QUOTA_PROVIDER = {"ncaaf": "cfbd", "ncaam": "cbbd"}
+QUOTA_HOLD_FAIL_HOURS = 96.0
+
 # A snapshot older than the handoff it is built from means `build_cfb_snapshot`
 # has not run since the handoff last landed. Small tolerance so the ordinary
 # case (build runs seconds after the handoff commit) never trips it.
@@ -113,6 +126,33 @@ def _cadence_hours(payload: dict, now: datetime.datetime) -> float:
         return max(multi_fetch.interval_for_payload(payload, now) / 3600.0, 1.0)
     except Exception:
         return 1.0
+
+
+def _quota_hold(key: str, now: datetime.datetime, root: pathlib.Path) -> str | None:
+    """Why the fetcher is deliberately not refreshing this sport, or None.
+
+    Read-only: provider_quota.check() writes probe bookkeeping into the ledger,
+    so this repeats only its reserve and pace tests against the ledger the run
+    restored. A period that has rolled over is not a hold -- the fetcher should
+    be spending again, so any staleness then is real.
+    """
+    provider = SPORT_QUOTA_PROVIDER.get(key)
+    if not provider:
+        return None
+    try:
+        import provider_quota
+
+        spec = provider_quota.PROVIDER_SPECS.get(provider)
+        entry = provider_quota._load_state(root / provider_quota.STATE_FILE).get(provider) or {}
+        if not spec or not isinstance(entry.get("remaining"), int):
+            return None
+        if provider_quota._resets_since(entry, spec, now):
+            return None
+        if entry["remaining"] <= spec["reserve"]:
+            return f"{provider}: {entry['remaining']} remaining, at the {spec['reserve']}-call reserve"
+        return provider_quota._pace_reason(provider, spec, entry, now)
+    except Exception:
+        return None
 
 
 def _parse_iso(value: Any) -> datetime.datetime | None:
@@ -318,10 +358,18 @@ def inspect_payload(
     finding["cadence_hours"] = round(cadence, 2)
     finding["warn_hours"] = round(warn_at, 2)
     finding["fail_hours"] = round(fail_at, 2)
+    hold = _quota_hold(key, now, root) if age is not None and age >= warn_at else None
+    finding["quota_hold"] = hold
 
     if age is None:
         finding["problems"].append("payload has no usable `updated` stamp")
         finding["state"] = "stale"
+    elif hold and age < max(fail_at, QUOTA_HOLD_FAIL_HOURS):
+        finding["problems"].append(
+            f"payload is {age:.1f}h old because the fetcher is pacing its quota "
+            f"({hold}); fails at {QUOTA_HOLD_FAIL_HOURS:.0f}h"
+        )
+        finding["state"] = "paced"
     elif age >= fail_at:
         finding["problems"].append(
             f"payload is {age:.1f}h old (fails at {fail_at:.0f}h on a {cadence:.0f}h refresh)"

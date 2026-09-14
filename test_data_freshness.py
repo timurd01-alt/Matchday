@@ -200,6 +200,47 @@ class ReportTests(unittest.TestCase):
         self.assertEqual(finding["warn_hours"], 3.0)
         self.assertEqual(finding["fail_hours"], 12.0)
 
+    def _cfbd_ledger(self, remaining):
+        """A CFBD ledger as the run restores it. NOW is 4.5 days (15%) into
+        September, so with 1.5x slack 225 calls are allowed by now."""
+        (self.root / "provider_quota_state.json").write_text(json.dumps({"cfbd": {
+            "remaining": remaining, "limit": 1000,
+            "period_start": "2026-09-01T00:00:00+00:00",
+            "observed_at": "2026-09-05T11:00:00+00:00"}}), encoding="utf-8")
+
+    def test_quota_paced_payload_warns_instead_of_failing(self):
+        """The 2026-09-13/14 red runs: CFBD ahead of pace, payload 16h old, every result repaired."""
+        self._cfbd_ledger(remaining=600)
+        _write(self.root, "ncaaf", "2026-09-04T20:00:00+00:00",
+               [_match("Rutgers", "Massachusetts", "2026-09-06T22:00:00Z")])
+        finding = data_freshness.inspect_payload("ncaaf", [], NOW, self.root)
+        self.assertEqual(finding["state"], "paced")
+        self.assertIn("pacing its quota", finding["problems"][0])
+        _handoff(self.root, [])
+        self.assertEqual(data_freshness.build_report(NOW, self.root)["payloads"][0]["state"], "paced")
+
+    def test_on_pace_quota_is_not_an_excuse(self):
+        """Budget left to spend means the fetcher should have fetched: still stale."""
+        self._cfbd_ledger(remaining=950)
+        _write(self.root, "ncaaf", "2026-09-04T20:00:00+00:00",
+               [_match("Rutgers", "Massachusetts", "2026-09-06T22:00:00Z")])
+        finding = data_freshness.inspect_payload("ncaaf", [], NOW, self.root)
+        self.assertEqual(finding["state"], "stale")
+
+    def test_quota_hold_still_fails_past_its_ceiling(self):
+        self._cfbd_ledger(remaining=600)
+        _write(self.root, "ncaaf", "2026-09-01T06:00:00+00:00",
+               [_match("Rutgers", "Massachusetts", "2026-09-06T22:00:00Z")])
+        finding = data_freshness.inspect_payload("ncaaf", [], NOW, self.root)
+        self.assertEqual(finding["state"], "stale")
+
+    def test_quota_hold_does_not_excuse_a_missing_result(self):
+        self._cfbd_ledger(remaining=600)
+        _write(self.root, "ncaaf", "2026-09-04T20:00:00+00:00",
+               [_match("Rutgers", "Massachusetts", "2026-09-03T22:00:00Z")])
+        finding = data_freshness.inspect_payload("ncaaf", [], NOW, self.root)
+        self.assertEqual(finding["state"], "stale")
+
     def test_missing_payload_is_reported_not_crashed(self):
         finding = data_freshness.inspect_payload("ncaaf", [], NOW, self.root)
         self.assertEqual(finding["state"], "missing")
