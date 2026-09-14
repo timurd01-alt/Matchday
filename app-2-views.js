@@ -506,7 +506,7 @@ function movementTag(row){
       ?`<i class="mvUp" title="up ${m} since last edition">▲${m}</i>`
       :`<i class="mvDown" title="down ${Math.abs(m)} since last edition">▼${Math.abs(m)}</i>`;
   }
-  if(row?.previous_rank==null)return '<i class="mvNew" title="first edition of this poll">new</i>';
+  if(row?.previous_rank==null)return '<i class="mvNew" title="first edition of this power rating">new</i>';
   return '';
 }
 function modTop25(){
@@ -515,7 +515,7 @@ function modTop25(){
   if(!rows.length)return '';
   const stale=table.season_in_progress===false;
   const caption=stale
-    ?`<div class="modWarn">Projection — the season has not started. This ranks the completed season.</div>`
+    ?`<div class="modWarn">Projection — the season has not started. This rates the completed season.</div>`
     :'';
   // Only when a previous edition exists. In a first poll this is false and
   // the column is absent, rather than a row of dashes standing in for it.
@@ -533,10 +533,10 @@ function modTop25(){
       +`<span class="modSos">${Number.isFinite(Number(r.sos))?'SoS '+Number(r.sos).toFixed(2):''}</span>`
       +(anyMovement?movementTag(r):'')+`</li>`;
   }).join('');
-  return `<section class="boardMod modTop25"><header><h3>Top 25</h3>`
+  return `<section class="boardMod modTop25"><header><h3>Power rating</h3>`
     +`<span>${esc(table.basis?.label||'Model rating')}</span></header>${caption}`
     +`<ol class="modList">${body}</ol>`
-    +`<p class="modNote">${esc(String(table.note||'').replace(/\.\./g,'.'))}</p>`+`<p class="modNote">Full table of every rated team on the Rankings tab.</p></section>`;
+    +`<p class="modNote">${esc(String(table.note||'').replace(/\.\./g,'.'))}</p>`+`<p class="modNote">Full power rating of every rated team on the Conferences tab.</p></section>`;
 }
 /* Upsets: the season's results the price said should not have happened.
    Recent finals on their own say nothing about which results mattered, so the
@@ -559,7 +559,7 @@ function modUpsets(){
       +`<span class="modTeam upLoser">${ranked(u.loser_rank,u.loser)}</span><b class="upScore upLoserScore">${Number(u.loser_score)}</b></li>`;
   }).join('');
   return `<section class="boardMod modScores modUpsets"><header><h3>Upsets</h3><span>biggest underdogs to win · pregame chance</span></header><ul class="modList">${body}</ul>`
-    +`<p class="modNote">Ranked by how little chance the closing line gave the winner. Poll ranks as of kickoff.</p></section>`;
+    +`<p class="modNote">Ranked by how little chance the closing line gave the winner. Numbers are power rating positions at kickoff.</p></section>`;
 }
 function modTopScores(){
   let done=(DATA.matches||[]).filter(m=>m.status==='FINISHED'
@@ -719,20 +719,20 @@ function modNotable(){
   if(!items.length)return '';
   return `<section class="boardMod modNotable"><header><h3>Notable</h3><span>from the full table</span></header>`
     +`<ul class="notableList">${items.map(([k,v,d])=>`<li><span class="ntKey">${esc(k)}</span><b>${esc(v)}</b><span class="ntDetail">${esc(d)}</span></li>`).join('')}</ul>`
-    +(withheld?`<p class="modNote">${withheld} team${withheld===1?' is':'s are'} held out of the ranking — ratings earned mostly against FCS opposition, which the table would otherwise flatter.</p>`:'')
+    +(withheld?`<p class="modNote">${withheld} team${withheld===1?' is':'s are'} held out of the power rating — ratings earned mostly against FCS opposition, which the table would otherwise flatter.</p>`:'')
     +`</section>`;
 }
 
 
-/* Trim the ranking card to fit, rather than to a number someone liked.
+/* Trim the power rating card to fit, rather than to a number someone liked.
    The board is three CSS columns and a column is as tall as what is in it, so
-   the ranking card -- the only one whose length is arbitrary -- is what decides
-   whether the other columns end in mid-air. Rather than guess a row count, the
-   other cards are measured after layout and the list is cut to the largest
-   number of rows that still fits inside the tallest of them.
+   the power rating card -- the only one whose length is arbitrary -- is what
+   decides whether the other columns end in mid-air. Rather than guess a row
+   count, the other cards are measured after layout and the list is cut to the
+   largest number of rows that still fits inside the tallest of them.
 
-   Everything cut is still reachable: the full rated table is on the Rankings
-   tab, and the card says so. */
+   Everything cut is still reachable: the full rated table is on the
+   Conferences tab, and the card says so. */
 function fitRankingCard(){
   const card=document.querySelector('.boardMods .modTop25');
   const list=card?.querySelector('.modList');
@@ -754,7 +754,7 @@ function fitRankingCard(){
   if(keep>=items.length)return;
   items.slice(keep).forEach(el=>el.remove());
   const note=card.querySelector('.modNote:last-of-type');
-  if(note)note.textContent=`Top ${keep} shown. Full table of every rated team on the Rankings tab.`;
+  if(note)note.textContent=`Top ${keep} shown. Full power rating of every rated team on the Conferences tab.`;
 }
 
 /* The week's upset call.

@@ -660,7 +660,7 @@ function renderWelcomeStatusNote(){
   const totals=scorecardTotals();
   host.innerHTML=FORECAST_PAUSE_ACTIVE
     ?`<p>The site covers college football and men's college basketball only. Publishing new
-      picks is paused while the model is rebuilt, so what you see is ratings, rankings and the
+      picks is paused while the model is rebuilt, so what you see is the power rating and the
       market's own number rather than a forecast.</p>`
     :`<p>The site covers college football and men's college basketball only. Fixtures on the
       board carry a model probability alongside the market's own number where one is priced${totals.lockMinutes?`, locked ${totals.lockMinutes} minutes before kickoff`:''}${totals.picks?` — ${totals.picks} of them have been graded against the result so far`:''}.</p>`;
