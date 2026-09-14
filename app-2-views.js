@@ -538,6 +538,29 @@ function modTop25(){
     +`<ol class="modList">${body}</ol>`
     +`<p class="modNote">${esc(String(table.note||'').replace(/\.\./g,'.'))}</p>`+`<p class="modNote">Full table of every rated team on the Rankings tab.</p></section>`;
 }
+/* Upsets: the season's results the price said should not have happened.
+   Recent finals on their own say nothing about which results mattered, so the
+   card ranks wins by the winner's pregame chance (closing no-vig moneyline, or
+   the closing spread when no moneyline was captured). Ranks are the ones
+   published before kickoff. Falls back to recent finals only when the handoff
+   carries no upset board. */
+function modUpsets(){
+  const board=(typeof MATCHDAY_BETBETTER_UPSETS!=='undefined'&&MATCHDAY_BETBETTER_UPSETS)||{};
+  const rows=(board.upsets||[]).slice(0,8);
+  if(String(DATA.comp_key||'').toUpperCase()!=='NCAAF'||!rows.length)return modTopScores();
+  const ranked=(rank,name)=>`${rank?`<i class="upRank">${Number(rank)}</i>`:''}<span class="upName" title="${esc(name)}">${esc(name)}</span>`;
+  const body=rows.map(u=>{
+    const pct=Number(u.winner_pregame_pct),line=Number(u.winner_spread);
+    const odds=Number.isFinite(line)&&line>0?`+${line%1?line.toFixed(1):line.toFixed(0)}`:'';
+    const when=String(u.played_on||'').slice(5).replace('-','/');
+    return `<li class="upRow" title="${esc(`${u.winner} had a ${pct.toFixed(1)}% pregame chance${odds?` (${odds} underdog)`:''} · ${when}`)}">`
+      +`<span class="modTeam won">${ranked(u.winner_rank,u.winner)}</span><b class="upScore">${Number(u.winner_score)}</b>`
+      +`<i class="upOdds">${Number.isFinite(pct)?Math.round(pct)+'%':''}<small>${esc(odds||'chance')}</small></i>`
+      +`<span class="modTeam upLoser">${ranked(u.loser_rank,u.loser)}</span><b class="upScore upLoserScore">${Number(u.loser_score)}</b></li>`;
+  }).join('');
+  return `<section class="boardMod modScores modUpsets"><header><h3>Upsets</h3><span>biggest underdogs to win · pregame chance</span></header><ul class="modList">${body}</ul>`
+    +`<p class="modNote">Ranked by how little chance the closing line gave the winner. Poll ranks as of kickoff.</p></section>`;
+}
 function modTopScores(){
   let done=(DATA.matches||[]).filter(m=>m.status==='FINISHED'
     &&Number.isFinite(Number(m.score?.home))&&Number.isFinite(Number(m.score?.away)));
@@ -901,6 +924,6 @@ function modSchedulePadding(){
 function collegeModules(){
   // Upset of the week leads: CSS columns fill in source order, so first in this
   // array is the top of the left column.
-  const cards=[modUpsetOfWeek(),modTopPick(),modMyPicks(),modStatOfWeek(),modNotable(),modRatingScatter(),modConferenceStrength(),modTop25(),modTopScores(),modToughestSchedules(),modTierSplit(),modConferenceParity(),modSchedulePadding()].filter(Boolean);
+  const cards=[modUpsetOfWeek(),modTopPick(),modMyPicks(),modStatOfWeek(),modNotable(),modRatingScatter(),modConferenceStrength(),modTop25(),modUpsets(),modToughestSchedules(),modTierSplit(),modConferenceParity(),modSchedulePadding()].filter(Boolean);
   return cards.length?`<div class="boardMods">${cards.join('')}</div>`:'';
 }
