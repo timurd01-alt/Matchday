@@ -538,6 +538,41 @@ function modTop25(){
     +`<ol class="modList">${body}</ol>`
     +`<p class="modNote">${esc(String(table.note||'').replace(/\.\./g,'.'))}</p>`+`<p class="modNote">Full power rating of every rated team on the Conferences tab.</p></section>`;
 }
+/* My Top 25: the owner's ballot, beside the power rating rather than instead of
+   it. The order is a person's call; what travels with each team is the résumé
+   it was judged on (record, strength of record, best win, power rating rank),
+   so a reader can see why and argue with it. Hidden until a ballot exists. */
+function collegeBallot(){
+  const b=typeof MATCHDAY_BETBETTER_BALLOT!=='undefined'?MATCHDAY_BETBETTER_BALLOT:null;
+  if(String(DATA.comp_key||'').toUpperCase()!=='NCAAF'||!b?.available||!(b.rankings||[]).length)return null;
+  return b;
+}
+function ballotWin(g){
+  if(!g)return '';
+  const where=g.site==='away'?'at':g.site==='neutral'?'n':'vs';
+  return `${where} ${g.opponent_rank?'#'+Number(g.opponent_rank)+' ':''}${esc(g.opponent)}`;
+}
+function ballotMove(r){
+  if(r.first_ballot)return '';
+  const m=Number(r.movement);
+  if(r.movement==null)return '<i class="mvNew" title="not on last week\'s ballot">new</i>';
+  if(!m)return '<i class="mvSame" title="unchanged">–</i>';
+  return m>0?`<i class="mvUp" title="up ${m}">▲${m}</i>`:`<i class="mvDown" title="down ${-m}">▼${-m}</i>`;
+}
+function modBallot(){
+  const b=collegeBallot();
+  if(!b)return '';
+  const body=b.rankings.map(r=>{
+    const s=r.resume||{};
+    return `<li class="${r.rank<=4?'seedTop':''}"><b>${Number(r.rank)}</b>`
+      +`<span class="modTeam" title="${esc(r.note||'')}">${esc(r.team_name)}<small class="ballotSub">${esc(s.record||'')}${s.best_win?' · best win '+ballotWin(s.best_win):''}</small></span>`
+      +`<span class="modSos">${s.power_rank?'PR #'+Number(s.power_rank):''}</span>`
+      +ballotMove(r)+`</li>`;
+  }).join('');
+  return `<section class="boardMod modBallot"><header><h3>My Top 25</h3><span>ballot · ${esc(b.published_on||'')}</span></header>`
+    +`<ol class="modList">${body}</ol>`
+    +`<p class="modNote">My own ranking of who has earned it: record and strength of record, quality wins and bad losses, head-to-head and conference titles, with the power rating as the eye test. Full résumés on the Conferences tab.</p></section>`;
+}
 /* Upsets: the season's results the price said should not have happened.
    Recent finals on their own say nothing about which results mattered, so the
    card ranks wins by the winner's pregame chance (closing no-vig moneyline, or
@@ -924,6 +959,6 @@ function modSchedulePadding(){
 function collegeModules(){
   // Upset of the week leads: CSS columns fill in source order, so first in this
   // array is the top of the left column.
-  const cards=[modUpsetOfWeek(),modTopPick(),modMyPicks(),modStatOfWeek(),modNotable(),modRatingScatter(),modConferenceStrength(),modTop25(),modUpsets(),modToughestSchedules(),modTierSplit(),modConferenceParity(),modSchedulePadding()].filter(Boolean);
+  const cards=[modUpsetOfWeek(),modTopPick(),modMyPicks(),modStatOfWeek(),modNotable(),modRatingScatter(),modConferenceStrength(),modBallot(),modTop25(),modUpsets(),modToughestSchedules(),modTierSplit(),modConferenceParity(),modSchedulePadding()].filter(Boolean);
   return cards.length?`<div class="boardMods">${cards.join('')}</div>`:'';
 }

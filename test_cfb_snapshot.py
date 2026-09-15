@@ -19,6 +19,17 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         self.assertIn("g.group!=='Matchday Top 25'", panels)
         self.assertIn("DATA.comp_key==='NCAAF'?'Conferences'", panels)
 
+    def test_the_owners_ballot_ships_apart_from_the_power_rating(self):
+        """My Top 25 is a person's call and must never borrow the model table's name."""
+        builder = (ROOT / "build_cfb_snapshot.py").read_text(encoding="utf-8")
+        views = (ROOT / "app-2-views.js").read_text(encoding="utf-8")
+        panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
+        self.assertIn('const MATCHDAY_BETBETTER_BALLOT="', builder)
+        self.assertIn('document.get("ballots")', builder)
+        self.assertIn("modBallot(),modTop25()", views)
+        self.assertIn("!b?.available", views)
+        self.assertIn("collegeBallotTableHTML()", panels)
+
     def test_news_is_a_primary_navigation_item(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
         self.assertIn('data-primary data-v="news"', html)
