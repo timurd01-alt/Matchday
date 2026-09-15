@@ -1,7 +1,7 @@
 {
   "handoff_version": 9,
   "source": "betbetter",
-  "generated_at": "2026-09-14T00:05:00.264238+00:00",
+  "generated_at": "2026-09-15T15:50:10.893718+00:00",
   "sports": [
     "ncaaf",
     "ncaam"
@@ -14385,6 +14385,13 @@
       "withheld": []
     }
   },
+  "ballots": {
+    "ncaaf": {
+      "available": false,
+      "sport": "ncaaf",
+      "reason": "No ballot has been published yet."
+    }
+  },
   "results": [
     {
       "event_id": "401908422",
@@ -26319,7 +26326,7 @@
     {
       "event_id": "401858225",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-17T23:30Z",
       "home": "Pittsburgh Panthers",
       "away": "Syracuse Orange",
@@ -26328,7 +26335,7 @@
     {
       "event_id": "401858226",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-18T23:30Z",
       "home": "Wake Forest Demon Deacons",
       "away": "Miami Hurricanes",
@@ -26337,7 +26344,7 @@
     {
       "event_id": "401856811",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T00:00Z",
       "home": "Texas Tech Red Raiders",
       "away": "Houston Cougars",
@@ -26346,7 +26353,7 @@
     {
       "event_id": "401858455",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T02:30Z",
       "home": "Oregon Ducks",
       "away": "Portland State Vikings",
@@ -26355,7 +26362,7 @@
     {
       "event_id": "401869940",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T15:30Z",
       "home": "Delaware Blue Hens",
       "away": "Coastal Carolina Chanticleers",
@@ -26364,7 +26371,7 @@
     {
       "event_id": "401858454",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T16:00Z",
       "home": "Ohio State Buckeyes",
       "away": "Kent State Golden Flashes",
@@ -26373,7 +26380,7 @@
     {
       "event_id": "401856686",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T16:00Z",
       "home": "Arkansas Razorbacks",
       "away": "Georgia Bulldogs",
@@ -26382,7 +26389,7 @@
     {
       "event_id": "401858456",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T16:00Z",
       "home": "Penn State Nittany Lions",
       "away": "Buffalo Bulls",
@@ -26391,7 +26398,7 @@
     {
       "event_id": "401856792",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T16:00Z",
       "home": "Kansas State Wildcats",
       "away": "Tulane Green Wave",
@@ -26400,7 +26407,7 @@
     {
       "event_id": "401856798",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T16:00Z",
       "home": "Iowa State Cyclones",
       "away": "Bowling Green Falcons",
@@ -26409,7 +26416,7 @@
     {
       "event_id": "401856812",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T16:00Z",
       "home": "Kansas Jayhawks",
       "away": "Arizona State Sun Devils",
@@ -26418,7 +26425,7 @@
     {
       "event_id": "401858228",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T16:00Z",
       "home": "Georgia Tech Yellow Jackets",
       "away": "Mercer Bears",
@@ -26427,7 +26434,7 @@
     {
       "event_id": "401858229",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T16:00Z",
       "home": "Clemson Tigers",
       "away": "North Carolina Tar Heels",
@@ -26436,7 +26443,7 @@
     {
       "event_id": "401858451",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T16:00Z",
       "home": "Minnesota Golden Gophers",
       "away": "Akron Zips",
@@ -26445,7 +26452,7 @@
     {
       "event_id": "401860889",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T16:00Z",
       "home": "Texas State Bobcats",
       "away": "North Texas Mean Green",
@@ -26454,7 +26461,7 @@
     {
       "event_id": "401858460",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T16:30Z",
       "home": "Wisconsin Badgers",
       "away": "Eastern Michigan Eagles",
@@ -26463,7 +26470,7 @@
     {
       "event_id": "401856695",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T16:45Z",
       "home": "Vanderbilt Commodores",
       "away": "NC State Wolfpack",
@@ -26472,7 +26479,7 @@
     {
       "event_id": "401864508",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T17:00Z",
       "home": "Central Michigan Chippewas",
       "away": "Wyoming Cowboys",
@@ -26481,7 +26488,7 @@
     {
       "event_id": "401858227",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T18:00Z",
       "home": "Boston College Eagles",
       "away": "Maine Black Bears",
@@ -26490,7 +26497,7 @@
     {
       "event_id": "401858448",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T18:00Z",
       "home": "Illinois Fighting Illini",
       "away": "Southern Illinois Salukis",
@@ -26499,7 +26506,7 @@
     {
       "event_id": "401862774",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T19:00Z",
       "home": "Toledo Rockets",
       "away": "Temple Owls",
@@ -26508,7 +26515,7 @@
     {
       "event_id": "401856694",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T19:30Z",
       "home": "Texas A&M Aggies",
       "away": "Kentucky Wildcats",
@@ -26517,7 +26524,7 @@
     {
       "event_id": "401856685",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T19:30Z",
       "home": "Alabama Crimson Tide",
       "away": "Florida State Seminoles",
@@ -26526,7 +26533,7 @@
     {
       "event_id": "401858457",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T19:30Z",
       "home": "Rutgers Scarlet Knights",
       "away": "USC Trojans",
@@ -26535,7 +26542,7 @@
     {
       "event_id": "401858450",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T19:30Z",
       "home": "Michigan Wolverines",
       "away": "UTEP Miners",
@@ -26544,7 +26551,7 @@
     {
       "event_id": "401858230",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T19:30Z",
       "home": "Louisville Cardinals",
       "away": "SMU Mustangs",
@@ -26553,7 +26560,7 @@
     {
       "event_id": "401856801",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T19:30Z",
       "home": "Utah Utes",
       "away": "Utah State Aggies",
@@ -26562,7 +26569,7 @@
     {
       "event_id": "401856797",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T19:30Z",
       "home": "Cincinnati Bearcats",
       "away": "Miami (OH) RedHawks",
@@ -26571,7 +26578,7 @@
     {
       "event_id": "401858233",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T19:30Z",
       "home": "California Golden Bears",
       "away": "Wagner Seahawks",
@@ -26580,7 +26587,7 @@
     {
       "event_id": "401860890",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T19:30Z",
       "home": "Washington State Cougars",
       "away": "Duquesne Dukes",
@@ -26589,7 +26596,7 @@
     {
       "event_id": "401866424",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T19:30Z",
       "home": "Massachusetts Minutemen",
       "away": "Stonehill Skyhawks",
@@ -26598,7 +26605,7 @@
     {
       "event_id": "401858449",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T20:00Z",
       "home": "Indiana Hoosiers",
       "away": "Western Kentucky Hilltoppers",
@@ -26607,7 +26614,7 @@
     {
       "event_id": "401858471",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T20:00Z",
       "home": "Iowa Hawkeyes",
       "away": "Northern Iowa Panthers",
@@ -26616,7 +26623,7 @@
     {
       "event_id": "401858231",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T20:00Z",
       "home": "Duke Blue Devils",
       "away": "Stanford Cardinal",
@@ -26625,7 +26632,7 @@
     {
       "event_id": "401866422",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T20:00Z",
       "home": "Liberty Flames",
       "away": "Ball State Cardinals",
@@ -26634,7 +26641,7 @@
     {
       "event_id": "401867804",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T20:00Z",
       "home": "Baylor Bears",
       "away": "Louisiana Tech Bulldogs",
@@ -26643,7 +26650,7 @@
     {
       "event_id": "401856691",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T20:15Z",
       "home": "South Carolina Gamecocks",
       "away": "Mississippi State Bulldogs",
@@ -26652,7 +26659,7 @@
     {
       "event_id": "401868317",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T20:30Z",
       "home": "UL Monroe Warhawks",
       "away": "SE Louisiana Lions",
@@ -26661,7 +26668,7 @@
     {
       "event_id": "401862710",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T22:00Z",
       "home": "Old Dominion Monarchs",
       "away": "East Carolina Pirates",
@@ -26670,7 +26677,7 @@
     {
       "event_id": "401862771",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T22:00Z",
       "home": "Florida Atlantic Owls",
       "away": "Florida International Panthers",
@@ -26679,7 +26686,7 @@
     {
       "event_id": "401864574",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T22:00Z",
       "home": "App State Mountaineers",
       "away": "Charlotte 49ers",
@@ -26688,7 +26695,7 @@
     {
       "event_id": "401871047",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T22:30Z",
       "home": "Missouri State Bears",
       "away": "Marshall Thundering Herd",
@@ -26697,7 +26704,7 @@
     {
       "event_id": "401856689",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T23:00Z",
       "home": "Missouri Tigers",
       "away": "Troy Trojans",
@@ -26706,7 +26713,7 @@
     {
       "event_id": "401856687",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T23:00Z",
       "home": "Auburn Tigers",
       "away": "Florida Gators",
@@ -26715,7 +26722,7 @@
     {
       "event_id": "401856800",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T23:00Z",
       "home": "UCF Knights",
       "away": "Georgia State Panthers",
@@ -26724,7 +26731,7 @@
     {
       "event_id": "401856803",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T23:00Z",
       "home": "Oklahoma State Cowboys",
       "away": "Murray State Racers",
@@ -26733,7 +26740,7 @@
     {
       "event_id": "401861963",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T23:00Z",
       "home": "Southern Miss Golden Eagles",
       "away": "UConn Huskies",
@@ -26742,7 +26749,7 @@
     {
       "event_id": "401862772",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T23:00Z",
       "home": "Memphis Tigers",
       "away": "UT Martin Skyhawks",
@@ -26751,7 +26758,7 @@
     {
       "event_id": "401862773",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T23:00Z",
       "home": "Rice Owls",
       "away": "Western Michigan Broncos",
@@ -26760,7 +26767,7 @@
     {
       "event_id": "401862777",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T23:00Z",
       "home": "South Florida Bulls",
       "away": "Delaware State Hornets",
@@ -26769,7 +26776,7 @@
     {
       "event_id": "401864443",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T23:00Z",
       "home": "Middle Tennessee Blue Raiders",
       "away": "Nevada Wolf Pack",
@@ -26778,7 +26785,7 @@
     {
       "event_id": "401866423",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T23:00Z",
       "home": "South Alabama Jaguars",
       "away": "Ohio Bobcats",
@@ -26787,7 +26794,7 @@
     {
       "event_id": "401870764",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T23:00Z",
       "home": "Sam Houston Bearkats",
       "away": "Nicholls Colonels",
@@ -26796,7 +26803,7 @@
     {
       "event_id": "401869948",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T23:00Z",
       "home": "Jacksonville State Gamecocks",
       "away": "Georgia Southern Eagles",
@@ -26805,7 +26812,7 @@
     {
       "event_id": "401858459",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T23:15Z",
       "home": "Washington Huskies",
       "away": "Eastern Washington Eagles",
@@ -26814,7 +26821,7 @@
     {
       "event_id": "401858452",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T23:15Z",
       "home": "Nebraska Cornhuskers",
       "away": "North Dakota Fighting Hawks",
@@ -26823,7 +26830,7 @@
     {
       "event_id": "401858453",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T23:30Z",
       "home": "Notre Dame Fighting Irish",
       "away": "Michigan State Spartans",
@@ -26832,7 +26839,7 @@
     {
       "event_id": "401856688",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T23:30Z",
       "home": "Ole Miss Rebels",
       "away": "LSU Tigers",
@@ -26841,7 +26848,7 @@
     {
       "event_id": "401856690",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T23:30Z",
       "home": "Oklahoma Sooners",
       "away": "New Mexico Lobos",
@@ -26850,7 +26857,7 @@
     {
       "event_id": "401856795",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T23:30Z",
       "home": "Colorado State Rams",
       "away": "BYU Cougars",
@@ -26859,7 +26866,7 @@
     {
       "event_id": "401856796",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T23:30Z",
       "home": "Northwestern Wildcats",
       "away": "Colorado Buffaloes",
@@ -26868,7 +26875,7 @@
     {
       "event_id": "401856802",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T23:30Z",
       "home": "Virginia Cavaliers",
       "away": "West Virginia Mountaineers",
@@ -26877,7 +26884,7 @@
     {
       "event_id": "401858232",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T23:30Z",
       "home": "Maryland Terrapins",
       "away": "Virginia Tech Hokies",
@@ -26886,7 +26893,7 @@
     {
       "event_id": "401856692",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-19T23:45Z",
       "home": "Tennessee Volunteers",
       "away": "Kennesaw State Owls",
@@ -26895,7 +26902,7 @@
     {
       "event_id": "401856693",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-20T00:00Z",
       "home": "Texas Longhorns",
       "away": "UTSA Roadrunners",
@@ -26904,7 +26911,7 @@
     {
       "event_id": "401856799",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-20T00:00Z",
       "home": "TCU Horned Frogs",
       "away": "Arkansas State Red Wolves",
@@ -26913,7 +26920,7 @@
     {
       "event_id": "401862775",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-20T00:00Z",
       "home": "Tulsa Golden Hurricane",
       "away": "East Texas A&M Lions",
@@ -26922,7 +26929,7 @@
     {
       "event_id": "401862776",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-20T00:00Z",
       "home": "Louisiana Ragin' Cajuns",
       "away": "UAB Blazers",
@@ -26931,7 +26938,7 @@
     {
       "event_id": "401860885",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-20T02:00Z",
       "home": "Boise State Broncos",
       "away": "South Dakota Coyotes",
@@ -26940,7 +26947,7 @@
     {
       "event_id": "401860887",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-20T02:00Z",
       "home": "San Diego State Aztecs",
       "away": "James Madison Dukes",
@@ -26949,7 +26956,7 @@
     {
       "event_id": "401856793",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-20T02:30Z",
       "home": "Arizona Wildcats",
       "away": "Northern Illinois Huskies",
@@ -26958,7 +26965,7 @@
     {
       "event_id": "401864507",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-20T02:30Z",
       "home": "Sacramento State Hornets",
       "away": "North Dakota State Bison",
@@ -26967,7 +26974,7 @@
     {
       "event_id": "401858458",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-20T03:00Z",
       "home": "UCLA Bruins",
       "away": "Purdue Boilermakers",
@@ -26976,7 +26983,7 @@
     {
       "event_id": "401860886",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-20T03:00Z",
       "home": "Oregon State Beavers",
       "away": "Montana Grizzlies",
@@ -26985,7 +26992,7 @@
     {
       "event_id": "401860888",
       "sport": "ncaaf",
-      "competition": "ncaaf",
+      "competition": null,
       "kickoff": "2026-09-20T03:00Z",
       "home": "San José State Spartans",
       "away": "Fresno State Bulldogs",
@@ -29920,7 +29927,7 @@
   "team_profiles": {
     "ncaaf": {
       "season": 2026,
-      "source": "Bet Better play-by-play (expected points added) and opponent-adjusted ratings",
+      "source": "Play-by-play (expected points added) and opponent-adjusted ratings",
       "generated_through": "2026-09-13",
       "teams": {
         "Alabama Crimson Tide": {
@@ -33377,21 +33384,22 @@
           "rule": "The scorecard freezes 60 minutes before kickoff. It stores the newest forecast generated at or before that moment, alongside the market price as it stood then, and is never rewritten afterwards."
         },
         "totals": {
-          "locked_events": 352,
-          "locked_selections": 704,
-          "graded_selections": 704,
+          "locked_events": 188,
+          "duplicate_cards_not_counted": 164,
+          "locked_selections": 376,
+          "graded_selections": 376,
           "awaiting_result": 0
         },
         "record": {
-          "picks": 352,
-          "wins": 305,
-          "losses": 47,
-          "hit_rate_pct": 86.6,
-          "expected_hit_rate_pct": 86.2,
-          "calibration_gap_points": 0.4,
+          "picks": 188,
+          "wins": 163,
+          "losses": 25,
+          "hit_rate_pct": 86.7,
+          "expected_hit_rate_pct": 86.5,
+          "calibration_gap_points": 0.2,
           "confidence_interval_pct": [
-            82.7,
-            89.8
+            81.1,
+            90.8
           ]
         },
         "versus_market": {
@@ -33427,38 +33435,38 @@
         "by_confidence": [
           {
             "band": "50–60%",
-            "picks": 39,
-            "hit_rate_pct": 53.8,
-            "expected_hit_rate_pct": 55.5,
-            "calibration_gap_points": -1.6
+            "picks": 21,
+            "hit_rate_pct": 57.1,
+            "expected_hit_rate_pct": 55.9,
+            "calibration_gap_points": 1.2
           },
           {
             "band": "60–70%",
-            "picks": 24,
-            "hit_rate_pct": 75.0,
-            "expected_hit_rate_pct": 65.3,
-            "calibration_gap_points": 9.7
+            "picks": 13,
+            "hit_rate_pct": 76.9,
+            "expected_hit_rate_pct": 65.1,
+            "calibration_gap_points": 11.9
           },
           {
             "band": "70–80%",
-            "picks": 37,
-            "hit_rate_pct": 83.8,
-            "expected_hit_rate_pct": 74.9,
+            "picks": 18,
+            "hit_rate_pct": 83.3,
+            "expected_hit_rate_pct": 74.5,
             "calibration_gap_points": 8.9
           },
           {
             "band": "80–90%",
-            "picks": 53,
-            "hit_rate_pct": 88.7,
+            "picks": 26,
+            "hit_rate_pct": 88.5,
             "expected_hit_rate_pct": 85.7,
-            "calibration_gap_points": 3.0
+            "calibration_gap_points": 2.7
           },
           {
             "band": "90–100%",
-            "picks": 199,
-            "hit_rate_pct": 94.5,
+            "picks": 110,
+            "hit_rate_pct": 93.6,
             "expected_hit_rate_pct": 97.0,
-            "calibration_gap_points": -2.5
+            "calibration_gap_points": -3.4
           }
         ],
         "recent": [
@@ -33493,16 +33501,6 @@
             "score": "49–30"
           },
           {
-            "event_name": "Louisiana at USC",
-            "sport": "ncaaf",
-            "starts_at": "2026-09-13T03:00:00.000Z",
-            "selection": "USC",
-            "probability_pct": 94.1,
-            "market_probability_pct": null,
-            "result": "win",
-            "score": "49–30"
-          },
-          {
             "event_name": "Sacramento State Hornets at Fresno State Bulldogs",
             "sport": "ncaaf",
             "starts_at": "2026-09-13T02:30:00Z",
@@ -33523,42 +33521,12 @@
             "score": "7–20"
           },
           {
-            "event_name": "Montana State at Nevada",
-            "sport": "ncaaf",
-            "starts_at": "2026-09-13T02:30:00.000Z",
-            "selection": "Nevada Wolf Pack",
-            "probability_pct": 98.8,
-            "market_probability_pct": null,
-            "result": "loss",
-            "score": "7–20"
-          },
-          {
-            "event_name": "Sacramento State at Fresno State",
-            "sport": "ncaaf",
-            "starts_at": "2026-09-13T02:30:00.000Z",
-            "selection": "Fresno State",
-            "probability_pct": 80.9,
-            "market_probability_pct": null,
-            "result": "win",
-            "score": "49–3"
-          },
-          {
             "event_name": "Arkansas Razorbacks at Utah Utes",
             "sport": "ncaaf",
             "starts_at": "2026-09-13T02:15:00Z",
             "selection": "Utah Utes",
             "probability_pct": 94.3,
             "market_probability_pct": 77.0,
-            "result": "win",
-            "score": "43–10"
-          },
-          {
-            "event_name": "Arkansas at Utah",
-            "sport": "ncaaf",
-            "starts_at": "2026-09-13T02:15:00.000Z",
-            "selection": "Utah",
-            "probability_pct": 78.0,
-            "market_probability_pct": null,
             "result": "win",
             "score": "43–10"
           },
@@ -33571,36 +33539,6 @@
             "market_probability_pct": 51.8,
             "result": "win",
             "score": "32–38"
-          },
-          {
-            "event_name": "North Dakota State at Air Force",
-            "sport": "ncaaf",
-            "starts_at": "2026-09-13T02:00:00.000Z",
-            "selection": "Air Force",
-            "probability_pct": 54.8,
-            "market_probability_pct": null,
-            "result": "loss",
-            "score": "32–38"
-          },
-          {
-            "event_name": "Cal Poly Mustangs at San José State Spartans",
-            "sport": "ncaaf",
-            "starts_at": "2026-09-13T01:00Z",
-            "selection": "San José State Spartans",
-            "probability_pct": 95.7,
-            "market_probability_pct": null,
-            "result": "win",
-            "score": "30–20"
-          },
-          {
-            "event_name": "Texas Southern Tigers at UTEP Miners",
-            "sport": "ncaaf",
-            "starts_at": "2026-09-13T01:00Z",
-            "selection": "UTEP Miners",
-            "probability_pct": 97.1,
-            "market_probability_pct": null,
-            "result": "win",
-            "score": "51–10"
           },
           {
             "event_name": "Cal Poly Mustangs at San Jose State Spartans",
@@ -33631,16 +33569,6 @@
             "market_probability_pct": null,
             "result": "win",
             "score": "63–7"
-          },
-          {
-            "event_name": "Prairie View A&M Panthers at Baylor Bears",
-            "sport": "ncaaf",
-            "starts_at": "2026-09-13T00:00Z",
-            "selection": "Baylor Bears",
-            "probability_pct": 100.0,
-            "market_probability_pct": null,
-            "result": "win",
-            "score": "44–3"
           },
           {
             "event_name": "Prairie View A&M Panthers at Baylor Bears",
@@ -33683,34 +33611,114 @@
             "score": "43–8"
           },
           {
-            "event_name": "Charlotte at Ole Miss",
+            "event_name": "Louisiana Tech Bulldogs at LSU Tigers",
             "sport": "ncaaf",
-            "starts_at": "2026-09-12T23:45:00.000Z",
-            "selection": "Ole Miss Rebels",
-            "probability_pct": 100.0,
-            "market_probability_pct": null,
+            "starts_at": "2026-09-12T23:30:00Z",
+            "selection": "LSU Tigers",
+            "probability_pct": 88.8,
+            "market_probability_pct": 96.4,
             "result": "win",
-            "score": "41–9"
+            "score": "45–14"
+          },
+          {
+            "event_name": "Navy Midshipmen at Florida Atlantic Owls",
+            "sport": "ncaaf",
+            "starts_at": "2026-09-12T23:30:00Z",
+            "selection": "Navy Midshipmen",
+            "probability_pct": 80.7,
+            "market_probability_pct": 63.5,
+            "result": "loss",
+            "score": "38–30"
+          },
+          {
+            "event_name": "Texas Tech Red Raiders at Oregon State Beavers",
+            "sport": "ncaaf",
+            "starts_at": "2026-09-12T23:30:00Z",
+            "selection": "Texas Tech Red Raiders",
+            "probability_pct": 99.9,
+            "market_probability_pct": 93.4,
+            "result": "win",
+            "score": "24–35"
+          },
+          {
+            "event_name": "Fordham Rams at Coastal Carolina Chanticleers",
+            "sport": "ncaaf",
+            "starts_at": "2026-09-12T23:30:00Z",
+            "selection": "Coastal Carolina Chanticleers",
+            "probability_pct": 99.0,
+            "market_probability_pct": 96.0,
+            "result": "win",
+            "score": "45–7"
           },
           {
             "event_name": "Georgia Southern Eagles at Clemson Tigers",
             "sport": "ncaaf",
-            "starts_at": "2026-09-12T23:30Z",
+            "starts_at": "2026-09-12T23:30:00Z",
             "selection": "Clemson Tigers",
             "probability_pct": 94.2,
-            "market_probability_pct": null,
+            "market_probability_pct": 89.5,
             "result": "win",
             "score": "22–7"
           },
           {
+            "event_name": "Ohio State Buckeyes at Texas Longhorns",
+            "sport": "ncaaf",
+            "starts_at": "2026-09-12T23:30:00Z",
+            "selection": "Ohio State Buckeyes",
+            "probability_pct": 74.2,
+            "market_probability_pct": 47.8,
+            "result": "loss",
+            "score": "24–23"
+          },
+          {
             "event_name": "Iowa State Cyclones at Iowa Hawkeyes",
             "sport": "ncaaf",
-            "starts_at": "2026-09-12T23:30Z",
+            "starts_at": "2026-09-12T23:30:00Z",
             "selection": "Iowa Hawkeyes",
             "probability_pct": 80.4,
-            "market_probability_pct": null,
+            "market_probability_pct": 83.2,
             "result": "win",
             "score": "16–13"
+          },
+          {
+            "event_name": "Western Illinois Leathernecks at Wisconsin Badgers",
+            "sport": "ncaaf",
+            "starts_at": "2026-09-12T23:15:00Z",
+            "selection": "Wisconsin Badgers",
+            "probability_pct": 100.0,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "36–9"
+          },
+          {
+            "event_name": "San Diego State Aztecs at UCLA Bruins",
+            "sport": "ncaaf",
+            "starts_at": "2026-09-12T23:15:00Z",
+            "selection": "UCLA Bruins",
+            "probability_pct": 54.9,
+            "market_probability_pct": 80.0,
+            "result": "win",
+            "score": "28–10"
+          },
+          {
+            "event_name": "West Georgia Wolves at Arkansas State Red Wolves",
+            "sport": "ncaaf",
+            "starts_at": "2026-09-12T23:00Z",
+            "selection": "Arkansas State Red Wolves",
+            "probability_pct": 99.4,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "52–7"
+          },
+          {
+            "event_name": "Tulsa Golden Hurricane at Sam Houston Bearkats",
+            "sport": "ncaaf",
+            "starts_at": "2026-09-12T23:00Z",
+            "selection": "Tulsa Golden Hurricane",
+            "probability_pct": 71.7,
+            "market_probability_pct": null,
+            "result": "win",
+            "score": "17–23"
           }
         ],
         "reportable": true,
