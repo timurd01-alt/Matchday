@@ -827,7 +827,11 @@ function renderMatches(){const M=DATA.matches||[];
   const html=missing+landingHero()+(typeof collegeModules==='function'?collegeModules():'')+intro+
     (shown.length?groupedBoardHTML(shown):`<div class="empty" style="grid-column:1/-1">No upcoming matches to analyze.</div>`)+
     (remaining?`<div class="fixturePager"><span>Showing ${shown.length} of ${active.length} fixtures</span><button class="actionbtn" onclick="MATCH_VISIBLE+=FIXTURE_PAGE_SIZE;renderMatches()">Load ${Math.min(FIXTURE_PAGE_SIZE,remaining)} more</button></div>`:'');
-  $('#view-matches').innerHTML=html;enhanceMatchCards($('#view-matches'));if(typeof fitRankingCard==='function')fitRankingCard();}
+  $('#view-matches').innerHTML=html;enhanceMatchCards($('#view-matches'));
+  // Notes go behind each card's ? first, so the power rating card is trimmed
+  // against the cards' real, shorter heights.
+  if(typeof collapseBoardNotes==='function')collapseBoardNotes($('#view-matches'));
+  if(typeof fitRankingCard==='function')fitRankingCard();}
 function renderResults(){const M=DATA.matches||[];
   const past=M.filter(isCompleteOrPast).sort((a,b)=>Number(isFavoriteMatch(b))-Number(isFavoriteMatch(a))||(b.kickoff||'').localeCompare(a.kickoff||''));
   const shown=past.slice(0,RESULT_VISIBLE),remaining=Math.max(0,past.length-shown.length);

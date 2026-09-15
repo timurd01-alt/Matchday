@@ -788,9 +788,85 @@ function fitRankingCard(){
   const keep=Math.max(10,Math.min(items.length,fits));
   if(keep>=items.length)return;
   items.slice(keep).forEach(el=>el.remove());
-  const note=card.querySelector('.modNote:last-of-type');
-  if(note)note.textContent=`Top ${keep} shown. Full power rating of every rated team on the Conferences tab.`;
+  // The card's notes live behind its ? now (collapseBoardNotes), so the count
+  // goes there too, in place of the pointer it used to replace.
+  const help=card.querySelector('header .boardHelp');
+  const full='Full power rating of every rated team on the Conferences tab.';
+  if(help)setBoardHelp(help,String(help.dataset.tip||'').replace(full,'')+` Top ${keep} shown. ${full}`);
 }
+
+/* Card explanations behind a ?, not under every card.
+   Each board card ends in one or more `.modNote` paragraphs saying how to read
+   it. Useful once, noise every visit after: across the board they were most of
+   the text on screen. They move into the site's existing metricHelp button
+   beside the card title -- hover or focus on desktop, tap on a phone (the
+   metricHelp handler in app-1-core.js shows the bottom popover there).
+
+   Built on the live DOM with textContent, never by reparsing HTML, so nothing
+   the notes quote from a feed is ever re-read as markup. `.modWarn` stays
+   visible: "this is a projection" is not an explanation, it is a caveat. */
+function setBoardHelp(button,text){
+  const label=button.dataset.label||'About this card';
+  const copy=String(text||'').replace(/\s+/g,' ').trim();
+  button.dataset.tip=copy;
+  button.setAttribute('aria-label',`${label}: ${copy}`);
+}
+function collapseBoardNotes(root){
+  (root||document).querySelectorAll('.boardMods .boardMod').forEach(card=>{
+    const notes=Array.from(card.querySelectorAll('.modNote'));
+    const title=card.querySelector('header h3');
+    if(!notes.length||!title)return;
+    let button=title.querySelector('.boardHelp');
+    if(!button){
+      button=document.createElement('button');
+      button.type='button';
+      button.className='metricHelp boardHelp';
+      button.textContent='?';
+      button.dataset.label=`About ${title.textContent.trim()}`;
+      button.setAttribute('aria-expanded','false');
+      button.setAttribute('aria-controls','metricHelpPopover');
+      title.appendChild(button);
+    }
+    setBoardHelp(button,notes.map(n=>n.textContent.trim()).filter(Boolean).join(' '));
+    notes.forEach(n=>n.remove());
+  });
+}
+// The card clips its overflow (rounded corners, the accent bar), so the CSS
+// tooltip metricHelp normally draws would be cut off inside it. On desktop the
+// text goes in one fixed box on <body> instead, placed beside the button.
+function boardTip(){
+  let tip=document.getElementById('boardTip');
+  if(tip)return tip;
+  tip=document.createElement('div');
+  tip.id='boardTip';
+  tip.className='boardTip';
+  tip.setAttribute('role','tooltip');
+  tip.hidden=true;
+  document.body.appendChild(tip);
+  return tip;
+}
+function showBoardTip(button){
+  if(window.matchMedia('(max-width: 760px)').matches)return;
+  const tip=boardTip(),box=button.getBoundingClientRect();
+  tip.textContent=button.dataset.tip||'';
+  tip.hidden=false;
+  const width=Math.min(300,window.innerWidth-24);
+  tip.style.width=width+'px';
+  tip.style.left=Math.min(Math.max(12,box.left-12),window.innerWidth-width-12)+'px';
+  const below=box.bottom+8,height=tip.offsetHeight;
+  tip.style.top=(below+height>window.innerHeight-12?Math.max(12,box.top-height-8):below)+'px';
+  button.setAttribute('aria-describedby','boardTip');
+}
+function hideBoardTip(){
+  const tip=document.getElementById('boardTip');
+  if(tip)tip.hidden=true;
+  document.querySelectorAll('.boardHelp[aria-describedby="boardTip"]').forEach(b=>b.removeAttribute('aria-describedby'));
+}
+document.addEventListener('pointerover',e=>{const b=e.target.closest?.('.boardHelp');if(b)showBoardTip(b)});
+document.addEventListener('pointerout',e=>{if(e.target.closest?.('.boardHelp'))hideBoardTip()});
+document.addEventListener('focusin',e=>{const b=e.target.closest?.('.boardHelp');b?showBoardTip(b):hideBoardTip()});
+document.addEventListener('focusout',e=>{if(e.target.closest?.('.boardHelp'))hideBoardTip()});
+window.addEventListener('scroll',hideBoardTip,true);
 
 /* The week's upset call.
    Editorial, and labelled that way in the card rather than only in a tooltip.
@@ -810,7 +886,7 @@ function modUpsetOfWeek(){
   <div><span>model</span><i style="width:${Math.max(2,Math.min(100,model))}%"></i><b>${Number.isFinite(model)?model.toFixed(1)+'%':'—'}</b></div>
   <div class="mkt"><span>market</span><i style="width:${Math.max(2,Math.min(100,market))}%"></i><b>${Number.isFinite(market)?market.toFixed(1)+'%':'—'}</b></div>
 </div>
-<div class="modPickNums">One call a week, picked from ${u.considered||0} games inside ${u.horizon_days||7} days: ${esc(u.basis||'')}.</div>
+<p class="modNote">One call a week, picked from ${u.considered||0} games inside ${u.horizon_days||7} days: ${esc(u.basis||'')}.</p>
 </section>`;
 }
 

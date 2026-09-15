@@ -1969,6 +1969,13 @@ html{color-scheme:dark}
 .boardMod header{display:flex;align-items:baseline;justify-content:space-between;gap:9px}
 .boardMod h3{font-family:var(--display);font-weight:var(--fw-bold);font-size:var(--fs-base);margin:0}
 .boardMod header span{font-family:var(--mono);font-size:var(--fs-2xs);color:var(--faint);text-transform:uppercase;letter-spacing:.06em;text-align:right}
+/* A card's explanation sits behind the ? beside its title (collapseBoardNotes).
+   The card clips overflow, so the pseudo-element tooltip is off here and the
+   text shows in #boardTip on desktop, or the metricHelp popover on a phone. */
+.boardMod h3 .boardHelp{margin-left:6px;vertical-align:2px}
+.boardHelp::after{display:none!important}
+.boardTip{position:fixed;z-index:1300;padding:9px 11px;border:1px solid var(--line2);border-radius:9px;background:#090d13;color:var(--text);box-shadow:0 12px 32px rgba(0,0,0,.45);font:var(--fw-medium) var(--fs-xs)/1.5 var(--sans);text-align:left;pointer-events:none}
+.boardTip[hidden]{display:none}
 .modWarn{background:rgba(255,176,46,.09);border-left:3px solid var(--warn);border-radius:6px;padding:7px 9px;font-size:var(--fs-xs);color:var(--muted);line-height:1.45}
 .modNote{margin:0;font-size:var(--fs-xs);color:var(--faint);line-height:1.5}
 .modList{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px;max-height:320px;overflow-y:auto}
