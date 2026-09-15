@@ -30,6 +30,16 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         self.assertIn("!b?.available", views)
         self.assertIn("collegeBallotTableHTML()", panels)
 
+    def test_board_card_explanations_sit_behind_a_question_mark(self):
+        """The notes moved behind each card's ?; they must not creep back or be reparsed."""
+        core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
+        views = (ROOT / "app-2-views.js").read_text(encoding="utf-8")
+        render = core[core.index("$('#view-matches').innerHTML=html"):]
+        self.assertLess(render.index("collapseBoardNotes("), render.index("fitRankingCard()"))
+        collapse = views[views.index("function collapseBoardNotes("):views.index("function boardTip(")]
+        self.assertIn("textContent", collapse)
+        self.assertNotIn("innerHTML", collapse)
+
     def test_news_is_a_primary_navigation_item(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
         self.assertIn('data-primary data-v="news"', html)
