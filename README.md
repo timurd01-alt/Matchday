@@ -18,29 +18,18 @@ hundred programmes that is genuinely hard to price.
 
 ## Where the numbers come from
 
-**Matchday does not compute ratings.** Every rating, ranking and model probability is
-produced by the [Bet Better](https://github.com/timurd01-alt) engine and read here
-through a JSON handoff (`betbetter_picks.json`, validated by `betbetter_handoff.py`).
-This repository renders those numbers and never recalculates them.
+**Matchday does not compute ratings.** The power rating, the model probabilities and
+the rest of the modelling come from a separate, private engine. This repository reads
+its published output and renders it; it never recalculates a number.
 
-- **Ratings** are an opponent-adjusted scoring margin — points per game better than an
-  average team against an average opponent — solved from the engine's own stored
-  results, with strength of schedule solved alongside and carried on every row.
-- **Rankings** are an edition with a date on it, read as published rather than
-  recomputed. A table that changed between two page loads would not be a poll.
-- **SP+** is stored for conference membership only. It is CFBD's rating, not this
-  model's, and never contributes to a ranking.
+- **The power rating** is an edition with a date on it, shown as published rather than
+  recomputed, with strength of schedule beside every rating.
+- **My Top 25** is my own ballot, ranked on each team's résumé. It is an opinion, kept
+  apart from the power rating.
 - **Match forecasts** are live shadow forecasts: they keep moving until kickoff, carry
   no pregame lock receipt, are not official picks, and are not graded.
 
-`build_cfb_snapshot.py` is the only writer of the ranking blocks in
-`matchday-cfb-snapshot.js`. Regenerate the handoff from the Bet Better repo:
-
-```bash
-python -m betbetter matchday export --out <matchday>/betbetter_picks.json
-```
-
-then rebuild the snapshot here:
+After new engine output lands, rebuild the site's snapshot:
 
 ```bash
 python build_cfb_snapshot.py
@@ -48,8 +37,8 @@ python build_cfb_snapshot.py
 
 ## Rules this project holds itself to
 
-- **Projections are labelled.** Brackets and poll editions say "projected" until real
-  selection and championship results exist. A ranking published before a season starts
+- **Projections are labelled.** Brackets and power rating editions say "projected" until
+  real selection and championship results exist. A power rating published before a season starts
   describes the previous completed season, and says so in its own note.
 - **Nothing is rewritten.** A settled score is never revised; a graded pick is never
   rescored. `archive/games/` is the raw record and refuses revisions.
@@ -62,7 +51,7 @@ python build_cfb_snapshot.py
 
 ## The board
 
-Upcoming games · Results · Scorecard · Bracket · Rankings · Community.
+Upcoming games · Results · Scorecard · Bracket · Conferences (power rating and My Top 25) · Community.
 
 The scorecard is deliberately two numbers, picks won and picks lost. Brier, log loss,
 calibration and closing-line value are still computed by the research modules; they are
