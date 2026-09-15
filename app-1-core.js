@@ -650,10 +650,12 @@ function renderWelcomeUpset(){
   // "now" all Saturday night. Past kickoff it shows the result, or that one is
   // still to come.
   const when=upsetStatusText(p,away);
-  host.innerHTML=`<div class="wuTop"><span>UPSET WATCH</span>${Number.isFinite(gap)?`<em class="wuGap">+${gap.toFixed(1)} pts clear of the market</em>`:'<em>one call a week</em>'}</div>`
+  // The strip shows the biggest call; the board card lists the rest.
+  const others=Math.max(0,(u.picks||[]).length-1);
+  host.innerHTML=`<div class="wuTop"><span>UPSET WATCH${others?` · +${others} more on the board`:''}</span>${Number.isFinite(gap)?`<em class="wuGap">+${gap.toFixed(1)} pts clear of the market</em>`:'<em>up to 3 calls a week</em>'}</div>`
     +`<div class="wuPick"><b>${esc(p.selection||'')}</b><span>${away?'at':'vs'} ${esc(opponent)}${when?` · ${esc(when)}`:''}</span></div>`
     +`<div class="wuBars">${bar('','model',model)}${Number.isFinite(market)?bar('mkt','market',market):''}</div>`
-    +`<p class="wuNote">The model's most contrarian call of the week — to watch and grade, not a recommended bet.</p>`;
+    +`<p class="wuNote">The model's biggest contrarian call of the week — to watch and grade, not a recommended bet.</p>`;
 }
 function renderWelcomeStatusNote(){
   const host=$('#welcomeStatusNote');if(!host)return;

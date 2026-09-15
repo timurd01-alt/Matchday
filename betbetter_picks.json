@@ -1,7 +1,7 @@
 {
   "handoff_version": 9,
   "source": "betbetter",
-  "generated_at": "2026-09-15T15:50:10.893718+00:00",
+  "generated_at": "2026-09-15T16:12:52.602892+00:00",
   "sports": [
     "ncaaf",
     "ncaam"
@@ -33301,6 +33301,7 @@
     "recorded": true,
     "week": "2026-W38",
     "pick": {
+      "slot": 1,
       "event_id": "a4e7771497976db67e6a81bc3700b32f",
       "sport": "ncaaf",
       "competition": "NCAAF",
@@ -33316,9 +33317,45 @@
       "home_score": null,
       "away_score": null
     },
+    "picks": [
+      {
+        "slot": 1,
+        "event_id": "a4e7771497976db67e6a81bc3700b32f",
+        "sport": "ncaaf",
+        "competition": "NCAAF",
+        "home": "South Carolina Gamecocks",
+        "away": "Mississippi State Bulldogs",
+        "kickoff": "2026-09-19T20:15:00Z",
+        "selection": "Mississippi State Bulldogs",
+        "model_pct": 44.2,
+        "market_pct": 28.3,
+        "disagreement_points": 15.9,
+        "best_price": 3.4,
+        "result": null,
+        "home_score": null,
+        "away_score": null
+      },
+      {
+        "slot": 2,
+        "event_id": "a85cea77fbd44d9135461815777f6a9c",
+        "sport": "ncaaf",
+        "competition": "NCAAF",
+        "home": "Alabama Crimson Tide",
+        "away": "Florida State Seminoles",
+        "kickoff": "2026-09-19T19:30:00Z",
+        "selection": "Florida State Seminoles",
+        "model_pct": 23.9,
+        "market_pct": 10.6,
+        "disagreement_points": 13.3,
+        "best_price": 9.0,
+        "result": null,
+        "home_score": null,
+        "away_score": null
+      }
+    ],
     "considered": 8,
     "horizon_days": 7,
-    "basis": "recorded when the week's pick was made: largest model-minus-market gap on a side the market has as an underdog, in an FBS game involving at least one Power Four team, excluding teams outplayed on EPA in their most recent game",
+    "basis": "recorded when the week's picks were made: up to 3 underdogs the model rates at least 5 points above the market, biggest gap first, in FBS games involving at least one Power Four team, excluding teams outplayed on EPA in their most recent game",
     "caveat": "Editorial, not advice. This is the model's most contrarian call of the week, and disagreement of this kind has historically predicted WORSE results on our graded college samples, not better. Publish it as something to watch and grade afterwards, never as a recommended bet."
   },
   "game_of_the_week": {

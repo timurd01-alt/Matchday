@@ -876,17 +876,25 @@ window.addEventListener('scroll',hideBoardTip,true);
    as written -- paraphrasing a warning is how warnings get softened. */
 function modUpsetOfWeek(){
   const u=(typeof MATCHDAY_BETBETTER_UPSET!=='undefined')?MATCHDAY_BETBETTER_UPSET:null;
-  const p=u&&u.available?u.pick:null;
-  if(!p||!bbSportRows([p]).length)return '';
-  const model=Number(p.model_pct),market=Number(p.market_pct);
-  return `<section class="boardMod modUpset"><header><h3>Upset of the week</h3><span>one a week</span></header>
-<div class="modPickTeam">${esc(p.selection||'')}</div>
-<div class="modPickGame">${esc(p.away||'')} at ${esc(p.home||'')}${(()=>{const s=typeof upsetStatusText==='function'?upsetStatusText(p,String(p.selection||'').toLowerCase()===String(p.away||'').toLowerCase()):'';return s?` · ${esc(s)}`:''})()}</div>
+  // Up to three calls a week since 2026-09-15. `picks` is the list; an older
+  // handoff carries only `pick`, which still renders as one.
+  const picks=u&&u.available?bbSportRows((u.picks&&u.picks.length)?u.picks:[u.pick].filter(Boolean)):[];
+  if(!picks.length)return '';
+  const one=p=>{
+    const model=Number(p.model_pct),market=Number(p.market_pct),gap=Number(p.disagreement_points);
+    const away=String(p.selection||'').toLowerCase()===String(p.away||'').toLowerCase();
+    const status=typeof upsetStatusText==='function'?upsetStatusText(p,away):'';
+    return `<div class="upsetPick">
+<div class="modPickTeam">${esc(p.selection||'')}${Number.isFinite(gap)?`<em class="upsetGap">+${gap.toFixed(1)}</em>`:''}</div>
+<div class="modPickGame">${esc(p.away||'')} at ${esc(p.home||'')}${status?` · ${esc(status)}`:''}</div>
 <div class="upsetBars">
   <div><span>model</span><i style="width:${Math.max(2,Math.min(100,model))}%"></i><b>${Number.isFinite(model)?model.toFixed(1)+'%':'—'}</b></div>
   <div class="mkt"><span>market</span><i style="width:${Math.max(2,Math.min(100,market))}%"></i><b>${Number.isFinite(market)?market.toFixed(1)+'%':'—'}</b></div>
-</div>
-<p class="modNote">One call a week, picked from ${u.considered||0} games inside ${u.horizon_days||7} days: ${esc(u.basis||'')}.</p>
+</div></div>`;
+  };
+  return `<section class="boardMod modUpset"><header><h3>${picks.length>1?'Upsets of the week':'Upset of the week'}</h3><span>up to 3 a week</span></header>
+${picks.map(one).join('')}
+<p class="modNote">Up to three calls a week, picked from ${u.considered||0} games inside ${u.horizon_days||7} days: ${esc(u.basis||'')}. To watch and grade, not recommended bets.</p>
 </section>`;
 }
 
