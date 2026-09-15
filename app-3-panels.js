@@ -170,7 +170,9 @@ function applyCurrentCfbSnapshot(payload){
       const home=profileFor(m.home?.name),away=profileFor(m.away?.name);
       if(!home&&!away)return;
       m.advanced_metrics={...(home?{home}:{}),...(away?{away}:{})};
-      m.advanced_metrics_meta={source:profiles.source||'Bet Better play-by-play',
+      // A fixed label rather than the handoff's own `source`, which names the
+      // engine. The modelling engine is private and is not named on the site.
+      m.advanced_metrics_meta={source:'Play-by-play (expected points added) and opponent-adjusted ratings',
         generated_at:profiles.generated_through||null,shadow_only:true,production_weight:0,
         coverage:{season:profiles.season,season_role:'current',teams:profileNames.length}};
     });
@@ -1081,7 +1083,7 @@ function bbEdgeWarning(p){
 function betbetterModelRead(m,p){
   const model=_bbNum(p.model_pct),market=_bbNum(p.market_pct),gap=_bbNum(p.edge_points);
   const books=_bbNum(p.book_count),price=_bbNum(p.best_price),american=_bbNum(p.best_american);
-  const engine=p.model_name||'Bet Better model';
+  const engine=p.model_name||'Matchday model';
   const when=_bbStamp(p.generated_at);
   const marketText=market==null?'No market snapshot on this side':`Market on this side: ${market.toFixed(1)}%`;
   // Both sides, not the pick alone. A 54.5% pick is a near coin-flip, and the
