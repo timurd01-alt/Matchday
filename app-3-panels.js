@@ -802,6 +802,34 @@ function collegeRankingTableHTML(){
     ${withheld?`<p class="modNote">Held out of the power rating: ${withheld} — ratings earned mostly against FCS opposition.</p>`:''}
   </section>`;
 }
+/* The full ballot on the Conferences tab, above the power rating: every team's
+   résumé on the four criteria it was ranked by, and the best résumés left off,
+   so leaving a team out reads as a decision rather than an oversight. */
+function collegeBallotTableHTML(){
+  const b=typeof collegeBallot==='function'?collegeBallot():null;
+  if(!b)return '';
+  const body=b.rankings.map(r=>{
+    const s=r.resume||{};
+    const sor=Number.isFinite(Number(s.sor))?` title="${(Number(s.sor)*100).toFixed(1)}% of top-25-level teams would match this record against this schedule"`:'';
+    return `<tr${r.rank<=4?' class="pollRanked"':''}><td class="pollRank">${Number(r.rank)}</td>`
+      +`<td class="pollMove">${ballotMove(r)}</td>`
+      +`<td class="pollTeam">${esc(r.team_name)}${s.conference_champion?' <i class="pollTier">champ</i>':''}${r.note?`<div class="ballotNote">${esc(r.note)}</div>`:''}</td>`
+      +`<td>${esc(s.record||'')}</td>`
+      +`<td class="pollNum"${sor}>${s.sor_rank?'#'+Number(s.sor_rank):'—'}</td>`
+      +`<td class="pollNum">${Number(s.top25_wins)||0}</td>`
+      +`<td>${ballotWin(s.best_win)||'—'}</td>`
+      +`<td class="pollNum">${Number(s.bad_losses)||0}</td>`
+      +`<td class="pollNum">${s.power_rank?'#'+Number(s.power_rank):'—'}</td></tr>`;
+  }).join('');
+  const leftOff=(b.left_off||[]).map(t=>`${esc(t.team_name)} (${esc(t.record)}, SOR #${Number(t.sor_rank)})`).join(', ');
+  return `<section class="pollSection ballotSection"><div class="pollHead"><div><div class="vhead" style="margin:0">My Top 25</div>
+      <p class="pollMeta">My ballot · ${esc(b.published_on||'')} · ranked on résumé, not on the power rating</p></div></div>
+    <div class="pollScroll"><table class="pollTable"><thead><tr>
+      <th>#</th><th title="Change since my last ballot">Move</th><th>Team</th><th>Rec</th><th title="Strength of record rank: how hard this record would be for a top-25-level team to match">SOR</th><th title="Wins over the power rating's top 25">T25 W</th><th>Best win</th><th title="Losses to teams outside the power rating's top 75">Bad L</th><th title="Power rating rank, the eye test">PR</th>
+    </tr></thead><tbody>${body}</tbody></table></div>
+    ${leftOff?`<p class="modNote">Best résumés left off: ${leftOff}.</p>`:''}
+  </section>`;
+}
 const _renderCollegeGroups=renderGroups;
 renderGroups=function(){
   _renderCollegeGroups();
@@ -810,6 +838,8 @@ renderGroups=function(){
   // tab was missing, and the conferences are the breakdown beneath it.
   const host=$('#view-groups'),poll=collegeRankingTableHTML();
   if(poll&&!host.querySelector('.pollSection'))host.insertAdjacentHTML('afterbegin',poll);
+  const ballotTable=collegeBallotTableHTML();
+  if(ballotTable&&!host.querySelector('.ballotSection'))host.insertAdjacentHTML('afterbegin',ballotTable);
   // The old caption said this rating was "context only" and a preseason
   // tiebreaker. That was wrong and misleading: it is the model's own
   // opponent-adjusted rating and the model does use it. Say what it is.

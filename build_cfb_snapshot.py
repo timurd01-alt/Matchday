@@ -285,6 +285,13 @@ def build(path: pathlib.Path = SNAPSHOT) -> str:
                   + json.dumps((document.get("upsets") or {}).get("ncaaf") or {},
                                ensure_ascii=False) + ";")
 
+    # The owner's own Top 25 ballot, with each team's résumé frozen on the day
+    # it was cast. Kept apart from the power rating on purpose: that table is
+    # the model's, this one is a person's judgement. {} until the first ballot.
+    blocks.append("  const MATCHDAY_BETBETTER_BALLOT="
+                  + json.dumps((document.get("ballots") or {}).get("ncaaf") or {},
+                               ensure_ascii=False) + ";")
+
     blocks.append("  const MATCHDAY_BETBETTER_UPSET="
                   + json.dumps(document.get("upset_of_the_week") or {}, ensure_ascii=False) + ";")
     blocks.append("  const MATCHDAY_BETBETTER_USER_PICKS="

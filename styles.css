@@ -2095,6 +2095,13 @@ html{color-scheme:dark}
 .modConf .modList,.modScores .modList{max-height:296px;overflow-y:auto}
 .boardMods{column-fill:balance}
 .mvNew{color:var(--signal);font-style:normal;font-family:var(--mono);font-size:var(--fs-3xs);flex:0 0 auto;min-width:30px;opacity:.9}
+/* My Top 25: the owner's ballot. Same frame as the power rating card, with the
+   résumé line under each team. */
+.modBallot .modList{max-height:296px;overflow-y:auto;overscroll-behavior:contain}
+.modBallot .modTeam{display:flex;flex-direction:column;min-width:0}
+.ballotSub{display:block;font-size:var(--fs-3xs);color:var(--faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ballotNote{font-size:var(--fs-3xs);color:var(--faint);font-style:italic;margin-top:2px}
+.mvSame{color:var(--faint);font-style:normal;font-family:var(--mono);font-size:var(--fs-3xs);flex:0 0 auto;min-width:30px}
 /* Once balanceBoardMods() has packed the cards, the container is a plain flex
    row of columns; the column-count rules above only apply before that runs. */
 .boardMods.balanced{display:flex;column-count:auto;gap:11px;align-items:flex-start}
