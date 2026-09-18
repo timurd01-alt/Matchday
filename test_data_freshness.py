@@ -71,7 +71,7 @@ class UnsettledTests(unittest.TestCase):
 
 class HandoffMatchTests(unittest.TestCase):
     def test_mascot_suffix_still_matches(self):
-        """Matchday says "TCU"; the handoff says "TCU Horned Frogs"."""
+        """Matchday says \"TCU\"; the handoff says \"TCU Horned Frogs\"."""
         self.assertTrue(data_freshness._names_match("TCU Horned Frogs", "TCU"))
         self.assertTrue(data_freshness._names_match("TCU", "TCU Horned Frogs"))
 
@@ -80,7 +80,7 @@ class HandoffMatchTests(unittest.TestCase):
         self.assertFalse(data_freshness._names_match("", "TCU"))
 
     def test_shared_prefix_is_weaker_than_an_exact_match(self):
-        """"Ohio" prefixes "Ohio State", and both are real FBS teams."""
+        """\"Ohio\" prefixes \"Ohio State\", and both are real FBS teams."""
         self.assertEqual(data_freshness._name_strength("Ohio", "Ohio"), data_freshness.MATCH_EXACT)
         self.assertEqual(
             data_freshness._name_strength("Ohio State Buckeyes", "Ohio"), data_freshness.MATCH_PREFIX
@@ -171,9 +171,9 @@ class ReportTests(unittest.TestCase):
     def test_out_of_season_sport_is_judged_on_its_own_cadence(self):
         """NCAAM out of season is fetched every 12h, so 10h old is not a problem.
 
-        The uniform 3h warning made a dormant sport permanently "aging" for
+        The uniform 3h warning made a dormant sport permanently \"aging\" for
         obeying the fetcher, and the 12h failure line sat exactly on its 12h
-        probe interval -- so an ordinary late probe flipped it to "stale" and
+        probe interval -- so an ordinary late probe flipped it to \"stale\" and
         failed the run.
         """
         _write(self.root, "ncaam", "2026-09-05T01:30:00+00:00",
@@ -227,12 +227,13 @@ class ReportTests(unittest.TestCase):
         finding = data_freshness.inspect_payload("ncaaf", [], NOW, self.root)
         self.assertEqual(finding["state"], "stale")
 
-    def test_quota_hold_still_fails_past_its_ceiling(self):
+    def test_quota_hold_past_ceiling_stays_paced_when_results_are_current(self):
+        """Sept 17+ red runs: payload older than 96h, CFBD still holding, no missing scores."""
         self._cfbd_ledger(remaining=600)
         _write(self.root, "ncaaf", "2026-09-01T06:00:00+00:00",
                [_match("Rutgers", "Massachusetts", "2026-09-06T22:00:00Z")])
         finding = data_freshness.inspect_payload("ncaaf", [], NOW, self.root)
-        self.assertEqual(finding["state"], "stale")
+        self.assertEqual(finding["state"], "paced")
 
     def test_quota_hold_does_not_excuse_a_missing_result(self):
         self._cfbd_ledger(remaining=600)
