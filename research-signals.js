@@ -120,32 +120,3 @@
   }
   window.researchSignalsPanel=researchSignalsPanel;
 })();
-
-/* Show a model pick on every fixture the payload already priced.
-   Cards only read betbetterReadFor(); the handoff covers ~37 NCAAF games,
-   while every fixture carries prediction.pick. Fall back so the board is
-   not blank on the rest of the slate. */
-(function(){
-  if(typeof betbetterReadFor!=='function')return;
-  const engineRead=betbetterReadFor;
-  window.betbetterReadFor=function(m){
-    const live=engineRead(m);
-    if(live)return live;
-    if(!m||typeof officialPrediction!=='function')return null;
-    const op=officialPrediction(m);
-    if(!op||!op.side||!op.name)return null;
-    const conf=Number(op.confidence);
-    return {
-      pick_name:op.name,
-      pick:op.side,
-      model_pct:Number.isFinite(conf)?conf:null,
-      market_pct:null,
-      edge_points:null,
-      engine:'matchday',
-      basis:'matchday_model',
-      official_pick:false,
-      official_publication_eligible:false,
-      moves_until_kickoff:String(m.status||'').toUpperCase()==='UPCOMING'
-    };
-  };
-})();
