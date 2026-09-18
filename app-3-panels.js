@@ -149,7 +149,51 @@ function applyCurrentCfbSnapshot(payload){
       m.status='FINISHED';
       m.score={...(m.score||{}),home:Number(hit.home_score),away:Number(hit.away_score)};
       m._settled_from='betbetter_results';
+      hit._merged=true;
     });
+    // Played games the fixture feed never carried at all.
+    //
+    // Settling above can only repair a game already on the board, and the feed
+    // keeps a rolling window -- on 2026-09-15 it began on 12 September, so the
+    // Results tab showed 40 of the 185 games played that season and the first
+    // three weekends existed nowhere on the site. The handoff holds them, so
+    // the missing ones are added as finished fixtures.
+    //
+    // Only games involving a rated team: the engine's results also carry the
+    // FCS and Division II games its opponents' schedules drag in (Willamette at
+    // Pacific), and the site covers neither.
+    const ratedNames=((typeof MATCHDAY_CFB_RANKINGS!=='undefined'&&MATCHDAY_CFB_RANKINGS.rankings)||[])
+      .map(r=>teamKey(r.name)).filter(Boolean);
+    const rated=new Set(ratedNames);
+    const isRated=name=>{
+      const key=teamKey(name);
+      if(!key)return false;
+      if(rated.has(key))return true;
+      return ratedNames.some(r=>r===key||r.startsWith(key+' ')||key.startsWith(r+' '));
+    };
+    if(rated.size){
+      const present=new Set((payload.matches||[]).map(m=>
+        `${teamKey(m.home?.name)}|${teamKey(m.away?.name)}|${String(m.kickoff||'').slice(0,10)}`));
+      const recovered=[];
+      settled.forEach(r=>{
+        if(r._merged)return;
+        if(String(r.sport||'ncaaf')!=='ncaaf')return;
+        if(!isRated(r.home)&&!isRated(r.away))return;
+        const day=String(r.played_on||'').slice(0,10);
+        const key=`${teamKey(r.home)}|${teamKey(r.away)}|${day}`;
+        if(present.has(key))return;
+        if((payload.matches||[]).some(m=>{
+          const mday=String(m.kickoff||'').slice(0,10);
+          return (mday===day||mday===_bbShiftDay(day,-1)||mday===_bbShiftDay(day,1))
+            &&bbNameMatches(m.home?.name,r.home)&&bbNameMatches(m.away?.name,r.away)}))return;
+        present.add(key);
+        recovered.push({id:`bb-result-${r.event_id||key}`,_comp:'NCAAF',competition:r.competition||'NCAAF',
+          kickoff:r.kickoff||`${day}T00:00:00Z`,status:'FINISHED',
+          home:{name:r.home},away:{name:r.away},
+          score:{home:Number(r.home_score),away:Number(r.away_score)},_from:'betbetter_results'});
+      });
+      if(recovered.length)payload.matches=(payload.matches||[]).concat(recovered);
+    }
   }
   // This season's advanced profile on every fixture, from the engine's own
   // play-by-play. It replaces a previous-season CFBD file that stopped
