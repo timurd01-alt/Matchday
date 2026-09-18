@@ -1,5 +1,11 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-09-18 (restore the existing college-football refresh after a
+deleted cross-provider helper crashed full polls. The existing poll-based
+bracket transformation now belongs to the CollegeFootballData adapter. Same
+CFBD source, endpoints, attribution, and displayed fields; no new sourcing or
+redistribution scope, SportsDataIO calls, or quota-policy changes.)
+
 > **Retired sports (2026-09-13).** Matchday now covers college football and men's
 > college basketball only. Entries below about soccer, NFL, NBA, MLB and NHL -- and the
 > football-data.org, API-Football, BALLDONTLIE, Sportmonks, Big Balls and nflverse

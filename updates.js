@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0918A",
+  "tag": "Fix",
+  "title": "Restore college-football data and poll refreshes",
+  "items": [
+   "Fixed a missing playoff-projection helper that stopped college-football refreshes when a full national poll arrived.",
+   "Added regression coverage for full Top 25 polls and the twelve-team projection threshold."
+  ]
+ },
+ {
   "date": "Build 0830J",
   "tag": "Fix",
   "title": "Every social export now uses the mobile layout",
