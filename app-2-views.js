@@ -783,9 +783,10 @@ function fitRankingCard(){
   // header, caption and notes.
   const budget=Math.max(...others)-(card.offsetHeight-list.offsetHeight);
   const fits=Math.floor(budget/rowHeight);
-  // The overview has room for a meaningful ranking, not a teaser. Keep at
-  // least twenty teams visible; above that, the measured layout still decides.
-  const keep=Math.max(20,Math.min(items.length,fits));
+  // The overview has room for a complete Top 25, not a teaser. Keeping all 25
+  // also lets the card use its share of the common column height with data
+  // instead of an empty flex tail.
+  const keep=Math.max(25,Math.min(items.length,fits));
   if(keep>=items.length)return;
   items.slice(keep).forEach(el=>el.remove());
   // The card's notes live behind its ? now (collapseBoardNotes), so the count
@@ -1031,15 +1032,13 @@ function modConferenceParity(){
     return {name,sd,top:sorted[0],bottom:sorted[sorted.length-1],n:v.length};
   }).sort((a,b)=>b.sd-a.sd);
   if(stats.length<3)return '';
-  const show=[...stats.slice(0,2),...stats.slice(-2)];
-  const seen=new Set();
-  const body=show.filter(c=>!seen.has(c.name)&&seen.add(c.name)).map((c,i,arr)=>
+  const body=stats.map(c=>
     `<tr><td class="tsTeam">${esc(c.name)}</td>`
     +`<td class="tsNum">${c.sd.toFixed(1)}</td>`
     +`<td>${c.top.toFixed(1)}</td><td>${c.bottom.toFixed(1)}</td></tr>`).join('');
-  return `<section class="boardMod modParity"><header><h3>Conference parity</h3><span>most and least spread</span></header>
+  return `<section class="boardMod modParity"><header><h3>Conference parity</h3><span>every rated league</span></header>
 <table class="tsTable"><thead><tr><th>Conference</th><th>Spread</th><th>Best</th><th>Worst</th></tr></thead><tbody>${body}</tbody></table>
-<p class="modNote">How far apart a conference's own teams are, not how good it is. A high spread means a couple of teams carrying the average; a low one means the league is tightly packed top to bottom.</p></section>`;
+<p class="modNote">Every conference with at least six rated teams, ordered from most to least spread. This measures how far apart a conference's own teams are, not how good it is.</p></section>`;
 }
 
 function collegeModules(){

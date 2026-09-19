@@ -825,8 +825,10 @@ function renderMatches(){const M=DATA.matches||[];
   const active=M.filter(m=>!isCompleteOrPast(m)).sort(favoriteFixtureSort);
   const shown=active.slice(0,MATCH_VISIBLE),remaining=Math.max(0,active.length-shown.length);
   const missing=DATA._missing?`<div class="banner" style="grid-column:1/-1"><b>No ${esc(DATA.competition||'this sport')} data yet.</b> Fetch it once its season is available — run the matching start file (e.g. start_ucl.bat) or keep an eye out when the season begins.</div>`:'';
+  const analysisIntro=`<div class="viewIntro analysisIntro"><div><div class="vhead">Analysis</div><p>Ratings, schedule strength, conference context and recorded model performance.</p></div><span>season snapshot</span></div>`;
   const intro=`<div class="viewIntro"><div><div class="vhead">${t('Fixtures')}</div><p>${FORECAST_PAUSE_ACTIVE?'Fixtures, scores and market odds. Model picks are paused.':'Pregame model reads now; final scores and grading after the game.'}</p></div><span>${active.length} games</span></div>`;
-  const html=missing+landingHero()+(typeof collegeModules==='function'?collegeModules():'')+intro+
+  const modules=typeof collegeModules==='function'?collegeModules():'';
+  const html=missing+landingHero()+(modules?analysisIntro+modules:'')+intro+
     (shown.length?groupedBoardHTML(shown):`<div class="empty" style="grid-column:1/-1">No upcoming matches to analyze.</div>`)+
     (remaining?`<div class="fixturePager"><span>Showing ${shown.length} of ${active.length} fixtures</span><button class="actionbtn" onclick="MATCH_VISIBLE+=FIXTURE_PAGE_SIZE;renderMatches()">Load ${Math.min(FIXTURE_PAGE_SIZE,remaining)} more</button></div>`:'');
   $('#view-matches').innerHTML=html;enhanceMatchCards($('#view-matches'));

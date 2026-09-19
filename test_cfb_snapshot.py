@@ -72,17 +72,30 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         self.assertIn("balanceBoardMods()", core)
         self.assertIn("function balanceBoardMods(){", views)
         self.assertIn("column.cards.push(item.card)", views)
-        self.assertIn(".modsCol>.boardMod:last-child{flex:1}", styles)
+        self.assertIn(".modsCol>.boardMod:last-child{flex:1;display:flex;flex-direction:column}", styles)
+        self.assertIn(".modsCol>.boardMod:last-child>.tsTable{flex:1}", styles)
         self.assertNotIn('class="boardMore"', views)
 
     def test_bottom_cards_are_filled_with_real_ranking_context(self):
         views = (ROOT / "app-2-views.js").read_text(encoding="utf-8")
-        self.assertIn("Math.max(20,Math.min(items.length,fits))", views)
+        self.assertIn("Math.max(25,Math.min(items.length,fits))", views)
         self.assertIn("function modConferenceTable(){", views)
         self.assertIn("<h3>Conference table</h3>", views)
         self.assertIn('class="confLeader"', views)
         self.assertIn("modConferenceTable()", views)
         self.assertNotIn("<h3>Power vs Group of Five</h3>", views)
+        parity = views[views.index("function modConferenceParity(){"):views.index("function collegeModules(){")]
+        self.assertIn("const body=stats.map", parity)
+        self.assertIn("every rated league", parity)
+        self.assertNotIn("stats.slice", parity)
+
+    def test_analysis_and_fixtures_are_distinct_homepage_sections(self):
+        core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
+        styles = (ROOT / "styles.css").read_text(encoding="utf-8")
+        self.assertIn('class="viewIntro analysisIntro"', core)
+        self.assertIn('>Analysis</div>', core)
+        self.assertIn("analysisIntro+modules", core)
+        self.assertIn(".analysisIntro{", styles)
 
     def test_news_is_a_primary_navigation_item(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
