@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0918I",
+  "tag": "Interface",
+  "title": "Every overview module now forms one clean box",
+  "items": [
+   "Restored every overview module to the main board and removed the separate More analysis disclosure.",
+   "Packed cards into measured columns and aligned all three bottom edges so the module area ends on one exact baseline above Fixtures."
+  ]
+ },
+ {
   "date": "Build 0918H",
   "tag": "Interface",
   "title": "A clean cutoff before the fixture list",
