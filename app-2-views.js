@@ -795,6 +795,32 @@ function fitRankingCard(){
   if(help)setBoardHelp(help,String(help.dataset.tip||'').replace(full,'')+` Top ${keep} shown. ${full}`);
 }
 
+/* Pack the overview into real columns, shortest column first. CSS multi-column
+   flow cannot promise a shared bottom edge when cards have different heights;
+   these measured columns can, and their final cards stretch by the few pixels
+   needed to close the rectangle. */
+function balanceBoardMods(){
+  const board=document.querySelector('#view-matches > .boardMods');
+  if(!board)return;
+  const cards=Array.from(board.children).filter(el=>el.classList?.contains('boardMod'));
+  const count=window.innerWidth>1180?3:window.innerWidth>720?2:1;
+  if(count===1||cards.length<count)return;
+  const heights=cards.map(card=>({card,height:card.offsetHeight}));
+  const columns=Array.from({length:count},()=>({height:0,cards:[]}));
+  heights.forEach(item=>{
+    const column=columns.reduce((best,next)=>next.height<best.height?next:best);
+    column.cards.push(item.card);
+    column.height+=item.height+11;
+  });
+  board.replaceChildren(...columns.map(column=>{
+    const el=document.createElement('div');
+    el.className='modsCol';
+    el.append(...column.cards);
+    return el;
+  }));
+  board.classList.add('balanced');
+}
+
 /* Card explanations behind a ?, not under every card.
    Each board card ends in one or more `.modNote` paragraphs saying how to read
    it. Useful once, noise every visit after: across the board they were most of
@@ -1021,12 +1047,5 @@ function collegeModules(){
   // Upset of the week leads: CSS columns fill in source order, so first in this
   // array is the top of the left column.
   const cards=[modUpsetOfWeek(),modTopPick(),modMyPicks(),modStatOfWeek(),modNotable(),modRatingScatter(),modConferenceStrength(),modBallot(),modTop25(),modUpsets(),modToughestSchedules(),modTierSplit(),modConferenceParity()].filter(Boolean);
-  if(!cards.length)return '';
-  // Keep the main board to three deliberate rows on a wide screen. The deeper
-  // tables remain available, but no longer let one tall final column push the
-  // fixture list down past a large empty shelf under the other two columns.
-  const primary=cards.slice(0,9),more=cards.slice(9);
-  return `<div class="boardMods">${primary.join('')}</div>`
-    +(more.length?`<details class="boardMore"><summary>More analysis <span>${more.length} modules</span></summary>`
-      +`<div class="boardMods boardModsMore">${more.join('')}</div></details>`:'');
+  return cards.length?`<div class="boardMods">${cards.join('')}</div>`:'';
 }

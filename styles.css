@@ -2170,24 +2170,16 @@ html{color-scheme:dark}
    were wrong and left a worse gap than it replaced. Keeping the cards close in
    height is what makes plain columns work: the board card is 15 rows and the
    full table lives on the Rankings tab. */
-.boardMods.balanced{display:block}
+.boardMods.balanced{display:flex;column-count:auto;gap:11px;align-items:stretch}
 .boardMods{display:block;column-count:3;column-gap:11px;column-fill:balance}
-.boardMods .modsCol{display:contents}
+.boardMods.balanced .modsCol{display:flex;flex:1 1 0;min-width:0;flex-direction:column;gap:11px}
+.boardMods.balanced .boardMod{margin:0}
+.boardMods.balanced .modsCol>.boardMod:last-child{flex:1}
 .modTop25 .modList,.modConf .modList,.modScores .modList{max-height:none;overflow:visible}
 @media(max-width:1180px){.boardMods{column-count:2}}
-@media(max-width:720px){.boardMods{column-count:1}}
+@media(max-width:720px){.boardMods,.boardMods.balanced{display:block;column-count:1}.boardMods.balanced .modsCol{display:contents}.boardMods.balanced .boardMod{margin:0 0 11px}}
 /* The ranking card is trimmed to fit by fitRankingCard(); nothing here caps it. */
 .modTop25 .modList{max-height:none;overflow:visible}
-.boardMore{grid-column:1/-1;margin:-3px 0 14px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.015);overflow:hidden}
-.boardMore summary{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 14px;cursor:pointer;color:var(--muted);font-family:var(--display);font-size:var(--fs-sm);font-weight:var(--fw-bold);list-style:none;transition:color .15s ease,background .15s ease}
-.boardMore summary::-webkit-details-marker{display:none}
-.boardMore summary::after{content:'+';order:3;color:var(--signal);font-family:var(--mono);font-size:var(--fs-md)}
-.boardMore[open] summary::after{content:'−'}
-.boardMore summary:hover,.boardMore summary:focus-visible{color:var(--text);background:rgba(255,255,255,.025)}
-.boardMore summary:focus-visible{outline:2px solid var(--signal);outline-offset:-2px}
-.boardMore summary span{margin-left:auto;color:var(--faint);font-family:var(--mono);font-size:var(--fs-3xs);font-weight:var(--fw-bold);letter-spacing:.07em;text-transform:uppercase}
-.boardMore .boardModsMore{margin:0;padding:0 11px 11px;column-count:2}
-@media(max-width:720px){.boardMore{margin-top:-3px}.boardMore .boardModsMore{column-count:1}.boardMore summary{min-height:44px}}
 /* Upset of the week, and my picks against the model and market. */
 .modUpset::before{background:linear-gradient(90deg,var(--live),transparent 70%)}
 .modMine::before{background:linear-gradient(90deg,var(--link,#76caff),transparent 70%)}

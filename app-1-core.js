@@ -833,7 +833,8 @@ function renderMatches(){const M=DATA.matches||[];
   // Notes go behind each card's ? first, so the power rating card is trimmed
   // against the cards' real, shorter heights.
   if(typeof collapseBoardNotes==='function')collapseBoardNotes($('#view-matches'));
-  if(typeof fitRankingCard==='function')fitRankingCard();}
+  if(typeof fitRankingCard==='function')fitRankingCard();
+  if(typeof balanceBoardMods==='function')balanceBoardMods();}
 function renderResults(){const M=DATA.matches||[];
   const past=M.filter(isCompleteOrPast).sort((a,b)=>Number(isFavoriteMatch(b))-Number(isFavoriteMatch(a))||(b.kickoff||'').localeCompare(a.kickoff||''));
   const shown=past.slice(0,RESULT_VISIBLE),remaining=Math.max(0,past.length-shown.length);

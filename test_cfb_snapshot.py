@@ -64,15 +64,16 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         self.assertIn("textContent", collapse)
         self.assertNotIn("innerHTML", collapse)
 
-    def test_board_has_a_deliberate_cutoff_before_fixtures(self):
-        """Deep tables stay available without leaving a tall empty shelf."""
+    def test_board_packs_every_module_to_one_bottom_edge(self):
+        """Every card stays visible and the three columns form one rectangle."""
+        core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
         views = (ROOT / "app-2-views.js").read_text(encoding="utf-8")
-        start = views.index("function collegeModules(){")
-        body = views[start:views.index(chr(10) + "}", start + 1)]
-        self.assertIn("cards.slice(0,9)", body)
-        self.assertIn("cards.slice(9)", body)
-        self.assertIn('<details class="boardMore">', body)
-        self.assertIn('<summary>More analysis', body)
+        styles = (ROOT / "styles.css").read_text(encoding="utf-8")
+        self.assertIn("balanceBoardMods()", core)
+        self.assertIn("function balanceBoardMods(){", views)
+        self.assertIn("column.cards.push(item.card)", views)
+        self.assertIn(".modsCol>.boardMod:last-child{flex:1}", styles)
+        self.assertNotIn('class="boardMore"', views)
 
     def test_news_is_a_primary_navigation_item(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
