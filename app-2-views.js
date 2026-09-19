@@ -783,9 +783,9 @@ function fitRankingCard(){
   // header, caption and notes.
   const budget=Math.max(...others)-(card.offsetHeight-list.offsetHeight);
   const fits=Math.floor(budget/rowHeight);
-  // A ranking shorter than ten is not a ranking; longer than what we rendered
-  // is not available. Between those, the layout decides.
-  const keep=Math.max(10,Math.min(items.length,fits));
+  // The overview has room for a meaningful ranking, not a teaser. Keep at
+  // least twenty teams visible; above that, the measured layout still decides.
+  const keep=Math.max(20,Math.min(items.length,fits));
   if(keep>=items.length)return;
   items.slice(keep).forEach(el=>el.remove());
   // The card's notes live behind its ? now (collapseBoardNotes), so the count
@@ -988,26 +988,25 @@ function modToughestSchedules(){
 <p class="modNote">Highest strength of schedule among ranked teams. Across the whole table the hardest schedules belong to teams nobody is ranking, which is true and says nothing.</p></section>`;
 }
 
-function modTierSplit(){
+function modConferenceTable(){
   const table=collegeRankingTable();
-  const rows=(table?.rankings||[]).filter(r=>r.tier&&Number.isFinite(Number(r.rating)));
+  const rows=(table?.rankings||[]).filter(r=>r.conference&&Number.isFinite(Number(r.rating)));
   if(rows.length<20)return '';
-  const groups={};
-  rows.forEach(r=>{(groups[String(r.tier)]||=[]).push(Number(r.rating))});
-  const order=Object.keys(groups).sort((a,b)=>(a==='power'?-1:b==='power'?1:a.localeCompare(b)));
-  if(order.length<2)return '';
-  const label={power:'Power Four',group_of_five:'Group of Five',g5:'Group of Five'};
-  const body=order.map(k=>{
-    const v=groups[k].slice().sort((a,b)=>b-a);
-    const mean=v.reduce((a,b)=>a+b,0)/v.length;
-    return `<tr><td class="tsTeam">${esc(label[k]||k.replace(/_/g,' '))}</td>`
-      +`<td>${v.length}</td>`
-      +`<td class="tsNum">${mean.toFixed(2)}</td>`
-      +`<td class="tsNum">${v[0].toFixed(2)}</td></tr>`;
-  }).join('');
-  return `<section class="boardMod modTier"><header><h3>Power vs Group of Five</h3><span>after the tier correction</span></header>
-<table class="tsTable"><thead><tr><th>Tier</th><th>Teams</th><th>Mean</th><th>Best</th></tr></thead><tbody>${body}</tbody></table>
-<p class="modNote">A measured offset put both tiers on one scale: across 521 cross-tier games the model had been crediting non-power teams points they had not earned. This is the gap that remains once that is corrected.</p></section>`;
+  const by={};
+  rows.forEach(r=>{(by[r.conference]||=[]).push(r)});
+  const conferences=Object.entries(by).filter(([,teams])=>teams.length>=4)
+    .map(([name,teams])=>{
+      const sorted=teams.slice().sort((a,b)=>Number(b.rating)-Number(a.rating));
+      return {name,n:teams.length,mean:teams.reduce((sum,r)=>sum+Number(r.rating),0)/teams.length,
+              best:Number(sorted[0].rating),leader:sorted[0].name};
+    }).sort((a,b)=>b.mean-a.mean);
+  if(conferences.length<4)return '';
+  const body=conferences.map(c=>`<tr><td class="tsTeam">${esc(c.name)}<small class="confLeader">${esc(c.leader)}</small></td>`
+    +`<td>${c.n}</td><td class="tsNum">${c.mean.toFixed(1)}</td>`
+    +`<td class="tsNum">${c.best.toFixed(1)}</td></tr>`).join('');
+  return `<section class="boardMod modTier"><header><h3>Conference table</h3><span>every rated league</span></header>
+<table class="tsTable"><thead><tr><th>Conference</th><th>Teams</th><th>Mean</th><th>Best</th></tr></thead><tbody>${body}</tbody></table>
+<p class="modNote">Every conference with at least four rated teams, ordered by its average opponent-adjusted rating. Best shows the league's highest-rated team.</p></section>`;
 }
 
 
@@ -1046,6 +1045,6 @@ function modConferenceParity(){
 function collegeModules(){
   // Upset of the week leads: CSS columns fill in source order, so first in this
   // array is the top of the left column.
-  const cards=[modUpsetOfWeek(),modTopPick(),modMyPicks(),modStatOfWeek(),modNotable(),modRatingScatter(),modConferenceStrength(),modBallot(),modTop25(),modUpsets(),modToughestSchedules(),modTierSplit(),modConferenceParity()].filter(Boolean);
+  const cards=[modUpsetOfWeek(),modTopPick(),modMyPicks(),modStatOfWeek(),modNotable(),modRatingScatter(),modConferenceStrength(),modBallot(),modTop25(),modUpsets(),modToughestSchedules(),modConferenceTable(),modConferenceParity()].filter(Boolean);
   return cards.length?`<div class="boardMods">${cards.join('')}</div>`:'';
 }

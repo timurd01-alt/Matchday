@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0919A",
+  "tag": "Interface",
+  "title": "Overview modules now use their full space",
+  "items": [
+   "Expanded the power rating to 20 teams so its taller card carries useful information instead of empty space.",
+   "Replaced the small Power vs Group of Five summary with a full conference table showing every rated league, its team count, mean rating, best rating, and leading team.",
+   "Kept every module inside the unified overview box with all three columns ending on the same exact line."
+  ]
+ },
+ {
   "date": "Build 0918I",
   "tag": "Interface",
   "title": "Every overview module now forms one clean box",

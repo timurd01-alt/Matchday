@@ -2224,6 +2224,7 @@ html{color-scheme:dark}
 .tsTeam{font-weight:var(--fw-semibold);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:9.5em}
 .tsNum{font-family:var(--mono);color:var(--signal)}
 .tsTable td:nth-child(2){font-family:var(--mono);color:var(--faint)}
+.confLeader{display:block;margin-top:2px;color:var(--faint);font-family:var(--mono);font-size:var(--fs-3xs);font-weight:var(--fw-regular);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:18ch}
 .modTier::before{background:linear-gradient(90deg,var(--live),transparent 70%)}
 .welcomeNotice{display:flex;align-items:flex-start;gap:10px;background:rgba(118,202,255,.07);border:1px solid rgba(118,202,255,.3);border-left:3px solid var(--link,#76caff);border-radius:10px;padding:10px 13px;margin-bottom:10px;font-size:var(--fs-md);color:var(--muted);line-height:1.5}
 .welcomeNotice strong{flex:0 0 auto;color:var(--link,#76caff);font-family:var(--display)}

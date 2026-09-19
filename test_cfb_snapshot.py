@@ -75,6 +75,15 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         self.assertIn(".modsCol>.boardMod:last-child{flex:1}", styles)
         self.assertNotIn('class="boardMore"', views)
 
+    def test_bottom_cards_are_filled_with_real_ranking_context(self):
+        views = (ROOT / "app-2-views.js").read_text(encoding="utf-8")
+        self.assertIn("Math.max(20,Math.min(items.length,fits))", views)
+        self.assertIn("function modConferenceTable(){", views)
+        self.assertIn("<h3>Conference table</h3>", views)
+        self.assertIn('class="confLeader"', views)
+        self.assertIn("modConferenceTable()", views)
+        self.assertNotIn("<h3>Power vs Group of Five</h3>", views)
+
     def test_news_is_a_primary_navigation_item(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
         self.assertIn('data-primary data-v="news"', html)
