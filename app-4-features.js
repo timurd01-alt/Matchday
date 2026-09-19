@@ -478,7 +478,9 @@ function _cfpBracketRounds(){
   ];
 }
 function _renderCFPBracket(host){
-  const official=Array.isArray(DATA.bracket)&&DATA.bracket.some(r=>(r.matches||[]).length);
+  const official=Array.isArray(DATA.bracket)&&DATA.bracket.some(r=>
+    !/projected/i.test(String(r.round||r.stage||r.name||''))
+    &&(r.matches||[]).some(m=>!['PROJECTED','TBD'].includes(String(m.status||'').toUpperCase())));
   const rounds=_cfpBracketRounds();
   host.innerHTML=`<div class="bracketStageHeader"><div class="vhead">CFP Bracket</div><div class="bracketLegend">${official?'Official + projected paths':'Projected from the current AP Poll'}</div></div><div class="bracketWideShell"><div class="bracketWideBoard">${rounds.map(r=>`<section class="brWideRound"><div class="brWideTitle"><b>${esc(r.label)}</b><span>${r.matches.length||0}</span></div><div class="brWideStack">${(r.matches.length?r.matches:[null]).map(m=>_v11MatchCard(m,r.label)).join('')}</div></section>`).join('')}</div></div>`;
 }

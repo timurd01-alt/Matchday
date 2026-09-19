@@ -30,6 +30,7 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         self.assertIn("table_type:'official_poll'", panels)
         self.assertIn("?MATCHDAY_CFB_AP_BRACKET", panels)
         self.assertIn("Projected from the current AP Poll", features)
+        self.assertIn("!['PROJECTED','TBD'].includes", features)
 
     def test_snapshot_replaces_old_record_and_stale_bracket(self):
         snapshot = (ROOT / "matchday-cfb-snapshot.js").read_text(encoding="utf-8")
