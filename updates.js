@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0918F",
+  "tag": "Interface",
+  "title": "Cleaner matchup analysis on every screen",
+  "items": [
+   "Removed the empty reserved column beneath the model pick when only one analysis panel is available.",
+   "Tightened the model-read card spacing and let its explanatory note use the available width.",
+   "Kept the mobile board inside the viewport so narrow phones no longer show an unnecessary horizontal scrollbar."
+  ]
+ },
+ {
   "date": "Build 0918E",
   "tag": "Interface",
   "title": "Expanded matchups now show overall roster context",
