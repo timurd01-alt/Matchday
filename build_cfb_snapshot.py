@@ -26,6 +26,7 @@ import pathlib
 import sys
 
 import betbetter_handoff
+import ap_poll
 
 SNAPSHOT = pathlib.Path("matchday-cfb-snapshot.js")
 BEGIN = "  /* BEGIN GENERATED RANKINGS -- build_cfb_snapshot.py */"
@@ -239,6 +240,13 @@ def build(path: pathlib.Path = SNAPSHOT) -> str:
         raise SystemExit("no Bet Better handoff found; nothing regenerated")
 
     blocks = []
+    # The browser can distinguish a current Bet Better repair layer from the
+    # older quota-limited fixture payload. Without this timestamp the header
+    # permanently advertised "fallback snapshot" even immediately after a
+    # fresh prediction handoff had repaired the slate.
+    blocks.append("  const MATCHDAY_BETBETTER_GENERATED_AT="
+                  + json.dumps(document.get("generated_at") or "",
+                               ensure_ascii=False) + ";")
     for sport, const in (("ncaaf", "MATCHDAY_CFB_RANKINGS"),
                          ("ncaam", "MATCHDAY_NCAAM_RANKINGS")):
         entry = betbetter_handoff.rankings(document, sport)
@@ -249,6 +257,30 @@ def build(path: pathlib.Path = SNAPSHOT) -> str:
         if sport == "ncaaf":
             payload["projected_bracket"] = cfp_bracket(entry)
         blocks.append(f"  const {const}={json.dumps(payload, ensure_ascii=False)};")
+
+    # The official poll and the model power rating are deliberately separate.
+    # Refresh the former from the published AP ranks; if the network response
+    # is incomplete, ap_poll keeps the last complete 1-25 snapshot.
+    poll = ap_poll.refresh()
+    poll_rows = poll.get("rankings") or []
+    rating_entry = betbetter_handoff.rankings(document, "ncaaf")
+    rating_rows = rating_entry.get("rankings") or []
+    by_name = {str(r.get("team_name") or "").casefold(): r for r in rating_rows}
+    bracket_rows = []
+    for item in poll_rows:
+        rated = by_name.get(str(item.get("name") or "").casefold())
+        if not rated:
+            continue
+        bracket_rows.append({**rated, "rank": item["rank"]})
+    bracket = cfp_bracket({"rankings": bracket_rows}) if len(bracket_rows) == 25 else []
+    poll_payload = {**poll, "rankings": [
+        {**row, "pos": row["rank"], "record": "", "code": ""}
+        for row in poll_rows
+    ]}
+    blocks.append("  const MATCHDAY_CFB_AP_POLL="
+                  + json.dumps(poll_payload, ensure_ascii=False) + ";")
+    blocks.append("  const MATCHDAY_CFB_AP_BRACKET="
+                  + json.dumps(bracket, ensure_ascii=False) + ";")
 
     results = [r for r in (document.get("results") or [])
                if r.get("home") and r.get("away")

@@ -291,8 +291,14 @@ function applyCurrentCfbSnapshot(payload){
     teams.forEach((team,index)=>team.pos=index+1);
     return {...g,teams};
   });
-  payload.bracket=[];
-  payload.bracket=MATCHDAY_CFB_SNAPSHOT.bracket||[];
+  const ap=(typeof MATCHDAY_CFB_AP_POLL!=='undefined'&&MATCHDAY_CFB_AP_POLL.rankings)||[];
+  if(ap.length===25){
+    const apTable={group:MATCHDAY_CFB_AP_POLL.poll_name||'AP Top 25',table_type:'official_poll',
+      source:MATCHDAY_CFB_AP_POLL.source||'',updated:MATCHDAY_CFB_AP_POLL.fetched_on||'',teams:ap};
+    payload.standings=[apTable,...(payload.standings||[]).filter(g=>!isPollTable(g))];
+  }
+  payload.bracket=(typeof MATCHDAY_CFB_AP_BRACKET!=='undefined'&&MATCHDAY_CFB_AP_BRACKET.length)
+    ?MATCHDAY_CFB_AP_BRACKET:(MATCHDAY_CFB_SNAPSHOT.bracket||[]);
   payload.bracketology=null;
   payload.position_views_note='Current-season results only. The playoff projection is recalibrating.';
   return payload;
@@ -441,9 +447,10 @@ function _scVersusMarket(vm){
     +`${esc(vm.basis||'')}${vm.disagreement_share_pct!=null?` · it disagreed with the market on ${esc(vm.disagreement_share_pct)}% of them`:''}.</p>`;
 }
 function _scRecent(rows){
-  if(!rows||!rows.length)return '';
+  const graded=(rows||[]).filter(r=>['win','loss'].includes(String(r.result||'').toLowerCase()));
+  if(!graded.length)return '';
   return `<div class="seclbl" style="margin-top:18px">Recent graded cards</div>`
-    +rows.slice(0,10).map(r=>{
+    +graded.slice(0,10).map(r=>{
       const won=String(r.result||'').toLowerCase()==='win';
       const p=Number(r.probability_pct);
       return `<div class="scrow ${won?'hit':'miss'}"><span class="scmatch">${esc(r.event_name||'')}</span>`
@@ -504,10 +511,11 @@ function renderCurrent(){captureSignalsIfFresh();({matches:renderMatches,results
 function renderStrip(){const M=DATA.matches||[],next=M.filter(isVisibleUpcoming).sort((a,b)=>(a.kickoff||'').localeCompare(b.kickoff||''))[0];const parts=[];
 const isSample=(DATA.source_note||'').toLowerCase().includes('sample');
 const freshness=DATA.source_freshness||{},fallback=freshness.state==='fallback';
+const syncedAt=typeof MATCHDAY_BETBETTER_GENERATED_AT!=='undefined'?MATCHDAY_BETBETTER_GENERATED_AT:'';
 parts.push(isSample?`<span class="ls-badge sample">${t("sample data")}</span>`:`<span class="ls-badge ok">${t("data feed")}</span>`);
 const streakStats=btmStats(btmGrade());
 if(streakStats.streak>=2)parts.push(`<span class="ls-streak" title="Beat the Model: ${streakStats.streak} correct in a row" onclick="setView('community')">\u{1F525} ${streakStats.streak}</span>`);
-if(next)parts.push(`<span class="ls-next ls-clickable" data-mid="${esc(next.id)}" onclick="openMatchModal(this.dataset.mid)" role="button" tabindex="0" title="Open expanded view">Next · <b>${esc(next.home.code)} v ${esc(next.away.code)}</b> ${kickIn(next.kickoff)}</span>`);else parts.push(`<span class="ls-next">No upcoming fixtures</span>`);parts.push(`<span class="ls-upd">${fallback?`<b class="stale">fallback snapshot ${ago(freshness.last_successful_at||DATA.updated)}</b> · `:(()=>{try{const a=(Date.now()-new Date(DATA.updated))/60000;if(a>360)return `<b class="stale">data ${ago(DATA.updated)}</b> · `;}catch(e){}return 'Updated '+ago(DATA.updated)+' · ';})()}${t("independent · built for fans")} · <b style="color:var(--signal)">build ${currentBuild()}</b></span>`);$('#strip').innerHTML=parts.join('')}
+if(next)parts.push(`<span class="ls-next ls-clickable" data-mid="${esc(next.id)}" onclick="openMatchModal(this.dataset.mid)" role="button" tabindex="0" title="Open expanded view">Next · <b>${esc(next.home.code)} v ${esc(next.away.code)}</b> ${kickIn(next.kickoff)}</span>`);else parts.push(`<span class="ls-next">No upcoming fixtures</span>`);parts.push(`<span class="ls-upd">${fallback&&syncedAt?`Predictions synced ${ago(syncedAt)} · `:fallback?`<b class="stale">data source ${ago(freshness.last_successful_at||DATA.updated)}</b> · `:(()=>{try{const a=(Date.now()-new Date(DATA.updated))/60000;if(a>360)return `<b class="stale">data ${ago(DATA.updated)}</b> · `;}catch(e){}return 'Updated '+ago(DATA.updated)+' · ';})()}${t("independent · built for fans")} · <b style="color:var(--signal)">build ${currentBuild()}</b></span>`);$('#strip').innerHTML=parts.join('')}
 /* removed duplicate (diverseNews) */
 /* removed duplicate (renderInsight) */
 function setView(v){VIEW=safeView(v);v=VIEW;if(typeof closeNavSheet==='function')closeNavSheet();

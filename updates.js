@@ -4,6 +4,18 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0918G",
+  "tag": "Data",
+  "title": "Predictions and AP Poll refreshed",
+  "items": [
+   "Restored predictions for games where a sportsbook supplied only one side of the market, including Michigan–UTEP; the public handoff still contains model probabilities only.",
+   "The current slate now has a prediction for every game Bet Better modeled.",
+   "Replaced the persistent fallback-snapshot warning with the actual Bet Better prediction-sync time when that newer handoff has repaired the board.",
+   "Updated the AP Top 25 independently of the model power ratings and made the CFP projection follow the current AP Poll.",
+   "Pending games no longer appear as losses in Recent graded cards; only settled wins and losses are shown."
+  ]
+ },
+ {
   "date": "Build 0918F",
   "tag": "Interface",
   "title": "Cleaner matchup analysis on every screen",

@@ -1,7 +1,7 @@
 {
   "handoff_version": 10,
   "source": "betbetter",
-  "generated_at": "2026-09-19T00:51:32.123784+00:00",
+  "generated_at": "2026-09-19T01:15:26.022216+00:00",
   "sports": [
     "ncaaf",
     "ncaam"
@@ -548,6 +548,36 @@
       ]
     },
     {
+      "event_id": "schedule:401866424",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Massachusetts",
+      "away": "Stonehill",
+      "kickoff": "2026-09-19T19:30:00.000Z",
+      "pick_name": "Massachusetts",
+      "pick": "h",
+      "model_pct": 90.4,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-06T22:03:46.382974+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Stonehill",
+          "is_home": false,
+          "model_pct": 9.6
+        },
+        {
+          "selection": "Massachusetts",
+          "is_home": true,
+          "model_pct": 90.4
+        }
+      ]
+    },
+    {
       "event_id": "15ebe2df1d91e584d091d509e70a1a71",
       "sport": "ncaaf",
       "competition": "NCAAF",
@@ -784,6 +814,36 @@
           "selection": "SMU Mustangs",
           "is_home": false,
           "model_pct": 49.9
+        }
+      ]
+    },
+    {
+      "event_id": "f9b0ff34657875b54ee16b8254168159",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Michigan Wolverines",
+      "away": "UTEP Miners",
+      "kickoff": "2026-09-19T19:30:00Z",
+      "pick_name": "Michigan Wolverines",
+      "pick": "h",
+      "model_pct": 99.3,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:48:31.322209+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "UTEP Miners",
+          "is_home": false,
+          "model_pct": 0.7
+        },
+        {
+          "selection": "Michigan Wolverines",
+          "is_home": true,
+          "model_pct": 99.3
         }
       ]
     },
@@ -1114,6 +1174,36 @@
           "selection": "UConn Huskies",
           "is_home": false,
           "model_pct": 62.3
+        }
+      ]
+    },
+    {
+      "event_id": "36bb6ea150432c9958bd533c49b06f23",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Memphis Tigers",
+      "away": "UT Martin Skyhawks",
+      "kickoff": "2026-09-19T23:00:00Z",
+      "pick_name": "Memphis Tigers",
+      "pick": "h",
+      "model_pct": 100.0,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:49:05.873685+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "UT Martin Skyhawks",
+          "is_home": false,
+          "model_pct": 0.0
+        },
+        {
+          "selection": "Memphis Tigers",
+          "is_home": true,
+          "model_pct": 100.0
         }
       ]
     },
@@ -1748,6 +1838,41 @@
       ]
     },
     {
+      "event_id": "828ceb39d7fd7da80c98174ae5f02dcd",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Louisiana Ragin Cajuns",
+      "away": "UAB Blazers",
+      "kickoff": "2026-09-20T00:00:00Z",
+      "pick_name": "Louisiana Ragin Cajuns",
+      "pick": "h",
+      "model_pct": 68.0,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:50:03.453662+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Louisiana Ragin Cajuns",
+          "is_home": true,
+          "model_pct": null
+        },
+        {
+          "selection": "UAB Blazers",
+          "is_home": false,
+          "model_pct": 32.0
+        },
+        {
+          "selection": "Louisiana Ragin Cajuns",
+          "is_home": true,
+          "model_pct": 68.0
+        }
+      ]
+    },
+    {
       "event_id": "a64b980a572375c0cc1adba3c3fc2811",
       "sport": "ncaaf",
       "competition": "NCAAF",
@@ -2014,6 +2139,11 @@
           "selection": "Fresno State Bulldogs",
           "is_home": false,
           "model_pct": 77.5
+        },
+        {
+          "selection": "San Jose State Spartans",
+          "is_home": true,
+          "model_pct": 22.5
         }
       ]
     },
@@ -3449,6 +3579,11 @@
           "selection": "Ohio Bobcats",
           "is_home": true,
           "model_pct": 83.4
+        },
+        {
+          "selection": "Stonehill Skyhawks",
+          "is_home": false,
+          "model_pct": 16.6
         }
       ]
     },
@@ -33755,8 +33890,8 @@
     "caveat": "Editorial, not advice. The game is chosen for how close and how strong the two teams are by our own ratings; the model's read on it is reported alongside, not used to select it. It is a live shadow forecast like every other pick here and carries no frozen receipt."
   },
   "coverage": {
-    "picks": 192,
-    "games_without_a_pick": 4,
+    "picks": 196,
+    "games_without_a_pick": 0,
     "competitions": [
       "NCAAF",
       "NCAAM"

@@ -943,3 +943,12 @@ record the review date here before each public release.
   workload, and venue additions remain prospective shadows with production
   weight zero; this change does not claim that an unverified provider tier or
   an unvalidated feature improves the production model.
+
+- **2026-09-18 (owner amendment):** Permitted a narrowly scoped AP Top 25
+  refresh from ESPN's public college-football scoreboard response. Matchday
+  retains only each team's displayed name and `curatedRank.current`, requests
+  a bounded seven-day game window, and accepts a refresh only when ranks 1–25
+  are complete and unambiguous. Raw responses, scores, prices, commentary, and
+  other fields are not stored or republished through this path. The UI credits
+  the result as the AP Top 25 sourced from ESPN; this permission does not
+  authorize general ESPN API ingestion.

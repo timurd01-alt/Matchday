@@ -8,13 +8,36 @@ ROOT = pathlib.Path(__file__).resolve().parent
 
 
 class CurrentCfbSnapshotTests(unittest.TestCase):
+    def test_fallback_header_uses_the_fresh_prediction_sync(self):
+        builder = (ROOT / "build_cfb_snapshot.py").read_text(encoding="utf-8")
+        panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
+        self.assertIn("MATCHDAY_BETBETTER_GENERATED_AT", builder)
+        self.assertIn("Predictions synced ${ago(syncedAt)}", panels)
+        self.assertNotIn("fallback snapshot ${ago", panels)
+
+    def test_pending_cards_are_not_called_losses(self):
+        panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
+        recent = panels[panels.index("function _scRecent(rows)"):panels.index("function renderScore()")]
+        self.assertIn("['win','loss'].includes", recent)
+        self.assertIn("graded.slice(0,10)", recent)
+
+    def test_ap_poll_is_separate_and_drives_the_cfp_projection(self):
+        builder = (ROOT / "build_cfb_snapshot.py").read_text(encoding="utf-8")
+        panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
+        features = (ROOT / "app-4-features.js").read_text(encoding="utf-8")
+        self.assertIn("MATCHDAY_CFB_AP_POLL", builder)
+        self.assertIn("MATCHDAY_CFB_AP_BRACKET", builder)
+        self.assertIn("table_type:'official_poll'", panels)
+        self.assertIn("?MATCHDAY_CFB_AP_BRACKET", panels)
+        self.assertIn("Projected from the current AP Poll", features)
+
     def test_snapshot_replaces_old_record_and_stale_bracket(self):
         snapshot = (ROOT / "matchday-cfb-snapshot.js").read_text(encoding="utf-8")
         panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
         self.assertIn("scorecard:{graded:8,model_hits:6,pending:0", snapshot)
         self.assertEqual(snapshot.count("result:'HIT'"), 6)
         self.assertEqual(snapshot.count("result:'MISS'"), 2)
-        self.assertIn("payload.bracket=MATCHDAY_CFB_SNAPSHOT.bracket", panels)
+        self.assertIn("?MATCHDAY_CFB_AP_BRACKET:(MATCHDAY_CFB_SNAPSHOT.bracket||[])", panels)
         self.assertIn("applyCurrentCfbSnapshot(DATA)", panels)
         self.assertIn("g.group!=='Matchday Top 25'", panels)
         self.assertIn("DATA.comp_key==='NCAAF'?'Conferences'", panels)
