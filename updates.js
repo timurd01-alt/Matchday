@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0918H",
+  "tag": "Interface",
+  "title": "A clean cutoff before the fixture list",
+  "items": [
+   "Ended the main overview after nine core cards so uneven final columns no longer leave a large empty shelf above Fixtures.",
+   "Moved the deeper analytical tables into an accessible More analysis disclosure without removing or clipping any content."
+  ]
+ },
+ {
   "date": "Build 0918G",
   "tag": "Data",
   "title": "Predictions and AP Poll refreshed",
