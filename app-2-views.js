@@ -1021,5 +1021,12 @@ function collegeModules(){
   // Upset of the week leads: CSS columns fill in source order, so first in this
   // array is the top of the left column.
   const cards=[modUpsetOfWeek(),modTopPick(),modMyPicks(),modStatOfWeek(),modNotable(),modRatingScatter(),modConferenceStrength(),modBallot(),modTop25(),modUpsets(),modToughestSchedules(),modTierSplit(),modConferenceParity()].filter(Boolean);
-  return cards.length?`<div class="boardMods">${cards.join('')}</div>`:'';
+  if(!cards.length)return '';
+  // Keep the main board to three deliberate rows on a wide screen. The deeper
+  // tables remain available, but no longer let one tall final column push the
+  // fixture list down past a large empty shelf under the other two columns.
+  const primary=cards.slice(0,9),more=cards.slice(9);
+  return `<div class="boardMods">${primary.join('')}</div>`
+    +(more.length?`<details class="boardMore"><summary>More analysis <span>${more.length} modules</span></summary>`
+      +`<div class="boardMods boardModsMore">${more.join('')}</div></details>`:'');
 }
