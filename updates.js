@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0919C",
+  "tag": "Fix",
+  "title": "AP Poll now includes record and power",
+  "items": [
+   "Joined every AP Top 25 team to its current win-loss record and Matchday opponent-adjusted power rating.",
+   "Kept the official AP order intact while exposing the separate Matchday power rank on each power value.",
+   "Added regression coverage so future snapshot rebuilds cannot silently blank either column."
+  ]
+ },
+ {
   "date": "Build 0919B",
   "tag": "Interface",
   "title": "Analysis cards now finish without empty interiors",

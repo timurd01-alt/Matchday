@@ -32,6 +32,15 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         self.assertIn("Projected from the current AP Poll", features)
         self.assertIn("!['PROJECTED','TBD'].includes", features)
 
+    def test_ap_poll_rows_include_record_and_matchday_power(self):
+        builder = (ROOT / "build_cfb_snapshot.py").read_text(encoding="utf-8")
+        panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
+        self.assertIn('"record": rated.get("record") or "—"', builder)
+        self.assertIn('"rating": rated.get("rating")', builder)
+        self.assertIn('"external_rank": rated.get("rank")', builder)
+        self.assertIn('>Record</th>', panels)
+        self.assertIn('>Power</th>', panels)
+
     def test_snapshot_replaces_old_record_and_stale_bracket(self):
         snapshot = (ROOT / "matchday-cfb-snapshot.js").read_text(encoding="utf-8")
         panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")

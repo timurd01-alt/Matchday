@@ -23,6 +23,7 @@ from __future__ import annotations
 
 import json
 import pathlib
+import re
 import sys
 
 import betbetter_handoff
@@ -31,6 +32,11 @@ import ap_poll
 SNAPSHOT = pathlib.Path("matchday-cfb-snapshot.js")
 BEGIN = "  /* BEGIN GENERATED RANKINGS -- build_cfb_snapshot.py */"
 END = "  /* END GENERATED RANKINGS */"
+
+
+def _team_key(value: object) -> str:
+    """Stable join key for the AP poll and Matchday's rating table."""
+    return re.sub(r"[^a-z0-9]+", " ", str(value or "").casefold()).strip()
 
 
 def _dedupe(rows: list[dict], entry: dict) -> list[dict]:
@@ -264,19 +270,28 @@ def build(path: pathlib.Path = SNAPSHOT) -> str:
     poll = ap_poll.refresh()
     poll_rows = poll.get("rankings") or []
     rating_entry = betbetter_handoff.rankings(document, "ncaaf")
-    rating_rows = rating_entry.get("rankings") or []
-    by_name = {str(r.get("team_name") or "").casefold(): r for r in rating_rows}
+    raw_rating_rows = rating_entry.get("rankings") or []
+    rating_rows = _dedupe(_rows(rating_entry), rating_entry)
+    by_name = {_team_key(r.get("name")): r for r in rating_rows}
+    raw_by_name = {_team_key(r.get("team_name")): r for r in raw_rating_rows}
     bracket_rows = []
     for item in poll_rows:
-        rated = by_name.get(str(item.get("name") or "").casefold())
+        rated = raw_by_name.get(_team_key(item.get("name")))
         if not rated:
             continue
         bracket_rows.append({**rated, "rank": item["rank"]})
     bracket = cfp_bracket({"rankings": bracket_rows}) if len(bracket_rows) == 25 else []
-    poll_payload = {**poll, "rankings": [
-        {**row, "pos": row["rank"], "record": "", "code": ""}
-        for row in poll_rows
-    ]}
+    poll_payload = {**poll, "rankings": []}
+    for row in poll_rows:
+        rated = by_name.get(_team_key(row.get("name"))) or {}
+        poll_payload["rankings"].append({
+            **row,
+            "pos": row["rank"],
+            "record": rated.get("record") or "—",
+            "rating": rated.get("rating"),
+            "external_rank": rated.get("rank"),
+            "code": "",
+        })
     blocks.append("  const MATCHDAY_CFB_AP_POLL="
                   + json.dumps(poll_payload, ensure_ascii=False) + ";")
     blocks.append("  const MATCHDAY_CFB_AP_BRACKET="
