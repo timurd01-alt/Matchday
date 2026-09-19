@@ -282,7 +282,7 @@ function _v4UpsetRows(){
 function simpleMatchFallbackPanel(m){
   const bb=typeof betbetterReadFor==='function'?betbetterReadFor(m):null;
   const read=bb?betbetterModelRead(m,bb):betbetterNoReadPanel();
-  return `<div class="detailGrid v8Fallback"><div class="readCard modelReadCard">${read}</div><div class="readCard">${marketPanel(m)}</div><div class="statsBoard">${statsPanel(m)}</div><div class="lineupBoard">${lineupsPanel(m)}</div></div>`;
+  return `<div class="detailGrid v8Fallback"><div class="readCard modelReadCard">${read}</div><div class="readCard">${marketPanel(m)}</div>${rosterPanel(m)}</div>`;
 }
 
 

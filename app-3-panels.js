@@ -791,14 +791,26 @@ function normalizePlayer(p){return {n:String(p?.n??p?.number??'').trim(),name:St
 function lineupRows(xi,formation){const players=(xi||[]).map(normalizePlayer).filter(p=>p.n||p.name);if(!players.length)return[];const parts=formationParts(formation);if(!parts.length){const rows=[];for(let i=0;i<players.length;i+=3)rows.push(players.slice(i,i+3));return rows}const rows=[];let idx=0;rows.push(players.slice(idx,idx+1));idx+=1;parts.forEach(c=>{rows.push(players.slice(idx,idx+c));idx+=c});if(idx<players.length)rows.push(players.slice(idx));return rows.filter(r=>r.length)}
 function pitchPlayer(p){const nm=shortPlayerName(p.name)||`#${p.n||'?'}`;return `<div class="pitchPlayer ${p.out?'out':''}" title="${esc((p.n?('#'+p.n+' '):'')+(p.name||''))}"><div class="num">${esc(p.n||'—')}</div><div class="pname">${esc(nm)}</div>${p.out?'<span class="subMark">sub</span>':''}</div>`}
 function pitchTeamCard(team,line,side){const rows=lineupRows(line?.xi||[],line?.formation||'');const fl=teamFlagHTML(team);const form=line?.formation||'XI';return `<div class="pitchCard ${side}"><div class="pitchHeader"><div class="pitchTeamName">${fl}<span>${esc(team?.name||side)}</span></div><div class="formationBadge">${esc(form)}</div></div>${rows.length?`<div class="pitch">${rows.map(r=>`<div class="pitchRow">${r.map(pitchPlayer).join('')}</div>`).join('')}</div>`:`<div class="emptyStats">Lineup not available.</div>`}<div class="lineupFoot"><span>${esc(team?.code||'')}</span><span>${rows.reduce((a,r)=>a+r.length,0)} players shown</span></div></div>`}
-function lineupsPanel(m){
-  const l=m.lineups;
-  if(l&&((l.home?.xi||[]).length||(l.away?.xi||[]).length))return `<div class="lineupBoard pitchMode"><div class="seclbl">Lineups</div><div class="pitchGrid">${pitchTeamCard(m.home,l.home||{},'home')}${pitchTeamCard(m.away,l.away||{},'away')}</div></div>`;
-  const ctx=m.pregame_context||m.prediction?.lock_readiness;
-  let title='No cleared lineup feed for this competition';
-  let note='Matchday will not infer a lineup or scrape an unlicensed source.';
-  if(!ctx){title='Readiness receipt unavailable';note='This published snapshot predates pregame-context tracking.'}
-  return `<div class="lineupBoard pitchMode"><div class="seclbl">Lineups</div><div class="emptyStats"><b>${esc(title)}</b><span>${esc(note)}</span></div></div>`;
+function rosterPlayer(p){
+  const pos=String(p?.position||'').trim(),num=String(p?.n??p?.number??'').trim();
+  const status=String(p?.roster_status||'').trim();
+  return `<div class="rosterPlayer"><span class="rosterPos">${esc(pos||num||'—')}</span><b>${esc(p?.name||p?.shortName||p?.athlete?.displayName||'Player')}</b>${status&&status!=='ACT'?`<em>${esc(status)}</em>`:''}</div>`;
+}
+function rosterTeamCard(team,players,summary){
+  return `<section class="rosterTeam"><div class="rosterTeamHead"><div><span>${esc(team?.code||'TEAM')}</span><b>${esc(team?.name||'Team')}</b></div><em>${players.length?`${players.length} listed`:'Roster profile'}</em></div>${players.length?`<div class="rosterPlayers">${players.map(rosterPlayer).join('')}</div>`:`<div class="rosterSummary"><b>${esc(summary.title)}</b><span>${esc(summary.note)}</span></div>`}</section>`;
+}
+function rosterPanel(m){
+  const depth=m.personnel?.depth_chart||{},lineups=m.lineups||{};
+  const rosterPlayers=raw=>(raw||[]).map(p=>({...normalizePlayer(p),position:p?.position||'',roster_status:p?.roster_status||''})).filter(p=>p.name);
+  const homePlayers=rosterPlayers(depth.home?.players||lineups.home?.xi||[]);
+  const awayPlayers=rosterPlayers(depth.away?.players||lineups.away?.xi||[]);
+  const pr=m.prediction||officialPrediction(m)||{},meta=sportClassMeta(pr,m),edge=Number(pr?.why?.class||0);
+  const label=meta.label||'Roster profile',source=meta.source?`Source: ${meta.source}`:(meta.note||'Built from the roster information available to Matchday.');
+  const homeTitle=edge>0.05?'Stronger roster':edge<-.05?'Lighter roster':'Even roster grade';
+  const awayTitle=edge<-.05?'Stronger roster':edge>.05?'Lighter roster':'Even roster grade';
+  const available=homePlayers.length||awayPlayers.length||meta.coverage!=='unavailable';
+  if(!available)return `<div class="lineupBoard rosterBoard"><div class="seclbl">Overall roster</div><div class="emptyStats"><b>Roster profile unavailable</b><span>Matchday does not have a verified roster source for this competition yet.</span></div></div>`;
+  return `<div class="lineupBoard rosterBoard"><div class="rosterBoardTitle"><div><span class="seclbl">Overall roster</span><b>${esc(label)}</b></div><small>${esc(source)}</small></div><div class="rosterGrid">${rosterTeamCard(m.home,homePlayers,{title:homeTitle,note:homePlayers.length?'Current roster listing':source})}${rosterTeamCard(m.away,awayPlayers,{title:awayTitle,note:awayPlayers.length?'Current roster listing':source})}</div></div>`;
 }
 function teamSnap(team,side,comp){return `<div class="teamSnap ${side==='away'?'away':''}"><div class="snapCode">${teamFlagHTML(team,side==='away')}${esc(team?.code||side)}</div><div class="snapName">${esc(team?.name||'TBD')}</div><div class="snapMeta">${esc(teamStandingsMeta(team,comp,{diff:true,form:true,hideStaleRecord:String(comp||'').toUpperCase()==='NCAAF'}).join(' · '))}</div></div>`}
 /* dedup */
@@ -1140,10 +1152,10 @@ function betbetterModelRead(m,p){
     +(p.integrity_note?`<p class="analystSummary">${esc(p.integrity_note)}</p>`:'')+`</section>`;
 }
 function details(m){
-  if(isForecastPaused(m))return `<div class="detailGrid v4Detail">${forecastPauseHTML(m)}<div class="detailTop">${betbetterMatchupPanel(m)}<div class="readCard forecastMarketCard">${marketPanel(m)}</div></div><div class="detailLow">${statsPanel(m)}${lineupsPanel(m)}</div></div>`;
+  if(isForecastPaused(m))return `<div class="detailGrid v4Detail">${forecastPauseHTML(m)}<div class="detailTop">${betbetterMatchupPanel(m)}<div class="readCard forecastMarketCard">${marketPanel(m)}</div></div><div class="detailLow">${rosterPanel(m)}</div></div>`;
   const bb=betbetterReadFor(m);
   const read=bb?betbetterModelRead(m,bb):betbetterNoReadPanel();
-  return `<div class="detailGrid v4Detail modernExpandedView"><div class="expandedSectionHead"><div><span>Matchday analysis</span><b>Model, market and matchup</b></div><em>Updated before kickoff</em></div><div class="detailTop"><div class="readCard modelReadCard">${read}</div><div class="readCard forecastMarketCard">${marketPanel(m)}</div></div><div class="detailTop">${betbetterMatchupPanel(m)}${matchProfilePanel(m)}</div><div class="detailLow">${statsPanel(m)}${lineupsPanel(m)}</div></div>`;
+  return `<div class="detailGrid v4Detail modernExpandedView"><div class="expandedSectionHead"><div><span>Matchday analysis</span><b>Model, market and matchup</b></div><em>Updated before kickoff</em></div><div class="detailTop"><div class="readCard modelReadCard">${read}</div><div class="readCard forecastMarketCard">${marketPanel(m)}</div></div><div class="detailTop">${betbetterMatchupPanel(m)}${matchProfilePanel(m)}</div><div class="detailLow">${rosterPanel(m)}</div></div>`;
 }
 /* dedup */
 function _v4TitleRows(t){

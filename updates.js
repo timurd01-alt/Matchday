@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0918E",
+  "tag": "Interface",
+  "title": "Expanded matchups now show overall roster context",
+  "items": [
+   "Replaced the empty Lineups area with an Overall roster panel that uses current depth-chart or roster entries when Matchday has them.",
+   "College matchups now show the verified roster-talent comparison already used by the model instead of an irrelevant missing-lineup warning.",
+   "Removed the unused box-score block from expanded matchup views."
+  ]
+ },
+ {
   "date": "Build 0918D",
   "tag": "Data",
   "title": "Current college slate predictions filled",
