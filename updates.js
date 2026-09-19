@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0918C",
+  "tag": "Fix",
+  "title": "Complete prediction-only college slate",
+  "items": [
+   "Expanded the Bet Better handoff from priced games to every modeled college fixture, increasing the current slate from 24 to 127 predictions.",
+   "Kept sportsbook prices, book counts, and model-versus-market edges internal; Matchday receives and displays model predictions only.",
+   "Matched fixtures even when providers reverse the home and away designation for the same teams and kickoff."
+  ]
+ },
+ {
   "date": "Build 0918B",
   "tag": "Data",
   "title": "Bet Better slate refreshed",

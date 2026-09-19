@@ -47,6 +47,8 @@ from typing import Any
 
 # Handoff major versions this reader understands. A document outside this set
 # is refused whole: a partly-understood pick is worse than no pick.
+# 10 carries prediction-only rows for every modeled fixture. Sportsbook prices,
+# book counts, and model-vs-market edges remain internal to Bet Better.
 # 9 added `game_of_the_week` -- the best matchup on the board, chosen on the
 # two teams' ratings and the gap between them rather than on the model's
 # confidence. Confidence alone always names a Power Four side hosting an FCS
@@ -63,7 +65,7 @@ from typing import Any
 # board survives Matchday's own fixture provider running out of quota).
 # 2 added `rankings` (the published Top 25 per sport). A v1 document is
 # still readable -- it simply carries no rankings -- so both are accepted.
-SUPPORTED_VERSIONS = frozenset({1, 2, 3, 4, 5, 6, 7, 8, 9})
+SUPPORTED_VERSIONS = frozenset({1, 2, 3, 4, 5, 6, 7, 8, 9, 10})
 
 DEFAULT_HANDOFF_PATH = "betbetter_picks.json"
 
@@ -234,8 +236,10 @@ def find(buckets: dict[str, list[dict[str, Any]]], home: object, away: object,
     if not wanted_home or not wanted_away:
         return None
     candidates = [pick for pick in buckets.get(_kickoff_day(kickoff), [])
-                  if _compatible(_normalize(pick.get("home")), wanted_home)
-                  and _compatible(_normalize(pick.get("away")), wanted_away)]
+                  if ((_compatible(_normalize(pick.get("home")), wanted_home)
+                       and _compatible(_normalize(pick.get("away")), wanted_away))
+                      or (_compatible(_normalize(pick.get("home")), wanted_away)
+                          and _compatible(_normalize(pick.get("away")), wanted_home)))]
     return candidates[0] if len(candidates) == 1 else None
 
 
@@ -245,11 +249,6 @@ def _display_block(pick: dict[str, Any], document: dict[str, Any]) -> dict[str, 
         "pick_name": pick.get("pick_name"),
         "pick": pick.get("pick"),
         "model_pct": pick.get("model_pct"),
-        "market_pct": pick.get("market_pct"),
-        "edge_points": pick.get("edge_points"),
-        "best_price": pick.get("best_price"),
-        "best_american": pick.get("best_american"),
-        "book_count": pick.get("book_count"),
         "sides": pick.get("sides") or [],
 
         "model_name": pick.get("model_name"),
@@ -266,7 +265,6 @@ def _display_block(pick: dict[str, Any], document: dict[str, Any]) -> dict[str, 
         "official_publication_eligible": False,
         "moves_until_kickoff": bool(pick.get("moves_until_kickoff", True)),
         "integrity_note": pick.get("integrity_note"),
-        "edge_warning": document.get("edge_warning"),
     }
 
 

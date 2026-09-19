@@ -231,7 +231,7 @@ function insightModelBlock(m){
 // opens onto cannot name different sides. It used to read m.betbetter_pick
 // alone, which only a scheduled build writes -- on a push deploy the card
 // therefore carried no pick at all while the expanded view still showed one.
-function matchdayLivePickHTML(m){const p=betbetterReadFor(m);if(!p)return'';const model=Number(p.model_pct),market=Number(p.market_pct),gap=Number(p.edge_points);const note=Number.isFinite(model)&&Number.isFinite(market)?`Model ${model.toFixed(1)}% · market ${market.toFixed(1)}%${Number.isFinite(gap)?` · ${gap>0?'+':''}${gap.toFixed(1)} pts`:''}`:'Live analytical read';return `<div class="pick matchdayLivePick"><span class="pl">Model</span><span class="pn">${esc(p.pick_name||'No pick')}</span><span class="pc">${Number.isFinite(model)?model.toFixed(1)+'%':'—'}</span><span class="pnote">${esc(note)} · updates until kickoff</span></div>`}
+function matchdayLivePickHTML(m){const p=betbetterReadFor(m);if(!p)return'';const model=Number(p.model_pct);return `<div class="pick matchdayLivePick"><span class="pl">Model</span><span class="pn">${esc(p.pick_name||'No pick')}</span><span class="pc">${Number.isFinite(model)?model.toFixed(1)+'%':'—'}</span><span class="pnote">Live prediction · updates until kickoff</span></div>`}
 function cardHTML(m,opts){
   opts=opts||{};
   const pending=m.status==='LIVE',stale=isStaleUpcoming(m);
@@ -246,7 +246,7 @@ function cardHTML(m,opts){
   // State 60.4%" above "SMU 53%" on the same card -- so a reader had no way to
   // know which one the site actually stands behind. `m.prediction` is no longer
   // rendered anywhere: the card, the rail and the expanded view all read the
-  // engine, and a fixture it has not priced says so instead.
+  // engine, and a fixture it has not modeled says so instead.
   const livePick=opts.hidePick?'':matchdayLivePickHTML(m);
   const pick=isForecastPaused(m)?forecastPauseHTML(m):livePick;
   const probChanged=!!probabilityMovement(m);

@@ -1085,7 +1085,7 @@ ${typeof matchdayLivePickHTML==='function'?matchdayLivePickHTML(m):''}</div>`;
 
    Matchday publishes college football and college basketball only, and the
    engine covers both, so there is no sport left for a second forecast to serve.
-   A fixture it has not priced gets an empty state rather than another model's
+   A fixture it has not modeled gets an empty state rather than another model's
    number under the engine's heading. */
 function betbetterReadFor(m){
   // Only UPCOMING, matching what the handoff itself will attach: a live
@@ -1104,61 +1104,39 @@ function betbetterReadFor(m){
   const days=[day,_bbShiftDay(day,-1),_bbShiftDay(day,1)];
   return list.find(p=>(!p.sport||!sport||String(p.sport).toLowerCase()===sport)
     &&days.includes(String(p.kickoff||'').slice(0,10))
-    &&bbNameMatches(p.home,m.home?.name||m.home)
-    &&bbNameMatches(p.away,m.away?.name||m.away))||null;
+    &&((bbNameMatches(p.home,m.home?.name||m.home)&&bbNameMatches(p.away,m.away?.name||m.away))
+      ||(bbNameMatches(p.home,m.away?.name||m.away)&&bbNameMatches(p.away,m.home?.name||m.home))))||null;
 }
 function betbetterNoReadPanel(){
   return `<section class="analystPanel"><div class="analystTop"><div class="analystTitle">Model read</div>`
-    +`<div class="analystBadge">not priced</div></div>`
-    +`<div class="emptyForecast">No model read on this fixture yet. The engine publishes a read once the game is priced; `
+    +`<div class="analystBadge">not modeled</div></div>`
+    +`<div class="emptyForecast">No model prediction is available for this fixture yet; `
     +`the opponent-adjusted ratings for both teams are in the matchup table below.</div></section>`;
 }
 function _bbNum(v){const n=Number(v);return Number.isFinite(n)?n:null;}
 function _bbPct(v,d=1){const n=_bbNum(v);return n==null?'\u2014':n.toFixed(d)+'%';}
 function _bbStamp(v){const t=Date.parse(v||'');return Number.isFinite(t)?new Date(t).toLocaleString():'';}
-// The caveat belongs to the handoff document, so an attached pick carries it and
-// a baked one reads it off the snapshot. Never retyped here: if the engine
-// changes its wording, the page changes with it.
-function bbEdgeWarning(p){
-  return p?.edge_warning
-    ||(typeof MATCHDAY_BETBETTER_EDGE_WARNING!=='undefined'?MATCHDAY_BETBETTER_EDGE_WARNING:'')
-    ||'';
-}
 function betbetterModelRead(m,p){
-  const model=_bbNum(p.model_pct),market=_bbNum(p.market_pct),gap=_bbNum(p.edge_points);
-  const books=_bbNum(p.book_count),price=_bbNum(p.best_price),american=_bbNum(p.best_american);
+  const model=_bbNum(p.model_pct);
   const engine=p.model_name||'Matchday model';
   const when=_bbStamp(p.generated_at);
-  const marketText=market==null?'No market snapshot on this side':`Market on this side: ${market.toFixed(1)}%`;
   // Both sides, not the pick alone. A 54.5% pick is a near coin-flip, and the
   // other side's number is the only thing on the panel that says so.
   const rows=(p.sides||[]).map(s=>`<tr><td class="bbKey">${esc(s.selection||'')}</td>`
-    +`<td>${_bbPct(s.model_pct)}</td><td>${_bbPct(s.market_pct)}</td>`
-    +`<td>${_bbNum(s.best_price)==null?'\u2014':_bbNum(s.best_price).toFixed(2)}</td></tr>`).join('');
+    +`<td>${_bbPct(s.model_pct)}</td></tr>`).join('');
   const sideBox=rows
     ?`<div class="analystBox"><div class="analystBoxTitle">Both sides</div>`
-      +`<table class="bbTable"><thead><tr><th></th><th>Model</th><th>Market</th><th>Best price</th></tr></thead>`
+      +`<table class="bbTable"><thead><tr><th></th><th>Model probability</th></tr></thead>`
       +`<tbody>${rows}</tbody></table></div>`
     :'';
-  // Every row is neutral on purpose. Colouring the gap green would endorse the
-  // number the warning underneath exists to say must not be staked on.
-  const stat=(name,val)=>`<div class="factorRow neu"><span class="fName">${esc(name)}</span><span class="fVal">${esc(val)}</span></div>`;
-  const warn=bbEdgeWarning(p);
-  const marketBox=`<div class="analystBox"><div class="analystBoxTitle">Model against market</div><div class="factorRows">`
-    +stat('Model',_bbPct(model))
-    +stat('Market',_bbPct(market))
-    +stat('Gap',gap==null?'\u2014':`${gap>0?'+':''}${gap.toFixed(1)} pts`)
-    +stat('Best price',price==null?'\u2014':`${price.toFixed(2)}${american==null?'':` (${american>0?'+':''}${american})`}`)
-    +stat('Books priced',books==null?'\u2014':String(books))
-    +`</div>${warn?`<p class="bbNote">${esc(warn)}</p>`:''}</div>`;
   return `<section class="analystPanel"><div class="analystTop"><div class="analystTitle">Model read</div>`
     +`<div class="analystBadge">live shadow read</div></div>`
     +`<div class="analystHero"><div class="analystMain"><div class="analystLabel">Model pick</div>`
     +`<div class="analystPick">${esc(p.pick_name||'No pick')}</div>`
     +`<p class="analystNote">${esc(engine)}${when?`, read at ${esc(when)}`:''}. This is the same read the card and the board modules quote.</p></div>`
     +`<div class="analystConfidence"><b>${_bbPct(model)}</b><span>model probability</span>`
-    +`<small>${esc(marketText)}</small>${p.model_version?`<small>${esc(p.model_version)}</small>`:''}</div></div>`
-    +`<div class="analystGrid">${sideBox}${marketBox}</div>`
+    +`${p.model_version?`<small>${esc(p.model_version)}</small>`:''}</div></div>`
+    +`<div class="analystGrid">${sideBox}</div>`
     +(p.integrity_note?`<p class="analystSummary">${esc(p.integrity_note)}</p>`:'')+`</section>`;
 }
 function details(m){

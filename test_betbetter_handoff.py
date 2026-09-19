@@ -85,6 +85,10 @@ class LoadTests(unittest.TestCase):
         loaded = betbetter_handoff.load(self.write(document()))
         self.assertEqual(len(loaded["picks"]), 1)
 
+    def test_prediction_only_version_loads(self):
+        loaded = betbetter_handoff.load(self.write(document(handoff_version=10)))
+        self.assertEqual(len(loaded["picks"]), 1)
+
     def test_an_unknown_version_is_refused_whole(self):
         with self.assertRaises(betbetter_handoff.HandoffError):
             betbetter_handoff.load(self.write(document(handoff_version=99)))
@@ -160,11 +164,12 @@ class AttachTests(unittest.TestCase):
                                    away="UMass Minutemen")])
         self.assertEqual(betbetter_handoff.attach(matches, doc), 0)
 
-    def test_home_and_away_are_not_interchangeable(self):
-        # A pick for the reverse fixture is a different game.
+    def test_provider_home_and_away_disagreement_still_matches(self):
+        # Providers sometimes reverse the venue designation for the same pair
+        # and kickoff. The team pair and date still identify one fixture.
         matches = [match(home={"name": "UMass Minutemen"},
                          away={"name": "Rutgers Scarlet Knights"})]
-        self.assertEqual(betbetter_handoff.attach(matches, document()), 0)
+        self.assertEqual(betbetter_handoff.attach(matches, document()), 1)
 
     def test_kickoff_minutes_may_differ_between_feeds(self):
         matches = [match(kickoff="2026-09-03T21:30:00Z")]
@@ -191,8 +196,9 @@ class AttachTests(unittest.TestCase):
         self.assertIs(block["official_publication_eligible"], False)
         self.assertEqual(block["basis"], "live_shadow_forecast")
         self.assertEqual(block["engine"], "betbetter")
-        # The warning travels with the card, not only in the envelope.
-        self.assertIn("edge", block["edge_warning"].lower())
+        private = {"market_pct", "edge_points", "best_price", "best_american",
+                   "book_count", "edge_warning"}
+        self.assertFalse(private & set(block))
 
     def test_an_attached_block_is_not_an_official_pick_record(self):
         # The guard that matters most: whatever this module attaches must fail
