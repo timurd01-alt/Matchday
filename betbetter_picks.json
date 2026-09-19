@@ -1,7 +1,7 @@
 {
   "handoff_version": 10,
   "source": "betbetter",
-  "generated_at": "2026-09-19T00:32:34.217038+00:00",
+  "generated_at": "2026-09-19T00:51:32.123784+00:00",
   "sports": [
     "ncaaf",
     "ncaam"
@@ -19,7 +19,7 @@
       "model_pct": 100.0,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
-      "generated_at": "2026-09-19T00:06:56.705661+00:00",
+      "generated_at": "2026-09-19T00:47:21.453776+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -38,6 +38,36 @@
       ]
     },
     {
+      "event_id": "529a333381665c34d05b290d2c9eb5b9",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Delaware Blue Hens",
+      "away": "Coastal Carolina Chanticleers",
+      "kickoff": "2026-09-19T15:30:00Z",
+      "pick_name": "Delaware Blue Hens",
+      "pick": "h",
+      "model_pct": 71.2,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:47:24.650839+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Delaware Blue Hens",
+          "is_home": true,
+          "model_pct": 71.2
+        },
+        {
+          "selection": "Coastal Carolina Chanticleers",
+          "is_home": false,
+          "model_pct": 28.8
+        }
+      ]
+    },
+    {
       "event_id": "01e9c4d460a55375a75d025e2b1ddbf5",
       "sport": "ncaaf",
       "competition": "NCAAF",
@@ -49,7 +79,7 @@
       "model_pct": 85.6,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
-      "generated_at": "2026-09-13T22:33:36.262465+00:00",
+      "generated_at": "2026-09-19T00:47:27.796087+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -68,6 +98,66 @@
       ]
     },
     {
+      "event_id": "3514404f321e9cf55f11222c8e36233b",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Georgia Tech Yellow Jackets",
+      "away": "Mercer Bears",
+      "kickoff": "2026-09-19T16:00:00Z",
+      "pick_name": "Georgia Tech Yellow Jackets",
+      "pick": "h",
+      "model_pct": 100.0,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:47:30.682578+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Georgia Tech Yellow Jackets",
+          "is_home": true,
+          "model_pct": 100.0
+        },
+        {
+          "selection": "Mercer Bears",
+          "is_home": false,
+          "model_pct": 0.0
+        }
+      ]
+    },
+    {
+      "event_id": "36baf28c66c363255bb0cd88b6aaf914",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Penn State Nittany Lions",
+      "away": "Buffalo Bulls",
+      "kickoff": "2026-09-19T16:00:00Z",
+      "pick_name": "Penn State Nittany Lions",
+      "pick": "h",
+      "model_pct": 99.4,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:47:33.189837+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Penn State Nittany Lions",
+          "is_home": true,
+          "model_pct": 99.4
+        },
+        {
+          "selection": "Buffalo Bulls",
+          "is_home": false,
+          "model_pct": 0.6
+        }
+      ]
+    },
+    {
       "event_id": "3fe3d77e009a7f205cce737523609a86",
       "sport": "ncaaf",
       "competition": "NCAAF",
@@ -79,7 +169,7 @@
       "model_pct": 79.8,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
-      "generated_at": "2026-09-13T22:33:38.250045+00:00",
+      "generated_at": "2026-09-19T00:47:35.588124+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -98,6 +188,126 @@
       ]
     },
     {
+      "event_id": "5bc9efd5f27827a26c1cf8744bb8c2b1",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Minnesota Golden Gophers",
+      "away": "Akron Zips",
+      "kickoff": "2026-09-19T16:00:00Z",
+      "pick_name": "Minnesota Golden Gophers",
+      "pick": "h",
+      "model_pct": 94.6,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:47:38.023779+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Minnesota Golden Gophers",
+          "is_home": true,
+          "model_pct": 94.6
+        },
+        {
+          "selection": "Akron Zips",
+          "is_home": false,
+          "model_pct": 5.4
+        }
+      ]
+    },
+    {
+      "event_id": "6eee31d7778965a3e617f10146619c1d",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Ohio State Buckeyes",
+      "away": "Kent State Golden Flashes",
+      "kickoff": "2026-09-19T16:00:00Z",
+      "pick_name": "Ohio State Buckeyes",
+      "pick": "h",
+      "model_pct": 100.0,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:47:40.493954+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Ohio State Buckeyes",
+          "is_home": true,
+          "model_pct": 100.0
+        },
+        {
+          "selection": "Kent State Golden Flashes",
+          "is_home": false,
+          "model_pct": 0.0
+        }
+      ]
+    },
+    {
+      "event_id": "72215c37435df22c87999aa675c675ca",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Kansas State Wildcats",
+      "away": "Tulane Green Wave",
+      "kickoff": "2026-09-19T16:00:00Z",
+      "pick_name": "Kansas State Wildcats",
+      "pick": "h",
+      "model_pct": 85.7,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:47:43.187847+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Kansas State Wildcats",
+          "is_home": true,
+          "model_pct": 85.7
+        },
+        {
+          "selection": "Tulane Green Wave",
+          "is_home": false,
+          "model_pct": 14.3
+        }
+      ]
+    },
+    {
+      "event_id": "9a69dbd474c6181a4c51f397b9b25d38",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Iowa State Cyclones",
+      "away": "Bowling Green Falcons",
+      "kickoff": "2026-09-19T16:00:00Z",
+      "pick_name": "Iowa State Cyclones",
+      "pick": "h",
+      "model_pct": 98.6,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:47:45.884036+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Iowa State Cyclones",
+          "is_home": true,
+          "model_pct": 98.6
+        },
+        {
+          "selection": "Bowling Green Falcons",
+          "is_home": false,
+          "model_pct": 1.4
+        }
+      ]
+    },
+    {
       "event_id": "a317e3ffe5919c8bff3b9b303054f1b3",
       "sport": "ncaaf",
       "competition": "NCAAF",
@@ -109,7 +319,7 @@
       "model_pct": 61.3,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
-      "generated_at": "2026-09-13T22:33:39.501689+00:00",
+      "generated_at": "2026-09-19T00:47:48.103787+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -128,6 +338,336 @@
       ]
     },
     {
+      "event_id": "b0cd2e8beaf0dc333daa592a0d3d5c3a",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Texas State Bobcats",
+      "away": "North Texas Mean Green",
+      "kickoff": "2026-09-19T16:00:00Z",
+      "pick_name": "North Texas Mean Green",
+      "pick": "a",
+      "model_pct": 83.0,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:47:50.632792+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Texas State Bobcats",
+          "is_home": true,
+          "model_pct": 17.0
+        },
+        {
+          "selection": "North Texas Mean Green",
+          "is_home": false,
+          "model_pct": 83.0
+        }
+      ]
+    },
+    {
+      "event_id": "bd7ae9e585a6595f7d308d45e1bf35e3",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Wisconsin Badgers",
+      "away": "Eastern Michigan Eagles",
+      "kickoff": "2026-09-19T16:30:00Z",
+      "pick_name": "Wisconsin Badgers",
+      "pick": "h",
+      "model_pct": 94.5,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:47:53.936612+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Wisconsin Badgers",
+          "is_home": true,
+          "model_pct": 94.5
+        },
+        {
+          "selection": "Eastern Michigan Eagles",
+          "is_home": false,
+          "model_pct": 5.5
+        }
+      ]
+    },
+    {
+      "event_id": "2e9835b129f8b8055d4a24f736547363",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Vanderbilt Commodores",
+      "away": "NC State Wolfpack",
+      "kickoff": "2026-09-19T16:45:00Z",
+      "pick_name": "Vanderbilt Commodores",
+      "pick": "h",
+      "model_pct": 76.4,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:47:57.145820+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Vanderbilt Commodores",
+          "is_home": true,
+          "model_pct": 76.4
+        },
+        {
+          "selection": "NC State Wolfpack",
+          "is_home": false,
+          "model_pct": 23.6
+        }
+      ]
+    },
+    {
+      "event_id": "26a76b78050ad3953d2d41dbeecd5a07",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Central Michigan Chippewas",
+      "away": "Wyoming Cowboys",
+      "kickoff": "2026-09-19T17:00:00Z",
+      "pick_name": "Central Michigan Chippewas",
+      "pick": "h",
+      "model_pct": 56.9,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:47:59.778727+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Central Michigan Chippewas",
+          "is_home": true,
+          "model_pct": 56.9
+        },
+        {
+          "selection": "Wyoming Cowboys",
+          "is_home": false,
+          "model_pct": 43.1
+        }
+      ]
+    },
+    {
+      "event_id": "08a2eb7afbd58ee7a8fb47bb4142eded",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Boston College Eagles",
+      "away": "Maine Black Bears",
+      "kickoff": "2026-09-19T18:00:00Z",
+      "pick_name": "Boston College Eagles",
+      "pick": "h",
+      "model_pct": 99.9,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:48:02.373664+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Boston College Eagles",
+          "is_home": true,
+          "model_pct": 99.9
+        },
+        {
+          "selection": "Maine Black Bears",
+          "is_home": false,
+          "model_pct": 0.1
+        }
+      ]
+    },
+    {
+      "event_id": "578e82a8bc67101e9eba884729ffcc69",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Illinois Fighting Illini",
+      "away": "Southern Illinois Salukis",
+      "kickoff": "2026-09-19T18:00:00Z",
+      "pick_name": "Illinois Fighting Illini",
+      "pick": "h",
+      "model_pct": 100.0,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:48:04.774032+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Illinois Fighting Illini",
+          "is_home": true,
+          "model_pct": 100.0
+        },
+        {
+          "selection": "Southern Illinois Salukis",
+          "is_home": false,
+          "model_pct": 0.0
+        }
+      ]
+    },
+    {
+      "event_id": "ea8b0414ff464255eef426fd61427030",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Toledo Rockets",
+      "away": "Temple Owls",
+      "kickoff": "2026-09-19T19:00:00Z",
+      "pick_name": "Toledo Rockets",
+      "pick": "h",
+      "model_pct": 87.2,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:48:07.273675+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Toledo Rockets",
+          "is_home": true,
+          "model_pct": 87.2
+        },
+        {
+          "selection": "Temple Owls",
+          "is_home": false,
+          "model_pct": 12.8
+        }
+      ]
+    },
+    {
+      "event_id": "15ebe2df1d91e584d091d509e70a1a71",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Cincinnati Bearcats",
+      "away": "Miami (OH) RedHawks",
+      "kickoff": "2026-09-19T19:30:00Z",
+      "pick_name": "Cincinnati Bearcats",
+      "pick": "h",
+      "model_pct": 92.4,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:48:09.773900+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Cincinnati Bearcats",
+          "is_home": true,
+          "model_pct": 92.4
+        },
+        {
+          "selection": "Miami (OH) RedHawks",
+          "is_home": false,
+          "model_pct": 7.6
+        }
+      ]
+    },
+    {
+      "event_id": "8b31d45a11a98ec8e6a9a9a5368a1bf4",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Rutgers Scarlet Knights",
+      "away": "USC Trojans",
+      "kickoff": "2026-09-19T19:30:00Z",
+      "pick_name": "USC Trojans",
+      "pick": "a",
+      "model_pct": 89.5,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:48:12.560394+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Rutgers Scarlet Knights",
+          "is_home": true,
+          "model_pct": 10.5
+        },
+        {
+          "selection": "USC Trojans",
+          "is_home": false,
+          "model_pct": 89.5
+        }
+      ]
+    },
+    {
+      "event_id": "8bdb9d65119df877f2e2ec632d28fef1",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Washington State Cougars",
+      "away": "Duquesne Dukes",
+      "kickoff": "2026-09-19T19:30:00Z",
+      "pick_name": "Washington State Cougars",
+      "pick": "h",
+      "model_pct": 100.0,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:48:15.156622+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Washington State Cougars",
+          "is_home": true,
+          "model_pct": 100.0
+        },
+        {
+          "selection": "Duquesne Dukes",
+          "is_home": false,
+          "model_pct": 0.0
+        }
+      ]
+    },
+    {
+      "event_id": "9a94b95365b9c78fbfb612ce4c859eda",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Utah Utes",
+      "away": "Utah State Aggies",
+      "kickoff": "2026-09-19T19:30:00Z",
+      "pick_name": "Utah Utes",
+      "pick": "h",
+      "model_pct": 99.3,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:48:17.660363+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Utah Utes",
+          "is_home": true,
+          "model_pct": 99.3
+        },
+        {
+          "selection": "Utah State Aggies",
+          "is_home": false,
+          "model_pct": 0.7
+        }
+      ]
+    },
+    {
       "event_id": "a85cea77fbd44d9135461815777f6a9c",
       "sport": "ncaaf",
       "competition": "NCAAF",
@@ -139,7 +679,7 @@
       "model_pct": 76.1,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
-      "generated_at": "2026-09-13T22:33:41.463872+00:00",
+      "generated_at": "2026-09-19T00:48:20.615535+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -169,7 +709,7 @@
       "model_pct": 92.8,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
-      "generated_at": "2026-09-13T22:33:43.160502+00:00",
+      "generated_at": "2026-09-19T00:48:23.588915+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -188,6 +728,36 @@
       ]
     },
     {
+      "event_id": "da8ba06d8ff130fdd0e8944b7a1ddff5",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "California Golden Bears",
+      "away": "Wagner Seahawks",
+      "kickoff": "2026-09-19T19:30:00Z",
+      "pick_name": "California Golden Bears",
+      "pick": "h",
+      "model_pct": 100.0,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:48:26.330540+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "California Golden Bears",
+          "is_home": true,
+          "model_pct": 100.0
+        },
+        {
+          "selection": "Wagner Seahawks",
+          "is_home": false,
+          "model_pct": 0.0
+        }
+      ]
+    },
+    {
       "event_id": "dbcfc3184e20d1ea45e910b89585071f",
       "sport": "ncaaf",
       "competition": "NCAAF",
@@ -199,7 +769,7 @@
       "model_pct": 50.1,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
-      "generated_at": "2026-09-13T22:33:44.927852+00:00",
+      "generated_at": "2026-09-19T00:48:28.933863+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -218,6 +788,126 @@
       ]
     },
     {
+      "event_id": "089e1a60578160dd6828794656461ba5",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Liberty Flames",
+      "away": "Ball State Cardinals",
+      "kickoff": "2026-09-19T20:00:00Z",
+      "pick_name": "Liberty Flames",
+      "pick": "h",
+      "model_pct": 83.7,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:48:33.992006+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Liberty Flames",
+          "is_home": true,
+          "model_pct": 83.7
+        },
+        {
+          "selection": "Ball State Cardinals",
+          "is_home": false,
+          "model_pct": 16.3
+        }
+      ]
+    },
+    {
+      "event_id": "1d773c6e9934d12970ba222e96ec4c80",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Iowa Hawkeyes",
+      "away": "Northern Iowa Panthers",
+      "kickoff": "2026-09-19T20:00:00Z",
+      "pick_name": "Iowa Hawkeyes",
+      "pick": "h",
+      "model_pct": 100.0,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:48:37.698616+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Iowa Hawkeyes",
+          "is_home": true,
+          "model_pct": 100.0
+        },
+        {
+          "selection": "Northern Iowa Panthers",
+          "is_home": false,
+          "model_pct": 0.0
+        }
+      ]
+    },
+    {
+      "event_id": "3c742aa7dc1c1da030846964a72de370",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Duke Blue Devils",
+      "away": "Stanford Cardinal",
+      "kickoff": "2026-09-19T20:00:00Z",
+      "pick_name": "Duke Blue Devils",
+      "pick": "h",
+      "model_pct": 83.5,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:48:40.149090+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Duke Blue Devils",
+          "is_home": true,
+          "model_pct": 83.5
+        },
+        {
+          "selection": "Stanford Cardinal",
+          "is_home": false,
+          "model_pct": 16.5
+        }
+      ]
+    },
+    {
+      "event_id": "790266884d07b6c2aeed8efc216ba610",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Baylor Bears",
+      "away": "Louisiana Tech Bulldogs",
+      "kickoff": "2026-09-19T20:00:00Z",
+      "pick_name": "Baylor Bears",
+      "pick": "h",
+      "model_pct": 79.2,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:48:43.063600+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Baylor Bears",
+          "is_home": true,
+          "model_pct": 79.2
+        },
+        {
+          "selection": "Louisiana Tech Bulldogs",
+          "is_home": false,
+          "model_pct": 20.8
+        }
+      ]
+    },
+    {
       "event_id": "f459decff5e212a417df01fead33b180",
       "sport": "ncaaf",
       "competition": "NCAAF",
@@ -229,7 +919,7 @@
       "model_pct": 100.0,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
-      "generated_at": "2026-09-13T22:33:46.946203+00:00",
+      "generated_at": "2026-09-19T00:48:45.846848+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -259,7 +949,7 @@
       "model_pct": 55.8,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
-      "generated_at": "2026-09-13T22:33:48.151348+00:00",
+      "generated_at": "2026-09-19T00:48:48.858211+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -278,6 +968,276 @@
       ]
     },
     {
+      "event_id": "3db3de2fb9101f01f676c1f319837667",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Appalachian State Mountaineers",
+      "away": "Charlotte 49ers",
+      "kickoff": "2026-09-19T22:00:00Z",
+      "pick_name": "Appalachian State Mountaineers",
+      "pick": "h",
+      "model_pct": 89.3,
+      "model_name": "NCAAF statistical baseline",
+      "model_version": "spplus-normal-fallback",
+      "generated_at": "2026-09-19T00:48:51.958233+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Appalachian State Mountaineers",
+          "is_home": true,
+          "model_pct": 89.3
+        },
+        {
+          "selection": "Charlotte 49ers",
+          "is_home": false,
+          "model_pct": 10.7
+        }
+      ]
+    },
+    {
+      "event_id": "436d9422da324c807b9d2fb50a2ef62a",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Old Dominion Monarchs",
+      "away": "East Carolina Pirates",
+      "kickoff": "2026-09-19T22:00:00Z",
+      "pick_name": "Old Dominion Monarchs",
+      "pick": "h",
+      "model_pct": 57.1,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:48:54.393813+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Old Dominion Monarchs",
+          "is_home": true,
+          "model_pct": 57.1
+        },
+        {
+          "selection": "East Carolina Pirates",
+          "is_home": false,
+          "model_pct": 42.9
+        }
+      ]
+    },
+    {
+      "event_id": "da4cee8b35281f4528d3dd939d42814d",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Florida Atlantic Owls",
+      "away": "Florida International Panthers",
+      "kickoff": "2026-09-19T22:00:00Z",
+      "pick_name": "Florida International Panthers",
+      "pick": "a",
+      "model_pct": 57.5,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:48:57.023990+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Florida Atlantic Owls",
+          "is_home": true,
+          "model_pct": 42.5
+        },
+        {
+          "selection": "Florida International Panthers",
+          "is_home": false,
+          "model_pct": 57.5
+        }
+      ]
+    },
+    {
+      "event_id": "fa9113ed354c9a40e487f5b923b4238f",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Missouri State Bears",
+      "away": "Marshall Thundering Herd",
+      "kickoff": "2026-09-19T22:30:00Z",
+      "pick_name": "Marshall Thundering Herd",
+      "pick": "a",
+      "model_pct": 51.0,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:49:00.346701+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Missouri State Bears",
+          "is_home": true,
+          "model_pct": 49.0
+        },
+        {
+          "selection": "Marshall Thundering Herd",
+          "is_home": false,
+          "model_pct": 51.0
+        }
+      ]
+    },
+    {
+      "event_id": "1088ecb8a4c34880f9fb0b9274a8d3e4",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Southern Mississippi Golden Eagles",
+      "away": "UConn Huskies",
+      "kickoff": "2026-09-19T23:00:00Z",
+      "pick_name": "UConn Huskies",
+      "pick": "a",
+      "model_pct": 62.3,
+      "model_name": "NCAAF statistical baseline",
+      "model_version": "spplus-normal-fallback",
+      "generated_at": "2026-09-19T00:49:03.252231+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Southern Mississippi Golden Eagles",
+          "is_home": true,
+          "model_pct": 37.7
+        },
+        {
+          "selection": "UConn Huskies",
+          "is_home": false,
+          "model_pct": 62.3
+        }
+      ]
+    },
+    {
+      "event_id": "4a9e833f32775e201ee648c51840df85",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "UCF Knights",
+      "away": "Georgia State Panthers",
+      "kickoff": "2026-09-19T23:00:00Z",
+      "pick_name": "UCF Knights",
+      "pick": "h",
+      "model_pct": 97.2,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:49:08.360877+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "UCF Knights",
+          "is_home": true,
+          "model_pct": 97.2
+        },
+        {
+          "selection": "Georgia State Panthers",
+          "is_home": false,
+          "model_pct": 2.8
+        }
+      ]
+    },
+    {
+      "event_id": "60c8d1fde1467bde9f2a20b5d4cb7c90",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Jacksonville State Gamecocks",
+      "away": "Georgia Southern Eagles",
+      "kickoff": "2026-09-19T23:00:00Z",
+      "pick_name": "Jacksonville State Gamecocks",
+      "pick": "h",
+      "model_pct": 65.6,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:49:10.746039+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Jacksonville State Gamecocks",
+          "is_home": true,
+          "model_pct": 65.6
+        },
+        {
+          "selection": "Georgia Southern Eagles",
+          "is_home": false,
+          "model_pct": 34.4
+        }
+      ]
+    },
+    {
+      "event_id": "69164d1b806f25a76cdb6268e19d4365",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Missouri Tigers",
+      "away": "Troy Trojans",
+      "kickoff": "2026-09-19T23:00:00Z",
+      "pick_name": "Missouri Tigers",
+      "pick": "h",
+      "model_pct": 97.8,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:49:13.473635+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Missouri Tigers",
+          "is_home": true,
+          "model_pct": 97.8
+        },
+        {
+          "selection": "Troy Trojans",
+          "is_home": false,
+          "model_pct": 2.2
+        }
+      ]
+    },
+    {
+      "event_id": "6c41bd5edc806bb66ae3038c8bfa3df0",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Oklahoma State Cowboys",
+      "away": "Murray State Racers",
+      "kickoff": "2026-09-19T23:00:00Z",
+      "pick_name": "Oklahoma State Cowboys",
+      "pick": "h",
+      "model_pct": 99.4,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:49:16.275518+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Oklahoma State Cowboys",
+          "is_home": true,
+          "model_pct": 99.4
+        },
+        {
+          "selection": "Murray State Racers",
+          "is_home": false,
+          "model_pct": 0.7
+        }
+      ]
+    },
+    {
       "event_id": "7ef3b27d15de635a3e05324f2b0c56cb",
       "sport": "ncaaf",
       "competition": "NCAAF",
@@ -289,7 +1249,7 @@
       "model_pct": 60.3,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
-      "generated_at": "2026-09-13T22:33:50.145743+00:00",
+      "generated_at": "2026-09-19T00:49:18.749040+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -308,6 +1268,186 @@
       ]
     },
     {
+      "event_id": "b8810f15896c1fbe1ca25054585612f0",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Middle Tennessee Blue Raiders",
+      "away": "Nevada Wolf Pack",
+      "kickoff": "2026-09-19T23:00:00Z",
+      "pick_name": "Nevada Wolf Pack",
+      "pick": "a",
+      "model_pct": 52.0,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:49:20.855713+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Middle Tennessee Blue Raiders",
+          "is_home": true,
+          "model_pct": 48.0
+        },
+        {
+          "selection": "Nevada Wolf Pack",
+          "is_home": false,
+          "model_pct": 52.0
+        }
+      ]
+    },
+    {
+      "event_id": "bcc250cd218a520bcd287c120644ba05",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "South Alabama Jaguars",
+      "away": "Ohio Bobcats",
+      "kickoff": "2026-09-19T23:00:00Z",
+      "pick_name": "Ohio Bobcats",
+      "pick": "a",
+      "model_pct": 60.9,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:49:23.215764+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "South Alabama Jaguars",
+          "is_home": true,
+          "model_pct": 39.1
+        },
+        {
+          "selection": "Ohio Bobcats",
+          "is_home": false,
+          "model_pct": 60.9
+        }
+      ]
+    },
+    {
+      "event_id": "be8b2e012b50c86775a87bb633e330e6",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Rice Owls",
+      "away": "Western Michigan Broncos",
+      "kickoff": "2026-09-19T23:00:00Z",
+      "pick_name": "Western Michigan Broncos",
+      "pick": "a",
+      "model_pct": 88.4,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:49:25.783864+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Rice Owls",
+          "is_home": true,
+          "model_pct": 11.6
+        },
+        {
+          "selection": "Western Michigan Broncos",
+          "is_home": false,
+          "model_pct": 88.4
+        }
+      ]
+    },
+    {
+      "event_id": "d72de7a6a2387f86edc530bbe90a7664",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "South Florida Bulls",
+      "away": "Delaware State Hornets",
+      "kickoff": "2026-09-19T23:00:00Z",
+      "pick_name": "South Florida Bulls",
+      "pick": "h",
+      "model_pct": 100.0,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:49:28.600080+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "South Florida Bulls",
+          "is_home": true,
+          "model_pct": 100.0
+        },
+        {
+          "selection": "Delaware State Hornets",
+          "is_home": false,
+          "model_pct": 0.0
+        }
+      ]
+    },
+    {
+      "event_id": "55699549855efd1bed7b9d6ae1c7aded",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Nebraska Cornhuskers",
+      "away": "North Dakota Fighting Hawks",
+      "kickoff": "2026-09-19T23:15:00Z",
+      "pick_name": "Nebraska Cornhuskers",
+      "pick": "h",
+      "model_pct": 100.0,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:49:31.215855+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Nebraska Cornhuskers",
+          "is_home": true,
+          "model_pct": 100.0
+        },
+        {
+          "selection": "North Dakota Fighting Hawks",
+          "is_home": false,
+          "model_pct": 0.1
+        }
+      ]
+    },
+    {
+      "event_id": "e68b359be33a1855ff582d9dde87faac",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Washington Huskies",
+      "away": "Eastern Washington Eagles",
+      "kickoff": "2026-09-19T23:15:00Z",
+      "pick_name": "Washington Huskies",
+      "pick": "h",
+      "model_pct": 100.0,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:49:33.767705+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Washington Huskies",
+          "is_home": true,
+          "model_pct": 100.0
+        },
+        {
+          "selection": "Eastern Washington Eagles",
+          "is_home": false,
+          "model_pct": 0.0
+        }
+      ]
+    },
+    {
       "event_id": "03297aa8a399c223aa1cc6aa923d9bc6",
       "sport": "ncaaf",
       "competition": "NCAAF",
@@ -319,7 +1459,7 @@
       "model_pct": 72.6,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
-      "generated_at": "2026-09-13T22:33:51.388200+00:00",
+      "generated_at": "2026-09-19T00:49:36.283007+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -338,6 +1478,36 @@
       ]
     },
     {
+      "event_id": "47892b65c28a830d83bbe465b070ce01",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Oklahoma Sooners",
+      "away": "New Mexico Lobos",
+      "kickoff": "2026-09-19T23:30:00Z",
+      "pick_name": "Oklahoma Sooners",
+      "pick": "h",
+      "model_pct": 93.4,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:49:38.966878+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Oklahoma Sooners",
+          "is_home": true,
+          "model_pct": 93.4
+        },
+        {
+          "selection": "New Mexico Lobos",
+          "is_home": false,
+          "model_pct": 6.6
+        }
+      ]
+    },
+    {
       "event_id": "65571f1cab1a260aae4a220e38dbbc1d",
       "sport": "ncaaf",
       "competition": "NCAAF",
@@ -349,7 +1519,7 @@
       "model_pct": 73.8,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
-      "generated_at": "2026-09-13T22:33:53.553141+00:00",
+      "generated_at": "2026-09-19T00:49:41.913601+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -379,7 +1549,7 @@
       "model_pct": 97.4,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
-      "generated_at": "2026-09-13T22:33:55.093914+00:00",
+      "generated_at": "2026-09-19T00:49:45.720252+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -409,7 +1579,7 @@
       "model_pct": 61.7,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
-      "generated_at": "2026-09-13T22:33:56.770764+00:00",
+      "generated_at": "2026-09-19T00:49:48.297911+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -428,6 +1598,36 @@
       ]
     },
     {
+      "event_id": "d3b7a8be0f6c9e50f7afd4005990228b",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Colorado State Rams",
+      "away": "BYU Cougars",
+      "kickoff": "2026-09-19T23:30:00Z",
+      "pick_name": "BYU Cougars",
+      "pick": "a",
+      "model_pct": 98.9,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:49:50.730649+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Colorado State Rams",
+          "is_home": true,
+          "model_pct": 1.1
+        },
+        {
+          "selection": "BYU Cougars",
+          "is_home": false,
+          "model_pct": 98.9
+        }
+      ]
+    },
+    {
       "event_id": "eda972dc55ded05916deafa37efab9c3",
       "sport": "ncaaf",
       "competition": "NCAAF",
@@ -439,7 +1639,7 @@
       "model_pct": 83.7,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
-      "generated_at": "2026-09-13T22:33:58.486157+00:00",
+      "generated_at": "2026-09-19T00:49:53.201490+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -458,6 +1658,126 @@
       ]
     },
     {
+      "event_id": "cc6953f45fe5acfc853fdf5e5e28a0e7",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Tennessee Volunteers",
+      "away": "Kennesaw State Owls",
+      "kickoff": "2026-09-19T23:45:00Z",
+      "pick_name": "Tennessee Volunteers",
+      "pick": "h",
+      "model_pct": 96.5,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:49:55.907708+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Tennessee Volunteers",
+          "is_home": true,
+          "model_pct": 96.5
+        },
+        {
+          "selection": "Kennesaw State Owls",
+          "is_home": false,
+          "model_pct": 3.5
+        }
+      ]
+    },
+    {
+      "event_id": "0fff6569a000494c8821a53d886df670",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Tulsa Golden Hurricane",
+      "away": "East Texas A&M Lions",
+      "kickoff": "2026-09-20T00:00:00Z",
+      "pick_name": "Tulsa Golden Hurricane",
+      "pick": "h",
+      "model_pct": 99.3,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:49:58.563599+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Tulsa Golden Hurricane",
+          "is_home": true,
+          "model_pct": 99.3
+        },
+        {
+          "selection": "East Texas A&M Lions",
+          "is_home": false,
+          "model_pct": 0.7
+        }
+      ]
+    },
+    {
+      "event_id": "6059b05ef23d08d9033bd7b5fe38e5d0",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Texas Longhorns",
+      "away": "UTSA Roadrunners",
+      "kickoff": "2026-09-20T00:00:00Z",
+      "pick_name": "Texas Longhorns",
+      "pick": "h",
+      "model_pct": 94.9,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:50:01.073613+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Texas Longhorns",
+          "is_home": true,
+          "model_pct": 94.9
+        },
+        {
+          "selection": "UTSA Roadrunners",
+          "is_home": false,
+          "model_pct": 5.1
+        }
+      ]
+    },
+    {
+      "event_id": "a64b980a572375c0cc1adba3c3fc2811",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "TCU Horned Frogs",
+      "away": "Arkansas State Red Wolves",
+      "kickoff": "2026-09-20T00:00:00Z",
+      "pick_name": "TCU Horned Frogs",
+      "pick": "h",
+      "model_pct": 95.8,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:50:06.983500+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "TCU Horned Frogs",
+          "is_home": true,
+          "model_pct": 95.8
+        },
+        {
+          "selection": "Arkansas State Red Wolves",
+          "is_home": false,
+          "model_pct": 4.2
+        }
+      ]
+    },
+    {
       "event_id": "d8c4386ede3f4cb264ac2f2b6017528c",
       "sport": "ncaaf",
       "competition": "NCAAF",
@@ -469,7 +1789,7 @@
       "model_pct": 91.8,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
-      "generated_at": "2026-09-13T22:34:00.022132+00:00",
+      "generated_at": "2026-09-19T00:50:09.955751+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -484,6 +1804,216 @@
           "selection": "Houston Cougars",
           "is_home": false,
           "model_pct": 8.2
+        }
+      ]
+    },
+    {
+      "event_id": "0cdf27f150204b8512bca1e2d7cce051",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "San Diego State Aztecs",
+      "away": "James Madison Dukes",
+      "kickoff": "2026-09-20T02:00:00Z",
+      "pick_name": "James Madison Dukes",
+      "pick": "a",
+      "model_pct": 72.7,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:50:12.563936+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "San Diego State Aztecs",
+          "is_home": true,
+          "model_pct": 27.3
+        },
+        {
+          "selection": "James Madison Dukes",
+          "is_home": false,
+          "model_pct": 72.7
+        }
+      ]
+    },
+    {
+      "event_id": "6d109b8538a3588ad21a393896d32efc",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Boise State Broncos",
+      "away": "South Dakota Coyotes",
+      "kickoff": "2026-09-20T02:00:00Z",
+      "pick_name": "Boise State Broncos",
+      "pick": "h",
+      "model_pct": 100.0,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:50:15.079882+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Boise State Broncos",
+          "is_home": true,
+          "model_pct": 100.0
+        },
+        {
+          "selection": "South Dakota Coyotes",
+          "is_home": false,
+          "model_pct": 0.0
+        }
+      ]
+    },
+    {
+      "event_id": "0c7583234f964dbb7d9803a27d6b6dae",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Sacramento State Hornets",
+      "away": "North Dakota State Bison",
+      "kickoff": "2026-09-20T02:30:00Z",
+      "pick_name": "North Dakota State Bison",
+      "pick": "a",
+      "model_pct": 88.4,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:50:17.523700+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Sacramento State Hornets",
+          "is_home": true,
+          "model_pct": 11.6
+        },
+        {
+          "selection": "North Dakota State Bison",
+          "is_home": false,
+          "model_pct": 88.4
+        }
+      ]
+    },
+    {
+      "event_id": "93de8127b5d37170dff2b88deca0b95e",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Arizona Wildcats",
+      "away": "Northern Illinois Huskies",
+      "kickoff": "2026-09-20T02:30:00Z",
+      "pick_name": "Arizona Wildcats",
+      "pick": "h",
+      "model_pct": 99.3,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:50:19.758563+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Arizona Wildcats",
+          "is_home": true,
+          "model_pct": 99.3
+        },
+        {
+          "selection": "Northern Illinois Huskies",
+          "is_home": false,
+          "model_pct": 0.7
+        }
+      ]
+    },
+    {
+      "event_id": "381e5c97af94a83e03eae0ac6f11ed38",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Oregon State Beavers",
+      "away": "Montana Grizzlies",
+      "kickoff": "2026-09-20T03:00:00Z",
+      "pick_name": "Oregon State Beavers",
+      "pick": "h",
+      "model_pct": 94.5,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:50:22.243750+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Oregon State Beavers",
+          "is_home": true,
+          "model_pct": 94.5
+        },
+        {
+          "selection": "Montana Grizzlies",
+          "is_home": false,
+          "model_pct": 5.5
+        }
+      ]
+    },
+    {
+      "event_id": "7a6a2035bf5d7abd30d6cc8b76d59e3e",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "UCLA Bruins",
+      "away": "Purdue Boilermakers",
+      "kickoff": "2026-09-20T03:00:00Z",
+      "pick_name": "UCLA Bruins",
+      "pick": "h",
+      "model_pct": 71.0,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:50:24.943637+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "UCLA Bruins",
+          "is_home": true,
+          "model_pct": 71.0
+        },
+        {
+          "selection": "Purdue Boilermakers",
+          "is_home": false,
+          "model_pct": 29.0
+        }
+      ]
+    },
+    {
+      "event_id": "f6db4e789ff9341a9c94befc751c5f53",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "San Jose State Spartans",
+      "away": "Fresno State Bulldogs",
+      "kickoff": "2026-09-20T03:00:00Z",
+      "pick_name": "Fresno State Bulldogs",
+      "pick": "a",
+      "model_pct": 77.5,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:50:27.544169+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "San Jose State Spartans",
+          "is_home": true,
+          "model_pct": null
+        },
+        {
+          "selection": "Fresno State Bulldogs",
+          "is_home": false,
+          "model_pct": 77.5
         }
       ]
     },
@@ -1448,6 +2978,96 @@
       ]
     },
     {
+      "event_id": "69b1a0ff5fb2c67c6627b5c8cf8368cb",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Tennessee Volunteers",
+      "away": "Texas Longhorns",
+      "kickoff": "2026-09-26T16:00:00Z",
+      "pick_name": "Texas Longhorns",
+      "pick": "a",
+      "model_pct": 56.0,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:50:30.183902+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Tennessee Volunteers",
+          "is_home": true,
+          "model_pct": 44.0
+        },
+        {
+          "selection": "Texas Longhorns",
+          "is_home": false,
+          "model_pct": 56.0
+        }
+      ]
+    },
+    {
+      "event_id": "6de44361bd6b6afc20b9bbefcc219f2a",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Ohio State Buckeyes",
+      "away": "Illinois Fighting Illini",
+      "kickoff": "2026-09-26T16:00:00Z",
+      "pick_name": "Ohio State Buckeyes",
+      "pick": "h",
+      "model_pct": 92.3,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:50:33.346209+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Ohio State Buckeyes",
+          "is_home": true,
+          "model_pct": 92.3
+        },
+        {
+          "selection": "Illinois Fighting Illini",
+          "is_home": false,
+          "model_pct": 7.7
+        }
+      ]
+    },
+    {
+      "event_id": "f0985218c2ed146bb0295c4e9c4a0dd7",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Western Michigan Broncos",
+      "away": "Boise State Broncos",
+      "kickoff": "2026-09-26T16:00:00Z",
+      "pick_name": "Boise State Broncos",
+      "pick": "a",
+      "model_pct": 54.6,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:50:36.363576+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Western Michigan Broncos",
+          "is_home": true,
+          "model_pct": 45.4
+        },
+        {
+          "selection": "Boise State Broncos",
+          "is_home": false,
+          "model_pct": 54.6
+        }
+      ]
+    },
+    {
       "event_id": "schedule:401858236",
       "sport": "ncaaf",
       "competition": "NCAAF",
@@ -1538,6 +3158,36 @@
       ]
     },
     {
+      "event_id": "c48f042c91328d4d0c6351fc82286879",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Maryland Terrapins",
+      "away": "UCLA Bruins",
+      "kickoff": "2026-09-26T17:30:00Z",
+      "pick_name": "Maryland Terrapins",
+      "pick": "h",
+      "model_pct": 62.8,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:50:38.993553+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Maryland Terrapins",
+          "is_home": true,
+          "model_pct": 62.8
+        },
+        {
+          "selection": "UCLA Bruins",
+          "is_home": false,
+          "model_pct": 37.1
+        }
+      ]
+    },
+    {
       "event_id": "schedule:401864510",
       "sport": "ncaaf",
       "competition": "NCAAF",
@@ -1564,6 +3214,126 @@
           "selection": "Hawai'i Rainbow Warriors",
           "is_home": false,
           "model_pct": 63.1
+        }
+      ]
+    },
+    {
+      "event_id": "3848eaee7484034f3604aed922649c4e",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Georgia Bulldogs",
+      "away": "Oklahoma Sooners",
+      "kickoff": "2026-09-26T19:30:00Z",
+      "pick_name": "Georgia Bulldogs",
+      "pick": "h",
+      "model_pct": 66.5,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:50:41.444783+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Georgia Bulldogs",
+          "is_home": true,
+          "model_pct": 66.5
+        },
+        {
+          "selection": "Oklahoma Sooners",
+          "is_home": false,
+          "model_pct": 33.5
+        }
+      ]
+    },
+    {
+      "event_id": "39a3d3075172036a2b3f7d47913779b8",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Michigan Wolverines",
+      "away": "Iowa Hawkeyes",
+      "kickoff": "2026-09-26T19:30:00Z",
+      "pick_name": "Iowa Hawkeyes",
+      "pick": "a",
+      "model_pct": 54.7,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:50:44.967675+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Michigan Wolverines",
+          "is_home": true,
+          "model_pct": 45.3
+        },
+        {
+          "selection": "Iowa Hawkeyes",
+          "is_home": false,
+          "model_pct": 54.7
+        }
+      ]
+    },
+    {
+      "event_id": "886538e98f0884df3d655d9d2d2ca567",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Florida Gators",
+      "away": "Ole Miss Rebels",
+      "kickoff": "2026-09-26T19:30:00Z",
+      "pick_name": "Ole Miss Rebels",
+      "pick": "a",
+      "model_pct": 71.6,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:50:47.517729+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Florida Gators",
+          "is_home": true,
+          "model_pct": 28.4
+        },
+        {
+          "selection": "Ole Miss Rebels",
+          "is_home": false,
+          "model_pct": 71.6
+        }
+      ]
+    },
+    {
+      "event_id": "e497e36c59bded468da11878568e7c80",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Washington Huskies",
+      "away": "Minnesota Golden Gophers",
+      "kickoff": "2026-09-26T19:30:00Z",
+      "pick_name": "Washington Huskies",
+      "pick": "h",
+      "model_pct": 88.1,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:50:49.985969+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Washington Huskies",
+          "is_home": true,
+          "model_pct": 88.1
+        },
+        {
+          "selection": "Minnesota Golden Gophers",
+          "is_home": false,
+          "model_pct": 11.9
         }
       ]
     },
@@ -1743,6 +3513,96 @@
       ]
     },
     {
+      "event_id": "edf8d3e3699aa5cb34c50ac7de992d37",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Auburn Tigers",
+      "away": "Vanderbilt Commodores",
+      "kickoff": "2026-09-26T20:15:00Z",
+      "pick_name": "Vanderbilt Commodores",
+      "pick": "a",
+      "model_pct": 61.8,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:50:52.535784+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Auburn Tigers",
+          "is_home": true,
+          "model_pct": 38.2
+        },
+        {
+          "selection": "Vanderbilt Commodores",
+          "is_home": false,
+          "model_pct": 61.8
+        }
+      ]
+    },
+    {
+      "event_id": "023386f1b92db2259c7d52b2f244182f",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Michigan State Spartans",
+      "away": "Nebraska Cornhuskers",
+      "kickoff": "2026-09-26T21:00:00Z",
+      "pick_name": "Nebraska Cornhuskers",
+      "pick": "a",
+      "model_pct": 63.9,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:50:55.043850+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Michigan State Spartans",
+          "is_home": true,
+          "model_pct": 36.1
+        },
+        {
+          "selection": "Nebraska Cornhuskers",
+          "is_home": false,
+          "model_pct": 63.9
+        }
+      ]
+    },
+    {
+      "event_id": "9c5cf55e5371dd6178da97dcaef2bff5",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Penn State Nittany Lions",
+      "away": "Wisconsin Badgers",
+      "kickoff": "2026-09-26T21:00:00Z",
+      "pick_name": "Penn State Nittany Lions",
+      "pick": "h",
+      "model_pct": 89.5,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:50:57.824762+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Penn State Nittany Lions",
+          "is_home": true,
+          "model_pct": 89.5
+        },
+        {
+          "selection": "Wisconsin Badgers",
+          "is_home": false,
+          "model_pct": 10.5
+        }
+      ]
+    },
+    {
       "event_id": "schedule:401860892",
       "sport": "ncaaf",
       "competition": "NCAAF",
@@ -1829,6 +3689,96 @@
           "selection": "Central Michigan Chippewas",
           "is_home": false,
           "model_pct": 0.1
+        }
+      ]
+    },
+    {
+      "event_id": "6c95114d806556a04a0d719e62c042d7",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "West Virginia Mountaineers",
+      "away": "Oklahoma State Cowboys",
+      "kickoff": "2026-09-26T23:00:00Z",
+      "pick_name": "West Virginia Mountaineers",
+      "pick": "h",
+      "model_pct": 78.2,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:51:00.929671+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "West Virginia Mountaineers",
+          "is_home": true,
+          "model_pct": 78.2
+        },
+        {
+          "selection": "Oklahoma State Cowboys",
+          "is_home": false,
+          "model_pct": 21.8
+        }
+      ]
+    },
+    {
+      "event_id": "83516ad7ba3e8ef9f90498cfcaf10eb5",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "USC Trojans",
+      "away": "Oregon Ducks",
+      "kickoff": "2026-09-26T23:00:00Z",
+      "pick_name": "Oregon Ducks",
+      "pick": "a",
+      "model_pct": 56.3,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:51:04.054980+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "USC Trojans",
+          "is_home": true,
+          "model_pct": 43.7
+        },
+        {
+          "selection": "Oregon Ducks",
+          "is_home": false,
+          "model_pct": 56.3
+        }
+      ]
+    },
+    {
+      "event_id": "c843a3f97a410eedafcfbad440774ad2",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "home": "Alabama Crimson Tide",
+      "away": "South Carolina Gamecocks",
+      "kickoff": "2026-09-26T23:00:00Z",
+      "pick_name": "Alabama Crimson Tide",
+      "pick": "h",
+      "model_pct": 84.1,
+      "model_name": "NCAAF adjusted-margin model",
+      "model_version": "ncaaf-adjusted-v1",
+      "generated_at": "2026-09-19T00:51:09.225937+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Alabama Crimson Tide",
+          "is_home": true,
+          "model_pct": 84.1
+        },
+        {
+          "selection": "South Carolina Gamecocks",
+          "is_home": false,
+          "model_pct": 15.9
         }
       ]
     },
@@ -31799,14 +33749,14 @@
       "model_pct": 50.1,
       "market_pct": null
     },
-    "considered": 13,
+    "considered": 26,
     "horizon_days": 7,
     "basis": "highest mean rating minus rating gap, among games inside the horizon where both teams are rated and the model is under 85.0% — the best matchup on the board, not the most confident pick",
     "caveat": "Editorial, not advice. The game is chosen for how close and how strong the two teams are by our own ratings; the model's read on it is reported alongside, not used to select it. It is a live shadow forecast like every other pick here and carries no frozen receipt."
   },
   "coverage": {
-    "picks": 127,
-    "games_without_a_pick": 1,
+    "picks": 192,
+    "games_without_a_pick": 4,
     "competitions": [
       "NCAAF",
       "NCAAM"

@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0918D",
+  "tag": "Data",
+  "title": "Current college slate predictions filled",
+  "items": [
+   "Ran Bet Better's current-window forecast pass and expanded the live prediction-only handoff from 127 to 192 modeled fixtures.",
+   "Filled the previously blank current-week cards, including Ohio State–Kent State, Penn State–Buffalo, Iowa State–Bowling Green, and Texas State–North Texas.",
+   "Kept sportsbook prices, book counts, and model-versus-market edges out of the public handoff."
+  ]
+ },
+ {
   "date": "Build 0918C",
   "tag": "Fix",
   "title": "Complete prediction-only college slate",
