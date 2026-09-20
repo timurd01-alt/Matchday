@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0920B",
+  "tag": "Pick",
+  "title": "Week 39 upset watch selected",
+  "items": [
+   "Vanderbilt over Auburn is the Week 39 editorial upset watch, with a 61.9% Bet Better model probability.",
+   "No Week 39 market price was available at publication, so the card shows no market probability, price or claimed edge.",
+   "This publication updates Matchday-facing data only; the private Bet Better engine remains local."
+  ]
+ },
+ {
   "date": "Build 0920A",
   "tag": "Data",
   "title": "Ratings, records and CFP projection refreshed",
