@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0920A",
+  "tag": "Data",
+  "title": "Ratings, records and CFP projection refreshed",
+  "items": [
+   "The latest Bet Better ratings, 71 next-week forecasts, scorecard, and Matchday handoff were refreshed for September 20.",
+   "The AP Poll and generated CFP projection were rebuilt from the refreshed data.",
+   "This release contains Matchday-facing data only; the private Bet Better engine remains local."
+  ]
+ },
+ {
   "date": "Build 0919C",
   "tag": "Fix",
   "title": "AP Poll now includes record and power",
