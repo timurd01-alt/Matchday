@@ -4,6 +4,20 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0921I",
+  "tag": "Fix",
+  "title": "Clearer college boards and faster switching",
+  "items": [
+   "Centered the welcome branding around a larger logo, linked @timurknowsball, and added scrollable game, record, research and upset-watch previews.",
+   "Prefetched and cached the other college board for faster sport switching while refreshing it in the background.",
+   "Limited Research's top pick to this week, expanded Toughest Schedules to 16 compact rows, and made View All Games easier to spot.",
+   "Added existing school marks to ranking and community pick rows, and used @timurknowsball on the scorecard comparison.",
+   "Simplified expanded matchup copy, moved forecast caveats into help, reduced duplicate profile comparison, and improved close-button and logo spacing.",
+   "Team popups now use the current ranking snapshot for record, rating and schedule context, and omit unsupported zero-valued statistics.",
+   "Restricted the verified leaderboard to college picks and displayed legacy pro-sport handles as college aliases without removing their history. Existing account sign-in remains the recovery path after browser storage is lost."
+  ]
+ },
+ {
   "date": "Build 0921H",
   "tag": "Fix",
   "title": "Keep data visible after entering",

@@ -34,6 +34,14 @@ export const HANDLE_POOL = [
   "Bo Jackson", "Tim Tebow", "Pete Maravich", "Christian Laettner",
   "Danny Manning", "Grant Hill", "Tyler Hansbrough", "Bill Bradley",
 ];
+// Legacy accounts can retain an old pro-sport handle. Keep their owner key and
+// pick history untouched; only the public alias changes to a college name.
+export function collegeHandle(handle) {
+  const value = String(handle || "");
+  if (HANDLE_POOL.some(name => value.startsWith(name + " #"))) return value;
+  const digest = crypto.createHash("sha256").update("college-handle:" + value).digest();
+  return `${HANDLE_POOL[digest[0] % HANDLE_POOL.length]} #${1000 + digest.readUInt16BE(1) % 9000}`;
+}
 
 export const DEVICE_RE = /^mdx-[a-z0-9]{12,60}$/;
 export const OWNER_RE = /^acct-[0-9a-f]{24}$/;

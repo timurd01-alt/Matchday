@@ -1,5 +1,9 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-09-21 (existing local school marks are now shown in ranking
+and community-pick views, with the same monogram fallback. No new marks,
+provider, data source, redistribution field, or ESPN material was added.)
+
 Reviewed: 2026-09-21 (school-mark rendering and existing local filename
 matching only. The marks still come from the previously reviewed local
 `klunn91/team-logos` library; unavailable schools show a monogram rather than

@@ -210,7 +210,7 @@ function showMatchLoading(){const host=$('#view-matches');if(host)host.innerHTML
 function clearCompetitionViewsForLoad(){
   ['groups','bracket','third'].forEach(view=>{const host=$('#view-'+view);if(host)host.innerHTML='<div class="empty">Loading current-season data…</div>'});
 }
-function changeSport(v){DATA_FILE=/^(ncaaf|ncaam)$/.test(v)?('data_'+v+'.json'):DEFAULT_SPORT_FILE;MATCH_VISIBLE=FIXTURE_PAGE_SIZE;RESULT_VISIBLE=FIXTURE_PAGE_SIZE;MODEL_VISIBLE=MODEL_PAGE_SIZE;try{localStorage.setItem('matchday.sport',DATA_FILE)}catch(e){};if(typeof syncViewLocation==='function')syncViewLocation(VIEW,'replace');applySportNav();showMatchLoading();clearCompetitionViewsForLoad();load(true);}
+function changeSport(v){DATA_FILE=/^(ncaaf|ncaam)$/.test(v)?('data_'+v+'.json'):DEFAULT_SPORT_FILE;MATCH_VISIBLE=FIXTURE_PAGE_SIZE;RESULT_VISIBLE=FIXTURE_PAGE_SIZE;MODEL_VISIBLE=MODEL_PAGE_SIZE;try{localStorage.setItem('matchday.sport',DATA_FILE)}catch(e){};if(typeof syncViewLocation==='function')syncViewLocation(VIEW,'replace');const cached=SPORT_DATA_CACHE[DATA_FILE];if(cached){showSportData(cached,true)}else{applySportNav();showMatchLoading();clearCompetitionViewsForLoad()}load(true);}
 
 const COLORS={orange:'#ffb02e',blue:'#4cc2ff',green:'#3ad17a',red:'#ff4d5e',purple:'#b16cff'};
 function saveSettings(){localStorage.setItem('matchday.settings',JSON.stringify(SETTINGS))}
@@ -571,7 +571,8 @@ function scorecardTotals(){
 function renderWelcomeStats(){
   const host=$('#welcomeStats');if(!host)return;
   const M=DATA.matches||[];
-  const upcoming=M.filter(isVisibleUpcoming);
+  const weekEnd=new Date();weekEnd.setHours(23,59,59,999);weekEnd.setDate(weekEnd.getDate()+7);
+  const upcoming=M.filter(m=>isVisibleUpcoming(m)&&new Date(m.kickoff)<=weekEnd);
   if(!upcoming.length){host.innerHTML='';return}
   // The first two cells used to disagree about what they were counting: the
   // fixture count came from whichever board was loaded while the second cell
@@ -583,7 +584,7 @@ function renderWelcomeStats(){
   // like a broken site.
   const sportLabel=SPORT_LABELS[currentSportKey()]||DATA.competition||'fixtures';
   const totals=scorecardTotals();
-  const cells=[[upcoming.length,`${sportLabel} fixtures`]];
+  const cells=[[upcoming.length,`${sportLabel} games next 7 days`]];
   if(totals.picks)cells.push([totals.picks,'picks graded in public']);
   if(FORECAST_PAUSE_ACTIVE)cells.push(['paused','new picks while rebuilding']);
   else if(totals.lockMinutes)cells.push([`${totals.lockMinutes} min`,'locked before kickoff']);
@@ -1254,18 +1255,12 @@ async function bootAccount(){
 // have live data for it; a curated pool otherwise), with exactly one
 // reshuffle allowed if they don't like the draw.
 const US_SPORT_NAME_POOL={
-  ncaaf:['Arch Manning','Carson Beck','Dylan Raiola','Jeremiah Smith','Ryan Williams'],
-  ncaam:['Cooper Flagg','Ace Bailey','Cameron Boozer','Darryn Peterson'],
+  ncaaf:['Herschel Walker','Doug Flutie','Charlie Ward','Vince Young','Bo Jackson','Tim Tebow'],
+  ncaam:['Pete Maravich','Christian Laettner','Danny Manning','Grant Hill','Tyler Hansbrough','Bill Bradley'],
 };
 const GENERAL_NAME_POOL=[].concat(...Object.values(US_SPORT_NAME_POOL));
 function _handlePool(){
   const sportKey=String(DATA?.comp_key||'').toLowerCase();
-  const scorers=(DATA?.scorers||[]).map(s=>s.name).filter(Boolean);
-  if(favoriteTeam()&&scorers.length){
-    const teamOnes=(DATA.scorers||[]).filter(s=>isFavoriteTeam(s.team)).map(s=>s.name).filter(Boolean);
-    if(teamOnes.length>=3)return teamOnes;
-  }
-  if(scorers.length>=5)return scorers;
   return US_SPORT_NAME_POOL[sportKey]||GENERAL_NAME_POOL;
 }
 function _drawHandle(exclude){
@@ -1300,7 +1295,8 @@ function ensureHandle(){
   if(ACCOUNT.signedIn)return; // server-assigned, and it outranks anything local
   try{
     const assigned=localStorage.getItem('matchday.handleAssigned')==='1';
-    if(!myHandle()||!assigned)assignHandle(); // first-time visitor, or force-migrates an old free-text handle
+    const collegeName=GENERAL_NAME_POOL.some(name=>myHandle().startsWith(name+' #'));
+    if(!myHandle()||!assigned||!collegeName)assignHandle(); // legacy pro-sport guest aliases are replaced without losing device picks
   }catch(e){}
 }
 async function pushScore(){ // server grades only picks it locked before kickoff

@@ -380,8 +380,8 @@ function myPicksComparison(){
     +`<span>${label}</span>`
     +`<i class="cmpBar"><b style="width:${Math.round(hits/n*100)}%"></b></i>`
     +`<em>${hits}/${n}</em></div>`;
-  return `<div class="seclbl" style="margin-top:18px">Me vs model vs market</div>`
-    +`<div class="cmpGrid">${row('Me',mine,'cmpMine')}${row('Model',model,'cmpModel')}${row('Market',market,'cmpMarket')}</div>`
+  return `<div class="seclbl" style="margin-top:18px">@timurknowsball vs model vs market</div>`
+    +`<div class="cmpGrid">${row('@timurknowsball',mine,'cmpMine')}${row('Model',model,'cmpModel')}${row('Market',market,'cmpMarket')}</div>`
     +`<p class="edisc">Same ${n} game${n===1?'':'s'} for all three: every recorded pick that has settled. `
     +`${n<10?'A small sample — the split is not yet worth reading much into. ':''}`
     +`The model figure is the one frozen before kickoff, not recomputed afterwards.</p>`;
@@ -515,7 +515,7 @@ function renderScore(){
     +`<div class="edisc">Only cards frozen before kickoff are graded, and a graded card is never rewritten. `
     +`Displayed scores are factual. Probabilities remain estimates.</div>`;
 }
-function highlightFavoriteRows(){if(!favoriteTeam())return;document.querySelectorAll('.gtable .gteam').forEach(cell=>{if(teamKey(cell.textContent).includes(teamKey(favoriteTeam())))cell.closest('tr')?.classList.add('favoriteTeamRow')})}
+function highlightFavoriteRows(){if(!favoriteTeam())return;document.querySelectorAll('.gtable .gteam').forEach(cell=>{if(teamKey(cell.dataset.team||cell.textContent).includes(teamKey(favoriteTeam())))cell.closest('tr')?.classList.add('favoriteTeamRow')})}
 function renderCurrent(){captureSignalsIfFresh();({home:renderHome,matches:renderMatches,results:renderResults,groups:renderStandings,bracket:renderBracket,score:renderScore,news:renderNews,community:renderCommunity}[VIEW]||renderHome)();renderWelcome();highlightFavoriteRows();applyStaticI18n()}
 function renderStrip(){const M=DATA.matches||[],next=M.filter(isVisibleUpcoming).sort((a,b)=>(a.kickoff||'').localeCompare(b.kickoff||''))[0];const parts=[];
 const isSample=(DATA.source_note||'').toLowerCase().includes('sample');
@@ -552,16 +552,36 @@ $('#nav').addEventListener('click',e=>{const b=e.target.closest('.navbtn[data-v]
 // against and put us straight back to full downloads.
 const REVALIDATE={cache:'no-cache'};
 let LOAD_SEQUENCE=0;
+const SPORT_DATA_CACHE=Object.create(null);
+const SPORT_PREFETCH=Object.create(null);
+function showSportData(payload,cached=false){
+  DATA=cached?payload:stripPastSeasonCompetitionViews(payload);
+  if(!cached){applyForecastPublicationPauses(DATA);applyCurrentCfbSnapshot(DATA);applyCurrentNcaamSnapshot(DATA);decodeNewsEntities(DATA);DATA.news=(DATA.news||[]).filter(isFreshNews).sort((a,b)=>newsTime(b)-newsTime(a))}
+  SPORT_DATA_CACHE[DATA_FILE]=DATA;
+  BYID={};(DATA.matches||[]).forEach(m=>BYID[m.id]=m);
+  LAST_OK=true;LAST_ERROR='';const cn=$('#compName');if(cn)cn.textContent=DATA.competition?' · '+DATA.competition:'';
+  const tb=document.querySelector('.navbtn[data-v="third"]');if(tb)tb.style.display=(DATA.third_race&&DATA.third_race.length)?'':'none';
+  const gb2=document.querySelector('.navbtn[data-v="groups"]');if(gb2)gb2.style.display=(DATA.standings&&DATA.standings.length)?'':'none';
+  applySportNav();renderStrip();renderInsight();renderCurrent();applyStaticI18n();renderAlerts();
+}
+function prefetchOtherSport(){
+  const other=DATA_FILE==='data_ncaaf.json'?'data_ncaam.json':'data_ncaaf.json';
+  if(SPORT_DATA_CACHE[other]||SPORT_PREFETCH[other])return;
+  SPORT_PREFETCH[other]=fetch(other,REVALIDATE).then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.json()}).catch(()=>null);
+}
 async function load(manual=false){const loadSequence=++LOAD_SEQUENCE,requestedFile=DATA_FILE;if(LOAD_TIMER){clearTimeout(LOAD_TIMER);LOAD_TIMER=null}try{
   // One board, one file. The merged "All college" view used to assemble itself
   // here out of board_summary.json (or, failing that, every per-sport file at
   // once) and then escalate to the full files when a visitor left the board;
   // none of that machinery is needed to load a single sport.
-  const r=await fetch(requestedFile,REVALIDATE);if(!r.ok)throw new Error('HTTP '+r.status);const payload=await r.json();if(loadSequence!==LOAD_SEQUENCE||requestedFile!==DATA_FILE)return;DATA=stripPastSeasonCompetitionViews(payload);applyForecastPublicationPauses(DATA);
-  applyCurrentCfbSnapshot(DATA);applyCurrentNcaamSnapshot(DATA);decodeNewsEntities(DATA);DATA.news=(DATA.news||[]).filter(isFreshNews).sort((a,b)=>newsTime(b)-newsTime(a));BYID={};(DATA.matches||[]).forEach(m=>BYID[m.id]=m);LAST_OK=true;LAST_ERROR='';const cn=$('#compName');if(cn)cn.textContent=DATA.competition?' · '+DATA.competition:'';const tb=document.querySelector('.navbtn[data-v="third"]');if(tb)tb.style.display=(DATA.third_race&&DATA.third_race.length)?'':'none';const gb2=document.querySelector('.navbtn[data-v="groups"]');if(gb2)gb2.style.display=(DATA.standings&&DATA.standings.length)?'':'none';// .some() passes (element,index): the index landed on isForecastPaused's
+  const pending=SPORT_PREFETCH[requestedFile];const payload=pending?await pending:null;
+  const fresh=payload||await (async()=>{const r=await fetch(requestedFile,REVALIDATE);if(!r.ok)throw new Error('HTTP '+r.status);return r.json()})();
+  SPORT_PREFETCH[requestedFile]=null;
+  if(loadSequence!==LOAD_SEQUENCE||requestedFile!==DATA_FILE)return;
+  // .some() passes (element,index): the index landed on isForecastPaused's
   // `payload` parameter, so the competition check read match._comp, which only
   // the merged build set -- the banner fired on every board except MLB's own.
-  applySportNav();renderStrip();renderInsight();renderCurrent();applyStaticI18n();renderAlerts()}catch(e){if(loadSequence!==LOAD_SEQUENCE||requestedFile!==DATA_FILE)return;console.error(e);applySportNav();
+  showSportData(fresh);prefetchOtherSport()}catch(e){if(loadSequence!==LOAD_SEQUENCE||requestedFile!==DATA_FILE)return;console.error(e);if(SPORT_DATA_CACHE[requestedFile]&&LAST_OK){LAST_ERROR=String(e.message||e);return}applySportNav();
   const sel=currentSportKey();
   if(sel&&(!DATA||((DATA.comp_key||'').toLowerCase()!==sel))){
     DATA={matches:[],news:[],standings:[],third_race:[],bracket:null,scorecard:null,title_odds:[],scorers:[],team_of_tournament:null,
@@ -609,49 +629,57 @@ function ensureTeamModal(){let modal=document.getElementById('teamModal');if(mod
 function closeTeamModal(){const modal=document.getElementById('teamModal');if(modal)modal.classList.remove('show');document.body.classList.remove('modalOpen')}
 function computeTeamProfile(name){
   const key=teamKey(name);
+  const rankings=String(DATA.comp_key||'').toUpperCase()==='NCAAM'
+    ?(typeof MATCHDAY_NCAAM_RANKINGS!=='undefined'?MATCHDAY_NCAAM_RANKINGS:null)
+    :(typeof MATCHDAY_CFB_RANKINGS!=='undefined'?MATCHDAY_CFB_RANKINGS:null);
+  const ranked=(rankings?.rankings||[]).find(r=>teamKey(r.name)===key)
+    ||(rankings?.rankings||[]).find(r=>bbNameMatches(r.name,name))||null;
   let standRec=null;
-  (DATA.standings||[]).filter(g=>g.table_type!=='power_ratings').forEach(g=>(g.teams||[]).forEach(t=>{if(teamKey(t.name)===key)standRec=t;}));
-  const matches=(DATA.matches||[]).filter(m=>teamKey(m.home?.name)===key||teamKey(m.away?.name)===key);
+  (DATA.standings||[]).filter(g=>g.table_type!=='power_ratings').forEach(g=>(g.teams||[]).forEach(t=>{if(bbNameMatches(t.name,name))standRec=t;}));
+  const matches=(DATA.matches||[]).filter(m=>bbNameMatches(m.home?.name,name)||bbNameMatches(m.away?.name,name));
   let side=null;
-  for(const m of matches){side=(teamKey(m.home?.name)===key)?m.home:(teamKey(m.away?.name)===key?m.away:null);if(side)break;}
+  for(const m of matches){side=bbNameMatches(m.home?.name,name)?m.home:(bbNameMatches(m.away?.name,name)?m.away:null);if(side)break;}
   const rec=standRec||side||{name};
+  const record=ranked?.record||rec.record||'';
+  const recordParts=/^(\d+)\s*[-–]\s*(\d+)/.exec(record);
   const finished=matches.filter(m=>m.status==='FINISHED').sort((a,b)=>(b.kickoff||'').localeCompare(a.kickoff||''));
   const next=matches.filter(isVisibleUpcoming).sort((a,b)=>(a.kickoff||'').localeCompare(b.kickoff||''))[0];
   return {
-    name: rec.name||name, code: rec.code||side?.code||'',
-    pos: rec.pos??null, pld: rec.pld??side?.pld??0, w: rec.w??null, d: rec.d??null, l: rec.l??null,
-    gf: rec.gf??side?.gf??0, ga: rec.ga??side?.ga??0, gd: rec.gd??side?.gd??0,
-    pts: rec.pts??side?.pts??0, form: rec.form||side?.form||'',
+    name: ranked?.name||rec.name||name, code: rec.code||side?.code||'',
+    pos: ranked?.rank??rec.pos??null, pld: recordParts?Number(recordParts[1])+Number(recordParts[2]):(rec.pld??side?.pld??null),
+    w: recordParts?Number(recordParts[1]):rec.w??null, d: rec.d??null, l: recordParts?Number(recordParts[2]):rec.l??null,
+    gf: rec.gf??side?.gf??null, ga: rec.ga??side?.ga??null, gd: rec.gd??side?.gd??null,
+    pts: rec.pts??side?.pts??null, form: rec.form||side?.form||'',
     formHome: side?.form_home||'', formAway: side?.form_away||'',
-    rating: side?.rating??rec.rating??null,
+    rating: ranked?.rating??side?.rating??rec.rating??null,
+    sos: ranked?.sos??null, offense: ranked?.adj_o??null, defense: ranked?.adj_d??null,
+    conference: ranked?.conference||'', published: rankings?.published_on||'',
     next, recent: finished.slice(0,5)
   };
 }
 function teamProfileHTML(p){
   const twoWay=SANDBOX_TWO_WAY.has(String(DATA.comp_key||'').toLowerCase());
-  const unit=_totalsUnit({});
-  const diffLabel=`${unit[0].toUpperCase()+unit.slice(1)} diff`;
   const winPct=p.pld?((Number(p.w)||0)/p.pld*100).toFixed(1)+'%':'—';
   const formRow=(label,str)=>str?`<div class="tpFormRow"><span class="tpFormLbl">${esc(label)}</span><span class="tpFormDots">${str.trim().split(' ').map(r=>`<i class="tpDot ${r}">${esc(r)}</i>`).join('')}</span></div>`:'';
   const recentRows=(p.recent||[]).map(m=>{
-    const home=teamKey(m.home.name)===teamKey(p.name);
+    const home=bbNameMatches(m.home.name,p.name);
     const opp=home?m.away:m.home;
     const gf=home?m.score?.home:m.score?.away, ga=home?m.score?.away:m.score?.home;
     const res=gf>ga?'W':gf<ga?'L':'D';
-    return `<div class="tpRecentRow"><i class="tpDot ${res}">${res}</i><span>${home?'vs':'@'} ${esc(opp.code||opp.name)}</span><b>${gf}-${ga}</b><span class="tpFaint">${esc(dt(m.kickoff).split(', ').pop()||'')}</span></div>`;
+    return `<div class="tpRecentRow"><i class="tpDot ${res}">${res}</i><span>${home?'vs':'@'} ${esc(opp.name||opp.code)}</span><b>${gf}-${ga}</b><span class="tpFaint">${esc(dt(m.kickoff)||'')}</span></div>`;
   }).join('');
-  const nextLine=p.next?`<div class="tpNext"><span class="tpFaint">Next</span> ${teamKey(p.next.home.name)===teamKey(p.name)?'vs':'@'} <b>${esc(teamKey(p.next.home.name)===teamKey(p.name)?p.next.away.code||p.next.away.name:p.next.home.code||p.next.home.name)}</b> · ${kickIn(p.next.kickoff)}</div>`:'';
+  const nextLine=p.next?`<div class="tpNext"><span class="tpFaint">Next</span> ${bbNameMatches(p.next.home.name,p.name)?'vs':'@'} <b>${esc(bbNameMatches(p.next.home.name,p.name)?p.next.away.code||p.next.away.name:p.next.home.code||p.next.home.name)}</b> · ${kickIn(p.next.kickoff)}</div>`:'';
   const record=(p.w!=null)?`${p.w}-${p.l}${!twoWay&&p.d!=null?`-${p.d}`:''}`:'—';
   return `<div class="tpHead"><button class="modalClose" onclick="closeTeamModal()" aria-label="Close">×</button>
-    <div class="tpCode">${esc(p.code)}</div><div class="tpName">${esc(p.name)}</div>
-    <div class="tpMeta">${p.pos?`#${p.pos} · `:''}${p.pld} played · record ${record}</div></div>
+    <div class="tpCode">${esc(p.code)}</div><div class="tpName">${teamMark(p.name)}${esc(p.name)}</div>
+    <div class="tpMeta">${p.pos?`Power #${p.pos} · `:''}${p.conference?`${esc(p.conference)} · `:''}${record!=='—'?`record ${record}`:'record pending'}${p.published?` · rating ${esc(p.published)}`:''}</div></div>
     <div class="tpBody">
       <div class="tpStatGrid">
-        <div class="tpStat"><span class="tpStatLbl">${twoWay?'Win%':'Points'}</span><b>${twoWay?winPct:p.pts}</b></div>
-        <div class="tpStat"><span class="tpStatLbl">${diffLabel}</span><b>${p.gd>0?'+':''}${p.gd}</b></div>
-        <div class="tpStat"><span class="tpStatLbl">For</span><b>${p.gf}</b></div>
-        <div class="tpStat"><span class="tpStatLbl">Against</span><b>${p.ga}</b></div>
-        <div class="tpStat"><span class="tpStatLbl">Class rating</span><b>${p.rating!=null?p.rating.toFixed(1):'—'}</b></div>
+        ${p.w!=null&&p.pld?`<div class="tpStat"><span class="tpStatLbl">Win rate</span><b>${winPct}</b></div>`:''}
+        ${p.rating!=null?`<div class="tpStat"><span class="tpStatLbl">Power rating</span><b>${Number(p.rating).toFixed(1)}</b></div>`:''}
+        ${p.sos!=null?`<div class="tpStat"><span class="tpStatLbl">Schedule</span><b>${Number(p.sos).toFixed(1)}</b></div>`:''}
+        ${p.offense!=null?`<div class="tpStat"><span class="tpStatLbl">Adjusted offense</span><b>${Number(p.offense).toFixed(1)}</b></div>`:''}
+        ${p.defense!=null?`<div class="tpStat"><span class="tpStatLbl">Adjusted defense</span><b>${Number(p.defense).toFixed(1)}</b></div>`:''}
       </div>
       ${formRow('Overall form',p.form)}
       ${formRow('Home form',p.formHome)}
@@ -947,6 +975,24 @@ function collegeBallotTableHTML(){
     ${leftOff?`<p class="modNote">Best résumés left off: ${leftOff}.</p>`:''}
   </section>`;
 }
+function decorateRankingTeamMarks(host){
+  host.querySelectorAll('.gteam[data-team]').forEach(cell=>{
+    if(cell.querySelector('.teamMark'))return;
+    const anchor=cell.querySelector('.code,.flagIcon,.pos');
+    if(anchor)anchor.insertAdjacentHTML('afterend',teamMark(cell.dataset.team));
+  });
+  const power=String(DATA.comp_key||'').toUpperCase()==='NCAAM'
+    ?(typeof MATCHDAY_NCAAM_RANKINGS!=='undefined'?MATCHDAY_NCAAM_RANKINGS:null)
+    :(typeof MATCHDAY_CFB_RANKINGS!=='undefined'?MATCHDAY_CFB_RANKINGS:null);
+  const ballot=typeof collegeBallot==='function'?collegeBallot():null;
+  [[host.querySelectorAll('.pollSection:not(.ballotSection):not(.officialPoll) .pollTeam'),power?.rankings||[],'name'],
+   [host.querySelectorAll('.ballotSection .pollTeam'),ballot?.rankings||[],'team_name']].forEach(([cells,rows,key])=>{
+    cells.forEach((cell,i)=>{
+      if(cell.querySelector('.teamMark')||!rows[i]?.[key])return;
+      cell.insertAdjacentHTML('afterbegin',teamMark(rows[i][key]));
+    });
+  });
+}
 const _renderCollegeGroups=renderGroups;
 renderGroups=function(){
   _renderCollegeGroups();
@@ -982,7 +1028,7 @@ renderGroups=function(){
     :(typeof MATCHDAY_CFB_RANKINGS!=='undefined'?MATCHDAY_CFB_RANKINGS:null);
   const bySos={};(table?.rankings||[]).forEach(r=>{if(Number.isFinite(Number(r.sos)))bySos[teamKey(r.name)]=Number(r.sos)});
   document.querySelectorAll('#view-groups .gtable:not(.officialPollTable) tbody tr').forEach(tr=>{
-    const name=tr.querySelector('.gteam')?.textContent||'';
+    const name=tr.querySelector('.gteam')?.dataset.team||'';
     const cell=tr.children[1];
     const sos=bySos[teamKey(name)];
     if(cell&&Number.isFinite(sos)&&!cell.querySelector('.sosTag')){
@@ -991,6 +1037,7 @@ renderGroups=function(){
       cell.appendChild(tag);
     }
   });
+  decorateRankingTeamMarks(host);
 };
 /* dedup */
 // The board loads its sport's full data file, so every match on screen already
@@ -1210,15 +1257,13 @@ function betbetterModelRead(m,p){
       +`<table class="bbTable"><thead><tr><th></th><th>Model probability</th></tr></thead>`
       +`<tbody>${rows}</tbody></table></div>`
     :'';
-  return `<section class="analystPanel"><div class="analystTop"><div class="analystTitle">Model read</div>`
-    +`<div class="analystBadge">live shadow read</div></div>`
-    +`<div class="analystHero"><div class="analystMain"><div class="analystLabel">Model pick</div>`
+  return `<section class="analystPanel"><div class="analystTop"><div class="analystTitle">Live model read</div>`
+    +`<details class="readHelp"><summary aria-label="About this forecast">?</summary><p>${esc(engine)}${when?` · ${esc(when)}`:''}${p.model_version?` · ${esc(p.model_version)}`:''}. This read may change before kickoff and is not a locked, graded pick.</p></details></div>`
+    +`<div class="analystHero"><div class="analystMain"><div class="analystLabel">Favored team</div>`
     +`<div class="analystPick">${esc(p.pick_name||'No pick')}</div>`
-    +`<p class="analystNote">${esc(engine)}${when?`, read at ${esc(when)}`:''}. This is the same read the card and the board modules quote.</p></div>`
-    +`<div class="analystConfidence"><b>${_bbPct(model)}</b><span>model probability</span>`
-    +`${p.model_version?`<small>${esc(p.model_version)}</small>`:''}</div></div>`
-    +`<div class="analystGrid">${sideBox}</div>`
-    +(p.integrity_note?`<p class="analystSummary">${esc(p.integrity_note)}</p>`:'')+`</section>`;
+    +`<p class="analystNote">Live forecast · not locked yet</p></div>`
+    +`<div class="analystConfidence"><b>${_bbPct(model)}</b><span>chance to win</span></div></div>`
+    +`<details class="readBreakdown"><summary>See both teams' chances</summary><div class="analystGrid">${sideBox}</div>${p.integrity_note?`<p class="analystSummary">${esc(p.integrity_note)}</p>`:''}</details></section>`;
 }
 function matchupWhyPanel(m,p){
   const h=betbetterTeamRow(m?.home?.name),a=betbetterTeamRow(m?.away?.name);
@@ -1227,7 +1272,7 @@ function matchupWhyPanel(m,p){
     return `<div class="matchWhyRow"><span>${esc(label)}</span><b>${valid?left.toFixed(digits):'—'}</b><i></i><b>${valid?right.toFixed(digits):'—'}</b></div>`;
   };
   const title=p?.pick_name?`Why the model leans ${p.pick_name}`:'What separates these teams';
-  return `<section class="matchWhy"><div class="matchWhyHead"><span>Why</span><h3>${esc(title)}</h3><p>The clearest opponent-adjusted signals behind this matchup. Full evidence remains available below.</p></div><div class="matchWhyTeams"><b>${esc(m?.home?.name||'Home')}</b><span>comparison</span><b>${esc(m?.away?.name||'Away')}</b></div><div class="matchWhyRows">${metric('Rating',h?.rating,a?.rating,2)}${metric('Offence',h?.adj_o,a?.adj_o)}${metric('Defence',h?.adj_d,a?.adj_d)}${metric('Schedule',h?.sos,a?.sos,2)}</div></section>`;
+  return `<section class="matchWhy"><div class="matchWhyHead"><span>Why</span><h3>${esc(title)}</h3></div><div class="matchWhyTeams"><b>${esc(m?.home?.name||'Home')}</b><span>comparison</span><b>${esc(m?.away?.name||'Away')}</b></div><div class="matchWhyRows">${metric('Rating',h?.rating,a?.rating,2)}${metric('Offence',h?.adj_o,a?.adj_o)}${metric('Defence',h?.adj_d,a?.adj_d)}${metric('Schedule',h?.sos,a?.sos,2)}</div></section>`;
 }
 function matchupEvidence(label,note,html,open=false){
   if(!html)return '';
@@ -1237,8 +1282,8 @@ function details(m){
   if(isForecastPaused(m))return `<div class="detailGrid v4Detail">${forecastPauseHTML(m)}<div class="detailTop">${betbetterMatchupPanel(m)}<div class="readCard forecastMarketCard">${marketPanel(m)}</div></div><div class="detailLow">${rosterPanel(m)}</div></div>`;
   const bb=betbetterReadFor(m);
   const read=bb?betbetterModelRead(m,bb):betbetterNoReadPanel();
-  const comparison=`<div class="matchEvidenceGrid">${betbetterMatchupPanel(m)}${matchProfilePanel(m)}</div>`;
-  return `<div class="detailGrid v4Detail modernExpandedView"><div class="expandedSectionHead"><div><span>Matchday analysis</span><b>Prediction first. Evidence on demand.</b></div><em>Updated before kickoff</em></div><div class="expandedDecision"><div class="readCard modelReadCard">${read}</div></div>${matchupWhyPanel(m,bb)}<div class="matchEvidenceList">${matchupEvidence('Team comparison','ratings, record and schedule',comparison)}${matchupEvidence('Market','current price and model disagreement',`<div class="readCard forecastMarketCard">${marketPanel(m)}</div>`)}${matchupEvidence('Supporting detail','roster, availability and deeper data',`<div class="detailLow">${rosterPanel(m)}<!-- matchday-advanced-profile --></div>`)}</div></div>`;
+  const comparison=betbetterMatchupPanel(m)||matchProfilePanel(m);
+  return `<div class="detailGrid v4Detail modernExpandedView"><div class="expandedSectionHead"><div><span>Matchday analysis</span><b>Pick &amp; matchup</b></div></div><div class="expandedDecision"><div class="readCard modelReadCard">${read}</div></div>${matchupWhyPanel(m,bb)}<div class="matchEvidenceList">${matchupEvidence('Team comparison','ratings and schedule',comparison)}${matchupEvidence('Market','price and model gap',`<div class="readCard forecastMarketCard">${marketPanel(m)}</div>`)}${matchupEvidence('More detail','season profile and roster',`<div class="detailLow">${matchProfilePanel(m)}${rosterPanel(m)}<!-- matchday-advanced-profile --></div>`)}</div></div>`;
 }
 /* dedup */
 function _v4TitleRows(t){

@@ -144,6 +144,7 @@
       <div class="welcomeActions">
         <button class="welcomeEnter" type="button" onclick="enterMatchday()">Enter Matchday Terminal <span aria-hidden="true">→</span></button>
         <span>No account required · no ads</span>
+        <a class="welcomeSocialLink" href="https://x.com/timurknowsball" rel="me noopener" target="_blank">Follow @timurknowsball on X <span aria-hidden="true">↗</span></a>
         <a class="welcomeLegalLink" href="legal.html">Legal, privacy &amp; data sources</a>
       </div>
     </div>
@@ -159,6 +160,14 @@
       </div>
       <div class="welcomeStats" id="welcomeStats" aria-live="polite"></div>
     </aside>
+    <div class="welcomeDiscover" aria-label="Explore Matchday">
+      <div class="welcomeUpset" id="welcomeUpset" hidden></div>
+      <div class="welcomeDiscoverLinks">
+        <button type="button" onclick="enterMatchday('matches')"><b>Games</b><span>This week's matchups and live model reads</span><i aria-hidden="true">→</i></button>
+        <button type="button" onclick="enterMatchday('score')"><b>Public record</b><span>Every locked pick, graded in public</span><i aria-hidden="true">→</i></button>
+        <button type="button" onclick="enterMatchday('news')"><b>Research</b><span>Ratings, context and upset watch</span><i aria-hidden="true">→</i></button>
+      </div>
+    </div>
   </div>
 </section>
 <section class="alertCenter" id="alertCenter" aria-label="Alert center" hidden></section>

@@ -108,7 +108,7 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         self.assertIn("function balanceBoardMods(target){", views)
         self.assertIn("column.cards.push(item.card)", views)
         self.assertIn(".modsCol>.boardMod:last-child{flex:1;display:flex;flex-direction:column}", styles)
-        self.assertIn(".modsCol>.boardMod:last-child>.tsTable{flex:1}", styles)
+        self.assertIn(".modsCol>.boardMod:last-child>.tsTable{flex:none}", styles)
         self.assertNotIn('class="boardMore"', views)
 
     def test_bottom_cards_are_filled_with_real_ranking_context(self):
@@ -120,7 +120,7 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         self.assertIn("modConferenceTable()", views)
         self.assertNotIn("<h3>Power vs Group of Five</h3>", views)
         toughest = views[views.index("function modToughestSchedules(){"):views.index("function modConferenceTable(){")]
-        self.assertIn(".slice(0,10)", toughest)
+        self.assertIn(".slice(0,16)", toughest)
         parity = views[views.index("function modConferenceParity(){"):views.index("function collegeModules(){")]
         self.assertIn("const body=stats.map", parity)
         self.assertIn("every rated league", parity)
@@ -235,11 +235,20 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         details = panels[panels.index("function details(m){"):panels.index("/* dedup */", panels.index("function details(m){"))]
         self.assertIn('class="expandedDecision"', details)
         self.assertIn("matchupWhyPanel(m,bb)", details)
-        for section in ("Team comparison", "Market", "Supporting detail"):
+        for section in ("Team comparison", "Market", "More detail"):
             self.assertIn(section, details)
         self.assertIn('details class="matchEvidence"', panels)
         self.assertIn("teamMarkHTML(m.home)", features)
         self.assertIn(".matchEvidenceList", styles)
+
+    def test_ranked_team_profile_uses_published_metrics_not_missing_zeros(self):
+        panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
+        profile = panels[panels.index("function computeTeamProfile(name){"):panels.index("function openTeamModal(name){")]
+        self.assertIn("ranked?.record||rec.record", profile)
+        self.assertIn("ranked?.rating??side?.rating", profile)
+        self.assertIn("sos: ranked?.sos", profile)
+        self.assertNotIn("side?.gf??0", profile)
+        self.assertIn("${p.sos!=null?", profile)
 
     def test_the_welcome_cards_model_read_is_bet_betters(self):
         """The gate quotes one model, the same one every other screen quotes.

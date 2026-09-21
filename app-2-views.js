@@ -138,7 +138,7 @@ function renderAccountRow(){
       ${buttons?`<span class="acctBtns">${buttons}</span>`:''}</div>`;
   }
   if(!buttons)return note?`<div class="acctRow">${note}</div>`:'';
-  return `<div class="acctRow"><span class="acctState">Playing as a guest — clearing this browser loses your handle and record. Sign in to keep them.</span>
+  return `<div class="acctRow"><span class="acctState">Playing as a guest — clearing this browser loses your record. To recover scores on another device or after clearing your browser, sign in with Google or GitHub, then use that same account to return.</span>
     <span class="acctBtns">${buttons}</span>${note}</div>`;
 }
 function renderCommunity(){ensureHandle();const host=$('#view-community');const fullDb=btmGrade();const db=btmScoped(fullDb);const s=btmStats(db);
@@ -192,13 +192,13 @@ function renderCommunity(){ensureHandle();const host=$('#view-community');const 
   open.forEach(m=>{const p=picks[m.id],x=communityPickProbs(m),official=officialPrediction(m);
     const sideBtn=(side,label,pct)=>{const locked=p&&p.pick===side;const disabled=p?'disabled':'';
       return `<button class="btmbtn ${locked?'locked':''}" ${disabled} onclick="pickBtm('${m.id}','${side}')">${esc(label)}${pct!=null?` <b>${pct}%</b>`:''}</button>`;};
-    h+=`<div class="btmcard"><div class="btmmatch">${esc(m.home.name)} <span class="mvvs">v</span> ${esc(m.away.name)}${p?`<span class="btmlocked">your pick: ${esc(p.pick==='h'?m.home.code:p.pick==='a'?m.away.code:'Draw')}</span>`:''}</div>
+    h+=`<div class="btmcard"><div class="btmmatch">${teamMark(m.home.name)}${esc(m.home.name)} <span class="mvvs">v</span> ${teamMark(m.away.name)}${esc(m.away.name)}${p?`<span class="btmlocked">your pick: ${esc(p.pick==='h'?m.home.code:p.pick==='a'?m.away.code:'Draw')}</span>`:''}</div>
       <div class="btmrow">${sideBtn('h',m.home.code||'Home',x.h)}${x.d>0?sideBtn('d',t('Draw'),x.d):''}${sideBtn('a',m.away.code||'Away',x.a)}</div>
       <div class="btmmeta">${official.side?`model: <b>${esc(official.name)}</b> ${official.confidence??'—'}% &middot; `:'model pick pending &middot; '}${x.source==='model'?'model probabilities · market unavailable · ':x.source==='none'?'probabilities pending · ':''}${p?'locked — graded when final':'pick before kickoff to play'}</div></div>`;});
   const graded=Object.values(picks).filter(p=>p.result).sort((a,b)=>b.ts-a.ts);
   if(graded.length){h+=`<div class="seclbl" style="margin-top:18px">Your results</div>`+graded.slice(0,20).map(p=>{
     const nm=p.pick==='h'?p.code.h:p.pick==='a'?p.code.a:'Draw';
-    return `<div class="btmres ${p.you_hit?'hit':'miss'}"><span>${esc(p.home)} v ${esc(p.away)}</span><span class="btmpick">you: ${esc(nm)} ${p.you_hit?'&#10003;':'&#10007;'}</span><span class="btmvs ${p.model_hit?'mok':'mno'}">model ${p.model_hit?'&#10003;':'&#10007;'}</span></div>`;}).join('');}
+    return `<div class="btmres ${p.you_hit?'hit':'miss'}"><span class="btmresTeams">${teamMark(p.home)}${esc(p.home)} v ${teamMark(p.away)}${esc(p.away)}</span><span class="btmpick">you: ${esc(nm)} ${p.you_hit?'&#10003;':'&#10007;'}</span><span class="btmvs ${p.model_hit?'mok':'mno'}">model ${p.model_hit?'&#10003;':'&#10007;'}</span></div>`;}).join('');}
   // leaderboard section (only when configured)
   if(LEADERBOARD_URL){
     const hn=myHandle();
@@ -633,10 +633,13 @@ function modTopPick(){
   // a push build does not run the fetch that does so. The handoff is committed,
   // so fall back to it rather than let the card blink out of existence
   // depending on which kind of deploy shipped last.
-  const attached=(DATA.matches||[]).filter(m=>m.status==='UPCOMING'&&m.betbetter_pick)
+  const now=new Date(),weekStart=new Date(now.getFullYear(),now.getMonth(),now.getDate()-((now.getDay()+6)%7));
+  const weekEnd=new Date(weekStart);weekEnd.setDate(weekEnd.getDate()+7);
+  const thisWeek=kickoff=>{const date=new Date(kickoff);return date>now&&date<weekEnd};
+  const attached=(DATA.matches||[]).filter(m=>m.status==='UPCOMING'&&m.betbetter_pick&&thisWeek(m.kickoff))
     .map(m=>({m,p:m.betbetter_pick}));
   const baked=attached.length?[]:bbSportRows(typeof MATCHDAY_BETBETTER_PICKS!=='undefined'?MATCHDAY_BETBETTER_PICKS:[])
-    .filter(p=>new Date(p.kickoff)>new Date())
+    .filter(p=>thisWeek(p.kickoff))
     .map(p=>({m:{home:{name:p.home},away:{name:p.away}},p}));
   const picks=attached.concat(baked)
     .filter(x=>Number.isFinite(Number(x.p.model_pct)))
@@ -645,7 +648,7 @@ function modTopPick(){
   if(!picks.length)return '';
   const {m,p}=picks[0];
   const gap=Number(p.edge_points);
-  return `<section class="boardMod modPick"><header><h3>Top pick</h3><span>live shadow read</span></header>`
+  return `<section class="boardMod modPick"><header><h3>Top pick this week</h3><span>live shadow read</span></header>`
     +`<div class="modPickTeam">${esc(p.pick_name||'')}</div>`
     +`<div class="modPickGame">${esc(m.home?.name||m.home||'')} v ${esc(m.away?.name||m.away||'')}</div>`
     +`<div class="modPickBar"><i style="width:${Math.max(0,Math.min(100,Number(p.model_pct)))}%"></i></div>`
@@ -994,9 +997,9 @@ function modToughestSchedules(){
   const rows=(table?.rankings||[]).filter(r=>Number.isFinite(Number(r.sos)));
   if(rows.length<10)return '';
   const pool=rows.filter(r=>(r.rank||999)<=40);
-  const top=(pool.length>=10?pool:rows).slice().sort((a,b)=>Number(b.sos)-Number(a.sos)).slice(0,10);
+  const top=(pool.length>=10?pool:rows).slice().sort((a,b)=>Number(b.sos)-Number(a.sos)).slice(0,16);
   if(!top.length)return '';
-  const body=top.map(r=>`<tr><td class="tsTeam">${esc(r.name)}</td>`
+  const body=top.map(r=>`<tr><td class="tsTeam">${teamMark(r.name)}${esc(r.name)}</td>`
     +`<td>#${r.rank}</td>`
     +`<td class="tsNum">${Number(r.sos).toFixed(2)}</td>`
     +`<td class="tsNum">${Number(r.rating).toFixed(2)}</td></tr>`).join('');

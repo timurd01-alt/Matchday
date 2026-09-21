@@ -2615,3 +2615,67 @@ html{color-scheme:dark}
   .welcomeLogo{width:78px;height:78px;margin:20px 0 17px}
   .welcomeBrand h1{letter-spacing:-.018em}
 }
+
+/* The welcome is a single, centered invitation; the live preview follows it. */
+.welcomeShell{width:min(720px,100%);grid-template-columns:minmax(0,1fr);gap:26px;justify-items:center}
+.welcomeBrand{width:100%;max-width:680px;text-align:center}
+.welcomeEyebrow,.welcomeCoverage{justify-content:center}
+.welcomeLogo{display:block;width:140px;height:140px;margin:22px auto 18px}
+.welcomeBrand h1,.welcomeLead,.welcomeDevNote{margin-left:auto;margin-right:auto}
+.welcomeBrand h1{font-size:clamp(3rem,7vw,5rem)}
+.welcomeActions{justify-content:center;flex-direction:column;gap:12px}
+.welcomeEnter{width:min(360px,100%);justify-content:center}
+.welcomeLegalLink{width:auto;margin-top:0}
+.welcomeSocialLink{color:var(--signal);font-family:var(--mono);font-size:var(--fs-xs);text-decoration:none}
+.welcomeSocialLink:hover,.welcomeSocialLink:focus-visible{text-decoration:underline}
+.welcomePreview{width:min(640px,100%)}
+.rankingTeam,.tsTeam{display:inline-flex;align-items:center;gap:8px}
+.rankingTeam .teamMark,.gteam .teamMark,.tsTeam .teamMark{width:26px;height:26px;flex-basis:26px;border-radius:6px}
+.rankingTeam .teamMark img,.gteam .teamMark img,.tsTeam .teamMark img{width:23px;height:23px}
+.boardMods.balanced .modsCol>.boardMod:last-child>.tsTable{flex:none}
+.cmpRow{grid-template-columns:minmax(105px,auto) minmax(0,1fr) 52px}
+.btmmatch .teamMark,.btmresTeams .teamMark{width:25px;height:25px;flex-basis:25px;border-radius:6px}
+.btmmatch .teamMark img,.btmresTeams .teamMark img{width:22px;height:22px}
+.btmresTeams{display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap}
+.gamesDifferences .gamesTextLink{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;margin-top:14px;padding:10px 18px;border:1px solid var(--signal);border-radius:10px;background:rgba(58,209,122,.11);color:var(--text)}
+.gamesDifferences .gamesTextLink:hover{background:rgba(58,209,122,.2)}
+.modernExpandedView .analystPanel{padding:20px 22px;background:var(--panel);font-family:var(--sans)}
+.modernExpandedView .analystPick{font-size:clamp(2rem,4vw,3.4rem)}
+.modernExpandedView .analystConfidence b{font-size:clamp(2.5rem,5vw,4rem)}
+.modernExpandedView .analystLabel,.modernExpandedView .analystConfidence span{color:var(--muted);font-family:var(--sans);font-size:var(--fs-sm);letter-spacing:0;text-transform:none}
+.modernExpandedView .analystNote,.modernExpandedView .matchWhyHead p{color:var(--text);font-size:var(--fs-md)}
+.readHelp{position:relative;margin-left:auto}
+.readHelp summary{display:grid;place-items:center;width:30px;height:30px;border:1px solid var(--line2);border-radius:50%;color:var(--text);cursor:pointer;list-style:none;font-weight:var(--fw-bold)}
+.readHelp summary::-webkit-details-marker{display:none}
+.readHelp[open] p{position:absolute;right:0;top:34px;z-index:3;width:min(340px,75vw);padding:12px 14px;border:1px solid var(--line2);border-radius:10px;background:var(--panel2);color:var(--text);font-size:var(--fs-sm);line-height:1.5;box-shadow:0 12px 30px rgba(0,0,0,.4)}
+.readBreakdown{margin-top:16px;border-top:1px solid var(--line);padding-top:12px}
+.readBreakdown summary{color:var(--signal);cursor:pointer;font-size:var(--fs-sm);font-weight:var(--fw-bold)}
+.readBreakdown .analystGrid{margin-top:12px}
+.modernExpandedView .matchWhy{background:var(--panel);padding:18px 22px}
+.modernExpandedView .matchWhyTeams span,.modernExpandedView .matchWhyRow span{color:var(--text);font-family:var(--sans);font-size:var(--fs-sm);letter-spacing:0;text-transform:none}
+.modernExpandedView .matchEvidenceBody .readCard{background:var(--panel);color:var(--text)}
+.modernExpandedView .profileCompareHead,.modernExpandedView .profileCompareRow>span{color:var(--text);font-family:var(--sans);letter-spacing:0;text-transform:none}
+.modernMatchSheet .modalHero{padding:20px 62px 22px}
+.modernMatchSheet .modalClose{top:14px;right:14px;width:40px;height:40px;font-size:var(--fs-2xl);color:var(--text);background:var(--panel2)}
+.modernMatchSheet .modalName .teamMark{width:56px;height:56px;flex-basis:56px;border-radius:12px}
+.modernMatchSheet .modalName .teamMark img{width:50px;height:50px}
+.modernMatchSheet .modalName .teamMonogramText{font-size:var(--fs-lg)}
+.modernMatchSheet .modalFixture{gap:26px}
+.modernMatchSheet .modalCode{color:var(--muted)}
+.modernMatchSheet .modalMeta{color:var(--text)}
+.welcomeDiscover{width:min(720px,100%);display:grid;gap:20px}
+.welcomeDiscover .welcomeUpset{max-width:none;margin:0}
+.welcomeDiscoverLinks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.welcomeDiscoverLinks button{display:grid;grid-template-columns:1fr auto;gap:7px;padding:17px;border:1px solid var(--line2);border-radius:13px;background:var(--panel);color:var(--text);text-align:left;cursor:pointer}
+.welcomeDiscoverLinks button:hover{border-color:var(--signal)}
+.welcomeDiscoverLinks b{font-family:var(--display);font-size:var(--fs-lg)}
+.welcomeDiscoverLinks span{grid-column:1/-1;color:var(--muted);font-size:var(--fs-sm);line-height:1.4}
+.welcomeDiscoverLinks i{color:var(--signal);font-style:normal}
+@media(max-width:760px){.modernMatchSheet .modalHero{padding:16px 18px 20px}.modernMatchSheet .modalStage{padding-right:48px}.modernMatchSheet .modalName .teamMark{width:44px;height:44px;flex-basis:44px}.modernMatchSheet .modalName .teamMark img{width:40px;height:40px}.modernMatchSheet .modalFixture{gap:12px}}
+@media(max-width:760px){.welcomeDiscoverLinks{grid-template-columns:1fr}.welcomeDiscoverLinks button{padding:14px 16px}}
+@media(max-width:760px){
+  .welcomeShell{gap:24px}
+  .welcomeLogo{width:112px;height:112px;margin:18px auto 16px}
+  .welcomeBrand h1{font-size:clamp(2.7rem,12vw,4.2rem)}
+  .welcomeEnter{justify-content:space-between}
+}

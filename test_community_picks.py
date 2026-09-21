@@ -38,6 +38,15 @@ class CommunityPickAvailabilityTests(unittest.TestCase):
         self.assertIn("market unavailable", self.source)
         self.assertIn("model pick pending", self.source)
 
+    def test_research_top_pick_stays_in_current_week(self):
+        self.assertIn("const thisWeek=kickoff=>", self.source)
+        self.assertIn("m.betbetter_pick&&thisWeek(m.kickoff)", self.source)
+        self.assertIn(".filter(p=>thisWeek(p.kickoff))", self.source)
+
+    def test_community_pick_rows_show_school_marks(self):
+        self.assertIn("${teamMark(m.home.name)}", self.source)
+        self.assertIn("${teamMark(m.away.name)}", self.source)
+
 
 if __name__ == "__main__":
     unittest.main()
