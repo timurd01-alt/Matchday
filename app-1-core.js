@@ -817,6 +817,60 @@ function groupedBoardHTML(list){
     return `<div class="boardHorizon"><span>${esc(h.label)}</span><i>${games.length} ${games.length===1?'game':'games'}</i></div>`+games.map(cardHTML).join('');
   }).join('');
 }
+
+// The games-first summary deliberately reads the same Bet Better handoff as
+// the fixture card and expanded view. Do not fill its gaps from m.prediction:
+// that is a different forecast system and previously produced contradictory
+// picks on the same fixture.
+function gamesBoardRead(m){
+  const read=typeof betbetterReadFor==='function'?betbetterReadFor(m):null;
+  if(!read)return null;
+  const number=v=>v==null||v===''?null:(Number.isFinite(Number(v))?Number(v):null);
+  const model=number(read.model_pct),market=number(read.market_pct);
+  if(!read.pick_name||model==null)return null;
+  const supplied=number(read.edge_points);
+  return {match:m,pick:read.pick_name,model,market,
+    difference:market==null?null:(supplied==null?model-market:supplied)};
+}
+function gamesSummaryHTML(active){
+  const sport=SPORT_LABELS[currentSportKey()]||DATA.competition||'College sports';
+  const reads=active.map(gamesBoardRead).filter(Boolean);
+  const comparable=reads.filter(r=>r.market!=null&&r.difference!=null);
+  const featured=([...comparable].sort((a,b)=>fixtureSort(a.match,b.match))[0]
+    ||[...reads].sort((a,b)=>fixtureSort(a.match,b.match))[0]
+    ||active[0]&&{match:active[0],pick:'',model:null,market:null,difference:null});
+  const top=[...comparable].sort((a,b)=>Math.abs(b.difference)-Math.abs(a.difference)||fixtureSort(a.match,b.match)).slice(0,3);
+  const feature=featured?gamesFeaturedHTML(featured):`<div class="gamesEmpty">No upcoming games on this board.</div>`;
+  return `<section class="gamesLandingHead"><span>GAMES</span><h1>${esc(sport)}</h1><p>Pregame model probabilities, market comparisons and a public record.</p></section>`
+    +`<section class="gamesFeatured"><div class="gamesSectionHead"><span>Featured game</span><small>${featured?.model!=null?'Live model':'Board status'}</small></div>${feature}</section>`
+    +gamesDifferencesHTML(top)
+    +gamesRecordHTML()
+    +`<nav class="gamesExplore" aria-label="Explore Matchday"><span>Explore</span><div><button type="button" onclick="setView('groups')"><b>Rankings</b><small>Ratings and conferences</small></button><button type="button" onclick="setView('news')"><b>Research</b><small>Analysis and methodology</small></button><button type="button" onclick="setView('results')"><b>Results</b><small>Finals and grading</small></button></div></nav>`;
+}
+function gamesFeaturedHTML(read){
+  const m=read.match;
+  const comparison=read.market==null
+    ?`<div><span>Market</span><b>No snapshot yet</b></div><div><span>Difference</span><b>Not available</b></div>`
+    :`<div><span>Market</span><b>${read.market.toFixed(1)}%</b></div><div><span>Difference</span><b class="${read.difference>0?'up':read.difference<0?'down':''}">${read.difference>0?'+':''}${read.difference.toFixed(1)} pts</b></div>`;
+  const model=read.model==null
+    ?`<div><span>Live model</span><b>No prediction yet</b></div>`
+    :`<div><span>Live model · ${esc(read.pick)}</span><b>${read.model.toFixed(1)}%</b></div>`;
+  return `<button type="button" class="gamesFeaturedButton" onclick="openMatchModal('${esc(String(m.id))}')"><span class="gamesFeaturedWhen">${esc(m.stage||'Fixture')} · ${esc(kickIn(m.kickoff))}</span><strong>${esc(m.home?.name||'Home')} <i>vs</i> ${esc(m.away?.name||'Away')}</strong><div class="gamesFeaturedCompare">${model}${comparison}</div><em>View analysis <span aria-hidden="true">→</span></em></button>`;
+}
+function gamesDifferencesHTML(reads){
+  const rows=reads.length?reads.map(read=>{
+    const m=read.match,d=read.difference;
+    return `<button type="button" onclick="openMatchModal('${esc(String(m.id))}')"><span><b>${esc(m.home?.name||'Home')} vs ${esc(m.away?.name||'Away')}</b><small>${esc(read.pick)} · model ${read.model.toFixed(1)}% · market ${read.market.toFixed(1)}%</small></span><strong class="${d>0?'up':d<0?'down':''}">${d>0?'+':''}${d.toFixed(1)} pts</strong></button>`;
+  }).join(''):`<div class="gamesEmpty">Model and market comparisons will appear as games are priced.</div>`;
+  return `<section class="gamesDifferences"><div class="gamesSectionHead"><span>Largest model / market differences</span><small>${reads.length?'Top '+reads.length:'Awaiting prices'}</small></div><div class="gamesDifferenceRows">${rows}</div><button type="button" class="gamesTextLink" onclick="document.querySelector('.gamesFixtureBoard')?.scrollIntoView({behavior:prefersReducedMotion()?'auto':'smooth'})">View all games <span aria-hidden="true">→</span></button></section>`;
+}
+function gamesRecordHTML(){
+  const sc=typeof betbetterScorecard==='function'?betbetterScorecard():null;
+  const r=sc?.record;
+  if(!sc?.available||!r?.picks)return `<section class="gamesRecord"><div><span>Public record</span><strong>Record begins after picks are graded.</strong></div><button type="button" onclick="setView('score')">View Scorecard <span aria-hidden="true">→</span></button></section>`;
+  const expected=Number(r.expected_hit_rate_pct),actual=Number(r.hit_rate_pct),gap=Number(r.calibration_gap_points);
+  return `<section class="gamesRecord"><div><span>Public record</span><strong>${Number(r.wins)||0}–${Number(r.losses)||0}</strong><p>${r.picks} locked pregame picks · ${Number.isFinite(actual)?`${actual.toFixed(1)}% hit rate`:''}${Number.isFinite(expected)?` vs ${expected.toFixed(1)}% expected`:''}${Number.isFinite(gap)?` · ${gap>0?'+':''}${gap.toFixed(1)} calibration pts`:''}</p></div><button type="button" onclick="setView('score')">View Scorecard <span aria-hidden="true">→</span></button></section>`;
+}
 function renderMatches(){const M=DATA.matches||[];
   // One sport's full schedule, in kickoff order with favorites pinned. The
   // horizon headings below (In play / Today / This week) do the work the old
@@ -825,10 +879,8 @@ function renderMatches(){const M=DATA.matches||[];
   const active=M.filter(m=>!isCompleteOrPast(m)).sort(favoriteFixtureSort);
   const shown=active.slice(0,MATCH_VISIBLE),remaining=Math.max(0,active.length-shown.length);
   const missing=DATA._missing?`<div class="banner" style="grid-column:1/-1"><b>No ${esc(DATA.competition||'this sport')} data yet.</b> Fetch it once its season is available — run the matching start file (e.g. start_ucl.bat) or keep an eye out when the season begins.</div>`:'';
-  const analysisIntro=`<div class="viewIntro analysisIntro"><div><div class="vhead">Analysis</div><p>Ratings, schedule strength, conference context and recorded model performance.</p></div><span>season snapshot</span></div>`;
-  const intro=`<div class="viewIntro"><div><div class="vhead">${t('Fixtures')}</div><p>${FORECAST_PAUSE_ACTIVE?'Fixtures, scores and market odds. Model picks are paused.':'Pregame model reads now; final scores and grading after the game.'}</p></div><span>${active.length} games</span></div>`;
-  const modules=typeof collegeModules==='function'?collegeModules():'';
-  const html=missing+landingHero()+(modules?analysisIntro+modules:'')+intro+
+  const intro=`<div class="viewIntro gamesFixtureBoard"><div><div class="vhead">Today's board</div><p>${FORECAST_PAUSE_ACTIVE?'Fixtures, scores and market odds. Model picks are paused.':'Open a matchup for the full model, market and team analysis.'}</p></div><span>${active.length} games</span></div>`;
+  const html=missing+gamesSummaryHTML(active)+intro+
     (shown.length?groupedBoardHTML(shown):`<div class="empty" style="grid-column:1/-1">No upcoming matches to analyze.</div>`)+
     (remaining?`<div class="fixturePager"><span>Showing ${shown.length} of ${active.length} fixtures</span><button class="actionbtn" onclick="MATCH_VISIBLE+=FIXTURE_PAGE_SIZE;renderMatches()">Load ${Math.min(FIXTURE_PAGE_SIZE,remaining)} more</button></div>`:'');
   $('#view-matches').innerHTML=html;enhanceMatchCards($('#view-matches'));

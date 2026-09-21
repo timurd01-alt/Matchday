@@ -98,13 +98,30 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         self.assertIn("every rated league", parity)
         self.assertNotIn("stats.slice", parity)
 
-    def test_analysis_and_fixtures_are_distinct_homepage_sections(self):
+    def test_games_home_leads_with_predictions_not_analysis_modules(self):
         core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
-        styles = (ROOT / "styles.css").read_text(encoding="utf-8")
-        self.assertIn('class="viewIntro analysisIntro"', core)
-        self.assertIn('>Analysis</div>', core)
-        self.assertIn("analysisIntro+modules", core)
-        self.assertIn(".analysisIntro{", styles)
+        render = core[core.index("function renderMatches(){"):]
+        render = render[:render.index(chr(10) + "function ", 1)]
+        self.assertIn("gamesSummaryHTML(active)", render)
+        self.assertIn("groupedBoardHTML(shown)", render)
+        self.assertLess(render.index("gamesSummaryHTML(active)"),
+                        render.index("groupedBoardHTML(shown)"))
+        self.assertNotIn("collegeModules", render)
+        summary = core[core.index("function gamesSummaryHTML("):
+                       core.index("function renderMatches(){")]
+        for destination in ("Featured game", "Largest model / market differences",
+                            "Public record", "Explore"):
+            self.assertIn(destination, summary)
+
+    def test_games_home_uses_one_model_and_null_safe_comparisons(self):
+        core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
+        read = core[core.index("function gamesBoardRead("):
+                    core.index("function gamesSummaryHTML(")]
+        self.assertIn("betbetterReadFor", read)
+        self.assertIn("v==null||v===''?null", read)
+        self.assertIn("market==null?null", read)
+        for banned in ("m.prediction", "_v10OfficialPick", "officialPrediction"):
+            self.assertNotIn(banned, read)
 
     def test_news_is_a_primary_navigation_item(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")

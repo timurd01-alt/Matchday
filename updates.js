@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0920C",
+  "tag": "Interface",
+  "title": "Games now lead the Matchday experience",
+  "items": [
+   "The Games page now opens with a featured matchup, the largest current model and market differences, and Matchday's public record.",
+   "The full fixture board remains grouped by when games happen, with every matchup opening into the existing detailed analysis.",
+   "Season research modules no longer appear ahead of the games, while rankings, research and results remain directly accessible."
+  ]
+ },
+ {
   "date": "Build 0920B",
   "tag": "Pick",
   "title": "Week 39 upset watch selected",
