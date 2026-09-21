@@ -66,6 +66,11 @@ class MobileNavigationTests(unittest.TestCase):
         self.assertIn("grid-template-columns:1fr", phone)
         self.assertIn('grid-template-areas:"strip" "main" "side"', phone)
 
+    def test_wide_desktop_grid_reserves_the_full_navigation_width(self):
+        css = (ROOT / "styles.css").read_text(encoding="utf-8")
+        wide = css[css.rindex("@media(min-width:1400px){"):]
+        self.assertIn("grid-template-columns:112px minmax(0,1fr)", wide)
+
     def test_public_navigation_urls_support_history(self):
         panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
         features = (ROOT / "app-4-features.js").read_text(encoding="utf-8")

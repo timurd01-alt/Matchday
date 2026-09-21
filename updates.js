@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0920I",
+  "tag": "Fix",
+  "title": "The wide desktop rail no longer covers the page",
+  "items": [
+   "At large desktop widths, the page grid now reserves the same 112px occupied by the expanded navigation rail.",
+   "Home headings, section labels, matchup cards, and research content now begin fully to the right of navigation instead of losing their first 50px underneath it."
+  ]
+ },
+ {
   "date": "Build 0920H",
   "tag": "Brand",
   "title": "Matchday Terminal returns to the masthead",

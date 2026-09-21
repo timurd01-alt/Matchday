@@ -2543,6 +2543,11 @@ html{color-scheme:dark}
   .sidebar .navbtn:not([data-primary]):not(.navMore){display:flex}
   .sidebar .navMore{display:none!important}
 }
+/* The wide-desktop rail is 112px (see the navigation breakpoint above), so
+   its grid track must grow with it instead of covering the first 50px of main. */
+@media(min-width:1400px){
+  .app,.app.noinsight,.app.gamesWide{grid-template-columns:112px minmax(0,1fr)}
+}
 
 /* Home orients; Games carries the complete research board. */
 #view-home .gamesLandingHead{display:none}
