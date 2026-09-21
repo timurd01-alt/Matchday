@@ -850,13 +850,13 @@ function teamLogoCandidates(name){
 }
 function teamLogoFallback(img){
   const remaining=String(img.dataset.logoFallback||'').split('|').filter(Boolean);
-  if(remaining.length){img.dataset.logoFallback=remaining.slice(1).join('|');img.src='social/logos/'+remaining[0];return}
+  if(remaining.length){img.dataset.logoFallback=remaining.slice(1).join('|');img.src='team-logos/'+remaining[0];return}
   img.hidden=true;img.nextElementSibling.hidden=false;
 }
 function teamMark(name,extra=''){
   const candidates=teamLogoCandidates(name),file=candidates.shift()||'';
   const letters=String(name||'').split(/\s+/).filter(Boolean).slice(0,2).map(w=>w[0]).join('').toUpperCase()||'?';
-  return `<span class="teamMark ${esc(extra)}"><img src="social/logos/${esc(file)}" data-logo-fallback="${esc(candidates.join('|'))}" alt="" width="32" height="32" loading="lazy" onerror="teamLogoFallback(this)"><span class="teamMonogramText" hidden aria-hidden="true">${esc(letters)}</span></span>`;
+  return `<span class="teamMark ${esc(extra)}"><img src="team-logos/${esc(file)}" data-logo-fallback="${esc(candidates.join('|'))}" alt="" width="32" height="32" loading="lazy" onerror="teamLogoFallback(this)"><span class="teamMonogramText" hidden aria-hidden="true">${esc(letters)}</span></span>`;
 }
 function gamesSummaryHTML(active){
   const sport=SPORT_LABELS[currentSportKey()]||DATA.competition||'College sports';

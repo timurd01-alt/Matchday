@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0920M",
+  "tag": "Fix",
+  "title": "Expanded school marks now use the public asset path",
+  "items": [
+   "Pointed the expanded 254-school resolver at the team-logo directory assembled by the production deployment.",
+   "Full mascot names still fall back progressively to their school mark, with a monogram only when no local artwork exists."
+  ]
+ },
+ {
   "date": "Build 0920L",
   "tag": "Update",
   "title": "A fuller, more informative college board",

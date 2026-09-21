@@ -175,7 +175,7 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         self.assertIn("function teamLogoCandidates(name)", core)
         self.assertIn("label.startsWith(school+' ')", core)
         self.assertIn("function teamLogoFallback(img)", core)
-        self.assertIn('src="social/logos/${esc(file)}"', core)
+        self.assertIn('src="team-logos/${esc(file)}"', core)
         for logo in ("temple.png", "army.png", "rutgers.png", "howard.png", "uab.png",
                      "california.png", "wakeForest.png", "charlotte.png", "auburn.png",
                      "vanderbilt.png", "boiseState.png", "northwestern.png"):
