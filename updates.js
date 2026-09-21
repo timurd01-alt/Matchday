@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0921J",
+  "tag": "Fix",
+  "title": "Show full opponent in team profiles",
+  "items": [
+   "Team profiles now spell out the next opponent rather than showing an ambiguous one-letter team code."
+  ]
+ },
+ {
   "date": "Build 0921I",
   "tag": "Fix",
   "title": "Clearer college boards and faster switching",

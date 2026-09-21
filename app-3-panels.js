@@ -668,7 +668,7 @@ function teamProfileHTML(p){
     const res=gf>ga?'W':gf<ga?'L':'D';
     return `<div class="tpRecentRow"><i class="tpDot ${res}">${res}</i><span>${home?'vs':'@'} ${esc(opp.name||opp.code)}</span><b>${gf}-${ga}</b><span class="tpFaint">${esc(dt(m.kickoff)||'')}</span></div>`;
   }).join('');
-  const nextLine=p.next?`<div class="tpNext"><span class="tpFaint">Next</span> ${bbNameMatches(p.next.home.name,p.name)?'vs':'@'} <b>${esc(bbNameMatches(p.next.home.name,p.name)?p.next.away.code||p.next.away.name:p.next.home.code||p.next.home.name)}</b> · ${kickIn(p.next.kickoff)}</div>`:'';
+  const nextLine=p.next?`<div class="tpNext"><span class="tpFaint">Next</span> ${bbNameMatches(p.next.home.name,p.name)?'vs':'@'} <b>${esc(bbNameMatches(p.next.home.name,p.name)?p.next.away.name:p.next.home.name)}</b> · ${kickIn(p.next.kickoff)}</div>`:'';
   const record=(p.w!=null)?`${p.w}-${p.l}${!twoWay&&p.d!=null?`-${p.d}`:''}`:'—';
   return `<div class="tpHead"><button class="modalClose" onclick="closeTeamModal()" aria-label="Close">×</button>
     <div class="tpCode">${esc(p.code)}</div><div class="tpName">${teamMark(p.name)}${esc(p.name)}</div>
