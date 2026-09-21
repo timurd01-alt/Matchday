@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0920J",
+  "tag": "Data",
+  "title": "Sunday upset prices published",
+  "items": [
+   "Replaced the temporary model-only Week 39 fallback with the refreshed priced card led by Texas A&M over LSU.",
+   "Published updated NCAAF forecasts, ratings, schedules, expanded-view records and the Week 39 upset scorecard from Bet Better's viewer-safe handoff.",
+   "The release contains Matchday-facing data and release metadata only; Bet Better's private engine and operational data remain private."
+  ]
+ },
+ {
   "date": "Build 0920I",
   "tag": "Fix",
   "title": "The wide desktop rail no longer covers the page",
