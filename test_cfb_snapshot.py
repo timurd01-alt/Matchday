@@ -167,6 +167,8 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
                      "houston.png", "duke.png", "coastalCarolina.png", "liberty.png"):
             self.assertIn(logo, core)
             self.assertTrue((ROOT / "social" / "logos" / logo).is_file())
+        self.assertIn("'Coastal Carolina':'coastalCarolina.png'", core)
+        self.assertIn("Liberty:'liberty.png'", core)
 
     def test_the_welcome_cards_model_read_is_bet_betters(self):
         """The gate quotes one model, the same one every other screen quotes.

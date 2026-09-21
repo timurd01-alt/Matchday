@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0920G",
+  "tag": "Fix",
+  "title": "School logos now resolve inside Games",
+  "items": [
+   "Logo matching now recognizes the short school names used by fixture data as well as the full mascot names used in Rankings.",
+   "The featured matchup and individual Games cards share that resolver, while an initial badge remains the safe fallback for unmapped schools."
+  ]
+ },
+ {
   "date": "Build 0920F",
   "tag": "Fix",
   "title": "Phone navigation no longer overlaps the page",

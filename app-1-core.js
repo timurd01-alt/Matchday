@@ -822,6 +822,9 @@ function gamesBoardRead(m){
 const TEAM_LOGO_FILES={
   'Texas Longhorns':'texas.png','Georgia Bulldogs':'georgia.png','Miami Hurricanes':'miami.png','Ole Miss Rebels':'oleMiss.png','Ohio State Buckeyes':'ohioState.png','Notre Dame Fighting Irish':'notreDame.png','Indiana Hoosiers':'indiana.png','Alabama Crimson Tide':'alabama.png','BYU Cougars':'byu.png','USC Trojans':'usc.png','Texas Tech Red Raiders':'texasTech.png','LSU Tigers':'lsu.png','Utah Utes':'utah.png','Louisville Cardinals':'louisville.png','Iowa Hawkeyes':'iowa.png','Penn State Nittany Lions':'pennState.png','Tennessee Volunteers':'tennessee.png','Florida Gators':'florida.png','Missouri Tigers':'missouri.png','Mississippi State Bulldogs':'mississippiState.png','Kentucky Wildcats':'kentucky.png','Houston Cougars':'houston.png','SMU Mustangs':'smu.png','Michigan Wolverines':'michigan.png','Duke Blue Devils':'duke.png','Coastal Carolina Chanticleers':'coastalCarolina.png','Liberty Flames':'liberty.png'
 };
+Object.assign(TEAM_LOGO_FILES,{
+  Texas:'texas.png',Georgia:'georgia.png',Miami:'miami.png','Ole Miss':'oleMiss.png','Ohio State':'ohioState.png','Notre Dame':'notreDame.png',Indiana:'indiana.png',Alabama:'alabama.png',BYU:'byu.png',USC:'usc.png','Texas Tech':'texasTech.png',LSU:'lsu.png',Utah:'utah.png',Louisville:'louisville.png',Iowa:'iowa.png','Penn State':'pennState.png',Tennessee:'tennessee.png',Florida:'florida.png',Missouri:'missouri.png','Mississippi State':'mississippiState.png',Kentucky:'kentucky.png',Houston:'houston.png',SMU:'smu.png',Michigan:'michigan.png',Duke:'duke.png','Coastal Carolina':'coastalCarolina.png',Liberty:'liberty.png'
+});
 function teamMark(name,extra=''){
   const file=TEAM_LOGO_FILES[name];
   if(file)return `<span class="teamMark ${esc(extra)}"><img src="team-logos/${file}" alt="" width="32" height="32" loading="lazy"></span>`;
