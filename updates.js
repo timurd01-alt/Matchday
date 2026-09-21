@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0921H",
+  "tag": "Fix",
+  "title": "Keep data visible after entering",
+  "items": [
+   "Prevented a removed insight panel from interrupting successful board loads and incorrectly showing 'no data' after entering the site."
+  ]
+ },
+ {
   "date": "Build 0921G",
   "tag": "Fix",
   "title": "Restore entry and tighten welcome spacing",

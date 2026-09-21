@@ -24,7 +24,9 @@ function _insightFocusPool(M){
   return [primary,...others];
 }
 function renderInsight(){
-  const host=$('#insight'),M=DATA.matches||[];
+  const host=$('#insight');
+  if(!host)return;
+  const M=DATA.matches||[];
   const pool=_insightFocusPool(M);
   const n=diverseNews(6);
   const newsHTML=n.length?`<div class="seclbl" style="margin-top:18px">Latest from multiple sources</div>`+n.map(a=>`<a class="ins-news" href="${esc(a.link||a.url||'#')}" target="_blank" rel="noopener"><span class="insSource">${esc(sourceName(a))}</span><br>${esc(a.headline||a.title||'Untitled')}</a>`).join(''):'';
