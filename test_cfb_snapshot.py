@@ -141,7 +141,8 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
                             "Public record", "Explore"):
             self.assertIn(destination, summary)
         self.assertNotIn("+weeklyUpset", summary)
-        self.assertIn("publishedMarketGapReads()", summary)
+        self.assertNotIn("publishedMarketGapReads", core)
+        self.assertIn("const top=[...comparable]", summary)
 
     def test_games_home_uses_one_model_and_null_safe_comparisons(self):
         core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
@@ -179,6 +180,8 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         self.assertIn("Date.now()+7*86400000", summary)
         self.assertIn("const week=active.filter", summary)
         self.assertIn("week.map(gamesBoardRead)", summary)
+        self.assertIn("featuredMatchupRead(reads)", summary)
+        self.assertIn("MATCHDAY_BETBETTER_GAME_OF_THE_WEEK", core)
         self.assertIn("teamMark(m.home?.name)", core)
         self.assertIn("teamMark(m.away?.name)", core)
         self.assertIn("return teamMark(team?.name,extra)", core)
@@ -209,8 +212,8 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
         home = core[core.index("function renderHome(){"):core.index("function gamesFeaturedHTML(")]
         self.assertIn("priced=reads.filter", home)
-        self.assertIn("publishedMarketGapReads()", home)
-        self.assertIn("marketReads.length?edges:'—'", home)
+        self.assertNotIn("publishedMarketGapReads", home)
+        self.assertIn("priced.length?edges:'—'", home)
         self.assertIn("Edges awaiting market", home)
         self.assertIn("top.length?'':' noComparisons'", core)
         styles = (ROOT / "styles.css").read_text(encoding="utf-8")

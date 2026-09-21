@@ -4,6 +4,17 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0921F",
+  "tag": "Fix",
+  "title": "Home comparisons now use the full Bet Better handoff",
+  "items": [
+   "Filled the Home model-versus-market summary and featured game from Bet Better's current aggregate market probabilities and probability-point differences.",
+   "The featured game now follows Bet Better's best-matchup selection, which favors two strong, closely rated teams instead of the earliest game.",
+   "Removed the upset-pick fallback from Home; Upsets of the Week remains in Research only.",
+   "Published only the public handoff and generated site data, with no private Bet Better engine, database, book prices, or credentials."
+  ]
+ },
+ {
   "date": "Build 0921E",
   "tag": "Fix",
   "title": "Reliable college team marks",

@@ -818,15 +818,18 @@ function gamesBoardRead(m){
   return {match:m,pick:read.pick_name,model,market,
     difference:market==null?null:(supplied==null?model-market:supplied)};
 }
-function publishedMarketGapReads(){
-  const u=(typeof MATCHDAY_BETBETTER_UPSET!=='undefined')?MATCHDAY_BETBETTER_UPSET:null;
-  const now=Date.now(),horizon=now+7*86400000;
-  return (u?.available?bbSportRows(u.picks||[u.pick].filter(Boolean)):[])
-    .filter(p=>p&&Date.parse(p.kickoff)>now&&Date.parse(p.kickoff)<=horizon)
-    .map(p=>({match:{home:{name:p.home},away:{name:p.away}},pick:p.selection,
-      model:Number(p.model_pct),market:Number(p.market_pct),difference:Number(p.disagreement_points),
-      published:true}))
-    .filter(r=>Number.isFinite(r.model)&&Number.isFinite(r.market)&&Number.isFinite(r.difference));
+function featuredMatchupRead(reads){
+  // Bet Better's game of the week is selected for two strong, closely rated
+  // teams, not for the largest edge or simply the earliest kickoff.
+  const game=(typeof MATCHDAY_BETBETTER_GAME_OF_THE_WEEK!=='undefined'
+    &&MATCHDAY_BETBETTER_GAME_OF_THE_WEEK.available)?MATCHDAY_BETBETTER_GAME_OF_THE_WEEK.game:null;
+  if(!game)return null;
+  return reads.find(read=>{
+    const m=read.match;
+    if(String(m.kickoff||'').slice(0,10)!==String(game.kickoff||'').slice(0,10))return false;
+    return (bbNameMatches(m.home?.name,game.home?.team)&&bbNameMatches(m.away?.name,game.away?.team))
+      ||(bbNameMatches(m.home?.name,game.away?.team)&&bbNameMatches(m.away?.name,game.home?.team));
+  })||null;
 }
 const TEAM_LOGO_FILES={
   'Texas Longhorns':'texas.png','Georgia Bulldogs':'georgia.png','Miami Hurricanes':'miami.png','Ole Miss Rebels':'oleMiss.png','Ohio State Buckeyes':'ohioState.png','Notre Dame Fighting Irish':'notreDame.png','Indiana Hoosiers':'indiana.png','Alabama Crimson Tide':'alabama.png','BYU Cougars':'byu.png','USC Trojans':'usc.png','Texas Tech Red Raiders':'texasTech.png','LSU Tigers':'lsu.png','Utah Utes':'utah.png','Louisville Cardinals':'louisville.png','Iowa Hawkeyes':'iowa.png','Penn State Nittany Lions':'pennState.png','Tennessee Volunteers':'tennessee.png','Florida Gators':'florida.png','Missouri Tigers':'missouri.png','Mississippi State Bulldogs':'mississippiState.png','Kentucky Wildcats':'kentucky.png','Houston Cougars':'houston.png','SMU Mustangs':'smu.png','Michigan Wolverines':'michigan.png','Duke Blue Devils':'duke.png','Coastal Carolina Chanticleers':'coastalCarolina.png','Liberty Flames':'liberty.png'
@@ -881,11 +884,11 @@ function gamesSummaryHTML(active){
   const week=active.filter(m=>m.status==='LIVE'||(kickMs(m)&&kickMs(m)<=weekEnd));
   const reads=week.map(gamesBoardRead).filter(Boolean);
   const comparable=reads.filter(r=>r.market!=null&&r.difference!=null);
-  const marketReads=comparable.length?comparable:publishedMarketGapReads();
-  const featured=([...comparable].sort((a,b)=>fixtureSort(a.match,b.match))[0]
+  const featured=featuredMatchupRead(reads)
+    ||[...comparable].sort((a,b)=>fixtureSort(a.match,b.match))[0]
     ||[...reads].sort((a,b)=>fixtureSort(a.match,b.match))[0]
     ||week[0]&&{match:week[0],pick:'',model:null,market:null,difference:null});
-  const top=[...marketReads].sort((a,b)=>Math.abs(b.difference)-Math.abs(a.difference)||fixtureSort(a.match,b.match)).slice(0,3);
+  const top=[...comparable].sort((a,b)=>Math.abs(b.difference)-Math.abs(a.difference)||fixtureSort(a.match,b.match)).slice(0,3);
   const feature=featured?gamesFeaturedHTML(featured):`<div class="gamesEmpty">No games in the next seven days. The full schedule remains below.</div>`;
   return `<section class="gamesLandingHead"><span>GAMES</span><h1>${esc(sport)}</h1><p>Predictions, market comparisons and the public record.</p></section>`
     +`<section class="gamesFeatured"><div class="gamesSectionHead"><span>This week's featured game</span><small>${featured?.model!=null?'Live model':'Next 7 days'}</small></div>${feature}</section>`
@@ -896,10 +899,10 @@ function renderHome(){
   const host=$('#view-home'),active=(DATA.matches||[]).filter(m=>!isCompleteOrPast(m)).sort(favoriteFixtureSort);
   const weekEnd=Date.now()+7*86400000,week=active.filter(m=>m.status==='LIVE'||(kickMs(m)&&kickMs(m)<=weekEnd));
   const reads=week.map(gamesBoardRead).filter(Boolean),priced=reads.filter(r=>r.market!=null&&r.difference!=null);
-  const marketReads=priced.length?priced:publishedMarketGapReads(),edges=marketReads.filter(r=>Math.abs(r.difference)>=5).length;
+  const edges=priced.filter(r=>Math.abs(r.difference)>=5).length;
   const sc=typeof betbetterScorecard==='function'?betbetterScorecard():null;
   host.innerHTML=`<section class="homeIntro"><span>MATCHDAY TERMINAL</span><h1>College sports predictions &amp; research</h1><p>What matters now, before you choose where to go deeper.</p></section>`
-    +`<section class="homeKpis" aria-label="This week's overview"><div><strong>${week.length}</strong><span>Games this week</span></div><div><strong>${marketReads.length?edges:'—'}</strong><span>${marketReads.length?'Model / market gaps':'Edges awaiting market'}</span></div><div><strong>${Number(sc?.record?.picks)||0}</strong><span>Picks graded</span></div></section>`
+    +`<section class="homeKpis" aria-label="This week's overview"><div><strong>${week.length}</strong><span>Games this week</span></div><div><strong>${priced.length?edges:'—'}</strong><span>${priced.length?'Model / market gaps':'Edges awaiting market'}</span></div><div><strong>${Number(sc?.record?.picks)||0}</strong><span>Picks graded</span></div></section>`
     +gamesSummaryHTML(active);
 }
 function gamesFeaturedHTML(read){
@@ -916,7 +919,7 @@ function gamesDifferencesHTML(reads){
   const rows=reads.length?reads.map(read=>{
     const m=read.match,d=read.difference;
     const content=`<span><b>${esc(m.home?.name||'Home')} vs ${esc(m.away?.name||'Away')}</b><small>${esc(read.pick)} · model ${read.model.toFixed(1)}% · market ${read.market.toFixed(1)}%</small></span><strong class="${d>0?'up':d<0?'down':''}">${d>0?'+':''}${d.toFixed(1)} pts</strong>`;
-    return read.published?`<div class="gamesDifferenceRow">${content}</div>`:`<button type="button" onclick="openMatchModal('${esc(String(m.id))}')">${content}</button>`;
+    return `<button type="button" onclick="openMatchModal('${esc(String(m.id))}')">${content}</button>`;
   }).join(''):`<div class="gamesEmpty">Model and market comparisons will appear as games are priced.</div>`;
   return `<section class="gamesDifferences"><div class="gamesSectionHead"><span>Largest model / market differences</span><small>${reads.length?'Top '+reads.length:'Awaiting prices'}</small></div><div class="gamesDifferenceRows">${rows}</div><button type="button" class="gamesTextLink" onclick="document.querySelector('.gamesFixtureBoard')?.scrollIntoView({behavior:prefersReducedMotion()?'auto':'smooth'})">View all games <span aria-hidden="true">→</span></button></section>`;
 }
