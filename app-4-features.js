@@ -643,10 +643,21 @@ if(Object.prototype.hasOwnProperty.call(SPORT_LABELS,requestedSport)){
 // Insights left the sidebar (it duplicates the Content hub); it stays reachable
 // by ?view=insights, but a stale saved default should no longer land there.
 const savedView=safeView(SETTINGS.defaultView||'matches');
-const initialView=requestedView&&document.getElementById('view-'+requestedView)?requestedView:savedView;
-applySettings();applySportNav();setView(initialView);
+const requestedSafeView=requestedView?safeView(requestedView):'';
+const initialView=requestedSafeView&&document.getElementById('view-'+requestedSafeView)?requestedSafeView:savedView;
+applySettings();applySportNav();setView(initialView,{history:false});
 bootAccount(); // resolves a returning sign-in redirect, or restores an existing session
 load().then(()=>{
-  if(requestedView&&document.getElementById('view-'+requestedView))setView(requestedView);
+  if(requestedSafeView&&document.getElementById('view-'+requestedSafeView))setView(requestedSafeView,{history:false});
   if(requestedMatch&&BYID[requestedMatch])openMatchModal(requestedMatch);
+});
+window.addEventListener('popstate',()=>{
+  const params=new URLSearchParams(window.location.search),target=safeView(params.get('view')||'matches');
+  const sport=String(params.get('sport')||'').toLowerCase();
+  if(Object.prototype.hasOwnProperty.call(SPORT_LABELS,sport)&&currentSportKey()!==sport){
+    DATA_FILE=`data_${sport}.json`;MATCH_VISIBLE=FIXTURE_PAGE_SIZE;RESULT_VISIBLE=FIXTURE_PAGE_SIZE;MODEL_VISIBLE=MODEL_PAGE_SIZE;
+    try{localStorage.setItem('matchday.sport',DATA_FILE)}catch(e){}
+    applySportNav();showMatchLoading();clearCompetitionViewsForLoad();
+    load(true).then(()=>setView(target,{history:false}));
+  }else setView(target,{history:false});
 });

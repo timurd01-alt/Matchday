@@ -15,7 +15,7 @@ class AnalysisModeTests(unittest.TestCase):
         self.assertIn("payload.standings=[]", core)
         self.assertIn("payload.bracket=[]", core)
         self.assertIn("payload.bracketology=null", core)
-        self.assertIn("DATA=stripPastSeasonCompetitionViews(await r.json())", panels)
+        self.assertIn("DATA=stripPastSeasonCompetitionViews(payload)", panels)
 
     def test_mobile_metric_help_is_tap_safe_and_stays_onscreen(self):
         core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")

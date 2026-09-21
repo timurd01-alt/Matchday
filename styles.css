@@ -1535,6 +1535,18 @@ body.modalOpen{overflow:hidden}.matchModal{position:fixed;inset:0;z-index:99;dis
   .gamesDifferenceRows strong{min-width:64px;font-size:var(--fs-md)}
 }
 @media(prefers-reduced-motion:reduce){.gamesFeaturedButton{transition:none}.gamesFeaturedButton:hover{transform:none}}
+
+/* The same four primary destinations plus More now define the desktop rail as
+   well as the phone bar. Secondary tools expand in place instead of competing
+   with the product's main information architecture on every screen. */
+@media(min-width:701px){
+  .sidebar .navbtn:not([data-primary]):not(.navMore){display:none}
+  .sidebar .navMore{display:flex}
+  .sidebar.navSheet{width:198px;overflow-y:auto;box-shadow:16px 0 38px rgba(0,0,0,.48)}
+  .sidebar.navSheet .navbtn{width:198px}
+  .sidebar.navSheet .navbtn .lbl{display:block;max-width:130px;opacity:1;text-align:left}
+  .sidebar.navSheet .navbtn:not([data-primary]):not(.navMore){display:flex}
+}
 .compactCard .pick .pnote.compactSignal{display:block;margin-left:auto;color:var(--muted);font-family:var(--mono);font-size:var(--fs-2xs);letter-spacing:.01em;white-space:nowrap}.compactCard .pick.edge .pnote.compactSignal{color:var(--win)}
 
 /* Session welcome — a deliberate front door before the analysis desk. */

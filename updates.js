@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0920D",
+  "tag": "Interface",
+  "title": "A smaller navigation with clearer destinations",
+  "items": [
+   "The primary navigation is now Games, Rankings, Results and Research, with Scorecard, bracket tools and Community collected under More.",
+   "Rankings now separates predictive power ratings, the Top 25 résumé ballot and conference tables instead of presenting them as one category.",
+   "Research is now the home for rating, schedule and conference analysis alongside Matchday's existing research and news material."
+  ]
+ },
+ {
   "date": "Build 0920C",
   "tag": "Interface",
   "title": "Games now lead the Matchday experience",

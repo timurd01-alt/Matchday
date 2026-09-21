@@ -167,22 +167,22 @@ function stripPastSeasonCompetitionViews(payload,now=new Date()){
 // Each sport declares exactly which views exist for it, in order.
 const NAV_DEF={
   // Matchday covers college football and men's college basketball only. Every
-  // profile is the same six views; the pair is kept because NAV_LABELS still
-  // names them differently per sport (Rankings/CFP Bracket vs
-  // Conferences/Bracketology), which is the whole reason the table survives.
-  college:           ['matches','results','groups','bracket','score','community'],
-  college_basketball:['matches','results','groups','bracket','score','community']
+  // profile exposes the same destinations. The established route keys remain
+  // in place so saved preferences and bookmarks continue to work.
+  college:           ['matches','groups','results','news','score','bracket','community'],
+  college_basketball:['matches','groups','results','news','score','bracket','community']
 };
 // The only views that exist after the college pivot. A stored defaultView or a
 // bookmarked hash can still name a removed one (Customize let people save
 // 'news' or 'updates' for years), so every entry point clamps through this
 // rather than trusting what it was handed and rendering into a null host.
 const VIEWS=new Set(['matches','results','groups','bracket','score','news','community']);
-function safeView(v){return VIEWS.has(v)?v:'matches';}
+const VIEW_ALIASES={games:'matches',rankings:'groups',research:'news'};
+function safeView(v){v=VIEW_ALIASES[v]||v;return VIEWS.has(v)?v:'matches';}
 const SPORT_KIND={ncaaf:'college',ncaam:'college_basketball'};
 function currentSportKey(){const m=(DATA_FILE||'').match(/data_(\w+)\.json/);return m?m[1]:'';}
 function navProfile(){return SPORT_KIND[currentSportKey()]||'college';}
-const NAV_LABELS={college:{groups:'Conferences',bracket:'CFP Playoff'},college_basketball:{groups:'Conferences',bracket:'Bracketology'}};
+const NAV_LABELS={college:{matches:'Games',groups:'Rankings',news:'Research',bracket:'CFP Playoff'},college_basketball:{matches:'Games',groups:'Rankings',news:'Research',bracket:'Bracketology'}};
 function tottTitle(){return 'Team of the Tournament'}
 function applySportNav(){
   const prof=navProfile();
@@ -190,9 +190,8 @@ function applySportNav(){
   const labels=NAV_LABELS[prof]||{};
   document.querySelectorAll('.navbtn[data-v]').forEach(b=>{
     const hasBracket=(Array.isArray(DATA?.bracket)&&DATA.bracket.some(r=>(r?.matches||[]).length))||!!DATA?.bracketology;
-    const hasStandings=Array.isArray(DATA?.standings)&&DATA.standings.length>0;
     const hasThirdRace=Array.isArray(DATA?.third_race)&&DATA.third_race.length>0;
-    const hasViewData=b.dataset.v==='bracket'?hasBracket:b.dataset.v==='groups'?hasStandings:b.dataset.v==='third'?hasThirdRace:true;
+    const hasViewData=b.dataset.v==='bracket'?hasBracket:b.dataset.v==='third'?hasThirdRace:true;
     b.style.display=allowed.includes(b.dataset.v)&&hasViewData?'':'none';
     const l=b.querySelector('.lbl');
     if(l){const en=l.getAttribute('data-en')||l.textContent.trim();l.setAttribute('data-en',en);
@@ -203,14 +202,15 @@ function applySportNav(){
   document.querySelectorAll('.navGroup').forEach(g=>{
     g.hidden=!g.querySelector('.navbtn[data-v]:not([style*="display: none"]),.navExternal');
   });
-  if(!allowed.includes(VIEW))setView('matches');
+  const activeButton=document.querySelector(`.navbtn[data-v="${VIEW}"]`);
+  if(!allowed.includes(VIEW)||!activeButton||activeButton.style.display==='none')setView('matches');
 }
 function loadingBoardHTML(){return '<div class="loadingBoard" aria-label="Loading matches"><span></span><span></span><span></span><span></span></div>'}
 function showMatchLoading(){const host=$('#view-matches');if(host)host.innerHTML=loadingBoardHTML()}
 function clearCompetitionViewsForLoad(){
   ['groups','bracket','third'].forEach(view=>{const host=$('#view-'+view);if(host)host.innerHTML='<div class="empty">Loading current-season data…</div>'});
 }
-function changeSport(v){DATA_FILE=/^(ncaaf|ncaam)$/.test(v)?('data_'+v+'.json'):DEFAULT_SPORT_FILE;MATCH_VISIBLE=FIXTURE_PAGE_SIZE;RESULT_VISIBLE=FIXTURE_PAGE_SIZE;MODEL_VISIBLE=MODEL_PAGE_SIZE;try{localStorage.setItem('matchday.sport',DATA_FILE)}catch(e){};applySportNav();showMatchLoading();clearCompetitionViewsForLoad();load(true);}
+function changeSport(v){DATA_FILE=/^(ncaaf|ncaam)$/.test(v)?('data_'+v+'.json'):DEFAULT_SPORT_FILE;MATCH_VISIBLE=FIXTURE_PAGE_SIZE;RESULT_VISIBLE=FIXTURE_PAGE_SIZE;MODEL_VISIBLE=MODEL_PAGE_SIZE;try{localStorage.setItem('matchday.sport',DATA_FILE)}catch(e){};if(typeof syncViewLocation==='function')syncViewLocation(VIEW,'replace');applySportNav();showMatchLoading();clearCompetitionViewsForLoad();load(true);}
 
 const COLORS={orange:'#ffb02e',blue:'#4cc2ff',green:'#3ad17a',red:'#ff4d5e',purple:'#b16cff'};
 function saveSettings(){localStorage.setItem('matchday.settings',JSON.stringify(SETTINGS))}
@@ -1070,7 +1070,7 @@ function toggleNavSheet(){
   document.body.classList.add('navSheetOpen');
   nav.querySelector('.navbtn[data-v]:not([data-primary]):not([style*="display: none"])')?.focus();
 }
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&navSheetOpen())closeNavSheet()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&navSheetOpen()){closeNavSheet();document.querySelector('#nav .navMore')?.focus()}});
 document.addEventListener('click',e=>{if(navSheetOpen()&&!e.target.closest('#nav'))closeNavSheet()});
 function toggleAlertCenter(force){
   const panel=$('#alertCenter'),bell=$('#alertBell');if(!panel)return;

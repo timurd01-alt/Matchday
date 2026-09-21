@@ -1047,3 +1047,15 @@ function collegeModules(){
   const cards=[modUpsetOfWeek(),modTopPick(),modMyPicks(),modStatOfWeek(),modNotable(),modRatingScatter(),modConferenceStrength(),modBallot(),modTop25(),modUpsets(),modToughestSchedules(),modConferenceTable(),modConferenceParity()].filter(Boolean);
   return cards.length?`<div class="boardMods">${cards.join('')}</div>`:'';
 }
+
+/* Reuse the published college-analysis cards on the Research destination.
+   This is an information-architecture move, not another calculation path. */
+function collegeResearchModules(){
+  if(!['NCAAF','NCAAM'].includes(String(DATA?.comp_key||'').toUpperCase()))return '';
+  const cards=[modStatOfWeek(),modNotable(),modRatingScatter(),modConferenceStrength(),modToughestSchedules(),modConferenceTable(),modConferenceParity()].filter(Boolean);
+  return cards.length?`<section class="collegeResearch" aria-labelledby="collegeResearchTitle">
+    <div class="seclbl" id="collegeResearchTitle">College analysis</div>
+    <div class="hint" style="margin-bottom:10px">Team ratings, schedule strength, and conference context from the current published model.</div>
+    <div class="boardMods">${cards.join('')}</div>
+  </section>`:'';
+}

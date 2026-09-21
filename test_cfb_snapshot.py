@@ -123,9 +123,15 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         for banned in ("m.prediction", "_v10OfficialPick", "officialPrediction"):
             self.assertNotIn(banned, read)
 
-    def test_news_is_a_primary_navigation_item(self):
+    def test_research_is_the_primary_home_for_analysis(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
         self.assertIn('data-primary data-v="news"', html)
+        self.assertIn('<span class="lbl">Research</span>', html)
+        views = (ROOT / "app-2-views.js").read_text(encoding="utf-8")
+        panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
+        self.assertIn("function collegeResearchModules(){", views)
+        self.assertIn('class="vhead">Research</div>', panels)
+        self.assertIn("collegeResearchModules", panels)
 
     def test_the_welcome_cards_model_read_is_bet_betters(self):
         """The gate quotes one model, the same one every other screen quotes.

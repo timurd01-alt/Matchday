@@ -518,8 +518,16 @@ if(streakStats.streak>=2)parts.push(`<span class="ls-streak" title="Beat the Mod
 if(next)parts.push(`<span class="ls-next ls-clickable" data-mid="${esc(next.id)}" onclick="openMatchModal(this.dataset.mid)" role="button" tabindex="0" title="Open expanded view">Next · <b>${esc(next.home.code)} v ${esc(next.away.code)}</b> ${kickIn(next.kickoff)}</span>`);else parts.push(`<span class="ls-next">No upcoming fixtures</span>`);parts.push(`<span class="ls-upd">${fallback&&syncedAt?`Predictions synced ${ago(syncedAt)} · `:fallback?`<b class="stale">data source ${ago(freshness.last_successful_at||DATA.updated)}</b> · `:(()=>{try{const a=(Date.now()-new Date(DATA.updated))/60000;if(a>360)return `<b class="stale">data ${ago(DATA.updated)}</b> · `;}catch(e){}return 'Updated '+ago(DATA.updated)+' · ';})()}${t("independent · built for fans")} · <b style="color:var(--signal)">build ${currentBuild()}</b></span>`);$('#strip').innerHTML=parts.join('')}
 /* removed duplicate (diverseNews) */
 /* removed duplicate (renderInsight) */
-function setView(v){VIEW=safeView(v);v=VIEW;if(typeof closeNavSheet==='function')closeNavSheet();
-  document.querySelectorAll('.navbtn[data-v]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===v));document.querySelectorAll('.view').forEach(el=>el.style.display=el.id==='view-'+v?((v==='matches'||v==='results')?'grid':'block'):'none');renderCurrent();const active=$('#view-'+v);if(active){active.classList.remove('viewEntering');void active.offsetWidth;active.classList.add('viewEntering')}}
+const VIEW_PUBLIC_NAMES={matches:'games',groups:'rankings',news:'research'};
+function syncViewLocation(v,mode='push'){
+  if(!window.history?.pushState)return;
+  const url=new URL(window.location.href),publicName=VIEW_PUBLIC_NAMES[safeView(v)]||safeView(v),sport=currentSportKey();
+  if(url.searchParams.get('view')===publicName&&url.searchParams.get('sport')===sport)return;
+  url.searchParams.set('view',publicName);if(sport)url.searchParams.set('sport',sport);url.searchParams.delete('match');
+  window.history[mode==='replace'?'replaceState':'pushState']({view:publicName,sport},'',url);
+}
+function setView(v,options={}){VIEW=safeView(v);v=VIEW;if(typeof closeNavSheet==='function')closeNavSheet();
+  document.querySelectorAll('.navbtn[data-v]').forEach(b=>{const on=b.dataset.v===v;b.setAttribute('aria-pressed',on);if(on)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});document.querySelectorAll('.view').forEach(el=>el.style.display=el.id==='view-'+v?((v==='matches'||v==='results')?'grid':'block'):'none');if(options.history!==false)syncViewLocation(v,options.replace?'replace':'push');renderCurrent();const active=$('#view-'+v);if(active){active.classList.remove('viewEntering');void active.offsetWidth;active.classList.add('viewEntering')}}
 $('#nav').addEventListener('click',e=>{const b=e.target.closest('.navbtn[data-v]');if(b?.dataset.v)setView(b.dataset.v)});
 // aggregateScorecards() lived here: it merged every sport's scorecard into the
 // one the merged "All college" board showed. Each board now reads its own
@@ -534,23 +542,24 @@ $('#nav').addEventListener('click',e=>{const b=e.target.closest('.navbtn[data-v]
 // megabytes. Not 'no-store', which would forbid keeping a copy to revalidate
 // against and put us straight back to full downloads.
 const REVALIDATE={cache:'no-cache'};
-async function load(manual=false){if(LOAD_TIMER){clearTimeout(LOAD_TIMER);LOAD_TIMER=null}try{
+let LOAD_SEQUENCE=0;
+async function load(manual=false){const loadSequence=++LOAD_SEQUENCE,requestedFile=DATA_FILE;if(LOAD_TIMER){clearTimeout(LOAD_TIMER);LOAD_TIMER=null}try{
   // One board, one file. The merged "All college" view used to assemble itself
   // here out of board_summary.json (or, failing that, every per-sport file at
   // once) and then escalate to the full files when a visitor left the board;
   // none of that machinery is needed to load a single sport.
-  const r=await fetch(DATA_FILE,REVALIDATE);if(!r.ok)throw new Error('HTTP '+r.status);DATA=stripPastSeasonCompetitionViews(await r.json());applyForecastPublicationPauses(DATA);
+  const r=await fetch(requestedFile,REVALIDATE);if(!r.ok)throw new Error('HTTP '+r.status);const payload=await r.json();if(loadSequence!==LOAD_SEQUENCE||requestedFile!==DATA_FILE)return;DATA=stripPastSeasonCompetitionViews(payload);applyForecastPublicationPauses(DATA);
   applyCurrentCfbSnapshot(DATA);applyCurrentNcaamSnapshot(DATA);decodeNewsEntities(DATA);DATA.news=(DATA.news||[]).filter(isFreshNews).sort((a,b)=>newsTime(b)-newsTime(a));BYID={};(DATA.matches||[]).forEach(m=>BYID[m.id]=m);LAST_OK=true;LAST_ERROR='';const cn=$('#compName');if(cn)cn.textContent=DATA.competition?' · '+DATA.competition:'';const tb=document.querySelector('.navbtn[data-v="third"]');if(tb)tb.style.display=(DATA.third_race&&DATA.third_race.length)?'':'none';const gb2=document.querySelector('.navbtn[data-v="groups"]');if(gb2)gb2.style.display=(DATA.standings&&DATA.standings.length)?'':'none';// .some() passes (element,index): the index landed on isForecastPaused's
   // `payload` parameter, so the competition check read match._comp, which only
   // the merged build set -- the banner fired on every board except MLB's own.
-  applySportNav();renderStrip();renderInsight();renderCurrent();applyStaticI18n();renderAlerts()}catch(e){console.error(e);applySportNav();
+  applySportNav();renderStrip();renderInsight();renderCurrent();applyStaticI18n();renderAlerts()}catch(e){if(loadSequence!==LOAD_SEQUENCE||requestedFile!==DATA_FILE)return;console.error(e);applySportNav();
   const sel=currentSportKey();
   if(sel&&(!DATA||((DATA.comp_key||'').toLowerCase()!==sel))){
     DATA={matches:[],news:[],standings:[],third_race:[],bracket:null,scorecard:null,title_odds:[],scorers:[],team_of_tournament:null,
           comp_key:sel.toUpperCase(),competition:(SPORT_LABELS[sel]||sel),updated:'',_missing:true};
     BYID={};
   }
-  applySportNav();LAST_OK=false;LAST_ERROR=String(e.message||e);$('#strip').textContent='no data';const selKey=(DATA_FILE.match(/data_(\w+)\.json/)||[])[1];$('#view-matches').innerHTML=`<div class="empty" style="grid-column:1/-1">${selKey?`No ${esc(SPORT_LABELS[selKey]||selKey.toUpperCase())} data yet.<br><span class="faintline">Run start_${esc(selKey)}.bat once to pull it, or pick the other sport above.</span>`:`Data file not loaded.<br><span class="faintline">${esc(LAST_ERROR)}</span>`}</div>`;if(VIEW==='status')renderStatus()}finally{const ss=$('#sportSel');if(ss)ss.value=(DATA_FILE.match(/data_(\w+)\.json/)||['','ncaaf'])[1];scheduleNextLoad()}}
+  applySportNav();LAST_OK=false;LAST_ERROR=String(e.message||e);$('#strip').textContent='no data';const selKey=(DATA_FILE.match(/data_(\w+)\.json/)||[])[1];$('#view-matches').innerHTML=`<div class="empty" style="grid-column:1/-1">${selKey?`No ${esc(SPORT_LABELS[selKey]||selKey.toUpperCase())} data yet.<br><span class="faintline">Run start_${esc(selKey)}.bat once to pull it, or pick the other sport above.</span>`:`Data file not loaded.<br><span class="faintline">${esc(LAST_ERROR)}</span>`}</div>`;if(VIEW==='status')renderStatus()}finally{if(loadSequence===LOAD_SEQUENCE){const ss=$('#sportSel');if(ss)ss.value=(DATA_FILE.match(/data_(\w+)\.json/)||['','ncaaf'])[1];scheduleNextLoad()}}}
 function scheduleNextLoad(){if(LOAD_TIMER)clearTimeout(LOAD_TIMER);LOAD_TIMER=setTimeout(()=>load(),Math.max(30,Number(SETTINGS.refresh)||60)*1000)}
 
 
@@ -688,6 +697,21 @@ function diverseNews(limit=12){
   return fav?result.sort((a,b)=>Number(teamKey(`${b.headline||b.title||''} ${b.desc||''}`).includes(fav))-Number(teamKey(`${a.headline||a.title||''} ${a.desc||''}`).includes(fav))):result;
 }
 function renderNews(){const n=DATA.news||[],host=$('#view-news'),diag=DATA.diagnostics||[];const buckets=newsBuckets(),srcs=newsSources();if(NEWS_FILTER!=='all'&&!buckets[NEWS_FILTER])NEWS_FILTER='all';let list=NEWS_FILTER==='all'?diverseNews(Math.max(n.length,18)):buckets[NEWS_FILTER]||[];host.innerHTML=`<div class="vhead">News cycle</div><div class="srcCount">${n.length} headlines · ${srcs.length-1} detected sources</div><div class="newsTools">${srcs.map(s=>`<button class="chip ${s==='all'?'allchip':''} ${NEWS_FILTER===s?'on':''}" data-src="${esc(s)}" onclick="NEWS_FILTER=this.dataset.src;renderNews()">${esc(s==='all'?'All sources':s)}<span class="count">${s==='all'?n.length:(buckets[s]||[]).length}</span></button>`).join('')}</div>`+(list.length?`<div class="newsGrid">`+list.map(a=>`<a class="ncard" href="${esc(a.link||a.url||'#')}" target="_blank" rel="noopener"><div class="srcTop"><span class="srcBadge">${esc(sourceName(a))}</span>${feedName(a)?`<span class="feedBadge">via ${esc(feedName(a))}</span>`:''}</div><div class="nhead">${esc(a.headline||a.title||'Untitled')}</div>${a.desc||a.description?`<div class="ndesc">${esc(a.desc||a.description)}</div>`:''}<div class="nmeta">${a.published?ago(a.published):''}</div></a>`).join('')+`</div>`:`<div class="empty">No headlines yet.</div>`)+(diag.length?`<div class="diagList">${diag.filter(d=>String(d).toLowerCase().includes('news')).map(d=>`<div>${esc(d)}</div>`).join('')}</div>`:'')}
+
+const _renderNewsAsResearch=renderNews;
+renderNews=function(){
+  _renderNewsAsResearch();
+  const host=$('#view-news');
+  if(!host)return;
+  const oldTitle=host.querySelector('.vhead');
+  if(oldTitle)oldTitle.remove();
+  const count=host.querySelector('.srcCount');
+  if(count)count.insertAdjacentHTML('beforebegin',`<div class="seclbl" style="margin-top:20px">Latest research &amp; analysis</div>`);
+  const collegeAnalysis=typeof collegeResearchModules==='function'?collegeResearchModules():'';
+  host.insertAdjacentHTML('afterbegin',`<div class="vhead">Research</div>
+    <div class="banner"><b>Why the model sees the field this way.</b> Explore team strength, schedule context, conference comparisons, methodology, and the latest college analysis without crowding the game board.</div>
+    ${collegeAnalysis}`);
+}
 
 
 
@@ -906,6 +930,16 @@ renderGroups=function(){
   if(poll&&!host.querySelector('.pollSection'))host.insertAdjacentHTML('afterbegin',poll);
   const ballotTable=collegeBallotTableHTML();
   if(ballotTable&&!host.querySelector('.ballotSection'))host.insertAdjacentHTML('afterbegin',ballotTable);
+  if(!host.querySelector('.rankingsIntro'))host.insertAdjacentHTML('afterbegin',`<section class="rankingsIntro">
+    <div class="vhead">Rankings</div>
+    <div class="banner"><b>Three views of the college landscape.</b> Power Ratings measure opponent-adjusted team strength. My Top 25 ranks résumés. Conferences show the standings and schedule context beneath both.</div>
+  </section>`);
+  const ballot=host.querySelector('.ballotSection');
+  if(ballot&&!host.querySelector('[data-ranking-section="top25"]'))ballot.insertAdjacentHTML('beforebegin',`<div class="seclbl" data-ranking-section="top25">Top 25</div><div class="hint" style="margin-bottom:8px">A résumé ballot, kept separate from the predictive power rating.</div>`);
+  const power=host.querySelector('.pollSection:not(.ballotSection):not(.officialPoll)');
+  if(power&&!host.querySelector('[data-ranking-section="power"]'))power.insertAdjacentHTML('beforebegin',`<div class="seclbl" data-ranking-section="power">Power Ratings</div><div class="hint" style="margin-bottom:8px">Opponent-adjusted team strength with schedule, offense, and defense context.</div>`);
+  const conference=host.querySelector('.tablewrap:not(.officialPoll)');
+  if(conference&&!host.querySelector('[data-ranking-section="conferences"]'))conference.insertAdjacentHTML('beforebegin',`<div class="seclbl" data-ranking-section="conferences">Conferences</div><div class="hint" style="margin-bottom:8px">Conference tables with the model rating and strength of schedule shown together.</div>`);
   // The old caption said this rating was "context only" and a preseason
   // tiebreaker. That was wrong and misleading: it is the model's own
   // opponent-adjusted rating and the model does use it. Say what it is.
