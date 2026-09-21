@@ -155,6 +155,9 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
                           "modConferenceParity()"):
             self.assertIn(preserved, research)
         self.assertIn("balanceBoardMods(host.querySelector('.collegeResearch .boardMods'))", panels)
+        self.assertIn("host.querySelector('.diagList')?.remove()", panels)
+        self.assertIn("host.querySelector('.newsTools')?.remove()", panels)
+        self.assertIn("host.querySelector('.empty')?.remove()", panels)
 
     def test_featured_games_are_limited_to_the_next_week_and_show_team_marks(self):
         core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
@@ -174,6 +177,7 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         self.assertIn("Liberty:'liberty.png'", core)
         self.assertIn("function teamLogoCandidates(name)", core)
         self.assertIn("label.startsWith(school+' ')", core)
+        self.assertIn("'Michigan State Spartans':'michiganState.png'", core)
         self.assertIn("function teamLogoFallback(img)", core)
         self.assertIn('src="team-logos/${esc(file)}"', core)
         for logo in ("temple.png", "army.png", "rutgers.png", "howard.png", "uab.png",

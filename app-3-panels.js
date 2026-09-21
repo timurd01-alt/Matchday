@@ -714,6 +714,14 @@ renderNews=function(){
   if(!host)return;
   const oldTitle=host.querySelector('.vhead');
   if(oldTitle)oldTitle.remove();
+  // Research is useful even when the external headline feed is empty. Do not
+  // leave a large empty news panel or expose fetch diagnostics to readers.
+  host.querySelector('.diagList')?.remove();
+  if(!diverseNews(Math.max((DATA.news||[]).length,18)).length){
+    host.querySelector('.srcCount')?.remove();
+    host.querySelector('.newsTools')?.remove();
+    host.querySelector('.empty')?.remove();
+  }
   const count=host.querySelector('.srcCount');
   if(count)count.insertAdjacentHTML('beforebegin',`<div class="seclbl" style="margin-top:20px">Latest research &amp; analysis</div>`);
   const collegeAnalysis=typeof collegeResearchModules==='function'?collegeResearchModules():'';
