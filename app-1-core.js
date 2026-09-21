@@ -842,7 +842,8 @@ Object.assign(TEAM_LOGO_FILES,{
   'Florida International':'floridaIntl.png','Houston Christian':'houstonBaptist.png',Nicholls:'nichollsState.png',
   'North Carolina A&T':'northCarolinaAT.png','San José State':'sanJoseState.png','SE Louisiana':'southeasternLouisiana.png',
   'Texas A&M':'texasAM.png','The Citadel':'citadel.png',UAlbany:'albany.png',
-  'Michigan State':'michiganState.png','Michigan State Spartans':'michiganState.png'
+  'Michigan State':'michiganState.png','Michigan State Spartans':'michiganState.png',
+  TCU:'TCU.png',"Hawai'i":'hawaii.png','Oklahoma State':'OklahomaState.png'
 });
 function inferredTeamLogoFile(name){
   const words=String(name||'').replace(/&/g,' and ').replace(/[^A-Za-z0-9]+/g,' ').trim().split(/\s+/).filter(Boolean);
@@ -853,14 +854,16 @@ function teamLogoCandidates(name){
   const label=String(name||'').trim();
   const words=label.replace(/&/g,' and ').replace(/[^A-Za-z0-9]+/g,' ').trim().split(/\s+/).filter(Boolean);
   const exact=TEAM_LOGO_FILES[label];
+  const distinctSchoolWord=new Set(['state','tech','university','college','international','christian','baptist','a&m','a']);
+  const safeSuffix=remaining=>!distinctSchoolWord.has(String(remaining||'').toLowerCase());
   const inferred=[];
-  for(let end=words.length;end>0;end--)inferred.push(inferredTeamLogoFile(words.slice(0,end).join(' ')));
+  for(let end=words.length;end>0;end--)if(safeSuffix(words[end]))inferred.push(inferredTeamLogoFile(words.slice(0,end).join(' ')));
   // Try the longest full school name before a shorter prefix: Michigan State
   // must never inherit Michigan's mark, and likewise for other state schools.
   const mappedPrefixes=Object.entries(TEAM_LOGO_FILES)
-    .filter(([school])=>label.startsWith(school+' '))
+    .filter(([school])=>label.startsWith(school+' ')&&safeSuffix(label.slice(school.length).trim().split(/\s+/)[0]))
     .sort((a,b)=>b[0].length-a[0].length).map(([,file])=>file);
-  return [...new Set([exact,...inferred[0],...mappedPrefixes,...inferred.slice(1)].filter(Boolean))];
+  return [...new Set([exact,...mappedPrefixes,...inferred].filter(Boolean))];
 }
 function teamLogoFallback(img){
   const remaining=String(img.dataset.logoFallback||'').split('|').filter(Boolean);

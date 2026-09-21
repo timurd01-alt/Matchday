@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0921E",
+  "tag": "Fix",
+  "title": "Reliable college team marks",
+  "items": [
+   "Fixed logo lookup so game and result cards request complete filenames instead of broken character-by-character paths.",
+   "Unavailable marks now cleanly show a school monogram instead of a broken image; similarly named schools no longer inherit another school's mark.",
+   "Corrected the local-file mappings for TCU, Hawai'i, and Oklahoma State."
+  ]
+ },
+ {
   "date": "Build 0921D",
   "tag": "Fix",
   "title": "Home market gaps populated without an upset card",

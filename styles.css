@@ -2580,6 +2580,7 @@ html{color-scheme:dark}
 .gamesFeaturedTeam>span:last-child{min-width:0}
 .teamMark{display:inline-grid;width:34px;height:34px;flex:0 0 34px;place-items:center;border-radius:9px;background:rgba(255,255,255,.055)}
 .teamMark img{display:block;width:28px;height:28px;object-fit:contain}
+.teamMark img[hidden],.teamMark .teamMonogramText[hidden]{display:none}
 .teamMonogramText{font:var(--fw-bold) var(--fs-3xs)/1 var(--mono);color:var(--muted)}
 .teamMonogram{border:1px solid var(--line2);color:var(--muted);font:var(--fw-bold) var(--fs-xs)/1 var(--mono)}
 .gamesSupportGrid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(270px,.75fr);gap:clamp(28px,4vw,64px);align-items:stretch;margin-top:28px}

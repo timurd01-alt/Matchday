@@ -192,7 +192,14 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         self.assertIn("label.startsWith(school+' ')", core)
         self.assertIn("'Michigan State Spartans':'michiganState.png'", core)
         self.assertIn("function teamLogoFallback(img)", core)
+        self.assertIn("[exact,...mappedPrefixes,...inferred]", core)
+        self.assertNotIn("...inferred[0]", core)
+        self.assertIn("safeSuffix(words[end])", core)
+        self.assertIn("TCU:'TCU.png'", core)
+        self.assertIn("'Oklahoma State':'OklahomaState.png'", core)
         self.assertIn('src="team-logos/${esc(file)}"', core)
+        styles = (ROOT / "styles.css").read_text(encoding="utf-8")
+        self.assertIn(".teamMark img[hidden],.teamMark .teamMonogramText[hidden]{display:none}", styles)
         for logo in ("temple.png", "army.png", "rutgers.png", "howard.png", "uab.png",
                      "california.png", "wakeForest.png", "charlotte.png", "auburn.png",
                      "vanderbilt.png", "boiseState.png", "northwestern.png"):

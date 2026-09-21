@@ -1,5 +1,11 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-09-21 (school-mark rendering and existing local filename
+matching only. The marks still come from the previously reviewed local
+`klunn91/team-logos` library; unavailable schools show a monogram rather than
+another school's mark. No new asset source, sports-data endpoint, restricted
+field, raw payload, quota policy, or ESPN content was added.)
+
 Reviewed: 2026-09-20 (interface and local school-mark expansion only. The
 complete library supplied 254 school marks (plus one unused NCAA mark) from
 the same public `klunn91/team-logos` source already documented in
