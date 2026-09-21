@@ -873,8 +873,13 @@ function gamesSummaryHTML(active){
     ||week[0]&&{match:week[0],pick:'',model:null,market:null,difference:null});
   const top=[...comparable].sort((a,b)=>Math.abs(b.difference)-Math.abs(a.difference)||fixtureSort(a.match,b.match)).slice(0,3);
   const feature=featured?gamesFeaturedHTML(featured):`<div class="gamesEmpty">No games in the next seven days. The full schedule remains below.</div>`;
+  // The weekly upset card is supplied by the viewer-safe Bet Better snapshot.
+  // Keep it on Home even when Matchday's own fixture/market feed is empty: that
+  // is exactly when the handoff is carrying the useful current-week context.
+  const weeklyUpset=(typeof modUpsetOfWeek==='function')?modUpsetOfWeek():'';
   return `<section class="gamesLandingHead"><span>GAMES</span><h1>${esc(sport)}</h1><p>Predictions, market comparisons and the public record.</p></section>`
     +`<section class="gamesFeatured"><div class="gamesSectionHead"><span>This week's featured game</span><small>${featured?.model!=null?'Live model':'Next 7 days'}</small></div>${feature}</section>`
+    +weeklyUpset
     +`<div class="gamesSupportGrid${top.length?'':' noComparisons'}">${gamesDifferencesHTML(top)}${gamesRecordHTML()}</div>`
     +`<nav class="gamesExplore" aria-label="Explore Matchday"><span>Explore</span><div><button type="button" onclick="setView('groups')"><b>Rankings</b><small>Ratings and conferences</small></button><button type="button" onclick="setView('news')"><b>Research</b><small>Analysis and methodology</small></button><button type="button" onclick="setView('results')"><b>Results</b><small>Finals and grading</small></button></div></nav>`;
 }

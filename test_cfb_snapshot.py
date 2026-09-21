@@ -129,6 +129,8 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         for destination in ("featured game", "Largest model / market differences",
                             "Public record", "Explore"):
             self.assertIn(destination, summary)
+        self.assertIn("modUpsetOfWeek", summary)
+        self.assertIn("+weeklyUpset", summary)
 
     def test_games_home_uses_one_model_and_null_safe_comparisons(self):
         core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
