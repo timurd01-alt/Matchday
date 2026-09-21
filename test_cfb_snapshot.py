@@ -170,6 +170,22 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         self.assertIn("'Coastal Carolina':'coastalCarolina.png'", core)
         self.assertIn("Liberty:'liberty.png'", core)
 
+    def test_home_does_not_call_missing_market_edges_zero(self):
+        core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
+        home = core[core.index("function renderHome(){"):core.index("function gamesFeaturedHTML(")]
+        self.assertIn("priced=reads.filter", home)
+        self.assertIn("priced.length?edges:'—'", home)
+        self.assertIn("Edges awaiting market", home)
+
+    def test_matchday_terminal_brand_is_consistent_on_the_entry_screen(self):
+        html = (ROOT / "index.html").read_text(encoding="utf-8")
+        styles = (ROOT / "styles.css").read_text(encoding="utf-8")
+        self.assertIn('<h1 id="welcomeTitle">Matchday Terminal</h1>', html)
+        self.assertIn("Enter Matchday Terminal", html)
+        self.assertIn('<span class="pip"></span>Matchday Terminal', html)
+        self.assertIn(".welcomeLogo{width:104px;height:104px", styles)
+        self.assertIn(".welcomeBrand h1{color:#fff;letter-spacing:-.025em", styles)
+
     def test_the_welcome_cards_model_read_is_bet_betters(self):
         """The gate quotes one model, the same one every other screen quotes.
 

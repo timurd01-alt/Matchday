@@ -850,10 +850,10 @@ function gamesSummaryHTML(active){
 function renderHome(){
   const host=$('#view-home'),active=(DATA.matches||[]).filter(m=>!isCompleteOrPast(m)).sort(favoriteFixtureSort);
   const weekEnd=Date.now()+7*86400000,week=active.filter(m=>m.status==='LIVE'||(kickMs(m)&&kickMs(m)<=weekEnd));
-  const reads=week.map(gamesBoardRead).filter(Boolean),edges=reads.filter(r=>r.difference!=null&&Math.abs(r.difference)>=5).length;
+  const reads=week.map(gamesBoardRead).filter(Boolean),priced=reads.filter(r=>r.market!=null&&r.difference!=null),edges=priced.filter(r=>Math.abs(r.difference)>=5).length;
   const sc=typeof betbetterScorecard==='function'?betbetterScorecard():null;
-  host.innerHTML=`<section class="homeIntro"><span>MATCHDAY</span><h1>College sports predictions &amp; research</h1><p>What matters now, before you choose where to go deeper.</p></section>`
-    +`<section class="homeKpis" aria-label="This week's overview"><div><strong>${week.length}</strong><span>Games this week</span></div><div><strong>${edges}</strong><span>Model edges</span></div><div><strong>${Number(sc?.record?.picks)||0}</strong><span>Picks graded</span></div></section>`
+  host.innerHTML=`<section class="homeIntro"><span>MATCHDAY TERMINAL</span><h1>College sports predictions &amp; research</h1><p>What matters now, before you choose where to go deeper.</p></section>`
+    +`<section class="homeKpis" aria-label="This week's overview"><div><strong>${week.length}</strong><span>Games this week</span></div><div><strong>${priced.length?edges:'—'}</strong><span>${priced.length?'Model edges':'Edges awaiting market'}</span></div><div><strong>${Number(sc?.record?.picks)||0}</strong><span>Picks graded</span></div></section>`
     +gamesSummaryHTML(active);
 }
 function gamesFeaturedHTML(read){

@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0920H",
+  "tag": "Brand",
+  "title": "Matchday Terminal returns to the masthead",
+  "items": [
+   "The welcome screen, browser metadata, entry button, Home label, and site masthead now consistently use the full Matchday Terminal name.",
+   "Welcome typography is white with calmer, even tracking, and the brand mark is larger while remaining responsive on phones.",
+   "The Home edge counter now shows that it is awaiting market prices instead of reporting a misleading zero when no comparable snapshots exist."
+  ]
+ },
+ {
   "date": "Build 0920G",
   "tag": "Fix",
   "title": "School logos now resolve inside Games",
