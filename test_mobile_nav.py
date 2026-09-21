@@ -58,6 +58,14 @@ class MobileNavigationTests(unittest.TestCase):
         self.assertIn("research:'news'", core)
         self.assertIn("document.querySelector('#nav .navMore')?.focus()", core)
 
+    def test_desktop_full_width_grid_cannot_override_the_phone_layout(self):
+        css = (ROOT / "styles.css").read_text(encoding="utf-8")
+        desktop = css[css.rindex("@media(min-width:701px){"):]
+        phone = css[css.rindex("@media(max-width:700px){"):]
+        self.assertIn("grid-template-columns:62px minmax(0,1fr)", desktop)
+        self.assertIn("grid-template-columns:1fr", phone)
+        self.assertIn('grid-template-areas:"strip" "main" "side"', phone)
+
     def test_public_navigation_urls_support_history(self):
         panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
         features = (ROOT / "app-4-features.js").read_text(encoding="utf-8")

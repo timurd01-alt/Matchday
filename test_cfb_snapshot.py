@@ -105,6 +105,8 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         self.assertIn('class="confLeader"', views)
         self.assertIn("modConferenceTable()", views)
         self.assertNotIn("<h3>Power vs Group of Five</h3>", views)
+        toughest = views[views.index("function modToughestSchedules(){"):views.index("function modConferenceTable(){")]
+        self.assertIn(".slice(0,10)", toughest)
         parity = views[views.index("function modConferenceParity(){"):views.index("function collegeModules(){")]
         self.assertIn("const body=stats.map", parity)
         self.assertIn("every rated league", parity)
@@ -160,6 +162,11 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         self.assertIn("week.map(gamesBoardRead)", summary)
         self.assertIn("teamMark(m.home?.name)", core)
         self.assertIn("teamMark(m.away?.name)", core)
+        self.assertIn("if(TEAM_LOGO_FILES[team?.name])return teamMark(team.name,extra)", core)
+        for logo in ("florida.png", "mississippiState.png", "kentucky.png",
+                     "houston.png", "duke.png", "coastalCarolina.png", "liberty.png"):
+            self.assertIn(logo, core)
+            self.assertTrue((ROOT / "social" / "logos" / logo).is_file())
 
     def test_the_welcome_cards_model_read_is_bet_betters(self):
         """The gate quotes one model, the same one every other screen quotes.

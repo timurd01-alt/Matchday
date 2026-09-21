@@ -2535,11 +2535,11 @@ html{color-scheme:dark}
    The old persistent In Focus rail repeated the selected matchup and took
    340px from every screen. Matchups now open on demand, leaving the full
    desktop canvas to the primary content. */
-.app,.app.noinsight,.app.gamesWide{grid-template-columns:62px minmax(0,1fr);grid-template-areas:"strip strip" "side main"}
 .insight,.railToggle{display:none!important}
 
 /* Desktop has room for every destination; only the phone uses More. */
 @media(min-width:701px){
+  .app,.app.noinsight,.app.gamesWide{grid-template-columns:62px minmax(0,1fr);grid-template-areas:"strip strip" "side main"}
   .sidebar .navbtn:not([data-primary]):not(.navMore){display:flex}
   .sidebar .navMore{display:none!important}
 }
@@ -2557,6 +2557,7 @@ html{color-scheme:dark}
 
 /* Four primary phone destinations plus More. The sheet reveals everything. */
 @media(max-width:700px){
+  .app,.app.noinsight,.app.gamesWide{grid-template-columns:1fr;grid-template-rows:46px minmax(0,1fr) 64px;grid-template-areas:"strip" "main" "side"}
   .sidebar .navbtn:not([data-mobile-primary]):not(.navMore){display:none}
   .sidebar.navSheet .navbtn:not(.navMore){display:flex}
   .homeKpis{grid-template-columns:1fr;margin:16px 0 22px}

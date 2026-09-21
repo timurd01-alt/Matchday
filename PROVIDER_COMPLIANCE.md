@@ -1,5 +1,11 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-09-20 (interface and local school-mark expansion only. Seven
+additional NCAA marks came from the same public `klunn91/team-logos` library
+already documented in `social/logos/README.md`; marks remain the property of
+their schools and imply no sponsorship. No sports-data provider, endpoint,
+restricted field, raw payload, quota policy, or ESPN content was added.)
+
 Reviewed: 2026-09-18 (restore the existing college-football refresh after a
 deleted cross-provider helper crashed full polls. The existing poll-based
 bracket transformation now belongs to the CollegeFootballData adapter. Same

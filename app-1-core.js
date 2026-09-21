@@ -246,7 +246,10 @@ function teamInitials(team){
   return (words.length>1?words.slice(0,3).map(w=>w[0]).join(''):words[0]?.slice(0,3)||'TM').toUpperCase();
 }
 function teamHue(team){let h=0;for(const ch of String(team?.name||team?.code||'team'))h=(h*31+ch.charCodeAt(0))%360;return h}
-function teamMarkHTML(team,extra=''){return `<span class="teamMark ${esc(extra)}" style="--team-hue:${teamHue(team)}" aria-hidden="true">${esc(teamInitials(team))}</span>`}
+function teamMarkHTML(team,extra=''){
+  if(TEAM_LOGO_FILES[team?.name])return teamMark(team.name,extra);
+  return `<span class="teamMark teamMonogram ${esc(extra)}" style="--team-hue:${teamHue(team)}" aria-hidden="true">${esc(teamInitials(team))}</span>`;
+}
 function metricHelp(label,copy){return `<button type="button" class="metricHelp" aria-label="${esc(label)}: ${esc(copy)}" aria-expanded="false" aria-controls="metricHelpPopover" data-tip="${esc(copy)}">?</button>`}
 function metricHelpPopover(){
   let pop=document.querySelector('#metricHelpPopover');
@@ -817,11 +820,11 @@ function gamesBoardRead(m){
     difference:market==null?null:(supplied==null?model-market:supplied)};
 }
 const TEAM_LOGO_FILES={
-  'Texas Longhorns':'texas.png','Georgia Bulldogs':'georgia.png','Miami Hurricanes':'miami.png','Ole Miss Rebels':'oleMiss.png','Ohio State Buckeyes':'ohioState.png','Notre Dame Fighting Irish':'notreDame.png','Indiana Hoosiers':'indiana.png','Alabama Crimson Tide':'alabama.png','BYU Cougars':'byu.png','USC Trojans':'usc.png','Texas Tech Red Raiders':'texasTech.png','LSU Tigers':'lsu.png','Utah Utes':'utah.png','Louisville Cardinals':'louisville.png','Iowa Hawkeyes':'iowa.png','Penn State Nittany Lions':'pennState.png','Tennessee Volunteers':'tennessee.png','Missouri Tigers':'missouri.png','SMU Mustangs':'smu.png','Michigan Wolverines':'michigan.png'
+  'Texas Longhorns':'texas.png','Georgia Bulldogs':'georgia.png','Miami Hurricanes':'miami.png','Ole Miss Rebels':'oleMiss.png','Ohio State Buckeyes':'ohioState.png','Notre Dame Fighting Irish':'notreDame.png','Indiana Hoosiers':'indiana.png','Alabama Crimson Tide':'alabama.png','BYU Cougars':'byu.png','USC Trojans':'usc.png','Texas Tech Red Raiders':'texasTech.png','LSU Tigers':'lsu.png','Utah Utes':'utah.png','Louisville Cardinals':'louisville.png','Iowa Hawkeyes':'iowa.png','Penn State Nittany Lions':'pennState.png','Tennessee Volunteers':'tennessee.png','Florida Gators':'florida.png','Missouri Tigers':'missouri.png','Mississippi State Bulldogs':'mississippiState.png','Kentucky Wildcats':'kentucky.png','Houston Cougars':'houston.png','SMU Mustangs':'smu.png','Michigan Wolverines':'michigan.png','Duke Blue Devils':'duke.png','Coastal Carolina Chanticleers':'coastalCarolina.png','Liberty Flames':'liberty.png'
 };
-function teamMark(name){
+function teamMark(name,extra=''){
   const file=TEAM_LOGO_FILES[name];
-  if(file)return `<span class="teamMark"><img src="team-logos/${file}" alt="" width="32" height="32" loading="lazy"></span>`;
+  if(file)return `<span class="teamMark ${esc(extra)}"><img src="team-logos/${file}" alt="" width="32" height="32" loading="lazy"></span>`;
   const letters=String(name||'').split(/\s+/).filter(Boolean).slice(0,2).map(w=>w[0]).join('').toUpperCase()||'?';
   return `<span class="teamMark teamMonogram" aria-hidden="true">${esc(letters)}</span>`;
 }

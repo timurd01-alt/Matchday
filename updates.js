@@ -4,6 +4,17 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0920F",
+  "tag": "Fix",
+  "title": "Phone navigation no longer overlaps the page",
+  "items": [
+   "The full-width desktop grid is now limited to desktop screens, restoring the bottom navigation and full content width on phones.",
+   "Home, Games, Rankings, and Research remain directly available in the phone bar, with every other destination under More.",
+   "Toughest Schedules now lists ten teams, filling the research card with useful rankings instead of stretching five rows apart.",
+   "Seven missing school marks were added, and the same local logo resolver now supplies both the featured matchup and every Games card."
+  ]
+ },
+ {
   "date": "Build 0920E",
   "tag": "Design",
   "title": "A calmer Home and a dedicated Games board",

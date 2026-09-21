@@ -983,7 +983,7 @@ ${ordered.length>MAX_ROWS?`<p class="modNote">Showing the ${MAX_ROWS} most recen
 <p class="modNote">${esc(u.note||'')}</p></section>`;
 }
 
-/* A small table for the gap at the foot of the last column.
+/* A useful table for the foot of a research column.
    Toughest schedules, because it is the one number this week's upstream work
    was about and the board otherwise only shows SoS as a value beside a rating,
    never ranked on its own. Ranked teams only: the hardest schedule in the
@@ -994,7 +994,7 @@ function modToughestSchedules(){
   const rows=(table?.rankings||[]).filter(r=>Number.isFinite(Number(r.sos)));
   if(rows.length<10)return '';
   const pool=rows.filter(r=>(r.rank||999)<=40);
-  const top=(pool.length>=5?pool:rows).slice().sort((a,b)=>Number(b.sos)-Number(a.sos)).slice(0,5);
+  const top=(pool.length>=10?pool:rows).slice().sort((a,b)=>Number(b.sos)-Number(a.sos)).slice(0,10);
   if(!top.length)return '';
   const body=top.map(r=>`<tr><td class="tsTeam">${esc(r.name)}</td>`
     +`<td>#${r.rank}</td>`
