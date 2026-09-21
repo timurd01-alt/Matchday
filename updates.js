@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0920K",
+  "tag": "Fix",
+  "title": "Week 39 upset cards are now visible",
+  "items": [
+   "Rebuilt Matchday's public NCAAF snapshot from the Sunday Bet Better handoff so the priced Week 39 upset cards render on the live site.",
+   "The public card now leads with Texas A&M over LSU, followed by Vanderbilt over Auburn and Cincinnati over Kansas State.",
+   "This remains a viewer-safe data release; no Bet Better engine, database, credentials, tests or implementation source were published."
+  ]
+ },
+ {
   "date": "Build 0920J",
   "tag": "Data",
   "title": "Sunday upset prices published",
