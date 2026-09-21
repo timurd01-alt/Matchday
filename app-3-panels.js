@@ -1219,7 +1219,7 @@ function matchupWhyPanel(m,p){
     return `<div class="matchWhyRow"><span>${esc(label)}</span><b>${valid?left.toFixed(digits):'—'}</b><i></i><b>${valid?right.toFixed(digits):'—'}</b></div>`;
   };
   const title=p?.pick_name?`Why the model leans ${p.pick_name}`:'What separates these teams';
-  return `<section class="matchWhy"><div class="matchWhyHead"><span>Why</span><h3>${esc(title)}</h3><p>The clearest opponent-adjusted signals behind this matchup. Full evidence remains available below.</p></div><div class="matchWhyTeams"><b>${esc(m?.home?.code||m?.home?.name||'Home')}</b><span>comparison</span><b>${esc(m?.away?.code||m?.away?.name||'Away')}</b></div><div class="matchWhyRows">${metric('Rating',h?.rating,a?.rating,2)}${metric('Offence',h?.adj_o,a?.adj_o)}${metric('Defence',h?.adj_d,a?.adj_d)}${metric('Schedule',h?.sos,a?.sos,2)}</div></section>`;
+  return `<section class="matchWhy"><div class="matchWhyHead"><span>Why</span><h3>${esc(title)}</h3><p>The clearest opponent-adjusted signals behind this matchup. Full evidence remains available below.</p></div><div class="matchWhyTeams"><b>${esc(m?.home?.name||'Home')}</b><span>comparison</span><b>${esc(m?.away?.name||'Away')}</b></div><div class="matchWhyRows">${metric('Rating',h?.rating,a?.rating,2)}${metric('Offence',h?.adj_o,a?.adj_o)}${metric('Defence',h?.adj_d,a?.adj_d)}${metric('Schedule',h?.sos,a?.sos,2)}</div></section>`;
 }
 function matchupEvidence(label,note,html,open=false){
   if(!html)return '';

@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0920N",
+  "tag": "Polish",
+  "title": "The matchup explanation names both schools",
+  "items": [
+   "Replaced one-letter provider codes in the expanded-view comparison header with the full school names.",
+   "The prediction, explanation, and evidence layers now use one consistent matchup identity."
+  ]
+ },
+ {
   "date": "Build 0920M",
   "tag": "Fix",
   "title": "Expanded school marks now use the public asset path",
