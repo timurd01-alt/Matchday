@@ -60,8 +60,20 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         self.assertIn('const MATCHDAY_BETBETTER_BALLOT="', builder)
         self.assertIn('document.get("ballots")', builder)
         self.assertIn("modBallot(),modTop25()", views)
-        self.assertIn("!b?.available", views)
+        self.assertIn("if(b?.available&&(b.rankings||[]).length)return b", views)
+        self.assertIn("return MATCHDAY_PERSONAL_CFB_BALLOT", views)
         self.assertIn("collegeBallotTableHTML()", panels)
+
+    def test_the_owners_public_x_ballot_is_the_rankings_fallback(self):
+        views = (ROOT / "app-2-views.js").read_text(encoding="utf-8")
+        panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
+        self.assertIn("MATCHDAY_PERSONAL_CFB_BALLOT", views)
+        self.assertIn("2101747002237210721", views)
+        self.assertIn("'Texas Longhorns','Georgia Bulldogs','Miami Hurricanes'", views)
+        self.assertIn("'Michigan Wolverines','Duke Blue Devils'", views)
+        self.assertIn("return MATCHDAY_PERSONAL_CFB_BALLOT", views)
+        self.assertIn('style="margin:0">My Top 25', panels)
+        self.assertIn("View the original post on X", panels)
 
     def test_board_card_explanations_sit_behind_a_question_mark(self):
         """The notes moved behind each card's ?; they must not creep back or be reparsed."""
@@ -79,7 +91,7 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         views = (ROOT / "app-2-views.js").read_text(encoding="utf-8")
         styles = (ROOT / "styles.css").read_text(encoding="utf-8")
         self.assertIn("balanceBoardMods()", core)
-        self.assertIn("function balanceBoardMods(){", views)
+        self.assertIn("function balanceBoardMods(target){", views)
         self.assertIn("column.cards.push(item.card)", views)
         self.assertIn(".modsCol>.boardMod:last-child{flex:1;display:flex;flex-direction:column}", styles)
         self.assertIn(".modsCol>.boardMod:last-child>.tsTable{flex:1}", styles)
@@ -98,18 +110,18 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         self.assertIn("every rated league", parity)
         self.assertNotIn("stats.slice", parity)
 
-    def test_games_home_leads_with_predictions_not_analysis_modules(self):
+    def test_home_summarizes_and_games_owns_the_complete_board(self):
         core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
+        home = core[core.index("function renderHome(){"):core.index("function gamesFeaturedHTML(")]
         render = core[core.index("function renderMatches(){"):]
         render = render[:render.index(chr(10) + "function ", 1)]
-        self.assertIn("gamesSummaryHTML(active)", render)
+        self.assertIn("gamesSummaryHTML(active)", home)
+        self.assertNotIn("gamesSummaryHTML(active)", render)
         self.assertIn("groupedBoardHTML(shown)", render)
-        self.assertLess(render.index("gamesSummaryHTML(active)"),
-                        render.index("groupedBoardHTML(shown)"))
         self.assertNotIn("collegeModules", render)
         summary = core[core.index("function gamesSummaryHTML("):
                        core.index("function renderMatches(){")]
-        for destination in ("Featured game", "Largest model / market differences",
+        for destination in ("featured game", "Largest model / market differences",
                             "Public record", "Explore"):
             self.assertIn(destination, summary)
 
@@ -125,13 +137,29 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
 
     def test_research_is_the_primary_home_for_analysis(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
-        self.assertIn('data-primary data-v="news"', html)
+        self.assertIn('data-primary data-mobile-primary data-v="news"', html)
         self.assertIn('<span class="lbl">Research</span>', html)
         views = (ROOT / "app-2-views.js").read_text(encoding="utf-8")
         panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
         self.assertIn("function collegeResearchModules(){", views)
         self.assertIn('class="vhead">Research</div>', panels)
         self.assertIn("collegeResearchModules", panels)
+        research = views[views.index("function collegeResearchModules(){"):]
+        for preserved in ("modUpsetOfWeek()", "modTopPick()", "modMyPicks()",
+                          "modUpsets()", "modRatingScatter()",
+                          "modConferenceParity()"):
+            self.assertIn(preserved, research)
+        self.assertIn("balanceBoardMods(host.querySelector('.collegeResearch .boardMods'))", panels)
+
+    def test_featured_games_are_limited_to_the_next_week_and_show_team_marks(self):
+        core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
+        summary = core[core.index("function gamesSummaryHTML("):
+                       core.index("function renderHome(){")]
+        self.assertIn("Date.now()+7*86400000", summary)
+        self.assertIn("const week=active.filter", summary)
+        self.assertIn("week.map(gamesBoardRead)", summary)
+        self.assertIn("teamMark(m.home?.name)", core)
+        self.assertIn("teamMark(m.away?.name)", core)
 
     def test_the_welcome_cards_model_read_is_bet_betters(self):
         """The gate quotes one model, the same one every other screen quotes.

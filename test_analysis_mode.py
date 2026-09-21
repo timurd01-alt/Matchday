@@ -98,16 +98,13 @@ class AnalysisModeTests(unittest.TestCase):
         # "level" and "no data" are different claims and must stay distinct.
         self.assertIn("covered?'level':'no data'", panels)
 
-    def test_insight_rail_has_a_visible_collapse_control(self):
+    def test_insight_rail_is_removed_to_leave_the_content_full_width(self):
         markup = (ROOT / "index.html").read_text(encoding="utf-8")
         core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
-        css = (ROOT / "styles.css").read_text(encoding="utf-8")
-        self.assertIn('id="railToggle"', markup)
-        self.assertIn('aria-controls="insight"', markup)
-        self.assertIn("function toggleInsightRail()", core)
-        self.assertIn("function syncRailToggle()", core)
-        # Must stay reachable once collapsed, or the rail can't be reopened.
-        self.assertIn(".app.noinsight .railToggle{right:0", css)
+        self.assertNotIn('id="railToggle"', markup)
+        self.assertNotIn('id="insight"', markup)
+        self.assertNotIn("function toggleInsightRail()", core)
+        self.assertNotIn("function syncRailToggle()", core)
 
     def test_team_view_title_comes_from_one_helper(self):
         core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")

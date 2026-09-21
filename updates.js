@@ -4,6 +4,18 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0920E",
+  "tag": "Design",
+  "title": "A calmer Home and a dedicated Games board",
+  "items": [
+   "Home is now a spacious weekly summary, while Games is a dedicated full schedule and matchup research board.",
+   "Featured games are limited to the next seven days and now include school logos where licensed local artwork is available.",
+   "Research keeps Upset of the Week, Top Pick, My Picks, upset watch, and every deeper schedule and conference table in balanced columns.",
+   "Desktop navigation exposes every destination directly; phones retain a compact More menu.",
+   "Rankings now includes Tim's latest personal college football Top 25, clearly separated from the predictive power rating and linked to the original X post."
+  ]
+ },
+ {
   "date": "Build 0920D",
   "tag": "Interface",
   "title": "A smaller navigation with clearer destinations",

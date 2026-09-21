@@ -7,7 +7,7 @@ ROOT = Path(__file__).resolve().parent
 
 
 class MobileNavigationTests(unittest.TestCase):
-    def test_more_trigger_is_available_on_phone_and_desktop(self):
+    def test_more_trigger_is_phone_only(self):
         css = (ROOT / "styles.css").read_text(encoding="utf-8")
         self.assertRegex(css, r"\.navMore\s*\{\s*display:none\s*\}")
         phone_rules = re.findall(
@@ -25,34 +25,34 @@ class MobileNavigationTests(unittest.TestCase):
             css,
             flags=re.DOTALL,
         )
-        self.assertTrue(
-            any(re.search(r"\.sidebar\s+\.navMore\s*\{\s*display:flex\s*\}", block)
-                for block in desktop_rules),
-            "the More trigger must also own secondary desktop destinations",
-        )
+        self.assertTrue(any(".sidebar .navMore{display:none!important}" in block
+                            for block in desktop_rules))
 
-    def test_primary_navigation_is_games_rankings_results_research(self):
+    def test_primary_navigation_includes_summary_home(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
         primary = re.findall(
-            r'<button class="navbtn" data-primary data-v="([^"]+)"[^>]*>.*?'
+            r'<button class="navbtn" data-primary(?: data-mobile-primary)? data-v="([^"]+)"[^>]*>.*?'
             r'<span class="lbl">([^<]+)</span>',
             html,
             flags=re.DOTALL,
         )
         self.assertEqual(
             primary,
-            [("matches", "Games"), ("groups", "Rankings"),
+            [("home", "Home"), ("matches", "Games"), ("groups", "Rankings"),
              ("results", "Results"), ("news", "Research")],
         )
         self.assertEqual(html.count('class="navbtn navMore"'), 1)
         self.assertNotIn('data-primary data-v="score"', html)
 
-    def test_secondary_tools_stay_behind_more(self):
+    def test_secondary_tools_are_direct_on_desktop_and_behind_more_on_phones(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
         for view in ("score", "bracket", "community"):
             self.assertIn(f'data-v="{view}"', html)
             self.assertNotIn(f'data-primary data-v="{view}"', html)
         core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
+        css = (ROOT / "styles.css").read_text(encoding="utf-8")
+        self.assertIn(".sidebar .navbtn:not([data-mobile-primary]):not(.navMore){display:none}", css)
+        self.assertIn(".sidebar.navSheet .navbtn:not(.navMore){display:flex}", css)
         self.assertIn("games:'matches'", core)
         self.assertIn("rankings:'groups'", core)
         self.assertIn("research:'news'", core)

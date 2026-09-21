@@ -130,11 +130,11 @@
     <div class="welcomeBrand">
       <div class="welcomeEyebrow"><span class="welcomeDot"></span> MATCHDAY ANALYSIS <span class="welcomeBeta">EARLY ACCESS</span></div>
       <img src="icon-192.png?v=4" class="welcomeLogo" alt="Matchday" width="192" height="192">
-      <h1 id="welcomeTitle">My college board, <span>published before kickoff.</span></h1>
-      <p class="welcomeLead">College sports predictions and statistics: model probabilities, team ratings and market comparisons for college football and men's college basketball—all graded in public.</p>
+      <h1 id="welcomeTitle">Matchday</h1>
+      <p class="welcomeLead">College sports predictions &amp; research.</p>
       <div class="welcomeCoverage" aria-label="Sports coverage"><span>College Football</span><span>Men's College Basketball</span></div>
       <details class="welcomeDevNote">
-        <summary>Early access &mdash; what that means</summary>
+        <summary>How this works</summary>
         <div id="welcomeStatusNote"></div>
         <p>Ratings come from my own engine and it is still being worked on, so a team's number
         can move between editions. Brackets and polls are projections until real selection and
@@ -144,13 +144,11 @@
       <div class="welcomeActions">
         <button class="welcomeEnter" type="button" onclick="enterMatchday()">Enter Matchday <span aria-hidden="true">→</span></button>
         <span>No account required · no ads</span>
-        <button class="welcomeTourLink" type="button" onclick="enterMatchday('',true)">Take a quick tour</button>
         <a class="welcomeLegalLink" href="legal.html">Legal, privacy &amp; data sources</a>
       </div>
-      <div class="welcomeUpset" id="welcomeUpset" hidden></div>
     </div>
     <aside class="welcomePreview" aria-label="Matchday preview">
-      <div class="welcomePreviewTop"><span>IN FOCUS</span><span id="welcomeFeedState">PREGAME</span></div>
+      <div class="welcomePreviewTop"><span>THIS WEEK</span><span id="welcomeFeedState">PREGAME</span></div>
       <div class="welcomeNext" id="welcomeNext">
         <div class="welcomeFallback">
           <span class="welcomeFallbackKicker">TODAY'S BOARD</span>
@@ -160,11 +158,6 @@
         </div>
       </div>
       <div class="welcomeStats" id="welcomeStats" aria-live="polite"></div>
-      <div class="welcomeProof">
-        <div><b>01</b><span>Model vs market</span><small>Probability, not certainty.</small></div>
-        <div><b>02</b><span>Locked in public</span><small>Picks never rewritten.</small><button class="welcomeProofLink" type="button" onclick="enterMatchday('score')">View verified scorecard <span aria-hidden="true">→</span></button></div>
-        <div><b>03</b><span>College focus</span><small>Football and basketball.</small></div>
-      </div>
     </aside>
   </div>
 </section>
@@ -172,14 +165,17 @@
 <div class="app" id="app">
   <div class="livestrip"><button type="button" class="ls-brand ls-brandHome" onclick="openWelcome()" title="Back to the welcome page" aria-label="Back to the welcome page"><span class="pip"></span>Matchday<span id="compName" style="color:var(--muted);font-weight:var(--fw-semibold);text-transform:none;letter-spacing:0"></span></button><select id="sportSel" class="sportSel" onchange="changeSport(this.value)" aria-label="Sport"><option value="ncaaf">College Football</option><option value="ncaam">Men's College Basketball</option></select><div id="strip" class="ls-next">loading…</div><div class="topActions"><button class="alertBell" id="alertBell" type="button" aria-label="Open alerts" aria-controls="alertCenter" aria-expanded="false" onclick="toggleAlertCenter()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg><span id="alertCount" hidden>0</span></button></div></div>
   <nav class="sidebar" id="nav">
+    <div class="navGroup" data-group="home">
+    <button class="navbtn" data-primary data-mobile-primary data-v="home" aria-pressed="true"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg><span class="lbl">Home</span></button>
+    </div>
     <div class="navGroup" data-group="games">
-    <button class="navbtn" data-primary data-v="matches" aria-pressed="true"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14" rx="2"/><line x1="8" y1="3" x2="8" y2="7"/><line x1="16" y1="3" x2="16" y2="7"/><line x1="4" y1="10" x2="20" y2="10"/></svg><span class="lbl">Games</span></button>
+    <button class="navbtn" data-primary data-mobile-primary data-v="matches" aria-pressed="false"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14" rx="2"/><line x1="8" y1="3" x2="8" y2="7"/><line x1="16" y1="3" x2="16" y2="7"/><line x1="4" y1="10" x2="20" y2="10"/></svg><span class="lbl">Games</span></button>
     </div>
     <div class="navGroup" data-group="competition">
-    <button class="navbtn" data-primary data-v="groups" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/><path d="M8 4v16"/></svg><span class="lbl">Rankings</span></button>
+    <button class="navbtn" data-primary data-mobile-primary data-v="groups" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/><path d="M8 4v16"/></svg><span class="lbl">Rankings</span></button>
     <button class="navbtn" data-primary data-v="results" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h10"/><circle cx="19" cy="18" r="2"/></svg><span class="lbl">Results</span></button>
     </div>
-    <div class="navGroup" data-group="content"><button class="navbtn" data-primary data-v="news" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 5h13v14H4z"/><path d="M17 8h3v9a2 2 0 0 1-2 2"/><line x1="7" y1="9" x2="14" y2="9"/><line x1="7" y1="13" x2="14" y2="13"/><line x1="7" y1="17" x2="11" y2="17"/></svg><span class="lbl">Research</span></button></div>
+    <div class="navGroup" data-group="content"><button class="navbtn" data-primary data-mobile-primary data-v="news" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 5h13v14H4z"/><path d="M17 8h3v9a2 2 0 0 1-2 2"/><line x1="7" y1="9" x2="14" y2="9"/><line x1="7" y1="13" x2="14" y2="13"/><line x1="7" y1="17" x2="11" y2="17"/></svg><span class="lbl">Research</span></button></div>
     <div class="navGroup" data-group="model">
     <button class="navbtn" data-v="score" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg><span class="lbl">Scorecard</span></button>
     </div>
@@ -192,10 +188,8 @@
     
     <button class="navbtn navMore" type="button" onclick="toggleNavSheet()" aria-expanded="false" aria-controls="nav"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg><span class="lbl">More</span></button>
   </nav>
-  <main class="content" tabindex="-1"><div id="alertBar" class="alertBar" style="display:none"></div><div class="view" id="view-matches" style="display:grid"><div class="empty">Loading…</div></div><div class="view" id="view-groups"></div>
+  <main class="content" tabindex="-1"><div id="alertBar" class="alertBar" style="display:none"></div><div class="view" id="view-home"><div class="empty">Loading…</div></div><div class="view" id="view-matches"><div class="empty">Loading…</div></div><div class="view" id="view-groups"></div>
 <div class="view" id="view-score"></div><div class="view" id="view-bracket"></div><div class="view" id="view-results"></div><div class="view" id="view-news"></div><div class="view" id="view-community"></div></main>
-  <aside class="insight" id="insight"></aside>
-  <button class="railToggle" id="railToggle" type="button" onclick="toggleInsightRail()" aria-controls="insight" aria-expanded="true" title="Hide the in-focus rail"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg><span class="srOnly">Hide the in-focus rail</span></button>
 </div>
 <script src="translations.js?v=__BUILD__"></script>
 <script src="updates.js?v=__BUILD__"></script>

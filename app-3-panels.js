@@ -507,7 +507,7 @@ function renderScore(){
     +`Displayed scores are factual. Probabilities remain estimates.</div>`;
 }
 function highlightFavoriteRows(){if(!favoriteTeam())return;document.querySelectorAll('.gtable .gteam').forEach(cell=>{if(teamKey(cell.textContent).includes(teamKey(favoriteTeam())))cell.closest('tr')?.classList.add('favoriteTeamRow')})}
-function renderCurrent(){captureSignalsIfFresh();({matches:renderMatches,results:renderResults,groups:renderStandings,bracket:renderBracket,score:renderScore,news:renderNews,community:renderCommunity}[VIEW]||renderMatches)();renderWelcome();highlightFavoriteRows();applyStaticI18n()}
+function renderCurrent(){captureSignalsIfFresh();({home:renderHome,matches:renderMatches,results:renderResults,groups:renderStandings,bracket:renderBracket,score:renderScore,news:renderNews,community:renderCommunity}[VIEW]||renderHome)();renderWelcome();highlightFavoriteRows();applyStaticI18n()}
 function renderStrip(){const M=DATA.matches||[],next=M.filter(isVisibleUpcoming).sort((a,b)=>(a.kickoff||'').localeCompare(b.kickoff||''))[0];const parts=[];
 const isSample=(DATA.source_note||'').toLowerCase().includes('sample');
 const freshness=DATA.source_freshness||{},fallback=freshness.state==='fallback';
@@ -518,7 +518,7 @@ if(streakStats.streak>=2)parts.push(`<span class="ls-streak" title="Beat the Mod
 if(next)parts.push(`<span class="ls-next ls-clickable" data-mid="${esc(next.id)}" onclick="openMatchModal(this.dataset.mid)" role="button" tabindex="0" title="Open expanded view">Next · <b>${esc(next.home.code)} v ${esc(next.away.code)}</b> ${kickIn(next.kickoff)}</span>`);else parts.push(`<span class="ls-next">No upcoming fixtures</span>`);parts.push(`<span class="ls-upd">${fallback&&syncedAt?`Predictions synced ${ago(syncedAt)} · `:fallback?`<b class="stale">data source ${ago(freshness.last_successful_at||DATA.updated)}</b> · `:(()=>{try{const a=(Date.now()-new Date(DATA.updated))/60000;if(a>360)return `<b class="stale">data ${ago(DATA.updated)}</b> · `;}catch(e){}return 'Updated '+ago(DATA.updated)+' · ';})()}${t("independent · built for fans")} · <b style="color:var(--signal)">build ${currentBuild()}</b></span>`);$('#strip').innerHTML=parts.join('')}
 /* removed duplicate (diverseNews) */
 /* removed duplicate (renderInsight) */
-const VIEW_PUBLIC_NAMES={matches:'games',groups:'rankings',news:'research'};
+const VIEW_PUBLIC_NAMES={home:'home',matches:'games',groups:'rankings',news:'research'};
 function syncViewLocation(v,mode='push'){
   if(!window.history?.pushState)return;
   const url=new URL(window.location.href),publicName=VIEW_PUBLIC_NAMES[safeView(v)]||safeView(v),sport=currentSportKey();
@@ -527,7 +527,7 @@ function syncViewLocation(v,mode='push'){
   window.history[mode==='replace'?'replaceState':'pushState']({view:publicName,sport},'',url);
 }
 function setView(v,options={}){VIEW=safeView(v);v=VIEW;if(typeof closeNavSheet==='function')closeNavSheet();
-  document.querySelectorAll('.navbtn[data-v]').forEach(b=>{const on=b.dataset.v===v;b.setAttribute('aria-pressed',on);if(on)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});document.querySelectorAll('.view').forEach(el=>el.style.display=el.id==='view-'+v?((v==='matches'||v==='results')?'grid':'block'):'none');if(options.history!==false)syncViewLocation(v,options.replace?'replace':'push');renderCurrent();const active=$('#view-'+v);if(active){active.classList.remove('viewEntering');void active.offsetWidth;active.classList.add('viewEntering')}}
+  $('#app')?.classList.toggle('gamesWide',v==='matches'||v==='home');document.querySelectorAll('.navbtn[data-v]').forEach(b=>{const on=b.dataset.v===v;b.setAttribute('aria-pressed',on);if(on)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});document.querySelectorAll('.view').forEach(el=>el.style.display=el.id==='view-'+v?((v==='matches'||v==='results')?'grid':'block'):'none');if(options.history!==false)syncViewLocation(v,options.replace?'replace':'push');renderCurrent();const active=$('#view-'+v);if(active){active.classList.remove('viewEntering');void active.offsetWidth;active.classList.add('viewEntering')}}
 $('#nav').addEventListener('click',e=>{const b=e.target.closest('.navbtn[data-v]');if(b?.dataset.v)setView(b.dataset.v)});
 // aggregateScorecards() lived here: it merged every sport's scorecard into the
 // one the merged "All college" board showed. Each board now reads its own
@@ -711,6 +711,8 @@ renderNews=function(){
   host.insertAdjacentHTML('afterbegin',`<div class="vhead">Research</div>
     <div class="banner"><b>Why the model sees the field this way.</b> Explore team strength, schedule context, conference comparisons, methodology, and the latest college analysis without crowding the game board.</div>
     ${collegeAnalysis}`);
+  if(typeof collapseBoardNotes==='function')collapseBoardNotes(host);
+  if(typeof balanceBoardMods==='function')balanceBoardMods(host.querySelector('.collegeResearch .boardMods'));
 }
 
 
@@ -898,6 +900,14 @@ function collegeRankingTableHTML(){
 function collegeBallotTableHTML(){
   const b=typeof collegeBallot==='function'?collegeBallot():null;
   if(!b)return '';
+  if(b.source==='x'){
+    const rows=b.rankings.map(r=>`<tr${r.rank<=4?' class="pollRanked"':''}><td class="pollRank">${Number(r.rank)}</td><td class="pollTeam teamClickable" data-team="${esc(r.team_name)}" onclick="openTeamModal(this.dataset.team)">${teamMark(r.team_name)}<span>${esc(r.team_name)}</span></td></tr>`).join('');
+    return `<section class="pollSection ballotSection personalBallot"><div class="pollHead"><div><div class="vhead" style="margin:0">My Top 25</div>
+      <p class="pollMeta">Personal ballot · published ${esc(b.published_on||'')} · separate from the model</p></div></div>
+      <div class="pollScroll"><table class="pollTable officialPollTable"><thead><tr><th>#</th><th>Team</th></tr></thead><tbody>${rows}</tbody></table></div>
+      <p class="modNote">${esc(b.note||'')}${b.source_url?` <a href="${esc(b.source_url)}" target="_blank" rel="noopener">View the original post on X</a>.`:''}</p>
+    </section>`;
+  }
   const body=b.rankings.map(r=>{
     const s=r.resume||{};
     const sor=Number.isFinite(Number(s.sor))?` title="${(Number(s.sor)*100).toFixed(1)}% of top-25-level teams would match this record against this schedule"`:'';

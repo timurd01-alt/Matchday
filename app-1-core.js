@@ -25,7 +25,7 @@ function runCarousel(key,items,host,renderFn,intervalMs){
     host.dataset.carouselBound='1';
   }
 }
-const DEFAULT_SETTINGS={accent:'green',density:'normal',panel:'glass',defaultView:'matches',refresh:900,showInsight:true,showFinished:false,showDetails:false,favoriteTeam:'',favoriteTeams:[],alertsKickoff:true,alertsLive:false,alertsUpset:false,alertsModel:true,alertsData:true};
+const DEFAULT_SETTINGS={accent:'green',density:'normal',panel:'glass',defaultView:'home',refresh:900,showFinished:false,showDetails:false,favoriteTeam:'',favoriteTeams:[],alertsKickoff:true,alertsLive:false,alertsUpset:false,alertsModel:true,alertsData:true};
 let SETTINGS={...DEFAULT_SETTINGS};try{SETTINGS={...DEFAULT_SETTINGS,...JSON.parse(localStorage.getItem('matchday.settings')||'{}')}}catch(e){}
 // Refresh cadence is product-controlled so visitors cannot accidentally create
 // excessive polling or make the dashboard feel stale.
@@ -169,20 +169,20 @@ const NAV_DEF={
   // Matchday covers college football and men's college basketball only. Every
   // profile exposes the same destinations. The established route keys remain
   // in place so saved preferences and bookmarks continue to work.
-  college:           ['matches','groups','results','news','score','bracket','community'],
-  college_basketball:['matches','groups','results','news','score','bracket','community']
+  college:           ['home','matches','groups','results','news','score','bracket','community'],
+  college_basketball:['home','matches','groups','results','news','score','bracket','community']
 };
 // The only views that exist after the college pivot. A stored defaultView or a
 // bookmarked hash can still name a removed one (Customize let people save
 // 'news' or 'updates' for years), so every entry point clamps through this
 // rather than trusting what it was handed and rendering into a null host.
-const VIEWS=new Set(['matches','results','groups','bracket','score','news','community']);
+const VIEWS=new Set(['home','matches','results','groups','bracket','score','news','community']);
 const VIEW_ALIASES={games:'matches',rankings:'groups',research:'news'};
-function safeView(v){v=VIEW_ALIASES[v]||v;return VIEWS.has(v)?v:'matches';}
+function safeView(v){v=VIEW_ALIASES[v]||v;return VIEWS.has(v)?v:'home';}
 const SPORT_KIND={ncaaf:'college',ncaam:'college_basketball'};
 function currentSportKey(){const m=(DATA_FILE||'').match(/data_(\w+)\.json/);return m?m[1]:'';}
 function navProfile(){return SPORT_KIND[currentSportKey()]||'college';}
-const NAV_LABELS={college:{matches:'Games',groups:'Rankings',news:'Research',bracket:'CFP Playoff'},college_basketball:{matches:'Games',groups:'Rankings',news:'Research',bracket:'Bracketology'}};
+const NAV_LABELS={college:{home:'Home',matches:'Games',groups:'Rankings',news:'Research',bracket:'CFP Playoff'},college_basketball:{home:'Home',matches:'Games',groups:'Rankings',news:'Research',bracket:'Bracketology'}};
 function tottTitle(){return 'Team of the Tournament'}
 function applySportNav(){
   const prof=navProfile();
@@ -214,24 +214,8 @@ function changeSport(v){DATA_FILE=/^(ncaaf|ncaam)$/.test(v)?('data_'+v+'.json'):
 
 const COLORS={orange:'#ffb02e',blue:'#4cc2ff',green:'#3ad17a',red:'#ff4d5e',purple:'#b16cff'};
 function saveSettings(){localStorage.setItem('matchday.settings',JSON.stringify(SETTINGS))}
-function applySettings(){document.documentElement.style.setProperty('--signal',COLORS[SETTINGS.accent]||COLORS.orange);document.body.classList.toggle('compact',SETTINGS.density==='compact');document.body.classList.toggle('spacious',SETTINGS.density==='spacious');$('#app').classList.toggle('flat',SETTINGS.panel==='flat');$('#app').classList.toggle('noinsight',!SETTINGS.showInsight);document.body.classList.toggle('hideStats',!SETTINGS.showDetails);syncRailToggle()}
-function syncRailToggle(){
-  const btn=$('#railToggle');
-  if(!btn)return;
-  const open=!!SETTINGS.showInsight,label=open?'Hide the in-focus rail':'Show the in-focus rail';
-  btn.setAttribute('aria-expanded',String(open));
-  btn.title=label;
-  const sr=btn.querySelector('.srOnly');
-  if(sr)sr.textContent=label;
-}
-function toggleInsightRail(){
-  const open=!SETTINGS.showInsight;
-  updateSetting('showInsight',open);
-  // renderCurrent() never touches the rail, so a rail that was collapsed
-  // before its first render would come back empty without this.
-  if(open&&typeof renderInsight==='function')renderInsight();
-}
-function updateSetting(k,v){if(k==='refresh')return;if(k==='showInsight'||k==='showDetails'||k==='showFinished'||k.startsWith('alerts'))v=!!v;SETTINGS[k]=v;saveSettings();applySettings();renderCurrent();if((k==='favoriteTeam'||k==='favoriteTeams')&&typeof renderInsight==='function')renderInsight();if(k.startsWith('alerts'))renderAlerts();scheduleNextLoad()}
+function applySettings(){document.documentElement.style.setProperty('--signal',COLORS[SETTINGS.accent]||COLORS.orange);document.body.classList.toggle('compact',SETTINGS.density==='compact');document.body.classList.toggle('spacious',SETTINGS.density==='spacious');$('#app').classList.toggle('flat',SETTINGS.panel==='flat');document.body.classList.toggle('hideStats',!SETTINGS.showDetails)}
+function updateSetting(k,v){if(k==='refresh')return;if(k==='showDetails'||k==='showFinished'||k.startsWith('alerts'))v=!!v;SETTINGS[k]=v;saveSettings();applySettings();renderCurrent();if(k.startsWith('alerts'))renderAlerts();scheduleNextLoad()}
 function resetSettings(){SETTINGS={...DEFAULT_SETTINGS};saveSettings();applySettings();setView(SETTINGS.defaultView);scheduleNextLoad()}
 // Feeds hand over headlines with HTML entities still in them ("Ducks&#39;"),
 // and esc() would then print the entity itself. Decode once, on load.
@@ -832,20 +816,39 @@ function gamesBoardRead(m){
   return {match:m,pick:read.pick_name,model,market,
     difference:market==null?null:(supplied==null?model-market:supplied)};
 }
+const TEAM_LOGO_FILES={
+  'Texas Longhorns':'texas.png','Georgia Bulldogs':'georgia.png','Miami Hurricanes':'miami.png','Ole Miss Rebels':'oleMiss.png','Ohio State Buckeyes':'ohioState.png','Notre Dame Fighting Irish':'notreDame.png','Indiana Hoosiers':'indiana.png','Alabama Crimson Tide':'alabama.png','BYU Cougars':'byu.png','USC Trojans':'usc.png','Texas Tech Red Raiders':'texasTech.png','LSU Tigers':'lsu.png','Utah Utes':'utah.png','Louisville Cardinals':'louisville.png','Iowa Hawkeyes':'iowa.png','Penn State Nittany Lions':'pennState.png','Tennessee Volunteers':'tennessee.png','Missouri Tigers':'missouri.png','SMU Mustangs':'smu.png','Michigan Wolverines':'michigan.png'
+};
+function teamMark(name){
+  const file=TEAM_LOGO_FILES[name];
+  if(file)return `<span class="teamMark"><img src="team-logos/${file}" alt="" width="32" height="32" loading="lazy"></span>`;
+  const letters=String(name||'').split(/\s+/).filter(Boolean).slice(0,2).map(w=>w[0]).join('').toUpperCase()||'?';
+  return `<span class="teamMark teamMonogram" aria-hidden="true">${esc(letters)}</span>`;
+}
 function gamesSummaryHTML(active){
   const sport=SPORT_LABELS[currentSportKey()]||DATA.competition||'College sports';
-  const reads=active.map(gamesBoardRead).filter(Boolean);
+  const weekEnd=Date.now()+7*86400000;
+  const week=active.filter(m=>m.status==='LIVE'||(kickMs(m)&&kickMs(m)<=weekEnd));
+  const reads=week.map(gamesBoardRead).filter(Boolean);
   const comparable=reads.filter(r=>r.market!=null&&r.difference!=null);
   const featured=([...comparable].sort((a,b)=>fixtureSort(a.match,b.match))[0]
     ||[...reads].sort((a,b)=>fixtureSort(a.match,b.match))[0]
-    ||active[0]&&{match:active[0],pick:'',model:null,market:null,difference:null});
+    ||week[0]&&{match:week[0],pick:'',model:null,market:null,difference:null});
   const top=[...comparable].sort((a,b)=>Math.abs(b.difference)-Math.abs(a.difference)||fixtureSort(a.match,b.match)).slice(0,3);
-  const feature=featured?gamesFeaturedHTML(featured):`<div class="gamesEmpty">No upcoming games on this board.</div>`;
-  return `<section class="gamesLandingHead"><span>GAMES</span><h1>${esc(sport)}</h1><p>Pregame model probabilities, market comparisons and a public record.</p></section>`
-    +`<section class="gamesFeatured"><div class="gamesSectionHead"><span>Featured game</span><small>${featured?.model!=null?'Live model':'Board status'}</small></div>${feature}</section>`
-    +gamesDifferencesHTML(top)
-    +gamesRecordHTML()
+  const feature=featured?gamesFeaturedHTML(featured):`<div class="gamesEmpty">No games in the next seven days. The full schedule remains below.</div>`;
+  return `<section class="gamesLandingHead"><span>GAMES</span><h1>${esc(sport)}</h1><p>Predictions, market comparisons and the public record.</p></section>`
+    +`<section class="gamesFeatured"><div class="gamesSectionHead"><span>This week's featured game</span><small>${featured?.model!=null?'Live model':'Next 7 days'}</small></div>${feature}</section>`
+    +`<div class="gamesSupportGrid">${gamesDifferencesHTML(top)}${gamesRecordHTML()}</div>`
     +`<nav class="gamesExplore" aria-label="Explore Matchday"><span>Explore</span><div><button type="button" onclick="setView('groups')"><b>Rankings</b><small>Ratings and conferences</small></button><button type="button" onclick="setView('news')"><b>Research</b><small>Analysis and methodology</small></button><button type="button" onclick="setView('results')"><b>Results</b><small>Finals and grading</small></button></div></nav>`;
+}
+function renderHome(){
+  const host=$('#view-home'),active=(DATA.matches||[]).filter(m=>!isCompleteOrPast(m)).sort(favoriteFixtureSort);
+  const weekEnd=Date.now()+7*86400000,week=active.filter(m=>m.status==='LIVE'||(kickMs(m)&&kickMs(m)<=weekEnd));
+  const reads=week.map(gamesBoardRead).filter(Boolean),edges=reads.filter(r=>r.difference!=null&&Math.abs(r.difference)>=5).length;
+  const sc=typeof betbetterScorecard==='function'?betbetterScorecard():null;
+  host.innerHTML=`<section class="homeIntro"><span>MATCHDAY</span><h1>College sports predictions &amp; research</h1><p>What matters now, before you choose where to go deeper.</p></section>`
+    +`<section class="homeKpis" aria-label="This week's overview"><div><strong>${week.length}</strong><span>Games this week</span></div><div><strong>${edges}</strong><span>Model edges</span></div><div><strong>${Number(sc?.record?.picks)||0}</strong><span>Picks graded</span></div></section>`
+    +gamesSummaryHTML(active);
 }
 function gamesFeaturedHTML(read){
   const m=read.match;
@@ -855,7 +858,7 @@ function gamesFeaturedHTML(read){
   const model=read.model==null
     ?`<div><span>Live model</span><b>No prediction yet</b></div>`
     :`<div><span>Live model · ${esc(read.pick)}</span><b>${read.model.toFixed(1)}%</b></div>`;
-  return `<button type="button" class="gamesFeaturedButton" onclick="openMatchModal('${esc(String(m.id))}')"><span class="gamesFeaturedWhen">${esc(m.stage||'Fixture')} · ${esc(kickIn(m.kickoff))}</span><strong>${esc(m.home?.name||'Home')} <i>vs</i> ${esc(m.away?.name||'Away')}</strong><div class="gamesFeaturedCompare">${model}${comparison}</div><em>View analysis <span aria-hidden="true">→</span></em></button>`;
+  return `<button type="button" class="gamesFeaturedButton" onclick="openMatchModal('${esc(String(m.id))}')"><span class="gamesFeaturedWhen">${esc(m.stage||'Fixture')} · ${esc(kickIn(m.kickoff))}</span><strong><span class="gamesFeaturedTeam">${teamMark(m.home?.name)}<span>${esc(m.home?.name||'Home')}</span></span><i>vs</i><span class="gamesFeaturedTeam away">${teamMark(m.away?.name)}<span>${esc(m.away?.name||'Away')}</span></span></strong><div class="gamesFeaturedCompare">${model}${comparison}</div><em>View analysis <span aria-hidden="true">→</span></em></button>`;
 }
 function gamesDifferencesHTML(reads){
   const rows=reads.length?reads.map(read=>{
@@ -879,8 +882,8 @@ function renderMatches(){const M=DATA.matches||[];
   const active=M.filter(m=>!isCompleteOrPast(m)).sort(favoriteFixtureSort);
   const shown=active.slice(0,MATCH_VISIBLE),remaining=Math.max(0,active.length-shown.length);
   const missing=DATA._missing?`<div class="banner" style="grid-column:1/-1"><b>No ${esc(DATA.competition||'this sport')} data yet.</b> Fetch it once its season is available — run the matching start file (e.g. start_ucl.bat) or keep an eye out when the season begins.</div>`:'';
-  const intro=`<div class="viewIntro gamesFixtureBoard"><div><div class="vhead">Today's board</div><p>${FORECAST_PAUSE_ACTIVE?'Fixtures, scores and market odds. Model picks are paused.':'Open a matchup for the full model, market and team analysis.'}</p></div><span>${active.length} games</span></div>`;
-  const html=missing+gamesSummaryHTML(active)+intro+
+  const intro=`<div class="viewIntro gamesFixtureBoard"><div><div class="vhead">Games</div><p>${FORECAST_PAUSE_ACTIVE?'Fixtures, scores and market odds. Model picks are paused.':'This week comes first. Open any matchup for the full model, market and team analysis.'}</p></div><span>${active.length} games</span></div>`;
+  const html=missing+intro+
     (shown.length?groupedBoardHTML(shown):`<div class="empty" style="grid-column:1/-1">No upcoming matches to analyze.</div>`)+
     (remaining?`<div class="fixturePager"><span>Showing ${shown.length} of ${active.length} fixtures</span><button class="actionbtn" onclick="MATCH_VISIBLE+=FIXTURE_PAGE_SIZE;renderMatches()">Load ${Math.min(FIXTURE_PAGE_SIZE,remaining)} more</button></div>`:'');
   $('#view-matches').innerHTML=html;enhanceMatchCards($('#view-matches'));

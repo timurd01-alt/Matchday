@@ -2530,3 +2530,59 @@ html{color-scheme:dark}
 /* Upsets card: same scoreboard grid as Top scores, with the pregame chance in the last column. */
 .modUpsets .modList li.upRow{display:grid;grid-template-columns:minmax(0,1fr) 2.2em 3.4em;grid-template-rows:auto auto;column-gap:8px;row-gap:1px;align-items:center;padding-block:6px}.modUpsets .upOdds{grid-column:3;grid-row:1 / span 2;display:flex;flex-direction:column;align-items:flex-end;line-height:1.1}.modUpsets .upOdds small{font-size:var(--fs-3xs);color:var(--faint)}.upScore{font-family:var(--mono);font-size:var(--fs-sm);text-align:right}.upLoser,.upLoserScore{color:var(--muted);font-weight:var(--fw-regular)}.upRank{font-style:normal;font-family:var(--mono);font-size:var(--fs-3xs);color:var(--faint);margin-right:4px}.upOdds{font-style:normal;font-family:var(--mono);font-size:var(--fs-2xs);color:var(--signal);text-align:right}
 .modUpsets .modTeam{display:flex;align-items:baseline;min-width:0}.upName{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+
+/* ---- Full-width, games-first workspace ----------------------------------
+   The old persistent In Focus rail repeated the selected matchup and took
+   340px from every screen. Matchups now open on demand, leaving the full
+   desktop canvas to the primary content. */
+.app,.app.noinsight,.app.gamesWide{grid-template-columns:62px minmax(0,1fr);grid-template-areas:"strip strip" "side main"}
+.insight,.railToggle{display:none!important}
+
+/* Desktop has room for every destination; only the phone uses More. */
+@media(min-width:701px){
+  .sidebar .navbtn:not([data-primary]):not(.navMore){display:flex}
+  .sidebar .navMore{display:none!important}
+}
+
+/* Home orients; Games carries the complete research board. */
+#view-home .gamesLandingHead{display:none}
+.homeIntro{max-width:840px;padding:8px 0 4px}
+.homeIntro>span{font-family:var(--mono);font-size:var(--fs-xs);font-weight:var(--fw-bold);letter-spacing:.18em;color:var(--signal)}
+.homeIntro h1{margin:8px 0 6px;font-size:clamp(27px,3vw,44px);line-height:1.04;letter-spacing:-.035em}
+.homeIntro p{margin:0;color:var(--muted);font-size:var(--fs-md)}
+.homeKpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;margin:22px 0 30px;overflow:hidden;border:1px solid var(--line);border-radius:14px;background:var(--line)}
+.homeKpis>div{display:flex;align-items:baseline;gap:10px;padding:17px 20px;background:var(--panel)}
+.homeKpis strong{font-family:var(--mono);font-size:var(--fs-2xl);font-weight:var(--fw-bold);color:var(--text)}
+.homeKpis span{font-size:var(--fs-sm);color:var(--muted)}
+
+/* Four primary phone destinations plus More. The sheet reveals everything. */
+@media(max-width:700px){
+  .sidebar .navbtn:not([data-mobile-primary]):not(.navMore){display:none}
+  .sidebar.navSheet .navbtn:not(.navMore){display:flex}
+  .homeKpis{grid-template-columns:1fr;margin:16px 0 22px}
+  .homeKpis>div{padding:12px 15px}
+}
+
+/* Give the lead matchup the room promised by the games-first hierarchy. */
+#view-matches>.gamesSupportGrid{grid-column:1/-1}
+.gamesFeaturedButton>strong{display:flex;align-items:center;gap:12px}
+.gamesFeaturedTeam{display:flex;min-width:0;align-items:center;gap:10px}
+.gamesFeaturedTeam.away{flex-direction:row-reverse;text-align:right}
+.gamesFeaturedTeam>span:last-child{min-width:0}
+.teamMark{display:inline-grid;width:34px;height:34px;flex:0 0 34px;place-items:center;border-radius:9px;background:rgba(255,255,255,.055)}
+.teamMark img{display:block;width:28px;height:28px;object-fit:contain}
+.teamMonogram{border:1px solid var(--line2);color:var(--muted);font:var(--fw-bold) var(--fs-xs)/1 var(--mono)}
+.gamesSupportGrid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(270px,.75fr);gap:clamp(28px,4vw,64px);align-items:stretch;margin-top:28px}
+.gamesSupportGrid .gamesRecord{margin:0;padding:18px 0;align-items:flex-start;flex-direction:column;justify-content:space-between}
+.gamesSupportGrid .gamesDifferences{border-top:0}
+.gamesSupportGrid .gamesSectionHead{padding-top:0}
+.personalBallot .pollTeam{display:flex;align-items:center;gap:10px}
+.personalBallot .teamMark{width:30px;height:30px;flex-basis:30px}
+.personalBallot .teamMark img{width:25px;height:25px}
+.collegeResearch{display:flow-root;margin-bottom:34px}
+@media(max-width:760px){
+  .gamesSupportGrid{grid-template-columns:1fr;gap:20px}
+  .gamesFeaturedButton>strong{align-items:flex-start;flex-direction:column}
+  .gamesFeaturedButton>strong i{display:none}
+  .gamesFeaturedTeam.away{flex-direction:row;text-align:left}
+}

@@ -541,11 +541,19 @@ function modTop25(){
 /* My Top 25: the owner's ballot, beside the power rating rather than instead of
    it. The order is a person's call; what travels with each team is the résumé
    it was judged on (record, strength of record, best win, power rating rank),
-   so a reader can see why and argue with it. Hidden until a ballot exists. */
+   so a reader can see why and argue with it. The owner's published X ballot
+   remains the fallback until the richer data-backed ballot exists. */
+const MATCHDAY_PERSONAL_CFB_BALLOT={
+  available:true,source:'x',published_on:'2026-09-20',
+  source_url:'https://x.com/timurknowsball/status/2101747002237210721',
+  note:'My first personal ranking after watching three weeks of college football.',
+  rankings:['Texas Longhorns','Georgia Bulldogs','Miami Hurricanes','Ole Miss Rebels','Ohio State Buckeyes','Notre Dame Fighting Irish','Indiana Hoosiers','Alabama Crimson Tide','BYU Cougars','USC Trojans','Texas Tech Red Raiders','LSU Tigers','Utah Utes','Louisville Cardinals','Iowa Hawkeyes','Penn State Nittany Lions','Tennessee Volunteers','Florida Gators','Missouri Tigers','Mississippi State Bulldogs','Kentucky Wildcats','Houston Cougars','SMU Mustangs','Michigan Wolverines','Duke Blue Devils'].map((team_name,index)=>({rank:index+1,team_name,first_ballot:true,resume:{}}))
+};
 function collegeBallot(){
   const b=typeof MATCHDAY_BETBETTER_BALLOT!=='undefined'?MATCHDAY_BETBETTER_BALLOT:null;
-  if(String(DATA.comp_key||'').toUpperCase()!=='NCAAF'||!b?.available||!(b.rankings||[]).length)return null;
-  return b;
+  if(String(DATA.comp_key||'').toUpperCase()!=='NCAAF')return null;
+  if(b?.available&&(b.rankings||[]).length)return b;
+  return MATCHDAY_PERSONAL_CFB_BALLOT;
 }
 function ballotWin(g){
   if(!g)return '';
@@ -571,7 +579,7 @@ function modBallot(){
   }).join('');
   return `<section class="boardMod modBallot"><header><h3>My Top 25</h3><span>ballot · ${esc(b.published_on||'')}</span></header>`
     +`<ol class="modList">${body}</ol>`
-    +`<p class="modNote">My own ranking of who has earned it: record and strength of record, quality wins and bad losses, head-to-head and conference titles, with the power rating as the eye test. Full résumés on the Conferences tab.</p></section>`;
+    +`<p class="modNote">${esc(b.note||'My own ranking of who has earned it: record and strength of record, quality wins and bad losses, head-to-head and conference titles, with the power rating as the eye test.')}${b.source_url?` <a href="${esc(b.source_url)}" target="_blank" rel="noopener">Original post on X</a>.`:' Full résumés on the Rankings tab.'}</p></section>`;
 }
 /* Upsets: the season's results the price said should not have happened.
    Recent finals on their own say nothing about which results mattered, so the
@@ -800,8 +808,8 @@ function fitRankingCard(){
    flow cannot promise a shared bottom edge when cards have different heights;
    these measured columns can, and their final cards stretch by the few pixels
    needed to close the rectangle. */
-function balanceBoardMods(){
-  const board=document.querySelector('#view-matches > .boardMods');
+function balanceBoardMods(target){
+  const board=target?.classList?.contains('boardMods')?target:document.querySelector('#view-matches > .boardMods');
   if(!board)return;
   const cards=Array.from(board.children).filter(el=>el.classList?.contains('boardMod'));
   const count=window.innerWidth>1180?3:window.innerWidth>720?2:1;
@@ -821,6 +829,14 @@ function balanceBoardMods(){
   }));
   board.classList.add('balanced');
 }
+
+const _renderCustomizeFullWidth=renderCustomize;
+renderCustomize=function(){
+  _renderCustomizeFullWidth();
+  document.querySelectorAll('#view-customize .switchrow').forEach(row=>{
+    if(row.textContent.includes('Right insight panel'))row.remove();
+  });
+};
 
 /* Card explanations behind a ?, not under every card.
    Each board card ends in one or more `.modNote` paragraphs saying how to read
@@ -1052,10 +1068,13 @@ function collegeModules(){
    This is an information-architecture move, not another calculation path. */
 function collegeResearchModules(){
   if(!['NCAAF','NCAAM'].includes(String(DATA?.comp_key||'').toUpperCase()))return '';
-  const cards=[modStatOfWeek(),modNotable(),modRatingScatter(),modConferenceStrength(),modToughestSchedules(),modConferenceTable(),modConferenceParity()].filter(Boolean);
+  // Keep every weekly forecasting feature reachable after Home became a
+  // summary. Rankings owns the two ranking tables; Research owns the picks,
+  // upset watch and the deeper schedule/conference analysis.
+  const cards=[modUpsetOfWeek(),modTopPick(),modMyPicks(),modUpsets(),modStatOfWeek(),modNotable(),modRatingScatter(),modConferenceStrength(),modToughestSchedules(),modConferenceTable(),modConferenceParity()].filter(Boolean);
   return cards.length?`<section class="collegeResearch" aria-labelledby="collegeResearchTitle">
-    <div class="seclbl" id="collegeResearchTitle">College analysis</div>
-    <div class="hint" style="margin-bottom:10px">Team ratings, schedule strength, and conference context from the current published model.</div>
+    <div class="seclbl" id="collegeResearchTitle">Weekly watch &amp; college analysis</div>
+    <div class="hint" style="margin-bottom:10px">Upset watch, locked picks, team ratings, schedule strength, and conference context from the current published model.</div>
     <div class="boardMods">${cards.join('')}</div>
   </section>`:'';
 }
