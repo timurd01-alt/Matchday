@@ -8,6 +8,17 @@ ROOT = pathlib.Path(__file__).resolve().parent
 
 
 class CurrentCfbSnapshotTests(unittest.TestCase):
+    def test_advanced_profile_stays_inside_supporting_detail(self):
+        panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
+        signals = (ROOT / "research-signals.js").read_text(encoding="utf-8")
+        self.assertIn('rosterPanel(m)}<!-- matchday-advanced-profile -->', panels)
+        self.assertIn('if(html.includes(slot))return html.replace(slot,panel)', signals)
+
+    def test_home_skips_empty_market_comparison_section(self):
+        core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
+        self.assertIn("${top.length?gamesDifferencesHTML(top):''}", core)
+        self.assertIn('onclick="setView(\'matches\')"><b>Games</b>', core)
+
     def test_fallback_header_uses_the_fresh_prediction_sync(self):
         builder = (ROOT / "build_cfb_snapshot.py").read_text(encoding="utf-8")
         panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")

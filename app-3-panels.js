@@ -1238,7 +1238,7 @@ function details(m){
   const bb=betbetterReadFor(m);
   const read=bb?betbetterModelRead(m,bb):betbetterNoReadPanel();
   const comparison=`<div class="matchEvidenceGrid">${betbetterMatchupPanel(m)}${matchProfilePanel(m)}</div>`;
-  return `<div class="detailGrid v4Detail modernExpandedView"><div class="expandedSectionHead"><div><span>Matchday analysis</span><b>Prediction first. Evidence on demand.</b></div><em>Updated before kickoff</em></div><div class="expandedDecision"><div class="readCard modelReadCard">${read}</div></div>${matchupWhyPanel(m,bb)}<div class="matchEvidenceList">${matchupEvidence('Team comparison','ratings, record and schedule',comparison)}${matchupEvidence('Market','current price and model disagreement',`<div class="readCard forecastMarketCard">${marketPanel(m)}</div>`)}${matchupEvidence('Supporting detail','roster, availability and deeper data',`<div class="detailLow">${rosterPanel(m)}</div>`)}</div></div>`;
+  return `<div class="detailGrid v4Detail modernExpandedView"><div class="expandedSectionHead"><div><span>Matchday analysis</span><b>Prediction first. Evidence on demand.</b></div><em>Updated before kickoff</em></div><div class="expandedDecision"><div class="readCard modelReadCard">${read}</div></div>${matchupWhyPanel(m,bb)}<div class="matchEvidenceList">${matchupEvidence('Team comparison','ratings, record and schedule',comparison)}${matchupEvidence('Market','current price and model disagreement',`<div class="readCard forecastMarketCard">${marketPanel(m)}</div>`)}${matchupEvidence('Supporting detail','roster, availability and deeper data',`<div class="detailLow">${rosterPanel(m)}<!-- matchday-advanced-profile --></div>`)}</div></div>`;
 }
 /* dedup */
 function _v4TitleRows(t){

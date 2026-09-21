@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0921C",
+  "tag": "Fix",
+  "title": "Advanced profiles follow the matchup hierarchy",
+  "items": [
+   "The advanced team profile now appears inside Supporting detail in the expanded game view, keeping the prediction and key reasons in focus.",
+   "When no games have market comparisons yet, the homepage skips the empty comparison panel and keeps Games directly accessible from Explore."
+  ]
+ },
+ {
   "date": "Build 0921B",
   "tag": "Fix",
   "title": "Week 39 upset card added to Home",

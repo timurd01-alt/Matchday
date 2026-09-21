@@ -114,6 +114,8 @@
     details=function(m){
       const html=String(priorDetails(m)||''),panel=researchSignalsPanel(m);
       if(!panel)return html;
+      const slot='<!-- matchday-advanced-profile -->';
+      if(html.includes(slot))return html.replace(slot,panel);
       const end=html.lastIndexOf('</div>');
       return end<0?html+panel:html.slice(0,end)+panel+html.slice(end);
     };

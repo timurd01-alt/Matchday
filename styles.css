@@ -2585,11 +2585,9 @@ html{color-scheme:dark}
 .gamesSupportGrid .gamesRecord{margin:0;padding:18px 0;align-items:flex-start;flex-direction:column;justify-content:space-between}
 .gamesSupportGrid .gamesDifferences{border-top:0}
 .gamesSupportGrid .gamesSectionHead{padding-top:0}
-.gamesSupportGrid.noComparisons{grid-template-columns:minmax(0,1fr) minmax(300px,.72fr);gap:24px;margin-top:20px}
-.gamesSupportGrid.noComparisons .gamesDifferences{display:grid;align-content:start}
-.gamesSupportGrid.noComparisons .gamesEmpty{padding:12px 2px 4px}
-.gamesSupportGrid.noComparisons .gamesTextLink{margin-top:0}
+.gamesSupportGrid.noComparisons{grid-template-columns:minmax(0,1fr);margin-top:20px}
 .gamesSupportGrid.noComparisons .gamesRecord{min-height:0;padding:12px 0;gap:14px}
+#view-home .gamesExplore>div{grid-template-columns:repeat(4,minmax(0,1fr))}
 .personalBallot .pollTeam{display:flex;align-items:center;gap:10px}
 .personalBallot .teamMark{width:30px;height:30px;flex-basis:30px}
 .personalBallot .teamMark img{width:25px;height:25px}
@@ -2597,6 +2595,7 @@ html{color-scheme:dark}
 @media(max-width:760px){
   .gamesSupportGrid{grid-template-columns:1fr;gap:20px}
   .gamesSupportGrid.noComparisons{grid-template-columns:1fr;gap:14px}
+  #view-home .gamesExplore>div{grid-template-columns:1fr}
   .gamesFeaturedButton>strong{align-items:flex-start;flex-direction:column}
   .gamesFeaturedButton>strong i{display:none}
   .gamesFeaturedTeam.away{flex-direction:row;text-align:left}

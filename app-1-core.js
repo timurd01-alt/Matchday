@@ -880,8 +880,8 @@ function gamesSummaryHTML(active){
   return `<section class="gamesLandingHead"><span>GAMES</span><h1>${esc(sport)}</h1><p>Predictions, market comparisons and the public record.</p></section>`
     +`<section class="gamesFeatured"><div class="gamesSectionHead"><span>This week's featured game</span><small>${featured?.model!=null?'Live model':'Next 7 days'}</small></div>${feature}</section>`
     +weeklyUpset
-    +`<div class="gamesSupportGrid${top.length?'':' noComparisons'}">${gamesDifferencesHTML(top)}${gamesRecordHTML()}</div>`
-    +`<nav class="gamesExplore" aria-label="Explore Matchday"><span>Explore</span><div><button type="button" onclick="setView('groups')"><b>Rankings</b><small>Ratings and conferences</small></button><button type="button" onclick="setView('news')"><b>Research</b><small>Analysis and methodology</small></button><button type="button" onclick="setView('results')"><b>Results</b><small>Finals and grading</small></button></div></nav>`;
+    +`<div class="gamesSupportGrid${top.length?'':' noComparisons'}">${top.length?gamesDifferencesHTML(top):''}${gamesRecordHTML()}</div>`
+    +`<nav class="gamesExplore" aria-label="Explore Matchday"><span>Explore</span><div><button type="button" onclick="setView('matches')"><b>Games</b><small>Fixtures and matchups</small></button><button type="button" onclick="setView('groups')"><b>Rankings</b><small>Ratings and conferences</small></button><button type="button" onclick="setView('news')"><b>Research</b><small>Analysis and methodology</small></button><button type="button" onclick="setView('results')"><b>Results</b><small>Finals and grading</small></button></div></nav>`;
 }
 function renderHome(){
   const host=$('#view-home'),active=(DATA.matches||[]).filter(m=>!isCompleteOrPast(m)).sort(favoriteFixtureSort);
