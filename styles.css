@@ -1497,9 +1497,10 @@ body.modalOpen{overflow:hidden}.matchModal{position:fixed;inset:0;z-index:99;dis
 .gamesFeaturedCompare b.up,.gamesDifferenceRows strong.up{color:var(--win)}
 .gamesFeaturedCompare b.down,.gamesDifferenceRows strong.down{color:var(--loss)}
 .gamesDifferenceRows{border-top:1px solid var(--line)}
-.gamesDifferenceRows button{display:grid;width:100%;min-height:62px;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:16px;padding:10px 2px;border:0;border-bottom:1px solid var(--line);background:none;color:var(--text);text-align:left;cursor:pointer}
+.gamesDifferenceRows button,.gamesDifferenceRow{display:grid;width:100%;min-height:62px;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:16px;padding:10px 2px;border:0;border-bottom:1px solid var(--line);background:none;color:var(--text);text-align:left}
+.gamesDifferenceRows button{cursor:pointer}
 .gamesDifferenceRows button:hover{background:rgba(255,255,255,.018)}
-.gamesDifferenceRows button>span{display:grid;min-width:0;gap:4px}
+.gamesDifferenceRows button>span,.gamesDifferenceRow>span{display:grid;min-width:0;gap:4px}
 .gamesDifferenceRows b{font-family:var(--display);font-size:var(--fs-base);overflow-wrap:anywhere}
 .gamesDifferenceRows small{color:var(--muted);font-family:var(--mono);font-size:var(--fs-xs);font-weight:var(--fw-regular);line-height:1.35}
 .gamesDifferenceRows strong{min-width:72px;text-align:right;font:var(--fw-heavy) var(--fs-lg)/1 var(--mono)}

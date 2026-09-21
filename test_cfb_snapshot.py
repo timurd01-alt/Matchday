@@ -140,8 +140,8 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         for destination in ("featured game", "Largest model / market differences",
                             "Public record", "Explore"):
             self.assertIn(destination, summary)
-        self.assertIn("modUpsetOfWeek", summary)
-        self.assertIn("+weeklyUpset", summary)
+        self.assertNotIn("+weeklyUpset", summary)
+        self.assertIn("publishedMarketGapReads()", summary)
 
     def test_games_home_uses_one_model_and_null_safe_comparisons(self):
         core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
@@ -198,11 +198,12 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
                      "vanderbilt.png", "boiseState.png", "northwestern.png"):
             self.assertTrue((ROOT / "social" / "logos" / logo).is_file(), logo)
 
-    def test_home_does_not_call_missing_market_edges_zero(self):
+    def test_home_populates_market_gaps_without_a_separate_upset_card(self):
         core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
         home = core[core.index("function renderHome(){"):core.index("function gamesFeaturedHTML(")]
         self.assertIn("priced=reads.filter", home)
-        self.assertIn("priced.length?edges:'—'", home)
+        self.assertIn("publishedMarketGapReads()", home)
+        self.assertIn("marketReads.length?edges:'—'", home)
         self.assertIn("Edges awaiting market", home)
         self.assertIn("top.length?'':' noComparisons'", core)
         styles = (ROOT / "styles.css").read_text(encoding="utf-8")

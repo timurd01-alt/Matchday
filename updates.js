@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0921D",
+  "tag": "Fix",
+  "title": "Home market gaps populated without an upset card",
+  "items": [
+   "Removed the separate Upsets of the Week card from Home while keeping it in Research.",
+   "The existing Home model-versus-market area now uses the published priced gaps when Matchday's own market feed has no comparisons, including its overview count.",
+   "These are probability disagreements for editorial context, not betting recommendations; no private Bet Better engine or operational data was published."
+  ]
+ },
+ {
   "date": "Build 0921C",
   "tag": "Fix",
   "title": "Advanced profiles follow the matchup hierarchy",
