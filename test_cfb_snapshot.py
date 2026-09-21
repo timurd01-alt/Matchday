@@ -40,6 +40,9 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         self.assertIn('"external_rank": rated.get("rank")', builder)
         self.assertIn('>Record</th>', panels)
         self.assertIn('>Power</th>', panels)
+        self.assertIn('>Move</th>', panels)
+        self.assertIn('class="pollMove up"', panels)
+        self.assertIn('Previous AP rank unavailable', panels)
 
     def test_snapshot_replaces_old_record_and_stale_bracket(self):
         snapshot = (ROOT / "matchday-cfb-snapshot.js").read_text(encoding="utf-8")
@@ -162,13 +165,21 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         self.assertIn("week.map(gamesBoardRead)", summary)
         self.assertIn("teamMark(m.home?.name)", core)
         self.assertIn("teamMark(m.away?.name)", core)
-        self.assertIn("if(TEAM_LOGO_FILES[team?.name])return teamMark(team.name,extra)", core)
+        self.assertIn("return teamMark(team?.name,extra)", core)
         for logo in ("florida.png", "mississippiState.png", "kentucky.png",
                      "houston.png", "duke.png", "coastalCarolina.png", "liberty.png"):
             self.assertIn(logo, core)
             self.assertTrue((ROOT / "social" / "logos" / logo).is_file())
         self.assertIn("'Coastal Carolina':'coastalCarolina.png'", core)
         self.assertIn("Liberty:'liberty.png'", core)
+        self.assertIn("function teamLogoCandidates(name)", core)
+        self.assertIn("label.startsWith(school+' ')", core)
+        self.assertIn("function teamLogoFallback(img)", core)
+        self.assertIn('src="social/logos/${esc(file)}"', core)
+        for logo in ("temple.png", "army.png", "rutgers.png", "howard.png", "uab.png",
+                     "california.png", "wakeForest.png", "charlotte.png", "auburn.png",
+                     "vanderbilt.png", "boiseState.png", "northwestern.png"):
+            self.assertTrue((ROOT / "social" / "logos" / logo).is_file(), logo)
 
     def test_home_does_not_call_missing_market_edges_zero(self):
         core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
@@ -176,6 +187,9 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         self.assertIn("priced=reads.filter", home)
         self.assertIn("priced.length?edges:'—'", home)
         self.assertIn("Edges awaiting market", home)
+        self.assertIn("top.length?'':' noComparisons'", core)
+        styles = (ROOT / "styles.css").read_text(encoding="utf-8")
+        self.assertIn(".gamesSupportGrid.noComparisons", styles)
 
     def test_matchday_terminal_brand_is_consistent_on_the_entry_screen(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
@@ -185,6 +199,19 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         self.assertIn('<span class="pip"></span>Matchday Terminal', html)
         self.assertIn(".welcomeLogo{width:104px;height:104px", styles)
         self.assertIn(".welcomeBrand h1{color:#fff;letter-spacing:-.025em", styles)
+
+    def test_expanded_matchup_leads_with_prediction_then_progressive_evidence(self):
+        panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
+        features = (ROOT / "app-4-features.js").read_text(encoding="utf-8")
+        styles = (ROOT / "styles.css").read_text(encoding="utf-8")
+        details = panels[panels.index("function details(m){"):panels.index("/* dedup */", panels.index("function details(m){"))]
+        self.assertIn('class="expandedDecision"', details)
+        self.assertIn("matchupWhyPanel(m,bb)", details)
+        for section in ("Team comparison", "Market", "Supporting detail"):
+            self.assertIn(section, details)
+        self.assertIn('details class="matchEvidence"', panels)
+        self.assertIn("teamMarkHTML(m.home)", features)
+        self.assertIn(".matchEvidenceList", styles)
 
     def test_the_welcome_cards_model_read_is_bet_betters(self):
         """The gate quotes one model, the same one every other screen quotes.

@@ -2047,7 +2047,8 @@ html{color-scheme:dark}
 .favEmpty{color:var(--faint);font-size:var(--fs-sm);font-family:var(--mono)}
 .favAdd{width:100%}
 .collegeConferenceTable{table-layout:fixed}.collegeConferenceTable th:first-child,.collegeConferenceTable td:first-child{width:42%}.collegeConferenceTable th:nth-child(2),.collegeConferenceTable td:nth-child(2){width:14%;font-family:var(--mono);font-variant-numeric:tabular-nums}.collegeConferenceTable th,.collegeConferenceTable td{box-sizing:border-box}.modernExpandedView{gap:16px}.expandedSectionHead{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:4px 2px}.expandedSectionHead>div{display:grid;gap:3px}.expandedSectionHead span{color:var(--signal);font:var(--fw-bold) var(--fs-3xs)/1 var(--mono);letter-spacing:.1em;text-transform:uppercase}.expandedSectionHead b{font:var(--fw-bold) var(--fs-xl)/1.1 var(--display)}.expandedSectionHead em{color:var(--faint);font:var(--fw-bold) var(--fs-xs)/1 var(--mono);font-style:normal}.modernMatchSheet .modalHero{position:sticky;top:0;z-index:2}.modernMatchSheet .modalStage{display:flex;align-items:center;justify-content:space-between;padding-right:42px}.modernMatchSheet .modalStage b{color:var(--signal);font-size:var(--fs-3xs)}.modernMatchSheet .modalBody{padding:20px 22px 26px}.modernMatchSheet .detailTop{grid-template-columns:minmax(0,1.08fr) minmax(300px,.92fr)}
-@media(max-width:760px){.modernMatchSheet .modalBody{padding:14px 12px 20px}.modernMatchSheet .detailTop{grid-template-columns:1fr}.expandedSectionHead{align-items:flex-start}.expandedSectionHead em{display:none}}
+.modernMatchSheet .modalName{display:flex;align-items:center;gap:10px}.modernMatchSheet .modalTeam.away .modalName{justify-content:flex-end}.expandedDecision .analystPanel{min-height:250px;display:flex;flex-direction:column;justify-content:center}.expandedDecision .analystPick{font-size:clamp(2rem,5vw,4.2rem);line-height:.94}.expandedDecision .analystConfidence b{font-size:clamp(2.6rem,6vw,5rem)}.matchWhy{border:1px solid var(--line);border-radius:16px;background:linear-gradient(135deg,rgba(58,209,122,.08),rgba(255,255,255,.018));padding:18px 20px}.matchWhyHead span{color:var(--signal);font:var(--fw-bold) var(--fs-3xs)/1 var(--mono);letter-spacing:.1em;text-transform:uppercase}.matchWhyHead h3{font:var(--fw-bold) var(--fs-2xl)/1.1 var(--display);margin-top:6px}.matchWhyHead p{color:var(--muted);margin-top:6px}.matchWhyTeams,.matchWhyRow{display:grid;grid-template-columns:minmax(75px,1fr) minmax(110px,1.3fr) minmax(75px,1fr);align-items:center;gap:12px}.matchWhyTeams{margin-top:18px;padding-bottom:8px;border-bottom:1px solid var(--line);text-align:center}.matchWhyTeams b:first-child,.matchWhyRow b:first-of-type{text-align:left}.matchWhyTeams b:last-child,.matchWhyRow b:last-child{text-align:right}.matchWhyTeams span{color:var(--faint);font:var(--fw-bold) var(--fs-3xs)/1 var(--mono);letter-spacing:.08em;text-transform:uppercase}.matchWhyRow{padding:10px 0;border-bottom:1px solid rgba(255,255,255,.045)}.matchWhyRow span{grid-column:2;grid-row:1;text-align:center;color:var(--muted);font-size:var(--fs-sm)}.matchWhyRow b{font-family:var(--mono);font-size:var(--fs-lg)}.matchWhyRow i{display:none}.matchEvidenceList{display:grid;gap:9px}.matchEvidence{border:1px solid var(--line);border-radius:13px;background:rgba(255,255,255,.018);overflow:hidden}.matchEvidence summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:15px 17px}.matchEvidence summary::-webkit-details-marker{display:none}.matchEvidence summary span{display:grid;gap:3px}.matchEvidence summary b{font-family:var(--display);font-size:var(--fs-lg)}.matchEvidence summary small{color:var(--muted);font-size:var(--fs-sm)}.matchEvidence summary>i{font-style:normal;color:var(--signal);font:var(--fw-bold) var(--fs-xl)/1 var(--mono);transition:transform .15s}.matchEvidence[open] summary>i{transform:rotate(45deg)}.matchEvidence[open] summary{border-bottom:1px solid var(--line)}.matchEvidenceBody{padding:14px}.matchEvidenceGrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.matchEvidenceBody .readCard{margin:0}.matchEvidenceBody .detailLow{margin:0!important}
+@media(max-width:760px){.modernMatchSheet .modalBody{padding:14px 12px 20px}.modernMatchSheet .detailTop{grid-template-columns:1fr}.expandedSectionHead{align-items:flex-start}.expandedSectionHead em{display:none}.matchEvidenceGrid{grid-template-columns:1fr}.matchWhy{padding:15px}.expandedDecision .analystPanel{min-height:0}.modernMatchSheet .modalTeam.away .modalName{justify-content:flex-start}}
 /* College board modules. One responsive strip above the fixture board. */
 .boardMods{grid-column:1/-1;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:11px;margin-bottom:14px}
 .boardMod{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:13px;display:flex;flex-direction:column;gap:9px;min-width:0}
@@ -2206,6 +2207,7 @@ html{color-scheme:dark}
 .pollHead{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px}
 .pollMeta{margin:3px 0 0;font-family:var(--mono);font-size:var(--fs-xs);color:var(--faint)}
 .pollBadge{flex:0 0 auto;border:1px solid var(--line2);border-radius:999px;padding:4px 9px;font-family:var(--mono);font-size:var(--fs-3xs);text-transform:uppercase;letter-spacing:.08em;color:var(--signal)}
+.pollMove{display:inline-flex;min-width:30px;justify-content:center;font-family:var(--mono);font-size:var(--fs-xs);font-weight:var(--fw-bold)}.pollMove.up{color:var(--win)}.pollMove.down{color:var(--loss)}.pollMove.same,.pollMove.unavailable{color:var(--faint)}
 .pollScroll{overflow-x:auto;max-height:560px;overflow-y:auto;border:1px solid var(--line);border-radius:10px;margin-top:6px}
 /* A published poll, rendered as its own table on the Conferences tab. It reuses
    .gtable's frame but keeps the rank column tight and left-aligns the team, and
@@ -2577,17 +2579,24 @@ html{color-scheme:dark}
 .gamesFeaturedTeam>span:last-child{min-width:0}
 .teamMark{display:inline-grid;width:34px;height:34px;flex:0 0 34px;place-items:center;border-radius:9px;background:rgba(255,255,255,.055)}
 .teamMark img{display:block;width:28px;height:28px;object-fit:contain}
+.teamMonogramText{font:var(--fw-bold) var(--fs-3xs)/1 var(--mono);color:var(--muted)}
 .teamMonogram{border:1px solid var(--line2);color:var(--muted);font:var(--fw-bold) var(--fs-xs)/1 var(--mono)}
 .gamesSupportGrid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(270px,.75fr);gap:clamp(28px,4vw,64px);align-items:stretch;margin-top:28px}
 .gamesSupportGrid .gamesRecord{margin:0;padding:18px 0;align-items:flex-start;flex-direction:column;justify-content:space-between}
 .gamesSupportGrid .gamesDifferences{border-top:0}
 .gamesSupportGrid .gamesSectionHead{padding-top:0}
+.gamesSupportGrid.noComparisons{grid-template-columns:minmax(0,1fr) minmax(300px,.72fr);gap:24px;margin-top:20px}
+.gamesSupportGrid.noComparisons .gamesDifferences{display:grid;align-content:start}
+.gamesSupportGrid.noComparisons .gamesEmpty{padding:12px 2px 4px}
+.gamesSupportGrid.noComparisons .gamesTextLink{margin-top:0}
+.gamesSupportGrid.noComparisons .gamesRecord{min-height:0;padding:12px 0;gap:14px}
 .personalBallot .pollTeam{display:flex;align-items:center;gap:10px}
 .personalBallot .teamMark{width:30px;height:30px;flex-basis:30px}
 .personalBallot .teamMark img{width:25px;height:25px}
 .collegeResearch{display:flow-root;margin-bottom:34px}
 @media(max-width:760px){
   .gamesSupportGrid{grid-template-columns:1fr;gap:20px}
+  .gamesSupportGrid.noComparisons{grid-template-columns:1fr;gap:14px}
   .gamesFeaturedButton>strong{align-items:flex-start;flex-direction:column}
   .gamesFeaturedButton>strong i{display:none}
   .gamesFeaturedTeam.away{flex-direction:row;text-align:left}

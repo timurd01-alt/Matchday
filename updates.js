@@ -4,6 +4,18 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0920L",
+  "tag": "Update",
+  "title": "A fuller, more informative college board",
+  "items": [
+   "When no model-versus-market comparisons are available, Home no longer reserves a tall empty block beside the public record.",
+   "The waiting message, scorecard summary, and Explore links now form one compact transition into the rest of the page.",
+   "Games and Results now resolve Matchday's 254-school local NCAA logo library, including short school names and common aliases, with monograms retained for uncovered programs.",
+   "The AP Top 25 now includes week-to-week movement when a prior published rank is available.",
+   "Expanded matchups now lead with one large prediction and a concise why section; team comparisons, market data, and supporting detail remain available in collapsible evidence rows."
+  ]
+ },
+ {
   "date": "Build 0920K",
   "tag": "Fix",
   "title": "Week 39 upset cards are now visible",

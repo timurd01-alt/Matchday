@@ -64,14 +64,23 @@ function pollTableNote(g){
 }
 function pollSectionHTML(polls){
   if(!polls||!polls.length)return '';
+  const movement=t=>{
+    const move=Number(t.movement);
+    if(t.movement!=null&&Number.isFinite(move)){
+      if(move>0)return `<span class="pollMove up" title="Up ${move} place${move===1?'':'s'}">↑${move}</span>`;
+      if(move<0)return `<span class="pollMove down" title="Down ${Math.abs(move)} place${move===-1?'':'s'}">↓${Math.abs(move)}</span>`;
+      return '<span class="pollMove same" title="Unchanged">—</span>';
+    }
+    return '<span class="pollMove unavailable" title="Previous AP rank unavailable">—</span>';
+  };
   const rows=g=>(g.teams||[]).map((t,i)=>`<tr><td class="pollRank">${esc(t.pos??i+1)}</td>`
     +`<td><div class="gteam teamClickable" data-team="${esc(t.name||'')}" onclick="openTeamModal(this.dataset.team)">`
     +`<span class="code">${esc(t.code||'')}</span>${esc(t.name||'')}</div></td>`
-    +`<td><b>${esc(t.record||`${t.w??'\u2014'}-${t.l??'\u2014'}`)}</b></td>`
+    +`<td>${movement(t)}</td><td><b>${esc(t.record||`${t.w??'\u2014'}-${t.l??'\u2014'}`)}</b></td>`
     +`<td${t.external_rank?` title="Matchday power rating #${Number(t.external_rank)}"`:''}>${t.rating!=null?Number(t.rating).toFixed(2):'\u2014'}</td></tr>`).join('');
   return `<div class="vhead">Rankings</div>`+polls.map(g=>
     `<div class="tablewrap officialPoll"><div class="groupHead">${esc(g.group||'Ranking')}<span>${esc(pollTableNote(g))}</span></div>`
-    +`<table class="gtable officialPollTable"><thead><tr><th>#</th><th>Team</th><th>Record</th>`
+    +`<table class="gtable officialPollTable"><thead><tr><th>#</th><th>Team</th><th>Move</th><th>Record</th>`
     +`<th title="Opponent-adjusted scoring margin; Matchday power-rating rank appears on hover" >Power</th></tr></thead>`
     +`<tbody>${rows(g)}</tbody></table></div>`).join('');
 }
@@ -1203,11 +1212,25 @@ function betbetterModelRead(m,p){
     +`<div class="analystGrid">${sideBox}</div>`
     +(p.integrity_note?`<p class="analystSummary">${esc(p.integrity_note)}</p>`:'')+`</section>`;
 }
+function matchupWhyPanel(m,p){
+  const h=betbetterTeamRow(m?.home?.name),a=betbetterTeamRow(m?.away?.name);
+  const metric=(label,hv,av,digits=1)=>{
+    const left=Number(hv),right=Number(av),valid=Number.isFinite(left)&&Number.isFinite(right);
+    return `<div class="matchWhyRow"><span>${esc(label)}</span><b>${valid?left.toFixed(digits):'—'}</b><i></i><b>${valid?right.toFixed(digits):'—'}</b></div>`;
+  };
+  const title=p?.pick_name?`Why the model leans ${p.pick_name}`:'What separates these teams';
+  return `<section class="matchWhy"><div class="matchWhyHead"><span>Why</span><h3>${esc(title)}</h3><p>The clearest opponent-adjusted signals behind this matchup. Full evidence remains available below.</p></div><div class="matchWhyTeams"><b>${esc(m?.home?.code||m?.home?.name||'Home')}</b><span>comparison</span><b>${esc(m?.away?.code||m?.away?.name||'Away')}</b></div><div class="matchWhyRows">${metric('Rating',h?.rating,a?.rating,2)}${metric('Offence',h?.adj_o,a?.adj_o)}${metric('Defence',h?.adj_d,a?.adj_d)}${metric('Schedule',h?.sos,a?.sos,2)}</div></section>`;
+}
+function matchupEvidence(label,note,html,open=false){
+  if(!html)return '';
+  return `<details class="matchEvidence"${open?' open':''}><summary><span><b>${esc(label)}</b><small>${esc(note)}</small></span><i aria-hidden="true">+</i></summary><div class="matchEvidenceBody">${html}</div></details>`;
+}
 function details(m){
   if(isForecastPaused(m))return `<div class="detailGrid v4Detail">${forecastPauseHTML(m)}<div class="detailTop">${betbetterMatchupPanel(m)}<div class="readCard forecastMarketCard">${marketPanel(m)}</div></div><div class="detailLow">${rosterPanel(m)}</div></div>`;
   const bb=betbetterReadFor(m);
   const read=bb?betbetterModelRead(m,bb):betbetterNoReadPanel();
-  return `<div class="detailGrid v4Detail modernExpandedView"><div class="expandedSectionHead"><div><span>Matchday analysis</span><b>Model, market and matchup</b></div><em>Updated before kickoff</em></div><div class="detailTop"><div class="readCard modelReadCard">${read}</div><div class="readCard forecastMarketCard">${marketPanel(m)}</div></div><div class="detailTop">${betbetterMatchupPanel(m)}${matchProfilePanel(m)}</div><div class="detailLow">${rosterPanel(m)}</div></div>`;
+  const comparison=`<div class="matchEvidenceGrid">${betbetterMatchupPanel(m)}${matchProfilePanel(m)}</div>`;
+  return `<div class="detailGrid v4Detail modernExpandedView"><div class="expandedSectionHead"><div><span>Matchday analysis</span><b>Prediction first. Evidence on demand.</b></div><em>Updated before kickoff</em></div><div class="expandedDecision"><div class="readCard modelReadCard">${read}</div></div>${matchupWhyPanel(m,bb)}<div class="matchEvidenceList">${matchupEvidence('Team comparison','ratings, record and schedule',comparison)}${matchupEvidence('Market','current price and model disagreement',`<div class="readCard forecastMarketCard">${marketPanel(m)}</div>`)}${matchupEvidence('Supporting detail','roster, availability and deeper data',`<div class="detailLow">${rosterPanel(m)}</div>`)}</div></div>`;
 }
 /* dedup */
 function _v4TitleRows(t){

@@ -247,8 +247,7 @@ function teamInitials(team){
 }
 function teamHue(team){let h=0;for(const ch of String(team?.name||team?.code||'team'))h=(h*31+ch.charCodeAt(0))%360;return h}
 function teamMarkHTML(team,extra=''){
-  if(TEAM_LOGO_FILES[team?.name])return teamMark(team.name,extra);
-  return `<span class="teamMark teamMonogram ${esc(extra)}" style="--team-hue:${teamHue(team)}" aria-hidden="true">${esc(teamInitials(team))}</span>`;
+  return teamMark(team?.name,extra);
 }
 function metricHelp(label,copy){return `<button type="button" class="metricHelp" aria-label="${esc(label)}: ${esc(copy)}" aria-expanded="false" aria-controls="metricHelpPopover" data-tip="${esc(copy)}">?</button>`}
 function metricHelpPopover(){
@@ -823,13 +822,41 @@ const TEAM_LOGO_FILES={
   'Texas Longhorns':'texas.png','Georgia Bulldogs':'georgia.png','Miami Hurricanes':'miami.png','Ole Miss Rebels':'oleMiss.png','Ohio State Buckeyes':'ohioState.png','Notre Dame Fighting Irish':'notreDame.png','Indiana Hoosiers':'indiana.png','Alabama Crimson Tide':'alabama.png','BYU Cougars':'byu.png','USC Trojans':'usc.png','Texas Tech Red Raiders':'texasTech.png','LSU Tigers':'lsu.png','Utah Utes':'utah.png','Louisville Cardinals':'louisville.png','Iowa Hawkeyes':'iowa.png','Penn State Nittany Lions':'pennState.png','Tennessee Volunteers':'tennessee.png','Florida Gators':'florida.png','Missouri Tigers':'missouri.png','Mississippi State Bulldogs':'mississippiState.png','Kentucky Wildcats':'kentucky.png','Houston Cougars':'houston.png','SMU Mustangs':'smu.png','Michigan Wolverines':'michigan.png','Duke Blue Devils':'duke.png','Coastal Carolina Chanticleers':'coastalCarolina.png','Liberty Flames':'liberty.png'
 };
 Object.assign(TEAM_LOGO_FILES,{
-  Texas:'texas.png',Georgia:'georgia.png',Miami:'miami.png','Ole Miss':'oleMiss.png','Ohio State':'ohioState.png','Notre Dame':'notreDame.png',Indiana:'indiana.png',Alabama:'alabama.png',BYU:'byu.png',USC:'usc.png','Texas Tech':'texasTech.png',LSU:'lsu.png',Utah:'utah.png',Louisville:'louisville.png',Iowa:'iowa.png','Penn State':'pennState.png',Tennessee:'tennessee.png',Florida:'florida.png',Missouri:'missouri.png','Mississippi State':'mississippiState.png',Kentucky:'kentucky.png',Houston:'houston.png',SMU:'smu.png',Michigan:'michigan.png',Duke:'duke.png','Coastal Carolina':'coastalCarolina.png',Liberty:'liberty.png'
+  Texas:'texas.png',Georgia:'georgia.png',Miami:'miami.png','Ole Miss':'oleMiss.png','Ohio State':'ohioState.png','Notre Dame':'notreDame.png',Indiana:'indiana.png',Alabama:'alabama.png',BYU:'byu.png',USC:'usc.png','Texas Tech':'texasTech.png',LSU:'lsu.png',Utah:'utah.png',Louisville:'louisville.png',Iowa:'iowa.png','Penn State':'pennState.png',Tennessee:'tennessee.png',Florida:'florida.png',Missouri:'missouri.png','Mississippi State':'mississippiState.png',Kentucky:'kentucky.png',Houston:'houston.png',SMU:'smu.png',Michigan:'michigan.png',Duke:'duke.png','Coastal Carolina':'coastalCarolina.png',Liberty:'liberty.png',
+  Louisiana:'louisianaLafayette.png','UL Monroe':'louisianaMonroe.png','Louisiana Tech':'LouisianaTech.png',
+  'Miami (OH)':'miamiOH.png',UConn:'connecticut.png','NC State':'ncState.png',
+  'App State':'appalachianState.png','Southern Miss':'southernMississippi.png',FIU:'floridaIntl.png',
+  FAU:'floridaAtlantic.png',NIU:'northernIllinois.png',UTSA:'texasSanAntonio.png',
+  'Sam Houston':'samHoustonState.png','UT Martin':'tennesseeMartin.png',McNeese:'mcNeeseState.png',
+  'Boston College':'boston.png','East Tennessee State':'eastTennessee.png','Florida A&M':'floridaAM.png',
+  'Florida International':'floridaIntl.png','Houston Christian':'houstonBaptist.png',Nicholls:'nichollsState.png',
+  'North Carolina A&T':'northCarolinaAT.png','San José State':'sanJoseState.png','SE Louisiana':'southeasternLouisiana.png',
+  'Texas A&M':'texasAM.png','The Citadel':'citadel.png',UAlbany:'albany.png'
 });
+function inferredTeamLogoFile(name){
+  const words=String(name||'').replace(/&/g,' and ').replace(/[^A-Za-z0-9]+/g,' ').trim().split(/\s+/).filter(Boolean);
+  if(!words.length)return '';
+  return words.map((word,i)=>i?word[0].toUpperCase()+word.slice(1):word.toLowerCase()).join('')+'.png';
+}
+function teamLogoCandidates(name){
+  const label=String(name||'').trim();
+  const exact=Object.entries(TEAM_LOGO_FILES)
+    .filter(([school])=>label===school||label.startsWith(school+' '))
+    .sort((a,b)=>b[0].length-a[0].length)[0]?.[1];
+  const words=label.replace(/&/g,' and ').replace(/[^A-Za-z0-9]+/g,' ').trim().split(/\s+/).filter(Boolean);
+  const inferred=[];
+  for(let end=words.length;end>0;end--)inferred.push(inferredTeamLogoFile(words.slice(0,end).join(' ')));
+  return [...new Set([exact,...inferred].filter(Boolean))];
+}
+function teamLogoFallback(img){
+  const remaining=String(img.dataset.logoFallback||'').split('|').filter(Boolean);
+  if(remaining.length){img.dataset.logoFallback=remaining.slice(1).join('|');img.src='social/logos/'+remaining[0];return}
+  img.hidden=true;img.nextElementSibling.hidden=false;
+}
 function teamMark(name,extra=''){
-  const file=TEAM_LOGO_FILES[name];
-  if(file)return `<span class="teamMark ${esc(extra)}"><img src="team-logos/${file}" alt="" width="32" height="32" loading="lazy"></span>`;
+  const candidates=teamLogoCandidates(name),file=candidates.shift()||'';
   const letters=String(name||'').split(/\s+/).filter(Boolean).slice(0,2).map(w=>w[0]).join('').toUpperCase()||'?';
-  return `<span class="teamMark teamMonogram" aria-hidden="true">${esc(letters)}</span>`;
+  return `<span class="teamMark ${esc(extra)}"><img src="social/logos/${esc(file)}" data-logo-fallback="${esc(candidates.join('|'))}" alt="" width="32" height="32" loading="lazy" onerror="teamLogoFallback(this)"><span class="teamMonogramText" hidden aria-hidden="true">${esc(letters)}</span></span>`;
 }
 function gamesSummaryHTML(active){
   const sport=SPORT_LABELS[currentSportKey()]||DATA.competition||'College sports';
@@ -844,7 +871,7 @@ function gamesSummaryHTML(active){
   const feature=featured?gamesFeaturedHTML(featured):`<div class="gamesEmpty">No games in the next seven days. The full schedule remains below.</div>`;
   return `<section class="gamesLandingHead"><span>GAMES</span><h1>${esc(sport)}</h1><p>Predictions, market comparisons and the public record.</p></section>`
     +`<section class="gamesFeatured"><div class="gamesSectionHead"><span>This week's featured game</span><small>${featured?.model!=null?'Live model':'Next 7 days'}</small></div>${feature}</section>`
-    +`<div class="gamesSupportGrid">${gamesDifferencesHTML(top)}${gamesRecordHTML()}</div>`
+    +`<div class="gamesSupportGrid${top.length?'':' noComparisons'}">${gamesDifferencesHTML(top)}${gamesRecordHTML()}</div>`
     +`<nav class="gamesExplore" aria-label="Explore Matchday"><span>Explore</span><div><button type="button" onclick="setView('groups')"><b>Rankings</b><small>Ratings and conferences</small></button><button type="button" onclick="setView('news')"><b>Research</b><small>Analysis and methodology</small></button><button type="button" onclick="setView('results')"><b>Results</b><small>Finals and grading</small></button></div></nav>`;
 }
 function renderHome(){

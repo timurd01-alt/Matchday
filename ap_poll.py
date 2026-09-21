@@ -68,6 +68,19 @@ def refresh(path: pathlib.Path = SNAPSHOT, today: dt.date | None = None,
     rows = extract(payloads)
     if not rows:
         return load(path)
+    previous = load(path)
+    previous_rows = previous.get("rankings") or []
+    current_signature = [(row["rank"], row["name"]) for row in rows]
+    previous_signature = [(row.get("rank"), row.get("name")) for row in previous_rows]
+    # Re-fetching the same weekly poll must not erase the movement captured
+    # when that poll first replaced its predecessor.
+    if current_signature == previous_signature:
+        return previous
+    previous_by_name = {row.get("name"): row.get("rank") for row in previous_rows}
+    for row in rows:
+        prior = previous_by_name.get(row["name"])
+        row["previous_rank"] = prior
+        row["movement"] = prior - row["rank"] if isinstance(prior, int) else None
     document = {
         "poll_name": "AP Top 25",
         "source": "ESPN scoreboard published AP rank",
@@ -76,4 +89,3 @@ def refresh(path: pathlib.Path = SNAPSHOT, today: dt.date | None = None,
     }
     path.write_text(json.dumps(document, indent=2) + "\n", encoding="utf-8", newline="\n")
     return document
-

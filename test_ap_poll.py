@@ -38,3 +38,19 @@ class ApPollTests(unittest.TestCase):
             self.assertEqual(result["fetched_on"], "2026-09-18")
             self.assertNotIn("events", path.read_text(encoding="utf-8"))
 
+    def test_refresh_calculates_and_preserves_weekly_movement(self):
+        with tempfile.TemporaryDirectory() as folder:
+            path = pathlib.Path(folder) / "poll.json"
+            previous = {"poll_name": "AP Top 25", "rankings": [
+                {"rank": rank, "name": f"Team {rank}"} for rank in range(1, 26)]}
+            path.write_text(json.dumps(previous), encoding="utf-8")
+            moved = self.payload()
+            competitors = moved["events"][0]["competitions"][0]["competitors"]
+            competitors[0]["team"]["displayName"] = "Team 2"
+            competitors[1]["team"]["displayName"] = "Team 1"
+            result = ap_poll.refresh(path, dt.date(2026, 9, 19), lambda _day: moved)
+            self.assertEqual(result["rankings"][0]["previous_rank"], 2)
+            self.assertEqual(result["rankings"][0]["movement"], 1)
+            self.assertEqual(result["rankings"][1]["movement"], -1)
+            repeated = ap_poll.refresh(path, dt.date(2026, 9, 20), lambda _day: moved)
+            self.assertEqual(repeated, result)
