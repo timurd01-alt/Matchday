@@ -2585,6 +2585,10 @@ html{color-scheme:dark}
 .teamMonogram{border:1px solid var(--line2);color:var(--muted);font:var(--fw-bold) var(--fs-xs)/1 var(--mono)}
 .gamesSupportGrid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(270px,.75fr);gap:clamp(28px,4vw,64px);align-items:stretch;margin-top:28px}
 .gamesSupportGrid .gamesRecord{margin:0;padding:18px 0;align-items:flex-start;flex-direction:column;justify-content:space-between}
+.gamesSupportGrid .gamesRecord{align-self:start;gap:16px}
+.welcomeLogo{margin:18px 0 15px}
+.welcomeLead{margin-top:16px}
+.welcomeActions{margin-top:22px}
 .gamesSupportGrid .gamesDifferences{border-top:0}
 .gamesSupportGrid .gamesSectionHead{padding-top:0}
 .gamesSupportGrid.noComparisons{grid-template-columns:minmax(0,1fr);margin-top:20px}

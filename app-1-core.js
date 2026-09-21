@@ -887,7 +887,7 @@ function gamesSummaryHTML(active){
   const featured=featuredMatchupRead(reads)
     ||[...comparable].sort((a,b)=>fixtureSort(a.match,b.match))[0]
     ||[...reads].sort((a,b)=>fixtureSort(a.match,b.match))[0]
-    ||week[0]&&{match:week[0],pick:'',model:null,market:null,difference:null});
+    ||(week[0]&&{match:week[0],pick:'',model:null,market:null,difference:null});
   const top=[...comparable].sort((a,b)=>Math.abs(b.difference)-Math.abs(a.difference)||fixtureSort(a.match,b.match)).slice(0,3);
   const feature=featured?gamesFeaturedHTML(featured):`<div class="gamesEmpty">No games in the next seven days. The full schedule remains below.</div>`;
   return `<section class="gamesLandingHead"><span>GAMES</span><h1>${esc(sport)}</h1><p>Predictions, market comparisons and the public record.</p></section>`

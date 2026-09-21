@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0921G",
+  "tag": "Fix",
+  "title": "Restore entry and tighten welcome spacing",
+  "items": [
+   "Repaired a script syntax error that prevented the welcome-page Enter button and site navigation from loading.",
+   "Reduced unused welcome-page spacing and kept the public-record action next to its figures instead of at the bottom of a stretched panel."
+  ]
+ },
+ {
   "date": "Build 0921F",
   "tag": "Fix",
   "title": "Home comparisons now use the full Bet Better handoff",
