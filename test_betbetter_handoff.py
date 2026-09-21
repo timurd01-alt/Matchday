@@ -89,6 +89,10 @@ class LoadTests(unittest.TestCase):
         loaded = betbetter_handoff.load(self.write(document(handoff_version=10)))
         self.assertEqual(len(loaded["picks"]), 1)
 
+    def test_market_comparison_version_loads(self):
+        loaded = betbetter_handoff.load(self.write(document(handoff_version=11)))
+        self.assertEqual(len(loaded["picks"]), 1)
+
     def test_an_unknown_version_is_refused_whole(self):
         with self.assertRaises(betbetter_handoff.HandoffError):
             betbetter_handoff.load(self.write(document(handoff_version=99)))
@@ -196,8 +200,9 @@ class AttachTests(unittest.TestCase):
         self.assertIs(block["official_publication_eligible"], False)
         self.assertEqual(block["basis"], "live_shadow_forecast")
         self.assertEqual(block["engine"], "betbetter")
-        private = {"market_pct", "edge_points", "best_price", "best_american",
-                   "book_count", "edge_warning"}
+        self.assertEqual(block["market_pct"], 94.5)
+        self.assertEqual(block["edge_points"], 4.4)
+        private = {"best_price", "best_american", "book_count", "edge_warning"}
         self.assertFalse(private & set(block))
 
     def test_an_attached_block_is_not_an_official_pick_record(self):

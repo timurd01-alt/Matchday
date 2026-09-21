@@ -6,6 +6,13 @@ matching only. The marks still come from the previously reviewed local
 another school's mark. No new asset source, sports-data endpoint, restricted
 field, raw payload, quota policy, or ESPN content was added.)
 
+Reviewed: 2026-09-21 (Bet Better handoff v11 publishes only the selected
+side's aggregate no-vig market probability and its model-minus-market
+probability-point difference alongside the existing forecast. It adds no
+provider, endpoint, raw bookmaker quote, price, book identity, credentials,
+or private engine code to Matchday. The values are contextual comparisons,
+not betting recommendations or official pick receipts.)
+
 Reviewed: 2026-09-20 (interface and local school-mark expansion only. The
 complete library supplied 254 school marks (plus one unused NCAA mark) from
 the same public `klunn91/team-logos` source already documented in
