@@ -13,13 +13,15 @@ class MobileStartupTests(unittest.TestCase):
 
     def test_enter_action_exists_before_application_bundles(self):
         self.assertLess(
-            self.html.index("window.enterMatchday=function"),
+            self.html.index("window.matchdayEnterNow=function"),
             self.html.index('<body>'),
         )
         self.assertLess(
-            self.html.index("window.enterMatchday=function"),
+            self.html.index("window.matchdayEnterNow=function"),
             self.html.index('src="app-1-core.js'),
         )
+        self.assertIn('onclick="matchdayEnterNow()"', self.html)
+        self.assertIn("if(gate)gate.hidden=true", self.html)
 
     def test_large_scripts_do_not_block_html_parsing(self):
         for filename in (

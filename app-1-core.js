@@ -230,8 +230,8 @@ function relativeTime(value,unit){return new Intl.RelativeTimeFormat(uiLocale(),
 function dt(iso){try{return new Date(iso).toLocaleString(uiLocale(),{weekday:'short',hour:'numeric',minute:'2-digit',month:'short',day:'numeric'})}catch(e){return''}}
 function ago(iso){try{const s=(Date.now()-new Date(iso).getTime())/1000;if(!isFinite(s))return'';if(s<70)return relativeTime(0,'second');if(s<3600)return relativeTime(-Math.round(s/60),'minute');if(s<86400)return relativeTime(-Math.round(s/3600),'hour');return relativeTime(-Math.round(s/86400),'day')}catch(e){return''}}
 function kickIn(iso){try{const m=Math.round((new Date(iso)-Date.now())/60000);if(m<=0)return relativeTime(0,'minute');if(m<60)return relativeTime(m,'minute');if(m<1440)return relativeTime(Math.round(m/60),'hour');return relativeTime(Math.round(m/1440),'day')}catch(e){return''}}
-const ODDS_WINDOW_HOURS=3; // mirrors fetch_data.py's PREGAME_ODDS_WINDOW_HOURS quota gate
-function oddsEtaLabel(m){try{const mins=(new Date(m.kickoff)-Date.now())/60000;if(mins>ODDS_WINDOW_HOURS*60)return `Market odds appear ~${ODDS_WINDOW_HOURS}h before kickoff`}catch(e){}return null}
+const ODDS_WINDOW_HOURS=24; // mirrors fetch_data.py's PREGAME_ODDS_WINDOW_HOURS quota gate
+function oddsEtaLabel(m){try{const mins=(new Date(m.kickoff)-Date.now())/60000;if(mins>ODDS_WINDOW_HOURS*60)return `Market odds checked from ${ODDS_WINDOW_HOURS}h before kickoff`}catch(e){}return null}
 const STALE_MATCH_MINUTES=150;
 function kickMs(m){const t=Date.parse(m?.kickoff||'');return Number.isFinite(t)?t:0}
 function isStaleUpcoming(m){const t=kickMs(m);return m?.status==='UPCOMING'&&t>0&&(Date.now()-t)>STALE_MATCH_MINUTES*60000}
@@ -413,7 +413,34 @@ function officialPredictionProbabilities(m){
   return locked.adjusted||locked.blend||locked.probs||pr.adjusted||pr.blend||pr.model||{};
 }
 function duo(xl,xv,yl,yv){xv=pct(xv);yv=pct(yv);return `<div class="mkt"><div class="lbls"><span>${esc(xl)} <b>${xv}%</b></span><span><b>${yv}%</b> ${esc(yl)}</span></div><div class="duo"><i class="x" style="flex-basis:${xv}%">${xv}%</i><i class="y" style="flex-basis:${yv}%">${yv}%</i></div></div>`}
-function marketPanel(m){const mk=m.markets||{},x=mk['1x2']||{},twoWay=_isTwoWay(m);let h='<div class="seclbl">Odds tracker</div>';if(x.home_pct!=null){h+=`<div class="problbl"><span>${esc(m.home.code||m.home.name)} win</span>${twoWay?'':'<span>draw</span>'}<span>${esc(m.away.code||m.away.name)} win</span></div>${bar1x2(x.home_pct,twoWay?null:x.draw_pct,x.away_pct)}<div class="faintline" style="margin-top:6px">1X2 market · ${x.books||'?'} books</div>`;const arr=v=>v>0?`<span class="up">▲${v}</span>`:v<0?`<span class="down">▼${Math.abs(v)}</span>`:`<span class="flat">·</span>`;if(x.move&&(x.move.h||(!twoWay&&x.move.d)||x.move.a)){h+=`<div class="oddsMove"><span class="mvlbl">Since open</span><span>${esc(m.home.code)} ${arr(x.move.h)}</span>${twoWay?'':`<span>X ${arr(x.move.d)}</span>`}<span>${esc(m.away.code)} ${arr(x.move.a)}</span></div>`}else if(x.open){h+=`<div class="faintline" style="margin-top:4px">No line movement logged yet — it builds as the fetcher keeps running.</div>`}if(x.confidence){h+=`<div class="oddsDisagree ${esc(x.confidence)}"><span class="dgtag">${esc(x.confidence)}</span><span>books range ${x.spread_lo}–${x.spread_hi}% on ${esc(m.home.code)} win</span><span class="dgspread">±${x.spread}</span></div>`}}else h+=`<div class="nomk">${esc(oddsEtaLabel(m)||'No 1X2 market odds yet.')}</div>`;if(mk.totals)h+=`<div class="seclbl">Goals — over/under ${esc(mk.totals.line)}</div>`+duo(`Over ${mk.totals.line}`,mk.totals.over_pct,`Under ${mk.totals.line}`,mk.totals.under_pct);return h}
+function marketPanel(m){
+  const mk=m.markets||{},x=mk['1x2']||{},twoWay=_isTwoWay(m);
+  let h='<div class="seclbl">Market price</div>';
+  if(x.home_pct!=null){
+    h+=`<div class="problbl"><span>${esc(m.home.code||m.home.name)} win</span>${twoWay?'':'<span>draw</span>'}<span>${esc(m.away.code||m.away.name)} win</span></div>${bar1x2(x.home_pct,twoWay?null:x.draw_pct,x.away_pct)}<div class="faintline" style="margin-top:6px">1X2 market · ${x.books||'?'} books</div>`;
+    const arr=v=>v>0?`<span class="up">▲${v}</span>`:v<0?`<span class="down">▼${Math.abs(v)}</span>`:`<span class="flat">·</span>`;
+    if(x.move&&(x.move.h||(!twoWay&&x.move.d)||x.move.a)){
+      h+=`<div class="oddsMove"><span class="mvlbl">Since open</span><span>${esc(m.home.code)} ${arr(x.move.h)}</span>${twoWay?'':`<span>X ${arr(x.move.d)}</span>`}<span>${esc(m.away.code)} ${arr(x.move.a)}</span></div>`;
+    }else if(x.open){
+      h+=`<div class="faintline" style="margin-top:4px">No line movement logged yet — it builds as the fetcher keeps running.</div>`;
+    }
+    if(x.confidence){
+      h+=`<div class="oddsDisagree ${esc(x.confidence)}"><span class="dgtag">${esc(x.confidence)}</span><span>books range ${x.spread_lo}–${x.spread_hi}% on ${esc(m.home.code)} win</span><span class="dgspread">±${x.spread}</span></div>`;
+    }
+  }else{
+    const read=typeof betbetterReadFor==='function'?betbetterReadFor(m):null;
+    const price=read?.market_pct==null?NaN:Number(read.market_pct);
+    if(Number.isFinite(price)&&price>=0&&price<=100){
+      const stamp=Date.parse(read.generated_at||read.handoff_generated_at||'');
+      const when=Number.isFinite(stamp)?` · ${esc(new Date(stamp).toLocaleString())}`:'';
+      h+=`<div class="readSide"><span>${esc(read.pick_name||'Model pick')}</span><strong>${Math.min(99.9,price).toFixed(1)}%</strong></div><div class="faintline">Market probability in Bet Better forecast${when}. Snapshot, not a live quote.</div>`;
+    }else{
+      h+=`<div class="nomk">${esc(oddsEtaLabel(m)||'No market price available yet.')}</div>`;
+    }
+  }
+  if(mk.totals)h+=`<div class="seclbl">Goals — over/under ${esc(mk.totals.line)}</div>`+duo(`Over ${mk.totals.line}`,mk.totals.over_pct,`Under ${mk.totals.line}`,mk.totals.under_pct);
+  return h;
+}
 function _v6UpsetClass(score,triggered){score=Number(score)||0;if(triggered)return'trigger';return score>=70?'high':score>=50?'med':'low'}
 /* dedup */
 /* dedup */

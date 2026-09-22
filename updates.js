@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0922F",
+  "tag": "Fix",
+  "title": "Keep entry responsive and show markets earlier",
+  "items": [
+   "Make the welcome screen exit immediately and independently of the larger app scripts so visitors are not trapped while the site loads.",
+   "Begin refreshing available game odds 24 hours before kickoff instead of three hours before.",
+   "When the separate odds feed has no quote, show the dated market probability already included in the Bet Better forecast rather than an empty Market panel."
+  ]
+ },
+ {
   "date": "Build 0922E",
   "tag": "Refinement",
   "title": "Show the matchup evidence directly",

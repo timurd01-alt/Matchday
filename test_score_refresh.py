@@ -30,12 +30,14 @@ class ScoreRefreshTests(unittest.TestCase):
     def test_odds_are_only_due_for_near_future_upcoming_games(self):
         now = datetime.datetime(2026, 7, 27, 20, 0, tzinfo=datetime.timezone.utc)
         near = {"status": "UPCOMING", "kickoff": "2026-07-27T22:00:00Z"}
-        far = {"status": "UPCOMING", "kickoff": "2026-07-28T02:01:00Z"}
+        far = {"status": "UPCOMING", "kickoff": "2026-07-28T20:01:00Z"}
+        day_ahead = {"status": "UPCOMING", "kickoff": "2026-07-28T19:59:00Z"}
         past = {"status": "UPCOMING", "kickoff": "2026-07-27T19:59:00Z"}
         live = {"status": "LIVE", "kickoff": "2026-07-27T19:00:00Z"}
         finished = {"status": "FINISHED", "kickoff": "2026-07-27T17:00:00Z"}
 
         self.assertTrue(fetch_data._due_for_odds(near, now))
+        self.assertTrue(fetch_data._due_for_odds(day_ahead, now))
         self.assertFalse(fetch_data._due_for_odds(far, now))
         self.assertFalse(fetch_data._due_for_odds(past, now))
         self.assertFalse(fetch_data._due_for_odds(live, now))

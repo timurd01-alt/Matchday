@@ -53,15 +53,18 @@
 }
 </script>
 <script>
-// The welcome action must work before the larger application bundles finish
-// downloading on a slow phone. app-1-core replaces this with the animated
-// version once it arrives.
-window.enterMatchday=function(){
+// Keep this exit independent of the larger application bundle: the welcome
+// screen must never trap a visitor when a script or data request stalls.
+window.matchdayEnterNow=function(targetView){
   window.MATCHDAY_ENTERED=true;
   try{sessionStorage.setItem('matchday.welcome.entered','1');localStorage.setItem('matchday.heroSeen','1')}catch(e){}
   var gate=document.getElementById('welcomeGate');if(gate)gate.hidden=true;
   document.body.classList.remove('welcomeOpen','welcomeExiting');
+  var app=document.getElementById('app');if(app){app.classList.remove('appRevealing');app.style.visibility='visible'}
   var home=document.getElementById('view-home');if(home)home.style.display='block';
+  window.setTimeout(function(){
+    try{if(targetView&&typeof setView==='function')setView(targetView);else if(typeof renderCurrent==='function')renderCurrent()}catch(e){console.error('Matchday view failed to render',e)}
+  },0);
   window.setTimeout(function(){
     var waiting=home&&home.querySelector('.empty');
     if(waiting&&waiting.textContent.trim()==='Loading…')waiting.innerHTML='The page is taking too long to load.<br><button class="actionbtn" type="button" onclick="location.reload()">Retry loading</button>';
@@ -159,7 +162,7 @@ window.enterMatchday=function(){
         graded afterwards and never rewritten.</p>
       </details>
       <div class="welcomeActions">
-        <button class="welcomeEnter" type="button" onclick="enterMatchday()">Enter Matchday Terminal <span aria-hidden="true">→</span></button>
+        <button class="welcomeEnter" type="button" onclick="matchdayEnterNow()">Enter Matchday Terminal <span aria-hidden="true">→</span></button>
         <span>No account required · no ads</span>
         <a class="welcomeSocialLink" href="https://x.com/timurknowsball" rel="me noopener" target="_blank">Follow @timurknowsball on X <span aria-hidden="true">↗</span></a>
         <a class="welcomeLegalLink" href="legal.html">Legal, privacy &amp; data sources</a>
@@ -180,9 +183,9 @@ window.enterMatchday=function(){
     <div class="welcomeDiscover" aria-label="Explore Matchday">
       <div class="welcomeUpset" id="welcomeUpset" hidden></div>
       <div class="welcomeDiscoverLinks">
-        <button type="button" onclick="enterMatchday('matches')"><b>Games</b><span>This week's matchups and live model reads</span><i aria-hidden="true">→</i></button>
-        <button type="button" onclick="enterMatchday('score')"><b>Public record</b><span>Every locked pick, graded in public</span><i aria-hidden="true">→</i></button>
-        <button type="button" onclick="enterMatchday('news')"><b>Research</b><span>Ratings, context and upset watch</span><i aria-hidden="true">→</i></button>
+        <button type="button" onclick="matchdayEnterNow('matches')"><b>Games</b><span>This week's matchups and live model reads</span><i aria-hidden="true">→</i></button>
+        <button type="button" onclick="matchdayEnterNow('score')"><b>Public record</b><span>Every locked pick, graded in public</span><i aria-hidden="true">→</i></button>
+        <button type="button" onclick="matchdayEnterNow('news')"><b>Research</b><span>Ratings, context and upset watch</span><i aria-hidden="true">→</i></button>
       </div>
     </div>
   </div>

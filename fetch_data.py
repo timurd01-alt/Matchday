@@ -249,7 +249,7 @@ def competition(key):
 # production modules use it rather than assigning the attribute.
 
 ODDS_FREE_QUOTA_URL = "https://api.the-odds-api.com/v4/sports/?apiKey="
-PREGAME_ODDS_WINDOW_HOURS = 3
+PREGAME_ODDS_WINDOW_HOURS = 24
 UA = {"User-Agent": "Mozilla/5.0 (matchday-terminal)"}
 
 API_FOOTBALL_MAX_INJURIES = 8

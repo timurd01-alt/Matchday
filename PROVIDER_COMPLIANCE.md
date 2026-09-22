@@ -1,5 +1,11 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-09-22 (the existing Odds API game-odds fetch begins within
+24 hours of kickoff instead of three, without changing its endpoint, cache,
+quota reserve, or output fields. The expanded view may also show the already-
+published Bet Better market probability, labeled as a dated snapshot rather
+than a live bookmaker quote. No raw provider feed is redistributed.)
+
 Reviewed: 2026-09-22 (the expanded matchup removes a repetitive generated
 "Why" claim and opens the existing opponent-adjusted comparison by default.
 No new provider, endpoint, redistributed field, restricted payload, or ESPN
