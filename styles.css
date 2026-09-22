@@ -2704,3 +2704,19 @@ html{color-scheme:dark}
 .welcomeCoverage span{background:#171d24;color:var(--text);border-color:#3a454e}
 .welcomeCoverage span:first-child{background:#163027;border-color:#34674e;color:#7be1a7}
 .welcomeDevNote{background:#141f20;border-color:#34674e}
+/* Keep the power-rating row in one table grid at narrow widths. */
+.powerTable td.pollMove{display:table-cell;width:52px;min-width:0;text-align:center}
+.powerTable th:nth-child(2){text-align:center}
+.powerTable .pollTeamInner{white-space:nowrap}
+@media(max-width:640px){
+  .powerTable{table-layout:fixed;width:100%}
+  .powerTable.hasMove th:first-child,.powerTable.hasMove td:first-child{width:40px}
+  .powerTable.hasMove th:nth-child(2),.powerTable.hasMove td:nth-child(2){width:44px}
+  .powerTable.hasMove th:nth-child(3),.powerTable.hasMove td:nth-child(3){display:table-cell;text-align:left}
+  .powerTable.hasMove th:nth-child(n+4),.powerTable.hasMove td:nth-child(n+4){display:none}
+  .powerTable:not(.hasMove) th:first-child,.powerTable:not(.hasMove) td:first-child{width:40px}
+  .powerTable:not(.hasMove) th:nth-child(2),.powerTable:not(.hasMove) td:nth-child(2){display:table-cell;text-align:left}
+  .powerTable:not(.hasMove) th:nth-child(n+3),.powerTable:not(.hasMove) td:nth-child(n+3){display:none}
+  .powerTable .pollTeamInner{max-width:100%;overflow:hidden;text-overflow:ellipsis}
+  .powerTable .pollTeamInner>span:last-child{overflow:hidden;text-overflow:ellipsis}
+}

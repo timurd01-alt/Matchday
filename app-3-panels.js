@@ -249,13 +249,41 @@ function applyCurrentCfbSnapshot(payload){
     if(hits.length===1||(hits.length>1&&Math.abs(extra(hits[0]))<Math.abs(extra(hits[1]))))return hits[0];
     return null;
   };
+  // The published result ledger can be newer than the derived rating rows.
+  // Count every completed game, including non-conference opponents, once.
+  const resultRecords=new Map(),seenResults=new Set();
+  (typeof MATCHDAY_BETBETTER_RESULTS!=='undefined'?MATCHDAY_BETBETTER_RESULTS:[])
+    .filter(g=>String(g.sport||'').toLowerCase()==='ncaaf'&&Number(g.season)===Number(MATCHDAY_CFB_RANKINGS?.season))
+    .sort((a,b)=>String(a.kickoff||a.played_on||'').localeCompare(String(b.kickoff||b.played_on||'')))
+    .forEach(g=>{
+      if(!g.home||!g.away||g.home_score==null||g.away_score==null)return;
+      const key=String(g.event_id||`${g.played_on}|${g.home}|${g.away}`);
+      if(seenResults.has(key))return;
+      seenResults.add(key);
+      [['home','away'],['away','home']].forEach(([side,other])=>{
+        const team=teamKey(g[side]),pf=Number(g[side+'_score']),pa=Number(g[other+'_score']);
+        if(!team||!Number.isFinite(pf)||!Number.isFinite(pa))return;
+        const rec=resultRecords.get(team)||{pld:0,w:0,d:0,l:0,gf:0,ga:0,form:''};
+        rec.pld++;rec.gf+=pf;rec.ga+=pa;
+        if(pf>pa){rec.w++;rec.form+='W'}else if(pf<pa){rec.l++;rec.form+='L'}else{rec.d++;rec.form+='D'}
+        resultRecords.set(team,rec);
+      });
+    });
+  const completedRecord=(name,minimum=0)=>{
+    const r=resultRecords.get(teamKey(name));
+    return r&&r.pld>=minimum?{...r,gd:r.gf-r.ga,pts:r.w*3+r.d,form:r.form.slice(-5),record:`${r.w}-${r.l}`}:null;
+  };
+  payload.cfb_result_records=Object.fromEntries(
+    [...resultRecords].map(([key,rec])=>[key,{pld:rec.pld,w:rec.w,l:rec.l,record:`${rec.w}-${rec.l}`}])
+  );
   (payload.matches||[]).forEach(m=>['home','away'].forEach(side=>{
     const team=m[side];if(!team?.name)return;
-    const row=rankFor(team.name);if(!row)return;
-    const w=Number(row.wins)||0,l=Number(row.losses)||0,played=Number(row.season_games)||(w+l);
-    Object.assign(team,{w,l,d:0,pld:played,record:`${w}-${l}`,win_pct:played?w/played:0,
-      form:String(row.recent_form||team.form||'').slice(-5),season_stale:false,
-      model_rank:row.rank<=25?row.rank:(team.model_rank??null),_record_from:'betbetter_rankings'});
+    const row=rankFor(team.name),latest=completedRecord(row?.name||team.name,Number(row?.season_games)||0);
+    if(!row&&!latest)return;
+    const w=latest?.w??(Number(row?.wins)||0),l=latest?.l??(Number(row?.losses)||0),played=latest?.pld??(Number(row?.season_games)||(w+l));
+    Object.assign(team,{w,l,d:latest?.d||0,pld:played,record:`${w}-${l}`,win_pct:played?w/played:0,
+      form:latest?.form||String(row?.recent_form||team.form||'').slice(-5),season_stale:false,
+      model_rank:row?.rank<=25?row.rank:(team.model_rank??null),_record_from:'completed_results'});
   }));
 
   // Records come from the ranking rows first.
@@ -270,9 +298,14 @@ function applyCurrentCfbSnapshot(payload){
     const w=Number(r.wins)||0,l=Number(r.losses)||0,d=Number(r.draws)||0;
     const played=Number(r.season_games)||(w+l+d);
     if(!played)return;
-    records.set(teamKey(r.name),{name:r.name,pld:played,w,d,l,gf:0,ga:0,gd:0,pts:w*3+d,
+    records.set(teamKey(r.name),completedRecord(r.name,played)||{name:r.name,pld:played,w,d,l,gf:0,ga:0,gd:0,pts:w*3+d,
       form:String(r.recent_form||'').slice(-5),record:`${w}-${l}`});
   });
+  resultRecords.forEach((_,key)=>{
+    const latest=completedRecord(key,Number(records.get(key)?.pld)||0);
+    if(latest)records.set(key,latest);
+  });
+  const recordFor=name=>records.get(teamKey(name))||records.get(teamKey(rankFor(name)?.name));
   const externalRating=name=>{const key=teamKey(name);return (MATCHDAY_CFB_SNAPSHOT.rankings||[]).find(row=>{const rk=teamKey(row.name);return rk===key||rk.startsWith(key+' ')||key.startsWith(rk+' ')})};
   payload.standings=(payload.standings||[]).filter(g=>g.group!=='Matchday Top 25').map(g=>{
     // A poll carries its own order. Attaching ratings is fine; re-sorting on
@@ -284,13 +317,11 @@ function applyCurrentCfbSnapshot(payload){
               external_rank:ranked?.rank??team.external_rank??null};
     })};
     const teams=(g.teams||[]).map((team,index)=>{
-      const current=records.get(teamKey(team.name));
+      const current=recordFor(team.name);
       const ranked=externalRating(team.name);
       // Prefer the ranking row's own record: it is regenerated with the
       // ratings and covers every rated team, where the hand list covers 16.
-      const rw=Number(ranked?.wins),rl=Number(ranked?.losses),rg=Number(ranked?.season_games);
-      const useRanked=Number.isFinite(rg)&&rg>0;
-      return {...team,pos:index+1,rating:ranked?.rating??null,external_rank:ranked?.rank??null,pld:useRanked?rg:(current?.pld||0),w:useRanked?rw:(current?.w||0),d:0,l:useRanked?rl:(current?.l||0),
+      return {...team,pos:index+1,rating:ranked?.rating??null,external_rank:ranked?.rank??null,pld:current?.pld||0,w:current?.w||0,d:current?.d||0,l:current?.l||0,
         gf:current?.gf||0,ga:current?.ga||0,gd:current?.gd||0,pts:current?.pts||0,
         form:current?.form||'',record:current?.record||'0-0'};
     }).sort((a,b)=>{// A conference table is standings: record and its tiebreakers decide it.
@@ -915,6 +946,13 @@ function collegeRankingTableHTML(){
   const preseason=table?.coverage?.is_preseason_edition||table?.coverage?.first_poll;
   const num=(v,d=2)=>Number.isFinite(Number(v))?Number(v).toFixed(d):'—';
   const moved=rows.some(r=>r.movement!=null&&Number.isFinite(Number(r.movement)));
+  const currentRecords=(DATA.standings||[]).filter(g=>!isPollTable(g)).flatMap(g=>g.teams||[]);
+  const recordForRow=row=>{
+    const completed=DATA.cfb_result_records?.[teamKey(row.name)];
+    if(completed&&completed.pld>=(Number(row.season_games)||0))return completed.record;
+    return currentRecords.find(t=>teamKey(t.name)===teamKey(row.name))?.record
+      ||currentRecords.find(t=>bbNameMatches(t.name,row.name))?.record;
+  };
   const body=rows.map(r=>`<tr${r.rank<=25?' class="pollRanked"':''}>`
     +`<td class="pollRank">${r.rank}</td>`
     +(moved?`<td class="pollMove">${movementTag(r)}</td>`:'')
@@ -924,7 +962,7 @@ function collegeRankingTableHTML(){
     +`<td class="pollNum">${num(r.sos)}</td>`
     +`<td class="pollNum">${num(r.adj_o,1)}</td>`
     +`<td class="pollNum">${num(r.adj_d,1)}</td>`
-    +`<td>${esc(r.record||'')}</td></tr>`).join('');
+    +`<td>${esc(recordForRow(r)||r.record||'')}</td></tr>`).join('');
   const withheld=(table?.withheld||[]).filter(w=>w?.team_name);
   const provisional=withheld.map(w=>`<tr><td>${esc(w.team_name)}</td><td>${num(w.rating)}</td><td>${Number.isFinite(Number(w.fcs_share))?(Number(w.fcs_share)*100).toFixed(1)+'%':'—'}</td></tr>`).join('');
   return `<section class="pollSection"><div class="pollHead">
@@ -933,7 +971,7 @@ function collegeRankingTableHTML(){
       
     </div>
     ${table.season_in_progress===false?'<div class="modWarn">Projection — the season has not started. This rates the completed season.</div>':''}
-    <div class="pollScroll"><table class="pollTable"><thead><tr>
+    <div class="pollScroll"><table class="pollTable powerTable${moved?' hasMove':''}"><thead><tr>
       <th>#</th>${moved?'<th title="Change since last week">Move</th>':''}<th>Team</th><th>Conference</th><th>Rating</th><th>SoS</th><th>Off</th><th>Def</th><th>Rec</th>
     </tr></thead><tbody>${body}</tbody></table></div>
     <details class="pollHelp"><summary aria-label="About the power ratings">?</summary><p>${esc(String(table.note||'').replace(/\.\./g,'.'))}</p><p>Provisional teams are shown below but have no FBS rank because most of their rating evidence comes from FCS games. They enter the ranked table when the source model has enough comparable FBS-opponent evidence.</p></details>

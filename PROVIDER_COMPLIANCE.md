@@ -1,5 +1,10 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-09-21 (conference and power-rating records now reconcile
+completed games already present in the published Bet Better handoff, including
+non-conference results. This adds no provider, endpoint, raw payload, new
+redistribution field, or ESPN content.)
+
 Reviewed: 2026-09-21 (existing local school marks are now shown in ranking
 and community-pick views, with the same monogram fallback. No new marks,
 provider, data source, redistribution field, or ESPN material was added.)

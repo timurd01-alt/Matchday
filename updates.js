@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0921M",
+  "tag": "Fix",
+  "title": "Aligned power ratings and complete records",
+  "items": [
+   "Restored one aligned row grid for rank, movement, and team at narrow widths.",
+   "Reconciled conference and power-rating records against completed games, including non-conference results such as Michigan State's Notre Dame loss."
+  ]
+ },
+ {
   "date": "Build 0921L",
   "tag": "Fix",
   "title": "Solid welcome controls",

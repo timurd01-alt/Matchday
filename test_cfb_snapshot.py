@@ -1,4 +1,5 @@
 import pathlib
+import json
 import unittest
 
 import build_cfb_snapshot
@@ -8,6 +9,24 @@ ROOT = pathlib.Path(__file__).resolve().parent
 
 
 class CurrentCfbSnapshotTests(unittest.TestCase):
+    def test_rankings_keep_table_cells_aligned_on_narrow_screens(self):
+        panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
+        styles = (ROOT / "styles.css").read_text(encoding="utf-8")
+        self.assertIn('powerTable${moved?', panels)
+        self.assertIn('.powerTable td.pollMove{display:table-cell', styles)
+        self.assertIn('.powerTable.hasMove th:nth-child(3),.powerTable.hasMove td:nth-child(3){display:table-cell', styles)
+
+    def test_completed_nonconference_results_reconcile_records(self):
+        handoff = json.loads((ROOT / "betbetter_picks.json").read_text(encoding="utf-8"))
+        msu = [r for r in handoff["results"] if r.get("season") == 2026 and
+               "Michigan State Spartans" in (r.get("home"), r.get("away"))]
+        self.assertEqual(len(msu), 3)
+        self.assertTrue(any(r.get("conference_game") is False and r.get("winner") != "Michigan State Spartans" for r in msu))
+        panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
+        self.assertIn("resultRecords=new Map(),seenResults=new Set()", panels)
+        self.assertIn("completedRecord(r.name,played)", panels)
+        self.assertIn("const current=recordFor(team.name)", panels)
+
     def test_advanced_profile_stays_inside_supporting_detail(self):
         panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
         signals = (ROOT / "research-signals.js").read_text(encoding="utf-8")
