@@ -16,6 +16,22 @@ class CommunityPickAvailabilityTests(unittest.TestCase):
         self.assertIn("home?.model_pct!=null&&away?.model_pct!=null", self.source)
         self.assertNotIn("function communityMarketProbs", self.source)
 
+    def test_community_orients_probabilities_by_team_not_provider_home_flag(self):
+        self.assertLess(
+            self.source.index("sides.find(s=>bbNameMatches(s.selection,m.home?.name))"),
+            self.source.index("sides.find(s=>s.is_home===true)"),
+        )
+        self.assertLess(
+            self.source.index("sides.find(s=>bbNameMatches(s.selection,m.away?.name))"),
+            self.source.index("sides.find(s=>s.is_home===false)"),
+        )
+
+    def test_latest_bet_better_read_wins_over_stale_fixture_attachment(self):
+        panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
+        self.assertIn("if(m.betbetter_pick)candidates.push(m.betbetter_pick)", panels)
+        self.assertIn("Date.parse(b.generated_at||'')", panels)
+        self.assertNotIn("if(m.betbetter_pick)return m.betbetter_pick;", panels)
+
     def test_open_picks_do_not_require_a_market(self):
         eligible_filter = next(
             line for line in self.source.splitlines()
@@ -36,6 +52,9 @@ class CommunityPickAvailabilityTests(unittest.TestCase):
         self.assertIn("Bet Better live model", self.source)
         self.assertIn("communityModelPctLabel(pct)", self.source)
         self.assertIn("Bet Better probabilities pending", self.source)
+        panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
+        self.assertIn("${modelPctLabel(val)}", panels)
+        self.assertIn("${modelPctLabel(pct)}", panels)
 
     def test_todays_call_is_removed(self):
         self.assertNotIn("Today's call", self.source)

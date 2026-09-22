@@ -1,5 +1,11 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-09-22 (conference cards now explain already-published ratings
+with top and bottom team names; the matchup "Why" panel summarizes existing
+team metrics without introducing new data. Community chooses the latest
+already-published Bet Better read. No new provider, endpoint, restricted
+payload, redistribution field, or ESPN content was added.)
+
 Reviewed: 2026-09-21 (Community now displays the two model probabilities
 already present in the Bet Better handoff and snapshots its pick when a user
 locks theirs. Fixture alias deduplication and two corrected local school-logo

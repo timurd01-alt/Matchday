@@ -518,7 +518,7 @@ function _scRecent(rows){
       const won=String(r.result||'').toLowerCase()==='win';
       const p=Number(r.probability_pct);
       return `<div class="scrow ${won?'hit':'miss'}"><span class="scmatch">${esc(r.event_name||'')}</span>`
-        +`<span class="scpick">${esc(r.selection||'')}${Number.isFinite(p)?` · ${p.toFixed(1)}%`:''}</span>`
+        +`<span class="scpick">${esc(r.selection||'')}${Number.isFinite(p)?` · ${modelPctLabel(p)}`:''}</span>`
         +`<span class="scscore">${esc(r.score||'')}</span>`
         +`<span class="scbadge">${won?'WON':'LOST'}</span></div>`;
     }).join('');
@@ -827,7 +827,7 @@ function _modelSortScore(m){const pr=m.prediction||{};const archived=_modelIsArc
 function _modelMarketText(m,side){if(_modelIsArchived(m))return 'archived pick';const mk=(m.markets||{})['1x2']||{};const v={h:mk.home_pct,d:mk.draw_pct,a:mk.away_pct}[side];return v==null?'market n/a':`${v}% market`}
 function _modelWhen(m){if(m.status==='LIVE')return 'Awaiting final';if(m.status==='FINISHED')return 'Finished';if(isStaleUpcoming(m))return 'Past kickoff';return kickIn(m.kickoff)}
 function _modelTag(m){const pr=m.prediction||{},kind=_modelEdgeKind(pr);if(_modelIsArchived(m))return {txt:'ARCHIVE',kind:'level'};if(m.status==='LIVE')return {txt:'LOCKED',kind:'level'};if(kind==='value')return {txt:'VALUE',kind:'value'};if(kind==='fade')return {txt:'CAUTION',kind:'fade'};if((Number(pr.confidence)||0)>=65&&_highConfidenceAllowed(m))return {txt:'HIGH CONF',kind:'level'};return {txt:'MODEL',kind:'level'}}
-function _modelBars(m){const md=officialPredictionProbabilities(m);const rows=_isTwoWay(m)?[['H','home',md.h],['A','away',md.a]]:[['H','home',md.h],['D','draw',md.d],['A','away',md.a]];return `<div class="modelBars">${rows.map(([lab,cls,val])=>{val=Math.max(0,Math.min(100,Number(val)||0));return `<div class="modelBarLine"><span>${lab}</span><div class="modelBarTrack"><span class="modelBarFill ${cls}" style="width:${Math.max(2,val)}%"></span></div><span>${Math.round(val)}%</span></div>`}).join('')}</div>`}
+function _modelBars(m){const md=officialPredictionProbabilities(m);const rows=_isTwoWay(m)?[['H','home',md.h],['A','away',md.a]]:[['H','home',md.h],['D','draw',md.d],['A','away',md.a]];return `<div class="modelBars">${rows.map(([lab,cls,val])=>{val=Math.max(0,Math.min(100,Number(val)||0));return `<div class="modelBarLine"><span>${lab}</span><div class="modelBarTrack"><span class="modelBarFill ${cls}" style="width:${Math.max(2,val)}%"></span></div><span>${modelPctLabel(val)}</span></div>`}).join('')}</div>`}
 function _modelFinalText(m){const s=m.score||{};if(m.status==='FINISHED'&&s.home!=null&&s.away!=null)return `${s.home}–${s.away}`;return _modelWhen(m)}
 /* dedup */
 /* dedup */
@@ -1285,18 +1285,19 @@ function betbetterReadFor(m){
   // Two sources on purpose, as in modTopPick(): a scheduled build attaches the
   // pick to the fixture, a push build does not run the fetch that does, and the
   // handoff is committed either way.
-  if(m.betbetter_pick)return m.betbetter_pick;
   const list=(typeof MATCHDAY_BETBETTER_PICKS!=='undefined')?MATCHDAY_BETBETTER_PICKS:null;
   const day=String(m.kickoff||'').slice(0,10);
-  if(!list||!list.length||!day)return null;
+  if(!list||!list.length||!day)return m.betbetter_pick||null;
   const sport=String(m._comp||DATA.comp_key||'').toLowerCase();
   // A day either side, for the same reason the results settling allows it: a
   // late kickoff and its listed date land on opposite sides of midnight UTC.
   const days=[day,_bbShiftDay(day,-1),_bbShiftDay(day,1)];
-  return list.find(p=>(!p.sport||!sport||String(p.sport).toLowerCase()===sport)
+  const candidates=list.filter(p=>(!p.sport||!sport||String(p.sport).toLowerCase()===sport)
     &&days.includes(String(p.kickoff||'').slice(0,10))
     &&((bbNameMatches(p.home,m.home?.name||m.home)&&bbNameMatches(p.away,m.away?.name||m.away))
-      ||(bbNameMatches(p.home,m.away?.name||m.away)&&bbNameMatches(p.away,m.home?.name||m.home))))||null;
+      ||(bbNameMatches(p.home,m.away?.name||m.away)&&bbNameMatches(p.away,m.home?.name||m.home))));
+  if(m.betbetter_pick)candidates.push(m.betbetter_pick);
+  return candidates.sort((a,b)=>(Date.parse(b.generated_at||'')||0)-(Date.parse(a.generated_at||'')||0))[0]||null;
 }
 function betbetterNoReadPanel(){
   return `<section class="analystPanel"><div class="analystTop"><div class="analystTitle">Model read</div>`
@@ -1328,12 +1329,23 @@ function betbetterModelRead(m,p){
 }
 function matchupWhyPanel(m,p){
   const h=betbetterTeamRow(m?.home?.name),a=betbetterTeamRow(m?.away?.name);
-  const metric=(label,hv,av,digits=1)=>{
-    const left=Number(hv),right=Number(av),valid=Number.isFinite(left)&&Number.isFinite(right);
-    return `<div class="matchWhyRow"><span>${esc(label)}</span><b>${valid?left.toFixed(digits):'—'}</b><i></i><b>${valid?right.toFixed(digits):'—'}</b></div>`;
-  };
-  const title=p?.pick_name?`Why the model leans ${p.pick_name}`:'What separates these teams';
-  return `<section class="matchWhy"><div class="matchWhyHead"><span>Why</span><h3>${esc(title)}</h3></div><div class="matchWhyTeams"><b>${esc(m?.home?.name||'Home')}</b><span>comparison</span><b>${esc(m?.away?.name||'Away')}</b></div><div class="matchWhyRows">${metric('Rating',h?.rating,a?.rating,2)}${metric('Offence',h?.adj_o,a?.adj_o)}${metric('Defence',h?.adj_d,a?.adj_d)}${metric('Schedule',h?.sos,a?.sos,2)}</div></section>`;
+  const pickedHome=p?.pick_name&&bbNameMatches(p.pick_name,m?.home?.name);
+  const pickedAway=p?.pick_name&&bbNameMatches(p.pick_name,m?.away?.name);
+  const chosen=pickedHome?h:pickedAway?a:null,opponent=pickedHome?a:pickedAway?h:null;
+  const valid=(x,y)=>x!=null&&y!=null&&Number.isFinite(Number(x))&&Number.isFinite(Number(y));
+  const signals=[
+    ['rating','higher opponent-adjusted rating',1],
+    ['adj_o','stronger adjusted offence',1],
+    ['adj_d','stronger adjusted defence',-1],
+    ['sos','tougher schedule',1]
+  ].filter(([key])=>valid(chosen?.[key],opponent?.[key]));
+  const edge=signals.find(([key,,direction])=>(Number(chosen[key])-Number(opponent[key]))*direction>0);
+  const counter=signals.find(([key,,direction])=>(Number(chosen[key])-Number(opponent[key]))*direction<0);
+  const title=p?.pick_name?`Why the model leans ${p.pick_name}`:'What shapes this matchup';
+  const summary=chosen&&opponent&&signals.length
+    ?`<div class="matchWhyInsights"><p><b>Model edge</b>${esc(edge?`${p.pick_name} has the ${edge[1]}.`:`The available team metrics show no clear edge for ${p.pick_name}.`)}</p>${counter?`<p><b>Counterpoint</b>${esc(`${pickedHome?m.away.name:m.home.name} has the ${counter[1]}.`)}</p>`:''}</div>`
+    :'<p class="matchWhyEmpty">A reliable team-metric explanation is not available yet. Open Team comparison for the available evidence.</p>';
+  return `<section class="matchWhy"><div class="matchWhyHead"><span>Why</span><h3>${esc(title)}</h3></div>${summary}</section>`;
 }
 function matchupEvidence(label,note,html,open=false){
   if(!html)return '';
@@ -1369,7 +1381,11 @@ function _v13LeaderPanel(sc){
 function _v4MatchSnapshots(){
   const M=(DATA.matches||[]).filter(m=>m.status!=='FINISHED'&&!isStaleUpcoming(m)&&(m.markets?.['1x2']||m.prediction)).sort((a,b)=>(a.kickoff||'').localeCompare(b.kickoff||'')).slice(0,8);
   if(!M.length)return '<div class="emptyForecast">No upcoming match snapshots yet.</div>';
-  return M.map(m=>{const pr=m.prediction||{},x=(m.markets||{})['1x2']||{};const probs=_v4ModelProbs(m);const twoWay=_isTwoWay(m);const hp=Math.round(Number(probs.h??x.home_pct??0)),dp=Math.round(Number(probs.d??x.draw_pct??0)),ap=Math.round(Number(probs.a??x.away_pct??0));const drawLine=twoWay?'':`<div class="probLine"><span class="sideName">Draw</span><span class="probTrack"><i class="probFill d" style="width:${Math.max(3,dp)}%"></i></span><span class="pct">${dp}%</span></div>`;return `<div class="matchSnapRow" onclick="openMatchModal('${esc(String(m.id||''))}')"><div><div class="matchSnapTeams">${esc(m.home?.code||m.home?.name||'H')} v ${esc(m.away?.code||m.away?.name||'A')}</div><div class="matchSnapMeta">${isForecastPaused(m)?'Market odds · ':''}${esc(m.stage||'')} \u2013 ${kickIn(m.kickoff)}</div></div><div class="probLines"><div class="probLine"><span class="sideName">${esc(m.home?.code||'H')}</span><span class="probTrack"><i class="probFill h" style="width:${Math.max(3,hp)}%"></i></span><span class="pct">${hp}%</span></div>${drawLine}<div class="probLine"><span class="sideName">${esc(m.away?.code||'A')}</span><span class="probTrack"><i class="probFill a" style="width:${Math.max(3,ap)}%"></i></span><span class="pct">${ap}%</span></div></div></div>`}).join('');
+  return M.map(m=>{const x=(m.markets||{})['1x2']||{},probs=_v4ModelProbs(m),twoWay=_isTwoWay(m);
+    const hp=Number(probs.h??x.home_pct??0),dp=Number(probs.d??x.draw_pct??0),ap=Number(probs.a??x.away_pct??0);
+    const line=(name,side,pct)=>`<div class="probLine"><span class="sideName">${esc(name)}</span><span class="probTrack"><i class="probFill ${side}" style="width:${Math.max(3,Math.min(100,pct))}%"></i></span><span class="pct">${modelPctLabel(pct)}</span></div>`;
+    return `<div class="matchSnapRow" onclick="openMatchModal('${esc(String(m.id||''))}')"><div><div class="matchSnapTeams">${esc(m.home?.code||m.home?.name||'H')} v ${esc(m.away?.code||m.away?.name||'A')}</div><div class="matchSnapMeta">${isForecastPaused(m)?'Market odds · ':''}${esc(m.stage||'')} \u2013 ${kickIn(m.kickoff)}</div></div><div class="probLines">${line(m.home?.code||'H','h',hp)}${twoWay?'':line('Draw','d',dp)}${line(m.away?.code||'A','a',ap)}</div></div>`;
+  }).join('');
 }
 function _v4AdvancementTable(adv){
   if(!adv.length)return '';

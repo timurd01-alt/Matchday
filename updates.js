@@ -4,6 +4,17 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0922A",
+  "tag": "Fix",
+  "title": "Clearer welcome and Community probabilities",
+  "items": [
+   "Keep the welcome headline within small screens and align the help panel with the main action.",
+   "Use the newest Bet Better read in Community and match probabilities to team names even if fixture order differs.",
+   "Remove the internal commit number from the top strip, use consistent typography, and cap displayed forecast certainty at 99.9%.",
+   "Show more conference context, give team names more room, and replace the repeated matchup metrics with a short takeaway."
+  ]
+ },
+ {
   "date": "Build 0921N",
   "tag": "Fix",
   "title": "Consistent welcome and community reads",

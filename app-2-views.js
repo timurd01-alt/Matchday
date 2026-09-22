@@ -47,8 +47,10 @@ function communityModelPctLabel(v){const n=Number(v);return v==null||!Number.isF
 function communityPickProbs(m){
   const read=typeof betbetterReadFor==='function'?betbetterReadFor(m):m.betbetter_pick;
   const sides=read?.sides||[];
-  const home=sides.find(s=>s.is_home===true)||sides.find(s=>bbNameMatches(s.selection,m.home?.name));
-  const away=sides.find(s=>s.is_home===false)||sides.find(s=>bbNameMatches(s.selection,m.away?.name));
+  // Match by team identity first: the fixture can be shown in the reverse
+  // orientation from the model handoff, making is_home misleading here.
+  const home=sides.find(s=>bbNameMatches(s.selection,m.home?.name))||sides.find(s=>s.is_home===true);
+  const away=sides.find(s=>bbNameMatches(s.selection,m.away?.name))||sides.find(s=>s.is_home===false);
   if(home?.model_pct!=null&&away?.model_pct!=null)return {h:+home.model_pct,d:0,a:+away.model_pct,source:'betbetter',read};
   return {h:null,d:null,a:null,source:'none',read:null};
 }
@@ -938,7 +940,7 @@ function modMyPicks(){
   const picks=bbSportRows(u?.picks||[]);
   if(!picks.length)return '';
   const rec=u.record||{};
-  const pct=v=>Number.isFinite(Number(v))?(Number(v)*100).toFixed(0)+'%':'—';
+  const pct=v=>v!=null&&Number.isFinite(Number(v))?communityModelPctLabel(Number(v)*100):'—';
   // Newest first and capped. A record that keeps growing should not make this
   // card keep growing with it -- the older rows are still in the totals above.
   const MAX_ROWS=6;
@@ -978,7 +980,7 @@ function modToughestSchedules(){
   const pool=rows.filter(r=>(r.rank||999)<=40);
   const top=(pool.length>=10?pool:rows).slice().sort((a,b)=>Number(b.sos)-Number(a.sos)).slice(0,16);
   if(!top.length)return '';
-  const body=top.map(r=>`<tr><td class="tsTeam">${teamMark(r.name)}${esc(r.name)}</td>`
+  const body=top.map(r=>`<tr><td class="tsTeam" title="${esc(r.name)}"><span class="tsTeamName">${teamMark(r.name)}<span>${esc(r.name)}</span></span></td>`
     +`<td>#${r.rank}</td>`
     +`<td class="tsNum">${Number(r.sos).toFixed(2)}</td>`
     +`<td class="tsNum">${Number(r.rating).toFixed(2)}</td></tr>`).join('');
@@ -997,10 +999,10 @@ function modConferenceTable(){
     .map(([name,teams])=>{
       const sorted=teams.slice().sort((a,b)=>Number(b.rating)-Number(a.rating));
       return {name,n:teams.length,mean:teams.reduce((sum,r)=>sum+Number(r.rating),0)/teams.length,
-              best:Number(sorted[0].rating),leader:sorted[0].name};
+              best:Number(sorted[0].rating),leaders:sorted.slice(0,3).map(r=>r.name)};
     }).sort((a,b)=>b.mean-a.mean);
   if(conferences.length<4)return '';
-  const body=conferences.map(c=>`<tr><td class="tsTeam">${esc(c.name)}<small class="confLeader">${esc(c.leader)}</small></td>`
+  const body=conferences.map(c=>`<tr><td class="tsTeam">${esc(c.name)}<small class="confLeader" title="Top rated: ${esc(c.leaders.join(', '))}">Top: ${esc(c.leaders.join(' · '))}</small></td>`
     +`<td>${c.n}</td><td class="tsNum">${c.mean.toFixed(1)}</td>`
     +`<td class="tsNum">${c.best.toFixed(1)}</td></tr>`).join('');
   return `<section class="boardMod modTier"><header><h3>Conference table</h3><span>every rated league</span></header>
@@ -1022,16 +1024,17 @@ function modConferenceParity(){
   const rows=(table?.rankings||[]).filter(r=>r.conference&&Number.isFinite(Number(r.rating)));
   if(rows.length<30)return '';
   const by={};
-  rows.forEach(r=>{(by[r.conference]||=[]).push(Number(r.rating))});
+  rows.forEach(r=>{(by[r.conference]||=[]).push(r)});
   const stats=Object.entries(by).filter(([,v])=>v.length>=6).map(([name,v])=>{
-    const mean=v.reduce((a,b)=>a+b,0)/v.length;
-    const sd=Math.sqrt(v.reduce((a,b)=>a+(b-mean)**2,0)/v.length);
-    const sorted=v.slice().sort((a,b)=>b-a);
-    return {name,sd,top:sorted[0],bottom:sorted[sorted.length-1],n:v.length};
+    const mean=v.reduce((a,r)=>a+Number(r.rating),0)/v.length;
+    const sd=Math.sqrt(v.reduce((a,r)=>a+(Number(r.rating)-mean)**2,0)/v.length);
+    const sorted=v.slice().sort((a,b)=>Number(b.rating)-Number(a.rating));
+    return {name,sd,top:Number(sorted[0].rating),bottom:Number(sorted[sorted.length-1].rating),
+      topName:sorted[0].name,bottomName:sorted[sorted.length-1].name,n:v.length};
   }).sort((a,b)=>b.sd-a.sd);
   if(stats.length<3)return '';
   const body=stats.map(c=>
-    `<tr><td class="tsTeam">${esc(c.name)}</td>`
+    `<tr><td class="tsTeam">${esc(c.name)}<small class="confLeader" title="Best: ${esc(c.topName)}; lowest: ${esc(c.bottomName)}">${esc(c.topName)} → ${esc(c.bottomName)}</small></td>`
     +`<td class="tsNum">${c.sd.toFixed(1)}</td>`
     +`<td>${c.top.toFixed(1)}</td><td>${c.bottom.toFixed(1)}</td></tr>`).join('');
   return `<section class="boardMod modParity"><header><h3>Conference parity</h3><span>every rated league</span></header>
