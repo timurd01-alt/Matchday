@@ -73,7 +73,7 @@ window.matchdayEnterNow=function(targetView){
 </script>
 </head>
 <body>
-<section class="welcomeGate" id="welcomeGate" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
+<section class="welcomeGate" id="welcomeGate" aria-labelledby="welcomeTitle">
   <div class="welcomeBlobs" aria-hidden="true"></div>
   <div class="welcomeNoise" aria-hidden="true"></div>
   <div class="welcomeScene" aria-hidden="true">
@@ -162,7 +162,7 @@ window.matchdayEnterNow=function(targetView){
         graded afterwards and never rewritten.</p>
       </details>
       <div class="welcomeActions">
-        <button class="welcomeEnter" type="button" onclick="matchdayEnterNow()">Enter Matchday Terminal <span aria-hidden="true">→</span></button>
+        <a class="welcomeEnter" href="#app" onclick="matchdayEnterNow()">Enter Matchday Terminal <span aria-hidden="true">→</span></a>
         <span>No account required · no ads</span>
         <a class="welcomeSocialLink" href="https://x.com/timurknowsball" rel="me noopener" target="_blank">Follow @timurknowsball on X <span aria-hidden="true">↗</span></a>
         <a class="welcomeLegalLink" href="legal.html">Legal, privacy &amp; data sources</a>

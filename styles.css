@@ -2746,3 +2746,12 @@ html{color-scheme:dark}
   .powerTable .pollTeamInner{max-width:100%;overflow:hidden;text-overflow:ellipsis}
   .powerTable .pollTeamInner>span:last-child{overflow:hidden;text-overflow:ellipsis}
 }
+
+/* The welcome is an introduction, not a modal gate. If app JavaScript stalls,
+   visitors can still scroll to the site instead of being trapped by an overlay. */
+.welcomeGate:not([hidden]){position:relative;inset:auto;z-index:auto;min-height:100vh;overflow:visible}
+.welcomeGate:not([hidden]) .welcomeScene,
+.welcomeGate:not([hidden]) .welcomeBlobs,
+.welcomeGate:not([hidden]) .welcomeNoise{position:absolute}
+.welcomeOpen .app{visibility:visible;display:block}
+@media(max-width:760px){.welcomeOpen .app{display:block}}

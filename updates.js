@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0922G",
+  "tag": "Fix",
+  "title": "Make the welcome page non-blocking",
+  "items": [
+   "Turn the full-screen welcome overlay into a normal scrollable introduction so the site remains reachable even if a script stalls.",
+   "Give Enter a real link to the app as a fallback when JavaScript is slow or unavailable."
+  ]
+ },
+ {
   "date": "Build 0922F",
   "tag": "Fix",
   "title": "Keep entry responsive and show markets earlier",

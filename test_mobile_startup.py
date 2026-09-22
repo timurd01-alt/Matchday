@@ -20,8 +20,14 @@ class MobileStartupTests(unittest.TestCase):
             self.html.index("window.matchdayEnterNow=function"),
             self.html.index('src="app-1-core.js'),
         )
-        self.assertIn('onclick="matchdayEnterNow()"', self.html)
+        self.assertIn('href="#app" onclick="matchdayEnterNow()"', self.html)
         self.assertIn("if(gate)gate.hidden=true", self.html)
+        self.assertNotIn('id="welcomeGate" role="dialog"', self.html)
+
+    def test_welcome_is_not_a_fullscreen_scroll_trap(self):
+        css = (ROOT / "styles.css").read_text(encoding="utf-8")
+        self.assertIn('.welcomeGate:not([hidden]){position:relative;inset:auto', css)
+        self.assertIn('.welcomeOpen .app{visibility:visible;display:block}', css)
 
     def test_large_scripts_do_not_block_html_parsing(self):
         for filename in (
