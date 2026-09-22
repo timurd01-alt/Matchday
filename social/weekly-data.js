@@ -184,7 +184,15 @@ window.MATCHDAY_SOCIAL = {
       17.33
     ]
   ],
-  "upset": null,
+  "upset": {
+    "eyebrow": "MODEL UPSET WATCH",
+    "underdog": "NO QUALIFYING CALL",
+    "favorite": "THIS WEEK",
+    "kickoff": "",
+    "modelPct": 0.0,
+    "marketPct": 0.0,
+    "note": "No matchup cleared the published upset-watch criteria this week."
+  },
   "slate": [
     {
       "rank": 1,

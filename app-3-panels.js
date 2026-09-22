@@ -622,7 +622,13 @@ function showSportData(payload,cached=false){
 function prefetchOtherSport(){
   const other=DATA_FILE==='data_ncaaf.json'?'data_ncaam.json':'data_ncaaf.json';
   if(SPORT_DATA_CACHE[other]||SPORT_PREFETCH[other])return;
-  SPORT_PREFETCH[other]=fetch(other,REVALIDATE).then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.json()}).catch(()=>null);
+  // The basketball payload is several megabytes. Pulling it immediately after
+  // football made first visits compete with an invisible download on phones.
+  // A switch still loads normally; only speculative background work is gated.
+  const connection=navigator.connection||navigator.mozConnection||navigator.webkitConnection;
+  if(connection?.saveData||/^(?:slow-)?2g|3g$/i.test(connection?.effectiveType||'')||matchMedia('(max-width:760px)').matches)return;
+  const start=()=>{if(SPORT_DATA_CACHE[other]||SPORT_PREFETCH[other])return;SPORT_PREFETCH[other]=fetch(other,REVALIDATE).then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.json()}).catch(()=>null)};
+  if('requestIdleCallback' in window)requestIdleCallback(start,{timeout:5000});else setTimeout(start,2500);
 }
 async function load(manual=false){const loadSequence=++LOAD_SEQUENCE,requestedFile=DATA_FILE;if(LOAD_TIMER){clearTimeout(LOAD_TIMER);LOAD_TIMER=null}try{
   // One board, one file. The merged "All college" view used to assemble itself

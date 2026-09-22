@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0922B",
+  "tag": "Fix",
+  "title": "Reliable entry and faster mobile startup",
+  "items": [
+   "Make the Enter button work immediately, even before the full application finishes downloading.",
+   "Let the welcome page render without waiting for web fonts or the larger application scripts.",
+   "Stop phones and reduced-data connections from downloading the other sport's multi-megabyte payload in the background."
+  ]
+ },
+ {
   "date": "Build 0922A",
   "tag": "Fix",
   "title": "Clearer welcome and Community probabilities",

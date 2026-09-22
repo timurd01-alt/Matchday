@@ -1,0 +1,45 @@
+import pathlib
+import unittest
+
+
+ROOT = pathlib.Path(__file__).resolve().parent
+
+
+class MobileStartupTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.html = (ROOT / "index.html").read_text(encoding="utf-8")
+        cls.panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
+
+    def test_enter_action_exists_before_application_bundles(self):
+        self.assertLess(
+            self.html.index("window.enterMatchday=function"),
+            self.html.index('<body>'),
+        )
+        self.assertLess(
+            self.html.index("window.enterMatchday=function"),
+            self.html.index('src="app-1-core.js'),
+        )
+
+    def test_large_scripts_do_not_block_html_parsing(self):
+        for filename in (
+            "translations.js", "updates.js", "matchday-cfb-snapshot.js",
+            "app-1-core.js", "app-2-views.js", "app-3-panels.js",
+            "app-4-features.js", "research-signals.js",
+        ):
+            self.assertRegex(self.html, rf'<script src="{filename}[^>]*\bdefer\b')
+
+    def test_web_fonts_do_not_block_first_render(self):
+        font_line = next(line for line in self.html.splitlines()
+                         if "fonts.googleapis.com/css2" in line and "noscript" not in line)
+        self.assertIn('media="print"', font_line)
+        self.assertIn("onload=", font_line)
+
+    def test_mobile_does_not_prefetch_other_multi_megabyte_sport(self):
+        self.assertIn("connection?.saveData", self.panels)
+        self.assertIn("matchMedia('(max-width:760px)').matches", self.panels)
+        self.assertIn("requestIdleCallback", self.panels)
+
+
+if __name__ == "__main__":
+    unittest.main()

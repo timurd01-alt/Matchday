@@ -553,7 +553,15 @@ def weekly_data_js(payload: dict, window: tuple[dt.datetime, dt.datetime],
     for game in upsets[:1]:
         names += [game["home"], game["away"]]
 
-    upset_block = None
+    upset_block = {
+        "eyebrow": "MODEL UPSET WATCH",
+        "underdog": "NO QUALIFYING CALL",
+        "favorite": "THIS WEEK",
+        "kickoff": "",
+        "modelPct": 0.0,
+        "marketPct": 0.0,
+        "note": "No matchup cleared the published upset-watch criteria this week.",
+    }
     if upsets:
         top = upsets[0]
         dog = top["underdog"]
