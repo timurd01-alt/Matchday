@@ -1,5 +1,9 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-09-22 (the Scorecard rearranges the existing public model,
+market, calibration, and lock-policy fields without adding a provider,
+endpoint, redistributed field, restricted payload, or ESPN content.)
+
 Reviewed: 2026-09-22 (the Pages artifact now omits duplicate scorecard evidence
 snapshots and duplicate NCAAF Bet Better match attachments that the browser
 does not read, while retaining the displayed summaries and shared handoff.

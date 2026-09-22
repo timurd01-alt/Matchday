@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0922D",
+  "tag": "Fix",
+  "title": "Reliable entry and clearer scorecard",
+  "items": [
+   "Keep Enter working when browser storage is unavailable, and show a loading state even before the application scripts finish.",
+   "Show an actionable Retry loading state if a competition download fails or stalls instead of leaving an empty view.",
+   "Give the Scorecard a concise record and performance summary, clearer card versus selection counts, and separate calibration, comparison, and methodology sections."
+  ]
+ },
+ {
   "date": "Build 0922C",
   "tag": "Performance",
   "title": "Smaller mobile data payloads",

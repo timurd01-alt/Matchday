@@ -57,9 +57,15 @@
 // downloading on a slow phone. app-1-core replaces this with the animated
 // version once it arrives.
 window.enterMatchday=function(){
+  window.MATCHDAY_ENTERED=true;
   try{sessionStorage.setItem('matchday.welcome.entered','1');localStorage.setItem('matchday.heroSeen','1')}catch(e){}
   var gate=document.getElementById('welcomeGate');if(gate)gate.hidden=true;
   document.body.classList.remove('welcomeOpen','welcomeExiting');
+  var home=document.getElementById('view-home');if(home)home.style.display='block';
+  window.setTimeout(function(){
+    var waiting=home&&home.querySelector('.empty');
+    if(waiting&&waiting.textContent.trim()==='Loading…')waiting.innerHTML='The page is taking too long to load.<br><button class="actionbtn" type="button" onclick="location.reload()">Retry loading</button>';
+  },15000);
 };
 </script>
 </head>

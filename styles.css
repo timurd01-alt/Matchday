@@ -2222,20 +2222,28 @@ html{color-scheme:dark}
    .gtable's frame but keeps the rank column tight and left-aligns the team, and
    it is deliberately not .pollTable -- that class is the full rated table above
    and its column rules are indexed. */
-/* Scorecard, generated from the engine's locked cards.
-   The hit rate and the rate the model expected share one tile on purpose: they
-   are a single comparison, and a layout that separates them is how the hit rate
-   gets quoted on its own. The calibration gap is styled neutrally in both
-   directions -- hitting more than forecast is not a win, it is a miscalibration
-   the same as hitting less. */
-.scHeadline{align-items:stretch}
-.scRateCard .sval{display:flex;flex-direction:column;gap:2px;line-height:1.1}
-.scVs{font-family:var(--mono);font-size:var(--fs-xs);color:var(--muted);font-weight:var(--fw-bold)}
+/* Scorecard: compact performance first, supporting context in distinct sections. */
+.scOverview{display:grid;grid-template-columns:minmax(180px,.75fr) minmax(0,2fr);gap:14px;align-items:stretch}
+.scRecord,.scMetrics,.scSection{background:var(--panel);border:1px solid var(--line);border-radius:var(--r)}
+.scRecord{display:flex;flex-direction:column;justify-content:center;padding:20px;gap:6px}
+.scRecord .slbl{margin:0}.scRecord>strong{font-family:var(--display);font-size:clamp(2.3rem,4vw,3.7rem);line-height:1;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.scRecord>span:last-child{color:var(--muted);font-size:var(--fs-sm)}
+.scMetrics{padding:12px 18px}.scMetricHead,.scMetricRow{display:grid;grid-template-columns:minmax(88px,1fr) minmax(90px,1fr) minmax(130px,1.3fr);gap:10px;align-items:center}
+.scMetricHead{padding:4px 0 9px;border-bottom:1px solid var(--line);color:var(--muted);font-size:var(--fs-xs);font-weight:var(--fw-bold)}
+.scMetricRow{padding:9px 0;border-bottom:1px solid var(--line);font-size:var(--fs-sm)}
+.scMetricRow>span:first-child{color:var(--muted)}.scMetricRow strong{font-family:var(--mono);font-size:var(--fs-md);font-variant-numeric:tabular-nums}.scMetricRow>span:last-child{color:var(--faint)}
+.scMetricFoot{display:grid;gap:3px;padding-top:10px;color:var(--muted);font-size:var(--fs-xs);line-height:1.45}
+.scCountNote{margin:9px 2px 0}.scSection{margin-top:20px;padding:18px}.scSection>.seclbl{margin:0 0 12px;color:var(--text)}
+.scComparison{border-color:var(--line2)}.scComparison .cmpRow{grid-template-columns:minmax(150px,1fr) minmax(90px,2fr) 58px;padding:7px 0;font-family:var(--sans);font-weight:var(--fw-semibold)}
+.scComparison .cmpGrid{gap:3px}.scComparison .edisc,.scSection .edisc{margin:11px 0 0}
+.scExplainer{margin-top:14px;border:1px solid var(--line);border-radius:var(--r);padding:10px 14px;color:var(--muted);font-size:var(--fs-sm)}
+.scExplainer summary{cursor:pointer;color:var(--text);font-weight:var(--fw-semibold)}.scExplainer summary span{display:inline-grid;place-items:center;margin-left:5px;width:17px;height:17px;border:1px solid var(--line2);border-radius:50%;font-size:var(--fs-xs)}
+.scExplainer p{line-height:1.5;margin:10px 0 0}.scMethodGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.scMethodGrid>div{display:grid;align-content:start;gap:6px;padding:12px;background:var(--bg2);border:1px solid var(--line);border-radius:9px}.scMethodGrid strong{font-size:var(--fs-sm)}.scMethodGrid span{font-size:var(--fs-sm);color:var(--muted);line-height:1.45}
+@media(max-width:760px){.scOverview{grid-template-columns:1fr}.scMethodGrid{grid-template-columns:1fr}.scMetrics{padding:11px}.scMetricHead,.scMetricRow{grid-template-columns:minmax(72px,1fr) minmax(76px,1fr) minmax(105px,1.4fr);gap:5px}.scMetricHead{font-size:var(--fs-2xs)}.scSection{padding:14px}}
 .scDash{padding:0 .12em;color:var(--faint)}
 .statuscard small{display:block;margin-top:7px;font-family:var(--mono);font-size:var(--fs-3xs);color:var(--faint);line-height:1.45}
 .scGap{font-family:var(--mono);font-weight:var(--fw-bold);color:var(--muted)}
 .scGap.over,.scGap.under,.scGap.flat{color:var(--muted)}
-.scCaveat{line-height:1.55}
 .scTableWrap{overflow-x:auto;margin-top:8px}
 .scTable{width:100%;border-collapse:collapse;font-size:var(--fs-sm)}
 .scTable th,.scTable td{padding:7px 9px;border-bottom:1px solid var(--line);text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}

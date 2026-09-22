@@ -435,11 +435,9 @@ function myPicksComparison(){
     +`<span>${label}</span>`
     +`<i class="cmpBar"><b style="width:${Math.round(hits/n*100)}%"></b></i>`
     +`<em>${hits}/${n}</em></div>`;
-  return `<div class="seclbl" style="margin-top:18px">@timurknowsball vs model vs market</div>`
+  return `<section class="scSection scComparison"><div class="seclbl">@timurknowsball vs model vs market</div>`
     +`<div class="cmpGrid">${row('@timurknowsball',mine,'cmpMine')}${row('Model',model,'cmpModel')}${row('Market',market,'cmpMarket')}</div>`
-    +`<p class="edisc">Same ${n} game${n===1?'':'s'} for all three: every recorded pick that has settled. `
-    +`${n<10?'A small sample — the split is not yet worth reading much into. ':''}`
-    +`The model figure is the one frozen before kickoff, not recomputed afterwards.</p>`;
+    +`<p class="edisc">Same ${n} settled pick${n===1?'':'s'} for all three.${n<10?' Small sample.':''} Model forecasts were frozen before kickoff.</p></section>`;
 }
 
 function betbetterScorecard(){
@@ -491,29 +489,15 @@ function _scBands(bands){
       +`<td>${Number.isFinite(exp)?exp.toFixed(1)+'%':'—'}</td>`
       +`<td>${_scGap(b.calibration_gap_points)}</td></tr>`;
   }).join('');
-  return `<div class="seclbl" style="margin-top:18px">Calibration by confidence</div>`
+  return `<section class="scSection"><div class="seclbl">Calibration by confidence</div>`
     +`<div class="scTableWrap"><table class="scTable"><thead><tr><th>Band</th><th>Picks</th>`
     +`<th>Hit</th><th>Expected</th><th>Gap</th></tr></thead><tbody>${rows}</tbody></table></div>`
-    +`<p class="edisc">Each band is the model's own stated confidence against what actually happened. `
-    +`A band that hits what it forecast is calibrated; a wide gap in either direction is not.</p>`;
-}
-function _scVersusMarket(vm){
-  if(!vm)return '';
-  const beat=Number(vm.beat_market_pct);
-  const n=Number(vm.graded_priced_selections);
-  if(!Number.isFinite(beat))return '';
-  return `<div class="seclbl" style="margin-top:18px">Against the price</div>`
-    +`<div class="status-grid"><div class="statuscard info"><span class="slbl">Beat the market</span>`
-    +`<div class="sval">${beat.toFixed(1)}%</div></div>`
-    +`<div class="statuscard info"><span class="slbl">Priced selections graded</span>`
-    +`<div class="sval">${Number.isFinite(n)?n:'—'}</div></div></div>`
-    +`<p class="edisc">${beat<50?'Below half: on the games that carried a price, the model beat it less often than not. ':''}`
-    +`${esc(vm.basis||'')}${vm.disagreement_share_pct!=null?` · it disagreed with the market on ${esc(vm.disagreement_share_pct)}% of them`:''}.</p>`;
+    +`<p class="edisc">Hit / expected by forecast confidence. A gap in either direction signals miscalibration.</p></section>`;
 }
 function _scRecent(rows){
   const graded=(rows||[]).filter(r=>['win','loss'].includes(String(r.result||'').toLowerCase()));
   if(!graded.length)return '';
-  return `<div class="seclbl" style="margin-top:18px">Recent graded cards</div>`
+  return `<section class="scSection"><div class="seclbl">Recent graded cards</div>`
     +graded.slice(0,10).map(r=>{
       const won=String(r.result||'').toLowerCase()==='win';
       const p=Number(r.probability_pct);
@@ -521,7 +505,7 @@ function _scRecent(rows){
         +`<span class="scpick">${esc(r.selection||'')}${Number.isFinite(p)?` · ${modelPctLabel(p)}`:''}</span>`
         +`<span class="scscore">${esc(r.score||'')}</span>`
         +`<span class="scbadge">${won?'WON':'LOST'}</span></div>`;
-    }).join('');
+    }).join('')+`</section>`;
 }
 function renderScore(){
   const host=$('#view-score'),sc=betbetterScorecard();
@@ -538,37 +522,35 @@ function renderScore(){
   const rec=sc.record||{},totals=sc.totals||{};
   const hit=Number(rec.hit_rate_pct),exp=Number(rec.expected_hit_rate_pct);
   const ci=Array.isArray(rec.confidence_interval_pct)?rec.confidence_interval_pct:null;
-  // Hit and expected share a tile. They are not two facts, they are one
-  // comparison, and splitting them is how the hit rate ends up quoted alone.
-  const record=`<div class="status-grid scHeadline">`
-    +`<div class="statuscard info"><span class="slbl">Record</span>`
-    +`<div class="sval">${esc(rec.wins??'—')}<span class="scDash">–</span>${esc(rec.losses??'—')}</div>`
-    +`<small>${esc(rec.picks??'—')} graded picks</small></div>`
-    +`<div class="statuscard info scRateCard"><span class="slbl">Hit rate vs expected</span>`
-    +`<div class="sval">${Number.isFinite(hit)?hit.toFixed(1)+'%':'—'}`
-    +`<span class="scVs">vs ${Number.isFinite(exp)?exp.toFixed(1)+'%':'—'} expected</span></div>`
-    +`<small>${_scGap(rec.calibration_gap_points)} against its own forecast`
-    +`${ci?` · 95% CI ${_scNum(ci[0])}–${_scNum(ci[1])}%`:''}</small></div></div>`;
+  const vm=sc.versus_market||{},beat=vm.beat_market_pct==null?NaN:Number(vm.beat_market_pct),priced=vm.graded_priced_selections==null?NaN:Number(vm.graded_priced_selections);
+  const record=`<section class="scOverview"><div class="scRecord"><span class="slbl">Public record</span>`
+    +`<strong>${esc(rec.wins??'—')}<span class="scDash">–</span>${esc(rec.losses??'—')}</strong>`
+    +`<span>${esc(rec.picks??'—')} graded picks</span></div>`
+    +`<div class="scMetrics"><div class="scMetricHead"><span></span><span>Model</span><span>Against the price</span></div>`
+    +`<div class="scMetricRow"><span>Result</span><strong>${Number.isFinite(hit)?hit.toFixed(1)+'%':'—'}</strong><strong>${Number.isFinite(beat)?beat.toFixed(1)+'%':'—'}</strong></div>`
+    +`<div class="scMetricRow"><span>Expected</span><strong>${Number.isFinite(exp)?exp.toFixed(1)+'%':'—'}</strong><span>—</span></div>`
+    +`<div class="scMetricRow"><span>Difference</span><strong>${_scGap(rec.calibration_gap_points)}</strong><span>—</span></div>`
+    +`<div class="scMetricFoot"><span>Model: wins / graded picks · Against the price: beat the locked market price${Number.isFinite(priced)?` on ${priced} priced selections`:''}.</span>`
+    +`${ci?`<span>Model hit rate 95% CI ${_scNum(ci[0])}–${_scNum(ci[1])}%.</span>`:''}</div></div></section>`;
   const pending=Number(totals.awaiting_result)||0;
-  const note=`<div class="hint" style="margin-top:10px">`
-    +`${esc(totals.graded_selections??'—')} graded selections from ${esc(totals.locked_events??'—')} locked cards`
-    +`${pending?` \u00b7 ${pending} awaiting a final score`:''}</div>`;
+  const note=`<p class="edisc scCountNote">${esc(totals.graded_selections??'—')} graded selections across ${esc(totals.locked_events??'—')} locked cards. A card can carry more than one selection.`
+    +`${pending?` ${pending} selections await a final score.`:''}</p>`;
   const reportable=sc.reportable===false
     ? `<div class="banner" style="margin-top:12px"><b>Not yet a reportable record.</b> `
       +`Fewer than ${esc(sc.minimum_picks_to_read??'the minimum')} graded picks, so the rate above is not a measurement yet.</div>`
     : '';
-  const lock=sc.lock_policy?.rule
-    ? `<p class="edisc">${esc(sc.lock_policy.rule)}</p>` : '';
+  const method=`<section class="scSection scMethod"><div class="seclbl">How the scorecard works</div>`
+    +`<div class="scMethodGrid"><div><strong>Locked 60 minutes before kickoff</strong><span>The latest forecast at or before the deadline and the price then are recorded.</span></div>`
+    +`<div><strong>Graded after the final whistle</strong><span>Only verified final results enter the record.</span></div>`
+    +`<div><strong>Never rewritten</strong><span>Locked forecasts and prices remain unchanged.</span></div></div>`
+    +`<p class="edisc">Displayed scores are factual. Probabilities remain estimates.</p></section>`;
   host.innerHTML=`<div class="vhead">Scorecard</div>`
     +`${record}${note}${reportable}`
-    +(sc.caveat?`<div class="banner scCaveat" style="margin-top:12px">${esc(scorecardCaveat(sc.caveat))}</div>`:'')
-    +_scVersusMarket(sc.versus_market)
+    +(sc.caveat?`<details class="scExplainer"><summary>Reading these numbers <span aria-hidden="true">?</span></summary><p>${esc(scorecardCaveat(sc.caveat))}</p>${vm.basis?`<p>Price: ${esc(vm.basis)}.</p>`:''}</details>`:'')
     +_scBands(sc.by_confidence)
     +_scRecent(sc.recent)
     +myPicksComparison()
-    +`${lock}`
-    +`<div class="edisc">Only cards frozen before kickoff are graded, and a graded card is never rewritten. `
-    +`Displayed scores are factual. Probabilities remain estimates.</div>`;
+    +method;
 }
 function highlightFavoriteRows(){if(!favoriteTeam())return;document.querySelectorAll('.gtable .gteam').forEach(cell=>{if(teamKey(cell.dataset.team||cell.textContent).includes(teamKey(favoriteTeam())))cell.closest('tr')?.classList.add('favoriteTeamRow')})}
 function renderCurrent(){captureSignalsIfFresh();({home:renderHome,matches:renderMatches,results:renderResults,groups:renderStandings,bracket:renderBracket,score:renderScore,news:renderNews,community:renderCommunity}[VIEW]||renderHome)();renderWelcome();highlightFavoriteRows();applyStaticI18n()}
@@ -611,6 +593,7 @@ const SPORT_DATA_CACHE=Object.create(null);
 const SPORT_PREFETCH=Object.create(null);
 function showSportData(payload,cached=false){
   DATA=cached?payload:stripPastSeasonCompetitionViews(payload);
+  const loadAlert=$('#alertBar');if(loadAlert?.textContent==='The data connection failed. Use Retry loading below.'){loadAlert.style.display='none';loadAlert.textContent=''}
   if(!cached){applyForecastPublicationPauses(DATA);applyCurrentCfbSnapshot(DATA);applyCurrentNcaamSnapshot(DATA);decodeNewsEntities(DATA);DATA.news=(DATA.news||[]).filter(isFreshNews).sort((a,b)=>newsTime(b)-newsTime(a))}
   SPORT_DATA_CACHE[DATA_FILE]=DATA;
   BYID={};(DATA.matches||[]).forEach(m=>BYID[m.id]=m);
@@ -636,7 +619,11 @@ async function load(manual=false){const loadSequence=++LOAD_SEQUENCE,requestedFi
   // once) and then escalate to the full files when a visitor left the board;
   // none of that machinery is needed to load a single sport.
   const pending=SPORT_PREFETCH[requestedFile];const payload=pending?await pending:null;
-  const fresh=payload||await (async()=>{const r=await fetch(requestedFile,REVALIDATE);if(!r.ok)throw new Error('HTTP '+r.status);return r.json()})();
+  const fresh=payload||await (async()=>{
+    const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),15000);
+    try{const r=await fetch(requestedFile,{...REVALIDATE,signal:controller.signal});if(!r.ok)throw new Error('HTTP '+r.status);return await r.json()}
+    finally{clearTimeout(timeout)}
+  })();
   SPORT_PREFETCH[requestedFile]=null;
   if(loadSequence!==LOAD_SEQUENCE||requestedFile!==DATA_FILE)return;
   // .some() passes (element,index): the index landed on isForecastPaused's
@@ -649,7 +636,11 @@ async function load(manual=false){const loadSequence=++LOAD_SEQUENCE,requestedFi
           comp_key:sel.toUpperCase(),competition:(SPORT_LABELS[sel]||sel),updated:'',_missing:true};
     BYID={};
   }
-  applySportNav();LAST_OK=false;LAST_ERROR=String(e.message||e);$('#strip').textContent='no data';const selKey=(DATA_FILE.match(/data_(\w+)\.json/)||[])[1];$('#view-matches').innerHTML=`<div class="empty" style="grid-column:1/-1">${selKey?`No ${esc(SPORT_LABELS[selKey]||selKey.toUpperCase())} data yet.<br><span class="faintline">Run start_${esc(selKey)}.bat once to pull it, or pick the other sport above.</span>`:`Data file not loaded.<br><span class="faintline">${esc(LAST_ERROR)}</span>`}</div>`;if(VIEW==='status')renderStatus()}finally{if(loadSequence===LOAD_SEQUENCE){const ss=$('#sportSel');if(ss)ss.value=(DATA_FILE.match(/data_(\w+)\.json/)||['','ncaaf'])[1];scheduleNextLoad()}}}
+  applySportNav();LAST_OK=false;LAST_ERROR=String(e.message||e);$('#strip').textContent='data unavailable';
+  const notice='<div class="empty scLoadError"><b>Matchday data did not load.</b><br>Check your connection, then try again.<br><button class="actionbtn" type="button" onclick="load(true)">Retry loading</button></div>';
+  document.querySelectorAll('.view').forEach(view=>{view.innerHTML=notice;view.style.display=view.id==='view-'+VIEW?'block':'none'});
+  const alert=$('#alertBar');if(alert){alert.style.display='block';alert.textContent='The data connection failed. Use Retry loading below.'}
+}finally{if(loadSequence===LOAD_SEQUENCE){const ss=$('#sportSel');if(ss)ss.value=(DATA_FILE.match(/data_(\w+)\.json/)||['','ncaaf'])[1];scheduleNextLoad()}}}
 function scheduleNextLoad(){if(LOAD_TIMER)clearTimeout(LOAD_TIMER);LOAD_TIMER=setTimeout(()=>load(),Math.max(30,Number(SETTINGS.refresh)||60)*1000)}
 
 
