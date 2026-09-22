@@ -1324,26 +1324,6 @@ function betbetterModelRead(m,p){
     +`<div class="analystConfidence"><b>${_bbPct(model)}</b><span>chance to win</span></div></div>`
     +`<details class="readBreakdown"><summary>See both teams' chances</summary>${sideBox}</details></section>`;
 }
-function matchupWhyPanel(m,p){
-  const h=betbetterTeamRow(m?.home?.name),a=betbetterTeamRow(m?.away?.name);
-  const pickedHome=p?.pick_name&&bbNameMatches(p.pick_name,m?.home?.name);
-  const pickedAway=p?.pick_name&&bbNameMatches(p.pick_name,m?.away?.name);
-  const chosen=pickedHome?h:pickedAway?a:null,opponent=pickedHome?a:pickedAway?h:null;
-  const valid=(x,y)=>x!=null&&y!=null&&Number.isFinite(Number(x))&&Number.isFinite(Number(y));
-  const signals=[
-    ['rating','higher opponent-adjusted rating',1],
-    ['adj_o','stronger adjusted offence',1],
-    ['adj_d','stronger adjusted defence',-1],
-    ['sos','tougher schedule',1]
-  ].filter(([key])=>valid(chosen?.[key],opponent?.[key]));
-  const edge=signals.find(([key,,direction])=>(Number(chosen[key])-Number(opponent[key]))*direction>0);
-  const counter=signals.find(([key,,direction])=>(Number(chosen[key])-Number(opponent[key]))*direction<0);
-  const title=p?.pick_name?`Why the model leans ${p.pick_name}`:'What shapes this matchup';
-  const summary=chosen&&opponent&&signals.length
-    ?`<div class="matchWhyInsights"><p><b>Model edge</b>${esc(edge?`${p.pick_name} has the ${edge[1]}.`:`The available team metrics show no clear edge for ${p.pick_name}.`)}</p>${counter?`<p><b>Counterpoint</b>${esc(`${pickedHome?m.away.name:m.home.name} has the ${counter[1]}.`)}</p>`:''}</div>`
-    :'<p class="matchWhyEmpty">A reliable team-metric explanation is not available yet. Open Team comparison for the available evidence.</p>';
-  return `<section class="matchWhy"><div class="matchWhyHead"><span>Why</span><h3>${esc(title)}</h3></div>${summary}</section>`;
-}
 function matchupEvidence(label,note,html,open=false){
   if(!html)return '';
   return `<details class="matchEvidence"${open?' open':''}><summary><span><b>${esc(label)}</b><small>${esc(note)}</small></span><i aria-hidden="true">+</i></summary><div class="matchEvidenceBody">${html}</div></details>`;
@@ -1353,7 +1333,7 @@ function details(m){
   const bb=betbetterReadFor(m);
   const read=bb?betbetterModelRead(m,bb):betbetterNoReadPanel();
   const comparison=betbetterMatchupPanel(m)||matchProfilePanel(m);
-  return `<div class="detailGrid v4Detail modernExpandedView"><div class="expandedSectionHead"><div><span>Matchday analysis</span><b>Pick &amp; matchup</b></div></div><div class="expandedDecision"><div class="readCard modelReadCard">${read}</div></div>${matchupWhyPanel(m,bb)}<div class="matchEvidenceList">${matchupEvidence('Team comparison','ratings and schedule',comparison)}${matchupEvidence('Market','price and model gap',`<div class="readCard forecastMarketCard">${marketPanel(m)}</div>`)}${matchupEvidence('More detail','season profile and roster',`<div class="detailLow">${matchProfilePanel(m)}${rosterPanel(m)}<!-- matchday-advanced-profile --></div>`)}</div></div>`;
+  return `<div class="detailGrid v4Detail modernExpandedView"><div class="expandedSectionHead"><div><span>Matchday analysis</span><b>Pick &amp; matchup</b></div></div><div class="expandedDecision"><div class="readCard modelReadCard">${read}</div></div><div class="matchEvidenceList">${matchupEvidence('Team comparison','rating, offence, defence and schedule',comparison,true)}${matchupEvidence('Market','price and model gap',`<div class="readCard forecastMarketCard">${marketPanel(m)}</div>`)}${matchupEvidence('More detail','season profile and roster',`<div class="detailLow">${matchProfilePanel(m)}${rosterPanel(m)}<!-- matchday-advanced-profile --></div>`)}</div></div>`;
 }
 /* dedup */
 function _v4TitleRows(t){

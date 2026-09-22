@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0922E",
+  "tag": "Refinement",
+  "title": "Show the matchup evidence directly",
+  "items": [
+   "Remove the repetitive two-line Why panel that treated the first favorable and unfavorable team metric as a cause of the forecast.",
+   "Open Team comparison by default in the expanded game view so rating, offence, defence, and schedule context are visible immediately."
+  ]
+ },
+ {
   "date": "Build 0922D",
   "tag": "Fix",
   "title": "Reliable entry and clearer scorecard",

@@ -1,5 +1,10 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-09-22 (the expanded matchup removes a repetitive generated
+"Why" claim and opens the existing opponent-adjusted comparison by default.
+No new provider, endpoint, redistributed field, restricted payload, or ESPN
+content was added.)
+
 Reviewed: 2026-09-22 (the Scorecard rearranges the existing public model,
 market, calibration, and lock-policy fields without adding a provider,
 endpoint, redistributed field, restricted payload, or ESPN content.)

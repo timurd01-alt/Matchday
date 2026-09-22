@@ -267,7 +267,8 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         styles = (ROOT / "styles.css").read_text(encoding="utf-8")
         details = panels[panels.index("function details(m){"):panels.index("/* dedup */", panels.index("function details(m){"))]
         self.assertIn('class="expandedDecision"', details)
-        self.assertIn("matchupWhyPanel(m,bb)", details)
+        self.assertNotIn("matchupWhyPanel", details)
+        self.assertIn("comparison,true", details)
         for section in ("Team comparison", "Market", "More detail"):
             self.assertIn(section, details)
         self.assertIn('details class="matchEvidence"', panels)
