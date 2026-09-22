@@ -427,9 +427,8 @@ renderCustomize=function(){
 
    Two rules shape what these may say:
    * edge_points is reported, never ranked on. On graded college samples a wider
-     model-market gap predicted WORSE results -- the sign is inverted -- so the
-     top pick is chosen by model probability and the gap is shown as context
-     with its warning attached.
+     model-market gap predicted WORSE results. The featured pick favors a
+     competitive matchup between poll teams, not the largest percentage or gap.
    * A poll for a season that has not started is not a poll about this season.
      season_in_progress drives the caveat, and the engine's own `note` is
      rendered rather than paraphrased.
@@ -622,14 +621,24 @@ function modTopPick(){
   const baked=attached.length?[]:bbSportRows(typeof MATCHDAY_BETBETTER_PICKS!=='undefined'?MATCHDAY_BETBETTER_PICKS:[])
     .filter(p=>thisWeek(p.kickoff))
     .map(p=>({m:{home:{name:p.home},away:{name:p.away}},p}));
-  const picks=attached.concat(baked)
-    .filter(x=>Number.isFinite(Number(x.p.model_pct)))
-    // Sorted by the model's own probability. Deliberately NOT by edge_points.
-    .sort((a,b)=>Number(b.p.model_pct)-Number(a.p.model_pct));
+  const poll=currentSportKey()==='ncaaf'
+    ?(typeof MATCHDAY_CFB_AP_POLL!=='undefined'?MATCHDAY_CFB_AP_POLL.rankings:[])
+    :(collegeRankingTable()?.top25||collegeRankingTable()?.rankings||[]);
+  const pollRank=name=>poll.find(r=>bbNameMatches(r.name||r.team_name,name))?.rank||99;
+  const available=attached.concat(baked).filter(x=>Number.isFinite(Number(x.p.model_pct)));
+  const competitive=available.filter(x=>Number(x.p.model_pct)<90);
+  const picks=(competitive.length?competitive:available)
+    .map(x=>({...x,homeRank:pollRank(x.m.home?.name||x.m.home),awayRank:pollRank(x.m.away?.name||x.m.away)}))
+    .filter(x=>Number(x.p.model_pct)<90)
+    // A real contest with two strong teams is more useful to feature than a
+    // near-certain FBS/FCS mismatch. Never rank on the uncalibrated edge.
+    .sort((a,b)=>((b.homeRank<=25)+(b.awayRank<=25))-((a.homeRank<=25)+(a.awayRank<=25))
+      ||Math.max(a.homeRank,a.awayRank)-Math.max(b.homeRank,b.awayRank)
+      ||Math.abs(Number(a.p.model_pct)-60)-Math.abs(Number(b.p.model_pct)-60));
   if(!picks.length)return '';
   const {m,p}=picks[0];
   const gap=Number(p.edge_points);
-  return `<section class="boardMod modPick"><header><h3>Top pick this week</h3><span>live shadow read</span></header>`
+  return `<section class="boardMod modPick"><header><h3>Featured pick this week</h3><span>live model read</span></header>`
     +`<div class="modPickTeam">${esc(p.pick_name||'')}</div>`
     +`<div class="modPickGame">${esc(m.home?.name||m.home||'')} v ${esc(m.away?.name||m.away||'')}</div>`
     +`<div class="modPickBar"><i style="width:${Math.max(0,Math.min(100,Number(p.model_pct)))}%"></i></div>`

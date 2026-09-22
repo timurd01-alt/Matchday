@@ -440,11 +440,9 @@ class CfpBracketFormatTests(unittest.TestCase):
         self.assertEqual(g5[0]["cfp_seed"], 12)
         self.assertNotIn("Penn State", {r["team_name"] for r in field})
 
-    def test_an_independent_gets_in_on_ranking_alone(self):
-        # Notre Dame has no conference and so no automatic bid. Ranked third, it
-        # is in as an at-large and seeded third.
+    def test_notre_dame_top_twelve_gets_2026_automatic_bid(self):
         nd = next(r for r in self.field() if r["team_name"] == "Notre Dame")
-        self.assertEqual(nd["cfp_bid"], "at-large")
+        self.assertEqual(nd["cfp_bid"], "Notre Dame")
         self.assertEqual(nd["cfp_seed"], 3)
 
     def test_an_independent_outside_the_twelve_is_out(self):
@@ -455,10 +453,9 @@ class CfpBracketFormatTests(unittest.TestCase):
         names = {r["team_name"] for r in self.field(entry)}
         self.assertNotIn("Notre Dame", names)
 
-    def test_bids_are_the_five_highest_ranked_champions_not_a_power_four_quota(self):
-        # Two Group of Five champions rated above the Big 12's best. The format
-        # takes the five highest-ranked champions, so the Big 12 misses the
-        # automatic bid -- Utah is still in, but on ranking as an at-large.
+    def test_2026_power_four_and_one_other_champion_are_guaranteed(self):
+        # Two eligible other champions outrank the Big 12 champion. Only the
+        # higher of those two gets the fifth bid; Big 12 remains automatic.
         entry = _season()
         for row in entry["rankings"]:
             if row["team_name"] == "G5 Sun Belt":
@@ -468,8 +465,8 @@ class CfpBracketFormatTests(unittest.TestCase):
         field = self.field(entry)
         bids = {r["team_name"]: r["cfp_bid"] for r in field}
         self.assertEqual(bids["G5 Sun Belt"], "champion")
-        self.assertEqual(bids["G5 American Athletic"], "champion")
-        self.assertEqual(bids["Utah"], "at-large")
+        self.assertEqual(bids["G5 American Athletic"], "at-large")
+        self.assertEqual(bids["Utah"], "champion")
 
     def test_bracket_paths_pair_the_byes_with_the_right_winners(self):
         rounds = build_cfb_snapshot.cfp_bracket(_season())
@@ -486,7 +483,7 @@ class CfpBracketFormatTests(unittest.TestCase):
 
     def test_shipped_snapshot_carries_a_group_of_five_seed(self):
         snapshot = (ROOT / "matchday-cfb-snapshot.js").read_text(encoding="utf-8")
-        self.assertIn("five conference champions, seven at-large", snapshot)
+        self.assertIn("2026 automatic bids and at-large", snapshot)
         self.assertIn('"away_slot": "8/9"', snapshot)
 
 

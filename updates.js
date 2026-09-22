@@ -4,6 +4,26 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0922J",
+  "tag": "Fix",
+  "title": "Make mobile entry reliable",
+  "items": [
+   "Turn Enter Matchday Terminal back into a dedicated button so a tap cannot be diverted by anchor navigation.",
+   "Give the mobile entry control a full-height touch target with direct tap handling."
+  ]
+ },
+ {
+  "date": "Build 0922I",
+  "tag": "Fix",
+  "title": "Make the college board clearer",
+  "items": [
+   "Remove the repeated sport name beside Matchday Terminal in the top strip.",
+   "Project the CFP using the 2026-27 automatic-bid and seeding rules, with AP order as a provisional ranking input and unranked champions included.",
+   "Feature a competitive poll matchup rather than a near-certain mismatch in the weekly pick card.",
+   "Match UMass to Massachusetts so the Sacramento State game displays its existing Bet Better forecast."
+  ]
+ },
+ {
   "date": "Build 0922H",
   "tag": "Fix",
   "title": "Restore welcome-page scrolling",

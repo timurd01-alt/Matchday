@@ -57,6 +57,7 @@
 // screen must never trap a visitor when a script or data request stalls.
 window.matchdayEnterNow=function(targetView){
   window.MATCHDAY_ENTERED=true;
+  window.MATCHDAY_SHOW_WELCOME=false;
   try{sessionStorage.setItem('matchday.welcome.entered','1');localStorage.setItem('matchday.heroSeen','1')}catch(e){}
   var gate=document.getElementById('welcomeGate');if(gate)gate.hidden=true;
   document.body.classList.remove('welcomeOpen','welcomeExiting');
@@ -73,7 +74,7 @@ window.matchdayEnterNow=function(targetView){
 </script>
 </head>
 <body>
-<section class="welcomeGate" id="welcomeGate" aria-labelledby="welcomeTitle">
+<section class="welcomeGate" id="welcomeGate" aria-labelledby="welcomeTitle" hidden>
   <div class="welcomeBlobs" aria-hidden="true"></div>
   <div class="welcomeNoise" aria-hidden="true"></div>
   <div class="welcomeScene" aria-hidden="true">
@@ -162,7 +163,7 @@ window.matchdayEnterNow=function(targetView){
         graded afterwards and never rewritten.</p>
       </details>
       <div class="welcomeActions">
-        <a class="welcomeEnter" href="#app" onclick="matchdayEnterNow()">Enter Matchday Terminal <span aria-hidden="true">→</span></a>
+        <button class="welcomeEnter" type="button" onclick="matchdayEnterNow()">Enter Matchday Terminal <span aria-hidden="true">→</span></button>
         <span>No account required · no ads</span>
         <a class="welcomeSocialLink" href="https://x.com/timurknowsball" rel="me noopener" target="_blank">Follow @timurknowsball on X <span aria-hidden="true">↗</span></a>
         <a class="welcomeLegalLink" href="legal.html">Legal, privacy &amp; data sources</a>
@@ -192,7 +193,7 @@ window.matchdayEnterNow=function(targetView){
 </section>
 <section class="alertCenter" id="alertCenter" aria-label="Alert center" hidden></section>
 <div class="app" id="app">
-  <div class="livestrip"><button type="button" class="ls-brand ls-brandHome" onclick="openWelcome()" title="Back to the welcome page" aria-label="Back to the welcome page"><span class="pip"></span>Matchday Terminal<span id="compName" style="color:var(--muted);font-weight:var(--fw-semibold);text-transform:none;letter-spacing:0"></span></button><select id="sportSel" class="sportSel" onchange="changeSport(this.value)" aria-label="Sport"><option value="ncaaf">College Football</option><option value="ncaam">Men's College Basketball</option></select><div id="strip" class="ls-next">loading…</div><div class="topActions"><button class="alertBell" id="alertBell" type="button" aria-label="Open alerts" aria-controls="alertCenter" aria-expanded="false" onclick="toggleAlertCenter()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg><span id="alertCount" hidden>0</span></button></div></div>
+  <div class="livestrip"><button type="button" class="ls-brand ls-brandHome" onclick="openWelcome()" title="Back to the welcome page" aria-label="Back to the welcome page"><span class="pip"></span>Matchday Terminal</button><select id="sportSel" class="sportSel" onchange="changeSport(this.value)" aria-label="Sport"><option value="ncaaf">College Football</option><option value="ncaam">Men's College Basketball</option></select><div id="strip" class="ls-next">loading…</div><div class="topActions"><button class="alertBell" id="alertBell" type="button" aria-label="Open alerts" aria-controls="alertCenter" aria-expanded="false" onclick="toggleAlertCenter()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg><span id="alertCount" hidden>0</span></button></div></div>
   <nav class="sidebar" id="nav">
     <div class="navGroup" data-group="home">
     <button class="navbtn" data-primary data-mobile-primary data-v="home" aria-pressed="true"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg><span class="lbl">Home</span></button>

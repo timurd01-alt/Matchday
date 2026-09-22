@@ -144,9 +144,12 @@ def _meta(entry: dict) -> dict:
 NON_CONFERENCE_GROUPS = frozenset({"FBS Independents"})
 
 CFP_FIELD = 12
-# The five highest-ranked conference champions are seeded into the field
-# automatically; the remaining seven places are at-large.
-CFP_AUTO_BIDS = 5
+# 2026-27: the four named conference champions and the highest-ranked champion
+# of these six conferences qualify. Notre Dame also qualifies automatically
+# if ranked in the top 12; otherwise seven places are at-large.
+CFP_POWER_FOUR = frozenset({"ACC", "Big Ten", "Big 12", "SEC"})
+CFP_OTHER_AUTO = frozenset({"American", "American Athletic", "Conference USA",
+                            "Mid-American", "Mountain West", "Pac-12", "Sun Belt"})
 
 # 5v12, 6v11, 7v10, 8v9, higher seed at home. The four winners meet the seeds on
 # bye in the order below -- 1 plays the 8/9 winner, not whoever it likes.
@@ -177,31 +180,27 @@ def projected_champions(rows: list[dict]) -> dict[str, dict]:
 def cfp_field(entry: dict) -> list[dict]:
     """The projected twelve, in seed order.
 
-    The format, and why each part of it is here rather than a top-twelve cut:
-
-      * Five automatic bids go to the five highest-ranked conference champions.
-        With any realistic rating set that resolves to the four Power Four
-        champions plus the best Group of Five champion, which is how the format
-        is usually described -- but the rule is what is implemented, so a year
-        in which two Group of Five champions outrank a Power Four champion
-        comes out right instead of forcing a bid the format does not guarantee.
-      * Seven at-large places follow, by ranking, from everyone not already in.
-      * Then straight seeding: the twelve are seeded 1-12 by ranking, not by
-        whether they won anything. A champion ranked outside the top four does
-        not take a bye from a higher-ranked at-large -- that changed for the
-        2025 season and the old bracket still seeded the old way by accident,
-        because it never modelled champions at all.
-
-    A top-twelve-by-rating cut gets the Group of Five bid wrong every time: the
-    best G5 team this season is ranked 55th, so it was simply absent, and one of
-    the twelve teams shown had taken its place.
+    AP rank is a provisional selection proxy, not a claim that the AP selects
+    the CFP. The four power-conference champions, best eligible other champion,
+    and (when AP top-12) Notre Dame take automatic places. Remaining teams enter
+    by ranking. Automatic qualifiers outside the top 12 are seeded at the bottom.
     """
     rows = sorted((r for r in (entry.get("rankings") or []) if r.get("rank")),
                   key=lambda r: r["rank"])
     if len(rows) < CFP_FIELD:
         return []
     champions = projected_champions(rows)
-    auto = sorted(champions.values(), key=lambda r: r["rank"])[:CFP_AUTO_BIDS]
+    auto = [champions[c] for c in CFP_POWER_FOUR if c in champions]
+    other = sorted((champions[c] for c in CFP_OTHER_AUTO if c in champions),
+                   key=lambda r: r["rank"])
+    if other:
+        auto.append(other[0])
+    notre_dame = next((r for r in rows if str(r.get("team_name") or "").startswith("Notre Dame")
+                       and r["rank"] <= 12), None)
+    if notre_dame:
+        auto.append(notre_dame)
+    if len(auto) < 5:
+        return []
     taken = {r["team_key"] for r in auto}
     at_large = [r for r in rows if r["team_key"] not in taken][:CFP_FIELD - len(auto)]
     field = sorted(auto + at_large, key=lambda r: r["rank"])
@@ -209,7 +208,8 @@ def cfp_field(entry: dict) -> list[dict]:
         return []
     for seed, row in enumerate(field, 1):
         row["cfp_seed"] = seed
-        row["cfp_bid"] = "champion" if row["team_key"] in taken else "at-large"
+        row["cfp_bid"] = ("Notre Dame" if notre_dame and row["team_key"] == notre_dame["team_key"]
+                          else "champion" if row["team_key"] in taken else "at-large")
     return field
 
 
@@ -228,7 +228,7 @@ def cfp_bracket(entry: dict) -> list[dict]:
     seed = {row["cfp_seed"]: row for row in field}
     name = lambda n: seed[n]["team_name"]
     return [
-        {"round": "CFP First Round — projected: five conference champions, seven at-large",
+        {"round": "CFP First Round — projected: 2026 automatic bids and at-large",
          "matches": [{"home": name(h), "away": name(a), "home_slot": str(h),
                       "away_slot": str(a), "status": "PROJECTED", "score": {}}
                      for h, a in CFP_FIRST_ROUND]},
@@ -280,7 +280,15 @@ def build(path: pathlib.Path = SNAPSHOT) -> str:
         if not rated:
             continue
         bracket_rows.append({**rated, "rank": item["rank"]})
-    bracket = cfp_bracket({"rankings": bracket_rows}) if len(bracket_rows) == 25 else []
+    # The AP publishes only 25 teams, while an automatic qualifier can be
+    # unranked. Keep the AP order for its 25, then use model order solely to
+    # choose and place otherwise-unranked projected conference champions.
+    ap_keys = {r["team_key"] for r in bracket_rows}
+    for model_rank, rated in enumerate(sorted(raw_rating_rows,
+                                               key=lambda r: r.get("rank") or 9999), 1):
+        if rated.get("team_key") not in ap_keys:
+            bracket_rows.append({**rated, "rank": 1000 + model_rank})
+    bracket = cfp_bracket({"rankings": bracket_rows}) if len(ap_keys) == 25 else []
     poll_payload = {**poll, "rankings": []}
     for row in poll_rows:
         rated = by_name.get(_team_key(row.get("name"))) or {}

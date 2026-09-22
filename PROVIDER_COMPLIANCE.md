@@ -1,5 +1,10 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-09-22 (the existing AP-poll and Bet Better display now applies
+the CFP's published 2026-27 qualification and seeding rules, uses already-held
+ratings only to project unranked conference champions, and resolves the
+Massachusetts/UMass school alias. No new feed, endpoint, or raw redistribution.)
+
 Reviewed: 2026-09-22 (the existing Odds API game-odds fetch begins within
 24 hours of kickoff instead of three, without changing its endpoint, cache,
 quota reserve, or output fields. The expanded view may also show the already-

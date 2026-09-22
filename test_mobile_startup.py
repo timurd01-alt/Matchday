@@ -20,7 +20,11 @@ class MobileStartupTests(unittest.TestCase):
             self.html.index("window.matchdayEnterNow=function"),
             self.html.index('src="app-1-core.js'),
         )
-        self.assertIn('href="#app" onclick="matchdayEnterNow()"', self.html)
+        self.assertIn(
+            '<button class="welcomeEnter" type="button" onclick="matchdayEnterNow()">',
+            self.html,
+        )
+        self.assertNotIn('class="welcomeEnter" href=', self.html)
         self.assertIn("if(gate)gate.hidden=true", self.html)
         self.assertNotIn('id="welcomeGate" role="dialog"', self.html)
 
@@ -29,6 +33,8 @@ class MobileStartupTests(unittest.TestCase):
         self.assertIn('.welcomeGate:not([hidden]){position:relative;inset:auto', css)
         self.assertIn('body.welcomeOpen{height:auto;min-height:100vh;overflow-y:auto}', css)
         self.assertIn('.welcomeOpen .app{visibility:visible;display:grid}', css)
+        self.assertIn('min-height:52px', css)
+        self.assertIn('touch-action:manipulation', css)
 
     def test_large_scripts_do_not_block_html_parsing(self):
         for filename in (

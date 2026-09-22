@@ -8,7 +8,11 @@ function scorecardUnderdogTag(p){if(!p?.upset_score||!p?.upset_snapshot?.radar||
 // the records map and the results settling keyed on an exact match and so
 // silently matched nothing -- ratings appeared while every record stayed 0-0
 // and no played game ever settled.
-function bbNameKey(name){return teamKey(name);}
+function bbNameKey(name){
+  // CFBD calls the school Massachusetts; Bet Better and its poll use UMass.
+  // Normalize that one established school alias before matching fixtures.
+  return teamKey(name).replace(/^umass(?= |$)/,'massachusetts');
+}
 // A parenthetical is part of the identity, not decoration. "Miami" and
 // "Miami (OH)" are two different schools that both play, and whole-string
 // prefixing matched them to each other -- the fixture feed's "Miami" against the
@@ -597,7 +601,7 @@ function showSportData(payload,cached=false){
   if(!cached){applyForecastPublicationPauses(DATA);applyCurrentCfbSnapshot(DATA);applyCurrentNcaamSnapshot(DATA);decodeNewsEntities(DATA);DATA.news=(DATA.news||[]).filter(isFreshNews).sort((a,b)=>newsTime(b)-newsTime(a))}
   SPORT_DATA_CACHE[DATA_FILE]=DATA;
   BYID={};(DATA.matches||[]).forEach(m=>BYID[m.id]=m);
-  LAST_OK=true;LAST_ERROR='';const cn=$('#compName');if(cn)cn.textContent=DATA.competition?' · '+DATA.competition:'';
+  LAST_OK=true;LAST_ERROR='';
   const tb=document.querySelector('.navbtn[data-v="third"]');if(tb)tb.style.display=(DATA.third_race&&DATA.third_race.length)?'':'none';
   const gb2=document.querySelector('.navbtn[data-v="groups"]');if(gb2)gb2.style.display=(DATA.standings&&DATA.standings.length)?'':'none';
   applySportNav();renderStrip();renderInsight();renderCurrent();applyStaticI18n();renderAlerts();

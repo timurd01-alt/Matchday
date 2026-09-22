@@ -2640,7 +2640,7 @@ html{color-scheme:dark}
 .welcomeBrand h1,.welcomeLead,.welcomeDevNote{margin-left:auto;margin-right:auto}
 .welcomeBrand h1{font-size:clamp(3rem,7vw,5rem)}
 .welcomeActions{justify-content:center;flex-direction:column;gap:12px}
-.welcomeEnter{width:min(360px,100%);justify-content:center}
+.welcomeEnter{width:min(360px,100%);min-height:52px;justify-content:center;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 .welcomeDevNote{width:min(360px,100%);box-sizing:border-box}
 .welcomeLegalLink{width:auto;margin-top:0}
 .welcomeSocialLink{color:var(--signal);font-family:var(--mono);font-size:var(--fs-xs);text-decoration:none}
