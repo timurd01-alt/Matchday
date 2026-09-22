@@ -4,6 +4,17 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0921K",
+  "tag": "Update",
+  "title": "Cleaner ranking and community rows",
+  "items": [
+   "Moved the long power-rating methodology into a compact help control.",
+   "Show NDSU and other FCS-heavy teams in a separate provisional section with their model ratings and FCS schedule share, without assigning an unsupported FBS rank.",
+   "Aligned team logos and names in ranking tables and removed duplicate green team codes beside conference logos.",
+   "Placed Community matchup and result logos at opposite ends and used full team names on pick buttons."
+  ]
+ },
+ {
   "date": "Build 0921J",
   "tag": "Fix",
   "title": "Show full opponent in team profiles",

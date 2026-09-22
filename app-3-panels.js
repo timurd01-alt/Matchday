@@ -918,14 +918,15 @@ function collegeRankingTableHTML(){
   const body=rows.map(r=>`<tr${r.rank<=25?' class="pollRanked"':''}>`
     +`<td class="pollRank">${r.rank}</td>`
     +(moved?`<td class="pollMove">${movementTag(r)}</td>`:'')
-    +`<td class="pollTeam">${esc(r.name)}${r.tier&&r.tier!=='power'?' <i class="pollTier">G5</i>':''}</td>`
+    +`<td class="pollTeam"><span class="pollTeamInner">${esc(r.name)}${r.tier&&r.tier!=='power'?' <i class="pollTier">G5</i>':''}</span></td>`
     +`<td>${esc(r.conference||'—')}</td>`
     +`<td class="pollNum">${num(r.rating)}</td>`
     +`<td class="pollNum">${num(r.sos)}</td>`
     +`<td class="pollNum">${num(r.adj_o,1)}</td>`
     +`<td class="pollNum">${num(r.adj_d,1)}</td>`
     +`<td>${esc(r.record||'')}</td></tr>`).join('');
-  const withheld=(table?.withheld||[]).map(w=>`${esc(w.team_name)}`).join(', ');
+  const withheld=(table?.withheld||[]).filter(w=>w?.team_name);
+  const provisional=withheld.map(w=>`<tr><td>${esc(w.team_name)}</td><td>${num(w.rating)}</td><td>${Number.isFinite(Number(w.fcs_share))?(Number(w.fcs_share)*100).toFixed(1)+'%':'—'}</td></tr>`).join('');
   return `<section class="pollSection"><div class="pollHead">
       <div><div class="vhead" style="margin:0">${String(DATA.comp_key||'').toUpperCase()==='NCAAM'?'Basketball power rating':'Football power rating'}</div>
       <p class="pollMeta">${esc(table.basis?.label||'Model rating')} · ${rows.length} rated teams${table.published_on?` · published ${esc(table.published_on)}`:''}</p></div>
@@ -935,8 +936,8 @@ function collegeRankingTableHTML(){
     <div class="pollScroll"><table class="pollTable"><thead><tr>
       <th>#</th>${moved?'<th title="Change since last week">Move</th>':''}<th>Team</th><th>Conference</th><th>Rating</th><th>SoS</th><th>Off</th><th>Def</th><th>Rec</th>
     </tr></thead><tbody>${body}</tbody></table></div>
-    <p class="modNote">${esc(String(table.note||'').replace(/\.\./g,'.'))}</p>
-    ${withheld?`<p class="modNote">Held out of the power rating: ${withheld} — ratings earned mostly against FCS opposition.</p>`:''}
+    <details class="pollHelp"><summary aria-label="About the power ratings">?</summary><p>${esc(String(table.note||'').replace(/\.\./g,'.'))}</p><p>Provisional teams are shown below but have no FBS rank because most of their rating evidence comes from FCS games. They enter the ranked table when the source model has enough comparable FBS-opponent evidence.</p></details>
+    ${provisional?`<details class="pollProvisional"><summary>Provisional teams · ${withheld.length} unranked</summary><div class="pollScroll"><table class="pollTable"><thead><tr><th>Team</th><th>Model rating</th><th>FCS schedule</th></tr></thead><tbody>${provisional}</tbody></table></div></details>`:''}
   </section>`;
 }
 /* The full ballot on the Conferences tab, above the power rating: every team's
@@ -946,7 +947,7 @@ function collegeBallotTableHTML(){
   const b=typeof collegeBallot==='function'?collegeBallot():null;
   if(!b)return '';
   if(b.source==='x'){
-    const rows=b.rankings.map(r=>`<tr${r.rank<=4?' class="pollRanked"':''}><td class="pollRank">${Number(r.rank)}</td><td class="pollTeam teamClickable" data-team="${esc(r.team_name)}" onclick="openTeamModal(this.dataset.team)">${teamMark(r.team_name)}<span>${esc(r.team_name)}</span></td></tr>`).join('');
+    const rows=b.rankings.map(r=>`<tr${r.rank<=4?' class="pollRanked"':''}><td class="pollRank">${Number(r.rank)}</td><td class="pollTeam teamClickable" data-team="${esc(r.team_name)}" onclick="openTeamModal(this.dataset.team)"><span class="pollTeamInner">${teamMark(r.team_name)}<span>${esc(r.team_name)}</span></span></td></tr>`).join('');
     return `<section class="pollSection ballotSection personalBallot"><div class="pollHead"><div><div class="vhead" style="margin:0">My Top 25</div>
       <p class="pollMeta">Personal ballot · published ${esc(b.published_on||'')} · separate from the model</p></div></div>
       <div class="pollScroll"><table class="pollTable officialPollTable"><thead><tr><th>#</th><th>Team</th></tr></thead><tbody>${rows}</tbody></table></div>
@@ -989,7 +990,7 @@ function decorateRankingTeamMarks(host){
    [host.querySelectorAll('.ballotSection .pollTeam'),ballot?.rankings||[],'team_name']].forEach(([cells,rows,key])=>{
     cells.forEach((cell,i)=>{
       if(cell.querySelector('.teamMark')||!rows[i]?.[key])return;
-      cell.insertAdjacentHTML('afterbegin',teamMark(rows[i][key]));
+      (cell.querySelector('.pollTeamInner')||cell).insertAdjacentHTML('afterbegin',teamMark(rows[i][key]));
     });
   });
 }

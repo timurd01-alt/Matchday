@@ -192,13 +192,13 @@ function renderCommunity(){ensureHandle();const host=$('#view-community');const 
   open.forEach(m=>{const p=picks[m.id],x=communityPickProbs(m),official=officialPrediction(m);
     const sideBtn=(side,label,pct)=>{const locked=p&&p.pick===side;const disabled=p?'disabled':'';
       return `<button class="btmbtn ${locked?'locked':''}" ${disabled} onclick="pickBtm('${m.id}','${side}')">${esc(label)}${pct!=null?` <b>${pct}%</b>`:''}</button>`;};
-    h+=`<div class="btmcard"><div class="btmmatch">${teamMark(m.home.name)}${esc(m.home.name)} <span class="mvvs">v</span> ${teamMark(m.away.name)}${esc(m.away.name)}${p?`<span class="btmlocked">your pick: ${esc(p.pick==='h'?m.home.code:p.pick==='a'?m.away.code:'Draw')}</span>`:''}</div>
-      <div class="btmrow">${sideBtn('h',m.home.code||'Home',x.h)}${x.d>0?sideBtn('d',t('Draw'),x.d):''}${sideBtn('a',m.away.code||'Away',x.a)}</div>
+    h+=`<div class="btmcard"><div class="btmmatch"><span class="btmSide">${teamMark(m.home.name)}<span>${esc(m.home.name)}</span></span><span class="mvvs">vs</span><span class="btmSide away"><span>${esc(m.away.name)}</span>${teamMark(m.away.name)}</span></div>${p?`<div class="btmlocked">your pick: ${esc(p.pick==='h'?m.home.name:p.pick==='a'?m.away.name:'Draw')}</div>`:''}
+      <div class="btmrow">${sideBtn('h',m.home.name||'Home',x.h)}${x.d>0?sideBtn('d',t('Draw'),x.d):''}${sideBtn('a',m.away.name||'Away',x.a)}</div>
       <div class="btmmeta">${official.side?`model: <b>${esc(official.name)}</b> ${official.confidence??'—'}% &middot; `:'model pick pending &middot; '}${x.source==='model'?'model probabilities · market unavailable · ':x.source==='none'?'probabilities pending · ':''}${p?'locked — graded when final':'pick before kickoff to play'}</div></div>`;});
   const graded=Object.values(picks).filter(p=>p.result).sort((a,b)=>b.ts-a.ts);
   if(graded.length){h+=`<div class="seclbl" style="margin-top:18px">Your results</div>`+graded.slice(0,20).map(p=>{
     const nm=p.pick==='h'?p.code.h:p.pick==='a'?p.code.a:'Draw';
-    return `<div class="btmres ${p.you_hit?'hit':'miss'}"><span class="btmresTeams">${teamMark(p.home)}${esc(p.home)} v ${teamMark(p.away)}${esc(p.away)}</span><span class="btmpick">you: ${esc(nm)} ${p.you_hit?'&#10003;':'&#10007;'}</span><span class="btmvs ${p.model_hit?'mok':'mno'}">model ${p.model_hit?'&#10003;':'&#10007;'}</span></div>`;}).join('');}
+    return `<div class="btmres ${p.you_hit?'hit':'miss'}"><span class="btmresTeams"><span class="btmSide">${teamMark(p.home)}<span>${esc(p.home)}</span></span><span class="mvvs">vs</span><span class="btmSide away"><span>${esc(p.away)}</span>${teamMark(p.away)}</span></span><span class="btmpick">you: ${esc(nm)} ${p.you_hit?'&#10003;':'&#10007;'}</span><span class="btmvs ${p.model_hit?'mok':'mno'}">model ${p.model_hit?'&#10003;':'&#10007;'}</span></div>`;}).join('');}
   // leaderboard section (only when configured)
   if(LEADERBOARD_URL){
     const hn=myHandle();

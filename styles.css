@@ -2207,6 +2207,14 @@ html{color-scheme:dark}
 .pollSection{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:14px;margin-bottom:14px}
 .pollHead{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px}
 .pollMeta{margin:3px 0 0;font-family:var(--mono);font-size:var(--fs-xs);color:var(--faint)}
+.pollHelp{margin-top:10px;color:var(--muted);font-size:var(--fs-xs)}
+.pollHelp summary{display:grid;place-items:center;width:28px;height:28px;border:1px solid var(--line);border-radius:50%;color:var(--text);font-weight:700;cursor:pointer;list-style:none}
+.pollHelp summary::-webkit-details-marker{display:none}
+.pollHelp summary:focus-visible,.pollProvisional summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.pollHelp p{max-width:80ch;line-height:1.55}
+.pollProvisional{margin-top:10px;border-top:1px solid var(--line);font-size:var(--fs-sm)}
+.pollProvisional summary{padding:11px 0;color:var(--text);font-weight:700;cursor:pointer}
+.pollProvisional .pollTable th:first-child,.pollProvisional .pollTable td:first-child{text-align:left}
 .pollBadge{flex:0 0 auto;border:1px solid var(--line2);border-radius:999px;padding:4px 9px;font-family:var(--mono);font-size:var(--fs-3xs);text-transform:uppercase;letter-spacing:.08em;color:var(--signal)}
 .pollMove{display:inline-flex;min-width:30px;justify-content:center;font-family:var(--mono);font-size:var(--fs-xs);font-weight:var(--fw-bold)}.pollMove.up{color:var(--win)}.pollMove.down{color:var(--loss)}.pollMove.same,.pollMove.unavailable{color:var(--faint)}
 .pollScroll{overflow-x:auto;max-height:560px;overflow-y:auto;border:1px solid var(--line);border-radius:10px;margin-top:6px}
@@ -2594,7 +2602,7 @@ html{color-scheme:dark}
 .gamesSupportGrid.noComparisons{grid-template-columns:minmax(0,1fr);margin-top:20px}
 .gamesSupportGrid.noComparisons .gamesRecord{min-height:0;padding:12px 0;gap:14px}
 #view-home .gamesExplore>div{grid-template-columns:repeat(4,minmax(0,1fr))}
-.personalBallot .pollTeam{display:flex;align-items:center;gap:10px}
+.personalBallot .pollTeam{display:table-cell}
 .personalBallot .teamMark{width:30px;height:30px;flex-basis:30px}
 .personalBallot .teamMark img{width:25px;height:25px}
 .collegeResearch{display:flow-root;margin-bottom:34px}
@@ -2637,6 +2645,19 @@ html{color-scheme:dark}
 .btmmatch .teamMark,.btmresTeams .teamMark{width:25px;height:25px;flex-basis:25px;border-radius:6px}
 .btmmatch .teamMark img,.btmresTeams .teamMark img{width:22px;height:22px}
 .btmresTeams{display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap}
+.pollTeamInner{display:inline-flex;align-items:center;gap:9px;min-height:34px;vertical-align:middle}
+.pollTeamInner .teamMark{flex:0 0 30px;width:30px;height:30px}
+.pollTeamInner .teamMark img{width:26px;height:26px}
+#view-groups .gteam .code{display:none}
+.btmmatch{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:14px}
+.btmresTeams{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:8px;min-width:min(450px,100%)}
+.btmSide{display:flex;align-items:center;gap:10px;min-width:0}
+.btmSide span:not(.teamMark){overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.btmSide.away{justify-content:flex-end;text-align:right}
+.btmmatch .mvvs{font-family:var(--mono);font-size:var(--fs-xs);color:var(--muted);text-transform:uppercase}
+.btmcard>.btmlocked{display:block;margin:-2px 0 9px;color:var(--signal);font-size:var(--fs-xs)}
+@media(max-width:640px){.btmmatch{gap:6px}.btmSide{gap:5px}.btmrow .btmbtn{font-size:var(--fs-xs);padding:9px 5px}}
+@media(max-width:640px){.btmresTeams{min-width:100%;gap:5px}.pollProvisional .pollTable th:nth-child(3),.pollProvisional .pollTable td:nth-child(3){display:table-cell}}
 .gamesDifferences .gamesTextLink{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;margin-top:14px;padding:10px 18px;border:1px solid var(--signal);border-radius:10px;background:rgba(58,209,122,.11);color:var(--text)}
 .gamesDifferences .gamesTextLink:hover{background:rgba(58,209,122,.2)}
 .modernExpandedView .analystPanel{padding:20px 22px;background:var(--panel);font-family:var(--sans)}

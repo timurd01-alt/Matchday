@@ -250,6 +250,17 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         self.assertNotIn("side?.gf??0", profile)
         self.assertIn("${p.sos!=null?", profile)
 
+    def test_power_rating_help_and_provisional_fcs_teams(self):
+        panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
+        section = panels[panels.index("function collegeRankingTableHTML(){"):panels.index("function collegeBallotTableHTML(){")]
+        self.assertIn('class="pollHelp"', section)
+        self.assertIn('aria-label="About the power ratings"', section)
+        self.assertIn('class="pollProvisional"', section)
+        self.assertIn('w.fcs_share', section)
+        self.assertNotIn('Held out of the power rating:', section)
+        self.assertIn('class="pollTeamInner"', section)
+        self.assertIn("(cell.querySelector('.pollTeamInner')||cell)", panels)
+
     def test_the_welcome_cards_model_read_is_bet_betters(self):
         """The gate quotes one model, the same one every other screen quotes.
 
