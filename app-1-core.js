@@ -390,6 +390,7 @@ function scorePlainText(m){if(m?.status==='LIVE')return '—';if(isStaleUpcoming
 function statNum(v){const m=String(v??'').match(/-?\d+(\.\d+)?/);return m?Number(m[0]):0}
 function pressure(stats,side){if(!stats)return 0;const s=stats[side]||{};return statNum(s.shots_on_target)*4+statNum(s.shots)*1.2+statNum(s.corners)*1.4+statNum(String(s.possession).replace('%',''))*.08-statNum(s.red_cards)*4}
 function pct(v){v=Number(v);return Number.isFinite(v)?Math.max(0,Math.min(100,Math.round(v))):0}
+function modelPctLabel(v){const n=Number(v);return v==null||!Number.isFinite(n)?'—':Math.max(0,Math.min(99.9,n)).toFixed(1)+'%'}
 function bar1x2(h,d,a){h=pct(h);a=pct(a);const dSeg=d==null?'':(d=>`<div class="seg d" style="flex-basis:${d}%"><span>${d}%</span></div>`)(pct(d));return `<div class="bar"><div class="seg h" style="flex-basis:${h}%"><span>${h}%</span></div>${dSeg}<div class="seg a" style="flex-basis:${a}%"><span>${a}%</span></div></div>`}
 // The backend owns the published pick. UI components may explain that pick,
 // but must never promote a live model or market inference over a locked record.
@@ -546,11 +547,11 @@ function _welcomeCardHTML(m){
   // them -- the only thing the pair is actually saying -- is the thing you see.
   const meter=Number.isFinite(model)
     ?`<div class="welcomeMeter" aria-hidden="true"><i style="--welcome-p:${pct(model)}%"></i>${Number.isFinite(market)?`<u style="--welcome-m:${pct(market)}%"></u>`:''}</div>
-      <div class="welcomeMeterKey"><span><b></b>model ${model.toFixed(1)}%</span>${Number.isFinite(market)?`<span><i></i>market ${market.toFixed(1)}%</span>`:''}</div>`
+      <div class="welcomeMeterKey"><span><b></b>model ${modelPctLabel(model)}</span>${Number.isFinite(market)?`<span><i></i>market ${market.toFixed(1)}%</span>`:''}</div>`
     :'';
   const read=pick&&Number.isFinite(model)
     ?`<div class="welcomeRead"><div class="welcomeReadTop"><span>MODEL PICK</span>${edgeChip}</div>
-       <div class="welcomeReadPick"><b>${esc(pick)}</b><strong>${model.toFixed(1)}<small>%</small></strong></div>
+       <div class="welcomeReadPick"><b>${esc(pick)}</b><strong>${modelPctLabel(model).slice(0,-1)}<small>%</small></strong></div>
        ${meter}</div>`
     :'';
   return `<div class="welcomeMatchMeta"><span>${esc(m._comp||DATA.comp_key||m.stage||'NEXT')}</span><span>${kickIn(m.kickoff)}</span></div><div class="welcomeTeams"><div><small>${esc(m.home?.code||'HOME')}</small><b>${esc(m.home?.name||'Home')}</b></div><em>v</em><div class="away"><small>${esc(m.away?.code||'AWAY')}</small><b>${esc(m.away?.name||'Away')}</b></div></div>${read}`;
@@ -625,7 +626,7 @@ function renderWelcomeUpset(){
   if(!p||(sport&&String(p.sport||'').toLowerCase()!==sport)){host.hidden=true;host.innerHTML='';return}
   const model=Number(p.model_pct),market=Number(p.market_pct),gap=Number(p.disagreement_points);
   if(!Number.isFinite(model)){host.hidden=true;host.innerHTML='';return}
-  const bar=(cls,label,v)=>`<div class="${cls}"><span>${label}</span><i style="width:${Math.max(2,Math.min(100,v))}%"></i><b>${Number.isFinite(v)?v.toFixed(1)+'%':'—'}</b></div>`;
+  const bar=(cls,label,v)=>`<div class="${cls}"><span>${label}</span><i style="width:${Math.max(2,Math.min(100,v))}%"></i><b>${Number.isFinite(v)?(label==='model'?modelPctLabel(v):v.toFixed(1)+'%'):'—'}</b></div>`;
   host.hidden=false;
   // Name the opponent, not the fixture: the selection is already the headline,
   // so "Iowa State Cyclones / Iowa State Cyclones at Iowa Hawkeyes" said it twice.
@@ -847,6 +848,9 @@ Object.assign(TEAM_LOGO_FILES,{
   'North Carolina A&T':'northCarolinaAT.png','San José State':'sanJoseState.png','SE Louisiana':'southeasternLouisiana.png',
   'Texas A&M':'texasAM.png','The Citadel':'citadel.png',UAlbany:'albany.png',
   'Michigan State':'michiganState.png','Michigan State Spartans':'michiganState.png',
+  'Florida Atlantic':'floridaAtlantic.png','Florida Atlantic Owls':'floridaAtlantic.png',
+  'Georgia Southern':'georgiaSouthern.png','Georgia Southern Eagles':'georgiaSouthern.png',
+  'Georgia State':'georgiaState.png','Georgia State Panthers':'georgiaState.png',
   TCU:'TCU.png',"Hawai'i":'hawaii.png','Oklahoma State':'OklahomaState.png'
 });
 function inferredTeamLogoFile(name){
@@ -913,13 +917,13 @@ function gamesFeaturedHTML(read){
     :`<div><span>Market</span><b>${read.market.toFixed(1)}%</b></div><div><span>Difference</span><b class="${read.difference>0?'up':read.difference<0?'down':''}">${read.difference>0?'+':''}${read.difference.toFixed(1)} pts</b></div>`;
   const model=read.model==null
     ?`<div><span>Live model</span><b>No prediction yet</b></div>`
-    :`<div><span>Live model · ${esc(read.pick)}</span><b>${read.model.toFixed(1)}%</b></div>`;
+    :`<div><span>Live model · ${esc(read.pick)}</span><b>${modelPctLabel(read.model)}</b></div>`;
   return `<button type="button" class="gamesFeaturedButton" onclick="openMatchModal('${esc(String(m.id))}')"><span class="gamesFeaturedWhen">${esc(m.stage||'Fixture')} · ${esc(kickIn(m.kickoff))}</span><strong><span class="gamesFeaturedTeam">${teamMark(m.home?.name)}<span>${esc(m.home?.name||'Home')}</span></span><i>vs</i><span class="gamesFeaturedTeam away">${teamMark(m.away?.name)}<span>${esc(m.away?.name||'Away')}</span></span></strong><div class="gamesFeaturedCompare">${model}${comparison}</div><em>View analysis <span aria-hidden="true">→</span></em></button>`;
 }
 function gamesDifferencesHTML(reads){
   const rows=reads.length?reads.map(read=>{
     const m=read.match,d=read.difference;
-    const content=`<span><b>${esc(m.home?.name||'Home')} vs ${esc(m.away?.name||'Away')}</b><small>${esc(read.pick)} · model ${read.model.toFixed(1)}% · market ${read.market.toFixed(1)}%</small></span><strong class="${d>0?'up':d<0?'down':''}">${d>0?'+':''}${d.toFixed(1)} pts</strong>`;
+    const content=`<span><b>${esc(m.home?.name||'Home')} vs ${esc(m.away?.name||'Away')}</b><small>${esc(read.pick)} · model ${modelPctLabel(read.model)} · market ${read.market.toFixed(1)}%</small></span><strong class="${d>0?'up':d<0?'down':''}">${d>0?'+':''}${d.toFixed(1)} pts</strong>`;
     return `<button type="button" onclick="openMatchModal('${esc(String(m.id))}')">${content}</button>`;
   }).join(''):`<div class="gamesEmpty">Model and market comparisons will appear as games are priced.</div>`;
   return `<section class="gamesDifferences"><div class="gamesSectionHead"><span>Largest model / market differences</span><small>${reads.length?'Top '+reads.length:'Awaiting prices'}</small></div><div class="gamesDifferenceRows">${rows}</div><button type="button" class="gamesTextLink" onclick="document.querySelector('.gamesFixtureBoard')?.scrollIntoView({behavior:prefersReducedMotion()?'auto':'smooth'})">View all games <span aria-hidden="true">→</span></button></section>`;
@@ -1103,7 +1107,7 @@ function computeSignalAlerts(){
     if(_alertEnabled('model')&&change&&bb)out.push({t:'model',txt:`${bb.pick_name||'Model read'} moved ${change.delta>0?'+':''}${change.delta} probability points.`,id:m.id});
     if(_alertEnabled('market')&&bb){
       const gap=Number(bb.edge_points);
-      if(Number.isFinite(gap)&&Math.abs(gap)>=8)out.push({t:'market',txt:`Model ${Number(bb.model_pct).toFixed(1)}% and market ${Number(bb.market_pct).toFixed(1)}% on ${bb.pick_name}.`,id:m.id});
+      if(Number.isFinite(gap)&&Math.abs(gap)>=8)out.push({t:'market',txt:`Model ${modelPctLabel(bb.model_pct)} and market ${Number(bb.market_pct).toFixed(1)}% on ${bb.pick_name}.`,id:m.id});
     }
   });
   return out.filter((a,i,list)=>list.findIndex(b=>_alertKey(b)===_alertKey(a))===i).slice(0,12);
@@ -1328,11 +1332,11 @@ function submitPick(matchId,pick){
   // A feed can still say UPCOMING after the clock has passed kickoff. The
   // timestamp is therefore a second, mandatory lock check.
   if(!isCommunityPickOpen(m))return false;
-  const official=officialPrediction(m);
+  const read=typeof betbetterReadFor==='function'?betbetterReadFor(m):m.betbetter_pick;
   db.picks[matchId]={pick,ts:Date.now(),
     home:m.home.name,away:m.away.name,code:{h:m.home.code,a:m.away.code},
     comp:m._comp||DATA.comp_key||'',
-    modelPick:official.side||null,
+    modelPick:read?.pick||null,
     marketPick:(()=>{const x=(m.markets||{})['1x2'];if(!x||x.home_pct==null)return null;const tr={h:x.home_pct,d:x.draw_pct,a:x.away_pct};return Object.keys(tr).reduce((a,b)=>tr[b]>tr[a]?b:a)})()};
   btmSave(db);renderCommunity();lockGlobalPick(matchId,pick,db.picks[matchId].comp);return true;
 }

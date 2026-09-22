@@ -10,12 +10,11 @@ class CommunityPickAvailabilityTests(unittest.TestCase):
     def setUpClass(cls):
         cls.source = (ROOT / "app-2-views.js").read_text(encoding="utf-8")
 
-    def test_model_probabilities_are_the_market_quota_fallback(self):
+    def test_probabilities_come_from_bet_better_sides_not_market(self):
         self.assertIn("function communityPickProbs(m)", self.source)
-        self.assertIn(
-            "prediction.regulation_probs||prediction.adjusted||prediction.blend||prediction.model",
-            self.source,
-        )
+        self.assertIn("betbetterReadFor(m)", self.source)
+        self.assertIn("home?.model_pct!=null&&away?.model_pct!=null", self.source)
+        self.assertNotIn("function communityMarketProbs", self.source)
 
     def test_open_picks_do_not_require_a_market(self):
         eligible_filter = next(
@@ -33,10 +32,19 @@ class CommunityPickAvailabilityTests(unittest.TestCase):
         self.assertIn("firstKick+4*864e5", self.source)
         self.assertIn(".slice(0,40)", self.source)
 
-    def test_model_only_picks_explain_missing_market_benchmark(self):
-        self.assertIn("No bookmaker line is available", self.source)
-        self.assertIn("market unavailable", self.source)
-        self.assertIn("model pick pending", self.source)
+    def test_model_only_picks_are_labeled_live_and_not_certain(self):
+        self.assertIn("Bet Better live model", self.source)
+        self.assertIn("communityModelPctLabel(pct)", self.source)
+        self.assertIn("Bet Better probabilities pending", self.source)
+
+    def test_todays_call_is_removed(self):
+        self.assertNotIn("Today's call", self.source)
+        self.assertNotIn("btmChallenge", self.source)
+
+    def test_new_pick_snapshots_bet_better_side(self):
+        core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
+        self.assertIn("modelPick:read?.pick||null", core)
+        self.assertIn("Math.min(99.9,n)", core)
 
     def test_research_top_pick_stays_in_current_week(self):
         self.assertIn("const thisWeek=kickoff=>", self.source)

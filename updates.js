@@ -4,6 +4,17 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0921N",
+  "tag": "Fix",
+  "title": "Consistent welcome and community reads",
+  "items": [
+   "Matched the Upset Watch and weekly-preview accents on the welcome page, with an opaque card background.",
+   "Show Bet Better's live team probabilities in Community and remove Today's call.",
+   "Made the expanded both-sides read compact, with its caveat under help, and cap displayed model certainty at 99.9%.",
+   "Corrected Florida Atlantic and Georgia Southern logos and collapsed alias duplicates such as FAU versus UL Monroe."
+  ]
+ },
+ {
   "date": "Build 0921M",
   "tag": "Fix",
   "title": "Aligned power ratings and complete records",

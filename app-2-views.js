@@ -13,12 +13,13 @@ function btmGrade(){ // fold finished results into the record
 }
 function btmStats(db){
   const g=Object.values(db.picks||{}).filter(p=>p.result);
-  const you=g.filter(p=>p.you_hit).length, model=g.filter(p=>p.model_hit).length;
-  const beat=g.filter(p=>p.you_hit&&!p.model_hit).length; // you right, model wrong
+  const paired=g.filter(p=>p.modelPick);
+  const you=g.filter(p=>p.you_hit).length, model=paired.filter(p=>p.model_hit).length;
+  const beat=paired.filter(p=>p.you_hit&&!p.model_hit).length; // you right, model wrong
   // current streak (most recent graded backwards)
   const chron=g.slice().sort((a,b)=>b.ts-a.ts);let streak=0;
   for(const p of chron){if(p.you_hit)streak++;else break;}
-  return {n:g.length,you,model,beat,streak,
+  return {n:g.length,you,model,modelN:paired.length,beat,streak,
     pending:Object.values(db.picks||{}).filter(p=>!p.result).length};
 }
 function btmBadges(s,db){const out=[];
@@ -42,34 +43,14 @@ function btmBadges(s,db){const out=[];
   for(let i=0;i<byday.length;i++){const wk=byday.filter(p=>p.ts>=byday[i].ts&&p.ts<byday[i].ts+6048e5);
     if(wk.length>=5&&wk.every(p=>p.you_hit)){out.push(['Perfect week','5+ correct in one week']);break;}}
   return out;}
+function communityModelPctLabel(v){const n=Number(v);return v==null||!Number.isFinite(n)?'—':Math.max(0,Math.min(99.9,n)).toFixed(1)+'%'}
 function communityPickProbs(m){
-  const market=(m.markets||{})['1x2'];
-  if(market&&market.home_pct!=null)return {h:+market.home_pct,d:+(market.draw_pct||0),a:+market.away_pct,source:'market'};
-  const prediction=m.prediction||{};
-  const model=prediction.regulation_probs||prediction.adjusted||prediction.blend||prediction.model;
-  if(!model||model.h==null||model.a==null)return {h:null,d:null,a:null,source:'none'};
-  return {h:+model.h,d:+(model.d||0),a:+model.a,source:'model'};
-}
-function btmChallenge(db){
-  // a framed "where do you stand" prompt on the next unpicked upcoming match with a model+market split
-  const picked=new Set(Object.keys(db.picks||{}));
-  const cand=(DATA.matches||[]).filter(m=>isCommunityPickOpen(m)&&m.prediction&&communityPickProbs(m)&&!picked.has(String(m.id)));
-  if(!cand.length)return null;
-  // pick the one where model disagrees most with the market favorite (most interesting call)
-  const score=m=>{const x=communityPickProbs(m);if(x.source!=='market')return 0;const mk={h:x.h,d:x.d,a:x.a};
-    const mfav=Object.keys(mk).reduce((a,b)=>mk[b]>mk[a]?b:a);
-    return officialPrediction(m).side!==mfav?2:1;};
-  cand.sort((a,b)=>score(b)-score(a)||(a.kickoff||'').localeCompare(b.kickoff||''));
-  const m=cand[0],x=communityPickProbs(m),mk={h:x.h,d:x.d,a:x.a};
-  const mfav=Object.keys(mk).reduce((a,b)=>mk[b]>mk[a]?b:a);
-  const nm=s=>s==='h'?m.home.name:s==='a'?m.away.name:'a draw';
-  const official=officialPrediction(m),disagree=official.side!==mfav;
-  return {id:m.id,home:m.home.name,away:m.away.name,
-    line:x.source!=='market'
-      ?`The model likes <b>${esc(nm(official.side))}</b> at ${official.confidence}%. No bookmaker line is available, so this pick will be graded without the market benchmark.`
-      :disagree
-      ?`The model likes <b>${esc(nm(official.side))}</b>, but the market favors <b>${esc(nm(mfav))}</b>. Who's right?`
-      :`The model and market agree on <b>${esc(nm(official.side))}</b> (${official.confidence}%). Fade them or follow?`};
+  const read=typeof betbetterReadFor==='function'?betbetterReadFor(m):m.betbetter_pick;
+  const sides=read?.sides||[];
+  const home=sides.find(s=>s.is_home===true)||sides.find(s=>bbNameMatches(s.selection,m.home?.name));
+  const away=sides.find(s=>s.is_home===false)||sides.find(s=>bbNameMatches(s.selection,m.away?.name));
+  if(home?.model_pct!=null&&away?.model_pct!=null)return {h:+home.model_pct,d:0,a:+away.model_pct,source:'betbetter',read};
+  return {h:null,d:null,a:null,source:'none',read:null};
 }
 function pickBtm(id,side){if(submitPick(id,side)){}}
 function btmAnalytics(db){
@@ -147,20 +128,20 @@ function renderCommunity(){ensureHandle();const host=$('#view-community');const 
   const firstKick=eligible.length?kickMs(eligible[0]):0;
   // A missing market can expose an entire season at once. Show the next
   // fixture slate instead of rendering hundreds of model-only cards.
-  const open=eligible.filter(m=>communityPickProbs(m).source==='market'||kickMs(m)<=firstKick+4*864e5).slice(0,40);
+  const open=eligible.filter(m=>communityPickProbs(m).source==='betbetter'||kickMs(m)<=firstKick+4*864e5).slice(0,40);
   const picks=db.picks||{};
   let h=`<div class="vhead">Community &middot; ${esc(scopeName)}</div>
   <div class="banner"><b>Games open seven days before kickoff.</b> Pick any listed matchup before it starts. When available, the model and market are graded beside you.</div>
   ${renderWeeklyAwards()}
   <div class="status-grid">
    <div class="statuscard ${s.you>=s.model&&s.n?'ok':'info'}"><span class="slbl">Your record</span><div class="sval">${s.you}/${s.n||0}</div><div class="hint">${s.n?Math.round(s.you/s.n*100)+'% correct':'no graded picks yet'}</div></div>
-   <div class="statuscard info"><span class="slbl">Model record</span><div class="sval">${s.model}/${s.n||0}</div><div class="hint">the opponent you are chasing</div></div>
+   <div class="statuscard info"><span class="slbl">Model record</span><div class="sval">${s.model}/${s.modelN||0}</div><div class="hint">Bet Better picks locked alongside yours</div></div>
    <div class="statuscard ${s.beat?'ok':'info'}"><span class="slbl">Model beaten</span><div class="sval">${s.beat}</div><div class="hint">you right when the model was wrong</div></div>
    <div class="statuscard info"><span class="slbl">Streak</span><div class="sval">${s.streak}${s.streak>=3?' &#128293;':''}</div><div class="hint">${s.pending} awaiting result</div></div>
   </div>`;
   // head-to-head insight: how often you agreed with the model, and who won when you split
-  if(s.n>=3){
-    const g=Object.values(picks).filter(p=>p.result);
+  if(s.modelN>=3){
+    const g=Object.values(picks).filter(p=>p.result&&p.modelPick);
     const withModel=g.filter(p=>p.pick===p.modelPick).length;
     const split=g.filter(p=>p.pick!==p.modelPick);
     const splitWins=split.filter(p=>p.you_hit&&!p.model_hit).length;
@@ -185,20 +166,18 @@ function renderCommunity(){ensureHandle();const host=$('#view-community');const 
     h+=`<div class="seclbl" style="margin-top:20px">Seasons <span class="faintline" style="font-weight:400">· 4-week runs</span></div>`;
     h+=seasons.slice(0,6).map(s=>`<div class="seasonRow ${s.current?'live':''}"><span class="seasonName">${s.current?'Current season':'Season '+(s.n+1)}</span><span class="seasonRec">you ${s.you} · model ${s.model} <i>of ${s.total}</i></span>${s.current?'<span class="seasonTag">current</span>':(s.you>s.model?'<span class="seasonTag win">won</span>':s.you<s.model?'<span class="seasonTag loss">lost</span>':'<span class="seasonTag">tied</span>')}</div>`).join('');
   }
-  const ch=btmChallenge(db);
-  if(ch)h+=`<div class="challengeCard" onclick="openMatchModal('${ch.id}')"><div class="challengeTag">Today's call</div><div class="challengeMatch">${esc(ch.home)} v ${esc(ch.away)}</div><div class="challengeLine">${ch.line}</div><div class="challengeHint">tap to make your pick →</div></div>`;
   h+=`<div class="seclbl" style="margin-top:18px">Make your picks</div>`;
   if(!open.length)h+=`<div class="empty">No games are inside the seven-day pick window yet.<br><span class="faintline">They appear automatically one week before kickoff.</span></div>`;
-  open.forEach(m=>{const p=picks[m.id],x=communityPickProbs(m),official=officialPrediction(m);
+  open.forEach(m=>{const p=picks[m.id],x=communityPickProbs(m),read=x.read;
     const sideBtn=(side,label,pct)=>{const locked=p&&p.pick===side;const disabled=p?'disabled':'';
-      return `<button class="btmbtn ${locked?'locked':''}" ${disabled} onclick="pickBtm('${m.id}','${side}')">${esc(label)}${pct!=null?` <b>${pct}%</b>`:''}</button>`;};
+      return `<button class="btmbtn ${locked?'locked':''}" ${disabled} onclick="pickBtm('${m.id}','${side}')">${esc(label)}${pct!=null?` <b>${communityModelPctLabel(pct)}</b>`:''}</button>`;};
     h+=`<div class="btmcard"><div class="btmmatch"><span class="btmSide">${teamMark(m.home.name)}<span>${esc(m.home.name)}</span></span><span class="mvvs">vs</span><span class="btmSide away"><span>${esc(m.away.name)}</span>${teamMark(m.away.name)}</span></div>${p?`<div class="btmlocked">your pick: ${esc(p.pick==='h'?m.home.name:p.pick==='a'?m.away.name:'Draw')}</div>`:''}
       <div class="btmrow">${sideBtn('h',m.home.name||'Home',x.h)}${x.d>0?sideBtn('d',t('Draw'),x.d):''}${sideBtn('a',m.away.name||'Away',x.a)}</div>
-      <div class="btmmeta">${official.side?`model: <b>${esc(official.name)}</b> ${official.confidence??'—'}% &middot; `:'model pick pending &middot; '}${x.source==='model'?'model probabilities · market unavailable · ':x.source==='none'?'probabilities pending · ':''}${p?'locked — graded when final':'pick before kickoff to play'}</div></div>`;});
+      <div class="btmmeta">${read?`Bet Better live model: <b>${esc(read.pick_name||'')}</b> ${communityModelPctLabel(read.model_pct)} · may change before kickoff · `:'Bet Better probabilities pending · '}${p?'your pick locked — graded when final':'pick before kickoff to play'}</div></div>`;});
   const graded=Object.values(picks).filter(p=>p.result).sort((a,b)=>b.ts-a.ts);
   if(graded.length){h+=`<div class="seclbl" style="margin-top:18px">Your results</div>`+graded.slice(0,20).map(p=>{
     const nm=p.pick==='h'?p.code.h:p.pick==='a'?p.code.a:'Draw';
-    return `<div class="btmres ${p.you_hit?'hit':'miss'}"><span class="btmresTeams"><span class="btmSide">${teamMark(p.home)}<span>${esc(p.home)}</span></span><span class="mvvs">vs</span><span class="btmSide away"><span>${esc(p.away)}</span>${teamMark(p.away)}</span></span><span class="btmpick">you: ${esc(nm)} ${p.you_hit?'&#10003;':'&#10007;'}</span><span class="btmvs ${p.model_hit?'mok':'mno'}">model ${p.model_hit?'&#10003;':'&#10007;'}</span></div>`;}).join('');}
+    return `<div class="btmres ${p.you_hit?'hit':'miss'}"><span class="btmresTeams"><span class="btmSide">${teamMark(p.home)}<span>${esc(p.home)}</span></span><span class="mvvs">vs</span><span class="btmSide away"><span>${esc(p.away)}</span>${teamMark(p.away)}</span></span><span class="btmpick">you: ${esc(nm)} ${p.you_hit?'&#10003;':'&#10007;'}</span><span class="btmvs ${p.model_hit?'mok':'mno'}">model ${p.modelPick?(p.model_hit?'&#10003;':'&#10007;'):'—'}</span></div>`;}).join('');}
   // leaderboard section (only when configured)
   if(LEADERBOARD_URL){
     const hn=myHandle();
@@ -652,7 +631,7 @@ function modTopPick(){
     +`<div class="modPickTeam">${esc(p.pick_name||'')}</div>`
     +`<div class="modPickGame">${esc(m.home?.name||m.home||'')} v ${esc(m.away?.name||m.away||'')}</div>`
     +`<div class="modPickBar"><i style="width:${Math.max(0,Math.min(100,Number(p.model_pct)))}%"></i></div>`
-    +`<div class="modPickNums"><b>${Number(p.model_pct).toFixed(1)}%</b> model`
+    +`<div class="modPickNums"><b>${communityModelPctLabel(p.model_pct)}</b> model`
     +(Number.isFinite(Number(p.market_pct))?` · <b>${Number(p.market_pct).toFixed(1)}%</b> market`:'')
     +(Number.isFinite(gap)?` · gap ${gap>0?'+':''}${gap.toFixed(1)}`:'')+`</div>`
     +`<p class="modNote">Not an official pick — a live model read that keeps moving until kickoff, and it is not graded. A wider model-market gap has predicted worse results on this engine's graded college samples, so the gap is context, not a signal.</p></section>`;
@@ -934,7 +913,7 @@ function modUpsetOfWeek(){
 <div class="modPickTeam">${esc(p.selection||'')}${Number.isFinite(gap)?`<em class="upsetGap">+${gap.toFixed(1)}</em>`:''}</div>
 <div class="modPickGame">${esc(p.away||'')} at ${esc(p.home||'')}${status?` · ${esc(status)}`:''}</div>
 <div class="upsetBars">
-  <div><span>model</span><i style="width:${Math.max(2,Math.min(100,model))}%"></i><b>${Number.isFinite(model)?model.toFixed(1)+'%':'—'}</b></div>
+  <div><span>model</span><i style="width:${Math.max(2,Math.min(100,model))}%"></i><b>${communityModelPctLabel(model)}</b></div>
   <div class="mkt"><span>market</span><i style="width:${Math.max(2,Math.min(100,market))}%"></i><b>${Number.isFinite(market)?market.toFixed(1)+'%':'—'}</b></div>
 </div></div>`;
   };

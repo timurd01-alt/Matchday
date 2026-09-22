@@ -1,5 +1,11 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-09-21 (Community now displays the two model probabilities
+already present in the Bet Better handoff and snapshots its pick when a user
+locks theirs. Fixture alias deduplication and two corrected local school-logo
+mappings add no provider, endpoint, raw payload, redistribution field, or ESPN
+content.)
+
 Reviewed: 2026-09-21 (conference and power-rating records now reconcile
 completed games already present in the published Bet Better handoff, including
 non-conference results. This adds no provider, endpoint, raw payload, new

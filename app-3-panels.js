@@ -101,6 +101,21 @@ function _freshestUpdated(current,incoming){
   if(!Number.isFinite(a))return incoming;
   return b>a?incoming:current;
 }
+function sameCfbSchool(a,b){
+  if(bbNameMatches(a,b))return true;
+  const x=teamLogoCandidates(a)[0],y=teamLogoCandidates(b)[0];
+  return !!x&&x===y;
+}
+function sameCfbFixture(a,b){
+  const ax=a.home?.name||a.home,bx=b.home?.name||b.home;
+  const ay=a.away?.name||a.away,by=b.away?.name||b.away;
+  const sameTeams=(sameCfbSchool(ax,bx)&&sameCfbSchool(ay,by))
+    ||(sameCfbSchool(ax,by)&&sameCfbSchool(ay,bx));
+  if(!sameTeams)return false;
+  const ta=Date.parse(a.kickoff||''),tb=Date.parse(b.kickoff||'');
+  return Number.isFinite(ta)&&Number.isFinite(tb)?Math.abs(ta-tb)<=36*3600e3
+    :String(a.kickoff||'').slice(0,10)===String(b.kickoff||'').slice(0,10);
+}
 function applyCurrentCfbSnapshot(payload){
   const comp=String(payload?.comp_key||'').toUpperCase();
   if(comp!=='NCAAF'||typeof MATCHDAY_CFB_SNAPSHOT==='undefined')return payload;
@@ -123,8 +138,7 @@ function applyCurrentCfbSnapshot(payload){
       const day=String(f.kickoff||'').slice(0,10);
       const key=`${teamKey(f.home)}|${teamKey(f.away)}|${day}`;
       if(have.has(key))return;
-      if((payload.matches||[]).some(m=>String(m.kickoff||'').slice(0,10)===day
-        &&bbNameMatches(m.home?.name,f.home)&&bbNameMatches(m.away?.name,f.away)))return;
+      if([...payload.matches||[],...added].some(m=>sameCfbFixture(m,f)))return;
       have.add(key);
       added.push({id:`bb-${f.event_id}`,_comp:'NCAAF',competition:f.competition||'NCAAF',
         kickoff:f.kickoff,status:'UPCOMING',
@@ -204,6 +218,16 @@ function applyCurrentCfbSnapshot(payload){
       if(recovered.length)payload.matches=(payload.matches||[]).concat(recovered);
     }
   }
+  // A provider may call one school FAU and another Florida Atlantic. Collapse
+  // those same-kickoff aliases after both fixture and result recovery, while
+  // preserving the provider row (and any final score) over a thin handoff row.
+  const unique=[];
+  (payload.matches||[]).forEach(m=>{
+    const index=unique.findIndex(other=>sameCfbFixture(other,m));
+    if(index<0){unique.push(m);return}
+    if(m.status==='FINISHED'&&unique[index].status!=='FINISHED')unique[index]=m;
+  });
+  payload.matches=unique;
   // This season's advanced profile on every fixture, from the engine's own
   // play-by-play. It replaces a previous-season CFBD file that stopped
   // refreshing, which is why the expanded view mostly said "unavailable".
@@ -1281,7 +1305,7 @@ function betbetterNoReadPanel(){
     +`the opponent-adjusted ratings for both teams are in the matchup table below.</div></section>`;
 }
 function _bbNum(v){const n=Number(v);return Number.isFinite(n)?n:null;}
-function _bbPct(v,d=1){const n=_bbNum(v);return n==null?'\u2014':n.toFixed(d)+'%';}
+function _bbPct(v,d=1){const n=_bbNum(v);return n==null?'\u2014':Math.min(99.9,n).toFixed(d)+'%';}
 function _bbStamp(v){const t=Date.parse(v||'');return Number.isFinite(t)?new Date(t).toLocaleString():'';}
 function betbetterModelRead(m,p){
   const model=_bbNum(p.model_pct);
@@ -1289,20 +1313,18 @@ function betbetterModelRead(m,p){
   const when=_bbStamp(p.generated_at);
   // Both sides, not the pick alone. A 54.5% pick is a near coin-flip, and the
   // other side's number is the only thing on the panel that says so.
-  const rows=(p.sides||[]).map(s=>`<tr><td class="bbKey">${esc(s.selection||'')}</td>`
-    +`<td>${_bbPct(s.model_pct)}</td></tr>`).join('');
+  const rows=(p.sides||[]).map(s=>`<div class="readSide"><span>${esc(s.selection||'')}</span>`
+    +`<strong>${_bbPct(s.model_pct)}</strong></div>`).join('');
   const sideBox=rows
-    ?`<div class="analystBox"><div class="analystBoxTitle">Both sides</div>`
-      +`<table class="bbTable"><thead><tr><th></th><th>Model probability</th></tr></thead>`
-      +`<tbody>${rows}</tbody></table></div>`
+    ?`<div class="readSides" aria-label="Both teams' win chances">${rows}</div>`
     :'';
   return `<section class="analystPanel"><div class="analystTop"><div class="analystTitle">Live model read</div>`
-    +`<details class="readHelp"><summary aria-label="About this forecast">?</summary><p>${esc(engine)}${when?` · ${esc(when)}`:''}${p.model_version?` · ${esc(p.model_version)}`:''}. This read may change before kickoff and is not a locked, graded pick.</p></details></div>`
+    +`<details class="readHelp"><summary aria-label="About this forecast">?</summary><p>${esc(engine)}${when?` · ${esc(when)}`:''}${p.model_version?` · ${esc(p.model_version)}`:''}. ${esc(p.integrity_note||'This read may change before kickoff and is not a locked, graded pick.')}</p></details></div>`
     +`<div class="analystHero"><div class="analystMain"><div class="analystLabel">Favored team</div>`
     +`<div class="analystPick">${esc(p.pick_name||'No pick')}</div>`
     +`<p class="analystNote">Live forecast · not locked yet</p></div>`
     +`<div class="analystConfidence"><b>${_bbPct(model)}</b><span>chance to win</span></div></div>`
-    +`<details class="readBreakdown"><summary>See both teams' chances</summary><div class="analystGrid">${sideBox}</div>${p.integrity_note?`<p class="analystSummary">${esc(p.integrity_note)}</p>`:''}</details></section>`;
+    +`<details class="readBreakdown"><summary>See both teams' chances</summary>${sideBox}</details></section>`;
 }
 function matchupWhyPanel(m,p){
   const h=betbetterTeamRow(m?.home?.name),a=betbetterTeamRow(m?.away?.name);

@@ -9,6 +9,20 @@ ROOT = pathlib.Path(__file__).resolve().parent
 
 
 class CurrentCfbSnapshotTests(unittest.TestCase):
+    def test_school_marks_do_not_fall_through_to_parent_school(self):
+        core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
+        for school, asset in (("Florida Atlantic Owls", "floridaAtlantic.png"),
+                              ("Georgia Southern Eagles", "georgiaSouthern.png"),
+                              ("Georgia State Panthers", "georgiaState.png")):
+            self.assertIn(f"'{school}':'{asset}'", core)
+
+    def test_fixture_aliases_are_deduplicated_by_school_and_kickoff(self):
+        panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
+        self.assertIn("function sameCfbFixture(a,b)", panels)
+        self.assertIn("teamLogoCandidates(a)[0]", panels)
+        self.assertIn("Math.abs(ta-tb)<=36*3600e3", panels)
+        self.assertIn("payload.matches=unique", panels)
+
     def test_rankings_keep_table_cells_aligned_on_narrow_screens(self):
         panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
         styles = (ROOT / "styles.css").read_text(encoding="utf-8")

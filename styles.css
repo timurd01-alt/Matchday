@@ -2704,6 +2704,14 @@ html{color-scheme:dark}
 .welcomeCoverage span{background:#171d24;color:var(--text);border-color:#3a454e}
 .welcomeCoverage span:first-child{background:#163027;border-color:#34674e;color:#7be1a7}
 .welcomeDevNote{background:#141f20;border-color:#34674e}
+.welcomeUpset{border-color:rgba(58,209,122,.35);border-left-color:var(--signal);background:#14231f}
+.wuTop,.wuTop .wuGap{color:var(--signal)}
+.wuBars i{background:var(--signal)}
+.readSides{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}
+.readSide{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;background:var(--panel2);border:1px solid var(--line);border-radius:10px;min-width:0}
+.readSide span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text);font-size:var(--fs-sm)}
+.readSide strong{font-family:var(--mono);font-size:var(--fs-lg);white-space:nowrap;color:var(--text)}
+@media(max-width:640px){.readSides{grid-template-columns:1fr}}
 /* Keep the power-rating row in one table grid at narrow widths. */
 .powerTable td.pollMove{display:table-cell;width:52px;min-width:0;text-align:center}
 .powerTable th:nth-child(2){text-align:center}
