@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0922H",
+  "tag": "Fix",
+  "title": "Restore welcome-page scrolling",
+  "items": [
+   "Lift the site's global body scroll lock while the welcome introduction is visible, so visitors can scroll into Matchday even if Enter does not respond."
+  ]
+ },
+ {
   "date": "Build 0922G",
   "tag": "Fix",
   "title": "Make the welcome page non-blocking",

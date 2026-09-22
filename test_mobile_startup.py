@@ -27,7 +27,8 @@ class MobileStartupTests(unittest.TestCase):
     def test_welcome_is_not_a_fullscreen_scroll_trap(self):
         css = (ROOT / "styles.css").read_text(encoding="utf-8")
         self.assertIn('.welcomeGate:not([hidden]){position:relative;inset:auto', css)
-        self.assertIn('.welcomeOpen .app{visibility:visible;display:block}', css)
+        self.assertIn('body.welcomeOpen{height:auto;min-height:100vh;overflow-y:auto}', css)
+        self.assertIn('.welcomeOpen .app{visibility:visible;display:grid}', css)
 
     def test_large_scripts_do_not_block_html_parsing(self):
         for filename in (

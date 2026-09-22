@@ -2753,5 +2753,6 @@ html{color-scheme:dark}
 .welcomeGate:not([hidden]) .welcomeScene,
 .welcomeGate:not([hidden]) .welcomeBlobs,
 .welcomeGate:not([hidden]) .welcomeNoise{position:absolute}
-.welcomeOpen .app{visibility:visible;display:block}
-@media(max-width:760px){.welcomeOpen .app{display:block}}
+body.welcomeOpen{height:auto;min-height:100vh;overflow-y:auto}
+.welcomeOpen .app{visibility:visible;display:grid}
+@media(max-width:760px){.welcomeOpen .app{display:grid}}
