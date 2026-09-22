@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0921L",
+  "tag": "Fix",
+  "title": "Solid welcome controls",
+  "items": [
+   "Made the sport labels and How this works panel opaque so stadium dots no longer show through the text."
+  ]
+ },
+ {
   "date": "Build 0921K",
   "tag": "Update",
   "title": "Cleaner ranking and community rows",

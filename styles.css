@@ -2700,3 +2700,7 @@ html{color-scheme:dark}
   .welcomeBrand h1{font-size:clamp(2.7rem,12vw,4.2rem)}
   .welcomeEnter{justify-content:space-between}
 }
+/* Keep stadium dots behind the welcome controls, not visible through them. */
+.welcomeCoverage span{background:#171d24;color:var(--text);border-color:#3a454e}
+.welcomeCoverage span:first-child{background:#163027;border-color:#34674e;color:#7be1a7}
+.welcomeDevNote{background:#141f20;border-color:#34674e}
