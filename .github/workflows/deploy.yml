@@ -453,7 +453,9 @@ jobs:
           fi
           cp data.json _site/
           for data_file in data_ncaaf.json data_ncaam.json; do
-            [ ! -f "$data_file" ] || cp "$data_file" _site/
+            comp="${data_file#data_}"
+            comp="${comp%.json}"
+            [ ! -f "$data_file" ] || python build_public_payload.py "$data_file" "_site/$data_file" "$comp"
           done
           # Failure tracebacks stay in the private Actions cache/log. Publishing
           # internal paths and provider error bodies to the public site creates

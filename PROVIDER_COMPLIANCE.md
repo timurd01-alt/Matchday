@@ -1,5 +1,10 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-09-22 (the Pages artifact now omits duplicate scorecard evidence
+snapshots and duplicate NCAAF Bet Better match attachments that the browser
+does not read, while retaining the displayed summaries and shared handoff.
+No provider, endpoint, visible data claim, license, or ESPN content changed.)
+
 Reviewed: 2026-09-22 (conference cards now explain already-published ratings
 with top and bottom team names; the matchup "Why" panel summarizes existing
 team metrics without introducing new data. Community chooses the latest

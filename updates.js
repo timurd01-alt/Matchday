@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0922C",
+  "tag": "Performance",
+  "title": "Smaller mobile data payloads",
+  "items": [
+   "Remove duplicated scorecard evidence snapshots from the browser payload while retaining the displayed scorecard summary.",
+   "Avoid publishing NCAAF Bet Better picks twice when the same handoff is already loaded by the page.",
+   "Minify public competition JSON to reduce download and parsing work on phones."
+  ]
+ },
+ {
   "date": "Build 0922B",
   "tag": "Fix",
   "title": "Reliable entry and faster mobile startup",
