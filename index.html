@@ -72,13 +72,23 @@ window.matchdayEnterNow=function(targetView){
     if(waiting&&waiting.textContent.trim()==='Loading…')waiting.innerHTML='The page is taking too long to load.<br><button class="actionbtn" type="button" onclick="location.reload()">Retry loading</button>';
   },15000);
 };
+// A capture listener keeps entry working in browsers that fail to dispatch an
+// inline handler after composited welcome-page effects are promoted to layers.
+document.addEventListener('click',function(event){
+  var trigger=event.target&&event.target.closest&&event.target.closest('.welcomeEnter');
+  if(!trigger)return;
+  event.preventDefault();
+  event.stopPropagation();
+  window.matchdayEnterNow();
+},true);
 </script>
 </head>
 <body>
 <section class="welcomeGate" id="welcomeGate" aria-labelledby="welcomeTitle">
+  <button class="welcomeEnter welcomeEnterFast" type="button" onclick="matchdayEnterNow()">Enter Matchday Terminal <span aria-hidden="true">→</span></button>
   <div class="welcomeBlobs" aria-hidden="true"></div>
   <div class="welcomeNoise" aria-hidden="true"></div>
-  <div class="welcomeScene" aria-hidden="true">
+  <script type="text/plain" id="retiredWelcomeScene" aria-hidden="true">
     <svg viewBox="0 0 1600 660" preserveAspectRatio="xMidYMax slice" focusable="false">
       <defs>
         <linearGradient id="wsSky" x1="0" y1="0" x2="0" y2="1">
@@ -147,7 +157,7 @@ window.matchdayEnterNow=function(targetView){
         <path d="M-40 596 Q800 566 1640 596" fill="none" stroke="#dfffee" stroke-opacity=".22" stroke-width="2.5"/>
       </g>
     </svg>
-  </div>
+  </script>
   <div class="welcomeShell">
     <div class="welcomeBrand">
       <div class="welcomeEyebrow"><span class="welcomeDot"></span> MATCHDAY TERMINAL <span class="welcomeBeta">EARLY ACCESS</span></div>
@@ -164,7 +174,6 @@ window.matchdayEnterNow=function(targetView){
         graded afterwards and never rewritten.</p>
       </details>
       <div class="welcomeActions">
-        <button class="welcomeEnter" type="button" onclick="matchdayEnterNow()">Enter Matchday Terminal <span aria-hidden="true">→</span></button>
         <span>No account required · no ads</span>
         <a class="welcomeSocialLink" href="https://x.com/timurknowsball" rel="me noopener" target="_blank">Follow @timurknowsball on X <span aria-hidden="true">↗</span></a>
         <a class="welcomeLegalLink" href="legal.html">Legal, privacy &amp; data sources</a>

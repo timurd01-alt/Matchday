@@ -4,6 +4,17 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0922M",
+  "tag": "Fix",
+  "title": "Make site entry immediate and clickable",
+  "items": [
+   "Parse and display Enter Matchday Terminal before any optional welcome content so phones can enter immediately.",
+   "Retire the thousands of rendered stadium SVG nodes that kept the browser's main thread busy and delayed taps.",
+   "Keep the entry action fixed above every decorative and preview layer on mobile and desktop.",
+   "Make the animated button sheen click-through and add a capture-phase entry fallback for browsers with composited-layer pointer issues."
+  ]
+ },
+ {
   "date": "Build 0922L",
   "tag": "Fix",
   "title": "Keep mobile entry visible",

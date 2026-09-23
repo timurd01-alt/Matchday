@@ -20,15 +20,18 @@ class MobileStartupTests(unittest.TestCase):
             self.html.index("window.matchdayEnterNow=function"),
             self.html.index('src="app-1-core.js'),
         )
-        self.assertIn(
-            '<button class="welcomeEnter" type="button" onclick="matchdayEnterNow()">',
-            self.html,
-        )
+        fast_button = '<button class="welcomeEnter welcomeEnterFast" type="button" onclick="matchdayEnterNow()">'
+        self.assertIn(fast_button, self.html)
+        self.assertLess(self.html.index(fast_button), self.html.index('id="retiredWelcomeScene"'))
+        self.assertIn('<script type="text/plain" id="retiredWelcomeScene"', self.html)
+        self.assertNotIn('<div class="welcomeScene"', self.html)
         self.assertNotIn('class="welcomeEnter" href=', self.html)
         self.assertIn("if(gate)gate.hidden=true", self.html)
         self.assertIn("window.scrollTo(0,0)", self.html)
         self.assertIn("document.documentElement.scrollTop=0", self.html)
         self.assertIn("'welcomeOpen','welcomeExiting','navSheetOpen'", self.html)
+        self.assertIn("document.addEventListener('click',function(event)", self.html)
+        self.assertIn("event.target.closest('.welcomeEnter')", self.html)
         self.assertIn('<section class="welcomeGate" id="welcomeGate" aria-labelledby="welcomeTitle">', self.html)
         self.assertNotIn('id="welcomeGate" aria-labelledby="welcomeTitle" hidden', self.html)
         self.assertNotIn('id="welcomeGate" role="dialog"', self.html)
@@ -46,6 +49,11 @@ class MobileStartupTests(unittest.TestCase):
         self.assertIn('.welcomeOpen .app{visibility:visible;display:grid}', css)
         self.assertIn('min-height:52px', css)
         self.assertIn('touch-action:manipulation', css)
+        self.assertIn('.welcomeActions{position:relative;z-index:20;pointer-events:auto}', css)
+        self.assertIn('.welcomeEnter{position:relative;z-index:21;', css)
+        self.assertIn('.welcomeEnter::after{content:"";position:absolute;inset:0;pointer-events:none', css)
+        self.assertIn('.welcomeEnterFast{position:fixed;', css)
+        self.assertIn('z-index:1200', css)
         self.assertIn('.welcomeGate:not([hidden]) .welcomeActions,', css)
         self.assertIn('animation:none!important;opacity:1!important;transform:none!important', css)
 

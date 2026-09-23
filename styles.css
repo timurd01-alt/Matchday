@@ -1717,8 +1717,11 @@ body.modalOpen{overflow:hidden}.matchModal{position:fixed;inset:0;z-index:99;dis
 .welcomeGate:not([hidden]) .welcomeProof>div:nth-child(1){animation-delay:.42s}
 .welcomeGate:not([hidden]) .welcomeProof>div:nth-child(2){animation-delay:.5s}
 .welcomeGate:not([hidden]) .welcomeProof>div:nth-child(3){animation-delay:.58s}
-.welcomeEnter{position:relative;overflow:hidden}
-.welcomeEnter::after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent 35%,rgba(255,255,255,.4) 50%,transparent 65%);transform:translateX(-120%);animation:ctaShimmer 3.4s ease-in-out .9s infinite}
+.welcomeActions{position:relative;z-index:20;pointer-events:auto}
+.welcomeEnter{position:relative;z-index:21;overflow:hidden;pointer-events:auto;isolation:isolate}
+.welcomeEnter::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(120deg,transparent 35%,rgba(255,255,255,.4) 50%,transparent 65%);transform:translateX(-120%);animation:ctaShimmer 3.4s ease-in-out .9s infinite}
+.welcomeEnterFast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:1200;transform:translateX(-50%);width:min(450px,calc(100vw - 32px));min-height:56px;justify-content:space-between}
+.welcomeEnterFast:hover{transform:translate(-50%,-2px)}
 @keyframes ctaShimmer{0%,55%{transform:translateX(-120%)}85%,100%{transform:translateX(120%)}}
 .welcomeDot{animation:pulseDot 2.2s ease-in-out infinite}
 @keyframes pulseDot{0%,100%{opacity:1;box-shadow:0 0 16px var(--signal)}50%{opacity:.55;box-shadow:0 0 6px var(--signal)}}
