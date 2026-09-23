@@ -2374,14 +2374,17 @@ html{color-scheme:dark}
   background:radial-gradient(70% 72% at 20% 42%,rgba(5,9,14,.92),rgba(5,9,14,.58) 46%,rgba(5,9,14,.08) 76%),
              radial-gradient(44% 34% at 16% 86%,rgba(5,9,14,.86),rgba(5,9,14,.4) 52%,transparent 76%),
              linear-gradient(180deg,rgba(5,9,14,.78),rgba(5,9,14,.24) 24%,transparent 42%)}
-.wsCrowd{animation:wsCrowdShift 11s ease-in-out infinite}
+/* The crowd does not move at all. Breathing the whole .wsCrowd group's opacity
+   was one animation rather than 48, but it is the group that holds all 1,621
+   crowd nodes: animating its opacity forces the entire crowd onto its own
+   compositor layer, to be rasterised and re-composited for as long as the
+   welcome page is open. A painted crowd reads as a crowd standing still. */
 .wsLamps{filter:drop-shadow(0 0 7px rgba(216,255,233,.9))}
 .wsTowerL,.wsTowerR{animation:wsFlicker 7.5s ease-in-out infinite}
 .wsTowerR{animation-delay:-3.1s}
 .wsBeams{animation:wsFlicker 9s ease-in-out -1.5s infinite}
-@keyframes wsCrowdShift{0%,100%{opacity:1}50%{opacity:.86}}
 @keyframes wsFlicker{0%,100%{opacity:1}44%{opacity:.88}52%{opacity:1.02}}
-@media(prefers-reduced-motion:reduce){.wsCrowd,.wsTowerL,.wsTowerR,.wsBeams{animation:none}}
+@media(prefers-reduced-motion:reduce){.wsTowerL,.wsTowerR,.wsBeams{animation:none}}
 /* Widen and crop rather than shrink: a stadium scaled to a phone's width is a
    thin strip of texture, while a crop of the bowl still reads as a stadium. */
 @media(max-width:900px){.welcomeScene svg{width:190%;left:-45%}
@@ -2452,8 +2455,7 @@ html{color-scheme:dark}
 
    The movement was a few tenths of a pixel behind a scrim, at the back of a
    scene nobody is looking at while they read the headline. The crowd still
-   reads as a crowd; .wsCrowd's one slow opacity breath below is the only life
-   the bowl needs. */
+   reads as a crowd standing still. */
 
 /* ---- welcome gate: match the type to the card -----------------------------
    Widening the card without touching its type left 9px labels (--fs-3xs) on a

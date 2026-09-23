@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0922Q",
+  "tag": "Fix",
+  "title": "Hold the stadium crowd completely still",
+  "items": [
+   "Remove the last crowd animation. Breathing the whole crowd group's opacity was a single animation rather than forty-eight, but it is the group that holds all 1,621 crowd nodes, so animating it forced the entire crowd onto its own compositor layer to be re-composited for as long as the welcome page stayed open. The crowd is now painted once and never touched again.",
+   "Five animations now run on the welcome page, none of them on the crowd: the two floodlight towers, the light beams, the signal dot and the shimmer on the entry button."
+  ]
+ },
+ {
   "date": "Build 0922P",
   "tag": "Fix",
   "title": "Stop the welcome page animating itself to death",
