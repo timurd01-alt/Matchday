@@ -1,107 +1,182 @@
 {
   "poll_name": "AP Top 25",
   "source": "ESPN scoreboard published AP rank",
-  "fetched_on": "2026-09-20",
+  "fetched_on": "2026-09-23",
   "rankings": [
     {
       "rank": 1,
-      "name": "Texas Longhorns"
+      "name": "Texas Longhorns",
+      "previous_rank": 1,
+      "movement": 0,
+      "record": "3-0"
     },
     {
       "rank": 2,
-      "name": "Georgia Bulldogs"
+      "name": "Georgia Bulldogs",
+      "previous_rank": 2,
+      "movement": 0,
+      "record": "3-0"
     },
     {
       "rank": 3,
-      "name": "Notre Dame Fighting Irish"
+      "name": "Notre Dame Fighting Irish",
+      "previous_rank": 3,
+      "movement": 0,
+      "record": "3-0"
     },
     {
       "rank": 4,
-      "name": "Indiana Hoosiers"
+      "name": "Ole Miss Rebels",
+      "previous_rank": 8,
+      "movement": 4,
+      "record": "3-0"
     },
     {
       "rank": 5,
-      "name": "Miami Hurricanes"
+      "name": "Indiana Hoosiers",
+      "previous_rank": 4,
+      "movement": -1,
+      "record": "3-0"
     },
     {
       "rank": 6,
-      "name": "Ohio State Buckeyes"
+      "name": "Miami Hurricanes",
+      "previous_rank": 5,
+      "movement": -1,
+      "record": "3-0"
     },
     {
       "rank": 7,
-      "name": "LSU Tigers"
+      "name": "Ohio State Buckeyes",
+      "previous_rank": 6,
+      "movement": -1,
+      "record": "2-1"
     },
     {
       "rank": 8,
-      "name": "Ole Miss Rebels"
+      "name": "Alabama Crimson Tide",
+      "previous_rank": 10,
+      "movement": 2,
+      "record": "3-0"
     },
     {
       "rank": 9,
-      "name": "Texas A&M Aggies"
+      "name": "BYU Cougars",
+      "previous_rank": 11,
+      "movement": 2,
+      "record": "3-0"
     },
     {
       "rank": 10,
-      "name": "Alabama Crimson Tide"
+      "name": "LSU Tigers",
+      "previous_rank": 7,
+      "movement": -3,
+      "record": "2-1"
     },
     {
       "rank": 11,
-      "name": "BYU Cougars"
+      "name": "Texas Tech Red Raiders",
+      "previous_rank": 13,
+      "movement": 2,
+      "record": "3-0"
     },
     {
       "rank": 12,
-      "name": "USC Trojans"
+      "name": "USC Trojans",
+      "previous_rank": 12,
+      "movement": 0,
+      "record": "4-0"
     },
     {
       "rank": 13,
-      "name": "Texas Tech Red Raiders"
+      "name": "Penn State Nittany Lions",
+      "previous_rank": 14,
+      "movement": 1,
+      "record": "3-0"
     },
     {
       "rank": 14,
-      "name": "Penn State Nittany Lions"
+      "name": "Tennessee Volunteers",
+      "previous_rank": 15,
+      "movement": 1,
+      "record": "3-0"
     },
     {
       "rank": 15,
-      "name": "Tennessee Volunteers"
+      "name": "Utah Utes",
+      "previous_rank": 17,
+      "movement": 2,
+      "record": "3-0"
     },
     {
       "rank": 16,
-      "name": "SMU Mustangs"
+      "name": "Louisville Cardinals",
+      "previous_rank": 23,
+      "movement": 7,
+      "record": "2-1"
     },
     {
       "rank": 17,
-      "name": "Utah Utes"
+      "name": "Iowa Hawkeyes",
+      "previous_rank": 18,
+      "movement": 1,
+      "record": "3-0"
     },
     {
       "rank": 18,
-      "name": "Iowa Hawkeyes"
+      "name": "Michigan Wolverines",
+      "previous_rank": 19,
+      "movement": 1,
+      "record": "3-0"
     },
     {
       "rank": 19,
-      "name": "Michigan Wolverines"
+      "name": "Missouri Tigers",
+      "previous_rank": 20,
+      "movement": 1,
+      "record": "3-0"
     },
     {
       "rank": 20,
-      "name": "Missouri Tigers"
+      "name": "Oregon Ducks",
+      "previous_rank": 21,
+      "movement": 1,
+      "record": "2-1"
     },
     {
       "rank": 21,
-      "name": "Oregon Ducks"
+      "name": "Florida Gators",
+      "previous_rank": null,
+      "movement": null,
+      "record": "3-0"
     },
     {
       "rank": 22,
-      "name": "Houston Cougars"
+      "name": "SMU Mustangs",
+      "previous_rank": 16,
+      "movement": -6,
+      "record": "2-1"
     },
     {
       "rank": 23,
-      "name": "Louisville Cardinals"
+      "name": "Texas A&M Aggies",
+      "previous_rank": 9,
+      "movement": -14,
+      "record": "2-1"
     },
     {
       "rank": 24,
-      "name": "Oklahoma Sooners"
+      "name": "Mississippi State Bulldogs",
+      "previous_rank": null,
+      "movement": null,
+      "record": "3-0"
     },
     {
       "rank": 25,
-      "name": "Virginia Cavaliers"
+      "name": "Houston Cougars",
+      "previous_rank": 22,
+      "movement": -3,
+      "record": "2-1"
     }
   ]
 }

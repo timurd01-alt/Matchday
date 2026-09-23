@@ -295,7 +295,14 @@ def build(path: pathlib.Path = SNAPSHOT) -> str:
         poll_payload["rankings"].append({
             **row,
             "pos": row["rank"],
-            "record": rated.get("record") or "—",
+            # The AP publishes each ranked team's record alongside the rank,
+            # and that is the record belonging to this table. The model
+            # ranking's copy is frozen at the moment its own poll was
+            # published, so the week's results are missing from it: on
+            # 23 September six ranked teams read a game short, with LSU shown
+            # at 2-0 after losing. Fall back to the model's only when the AP
+            # sends none.
+            "record": row.get("record") or rated.get("record") or "—",
             "rating": rated.get("rating"),
             "external_rank": rated.get("rank"),
             "code": "",
