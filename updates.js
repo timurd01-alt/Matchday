@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0923E",
+  "tag": "Fix",
+  "title": "Tidier community picks",
+  "items": [
+   "Each game in Community Picks is now two aligned rows, away team over home team, with logos and names in one column.",
+   "Community and model percentages are capped at 99.9%; nothing shows as 100%."
+  ]
+ },
+ {
   "date": "Build 0923D",
   "tag": "Feature",
   "title": "Community, rebuilt around people",

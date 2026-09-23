@@ -161,6 +161,8 @@ function commSplit(m,picks){
   const c={...(COMM_CONSENSUS[m.id]||{h:0,d:0,a:0})},mine=picks[m.id];
   const n=(c.h||0)+(c.d||0)+(c.a||0);return {h:c.h||0,d:c.d||0,a:c.a||0,n,mine};
 }
+// Never 100%: a pick is a forecast, and a unanimous split is still not certain.
+function commPct(v){const n=Number(v)||0;return (n>=99.95?99.9:n<=0.05&&n>0?0.1:n).toFixed(1).replace(/\.0$/,'')+'%'}
 function commShort(m,side){return side==='h'?(m.home.code||m.home.name):side==='a'?(m.away.code||m.away.name):t('Draw')}
 function commAgo(ms){const s=Math.max(0,(Date.now()-ms)/1000);return s<3600?`${Math.max(1,Math.round(s/60))}m ago`:s<86400?`${Math.round(s/3600)}h ago`:`${Math.round(s/86400)}d ago`}
 function renderCommunity(fromFetch){ensureHandle();const host=$('#view-community');const db=btmScoped(btmGrade());const s=btmStats(db);
@@ -185,13 +187,13 @@ function renderCommunity(fromFetch){ensureHandle();const host=$('#view-community
     shown.forEach(m=>{
       const x=communityPickProbs(m),read=x.read,sp=commSplit(m,picks),p=picks[m.id],dr=draft[m.id];
       const lead=sp.n?(['h','a','d'].reduce((a,b)=>sp[b]>sp[a]?b:a,'h')):null;
-      const community=sp.n?`${Math.round(sp[lead]/sp.n*100)}% ${esc(commShort(m,lead))}`:'<i>no picks yet</i>';
-      const model=read?`${communityModelPctLabel(read.model_pct).replace(/\.\d%$/,'%')} ${esc(bbNameMatches(read.pick_name,m.home.name)?commShort(m,'h'):commShort(m,'a'))}`:'<i title="Model probabilities pending">—</i>';
+      const community=sp.n?`${commPct(sp[lead]/sp.n*100)} ${esc(commShort(m,lead))}`:'<i>no picks yet</i>';
+      const model=read?`${communityModelPctLabel(read.model_pct)} ${esc(bbNameMatches(read.pick_name,m.home.name)?commShort(m,'h'):commShort(m,'a'))}`:'<i title="Model probabilities pending">—</i>';
       const mine=dr?`<b class="commMine">${esc(commShort(m,dr))}${p?' (change)':''}</b>`:p?`<b class="commMine locked">${esc(commShort(m,p.pick))} ✓</b>`:'<span class="commMine none">Pick</span>';
       const isOpen=COMM_OPEN===String(m.id);
-      h+=`<button type="button" class="commRow commGame${isOpen?' open':''}" role="row" aria-expanded="${isOpen}" onclick="toggleCommGame('${esc(String(m.id))}')"><span role="cell" class="commGameName"><b><span class="commTeams">${teamMark(m.away.name)}${esc(m.away.name)} at ${teamMark(m.home.name)}${esc(m.home.name)}</span></b><small>${esc(kickIn(m.kickoff))}</small></span><span role="cell">${community}</span><span role="cell">${model}</span><span role="cell">${mine}</span></button>`;
+      h+=`<button type="button" class="commRow commGame${isOpen?' open':''}" role="row" aria-expanded="${isOpen}" onclick="toggleCommGame('${esc(String(m.id))}')"><span role="cell" class="commGameName"><span class="commTeams"><span class="commTeam"><i class="commAt"></i>${teamMark(m.away.name)}<b>${esc(m.away.name)}</b></span><span class="commTeam"><i class="commAt">@</i>${teamMark(m.home.name)}<b>${esc(m.home.name)}</b></span></span><small>${esc(kickIn(m.kickoff))}</small></span><span role="cell">${community}</span><span role="cell">${model}</span><span role="cell">${mine}</span></button>`;
       if(isOpen){
-        const bar=(side,label)=>{const pct=sp.n?Math.round(sp[side]/sp.n*100):0;return `<div class="commBar"><span>${esc(label)}</span><i><em style="width:${pct}%"></em></i><b>${pct}%</b></div>`};
+        const bar=(side,label)=>{const pct=sp.n?sp[side]/sp.n*100:0;return `<div class="commBar"><span>${esc(label)}</span><i><em style="width:${pct}%"></em></i><b>${commPct(pct)}</b></div>`};
         const btn=(side,label)=>{const chosen=dr?dr===side:p?.pick===side;const saved=!dr&&p?.pick===side;return `<button type="button" class="btmbtn${saved?' locked':''}${dr===side?' drafted':''}" aria-pressed="${chosen}" onclick="pickBtm('${esc(String(m.id))}','${side}')">${esc(label)}</button>`};
         h+=`<div class="commDetail" role="row"><div role="cell"><div class="commBars">${bar('a',m.away.name)}${bar('h',m.home.name)}<small>${sp.n} pick${sp.n===1?'':'s'} from the community</small></div>
           <div class="btmrow">${btn('a',m.away.name)}${btn('h',m.home.name)}</div>

@@ -2873,3 +2873,14 @@ body.welcomeOpen{height:auto;min-height:100vh;overflow-y:auto}
 @media(max-width:760px){.commRow{grid-template-columns:minmax(0,1.6fr) 1fr .8fr}.commRow>span:nth-child(3){display:none}.commSubmitBar{bottom:72px}}
 .commTeams{display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap}.commTeams .teamMark{width:22px;height:22px;flex-basis:22px}.commTeams .teamMark img{width:18px;height:18px}
 .commMore{margin-top:12px}
+.commTeams{display:grid;gap:6px;flex-wrap:nowrap}
+.commTeam{display:grid;grid-template-columns:24px minmax(0,1fr);gap:8px;align-items:center;min-width:0}
+.commTeam b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.commTeam .teamMark{width:24px;height:24px;flex-basis:24px}.commTeam .teamMark img{width:20px;height:20px}
+.commAt{margin-right:5px;color:var(--faint);font:var(--fw-bold) var(--fs-2xs)/1 var(--mono);font-style:normal;text-transform:uppercase}
+.commGameName small{padding-left:32px}
+.commTeams{gap:4px}
+.commTeam{grid-template-columns:12px 24px minmax(0,1fr)}
+.commAt{margin:0;text-align:center}
+.commGameName small{padding-left:52px}
+.commGame>span:nth-child(2),.commGame>span:nth-child(3){overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
