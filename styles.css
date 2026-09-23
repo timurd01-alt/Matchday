@@ -2367,18 +2367,26 @@ html{color-scheme:dark}
    contrast from the scrim below, not from starving the scene of detail. */
 .welcomeScene{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
 .welcomeScene svg{position:absolute;left:0;bottom:0;width:100%;height:auto;display:block}
-/* The scrim is what makes the headline readable over the bowl. Weighted to the
-   left, where the copy is, and to the top, where the sky would otherwise sit
-   right behind the first line of type. */
+/* The scrim is what makes the headline readable over the bowl. It is centred,
+   because the copy is: the shell was a two-column layout with the brand on the
+   left when this was written, and it has since become a single centred column
+   at every width. The scrim stayed weighted to 20% -- so the pool of darkness
+   sat beside the type rather than under it, and the scene's brightest object,
+   the scoreboard, showed through the headline and the sport chips. */
 .welcomeScene::after{content:"";position:absolute;inset:0;
-  background:radial-gradient(70% 72% at 20% 42%,rgba(5,9,14,.92),rgba(5,9,14,.58) 46%,rgba(5,9,14,.08) 76%),
-             radial-gradient(44% 34% at 16% 86%,rgba(5,9,14,.86),rgba(5,9,14,.4) 52%,transparent 76%),
-             linear-gradient(180deg,rgba(5,9,14,.78),rgba(5,9,14,.24) 24%,transparent 42%)}
+  background:radial-gradient(78% 68% at 50% 40%,rgba(5,9,14,.94),rgba(5,9,14,.66) 48%,rgba(5,9,14,.12) 78%),
+             linear-gradient(180deg,rgba(5,9,14,.8),rgba(5,9,14,.28) 26%,transparent 46%)}
 /* The crowd does not move at all. Breathing the whole .wsCrowd group's opacity
    was one animation rather than 48, but it is the group that holds all 1,621
    crowd nodes: animating its opacity forces the entire crowd onto its own
    compositor layer, to be rasterised and re-composited for as long as the
    welcome page is open. A painted crowd reads as a crowd standing still. */
+/* The scoreboard sits at the centre of the bowl, which is exactly where the
+   headline, the lead and the sport chips now sit. Lit panel, green segments and
+   a pale highlight made it the brightest thing in the scene and it read as a
+   rectangle behind the type. Held well back, it is stadium structure rather
+   than a competing display. */
+.wsBoard{opacity:.28}
 .wsLamps{filter:drop-shadow(0 0 7px rgba(216,255,233,.9))}
 .wsTowerL,.wsTowerR{animation:wsFlicker 7.5s ease-in-out infinite}
 .wsTowerR{animation-delay:-3.1s}
