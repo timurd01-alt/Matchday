@@ -684,16 +684,32 @@ function renderScore(){
   const hit=Number(rec.hit_rate_pct),exp=Number(rec.expected_hit_rate_pct);
   const ci=Array.isArray(rec.confidence_interval_pct)?rec.confidence_interval_pct:null;
   const vm=sc.versus_market||{},beat=vm.beat_market_pct==null?NaN:Number(vm.beat_market_pct),priced=vm.graded_priced_selections==null?NaN:Number(vm.graded_priced_selections);
+  // Beating the price is a pairwise comparison against one other forecaster,
+  // so its baseline is a coin flip. The page used to say it had none and leave
+  // the column half empty, which left the headline number unreadable: 49.7%
+  // means nothing until you know that 50 is the line. The interval is the part
+  // that actually settles it -- it straddles 50 here, so the honest reading is
+  // "no separation shown yet" rather than "losing to the market".
+  const bm=vm.beat_market||null;
+  const bmExp=bm&&Number.isFinite(Number(bm.expected_hit_rate_pct))?Number(bm.expected_hit_rate_pct):NaN;
+  const bmCi=bm&&Array.isArray(bm.confidence_interval_pct)?bm.confidence_interval_pct:null;
   const record=`<section class="scOverview"><div class="scRecord"><span class="slbl">Public record</span>`
     +`<strong>${esc(rec.wins??'—')}<span class="scDash">–</span>${esc(rec.losses??'—')}</strong>`
     +`<span>${esc(rec.picks??'—')} graded picks</span></div>`
     +`<div class="scMetrics"><div class="scMetricHead"><span></span><span>Model</span><span>Against the price</span></div>`
     +`<div class="scMetricRow"><span>Result</span><strong>${Number.isFinite(hit)?hit.toFixed(1)+'%':'—'}</strong><strong>${Number.isFinite(beat)?beat.toFixed(1)+'%':'—'}</strong></div>`
-    +`<div class="scMetricRow"><span>Expected</span><strong>${Number.isFinite(exp)?exp.toFixed(1)+'%':'—'}</strong><span title="The engine publishes no expected baseline for beating the price">—</span></div>`
-    +`<div class="scMetricRow"><span>Difference</span><strong>${_scGap(rec.calibration_gap_points)}</strong><span title="The engine publishes no expected baseline for beating the price">—</span></div>`
-    +`<div class="scMetricFoot"><span>Model: wins / graded picks · Against the price: beat the locked market price${Number.isFinite(priced)?` on ${priced} priced selections`:''}.</span>`
-    +`${ci?`<span>Model hit rate 95% CI ${_scNum(ci[0])}–${_scNum(ci[1])}%.</span>`:''}`
-    +`<span>Beating the price has no expected baseline to compare against, so those two cells stay blank.</span></div></div></section>`;
+    +`<div class="scMetricRow"><span>Expected</span><strong>${Number.isFinite(exp)?exp.toFixed(1)+'%':'—'}</strong>`
+    +`<strong${Number.isFinite(bmExp)?' title="Two forecasters compared on the same games are a coin flip at 50%"':''}>${Number.isFinite(bmExp)?bmExp.toFixed(1)+'%':'—'}</strong></div>`
+    +`<div class="scMetricRow"><span>Difference</span><strong>${_scGap(rec.calibration_gap_points)}</strong>`
+    +`<strong>${bm?_scGap(bm.calibration_gap_points):'—'}</strong></div>`
+    +`<div class="scMetricFoot"><span>Model: wins / graded picks${Number.isFinite(rec.picks)?'':''} · Against the price: beat the locked market price${Number.isFinite(priced)?` on ${priced} priced selections`:''}`
+    +`${bm&&bm.wins!=null?`, ${bm.wins}&ndash;${bm.losses}${bm.ties?` with ${bm.ties} tied`:''}`:''}.</span>`
+    +`${ci?`<span>Model hit rate 95% CI ${_scNum(ci[0])}–${_scNum(ci[1])}%.`:'<span>'}`
+    +`${bmCi?` Against the price 95% CI ${_scNum(bmCi[0])}–${_scNum(bmCi[1])}%.`:''}</span>`
+    +`<span>${bmCi&&Number(bmCi[0])<50&&Number(bmCi[1])>50
+        ? 'That interval spans 50%, so on this sample the model and the market are not yet separable — neither is shown to be the better forecaster.'
+        : 'Beating the price is a coin flip at 50%: above it the model is the better forecaster of the two, below it the market is.'}</span>`
+    +`</div></div></section>`;
   const pending=Number(totals.awaiting_result)||0;
   const note=`<p class="edisc scCountNote">${esc(totals.graded_selections??'—')} graded selections across ${esc(totals.locked_events??'—')} locked cards. A card can carry more than one selection.`
     +`${pending?` ${pending} selections await a final score.`:''}</p>`;
