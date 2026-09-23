@@ -57,12 +57,13 @@
 // screen must never trap a visitor when a script or data request stalls.
 window.matchdayEnterNow=function(targetView){
   window.MATCHDAY_ENTERED=true;
-  window.MATCHDAY_SHOW_WELCOME=false;
   try{sessionStorage.setItem('matchday.welcome.entered','1');localStorage.setItem('matchday.heroSeen','1')}catch(e){}
   var gate=document.getElementById('welcomeGate');if(gate)gate.hidden=true;
-  document.body.classList.remove('welcomeOpen','welcomeExiting');
+  document.body.classList.remove('welcomeOpen','welcomeExiting','navSheetOpen');
+  var nav=document.getElementById('nav');if(nav){nav.classList.remove('navSheet');var more=nav.querySelector('.navMore');if(more)more.setAttribute('aria-expanded','false')}
   var app=document.getElementById('app');if(app){app.classList.remove('appRevealing');app.style.visibility='visible'}
   var home=document.getElementById('view-home');if(home)home.style.display='block';
+  try{window.scrollTo(0,0);document.documentElement.scrollTop=0;document.body.scrollTop=0}catch(e){}
   window.setTimeout(function(){
     try{if(targetView&&typeof setView==='function')setView(targetView);else if(typeof renderCurrent==='function')renderCurrent()}catch(e){console.error('Matchday view failed to render',e)}
   },0);
@@ -74,7 +75,7 @@ window.matchdayEnterNow=function(targetView){
 </script>
 </head>
 <body>
-<section class="welcomeGate" id="welcomeGate" aria-labelledby="welcomeTitle" hidden>
+<section class="welcomeGate" id="welcomeGate" aria-labelledby="welcomeTitle">
   <div class="welcomeBlobs" aria-hidden="true"></div>
   <div class="welcomeNoise" aria-hidden="true"></div>
   <div class="welcomeScene" aria-hidden="true">

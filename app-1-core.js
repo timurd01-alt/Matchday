@@ -452,18 +452,18 @@ function _v6UpsetClass(score,triggered){score=Number(score)||0;if(triggered)retu
 let HERO_FIRST_VISIT=false;try{HERO_FIRST_VISIT=!localStorage.getItem('matchday.heroVisited');if(HERO_FIRST_VISIT)localStorage.setItem('matchday.heroVisited','1')}catch(e){}
 function heroSeen(){try{return localStorage.getItem('matchday.heroSeen')==='1'||!HERO_FIRST_VISIT}catch(e){return false}}
 function heroDismiss(){try{localStorage.setItem('matchday.heroSeen','1')}catch(e){};renderCurrent();}
-function welcomeDismissed(){return !window.MATCHDAY_SHOW_WELCOME}
+function welcomeDismissed(){if(window.MATCHDAY_ENTERED)return true;try{return sessionStorage.getItem('matchday.welcome.entered')==='1'}catch(e){return false}}
 // The Matchday wordmark in the top bar takes a fan back to the welcome page.
-function openWelcome(){window.MATCHDAY_ENTERED=false;window.MATCHDAY_SHOW_WELCOME=true;renderWelcome();window.scrollTo?.(0,0);document.getElementById('welcomeGate')?.focus?.()}
+function openWelcome(){window.MATCHDAY_ENTERED=false;try{sessionStorage.removeItem('matchday.welcome.entered')}catch(e){}renderWelcome();window.scrollTo?.(0,0);document.getElementById('welcomeGate')?.focus?.()}
 function enterMatchday(targetView='',startWithTour=false){
   window.MATCHDAY_ENTERED=true;
-  window.MATCHDAY_SHOW_WELCOME=false;
   try{sessionStorage.setItem('matchday.welcome.entered','1');localStorage.setItem('matchday.heroSeen','1')}catch(e){}
   const gate=$('#welcomeGate'),app=$('#app');
   const finish=()=>{
     if(gate){gate.hidden=true;gate.classList.remove('welcomeLeaving')}
     document.body.classList.remove('welcomeOpen','welcomeExiting');
     if(app)app.classList.remove('appRevealing');
+    window.scrollTo?.(0,0);
     if(targetView&&typeof setView==='function')setView(targetView);else renderCurrent();
     const main=document.querySelector('.content');if(main)main.focus?.();
     if(startWithTour)setTimeout(startTour,500);

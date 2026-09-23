@@ -26,7 +26,18 @@ class MobileStartupTests(unittest.TestCase):
         )
         self.assertNotIn('class="welcomeEnter" href=', self.html)
         self.assertIn("if(gate)gate.hidden=true", self.html)
+        self.assertIn("window.scrollTo(0,0)", self.html)
+        self.assertIn("document.documentElement.scrollTop=0", self.html)
+        self.assertIn("'welcomeOpen','welcomeExiting','navSheetOpen'", self.html)
+        self.assertIn('<section class="welcomeGate" id="welcomeGate" aria-labelledby="welcomeTitle">', self.html)
+        self.assertNotIn('id="welcomeGate" aria-labelledby="welcomeTitle" hidden', self.html)
         self.assertNotIn('id="welcomeGate" role="dialog"', self.html)
+
+    def test_welcome_uses_session_entry_state(self):
+        core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
+        self.assertIn("sessionStorage.getItem('matchday.welcome.entered')==='1'", core)
+        self.assertIn("sessionStorage.removeItem('matchday.welcome.entered')", core)
+        self.assertNotIn("MATCHDAY_SHOW_WELCOME", core)
 
     def test_welcome_is_not_a_fullscreen_scroll_trap(self):
         css = (ROOT / "styles.css").read_text(encoding="utf-8")

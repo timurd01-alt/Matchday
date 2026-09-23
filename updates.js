@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0922K",
+  "tag": "Fix",
+  "title": "Restore mobile entry and navigation",
+  "items": [
+   "Show the welcome page on a visitor's first entry instead of initializing it as hidden.",
+   "Reset the mobile viewport and navigation sheet when entering so the app cannot remain scrolled below or stuck behind the welcome layout.",
+   "Remember entry only for the current browser session, while keeping the Matchday wordmark available to reopen the welcome page."
+  ]
+ },
+ {
   "date": "Build 0922J",
   "tag": "Fix",
   "title": "Make mobile entry reliable",
