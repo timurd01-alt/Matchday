@@ -4,6 +4,18 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0922P",
+  "tag": "Fix",
+  "title": "Stop the welcome page animating itself to death",
+  "items": [
+   "Hold the crowd still. Each row of the stadium was split into three sets on staggered delays, which left 48 separate infinite animations running for the life of the page, every one of them hinting will-change and so claiming its own compositor layer -- 48 layers holding 1,581 circles between them, re-rendered continuously for a few tenths of a pixel of movement behind a scrim.",
+   "Hold the preview card's lit border still. Spinning it animated an angle that a conic gradient and two masks are derived from, so the card's whole border was repainted on the main thread every frame, none of it composited.",
+   "Hold the two background colour washes still. They are 560px and 480px discs under a 90px blur, and they drifted on an animated scale; a blurred surface cannot be composited while it scales, so both blurs were re-rendered every frame.",
+   "Pulse the signal dot with opacity rather than box-shadow, which was repainting it every frame.",
+   "Six animations now run on the welcome page instead of fifty-seven, and none of them force a repaint. The page looks the same."
+  ]
+ },
+ {
   "date": "Build 0922O",
   "tag": "Fix",
   "title": "Let the welcome page scroll, and detach the site from it",

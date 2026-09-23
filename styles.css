@@ -1702,10 +1702,12 @@ body.modalOpen{overflow:hidden}.matchModal{position:fixed;inset:0;z-index:99;dis
 .welcomeShell{z-index:1}
 .welcomeBlobs{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
 .welcomeBlobs::before,.welcomeBlobs::after{content:"";position:absolute;border-radius:50%;filter:blur(90px);opacity:.32}
-.welcomeBlobs::before{width:min(560px,60vw);height:min(560px,60vw);background:var(--signal);top:-140px;left:-100px;animation:blobFloatA 19s ease-in-out infinite}
-.welcomeBlobs::after{width:min(480px,55vw);height:min(480px,55vw);background:var(--home);bottom:-150px;right:-80px;animation:blobFloatB 23s ease-in-out infinite}
-@keyframes blobFloatA{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(70px,50px) scale(1.18)}}
-@keyframes blobFloatB{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-60px,-40px) scale(1.12)}}
+/* Static. These are 560px and 480px discs under a 90px blur, and they used to
+   drift on an animated scale -- scaling a blurred surface cannot be composited,
+   so the browser re-rendered both blurs every frame for the life of the page.
+   They are a colour wash behind a stadium; holding them still loses nothing. */
+.welcomeBlobs::before{width:min(560px,60vw);height:min(560px,60vw);background:var(--signal);top:-140px;left:-100px;transform:translate(35px,25px) scale(1.09)}
+.welcomeBlobs::after{width:min(480px,55vw);height:min(480px,55vw);background:var(--home);bottom:-150px;right:-80px;transform:translate(-30px,-20px) scale(1.06)}
 /* A tight stagger, not a slow one. Each element holds at opacity 0 until its
    delay elapses, so a sequence that ran to 1.03s meant the welcome page was
    still visibly assembling itself a second after it had finished loading --
@@ -1730,7 +1732,9 @@ body.modalOpen{overflow:hidden}.matchModal{position:fixed;inset:0;z-index:99;dis
    from the page. */
 @keyframes ctaShimmer{0%,55%{transform:translateX(-120%)}85%,100%{transform:translateX(120%)}}
 .welcomeDot{animation:pulseDot 2.2s ease-in-out infinite}
-@keyframes pulseDot{0%,100%{opacity:1;box-shadow:0 0 16px var(--signal)}50%{opacity:.55;box-shadow:0 0 6px var(--signal)}}
+/* Opacity only. Animating box-shadow repaints the dot every frame instead of
+   compositing it; the pulse looks the same. */
+@keyframes pulseDot{0%,100%{opacity:1}50%{opacity:.55}}
 @keyframes carouselIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
 .carouselFade{animation:carouselIn .4s ease-out}
 @media(prefers-reduced-motion:reduce){
@@ -1931,7 +1935,11 @@ html{color-scheme:dark}
   -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
   mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
   -webkit-mask-composite:xor;mask-composite:exclude;
-  animation:welcomeSpin 9s linear infinite;opacity:.9;
+  /* Held at a fixed angle. Spinning it animated a custom angle property that
+     a conic-gradient and two composited masks are derived from, so the card's
+     whole border was re-painted on the main thread every frame -- none of it
+     composited. The lit edge reads the same standing still. */
+  --welcome-spin:128deg;opacity:.9;
 }
 .welcomePreview::after{
   content:"";position:absolute;inset:12% -18% -22% -18%;z-index:-2;pointer-events:none;
@@ -2433,14 +2441,19 @@ html{color-scheme:dark}
 @media(max-width:760px){.welcomePreview{padding:18px}.welcomeNext{padding:16px}
   .welcomeReadPick{flex-direction:column;align-items:flex-start;gap:2px}}
 
-/* The crowd: each row is split into three interleaved sets on staggered
-   delays, so what moves is people shifting in their seats rather than a row of
-   dots sliding in unison. Transform and opacity only -- no layout, no paint. */
-.wsFans{animation:wsFans 3.6s ease-in-out infinite;animation-delay:var(--d,0s);will-change:transform,opacity}
-@keyframes wsFans{0%,100%{transform:translateY(0);opacity:1}
-  38%{transform:translateY(-2.4px);opacity:.72}
-  64%{transform:translateY(1.4px);opacity:1}}
-@media(prefers-reduced-motion:reduce){.wsFans{animation:none}}
+/* The crowd sits still.
+
+   Each row used to be split into three interleaved sets on staggered delays,
+   which meant 48 separate infinite animations, each carrying
+   will-change:transform,opacity. That hint promotes every one of those groups
+   to its own compositor layer, so the browser held 48 layers containing 1,581
+   circles between them and re-rastered them for the life of the page. It is
+   the single most expensive thing the welcome page did.
+
+   The movement was a few tenths of a pixel behind a scrim, at the back of a
+   scene nobody is looking at while they read the headline. The crowd still
+   reads as a crowd; .wsCrowd's one slow opacity breath below is the only life
+   the bowl needs. */
 
 /* ---- welcome gate: match the type to the card -----------------------------
    Widening the card without touching its type left 9px labels (--fs-3xs) on a
