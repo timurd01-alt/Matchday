@@ -1139,35 +1139,76 @@ function probabilitySparkline(m){
   const delta=Math.round(vals[vals.length-1]-vals[0]),cls=delta>0?'up':delta<0?'down':'flat';
   return `<span class="probTrend ${cls}" title="Model probability movement: ${delta>0?'+':''}${delta} points"><svg viewBox="0 0 56 20" aria-hidden="true"><polyline points="${coords}"/></svg><b>${delta>0?'+':''}${delta}</b></span>`;
 }
-function _alertEnabled(type){if(type==='live'||type==='upset')return false;const map={soon:'alertsKickoff',model:'alertsModel',market:'alertsModel',data:'alertsData'};return SETTINGS[map[type]]!==false}
-function _alertIcon(type){return ({soon:'&#9203;',model:'&#8597;',market:'&#8644;',data:'&#9888;'})[type]||'&#8226;'}
-function _alertKey(a){return `${a.t}:${a.id||'app'}:${a.txt}`}
+// The bell reports what changed for a reader: a new ratings edition, a new AP
+// poll, this week's picks, results, and starred teams. Site-maintenance notes
+// (quota reserves, fixture counts) belong on the QA page, not here -- they sat
+// in the bell every visit and said nothing a reader could use.
+//
+// Every alert carries a stable `key` that never includes relative text such as
+// "3h ago". The old key was the alert's text, so the clock alone minted a new,
+// unread alert on each refresh.
+function _alertEnabled(type){if(type==='live')return false;const map={soon:'alertsKickoff',final:'alertsKickoff',model:'alertsModel',market:'alertsModel',data:'alertsData'};return map[type]?SETTINGS[map[type]]!==false:true}
+function _alertIcon(type){return ({soon:'&#9203;',final:'&#10003;',model:'&#8597;',market:'&#8644;',data:'&#9888;',pick:'&#9733;',result:'&#9873;',ratings:'&#9776;',poll:'&#9650;',ballot:'&#9998;',gotw:'&#9737;'})[type]||'&#8226;'}
+function _alertLabel(type){return ({soon:'Kickoff',final:'Final',model:'Model moved',market:'Model vs market',data:'Data',pick:'Upset watch',result:'Upset watch graded',ratings:'Power ratings',poll:'AP Top 25',ballot:'TimurKnowsBall Ballot',gotw:'Game of the week'})[type]||type}
+function _alertKey(a){return a.key||`${a.t}:${a.id||'app'}`}
 function _alertSeen(){return new Set(_alertReadJSON('matchday.alertsSeen',[]))}
+function _alertGlobal(name){try{return Function('return typeof '+name+'!=="undefined"?'+name+':null')()}catch(e){return null}}
+function _alertMatchId(home,away){const m=(DATA.matches||[]).find(x=>x.home?.name===home&&x.away?.name===away);return m?m.id:''}
+function _alertDay(iso){const v=String(iso||''),d=new Date(v.length===10?v+'T12:00:00':v);return Number.isFinite(d.getTime())?d.toLocaleDateString(undefined,{month:'short',day:'numeric'}):''}
+function _alertPct(v){const n=Number(v);return Number.isFinite(n)?n.toFixed(1)+'%':'—'}
+// The weekly college content lives in the football snapshot, so it is shown
+// only while the football board is open.
+function _collegeAlerts(){
+  const out=[];
+  if(/ncaam/.test(String(typeof DATA_FILE!=='undefined'?DATA_FILE:'')))return out;
+  const upset=_alertGlobal('MATCHDAY_BETBETTER_UPSET');
+  if(upset?.available&&upset.recorded){
+    (upset.picks&&upset.picks.length?upset.picks:[upset.pick]).filter(Boolean).forEach(p=>{
+      const id=_alertMatchId(p.home,p.away),slot=p.slot||1,other=p.selection===p.home?p.away:p.home;
+      if(p.result)out.push({t:'result',key:`result:${upset.week}:${slot}`,id,view:'home',txt:`${p.selection} ${/win|hit|won/i.test(p.result)?'won':'lost'} against ${other}, ${p.away_score??''}–${p.home_score??''}. The model had ${_alertPct(p.model_pct)}, the market ${_alertPct(p.market_pct)}.`});
+      else out.push({t:'pick',key:`pick:${upset.week}:${slot}`,id,view:'home',txt:`${p.selection} over ${other} (${_alertDay(p.kickoff)}). Model ${_alertPct(p.model_pct)} vs market ${_alertPct(p.market_pct)}.`});
+    });
+  }
+  const gotw=_alertGlobal('MATCHDAY_BETBETTER_GAME_OF_THE_WEEK');
+  if(gotw?.available&&gotw.game&&Date.parse(gotw.game.kickoff)>Date.now()){const g=gotw.game,rk=t=>t?.rank?` (#${t.rank})`:'';out.push({t:'gotw',key:`gotw:${g.event_id}`,id:_alertMatchId(g.home?.team,g.away?.team),view:'home',txt:`${g.away?.team}${rk(g.away)} at ${g.home?.team}${rk(g.home)}, ${_alertDay(g.kickoff)}.`})}
+  const ratings=_alertGlobal('MATCHDAY_CFB_RANKINGS');
+  if(ratings?.available&&ratings.published_on&&ratings.rankings?.length)out.push({t:'ratings',key:`ratings:${ratings.published_on}`,view:'groups',txt:`New edition, ${_alertDay(ratings.published_on)}. Top three: ${ratings.rankings.slice(0,3).map(r=>r.name).join(', ')}.`});
+  const ap=_alertGlobal('MATCHDAY_CFB_AP_POLL');
+  if(ap?.fetched_on&&ap.rankings?.length){
+    const hasHistory=ap.rankings.some(r=>r.previous_rank!=null);
+    const riser=ap.rankings.filter(r=>Number(r.movement)>0).sort((x,y)=>y.movement-x.movement)[0];
+    const newcomers=hasHistory?ap.rankings.filter(r=>r.previous_rank==null):[];
+    let txt=`No. 1 ${ap.rankings[0].name}.`;
+    if(riser)txt+=` Biggest riser: ${riser.name}, up ${riser.movement} to No. ${riser.rank}.`;
+    if(newcomers.length)txt+=` New: ${newcomers.slice(0,3).map(r=>r.name).join(', ')}.`;
+    out.push({t:'poll',key:`poll:${ap.rankings.map(r=>r.name).join('|')}`,view:'groups',txt});
+  }
+  const ballot=_alertGlobal('MATCHDAY_BETBETTER_BALLOT');
+  if(ballot?.available&&ballot.published_on)out.push({t:'ballot',key:`ballot:${ballot.published_on}`,view:'groups',txt:`New ballot, ${_alertDay(ballot.published_on)}.`});
+  return out;
+}
 function computeSignalAlerts(){
   const out=[],now=Date.now(),watchedNames=new Set(wlLoad()),updated=Date.parse(DATA.updated||'');
-  if(_alertEnabled('data')&&Number.isFinite(updated)&&(now-updated)>180*60000)out.push({t:'data',txt:`Match data was last updated ${ago(DATA.updated)}.`,id:''});
-  if(_alertEnabled('data')&&Array.isArray(DATA.quota_blocked_providers)&&DATA.quota_blocked_providers.length)out.push({t:'data',txt:`Some data is limited this run — ${DATA.quota_blocked_providers.join(', ')} hit its safety reserve, so a few signals may be missing even though the timestamp looks fresh.`,id:'quota'});
-  if(_alertEnabled('data')&&DATA.fixture_count_check?.anomaly)out.push({t:'data',txt:`Fewer fixtures than usual this run (${DATA.fixture_count_check.current} vs. a recent average of ${DATA.fixture_count_check.trailing_avg}) — a provider may be returning a partial slate.`,id:'fixture-count'});
+  // Only a genuinely stale site is worth a reader's attention. Keyed by the
+  // update it describes, so it is read once rather than once per refresh.
+  if(_alertEnabled('data')&&Number.isFinite(updated)&&(now-updated)>24*3600000)out.push({t:'data',key:`data:stale:${DATA.updated}`,txt:`Game data has not refreshed since ${_alertDay(DATA.updated)}. Predictions shown may be out of date.`});
   (DATA.matches||[]).forEach(m=>{
     const watched=watchedNames.has(m.home?.name)||watchedNames.has(m.away?.name)||isFavoriteMatch(m);
     if(!watched)return;
-    if(_alertEnabled('live')&&m.status==='LIVE')out.push({t:'live',txt:`${m.home?.code||m.home?.name} ${m.score?.home??0}-${m.score?.away??0} ${m.away?.code||m.away?.name} is live.`,id:m.id});
-    if(_alertEnabled('soon')&&m.status==='UPCOMING'&&m.kickoff){const mins=Math.round((new Date(m.kickoff)-now)/60000);if(mins>0&&mins<=90)out.push({t:'soon',txt:`${m.home?.name} v ${m.away?.name} starts in ${mins}m.`,id:m.id});}
+    if(_alertEnabled('soon')&&m.status==='UPCOMING'&&m.kickoff){const mins=Math.round((new Date(m.kickoff)-now)/60000);if(mins>0&&mins<=180)out.push({t:'soon',key:`soon:${m.id}`,id:m.id,txt:`${m.away?.name} at ${m.home?.name} kicks off in ${mins>=90?Math.round(mins/60)+'h':mins+'m'}.`});}
+    if(_alertEnabled('final')&&m.status==='FINISHED'&&m.kickoff&&now-Date.parse(m.kickoff)<48*3600000&&m.score&&m.score.home!=null)out.push({t:'final',key:`final:${m.id}`,id:m.id,txt:`${m.away?.name} ${m.score.away}, ${m.home?.name} ${m.score.home}.`});
     // Both alerts describe the engine's read, because that is the only read the
-    // site publishes. The gap alert deliberately states the two numbers rather
-    // than ranking on the gap: the engine's own caveat says a wider gap has
-    // predicted worse results, so it is context, never a call to act.
+    // site publishes. The gap alert states the two numbers rather than ranking
+    // on the gap: a wider gap has predicted worse results, so it is context.
     const change=probabilityMovement(m),bb=typeof betbetterReadFor==='function'?betbetterReadFor(m):null;
-    if(_alertEnabled('model')&&change&&bb)out.push({t:'model',txt:`${bb.pick_name||'Model read'} moved ${change.delta>0?'+':''}${change.delta} probability points.`,id:m.id});
-    if(_alertEnabled('market')&&bb){
-      const gap=Number(bb.edge_points);
-      if(Number.isFinite(gap)&&Math.abs(gap)>=8)out.push({t:'market',txt:`Model ${modelPctLabel(bb.model_pct)} and market ${Number(bb.market_pct).toFixed(1)}% on ${bb.pick_name}.`,id:m.id});
-    }
+    if(_alertEnabled('model')&&change&&bb)out.push({t:'model',key:`model:${m.id}:${bb.pick_name}:${change.delta}`,id:m.id,txt:`${bb.pick_name||'Model read'} moved ${change.delta>0?'+':''}${change.delta} probability points.`});
+    if(_alertEnabled('market')&&bb){const gap=Number(bb.edge_points);if(Number.isFinite(gap)&&Math.abs(gap)>=8)out.push({t:'market',key:`market:${m.id}:${bb.pick_name}`,id:m.id,txt:`Model ${modelPctLabel(bb.model_pct)} and market ${Number(bb.market_pct).toFixed(1)}% on ${bb.pick_name}.`});}
   });
-  return out.filter((a,i,list)=>list.findIndex(b=>_alertKey(b)===_alertKey(a))===i).slice(0,12);
+  out.push(..._collegeAlerts());
+  return out.filter((a,i,list)=>list.findIndex(b=>_alertKey(b)===_alertKey(a))===i).slice(0,14);
 }
-function openAlertMatch(id){toggleAlertCenter(false);if(id)openMatchModal(id)}
-function markAlertsRead(alerts=computeSignalAlerts()){try{localStorage.setItem('matchday.alertsSeen',JSON.stringify(alerts.map(_alertKey).slice(-80)))}catch(e){}renderSignalAlerts()}
+function openAlertMatch(id,view){toggleAlertCenter(false);if(id&&(BYID[id]||(DATA.matches||[]).some(m=>String(m.id)===String(id)))){openMatchModal(id);return}if(view)setView(view)}
+function markAlertsRead(alerts=computeSignalAlerts(),render=true){try{const keys=alerts.map(_alertKey),kept=[..._alertSeen()].filter(k=>!keys.includes(k));localStorage.setItem('matchday.alertsSeen',JSON.stringify(kept.concat(keys).slice(-200)))}catch(e){}if(render)renderSignalAlerts()}
 // Phone nav. Nineteen destinations in a 375px bar meant four were reachable and
 // the labels sat at 8px; the rest were behind a horizontal scroll nobody finds.
 // The bar now carries four primary views plus this trigger, and everything else
@@ -1194,14 +1235,14 @@ function toggleAlertCenter(force){
   const panel=$('#alertCenter'),bell=$('#alertBell');if(!panel)return;
   const open=force===undefined?panel.hidden:!!force;panel.hidden=!open;
   if(bell){bell.setAttribute('aria-expanded',String(open));bell.setAttribute('aria-label',open?'Close alerts':'Open alerts')}
-  if(open){markAlertsRead(computeSignalAlerts());panel.querySelector('.alertCenterClose')?.focus()}
+  if(open){renderSignalAlerts();markAlertsRead(computeSignalAlerts(),false);const c=$('#alertCount');if(c)c.hidden=true;panel.querySelector('.alertCenterClose')?.focus()}else renderSignalAlerts()
 }
 function renderSignalAlerts(){
   const bar=$('#alertBar'),panel=$('#alertCenter'),bell=$('#alertBell'),count=$('#alertCount'),alerts=computeSignalAlerts(),seen=_alertSeen();
   const unseen=alerts.filter(a=>!seen.has(_alertKey(a))).length;
   if(count){count.textContent=unseen;count.hidden=!unseen}bell?.classList.toggle('hasAlerts',!!alerts.length);bell?.classList.toggle('hasUnseen',unseen>0);
-  if(bar){const urgent=alerts.filter(a=>a.t==='live'||a.t==='upset'||a.t==='model').slice(0,3);bar.style.display=urgent.length?'':'none';bar.innerHTML=urgent.map(a=>`<button class="alertPill ${a.t}" onclick="openAlertMatch('${esc(a.id)}')">${_alertIcon(a.t)} ${esc(a.txt)}</button>`).join('')}
-  if(panel)panel.innerHTML=`<div class="alertCenterHead"><div><span>Signal center</span><b>${alerts.length?`${alerts.length} active`:'All quiet'}</b></div><button class="alertCenterClose" onclick="toggleAlertCenter(false)" aria-label="Close alerts">&times;</button></div><div class="alertCenterList">${alerts.length?alerts.map(a=>`<button class="alertItem ${a.t}" onclick="openAlertMatch('${esc(a.id)}')"><i>${_alertIcon(a.t)}</i><span><b>${a.t==='soon'?'Kickoff':a.t==='market'?'Model vs market':a.t[0].toUpperCase()+a.t.slice(1)}</b><small>${esc(a.txt)}</small></span></button>`).join(''):`<div class="alertEmpty"><span>&#10003;</span><b>No active signals</b><p>Star a team to receive kickoff, model-movement and market-gap alerts.</p></div>`}</div><div class="alertCenterFoot"><button onclick="markAlertsRead()">Mark all read</button><button onclick="toggleAlertCenter(false);setView('customize')">Alert settings</button></div>`;
+  if(bar){const urgent=alerts.filter(a=>(a.t==='soon'||a.t==='final')&&!seen.has(_alertKey(a))).slice(0,3);bar.style.display=urgent.length?'':'none';bar.innerHTML=urgent.map(a=>`<button class="alertPill ${a.t}" onclick="openAlertMatch('${esc(a.id||'')}','${esc(a.view||'')}')">${_alertIcon(a.t)} ${esc(a.txt)}</button>`).join('')}
+  if(panel)panel.innerHTML=`<div class="alertCenterHead"><div><span>Signal center</span><b>${unseen?`${unseen} new`:alerts.length?'All caught up':'All quiet'}</b></div><button class="alertCenterClose" onclick="toggleAlertCenter(false)" aria-label="Close alerts">&times;</button></div><div class="alertCenterList">${alerts.length?[...alerts].sort((x,y)=>seen.has(_alertKey(x))-seen.has(_alertKey(y))).map(a=>{const old=seen.has(_alertKey(a));return `<button class="alertItem ${a.t}${old?' read':''}" onclick="openAlertMatch('${esc(a.id||'')}','${esc(a.view||'')}')"><i>${_alertIcon(a.t)}</i><span><b>${_alertLabel(a.t)}${old?'':' <em class="alertNew">new</em>'}</b><small>${esc(a.txt)}</small></span></button>`}).join(''):`<div class="alertEmpty"><span>&#10003;</span><b>No active signals</b><p>New ratings, AP polls and weekly picks show up here. Star a team for kickoff and final-score alerts.</p></div>`}</div><div class="alertCenterFoot"><button onclick="markAlertsRead()">Mark all read</button><button onclick="toggleAlertCenter(false);setView('customize')">Alert settings</button></div>`;
 }
 computeAlerts=computeSignalAlerts;
 renderAlerts=renderSignalAlerts;

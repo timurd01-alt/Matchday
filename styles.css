@@ -2825,3 +2825,10 @@ body.welcomeOpen{height:auto;min-height:100vh;overflow-y:auto}
    straight into it. matchdayEnterNow() is inline in <head> and reveals the app
    on its own, so entry still works even if no bundle ever loads. */
 .welcomeOpen .app{display:none}
+
+.alertItem.read b{color:var(--muted)}.alertItem.read small{color:var(--faint)}.alertNew{margin-left:6px;padding:1px 6px;border-radius:999px;background:var(--accent,#3ad17a);color:#06120b;font-style:normal;font-size:var(--fs-xs,11px);font-weight:var(--fw-bold,700);text-transform:uppercase;letter-spacing:.04em}
+/* Side by side, the record's label sits on the same line and rule as the
+   differences header instead of starting 18px lower under its own border. */
+.gamesSupportGrid:not(.noComparisons) .gamesRecord{padding-top:0;border-top:0}
+.gamesSupportGrid:not(.noComparisons) .gamesRecord>div{width:100%;gap:12px}
+.gamesSupportGrid:not(.noComparisons) .gamesRecord>div>span:first-child{display:block;padding:0 2px 10px;border-bottom:1px solid var(--line)}

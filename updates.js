@@ -4,6 +4,18 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0923C",
+  "tag": "Feature",
+  "title": "An alert bell worth opening",
+  "items": [
+   "The bell now announces new power ratings, each new AP Top 25 with its biggest riser, this week's upset watch picks and their results, the game of the week, and new TimurKnowsBall ballots.",
+   "Starred teams get kickoff and final-score alerts.",
+   "Alerts you have read stay read after a refresh; new ones are tagged.",
+   "Behind-the-scenes data notices no longer fill the bell.",
+   "The public record now lines up with the model/market differences on Home."
+  ]
+ },
+ {
   "date": "Build 0923B",
   "tag": "Legal",
   "title": "Clearer data-source notice",
