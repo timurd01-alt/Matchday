@@ -8,19 +8,40 @@ function scorecardUnderdogTag(p){if(!p?.upset_score||!p?.upset_snapshot?.radar||
 // the records map and the results settling keyed on an exact match and so
 // silently matched nothing -- ratings appeared while every record stayed 0-0
 // and no played game ever settled.
+const _BB_NAME_KEY_CACHE=new Map();
 function bbNameKey(name){
   // CFBD calls the school Massachusetts; Bet Better and its poll use UMass.
   // Normalize that one established school alias before matching fixtures.
-  return teamKey(name).replace(/^umass(?= |$)/,'massachusetts');
+  const label=String(name||'');
+  const hit=_BB_NAME_KEY_CACHE.get(label);
+  if(hit!==undefined)return hit;
+  const key=teamKey(label).replace(/^umass(?= |$)/,'massachusetts');
+  _BB_NAME_KEY_CACHE.set(label,key);
+  return key;
+}
+// Both are split per word on every comparison; the merge compares the same few
+// hundred names against each other, so the split is kept too.
+const _BB_WORDS_CACHE=new Map();
+function bbNameWords(name){
+  const label=String(name||'');
+  let words=_BB_WORDS_CACHE.get(label);
+  if(words===undefined){words=bbNameKey(label).split(' ').filter(Boolean);_BB_WORDS_CACHE.set(label,words)}
+  return words;
 }
 // A parenthetical is part of the identity, not decoration. "Miami" and
 // "Miami (OH)" are two different schools that both play, and whole-string
 // prefixing matched them to each other -- the fixture feed's "Miami" against the
 // engine's "Miami (OH) RedHawks" -- which is how a result gets settled onto the
 // wrong game.
+const _BB_QUALIFIER_CACHE=new Map();
 function bbNameQualifier(name){
-  const m=/\(([^)]*)\)/.exec(String(name||''));
-  return m?teamKey(m[1]):'';
+  const label=String(name||'');
+  const hit=_BB_QUALIFIER_CACHE.get(label);
+  if(hit!==undefined)return hit;
+  const m=/\(([^)]*)\)/.exec(label);
+  const qualifier=m?teamKey(m[1]):'';
+  _BB_QUALIFIER_CACHE.set(label,qualifier);
+  return qualifier;
 }
 // Matched word by word, with the shorter name's last word allowed to be an
 // abbreviation of the longer's.
@@ -39,7 +60,7 @@ function bbNameQualifier(name){
 // within a day -- but a name table is the only real answer if it ever bites.
 function bbNameMatches(a,b){
   if(bbNameQualifier(a)!==bbNameQualifier(b))return false;
-  const x=bbNameKey(a).split(' ').filter(Boolean),y=bbNameKey(b).split(' ').filter(Boolean);
+  const x=bbNameWords(a),y=bbNameWords(b);
   if(!x.length||!y.length)return false;
   const [short,long]=x.length<=y.length?[x,y]:[y,x];
   return short.every((word,i)=>long[i].startsWith(word));
@@ -89,6 +110,45 @@ function pollSectionHTML(polls){
     +`<tbody>${rows(g)}</tbody></table></div>`).join('');
 }
 function _bbShiftDay(day,delta){const t=Date.parse(day+'T12:00:00Z');return Number.isFinite(t)?new Date(t+delta*86400000).toISOString().slice(0,10):day;}
+/* Merging the handoff used to compare every fixture against every other one.
+   With 632 handoff fixtures folded into a 160-fixture board that is ~700,000
+   sameCfbFixture() calls, and it locked the main thread for over two minutes
+   before the page could paint.
+
+   sameCfbFixture() can only match kickoffs within 36 hours of each other, or
+   two fixtures whose kickoff strings give the same calendar day. So fixtures
+   are bucketed by day here and each one is only compared against the two days
+   either side -- a superset of everything that could have matched, at a few
+   comparisons apiece instead of the whole board. */
+function _cfbDayOf(fixture){return String(fixture?.kickoff||'').slice(0,10)}
+function _cfbDayIsReal(day){return Number.isFinite(Date.parse(day+'T12:00:00Z'))}
+function makeCfbFixtureIndex(){
+  const byDay=new Map(),undated=[];let seq=0;
+  return {
+    add(fixture,value){
+      const record={fixture,value:value===undefined?fixture:value,seq:seq++};
+      const day=_cfbDayOf(fixture);
+      if(_cfbDayIsReal(day)){let list=byDay.get(day);if(!list)byDay.set(day,list=[]);list.push(record)}
+      else undated.push(record);
+      return record;
+    },
+    // The first stored fixture that sameCfbFixture() accepts, in the order the
+    // fixtures were added -- the linear scan this replaces took the first hit.
+    match(probe){
+      const day=_cfbDayOf(probe);
+      let pool;
+      if(_cfbDayIsReal(day)){
+        pool=undated.slice();
+        for(let delta=-2;delta<=2;delta++){const list=byDay.get(_bbShiftDay(day,delta));if(list)pool.push(...list)}
+      }else{
+        // No usable day to bucket on: compare against everything, as before.
+        pool=undated.slice();for(const list of byDay.values())pool.push(...list);
+      }
+      pool.sort((a,b)=>a.seq-b.seq);
+      return pool.find(record=>sameCfbFixture(record.fixture,probe))||null;
+    }
+  };
+}
 function bbFindByName(list,name){return (list||[]).find(r=>bbNameMatches(r.name||r.team_name,name))||null;}
 // The snapshots are rebuilt only when a new Bet Better handoff is taken in;
 // data_*.json is refetched hourly. Stamping the snapshot's date over the
@@ -107,7 +167,7 @@ function _freshestUpdated(current,incoming){
 }
 function sameCfbSchool(a,b){
   if(bbNameMatches(a,b))return true;
-  const x=teamLogoCandidates(a)[0],y=teamLogoCandidates(b)[0];
+  const x=primaryTeamLogo(a),y=primaryTeamLogo(b);
   return !!x&&x===y;
 }
 function sameCfbFixture(a,b){
@@ -138,12 +198,17 @@ function applyCurrentCfbSnapshot(payload){
     const have=new Set((payload.matches||[]).map(m=>
       `${teamKey(m.home?.name)}|${teamKey(m.away?.name)}|${String(m.kickoff||'').slice(0,10)}`));
     const added=[];
+    const known=makeCfbFixtureIndex();
+    (payload.matches||[]).forEach(m=>known.add(m));
     upcoming.forEach(f=>{
       const day=String(f.kickoff||'').slice(0,10);
       const key=`${teamKey(f.home)}|${teamKey(f.away)}|${day}`;
       if(have.has(key))return;
-      if([...payload.matches||[],...added].some(m=>sameCfbFixture(m,f)))return;
+      // sameCfbFixture() reads home/away off .name when present; the handoff
+      // rows carry plain strings, which it already handles.
+      if(known.match(f))return;
       have.add(key);
+      known.add({kickoff:f.kickoff,home:{name:f.home},away:{name:f.away}});
       added.push({id:`bb-${f.event_id}`,_comp:'NCAAF',competition:f.competition||'NCAAF',
         kickoff:f.kickoff,status:'UPCOMING',
         home:{name:f.home},away:{name:f.away},score:{},_from:'betbetter_fixtures'});
@@ -202,6 +267,13 @@ function applyCurrentCfbSnapshot(payload){
       const present=new Set((payload.matches||[]).map(m=>
         `${teamKey(m.home?.name)}|${teamKey(m.away?.name)}|${String(m.kickoff||'').slice(0,10)}`));
       const recovered=[];
+      // The board is only read by kickoff day below, so it is bucketed once
+      // here rather than scanned in full for each of the handoff's results.
+      const matchesByDay=new Map();
+      (payload.matches||[]).forEach(m=>{
+        const mday=String(m.kickoff||'').slice(0,10);
+        let list=matchesByDay.get(mday);if(!list)matchesByDay.set(mday,list=[]);list.push(m);
+      });
       settled.forEach(r=>{
         if(r._merged)return;
         if(String(r.sport||'ncaaf')!=='ncaaf')return;
@@ -209,10 +281,9 @@ function applyCurrentCfbSnapshot(payload){
         const day=String(r.played_on||'').slice(0,10);
         const key=`${teamKey(r.home)}|${teamKey(r.away)}|${day}`;
         if(present.has(key))return;
-        if((payload.matches||[]).some(m=>{
-          const mday=String(m.kickoff||'').slice(0,10);
-          return (mday===day||mday===_bbShiftDay(day,-1)||mday===_bbShiftDay(day,1))
-            &&bbNameMatches(m.home?.name,r.home)&&bbNameMatches(m.away?.name,r.away)}))return;
+        const sameWindow=[day,_bbShiftDay(day,-1),_bbShiftDay(day,1)]
+          .flatMap(d=>matchesByDay.get(d)||[]);
+        if(sameWindow.some(m=>bbNameMatches(m.home?.name,r.home)&&bbNameMatches(m.away?.name,r.away)))return;
         present.add(key);
         recovered.push({id:`bb-result-${r.event_id||key}`,_comp:'NCAAF',competition:r.competition||'NCAAF',
           kickoff:r.kickoff||`${day}T00:00:00Z`,status:'FINISHED',
@@ -226,10 +297,20 @@ function applyCurrentCfbSnapshot(payload){
   // those same-kickoff aliases after both fixture and result recovery, while
   // preserving the provider row (and any final score) over a thin handoff row.
   const unique=[];
+  const kept=makeCfbFixtureIndex();
   (payload.matches||[]).forEach(m=>{
-    const index=unique.findIndex(other=>sameCfbFixture(other,m));
-    if(index<0){unique.push(m);return}
-    if(m.status==='FINISHED'&&unique[index].status!=='FINISHED')unique[index]=m;
+    const hit=kept.match(m);
+    if(!hit){const position=unique.push(m)-1;kept.add(m,position);return}
+    if(m.status==='FINISHED'&&unique[hit.value].status!=='FINISHED'){
+      unique[hit.value]=m;
+      // The scan this replaces compared later fixtures against the row it had
+      // just swapped in, so the index has to follow the swap. When the new row
+      // sits on a different calendar day it is registered there too, pointing
+      // at the same position.
+      const previousDay=_cfbDayOf(hit.fixture);
+      hit.fixture=m;
+      if(_cfbDayOf(m)!==previousDay)kept.add(m,hit.value);
+    }
   });
   payload.matches=unique;
   // This season's advanced profile on every fixture, from the engine's own
@@ -240,12 +321,21 @@ function applyCurrentCfbSnapshot(payload){
   const profileNames=Object.keys(profileTeams);
   if(profileNames.length){
     const byKey=new Map(profileNames.map(n=>[teamKey(n),n]));
+    // Only a miss walks the whole profile list, and the board asks about the
+    // same few hundred schools twice a fixture, so the answer is kept.
+    const profileCache=new Map();
     const profileFor=name=>{
-      const exact=byKey.get(teamKey(name));if(exact)return profileTeams[exact];
-      const words=n=>bbNameKey(n).split(' ').filter(Boolean).length;
-      const hits=profileNames.filter(n=>bbNameMatches(n,name)).sort((a,b)=>Math.abs(words(a)-words(name))-Math.abs(words(b)-words(name)));
-      if(hits.length===1||(hits.length>1&&Math.abs(words(hits[0])-words(name))<Math.abs(words(hits[1])-words(name))))return profileTeams[hits[0]];
-      return null;
+      const label=String(name||'');
+      if(profileCache.has(label))return profileCache.get(label);
+      const found=(()=>{
+        const exact=byKey.get(teamKey(label));if(exact)return profileTeams[exact];
+        const words=n=>bbNameWords(n).length;
+        const hits=profileNames.filter(n=>bbNameMatches(n,label)).sort((a,b)=>Math.abs(words(a)-words(label))-Math.abs(words(b)-words(label)));
+        if(hits.length===1||(hits.length>1&&Math.abs(words(hits[0])-words(label))<Math.abs(words(hits[1])-words(label))))return profileTeams[hits[0]];
+        return null;
+      })();
+      profileCache.set(label,found);
+      return found;
     };
     (payload.matches||[]).forEach(m=>{
       const home=profileFor(m.home?.name),away=profileFor(m.away?.name);
@@ -267,15 +357,22 @@ function applyCurrentCfbSnapshot(payload){
   // wins, losses, games and form, so they replace the feed's numbers here.
   const rankRows=((typeof MATCHDAY_CFB_RANKINGS!=='undefined'&&MATCHDAY_CFB_RANKINGS.rankings)||[]);
   const rankByKey=new Map(rankRows.map(r=>[teamKey(r.name),r]));
+  const rankCache=new Map();
   const rankFor=name=>{
-    const exact=rankByKey.get(teamKey(name));
-    if(exact)return exact;
-    const extra=r=>bbNameKey(r.name).split(' ').filter(Boolean).length-bbNameKey(name).split(' ').filter(Boolean).length;
-    const hits=rankRows.filter(r=>bbNameMatches(r.name,name)).sort((a,b)=>Math.abs(extra(a))-Math.abs(extra(b)));
-    // "Texas" matches Texas Longhorns and Texas Tech Red Raiders; take the
-    // closest name only when it is unambiguous.
-    if(hits.length===1||(hits.length>1&&Math.abs(extra(hits[0]))<Math.abs(extra(hits[1]))))return hits[0];
-    return null;
+    const label=String(name||'');
+    if(rankCache.has(label))return rankCache.get(label);
+    const found=(()=>{
+      const exact=rankByKey.get(teamKey(label));
+      if(exact)return exact;
+      const extra=r=>bbNameWords(r.name).length-bbNameWords(label).length;
+      const hits=rankRows.filter(r=>bbNameMatches(r.name,label)).sort((a,b)=>Math.abs(extra(a))-Math.abs(extra(b)));
+      // "Texas" matches Texas Longhorns and Texas Tech Red Raiders; take the
+      // closest name only when it is unambiguous.
+      if(hits.length===1||(hits.length>1&&Math.abs(extra(hits[0]))<Math.abs(extra(hits[1]))))return hits[0];
+      return null;
+    })();
+    rankCache.set(label,found);
+    return found;
   };
   // The published result ledger can be newer than the derived rating rows.
   // Count every completed game, including non-conference opponents, once.

@@ -4,6 +4,19 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0922N",
+  "tag": "Fix",
+  "title": "Fix the startup freeze behind the entry delay",
+  "items": [
+   "Fix the college football snapshot merge, which compared every fixture against every other one and rebuilt each team's logo list on each comparison. It ran for about two minutes and forty seconds on every load, locking the page so completely that a returning visitor on a phone could not scroll or tap. Fixtures are now grouped by kickoff day and the name lookups keep their answers, taking the same merge, with identical output, to well under a second.",
+   "Keep the large data and application bundles from executing while the welcome page is waiting for a click, so the page stays responsive while they load.",
+   "Load the application bundles in parallel instead of one after another, so entry no longer waits on eight separate network round trips, and drop the fixed delay that used to sit in front of them.",
+   "Warm the bundles into the browser cache while the welcome page is being read, so pressing Enter starts against files that have already arrived.",
+   "Restore the stadium artwork on the welcome page and return the Enter button to the page layout; both had been stripped while chasing the freeze above.",
+   "Shorten the welcome page's entrance animation, which left the headline and the call to action invisible for the first second."
+  ]
+ },
+ {
   "date": "Build 0922M",
   "tag": "Fix",
   "title": "Make site entry immediate and clickable",

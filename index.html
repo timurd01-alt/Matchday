@@ -64,6 +64,7 @@ window.matchdayEnterNow=function(targetView){
   var app=document.getElementById('app');if(app){app.classList.remove('appRevealing');app.style.visibility='visible'}
   var home=document.getElementById('view-home');if(home)home.style.display='block';
   try{window.scrollTo(0,0);document.documentElement.scrollTop=0;document.body.scrollTop=0}catch(e){}
+  if(typeof window.startMatchdayApp==='function')window.startMatchdayApp();
   window.setTimeout(function(){
     try{if(targetView&&typeof setView==='function')setView(targetView);else if(typeof renderCurrent==='function')renderCurrent()}catch(e){console.error('Matchday view failed to render',e)}
   },0);
@@ -85,10 +86,9 @@ document.addEventListener('click',function(event){
 </head>
 <body>
 <section class="welcomeGate" id="welcomeGate" aria-labelledby="welcomeTitle">
-  <button class="welcomeEnter welcomeEnterFast" type="button" onclick="matchdayEnterNow()">Enter Matchday Terminal <span aria-hidden="true">→</span></button>
   <div class="welcomeBlobs" aria-hidden="true"></div>
   <div class="welcomeNoise" aria-hidden="true"></div>
-  <script type="text/plain" id="retiredWelcomeScene" aria-hidden="true">
+  <div class="welcomeScene" aria-hidden="true">
     <svg viewBox="0 0 1600 660" preserveAspectRatio="xMidYMax slice" focusable="false">
       <defs>
         <linearGradient id="wsSky" x1="0" y1="0" x2="0" y2="1">
@@ -157,7 +157,7 @@ document.addEventListener('click',function(event){
         <path d="M-40 596 Q800 566 1640 596" fill="none" stroke="#dfffee" stroke-opacity=".22" stroke-width="2.5"/>
       </g>
     </svg>
-  </script>
+  </div>
   <div class="welcomeShell">
     <div class="welcomeBrand">
       <div class="welcomeEyebrow"><span class="welcomeDot"></span> MATCHDAY TERMINAL <span class="welcomeBeta">EARLY ACCESS</span></div>
@@ -174,6 +174,7 @@ document.addEventListener('click',function(event){
         graded afterwards and never rewritten.</p>
       </details>
       <div class="welcomeActions">
+        <button class="welcomeEnter" type="button" onclick="matchdayEnterNow()">Enter Matchday Terminal <span aria-hidden="true">→</span></button>
         <span>No account required · no ads</span>
         <a class="welcomeSocialLink" href="https://x.com/timurknowsball" rel="me noopener" target="_blank">Follow @timurknowsball on X <span aria-hidden="true">↗</span></a>
         <a class="welcomeLegalLink" href="legal.html">Legal, privacy &amp; data sources</a>
@@ -231,14 +232,48 @@ document.addEventListener('click',function(event){
   <main class="content" tabindex="-1"><div id="alertBar" class="alertBar" style="display:none"></div><div class="view" id="view-home"><div class="empty">Loading…</div></div><div class="view" id="view-matches"><div class="empty">Loading…</div></div><div class="view" id="view-groups"></div>
 <div class="view" id="view-score"></div><div class="view" id="view-bracket"></div><div class="view" id="view-results"></div><div class="view" id="view-news"></div><div class="view" id="view-community"></div></main>
 </div>
-<script src="translations.js?v=__BUILD__" defer></script>
-<script src="updates.js?v=__BUILD__" defer></script>
-<script src="matchday-cfb-snapshot.js?v=__BUILD__" defer></script>
-<script src="app-1-core.js?v=__BUILD__" defer></script>
-<script src="app-2-views.js?v=__BUILD__" defer></script>
-<script src="app-3-panels.js?v=__BUILD__" defer></script>
-<script src="app-4-features.js?v=__BUILD__" defer></script>
-<script src="research-signals.js?v=__BUILD__" defer></script>
+<script>
+// Keep the welcome page interactive. The large data/application bundles used
+// to execute as soon as parsing finished, monopolizing the main thread before
+// a visitor's click could be dispatched. Start them only after entry (or
+// immediately for a visitor who already entered during this browser session).
+var MATCHDAY_FILES=['translations.js','updates.js','matchday-cfb-snapshot.js','app-1-core.js','app-2-views.js','app-3-panels.js','app-4-features.js','research-signals.js'];
+function matchdayAsset(file){return file+'?v=__BUILD__'}
+window.startMatchdayApp=function(){
+  if(window.MATCHDAY_APP_STARTING)return window.MATCHDAY_APP_STARTING;
+  // async=false on an injected script preserves execution order while letting
+  // every file download at once. Chaining each file's load() to the next one
+  // spent a full network round trip per file -- eight of them, before a single
+  // line of the application could run.
+  window.MATCHDAY_APP_STARTING=Promise.all(MATCHDAY_FILES.map(function(file){
+    return new Promise(function(resolve,reject){
+      var script=document.createElement('script');
+      script.src=matchdayAsset(file);
+      script.async=false;
+      script.onload=resolve;script.onerror=reject;
+      document.body.appendChild(script);
+    });
+  })).catch(function(error){console.error('Matchday failed to start',error)});
+  return window.MATCHDAY_APP_STARTING;
+};
+// Fetch the bundles into the HTTP cache while the visitor is still reading the
+// welcome page. A preload does not execute, so the page stays interactive, and
+// entry then runs against bytes that have already arrived.
+window.warmMatchdayApp=function(){
+  if(window.MATCHDAY_APP_WARMED||window.MATCHDAY_APP_STARTING)return;
+  window.MATCHDAY_APP_WARMED=true;
+  MATCHDAY_FILES.forEach(function(file){
+    var link=document.createElement('link');
+    link.rel='preload';link.as='script';link.href=matchdayAsset(file);
+    document.head.appendChild(link);
+  });
+};
+try{
+  if(sessionStorage.getItem('matchday.welcome.entered')==='1')window.startMatchdayApp();
+  else if('requestIdleCallback' in window)requestIdleCallback(window.warmMatchdayApp,{timeout:1500});
+  else window.setTimeout(window.warmMatchdayApp,700);
+}catch(e){}
+</script>
 
 </body>
 </html>

@@ -19,7 +19,9 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
     def test_fixture_aliases_are_deduplicated_by_school_and_kickoff(self):
         panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
         self.assertIn("function sameCfbFixture(a,b)", panels)
-        self.assertIn("teamLogoCandidates(a)[0]", panels)
+        # The comparison hot path uses the memoized, no-copy accessor; the
+        # full candidate list is still what the logo markup consumes.
+        self.assertIn("primaryTeamLogo(a)", panels)
         self.assertIn("Math.abs(ta-tb)<=36*3600e3", panels)
         self.assertIn("payload.matches=unique", panels)
 
@@ -230,7 +232,7 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         self.assertIn("function teamLogoFallback(img)", core)
         self.assertIn("[exact,...mappedPrefixes,...inferred]", core)
         self.assertNotIn("...inferred[0]", core)
-        self.assertIn("safeSuffix(words[end])", core)
+        self.assertIn("_safeLogoSuffix(words[end])", core)
         self.assertIn("TCU:'TCU.png'", core)
         self.assertIn("'Oklahoma State':'OklahomaState.png'", core)
         self.assertIn('src="team-logos/${esc(file)}"', core)

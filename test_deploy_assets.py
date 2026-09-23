@@ -21,7 +21,14 @@ class DeployAssetTests(unittest.TestCase):
         markup = (ROOT / "index.html").read_text(encoding="utf-8")
         workflow = (ROOT / ".github" / "workflows" / "deploy.yml").read_text(encoding="utf-8")
         scripts = re.findall(r'<script src="([^"?]+)\.js(?:\?[^"]*)?"', markup)
-        self.assertGreater(len(scripts), 5, "sanity check: found too few <script> tags to be real")
+        # The application bundles are injected by startMatchdayApp() instead of
+        # being written as <script src> tags, so that the welcome page stays
+        # interactive while they load. They are read from that list here: a
+        # bundle missing from deploy.yml 404s just as quietly either way.
+        listed = re.search(r"var MATCHDAY_FILES=\[(.*?)\];", markup, re.S)
+        self.assertIsNotNone(listed, "startMatchdayApp's bundle list is no longer readable")
+        scripts += [name[:-3] for name in re.findall(r"'([^']+\.js)'", listed.group(1))]
+        self.assertGreater(len(scripts), 5, "sanity check: found too few scripts to be real")
         missing = [f"{name}.js" for name in scripts if f"{name}.js" not in workflow]
         self.assertEqual(missing, [],
                          f"index.html loads {missing} but deploy.yml never copies "

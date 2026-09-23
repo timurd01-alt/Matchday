@@ -18,7 +18,10 @@ class ResearchSignalsUITests(unittest.TestCase):
         for gone in ("nfl_challenger_shadow", "mlb_challenger_shadow"):
             self.assertNotIn(gone, source)
         index = (ROOT / "index.html").read_text(encoding="utf-8")
-        self.assertIn("research-signals.js?v=__BUILD__", index)
+        # The script is injected by startMatchdayApp(), which stamps the build
+        # onto every bundle it loads; the stylesheet is still a plain tag.
+        self.assertIn("'research-signals.js'", index)
+        self.assertIn("function matchdayAsset(file){return file+'?v=__BUILD__'}", index)
         self.assertIn("research-signals.css?v=__BUILD__", index)
 
     def test_cfb_profile_is_plain_language_and_explicitly_descriptive(self):

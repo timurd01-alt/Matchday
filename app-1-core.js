@@ -238,7 +238,17 @@ function isStaleUpcoming(m){const t=kickMs(m);return m?.status==='UPCOMING'&&t>0
 function isCompleteOrPast(m){return m?.status==='FINISHED'||isStaleUpcoming(m)}
 function isVisibleUpcoming(m){return m?.status==='UPCOMING'&&!isStaleUpcoming(m)}
 function fixtureSort(a,b){const o={LIVE:0,UPCOMING:1,FINISHED:2};return (o[a.status]??9)-(o[b.status]??9)||(a.kickoff||'').localeCompare(b.kickoff||'')}
-function teamKey(name){return String(name||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim()}
+// Pure function of the name, and the fixture merge calls it millions of times
+// across a few hundred distinct schools, so the answer is kept.
+const _TEAM_KEY_CACHE=new Map();
+function teamKey(name){
+  const label=String(name||'');
+  const hit=_TEAM_KEY_CACHE.get(label);
+  if(hit!==undefined)return hit;
+  const key=label.toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+  _TEAM_KEY_CACHE.set(label,key);
+  return key;
+}
 function teamInitials(team){
   const code=String(team?.code||'').replace(/[^A-Za-z0-9]/g,'').slice(0,3).toUpperCase();
   if(code)return code;
@@ -882,25 +892,53 @@ Object.assign(TEAM_LOGO_FILES,{
   'Georgia State':'georgiaState.png','Georgia State Panthers':'georgiaState.png',
   TCU:'TCU.png',"Hawai'i":'hawaii.png','Oklahoma State':'OklahomaState.png'
 });
+const _INFERRED_LOGO_CACHE=new Map();
 function inferredTeamLogoFile(name){
-  const words=String(name||'').replace(/&/g,' and ').replace(/[^A-Za-z0-9]+/g,' ').trim().split(/\s+/).filter(Boolean);
-  if(!words.length)return '';
-  return words.map((word,i)=>i?word[0].toUpperCase()+word.slice(1):word.toLowerCase()).join('')+'.png';
+  const label=String(name||'');
+  const hit=_INFERRED_LOGO_CACHE.get(label);
+  if(hit!==undefined)return hit;
+  const words=label.replace(/&/g,' and ').replace(/[^A-Za-z0-9]+/g,' ').trim().split(/\s+/).filter(Boolean);
+  const file=words.length?words.map((word,i)=>i?word[0].toUpperCase()+word.slice(1):word.toLowerCase()).join('')+'.png':'';
+  _INFERRED_LOGO_CACHE.set(label,file);
+  return file;
 }
+// Hoisted out of the function: these never change, and rebuilding the set and
+// the entry list on every call made the fixture merge quadratic in wall time.
+const _DISTINCT_SCHOOL_WORD=new Set(['state','tech','university','college','international','christian','baptist','a&m','a']);
+const _safeLogoSuffix=remaining=>!_DISTINCT_SCHOOL_WORD.has(String(remaining||'').toLowerCase());
+// Longest school name first, so the prefix search can keep its ordering without
+// re-sorting the table on every lookup.
+const _TEAM_LOGO_ENTRIES=Object.entries(TEAM_LOGO_FILES).sort((a,b)=>b[0].length-a[0].length);
+// The snapshot merge asks for the same few hundred schools millions of times.
+// The computed list is kept and handed out as a copy, because callers such as
+// teamMark() shift entries off the array they are given.
+const _LOGO_CANDIDATE_CACHE=new Map();
 function teamLogoCandidates(name){
   const label=String(name||'').trim();
-  const words=label.replace(/&/g,' and ').replace(/[^A-Za-z0-9]+/g,' ').trim().split(/\s+/).filter(Boolean);
-  const exact=TEAM_LOGO_FILES[label];
-  const distinctSchoolWord=new Set(['state','tech','university','college','international','christian','baptist','a&m','a']);
-  const safeSuffix=remaining=>!distinctSchoolWord.has(String(remaining||'').toLowerCase());
-  const inferred=[];
-  for(let end=words.length;end>0;end--)if(safeSuffix(words[end]))inferred.push(inferredTeamLogoFile(words.slice(0,end).join(' ')));
-  // Try the longest full school name before a shorter prefix: Michigan State
-  // must never inherit Michigan's mark, and likewise for other state schools.
-  const mappedPrefixes=Object.entries(TEAM_LOGO_FILES)
-    .filter(([school])=>label.startsWith(school+' ')&&safeSuffix(label.slice(school.length).trim().split(/\s+/)[0]))
-    .sort((a,b)=>b[0].length-a[0].length).map(([,file])=>file);
-  return [...new Set([exact,...mappedPrefixes,...inferred].filter(Boolean))];
+  let candidates=_LOGO_CANDIDATE_CACHE.get(label);
+  if(candidates===undefined){
+    const words=label.replace(/&/g,' and ').replace(/[^A-Za-z0-9]+/g,' ').trim().split(/\s+/).filter(Boolean);
+    const exact=TEAM_LOGO_FILES[label];
+    const inferred=[];
+    for(let end=words.length;end>0;end--)if(_safeLogoSuffix(words[end]))inferred.push(inferredTeamLogoFile(words.slice(0,end).join(' ')));
+    // Try the longest full school name before a shorter prefix: Michigan State
+    // must never inherit Michigan's mark, and likewise for other state schools.
+    const mappedPrefixes=[];
+    for(const [school,file] of _TEAM_LOGO_ENTRIES){
+      if(label.startsWith(school+' ')&&_safeLogoSuffix(label.slice(school.length).trim().split(/\s+/)[0]))mappedPrefixes.push(file);
+    }
+    candidates=[...new Set([exact,...mappedPrefixes,...inferred].filter(Boolean))];
+    _LOGO_CANDIDATE_CACHE.set(label,candidates);
+  }
+  return candidates.slice();
+}
+// The fixture merge only ever wants the first candidate, and copying the array
+// for each of a few million comparisons is itself most of the cost.
+function primaryTeamLogo(name){
+  const label=String(name||'').trim();
+  let candidates=_LOGO_CANDIDATE_CACHE.get(label);
+  if(candidates===undefined){teamLogoCandidates(label);candidates=_LOGO_CANDIDATE_CACHE.get(label)}
+  return candidates[0];
 }
 function teamLogoFallback(img){
   const remaining=String(img.dataset.logoFallback||'').split('|').filter(Boolean);

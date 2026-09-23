@@ -18,13 +18,19 @@ class MobileStartupTests(unittest.TestCase):
         )
         self.assertLess(
             self.html.index("window.matchdayEnterNow=function"),
-            self.html.index('src="app-1-core.js'),
+            self.html.index("window.startMatchdayApp=function()"),
         )
-        fast_button = '<button class="welcomeEnter welcomeEnterFast" type="button" onclick="matchdayEnterNow()">'
-        self.assertIn(fast_button, self.html)
-        self.assertLess(self.html.index(fast_button), self.html.index('id="retiredWelcomeScene"'))
-        self.assertIn('<script type="text/plain" id="retiredWelcomeScene"', self.html)
-        self.assertNotIn('<div class="welcomeScene"', self.html)
+        # The button belongs in the brand column beside the rest of the copy.
+        # It was briefly pinned to the bottom of the viewport to work around an
+        # entry bug that turned out to be a blocked main thread; floating it
+        # detached it from the page.
+        enter_button = '<button class="welcomeEnter" type="button" onclick="matchdayEnterNow()">'
+        self.assertIn(enter_button, self.html)
+        self.assertNotIn('welcomeEnterFast', self.html)
+        self.assertLess(self.html.index('<div class="welcomeActions">'), self.html.index(enter_button))
+        # The stadium scene is the welcome page's artwork, not a startup cost.
+        self.assertIn('<div class="welcomeScene"', self.html)
+        self.assertNotIn('id="retiredWelcomeScene"', self.html)
         self.assertNotIn('class="welcomeEnter" href=', self.html)
         self.assertIn("if(gate)gate.hidden=true", self.html)
         self.assertIn("window.scrollTo(0,0)", self.html)
@@ -52,18 +58,58 @@ class MobileStartupTests(unittest.TestCase):
         self.assertIn('.welcomeActions{position:relative;z-index:20;pointer-events:auto}', css)
         self.assertIn('.welcomeEnter{position:relative;z-index:21;', css)
         self.assertIn('.welcomeEnter::after{content:"";position:absolute;inset:0;pointer-events:none', css)
-        self.assertIn('.welcomeEnterFast{position:fixed;', css)
-        self.assertIn('z-index:1200', css)
+        self.assertNotIn('.welcomeEnterFast', css)
         self.assertIn('.welcomeGate:not([hidden]) .welcomeActions,', css)
         self.assertIn('animation:none!important;opacity:1!important;transform:none!important', css)
 
-    def test_large_scripts_do_not_block_html_parsing(self):
+    def test_large_scripts_do_not_block_welcome_interaction(self):
         for filename in (
             "translations.js", "updates.js", "matchday-cfb-snapshot.js",
             "app-1-core.js", "app-2-views.js", "app-3-panels.js",
             "app-4-features.js", "research-signals.js",
         ):
-            self.assertRegex(self.html, rf'<script src="{filename}[^>]*\bdefer\b')
+            self.assertNotIn(f'<script src="{filename}', self.html)
+            self.assertIn(f"'{filename}'", self.html)
+        self.assertIn("window.startMatchdayApp=function()", self.html)
+        # Entry starts the application immediately. A fixed delay was added to
+        # hide a two-minute snapshot merge; the merge is fixed, and the delay
+        # was pure latency.
+        self.assertIn("window.startMatchdayApp()", self.html)
+        self.assertNotIn("window.setTimeout(window.startMatchdayApp", self.html)
+        # The bundles download in parallel and execute in order. Chaining each
+        # file's load to the next cost one network round trip per file.
+        self.assertIn("script.async=false", self.html)
+        self.assertNotIn("files.reduce(function(chain,file)", self.html)
+        # The welcome page warms the bundles into cache without executing them.
+        self.assertIn("link.rel='preload'", self.html)
+        self.assertIn("window.warmMatchdayApp", self.html)
+
+    def test_snapshot_merge_is_not_quadratic(self):
+        """The CFB snapshot merge locked the main thread for ~163s on load.
+
+        Every fixture was compared against every other one, and each comparison
+        rebuilt the team-logo candidate list from scratch -- 2.8 million calls.
+        Fixtures are now bucketed by kickoff day and the pure name helpers are
+        memoized, which took the same merge (identical output) to well under a
+        second.
+        """
+        core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
+        # Pure per-name helpers keep their answers.
+        self.assertIn("_LOGO_CANDIDATE_CACHE", core)
+        self.assertIn("_TEAM_KEY_CACHE", core)
+        self.assertIn("_INFERRED_LOGO_CACHE", core)
+        # The logo table is built once, not rebuilt and re-sorted per call.
+        self.assertIn("_TEAM_LOGO_ENTRIES", core)
+        self.assertNotIn("Object.entries(TEAM_LOGO_FILES)\n    .filter", core)
+        # A no-copy accessor for the comparison hot path.
+        self.assertIn("function primaryTeamLogo(name)", core)
+
+        self.assertIn("function makeCfbFixtureIndex()", self.panels)
+        self.assertIn("_BB_NAME_KEY_CACHE", self.panels)
+        self.assertIn("_BB_QUALIFIER_CACHE", self.panels)
+        # The two whole-board scans the index replaced.
+        self.assertNotIn("[...payload.matches||[],...added].some", self.panels)
+        self.assertNotIn("unique.findIndex(other=>sameCfbFixture(other,m))", self.panels)
 
     def test_web_fonts_do_not_block_first_render(self):
         font_line = next(line for line in self.html.splitlines()
