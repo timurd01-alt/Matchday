@@ -14,7 +14,7 @@ class MobileStartupTests(unittest.TestCase):
     def test_enter_action_exists_before_application_bundles(self):
         self.assertLess(
             self.html.index("window.matchdayEnterNow=function"),
-            self.html.index('<body>'),
+            self.html.index('<body class="welcomeOpen">'),
         )
         self.assertLess(
             self.html.index("window.matchdayEnterNow=function"),
@@ -52,7 +52,17 @@ class MobileStartupTests(unittest.TestCase):
         css = (ROOT / "styles.css").read_text(encoding="utf-8")
         self.assertIn('.welcomeGate:not([hidden]){position:relative;inset:auto', css)
         self.assertIn('body.welcomeOpen{height:auto;min-height:100vh;overflow-y:auto}', css)
-        self.assertIn('.welcomeOpen .app{visibility:visible;display:grid}', css)
+        # The site is not appended underneath the welcome page: the document is
+        # the welcome page alone, so scrolling down reaches the end of it rather
+        # than a second copy of the home view.
+        self.assertIn('.welcomeOpen .app{display:none}', css)
+        self.assertNotIn('.welcomeOpen .app{visibility:visible', css)
+        # welcomeOpen ships in the markup. renderWelcome() sets it too, but that
+        # lives in the application bundle, which no longer runs before entry --
+        # without the markup class the body kept overflow:hidden and the welcome
+        # page could not be scrolled at all.
+        self.assertIn('<body class="welcomeOpen">', self.html)
+        self.assertIn("document.body.classList.remove('welcomeOpen');", self.html)
         self.assertIn('min-height:52px', css)
         self.assertIn('touch-action:manipulation', css)
         self.assertIn('.welcomeActions{position:relative;z-index:20;pointer-events:auto}', css)

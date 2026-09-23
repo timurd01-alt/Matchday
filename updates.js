@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0922O",
+  "tag": "Fix",
+  "title": "Let the welcome page scroll, and detach the site from it",
+  "items": [
+   "Restore scrolling on the welcome page. The class that makes the page scrollable was applied by a function inside the application bundle, which no longer runs before entry, so the body kept the app shell's fixed viewport height and the welcome page could not be scrolled at all on a computer. It now ships in the markup instead.",
+   "Stop appending the home view underneath the welcome page. Scrolling down reached a second copy of the site rather than the end of the introduction. Entry still works if no bundle ever loads, so nothing is lost by hiding it."
+  ]
+ },
+ {
   "date": "Build 0922N",
   "tag": "Fix",
   "title": "Fix the startup freeze behind the entry delay",

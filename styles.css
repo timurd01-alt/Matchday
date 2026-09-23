@@ -2767,12 +2767,17 @@ html{color-scheme:dark}
   .powerTable .pollTeamInner>span:last-child{overflow:hidden;text-overflow:ellipsis}
 }
 
-/* The welcome is an introduction, not a modal gate. If app JavaScript stalls,
-   visitors can still scroll to the site instead of being trapped by an overlay. */
+/* The welcome is an introduction, not a modal gate: it sits in normal flow and
+   scrolls with the document rather than trapping scroll inside a fixed
+   overlay. */
 .welcomeGate:not([hidden]){position:relative;inset:auto;z-index:auto;min-height:100vh;overflow:visible}
 .welcomeGate:not([hidden]) .welcomeScene,
 .welcomeGate:not([hidden]) .welcomeBlobs,
 .welcomeGate:not([hidden]) .welcomeNoise{position:absolute}
 body.welcomeOpen{height:auto;min-height:100vh;overflow-y:auto}
-.welcomeOpen .app{visibility:visible;display:grid}
-@media(max-width:760px){.welcomeOpen .app{display:grid}}
+/* The site itself is not appended underneath the welcome page. It used to be
+   left visible there as an escape hatch for a stalled bundle, which put a
+   second copy of the home view below the fold and made the welcome page scroll
+   straight into it. matchdayEnterNow() is inline in <head> and reveals the app
+   on its own, so entry still works even if no bundle ever loads. */
+.welcomeOpen .app{display:none}

@@ -84,7 +84,11 @@ document.addEventListener('click',function(event){
 },true);
 </script>
 </head>
-<body>
+<!-- welcomeOpen is set in the markup, not by renderWelcome(). That function
+     lives in the application bundle, which no longer runs until entry, so the
+     class arrived too late to matter: the body kept its app-shell
+     height:100vh/overflow:hidden and the welcome page could not be scrolled. -->
+<body class="welcomeOpen">
 <section class="welcomeGate" id="welcomeGate" aria-labelledby="welcomeTitle">
   <div class="welcomeBlobs" aria-hidden="true"></div>
   <div class="welcomeNoise" aria-hidden="true"></div>
@@ -269,7 +273,10 @@ window.warmMatchdayApp=function(){
   });
 };
 try{
-  if(sessionStorage.getItem('matchday.welcome.entered')==='1')window.startMatchdayApp();
+  if(sessionStorage.getItem('matchday.welcome.entered')==='1'){
+    document.body.classList.remove('welcomeOpen');
+    window.startMatchdayApp();
+  }
   else if('requestIdleCallback' in window)requestIdleCallback(window.warmMatchdayApp,{timeout:1500});
   else window.setTimeout(window.warmMatchdayApp,700);
 }catch(e){}
