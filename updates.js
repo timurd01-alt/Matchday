@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0923F",
+  "tag": "Fix",
+  "title": "No false stale-data alert",
+  "items": [
+   "The alert bell no longer says game data stopped refreshing on Sep 13. It now uses the most recent sync of predictions and results, the same time shown in the top strip."
+  ]
+ },
+ {
   "date": "Build 0923E",
   "tag": "Fix",
   "title": "Tidier community picks",

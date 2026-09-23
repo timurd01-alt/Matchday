@@ -1188,10 +1188,14 @@ function _collegeAlerts(){
   return out;
 }
 function computeSignalAlerts(){
-  const out=[],now=Date.now(),watchedNames=new Set(wlLoad()),updated=Date.parse(DATA.updated||'');
+  const out=[],now=Date.now(),watchedNames=new Set(wlLoad());
+  // Freshness is the newer of the provider fetch and the engine handoff. The
+  // college board is driven by the handoff, so a CFBD fetch frozen by its
+  // monthly quota is not "stale data" while the handoff keeps arriving.
+  const synced=_alertGlobal('MATCHDAY_BETBETTER_GENERATED_AT'),updatedIso=[DATA.updated,synced].filter(Boolean).sort((a,b)=>Date.parse(b)-Date.parse(a))[0]||'',updated=Date.parse(updatedIso);
   // Only a genuinely stale site is worth a reader's attention. Keyed by the
   // update it describes, so it is read once rather than once per refresh.
-  if(_alertEnabled('data')&&Number.isFinite(updated)&&(now-updated)>24*3600000)out.push({t:'data',key:`data:stale:${DATA.updated}`,txt:`Game data has not refreshed since ${_alertDay(DATA.updated)}. Predictions shown may be out of date.`});
+  if(_alertEnabled('data')&&Number.isFinite(updated)&&(now-updated)>24*3600000)out.push({t:'data',key:`data:stale:${updatedIso}`,txt:`Game data has not refreshed since ${_alertDay(updatedIso)}. Predictions shown may be out of date.`});
   (DATA.matches||[]).forEach(m=>{
     const watched=watchedNames.has(m.home?.name)||watchedNames.has(m.away?.name)||isFavoriteMatch(m);
     if(!watched)return;
