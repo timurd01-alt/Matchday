@@ -443,7 +443,7 @@ function marketPanel(m){
     if(Number.isFinite(price)&&price>=0&&price<=100){
       const stamp=Date.parse(read.generated_at||read.handoff_generated_at||'');
       const when=Number.isFinite(stamp)?` · ${esc(new Date(stamp).toLocaleString())}`:'';
-      h+=`<div class="readSide"><span>${esc(read.pick_name||'Model pick')}</span><strong>${Math.min(99.9,price).toFixed(1)}%</strong></div><div class="faintline">Market probability in Bet Better forecast${when}. Snapshot, not a live quote.</div>`;
+      h+=`<div class="readSide"><span>${esc(read.pick_name||'Model pick')}</span><strong>${Math.min(99.9,price).toFixed(1)}%</strong></div><div class="faintline">Market probability recorded with the published forecast${when}. Snapshot, not a live quote.</div>`;
     }else{
       h+=`<div class="nomk">${esc(oddsEtaLabel(m)||'No market price available yet.')}</div>`;
     }

@@ -49,9 +49,17 @@ class CommunityPickAvailabilityTests(unittest.TestCase):
         self.assertIn(".slice(0,40)", self.source)
 
     def test_model_only_picks_are_labeled_live_and_not_certain(self):
-        self.assertIn("Bet Better live model", self.source)
+        # The modelling engine is private and is not named anywhere a visitor
+        # can read. The label still has to say the number is live and provisional.
+        self.assertIn("Live model", self.source)
         self.assertIn("communityModelPctLabel(pct)", self.source)
-        self.assertIn("Bet Better probabilities pending", self.source)
+        self.assertIn("Model probabilities pending", self.source)
+        # The engine's name is gone from every string a visitor can read. Asserted
+        # on the old labels rather than the bare name, which still appears in
+        # developer comments explaining where the handoff comes from.
+        self.assertNotIn("Bet Better live model", self.source)
+        self.assertNotIn("Bet Better probabilities pending", self.source)
+        self.assertNotIn("Bet Better picks locked alongside yours", self.source)
         panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
         self.assertIn("${modelPctLabel(val)}", panels)
         self.assertIn("${modelPctLabel(pct)}", panels)

@@ -4,6 +4,19 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0922S",
+  "tag": "Fix",
+  "title": "Scorecard depth, naming, and a sidebar that covered the page",
+  "items": [
+   "Stop the navigation rail covering the left edge of the page on most laptop screens. The rail widens from 62px to 112px at 1181px, but the column reserved for it only widened at 1400px, so at every width in between — 1280 and 1366 among them — it sat on top of the first 50px of the content beside it and clipped the start of every heading, table row and label.",
+   "Draw the model's record for the picks that agreed with the market and the picks that went against it. Both were published in full — hit rate, expected rate, calibration gap and confidence interval — and neither was ever shown. Agreeing with the price returns 89.2% on 176 picks; going against it returns 47.8% on 23, against an expected 71.9%.",
+   "Say plainly why the two blank cells under 'Against the price' are blank: beating the price has no expected baseline to compare against.",
+   "Show the model's and the market's full records under the head-to-head comparison, which is scored only on the 25 games @timurknowsball picked. They are marked as the larger, separate sample that they are rather than mixed into the same bars.",
+   "Rename the research card to '@timurknowsball picks'.",
+   "Remove the modelling engine's name from every label a visitor can read."
+  ]
+ },
+ {
   "date": "Build 0922R",
   "tag": "Fix",
   "title": "Clear the stadium scoreboard from behind the headline",

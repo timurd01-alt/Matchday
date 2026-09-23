@@ -67,9 +67,47 @@ class MobileNavigationTests(unittest.TestCase):
         self.assertIn('grid-template-areas:"strip" "main" "side"', phone)
 
     def test_wide_desktop_grid_reserves_the_full_navigation_width(self):
+        """The rail's grid track must widen at the same breakpoint the rail does.
+
+        This asserted the track at min-width:1400px while the rail widens to
+        112px at min-width:1181px, so between those two widths -- 1280 and 1366
+        among them -- the rail sat 112px wide in a 62px track and covered the
+        first 50px of the content beside it. Pinning the literal breakpoint is
+        what let the two drift apart, so the relationship is checked instead.
+        """
+        import re
         css = (ROOT / "styles.css").read_text(encoding="utf-8")
-        wide = css[css.rindex("@media(min-width:1400px){"):]
-        self.assertIn("grid-template-columns:112px minmax(0,1fr)", wide)
+
+        def breakpoints(declaration):
+            found = []
+            for match in re.finditer(r"@media\(min-width:(\d+)px\)\{", css):
+                start = match.end()
+                depth, i = 1, start
+                while i < len(css) and depth:
+                    if css[i] == "{":
+                        depth += 1
+                    elif css[i] == "}":
+                        depth -= 1
+                    i += 1
+                if declaration in css[start:i]:
+                    found.append(int(match.group(1)))
+            return found
+
+        # The two-column rule is the one that wins: a later min-width:701px
+        # block collapses the three-column layout for every desktop width, so
+        # matching the bare declaration would also hit the three-column rule
+        # that block overrides -- and pass whatever the two-column one says.
+        rail = breakpoints(".sidebar{width:112px")
+        track = breakpoints(
+            ".app,.app.noinsight,.app.gamesWide{grid-template-columns:112px minmax(0,1fr)}"
+        )
+        self.assertTrue(rail, "no breakpoint widens the rail to 112px")
+        self.assertTrue(track, "no breakpoint widens the rail's grid track to 112px")
+        self.assertLessEqual(
+            min(track), min(rail),
+            f"the rail widens to 112px at {min(rail)}px but its grid track only "
+            f"grows at {min(track)}px, so between those widths it covers the content",
+        )
 
     def test_public_navigation_urls_support_history(self):
         panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")

@@ -536,9 +536,35 @@ function myPicksComparison(){
     +`<span>${label}</span>`
     +`<i class="cmpBar"><b style="width:${Math.round(hits/n*100)}%"></b></i>`
     +`<em>${hits}/${n}</em></div>`;
+  // The head-to-head above is deliberately restricted to the games I picked, so
+  // all three are scored on the same fixtures. The model and the market price
+  // far more games than that, and their full records belong on the page too --
+  // below, plainly marked as the different, larger sample that they are, rather
+  // than mixed into bars that only mean anything like-for-like.
+  const sc=typeof betbetterScorecard==='function'?betbetterScorecard():null;
+  const rec=sc?.record||{},vm=sc?.versus_market||{};
+  const full=Number(rec.hit_rate_pct),fullN=Number(rec.picks);
+  const beat=Number(vm.beat_market_pct),beatN=Number(vm.graded_priced_selections);
+  const wider=[];
+  if(Number.isFinite(full)&&Number.isFinite(fullN)&&fullN>n){
+    wider.push(`<div class="cmpWideRow"><span>Model</span>`
+      +`<strong>${esc(rec.wins??'—')}<span class="scDash">–</span>${esc(rec.losses??'—')}</strong>`
+      +`<em>${full.toFixed(1)}% of ${fullN} graded picks</em></div>`);
+  }
+  if(Number.isFinite(beat)&&Number.isFinite(beatN)&&beatN>n){
+    wider.push(`<div class="cmpWideRow"><span>Market</span>`
+      +`<strong>${beat.toFixed(1)}%</strong>`
+      +`<em>beat the locked price on ${beatN} priced selections</em></div>`);
+  }
+  const widerBlock=wider.length
+    ? `<div class="cmpWide"><div class="cmpWideHead">Across every graded pick</div>${wider.join('')}`
+      +`<p class="edisc">A much larger sample than the ${n} above, and not a like-for-like comparison: `
+      +`it covers every game the model priced, not only the ones @timurknowsball picked.</p></div>`
+    : '';
   return `<section class="scSection scComparison"><div class="seclbl">@timurknowsball vs model vs market</div>`
     +`<div class="cmpGrid">${row('@timurknowsball',mine,'cmpMine')}${row('Model',model,'cmpModel')}${row('Market',market,'cmpMarket')}</div>`
-    +`<p class="edisc">Same ${n} settled pick${n===1?'':'s'} for all three.${n<10?' Small sample.':''} Model forecasts were frozen before kickoff.</p></section>`;
+    +`<p class="edisc">Same ${n} settled pick${n===1?'':'s'} for all three.${n<10?' Small sample.':''} Model forecasts were frozen before kickoff.</p>`
+    +widerBlock+`</section>`;
 }
 
 function betbetterScorecard(){
@@ -595,6 +621,37 @@ function _scBands(bands){
     +`<th>Hit</th><th>Expected</th><th>Gap</th></tr></thead><tbody>${rows}</tbody></table></div>`
     +`<p class="edisc">Hit / expected by forecast confidence. A gap in either direction signals miscalibration.</p></section>`;
 }
+/* Where the model stood relative to the price.
+
+   The engine publishes a full calibration block for the picks that agreed with
+   the market and another for the picks that disagreed, and neither was drawn.
+   They are the most informative rows in the payload: agreeing with the price is
+   where a favourite-heavy book of picks earns its hit rate, and disagreeing
+   with it is the only place the model is really making a claim of its own. */
+function _scMarketSplit(vm){
+  const pairs=[['Agreed with the price',vm?.agreed_with_market],
+               ['Disagreed with the price',vm?.disagreed_with_market]];
+  const usable=pairs.filter(([,b])=>b&&Number.isFinite(Number(b.hit_rate_pct)));
+  if(!usable.length)return '';
+  const rows=usable.map(([label,b])=>{
+    const hit=Number(b.hit_rate_pct),exp=Number(b.expected_hit_rate_pct);
+    const ci=Array.isArray(b.confidence_interval_pct)?b.confidence_interval_pct:null;
+    return `<tr><td class="scBand">${esc(label)}</td>`
+      +`<td>${esc(b.picks??'—')}</td>`
+      +`<td>${esc(b.wins??'—')}<span class="scDash">–</span>${esc(b.losses??'—')}</td>`
+      +`<td>${Number.isFinite(hit)?hit.toFixed(1)+'%':'—'}</td>`
+      +`<td>${Number.isFinite(exp)?exp.toFixed(1)+'%':'—'}</td>`
+      +`<td>${_scGap(b.calibration_gap_points)}</td>`
+      +`<td>${ci?`${_scNum(ci[0])}–${_scNum(ci[1])}%`:'—'}</td></tr>`;
+  }).join('');
+  const share=Number(vm?.disagreement_share_pct);
+  return `<section class="scSection"><div class="seclbl">With the price and against it</div>`
+    +`<div class="scTableWrap"><table class="scTable scSplitTable"><thead><tr><th>Picks</th><th>N</th><th>W–L</th>`
+    +`<th>Hit</th><th>Expected</th><th>Gap</th><th>95% CI</th></tr></thead><tbody>${rows}</tbody></table></div>`
+    +`<p class="edisc">${Number.isFinite(share)?`The model took a different side from the market on ${share.toFixed(1)}% of priced picks. `:''}`
+    +`Agreeing with the price is where a book of favourites earns its hit rate; disagreeing is where the model is making a claim of its own. `
+    +`Small samples move these numbers a long way &mdash; read the interval, not the point.</p></section>`;
+}
 function _scRecent(rows){
   const graded=(rows||[]).filter(r=>['win','loss'].includes(String(r.result||'').toLowerCase()));
   if(!graded.length)return '';
@@ -629,10 +686,11 @@ function renderScore(){
     +`<span>${esc(rec.picks??'—')} graded picks</span></div>`
     +`<div class="scMetrics"><div class="scMetricHead"><span></span><span>Model</span><span>Against the price</span></div>`
     +`<div class="scMetricRow"><span>Result</span><strong>${Number.isFinite(hit)?hit.toFixed(1)+'%':'—'}</strong><strong>${Number.isFinite(beat)?beat.toFixed(1)+'%':'—'}</strong></div>`
-    +`<div class="scMetricRow"><span>Expected</span><strong>${Number.isFinite(exp)?exp.toFixed(1)+'%':'—'}</strong><span>—</span></div>`
-    +`<div class="scMetricRow"><span>Difference</span><strong>${_scGap(rec.calibration_gap_points)}</strong><span>—</span></div>`
+    +`<div class="scMetricRow"><span>Expected</span><strong>${Number.isFinite(exp)?exp.toFixed(1)+'%':'—'}</strong><span title="The engine publishes no expected baseline for beating the price">—</span></div>`
+    +`<div class="scMetricRow"><span>Difference</span><strong>${_scGap(rec.calibration_gap_points)}</strong><span title="The engine publishes no expected baseline for beating the price">—</span></div>`
     +`<div class="scMetricFoot"><span>Model: wins / graded picks · Against the price: beat the locked market price${Number.isFinite(priced)?` on ${priced} priced selections`:''}.</span>`
-    +`${ci?`<span>Model hit rate 95% CI ${_scNum(ci[0])}–${_scNum(ci[1])}%.</span>`:''}</div></div></section>`;
+    +`${ci?`<span>Model hit rate 95% CI ${_scNum(ci[0])}–${_scNum(ci[1])}%.</span>`:''}`
+    +`<span>Beating the price has no expected baseline to compare against, so those two cells stay blank.</span></div></div></section>`;
   const pending=Number(totals.awaiting_result)||0;
   const note=`<p class="edisc scCountNote">${esc(totals.graded_selections??'—')} graded selections across ${esc(totals.locked_events??'—')} locked cards. A card can carry more than one selection.`
     +`${pending?` ${pending} selections await a final score.`:''}</p>`;
@@ -648,6 +706,7 @@ function renderScore(){
   host.innerHTML=`<div class="vhead">Scorecard</div>`
     +`${record}${note}${reportable}`
     +(sc.caveat?`<details class="scExplainer"><summary>Reading these numbers <span aria-hidden="true">?</span></summary><p>${esc(scorecardCaveat(sc.caveat))}</p>${vm.basis?`<p>Price: ${esc(vm.basis)}.</p>`:''}</details>`:'')
+    +_scMarketSplit(vm)
     +_scBands(sc.by_confidence)
     +_scRecent(sc.recent)
     +myPicksComparison()

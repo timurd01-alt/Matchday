@@ -2332,6 +2332,16 @@ html{color-scheme:dark}
 .cmpModel .cmpBar b{background:var(--link,#76caff)}
 .cmpMarket .cmpBar b{background:var(--warn)}
 .cmpRow em{font-style:normal;text-align:right;color:var(--text)}
+/* The model's and the market's full records, under the like-for-like bars.
+   Deliberately not drawn as bars: they are a different, much larger sample and
+   a bar beside the three above would invite exactly the comparison the note
+   says not to make. */
+.cmpWide{margin-top:14px;padding-top:13px;border-top:1px solid var(--line)}
+.cmpWideHead{font-family:var(--mono);font-size:var(--fs-3xs);letter-spacing:.12em;text-transform:uppercase;color:var(--faint);font-weight:var(--fw-bold);margin-bottom:9px}
+.cmpWideRow{display:grid;grid-template-columns:58px auto minmax(0,1fr);align-items:baseline;gap:10px;padding:5px 0;font-family:var(--mono);font-size:var(--fs-sm);color:var(--muted)}
+.cmpWideRow strong{font-family:var(--display);font-size:var(--fs-md);color:var(--text)}
+.cmpWideRow em{font-style:normal;color:var(--faint);font-size:var(--fs-xs)}
+@media(max-width:560px){.cmpWideRow{grid-template-columns:auto auto;row-gap:2px}.cmpWideRow em{grid-column:1/-1}}
 .mpLateTag{font-style:normal;font-family:var(--mono);font-size:var(--fs-3xs);color:var(--warn);border:1px solid var(--line2);border-radius:4px;padding:0 3px;margin-left:5px}
 .mpLate{opacity:.72}
 /* Compact stat table that fills the tail of the last column. */
@@ -2595,8 +2605,14 @@ html{color-scheme:dark}
   .sidebar .navMore{display:none!important}
 }
 /* The wide-desktop rail is 112px (see the navigation breakpoint above), so
-   its grid track must grow with it instead of covering the first 50px of main. */
-@media(min-width:1400px){
+   its grid track must grow with it instead of covering the first 50px of main.
+
+   These two numbers have to be the same. The rail widens to 112px at
+   min-width:1181px but this track only grew at min-width:1400px, so at every
+   width in between -- 1280 and 1366 among them, which is most laptop screens --
+   the rail was 112px wide in a 62px track and sat on top of the first 50px of
+   the content beside it, clipping the left edge of every heading and table. */
+@media(min-width:1181px){
   .app,.app.noinsight,.app.gamesWide{grid-template-columns:112px minmax(0,1fr)}
 }
 
@@ -2612,6 +2628,11 @@ html{color-scheme:dark}
 .homeKpis span{font-size:var(--fs-sm);color:var(--muted)}
 
 /* Four primary phone destinations plus More. The sheet reveals everything. */
+/* Seven columns will not sit on a phone. The interval is the first thing to
+   go: the gap beside it already says whether the sample means anything. */
+@media(max-width:700px){
+  .scSplitTable th:nth-child(7),.scSplitTable td:nth-child(7){display:none}
+}
 @media(max-width:700px){
   .app,.app.noinsight,.app.gamesWide{grid-template-columns:1fr;grid-template-rows:46px minmax(0,1fr) 64px;grid-template-areas:"strip" "main" "side"}
   .sidebar .navbtn:not([data-mobile-primary]):not(.navMore){display:none}

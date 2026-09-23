@@ -137,7 +137,7 @@ function renderCommunity(){ensureHandle();const host=$('#view-community');const 
   ${renderWeeklyAwards()}
   <div class="status-grid">
    <div class="statuscard ${s.you>=s.model&&s.n?'ok':'info'}"><span class="slbl">Your record</span><div class="sval">${s.you}/${s.n||0}</div><div class="hint">${s.n?Math.round(s.you/s.n*100)+'% correct':'no graded picks yet'}</div></div>
-   <div class="statuscard info"><span class="slbl">Model record</span><div class="sval">${s.model}/${s.modelN||0}</div><div class="hint">Bet Better picks locked alongside yours</div></div>
+   <div class="statuscard info"><span class="slbl">Model record</span><div class="sval">${s.model}/${s.modelN||0}</div><div class="hint">Model picks locked alongside yours</div></div>
    <div class="statuscard ${s.beat?'ok':'info'}"><span class="slbl">Model beaten</span><div class="sval">${s.beat}</div><div class="hint">you right when the model was wrong</div></div>
    <div class="statuscard info"><span class="slbl">Streak</span><div class="sval">${s.streak}${s.streak>=3?' &#128293;':''}</div><div class="hint">${s.pending} awaiting result</div></div>
   </div>`;
@@ -175,7 +175,7 @@ function renderCommunity(){ensureHandle();const host=$('#view-community');const 
       return `<button class="btmbtn ${locked?'locked':''}" ${disabled} onclick="pickBtm('${m.id}','${side}')">${esc(label)}${pct!=null?` <b>${communityModelPctLabel(pct)}</b>`:''}</button>`;};
     h+=`<div class="btmcard"><div class="btmmatch"><span class="btmSide">${teamMark(m.home.name)}<span>${esc(m.home.name)}</span></span><span class="mvvs">vs</span><span class="btmSide away"><span>${esc(m.away.name)}</span>${teamMark(m.away.name)}</span></div>${p?`<div class="btmlocked">your pick: ${esc(p.pick==='h'?m.home.name:p.pick==='a'?m.away.name:'Draw')}</div>`:''}
       <div class="btmrow">${sideBtn('h',m.home.name||'Home',x.h)}${x.d>0?sideBtn('d',t('Draw'),x.d):''}${sideBtn('a',m.away.name||'Away',x.a)}</div>
-      <div class="btmmeta">${read?`Bet Better live model: <b>${esc(read.pick_name||'')}</b> ${communityModelPctLabel(read.model_pct)} · may change before kickoff · `:'Bet Better probabilities pending · '}${p?'your pick locked — graded when final':'pick before kickoff to play'}</div></div>`;});
+      <div class="btmmeta">${read?`Live model: <b>${esc(read.pick_name||'')}</b> ${communityModelPctLabel(read.model_pct)} · may change before kickoff · `:'Model probabilities pending · '}${p?'your pick locked — graded when final':'pick before kickoff to play'}</div></div>`;});
   const graded=Object.values(picks).filter(p=>p.result).sort((a,b)=>b.ts-a.ts);
   if(graded.length){h+=`<div class="seclbl" style="margin-top:18px">Your results</div>`+graded.slice(0,20).map(p=>{
     const nm=p.pick==='h'?p.code.h:p.pick==='a'?p.code.a:'Draw';
@@ -934,7 +934,7 @@ ${picks.map(one).join('')}
 </section>`;
 }
 
-/* My picks, against the model and the market.
+/* @timurknowsball's picks, against the model and the market.
    Three honesty constraints ship with this data and all three are obeyed:
    `reportable` false means the sample is too small to state a record as though
    it meant something; `excluded` counts picks recorded after kickoff, which are
@@ -968,7 +968,7 @@ function modMyPicks(){
   const losses=settled.length-wins;
   const agreed=settled.filter(p=>p.model_agreed).length;
   const record=`<div class="modStatSub"><b>${wins}–${losses}</b> on settled picks · the model agreed on ${agreed}</div>`;
-  return `<section class="boardMod modMine"><header><h3>My picks</h3><span>vs model &amp; market</span></header>
+  return `<section class="boardMod modMine"><header><h3>@timurknowsball picks</h3><span>vs model &amp; market</span></header>
 ${record}
 <div class="mpHead"><span>pick</span><span>model</span><span>market</span></div>
 <ul class="modList">${rows}</ul>
