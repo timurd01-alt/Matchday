@@ -2958,27 +2958,30 @@ body.welcomeOpen{height:auto;min-height:100vh;overflow-y:auto}
 
 /* ---- welcome gate: identity and atmosphere --------------------------------
    The logo is small and top-left, aligned to the content column: identity,
-   not a second headline competing with the hero. The background is the one
-   atmospheric element on the page -- a faint data field (grid plus a single
-   probability curve) with an oversized "M" watermark at ~4% contrast. It
-   lives only behind the first screen and fades out, so the page reads
-   atmosphere -> information -> product and every later section sits on the
-   plain app background. */
+   not a second headline competing with the hero.
+
+   The background is the application's own, not a new one. It reuses the
+   treatment the app already gives its hero surfaces (.modalHero, .tpHead,
+   .analystPanel): --bg underneath, a soft --signal glow from one corner and a
+   --home glow from the other, plus the faint turf tint of .pitch laid as
+   wide yard-line bands. It is one fixed layer behind the whole page, so it
+   does not change between the hero and the footer, and entering the app
+   lands on the same colours the visitor was already looking at. */
 #welcomeGate .wx-brand{display:inline-flex;align-items:center;gap:8px}
 #welcomeGate .wx-logo{width:24px;height:24px;border-radius:6px;margin:0;box-shadow:none;animation:none}
-#welcomeGate::before,#welcomeGate::after{content:"";position:absolute;left:0;right:0;top:0;height:min(100vh,960px);pointer-events:none;z-index:0}
-#welcomeGate::before{
-  background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 600' preserveAspectRatio='none'%3E%3Cpath d='M0 520 C 380 520 480 90 1200 70' fill='none' stroke='%233ad17a' stroke-opacity='.18' stroke-width='1.5'/%3E%3Cpath d='M0 560 C 420 560 560 240 1200 210' fill='none' stroke='%23e7edf4' stroke-opacity='.07' stroke-width='1'/%3E%3C/svg%3E"),
-    linear-gradient(rgba(231,237,244,.035) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(231,237,244,.035) 1px,transparent 1px);
-  background-size:100% 100%,64px 64px,64px 64px;
-  background-position:center,center top,center top;
-  -webkit-mask-image:radial-gradient(ellipse 80% 70% at 50% 40%,#000 30%,transparent 100%);
-  mask-image:radial-gradient(ellipse 80% 70% at 50% 40%,#000 30%,transparent 100%)}
-#welcomeGate::after{
-  content:"M";display:flex;align-items:center;justify-content:center;overflow:hidden;
-  font-family:var(--sans);font-weight:var(--fw-semibold);font-size:var(--fs-wx-mark);line-height:1;letter-spacing:-.06em;
-  color:rgba(231,237,244,.035);
-  -webkit-mask-image:linear-gradient(#000 45%,transparent 95%);mask-image:linear-gradient(#000 45%,transparent 95%)}
+#welcomeGate::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(circle at 12% 0%,rgba(58,209,122,.10),transparent 42%),
+    radial-gradient(circle at 88% 100%,rgba(76,194,255,.07),transparent 42%),
+    repeating-linear-gradient(90deg,transparent 0 119px,rgba(58,209,122,.035) 119px 120px),
+    linear-gradient(180deg,rgba(58,209,122,.03),rgba(22,74,45,.06)),
+    var(--bg)}
 #welcomeGate .wx{position:relative;z-index:1}
+/* The header is the app's top strip: --glass with a --line rule. */
+#welcomeGate .wx-top{margin:0 -32px;padding:16px 32px;background:rgba(14,20,29,.72);border-bottom:1px solid var(--line);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+/* Section rules and cards use the app's own surfaces: .card is --panel on
+   --line at --r. */
+#welcomeGate .wx-section,#welcomeGate .wx-foot{border-top-color:var(--line)}
+#welcomeGate .wx-card{background:var(--panel);border-color:var(--line);border-radius:var(--r)}
+#welcomeGate .wx-card:hover{border-color:rgba(58,209,122,.45)}
+@media(max-width:760px){#welcomeGate .wx-top{margin:0 -16px;padding:16px}}
