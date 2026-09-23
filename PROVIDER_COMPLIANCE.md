@@ -326,8 +326,9 @@ legal advice.
   play-by-play, odds (ESPN BET quotes are dropped in `provider_adapters.py`),
   injuries, depth charts, schedules as a fixture source, team data, logos,
   images, video, article text, and any raw payload or bulk redistribution.
-  Statistics, schedules, odds and ratings inputs come from the other providers
-  listed below. The raw ESPN response is never stored or published; only the
+  Statistics, schedules and ratings inputs come from CollegeFootballData
+  (CFBD) and CollegeBasketballData (CBBD), and market prices from The Odds
+  API -- see the provider checks below. The raw ESPN response is never stored or published; only the
   fields in the table survive. Residual risk, taken knowingly: the scoreboard
   endpoint is undocumented and used without an agreement, so ESPN's site terms
   still govern the request itself even though the facts it returns are not
