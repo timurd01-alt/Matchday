@@ -84,10 +84,14 @@ def week_window(now: dt.datetime | None = None) -> tuple[dt.datetime, dt.datetim
     A college football week is Tuesday through Monday, so this covers the
     Thursday/Friday openers, Saturday, and the Sunday and Monday night games,
     and stops before the next Tuesday. On a Monday the window is the rest of
-    that day, which is correct: those games are still this week's.
+    that day, which is correct: those games are still this week's. On a
+    Sunday the weekend is over, so the window is the whole coming week: the
+    Sunday automation ships next week's picks that afternoon.
     """
     now = now or _utc_now()
     days_to_monday = (0 - now.weekday()) % 7
+    if now.weekday() == 6:
+        days_to_monday = 8
     monday = (now + dt.timedelta(days=days_to_monday)).date()
     end = dt.datetime.combine(monday, dt.time(23, 59, 59), tzinfo=dt.timezone.utc)
     return now, end

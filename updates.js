@@ -4,6 +4,17 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0923A",
+  "tag": "Automation",
+  "title": "Sunday updates ship on their own",
+  "items": [
+   "Every Sunday afternoon the ratings, results, AP Top 25 and next week's predictions refresh and publish without a manual step.",
+   "The AP poll's week-to-week movement now carries over correctly between updates.",
+   "The weekly slate export now covers the full coming week when it runs on Sunday.",
+   "The personal ballot is now called the TimurKnowsBall Ballot."
+  ]
+ },
+ {
   "date": "Build 0922T",
   "tag": "Update",
   "title": "Make the site identifiable as Matchday Terminal",

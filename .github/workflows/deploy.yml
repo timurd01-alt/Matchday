@@ -399,6 +399,11 @@ jobs:
           if [ -f ncaaf_venue_coords.json ]; then
             git add -- ncaaf_venue_coords.json
           fi
+          # The AP poll's week-to-week movement is measured against the last
+          # stored poll, so the stored poll has to move when the AP's does.
+          if [ -f ap_poll_snapshot.json ]; then
+            git add -- ap_poll_snapshot.json
+          fi
           # `git add` fails the ENTIRE step on a pathspec matching nothing
           # (verified: exit 128, "did not match any files"), and these ledgers
           # legitimately may not exist -- mlb_shadow_ledger.jsonl before the

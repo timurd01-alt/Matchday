@@ -1213,7 +1213,7 @@ function collegeBallotTableHTML(){
   if(!b)return '';
   if(b.source==='x'){
     const rows=b.rankings.map(r=>`<tr${r.rank<=4?' class="pollRanked"':''}><td class="pollRank">${Number(r.rank)}</td><td class="pollTeam teamClickable" data-team="${esc(r.team_name)}" onclick="openTeamModal(this.dataset.team)"><span class="pollTeamInner">${teamMark(r.team_name)}<span>${esc(r.team_name)}</span></span></td></tr>`).join('');
-    return `<section class="pollSection ballotSection personalBallot"><div class="pollHead"><div><div class="vhead" style="margin:0">My Top 25</div>
+    return `<section class="pollSection ballotSection personalBallot"><div class="pollHead"><div><div class="vhead" style="margin:0">TimurKnowsBall Ballot</div>
       <p class="pollMeta">Personal ballot · published ${esc(b.published_on||'')} · separate from the model</p></div></div>
       <div class="pollScroll"><table class="pollTable officialPollTable"><thead><tr><th>#</th><th>Team</th></tr></thead><tbody>${rows}</tbody></table></div>
       <p class="modNote">${esc(b.note||'')}${b.source_url?` <a href="${esc(b.source_url)}" target="_blank" rel="noopener">View the original post on X</a>.`:''}</p>
@@ -1233,7 +1233,7 @@ function collegeBallotTableHTML(){
       +`<td class="pollNum">${s.power_rank?'#'+Number(s.power_rank):'—'}</td></tr>`;
   }).join('');
   const leftOff=(b.left_off||[]).map(t=>`${esc(t.team_name)} (${esc(t.record)}, SOR #${Number(t.sor_rank)})`).join(', ');
-  return `<section class="pollSection ballotSection"><div class="pollHead"><div><div class="vhead" style="margin:0">My Top 25</div>
+  return `<section class="pollSection ballotSection"><div class="pollHead"><div><div class="vhead" style="margin:0">TimurKnowsBall Ballot</div>
       <p class="pollMeta">My ballot · ${esc(b.published_on||'')} · ranked on résumé, not on the power rating</p></div></div>
     <div class="pollScroll"><table class="pollTable"><thead><tr>
       <th>#</th><th title="Change since my last ballot">Move</th><th>Team</th><th>Rec</th><th title="Strength of record rank: how hard this record would be for a top-25-level team to match">SOR</th><th title="Wins over the power rating's top 25">T25 W</th><th>Best win</th><th title="Losses to teams outside the power rating's top 75">Bad L</th><th title="Power rating rank, the eye test">PR</th>
@@ -1271,7 +1271,7 @@ renderGroups=function(){
   if(ballotTable&&!host.querySelector('.ballotSection'))host.insertAdjacentHTML('afterbegin',ballotTable);
   if(!host.querySelector('.rankingsIntro'))host.insertAdjacentHTML('afterbegin',`<section class="rankingsIntro">
     <div class="vhead">Rankings</div>
-    <div class="banner"><b>Three views of the college landscape.</b> Power Ratings measure opponent-adjusted team strength. My Top 25 ranks résumés. Conferences show the standings and schedule context beneath both.</div>
+    <div class="banner"><b>Three views of the college landscape.</b> Power Ratings measure opponent-adjusted team strength. The TimurKnowsBall Ballot ranks résumés. Conferences show the standings and schedule context beneath both.</div>
   </section>`);
   const ballot=host.querySelector('.ballotSection');
   if(ballot&&!host.querySelector('[data-ranking-section="top25"]'))ballot.insertAdjacentHTML('beforebegin',`<div class="seclbl" data-ranking-section="top25">Top 25</div><div class="hint" style="margin-bottom:8px">A résumé ballot, kept separate from the predictive power rating.</div>`);
