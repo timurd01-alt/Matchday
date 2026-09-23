@@ -684,6 +684,17 @@ function renderWelcomeUpset(){
     +`<div class="wuBars">${bar('','model',model)}${Number.isFinite(market)?bar('mkt','market',market):''}</div>`
     +`<p class="wuNote">The model's biggest contrarian call of the week — to watch and grade, not a recommended bet.</p>`;
 }
+// The record line under THE RECORD, summed from the scorecard's own graded
+// totals. Absent data hides it -- the gate never states a number it cannot source.
+function renderWelcomeRecord(){
+  const host=$('#welcomeRecord');if(!host)return;
+  const all=(typeof MATCHDAY_BETBETTER_SCORECARD!=='undefined')?MATCHDAY_BETBETTER_SCORECARD:null;
+  const sports=Object.values(all?.sports||{}).filter(s=>s?.available);
+  const w=sports.reduce((n,s)=>n+(Number(s.record?.wins)||0),0),l=sports.reduce((n,s)=>n+(Number(s.record?.losses)||0),0);
+  if(!(w+l)){host.hidden=true;host.innerHTML='';return}
+  host.hidden=false;
+  host.innerHTML=`<b>${w}–${l}</b><span>${(100*w/(w+l)).toFixed(1)}% of graded picks correct</span>`;
+}
 function renderWelcomeStatusNote(){
   const host=$('#welcomeStatusNote');if(!host)return;
   const totals=scorecardTotals();
@@ -713,7 +724,7 @@ function bindWelcomeTilt(){
 function renderWelcome(){
   const gate=$('#welcomeGate');if(!gate)return;
   const dismissed=welcomeDismissed();gate.hidden=dismissed;document.body.classList.toggle('welcomeOpen',!dismissed);if(dismissed){runCarousel('welcome',null);return}
-  renderWelcomeStats();renderWelcomeStatusNote();renderWelcomeUpset();bindWelcomeTilt();
+  renderWelcomeStats();renderWelcomeStatusNote();renderWelcomeUpset();renderWelcomeRecord();bindWelcomeTilt();
   // The card only ever shows a fixture the engine has priced. It is a model
   // read, so a game without one has nothing to say here -- an out-of-season
   // board (nothing 55 days out is priced) gets the standing panel below rather

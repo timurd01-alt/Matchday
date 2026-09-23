@@ -28,8 +28,9 @@ class MobileStartupTests(unittest.TestCase):
         self.assertIn(enter_button, self.html)
         self.assertNotIn('welcomeEnterFast', self.html)
         self.assertLess(self.html.index('<div class="welcomeActions">'), self.html.index(enter_button))
-        # The stadium scene is the welcome page's artwork, not a startup cost.
-        self.assertIn('<div class="welcomeScene"', self.html)
+        # The gate is one plain design system now: no decorative stadium,
+        # blobs or noise layers competing with the copy.
+        self.assertNotIn('<div class="welcomeScene"', self.html)
         self.assertNotIn('id="retiredWelcomeScene"', self.html)
         self.assertNotIn('class="welcomeEnter" href=', self.html)
         self.assertIn("if(gate)gate.hidden=true", self.html)

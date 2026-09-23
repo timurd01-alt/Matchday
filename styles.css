@@ -2884,3 +2884,74 @@ body.welcomeOpen{height:auto;min-height:100vh;overflow-y:auto}
 .commAt{margin:0;text-align:center}
 .commGameName small{padding-left:52px}
 .commGame>span:nth-child(2),.commGame>span:nth-child(3){overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* ---- welcome gate: one design system ---------------------------------------
+   The gate used to give every idea its own treatment -- a stadium scene, glow
+   blobs, a tilting preview card, pills, a shimmering button, a display face
+   beside a mono face -- so nothing read as part of one product. It is now a
+   single vertical story built from a deliberately small vocabulary:
+     type   one family (--sans), five roles: hero 52 / section 26 / sub 17 /
+            body 16 / meta 12; weights 400-500-600 only
+     space  8px base, used as 8 16 24 32 48 64 96 128
+     color  neutrals + --signal as the one accent; no decorative color
+     shape  one card (.wx-card), one button (.welcomeEnter), one link style
+   Declared last and scoped under #welcomeGate so it wins over the older
+   welcome layers above without deleting rules other tests pin. */
+#welcomeGate{--fs-wx-hero:3.714rem;--fs-wx-hero-sm:2.857rem;--fs-wx-section:1.857rem;--fs-wx-section-sm:1.714rem;--fs-wx-sub:1.214rem;--fs-wx-body:1.143rem;--fs-wx-meta:.857rem;display:block;place-items:initial;padding:0;background:var(--bg);font-family:var(--sans);font-size:var(--fs-wx-body);line-height:1.6;color:var(--text)}
+#welcomeGate[hidden]{display:none}
+#welcomeGate .wx{width:min(1152px,100%);margin:0 auto;padding:0 32px}
+#welcomeGate h1,#welcomeGate h2,#welcomeGate h3{font-family:var(--sans);color:var(--text);letter-spacing:-.015em;margin:0}
+#welcomeGate h1{font-size:var(--fs-wx-hero);line-height:1.1;font-weight:var(--fw-semibold);letter-spacing:-.025em;animation:none}
+#welcomeGate h2{font-size:var(--fs-wx-section);line-height:1.25;font-weight:var(--fw-semibold);margin-top:8px}
+#welcomeGate h3{font-size:var(--fs-wx-sub);line-height:1.4;font-weight:var(--fw-medium)}
+#welcomeGate p{margin:0}
+#welcomeGate .wx-meta{font-size:var(--fs-wx-meta);line-height:1.5;font-weight:var(--fw-medium);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+#welcomeGate .wx-quiet{letter-spacing:.02em;text-transform:none}
+#welcomeGate .wx-lead,#welcomeGate .wx-body,#welcomeGate .wx-body p{font-size:var(--fs-wx-body);font-weight:var(--fw-regular);color:var(--muted);max-width:60ch}
+#welcomeGate .wx-brand{font-size:var(--fs-wx-meta);font-weight:var(--fw-semibold);letter-spacing:.08em;text-transform:uppercase;color:var(--text)}
+/* The one link style: every secondary action on the page. */
+#welcomeGate .wx-link,#welcomeGate .wx-footLinks a{appearance:none;background:none;border:0;padding:8px 0;min-height:44px;display:inline-flex;align-items:center;gap:8px;font:inherit;font-size:var(--fs-wx-meta);font-weight:var(--fw-semibold);letter-spacing:.08em;text-transform:uppercase;color:var(--signal);cursor:pointer}
+#welcomeGate .wx-link:hover,#welcomeGate .wx-footLinks a:hover{text-decoration:underline;text-underline-offset:4px}
+#welcomeGate :is(.wx-link,.wx-card,.wx-footLinks a,.welcomeEnter):focus-visible{outline:2px solid var(--signal);outline-offset:4px;border-radius:8px}
+#welcomeGate .wx-top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:24px 0}
+#welcomeGate .wx-hero{padding:128px 0 96px;text-align:center;display:flex;flex-direction:column;align-items:center}
+#welcomeGate .wx-hero h1{margin-top:16px}
+#welcomeGate .wx-hero .wx-lead{margin-top:16px}
+#welcomeGate .wx-hero .welcomeActions{margin-top:32px;justify-content:center}
+#welcomeGate .wx-hero .wx-quiet{margin-top:16px}
+/* The one button. */
+#welcomeGate .welcomeEnter{width:auto;min-height:48px;padding:0 24px;gap:8px;justify-content:center;border:1px solid var(--signal);border-radius:8px;background:var(--signal);color:#070a0f;font-family:var(--sans);font-size:var(--fs-wx-body);font-weight:var(--fw-semibold);box-shadow:none;transform:none;transition:background-color .15s ease}
+#welcomeGate .welcomeEnter:hover{background:#5fdc94;transform:none;box-shadow:none}
+#welcomeGate .welcomeEnter::after{content:none;animation:none}
+#welcomeGate .welcomeActions{animation:none}
+#welcomeGate .wx-section{padding:96px 0;border-top:1px solid var(--line)}
+#welcomeGate .wx-grid{list-style:none;margin:48px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px}
+#welcomeGate .wx-grid li h3{margin-top:8px}
+#welcomeGate .wx-grid li p{margin-top:8px;color:var(--muted)}
+#welcomeGate .wx-num{font-size:var(--fs-wx-meta);font-weight:var(--fw-medium);letter-spacing:.08em;color:var(--signal)}
+/* The one card: only for things you can click. Identical by construction. */
+#welcomeGate .wx-card{appearance:none;text-align:left;font:inherit;color:inherit;cursor:pointer;display:flex;flex-direction:column;align-items:flex-start;height:100%;padding:24px;border:1px solid var(--line2);border-radius:8px;background:var(--bg2);transition:border-color .15s ease}
+#welcomeGate .wx-card:hover{border-color:var(--signal)}
+#welcomeGate .wx-card h3{margin-top:8px}
+#welcomeGate .wx-card p{margin-top:8px;color:var(--muted);flex:1}
+#welcomeGate .wx-cta{margin-top:24px;font-size:var(--fs-wx-meta);font-weight:var(--fw-semibold);letter-spacing:.08em;text-transform:uppercase;color:var(--signal)}
+#welcomeGate .wx-record,#welcomeGate .wx-research{text-align:center;display:flex;flex-direction:column;align-items:center}
+#welcomeGate .wx-record .wx-body,#welcomeGate .wx-research .wx-body{margin-top:16px}
+#welcomeGate .wx-stat{margin-top:48px;display:flex;flex-direction:column;align-items:center;gap:8px}
+#welcomeGate .wx-stat[hidden]{display:none}
+#welcomeGate .wx-stat b{font-size:var(--fs-wx-hero);line-height:1.1;font-weight:var(--fw-semibold);letter-spacing:-.025em;font-variant-numeric:tabular-nums;color:var(--text)}
+#welcomeGate .wx-stat span{font-size:var(--fs-wx-meta);font-weight:var(--fw-medium);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+#welcomeGate .wx-record>.wx-link,#welcomeGate .wx-research>.wx-link{margin-top:32px}
+#welcomeGate .wx-foot{padding:96px 0 64px;border-top:1px solid var(--line);text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px}
+#welcomeGate .wx-footLinks{display:flex;flex-wrap:wrap;justify-content:center;gap:0 24px;margin-top:24px}
+#welcomeGate .wx-footLinks a{color:var(--muted);font-weight:var(--fw-medium);letter-spacing:.02em;text-transform:none}
+@media(max-width:760px){
+  #welcomeGate .wx{padding:0 16px}
+  #welcomeGate h1,#welcomeGate .wx-stat b{font-size:var(--fs-wx-hero-sm)}
+  #welcomeGate h2{font-size:var(--fs-wx-section-sm)}
+  #welcomeGate .wx-hero{padding:64px 0}
+  #welcomeGate .wx-section{padding:64px 0}
+  #welcomeGate .wx-grid{grid-template-columns:1fr;gap:24px;margin-top:32px}
+  #welcomeGate .welcomeEnter{width:100%}
+}
+@media(prefers-reduced-motion:reduce){#welcomeGate .wx-card,#welcomeGate .welcomeEnter{transition:none}}

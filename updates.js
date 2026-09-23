@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0923G",
+  "tag": "Design",
+  "title": "A calmer, consistent Welcome page",
+  "items": [
+   "The Welcome page is now one vertical story: what Matchday is, how it works, where to start, the public record, and research.",
+   "One font, one type scale, one card style, one button and an 8px spacing system replace the stadium artwork, glow effects and mixed shapes.",
+   "Games, Rankings and Scorecard now sit side by side as three identical cards, and the record shows the graded win–loss total once it has loaded."
+  ]
+ },
+ {
   "date": "Build 0923F",
   "tag": "Fix",
   "title": "No false stale-data alert",
