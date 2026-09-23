@@ -70,9 +70,14 @@ async function lockPick(db, body) {
   if (!match || match.status !== "UPCOMING" || !Number.isFinite(kickoff) || kickoff <= Date.now() + 30000) {
     return { status: 409, payload: { ok: false, error: "pick window closed" } };
   }
+  // A pick may be changed until kickoff; the window check above and the
+  // kickoff guard on the update both refuse a change once the game is on.
   await db.query(
     `INSERT INTO verified_picks(device_id,comp,match_id,handle,pick,kickoff,created_at)
-     VALUES($1,$2,$3,$4,$5,$6,$7) ON CONFLICT(device_id,comp,match_id) DO NOTHING`,
+     VALUES($1,$2,$3,$4,$5,$6,$7)
+     ON CONFLICT(device_id,comp,match_id) DO UPDATE
+       SET pick=EXCLUDED.pick, handle=EXCLUDED.handle, created_at=EXCLUDED.created_at
+       WHERE verified_picks.result IS NULL AND verified_picks.kickoff > EXCLUDED.created_at + 30000`,
     [owner.ownerId, comp, matchId, owner.handle, pick, kickoff, Date.now()]
   );
   return { status: 200, payload: { ok: true, handle: owner.handle, signedIn: !!owner.account } };
@@ -200,6 +205,58 @@ async function leaderboard(db, period) {
   return { ok: true, board: rows.rows.map(row => ({ ...row, handle: collegeHandle(row.handle), streak: 0 })), period: allowedPeriod };
 }
 
+// What the community is picking: per-match counts for one competition's games
+// that have not kicked off yet (plus those in the last day, so a finished
+// game's split stays readable). Counts only -- no identities.
+async function consensus(db, comp) {
+  if (!ALLOWED_COMPS.has(comp)) return { ok: false, error: "invalid competition" };
+  const rows = await db.query(
+    `SELECT match_id,
+            COUNT(*) FILTER (WHERE pick='h')::int AS h,
+            COUNT(*) FILTER (WHERE pick='d')::int AS d,
+            COUNT(*) FILTER (WHERE pick='a')::int AS a
+     FROM verified_picks
+     WHERE comp=$1 AND kickoff >= $2
+     GROUP BY match_id`,
+    [comp, Date.now() - 86400000]
+  );
+  const games = {};
+  for (const row of rows.rows) games[row.match_id] = { h: row.h, d: row.d, a: row.a };
+  return { ok: true, comp, games };
+}
+
+// A light feed of what people did: recent locked picks, and yesterday's
+// records for anyone who had at least three picks graded that day. Handles are
+// the assigned, pseudonymous ones already shown on the leaderboard.
+async function activity(db, comp) {
+  if (!ALLOWED_COMPS.has(comp)) return { ok: false, error: "invalid competition" };
+  const picks = await db.query(
+    `SELECT COALESCE(a.handle, v.handle) AS handle, v.match_id, v.pick, v.created_at
+     FROM verified_picks v LEFT JOIN accounts a ON a.owner_key = v.device_id
+     WHERE v.comp=$1 AND v.created_at >= $2
+     ORDER BY v.created_at DESC LIMIT 25`,
+    [comp, Date.now() - 7 * 86400000]
+  );
+  const dayStart = new Date(); dayStart.setUTCHours(0, 0, 0, 0);
+  const since = dayStart.getTime() - 86400000;
+  const days = await db.query(
+    `SELECT COALESCE(MAX(a.handle), MAX(v.handle)) AS handle,
+            COUNT(*) FILTER (WHERE v.result=v.pick)::int AS wins,
+            COUNT(*) FILTER (WHERE v.result<>v.pick)::int AS losses,
+            MAX(v.graded_at) AS at
+     FROM verified_picks v LEFT JOIN accounts a ON a.owner_key = v.device_id
+     WHERE v.comp=$1 AND v.result IS NOT NULL AND v.graded_at >= $2 AND v.graded_at < $3
+     GROUP BY v.device_id HAVING COUNT(*) >= 3
+     ORDER BY COUNT(*) FILTER (WHERE v.result=v.pick) DESC LIMIT 5`,
+    [comp, since, dayStart.getTime()]
+  );
+  const items = [
+    ...picks.rows.map(row => ({ kind: "pick", handle: collegeHandle(row.handle), matchId: row.match_id, pick: row.pick, at: Number(row.created_at) })),
+    ...days.rows.map(row => ({ kind: "day", handle: collegeHandle(row.handle), wins: row.wins, losses: row.losses, at: Number(row.at) })),
+  ].sort((x, y) => y.at - x.at).slice(0, 25);
+  return { ok: true, comp, items };
+}
+
 export default async function handler(req, res) {
   setHeaders(req, res);
   if (req.method === "OPTIONS") return res.status(204).end();
@@ -231,6 +288,12 @@ export default async function handler(req, res) {
     const action = String(req.query.action || "");
     if (action === "leaderboard" && req.method === "GET") {
       return res.status(200).json(await leaderboard(db, String(req.query.period || "all")));
+    }
+    if ((action === "consensus" || action === "activity") && req.method === "GET") {
+      const comp = String(req.query.comp || "").toLowerCase();
+      const payload = action === "consensus" ? await consensus(db, comp) : await activity(db, comp);
+      res.setHeader("Cache-Control", "public, s-maxage=60, stale-while-revalidate=120");
+      return res.status(payload.ok ? 200 : 400).json(payload);
     }
     if (action === "providers" && req.method === "GET") {
       return res.status(200).json({

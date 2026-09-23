@@ -54,7 +54,6 @@ function communityPickProbs(m){
   if(home?.model_pct!=null&&away?.model_pct!=null)return {h:+home.model_pct,d:0,a:+away.model_pct,source:'betbetter',read};
   return {h:null,d:null,a:null,source:'none',read:null};
 }
-function pickBtm(id,side){if(submitPick(id,side)){}}
 function btmAnalytics(db){
   const g=Object.values(db.picks||{}).filter(p=>p.result);
   if(g.length<3)return null;
@@ -124,82 +123,105 @@ function renderAccountRow(){
   return `<div class="acctRow"><span class="acctState">Playing as a guest — clearing this browser loses your record. To recover scores on another device or after clearing your browser, sign in with Google or GitHub, then use that same account to return.</span>
     <span class="acctBtns">${buttons}</span>${note}</div>`;
 }
-function renderCommunity(){ensureHandle();const host=$('#view-community');const fullDb=btmGrade();const db=btmScoped(fullDb);const s=btmStats(db);
-  const scopeName=DATA.competition||DATA.comp_key||'This sport';
+// Community answers one question: what are other Matchday users picking?
+// Model performance lives on Scorecard, rankings on Rankings, analysis on
+// Games -- so this page is three light sections and no dashboards:
+//   1. Community picks  -- the week's games, the community split beside the
+//      model, and your own pick. Picks are a draft until "Submit picks".
+//   2. Leaderboard      -- This week | Season, W-L only.
+//   3. Recent activity  -- who picked what, and yesterday's records.
+let COMM_ALL=false,COMM_FLASH='',COMM_OPEN='',COMM_CONSENSUS={},COMM_ACTIVITY=null,COMM_FETCHED='';
+function btmDraft(){try{return JSON.parse(localStorage.getItem('matchday.btmDraft')||'{}')||{}}catch(e){return {}}}
+function btmDraftSave(d){try{localStorage.setItem('matchday.btmDraft',JSON.stringify(d))}catch(e){}}
+function draftPick(id,side){const d=btmDraft();if(d[id]===side)delete d[id];else d[id]=side;btmDraftSave(d);renderCommunity()}
+function pickBtm(id,side){draftPick(id,side)}
+function clearDraft(){btmDraftSave({});renderCommunity()}
+function toggleCommGame(id){COMM_OPEN=COMM_OPEN===id?'':id;renderCommunity()}
+function submitDraft(){
+  const d=btmDraft(),ids=Object.keys(d);if(!ids.length)return;
+  if(!confirm(`Submit ${ids.length} pick${ids.length===1?'':'s'}? You can change a pick until kickoff; after that it is locked and graded.`))return;
+  let done=0;const left={};
+  ids.forEach(id=>{if(submitPick(id,d[id],false))done++;else{const m=(DATA.matches||[]).find(x=>String(x.id)===String(id));if(m&&isCommunityPickOpen(m)&&btmLoad().picks?.[id]?.pick!==d[id])left[id]=d[id]}});
+  btmDraftSave(left);
+  COMM_FLASH=done?`${done} pick${done===1?'':'s'} submitted.`:'Nothing was submitted: those games have started or were already picked.';
+  COMM_FETCHED='';renderCommunity();
+}
+async function commFetch(action,comp){
+  if(!LEADERBOARD_URL)return null;
+  try{const r=await fetch(`${LEADERBOARD_URL}?action=${action}&comp=${encodeURIComponent(comp)}`);const d=await r.json();return d.ok?d:null}catch(e){return null}
+}
+function commLoad(comp){
+  const stamp=comp+':'+Math.floor(Date.now()/60000);if(COMM_FETCHED===stamp)return;COMM_FETCHED=stamp;
+  Promise.all([commFetch('consensus',comp),commFetch('activity',comp),fetchLeaderboard(lbPeriod())]).then(([c,a,board])=>{
+    COMM_CONSENSUS=c?.games||{};COMM_ACTIVITY=a?.items||[];COMM_BOARD=board;if(VIEW==='community')renderCommunity(true);
+  });
+}
+let COMM_BOARD=null;
+function commSplit(m,picks){
+  const c={...(COMM_CONSENSUS[m.id]||{h:0,d:0,a:0})},mine=picks[m.id];
+  const n=(c.h||0)+(c.d||0)+(c.a||0);return {h:c.h||0,d:c.d||0,a:c.a||0,n,mine};
+}
+function commShort(m,side){return side==='h'?(m.home.code||m.home.name):side==='a'?(m.away.code||m.away.name):t('Draw')}
+function commAgo(ms){const s=Math.max(0,(Date.now()-ms)/1000);return s<3600?`${Math.max(1,Math.round(s/60))}m ago`:s<86400?`${Math.round(s/3600)}h ago`:`${Math.round(s/86400)}d ago`}
+function renderCommunity(fromFetch){ensureHandle();const host=$('#view-community');const db=btmScoped(btmGrade());const s=btmStats(db);
+  const comp=String(DATA.comp_key||(/ncaam/.test(String(DATA_FILE||''))?'ncaam':'ncaaf')).toLowerCase();
+  if(!fromFetch)commLoad(comp);
   const eligible=(DATA.matches||[]).filter(m=>isCommunityPickOpen(m)).sort((a,b)=>(a.kickoff||'').localeCompare(b.kickoff||''));
   const firstKick=eligible.length?kickMs(eligible[0]):0;
-  // A missing market can expose an entire season at once. Show the next
-  // fixture slate instead of rendering hundreds of model-only cards.
+  // A missing market can expose an entire season at once; show the next slate.
   const open=eligible.filter(m=>communityPickProbs(m).source==='betbetter'||kickMs(m)<=firstKick+4*864e5).slice(0,40);
   const picks=db.picks||{};
-  let h=`<div class="vhead">Community &middot; ${esc(scopeName)}</div>
-  <div class="banner"><b>Games open seven days before kickoff.</b> Pick any listed matchup before it starts. When available, the model and market are graded beside you.</div>
-  ${renderWeeklyAwards()}
-  <div class="status-grid">
-   <div class="statuscard ${s.you>=s.model&&s.n?'ok':'info'}"><span class="slbl">Your record</span><div class="sval">${s.you}/${s.n||0}</div><div class="hint">${s.n?Math.round(s.you/s.n*100)+'% correct':'no graded picks yet'}</div></div>
-   <div class="statuscard info"><span class="slbl">Model record</span><div class="sval">${s.model}/${s.modelN||0}</div><div class="hint">Model picks locked alongside yours</div></div>
-   <div class="statuscard ${s.beat?'ok':'info'}"><span class="slbl">Model beaten</span><div class="sval">${s.beat}</div><div class="hint">you right when the model was wrong</div></div>
-   <div class="statuscard info"><span class="slbl">Streak</span><div class="sval">${s.streak}${s.streak>=3?' &#128293;':''}</div><div class="hint">${s.pending} awaiting result</div></div>
-  </div>`;
-  // head-to-head insight: how often you agreed with the model, and who won when you split
-  if(s.modelN>=3){
-    const g=Object.values(picks).filter(p=>p.result&&p.modelPick);
-    const withModel=g.filter(p=>p.pick===p.modelPick).length;
-    const split=g.filter(p=>p.pick!==p.modelPick);
-    const splitWins=split.filter(p=>p.you_hit&&!p.model_hit).length;
-    h+=`<div class="h2hbar"><div class="h2hitem"><b>${Math.round(withModel/g.length*100)}%</b><span>of your picks matched the model</span></div><div class="h2hitem"><b>${splitWins}/${split.length||0}</b><span>you won when you went your own way</span></div><div class="h2hitem"><b>${s.n?Math.round((s.you-s.model)/s.n*100):0>0?'+':''}${s.you-s.model}</b><span>your net record vs the model</span></div></div>`;
-  }
-  const badges=btmBadges(s,db);
-  if(badges.length)h+=`<div class="seclbl" style="margin-top:16px">Badges</div><div class="fchips">`+badges.map(b=>`<span class="fchip good" title="${esc(b[1])}">${esc(b[0])}</span>`).join('')+`</div>`;
-  // personal analytics
-  const an=btmAnalytics(db);
-  if(an){
-    h+=`<div class="seclbl" style="margin-top:20px">Your tendencies</div><div class="anGrid">`;
-    if(an.favN>=3)h+=`<div class="anCard"><div class="anPct">${an.favPct}%</div><div class="anLbl">on favorites <span>(${an.favN})</span></div></div>`;
-    if(an.dogN>=3)h+=`<div class="anCard"><div class="anPct">${an.dogPct}%</div><div class="anLbl">on underdogs <span>(${an.dogN})</span></div></div>`;
-    if(an.splitN>=3)h+=`<div class="anCard"><div class="anPct">${an.splitPct}%</div><div class="anLbl">when you defy the model <span>(${an.splitN})</span></div></div>`;
-    if(an.withN>=3)h+=`<div class="anCard"><div class="anPct">${an.withPct}%</div><div class="anLbl">when you side with it <span>(${an.withN})</span></div></div>`;
+  const draft=btmDraft();Object.keys(draft).forEach(id=>{if(picks[id]?.pick===draft[id]||!open.some(m=>String(m.id)===String(id)))delete draft[id]});
+  const nDraft=Object.keys(draft).length;
+  let h=`<div class="vhead">Community</div><p class="commLede">What other Matchday users are picking this week.</p>`;
+  if(COMM_FLASH){h+=`<div class="commFlash" role="status">${esc(COMM_FLASH)}</div>`;COMM_FLASH='';}
+  h+=`<div class="commLayout"><section class="commMain" aria-labelledby="commPicksTitle"><div class="commHead"><h2 id="commPicksTitle">Community picks</h2><span>This week</span></div>`;
+  if(!open.length)h+=`<div class="empty">No games are open for picks yet.<br><span class="faintline">Games open seven days before kickoff.</span></div>`;
+  else{
+    h+=`<div class="commTable" role="table"><div class="commRow commCols" role="row"><span role="columnheader">Game</span><span role="columnheader">Community</span><span role="columnheader" title="Live model: can change before kickoff">Live model</span><span role="columnheader">Your pick</span></div>`;
+    // Twelve rows answer 'what is the community picking'; the rest of the
+    // week is one tap away instead of a long scroll.
+    const shown=COMM_ALL?open:open.slice(0,12);
+    shown.forEach(m=>{
+      const x=communityPickProbs(m),read=x.read,sp=commSplit(m,picks),p=picks[m.id],dr=draft[m.id];
+      const lead=sp.n?(['h','a','d'].reduce((a,b)=>sp[b]>sp[a]?b:a,'h')):null;
+      const community=sp.n?`${Math.round(sp[lead]/sp.n*100)}% ${esc(commShort(m,lead))}`:'<i>no picks yet</i>';
+      const model=read?`${communityModelPctLabel(read.model_pct).replace(/\.\d%$/,'%')} ${esc(bbNameMatches(read.pick_name,m.home.name)?commShort(m,'h'):commShort(m,'a'))}`:'<i title="Model probabilities pending">—</i>';
+      const mine=dr?`<b class="commMine">${esc(commShort(m,dr))}${p?' (change)':''}</b>`:p?`<b class="commMine locked">${esc(commShort(m,p.pick))} ✓</b>`:'<span class="commMine none">Pick</span>';
+      const isOpen=COMM_OPEN===String(m.id);
+      h+=`<button type="button" class="commRow commGame${isOpen?' open':''}" role="row" aria-expanded="${isOpen}" onclick="toggleCommGame('${esc(String(m.id))}')"><span role="cell" class="commGameName"><b><span class="commTeams">${teamMark(m.away.name)}${esc(m.away.name)} at ${teamMark(m.home.name)}${esc(m.home.name)}</span></b><small>${esc(kickIn(m.kickoff))}</small></span><span role="cell">${community}</span><span role="cell">${model}</span><span role="cell">${mine}</span></button>`;
+      if(isOpen){
+        const bar=(side,label)=>{const pct=sp.n?Math.round(sp[side]/sp.n*100):0;return `<div class="commBar"><span>${esc(label)}</span><i><em style="width:${pct}%"></em></i><b>${pct}%</b></div>`};
+        const btn=(side,label)=>{const chosen=dr?dr===side:p?.pick===side;const saved=!dr&&p?.pick===side;return `<button type="button" class="btmbtn${saved?' locked':''}${dr===side?' drafted':''}" aria-pressed="${chosen}" onclick="pickBtm('${esc(String(m.id))}','${side}')">${esc(label)}</button>`};
+        h+=`<div class="commDetail" role="row"><div role="cell"><div class="commBars">${bar('a',m.away.name)}${bar('h',m.home.name)}<small>${sp.n} pick${sp.n===1?'':'s'} from the community</small></div>
+          <div class="btmrow">${btn('a',m.away.name)}${btn('h',m.home.name)}</div>
+          <small class="commNote">${p?'Submitted. You can change it until kickoff.':'Tap a team, then Submit picks.'} <button type="button" class="gamesTextLink" onclick="openMatchModal('${esc(String(m.id))}')">Game analysis →</button></small></div></div>`;
+      }
+    });
     h+=`</div>`;
-    if(an.comps.length>=2){h+=`<div class="anByComp">`+an.comps.map(c=>`<div class="anCompRow"><span>${esc(c.comp)}</span><div class="anBar"><div style="width:${c.pct}%"></div></div><span>${c.pct}% <i>(${c.n})</i></span></div>`).join('')+`</div>`;}
+    if(open.length>12)h+=`<button type="button" class="gamesTextLink commMore" onclick="COMM_ALL=!COMM_ALL;renderCommunity(true)">${COMM_ALL?'Show fewer games':`Show all ${open.length} games`}</button>`;
+    h+=`<div class="commSubmitBar${nDraft?' ready':''}"><span>${nDraft?`<b>${nDraft}</b> pick${nDraft===1?'':'s'} ready to submit`:'Open a game to make a pick'}</span>${nDraft?`<button type="button" class="commClear" onclick="clearDraft()">Clear</button>`:''}<button type="button" class="commSubmit" ${nDraft?'':'disabled'} onclick="submitDraft()">Submit picks</button></div>`;
   }
-  // streak seasons
-  const seasons=btmSeason(db);
-  if(seasons&&seasons.length){
-    h+=`<div class="seclbl" style="margin-top:20px">Seasons <span class="faintline" style="font-weight:400">· 4-week runs</span></div>`;
-    h+=seasons.slice(0,6).map(s=>`<div class="seasonRow ${s.current?'live':''}"><span class="seasonName">${s.current?'Current season':'Season '+(s.n+1)}</span><span class="seasonRec">you ${s.you} · model ${s.model} <i>of ${s.total}</i></span>${s.current?'<span class="seasonTag">current</span>':(s.you>s.model?'<span class="seasonTag win">won</span>':s.you<s.model?'<span class="seasonTag loss">lost</span>':'<span class="seasonTag">tied</span>')}</div>`).join('');
-  }
-  h+=`<div class="seclbl" style="margin-top:18px">Make your picks</div>`;
-  if(!open.length)h+=`<div class="empty">No games are inside the seven-day pick window yet.<br><span class="faintline">They appear automatically one week before kickoff.</span></div>`;
-  open.forEach(m=>{const p=picks[m.id],x=communityPickProbs(m),read=x.read;
-    const sideBtn=(side,label,pct)=>{const locked=p&&p.pick===side;const disabled=p?'disabled':'';
-      return `<button class="btmbtn ${locked?'locked':''}" ${disabled} onclick="pickBtm('${m.id}','${side}')">${esc(label)}${pct!=null?` <b>${communityModelPctLabel(pct)}</b>`:''}</button>`;};
-    h+=`<div class="btmcard"><div class="btmmatch"><span class="btmSide">${teamMark(m.home.name)}<span>${esc(m.home.name)}</span></span><span class="mvvs">vs</span><span class="btmSide away"><span>${esc(m.away.name)}</span>${teamMark(m.away.name)}</span></div>${p?`<div class="btmlocked">your pick: ${esc(p.pick==='h'?m.home.name:p.pick==='a'?m.away.name:'Draw')}</div>`:''}
-      <div class="btmrow">${sideBtn('h',m.home.name||'Home',x.h)}${x.d>0?sideBtn('d',t('Draw'),x.d):''}${sideBtn('a',m.away.name||'Away',x.a)}</div>
-      <div class="btmmeta">${read?`Live model: <b>${esc(read.pick_name||'')}</b> ${communityModelPctLabel(read.model_pct)} · may change before kickoff · `:'Model probabilities pending · '}${p?'your pick locked — graded when final':'pick before kickoff to play'}</div></div>`;});
-  const graded=Object.values(picks).filter(p=>p.result).sort((a,b)=>b.ts-a.ts);
-  if(graded.length){h+=`<div class="seclbl" style="margin-top:18px">Your results</div>`+graded.slice(0,20).map(p=>{
-    const nm=p.pick==='h'?p.code.h:p.pick==='a'?p.code.a:'Draw';
-    return `<div class="btmres ${p.you_hit?'hit':'miss'}"><span class="btmresTeams"><span class="btmSide">${teamMark(p.home)}<span>${esc(p.home)}</span></span><span class="mvvs">vs</span><span class="btmSide away"><span>${esc(p.away)}</span>${teamMark(p.away)}</span></span><span class="btmpick">you: ${esc(nm)} ${p.you_hit?'&#10003;':'&#10007;'}</span><span class="btmvs ${p.model_hit?'mok':'mno'}">model ${p.modelPick?(p.model_hit?'&#10003;':'&#10007;'):'—'}</span></div>`;}).join('');}
-  // leaderboard section (only when configured)
-  if(LEADERBOARD_URL){
-    const hn=myHandle();
-    const period=lbPeriod();
-    const tab=(p,label)=>`<button class="lbTab ${p===period?'on':''}" onclick="setLbPeriod('${p}')">${label}</button>`;
-    h+=`<div class="seclbl" style="margin-top:20px">Global leaderboard</div>`;
-    h+=`<div class="btmmeta" style="margin-bottom:8px">You appear as <b>${esc(hn)}</b> — assigned automatically so the board stays free of offensive names.${canReshuffleHandle()?` <button class="btmbtn" style="margin-left:8px;padding:3px 9px;font-size:var(--fs-sm)" onclick="reshuffleHandle()">Reshuffle (1 left)</button>`:''}</div>`;
-    h+=renderAccountRow();
-    h+=`<div class="lbTabs">${tab('all','All time')}${tab('week','This week')}${tab('month','This month')}</div>`;
-    h+=`<div id="lbBoard" class="empty">Loading board…</div>`;
-  } else {
-    h+=`<div class="seclbl" style="margin-top:20px">Global leaderboard</div><div class="empty">Coming soon — compete with other players once the shared board launches.</div>`;
-  }
+  h+=`</section><aside class="commSide">`;
+  // Leaderboard: This week | Season, W-L only.
+  const period=lbPeriod()==='week'?'week':'all';
+  h+=`<section class="commBox" aria-labelledby="commBoardTitle"><div class="commHead"><h2 id="commBoardTitle">Leaderboard</h2><div class="lbTabs"><button class="lbTab ${period==='week'?'on':''}" onclick="setLbPeriod('week')">This week</button><button class="lbTab ${period==='all'?'on':''}" onclick="setLbPeriod('all')">Season</button></div></div>`;
+  if(!LEADERBOARD_URL)h+=`<div class="empty">Coming soon.</div>`;
+  else if(COMM_BOARD===null)h+=`<div class="empty">Loading…</div>`;
+  else if(!COMM_BOARD.length)h+=`<div class="empty">${period==='week'?'No one has 3 graded picks this week yet.':'No one has 10 graded picks yet.'}</div>`;
+  else h+=`<ol class="commBoard">${COMM_BOARD.slice(0,10).map((r,i)=>`<li${r.handle===myHandle()?' class="me"':''}><span>${i+1}</span><b>${esc(r.handle)}</b><em>${r.hits}–${Math.max(0,r.graded-r.hits)}</em></li>`).join('')}</ol>`;
+  h+=`<p class="commYou">You are <b>${esc(myHandle()||'')}</b> · ${s.you}–${Math.max(0,(s.n||0)-s.you)}${canReshuffleHandle()?` · <button type="button" class="gamesTextLink" onclick="reshuffleHandle()">new name</button>`:''}</p>${renderAccountRow()}</section>`;
+  // Recent activity.
+  const byId=new Map((DATA.matches||[]).map(m=>[String(m.id),m]));
+  const items=(COMM_ACTIVITY||[]).map(it=>{
+    if(it.kind==='day')return `<li><b>${esc(it.handle)}</b> went ${it.wins}–${it.losses} yesterday<small>${commAgo(it.at)}</small></li>`;
+    const m=byId.get(String(it.matchId));if(!m)return '';
+    const team=it.pick==='h'?m.home.name:it.pick==='a'?m.away.name:'a draw',other=it.pick==='h'?m.away.name:m.home.name;
+    return `<li><b>${esc(it.handle)}</b> picked ${esc(team)} over ${esc(other)}<small>${commAgo(it.at)}</small></li>`;
+  }).filter(Boolean);
+  h+=`<section class="commBox" aria-labelledby="commActTitle"><div class="commHead"><h2 id="commActTitle">Recent activity</h2></div>${COMM_ACTIVITY===null?'<div class="empty">Loading…</div>':items.length?`<ul class="commFeed">${items.slice(0,12).join('')}</ul>`:'<div class="empty">No picks yet this week. Be the first.</div>'}</section>`;
+  h+=`</aside></div>`;
   host.innerHTML=h;
-  if(LEADERBOARD_URL&&myHandle()){fetchLeaderboard(lbPeriod()).then(board=>{const el=$('#lbBoard');if(!el)return;
-    const empties={all:'No ranked players yet — be the first with 10+ graded picks.',
-      week:'No one has 3+ graded picks this week yet — check back soon.',
-      month:'No one has 3+ graded picks this month yet — check back soon.'};
-    if(!board||!board.length){el.innerHTML=empties[lbPeriod()]||empties.all;return;}
-    el.className='';el.innerHTML=board.map((r,i)=>`<div class="lbrow"><span class="lbrk">${i+1}</span><span class="lbname">${esc(r.handle)}</span><span class="lbrec">${r.hits}/${r.graded}</span><span class="lbpct">${r.graded?Math.round(r.hits/r.graded*100):0}%</span></div>`).join('');});}
 }
 
 /* ===== Matchup Sandbox — hypothetical same-competition matchups ===========

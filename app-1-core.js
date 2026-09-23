@@ -1407,7 +1407,7 @@ async function fetchLeaderboard(period){
   try{const r=await fetch(LEADERBOARD_URL+'?action=leaderboard&period='+(period||'all'));const d=await r.json();return d.ok?d.board:null;}catch(e){return null;}
 }
 function lbPeriod(){try{return localStorage.getItem('matchday.lbPeriod')||'all'}catch(e){return 'all'}}
-function setLbPeriod(p){try{localStorage.setItem('matchday.lbPeriod',p)}catch(e){};renderCommunity();}
+function setLbPeriod(p){try{localStorage.setItem('matchday.lbPeriod',p)}catch(e){};if(typeof COMM_BOARD!=='undefined'){COMM_BOARD=null;COMM_FETCHED=''}renderCommunity();}
 function btmLoad(){try{return JSON.parse(localStorage.getItem('matchday.btm')||'{}')}catch(e){return {}}}
 function btmSave(o){try{localStorage.setItem('matchday.btm',JSON.stringify(o))}catch(e){}}
 function communityScope(){return String(DATA?.comp_key||'').toUpperCase();}
@@ -1419,11 +1419,12 @@ async function lockGlobalPick(matchId,pick,comp){
   const d=await lbPost('pick',{deviceId:deviceId(),matchId:String(matchId),pick,comp:String(comp||'').toLowerCase()});
   if(d&&d.ok)applyAccount(d);
 }
-function submitPick(matchId,pick){
+function submitPick(matchId,pick,render=true){
   ensureHandle();
   const db=btmLoad();db.picks=db.picks||{};
-  if(db.picks[matchId])return false; // one locked pick per match, like the model
+  // One pick per match. It can be changed until kickoff, then it is locked.
   const m=(DATA.matches||[]).find(x=>String(x.id)===String(matchId));if(!m)return false;
+  if(db.picks[matchId]&&(db.picks[matchId].pick===pick||db.picks[matchId].result))return false;
   // A feed can still say UPCOMING after the clock has passed kickoff. The
   // timestamp is therefore a second, mandatory lock check.
   if(!isCommunityPickOpen(m))return false;
@@ -1433,5 +1434,5 @@ function submitPick(matchId,pick){
     comp:m._comp||DATA.comp_key||'',
     modelPick:read?.pick||null,
     marketPick:(()=>{const x=(m.markets||{})['1x2'];if(!x||x.home_pct==null)return null;const tr={h:x.home_pct,d:x.draw_pct,a:x.away_pct};return Object.keys(tr).reduce((a,b)=>tr[b]>tr[a]?b:a)})()};
-  btmSave(db);renderCommunity();lockGlobalPick(matchId,pick,db.picks[matchId].comp);return true;
+  btmSave(db);if(render)renderCommunity();lockGlobalPick(matchId,pick,db.picks[matchId].comp);return true;
 }

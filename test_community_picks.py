@@ -52,7 +52,7 @@ class CommunityPickAvailabilityTests(unittest.TestCase):
         # The modelling engine is private and is not named anywhere a visitor
         # can read. The label still has to say the number is live and provisional.
         self.assertIn("Live model", self.source)
-        self.assertIn("communityModelPctLabel(pct)", self.source)
+        self.assertIn("communityModelPctLabel(read.model_pct)", self.source)
         self.assertIn("Model probabilities pending", self.source)
         # The engine's name is gone from every string a visitor can read. Asserted
         # on the old labels rather than the bare name, which still appears in
