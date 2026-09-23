@@ -81,7 +81,9 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
     def test_ap_poll_rows_include_record_and_matchday_power(self):
         builder = (ROOT / "build_cfb_snapshot.py").read_text(encoding="utf-8")
         panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
-        self.assertIn('"record": rated.get("record") or "—"', builder)
+        # The AP's own record wins, the model ranking's frozen copy is the
+        # fallback. Reversing these silently reintroduces the stale records.
+        self.assertIn('"record": row.get("record") or rated.get("record") or "—"', builder)
         self.assertIn('"rating": rated.get("rating")', builder)
         self.assertIn('"external_rank": rated.get("rank")', builder)
         self.assertIn('>Record</th>', panels)
