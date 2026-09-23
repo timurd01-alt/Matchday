@@ -49,6 +49,13 @@ from typing import Any
 # is refused whole: a partly-understood pick is worse than no pick.
 # 11 adds the selected side's no-vig market probability and model-minus-market
 # probability gap; raw sportsbook quotes, book coverage and wagers stay private.
+# The same export also carries `scorecard.scope` and
+# `scorecard.sports.<sport>.conviction`. `scope` separates what the record
+# claims ("who wins") from what it does not (the spread). `conviction` is the
+# model's distance from the price: how far above the market it prices a
+# contested underdog, and the record it earned taking that side outright. The
+# two travel together and must render together -- the lift alone reads as an
+# edge the results do not support.
 # 10 carried prediction-only rows for every modeled fixture.
 # 9 added `game_of_the_week` -- the best matchup on the board, chosen on the
 # two teams' ratings and the gap between them rather than on the model's

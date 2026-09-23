@@ -572,7 +572,10 @@ function betbetterScorecard(){
   if(!all)return null;
   const key=(typeof currentSportKey==='function'?currentSportKey():'')||'';
   const sport=key?(all.sports||{})[key]:null;
-  return sport?{...sport,caveat:all.caveat}:null;
+  // `caveat` and `scope` sit on the document, not on the sport, because they
+  // are the same sentences whichever board is loaded. Carried onto the sport
+  // object so the renderer reads one shape.
+  return sport?{...sport,caveat:all.caveat,scope:all.scope}:null;
 }
 // The engine's caveat is addressed partly to whoever renders it -- it names its
 // own JSON fields. The warning is printed as written except for those
@@ -706,11 +709,54 @@ function renderScore(){
   host.innerHTML=`<div class="vhead">Scorecard</div>`
     +`${record}${note}${reportable}`
     +(sc.caveat?`<details class="scExplainer"><summary>Reading these numbers <span aria-hidden="true">?</span></summary><p>${esc(scorecardCaveat(sc.caveat))}</p>${vm.basis?`<p>Price: ${esc(vm.basis)}.</p>`:''}</details>`:'')
+    +_scScope(sc.scope)
     +_scMarketSplit(vm)
+    +_scConviction(sc.conviction)
     +_scBands(sc.by_confidence)
     +_scRecent(sc.recent)
     +myPicksComparison()
     +method;
+}
+/* What the model sees that the price does not.
+   The hit rate cannot show this: a card that agrees with the book and one that
+   contradicts it both grade as a win, so a record made of chalk reads exactly
+   like one that found something. The distinctive number is the lift -- how far
+   above the market this model prices a contested underdog -- and it never
+   renders alone. `outright_disagreements` is the record it earned taking that
+   side, and it has been losing; showing the lift by itself would claim an edge
+   the results do not support. If the engine ever stops sending the record, the
+   whole block is withheld rather than showing the flattering half. */
+function _scConviction(c){
+  if(!c||c.available===false)return'';
+  const d=c.outright_disagreements;
+  if(!d||d.picks==null||!d.picks)return'';
+  const lift=c.underdog_lift_points;
+  if(lift==null)return'';
+  const band=Array.isArray(c.contested_band_pct)?c.contested_band_pct:[30,50];
+  const sign=lift>0?'+':'';
+  return`<section class="scSection scConviction"><div class="seclbl">Where it parts from the price</div>`
+    +`<div class="scMethodGrid">`
+    +`<div><strong>${esc(sign+lift)} pts on live underdogs</strong>`
+    +`<span>On games the market prices between ${esc(band[0])}% and ${esc(band[1])}%, this model gives the underdog `
+    +`${esc(sign+lift)} points more chance than the book does, across ${esc(c.contested_underdogs??'—')} selections.</span></div>`
+    +`<div><strong>${esc(c.mean_divergence_points??'—')} pts apart on average</strong>`
+    +`<span>How far the two prices sit from each other across every graded card.</span></div>`
+    +`<div><strong>${esc(d.wins)}-${esc(d.losses)} backing that side</strong>`
+    +`<span>The record when the model's favourite is the market's underdog. `
+    +`Seeing an underrated team and beating the price are not the same thing, and so far only the first holds.</span></div>`
+    +`</div>${c.basis?`<p class="edisc">Price: ${esc(c.basis)}.</p>`:''}</section>`;
+}
+/* "Who wins" and "the spread" are two different claims, and a reader who reads
+   the first as the second will think this record says something it does not.
+   The engine sends both sentences in `scorecard.scope`; this renders them
+   behind a "?" rather than as a paragraph nobody finishes. */
+function _scScope(sc){
+  if(!sc||!sc.winner_note)return'';
+  return`<details class="scExplainer"><summary>What this record does and does not say <span aria-hidden="true">?</span></summary>`
+    +`<p><b>It predicts ${esc(sc.predicts||'who wins')}.</b> ${esc(sc.winner_note)}</p>`
+    +(sc.spread_note?`<p><b>It does not predict ${esc(sc.does_not_predict||'the spread')}.</b> ${esc(sc.spread_note)}</p>`:'')
+    +(sc.conviction_note?`<p>${esc(sc.conviction_note)}</p>`:'')
+    +`</details>`;
 }
 function highlightFavoriteRows(){if(!favoriteTeam())return;document.querySelectorAll('.gtable .gteam').forEach(cell=>{if(teamKey(cell.dataset.team||cell.textContent).includes(teamKey(favoriteTeam())))cell.closest('tr')?.classList.add('favoriteTeamRow')})}
 function renderCurrent(){captureSignalsIfFresh();({home:renderHome,matches:renderMatches,results:renderResults,groups:renderStandings,bracket:renderBracket,score:renderScore,news:renderNews,community:renderCommunity}[VIEW]||renderHome)();renderWelcome();highlightFavoriteRows();applyStaticI18n()}
