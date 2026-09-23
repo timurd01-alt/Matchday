@@ -47,17 +47,16 @@ from typing import Any
 
 # Handoff major versions this reader understands. A document outside this set
 # is refused whole: a partly-understood pick is worse than no pick.
-# 11 added the selected side's no-vig market probability and the model-minus-
-# market gap, and -- with the same export -- `scorecard.scope` and
+# 11 adds the selected side's no-vig market probability and model-minus-market
+# probability gap; raw sportsbook quotes, book coverage and wagers stay private.
+# The same export also carries `scorecard.scope` and
 # `scorecard.sports.<sport>.conviction`. `scope` separates what the record
 # claims ("who wins") from what it does not (the spread). `conviction` is the
 # model's distance from the price: how far above the market it prices a
 # contested underdog, and the record it earned taking that side outright. The
 # two travel together and must render together -- the lift alone reads as an
 # edge the results do not support.
-# 10 added the complete prediction-only slate: every modelled upcoming game,
-# with sportsbook fields stripped.
-# Both are additive, so a reader that ignores the new keys still renders.
+# 10 carried prediction-only rows for every modeled fixture.
 # 9 added `game_of_the_week` -- the best matchup on the board, chosen on the
 # two teams' ratings and the gap between them rather than on the model's
 # confidence. Confidence alone always names a Power Four side hosting an FCS
@@ -245,8 +244,10 @@ def find(buckets: dict[str, list[dict[str, Any]]], home: object, away: object,
     if not wanted_home or not wanted_away:
         return None
     candidates = [pick for pick in buckets.get(_kickoff_day(kickoff), [])
-                  if _compatible(_normalize(pick.get("home")), wanted_home)
-                  and _compatible(_normalize(pick.get("away")), wanted_away)]
+                  if ((_compatible(_normalize(pick.get("home")), wanted_home)
+                       and _compatible(_normalize(pick.get("away")), wanted_away))
+                      or (_compatible(_normalize(pick.get("home")), wanted_away)
+                          and _compatible(_normalize(pick.get("away")), wanted_home)))]
     return candidates[0] if len(candidates) == 1 else None
 
 
@@ -258,9 +259,6 @@ def _display_block(pick: dict[str, Any], document: dict[str, Any]) -> dict[str, 
         "model_pct": pick.get("model_pct"),
         "market_pct": pick.get("market_pct"),
         "edge_points": pick.get("edge_points"),
-        "best_price": pick.get("best_price"),
-        "best_american": pick.get("best_american"),
-        "book_count": pick.get("book_count"),
         "sides": pick.get("sides") or [],
 
         "model_name": pick.get("model_name"),
@@ -277,7 +275,6 @@ def _display_block(pick: dict[str, Any], document: dict[str, Any]) -> dict[str, 
         "official_publication_eligible": False,
         "moves_until_kickoff": bool(pick.get("moves_until_kickoff", True)),
         "integrity_note": pick.get("integrity_note"),
-        "edge_warning": document.get("edge_warning"),
     }
 
 

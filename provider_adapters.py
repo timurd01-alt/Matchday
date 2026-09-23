@@ -802,9 +802,25 @@ class CollegeFootballDataAdapter:
         else:
             ranks = []
         is_real_poll = bool(ranks) and not ranks[0].get("projected")
-        cfp = SportsDataIOAdapter._cfp_projection(ranks) if is_real_poll and len(ranks) >= 12 else None
+        cfp = self._cfp_projection(ranks) if is_real_poll and len(ranks) >= 12 else None
         self._cached_rankings = (ranks, cfp)
         return self._cached_rankings
+
+    @staticmethod
+    def _cfp_projection(ranks):
+        """Preserve the poll-based bracket without depending on another provider."""
+        if len(ranks) < 12:
+            return None
+        def match(a, b):
+            return {"home": f"({a['rank']}) {a['name']}", "away": f"({b['rank']}) {b['name']}",
+                    "score": {"home": None, "away": None}, "status": "UPCOMING", "kickoff": None}
+        first = [match(ranks[4], ranks[11]), match(ranks[5], ranks[10]),
+                 match(ranks[6], ranks[9]), match(ranks[7], ranks[8])]
+        byes = [{"home": f"({team['rank']}) {team['name']}", "away": "First-round winner",
+                 "score": {"home": None, "away": None}, "status": "UPCOMING", "kickoff": None}
+                for team in ranks[:4]]
+        return [{"round": "CFP First Round (model projection)", "matches": first},
+                {"round": "CFP Quarter-finals (model projection)", "matches": byes}]
 
     def _projected_ranking(self):
         """Way-too-early Top 25 blending roster talent and recent results.
@@ -1308,5 +1324,4 @@ class CollegeBasketballDataAdapter:
                 if name and score:
                     out[str(name)] = float(score)
         return out
-
 

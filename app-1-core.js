@@ -25,7 +25,7 @@ function runCarousel(key,items,host,renderFn,intervalMs){
     host.dataset.carouselBound='1';
   }
 }
-const DEFAULT_SETTINGS={accent:'green',density:'normal',panel:'glass',defaultView:'matches',refresh:900,showInsight:true,showFinished:false,showDetails:false,favoriteTeam:'',favoriteTeams:[],alertsKickoff:true,alertsLive:false,alertsUpset:false,alertsModel:true,alertsData:true};
+const DEFAULT_SETTINGS={accent:'green',density:'normal',panel:'glass',defaultView:'home',refresh:900,showFinished:false,showDetails:false,favoriteTeam:'',favoriteTeams:[],alertsKickoff:true,alertsLive:false,alertsUpset:false,alertsModel:true,alertsData:true};
 let SETTINGS={...DEFAULT_SETTINGS};try{SETTINGS={...DEFAULT_SETTINGS,...JSON.parse(localStorage.getItem('matchday.settings')||'{}')}}catch(e){}
 // Refresh cadence is product-controlled so visitors cannot accidentally create
 // excessive polling or make the dashboard feel stale.
@@ -167,22 +167,22 @@ function stripPastSeasonCompetitionViews(payload,now=new Date()){
 // Each sport declares exactly which views exist for it, in order.
 const NAV_DEF={
   // Matchday covers college football and men's college basketball only. Every
-  // profile is the same six views; the pair is kept because NAV_LABELS still
-  // names them differently per sport (Rankings/CFP Bracket vs
-  // Conferences/Bracketology), which is the whole reason the table survives.
-  college:           ['matches','results','groups','bracket','score','community'],
-  college_basketball:['matches','results','groups','bracket','score','community']
+  // profile exposes the same destinations. The established route keys remain
+  // in place so saved preferences and bookmarks continue to work.
+  college:           ['home','matches','groups','results','news','score','bracket','community'],
+  college_basketball:['home','matches','groups','results','news','score','bracket','community']
 };
 // The only views that exist after the college pivot. A stored defaultView or a
 // bookmarked hash can still name a removed one (Customize let people save
 // 'news' or 'updates' for years), so every entry point clamps through this
 // rather than trusting what it was handed and rendering into a null host.
-const VIEWS=new Set(['matches','results','groups','bracket','score','news','community']);
-function safeView(v){return VIEWS.has(v)?v:'matches';}
+const VIEWS=new Set(['home','matches','results','groups','bracket','score','news','community']);
+const VIEW_ALIASES={games:'matches',rankings:'groups',research:'news'};
+function safeView(v){v=VIEW_ALIASES[v]||v;return VIEWS.has(v)?v:'home';}
 const SPORT_KIND={ncaaf:'college',ncaam:'college_basketball'};
 function currentSportKey(){const m=(DATA_FILE||'').match(/data_(\w+)\.json/);return m?m[1]:'';}
 function navProfile(){return SPORT_KIND[currentSportKey()]||'college';}
-const NAV_LABELS={college:{groups:'Conferences',bracket:'CFP Playoff'},college_basketball:{groups:'Conferences',bracket:'Bracketology'}};
+const NAV_LABELS={college:{home:'Home',matches:'Games',groups:'Rankings',news:'Research',bracket:'CFP Playoff'},college_basketball:{home:'Home',matches:'Games',groups:'Rankings',news:'Research',bracket:'Bracketology'}};
 function tottTitle(){return 'Team of the Tournament'}
 function applySportNav(){
   const prof=navProfile();
@@ -190,9 +190,8 @@ function applySportNav(){
   const labels=NAV_LABELS[prof]||{};
   document.querySelectorAll('.navbtn[data-v]').forEach(b=>{
     const hasBracket=(Array.isArray(DATA?.bracket)&&DATA.bracket.some(r=>(r?.matches||[]).length))||!!DATA?.bracketology;
-    const hasStandings=Array.isArray(DATA?.standings)&&DATA.standings.length>0;
     const hasThirdRace=Array.isArray(DATA?.third_race)&&DATA.third_race.length>0;
-    const hasViewData=b.dataset.v==='bracket'?hasBracket:b.dataset.v==='groups'?hasStandings:b.dataset.v==='third'?hasThirdRace:true;
+    const hasViewData=b.dataset.v==='bracket'?hasBracket:b.dataset.v==='third'?hasThirdRace:true;
     b.style.display=allowed.includes(b.dataset.v)&&hasViewData?'':'none';
     const l=b.querySelector('.lbl');
     if(l){const en=l.getAttribute('data-en')||l.textContent.trim();l.setAttribute('data-en',en);
@@ -203,35 +202,20 @@ function applySportNav(){
   document.querySelectorAll('.navGroup').forEach(g=>{
     g.hidden=!g.querySelector('.navbtn[data-v]:not([style*="display: none"]),.navExternal');
   });
-  if(!allowed.includes(VIEW))setView('matches');
+  const activeButton=document.querySelector(`.navbtn[data-v="${VIEW}"]`);
+  if(!allowed.includes(VIEW)||!activeButton||activeButton.style.display==='none')setView('matches');
 }
 function loadingBoardHTML(){return '<div class="loadingBoard" aria-label="Loading matches"><span></span><span></span><span></span><span></span></div>'}
 function showMatchLoading(){const host=$('#view-matches');if(host)host.innerHTML=loadingBoardHTML()}
 function clearCompetitionViewsForLoad(){
   ['groups','bracket','third'].forEach(view=>{const host=$('#view-'+view);if(host)host.innerHTML='<div class="empty">Loading current-season data…</div>'});
 }
-function changeSport(v){DATA_FILE=/^(ncaaf|ncaam)$/.test(v)?('data_'+v+'.json'):DEFAULT_SPORT_FILE;MATCH_VISIBLE=FIXTURE_PAGE_SIZE;RESULT_VISIBLE=FIXTURE_PAGE_SIZE;MODEL_VISIBLE=MODEL_PAGE_SIZE;try{localStorage.setItem('matchday.sport',DATA_FILE)}catch(e){};applySportNav();showMatchLoading();clearCompetitionViewsForLoad();load(true);}
+function changeSport(v){DATA_FILE=/^(ncaaf|ncaam)$/.test(v)?('data_'+v+'.json'):DEFAULT_SPORT_FILE;MATCH_VISIBLE=FIXTURE_PAGE_SIZE;RESULT_VISIBLE=FIXTURE_PAGE_SIZE;MODEL_VISIBLE=MODEL_PAGE_SIZE;try{localStorage.setItem('matchday.sport',DATA_FILE)}catch(e){};if(typeof syncViewLocation==='function')syncViewLocation(VIEW,'replace');const cached=SPORT_DATA_CACHE[DATA_FILE];if(cached){showSportData(cached,true)}else{applySportNav();showMatchLoading();clearCompetitionViewsForLoad()}load(true);}
 
 const COLORS={orange:'#ffb02e',blue:'#4cc2ff',green:'#3ad17a',red:'#ff4d5e',purple:'#b16cff'};
 function saveSettings(){localStorage.setItem('matchday.settings',JSON.stringify(SETTINGS))}
-function applySettings(){document.documentElement.style.setProperty('--signal',COLORS[SETTINGS.accent]||COLORS.orange);document.body.classList.toggle('compact',SETTINGS.density==='compact');document.body.classList.toggle('spacious',SETTINGS.density==='spacious');$('#app').classList.toggle('flat',SETTINGS.panel==='flat');$('#app').classList.toggle('noinsight',!SETTINGS.showInsight);document.body.classList.toggle('hideStats',!SETTINGS.showDetails);syncRailToggle()}
-function syncRailToggle(){
-  const btn=$('#railToggle');
-  if(!btn)return;
-  const open=!!SETTINGS.showInsight,label=open?'Hide the in-focus rail':'Show the in-focus rail';
-  btn.setAttribute('aria-expanded',String(open));
-  btn.title=label;
-  const sr=btn.querySelector('.srOnly');
-  if(sr)sr.textContent=label;
-}
-function toggleInsightRail(){
-  const open=!SETTINGS.showInsight;
-  updateSetting('showInsight',open);
-  // renderCurrent() never touches the rail, so a rail that was collapsed
-  // before its first render would come back empty without this.
-  if(open&&typeof renderInsight==='function')renderInsight();
-}
-function updateSetting(k,v){if(k==='refresh')return;if(k==='showInsight'||k==='showDetails'||k==='showFinished'||k.startsWith('alerts'))v=!!v;SETTINGS[k]=v;saveSettings();applySettings();renderCurrent();if((k==='favoriteTeam'||k==='favoriteTeams')&&typeof renderInsight==='function')renderInsight();if(k.startsWith('alerts'))renderAlerts();scheduleNextLoad()}
+function applySettings(){document.documentElement.style.setProperty('--signal',COLORS[SETTINGS.accent]||COLORS.orange);document.body.classList.toggle('compact',SETTINGS.density==='compact');document.body.classList.toggle('spacious',SETTINGS.density==='spacious');$('#app').classList.toggle('flat',SETTINGS.panel==='flat');document.body.classList.toggle('hideStats',!SETTINGS.showDetails)}
+function updateSetting(k,v){if(k==='refresh')return;if(k==='showDetails'||k==='showFinished'||k.startsWith('alerts'))v=!!v;SETTINGS[k]=v;saveSettings();applySettings();renderCurrent();if(k.startsWith('alerts'))renderAlerts();scheduleNextLoad()}
 function resetSettings(){SETTINGS={...DEFAULT_SETTINGS};saveSettings();applySettings();setView(SETTINGS.defaultView);scheduleNextLoad()}
 // Feeds hand over headlines with HTML entities still in them ("Ducks&#39;"),
 // and esc() would then print the entity itself. Decode once, on load.
@@ -246,15 +230,25 @@ function relativeTime(value,unit){return new Intl.RelativeTimeFormat(uiLocale(),
 function dt(iso){try{return new Date(iso).toLocaleString(uiLocale(),{weekday:'short',hour:'numeric',minute:'2-digit',month:'short',day:'numeric'})}catch(e){return''}}
 function ago(iso){try{const s=(Date.now()-new Date(iso).getTime())/1000;if(!isFinite(s))return'';if(s<70)return relativeTime(0,'second');if(s<3600)return relativeTime(-Math.round(s/60),'minute');if(s<86400)return relativeTime(-Math.round(s/3600),'hour');return relativeTime(-Math.round(s/86400),'day')}catch(e){return''}}
 function kickIn(iso){try{const m=Math.round((new Date(iso)-Date.now())/60000);if(m<=0)return relativeTime(0,'minute');if(m<60)return relativeTime(m,'minute');if(m<1440)return relativeTime(Math.round(m/60),'hour');return relativeTime(Math.round(m/1440),'day')}catch(e){return''}}
-const ODDS_WINDOW_HOURS=3; // mirrors fetch_data.py's PREGAME_ODDS_WINDOW_HOURS quota gate
-function oddsEtaLabel(m){try{const mins=(new Date(m.kickoff)-Date.now())/60000;if(mins>ODDS_WINDOW_HOURS*60)return `Market odds appear ~${ODDS_WINDOW_HOURS}h before kickoff`}catch(e){}return null}
+const ODDS_WINDOW_HOURS=24; // mirrors fetch_data.py's PREGAME_ODDS_WINDOW_HOURS quota gate
+function oddsEtaLabel(m){try{const mins=(new Date(m.kickoff)-Date.now())/60000;if(mins>ODDS_WINDOW_HOURS*60)return `Market odds checked from ${ODDS_WINDOW_HOURS}h before kickoff`}catch(e){}return null}
 const STALE_MATCH_MINUTES=150;
 function kickMs(m){const t=Date.parse(m?.kickoff||'');return Number.isFinite(t)?t:0}
 function isStaleUpcoming(m){const t=kickMs(m);return m?.status==='UPCOMING'&&t>0&&(Date.now()-t)>STALE_MATCH_MINUTES*60000}
 function isCompleteOrPast(m){return m?.status==='FINISHED'||isStaleUpcoming(m)}
 function isVisibleUpcoming(m){return m?.status==='UPCOMING'&&!isStaleUpcoming(m)}
 function fixtureSort(a,b){const o={LIVE:0,UPCOMING:1,FINISHED:2};return (o[a.status]??9)-(o[b.status]??9)||(a.kickoff||'').localeCompare(b.kickoff||'')}
-function teamKey(name){return String(name||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim()}
+// Pure function of the name, and the fixture merge calls it millions of times
+// across a few hundred distinct schools, so the answer is kept.
+const _TEAM_KEY_CACHE=new Map();
+function teamKey(name){
+  const label=String(name||'');
+  const hit=_TEAM_KEY_CACHE.get(label);
+  if(hit!==undefined)return hit;
+  const key=label.toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+  _TEAM_KEY_CACHE.set(label,key);
+  return key;
+}
 function teamInitials(team){
   const code=String(team?.code||'').replace(/[^A-Za-z0-9]/g,'').slice(0,3).toUpperCase();
   if(code)return code;
@@ -262,7 +256,9 @@ function teamInitials(team){
   return (words.length>1?words.slice(0,3).map(w=>w[0]).join(''):words[0]?.slice(0,3)||'TM').toUpperCase();
 }
 function teamHue(team){let h=0;for(const ch of String(team?.name||team?.code||'team'))h=(h*31+ch.charCodeAt(0))%360;return h}
-function teamMarkHTML(team,extra=''){return `<span class="teamMark ${esc(extra)}" style="--team-hue:${teamHue(team)}" aria-hidden="true">${esc(teamInitials(team))}</span>`}
+function teamMarkHTML(team,extra=''){
+  return teamMark(team?.name,extra);
+}
 function metricHelp(label,copy){return `<button type="button" class="metricHelp" aria-label="${esc(label)}: ${esc(copy)}" aria-expanded="false" aria-controls="metricHelpPopover" data-tip="${esc(copy)}">?</button>`}
 function metricHelpPopover(){
   let pop=document.querySelector('#metricHelpPopover');
@@ -404,6 +400,7 @@ function scorePlainText(m){if(m?.status==='LIVE')return '—';if(isStaleUpcoming
 function statNum(v){const m=String(v??'').match(/-?\d+(\.\d+)?/);return m?Number(m[0]):0}
 function pressure(stats,side){if(!stats)return 0;const s=stats[side]||{};return statNum(s.shots_on_target)*4+statNum(s.shots)*1.2+statNum(s.corners)*1.4+statNum(String(s.possession).replace('%',''))*.08-statNum(s.red_cards)*4}
 function pct(v){v=Number(v);return Number.isFinite(v)?Math.max(0,Math.min(100,Math.round(v))):0}
+function modelPctLabel(v){const n=Number(v);return v==null||!Number.isFinite(n)?'—':Math.max(0,Math.min(99.9,n)).toFixed(1)+'%'}
 function bar1x2(h,d,a){h=pct(h);a=pct(a);const dSeg=d==null?'':(d=>`<div class="seg d" style="flex-basis:${d}%"><span>${d}%</span></div>`)(pct(d));return `<div class="bar"><div class="seg h" style="flex-basis:${h}%"><span>${h}%</span></div>${dSeg}<div class="seg a" style="flex-basis:${a}%"><span>${a}%</span></div></div>`}
 // The backend owns the published pick. UI components may explain that pick,
 // but must never promote a live model or market inference over a locked record.
@@ -426,7 +423,34 @@ function officialPredictionProbabilities(m){
   return locked.adjusted||locked.blend||locked.probs||pr.adjusted||pr.blend||pr.model||{};
 }
 function duo(xl,xv,yl,yv){xv=pct(xv);yv=pct(yv);return `<div class="mkt"><div class="lbls"><span>${esc(xl)} <b>${xv}%</b></span><span><b>${yv}%</b> ${esc(yl)}</span></div><div class="duo"><i class="x" style="flex-basis:${xv}%">${xv}%</i><i class="y" style="flex-basis:${yv}%">${yv}%</i></div></div>`}
-function marketPanel(m){const mk=m.markets||{},x=mk['1x2']||{},twoWay=_isTwoWay(m);let h='<div class="seclbl">Odds tracker</div>';if(x.home_pct!=null){h+=`<div class="problbl"><span>${esc(m.home.code||m.home.name)} win</span>${twoWay?'':'<span>draw</span>'}<span>${esc(m.away.code||m.away.name)} win</span></div>${bar1x2(x.home_pct,twoWay?null:x.draw_pct,x.away_pct)}<div class="faintline" style="margin-top:6px">1X2 market · ${x.books||'?'} books</div>`;const arr=v=>v>0?`<span class="up">▲${v}</span>`:v<0?`<span class="down">▼${Math.abs(v)}</span>`:`<span class="flat">·</span>`;if(x.move&&(x.move.h||(!twoWay&&x.move.d)||x.move.a)){h+=`<div class="oddsMove"><span class="mvlbl">Since open</span><span>${esc(m.home.code)} ${arr(x.move.h)}</span>${twoWay?'':`<span>X ${arr(x.move.d)}</span>`}<span>${esc(m.away.code)} ${arr(x.move.a)}</span></div>`}else if(x.open){h+=`<div class="faintline" style="margin-top:4px">No line movement logged yet — it builds as the fetcher keeps running.</div>`}if(x.confidence){h+=`<div class="oddsDisagree ${esc(x.confidence)}"><span class="dgtag">${esc(x.confidence)}</span><span>books range ${x.spread_lo}–${x.spread_hi}% on ${esc(m.home.code)} win</span><span class="dgspread">±${x.spread}</span></div>`}}else h+=`<div class="nomk">${esc(oddsEtaLabel(m)||'No 1X2 market odds yet.')}</div>`;if(mk.totals)h+=`<div class="seclbl">Goals — over/under ${esc(mk.totals.line)}</div>`+duo(`Over ${mk.totals.line}`,mk.totals.over_pct,`Under ${mk.totals.line}`,mk.totals.under_pct);return h}
+function marketPanel(m){
+  const mk=m.markets||{},x=mk['1x2']||{},twoWay=_isTwoWay(m);
+  let h='<div class="seclbl">Market price</div>';
+  if(x.home_pct!=null){
+    h+=`<div class="problbl"><span>${esc(m.home.code||m.home.name)} win</span>${twoWay?'':'<span>draw</span>'}<span>${esc(m.away.code||m.away.name)} win</span></div>${bar1x2(x.home_pct,twoWay?null:x.draw_pct,x.away_pct)}<div class="faintline" style="margin-top:6px">1X2 market · ${x.books||'?'} books</div>`;
+    const arr=v=>v>0?`<span class="up">▲${v}</span>`:v<0?`<span class="down">▼${Math.abs(v)}</span>`:`<span class="flat">·</span>`;
+    if(x.move&&(x.move.h||(!twoWay&&x.move.d)||x.move.a)){
+      h+=`<div class="oddsMove"><span class="mvlbl">Since open</span><span>${esc(m.home.code)} ${arr(x.move.h)}</span>${twoWay?'':`<span>X ${arr(x.move.d)}</span>`}<span>${esc(m.away.code)} ${arr(x.move.a)}</span></div>`;
+    }else if(x.open){
+      h+=`<div class="faintline" style="margin-top:4px">No line movement logged yet — it builds as the fetcher keeps running.</div>`;
+    }
+    if(x.confidence){
+      h+=`<div class="oddsDisagree ${esc(x.confidence)}"><span class="dgtag">${esc(x.confidence)}</span><span>books range ${x.spread_lo}–${x.spread_hi}% on ${esc(m.home.code)} win</span><span class="dgspread">±${x.spread}</span></div>`;
+    }
+  }else{
+    const read=typeof betbetterReadFor==='function'?betbetterReadFor(m):null;
+    const price=read?.market_pct==null?NaN:Number(read.market_pct);
+    if(Number.isFinite(price)&&price>=0&&price<=100){
+      const stamp=Date.parse(read.generated_at||read.handoff_generated_at||'');
+      const when=Number.isFinite(stamp)?` · ${esc(new Date(stamp).toLocaleString())}`:'';
+      h+=`<div class="readSide"><span>${esc(read.pick_name||'Model pick')}</span><strong>${Math.min(99.9,price).toFixed(1)}%</strong></div><div class="faintline">Market probability recorded with the published forecast${when}. Snapshot, not a live quote.</div>`;
+    }else{
+      h+=`<div class="nomk">${esc(oddsEtaLabel(m)||'No market price available yet.')}</div>`;
+    }
+  }
+  if(mk.totals)h+=`<div class="seclbl">Goals — over/under ${esc(mk.totals.line)}</div>`+duo(`Over ${mk.totals.line}`,mk.totals.over_pct,`Under ${mk.totals.line}`,mk.totals.under_pct);
+  return h;
+}
 function _v6UpsetClass(score,triggered){score=Number(score)||0;if(triggered)return'trigger';return score>=70?'high':score>=50?'med':'low'}
 /* dedup */
 /* dedup */
@@ -438,16 +462,18 @@ function _v6UpsetClass(score,triggered){score=Number(score)||0;if(triggered)retu
 let HERO_FIRST_VISIT=false;try{HERO_FIRST_VISIT=!localStorage.getItem('matchday.heroVisited');if(HERO_FIRST_VISIT)localStorage.setItem('matchday.heroVisited','1')}catch(e){}
 function heroSeen(){try{return localStorage.getItem('matchday.heroSeen')==='1'||!HERO_FIRST_VISIT}catch(e){return false}}
 function heroDismiss(){try{localStorage.setItem('matchday.heroSeen','1')}catch(e){};renderCurrent();}
-function welcomeDismissed(){try{return sessionStorage.getItem('matchday.welcome.entered')==='1'}catch(e){return false}}
+function welcomeDismissed(){if(window.MATCHDAY_ENTERED)return true;try{return sessionStorage.getItem('matchday.welcome.entered')==='1'}catch(e){return false}}
 // The Matchday wordmark in the top bar takes a fan back to the welcome page.
-function openWelcome(){try{sessionStorage.removeItem('matchday.welcome.entered')}catch(e){}renderWelcome();window.scrollTo?.(0,0);document.getElementById('welcomeGate')?.focus?.()}
+function openWelcome(){window.MATCHDAY_ENTERED=false;try{sessionStorage.removeItem('matchday.welcome.entered')}catch(e){}renderWelcome();window.scrollTo?.(0,0);document.getElementById('welcomeGate')?.focus?.()}
 function enterMatchday(targetView='',startWithTour=false){
+  window.MATCHDAY_ENTERED=true;
   try{sessionStorage.setItem('matchday.welcome.entered','1');localStorage.setItem('matchday.heroSeen','1')}catch(e){}
   const gate=$('#welcomeGate'),app=$('#app');
   const finish=()=>{
     if(gate){gate.hidden=true;gate.classList.remove('welcomeLeaving')}
     document.body.classList.remove('welcomeOpen','welcomeExiting');
     if(app)app.classList.remove('appRevealing');
+    window.scrollTo?.(0,0);
     if(targetView&&typeof setView==='function')setView(targetView);else renderCurrent();
     const main=document.querySelector('.content');if(main)main.focus?.();
     if(startWithTour)setTimeout(startTour,500);
@@ -560,11 +586,11 @@ function _welcomeCardHTML(m){
   // them -- the only thing the pair is actually saying -- is the thing you see.
   const meter=Number.isFinite(model)
     ?`<div class="welcomeMeter" aria-hidden="true"><i style="--welcome-p:${pct(model)}%"></i>${Number.isFinite(market)?`<u style="--welcome-m:${pct(market)}%"></u>`:''}</div>
-      <div class="welcomeMeterKey"><span><b></b>model ${model.toFixed(1)}%</span>${Number.isFinite(market)?`<span><i></i>market ${market.toFixed(1)}%</span>`:''}</div>`
+      <div class="welcomeMeterKey"><span><b></b>model ${modelPctLabel(model)}</span>${Number.isFinite(market)?`<span><i></i>market ${market.toFixed(1)}%</span>`:''}</div>`
     :'';
   const read=pick&&Number.isFinite(model)
     ?`<div class="welcomeRead"><div class="welcomeReadTop"><span>MODEL PICK</span>${edgeChip}</div>
-       <div class="welcomeReadPick"><b>${esc(pick)}</b><strong>${model.toFixed(1)}<small>%</small></strong></div>
+       <div class="welcomeReadPick"><b>${esc(pick)}</b><strong>${modelPctLabel(model).slice(0,-1)}<small>%</small></strong></div>
        ${meter}</div>`
     :'';
   return `<div class="welcomeMatchMeta"><span>${esc(m._comp||DATA.comp_key||m.stage||'NEXT')}</span><span>${kickIn(m.kickoff)}</span></div><div class="welcomeTeams"><div><small>${esc(m.home?.code||'HOME')}</small><b>${esc(m.home?.name||'Home')}</b></div><em>v</em><div class="away"><small>${esc(m.away?.code||'AWAY')}</small><b>${esc(m.away?.name||'Away')}</b></div></div>${read}`;
@@ -585,7 +611,8 @@ function scorecardTotals(){
 function renderWelcomeStats(){
   const host=$('#welcomeStats');if(!host)return;
   const M=DATA.matches||[];
-  const upcoming=M.filter(isVisibleUpcoming);
+  const weekEnd=new Date();weekEnd.setHours(23,59,59,999);weekEnd.setDate(weekEnd.getDate()+7);
+  const upcoming=M.filter(m=>isVisibleUpcoming(m)&&new Date(m.kickoff)<=weekEnd);
   if(!upcoming.length){host.innerHTML='';return}
   // The first two cells used to disagree about what they were counting: the
   // fixture count came from whichever board was loaded while the second cell
@@ -597,7 +624,7 @@ function renderWelcomeStats(){
   // like a broken site.
   const sportLabel=SPORT_LABELS[currentSportKey()]||DATA.competition||'fixtures';
   const totals=scorecardTotals();
-  const cells=[[upcoming.length,`${sportLabel} fixtures`]];
+  const cells=[[upcoming.length,`${sportLabel} games next 7 days`]];
   if(totals.picks)cells.push([totals.picks,'picks graded in public']);
   if(FORECAST_PAUSE_ACTIVE)cells.push(['paused','new picks while rebuilding']);
   else if(totals.lockMinutes)cells.push([`${totals.lockMinutes} min`,'locked before kickoff']);
@@ -638,7 +665,7 @@ function renderWelcomeUpset(){
   if(!p||(sport&&String(p.sport||'').toLowerCase()!==sport)){host.hidden=true;host.innerHTML='';return}
   const model=Number(p.model_pct),market=Number(p.market_pct),gap=Number(p.disagreement_points);
   if(!Number.isFinite(model)){host.hidden=true;host.innerHTML='';return}
-  const bar=(cls,label,v)=>`<div class="${cls}"><span>${label}</span><i style="width:${Math.max(2,Math.min(100,v))}%"></i><b>${Number.isFinite(v)?v.toFixed(1)+'%':'—'}</b></div>`;
+  const bar=(cls,label,v)=>`<div class="${cls}"><span>${label}</span><i style="width:${Math.max(2,Math.min(100,v))}%"></i><b>${Number.isFinite(v)?(label==='model'?modelPctLabel(v):v.toFixed(1)+'%'):'—'}</b></div>`;
   host.hidden=false;
   // Name the opponent, not the fixture: the selection is already the headline,
   // so "Iowa State Cyclones / Iowa State Cyclones at Iowa Hawkeyes" said it twice.
@@ -817,6 +844,164 @@ function groupedBoardHTML(list){
     return `<div class="boardHorizon"><span>${esc(h.label)}</span><i>${games.length} ${games.length===1?'game':'games'}</i></div>`+games.map(cardHTML).join('');
   }).join('');
 }
+
+// The games-first summary deliberately reads the same Bet Better handoff as
+// the fixture card and expanded view. Do not fill its gaps from m.prediction:
+// that is a different forecast system and previously produced contradictory
+// picks on the same fixture.
+function gamesBoardRead(m){
+  const read=typeof betbetterReadFor==='function'?betbetterReadFor(m):null;
+  if(!read)return null;
+  const number=v=>v==null||v===''?null:(Number.isFinite(Number(v))?Number(v):null);
+  const model=number(read.model_pct),market=number(read.market_pct);
+  if(!read.pick_name||model==null)return null;
+  const supplied=number(read.edge_points);
+  return {match:m,pick:read.pick_name,model,market,
+    difference:market==null?null:(supplied==null?model-market:supplied)};
+}
+function featuredMatchupRead(reads){
+  // Bet Better's game of the week is selected for two strong, closely rated
+  // teams, not for the largest edge or simply the earliest kickoff.
+  const game=(typeof MATCHDAY_BETBETTER_GAME_OF_THE_WEEK!=='undefined'
+    &&MATCHDAY_BETBETTER_GAME_OF_THE_WEEK.available)?MATCHDAY_BETBETTER_GAME_OF_THE_WEEK.game:null;
+  if(!game)return null;
+  return reads.find(read=>{
+    const m=read.match;
+    if(String(m.kickoff||'').slice(0,10)!==String(game.kickoff||'').slice(0,10))return false;
+    return (bbNameMatches(m.home?.name,game.home?.team)&&bbNameMatches(m.away?.name,game.away?.team))
+      ||(bbNameMatches(m.home?.name,game.away?.team)&&bbNameMatches(m.away?.name,game.home?.team));
+  })||null;
+}
+const TEAM_LOGO_FILES={
+  'Texas Longhorns':'texas.png','Georgia Bulldogs':'georgia.png','Miami Hurricanes':'miami.png','Ole Miss Rebels':'oleMiss.png','Ohio State Buckeyes':'ohioState.png','Notre Dame Fighting Irish':'notreDame.png','Indiana Hoosiers':'indiana.png','Alabama Crimson Tide':'alabama.png','BYU Cougars':'byu.png','USC Trojans':'usc.png','Texas Tech Red Raiders':'texasTech.png','LSU Tigers':'lsu.png','Utah Utes':'utah.png','Louisville Cardinals':'louisville.png','Iowa Hawkeyes':'iowa.png','Penn State Nittany Lions':'pennState.png','Tennessee Volunteers':'tennessee.png','Florida Gators':'florida.png','Missouri Tigers':'missouri.png','Mississippi State Bulldogs':'mississippiState.png','Kentucky Wildcats':'kentucky.png','Houston Cougars':'houston.png','SMU Mustangs':'smu.png','Michigan Wolverines':'michigan.png','Duke Blue Devils':'duke.png','Coastal Carolina Chanticleers':'coastalCarolina.png','Liberty Flames':'liberty.png'
+};
+Object.assign(TEAM_LOGO_FILES,{
+  Texas:'texas.png',Georgia:'georgia.png',Miami:'miami.png','Ole Miss':'oleMiss.png','Ohio State':'ohioState.png','Notre Dame':'notreDame.png',Indiana:'indiana.png',Alabama:'alabama.png',BYU:'byu.png',USC:'usc.png','Texas Tech':'texasTech.png',LSU:'lsu.png',Utah:'utah.png',Louisville:'louisville.png',Iowa:'iowa.png','Penn State':'pennState.png',Tennessee:'tennessee.png',Florida:'florida.png',Missouri:'missouri.png','Mississippi State':'mississippiState.png',Kentucky:'kentucky.png',Houston:'houston.png',SMU:'smu.png',Michigan:'michigan.png',Duke:'duke.png','Coastal Carolina':'coastalCarolina.png',Liberty:'liberty.png',
+  Louisiana:'louisianaLafayette.png','UL Monroe':'louisianaMonroe.png','Louisiana Tech':'LouisianaTech.png',
+  'Miami (OH)':'miamiOH.png',UConn:'connecticut.png','NC State':'ncState.png',
+  'App State':'appalachianState.png','Southern Miss':'southernMississippi.png',FIU:'floridaIntl.png',
+  FAU:'floridaAtlantic.png',NIU:'northernIllinois.png',UTSA:'texasSanAntonio.png',
+  'Sam Houston':'samHoustonState.png','UT Martin':'tennesseeMartin.png',McNeese:'mcNeeseState.png',
+  'Boston College':'boston.png','East Tennessee State':'eastTennessee.png','Florida A&M':'floridaAM.png',
+  'Florida International':'floridaIntl.png','Houston Christian':'houstonBaptist.png',Nicholls:'nichollsState.png',
+  'North Carolina A&T':'northCarolinaAT.png','San José State':'sanJoseState.png','SE Louisiana':'southeasternLouisiana.png',
+  'Texas A&M':'texasAM.png','The Citadel':'citadel.png',UAlbany:'albany.png',
+  'Michigan State':'michiganState.png','Michigan State Spartans':'michiganState.png',
+  'Florida Atlantic':'floridaAtlantic.png','Florida Atlantic Owls':'floridaAtlantic.png',
+  'Georgia Southern':'georgiaSouthern.png','Georgia Southern Eagles':'georgiaSouthern.png',
+  'Georgia State':'georgiaState.png','Georgia State Panthers':'georgiaState.png',
+  TCU:'TCU.png',"Hawai'i":'hawaii.png','Oklahoma State':'OklahomaState.png'
+});
+const _INFERRED_LOGO_CACHE=new Map();
+function inferredTeamLogoFile(name){
+  const label=String(name||'');
+  const hit=_INFERRED_LOGO_CACHE.get(label);
+  if(hit!==undefined)return hit;
+  const words=label.replace(/&/g,' and ').replace(/[^A-Za-z0-9]+/g,' ').trim().split(/\s+/).filter(Boolean);
+  const file=words.length?words.map((word,i)=>i?word[0].toUpperCase()+word.slice(1):word.toLowerCase()).join('')+'.png':'';
+  _INFERRED_LOGO_CACHE.set(label,file);
+  return file;
+}
+// Hoisted out of the function: these never change, and rebuilding the set and
+// the entry list on every call made the fixture merge quadratic in wall time.
+const _DISTINCT_SCHOOL_WORD=new Set(['state','tech','university','college','international','christian','baptist','a&m','a']);
+const _safeLogoSuffix=remaining=>!_DISTINCT_SCHOOL_WORD.has(String(remaining||'').toLowerCase());
+// Longest school name first, so the prefix search can keep its ordering without
+// re-sorting the table on every lookup.
+const _TEAM_LOGO_ENTRIES=Object.entries(TEAM_LOGO_FILES).sort((a,b)=>b[0].length-a[0].length);
+// The snapshot merge asks for the same few hundred schools millions of times.
+// The computed list is kept and handed out as a copy, because callers such as
+// teamMark() shift entries off the array they are given.
+const _LOGO_CANDIDATE_CACHE=new Map();
+function teamLogoCandidates(name){
+  const label=String(name||'').trim();
+  let candidates=_LOGO_CANDIDATE_CACHE.get(label);
+  if(candidates===undefined){
+    const words=label.replace(/&/g,' and ').replace(/[^A-Za-z0-9]+/g,' ').trim().split(/\s+/).filter(Boolean);
+    const exact=TEAM_LOGO_FILES[label];
+    const inferred=[];
+    for(let end=words.length;end>0;end--)if(_safeLogoSuffix(words[end]))inferred.push(inferredTeamLogoFile(words.slice(0,end).join(' ')));
+    // Try the longest full school name before a shorter prefix: Michigan State
+    // must never inherit Michigan's mark, and likewise for other state schools.
+    const mappedPrefixes=[];
+    for(const [school,file] of _TEAM_LOGO_ENTRIES){
+      if(label.startsWith(school+' ')&&_safeLogoSuffix(label.slice(school.length).trim().split(/\s+/)[0]))mappedPrefixes.push(file);
+    }
+    candidates=[...new Set([exact,...mappedPrefixes,...inferred].filter(Boolean))];
+    _LOGO_CANDIDATE_CACHE.set(label,candidates);
+  }
+  return candidates.slice();
+}
+// The fixture merge only ever wants the first candidate, and copying the array
+// for each of a few million comparisons is itself most of the cost.
+function primaryTeamLogo(name){
+  const label=String(name||'').trim();
+  let candidates=_LOGO_CANDIDATE_CACHE.get(label);
+  if(candidates===undefined){teamLogoCandidates(label);candidates=_LOGO_CANDIDATE_CACHE.get(label)}
+  return candidates[0];
+}
+function teamLogoFallback(img){
+  const remaining=String(img.dataset.logoFallback||'').split('|').filter(Boolean);
+  if(remaining.length){img.dataset.logoFallback=remaining.slice(1).join('|');img.src='team-logos/'+remaining[0];return}
+  img.hidden=true;img.nextElementSibling.hidden=false;
+}
+function teamMark(name,extra=''){
+  const candidates=teamLogoCandidates(name),file=candidates.shift()||'';
+  const letters=String(name||'').split(/\s+/).filter(Boolean).slice(0,2).map(w=>w[0]).join('').toUpperCase()||'?';
+  return `<span class="teamMark ${esc(extra)}"><img src="team-logos/${esc(file)}" data-logo-fallback="${esc(candidates.join('|'))}" alt="" width="32" height="32" loading="lazy" onerror="teamLogoFallback(this)"><span class="teamMonogramText" hidden aria-hidden="true">${esc(letters)}</span></span>`;
+}
+function gamesSummaryHTML(active){
+  const sport=SPORT_LABELS[currentSportKey()]||DATA.competition||'College sports';
+  const weekEnd=Date.now()+7*86400000;
+  const week=active.filter(m=>m.status==='LIVE'||(kickMs(m)&&kickMs(m)<=weekEnd));
+  const reads=week.map(gamesBoardRead).filter(Boolean);
+  const comparable=reads.filter(r=>r.market!=null&&r.difference!=null);
+  const featured=featuredMatchupRead(reads)
+    ||[...comparable].sort((a,b)=>fixtureSort(a.match,b.match))[0]
+    ||[...reads].sort((a,b)=>fixtureSort(a.match,b.match))[0]
+    ||(week[0]&&{match:week[0],pick:'',model:null,market:null,difference:null});
+  const top=[...comparable].sort((a,b)=>Math.abs(b.difference)-Math.abs(a.difference)||fixtureSort(a.match,b.match)).slice(0,3);
+  const feature=featured?gamesFeaturedHTML(featured):`<div class="gamesEmpty">No games in the next seven days. The full schedule remains below.</div>`;
+  return `<section class="gamesLandingHead"><span>GAMES</span><h1>${esc(sport)}</h1><p>Predictions, market comparisons and the public record.</p></section>`
+    +`<section class="gamesFeatured"><div class="gamesSectionHead"><span>This week's featured game</span><small>${featured?.model!=null?'Live model':'Next 7 days'}</small></div>${feature}</section>`
+    +`<div class="gamesSupportGrid${top.length?'':' noComparisons'}">${top.length?gamesDifferencesHTML(top):''}${gamesRecordHTML()}</div>`
+    +`<nav class="gamesExplore" aria-label="Explore Matchday"><span>Explore</span><div><button type="button" onclick="setView('matches')"><b>Games</b><small>Fixtures and matchups</small></button><button type="button" onclick="setView('groups')"><b>Rankings</b><small>Ratings and conferences</small></button><button type="button" onclick="setView('news')"><b>Research</b><small>Analysis and methodology</small></button><button type="button" onclick="setView('results')"><b>Results</b><small>Finals and grading</small></button></div></nav>`;
+}
+function renderHome(){
+  const host=$('#view-home'),active=(DATA.matches||[]).filter(m=>!isCompleteOrPast(m)).sort(favoriteFixtureSort);
+  const weekEnd=Date.now()+7*86400000,week=active.filter(m=>m.status==='LIVE'||(kickMs(m)&&kickMs(m)<=weekEnd));
+  const reads=week.map(gamesBoardRead).filter(Boolean),priced=reads.filter(r=>r.market!=null&&r.difference!=null);
+  const edges=priced.filter(r=>Math.abs(r.difference)>=5).length;
+  const sc=typeof betbetterScorecard==='function'?betbetterScorecard():null;
+  host.innerHTML=`<section class="homeIntro"><span>MATCHDAY TERMINAL</span><h1>College sports predictions &amp; research</h1><p>What matters now, before you choose where to go deeper.</p></section>`
+    +`<section class="homeKpis" aria-label="This week's overview"><div><strong>${week.length}</strong><span>Games this week</span></div><div><strong>${priced.length?edges:'—'}</strong><span>${priced.length?'Model / market gaps':'Edges awaiting market'}</span></div><div><strong>${Number(sc?.record?.picks)||0}</strong><span>Picks graded</span></div></section>`
+    +gamesSummaryHTML(active);
+}
+function gamesFeaturedHTML(read){
+  const m=read.match;
+  const comparison=read.market==null
+    ?`<div><span>Market</span><b>No snapshot yet</b></div><div><span>Difference</span><b>Not available</b></div>`
+    :`<div><span>Market</span><b>${read.market.toFixed(1)}%</b></div><div><span>Difference</span><b class="${read.difference>0?'up':read.difference<0?'down':''}">${read.difference>0?'+':''}${read.difference.toFixed(1)} pts</b></div>`;
+  const model=read.model==null
+    ?`<div><span>Live model</span><b>No prediction yet</b></div>`
+    :`<div><span>Live model · ${esc(read.pick)}</span><b>${modelPctLabel(read.model)}</b></div>`;
+  return `<button type="button" class="gamesFeaturedButton" onclick="openMatchModal('${esc(String(m.id))}')"><span class="gamesFeaturedWhen">${esc(m.stage||'Fixture')} · ${esc(kickIn(m.kickoff))}</span><strong><span class="gamesFeaturedTeam">${teamMark(m.home?.name)}<span>${esc(m.home?.name||'Home')}</span></span><i>vs</i><span class="gamesFeaturedTeam away">${teamMark(m.away?.name)}<span>${esc(m.away?.name||'Away')}</span></span></strong><div class="gamesFeaturedCompare">${model}${comparison}</div><em>View analysis <span aria-hidden="true">→</span></em></button>`;
+}
+function gamesDifferencesHTML(reads){
+  const rows=reads.length?reads.map(read=>{
+    const m=read.match,d=read.difference;
+    const content=`<span><b>${esc(m.home?.name||'Home')} vs ${esc(m.away?.name||'Away')}</b><small>${esc(read.pick)} · model ${modelPctLabel(read.model)} · market ${read.market.toFixed(1)}%</small></span><strong class="${d>0?'up':d<0?'down':''}">${d>0?'+':''}${d.toFixed(1)} pts</strong>`;
+    return `<button type="button" onclick="openMatchModal('${esc(String(m.id))}')">${content}</button>`;
+  }).join(''):`<div class="gamesEmpty">Model and market comparisons will appear as games are priced.</div>`;
+  return `<section class="gamesDifferences"><div class="gamesSectionHead"><span>Largest model / market differences</span><small>${reads.length?'Top '+reads.length:'Awaiting prices'}</small></div><div class="gamesDifferenceRows">${rows}</div><button type="button" class="gamesTextLink" onclick="document.querySelector('.gamesFixtureBoard')?.scrollIntoView({behavior:prefersReducedMotion()?'auto':'smooth'})">View all games <span aria-hidden="true">→</span></button></section>`;
+}
+function gamesRecordHTML(){
+  const sc=typeof betbetterScorecard==='function'?betbetterScorecard():null;
+  const r=sc?.record;
+  if(!sc?.available||!r?.picks)return `<section class="gamesRecord"><div><span>Public record</span><strong>Record begins after picks are graded.</strong></div><button type="button" onclick="setView('score')">View Scorecard <span aria-hidden="true">→</span></button></section>`;
+  const expected=Number(r.expected_hit_rate_pct),actual=Number(r.hit_rate_pct),gap=Number(r.calibration_gap_points);
+  return `<section class="gamesRecord"><div><span>Public record</span><strong>${Number(r.wins)||0}–${Number(r.losses)||0}</strong><p>${r.picks} locked pregame picks · ${Number.isFinite(actual)?`${actual.toFixed(1)}% hit rate`:''}${Number.isFinite(expected)?` vs ${expected.toFixed(1)}% expected`:''}${Number.isFinite(gap)?` · ${gap>0?'+':''}${gap.toFixed(1)} calibration pts`:''}</p></div><button type="button" onclick="setView('score')">View Scorecard <span aria-hidden="true">→</span></button></section>`;
+}
 function renderMatches(){const M=DATA.matches||[];
   // One sport's full schedule, in kickoff order with favorites pinned. The
   // horizon headings below (In play / Today / This week) do the work the old
@@ -825,15 +1010,16 @@ function renderMatches(){const M=DATA.matches||[];
   const active=M.filter(m=>!isCompleteOrPast(m)).sort(favoriteFixtureSort);
   const shown=active.slice(0,MATCH_VISIBLE),remaining=Math.max(0,active.length-shown.length);
   const missing=DATA._missing?`<div class="banner" style="grid-column:1/-1"><b>No ${esc(DATA.competition||'this sport')} data yet.</b> Fetch it once its season is available — run the matching start file (e.g. start_ucl.bat) or keep an eye out when the season begins.</div>`:'';
-  const intro=`<div class="viewIntro"><div><div class="vhead">${t('Fixtures')}</div><p>${FORECAST_PAUSE_ACTIVE?'Fixtures, scores and market odds. Model picks are paused.':'Pregame model reads now; final scores and grading after the game.'}</p></div><span>${active.length} games</span></div>`;
-  const html=missing+landingHero()+(typeof collegeModules==='function'?collegeModules():'')+intro+
+  const intro=`<div class="viewIntro gamesFixtureBoard"><div><div class="vhead">Games</div><p>${FORECAST_PAUSE_ACTIVE?'Fixtures, scores and market odds. Model picks are paused.':'This week comes first. Open any matchup for the full model, market and team analysis.'}</p></div><span>${active.length} games</span></div>`;
+  const html=missing+intro+
     (shown.length?groupedBoardHTML(shown):`<div class="empty" style="grid-column:1/-1">No upcoming matches to analyze.</div>`)+
     (remaining?`<div class="fixturePager"><span>Showing ${shown.length} of ${active.length} fixtures</span><button class="actionbtn" onclick="MATCH_VISIBLE+=FIXTURE_PAGE_SIZE;renderMatches()">Load ${Math.min(FIXTURE_PAGE_SIZE,remaining)} more</button></div>`:'');
   $('#view-matches').innerHTML=html;enhanceMatchCards($('#view-matches'));
   // Notes go behind each card's ? first, so the power rating card is trimmed
   // against the cards' real, shorter heights.
   if(typeof collapseBoardNotes==='function')collapseBoardNotes($('#view-matches'));
-  if(typeof fitRankingCard==='function')fitRankingCard();}
+  if(typeof fitRankingCard==='function')fitRankingCard();
+  if(typeof balanceBoardMods==='function')balanceBoardMods();}
 function renderResults(){const M=DATA.matches||[];
   const past=M.filter(isCompleteOrPast).sort((a,b)=>Number(isFavoriteMatch(b))-Number(isFavoriteMatch(a))||(b.kickoff||'').localeCompare(a.kickoff||''));
   const shown=past.slice(0,RESULT_VISIBLE),remaining=Math.max(0,past.length-shown.length);
@@ -870,21 +1056,8 @@ const SYSTEM_UPDATES=Array.isArray(window.SYSTEM_UPDATES)?window.SYSTEM_UPDATES:
 // which is exactly what had happened: the strip said 0728B while the Updates
 // page said 0730A.
 // "0830F" alone cannot be tracked back to anything: it carries no year, its
-// letter suffix only orders builds within one day, and nothing ties it to the
-// commit that actually shipped -- so a report of "broken on 0830F" could not be
-// matched to a deploy. deploy.yml already substitutes the commit's short SHA
-// into index.html for asset cache-busting; reading it back out of a meta tag
-// gives the label a commit to point at, with no second string to keep in sync.
-// Locally the placeholder is never substituted, so it is dropped rather than
-// shown to a developer as "__BUILD__".
-function buildSha(){
-  const raw=document.querySelector('meta[name="matchday-build-sha"]')?.content||'';
-  return /^[0-9a-f]{7,40}$/i.test(raw)?raw:'';
-}
 function currentBuild(){
-  const label=String(SYSTEM_UPDATES[0]?.date||'').replace(/^Build\s*/i,'').trim()||'dev';
-  const sha=buildSha();
-  return sha?`${label} · ${sha}`:label;
+  return String(SYSTEM_UPDATES[0]?.date||'').replace(/^Build\s*/i,'').trim()||'dev';
 }
 const UPDATES_PAGE_SIZE=10;
 let UPDATES_EXPANDED=false;
@@ -988,7 +1161,7 @@ function computeSignalAlerts(){
     if(_alertEnabled('model')&&change&&bb)out.push({t:'model',txt:`${bb.pick_name||'Model read'} moved ${change.delta>0?'+':''}${change.delta} probability points.`,id:m.id});
     if(_alertEnabled('market')&&bb){
       const gap=Number(bb.edge_points);
-      if(Number.isFinite(gap)&&Math.abs(gap)>=8)out.push({t:'market',txt:`Model ${Number(bb.model_pct).toFixed(1)}% and market ${Number(bb.market_pct).toFixed(1)}% on ${bb.pick_name}.`,id:m.id});
+      if(Number.isFinite(gap)&&Math.abs(gap)>=8)out.push({t:'market',txt:`Model ${modelPctLabel(bb.model_pct)} and market ${Number(bb.market_pct).toFixed(1)}% on ${bb.pick_name}.`,id:m.id});
     }
   });
   return out.filter((a,i,list)=>list.findIndex(b=>_alertKey(b)===_alertKey(a))===i).slice(0,12);
@@ -1015,7 +1188,7 @@ function toggleNavSheet(){
   document.body.classList.add('navSheetOpen');
   nav.querySelector('.navbtn[data-v]:not([data-primary]):not([style*="display: none"])')?.focus();
 }
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&navSheetOpen())closeNavSheet()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&navSheetOpen()){closeNavSheet();document.querySelector('#nav .navMore')?.focus()}});
 document.addEventListener('click',e=>{if(navSheetOpen()&&!e.target.closest('#nav'))closeNavSheet()});
 function toggleAlertCenter(force){
   const panel=$('#alertCenter'),bell=$('#alertBell');if(!panel)return;
@@ -1140,18 +1313,12 @@ async function bootAccount(){
 // have live data for it; a curated pool otherwise), with exactly one
 // reshuffle allowed if they don't like the draw.
 const US_SPORT_NAME_POOL={
-  ncaaf:['Arch Manning','Carson Beck','Dylan Raiola','Jeremiah Smith','Ryan Williams'],
-  ncaam:['Cooper Flagg','Ace Bailey','Cameron Boozer','Darryn Peterson'],
+  ncaaf:['Herschel Walker','Doug Flutie','Charlie Ward','Vince Young','Bo Jackson','Tim Tebow'],
+  ncaam:['Pete Maravich','Christian Laettner','Danny Manning','Grant Hill','Tyler Hansbrough','Bill Bradley'],
 };
 const GENERAL_NAME_POOL=[].concat(...Object.values(US_SPORT_NAME_POOL));
 function _handlePool(){
   const sportKey=String(DATA?.comp_key||'').toLowerCase();
-  const scorers=(DATA?.scorers||[]).map(s=>s.name).filter(Boolean);
-  if(favoriteTeam()&&scorers.length){
-    const teamOnes=(DATA.scorers||[]).filter(s=>isFavoriteTeam(s.team)).map(s=>s.name).filter(Boolean);
-    if(teamOnes.length>=3)return teamOnes;
-  }
-  if(scorers.length>=5)return scorers;
   return US_SPORT_NAME_POOL[sportKey]||GENERAL_NAME_POOL;
 }
 function _drawHandle(exclude){
@@ -1186,7 +1353,8 @@ function ensureHandle(){
   if(ACCOUNT.signedIn)return; // server-assigned, and it outranks anything local
   try{
     const assigned=localStorage.getItem('matchday.handleAssigned')==='1';
-    if(!myHandle()||!assigned)assignHandle(); // first-time visitor, or force-migrates an old free-text handle
+    const collegeName=GENERAL_NAME_POOL.some(name=>myHandle().startsWith(name+' #'));
+    if(!myHandle()||!assigned||!collegeName)assignHandle(); // legacy pro-sport guest aliases are replaced without losing device picks
   }catch(e){}
 }
 async function pushScore(){ // server grades only picks it locked before kickoff
@@ -1218,11 +1386,11 @@ function submitPick(matchId,pick){
   // A feed can still say UPCOMING after the clock has passed kickoff. The
   // timestamp is therefore a second, mandatory lock check.
   if(!isCommunityPickOpen(m))return false;
-  const official=officialPrediction(m);
+  const read=typeof betbetterReadFor==='function'?betbetterReadFor(m):m.betbetter_pick;
   db.picks[matchId]={pick,ts:Date.now(),
     home:m.home.name,away:m.away.name,code:{h:m.home.code,a:m.away.code},
     comp:m._comp||DATA.comp_key||'',
-    modelPick:official.side||null,
+    modelPick:read?.pick||null,
     marketPick:(()=>{const x=(m.markets||{})['1x2'];if(!x||x.home_pct==null)return null;const tr={h:x.home_pct,d:x.draw_pct,a:x.away_pct};return Object.keys(tr).reduce((a,b)=>tr[b]>tr[a]?b:a)})()};
   btmSave(db);renderCommunity();lockGlobalPick(matchId,pick,db.picks[matchId].comp);return true;
 }

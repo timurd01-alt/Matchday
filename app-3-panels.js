@@ -8,15 +8,40 @@ function scorecardUnderdogTag(p){if(!p?.upset_score||!p?.upset_snapshot?.radar||
 // the records map and the results settling keyed on an exact match and so
 // silently matched nothing -- ratings appeared while every record stayed 0-0
 // and no played game ever settled.
-function bbNameKey(name){return teamKey(name);}
+const _BB_NAME_KEY_CACHE=new Map();
+function bbNameKey(name){
+  // CFBD calls the school Massachusetts; Bet Better and its poll use UMass.
+  // Normalize that one established school alias before matching fixtures.
+  const label=String(name||'');
+  const hit=_BB_NAME_KEY_CACHE.get(label);
+  if(hit!==undefined)return hit;
+  const key=teamKey(label).replace(/^umass(?= |$)/,'massachusetts');
+  _BB_NAME_KEY_CACHE.set(label,key);
+  return key;
+}
+// Both are split per word on every comparison; the merge compares the same few
+// hundred names against each other, so the split is kept too.
+const _BB_WORDS_CACHE=new Map();
+function bbNameWords(name){
+  const label=String(name||'');
+  let words=_BB_WORDS_CACHE.get(label);
+  if(words===undefined){words=bbNameKey(label).split(' ').filter(Boolean);_BB_WORDS_CACHE.set(label,words)}
+  return words;
+}
 // A parenthetical is part of the identity, not decoration. "Miami" and
 // "Miami (OH)" are two different schools that both play, and whole-string
 // prefixing matched them to each other -- the fixture feed's "Miami" against the
 // engine's "Miami (OH) RedHawks" -- which is how a result gets settled onto the
 // wrong game.
+const _BB_QUALIFIER_CACHE=new Map();
 function bbNameQualifier(name){
-  const m=/\(([^)]*)\)/.exec(String(name||''));
-  return m?teamKey(m[1]):'';
+  const label=String(name||'');
+  const hit=_BB_QUALIFIER_CACHE.get(label);
+  if(hit!==undefined)return hit;
+  const m=/\(([^)]*)\)/.exec(label);
+  const qualifier=m?teamKey(m[1]):'';
+  _BB_QUALIFIER_CACHE.set(label,qualifier);
+  return qualifier;
 }
 // Matched word by word, with the shorter name's last word allowed to be an
 // abbreviation of the longer's.
@@ -35,7 +60,7 @@ function bbNameQualifier(name){
 // within a day -- but a name table is the only real answer if it ever bites.
 function bbNameMatches(a,b){
   if(bbNameQualifier(a)!==bbNameQualifier(b))return false;
-  const x=bbNameKey(a).split(' ').filter(Boolean),y=bbNameKey(b).split(' ').filter(Boolean);
+  const x=bbNameWords(a),y=bbNameWords(b);
   if(!x.length||!y.length)return false;
   const [short,long]=x.length<=y.length?[x,y]:[y,x];
   return short.every((word,i)=>long[i].startsWith(word));
@@ -64,18 +89,66 @@ function pollTableNote(g){
 }
 function pollSectionHTML(polls){
   if(!polls||!polls.length)return '';
+  const movement=t=>{
+    const move=Number(t.movement);
+    if(t.movement!=null&&Number.isFinite(move)){
+      if(move>0)return `<span class="pollMove up" title="Up ${move} place${move===1?'':'s'}">↑${move}</span>`;
+      if(move<0)return `<span class="pollMove down" title="Down ${Math.abs(move)} place${move===-1?'':'s'}">↓${Math.abs(move)}</span>`;
+      return '<span class="pollMove same" title="Unchanged">—</span>';
+    }
+    return '<span class="pollMove unavailable" title="Previous AP rank unavailable">—</span>';
+  };
   const rows=g=>(g.teams||[]).map((t,i)=>`<tr><td class="pollRank">${esc(t.pos??i+1)}</td>`
     +`<td><div class="gteam teamClickable" data-team="${esc(t.name||'')}" onclick="openTeamModal(this.dataset.team)">`
     +`<span class="code">${esc(t.code||'')}</span>${esc(t.name||'')}</div></td>`
-    +`<td><b>${esc(t.record||`${t.w??'\u2014'}-${t.l??'\u2014'}`)}</b></td>`
-    +`<td>${t.rating!=null?Number(t.rating).toFixed(2):'\u2014'}</td></tr>`).join('');
+    +`<td>${movement(t)}</td><td><b>${esc(t.record||`${t.w??'\u2014'}-${t.l??'\u2014'}`)}</b></td>`
+    +`<td${t.external_rank?` title="Matchday power rating #${Number(t.external_rank)}"`:''}>${t.rating!=null?Number(t.rating).toFixed(2):'\u2014'}</td></tr>`).join('');
   return `<div class="vhead">Rankings</div>`+polls.map(g=>
     `<div class="tablewrap officialPoll"><div class="groupHead">${esc(g.group||'Ranking')}<span>${esc(pollTableNote(g))}</span></div>`
-    +`<table class="gtable officialPollTable"><thead><tr><th>#</th><th>Team</th><th>Record</th>`
-    +`<th title="0\u201310 blend of talent, Elo and season results">Power</th></tr></thead>`
+    +`<table class="gtable officialPollTable"><thead><tr><th>#</th><th>Team</th><th>Move</th><th>Record</th>`
+    +`<th title="Opponent-adjusted scoring margin; Matchday power-rating rank appears on hover" >Power</th></tr></thead>`
     +`<tbody>${rows(g)}</tbody></table></div>`).join('');
 }
 function _bbShiftDay(day,delta){const t=Date.parse(day+'T12:00:00Z');return Number.isFinite(t)?new Date(t+delta*86400000).toISOString().slice(0,10):day;}
+/* Merging the handoff used to compare every fixture against every other one.
+   With 632 handoff fixtures folded into a 160-fixture board that is ~700,000
+   sameCfbFixture() calls, and it locked the main thread for over two minutes
+   before the page could paint.
+
+   sameCfbFixture() can only match kickoffs within 36 hours of each other, or
+   two fixtures whose kickoff strings give the same calendar day. So fixtures
+   are bucketed by day here and each one is only compared against the two days
+   either side -- a superset of everything that could have matched, at a few
+   comparisons apiece instead of the whole board. */
+function _cfbDayOf(fixture){return String(fixture?.kickoff||'').slice(0,10)}
+function _cfbDayIsReal(day){return Number.isFinite(Date.parse(day+'T12:00:00Z'))}
+function makeCfbFixtureIndex(){
+  const byDay=new Map(),undated=[];let seq=0;
+  return {
+    add(fixture,value){
+      const record={fixture,value:value===undefined?fixture:value,seq:seq++};
+      const day=_cfbDayOf(fixture);
+      if(_cfbDayIsReal(day)){let list=byDay.get(day);if(!list)byDay.set(day,list=[]);list.push(record)}
+      else undated.push(record);
+      return record;
+    },
+    // The first stored fixture that sameCfbFixture() accepts, in the order the
+    // fixtures were added -- the linear scan this replaces took the first hit.
+    match(probe){
+      const day=_cfbDayOf(probe);
+      let pool;
+      if(_cfbDayIsReal(day)){
+        pool=undated.slice();
+        for(let delta=-2;delta<=2;delta++){const list=byDay.get(_bbShiftDay(day,delta));if(list)pool.push(...list)}
+      }else{
+        // No usable day to bucket on: compare against everything, as before.
+        pool=undated.slice();for(const list of byDay.values())pool.push(...list);
+      }
+      pool.sort((a,b)=>a.seq-b.seq);
+      return pool.find(record=>sameCfbFixture(record.fixture,probe))||null;
+    }
+  };
+}
 function bbFindByName(list,name){return (list||[]).find(r=>bbNameMatches(r.name||r.team_name,name))||null;}
 // The snapshots are rebuilt only when a new Bet Better handoff is taken in;
 // data_*.json is refetched hourly. Stamping the snapshot's date over the
@@ -91,6 +164,21 @@ function _freshestUpdated(current,incoming){
   if(!Number.isFinite(b))return current;
   if(!Number.isFinite(a))return incoming;
   return b>a?incoming:current;
+}
+function sameCfbSchool(a,b){
+  if(bbNameMatches(a,b))return true;
+  const x=primaryTeamLogo(a),y=primaryTeamLogo(b);
+  return !!x&&x===y;
+}
+function sameCfbFixture(a,b){
+  const ax=a.home?.name||a.home,bx=b.home?.name||b.home;
+  const ay=a.away?.name||a.away,by=b.away?.name||b.away;
+  const sameTeams=(sameCfbSchool(ax,bx)&&sameCfbSchool(ay,by))
+    ||(sameCfbSchool(ax,by)&&sameCfbSchool(ay,bx));
+  if(!sameTeams)return false;
+  const ta=Date.parse(a.kickoff||''),tb=Date.parse(b.kickoff||'');
+  return Number.isFinite(ta)&&Number.isFinite(tb)?Math.abs(ta-tb)<=36*3600e3
+    :String(a.kickoff||'').slice(0,10)===String(b.kickoff||'').slice(0,10);
 }
 function applyCurrentCfbSnapshot(payload){
   const comp=String(payload?.comp_key||'').toUpperCase();
@@ -110,13 +198,17 @@ function applyCurrentCfbSnapshot(payload){
     const have=new Set((payload.matches||[]).map(m=>
       `${teamKey(m.home?.name)}|${teamKey(m.away?.name)}|${String(m.kickoff||'').slice(0,10)}`));
     const added=[];
+    const known=makeCfbFixtureIndex();
+    (payload.matches||[]).forEach(m=>known.add(m));
     upcoming.forEach(f=>{
       const day=String(f.kickoff||'').slice(0,10);
       const key=`${teamKey(f.home)}|${teamKey(f.away)}|${day}`;
       if(have.has(key))return;
-      if((payload.matches||[]).some(m=>String(m.kickoff||'').slice(0,10)===day
-        &&bbNameMatches(m.home?.name,f.home)&&bbNameMatches(m.away?.name,f.away)))return;
+      // sameCfbFixture() reads home/away off .name when present; the handoff
+      // rows carry plain strings, which it already handles.
+      if(known.match(f))return;
       have.add(key);
+      known.add({kickoff:f.kickoff,home:{name:f.home},away:{name:f.away}});
       added.push({id:`bb-${f.event_id}`,_comp:'NCAAF',competition:f.competition||'NCAAF',
         kickoff:f.kickoff,status:'UPCOMING',
         home:{name:f.home},away:{name:f.away},score:{},_from:'betbetter_fixtures'});
@@ -175,6 +267,13 @@ function applyCurrentCfbSnapshot(payload){
       const present=new Set((payload.matches||[]).map(m=>
         `${teamKey(m.home?.name)}|${teamKey(m.away?.name)}|${String(m.kickoff||'').slice(0,10)}`));
       const recovered=[];
+      // The board is only read by kickoff day below, so it is bucketed once
+      // here rather than scanned in full for each of the handoff's results.
+      const matchesByDay=new Map();
+      (payload.matches||[]).forEach(m=>{
+        const mday=String(m.kickoff||'').slice(0,10);
+        let list=matchesByDay.get(mday);if(!list)matchesByDay.set(mday,list=[]);list.push(m);
+      });
       settled.forEach(r=>{
         if(r._merged)return;
         if(String(r.sport||'ncaaf')!=='ncaaf')return;
@@ -182,10 +281,9 @@ function applyCurrentCfbSnapshot(payload){
         const day=String(r.played_on||'').slice(0,10);
         const key=`${teamKey(r.home)}|${teamKey(r.away)}|${day}`;
         if(present.has(key))return;
-        if((payload.matches||[]).some(m=>{
-          const mday=String(m.kickoff||'').slice(0,10);
-          return (mday===day||mday===_bbShiftDay(day,-1)||mday===_bbShiftDay(day,1))
-            &&bbNameMatches(m.home?.name,r.home)&&bbNameMatches(m.away?.name,r.away)}))return;
+        const sameWindow=[day,_bbShiftDay(day,-1),_bbShiftDay(day,1)]
+          .flatMap(d=>matchesByDay.get(d)||[]);
+        if(sameWindow.some(m=>bbNameMatches(m.home?.name,r.home)&&bbNameMatches(m.away?.name,r.away)))return;
         present.add(key);
         recovered.push({id:`bb-result-${r.event_id||key}`,_comp:'NCAAF',competition:r.competition||'NCAAF',
           kickoff:r.kickoff||`${day}T00:00:00Z`,status:'FINISHED',
@@ -195,6 +293,26 @@ function applyCurrentCfbSnapshot(payload){
       if(recovered.length)payload.matches=(payload.matches||[]).concat(recovered);
     }
   }
+  // A provider may call one school FAU and another Florida Atlantic. Collapse
+  // those same-kickoff aliases after both fixture and result recovery, while
+  // preserving the provider row (and any final score) over a thin handoff row.
+  const unique=[];
+  const kept=makeCfbFixtureIndex();
+  (payload.matches||[]).forEach(m=>{
+    const hit=kept.match(m);
+    if(!hit){const position=unique.push(m)-1;kept.add(m,position);return}
+    if(m.status==='FINISHED'&&unique[hit.value].status!=='FINISHED'){
+      unique[hit.value]=m;
+      // The scan this replaces compared later fixtures against the row it had
+      // just swapped in, so the index has to follow the swap. When the new row
+      // sits on a different calendar day it is registered there too, pointing
+      // at the same position.
+      const previousDay=_cfbDayOf(hit.fixture);
+      hit.fixture=m;
+      if(_cfbDayOf(m)!==previousDay)kept.add(m,hit.value);
+    }
+  });
+  payload.matches=unique;
   // This season's advanced profile on every fixture, from the engine's own
   // play-by-play. It replaces a previous-season CFBD file that stopped
   // refreshing, which is why the expanded view mostly said "unavailable".
@@ -203,12 +321,21 @@ function applyCurrentCfbSnapshot(payload){
   const profileNames=Object.keys(profileTeams);
   if(profileNames.length){
     const byKey=new Map(profileNames.map(n=>[teamKey(n),n]));
+    // Only a miss walks the whole profile list, and the board asks about the
+    // same few hundred schools twice a fixture, so the answer is kept.
+    const profileCache=new Map();
     const profileFor=name=>{
-      const exact=byKey.get(teamKey(name));if(exact)return profileTeams[exact];
-      const words=n=>bbNameKey(n).split(' ').filter(Boolean).length;
-      const hits=profileNames.filter(n=>bbNameMatches(n,name)).sort((a,b)=>Math.abs(words(a)-words(name))-Math.abs(words(b)-words(name)));
-      if(hits.length===1||(hits.length>1&&Math.abs(words(hits[0])-words(name))<Math.abs(words(hits[1])-words(name))))return profileTeams[hits[0]];
-      return null;
+      const label=String(name||'');
+      if(profileCache.has(label))return profileCache.get(label);
+      const found=(()=>{
+        const exact=byKey.get(teamKey(label));if(exact)return profileTeams[exact];
+        const words=n=>bbNameWords(n).length;
+        const hits=profileNames.filter(n=>bbNameMatches(n,label)).sort((a,b)=>Math.abs(words(a)-words(label))-Math.abs(words(b)-words(label)));
+        if(hits.length===1||(hits.length>1&&Math.abs(words(hits[0])-words(label))<Math.abs(words(hits[1])-words(label))))return profileTeams[hits[0]];
+        return null;
+      })();
+      profileCache.set(label,found);
+      return found;
     };
     (payload.matches||[]).forEach(m=>{
       const home=profileFor(m.home?.name),away=profileFor(m.away?.name);
@@ -230,23 +357,58 @@ function applyCurrentCfbSnapshot(payload){
   // wins, losses, games and form, so they replace the feed's numbers here.
   const rankRows=((typeof MATCHDAY_CFB_RANKINGS!=='undefined'&&MATCHDAY_CFB_RANKINGS.rankings)||[]);
   const rankByKey=new Map(rankRows.map(r=>[teamKey(r.name),r]));
+  const rankCache=new Map();
   const rankFor=name=>{
-    const exact=rankByKey.get(teamKey(name));
-    if(exact)return exact;
-    const extra=r=>bbNameKey(r.name).split(' ').filter(Boolean).length-bbNameKey(name).split(' ').filter(Boolean).length;
-    const hits=rankRows.filter(r=>bbNameMatches(r.name,name)).sort((a,b)=>Math.abs(extra(a))-Math.abs(extra(b)));
-    // "Texas" matches Texas Longhorns and Texas Tech Red Raiders; take the
-    // closest name only when it is unambiguous.
-    if(hits.length===1||(hits.length>1&&Math.abs(extra(hits[0]))<Math.abs(extra(hits[1]))))return hits[0];
-    return null;
+    const label=String(name||'');
+    if(rankCache.has(label))return rankCache.get(label);
+    const found=(()=>{
+      const exact=rankByKey.get(teamKey(label));
+      if(exact)return exact;
+      const extra=r=>bbNameWords(r.name).length-bbNameWords(label).length;
+      const hits=rankRows.filter(r=>bbNameMatches(r.name,label)).sort((a,b)=>Math.abs(extra(a))-Math.abs(extra(b)));
+      // "Texas" matches Texas Longhorns and Texas Tech Red Raiders; take the
+      // closest name only when it is unambiguous.
+      if(hits.length===1||(hits.length>1&&Math.abs(extra(hits[0]))<Math.abs(extra(hits[1]))))return hits[0];
+      return null;
+    })();
+    rankCache.set(label,found);
+    return found;
   };
+  // The published result ledger can be newer than the derived rating rows.
+  // Count every completed game, including non-conference opponents, once.
+  const resultRecords=new Map(),seenResults=new Set();
+  (typeof MATCHDAY_BETBETTER_RESULTS!=='undefined'?MATCHDAY_BETBETTER_RESULTS:[])
+    .filter(g=>String(g.sport||'').toLowerCase()==='ncaaf'&&Number(g.season)===Number(MATCHDAY_CFB_RANKINGS?.season))
+    .sort((a,b)=>String(a.kickoff||a.played_on||'').localeCompare(String(b.kickoff||b.played_on||'')))
+    .forEach(g=>{
+      if(!g.home||!g.away||g.home_score==null||g.away_score==null)return;
+      const key=String(g.event_id||`${g.played_on}|${g.home}|${g.away}`);
+      if(seenResults.has(key))return;
+      seenResults.add(key);
+      [['home','away'],['away','home']].forEach(([side,other])=>{
+        const team=teamKey(g[side]),pf=Number(g[side+'_score']),pa=Number(g[other+'_score']);
+        if(!team||!Number.isFinite(pf)||!Number.isFinite(pa))return;
+        const rec=resultRecords.get(team)||{pld:0,w:0,d:0,l:0,gf:0,ga:0,form:''};
+        rec.pld++;rec.gf+=pf;rec.ga+=pa;
+        if(pf>pa){rec.w++;rec.form+='W'}else if(pf<pa){rec.l++;rec.form+='L'}else{rec.d++;rec.form+='D'}
+        resultRecords.set(team,rec);
+      });
+    });
+  const completedRecord=(name,minimum=0)=>{
+    const r=resultRecords.get(teamKey(name));
+    return r&&r.pld>=minimum?{...r,gd:r.gf-r.ga,pts:r.w*3+r.d,form:r.form.slice(-5),record:`${r.w}-${r.l}`}:null;
+  };
+  payload.cfb_result_records=Object.fromEntries(
+    [...resultRecords].map(([key,rec])=>[key,{pld:rec.pld,w:rec.w,l:rec.l,record:`${rec.w}-${rec.l}`}])
+  );
   (payload.matches||[]).forEach(m=>['home','away'].forEach(side=>{
     const team=m[side];if(!team?.name)return;
-    const row=rankFor(team.name);if(!row)return;
-    const w=Number(row.wins)||0,l=Number(row.losses)||0,played=Number(row.season_games)||(w+l);
-    Object.assign(team,{w,l,d:0,pld:played,record:`${w}-${l}`,win_pct:played?w/played:0,
-      form:String(row.recent_form||team.form||'').slice(-5),season_stale:false,
-      model_rank:row.rank<=25?row.rank:(team.model_rank??null),_record_from:'betbetter_rankings'});
+    const row=rankFor(team.name),latest=completedRecord(row?.name||team.name,Number(row?.season_games)||0);
+    if(!row&&!latest)return;
+    const w=latest?.w??(Number(row?.wins)||0),l=latest?.l??(Number(row?.losses)||0),played=latest?.pld??(Number(row?.season_games)||(w+l));
+    Object.assign(team,{w,l,d:latest?.d||0,pld:played,record:`${w}-${l}`,win_pct:played?w/played:0,
+      form:latest?.form||String(row?.recent_form||team.form||'').slice(-5),season_stale:false,
+      model_rank:row?.rank<=25?row.rank:(team.model_rank??null),_record_from:'completed_results'});
   }));
 
   // Records come from the ranking rows first.
@@ -261,9 +423,14 @@ function applyCurrentCfbSnapshot(payload){
     const w=Number(r.wins)||0,l=Number(r.losses)||0,d=Number(r.draws)||0;
     const played=Number(r.season_games)||(w+l+d);
     if(!played)return;
-    records.set(teamKey(r.name),{name:r.name,pld:played,w,d,l,gf:0,ga:0,gd:0,pts:w*3+d,
+    records.set(teamKey(r.name),completedRecord(r.name,played)||{name:r.name,pld:played,w,d,l,gf:0,ga:0,gd:0,pts:w*3+d,
       form:String(r.recent_form||'').slice(-5),record:`${w}-${l}`});
   });
+  resultRecords.forEach((_,key)=>{
+    const latest=completedRecord(key,Number(records.get(key)?.pld)||0);
+    if(latest)records.set(key,latest);
+  });
+  const recordFor=name=>records.get(teamKey(name))||records.get(teamKey(rankFor(name)?.name));
   const externalRating=name=>{const key=teamKey(name);return (MATCHDAY_CFB_SNAPSHOT.rankings||[]).find(row=>{const rk=teamKey(row.name);return rk===key||rk.startsWith(key+' ')||key.startsWith(rk+' ')})};
   payload.standings=(payload.standings||[]).filter(g=>g.group!=='Matchday Top 25').map(g=>{
     // A poll carries its own order. Attaching ratings is fine; re-sorting on
@@ -275,13 +442,11 @@ function applyCurrentCfbSnapshot(payload){
               external_rank:ranked?.rank??team.external_rank??null};
     })};
     const teams=(g.teams||[]).map((team,index)=>{
-      const current=records.get(teamKey(team.name));
+      const current=recordFor(team.name);
       const ranked=externalRating(team.name);
       // Prefer the ranking row's own record: it is regenerated with the
       // ratings and covers every rated team, where the hand list covers 16.
-      const rw=Number(ranked?.wins),rl=Number(ranked?.losses),rg=Number(ranked?.season_games);
-      const useRanked=Number.isFinite(rg)&&rg>0;
-      return {...team,pos:index+1,rating:ranked?.rating??null,external_rank:ranked?.rank??null,pld:useRanked?rg:(current?.pld||0),w:useRanked?rw:(current?.w||0),d:0,l:useRanked?rl:(current?.l||0),
+      return {...team,pos:index+1,rating:ranked?.rating??null,external_rank:ranked?.rank??null,pld:current?.pld||0,w:current?.w||0,d:current?.d||0,l:current?.l||0,
         gf:current?.gf||0,ga:current?.ga||0,gd:current?.gd||0,pts:current?.pts||0,
         form:current?.form||'',record:current?.record||'0-0'};
     }).sort((a,b)=>{// A conference table is standings: record and its tiebreakers decide it.
@@ -291,8 +456,14 @@ function applyCurrentCfbSnapshot(payload){
     teams.forEach((team,index)=>team.pos=index+1);
     return {...g,teams};
   });
-  payload.bracket=[];
-  payload.bracket=MATCHDAY_CFB_SNAPSHOT.bracket||[];
+  const ap=(typeof MATCHDAY_CFB_AP_POLL!=='undefined'&&MATCHDAY_CFB_AP_POLL.rankings)||[];
+  if(ap.length===25){
+    const apTable={group:MATCHDAY_CFB_AP_POLL.poll_name||'AP Top 25',table_type:'official_poll',
+      source:MATCHDAY_CFB_AP_POLL.source||'',updated:MATCHDAY_CFB_AP_POLL.fetched_on||'',teams:ap};
+    payload.standings=[apTable,...(payload.standings||[]).filter(g=>!isPollTable(g))];
+  }
+  payload.bracket=(typeof MATCHDAY_CFB_AP_BRACKET!=='undefined'&&MATCHDAY_CFB_AP_BRACKET.length)
+    ?MATCHDAY_CFB_AP_BRACKET:(MATCHDAY_CFB_SNAPSHOT.bracket||[]);
   payload.bracketology=null;
   payload.position_views_note='Current-season results only. The playoff projection is recalibrating.';
   return payload;
@@ -365,11 +536,35 @@ function myPicksComparison(){
     +`<span>${label}</span>`
     +`<i class="cmpBar"><b style="width:${Math.round(hits/n*100)}%"></b></i>`
     +`<em>${hits}/${n}</em></div>`;
-  return `<div class="seclbl" style="margin-top:18px">Me vs model vs market</div>`
-    +`<div class="cmpGrid">${row('Me',mine,'cmpMine')}${row('Model',model,'cmpModel')}${row('Market',market,'cmpMarket')}</div>`
-    +`<p class="edisc">Same ${n} game${n===1?'':'s'} for all three: every recorded pick that has settled. `
-    +`${n<10?'A small sample — the split is not yet worth reading much into. ':''}`
-    +`The model figure is the one frozen before kickoff, not recomputed afterwards.</p>`;
+  // The head-to-head above is deliberately restricted to the games I picked, so
+  // all three are scored on the same fixtures. The model and the market price
+  // far more games than that, and their full records belong on the page too --
+  // below, plainly marked as the different, larger sample that they are, rather
+  // than mixed into bars that only mean anything like-for-like.
+  const sc=typeof betbetterScorecard==='function'?betbetterScorecard():null;
+  const rec=sc?.record||{},vm=sc?.versus_market||{};
+  const full=Number(rec.hit_rate_pct),fullN=Number(rec.picks);
+  const beat=Number(vm.beat_market_pct),beatN=Number(vm.graded_priced_selections);
+  const wider=[];
+  if(Number.isFinite(full)&&Number.isFinite(fullN)&&fullN>n){
+    wider.push(`<div class="cmpWideRow"><span>Model</span>`
+      +`<strong>${esc(rec.wins??'—')}<span class="scDash">–</span>${esc(rec.losses??'—')}</strong>`
+      +`<em>${full.toFixed(1)}% of ${fullN} graded picks</em></div>`);
+  }
+  if(Number.isFinite(beat)&&Number.isFinite(beatN)&&beatN>n){
+    wider.push(`<div class="cmpWideRow"><span>Market</span>`
+      +`<strong>${beat.toFixed(1)}%</strong>`
+      +`<em>beat the locked price on ${beatN} priced selections</em></div>`);
+  }
+  const widerBlock=wider.length
+    ? `<div class="cmpWide"><div class="cmpWideHead">Across every graded pick</div>${wider.join('')}`
+      +`<p class="edisc">A much larger sample than the ${n} above, and not a like-for-like comparison: `
+      +`it covers every game the model priced, not only the ones @timurknowsball picked.</p></div>`
+    : '';
+  return `<section class="scSection scComparison"><div class="seclbl">@timurknowsball vs model vs market</div>`
+    +`<div class="cmpGrid">${row('@timurknowsball',mine,'cmpMine')}${row('Model',model,'cmpModel')}${row('Market',market,'cmpMarket')}</div>`
+    +`<p class="edisc">Same ${n} settled pick${n===1?'':'s'} for all three.${n<10?' Small sample.':''} Model forecasts were frozen before kickoff.</p>`
+    +widerBlock+`</section>`;
 }
 
 function betbetterScorecard(){
@@ -424,36 +619,54 @@ function _scBands(bands){
       +`<td>${Number.isFinite(exp)?exp.toFixed(1)+'%':'—'}</td>`
       +`<td>${_scGap(b.calibration_gap_points)}</td></tr>`;
   }).join('');
-  return `<div class="seclbl" style="margin-top:18px">Calibration by confidence</div>`
+  return `<section class="scSection"><div class="seclbl">Calibration by confidence</div>`
     +`<div class="scTableWrap"><table class="scTable"><thead><tr><th>Band</th><th>Picks</th>`
     +`<th>Hit</th><th>Expected</th><th>Gap</th></tr></thead><tbody>${rows}</tbody></table></div>`
-    +`<p class="edisc">Each band is the model's own stated confidence against what actually happened. `
-    +`A band that hits what it forecast is calibrated; a wide gap in either direction is not.</p>`;
+    +`<p class="edisc">Hit / expected by forecast confidence. A gap in either direction signals miscalibration.</p></section>`;
 }
-function _scVersusMarket(vm){
-  if(!vm)return '';
-  const beat=Number(vm.beat_market_pct);
-  const n=Number(vm.graded_priced_selections);
-  if(!Number.isFinite(beat))return '';
-  return `<div class="seclbl" style="margin-top:18px">Against the price</div>`
-    +`<div class="status-grid"><div class="statuscard info"><span class="slbl">Beat the market</span>`
-    +`<div class="sval">${beat.toFixed(1)}%</div></div>`
-    +`<div class="statuscard info"><span class="slbl">Priced selections graded</span>`
-    +`<div class="sval">${Number.isFinite(n)?n:'—'}</div></div></div>`
-    +`<p class="edisc">${beat<50?'Below half: on the games that carried a price, the model beat it less often than not. ':''}`
-    +`${esc(vm.basis||'')}${vm.disagreement_share_pct!=null?` · it disagreed with the market on ${esc(vm.disagreement_share_pct)}% of them`:''}.</p>`;
+/* Where the model stood relative to the price.
+
+   The engine publishes a full calibration block for the picks that agreed with
+   the market and another for the picks that disagreed, and neither was drawn.
+   They are the most informative rows in the payload: agreeing with the price is
+   where a favourite-heavy book of picks earns its hit rate, and disagreeing
+   with it is the only place the model is really making a claim of its own. */
+function _scMarketSplit(vm){
+  const pairs=[['Agreed with the price',vm?.agreed_with_market],
+               ['Disagreed with the price',vm?.disagreed_with_market]];
+  const usable=pairs.filter(([,b])=>b&&Number.isFinite(Number(b.hit_rate_pct)));
+  if(!usable.length)return '';
+  const rows=usable.map(([label,b])=>{
+    const hit=Number(b.hit_rate_pct),exp=Number(b.expected_hit_rate_pct);
+    const ci=Array.isArray(b.confidence_interval_pct)?b.confidence_interval_pct:null;
+    return `<tr><td class="scBand">${esc(label)}</td>`
+      +`<td>${esc(b.picks??'—')}</td>`
+      +`<td>${esc(b.wins??'—')}<span class="scDash">–</span>${esc(b.losses??'—')}</td>`
+      +`<td>${Number.isFinite(hit)?hit.toFixed(1)+'%':'—'}</td>`
+      +`<td>${Number.isFinite(exp)?exp.toFixed(1)+'%':'—'}</td>`
+      +`<td>${_scGap(b.calibration_gap_points)}</td>`
+      +`<td>${ci?`${_scNum(ci[0])}–${_scNum(ci[1])}%`:'—'}</td></tr>`;
+  }).join('');
+  const share=Number(vm?.disagreement_share_pct);
+  return `<section class="scSection"><div class="seclbl">With the price and against it</div>`
+    +`<div class="scTableWrap"><table class="scTable scSplitTable"><thead><tr><th>Picks</th><th>N</th><th>W–L</th>`
+    +`<th>Hit</th><th>Expected</th><th>Gap</th><th>95% CI</th></tr></thead><tbody>${rows}</tbody></table></div>`
+    +`<p class="edisc">${Number.isFinite(share)?`The model took a different side from the market on ${share.toFixed(1)}% of priced picks. `:''}`
+    +`Agreeing with the price is where a book of favourites earns its hit rate; disagreeing is where the model is making a claim of its own. `
+    +`Small samples move these numbers a long way &mdash; read the interval, not the point.</p></section>`;
 }
 function _scRecent(rows){
-  if(!rows||!rows.length)return '';
-  return `<div class="seclbl" style="margin-top:18px">Recent graded cards</div>`
-    +rows.slice(0,10).map(r=>{
+  const graded=(rows||[]).filter(r=>['win','loss'].includes(String(r.result||'').toLowerCase()));
+  if(!graded.length)return '';
+  return `<section class="scSection"><div class="seclbl">Recent graded cards</div>`
+    +graded.slice(0,10).map(r=>{
       const won=String(r.result||'').toLowerCase()==='win';
       const p=Number(r.probability_pct);
       return `<div class="scrow ${won?'hit':'miss'}"><span class="scmatch">${esc(r.event_name||'')}</span>`
-        +`<span class="scpick">${esc(r.selection||'')}${Number.isFinite(p)?` · ${p.toFixed(1)}%`:''}</span>`
+        +`<span class="scpick">${esc(r.selection||'')}${Number.isFinite(p)?` · ${modelPctLabel(p)}`:''}</span>`
         +`<span class="scscore">${esc(r.score||'')}</span>`
         +`<span class="scbadge">${won?'WON':'LOST'}</span></div>`;
-    }).join('');
+    }).join('')+`</section>`;
 }
 function renderScore(){
   const host=$('#view-score'),sc=betbetterScorecard();
@@ -470,39 +683,39 @@ function renderScore(){
   const rec=sc.record||{},totals=sc.totals||{};
   const hit=Number(rec.hit_rate_pct),exp=Number(rec.expected_hit_rate_pct);
   const ci=Array.isArray(rec.confidence_interval_pct)?rec.confidence_interval_pct:null;
-  // Hit and expected share a tile. They are not two facts, they are one
-  // comparison, and splitting them is how the hit rate ends up quoted alone.
-  const record=`<div class="status-grid scHeadline">`
-    +`<div class="statuscard info"><span class="slbl">Record</span>`
-    +`<div class="sval">${esc(rec.wins??'—')}<span class="scDash">–</span>${esc(rec.losses??'—')}</div>`
-    +`<small>${esc(rec.picks??'—')} graded picks</small></div>`
-    +`<div class="statuscard info scRateCard"><span class="slbl">Hit rate vs expected</span>`
-    +`<div class="sval">${Number.isFinite(hit)?hit.toFixed(1)+'%':'—'}`
-    +`<span class="scVs">vs ${Number.isFinite(exp)?exp.toFixed(1)+'%':'—'} expected</span></div>`
-    +`<small>${_scGap(rec.calibration_gap_points)} against its own forecast`
-    +`${ci?` · 95% CI ${_scNum(ci[0])}–${_scNum(ci[1])}%`:''}</small></div></div>`;
+  const vm=sc.versus_market||{},beat=vm.beat_market_pct==null?NaN:Number(vm.beat_market_pct),priced=vm.graded_priced_selections==null?NaN:Number(vm.graded_priced_selections);
+  const record=`<section class="scOverview"><div class="scRecord"><span class="slbl">Public record</span>`
+    +`<strong>${esc(rec.wins??'—')}<span class="scDash">–</span>${esc(rec.losses??'—')}</strong>`
+    +`<span>${esc(rec.picks??'—')} graded picks</span></div>`
+    +`<div class="scMetrics"><div class="scMetricHead"><span></span><span>Model</span><span>Against the price</span></div>`
+    +`<div class="scMetricRow"><span>Result</span><strong>${Number.isFinite(hit)?hit.toFixed(1)+'%':'—'}</strong><strong>${Number.isFinite(beat)?beat.toFixed(1)+'%':'—'}</strong></div>`
+    +`<div class="scMetricRow"><span>Expected</span><strong>${Number.isFinite(exp)?exp.toFixed(1)+'%':'—'}</strong><span title="The engine publishes no expected baseline for beating the price">—</span></div>`
+    +`<div class="scMetricRow"><span>Difference</span><strong>${_scGap(rec.calibration_gap_points)}</strong><span title="The engine publishes no expected baseline for beating the price">—</span></div>`
+    +`<div class="scMetricFoot"><span>Model: wins / graded picks · Against the price: beat the locked market price${Number.isFinite(priced)?` on ${priced} priced selections`:''}.</span>`
+    +`${ci?`<span>Model hit rate 95% CI ${_scNum(ci[0])}–${_scNum(ci[1])}%.</span>`:''}`
+    +`<span>Beating the price has no expected baseline to compare against, so those two cells stay blank.</span></div></div></section>`;
   const pending=Number(totals.awaiting_result)||0;
-  const note=`<div class="hint" style="margin-top:10px">`
-    +`${esc(totals.graded_selections??'—')} graded selections from ${esc(totals.locked_events??'—')} locked cards`
-    +`${pending?` \u00b7 ${pending} awaiting a final score`:''}</div>`;
+  const note=`<p class="edisc scCountNote">${esc(totals.graded_selections??'—')} graded selections across ${esc(totals.locked_events??'—')} locked cards. A card can carry more than one selection.`
+    +`${pending?` ${pending} selections await a final score.`:''}</p>`;
   const reportable=sc.reportable===false
     ? `<div class="banner" style="margin-top:12px"><b>Not yet a reportable record.</b> `
       +`Fewer than ${esc(sc.minimum_picks_to_read??'the minimum')} graded picks, so the rate above is not a measurement yet.</div>`
     : '';
-  const lock=sc.lock_policy?.rule
-    ? `<p class="edisc">${esc(sc.lock_policy.rule)}</p>` : '';
+  const method=`<section class="scSection scMethod"><div class="seclbl">How the scorecard works</div>`
+    +`<div class="scMethodGrid"><div><strong>Locked 60 minutes before kickoff</strong><span>The latest forecast at or before the deadline and the price then are recorded.</span></div>`
+    +`<div><strong>Graded after the final whistle</strong><span>Only verified final results enter the record.</span></div>`
+    +`<div><strong>Never rewritten</strong><span>Locked forecasts and prices remain unchanged.</span></div></div>`
+    +`<p class="edisc">Displayed scores are factual. Probabilities remain estimates.</p></section>`;
   host.innerHTML=`<div class="vhead">Scorecard</div>`
     +`${record}${note}${reportable}`
-    +(sc.caveat?`<div class="banner scCaveat" style="margin-top:12px">${esc(scorecardCaveat(sc.caveat))}</div>`:'')
+    +(sc.caveat?`<details class="scExplainer"><summary>Reading these numbers <span aria-hidden="true">?</span></summary><p>${esc(scorecardCaveat(sc.caveat))}</p>${vm.basis?`<p>Price: ${esc(vm.basis)}.</p>`:''}</details>`:'')
     +_scScope(sc.scope)
-    +_scVersusMarket(sc.versus_market)
+    +_scMarketSplit(vm)
     +_scConviction(sc.conviction)
     +_scBands(sc.by_confidence)
     +_scRecent(sc.recent)
     +myPicksComparison()
-    +`${lock}`
-    +`<div class="edisc">Only cards frozen before kickoff are graded, and a graded card is never rewritten. `
-    +`Displayed scores are factual. Probabilities remain estimates.</div>`;
+    +method;
 }
 /* What the model sees that the price does not.
    The hit rate cannot show this: a card that agrees with the book and one that
@@ -545,19 +758,28 @@ function _scScope(sc){
     +(sc.conviction_note?`<p>${esc(sc.conviction_note)}</p>`:'')
     +`</details>`;
 }
-function highlightFavoriteRows(){if(!favoriteTeam())return;document.querySelectorAll('.gtable .gteam').forEach(cell=>{if(teamKey(cell.textContent).includes(teamKey(favoriteTeam())))cell.closest('tr')?.classList.add('favoriteTeamRow')})}
-function renderCurrent(){captureSignalsIfFresh();({matches:renderMatches,results:renderResults,groups:renderStandings,bracket:renderBracket,score:renderScore,news:renderNews,community:renderCommunity}[VIEW]||renderMatches)();renderWelcome();highlightFavoriteRows();applyStaticI18n()}
+function highlightFavoriteRows(){if(!favoriteTeam())return;document.querySelectorAll('.gtable .gteam').forEach(cell=>{if(teamKey(cell.dataset.team||cell.textContent).includes(teamKey(favoriteTeam())))cell.closest('tr')?.classList.add('favoriteTeamRow')})}
+function renderCurrent(){captureSignalsIfFresh();({home:renderHome,matches:renderMatches,results:renderResults,groups:renderStandings,bracket:renderBracket,score:renderScore,news:renderNews,community:renderCommunity}[VIEW]||renderHome)();renderWelcome();highlightFavoriteRows();applyStaticI18n()}
 function renderStrip(){const M=DATA.matches||[],next=M.filter(isVisibleUpcoming).sort((a,b)=>(a.kickoff||'').localeCompare(b.kickoff||''))[0];const parts=[];
 const isSample=(DATA.source_note||'').toLowerCase().includes('sample');
 const freshness=DATA.source_freshness||{},fallback=freshness.state==='fallback';
+const syncedAt=typeof MATCHDAY_BETBETTER_GENERATED_AT!=='undefined'?MATCHDAY_BETBETTER_GENERATED_AT:'';
 parts.push(isSample?`<span class="ls-badge sample">${t("sample data")}</span>`:`<span class="ls-badge ok">${t("data feed")}</span>`);
 const streakStats=btmStats(btmGrade());
 if(streakStats.streak>=2)parts.push(`<span class="ls-streak" title="Beat the Model: ${streakStats.streak} correct in a row" onclick="setView('community')">\u{1F525} ${streakStats.streak}</span>`);
-if(next)parts.push(`<span class="ls-next ls-clickable" data-mid="${esc(next.id)}" onclick="openMatchModal(this.dataset.mid)" role="button" tabindex="0" title="Open expanded view">Next · <b>${esc(next.home.code)} v ${esc(next.away.code)}</b> ${kickIn(next.kickoff)}</span>`);else parts.push(`<span class="ls-next">No upcoming fixtures</span>`);parts.push(`<span class="ls-upd">${fallback?`<b class="stale">fallback snapshot ${ago(freshness.last_successful_at||DATA.updated)}</b> · `:(()=>{try{const a=(Date.now()-new Date(DATA.updated))/60000;if(a>360)return `<b class="stale">data ${ago(DATA.updated)}</b> · `;}catch(e){}return 'Updated '+ago(DATA.updated)+' · ';})()}${t("independent · built for fans")} · <b style="color:var(--signal)">build ${currentBuild()}</b></span>`);$('#strip').innerHTML=parts.join('')}
+if(next)parts.push(`<span class="ls-next ls-clickable" data-mid="${esc(next.id)}" onclick="openMatchModal(this.dataset.mid)" role="button" tabindex="0" title="Open expanded view">Next · <b>${esc(next.home.code)} v ${esc(next.away.code)}</b> ${kickIn(next.kickoff)}</span>`);else parts.push(`<span class="ls-next">No upcoming fixtures</span>`);parts.push(`<span class="ls-upd">${fallback&&syncedAt?`Predictions synced ${ago(syncedAt)} · `:fallback?`<b class="stale">data source ${ago(freshness.last_successful_at||DATA.updated)}</b> · `:(()=>{try{const a=(Date.now()-new Date(DATA.updated))/60000;if(a>360)return `<b class="stale">data ${ago(DATA.updated)}</b> · `;}catch(e){}return 'Updated '+ago(DATA.updated)+' · ';})()}${t("independent · built for fans")} · <b style="color:var(--signal)">build ${currentBuild()}</b></span>`);$('#strip').innerHTML=parts.join('')}
 /* removed duplicate (diverseNews) */
 /* removed duplicate (renderInsight) */
-function setView(v){VIEW=safeView(v);v=VIEW;if(typeof closeNavSheet==='function')closeNavSheet();
-  document.querySelectorAll('.navbtn[data-v]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===v));document.querySelectorAll('.view').forEach(el=>el.style.display=el.id==='view-'+v?((v==='matches'||v==='results')?'grid':'block'):'none');renderCurrent();const active=$('#view-'+v);if(active){active.classList.remove('viewEntering');void active.offsetWidth;active.classList.add('viewEntering')}}
+const VIEW_PUBLIC_NAMES={home:'home',matches:'games',groups:'rankings',news:'research'};
+function syncViewLocation(v,mode='push'){
+  if(!window.history?.pushState)return;
+  const url=new URL(window.location.href),publicName=VIEW_PUBLIC_NAMES[safeView(v)]||safeView(v),sport=currentSportKey();
+  if(url.searchParams.get('view')===publicName&&url.searchParams.get('sport')===sport)return;
+  url.searchParams.set('view',publicName);if(sport)url.searchParams.set('sport',sport);url.searchParams.delete('match');
+  window.history[mode==='replace'?'replaceState':'pushState']({view:publicName,sport},'',url);
+}
+function setView(v,options={}){VIEW=safeView(v);v=VIEW;if(typeof closeNavSheet==='function')closeNavSheet();
+  $('#app')?.classList.toggle('gamesWide',v==='matches'||v==='home');document.querySelectorAll('.navbtn[data-v]').forEach(b=>{const on=b.dataset.v===v;b.setAttribute('aria-pressed',on);if(on)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});document.querySelectorAll('.view').forEach(el=>el.style.display=el.id==='view-'+v?((v==='matches'||v==='results')?'grid':'block'):'none');if(options.history!==false)syncViewLocation(v,options.replace?'replace':'push');renderCurrent();const active=$('#view-'+v);if(active){active.classList.remove('viewEntering');void active.offsetWidth;active.classList.add('viewEntering')}}
 $('#nav').addEventListener('click',e=>{const b=e.target.closest('.navbtn[data-v]');if(b?.dataset.v)setView(b.dataset.v)});
 // aggregateScorecards() lived here: it merged every sport's scorecard into the
 // one the merged "All college" board showed. Each board now reads its own
@@ -572,23 +794,59 @@ $('#nav').addEventListener('click',e=>{const b=e.target.closest('.navbtn[data-v]
 // megabytes. Not 'no-store', which would forbid keeping a copy to revalidate
 // against and put us straight back to full downloads.
 const REVALIDATE={cache:'no-cache'};
-async function load(manual=false){if(LOAD_TIMER){clearTimeout(LOAD_TIMER);LOAD_TIMER=null}try{
+let LOAD_SEQUENCE=0;
+const SPORT_DATA_CACHE=Object.create(null);
+const SPORT_PREFETCH=Object.create(null);
+function showSportData(payload,cached=false){
+  DATA=cached?payload:stripPastSeasonCompetitionViews(payload);
+  const loadAlert=$('#alertBar');if(loadAlert?.textContent==='The data connection failed. Use Retry loading below.'){loadAlert.style.display='none';loadAlert.textContent=''}
+  if(!cached){applyForecastPublicationPauses(DATA);applyCurrentCfbSnapshot(DATA);applyCurrentNcaamSnapshot(DATA);decodeNewsEntities(DATA);DATA.news=(DATA.news||[]).filter(isFreshNews).sort((a,b)=>newsTime(b)-newsTime(a))}
+  SPORT_DATA_CACHE[DATA_FILE]=DATA;
+  BYID={};(DATA.matches||[]).forEach(m=>BYID[m.id]=m);
+  LAST_OK=true;LAST_ERROR='';
+  const tb=document.querySelector('.navbtn[data-v="third"]');if(tb)tb.style.display=(DATA.third_race&&DATA.third_race.length)?'':'none';
+  const gb2=document.querySelector('.navbtn[data-v="groups"]');if(gb2)gb2.style.display=(DATA.standings&&DATA.standings.length)?'':'none';
+  applySportNav();renderStrip();renderInsight();renderCurrent();applyStaticI18n();renderAlerts();
+}
+function prefetchOtherSport(){
+  const other=DATA_FILE==='data_ncaaf.json'?'data_ncaam.json':'data_ncaaf.json';
+  if(SPORT_DATA_CACHE[other]||SPORT_PREFETCH[other])return;
+  // The basketball payload is several megabytes. Pulling it immediately after
+  // football made first visits compete with an invisible download on phones.
+  // A switch still loads normally; only speculative background work is gated.
+  const connection=navigator.connection||navigator.mozConnection||navigator.webkitConnection;
+  if(connection?.saveData||/^(?:slow-)?2g|3g$/i.test(connection?.effectiveType||'')||matchMedia('(max-width:760px)').matches)return;
+  const start=()=>{if(SPORT_DATA_CACHE[other]||SPORT_PREFETCH[other])return;SPORT_PREFETCH[other]=fetch(other,REVALIDATE).then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.json()}).catch(()=>null)};
+  if('requestIdleCallback' in window)requestIdleCallback(start,{timeout:5000});else setTimeout(start,2500);
+}
+async function load(manual=false){const loadSequence=++LOAD_SEQUENCE,requestedFile=DATA_FILE;if(LOAD_TIMER){clearTimeout(LOAD_TIMER);LOAD_TIMER=null}try{
   // One board, one file. The merged "All college" view used to assemble itself
   // here out of board_summary.json (or, failing that, every per-sport file at
   // once) and then escalate to the full files when a visitor left the board;
   // none of that machinery is needed to load a single sport.
-  const r=await fetch(DATA_FILE,REVALIDATE);if(!r.ok)throw new Error('HTTP '+r.status);DATA=stripPastSeasonCompetitionViews(await r.json());applyForecastPublicationPauses(DATA);
-  applyCurrentCfbSnapshot(DATA);applyCurrentNcaamSnapshot(DATA);decodeNewsEntities(DATA);DATA.news=(DATA.news||[]).filter(isFreshNews).sort((a,b)=>newsTime(b)-newsTime(a));BYID={};(DATA.matches||[]).forEach(m=>BYID[m.id]=m);LAST_OK=true;LAST_ERROR='';const cn=$('#compName');if(cn)cn.textContent=DATA.competition?' · '+DATA.competition:'';const tb=document.querySelector('.navbtn[data-v="third"]');if(tb)tb.style.display=(DATA.third_race&&DATA.third_race.length)?'':'none';const gb2=document.querySelector('.navbtn[data-v="groups"]');if(gb2)gb2.style.display=(DATA.standings&&DATA.standings.length)?'':'none';// .some() passes (element,index): the index landed on isForecastPaused's
+  const pending=SPORT_PREFETCH[requestedFile];const payload=pending?await pending:null;
+  const fresh=payload||await (async()=>{
+    const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),15000);
+    try{const r=await fetch(requestedFile,{...REVALIDATE,signal:controller.signal});if(!r.ok)throw new Error('HTTP '+r.status);return await r.json()}
+    finally{clearTimeout(timeout)}
+  })();
+  SPORT_PREFETCH[requestedFile]=null;
+  if(loadSequence!==LOAD_SEQUENCE||requestedFile!==DATA_FILE)return;
+  // .some() passes (element,index): the index landed on isForecastPaused's
   // `payload` parameter, so the competition check read match._comp, which only
   // the merged build set -- the banner fired on every board except MLB's own.
-  applySportNav();renderStrip();renderInsight();renderCurrent();applyStaticI18n();renderAlerts()}catch(e){console.error(e);applySportNav();
+  showSportData(fresh);prefetchOtherSport()}catch(e){if(loadSequence!==LOAD_SEQUENCE||requestedFile!==DATA_FILE)return;console.error(e);if(SPORT_DATA_CACHE[requestedFile]&&LAST_OK){LAST_ERROR=String(e.message||e);return}applySportNav();
   const sel=currentSportKey();
   if(sel&&(!DATA||((DATA.comp_key||'').toLowerCase()!==sel))){
     DATA={matches:[],news:[],standings:[],third_race:[],bracket:null,scorecard:null,title_odds:[],scorers:[],team_of_tournament:null,
           comp_key:sel.toUpperCase(),competition:(SPORT_LABELS[sel]||sel),updated:'',_missing:true};
     BYID={};
   }
-  applySportNav();LAST_OK=false;LAST_ERROR=String(e.message||e);$('#strip').textContent='no data';const selKey=(DATA_FILE.match(/data_(\w+)\.json/)||[])[1];$('#view-matches').innerHTML=`<div class="empty" style="grid-column:1/-1">${selKey?`No ${esc(SPORT_LABELS[selKey]||selKey.toUpperCase())} data yet.<br><span class="faintline">Run start_${esc(selKey)}.bat once to pull it, or pick the other sport above.</span>`:`Data file not loaded.<br><span class="faintline">${esc(LAST_ERROR)}</span>`}</div>`;if(VIEW==='status')renderStatus()}finally{const ss=$('#sportSel');if(ss)ss.value=(DATA_FILE.match(/data_(\w+)\.json/)||['','ncaaf'])[1];scheduleNextLoad()}}
+  applySportNav();LAST_OK=false;LAST_ERROR=String(e.message||e);$('#strip').textContent='data unavailable';
+  const notice='<div class="empty scLoadError"><b>Matchday data did not load.</b><br>Check your connection, then try again.<br><button class="actionbtn" type="button" onclick="load(true)">Retry loading</button></div>';
+  document.querySelectorAll('.view').forEach(view=>{view.innerHTML=notice;view.style.display=view.id==='view-'+VIEW?'block':'none'});
+  const alert=$('#alertBar');if(alert){alert.style.display='block';alert.textContent='The data connection failed. Use Retry loading below.'}
+}finally{if(loadSequence===LOAD_SEQUENCE){const ss=$('#sportSel');if(ss)ss.value=(DATA_FILE.match(/data_(\w+)\.json/)||['','ncaaf'])[1];scheduleNextLoad()}}}
 function scheduleNextLoad(){if(LOAD_TIMER)clearTimeout(LOAD_TIMER);LOAD_TIMER=setTimeout(()=>load(),Math.max(30,Number(SETTINGS.refresh)||60)*1000)}
 
 
@@ -629,49 +887,57 @@ function ensureTeamModal(){let modal=document.getElementById('teamModal');if(mod
 function closeTeamModal(){const modal=document.getElementById('teamModal');if(modal)modal.classList.remove('show');document.body.classList.remove('modalOpen')}
 function computeTeamProfile(name){
   const key=teamKey(name);
+  const rankings=String(DATA.comp_key||'').toUpperCase()==='NCAAM'
+    ?(typeof MATCHDAY_NCAAM_RANKINGS!=='undefined'?MATCHDAY_NCAAM_RANKINGS:null)
+    :(typeof MATCHDAY_CFB_RANKINGS!=='undefined'?MATCHDAY_CFB_RANKINGS:null);
+  const ranked=(rankings?.rankings||[]).find(r=>teamKey(r.name)===key)
+    ||(rankings?.rankings||[]).find(r=>bbNameMatches(r.name,name))||null;
   let standRec=null;
-  (DATA.standings||[]).filter(g=>g.table_type!=='power_ratings').forEach(g=>(g.teams||[]).forEach(t=>{if(teamKey(t.name)===key)standRec=t;}));
-  const matches=(DATA.matches||[]).filter(m=>teamKey(m.home?.name)===key||teamKey(m.away?.name)===key);
+  (DATA.standings||[]).filter(g=>g.table_type!=='power_ratings').forEach(g=>(g.teams||[]).forEach(t=>{if(bbNameMatches(t.name,name))standRec=t;}));
+  const matches=(DATA.matches||[]).filter(m=>bbNameMatches(m.home?.name,name)||bbNameMatches(m.away?.name,name));
   let side=null;
-  for(const m of matches){side=(teamKey(m.home?.name)===key)?m.home:(teamKey(m.away?.name)===key?m.away:null);if(side)break;}
+  for(const m of matches){side=bbNameMatches(m.home?.name,name)?m.home:(bbNameMatches(m.away?.name,name)?m.away:null);if(side)break;}
   const rec=standRec||side||{name};
+  const record=ranked?.record||rec.record||'';
+  const recordParts=/^(\d+)\s*[-–]\s*(\d+)/.exec(record);
   const finished=matches.filter(m=>m.status==='FINISHED').sort((a,b)=>(b.kickoff||'').localeCompare(a.kickoff||''));
   const next=matches.filter(isVisibleUpcoming).sort((a,b)=>(a.kickoff||'').localeCompare(b.kickoff||''))[0];
   return {
-    name: rec.name||name, code: rec.code||side?.code||'',
-    pos: rec.pos??null, pld: rec.pld??side?.pld??0, w: rec.w??null, d: rec.d??null, l: rec.l??null,
-    gf: rec.gf??side?.gf??0, ga: rec.ga??side?.ga??0, gd: rec.gd??side?.gd??0,
-    pts: rec.pts??side?.pts??0, form: rec.form||side?.form||'',
+    name: ranked?.name||rec.name||name, code: rec.code||side?.code||'',
+    pos: ranked?.rank??rec.pos??null, pld: recordParts?Number(recordParts[1])+Number(recordParts[2]):(rec.pld??side?.pld??null),
+    w: recordParts?Number(recordParts[1]):rec.w??null, d: rec.d??null, l: recordParts?Number(recordParts[2]):rec.l??null,
+    gf: rec.gf??side?.gf??null, ga: rec.ga??side?.ga??null, gd: rec.gd??side?.gd??null,
+    pts: rec.pts??side?.pts??null, form: rec.form||side?.form||'',
     formHome: side?.form_home||'', formAway: side?.form_away||'',
-    rating: side?.rating??rec.rating??null,
+    rating: ranked?.rating??side?.rating??rec.rating??null,
+    sos: ranked?.sos??null, offense: ranked?.adj_o??null, defense: ranked?.adj_d??null,
+    conference: ranked?.conference||'', published: rankings?.published_on||'',
     next, recent: finished.slice(0,5)
   };
 }
 function teamProfileHTML(p){
   const twoWay=SANDBOX_TWO_WAY.has(String(DATA.comp_key||'').toLowerCase());
-  const unit=_totalsUnit({});
-  const diffLabel=`${unit[0].toUpperCase()+unit.slice(1)} diff`;
   const winPct=p.pld?((Number(p.w)||0)/p.pld*100).toFixed(1)+'%':'—';
   const formRow=(label,str)=>str?`<div class="tpFormRow"><span class="tpFormLbl">${esc(label)}</span><span class="tpFormDots">${str.trim().split(' ').map(r=>`<i class="tpDot ${r}">${esc(r)}</i>`).join('')}</span></div>`:'';
   const recentRows=(p.recent||[]).map(m=>{
-    const home=teamKey(m.home.name)===teamKey(p.name);
+    const home=bbNameMatches(m.home.name,p.name);
     const opp=home?m.away:m.home;
     const gf=home?m.score?.home:m.score?.away, ga=home?m.score?.away:m.score?.home;
     const res=gf>ga?'W':gf<ga?'L':'D';
-    return `<div class="tpRecentRow"><i class="tpDot ${res}">${res}</i><span>${home?'vs':'@'} ${esc(opp.code||opp.name)}</span><b>${gf}-${ga}</b><span class="tpFaint">${esc(dt(m.kickoff).split(', ').pop()||'')}</span></div>`;
+    return `<div class="tpRecentRow"><i class="tpDot ${res}">${res}</i><span>${home?'vs':'@'} ${esc(opp.name||opp.code)}</span><b>${gf}-${ga}</b><span class="tpFaint">${esc(dt(m.kickoff)||'')}</span></div>`;
   }).join('');
-  const nextLine=p.next?`<div class="tpNext"><span class="tpFaint">Next</span> ${teamKey(p.next.home.name)===teamKey(p.name)?'vs':'@'} <b>${esc(teamKey(p.next.home.name)===teamKey(p.name)?p.next.away.code||p.next.away.name:p.next.home.code||p.next.home.name)}</b> · ${kickIn(p.next.kickoff)}</div>`:'';
+  const nextLine=p.next?`<div class="tpNext"><span class="tpFaint">Next</span> ${bbNameMatches(p.next.home.name,p.name)?'vs':'@'} <b>${esc(bbNameMatches(p.next.home.name,p.name)?p.next.away.name:p.next.home.name)}</b> · ${kickIn(p.next.kickoff)}</div>`:'';
   const record=(p.w!=null)?`${p.w}-${p.l}${!twoWay&&p.d!=null?`-${p.d}`:''}`:'—';
   return `<div class="tpHead"><button class="modalClose" onclick="closeTeamModal()" aria-label="Close">×</button>
-    <div class="tpCode">${esc(p.code)}</div><div class="tpName">${esc(p.name)}</div>
-    <div class="tpMeta">${p.pos?`#${p.pos} · `:''}${p.pld} played · record ${record}</div></div>
+    <div class="tpCode">${esc(p.code)}</div><div class="tpName">${teamMark(p.name)}${esc(p.name)}</div>
+    <div class="tpMeta">${p.pos?`Power #${p.pos} · `:''}${p.conference?`${esc(p.conference)} · `:''}${record!=='—'?`record ${record}`:'record pending'}${p.published?` · rating ${esc(p.published)}`:''}</div></div>
     <div class="tpBody">
       <div class="tpStatGrid">
-        <div class="tpStat"><span class="tpStatLbl">${twoWay?'Win%':'Points'}</span><b>${twoWay?winPct:p.pts}</b></div>
-        <div class="tpStat"><span class="tpStatLbl">${diffLabel}</span><b>${p.gd>0?'+':''}${p.gd}</b></div>
-        <div class="tpStat"><span class="tpStatLbl">For</span><b>${p.gf}</b></div>
-        <div class="tpStat"><span class="tpStatLbl">Against</span><b>${p.ga}</b></div>
-        <div class="tpStat"><span class="tpStatLbl">Class rating</span><b>${p.rating!=null?p.rating.toFixed(1):'—'}</b></div>
+        ${p.w!=null&&p.pld?`<div class="tpStat"><span class="tpStatLbl">Win rate</span><b>${winPct}</b></div>`:''}
+        ${p.rating!=null?`<div class="tpStat"><span class="tpStatLbl">Power rating</span><b>${Number(p.rating).toFixed(1)}</b></div>`:''}
+        ${p.sos!=null?`<div class="tpStat"><span class="tpStatLbl">Schedule</span><b>${Number(p.sos).toFixed(1)}</b></div>`:''}
+        ${p.offense!=null?`<div class="tpStat"><span class="tpStatLbl">Adjusted offense</span><b>${Number(p.offense).toFixed(1)}</b></div>`:''}
+        ${p.defense!=null?`<div class="tpStat"><span class="tpStatLbl">Adjusted defense</span><b>${Number(p.defense).toFixed(1)}</b></div>`:''}
       </div>
       ${formRow('Overall form',p.form)}
       ${formRow('Home form',p.formHome)}
@@ -727,6 +993,31 @@ function diverseNews(limit=12){
 }
 function renderNews(){const n=DATA.news||[],host=$('#view-news'),diag=DATA.diagnostics||[];const buckets=newsBuckets(),srcs=newsSources();if(NEWS_FILTER!=='all'&&!buckets[NEWS_FILTER])NEWS_FILTER='all';let list=NEWS_FILTER==='all'?diverseNews(Math.max(n.length,18)):buckets[NEWS_FILTER]||[];host.innerHTML=`<div class="vhead">News cycle</div><div class="srcCount">${n.length} headlines · ${srcs.length-1} detected sources</div><div class="newsTools">${srcs.map(s=>`<button class="chip ${s==='all'?'allchip':''} ${NEWS_FILTER===s?'on':''}" data-src="${esc(s)}" onclick="NEWS_FILTER=this.dataset.src;renderNews()">${esc(s==='all'?'All sources':s)}<span class="count">${s==='all'?n.length:(buckets[s]||[]).length}</span></button>`).join('')}</div>`+(list.length?`<div class="newsGrid">`+list.map(a=>`<a class="ncard" href="${esc(a.link||a.url||'#')}" target="_blank" rel="noopener"><div class="srcTop"><span class="srcBadge">${esc(sourceName(a))}</span>${feedName(a)?`<span class="feedBadge">via ${esc(feedName(a))}</span>`:''}</div><div class="nhead">${esc(a.headline||a.title||'Untitled')}</div>${a.desc||a.description?`<div class="ndesc">${esc(a.desc||a.description)}</div>`:''}<div class="nmeta">${a.published?ago(a.published):''}</div></a>`).join('')+`</div>`:`<div class="empty">No headlines yet.</div>`)+(diag.length?`<div class="diagList">${diag.filter(d=>String(d).toLowerCase().includes('news')).map(d=>`<div>${esc(d)}</div>`).join('')}</div>`:'')}
 
+const _renderNewsAsResearch=renderNews;
+renderNews=function(){
+  _renderNewsAsResearch();
+  const host=$('#view-news');
+  if(!host)return;
+  const oldTitle=host.querySelector('.vhead');
+  if(oldTitle)oldTitle.remove();
+  // Research is useful even when the external headline feed is empty. Do not
+  // leave a large empty news panel or expose fetch diagnostics to readers.
+  host.querySelector('.diagList')?.remove();
+  if(!diverseNews(Math.max((DATA.news||[]).length,18)).length){
+    host.querySelector('.srcCount')?.remove();
+    host.querySelector('.newsTools')?.remove();
+    host.querySelector('.empty')?.remove();
+  }
+  const count=host.querySelector('.srcCount');
+  if(count)count.insertAdjacentHTML('beforebegin',`<div class="seclbl" style="margin-top:20px">Latest research &amp; analysis</div>`);
+  const collegeAnalysis=typeof collegeResearchModules==='function'?collegeResearchModules():'';
+  host.insertAdjacentHTML('afterbegin',`<div class="vhead">Research</div>
+    <div class="banner"><b>Why the model sees the field this way.</b> Explore team strength, schedule context, conference comparisons, methodology, and the latest college analysis without crowding the game board.</div>
+    ${collegeAnalysis}`);
+  if(typeof collapseBoardNotes==='function')collapseBoardNotes(host);
+  if(typeof balanceBoardMods==='function')balanceBoardMods(host.querySelector('.collegeResearch .boardMods'));
+}
+
 
 
 /* ===== UI PATCH: model dashboard polish only; data untouched ===== */
@@ -739,7 +1030,7 @@ function _modelSortScore(m){const pr=m.prediction||{};const archived=_modelIsArc
 function _modelMarketText(m,side){if(_modelIsArchived(m))return 'archived pick';const mk=(m.markets||{})['1x2']||{};const v={h:mk.home_pct,d:mk.draw_pct,a:mk.away_pct}[side];return v==null?'market n/a':`${v}% market`}
 function _modelWhen(m){if(m.status==='LIVE')return 'Awaiting final';if(m.status==='FINISHED')return 'Finished';if(isStaleUpcoming(m))return 'Past kickoff';return kickIn(m.kickoff)}
 function _modelTag(m){const pr=m.prediction||{},kind=_modelEdgeKind(pr);if(_modelIsArchived(m))return {txt:'ARCHIVE',kind:'level'};if(m.status==='LIVE')return {txt:'LOCKED',kind:'level'};if(kind==='value')return {txt:'VALUE',kind:'value'};if(kind==='fade')return {txt:'CAUTION',kind:'fade'};if((Number(pr.confidence)||0)>=65&&_highConfidenceAllowed(m))return {txt:'HIGH CONF',kind:'level'};return {txt:'MODEL',kind:'level'}}
-function _modelBars(m){const md=officialPredictionProbabilities(m);const rows=_isTwoWay(m)?[['H','home',md.h],['A','away',md.a]]:[['H','home',md.h],['D','draw',md.d],['A','away',md.a]];return `<div class="modelBars">${rows.map(([lab,cls,val])=>{val=Math.max(0,Math.min(100,Number(val)||0));return `<div class="modelBarLine"><span>${lab}</span><div class="modelBarTrack"><span class="modelBarFill ${cls}" style="width:${Math.max(2,val)}%"></span></div><span>${Math.round(val)}%</span></div>`}).join('')}</div>`}
+function _modelBars(m){const md=officialPredictionProbabilities(m);const rows=_isTwoWay(m)?[['H','home',md.h],['A','away',md.a]]:[['H','home',md.h],['D','draw',md.d],['A','away',md.a]];return `<div class="modelBars">${rows.map(([lab,cls,val])=>{val=Math.max(0,Math.min(100,Number(val)||0));return `<div class="modelBarLine"><span>${lab}</span><div class="modelBarTrack"><span class="modelBarFill ${cls}" style="width:${Math.max(2,val)}%"></span></div><span>${modelPctLabel(val)}</span></div>`}).join('')}</div>`}
 function _modelFinalText(m){const s=m.score||{};if(m.status==='FINISHED'&&s.home!=null&&s.away!=null)return `${s.home}–${s.away}`;return _modelWhen(m)}
 /* dedup */
 /* dedup */
@@ -837,14 +1128,26 @@ function normalizePlayer(p){return {n:String(p?.n??p?.number??'').trim(),name:St
 function lineupRows(xi,formation){const players=(xi||[]).map(normalizePlayer).filter(p=>p.n||p.name);if(!players.length)return[];const parts=formationParts(formation);if(!parts.length){const rows=[];for(let i=0;i<players.length;i+=3)rows.push(players.slice(i,i+3));return rows}const rows=[];let idx=0;rows.push(players.slice(idx,idx+1));idx+=1;parts.forEach(c=>{rows.push(players.slice(idx,idx+c));idx+=c});if(idx<players.length)rows.push(players.slice(idx));return rows.filter(r=>r.length)}
 function pitchPlayer(p){const nm=shortPlayerName(p.name)||`#${p.n||'?'}`;return `<div class="pitchPlayer ${p.out?'out':''}" title="${esc((p.n?('#'+p.n+' '):'')+(p.name||''))}"><div class="num">${esc(p.n||'—')}</div><div class="pname">${esc(nm)}</div>${p.out?'<span class="subMark">sub</span>':''}</div>`}
 function pitchTeamCard(team,line,side){const rows=lineupRows(line?.xi||[],line?.formation||'');const fl=teamFlagHTML(team);const form=line?.formation||'XI';return `<div class="pitchCard ${side}"><div class="pitchHeader"><div class="pitchTeamName">${fl}<span>${esc(team?.name||side)}</span></div><div class="formationBadge">${esc(form)}</div></div>${rows.length?`<div class="pitch">${rows.map(r=>`<div class="pitchRow">${r.map(pitchPlayer).join('')}</div>`).join('')}</div>`:`<div class="emptyStats">Lineup not available.</div>`}<div class="lineupFoot"><span>${esc(team?.code||'')}</span><span>${rows.reduce((a,r)=>a+r.length,0)} players shown</span></div></div>`}
-function lineupsPanel(m){
-  const l=m.lineups;
-  if(l&&((l.home?.xi||[]).length||(l.away?.xi||[]).length))return `<div class="lineupBoard pitchMode"><div class="seclbl">Lineups</div><div class="pitchGrid">${pitchTeamCard(m.home,l.home||{},'home')}${pitchTeamCard(m.away,l.away||{},'away')}</div></div>`;
-  const ctx=m.pregame_context||m.prediction?.lock_readiness;
-  let title='No cleared lineup feed for this competition';
-  let note='Matchday will not infer a lineup or scrape an unlicensed source.';
-  if(!ctx){title='Readiness receipt unavailable';note='This published snapshot predates pregame-context tracking.'}
-  return `<div class="lineupBoard pitchMode"><div class="seclbl">Lineups</div><div class="emptyStats"><b>${esc(title)}</b><span>${esc(note)}</span></div></div>`;
+function rosterPlayer(p){
+  const pos=String(p?.position||'').trim(),num=String(p?.n??p?.number??'').trim();
+  const status=String(p?.roster_status||'').trim();
+  return `<div class="rosterPlayer"><span class="rosterPos">${esc(pos||num||'—')}</span><b>${esc(p?.name||p?.shortName||p?.athlete?.displayName||'Player')}</b>${status&&status!=='ACT'?`<em>${esc(status)}</em>`:''}</div>`;
+}
+function rosterTeamCard(team,players,summary){
+  return `<section class="rosterTeam"><div class="rosterTeamHead"><div><span>${esc(team?.code||'TEAM')}</span><b>${esc(team?.name||'Team')}</b></div><em>${players.length?`${players.length} listed`:'Roster profile'}</em></div>${players.length?`<div class="rosterPlayers">${players.map(rosterPlayer).join('')}</div>`:`<div class="rosterSummary"><b>${esc(summary.title)}</b><span>${esc(summary.note)}</span></div>`}</section>`;
+}
+function rosterPanel(m){
+  const depth=m.personnel?.depth_chart||{},lineups=m.lineups||{};
+  const rosterPlayers=raw=>(raw||[]).map(p=>({...normalizePlayer(p),position:p?.position||'',roster_status:p?.roster_status||''})).filter(p=>p.name);
+  const homePlayers=rosterPlayers(depth.home?.players||lineups.home?.xi||[]);
+  const awayPlayers=rosterPlayers(depth.away?.players||lineups.away?.xi||[]);
+  const pr=m.prediction||officialPrediction(m)||{},meta=sportClassMeta(pr,m),edge=Number(pr?.why?.class||0);
+  const label=meta.label||'Roster profile',source=meta.source?`Source: ${meta.source}`:(meta.note||'Built from the roster information available to Matchday.');
+  const homeTitle=edge>0.05?'Stronger roster':edge<-.05?'Lighter roster':'Even roster grade';
+  const awayTitle=edge<-.05?'Stronger roster':edge>.05?'Lighter roster':'Even roster grade';
+  const available=homePlayers.length||awayPlayers.length||meta.coverage!=='unavailable';
+  if(!available)return `<div class="lineupBoard rosterBoard"><div class="seclbl">Overall roster</div><div class="emptyStats"><b>Roster profile unavailable</b><span>Matchday does not have a verified roster source for this competition yet.</span></div></div>`;
+  return `<div class="lineupBoard rosterBoard"><div class="rosterBoardTitle"><div><span class="seclbl">Overall roster</span><b>${esc(label)}</b></div><small>${esc(source)}</small></div><div class="rosterGrid">${rosterTeamCard(m.home,homePlayers,{title:homeTitle,note:homePlayers.length?'Current roster listing':source})}${rosterTeamCard(m.away,awayPlayers,{title:awayTitle,note:awayPlayers.length?'Current roster listing':source})}</div></div>`;
 }
 function teamSnap(team,side,comp){return `<div class="teamSnap ${side==='away'?'away':''}"><div class="snapCode">${teamFlagHTML(team,side==='away')}${esc(team?.code||side)}</div><div class="snapName">${esc(team?.name||'TBD')}</div><div class="snapMeta">${esc(teamStandingsMeta(team,comp,{diff:true,form:true,hideStaleRecord:String(comp||'').toUpperCase()==='NCAAF'}).join(' · '))}</div></div>`}
 /* dedup */
@@ -870,28 +1173,36 @@ function collegeRankingTableHTML(){
   const preseason=table?.coverage?.is_preseason_edition||table?.coverage?.first_poll;
   const num=(v,d=2)=>Number.isFinite(Number(v))?Number(v).toFixed(d):'—';
   const moved=rows.some(r=>r.movement!=null&&Number.isFinite(Number(r.movement)));
+  const currentRecords=(DATA.standings||[]).filter(g=>!isPollTable(g)).flatMap(g=>g.teams||[]);
+  const recordForRow=row=>{
+    const completed=DATA.cfb_result_records?.[teamKey(row.name)];
+    if(completed&&completed.pld>=(Number(row.season_games)||0))return completed.record;
+    return currentRecords.find(t=>teamKey(t.name)===teamKey(row.name))?.record
+      ||currentRecords.find(t=>bbNameMatches(t.name,row.name))?.record;
+  };
   const body=rows.map(r=>`<tr${r.rank<=25?' class="pollRanked"':''}>`
     +`<td class="pollRank">${r.rank}</td>`
     +(moved?`<td class="pollMove">${movementTag(r)}</td>`:'')
-    +`<td class="pollTeam">${esc(r.name)}${r.tier&&r.tier!=='power'?' <i class="pollTier">G5</i>':''}</td>`
+    +`<td class="pollTeam"><span class="pollTeamInner">${esc(r.name)}${r.tier&&r.tier!=='power'?' <i class="pollTier">G5</i>':''}</span></td>`
     +`<td>${esc(r.conference||'—')}</td>`
     +`<td class="pollNum">${num(r.rating)}</td>`
     +`<td class="pollNum">${num(r.sos)}</td>`
     +`<td class="pollNum">${num(r.adj_o,1)}</td>`
     +`<td class="pollNum">${num(r.adj_d,1)}</td>`
-    +`<td>${esc(r.record||'')}</td></tr>`).join('');
-  const withheld=(table?.withheld||[]).map(w=>`${esc(w.team_name)}`).join(', ');
+    +`<td>${esc(recordForRow(r)||r.record||'')}</td></tr>`).join('');
+  const withheld=(table?.withheld||[]).filter(w=>w?.team_name);
+  const provisional=withheld.map(w=>`<tr><td>${esc(w.team_name)}</td><td>${num(w.rating)}</td><td>${Number.isFinite(Number(w.fcs_share))?(Number(w.fcs_share)*100).toFixed(1)+'%':'—'}</td></tr>`).join('');
   return `<section class="pollSection"><div class="pollHead">
       <div><div class="vhead" style="margin:0">${String(DATA.comp_key||'').toUpperCase()==='NCAAM'?'Basketball power rating':'Football power rating'}</div>
       <p class="pollMeta">${esc(table.basis?.label||'Model rating')} · ${rows.length} rated teams${table.published_on?` · published ${esc(table.published_on)}`:''}</p></div>
       
     </div>
     ${table.season_in_progress===false?'<div class="modWarn">Projection — the season has not started. This rates the completed season.</div>':''}
-    <div class="pollScroll"><table class="pollTable"><thead><tr>
+    <div class="pollScroll"><table class="pollTable powerTable${moved?' hasMove':''}"><thead><tr>
       <th>#</th>${moved?'<th title="Change since last week">Move</th>':''}<th>Team</th><th>Conference</th><th>Rating</th><th>SoS</th><th>Off</th><th>Def</th><th>Rec</th>
     </tr></thead><tbody>${body}</tbody></table></div>
-    <p class="modNote">${esc(String(table.note||'').replace(/\.\./g,'.'))}</p>
-    ${withheld?`<p class="modNote">Held out of the power rating: ${withheld} — ratings earned mostly against FCS opposition.</p>`:''}
+    <details class="pollHelp"><summary aria-label="About the power ratings">?</summary><p>${esc(String(table.note||'').replace(/\.\./g,'.'))}</p><p>Provisional teams are shown below but have no FBS rank because most of their rating evidence comes from FCS games. They enter the ranked table when the source model has enough comparable FBS-opponent evidence.</p></details>
+    ${provisional?`<details class="pollProvisional"><summary>Provisional teams · ${withheld.length} unranked</summary><div class="pollScroll"><table class="pollTable"><thead><tr><th>Team</th><th>Model rating</th><th>FCS schedule</th></tr></thead><tbody>${provisional}</tbody></table></div></details>`:''}
   </section>`;
 }
 /* The full ballot on the Conferences tab, above the power rating: every team's
@@ -900,6 +1211,14 @@ function collegeRankingTableHTML(){
 function collegeBallotTableHTML(){
   const b=typeof collegeBallot==='function'?collegeBallot():null;
   if(!b)return '';
+  if(b.source==='x'){
+    const rows=b.rankings.map(r=>`<tr${r.rank<=4?' class="pollRanked"':''}><td class="pollRank">${Number(r.rank)}</td><td class="pollTeam teamClickable" data-team="${esc(r.team_name)}" onclick="openTeamModal(this.dataset.team)"><span class="pollTeamInner">${teamMark(r.team_name)}<span>${esc(r.team_name)}</span></span></td></tr>`).join('');
+    return `<section class="pollSection ballotSection personalBallot"><div class="pollHead"><div><div class="vhead" style="margin:0">My Top 25</div>
+      <p class="pollMeta">Personal ballot · published ${esc(b.published_on||'')} · separate from the model</p></div></div>
+      <div class="pollScroll"><table class="pollTable officialPollTable"><thead><tr><th>#</th><th>Team</th></tr></thead><tbody>${rows}</tbody></table></div>
+      <p class="modNote">${esc(b.note||'')}${b.source_url?` <a href="${esc(b.source_url)}" target="_blank" rel="noopener">View the original post on X</a>.`:''}</p>
+    </section>`;
+  }
   const body=b.rankings.map(r=>{
     const s=r.resume||{};
     const sor=Number.isFinite(Number(s.sor))?` title="${(Number(s.sor)*100).toFixed(1)}% of top-25-level teams would match this record against this schedule"`:'';
@@ -922,6 +1241,24 @@ function collegeBallotTableHTML(){
     ${leftOff?`<p class="modNote">Best résumés left off: ${leftOff}.</p>`:''}
   </section>`;
 }
+function decorateRankingTeamMarks(host){
+  host.querySelectorAll('.gteam[data-team]').forEach(cell=>{
+    if(cell.querySelector('.teamMark'))return;
+    const anchor=cell.querySelector('.code,.flagIcon,.pos');
+    if(anchor)anchor.insertAdjacentHTML('afterend',teamMark(cell.dataset.team));
+  });
+  const power=String(DATA.comp_key||'').toUpperCase()==='NCAAM'
+    ?(typeof MATCHDAY_NCAAM_RANKINGS!=='undefined'?MATCHDAY_NCAAM_RANKINGS:null)
+    :(typeof MATCHDAY_CFB_RANKINGS!=='undefined'?MATCHDAY_CFB_RANKINGS:null);
+  const ballot=typeof collegeBallot==='function'?collegeBallot():null;
+  [[host.querySelectorAll('.pollSection:not(.ballotSection):not(.officialPoll) .pollTeam'),power?.rankings||[],'name'],
+   [host.querySelectorAll('.ballotSection .pollTeam'),ballot?.rankings||[],'team_name']].forEach(([cells,rows,key])=>{
+    cells.forEach((cell,i)=>{
+      if(cell.querySelector('.teamMark')||!rows[i]?.[key])return;
+      (cell.querySelector('.pollTeamInner')||cell).insertAdjacentHTML('afterbegin',teamMark(rows[i][key]));
+    });
+  });
+}
 const _renderCollegeGroups=renderGroups;
 renderGroups=function(){
   _renderCollegeGroups();
@@ -932,6 +1269,16 @@ renderGroups=function(){
   if(poll&&!host.querySelector('.pollSection'))host.insertAdjacentHTML('afterbegin',poll);
   const ballotTable=collegeBallotTableHTML();
   if(ballotTable&&!host.querySelector('.ballotSection'))host.insertAdjacentHTML('afterbegin',ballotTable);
+  if(!host.querySelector('.rankingsIntro'))host.insertAdjacentHTML('afterbegin',`<section class="rankingsIntro">
+    <div class="vhead">Rankings</div>
+    <div class="banner"><b>Three views of the college landscape.</b> Power Ratings measure opponent-adjusted team strength. My Top 25 ranks résumés. Conferences show the standings and schedule context beneath both.</div>
+  </section>`);
+  const ballot=host.querySelector('.ballotSection');
+  if(ballot&&!host.querySelector('[data-ranking-section="top25"]'))ballot.insertAdjacentHTML('beforebegin',`<div class="seclbl" data-ranking-section="top25">Top 25</div><div class="hint" style="margin-bottom:8px">A résumé ballot, kept separate from the predictive power rating.</div>`);
+  const power=host.querySelector('.pollSection:not(.ballotSection):not(.officialPoll)');
+  if(power&&!host.querySelector('[data-ranking-section="power"]'))power.insertAdjacentHTML('beforebegin',`<div class="seclbl" data-ranking-section="power">Power Ratings</div><div class="hint" style="margin-bottom:8px">Opponent-adjusted team strength with schedule, offense, and defense context.</div>`);
+  const conference=host.querySelector('.tablewrap:not(.officialPoll)');
+  if(conference&&!host.querySelector('[data-ranking-section="conferences"]'))conference.insertAdjacentHTML('beforebegin',`<div class="seclbl" data-ranking-section="conferences">Conferences</div><div class="hint" style="margin-bottom:8px">Conference tables with the model rating and strength of schedule shown together.</div>`);
   // The old caption said this rating was "context only" and a preseason
   // tiebreaker. That was wrong and misleading: it is the model's own
   // opponent-adjusted rating and the model does use it. Say what it is.
@@ -947,7 +1294,7 @@ renderGroups=function(){
     :(typeof MATCHDAY_CFB_RANKINGS!=='undefined'?MATCHDAY_CFB_RANKINGS:null);
   const bySos={};(table?.rankings||[]).forEach(r=>{if(Number.isFinite(Number(r.sos)))bySos[teamKey(r.name)]=Number(r.sos)});
   document.querySelectorAll('#view-groups .gtable:not(.officialPollTable) tbody tr').forEach(tr=>{
-    const name=tr.querySelector('.gteam')?.textContent||'';
+    const name=tr.querySelector('.gteam')?.dataset.team||'';
     const cell=tr.children[1];
     const sos=bySos[teamKey(name)];
     if(cell&&Number.isFinite(sos)&&!cell.querySelector('.sosTag')){
@@ -956,6 +1303,7 @@ renderGroups=function(){
       cell.appendChild(tag);
     }
   });
+  decorateRankingTeamMarks(host);
 };
 /* dedup */
 // The board loads its sport's full data file, so every match on screen already
@@ -1131,7 +1479,7 @@ ${typeof matchdayLivePickHTML==='function'?matchdayLivePickHTML(m):''}</div>`;
 
    Matchday publishes college football and college basketball only, and the
    engine covers both, so there is no sport left for a second forecast to serve.
-   A fixture it has not priced gets an empty state rather than another model's
+   A fixture it has not modeled gets an empty state rather than another model's
    number under the engine's heading. */
 function betbetterReadFor(m){
   // Only UPCOMING, matching what the handoff itself will attach: a live
@@ -1140,78 +1488,58 @@ function betbetterReadFor(m){
   // Two sources on purpose, as in modTopPick(): a scheduled build attaches the
   // pick to the fixture, a push build does not run the fetch that does, and the
   // handoff is committed either way.
-  if(m.betbetter_pick)return m.betbetter_pick;
   const list=(typeof MATCHDAY_BETBETTER_PICKS!=='undefined')?MATCHDAY_BETBETTER_PICKS:null;
   const day=String(m.kickoff||'').slice(0,10);
-  if(!list||!list.length||!day)return null;
+  if(!list||!list.length||!day)return m.betbetter_pick||null;
   const sport=String(m._comp||DATA.comp_key||'').toLowerCase();
   // A day either side, for the same reason the results settling allows it: a
   // late kickoff and its listed date land on opposite sides of midnight UTC.
   const days=[day,_bbShiftDay(day,-1),_bbShiftDay(day,1)];
-  return list.find(p=>(!p.sport||!sport||String(p.sport).toLowerCase()===sport)
+  const candidates=list.filter(p=>(!p.sport||!sport||String(p.sport).toLowerCase()===sport)
     &&days.includes(String(p.kickoff||'').slice(0,10))
-    &&bbNameMatches(p.home,m.home?.name||m.home)
-    &&bbNameMatches(p.away,m.away?.name||m.away))||null;
+    &&((bbNameMatches(p.home,m.home?.name||m.home)&&bbNameMatches(p.away,m.away?.name||m.away))
+      ||(bbNameMatches(p.home,m.away?.name||m.away)&&bbNameMatches(p.away,m.home?.name||m.home))));
+  if(m.betbetter_pick)candidates.push(m.betbetter_pick);
+  return candidates.sort((a,b)=>(Date.parse(b.generated_at||'')||0)-(Date.parse(a.generated_at||'')||0))[0]||null;
 }
 function betbetterNoReadPanel(){
   return `<section class="analystPanel"><div class="analystTop"><div class="analystTitle">Model read</div>`
-    +`<div class="analystBadge">not priced</div></div>`
-    +`<div class="emptyForecast">No model read on this fixture yet. The engine publishes a read once the game is priced; `
+    +`<div class="analystBadge">not modeled</div></div>`
+    +`<div class="emptyForecast">No model prediction is available for this fixture yet; `
     +`the opponent-adjusted ratings for both teams are in the matchup table below.</div></section>`;
 }
 function _bbNum(v){const n=Number(v);return Number.isFinite(n)?n:null;}
-function _bbPct(v,d=1){const n=_bbNum(v);return n==null?'\u2014':n.toFixed(d)+'%';}
+function _bbPct(v,d=1){const n=_bbNum(v);return n==null?'\u2014':Math.min(99.9,n).toFixed(d)+'%';}
 function _bbStamp(v){const t=Date.parse(v||'');return Number.isFinite(t)?new Date(t).toLocaleString():'';}
-// The caveat belongs to the handoff document, so an attached pick carries it and
-// a baked one reads it off the snapshot. Never retyped here: if the engine
-// changes its wording, the page changes with it.
-function bbEdgeWarning(p){
-  return p?.edge_warning
-    ||(typeof MATCHDAY_BETBETTER_EDGE_WARNING!=='undefined'?MATCHDAY_BETBETTER_EDGE_WARNING:'')
-    ||'';
-}
 function betbetterModelRead(m,p){
-  const model=_bbNum(p.model_pct),market=_bbNum(p.market_pct),gap=_bbNum(p.edge_points);
-  const books=_bbNum(p.book_count),price=_bbNum(p.best_price),american=_bbNum(p.best_american);
+  const model=_bbNum(p.model_pct);
   const engine=p.model_name||'Matchday model';
   const when=_bbStamp(p.generated_at);
-  const marketText=market==null?'No market snapshot on this side':`Market on this side: ${market.toFixed(1)}%`;
   // Both sides, not the pick alone. A 54.5% pick is a near coin-flip, and the
   // other side's number is the only thing on the panel that says so.
-  const rows=(p.sides||[]).map(s=>`<tr><td class="bbKey">${esc(s.selection||'')}</td>`
-    +`<td>${_bbPct(s.model_pct)}</td><td>${_bbPct(s.market_pct)}</td>`
-    +`<td>${_bbNum(s.best_price)==null?'\u2014':_bbNum(s.best_price).toFixed(2)}</td></tr>`).join('');
+  const rows=(p.sides||[]).map(s=>`<div class="readSide"><span>${esc(s.selection||'')}</span>`
+    +`<strong>${_bbPct(s.model_pct)}</strong></div>`).join('');
   const sideBox=rows
-    ?`<div class="analystBox"><div class="analystBoxTitle">Both sides</div>`
-      +`<table class="bbTable"><thead><tr><th></th><th>Model</th><th>Market</th><th>Best price</th></tr></thead>`
-      +`<tbody>${rows}</tbody></table></div>`
+    ?`<div class="readSides" aria-label="Both teams' win chances">${rows}</div>`
     :'';
-  // Every row is neutral on purpose. Colouring the gap green would endorse the
-  // number the warning underneath exists to say must not be staked on.
-  const stat=(name,val)=>`<div class="factorRow neu"><span class="fName">${esc(name)}</span><span class="fVal">${esc(val)}</span></div>`;
-  const warn=bbEdgeWarning(p);
-  const marketBox=`<div class="analystBox"><div class="analystBoxTitle">Model against market</div><div class="factorRows">`
-    +stat('Model',_bbPct(model))
-    +stat('Market',_bbPct(market))
-    +stat('Gap',gap==null?'\u2014':`${gap>0?'+':''}${gap.toFixed(1)} pts`)
-    +stat('Best price',price==null?'\u2014':`${price.toFixed(2)}${american==null?'':` (${american>0?'+':''}${american})`}`)
-    +stat('Books priced',books==null?'\u2014':String(books))
-    +`</div>${warn?`<p class="bbNote">${esc(warn)}</p>`:''}</div>`;
-  return `<section class="analystPanel"><div class="analystTop"><div class="analystTitle">Model read</div>`
-    +`<div class="analystBadge">live shadow read</div></div>`
-    +`<div class="analystHero"><div class="analystMain"><div class="analystLabel">Model pick</div>`
+  return `<section class="analystPanel"><div class="analystTop"><div class="analystTitle">Live model read</div>`
+    +`<details class="readHelp"><summary aria-label="About this forecast">?</summary><p>${esc(engine)}${when?` · ${esc(when)}`:''}${p.model_version?` · ${esc(p.model_version)}`:''}. ${esc(p.integrity_note||'This read may change before kickoff and is not a locked, graded pick.')}</p></details></div>`
+    +`<div class="analystHero"><div class="analystMain"><div class="analystLabel">Favored team</div>`
     +`<div class="analystPick">${esc(p.pick_name||'No pick')}</div>`
-    +`<p class="analystNote">${esc(engine)}${when?`, read at ${esc(when)}`:''}. This is the same read the card and the board modules quote.</p></div>`
-    +`<div class="analystConfidence"><b>${_bbPct(model)}</b><span>model probability</span>`
-    +`<small>${esc(marketText)}</small>${p.model_version?`<small>${esc(p.model_version)}</small>`:''}</div></div>`
-    +`<div class="analystGrid">${sideBox}${marketBox}</div>`
-    +(p.integrity_note?`<p class="analystSummary">${esc(p.integrity_note)}</p>`:'')+`</section>`;
+    +`<p class="analystNote">Live forecast · not locked yet</p></div>`
+    +`<div class="analystConfidence"><b>${_bbPct(model)}</b><span>chance to win</span></div></div>`
+    +`<details class="readBreakdown"><summary>See both teams' chances</summary>${sideBox}</details></section>`;
+}
+function matchupEvidence(label,note,html,open=false){
+  if(!html)return '';
+  return `<details class="matchEvidence"${open?' open':''}><summary><span><b>${esc(label)}</b><small>${esc(note)}</small></span><i aria-hidden="true">+</i></summary><div class="matchEvidenceBody">${html}</div></details>`;
 }
 function details(m){
-  if(isForecastPaused(m))return `<div class="detailGrid v4Detail">${forecastPauseHTML(m)}<div class="detailTop">${betbetterMatchupPanel(m)}<div class="readCard forecastMarketCard">${marketPanel(m)}</div></div><div class="detailLow">${statsPanel(m)}${lineupsPanel(m)}</div></div>`;
+  if(isForecastPaused(m))return `<div class="detailGrid v4Detail">${forecastPauseHTML(m)}<div class="detailTop">${betbetterMatchupPanel(m)}<div class="readCard forecastMarketCard">${marketPanel(m)}</div></div><div class="detailLow">${rosterPanel(m)}</div></div>`;
   const bb=betbetterReadFor(m);
   const read=bb?betbetterModelRead(m,bb):betbetterNoReadPanel();
-  return `<div class="detailGrid v4Detail modernExpandedView"><div class="expandedSectionHead"><div><span>Matchday analysis</span><b>Model, market and matchup</b></div><em>Updated before kickoff</em></div><div class="detailTop"><div class="readCard modelReadCard">${read}</div><div class="readCard forecastMarketCard">${marketPanel(m)}</div></div><div class="detailTop">${betbetterMatchupPanel(m)}${matchProfilePanel(m)}</div><div class="detailLow">${statsPanel(m)}${lineupsPanel(m)}</div></div>`;
+  const comparison=betbetterMatchupPanel(m)||matchProfilePanel(m);
+  return `<div class="detailGrid v4Detail modernExpandedView"><div class="expandedSectionHead"><div><span>Matchday analysis</span><b>Pick &amp; matchup</b></div></div><div class="expandedDecision"><div class="readCard modelReadCard">${read}</div></div><div class="matchEvidenceList">${matchupEvidence('Team comparison','rating, offence, defence and schedule',comparison,true)}${matchupEvidence('Market','price and model gap',`<div class="readCard forecastMarketCard">${marketPanel(m)}</div>`)}${matchupEvidence('More detail','season profile and roster',`<div class="detailLow">${matchProfilePanel(m)}${rosterPanel(m)}<!-- matchday-advanced-profile --></div>`)}</div></div>`;
 }
 /* dedup */
 function _v4TitleRows(t){
@@ -1236,7 +1564,11 @@ function _v13LeaderPanel(sc){
 function _v4MatchSnapshots(){
   const M=(DATA.matches||[]).filter(m=>m.status!=='FINISHED'&&!isStaleUpcoming(m)&&(m.markets?.['1x2']||m.prediction)).sort((a,b)=>(a.kickoff||'').localeCompare(b.kickoff||'')).slice(0,8);
   if(!M.length)return '<div class="emptyForecast">No upcoming match snapshots yet.</div>';
-  return M.map(m=>{const pr=m.prediction||{},x=(m.markets||{})['1x2']||{};const probs=_v4ModelProbs(m);const twoWay=_isTwoWay(m);const hp=Math.round(Number(probs.h??x.home_pct??0)),dp=Math.round(Number(probs.d??x.draw_pct??0)),ap=Math.round(Number(probs.a??x.away_pct??0));const drawLine=twoWay?'':`<div class="probLine"><span class="sideName">Draw</span><span class="probTrack"><i class="probFill d" style="width:${Math.max(3,dp)}%"></i></span><span class="pct">${dp}%</span></div>`;return `<div class="matchSnapRow" onclick="openMatchModal('${esc(String(m.id||''))}')"><div><div class="matchSnapTeams">${esc(m.home?.code||m.home?.name||'H')} v ${esc(m.away?.code||m.away?.name||'A')}</div><div class="matchSnapMeta">${isForecastPaused(m)?'Market odds · ':''}${esc(m.stage||'')} \u2013 ${kickIn(m.kickoff)}</div></div><div class="probLines"><div class="probLine"><span class="sideName">${esc(m.home?.code||'H')}</span><span class="probTrack"><i class="probFill h" style="width:${Math.max(3,hp)}%"></i></span><span class="pct">${hp}%</span></div>${drawLine}<div class="probLine"><span class="sideName">${esc(m.away?.code||'A')}</span><span class="probTrack"><i class="probFill a" style="width:${Math.max(3,ap)}%"></i></span><span class="pct">${ap}%</span></div></div></div>`}).join('');
+  return M.map(m=>{const x=(m.markets||{})['1x2']||{},probs=_v4ModelProbs(m),twoWay=_isTwoWay(m);
+    const hp=Number(probs.h??x.home_pct??0),dp=Number(probs.d??x.draw_pct??0),ap=Number(probs.a??x.away_pct??0);
+    const line=(name,side,pct)=>`<div class="probLine"><span class="sideName">${esc(name)}</span><span class="probTrack"><i class="probFill ${side}" style="width:${Math.max(3,Math.min(100,pct))}%"></i></span><span class="pct">${modelPctLabel(pct)}</span></div>`;
+    return `<div class="matchSnapRow" onclick="openMatchModal('${esc(String(m.id||''))}')"><div><div class="matchSnapTeams">${esc(m.home?.code||m.home?.name||'H')} v ${esc(m.away?.code||m.away?.name||'A')}</div><div class="matchSnapMeta">${isForecastPaused(m)?'Market odds · ':''}${esc(m.stage||'')} \u2013 ${kickIn(m.kickoff)}</div></div><div class="probLines">${line(m.home?.code||'H','h',hp)}${twoWay?'':line('Draw','d',dp)}${line(m.away?.code||'A','a',ap)}</div></div>`;
+  }).join('');
 }
 function _v4AdvancementTable(adv){
   if(!adv.length)return '';

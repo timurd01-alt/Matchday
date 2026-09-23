@@ -4,6 +4,605 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0922T",
+  "tag": "Update",
+  "title": "Make the site identifiable as Matchday Terminal",
+  "items": [
+   "Describe the site to search engines and AI assistants as a named entity rather than a loose page: an Organization and a WebSite node, linked to each other and to the application, carrying the logo, the alternate names the site is known by, the subjects it covers, and a link to @timurknowsball as a verifying profile.",
+   "Name the AI crawlers explicitly in robots.txt, including Google-Extended, which governs whether Gemini and Google's AI answers may read the site at all. All of them were already permitted by the wildcard; naming them keeps the permission from being lost if that wildcard is ever tightened."
+  ]
+ },
+ {
+  "date": "Build 0922S",
+  "tag": "Fix",
+  "title": "Scorecard depth, naming, and a sidebar that covered the page",
+  "items": [
+   "Stop the navigation rail covering the left edge of the page on most laptop screens. The rail widens from 62px to 112px at 1181px, but the column reserved for it only widened at 1400px, so at every width in between — 1280 and 1366 among them — it sat on top of the first 50px of the content beside it and clipped the start of every heading, table row and label.",
+   "Draw the model's record for the picks that agreed with the market and the picks that went against it. Both were published in full — hit rate, expected rate, calibration gap and confidence interval — and neither was ever shown. Agreeing with the price returns 89.2% on 176 picks; going against it returns 47.8% on 23, against an expected 71.9%.",
+   "Say plainly why the two blank cells under 'Against the price' are blank: beating the price has no expected baseline to compare against.",
+   "Show the model's and the market's full records under the head-to-head comparison, which is scored only on the 25 games @timurknowsball picked. They are marked as the larger, separate sample that they are rather than mixed into the same bars.",
+   "Rename the research card to '@timurknowsball picks'.",
+   "Remove the modelling engine's name from every label a visitor can read."
+  ]
+ },
+ {
+  "date": "Build 0922R",
+  "tag": "Fix",
+  "title": "Clear the stadium scoreboard from behind the headline",
+  "items": [
+   "Centre the scrim that darkens the stadium behind the welcome copy. It was weighted to the left, from when the welcome page was a two-column layout with the brand down one side; the page is a single centred column at every width now, so the pool of darkness sat beside the type instead of under it.",
+   "Hold the scoreboard well back. It sits at the centre of the bowl, which is exactly where the headline, the lead and the sport chips now sit, and its lit panel and green segments made it the brightest object in the scene. It reads as stadium structure rather than a rectangle behind the type."
+  ]
+ },
+ {
+  "date": "Build 0922Q",
+  "tag": "Fix",
+  "title": "Hold the stadium crowd completely still",
+  "items": [
+   "Remove the last crowd animation. Breathing the whole crowd group's opacity was a single animation rather than forty-eight, but it is the group that holds all 1,621 crowd nodes, so animating it forced the entire crowd onto its own compositor layer to be re-composited for as long as the welcome page stayed open. The crowd is now painted once and never touched again.",
+   "Five animations now run on the welcome page, none of them on the crowd: the two floodlight towers, the light beams, the signal dot and the shimmer on the entry button."
+  ]
+ },
+ {
+  "date": "Build 0922P",
+  "tag": "Fix",
+  "title": "Stop the welcome page animating itself to death",
+  "items": [
+   "Hold the crowd still. Each row of the stadium was split into three sets on staggered delays, which left 48 separate infinite animations running for the life of the page, every one of them hinting will-change and so claiming its own compositor layer -- 48 layers holding 1,581 circles between them, re-rendered continuously for a few tenths of a pixel of movement behind a scrim.",
+   "Hold the preview card's lit border still. Spinning it animated an angle that a conic gradient and two masks are derived from, so the card's whole border was repainted on the main thread every frame, none of it composited.",
+   "Hold the two background colour washes still. They are 560px and 480px discs under a 90px blur, and they drifted on an animated scale; a blurred surface cannot be composited while it scales, so both blurs were re-rendered every frame.",
+   "Pulse the signal dot with opacity rather than box-shadow, which was repainting it every frame.",
+   "Six animations now run on the welcome page instead of fifty-seven, and none of them force a repaint. The page looks the same."
+  ]
+ },
+ {
+  "date": "Build 0922O",
+  "tag": "Fix",
+  "title": "Let the welcome page scroll, and detach the site from it",
+  "items": [
+   "Restore scrolling on the welcome page. The class that makes the page scrollable was applied by a function inside the application bundle, which no longer runs before entry, so the body kept the app shell's fixed viewport height and the welcome page could not be scrolled at all on a computer. It now ships in the markup instead.",
+   "Stop appending the home view underneath the welcome page. Scrolling down reached a second copy of the site rather than the end of the introduction. Entry still works if no bundle ever loads, so nothing is lost by hiding it."
+  ]
+ },
+ {
+  "date": "Build 0922N",
+  "tag": "Fix",
+  "title": "Fix the startup freeze behind the entry delay",
+  "items": [
+   "Fix the college football snapshot merge, which compared every fixture against every other one and rebuilt each team's logo list on each comparison. It ran for about two minutes and forty seconds on every load, locking the page so completely that a returning visitor on a phone could not scroll or tap. Fixtures are now grouped by kickoff day and the name lookups keep their answers, taking the same merge, with identical output, to well under a second.",
+   "Keep the large data and application bundles from executing while the welcome page is waiting for a click, so the page stays responsive while they load.",
+   "Load the application bundles in parallel instead of one after another, so entry no longer waits on eight separate network round trips, and drop the fixed delay that used to sit in front of them.",
+   "Warm the bundles into the browser cache while the welcome page is being read, so pressing Enter starts against files that have already arrived.",
+   "Restore the stadium artwork on the welcome page and return the Enter button to the page layout; both had been stripped while chasing the freeze above.",
+   "Shorten the welcome page's entrance animation, which left the headline and the call to action invisible for the first second."
+  ]
+ },
+ {
+  "date": "Build 0922M",
+  "tag": "Fix",
+  "title": "Make site entry immediate and clickable",
+  "items": [
+   "Parse and display Enter Matchday Terminal before any optional welcome content so phones can enter immediately.",
+   "Retire the thousands of rendered stadium SVG nodes that kept the browser's main thread busy and delayed taps.",
+   "Keep the entry action fixed above every decorative and preview layer on mobile and desktop.",
+   "Make the animated button sheen click-through and add a capture-phase entry fallback for browsers with composited-layer pointer issues."
+  ]
+ },
+ {
+  "date": "Build 0922L",
+  "tag": "Fix",
+  "title": "Keep mobile entry visible",
+  "items": [
+   "Render the welcome text, Enter button, and preview immediately on phones instead of depending on delayed entrance animations.",
+   "Prevent mobile low-power animation throttling from leaving the welcome controls transparent while later cards remain visible."
+  ]
+ },
+ {
+  "date": "Build 0922K",
+  "tag": "Fix",
+  "title": "Restore mobile entry and navigation",
+  "items": [
+   "Show the welcome page on a visitor's first entry instead of initializing it as hidden.",
+   "Reset the mobile viewport and navigation sheet when entering so the app cannot remain scrolled below or stuck behind the welcome layout.",
+   "Remember entry only for the current browser session, while keeping the Matchday wordmark available to reopen the welcome page."
+  ]
+ },
+ {
+  "date": "Build 0922J",
+  "tag": "Fix",
+  "title": "Make mobile entry reliable",
+  "items": [
+   "Turn Enter Matchday Terminal back into a dedicated button so a tap cannot be diverted by anchor navigation.",
+   "Give the mobile entry control a full-height touch target with direct tap handling."
+  ]
+ },
+ {
+  "date": "Build 0922I",
+  "tag": "Fix",
+  "title": "Make the college board clearer",
+  "items": [
+   "Remove the repeated sport name beside Matchday Terminal in the top strip.",
+   "Project the CFP using the 2026-27 automatic-bid and seeding rules, with AP order as a provisional ranking input and unranked champions included.",
+   "Feature a competitive poll matchup rather than a near-certain mismatch in the weekly pick card.",
+   "Match UMass to Massachusetts so the Sacramento State game displays its existing Bet Better forecast."
+  ]
+ },
+ {
+  "date": "Build 0922H",
+  "tag": "Fix",
+  "title": "Restore welcome-page scrolling",
+  "items": [
+   "Lift the site's global body scroll lock while the welcome introduction is visible, so visitors can scroll into Matchday even if Enter does not respond."
+  ]
+ },
+ {
+  "date": "Build 0922G",
+  "tag": "Fix",
+  "title": "Make the welcome page non-blocking",
+  "items": [
+   "Turn the full-screen welcome overlay into a normal scrollable introduction so the site remains reachable even if a script stalls.",
+   "Give Enter a real link to the app as a fallback when JavaScript is slow or unavailable."
+  ]
+ },
+ {
+  "date": "Build 0922F",
+  "tag": "Fix",
+  "title": "Keep entry responsive and show markets earlier",
+  "items": [
+   "Make the welcome screen exit immediately and independently of the larger app scripts so visitors are not trapped while the site loads.",
+   "Begin refreshing available game odds 24 hours before kickoff instead of three hours before.",
+   "When the separate odds feed has no quote, show the dated market probability already included in the Bet Better forecast rather than an empty Market panel."
+  ]
+ },
+ {
+  "date": "Build 0922E",
+  "tag": "Refinement",
+  "title": "Show the matchup evidence directly",
+  "items": [
+   "Remove the repetitive two-line Why panel that treated the first favorable and unfavorable team metric as a cause of the forecast.",
+   "Open Team comparison by default in the expanded game view so rating, offence, defence, and schedule context are visible immediately."
+  ]
+ },
+ {
+  "date": "Build 0922D",
+  "tag": "Fix",
+  "title": "Reliable entry and clearer scorecard",
+  "items": [
+   "Keep Enter working when browser storage is unavailable, and show a loading state even before the application scripts finish.",
+   "Show an actionable Retry loading state if a competition download fails or stalls instead of leaving an empty view.",
+   "Give the Scorecard a concise record and performance summary, clearer card versus selection counts, and separate calibration, comparison, and methodology sections."
+  ]
+ },
+ {
+  "date": "Build 0922C",
+  "tag": "Performance",
+  "title": "Smaller mobile data payloads",
+  "items": [
+   "Remove duplicated scorecard evidence snapshots from the browser payload while retaining the displayed scorecard summary.",
+   "Avoid publishing NCAAF Bet Better picks twice when the same handoff is already loaded by the page.",
+   "Minify public competition JSON to reduce download and parsing work on phones."
+  ]
+ },
+ {
+  "date": "Build 0922B",
+  "tag": "Fix",
+  "title": "Reliable entry and faster mobile startup",
+  "items": [
+   "Make the Enter button work immediately, even before the full application finishes downloading.",
+   "Let the welcome page render without waiting for web fonts or the larger application scripts.",
+   "Stop phones and reduced-data connections from downloading the other sport's multi-megabyte payload in the background."
+  ]
+ },
+ {
+  "date": "Build 0922A",
+  "tag": "Fix",
+  "title": "Clearer welcome and Community probabilities",
+  "items": [
+   "Keep the welcome headline within small screens and align the help panel with the main action.",
+   "Use the newest Bet Better read in Community and match probabilities to team names even if fixture order differs.",
+   "Remove the internal commit number from the top strip, use consistent typography, and cap displayed forecast certainty at 99.9%.",
+   "Show more conference context, give team names more room, and replace the repeated matchup metrics with a short takeaway."
+  ]
+ },
+ {
+  "date": "Build 0921N",
+  "tag": "Fix",
+  "title": "Consistent welcome and community reads",
+  "items": [
+   "Matched the Upset Watch and weekly-preview accents on the welcome page, with an opaque card background.",
+   "Show Bet Better's live team probabilities in Community and remove Today's call.",
+   "Made the expanded both-sides read compact, with its caveat under help, and cap displayed model certainty at 99.9%.",
+   "Corrected Florida Atlantic and Georgia Southern logos and collapsed alias duplicates such as FAU versus UL Monroe."
+  ]
+ },
+ {
+  "date": "Build 0921M",
+  "tag": "Fix",
+  "title": "Aligned power ratings and complete records",
+  "items": [
+   "Restored one aligned row grid for rank, movement, and team at narrow widths.",
+   "Reconciled conference and power-rating records against completed games, including non-conference results such as Michigan State's Notre Dame loss."
+  ]
+ },
+ {
+  "date": "Build 0921L",
+  "tag": "Fix",
+  "title": "Solid welcome controls",
+  "items": [
+   "Made the sport labels and How this works panel opaque so stadium dots no longer show through the text."
+  ]
+ },
+ {
+  "date": "Build 0921K",
+  "tag": "Update",
+  "title": "Cleaner ranking and community rows",
+  "items": [
+   "Moved the long power-rating methodology into a compact help control.",
+   "Show NDSU and other FCS-heavy teams in a separate provisional section with their model ratings and FCS schedule share, without assigning an unsupported FBS rank.",
+   "Aligned team logos and names in ranking tables and removed duplicate green team codes beside conference logos.",
+   "Placed Community matchup and result logos at opposite ends and used full team names on pick buttons."
+  ]
+ },
+ {
+  "date": "Build 0921J",
+  "tag": "Fix",
+  "title": "Show full opponent in team profiles",
+  "items": [
+   "Team profiles now spell out the next opponent rather than showing an ambiguous one-letter team code."
+  ]
+ },
+ {
+  "date": "Build 0921I",
+  "tag": "Fix",
+  "title": "Clearer college boards and faster switching",
+  "items": [
+   "Centered the welcome branding around a larger logo, linked @timurknowsball, and added scrollable game, record, research and upset-watch previews.",
+   "Prefetched and cached the other college board for faster sport switching while refreshing it in the background.",
+   "Limited Research's top pick to this week, expanded Toughest Schedules to 16 compact rows, and made View All Games easier to spot.",
+   "Added existing school marks to ranking and community pick rows, and used @timurknowsball on the scorecard comparison.",
+   "Simplified expanded matchup copy, moved forecast caveats into help, reduced duplicate profile comparison, and improved close-button and logo spacing.",
+   "Team popups now use the current ranking snapshot for record, rating and schedule context, and omit unsupported zero-valued statistics.",
+   "Restricted the verified leaderboard to college picks and displayed legacy pro-sport handles as college aliases without removing their history. Existing account sign-in remains the recovery path after browser storage is lost."
+  ]
+ },
+ {
+  "date": "Build 0921H",
+  "tag": "Fix",
+  "title": "Keep data visible after entering",
+  "items": [
+   "Prevented a removed insight panel from interrupting successful board loads and incorrectly showing 'no data' after entering the site."
+  ]
+ },
+ {
+  "date": "Build 0921G",
+  "tag": "Fix",
+  "title": "Restore entry and tighten welcome spacing",
+  "items": [
+   "Repaired a script syntax error that prevented the welcome-page Enter button and site navigation from loading.",
+   "Reduced unused welcome-page spacing and kept the public-record action next to its figures instead of at the bottom of a stretched panel."
+  ]
+ },
+ {
+  "date": "Build 0921F",
+  "tag": "Fix",
+  "title": "Home comparisons now use the full Bet Better handoff",
+  "items": [
+   "Filled the Home model-versus-market summary and featured game from Bet Better's current aggregate market probabilities and probability-point differences.",
+   "The featured game now follows Bet Better's best-matchup selection, which favors two strong, closely rated teams instead of the earliest game.",
+   "Removed the upset-pick fallback from Home; Upsets of the Week remains in Research only.",
+   "Published only the public handoff and generated site data, with no private Bet Better engine, database, book prices, or credentials."
+  ]
+ },
+ {
+  "date": "Build 0921E",
+  "tag": "Fix",
+  "title": "Reliable college team marks",
+  "items": [
+   "Fixed logo lookup so game and result cards request complete filenames instead of broken character-by-character paths.",
+   "Unavailable marks now cleanly show a school monogram instead of a broken image; similarly named schools no longer inherit another school's mark.",
+   "Corrected the local-file mappings for TCU, Hawai'i, and Oklahoma State."
+  ]
+ },
+ {
+  "date": "Build 0921D",
+  "tag": "Fix",
+  "title": "Home market gaps populated without an upset card",
+  "items": [
+   "Removed the separate Upsets of the Week card from Home while keeping it in Research.",
+   "The existing Home model-versus-market area now uses the published priced gaps when Matchday's own market feed has no comparisons, including its overview count.",
+   "These are probability disagreements for editorial context, not betting recommendations; no private Bet Better engine or operational data was published."
+  ]
+ },
+ {
+  "date": "Build 0921C",
+  "tag": "Fix",
+  "title": "Advanced profiles follow the matchup hierarchy",
+  "items": [
+   "The advanced team profile now appears inside Supporting detail in the expanded game view, keeping the prediction and key reasons in focus.",
+   "When no games have market comparisons yet, the homepage skips the empty comparison panel and keeps Games directly accessible from Explore."
+  ]
+ },
+ {
+  "date": "Build 0921B",
+  "tag": "Fix",
+  "title": "Week 39 upset card added to Home",
+  "items": [
+   "The Matchday Home page now renders the current Bet Better upset-of-the-week card directly below the featured game.",
+   "The card remains visible when Matchday's own fixture or market feed is empty because it is populated from the viewer-safe NCAAF snapshot.",
+   "No private Bet Better engine, database, credentials or operational source is included."
+  ]
+ },
+ {
+  "date": "Build 0921A",
+  "tag": "Fix",
+  "title": "Cleaner Research and correct school marks",
+  "items": [
+   "When there are no current headlines, Research goes straight from its analysis modules into the rest of the page instead of displaying a large empty box and zero-source filters.",
+   "Internal news-fetch diagnostics are no longer displayed on the public Research page.",
+   "Michigan State now uses its Spartan mark, and logo matching favors the full school name before any shorter prefix."
+  ]
+ },
+ {
+  "date": "Build 0920N",
+  "tag": "Polish",
+  "title": "The matchup explanation names both schools",
+  "items": [
+   "Replaced one-letter provider codes in the expanded-view comparison header with the full school names.",
+   "The prediction, explanation, and evidence layers now use one consistent matchup identity."
+  ]
+ },
+ {
+  "date": "Build 0920M",
+  "tag": "Fix",
+  "title": "Expanded school marks now use the public asset path",
+  "items": [
+   "Pointed the expanded 254-school resolver at the team-logo directory assembled by the production deployment.",
+   "Full mascot names still fall back progressively to their school mark, with a monogram only when no local artwork exists."
+  ]
+ },
+ {
+  "date": "Build 0920L",
+  "tag": "Update",
+  "title": "A fuller, more informative college board",
+  "items": [
+   "When no model-versus-market comparisons are available, Home no longer reserves a tall empty block beside the public record.",
+   "The waiting message, scorecard summary, and Explore links now form one compact transition into the rest of the page.",
+   "Games and Results now resolve Matchday's 254-school local NCAA logo library, including short school names and common aliases, with monograms retained for uncovered programs.",
+   "The AP Top 25 now includes week-to-week movement when a prior published rank is available.",
+   "Expanded matchups now lead with one large prediction and a concise why section; team comparisons, market data, and supporting detail remain available in collapsible evidence rows."
+  ]
+ },
+ {
+  "date": "Build 0920K",
+  "tag": "Fix",
+  "title": "Week 39 upset cards are now visible",
+  "items": [
+   "Rebuilt Matchday's public NCAAF snapshot from the Sunday Bet Better handoff so the priced Week 39 upset cards render on the live site.",
+   "The public card now leads with Texas A&M over LSU, followed by Vanderbilt over Auburn and Cincinnati over Kansas State.",
+   "This remains a viewer-safe data release; no Bet Better engine, database, credentials, tests or implementation source were published."
+  ]
+ },
+ {
+  "date": "Build 0920J",
+  "tag": "Data",
+  "title": "Sunday upset prices published",
+  "items": [
+   "Replaced the temporary model-only Week 39 fallback with the refreshed priced card led by Texas A&M over LSU.",
+   "Published updated NCAAF forecasts, ratings, schedules, expanded-view records and the Week 39 upset scorecard from Bet Better's viewer-safe handoff.",
+   "The release contains Matchday-facing data and release metadata only; Bet Better's private engine and operational data remain private."
+  ]
+ },
+ {
+  "date": "Build 0920I",
+  "tag": "Fix",
+  "title": "The wide desktop rail no longer covers the page",
+  "items": [
+   "At large desktop widths, the page grid now reserves the same 112px occupied by the expanded navigation rail.",
+   "Home headings, section labels, matchup cards, and research content now begin fully to the right of navigation instead of losing their first 50px underneath it."
+  ]
+ },
+ {
+  "date": "Build 0920H",
+  "tag": "Brand",
+  "title": "Matchday Terminal returns to the masthead",
+  "items": [
+   "The welcome screen, browser metadata, entry button, Home label, and site masthead now consistently use the full Matchday Terminal name.",
+   "Welcome typography is white with calmer, even tracking, and the brand mark is larger while remaining responsive on phones.",
+   "The Home edge counter now shows that it is awaiting market prices instead of reporting a misleading zero when no comparable snapshots exist."
+  ]
+ },
+ {
+  "date": "Build 0920G",
+  "tag": "Fix",
+  "title": "School logos now resolve inside Games",
+  "items": [
+   "Logo matching now recognizes the short school names used by fixture data as well as the full mascot names used in Rankings.",
+   "The featured matchup and individual Games cards share that resolver, while an initial badge remains the safe fallback for unmapped schools."
+  ]
+ },
+ {
+  "date": "Build 0920F",
+  "tag": "Fix",
+  "title": "Phone navigation no longer overlaps the page",
+  "items": [
+   "The full-width desktop grid is now limited to desktop screens, restoring the bottom navigation and full content width on phones.",
+   "Home, Games, Rankings, and Research remain directly available in the phone bar, with every other destination under More.",
+   "Toughest Schedules now lists ten teams, filling the research card with useful rankings instead of stretching five rows apart.",
+   "Seven missing school marks were added, and the same local logo resolver now supplies both the featured matchup and every Games card."
+  ]
+ },
+ {
+  "date": "Build 0920E",
+  "tag": "Design",
+  "title": "A calmer Home and a dedicated Games board",
+  "items": [
+   "Home is now a spacious weekly summary, while Games is a dedicated full schedule and matchup research board.",
+   "Featured games are limited to the next seven days and now include school logos where licensed local artwork is available.",
+   "Research keeps Upset of the Week, Top Pick, My Picks, upset watch, and every deeper schedule and conference table in balanced columns.",
+   "Desktop navigation exposes every destination directly; phones retain a compact More menu.",
+   "Rankings now includes Tim's latest personal college football Top 25, clearly separated from the predictive power rating and linked to the original X post."
+  ]
+ },
+ {
+  "date": "Build 0920D",
+  "tag": "Interface",
+  "title": "A smaller navigation with clearer destinations",
+  "items": [
+   "The primary navigation is now Games, Rankings, Results and Research, with Scorecard, bracket tools and Community collected under More.",
+   "Rankings now separates predictive power ratings, the Top 25 résumé ballot and conference tables instead of presenting them as one category.",
+   "Research is now the home for rating, schedule and conference analysis alongside Matchday's existing research and news material."
+  ]
+ },
+ {
+  "date": "Build 0920C",
+  "tag": "Interface",
+  "title": "Games now lead the Matchday experience",
+  "items": [
+   "The Games page now opens with a featured matchup, the largest current model and market differences, and Matchday's public record.",
+   "The full fixture board remains grouped by when games happen, with every matchup opening into the existing detailed analysis.",
+   "Season research modules no longer appear ahead of the games, while rankings, research and results remain directly accessible."
+  ]
+ },
+ {
+  "date": "Build 0920B",
+  "tag": "Pick",
+  "title": "Week 39 upset watch selected",
+  "items": [
+   "Vanderbilt over Auburn is the Week 39 editorial upset watch, with a 61.9% Bet Better model probability.",
+   "No Week 39 market price was available at publication, so the card shows no market probability, price or claimed edge.",
+   "This publication updates Matchday-facing data only; the private Bet Better engine remains local."
+  ]
+ },
+ {
+  "date": "Build 0920A",
+  "tag": "Data",
+  "title": "Ratings, records and CFP projection refreshed",
+  "items": [
+   "The latest Bet Better ratings, 71 next-week forecasts, scorecard, and Matchday handoff were refreshed for September 20.",
+   "The AP Poll and generated CFP projection were rebuilt from the refreshed data.",
+   "This release contains Matchday-facing data only; the private Bet Better engine remains local."
+  ]
+ },
+ {
+  "date": "Build 0919C",
+  "tag": "Fix",
+  "title": "AP Poll now includes record and power",
+  "items": [
+   "Joined every AP Top 25 team to its current win-loss record and Matchday opponent-adjusted power rating.",
+   "Kept the official AP order intact while exposing the separate Matchday power rank on each power value.",
+   "Added regression coverage so future snapshot rebuilds cannot silently blank either column."
+  ]
+ },
+ {
+  "date": "Build 0919B",
+  "tag": "Interface",
+  "title": "Analysis cards now finish without empty interiors",
+  "items": [
+   "Filled the full aligned module box with a complete Top 25 and every eligible conference-parity row.",
+   "Distributed the remaining table height across real rows so each bottom card ends with standard padding instead of a blank block.",
+   "Separated Analysis and Fixtures into clearly labeled sections while keeping both together on the mixed homepage."
+  ]
+ },
+ {
+  "date": "Build 0919A",
+  "tag": "Interface",
+  "title": "Overview modules now use their full space",
+  "items": [
+   "Expanded the power rating to 20 teams so its taller card carries useful information instead of empty space.",
+   "Replaced the small Power vs Group of Five summary with a full conference table showing every rated league, its team count, mean rating, best rating, and leading team.",
+   "Kept every module inside the unified overview box with all three columns ending on the same exact line."
+  ]
+ },
+ {
+  "date": "Build 0918I",
+  "tag": "Interface",
+  "title": "Every overview module now forms one clean box",
+  "items": [
+   "Restored every overview module to the main board and removed the separate More analysis disclosure.",
+   "Packed cards into measured columns and aligned all three bottom edges so the module area ends on one exact baseline above Fixtures."
+  ]
+ },
+ {
+  "date": "Build 0918H",
+  "tag": "Interface",
+  "title": "A clean cutoff before the fixture list",
+  "items": [
+   "Ended the main overview after nine core cards so uneven final columns no longer leave a large empty shelf above Fixtures.",
+   "Moved the deeper analytical tables into an accessible More analysis disclosure without removing or clipping any content."
+  ]
+ },
+ {
+  "date": "Build 0918G",
+  "tag": "Data",
+  "title": "Predictions and AP Poll refreshed",
+  "items": [
+   "Restored predictions for games where a sportsbook supplied only one side of the market, including Michigan–UTEP; the public handoff still contains model probabilities only.",
+   "The current slate now has a prediction for every game Bet Better modeled.",
+   "Replaced the persistent fallback-snapshot warning with the actual Bet Better prediction-sync time when that newer handoff has repaired the board.",
+   "Updated the AP Top 25 independently of the model power ratings and made the CFP projection follow the current AP Poll.",
+   "Pending games no longer appear as losses in Recent graded cards; only settled wins and losses are shown."
+  ]
+ },
+ {
+  "date": "Build 0918F",
+  "tag": "Interface",
+  "title": "Cleaner matchup analysis on every screen",
+  "items": [
+   "Removed the empty reserved column beneath the model pick when only one analysis panel is available.",
+   "Tightened the model-read card spacing and let its explanatory note use the available width.",
+   "Kept the mobile board inside the viewport so narrow phones no longer show an unnecessary horizontal scrollbar."
+  ]
+ },
+ {
+  "date": "Build 0918E",
+  "tag": "Interface",
+  "title": "Expanded matchups now show overall roster context",
+  "items": [
+   "Replaced the empty Lineups area with an Overall roster panel that uses current depth-chart or roster entries when Matchday has them.",
+   "College matchups now show the verified roster-talent comparison already used by the model instead of an irrelevant missing-lineup warning.",
+   "Removed the unused box-score block from expanded matchup views."
+  ]
+ },
+ {
+  "date": "Build 0918D",
+  "tag": "Data",
+  "title": "Current college slate predictions filled",
+  "items": [
+   "Ran Bet Better's current-window forecast pass and expanded the live prediction-only handoff from 127 to 192 modeled fixtures.",
+   "Filled the previously blank current-week cards, including Ohio State–Kent State, Penn State–Buffalo, Iowa State–Bowling Green, and Texas State–North Texas.",
+   "Kept sportsbook prices, book counts, and model-versus-market edges out of the public handoff."
+  ]
+ },
+ {
+  "date": "Build 0918C",
+  "tag": "Fix",
+  "title": "Complete prediction-only college slate",
+  "items": [
+   "Expanded the Bet Better handoff from priced games to every modeled college fixture, increasing the current slate from 24 to 127 predictions.",
+   "Kept sportsbook prices, book counts, and model-versus-market edges internal; Matchday receives and displays model predictions only.",
+   "Matched fixtures even when providers reverse the home and away designation for the same teams and kickoff."
+  ]
+ },
+ {
+  "date": "Build 0918B",
+  "tag": "Data",
+  "title": "Bet Better slate refreshed",
+  "items": [
+   "Refreshed Matchday from Bet Better's latest handoff with 24 live college-football predictions and zero eligible games omitted.",
+   "Updated the supporting schedule to 624 upcoming fixtures and 186 settled results.",
+   "Kept quota-paced college-football data in its correct paced state while Bet Better continues supplying every settled score."
+  ]
+ },
+ {
+  "date": "Build 0918A",
+  "tag": "Fix",
+  "title": "Restore college-football data and poll refreshes",
+  "items": [
+   "Fixed a missing playoff-projection helper that stopped college-football refreshes when a full national poll arrived.",
+   "Added regression coverage for full Top 25 polls and the twelve-team projection threshold."
+  ]
+ },
+ {
   "date": "Build 0830J",
   "tag": "Fix",
   "title": "Every social export now uses the mobile layout",

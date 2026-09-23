@@ -1,4 +1,5 @@
 import pathlib
+import json
 import unittest
 
 import build_cfb_snapshot
@@ -8,13 +9,94 @@ ROOT = pathlib.Path(__file__).resolve().parent
 
 
 class CurrentCfbSnapshotTests(unittest.TestCase):
+    def test_school_marks_do_not_fall_through_to_parent_school(self):
+        core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
+        for school, asset in (("Florida Atlantic Owls", "floridaAtlantic.png"),
+                              ("Georgia Southern Eagles", "georgiaSouthern.png"),
+                              ("Georgia State Panthers", "georgiaState.png")):
+            self.assertIn(f"'{school}':'{asset}'", core)
+
+    def test_fixture_aliases_are_deduplicated_by_school_and_kickoff(self):
+        panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
+        self.assertIn("function sameCfbFixture(a,b)", panels)
+        # The comparison hot path uses the memoized, no-copy accessor; the
+        # full candidate list is still what the logo markup consumes.
+        self.assertIn("primaryTeamLogo(a)", panels)
+        self.assertIn("Math.abs(ta-tb)<=36*3600e3", panels)
+        self.assertIn("payload.matches=unique", panels)
+
+    def test_rankings_keep_table_cells_aligned_on_narrow_screens(self):
+        panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
+        styles = (ROOT / "styles.css").read_text(encoding="utf-8")
+        self.assertIn('powerTable${moved?', panels)
+        self.assertIn('.powerTable td.pollMove{display:table-cell', styles)
+        self.assertIn('.powerTable.hasMove th:nth-child(3),.powerTable.hasMove td:nth-child(3){display:table-cell', styles)
+
+    def test_completed_nonconference_results_reconcile_records(self):
+        handoff = json.loads((ROOT / "betbetter_picks.json").read_text(encoding="utf-8"))
+        msu = [r for r in handoff["results"] if r.get("season") == 2026 and
+               "Michigan State Spartans" in (r.get("home"), r.get("away"))]
+        self.assertEqual(len(msu), 3)
+        self.assertTrue(any(r.get("conference_game") is False and r.get("winner") != "Michigan State Spartans" for r in msu))
+        panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
+        self.assertIn("resultRecords=new Map(),seenResults=new Set()", panels)
+        self.assertIn("completedRecord(r.name,played)", panels)
+        self.assertIn("const current=recordFor(team.name)", panels)
+
+    def test_advanced_profile_stays_inside_supporting_detail(self):
+        panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
+        signals = (ROOT / "research-signals.js").read_text(encoding="utf-8")
+        self.assertIn('rosterPanel(m)}<!-- matchday-advanced-profile -->', panels)
+        self.assertIn('if(html.includes(slot))return html.replace(slot,panel)', signals)
+
+    def test_home_skips_empty_market_comparison_section(self):
+        core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
+        self.assertIn("${top.length?gamesDifferencesHTML(top):''}", core)
+        self.assertIn('onclick="setView(\'matches\')"><b>Games</b>', core)
+
+    def test_fallback_header_uses_the_fresh_prediction_sync(self):
+        builder = (ROOT / "build_cfb_snapshot.py").read_text(encoding="utf-8")
+        panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
+        self.assertIn("MATCHDAY_BETBETTER_GENERATED_AT", builder)
+        self.assertIn("Predictions synced ${ago(syncedAt)}", panels)
+        self.assertNotIn("fallback snapshot ${ago", panels)
+
+    def test_pending_cards_are_not_called_losses(self):
+        panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
+        recent = panels[panels.index("function _scRecent(rows)"):panels.index("function renderScore()")]
+        self.assertIn("['win','loss'].includes", recent)
+        self.assertIn("graded.slice(0,10)", recent)
+
+    def test_ap_poll_is_separate_and_drives_the_cfp_projection(self):
+        builder = (ROOT / "build_cfb_snapshot.py").read_text(encoding="utf-8")
+        panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
+        features = (ROOT / "app-4-features.js").read_text(encoding="utf-8")
+        self.assertIn("MATCHDAY_CFB_AP_POLL", builder)
+        self.assertIn("MATCHDAY_CFB_AP_BRACKET", builder)
+        self.assertIn("table_type:'official_poll'", panels)
+        self.assertIn("?MATCHDAY_CFB_AP_BRACKET", panels)
+        self.assertIn("Projected from the current AP Poll", features)
+        self.assertIn("!['PROJECTED','TBD'].includes", features)
+
+    def test_ap_poll_rows_include_record_and_matchday_power(self):
+        builder = (ROOT / "build_cfb_snapshot.py").read_text(encoding="utf-8")
+        panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
+        self.assertIn('"record": rated.get("record") or "—"', builder)
+        self.assertIn('"rating": rated.get("rating")', builder)
+        self.assertIn('"external_rank": rated.get("rank")', builder)
+        self.assertIn('>Record</th>', panels)
+        self.assertIn('>Power</th>', panels)
+        self.assertIn('>Move</th>', panels)
+        self.assertIn('class="pollMove up"', panels)
+        self.assertIn('Previous AP rank unavailable', panels)
+
     def test_snapshot_replaces_old_record_and_stale_bracket(self):
         snapshot = (ROOT / "matchday-cfb-snapshot.js").read_text(encoding="utf-8")
         panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
         self.assertIn("scorecard:{graded:8,model_hits:6,pending:0", snapshot)
         self.assertEqual(snapshot.count("result:'HIT'"), 6)
         self.assertEqual(snapshot.count("result:'MISS'"), 2)
-        self.assertIn("payload.bracket=MATCHDAY_CFB_SNAPSHOT.bracket", panels)
+        self.assertIn("?MATCHDAY_CFB_AP_BRACKET:(MATCHDAY_CFB_SNAPSHOT.bracket||[])", panels)
         self.assertIn("applyCurrentCfbSnapshot(DATA)", panels)
         self.assertIn("g.group!=='Matchday Top 25'", panels)
         self.assertIn("DATA.comp_key==='NCAAF'?'Conferences'", panels)
@@ -27,8 +109,20 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         self.assertIn('const MATCHDAY_BETBETTER_BALLOT="', builder)
         self.assertIn('document.get("ballots")', builder)
         self.assertIn("modBallot(),modTop25()", views)
-        self.assertIn("!b?.available", views)
+        self.assertIn("if(b?.available&&(b.rankings||[]).length)return b", views)
+        self.assertIn("return MATCHDAY_PERSONAL_CFB_BALLOT", views)
         self.assertIn("collegeBallotTableHTML()", panels)
+
+    def test_the_owners_public_x_ballot_is_the_rankings_fallback(self):
+        views = (ROOT / "app-2-views.js").read_text(encoding="utf-8")
+        panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
+        self.assertIn("MATCHDAY_PERSONAL_CFB_BALLOT", views)
+        self.assertIn("2101747002237210721", views)
+        self.assertIn("'Texas Longhorns','Georgia Bulldogs','Miami Hurricanes'", views)
+        self.assertIn("'Michigan Wolverines','Duke Blue Devils'", views)
+        self.assertIn("return MATCHDAY_PERSONAL_CFB_BALLOT", views)
+        self.assertIn('style="margin:0">My Top 25', panels)
+        self.assertIn("View the original post on X", panels)
 
     def test_board_card_explanations_sit_behind_a_question_mark(self):
         """The notes moved behind each card's ?; they must not creep back or be reparsed."""
@@ -40,9 +134,168 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         self.assertIn("textContent", collapse)
         self.assertNotIn("innerHTML", collapse)
 
-    def test_news_is_a_primary_navigation_item(self):
+    def test_board_packs_every_module_to_one_bottom_edge(self):
+        """Every card stays visible and the three columns form one rectangle."""
+        core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
+        views = (ROOT / "app-2-views.js").read_text(encoding="utf-8")
+        styles = (ROOT / "styles.css").read_text(encoding="utf-8")
+        self.assertIn("balanceBoardMods()", core)
+        self.assertIn("function balanceBoardMods(target){", views)
+        self.assertIn("column.cards.push(item.card)", views)
+        self.assertIn(".modsCol>.boardMod:last-child{flex:1;display:flex;flex-direction:column}", styles)
+        self.assertIn(".modsCol>.boardMod:last-child>.tsTable{flex:none}", styles)
+        self.assertNotIn('class="boardMore"', views)
+
+    def test_bottom_cards_are_filled_with_real_ranking_context(self):
+        views = (ROOT / "app-2-views.js").read_text(encoding="utf-8")
+        self.assertIn("Math.max(25,Math.min(items.length,fits))", views)
+        self.assertIn("function modConferenceTable(){", views)
+        self.assertIn("<h3>Conference table</h3>", views)
+        self.assertIn('class="confLeader"', views)
+        self.assertIn("modConferenceTable()", views)
+        self.assertNotIn("<h3>Power vs Group of Five</h3>", views)
+        toughest = views[views.index("function modToughestSchedules(){"):views.index("function modConferenceTable(){")]
+        self.assertIn(".slice(0,16)", toughest)
+        parity = views[views.index("function modConferenceParity(){"):views.index("function collegeModules(){")]
+        self.assertIn("const body=stats.map", parity)
+        self.assertIn("every rated league", parity)
+        self.assertNotIn("stats.slice", parity)
+
+    def test_home_summarizes_and_games_owns_the_complete_board(self):
+        core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
+        home = core[core.index("function renderHome(){"):core.index("function gamesFeaturedHTML(")]
+        render = core[core.index("function renderMatches(){"):]
+        render = render[:render.index(chr(10) + "function ", 1)]
+        self.assertIn("gamesSummaryHTML(active)", home)
+        self.assertNotIn("gamesSummaryHTML(active)", render)
+        self.assertIn("groupedBoardHTML(shown)", render)
+        self.assertNotIn("collegeModules", render)
+        summary = core[core.index("function gamesSummaryHTML("):
+                       core.index("function renderMatches(){")]
+        for destination in ("featured game", "Largest model / market differences",
+                            "Public record", "Explore"):
+            self.assertIn(destination, summary)
+        self.assertNotIn("+weeklyUpset", summary)
+        self.assertNotIn("publishedMarketGapReads", core)
+        self.assertIn("const top=[...comparable]", summary)
+
+    def test_games_home_uses_one_model_and_null_safe_comparisons(self):
+        core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
+        read = core[core.index("function gamesBoardRead("):
+                    core.index("function gamesSummaryHTML(")]
+        self.assertIn("betbetterReadFor", read)
+        self.assertIn("v==null||v===''?null", read)
+        self.assertIn("market==null?null", read)
+        for banned in ("m.prediction", "_v10OfficialPick", "officialPrediction"):
+            self.assertNotIn(banned, read)
+
+    def test_research_is_the_primary_home_for_analysis(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
-        self.assertIn('data-primary data-v="news"', html)
+        self.assertIn('data-primary data-mobile-primary data-v="news"', html)
+        self.assertIn('<span class="lbl">Research</span>', html)
+        views = (ROOT / "app-2-views.js").read_text(encoding="utf-8")
+        panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
+        self.assertIn("function collegeResearchModules(){", views)
+        self.assertIn('class="vhead">Research</div>', panels)
+        self.assertIn("collegeResearchModules", panels)
+        research = views[views.index("function collegeResearchModules(){"):]
+        for preserved in ("modUpsetOfWeek()", "modTopPick()", "modMyPicks()",
+                          "modUpsets()", "modRatingScatter()",
+                          "modConferenceParity()"):
+            self.assertIn(preserved, research)
+        self.assertIn("balanceBoardMods(host.querySelector('.collegeResearch .boardMods'))", panels)
+        self.assertIn("host.querySelector('.diagList')?.remove()", panels)
+        self.assertIn("host.querySelector('.newsTools')?.remove()", panels)
+        self.assertIn("host.querySelector('.empty')?.remove()", panels)
+
+    def test_featured_games_are_limited_to_the_next_week_and_show_team_marks(self):
+        core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
+        summary = core[core.index("function gamesSummaryHTML("):
+                       core.index("function renderHome(){")]
+        self.assertIn("Date.now()+7*86400000", summary)
+        self.assertIn("const week=active.filter", summary)
+        self.assertIn("week.map(gamesBoardRead)", summary)
+        self.assertIn("featuredMatchupRead(reads)", summary)
+        self.assertIn("MATCHDAY_BETBETTER_GAME_OF_THE_WEEK", core)
+        self.assertIn("teamMark(m.home?.name)", core)
+        self.assertIn("teamMark(m.away?.name)", core)
+        self.assertIn("return teamMark(team?.name,extra)", core)
+        for logo in ("florida.png", "mississippiState.png", "kentucky.png",
+                     "houston.png", "duke.png", "coastalCarolina.png", "liberty.png"):
+            self.assertIn(logo, core)
+            self.assertTrue((ROOT / "social" / "logos" / logo).is_file())
+        self.assertIn("'Coastal Carolina':'coastalCarolina.png'", core)
+        self.assertIn("Liberty:'liberty.png'", core)
+        self.assertIn("function teamLogoCandidates(name)", core)
+        self.assertIn("label.startsWith(school+' ')", core)
+        self.assertIn("'Michigan State Spartans':'michiganState.png'", core)
+        self.assertIn("function teamLogoFallback(img)", core)
+        self.assertIn("[exact,...mappedPrefixes,...inferred]", core)
+        self.assertNotIn("...inferred[0]", core)
+        self.assertIn("_safeLogoSuffix(words[end])", core)
+        self.assertIn("TCU:'TCU.png'", core)
+        self.assertIn("'Oklahoma State':'OklahomaState.png'", core)
+        self.assertIn('src="team-logos/${esc(file)}"', core)
+        styles = (ROOT / "styles.css").read_text(encoding="utf-8")
+        self.assertIn(".teamMark img[hidden],.teamMark .teamMonogramText[hidden]{display:none}", styles)
+        for logo in ("temple.png", "army.png", "rutgers.png", "howard.png", "uab.png",
+                     "california.png", "wakeForest.png", "charlotte.png", "auburn.png",
+                     "vanderbilt.png", "boiseState.png", "northwestern.png"):
+            self.assertTrue((ROOT / "social" / "logos" / logo).is_file(), logo)
+
+    def test_home_populates_market_gaps_without_a_separate_upset_card(self):
+        core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
+        home = core[core.index("function renderHome(){"):core.index("function gamesFeaturedHTML(")]
+        self.assertIn("priced=reads.filter", home)
+        self.assertNotIn("publishedMarketGapReads", home)
+        self.assertIn("priced.length?edges:'—'", home)
+        self.assertIn("Edges awaiting market", home)
+        self.assertIn("top.length?'':' noComparisons'", core)
+        styles = (ROOT / "styles.css").read_text(encoding="utf-8")
+        self.assertIn(".gamesSupportGrid.noComparisons", styles)
+
+    def test_matchday_terminal_brand_is_consistent_on_the_entry_screen(self):
+        html = (ROOT / "index.html").read_text(encoding="utf-8")
+        styles = (ROOT / "styles.css").read_text(encoding="utf-8")
+        self.assertIn('<h1 id="welcomeTitle">Matchday Terminal</h1>', html)
+        self.assertIn("Enter Matchday Terminal", html)
+        self.assertIn('<span class="pip"></span>Matchday Terminal', html)
+        self.assertIn(".welcomeLogo{width:104px;height:104px", styles)
+        self.assertIn(".welcomeBrand h1{color:#fff;letter-spacing:-.025em", styles)
+
+    def test_expanded_matchup_leads_with_prediction_then_progressive_evidence(self):
+        panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
+        features = (ROOT / "app-4-features.js").read_text(encoding="utf-8")
+        styles = (ROOT / "styles.css").read_text(encoding="utf-8")
+        details = panels[panels.index("function details(m){"):panels.index("/* dedup */", panels.index("function details(m){"))]
+        self.assertIn('class="expandedDecision"', details)
+        self.assertNotIn("matchupWhyPanel", details)
+        self.assertIn("comparison,true", details)
+        for section in ("Team comparison", "Market", "More detail"):
+            self.assertIn(section, details)
+        self.assertIn('details class="matchEvidence"', panels)
+        self.assertIn("teamMarkHTML(m.home)", features)
+        self.assertIn(".matchEvidenceList", styles)
+
+    def test_ranked_team_profile_uses_published_metrics_not_missing_zeros(self):
+        panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
+        profile = panels[panels.index("function computeTeamProfile(name){"):panels.index("function openTeamModal(name){")]
+        self.assertIn("ranked?.record||rec.record", profile)
+        self.assertIn("ranked?.rating??side?.rating", profile)
+        self.assertIn("sos: ranked?.sos", profile)
+        self.assertNotIn("side?.gf??0", profile)
+        self.assertIn("${p.sos!=null?", profile)
+
+    def test_power_rating_help_and_provisional_fcs_teams(self):
+        panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
+        section = panels[panels.index("function collegeRankingTableHTML(){"):panels.index("function collegeBallotTableHTML(){")]
+        self.assertIn('class="pollHelp"', section)
+        self.assertIn('aria-label="About the power ratings"', section)
+        self.assertIn('class="pollProvisional"', section)
+        self.assertIn('w.fcs_share', section)
+        self.assertNotIn('Held out of the power rating:', section)
+        self.assertIn('class="pollTeamInner"', section)
+        self.assertIn("(cell.querySelector('.pollTeamInner')||cell)", panels)
 
     def test_the_welcome_cards_model_read_is_bet_betters(self):
         """The gate quotes one model, the same one every other screen quotes.
@@ -189,11 +442,9 @@ class CfpBracketFormatTests(unittest.TestCase):
         self.assertEqual(g5[0]["cfp_seed"], 12)
         self.assertNotIn("Penn State", {r["team_name"] for r in field})
 
-    def test_an_independent_gets_in_on_ranking_alone(self):
-        # Notre Dame has no conference and so no automatic bid. Ranked third, it
-        # is in as an at-large and seeded third.
+    def test_notre_dame_top_twelve_gets_2026_automatic_bid(self):
         nd = next(r for r in self.field() if r["team_name"] == "Notre Dame")
-        self.assertEqual(nd["cfp_bid"], "at-large")
+        self.assertEqual(nd["cfp_bid"], "Notre Dame")
         self.assertEqual(nd["cfp_seed"], 3)
 
     def test_an_independent_outside_the_twelve_is_out(self):
@@ -204,10 +455,9 @@ class CfpBracketFormatTests(unittest.TestCase):
         names = {r["team_name"] for r in self.field(entry)}
         self.assertNotIn("Notre Dame", names)
 
-    def test_bids_are_the_five_highest_ranked_champions_not_a_power_four_quota(self):
-        # Two Group of Five champions rated above the Big 12's best. The format
-        # takes the five highest-ranked champions, so the Big 12 misses the
-        # automatic bid -- Utah is still in, but on ranking as an at-large.
+    def test_2026_power_four_and_one_other_champion_are_guaranteed(self):
+        # Two eligible other champions outrank the Big 12 champion. Only the
+        # higher of those two gets the fifth bid; Big 12 remains automatic.
         entry = _season()
         for row in entry["rankings"]:
             if row["team_name"] == "G5 Sun Belt":
@@ -217,8 +467,8 @@ class CfpBracketFormatTests(unittest.TestCase):
         field = self.field(entry)
         bids = {r["team_name"]: r["cfp_bid"] for r in field}
         self.assertEqual(bids["G5 Sun Belt"], "champion")
-        self.assertEqual(bids["G5 American Athletic"], "champion")
-        self.assertEqual(bids["Utah"], "at-large")
+        self.assertEqual(bids["G5 American Athletic"], "at-large")
+        self.assertEqual(bids["Utah"], "champion")
 
     def test_bracket_paths_pair_the_byes_with_the_right_winners(self):
         rounds = build_cfb_snapshot.cfp_bracket(_season())
@@ -235,7 +485,7 @@ class CfpBracketFormatTests(unittest.TestCase):
 
     def test_shipped_snapshot_carries_a_group_of_five_seed(self):
         snapshot = (ROOT / "matchday-cfb-snapshot.js").read_text(encoding="utf-8")
-        self.assertIn("five conference champions, seven at-large", snapshot)
+        self.assertIn("2026 automatic bids and at-large", snapshot)
         self.assertIn('"away_slot": "8/9"', snapshot)
 
 

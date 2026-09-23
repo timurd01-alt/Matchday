@@ -15,7 +15,7 @@ class AnalysisModeTests(unittest.TestCase):
         self.assertIn("payload.standings=[]", core)
         self.assertIn("payload.bracket=[]", core)
         self.assertIn("payload.bracketology=null", core)
-        self.assertIn("DATA=stripPastSeasonCompetitionViews(await r.json())", panels)
+        self.assertIn("DATA=cached?payload:stripPastSeasonCompetitionViews(payload)", panels)
 
     def test_mobile_metric_help_is_tap_safe_and_stays_onscreen(self):
         core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
@@ -63,11 +63,24 @@ class AnalysisModeTests(unittest.TestCase):
 
     def test_pregame_gaps_explain_source_and_collection_state(self):
         panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
-        self.assertIn("This published snapshot predates pregame-context tracking", panels)
-        self.assertIn("No cleared lineup feed for this competition", panels)
+        self.assertIn("Roster profile unavailable", panels)
         self.assertIn("Needed before lock", panels)
         css = (ROOT / "styles.css").read_text(encoding="utf-8")
         self.assertIn(".contextAlert{display:grid", css)
+
+    def test_expanded_match_uses_overall_roster_without_box_score_panel(self):
+        panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
+        features = (ROOT / "app-4-features.js").read_text(encoding="utf-8")
+        self.assertIn("function rosterPanel(m)", panels)
+        self.assertIn("Overall roster", panels)
+        self.assertIn("m.personnel?.depth_chart", panels)
+        details = panels[panels.index("function details(m){"):panels.index("function _v4TitleRows")]
+        self.assertIn("${rosterPanel(m)}", details)
+        self.assertNotIn("${statsPanel(m)}", details)
+        self.assertNotIn("${lineupsPanel(m)}", details)
+        fallback = features[features.index("function simpleMatchFallbackPanel(m){"):features.index("/* ===== BRACKET V11")]
+        self.assertIn("${rosterPanel(m)}", fallback)
+        self.assertNotIn("${statsPanel(m)}", fallback)
 
     def test_neutral_venue_comparison_has_responsive_layout(self):
         css = (ROOT / "styles.css").read_text(encoding="utf-8")
@@ -85,16 +98,13 @@ class AnalysisModeTests(unittest.TestCase):
         # "level" and "no data" are different claims and must stay distinct.
         self.assertIn("covered?'level':'no data'", panels)
 
-    def test_insight_rail_has_a_visible_collapse_control(self):
+    def test_insight_rail_is_removed_to_leave_the_content_full_width(self):
         markup = (ROOT / "index.html").read_text(encoding="utf-8")
         core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
-        css = (ROOT / "styles.css").read_text(encoding="utf-8")
-        self.assertIn('id="railToggle"', markup)
-        self.assertIn('aria-controls="insight"', markup)
-        self.assertIn("function toggleInsightRail()", core)
-        self.assertIn("function syncRailToggle()", core)
-        # Must stay reachable once collapsed, or the rail can't be reopened.
-        self.assertIn(".app.noinsight .railToggle{right:0", css)
+        self.assertNotIn('id="railToggle"', markup)
+        self.assertNotIn('id="insight"', markup)
+        self.assertNotIn("function toggleInsightRail()", core)
+        self.assertNotIn("function syncRailToggle()", core)
 
     def test_team_view_title_comes_from_one_helper(self):
         core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")

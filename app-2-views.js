@@ -13,12 +13,13 @@ function btmGrade(){ // fold finished results into the record
 }
 function btmStats(db){
   const g=Object.values(db.picks||{}).filter(p=>p.result);
-  const you=g.filter(p=>p.you_hit).length, model=g.filter(p=>p.model_hit).length;
-  const beat=g.filter(p=>p.you_hit&&!p.model_hit).length; // you right, model wrong
+  const paired=g.filter(p=>p.modelPick);
+  const you=g.filter(p=>p.you_hit).length, model=paired.filter(p=>p.model_hit).length;
+  const beat=paired.filter(p=>p.you_hit&&!p.model_hit).length; // you right, model wrong
   // current streak (most recent graded backwards)
   const chron=g.slice().sort((a,b)=>b.ts-a.ts);let streak=0;
   for(const p of chron){if(p.you_hit)streak++;else break;}
-  return {n:g.length,you,model,beat,streak,
+  return {n:g.length,you,model,modelN:paired.length,beat,streak,
     pending:Object.values(db.picks||{}).filter(p=>!p.result).length};
 }
 function btmBadges(s,db){const out=[];
@@ -42,34 +43,16 @@ function btmBadges(s,db){const out=[];
   for(let i=0;i<byday.length;i++){const wk=byday.filter(p=>p.ts>=byday[i].ts&&p.ts<byday[i].ts+6048e5);
     if(wk.length>=5&&wk.every(p=>p.you_hit)){out.push(['Perfect week','5+ correct in one week']);break;}}
   return out;}
+function communityModelPctLabel(v){const n=Number(v);return v==null||!Number.isFinite(n)?'—':Math.max(0,Math.min(99.9,n)).toFixed(1)+'%'}
 function communityPickProbs(m){
-  const market=(m.markets||{})['1x2'];
-  if(market&&market.home_pct!=null)return {h:+market.home_pct,d:+(market.draw_pct||0),a:+market.away_pct,source:'market'};
-  const prediction=m.prediction||{};
-  const model=prediction.regulation_probs||prediction.adjusted||prediction.blend||prediction.model;
-  if(!model||model.h==null||model.a==null)return {h:null,d:null,a:null,source:'none'};
-  return {h:+model.h,d:+(model.d||0),a:+model.a,source:'model'};
-}
-function btmChallenge(db){
-  // a framed "where do you stand" prompt on the next unpicked upcoming match with a model+market split
-  const picked=new Set(Object.keys(db.picks||{}));
-  const cand=(DATA.matches||[]).filter(m=>isCommunityPickOpen(m)&&m.prediction&&communityPickProbs(m)&&!picked.has(String(m.id)));
-  if(!cand.length)return null;
-  // pick the one where model disagrees most with the market favorite (most interesting call)
-  const score=m=>{const x=communityPickProbs(m);if(x.source!=='market')return 0;const mk={h:x.h,d:x.d,a:x.a};
-    const mfav=Object.keys(mk).reduce((a,b)=>mk[b]>mk[a]?b:a);
-    return officialPrediction(m).side!==mfav?2:1;};
-  cand.sort((a,b)=>score(b)-score(a)||(a.kickoff||'').localeCompare(b.kickoff||''));
-  const m=cand[0],x=communityPickProbs(m),mk={h:x.h,d:x.d,a:x.a};
-  const mfav=Object.keys(mk).reduce((a,b)=>mk[b]>mk[a]?b:a);
-  const nm=s=>s==='h'?m.home.name:s==='a'?m.away.name:'a draw';
-  const official=officialPrediction(m),disagree=official.side!==mfav;
-  return {id:m.id,home:m.home.name,away:m.away.name,
-    line:x.source!=='market'
-      ?`The model likes <b>${esc(nm(official.side))}</b> at ${official.confidence}%. No bookmaker line is available, so this pick will be graded without the market benchmark.`
-      :disagree
-      ?`The model likes <b>${esc(nm(official.side))}</b>, but the market favors <b>${esc(nm(mfav))}</b>. Who's right?`
-      :`The model and market agree on <b>${esc(nm(official.side))}</b> (${official.confidence}%). Fade them or follow?`};
+  const read=typeof betbetterReadFor==='function'?betbetterReadFor(m):m.betbetter_pick;
+  const sides=read?.sides||[];
+  // Match by team identity first: the fixture can be shown in the reverse
+  // orientation from the model handoff, making is_home misleading here.
+  const home=sides.find(s=>bbNameMatches(s.selection,m.home?.name))||sides.find(s=>s.is_home===true);
+  const away=sides.find(s=>bbNameMatches(s.selection,m.away?.name))||sides.find(s=>s.is_home===false);
+  if(home?.model_pct!=null&&away?.model_pct!=null)return {h:+home.model_pct,d:0,a:+away.model_pct,source:'betbetter',read};
+  return {h:null,d:null,a:null,source:'none',read:null};
 }
 function pickBtm(id,side){if(submitPick(id,side)){}}
 function btmAnalytics(db){
@@ -138,7 +121,7 @@ function renderAccountRow(){
       ${buttons?`<span class="acctBtns">${buttons}</span>`:''}</div>`;
   }
   if(!buttons)return note?`<div class="acctRow">${note}</div>`:'';
-  return `<div class="acctRow"><span class="acctState">Playing as a guest — clearing this browser loses your handle and record. Sign in to keep them.</span>
+  return `<div class="acctRow"><span class="acctState">Playing as a guest — clearing this browser loses your record. To recover scores on another device or after clearing your browser, sign in with Google or GitHub, then use that same account to return.</span>
     <span class="acctBtns">${buttons}</span>${note}</div>`;
 }
 function renderCommunity(){ensureHandle();const host=$('#view-community');const fullDb=btmGrade();const db=btmScoped(fullDb);const s=btmStats(db);
@@ -147,20 +130,20 @@ function renderCommunity(){ensureHandle();const host=$('#view-community');const 
   const firstKick=eligible.length?kickMs(eligible[0]):0;
   // A missing market can expose an entire season at once. Show the next
   // fixture slate instead of rendering hundreds of model-only cards.
-  const open=eligible.filter(m=>communityPickProbs(m).source==='market'||kickMs(m)<=firstKick+4*864e5).slice(0,40);
+  const open=eligible.filter(m=>communityPickProbs(m).source==='betbetter'||kickMs(m)<=firstKick+4*864e5).slice(0,40);
   const picks=db.picks||{};
   let h=`<div class="vhead">Community &middot; ${esc(scopeName)}</div>
   <div class="banner"><b>Games open seven days before kickoff.</b> Pick any listed matchup before it starts. When available, the model and market are graded beside you.</div>
   ${renderWeeklyAwards()}
   <div class="status-grid">
    <div class="statuscard ${s.you>=s.model&&s.n?'ok':'info'}"><span class="slbl">Your record</span><div class="sval">${s.you}/${s.n||0}</div><div class="hint">${s.n?Math.round(s.you/s.n*100)+'% correct':'no graded picks yet'}</div></div>
-   <div class="statuscard info"><span class="slbl">Model record</span><div class="sval">${s.model}/${s.n||0}</div><div class="hint">the opponent you are chasing</div></div>
+   <div class="statuscard info"><span class="slbl">Model record</span><div class="sval">${s.model}/${s.modelN||0}</div><div class="hint">Model picks locked alongside yours</div></div>
    <div class="statuscard ${s.beat?'ok':'info'}"><span class="slbl">Model beaten</span><div class="sval">${s.beat}</div><div class="hint">you right when the model was wrong</div></div>
    <div class="statuscard info"><span class="slbl">Streak</span><div class="sval">${s.streak}${s.streak>=3?' &#128293;':''}</div><div class="hint">${s.pending} awaiting result</div></div>
   </div>`;
   // head-to-head insight: how often you agreed with the model, and who won when you split
-  if(s.n>=3){
-    const g=Object.values(picks).filter(p=>p.result);
+  if(s.modelN>=3){
+    const g=Object.values(picks).filter(p=>p.result&&p.modelPick);
     const withModel=g.filter(p=>p.pick===p.modelPick).length;
     const split=g.filter(p=>p.pick!==p.modelPick);
     const splitWins=split.filter(p=>p.you_hit&&!p.model_hit).length;
@@ -185,20 +168,18 @@ function renderCommunity(){ensureHandle();const host=$('#view-community');const 
     h+=`<div class="seclbl" style="margin-top:20px">Seasons <span class="faintline" style="font-weight:400">· 4-week runs</span></div>`;
     h+=seasons.slice(0,6).map(s=>`<div class="seasonRow ${s.current?'live':''}"><span class="seasonName">${s.current?'Current season':'Season '+(s.n+1)}</span><span class="seasonRec">you ${s.you} · model ${s.model} <i>of ${s.total}</i></span>${s.current?'<span class="seasonTag">current</span>':(s.you>s.model?'<span class="seasonTag win">won</span>':s.you<s.model?'<span class="seasonTag loss">lost</span>':'<span class="seasonTag">tied</span>')}</div>`).join('');
   }
-  const ch=btmChallenge(db);
-  if(ch)h+=`<div class="challengeCard" onclick="openMatchModal('${ch.id}')"><div class="challengeTag">Today's call</div><div class="challengeMatch">${esc(ch.home)} v ${esc(ch.away)}</div><div class="challengeLine">${ch.line}</div><div class="challengeHint">tap to make your pick →</div></div>`;
   h+=`<div class="seclbl" style="margin-top:18px">Make your picks</div>`;
   if(!open.length)h+=`<div class="empty">No games are inside the seven-day pick window yet.<br><span class="faintline">They appear automatically one week before kickoff.</span></div>`;
-  open.forEach(m=>{const p=picks[m.id],x=communityPickProbs(m),official=officialPrediction(m);
+  open.forEach(m=>{const p=picks[m.id],x=communityPickProbs(m),read=x.read;
     const sideBtn=(side,label,pct)=>{const locked=p&&p.pick===side;const disabled=p?'disabled':'';
-      return `<button class="btmbtn ${locked?'locked':''}" ${disabled} onclick="pickBtm('${m.id}','${side}')">${esc(label)}${pct!=null?` <b>${pct}%</b>`:''}</button>`;};
-    h+=`<div class="btmcard"><div class="btmmatch">${esc(m.home.name)} <span class="mvvs">v</span> ${esc(m.away.name)}${p?`<span class="btmlocked">your pick: ${esc(p.pick==='h'?m.home.code:p.pick==='a'?m.away.code:'Draw')}</span>`:''}</div>
-      <div class="btmrow">${sideBtn('h',m.home.code||'Home',x.h)}${x.d>0?sideBtn('d',t('Draw'),x.d):''}${sideBtn('a',m.away.code||'Away',x.a)}</div>
-      <div class="btmmeta">${official.side?`model: <b>${esc(official.name)}</b> ${official.confidence??'—'}% &middot; `:'model pick pending &middot; '}${x.source==='model'?'model probabilities · market unavailable · ':x.source==='none'?'probabilities pending · ':''}${p?'locked — graded when final':'pick before kickoff to play'}</div></div>`;});
+      return `<button class="btmbtn ${locked?'locked':''}" ${disabled} onclick="pickBtm('${m.id}','${side}')">${esc(label)}${pct!=null?` <b>${communityModelPctLabel(pct)}</b>`:''}</button>`;};
+    h+=`<div class="btmcard"><div class="btmmatch"><span class="btmSide">${teamMark(m.home.name)}<span>${esc(m.home.name)}</span></span><span class="mvvs">vs</span><span class="btmSide away"><span>${esc(m.away.name)}</span>${teamMark(m.away.name)}</span></div>${p?`<div class="btmlocked">your pick: ${esc(p.pick==='h'?m.home.name:p.pick==='a'?m.away.name:'Draw')}</div>`:''}
+      <div class="btmrow">${sideBtn('h',m.home.name||'Home',x.h)}${x.d>0?sideBtn('d',t('Draw'),x.d):''}${sideBtn('a',m.away.name||'Away',x.a)}</div>
+      <div class="btmmeta">${read?`Live model: <b>${esc(read.pick_name||'')}</b> ${communityModelPctLabel(read.model_pct)} · may change before kickoff · `:'Model probabilities pending · '}${p?'your pick locked — graded when final':'pick before kickoff to play'}</div></div>`;});
   const graded=Object.values(picks).filter(p=>p.result).sort((a,b)=>b.ts-a.ts);
   if(graded.length){h+=`<div class="seclbl" style="margin-top:18px">Your results</div>`+graded.slice(0,20).map(p=>{
     const nm=p.pick==='h'?p.code.h:p.pick==='a'?p.code.a:'Draw';
-    return `<div class="btmres ${p.you_hit?'hit':'miss'}"><span>${esc(p.home)} v ${esc(p.away)}</span><span class="btmpick">you: ${esc(nm)} ${p.you_hit?'&#10003;':'&#10007;'}</span><span class="btmvs ${p.model_hit?'mok':'mno'}">model ${p.model_hit?'&#10003;':'&#10007;'}</span></div>`;}).join('');}
+    return `<div class="btmres ${p.you_hit?'hit':'miss'}"><span class="btmresTeams"><span class="btmSide">${teamMark(p.home)}<span>${esc(p.home)}</span></span><span class="mvvs">vs</span><span class="btmSide away"><span>${esc(p.away)}</span>${teamMark(p.away)}</span></span><span class="btmpick">you: ${esc(nm)} ${p.you_hit?'&#10003;':'&#10007;'}</span><span class="btmvs ${p.model_hit?'mok':'mno'}">model ${p.modelPick?(p.model_hit?'&#10003;':'&#10007;'):'—'}</span></div>`;}).join('');}
   // leaderboard section (only when configured)
   if(LEADERBOARD_URL){
     const hn=myHandle();
@@ -446,9 +427,8 @@ renderCustomize=function(){
 
    Two rules shape what these may say:
    * edge_points is reported, never ranked on. On graded college samples a wider
-     model-market gap predicted WORSE results -- the sign is inverted -- so the
-     top pick is chosen by model probability and the gap is shown as context
-     with its warning attached.
+     model-market gap predicted WORSE results. The featured pick favors a
+     competitive matchup between poll teams, not the largest percentage or gap.
    * A poll for a season that has not started is not a poll about this season.
      season_in_progress drives the caveat, and the engine's own `note` is
      rendered rather than paraphrased.
@@ -541,11 +521,19 @@ function modTop25(){
 /* My Top 25: the owner's ballot, beside the power rating rather than instead of
    it. The order is a person's call; what travels with each team is the résumé
    it was judged on (record, strength of record, best win, power rating rank),
-   so a reader can see why and argue with it. Hidden until a ballot exists. */
+   so a reader can see why and argue with it. The owner's published X ballot
+   remains the fallback until the richer data-backed ballot exists. */
+const MATCHDAY_PERSONAL_CFB_BALLOT={
+  available:true,source:'x',published_on:'2026-09-20',
+  source_url:'https://x.com/timurknowsball/status/2101747002237210721',
+  note:'My first personal ranking after watching three weeks of college football.',
+  rankings:['Texas Longhorns','Georgia Bulldogs','Miami Hurricanes','Ole Miss Rebels','Ohio State Buckeyes','Notre Dame Fighting Irish','Indiana Hoosiers','Alabama Crimson Tide','BYU Cougars','USC Trojans','Texas Tech Red Raiders','LSU Tigers','Utah Utes','Louisville Cardinals','Iowa Hawkeyes','Penn State Nittany Lions','Tennessee Volunteers','Florida Gators','Missouri Tigers','Mississippi State Bulldogs','Kentucky Wildcats','Houston Cougars','SMU Mustangs','Michigan Wolverines','Duke Blue Devils'].map((team_name,index)=>({rank:index+1,team_name,first_ballot:true,resume:{}}))
+};
 function collegeBallot(){
   const b=typeof MATCHDAY_BETBETTER_BALLOT!=='undefined'?MATCHDAY_BETBETTER_BALLOT:null;
-  if(String(DATA.comp_key||'').toUpperCase()!=='NCAAF'||!b?.available||!(b.rankings||[]).length)return null;
-  return b;
+  if(String(DATA.comp_key||'').toUpperCase()!=='NCAAF')return null;
+  if(b?.available&&(b.rankings||[]).length)return b;
+  return MATCHDAY_PERSONAL_CFB_BALLOT;
 }
 function ballotWin(g){
   if(!g)return '';
@@ -571,7 +559,7 @@ function modBallot(){
   }).join('');
   return `<section class="boardMod modBallot"><header><h3>My Top 25</h3><span>ballot · ${esc(b.published_on||'')}</span></header>`
     +`<ol class="modList">${body}</ol>`
-    +`<p class="modNote">My own ranking of who has earned it: record and strength of record, quality wins and bad losses, head-to-head and conference titles, with the power rating as the eye test. Full résumés on the Conferences tab.</p></section>`;
+    +`<p class="modNote">${esc(b.note||'My own ranking of who has earned it: record and strength of record, quality wins and bad losses, head-to-head and conference titles, with the power rating as the eye test.')}${b.source_url?` <a href="${esc(b.source_url)}" target="_blank" rel="noopener">Original post on X</a>.`:' Full résumés on the Rankings tab.'}</p></section>`;
 }
 /* Upsets: the season's results the price said should not have happened.
    Recent finals on their own say nothing about which results mattered, so the
@@ -625,23 +613,36 @@ function modTopPick(){
   // a push build does not run the fetch that does so. The handoff is committed,
   // so fall back to it rather than let the card blink out of existence
   // depending on which kind of deploy shipped last.
-  const attached=(DATA.matches||[]).filter(m=>m.status==='UPCOMING'&&m.betbetter_pick)
+  const now=new Date(),weekStart=new Date(now.getFullYear(),now.getMonth(),now.getDate()-((now.getDay()+6)%7));
+  const weekEnd=new Date(weekStart);weekEnd.setDate(weekEnd.getDate()+7);
+  const thisWeek=kickoff=>{const date=new Date(kickoff);return date>now&&date<weekEnd};
+  const attached=(DATA.matches||[]).filter(m=>m.status==='UPCOMING'&&m.betbetter_pick&&thisWeek(m.kickoff))
     .map(m=>({m,p:m.betbetter_pick}));
   const baked=attached.length?[]:bbSportRows(typeof MATCHDAY_BETBETTER_PICKS!=='undefined'?MATCHDAY_BETBETTER_PICKS:[])
-    .filter(p=>new Date(p.kickoff)>new Date())
+    .filter(p=>thisWeek(p.kickoff))
     .map(p=>({m:{home:{name:p.home},away:{name:p.away}},p}));
-  const picks=attached.concat(baked)
-    .filter(x=>Number.isFinite(Number(x.p.model_pct)))
-    // Sorted by the model's own probability. Deliberately NOT by edge_points.
-    .sort((a,b)=>Number(b.p.model_pct)-Number(a.p.model_pct));
+  const poll=currentSportKey()==='ncaaf'
+    ?(typeof MATCHDAY_CFB_AP_POLL!=='undefined'?MATCHDAY_CFB_AP_POLL.rankings:[])
+    :(collegeRankingTable()?.top25||collegeRankingTable()?.rankings||[]);
+  const pollRank=name=>poll.find(r=>bbNameMatches(r.name||r.team_name,name))?.rank||99;
+  const available=attached.concat(baked).filter(x=>Number.isFinite(Number(x.p.model_pct)));
+  const competitive=available.filter(x=>Number(x.p.model_pct)<90);
+  const picks=(competitive.length?competitive:available)
+    .map(x=>({...x,homeRank:pollRank(x.m.home?.name||x.m.home),awayRank:pollRank(x.m.away?.name||x.m.away)}))
+    .filter(x=>Number(x.p.model_pct)<90)
+    // A real contest with two strong teams is more useful to feature than a
+    // near-certain FBS/FCS mismatch. Never rank on the uncalibrated edge.
+    .sort((a,b)=>((b.homeRank<=25)+(b.awayRank<=25))-((a.homeRank<=25)+(a.awayRank<=25))
+      ||Math.max(a.homeRank,a.awayRank)-Math.max(b.homeRank,b.awayRank)
+      ||Math.abs(Number(a.p.model_pct)-60)-Math.abs(Number(b.p.model_pct)-60));
   if(!picks.length)return '';
   const {m,p}=picks[0];
   const gap=Number(p.edge_points);
-  return `<section class="boardMod modPick"><header><h3>Top pick</h3><span>live shadow read</span></header>`
+  return `<section class="boardMod modPick"><header><h3>Featured pick this week</h3><span>live model read</span></header>`
     +`<div class="modPickTeam">${esc(p.pick_name||'')}</div>`
     +`<div class="modPickGame">${esc(m.home?.name||m.home||'')} v ${esc(m.away?.name||m.away||'')}</div>`
     +`<div class="modPickBar"><i style="width:${Math.max(0,Math.min(100,Number(p.model_pct)))}%"></i></div>`
-    +`<div class="modPickNums"><b>${Number(p.model_pct).toFixed(1)}%</b> model`
+    +`<div class="modPickNums"><b>${communityModelPctLabel(p.model_pct)}</b> model`
     +(Number.isFinite(Number(p.market_pct))?` · <b>${Number(p.market_pct).toFixed(1)}%</b> market`:'')
     +(Number.isFinite(gap)?` · gap ${gap>0?'+':''}${gap.toFixed(1)}`:'')+`</div>`
     +`<p class="modNote">Not an official pick — a live model read that keeps moving until kickoff, and it is not graded. A wider model-market gap has predicted worse results on this engine's graded college samples, so the gap is context, not a signal.</p></section>`;
@@ -783,9 +784,10 @@ function fitRankingCard(){
   // header, caption and notes.
   const budget=Math.max(...others)-(card.offsetHeight-list.offsetHeight);
   const fits=Math.floor(budget/rowHeight);
-  // A ranking shorter than ten is not a ranking; longer than what we rendered
-  // is not available. Between those, the layout decides.
-  const keep=Math.max(10,Math.min(items.length,fits));
+  // The overview has room for a complete Top 25, not a teaser. Keeping all 25
+  // also lets the card use its share of the common column height with data
+  // instead of an empty flex tail.
+  const keep=Math.max(25,Math.min(items.length,fits));
   if(keep>=items.length)return;
   items.slice(keep).forEach(el=>el.remove());
   // The card's notes live behind its ? now (collapseBoardNotes), so the count
@@ -794,6 +796,40 @@ function fitRankingCard(){
   const full='Full power rating of every rated team on the Conferences tab.';
   if(help)setBoardHelp(help,String(help.dataset.tip||'').replace(full,'')+` Top ${keep} shown. ${full}`);
 }
+
+/* Pack the overview into real columns, shortest column first. CSS multi-column
+   flow cannot promise a shared bottom edge when cards have different heights;
+   these measured columns can, and their final cards stretch by the few pixels
+   needed to close the rectangle. */
+function balanceBoardMods(target){
+  const board=target?.classList?.contains('boardMods')?target:document.querySelector('#view-matches > .boardMods');
+  if(!board)return;
+  const cards=Array.from(board.children).filter(el=>el.classList?.contains('boardMod'));
+  const count=window.innerWidth>1180?3:window.innerWidth>720?2:1;
+  if(count===1||cards.length<count)return;
+  const heights=cards.map(card=>({card,height:card.offsetHeight}));
+  const columns=Array.from({length:count},()=>({height:0,cards:[]}));
+  heights.forEach(item=>{
+    const column=columns.reduce((best,next)=>next.height<best.height?next:best);
+    column.cards.push(item.card);
+    column.height+=item.height+11;
+  });
+  board.replaceChildren(...columns.map(column=>{
+    const el=document.createElement('div');
+    el.className='modsCol';
+    el.append(...column.cards);
+    return el;
+  }));
+  board.classList.add('balanced');
+}
+
+const _renderCustomizeFullWidth=renderCustomize;
+renderCustomize=function(){
+  _renderCustomizeFullWidth();
+  document.querySelectorAll('#view-customize .switchrow').forEach(row=>{
+    if(row.textContent.includes('Right insight panel'))row.remove();
+  });
+};
 
 /* Card explanations behind a ?, not under every card.
    Each board card ends in one or more `.modNote` paragraphs saying how to read
@@ -888,7 +924,7 @@ function modUpsetOfWeek(){
 <div class="modPickTeam">${esc(p.selection||'')}${Number.isFinite(gap)?`<em class="upsetGap">+${gap.toFixed(1)}</em>`:''}</div>
 <div class="modPickGame">${esc(p.away||'')} at ${esc(p.home||'')}${status?` · ${esc(status)}`:''}</div>
 <div class="upsetBars">
-  <div><span>model</span><i style="width:${Math.max(2,Math.min(100,model))}%"></i><b>${Number.isFinite(model)?model.toFixed(1)+'%':'—'}</b></div>
+  <div><span>model</span><i style="width:${Math.max(2,Math.min(100,model))}%"></i><b>${communityModelPctLabel(model)}</b></div>
   <div class="mkt"><span>market</span><i style="width:${Math.max(2,Math.min(100,market))}%"></i><b>${Number.isFinite(market)?market.toFixed(1)+'%':'—'}</b></div>
 </div></div>`;
   };
@@ -898,7 +934,7 @@ ${picks.map(one).join('')}
 </section>`;
 }
 
-/* My picks, against the model and the market.
+/* @timurknowsball's picks, against the model and the market.
    Three honesty constraints ship with this data and all three are obeyed:
    `reportable` false means the sample is too small to state a record as though
    it meant something; `excluded` counts picks recorded after kickoff, which are
@@ -913,7 +949,7 @@ function modMyPicks(){
   const picks=bbSportRows(u?.picks||[]);
   if(!picks.length)return '';
   const rec=u.record||{};
-  const pct=v=>Number.isFinite(Number(v))?(Number(v)*100).toFixed(0)+'%':'—';
+  const pct=v=>v!=null&&Number.isFinite(Number(v))?communityModelPctLabel(Number(v)*100):'—';
   // Newest first and capped. A record that keeps growing should not make this
   // card keep growing with it -- the older rows are still in the totals above.
   const MAX_ROWS=6;
@@ -932,7 +968,7 @@ function modMyPicks(){
   const losses=settled.length-wins;
   const agreed=settled.filter(p=>p.model_agreed).length;
   const record=`<div class="modStatSub"><b>${wins}–${losses}</b> on settled picks · the model agreed on ${agreed}</div>`;
-  return `<section class="boardMod modMine"><header><h3>My picks</h3><span>vs model &amp; market</span></header>
+  return `<section class="boardMod modMine"><header><h3>@timurknowsball picks</h3><span>vs model &amp; market</span></header>
 ${record}
 <div class="mpHead"><span>pick</span><span>model</span><span>market</span></div>
 <ul class="modList">${rows}</ul>
@@ -940,7 +976,7 @@ ${ordered.length>MAX_ROWS?`<p class="modNote">Showing the ${MAX_ROWS} most recen
 <p class="modNote">${esc(u.note||'')}</p></section>`;
 }
 
-/* A small table for the gap at the foot of the last column.
+/* A useful table for the foot of a research column.
    Toughest schedules, because it is the one number this week's upstream work
    was about and the board otherwise only shows SoS as a value beside a rating,
    never ranked on its own. Ranked teams only: the hardest schedule in the
@@ -951,9 +987,9 @@ function modToughestSchedules(){
   const rows=(table?.rankings||[]).filter(r=>Number.isFinite(Number(r.sos)));
   if(rows.length<10)return '';
   const pool=rows.filter(r=>(r.rank||999)<=40);
-  const top=(pool.length>=5?pool:rows).slice().sort((a,b)=>Number(b.sos)-Number(a.sos)).slice(0,5);
+  const top=(pool.length>=10?pool:rows).slice().sort((a,b)=>Number(b.sos)-Number(a.sos)).slice(0,16);
   if(!top.length)return '';
-  const body=top.map(r=>`<tr><td class="tsTeam">${esc(r.name)}</td>`
+  const body=top.map(r=>`<tr><td class="tsTeam" title="${esc(r.name)}"><span class="tsTeamName">${teamMark(r.name)}<span>${esc(r.name)}</span></span></td>`
     +`<td>#${r.rank}</td>`
     +`<td class="tsNum">${Number(r.sos).toFixed(2)}</td>`
     +`<td class="tsNum">${Number(r.rating).toFixed(2)}</td></tr>`).join('');
@@ -962,26 +998,25 @@ function modToughestSchedules(){
 <p class="modNote">Highest strength of schedule among ranked teams. Across the whole table the hardest schedules belong to teams nobody is ranking, which is true and says nothing.</p></section>`;
 }
 
-function modTierSplit(){
+function modConferenceTable(){
   const table=collegeRankingTable();
-  const rows=(table?.rankings||[]).filter(r=>r.tier&&Number.isFinite(Number(r.rating)));
+  const rows=(table?.rankings||[]).filter(r=>r.conference&&Number.isFinite(Number(r.rating)));
   if(rows.length<20)return '';
-  const groups={};
-  rows.forEach(r=>{(groups[String(r.tier)]||=[]).push(Number(r.rating))});
-  const order=Object.keys(groups).sort((a,b)=>(a==='power'?-1:b==='power'?1:a.localeCompare(b)));
-  if(order.length<2)return '';
-  const label={power:'Power Four',group_of_five:'Group of Five',g5:'Group of Five'};
-  const body=order.map(k=>{
-    const v=groups[k].slice().sort((a,b)=>b-a);
-    const mean=v.reduce((a,b)=>a+b,0)/v.length;
-    return `<tr><td class="tsTeam">${esc(label[k]||k.replace(/_/g,' '))}</td>`
-      +`<td>${v.length}</td>`
-      +`<td class="tsNum">${mean.toFixed(2)}</td>`
-      +`<td class="tsNum">${v[0].toFixed(2)}</td></tr>`;
-  }).join('');
-  return `<section class="boardMod modTier"><header><h3>Power vs Group of Five</h3><span>after the tier correction</span></header>
-<table class="tsTable"><thead><tr><th>Tier</th><th>Teams</th><th>Mean</th><th>Best</th></tr></thead><tbody>${body}</tbody></table>
-<p class="modNote">A measured offset put both tiers on one scale: across 521 cross-tier games the model had been crediting non-power teams points they had not earned. This is the gap that remains once that is corrected.</p></section>`;
+  const by={};
+  rows.forEach(r=>{(by[r.conference]||=[]).push(r)});
+  const conferences=Object.entries(by).filter(([,teams])=>teams.length>=4)
+    .map(([name,teams])=>{
+      const sorted=teams.slice().sort((a,b)=>Number(b.rating)-Number(a.rating));
+      return {name,n:teams.length,mean:teams.reduce((sum,r)=>sum+Number(r.rating),0)/teams.length,
+              best:Number(sorted[0].rating),leaders:sorted.slice(0,3).map(r=>r.name)};
+    }).sort((a,b)=>b.mean-a.mean);
+  if(conferences.length<4)return '';
+  const body=conferences.map(c=>`<tr><td class="tsTeam">${esc(c.name)}<small class="confLeader" title="Top rated: ${esc(c.leaders.join(', '))}">Top: ${esc(c.leaders.join(' · '))}</small></td>`
+    +`<td>${c.n}</td><td class="tsNum">${c.mean.toFixed(1)}</td>`
+    +`<td class="tsNum">${c.best.toFixed(1)}</td></tr>`).join('');
+  return `<section class="boardMod modTier"><header><h3>Conference table</h3><span>every rated league</span></header>
+<table class="tsTable"><thead><tr><th>Conference</th><th>Teams</th><th>Mean</th><th>Best</th></tr></thead><tbody>${body}</tbody></table>
+<p class="modNote">Every conference with at least four rated teams, ordered by its average opponent-adjusted rating. Best shows the league's highest-rated team.</p></section>`;
 }
 
 
@@ -998,28 +1033,42 @@ function modConferenceParity(){
   const rows=(table?.rankings||[]).filter(r=>r.conference&&Number.isFinite(Number(r.rating)));
   if(rows.length<30)return '';
   const by={};
-  rows.forEach(r=>{(by[r.conference]||=[]).push(Number(r.rating))});
+  rows.forEach(r=>{(by[r.conference]||=[]).push(r)});
   const stats=Object.entries(by).filter(([,v])=>v.length>=6).map(([name,v])=>{
-    const mean=v.reduce((a,b)=>a+b,0)/v.length;
-    const sd=Math.sqrt(v.reduce((a,b)=>a+(b-mean)**2,0)/v.length);
-    const sorted=v.slice().sort((a,b)=>b-a);
-    return {name,sd,top:sorted[0],bottom:sorted[sorted.length-1],n:v.length};
+    const mean=v.reduce((a,r)=>a+Number(r.rating),0)/v.length;
+    const sd=Math.sqrt(v.reduce((a,r)=>a+(Number(r.rating)-mean)**2,0)/v.length);
+    const sorted=v.slice().sort((a,b)=>Number(b.rating)-Number(a.rating));
+    return {name,sd,top:Number(sorted[0].rating),bottom:Number(sorted[sorted.length-1].rating),
+      topName:sorted[0].name,bottomName:sorted[sorted.length-1].name,n:v.length};
   }).sort((a,b)=>b.sd-a.sd);
   if(stats.length<3)return '';
-  const show=[...stats.slice(0,2),...stats.slice(-2)];
-  const seen=new Set();
-  const body=show.filter(c=>!seen.has(c.name)&&seen.add(c.name)).map((c,i,arr)=>
-    `<tr><td class="tsTeam">${esc(c.name)}</td>`
+  const body=stats.map(c=>
+    `<tr><td class="tsTeam">${esc(c.name)}<small class="confLeader" title="Best: ${esc(c.topName)}; lowest: ${esc(c.bottomName)}">${esc(c.topName)} → ${esc(c.bottomName)}</small></td>`
     +`<td class="tsNum">${c.sd.toFixed(1)}</td>`
     +`<td>${c.top.toFixed(1)}</td><td>${c.bottom.toFixed(1)}</td></tr>`).join('');
-  return `<section class="boardMod modParity"><header><h3>Conference parity</h3><span>most and least spread</span></header>
+  return `<section class="boardMod modParity"><header><h3>Conference parity</h3><span>every rated league</span></header>
 <table class="tsTable"><thead><tr><th>Conference</th><th>Spread</th><th>Best</th><th>Worst</th></tr></thead><tbody>${body}</tbody></table>
-<p class="modNote">How far apart a conference's own teams are, not how good it is. A high spread means a couple of teams carrying the average; a low one means the league is tightly packed top to bottom.</p></section>`;
+<p class="modNote">Every conference with at least six rated teams, ordered from most to least spread. This measures how far apart a conference's own teams are, not how good it is.</p></section>`;
 }
 
 function collegeModules(){
   // Upset of the week leads: CSS columns fill in source order, so first in this
   // array is the top of the left column.
-  const cards=[modUpsetOfWeek(),modTopPick(),modMyPicks(),modStatOfWeek(),modNotable(),modRatingScatter(),modConferenceStrength(),modBallot(),modTop25(),modUpsets(),modToughestSchedules(),modTierSplit(),modConferenceParity()].filter(Boolean);
+  const cards=[modUpsetOfWeek(),modTopPick(),modMyPicks(),modStatOfWeek(),modNotable(),modRatingScatter(),modConferenceStrength(),modBallot(),modTop25(),modUpsets(),modToughestSchedules(),modConferenceTable(),modConferenceParity()].filter(Boolean);
   return cards.length?`<div class="boardMods">${cards.join('')}</div>`:'';
+}
+
+/* Reuse the published college-analysis cards on the Research destination.
+   This is an information-architecture move, not another calculation path. */
+function collegeResearchModules(){
+  if(!['NCAAF','NCAAM'].includes(String(DATA?.comp_key||'').toUpperCase()))return '';
+  // Keep every weekly forecasting feature reachable after Home became a
+  // summary. Rankings owns the two ranking tables; Research owns the picks,
+  // upset watch and the deeper schedule/conference analysis.
+  const cards=[modUpsetOfWeek(),modTopPick(),modMyPicks(),modUpsets(),modStatOfWeek(),modNotable(),modRatingScatter(),modConferenceStrength(),modToughestSchedules(),modConferenceTable(),modConferenceParity()].filter(Boolean);
+  return cards.length?`<section class="collegeResearch" aria-labelledby="collegeResearchTitle">
+    <div class="seclbl" id="collegeResearchTitle">Weekly watch &amp; college analysis</div>
+    <div class="hint" style="margin-bottom:10px">Upset watch, locked picks, team ratings, schedule strength, and conference context from the current published model.</div>
+    <div class="boardMods">${cards.join('')}</div>
+  </section>`:'';
 }

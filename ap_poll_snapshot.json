@@ -1,0 +1,107 @@
+{
+  "poll_name": "AP Top 25",
+  "source": "ESPN scoreboard published AP rank",
+  "fetched_on": "2026-09-20",
+  "rankings": [
+    {
+      "rank": 1,
+      "name": "Texas Longhorns"
+    },
+    {
+      "rank": 2,
+      "name": "Georgia Bulldogs"
+    },
+    {
+      "rank": 3,
+      "name": "Notre Dame Fighting Irish"
+    },
+    {
+      "rank": 4,
+      "name": "Indiana Hoosiers"
+    },
+    {
+      "rank": 5,
+      "name": "Miami Hurricanes"
+    },
+    {
+      "rank": 6,
+      "name": "Ohio State Buckeyes"
+    },
+    {
+      "rank": 7,
+      "name": "LSU Tigers"
+    },
+    {
+      "rank": 8,
+      "name": "Ole Miss Rebels"
+    },
+    {
+      "rank": 9,
+      "name": "Texas A&M Aggies"
+    },
+    {
+      "rank": 10,
+      "name": "Alabama Crimson Tide"
+    },
+    {
+      "rank": 11,
+      "name": "BYU Cougars"
+    },
+    {
+      "rank": 12,
+      "name": "USC Trojans"
+    },
+    {
+      "rank": 13,
+      "name": "Texas Tech Red Raiders"
+    },
+    {
+      "rank": 14,
+      "name": "Penn State Nittany Lions"
+    },
+    {
+      "rank": 15,
+      "name": "Tennessee Volunteers"
+    },
+    {
+      "rank": 16,
+      "name": "SMU Mustangs"
+    },
+    {
+      "rank": 17,
+      "name": "Utah Utes"
+    },
+    {
+      "rank": 18,
+      "name": "Iowa Hawkeyes"
+    },
+    {
+      "rank": 19,
+      "name": "Michigan Wolverines"
+    },
+    {
+      "rank": 20,
+      "name": "Missouri Tigers"
+    },
+    {
+      "rank": 21,
+      "name": "Oregon Ducks"
+    },
+    {
+      "rank": 22,
+      "name": "Houston Cougars"
+    },
+    {
+      "rank": 23,
+      "name": "Louisville Cardinals"
+    },
+    {
+      "rank": 24,
+      "name": "Oklahoma Sooners"
+    },
+    {
+      "rank": 25,
+      "name": "Virginia Cavaliers"
+    }
+  ]
+}

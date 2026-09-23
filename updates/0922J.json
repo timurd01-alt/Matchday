@@ -1,0 +1,1 @@
+{"rank":241,"date":"Build 0922J","tag":"Fix","title":"Make mobile entry reliable","items":["Turn Enter Matchday Terminal back into a dedicated button so a tap cannot be diverted by anchor navigation.","Give the mobile entry control a full-height touch target with direct tap handling."]}

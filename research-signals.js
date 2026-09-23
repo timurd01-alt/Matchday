@@ -100,11 +100,6 @@
     const metrics=metricRows(m),meta=m?.advanced_metrics_meta;
     if(String(m?._comp||DATA?.comp_key||'').toUpperCase()==='NCAAF'&&meta)return cfbSignalsPanel(m,meta);
     if(!metrics){
-      // The match's own competition, not the board's. On the merged "All
-      // sports" board DATA.comp_key is 'ALL', so every one of these sports
-      // failed the test and the panel vanished silently -- the same board
-      // where needsDetailHydration() has already read m._comp to decide the
-      // fixture was worth hydrating for this very panel.
       const comp=String(m?._comp||DATA?.comp_key||'').toUpperCase();
       if(!['NCAAF','NCAAM'].includes(comp))return '';
       return `<section class="analystPanel researchPanel unavailable"><div class="researchHead"><div><span>Research signals</span><b>Authorized profile unavailable</b></div><em>official model unchanged</em></div><p class="researchCaution">This build has no fresh, matchup-linked advanced profile from an approved source. Matchday leaves the signal missing instead of inventing a neutral value.</p></section>`;
@@ -119,6 +114,8 @@
     details=function(m){
       const html=String(priorDetails(m)||''),panel=researchSignalsPanel(m);
       if(!panel)return html;
+      const slot='<!-- matchday-advanced-profile -->';
+      if(html.includes(slot))return html.replace(slot,panel);
       const end=html.lastIndexOf('</div>');
       return end<0?html+panel:html.slice(0,end)+panel+html.slice(end);
     };

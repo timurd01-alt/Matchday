@@ -10,7 +10,7 @@
 // a column and how anonymous history gets claimed.
 
 import {
-  PUBLIC_DATA_ORIGIN, HANDLE_POOL, DEVICE_RE, SESSION_TTL_MS,
+  PUBLIC_DATA_ORIGIN, HANDLE_POOL, collegeHandle, DEVICE_RE, SESSION_TTL_MS,
   PROVIDERS, providerConfigured, newClient, ensureSchema, setHeaders, requestIp,
   opaqueKey, consumeLimit, accountForToken, createSession, destroySession,
   redeemSigninCode, claimDevicePicks, reshuffleAccountHandle,
@@ -18,10 +18,7 @@ import {
 } from "./_accounts.js";
 import crypto from "node:crypto";
 
-const ALLOWED_COMPS = new Set([
-  "wc", "ucl", "epl", "laliga", "seriea", "bundesliga", "ligue1",
-  "nfl", "ncaaf", "ncaam", "nba", "mlb", "nhl",
-]);
+const ALLOWED_COMPS = new Set(["ncaaf", "ncaam"]);
 const MATCH_RE = /^[A-Za-z0-9:_-]{1,100}$/;
 
 // Anonymous visitors still get a stable name derived from their device id.
@@ -39,7 +36,7 @@ function serverHandle(deviceId) {
 async function resolveOwner(db, body) {
   const account = await accountForToken(db, body?.token);
   if (account) {
-    return { ownerId: account.owner_key, handle: account.handle, account };
+    return { ownerId: account.owner_key, handle: collegeHandle(account.handle), account };
   }
   const deviceId = String(body?.deviceId || "");
   if (!DEVICE_RE.test(deviceId)) return null;
@@ -140,7 +137,7 @@ async function exchangeSignin(db, body) {
   return {
     status: 200,
     payload: {
-      ok: true, token, handle: row.handle, signedIn: true,
+      ok: true, token, handle: collegeHandle(row.handle), signedIn: true,
       canReshuffle: !row.reshuffled, claimed,
       expiresAt: Date.now() + SESSION_TTL_MS, ...stats,
     },
@@ -154,7 +151,7 @@ async function sessionState(db, body) {
   return {
     status: 200,
     payload: {
-      ok: true, signedIn: true, handle: account.handle,
+      ok: true, signedIn: true, handle: collegeHandle(account.handle),
       canReshuffle: !account.reshuffled, ...stats,
     },
   };
@@ -193,14 +190,14 @@ async function leaderboard(db, period) {
             COUNT(*) FILTER (WHERE v.result=v.pick)::int AS hits
      FROM verified_picks v
      LEFT JOIN accounts a ON a.owner_key = v.device_id
-     WHERE v.result IS NOT NULL AND v.graded_at >= $1
+     WHERE v.result IS NOT NULL AND v.graded_at >= $1 AND v.comp IN ('ncaaf','ncaam')
      GROUP BY v.device_id
      HAVING COUNT(*) >= $2
      ORDER BY (COUNT(*) FILTER (WHERE v.result=v.pick))::float / COUNT(*) DESC, COUNT(*) DESC
      LIMIT 100`,
     [since, minimum]
   );
-  return { ok: true, board: rows.rows.map(row => ({ ...row, streak: 0 })), period: allowedPeriod };
+  return { ok: true, board: rows.rows.map(row => ({ ...row, handle: collegeHandle(row.handle), streak: 0 })), period: allowedPeriod };
 }
 
 export default async function handler(req, res) {

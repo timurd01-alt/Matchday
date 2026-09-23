@@ -242,6 +242,37 @@ class CollegeFootballDataTests(unittest.TestCase):
         self.assertIsNone(projection)
         self.assertFalse(model["michigan"]["season_stale"])
 
+    def test_full_poll_builds_projection_without_sportsdataio(self):
+        # Short test polls never exercised the helper used by a real Top 25.
+        for count in (11, 12, 25):
+            with self.subTest(count=count):
+                calls = []
+                def getter(url, headers):
+                    calls.append(url)
+                    self.assertIn("api.collegefootballdata.com/rankings?", url)
+                    return [{"season": 2026, "week": 3, "polls": [{
+                        "poll": "AP Top 25",
+                        "ranks": [{"rank": i, "school": f"College {i}"}
+                                  for i in range(1, count + 1)],
+                    }]}]
+                adapter = CollegeFootballDataAdapter(
+                    "shared-key", getter=getter, today=dt.date(2026, 9, 18))
+                ranks, projection = adapter.rankings([])
+                self.assertEqual(len(ranks), count)
+                if count < 12:
+                    self.assertIsNone(projection)
+                else:
+                    first_round, quarterfinals = projection
+                    self.assertIn("model projection", first_round["round"])
+                    self.assertEqual(
+                        [(m["home"], m["away"]) for m in first_round["matches"]],
+                        [(f"({a}) College {a}", f"({b}) College {b}")
+                         for a, b in ((5, 12), (6, 11), (7, 10), (8, 9))])
+                    self.assertEqual([m["home"] for m in quarterfinals["matches"]],
+                                     [f"({i}) College {i}" for i in range(1, 5)])
+                self.assertEqual(adapter.rankings([]), (ranks, projection))
+                self.assertEqual(len(calls), 1)
+
     def test_standings_model_dict_gets_the_same_position_as_the_sorted_table(self):
         # Regression: `model[name]` used to be snapshotted via {**item, ...}
         # BEFORE the per-group sort assigned real positions, so every team's

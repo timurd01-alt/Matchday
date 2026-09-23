@@ -24,7 +24,9 @@ function _insightFocusPool(M){
   return [primary,...others];
 }
 function renderInsight(){
-  const host=$('#insight'),M=DATA.matches||[];
+  const host=$('#insight');
+  if(!host)return;
+  const M=DATA.matches||[];
   const pool=_insightFocusPool(M);
   const n=diverseNews(6);
   const newsHTML=n.length?`<div class="seclbl" style="margin-top:18px">Latest from multiple sources</div>`+n.map(a=>`<a class="ins-news" href="${esc(a.link||a.url||'#')}" target="_blank" rel="noopener"><span class="insSource">${esc(sourceName(a))}</span><br>${esc(a.headline||a.title||'Untitled')}</a>`).join(''):'';
@@ -104,7 +106,7 @@ window.openMatchModal=function(id){
     const hmeta=t=>esc(teamStandingsMeta(t,m._comp,{form:true,hideStaleRecord:_v15CompetitionKey(m)==='NCAAF'}).join(' · '));
     const rawScore=scorePlainText(m).trim()||'TBD';
     const body=safeMatchDetails(m);
-    modal.innerHTML=`<section class="matchSheet modernMatchSheet" role="dialog" aria-modal="true" aria-label="Expanded matchup analysis"><div class="modalHero"><button class="modalClose" onclick="closeMatchModal()" aria-label="Close">×</button><div class="modalStage"><span>${esc(m.stage||'Matchup')}</span><b>${esc(m.status==='LIVE'?'LIVE':m.status||'UPCOMING')}</b></div><div class="modalFixture"><div class="modalTeam"><div class="modalCode">${teamFlagHTML(m.home)}${esc(m.home?.code||'HOME')}</div><div class="modalName">${esc(m.home?.name||'Home')}</div><div class="modalMeta">${hmeta(m.home)}</div></div><div class="modalScore"><div class="bigScore">${esc(rawScore)}</div><div class="modalStatus">${m.status==='LIVE'?'Final score pending':kickIn(m.kickoff)}</div></div><div class="modalTeam away"><div class="modalCode">${esc(m.away?.code||'AWAY')}${teamFlagHTML(m.away,true)}</div><div class="modalName">${esc(m.away?.name||'Away')}</div><div class="modalMeta">${hmeta(m.away)}</div></div></div></div><div class="modalBody">${body}</div></section>`;
+    modal.innerHTML=`<section class="matchSheet modernMatchSheet" role="dialog" aria-modal="true" aria-label="Expanded matchup analysis"><div class="modalHero"><button class="modalClose" onclick="closeMatchModal()" aria-label="Close">×</button><div class="modalStage"><span>${esc(m.stage||'Matchup')}</span><b>${esc(m.status==='LIVE'?'LIVE':m.status||'UPCOMING')}</b></div><div class="modalFixture"><div class="modalTeam"><div class="modalCode">${teamFlagHTML(m.home)}${esc(m.home?.code||'HOME')}</div><div class="modalName">${teamMarkHTML(m.home)}<span>${esc(m.home?.name||'Home')}</span></div><div class="modalMeta">${hmeta(m.home)}</div></div><div class="modalScore"><div class="bigScore">${esc(rawScore)}</div><div class="modalStatus">${m.status==='LIVE'?'Final score pending':kickIn(m.kickoff)}</div></div><div class="modalTeam away"><div class="modalCode">${esc(m.away?.code||'AWAY')}${teamFlagHTML(m.away,true)}</div><div class="modalName"><span>${esc(m.away?.name||'Away')}</span>${teamMarkHTML(m.away,'away')}</div><div class="modalMeta">${hmeta(m.away)}</div></div></div></div><div class="modalBody">${body}</div></section>`;
     modal.dataset.matchId=key;
     modal.classList.add('show');
     document.body.classList.add('modalOpen');
@@ -231,7 +233,7 @@ function insightModelBlock(m){
 // opens onto cannot name different sides. It used to read m.betbetter_pick
 // alone, which only a scheduled build writes -- on a push deploy the card
 // therefore carried no pick at all while the expanded view still showed one.
-function matchdayLivePickHTML(m){const p=betbetterReadFor(m);if(!p)return'';const model=Number(p.model_pct),market=Number(p.market_pct),gap=Number(p.edge_points);const note=Number.isFinite(model)&&Number.isFinite(market)?`Model ${model.toFixed(1)}% · market ${market.toFixed(1)}%${Number.isFinite(gap)?` · ${gap>0?'+':''}${gap.toFixed(1)} pts`:''}`:'Live analytical read';return `<div class="pick matchdayLivePick"><span class="pl">Model</span><span class="pn">${esc(p.pick_name||'No pick')}</span><span class="pc">${Number.isFinite(model)?model.toFixed(1)+'%':'—'}</span><span class="pnote">${esc(note)} · updates until kickoff</span></div>`}
+function matchdayLivePickHTML(m){const p=betbetterReadFor(m);if(!p)return'';const model=Number(p.model_pct);return `<div class="pick matchdayLivePick"><span class="pl">Model</span><span class="pn">${esc(p.pick_name||'No pick')}</span><span class="pc">${Number.isFinite(model)?model.toFixed(1)+'%':'—'}</span><span class="pnote">Live prediction · updates until kickoff</span></div>`}
 function cardHTML(m,opts){
   opts=opts||{};
   const pending=m.status==='LIVE',stale=isStaleUpcoming(m);
@@ -246,7 +248,7 @@ function cardHTML(m,opts){
   // State 60.4%" above "SMU 53%" on the same card -- so a reader had no way to
   // know which one the site actually stands behind. `m.prediction` is no longer
   // rendered anywhere: the card, the rail and the expanded view all read the
-  // engine, and a fixture it has not priced says so instead.
+  // engine, and a fixture it has not modeled says so instead.
   const livePick=opts.hidePick?'':matchdayLivePickHTML(m);
   const pick=isForecastPaused(m)?forecastPauseHTML(m):livePick;
   const probChanged=!!probabilityMovement(m);
@@ -282,7 +284,7 @@ function _v4UpsetRows(){
 function simpleMatchFallbackPanel(m){
   const bb=typeof betbetterReadFor==='function'?betbetterReadFor(m):null;
   const read=bb?betbetterModelRead(m,bb):betbetterNoReadPanel();
-  return `<div class="detailGrid v8Fallback"><div class="readCard modelReadCard">${read}</div><div class="readCard">${marketPanel(m)}</div><div class="statsBoard">${statsPanel(m)}</div><div class="lineupBoard">${lineupsPanel(m)}</div></div>`;
+  return `<div class="detailGrid v8Fallback"><div class="readCard modelReadCard">${read}</div><div class="readCard">${marketPanel(m)}</div>${rosterPanel(m)}</div>`;
 }
 
 
@@ -478,9 +480,11 @@ function _cfpBracketRounds(){
   ];
 }
 function _renderCFPBracket(host){
-  const official=Array.isArray(DATA.bracket)&&DATA.bracket.some(r=>(r.matches||[]).length);
+  const official=Array.isArray(DATA.bracket)&&DATA.bracket.some(r=>
+    !/projected/i.test(String(r.round||r.stage||r.name||''))
+    &&(r.matches||[]).some(m=>!['PROJECTED','TBD'].includes(String(m.status||'').toUpperCase())));
   const rounds=_cfpBracketRounds();
-  host.innerHTML=`<div class="bracketStageHeader"><div class="vhead">CFP Bracket</div><div class="bracketLegend">${official?'Official + projected paths':'Projected bracket (model seeding)'}</div></div><div class="bracketWideShell"><div class="bracketWideBoard">${rounds.map(r=>`<section class="brWideRound"><div class="brWideTitle"><b>${esc(r.label)}</b><span>${r.matches.length||0}</span></div><div class="brWideStack">${(r.matches.length?r.matches:[null]).map(m=>_v11MatchCard(m,r.label)).join('')}</div></section>`).join('')}</div></div>`;
+  host.innerHTML=`<div class="bracketStageHeader"><div class="vhead">CFP Bracket</div><div class="bracketLegend">${official?'Official + projected paths':'Projected from the current AP Poll'}</div></div><div class="bracketWideShell"><div class="bracketWideBoard">${rounds.map(r=>`<section class="brWideRound"><div class="brWideTitle"><b>${esc(r.label)}</b><span>${r.matches.length||0}</span></div><div class="brWideStack">${(r.matches.length?r.matches:[null]).map(m=>_v11MatchCard(m,r.label)).join('')}</div></section>`).join('')}</div></div>`;
 }
 function renderBracket(){
   const host=$('#view-bracket');
@@ -641,10 +645,21 @@ if(Object.prototype.hasOwnProperty.call(SPORT_LABELS,requestedSport)){
 // Insights left the sidebar (it duplicates the Content hub); it stays reachable
 // by ?view=insights, but a stale saved default should no longer land there.
 const savedView=safeView(SETTINGS.defaultView||'matches');
-const initialView=requestedView&&document.getElementById('view-'+requestedView)?requestedView:savedView;
-applySettings();applySportNav();setView(initialView);
+const requestedSafeView=requestedView?safeView(requestedView):'';
+const initialView=requestedSafeView&&document.getElementById('view-'+requestedSafeView)?requestedSafeView:savedView;
+applySettings();applySportNav();setView(initialView,{history:false});
 bootAccount(); // resolves a returning sign-in redirect, or restores an existing session
 load().then(()=>{
-  if(requestedView&&document.getElementById('view-'+requestedView))setView(requestedView);
+  if(requestedSafeView&&document.getElementById('view-'+requestedSafeView))setView(requestedSafeView,{history:false});
   if(requestedMatch&&BYID[requestedMatch])openMatchModal(requestedMatch);
+});
+window.addEventListener('popstate',()=>{
+  const params=new URLSearchParams(window.location.search),target=safeView(params.get('view')||'matches');
+  const sport=String(params.get('sport')||'').toLowerCase();
+  if(Object.prototype.hasOwnProperty.call(SPORT_LABELS,sport)&&currentSportKey()!==sport){
+    DATA_FILE=`data_${sport}.json`;MATCH_VISIBLE=FIXTURE_PAGE_SIZE;RESULT_VISIBLE=FIXTURE_PAGE_SIZE;MODEL_VISIBLE=MODEL_PAGE_SIZE;
+    try{localStorage.setItem('matchday.sport',DATA_FILE)}catch(e){}
+    applySportNav();showMatchLoading();clearCompetitionViewsForLoad();
+    load(true).then(()=>setView(target,{history:false}));
+  }else setView(target,{history:false});
 });

@@ -3,23 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>College Sports Predictions &amp; Statistics | College Matchday</title>
+<title>College Sports Predictions &amp; Statistics | Matchday Terminal</title>
 <meta name="description" content="College sports predictions and statistics: model win probabilities, team ratings and market comparison for college football and men's college basketball, with every pick graded in public.">
 <link rel="canonical" href="https://matchdayterminal.com/">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="College Matchday">
+<meta property="og:site_name" content="Matchday Terminal">
 <meta property="og:url" content="https://matchdayterminal.com/">
-<meta property="og:title" content="College Sports Predictions &amp; Statistics | College Matchday">
+<meta property="og:title" content="College Sports Predictions &amp; Statistics | Matchday Terminal">
 <meta property="og:description" content="College sports predictions and statistics: model win probabilities, team ratings and market comparison for college football and men's college basketball, with every pick graded in public.">
 <meta property="og:image" content="https://matchdayterminal.com/icon-512.png">
 <meta property="og:image:width" content="512">
 <meta property="og:image:height" content="512">
-<meta property="og:image:alt" content="College Matchday logo">
+<meta property="og:image:alt" content="Matchday Terminal logo">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="College Sports Predictions &amp; Statistics | College Matchday">
+<meta name="twitter:title" content="College Sports Predictions &amp; Statistics | Matchday Terminal">
 <meta name="twitter:description" content="College sports predictions and statistics: model win probabilities, team ratings and market comparison for college football and men's college basketball, with every pick graded in public.">
 <meta name="twitter:image" content="https://matchdayterminal.com/icon-512.png">
-<meta name="twitter:image:alt" content="College Matchday logo">
+<meta name="twitter:image:alt" content="Matchday Terminal logo">
 <meta name="theme-color" content="#070a0f">
 <!-- deploy.yml rewrites every __BUILD__ in this file to the deployed commit's
      short SHA. Carrying it in a meta tag as well as the asset query strings
@@ -27,7 +27,7 @@
 <meta name="matchday-build-sha" content="__BUILD__">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="College Matchday">
+<meta name="apple-mobile-web-app-title" content="Matchday Terminal">
 <link rel="icon" href="./favicon.ico?v=4" sizes="any">
 <link rel="shortcut icon" href="./matchday.ico?v=4">
 <link rel="icon" type="image/png" sizes="180x180" href="./icon-180.png?v=4">
@@ -36,24 +36,101 @@
 <link rel="manifest" href="./manifest.json?v=4">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet"></noscript>
 <link rel="stylesheet" href="styles.css?v=__BUILD__">
 <link rel="stylesheet" href="research-signals.css?v=__BUILD__">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "College Matchday",
-  "url": "https://matchdayterminal.com/",
-  "description": "College sports predictions and statistics: model picks, win probabilities, team ratings and market comparison for college football and men's college basketball, with every pick graded in public.",
-  "applicationCategory": "SportsApplication",
-  "operatingSystem": "Any",
-  "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://matchdayterminal.com/#publisher",
+      "name": "Matchday Terminal",
+      "alternateName": ["Matchday", "matchdayterminal.com"],
+      "url": "https://matchdayterminal.com/",
+      "description": "Independent publisher of college football and men's college basketball model predictions, team ratings and a publicly graded pick record.",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://matchdayterminal.com/icon-512.png",
+        "width": 512,
+        "height": 512
+      },
+      "sameAs": ["https://x.com/timurknowsball"],
+      "foundingDate": "2026",
+      "knowsAbout": [
+        "College football predictions",
+        "Men's college basketball predictions",
+        "Sports forecasting model calibration",
+        "Team power ratings",
+        "Betting market comparison"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://matchdayterminal.com/#website",
+      "name": "Matchday Terminal",
+      "alternateName": ["Matchday", "matchdayterminal.com"],
+      "url": "https://matchdayterminal.com/",
+      "inLanguage": "en",
+      "description": "College sports predictions and statistics: model win probabilities, team ratings and market comparison for college football and men's college basketball, with every pick graded in public.",
+      "publisher": {"@id": "https://matchdayterminal.com/#publisher"}
+    },
+    {
+      "@type": "WebApplication",
+      "@id": "https://matchdayterminal.com/#app",
+      "name": "Matchday Terminal",
+      "url": "https://matchdayterminal.com/",
+      "description": "College sports predictions and statistics: model picks, win probabilities, team ratings and market comparison for college football and men's college basketball, with every pick graded in public.",
+      "applicationCategory": "SportsApplication",
+      "operatingSystem": "Any",
+      "browserRequirements": "Requires JavaScript",
+      "isPartOf": {"@id": "https://matchdayterminal.com/#website"},
+      "publisher": {"@id": "https://matchdayterminal.com/#publisher"},
+      "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}
+    }
+  ]
 }
 </script>
+<script>
+// Keep this exit independent of the larger application bundle: the welcome
+// screen must never trap a visitor when a script or data request stalls.
+window.matchdayEnterNow=function(targetView){
+  window.MATCHDAY_ENTERED=true;
+  try{sessionStorage.setItem('matchday.welcome.entered','1');localStorage.setItem('matchday.heroSeen','1')}catch(e){}
+  var gate=document.getElementById('welcomeGate');if(gate)gate.hidden=true;
+  document.body.classList.remove('welcomeOpen','welcomeExiting','navSheetOpen');
+  var nav=document.getElementById('nav');if(nav){nav.classList.remove('navSheet');var more=nav.querySelector('.navMore');if(more)more.setAttribute('aria-expanded','false')}
+  var app=document.getElementById('app');if(app){app.classList.remove('appRevealing');app.style.visibility='visible'}
+  var home=document.getElementById('view-home');if(home)home.style.display='block';
+  try{window.scrollTo(0,0);document.documentElement.scrollTop=0;document.body.scrollTop=0}catch(e){}
+  if(typeof window.startMatchdayApp==='function')window.startMatchdayApp();
+  window.setTimeout(function(){
+    try{if(targetView&&typeof setView==='function')setView(targetView);else if(typeof renderCurrent==='function')renderCurrent()}catch(e){console.error('Matchday view failed to render',e)}
+  },0);
+  window.setTimeout(function(){
+    var waiting=home&&home.querySelector('.empty');
+    if(waiting&&waiting.textContent.trim()==='Loading…')waiting.innerHTML='The page is taking too long to load.<br><button class="actionbtn" type="button" onclick="location.reload()">Retry loading</button>';
+  },15000);
+};
+// A capture listener keeps entry working in browsers that fail to dispatch an
+// inline handler after composited welcome-page effects are promoted to layers.
+document.addEventListener('click',function(event){
+  var trigger=event.target&&event.target.closest&&event.target.closest('.welcomeEnter');
+  if(!trigger)return;
+  event.preventDefault();
+  event.stopPropagation();
+  window.matchdayEnterNow();
+},true);
+</script>
 </head>
-<body>
-<section class="welcomeGate" id="welcomeGate" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
+<!-- welcomeOpen is set in the markup, not by renderWelcome(). That function
+     lives in the application bundle, which no longer runs until entry, so the
+     class arrived too late to matter: the body kept its app-shell
+     height:100vh/overflow:hidden and the welcome page could not be scrolled. -->
+<body class="welcomeOpen">
+<section class="welcomeGate" id="welcomeGate" aria-labelledby="welcomeTitle">
   <div class="welcomeBlobs" aria-hidden="true"></div>
   <div class="welcomeNoise" aria-hidden="true"></div>
   <div class="welcomeScene" aria-hidden="true">
@@ -128,13 +205,13 @@
   </div>
   <div class="welcomeShell">
     <div class="welcomeBrand">
-      <div class="welcomeEyebrow"><span class="welcomeDot"></span> MATCHDAY ANALYSIS <span class="welcomeBeta">EARLY ACCESS</span></div>
-      <img src="icon-192.png?v=4" class="welcomeLogo" alt="Matchday" width="192" height="192">
-      <h1 id="welcomeTitle">My college board, <span>published before kickoff.</span></h1>
-      <p class="welcomeLead">College sports predictions and statistics: model probabilities, team ratings and market comparisons for college football and men's college basketball—all graded in public.</p>
+      <div class="welcomeEyebrow"><span class="welcomeDot"></span> MATCHDAY TERMINAL <span class="welcomeBeta">EARLY ACCESS</span></div>
+      <img src="icon-192.png?v=4" class="welcomeLogo" alt="Matchday Terminal" width="192" height="192">
+      <h1 id="welcomeTitle">Matchday Terminal</h1>
+      <p class="welcomeLead">College sports predictions &amp; research.</p>
       <div class="welcomeCoverage" aria-label="Sports coverage"><span>College Football</span><span>Men's College Basketball</span></div>
       <details class="welcomeDevNote">
-        <summary>Early access &mdash; what that means</summary>
+        <summary>How this works</summary>
         <div id="welcomeStatusNote"></div>
         <p>Ratings come from my own engine and it is still being worked on, so a team's number
         can move between editions. Brackets and polls are projections until real selection and
@@ -142,15 +219,14 @@
         graded afterwards and never rewritten.</p>
       </details>
       <div class="welcomeActions">
-        <button class="welcomeEnter" type="button" onclick="enterMatchday()">Enter Matchday <span aria-hidden="true">→</span></button>
+        <button class="welcomeEnter" type="button" onclick="matchdayEnterNow()">Enter Matchday Terminal <span aria-hidden="true">→</span></button>
         <span>No account required · no ads</span>
-        <button class="welcomeTourLink" type="button" onclick="enterMatchday('',true)">Take a quick tour</button>
+        <a class="welcomeSocialLink" href="https://x.com/timurknowsball" rel="me noopener" target="_blank">Follow @timurknowsball on X <span aria-hidden="true">↗</span></a>
         <a class="welcomeLegalLink" href="legal.html">Legal, privacy &amp; data sources</a>
       </div>
-      <div class="welcomeUpset" id="welcomeUpset" hidden></div>
     </div>
     <aside class="welcomePreview" aria-label="Matchday preview">
-      <div class="welcomePreviewTop"><span>IN FOCUS</span><span id="welcomeFeedState">PREGAME</span></div>
+      <div class="welcomePreviewTop"><span>THIS WEEK</span><span id="welcomeFeedState">PREGAME</span></div>
       <div class="welcomeNext" id="welcomeNext">
         <div class="welcomeFallback">
           <span class="welcomeFallbackKicker">TODAY'S BOARD</span>
@@ -160,54 +236,92 @@
         </div>
       </div>
       <div class="welcomeStats" id="welcomeStats" aria-live="polite"></div>
-      <div class="welcomeProof">
-        <div><b>01</b><span>Model vs market</span><small>Probability, not certainty.</small></div>
-        <div><b>02</b><span>Locked in public</span><small>Picks never rewritten.</small><button class="welcomeProofLink" type="button" onclick="enterMatchday('score')">View verified scorecard <span aria-hidden="true">→</span></button></div>
-        <div><b>03</b><span>College focus</span><small>Football and basketball.</small></div>
-      </div>
     </aside>
+    <div class="welcomeDiscover" aria-label="Explore Matchday">
+      <div class="welcomeUpset" id="welcomeUpset" hidden></div>
+      <div class="welcomeDiscoverLinks">
+        <button type="button" onclick="matchdayEnterNow('matches')"><b>Games</b><span>This week's matchups and live model reads</span><i aria-hidden="true">→</i></button>
+        <button type="button" onclick="matchdayEnterNow('score')"><b>Public record</b><span>Every locked pick, graded in public</span><i aria-hidden="true">→</i></button>
+        <button type="button" onclick="matchdayEnterNow('news')"><b>Research</b><span>Ratings, context and upset watch</span><i aria-hidden="true">→</i></button>
+      </div>
+    </div>
   </div>
 </section>
 <section class="alertCenter" id="alertCenter" aria-label="Alert center" hidden></section>
 <div class="app" id="app">
-  <div class="livestrip"><button type="button" class="ls-brand ls-brandHome" onclick="openWelcome()" title="Back to the welcome page" aria-label="Back to the welcome page"><span class="pip"></span>Matchday<span id="compName" style="color:var(--muted);font-weight:var(--fw-semibold);text-transform:none;letter-spacing:0"></span></button><select id="sportSel" class="sportSel" onchange="changeSport(this.value)" aria-label="Sport"><option value="ncaaf">College Football</option><option value="ncaam">Men's College Basketball</option></select><div id="strip" class="ls-next">loading…</div><div class="topActions"><button class="alertBell" id="alertBell" type="button" aria-label="Open alerts" aria-controls="alertCenter" aria-expanded="false" onclick="toggleAlertCenter()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg><span id="alertCount" hidden>0</span></button></div></div>
+  <div class="livestrip"><button type="button" class="ls-brand ls-brandHome" onclick="openWelcome()" title="Back to the welcome page" aria-label="Back to the welcome page"><span class="pip"></span>Matchday Terminal</button><select id="sportSel" class="sportSel" onchange="changeSport(this.value)" aria-label="Sport"><option value="ncaaf">College Football</option><option value="ncaam">Men's College Basketball</option></select><div id="strip" class="ls-next">loading…</div><div class="topActions"><button class="alertBell" id="alertBell" type="button" aria-label="Open alerts" aria-controls="alertCenter" aria-expanded="false" onclick="toggleAlertCenter()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg><span id="alertCount" hidden>0</span></button></div></div>
   <nav class="sidebar" id="nav">
+    <div class="navGroup" data-group="home">
+    <button class="navbtn" data-primary data-mobile-primary data-v="home" aria-pressed="true"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg><span class="lbl">Home</span></button>
+    </div>
     <div class="navGroup" data-group="games">
-    <button class="navbtn" data-primary data-v="matches" aria-pressed="true"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14" rx="2"/><line x1="8" y1="3" x2="8" y2="7"/><line x1="16" y1="3" x2="16" y2="7"/><line x1="4" y1="10" x2="20" y2="10"/></svg><span class="lbl">Matches</span></button><button class="navbtn" data-primary data-v="results" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h10"/><circle cx="19" cy="18" r="2"/></svg><span class="lbl">Results</span></button>
+    <button class="navbtn" data-primary data-mobile-primary data-v="matches" aria-pressed="false"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14" rx="2"/><line x1="8" y1="3" x2="8" y2="7"/><line x1="16" y1="3" x2="16" y2="7"/><line x1="4" y1="10" x2="20" y2="10"/></svg><span class="lbl">Games</span></button>
     </div>
     <div class="navGroup" data-group="competition">
-    <button class="navbtn" data-v="groups" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/><path d="M8 4v16"/></svg><span class="lbl">Groups</span></button>
-    <button class="navbtn" data-v="bracket" aria-pressed="false"><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="12" r="2.5"/><path d="M8.5 6H13c1 0 2 .8 2 2v2M8.5 18H13c1 0 2-.8 2-2v-2"/></svg><span class="lbl">Bracket</span></button>
-    
-    
+    <button class="navbtn" data-primary data-mobile-primary data-v="groups" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/><path d="M8 4v16"/></svg><span class="lbl">Rankings</span></button>
+    <button class="navbtn" data-primary data-v="results" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h10"/><circle cx="19" cy="18" r="2"/></svg><span class="lbl">Results</span></button>
     </div>
+    <div class="navGroup" data-group="content"><button class="navbtn" data-primary data-mobile-primary data-v="news" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 5h13v14H4z"/><path d="M17 8h3v9a2 2 0 0 1-2 2"/><line x1="7" y1="9" x2="14" y2="9"/><line x1="7" y1="13" x2="14" y2="13"/><line x1="7" y1="17" x2="11" y2="17"/></svg><span class="lbl">Research</span></button></div>
     <div class="navGroup" data-group="model">
-    
-    
-    <button class="navbtn" data-primary data-v="score" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg><span class="lbl">Scorecard</span></button>
-    
+    <button class="navbtn" data-v="score" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg><span class="lbl">Scorecard</span></button>
     </div>
-    <div class="navGroup" data-group="content"><button class="navbtn" data-primary data-v="news" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 5h13v14H4z"/><path d="M17 8h3v9a2 2 0 0 1-2 2"/><line x1="7" y1="9" x2="14" y2="9"/><line x1="7" y1="13" x2="14" y2="13"/><line x1="7" y1="17" x2="11" y2="17"/></svg><span class="lbl">News</span></button></div>
-    
+    <div class="navGroup" data-group="bracket">
+    <button class="navbtn" data-v="bracket" aria-pressed="false"><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="12" r="2.5"/><path d="M8.5 6H13c1 0 2 .8 2 2v2M8.5 18H13c1 0 2-.8 2-2v-2"/></svg><span class="lbl">Bracket</span></button>
+    </div>
     <div class="navGroup" data-group="community">
     <button class="navbtn" data-v="community" aria-pressed="false"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="10" r="2.2"/><path d="M4 19c0-3 2.2-5 5-5s5 2 5 5"/><path d="M15 19c0-2 1-3.5 3-3.5s3 1.5 3 3.5"/></svg><span class="lbl">Community</span></button>
     </div>
     
     <button class="navbtn navMore" type="button" onclick="toggleNavSheet()" aria-expanded="false" aria-controls="nav"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg><span class="lbl">More</span></button>
   </nav>
-  <main class="content" tabindex="-1"><div id="alertBar" class="alertBar" style="display:none"></div><div class="view" id="view-matches" style="display:grid"><div class="empty">Loading…</div></div><div class="view" id="view-groups"></div>
+  <main class="content" tabindex="-1"><div id="alertBar" class="alertBar" style="display:none"></div><div class="view" id="view-home"><div class="empty">Loading…</div></div><div class="view" id="view-matches"><div class="empty">Loading…</div></div><div class="view" id="view-groups"></div>
 <div class="view" id="view-score"></div><div class="view" id="view-bracket"></div><div class="view" id="view-results"></div><div class="view" id="view-news"></div><div class="view" id="view-community"></div></main>
-  <aside class="insight" id="insight"></aside>
-  <button class="railToggle" id="railToggle" type="button" onclick="toggleInsightRail()" aria-controls="insight" aria-expanded="true" title="Hide the in-focus rail"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg><span class="srOnly">Hide the in-focus rail</span></button>
 </div>
-<script src="translations.js?v=__BUILD__"></script>
-<script src="updates.js?v=__BUILD__"></script>
-<script src="matchday-cfb-snapshot.js?v=__BUILD__"></script>
-<script src="app-1-core.js?v=__BUILD__"></script>
-<script src="app-2-views.js?v=__BUILD__"></script>
-<script src="app-3-panels.js?v=__BUILD__"></script>
-<script src="app-4-features.js?v=__BUILD__"></script>
-<script src="research-signals.js?v=__BUILD__"></script>
+<script>
+// Keep the welcome page interactive. The large data/application bundles used
+// to execute as soon as parsing finished, monopolizing the main thread before
+// a visitor's click could be dispatched. Start them only after entry (or
+// immediately for a visitor who already entered during this browser session).
+var MATCHDAY_FILES=['translations.js','updates.js','matchday-cfb-snapshot.js','app-1-core.js','app-2-views.js','app-3-panels.js','app-4-features.js','research-signals.js'];
+function matchdayAsset(file){return file+'?v=__BUILD__'}
+window.startMatchdayApp=function(){
+  if(window.MATCHDAY_APP_STARTING)return window.MATCHDAY_APP_STARTING;
+  // async=false on an injected script preserves execution order while letting
+  // every file download at once. Chaining each file's load() to the next one
+  // spent a full network round trip per file -- eight of them, before a single
+  // line of the application could run.
+  window.MATCHDAY_APP_STARTING=Promise.all(MATCHDAY_FILES.map(function(file){
+    return new Promise(function(resolve,reject){
+      var script=document.createElement('script');
+      script.src=matchdayAsset(file);
+      script.async=false;
+      script.onload=resolve;script.onerror=reject;
+      document.body.appendChild(script);
+    });
+  })).catch(function(error){console.error('Matchday failed to start',error)});
+  return window.MATCHDAY_APP_STARTING;
+};
+// Fetch the bundles into the HTTP cache while the visitor is still reading the
+// welcome page. A preload does not execute, so the page stays interactive, and
+// entry then runs against bytes that have already arrived.
+window.warmMatchdayApp=function(){
+  if(window.MATCHDAY_APP_WARMED||window.MATCHDAY_APP_STARTING)return;
+  window.MATCHDAY_APP_WARMED=true;
+  MATCHDAY_FILES.forEach(function(file){
+    var link=document.createElement('link');
+    link.rel='preload';link.as='script';link.href=matchdayAsset(file);
+    document.head.appendChild(link);
+  });
+};
+try{
+  if(sessionStorage.getItem('matchday.welcome.entered')==='1'){
+    document.body.classList.remove('welcomeOpen');
+    window.startMatchdayApp();
+  }
+  else if('requestIdleCallback' in window)requestIdleCallback(window.warmMatchdayApp,{timeout:1500});
+  else window.setTimeout(window.warmMatchdayApp,700);
+}catch(e){}
+</script>
 
 </body>
 </html>

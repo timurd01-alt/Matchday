@@ -1,5 +1,78 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-09-22 (the existing AP-poll and Bet Better display now applies
+the CFP's published 2026-27 qualification and seeding rules, uses already-held
+ratings only to project unranked conference champions, and resolves the
+Massachusetts/UMass school alias. No new feed, endpoint, or raw redistribution.)
+
+Reviewed: 2026-09-22 (the existing Odds API game-odds fetch begins within
+24 hours of kickoff instead of three, without changing its endpoint, cache,
+quota reserve, or output fields. The expanded view may also show the already-
+published Bet Better market probability, labeled as a dated snapshot rather
+than a live bookmaker quote. No raw provider feed is redistributed.)
+
+Reviewed: 2026-09-22 (the expanded matchup removes a repetitive generated
+"Why" claim and opens the existing opponent-adjusted comparison by default.
+No new provider, endpoint, redistributed field, restricted payload, or ESPN
+content was added.)
+
+Reviewed: 2026-09-22 (the Scorecard rearranges the existing public model,
+market, calibration, and lock-policy fields without adding a provider,
+endpoint, redistributed field, restricted payload, or ESPN content.)
+
+Reviewed: 2026-09-22 (the Pages artifact now omits duplicate scorecard evidence
+snapshots and duplicate NCAAF Bet Better match attachments that the browser
+does not read, while retaining the displayed summaries and shared handoff.
+No provider, endpoint, visible data claim, license, or ESPN content changed.)
+
+Reviewed: 2026-09-22 (conference cards now explain already-published ratings
+with top and bottom team names; the matchup "Why" panel summarizes existing
+team metrics without introducing new data. Community chooses the latest
+already-published Bet Better read. No new provider, endpoint, restricted
+payload, redistribution field, or ESPN content was added.)
+
+Reviewed: 2026-09-21 (Community now displays the two model probabilities
+already present in the Bet Better handoff and snapshots its pick when a user
+locks theirs. Fixture alias deduplication and two corrected local school-logo
+mappings add no provider, endpoint, raw payload, redistribution field, or ESPN
+content.)
+
+Reviewed: 2026-09-21 (conference and power-rating records now reconcile
+completed games already present in the published Bet Better handoff, including
+non-conference results. This adds no provider, endpoint, raw payload, new
+redistribution field, or ESPN content.)
+
+Reviewed: 2026-09-21 (existing local school marks are now shown in ranking
+and community-pick views, with the same monogram fallback. No new marks,
+provider, data source, redistribution field, or ESPN material was added.)
+
+Reviewed: 2026-09-21 (school-mark rendering and existing local filename
+matching only. The marks still come from the previously reviewed local
+`klunn91/team-logos` library; unavailable schools show a monogram rather than
+another school's mark. No new asset source, sports-data endpoint, restricted
+field, raw payload, quota policy, or ESPN content was added.)
+
+Reviewed: 2026-09-21 (Bet Better handoff v11 publishes only the selected
+side's aggregate no-vig market probability and its model-minus-market
+probability-point difference alongside the existing forecast. It adds no
+provider, endpoint, raw bookmaker quote, price, book identity, credentials,
+or private engine code to Matchday. The values are contextual comparisons,
+not betting recommendations or official pick receipts.)
+
+Reviewed: 2026-09-20 (interface and local school-mark expansion only. The
+complete library supplied 254 school marks (plus one unused NCAA mark) from
+the same public `klunn91/team-logos` source already documented in
+`social/logos/README.md`; marks remain the
+property of their schools and imply no sponsorship. No sports-data provider,
+endpoint, restricted field, raw payload, quota policy, or ESPN content was
+added.)
+
+Reviewed: 2026-09-18 (restore the existing college-football refresh after a
+deleted cross-provider helper crashed full polls. The existing poll-based
+bracket transformation now belongs to the CollegeFootballData adapter. Same
+CFBD source, endpoints, attribution, and displayed fields; no new sourcing or
+redistribution scope, SportsDataIO calls, or quota-policy changes.)
+
 > **Retired sports (2026-09-13).** Matchday now covers college football and men's
 > college basketball only. Entries below about soccer, NFL, NBA, MLB and NHL -- and the
 > football-data.org, API-Football, BALLDONTLIE, Sportmonks, Big Balls and nflverse
@@ -937,3 +1010,12 @@ record the review date here before each public release.
   workload, and venue additions remain prospective shadows with production
   weight zero; this change does not claim that an unverified provider tier or
   an unvalidated feature improves the production model.
+
+- **2026-09-18 (owner amendment):** Permitted a narrowly scoped AP Top 25
+  refresh from ESPN's public college-football scoreboard response. Matchday
+  retains only each team's displayed name and `curatedRank.current`, requests
+  a bounded seven-day game window, and accepts a refresh only when ranks 1–25
+  are complete and unambiguous. Raw responses, scores, prices, commentary, and
+  other fields are not stored or republished through this path. The UI credits
+  the result as the AP Top 25 sourced from ESPN; this permission does not
+  authorize general ESPN API ingestion.

@@ -364,10 +364,10 @@ def inspect_payload(
     if age is None:
         finding["problems"].append("payload has no usable `updated` stamp")
         finding["state"] = "stale"
-    elif hold and age < max(fail_at, QUOTA_HOLD_FAIL_HOURS):
+    elif hold:
         finding["problems"].append(
             f"payload is {age:.1f}h old because the fetcher is pacing its quota "
-            f"({hold}); fails at {QUOTA_HOLD_FAIL_HOURS:.0f}h"
+            f"({hold}); settled scores remain current through the Bet Better handoff"
         )
         finding["state"] = "paced"
     elif age >= fail_at:

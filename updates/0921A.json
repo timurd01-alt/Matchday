@@ -1,0 +1,11 @@
+{
+  "rank": 218,
+  "date": "Build 0921A",
+  "tag": "Fix",
+  "title": "Cleaner Research and correct school marks",
+  "items": [
+    "When there are no current headlines, Research goes straight from its analysis modules into the rest of the page instead of displaying a large empty box and zero-source filters.",
+    "Internal news-fetch diagnostics are no longer displayed on the public Research page.",
+    "Michigan State now uses its Spartan mark, and logo matching favors the full school name before any shorter prefix."
+  ]
+}
