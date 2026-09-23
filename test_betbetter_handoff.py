@@ -131,6 +131,16 @@ class AttachTests(unittest.TestCase):
         # The production forecast is untouched, so the pause still owns it.
         self.assertEqual(matches[0]["prediction"], {"publication_state": "paused"})
 
+    def test_an_ungraded_pick_says_so_on_the_card(self):
+        # FBS vs FCS: the engine prices it for reference and never grades it.
+        matches = [match()]
+        doc = document(picks=[pick(graded=False, grading_note="FBS vs FCS: not graded")])
+        betbetter_handoff.attach(matches, doc)
+        self.assertIs(matches[0]["betbetter_pick"]["graded"], False)
+        plain = [match()]
+        betbetter_handoff.attach(plain, document())
+        self.assertIs(plain[0]["betbetter_pick"]["graded"], True)
+
     def test_a_team_is_an_object_on_the_matchday_side(self):
         # Matchday carries {"name": ..., "code": ...}; reading str() of that
         # matched nothing at all, which is how this was found.

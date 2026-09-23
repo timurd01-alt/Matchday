@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0923J",
+  "tag": "Fix",
+  "title": "FBS vs FCS games are priced again, but not graded",
+  "items": [
+   "Rutgers vs Howard and 12 other FBS-vs-FCS games had no model number because the engine was holding those games back. They now show a probability labelled \"Not graded · FBS vs FCS\".",
+   "These games stay out of the scorecard: picking a heavy favourite over an FCS side says little about the model.",
+   "Model percentages on game cards now cap at 99.9% instead of reading 100.0%."
+  ]
+ },
+ {
   "date": "Build 0923I",
   "tag": "Design",
   "title": "Welcome page uses the app's own background",

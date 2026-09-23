@@ -275,6 +275,10 @@ def _display_block(pick: dict[str, Any], document: dict[str, Any]) -> dict[str, 
         "official_publication_eligible": False,
         "moves_until_kickoff": bool(pick.get("moves_until_kickoff", True)),
         "integrity_note": pick.get("integrity_note"),
+        # FBS-versus-FCS games are priced for reference but never graded; the
+        # card has to say so rather than look like any other call.
+        "graded": pick.get("graded", True) is not False,
+        "grading_note": pick.get("grading_note"),
     }
 
 

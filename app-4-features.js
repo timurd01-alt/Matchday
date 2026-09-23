@@ -233,7 +233,7 @@ function insightModelBlock(m){
 // opens onto cannot name different sides. It used to read m.betbetter_pick
 // alone, which only a scheduled build writes -- on a push deploy the card
 // therefore carried no pick at all while the expanded view still showed one.
-function matchdayLivePickHTML(m){const p=betbetterReadFor(m);if(!p)return'';const model=Number(p.model_pct);return `<div class="pick matchdayLivePick"><span class="pl">Model</span><span class="pn">${esc(p.pick_name||'No pick')}</span><span class="pc">${Number.isFinite(model)?model.toFixed(1)+'%':'—'}</span><span class="pnote">Live prediction · updates until kickoff</span></div>`}
+function matchdayLivePickHTML(m){const p=betbetterReadFor(m);if(!p)return'';const model=Number(p.model_pct);return `<div class="pick matchdayLivePick"><span class="pl">Model</span><span class="pn">${esc(p.pick_name||'No pick')}</span><span class="pc">${modelPctLabel(model)}</span><span class="pnote">${p.graded===false?`<span title="${esc(p.grading_note||'')}">Not graded · FBS vs FCS</span>`:'Live prediction · updates until kickoff'}</span></div>`}
 function cardHTML(m,opts){
   opts=opts||{};
   const pending=m.status==='LIVE',stale=isStaleUpcoming(m);
