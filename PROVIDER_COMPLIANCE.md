@@ -2,7 +2,8 @@
 
 Reviewed: 2026-09-23 (ESPN sourcing rule rewritten: public facts only -- final
 scores, AP Top 25 rank/team, news headline+link -- never ESPN statistics or
-content. Flags Bet Better's ESPN-derived EPA as an open item.)
+content. Bet Better's private play-by-play use recorded as an owner decision:
+only its derived figures reach the site.)
 
 Reviewed: 2026-09-22 (the existing AP-poll and Bet Better display now applies
 the CFP's published 2026-27 qualification and seeding rules, uses already-held
@@ -332,12 +333,17 @@ legal advice.
   still govern the request itself even though the facts it returns are not
   ESPN's. Keep request volume minimal (a handful of scoreboard calls per run).
 
-  **Open item -- Bet Better play-by-play.** Bet Better collects ESPN game
-  summaries (play-by-play) locally and ships derived EPA / success-rate
-  metrics in the handoff's `team_profiles` and `play_metrics`. That is
-  statistics-derived, not a public fact, so it sits outside this rule until the
-  owner either moves the play-by-play to another source or explicitly accepts
-  derived-only EPA here. Use only documented provider API endpoints in general.
+  **Bet Better play-by-play (owner decision 2026-09-23).** Bet Better is the
+  owner's personal, non-commercial engine. It reads ESPN game summaries
+  privately as an input to its own calculations; nothing from them is sold,
+  and the raw play-by-play never leaves the owner's machine. Matchday may show
+  only what the engine *computes* from it -- opponent-adjusted ratings and
+  EPA / success-rate figures in `team_profiles` and `play_metrics` -- never
+  ESPN's own box-score lines, stat tables or play text. Conditions that keep
+  this acceptable: request volume stays low and cached (one summary per
+  finished game), no raw or bulk ESPN data is published, and Matchday adds no
+  paid tier or ESPN-derived data product. If any of those change, revisit.
+  Use only documented provider API endpoints in general.
 - Show provider data inside Matchday's user-facing analytics experience. Do not
   offer raw feeds, bulk downloads, a proxy API, or a standalone data product.
 - Keep the analytics/not-betting-advice language and independent-provider
