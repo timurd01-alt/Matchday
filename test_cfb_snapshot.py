@@ -121,7 +121,7 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         self.assertIn("'Texas Longhorns','Georgia Bulldogs','Miami Hurricanes'", views)
         self.assertIn("'Michigan Wolverines','Duke Blue Devils'", views)
         self.assertIn("return MATCHDAY_PERSONAL_CFB_BALLOT", views)
-        self.assertIn('style="margin:0">My Top 25', panels)
+        self.assertIn('style="margin:0">TimurKnowsBall Ballot', panels)
         self.assertIn("View the original post on X", panels)
 
     def test_board_card_explanations_sit_behind_a_question_mark(self):

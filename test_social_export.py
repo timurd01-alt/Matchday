@@ -81,6 +81,11 @@ class WeekWindow(unittest.TestCase):
         self.assertEqual(end.date(), monday.date())
         self.assertGreater(end, start)
 
+    def test_on_a_sunday_the_window_is_the_coming_week(self):
+        sunday = dt.datetime(2026, 9, 13, 19, 0, tzinfo=dt.timezone.utc)
+        _start, end = social_export.week_window(sunday)
+        self.assertEqual(end.date(), dt.date(2026, 9, 21))
+
     def test_on_a_tuesday_the_window_opens_a_fresh_week(self):
         tuesday = dt.datetime(2026, 9, 8, 9, 0, tzinfo=dt.timezone.utc)
         _start, end = social_export.week_window(tuesday)

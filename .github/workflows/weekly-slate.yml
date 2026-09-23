@@ -10,10 +10,12 @@ name: Export the week's numbers
 #   * No dependencies. Standard library only, so this shares deploy.yml's
 #     Python and cannot break it.
 #
-# Tuesday 13:00 UTC (09:00 ET) opens the new college week, so the export covers
-# a full Tuesday-to-Monday window with the weekend still ahead of it.
+# Sunday 23:00 UTC (18:00 CT), after the local Sunday ship has pushed the new
+# handoff, so the export covers the whole coming week. Tuesday 13:00 UTC stays
+# as a catch-up in case the Sunday ship ran late or the machine was off.
 on:
   schedule:
+    - cron: '0 23 * * 0'
     - cron: '0 13 * * 2'
   workflow_dispatch:
     inputs:

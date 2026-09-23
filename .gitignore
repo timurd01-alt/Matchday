@@ -128,3 +128,4 @@ fixture_count_history.json
 # the college files replaced them. Regenerate it locally when you want the
 # fast path: python build_board_summary.py --output board_summary.json
 board_summary.json
+automation/logs/
