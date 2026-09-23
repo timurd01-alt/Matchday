@@ -47,6 +47,17 @@ from typing import Any
 
 # Handoff major versions this reader understands. A document outside this set
 # is refused whole: a partly-understood pick is worse than no pick.
+# 11 added the selected side's no-vig market probability and the model-minus-
+# market gap, and -- with the same export -- `scorecard.scope` and
+# `scorecard.sports.<sport>.conviction`. `scope` separates what the record
+# claims ("who wins") from what it does not (the spread). `conviction` is the
+# model's distance from the price: how far above the market it prices a
+# contested underdog, and the record it earned taking that side outright. The
+# two travel together and must render together -- the lift alone reads as an
+# edge the results do not support.
+# 10 added the complete prediction-only slate: every modelled upcoming game,
+# with sportsbook fields stripped.
+# Both are additive, so a reader that ignores the new keys still renders.
 # 9 added `game_of_the_week` -- the best matchup on the board, chosen on the
 # two teams' ratings and the gap between them rather than on the model's
 # confidence. Confidence alone always names a Power Four side hosting an FCS
@@ -63,7 +74,7 @@ from typing import Any
 # board survives Matchday's own fixture provider running out of quota).
 # 2 added `rankings` (the published Top 25 per sport). A v1 document is
 # still readable -- it simply carries no rankings -- so both are accepted.
-SUPPORTED_VERSIONS = frozenset({1, 2, 3, 4, 5, 6, 7, 8, 9})
+SUPPORTED_VERSIONS = frozenset({1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11})
 
 DEFAULT_HANDOFF_PATH = "betbetter_picks.json"
 
