@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0923B",
+  "tag": "Legal",
+  "title": "Clearer data-source notice",
+  "items": [
+   "The legal page now says exactly what comes from ESPN: public facts only (final scores, AP Top 25 rank and team, news links), never statistics or content.",
+   "The AP Top 25 is credited to the Associated Press."
+  ]
+ },
+ {
   "date": "Build 0923A",
   "tag": "Automation",
   "title": "Sunday updates ship on their own",

@@ -1,5 +1,9 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-09-23 (ESPN sourcing rule rewritten: public facts only -- final
+scores, AP Top 25 rank/team, news headline+link -- never ESPN statistics or
+content. Flags Bet Better's ESPN-derived EPA as an open item.)
+
 Reviewed: 2026-09-22 (the existing AP-poll and Bet Better display now applies
 the CFP's published 2026-27 qualification and seeding rules, uses already-held
 ratings only to project unranked conference champions, and resolves the
@@ -307,46 +311,33 @@ legal advice.
 
 - Keep every API key in `config_keys.py` or server environment variables. Never
   expose a key in browser JavaScript, generated JSON, screenshots, or Git.
-- **ESPN sourcing rule:** Direct ESPN site/API access, scraping, images, video,
-  article text, and bulk redistribution remain excluded because Matchday has
-  no licensed ESPN developer feed.
+- **ESPN sourcing rule (rewritten 2026-09-23 by the owner; replaces the
+  2026-08-31 and 2026-09-12 amendments).** Matchday takes only **public facts**
+  from ESPN, never ESPN's statistics or content:
 
-  **Amended 2026-08-31 by the owner:** the News-tab exclusion is lifted. ESPN's
-  public college RSS feeds (`/espn/rss/ncf/news`, `/espn/rss/ncb/news`) are now
-  the college news source, and the `_is_espn()` intake rejection is removed.
-  Only the headline and the link are stored -- no article text, no images, no
-  bulk redistribution -- and ESPN is credited by name on every item. The
-  residual risk is that these are publicly published feeds consumed without a
-  licence agreement rather than under one; that is a decision the owner has
-  taken knowingly. Every other clause of this rule still stands.
+  | Allowed from ESPN (public facts) | Fields kept |
+  |---|---|
+  | Final scores | home score, away score, finished status -- only for a fixture already on Matchday's own schedule whose kickoff has passed (`score_fallback.py`, and the Bet Better handoff's `results`) |
+  | AP Top 25 | rank and team name only; the poll belongs to the AP, ESPN is only the carrier (`ap_poll.py`) |
+  | College news | headline and link only, ESPN credited on every item (public RSS feeds) |
 
-  **Amended 2026-09-12 by the owner: final scores.** A game's final score and
-  its finished status may come from ESPN's public college scoreboard
-  (`site.api.espn.com/.../scoreboard`), and may reach Matchday indirectly
-  through the Bet Better handoff's `results`, which are ESPN-sourced for NCAAF
-  while CollegeFootballData's monthly quota is spent. The owner's reasoning: a
-  final score is a public fact available from any outlet, not ESPN's content.
-  The scope is exactly that -- home score, away score, and "finished" -- and
-  only for a fixture already on Matchday's own schedule whose kickoff has
-  passed. No schedule, odds, statistics, team data, logos, text, or raw payload
-  is taken or stored, and the scoreboard is never the source of a fixture
-  list. The residual risk is the same as the news amendment: the endpoint is
-  undocumented and used without an agreement, so ESPN's site terms still
-  apply to the request itself even though the fact it returns does not belong
-  to them. A narrowly reviewed, openly licensed
-  secondary release may be used only when its ESPN provenance is explicit,
-  the exact asset/schema/cadence has been verified, Matchday publishes only a
-  normalized analytical view rather than the raw feed, and the UI identifies
-  it as ESPN-derived and unofficial. The only current exception is nflverse's
-  2025+ depth-chart release described in the 2026-08-11 review above. ESPN is
-  still excluded as a
-  News tab source: any item attributed to ESPN is rejected both on fresh
-  intake and when merging in a previous run's cached headlines for
-  feed-diversity carryover (`_is_espn()` in `fetch_data.py`, a whole-word
-  case-insensitive match against source/feed/label -- not just an exact
-  `"ESPN"` string, since an exact match was found on 2026-07-25 to let
-  ESPN-branded variants like "ESPN.com" slip through both checks; see the
-  Changelog below). Use only documented provider API endpoints in general.
+  Everything else stays excluded from ESPN: statistics, box scores,
+  play-by-play, odds (ESPN BET quotes are dropped in `provider_adapters.py`),
+  injuries, depth charts, schedules as a fixture source, team data, logos,
+  images, video, article text, and any raw payload or bulk redistribution.
+  Statistics, schedules, odds and ratings inputs come from the other providers
+  listed below. The raw ESPN response is never stored or published; only the
+  fields in the table survive. Residual risk, taken knowingly: the scoreboard
+  endpoint is undocumented and used without an agreement, so ESPN's site terms
+  still govern the request itself even though the facts it returns are not
+  ESPN's. Keep request volume minimal (a handful of scoreboard calls per run).
+
+  **Open item -- Bet Better play-by-play.** Bet Better collects ESPN game
+  summaries (play-by-play) locally and ships derived EPA / success-rate
+  metrics in the handoff's `team_profiles` and `play_metrics`. That is
+  statistics-derived, not a public fact, so it sits outside this rule until the
+  owner either moves the play-by-play to another source or explicitly accepts
+  derived-only EPA here. Use only documented provider API endpoints in general.
 - Show provider data inside Matchday's user-facing analytics experience. Do not
   offer raw feeds, bulk downloads, a proxy API, or a standalone data product.
 - Keep the analytics/not-betting-advice language and independent-provider
