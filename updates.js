@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0922T",
+  "tag": "Update",
+  "title": "Make the site identifiable as Matchday Terminal",
+  "items": [
+   "Describe the site to search engines and AI assistants as a named entity rather than a loose page: an Organization and a WebSite node, linked to each other and to the application, carrying the logo, the alternate names the site is known by, the subjects it covers, and a link to @timurknowsball as a verifying profile.",
+   "Name the AI crawlers explicitly in robots.txt, including Google-Extended, which governs whether Gemini and Google's AI answers may read the site at all. All of them were already permitted by the wildcard; naming them keeps the permission from being lost if that wildcard is ever tightened."
+  ]
+ },
+ {
   "date": "Build 0922S",
   "tag": "Fix",
   "title": "Scorecard depth, naming, and a sidebar that covered the page",

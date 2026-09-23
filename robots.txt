@@ -1,4 +1,27 @@
 User-agent: *
 Allow: /
 
+# Assistants that answer questions about "Matchday Terminal" need to be able to
+# read the site to learn that the name refers to it. These crawlers already fall
+# under the wildcard above; they are named so that the permission is explicit and
+# survives a future tightening of it.
+#
+# Google-Extended governs whether Gemini and Google's AI answers may ground on
+# this site. It is a separate token from Googlebot: blocking it removes the site
+# from those answers while leaving ordinary search indexing untouched.
+User-agent: Google-Extended
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
 Sitemap: https://matchdayterminal.com/sitemap.xml

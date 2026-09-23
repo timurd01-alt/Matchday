@@ -43,13 +43,54 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "Matchday Terminal",
-  "url": "https://matchdayterminal.com/",
-  "description": "College sports predictions and statistics: model picks, win probabilities, team ratings and market comparison for college football and men's college basketball, with every pick graded in public.",
-  "applicationCategory": "SportsApplication",
-  "operatingSystem": "Any",
-  "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://matchdayterminal.com/#publisher",
+      "name": "Matchday Terminal",
+      "alternateName": ["Matchday", "matchdayterminal.com"],
+      "url": "https://matchdayterminal.com/",
+      "description": "Independent publisher of college football and men's college basketball model predictions, team ratings and a publicly graded pick record.",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://matchdayterminal.com/icon-512.png",
+        "width": 512,
+        "height": 512
+      },
+      "sameAs": ["https://x.com/timurknowsball"],
+      "foundingDate": "2026",
+      "knowsAbout": [
+        "College football predictions",
+        "Men's college basketball predictions",
+        "Sports forecasting model calibration",
+        "Team power ratings",
+        "Betting market comparison"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://matchdayterminal.com/#website",
+      "name": "Matchday Terminal",
+      "alternateName": ["Matchday", "matchdayterminal.com"],
+      "url": "https://matchdayterminal.com/",
+      "inLanguage": "en",
+      "description": "College sports predictions and statistics: model win probabilities, team ratings and market comparison for college football and men's college basketball, with every pick graded in public.",
+      "publisher": {"@id": "https://matchdayterminal.com/#publisher"}
+    },
+    {
+      "@type": "WebApplication",
+      "@id": "https://matchdayterminal.com/#app",
+      "name": "Matchday Terminal",
+      "url": "https://matchdayterminal.com/",
+      "description": "College sports predictions and statistics: model picks, win probabilities, team ratings and market comparison for college football and men's college basketball, with every pick graded in public.",
+      "applicationCategory": "SportsApplication",
+      "operatingSystem": "Any",
+      "browserRequirements": "Requires JavaScript",
+      "isPartOf": {"@id": "https://matchdayterminal.com/#website"},
+      "publisher": {"@id": "https://matchdayterminal.com/#publisher"},
+      "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}
+    }
+  ]
 }
 </script>
 <script>
