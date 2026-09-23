@@ -2716,6 +2716,17 @@ html{color-scheme:dark}
   .welcomeLogo{width:112px;height:112px;margin:18px auto 16px}
   .welcomeBrand h1{font-size:clamp(2.25rem,8vw,3.5rem);line-height:1.05}
   .welcomeEnter{justify-content:space-between}
+  /* Mobile Safari may pause delayed compositor animations in low-power mode.
+     These elements otherwise remain at the keyframe's initial opacity:0,
+     hiding the entry button while non-animated cards below it stay visible. */
+  .welcomeGate:not([hidden]) .welcomeEyebrow,
+  .welcomeGate:not([hidden]) .welcomeLogo,
+  .welcomeGate:not([hidden]) .welcomeBrand h1,
+  .welcomeGate:not([hidden]) .welcomeLead,
+  .welcomeGate:not([hidden]) .welcomeDevNote,
+  .welcomeGate:not([hidden]) .welcomeActions,
+  .welcomeGate:not([hidden]) .welcomePreview,
+  .welcomeGate:not([hidden]) .welcomeProof>div{animation:none!important;opacity:1!important;transform:none!important}
 }
 /* Keep stadium dots behind the welcome controls, not visible through them. */
 .welcomeCoverage span{background:#171d24;color:var(--text);border-color:#3a454e}

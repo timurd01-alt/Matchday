@@ -46,6 +46,8 @@ class MobileStartupTests(unittest.TestCase):
         self.assertIn('.welcomeOpen .app{visibility:visible;display:grid}', css)
         self.assertIn('min-height:52px', css)
         self.assertIn('touch-action:manipulation', css)
+        self.assertIn('.welcomeGate:not([hidden]) .welcomeActions,', css)
+        self.assertIn('animation:none!important;opacity:1!important;transform:none!important', css)
 
     def test_large_scripts_do_not_block_html_parsing(self):
         for filename in (

@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0922L",
+  "tag": "Fix",
+  "title": "Keep mobile entry visible",
+  "items": [
+   "Render the welcome text, Enter button, and preview immediately on phones instead of depending on delayed entrance animations.",
+   "Prevent mobile low-power animation throttling from leaving the welcome controls transparent while later cards remain visible."
+  ]
+ },
+ {
   "date": "Build 0922K",
   "tag": "Fix",
   "title": "Restore mobile entry and navigation",
