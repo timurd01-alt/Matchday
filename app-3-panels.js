@@ -692,8 +692,7 @@ function _scMarket(vm,c){
   const share=Number(vm?.disagreement_share_pct);
   return `<section class="rsBlock rsSpan12">${rsTop('Against the market','graded')}`
     +`<div class="rsSplit"><div class="rsSplitMain">${stats}`
-    +`<p class="rsFeatRead scMarketRead">${Number.isFinite(share)?`Matchday took a different side from the market on ${share.toFixed(1)}% of priced picks. `:''}`
-    +`${stats?'Seeing an underrated team and beating the price are not the same thing — so far only the first holds.':''}</p></div>`
+    +(Number.isFinite(share)?`<p class="rsFeatRead scMarketRead">Different side from the market on ${share.toFixed(1)}% of priced picks.</p>`:'')+`</div>`
     +(rows?`<div class="rsSplitSide">${rows}<div class="scRangeKey"><span><i class="scKeyFill"></i>Hit rate</span><span><i class="scKeyRef"></i>Expected</span></div></div>`:'')
     +`</div></section>`;
 }

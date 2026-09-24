@@ -1170,10 +1170,11 @@ function rsFeatured(){
   const open=m.id?`<button type="button" class="rsMoreBtn" onclick="openMatchModal('${esc(String(m.id))}')">Open matchup <span aria-hidden="true">→</span></button>`:'';
   return `<section class="rsBlock rsFeatured rsSpan12">${rsTop('Featured read','live',when)}`
     +`<div class="rsSplit"><div class="rsSplitMain"><div class="rsFeatTeams">${side(away,'Away')}<span class="rsAt">at</span>${side(home,'Home')}</div>`
-    +`<p class="rsFeatRead">${read}</p></div><div class="rsSplitSide"><div class="rsCompare"><div><span class="rsKicker">Matchday</span><b class="rsSignal">${communityModelPctLabel(model)}</b><span>${esc(team)} win</span></div>`
+    +`</div><div class="rsSplitSide"><div class="rsCompare"><div><span class="rsKicker">Matchday</span><b class="rsSignal">${communityModelPctLabel(model)}</b><span>${esc(team)} win</span></div>`
     +(Number.isFinite(market)?`<div><span class="rsKicker">Market</span><b>${market.toFixed(1)}%</b><span>no-vig price</span></div>`:'')
     +(Number.isFinite(gap)?`<div><span class="rsKicker">Difference</span><b>${gap>0?'+':'−'}${Math.abs(gap).toFixed(1)}</b><span>points</span></div>`:'')+`</div>`
-    +`<div class="rsFoot"><p class="rsFine">Chosen as the week's most competitive game between ranked teams. Not graded.</p>${open}</div></div></div></section>`;
+    +`<p class="rsFeatRead">${read}</p>`
+    +`<div class="rsFoot"><p class="rsFine">The week's most competitive game between ranked teams. Not graded.</p>${open}</div></div></div></section>`;
 }
 /* Model–market watch: the week's largest disagreements with the price.
    Framed as research on purpose -- these are calls to watch and grade, and
@@ -1186,7 +1187,7 @@ function rsModelMarketWatch(){
     const model=Number(p.model_pct),market=Number(p.market_pct),gap=Number(p.disagreement_points);
     const away=String(p.selection||'').toLowerCase()===String(p.away||'').toLowerCase();
     const status=typeof upsetStatusText==='function'?upsetStatusText(p,away):'';
-    return `<li class="rsGapRow"><div class="rsGapGame"><b>${esc(rsShortName(p.selection))}</b>`
+    return `<li class="rsGapRow"><div class="rsGapGame"><b class="rsLogoName">${typeof teamMark==='function'?teamMark(p.selection):''}${esc(rsShortName(p.selection))}</b>`
       +`<span>${esc(rsShortName(p.away))} at ${esc(rsShortName(p.home))}${status?` · ${esc(status)}`:''}</span></div>`
       +`<span class="rsNum"><b class="rsSignal">${communityModelPctLabel(model)}</b><small>Matchday</small></span>`
       +`<span class="rsNum"><b>${Number.isFinite(market)?market.toFixed(1)+'%':'—'}</b><small>market</small></span>`
@@ -1209,7 +1210,7 @@ function rsLongshots(){
   const board=(typeof MATCHDAY_BETBETTER_UPSETS!=='undefined'&&MATCHDAY_BETBETTER_UPSETS)||{};
   const shots=String(DATA.comp_key||'').toUpperCase()==='NCAAF'?(board.upsets||[]):[];
   if(!shots.length)return '';
-  const card=(x,i)=>`<li class="rsShot${i>=9?' rsExtra':''}"><b class="rsShotPct">${Number.isFinite(Number(x.winner_pregame_pct))?Math.round(Number(x.winner_pregame_pct))+'%':'—'}</b>`
+  const card=(x,i)=>`<li class="rsShot${i>=6?' rsExtra':''}"><b class="rsShotPct">${Number.isFinite(Number(x.winner_pregame_pct))?Math.round(Number(x.winner_pregame_pct))+'%':'—'}</b>`
     +`<span class="rsShotTeam rsLogoName">${(typeof teamMark==='function'?teamMark(x.winner):'')}${esc(rsShortName(x.winner))}</span>`
     +`<span class="rsShotSub">beat ${esc(rsShortName(x.loser))} ${Number(x.winner_score)}–${Number(x.loser_score)}</span>`
     +`<span class="rsShotDate">${esc(String(x.played_on||'').slice(5).replace('-','/'))}</span></li>`;
@@ -1217,7 +1218,7 @@ function rsLongshots(){
     +`<p class="rsLede">The smallest pregame chances that still won, priced by the closing market.</p>`
     +`<ul class="rsShots">${shots.map(card).join('')}</ul>`
     +`<div class="rsFoot"><p class="rsFine">${shots.length} winners${Number.isFinite(Number(board.threshold_pct))?` at or under ${Number(board.threshold_pct)}%`:''} this season. Chance is the market's, not Matchday's.</p>`
-    +(shots.length>9?rsMoreBtn(shots.length,'View all','Longshots that won'):'')+`</div></section>`;
+    +(shots.length>6?rsMoreBtn(shots.length,'View all','Longshots that won'):'')+`</div></section>`;
 }
 function rsStat(){
   const table=collegeRankingTable();
@@ -1234,7 +1235,7 @@ function rsStat(){
   const weekly=all.filter(r=>Number.isFinite(Number(r.movement))&&Number(r.movement)!==0);
   const up=weekly.filter(r=>Number(r.movement)>0).sort((a,b)=>Number(b.movement)-Number(a.movement)).slice(0,3);
   const down=weekly.filter(r=>Number(r.movement)<0).sort((a,b)=>Number(a.movement)-Number(b.movement)).slice(0,3);
-  const li=(r,cls,sign)=>`<li>${(typeof teamMark==='function'?teamMark(r.name):'')}<span>${esc(rsShortName(r.name))}</span><small>PR #${r.rank}</small><b class="${cls}">${sign}${Math.abs(Number(r.movement))}</b></li>`;
+  const li=(r,cls,sign)=>`<li>${(typeof teamMark==='function'?teamMark(r.name):'')}<span class="rsMvName">${esc(rsShortName(r.name))}</span><small class="rsMvRank">PR #${r.rank}</small><b class="rsMvChg ${cls}">${sign}${Math.abs(Number(r.movement))}</b></li>`;
   const lists=(up.length||down.length)
     ?`<div class="rsMovers"><div><span class="rsKicker">This week · up</span><ul>${up.map(r=>li(r,'rsWin','↑')).join('')}</ul></div>`
       +`<div><span class="rsKicker">This week · down</span><ul>${down.map(r=>li(r,'rsLoss','↓')).join('')}</ul></div></div>`:'';
@@ -1261,8 +1262,10 @@ function rsMyPicks(){
   };
   return `<section class="rsBlock rsSpan12">${rsTop('Matchday in public','graded')}`
     +`<div class="rsSplit"><div class="rsSplitMain"><p class="rsLede">How <a href="https://x.com/timurknowsball" target="_blank" rel="noopener">@timurknowsball</a> uses the model, pick by pick.</p>`
-    +`<div class="rsBigStat"><b>${wins}–${settled.length-wins}</b><span>settled picks</span></div>`
-    +`<dl class="rsSummary"><div><dt>With Matchday</dt><dd>${agreedW}–${agreed.length-agreedW}</dd></div><div><dt>Against Matchday</dt><dd>${differW}–${differ.length-differW}</dd></div></dl></div>`
+    +`<div class="rsBigStat"><b>${wins}–${settled.length-wins}</b><span>settled picks · ${settled.length?Math.round(wins/settled.length*100):0}% hit rate</span></div>`
+    // Every settled pick in order, oldest first: the record as a run of results.
+    +`<div class="rsForm" aria-label="Settled picks in order, oldest first">${settled.slice().sort((x,y)=>String(x.starts_at||'').localeCompare(String(y.starts_at||''))).map(p=>`<i class="${p.outcome===1?'w':'l'}" title="${esc(rsShortName(p.selection))} · ${p.outcome===1?'won':'lost'}"></i>`).join('')}</div>`
+    +[['With Matchday',agreedW,agreed.length],['Against Matchday',differW,differ.length]].filter(([,,n])=>n).map(([k,w,n])=>`<div class="rsSplitBar"><div><span class="rsKicker">${k}</span><b>${w}–${n-w}</b></div><i><b style="width:${Math.round(w/n*100)}%"></b></i><em>${Math.round(w/n*100)}%</em></div>`).join('')+`</div>`
     +`<div class="rsSplitSide rsExpandable"><ul class="rsPicks">${ordered.map(row).join('')}</ul>`
     +(ordered.length>5?rsMoreBtn(ordered.length,'All picks','@timurknowsball picks'):'')+`</div></div></section>`;
 }
@@ -1385,14 +1388,14 @@ function rsSchedules(){
   if(rows.length<10)return '';
   const pool=rows.filter(r=>(r.rank||999)<=40);
   const top=(pool.length>=10?pool:rows).slice().sort((a,b)=>Number(b.sos)-Number(a.sos));
-  const row=(r,i)=>`<li class="rsSchedRow${i>=5?' rsExtra':''}"><span class="rsRank">${i+1}</span>`
+  const row=(r,i)=>`<li class="rsSchedRow${i>=6?' rsExtra':''}"><span class="rsRank">${i+1}</span>`
     +`<span class="rsSchedTeam">${typeof teamMark==='function'?teamMark(r.name):''}<b>${esc(rsShortName(r.name))}</b></span>`
     +`<span class="rsNum rsMuted" title="Power rating rank"><b>#${r.rank}</b></span>`
     +`<span class="rsNum"><b>${Number(r.sos).toFixed(2)}</b></span></li>`;
   return `<section class="rsBlock rsExpandable rsSpan5">${rsTop('Toughest schedules','season','Power rating top 40')}`
     +`<div class="rsSchedHead"><span></span><span>Team</span><span>PR</span><span>SoS</span></div>`
     +`<ol class="rsSched">${top.map(row).join('')}</ol>`
-    +(top.length>5?rsMoreBtn(top.length,'View all','Toughest schedules · power rating top 40'):'')+`</section>`;
+    +(top.length>6?rsMoreBtn(top.length,'View all','Toughest schedules · power rating top 40'):'')+`</section>`;
 }
 function rsPart(num,label,body){
   return body?`<div class="rsPart"><h2 class="rsPartHead"><span>${num}</span>${label}</h2>${body}</div>`:'';

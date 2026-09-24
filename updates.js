@@ -4,6 +4,17 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0924T",
+  "tag": "Design",
+  "title": "Research and Scorecard polish",
+  "items": [
+   "Supporting sentences are now short grey notes instead of white paragraphs.",
+   "The featured read sits beside its numbers without a gap in the middle; Model–market watch shows team logos.",
+   "Risers & fallers rows line up logo, name and rank cleanly; Toughest schedules shows six teams.",
+   "Matchday in public adds a pick-by-pick form strip and bars comparing picks with and against Matchday."
+  ]
+ },
+ {
   "date": "Build 0924S",
   "tag": "Feature",
   "title": "Non-conference and overall records in conference standings",
