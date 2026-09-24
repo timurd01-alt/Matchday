@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0923Z",
+  "tag": "Design",
+  "title": "Illustrated players on the welcome page",
+  "items": [
+   "Subtle basketball and football illustrations frame the welcome page in the site's dark palette, with simplified faces and a compact layout."
+  ]
+ },
+ {
   "date": "Build 0923Y",
   "tag": "Design",
   "title": "The CFP field, together on screen",

@@ -3058,7 +3058,7 @@ body.welcomeOpen{height:auto;min-height:100vh;overflow-y:auto}
 @media(max-width:760px){#welcomeGate .wx-hero{padding:64px 0 48px}#welcomeGate .wx-hero .welcomeEnter{width:100%}}
 
 /* Quiet, decorative athletes frame the entrance without intercepting input. */
-#welcomeGate .wx-hero::after{content:"";position:absolute;z-index:-2;pointer-events:none;top:0;bottom:0;left:50%;transform:translateX(-50%);width:min(1500px,100vw);background:url("assets/welcome/college-athletes.webp") center top/cover no-repeat;opacity:.55;mask-image:linear-gradient(to bottom,transparent,black 12%,black 65%,transparent);}
+#welcomeGate .wx-hero::after{content:"";position:absolute;z-index:-2;pointer-events:none;top:0;bottom:0;left:50%;transform:translateX(-50%);width:min(1500px,100vw);background:url("assets/welcome/college-athletes-illustrated.webp") center top/cover no-repeat;opacity:.55;mask-image:linear-gradient(to bottom,transparent,black 12%,black 65%,transparent);}
 @media(max-width:760px){#welcomeGate .wx-hero::after{background-size:100% auto;opacity:.32}}
 
 /* News cards are one size. The grid used align-items:start, so every card was
