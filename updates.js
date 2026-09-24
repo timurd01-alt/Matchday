@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0923R",
+  "tag": "Feature",
+  "title": "Matchday on Instagram",
+  "items": [
+   "The @timurknowsball Instagram is now linked beside X, YouTube and TikTok in the Welcome page header and footer, and on the legal page."
+  ]
+ },
+ {
   "date": "Build 0923Q",
   "tag": "Fix",
   "title": "Real kickoff times on the Games board",
