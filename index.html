@@ -137,7 +137,10 @@ document.addEventListener('click',function(event){
   <div class="wx">
     <header class="wx-top">
       <span class="wx-brand"><img src="icon-192.png?v=4" class="wx-logo" alt="" width="24" height="24">Matchday Terminal</span>
-      <button class="wx-link" type="button" onclick="matchdayEnterNow()">Enter app <span aria-hidden="true">→</span></button>
+      <nav class="wx-topNav" aria-label="Matchday">
+        <a class="wx-social" href="https://x.com/timurknowsball" rel="me noopener" target="_blank" aria-label="Follow @timurknowsball on X"><svg class="wx-xicon" viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 2H22l-6.8 7.8L23.2 22h-6.3l-4.9-6.4L6.4 22H3.3l7.3-8.3L1 2h6.4l4.4 5.9L18.9 2zm-1.1 18h1.7L6.3 3.9H4.5L17.8 20z"/></svg><span>@timurknowsball</span></a>
+        <button class="wx-link" type="button" onclick="matchdayEnterNow()">Enter app <span aria-hidden="true">→</span></button>
+      </nav>
     </header>
 
     <section class="wx-hero">
@@ -158,41 +161,31 @@ document.addEventListener('click',function(event){
         <li><span class="wx-num">02</span><h3>Compare</h3><p>Each probability sits beside the market's number, so you can see where the two disagree.</p></li>
         <li><span class="wx-num">03</span><h3>Grade</h3><p>Picks lock before kickoff and are graded after the result. Nothing locked is ever rewritten.</p></li>
       </ol>
+      <div id="welcomeStatusNote" class="wx-body wx-note"><p>Ratings come from Matchday's own engine, which is still being refined, so a team's number can move between editions.</p></div>
     </section>
 
     <section class="wx-section" aria-labelledby="wxExplore">
       <p class="wx-meta">Explore Matchday</p>
       <h2 id="wxExplore">Start with the board.</h2>
-      <div class="wx-grid">
+      <div class="wx-grid wx-grid4">
         <button class="wx-card" type="button" onclick="matchdayEnterNow('matches')"><span class="wx-meta">Games</span><h3>The current board</h3><p>Upcoming matchups, model probabilities and market differences.</p><span class="wx-cta">Explore games <span aria-hidden="true">→</span></span></button>
         <button class="wx-card" type="button" onclick="matchdayEnterNow('groups')"><span class="wx-meta">Rankings</span><h3>Who's actually good?</h3><p>Team ratings, schedule context and conference strength.</p><span class="wx-cta">Explore rankings <span aria-hidden="true">→</span></span></button>
         <button class="wx-card" type="button" onclick="matchdayEnterNow('score')"><span class="wx-meta">Scorecard</span><h3>The permanent record</h3><p>Every locked prediction, graded after the result.</p><span class="wx-cta">View scorecard <span aria-hidden="true">→</span></span></button>
+        <button class="wx-card" type="button" onclick="matchdayEnterNow('community')"><span class="wx-meta">Community</span><h3>Make your own picks</h3><p>Call games against the model and see how your record compares.</p><span class="wx-cta">Join community <span aria-hidden="true">→</span></span></button>
       </div>
     </section>
 
-    <section class="wx-section wx-record" aria-labelledby="wxRecord">
-      <p class="wx-meta">The record</p>
-      <h2 id="wxRecord">Every locked prediction is preserved and graded.</h2>
-      <div id="welcomeStatusNote" class="wx-body"><p>Ratings come from Matchday's own engine, which is still being refined, so a team's number can move between editions. Brackets and polls are projections until real results exist, and they say so.</p></div>
-      <div class="wx-stat" id="welcomeRecord" hidden></div>
-      <button class="wx-link" type="button" onclick="matchdayEnterNow('score')">View scorecard <span aria-hidden="true">→</span></button>
-    </section>
-
-    <section class="wx-section wx-research" aria-labelledby="wxResearch">
-      <p class="wx-meta">Research</p>
-      <h2 id="wxResearch">The ideas behind the numbers.</h2>
-      <p class="wx-body">Methodology, ratings context and the week's upset watch.</p>
-      <button class="wx-link" type="button" onclick="matchdayEnterNow('news')">View research <span aria-hidden="true">→</span></button>
-    </section>
-
     <footer class="wx-foot">
-      <span class="wx-brand">Matchday Terminal</span>
-      <p class="wx-meta wx-quiet">College sports research</p>
-      <button class="wx-link" type="button" onclick="matchdayEnterNow()">Enter app <span aria-hidden="true">→</span></button>
-      <nav class="wx-footLinks" aria-label="More">
-        <a href="https://x.com/timurknowsball" rel="me noopener" target="_blank">Follow @timurknowsball on X <span aria-hidden="true">↗</span></a>
-        <a href="legal.html">Legal, privacy &amp; data sources</a>
+      <span class="wx-brand"><img src="icon-192.png?v=4" class="wx-logo" alt="" width="24" height="24">Matchday Terminal</span>
+      <nav class="wx-footLinks" aria-label="Site">
+        <button type="button" onclick="matchdayEnterNow('matches')">Games</button>
+        <button type="button" onclick="matchdayEnterNow('groups')">Rankings</button>
+        <button type="button" onclick="matchdayEnterNow('score')">Scorecard</button>
+        <button type="button" onclick="matchdayEnterNow('community')">Community</button>
+        <button type="button" onclick="matchdayEnterNow('news')">Research</button>
+        <a href="legal.html">Legal &amp; data sources</a>
       </nav>
+      <a class="wx-social" href="https://x.com/timurknowsball" rel="me noopener" target="_blank" aria-label="Follow @timurknowsball on X"><svg class="wx-xicon" viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 2H22l-6.8 7.8L23.2 22h-6.3l-4.9-6.4L6.4 22H3.3l7.3-8.3L1 2h6.4l4.4 5.9L18.9 2zm-1.1 18h1.7L6.3 3.9H4.5L17.8 20z"/></svg><span>@timurknowsball</span></a>
     </footer>
   </div>
 </section>

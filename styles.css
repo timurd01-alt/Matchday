@@ -2985,3 +2985,33 @@ body.welcomeOpen{height:auto;min-height:100vh;overflow-y:auto}
 #welcomeGate .wx-card{background:var(--panel);border-color:var(--line);border-radius:var(--r)}
 #welcomeGate .wx-card:hover{border-color:rgba(58,209,122,.45)}
 @media(max-width:760px){#welcomeGate .wx-top{margin:0 -16px;padding:16px}}
+
+/* ---- welcome gate: a short entrance ---------------------------------------
+   Three jobs only -- what Matchday is, how it works, where to go -- so the
+   Record and Research sections are gone (the app has both) and the spacing
+   tightens to 96/64. X is the one configured social account; it sits in the
+   header as a quiet outlined chip rather than only in the footer. */
+#welcomeGate .wx-hero{padding:96px 0 64px}
+#welcomeGate .wx-section{padding:64px 0}
+#welcomeGate .wx-topNav{display:flex;align-items:center;gap:16px}
+#welcomeGate .wx-social{display:inline-flex;align-items:center;gap:8px;min-height:36px;padding:0 16px;border:1px solid var(--line2);border-radius:999px;color:var(--text);font-size:var(--fs-wx-meta);font-weight:var(--fw-medium);text-decoration:none;transition:border-color .15s ease}
+#welcomeGate .wx-social:hover{border-color:var(--signal)}
+#welcomeGate .wx-social:focus-visible{outline:2px solid var(--signal);outline-offset:4px}
+#welcomeGate .wx-xicon{width:14px;height:14px;fill:currentColor}
+#welcomeGate .wx-grid4{grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:1fr;gap:24px}
+#welcomeGate .wx-note{margin-top:32px;font-size:var(--fs-wx-meta)}
+#welcomeGate .wx-note p{font-size:inherit}
+#welcomeGate .wx-foot{padding:48px 0;gap:16px}
+#welcomeGate .wx-footLinks{margin-top:0}
+#welcomeGate .wx-footLinks button{appearance:none;background:none;border:0;padding:8px 0;min-height:44px;font:inherit;font-size:var(--fs-wx-meta);font-weight:var(--fw-medium);color:var(--muted);cursor:pointer}
+#welcomeGate .wx-footLinks button:hover{color:var(--text)}
+#welcomeGate .wx-footLinks button:focus-visible{outline:2px solid var(--signal);outline-offset:4px;border-radius:8px}
+@media(max-width:1000px){#welcomeGate .wx-grid4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){
+  #welcomeGate .wx-hero{padding:48px 0}
+  #welcomeGate .wx-section{padding:48px 0}
+  #welcomeGate .wx-grid4{grid-template-columns:1fr}
+  #welcomeGate .wx-social span{display:none}
+  #welcomeGate .wx-social{padding:0 12px;min-height:44px}
+}
+@media(prefers-reduced-motion:reduce){#welcomeGate .wx-social{transition:none}}

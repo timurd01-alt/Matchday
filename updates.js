@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0923K",
+  "tag": "Design",
+  "title": "A shorter Welcome page",
+  "items": [
+   "The Welcome page is now three parts: what Matchday is, how it works, and where to start. The Record and Research sections are gone, since the app has both.",
+   "Explore Matchday now has four equal cards: Games, Rankings, Scorecard and Community.",
+   "The @timurknowsball X account sits in the header, and the footer is a simple site menu."
+  ]
+ },
+ {
   "date": "Build 0923J",
   "tag": "Fix",
   "title": "FBS vs FCS games are priced again, but not graded",
