@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0923U",
+  "tag": "Fix",
+  "title": "Aligned ranking movement arrows",
+  "items": [
+   "The AP Top 25 now shows movement the same way as the Power Rating: ▲/▼ in a narrow centred column right after the rank, instead of a wide right-aligned column where the arrows drifted away from their rows."
+  ]
+ },
+ {
   "date": "Build 0923T",
   "tag": "Design",
   "title": "A tighter Welcome page",

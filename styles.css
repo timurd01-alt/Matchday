@@ -3027,3 +3027,13 @@ body.welcomeOpen{height:auto;min-height:100vh;overflow-y:auto}
 #welcomeGate .wx-grid{margin-top:32px}
 #welcomeGate .wx-grid:not(.wx-grid4){gap:24px}
 @media(max-width:760px){#welcomeGate .wx-hero{padding:48px 0 40px}#welcomeGate .wx-section{padding:40px 0}#welcomeGate .wx-grid{margin-top:24px}}
+
+/* AP Top 25 movement matches the power-rating table: the same ▲/▼ marks, in a
+   narrow centred column beside the rank, instead of a wide right-aligned one
+   after the team name where the arrows floated away from their rows. */
+.gtable.officialPollTable th.pollMoveCell,.gtable.officialPollTable td.pollMoveCell{width:52px;text-align:center;white-space:nowrap}
+.gtable.officialPollTable td.pollMoveCell .pollMove{min-width:0;justify-content:center}
+.gtable.officialPollTable td:nth-child(3),.gtable.officialPollTable th:nth-child(3){text-align:left}
+.gtable.officialPollTable td:nth-child(4),.gtable.officialPollTable th:nth-child(4),
+.gtable.officialPollTable td:nth-child(5),.gtable.officialPollTable th:nth-child(5){text-align:right;font-variant-numeric:tabular-nums}
+.gtable.officialPollTable td:nth-child(2):not(.pollMoveCell),.gtable.officialPollTable th:nth-child(2):not(.pollMoveCell){text-align:left}
