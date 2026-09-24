@@ -4,6 +4,17 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0924F",
+  "tag": "Design",
+  "title": "Clearer Research sections",
+  "items": [
+   "Every Research section now sits in its own bordered panel, and the weekly rail stays in view as you scroll.",
+   "Toughest schedules moved beside the Upset radar as a compact ranked list with team badges and schedule-strength bars.",
+   "View all is now a clear full-width button that opens the complete list in its own window.",
+   "Hover anywhere on Rating vs schedule to see the nearest team's conference, rank, rating and schedule strength."
+  ]
+ },
+ {
   "date": "Build 0924E",
   "tag": "Design",
   "title": "Research with a clear reading order",

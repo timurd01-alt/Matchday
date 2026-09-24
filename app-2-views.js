@@ -1094,6 +1094,38 @@ function collegeModules(){
    then conference context, then reference data. Nothing is dropped -- longer
    lists sit behind "View all" and the conference views behind tabs. Colour
    carries meaning only: green for the model's signal, red for a miss. */
+// One "View all" pattern everywhere: the extra rows live in the same list
+// (so columns stay aligned) and a visible button toggles them.
+function rsMoreBtn(total,label,title){
+  return `<button type="button" class="rsMoreBtn" aria-haspopup="dialog" data-title="${esc(title)}" onclick="rsOpenAll(this)">${esc(label)} ${total} <span aria-hidden="true">→</span></button>`;
+}
+/* "View all" opens the complete list in its own window rather than growing
+   the section in place. The list is cloned from the section, so the window
+   shows exactly the same rows and columns, just all of them. */
+function rsOpenAll(btn){
+  const box=btn.closest('.rsExpandable');if(!box)return;
+  const title=btn.dataset.title||'All';
+  const body=document.createElement('div');
+  box.querySelectorAll(':scope > .rsSchedHead, :scope > ul, :scope > ol').forEach(el=>{
+    const c=el.cloneNode(true);c.querySelectorAll('.rsExtra').forEach(x=>x.classList.remove('rsExtra'));body.appendChild(c);
+  });
+  let dlg=document.getElementById('rsAllDialog');
+  if(!dlg){
+    dlg=document.createElement('div');dlg.id='rsAllDialog';dlg.className='rsDialog';dlg.hidden=true;
+    dlg.innerHTML=`<div class="rsDialogSheet" role="dialog" aria-modal="true" aria-labelledby="rsDialogTitle" tabindex="-1"><div class="rsDialogHead"><h2 id="rsDialogTitle" class="seclbl"></h2><button type="button" class="rsDialogClose" aria-label="Close">×</button></div><div class="rsDialogBody"></div></div>`;
+    document.body.appendChild(dlg);
+    dlg.addEventListener('click',e=>{if(e.target===dlg||e.target.closest('.rsDialogClose'))rsCloseAll()});
+    document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!dlg.hidden)rsCloseAll()});
+  }
+  dlg.querySelector('#rsDialogTitle').textContent=title;
+  dlg.querySelector('.rsDialogBody').replaceChildren(...body.childNodes);
+  dlg._opener=btn;dlg.hidden=false;document.body.classList.add('modalOpen');
+  dlg.querySelector('.rsDialogSheet').focus();
+}
+function rsCloseAll(){
+  const dlg=document.getElementById('rsAllDialog');if(!dlg)return;
+  dlg.hidden=true;document.body.classList.remove('modalOpen');dlg._opener?.focus();
+}
 function rsHead(label,aside){
   return `<div class="rsHead"><h2 class="seclbl">${label}</h2>${aside?`<span class="rsAside">${aside}</span>`:''}</div>`;
 }
@@ -1149,12 +1181,13 @@ function rsUpsetRadar(){
   const shotRow=x=>`<li class="rsShotRow" title="${esc(`${x.winner} ${x.winner_score}–${x.loser_score} ${x.loser} · ${String(x.played_on||'')}`)}">`
     +`<span><b>${esc(rsShortName(x.winner))}</b> beat ${esc(rsShortName(x.loser))} <em>${Number(x.winner_score)}–${Number(x.loser_score)}</em></span>`
     +`<span class="rsNum"><b>${Number.isFinite(Number(x.winner_pregame_pct))?Math.round(Number(x.winner_pregame_pct))+'%':'—'}</b></span></li>`;
-  const more=shots.slice(3,8);
+  const shown=shots.slice(0,8);
   return `<section class="rsBlock">${rsHead('Upset radar')}`
     +(gaps?`<div class="rsSub">Biggest model–market gaps this week</div><ul class="rsList">${gaps}</ul>`
       +`<p class="rsFine">Up to three calls a week${u.considered?`, from ${u.considered} games`:''}. To watch and grade, not recommended bets.</p>`:'')
-    +(shots.length?`<div class="rsSub">Longest-shot winners this season <span>pregame chance</span></div><ul class="rsList">${shots.slice(0,3).map(shotRow).join('')}</ul>`
-      +(more.length?`<details class="rsMore"><summary>View all <span aria-hidden="true">→</span></summary><ul class="rsList">${more.map(shotRow).join('')}</ul></details>`:''):'')
+    +(shots.length?`<div class="rsExpandable"><div class="rsSub">Longest-shot winners this season <span>pregame chance</span></div>`
+      +`<ul class="rsList">${shown.map((x,i)=>shotRow(x).replace('<li class="rsShotRow"',`<li class="rsShotRow${i>=3?' rsExtra':''}"`)).join('')}</ul>`
+      +(shown.length>3?rsMoreBtn(shown.length,'View all','Longest-shot winners this season'):'')+`</div>`:'')
     +`</section>`;
 }
 function rsStat(){
@@ -1202,9 +1235,8 @@ function rsMyPicks(){
   };
   return `<div class="rsRailBlock"><span class="seclbl">@timurknowsball</span>`
     +`<b class="rsRailBig">${wins}–${settled.length-wins}</b><span class="rsRailSub">settled picks · ${agreed} of ${settled.length} agreed with Matchday</span>`
-    +`<ul class="rsPicks">${ordered.slice(0,5).map(row).join('')}</ul>`
-    +(ordered.length>5?`<details class="rsMore"><summary>All picks <span aria-hidden="true">→</span></summary><ul class="rsPicks">${ordered.slice(5).map(row).join('')}</ul></details>`:'')
-    +`</div>`;
+    +`<div class="rsExpandable"><ul class="rsPicks">${ordered.map((p,i)=>row(p).replace('<li ',`<li class="${i>=5?'rsExtra':''}" `)).join('')}</ul>`
+    +(ordered.length>5?rsMoreBtn(ordered.length,'All picks','@timurknowsball picks'):'')+`</div></div>`;
 }
 function rsScatter(){
   const table=collegeRankingTable();
@@ -1222,7 +1254,7 @@ function rsScatter(){
   const top=rows.slice().sort((a,b)=>Number(b.rating)-Number(a.rating)).slice(0,3);
   const dots=rows.map(r=>{
     const power=String(r.tier||'')==='power',hi=top.includes(r);
-    return `<circle cx="${sx(Number(r.sos)).toFixed(1)}" cy="${sy(Number(r.rating)).toFixed(1)}" r="${hi?4.5:3}" class="${hi?'dotHi':power?'dotP':'dotG'}"><title>${esc(r.name)} — rating ${Number(r.rating).toFixed(2)}, SoS ${Number(r.sos).toFixed(2)}${r.conference?' · '+esc(r.conference):''}</title></circle>`;
+    return `<circle cx="${sx(Number(r.sos)).toFixed(1)}" cy="${sy(Number(r.rating)).toFixed(1)}" r="${hi?4.5:3}" class="${hi?'dotHi':power?'dotP':'dotG'}" data-team="${esc(r.name)}" data-rank="${esc(r.rank??'')}" data-rating="${Number(r.rating).toFixed(2)}" data-sos="${Number(r.sos).toFixed(2)}" data-conf="${esc(r.conference||'')}"></circle>`;
   }).join('');
   let lastY=-99;
   const labels=top.slice().sort((a,b)=>sy(Number(a.rating))-sy(Number(b.rating))).map(r=>{
@@ -1237,9 +1269,42 @@ function rsScatter(){
     +`<line class="scMed" x1="${mx.toFixed(1)}" y1="${PT}" x2="${mx.toFixed(1)}" y2="${H-PB}"/><line class="scMed" x1="${PL}" y1="${my.toFixed(1)}" x2="${W-PR}" y2="${my.toFixed(1)}"/>`
     +`${dots}${labels}<text class="scAxLbl" x="${(W/2).toFixed(0)}" y="${H-8}" text-anchor="middle">strength of schedule →</text>`
     +`<text class="scAxLbl" transform="rotate(-90 12 ${(H/2).toFixed(0)})" x="12" y="${(H/2).toFixed(0)}" text-anchor="middle">rating →</text></svg>`
-    +`<div class="rsLegend"><span><i class="dotKeyP"></i>Power</span>${anyG5?'<span><i class="dotKeyG"></i>Group of Five</span>':''}<span>Lines are medians · hover a dot for the team</span></div>`
+    +`<div class="rsLegend"><span><i class="dotKeyP"></i>Power</span>${anyG5?'<span><i class="dotKeyG"></i>Group of Five</span>':''}<span>Lines are medians · hover anywhere on the chart</span></div>`
     +`<p class="rsFine">Up and to the right is a strong rating earned against a hard schedule; up and to the left is a rating built on a soft one.</p></section>`;
 }
+/* Hover anywhere on the chart: the nearest dot within reach is highlighted
+   and described in a floating card. Dots are a few pixels wide, so matching the
+   cursor to the closest one beats making readers hit each dot exactly. */
+function rsScatterTip(){
+  let tip=document.getElementById('rsScatterTip');
+  if(!tip){tip=document.createElement('div');tip.id='rsScatterTip';tip.className='rsScatterTip';tip.setAttribute('role','tooltip');tip.hidden=true;document.body.appendChild(tip)}
+  return tip;
+}
+function rsScatterClear(svg){
+  svg?.querySelectorAll('circle.rsActive').forEach(c=>c.classList.remove('rsActive'));
+  const tip=document.getElementById('rsScatterTip');if(tip)tip.hidden=true;
+}
+document.addEventListener('pointermove',e=>{
+  const svg=e.target.closest?.('.rsScatter');
+  if(!svg){document.querySelectorAll('.rsScatter').forEach(rsScatterClear);return}
+  let best=null,bestD=18*18;
+  svg.querySelectorAll('circle[data-team]').forEach(c=>{
+    const b=c.getBoundingClientRect(),dx=b.left+b.width/2-e.clientX,dy=b.top+b.height/2-e.clientY,d=dx*dx+dy*dy;
+    if(d<bestD){bestD=d;best=c}
+  });
+  svg.querySelectorAll('circle.rsActive').forEach(c=>{if(c!==best)c.classList.remove('rsActive')});
+  const tip=rsScatterTip();
+  if(!best){tip.hidden=true;return}
+  best.classList.add('rsActive');
+  const d=best.dataset;
+  tip.innerHTML=`<b>${esc(d.team)}</b>${d.conf?`<span>${esc(d.conf)}${d.rank?` · #${esc(d.rank)}`:''}</span>`:''}<dl><div><dt>Rating</dt><dd>${esc(d.rating)}</dd></div><div><dt>SoS</dt><dd>${esc(d.sos)}</dd></div></dl>`;
+  tip.hidden=false;
+  const b=best.getBoundingClientRect(),w=tip.offsetWidth,h=tip.offsetHeight;
+  let x=b.left+b.width/2+14,y=b.top-h/2;
+  if(x+w>innerWidth-12)x=b.left-w-14;
+  y=Math.max(12,Math.min(innerHeight-h-12,y));
+  tip.style.left=x+'px';tip.style.top=y+'px';
+});
 function rsConfTab(btn,key){
   const box=btn.closest('.rsConf');if(!box)return;
   box.dataset.tab=key;
@@ -1280,22 +1345,26 @@ function rsSchedules(){
   if(rows.length<10)return '';
   const pool=rows.filter(r=>(r.rank||999)<=40);
   const top=(pool.length>=10?pool:rows).slice().sort((a,b)=>Number(b.sos)-Number(a.sos));
-  const row=(r,i)=>`<tr><td class="rsLeft"><span class="rsRank">${i+1}</span>${esc(rsShortName(r.name))}</td><td>#${r.rank}</td><td>${Number(r.sos).toFixed(2)}</td><td>${Number(r.rating).toFixed(2)}</td></tr>`;
-  const head=`<thead><tr><th class="rsLeft">Team</th><th>Rank</th><th>SoS</th><th>Rating</th></tr></thead>`;
-  return `<section class="rsBlock">${rsHead('Toughest schedules','Top 40 teams')}`
-    +`<div class="scTableWrap"><table class="scTable">${head}<tbody>${top.slice(0,5).map(row).join('')}</tbody></table></div>`
-    +(top.length>5?`<details class="rsMore"><summary>View all ${top.length} <span aria-hidden="true">→</span></summary><div class="scTableWrap"><table class="scTable"><tbody>${top.slice(5).map((r,i)=>row(r,i+5)).join('')}</tbody></table></div></details>`:'')
-    +`</section>`;
+  const hi=Number(top[0].sos),lo=Math.min(0,...top.map(r=>Number(r.sos)));
+  const row=(r,i)=>`<li class="rsSchedRow${i>=5?' rsExtra':''}"><span class="rsRank">${i+1}</span>`
+    +`<span class="rsSchedTeam">${typeof teamMark==='function'?teamMark(r.name):''}<b>${esc(rsShortName(r.name))}</b><small>#${r.rank}</small></span>`
+    +`<i class="rsBar"><b style="width:${Math.max(3,Math.round((Number(r.sos)-lo)/((hi-lo)||1)*100))}%"></b></i>`
+    +`<span class="rsNum"><b>${Number(r.sos).toFixed(2)}</b></span><span class="rsNum rsMuted"><b>${Number(r.rating).toFixed(1)}</b></span></li>`;
+  return `<section class="rsBlock rsExpandable">${rsHead('Toughest schedules','Top 40 teams')}`
+    +`<div class="rsSchedHead"><span></span><span>Team</span><span>Strength of schedule</span><span>SoS</span><span>Rating</span></div>`
+    +`<ol class="rsSched">${top.map(row).join('')}</ol>`
+    +(top.length>5?rsMoreBtn(top.length,'View all','Toughest schedules · top 40 teams'):'')+`</section>`;
 }
 function collegeResearchModules(){
   if(!['NCAAF','NCAAM'].includes(String(DATA?.comp_key||'').toUpperCase()))return '';
   const featured=rsFeatured(),radar=rsUpsetRadar();
   const rail=[rsStat(),rsNotable(),rsMyPicks()].filter(Boolean).join('');
-  const lower=[rsScatter(),rsConferences(),rsSchedules()].filter(Boolean).join('');
-  if(!featured&&!radar&&!rail&&!lower)return '';
+  const sched=rsSchedules();
+  const lower=[rsScatter(),rsConferences()].filter(Boolean).join('');
+  if(!featured&&!radar&&!sched&&!rail&&!lower)return '';
   return `<section class="collegeResearch" aria-label="Weekly watch and college analysis">
     ${featured}
-    <div class="rsGrid"><div class="rsMain">${radar}</div>${rail?`<aside class="rsRail" aria-label="This week">${rail}</aside>`:''}</div>
+    <div class="rsGrid"><div class="rsMain">${radar}${sched}</div>${rail?`<aside class="rsRail" aria-label="This week">${rail}</aside>`:''}</div>
     ${lower}
   </section>`;
 }
