@@ -3564,3 +3564,4 @@ body{font-variant-numeric:tabular-nums}
 .rsNotes .rsStopList{flex:1;display:flex;flex-direction:column}
 .rsStopList dd{flex:1;display:flex!important;flex-direction:column}
 .rsStopList ol{flex:1;display:flex;flex-direction:column;justify-content:space-between}
+.rsNotes:has(.rsStopList)>div:not(.rsStopList){padding:14px 0}.rsNotes:has(.rsStopList)>div:first-child{padding-top:6px}.rsNotes:has(.rsStopList) dd{margin-top:6px}.rsNotes:has(.rsStopList) .rsStopList{padding-top:14px}

@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0925B",
+  "tag": "Fix",
+  "title": "Roomier defense notes",
+  "items": [
+   "Wins by frequency and Wins by limiting damage have more breathing room in the defense notes."
+  ]
+ },
+ {
   "date": "Build 0924AB",
   "tag": "Design",
   "title": "The bracket, without the box",
