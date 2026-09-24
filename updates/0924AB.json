@@ -1,0 +1,10 @@
+{
+  "rank": 305,
+  "date": "Build 0924AB",
+  "tag": "Design",
+  "title": "The bracket, without the box",
+  "items": [
+    "Removed the repeated round headings above the CFP bracket.",
+    "The connected gold bracket now sits directly on the Terminal background, without the gray outer panel."
+  ]
+}

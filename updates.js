@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0924AB",
+  "tag": "Design",
+  "title": "The bracket, without the box",
+  "items": [
+   "Removed the repeated round headings above the CFP bracket.",
+   "The connected gold bracket now sits directly on the Terminal background, without the gray outer panel."
+  ]
+ },
+ {
   "date": "Build 0925A",
   "tag": "Fix",
   "title": "Even spacing in the defense notes",
