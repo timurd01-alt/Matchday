@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0924AA",
+  "tag": "Design",
+  "title": "A larger CFP bracket",
+  "items": [
+   "Reduced the empty space around the CFP diagram so the connected bracket fills more of its panel.",
+   "The complete bracket still fits the available screen height without a scrolling panel."
+  ]
+ },
+ {
   "date": "Build 0924Z",
   "tag": "Feature",
   "title": "How it played",
