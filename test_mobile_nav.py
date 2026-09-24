@@ -61,7 +61,14 @@ class MobileNavigationTests(unittest.TestCase):
     def test_desktop_full_width_grid_cannot_override_the_phone_layout(self):
         css = (ROOT / "styles.css").read_text(encoding="utf-8")
         desktop = css[css.rindex("@media(min-width:701px){"):]
-        phone = css[css.rindex("@media(max-width:700px){"):]
+        # Inspect the app grid, not whichever component happens to declare
+        # the last phone breakpoint (the CFP row has its own two-column grid).
+        phone_grids = re.findall(
+            r"@media\(max-width:700px\)\s*\{\s*(\.app,\.app\.noinsight,\.app\.gamesWide\{[^}]+\})",
+            css,
+        )
+        self.assertTrue(phone_grids, "The app's phone grid rule is missing")
+        phone = phone_grids[-1]
         self.assertIn("grid-template-columns:62px minmax(0,1fr)", desktop)
         self.assertIn("grid-template-columns:1fr", phone)
         self.assertIn('grid-template-areas:"strip" "main" "side"', phone)
