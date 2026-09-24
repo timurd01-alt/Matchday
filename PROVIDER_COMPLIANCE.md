@@ -1,5 +1,9 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-09-24 (connected CFP presentation uses the existing published
+field, final scores, and existing local school-mark library. No new source,
+endpoint, raw payload, or ESPN imagery is introduced.)
+
 Reviewed: 2026-09-23 (owner decision, later the same day: ESPN's **public
 knowledge is not off the books**. Schedule facts -- which teams play, the
 date, and the announced kickoff time -- are public facts like a final score,

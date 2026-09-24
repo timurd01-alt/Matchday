@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0924I",
+  "tag": "Design",
+  "title": "A connected road to the CFP championship",
+  "items": [
+   "The CFP bracket is now mirrored: opening games on the outside, connected paths through the quarterfinals and semifinals, and the championship in the center.",
+   "Team logos, seed badges and a gold title-game treatment make the complete field easy to follow without a scrolling bracket panel.",
+   "Paths follow fixed CFP seeding and preserve supplied matchups and final scores."
+  ]
+ },
+ {
   "date": "Build 0924H",
   "tag": "Fix",
   "title": "Team logos fit their badges on Research",

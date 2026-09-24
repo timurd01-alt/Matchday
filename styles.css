@@ -3050,57 +3050,37 @@ body.welcomeOpen{height:auto;min-height:100vh;overflow-y:auto}
 .ncard::before{background:var(--nk)}
 .newsKind{font-family:var(--mono);font-size:var(--fs-3xs);font-weight:var(--fw-bold);letter-spacing:.08em;text-transform:uppercase;color:var(--nk);border:1px solid color-mix(in srgb,var(--nk) 45%,transparent);background:color-mix(in srgb,var(--nk) 12%,transparent);border-radius:999px;padding:3px 7px}
 
-/* CFP has four rounds, independent of the generic tournament board. */
-.cfpShell{--cfp-line:rgba(255,255,255,.14);padding:8px 0 24px}
-.cfpHero{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:24px 0}
-.cfpEyebrow{font-size:var(--fs-xs);font-family:var(--mono);font-weight:var(--fw-bold);text-transform:uppercase;letter-spacing:.14em;color:var(--signal)}
-.cfpHero h2{font-family:var(--display);font-size:var(--fs-title);line-height:1.12;margin:10px 0 12px;letter-spacing:-.025em}
-.cfpHero p,.cfpFoot{color:var(--muted);font-size:var(--fs-sm);line-height:1.6;margin:0}
-.cfpBadge{flex-shrink:0;border:1px solid var(--cfp-line);border-radius:6px;padding:9px 12px;font-size:var(--fs-xs);font-family:var(--mono);font-weight:var(--fw-semibold);color:var(--signal);background:rgba(58,209,122,.06)}
-.cfpGuide{display:flex;flex-wrap:wrap;gap:12px 28px;border-top:1px solid var(--cfp-line);border-bottom:1px solid var(--cfp-line);padding:14px 0;color:var(--muted);font-size:var(--fs-sm)}
-.cfpGuide b{color:var(--text);font-family:var(--mono)}
-.cfpBoard{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;padding:28px 0}
-.cfpRound{min-width:0}
-.cfpRoundHead{display:flex;gap:10px;align-items:center;min-height:64px;margin-bottom:16px;border-bottom:1px solid var(--cfp-line);padding-bottom:14px}
-.cfpRoundNumber{font-size:var(--fs-sm);font-family:var(--mono);font-weight:var(--fw-semibold);color:var(--signal)}
-.cfpRoundHead h3{font-size:var(--fs-lg);font-family:var(--display);font-weight:var(--fw-bold);margin:0;line-height:1.3}
-.cfpRoundHead p{font-size:var(--fs-xs);color:var(--muted);margin:5px 0 0}
-.cfpMatches{display:grid;gap:14px}
-.cfpMatch{border:1px solid var(--cfp-line);border-radius:10px;background:rgba(255,255,255,.025);overflow:hidden}
-.cfpMatchMeta{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:5px;padding:10px 12px;border-bottom:1px solid var(--cfp-line);font-size:var(--fs-xs);font-family:var(--mono);color:var(--muted)}
-.cfpMatchMeta b{font-weight:var(--fw-medium);color:var(--text)}
-.cfpTeam{display:flex;align-items:center;gap:9px;min-height:52px;padding:10px 12px}
-.cfpTeam+.cfpTeam{border-top:1px solid rgba(255,255,255,.06)}
-.cfpSeed{flex:0 0 23px;text-align:center;font-size:var(--fs-xs);font-family:var(--mono);font-weight:var(--fw-semibold);color:var(--muted)}
-.cfpTeamName{flex:1;min-width:0;overflow-wrap:anywhere;font-size:var(--fs-md);font-family:var(--display);font-weight:var(--fw-bold);line-height:1.4}
-.cfpPath .cfpTeamName{font-weight:var(--fw-regular);color:var(--muted);font-size:var(--fs-sm)}
-.cfpScore{font-size:var(--fs-md);font-family:var(--mono);font-weight:var(--fw-bold)}
-.cfpWinner{background:rgba(58,209,122,.08)}
-.cfpWon{color:var(--signal)}
-.cfpTitleRound .cfpMatch{border-color:rgba(58,209,122,.5);background:linear-gradient(135deg,rgba(58,209,122,.08),rgba(255,255,255,.02))}
-.cfpTitleRound .cfpRoundHead{border-color:var(--signal)}
-.cfpFoot{border-top:1px solid var(--cfp-line);padding-top:16px;font-size:var(--fs-sm)}
-@media(max-width:1100px){.cfpBoard{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 16px}}
-@media(max-width:600px){.cfpHero{align-items:flex-start;flex-direction:column;gap:12px;padding:18px 0}.cfpBoard{grid-template-columns:minmax(0,1fr);gap:24px;padding:20px 0}.cfpRoundHead{min-height:0;margin-bottom:12px}.cfpTeamName{font-size:var(--fs-md)}.cfpGuide{gap:10px 20px}.cfpGuide span:last-child{flex-basis:100%}}
-
-/* Keep the complete CFP field compact and visible together. */
-.cfpHero{padding:12px 0;gap:12px}
-.cfpHero h2{font-size:var(--fs-title);margin:7px 0}
-.cfpGuide{padding:10px 0}
-.cfpBoard{padding:18px 0;gap:14px}
-.cfpRoundHead{min-height:48px;margin-bottom:10px;padding-bottom:10px}
-.cfpMatches{gap:8px}
-.cfpMatchMeta{padding:6px 9px}
-.cfpTeam{min-height:34px;padding:6px 9px;gap:6px}
-.cfpFoot{padding-top:10px}
-@media(max-width:600px){
-  .cfpHero{gap:7px;padding:10px 0}.cfpHero h2{font-size:var(--fs-2xl)}.cfpHero p{font-size:var(--fs-xs)}.cfpEyebrow{font-size:var(--fs-xs)}.cfpBadge{padding:5px 8px;font-size:var(--fs-xs)}
-  .cfpGuide{font-size:var(--fs-xs);gap:6px 14px}.cfpGuide span:last-child{flex-basis:auto}
-  .cfpBoard{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 8px;padding:14px 0}
-  .cfpRoundHead{gap:5px;min-height:47px;margin-bottom:8px;padding-bottom:8px;align-items:flex-start}
-  .cfpRoundNumber{font-size:var(--fs-xs);padding-top:3px}.cfpRoundHead h3{font-size:var(--fs-sm)}.cfpRoundHead p{font-size:var(--fs-xs);margin-top:3px}
-  .cfpMatchMeta{font-size:var(--fs-xs);padding:5px 6px;gap:3px}.cfpTeam{padding:5px 6px;gap:4px;min-height:32px}.cfpSeed{flex-basis:15px;font-size:var(--fs-xs)}.cfpTeamName{font-size:var(--fs-xs)}.cfpPath .cfpTeamName{font-size:var(--fs-xs)}.cfpFoot{font-size:var(--fs-xs)}
-}
+/* A single, connected CFP diagram scales as a whole; it never becomes a scroller. */
+.cfpShell{--cfp-gold:#d6bd80;--cfp-line:#ad9563;padding:8px 0 16px}
+.cfpHero{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:12px 0 8px}
+.cfpEyebrow{font:var(--fw-semibold) var(--fs-2xs) var(--mono);letter-spacing:.15em;text-transform:uppercase;color:var(--cfp-gold)}
+.cfpHero h2{font:var(--fw-heavy) var(--fs-title)/1.1 var(--display);letter-spacing:-.035em;margin:8px 0 0}
+.cfpBadge{flex-shrink:0;font:var(--fw-semibold) var(--fs-2xs) var(--mono);color:var(--cfp-gold);padding:8px 11px;border:1px solid #766643;border-radius:5px;background:rgba(214,189,128,.05)}
+.cfpIntro{font-size:var(--fs-sm);line-height:1.6;color:var(--muted);margin:4px 0 14px}
+.cfpCanvas{border:1px solid var(--line);border-radius:12px;background:linear-gradient(145deg,#10171b,#0c1115 60%,#141813);width:100%}
+.cfpDiagram{display:block;width:100%;height:auto;max-height:max(160px,calc(100dvh - 260px));overflow:visible}
+.cfpColumnLabel{font:var(--fw-semibold) var(--fs-sm) var(--mono);letter-spacing:1.2px;fill:#aab8bf}
+.cfpConnector{fill:none;stroke:var(--cfp-line);stroke-width:2.5;stroke-linejoin:round}
+.cfpCardSurface{fill:#182128;stroke:#526066;stroke-width:1}
+.cfpSvgFinal .cfpCardSurface{fill:#22271f;stroke:var(--cfp-gold);stroke-width:2}
+.cfpCardDivider{stroke:#344148;stroke-width:1}
+.cfpSvgMeta{fill:#b7c3c9;font:var(--fw-semibold) var(--fs-2xs) var(--mono);letter-spacing:.7px}
+.cfpSvgBye{fill:var(--cfp-gold);font:var(--fw-medium) var(--fs-3xs) var(--mono)}
+.cfpSvgSeed{fill:var(--cfp-gold);font:var(--fw-bold) var(--fs-base) var(--mono)}
+.cfpLogoTile{fill:#e4eae5}
+.cfpSvgName{fill:#edf3f5;font:var(--fw-bold) var(--fs-base) var(--display)}
+.cfpSvgPath .cfpSvgName{fill:#bac5ca;font-weight:var(--fw-medium);font-size:var(--fs-sm)}
+.cfpSvgSlot{fill:#91a3ac;font:var(--fs-xl) var(--mono)}
+.cfpSvgScore{fill:#f4f8f6;font:var(--fw-bold) var(--fs-base) var(--mono)}
+.cfpMonogram{fill:#182128;font:var(--fw-bold) var(--fs-xs) var(--display)}
+.cfpWinFill{fill:#234333}
+.cfpTrophy{fill:none;stroke:var(--cfp-gold);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.cfpChampLabel{fill:var(--cfp-gold);font:var(--fw-bold) var(--fs-xs) var(--mono);letter-spacing:1.5px}
+.cfpCenterNote{fill:var(--cfp-gold);font:var(--fw-semibold) var(--fs-2xs) var(--mono);letter-spacing:1.5px}
+.cfpCenterSub{fill:#aab8bf;font:var(--fs-sm) var(--display)}
+.cfpFoot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px 20px;padding-top:12px;color:var(--muted);font-size:var(--fs-xs)}
+.cfpFoot i{display:inline-block;width:20px;height:2px;background:var(--cfp-line);vertical-align:middle;margin-right:7px}
+@media(max-width:600px){.cfpHero{gap:8px}.cfpHero h2{font-size:var(--fs-2xl)}.cfpEyebrow{font-size:var(--fs-3xs)}.cfpBadge{font-size:var(--fs-3xs);padding:6px}.cfpIntro,.cfpFoot{font-size:var(--fs-2xs)}.cfpCanvas{border-radius:6px}.cfpFoot{gap:6px}.cfpColumnLabel{letter-spacing:0}}
 
 /* One typeface site-wide. --display and --mono are kept as aliases of --sans so
    existing rules need no edits; tabular numerals keep figures aligned the way
