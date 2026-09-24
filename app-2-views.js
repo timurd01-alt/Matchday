@@ -1166,8 +1166,8 @@ function rsFeatured(){
     :`Matchday and the market price ${esc(team)} almost identically.`;
   const kick=p.kickoff||m.kickoff;
   const when=kick?kickIn(kick):'';
-  const side=(name,label)=>`<div class="rsFeatSide"><span class="rsKicker">${label}</span><b>${esc(rsShortName(name))}</b><span>${rsTeamRow(name)}</span></div>`;
-  const open=m.id?`<button type="button" class="rsLink" onclick="openMatchModal('${esc(String(m.id))}')">Open matchup <span aria-hidden="true">→</span></button>`:'';
+  const side=(name,label)=>`<div class="rsFeatSide">${typeof teamMark==='function'?teamMark(name):''}<div><span class="rsKicker">${label}</span><b>${esc(rsShortName(name))}</b><span>${rsTeamRow(name)}</span></div></div>`;
+  const open=m.id?`<button type="button" class="rsMoreBtn" onclick="openMatchModal('${esc(String(m.id))}')">Open matchup <span aria-hidden="true">→</span></button>`:'';
   return `<section class="rsBlock rsFeatured rsSpan12">${rsTop('Featured read','live',when)}`
     +`<div class="rsSplit"><div class="rsSplitMain"><div class="rsFeatTeams">${side(away,'Away')}<span class="rsAt">at</span>${side(home,'Home')}</div>`
     +`<p class="rsFeatRead">${read}</p></div><div class="rsSplitSide"><div class="rsCompare"><div><span class="rsKicker">Matchday</span><b class="rsSignal">${communityModelPctLabel(model)}</b><span>${esc(team)} win</span></div>`
@@ -1285,7 +1285,7 @@ function rsTrackRecord(){
     +`<p class="rsFeatRead">${Number.isFinite(gap)?`Picks won ${Math.abs(gap).toFixed(1)} points ${gap>=0?'more':'less'} often than the model expected. `:''}`
     +`${straddles?'Against the market price it is still a coin flip on this sample.':''}</p>`
     +(cal?`<div class="rsCal"><div class="rsCalHead"><span>Confidence</span><span><i class="rsKeyFill"></i>Hit rate <i class="rsKeyTick"></i>Expected</span><span></span></div>${cal}</div>`:'')
-    +`<div class="rsFoot"><span></span><button type="button" class="rsLink" onclick="setView('score')">Full scorecard <span aria-hidden="true">→</span></button></div></section>`;
+    +`<button type="button" class="rsMoreBtn rsEnd" onclick="setView('score')">Full scorecard <span aria-hidden="true">→</span></button></section>`;
 }
 function rsScatter(){
   const table=collegeRankingTable();

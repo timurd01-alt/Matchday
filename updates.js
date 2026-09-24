@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0924Q",
+  "tag": "Design",
+  "title": "One button style everywhere",
+  "items": [
+   "View all games, View Scorecard, View all, Full scorecard and Open matchup now share one button style on every tab.",
+   "Paired buttons at the bottom of Research panels line up with each other.",
+   "The Featured read shows both teams' logos."
+  ]
+ },
+ {
   "date": "Build 0924P",
   "tag": "Design",
   "title": "Scorecard in the Research layout",
