@@ -3015,3 +3015,4 @@ body.welcomeOpen{height:auto;min-height:100vh;overflow-y:auto}
   #welcomeGate .wx-social{padding:0 12px;min-height:44px}
 }
 @media(prefers-reduced-motion:reduce){#welcomeGate .wx-social{transition:none}}
+#welcomeGate .wx-foot .wx-socials{display:flex;gap:8px;justify-content:center}
