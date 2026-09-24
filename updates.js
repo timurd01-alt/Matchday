@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0924G",
+  "tag": "Fix",
+  "title": "Power rating ranks labelled as such",
+  "items": [
+   "Toughest schedules, Stat of the week, Notable and the Rating vs schedule hover card now mark ranks as PR #, so a power rating rank is never mistaken for an AP ranking."
+  ]
+ },
+ {
   "date": "Build 0924F",
   "tag": "Design",
   "title": "Clearer Research sections",

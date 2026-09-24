@@ -1197,7 +1197,7 @@ function rsStat(){
   if(riser&&Number(riser.movement_since_preseason)>0){
     return `<div class="rsRailBlock"><span class="seclbl">Stat of the week</span>`
       +`<b class="rsRailBig">${esc(riser.name)}</b>`
-      +`<span class="rsRailSub"><em class="rsSignal">↑${Number(riser.movement_since_preseason)} spots</em> since the preseason, now #${riser.rank}</span></div>`;
+      +`<span class="rsRailSub"><em class="rsSignal">↑${Number(riser.movement_since_preseason)} spots</em> in the power rating since the preseason · now PR #${riser.rank}</span></div>`;
   }
   const sos=(table?.rankings||[]).filter(r=>Number.isFinite(Number(r.sos))&&(r.rank||999)<=25);
   const hardest=sos.slice().sort((a,b)=>Number(b.sos)-Number(a.sos))[0];
@@ -1215,7 +1215,7 @@ function rsNotable(){
   const items=[];
   if(off)items.push(['Best offense',rsShortName(off.name),`${Number(off.adj_o).toFixed(1)} adj. points scored`]);
   if(def)items.push(['Best defense',rsShortName(def.name),`${Number(def.adj_d).toFixed(1)} adj. points allowed`]);
-  if(g5)items.push(['Outside the power tier',rsShortName(g5.name),`${Number(g5.rating).toFixed(2)} rating · #${g5.rank}`]);
+  if(g5)items.push(['Outside the power tier',rsShortName(g5.name),`${Number(g5.rating).toFixed(2)} rating · PR #${g5.rank}`]);
   if(!items.length)return '';
   return `<div class="rsRailBlock"><span class="seclbl">Notable</span><dl class="rsNotable">`
     +items.map(([k,v,d])=>`<div><dt>${esc(k)}</dt><dd><b>${esc(v)}</b><span>${esc(d)}</span></dd></div>`).join('')+`</dl></div>`;
@@ -1297,7 +1297,7 @@ document.addEventListener('pointermove',e=>{
   if(!best){tip.hidden=true;return}
   best.classList.add('rsActive');
   const d=best.dataset;
-  tip.innerHTML=`<b>${esc(d.team)}</b>${d.conf?`<span>${esc(d.conf)}${d.rank?` · #${esc(d.rank)}`:''}</span>`:''}<dl><div><dt>Rating</dt><dd>${esc(d.rating)}</dd></div><div><dt>SoS</dt><dd>${esc(d.sos)}</dd></div></dl>`;
+  tip.innerHTML=`<b>${esc(d.team)}</b>${d.conf?`<span>${esc(d.conf)}${d.rank?` · PR #${esc(d.rank)}`:''}</span>`:''}<dl><div><dt>Rating</dt><dd>${esc(d.rating)}</dd></div><div><dt>SoS</dt><dd>${esc(d.sos)}</dd></div></dl>`;
   tip.hidden=false;
   const b=best.getBoundingClientRect(),w=tip.offsetWidth,h=tip.offsetHeight;
   let x=b.left+b.width/2+14,y=b.top-h/2;
@@ -1347,13 +1347,13 @@ function rsSchedules(){
   const top=(pool.length>=10?pool:rows).slice().sort((a,b)=>Number(b.sos)-Number(a.sos));
   const hi=Number(top[0].sos),lo=Math.min(0,...top.map(r=>Number(r.sos)));
   const row=(r,i)=>`<li class="rsSchedRow${i>=5?' rsExtra':''}"><span class="rsRank">${i+1}</span>`
-    +`<span class="rsSchedTeam">${typeof teamMark==='function'?teamMark(r.name):''}<b>${esc(rsShortName(r.name))}</b><small>#${r.rank}</small></span>`
+    +`<span class="rsSchedTeam">${typeof teamMark==='function'?teamMark(r.name):''}<b>${esc(rsShortName(r.name))}</b><small title="Power rating rank">PR #${r.rank}</small></span>`
     +`<i class="rsBar"><b style="width:${Math.max(3,Math.round((Number(r.sos)-lo)/((hi-lo)||1)*100))}%"></b></i>`
     +`<span class="rsNum"><b>${Number(r.sos).toFixed(2)}</b></span><span class="rsNum rsMuted"><b>${Number(r.rating).toFixed(1)}</b></span></li>`;
-  return `<section class="rsBlock rsExpandable">${rsHead('Toughest schedules','Top 40 teams')}`
-    +`<div class="rsSchedHead"><span></span><span>Team</span><span>Strength of schedule</span><span>SoS</span><span>Rating</span></div>`
+  return `<section class="rsBlock rsExpandable">${rsHead('Toughest schedules','Power rating top 40')}`
+    +`<div class="rsSchedHead"><span></span><span>Team</span><span>Strength of schedule</span><span>SoS</span><span title="Power rating">Power</span></div>`
     +`<ol class="rsSched">${top.map(row).join('')}</ol>`
-    +(top.length>5?rsMoreBtn(top.length,'View all','Toughest schedules · top 40 teams'):'')+`</section>`;
+    +(top.length>5?rsMoreBtn(top.length,'View all','Toughest schedules · power rating top 40'):'')+`</section>`;
 }
 function collegeResearchModules(){
   if(!['NCAAF','NCAAM'].includes(String(DATA?.comp_key||'').toUpperCase()))return '';
