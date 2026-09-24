@@ -252,11 +252,22 @@ function fixtureSort(a,b){const o={LIVE:0,UPCOMING:1,FINISHED:2};return (o[a.sta
 // Pure function of the name, and the fixture merge calls it millions of times
 // across a few hundred distinct schools, so the answer is kept.
 const _TEAM_KEY_CACHE=new Map();
+/* Apostrophes are deleted, not turned into a space.
+   ESPN files the school as "Hawai'i Rainbow Warriors" and the odds feed as
+   "Hawaii Rainbow Warriors". Replacing the apostrophe with a space gives
+   "hawai i rainbow warriors", which matches "hawaii rainbow warriors" on no
+   test at all -- not the exact key, and not the prefix rule either, since
+   "hawai" is not a word in the other name. So Bet Better's card for Hawai'i at
+   Wyoming sat in the payload unattached, and the fixture fell through to
+   Matchday's own preseason model, which had zero games of evidence for either
+   side. The same miss empties Hawai'i's record and its ratings lookup.
+   Bet Better's `comparison._fold` deletes them for exactly this reason. */
 function teamKey(name){
   const label=String(name||'');
   const hit=_TEAM_KEY_CACHE.get(label);
   if(hit!==undefined)return hit;
-  const key=label.toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+  const key=label.toLowerCase().replace(/['‘’ʻʼ]/g,'')
+                 .replace(/[^a-z0-9]+/g,' ').trim();
   _TEAM_KEY_CACHE.set(label,key);
   return key;
 }
