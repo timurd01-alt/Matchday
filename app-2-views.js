@@ -1263,7 +1263,7 @@ function rsMyPicks(){
     +`<div class="rsBigStat"><b>${wins}–${settled.length-wins}</b><span>settled picks · ${settled.length?Math.round(wins/settled.length*100):0}% hit rate</span></div>`
     // Every settled pick in order, oldest first: the record as a run of results.
     +`<div class="rsForm" aria-label="Settled picks in order, oldest first">${settled.slice().sort((x,y)=>String(x.starts_at||'').localeCompare(String(y.starts_at||''))).map(p=>`<i class="${p.outcome===1?'w':'l'}" title="${esc(rsShortName(p.selection))} · ${p.outcome===1?'won':'lost'}"></i>`).join('')}</div>`
-    +[['With Matchday',agreedW,agreed.length],['Against Matchday',differW,differ.length]].filter(([,,n])=>n).map(([k,w,n])=>`<div class="rsSplitBar"><div><span class="rsKicker">${k}</span><b>${w}–${n-w}</b></div><i><b style="width:${Math.round(w/n*100)}%"></b></i><em>${Math.round(w/n*100)}%</em></div>`).join('')+`</div>`
+    +[['With Matchday',agreedW,agreed.length],['Against Matchday',differW,differ.length],['Against the market',...(()=>{const dog=settled.filter(p=>Number.isFinite(Number(p.market_probability))&&Number(p.market_probability)<0.5);return [dog.filter(p=>p.outcome===1).length,dog.length]})()]].filter(([,,n])=>n).map(([k,w,n])=>`<div class="rsSplitBar"><div><span class="rsKicker">${k}</span><b>${w}–${n-w}</b></div><i><b style="width:${Math.round(w/n*100)}%"></b></i><em>${Math.round(w/n*100)}%</em></div>`).join('')+`</div>`
     +`<div class="rsSplitSide rsExpandable"><ul class="rsPicks">${ordered.map(row).join('')}</ul>`
     +(ordered.length>5?rsMoreBtn(ordered.length,'All picks','@timurknowsball picks'):'')+`</div></div></section>`;
 }
@@ -1347,7 +1347,10 @@ document.addEventListener('pointermove',e=>{
   if(!best){tip.hidden=true;return}
   best.classList.add('rsActive');
   const d=best.dataset;
-  tip.innerHTML=`<b>${esc(d.team)}</b>${d.conf?`<span>${esc(d.conf)}${d.rank?` · PR #${esc(d.rank)}`:''}</span>`:''}<dl><div><dt>Rating</dt><dd>${esc(d.rating)}</dd></div><div><dt>SoS</dt><dd>${esc(d.sos)}</dd></div></dl>`;
+  // Each chart names its own two measures on the dots; Rating/SoS is only
+  // the default for the rating-vs-schedule chart.
+  const m1l=d.m1l||'Rating',m1=d.m1??d.rating,m2l=d.m2l||'SoS',m2=d.m2??d.sos;
+  tip.innerHTML=`<b>${esc(d.team)}</b>${d.conf?`<span>${esc(d.conf)}${d.rank?` · PR #${esc(d.rank)}`:''}</span>`:''}<dl><div><dt>${esc(m1l)}</dt><dd>${esc(m1)}</dd></div><div><dt>${esc(m2l)}</dt><dd>${esc(m2)}</dd></div></dl>`;
   tip.hidden=false;
   const b=best.getBoundingClientRect(),w=tip.offsetWidth,h=tip.offsetHeight;
   let x=b.left+b.width/2+14,y=b.top-h/2;
@@ -1394,6 +1397,109 @@ function rsSchedules(){
     +`<ol class="rsSched">${top.map(row).join('')}</ol>`
     +(top.length>6?rsMoreBtn(top.length,'View all','Toughest schedules · power rating top 40'):'')+`</section>`;
 }
+/* Team play-by-play profiles (MATCHDAY_BETBETTER_TEAM_PROFILES), FBS only:
+   a team must be in the power rating table, which is FBS-only and supplies
+   tier, conference and rank. Two games minimum so one result is not a
+   profile. */
+function rsProfiles(){
+  const P=typeof MATCHDAY_BETBETTER_TEAM_PROFILES!=='undefined'?MATCHDAY_BETBETTER_TEAM_PROFILES:null;
+  if(!P||!P.teams)return [];
+  const table=collegeRankingTable()?.rankings||[];
+  const byName=new Map(table.map(r=>[r.name,r]));
+  return Object.entries(P.teams).map(([name,v])=>({name,...v,row:byName.get(name)}))
+    .filter(t=>t.row&&Number(t.games)>=2);
+}
+const rsSigned=(v,d)=>{const n=Number(v),r=Number(n.toFixed(d));return r===0?(0).toFixed(d):(r>0?'+':'−')+Math.abs(r).toFixed(d)};
+const rsMedian=a=>{const b=a.slice().sort((m,n)=>m-n);return b[Math.floor(b.length/2)]};
+/* Efficiency vs net points per success.
+   y is total EPA over successful plays: failed plays stay in the numerator, so
+   it is NET points per success, not points when a play works. It is not
+   explosiveness or IsoPPP, which need play-level EPA on successful snaps. */
+function rsEfficiencyData(){
+  const rows=rsProfiles().filter(t=>Number.isFinite(Number(t.success_rate))&&Number(t.success_rate)>=0.15&&Number.isFinite(Number(t.ppa)))
+    .map(t=>({...t,x:Number(t.success_rate),y:Number(t.ppa)/Number(t.success_rate)}));
+  if(rows.length<12)return null;
+  const mx=rsMedian(rows.map(r=>r.x)),my=rsMedian(rows.map(r=>r.y));
+  const x0=Math.min(...rows.map(r=>r.x)),x1=Math.max(...rows.map(r=>r.x)),y0=Math.min(...rows.map(r=>r.y)),y1=Math.max(...rows.map(r=>r.y));
+  // One label per quadrant: the team furthest into its own quadrant, measured
+  // on both axes scaled to their range. Never "furthest from the median"
+  // overall, which only ever picks the worst offences.
+  const quads={tr:[1,1],tl:[-1,1],br:[1,-1],bl:[-1,-1]};
+  const pick={};
+  Object.entries(quads).forEach(([k,[sx,sy]])=>{
+    const inQ=rows.filter(r=>Math.sign(r.x-mx)===sx&&Math.sign(r.y-my)===sy);
+    pick[k]={n:inQ.length,team:inQ.slice().sort((a,b)=>(sx*(b.x-mx)/(x1-x0)+sy*(b.y-my)/(y1-y0))-(sx*(a.x-mx)/(x1-x0)+sy*(a.y-my)/(y1-y0)))[0]||null};
+  });
+  return {rows,mx,my,x0,x1,y0,y1,pick};
+}
+function rsEfficiency(){
+  const D=rsEfficiencyData();if(!D)return '';
+  const {rows,mx,my,x0,x1,y0,y1,pick}=D;
+  const W=1000,H=340,PL=40,PR=16,PT=14,PB=32;
+  const sx=v=>PL+((v-x0)/((x1-x0)||1))*(W-PL-PR),sy=v=>H-PB-((v-y0)/((y1-y0)||1))*(H-PT-PB);
+  const labelled=new Set(Object.values(pick).map(p=>p.team).filter(Boolean));
+  const dots=rows.map(r=>{
+    const hi=labelled.has(r),power=String(r.row.tier||'')==='power';
+    return `<circle cx="${sx(r.x).toFixed(1)}" cy="${sy(r.y).toFixed(1)}" r="${hi?4.5:3}" class="${hi?'dotHi':power?'dotP':'dotG'}" data-team="${esc(r.name)}" data-rank="${esc(r.row.rank??'')}" data-conf="${esc(r.row.conference||'')}" data-m1l="Success rate" data-m1="${(r.x*100).toFixed(1)}%" data-m2l="Net pts / success" data-m2="${rsSigned(r.y,2)}"></circle>`;
+  }).join('');
+  const labels=[...labelled].map(r=>{const x=sx(r.x),left=x>W-180;return `<text class="rsLbl" x="${(left?x-8:x+8).toFixed(1)}" y="${(sy(r.y)+4).toFixed(1)}" text-anchor="${left?'end':'start'}">${esc(rsShortName(r.name))}</text>`}).join('');
+  return `<section class="rsBlock rsSpan8">${rsTop('Efficiency vs net points per success','season',`${rows.length} FBS offenses`)}`
+    +`<svg viewBox="0 0 ${W} ${H}" class="rsScatter" role="img" aria-label="Scatter of offensive success rate against net expected points per successful play">`
+    +`<line class="scAx" x1="${PL}" y1="${H-PB}" x2="${W-PR}" y2="${H-PB}"/><line class="scAx" x1="${PL}" y1="${PT}" x2="${PL}" y2="${H-PB}"/>`
+    +`<line class="scMed" x1="${sx(mx).toFixed(1)}" y1="${PT}" x2="${sx(mx).toFixed(1)}" y2="${H-PB}"/><line class="scMed" x1="${PL}" y1="${sy(my).toFixed(1)}" x2="${W-PR}" y2="${sy(my).toFixed(1)}"/>`
+    +`${dots}${labels}<text class="scAxLbl" x="${(W/2).toFixed(0)}" y="${H-8}" text-anchor="middle">success rate →</text>`
+    +`<text class="scAxLbl" transform="rotate(-90 12 ${(H/2).toFixed(0)})" x="12" y="${(H/2).toFixed(0)}" text-anchor="middle">net points per success →</text></svg>`
+    +`<div class="rsLegend"><span><i class="dotKeyP"></i>Power</span><span><i class="dotKeyG"></i>Group of Five</span><span>Lines are medians · hover for the team</span></div></section>`;
+}
+function rsEfficiencyNotes(){
+  const D=rsEfficiencyData();if(!D)return '';
+  const q=[['tr','Efficient and nets a lot'],['tl','Scores in bursts, stalls between'],['br','Moves the chains, rarely breaks one'],['bl','Neither']];
+  return `<section class="rsBlock rsSpan4">${rsTop('Reading the chart','season')}<dl class="rsNotes">`
+    +q.map(([k,label])=>{const p=D.pick[k];return `<div><dt>${label}</dt><dd><b class="rsLogoName">${p.team?(typeof teamMark==='function'?teamMark(p.team.name):'')+esc(rsShortName(p.team.name)):'—'}</b><span>${p.n} teams${p.team?` · ${(p.team.x*100).toFixed(1)}% success · ${rsSigned(p.team.y,2)} net per success`:''}</span></dd></div>`}).join('')
+    +`<div><dt>How to read it</dt><dd><span>Right is how often a snap succeeds. Up is net expected points per successful snap, with failed snaps still counted.</span></dd></div>`
+    +`</dl></section>`;
+}
+/* Defence against a real zero. Expected points allowed per play has a true
+   zero -- the average snap against this defence gains nothing -- so the bars
+   diverge from zero, not from a median, on one scale for both halves. Stop
+   rate answers a different question from the bar: how often a defence wins
+   the down, rather than how much it gives up. */
+function rsDefenceData(){
+  const rows=rsProfiles().filter(t=>Number.isFinite(Number(t.def_ppa_allowed))&&Number.isFinite(Number(t.def_success_rate_allowed)))
+    .map(t=>({...t,v:Number(t.def_ppa_allowed),stop:1-Number(t.def_success_rate_allowed)}));
+  if(rows.length<16)return null;
+  const sorted=rows.slice().sort((a,b)=>a.v-b.v);
+  return {rows,best:sorted.slice(0,8),worst:sorted.slice(-8).reverse(),below:rows.filter(r=>r.v<0).length};
+}
+function rsDefence(){
+  const D=rsDefenceData();if(!D)return '';
+  const scale=Math.max(...[...D.best,...D.worst].map(r=>Math.abs(r.v)))||1;
+  const row=r=>{
+    const pct=Math.abs(r.v)/scale*50,neg=r.v<0;
+    return `<li class="rsDivRow"><span class="rsLogoName">${typeof teamMark==='function'?teamMark(r.name):''}<b>${esc(rsShortName(r.name))}</b></span>`
+      +`<i class="rsDivTrack"><b class="${neg?'good':'bad'}" style="${neg?`right:50%`:`left:50%`};width:${pct.toFixed(1)}%"></b></i>`
+      +`<span class="rsNum"><b class="${neg?'rsWin':'rsLoss'}">${r.v>0?'+':'−'}${Math.abs(r.v).toFixed(3)}</b></span>`
+      +`<span class="rsDivStop">${Math.round(r.stop*100)}% stopped</span></li>`;
+  };
+  return `<section class="rsBlock rsSpan8">${rsTop('Defense against a real zero','season','EPA allowed per play')}`
+    +`<div class="rsDivHead"><span>Best 8</span><span>← defense wins the down · offense gains →</span><span></span><span>Stop rate</span></div>`
+    +`<ul class="rsDiv">${D.best.map(row).join('')}</ul>`
+    +`<div class="rsDivHead rsDivGap"><span>Worst 8</span><span></span><span></span><span></span></div>`
+    +`<ul class="rsDiv">${D.worst.map(row).join('')}</ul></section>`;
+}
+function rsDefenceNotes(){
+  const D=rsDefenceData();if(!D)return '';
+  const freq=D.best.slice().sort((a,b)=>b.stop-a.stop)[0],limit=D.best.slice().sort((a,b)=>a.stop-b.stop)[0];
+  const med=rsMedian(D.rows.map(r=>r.v));
+  const item=(k,t,d)=>`<div><dt>${k}</dt><dd><b class="${t?'rsLogoName':''}">${t?(typeof teamMark==='function'?teamMark(t.name):'')+esc(rsShortName(t.name)):''}</b><span>${d}</span></dd></div>`;
+  return `<section class="rsBlock rsSpan4">${rsTop('Reading the chart','season')}<dl class="rsNotes">`
+    +`<div><dt>Left of zero</dt><dd><b class="rsSignal">${D.below} of ${D.rows.length}</b><span>defenses hold the average snap to a loss · median ${rsSigned(med,3)}</span></dd></div>`
+    +item('Wins by frequency',freq,`${rsSigned(freq.v,3)} EPA · stops ${Math.round(freq.stop*100)}% of snaps`)
+    +item('Wins by limiting damage',limit,`${rsSigned(limit.v,3)} EPA · stops ${Math.round(limit.stop*100)}% of snaps`)
+    +(()=>{const top=D.rows.slice().sort((x,y)=>y.stop-x.stop)[0],worst=D.worst[0];return item('Highest stop rate',top,`stops ${Math.round(top.stop*100)}% of snaps · ${rsSigned(top.v,3)} EPA`)+item('Most allowed per snap',worst,`${rsSigned(worst.v,3)} EPA · stops ${Math.round(worst.stop*100)}% of snaps`)})()
+    +`<div><dt>How to read it</dt><dd><span>The bar is how much a defense gives up per snap. Stop rate is how often it wins the down — a different question.</span></dd></div>`
+    +`</dl></section>`;
+}
 function rsPart(num,label,body){
   return body?`<div class="rsPart"><h2 class="rsPartHead"><span>${num}</span>${label}</h2>${body}</div>`:'';
 }
@@ -1404,8 +1510,8 @@ function collegeResearchModules(){
   const grid=(...cells)=>{const c=cells.filter(Boolean);return c.length?`<div class="rsRow">${c.join('')}</div>`:''};
   const parts=[
     rsPart('01','This week',grid(rsFeatured(),rsModelMarketWatch())),
-    rsPart('02','What the model is finding',grid(rsStat(),rsLongshots())+grid(rsScatter(),rsScatterNotes())),
-    rsPart('03','The bigger picture',grid(rsSchedules(),rsConferences())),
+    rsPart('02','What the model is finding',grid(rsStat(),rsLongshots())+grid(rsScatter(),rsScatterNotes())+grid(rsEfficiency(),rsEfficiencyNotes())),
+    rsPart('03','The bigger picture',grid(rsSchedules(),rsConferences())+grid(rsDefence(),rsDefenceNotes())),
     rsPart('04','Track record',grid(rsMyPicks())),
   ].join('');
   if(!parts)return '';
