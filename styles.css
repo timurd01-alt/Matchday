@@ -3341,7 +3341,6 @@ body{font-variant-numeric:tabular-nums}
 @media(max-width:600px){.rsShots{grid-template-columns:1fr}.rsNewsList a{grid-template-columns:1fr;gap:3px}.rsNewsTitle{white-space:normal}}
 /* Research v4: one editorial column on a 12-column grid, a steady 16/24/40
    rhythm, and panels sized by what they hold. */
-.collegeResearch{max-width:1240px}
 .rsRow{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px;align-items:stretch}
 .rsRow+.rsRow{margin-top:16px}
 .rsSpan4{grid-column:span 4}.rsSpan5{grid-column:span 5}.rsSpan7{grid-column:span 7}.rsSpan8{grid-column:span 8}
@@ -3409,3 +3408,4 @@ body{font-variant-numeric:tabular-nums}
 /* Scorecard: record and hit rate are the two things read first. */
 .scRate b{font-size:var(--fs-hero);font-weight:var(--fw-heavy);letter-spacing:-.03em}
 .scHead .seclbl{display:flex;align-items:center;gap:6px}.scHelp{margin:0}
+.rsLegend2{margin-top:-4px}.rsLegend2+.rsPart{margin-top:14px}

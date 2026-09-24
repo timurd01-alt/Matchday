@@ -1076,8 +1076,7 @@ renderNews=function(){
     host.querySelector('.empty')?.remove();
   }
   const collegeAnalysis=typeof collegeResearchModules==='function'?collegeResearchModules():'';
-  // College research carries its own compact headline list; the full news
-  // grid is not repeated beneath it.
+  // College Research is model research only; the news feed is not shown.
   if(collegeAnalysis)host.replaceChildren();
   host.insertAdjacentHTML('afterbegin',`<div class="vhead">Research</div>
     ${collegeAnalysis}`);

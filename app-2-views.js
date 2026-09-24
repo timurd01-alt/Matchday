@@ -1203,7 +1203,7 @@ function rsModelMarketWatch(){
     +`<div class="rsSplit"><div class="rsSplitMain"><p class="rsLede">The week's largest gaps between Matchday and the market, a recurring research feature.</p>`
     +`<ul class="rsList">${rows}</ul></div>`
     +`<div class="rsSplitSide">${hist?`<div class="rsHist"><div class="rsHistHead"><span>How disagreement has graded</span>${rsChip('graded')}</div>${hist}</div>`:''}`
-    +`<p class="rsFine">${esc(u.caveat||'Watch and grade — not recommended bets.')}</p></div></div></section>`;
+    +`<p class="rsFine">To watch and grade, not recommended bets.</p></div></div></section>`;
 }
 function rsLongshots(){
   const board=(typeof MATCHDAY_BETBETTER_UPSETS!=='undefined'&&MATCHDAY_BETBETTER_UPSETS)||{};
@@ -1418,15 +1418,6 @@ function rsSchedules(){
 function rsPart(num,label,body){
   return body?`<div class="rsPart"><h2 class="rsPartHead"><span>${num}</span>${label}</h2>${body}</div>`:'';
 }
-/* A compact headline list at the foot of Research. Matchday is not a news
-   site; the full feed is one click away rather than filling the page. */
-function rsHeadlines(){
-  const items=typeof diverseNews==='function'?diverseNews(Math.max((DATA.news||[]).length,18)):[];
-  if(!items.length)return '';
-  const row=(a,i)=>`<li class="${i>=5?'rsExtra':''}"><a href="${esc(a.link||a.url||'#')}" target="_blank" rel="noopener"><span class="rsNewsKind nk-${newsKind(a).key}">${esc(newsKind(a).label)}</span><span class="rsNewsTitle">${esc(a.headline||a.title||'Untitled')}</span><span class="rsNewsMeta">${esc(sourceName(a))}${a.published?' · '+ago(a.published):''}</span></a></li>`;
-  return `<section class="rsBlock rsExpandable rsNews"><h3 class="rsTitle">Latest headlines</h3><ul class="rsNewsList">${items.map(row).join('')}</ul>`
-    +(items.length>5?rsMoreBtn(items.length,'All headlines','Latest headlines'):'')+`</section>`;
-}
 function collegeResearchModules(){
   if(!['NCAAF','NCAAM'].includes(String(DATA?.comp_key||'').toUpperCase()))return '';
   // One 12-column grid. Each panel's span is set by what it holds (rsSpanN),
@@ -1441,5 +1432,5 @@ function collegeResearchModules(){
   if(!parts)return '';
   return `<section class="collegeResearch" aria-label="College research">`
     +`<div class="rsLegend2"><span>${rsChip('live')} moves until kickoff</span><span>${rsChip('season')} this season's results so far</span><span>${rsChip('graded')} locked picks, scored after the final</span></div>`
-    +`${parts}${rsHeadlines()}</section>`;
+    +`${parts}</section>`;
 }

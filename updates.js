@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0924N",
+  "tag": "Fix",
+  "title": "Research fills the page",
+  "items": [
+   "Research now spans the full width of the page, with no empty strip on the right.",
+   "The long editorial caveat under Model–market watch is replaced by one short line; the graded record beside it already shows how disagreement has done.",
+   "The headline list is removed so Research stays focused on the model, and the space above the first section is tightened."
+  ]
+ },
+ {
   "date": "Build 0924M",
   "tag": "Design",
   "title": "A tighter Scorecard",
