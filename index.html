@@ -103,11 +103,14 @@ window.matchdayEnterNow=function(targetView){
   document.body.classList.remove('welcomeOpen','welcomeExiting','navSheetOpen');
   var nav=document.getElementById('nav');if(nav){nav.classList.remove('navSheet');var more=nav.querySelector('.navMore');if(more)more.setAttribute('aria-expanded','false')}
   var app=document.getElementById('app');if(app){app.classList.remove('appRevealing');app.style.visibility='visible'}
-  var home=document.getElementById('view-home');if(home)home.style.display='block';
+  // Show only the view being entered. Forcing #view-home visible here while
+  // the app re-rendered the last-used view left both on screen at once.
+  var target=targetView||(typeof VIEW!=='undefined'&&VIEW)||'home';
+  document.querySelectorAll('.view').forEach(function(el){el.style.display=el.id==='view-'+target?'block':'none'});
   try{window.scrollTo(0,0);document.documentElement.scrollTop=0;document.body.scrollTop=0}catch(e){}
   if(typeof window.startMatchdayApp==='function')window.startMatchdayApp();
   window.setTimeout(function(){
-    try{if(targetView&&typeof setView==='function')setView(targetView);else if(typeof renderCurrent==='function')renderCurrent()}catch(e){console.error('Matchday view failed to render',e)}
+    try{if(typeof setView==='function')setView(target,{replace:!targetView});else if(typeof renderCurrent==='function')renderCurrent()}catch(e){console.error('Matchday view failed to render',e)}
   },0);
   window.setTimeout(function(){
     var waiting=home&&home.querySelector('.empty');

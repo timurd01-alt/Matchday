@@ -485,7 +485,7 @@ function enterMatchday(targetView='',startWithTour=false){
     document.body.classList.remove('welcomeOpen','welcomeExiting');
     if(app)app.classList.remove('appRevealing');
     window.scrollTo?.(0,0);
-    if(targetView&&typeof setView==='function')setView(targetView);else renderCurrent();
+    if(typeof setView==='function')setView(targetView||VIEW||'home',{replace:!targetView});else renderCurrent();
     const main=document.querySelector('.content');if(main)main.focus?.();
     if(startWithTour)setTimeout(startTour,500);
   };

@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0924C",
+  "tag": "Fix",
+  "title": "Returning from the welcome page shows one tab",
+  "items": [
+   "Going back to the welcome page and entering again no longer stacks the Home page on top of the tab you were on."
+  ]
+ },
+ {
   "date": "Build 0924B",
   "tag": "Design",
   "title": "Scorecard rebuilt around the record",
