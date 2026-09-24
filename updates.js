@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0923O",
+  "tag": "Feature",
+  "title": "Matchday on TikTok",
+  "items": [
+   "The @timurknowsball TikTok is now linked beside X and YouTube in the Welcome page header and footer, and on the legal page."
+  ]
+ },
+ {
   "date": "Build 0923N",
   "tag": "Feature",
   "title": "Matchday on YouTube",
