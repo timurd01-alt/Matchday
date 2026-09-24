@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0925A",
+  "tag": "Fix",
+  "title": "Even spacing in the defense notes",
+  "items": [
+   "The defense Reading the chart notes stack evenly, and the stop-rate list fills the rest of the panel instead of gaps opening between notes."
+  ]
+ },
+ {
   "date": "Build 0924AA",
   "tag": "Design",
   "title": "A larger CFP bracket",

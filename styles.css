@@ -3559,3 +3559,9 @@ body{font-variant-numeric:tabular-nums}
 .hipVerdict{margin:14px 0 0;font-size:var(--fs-base);font-weight:var(--fw-semibold)}
 .rsStopList ol{list-style:none;margin:6px 0 0;padding:0}.rsStopList li{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:5px 0;font-size:var(--fs-sm)}
 .rsStopList li+li{border-top:1px solid var(--line)}.rsStopList dd{display:block!important}
+/* Notes with a closing list: items stack normally and the list fills the
+   rest, spacing its own rows, instead of gaps opening between the notes. */
+.rsNotes:has(.rsStopList){justify-content:flex-start}
+.rsNotes .rsStopList{flex:1;display:flex;flex-direction:column}
+.rsStopList dd{flex:1;display:flex!important;flex-direction:column}
+.rsStopList ol{flex:1;display:flex;flex-direction:column;justify-content:space-between}
