@@ -1072,9 +1072,10 @@ renderNews=function(){
     host.querySelector('.newsTools')?.remove();
     host.querySelector('.empty')?.remove();
   }
-  const tools=host.querySelector('.newsTools');
-  if(tools)tools.insertAdjacentHTML('beforebegin',`<div class="rsBlock rsNewsHead"><h2 class="seclbl">Latest news</h2></div>`);
   const collegeAnalysis=typeof collegeResearchModules==='function'?collegeResearchModules():'';
+  // College research carries its own compact headline list; the full news
+  // grid is not repeated beneath it.
+  if(collegeAnalysis)host.replaceChildren();
   host.insertAdjacentHTML('afterbegin',`<div class="vhead">Research</div>
     ${collegeAnalysis}`);
 }

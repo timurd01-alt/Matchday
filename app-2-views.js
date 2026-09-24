@@ -1106,7 +1106,7 @@ function rsOpenAll(btn){
   const box=btn.closest('.rsExpandable');if(!box)return;
   const title=btn.dataset.title||'All';
   const body=document.createElement('div');
-  box.querySelectorAll(':scope > .rsSchedHead, :scope > ul, :scope > ol').forEach(el=>{
+  box.querySelectorAll(':scope > .rsSchedHead, :scope > .rsConfHead, :scope > ul, :scope > ol').forEach(el=>{
     const c=el.cloneNode(true);c.querySelectorAll('.rsExtra').forEach(x=>x.classList.remove('rsExtra'));body.appendChild(c);
   });
   let dlg=document.getElementById('rsAllDialog');
@@ -1146,29 +1146,29 @@ function rsFeatured(){
   const model=Number(p.model_pct),market=Number(p.market_pct),gap=Number(p.edge_points);
   const home=m.home?.name||m.home||'',away=m.away?.name||m.away||'';
   const team=rsShortName(p.pick_name);
-  const read=Number.isFinite(gap)&&Math.abs(gap)>=1
-    ?`Matchday is ${Math.abs(gap)>=5?'meaningfully ':''}${gap<0?'cooler':'warmer'} on ${esc(team)} than the market this week.`
-    :`Matchday and the market see this one about the same.`;
+  const read=Number.isFinite(gap)&&Math.abs(gap)>=0.5
+    ?`Matchday is ${Math.abs(gap).toFixed(1)} points ${gap<0?'lower':'higher'} on ${esc(team)} than the market.`
+    :`Matchday and the market price ${esc(team)} almost identically.`;
   const open=m.id?`<button type="button" class="rsLink" onclick="openMatchModal('${esc(String(m.id))}')">Open matchup <span aria-hidden="true">→</span></button>`:'';
-  return `<section class="rsFeatured">`
-    +`<div class="rsFeatMain"><span class="seclbl">Featured read</span>`
+  return `<section class="rsBlock rsFeatured"><h3 class="rsTitle">Featured read</h3>`
     +`<div class="rsFeatGame">${esc(rsShortName(away))} at ${esc(rsShortName(home))}</div>`
     +`<div class="rsFeatTeam">${esc(p.pick_name||'')}</div>`
-    +`<div class="rsFeatPct"><b>${communityModelPctLabel(model)}</b><span>Model win probability</span></div></div>`
-    +`<div class="rsFeatSide"><dl class="rsFeatNums">`
-    +(Number.isFinite(market)?`<div><dt>Market</dt><dd>${market.toFixed(1)}%</dd></div>`:'')
-    +(Number.isFinite(gap)?`<div><dt>Difference</dt><dd>${gap>0?'+':'−'}${Math.abs(gap).toFixed(1)} pts</dd></div>`:'')
-    +`</dl><p class="rsFeatRead">${read}</p>`
-    +`<p class="rsFine">A live read that moves until kickoff and is not graded. A wide model–market gap is context, not a signal.</p>${open}</div>`
+    +`<div class="rsReadLine"><span class="rsReadTag">Matchday read</span>`
+    +`<b class="rsSignal">${esc(team)} ${communityModelPctLabel(model)}</b>`
+    +(Number.isFinite(market)?`<span>Market ${market.toFixed(1)}%</span>`:'')
+    +(Number.isFinite(gap)?`<span>${gap>0?'+':'−'}${Math.abs(gap).toFixed(1)} pts</span>`:'')+`</div>`
+    +`<p class="rsFeatRead">${read}</p>`
+    +`<div class="rsFeatFoot"><p class="rsFine">A live read that moves until kickoff and is not graded. The gap is context, not a signal.</p>${open}</div>`
     +`</section>`;
 }
-function rsUpsetRadar(){
+/* Model–market watch: the week's largest disagreements with the price.
+   Framed as research on purpose -- these are calls to watch and grade, and
+   the engine's own caveat says disagreement of this kind has graded worse. */
+function rsModelMarketWatch(){
   const u=(typeof MATCHDAY_BETBETTER_UPSET!=='undefined')?MATCHDAY_BETBETTER_UPSET:null;
   const calls=u&&u.available?bbSportRows((u.picks&&u.picks.length)?u.picks:[u.pick].filter(Boolean)):[];
-  const board=(typeof MATCHDAY_BETBETTER_UPSETS!=='undefined'&&MATCHDAY_BETBETTER_UPSETS)||{};
-  const shots=String(DATA.comp_key||'').toUpperCase()==='NCAAF'?(board.upsets||[]):[];
-  if(!calls.length&&!shots.length)return '';
-  const gaps=calls.map(p=>{
+  if(!calls.length)return '';
+  const rows=calls.map(p=>{
     const model=Number(p.model_pct),market=Number(p.market_pct),gap=Number(p.disagreement_points);
     const away=String(p.selection||'').toLowerCase()===String(p.away||'').toLowerCase();
     const status=typeof upsetStatusText==='function'?upsetStatusText(p,away):'';
@@ -1178,47 +1178,34 @@ function rsUpsetRadar(){
       +`<span class="rsNum"><b>${Number.isFinite(market)?market.toFixed(1)+'%':'—'}</b><small>market</small></span>`
       +`<span class="rsNum rsSignal"><b>${Number.isFinite(gap)?'+'+gap.toFixed(1):'—'}</b><small>gap</small></span></li>`;
   }).join('');
-  const shotRow=x=>`<li class="rsShotRow" title="${esc(`${x.winner} ${x.winner_score}–${x.loser_score} ${x.loser} · ${String(x.played_on||'')}`)}">`
-    +`<span><b>${esc(rsShortName(x.winner))}</b> beat ${esc(rsShortName(x.loser))} <em>${Number(x.winner_score)}–${Number(x.loser_score)}</em></span>`
-    +`<span class="rsNum"><b>${Number.isFinite(Number(x.winner_pregame_pct))?Math.round(Number(x.winner_pregame_pct))+'%':'—'}</b></span></li>`;
-  const shown=shots.slice(0,8);
-  return `<section class="rsBlock">${rsHead('Upset radar')}`
-    +(gaps?`<div class="rsSub">Biggest model–market gaps this week</div><ul class="rsList">${gaps}</ul>`
-      +`<p class="rsFine">Up to three calls a week${u.considered?`, from ${u.considered} games`:''}. To watch and grade, not recommended bets.</p>`:'')
-    +(shots.length?`<div class="rsExpandable"><div class="rsSub">Longest-shot winners this season <span>pregame chance</span></div>`
-      +`<ul class="rsList">${shown.map((x,i)=>shotRow(x).replace('<li class="rsShotRow"',`<li class="rsShotRow${i>=3?' rsExtra':''}"`)).join('')}</ul>`
-      +(shown.length>3?rsMoreBtn(shown.length,'View all','Longest-shot winners this season'):'')+`</div>`:'')
-    +`</section>`;
+  return `<section class="rsBlock"><h3 class="rsTitle">Model–market watch</h3>`
+    +`<p class="rsLede">Largest differences between Matchday and the market this week.</p>`
+    +`<ul class="rsList">${rows}</ul>`
+    +`<p class="rsFine">Up to three a week${u.considered?`, from ${u.considered} games`:''}. Watch and grade — not recommended bets.</p></section>`;
+}
+/* Longshots that won: how the lowest pregame probabilities behaved in
+   reality. Pregame chance is the closing no-vig price, not the model. */
+function rsLongshots(){
+  const board=(typeof MATCHDAY_BETBETTER_UPSETS!=='undefined'&&MATCHDAY_BETBETTER_UPSETS)||{};
+  const shots=String(DATA.comp_key||'').toUpperCase()==='NCAAF'?(board.upsets||[]).slice(0,8):[];
+  if(!shots.length)return '';
+  const card=(x,i)=>`<li class="rsShot${i>=3?' rsExtra':''}"><b class="rsShotPct">${Number.isFinite(Number(x.winner_pregame_pct))?Math.round(Number(x.winner_pregame_pct))+'%':'—'}</b>`
+    +`<span class="rsShotTeam">${esc(rsShortName(x.winner))}</span>`
+    +`<span class="rsShotSub">beat ${esc(rsShortName(x.loser))} ${Number(x.winner_score)}–${Number(x.loser_score)}</span></li>`;
+  return `<section class="rsBlock rsExpandable"><h3 class="rsTitle">Longshots that won</h3>`
+    +`<p class="rsLede">Lowest pregame win chances that still won this season.</p>`
+    +`<ul class="rsShots">${shots.map(card).join('')}</ul>`
+    +(shots.length>3?rsMoreBtn(shots.length,'View all','Longshots that won'):'')+`</section>`;
 }
 function rsStat(){
   const table=collegeRankingTable();
   const rows=(table?.rankings||[]).filter(r=>Number.isFinite(Number(r.movement_since_preseason)));
   const riser=rows.slice().sort((a,b)=>Number(b.movement_since_preseason)-Number(a.movement_since_preseason))[0];
-  if(riser&&Number(riser.movement_since_preseason)>0){
-    return `<div class="rsRailBlock"><span class="seclbl">Stat of the week</span>`
-      +`<b class="rsRailBig">${esc(riser.name)}</b>`
-      +`<span class="rsRailSub"><em class="rsSignal">↑${Number(riser.movement_since_preseason)} spots</em> in the power rating since the preseason · now PR #${riser.rank}</span></div>`;
-  }
-  const sos=(table?.rankings||[]).filter(r=>Number.isFinite(Number(r.sos))&&(r.rank||999)<=25);
-  const hardest=sos.slice().sort((a,b)=>Number(b.sos)-Number(a.sos))[0];
-  if(!hardest)return '';
-  return `<div class="rsRailBlock"><span class="seclbl">Stat of the week</span><b class="rsRailBig">${esc(hardest.name)}</b>`
-    +`<span class="rsRailSub">Toughest schedule in the top 25 · SoS ${Number(hardest.sos).toFixed(2)}</span></div>`;
-}
-function rsNotable(){
-  const table=collegeRankingTable();
-  const rows=(table?.rankings||[]).filter(r=>Number.isFinite(Number(r.rating)));
-  if(!rows.length)return '';
-  const best=(key,dir)=>rows.filter(r=>Number.isFinite(Number(r[key]))).slice().sort((a,b)=>dir*(Number(b[key])-Number(a[key])))[0];
-  const off=best('adj_o',1),def=best('adj_d',-1);
-  const g5=rows.filter(r=>r.tier&&String(r.tier)!=='power').slice().sort((a,b)=>Number(b.rating)-Number(a.rating))[0];
-  const items=[];
-  if(off)items.push(['Best offense',rsShortName(off.name),`${Number(off.adj_o).toFixed(1)} adj. points scored`]);
-  if(def)items.push(['Best defense',rsShortName(def.name),`${Number(def.adj_d).toFixed(1)} adj. points allowed`]);
-  if(g5)items.push(['Outside the power tier',rsShortName(g5.name),`${Number(g5.rating).toFixed(2)} rating · PR #${g5.rank}`]);
-  if(!items.length)return '';
-  return `<div class="rsRailBlock"><span class="seclbl">Notable</span><dl class="rsNotable">`
-    +items.map(([k,v,d])=>`<div><dt>${esc(k)}</dt><dd><b>${esc(v)}</b><span>${esc(d)}</span></dd></div>`).join('')+`</dl></div>`;
+  if(!riser||Number(riser.movement_since_preseason)<=0)return '';
+  return `<section class="rsBlock rsMove"><h3 class="rsTitle">Biggest rating move</h3>`
+    +`<b class="rsMoveTeam">${esc(rsShortName(riser.name))}</b>`
+    +`<span class="rsMoveBig rsSignal">↑${Number(riser.movement_since_preseason)}</span>`
+    +`<span class="rsMoveSub">spots in the power rating since the preseason · now PR #${riser.rank}</span></section>`;
 }
 function rsMyPicks(){
   const u=(typeof MATCHDAY_BETBETTER_USER_PICKS!=='undefined')?MATCHDAY_BETBETTER_USER_PICKS:null;
@@ -1228,15 +1215,28 @@ function rsMyPicks(){
   const settled=picks.filter(p=>p.outcome===0||p.outcome===1);
   const wins=settled.filter(p=>p.outcome===1).length,agreed=settled.filter(p=>p.model_agreed).length;
   const pct=v=>v!=null&&Number.isFinite(Number(v))?communityModelPctLabel(Number(v)*100):'—';
-  const row=p=>{
+  const row=(p,i)=>{
     const done=p.outcome===0||p.outcome===1,won=p.outcome===1;
-    return `<li title="Model ${pct(p.model_probability)} · market ${pct(p.market_probability)} · model ${p.model_agreed?'agreed':'disagreed'}">`
+    return `<li class="${i>=5?'rsExtra':''}" title="Model ${pct(p.model_probability)} · market ${pct(p.market_probability)} · model ${p.model_agreed?'agreed':'disagreed'}">`
       +`<span>${esc(rsShortName(p.selection))}</span><b class="${done?(won?'rsWin':'rsLoss'):'rsWait'}">${done?(won?'W':'L'):'·'}</b></li>`;
   };
-  return `<div class="rsRailBlock"><span class="seclbl">@timurknowsball</span>`
-    +`<b class="rsRailBig">${wins}–${settled.length-wins}</b><span class="rsRailSub">settled picks · ${agreed} of ${settled.length} agreed with Matchday</span>`
-    +`<div class="rsExpandable"><ul class="rsPicks">${ordered.map((p,i)=>row(p).replace('<li ',`<li class="${i>=5?'rsExtra':''}" `)).join('')}</ul>`
-    +(ordered.length>5?rsMoreBtn(ordered.length,'All picks','@timurknowsball picks'):'')+`</div></div>`;
+  return `<section class="rsBlock rsExpandable"><h3 class="rsTitle">Matchday in public</h3>`
+    +`<p class="rsLede">How <a href="https://x.com/timurknowsball" target="_blank" rel="noopener">@timurknowsball</a> uses the model, pick by pick.</p>`
+    +`<div class="rsBigStat"><b>${wins}–${settled.length-wins}</b><span>settled picks · ${agreed} of ${settled.length} agreed with Matchday</span></div>`
+    +`<ul class="rsPicks">${ordered.map(row).join('')}</ul>`
+    +(ordered.length>5?rsMoreBtn(ordered.length,'All picks','@timurknowsball picks'):'')+`</section>`;
+}
+/* The model's own graded record, so Research ends on how it has performed. */
+function rsTrackRecord(){
+  const sc=typeof betbetterScorecard==='function'?betbetterScorecard():null;
+  if(!sc||sc.available===false)return '';
+  const rec=sc.record||{},vm=sc.versus_market||{};
+  const n=v=>Number.isFinite(Number(v))?Number(v).toFixed(1)+'%':'—';
+  return `<section class="rsBlock"><h3 class="rsTitle">Matchday results</h3>`
+    +`<p class="rsLede">Every pick locked before kickoff and graded after the final.</p>`
+    +`<div class="rsBigStat"><b>${esc(rec.wins??'—')}–${esc(rec.losses??'—')}</b><span>${esc(rec.picks??'—')} graded picks</span></div>`
+    +`<dl class="rsSummary"><div><dt>Hit rate</dt><dd>${n(rec.hit_rate_pct)}</dd></div><div><dt>Expected</dt><dd>${n(rec.expected_hit_rate_pct)}</dd></div><div><dt>Beat the price</dt><dd>${n(vm.beat_market_pct)}</dd></div></dl>`
+    +`<button type="button" class="rsMoreBtn" onclick="setView('score')">Full scorecard <span aria-hidden="true">→</span></button></section>`;
 }
 function rsScatter(){
   const table=collegeRankingTable();
@@ -1263,7 +1263,8 @@ function rsScatter(){
     return `<text class="rsLbl" x="${(left?x-8:x+8).toFixed(1)}" y="${y.toFixed(1)}" text-anchor="${left?'end':'start'}">${esc(rsShortName(r.name))}</text>`;
   }).join('');
   const anyG5=rows.some(r=>String(r.tier||'')&&String(r.tier)!=='power');
-  return `<section class="rsBlock">${rsHead('Rating vs schedule',`${rows.length} teams`)}`
+  return `<section class="rsBlock"><div class="rsTitleRow"><h3 class="rsTitle">Rating vs schedule</h3><span class="rsAside">${rows.length} teams</span></div>`
+    +`<p class="rsLede">Are teams rated appropriately for the opponents they've played?</p>`
     +`<svg viewBox="0 0 ${W} ${H}" class="rsScatter" role="img" aria-label="Scatter plot of team rating against strength of schedule">`
     +`<line class="scAx" x1="${PL}" y1="${H-PB}" x2="${W-PR}" y2="${H-PB}"/><line class="scAx" x1="${PL}" y1="${PT}" x2="${PL}" y2="${H-PB}"/>`
     +`<line class="scMed" x1="${mx.toFixed(1)}" y1="${PT}" x2="${mx.toFixed(1)}" y2="${H-PB}"/><line class="scMed" x1="${PL}" y1="${my.toFixed(1)}" x2="${W-PR}" y2="${my.toFixed(1)}"/>`
@@ -1305,39 +1306,28 @@ document.addEventListener('pointermove',e=>{
   y=Math.max(12,Math.min(innerHeight-h-12,y));
   tip.style.left=x+'px';tip.style.top=y+'px';
 });
-function rsConfTab(btn,key){
-  const box=btn.closest('.rsConf');if(!box)return;
-  box.dataset.tab=key;
-  box.querySelectorAll('.rsTabs button').forEach(b=>b.setAttribute('aria-pressed',String(b===btn)));
-}
 function rsConferences(){
   const table=collegeRankingTable();
   const rows=(table?.rankings||[]).filter(r=>r.conference&&Number.isFinite(Number(r.rating)));
   if(rows.length<20)return '';
   const by={};rows.forEach(r=>{(by[r.conference]||=[]).push(r)});
   const confs=Object.entries(by).filter(([,v])=>v.length>=4).map(([name,v])=>{
-    const s=v.slice().sort((a,b)=>Number(b.rating)-Number(a.rating));
     const mean=v.reduce((a,r)=>a+Number(r.rating),0)/v.length;
     const sd=Math.sqrt(v.reduce((a,r)=>a+(Number(r.rating)-mean)**2,0)/v.length);
-    return {name,n:v.length,mean,sd,best:s[0],worst:s[s.length-1],leaders:s.slice(0,3)};
+    return {name,n:v.length,mean,sd};
   }).sort((a,b)=>b.mean-a.mean);
   if(confs.length<3)return '';
-  const hi=Math.max(...confs.map(c=>c.mean)),lo=Math.min(...confs.map(c=>c.mean)),span=(hi-lo)||1;
+  // Spread is the standard deviation of a conference's own ratings: how far
+  // apart its teams are, not how good it is. Six-team minimum so a tiny
+  // league cannot win "most balanced" by having no one in it.
   const parity=confs.filter(c=>c.n>=6).slice().sort((a,b)=>a.sd-b.sd);
-  const strength=confs.map(c=>`<li><span>${esc(c.name)}</span><i class="rsBar"><b style="width:${Math.max(3,Math.round((c.mean-lo)/span*100))}%"></b></i><span class="rsNum"><b>${c.mean.toFixed(1)}</b></span><span class="rsNum rsMuted">${c.n}</span></li>`).join('');
-  const parityRows=parity.map(c=>`<tr><td>${esc(c.name)}</td><td>${c.sd.toFixed(1)}</td><td>${Number(c.best.rating).toFixed(1)}</td><td>${Number(c.worst.rating).toFixed(1)}</td></tr>`).join('');
-  const teamRows=confs.map(c=>`<tr><td>${esc(c.name)}</td><td class="rsLeft">${c.leaders.map(r=>esc(rsShortName(r.name))).join(' · ')}</td><td>${Number(c.best.rating).toFixed(1)}</td><td>${Number(c.worst.rating).toFixed(1)}</td></tr>`).join('');
-  const balanced=parity[0],widest=parity[parity.length-1];
-  return `<section class="rsBlock rsConf" data-tab="strength">${rsHead('Conference landscape')}`
-    +`<div class="rsTabs" role="group" aria-label="Conference view">`
-    +[['strength','Strength'],['parity','Parity'],['teams','Teams']].map(([k,l],i)=>`<button type="button" aria-pressed="${i===0}" onclick="rsConfTab(this,'${k}')">${l}</button>`).join('')+`</div>`
-    +`<div class="rsPane" data-pane="strength"><div class="rsBarHead"><span>Conference</span><span></span><span>Mean rating</span><span>Teams</span></div><ul class="rsBars">${strength}</ul>`
+  const row=(c,i)=>`<li class="rsConfRow${i>=6?' rsExtra':''}"><span>${esc(c.name)}</span><span class="rsNum"><b>${c.mean.toFixed(1)}</b></span><span class="rsNum rsMuted"><b>${c.n}</b></span></li>`;
+  return `<section class="rsBlock rsExpandable"><h3 class="rsTitle">Conference landscape</h3>`
     +`<dl class="rsSummary"><div><dt>Strongest</dt><dd>${esc(confs[0].name)}</dd></div>`
-    +(balanced?`<div><dt>Most balanced</dt><dd>${esc(balanced.name)}</dd></div><div><dt>Widest spread</dt><dd>${esc(widest.name)}</dd></div>`:'')+`</dl></div>`
-    +`<div class="rsPane" data-pane="parity"><div class="scTableWrap"><table class="scTable"><thead><tr><th>Conference</th><th>Spread</th><th>Best</th><th>Worst</th></tr></thead><tbody>${parityRows}</tbody></table></div>`
-    +`<p class="rsFine">Spread is how far apart a conference's own teams are rated (standard deviation), not how good the conference is. Most balanced first.</p></div>`
-    +`<div class="rsPane" data-pane="teams"><div class="scTableWrap"><table class="scTable"><thead><tr><th>Conference</th><th class="rsLeft">Top three</th><th>Best</th><th>Worst</th></tr></thead><tbody>${teamRows}</tbody></table></div></div>`
-    +`</section>`;
+    +(parity.length?`<div title="Smallest spread of team ratings"><dt>Most balanced</dt><dd>${esc(parity[0].name)}</dd></div><div title="Largest spread of team ratings"><dt>Widest spread</dt><dd>${esc(parity[parity.length-1].name)}</dd></div>`:'')+`</dl>`
+    +`<div class="rsConfHead"><span>Conference</span><span>Avg. rating</span><span>Teams</span></div>`
+    +`<ul class="rsConf">${confs.map(row).join('')}</ul>`
+    +(confs.length>6?rsMoreBtn(confs.length,'View all','Conference landscape'):'')+`</section>`;
 }
 function rsSchedules(){
   const table=collegeRankingTable();
@@ -1345,26 +1335,37 @@ function rsSchedules(){
   if(rows.length<10)return '';
   const pool=rows.filter(r=>(r.rank||999)<=40);
   const top=(pool.length>=10?pool:rows).slice().sort((a,b)=>Number(b.sos)-Number(a.sos));
-  const hi=Number(top[0].sos),lo=Math.min(0,...top.map(r=>Number(r.sos)));
   const row=(r,i)=>`<li class="rsSchedRow${i>=5?' rsExtra':''}"><span class="rsRank">${i+1}</span>`
-    +`<span class="rsSchedTeam">${typeof teamMark==='function'?teamMark(r.name):''}<b>${esc(rsShortName(r.name))}</b><small title="Power rating rank">PR #${r.rank}</small></span>`
-    +`<i class="rsBar"><b style="width:${Math.max(3,Math.round((Number(r.sos)-lo)/((hi-lo)||1)*100))}%"></b></i>`
-    +`<span class="rsNum"><b>${Number(r.sos).toFixed(2)}</b></span><span class="rsNum rsMuted"><b>${Number(r.rating).toFixed(1)}</b></span></li>`;
-  return `<section class="rsBlock rsExpandable">${rsHead('Toughest schedules','Power rating top 40')}`
-    +`<div class="rsSchedHead"><span></span><span>Team</span><span>Strength of schedule</span><span>SoS</span><span title="Power rating">Power</span></div>`
+    +`<span class="rsSchedTeam">${typeof teamMark==='function'?teamMark(r.name):''}<b>${esc(rsShortName(r.name))}</b></span>`
+    +`<span class="rsNum rsMuted" title="Power rating rank"><b>#${r.rank}</b></span>`
+    +`<span class="rsNum"><b>${Number(r.sos).toFixed(2)}</b></span></li>`;
+  return `<section class="rsBlock rsExpandable"><h3 class="rsTitle">Toughest schedules</h3>`
+    +`<div class="rsSchedHead"><span></span><span>Team</span><span>PR</span><span>SoS</span></div>`
     +`<ol class="rsSched">${top.map(row).join('')}</ol>`
     +(top.length>5?rsMoreBtn(top.length,'View all','Toughest schedules · power rating top 40'):'')+`</section>`;
 }
+function rsPart(num,label,body){
+  return body?`<div class="rsPart"><h2 class="rsPartHead"><span>${num}</span>${label}</h2>${body}</div>`:'';
+}
+/* A compact headline list at the foot of Research. Matchday is not a news
+   site; the full feed is one click away rather than filling the page. */
+function rsHeadlines(){
+  const items=typeof diverseNews==='function'?diverseNews(Math.max((DATA.news||[]).length,18)):[];
+  if(!items.length)return '';
+  const row=(a,i)=>`<li class="${i>=5?'rsExtra':''}"><a href="${esc(a.link||a.url||'#')}" target="_blank" rel="noopener"><span class="rsNewsKind nk-${newsKind(a).key}">${esc(newsKind(a).label)}</span><span class="rsNewsTitle">${esc(a.headline||a.title||'Untitled')}</span><span class="rsNewsMeta">${esc(sourceName(a))}${a.published?' · '+ago(a.published):''}</span></a></li>`;
+  return `<section class="rsBlock rsExpandable rsNews"><h3 class="rsTitle">Latest headlines</h3><ul class="rsNewsList">${items.map(row).join('')}</ul>`
+    +(items.length>5?rsMoreBtn(items.length,'All headlines','Latest headlines'):'')+`</section>`;
+}
 function collegeResearchModules(){
   if(!['NCAAF','NCAAM'].includes(String(DATA?.comp_key||'').toUpperCase()))return '';
-  const featured=rsFeatured(),radar=rsUpsetRadar();
-  const rail=[rsStat(),rsNotable(),rsMyPicks()].filter(Boolean).join('');
-  const sched=rsSchedules();
-  const lower=[rsScatter(),rsConferences()].filter(Boolean).join('');
-  if(!featured&&!radar&&!sched&&!rail&&!lower)return '';
-  return `<section class="collegeResearch" aria-label="Weekly watch and college analysis">
-    ${featured}
-    <div class="rsGrid"><div class="rsMain">${radar}${sched}</div>${rail?`<aside class="rsRail" aria-label="This week">${rail}</aside>`:''}</div>
-    ${lower}
-  </section>`;
+  const grid=(...cells)=>{const c=cells.filter(Boolean);return c.length?`<div class="rsRow rsRow${c.length}">${c.join('')}</div>`:''};
+  const scatter=rsScatter();
+  const parts=[
+    rsPart('01','This week',grid(rsFeatured(),rsModelMarketWatch())),
+    rsPart('02','What the model is finding',grid(rsStat(),rsLongshots())+(scatter||'')),
+    rsPart('03','The bigger picture',grid(rsSchedules(),rsConferences())),
+    rsPart('04','Track record',grid(rsTrackRecord(),rsMyPicks())),
+  ].join('');
+  if(!parts)return '';
+  return `<section class="collegeResearch" aria-label="College research">${parts}${rsHeadlines()}</section>`;
 }
