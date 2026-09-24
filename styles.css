@@ -3588,3 +3588,4 @@ body{font-variant-numeric:tabular-nums}
 /* The feature tint: the home page's game-of-the-week card, reused for the
    lead panel on Research (Featured read) and the Scorecard (Model record). */
 .rsFeatured,.rsFeatureTint{background:linear-gradient(135deg,rgba(58,209,122,.1),rgba(76,194,255,.035) 55%,var(--panel))!important}
+.rsNotes dd{gap:7px!important}.rsNotes dd>b.rsLogoName{line-height:1.2}

@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0925E",
+  "tag": "Fix",
+  "title": "Space under team logos in chart notes",
+  "items": [
+   "In every Reading the chart panel, the stats line no longer touches the team logo above it."
+  ]
+ },
+ {
   "date": "Build 0925D",
   "tag": "Design",
   "title": "Feature tint on lead panels",
