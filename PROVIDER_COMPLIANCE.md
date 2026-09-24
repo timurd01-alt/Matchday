@@ -1,5 +1,9 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-09-24 (the CFP first-four-out row compares the already-published
+AP poll with the current projected field. It reuses existing school marks and
+records; no new provider, endpoint, or raw payload is introduced.)
+
 Reviewed: 2026-09-24 (connected CFP presentation uses the existing published
 field, final scores, and existing local school-mark library. No new source,
 endpoint, raw payload, or ESPN imagery is introduced.)

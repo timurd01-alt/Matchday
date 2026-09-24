@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0924AC",
+  "tag": "Feature",
+  "title": "First four out of the CFP field",
+  "items": [
+   "The four highest AP-ranked teams outside the current projected playoff field now appear below the bracket, with logos, AP ranks and records.",
+   "Teams already in the field are excluded, including projected automatic qualifiers."
+  ]
+ },
+ {
   "date": "Build 0925B",
   "tag": "Fix",
   "title": "Roomier defense notes",

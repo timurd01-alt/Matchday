@@ -22,6 +22,14 @@ const original=JSON.stringify(source);
 const tree=()=>context._cfpBracketTree();
 const get=(id)=>tree().find(n=>n.id===id);
 assert.equal(tree().length,11);
+// Automatic qualifiers can displace a higher AP-ranked team: do not just take ranks 13–16.
+context.MATCHDAY_CFB_AP_POLL={rankings:[...Array.from({length:11},(_,i)=>({name:'School '+(i+1),rank:i+1})),...Array.from({length:4},(_,i)=>({name:'School '+(i+13),rank:i+12})),{name:'School 12',rank:25}]};
+assert.equal(context._cfpFirstFourOut(tree()).map(t=>t.name).join(','),'School 13,School 14,School 15,School 16');
+assert.equal(context._cfpFirstFourOut(tree().filter(n=>n.id!=='qf1')).length,0);
+assert.equal(context._cfpOutRow(tree(),true),'');
+const pollBefore=JSON.stringify(context.MATCHDAY_CFB_AP_POLL);
+context._cfpFirstFourOut(tree());assert.equal(JSON.stringify(context.MATCHDAY_CFB_AP_POLL),pollBefore);
+
 assert.equal(tree().filter(n=>n.next).length,10);
 for(const [seed,pair] of [[1,[8,9]],[4,[5,12]],[2,[7,10]],[3,[6,11]]]){
  assert.equal(get('fr'+seed).teams.map(t=>t.seed).join(','),pair.join(','));
