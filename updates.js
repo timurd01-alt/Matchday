@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0924H",
+  "tag": "Fix",
+  "title": "Team logos fit their badges on Research",
+  "items": [
+   "Logos in Toughest schedules, its View all window, and Scorecard results no longer spill out of their badges."
+  ]
+ },
+ {
   "date": "Build 0924G",
   "tag": "Fix",
   "title": "Power rating ranks labelled as such",

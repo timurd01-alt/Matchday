@@ -3302,3 +3302,7 @@ body{font-variant-numeric:tabular-nums}
 .rsDialogBody{overflow-y:auto;padding:8px 20px 20px}
 .rsDialogBody .rsPicks li{border-bottom:1px solid var(--line);padding:8px 0}
 @media(max-width:600px){.rsDialog{padding:0;place-items:end stretch}.rsDialogSheet{max-height:88vh;border-radius:var(--r) var(--r) 0 0}}
+/* Research and Scorecard rows use smaller badges than the base rule's fixed
+   28px logo, which spilled out of them. Size the logo to the badge instead. */
+.rsSchedTeam .teamMark,.scTeam .teamMark{overflow:hidden}
+.rsSchedTeam .teamMark img,.scTeam .teamMark img{width:80%;height:80%;object-fit:contain}
