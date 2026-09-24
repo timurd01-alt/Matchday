@@ -4,6 +4,17 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0924B",
+  "tag": "Design",
+  "title": "Scorecard rebuilt around the record",
+  "items": [
+   "The model record leads the Scorecard, with the hit rate beside it and the comparison with the market price below.",
+   "Market comparisons are shown as three headline numbers above a shorter table, and the confidence intervals moved behind Methodology.",
+   "Calibration is now shown as bars against the expected rate, and recent results read like game scores with team logos.",
+   "Section headings are the same green on every tab, page intros are plain text instead of boxed callouts, and the TimurKnowsBall Ballot shows in full without a scroll box."
+  ]
+ },
+ {
   "date": "Build 0924A",
   "tag": "Design",
   "title": "A calmer Scorecard and one consistent look",
