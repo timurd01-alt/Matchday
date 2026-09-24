@@ -3503,3 +3503,7 @@ body{font-variant-numeric:tabular-nums}
 .rsMovers li .rsMvRank{grid-column:2!important;grid-row:2!important}
 .rsMovers li .rsMvChg{grid-column:3!important;grid-row:1/3!important}
 .rsMovers li>.teamMark{grid-column:1!important;grid-row:1/3!important}
+.rsHistBars .rsHistHead{margin-bottom:4px}
+.rsHistBars .rsSplitBar{grid-template-columns:170px minmax(0,1fr) 44px}
+.rsHistBars .rsSplitBar:nth-of-type(n+3)>i b{background:var(--muted)}
+.rsHistBars+.rsFine{margin-top:12px}

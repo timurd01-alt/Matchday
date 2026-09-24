@@ -1197,13 +1197,13 @@ function rsModelMarketWatch(){
   // the record rather than as a tip sheet.
   const sc=typeof betbetterScorecard==='function'?betbetterScorecard():null;
   const vm=sc?.versus_market||{},od=sc?.conviction?.outright_disagreements;
-  const hist=[['Agreed with market',vm.agreed_with_market],['Disagreed with market',vm.disagreed_with_market]]
-    .filter(([,b])=>b&&b.picks).map(([l,b])=>`<div><span>${l}</span><b>${esc(b.wins)}–${esc(b.losses)}</b><em>${Number(b.hit_rate_pct).toFixed(1)}%</em></div>`).join('')
-    +(od&&od.picks?`<div><span>Backed the market underdog</span><b>${esc(od.wins)}–${esc(od.losses)}</b><em>${Number(od.hit_rate_pct).toFixed(1)}%</em></div>`:'');
+  const bar=(l,b)=>`<div class="rsSplitBar"><div><span class="rsKicker">${l}</span><b>${esc(b.wins)}–${esc(b.losses)}</b></div><i><b style="width:${Math.max(0,Math.min(100,Number(b.hit_rate_pct)))}%"></b></i><em>${Math.round(Number(b.hit_rate_pct))}%</em></div>`;
+  const hist=[['Agreed with market',vm.agreed_with_market],['Disagreed with market',vm.disagreed_with_market],['Backed market underdog',od]]
+    .filter(([,b])=>b&&b.picks).map(([l,b])=>bar(l,b)).join('');
   return `<section class="rsBlock rsSpan12">${rsTop('Model–market watch','live',u.week?esc(String(u.week).replace(/^\d{4}-W/,'Week ')):'')}`
     +`<div class="rsSplit"><div class="rsSplitMain"><p class="rsLede">The week's largest gaps between Matchday and the market, a recurring research feature.</p>`
     +`<ul class="rsList">${rows}</ul></div>`
-    +`<div class="rsSplitSide">${hist?`<div class="rsHist"><div class="rsHistHead"><span>How disagreement has graded</span>${rsChip('graded')}</div>${hist}</div>`:''}`
+    +`<div class="rsSplitSide">${hist?`<div class="rsHistBars"><div class="rsHistHead"><span>How disagreement has graded</span>${rsChip('graded')}</div>${hist}</div>`:''}`
     +`<p class="rsFine">To watch and grade, not recommended bets.</p></div></div></section>`;
 }
 function rsLongshots(){

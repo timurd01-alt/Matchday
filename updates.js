@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0924U",
+  "tag": "Design",
+  "title": "Model–market watch history as bars",
+  "items": [
+   "How disagreement has graded now shows agreed, disagreed and backed-the-underdog as hit-rate bars, matching Matchday in public and filling the panel evenly."
+  ]
+ },
+ {
   "date": "Build 0924T",
   "tag": "Design",
   "title": "Research and Scorecard polish",
