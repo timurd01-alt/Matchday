@@ -1139,27 +1139,41 @@ function rsShortName(name){
   const parts=s.split(' ');
   return parts.length>1?parts.slice(0,-1).join(' '):s;
 }
+/* Every Research panel says what kind of number it holds. Live reads move
+   until kickoff; season figures are this season's results so far; graded
+   figures are locked picks scored after the final. Mixing them up is the
+   easiest way to misread the page, so the label is never left out. */
+function rsChip(kind){
+  const t={live:['Live','Moves until kickoff'],season:['Season to date','Results so far this season'],graded:['Graded','Locked before kickoff, scored after the final']}[kind];
+  return t?`<span class="rsChip rsChip-${kind}" title="${t[1]}">${t[0]}</span>`:'';
+}
+function rsTop(title,kind,aside){
+  return `<div class="rsTop"><h3 class="rsTitle">${title}</h3><span class="rsTopAside">${aside?`<span class="rsAside">${aside}</span>`:''}${rsChip(kind)}</span></div>`;
+}
+function rsTeamRow(name){
+  const t=(collegeRankingTable()?.rankings||[]).find(r=>bbNameMatches(r.name,name));
+  return t?`PR #${t.rank} · ${esc(t.record||`${t.wins}-${t.losses}`)}`:'';
+}
 function rsFeatured(){
   const fp=typeof featuredPick==='function'?featuredPick():null;
   if(!fp)return '';
   const {m,p}=fp;
   const model=Number(p.model_pct),market=Number(p.market_pct),gap=Number(p.edge_points);
-  const home=m.home?.name||m.home||'',away=m.away?.name||m.away||'';
+  const home=m.home?.name||m.home||p.home||'',away=m.away?.name||m.away||p.away||'';
   const team=rsShortName(p.pick_name);
   const read=Number.isFinite(gap)&&Math.abs(gap)>=0.5
     ?`Matchday is ${Math.abs(gap).toFixed(1)} points ${gap<0?'lower':'higher'} on ${esc(team)} than the market.`
     :`Matchday and the market price ${esc(team)} almost identically.`;
+  const kick=p.kickoff||m.kickoff;
+  const when=kick?kickIn(kick):'';
+  const side=(name,label)=>`<div class="rsFeatSide"><span class="rsKicker">${label}</span><b>${esc(rsShortName(name))}</b><span>${rsTeamRow(name)}</span></div>`;
   const open=m.id?`<button type="button" class="rsLink" onclick="openMatchModal('${esc(String(m.id))}')">Open matchup <span aria-hidden="true">→</span></button>`:'';
-  return `<section class="rsBlock rsFeatured"><h3 class="rsTitle">Featured read</h3>`
-    +`<div class="rsFeatGame">${esc(rsShortName(away))} at ${esc(rsShortName(home))}</div>`
-    +`<div class="rsFeatTeam">${esc(p.pick_name||'')}</div>`
-    +`<div class="rsReadLine"><span class="rsReadTag">Matchday read</span>`
-    +`<b class="rsSignal">${esc(team)} ${communityModelPctLabel(model)}</b>`
-    +(Number.isFinite(market)?`<span>Market ${market.toFixed(1)}%</span>`:'')
-    +(Number.isFinite(gap)?`<span>${gap>0?'+':'−'}${Math.abs(gap).toFixed(1)} pts</span>`:'')+`</div>`
-    +`<p class="rsFeatRead">${read}</p>`
-    +`<div class="rsFeatFoot"><p class="rsFine">A live read that moves until kickoff and is not graded. The gap is context, not a signal.</p>${open}</div>`
-    +`</section>`;
+  return `<section class="rsBlock rsFeatured rsSpan12">${rsTop('Featured read','live',when)}`
+    +`<div class="rsSplit"><div class="rsSplitMain"><div class="rsFeatTeams">${side(away,'Away')}<span class="rsAt">at</span>${side(home,'Home')}</div>`
+    +`<p class="rsFeatRead">${read}</p></div><div class="rsSplitSide"><div class="rsCompare"><div><span class="rsKicker">Matchday</span><b class="rsSignal">${communityModelPctLabel(model)}</b><span>${esc(team)} win</span></div>`
+    +(Number.isFinite(market)?`<div><span class="rsKicker">Market</span><b>${market.toFixed(1)}%</b><span>no-vig price</span></div>`:'')
+    +(Number.isFinite(gap)?`<div><span class="rsKicker">Difference</span><b>${gap>0?'+':'−'}${Math.abs(gap).toFixed(1)}</b><span>points</span></div>`:'')+`</div>`
+    +`<div class="rsFoot"><p class="rsFine">Chosen as the week's most competitive game between ranked teams. Not graded.</p>${open}</div></div></div></section>`;
 }
 /* Model–market watch: the week's largest disagreements with the price.
    Framed as research on purpose -- these are calls to watch and grade, and
@@ -1174,38 +1188,60 @@ function rsModelMarketWatch(){
     const status=typeof upsetStatusText==='function'?upsetStatusText(p,away):'';
     return `<li class="rsGapRow"><div class="rsGapGame"><b>${esc(rsShortName(p.selection))}</b>`
       +`<span>${esc(rsShortName(p.away))} at ${esc(rsShortName(p.home))}${status?` · ${esc(status)}`:''}</span></div>`
-      +`<span class="rsNum"><b>${communityModelPctLabel(model)}</b><small>model</small></span>`
+      +`<span class="rsNum"><b class="rsSignal">${communityModelPctLabel(model)}</b><small>Matchday</small></span>`
       +`<span class="rsNum"><b>${Number.isFinite(market)?market.toFixed(1)+'%':'—'}</b><small>market</small></span>`
-      +`<span class="rsNum rsSignal"><b>${Number.isFinite(gap)?'+'+gap.toFixed(1):'—'}</b><small>gap</small></span></li>`;
+      +`<span class="rsNum"><b>${Number.isFinite(gap)?'+'+gap.toFixed(1):'—'}</b><small>gap</small></span></li>`;
   }).join('');
-  return `<section class="rsBlock"><h3 class="rsTitle">Model–market watch</h3>`
-    +`<p class="rsLede">Largest differences between Matchday and the market this week.</p>`
-    +`<ul class="rsList">${rows}</ul>`
-    +`<p class="rsFine">Up to three a week${u.considered?`, from ${u.considered} games`:''}. Watch and grade — not recommended bets.</p></section>`;
+  // How disagreement has actually graded, so the live list is read against
+  // the record rather than as a tip sheet.
+  const sc=typeof betbetterScorecard==='function'?betbetterScorecard():null;
+  const vm=sc?.versus_market||{},od=sc?.conviction?.outright_disagreements;
+  const hist=[['Agreed with market',vm.agreed_with_market],['Disagreed with market',vm.disagreed_with_market]]
+    .filter(([,b])=>b&&b.picks).map(([l,b])=>`<div><span>${l}</span><b>${esc(b.wins)}–${esc(b.losses)}</b><em>${Number(b.hit_rate_pct).toFixed(1)}%</em></div>`).join('')
+    +(od&&od.picks?`<div><span>Backed the market underdog</span><b>${esc(od.wins)}–${esc(od.losses)}</b><em>${Number(od.hit_rate_pct).toFixed(1)}%</em></div>`:'');
+  return `<section class="rsBlock rsSpan12">${rsTop('Model–market watch','live',u.week?esc(String(u.week).replace(/^\d{4}-W/,'Week ')):'')}`
+    +`<div class="rsSplit"><div class="rsSplitMain"><p class="rsLede">The week's largest gaps between Matchday and the market, a recurring research feature.</p>`
+    +`<ul class="rsList">${rows}</ul></div>`
+    +`<div class="rsSplitSide">${hist?`<div class="rsHist"><div class="rsHistHead"><span>How disagreement has graded</span>${rsChip('graded')}</div>${hist}</div>`:''}`
+    +`<p class="rsFine">${esc(u.caveat||'Watch and grade — not recommended bets.')}</p></div></div></section>`;
 }
-/* Longshots that won: how the lowest pregame probabilities behaved in
-   reality. Pregame chance is the closing no-vig price, not the model. */
 function rsLongshots(){
   const board=(typeof MATCHDAY_BETBETTER_UPSETS!=='undefined'&&MATCHDAY_BETBETTER_UPSETS)||{};
-  const shots=String(DATA.comp_key||'').toUpperCase()==='NCAAF'?(board.upsets||[]).slice(0,8):[];
+  const shots=String(DATA.comp_key||'').toUpperCase()==='NCAAF'?(board.upsets||[]):[];
   if(!shots.length)return '';
-  const card=(x,i)=>`<li class="rsShot${i>=3?' rsExtra':''}"><b class="rsShotPct">${Number.isFinite(Number(x.winner_pregame_pct))?Math.round(Number(x.winner_pregame_pct))+'%':'—'}</b>`
+  const card=(x,i)=>`<li class="rsShot${i>=6?' rsExtra':''}"><b class="rsShotPct">${Number.isFinite(Number(x.winner_pregame_pct))?Math.round(Number(x.winner_pregame_pct))+'%':'—'}</b>`
     +`<span class="rsShotTeam">${esc(rsShortName(x.winner))}</span>`
-    +`<span class="rsShotSub">beat ${esc(rsShortName(x.loser))} ${Number(x.winner_score)}–${Number(x.loser_score)}</span></li>`;
-  return `<section class="rsBlock rsExpandable"><h3 class="rsTitle">Longshots that won</h3>`
-    +`<p class="rsLede">Lowest pregame win chances that still won this season.</p>`
+    +`<span class="rsShotSub">beat ${esc(rsShortName(x.loser))} ${Number(x.winner_score)}–${Number(x.loser_score)}</span>`
+    +`<span class="rsShotDate">${esc(String(x.played_on||'').slice(5).replace('-','/'))}</span></li>`;
+  return `<section class="rsBlock rsExpandable rsSpan8">${rsTop('Longshots that won','season')}`
+    +`<p class="rsLede">The smallest pregame chances that still won, priced by the closing market.</p>`
     +`<ul class="rsShots">${shots.map(card).join('')}</ul>`
-    +(shots.length>3?rsMoreBtn(shots.length,'View all','Longshots that won'):'')+`</section>`;
+    +`<div class="rsFoot"><p class="rsFine">${shots.length} winners${Number.isFinite(Number(board.threshold_pct))?` at or under ${Number(board.threshold_pct)}%`:''} this season. Chance is the market's, not Matchday's.</p>`
+    +(shots.length>6?rsMoreBtn(shots.length,'View all','Longshots that won'):'')+`</div></section>`;
 }
 function rsStat(){
   const table=collegeRankingTable();
-  const rows=(table?.rankings||[]).filter(r=>Number.isFinite(Number(r.movement_since_preseason)));
-  const riser=rows.slice().sort((a,b)=>Number(b.movement_since_preseason)-Number(a.movement_since_preseason))[0];
+  const all=table?.rankings||[];
+  const rows=all.filter(r=>Number.isFinite(Number(r.movement_since_preseason)));
+  const byMove=rows.slice().sort((a,b)=>Number(b.movement_since_preseason)-Number(a.movement_since_preseason));
+  const riser=byMove[0];
   if(!riser||Number(riser.movement_since_preseason)<=0)return '';
-  return `<section class="rsBlock rsMove"><h3 class="rsTitle">Biggest rating move</h3>`
-    +`<b class="rsMoveTeam">${esc(rsShortName(riser.name))}</b>`
-    +`<span class="rsMoveBig rsSignal">↑${Number(riser.movement_since_preseason)}</span>`
-    +`<span class="rsMoveSub">spots in the power rating since the preseason · now PR #${riser.rank}</span></section>`;
+  const path=[riser.preseason_rank!=null?`<span><em>Preseason</em>#${riser.preseason_rank}</span>`:'',
+    riser.previous_rank!=null?`<span><em>Last week</em>#${riser.previous_rank}</span>`:'',
+    `<span class="rsSignal"><em>Now</em>#${riser.rank}</span>`].filter(Boolean).join('<i aria-hidden="true">→</i>');
+  // This week's moves: power rating places gained or lost since the previous
+  // edition. Only drawn when a previous edition exists.
+  const weekly=all.filter(r=>Number.isFinite(Number(r.movement))&&Number(r.movement)!==0);
+  const up=weekly.filter(r=>Number(r.movement)>0).sort((a,b)=>Number(b.movement)-Number(a.movement)).slice(0,3);
+  const down=weekly.filter(r=>Number(r.movement)<0).sort((a,b)=>Number(a.movement)-Number(b.movement)).slice(0,3);
+  const li=(r,cls,sign)=>`<li><span>${esc(rsShortName(r.name))}</span><small>PR #${r.rank}</small><b class="${cls}">${sign}${Math.abs(Number(r.movement))}</b></li>`;
+  const lists=(up.length||down.length)
+    ?`<div class="rsMovers"><div><span class="rsKicker">This week · up</span><ul>${up.map(r=>li(r,'rsWin','↑')).join('')}</ul></div>`
+      +`<div><span class="rsKicker">This week · down</span><ul>${down.map(r=>li(r,'rsLoss','↓')).join('')}</ul></div></div>`:'';
+  return `<section class="rsBlock rsMove rsSpan4">${rsTop('Risers &amp; fallers','season')}`
+    +`<span class="rsKicker rsMoveLabel">Biggest move since the preseason</span>`
+    +`<div class="rsMoveHead"><b class="rsMoveTeam">${esc(rsShortName(riser.name))}</b><span class="rsMoveBig rsSignal">↑${Number(riser.movement_since_preseason)}</span></div>`
+    +`<div class="rsPath">${path}</div>${lists}</section>`;
 }
 function rsMyPicks(){
   const u=(typeof MATCHDAY_BETBETTER_USER_PICKS!=='undefined')?MATCHDAY_BETBETTER_USER_PICKS:null;
@@ -1213,16 +1249,20 @@ function rsMyPicks(){
   if(!picks.length)return '';
   const ordered=picks.slice().sort((a,b)=>String(b.starts_at||'').localeCompare(String(a.starts_at||'')));
   const settled=picks.filter(p=>p.outcome===0||p.outcome===1);
-  const wins=settled.filter(p=>p.outcome===1).length,agreed=settled.filter(p=>p.model_agreed).length;
+  const wins=settled.filter(p=>p.outcome===1).length;
+  const agreed=settled.filter(p=>p.model_agreed),agreedW=agreed.filter(p=>p.outcome===1).length;
+  const differ=settled.filter(p=>!p.model_agreed),differW=differ.filter(p=>p.outcome===1).length;
   const pct=v=>v!=null&&Number.isFinite(Number(v))?communityModelPctLabel(Number(v)*100):'—';
   const row=(p,i)=>{
     const done=p.outcome===0||p.outcome===1,won=p.outcome===1;
-    return `<li class="${i>=5?'rsExtra':''}" title="Model ${pct(p.model_probability)} · market ${pct(p.market_probability)} · model ${p.model_agreed?'agreed':'disagreed'}">`
-      +`<span>${esc(rsShortName(p.selection))}</span><b class="${done?(won?'rsWin':'rsLoss'):'rsWait'}">${done?(won?'W':'L'):'·'}</b></li>`;
+    return `<li class="${i>=5?'rsExtra':''}"><span>${esc(rsShortName(p.selection))}</span>`
+      +`<span class="rsPickMeta">${pct(p.model_probability)} Matchday · ${p.model_agreed?'agreed':'disagreed'}</span>`
+      +`<b class="${done?(won?'rsWin':'rsLoss'):'rsWait'}">${done?(won?'W':'L'):'·'}</b></li>`;
   };
-  return `<section class="rsBlock rsExpandable"><h3 class="rsTitle">Matchday in public</h3>`
+  return `<section class="rsBlock rsExpandable rsSpan5">${rsTop('Matchday in public','graded')}`
     +`<p class="rsLede">How <a href="https://x.com/timurknowsball" target="_blank" rel="noopener">@timurknowsball</a> uses the model, pick by pick.</p>`
-    +`<div class="rsBigStat"><b>${wins}–${settled.length-wins}</b><span>settled picks · ${agreed} of ${settled.length} agreed with Matchday</span></div>`
+    +`<div class="rsBigStat"><b>${wins}–${settled.length-wins}</b><span>settled picks</span></div>`
+    +`<dl class="rsSummary"><div><dt>With Matchday</dt><dd>${agreedW}–${agreed.length-agreedW}</dd></div><div><dt>Against Matchday</dt><dd>${differW}–${differ.length-differW}</dd></div></dl>`
     +`<ul class="rsPicks">${ordered.map(row).join('')}</ul>`
     +(ordered.length>5?rsMoreBtn(ordered.length,'All picks','@timurknowsball picks'):'')+`</section>`;
 }
@@ -1230,13 +1270,22 @@ function rsMyPicks(){
 function rsTrackRecord(){
   const sc=typeof betbetterScorecard==='function'?betbetterScorecard():null;
   if(!sc||sc.available===false)return '';
-  const rec=sc.record||{},vm=sc.versus_market||{};
+  const rec=sc.record||{},vm=sc.versus_market||{},bm=vm.beat_market||{};
   const n=v=>Number.isFinite(Number(v))?Number(v).toFixed(1)+'%':'—';
-  return `<section class="rsBlock"><h3 class="rsTitle">Matchday results</h3>`
-    +`<p class="rsLede">Every pick locked before kickoff and graded after the final.</p>`
-    +`<div class="rsBigStat"><b>${esc(rec.wins??'—')}–${esc(rec.losses??'—')}</b><span>${esc(rec.picks??'—')} graded picks</span></div>`
-    +`<dl class="rsSummary"><div><dt>Hit rate</dt><dd>${n(rec.hit_rate_pct)}</dd></div><div><dt>Expected</dt><dd>${n(rec.expected_hit_rate_pct)}</dd></div><div><dt>Beat the price</dt><dd>${n(vm.beat_market_pct)}</dd></div></dl>`
-    +`<button type="button" class="rsMoreBtn" onclick="setView('score')">Full scorecard <span aria-hidden="true">→</span></button></section>`;
+  const gap=Number(rec.calibration_gap_points);
+  const ci=Array.isArray(bm.confidence_interval_pct)?bm.confidence_interval_pct:null;
+  const straddles=ci&&Number(ci[0])<50&&Number(ci[1])>50;
+  const bands=(sc.by_confidence||[]).filter(b=>Number.isFinite(Number(b.hit_rate_pct))&&Number.isFinite(Number(b.expected_hit_rate_pct)));
+  const pos=v=>Math.max(0,Math.min(100,(Number(v)-50)*2));
+  const cal=bands.map(b=>`<div class="rsCalRow"><span>${esc(b.band)}</span><i class="rsCalTrack"><b style="width:${pos(b.hit_rate_pct)}%"></b><em style="left:${pos(b.expected_hit_rate_pct)}%"></em></i><span class="rsNum"><b>${Math.round(Number(b.hit_rate_pct))}%</b></span></div>`).join('');
+  return `<section class="rsBlock rsSpan7">${rsTop('Matchday results','graded')}`
+    +`<div class="rsResults"><div class="rsBigStat"><b>${esc(rec.wins??'—')}–${esc(rec.losses??'—')}</b><span>${esc(rec.picks??'—')} graded picks</span></div>`
+    +`<dl class="rsSummary"><div><dt>Hit rate</dt><dd>${n(rec.hit_rate_pct)}</dd></div><div><dt>Expected</dt><dd>${n(rec.expected_hit_rate_pct)}</dd></div>`
+    +`<div><dt>Beat the price</dt><dd>${n(vm.beat_market_pct)}</dd></div></dl></div>`
+    +`<p class="rsFeatRead">${Number.isFinite(gap)?`Picks won ${Math.abs(gap).toFixed(1)} points ${gap>=0?'more':'less'} often than the model expected. `:''}`
+    +`${straddles?'Against the market price it is still a coin flip on this sample.':''}</p>`
+    +(cal?`<div class="rsCal"><div class="rsCalHead"><span>Confidence</span><span><i class="rsKeyFill"></i>Hit rate <i class="rsKeyTick"></i>Expected</span><span></span></div>${cal}</div>`:'')
+    +`<div class="rsFoot"><span></span><button type="button" class="rsLink" onclick="setView('score')">Full scorecard <span aria-hidden="true">→</span></button></div></section>`;
 }
 function rsScatter(){
   const table=collegeRankingTable();
@@ -1263,7 +1312,7 @@ function rsScatter(){
     return `<text class="rsLbl" x="${(left?x-8:x+8).toFixed(1)}" y="${y.toFixed(1)}" text-anchor="${left?'end':'start'}">${esc(rsShortName(r.name))}</text>`;
   }).join('');
   const anyG5=rows.some(r=>String(r.tier||'')&&String(r.tier)!=='power');
-  return `<section class="rsBlock"><div class="rsTitleRow"><h3 class="rsTitle">Rating vs schedule</h3><span class="rsAside">${rows.length} teams</span></div>`
+  return `<section class="rsBlock rsSpan8">${rsTop('Rating vs schedule','season',`${rows.length} teams`)}`
     +`<p class="rsLede">Are teams rated appropriately for the opponents they've played?</p>`
     +`<svg viewBox="0 0 ${W} ${H}" class="rsScatter" role="img" aria-label="Scatter plot of team rating against strength of schedule">`
     +`<line class="scAx" x1="${PL}" y1="${H-PB}" x2="${W-PR}" y2="${H-PB}"/><line class="scAx" x1="${PL}" y1="${PT}" x2="${PL}" y2="${H-PB}"/>`
@@ -1272,6 +1321,27 @@ function rsScatter(){
     +`<text class="scAxLbl" transform="rotate(-90 12 ${(H/2).toFixed(0)})" x="12" y="${(H/2).toFixed(0)}" text-anchor="middle">rating →</text></svg>`
     +`<div class="rsLegend"><span><i class="dotKeyP"></i>Power</span>${anyG5?'<span><i class="dotKeyG"></i>Group of Five</span>':''}<span>Lines are medians · hover anywhere on the chart</span></div>`
     +`<p class="rsFine">Up and to the right is a strong rating earned against a hard schedule; up and to the left is a rating built on a soft one.</p></section>`;
+}
+/* What the chart shows, stated: the two quadrants that matter and the
+   top-25 extremes, all read from the same rows the chart plots. */
+function rsScatterNotes(){
+  const rows=(collegeRankingTable()?.rankings||[]).filter(r=>Number.isFinite(Number(r.rating))&&Number.isFinite(Number(r.sos)));
+  if(rows.length<12)return '';
+  const med=a=>{const b=a.slice().sort((m,n)=>m-n);return b[Math.floor(b.length/2)]};
+  const mr=med(rows.map(r=>Number(r.rating))),ms=med(rows.map(r=>Number(r.sos)));
+  const earned=rows.filter(r=>Number(r.rating)>=mr&&Number(r.sos)>=ms).length;
+  const soft=rows.filter(r=>Number(r.rating)>=mr&&Number(r.sos)<ms);
+  const top=rows.filter(r=>(r.rank||999)<=25);
+  const most=top.slice().sort((a,b)=>Number(b.sos)-Number(a.sos))[0],least=top.slice().sort((a,b)=>Number(a.sos)-Number(b.sos))[0];
+  const softest=soft.slice().sort((a,b)=>Number(b.rating)-Number(a.rating))[0];
+  const item=(k,v,d)=>`<div><dt>${k}</dt><dd><b>${v}</b><span>${d}</span></dd></div>`;
+  return `<section class="rsBlock rsSpan4">${rsTop('Reading the chart','season')}<dl class="rsNotes">`
+    +item('Earned','<span class="rsSignal">'+earned+'</span>',`teams above median on both rating and schedule`)
+    +item('Built on a soft schedule',soft.length,`teams above median rating, below median schedule`)
+    +(most?item('Most-tested top 25',esc(rsShortName(most.name)),`SoS ${Number(most.sos).toFixed(2)} · PR #${most.rank}`):'')
+    +(least?item('Least-tested top 25',esc(rsShortName(least.name)),`SoS ${Number(least.sos).toFixed(2)} · PR #${least.rank}`):'')
+    +(softest?item('Best rating, soft schedule',esc(rsShortName(softest.name)),`${Number(softest.rating).toFixed(1)} rating · PR #${softest.rank}`):'')
+    +`</dl></section>`;
 }
 /* Hover anywhere on the chart: the nearest dot within reach is highlighted
    and described in a floating card. Dots are a few pixels wide, so matching the
@@ -1321,11 +1391,12 @@ function rsConferences(){
   // apart its teams are, not how good it is. Six-team minimum so a tiny
   // league cannot win "most balanced" by having no one in it.
   const parity=confs.filter(c=>c.n>=6).slice().sort((a,b)=>a.sd-b.sd);
-  const row=(c,i)=>`<li class="rsConfRow${i>=6?' rsExtra':''}"><span>${esc(c.name)}</span><span class="rsNum"><b>${c.mean.toFixed(1)}</b></span><span class="rsNum rsMuted"><b>${c.n}</b></span></li>`;
-  return `<section class="rsBlock rsExpandable"><h3 class="rsTitle">Conference landscape</h3>`
+  const hi=Math.max(...confs.map(c=>c.mean)),lo=Math.min(...confs.map(c=>c.mean));
+  const row=(c,i)=>`<li class="rsConfRow${i>=6?' rsExtra':''}"><span>${esc(c.name)}</span><i class="rsBar"><b style="width:${Math.max(3,Math.round((c.mean-lo)/((hi-lo)||1)*100))}%"></b></i><span class="rsNum"><b>${c.mean.toFixed(1)}</b></span><span class="rsNum rsMuted"><b>${c.n}</b></span></li>`;
+  return `<section class="rsBlock rsExpandable rsSpan7">${rsTop('Conference landscape','season','Mean power rating')}`
     +`<dl class="rsSummary"><div><dt>Strongest</dt><dd>${esc(confs[0].name)}</dd></div>`
     +(parity.length?`<div title="Smallest spread of team ratings"><dt>Most balanced</dt><dd>${esc(parity[0].name)}</dd></div><div title="Largest spread of team ratings"><dt>Widest spread</dt><dd>${esc(parity[parity.length-1].name)}</dd></div>`:'')+`</dl>`
-    +`<div class="rsConfHead"><span>Conference</span><span>Avg. rating</span><span>Teams</span></div>`
+    +`<div class="rsConfHead"><span>Conference</span><span></span><span>Avg. rating</span><span>Teams</span></div>`
     +`<ul class="rsConf">${confs.map(row).join('')}</ul>`
     +(confs.length>6?rsMoreBtn(confs.length,'View all','Conference landscape'):'')+`</section>`;
 }
@@ -1339,7 +1410,7 @@ function rsSchedules(){
     +`<span class="rsSchedTeam">${typeof teamMark==='function'?teamMark(r.name):''}<b>${esc(rsShortName(r.name))}</b></span>`
     +`<span class="rsNum rsMuted" title="Power rating rank"><b>#${r.rank}</b></span>`
     +`<span class="rsNum"><b>${Number(r.sos).toFixed(2)}</b></span></li>`;
-  return `<section class="rsBlock rsExpandable"><h3 class="rsTitle">Toughest schedules</h3>`
+  return `<section class="rsBlock rsExpandable rsSpan5">${rsTop('Toughest schedules','season','Power rating top 40')}`
     +`<div class="rsSchedHead"><span></span><span>Team</span><span>PR</span><span>SoS</span></div>`
     +`<ol class="rsSched">${top.map(row).join('')}</ol>`
     +(top.length>5?rsMoreBtn(top.length,'View all','Toughest schedules · power rating top 40'):'')+`</section>`;
@@ -1358,14 +1429,17 @@ function rsHeadlines(){
 }
 function collegeResearchModules(){
   if(!['NCAAF','NCAAM'].includes(String(DATA?.comp_key||'').toUpperCase()))return '';
-  const grid=(...cells)=>{const c=cells.filter(Boolean);return c.length?`<div class="rsRow rsRow${c.length}">${c.join('')}</div>`:''};
-  const scatter=rsScatter();
+  // One 12-column grid. Each panel's span is set by what it holds (rsSpanN),
+  // so a finding and its supporting numbers share a row at sensible widths.
+  const grid=(...cells)=>{const c=cells.filter(Boolean);return c.length?`<div class="rsRow">${c.join('')}</div>`:''};
   const parts=[
     rsPart('01','This week',grid(rsFeatured(),rsModelMarketWatch())),
-    rsPart('02','What the model is finding',grid(rsStat(),rsLongshots())+(scatter||'')),
+    rsPart('02','What the model is finding',grid(rsStat(),rsLongshots())+grid(rsScatter(),rsScatterNotes())),
     rsPart('03','The bigger picture',grid(rsSchedules(),rsConferences())),
     rsPart('04','Track record',grid(rsTrackRecord(),rsMyPicks())),
   ].join('');
   if(!parts)return '';
-  return `<section class="collegeResearch" aria-label="College research">${parts}${rsHeadlines()}</section>`;
+  return `<section class="collegeResearch" aria-label="College research">`
+    +`<div class="rsLegend2"><span>${rsChip('live')} moves until kickoff</span><span>${rsChip('season')} this season's results so far</span><span>${rsChip('graded')} locked picks, scored after the final</span></div>`
+    +`${parts}${rsHeadlines()}</section>`;
 }
