@@ -758,7 +758,7 @@ function renderScore(){
     ? `<div class="banner" style="margin-bottom:14px"><b>Not yet a reportable record.</b> `
       +`Fewer than ${esc(sc.minimum_picks_to_read??'the minimum')} graded picks, so the rate below is not a measurement yet.</div>`
     : '';
-  const record=`<section class="rsBlock rsSpan7">${rsTop('Model record','graded',`${esc(rec.picks??'—')} graded picks`)}`
+  const record=`<section class="rsBlock rsSpan7 rsFeatureTint">${rsTop('Model record','graded',`${esc(rec.picks??'—')} graded picks`)}`
     +`<div class="scLead"><div><strong class="scBig">${esc(rec.wins??'—')}–${esc(rec.losses??'—')}</strong><span class="rsKicker">Wins–losses</span></div>`
     +`<div><strong class="scBig">${_scPct(rec.hit_rate_pct)}</strong><span class="rsKicker">Hit rate</span></div></div>`
     +`<dl class="rsSummary scLeadCtx"><div><dt>Expected</dt><dd>${_scPct(rec.expected_hit_rate_pct)}</dd></div>`

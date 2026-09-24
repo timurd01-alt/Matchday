@@ -3585,3 +3585,6 @@ body{font-variant-numeric:tabular-nums}
 .gamesSeeds em{font-style:normal;width:16px;color:var(--signal);font-weight:var(--fw-bold)}
 .gamesSeeds b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:var(--fw-semibold)}
 .gamesSeeds .teamMark{width:26px;height:26px;flex:0 0 26px;overflow:hidden}.gamesSeeds .teamMark img{width:80%;height:80%;object-fit:contain}
+/* The feature tint: the home page's game-of-the-week card, reused for the
+   lead panel on Research (Featured read) and the Scorecard (Model record). */
+.rsFeatured,.rsFeatureTint{background:linear-gradient(135deg,rgba(58,209,122,.1),rgba(76,194,255,.035) 55%,var(--panel))!important}
