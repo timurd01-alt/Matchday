@@ -1173,8 +1173,7 @@ function rsFeatured(){
     +`</div><div class="rsSplitSide"><div class="rsCompare"><div><span class="rsKicker">Matchday</span><b class="rsSignal">${communityModelPctLabel(model)}</b><span>${esc(team)} win</span></div>`
     +(Number.isFinite(market)?`<div><span class="rsKicker">Market</span><b>${market.toFixed(1)}%</b><span>no-vig price</span></div>`:'')
     +(Number.isFinite(gap)?`<div><span class="rsKicker">Difference</span><b>${gap>0?'+':'−'}${Math.abs(gap).toFixed(1)}</b><span>points</span></div>`:'')+`</div>`
-    +`<p class="rsFeatRead">${read}</p>`
-    +`<div class="rsFoot"><p class="rsFine">The week's most competitive game between ranked teams. Not graded.</p>${open}</div></div></div></section>`;
+    +`<div class="rsFoot">${open}</div></div></div></section>`;
 }
 /* Model–market watch: the week's largest disagreements with the price.
    Framed as research on purpose -- these are calls to watch and grade, and
@@ -1200,11 +1199,11 @@ function rsModelMarketWatch(){
   const bar=(l,b)=>`<div class="rsSplitBar"><div><span class="rsKicker">${l}</span><b>${esc(b.wins)}–${esc(b.losses)}</b></div><i><b style="width:${Math.max(0,Math.min(100,Number(b.hit_rate_pct)))}%"></b></i><em>${Math.round(Number(b.hit_rate_pct))}%</em></div>`;
   const hist=[['Agreed with market',vm.agreed_with_market],['Disagreed with market',vm.disagreed_with_market],['Backed market underdog',od]]
     .filter(([,b])=>b&&b.picks).map(([l,b])=>bar(l,b)).join('');
-  return `<section class="rsBlock rsSpan12">${rsTop('Model–market watch','live',u.week?esc(String(u.week).replace(/^\d{4}-W/,'Week ')):'')}`
-    +`<div class="rsSplit"><div class="rsSplitMain"><p class="rsLede">The week's largest gaps between Matchday and the market, a recurring research feature.</p>`
+  return `<section class="rsBlock rsSpan12">${rsTop('<span title="To watch and grade, not recommended bets.">Model–market watch</span>','live',u.week?esc(String(u.week).replace(/^\d{4}-W/,'Week ')):'')}`
+    +`<div class="rsSplit"><div class="rsSplitMain">`
     +`<ul class="rsList">${rows}</ul></div>`
     +`<div class="rsSplitSide">${hist?`<div class="rsHistBars"><div class="rsHistHead"><span>How disagreement has graded</span>${rsChip('graded')}</div>${hist}</div>`:''}`
-    +`<p class="rsFine">To watch and grade, not recommended bets.</p></div></div></section>`;
+    +`</div></div></section>`;
 }
 function rsLongshots(){
   const board=(typeof MATCHDAY_BETBETTER_UPSETS!=='undefined'&&MATCHDAY_BETBETTER_UPSETS)||{};
@@ -1215,9 +1214,8 @@ function rsLongshots(){
     +`<span class="rsShotSub">beat ${esc(rsShortName(x.loser))} ${Number(x.winner_score)}–${Number(x.loser_score)}</span>`
     +`<span class="rsShotDate">${esc(String(x.played_on||'').slice(5).replace('-','/'))}</span></li>`;
   return `<section class="rsBlock rsExpandable rsSpan8">${rsTop('Longshots that won','season')}`
-    +`<p class="rsLede">The smallest pregame chances that still won, priced by the closing market.</p>`
     +`<ul class="rsShots">${shots.map(card).join('')}</ul>`
-    +`<div class="rsFoot"><p class="rsFine">${shots.length} winners${Number.isFinite(Number(board.threshold_pct))?` at or under ${Number(board.threshold_pct)}%`:''} this season. Chance is the market's, not Matchday's.</p>`
+    +`<div class="rsFoot">`
     +(shots.length>6?rsMoreBtn(shots.length,'View all','Longshots that won'):'')+`</div></section>`;
 }
 function rsStat(){
@@ -1260,8 +1258,8 @@ function rsMyPicks(){
       +`<span class="rsPickMeta">${pct(p.model_probability)} Matchday · ${p.model_agreed?'agreed':'disagreed'}</span>`
       +`<b class="${done?(won?'rsWin':'rsLoss'):'rsWait'}">${done?(won?'W':'L'):'·'}</b></li>`;
   };
-  return `<section class="rsBlock rsSpan12">${rsTop('Matchday in public','graded')}`
-    +`<div class="rsSplit"><div class="rsSplitMain"><p class="rsLede">How <a href="https://x.com/timurknowsball" target="_blank" rel="noopener">@timurknowsball</a> uses the model, pick by pick.</p>`
+  return `<section class="rsBlock rsSpan12">${rsTop('Matchday in public · <a class="rsHandle" href="https://x.com/timurknowsball" target="_blank" rel="noopener">@timurknowsball</a>','graded')}`
+    +`<div class="rsSplit"><div class="rsSplitMain">`
     +`<div class="rsBigStat"><b>${wins}–${settled.length-wins}</b><span>settled picks · ${settled.length?Math.round(wins/settled.length*100):0}% hit rate</span></div>`
     // Every settled pick in order, oldest first: the record as a run of results.
     +`<div class="rsForm" aria-label="Settled picks in order, oldest first">${settled.slice().sort((x,y)=>String(x.starts_at||'').localeCompare(String(y.starts_at||''))).map(p=>`<i class="${p.outcome===1?'w':'l'}" title="${esc(rsShortName(p.selection))} · ${p.outcome===1?'won':'lost'}"></i>`).join('')}</div>`
@@ -1295,14 +1293,13 @@ function rsScatter(){
   }).join('');
   const anyG5=rows.some(r=>String(r.tier||'')&&String(r.tier)!=='power');
   return `<section class="rsBlock rsSpan8">${rsTop('Rating vs schedule','season',`${rows.length} teams`)}`
-    +`<p class="rsLede">Are teams rated appropriately for the opponents they've played?</p>`
     +`<svg viewBox="0 0 ${W} ${H}" class="rsScatter" role="img" aria-label="Scatter plot of team rating against strength of schedule">`
     +`<line class="scAx" x1="${PL}" y1="${H-PB}" x2="${W-PR}" y2="${H-PB}"/><line class="scAx" x1="${PL}" y1="${PT}" x2="${PL}" y2="${H-PB}"/>`
     +`<line class="scMed" x1="${mx.toFixed(1)}" y1="${PT}" x2="${mx.toFixed(1)}" y2="${H-PB}"/><line class="scMed" x1="${PL}" y1="${my.toFixed(1)}" x2="${W-PR}" y2="${my.toFixed(1)}"/>`
     +`${dots}${labels}<text class="scAxLbl" x="${(W/2).toFixed(0)}" y="${H-8}" text-anchor="middle">strength of schedule →</text>`
     +`<text class="scAxLbl" transform="rotate(-90 12 ${(H/2).toFixed(0)})" x="12" y="${(H/2).toFixed(0)}" text-anchor="middle">rating →</text></svg>`
     +`<div class="rsLegend"><span><i class="dotKeyP"></i>Power</span>${anyG5?'<span><i class="dotKeyG"></i>Group of Five</span>':''}<span>Lines are medians · hover anywhere on the chart</span></div>`
-    +`<p class="rsFine">Up and to the right is a strong rating earned against a hard schedule; up and to the left is a rating built on a soft one.</p></section>`;
+    +`</section>`;
 }
 /* What the chart shows, stated: the two quadrants that matter and the
    top-25 extremes, all read from the same rows the chart plots. */

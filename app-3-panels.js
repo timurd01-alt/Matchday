@@ -663,7 +663,7 @@ function _scBands(bands){
   return `<section class="rsBlock rsSpan5">${rsTop('Calibration','graded',`${n} picks`)}`
     +`<div class="scCalKey"><span><i class="scCalFill"></i>Hit rate</span><span><i class="scCalExp"></i>Expected</span></div>`
     +`<div class="scCal">${rows}</div>`
-    +`<p class="rsFine">Does a 70% pick win about 70% of the time? A gap either way is miscalibration.</p></section>`;
+    +`</section>`;
 }
 /* Picks that agreed with the market and picks that disagreed. The lift stat
    never renders without the record it earned taking that side: showing it
@@ -692,7 +692,7 @@ function _scMarket(vm,c){
   const share=Number(vm?.disagreement_share_pct);
   return `<section class="rsBlock rsSpan12">${rsTop('Against the market','graded')}`
     +`<div class="rsSplit"><div class="rsSplitMain">${stats}`
-    +(Number.isFinite(share)?`<p class="rsFeatRead scMarketRead">Different side from the market on ${share.toFixed(1)}% of priced picks.</p>`:'')+`</div>`
+    +`</div>`
     +(rows?`<div class="rsSplitSide">${rows}<div class="scRangeKey"><span><i class="scKeyFill"></i>Hit rate</span><span><i class="scKeyRef"></i>Expected</span></div></div>`:'')
     +`</div></section>`;
 }
@@ -768,7 +768,8 @@ function renderScore(){
   const price=`<section class="rsBlock rsSpan5">${rsTop('Against the price','graded')}`
     +_scCompare([['Actual',_scPct(vm.beat_market_pct)],['Expected',bm?_scPct(bm.expected_hit_rate_pct):'50.0%'],['Difference',bm?_scGap(bm.calibration_gap_points):'—']])
     +_scRange({value:vm.beat_market_pct,ref:50,lo:bmCi?.[0],hi:bmCi?.[1],min:35,max:65,refLabel:'Coin flip',leftLabel:'← Market better',rightLabel:'Matchday better →'})
-    +`<p class="rsFeatRead">${straddles?`The 95% range (${_scNum(bmCi[0])}–${_scNum(bmCi[1])}%) still spans the coin flip, so Matchday and the market are not yet separable.`:'Above 50% the model is the better forecaster of the two; below it, the market is.'}</p></section>`;
+    +`<div class="scRangeKey"><span><i class="scKeyDot"></i>Beat the price</span><span><i class="scKeyRef"></i>Coin flip</span>${bmCi?'<span><i class="scKeyBand"></i>95% range</span>':''}</div>`
+    +`</section>`;
   const grid=(...cells)=>{const c=cells.filter(Boolean);return c.length?`<div class="rsRow">${c.join('')}</div>`:''};
   const part=typeof rsPart==='function'?rsPart:(n,l,b)=>b;
   host.innerHTML=`<div class="vhead">Scorecard</div>`

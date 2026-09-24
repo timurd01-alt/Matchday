@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0924V",
+  "tag": "Design",
+  "title": "No more filler text on Research and Scorecard",
+  "items": [
+   "Grey explanatory sentences and footnotes are gone from Research and the Scorecard; the numbers, charts and Live / Season / Graded labels carry the meaning. The Model–market watch caveat is kept in its title's tooltip.",
+   "The featured read's numbers now sit level with the teams, and Model–market watch's list and graded bars line up top and bottom.",
+   "Longshot cards and calibration rows fill their panels; Against the price has a key and its range bar lines up with Model record's."
+  ]
+ },
+ {
   "date": "Build 0924U",
   "tag": "Design",
   "title": "Model–market watch history as bars",

@@ -3507,3 +3507,11 @@ body{font-variant-numeric:tabular-nums}
 .rsHistBars .rsSplitBar{grid-template-columns:170px minmax(0,1fr) 44px}
 .rsHistBars .rsSplitBar:nth-of-type(n+3)>i b{background:var(--muted)}
 .rsHistBars+.rsFine{margin-top:12px}
+/* Fill panels with their own content rather than leaving a gap. */
+.rsShots{flex:1;grid-auto-rows:1fr}
+.rsExpandable>.rsShots+.rsFoot{padding-top:14px}
+.scorecardPage .scCal{flex:1;display:flex;flex-direction:column;justify-content:space-between}
+.scorecardPage .rsPart:first-child .rsSpan5{justify-content:flex-start}
+.scorecardPage .rsPart:first-child .rsSpan5 .scRange{margin-top:auto}
+.scorecardPage .rsPart:first-child .rsSpan7 .scRange{margin-top:auto}
+.rsHandle{color:var(--signal);text-decoration:none;font-weight:var(--fw-semibold)}.rsHandle:hover{text-decoration:underline}
