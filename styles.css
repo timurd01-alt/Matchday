@@ -3525,3 +3525,4 @@ body{font-variant-numeric:tabular-nums}
 .scorecardPage .rsSplitMain>.rsCompare>div:nth-child(3){border-left:0}
 .scorecardPage .rsSplitMain>.rsCompare>div:nth-child(n+3){border-top:1px solid var(--line)}
 .scorecardPage .rsPart:first-child .rsSpan5 .rsCompare{flex:1;margin-bottom:22px}.scorecardPage .rsPart:first-child .rsSpan5 .rsCompare>div{align-content:center}.scorecardPage .rsPart:first-child .rsSpan5 .scRange{margin-top:14px}
+.rsFoot:empty{display:none}.rsFeatured .rsSplit{align-items:stretch}.rsFeatured .rsSplitMain{justify-content:center}.rsFeatured .rsFeatTeams{margin:0!important}.rsFeatured .rsSplitSide{justify-content:center}

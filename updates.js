@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0924X",
+  "tag": "Fix",
+  "title": "Featured read aligned",
+  "items": [
+   "The featured read's teams now sit vertically centred against the Matchday, market and difference numbers."
+  ]
+ },
+ {
   "date": "Build 0924W",
   "tag": "Design",
   "title": "Fuller panels, no dead space",
