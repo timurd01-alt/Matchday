@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0925F",
+  "tag": "Fix",
+  "title": "Clearer recent results",
+  "items": [
+   "Each recent result on the Scorecard, and in its View all window, is now its own card, so one game's score can no longer read as part of the game beside it.",
+   "Louisiana Ragin' Cajuns now shortens to Louisiana."
+  ]
+ },
+ {
   "date": "Build 0925E",
   "tag": "Fix",
   "title": "Space under team logos in chart notes",

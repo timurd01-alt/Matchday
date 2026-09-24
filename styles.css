@@ -3589,3 +3589,9 @@ body{font-variant-numeric:tabular-nums}
    lead panel on Research (Featured read) and the Scorecard (Model record). */
 .rsFeatured,.rsFeatureTint{background:linear-gradient(135deg,rgba(58,209,122,.1),rgba(76,194,255,.035) 55%,var(--panel))!important}
 .rsNotes dd{gap:7px!important}.rsNotes dd>b.rsLogoName{line-height:1.2}
+/* Recent results: each game is its own card, so two columns never read as
+   one row (a left game's scores used to sit against the right game's logos). */
+.scorecardPage .scGames{gap:12px!important}
+.scorecardPage .scGame,.rsDialogBody .scGame{padding:12px 14px!important;background:var(--bg2);border:1px solid var(--line);border-radius:var(--r);border-bottom:1px solid var(--line)}
+.rsDialogBody .scGames{gap:10px!important;padding-top:10px}
+.scGamePick{gap:16px}
