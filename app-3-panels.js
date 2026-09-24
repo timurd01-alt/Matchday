@@ -622,7 +622,9 @@ function _scGap(v,unit=' pts'){
   return `<span class="scGap">${n>0?'+':n<0?'−':''}${Math.abs(n).toFixed(1)}${unit}</span>`;
 }
 function _scHead(label,hint,aside){
-  return `<div class="scHead"><div><div class="seclbl">${label}</div>${hint?`<p class="scHeadHint">${hint}</p>`:''}</div>${aside?`<span class="scAside">${aside}</span>`:''}</div>`;
+  // The hint is a tooltip on a ?, not a sentence under the heading.
+  const help=hint?`<button type="button" class="metricHelp boardHelp scHelp" aria-label="${esc(hint)}" data-tip="${esc(hint)}">?</button>`:'';
+  return `<div class="scHead"><div class="seclbl">${label}${help}</div>${aside?`<span class="scAside">${aside}</span>`:''}</div>`;
 }
 function _scStat(value,label,sub){
   return `<div class="scStat"><b>${value}</b><span>${label}</span>${sub?`<small>${sub}</small>`:''}</div>`;
@@ -676,8 +678,9 @@ function _scMarket(vm,c){
     +`${stats?'Seeing an underrated team and beating the price are not the same thing — so far only the first holds.':''}</p></section>`;
 }
 function _scTeamLine(name,score,won,prefix){
-  return `<div class="scTeam${won?' won':''}">${typeof teamMark==='function'?teamMark(name):''}`
-    +`<span>${prefix?`<em>${prefix}</em> `:''}${esc(name)}</span><b>${esc(score??'')}</b></div>`;
+  const short=typeof rsShortName==='function'?rsShortName(name):name;
+  return `<div class="scTeam${won?' won':''}" title="${esc(name)}">${typeof teamMark==='function'?teamMark(name):''}`
+    +`<span>${prefix?`<em>${prefix}</em> `:''}${esc(short)}</span><b>${esc(score??'')}</b></div>`;
 }
 function _scRecent(rows){
   const graded=(rows||[]).filter(r=>['win','loss'].includes(String(r.result||'').toLowerCase()));
@@ -694,7 +697,7 @@ function _scRecent(rows){
         ? _scTeamLine(away,as,an>hn)+_scTeamLine(home,hs,hn>an,'at')
         : `<div class="scTeam"><span>${esc(r.event_name||'')}</span><b>${esc(r.score||'')}</b></div>`;
       return `<article class="scGame ${won?'hit':'miss'}">${teams}`
-        +`<div class="scGamePick"><span>Pick · ${esc(r.selection||'')}${Number.isFinite(p)?` ${modelPctLabel(p)}`:''}</span>`
+        +`<div class="scGamePick"><span>Pick · ${esc(typeof rsShortName==='function'?rsShortName(r.selection):(r.selection||''))}${Number.isFinite(p)?` ${modelPctLabel(p)}`:''}</span>`
         +`<b>${won?'✓ Won':'✗ Lost'}</b></div></article>`;
     }).join('')+`</div></section>`;
 }

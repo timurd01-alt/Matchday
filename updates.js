@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0924M",
+  "tag": "Design",
+  "title": "A tighter Scorecard",
+  "items": [
+   "The record (141–32) and hit rate (81.5%) now lead at the same size; expected rate, difference and confidence interval step down beneath them.",
+   "Section explanations moved behind a ? beside each heading, so Against the market and Calibration open straight onto the numbers.",
+   "Recent results use short team names, formatted like game scores."
+  ]
+ },
+ {
   "date": "Build 0924L",
   "tag": "Design",
   "title": "Research as one editorial page",

@@ -3406,3 +3406,6 @@ body{font-variant-numeric:tabular-nums}
 .rsMovers ul{list-style:none;margin:6px 0 0;padding:0}.rsMovers li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:0 8px;padding:5px 0;font-size:var(--fs-sm)}
 .rsMovers li span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.rsMovers li small{grid-column:1;font-size:var(--fs-xs);color:var(--faint)}.rsMovers li b{grid-column:2;grid-row:1/3;align-self:center}
 .rsShots{gap:10px}.rsShot{padding:10px 12px}.rsShotPct{font-size:var(--fs-2xl)}
+/* Scorecard: record and hit rate are the two things read first. */
+.scRate b{font-size:var(--fs-hero);font-weight:var(--fw-heavy);letter-spacing:-.03em}
+.scHead .seclbl{display:flex;align-items:center;gap:6px}.scHelp{margin:0}
