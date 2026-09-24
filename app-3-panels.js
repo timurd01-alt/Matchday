@@ -518,66 +518,6 @@ function applyCurrentNcaamSnapshot(payload){
    and what it expected to hit, and whether it beat the price. Expected sits
    beside actual in the same tile, and the engine's own caveat is printed
    underneath. */
-/* Me, the model and the market on the same graded games.
-   The scorecard is two numbers by design, so this sits under them rather than
-   replacing them. It exists because "did I beat the market" is the question the
-   record is actually for, and a hit rate with nothing to compare it against
-   cannot answer it.
-
-   All three are scored on exactly the same fixtures -- the ones I picked before
-   kickoff that have since settled. The market column is whether the side the
-   market priced as favourite won; the model column is the figure frozen an hour
-   before kickoff, not one computed afterwards. */
-function myPicksComparison(){
-  const u=(typeof MATCHDAY_BETBETTER_USER_PICKS!=='undefined')?MATCHDAY_BETBETTER_USER_PICKS:null;
-  const graded=(u?.picks||[]).filter(p=>p.outcome===0||p.outcome===1);
-  if(!graded.length)return '';
-  let mine=0,model=0,market=0;
-  graded.forEach(p=>{
-    const won=p.outcome===1;
-    if(won)mine++;
-    const mp=Number(p.model_probability),kp=Number(p.market_probability);
-    // The model and the market "took" my side when they priced it above even,
-    // so each is right when that agrees with what actually happened.
-    if(Number.isFinite(mp)&&((mp>=0.5)===won))model++;
-    if(Number.isFinite(kp)&&((kp>=0.5)===won))market++;
-  });
-  const n=graded.length;
-  const row=(label,hits,cls)=>`<div class="cmpRow ${cls}">`
-    +`<span>${label}</span>`
-    +`<i class="cmpBar"><b style="width:${Math.round(hits/n*100)}%"></b></i>`
-    +`<em>${hits}/${n}</em></div>`;
-  // The head-to-head above is deliberately restricted to the games I picked, so
-  // all three are scored on the same fixtures. The model and the market price
-  // far more games than that, and their full records belong on the page too --
-  // below, plainly marked as the different, larger sample that they are, rather
-  // than mixed into bars that only mean anything like-for-like.
-  const sc=typeof betbetterScorecard==='function'?betbetterScorecard():null;
-  const rec=sc?.record||{},vm=sc?.versus_market||{};
-  const full=Number(rec.hit_rate_pct),fullN=Number(rec.picks);
-  const beat=Number(vm.beat_market_pct),beatN=Number(vm.graded_priced_selections);
-  const wider=[];
-  if(Number.isFinite(full)&&Number.isFinite(fullN)&&fullN>n){
-    wider.push(`<div class="cmpWideRow"><span>Model</span>`
-      +`<strong>${esc(rec.wins??'—')}<span class="scDash">–</span>${esc(rec.losses??'—')}</strong>`
-      +`<em>${full.toFixed(1)}% of ${fullN} graded picks</em></div>`);
-  }
-  if(Number.isFinite(beat)&&Number.isFinite(beatN)&&beatN>n){
-    wider.push(`<div class="cmpWideRow"><span>Market</span>`
-      +`<strong>${beat.toFixed(1)}%</strong>`
-      +`<em>beat the locked price on ${beatN} priced selections</em></div>`);
-  }
-  const widerBlock=wider.length
-    ? `<div class="cmpWide"><div class="cmpWideHead">Across every graded pick</div>${wider.join('')}`
-      +`<p class="edisc">A much larger sample than the ${n} above, and not a like-for-like comparison: `
-      +`it covers every game the model priced, not only the ones @timurknowsball picked.</p></div>`
-    : '';
-  return `<section class="scSection scComparison"><div class="seclbl">@timurknowsball vs model vs market</div>`
-    +`<div class="cmpGrid">${row('@timurknowsball',mine,'cmpMine')}${row('Model',model,'cmpModel')}${row('Market',market,'cmpMarket')}</div>`
-    +`<p class="edisc">Same ${n} settled pick${n===1?'':'s'} for all three.${n<10?' Small sample.':''} Model forecasts were frozen before kickoff.</p>`
-    +widerBlock+`</section>`;
-}
-
 function betbetterScorecard(){
   const all=(typeof MATCHDAY_BETBETTER_SCORECARD!=='undefined')?MATCHDAY_BETBETTER_SCORECARD:null;
   if(!all)return null;
@@ -612,6 +552,12 @@ function scorecardCaveat(text){
   // from the reader's copy; nothing that describes the numbers is.
   return out.replace(/\s*Never render[^.]*\.\s*$/,'').trim();
 }
+// Same frame as the Rankings tab: a section label and hint, then a titled panel.
+function _scOpen(key,label,hint,title,meta){
+  return `<div class="seclbl" data-score-section="${key}">${label}</div><div class="hint" style="margin-bottom:8px">${hint}</div>`
+    +`<section class="pollSection scSection"><div class="pollHead"><div><div class="vhead" style="margin:0">${title}</div>`
+    +`${meta?`<p class="pollMeta">${meta}</p>`:''}</div></div>`;
+}
 function _scNum(v,d=1){const n=Number(v);return Number.isFinite(n)?n.toFixed(d):null;}
 function _scGap(v){
   const n=Number(v);
@@ -630,10 +576,11 @@ function _scBands(bands){
       +`<td>${Number.isFinite(exp)?exp.toFixed(1)+'%':'—'}</td>`
       +`<td>${_scGap(b.calibration_gap_points)}</td></tr>`;
   }).join('');
-  return `<section class="scSection"><div class="seclbl">Calibration by confidence</div>`
+  const n=bands.reduce((a,b)=>a+(Number(b.picks)||0),0);
+  return _scOpen('calibration','Calibration','Does a 70% pick win about 70% of the time?','Hit rate by confidence band',`${n} graded picks`)
     +`<div class="scTableWrap"><table class="scTable"><thead><tr><th>Band</th><th>Picks</th>`
     +`<th>Hit</th><th>Expected</th><th>Gap</th></tr></thead><tbody>${rows}</tbody></table></div>`
-    +`<p class="edisc">Hit / expected by forecast confidence. A gap in either direction signals miscalibration.</p></section>`;
+    +`<p class="edisc">A gap in either direction signals miscalibration.</p></section>`;
 }
 /* Where the model stood relative to the price.
 
@@ -642,11 +589,15 @@ function _scBands(bands){
    They are the most informative rows in the payload: agreeing with the price is
    where a favourite-heavy book of picks earns its hit rate, and disagreeing
    with it is the only place the model is really making a claim of its own. */
-function _scMarketSplit(vm){
+function _scMarketSplit(vm,conviction){
   const pairs=[['Agreed with the price',vm?.agreed_with_market],
                ['Disagreed with the price',vm?.disagreed_with_market]];
   const usable=pairs.filter(([,b])=>b&&Number.isFinite(Number(b.hit_rate_pct)));
-  if(!usable.length)return '';
+  const tiles=_scConviction(conviction);
+  if(!usable.length&&!tiles)return '';
+  const basis=conviction?.basis||vm?.basis;
+  const open=_scOpen('market','Against the market','Where the model agrees with the locked price, and where it goes its own way.','Model vs the price',basis?`Price: ${esc(basis)}`:'');
+  if(!usable.length)return open+tiles+`</section>`;
   const rows=usable.map(([label,b])=>{
     const hit=Number(b.hit_rate_pct),exp=Number(b.expected_hit_rate_pct);
     const ci=Array.isArray(b.confidence_interval_pct)?b.confidence_interval_pct:null;
@@ -659,25 +610,27 @@ function _scMarketSplit(vm){
       +`<td>${ci?`${_scNum(ci[0])}–${_scNum(ci[1])}%`:'—'}</td></tr>`;
   }).join('');
   const share=Number(vm?.disagreement_share_pct);
-  return `<section class="scSection"><div class="seclbl">With the price and against it</div>`
+  return open+tiles
     +`<div class="scTableWrap"><table class="scTable scSplitTable"><thead><tr><th>Picks</th><th>N</th><th>W–L</th>`
     +`<th>Hit</th><th>Expected</th><th>Gap</th><th>95% CI</th></tr></thead><tbody>${rows}</tbody></table></div>`
-    +`<p class="edisc">${Number.isFinite(share)?`The model took a different side from the market on ${share.toFixed(1)}% of priced picks. `:''}`
-    +`Agreeing with the price is where a book of favourites earns its hit rate; disagreeing is where the model is making a claim of its own. `
-    +`Small samples move these numbers a long way &mdash; read the interval, not the point.</p></section>`;
+    +`<p class="edisc">${Number.isFinite(share)?`Took a different side from the market on ${share.toFixed(1)}% of priced picks. `:''}`
+    +`Agreeing with the price is where a book of favourites earns its hit rate; disagreeing is where the model makes a claim of its own. `
+    +`Read the interval, not the point.</p></section>`;
 }
 function _scRecent(rows){
   const graded=(rows||[]).filter(r=>['win','loss'].includes(String(r.result||'').toLowerCase()));
   if(!graded.length)return '';
-  return `<section class="scSection"><div class="seclbl">Recent graded cards</div>`
+  return _scOpen('recent','Recent results','The latest cards graded after a verified final.','Recent graded cards','newest first')
+    +`<div class="scTableWrap"><table class="scTable scRecentTable"><thead><tr><th>Game</th><th>Pick</th><th>Prob</th><th>Score</th><th>Result</th></tr></thead><tbody>`
     +graded.slice(0,10).map(r=>{
       const won=String(r.result||'').toLowerCase()==='win';
       const p=Number(r.probability_pct);
-      return `<div class="scrow ${won?'hit':'miss'}"><span class="scmatch">${esc(r.event_name||'')}</span>`
-        +`<span class="scpick">${esc(r.selection||'')}${Number.isFinite(p)?` · ${modelPctLabel(p)}`:''}</span>`
-        +`<span class="scscore">${esc(r.score||'')}</span>`
-        +`<span class="scbadge">${won?'WON':'LOST'}</span></div>`;
-    }).join('')+`</section>`;
+      return `<tr class="${won?'hit':'miss'}"><td class="scmatch">${esc(r.event_name||'')}</td>`
+        +`<td class="scpick">${esc(r.selection||'')}</td>`
+        +`<td>${Number.isFinite(p)?modelPctLabel(p):'—'}</td>`
+        +`<td class="scscore">${esc(r.score||'')}</td>`
+        +`<td><span class="scbadge">${won?'WON':'LOST'}</span></td></tr>`;
+    }).join('')+`</tbody></table></div></section>`;
 }
 function renderScore(){
   const host=$('#view-score'),sc=betbetterScorecard();
@@ -713,36 +666,39 @@ function renderScore(){
     +`<strong${Number.isFinite(bmExp)?' title="Two forecasters compared on the same games are a coin flip at 50%"':''}>${Number.isFinite(bmExp)?bmExp.toFixed(1)+'%':'—'}</strong></div>`
     +`<div class="scMetricRow"><span>Difference</span><strong>${_scGap(rec.calibration_gap_points)}</strong>`
     +`<strong>${bm?_scGap(bm.calibration_gap_points):'—'}</strong></div>`
-    +`<div class="scMetricFoot"><span>Model: wins / graded picks${Number.isFinite(rec.picks)?'':''} · Against the price: beat the locked market price${Number.isFinite(priced)?` on ${priced} priced selections`:''}`
-    +`${bm&&bm.wins!=null?`, ${bm.wins}&ndash;${bm.losses}${bm.ties?` with ${bm.ties} tied`:''}`:''}.</span>`
-    +`${ci?`<span>Model hit rate 95% CI ${_scNum(ci[0])}–${_scNum(ci[1])}%.`:'<span>'}`
-    +`${bmCi?` Against the price 95% CI ${_scNum(bmCi[0])}–${_scNum(bmCi[1])}%.`:''}</span>`
+    +`<div class="scMetricFoot">`
+    +`${ci||bmCi?`<span>95% CI: model ${ci?`${_scNum(ci[0])}–${_scNum(ci[1])}%`:'—'} · against the price ${bmCi?`${_scNum(bmCi[0])}–${_scNum(bmCi[1])}%`:'—'}.</span>`:''}`
     +`<span>${bmCi&&Number(bmCi[0])<50&&Number(bmCi[1])>50
-        ? 'That interval spans 50%, so on this sample the model and the market are not yet separable — neither is shown to be the better forecaster.'
+        ? 'The price interval spans 50%, so the model and the market are not yet separable on this sample.'
         : 'Beating the price is a coin flip at 50%: above it the model is the better forecaster of the two, below it the market is.'}</span>`
     +`</div></div></section>`;
   const pending=Number(totals.awaiting_result)||0;
-  const note=`<p class="edisc scCountNote">${esc(totals.graded_selections??'—')} graded selections across ${esc(totals.locked_events??'—')} locked cards. A card can carry more than one selection.`
-    +`${pending?` ${pending} selections await a final score.`:''}</p>`;
   const reportable=sc.reportable===false
     ? `<div class="banner" style="margin-top:12px"><b>Not yet a reportable record.</b> `
       +`Fewer than ${esc(sc.minimum_picks_to_read??'the minimum')} graded picks, so the rate above is not a measurement yet.</div>`
     : '';
-  const method=`<section class="scSection scMethod"><div class="seclbl">How the scorecard works</div>`
-    +`<div class="scMethodGrid"><div><strong>Locked 60 minutes before kickoff</strong><span>The latest forecast at or before the deadline and the price then are recorded.</span></div>`
-    +`<div><strong>Graded after the final whistle</strong><span>Only verified final results enter the record.</span></div>`
-    +`<div><strong>Never rewritten</strong><span>Locked forecasts and prices remain unchanged.</span></div></div>`
-    +`<p class="edisc">Displayed scores are factual. Probabilities remain estimates.</p></section>`;
+  // One strip for the guarantees, one fold for everything that explains the
+  // numbers. These used to be two separate "?" panels, a footnote paragraph and
+  // a closing section, which read as four competing asides.
+  const trust=`<div class="banner"><b>A permanent public record.</b> Every pick is locked 60 minutes before kickoff, graded only on verified finals, and never rewritten.</div>`
+    +`<div class="seclbl">Record</div><div class="hint" style="margin-bottom:8px">Wins against what the model expected, and how often it beat the market price.</div>`;
+  const scope=sc.scope||{};
+  const explain=`<details class="scExplainer"><summary>How to read this record <span aria-hidden="true">?</span></summary>`
+    +`<p><b>Model</b> is wins over graded picks. <b>Against the price</b> is how often the model's probability beat the locked market price`
+    +`${Number.isFinite(priced)?` across ${priced} priced selections`:''}${bm&&bm.wins!=null?` (${bm.wins}&ndash;${bm.losses}${bm.ties?`, ${bm.ties} tied`:''})`:''}.</p>`
+    +`<p>${esc(totals.graded_selections??'—')} graded selections across ${esc(totals.locked_events??'—')} locked cards; a card can carry more than one selection.${pending?` ${pending} await a final score.`:''}</p>`
+    +(sc.caveat?`<p>${esc(scorecardCaveat(sc.caveat))}</p>`:'')
+    +(scope.winner_note?`<p><b>It predicts ${esc(scope.predicts||'who wins')}.</b> ${esc(scope.winner_note)}</p>`:'')
+    +(scope.spread_note?`<p><b>It does not predict ${esc(scope.does_not_predict||'the spread')}.</b> ${esc(scope.spread_note)}</p>`:'')
+    +(scope.conviction_note?`<p>${esc(scope.conviction_note)}</p>`:'')
+    +`<p>The latest forecast at or before the lock deadline, and the price then, are recorded and never changed. Only verified final results enter the record. Scores are factual; probabilities remain estimates.</p>`
+    +`</details>`;
+  const bands=_scBands(sc.by_confidence);
   host.innerHTML=`<div class="vhead">Scorecard</div>`
-    +`${record}${note}${reportable}`
-    +(sc.caveat?`<details class="scExplainer"><summary>Reading these numbers <span aria-hidden="true">?</span></summary><p>${esc(scorecardCaveat(sc.caveat))}</p>${vm.basis?`<p>Price: ${esc(vm.basis)}.</p>`:''}</details>`:'')
-    +_scScope(sc.scope)
-    +_scMarketSplit(vm)
-    +_scConviction(sc.conviction)
-    +_scBands(sc.by_confidence)
-    +_scRecent(sc.recent)
-    +myPicksComparison()
-    +method;
+    +`${trust}${record}${reportable}${explain}`
+    +_scMarketSplit(vm,sc.conviction)
+    +bands
+    +_scRecent(sc.recent);
 }
 /* What the model sees that the price does not.
    The hit rate cannot show this: a card that agrees with the book and one that
@@ -761,8 +717,7 @@ function _scConviction(c){
   if(lift==null)return'';
   const band=Array.isArray(c.contested_band_pct)?c.contested_band_pct:[30,50];
   const sign=lift>0?'+':'';
-  return`<section class="scSection scConviction"><div class="seclbl">Where it parts from the price</div>`
-    +`<div class="scMethodGrid">`
+  return`<div class="scStats">`
     +`<div><strong>${esc(sign+lift)} pts on live underdogs</strong>`
     +`<span>On games the market prices between ${esc(band[0])}% and ${esc(band[1])}%, this model gives the underdog `
     +`${esc(sign+lift)} points more chance than the book does, across ${esc(c.contested_underdogs??'—')} selections.</span></div>`
@@ -771,19 +726,7 @@ function _scConviction(c){
     +`<div><strong>${esc(d.wins)}-${esc(d.losses)} backing that side</strong>`
     +`<span>The record when the model's favourite is the market's underdog. `
     +`Seeing an underrated team and beating the price are not the same thing, and so far only the first holds.</span></div>`
-    +`</div>${c.basis?`<p class="edisc">Price: ${esc(c.basis)}.</p>`:''}</section>`;
-}
-/* "Who wins" and "the spread" are two different claims, and a reader who reads
-   the first as the second will think this record says something it does not.
-   The engine sends both sentences in `scorecard.scope`; this renders them
-   behind a "?" rather than as a paragraph nobody finishes. */
-function _scScope(sc){
-  if(!sc||!sc.winner_note)return'';
-  return`<details class="scExplainer"><summary>What this record does and does not say <span aria-hidden="true">?</span></summary>`
-    +`<p><b>It predicts ${esc(sc.predicts||'who wins')}.</b> ${esc(sc.winner_note)}</p>`
-    +(sc.spread_note?`<p><b>It does not predict ${esc(sc.does_not_predict||'the spread')}.</b> ${esc(sc.spread_note)}</p>`:'')
-    +(sc.conviction_note?`<p>${esc(sc.conviction_note)}</p>`:'')
-    +`</details>`;
+    +`</div>`;
 }
 function highlightFavoriteRows(){if(!favoriteTeam())return;document.querySelectorAll('.gtable .gteam').forEach(cell=>{if(teamKey(cell.dataset.team||cell.textContent).includes(teamKey(favoriteTeam())))cell.closest('tr')?.classList.add('favoriteTeamRow')})}
 function renderCurrent(){captureSignalsIfFresh();({home:renderHome,matches:renderMatches,results:renderResults,groups:renderStandings,bracket:renderBracket,score:renderScore,news:renderNews,community:renderCommunity}[VIEW]||renderHome)();renderWelcome();highlightFavoriteRows();applyStaticI18n()}
@@ -1309,7 +1252,7 @@ renderGroups=function(){
   if(ballotTable&&!host.querySelector('.ballotSection'))host.insertAdjacentHTML('afterbegin',ballotTable);
   if(!host.querySelector('.rankingsIntro'))host.insertAdjacentHTML('afterbegin',`<section class="rankingsIntro">
     <div class="vhead">Rankings</div>
-    <div class="banner"><b>Three views of the college landscape.</b> Power Ratings measure opponent-adjusted team strength. The TimurKnowsBall Ballot ranks résumés. Conferences show the standings and schedule context beneath both.</div>
+    <div class="banner"><b>Three views of the college landscape.</b> Power Ratings measure opponent-adjusted team strength. The AP Top 25 is the official media poll. The TimurKnowsBall Ballot ranks résumés. Conferences show standings and schedule context beneath.</div>
   </section>`);
   const ballot=host.querySelector('.ballotSection');
   if(ballot&&!host.querySelector('[data-ranking-section="top25"]'))ballot.insertAdjacentHTML('beforebegin',`<div class="seclbl" data-ranking-section="top25">Top 25</div><div class="hint" style="margin-bottom:8px">A résumé ballot, kept separate from the predictive power rating.</div>`);
@@ -1341,6 +1284,18 @@ renderGroups=function(){
       cell.appendChild(tag);
     }
   });
+  // Order is fixed: the model's power rating first, the official AP poll
+  // second, my ballot last. Sections are inserted by separate renderers, so
+  // they are moved into place here rather than relying on insertion order.
+  const apTable=host.querySelector('.tablewrap.officialPoll');
+  if(apTable){
+    const stray=apTable.previousElementSibling;
+    if(stray?.classList.contains('vhead')&&stray.textContent.trim()==='Rankings')stray.remove();
+    if(!host.querySelector('[data-ranking-section="ap"]'))apTable.insertAdjacentHTML('beforebegin',`<div class="seclbl" data-ranking-section="ap">AP Top 25</div><div class="hint" style="margin-bottom:8px">The official national media poll.</div>`);
+  }
+  const group=key=>{const lbl=host.querySelector(`[data-ranking-section="${key}"]`);if(!lbl)return[];const out=[lbl];let n=lbl.nextElementSibling;while(n&&!n.dataset.rankingSection&&!n.classList.contains('vhead')){out.push(n);n=n.nextElementSibling;if(out.length>2)break;}return out;};
+  const intro=host.querySelector('.rankingsIntro');
+  if(intro){let at=intro;['power','ap','top25'].forEach(k=>group(k).forEach(el=>{at.after(el);at=el;}));}
   decorateRankingTeamMarks(host);
 };
 /* dedup */
