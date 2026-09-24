@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0924D",
+  "tag": "Fix",
+  "title": "Conference standings sorted by conference record",
+  "items": [
+   "Football conference tables now rank teams by conference record, counting only games between members of that conference, then head-to-head, overall record and model rating.",
+   "A new Conf column shows each team's conference record next to its overall record.",
+   "The expanded match view now uses the same flat, dark panels as the rest of the site, without the glows and green outlines."
+  ]
+ },
+ {
   "date": "Build 0924C",
   "tag": "Fix",
   "title": "Returning from the welcome page shows one tab",

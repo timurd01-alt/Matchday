@@ -3163,3 +3163,14 @@ body{font-variant-numeric:tabular-nums}
   .scCalRow{grid-template-columns:58px minmax(0,1fr) 74px 40px;gap:10px}.scCalN{display:none}.scGames{grid-template-columns:1fr}}
 .scStat b .scGap,.scCtx .scGap{font-size:inherit;font-weight:inherit;color:inherit}
 @media(max-width:760px){.scBlock .scTable th:nth-child(5),.scBlock .scTable td:nth-child(5){display:none}}
+/* Expanded match view: same flat surfaces and hairlines as the rest of the
+   site. It used a lighter gradient sheet, coloured glows in the header, green
+   outlines on team badges and cards, and a glowing score, so it read far
+   brighter than any tab behind it. Green stays for text accents only. */
+.matchSheet,.matchSheet.modernMatchSheet{background:var(--bg2)!important;box-shadow:0 24px 80px rgba(0,0,0,.6)!important}
+.matchSheet .modalHero{background:var(--bg2)!important;background-image:none!important;border-bottom:1px solid var(--line)}
+.matchSheet .teamMark{border-color:var(--line2)!important;box-shadow:none!important}
+.matchSheet .bigScore{text-shadow:none!important}
+.matchSheet .modelReadCard,.matchSheet .analystConfidence,.matchSheet .matchdayLivePick{border-color:var(--line)!important}
+.matchSheet .analystConfidence,.matchSheet .matchdayLivePick{background:var(--panel)!important}
+.matchSheet .readSide{background:var(--panel)!important}

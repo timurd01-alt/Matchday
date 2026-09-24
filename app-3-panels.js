@@ -387,7 +387,7 @@ function applyCurrentCfbSnapshot(payload){
   };
   // The published result ledger can be newer than the derived rating rows.
   // Count every completed game, including non-conference opponents, once.
-  const resultRecords=new Map(),seenResults=new Set();
+  const resultRecords=new Map(),seenResults=new Set(),gameLog=[];
   (typeof MATCHDAY_BETBETTER_RESULTS!=='undefined'?MATCHDAY_BETBETTER_RESULTS:[])
     .filter(g=>String(g.sport||'').toLowerCase()==='ncaaf'&&Number(g.season)===Number(MATCHDAY_CFB_RANKINGS?.season))
     .sort((a,b)=>String(a.kickoff||a.played_on||'').localeCompare(String(b.kickoff||b.played_on||'')))
@@ -396,6 +396,7 @@ function applyCurrentCfbSnapshot(payload){
       const key=String(g.event_id||`${g.played_on}|${g.home}|${g.away}`);
       if(seenResults.has(key))return;
       seenResults.add(key);
+      gameLog.push({home:teamKey(g.home),away:teamKey(g.away),hs:Number(g.home_score),as:Number(g.away_score)});
       [['home','away'],['away','home']].forEach(([side,other])=>{
         const team=teamKey(g[side]),pf=Number(g[side+'_score']),pa=Number(g[other+'_score']);
         if(!team||!Number.isFinite(pf)||!Number.isFinite(pa))return;
@@ -443,6 +444,50 @@ function applyCurrentCfbSnapshot(payload){
   });
   const recordFor=name=>records.get(teamKey(name))||records.get(teamKey(rankFor(name)?.name));
   const externalRating=name=>{const key=teamKey(name);return (MATCHDAY_CFB_SNAPSHOT.rankings||[]).find(row=>{const rk=teamKey(row.name);return rk===key||rk.startsWith(key+' ')||key.startsWith(rk+' ')})};
+  /* Conference standings, ordered the way conferences order them.
+     1. Conference win percentage -- only games between two members of this
+        table count; non-conference games never move a team up or down here.
+     2. Head-to-head among the tied teams (a mini-table if three or more are
+        level); if that separates some of them, each still-level subgroup is
+        re-run from step 2.
+     3. Overall win percentage.
+     4. Model rating, standing in for the computer/CFP rankings most
+        conferences use as their late tiebreaker.
+     Conference-specific steps (common opponents, rival divisions) are not
+     modelled; the first three settle almost every real tie. */
+  const conferenceOrder=teams=>{
+    const idx=new Map();
+    teams.forEach((t,i)=>{[t.name,rankFor(t.name)?.name].forEach(n=>{if(n)idx.set(teamKey(n),i)})});
+    const confGames=gameLog.map(g=>({h:idx.get(g.home),a:idx.get(g.away),hs:g.hs,as:g.as}))
+      .filter(g=>g.h!=null&&g.a!=null&&g.h!==g.a&&g.hs!==g.as);
+    teams.forEach(t=>{t.cw=0;t.cl=0});
+    confGames.forEach(g=>{const [w,l]=g.hs>g.as?[g.h,g.a]:[g.a,g.h];teams[w].cw++;teams[l].cl++;});
+    teams.forEach(t=>{t.conf_record=`${t.cw}-${t.cl}`});
+    const pct=(w,l)=>w+l?w/(w+l):0;
+    const overall=t=>pct(Number(t.w)||0,Number(t.l)||0);
+    const pos=new Map(teams.map((t,i)=>[t,i]));
+    const h2h=group=>{
+      const inG=new Set(group.map(t=>pos.get(t))),rec=new Map(group.map(t=>[t,{w:0,l:0}]));
+      confGames.forEach(g=>{if(!inG.has(g.h)||!inG.has(g.a))return;
+        const [w,l]=g.hs>g.as?[g.h,g.a]:[g.a,g.h];rec.get(teams[w]).w++;rec.get(teams[l]).l++;});
+      return t=>{const r=rec.get(t);return r.w+r.l?pct(r.w,r.l):null};
+    };
+    const bucket=(list,key)=>{const out=[];list.forEach(t=>{const k=key(t),last=out[out.length-1];if(last&&last.k===k)last.items.push(t);else out.push({k,items:[t]})});return out.map(b=>b.items)};
+    const fallback=(a,b)=>(overall(b)-overall(a))||((Number(b.rating)||0)-(Number(a.rating)||0))||a.name.localeCompare(b.name);
+    const breakTie=group=>{
+      if(group.length<2)return group;
+      const score=h2h(group),scores=group.map(score);
+      // Head-to-head only decides a tie when every tied team has played at
+      // least one of the others; otherwise it rewards whoever happened to be
+      // scheduled against the group.
+      if(scores.some(v=>v==null)||new Set(scores).size===1)return [...group].sort(fallback);
+      const ordered=[...group].sort((a,b)=>score(b)-score(a));
+      return bucket(ordered,score).flatMap(g=>g.length===group.length?[...g].sort(fallback):breakTie(g));
+    };
+    // Equal percentage is the tie; more conference wins breaks 2-0 vs 1-0.
+    const byConf=[...teams].sort((a,b)=>(pct(b.cw,b.cl)-pct(a.cw,a.cl))||(b.cw-a.cw));
+    return bucket(byConf,t=>`${pct(t.cw,t.cl)}|${t.cw}`).flatMap(breakTie);
+  };
   payload.standings=(payload.standings||[]).filter(g=>g.group!=='Matchday Top 25').map(g=>{
     // A poll carries its own order. Attaching ratings is fine; re-sorting on
     // them, and renumbering pos, publishes a different table under the poll's
@@ -460,10 +505,9 @@ function applyCurrentCfbSnapshot(payload){
       return {...team,pos:index+1,rating:ranked?.rating??null,external_rank:ranked?.rank??null,pld:current?.pld||0,w:current?.w||0,d:current?.d||0,l:current?.l||0,
         gf:current?.gf||0,ga:current?.ga||0,gd:current?.gd||0,pts:current?.pts||0,
         form:current?.form||'',record:current?.record||'0-0'};
-    }).sort((a,b)=>{// A conference table is standings: record and its tiebreakers decide it.
-      // The imported rating is context, so it only separates teams still level
-      // on every real tiebreaker -- which before kickoff is all of them.
-      return (b.w-a.w)||(a.l-b.l)||(b.gd-a.gd)||(b.pts-a.pts)||((Number(b.rating)||0)-(Number(a.rating)||0))||a.name.localeCompare(b.name);});
+    });
+    const sorted=conferenceOrder(teams);
+    teams.length=0;teams.push(...sorted);
     teams.forEach((team,index)=>team.pos=index+1);
     return {...g,teams};
   });
@@ -1102,7 +1146,7 @@ function teamSnap(team,side,comp){return `<div class="teamSnap ${side==='away'?'
 /* dedup */
 function _v15RenderLeagueTable(st,host){const seen=new Set(),teams=[];(st||[]).forEach(g=>(g.teams||[]).forEach(t=>{const key=String(t.name||t.code||'').toLowerCase();if(key&&!seen.has(key)){seen.add(key);teams.push(t)}}));teams.sort((a,b)=>(Number(a.pos)||999)-(Number(b.pos)||999)||(Number(b.pts)||0)-(Number(a.pts)||0)||(Number(b.gd)||0)-(Number(a.gd)||0));host.innerHTML=`<div class="vhead">Table</div><div class="tablewrap leagueTableWrap"><div class="groupHead">${esc(DATA.competition||'League table')}<span>${teams.length} clubs · full table</span></div><table class="gtable"><thead><tr><th>Team</th><th>P</th><th>W</th><th>D</th><th>L</th><th>GF</th><th>GA</th><th>GD</th><th>Pts</th><th>Form</th></tr></thead><tbody>${teams.map((t,i)=>{const q=t.qual?`<span class="qbadge ${esc(t.qual.status||'')}" title="${esc(t.qual.note||'')}">${esc(t.qual.status||t.qual.note||'')}</span>`:'';return `<tr><td><div class="gteam teamClickable" data-team="${esc(t.name||'')}" onclick="openTeamModal(this.dataset.team)"><span class="pos">${t.pos||i+1}</span><span class="code">${esc(t.code||'')}</span>${esc(t.name||'')} ${q}</div></td><td>${t.pld??'—'}</td><td>${t.w??'—'}</td><td>${t.d??'—'}</td><td>${t.l??'—'}</td><td>${t.gf??'—'}</td><td>${t.ga??'—'}</td><td>${t.gd??'—'}</td><td><b>${t.pts??'—'}</b></td><td class="form">${esc(t.form||'')}</td></tr>`}).join('')}</tbody></table></div>`}
 function renderStandings(){renderGroups()}
-function renderGroups(){const _tables=deriveStandings(),polls=_tables.filter(isPollTable),st=_tables.filter(g=>!isPollTable(g)),host=$('#view-groups'),sc=DATA.scorers||[];if(!st.length&&!polls.length){host.innerHTML=`<div class="vhead">${['NCAAF','NCAAM'].includes(DATA.comp_key)?'Conferences':'Groups'}</div><div class="empty">No group data found yet.</div>`;return}if(navProfile()==='soccer_league'){_v15RenderLeagueTable(st,host);return}if(DATA.comp_key==='NCAAM'){host.innerHTML=pollSectionHTML(polls)+`<div class="vhead">Conferences</div>`+st.map(g=>`<div class="tablewrap"><div class="groupHead">${esc(g.group)}<span>Power breaks 0-0 ties</span></div><table class="gtable ncaamTable"><thead><tr><th>Team</th><th title="0–10 blend of talent, Elo and season results">Power</th><th>Record</th><th>Win%</th><th>PF/G</th><th>PA/G</th><th>Diff</th><th>Streak</th></tr></thead><tbody>${(g.teams||[]).map(t=>`<tr><td><div class="gteam teamClickable" data-team="${esc(t.name||'')}" onclick="openTeamModal(this.dataset.team)"><span class="pos">${t.pos||''}</span><span class="code">${esc(t.code||'')}</span>${esc(t.name||'')}</div></td><td>${t.rating!=null?Number(t.rating).toFixed(2):'—'}</td><td><b>${esc(t.record||`${t.w??'—'}-${t.l??'—'}`)}</b></td><td>${t.win_pct!=null?(Number(t.win_pct)*100).toFixed(1)+'%':'—'}</td><td>${t.avg_pf!=null&&Number(t.avg_pf)?Number(t.avg_pf).toFixed(1):'—'}</td><td>${t.avg_pa!=null&&Number(t.avg_pa)?Number(t.avg_pa).toFixed(1):'—'}</td><td>${t.gd!=null?esc(t.gd):'—'}</td><td class="form">${esc(t.form||'—')}</td></tr>`).join('')}</tbody></table></div>`).join('');return}const groupsTwoWay=SANDBOX_TWO_WAY.has(String(DATA.comp_key||'').toLowerCase());const americanSport=navProfile()==='us_sport'||navProfile()==='college';const ratingSorted=false;const US_SCORE_UNIT={ncaaf:['PF','PA'],ncaam:['PF','PA']};const[fLabel,aLabel]=US_SCORE_UNIT[String(DATA.comp_key||'').toLowerCase()]||['GF','GA'];const winPct=t=>t.pld?((Number(t.w)||0)/t.pld*100).toFixed(1)+'%':'—';host.innerHTML=pollSectionHTML(polls)+`<div class="vhead">${DATA.comp_key==='NCAAF'?'Conferences':americanSport?'Standings':'Groups'}</div>`+st.map(g=>`<div class="tablewrap"><div class="groupHead">${americanSport?esc(g.group||'Full table'):esc(g.group)}<span>${DATA.comp_key==='NCAAF'?'Power breaks tied records':americanSport?(ratingSorted?'ranked by model rating':'ranked by win rate'):'Top 2 · 3rd'}</span></div><table class="gtable"><thead><tr><th>Team</th>${americanSport?'<th title="0–10 blend of talent, Elo and season results">Power</th>':''}<th>P</th><th>W</th>${groupsTwoWay?'':'<th>D</th>'}<th>L</th><th>${fLabel}</th><th>${aLabel}</th><th>${americanSport?'Diff':'GD'}</th><th>${americanSport?'Win%':'Pts'}</th><th>Form</th></tr></thead><tbody>${(g.teams||[]).map(t=>{const fl=uiFlag(t.code);const q=t.qual?`<span class="qbadge ${esc(t.qual.status)}" title="${esc(t.qual.note)}">${esc(t.qual.note)}</span>`:'';return `<tr class="${americanSport?'':(t.pos<=2?'qual':t.pos===3?'third':'')}"><td><div class="gteam teamClickable" data-team="${esc(t.name||'')}" onclick="openTeamModal(this.dataset.team)"><span class="pos">${t.pos||''}</span>${fl?`<span class="flagIcon">${fl}</span>`:''}<span class="code">${esc(t.code||'')}</span>${esc(t.name)} ${t.live?'<span class="liveMark">*</span>':''}${q}</div></td>${americanSport?`<td>${t.rating!=null?Number(t.rating).toFixed(2):'—'}</td>`:''}<td>${t.pld??'—'}</td><td>${t.w??'—'}</td>${groupsTwoWay?'':`<td>${t.d??'—'}</td>`}<td>${t.l??'—'}</td><td>${t.gf??'—'}</td><td>${t.ga??'—'}</td><td>${t.gd??'—'}</td><td><b>${americanSport?winPct(t):(t.pts??'—')}</b></td><td class="form">${esc(t.form||'')}</td></tr>`}).join('')}</tbody></table></div>`).join('')}
+function renderGroups(){const _tables=deriveStandings(),polls=_tables.filter(isPollTable),st=_tables.filter(g=>!isPollTable(g)),host=$('#view-groups'),sc=DATA.scorers||[];if(!st.length&&!polls.length){host.innerHTML=`<div class="vhead">${['NCAAF','NCAAM'].includes(DATA.comp_key)?'Conferences':'Groups'}</div><div class="empty">No group data found yet.</div>`;return}if(navProfile()==='soccer_league'){_v15RenderLeagueTable(st,host);return}if(DATA.comp_key==='NCAAM'){host.innerHTML=pollSectionHTML(polls)+`<div class="vhead">Conferences</div>`+st.map(g=>`<div class="tablewrap"><div class="groupHead">${esc(g.group)}<span>Power breaks 0-0 ties</span></div><table class="gtable ncaamTable"><thead><tr><th>Team</th><th title="0–10 blend of talent, Elo and season results">Power</th><th>Record</th><th>Win%</th><th>PF/G</th><th>PA/G</th><th>Diff</th><th>Streak</th></tr></thead><tbody>${(g.teams||[]).map(t=>`<tr><td><div class="gteam teamClickable" data-team="${esc(t.name||'')}" onclick="openTeamModal(this.dataset.team)"><span class="pos">${t.pos||''}</span><span class="code">${esc(t.code||'')}</span>${esc(t.name||'')}</div></td><td>${t.rating!=null?Number(t.rating).toFixed(2):'—'}</td><td><b>${esc(t.record||`${t.w??'—'}-${t.l??'—'}`)}</b></td><td>${t.win_pct!=null?(Number(t.win_pct)*100).toFixed(1)+'%':'—'}</td><td>${t.avg_pf!=null&&Number(t.avg_pf)?Number(t.avg_pf).toFixed(1):'—'}</td><td>${t.avg_pa!=null&&Number(t.avg_pa)?Number(t.avg_pa).toFixed(1):'—'}</td><td>${t.gd!=null?esc(t.gd):'—'}</td><td class="form">${esc(t.form||'—')}</td></tr>`).join('')}</tbody></table></div>`).join('');return}const groupsTwoWay=SANDBOX_TWO_WAY.has(String(DATA.comp_key||'').toLowerCase());const americanSport=navProfile()==='us_sport'||navProfile()==='college';const ratingSorted=false;const US_SCORE_UNIT={ncaaf:['PF','PA'],ncaam:['PF','PA']};const[fLabel,aLabel]=US_SCORE_UNIT[String(DATA.comp_key||'').toLowerCase()]||['GF','GA'];const winPct=t=>t.pld?((Number(t.w)||0)/t.pld*100).toFixed(1)+'%':'—';host.innerHTML=pollSectionHTML(polls)+`<div class="vhead">${DATA.comp_key==='NCAAF'?'Conferences':americanSport?'Standings':'Groups'}</div>`+st.map(g=>`<div class="tablewrap"><div class="groupHead">${americanSport?esc(g.group||'Full table'):esc(g.group)}<span>${DATA.comp_key==='NCAAF'?'Conference record, then head-to-head':americanSport?(ratingSorted?'ranked by model rating':'ranked by win rate'):'Top 2 · 3rd'}</span></div><table class="gtable"><thead><tr><th>Team</th>${americanSport?'<th title="0–10 blend of talent, Elo and season results">Power</th>':''}${DATA.comp_key==='NCAAF'?'<th title="Conference record: games against teams in this table only">Conf</th>':''}<th>P</th><th>W</th>${groupsTwoWay?'':'<th>D</th>'}<th>L</th><th>${fLabel}</th><th>${aLabel}</th><th>${americanSport?'Diff':'GD'}</th><th>${americanSport?'Win%':'Pts'}</th><th>Form</th></tr></thead><tbody>${(g.teams||[]).map(t=>{const fl=uiFlag(t.code);const q=t.qual?`<span class="qbadge ${esc(t.qual.status)}" title="${esc(t.qual.note)}">${esc(t.qual.note)}</span>`:'';return `<tr class="${americanSport?'':(t.pos<=2?'qual':t.pos===3?'third':'')}"><td><div class="gteam teamClickable" data-team="${esc(t.name||'')}" onclick="openTeamModal(this.dataset.team)"><span class="pos">${t.pos||''}</span>${fl?`<span class="flagIcon">${fl}</span>`:''}<span class="code">${esc(t.code||'')}</span>${esc(t.name)} ${t.live?'<span class="liveMark">*</span>':''}${q}</div></td>${americanSport?`<td>${t.rating!=null?Number(t.rating).toFixed(2):'—'}</td>`:''}${DATA.comp_key==='NCAAF'?`<td><b>${esc(t.conf_record||'0-0')}</b></td>`:''}<td>${t.pld??'—'}</td><td>${t.w??'—'}</td>${groupsTwoWay?'':`<td>${t.d??'—'}</td>`}<td>${t.l??'—'}</td><td>${t.gf??'—'}</td><td>${t.ga??'—'}</td><td>${t.gd??'—'}</td><td><b>${americanSport?winPct(t):(t.pts??'—')}</b></td><td class="form">${esc(t.form||'')}</td></tr>`}).join('')}</tbody></table></div>`).join('')}
 
 /* The published power rating, on the Conferences tab.
    The tab previously held conference tables only, so the ranking that the whole
@@ -1227,7 +1271,7 @@ renderGroups=function(){
   const power=host.querySelector('.pollSection:not(.ballotSection):not(.officialPoll)');
   if(power&&!host.querySelector('[data-ranking-section="power"]'))power.insertAdjacentHTML('beforebegin',`<div class="seclbl" data-ranking-section="power">Power Ratings</div><div class="hint" style="margin-bottom:8px">Opponent-adjusted team strength with schedule, offense, and defense context.</div>`);
   const conference=host.querySelector('.tablewrap:not(.officialPoll)');
-  if(conference&&!host.querySelector('[data-ranking-section="conferences"]'))conference.insertAdjacentHTML('beforebegin',`<div class="seclbl" data-ranking-section="conferences">Conferences</div><div class="hint" style="margin-bottom:8px">Conference tables with the model rating and strength of schedule shown together.</div>`);
+  if(conference&&!host.querySelector('[data-ranking-section="conferences"]'))conference.insertAdjacentHTML('beforebegin',`<div class="seclbl" data-ranking-section="conferences">Conferences</div><div class="hint" style="margin-bottom:8px">Ordered by conference record (games against conference opponents only), then head-to-head, overall record and model rating.</div>`);
   // The old caption said this rating was "context only" and a preseason
   // tiebreaker. That was wrong and misleading: it is the model's own
   // opponent-adjusted rating and the model does use it. Say what it is.
