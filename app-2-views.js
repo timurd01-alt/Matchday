@@ -310,7 +310,6 @@ function renderSandbox(){
     resultHtml=`<div class="empty" style="margin-top:16px">Pick two different teams.</div>`;
   }
   host.innerHTML=`<div class="vhead">Matchup Sandbox</div>
-    <p class="pageLede">Pick two ${esc(DATA.competition||'')} teams and see what the model — using this season's real standings — thinks.</p>
     <div class="sandboxPickers">
       <select id="sandboxHome" onchange="sandboxPick('home',this.value)">${buildOpts(sel.home)}</select>
       <span class="sandboxVs">vs</span>
@@ -365,7 +364,7 @@ function insightFeatureLabel(post){return post?.type==='availability'?'Availabil
 function newestPostFirst(a,b){return String(b?.date||'').localeCompare(String(a?.date||''))}
 function renderInsights(){
   const host=$('#view-insights');
-  host.innerHTML=`<div class="vhead">Insights</div><p class="pageLede">Auto-generated weekly from the model's own graded picks — hit rate, calibration, and this week's storylines. Not third-party news. Want the tactics behind the numbers instead? See the <a href="content.html" style="color:inherit;text-decoration:underline">Content hub</a>.</p><div class="seclbl" style="margin-top:16px">Research</div><div class="hint" style="margin-bottom:8px">How the model itself performs: methodology notes and measured results.</div><div id="researchList" class="insightsList"><div class="empty">Loading…</div></div><div class="seclbl" style="margin-top:20px">Weekly recaps</div><div class="hint" style="margin-bottom:8px">Completed scorecards built from verified, locked picks.</div><div id="insightsList" class="insightsList"><div class="empty">Loading…</div></div><div class="seclbl" style="margin-top:20px">Analysis &amp; features</div><div class="hint" style="margin-bottom:8px">Opening boards, availability desks, simulations, and methodology notes.</div><div id="featuresList" class="insightsList"><div class="empty">Loading…</div></div>`;
+  host.innerHTML=`<div class="vhead">Insights</div><div class="seclbl" style="margin-top:16px">Research</div><div class="hint" style="margin-bottom:8px">How the model itself performs: methodology notes and measured results.</div><div id="researchList" class="insightsList"><div class="empty">Loading…</div></div><div class="seclbl" style="margin-top:20px">Weekly recaps</div><div class="hint" style="margin-bottom:8px">Completed scorecards built from verified, locked picks.</div><div id="insightsList" class="insightsList"><div class="empty">Loading…</div></div><div class="seclbl" style="margin-top:20px">Analysis &amp; features</div><div class="hint" style="margin-bottom:8px">Opening boards, availability desks, simulations, and methodology notes.</div><div id="featuresList" class="insightsList"><div class="empty">Loading…</div></div>`;
   loadResearchPosts().then(posts=>{
     const list=$('#researchList');if(!list)return;
     if(!posts.length){list.innerHTML='<div class="empty">No research posts published yet.</div>';return;}
@@ -378,7 +377,7 @@ function renderInsights(){
     featuresList.innerHTML=features.length?features.slice(0,40).map(p=>`<a class="insightCard" href="posts/${esc(p.slug)}.html" target="_blank" rel="noopener"><b>${esc(p.title)}</b><span>${esc(p.summary||'')}</span><small>${esc(p.date||'')} · ${esc(insightFeatureLabel(p))}</small></a>`).join(''):'<div class="empty">No analysis features published yet.</div>';
   });
 }
-function renderCustomize(){const host=$('#view-customize');host.innerHTML=`<div class="vhead">Customize</div><p class="pageLede">These settings save locally in this browser/app window.</p><div class="settings-grid"><div class="setcard"><label>Accent color</label><select onchange="updateSetting('accent',this.value)">${opt('orange','Matchday orange',SETTINGS.accent)}${opt('blue','Electric blue',SETTINGS.accent)}${opt('green','Pitch green',SETTINGS.accent)}${opt('red','Signal red',SETTINGS.accent)}${opt('purple','Night purple',SETTINGS.accent)}</select><div class="hint">Changes highlights, buttons and the brand dot.</div></div><div class="setcard"><label>Language</label><select onchange="setLang(this.value)">${lopt('','English',LANG)}${lopt('es','Español',LANG)}${lopt('fr','Français',LANG)}${lopt('de','Deutsch',LANG)}${lopt('pt','Português',LANG)}${lopt('ru','Русский',LANG)}</select><div class="hint">Translates the interface. Match data stays as provided by sources.</div></div><div class="setcard"><label>Card density</label><select onchange="updateSetting('density',this.value)">${opt('compact','Compact',SETTINGS.density)}${opt('normal','Normal',SETTINGS.density)}${opt('spacious','Spacious',SETTINGS.density)}</select><div class="hint">Compact fits more matches on screen; spacious gives each card more room.</div></div><div class="setcard"><label>Panel style</label><select onchange="updateSetting('panel',this.value)">${opt('glass','Soft glass',SETTINGS.panel)}${opt('flat','Flat dark',SETTINGS.panel)}</select><div class="hint">Flat mode is lighter on older laptops.</div></div><div class="setcard"><label>Default tab</label><select onchange="updateSetting('defaultView',this.value)">${['matches','groups','title','edge','bracket','third','news','status','updates'].map(v=>opt(v,v[0].toUpperCase()+v.slice(1),SETTINGS.defaultView)).join('')}</select><div class="hint">Selected when the page starts.</div></div><div class="setcard"><label>Refresh rate</label><select onchange="updateSetting('refresh',this.value)">${opt(900,'Every 15 minutes',SETTINGS.refresh)}${opt(1800,'Every 30 minutes',SETTINGS.refresh)}${opt(3600,'Every 60 minutes',SETTINGS.refresh)}</select><div class="hint">Reloads published analysis; provider refreshes run hourly.</div></div><div class="setcard"><label>Display</label><div class="switchrow"><span>Right insight panel</span><input type="checkbox" ${checked(SETTINGS.showInsight)} onchange="updateSetting('showInsight',this.checked)"></div><div class="switchrow" style="margin-top:10px"><span>Match detail panels</span><input type="checkbox" ${checked(SETTINGS.showDetails)} onchange="updateSetting('showDetails',this.checked)"></div></div></div><div class="btnline"><button class="actionbtn" onclick="resetSettings()">Reset settings</button><button class="actionbtn" onclick="setView('status')">Check app status</button><button class="actionbtn" onclick="startTour()">Replay tour</button></div>`}
+function renderCustomize(){const host=$('#view-customize');host.innerHTML=`<div class="vhead">Customize</div><div class="settings-grid"><div class="setcard"><label>Accent color</label><select onchange="updateSetting('accent',this.value)">${opt('orange','Matchday orange',SETTINGS.accent)}${opt('blue','Electric blue',SETTINGS.accent)}${opt('green','Pitch green',SETTINGS.accent)}${opt('red','Signal red',SETTINGS.accent)}${opt('purple','Night purple',SETTINGS.accent)}</select><div class="hint">Changes highlights, buttons and the brand dot.</div></div><div class="setcard"><label>Language</label><select onchange="setLang(this.value)">${lopt('','English',LANG)}${lopt('es','Español',LANG)}${lopt('fr','Français',LANG)}${lopt('de','Deutsch',LANG)}${lopt('pt','Português',LANG)}${lopt('ru','Русский',LANG)}</select><div class="hint">Translates the interface. Match data stays as provided by sources.</div></div><div class="setcard"><label>Card density</label><select onchange="updateSetting('density',this.value)">${opt('compact','Compact',SETTINGS.density)}${opt('normal','Normal',SETTINGS.density)}${opt('spacious','Spacious',SETTINGS.density)}</select><div class="hint">Compact fits more matches on screen; spacious gives each card more room.</div></div><div class="setcard"><label>Panel style</label><select onchange="updateSetting('panel',this.value)">${opt('glass','Soft glass',SETTINGS.panel)}${opt('flat','Flat dark',SETTINGS.panel)}</select><div class="hint">Flat mode is lighter on older laptops.</div></div><div class="setcard"><label>Default tab</label><select onchange="updateSetting('defaultView',this.value)">${['matches','groups','title','edge','bracket','third','news','status','updates'].map(v=>opt(v,v[0].toUpperCase()+v.slice(1),SETTINGS.defaultView)).join('')}</select><div class="hint">Selected when the page starts.</div></div><div class="setcard"><label>Refresh rate</label><select onchange="updateSetting('refresh',this.value)">${opt(900,'Every 15 minutes',SETTINGS.refresh)}${opt(1800,'Every 30 minutes',SETTINGS.refresh)}${opt(3600,'Every 60 minutes',SETTINGS.refresh)}</select><div class="hint">Reloads published analysis; provider refreshes run hourly.</div></div><div class="setcard"><label>Display</label><div class="switchrow"><span>Right insight panel</span><input type="checkbox" ${checked(SETTINGS.showInsight)} onchange="updateSetting('showInsight',this.checked)"></div><div class="switchrow" style="margin-top:10px"><span>Match detail panels</span><input type="checkbox" ${checked(SETTINGS.showDetails)} onchange="updateSetting('showDetails',this.checked)"></div></div></div><div class="btnline"><button class="actionbtn" onclick="resetSettings()">Reset settings</button><button class="actionbtn" onclick="setView('status')">Check app status</button><button class="actionbtn" onclick="startTour()">Replay tour</button></div>`}
 function scDeepTab(t){window._scTab=t;renderScore();}
 function renderDeepDive(sc){const tab=window._scTab||'overview';
   // "You have 0" alone is confusing when the audit cards directly above show
@@ -632,7 +631,10 @@ function modTopScores(){
   }).join('');
   return `<section class="boardMod modScores"><header><h3>Top scores</h3><span>most recent finals</span></header><ul class="modList">${rows}</ul></section>`;
 }
-function modTopPick(){
+/* The week's featured live read: the most competitive game between ranked
+   teams, never ranked on the uncalibrated edge. Shared by the Home card and
+   the Research lead. */
+function featuredPick(){
   // Two sources on purpose. A scheduled build attaches the pick to the fixture;
   // a push build does not run the fetch that does so. The handoff is committed,
   // so fall back to it rather than let the card blink out of existence
@@ -659,8 +661,12 @@ function modTopPick(){
     .sort((a,b)=>((b.homeRank<=25)+(b.awayRank<=25))-((a.homeRank<=25)+(a.awayRank<=25))
       ||Math.max(a.homeRank,a.awayRank)-Math.max(b.homeRank,b.awayRank)
       ||Math.abs(Number(a.p.model_pct)-60)-Math.abs(Number(b.p.model_pct)-60));
-  if(!picks.length)return '';
-  const {m,p}=picks[0];
+  return picks[0]||null;
+}
+function modTopPick(){
+  const fp=featuredPick();
+  if(!fp)return '';
+  const {m,p}=fp;
   const gap=Number(p.edge_points);
   return `<section class="boardMod modPick"><header><h3>Featured pick this week</h3><span>live model read</span></header>`
     +`<div class="modPickTeam">${esc(p.pick_name||'')}</div>`
@@ -1082,17 +1088,214 @@ function collegeModules(){
   return cards.length?`<div class="boardMods">${cards.join('')}</div>`:'';
 }
 
-/* Reuse the published college-analysis cards on the Research destination.
-   This is an information-architecture move, not another calculation path. */
+/* Research page layout.
+   One reading order instead of eleven equal cards: featured read, then the
+   week's opportunities beside a narrow rail, then the rating/schedule chart,
+   then conference context, then reference data. Nothing is dropped -- longer
+   lists sit behind "View all" and the conference views behind tabs. Colour
+   carries meaning only: green for the model's signal, red for a miss. */
+function rsHead(label,aside){
+  return `<div class="rsHead"><h2 class="seclbl">${label}</h2>${aside?`<span class="rsAside">${aside}</span>`:''}</div>`;
+}
+function rsShortName(name){
+  // "Texas A&M Aggies" -> "Texas A&M". Nicknames are the last word, or two
+  // for the handful of two-word nicknames.
+  const s=String(name||'');
+  const two=/(Crimson Tide|Blue Devils|Tar Heels|Yellow Jackets|Red Raiders|Horned Frogs|Golden Gophers|Nittany Lions|Fighting Irish|Sun Devils|Demon Deacons|Mean Green|Black Knights|Golden Hurricane|Scarlet Knights|Ragin' Cajuns|Red Wolves|Golden Eagles|Golden Flashes|Blue Raiders|Green Wave|Rainbow Warriors|Blue Hens|Thundering Herd|Red Storm)$/;
+  const m=s.match(two);
+  if(m)return s.slice(0,-m[0].length).trim()||s;
+  const parts=s.split(' ');
+  return parts.length>1?parts.slice(0,-1).join(' '):s;
+}
+function rsFeatured(){
+  const fp=typeof featuredPick==='function'?featuredPick():null;
+  if(!fp)return '';
+  const {m,p}=fp;
+  const model=Number(p.model_pct),market=Number(p.market_pct),gap=Number(p.edge_points);
+  const home=m.home?.name||m.home||'',away=m.away?.name||m.away||'';
+  const team=rsShortName(p.pick_name);
+  const read=Number.isFinite(gap)&&Math.abs(gap)>=1
+    ?`Matchday is ${Math.abs(gap)>=5?'meaningfully ':''}${gap<0?'cooler':'warmer'} on ${esc(team)} than the market this week.`
+    :`Matchday and the market see this one about the same.`;
+  const open=m.id?`<button type="button" class="rsLink" onclick="openMatchModal('${esc(String(m.id))}')">Open matchup <span aria-hidden="true">→</span></button>`:'';
+  return `<section class="rsFeatured">`
+    +`<div class="rsFeatMain"><span class="seclbl">Featured read</span>`
+    +`<div class="rsFeatGame">${esc(rsShortName(away))} at ${esc(rsShortName(home))}</div>`
+    +`<div class="rsFeatTeam">${esc(p.pick_name||'')}</div>`
+    +`<div class="rsFeatPct"><b>${communityModelPctLabel(model)}</b><span>Model win probability</span></div></div>`
+    +`<div class="rsFeatSide"><dl class="rsFeatNums">`
+    +(Number.isFinite(market)?`<div><dt>Market</dt><dd>${market.toFixed(1)}%</dd></div>`:'')
+    +(Number.isFinite(gap)?`<div><dt>Difference</dt><dd>${gap>0?'+':'−'}${Math.abs(gap).toFixed(1)} pts</dd></div>`:'')
+    +`</dl><p class="rsFeatRead">${read}</p>`
+    +`<p class="rsFine">A live read that moves until kickoff and is not graded. A wide model–market gap is context, not a signal.</p>${open}</div>`
+    +`</section>`;
+}
+function rsUpsetRadar(){
+  const u=(typeof MATCHDAY_BETBETTER_UPSET!=='undefined')?MATCHDAY_BETBETTER_UPSET:null;
+  const calls=u&&u.available?bbSportRows((u.picks&&u.picks.length)?u.picks:[u.pick].filter(Boolean)):[];
+  const board=(typeof MATCHDAY_BETBETTER_UPSETS!=='undefined'&&MATCHDAY_BETBETTER_UPSETS)||{};
+  const shots=String(DATA.comp_key||'').toUpperCase()==='NCAAF'?(board.upsets||[]):[];
+  if(!calls.length&&!shots.length)return '';
+  const gaps=calls.map(p=>{
+    const model=Number(p.model_pct),market=Number(p.market_pct),gap=Number(p.disagreement_points);
+    const away=String(p.selection||'').toLowerCase()===String(p.away||'').toLowerCase();
+    const status=typeof upsetStatusText==='function'?upsetStatusText(p,away):'';
+    return `<li class="rsGapRow"><div class="rsGapGame"><b>${esc(rsShortName(p.selection))}</b>`
+      +`<span>${esc(rsShortName(p.away))} at ${esc(rsShortName(p.home))}${status?` · ${esc(status)}`:''}</span></div>`
+      +`<span class="rsNum"><b>${communityModelPctLabel(model)}</b><small>model</small></span>`
+      +`<span class="rsNum"><b>${Number.isFinite(market)?market.toFixed(1)+'%':'—'}</b><small>market</small></span>`
+      +`<span class="rsNum rsSignal"><b>${Number.isFinite(gap)?'+'+gap.toFixed(1):'—'}</b><small>gap</small></span></li>`;
+  }).join('');
+  const shotRow=x=>`<li class="rsShotRow" title="${esc(`${x.winner} ${x.winner_score}–${x.loser_score} ${x.loser} · ${String(x.played_on||'')}`)}">`
+    +`<span><b>${esc(rsShortName(x.winner))}</b> beat ${esc(rsShortName(x.loser))} <em>${Number(x.winner_score)}–${Number(x.loser_score)}</em></span>`
+    +`<span class="rsNum"><b>${Number.isFinite(Number(x.winner_pregame_pct))?Math.round(Number(x.winner_pregame_pct))+'%':'—'}</b></span></li>`;
+  const more=shots.slice(3,8);
+  return `<section class="rsBlock">${rsHead('Upset radar')}`
+    +(gaps?`<div class="rsSub">Biggest model–market gaps this week</div><ul class="rsList">${gaps}</ul>`
+      +`<p class="rsFine">Up to three calls a week${u.considered?`, from ${u.considered} games`:''}. To watch and grade, not recommended bets.</p>`:'')
+    +(shots.length?`<div class="rsSub">Longest-shot winners this season <span>pregame chance</span></div><ul class="rsList">${shots.slice(0,3).map(shotRow).join('')}</ul>`
+      +(more.length?`<details class="rsMore"><summary>View all <span aria-hidden="true">→</span></summary><ul class="rsList">${more.map(shotRow).join('')}</ul></details>`:''):'')
+    +`</section>`;
+}
+function rsStat(){
+  const table=collegeRankingTable();
+  const rows=(table?.rankings||[]).filter(r=>Number.isFinite(Number(r.movement_since_preseason)));
+  const riser=rows.slice().sort((a,b)=>Number(b.movement_since_preseason)-Number(a.movement_since_preseason))[0];
+  if(riser&&Number(riser.movement_since_preseason)>0){
+    return `<div class="rsRailBlock"><span class="seclbl">Stat of the week</span>`
+      +`<b class="rsRailBig">${esc(riser.name)}</b>`
+      +`<span class="rsRailSub"><em class="rsSignal">↑${Number(riser.movement_since_preseason)} spots</em> since the preseason, now #${riser.rank}</span></div>`;
+  }
+  const sos=(table?.rankings||[]).filter(r=>Number.isFinite(Number(r.sos))&&(r.rank||999)<=25);
+  const hardest=sos.slice().sort((a,b)=>Number(b.sos)-Number(a.sos))[0];
+  if(!hardest)return '';
+  return `<div class="rsRailBlock"><span class="seclbl">Stat of the week</span><b class="rsRailBig">${esc(hardest.name)}</b>`
+    +`<span class="rsRailSub">Toughest schedule in the top 25 · SoS ${Number(hardest.sos).toFixed(2)}</span></div>`;
+}
+function rsNotable(){
+  const table=collegeRankingTable();
+  const rows=(table?.rankings||[]).filter(r=>Number.isFinite(Number(r.rating)));
+  if(!rows.length)return '';
+  const best=(key,dir)=>rows.filter(r=>Number.isFinite(Number(r[key]))).slice().sort((a,b)=>dir*(Number(b[key])-Number(a[key])))[0];
+  const off=best('adj_o',1),def=best('adj_d',-1);
+  const g5=rows.filter(r=>r.tier&&String(r.tier)!=='power').slice().sort((a,b)=>Number(b.rating)-Number(a.rating))[0];
+  const items=[];
+  if(off)items.push(['Best offense',rsShortName(off.name),`${Number(off.adj_o).toFixed(1)} adj. points scored`]);
+  if(def)items.push(['Best defense',rsShortName(def.name),`${Number(def.adj_d).toFixed(1)} adj. points allowed`]);
+  if(g5)items.push(['Outside the power tier',rsShortName(g5.name),`${Number(g5.rating).toFixed(2)} rating · #${g5.rank}`]);
+  if(!items.length)return '';
+  return `<div class="rsRailBlock"><span class="seclbl">Notable</span><dl class="rsNotable">`
+    +items.map(([k,v,d])=>`<div><dt>${esc(k)}</dt><dd><b>${esc(v)}</b><span>${esc(d)}</span></dd></div>`).join('')+`</dl></div>`;
+}
+function rsMyPicks(){
+  const u=(typeof MATCHDAY_BETBETTER_USER_PICKS!=='undefined')?MATCHDAY_BETBETTER_USER_PICKS:null;
+  const picks=bbSportRows(u?.picks||[]);
+  if(!picks.length)return '';
+  const ordered=picks.slice().sort((a,b)=>String(b.starts_at||'').localeCompare(String(a.starts_at||'')));
+  const settled=picks.filter(p=>p.outcome===0||p.outcome===1);
+  const wins=settled.filter(p=>p.outcome===1).length,agreed=settled.filter(p=>p.model_agreed).length;
+  const pct=v=>v!=null&&Number.isFinite(Number(v))?communityModelPctLabel(Number(v)*100):'—';
+  const row=p=>{
+    const done=p.outcome===0||p.outcome===1,won=p.outcome===1;
+    return `<li title="Model ${pct(p.model_probability)} · market ${pct(p.market_probability)} · model ${p.model_agreed?'agreed':'disagreed'}">`
+      +`<span>${esc(rsShortName(p.selection))}</span><b class="${done?(won?'rsWin':'rsLoss'):'rsWait'}">${done?(won?'W':'L'):'·'}</b></li>`;
+  };
+  return `<div class="rsRailBlock"><span class="seclbl">@timurknowsball</span>`
+    +`<b class="rsRailBig">${wins}–${settled.length-wins}</b><span class="rsRailSub">settled picks · ${agreed} of ${settled.length} agreed with Matchday</span>`
+    +`<ul class="rsPicks">${ordered.slice(0,5).map(row).join('')}</ul>`
+    +(ordered.length>5?`<details class="rsMore"><summary>All picks <span aria-hidden="true">→</span></summary><ul class="rsPicks">${ordered.slice(5).map(row).join('')}</ul></details>`:'')
+    +`</div>`;
+}
+function rsScatter(){
+  const table=collegeRankingTable();
+  const rows=(table?.rankings||[]).filter(r=>Number.isFinite(Number(r.rating))&&Number.isFinite(Number(r.sos)));
+  if(rows.length<12)return '';
+  const W=1000,H=340,PL=40,PR=16,PT=14,PB=32;
+  const xs=rows.map(r=>Number(r.sos)),ys=rows.map(r=>Number(r.rating));
+  const x0=Math.min(...xs),x1=Math.max(...xs),y0=Math.min(...ys),y1=Math.max(...ys);
+  const sx=v=>PL+((v-x0)/((x1-x0)||1))*(W-PL-PR);
+  const sy=v=>H-PB-((v-y0)/((y1-y0)||1))*(H-PT-PB);
+  const med=a=>{const b=a.slice().sort((m,n)=>m-n);return b[Math.floor(b.length/2)]};
+  const mx=sx(med(xs)),my=sy(med(ys));
+  // Label only the three highest-rated teams. Everything else is a tooltip:
+  // labelling a cluster just stacks names on top of each other.
+  const top=rows.slice().sort((a,b)=>Number(b.rating)-Number(a.rating)).slice(0,3);
+  const dots=rows.map(r=>{
+    const power=String(r.tier||'')==='power',hi=top.includes(r);
+    return `<circle cx="${sx(Number(r.sos)).toFixed(1)}" cy="${sy(Number(r.rating)).toFixed(1)}" r="${hi?4.5:3}" class="${hi?'dotHi':power?'dotP':'dotG'}"><title>${esc(r.name)} — rating ${Number(r.rating).toFixed(2)}, SoS ${Number(r.sos).toFixed(2)}${r.conference?' · '+esc(r.conference):''}</title></circle>`;
+  }).join('');
+  let lastY=-99;
+  const labels=top.slice().sort((a,b)=>sy(Number(a.rating))-sy(Number(b.rating))).map(r=>{
+    let y=sy(Number(r.rating))+4;if(y-lastY<13)y=lastY+13;lastY=y;
+    const x=sx(Number(r.sos)),left=x>W-180;
+    return `<text class="rsLbl" x="${(left?x-8:x+8).toFixed(1)}" y="${y.toFixed(1)}" text-anchor="${left?'end':'start'}">${esc(rsShortName(r.name))}</text>`;
+  }).join('');
+  const anyG5=rows.some(r=>String(r.tier||'')&&String(r.tier)!=='power');
+  return `<section class="rsBlock">${rsHead('Rating vs schedule',`${rows.length} teams`)}`
+    +`<svg viewBox="0 0 ${W} ${H}" class="rsScatter" role="img" aria-label="Scatter plot of team rating against strength of schedule">`
+    +`<line class="scAx" x1="${PL}" y1="${H-PB}" x2="${W-PR}" y2="${H-PB}"/><line class="scAx" x1="${PL}" y1="${PT}" x2="${PL}" y2="${H-PB}"/>`
+    +`<line class="scMed" x1="${mx.toFixed(1)}" y1="${PT}" x2="${mx.toFixed(1)}" y2="${H-PB}"/><line class="scMed" x1="${PL}" y1="${my.toFixed(1)}" x2="${W-PR}" y2="${my.toFixed(1)}"/>`
+    +`${dots}${labels}<text class="scAxLbl" x="${(W/2).toFixed(0)}" y="${H-8}" text-anchor="middle">strength of schedule →</text>`
+    +`<text class="scAxLbl" transform="rotate(-90 12 ${(H/2).toFixed(0)})" x="12" y="${(H/2).toFixed(0)}" text-anchor="middle">rating →</text></svg>`
+    +`<div class="rsLegend"><span><i class="dotKeyP"></i>Power</span>${anyG5?'<span><i class="dotKeyG"></i>Group of Five</span>':''}<span>Lines are medians · hover a dot for the team</span></div>`
+    +`<p class="rsFine">Up and to the right is a strong rating earned against a hard schedule; up and to the left is a rating built on a soft one.</p></section>`;
+}
+function rsConfTab(btn,key){
+  const box=btn.closest('.rsConf');if(!box)return;
+  box.dataset.tab=key;
+  box.querySelectorAll('.rsTabs button').forEach(b=>b.setAttribute('aria-pressed',String(b===btn)));
+}
+function rsConferences(){
+  const table=collegeRankingTable();
+  const rows=(table?.rankings||[]).filter(r=>r.conference&&Number.isFinite(Number(r.rating)));
+  if(rows.length<20)return '';
+  const by={};rows.forEach(r=>{(by[r.conference]||=[]).push(r)});
+  const confs=Object.entries(by).filter(([,v])=>v.length>=4).map(([name,v])=>{
+    const s=v.slice().sort((a,b)=>Number(b.rating)-Number(a.rating));
+    const mean=v.reduce((a,r)=>a+Number(r.rating),0)/v.length;
+    const sd=Math.sqrt(v.reduce((a,r)=>a+(Number(r.rating)-mean)**2,0)/v.length);
+    return {name,n:v.length,mean,sd,best:s[0],worst:s[s.length-1],leaders:s.slice(0,3)};
+  }).sort((a,b)=>b.mean-a.mean);
+  if(confs.length<3)return '';
+  const hi=Math.max(...confs.map(c=>c.mean)),lo=Math.min(...confs.map(c=>c.mean)),span=(hi-lo)||1;
+  const parity=confs.filter(c=>c.n>=6).slice().sort((a,b)=>a.sd-b.sd);
+  const strength=confs.map(c=>`<li><span>${esc(c.name)}</span><i class="rsBar"><b style="width:${Math.max(3,Math.round((c.mean-lo)/span*100))}%"></b></i><span class="rsNum"><b>${c.mean.toFixed(1)}</b></span><span class="rsNum rsMuted">${c.n}</span></li>`).join('');
+  const parityRows=parity.map(c=>`<tr><td>${esc(c.name)}</td><td>${c.sd.toFixed(1)}</td><td>${Number(c.best.rating).toFixed(1)}</td><td>${Number(c.worst.rating).toFixed(1)}</td></tr>`).join('');
+  const teamRows=confs.map(c=>`<tr><td>${esc(c.name)}</td><td class="rsLeft">${c.leaders.map(r=>esc(rsShortName(r.name))).join(' · ')}</td><td>${Number(c.best.rating).toFixed(1)}</td><td>${Number(c.worst.rating).toFixed(1)}</td></tr>`).join('');
+  const balanced=parity[0],widest=parity[parity.length-1];
+  return `<section class="rsBlock rsConf" data-tab="strength">${rsHead('Conference landscape')}`
+    +`<div class="rsTabs" role="group" aria-label="Conference view">`
+    +[['strength','Strength'],['parity','Parity'],['teams','Teams']].map(([k,l],i)=>`<button type="button" aria-pressed="${i===0}" onclick="rsConfTab(this,'${k}')">${l}</button>`).join('')+`</div>`
+    +`<div class="rsPane" data-pane="strength"><div class="rsBarHead"><span>Conference</span><span></span><span>Mean rating</span><span>Teams</span></div><ul class="rsBars">${strength}</ul>`
+    +`<dl class="rsSummary"><div><dt>Strongest</dt><dd>${esc(confs[0].name)}</dd></div>`
+    +(balanced?`<div><dt>Most balanced</dt><dd>${esc(balanced.name)}</dd></div><div><dt>Widest spread</dt><dd>${esc(widest.name)}</dd></div>`:'')+`</dl></div>`
+    +`<div class="rsPane" data-pane="parity"><div class="scTableWrap"><table class="scTable"><thead><tr><th>Conference</th><th>Spread</th><th>Best</th><th>Worst</th></tr></thead><tbody>${parityRows}</tbody></table></div>`
+    +`<p class="rsFine">Spread is how far apart a conference's own teams are rated (standard deviation), not how good the conference is. Most balanced first.</p></div>`
+    +`<div class="rsPane" data-pane="teams"><div class="scTableWrap"><table class="scTable"><thead><tr><th>Conference</th><th class="rsLeft">Top three</th><th>Best</th><th>Worst</th></tr></thead><tbody>${teamRows}</tbody></table></div></div>`
+    +`</section>`;
+}
+function rsSchedules(){
+  const table=collegeRankingTable();
+  const rows=(table?.rankings||[]).filter(r=>Number.isFinite(Number(r.sos)));
+  if(rows.length<10)return '';
+  const pool=rows.filter(r=>(r.rank||999)<=40);
+  const top=(pool.length>=10?pool:rows).slice().sort((a,b)=>Number(b.sos)-Number(a.sos));
+  const row=(r,i)=>`<tr><td class="rsLeft"><span class="rsRank">${i+1}</span>${esc(rsShortName(r.name))}</td><td>#${r.rank}</td><td>${Number(r.sos).toFixed(2)}</td><td>${Number(r.rating).toFixed(2)}</td></tr>`;
+  const head=`<thead><tr><th class="rsLeft">Team</th><th>Rank</th><th>SoS</th><th>Rating</th></tr></thead>`;
+  return `<section class="rsBlock">${rsHead('Toughest schedules','Top 40 teams')}`
+    +`<div class="scTableWrap"><table class="scTable">${head}<tbody>${top.slice(0,5).map(row).join('')}</tbody></table></div>`
+    +(top.length>5?`<details class="rsMore"><summary>View all ${top.length} <span aria-hidden="true">→</span></summary><div class="scTableWrap"><table class="scTable"><tbody>${top.slice(5).map((r,i)=>row(r,i+5)).join('')}</tbody></table></div></details>`:'')
+    +`</section>`;
+}
 function collegeResearchModules(){
   if(!['NCAAF','NCAAM'].includes(String(DATA?.comp_key||'').toUpperCase()))return '';
-  // Keep every weekly forecasting feature reachable after Home became a
-  // summary. Rankings owns the two ranking tables; Research owns the picks,
-  // upset watch and the deeper schedule/conference analysis.
-  const cards=[modUpsetOfWeek(),modTopPick(),modMyPicks(),modUpsets(),modStatOfWeek(),modNotable(),modRatingScatter(),modConferenceStrength(),modToughestSchedules(),modConferenceTable(),modConferenceParity()].filter(Boolean);
-  return cards.length?`<section class="collegeResearch" aria-labelledby="collegeResearchTitle">
-    <div class="seclbl" id="collegeResearchTitle">Weekly watch &amp; college analysis</div>
-    <div class="hint" style="margin-bottom:10px">Upset watch, locked picks, team ratings, schedule strength, and conference context from the current published model.</div>
-    <div class="boardMods">${cards.join('')}</div>
-  </section>`:'';
+  const featured=rsFeatured(),radar=rsUpsetRadar();
+  const rail=[rsStat(),rsNotable(),rsMyPicks()].filter(Boolean).join('');
+  const lower=[rsScatter(),rsConferences(),rsSchedules()].filter(Boolean).join('');
+  if(!featured&&!radar&&!rail&&!lower)return '';
+  return `<section class="collegeResearch" aria-label="Weekly watch and college analysis">
+    ${featured}
+    <div class="rsGrid"><div class="rsMain">${radar}</div>${rail?`<aside class="rsRail" aria-label="This week">${rail}</aside>`:''}</div>
+    ${lower}
+  </section>`;
 }

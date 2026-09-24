@@ -201,11 +201,15 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         self.assertIn('class="vhead">Research</div>', panels)
         self.assertIn("collegeResearchModules", panels)
         research = views[views.index("function collegeResearchModules(){"):]
-        for preserved in ("modUpsetOfWeek()", "modTopPick()", "modMyPicks()",
-                          "modUpsets()", "modRatingScatter()",
-                          "modConferenceParity()"):
+        # Every weekly feature stays reachable after the Research redesign:
+        # featured read, upset calls and long-shot winners (one Upset radar),
+        # my picks, the rating/schedule chart, and conference parity (a tab).
+        for preserved in ("rsFeatured()", "rsUpsetRadar()", "rsMyPicks()",
+                          "rsScatter()", "rsConferences()", "rsSchedules()"):
             self.assertIn(preserved, research)
-        self.assertIn("balanceBoardMods(host.querySelector('.collegeResearch .boardMods'))", panels)
+        for source in ("MATCHDAY_BETBETTER_UPSET", "MATCHDAY_BETBETTER_UPSETS",
+                       "MATCHDAY_BETBETTER_USER_PICKS", 'data-pane="parity"'):
+            self.assertIn(source, views)
         self.assertIn("host.querySelector('.diagList')?.remove()", panels)
         self.assertIn("host.querySelector('.newsTools')?.remove()", panels)
         self.assertIn("host.querySelector('.empty')?.remove()", panels)

@@ -734,14 +734,33 @@ function renderScore(){
     +`<p class="scFoot">${bmCi?`95% CI ${_scNum(bmCi[0])}–${_scNum(bmCi[1])}%. `:''}`
     +`${straddles?'Market and model are not yet separable on this sample.':'Above 50% the model is the better forecaster of the two; below it, the market is.'}</p></div></section>`;
   host.innerHTML=`<div class="vhead">Scorecard</div>`
-    +`<div class="scIntro"><p class="pageLede">A permanent public record. Picks lock 60 minutes before kickoff and are never rewritten.</p>${method}</div>`
+    +`<div class="scIntro">${method}</div>`
     +reportable+hero
     +_scMarket(vm,sc.conviction)
     +_scBands(sc.by_confidence)
     +_scRecent(sc.recent);
 }
 function highlightFavoriteRows(){if(!favoriteTeam())return;document.querySelectorAll('.gtable .gteam').forEach(cell=>{if(teamKey(cell.dataset.team||cell.textContent).includes(teamKey(favoriteTeam())))cell.closest('tr')?.classList.add('favoriteTeamRow')})}
-function renderCurrent(){captureSignalsIfFresh();({home:renderHome,matches:renderMatches,results:renderResults,groups:renderStandings,bracket:renderBracket,score:renderScore,news:renderNews,community:renderCommunity}[VIEW]||renderHome)();renderWelcome();highlightFavoriteRows();applyStaticI18n()}
+/* Every page title carries a short, muted descriptor on its right instead of
+   an explanatory sentence beneath it. One place, so the tabs stay consistent. */
+const PAGE_TAGS={
+  news:()=>'Model · Team · Conference',
+  score:()=>'Public model record',
+  groups:()=>{const s=(typeof MATCHDAY_CFB_RANKINGS!=='undefined'&&MATCHDAY_CFB_RANKINGS?.season)||'';return `${s?s+' ':''}team ratings`},
+  results:()=>'Final scores',
+  bracket:()=>'Playoff projection',
+  community:()=>'Picks & polls',
+  insights:()=>'Model recaps',
+  customize:()=>'Saved in this browser',
+};
+function tagPageHead(){
+  const view=document.getElementById('view-'+VIEW),head=view?.querySelector('.vhead');
+  const tag=PAGE_TAGS[VIEW]?.();
+  if(!head||!tag||head.querySelector('.pageTag'))return;
+  head.classList.add('pageHead');
+  head.insertAdjacentHTML('beforeend',`<small class="pageTag">${esc(tag)}</small>`);
+}
+function renderCurrent(){captureSignalsIfFresh();({home:renderHome,matches:renderMatches,results:renderResults,groups:renderStandings,bracket:renderBracket,score:renderScore,news:renderNews,community:renderCommunity}[VIEW]||renderHome)();renderWelcome();highlightFavoriteRows();applyStaticI18n();tagPageHead()}
 function renderStrip(){const M=DATA.matches||[],next=M.filter(isVisibleUpcoming).sort((a,b)=>(a.kickoff||'').localeCompare(b.kickoff||''))[0];const parts=[];
 const isSample=(DATA.source_note||'').toLowerCase().includes('sample');
 const freshness=DATA.source_freshness||{},fallback=freshness.state==='fallback';
@@ -984,7 +1003,45 @@ const NEWS_KINDS=[
 ];
 function newsKind(a){const text=`${a.headline||a.title||''} ${a.desc||a.description||''}`;return NEWS_KINDS.find(k=>k.re.test(text))||{key:'general',label:'News'}}
 const NEWS_KIND_ORDER=['injury','preview','recruiting','offfield','general'];
-function renderNews(){const n=DATA.news||[],host=$('#view-news'),diag=DATA.diagnostics||[];const buckets=newsBuckets(),srcs=newsSources();if(NEWS_FILTER!=='all'&&!buckets[NEWS_FILTER])NEWS_FILTER='all';let list=NEWS_FILTER==='all'?diverseNews(Math.max(n.length,18)):buckets[NEWS_FILTER]||[];host.innerHTML=`<div class="vhead">News cycle</div><div class="srcCount">${n.length} headlines · ${srcs.length-1} detected sources</div><div class="newsTools">${srcs.map(s=>`<button class="chip ${s==='all'?'allchip':''} ${NEWS_FILTER===s?'on':''}" data-src="${esc(s)}" onclick="NEWS_FILTER=this.dataset.src;renderNews()">${esc(s==='all'?'All sources':s)}<span class="count">${s==='all'?n.length:(buckets[s]||[]).length}</span></button>`).join('')}</div>`+(list.length?`<div class="newsGrid">`+list.map((a,i)=>({a,i,k:newsKind(a)})).sort((x,y)=>NEWS_KIND_ORDER.indexOf(x.k.key)-NEWS_KIND_ORDER.indexOf(y.k.key)||x.i-y.i).map(({a,k})=>`<a class="ncard nk-${k.key}" href="${esc(a.link||a.url||'#')}" target="_blank" rel="noopener"><div class="srcTop"><span class="newsKind">${esc(k.label)}</span><span class="srcBadge">${esc(sourceName(a))}</span>${feedName(a)?`<span class="feedBadge">via ${esc(feedName(a))}</span>`:''}</div><div class="nhead">${esc(a.headline||a.title||'Untitled')}</div>${a.desc||a.description?`<div class="ndesc">${esc(a.desc||a.description)}</div>`:''}<div class="nmeta">${a.published?ago(a.published):''}</div></a>`).join('')+`</div>`:`<div class="empty">No headlines yet.</div>`)+(diag.length?`<div class="diagList">${diag.filter(d=>String(d).toLowerCase().includes('news')).map(d=>`<div>${esc(d)}</div>`).join('')}</div>`:'')}
+/* The news feed. One filter bar that switches between publications and story
+   types, and cards with a single colour signal (the left edge), the category
+   and original publication on top, and the aggregator demoted to the footer
+   so it never reads as the author. */
+let NEWS_MODE='sources',NEWS_KIND_FILTER='all';
+function newsCard(a,k,lead){
+  const feed=feedName(a),when=a.published?ago(a.published):'';
+  const foot=[when,feed?`via ${esc(feed)}`:''].filter(Boolean).join(' · ');
+  return `<a class="ncard nk-${k.key}${lead?' ncardLead':''}" href="${esc(a.link||a.url||'#')}" target="_blank" rel="noopener">`
+    +`<div class="srcTop"><span class="newsKind">${esc(k.label)}</span><span class="srcName">${esc(sourceName(a))}</span></div>`
+    +`<div class="nhead">${esc(a.headline||a.title||'Untitled')}</div>`
+    +(a.desc||a.description?`<div class="ndesc">${esc(a.desc||a.description)}</div>`:'')
+    +`<div class="nmeta"><span>${foot}</span><span class="narrow" aria-hidden="true">→</span></div></a>`;
+}
+function renderNews(){
+  const n=DATA.news||[],host=$('#view-news');
+  const buckets=newsBuckets(),srcs=newsSources();
+  if(NEWS_FILTER!=='all'&&!buckets[NEWS_FILTER])NEWS_FILTER='all';
+  const all=diverseNews(Math.max(n.length,18)).map((a,i)=>({a,i,k:newsKind(a)}));
+  const kinds=NEWS_KIND_ORDER.map(key=>({key,label:key==='general'?'News':(NEWS_KINDS.find(k=>k.key===key)||{}).label,count:all.filter(x=>x.k.key===key).length})).filter(k=>k.count);
+  if(NEWS_KIND_FILTER!=='all'&&!kinds.some(k=>k.key===NEWS_KIND_FILTER))NEWS_KIND_FILTER='all';
+  let list;
+  if(NEWS_MODE==='categories'){
+    list=all.filter(x=>NEWS_KIND_FILTER==='all'||x.k.key===NEWS_KIND_FILTER);
+  }else{
+    list=NEWS_FILTER==='all'?all:(buckets[NEWS_FILTER]||[]).map((a,i)=>({a,i,k:newsKind(a)}));
+  }
+  list=list.slice().sort((x,y)=>NEWS_KIND_ORDER.indexOf(x.k.key)-NEWS_KIND_ORDER.indexOf(y.k.key)||x.i-y.i);
+  const chip=(on,label,count,click)=>`<button class="chip ${on?'on':''}" onclick="${click}">${esc(label)}<span class="count">${count}</span></button>`;
+  const chips=NEWS_MODE==='categories'
+    ?chip(NEWS_KIND_FILTER==='all','All stories',all.length,"NEWS_KIND_FILTER='all';renderNews()")
+      +kinds.map(k=>chip(NEWS_KIND_FILTER===k.key,k.label,k.count,`NEWS_KIND_FILTER='${k.key}';renderNews()`)).join('')
+    :srcs.map(s=>`<button class="chip ${NEWS_FILTER===s?'on':''}" data-src="${esc(s)}" onclick="NEWS_FILTER=this.dataset.src;renderNews()">${esc(s==='all'?'All sources':s)}<span class="count">${s==='all'?n.length:(buckets[s]||[]).length}</span></button>`).join('');
+  const mode=`<div class="newsMode" role="group" aria-label="Filter by">`
+    +[['sources','Sources'],['categories','Categories']].map(([k,l])=>`<button type="button" aria-pressed="${NEWS_MODE===k}" onclick="NEWS_MODE='${k}';renderNews()">${l}</button>`).join('')+`</div>`;
+  host.innerHTML=`<div class="vhead">News cycle</div>`
+    +`<div class="newsTools">${mode}${chips}</div>`
+    +(list.length?`<div class="newsGrid">${list.map((x,i)=>newsCard(x.a,x.k,i<2&&list.length>4)).join('')}</div>`:`<div class="empty">No headlines yet.</div>`);
+}
 
 const _renderNewsAsResearch=renderNews;
 renderNews=function(){
@@ -1001,14 +1058,11 @@ renderNews=function(){
     host.querySelector('.newsTools')?.remove();
     host.querySelector('.empty')?.remove();
   }
-  const count=host.querySelector('.srcCount');
-  if(count)count.insertAdjacentHTML('beforebegin',`<div class="seclbl" style="margin-top:20px">Latest research &amp; analysis</div>`);
+  const tools=host.querySelector('.newsTools');
+  if(tools)tools.insertAdjacentHTML('beforebegin',`<div class="rsBlock rsNewsHead"><h2 class="seclbl">Latest news</h2></div>`);
   const collegeAnalysis=typeof collegeResearchModules==='function'?collegeResearchModules():'';
   host.insertAdjacentHTML('afterbegin',`<div class="vhead">Research</div>
-    <p class="pageLede">Explore team strength, schedule context, conference comparisons, methodology, and the latest college analysis without crowding the game board.</p>
     ${collegeAnalysis}`);
-  if(typeof collapseBoardNotes==='function')collapseBoardNotes(host);
-  if(typeof balanceBoardMods==='function')balanceBoardMods(host.querySelector('.collegeResearch .boardMods'));
 }
 
 
@@ -1264,7 +1318,6 @@ renderGroups=function(){
   if(ballotTable&&!host.querySelector('.ballotSection'))host.insertAdjacentHTML('afterbegin',ballotTable);
   if(!host.querySelector('.rankingsIntro'))host.insertAdjacentHTML('afterbegin',`<section class="rankingsIntro">
     <div class="vhead">Rankings</div>
-    <p class="pageLede">Power Ratings measure opponent-adjusted team strength. The AP Top 25 is the official media poll. The TimurKnowsBall Ballot ranks résumés. Conferences show standings and schedule context beneath.</p>
   </section>`);
   const ballot=host.querySelector('.ballotSection');
   if(ballot&&!host.querySelector('[data-ranking-section="top25"]'))ballot.insertAdjacentHTML('beforebegin',`<div class="seclbl" data-ranking-section="top25">Top 25</div><div class="hint" style="margin-bottom:8px">A résumé ballot, kept separate from the predictive power rating.</div>`);
