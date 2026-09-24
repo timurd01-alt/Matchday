@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0923V",
+  "tag": "Design",
+  "title": "A Welcome page that stands out",
+  "items": [
+   "The Matchday Terminal title is now much larger, in the app's heavy heading font with a white-to-green fill and a soft green spotlight behind it.",
+   "New line under the title: \"College football and basketball, by the numbers.\" It describes the whole site rather than a few features.",
+   "A bigger Enter button with a soft glow."
+  ]
+ },
+ {
   "date": "Build 0923U",
   "tag": "Fix",
   "title": "Aligned ranking movement arrows",

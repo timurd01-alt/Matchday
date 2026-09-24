@@ -3037,3 +3037,22 @@ body.welcomeOpen{height:auto;min-height:100vh;overflow-y:auto}
 .gtable.officialPollTable td:nth-child(4),.gtable.officialPollTable th:nth-child(4),
 .gtable.officialPollTable td:nth-child(5),.gtable.officialPollTable th:nth-child(5){text-align:right;font-variant-numeric:tabular-nums}
 .gtable.officialPollTable td:nth-child(2):not(.pollMoveCell),.gtable.officialPollTable th:nth-child(2):not(.pollMoveCell){text-align:left}
+
+/* ---- welcome gate: a hero that stands out ---------------------------------
+   Nothing added -- the title does the work. It takes the app's own display
+   face (Archivo, the heavy face every app heading uses) at display size, with
+   a white-to-signal fill, and sits in a single soft --signal spotlight: the
+   same corner-glow treatment the app gives its hero panels, centred. */
+#welcomeGate{--fs-wx-display:clamp(3.5rem,9vw,8rem);--fs-wx-lead:clamp(1.143rem,1.6vw,1.429rem)}
+#welcomeGate .wx-hero{position:relative;isolation:isolate;padding:96px 0 72px}
+#welcomeGate .wx-hero::before{content:"";position:absolute;left:50%;top:44%;width:min(900px,120%);height:420px;transform:translate(-50%,-50%);z-index:-1;pointer-events:none;
+  background:radial-gradient(ellipse at center,rgba(58,209,122,.16),rgba(58,209,122,.05) 45%,transparent 70%)}
+#welcomeGate .wx-hero h1{font-family:var(--display);font-size:var(--fs-wx-display);font-weight:var(--fw-heavy);line-height:.95;letter-spacing:-.045em;
+  background:linear-gradient(180deg,#ffffff 20%,#bff5d8 70%,var(--signal) 115%);-webkit-background-clip:text;background-clip:text;color:transparent;
+  padding-bottom:.06em}
+@supports not ((-webkit-background-clip:text) or (background-clip:text)){#welcomeGate .wx-hero h1{color:var(--text);background:none}}
+#welcomeGate .wx-hero .wx-lead{margin-top:24px;font-size:var(--fs-wx-lead);color:var(--text);opacity:.78;max-width:none}
+#welcomeGate .wx-hero .welcomeActions{margin-top:40px}
+#welcomeGate .wx-hero .welcomeEnter{min-height:56px;padding:0 32px;font-size:var(--fs-wx-sub);box-shadow:0 8px 32px rgba(58,209,122,.28)}
+#welcomeGate .wx-hero .welcomeEnter:hover{box-shadow:0 10px 40px rgba(58,209,122,.4)}
+@media(max-width:760px){#welcomeGate .wx-hero{padding:64px 0 48px}#welcomeGate .wx-hero .welcomeEnter{width:100%}}
