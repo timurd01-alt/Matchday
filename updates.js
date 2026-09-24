@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0923X",
+  "tag": "Design",
+  "title": "A clearer CFP playoff bracket",
+  "items": [
+   "A dedicated four-round layout replaces the oversized tournament board, with two columns on tablets and a single column on phones.",
+   "Separate seed badges, readable team names and a highlighted championship card make the field easier to scan.",
+   "The AP-based projection is clearly labelled, with first-round byes explained."
+  ]
+ },
+ {
   "date": "Build 0923W",
   "tag": "Design",
   "title": "Even, colour-coded news cards",

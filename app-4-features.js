@@ -479,13 +479,30 @@ function _cfpBracketRounds(){
     {label:'National Championship',matches:grouped.final}
   ];
 }
+function _cfpMatchCard(m,roundIndex,index){
+  if(!m)return '<div class="brWideEmpty">Matchups not yet available</div>';
+  const labels=['First round','QF','SF','Championship'];
+  const row=side=>{
+    const name=_v11TeamName(side==='h'?m.home:m.away);
+    const seeded=String(name).match(/^\((\d+)\)\s*(.+)$/);
+    const path=/winner|^TBD$|^Seed\b/i.test(name);
+    const score=_v11Score(m,side);
+    const won=score!=null&&_v11Score(m,side==='h'?'a':'h')!=null&&_v11IsWin(m,side);
+    return `<div class="cfpTeam ${path?'cfpPath':''} ${won?'cfpWinner':''}"><span class="cfpSeed" aria-label="${seeded?'Seed '+seeded[1]:'Unseeded'}">${seeded?esc(seeded[1]):'—'}</span><span class="cfpTeamName">${esc(seeded?seeded[2]:name)}</span>${score!=null?`<b class="cfpScore">${esc(score)}</b>`:''}${won?'<span class="cfpWon" aria-label="Winner">✓</span>':''}</div>`;
+  };
+  const status=String(m.status||'').toUpperCase();
+  const timing=status==='FINISHED'?'Final':m.kickoff?_v11StatusText(m):status==='LIVE'?'Awaiting final':'Time TBA';
+  return `<article class="cfpMatch"><div class="cfpMatchMeta"><b>${labels[roundIndex]}${roundIndex<3?' '+(index+1):''}</b><span>${esc(timing)}</span></div>${row('h')}${row('a')}</article>`;
+}
 function _renderCFPBracket(host){
   const official=Array.isArray(DATA.bracket)&&DATA.bracket.some(r=>
-    !/projected/i.test(String(r.round||r.stage||r.name||''))
+    !/project(?:ed|ion)/i.test(String(r.round||r.stage||r.name||''))
     &&(r.matches||[]).some(m=>!['PROJECTED','TBD'].includes(String(m.status||'').toUpperCase())));
   const rounds=_cfpBracketRounds();
-  host.innerHTML=`<div class="bracketStageHeader"><div class="vhead">CFP Bracket</div><div class="bracketLegend">${official?'Official + projected paths':'Projected from the current AP Poll'}</div></div><div class="bracketWideShell"><div class="bracketWideBoard">${rounds.map(r=>`<section class="brWideRound"><div class="brWideTitle"><b>${esc(r.label)}</b><span>${r.matches.length||0}</span></div><div class="brWideStack">${(r.matches.length?r.matches:[null]).map(m=>_v11MatchCard(m,r.label)).join('')}</div></section>`).join('')}</div></div>`;
+  const notes=['Opening matchups','Top four seeds enter','The final four','The title game'];
+  host.innerHTML=`<div class="cfpShell"><header class="cfpHero"><div><span class="cfpEyebrow">College Football Playoff</span><h2>Road to the championship</h2><p>${official?'Official matchups and projected paths.':'Projected from the current AP Poll. This is not the official CFP field.'}</p></div><span class="cfpBadge">${official?'Playoff bracket':'Projected field'}</span></header><div class="cfpGuide"><span><b>12</b> teams</span><span><b>4</b> rounds</span><span>Seeds <b>1–4</b> receive a first-round bye</span></div><div class="cfpBoard">${rounds.map((r,i)=>`<section class="cfpRound ${i===3?'cfpTitleRound':''}" aria-labelledby="cfp-round-${i}"><header class="cfpRoundHead"><span class="cfpRoundNumber">0${i+1}</span><div><h3 id="cfp-round-${i}">${esc(r.label)}</h3><p>${notes[i]}</p></div></header><div class="cfpMatches">${(r.matches.length?r.matches:[null]).map((m,j)=>_cfpMatchCard(m,i,j)).join('')}</div></section>`).join('')}</div><p class="cfpFoot">Numbers beside teams are playoff seeds. Winner placeholders will fill as matchups are determined.</p></div>`;
 }
+
 function renderBracket(){
   const host=$('#view-bracket');
   if(!host)return;
