@@ -3575,4 +3575,13 @@ body{font-variant-numeric:tabular-nums}
 .cfpOutTeam .teamMark img{width:80%;height:80%;object-fit:contain}
 .cfpOutTeam>div{min-width:0}.cfpOutTeam b{display:block;font-size:var(--fs-sm);font-weight:var(--fw-semibold);overflow-wrap:anywhere}
 .cfpOutTeam span:not(.teamMark):not(.teamMonogramText){display:block;margin-top:4px;font-size:var(--fs-xs);color:var(--muted)}
-@media(max-width:700px){.cfpOutGrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.cfpOutTeam{padding:10px;gap:8px}.cfpOut{margin-top:16px}}
+@media(max-width:699px){.cfpOutGrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.cfpOutTeam{padding:10px;gap:8px}.cfpOut{margin-top:16px}}
+/* Home: record and playoff picture stacked in the side column. */
+.gamesSideCol{display:grid;align-content:start;gap:0}
+.gamesSideCol>.gamesBracket{border-top:0;margin-top:0}
+.gamesBracket{align-items:flex-start;flex-wrap:wrap}
+.gamesSeeds{list-style:none;margin:8px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 20px}
+.gamesSeeds li{display:flex;align-items:center;gap:8px;min-width:0;font-size:var(--fs-sm)}
+.gamesSeeds em{font-style:normal;width:16px;color:var(--signal);font-weight:var(--fw-bold)}
+.gamesSeeds b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:var(--fw-semibold)}
+.gamesSeeds .teamMark{width:26px;height:26px;flex:0 0 26px;overflow:hidden}.gamesSeeds .teamMark img{width:80%;height:80%;object-fit:contain}

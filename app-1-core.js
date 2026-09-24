@@ -1012,7 +1012,7 @@ function gamesSummaryHTML(active){
   const feature=featured?gamesFeaturedHTML(featured):`<div class="gamesEmpty">No games in the next seven days. The full schedule remains below.</div>`;
   return `<section class="gamesLandingHead"><span>GAMES</span><h1>${esc(sport)}</h1><p>Predictions, market comparisons and the public record.</p></section>`
     +`<section class="gamesFeatured"><div class="gamesSectionHead"><span>This week's featured game</span><small>${featured?.model!=null?'Live model':'Next 7 days'}</small></div>${feature}</section>`
-    +`<div class="gamesSupportGrid${top.length?'':' noComparisons'}">${top.length?gamesDifferencesHTML(top):''}${gamesRecordHTML()}</div>`
+    +`<div class="gamesSupportGrid${top.length?'':' noComparisons'}">${top.length?gamesDifferencesHTML(top):''}<div class="gamesSideCol">${gamesRecordHTML()}${gamesBracketHTML()}</div></div>`
     +`<nav class="gamesExplore" aria-label="Explore Matchday"><span>Explore</span><div><button type="button" onclick="setView('matches')"><b>Games</b><small>Fixtures and matchups</small></button><button type="button" onclick="setView('groups')"><b>Rankings</b><small>Ratings and conferences</small></button><button type="button" onclick="setView('news')"><b>Research</b><small>Analysis and methodology</small></button><button type="button" onclick="setView('results')"><b>Results</b><small>Finals and grading</small></button></div></nav>`;
 }
 function renderHome(){
@@ -1042,6 +1042,19 @@ function gamesDifferencesHTML(reads){
     return `<button type="button" onclick="openMatchModal('${esc(String(m.id))}')">${content}</button>`;
   }).join(''):`<div class="gamesEmpty">Model and market comparisons will appear as games are priced.</div>`;
   return `<section class="gamesDifferences"><div class="gamesSectionHead"><span>Largest model / market differences</span><small>${reads.length?'Top '+reads.length:'Awaiting prices'}</small></div><div class="gamesDifferenceRows">${rows}</div><button type="button" class="gamesTextLink" onclick="document.querySelector('.gamesFixtureBoard')?.scrollIntoView({behavior:prefersReducedMotion()?'auto':'smooth'})">View all games <span aria-hidden="true">→</span></button></section>`;
+}
+/* The projected playoff field's top four seeds, from the same bracket data
+   the Bracket tab draws, as a way into that tab from the home page. */
+function gamesBracketHTML(){
+  if(String(DATA?.comp_key||'').toUpperCase()!=='NCAAF')return '';
+  const rounds=(typeof MATCHDAY_CFB_AP_BRACKET!=='undefined'&&MATCHDAY_CFB_AP_BRACKET)||[];
+  const byes=(rounds.find(r=>/quarter/i.test(r.round||''))?.matches||[])
+    .filter(m=>/^[1-4]$/.test(String(m.home_slot||''))).sort((a,b)=>Number(a.home_slot)-Number(b.home_slot));
+  if(!byes.length)return '';
+  const short=n=>typeof rsShortName==='function'?rsShortName(n):n;
+  return `<section class="gamesRecord gamesBracket"><div><span>Playoff picture</span>`
+    +`<ol class="gamesSeeds">${byes.map(m=>`<li><em>${esc(m.home_slot)}</em>${typeof teamMark==='function'?teamMark(m.home):''}<b>${esc(short(m.home))}</b></li>`).join('')}</ol></div>`
+    +`<button type="button" onclick="setView('bracket')">View bracket <span aria-hidden="true">→</span></button></section>`;
 }
 function gamesRecordHTML(){
   const sc=typeof betbetterScorecard==='function'?betbetterScorecard():null;

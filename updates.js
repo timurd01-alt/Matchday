@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0925C",
+  "tag": "Feature",
+  "title": "Playoff picture on the home page",
+  "items": [
+   "Under the public record, the home page shows the projected top four playoff seeds with a View bracket button."
+  ]
+ },
+ {
   "date": "Build 0924AC",
   "tag": "Feature",
   "title": "First four out of the CFP field",
