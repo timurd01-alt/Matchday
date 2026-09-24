@@ -3114,3 +3114,22 @@ body.welcomeOpen{height:auto;min-height:100vh;overflow-y:auto}
 .cfpFoot{border-top:1px solid var(--cfp-line);padding-top:16px;font-size:12px}
 @media(max-width:1100px){.cfpBoard{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 16px}}
 @media(max-width:600px){.cfpHero{align-items:flex-start;flex-direction:column;gap:12px;padding:18px 0}.cfpBoard{grid-template-columns:minmax(0,1fr);gap:24px;padding:20px 0}.cfpRoundHead{min-height:0;margin-bottom:12px}.cfpTeamName{font-size:15px}.cfpGuide{gap:10px 20px}.cfpGuide span:last-child{flex-basis:100%}}
+
+/* Keep the complete CFP field compact and visible together. */
+.cfpHero{padding:12px 0;gap:12px}
+.cfpHero h2{font-size:clamp(22px,2.5vw,32px);margin:7px 0}
+.cfpGuide{padding:10px 0}
+.cfpBoard{padding:18px 0;gap:14px}
+.cfpRoundHead{min-height:48px;margin-bottom:10px;padding-bottom:10px}
+.cfpMatches{gap:8px}
+.cfpMatchMeta{padding:6px 9px}
+.cfpTeam{min-height:34px;padding:6px 9px;gap:6px}
+.cfpFoot{padding-top:10px}
+@media(max-width:600px){
+  .cfpHero{gap:7px;padding:10px 0}.cfpHero h2{font-size:22px}.cfpHero p{font-size:11px}.cfpEyebrow{font-size:9px}.cfpBadge{padding:5px 8px;font-size:9px}
+  .cfpGuide{font-size:10px;gap:6px 14px}.cfpGuide span:last-child{flex-basis:auto}
+  .cfpBoard{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 8px;padding:14px 0}
+  .cfpRoundHead{gap:5px;min-height:47px;margin-bottom:8px;padding-bottom:8px;align-items:flex-start}
+  .cfpRoundNumber{font-size:9px;padding-top:3px}.cfpRoundHead h3{font-size:13px}.cfpRoundHead p{font-size:9px;margin-top:3px}
+  .cfpMatchMeta{font-size:8px;padding:5px 6px;gap:3px}.cfpTeam{padding:5px 6px;gap:4px;min-height:32px}.cfpSeed{flex-basis:15px;font-size:9px}.cfpTeamName{font-size:11px}.cfpPath .cfpTeamName{font-size:10px}.cfpFoot{font-size:10px}
+}

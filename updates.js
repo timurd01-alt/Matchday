@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0923Y",
+  "tag": "Design",
+  "title": "The CFP field, together on screen",
+  "items": [
+   "More compact matchup cards keep all four rounds together without a scrolling bracket panel.",
+   "Phones use two compact columns instead of a long single-column list."
+  ]
+ },
+ {
   "date": "Build 0923X",
   "tag": "Design",
   "title": "A clearer CFP playoff bracket",
