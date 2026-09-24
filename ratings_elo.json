@@ -2,500 +2,500 @@
  "_version": 2,
  "teams": {
   "football:florida state": {
-   "r": 1655.432793325128,
-   "n": 314
+   "r": 1653.5349145022471,
+   "n": 315
   },
   "football:byu": {
-   "r": 1804.94169360107,
-   "n": 312
+   "r": 1822.8177569925047,
+   "n": 315
   },
   "football:kansas state": {
-   "r": 1722.7124291866808,
-   "n": 310
+   "r": 1731.453962060058,
+   "n": 311
   },
   "football:iowa": {
-   "r": 1790.4375379639866,
-   "n": 308
+   "r": 1793.7852962134966,
+   "n": 310
   },
   "football:louisiana tech": {
-   "r": 1391.6274340449154,
-   "n": 310
+   "r": 1388.2955603112066,
+   "n": 311
   },
   "football:mississippi valley state": {
    "r": 1442.945113834896,
    "n": 4
   },
   "football:texas tech": {
-   "r": 1781.2391121549945,
-   "n": 309
-  },
-  "football:new mexico": {
-   "r": 1458.2216033740747,
-   "n": 306
-  },
-  "football:usc": {
-   "r": 1787.647112224158,
-   "n": 312
-  },
-  "football:penn state": {
-   "r": 1819.1171856301814,
-   "n": 308
-  },
-  "football:wake forest": {
-   "r": 1619.9975071518525,
-   "n": 307
-  },
-  "football:app state": {
-   "r": 1527.1324531279943,
-   "n": 161
-  },
-  "football:san diego state": {
-   "r": 1558.53224235368,
-   "n": 309
-  },
-  "football:arizona state": {
-   "r": 1713.2046615762342,
-   "n": 303
-  },
-  "football:auburn": {
-   "r": 1651.7087589210157,
+   "r": 1787.0114494357667,
    "n": 310
   },
+  "football:new mexico": {
+   "r": 1477.51082460204,
+   "n": 309
+  },
+  "football:usc": {
+   "r": 1799.8634772747528,
+   "n": 315
+  },
+  "football:penn state": {
+   "r": 1826.3966314538666,
+   "n": 311
+  },
+  "football:wake forest": {
+   "r": 1623.8281903893017,
+   "n": 310
+  },
+  "football:app state": {
+   "r": 1552.713022018081,
+   "n": 165
+  },
+  "football:san diego state": {
+   "r": 1553.3494171360974,
+   "n": 311
+  },
+  "football:arizona state": {
+   "r": 1722.062151900827,
+   "n": 304
+  },
+  "football:auburn": {
+   "r": 1648.760668149677,
+   "n": 312
+  },
   "football:wyoming": {
-   "r": 1451.3519695596383,
-   "n": 303
+   "r": 1441.1355434866587,
+   "n": 304
   },
   "football:north texas": {
-   "r": 1557.7819974754766,
-   "n": 308
+   "r": 1550.0238707524268,
+   "n": 311
   },
   "football:baylor": {
-   "r": 1658.8611177445982,
-   "n": 307
+   "r": 1652.0043362873596,
+   "n": 309
   },
   "football:marshall": {
-   "r": 1556.3133157904492,
-   "n": 309
+   "r": 1561.6670338399865,
+   "n": 311
   },
   "football:southeast missouri state": {
    "r": 1322.6626277826049,
    "n": 28
   },
   "football:miami": {
-   "r": 1791.504059931914,
-   "n": 307
+   "r": 1812.4486004692842,
+   "n": 310
   },
   "football:mcneese": {
    "r": 1399.9743113391448,
    "n": 27
   },
   "football:northwestern": {
-   "r": 1565.6052610110557,
-   "n": 306
+   "r": 1581.8754883514393,
+   "n": 308
   },
   "football:northern illinois": {
-   "r": 1411.3990427249628,
-   "n": 311
+   "r": 1406.003744619921,
+   "n": 313
   },
   "football:wisconsin": {
-   "r": 1655.9172696170037,
-   "n": 312
+   "r": 1656.5335285102142,
+   "n": 314
   },
   "football:western michigan": {
-   "r": 1536.3019219277514,
-   "n": 304
+   "r": 1543.463975779691,
+   "n": 306
   },
   "football:air force": {
-   "r": 1521.2252170738495,
-   "n": 304
+   "r": 1527.8090412697895,
+   "n": 305
   },
   "football:cal state northridge": {
    "r": 1480.2225785544838,
    "n": 2
   },
   "football:utah": {
-   "r": 1797.31615832124,
-   "n": 304
-  },
-  "football:arizona": {
-   "r": 1655.1033471838982,
-   "n": 302
-  },
-  "football:arkansas": {
-   "r": 1557.9428385430506,
-   "n": 308
-  },
-  "football:missouri state": {
-   "r": 1391.6022268070838,
-   "n": 40
-  },
-  "football:boise state": {
-   "r": 1745.4708484513108,
-   "n": 315
-  },
-  "football:virginia": {
-   "r": 1639.984249283572,
-   "n": 309
-  },
-  "football:clemson": {
-   "r": 1876.44187213945,
-   "n": 316
-  },
-  "football:citadel": {
-   "r": 1385.1659579401282,
-   "n": 34
-  },
-  "football:colorado state": {
-   "r": 1414.8088832296144,
-   "n": 302
-  },
-  "football:colorado": {
-   "r": 1576.4829950340707,
-   "n": 309
-  },
-  "football:duke": {
-   "r": 1688.0906785923614,
-   "n": 309
-  },
-  "football:east carolina": {
-   "r": 1534.0437697718671,
-   "n": 307
-  },
-  "football:eastern michigan": {
-   "r": 1412.588790394534,
-   "n": 304
-  },
-  "football:uconn": {
-   "r": 1482.2502364497311,
-   "n": 296
-  },
-  "football:florida": {
-   "r": 1695.6714910982114,
-   "n": 309
-  },
-  "football:ball state": {
-   "r": 1367.307521081607,
-   "n": 304
-  },
-  "football:georgia": {
-   "r": 2079.9462329089956,
-   "n": 318
-  },
-  "football:georgia southern": {
-   "r": 1521.1537754163428,
-   "n": 153
-  },
-  "football:georgia tech": {
-   "r": 1672.6046290948782,
-   "n": 311
-  },
-  "football:ucf": {
-   "r": 1606.7516644417644,
-   "n": 311
-  },
-  "football:illinois": {
-   "r": 1669.2621000419538,
-   "n": 305
-  },
-  "football:middle tennessee": {
-   "r": 1330.080490377559,
+   "r": 1790.6838895683923,
    "n": 306
   },
-  "football:iowa state": {
-   "r": 1749.048032313466,
-   "n": 309
+  "football:arizona": {
+   "r": 1653.4354713494292,
+   "n": 304
   },
-  "football:ohio": {
-   "r": 1607.719718971041,
+  "football:arkansas": {
+   "r": 1552.114008192767,
+   "n": 310
+  },
+  "football:missouri state": {
+   "r": 1383.01062054694,
+   "n": 41
+  },
+  "football:boise state": {
+   "r": 1744.4188067302225,
+   "n": 317
+  },
+  "football:virginia": {
+   "r": 1637.8073591738162,
+   "n": 311
+  },
+  "football:clemson": {
+   "r": 1868.7778444246862,
+   "n": 318
+  },
+  "football:citadel": {
+   "r": 1396.3566719071564,
+   "n": 35
+  },
+  "football:colorado state": {
+   "r": 1411.9141681544422,
+   "n": 303
+  },
+  "football:colorado": {
+   "r": 1566.3765521674925,
+   "n": 310
+  },
+  "football:duke": {
+   "r": 1716.2881315618738,
+   "n": 312
+  },
+  "football:east carolina": {
+   "r": 1533.2140660328741,
+   "n": 310
+  },
+  "football:eastern michigan": {
+   "r": 1405.812187953085,
+   "n": 307
+  },
+  "football:uconn": {
+   "r": 1480.1995911973459,
+   "n": 298
+  },
+  "football:florida": {
+   "r": 1702.0230136837831,
+   "n": 311
+  },
+  "football:ball state": {
+   "r": 1361.2037913536553,
    "n": 305
   },
-  "football:lsu": {
-   "r": 1826.752431912062,
+  "football:georgia": {
+   "r": 2085.0953809379125,
+   "n": 321
+  },
+  "football:georgia southern": {
+   "r": 1511.1553211675066,
+   "n": 154
+  },
+  "football:georgia tech": {
+   "r": 1676.65155569587,
    "n": 312
+  },
+  "football:ucf": {
+   "r": 1603.1524318339934,
+   "n": 313
+  },
+  "football:illinois": {
+   "r": 1662.5259834067022,
+   "n": 308
+  },
+  "football:middle tennessee": {
+   "r": 1349.606111895803,
+   "n": 308
+  },
+  "football:iowa state": {
+   "r": 1751.2869662502196,
+   "n": 310
+  },
+  "football:ohio": {
+   "r": 1581.5332556332316,
+   "n": 307
+  },
+  "football:lsu": {
+   "r": 1829.9144914643118,
+   "n": 314
   },
   "football:western carolina": {
    "r": 1321.182047223378,
    "n": 37
   },
   "football:louisville": {
-   "r": 1732.0524114999978,
-   "n": 309
+   "r": 1737.4315836388917,
+   "n": 311
   },
   "football:kentucky": {
-   "r": 1635.695083715877,
-   "n": 306
-  },
-  "football:vanderbilt": {
-   "r": 1633.698200924495,
-   "n": 305
-  },
-  "football:miami oh": {
-   "r": 1564.8259936683862,
+   "r": 1652.5026849041521,
    "n": 308
   },
-  "football:michigan": {
-   "r": 1914.2562572203437,
-   "n": 305
-  },
-  "football:bowling green": {
-   "r": 1413.9924770428745,
-   "n": 305
-  },
-  "football:minnesota": {
-   "r": 1681.563903220584,
-   "n": 304
-  },
-  "football:ul monroe": {
-   "r": 1305.4435112386104,
+  "football:vanderbilt": {
+   "r": 1649.8870599938714,
    "n": 307
   },
-  "football:ole miss": {
-   "r": 1877.7089675888071,
-   "n": 305
-  },
-  "football:tulane": {
-   "r": 1696.1628164376232,
-   "n": 313
-  },
-  "football:memphis": {
-   "r": 1658.7426990404645,
+  "football:miami oh": {
+   "r": 1557.7301102105484,
    "n": 309
   },
-  "football:mississippi state": {
-   "r": 1597.9763007987663,
+  "football:michigan": {
+   "r": 1925.6393447325524,
+   "n": 308
+  },
+  "football:bowling green": {
+   "r": 1411.7535431061208,
    "n": 306
   },
-  "football:missouri": {
-   "r": 1761.1103223522653,
+  "football:minnesota": {
+   "r": 1666.896876780751,
+   "n": 306
+  },
+  "football:ul monroe": {
+   "r": 1280.3122053959946,
+   "n": 310
+  },
+  "football:ole miss": {
+   "r": 1891.815535794143,
+   "n": 307
+  },
+  "football:tulane": {
+   "r": 1677.2015718129805,
+   "n": 315
+  },
+  "football:memphis": {
+   "r": 1672.6561985167864,
    "n": 311
+  },
+  "football:mississippi state": {
+   "r": 1633.7344652590225,
+   "n": 309
+  },
+  "football:missouri": {
+   "r": 1777.4372935901056,
+   "n": 314
   },
   "football:western illinois": {
    "r": 1370.9832775983757,
    "n": 31
   },
   "football:nebraska": {
-   "r": 1587.9500712903189,
-   "n": 310
+   "r": 1603.2719054052172,
+   "n": 312
   },
   "football:san jose state": {
-   "r": 1480.7176545591308,
-   "n": 308
+   "r": 1479.6131655525314,
+   "n": 311
   },
   "football:north carolina": {
-   "r": 1626.6719128128952,
-   "n": 310
+   "r": 1640.1835653736657,
+   "n": 312
   },
   "football:tulsa": {
-   "r": 1392.4045625098609,
-   "n": 310
+   "r": 1404.7554839298666,
+   "n": 311
   },
   "football:nc state": {
-   "r": 1688.9869209670624,
-   "n": 309
+   "r": 1666.099787140296,
+   "n": 311
   },
   "football:arkansas state": {
-   "r": 1450.1250336755597,
-   "n": 307
+   "r": 1447.01389162156,
+   "n": 308
   },
   "football:notre dame": {
-   "r": 1937.6965083950768,
-   "n": 307
+   "r": 1943.416291101549,
+   "n": 310
   },
   "football:texas a m": {
-   "r": 1837.10026039105,
-   "n": 305
+   "r": 1817.402366519956,
+   "n": 306
   },
   "football:ohio state": {
-   "r": 2056.7909696584647,
-   "n": 309
+   "r": 2057.010733213761,
+   "n": 310
   },
   "football:fresno state": {
-   "r": 1594.545241304009,
-   "n": 313
+   "r": 1600.6960725769352,
+   "n": 315
   },
   "football:oklahoma": {
-   "r": 1895.3744566265545,
-   "n": 318
+   "r": 1888.0061585680107,
+   "n": 321
   },
   "football:utep": {
-   "r": 1239.2295378576828,
-   "n": 306
+   "r": 1238.5246002809147,
+   "n": 308
   },
   "football:oregon": {
-   "r": 1984.4589156777106,
-   "n": 308
+   "r": 1988.5389463732013,
+   "n": 310
   },
   "football:nevada": {
-   "r": 1352.7214958305717,
-   "n": 308
+   "r": 1358.2179144680013,
+   "n": 310
   },
   "football:oregon state": {
-   "r": 1523.2323012421768,
-   "n": 304
-  },
-  "football:eastern washington": {
-   "r": 1416.417364764437,
-   "n": 32
-  },
-  "football:pittsburgh": {
-   "r": 1698.0090161164321,
-   "n": 309
-  },
-  "football:kent state": {
-   "r": 1304.8248601300543,
-   "n": 301
-  },
-  "football:purdue": {
-   "r": 1478.5499430188577,
+   "r": 1532.5804703632195,
    "n": 305
   },
-  "football:central michigan": {
-   "r": 1453.1557196368979,
-   "n": 306
+  "football:eastern washington": {
+   "r": 1414.7334793066677,
+   "n": 33
   },
-  "football:rice": {
-   "r": 1384.8277445753884,
+  "football:pittsburgh": {
+   "r": 1710.9876151567871,
+   "n": 311
+  },
+  "football:kent state": {
+   "r": 1302.8670076851563,
    "n": 303
   },
+  "football:purdue": {
+   "r": 1481.8599837209133,
+   "n": 308
+  },
+  "football:central michigan": {
+   "r": 1453.5935328868454,
+   "n": 308
+  },
+  "football:rice": {
+   "r": 1375.206755356222,
+   "n": 305
+  },
   "football:houston": {
-   "r": 1641.487398287187,
-   "n": 307
+   "r": 1635.7150610064148,
+   "n": 308
   },
   "football:rutgers": {
-   "r": 1541.1112997313342,
-   "n": 306
+   "r": 1504.0239658943365,
+   "n": 309
   },
   "football:villanova": {
    "r": 1417.8693105564466,
    "n": 22
   },
   "football:louisiana": {
-   "r": 1559.5623173464785,
-   "n": 310
+   "r": 1564.832321510213,
+   "n": 311
   },
   "football:sam houston": {
-   "r": 1366.7872919292936,
-   "n": 58
+   "r": 1369.334779837017,
+   "n": 60
   },
   "football:south carolina": {
-   "r": 1687.821044485944,
-   "n": 307
+   "r": 1673.201955615166,
+   "n": 309
   },
   "football:new mexico state": {
    "r": 1328.962945474367,
    "n": 304
   },
   "football:south florida": {
-   "r": 1520.784857996555,
-   "n": 302
+   "r": 1542.1019706453187,
+   "n": 304
   },
   "football:jacksonville state": {
-   "r": 1519.6510234724892,
-   "n": 65
+   "r": 1529.6494777213254,
+   "n": 66
   },
   "football:smu": {
-   "r": 1757.5185722721237,
-   "n": 310
+   "r": 1746.5147627606593,
+   "n": 311
   },
   "football:kansas": {
-   "r": 1561.235178378817,
-   "n": 306
-  },
-  "football:washington state": {
-   "r": 1624.1571322686382,
-   "n": 301
-  },
-  "football:stanford": {
-   "r": 1528.5436474316684,
-   "n": 306
-  },
-  "football:syracuse": {
-   "r": 1583.2317930346153,
-   "n": 308
-  },
-  "football:buffalo": {
-   "r": 1426.1407612012438,
-   "n": 304
-  },
-  "football:navy": {
-   "r": 1621.8897027750202,
-   "n": 308
-  },
-  "football:temple": {
-   "r": 1384.115353141916,
-   "n": 304
-  },
-  "football:tennessee": {
-   "r": 1798.6218893289229,
+   "r": 1551.1923019623093,
    "n": 309
   },
+  "football:washington state": {
+   "r": 1628.1779453734605,
+   "n": 302
+  },
+  "football:stanford": {
+   "r": 1526.1552462362117,
+   "n": 309
+  },
+  "football:syracuse": {
+   "r": 1564.3098080797379,
+   "n": 310
+  },
+  "football:buffalo": {
+   "r": 1424.5425348221809,
+   "n": 305
+  },
+  "football:navy": {
+   "r": 1626.0336598438298,
+   "n": 309
+  },
+  "football:temple": {
+   "r": 1377.2529767948229,
+   "n": 306
+  },
+  "football:tennessee": {
+   "r": 1798.2389205061631,
+   "n": 311
+  },
   "football:southern miss": {
-   "r": 1363.8911620870242,
-   "n": 308
+   "r": 1353.4667917019083,
+   "n": 309
   },
   "football:utah state": {
-   "r": 1513.5912380174912,
-   "n": 304
+   "r": 1510.530153839914,
+   "n": 305
   },
   "football:toledo": {
-   "r": 1580.2741945602054,
-   "n": 307
+   "r": 1584.693239673283,
+   "n": 308
   },
   "football:ucla": {
-   "r": 1610.74198280049,
-   "n": 305
+   "r": 1631.1946129980765,
+   "n": 307
   },
   "football:alabama": {
-   "r": 2040.2232868280319,
-   "n": 319
+   "r": 2023.7968624727844,
+   "n": 323
   },
   "football:virginia tech": {
-   "r": 1542.4842197463543,
-   "n": 314
+   "r": 1556.4852108781272,
+   "n": 315
   },
   "football:akron": {
-   "r": 1290.1969805838157,
-   "n": 305
+   "r": 1301.2865609025537,
+   "n": 308
   },
   "football:washington": {
-   "r": 1805.3397789706416,
-   "n": 305
+   "r": 1807.023664428411,
+   "n": 306
   },
   "football:idaho": {
    "r": 1314.160800965287,
    "n": 228
   },
   "football:west virginia": {
-   "r": 1650.6533022100627,
-   "n": 304
+   "r": 1672.9736039000193,
+   "n": 307
   },
   "football:boston college": {
-   "r": 1534.9046851025892,
-   "n": 309
+   "r": 1542.6341796308598,
+   "n": 312
   },
   "football:cincinnati": {
-   "r": 1649.1809599574005,
-   "n": 309
+   "r": 1662.716278784547,
+   "n": 311
   },
   "football:army": {
-   "r": 1580.712845754851,
-   "n": 310
+   "r": 1564.7277123204622,
+   "n": 311
   },
   "football:uab": {
-   "r": 1395.1985258753998,
-   "n": 284
+   "r": 1394.0016241869805,
+   "n": 287
   },
   "football:chattanooga": {
    "r": 1357.782207882854,
    "n": 31
   },
   "football:northern iowa": {
-   "r": 1390.5460532949762,
-   "n": 29
+   "r": 1388.9734735991394,
+   "n": 30
   },
   "football:california": {
-   "r": 1628.082571109935,
-   "n": 301
+   "r": 1629.0241494971362,
+   "n": 304
   },
   "football:northwestern state": {
    "r": 1313.5305171696411,
@@ -510,52 +510,52 @@
    "n": 16
   },
   "football:unlv": {
-   "r": 1596.5533941549688,
-   "n": 310
+   "r": 1583.398619931843,
+   "n": 313
   },
   "football:grambling": {
    "r": 1319.9186718303795,
    "n": 25
   },
   "football:maryland": {
-   "r": 1528.4899348936785,
-   "n": 302
+   "r": 1526.9639593994068,
+   "n": 304
   },
   "football:michigan state": {
-   "r": 1594.2389308114205,
-   "n": 308
+   "r": 1592.1365586369932,
+   "n": 309
   },
   "football:montana": {
-   "r": 1505.1661667050155,
-   "n": 12
+   "r": 1495.8179975839728,
+   "n": 13
   },
   "football:indiana": {
-   "r": 1767.027344318968,
-   "n": 304
+   "r": 1757.928429668063,
+   "n": 308
   },
   "football:illinois state": {
    "r": 1432.8188406424447,
    "n": 21
   },
   "football:oklahoma state": {
-   "r": 1566.6408742482631,
-   "n": 308
+   "r": 1569.4902926373436,
+   "n": 309
   },
   "football:hawai i": {
-   "r": 1478.475746135849,
-   "n": 325
+   "r": 1460.021278767081,
+   "n": 327
   },
   "football:portland state": {
-   "r": 1360.463056759876,
-   "n": 39
+   "r": 1355.5943750177764,
+   "n": 41
   },
   "football:texas": {
-   "r": 1897.6072215921972,
-   "n": 311
+   "r": 1899.6799699370524,
+   "n": 312
   },
   "football:tcu": {
-   "r": 1738.4145909691813,
-   "n": 308
+   "r": 1724.0341177921591,
+   "n": 310
   },
   "football:weber state": {
    "r": 1344.5707582110892,
@@ -570,24 +570,24 @@
    "n": 25
   },
   "football:nicholls": {
-   "r": 1276.0695043497903,
-   "n": 48
+   "r": 1268.8358307096007,
+   "n": 49
   },
   "football:murray state": {
-   "r": 1286.9536067980268,
-   "n": 36
+   "r": 1275.5650192163332,
+   "n": 38
   },
   "football:tennessee tech": {
    "r": 1320.4045114010069,
    "n": 30
   },
   "football:texas state": {
-   "r": 1430.220498709939,
-   "n": 183
+   "r": 1444.7493764237058,
+   "n": 184
   },
   "football:james madison": {
-   "r": 1686.5287460608863,
-   "n": 64
+   "r": 1702.621547815885,
+   "n": 67
   },
   "football:stephen f austin": {
    "r": 1337.2896716394575,
@@ -610,8 +610,8 @@
    "n": 26
   },
   "football:southern illinois": {
-   "r": 1404.6614528508587,
-   "n": 25
+   "r": 1401.2871567327559,
+   "n": 26
   },
   "football:northern arizona": {
    "r": 1385.4579214348264,
@@ -626,8 +626,8 @@
    "n": 23
   },
   "football:troy": {
-   "r": 1552.8067132188135,
-   "n": 300
+   "r": 1575.0655496887075,
+   "n": 303
   },
   "football:samford": {
    "r": 1386.4287426915582,
@@ -638,12 +638,12 @@
    "n": 41
   },
   "football:liberty": {
-   "r": 1498.8241256090228,
-   "n": 117
+   "r": 1500.2781448193098,
+   "n": 119
   },
   "football:western kentucky": {
-   "r": 1549.1138372137439,
-   "n": 240
+   "r": 1527.983086558522,
+   "n": 243
   },
   "football:rhode island": {
    "r": 1360.3647188138332,
@@ -670,8 +670,8 @@
    "n": 8
   },
   "football:massachusetts": {
-   "r": 1152.2851358585074,
-   "n": 172
+   "r": 1194.3206733866343,
+   "n": 174
   },
   "football:texas southern": {
    "r": 1319.6463356488523,
@@ -682,8 +682,8 @@
    "n": 19
   },
   "football:florida atlantic": {
-   "r": 1354.27339186342,
-   "n": 262
+   "r": 1364.453108931719,
+   "n": 263
   },
   "football:new hampshire": {
    "r": 1426.309829064652,
@@ -706,16 +706,16 @@
    "n": 13
   },
   "football:sacramento state": {
-   "r": 1380.7437782644656,
-   "n": 29
+   "r": 1364.4385308003211,
+   "n": 31
   },
   "football:holy cross": {
    "r": 1458.7951056506986,
    "n": 11
   },
   "football:ut martin": {
-   "r": 1315.2375919173087,
-   "n": 36
+   "r": 1311.0868664835787,
+   "n": 38
   },
   "football:charleston southern": {
    "r": 1354.9552229031697,
@@ -734,20 +734,20 @@
    "n": 1
   },
   "football:howard": {
-   "r": 1312.4036517283425,
-   "n": 24
+   "r": 1311.1279454484156,
+   "n": 25
   },
   "football:se louisiana": {
-   "r": 1265.5547513322,
-   "n": 34
+   "r": 1275.4802755811845,
+   "n": 36
   },
   "football:florida international": {
-   "r": 1361.1609012373478,
-   "n": 251
+   "r": 1350.981184169049,
+   "n": 252
   },
   "football:delaware": {
-   "r": 1458.3424963413565,
-   "n": 28
+   "r": 1465.8937859580374,
+   "n": 30
   },
   "football:morgan state": {
    "r": 1288.4862021905606,
@@ -758,8 +758,8 @@
    "n": 14
   },
   "football:maine": {
-   "r": 1350.30898245903,
-   "n": 29
+   "r": 1340.8764634085092,
+   "n": 31
   },
   "football:tennessee state": {
    "r": 1428.4470556697718,
@@ -790,8 +790,8 @@
    "n": 13
   },
   "football:north dakota state": {
-   "r": 1572.0053962934692,
-   "n": 15
+   "r": 1579.4109736960395,
+   "n": 16
   },
   "football:south carolina state": {
    "r": 1338.2819596280654,
@@ -822,8 +822,8 @@
    "n": 20
   },
   "football:delaware state": {
-   "r": 1379.0860602170737,
-   "n": 15
+   "r": 1373.754081002699,
+   "n": 16
   },
   "football:central connecticut": {
    "r": 1385.1982944451506,
@@ -846,20 +846,20 @@
    "n": 13
   },
   "football:coastal carolina": {
-   "r": 1533.4927521492598,
-   "n": 114
+   "r": 1514.6579367560796,
+   "n": 116
   },
   "football:towson": {
-   "r": 1409.6987205101093,
-   "n": 18
+   "r": 1405.5547634412997,
+   "n": 19
   },
   "football:alabama a m": {
    "r": 1380.5102996445037,
    "n": 16
   },
   "football:north dakota": {
-   "r": 1413.4202237250709,
-   "n": 16
+   "r": 1408.7150594414225,
+   "n": 17
   },
   "football:prairie view a m": {
    "r": 1386.2187811652216,
@@ -874,56 +874,56 @@
    "n": 6
   },
   "football:south dakota": {
-   "r": 1441.023154201361,
-   "n": 17
+   "r": 1432.2699449207612,
+   "n": 19
   },
   "football:stony brook": {
    "r": 1371.0621470381336,
    "n": 16
   },
   "football:georgia state": {
-   "r": 1351.6247124610597,
-   "n": 157
+   "r": 1348.1413735348021,
+   "n": 158
   },
   "football:fordham": {
    "r": 1407.636751748023,
    "n": 16
   },
   "football:south alabama": {
-   "r": 1425.2408614061678,
-   "n": 170
+   "r": 1446.0949865527868,
+   "n": 172
   },
   "football:wagner": {
-   "r": 1317.86786940734,
-   "n": 21
+   "r": 1313.494115819646,
+   "n": 23
   },
   "football:utsa": {
-   "r": 1547.8321720198412,
-   "n": 168
+   "r": 1545.759423674986,
+   "n": 169
   },
   "football:lamar": {
    "r": 1374.4568985918986,
    "n": 16
   },
   "football:east texas a m": {
-   "r": 1462.5676760188373,
-   "n": 5
+   "r": 1450.2167545988316,
+   "n": 6
   },
   "football:northwestern oklahoma state": {
    "r": 1491.2168203904196,
    "n": 1
   },
   "football:old dominion": {
-   "r": 1521.9409174954833,
-   "n": 137
+   "r": 1507.7926894795933,
+   "n": 138
   },
   "football:abilene christian": {
    "r": 1367.0402877108263,
    "n": 20
   },
   "football:duquesne": {
-   "r": 1412.2353873502946,
-   "n": 13
+   "r": 1401.6307500495323,
+   "n": 15
   },
   "football:campbell": {
    "r": 1399.4456774955331,
@@ -934,8 +934,8 @@
    "n": 2
   },
   "football:charlotte": {
-   "r": 1301.699106647992,
-   "n": 126
+   "r": 1283.906845372174,
+   "n": 129
   },
   "football:ualbany": {
    "r": 1422.6170739514075,
@@ -954,8 +954,8 @@
    "n": 11
   },
   "football:mercer": {
-   "r": 1455.4508401069654,
-   "n": 11
+   "r": 1451.4039135059736,
+   "n": 12
   },
   "football:houston christian": {
    "r": 1366.0616858351048,
@@ -966,24 +966,24 @@
    "n": 8
   },
   "football:kennesaw state": {
-   "r": 1476.7059486012668,
-   "n": 31
+   "r": 1484.4967864416526,
+   "n": 33
   },
   "football:drake": {
    "r": 1493.5573784192184,
    "n": 1
   },
   "football:robert morris": {
-   "r": 1447.1212535533682,
-   "n": 7
+   "r": 1431.784363942223,
+   "n": 8
   },
   "football:north alabama": {
    "r": 1452.4714960059664,
    "n": 7
   },
   "football:long island university": {
-   "r": 1441.2809902305485,
-   "n": 11
+   "r": 1434.9943834858232,
+   "n": 12
   },
   "football:st francis pa": {
    "r": 1436.0335523061399,
@@ -6554,7 +6554,15 @@
    "n": 1
   },
   "football:west georgia": {
-   "r": 1488.8821884918293,
+   "r": 1478.5236090925473,
+   "n": 2
+  },
+  "football:mercyhurst": {
+   "r": 1488.9650048986641,
+   "n": 1
+  },
+  "football:stonehill": {
+   "r": 1480.279709290807,
    "n": 1
   }
  },
@@ -177706,6 +177714,157 @@
   "NCAAF:cfbd-401856769": true,
   "NCAAF:cfbd-401858429": true,
   "NCAAF:cfbd-401858206": true,
-  "NCAAF:cfbd-401858436": true
+  "NCAAF:cfbd-401858436": true,
+  "NCAAF:bb-401856766": true,
+  "NCAAF:bb-401864494": true,
+  "NCAAF:bb-401858202": true,
+  "NCAAF:bb-401866408": true,
+  "NCAAF:bb-401858201": true,
+  "NCAAF:bb-401862693": true,
+  "NCAAF:bb-401858423": true,
+  "NCAAF:bb-401858204": true,
+  "NCAAF:bb-401864425": true,
+  "NCAAF:bb-401856663": true,
+  "NCAAF:bb-401858424": true,
+  "NCAAF:bb-401864495": true,
+  "NCAAF:bb-401858435": true,
+  "NCAAF:bb-401856664": true,
+  "NCAAF:bb-401856769": true,
+  "NCAAF:bb-401858206": true,
+  "NCAAF:bb-401858436": true,
+  "NCAAF:bb-401856634": true,
+  "NCAAF:bb-401856780": true,
+  "NCAAF:bb-401858425": true,
+  "NCAAF:bb-401858430": true,
+  "NCAAF:bb-401869960": true,
+  "NCAAF:bb-401856665": true,
+  "NCAAF:bb-401864496": true,
+  "NCAAF:bb-401856658": true,
+  "NCAAF:bb-401856636": true,
+  "NCAAF:bb-401856777": true,
+  "NCAAF:bb-401858209": true,
+  "NCAAF:bb-401858433": true,
+  "NCAAF:bb-401858434": true,
+  "NCAAF:bb-401862694": true,
+  "NCAAF:bb-401862696": true,
+  "NCAAF:bb-401866627": true,
+  "NCAAF:bb-401858426": true,
+  "NCAAF:bb-401868316": true,
+  "NCAAF:bb-401870763": true,
+  "NCAAF:bb-401856662": true,
+  "NCAAF:bb-401858428": true,
+  "NCAAF:bb-401867866": true,
+  "NCAAF:bb-401856775": true,
+  "NCAAF:bb-401858431": true,
+  "NCAAF:bb-401860879": true,
+  "NCAAF:bb-401856660": true,
+  "NCAAF:bb-401864497": true,
+  "NCAAF:bb-401864498": true,
+  "NCAAF:bb-401858210": true,
+  "NCAAF:bb-401864432": true,
+  "NCAAF:bb-401856661": true,
+  "NCAAF:bb-401858438": true,
+  "NCAAF:bb-401858213": true,
+  "NCAAF:bb-401858214": true,
+  "NCAAF:bb-401856678": true,
+  "NCAAF:bb-401856679": true,
+  "NCAAF:bb-401858224": true,
+  "NCAAF:bb-401858439": true,
+  "NCAAF:bb-401858442": true,
+  "NCAAF:bb-401862702": true,
+  "NCAAF:bb-401864571": true,
+  "NCAAF:bb-401867929": true,
+  "NCAAF:bb-401856673": true,
+  "NCAAF:bb-401856791": true,
+  "NCAAF:bb-401856674": true,
+  "NCAAF:bb-401856677": true,
+  "NCAAF:bb-401856790": true,
+  "NCAAF:bb-401856810": true,
+  "NCAAF:bb-401858216": true,
+  "NCAAF:bb-401858217": true,
+  "NCAAF:bb-401858444": true,
+  "NCAAF:bb-401859184": true,
+  "NCAAF:bb-401862708": true,
+  "NCAAF:bb-401866412": true,
+  "NCAAF:bb-401862705": true,
+  "NCAAF:bb-401865252": true,
+  "NCAAF:bb-401868326": true,
+  "NCAAF:bb-401856684": true,
+  "NCAAF:cfbd-401858225": true,
+  "NCAAF:cfbd-401858226": true,
+  "NCAAF:cfbd-401856811": true,
+  "NCAAF:cfbd-401858455": true,
+  "NCAAF:cfbd-401869940": true,
+  "NCAAF:cfbd-401856686": true,
+  "NCAAF:cfbd-401856792": true,
+  "NCAAF:cfbd-401856798": true,
+  "NCAAF:cfbd-401856812": true,
+  "NCAAF:cfbd-401858228": true,
+  "NCAAF:cfbd-401858229": true,
+  "NCAAF:cfbd-401858451": true,
+  "NCAAF:cfbd-401858454": true,
+  "NCAAF:cfbd-401858456": true,
+  "NCAAF:cfbd-401860889": true,
+  "NCAAF:cfbd-401858460": true,
+  "NCAAF:cfbd-401856695": true,
+  "NCAAF:cfbd-401864508": true,
+  "NCAAF:cfbd-401858227": true,
+  "NCAAF:cfbd-401858448": true,
+  "NCAAF:cfbd-401862774": true,
+  "NCAAF:cfbd-401856685": true,
+  "NCAAF:cfbd-401856694": true,
+  "NCAAF:cfbd-401856797": true,
+  "NCAAF:cfbd-401856801": true,
+  "NCAAF:cfbd-401858230": true,
+  "NCAAF:cfbd-401858233": true,
+  "NCAAF:cfbd-401858450": true,
+  "NCAAF:cfbd-401858457": true,
+  "NCAAF:cfbd-401860890": true,
+  "NCAAF:cfbd-401866424": true,
+  "NCAAF:cfbd-401858231": true,
+  "NCAAF:cfbd-401858449": true,
+  "NCAAF:cfbd-401858471": true,
+  "NCAAF:cfbd-401866422": true,
+  "NCAAF:cfbd-401867804": true,
+  "NCAAF:cfbd-401856691": true,
+  "NCAAF:cfbd-401868317": true,
+  "NCAAF:cfbd-401862710": true,
+  "NCAAF:cfbd-401862771": true,
+  "NCAAF:cfbd-401864574": true,
+  "NCAAF:cfbd-401871047": true,
+  "NCAAF:cfbd-401856687": true,
+  "NCAAF:cfbd-401856689": true,
+  "NCAAF:cfbd-401856800": true,
+  "NCAAF:cfbd-401856803": true,
+  "NCAAF:cfbd-401861963": true,
+  "NCAAF:cfbd-401862772": true,
+  "NCAAF:cfbd-401862773": true,
+  "NCAAF:cfbd-401862777": true,
+  "NCAAF:cfbd-401864443": true,
+  "NCAAF:cfbd-401866423": true,
+  "NCAAF:cfbd-401869948": true,
+  "NCAAF:cfbd-401870764": true,
+  "NCAAF:cfbd-401858452": true,
+  "NCAAF:cfbd-401858459": true,
+  "NCAAF:cfbd-401856688": true,
+  "NCAAF:cfbd-401856690": true,
+  "NCAAF:cfbd-401856795": true,
+  "NCAAF:cfbd-401856796": true,
+  "NCAAF:cfbd-401856802": true,
+  "NCAAF:cfbd-401858232": true,
+  "NCAAF:cfbd-401858453": true,
+  "NCAAF:cfbd-401856692": true,
+  "NCAAF:cfbd-401856693": true,
+  "NCAAF:cfbd-401856799": true,
+  "NCAAF:cfbd-401862775": true,
+  "NCAAF:cfbd-401862776": true,
+  "NCAAF:bb-401864574": true,
+  "NCAAF:cfbd-401860885": true,
+  "NCAAF:cfbd-401860887": true,
+  "NCAAF:cfbd-401856793": true,
+  "NCAAF:cfbd-401864507": true,
+  "NCAAF:cfbd-401858458": true,
+  "NCAAF:cfbd-401860886": true,
+  "NCAAF:cfbd-401860888": true
  }
 }
