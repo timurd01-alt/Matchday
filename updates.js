@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0923L",
+  "tag": "Design",
+  "title": "One way in from the Welcome page",
+  "items": [
+   "Removed the small \"Enter app\" link from the Welcome page header, so the green Enter Matchday Terminal button is the one clear way in."
+  ]
+ },
+ {
   "date": "Build 0923K",
   "tag": "Design",
   "title": "A shorter Welcome page",
