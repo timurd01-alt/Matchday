@@ -201,6 +201,17 @@ function applyCurrentCfbSnapshot(payload){
     const known=makeCfbFixtureIndex();
     (payload.matches||[]).forEach(m=>known.add(m));
     upcoming.forEach(f=>{
+      // A game both sources hold keeps the feed's row, but takes the engine's
+      // kickoff once one is announced. The frozen feed still carries the
+      // midnight-Eastern placeholder it had before times were set, so Saturday
+      // games read "Time TBA" while the engine had noon and 3:30.
+      const hit=known.match(f),held=hit&&hit.value;
+      if(held&&held!==f&&held.home){
+        if(held.status==='UPCOMING'&&f.kickoff&&kickoffTimeTbd(held)&&!kickoffTimeTbd(f)){
+          held.kickoff=f.kickoff;held._kickoff_from='betbetter_fixtures';
+        }
+        return;
+      }
       const day=String(f.kickoff||'').slice(0,10);
       const key=`${teamKey(f.home)}|${teamKey(f.away)}|${day}`;
       if(have.has(key))return;

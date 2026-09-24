@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0923Q",
+  "tag": "Fix",
+  "title": "Real kickoff times on the Games board",
+  "items": [
+   "This week's college football games now show their announced kickoff times. The schedule feed hasn't updated since times were set, so the board now takes each game's time from the model engine's fresher schedule.",
+   "\"Time TBA\" now only appears on games where no time has been announced anywhere."
+  ]
+ },
+ {
   "date": "Build 0923P",
   "tag": "Feature",
   "title": "Games grouped by day",
