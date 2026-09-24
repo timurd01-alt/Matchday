@@ -3545,3 +3545,17 @@ body{font-variant-numeric:tabular-nums}
 .rsDivStop{text-align:right;color:var(--muted);font-size:var(--fs-xs)}
 @media(max-width:699px){.rsDivHead,.rsDivRow{grid-template-columns:minmax(0,1fr) 90px 56px;gap:8px}.rsDivHead span:nth-child(2),.rsDivStop{display:none}.rsDivRow .rsDivTrack{grid-column:2}}
 @media(max-width:900px){.rsFeatured .rsSplit{grid-template-columns:1fr;gap:16px}}
+/* How it played: finished-game efficiency, head to head. */
+.hipHead{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:16px;margin:14px 0 10px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.hipTeam{display:flex;align-items:center;gap:10px;font-weight:var(--fw-bold);font-size:var(--fs-lg);min-width:0}.hipTeam.a{flex-direction:row-reverse;text-align:right}
+.hipTeam span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hipTeam .teamMark{width:32px;height:32px;flex:0 0 32px;overflow:hidden}.hipTeam .teamMark img{width:80%;height:80%;object-fit:contain}
+.hipScore{font-size:var(--fs-2xl);font-weight:var(--fw-heavy)}
+.hipRow{display:grid;grid-template-columns:72px minmax(0,1fr) 72px;align-items:center;gap:14px;padding:9px 0;border-bottom:1px solid var(--line)}
+.hipRow>b{font-size:var(--fs-lg);font-weight:var(--fw-semibold);color:var(--muted)}.hipRow>b:last-child{text-align:right}.hipRow>b.hipLead{color:var(--text)}
+.hipMid{display:grid;gap:6px}.hipMid>span{text-align:center;font-size:var(--fs-2xs);letter-spacing:.1em;text-transform:uppercase;color:var(--faint);font-weight:var(--fw-bold)}
+.hipBar{display:flex;gap:3px;height:8px}.hipBar em{display:block;height:100%;background:var(--line2)}
+.hipBar em.h{border-radius:999px 0 0 999px}.hipBar em.a{border-radius:0 999px 999px 0}.hipBar em.lead{background:var(--signal)}
+.hipVerdict{margin:14px 0 0;font-size:var(--fs-base);font-weight:var(--fw-semibold)}
+.rsStopList ol{list-style:none;margin:6px 0 0;padding:0}.rsStopList li{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:5px 0;font-size:var(--fs-sm)}
+.rsStopList li+li{border-top:1px solid var(--line)}.rsStopList dd{display:block!important}

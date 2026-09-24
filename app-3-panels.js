@@ -1601,6 +1601,58 @@ function betbetterReadFor(m){
   if(m.betbetter_pick)candidates.push(m.betbetter_pick);
   return candidates.sort((a,b)=>(Date.parse(b.generated_at||'')||0)-(Date.parse(a.generated_at||'')||0))[0]||null;
 }
+/* How it played. A finished game has no live read to show, so the space goes
+   to what happened: each team's plays, expected points per play and success
+   rate from the engine's own play-by-play (result.play_metrics), and whether
+   the scoreboard winner also won on efficiency. Nothing here is a forecast. */
+function playedResultFor(m){
+  const list=(typeof MATCHDAY_BETBETTER_RESULTS!=='undefined')?MATCHDAY_BETBETTER_RESULTS:[];
+  const day=String(m?.kickoff||'').slice(0,10);if(!day||!list.length)return null;
+  const days=[day,_bbShiftDay(day,-1),_bbShiftDay(day,1)];
+  const home=m.home?.name||m.home,away=m.away?.name||m.away;
+  const r=list.find(x=>x.play_metrics&&days.includes(String(x.played_on||x.kickoff||'').slice(0,10))
+    &&((bbNameMatches(x.home,home)&&bbNameMatches(x.away,away))||(bbNameMatches(x.home,away)&&bbNameMatches(x.away,home))));
+  if(!r)return null;
+  // Orient to the card: the card's home team is always the left side.
+  const flipped=!bbNameMatches(r.home,home);
+  const pm=r.play_metrics;
+  return {home:{name:home,score:Number(flipped?r.away_score:r.home_score),...(flipped?pm.away:pm.home)},
+          away:{name:away,score:Number(flipped?r.home_score:r.away_score),...(flipped?pm.home:pm.away)}};
+}
+function howItPlayedPanel(m){
+  if(String(m?.status||'').toUpperCase()!=='FINISHED')return '';
+  const g=playedResultFor(m);if(!g)return '';
+  const H=g.home,A=g.away,short=n=>typeof rsShortName==='function'?rsShortName(n):n;
+  const sgn=(v,d)=>{const n=Number(v);if(!Number.isFinite(n))return '—';const r=Number(n.toFixed(d));return r===0?(0).toFixed(d):(r>0?'+':'−')+Math.abs(r).toFixed(d)};
+  // One row per measure: both values, and a split bar showing each side's
+  // share. EPA can be negative, so its bar compares the two values on a
+  // shared scale centred between them rather than as a share of a total.
+  const row=(label,h,a,fmt,kind)=>{
+    let hs=50;
+    if(kind==='share'){const t=Math.abs(h)+Math.abs(a);hs=t?Math.abs(h)/t*100:50}
+    else{const span=Math.max(0.2,Math.abs(h-a)*2);hs=Math.max(8,Math.min(92,50+(h-a)/span*50))}
+    const hw=h>a,aw=a>h;
+    return `<div class="hipRow"><b class="${hw?'hipLead':''}">${fmt(h)}</b>`
+      +`<div class="hipMid"><span>${label}</span><i class="hipBar"><em class="h${hw?' lead':''}" style="width:${hs.toFixed(1)}%"></em><em class="a${aw?' lead':''}" style="width:${(100-hs).toFixed(1)}%"></em></i></div>`
+      +`<b class="${aw?'hipLead':''}">${fmt(a)}</b></div>`;
+  };
+  const effH=Number(H.epa_per_play),effA=Number(A.epa_per_play);
+  const scoreWinner=H.score>A.score?H:A.score>H.score?A:null;
+  const effWinner=effH>effA?H:effA>effH?A:null;
+  const gap=Math.abs(effH-effA);
+  const verdict=!effWinner?'Dead level on efficiency.'
+    :scoreWinner&&scoreWinner!==effWinner
+      ?`${esc(short(scoreWinner.name))} won on the scoreboard, but ${esc(short(effWinner.name))} was more efficient by ${gap.toFixed(2)} EPA per play.`
+      :`${esc(short(effWinner.name))} won the efficiency battle by ${gap.toFixed(2)} EPA per play${scoreWinner?' and the game':''}.`;
+  const team=(t,side)=>`<div class="hipTeam ${side}">${typeof teamMark==='function'?teamMark(t.name):''}<span>${esc(short(t.name))}</span></div>`;
+  return `<section class="analystPanel hipPanel"><div class="analystTop"><div class="analystTitle">How it played</div><div class="analystBadge">final</div></div>`
+    +`<div class="hipHead">${team(H,'h')}<span class="hipScore">${H.score}–${A.score}</span>${team(A,'a')}</div>`
+    +row('EPA per play',effH,effA,v=>sgn(v,2),'diff')
+    +row('Success rate',Number(H.success_rate),Number(A.success_rate),v=>Number.isFinite(v)?Math.round(v*100)+'%':'—','share')
+    +row('Total EPA',Number(H.epa_total),Number(A.epa_total),v=>sgn(v,1),'diff')
+    +row('Plays',Number(H.plays),Number(A.plays),v=>Number.isFinite(v)?String(v):'—','share')
+    +`<p class="hipVerdict">${verdict}</p></section>`;
+}
 function betbetterNoReadPanel(){
   return `<section class="analystPanel"><div class="analystTop"><div class="analystTitle">Model read</div>`
     +`<div class="analystBadge">not modeled</div></div>`
@@ -1636,7 +1688,7 @@ function matchupEvidence(label,note,html,open=false){
 function details(m){
   if(isForecastPaused(m))return `<div class="detailGrid v4Detail">${forecastPauseHTML(m)}<div class="detailTop">${betbetterMatchupPanel(m)}<div class="readCard forecastMarketCard">${marketPanel(m)}</div></div><div class="detailLow">${rosterPanel(m)}</div></div>`;
   const bb=betbetterReadFor(m);
-  const read=bb?betbetterModelRead(m,bb):betbetterNoReadPanel();
+  const read=bb?betbetterModelRead(m,bb):(howItPlayedPanel(m)||betbetterNoReadPanel());
   const comparison=betbetterMatchupPanel(m)||matchProfilePanel(m);
   return `<div class="detailGrid v4Detail modernExpandedView"><div class="expandedSectionHead"><div><span>Matchday analysis</span><b>Pick &amp; matchup</b></div></div><div class="expandedDecision"><div class="readCard modelReadCard">${read}</div></div><div class="matchEvidenceList">${matchupEvidence('Team comparison','rating, offence, defence and schedule',comparison,true)}${matchupEvidence('Market','price and model gap',`<div class="readCard forecastMarketCard">${marketPanel(m)}</div>`)}${matchupEvidence('More detail','season profile and roster',`<div class="detailLow">${matchProfilePanel(m)}${rosterPanel(m)}<!-- matchday-advanced-profile --></div>`)}</div></div>`;
 }

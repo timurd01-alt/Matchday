@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0924Z",
+  "tag": "Feature",
+  "title": "How it played",
+  "items": [
+   "Finished games' expanded view now shows How it played in place of the empty model read: each team's EPA per play, success rate, total EPA and plays, head to head, from Matchday's own play-by-play.",
+   "A one-line verdict says who won the efficiency battle, and flags games where the scoreboard winner was out-played on efficiency.",
+   "Research: the How to read it notes are gone, and the defense notes list the eight highest stop rates."
+  ]
+ },
+ {
   "date": "Build 0924Y",
   "tag": "Feature",
   "title": "Efficiency and defense research",

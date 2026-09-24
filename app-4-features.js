@@ -283,7 +283,8 @@ function _v4UpsetRows(){
 // real expanded view does, so a render error cannot resurrect the other model.
 function simpleMatchFallbackPanel(m){
   const bb=typeof betbetterReadFor==='function'?betbetterReadFor(m):null;
-  const read=bb?betbetterModelRead(m,bb):betbetterNoReadPanel();
+  const played=typeof howItPlayedPanel==='function'?howItPlayedPanel(m):'';
+  const read=bb?betbetterModelRead(m,bb):(played||betbetterNoReadPanel());
   return `<div class="detailGrid v8Fallback"><div class="readCard modelReadCard">${read}</div><div class="readCard">${marketPanel(m)}</div>${rosterPanel(m)}</div>`;
 }
 

@@ -1456,7 +1456,6 @@ function rsEfficiencyNotes(){
   const q=[['tr','Efficient and nets a lot'],['tl','Scores in bursts, stalls between'],['br','Moves the chains, rarely breaks one'],['bl','Neither']];
   return `<section class="rsBlock rsSpan4">${rsTop('Reading the chart','season')}<dl class="rsNotes">`
     +q.map(([k,label])=>{const p=D.pick[k];return `<div><dt>${label}</dt><dd><b class="rsLogoName">${p.team?(typeof teamMark==='function'?teamMark(p.team.name):'')+esc(rsShortName(p.team.name)):'—'}</b><span>${p.n} teams${p.team?` · ${(p.team.x*100).toFixed(1)}% success · ${rsSigned(p.team.y,2)} net per success`:''}</span></dd></div>`}).join('')
-    +`<div><dt>How to read it</dt><dd><span>Right is how often a snap succeeds. Up is net expected points per successful snap, with failed snaps still counted.</span></dd></div>`
     +`</dl></section>`;
 }
 /* Defence against a real zero. Expected points allowed per play has a true
@@ -1496,8 +1495,7 @@ function rsDefenceNotes(){
     +`<div><dt>Left of zero</dt><dd><b class="rsSignal">${D.below} of ${D.rows.length}</b><span>defenses hold the average snap to a loss · median ${rsSigned(med,3)}</span></dd></div>`
     +item('Wins by frequency',freq,`${rsSigned(freq.v,3)} EPA · stops ${Math.round(freq.stop*100)}% of snaps`)
     +item('Wins by limiting damage',limit,`${rsSigned(limit.v,3)} EPA · stops ${Math.round(limit.stop*100)}% of snaps`)
-    +(()=>{const top=D.rows.slice().sort((x,y)=>y.stop-x.stop)[0],worst=D.worst[0];return item('Highest stop rate',top,`stops ${Math.round(top.stop*100)}% of snaps · ${rsSigned(top.v,3)} EPA`)+item('Most allowed per snap',worst,`${rsSigned(worst.v,3)} EPA · stops ${Math.round(worst.stop*100)}% of snaps`)})()
-    +`<div><dt>How to read it</dt><dd><span>The bar is how much a defense gives up per snap. Stop rate is how often it wins the down — a different question.</span></dd></div>`
+    +`<div class="rsStopList"><dt>Highest stop rates</dt><dd><ol>${D.rows.slice().sort((x,y)=>y.stop-x.stop).slice(0,8).map(t=>`<li><span class="rsLogoName">${typeof teamMark==='function'?teamMark(t.name):''}${esc(rsShortName(t.name))}</span><b>${Math.round(t.stop*100)}%</b></li>`).join('')}</ol></dd></div>`
     +`</dl></section>`;
 }
 function rsPart(num,label,body){
