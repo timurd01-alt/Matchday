@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0923T",
+  "tag": "Design",
+  "title": "A tighter Welcome page",
+  "items": [
+   "The Welcome page hero is now just the title, one line about Matchday and the Enter button.",
+   "Less space between sections, so the How it works steps sit closer to the hero and the whole top of the page fits on one screen."
+  ]
+ },
+ {
   "date": "Build 0923S",
   "tag": "Fix",
   "title": "The college football schedule updates again",

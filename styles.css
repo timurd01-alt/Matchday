@@ -3016,3 +3016,14 @@ body.welcomeOpen{height:auto;min-height:100vh;overflow-y:auto}
 }
 @media(prefers-reduced-motion:reduce){#welcomeGate .wx-social{transition:none}}
 #welcomeGate .wx-foot .wx-socials{display:flex;gap:8px;justify-content:center}
+
+/* ---- welcome gate: tighter rhythm ------------------------------------------
+   The hero is a title, one line and the button; How it works sits closer to
+   it and its steps closer to their heading. Still on the 8px scale. */
+#welcomeGate .wx-hero{padding:80px 0 56px}
+#welcomeGate .wx-hero h1{margin-top:0}
+#welcomeGate .wx-hero .wx-lead{max-width:56ch}
+#welcomeGate .wx-section{padding:48px 0}
+#welcomeGate .wx-grid{margin-top:32px}
+#welcomeGate .wx-grid:not(.wx-grid4){gap:24px}
+@media(max-width:760px){#welcomeGate .wx-hero{padding:48px 0 40px}#welcomeGate .wx-section{padding:40px 0}#welcomeGate .wx-grid{margin-top:24px}}
