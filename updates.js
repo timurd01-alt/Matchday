@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0924S",
+  "tag": "Feature",
+  "title": "Non-conference and overall records in conference standings",
+  "items": [
+   "Football conference tables now show Non-con and Overall records beside the conference record."
+  ]
+ },
+ {
   "date": "Build 0924R",
   "tag": "Design",
   "title": "Livelier Scorecard, tidier Research",
