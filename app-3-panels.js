@@ -629,6 +629,12 @@ function _scHead(label,hint,aside){
 function _scStat(value,label,sub){
   return `<div class="scStat"><b>${value}</b><span>${label}</span>${sub?`<small>${sub}</small>`:''}</div>`;
 }
+/* Scorecard layout, on the same grid and panels as Research: numbered parts,
+   titled panels sized by what they hold, and long lists behind View all.
+   Every panel here is graded, so each carries the Graded label. */
+function _scCompare(items){
+  return `<div class="rsCompare">${items.map(([k,v,sub])=>`<div><span class="rsKicker">${k}</span><b>${v}</b>${sub?`<span>${sub}</span>`:''}</div>`).join('')}</div>`;
+}
 function _scBands(bands){
   if(!bands||!bands.length)return '';
   const n=bands.reduce((a,b)=>a+(Number(b.picks)||0),0);
@@ -640,25 +646,23 @@ function _scBands(bands){
     return `<div class="scCalRow"><span class="scCalBand">${esc(b.band||'')}</span>`
       +`<span class="scCalTrack" aria-hidden="true">${ok?`<i class="scCalFill" style="width:${pos(hit)}%"></i><i class="scCalExp" style="left:${pos(exp)}%"></i>`:''}</span>`
       +`<span class="scCalNums"><b>${ok?Math.round(hit)+'%':'—'}</b> / ${ok?Math.round(exp)+'%':'—'}</span>`
-      +`<span class="scCalGap">${_scGap(b.calibration_gap_points,'')}</span>`
-      +`<span class="scCalN">${esc(b.picks??'—')}</span></div>`;
+      +`<span class="scCalGap">${_scGap(b.calibration_gap_points,'')}</span></div>`;
   }).join('');
-  return `<section class="scBlock">${_scHead('Calibration','Does a 70% pick win about 70% of the time?',`${n} picks`)}`
+  return `<section class="rsBlock rsSpan5">${rsTop('Calibration','graded',`${n} picks`)}`
     +`<div class="scCalKey"><span><i class="scCalFill"></i>Hit rate</span><span><i class="scCalExp"></i>Expected</span></div>`
-    +`<div class="scCal">${rows}</div></section>`;
+    +`<div class="scCal">${rows}</div>`
+    +`<p class="rsFine">Does a 70% pick win about 70% of the time? A gap either way is miscalibration.</p></section>`;
 }
-/* The engine publishes a calibration block for picks that agreed with the
-   market and one for picks that disagreed. Disagreeing is the only place the
-   model makes a claim of its own. The lift stat never renders without the
-   record it earned taking that side: showing it alone would claim an edge the
-   results do not support. */
+/* Picks that agreed with the market and picks that disagreed. The lift stat
+   never renders without the record it earned taking that side: showing it
+   alone would claim an edge the results do not support. */
 function _scMarket(vm,c){
   const d=c&&c.available!==false?c.outright_disagreements:null;
   const lift=c?.underdog_lift_points;
   const stats=(d&&d.picks&&lift!=null)
-    ? `<div class="scStats">${_scStat(`${lift>0?'+':''}${esc(lift)} pts`,'Underdog lean',`${esc(c.contested_underdogs??'—')} selections`)}`
-      +_scStat(`${esc(c.mean_divergence_points??'—')} pts`,'Avg. price gap','every graded card')
-      +_scStat(`${esc(d.wins)}–${esc(d.losses)}`,'Model underdogs','record vs market')+`</div>`
+    ? _scCompare([['Underdog lean',`${lift>0?'+':''}${esc(lift)} pts`,`${esc(c.contested_underdogs??'—')} selections`],
+        ['Avg. price gap',`${esc(c.mean_divergence_points??'—')} pts`,'every graded card'],
+        ['Model underdogs',`${esc(d.wins)}–${esc(d.losses)}`,'record vs market']])
     : '';
   const pairs=[['Agreed',vm?.agreed_with_market],['Disagreed',vm?.disagreed_with_market]]
     .filter(([,b])=>b&&Number.isFinite(Number(b.hit_rate_pct)));
@@ -671,11 +675,13 @@ function _scMarket(vm,c){
       +`<td>${_scPct(b.expected_hit_rate_pct)}</td><td>${_scGap(b.calibration_gap_points,'')}</td></tr>`;
   }).join('');
   const share=Number(vm?.disagreement_share_pct);
-  return `<section class="scBlock">${_scHead('Against the market','Where Matchday differs from the locked market price.')}`
-    +stats
-    +(rows?`<div class="scTableWrap"><table class="scTable"><thead><tr><th>vs market</th><th>Picks</th><th>Record</th><th>Hit</th><th>Expected</th><th>Gap</th></tr></thead><tbody>${rows}</tbody></table></div>`:'')
-    +`<p class="scFoot">${Number.isFinite(share)?`Different side on ${share.toFixed(1)}% of priced picks. `:''}`
-    +`${stats?'Seeing an underrated team and beating the price are not the same thing — so far only the first holds.':''}</p></section>`;
+  return `<section class="rsBlock rsSpan12">${rsTop('Against the market','graded')}`
+    +`<div class="rsSplit"><div class="rsSplitMain">${stats}`
+    +`<p class="rsFeatRead">${Number.isFinite(share)?`Matchday took a different side from the market on ${share.toFixed(1)}% of priced picks. `:''}`
+    +`${stats?'Seeing an underrated team and beating the price are not the same thing — so far only the first holds.':''}</p></div>`
+    +(rows?`<div class="rsSplitSide"><div class="scTableWrap"><table class="scTable"><thead><tr><th>vs market</th><th>Picks</th><th>Record</th><th>Hit</th><th>Expected</th><th>Gap</th></tr></thead><tbody>${rows}</tbody></table></div>`
+      +`<p class="rsFine">Hover a hit rate for its 95% interval.</p></div>`:'')
+    +`</div></section>`;
 }
 function _scTeamLine(name,score,won,prefix){
   const short=typeof rsShortName==='function'?rsShortName(name):name;
@@ -685,8 +691,9 @@ function _scTeamLine(name,score,won,prefix){
 function _scRecent(rows){
   const graded=(rows||[]).filter(r=>['win','loss'].includes(String(r.result||'').toLowerCase()));
   if(!graded.length)return '';
-  return `<section class="scBlock">${_scHead('Recent results','','Newest first')}<div class="scGames">`
-    +graded.slice(0,10).map(r=>{
+  const list=graded.slice(0,10);
+  return `<section class="rsBlock rsSpan7 rsExpandable">${rsTop('Recent results','graded','Newest first')}<ul class="scGames">`
+    +list.map((r,i)=>{
       const won=String(r.result||'').toLowerCase()==='win';
       const p=Number(r.probability_pct);
       const [away,home]=String(r.event_name||'').split(' at ');
@@ -696,10 +703,11 @@ function _scRecent(rows){
       const teams=home
         ? _scTeamLine(away,as,an>hn)+_scTeamLine(home,hs,hn>an,'at')
         : `<div class="scTeam"><span>${esc(r.event_name||'')}</span><b>${esc(r.score||'')}</b></div>`;
-      return `<article class="scGame ${won?'hit':'miss'}">${teams}`
+      return `<li class="scGame ${won?'hit':'miss'}${i>=4?' rsExtra':''}">${teams}`
         +`<div class="scGamePick"><span>Pick · ${esc(typeof rsShortName==='function'?rsShortName(r.selection):(r.selection||''))}${Number.isFinite(p)?` ${modelPctLabel(p)}`:''}</span>`
-        +`<b>${won?'✓ Won':'✗ Lost'}</b></div></article>`;
-    }).join('')+`</div></section>`;
+        +`<b>${won?'✓ Won':'✗ Lost'}</b></div></li>`;
+    }).join('')+`</ul>`
+    +(list.length>4?rsMoreBtn(list.length,'View all','Recent results'):'')+`</section>`;
 }
 function renderScore(){
   const host=$('#view-score'),sc=betbetterScorecard();
@@ -736,26 +744,25 @@ function renderScore(){
     ? `<div class="banner" style="margin-bottom:14px"><b>Not yet a reportable record.</b> `
       +`Fewer than ${esc(sc.minimum_picks_to_read??'the minimum')} graded picks, so the rate below is not a measurement yet.</div>`
     : '';
-  const hero=`<section class="scHero"><div class="scHeroTop"><div class="scHeroMain">`
-    +`<div class="seclbl">Model record</div>`
-    +`<strong class="scBig">${esc(rec.wins??'—')}–${esc(rec.losses??'—')}</strong>`
-    +`<span class="scSub">${esc(rec.picks??'—')} graded picks</span></div>`
-    +`<div class="scHeroSide"><div class="scRate"><b>${_scPct(rec.hit_rate_pct)}</b><span>Hit rate</span></div>`
-    +`<dl class="scCtx"><div><dt>Expected</dt><dd>${_scPct(rec.expected_hit_rate_pct)}</dd></div>`
+  const record=`<section class="rsBlock rsSpan7">${rsTop('Model record','graded',`${esc(rec.picks??'—')} graded picks`)}`
+    +`<div class="scLead"><div><strong class="scBig">${esc(rec.wins??'—')}–${esc(rec.losses??'—')}</strong><span class="rsKicker">Wins–losses</span></div>`
+    +`<div><strong class="scBig">${_scPct(rec.hit_rate_pct)}</strong><span class="rsKicker">Hit rate</span></div></div>`
+    +`<dl class="rsSummary scLeadCtx"><div><dt>Expected</dt><dd>${_scPct(rec.expected_hit_rate_pct)}</dd></div>`
     +`<div><dt>vs expected</dt><dd>${_scGap(rec.calibration_gap_points)}</dd></div>`
-    +(ci?`<div><dt>95% CI</dt><dd>${_scNum(ci[0])}–${_scNum(ci[1])}%</dd></div>`:'')+`</dl></div></div>`
-    +`<div class="scPrice"><div class="seclbl">Against the price</div><div class="scStats">`
-    +_scStat(_scPct(vm.beat_market_pct),'Actual')
-    +_scStat(bm?_scPct(bm.expected_hit_rate_pct):'50.0%','Expected')
-    +_scStat(bm?_scGap(bm.calibration_gap_points):'—','Difference')+`</div>`
-    +`<p class="scFoot">${bmCi?`95% CI ${_scNum(bmCi[0])}–${_scNum(bmCi[1])}%. `:''}`
-    +`${straddles?'Market and model are not yet separable on this sample.':'Above 50% the model is the better forecaster of the two; below it, the market is.'}</p></div></section>`;
+    +(ci?`<div><dt>95% CI</dt><dd>${_scNum(ci[0])}–${_scNum(ci[1])}%</dd></div>`:'')+`</dl></section>`;
+  const price=`<section class="rsBlock rsSpan5">${rsTop('Against the price','graded')}`
+    +_scCompare([['Actual',_scPct(vm.beat_market_pct)],['Expected',bm?_scPct(bm.expected_hit_rate_pct):'50.0%'],['Difference',bm?_scGap(bm.calibration_gap_points):'—']])
+    +`<p class="rsFeatRead">${straddles?'Matchday and the market are not yet separable on this sample.':'Above 50% the model is the better forecaster of the two; below it, the market is.'}</p>`
+    +(bmCi?`<p class="rsFine">95% CI ${_scNum(bmCi[0])}–${_scNum(bmCi[1])}%. A coin flip is 50%.</p>`:'')+`</section>`;
+  const grid=(...cells)=>{const c=cells.filter(Boolean);return c.length?`<div class="rsRow">${c.join('')}</div>`:''};
+  const part=typeof rsPart==='function'?rsPart:(n,l,b)=>b;
   host.innerHTML=`<div class="vhead">Scorecard</div>`
-    +`<div class="scIntro">${method}</div>`
-    +reportable+hero
-    +_scMarket(vm,sc.conviction)
-    +_scBands(sc.by_confidence)
-    +_scRecent(sc.recent);
+    +`<div class="scIntro">${method}</div>`+reportable
+    +`<section class="collegeResearch scorecardPage">`
+    +part('01','The record',grid(record,price))
+    +part('02','Against the market',grid(_scMarket(vm,sc.conviction)))
+    +part('03','Calibration and results',grid(_scBands(sc.by_confidence),_scRecent(sc.recent)))
+    +`</section>`;
 }
 function highlightFavoriteRows(){if(!favoriteTeam())return;document.querySelectorAll('.gtable .gteam').forEach(cell=>{if(teamKey(cell.dataset.team||cell.textContent).includes(teamKey(favoriteTeam())))cell.closest('tr')?.classList.add('favoriteTeamRow')})}
 /* Every page title carries a short, muted descriptor on its right instead of

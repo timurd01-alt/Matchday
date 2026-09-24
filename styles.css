@@ -3409,3 +3409,18 @@ body{font-variant-numeric:tabular-nums}
 .scRate b{font-size:var(--fs-hero);font-weight:var(--fw-heavy);letter-spacing:-.03em}
 .scHead .seclbl{display:flex;align-items:center;gap:6px}.scHelp{margin:0}
 .rsLegend2{margin-top:-4px}.rsLegend2+.rsPart{margin-top:14px}
+/* Scorecard on the Research grid. */
+.scorecardPage{margin-top:4px}.scorecardPage>.rsPart:first-child{margin-top:8px}
+.scLead{display:flex;flex-wrap:wrap;align-items:flex-end;gap:12px 56px;margin:14px 0 18px}
+.scLead>div{display:grid;gap:6px}
+.scLead .scBig{font-size:var(--fs-hero);font-weight:var(--fw-heavy);line-height:1;letter-spacing:-.03em}
+.scLeadCtx{margin-top:auto!important;padding-top:14px;border-top:1px solid var(--line)}
+.scorecardPage .rsCompare b .scGap{font-size:inherit;font-weight:inherit;color:inherit}
+.scorecardPage .rsSummary .scGap{font-size:inherit;font-weight:inherit;color:inherit}
+.scorecardPage .scCal{margin-top:4px}
+.scorecardPage .scCalRow{grid-template-columns:62px minmax(0,1fr) 78px 44px;gap:12px}
+.scorecardPage .scGames{list-style:none;margin:6px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 24px}
+.scorecardPage .scGame{padding:10px 0}
+.rsDialogBody .scGames{list-style:none;margin:0;padding:0;display:grid;gap:0}.rsDialogBody .scGame{padding:10px 0}
+.scorecardPage .rsSplitMain .rsCompare{margin-top:6px}
+@media(max-width:760px){.scorecardPage .scGames{grid-template-columns:1fr}}
