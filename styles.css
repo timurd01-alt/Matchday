@@ -3056,3 +3056,28 @@ body.welcomeOpen{height:auto;min-height:100vh;overflow-y:auto}
 #welcomeGate .wx-hero .welcomeEnter{min-height:56px;padding:0 32px;font-size:var(--fs-wx-sub);box-shadow:0 8px 32px rgba(58,209,122,.28)}
 #welcomeGate .wx-hero .welcomeEnter:hover{box-shadow:0 10px 40px rgba(58,209,122,.4)}
 @media(max-width:760px){#welcomeGate .wx-hero{padding:64px 0 48px}#welcomeGate .wx-hero .welcomeEnter{width:100%}}
+
+/* Quiet, decorative athletes frame the entrance without intercepting input. */
+#welcomeGate .wx-hero::after{content:"";position:absolute;z-index:-2;pointer-events:none;top:0;bottom:0;left:50%;transform:translateX(-50%);width:min(1500px,100vw);background:url("assets/welcome/college-athletes.webp") center top/cover no-repeat;opacity:.55;mask-image:linear-gradient(to bottom,transparent,black 12%,black 65%,transparent);}
+@media(max-width:760px){#welcomeGate .wx-hero::after{background-size:100% auto;opacity:.32}}
+
+/* News cards are one size. The grid used align-items:start, so every card was
+   as tall as its own copy and each row went ragged. Rows now share one height
+   (grid-auto-rows:1fr), headline and summary are clamped to three lines each
+   so one long story cannot stretch the whole grid, and the timestamp sits on
+   the bottom edge of every card. */
+.newsGrid{align-items:stretch;grid-auto-rows:1fr}
+.newsGrid .ncard{display:flex;flex-direction:column;height:100%}
+.newsGrid .ncard .nhead{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;line-clamp:3;overflow:hidden}
+.newsGrid .ncard .ndesc{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;line-clamp:3;overflow:hidden}
+.newsGrid .ncard .nmeta{margin-top:auto;padding-top:8px}
+
+/* News kinds: one colour per kind of story, from the app's existing tokens,
+   on the card's left rule and a small tag. The grid is grouped by kind. */
+.ncard{--nk:var(--signal)}
+.ncard.nk-injury{--nk:var(--loss)}
+.ncard.nk-preview{--nk:var(--home)}
+.ncard.nk-recruiting{--nk:var(--away)}
+.ncard.nk-offfield{--nk:var(--warn)}
+.ncard::before{background:var(--nk)}
+.newsKind{font-family:var(--mono);font-size:var(--fs-3xs);font-weight:var(--fw-bold);letter-spacing:.08em;text-transform:uppercase;color:var(--nk);border:1px solid color-mix(in srgb,var(--nk) 45%,transparent);background:color-mix(in srgb,var(--nk) 12%,transparent);border-radius:999px;padding:3px 7px}

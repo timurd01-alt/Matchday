@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0923W",
+  "tag": "Design",
+  "title": "Even, colour-coded news cards",
+  "items": [
+   "Every news card is now the same size. Headlines and summaries are capped at three lines and the time sits on the bottom edge.",
+   "Cards are colour-coded by kind of story and grouped that way: Injuries (red), Game preview (blue), Recruiting (purple), Off the field (amber), and other news (green)."
+  ]
+ },
+ {
   "date": "Build 0923V",
   "tag": "Design",
   "title": "A Welcome page that stands out",
