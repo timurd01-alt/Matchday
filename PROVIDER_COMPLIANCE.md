@@ -1,5 +1,14 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-09-23 (owner decision, later the same day: ESPN's **public
+knowledge is not off the books**. Schedule facts -- which teams play, the
+date, and the announced kickoff time -- are public facts like a final score,
+and Matchday may take them from ESPN. `schedule_fallback.py` now refreshes the
+kickoff time of fixtures already on Matchday's schedule from the public
+scoreboard while CFBD is dark, and the site takes the same facts from the Bet
+Better handoff's ESPN-sourced `fixtures`. Still excluded: statistics, odds,
+content, logos, images and raw payloads.)
+
 Reviewed: 2026-09-23 (ESPN sourcing rule rewritten: public facts only -- final
 scores, AP Top 25 rank/team, news headline+link -- never ESPN statistics or
 content. Bet Better's private play-by-play use recorded as an owner decision:
@@ -321,12 +330,13 @@ legal advice.
   | Final scores | home score, away score, finished status -- only for a fixture already on Matchday's own schedule whose kickoff has passed (`score_fallback.py`, and the Bet Better handoff's `results`) |
   | AP Top 25 | rank and team name only; the poll belongs to the AP, ESPN is only the carrier (`ap_poll.py`) |
   | College news | headline and link only, ESPN credited on every item (public RSS feeds) |
+  | Fixture schedule | teams, date, announced kickoff time -- public knowledge, allowed by the owner's 2026-09-23 decision; used to fix kickoff times on Matchday's own schedule (`schedule_fallback.py`) and to fill fixtures from the Bet Better handoff's `fixtures` |
 
   Everything else stays excluded from ESPN: statistics, box scores,
   play-by-play, odds (ESPN BET quotes are dropped in `provider_adapters.py`),
-  injuries, depth charts, schedules as a fixture source, team data, logos,
+  injuries, depth charts, team data, logos,
   images, video, article text, and any raw payload or bulk redistribution.
-  Statistics, schedules and ratings inputs come from CollegeFootballData
+  Statistics and ratings inputs, and the primary schedule, come from CollegeFootballData
   (CFBD) and CollegeBasketballData (CBBD), and market prices from The Odds
   API -- see the provider checks below. The raw ESPN response is never stored or published; only the
   fields in the table survive. Residual risk, taken knowingly: the scoreboard

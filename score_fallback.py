@@ -8,9 +8,10 @@ which is what kept failing the freshness alarm.
 This fills exactly one gap: a fixture already on Matchday's own schedule, past
 kickoff, with no final. It asks ESPN's public scoreboard for the final score of
 that game and nothing else. Scope is set by the owner's 2026-09-12 amendment in
-PROVIDER_COMPLIANCE.md: home score, away score and "finished" only; no schedule,
-odds, statistics, team data or raw payload is taken or stored, and the
-scoreboard never adds a fixture.
+PROVIDER_COMPLIANCE.md: home score, away score and "finished" only; no odds,
+statistics, team data or raw payload is taken or stored, and the scoreboard
+never adds a fixture. (Kickoff times, which the owner cleared as public facts
+on 2026-09-23, are handled separately in schedule_fallback.py.)
 
 A game is settled only when the scoreboard reports it completed, both team
 names match, and the kickoffs agree. Anything ambiguous is left unsettled: a

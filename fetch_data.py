@@ -4953,11 +4953,23 @@ def fetch_college_bundle():
             os.replace(tmp, cache_file)
         except ProviderError:
             # Preserve the last successful launch payload through a quota or provider outage.
-            if not os.path.exists(cache_file):
-                raise
-            with open(cache_file, encoding="utf-8") as handle:
-                bundle = json.load(handle)
-            DIAG.append(f"{provider_name}: stale cache after provider limit/error")
+            if os.path.exists(cache_file):
+                with open(cache_file, encoding="utf-8") as handle:
+                    bundle = json.load(handle)
+                DIAG.append(f"{provider_name}: stale cache after provider limit/error")
+            else:
+                # No bundle cache either: rebuild from the last published payload
+                # rather than raising, which froze data_ncaaf.json for ten days in
+                # September 2026 (see schedule_fallback.py).
+                import schedule_fallback
+                bundle = schedule_fallback.last_good_bundle(COMP_KEY) if COMP_KEY == "NCAAF" else None
+                if bundle is None:
+                    raise
+                DIAG.append(f"{provider_name}: provider unavailable and no bundle cache; "
+                            f"rebuilt from the last published payload "
+                            f"({len(bundle['matches'])} fixtures, {len(bundle.get('history') or [])} "
+                            f"engine results as history)")
+            bundle["_stale"] = True
     all_matches = bundle.get("matches") or []
     normalize_match_results(all_matches)
     # A cached bundle never learns a result, and CFBD's quota can be spent for
@@ -4972,9 +4984,20 @@ def fetch_college_bundle():
                         + (f"; {len(filled['errors'])} day(s) failed" if filled["errors"] else ""))
         except Exception as exc:
             DIAG.append(f"final-score fallback: skipped ({exc})")
+        # A stale schedule also keeps the kickoff times it had when it froze --
+        # often the placeholder used before a time is announced.
+        if bundle.get("_stale"):
+            try:
+                import schedule_fallback
+                moved = schedule_fallback.refresh_kickoffs(all_matches, COMP_KEY)
+                DIAG.append(f"kickoff-time fallback: updated {moved['updated']} of "
+                            f"{moved['candidates']} upcoming fixture(s) across {moved['days']} day(s)"
+                            + (f"; {len(moved['errors'])} day(s) failed" if moved["errors"] else ""))
+            except Exception as exc:
+                DIAG.append(f"kickoff-time fallback: skipped ({exc})")
     # Retain the complete licensed season only in memory for local aggregate
     # model training; the public dashboard still receives the bounded window.
-    adapter._model_history = all_matches
+    adapter._model_history = all_matches + list(bundle.get("history") or [])
     st = {norm(name): row for name, row in (bundle.get("standings_model") or {}).items()}
     tables = bundle.get("tables") or []
     adapter._cached_rankings = (bundle.get("rankings") or [], bundle.get("projection"))

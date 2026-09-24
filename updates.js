@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0923S",
+  "tag": "Fix",
+  "title": "The college football schedule updates again",
+  "items": [
+   "When CollegeFootballData's monthly allowance runs out, the hourly build now rebuilds the schedule from its last good copy instead of stopping. The college football data had not been rebuilt since September 13.",
+   "Kickoff times for the next nine days are checked against ESPN's public scoreboard, so Saturday games stop showing the \"time to be announced\" placeholder once a time is set.",
+   "Final scores keep settling from the same public scoreboard."
+  ]
+ },
+ {
   "date": "Build 0923R",
   "tag": "Feature",
   "title": "Matchday on Instagram",
