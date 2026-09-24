@@ -495,5 +495,25 @@ class CfpBracketFormatTests(unittest.TestCase):
         self.assertIn('"away_slot": "8/9"', snapshot)
 
 
+class TeamNameKeyTests(unittest.TestCase):
+    """An apostrophe must not split a school's name into two words."""
+
+    def test_the_key_deletes_apostrophes_rather_than_spacing_them(self):
+        core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
+        # ESPN files "Hawai'i Rainbow Warriors", the odds feed "Hawaii Rainbow
+        # Warriors". Spacing the apostrophe gives "hawai i", which matches the
+        # other spelling on no test at all, so Bet Better's card sat unattached
+        # and the fixture fell through to a preseason model with no games behind
+        # it. The record and ratings lookups missed for the same reason.
+        self.assertIn("""replace(/['\u2018\u2019\u02bb\u02bc]/g,'')""", core)
+
+    def test_the_record_lookup_falls_back_to_the_name_matcher(self):
+        panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
+        # A withheld team has no ranking row to borrow a record from, so an
+        # exact-key miss left a stale number: North Dakota State read 1-0 at
+        # 4-0. Every wrong record on the site was a withheld team.
+        self.assertIn("if(bbNameMatches(key,name)){r=value;break;}", panels)
+
+
 if __name__ == "__main__":
     unittest.main()

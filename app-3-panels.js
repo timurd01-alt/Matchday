@@ -406,8 +406,22 @@ function applyCurrentCfbSnapshot(payload){
         resultRecords.set(team,rec);
       });
     });
+  /* Exact key first, then the same prefix matcher the ratings use.
+     The fixture feed says "Sacramento State" while results are filed under
+     "Sacramento State Hornets", so an exact-key lookup misses. For a ranked
+     team that went unnoticed, because the ranking row carried a record to fall
+     back on. For a team the poll withholds -- one whose rating was earned
+     mostly against FCS opposition -- there is no ranking row, so the miss left
+     a stale number on the page: North Dakota State read 1-0 at 4-0, and
+     Sacramento State 0-1 at 1-3. Every wrong record on the site was a withheld
+     team, which is what gave the cause away. */
   const completedRecord=(name,minimum=0)=>{
-    const r=resultRecords.get(teamKey(name));
+    let r=resultRecords.get(teamKey(name));
+    if(!r){
+      for(const [key,value] of resultRecords){
+        if(bbNameMatches(key,name)){r=value;break;}
+      }
+    }
     return r&&r.pld>=minimum?{...r,gd:r.gf-r.ga,pts:r.w*3+r.d,form:r.form.slice(-5),record:`${r.w}-${r.l}`}:null;
   };
   payload.cfb_result_records=Object.fromEntries(
