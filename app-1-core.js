@@ -233,6 +233,17 @@ function kickIn(iso){try{const m=Math.round((new Date(iso)-Date.now())/60000);if
 const ODDS_WINDOW_HOURS=24; // mirrors fetch_data.py's PREGAME_ODDS_WINDOW_HOURS quota gate
 function oddsEtaLabel(m){try{const mins=(new Date(m.kickoff)-Date.now())/60000;if(mins>ODDS_WINDOW_HOURS*60)return `Market odds checked from ${ODDS_WINDOW_HOURS}h before kickoff`}catch(e){}return null}
 const STALE_MATCH_MINUTES=150;
+// A kickoff with no announced time. The college feed stores those as midnight
+// US Eastern on the game's date (04:00Z / 05:00Z), which rendered as "11:00 PM"
+// the night before in Central time and filed a Saturday game under Friday. An
+// explicit provider flag wins; otherwise exactly 00:00 Eastern is the marker.
+function kickoffTimeTbd(m){
+  if(m?.time_tbd===true)return true;if(m?.time_tbd===false)return false;
+  const t=Date.parse(m?.kickoff||'');if(!Number.isFinite(t))return false;
+  try{const p=new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).formatToParts(new Date(t));
+    return p.find(x=>x.type==='hour')?.value==='00'&&p.find(x=>x.type==='minute')?.value==='00'}catch(e){return false}
+}
+function easternDayKey(ms){try{return new Intl.DateTimeFormat('en-CA',{timeZone:'America/New_York',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date(ms))}catch(e){return boardDayKey(ms)}}
 function kickMs(m){const t=Date.parse(m?.kickoff||'');return Number.isFinite(t)?t:0}
 function isStaleUpcoming(m){const t=kickMs(m);return m?.status==='UPCOMING'&&t>0&&(Date.now()-t)>STALE_MATCH_MINUTES*60000}
 function isCompleteOrPast(m){return m?.status==='FINISHED'||isStaleUpcoming(m)}
@@ -395,7 +406,7 @@ function teamStandingsMeta(team,comp,opts){
   if(opts.form&&form)parts.push(form);
   return parts;
 }
-function scoreText(m){if(m.status==='LIVE')return'<span class="pendingScore" aria-label="Score shown after final">—</span>';const done=m.status==='FINISHED';if(isStaleUpcoming(m))return'<span class="kick">Past kickoff</span>';return done?`${m.score?.home??'-'}<span class="sep">–</span>${m.score?.away??'-'}${m.score?.pens?`<span class="pensTag">(${m.score.pens.home}-${m.score.pens.away} pens)</span>`:''}`:`<span class="kick">${dt(m.kickoff).split(', ').pop()||'TBD'}</span>`}
+function scoreText(m){if(m.status==='LIVE')return'<span class="pendingScore" aria-label="Score shown after final">—</span>';const done=m.status==='FINISHED';if(isStaleUpcoming(m))return'<span class="kick">Past kickoff</span>';return done?`${m.score?.home??'-'}<span class="sep">–</span>${m.score?.away??'-'}${m.score?.pens?`<span class="pensTag">(${m.score.pens.home}-${m.score.pens.away} pens)</span>`:''}`:`<span class="kick">${kickoffTimeTbd(m)?'Time TBA':(dt(m.kickoff).split(', ').pop()||'TBD')}</span>`}
 function scorePlainText(m){if(m?.status==='LIVE')return '—';if(isStaleUpcoming(m))return 'Past kickoff';if(m?.status==='FINISHED'){const pens=m.score?.pens?` (${m.score.pens.home}-${m.score.pens.away} pens)`:'';return `${m.score?.home??'-'}–${m.score?.away??'-'}${pens}`;}return dt(m?.kickoff).split(', ').pop()||'TBD';}
 function statNum(v){const m=String(v??'').match(/-?\d+(\.\d+)?/);return m?Number(m[0]):0}
 function pressure(stats,side){if(!stats)return 0;const s=stats[side]||{};return statNum(s.shots_on_target)*4+statNum(s.shots)*1.2+statNum(s.corners)*1.4+statNum(String(s.possession).replace('%',''))*.08-statNum(s.red_cards)*4}
@@ -837,22 +848,37 @@ function nearTermPool(matches,minCount){
 // A schedule can reach months ahead, and a game 62 days out looked exactly like
 // one tomorrow, leaving the whole board reading as stale. Group by horizon so a
 // quiet week is legible as a quiet week.
-const BOARD_HORIZONS=[
-  {key:'live',  label:'In play',        test:(m,now)=>m.status==='LIVE'},
-  {key:'today', label:'Today',          test:(m,now)=>kickMs(m)&&kickMs(m)<now+86400000},
-  {key:'week',  label:'This week',      test:(m,now)=>kickMs(m)&&kickMs(m)<now+7*86400000},
-  {key:'later', label:'Further ahead',  test:()=>true}
-];
+// One heading per calendar day, in the visitor's own time zone, after
+// anything in play. The old horizons ("Today", "This week", "Further ahead")
+// put Thursday night and Saturday noon under one label, so a week's slate read
+// as one long list. Order inside a day is the order handed in (favourites
+// pinned, then kickoff).
+function boardDayKey(ms){const d=new Date(ms);return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
+function boardDayLabel(key,now){
+  const [y,mo,d]=key.split('-').map(Number),day=new Date(y,mo-1,d);
+  const today=new Date(now);today.setHours(0,0,0,0);
+  const diff=Math.round((day-today)/86400000);
+  const date=day.toLocaleDateString(undefined,{month:'short',day:'numeric'});
+  const weekday=day.toLocaleDateString(undefined,{weekday:'long'});
+  if(diff===0)return `Today · ${weekday}, ${date}`;
+  if(diff===1)return `Tomorrow · ${weekday}, ${date}`;
+  return `${weekday} · ${date}`;
+}
 function groupedBoardHTML(list){
   const now=Date.now(),buckets=new Map();
   list.forEach(m=>{
-    const h=BOARD_HORIZONS.find(x=>x.test(m,now))||BOARD_HORIZONS[BOARD_HORIZONS.length-1];
-    if(!buckets.has(h.key))buckets.set(h.key,[]);
-    buckets.get(h.key).push(m);
+    const ms=kickMs(m);
+    // An unannounced kickoff belongs to its Eastern calendar date, and sits
+    // after that day's timed games.
+    const key=m.status==='LIVE'?'0-live':(ms?'1-'+(kickoffTimeTbd(m)?easternDayKey(ms):boardDayKey(ms)):'2-tbd');
+    if(!buckets.has(key))buckets.set(key,[]);
+    buckets.get(key).push(m);
   });
-  return BOARD_HORIZONS.filter(h=>buckets.get(h.key)?.length).map(h=>{
-    const games=buckets.get(h.key);
-    return `<div class="boardHorizon"><span>${esc(h.label)}</span><i>${games.length} ${games.length===1?'game':'games'}</i></div>`+games.map(cardHTML).join('');
+  buckets.forEach(games=>games.sort((a,b)=>Number(kickoffTimeTbd(a))-Number(kickoffTimeTbd(b))));
+  return [...buckets.keys()].sort().map(key=>{
+    const games=buckets.get(key);
+    const label=key==='0-live'?'In play':key==='2-tbd'?'Date to be announced':boardDayLabel(key.slice(2),now);
+    return `<div class="boardHorizon"><span>${esc(label)}</span><i>${games.length} ${games.length===1?'game':'games'}</i></div>`+games.map(cardHTML).join('');
   }).join('');
 }
 
