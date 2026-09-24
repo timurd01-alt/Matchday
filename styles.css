@@ -3052,35 +3052,34 @@ body.welcomeOpen{height:auto;min-height:100vh;overflow-y:auto}
 
 /* A single, connected CFP diagram scales as a whole; it never becomes a scroller. */
 .cfpShell{--cfp-gold:#d6bd80;--cfp-line:#ad9563;padding:8px 0 16px}
-.cfpHero{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:12px 0 8px}
-.cfpEyebrow{font:var(--fw-semibold) var(--fs-2xs) var(--mono);letter-spacing:.15em;text-transform:uppercase;color:var(--cfp-gold)}
+.cfpHero{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:12px 0 16px}
+.cfpEyebrow{font:var(--fw-semibold) var(--fs-2xs) var(--mono);letter-spacing:.15em;text-transform:uppercase;color:var(--signal)}
 .cfpHero h2{font:var(--fw-heavy) var(--fs-title)/1.1 var(--display);letter-spacing:-.035em;margin:8px 0 0}
-.cfpBadge{flex-shrink:0;font:var(--fw-semibold) var(--fs-2xs) var(--mono);color:var(--cfp-gold);padding:8px 11px;border:1px solid #766643;border-radius:5px;background:rgba(214,189,128,.05)}
-.cfpIntro{font-size:var(--fs-sm);line-height:1.6;color:var(--muted);margin:4px 0 14px}
-.cfpCanvas{border:1px solid var(--line);border-radius:12px;background:linear-gradient(145deg,#10171b,#0c1115 60%,#141813);width:100%}
+.cfpBadge{flex-shrink:0;font:var(--fw-semibold) var(--fs-2xs) var(--mono);color:var(--signal);padding:8px 11px;border:1px solid var(--line2);border-radius:5px;background:var(--bg2)}
+.cfpCanvas{border:1px solid var(--line2);border-radius:var(--r);background:var(--panel);width:100%}
 .cfpDiagram{display:block;width:100%;height:auto;max-height:max(160px,calc(100dvh - 260px));overflow:visible}
-.cfpColumnLabel{font:var(--fw-semibold) var(--fs-sm) var(--mono);letter-spacing:1.2px;fill:#aab8bf}
+.cfpColumnLabel{font:var(--fw-semibold) var(--fs-sm) var(--mono);letter-spacing:1.2px;fill:var(--muted)}
 .cfpConnector{fill:none;stroke:var(--cfp-line);stroke-width:2.5;stroke-linejoin:round}
-.cfpCardSurface{fill:#182128;stroke:#526066;stroke-width:1}
-.cfpSvgFinal .cfpCardSurface{fill:#22271f;stroke:var(--cfp-gold);stroke-width:2}
-.cfpCardDivider{stroke:#344148;stroke-width:1}
-.cfpSvgMeta{fill:#b7c3c9;font:var(--fw-semibold) var(--fs-2xs) var(--mono);letter-spacing:.7px}
+.cfpCardSurface{fill:var(--bg2);stroke:var(--line2);stroke-width:1}
+.cfpSvgFinal .cfpCardSurface{fill:var(--bg2);stroke:var(--cfp-gold);stroke-width:2}
+.cfpCardDivider{stroke:var(--line);stroke-width:1}
+.cfpSvgMeta{fill:var(--muted);font:var(--fw-semibold) var(--fs-2xs) var(--mono);letter-spacing:.7px}
 .cfpSvgBye{fill:var(--cfp-gold);font:var(--fw-medium) var(--fs-3xs) var(--mono)}
 .cfpSvgSeed{fill:var(--cfp-gold);font:var(--fw-bold) var(--fs-base) var(--mono)}
 .cfpLogoTile{fill:#e4eae5}
-.cfpSvgName{fill:#edf3f5;font:var(--fw-bold) var(--fs-base) var(--display)}
-.cfpSvgPath .cfpSvgName{fill:#bac5ca;font-weight:var(--fw-medium);font-size:var(--fs-sm)}
-.cfpSvgSlot{fill:#91a3ac;font:var(--fs-xl) var(--mono)}
-.cfpSvgScore{fill:#f4f8f6;font:var(--fw-bold) var(--fs-base) var(--mono)}
+.cfpSvgName{fill:var(--text);font:var(--fw-bold) var(--fs-base) var(--display)}
+.cfpSvgPath .cfpSvgName{fill:var(--muted);font-weight:var(--fw-medium);font-size:var(--fs-sm)}
+.cfpSvgSlot{fill:var(--muted);font:var(--fs-xl) var(--mono)}
+.cfpSvgScore{fill:var(--text);font:var(--fw-bold) var(--fs-base) var(--mono)}
 .cfpMonogram{fill:#182128;font:var(--fw-bold) var(--fs-xs) var(--display)}
 .cfpWinFill{fill:#234333}
 .cfpTrophy{fill:none;stroke:var(--cfp-gold);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
 .cfpChampLabel{fill:var(--cfp-gold);font:var(--fw-bold) var(--fs-xs) var(--mono);letter-spacing:1.5px}
-.cfpCenterNote{fill:var(--cfp-gold);font:var(--fw-semibold) var(--fs-2xs) var(--mono);letter-spacing:1.5px}
-.cfpCenterSub{fill:#aab8bf;font:var(--fs-sm) var(--display)}
+.cfpCenterNote{fill:var(--muted);font:var(--fw-semibold) var(--fs-2xs) var(--mono);letter-spacing:1.5px}
+.cfpCenterSub{fill:var(--muted);font:var(--fs-sm) var(--display)}
 .cfpFoot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px 20px;padding-top:12px;color:var(--muted);font-size:var(--fs-xs)}
 .cfpFoot i{display:inline-block;width:20px;height:2px;background:var(--cfp-line);vertical-align:middle;margin-right:7px}
-@media(max-width:600px){.cfpHero{gap:8px}.cfpHero h2{font-size:var(--fs-2xl)}.cfpEyebrow{font-size:var(--fs-3xs)}.cfpBadge{font-size:var(--fs-3xs);padding:6px}.cfpIntro,.cfpFoot{font-size:var(--fs-2xs)}.cfpCanvas{border-radius:6px}.cfpFoot{gap:6px}.cfpColumnLabel{letter-spacing:0}}
+@media(max-width:600px){.cfpHero{gap:8px}.cfpHero h2{font-size:var(--fs-2xl)}.cfpEyebrow{font-size:var(--fs-3xs)}.cfpBadge{font-size:var(--fs-3xs);padding:6px}.cfpFoot{font-size:var(--fs-2xs)}.cfpCanvas{border-radius:6px}.cfpFoot{gap:6px}.cfpColumnLabel{letter-spacing:0}}
 
 /* One typeface site-wide. --display and --mono are kept as aliases of --sans so
    existing rules need no edits; tabular numerals keep figures aligned the way

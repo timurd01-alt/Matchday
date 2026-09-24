@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0924K",
+  "tag": "Design",
+  "title": "Gold bracket, Matchday colors",
+  "items": [
+   "The CFP page now uses the same dark panels, green accents and text colors as Research and Scorecard.",
+   "Gold remains on the connected bracket paths, seeds, trophy and championship outline.",
+   "Removed the explanatory subheader and the period after the page title."
+  ]
+ },
+ {
   "date": "Build 0924J",
   "tag": "Design",
   "title": "Research tells one story",
