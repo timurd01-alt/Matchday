@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0925G",
+  "tag": "Fix",
+  "title": "Balanced home page columns",
+  "items": [
+   "The home page lists the four largest model/market differences, so it lines up with the public record and playoff picture beside it.",
+   "The public record and playoff picture use even spacing."
+  ]
+ },
+ {
   "date": "Build 0925F",
   "tag": "Fix",
   "title": "Clearer recent results",

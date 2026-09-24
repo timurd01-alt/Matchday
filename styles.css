@@ -3595,3 +3595,4 @@ body{font-variant-numeric:tabular-nums}
 .scorecardPage .scGame,.rsDialogBody .scGame{padding:12px 14px!important;background:var(--bg2);border:1px solid var(--line);border-radius:var(--r);border-bottom:1px solid var(--line)}
 .rsDialogBody .scGames{gap:10px!important;padding-top:10px}
 .scGamePick{gap:16px}
+.gamesSideCol>.gamesRecord{padding:16px 2px!important;margin-top:0}.gamesSideCol>.gamesRecord:first-child{padding-top:4px!important}
