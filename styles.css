@@ -3436,3 +3436,44 @@ body{font-variant-numeric:tabular-nums}
 .rsFeatSide{display:flex!important;align-items:center;gap:12px}.rsFeatSide>div{display:grid;gap:2px}.rsFeatSide>div>span:last-child{font-size:var(--fs-xs);color:var(--muted)}
 .rsFeatSide .teamMark{width:44px;height:44px;flex:0 0 44px;border-radius:10px;overflow:hidden}.rsFeatSide .teamMark img{width:80%;height:80%;object-fit:contain}
 .rsFeatured .rsAt{padding-bottom:0;align-self:center}.rsFeatured .rsFeatTeams{align-items:center;gap:22px}
+/* Logos beside team names in Research lists. */
+.rsLogoName{display:inline-flex!important;align-items:center;gap:8px;min-width:0}
+.rsLogoName .teamMark,.rsMovers li .teamMark{width:22px;height:22px;flex:0 0 22px;border-radius:6px;overflow:hidden}
+.rsLogoName .teamMark img,.rsMovers li .teamMark img{width:80%;height:80%;object-fit:contain}
+.rsMoveTeam.rsLogoName .teamMark{width:30px;height:30px;flex-basis:30px}
+.rsMovers li{grid-template-columns:22px minmax(0,1fr) auto;column-gap:8px}.rsMovers li .teamMark{grid-row:1/3;align-self:center}
+.rsMovers li span{grid-column:2}.rsMovers li small{grid-column:2}.rsMovers li b{grid-column:3}
+/* Split panels: the side column's footnote sits under its content. */
+.rsSplitSide .rsFoot{margin-top:0;padding-top:12px}.rsSplitSide>.rsFine{margin-top:12px;padding-top:0}
+.rsSplitSide .rsFoot .rsFine{margin:0}
+.rsSplitSide>.rsMoreBtn{margin-top:14px}
+/* Scorecard range bars. */
+.scRange{margin-top:22px}
+.scRangeTrack{position:relative;height:10px;border-radius:999px;background:var(--bg2);border:1px solid var(--line)}
+.scRangeBand{position:absolute;top:0;bottom:0;border-radius:999px;background:color-mix(in srgb,var(--signal) 28%,transparent)}
+.scRangeRef{position:absolute;top:-7px;bottom:-7px;width:2px;background:var(--text);transform:translateX(-50%)}
+.scRangeRef em{position:absolute;bottom:calc(100% + 4px);left:50%;transform:translateX(-50%);font-style:normal;font-size:var(--fs-2xs);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:var(--fw-bold);white-space:nowrap}
+.scRangeDot{position:absolute;top:50%;width:16px;height:16px;border-radius:50%;background:var(--signal);border:3px solid var(--panel);transform:translate(-50%,-50%);box-shadow:0 0 0 1px var(--signal)}
+.scRangeAxis{display:flex;justify-content:space-between;margin-top:8px;font-size:var(--fs-xs);color:var(--faint)}
+.scRangeKey{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:12px;font-size:var(--fs-xs);color:var(--muted)}.scRangeKey span{display:flex;align-items:center;gap:6px}
+.scKeyDot{width:10px;height:10px;border-radius:50%;background:var(--signal)}.scKeyRef{width:2px;height:12px;background:var(--text)}.scKeyBand{width:16px;height:8px;border-radius:999px;background:color-mix(in srgb,var(--signal) 28%,transparent)}
+.scorecardPage .rsCompare+.scRange{margin-top:34px}
+.scorecardPage .rsCompare~.rsFeatRead{margin:16px 0 0}
+.scorecardPage .scLead{margin:10px 0 16px}
+.scorecardPage .scLeadCtx{margin-top:0!important}
+.scorecardPage .scRange+.scRangeKey{margin-top:10px}
+.scorecardPage .rsSpan7 .scRange{margin-top:34px}
+.scMarketRead{margin-top:16px!important}
+.scVs{padding:10px 0;border-bottom:1px solid var(--line)}.scVs:first-child{padding-top:0}
+.scVsHead{display:flex;justify-content:space-between;gap:12px;font-size:var(--fs-sm)}.scVsHead span{color:var(--muted)}
+.scVsBar{display:grid;grid-template-columns:minmax(0,1fr) 150px 52px;align-items:center;gap:14px;margin-top:8px}
+.scVsTrack{position:relative;display:block;height:10px;border-radius:999px;background:var(--bg2);border:1px solid var(--line)}
+.scVsTrack b{position:absolute;left:0;top:0;bottom:0;border-radius:999px;background:var(--signal)}
+.scVs+.scVs .scVsTrack b{background:var(--muted)}
+.scVsTrack em{position:absolute;top:-5px;bottom:-5px;width:2px;background:var(--text);transform:translateX(-50%)}
+.scVsNum{display:grid;justify-items:end}.scVsNum b{font-size:var(--fs-lg)}.scVsNum small{font-size:var(--fs-xs);color:var(--faint)}
+.scVsGap{text-align:right;font-weight:var(--fw-semibold)}
+.scKeyFill{width:14px;height:6px;border-radius:999px;background:var(--signal)}
+@media(max-width:600px){.scVsBar{grid-template-columns:minmax(0,1fr) 110px 40px;gap:8px}}
+.scorecardPage .rsPart:first-child .rsSpan5{justify-content:space-between}.scorecardPage .rsPart:first-child .rsSpan5 .scRange{margin-top:0}
+.rsNotes{flex:1;display:flex!important;flex-direction:column;justify-content:space-between}

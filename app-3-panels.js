@@ -632,6 +632,18 @@ function _scStat(value,label,sub){
 /* Scorecard layout, on the same grid and panels as Research: numbered parts,
    titled panels sized by what they hold, and long lists behind View all.
    Every panel here is graded, so each carries the Graded label. */
+/* A value on a scale with its 95% range and a reference mark: the same
+   numbers the panel states, drawn so the range reads at a glance. */
+function _scRange({value,ref,lo,hi,min,max,refLabel,leftLabel,rightLabel}){
+  const pos=v=>Math.max(0,Math.min(100,(Number(v)-min)/(max-min)*100));
+  const ok=Number.isFinite(Number(value));
+  if(!ok)return '';
+  const band=Number.isFinite(Number(lo))&&Number.isFinite(Number(hi))?`<i class="scRangeBand" style="left:${pos(lo)}%;width:${Math.max(1,pos(hi)-pos(lo))}%"></i>`:'';
+  return `<div class="scRange"><div class="scRangeTrack">${band}`
+    +(Number.isFinite(Number(ref))?`<i class="scRangeRef" style="left:${pos(ref)}%"><em>${refLabel}</em></i>`:'')
+    +`<i class="scRangeDot" style="left:${pos(value)}%"></i></div>`
+    +`<div class="scRangeAxis"><span>${leftLabel??min+'%'}</span><span>${rightLabel??max+'%'}</span></div></div>`;
+}
 function _scCompare(items){
   return `<div class="rsCompare">${items.map(([k,v,sub])=>`<div><span class="rsKicker">${k}</span><b>${v}</b>${sub?`<span>${sub}</span>`:''}</div>`).join('')}</div>`;
 }
@@ -667,20 +679,22 @@ function _scMarket(vm,c){
   const pairs=[['Agreed',vm?.agreed_with_market],['Disagreed',vm?.disagreed_with_market]]
     .filter(([,b])=>b&&Number.isFinite(Number(b.hit_rate_pct)));
   if(!stats&&!pairs.length)return '';
+  // Agreed vs disagreed as bars: hit rate filled, expected as a tick. The
+  // same numbers the table held, drawn so the gap between the two reads first.
   const rows=pairs.map(([label,b])=>{
     const ci=Array.isArray(b.confidence_interval_pct)?b.confidence_interval_pct:null;
-    return `<tr><td>${label}</td><td>${esc(b.picks??'—')}</td>`
-      +`<td>${esc(b.wins??'—')}–${esc(b.losses??'—')}</td>`
-      +`<td${ci?` title="95% CI ${_scNum(ci[0])}–${_scNum(ci[1])}%"`:''}>${_scPct(b.hit_rate_pct)}</td>`
-      +`<td>${_scPct(b.expected_hit_rate_pct)}</td><td>${_scGap(b.calibration_gap_points,'')}</td></tr>`;
+    const hit=Number(b.hit_rate_pct),exp=Number(b.expected_hit_rate_pct);
+    return `<div class="scVs"><div class="scVsHead"><b>${label} with the market</b><span>${esc(b.wins??'—')}–${esc(b.losses??'—')} · ${esc(b.picks??'—')} picks</span></div>`
+      +`<div class="scVsBar"><i class="scVsTrack"><b style="width:${Math.max(0,Math.min(100,hit))}%"></b>${Number.isFinite(exp)?`<em style="left:${Math.max(0,Math.min(100,exp))}%"></em>`:''}</i>`
+      +`<span class="scVsNum"${ci?` title="95% CI ${_scNum(ci[0])}–${_scNum(ci[1])}%"`:''}><b>${_scPct(hit)}</b><small>hit · ${_scPct(exp)} expected</small></span>`
+      +`<span class="scVsGap">${_scGap(b.calibration_gap_points,'')}</span></div></div>`;
   }).join('');
   const share=Number(vm?.disagreement_share_pct);
   return `<section class="rsBlock rsSpan12">${rsTop('Against the market','graded')}`
     +`<div class="rsSplit"><div class="rsSplitMain">${stats}`
-    +`<p class="rsFeatRead">${Number.isFinite(share)?`Matchday took a different side from the market on ${share.toFixed(1)}% of priced picks. `:''}`
+    +`<p class="rsFeatRead scMarketRead">${Number.isFinite(share)?`Matchday took a different side from the market on ${share.toFixed(1)}% of priced picks. `:''}`
     +`${stats?'Seeing an underrated team and beating the price are not the same thing — so far only the first holds.':''}</p></div>`
-    +(rows?`<div class="rsSplitSide"><div class="scTableWrap"><table class="scTable"><thead><tr><th>vs market</th><th>Picks</th><th>Record</th><th>Hit</th><th>Expected</th><th>Gap</th></tr></thead><tbody>${rows}</tbody></table></div>`
-      +`<p class="rsFine">Hover a hit rate for its 95% interval.</p></div>`:'')
+    +(rows?`<div class="rsSplitSide">${rows}<div class="scRangeKey"><span><i class="scKeyFill"></i>Hit rate</span><span><i class="scKeyRef"></i>Expected</span></div></div>`:'')
     +`</div></section>`;
 }
 function _scTeamLine(name,score,won,prefix){
@@ -749,11 +763,13 @@ function renderScore(){
     +`<div><strong class="scBig">${_scPct(rec.hit_rate_pct)}</strong><span class="rsKicker">Hit rate</span></div></div>`
     +`<dl class="rsSummary scLeadCtx"><div><dt>Expected</dt><dd>${_scPct(rec.expected_hit_rate_pct)}</dd></div>`
     +`<div><dt>vs expected</dt><dd>${_scGap(rec.calibration_gap_points)}</dd></div>`
-    +(ci?`<div><dt>95% CI</dt><dd>${_scNum(ci[0])}–${_scNum(ci[1])}%</dd></div>`:'')+`</dl></section>`;
+    +(ci?`<div><dt>95% CI</dt><dd>${_scNum(ci[0])}–${_scNum(ci[1])}%</dd></div>`:'')+`</dl>`
+    +_scRange({value:rec.hit_rate_pct,ref:rec.expected_hit_rate_pct,lo:ci?.[0],hi:ci?.[1],min:50,max:100,refLabel:'Expected'})
+    +`<div class="scRangeKey"><span><i class="scKeyDot"></i>Hit rate</span><span><i class="scKeyRef"></i>Expected</span>${ci?'<span><i class="scKeyBand"></i>95% range</span>':''}</div></section>`;
   const price=`<section class="rsBlock rsSpan5">${rsTop('Against the price','graded')}`
     +_scCompare([['Actual',_scPct(vm.beat_market_pct)],['Expected',bm?_scPct(bm.expected_hit_rate_pct):'50.0%'],['Difference',bm?_scGap(bm.calibration_gap_points):'—']])
-    +`<p class="rsFeatRead">${straddles?'Matchday and the market are not yet separable on this sample.':'Above 50% the model is the better forecaster of the two; below it, the market is.'}</p>`
-    +(bmCi?`<p class="rsFine">95% CI ${_scNum(bmCi[0])}–${_scNum(bmCi[1])}%. A coin flip is 50%.</p>`:'')+`</section>`;
+    +_scRange({value:vm.beat_market_pct,ref:50,lo:bmCi?.[0],hi:bmCi?.[1],min:35,max:65,refLabel:'Coin flip',leftLabel:'← Market better',rightLabel:'Matchday better →'})
+    +`<p class="rsFeatRead">${straddles?`The 95% range (${_scNum(bmCi[0])}–${_scNum(bmCi[1])}%) still spans the coin flip, so Matchday and the market are not yet separable.`:'Above 50% the model is the better forecaster of the two; below it, the market is.'}</p></section>`;
   const grid=(...cells)=>{const c=cells.filter(Boolean);return c.length?`<div class="rsRow">${c.join('')}</div>`:''};
   const part=typeof rsPart==='function'?rsPart:(n,l,b)=>b;
   host.innerHTML=`<div class="vhead">Scorecard</div>`
