@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0923M",
+  "tag": "Design",
+  "title": "Cleaner How it works",
+  "items": [
+   "Removed the small ratings note under the three How it works steps on the Welcome page."
+  ]
+ },
+ {
   "date": "Build 0923L",
   "tag": "Design",
   "title": "One way in from the Welcome page",

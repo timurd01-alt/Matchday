@@ -160,7 +160,8 @@ document.addEventListener('click',function(event){
         <li><span class="wx-num">02</span><h3>Compare</h3><p>Each probability sits beside the market's number, so you can see where the two disagree.</p></li>
         <li><span class="wx-num">03</span><h3>Grade</h3><p>Picks lock before kickoff and are graded after the result. Nothing locked is ever rewritten.</p></li>
       </ol>
-      <div id="welcomeStatusNote" class="wx-body wx-note"><p>Ratings come from Matchday's own engine, which is still being refined, so a team's number can move between editions.</p></div>
+      <!-- Kept for renderWelcomeStatusNote(), which fills it from the pause flag; not shown on the gate. -->
+      <div id="welcomeStatusNote" hidden></div>
     </section>
 
     <section class="wx-section" aria-labelledby="wxExplore">
