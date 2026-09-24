@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0924W",
+  "tag": "Design",
+  "title": "Fuller panels, no dead space",
+  "items": [
+   "Longshots that won now shows eight games, four across.",
+   "Against the market shows four findings in a 2×2 block, including how often Matchday took a different side from the market, level with the agreed/disagreed bars.",
+   "Against the price's numbers fill the panel, and its range bar lines up with Model record's."
+  ]
+ },
+ {
   "date": "Build 0924V",
   "tag": "Design",
   "title": "No more filler text on Research and Scorecard",

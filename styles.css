@@ -3515,3 +3515,13 @@ body{font-variant-numeric:tabular-nums}
 .scorecardPage .rsPart:first-child .rsSpan5 .scRange{margin-top:auto}
 .scorecardPage .rsPart:first-child .rsSpan7 .scRange{margin-top:auto}
 .rsHandle{color:var(--signal);text-decoration:none;font-weight:var(--fw-semibold)}.rsHandle:hover{text-decoration:underline}
+.rsShots{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media(max-width:1300px){.rsShots{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.rsShots{grid-template-columns:1fr}}
+/* Against the market: four findings as a 2x2 block that fills its half. */
+.scorecardPage .rsSplitMain{align-self:stretch}
+.scorecardPage .rsSplitMain>.rsCompare{flex:1;grid-template-columns:repeat(2,minmax(0,1fr))}
+.scorecardPage .rsSplitMain>.rsCompare>div{align-content:center}
+.scorecardPage .rsSplitMain>.rsCompare>div:nth-child(3){border-left:0}
+.scorecardPage .rsSplitMain>.rsCompare>div:nth-child(n+3){border-top:1px solid var(--line)}
+.scorecardPage .rsPart:first-child .rsSpan5 .rsCompare{flex:1;margin-bottom:22px}.scorecardPage .rsPart:first-child .rsSpan5 .rsCompare>div{align-content:center}.scorecardPage .rsPart:first-child .rsSpan5 .scRange{margin-top:14px}

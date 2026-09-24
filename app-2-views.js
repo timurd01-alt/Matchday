@@ -1209,14 +1209,14 @@ function rsLongshots(){
   const board=(typeof MATCHDAY_BETBETTER_UPSETS!=='undefined'&&MATCHDAY_BETBETTER_UPSETS)||{};
   const shots=String(DATA.comp_key||'').toUpperCase()==='NCAAF'?(board.upsets||[]):[];
   if(!shots.length)return '';
-  const card=(x,i)=>`<li class="rsShot${i>=6?' rsExtra':''}"><b class="rsShotPct">${Number.isFinite(Number(x.winner_pregame_pct))?Math.round(Number(x.winner_pregame_pct))+'%':'—'}</b>`
+  const card=(x,i)=>`<li class="rsShot${i>=8?' rsExtra':''}"><b class="rsShotPct">${Number.isFinite(Number(x.winner_pregame_pct))?Math.round(Number(x.winner_pregame_pct))+'%':'—'}</b>`
     +`<span class="rsShotTeam rsLogoName">${(typeof teamMark==='function'?teamMark(x.winner):'')}${esc(rsShortName(x.winner))}</span>`
     +`<span class="rsShotSub">beat ${esc(rsShortName(x.loser))} ${Number(x.winner_score)}–${Number(x.loser_score)}</span>`
     +`<span class="rsShotDate">${esc(String(x.played_on||'').slice(5).replace('-','/'))}</span></li>`;
   return `<section class="rsBlock rsExpandable rsSpan8">${rsTop('Longshots that won','season')}`
     +`<ul class="rsShots">${shots.map(card).join('')}</ul>`
     +`<div class="rsFoot">`
-    +(shots.length>6?rsMoreBtn(shots.length,'View all','Longshots that won'):'')+`</div></section>`;
+    +(shots.length>8?rsMoreBtn(shots.length,'View all','Longshots that won'):'')+`</div></section>`;
 }
 function rsStat(){
   const table=collegeRankingTable();

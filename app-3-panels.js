@@ -674,7 +674,8 @@ function _scMarket(vm,c){
   const stats=(d&&d.picks&&lift!=null)
     ? _scCompare([['Underdog lean',`${lift>0?'+':''}${esc(lift)} pts`,`${esc(c.contested_underdogs??'—')} selections`],
         ['Avg. price gap',`${esc(c.mean_divergence_points??'—')} pts`,'every graded card'],
-        ['Model underdogs',`${esc(d.wins)}–${esc(d.losses)}`,'record vs market']])
+        ['Model underdogs',`${esc(d.wins)}–${esc(d.losses)}`,'record vs market'],
+        ...(Number.isFinite(Number(vm?.disagreement_share_pct))?[['Different side',`${Number(vm.disagreement_share_pct).toFixed(1)}%`,'of priced picks']]:[])])
     : '';
   const pairs=[['Agreed',vm?.agreed_with_market],['Disagreed',vm?.disagreed_with_market]]
     .filter(([,b])=>b&&Number.isFinite(Number(b.hit_rate_pct)));
