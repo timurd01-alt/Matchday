@@ -3610,3 +3610,25 @@ body{font-variant-numeric:tabular-nums}
 .gamesSupportGrid+.gamesExplore{margin-top:9px}
 .gamesSupportGrid .gamesDifferences>button.gamesTextLink{margin-top:16px!important}
 .gamesSupportGrid .gamesDifferences>button.gamesTextLink{align-self:stretch!important;width:100%}
+
+/* Phones: the conference table keeps every column and scrolls sideways
+   instead of dropping the bar and squeezing the names. */
+@media(max-width:600px){
+  .rsScrollX{overflow-x:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+  .rsScrollX .rsConfHead,.rsScrollX .rsConfRow{min-width:440px;grid-template-columns:130px minmax(90px,1fr) 84px 48px}
+  .rsScrollX .rsConfHead span:nth-child(2),.rsScrollX .rsConfRow .rsBar{display:block}
+  .rsScrollX .rsConfRow>span:first-child{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+}
+/* Scatter zoom (rsZoomChart): phones only. */
+.rsZoomBtn{display:none;margin-left:auto;min-height:36px;padding:0 14px;border:1px solid var(--line2);border-radius:999px;background:var(--panel2);color:var(--signal);font:inherit;font-weight:var(--fw-bold);cursor:pointer}
+@media(max-width:600px){.rsZoomBtn{display:inline-flex;align-items:center}}
+.rsZoom{position:fixed;inset:0;z-index:80;display:flex;flex-direction:column;gap:12px;padding:14px 16px calc(14px + env(safe-area-inset-bottom));background:var(--bg)}
+.rsZoomBar,.rsZoomCtl{display:flex;align-items:center;gap:10px}
+.rsZoomBar h2{margin:0}
+.rsZoomClose{margin-left:auto;width:44px;height:44px;border:1px solid var(--line2);border-radius:999px;background:var(--panel2);color:var(--text);font-size:var(--fs-xl);cursor:pointer}
+.rsZoomPane{flex:1;min-height:0;overflow:auto;-webkit-overflow-scrolling:touch;display:flex;border:1px solid var(--line);border-radius:var(--r);background:var(--panel)}
+.rsZoomPane svg.rsScatter{flex:none;width:100%;margin:auto 0}
+.rsZoomCtl button{width:44px;height:44px;border:1px solid var(--line2);border-radius:10px;background:var(--panel2);color:var(--text);font-size:var(--fs-xl);cursor:pointer}
+.rsZoomLvl{min-width:3ch;text-align:center;font-variant-numeric:tabular-nums;color:var(--muted)}
+.rsZoomHint{margin-left:auto;font-size:var(--fs-xs);color:var(--faint);text-align:right}
+.rsScatterTip{z-index:90}

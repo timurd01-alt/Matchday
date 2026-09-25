@@ -1132,7 +1132,7 @@ function rsOpenAll(btn){
   const box=btn.closest('.rsExpandable');if(!box)return;
   const title=btn.dataset.title||'All';
   const body=document.createElement('div');
-  box.querySelectorAll(':scope > .rsSchedHead, :scope > .rsConfHead, :scope > ul, :scope > ol').forEach(el=>{
+  box.querySelectorAll(':scope > .rsSchedHead, :scope > .rsConfHead, :scope > .rsScrollX, :scope > ul, :scope > ol').forEach(el=>{
     const c=el.cloneNode(true);c.querySelectorAll('.rsExtra').forEach(x=>x.classList.remove('rsExtra'));body.appendChild(c);
   });
   let dlg=document.getElementById('rsAllDialog');
@@ -1324,7 +1324,7 @@ function rsScatter(){
     +`<line class="scMed" x1="${mx.toFixed(1)}" y1="${PT}" x2="${mx.toFixed(1)}" y2="${H-PB}"/><line class="scMed" x1="${PL}" y1="${my.toFixed(1)}" x2="${W-PR}" y2="${my.toFixed(1)}"/>`
     +`${dots}${labels}<text class="scAxLbl" x="${(W/2).toFixed(0)}" y="${H-8}" text-anchor="middle">strength of schedule →</text>`
     +`<text class="scAxLbl" transform="rotate(-90 12 ${(H/2).toFixed(0)})" x="12" y="${(H/2).toFixed(0)}" text-anchor="middle">rating →</text></svg>`
-    +`<div class="rsLegend"><span><i class="dotKeyP"></i>Power</span>${anyG5?'<span><i class="dotKeyG"></i>Group of Five</span>':''}<span>Lines are medians · hover anywhere on the chart</span></div>`
+    +`<div class="rsLegend"><span><i class="dotKeyP"></i>Power</span>${anyG5?'<span><i class="dotKeyG"></i>Group of Five</span>':''}<span>Lines are medians · hover anywhere on the chart</span><button type="button" class="rsZoomBtn" onclick="rsZoomChart(this)">Zoom chart</button></div>`
     +`</section>`;
 }
 /* What the chart shows, stated: the two quadrants that matter and the
@@ -1360,7 +1360,7 @@ function rsScatterClear(svg){
   svg?.querySelectorAll('circle.rsActive').forEach(c=>c.classList.remove('rsActive'));
   const tip=document.getElementById('rsScatterTip');if(tip)tip.hidden=true;
 }
-document.addEventListener('pointermove',e=>{
+function rsScatterPoint(e){
   const svg=e.target.closest?.('.rsScatter');
   if(!svg){document.querySelectorAll('.rsScatter').forEach(rsScatterClear);return}
   let best=null,bestD=18*18;
@@ -1380,10 +1380,48 @@ document.addEventListener('pointermove',e=>{
   tip.hidden=false;
   const b=best.getBoundingClientRect(),w=tip.offsetWidth,h=tip.offsetHeight;
   let x=b.left+b.width/2+14,y=b.top-h/2;
-  if(x+w>innerWidth-12)x=b.left-w-14;
+  if(x+w>innerWidth-12)x=Math.max(12,b.left-w-14);
   y=Math.max(12,Math.min(innerHeight-h-12,y));
   tip.style.left=x+'px';tip.style.top=y+'px';
-});
+}
+document.addEventListener('pointermove',rsScatterPoint);
+// Touch has no hover: a tap reads out the nearest team instead.
+document.addEventListener('pointerdown',rsScatterPoint);
+/* Phone view of a scatter. At phone width a 1000x340 chart is about 115px
+   tall and its dots are specks, so "Zoom chart" opens it full screen with
+   zoom steps; the zoomed chart pans by scrolling and a tap names the team. */
+const RS_ZOOMS=[1,2,3,4];
+function rsZoomChart(btn){
+  const src=btn.closest('.rsBlock')?.querySelector('svg.rsScatter');if(!src)return;
+  const title=btn.closest('.rsBlock').querySelector('.rsTitle')?.textContent||'Chart';
+  const box=document.createElement('div');
+  box.className='rsZoom';box.setAttribute('role','dialog');box.setAttribute('aria-modal','true');box.setAttribute('aria-label',title);
+  box.innerHTML=`<div class="rsZoomBar"><h2 class="seclbl">${esc(title)}</h2><button type="button" class="rsZoomClose" aria-label="Close">×</button></div>`
+    +`<div class="rsZoomPane"></div><div class="rsZoomCtl"><button type="button" data-z="-1" aria-label="Zoom out">−</button><span class="rsZoomLvl" aria-live="polite">1×</span><button type="button" data-z="1" aria-label="Zoom in">+</button><span class="rsZoomHint">Tap a dot for the team · drag to pan</span></div>`;
+  const pane=box.querySelector('.rsZoomPane'),svg=src.cloneNode(true);
+  svg.querySelectorAll('.rsActive').forEach(c=>c.classList.remove('rsActive'));
+  pane.appendChild(svg);
+  let i=0;
+  const clearTip=()=>rsScatterClear(svg);
+  const close=()=>{clearTip();box.remove();document.body.classList.remove('modalOpen');document.removeEventListener('keydown',onKey);btn.focus()};
+  const onKey=e=>{if(e.key==='Escape')close()};
+  box.addEventListener('click',e=>{
+    const z=e.target.closest('[data-z]');
+    if(z){
+      const cx=(pane.scrollLeft+pane.clientWidth/2)/pane.scrollWidth,cy=(pane.scrollTop+pane.clientHeight/2)/pane.scrollHeight;
+      i=Math.max(0,Math.min(RS_ZOOMS.length-1,i+Number(z.dataset.z)));
+      svg.style.width=(RS_ZOOMS[i]*100)+'%';
+      box.querySelector('.rsZoomLvl').textContent=RS_ZOOMS[i]+'×';
+      pane.scrollLeft=cx*pane.scrollWidth-pane.clientWidth/2;pane.scrollTop=cy*pane.scrollHeight-pane.clientHeight/2;
+      clearTip();return;
+    }
+    if(e.target.closest('.rsZoomClose'))close();
+  });
+  pane.addEventListener('scroll',clearTip,{passive:true});
+  document.addEventListener('keydown',onKey);
+  document.body.appendChild(box);document.body.classList.add('modalOpen');
+  box.querySelector('.rsZoomClose').focus();
+}
 function rsConferences(){
   const table=collegeRankingTable();
   const rows=(table?.rankings||[]).filter(r=>r.conference&&Number.isFinite(Number(r.rating)));
@@ -1404,8 +1442,8 @@ function rsConferences(){
   return `<section class="rsBlock rsExpandable rsSpan7">${rsTop('Conference landscape','season','Mean power rating')}`
     +`<dl class="rsSummary"><div><dt>Strongest</dt><dd>${esc(confs[0].name)}</dd></div>`
     +(parity.length?`<div title="Smallest spread of team ratings"><dt>Most balanced</dt><dd>${esc(parity[0].name)}</dd></div><div title="Largest spread of team ratings"><dt>Widest spread</dt><dd>${esc(parity[parity.length-1].name)}</dd></div>`:'')+`</dl>`
-    +`<div class="rsConfHead"><span>Conference</span><span></span><span>Avg. rating</span><span>Teams</span></div>`
-    +`<ul class="rsConf">${confs.map(row).join('')}</ul>`
+    +`<div class="rsScrollX"><div class="rsConfHead"><span>Conference</span><span></span><span>Avg. rating</span><span>Teams</span></div>`
+    +`<ul class="rsConf">${confs.map(row).join('')}</ul></div>`
     +(confs.length>6?rsMoreBtn(confs.length,'View all','Conference landscape'):'')+`</section>`;
 }
 function rsSchedules(){
@@ -1475,7 +1513,7 @@ function rsEfficiency(){
     +`<line class="scMed" x1="${sx(mx).toFixed(1)}" y1="${PT}" x2="${sx(mx).toFixed(1)}" y2="${H-PB}"/><line class="scMed" x1="${PL}" y1="${sy(my).toFixed(1)}" x2="${W-PR}" y2="${sy(my).toFixed(1)}"/>`
     +`${dots}${labels}<text class="scAxLbl" x="${(W/2).toFixed(0)}" y="${H-8}" text-anchor="middle">success rate →</text>`
     +`<text class="scAxLbl" transform="rotate(-90 12 ${(H/2).toFixed(0)})" x="12" y="${(H/2).toFixed(0)}" text-anchor="middle">net points per success →</text></svg>`
-    +`<div class="rsLegend"><span><i class="dotKeyP"></i>Power</span><span><i class="dotKeyG"></i>Group of Five</span><span>Lines are medians · hover for the team</span></div></section>`;
+    +`<div class="rsLegend"><span><i class="dotKeyP"></i>Power</span><span><i class="dotKeyG"></i>Group of Five</span><span>Lines are medians · hover for the team</span><button type="button" class="rsZoomBtn" onclick="rsZoomChart(this)">Zoom chart</button></div></section>`;
 }
 function rsEfficiencyNotes(){
   const D=rsEfficiencyData();if(!D)return '';
