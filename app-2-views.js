@@ -160,10 +160,29 @@ async function commFetch(action,comp){
 function commLoad(comp){
   const stamp=comp+':'+Math.floor(Date.now()/60000);if(COMM_FETCHED===stamp)return;COMM_FETCHED=stamp;
   Promise.all([commFetch('consensus',comp),commFetch('activity',comp),fetchLeaderboard(lbPeriod())]).then(([c,a,board])=>{
-    COMM_CONSENSUS=c?.games||{};COMM_ACTIVITY=a?.items||[];COMM_BOARD=board;if(VIEW==='community')renderCommunity(true);
+    COMM_CONSENSUS=c?.games||{};COMM_ACTIVITY=a?.items||[];COMM_BOARD=board;
+    if(c&&c.ok)commForgetStalePicks(COMM_CONSENSUS);
+    if(VIEW==='community')renderCommunity(true);
   });
 }
 let COMM_BOARD=null;
+/* The browser keeps its own copy of each submitted pick. If the server has no
+   pick on that side for a still-open game, the local copy is stale (the pick
+   never reached the server, or the server's picks were cleared) and it is
+   forgotten, so the game can be picked again. Only after a successful server
+   reply, and never for a pick under five minutes old: the server's counts are
+   cached briefly and a fresh pick may not be in them yet. */
+function commForgetStalePicks(games){
+  const db=btmLoad();if(!db.picks)return;
+  let changed=false;const cutoff=Date.now()-5*60000;
+  Object.entries(db.picks).forEach(([id,p])=>{
+    if(!p||p.result||!(Number(p.ts)<cutoff))return;
+    const m=(DATA.matches||[]).find(x=>String(x.id)===String(id));
+    if(!m||!isCommunityPickOpen(m))return;
+    if(!((games[id]||{})[p.pick]>0)){delete db.picks[id];changed=true;}
+  });
+  if(changed)btmSave(db);
+}
 function commSplit(m,picks){
   const c={...(COMM_CONSENSUS[m.id]||{h:0,d:0,a:0})},mine=picks[m.id];
   const n=(c.h||0)+(c.d||0)+(c.a||0);return {h:c.h||0,d:c.d||0,a:c.a||0,n,mine};

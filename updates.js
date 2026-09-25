@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0925N",
+  "tag": "Fix",
+  "title": "Community picks follow the server",
+  "items": [
+   "If your browser remembers a pick that the community server does not have, the stale pick is forgotten and the game can be picked again."
+  ]
+ },
+ {
   "date": "Build 0925M",
   "tag": "Fix",
   "title": "Full-width View all games",
