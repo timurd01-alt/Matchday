@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0925ZP",
+  "tag": "Fix",
+  "title": "Shorter, clearer final summary",
+  "items": [
+   "A finished game's Final summary now says it in one sentence, for example: Ratings expected Liberty by 4.6. Liberty won by 17. Liberty played 12.4 points better than expected.",
+   "It shows the pick made an hour before kickoff, and drops the repeated score header and wide rating rows, so the panel is less than half its old height."
+  ]
+ },
+ {
   "date": "Build 0925ZO",
   "tag": "Fix",
   "title": "Legal page: X contact, no news feeds",

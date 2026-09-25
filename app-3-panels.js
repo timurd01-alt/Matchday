@@ -1674,9 +1674,8 @@ function howItPlayedPanel(m){
 /* Final summary. Play-by-play reaches the results feed a few days late and
    never for some games, and a finished game must not fall back to a "model
    read" panel. What is always known after the whistle: the score, the pick
-   Matchday locked, and both teams' ratings. The game rating is the margin plus
-   the opponent's power rating -- the same opponent-adjusted scale as the power
-   rating (no home-field term), so it reads as "played like a team rated X". */
+   Bet Better locked, and both teams' ratings. The ratings imply a margin
+   (no home-field term); the summary states how far the result landed from it. */
 function bbLockedPickFor(m){
   const sc=typeof MATCHDAY_BETBETTER_SCORECARD!=='undefined'?MATCHDAY_BETBETTER_SCORECARD:null;
   const sport=String(m._comp||DATA.comp_key||'').toLowerCase();
@@ -1700,30 +1699,30 @@ function finalSummaryPanel(m){
   const H={name:home,score:hs,r:find(home)},A={name:away,score:as,r:find(away)};
   const short=n=>typeof rsShortName==='function'?rsShortName(n):n;
   const num=v=>{const n=Number(v);return Number.isFinite(n)?n:null};
-  const sgn=(v,d=1)=>v==null?'—':(Number(v.toFixed(d))>0?'+':Number(v.toFixed(d))<0?'−':'')+Math.abs(v).toFixed(d);
-  const game=(t,o)=>{const or=num(o.r?.rating);return or==null?null:(t.score-o.score)+or};
-  H.game=game(H,A);A.game=game(A,H);
-  const line=(label,h,a,fmt,hiWins=true)=>{
-    const ok=h!=null&&a!=null,hw=ok&&(hiWins?h>a:h<a),aw=ok&&(hiWins?a>h:a<h);
-    return `<div class="hipRow"><b class="${hw?'hipLead':''}">${fmt(h)}</b><div class="hipMid"><span>${label}</span></div><b class="${aw?'hipLead':''}">${fmt(a)}</b></div>`;
-  };
   // The pick is Bet Better's locked one from its scorecard. m.prediction is
   // the retired in-house model and is never shown as Matchday's call.
   const winner=hs>as?'h':as>hs?'a':null;
   const bb=bbLockedPickFor(m);
   const pickSide=bb?(bbNameMatches(bb.selection,home)?'h':bbNameMatches(bb.selection,away)?'a':null):null;
   const pick=pickSide&&winner?`<p class="hipVerdict">Matchday picked <b>${esc(short(bb.selection))}</b>${Number.isFinite(Number(bb.probability_pct))?` at ${Math.round(Number(bb.probability_pct))}%`:''} — <b class="${pickSide===winner?'fsHit':'fsMiss'}">${pickSide===winner?'correct':'missed'}</b>.</p>`:'';
-  const over=(t)=>{const g=t.game,s=num(t.r?.rating);return g==null||s==null?'':`${esc(short(t.name))} ${g>=s?'beat':'fell short of'} its season rating by ${Math.abs(g-s).toFixed(1)}`};
-  const notes=[over(H),over(A)].filter(Boolean);
-  const team=(t,side)=>`<div class="hipTeam ${side}">${typeof teamMark==='function'?teamMark(t.name):''}<span>${esc(short(t.name))}</span></div>`;
-  const f1=v=>v==null?'—':v.toFixed(1);
-  return `<section class="analystPanel hipPanel"><div class="analystTop"><div class="analystTitle">Final summary</div><div class="analystBadge">final</div></div>`
-    +`<div class="hipHead">${team(H,'h')}<span class="hipScore">${hs}–${as}</span>${team(A,'a')}</div>`
-    +pick
-    +line('Game rating',H.game,A.game,f1)
-    +line('Season rating',num(H.r?.rating),num(A.r?.rating),f1)
-    +(notes.length?`<p class="hipVerdict">${notes.join('; ')}.</p>`:'')
-    +`<p class="fsNote">Game rating is the margin plus the opponent's power rating. Play-by-play efficiency appears here once the game's plays are processed.</p></section>`;
+  // One game has one surprise: actual margin minus the margin the two season
+  // ratings implied. Stating it per team only mirrors the same number.
+  const hr=num(H.r?.rating),ar=num(A.r?.rating);
+  let story='';
+  if(hr!=null&&ar!=null){
+    const exp=hr-ar,act=hs-as,diff=act-exp;
+    const expText=Math.abs(exp)<0.05?'Ratings expected a dead heat':`Ratings expected ${esc(short(exp>0?home:away))} by ${Math.abs(exp).toFixed(1)}`;
+    const actText=act===0?'It finished level':`${esc(short(act>0?home:away))} won by ${Math.abs(act)}`;
+    const beat=Math.abs(diff)<0.05?' — exactly as expected':` — ${esc(short(diff>0?home:away))} played <b>${Math.abs(diff).toFixed(1)} points</b> better than expected`;
+    story=`<p class="hipVerdict">${expText}. ${actText}${beat}.</p>`;
+  }
+  // The match window's own header already shows both teams and the score, so
+  // the summary is text only: the pick, what happened against expectation,
+  // and the two season ratings the expectation came from.
+  const f1=v=>v==null?'—':(v>0?'+':v<0?'−':'')+Math.abs(v).toFixed(1);
+  const ratings=hr!=null&&ar!=null?`<p class="fsNote">Season ratings: ${esc(short(home))} ${f1(hr)} · ${esc(short(away))} ${f1(ar)}. Play-by-play efficiency appears here once the game's plays are processed.</p>`:'';
+  return `<section class="analystPanel hipPanel fsPanel"><div class="analystTop"><div class="analystTitle">Final summary</div><div class="analystBadge">final</div></div>`
+    +pick+story+ratings+`</section>`;
 }
 function betbetterNoReadPanel(){
   return `<section class="analystPanel"><div class="analystTop"><div class="analystTitle">Model read</div>`

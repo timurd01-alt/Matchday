@@ -3703,3 +3703,7 @@ body{font-variant-numeric:tabular-nums}
    wins over `.expandedDecision .analystPick`. */
 .expandedDecision .analystPick,.modernExpandedView .analystPick{line-height:1.12;padding-bottom:.05em;overflow:visible}
 .modalName,.modernMatchSheet .modalName{line-height:1.12;padding-bottom:.04em}
+/* Final summary is short text: no centred 250px block, tight spacing. */
+.expandedDecision .analystPanel.fsPanel,.fsPanel{min-height:0;justify-content:flex-start}
+.fsPanel .hipVerdict{margin:8px 0 0}
+.fsPanel .analystTop+.hipVerdict{margin-top:4px}
