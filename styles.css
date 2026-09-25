@@ -3675,3 +3675,5 @@ body{font-variant-numeric:tabular-nums}
 /* Methodology fills the row in two columns instead of one narrow box. */
 .scMethod>div{max-width:none;columns:2 340px;column-gap:36px}
 .scMethod p{break-inside:avoid}
+/* Basketball preseason placeholders keep the layout without inventing numbers. */
+.rsWaitingNote{margin:12px 0 0;padding:28px 16px;border:1px dashed var(--line);border-radius:8px;text-align:center;color:var(--muted);font-size:var(--fs-sm);line-height:1.5}

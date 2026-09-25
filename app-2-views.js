@@ -1542,6 +1542,12 @@ function rsDefenceNotes(){
 function rsPart(num,label,body){
   return body?`<div class="rsPart"><h2 class="rsPartHead"><span>${num}</span>${label}</h2>${body}</div>`:'';
 }
+/* Basketball preseason: a panel with nothing to show keeps its place in the
+   layout with a plain waiting note, so the page reads the same before and
+   after the first tipoff. Football never uses this; its panels hide. */
+function rsWaiting(title,kind,span,note){
+  return `<section class="rsBlock rsWaiting rsSpan${span}">${rsTop(title,kind)}<p class="rsWaitingNote">${esc(note)}</p></section>`;
+}
 function collegeResearchModules(){
   if(!['NCAAF','NCAAM'].includes(String(DATA?.comp_key||'').toUpperCase()))return '';
   // One 12-column grid. Each panel's span is set by what it holds (rsSpanN),
@@ -1551,11 +1557,15 @@ function collegeResearchModules(){
   // play-by-play measures; basketball has no downs or snaps, so those panels
   // are football-only rather than showing football teams on the NCAAM page.
   const football=String(DATA?.comp_key||'').toUpperCase()==='NCAAF';
+  const wait=(...args)=>football?'':rsWaiting(...args);
+  const soon='Waiting for the season to start.',box='Waiting for the season to start. Needs basketball box scores, which Matchday does not collect yet.';
   const parts=[
-    ['This week',grid(rsFeatured(),rsModelMarketWatch())],
-    ['What the model is finding',grid(rsStat(),rsLongshots())+grid(rsScatter(),rsScatterNotes())+(football?grid(rsEfficiency(),rsEfficiencyNotes()):'')],
-    ['The bigger picture',grid(rsSchedules(),rsConferences())+(football?grid(rsDefence(),rsDefenceNotes()):'')],
-    ['Track record',grid(rsMyPicks())],
+    ['This week',grid(rsFeatured()||wait('Featured read','live',12,soon),rsModelMarketWatch()||wait('Model–market watch','live',12,soon))],
+    ['What the model is finding',grid(rsStat()||wait('Risers &amp; fallers','season',4,soon),rsLongshots()||wait('Longshots that won','season',8,soon))+grid(rsScatter(),rsScatterNotes())
+      +(football?grid(rsEfficiency(),rsEfficiencyNotes()):grid(wait('Offensive vs defensive efficiency','season',8,box),wait('Reading the chart','season',4,box)))],
+    ['The bigger picture',grid(rsSchedules(),rsConferences())
+      +(football?grid(rsDefence(),rsDefenceNotes()):grid(wait('Pace','season',8,box),wait('Reading the chart','season',4,box)))],
+    ['Track record',grid(rsMyPicks()||wait('Matchday in public','graded',12,'Picks are graded once the season starts.'))],
   ].filter(([,body])=>body).map(([label,body],i)=>rsPart(String(i+1).padStart(2,'0'),label,body)).join('');
   if(!parts)return '';
   return `<section class="collegeResearch" aria-label="College research">`
