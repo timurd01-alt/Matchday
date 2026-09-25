@@ -3596,3 +3596,10 @@ body{font-variant-numeric:tabular-nums}
 .rsDialogBody .scGames{gap:10px!important;padding-top:10px}
 .scGamePick{gap:16px}
 .gamesSideCol>.gamesRecord{padding:16px 2px!important;margin-top:0}.gamesSideCol>.gamesRecord:first-child{padding-top:4px!important}
+/* Home support row: both columns end on their button, and the buttons line up. */
+.gamesSupportGrid{align-items:stretch}
+.gamesDifferences{display:flex;flex-direction:column}
+.gamesDifferences>.gamesTextLink,.gamesDifferences>a:last-child,.gamesDifferences>button:last-child{margin-top:auto!important;align-self:flex-start}
+.gamesSideCol{display:flex!important;flex-direction:column}
+.gamesSideCol>.gamesBracket{flex:1;border-bottom:0!important;padding-bottom:0!important}
+.gamesSideCol>.gamesBracket>button{margin-top:auto}

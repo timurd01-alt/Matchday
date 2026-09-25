@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0925H",
+  "tag": "Fix",
+  "title": "No gap under the home page summary",
+  "items": [
+   "View all games and View bracket now line up at the bottom of the home page summary, with no empty strip before Explore."
+  ]
+ },
+ {
   "date": "Build 0925G",
   "tag": "Fix",
   "title": "Balanced home page columns",
