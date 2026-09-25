@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0925ZV",
+  "tag": "Design",
+  "title": "Defense groups and clearer season badges",
+  "items": [
+   "Defense Against A Real Zero now has group tabs beside it: Stops and limits, Bend don't break, Big plays hurt, and Neither.",
+   "Research badges say what each section is built from: 2026 only, or 2026 + 2025 where the power rating still carries last season.",
+   "On phones, the Scorecard's Expected label no longer overlaps the 95% range."
+  ]
+ },
+ {
   "date": "Build 0925ZU",
   "tag": "Fix",
   "title": "Chart numbers and tighter layout",

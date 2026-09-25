@@ -3737,6 +3737,8 @@ body{font-variant-numeric:tabular-nums}
 .rsFilterConf{padding-right:6px}
 .rsPlot circle.rsFadeOut{opacity:.08}
 .rsPlot.rsFiltered text.rsLbl{opacity:.25}
-.rsQuadNote{margin:-4px 0 12px;color:var(--faint);font-size:var(--fs-xs)}
 .rsChartBlock .rsLegend{align-items:center}
 .scTick{fill:var(--faint);font-size:var(--fs-2xs);font-variant-numeric:tabular-nums}
+/* Phones: the range bar's "Expected" label sits ~25px above the bar and hit
+   the wrapped 95% CI figures. Leave room for it. */
+@media(max-width:600px){.scorecardPage .scRange{padding-top:24px}}
