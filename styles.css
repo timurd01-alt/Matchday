@@ -3609,3 +3609,4 @@ body{font-variant-numeric:tabular-nums}
 .gamesDifferences>.gamesTextLink{margin-top:16px!important}
 .gamesSupportGrid+.gamesExplore{margin-top:9px}
 .gamesSupportGrid .gamesDifferences>button.gamesTextLink{margin-top:16px!important}
+.gamesSupportGrid .gamesDifferences>button.gamesTextLink{align-self:stretch!important;width:100%}

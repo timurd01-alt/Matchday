@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0925M",
+  "tag": "Fix",
+  "title": "Full-width View all games",
+  "items": [
+   "View all games on the home page now spans its column, filling the empty space beside it."
+  ]
+ },
+ {
   "date": "Build 0925L",
   "tag": "Fix",
   "title": "Clearer community picks",
