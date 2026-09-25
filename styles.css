@@ -3649,7 +3649,6 @@ body{font-variant-numeric:tabular-nums}
 .gameConfPick{display:inline-flex;align-items:center;gap:6px;margin-left:auto;color:var(--faint);font:var(--fw-bold) var(--fs-2xs)/1 var(--mono);text-transform:uppercase;letter-spacing:.04em}
 .gameConfPick select{min-height:32px;border:1px solid var(--line2);background:var(--panel);color:var(--text);border-radius:8px;padding:4px 8px;font-size:var(--fs-xs);font-family:var(--mono);text-transform:none}
 @media (max-width:640px){.gameFilters{flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px}.gameFilters .chip{flex:0 0 auto}.gameConfPick{margin-left:0;flex:0 0 auto}}
-<<<<<<< Updated upstream
 
 /* The same gold bracket advances left to right in narrower windows. */
 .cfpCompact{display:none}
@@ -3661,9 +3660,7 @@ body{font-variant-numeric:tabular-nums}
 }
 
 @media(max-width:700px){.cfpCompact>svg{min-width:1000px}}
-=======
 @media (min-width:641px) and (max-width:1280px){.gameConfPick{margin-left:0}}
 /* Half-screen windows: the strip keeps Next and Updated readable and drops
    the tagline and build label, which were cutting both off. */
 @media(max-width:1280px){#strip .ls-extra{display:none}#strip .ls-next{flex:0 0 auto;max-width:40%}}
->>>>>>> Stashed changes

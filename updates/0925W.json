@@ -1,0 +1,1 @@
+{"rank": 326, "date": "Build 0925W", "tag": "Fix", "title": "Half-screen top strip and Games filters", "items": ["In narrower windows the top strip drops the tagline and build label so Next and Updated are no longer cut off.", "The Games conference dropdown follows the filter chips instead of being pushed to the far edge, removing the empty gap."]}
