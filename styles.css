@@ -3569,7 +3569,8 @@ body{font-variant-numeric:tabular-nums}
 .cfpOut h3{margin:0 0 10px;color:var(--signal);font-size:var(--fs-xs);font-weight:var(--fw-bold);letter-spacing:.08em;text-transform:uppercase}
 .cfpOutGrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
 .cfpOutTeam{display:flex;align-items:center;gap:12px;padding:12px 14px;min-width:0;background:var(--bg2);border:1px solid var(--line2);border-radius:8px}
-.cfpOutTeam .teamMark{flex:0 0 32px;width:32px;height:32px;overflow:hidden}
+.cfpOutTeam .teamMark{flex:0 0 32px;width:32px;height:32px;overflow:hidden;display:grid;place-items:center;background:#e4eae5;border:0;border-radius:5px}
+.cfpOutTeam .teamMark .teamMonogramText{color:#101820}
 .cfpOutTeam .teamMark img{width:80%;height:80%;object-fit:contain}
 .cfpOutTeam>div{min-width:0}.cfpOutTeam b{display:block;font-size:var(--fs-sm);font-weight:var(--fw-semibold);overflow-wrap:anywhere}
 .cfpOutTeam span:not(.teamMark):not(.teamMonogramText){display:block;margin-top:4px;font-size:var(--fs-xs);color:var(--muted)}

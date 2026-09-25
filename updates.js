@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0925ZI",
+  "tag": "Design",
+  "title": "First Four Out logos match the bracket",
+  "items": [
+   "The First Four Out teams now show their logos on the same light tile the playoff bracket uses."
+  ]
+ },
+ {
   "date": "Build 0925ZH",
   "tag": "Fix",
   "title": "Tidier Methodology text",
