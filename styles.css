@@ -3728,9 +3728,9 @@ body{font-variant-numeric:tabular-nums}
 .dotKeyHi{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--signal)}
 /* Phones: the tabs replace the chart (a few hundred dots are too small to tap). */
 @media(max-width:600px){.rsChartBlock{display:none}}
-/* Chart filter overlay (rsPlotFilter), in the empty bottom-left corner. */
+/* Chart filter (rsPlotFilter), right end of the legend row. */
 .rsPlot{position:relative}
-.rsFilter{position:absolute;left:6%;bottom:13%;display:flex;flex-wrap:wrap;gap:6px;max-width:34%;align-items:center}
+.rsFilter{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-left:auto}
 .rsFilterChip,.rsFilterConf{min-height:30px;padding:0 10px;border:1px solid var(--line2);border-radius:999px;background:var(--bg2);color:var(--muted);font:inherit;font-size:var(--fs-xs);font-weight:var(--fw-semibold);cursor:pointer}
 .rsFilterChip[aria-pressed="true"]{border-color:var(--signal);color:var(--text)}
 .rsFilterChip:focus-visible,.rsFilterConf:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
@@ -3738,3 +3738,5 @@ body{font-variant-numeric:tabular-nums}
 .rsPlot circle.rsFadeOut{opacity:.08}
 .rsPlot.rsFiltered text.rsLbl{opacity:.25}
 .rsQuadNote{margin:-4px 0 12px;color:var(--faint);font-size:var(--fs-xs)}
+.rsChartBlock .rsLegend{align-items:center}
+.scTick{fill:var(--faint);font-size:var(--fs-2xs);font-variant-numeric:tabular-nums}

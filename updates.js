@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0925ZU",
+  "tag": "Fix",
+  "title": "Chart numbers and tighter layout",
+  "items": [
+   "Both Research charts now show small numbers along each axis.",
+   "The team filters moved below the chart on the right, and the group lists show five teams before Show all, so the chart no longer leaves empty space beneath it."
+  ]
+ },
+ {
   "date": "Build 0925ZT",
   "tag": "Design",
   "title": "Chart groups, filters and top 25",

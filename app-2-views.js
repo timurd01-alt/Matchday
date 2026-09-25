@@ -1303,6 +1303,18 @@ function rsMyPicks(){
     +`<div class="rsSplitSide rsExpandable"><ul class="rsPicks">${ordered.map(row).join('')}</ul>`
     +(ordered.length>5?rsMoreBtn(ordered.length,'All picks','@timurknowsball picks'):'')+`</div></div></section>`;
 }
+// Small tick numbers on both chart axes: "nice" steps (1, 2 or 5 x 10^n)
+// that land inside the data range, drawn faint so the dots stay the subject.
+function rsNiceTicks(lo,hi,n=5){
+  const span=(hi-lo)||1,raw=span/(n-1),mag=Math.pow(10,Math.floor(Math.log10(raw))),f=raw/mag;
+  const step=(f<1.5?1:f<3.5?2:f<7.5?5:10)*mag,out=[];
+  for(let v=Math.ceil(lo/step)*step;v<=hi+step*1e-9;v+=step)out.push(+v.toFixed(10));
+  return out;
+}
+function rsAxisTicks(sx,sy,x0,x1,y0,y1,W,H,PL,PB,fx,fy){
+  return rsNiceTicks(x0,x1).map(v=>`<text class="scTick" x="${sx(v).toFixed(1)}" y="${H-PB+15}" text-anchor="middle">${fx(v)}</text>`).join('')
+    +rsNiceTicks(y0,y1).map(v=>`<text class="scTick" x="${PL-6}" y="${(sy(v)+3.5).toFixed(1)}" text-anchor="end">${fy(v)}</text>`).join('');
+}
 function rsScatter(){
   const table=collegeRankingTable();
   const rows=(table?.rankings||[]).filter(r=>Number.isFinite(Number(r.rating))&&Number.isFinite(Number(r.sos)));
@@ -1332,13 +1344,14 @@ function rsScatter(){
     return `<svg viewBox="0 0 ${W} ${H}" class="rsScatter ${cls}" role="img" aria-label="Scatter plot of team rating against strength of schedule">`
       +`<line class="scAx" x1="${PL}" y1="${H-PB}" x2="${W-PR}" y2="${H-PB}"/><line class="scAx" x1="${PL}" y1="${PT}" x2="${PL}" y2="${H-PB}"/>`
       +`<line class="scMed" x1="${mx.toFixed(1)}" y1="${PT}" x2="${mx.toFixed(1)}" y2="${H-PB}"/><line class="scMed" x1="${PL}" y1="${my.toFixed(1)}" x2="${W-PR}" y2="${my.toFixed(1)}"/>`
+      +rsAxisTicks(sx,sy,x0,x1,y0,y1,W,H,PL,PB,v=>v.toFixed(Number.isInteger(v)?0:1),v=>v.toFixed(Number.isInteger(v)?0:1))
       +`${dots}${labels}<text class="scAxLbl" x="${((W+PL)/2).toFixed(0)}" y="${H-8}" text-anchor="middle">strength of schedule →</text>`
       +`<text class="scAxLbl" transform="rotate(-90 12 ${(H/2).toFixed(0)})" x="12" y="${(H/2).toFixed(0)}" text-anchor="middle">rating →</text></svg>`;
   };
   const anyG5=rows.some(r=>String(r.tier||'')&&String(r.tier)!=='power');
   return `<section class="rsBlock rsSpan8 rsChartBlock">${rsTop('Rating vs schedule','season',`${rows.length} teams`)}`
-    +`<div class="rsPlot">`+draw(1000,440,40,16,14,32,1,'rsWide')+draw(640,360,34,14,14,32,1.1,'rsMid')+draw(360,420,30,12,14,32,1.25,'rsTall')+rsPlotFilter(rows.map(r=>r.conference))+`</div>`
-    +`<div class="rsLegend"><span><i class="dotKeyHi"></i>Top 25</span><span><i class="dotKeyP"></i>Power</span>${anyG5?'<span><i class="dotKeyG"></i>Group of Five</span>':''}<span>Lines are medians · hover anywhere on the chart</span></div><div class="rsReadout" aria-live="polite">Tap any dot to see the team.</div>`
+    +`<div class="rsPlot">`+draw(1000,440,56,16,14,44,1,'rsWide')+draw(640,360,52,14,14,44,1.1,'rsMid')+draw(360,420,46,12,14,44,1.25,'rsTall')+`</div>`
+    +`<div class="rsLegend"><span><i class="dotKeyHi"></i>Top 25</span><span><i class="dotKeyP"></i>Power</span>${anyG5?'<span><i class="dotKeyG"></i>Group of Five</span>':''}<span>Lines are medians · hover anywhere on the chart</span>${rsPlotFilter(rows.map(r=>r.conference))}</div><div class="rsReadout" aria-live="polite">Tap any dot to see the team.</div>`
     +`</section>`;
 }
 /* What the chart shows, stated: the two quadrants that matter and the
@@ -1350,18 +1363,18 @@ function rsScatter(){
    badge so the highlighted dots on the chart can be found in the list. */
 function rsQuadTabs(key,groups,colA,colB){
   const first=groups.findIndex(g=>g.rows.length);if(first<0)return '';
-  const tabs=groups.map((g,i)=>`<button type="button" class="rsQuadTab" aria-pressed="${i===first}" data-g="${i}" onclick="rsQuadPick(this)"><span>${esc(g.label)}</span><b>${g.rows.length}</b></button>`).join('');
+  const tabs=groups.map((g,i)=>`<button type="button" class="rsQuadTab" aria-pressed="${i===first}" data-g="${i}" title="${esc(g.what)}" onclick="rsQuadPick(this)"><span>${esc(g.label)}</span><b>${g.rows.length}</b></button>`).join('');
   const panes=groups.map((g,i)=>{
-    const li=g.rows.map((r,n)=>`<li class="${n>=8?'rsQuadMoreRow':''}"><span class="rsQuadN">${n+1}</span><span class="rsLogoName">${typeof teamMark==='function'?teamMark(r.name):''}${esc(rsShortName(r.name))}${r.rank&&r.rank<=25?`<i class="rsQuadRank">#${esc(r.rank)}</i>`:''}</span><span class="rsNum">${r.a}</span><span class="rsNum rsMuted">${r.b}</span></li>`).join('');
-    const more=g.rows.length>8?`<button type="button" class="rsQuadMore" onclick="this.closest('.rsQuadPane').classList.add('rsOpen');this.remove()">Show all ${g.rows.length} <span aria-hidden="true">→</span></button>`:'';
-    return `<div class="rsQuadPane" data-g="${i}"${i===first?'':' hidden'}><p class="rsQuadWhat">${esc(g.what)}</p><div class="rsQuadHead"><span>#</span><span>Team</span><span>${esc(colA)}</span><span>${esc(colB)}</span></div><ol class="rsQuadList">${li}</ol>${more}</div>`;
+    const li=g.rows.map((r,n)=>`<li class="${n>=5?'rsQuadMoreRow':''}"><span class="rsQuadN">${n+1}</span><span class="rsLogoName">${typeof teamMark==='function'?teamMark(r.name):''}${esc(rsShortName(r.name))}${r.rank&&r.rank<=25?`<i class="rsQuadRank">#${esc(r.rank)}</i>`:''}</span><span class="rsNum">${r.a}</span><span class="rsNum rsMuted">${r.b}</span></li>`).join('');
+    const more=g.rows.length>5?`<button type="button" class="rsQuadMore" onclick="this.closest('.rsQuadPane').classList.add('rsOpen');this.remove()">Show all ${g.rows.length} <span aria-hidden="true">→</span></button>`:'';
+    return `<div class="rsQuadPane" data-g="${i}"${i===first?'':' hidden'}><div class="rsQuadHead"><span>#</span><span>Team</span><span>${esc(colA)}</span><span>${esc(colB)}</span></div><ol class="rsQuadList">${li}</ol>${more}</div>`;
   }).join('');
   // Why the counts are lopsided, said once: the lines split each measure in
   // half, and the two measures move together.
   const note=`<p class="rsQuadNote">Each line splits the teams in half. Most teams are strong at both or neither, so the two mixed groups are the unusual profiles.</p>`;
   return `<div class="rsQuad" data-key="${esc(key)}"><div class="rsQuadTabs" role="group" aria-label="Team groups">${tabs}</div>${note}${panes}</div>`;
 }
-/* Filter overlay in the chart's empty bottom-left corner: fade every dot that
+/* Filter at the right end of the chart's legend row: fade every dot that
    is not in the chosen tier or conference, so one league can be read at a time. */
 function rsPlotFilter(confs){
   const list=[...new Set(confs.filter(Boolean))].sort();
@@ -1370,11 +1383,11 @@ function rsPlotFilter(confs){
     +(list.length?`<select class="rsFilterConf" aria-label="Conference" onchange="rsPlotFilterSet(this,this.value?'conf:'+this.value:'all')"><option value="">Conference</option>${list.map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join('')}</select>`:'')+`</div>`;
 }
 function rsPlotFilterSet(el,f){
-  const plot=el.closest('.rsPlot');
+  const plot=el.closest('.rsBlock');
   plot.querySelectorAll('.rsFilterChip').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.f===f)));
   const sel=plot.querySelector('.rsFilterConf');if(sel&&!f.startsWith('conf:'))sel.value='';
   const [kind,val]=f==='all'?['all','']:[f.slice(0,f.indexOf(':')),f.slice(f.indexOf(':')+1)];
-  plot.classList.toggle('rsFiltered',kind!=='all');
+  plot.querySelector('.rsPlot')?.classList.toggle('rsFiltered',kind!=='all');
   plot.querySelectorAll('circle[data-team]').forEach(c=>{
     const on=kind==='all'||(kind==='tier'?c.dataset.tier===val:c.dataset.conf===val);
     c.classList.toggle('rsFadeOut',!on);
@@ -1405,7 +1418,7 @@ function rsScatterNotes(){
     {label:'Tested, fell short',what:'Below-median rating against an above-median schedule.',rows:rsQuadRows(rows,x,y,mx,my,1,-1).map(shape)},
     {label:'Neither',what:'Below-median rating against a below-median schedule.',rows:rsQuadRows(rows,x,y,mx,my,-1,-1).map(shape)},
   ];
-  return `<section class="rsBlock rsSpan4">${rsTop('Rating vs schedule groups','season')}${rsQuadTabs('rating',groups,'Rating','SoS')}</section>`;
+  return `<section class="rsBlock rsSpan4">${rsTop('Schedule groups','season')}${rsQuadTabs('rating',groups,'Rating','SoS')}</section>`;
 }
 /* Hover anywhere on the chart: the nearest dot within reach is highlighted
    and described in a floating card. Dots are a few pixels wide, so matching the
@@ -1539,12 +1552,13 @@ function rsEfficiency(){
     return `<svg viewBox="0 0 ${W} ${H}" class="rsScatter ${cls}" role="img" aria-label="Scatter of offensive success rate against net expected points per successful play">`
       +`<line class="scAx" x1="${PL}" y1="${H-PB}" x2="${W-PR}" y2="${H-PB}"/><line class="scAx" x1="${PL}" y1="${PT}" x2="${PL}" y2="${H-PB}"/>`
       +`<line class="scMed" x1="${sx(mx).toFixed(1)}" y1="${PT}" x2="${sx(mx).toFixed(1)}" y2="${H-PB}"/><line class="scMed" x1="${PL}" y1="${sy(my).toFixed(1)}" x2="${W-PR}" y2="${sy(my).toFixed(1)}"/>`
+      +rsAxisTicks(sx,sy,x0,x1,y0,y1,W,H,PL,PB,v=>Math.round(v*100)+'%',v=>(v>0?'+':'')+v.toFixed(Math.abs(v)<1&&!Number.isInteger(v*10)?2:1))
       +`${dots}${labels}<text class="scAxLbl" x="${((W+PL)/2).toFixed(0)}" y="${H-8}" text-anchor="middle">success rate →</text>`
       +`<text class="scAxLbl" transform="rotate(-90 12 ${(H/2).toFixed(0)})" x="12" y="${(H/2).toFixed(0)}" text-anchor="middle">net points per success →</text></svg>`;
   };
   return `<section class="rsBlock rsSpan8 rsChartBlock">${rsTop('Efficiency vs net points per success','season',`${rows.length} FBS offenses`)}`
-    +`<div class="rsPlot">`+draw(1000,440,40,16,14,32,1,'rsWide')+draw(640,360,34,14,14,32,1.1,'rsMid')+draw(360,420,30,12,14,32,1.25,'rsTall')+rsPlotFilter(rows.map(r=>r.row?.conference))+`</div>`
-    +`<div class="rsLegend"><span><i class="dotKeyHi"></i>Top 25</span><span><i class="dotKeyP"></i>Power</span><span><i class="dotKeyG"></i>Group of Five</span><span>Lines are medians · hover for the team</span></div><div class="rsReadout" aria-live="polite">Tap any dot to see the team.</div></section>`;
+    +`<div class="rsPlot">`+draw(1000,440,56,16,14,44,1,'rsWide')+draw(640,360,52,14,14,44,1.1,'rsMid')+draw(360,420,46,12,14,44,1.25,'rsTall')+`</div>`
+    +`<div class="rsLegend"><span><i class="dotKeyHi"></i>Top 25</span><span><i class="dotKeyP"></i>Power</span><span><i class="dotKeyG"></i>Group of Five</span><span>Lines are medians · hover for the team</span>${rsPlotFilter(rows.map(r=>r.row?.conference))}</div><div class="rsReadout" aria-live="polite">Tap any dot to see the team.</div></section>`;
 }
 function rsEfficiencyNotes(){
   const D=rsEfficiencyData();if(!D)return '';
