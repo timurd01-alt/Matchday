@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0925ZK",
+  "tag": "Fix",
+  "title": "Team names no longer split mid-word",
+  "items": [
+   "Game cards are now at least 360px wide with slightly tighter gutters, so every school name fits without being cut in the middle (no more Northwest/ern or Tennesse/e). Names still wrap between words, like Virginia / Tech.",
+   "The 14 schools with one word still too long use a short name they go by, such as NU, UMass, Penn, FIU and YSU. Hover the name for the full one.",
+   "First Four Out, scorecard rows and the model-versus-market list also stopped breaking names mid-word."
+  ]
+ },
+ {
   "date": "Build 0925ZJ",
   "tag": "Fix",
   "title": "Methodology in two fixed columns",
