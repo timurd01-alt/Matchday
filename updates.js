@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0925ZX",
+  "tag": "Design",
+  "title": "Show all opens a window",
+  "items": [
+   "Every Show all on the Research page opens the full list in its own window, including the chart and defense group lists, which now show seven teams in the panel.",
+   "The top bar notes that the Scorecard and Research update on Sundays."
+  ]
+ },
+ {
   "date": "Build 0925ZW",
   "tag": "Design",
   "title": "Research methodology",

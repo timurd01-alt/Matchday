@@ -3721,7 +3721,6 @@ body{font-variant-numeric:tabular-nums}
 .rsQuadList{list-style:none;margin:0;padding:0}
 .rsQuadList li{padding:7px 0;border-bottom:1px solid var(--line);font-size:var(--fs-sm)}
 .rsQuadList li.rsQuadMoreRow{display:none}
-.rsQuadPane.rsOpen .rsQuadList li.rsQuadMoreRow{display:grid}
 .rsQuadN{color:var(--faint);font-variant-numeric:tabular-nums}
 .rsQuadRank{margin-left:6px;font-style:normal;font-size:var(--fs-2xs);font-weight:var(--fw-bold);color:var(--signal)}
 .rsQuadMore{margin-top:10px;width:100%;min-height:40px;border:1px solid var(--line2);border-radius:8px;background:transparent;color:var(--signal);font:inherit;font-size:var(--fs-sm);font-weight:var(--fw-semibold);cursor:pointer}
@@ -3746,3 +3745,4 @@ body{font-variant-numeric:tabular-nums}
 .rsLegend2 .rsMethod{margin:0 0 0 auto}
 .rsLegend2 .rsMethod[open]{flex-basis:100%;margin-left:0}
 .rsLegend2 .rsMethod>div{margin-top:10px;color:var(--muted);font-size:var(--fs-sm)}
+.rsDialogBody .rsQuadHead,.rsDialogBody .rsQuadList li{grid-template-columns:28px minmax(0,1fr) 72px 80px}

@@ -1142,6 +1142,10 @@ function rsOpenAll(btn){
   box.querySelectorAll(':scope > .rsSchedHead, :scope > .rsConfHead, :scope > .rsScrollX, :scope > ul, :scope > ol').forEach(el=>{
     const c=el.cloneNode(true);c.querySelectorAll('.rsExtra').forEach(x=>x.classList.remove('rsExtra'));body.appendChild(c);
   });
+  rsShowDialog(title,[...body.childNodes],btn);
+}
+// The one "View all" window every Research list opens into.
+function rsShowDialog(title,nodes,opener){
   let dlg=document.getElementById('rsAllDialog');
   if(!dlg){
     dlg=document.createElement('div');dlg.id='rsAllDialog';dlg.className='rsDialog';dlg.hidden=true;
@@ -1151,8 +1155,8 @@ function rsOpenAll(btn){
     document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!dlg.hidden)rsCloseAll()});
   }
   dlg.querySelector('#rsDialogTitle').textContent=title;
-  dlg.querySelector('.rsDialogBody').replaceChildren(...body.childNodes);
-  dlg._opener=btn;dlg.hidden=false;document.body.classList.add('modalOpen');
+  dlg.querySelector('.rsDialogBody').replaceChildren(...nodes);
+  dlg._opener=opener;dlg.hidden=false;document.body.classList.add('modalOpen');
   dlg.querySelector('.rsDialogSheet').focus();
 }
 function rsCloseAll(){
@@ -1386,7 +1390,7 @@ function rsQuadTabs(key,groups,colA,colB,show=7){
   const tabs=groups.map((g,i)=>`<button type="button" class="rsQuadTab" aria-pressed="${i===first}" data-g="${i}" title="${esc(g.what)}" onclick="rsQuadPick(this)"><span>${esc(g.label)}</span><b>${g.rows.length}</b></button>`).join('');
   const panes=groups.map((g,i)=>{
     const li=g.rows.map((r,n)=>`<li class="${n>=show?'rsQuadMoreRow':''}"><span class="rsQuadN">${n+1}</span><span class="rsLogoName">${typeof teamMark==='function'?teamMark(r.name):''}${esc(rsShortName(r.name))}${r.rank&&r.rank<=25?`<i class="rsQuadRank">#${esc(r.rank)}</i>`:''}</span><span class="rsNum">${r.a}</span><span class="rsNum rsMuted">${r.b}</span></li>`).join('');
-    const more=g.rows.length>show?`<button type="button" class="rsQuadMore" onclick="this.closest('.rsQuadPane').classList.add('rsOpen');this.remove()">Show all ${g.rows.length} <span aria-hidden="true">→</span></button>`:'';
+    const more=g.rows.length>show?`<button type="button" class="rsQuadMore" aria-haspopup="dialog" data-title="${esc(g.label)}" onclick="rsQuadOpenAll(this)">Show all ${g.rows.length} <span aria-hidden="true">→</span></button>`:'';
     return `<div class="rsQuadPane" data-g="${i}"${i===first?'':' hidden'}><div class="rsQuadHead"><span>#</span><span>Team</span><span>${esc(colA)}</span><span>${esc(colB)}</span></div><ol class="rsQuadList">${li}</ol>${more}</div>`;
   }).join('');
   return `<div class="rsQuad" data-key="${esc(key)}"><div class="rsQuadTabs" role="group" aria-label="Team groups">${tabs}</div>${panes}</div>`;
@@ -1409,6 +1413,13 @@ function rsPlotFilterSet(el,f){
     const on=kind==='all'||(kind==='tier'?c.dataset.tier===val:c.dataset.conf===val);
     c.classList.toggle('rsFadeOut',!on);
   });
+}
+function rsQuadOpenAll(btn){
+  const pane=btn.closest('.rsQuadPane'),block=btn.closest('.rsBlock');
+  const head=pane.querySelector('.rsQuadHead').cloneNode(true),list=pane.querySelector('.rsQuadList').cloneNode(true);
+  list.querySelectorAll('.rsQuadMoreRow').forEach(li=>li.classList.remove('rsQuadMoreRow'));
+  const section=block?.querySelector('.rsTitle')?.textContent||'Teams';
+  rsShowDialog(`${section} · ${btn.dataset.title}`,[head,list],btn);
 }
 function rsQuadPick(btn){
   const box=btn.closest('.rsQuad');const g=btn.dataset.g;
@@ -1629,7 +1640,7 @@ function rsDefenceNotes(){
     {label:'Big plays hurt',what:'Stops plenty of snaps, but pays for the ones it misses.',rows:rsQuadRows(D.rows,x,y,mx,my,1,-1).map(shape)},
     {label:'Neither',what:'Below median on both.',rows:rsQuadRows(D.rows,x,y,mx,my,-1,-1).map(shape)},
   ];
-  return `<section class="rsBlock rsSpan4">${rsTop('Defense groups','current')}${rsQuadTabs('defense',groups,'Stop rate','EPA',12)}</section>`;
+  return `<section class="rsBlock rsSpan4">${rsTop('Defense groups','current')}${rsQuadTabs('defense',groups,'Stop rate','EPA')}</section>`;
 }
 function rsPart(num,label,body){
   return body?`<div class="rsPart"><h2 class="rsPartHead"><span>${num}</span>${label}</h2>${body}</div>`:'';
