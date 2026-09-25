@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0925ZY",
+  "tag": "Design",
+  "title": "Community in Explore",
+  "items": [
+   "The home page Explore row now links to Community instead of Games, which is already one tap away through View all games."
+  ]
+ },
+ {
   "date": "Build 0925ZX",
   "tag": "Design",
   "title": "Show all opens a window",
