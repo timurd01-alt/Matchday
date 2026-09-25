@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0925R",
+  "tag": "Feature",
+  "title": "Filter the Games board",
+  "items": [
+   "Games now has filter chips: All games, Top 25, Ranked vs ranked, Conference games and Non-conference, each showing how many games it matches.",
+   "A conference menu narrows the board to one league, and it combines with the chips, for example ranked SEC games only.",
+   "Top 25 uses the published poll: AP for football, the Top 25 table for basketball."
+  ]
+ },
+ {
   "date": "Build 0925Q",
   "tag": "Fix",
   "title": "Conference standings and charts rebuilt for phones",

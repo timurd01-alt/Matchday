@@ -1063,17 +1063,70 @@ function gamesRecordHTML(){
   const expected=Number(r.expected_hit_rate_pct),actual=Number(r.hit_rate_pct),gap=Number(r.calibration_gap_points);
   return `<section class="gamesRecord"><div><span>Public record</span><strong>${Number(r.wins)||0}–${Number(r.losses)||0}</strong><p>${r.picks} locked pregame picks · ${Number.isFinite(actual)?`${actual.toFixed(1)}% hit rate`:''}${Number.isFinite(expected)?` vs ${expected.toFixed(1)}% expected`:''}${Number.isFinite(gap)?` · ${gap>0?'+':''}${gap.toFixed(1)} calibration pts`:''}</p></div><button type="button" onclick="setView('score')">View Scorecard <span aria-hidden="true">→</span></button></section>`;
 }
+/* Games-board filters. Kind is one of all / top25 / ranked (both teams in the
+   poll) / conf (same-conference game) / nonconf; conf narrows to one league.
+   Poll rank is the published poll (AP for football, the ranking table's top
+   25 for basketball) -- the same source the upset module reads. */
+let GAME_FILTER={kind:'all',conf:''},GAME_TEAM_CACHE=new Map();
+// Per-render memo: every chip count re-filters the whole schedule.
+function gameTeamMemo(kind,name,fn){const k=kind+'|'+name;if(!GAME_TEAM_CACHE.has(k))GAME_TEAM_CACHE.set(k,fn());return GAME_TEAM_CACHE.get(k)}
+function gamePollRank(name){return gameTeamMemo('rank',name,()=>gamePollRankUncached(name))}
+function gamePollRankUncached(name){
+  const poll=currentSportKey()==='ncaaf'
+    ?(typeof MATCHDAY_CFB_AP_POLL!=='undefined'?MATCHDAY_CFB_AP_POLL.rankings||[]:[])
+    :(typeof collegeRankingTable==='function'?(collegeRankingTable()?.top25||collegeRankingTable()?.rankings||[]):[]);
+  const r=Number(poll.find(r=>bbNameMatches(r.name||r.team_name,name))?.rank);
+  return Number.isFinite(r)&&r<=25?r:null;
+}
+// Live fixtures carry no conference; the power-rating table does.
+function gameConference(side){
+  if(side?.group)return side.group;
+  return gameTeamMemo('conf',side?.name,()=>{
+  const rows=typeof collegeRankingTable==='function'?(collegeRankingTable()?.rankings||[]):[];
+  return rows.find(r=>bbNameMatches(r.name,side?.name))?.conference||'';
+  });
+}
+function gameMatchesFilter(m,f){
+  const hc=gameConference(m.home),ac=gameConference(m.away);
+  if(f.conf&&hc!==f.conf&&ac!==f.conf)return false;
+  const hr=gamePollRank(m.home?.name),ar=gamePollRank(m.away?.name);
+  if(f.kind==='top25')return hr!=null||ar!=null;
+  if(f.kind==='ranked')return hr!=null&&ar!=null;
+  if(f.kind==='conf')return !!hc&&hc===ac;
+  if(f.kind==='nonconf')return !!hc&&!!ac&&hc!==ac;
+  return true;
+}
+function setGameFilter(patch){GAME_FILTER={...GAME_FILTER,...patch};MATCH_VISIBLE=FIXTURE_PAGE_SIZE;renderMatches()}
+function gameFilterBarHTML(active){
+  const confs=[...new Set(active.flatMap(m=>[gameConference(m.home),gameConference(m.away)]).filter(Boolean))].sort();
+  if(GAME_FILTER.conf&&!confs.includes(GAME_FILTER.conf))GAME_FILTER.conf='';
+  const kinds=[['all','All games'],['top25','Top 25'],['ranked','Ranked vs ranked'],['conf','Conference games'],['nonconf','Non-conference']];
+  const chips=kinds.map(([k,label])=>{
+    const n=active.filter(m=>gameMatchesFilter(m,{...GAME_FILTER,kind:k})).length;
+    const on=GAME_FILTER.kind===k;
+    return `<button type="button" class="chip ${on?'on':''}" aria-pressed="${on}" onclick="setGameFilter({kind:'${k}'})">${label}<span class="count">${n}</span></button>`;
+  }).join('');
+  const select=confs.length?`<label class="gameConfPick"><span>Conference</span><select onchange="setGameFilter({conf:this.value})"><option value="">All conferences</option>${confs.map(c=>`<option value="${esc(c)}" ${c===GAME_FILTER.conf?'selected':''}>${esc(c)}</option>`).join('')}</select></label>`:'';
+  return `<div class="modelToolbar gameFilters" role="group" aria-label="Filter games">${chips}${select}</div>`;
+}
 function renderMatches(){const M=DATA.matches||[];
   // One sport's full schedule, in kickoff order with favorites pinned. The
   // horizon headings below (In play / Today / This week) do the work the old
   // merged board needed a watchability ranking for: a long schedule stays
   // readable because it is grouped by when it happens, not trimmed.
-  const active=M.filter(m=>!isCompleteOrPast(m)).sort(favoriteFixtureSort);
+  GAME_TEAM_CACHE=new Map();
+  const all=M.filter(m=>!isCompleteOrPast(m)).sort(favoriteFixtureSort);
+  const filterBar=gameFilterBarHTML(all);
+  const active=all.filter(m=>gameMatchesFilter(m,GAME_FILTER));
+  const filtered=GAME_FILTER.kind!=='all'||!!GAME_FILTER.conf;
   const shown=active.slice(0,MATCH_VISIBLE),remaining=Math.max(0,active.length-shown.length);
   const missing=DATA._missing?`<div class="banner" style="grid-column:1/-1"><b>No ${esc(DATA.competition||'this sport')} data yet.</b> Fetch it once its season is available — run the matching start file (e.g. start_ucl.bat) or keep an eye out when the season begins.</div>`:'';
-  const intro=`<div class="viewIntro gamesFixtureBoard"><div><div class="vhead">Games</div><p>${FORECAST_PAUSE_ACTIVE?'Fixtures, scores and market odds. Model picks are paused.':'This week comes first. Open any matchup for the full model, market and team analysis.'}</p></div><span>${active.length} games</span></div>`;
-  const html=missing+intro+
-    (shown.length?groupedBoardHTML(shown):`<div class="empty" style="grid-column:1/-1">No upcoming matches to analyze.</div>`)+
+  const intro=`<div class="viewIntro gamesFixtureBoard"><div><div class="vhead">Games</div><p>${FORECAST_PAUSE_ACTIVE?'Fixtures, scores and market odds. Model picks are paused.':'This week comes first. Open any matchup for the full model, market and team analysis.'}</p></div><span>${filtered?`${active.length} of ${all.length}`:active.length} games</span></div>`;
+  const empty=filtered&&all.length
+    ?`<div class="empty" style="grid-column:1/-1">No upcoming games match these filters. <button type="button" class="actionbtn" onclick="setGameFilter({kind:'all',conf:''})">Clear filters</button></div>`
+    :`<div class="empty" style="grid-column:1/-1">No upcoming matches to analyze.</div>`;
+  const html=missing+intro+(all.length?filterBar:'')+
+    (shown.length?groupedBoardHTML(shown):empty)+
     (remaining?`<div class="fixturePager"><span>Showing ${shown.length} of ${active.length} fixtures</span><button class="actionbtn" onclick="MATCH_VISIBLE+=FIXTURE_PAGE_SIZE;renderMatches()">Load ${Math.min(FIXTURE_PAGE_SIZE,remaining)} more</button></div>`:'');
   $('#view-matches').innerHTML=html;enhanceMatchCards($('#view-matches'));
   // Notes go behind each card's ? first, so the power rating card is trimmed
