@@ -935,13 +935,20 @@ function gamesFeaturedHTML(read){
     :`<div><span>Live model · ${esc(read.pick)}</span><b>${modelPctLabel(read.model)}</b></div>`;
   return `<button type="button" class="gamesFeaturedButton" onclick="openMatchModal('${esc(String(m.id))}')"><span class="gamesFeaturedWhen">${esc(m.stage||'Fixture')} · ${esc(kickIn(m.kickoff))}</span><strong><span class="gamesFeaturedTeam">${teamMark(m.home?.name)}<span>${esc(m.home?.name||'Home')}</span></span><i>vs</i><span class="gamesFeaturedTeam away">${teamMark(m.away?.name)}<span>${esc(m.away?.name||'Away')}</span></span></strong><div class="gamesFeaturedCompare">${model}${comparison}</div><em>View analysis <span aria-hidden="true">→</span></em></button>`;
 }
+// Home has no fixture board of its own, so "View all games" opens the Games
+// view; where the board is on the same page, it scrolls to it instead.
+function openAllGames(){
+  const board=[...document.querySelectorAll('.gamesFixtureBoard')].find(b=>b.offsetParent);
+  if(board){board.scrollIntoView({behavior:prefersReducedMotion()?'auto':'smooth'});return}
+  setView('matches');
+}
 function gamesDifferencesHTML(reads){
   const rows=reads.length?reads.map(read=>{
     const m=read.match,d=read.difference;
     const content=`<span><b>${esc(m.home?.name||'Home')} vs ${esc(m.away?.name||'Away')}</b><small>${esc(read.pick)} · model ${modelPctLabel(read.model)} · market ${read.market.toFixed(1)}%</small></span><strong class="${d>0?'up':d<0?'down':''}">${d>0?'+':''}${d.toFixed(1)} pts</strong>`;
     return `<button type="button" onclick="openMatchModal('${esc(String(m.id))}')">${content}</button>`;
   }).join(''):`<div class="gamesEmpty">Model and market comparisons will appear as games are priced.</div>`;
-  return `<section class="gamesDifferences"><div class="gamesSectionHead"><span>Largest model / market differences</span><small>${reads.length?'Top '+reads.length:'Awaiting prices'}</small></div><div class="gamesDifferenceRows">${rows}</div><button type="button" class="gamesTextLink" onclick="document.querySelector('.gamesFixtureBoard')?.scrollIntoView({behavior:prefersReducedMotion()?'auto':'smooth'})">View all games <span aria-hidden="true">→</span></button></section>`;
+  return `<section class="gamesDifferences"><div class="gamesSectionHead"><span>Largest model / market differences</span><small>${reads.length?'Top '+reads.length:'Awaiting prices'}</small></div><div class="gamesDifferenceRows">${rows}</div><button type="button" class="gamesTextLink" onclick="openAllGames()">View all games <span aria-hidden="true">→</span></button></section>`;
 }
 /* The projected playoff field's top four seeds, from the same bracket data
    the Bracket tab draws, as a way into that tab from the home page. */
