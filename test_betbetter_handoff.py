@@ -12,8 +12,6 @@ import tempfile
 import unittest
 
 import betbetter_handoff
-import forecast_pause
-import pick_integrity
 
 
 def pick(**overrides):
@@ -124,12 +122,10 @@ class LoadTests(unittest.TestCase):
 
 
 class AttachTests(unittest.TestCase):
-    def test_a_pick_lands_on_its_own_key_not_on_prediction(self):
-        matches = [match(prediction={"publication_state": "paused"})]
+    def test_a_pick_lands_on_its_own_key(self):
+        matches = [match()]
         self.assertEqual(betbetter_handoff.attach(matches, document()), 1)
         self.assertIn("betbetter_pick", matches[0])
-        # The production forecast is untouched, so the pause still owns it.
-        self.assertEqual(matches[0]["prediction"], {"publication_state": "paused"})
 
     def test_an_ungraded_pick_says_so_on_the_card(self):
         # FBS vs FCS: the engine prices it for reference and never grades it.
@@ -215,15 +211,6 @@ class AttachTests(unittest.TestCase):
         private = {"best_price", "best_american", "book_count", "edge_warning"}
         self.assertFalse(private & set(block))
 
-    def test_an_attached_block_is_not_an_official_pick_record(self):
-        # The guard that matters most: whatever this module attaches must fail
-        # Matchday's own receipt test, so it can never be graded as a call.
-        matches = [match()]
-        betbetter_handoff.attach(matches, document())
-        self.assertFalse(
-            pick_integrity.is_official_pick_record(matches[0]["betbetter_pick"]))
-
-
 class FileLevelTests(unittest.TestCase):
     def test_a_broken_handoff_does_not_stop_a_fetch(self):
         handle, path = tempfile.mkstemp(suffix=".json")
@@ -241,15 +228,12 @@ class FileLevelTests(unittest.TestCase):
         self.assertFalse(report["available"])
 
 
-class PauseTests(unittest.TestCase):
-    def test_display_is_refused_regardless_of_how_the_pause_is_set(self):
-        # These picks are never publishable, so the answer does not depend on
-        # the pause. This is what lets the pipe be wired while it stays on.
+class PublicationTests(unittest.TestCase):
+    def test_an_attached_pick_is_never_an_official_publication(self):
         matches = [match()]
         betbetter_handoff.attach(matches, document())
         self.assertIs(
             matches[0]["betbetter_pick"]["official_publication_eligible"], False)
-        self.assertFalse(forecast_pause.PAUSE_ACTIVE)
 
 
 if __name__ == "__main__":

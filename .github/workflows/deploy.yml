@@ -64,27 +64,11 @@ jobs:
             # them, and every run re-fetched from the provider regardless of
             # the intended cache window.
             odds_market_cache_*.json
-            outrights_market_cache_*.json
             advanced_metrics_*.json
             ncaaf_venue_coords.json
-            # forecast_ledger_*.jsonl is NOT cached. Every ledger it
-            # matches is git-tracked and committed back by the ledger
-            # step below, whose own `ls forecast_ledger_*.jsonl` glob
-            # picks up new competitions automatically -- so a ledger
-            # for a newly-started season becomes tracked-and-cached
-            # the moment it is first written, with no code change and
-            # no review. forecast_ledger_ligue1.jsonl did exactly that
-            # in 0f66793 when Ligue 1 opened, and CacheClobberTests
-            # took the hourly deploy down until the glob was removed.
-            # A wildcard here cannot be grandfathered safely: the set
-            # it covers grows on its own.
             market_snapshot_ledger.jsonl
-            market_benchmark_report.json
             next_task.json
             ui_audit_report.json
-            data_coverage_report.json
-            clv_report.json
-            independent_value_report.json
             # posts.json / posts_state.json / posts/*.html are NOT cached.
             # They are git-tracked and committed back below, and caching a
             # tracked file means the restore-keys fallback lands an older
@@ -123,9 +107,6 @@ jobs:
       - name: Recover published last-good fixtures after a cold cache miss
         run: python recover_published_data.py
 
-      - name: Reconcile official picks into append-only forecast ledgers
-        run: python reconcile_forecast_ledgers.py
-
       - name: Write private keys from secrets (never committed)
         run: |
           cat > config_keys.py <<EOF
@@ -146,9 +127,6 @@ jobs:
           python build_updates.py --check || echo "::warning::updates.js was out of sync with updates/; rebuilding"
           python build_updates.py
 
-      - name: Recover durable NCAAF roster talent before shared quota use
-        run: python refresh_college_talent.py
-
       # Stadium coordinates for the weather lookup. One licensed CFBD call the
       # first time, then skipped forever -- stadiums do not move. Without it
       # 145 of 160 upcoming NCAAF fixtures resolved to no coordinates and
@@ -157,39 +135,6 @@ jobs:
       - name: Recover durable NCAAF venue coordinates
         continue-on-error: true
         run: python refresh_ncaaf_venues.py
-
-      # Plumbing for the pre-registered 2026-27 NCAAM season. This is a no-op
-      # today by design: ncaam_advanced_metrics.MAPPING_VERIFIED is False, so
-      # the script prints why and exits 0 without spending a single CBBD call.
-      # Enabling it is a one-line change AFTER someone runs --verify against a
-      # real response and commits the evidence. Wiring it now means the step,
-      # its cache entry, and its position in the run order are already settled
-      # and reviewed rather than being rushed in November against the
-      # artifact_freeze_deadline in ncaam_preregistration.json.
-      - name: Refresh NCAAM adjusted-efficiency research profile
-        if: github.event_name != 'push'
-        continue-on-error: true
-        run: python ncaam_advanced_metrics.py
-
-      # The "ONE-TIME seed merge" step that used to live here was removed
-      # 2026-07-27. It was never actually one-time -- it ran on EVERY run and
-      # re-added all 19 seed picks under their original fixture keys, because
-      # its `if mid not in current` check compares against keys that
-      # _quarantine_legacy_records() has since renamed to "legacy:<id>". Each
-      # run therefore re-seeded 19 plain keys, which that function then
-      # renamed to "legacy:<id>:2", ":3", ... growing picks_log_wc.json by 19
-      # duplicate records per run (measured: 19 real fixtures stored as 38
-      # records) and inflating the scorecard's all-time legacy tally with
-      # copies of the same picks. The re-seeded copies also carried the old
-      # penalty-inflated scorelines ("3-5" instead of "1-1 (2-4 pens)") that
-      # update_scorecard()'s self-heal pass had already corrected, so every
-      # run reintroduced data the app had explicitly fixed.
-      #
-      # It is safe to drop outright: picks_log_wc.json is now tracked in git
-      # (see .gitignore) and committed back after every fetch, so the ledger
-      # persists on its own and no longer needs re-seeding from
-      # seed_picks_log_wc.json (kept in the repo as the historical record of
-      # what was originally seeded).
 
       - name: Fetch one adaptive round for all sports
         if: github.event_name != 'push'
@@ -227,49 +172,6 @@ jobs:
             echo "::warning::betbetter_picks.json is absent; the NCAAF board keeps whatever repair layer is committed."
           fi
 
-      - name: Segment model losses against the closing market
-        if: github.event_name != 'push'
-        run: |
-          files=(forecast_ledger_*.jsonl)
-          if [ -f market_snapshot_ledger.jsonl ] && [ -e "${files[0]}" ]; then
-            python build_market_benchmark.py --forecast-ledger "${files[@]}" --market-ledger market_snapshot_ledger.jsonl --output market_benchmark_report.json
-          else
-            echo "market/forecast receipts have not accumulated yet; benchmark remains pending"
-          fi
-
-      # A pre-registered target is only worth anything if it cannot be quietly
-      # edited once results exist. --check fails the build on a declaration
-      # whose sealed terms no longer hash to their recorded value, so a
-      # post-hoc change to the goalposts breaks CI instead of passing silently.
-      - name: Verify pre-registered forecasting targets are unamended
-        run: python preregistration.py ncaam_preregistration.json --check
-
-      # Answers "does the independent read add anything over the market" from
-      # the committed pick logs. Descriptive, not authoritative -- the pick logs
-      # are the published record and the scorecard's self-heal pass may correct
-      # them, whereas market_benchmark_report.json is built from the
-      # append-only ledger. It runs anyway because the market snapshot ledger
-      # only began persisting 2026-08-19 and will not carry a usable sample for
-      # months, while the pick logs already hold hundreds of graded fixtures.
-      - name: Measure independent value against the market
-        if: github.event_name != 'push'
-        continue-on-error: true
-        run: python independent_value.py --output independent_value_report.json
-
-      # Closing line value is the fast-converging read on whether Matchday
-      # knows anything the market does not yet: line movement carries far less
-      # variance than match results, so it answers in hundreds of fixtures
-      # rather than thousands. Descriptive only -- it feeds no forecast.
-      - name: Measure closing line value by competition
-        if: github.event_name != 'push'
-        run: |
-          files=(forecast_ledger_*.jsonl)
-          if [ -f market_snapshot_ledger.jsonl ] && [ -e "${files[0]}" ]; then
-            python clv_report.py --forecast-ledger "${files[@]}" --market-ledger market_snapshot_ledger.jsonl --output clv_report.json
-          else
-            echo "market/forecast receipts have not accumulated yet; CLV remains pending"
-          fi
-
       # Both product loops run before next_task.py so their reports are on
       # disk when it ranks. Neither can fail the build: an undersized tap
       # target and a thin pick log are things to work on, not reasons to stop
@@ -280,13 +182,6 @@ jobs:
         if: github.event_name != 'push'
         continue-on-error: true
         run: python ui_audit.py --output ui_audit_report.json
-
-      # Runs after the fetch and grading steps so it measures the payloads this
-      # run actually published, rather than the ones it inherited from cache.
-      - name: Measure prediction input coverage and evidence gaps
-        if: github.event_name != 'push'
-        continue-on-error: true
-        run: python data_coverage.py --output data_coverage_report.json
 
       # Runs after every report step above so it ranks this run's evidence.
       # Never blocks the build.
@@ -319,56 +214,14 @@ jobs:
       - name: Populate authorized research reasoning into cached fixtures
         run: python populate_research_signals.py
 
-      - name: Commit updated ratings and picks ledger back to the repo
+      - name: Commit durable generated files back to the repo
         if: github.event_name != 'push'
-        # EVERY ratings*.json file (Elo, and every per-competition curated/
-        # enriched class-rating file -- ratings.json, ratings_ncaaf.json,
-        # ratings_bundesliga.json, etc.) is git-tracked, and all of them used
-        # to also be matched by the cache step above -- the cache's
-        # restore-keys fallback would silently restore an older cached copy
-        # over the freshly-checked-out file every run, discarding real
-        # enrichment (talent/recruiting strength, championship-odds strength,
-        # historical Elo) and reintroducing stale/contaminated data none of
-        # this session's fixes could see, since they never ran against it.
-        # Confirmed live 2026-07-26: this exact bug flipped Alabama's class
-        # score negative relative to East Carolina's on the live site, even
-        # though the underlying provider data was correct. Committing the
-        # real per-run result back here, instead of relying on the cache,
-        # makes git the one source of truth for every ratings file.
-        #
-        # picks_log*.json joined this step 2026-07-27 for the identical
-        # reason: it was cache-only (see .gitignore's prior entry for it) and
-        # a single cache-restore hiccup silently reset the entire pick-lock
-        # ledger to empty with zero error trace -- confirmed live the same
-        # day. The scorecard's whole "verified pregame picks, locked in
-        # public, never rewritten" claim depends on this ledger actually
-        # persisting, so it gets the same durable-source-of-truth treatment.
-        #
-        # market_snapshot_ledger.jsonl joined 2026-08-19 as the FOURTH
-        # instance, and the most damaging one. Every prior instance stored
-        # something recomputable: ratings rebuild from provider data, picks
-        # regenerate, forecasts re-derive. A market price cannot. What the
-        # closing consensus said at a kickoff that has already happened is
-        # unrecoverable the moment it is lost -- there is no endpoint, no
-        # backfill, and no provider that will sell it back. It is also the
-        # single file the "do we beat the market" question depends on: both
-        # market_benchmark_report.json and the CLV report read from it, and
-        # neither can be reconstructed without it. It was cached but never
-        # committed, so one cache miss silently zeroed the entire benchmark
-        # evidence base with no error trace.
-        #
-        # forecast_ledger_*.jsonl and mlb_shadow_ledger.jsonl joined
-        # 2026-08-18 for the third instance of the same reason. They were
-        # cache-only, and they hold the append-only prospective receipts that
-        # the NFL calibrated-Elo gate and the MLB promotion/recovery gates are
-        # graded from -- nfl_model_adjustment.json sits at
-        # prospective_status: "collecting_prospective_evidence" with the NFL
-        # season about to start writing exactly that evidence. A cache miss
-        # would erase it with no error trace, and unlike a ratings file it
-        # cannot be recomputed afterwards: a pregame lock is only worth
-        # anything because it was recorded before the result existed. The
-        # grading steps above are guarded by `if [ -f ... ]`, so a silent loss
-        # degrades to a cheerful "pending" rather than a failure.
+        # market_snapshot_ledger.jsonl is committed rather than cached because
+        # a market price cannot be recomputed: what the closing consensus said
+        # at a kickoff that has already happened is unrecoverable the moment it
+        # is lost -- there is no endpoint, no backfill, and no provider that
+        # will sell it back. It was once cached but never committed, and one
+        # cache miss silently zeroed it with no error trace.
         #
         # These files start untracked the first run after that .gitignore
         # change, and `git diff` (unlike `git diff --cached`) ignores
@@ -379,7 +232,6 @@ jobs:
         run: |
           git config user.name "matchday-bot"
           git config user.email "actions@github.com"
-          git add -- 'ratings*.json' ':!ratings*.backup.json' ':!ratings*.legacy.json' ':!ratings*.raced-preserved.json' 'picks_log*.json'
           # The published editorial record. posts.json, the due-ledger that
           # decides whether a recap has already gone out, and the rendered
           # pages must move together in one commit or the site links posts
@@ -387,7 +239,7 @@ jobs:
           # the ledgers below because `git add` exits 128 on a pathspec that
           # matches nothing, which would fail the job -- and with it the
           # deploy -- on a run where nothing was wrong.
-          published=$(ls posts.json posts_state.json 2>/dev/null || true)
+          published=$(ls posts.json 2>/dev/null || true)
           if [ -n "$published" ]; then
             git add -- $published
           fi
@@ -409,17 +261,16 @@ jobs:
           fi
           # `git add` fails the ENTIRE step on a pathspec matching nothing
           # (verified: exit 128, "did not match any files"), and these ledgers
-          # legitimately may not exist -- mlb_shadow_ledger.jsonl before the
-          # first shadow lock, forecast_ledger_*.jsonl on a cold checkout.
+          # legitimately may not exist on a cold checkout.
           # Naming them as literal pathspecs would therefore fail the build
           # job, and with it the hourly site deploy, on exactly the runs where
           # nothing was wrong. Collect only the ledgers actually present.
-          ledgers=$(ls forecast_ledger_*.jsonl mlb_shadow_ledger.jsonl market_snapshot_ledger.jsonl 2>/dev/null || true)
+          ledgers=$(ls market_snapshot_ledger.jsonl 2>/dev/null || true)
           if [ -n "$ledgers" ]; then
             git add -- $ledgers
           fi
           if ! git diff --cached --quiet; then
-            git commit -m "Update ratings, picks, and market ledgers [skip ci]"
+            git commit -m "Update market ledger and generated files [skip ci]"
             persisted=false
             for attempt in 1 2 3; do
               # The fetch leaves other generated site files intentionally

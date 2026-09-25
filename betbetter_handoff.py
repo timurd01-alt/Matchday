@@ -5,26 +5,15 @@ model read on upcoming games. This module loads that document, checks it, and
 attaches each pick to the matching fixture. It is the only place Matchday
 trusts anything from that engine, so every guard lives here.
 
-Where the pick is attached, and why it is not `prediction`
-----------------------------------------------------------
-A Bet Better pick lands on `match["betbetter_pick"]`, beside the production
-forecast rather than inside it. That follows the shape already used for
-`mlb_challenger_shadow`: research output rides alongside published output and
-is never mistaken for it. Three things fall out of that choice for free:
-
-  * `_set_prediction_publication_state` clears `match["prediction"]` while the
-    site-wide pause is on. A pick written into that key would be wiped; a pick
-    written beside it survives, still marked unpublishable.
-  * `_lock_decision` refuses new receipts for the immutable official ledger
-    while paused. Nothing here ever reaches that ledger, so a displayed pick
-    cannot later be graded as though it had been an official call.
-  * Removing the engine is deleting one key.
+Where the pick is attached
+--------------------------
+A Bet Better pick lands on `match["betbetter_pick"]`. Removing the engine is
+deleting one key.
 
 What is refused
 ---------------
-These picks are *live* forecasts: they keep moving until kickoff. They carry no
-pregame lock receipt and cannot satisfy `pick_integrity.is_official_pick_record`.
-So this module refuses, rather than merely labels:
+These picks are *live* forecasts: they keep moving until kickoff. So this
+module refuses, rather than merely labels:
 
   * a document whose `handoff_version` this code does not know,
   * any pick claiming `official_pick` — the handoff has no authority to mint
@@ -32,9 +21,7 @@ So this module refuses, rather than merely labels:
   * any pick for a fixture that is not `UPCOMING`, so a live number can never
     be attached to a game whose result is already known.
 
-Publication remains `forecast_pause`'s decision. This module never consults it
-to *grant* display; it stamps `official_publication_eligible: False` on every
-pick it attaches, so the answer is no regardless of how the pause is set.
+It stamps `official_publication_eligible: False` on every pick it attaches.
 """
 
 from __future__ import annotations

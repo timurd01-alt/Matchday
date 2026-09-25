@@ -376,7 +376,7 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         # renderInsight() lives in app-4-features.js, so it cannot bound a slice of
         # app-3-panels.js. _v4TitleRows is the function that actually follows
         # details() in this file.
-        details = panels[panels.index("function details(m){"):panels.index("function _v4TitleRows(")]
+        details = panels[panels.index("function details(m){"):]
         self.assertNotIn("pregameContextPanel(m)", details)
         self.assertIn("modernExpandedView", details)
         self.assertIn("modernMatchSheet", features)

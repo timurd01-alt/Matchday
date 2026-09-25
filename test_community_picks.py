@@ -60,9 +60,6 @@ class CommunityPickAvailabilityTests(unittest.TestCase):
         self.assertNotIn("Bet Better live model", self.source)
         self.assertNotIn("Bet Better probabilities pending", self.source)
         self.assertNotIn("Bet Better picks locked alongside yours", self.source)
-        panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
-        self.assertIn("${modelPctLabel(val)}", panels)
-        self.assertIn("${modelPctLabel(pct)}", panels)
 
     def test_todays_call_is_removed(self):
         self.assertNotIn("Today's call", self.source)

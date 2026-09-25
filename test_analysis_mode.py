@@ -64,7 +64,6 @@ class AnalysisModeTests(unittest.TestCase):
     def test_pregame_gaps_explain_source_and_collection_state(self):
         panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
         self.assertIn("Roster profile unavailable", panels)
-        self.assertIn("Needed before lock", panels)
         css = (ROOT / "styles.css").read_text(encoding="utf-8")
         self.assertIn(".contextAlert{display:grid", css)
 
@@ -74,7 +73,7 @@ class AnalysisModeTests(unittest.TestCase):
         self.assertIn("function rosterPanel(m)", panels)
         self.assertIn("Overall roster", panels)
         self.assertIn("m.personnel?.depth_chart", panels)
-        details = panels[panels.index("function details(m){"):panels.index("function _v4TitleRows")]
+        details = panels[panels.index("function details(m){"):]
         self.assertIn("${rosterPanel(m)}", details)
         self.assertNotIn("${statsPanel(m)}", details)
         self.assertNotIn("${lineupsPanel(m)}", details)
@@ -87,16 +86,6 @@ class AnalysisModeTests(unittest.TestCase):
         self.assertIn(".neutralVenueRow{display:grid", css)
         self.assertIn(".hypotheticalTag{display:inline-flex", css)
         self.assertIn("@media(max-width:540px){.neutralVenueBox", css)
-
-    def test_talent_edge_row_is_never_silently_dropped(self):
-        panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
-        self.assertIn("const classListed=", panels)
-        self.assertIn("if(!classListed){", panels)
-        self.assertIn("classMeta.edge_available===false", panels)
-        self.assertIn("not scored", panels)
-        self.assertIn("classMeta.coverage_label", panels)
-        # "level" and "no data" are different claims and must stay distinct.
-        self.assertIn("covered?'level':'no data'", panels)
 
     def test_insight_rail_is_removed_to_leave_the_content_full_width(self):
         markup = (ROOT / "index.html").read_text(encoding="utf-8")
@@ -126,7 +115,6 @@ class AnalysisModeTests(unittest.TestCase):
         self.assertNotIn("more live", panels)
         self.assertNotIn("No live matches", panels)
         self.assertNotIn("_modelFilterBtn('live'", panels)
-        self.assertIn("Awaiting final", panels)
 
     def test_in_progress_cards_hide_partial_scores_without_squeezing_team_names(self):
         core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
@@ -138,22 +126,6 @@ class AnalysisModeTests(unittest.TestCase):
         self.assertIn("grid-template-columns:minmax(0,1fr) 64px minmax(0,1fr)", css)
         self.assertIn("-webkit-line-clamp:2", css)
         self.assertNotIn("liveClock(m)</div>", cards)
-
-    def test_scorecard_only_calls_triggered_underdog_profiles_upset_picks(self):
-        panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
-        self.assertIn("underdog risk · ${name} ${score}/100", panels)
-        self.assertIn("upset pick · ${name} ${score}/100", panels)
-        self.assertIn("if(!p.upset_triggered)", panels)
-        self.assertNotIn('class="scsplit upsetTag">upset ${esc(', panels)
-
-    def test_model_archive_requires_a_verified_locked_snapshot(self):
-        panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
-        features = (ROOT / "app-4-features.js").read_text(encoding="utf-8")
-        self.assertIn("function _modelHasVerifiedLock", panels)
-        self.assertIn("m?.prediction?.publication_state==='locked'", panels)
-        self.assertIn("m.prediction&&(!_modelIsPast(m)||_modelHasVerifiedLock(m))", panels)
-        self.assertIn("Verified locked pregame picks", panels)
-        self.assertIn("const eligible=M.filter(m=>!_modelIsPast(m)||_modelHasVerifiedLock(m))", features)
 
     def test_sport_picker_covers_every_published_sport(self):
         """The sport picker must offer exactly what the deploy ships.

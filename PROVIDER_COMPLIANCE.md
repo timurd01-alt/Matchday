@@ -1,5 +1,14 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-09-25 (the retired in-house model is removed. No provider,
+endpoint or display is added. Three fetches stop: CFBD team talent, CBBD
+recruiting ratings, and The Odds API championship outrights -- each existed
+only to feed the removed model. The Matchday Terminal X publisher is removed,
+so nothing is posted to X. Every pick, probability and rating on the site now
+comes from the Bet Better handoff under its existing review; fixtures, scores,
+game odds, weather, injuries, news and standings are fetched and displayed as
+before.)
+
 Reviewed: 2026-09-24 (the CFP first-four-out row compares the already-published
 AP poll with the current projected field. It reuses existing school marks and
 records; no new provider, endpoint, or raw payload is introduced.)

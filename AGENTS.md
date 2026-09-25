@@ -1,7 +1,9 @@
 # Matchday
 
-Sports-prediction analytics site (Elo/SRS-derived picks, probabilities, bracketology) covering
-college football and men's college basketball only. Soccer, NFL, NBA, MLB and NHL were removed
+Sports-prediction analytics site covering college football and men's college
+basketball only. **Every pick, probability, power rating and scorecard comes from
+the Bet Better engine** through `betbetter_picks.json` (see below); Matchday
+itself no longer forecasts. Soccer, NFL, NBA, MLB and NHL were removed
 entirely on 2026-09-13; do not reintroduce them. Flask backend (`app.py`,
 `server/server_app.py`), static JS/HTML/CSS frontend, provider data cached to JSON.
 
@@ -13,7 +15,23 @@ merged into `main`, pushed to `origin/main`, and the production deployment is
 checked. Do not stop after editing, testing, committing, or pushing only a
 feature branch.
 Before merging, update from the current remote `main` and preserve its bot-owned
-generated data. Never force-push production.
+generated files. Never force-push production.
+
+## Picks come from Bet Better, and only from Bet Better
+
+Matchday's own in-house model (`predict()`, Elo/H2H ratings, the pick lock,
+`picks_log_*.json`, the forecast ledgers, the old scorecard, recaps, promotion
+gates, challengers, the NCAAM pre-registration and the X bot) was removed on
+2026-09-25. Bet Better never read any of it. Do not reintroduce a second
+forecast: the site previously showed two prediction systems that disagreed on
+the same fixture.
+
+The pipeline is one-way. The Bet Better engine writes `betbetter_picks.json`;
+`betbetter_handoff.py` validates it and attaches each pick to its fixture as
+`match["betbetter_pick"]`; `build_cfb_snapshot.py` builds the picks, scorecard,
+ratings and results the browser shows (`matchday-cfb-snapshot.js`).
+`fetch_data.py` still owns everything that is not a forecast: fixtures, scores,
+market odds, weather, injuries, news, standings and the game archive.
 
 ## Departments
 
@@ -60,26 +78,19 @@ This layout exists because a single shared `SYSTEM_UPDATES` array literal made
 **every** pull request conflict with every other one: each change prepended to
 the same lines. One file per build removes the shared line entirely.
 
-## Generated data files are bot-owned
+## Generated files are bot-owned
 
-`ratings*.json` and `picks_log*.json` are committed back to `main` by the hourly
-workflow (10 of any 30 recent commits are `Update ratings and picks ledger`).
-Do not commit them from a feature branch — the branch goes stale within the hour
-and conflicts on a large generated JSON. Change the *code* that produces them
-and let the scheduled run regenerate the data. If a branch already carries such
-a change, resolve in favour of `main`'s copy.
+`market_snapshot_ledger.jsonl`, `posts.json` and the rendered `posts/*.html`
+are committed back to `main` by the hourly workflow. Do not hand-edit them on a
+feature branch; change the code that writes them. If a branch already carries
+such a change, resolve in favour of `main`'s copy.
 
 ## The game archive is the raw record; everything else is derived
 
 `archive/games/<comp>/<season>.csv` is Matchday's own copy of every finished
 game it has seen. It exists because nothing else here keeps one: `data_*.json`,
-every `*_cache.json` and the nflverse play-by-play are all gitignored, so the
-only durable artifacts were *derived* ones (`ratings_elo.json`, `picks_log_*`,
-the ledgers). That had three standing costs — a rating could never be
-recomputed, `backfill_history.py`'s large one-time quota spend produced Elo and
-kept none of the games behind it, and a dark provider meant a dark sport (CFBD
-for three weeks; `ncaam_advanced_metrics.py` still reports that nothing has
-ever fed it live data).
+every `*_cache.json` and the nflverse play-by-play are all gitignored, and a
+dark provider otherwise meant a dark sport (CFBD for three weeks).
 
 Two tables, because a final score cannot produce an adjusted-efficiency rating:
 `archive/games/` always, and `archive/box/` for team box detail wherever a
@@ -98,14 +109,13 @@ Two writers, deliberately separate:
 - **Backward, occasional.** `archive_backfill.py` seeds history from sources
   that cost no quota: the openfootball CC0 history, the BallDontLie/CFBD/CBBD
   caches already on disk, and nflverse. Safe to re-run at any time; it seeded
-  35,460 games across 11 competitions. `backfill_history.py` is the deliberate
-  opposite — it spends real quota for seasons no free source covers.
+  35,460 games across 11 competitions.
 
 Two rules the archive enforces, both learned the hard way:
 
 - **A settled score is never rewritten.** A revision is refused and logged to
   `archive/conflicts.jsonl` with the original left standing, so a provider
-  cannot retroactively change the inputs behind an already-graded pick.
+  cannot retroactively rewrite a published result.
 - **One provider per (competition, season).** Two sources describe the same
   game with different ids and different team naming — nflverse's
   `2021_01_ARI_TEN` between "TEN" and "ARI" versus BallDontLie's
@@ -118,31 +128,13 @@ Two rules the archive enforces, both learned the hard way:
   competitions under *their* ids — seeding a season from a bulk source instead
   would make the hourly hook re-add every game under a second id forever.
 
-Unlike `ratings*.json`, these partitions are append-mostly and sorted by date,
-so a feature branch touching them does not conflict the way a regenerated blob
-does. Validate with `python game_archive.py validate` before committing.
+These partitions are append-mostly and sorted by date, so a feature branch
+touching them does not conflict the way a regenerated blob does. Validate with `python game_archive.py validate` before committing.
 
-## Hashed artifacts are byte-sensitive
+## Line endings are pinned
 
-Three places hash a checked-in file's raw bytes and freeze the digest into
-governance: the MLB challenger artifact (`mlb_challenger_store.py`), the CFB
-challenger (`build_cfb_challenger.py`), and every manual-review evidence file a
-release review binds to (`mlb_recovery.py`). A hash over bytes is only stable
-if the bytes are, so `.gitattributes` pins `eol=lf` repository-wide (`.bat`
-keeps CRLF for `cmd.exe`).
-
-This is not theoretical. `mlb_model_promotion.json` froze `f110758c...`, the
-CRLF rendering of the challenger produced by a Windows checkout under
-`core.autocrlf=true`, while CI checked the file out with LF and every shadow
-lock recorded `f0177891...`. Same model, two digests, and
-`exact_cohort_required` could never be satisfied — the gate spent weeks
-collecting prospective evidence it would have had to discard. Corrected
-2026-08-19 to the digest the evidence was recorded against, preserving it.
-
-Never "fix" such a mismatch by writing your local digest into a policy. Check
-whether the file is the same content rendered differently first;
-`test_mlb_model_promotion.py` now asserts the policy digest against the
-artifact on disk on every run.
+`.gitattributes` pins `eol=lf` repository-wide (`.bat` keeps CRLF for
+`cmd.exe`), so a Windows checkout and CI see the same bytes.
 
 ## Provider quota is enforced, not assumed
 
@@ -216,27 +208,11 @@ attached.
 
 ## Self-development loops
 
-Five loops keep the site improving. They are deliberately separate: the loop
-that can write model code must never be the loop that decides a model ships.
-
-Every loop obeys the same rule: **report findings, never opinions.** A loop
-that fires without something concrete to point at makes the agent downstream
-invent work to justify the trigger. Each one below must be able to say
-nothing, and each has a test proving the silent case is reachable.
-
-**Loop A -- `check_promotion_readiness.py`** (hourly, in `deploy.yml`). Compares
-each frozen promotion policy against the prospective scorecard built from the
-ledgers this run, and writes `promotion_readiness.json`. Read-only: it never
-edits a policy and its most positive verdict is `ready_for_manual_review`. The
-scorecards' own `status` only checks sample-size minimums; the extra conditions
-a policy states (exact cohort identity, paired interval, Brier improvement) are
-checked here. Four states matter -- `collecting` (wait), `evidence_against`
-(record a rejection), `blocked` (evidence is unusable, decide now), and
-`ready_for_manual_review`.
-
-Add a gate by appending to `GATES`, naming the policy, the scorecard, and which
-pair of models the policy is about. That last part cannot be inferred: MLB's
-policy governs the capped blend, not the raw challenger.
+Three loops keep the site improving. Every loop obeys the same rule: **report
+findings, never opinions.** A loop that fires without something concrete to
+point at makes the agent downstream invent work to justify the trigger. Each
+one must be able to say nothing, and each has a test proving the silent case is
+reachable.
 
 **Loop B -- `ui_audit.py`** (hourly). Audits the shipped HTML/CSS against
 published interface requirements -- WCAG 2.2 AA contrast, focus visibility,
@@ -252,82 +228,27 @@ translucent background is unresolvable (not flattened to opaque), and a tap
 target is the selector's *subject* (not any interactive ancestor). When adding
 a rule, add its silent case too.
 
-**Loop C -- `data_coverage.py`** (hourly). Measures the gap between the inputs
-the models wanted and the data that arrived, writing `data_coverage_report.json`
-in four kinds: `missing_input` (absent on fixtures inside the 72h horizon),
-`stale_feed` (payload past its freshness budget while still publishing),
-`unsourced_family` (empty on every fixture everywhere -- a sourcing decision,
-not a repair), and `thin_evidence` (picks published with too little graded
-history to judge). Read-only.
-
-Off-season is never a gap: a competition with no imminent fixtures is skipped
-for input and freshness entirely, or NBA and NHL would be reported every hour
-for half the year. A family reported as globally unsourced is suppressed from
-the per-competition signal, so one absence is never reported twice.
-
-**Loop D -- `next_task.py`** (hourly). Ranks live signals from Loop A's report,
-Loops B and C's reports, `fetch_failure_*.json`, `provider_quota_state.json`,
-`market_benchmark_report.json`, and `docs/experiments.json`, then emits **one**
-scoped task prompt plus the guardrails. A quiet repository produces an explicit
-"no action needed, do not invent work". Adjust priorities in `PRIORITY`.
-
-The ranking encodes a judgement worth keeping: a broken data pipeline outranks
-an interface blocker, which outranks research questions, which outrank
-decisions about what to build next. Anything actively degrading what the site
-publishes comes before anything that merely could be better.
+**Loop D -- `next_task.py`** (hourly). Ranks live signals from
+`fetch_failure_*.json`, `provider_quota_state.json` and Loop B's report, then
+emits **one** scoped task prompt plus the guardrails. A quiet repository
+produces an explicit "no action needed, do not invent work". Adjust priorities
+in `PRIORITY`. A broken data pipeline outranks a quota warning, which outranks
+an interface defect.
 
 **Loop E -- the scheduled agent.** Consumes Loop D's prompt, works on a branch,
-opens a PR. CI is the verifier; a human merges. It may *propose* a policy status
-change with evidence attached, never apply one, and never touch a
-`requirements` block, a quota reserve, or the bot-owned generated data.
+opens a PR. CI is the verifier; a human merges. It never touches a quota
+reserve or the bot-owned generated files.
 
-## Beating the market: CLV and pre-registration
+(Loops A and C graded and fed the retired in-house model and were removed with
+it; the letters are kept so older references still line up.)
 
-Matchday's stated goal is to beat the closing line as a forecasting claim, not
-to bet. Two rules follow from that.
+## The market price ledger
 
-**Overall hit rate is not evidence about the model.** When Matchday names the
-market's favourite it inherits the market's record, so a headline hit rate says
-almost nothing. `independent_value.py` splits the committed pick logs on
-agreement with the market and scores the two sides separately. It is
-descriptive -- the pick logs are the published record, which the scorecard's
-self-heal pass may correct -- and `market_benchmark_report.json` is the
-tamper-evident authority once it has data. Each metric uses every row that can
-support it: the agreement split needs only the market's pick, the paired
-scoring comparison needs its probabilities, and they report separate n.
-
-**Measure CLV, not win rate.** `clv_report.py` reports closing-minus-lock
-probability movement toward Matchday's pick, per competition, with a game-date
-block bootstrap. Match outcomes are too noisy to settle the question in a
-reasonable sample; line movement answers in hundreds of fixtures rather than
-thousands. A segment is given no verdict unless its median lock lead clears
-`MIN_LEAD_MINUTES` -- a pick locked at the bell has nothing to be right early
-about. The report is descriptive and feeds no forecast.
-
-**`market_snapshot_ledger.jsonl` is irreplaceable.** Ratings recompute, picks
-regenerate, forecasts re-derive. A closing price cannot be recovered after the
-kickoff it belonged to. It is git-tracked and committed back hourly for that
-reason; never move it back behind `.gitignore`.
-
-**Pre-register before the season, not after.** `preregistration.py` seals a
-declaration's immutable terms -- competition, season, hypothesis, metrics,
-minimum sample, lock lead floor, decision rule -- into `terms_sha256`. Editing
-any of them afterwards makes the declaration report `void`, and `--seal`
-refuses to re-hash an edited file rather than laundering the change. CI runs
-`--check`, so moving the goalposts breaks the build. `ncaam_preregistration.json`
-is the live declaration for the 2026-27 season; its model artifact must be
-frozen before `artifact_freeze_deadline` or the declaration is void.
-
-To register a new target, write the declaration, run `--seal` once, and record
-it in `docs/experiments.json`. Never amend a sealed declaration: open a new one.
-
-**NCAAM build path.** `ncaam_advanced_metrics.py` connects CBBD team box scores
-to `advanced_metrics.basketball_team_profiles`. It fails closed: `refresh()`
-raises while `MAPPING_VERIFIED` is False, because a mis-named provider field
-does not error -- `basketball_game_records` silently drops the row, yielding an
-empty profile set and a cheerful "no data". To enable it, run
-`--verify` against one real CBBD response, correct `TEAM_BOX_FIELDS` if the
-names differ, and set the flag in a commit showing that evidence.
+**`market_snapshot_ledger.jsonl` is irreplaceable.** It holds bookmaker prices,
+not picks. A closing price cannot be recovered after the kickoff it belonged
+to, so it is git-tracked and committed back hourly; never move it back behind
+`.gitignore`. It is the evidence any future closing-line comparison of Bet
+Better's picks would need.
 
 ## Tests
 
@@ -344,12 +265,11 @@ ran thirty, and the thirty themselves left 26 modules on disk gating nothing.
 
 The suites most worth knowing by name when something fails:
 
-- `test_model_inputs.py` — prediction/model input construction
+- `test_betbetter_handoff.py` — the Bet Better handoff: validation and attachment
+- `test_cfb_snapshot.py` — the snapshot the browser shows picks, ratings and results from
 - `test_provider_adapters.py` — provider normalization and adapters
-- `test_generate_posts.py` — social post generation
+- `test_generate_posts.py` — post pages and the sitemap
 - `test_provider_quota.py` — persisted quota pacing, reset probes, and provider wiring
-- `test_pick_lock_persistence.py` — the pregame pick lock the scorecard's
-  "locked in public, never rewritten" claim depends on
 
 ## Compliance
 

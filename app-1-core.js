@@ -73,61 +73,7 @@ const FIXTURE_PAGE_SIZE=40;
 // The model board used to render every pick in one scroll (1,300+ rows on a
 // full slate). Same pager the fixture list already uses, smaller page: a pick
 // row is denser reading than a match card.
-const MODEL_PAGE_SIZE=25;
-let MATCH_VISIBLE=FIXTURE_PAGE_SIZE,RESULT_VISIBLE=FIXTURE_PAGE_SIZE,MODEL_VISIBLE=MODEL_PAGE_SIZE;
-// Site-wide publication pause, mirroring forecast_pause.py. One flag: clear
-// FORECAST_PAUSE_ACTIVE when the coverage gaps close and every sport falls back
-// to its own gate below rather than publishing unconditionally.
-const FORECAST_PAUSE_ACTIVE=false;
-const FORECAST_PAUSE_MESSAGE='Predictions are paused while the model is rebuilt on a new data engine.';
-
-function forecastPublicationState(payload,match){
-  const value=x=>typeof x==='string'?x:(x&&typeof x==='object'?(x.state||x.status||x.publication_state):'');
-  const candidates=[
-    match?._forecast_paused?'paused':'',match?.forecast_publication_state,match?.prediction_publication_state,
-    match?.publication_state,match?.forecast_publication,match?.prediction?.publication_state,
-    payload?.forecast_publication_state,payload?.prediction_publication_state,payload?.publication_state,
-    payload?.forecast_publication,payload?.prediction_publication,
-  ];
-  const states=candidates.map(value).filter(Boolean).map(x=>String(x).toLowerCase());
-  if(states.includes('paused'))return 'paused';
-  const dataset=String(value(payload?.forecast_publication)||value(payload?.prediction_publication)||'').toLowerCase();
-  if(dataset==='eligible')return 'eligible';
-  return states[0]||'';
-}
-function isForecastPaused(match,payload=DATA){
-  // Finished matches keep the pick they were graded on: that is the public
-  // record, and hiding it would scrub the model's own results. Everything not
-  // yet settled -- upcoming and in-play alike -- loses its forecast, because an
-  // in-play pick is still an ungraded model call being presented as live
-  // analysis, percentages included.
-  if(String(match?.status||'').toUpperCase()==='FINISHED')return false;
-  if(FORECAST_PAUSE_ACTIVE)return true;
-  // The site switch is authoritative. A last-good dataset can retain yesterday's
-  // paused marker when a provider refresh is rate-limited; it must not resurrect
-  // a banner after publication has deliberately resumed.
-  return false;
-}
-function applyForecastPublicationPauses(payload){
-  if(!payload||!Array.isArray(payload.matches))return payload;
-  payload.matches.forEach(match=>{
-    if(!isForecastPaused(match,payload))return;
-    match._forecast_paused=true;
-    match._forecast_pause_message=FORECAST_PAUSE_MESSAGE;
-    ['prediction','locked_prediction','prediction_snapshot','official_pick','model_pick','model_confidence',
-     'confidence','edge','upset','watchability','watch_score','forecast','predicted_score',
-     'predicted_home_score','predicted_away_score','predicted_margin','expected_margin','model_margin',
-     'model_alert','model_vs_market_alert'].forEach(key=>delete match[key]);
-  });
-  return payload;
-}
-function forecastPauseHTML(match){
-  // Two inline children with no rule of their own rendered as one run-on line
-  // ("Forecast pausedPicks are on hold..."). Block them out and give the notice
-  // the same warn treatment the top-of-view banner already uses.
-  return isForecastPaused(match)?`<div class="emptyForecast forecastPaused" role="status"><b>Forecast paused</b><span>${esc(FORECAST_PAUSE_MESSAGE)}</span><em>Scores, results, stats and market odds are all still here.</em></div>`:'';
-}
-
+let MATCH_VISIBLE=FIXTURE_PAGE_SIZE,RESULT_VISIBLE=FIXTURE_PAGE_SIZE;
 // Providers can keep the season that just ended until the next schedule
 // opens. Keep its games in Results, but never label its table or bracket as
 // the new season's live competition state.
@@ -210,7 +156,7 @@ function showMatchLoading(){const host=$('#view-matches');if(host)host.innerHTML
 function clearCompetitionViewsForLoad(){
   ['groups','bracket','third'].forEach(view=>{const host=$('#view-'+view);if(host)host.innerHTML='<div class="empty">Loading current-season data…</div>'});
 }
-function changeSport(v){DATA_FILE=/^(ncaaf|ncaam)$/.test(v)?('data_'+v+'.json'):DEFAULT_SPORT_FILE;MATCH_VISIBLE=FIXTURE_PAGE_SIZE;RESULT_VISIBLE=FIXTURE_PAGE_SIZE;MODEL_VISIBLE=MODEL_PAGE_SIZE;try{localStorage.setItem('matchday.sport',DATA_FILE)}catch(e){};if(typeof syncViewLocation==='function')syncViewLocation(VIEW,'replace');const cached=SPORT_DATA_CACHE[DATA_FILE];if(cached){showSportData(cached,true)}else{applySportNav();showMatchLoading();clearCompetitionViewsForLoad()}load(true);}
+function changeSport(v){DATA_FILE=/^(ncaaf|ncaam)$/.test(v)?('data_'+v+'.json'):DEFAULT_SPORT_FILE;MATCH_VISIBLE=FIXTURE_PAGE_SIZE;RESULT_VISIBLE=FIXTURE_PAGE_SIZE;try{localStorage.setItem('matchday.sport',DATA_FILE)}catch(e){};if(typeof syncViewLocation==='function')syncViewLocation(VIEW,'replace');const cached=SPORT_DATA_CACHE[DATA_FILE];if(cached){showSportData(cached,true)}else{applySportNav();showMatchLoading();clearCompetitionViewsForLoad()}load(true);}
 
 const COLORS={orange:'#ffb02e',blue:'#4cc2ff',green:'#3ad17a',red:'#ff4d5e',purple:'#b16cff'};
 function saveSettings(){localStorage.setItem('matchday.settings',JSON.stringify(SETTINGS))}
@@ -424,26 +370,6 @@ function pressure(stats,side){if(!stats)return 0;const s=stats[side]||{};return 
 function pct(v){v=Number(v);return Number.isFinite(v)?Math.max(0,Math.min(100,Math.round(v))):0}
 function modelPctLabel(v){const n=Number(v);return v==null||!Number.isFinite(n)?'—':Math.max(0,Math.min(99.9,n)).toFixed(1)+'%'}
 function bar1x2(h,d,a){h=pct(h);a=pct(a);const dSeg=d==null?'':(d=>`<div class="seg d" style="flex-basis:${d}%"><span>${d}%</span></div>`)(pct(d));return `<div class="bar"><div class="seg h" style="flex-basis:${h}%"><span>${h}%</span></div>${dSeg}<div class="seg a" style="flex-basis:${a}%"><span>${a}%</span></div></div>`}
-// The backend owns the published pick. UI components may explain that pick,
-// but must never promote a live model or market inference over a locked record.
-function lockedPredictionSnapshot(m){
-  const pr=m?.prediction||{};
-  const candidates=[m?.locked_prediction,m?.prediction_snapshot,pr.locked_snapshot,pr.snapshot,pr.locked];
-  const found=candidates.find(x=>x&&typeof x==='object'&&!Array.isArray(x));
-  return found?.prediction&&typeof found.prediction==='object'?found.prediction:(found||{});
-}
-function officialPrediction(m){
-  if(isForecastPaused(m))return {side:'',name:'',confidence:null,locked:{}};
-  const pr=m?.prediction||{},locked=lockedPredictionSnapshot(m);
-  const side=locked.pick??pr.pick??'';
-  const name=locked.pick_name??pr.pick_name??(side==='h'?m?.home?.name:side==='a'?m?.away?.name:side==='d'?'Draw':'');
-  return {side,name,confidence:locked.confidence??pr.confidence??null,locked};
-}
-function officialPredictionProbabilities(m){
-  if(isForecastPaused(m))return {};
-  const pr=m?.prediction||{},locked=lockedPredictionSnapshot(m);
-  return locked.adjusted||locked.blend||locked.probs||pr.adjusted||pr.blend||pr.model||{};
-}
 function duo(xl,xv,yl,yv){xv=pct(xv);yv=pct(yv);return `<div class="mkt"><div class="lbls"><span>${esc(xl)} <b>${xv}%</b></span><span><b>${yv}%</b> ${esc(yl)}</span></div><div class="duo"><i class="x" style="flex-basis:${xv}%">${xv}%</i><i class="y" style="flex-basis:${yv}%">${yv}%</i></div></div>`}
 function marketPanel(m){
   const mk=m.markets||{},x=mk['1x2']||{},twoWay=_isTwoWay(m);
@@ -473,7 +399,6 @@ function marketPanel(m){
   if(mk.totals)h+=`<div class="seclbl">Goals — over/under ${esc(mk.totals.line)}</div>`+duo(`Over ${mk.totals.line}`,mk.totals.over_pct,`Under ${mk.totals.line}`,mk.totals.under_pct);
   return h;
 }
-function _v6UpsetClass(score,triggered){score=Number(score)||0;if(triggered)return'trigger';return score>=70?'high':score>=50?'med':'low'}
 /* dedup */
 /* dedup */
 /* dedup */
@@ -511,7 +436,6 @@ function enterMatchday(targetView='',startWithTour=false){
 const TOUR_STEPS=[
   {target:'#sportSel',title:'Start here',body:'Switch between College Football and Men’s College Basketball. Each has its own predictions, accuracy tracking and playoff picture.'},
   {target:'.navbtn[data-v="matches"]',title:'Matches',body:'Every upcoming fixture with the model’s locked pregame pick shown next to the market’s.'},
-  {target:'.navbtn[data-v="edge"]',title:'Model',body:'See exactly why the model favors a side — points, form, ratings, injuries and more, broken down factor by factor.'},
   {target:'.navbtn[data-v="score"]',title:'Scorecard',body:'Every locked pick, tracked in public. Nothing gets rewritten after the fact — good calls or bad ones.'},
   {target:'.navbtn[data-v="sandbox"]',title:'Sandbox',body:'Build a hypothetical matchup between any two teams and see what the model thinks, on the spot.'},
   {target:'.navbtn[data-v="bracket"]',title:'Bracket',body:'Simulate an entire knockout bracket round by round, using the model’s own predictions.'},
@@ -648,7 +572,6 @@ function renderWelcomeStats(){
   const totals=scorecardTotals();
   const cells=[[upcoming.length,`${sportLabel} games next 7 days`]];
   if(totals.picks)cells.push([totals.picks,'picks graded in public']);
-  if(FORECAST_PAUSE_ACTIVE)cells.push(['paused','new picks while rebuilding']);
   else if(totals.lockMinutes)cells.push([`${totals.lockMinutes} min`,'locked before kickoff']);
   else cells.push([ALL_SPORT_KEYS.length,'sports covered']);
   host.innerHTML=cells.map(([v,l])=>`<div><b>${esc(v)}</b><span>${esc(l)}</span></div>`).join('');
@@ -720,11 +643,7 @@ function renderWelcomeRecord(){
 function renderWelcomeStatusNote(){
   const host=$('#welcomeStatusNote');if(!host)return;
   const totals=scorecardTotals();
-  host.innerHTML=FORECAST_PAUSE_ACTIVE
-    ?`<p>The site covers college football and men's college basketball only. Publishing new
-      picks is paused while the model is rebuilt, so what you see is the power rating and the
-      market's own number rather than a forecast.</p>`
-    :`<p>The site covers college football and men's college basketball only. Fixtures on the
+  host.innerHTML=`<p>The site covers college football and men's college basketball only. Fixtures on the
       board carry a model probability alongside the market's own number where one is priced${totals.lockMinutes?`, locked ${totals.lockMinutes} minutes before kickoff`:''}${totals.picks?` — ${totals.picks} of them have been graded against the result so far`:''}.</p>`;
 }
 // Slight parallax on the preview card. Pointer-only and opt-out aware, so it
@@ -767,18 +686,6 @@ function renderWelcome(){
   runCarousel('welcome',pool,host,_welcomeCardHTML,4500);
   const state=$('#welcomeFeedState');if(state)state.textContent='PREGAME';
 }
-function heroMarquee(){
-  const up=(DATA.matches||[]).filter(m=>m.status==='UPCOMING'&&m.prediction&&m.markets);
-  if(!up.length)return '';
-  const pick=up.sort((a,b)=>(a.kickoff||'').localeCompare(b.kickoff||''))[0];
-  const pr=pick.prediction||{};
-  return `<div class="heroMatch" onclick="openMatchModal('${esc(String(pick.id))}')">
-    <div class="heroMatchTeams">${esc(pick.home.name)} <span class="mvvs">v</span> ${esc(pick.away.name)}
-      ${pick._comp?`<span class="compTag">${esc(pick._comp)}</span>`:''}
-      <span class="heroLive">PREGAME</span></div>
-    ${pr.pick_name?`<div class="heroMatchPick">model: <b>${esc(pr.pick_name)}</b>${pr.confidence?` ${pr.confidence}%`:''}</div>`:''}
-  </div>`;
-}
 function landingHero(){
   // The engine's graded record, not the hand-typed block this used to read.
   const sc=typeof betbetterScorecard==='function'?betbetterScorecard():null;
@@ -801,23 +708,12 @@ function landingHero(){
     <div class="heroTitle">Every pick, on the record.</div>
     <div class="heroSub">Locked before kickoff, graded after the final whistle, never edited in between. Free, and no ads.</div>
     <div class="heroRow">${rec}</div>
-    ${heroMarquee()}
     <div class="heroActions">
       <button class="btmbtn heroBtn" onclick="heroDismiss()">Open the analysis</button>
       <button class="btmbtn heroBtn ghost" onclick="heroDismiss();setView('community')">Play against the model</button>
     </div>
   </div>`;
 }
-// Where a draw is possible the leading outcome is routinely under 50%, which
-// reads as a broken model when it is presented as a flat "Pick". Both the card
-// markup and the compact-card pass below label those "Most likely" instead, so
-// they have to agree on when that is.
-function hasThreeWayProbabilities(m){
-  if(typeof _isTwoWay==='function'&&_isTwoWay(m))return false;
-  const p=officialPredictionProbabilities(m)||{};
-  return p.h!=null&&p.d!=null&&p.a!=null;
-}
-function leadsUnderHalf(m,confidence){return hasThreeWayProbabilities(m)&&Number(confidence)<50}
 function enhanceMatchCards(host){
   host.querySelectorAll('.card .head').forEach(head=>{
     const card=head.closest('.card'),m=BYID[card?.dataset.id];
@@ -1128,7 +1024,7 @@ function renderMatches(){const M=DATA.matches||[];
   const filtered=GAME_FILTER.kind!=='all'||!!GAME_FILTER.conf;
   const shown=active.slice(0,MATCH_VISIBLE),remaining=Math.max(0,active.length-shown.length);
   const missing=DATA._missing?`<div class="banner" style="grid-column:1/-1"><b>No ${esc(DATA.competition||'this sport')} data yet.</b> Fetch it once its season is available — run the matching start file (e.g. start_ucl.bat) or keep an eye out when the season begins.</div>`:'';
-  const intro=`<div class="viewIntro gamesFixtureBoard"><div><div class="vhead">Games</div><p>${FORECAST_PAUSE_ACTIVE?'Fixtures, scores and market odds. Model picks are paused.':'This week comes first. Open any matchup for the full model, market and team analysis.'}</p></div><span>${filtered?`${active.length} of ${all.length}`:active.length} games</span></div>`;
+  const intro=`<div class="viewIntro gamesFixtureBoard"><div><div class="vhead">Games</div><p>This week comes first. Open any matchup for the full model, market and team analysis.</p></div><span>${filtered?`${active.length} of ${all.length}`:active.length} games</span></div>`;
   const empty=filtered&&all.length
     ?`<div class="empty" style="grid-column:1/-1">No upcoming games match these filters. <button type="button" class="actionbtn" onclick="setGameFilter({kind:'all',conf:''})">Clear filters</button></div>`
     :`<div class="empty" style="grid-column:1/-1">No upcoming matches to analyze.</div>`;
@@ -1165,8 +1061,8 @@ function bracketMatch(km,ri,mi,last=false){const pending=km.status==='LIVE',done
 /* removed duplicate (projectedRounds) */
 /* removed duplicate (renderBracket) */
 function renderThird(){const host=$('#view-third'),third=getThirdRace();if(!third.length){host.innerHTML=`<div class="vhead">Third-place tracker</div><div class="empty">Third-place race not available yet.</div>`;return}const cut=third[7];host.innerHTML=`<div class="vhead">Third-place tracker</div><div class="thirdList"><div class="thirdHead"><span>Rank</span><span>Team</span><span>Group</span><span>Pts</span><span>GD</span><span>Status</span></div>${third.map((t,i)=>`<div class="thirdRow ${t.in?'in':'out'}"><div class="thirdRank">#${i+1}</div><div class="thirdTeam"><div class="name">${esc(t.code||'')} ${esc(t.team||'')} ${t.live?'<span class="liveMark">*</span>':''}</div><div class="group">${esc(t.group||'')} · GF ${t.gf??0}</div></div><div class="thirdNum">${esc(t.group||'')}</div><div class="thirdNum pts">${t.pts}</div><div class="thirdNum gd">${t.gd>0?'+':''}${t.gd}</div><div class="thirdBadge ${t.in?'in':''}">${t.in?'IN':'CHASE'}</div></div>`).join('')}<div class="thirdCut">Cut line: ${cut?`${esc(cut.team||cut.name)} at ${cut.pts} pts, GD ${cut.gd>0?'+':''}${cut.gd}`:'waiting for enough teams'}.</div></div>`}
-/* removed duplicate (renderTitle) */
-/* removed duplicate (renderEdge) */
+
+
 /* removed duplicate (newsSources) */
 /* removed duplicate (renderNews) */
 

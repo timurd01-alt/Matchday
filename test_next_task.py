@@ -12,16 +12,6 @@ def write(base, name, payload):
     path.write_text(json.dumps(payload), encoding="utf-8")
 
 
-def readiness(*gates):
-    return {"schema_version": 1, "auto_promotion": False, "gates": list(gates)}
-
-
-def gate(gate_id="mlb-run-strength-challenger", state="collecting"):
-    return {"id": gate_id, "state": state, "summary": f"{gate_id}: {state}",
-            "policy_path": "mlb_model_promotion.json",
-            "scorecard_path": "mlb_prospective_scorecard.json"}
-
-
 class NextTaskTest(unittest.TestCase):
     def test_quiet_repository_emits_an_explicit_no_op(self):
         with tempfile.TemporaryDirectory() as root:
@@ -30,86 +20,15 @@ class NextTaskTest(unittest.TestCase):
         self.assertIn("No action needed", report["prompt"])
         self.assertIn("Do not invent work", report["prompt"])
 
-    def test_collecting_gates_alone_produce_no_task(self):
-        with tempfile.TemporaryDirectory() as root:
-            write(root, "promotion_readiness.json", readiness(gate()))
-            self.assertEqual(collect(root), [])
-
-    def test_blocked_gate_outranks_a_ready_gate(self):
-        with tempfile.TemporaryDirectory() as root:
-            write(root, "promotion_readiness.json", readiness(
-                gate("nfl-calibrated-elo", "ready_for_manual_review"),
-                gate("mlb-run-strength-challenger", "blocked")))
-            tasks = collect(root)
-        self.assertEqual(tasks[0]["kind"], "promotion_blocked")
-        self.assertEqual(tasks[1]["kind"], "promotion_ready")
-
-    def test_fetch_failure_outranks_a_pending_experiment(self):
-        with tempfile.TemporaryDirectory() as root:
-            write(root, "fetch_failure_nfl.json",
-                  {"comp": "NFL", "at": "2026-08-19T05:00:00Z", "error": "provider 503"})
-            write(root, "docs/experiments.json",
-                  {"experiments": [{"id": "e1", "decision": "not_yet_run", "hypothesis": "h"}]})
-            tasks = collect(root)
-        self.assertEqual(tasks[0]["kind"], "fetch_failure")
-        self.assertIn("provider 503", tasks[0]["why"])
-        self.assertEqual(tasks[1]["kind"], "experiment_not_yet_run")
-
     def test_only_the_top_candidate_becomes_the_task(self):
         with tempfile.TemporaryDirectory() as root:
-            write(root, "promotion_readiness.json", readiness(gate(state="blocked")))
-            write(root, "docs/experiments.json",
-                  {"experiments": [{"id": "e1", "decision": "not_yet_run", "hypothesis": "h"}]})
+            write(root, "ui_audit_report.json", {"findings": [
+                {"severity": "blocker", "rule": "contrast-below-floor", "file": "styles.css", "line": 1, "detail": "x"},
+                {"severity": "warn", "rule": "typography-off-token", "file": "styles.css", "line": 2, "detail": "y"}]})
             report = build_report(root)
-        self.assertEqual(report["task"]["kind"], "promotion_blocked")
-        self.assertEqual([item["kind"] for item in report["deferred"]],
-                         ["experiment_not_yet_run"])
+        self.assertEqual(report["task"]["kind"], "ui_blocker")
+        self.assertEqual([item["kind"] for item in report["deferred"]], ["ui_warn"])
         self.assertIn("deliberately NOT working on", report["prompt"])
-
-    def test_settled_experiments_are_not_proposed(self):
-        with tempfile.TemporaryDirectory() as root:
-            write(root, "docs/experiments.json", {"experiments": [
-                {"id": "e1", "decision": "keep_production"},
-                {"id": "e2", "decision": "reject"}]})
-            self.assertEqual(collect(root), [])
-
-    def test_narrow_market_gap_is_ignored_as_noise(self):
-        with tempfile.TemporaryDirectory() as root:
-            write(root, "market_benchmark_report.json", {"outcome_segments": {"competition": {
-                "nfl": {"n": 200, "matchday_minus_market_log_loss": 0.001}}}})
-            self.assertEqual(collect(root), [])
-
-    def test_small_sample_market_gap_is_ignored(self):
-        with tempfile.TemporaryDirectory() as root:
-            write(root, "market_benchmark_report.json", {"outcome_segments": {"competition": {
-                "nfl": {"n": 5, "matchday_minus_market_log_loss": 0.9}}}})
-            self.assertEqual(collect(root), [])
-
-    def test_worst_qualifying_market_segment_is_selected(self):
-        with tempfile.TemporaryDirectory() as root:
-            write(root, "market_benchmark_report.json", {"outcome_segments": {
-                "competition": {"nfl": {"n": 100, "matchday_minus_market_log_loss": 0.05},
-                                "mlb": {"n": 100, "matchday_minus_market_log_loss": 0.11}}}})
-            tasks = collect(root)
-        self.assertEqual(tasks[0]["segment"]["label"], "mlb")
-
-    def test_market_task_forbids_fitting_to_the_segment(self):
-        with tempfile.TemporaryDirectory() as root:
-            write(root, "market_benchmark_report.json", {"outcome_segments": {"competition": {
-                "nfl": {"n": 100, "matchday_minus_market_log_loss": 0.09}}}})
-            self.assertIn("Do not tune the model to the segment", collect(root)[0]["do"])
-
-    def test_promotion_tasks_propose_but_never_promote(self):
-        with tempfile.TemporaryDirectory() as root:
-            write(root, "promotion_readiness.json", readiness(
-                gate(state="ready_for_manual_review"), gate("nfl", "evidence_against")))
-            tasks = {item["kind"]: item for item in collect(root)}
-        ready = tasks["promotion_ready"]["do"].lower()
-        self.assertIn("do not promote", ready)
-        self.assertIn("propose", ready)
-        self.assertIn("do not change production_weight", ready)
-        rejection = tasks["promotion_evidence_against"]["do"].lower()
-        self.assertIn("do not weaken the bar", rejection)
 
     def test_provider_at_reserve_becomes_a_task(self):
         import provider_quota
@@ -137,13 +56,14 @@ class NextTaskTest(unittest.TestCase):
 
     def test_unreadable_state_files_are_skipped_not_raised(self):
         with tempfile.TemporaryDirectory() as root:
-            (Path(root) / "promotion_readiness.json").write_text("{not json", encoding="utf-8")
-            (Path(root) / "market_benchmark_report.json").write_text("", encoding="utf-8")
+            (Path(root) / "provider_quota_state.json").write_text("{not json", encoding="utf-8")
+            (Path(root) / "ui_audit_report.json").write_text("", encoding="utf-8")
             self.assertEqual(collect(root), [])
 
     def test_every_prompt_carries_the_guardrails(self):
         with tempfile.TemporaryDirectory() as root:
-            write(root, "promotion_readiness.json", readiness(gate(state="blocked")))
+            write(root, "ui_audit_report.json", {"findings": [
+                {"severity": "blocker", "rule": "contrast-below-floor", "file": "styles.css", "line": 1, "detail": "x"}]})
             prompt = build_report(root)["prompt"]
         for rule in GUARDRAILS:
             self.assertIn(rule, prompt)
@@ -158,26 +78,12 @@ class ProductLoopSignalTests(unittest.TestCase):
     gate that is actively broken.
     """
 
-    def _coverage(self, *gaps):
-        return {"schema_version": 1, "gaps": list(gaps)}
-
-    def _gap(self, kind="stale_feed", severity="critical", comp="EPL"):
-        return {"kind": kind, "severity": severity, "competition": comp,
-                "summary": f"{comp}: {kind} ({severity})"}
-
     def _audit(self, *findings):
         return {"schema_version": 1, "findings": list(findings)}
 
     def _finding(self, severity="blocker", rule="contrast-below-floor"):
         return {"rule": rule, "severity": severity, "file": "styles.css",
                 "line": 1561, "detail": f"{rule} detail", "snippet": ".x"}
-
-    def test_a_critical_data_gap_becomes_a_task(self):
-        with tempfile.TemporaryDirectory() as root:
-            write(root, "data_coverage_report.json", self._coverage(self._gap()))
-            report = build_report(root)
-        self.assertEqual(report["task"]["kind"], "data_gap_critical")
-        self.assertIn("EPL", report["prompt"])
 
     def test_an_interface_blocker_becomes_a_task(self):
         with tempfile.TemporaryDirectory() as root:
@@ -186,45 +92,19 @@ class ProductLoopSignalTests(unittest.TestCase):
         self.assertEqual(report["task"]["kind"], "ui_blocker")
         self.assertIn("styles.css:1561", report["prompt"])
 
-    def test_a_broken_data_pipeline_outranks_an_interface_blocker(self):
-        with tempfile.TemporaryDirectory() as root:
-            write(root, "data_coverage_report.json", self._coverage(self._gap()))
-            write(root, "ui_audit_report.json", self._audit(self._finding()))
-            report = build_report(root)
-        self.assertEqual(report["task"]["kind"], "data_gap_critical")
-        self.assertIn("ui_blocker", [item["kind"] for item in report["deferred"]])
-
-    def test_an_interface_blocker_outranks_a_pending_experiment(self):
-        with tempfile.TemporaryDirectory() as root:
-            write(root, "ui_audit_report.json", self._audit(self._finding()))
-            write(root, "docs/experiments.json",
-                  {"experiments": [{"id": "x", "decision": "not_yet_run"}]})
-            report = build_report(root)
-        self.assertEqual(report["task"]["kind"], "ui_blocker")
-
-    def test_a_promotion_block_still_outranks_every_product_signal(self):
-        with tempfile.TemporaryDirectory() as root:
-            write(root, "promotion_readiness.json", readiness(gate(state="blocked")))
-            write(root, "data_coverage_report.json", self._coverage(self._gap()))
-            write(root, "ui_audit_report.json", self._audit(self._finding()))
-            report = build_report(root)
-        self.assertEqual(report["task"]["kind"], "promotion_blocked")
-
     def test_warn_level_signals_rank_below_critical_ones(self):
         with tempfile.TemporaryDirectory() as root:
-            write(root, "data_coverage_report.json",
-                  self._coverage(self._gap(kind="thin_evidence", severity="warn")))
-            write(root, "ui_audit_report.json", self._audit(self._finding("warn")))
+            write(root, "ui_audit_report.json",
+                  self._audit(self._finding("warn"), self._finding("blocker")))
             report = build_report(root)
         kinds = [report["task"]["kind"]] + [item["kind"] for item in report["deferred"]]
-        self.assertEqual(kinds, ["data_gap_warn", "ui_warn"])
+        self.assertEqual(kinds, ["ui_blocker", "ui_warn"])
 
     def test_empty_reports_produce_no_task(self):
-        """A clean audit and a clean coverage report must leave the loop
-        silent rather than manufacturing a low-priority errand."""
+        """A clean audit must leave the loop silent rather than manufacturing
+        a low-priority errand."""
         with tempfile.TemporaryDirectory() as root:
             write(root, "ui_audit_report.json", self._audit())
-            write(root, "data_coverage_report.json", self._coverage())
             report = build_report(root)
         self.assertIsNone(report["task"])
         self.assertIn("No action needed", report["prompt"])
@@ -232,7 +112,6 @@ class ProductLoopSignalTests(unittest.TestCase):
     def test_malformed_reports_are_ignored_rather_than_crashing(self):
         with tempfile.TemporaryDirectory() as root:
             Path(root, "ui_audit_report.json").write_text("{oh no", encoding="utf-8")
-            Path(root, "data_coverage_report.json").write_text("[]", encoding="utf-8")
             self.assertEqual(collect(root), [])
 
     def test_the_ui_task_forbids_moving_the_threshold_instead_of_fixing(self):
@@ -241,20 +120,11 @@ class ProductLoopSignalTests(unittest.TestCase):
             prompt = build_report(root)["prompt"]
         self.assertIn("Do not widen a threshold", prompt)
 
-    def test_the_data_task_forbids_editing_the_measured_files(self):
-        with tempfile.TemporaryDirectory() as root:
-            write(root, "data_coverage_report.json", self._coverage(self._gap()))
-            prompt = build_report(root)["prompt"]
-        self.assertIn("changes the measurement rather than the problem", prompt)
-
-
 class GuardrailTest(unittest.TestCase):
-    def test_guardrails_protect_bot_owned_and_frozen_files(self):
+    def test_guardrails_protect_main_and_quota(self):
         joined = " ".join(GUARDRAILS)
-        self.assertIn("picks_log", joined)
-        self.assertIn("ratings*.json", joined)
         self.assertIn("never push to main", joined)
-        self.assertIn("`requirements`", joined)
+        self.assertIn("quota reserve", joined)
 
 class RequiredSuiteDriftTest(unittest.TestCase):
     """The prompt's test command must be the one CI actually runs.

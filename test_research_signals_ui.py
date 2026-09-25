@@ -49,7 +49,6 @@ class ResearchSignalsUITests(unittest.TestCase):
     def test_ci_builds_and_publishes_derived_research_assets(self):
         workflow = (ROOT / ".github" / "workflows" / "deploy.yml").read_text(encoding="utf-8")
         self.assertIn("python populate_research_signals.py", workflow)
-        self.assertIn("forecast_ledger_*.jsonl", workflow)
         self.assertIn("research-signals.js", workflow)
         self.assertIn("research-signals.css", workflow)
 

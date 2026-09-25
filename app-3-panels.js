@@ -1,6 +1,3 @@
-function scorecardAuditCount(v,preferred='total'){if(v==null)return 0;if(typeof v==='object')return Number(v[preferred]??v.total??v.graded??v.count)||0;return Number(v)||0}
-function scorecardMarketComparisonPick(p){if(['h','d','a'].includes(p?.market_comparison_pick))return p.market_comparison_pick;return p?.outcome_basis==='ultimate_winner'||p?.prediction_snapshot?.is_knockout?p?.regulation_pick:p?.pick}
-function scorecardUnderdogTag(p){if(!p?.upset_score||!p?.upset_snapshot?.radar||p?.upset_snapshot?.standings_gap_pct==null)return'';const name=esc(p.upset_name||'Underdog'),score=esc(p.upset_score);if(!p.upset_triggered)return` <i class="scsplit upsetTag">underdog risk · ${name} ${score}/100</i>`;const outcome=p.result?(p.upset_hit?' &#10003;':' &#10007;'):'';return` <i class="scsplit upsetTag">upset pick · ${name} ${score}/100${outcome}</i>`}
 // One team-name matcher for everything the handoff feeds.
 //
 // The fixture feed calls a team "Virginia"; the engine calls it "Virginia
@@ -856,7 +853,7 @@ const SPORT_PREFETCH=Object.create(null);
 function showSportData(payload,cached=false){
   DATA=cached?payload:stripPastSeasonCompetitionViews(payload);
   const loadAlert=$('#alertBar');if(loadAlert?.textContent==='The data connection failed. Use Retry loading below.'){loadAlert.style.display='none';loadAlert.textContent=''}
-  if(!cached){applyForecastPublicationPauses(DATA);applyCurrentCfbSnapshot(DATA);applyCurrentNcaamSnapshot(DATA);decodeNewsEntities(DATA);DATA.news=(DATA.news||[]).filter(isFreshNews).sort((a,b)=>newsTime(b)-newsTime(a))}
+  if(!cached){applyCurrentCfbSnapshot(DATA);applyCurrentNcaamSnapshot(DATA);decodeNewsEntities(DATA);DATA.news=(DATA.news||[]).filter(isFreshNews).sort((a,b)=>newsTime(b)-newsTime(a))}
   SPORT_DATA_CACHE[DATA_FILE]=DATA;
   BYID={};(DATA.matches||[]).forEach(m=>BYID[m.id]=m);
   LAST_OK=true;LAST_ERROR='';
@@ -1124,30 +1121,8 @@ renderNews=function(){
 
 
 /* ===== UI PATCH: model dashboard polish only; data untouched ===== */
-function _modelHasVerifiedLock(m){return m?.prediction?.publication_state==='locked'}
-function _modelIsPast(m){return m.status==='FINISHED'||isStaleUpcoming(m)}
-function _modelIsArchived(m){return _modelIsPast(m)&&_modelHasVerifiedLock(m)}
-function _highConfidenceAllowed(m){return m?.prediction?.lock_readiness?.confidence_guard?.high_confidence_label_allowed!==false}
-function _modelEdgeKind(pr){if(!pr||pr.edge==null)return'level';return pr.edge>=6?'value':pr.edge<=-6?'fade':'level'}
-function _modelSortScore(m){const pr=m.prediction||{};const archived=_modelIsArchived(m)?-10000:0;const upcoming=isVisibleUpcoming(m)?500:0;const edge=pr.edge==null?0:Math.max(0,pr.edge)*10;const conf=Number(pr.confidence)||0;return archived+upcoming+edge+conf}
-function _modelMarketText(m,side){if(_modelIsArchived(m))return 'archived pick';const mk=(m.markets||{})['1x2']||{};const v={h:mk.home_pct,d:mk.draw_pct,a:mk.away_pct}[side];return v==null?'market n/a':`${v}% market`}
-function _modelWhen(m){if(m.status==='LIVE')return 'Awaiting final';if(m.status==='FINISHED')return 'Finished';if(isStaleUpcoming(m))return 'Past kickoff';return kickIn(m.kickoff)}
-function _modelTag(m){const pr=m.prediction||{},kind=_modelEdgeKind(pr);if(_modelIsArchived(m))return {txt:'ARCHIVE',kind:'level'};if(m.status==='LIVE')return {txt:'LOCKED',kind:'level'};if(kind==='value')return {txt:'VALUE',kind:'value'};if(kind==='fade')return {txt:'CAUTION',kind:'fade'};if((Number(pr.confidence)||0)>=65&&_highConfidenceAllowed(m))return {txt:'HIGH CONF',kind:'level'};return {txt:'MODEL',kind:'level'}}
-function _modelBars(m){const md=officialPredictionProbabilities(m);const rows=_isTwoWay(m)?[['H','home',md.h],['A','away',md.a]]:[['H','home',md.h],['D','draw',md.d],['A','away',md.a]];return `<div class="modelBars">${rows.map(([lab,cls,val])=>{val=Math.max(0,Math.min(100,Number(val)||0));return `<div class="modelBarLine"><span>${lab}</span><div class="modelBarTrack"><span class="modelBarFill ${cls}" style="width:${Math.max(2,val)}%"></span></div><span>${modelPctLabel(val)}</span></div>`}).join('')}</div>`}
-function _modelFinalText(m){const s=m.score||{};if(m.status==='FINISHED'&&s.home!=null&&s.away!=null)return `${s.home}–${s.away}`;return _modelWhen(m)}
 /* dedup */
 /* dedup */
-function _modelApplyFilter(all){const f=window.MODEL_FILTER||'action';return all.filter(m=>{const archived=_modelIsArchived(m),pr=m.prediction||{},edge=Number(pr.edge)||0,conf=Number(pr.confidence)||0,hasOdds=!!((m.markets||{})['1x2']);if(f==='archive')return archived;if(archived)return false;if(f==='all')return true;if(f==='action'||f==='upcoming')return isVisibleUpcoming(m);if(f==='value')return isVisibleUpcoming(m)&&edge>=6;if(f==='caution')return isVisibleUpcoming(m)&&edge<=-6;if(f==='high')return isVisibleUpcoming(m)&&conf>=65&&_highConfidenceAllowed(m);if(f==='odds')return isVisibleUpcoming(m)&&hasOdds;return true})}
-function _modelFilterBtn(key,label,count){const on=(window.MODEL_FILTER||'action')===key;return `<button class="chip ${on?'on':''}" onclick="window.MODEL_FILTER='${key}';MODEL_VISIBLE=MODEL_PAGE_SIZE;renderEdge()">${label}<span class="count">${count}</span></button>`}
-function _archiveRow(m){const op=officialPrediction(m);return `<div class="archiveRow" onclick="openMatchModal('${esc(String(m.id||''))}')"><div><div class="archiveTeams">${esc(m.home?.code||m.home?.name||'H')} v ${esc(m.away?.code||m.away?.name||'A')}</div><div class="archiveMeta">${esc(m.stage||'Fixture')} · ${_modelWhen(m)}</div></div><div class="archiveResult">${esc(_modelFinalText(m))}</div><div class="archivePick">Pick <b>${esc(op.name||'—')}</b> · ${op.confidence??'—'}%</div><div class="archiveBadge">Review</div></div>`}
-function renderEdge(){const host=$('#view-edge');const all=(DATA.matches||[]).filter(m=>m.prediction&&(!_modelIsPast(m)||_modelHasVerifiedLock(m))).sort((a,b)=>_modelSortScore(b)-_modelSortScore(a));if(!all.length){host.innerHTML=`<div class="vhead">Model</div>${(()=>{const sc=DATA.scorecard;if(!sc||!sc.graded)return '';const rec=`${sc.model_hits}-${sc.graded-sc.model_hits}`;const br=sc.brier3??sc.brier_advancement??sc.brier??'—';const brLabel=sc.brier3!=null?'Outcome Brier':sc.brier_advancement!=null?'Advancement Brier':'Pick-event Brier';const cl=sc.clv_avg!=null?(sc.clv_avg>0?'+':'')+sc.clv_avg+' pp':'—';const vs=sc.value&&sc.value.all?`${sc.value.all.hits}/${sc.value.all.n}`:'—';return `<div class="credstrip"><span class="credtag">Model record</span><span class="creditem"><b>${rec}</b> last ${sc.graded}</span><span class="creditem">${brLabel} <b>${br}</b></span><span class="creditem">Line movement <b>${cl}</b></span><span class="creditem">Value <b>${vs}</b></span>${sc.graded<20?'<span class="crednote">small sample</span>':''}</div>`;})()}${FORECAST_PAUSE_ACTIVE?`<div class="empty forecastPaused" role="status"><b>Pick board is paused</b><span>${esc(FORECAST_PAUSE_MESSAGE)}</span><em>Graded picks return here once publication resumes. <a href="qa.html#pause">Why, and what comes next</a></em></div>`:'<div class="empty">No model picks yet.</div>'}`;return}if(!window.MODEL_FILTER||window.MODEL_FILTER==='finished'||window.MODEL_FILTER==='live')window.MODEL_FILTER='action';
-  // Paused: the pregame tab is empty by construction, so open on the graded
-  // record rather than dropping the reader onto a blank board.
-  if(FORECAST_PAUSE_ACTIVE&&window.MODEL_FILTER==='action'&&!all.some(isVisibleUpcoming))window.MODEL_FILTER='archive';const archived=all.filter(_modelIsArchived).sort((a,b)=>new Date(b.kickoff||0)-new Date(a.kickoff||0));const active=all.filter(m=>!_modelIsArchived(m));const counts={all:active.length,action:active.filter(isVisibleUpcoming).length,upcoming:active.filter(isVisibleUpcoming).length,value:active.filter(m=>isVisibleUpcoming(m)&&(m.prediction?.edge||0)>=6).length,caution:active.filter(m=>isVisibleUpcoming(m)&&(m.prediction?.edge||0)<=-6).length,high:active.filter(m=>isVisibleUpcoming(m)&&(Number(m.prediction?.confidence)||0)>=65&&_highConfidenceAllowed(m)).length,odds:active.filter(m=>isVisibleUpcoming(m)&&!!((m.markets||{})['1x2'])).length,archive:archived.length};const list=_modelApplyFilter(all).sort((a,b)=>_modelSortScore(b)-_modelSortScore(a));const actionable=active.filter(isVisibleUpcoming);const value=active.filter(m=>isVisibleUpcoming(m)&&(m.prediction?.edge||0)>=6);const caution=active.filter(m=>isVisibleUpcoming(m)&&(m.prediction?.edge||0)<=-6);const high=active.filter(m=>isVisibleUpcoming(m)&&(Number(m.prediction?.confidence)||0)>=65&&_highConfidenceAllowed(m));const archiveMode=window.MODEL_FILTER==='archive';const shownRows=list.slice(0,MODEL_VISIBLE),moreRows=Math.max(0,list.length-shownRows.length);let html=`<div class="modelShell"><div class="modelHero"><div><div class="modelHeroTitle">Pregame model</div><div class="modelHeroSub">Verified locked pregame picks, market context, and postgame grading.</div></div><div class="modelKpis"><div class="modelKpi"><span>Pregame</span><b>${actionable.length}</b></div><div class="modelKpi good"><span>Model leans</span><b>${value.length}</b></div><div class="modelKpi warn"><span>High confidence</span><b>${high.length}</b></div><div class="modelKpi bad"><span>Graded</span><b>${archived.length}</b></div></div></div><div class="modelToolbar">${_modelFilterBtn('action','Pregame',counts.action)}${_modelFilterBtn('value','Model lean',counts.value)}${_modelFilterBtn('archive','Results',counts.archive)}</div>${_modelSpotlight(active)}<div class="modelGrid"><section class="modelPanel"><div class="modelPanelHead"><h3>${archiveMode?'Postgame results':'Pregame pick board'}</h3><span>${shownRows.length} of ${list.length}</span></div><div class="modelList">${shownRows.length?shownRows.map(_modelRow).join(''):`<div class="modelEmptySmall">No matches in this filter.</div>`}</div>${moreRows?`<div class="fixturePager"><span>Showing ${shownRows.length} of ${list.length} picks</span><button class="actionbtn" onclick="MODEL_VISIBLE+=MODEL_PAGE_SIZE;renderEdge()">Load ${Math.min(MODEL_PAGE_SIZE,moreRows)} more</button></div>`:''}</section><section class="modelPanel modelDigestPanel"><div class="modelPanelHead"><h3>${archiveMode?'Postgame reads':'Quick reads'}</h3><span>digest</span></div><div class="modelReadList">`;const reads=(list.length?list:(archiveMode?archived:active)).slice(0,5);html+=reads.map((m,i)=>{const pr=m.prediction||{},tag=_modelTag(m),txt=_modelIsArchived(m)?`${pr.pick_name||'Model'} was ${pr.confidence||'—'}%. Result: ${_modelFinalText(m)}.`:(edgeBreakdown(m)||`${pr.pick_name||'Model'} at ${pr.confidence||'—'}%.`);return `<div class="modelRead" onclick="openMatchModal('${esc(String(m.id||''))}')"><div class="rtitle"><span>${tag.txt}</span>${esc(m.home?.code||'H')} v ${esc(m.away?.code||'A')}</div><p>${esc(txt)}</p></div>`}).join('');html+=`</div></section>`;if(!archiveMode&&archived.length){html+=`<section class="modelPanel modelArchivePanel"><div class="modelPanelHead"><h3>Postgame results <span class="archiveBadge">${archived.length}</span></h3><span><button class="chip" onclick="window.MODEL_FILTER='archive';MODEL_VISIBLE=MODEL_PAGE_SIZE;renderEdge()">View results</button></span></div><div class="modelList">${archived.slice(0,8).map(_archiveRow).join('')}</div></section>`}html+=`</div></div>`;host.innerHTML=html}
-
-
-
-/* ===== UI PATCH: complete bracket render; UI only, data untouched ===== */
 function _canonRoundName(name){
   const x=String(name||'').toLowerCase().replace(/[_-]/g,' ');
   if(/knockout.*play.?off|play off round/.test(x))return 'Knockout phase play-offs';
@@ -1244,7 +1219,7 @@ function rosterPanel(m){
   const rosterPlayers=raw=>(raw||[]).map(p=>({...normalizePlayer(p),position:p?.position||'',roster_status:p?.roster_status||''})).filter(p=>p.name);
   const homePlayers=rosterPlayers(depth.home?.players||lineups.home?.xi||[]);
   const awayPlayers=rosterPlayers(depth.away?.players||lineups.away?.xi||[]);
-  const pr=m.prediction||officialPrediction(m)||{},meta=sportClassMeta(pr,m),edge=Number(pr?.why?.class||0);
+  const meta=sportClassMeta({},m),edge=0;
   const label=meta.label||'Roster profile',source=meta.source?`Source: ${meta.source}`:(meta.note||'Built from the roster information available to Matchday.');
   const homeTitle=edge>0.05?'Stronger roster':edge<-.05?'Lighter roster':'Even roster grade';
   const awayTitle=edge<-.05?'Stronger roster':edge>.05?'Lighter roster':'Even roster grade';
@@ -1440,15 +1415,6 @@ function openMatchModal(id){const m=BYID[id]||(DATA.matches||[]).find(x=>String(
 
 
 /* ===== MATCH MODAL + FORECAST BOARD REDESIGN — v4 ===== */
-function _v4PickSideLabel(m,side){
-  if(side==='h')return m.home?.name||'Home';
-  if(side==='a')return m.away?.name||'Away';
-  if(side==='d')return 'Draw';
-  return 'No pick';
-}
-function _v4ModelProbs(m){
-  return officialPredictionProbabilities(m);
-}
 function sportClassMeta(pr,m){
   if(pr?.class_meta)return pr.class_meta;
   // Locked predictions created before class provenance was added keep their
@@ -1458,88 +1424,6 @@ function sportClassMeta(pr,m){
   const comp=String(m?._comp||DATA.comp_key||'').toUpperCase();
   const labels={NCAAF:'Roster talent edge',NCAAM:'Recruiting edge'};
   return {label:labels[comp]||'Squad edge',coverage:'partial'};
-}
-function _v4FactorRows(pr,m){
-  const classMeta=sportClassMeta(pr,m),legacyMarketClass=!pr?.class_meta&&classMeta.coverage==='unavailable';
-  const classLabel=legacyMarketClass?'legacy championship market power':classMeta.label.toLowerCase();
-  const labels={class:classLabel,market_power:'championship market power',pts:'points',gd:scoreDiffLabel(m),record:'season record',margin:'scoring margin',rank:'poll rank',srs:'opponent-adjusted rating',form:'form',adv:'home field',rest:'rest',elo:'elo rating',h2h:'head-to-head',injuries:'injuries'};
-  const rows=[];
-  const classVal=pr?.why?.class!=null?(Number(pr.why.class)||0):null;
-  const classListed=classVal!=null&&Math.abs(classVal)>=0.3;
-  if(pr&&pr.why){
-    Object.entries(pr.why).filter(([k,v])=>labels[k]&&Math.abs(Number(v)||0)>=0.3)
-      .sort((a,b)=>Math.abs(Number(b[1])||0)-Math.abs(Number(a[1])||0))
-      .forEach(([k,v])=>{v=Number(v)||0;rows.push(`<div class="factorRow ${v>0?'pos':v<0?'neg':'neu'}"><span class="fName">${esc(labels[k])}</span><span class="fVal">${v>0?'+':''}${v.toFixed(1)}</span></div>`)});
-  }
-  // Two very different things used to look identical here: a roster/talent
-  // signal that grades the two teams level, and one the provider never
-  // covered. Both fell under the 0.3 threshold above and were dropped
-  // silently, so the talent edge simply vanished for 41 of 160 live NCAAF
-  // fixtures with nothing on screen saying why. State it either way.
-  if(!classListed){
-    if(classMeta.edge_available===false){
-      rows.push(`<div class="factorRow neu" title="${esc(classMeta.note||`No validated player-quality grades are available, so ${classLabel} is not scored.`)}"><span class="fName">${esc(classLabel)}</span><span class="fVal">not scored</span></div>`);
-    }else{
-      const covered=classMeta.coverage!=='unavailable'&&classVal!=null;
-      rows.push(`<div class="factorRow neu" title="${esc(covered?`${classLabel} is in the model for this matchup and grades the two teams level.`:`No verified ${classLabel} data for this matchup, so the model assigned no edge rather than a fabricated one.`)}"><span class="fName">${esc(classLabel)}</span><span class="fVal">${covered?'level':'no data'}</span></div>`);
-    }
-  }
-  if(classMeta.coverage_label&&classMeta.coverage!=='unavailable')rows.push(`<div class="factorRow neu" title="Expected depth-chart coverage only; this does not assert confirmed gameday actives or player quality."><span class="fName">${esc(classMeta.coverage_label)}</span><span class="fVal">${classMeta.coverage==='complete'?'both teams':'partial'}</span></div>`);
-  if(pr&&Number(pr.damp_pct))rows.push(`<div class="factorRow neu"><span class="fName">variance control</span><span class="fVal">−${esc(pr.damp_pct)}%</span></div>`);
-  if(pr&&Number(pr.mkt_pull))rows.push(`<div class="factorRow neu"><span class="fName">consensus pull</span><span class="fVal">${Number(pr.mkt_pull)>0?'+':''}${esc(pr.mkt_pull)}</span></div>`);
-  // Surfaces the locked pick's own data-availability snapshot as an explicit
-  // uncertainty signal, rather than letting a missing input pass silently.
-  if(pr&&pr.data_availability){
-    const availLabels={market:'market odds',box_score:'box score',lineups:'lineups',injuries:'injury reports',weather:'weather',personnel:'sport-specific personnel',venue_context:'venue context'};
-    Object.entries(pr.data_availability).filter(([k,v])=>v==='unavailable'&&availLabels[k])
-      .forEach(([k])=>rows.push(`<div class="factorRow neu" title="No ${esc(availLabels[k])} were available when this pick locked, so the model could not use them."><span class="fName">${esc(availLabels[k])}</span><span class="fVal">no data</span></div>`));
-  }
-  return rows.length?rows.join(''):'<div class="factorRow neu"><span class="fName">No factor detail</span><span class="fVal">—</span></div>';
-}
-function pregameContextPanel(m){
-  const ctx=m.pregame_context||m.prediction?.lock_readiness;
-  if(!ctx)return `<div class="readCard pregameContextCard"><div class="seclbl">Pregame context</div><div class="emptyStats"><b>No readiness receipt for this fixture</b><span>This forecast was published before Matchday started recording which pregame inputs it had. The pick still stands as locked; only the receipt is missing.</span></div></div>`;
-  const labels={market:'market',injuries:'injuries',lineups:'lineups',weather:'weather',venue:'venue',starting_pitchers:'starting pitchers',bullpen:'bullpen availability',rotation:'rotation',key_players:'QB / key players',starting_goalies:'starting goalies'};
-  const state=m.prediction?.publication_state||ctx.phase||'preliminary';
-  const stateLabel=state==='locked'?'Locked forecast':state==='lock_candidate'?'Inside lock window':'Preliminary forecast';
-  const inWindow=state==='locked'||state==='lock_candidate';
-  // Outside the lock window an unconfirmed input is the schedule working, not
-  // a fault -- lineups for a fixture two days out have not been named yet. The
-  // panel used to render one grey "missing" row per input plus a red "Needed
-  // before lock" alert on every such fixture, which is every soccer and
-  // college fixture on the board, so a normal pregame card read as a broken
-  // one. The full receipt is kept for inside the window, where a missing input
-  // genuinely blocks the lock.
-  const inputPairs=Object.entries(ctx.inputs||{});
-  const confirmedPairs=inputPairs.filter(([,value])=>String(value)==='confirmed');
-  const pendingPairs=inputPairs.filter(([,value])=>String(value)!=='confirmed');
-  const rows=(inWindow?inputPairs:confirmedPairs).map(([key,value])=>`<div class="factorRow ${value==='confirmed'?'pos':'neu'}"><span class="fName">${esc(labels[key]||key)}</span><span class="fVal">${esc(value)}</span></div>`).join('');
-  const lead=Number(ctx.lead_time_hours);
-  const pendingLine=(!inWindow&&pendingPairs.length)?`<div class="contextPending"><b>Still to arrive</b><span>${pendingPairs.map(([key])=>esc(labels[key]||key)).join(' · ')}</span><small>${lead>0?`Kickoff is ${lead>=48?Math.round(lead/24)+' days':Math.round(lead)+'h'} away — these confirm closer to it.`:'These confirm closer to kickoff.'}</small></div>`:'';
-  // Only a licensed feed writes starting_pitchers; SportsGameOdds writes its
-  // market-listed inference under starter_candidates so the two can never be
-  // confused. Reading only the first meant this card showed nothing at all on
-  // every fixture, and the "not confirmed" wording below was unreachable.
-  const injuries=m.injuries||{};
-  const injuryDetails=m.personnel?.injury_details||{};
-  const injuryCount=(injuries.home||[]).length+(injuries.away||[]).length+
-    (injuryDetails.home||[]).length+(injuryDetails.away||[]).length;
-  const depth=m.personnel?.depth_chart||{};
-  const depthPositions=new Set(['QB','RB','LWR','RWR','SLWR','TE','LDE','RDE','MLB','LCB','RCB','FS','SS']);
-  const depthLine=side=>{
-    const chart=depth[side]||{},players=(chart.players||[]).filter(p=>depthPositions.has(String(p.position||'').toUpperCase())).slice(0,8);
-    if(!players.length)return'';
-    const team=side==='home'?m.home:m.away;
-    return `${esc(team?.code||team?.name||side)} expected: ${players.map(p=>`${esc(p.position||'')} ${esc(p.name||'')}${p.roster_status&&p.roster_status!=='ACT'?` <b>(${esc(p.roster_status)})</b>`:''}`).join(' · ')}`;
-  };
-  const detailNotes=[];
-  if(injuryCount)detailNotes.push(`<div class="contextNote"><b>Availability report</b><span>${injuryCount} unavailable or questionable player${injuryCount===1?'':'s'}</span></div>`);
-  ['home','away'].map(depthLine).filter(Boolean).forEach(line=>detailNotes.push(`<div class="contextNote contextNoteWide"><b>Expected depth</b><span>${line}</span></div>`));
-  const depthObserved=depth.home?.observed_at||depth.away?.observed_at;
-  if(depthObserved)detailNotes.push(`<div class="contextNote contextNoteWide"><b>Depth-chart timestamp</b><span>${esc(new Date(depthObserved).toLocaleString())}</span><small>Expected hierarchy, not confirmed gameday actives</small></div>`);
-  const missing=(ctx.missing_critical||[]).map(k=>labels[k]||k);
-  const missingBlock=(inWindow&&missing.length)?`<div class="contextAlert"><span aria-hidden="true">!</span><div><b>Needed before lock</b><p>${missing.map(x=>esc(x)).join(' · ')}</p></div></div>`:'';
-  return `<div class="readCard pregameContextCard"><div class="seclbl">Pregame context</div><div class="pick insightPick ${state==='locked'?'':'gate'}"><span class="pl">State</span><span class="pn">${esc(stateLabel)}</span><span class="pc">${esc(ctx.coverage_pct??0)}%</span><span class="pnote">${inWindow?`input coverage · locks on the first successful refresh inside the ${esc(ctx.lock_window_hours??2)}h pregame window`:`input coverage so far · the pick locks inside the ${esc(ctx.lock_window_hours??2)}h window before kickoff`}</span></div>${rows?`<div class="factorRows contextFactorRows">${rows}</div>`:''}${pendingLine}<div class="contextDetails">${detailNotes.length?`<div class="contextNoteGrid">${detailNotes.join('')}</div>`:''}${missingBlock}</div><div class="contextResearch"><span>Research-only</span><p>New personnel and venue inputs are tracked, but do not change the model yet.</p></div></div>`;
 }
 
 /* Bet Better's own read on one fixture.
@@ -1757,58 +1641,12 @@ function matchupEvidence(label,note,html,open=false){
   return `<details class="matchEvidence"${open?' open':''}><summary><span><b>${esc(label)}</b><small>${esc(note)}</small></span><i aria-hidden="true">+</i></summary><div class="matchEvidenceBody">${html}</div></details>`;
 }
 function details(m){
-  if(isForecastPaused(m))return `<div class="detailGrid v4Detail">${forecastPauseHTML(m)}<div class="detailTop">${betbetterMatchupPanel(m)}<div class="readCard forecastMarketCard">${marketPanel(m)}</div></div><div class="detailLow">${rosterPanel(m)}</div></div>`;
   const bb=betbetterReadFor(m);
   const read=bb?betbetterModelRead(m,bb):(howItPlayedPanel(m)||finalSummaryPanel(m)||betbetterNoReadPanel());
   const comparison=betbetterMatchupPanel(m)||matchProfilePanel(m);
   return `<div class="detailGrid v4Detail modernExpandedView"><div class="expandedSectionHead"><div><span>Matchday analysis</span><b>Pick &amp; matchup</b></div></div><div class="expandedDecision"><div class="readCard modelReadCard">${read}</div></div><div class="matchEvidenceList">${matchupEvidence('Team comparison','rating, offence, defence and schedule',comparison,true)}${matchupEvidence('Market','price and model gap',`<div class="readCard forecastMarketCard">${marketPanel(m)}</div>`)}${matchupEvidence('More detail','season profile and roster',`<div class="detailLow">${matchProfilePanel(m)}${rosterPanel(m)}<!-- matchday-advanced-profile --></div>`)}</div></div>`;
 }
 /* dedup */
-function _v4TitleRows(t){
-  if(!t.length)return '<div class="emptyForecast">No title-race snapshot yet.</div>';
-  const max=Number(t[0].pct)||1;
-  return t.slice(0,12).map((x,i)=>`<div class="raceRow"><span class="raceRank">${i+1}</span><div><div class="raceTeam">${uiFlag(x.code)?`<span class="flagIcon">${uiFlag(x.code)}</span>`:''}${esc(x.team)}</div><div class="raceMeta">title probability snapshot</div></div><span class="raceBar"><i style="width:${Math.max(4,Math.round((Number(x.pct)||0)/max*100))}%"></i></span><span class="racePct">${esc(x.pct??'—')}%</span></div>`).join('');
-}
-function _v4ScorerRows(sc){
-  if(!sc.length)return '<div class="emptyForecast">No scorer data yet.</div>';
-  return sc.slice(0,10).map((p,i)=>`<div class="scorerRow"><span class="scorerRank">${i+1}</span><div><div class="scorerName">${esc(p.name||'')}</div><div class="scorerMeta">${esc(p.code||p.team||'')}</div></div><span class="scorerGoals">${esc(p.goals??0)} G${p.assists?` · ${esc(p.assists)} A`:''}</span></div>`).join('');
-}
-function _v13LeaderPanel(sc){
-  const board=DATA.leaders||{},cats=board.categories||[];
-  if(cats.length){
-    const meta=[board.season,board.source].filter(Boolean).join(' · ');
-    const cards=cats.map(c=>`<div class="leaderCategory"><div class="leaderCategoryHead"><span>${esc(c.label||c.key||'Leader')}</span><b>${esc(c.abbr||'')}</b></div><div class="leaderRows">${(c.leaders||[]).slice(0,3).map((p,i)=>`<div class="leaderRow"><span>${i+1}</span><strong>${esc(p.name||'')}</strong><b>${esc(p.value??'—')}</b></div>`).join('')}</div></div>`).join('');
-    return `<section class="forecastPanel leaderPanel"><div class="forecastPanelHead"><h3>Season leaders</h3><span>${esc(meta||'verified stats')}</span></div><div class="leaderCategoryGrid">${cards}</div></section>`;
-  }
-  if(sc.length)return `<section class="forecastPanel"><div class="forecastPanelHead"><h3>Scoring leaders</h3><span>goals & assists</span></div><div class="scorerList">${_v4ScorerRows(sc)}</div></section>`;
-  return '';
-}
-function _v4MatchSnapshots(){
-  const M=(DATA.matches||[]).filter(m=>m.status!=='FINISHED'&&!isStaleUpcoming(m)&&(m.markets?.['1x2']||m.prediction)).sort((a,b)=>(a.kickoff||'').localeCompare(b.kickoff||'')).slice(0,8);
-  if(!M.length)return '<div class="emptyForecast">No upcoming match snapshots yet.</div>';
-  return M.map(m=>{const x=(m.markets||{})['1x2']||{},probs=_v4ModelProbs(m),twoWay=_isTwoWay(m);
-    const hp=Number(probs.h??x.home_pct??0),dp=Number(probs.d??x.draw_pct??0),ap=Number(probs.a??x.away_pct??0);
-    const line=(name,side,pct)=>`<div class="probLine"><span class="sideName">${esc(name)}</span><span class="probTrack"><i class="probFill ${side}" style="width:${Math.max(3,Math.min(100,pct))}%"></i></span><span class="pct">${modelPctLabel(pct)}</span></div>`;
-    return `<div class="matchSnapRow" onclick="openMatchModal('${esc(String(m.id||''))}')"><div><div class="matchSnapTeams">${esc(m.home?.code||m.home?.name||'H')} v ${esc(m.away?.code||m.away?.name||'A')}</div><div class="matchSnapMeta">${isForecastPaused(m)?'Market odds · ':''}${esc(m.stage||'')} \u2013 ${kickIn(m.kickoff)}</div></div><div class="probLines">${line(m.home?.code||'H','h',hp)}${twoWay?'':line('Draw','d',dp)}${line(m.away?.code||'A','a',ap)}</div></div>`;
-  }).join('');
-}
-function _v4AdvancementTable(adv){
-  if(!adv.length)return '';
-  const stages=Object.keys(adv[0].stages||{});
-  const advCols=`grid-template-columns:minmax(150px,1.6fr) repeat(${stages.length},minmax(56px,1fr))`;
-  return `<section class="forecastPanel"><div class="forecastPanelHead"><h3>Advancement path</h3><span>model projection</span></div><div class="advtable v4"><div class="advrow advhead" style="${advCols}"><span>Team</span>${stages.map(sg=>`<span>${esc(sg==='Champion'?'Win':sg.replace('-finals','F').replace('Round of ','R'))}</span>`).join('')}</div>${adv.slice(0,18).map(r=>`<div class="advrow" style="${advCols}"><span class="advteam">${uiFlag(r.code)?`<span class="flagIcon">${uiFlag(r.code)}</span> `:''}${esc(r.team)}</span>${stages.map(sg=>{const v=r.stages[sg];return `<span class="advpct ${v>=50?'hi':v<10?'lo':''}">${v!=null?v+'%':'&mdash;'}</span>`}).join('')}</div>`).join('')}</div><div class="forecastDisclaimer">Projection only. Later rounds depend on the field that actually survives.</div></section>`;
-}
-function renderTitle(){
-  const t=DATA.title_odds||[],adv=DATA.advancement||[],sc=DATA.scorers||[],upsets=_v4UpsetRows();
-  const upcoming=(DATA.matches||[]).filter(m=>m.status!=='FINISHED'&&!isStaleUpcoming(m)).length;
-  let html=`<div class="forecastShell"><div class="forecastHero"><div><h2>Forecast board</h2><p>Tournament probabilities, upset risk, advancement paths, and scorer races, in one place.</p></div><div class="forecastKpis"><div class="forecastKpi"><span>Upcoming</span><b>${upcoming}</b></div><div class="forecastKpi"><span>Upset watch</span><b>${upsets.length}</b></div><div class="forecastKpi"><span>Title teams</span><b>${t.length||'—'}</b></div></div></div>`;
-  const leaderPanel=_v13LeaderPanel(sc);
-  html+=`<div class="forecastGrid ${leaderPanel?'':'single'}"><section class="forecastPanel"><div class="forecastPanelHead"><h3>Upset radar</h3><span>${upsets.length} matches</span></div><div class="upsetList">${upsets.length?upsets.map(x=>`<div class="upsetRow" onclick="openMatchModal('${esc(String(x.m.id||''))}')"><div><div class="upsetMatch">${esc(x.m.home?.code||x.m.home?.name||'H')} v ${esc(x.m.away?.code||x.m.away?.name||'A')}</div><div class="upsetWhy">${esc(x.reason)}</div></div><div class="upsetWhy">${esc(x.m.stage||'')} · ${kickIn(x.m.kickoff)}</div><span class="riskPill ${x.cls}">${x.triggered?'active upset pick':x.risk>=70?'high variance':x.risk>=50?'medium variance':'low variance'}</span></div>`).join(''):'<div class="emptyForecast">No upcoming matches to analyze.</div>'}</div></section>${leaderPanel}</div>`;
-  html+=`<div class="forecastGrid"><section class="forecastPanel"><div class="forecastPanelHead"><h3>Title race</h3><span>probability snapshot</span></div><div class="raceList">${_v4TitleRows(t)}</div></section><section class="forecastPanel"><div class="forecastPanelHead"><h3>Match snapshots</h3><span>next fixtures</span></div><div class="matchSnapList">${_v4MatchSnapshots()}</div></section></div>`;
-  html+=_v4AdvancementTable(adv);
-  html+=`<div class="forecastNote">Read these as probabilities, not calls: a 38% pick is supposed to lose most of the time.</div></div>`;
-  const host=$('#view-title');host.innerHTML=html;
-}
 
 
 

@@ -4,7 +4,6 @@ function _insightFocusHTML(focus){
     h+=`<div class="ins-match">${esc(focus.home?.name||'Home')} <span class="evs">v</span> ${esc(focus.away?.name||'Away')}</div><div class="ins-sub">${focus.status==='LIVE'?'Awaiting final':focus.status==='FINISHED'?`Final · ${esc(scorePlainText(focus))}`:`${esc(focus.stage||'')} · ${kickIn(focus.kickoff)}`}</div>`;
     h+=insightModelBlock(focus);
     const x=(focus.markets||{})['1x2']||{};
-    if(isForecastPaused(focus)&&x.home_pct!=null)h+='<div class="seclbl" style="margin-top:12px">Market odds</div>';
     if(x.home_pct!=null){const twoWay=_isTwoWay(focus);h+=`<div class="prob insightProb"><div class="problbl"><span>${esc(focus.home?.code||'H')}</span>${twoWay?'':'<span>draw</span>'}<span>${esc(focus.away?.code||'A')}</span></div>${bar1x2(x.home_pct,twoWay?null:x.draw_pct,x.away_pct)}</div>`;}
   }else{
     h+=`<div class="faintline">No match in focus yet.</div>`;
@@ -12,15 +11,13 @@ function _insightFocusHTML(focus){
   return h;
 }
 function _insightFocusPool(M){
-  const eligible=M.filter(m=>!_modelIsPast(m)||_modelHasVerifiedLock(m));
+  const eligible=M;
   const primary=eligible.filter(m=>isFavoriteMatch(m)&&isVisibleUpcoming(m)).sort(fixtureSort)[0]||eligible.filter(isVisibleUpcoming).sort(fixtureSort)[0]||eligible.find(m=>isFavoriteMatch(m)&&m.status==='FINISHED')||eligible.find(m=>m.status==='FINISHED')||eligible.find(m=>m.status==='LIVE')||eligible[0];
   if(!primary)return [];
-  // rotate the primary focus alongside a few other upcoming games worth
-  // surfacing, ranked by watchability within a near-term window so a
-  // months-away fixture can't outrank this week's games
+  // rotate the primary focus alongside a few other upcoming games within a
+  // near-term window so a months-away fixture can't outrank this week's games
   const candidates=eligible.filter(m=>isVisibleUpcoming(m)&&m.id!==primary.id);
-  const others=nearTermPool(candidates,4)
-    .sort((a,b)=>(b.watchability||0)-(a.watchability||0)).slice(0,4);
+  const others=nearTermPool(candidates,4).slice(0,4);
   return [primary,...others];
 }
 function renderInsight(){
@@ -121,103 +118,9 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')window.closeMatchMod
 /* ===== OFFICIAL PICK / UPSET WATCH SEPARATION — v10 =====
    UI-side safety gate: an upset candidate can be shown as dangerous without
    replacing the official pick when the market gap is too large. */
-function _v10SideName(m,side){
-  if(side==='h')return m?.home?.name||'Home';
-  if(side==='a')return m?.away?.name||'Away';
-  if(side==='d')return 'Draw';
-  return 'No pick';
-}
-function _v10MarketMap(m){
-  const x=(m?.markets||{})['1x2']||{};
-  return {h:Number(x.home_pct),d:Number(x.draw_pct),a:Number(x.away_pct)};
-}
-function _v10Has(v){return Number.isFinite(Number(v))}
-function _v10PctFor(m,side){
-  const official=officialPrediction(m);
-  if(side===official.side&&Number.isFinite(Number(official.confidence)))return Math.round(Number(official.confidence));
-  const v=Number(officialPredictionProbabilities(m)?.[side]);
-  return Number.isFinite(v)?Math.round(v):null;
-}
-function _v10OfficialPick(m){
-  const pr=m?.prediction||{};
-  const u=pr.upset||{};
-  const published=officialPrediction(m);
-  const market=_v10MarketMap(m);
-  // Do not recalculate a pick from live probabilities, odds, or box-score
-  // state here. The backend has already applied its gate and frozen the pick.
-  const officialSide=published.side;
-  const name=published.name||_v10SideName(m,officialSide);
-  const conf=Number.isFinite(Number(published.confidence))?Math.round(Number(published.confidence)):null;
-  const cand=u.candidate||'';
-  const rawSide=officialSide,rawName=name;
-  const blocked=!!cand&&u.blocked===true;
-  const marketGap=Number.isFinite(Number(u.market_gap_pct))?Math.round(Number(u.market_gap_pct)):null;
-  const gateReason=u.gate_reason||u.block_reason||(marketGap!=null?`market gap ${marketGap} pts`:'backend gate');
-  const marketPct=_v10Has(market[officialSide])?Math.round(market[officialSide]):null;
-  const candName=u.candidate_name||_v10SideName(m,cand);
-  const candPct=Number.isFinite(Number(u.candidate_pct))?Math.round(Number(u.candidate_pct)):_v10PctFor(m,cand);
-  const officialNote=blocked
-    ? `Upset watch: ${candName}. ${gateReason}; the locked pick remains ${name}.`
-    : (u.triggered&&cand===officialSide ? 'Upset pick passed the gate.' : (pr.note||'model read'));
-  return {side:officialSide,name,confidence:conf,marketPct,rawSide,rawName,blocked,gateReason,marketGap,
-          candidate:cand,candidateName:candName,candidatePct:candPct,upsetScore:Number(u.score||0),
-          upsetTriggered:!!u.triggered, note:officialNote};
-}
-function _v10OfficialEdge(m,op){
-  const market=_v10MarketMap(m); const mk=Number(market[op.side]);
-  if(!Number.isFinite(mk)||op.confidence==null)return null;
-  return Math.round(Number(op.confidence)-mk);
-}
 function _isTwoWay(m){return SANDBOX_TWO_WAY.has(String(m?._comp||DATA.comp_key||'').toLowerCase());}
 const US_SCORE_TERM={ncaaf:'points',ncaam:'points'};
 function _totalsUnit(m){return US_SCORE_TERM[String(m?._comp||DATA.comp_key||'').toLowerCase()]||'goals';}
-function edgeBreakdown(m){
-  const pr=m?.prediction, x=(m?.markets||{})['1x2']||{};
-  if(!pr)return '';
-  const op=_v10OfficialPick(m);
-  const pickSide=op.side;
-  const mkmap={h:x.home_pct,d:x.draw_pct,a:x.away_pct};
-  const modelP=officialPredictionProbabilities(m)?.[pickSide];
-  const mktP=mkmap[pickSide];
-  const edge=_v10OfficialEdge(m,op);
-  const team=(pickSide==='h')?m.home:(pickSide==='a')?m.away:null;
-  let bits=[];
-  if(op.blocked){
-    bits.push(`Official pick stays ${op.name}${op.confidence!=null?` at ${op.confidence}%`:''}. Upset radar flagged ${op.candidateName}${op.upsetScore?` (${op.upsetScore}/100)`:''}, but ${op.gateReason}.`);
-  }else if(edge!=null&&mktP!=null&&modelP!=null){
-    if(edge>=6)bits.push(`The model rates ${op.name} higher than the market (${modelP}% vs ${mktP}%).`);
-    else if(edge<=-6)bits.push(`The model is cooler on ${op.name} than the market (${modelP}% vs ${mktP}%).`);
-    else bits.push(`Model and market broadly agree on ${op.name} (${modelP}% vs ${mktP}%).`);
-  }else{
-    bits.push(`Official model pick is ${op.name}${op.confidence!=null?` at ${op.confidence}%`:''}.`);
-  }
-  if(team){
-    const f=String(team.form||'').split(' ').filter(Boolean);
-    if(f.length)bits.push(`${team.name} form: ${f.join(' ')} · GD ${Number(team.gd||0)>0?'+':''}${team.gd??0}.`);
-  }
-  const tot=(m?.markets||{}).totals;
-  const modelTot=(m?.prediction||{}).totals;
-  if(tot){
-    const unit=_totalsUnit(m);
-    let goalsLine=`${unit[0].toUpperCase()+unit.slice(1)} market: over ${tot.line} ${tot.over_pct}%, under ${tot.line} ${tot.under_pct}%.`;
-    if(modelTot&&modelTot.pick)goalsLine+=` Model expects ${modelTot.expected} — leans ${modelTot.pick}.`;
-    bits.push(goalsLine);
-  }else if(modelTot&&modelTot.expected!=null){
-    bits.push(`Model expects ${modelTot.expected} ${_totalsUnit(m)} — no market line yet.`);
-  }
-  return bits.join(' ');
-}
-function _v6UpsetBox(m){
-  const pr=m?.prediction||{},u=pr.upset||{},op=_v10OfficialPick(m);
-  if(!u.radar)return `<div class="analystBox upsetBox"><div class="analystBoxTitle">Upset radar</div><div class="emptyForecast" style="padding:12px">No upset risk: this match does not have both a clear standings mismatch and an 8+ point model/market disagreement.</div></div>`;
-  const shownActive=!!u.triggered&&!op.blocked;
-  const cls=_v6UpsetClass(u.score,shownActive);
-  const status=op.blocked?'watch only · gate blocked':shownActive?'upset pick active':'watch only';
-  const upsetTwoWay=_isTwoWay(m);
-  const fallbackReason=upsetTwoWay?'Volatility profile calculated from low-scoring profile, favorite softness, and team gap.':'Volatility profile calculated from draw pressure, low-scoring profile, favorite softness, and team gap.';
-  const reason=op.blocked?`${u.reason||'Volatility profile detected.'} · ${op.gateReason}.`:u.reason||fallbackReason;
-  return `<div class="analystBox upsetBox"><div class="analystBoxTitle">Upset radar</div><div class="upsetHero"><div class="candidate"><span>candidate</span><b>${esc(u.candidate_name||'Underdog')}</b></div><div class="upsetScoreDial ${cls}"><b>${esc(u.score??'—')}</b><small>/100</small></div></div><div class="probLines"><div class="probLine"><span class="sideName">${esc(u.favorite_name||'Favorite')}</span><span class="probTrack"><i class="probFill h" style="width:${Math.max(3,Number(u.favorite_pct)||0)}%"></i></span><span class="pct">${esc(u.favorite_pct??'—')}%</span></div><div class="probLine"><span class="sideName">${esc(u.candidate_name||'Underdog')}</span><span class="probTrack"><i class="probFill a" style="width:${Math.max(3,Number(u.candidate_pct)||0)}%"></i></span><span class="pct">${esc(u.candidate_pct??'—')}%</span></div></div><div class="upsetMath"><span>Temp<b class="hot">T ${esc(u.temperature??'—')}</b></span><span>Variance<b>${esc(u.variance_pct??'—')}%</b></span><span>${upsetTwoWay?'Low scoring':'Low goals'}<b>${esc(u.low_goal_pct??'—')}%</b></span></div><p class="upsetReason">${esc(reason)}</p><span class="upsetTriggered ${op.blocked?'blocked':shownActive?'':'watch'}">${esc(status)}</span></div>`;
-}
 /* dedup */
 // The rail shows the engine's read or it shows nothing. Matchday's own
 // `prediction` used to sit beneath it under "Locked model pick" -- a second
@@ -225,7 +128,6 @@ function _v6UpsetBox(m){
 // a confidence beside "no market to compare against" for a number this site
 // does not stand behind.
 function insightModelBlock(m){
-  if(isForecastPaused(m))return forecastPauseHTML(m);
   return matchdayLivePickHTML(m)
     ||'<div class="seclbl">Model read</div><div class="nomk">No model read on this fixture yet.</div>';
 }
@@ -263,33 +165,10 @@ function cardHTML(m,opts){
   // rendered anywhere: the card, the rail and the expanded view all read the
   // engine, and a fixture it has not modeled says so instead.
   const livePick=opts.hidePick?'':matchdayLivePickHTML(m);
-  const pick=isForecastPaused(m)?forecastPauseHTML(m):livePick;
+  const pick=livePick;
   const probChanged=!!probabilityMovement(m);
   const timing=pending?'score after final':m.status==='FINISHED'?'postgame':stale?'past kickoff':kickIn(m.kickoff);
   return `<article class="card${SETTINGS.showDetails?'':' compactCard'}${probChanged?' probChanged':''}" data-id="${esc(m.id)}"><div class="head" onclick="openMatchModal(this.closest('article').dataset.id)"><div class="metarow"><span class="stage">${esc(m.stage||'Fixture')}</span>${m._comp&&!DATA_FILE?`<span class="compTag">${esc(m._comp)}</span>`:''}<span class="wstar ${wlHas(m.home.name)||wlHas(m.away.name)?'on':''}" onclick="event.stopPropagation();wlToggle('${esc(m.home.name)}')" title="Watch">&#9733;</span>${m.weather?`<a class="wxchip" href="${esc(m.weather.source_url||'https://open-meteo.com/')}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()" title="Weather data by Open-Meteo"><b>${Math.round(m.weather.temp_c*9/5+32)}&deg;F</b>${m.weather.wind_kph>=20?` ${Math.round(m.weather.wind_kph*0.621371)} mph`:''}${m.weather.rain_pct>=40?` &#9730;${m.weather.rain_pct}%`:''}<small> Open-Meteo</small></a>`:''}<span class="spacer"></span><span class="pill ${esc(statusClass)}">${esc(displayStatus)}</span></div><div class="fixture"><div class="side"><div class="tname">${teamMarkHTML(m.home)}<span class="teamNameText" title="${esc(m.home.name)}">${hfl}${esc(cardTeamName(m.home.name))}</span></div><div class="tsub"><span>${esc(m.home.code)}</span>${teamStandingsMeta(m.home,m._comp).map(p=>`<span>${esc(p)}</span>`).join('')}</div></div><div class="center"><div class="score">${scoreText(m)}</div><div class="kick">${timing}</div></div><div class="side away"><div class="tname"><span class="teamNameText" title="${esc(m.away.name)}">${esc(cardTeamName(m.away.name))}${afl}</span>${teamMarkHTML(m.away,'away')}</div><div class="tsub"><span>${esc(m.away.code)}</span>${teamStandingsMeta(m.away,m._comp).map(p=>`<span>${esc(p)}</span>`).join('')}</div></div></div>${probTop}${pick}<div class="expander"></div></div></article>`;
-}
-function _modelRow(m){
-  const pr=m.prediction||{},op=_v10OfficialPick(m),kind=_modelEdgeKind(pr),tag=_modelTag(m),arch=_modelIsArchived(m);
-  const edgeVal=_v10OfficialEdge(m,op);const edge=(edgeVal==null||arch)?'':`${edgeVal>0?'+':''}${edgeVal}`;
-  const sub=arch?`${op.confidence??'—'}% · ${_modelFinalText(m)}`:`${op.confidence??'—'}% · ${_modelMarketText(m,op.side)}`;
-  const statusKind=op.blocked?'gate':tag.kind;const statusTxt=op.blocked?'UPSET WATCH':tag.txt;
-  return `<div class="modelRow ${arch?'archived':''}" onclick="openMatchModal('${esc(String(m.id||''))}')"><div class="modelMatch"><div class="teams">${esc(m.home?.code||m.home?.name||'H')} v ${esc(m.away?.code||m.away?.name||'A')}</div><div class="meta">${esc(m.stage||'Fixture')} · ${_modelWhen(m)}</div></div><div class="modelChoice"><div class="small">${arch?'Archived pick':'Official pick'}</div><div class="main">${esc(op.name||'No pick')}</div><div class="sub">${esc(sub)}</div></div>${_modelBars(m)}<div class="modelStatus"><span class="tag ${statusKind}">${statusTxt}</span>${edge?`<span class="tag ${kind}">${edge} edge</span>`:''}</div></div>`;
-}
-function _modelSpotlight(list){
-  const pregame=(list||[]).filter(isVisibleUpcoming);const m=pregame.find(x=>(_v10OfficialEdge(x,_v10OfficialPick(x))||0)>=6)||pregame[0];if(!m)return'';
-  const pr=m.prediction||{},op=_v10OfficialPick(m),kind=op.blocked?'gate':_modelEdgeKind(pr);const edgeVal=_v10OfficialEdge(m,op);const edge=edgeVal==null?'No edge data':`${edgeVal>0?'+':''}${edgeVal} vs market`;
-  return `<div class="modelSpot"><div class="modelSpotHead"><span>Best current read</span><span>${esc(m.stage||'Fixture')} · ${_modelWhen(m)}</span></div><div class="modelSpotBody"><div class="modelSpotTeam"><span class="code">${esc(m.home?.code||'HOME')}</span><div class="name">${esc(m.home?.name||'Home')}</div></div><div class="modelPickDial"><div class="lbl">Official pick</div><div class="pickName">${esc(op.name||'No pick')}</div><div class="conf">${op.confidence??'—'}%</div><span class="edgePill ${kind}">${esc(op.blocked?'upset watch only':edge)}</span></div><div class="modelSpotTeam away"><span class="code">${esc(m.away?.code||'AWAY')}</span><div class="name">${esc(m.away?.name||'Away')}</div></div></div></div>`;
-}
-function _v4UpsetRows(){
-  const M=(DATA.matches||[]).filter(isVisibleUpcoming).filter(m=>m.prediction?.upset?.radar);
-  return M.map(m=>{
-    const pr=m.prediction||{},u=pr.upset||{},op=_v10OfficialPick(m);
-    if(u.radar){
-      const risk=Number(u.score)||0;const active=!!u.triggered&&!op.blocked;const cls=active?'trigger':risk>=70?'high':risk>=50?'med':'low';
-      const reason=`${u.candidate_name||'Underdog'} · standings gap ${u.standings_gap_pct??'—'} pts · model ${u.upset_edge>0?'+':''}${u.upset_edge??'—'} vs market`;
-      return {m,risk,cls,reason,triggered:active,blocked:op.blocked};
-    }
-  }).sort((a,b)=>b.risk-a.risk).slice(0,6);
 }
 // The panel details() falls back to if it throws. It carried its own copy of the
 // prediction-driven "Model read" card; it now shows the same engine read the
@@ -631,40 +510,6 @@ function _v12ProbTile(label,pct,side,active){
   const cls=side==='h'?'home':side==='d'?'draw':'away';
   return `<div class="probTile ${cls} ${active?'pickSide':''}"><span class="probSide">${esc(label)}</span><b class="probPct">${_v12Round(pct)}%</b><span class="probMiniTrack"><i style="width:${Math.max(3,_v12Round(pct))}%"></i></span>${active?'<em class="probTag">pick</em>':''}</div>`;
 }
-function _v12OutcomeCard(m,op){
-  const probs=_v4ModelProbs(m)||{};
-  const market=_v10MarketMap(m)||{};
-  const side=op?.side||'';
-  const hp=_v12Round(probs.h), dp=_v12Round(probs.d), ap=_v12Round(probs.a);
-  const marketPct=_v10Has(market[side])?_v12Round(market[side]):null;
-  const edge=op?_v10OfficialEdge(m,op):null;
-  const edgeCls=edge==null?'edgeFlat':edge>0?'edgePos':edge<0?'edgeNeg':'edgeFlat';
-  const tot=(m?.markets||{}).totals||{};
-  const modelTot=(m?.prediction||{}).totals;
-  const unit=_totalsUnit(m);
-  const twoWay=_isTwoWay(m);
-  const drawNote=twoWay?null:(dp>=30?'high draw pressure':dp>=25?'moderate draw pressure':'low draw pressure');
-  const goalNote=tot.under_pct!=null?`Under ${esc(tot.line||2.5)}: ${esc(tot.under_pct)}%${modelTot&&modelTot.pick?` (model: ${esc(modelTot.pick)})`:''}`
-    :(modelTot&&modelTot.expected!=null?`Model expects ${esc(modelTot.expected)} ${unit}`:`No ${unit} market yet`);
-  // Without a market yet, "market on pick" / "model edge" have nothing to
-  // show -- swap in the class-rating and Elo edges (from the pick's own
-  // perspective; why values are stored home-minus-away) instead of a pair
-  // of blank dashes. Both are always present in why{} once a pick exists.
-  const why=(m?.prediction||{}).why||{};
-  const sideSign=side==='a'?-1:1;
-  const pts=v=>`${v>0?'+':''}${v.toFixed(1)} pts`;
-  const hasMarket=marketPct!=null;
-  const classMeta=sportClassMeta(m?.prediction||{},m);
-  const compareLabel1=hasMarket?'Market on pick':(classMeta.label||'Personnel edge');
-  const classEdge=why.class!=null?why.class*sideSign:null;
-  const compareVal1=hasMarket?`${marketPct}%`:(classMeta.edge_available===false?'Not scored':classMeta.coverage==='unavailable'?'Not available':classEdge!=null?`${classMeta.coverage==='partial'?'Partial · ':''}${pts(classEdge)}`:'—');
-  const compareLabel2=hasMarket?'Model edge':'Elo edge';
-  const eloEdge=why.elo!=null?why.elo*sideSign:null;
-  const compareCls2=hasMarket?edgeCls:(eloEdge==null?'edgeFlat':eloEdge>0?'edgePos':eloEdge<0?'edgeNeg':'edgeFlat');
-  const compareVal2=hasMarket?(edge!=null?`${edge>0?'+':''}${edge} pts`:'—'):(eloEdge!=null?pts(eloEdge):'—');
-  const risk=op?.blocked?`Upset gate blocked · ${esc(op.gateReason||'market gap too wide')}`:(drawNote?`${drawNote} · ${goalNote}`:goalNote);
-  return `<div class="analystBox probMatrixCard"><div class="analystBoxTitle">Probability check</div><div class="probMatrix"><div class="probTiles">${_v12ProbTile(m?.home?.code||m?.home?.name||'Home',hp,'h',side==='h')}${twoWay?'':_v12ProbTile('Draw',dp,'d',side==='d')}${_v12ProbTile(m?.away?.code||m?.away?.name||'Away',ap,'a',side==='a')}</div><div class="probCompareGrid"><div class="probCompareItem"><span>Official side</span><b>${esc(op?.name||'No pick')}</b></div><div class="probCompareItem"><span>${compareLabel1}</span><b>${esc(compareVal1)}</b></div><div class="probCompareItem ${compareCls2}"><span>${compareLabel2}</span><b>${esc(compareVal2)}</b></div></div><p class="probContextLine">${risk}</p></div></div>`;
-}
 function _v15Num(v){
   if(v===null||v===undefined||v==='')return null;
   const n=Number(v);return Number.isFinite(n)?n:null;
@@ -746,22 +591,6 @@ function matchProfilePanel(m){
   if(!rows)return '';
   return `<div class="readCard matchProfileCard"><div class="readHead"><span>Profile</span><b>Team comparison</b></div><div class="profileCompareHead"><b>${esc(m?.home?.code||m?.home?.name||'Home')}</b><span>this season</span><b>${esc(m?.away?.code||m?.away?.name||'Away')}</b></div><div class="profileCompareRows">${rows}</div></div>`;
 }
-function neutralVenuePanel(m){
-  // pr.neutral_venue_probs is a real second predict() run with the home-
-  // advantage term zeroed (fetch_data.py), not a client-side estimate --
-  // only present on matches that haven't finished, and dropped entirely
-  // once a pick locks (apply_locked_picks() replaces the whole prediction
-  // object), so this can never imply the official, locked forecast changed.
-  const pr=m?.prediction;
-  if(!pr||!pr.neutral_venue_probs)return'';
-  const side=pr.regulation_pick||pr.pick;
-  const probs=pr.adjusted||pr.blend||{};
-  const cur=Number(probs[side]),neu=Number(pr.neutral_venue_probs[side]);
-  if(!Number.isFinite(cur)||!Number.isFinite(neu))return'';
-  const delta=Math.round(neu)-Math.round(cur);
-  const pickName=esc(_v4PickSideLabel(m,side));
-  return `<div class="analystBox neutralVenueBox"><div class="analystBoxTitle">Neutral venue <span class="hypotheticalTag">hypothetical, not the official forecast</span></div><div class="neutralVenueRow"><span>Current (home field)</span><b>${pickName} ${Math.round(cur)}%</b></div><div class="neutralVenueRow"><span>If this were a neutral site</span><b>${pickName} ${Math.round(neu)}%</b></div><div class="neutralVenueDelta ${delta<0?'down':delta>0?'up':''}">${delta===0?'No change — home field isn’t moving this pick':`${delta>0?'+':''}${delta} point${Math.abs(delta)===1?'':'s'} from removing home advantage`}</div></div>`;
-}
 const startupParams=new URLSearchParams(window.location.search);
 const requestedView=startupParams.get('view');
 const requestedSport=String(startupParams.get('sport')||'').toLowerCase();
@@ -785,7 +614,7 @@ window.addEventListener('popstate',()=>{
   const params=new URLSearchParams(window.location.search),target=safeView(params.get('view')||'matches');
   const sport=String(params.get('sport')||'').toLowerCase();
   if(Object.prototype.hasOwnProperty.call(SPORT_LABELS,sport)&&currentSportKey()!==sport){
-    DATA_FILE=`data_${sport}.json`;MATCH_VISIBLE=FIXTURE_PAGE_SIZE;RESULT_VISIBLE=FIXTURE_PAGE_SIZE;MODEL_VISIBLE=MODEL_PAGE_SIZE;
+    DATA_FILE=`data_${sport}.json`;MATCH_VISIBLE=FIXTURE_PAGE_SIZE;RESULT_VISIBLE=FIXTURE_PAGE_SIZE;
     try{localStorage.setItem('matchday.sport',DATA_FILE)}catch(e){}
     applySportNav();showMatchLoading();clearCompetitionViewsForLoad();
     load(true).then(()=>setView(target,{history:false}));

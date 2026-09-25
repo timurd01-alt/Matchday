@@ -173,8 +173,8 @@ class CacheClobberTests(unittest.TestCase):
                              f"{entry} is git-tracked; caching it reintroduces the "
                              "clobber that kept the hourly deploy red")
         workflow = (ROOT / ".github" / "workflows" / "deploy.yml").read_text(encoding="utf-8")
-        commit_step = workflow.split("Commit updated ratings and picks ledger", 1)[1]
-        self.assertIn("posts.json posts_state.json", commit_step)
+        commit_step = workflow.split("Commit durable generated files back to the repo", 1)[1]
+        self.assertIn("ls posts.json", commit_step)
         self.assertIn("'posts/*.html'", commit_step)
 
     def test_every_post_in_the_feed_has_a_committed_page(self):
