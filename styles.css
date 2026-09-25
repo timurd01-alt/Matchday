@@ -2886,7 +2886,7 @@ body.welcomeOpen{height:auto;min-height:100vh;overflow-y:auto}
 #welcomeGate .wx-hero h1{margin-top:16px}
 #welcomeGate .wx-hero .wx-lead{margin-top:16px}
 #welcomeGate .wx-hero .welcomeActions{margin-top:32px;justify-content:center}
-#welcomeGate .wx-hero .wx-quiet{margin-top:16px}
+#welcomeGate .wx-hero .wx-quiet{margin-top:19px}
 /* The one button. */
 #welcomeGate .welcomeEnter{width:auto;min-height:48px;padding:0 24px;gap:8px;justify-content:center;border:1px solid var(--signal);border-radius:8px;background:var(--signal);color:var(--bg);font-family:var(--sans);font-size:var(--fs-wx-body);font-weight:var(--fw-semibold);box-shadow:none;transform:none;transition:background-color .15s ease}
 #welcomeGate .welcomeEnter:hover{background:var(--signal);transform:none;box-shadow:none}
@@ -3018,7 +3018,7 @@ body.welcomeOpen{height:auto;min-height:100vh;overflow-y:auto}
   padding-bottom:.06em}
 @supports not ((-webkit-background-clip:text) or (background-clip:text)){#welcomeGate .wx-hero h1{color:var(--text);background:none}}
 #welcomeGate .wx-hero .wx-lead{margin-top:24px;font-size:var(--fs-wx-lead);color:var(--text);opacity:.78;max-width:none}
-#welcomeGate .wx-hero .welcomeActions{margin-top:20px}
+#welcomeGate .wx-hero .welcomeActions{margin-top:17px}
 #welcomeGate .wx-hero .welcomeEnter{min-height:56px;padding:0 32px;font-size:var(--fs-wx-sub);box-shadow:0 8px 32px rgba(58,209,122,.28)}
 #welcomeGate .wx-hero .welcomeEnter:hover{box-shadow:0 10px 40px rgba(58,209,122,.4)}
 @media(max-width:760px){#welcomeGate .wx-hero{padding:64px 0 48px}#welcomeGate .wx-hero .welcomeEnter{width:100%}}

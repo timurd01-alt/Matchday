@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0925ZF",
+  "tag": "Design",
+  "title": "Even spacing on the welcome page",
+  "items": [
+   "The tagline, Enter button and 'No account required' line now sit the same distance apart."
+  ]
+ },
+ {
   "date": "Build 0925ZE",
   "tag": "Design",
   "title": "Welcome button sits closer to the tagline",
