@@ -6,6 +6,14 @@ window.SYSTEM_UPDATES=[
  {
   "date": "Build 0925ZO",
   "tag": "Fix",
+  "title": "Legal page: X contact, no news feeds",
+  "items": [
+   "The Legal & data page lists X (@timurknowsball) as the one way to get in touch, and no longer lists news feeds, which the site does not use."
+  ]
+ },
+ {
+  "date": "Build 0925ZO",
+  "tag": "Fix",
   "title": "Contact through X only",
   "items": [
    "The Legal & data page now lists X (@timurknowsball) as the one way to get in touch."
