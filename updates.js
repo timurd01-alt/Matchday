@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0925ZR",
+  "tag": "Change",
+  "title": "Repository cleanup",
+  "items": [
+   "Removed 39 unused files: the old desktop launcher and its start scripts, a retired server, old notes and the unused content feed. Nothing on the site changes."
+  ]
+ },
+ {
   "date": "Build 0925ZQ",
   "tag": "Change",
   "title": "Old in-house model removed",
