@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0925V",
+  "tag": "Design",
+  "title": "A readable CFP bracket on smaller screens",
+  "items": [
+   "Phones and narrow desktop windows now show the same gold bracket advancing from left to right.",
+   "On phones, swipe sideways through full-size matchup cards instead of reading a shrunken diagram.",
+   "Wide screens keep the mirrored bracket, and the first four out remain below it."
+  ]
+ },
+ {
   "date": "Build 0925U",
   "tag": "Fix",
   "title": "Conference standings always scroll",

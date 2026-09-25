@@ -579,6 +579,17 @@ function _cfpOutRow(nodes,official){
   const teams=_cfpFirstFourOut(nodes);if(!teams.length)return '';
   return `<section class="cfpOut" aria-labelledby="cfp-out-title"><h3 id="cfp-out-title">First four out</h3><div class="cfpOutGrid">${teams.map(t=>`<article class="cfpOutTeam">${teamMark(t.name)}<div><b>${esc(t.name)}</b><span>AP #${esc(t.rank)}${t.record?' · '+esc(t.record):''}</span></div></article>`).join('')}</div></section>`;
 }
+function _cfpResponsiveBracket(nodes,trophy){
+  const order=[1,4,2,3];
+  const compact=nodes.map(n=>{
+    const i=order.indexOf(Number(n.id.slice(2)));
+    if(n.id.startsWith('fr'))return {...n,x:10,y:80+i*180};
+    if(n.id.startsWith('qf'))return {...n,x:230,y:80+i*180};
+    if(n.id.startsWith('sf'))return {...n,x:450,y:n.id==='sf1'?170:530};
+    return {...n,x:670,y:350};
+  });
+  return `<div class="cfpCompact" role="region" tabindex="0" aria-label="Playoff bracket. Scroll horizontally to follow the rounds."><svg viewBox="0 60 860 700" role="img" aria-label="Playoff bracket advancing from left to right">${trophy.replace('translate(720 151)','translate(760 238)')}<text x="760" y="319" text-anchor="middle" class="cfpChampLabel">NATIONAL<tspan x="760" dy="14">CHAMPIONSHIP</tspan></text>${compact.map(n=>_cfpSvgConnector(n,compact)).join('')}${compact.map(_cfpSvgCard).join('')}</svg></div>`;
+}
 function _renderCFPBracket(host){
   const official=Array.isArray(DATA.bracket)&&DATA.bracket.some(r=>
     !/project(?:ed|ion)/i.test(String(r.round||r.stage||r.name||''))
@@ -586,7 +597,8 @@ function _renderCFPBracket(host){
   const nodes=_cfpBracketTree();
   if(!nodes.length){host.innerHTML='<div class="vhead">CFP Playoff</div><div class="empty">The playoff bracket is waiting for complete seed information.</div>';return}
   const trophy=`<g class="cfpTrophy" transform="translate(720 151)" aria-hidden="true"><path d="M 0 -39 C -34 -13 -26 12 0 28 C 26 12 34 -13 0 -39 Z M 0 -29 V 17 M -8 -12 H 8 M -8 -3 H 8 M -8 6 H 8 M -13 23 L -9 47 H 9 L 13 23 M -20 49 H 20"/><path d="M -26 56 H 26"/></g>`;
-  host.innerHTML=`<section class="cfpShell"><header class="cfpHero"><div><span class="cfpEyebrow">College Football Playoff</span><h2>The road to a champion</h2></div><span class="cfpBadge">${official?'Playoff bracket':'Projected field'}</span></header><div class="cfpCanvas"><svg class="cfpDiagram" viewBox="0 96 1440 432" role="img" aria-labelledby="cfp-title cfp-description"><title id="cfp-title">Connected College Football Playoff bracket</title><desc id="cfp-description">${official?'Official matchups and unresolved paths.':'Projected from the current AP Poll. Not the official CFP bracket.'} Seeds 1–4 enter in the quarterfinals. First-round games on the outside feed quarterfinals, then semifinals, and the championship in the center. ${esc(nodes.map(n=>n.label+': '+n.teams.map(t=>(t.seed?'seed '+t.seed+' ':'')+t.name).join(' versus ')).join('. '))}</desc>${trophy}<text x="720" y="238" text-anchor="middle" class="cfpChampLabel">NATIONAL CHAMPIONSHIP</text>${nodes.map(n=>_cfpSvgConnector(n,nodes)).join('')}${nodes.map(_cfpSvgCard).join('')}<text x="720" y="418" text-anchor="middle" class="cfpCenterNote">TWO SIDES. ONE CHAMPION.</text><text x="720" y="440" text-anchor="middle" class="cfpCenterSub">Follow the lines to the title.</text></svg></div><footer class="cfpFoot"><span><i aria-hidden="true"></i> Winner advances along the connected path</span><span>12 teams · 4 rounds · No reseeding</span></footer>${_cfpOutRow(nodes,official)}</section>`;
+  host.innerHTML=`<section class="cfpShell"><header class="cfpHero"><div><span class="cfpEyebrow">College Football Playoff</span><h2>The road to a champion</h2></div><span class="cfpBadge">${official?'Playoff bracket':'Projected field'}</span></header>${_cfpResponsiveBracket(nodes,trophy)}<div class="cfpCanvas"><svg class="cfpDiagram" viewBox="0 96 1440 432" role="img" aria-labelledby="cfp-title cfp-description"><title id="cfp-title">Connected College Football Playoff bracket</title><desc id="cfp-description">${official?'Official matchups and unresolved paths.':'Projected from the current AP Poll. Not the official CFP bracket.'} Seeds 1–4 enter in the quarterfinals. First-round games on the outside feed quarterfinals, then semifinals, and the championship in the center. ${esc(nodes.map(n=>n.label+': '+n.teams.map(t=>(t.seed?'seed '+t.seed+' ':'')+t.name).join(' versus ')).join('. '))}</desc>${trophy}<text x="720" y="238" text-anchor="middle" class="cfpChampLabel">NATIONAL CHAMPIONSHIP</text>${nodes.map(n=>_cfpSvgConnector(n,nodes)).join('')}${nodes.map(_cfpSvgCard).join('')}<text x="720" y="418" text-anchor="middle" class="cfpCenterNote">TWO SIDES. ONE CHAMPION.</text><text x="720" y="440" text-anchor="middle" class="cfpCenterSub">Follow the lines to the title.</text></svg></div><footer class="cfpFoot"><span><i aria-hidden="true"></i> Winner advances along the connected path</span><span>12 teams · 4 rounds · No reseeding</span></footer>${_cfpOutRow(nodes,official)}</section>`;
+
 }
 
 function renderBracket(){
