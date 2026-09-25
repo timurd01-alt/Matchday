@@ -3672,9 +3672,11 @@ body{font-variant-numeric:tabular-nums}
 /* Team window: the logo had no gap before the name. */
 .tpName{display:flex;align-items:center;gap:12px}
 /* Methodology fills the row in two columns instead of one narrow box. */
-.scMethod>div{max-width:none;columns:2 340px;column-gap:36px}
-.scMethod p{break-inside:avoid;margin:0;padding-bottom:10px}
-.scMethod p:last-child{padding-bottom:0}
+.scMethod>div{max-width:none}
+.scMethodGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 36px;align-items:start}
+.scMethodCol{display:flex;flex-direction:column;gap:12px}
+.scMethod .scMethodCol p{margin:0;padding:0}
+@media(max-width:760px){.scMethodGrid{grid-template-columns:1fr}}
 .scMethod .nowrap{white-space:nowrap}
 /* Basketball preseason placeholders keep the layout without inventing numbers. */
 .rsWaitingNote{margin:12px 0 0;padding:28px 16px;border:1px dashed var(--line);border-radius:8px;text-align:center;color:var(--muted);font-size:var(--fs-sm);line-height:1.5}

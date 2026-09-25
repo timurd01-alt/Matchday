@@ -754,17 +754,20 @@ function renderScore(){
   const bmCi=bm&&Array.isArray(bm.confidence_interval_pct)?bm.confidence_interval_pct:null;
   const straddles=bmCi&&Number(bmCi[0])<50&&Number(bmCi[1])>50;
   const pending=Number(totals.awaiting_result)||0;
-  const method=`<details class="scMethod"><summary>Methodology <span aria-hidden="true">ⓘ</span></summary><div>`
+  // Two fixed columns, not CSS columns: flowed text split wherever it
+  // balanced, so a column could open on an unlabelled paragraph.
+  const method=`<details class="scMethod"><summary>Methodology <span aria-hidden="true">ⓘ</span></summary><div class="scMethodGrid"><div class="scMethodCol">`
     +`<p><b>Locking.</b> The latest forecast at or before 60 minutes to kickoff, and the market price then, are recorded and never changed. Only verified final results are graded.</p>`
     +`<p><b>Model record</b> is wins over graded picks. <b>Expected</b> is the average probability the model gave its picks; the gap between the two is calibration.</p>`
     +`<p><b>Against the price</b> is how often the model's probability beat the locked market price${Number.isFinite(priced)?` across ${priced} priced selections`:''}${bm&&bm.wins!=null?` <span class="nowrap">(${bm.wins}–${bm.losses}${bm.ties?`, ${bm.ties} tied`:''})</span>`:''}. Two forecasters on the same games are a coin flip at 50%.${vm.basis?` Price: ${esc(vm.basis)}.`:''}</p>`
     +`<p><b>Intervals</b> are 95% confidence intervals; small samples move the point estimate a long way.</p>`
-    +`<p>${esc(totals.graded_selections??'—')} graded selections across ${esc(totals.locked_events??'—')} locked cards; a card can carry more than one selection.${pending?` ${pending} await a final score.`:''}</p>`
-    +(sc.caveat?`<p>${esc(scorecardCaveat(sc.caveat))}</p>`:'')
+    +`<p><b>Sample.</b> ${esc(totals.graded_selections??'—')} graded selections across ${esc(totals.locked_events??'—')} locked cards; a card can carry more than one selection.${pending?` ${pending} await a final score.`:''}</p>`
+    +`</div><div class="scMethodCol">`
+    +(sc.caveat?`<p><b>Hit rate.</b> ${esc(scorecardCaveat(sc.caveat))}</p>`:'')
     +(scope.winner_note?`<p><b>It predicts ${esc(scope.predicts||'who wins')}.</b> ${esc(scope.winner_note)}</p>`:'')
     +(scope.spread_note?`<p><b>It does not predict ${esc(scope.does_not_predict||'the spread')}.</b> ${esc(scope.spread_note)}</p>`:'')
-    +(scope.conviction_note?`<p>${esc(scope.conviction_note)}</p>`:'')
-    +`</div></details>`;
+    +(scope.conviction_note?`<p><b>Edge.</b> ${esc(scope.conviction_note)}</p>`:'')
+    +`</div></div></details>`;
   const reportable=sc.reportable===false
     ? `<div class="banner" style="margin-bottom:14px"><b>Not yet a reportable record.</b> `
       +`Fewer than ${esc(sc.minimum_picks_to_read??'the minimum')} graded picks, so the rate below is not a measurement yet.</div>`

@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0925ZJ",
+  "tag": "Fix",
+  "title": "Methodology in two fixed columns",
+  "items": [
+   "The Scorecard's Methodology now has two fixed columns, how the record works and how to read it, with a bold lead-in on every paragraph and even spacing throughout."
+  ]
+ },
+ {
   "date": "Build 0925ZI",
   "tag": "Design",
   "title": "First Four Out logos match the bracket",
