@@ -94390,9 +94390,30 @@
    "affects_prediction": false,
    "user_visible": false
   },
-  "result": null,
-  "model_result": null,
-  "market_result": null
+  "result": "a",
+  "model_result": "a",
+  "market_result": "a",
+  "score": "17-34",
+  "result_snapshot": {
+   "display": {
+    "home": 17,
+    "away": 34
+   },
+   "regulation": null,
+   "penalties": null,
+   "ultimate_winner": "a",
+   "observed_at": "2026-09-25T07:50:08.892871Z",
+   "source": "provider"
+  },
+  "model_hit": true,
+  "market_hit": true,
+  "market_comparison_hit": true,
+  "upset_hit": false,
+  "brier3": 0.442,
+  "log_loss": 0.635,
+  "brier_advancement": null,
+  "log_loss_advancement": null,
+  "result_corrections": []
  },
  "cfbd-401862779": {
   "schema_ver": 2,
@@ -96539,6 +96560,560 @@
      "mean_log_loss": 0.365112,
      "brier_skill_vs_uniform": 0.682,
      "log_skill_vs_uniform": 0.667661
+    }
+   },
+   "event_readiness": {
+    "available": false,
+    "score": null,
+    "missing_components": [
+     "scenario_stability",
+     "availability",
+     "freshness",
+     "model_stability"
+    ]
+   },
+   "components": {
+    "scenario_stability": {
+     "available": false,
+     "score": null,
+     "reason": "scenario_forecasts_not_captured"
+    },
+    "availability": {
+     "available": false,
+     "score": null,
+     "reason": "availability_probabilities_not_captured"
+    },
+    "freshness": {
+     "available": false,
+     "score": null,
+     "reason": "input_freshness_not_captured"
+    },
+    "model_stability": {
+     "available": false,
+     "score": null,
+     "reason": "independent_model_outputs_not_captured"
+    }
+   },
+   "missing_components": [
+    "historical_evidence",
+    "scenario_stability",
+    "availability",
+    "freshness",
+    "model_stability"
+   ],
+   "affects_prediction": false,
+   "user_visible": false
+  },
+  "result": null,
+  "model_result": null,
+  "market_result": null
+ },
+ "cfbd-401858234": {
+  "schema_ver": 2,
+  "fixture_id": "cfbd-401858234",
+  "competition": "NCAAF",
+  "home": "California",
+  "away": "Clemson",
+  "stage": "Week 4",
+  "kickoff": "2026-09-26T02:30:00Z",
+  "pick": "a",
+  "pick_name": "Clemson",
+  "confidence": 53,
+  "edge": 2,
+  "base_pick": "a",
+  "base_pick_name": "Clemson",
+  "probs": {
+   "h": 47,
+   "d": 0,
+   "a": 53
+  },
+  "advancement_probs": null,
+  "regulation_probs": {
+   "h": 47,
+   "d": 0,
+   "a": 53
+  },
+  "regulation_pick": "a",
+  "market_comparison_pick": "a",
+  "market_comparison_basis": "regulation_1x2",
+  "outcome_basis": "regulation",
+  "market_basis": "regulation_1x2",
+  "market_pick": "a",
+  "market_pct": 51,
+  "pick_mkt": 51,
+  "value_side": null,
+  "value_edge": null,
+  "value_mkt": null,
+  "value_name": null,
+  "upset_candidate": "h",
+  "upset_name": "California",
+  "upset_score": 63,
+  "upset_candidate_pct": 47,
+  "upset_triggered": false,
+  "upset_temperature": 1.16,
+  "upset_reason": "narrow team gap",
+  "factor_snapshot": {
+   "rest": 0.43,
+   "srs": 0.12,
+   "record": 0.0,
+   "rank": 0.0,
+   "elo": -6.5,
+   "adv": 0.45,
+   "class": -1.14,
+   "margin": 0.0,
+   "market_power": 0.0,
+   "form": 0.0
+  },
+  "market_snapshot": {
+   "h": 49,
+   "d": 0,
+   "a": 51
+  },
+  "market_snapshot_at": "2026-09-25T07:49:57.168638Z",
+  "market_snapshot_recorded_at": "2026-09-25T07:50:08.891421Z",
+  "market_snapshot_receipt": {
+   "source": "The Odds API consensus",
+   "source_reference": "https://the-odds-api.com/",
+   "observed_at": "2026-09-25T07:49:57.168638Z",
+   "recorded_at": "2026-09-25T07:50:08.891421Z",
+   "snapshot_id": null,
+   "books": 14,
+   "spread": 2
+  },
+  "market_gap": 2.0,
+  "upset_snapshot": {
+   "candidate": "California",
+   "class": "pickem",
+   "market_dog_pct": 49.0,
+   "model_dog_pct": 47.0,
+   "upset_edge": -2.0,
+   "independent_model_dog_pct": 41.0,
+   "independent_model_lead_pct": -18.0,
+   "independent_edge": -8.0,
+   "edge_threshold": 8.0,
+   "supporting_signals": [
+    "adv",
+    "rest",
+    "srs"
+   ],
+   "personnel_gate": true,
+   "personnel_blockers": [],
+   "radar": false,
+   "standings_candidate": null,
+   "standings_gap_pct": null,
+   "gate": "none",
+   "box_score_edge": 0.0
+  },
+  "box_score_available": false,
+  "data_availability": {
+   "market": "available",
+   "box_score": "unavailable",
+   "lineups": "unavailable",
+   "injuries": "unavailable",
+   "weather": "available",
+   "personnel": "unavailable",
+   "venue_context": "available"
+  },
+  "damp_pct": 0,
+  "mkt_pull": -6,
+  "model_ver": "v6-calibrated",
+  "model_code_marker": "matchday-predictor-integrity-2026-07",
+  "model_signal_schema": 8,
+  "reproducibility": {
+   "model_version": "v6-calibrated",
+   "model_signal_schema": 8,
+   "probability_basis": "regulation",
+   "market_comparison_basis": "regulation_1x2",
+   "market_comparison_pick": "a"
+  },
+  "locked_at": "2026-09-25T07:50:08.891421Z",
+  "lead_time_seconds": 67191.109,
+  "lead_time_hours": 18.664197,
+  "lock_window_hours": 24.0,
+  "status_at_lock": "UPCOMING",
+  "integrity_eligible": true,
+  "integrity_status": "verified",
+  "integrity_reason": "verified_pregame_window",
+  "prediction_snapshot": {
+   "pick": "a",
+   "pick_name": "Clemson",
+   "confidence": 53,
+   "model_version": "v6-calibrated",
+   "model_signal_schema": 8,
+   "base_pick": "a",
+   "base_pick_name": "Clemson",
+   "model": {
+    "h": 41,
+    "a": 59,
+    "d": 0
+   },
+   "base_blend": {
+    "h": 46,
+    "d": 0,
+    "a": 54
+   },
+   "blend": {
+    "h": 47,
+    "d": 0,
+    "a": 53
+   },
+   "adjusted": {
+    "h": 47,
+    "d": 0,
+    "a": 53
+   },
+   "is_knockout": false,
+   "advancement": null,
+   "regulation_pick": "a",
+   "market_comparison_pick": "a",
+   "market_comparison_basis": "regulation_1x2",
+   "regulation_pick_name": "Clemson",
+   "regulation_confidence": 53,
+   "regulation_probs": {
+    "h": 47,
+    "d": 0,
+    "a": 53
+   },
+   "edge": 2,
+   "note": "favorite, but upset watch",
+   "why": {
+    "rest": 0.43,
+    "srs": 0.12,
+    "record": 0.0,
+    "rank": 0.0,
+    "elo": -6.5,
+    "adv": 0.45,
+    "class": -1.14,
+    "margin": 0.0,
+    "market_power": 0.0,
+    "form": 0.0
+   },
+   "damp_pct": 0,
+   "mkt_pull": -6,
+   "market_weight": 0.6,
+   "upset": {
+    "candidate": "h",
+    "candidate_name": "California",
+    "favorite": "a",
+    "favorite_name": "Clemson",
+    "score": 63,
+    "upset_class": "pickem",
+    "market_dog_pct": 49.0,
+    "model_dog_pct": 47.0,
+    "upset_edge": -2.0,
+    "radar": false,
+    "standings_candidate": null,
+    "standings_gap_pct": null,
+    "standings_sample_ok": false,
+    "temperature": 1.16,
+    "variance_pct": 13,
+    "low_goal_pct": 42,
+    "draw_pct": 0,
+    "favorite_pct": 53,
+    "candidate_pct": 47,
+    "margin_pct": 6,
+    "learn_bias_pct": 0.0,
+    "market_gap_pct": 2.0,
+    "market_gate": false,
+    "market_quality_gate": true,
+    "independent_model_dog_pct": 41.0,
+    "independent_model_lead_pct": -18.0,
+    "independent_edge": -8.0,
+    "edge_threshold": 8.0,
+    "independent_pick_gate": false,
+    "playability_gate": true,
+    "evidence_gate": true,
+    "supporting_signals": [
+     "adv",
+     "rest",
+     "srs"
+    ],
+    "personnel_gate": true,
+    "personnel_blockers": [],
+    "box_score_edge": 0.0,
+    "strong_box_signal": false,
+    "blocked": false,
+    "triggered": false,
+    "reason": "narrow team gap"
+   },
+   "data_quality": {
+    "level": "preseason",
+    "games": {
+     "home": 0,
+     "away": 0
+    },
+    "signals": [
+     "class",
+     "srs",
+     "elo",
+     "rest",
+     "market"
+    ],
+    "market_available": true,
+    "market_books": 14,
+    "market_spread": 2,
+    "market_weight": 0.6,
+    "note": "Limited current-season evidence; probability is intentionally conservative."
+   },
+   "predicted_margin": {
+    "value": -0.7,
+    "unit": "points",
+    "favored": "a",
+    "label": "Clemson by 0.7"
+   },
+   "class_meta": {
+    "label": "Roster talent edge",
+    "source": "247Sports Team Talent Composite via CollegeFootballData",
+    "available": true,
+    "coverage": "complete",
+    "home_available": true,
+    "away_available": true,
+    "note": "Multi-year current-roster talent composite; it measures roster quality, not program prestige.",
+    "edge_available": true,
+    "coverage_label": null
+   },
+   "publication_state": "locked",
+   "lock_readiness": {
+    "schema_ver": 1,
+    "sport": "football",
+    "competition": "NCAAF",
+    "phase": "lock_window",
+    "lock_window_hours": 24.0,
+    "lead_time_hours": 18.67,
+    "inputs": {
+     "market": "confirmed",
+     "injuries": "missing",
+     "key_players": "missing",
+     "weather": "confirmed"
+    },
+    "missing_critical": [
+     "injuries",
+     "key_players"
+    ],
+    "unconfirmed_critical": [
+     "injuries",
+     "key_players"
+    ],
+    "coverage_pct": 50,
+    "confirmed_pct": 50,
+    "provenance": [],
+    "confidence_guard": {
+     "high_confidence_label_allowed": false,
+     "reason": "critical pregame inputs not confirmed"
+    },
+    "production_weight": 0,
+    "research_mode": "prospective_shadow"
+   },
+   "neutral_venue_probs": {
+    "h": 46,
+    "d": 0,
+    "a": 54
+   },
+   "totals": {
+    "expected": 61.6,
+    "basis": "preseason_rating"
+   },
+   "data_availability": {
+    "market": "available",
+    "box_score": "unavailable",
+    "lineups": "unavailable",
+    "injuries": "unavailable",
+    "weather": "available",
+    "personnel": "unavailable",
+    "venue_context": "available"
+   }
+  },
+  "input_snapshot": {
+   "competition": "NCAAF",
+   "competition_config": {
+    "label": "College Football",
+    "sport": "football",
+    "fd": null,
+    "odds": "americanfootball_ncaaf",
+    "outright": "americanfootball_ncaaf_championship_winner",
+    "tournament": false,
+    "source": "cfbd",
+    "has_draws": false
+   },
+   "match": {
+    "id": "cfbd-401858234",
+    "stage": "Week 4",
+    "kickoff": "2026-09-26T02:30:00Z",
+    "status": "UPCOMING",
+    "venue": "California Memorial Stadium",
+    "home": {
+     "name": "California",
+     "code": "C",
+     "group": "ACC",
+     "pts": null,
+     "gd": null,
+     "form": "",
+     "pos": null,
+     "srs": 1.339,
+     "srs_games": 2,
+     "rest_days": 13,
+     "rating": 7.15,
+     "form_home": "L",
+     "form_away": "W"
+    },
+    "away": {
+     "name": "Clemson",
+     "code": "C",
+     "group": "ACC",
+     "pts": null,
+     "gd": null,
+     "form": "",
+     "pos": null,
+     "srs": -2.905,
+     "srs_games": 2,
+     "rest_days": 6,
+     "rating": 11.21,
+     "form_home": "W",
+     "form_away": "L"
+    },
+    "markets": {
+     "1x2": {
+      "home_pct": 49,
+      "draw_pct": 0,
+      "away_pct": 51,
+      "books": 14,
+      "source": "The Odds API consensus",
+      "source_reference": "https://the-odds-api.com/",
+      "observed_at": "2026-09-25T07:49:57.168638Z",
+      "spread": 2,
+      "spread_lo": 48,
+      "spread_hi": 50,
+      "confidence": "tight",
+      "open": {
+       "h": 49,
+       "d": 0,
+       "a": 51
+      },
+      "move": {
+       "h": 0,
+       "d": 0,
+       "a": 0
+      }
+     }
+    },
+    "weather": {
+     "temp_c": 18,
+     "wind_kph": 7,
+     "rain_pct": 0,
+     "source": "Open-Meteo",
+     "source_url": "https://open-meteo.com/"
+    },
+    "injuries": {
+     "home": [],
+     "away": []
+    },
+    "lineups": null,
+    "h2h": [],
+    "stats": null,
+    "stats_extra": null,
+    "data_source": "CollegeFootballData",
+    "advanced_metrics": null,
+    "advanced_metrics_meta": null,
+    "nfl_challenger_shadow": null,
+    "mlb_challenger_shadow": null,
+    "personnel": null,
+    "personnel_shadow": {
+     "schema_ver": 1,
+     "sport": "football",
+     "production_weight": 0,
+     "mode": "prospective_shadow",
+     "features": {
+      "injury_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineup_counts": {
+       "home": 0,
+       "away": 0
+      },
+      "lineups_confirmed": false,
+      "rest_days": {
+       "home": 13,
+       "away": 6
+      },
+      "weather": {
+       "temp_c": 18,
+       "wind_kph": 7,
+       "rain_pct": 0,
+       "source": "Open-Meteo",
+       "source_url": "https://open-meteo.com/"
+      },
+      "venue_context": {
+       "sample_games": 0,
+       "league_total_avg": 54.425,
+       "venue_total_avg": 54.425,
+       "factor": 1.0,
+       "label": "venue scoring context",
+       "production_weight": 0,
+       "method": "prior finals, 10-game shrinkage"
+      }
+     }
+    },
+    "pregame_context": {
+     "schema_ver": 1,
+     "sport": "football",
+     "competition": "NCAAF",
+     "phase": "lock_window",
+     "lock_window_hours": 24.0,
+     "lead_time_hours": 18.67,
+     "inputs": {
+      "market": "confirmed",
+      "injuries": "missing",
+      "key_players": "missing",
+      "weather": "confirmed"
+     },
+     "missing_critical": [
+      "injuries",
+      "key_players"
+     ],
+     "unconfirmed_critical": [
+      "injuries",
+      "key_players"
+     ],
+     "coverage_pct": 50,
+     "confirmed_pct": 50,
+     "provenance": [],
+     "confidence_guard": {
+      "high_confidence_label_allowed": false,
+      "reason": "critical pregame inputs not confirmed"
+     },
+     "production_weight": 0,
+     "research_mode": "prospective_shadow"
+    },
+    "pregame_provenance": null,
+    "venue_context": {
+     "sample_games": 0,
+     "league_total_avg": 54.425,
+     "venue_total_avg": 54.425,
+     "factor": 1.0,
+     "label": "venue scoring context",
+     "production_weight": 0,
+     "method": "prior finals, 10-game shrinkage"
+    },
+    "model_signal_schema": null
+   }
+  },
+  "mfti_shadow": {
+   "spec_version": "MFTI-0.1.1-shadow",
+   "mode": "shadow_research_only",
+   "captured_at": "2026-09-25T07:50:08.891421Z",
+   "status": "incomplete",
+   "score": null,
+   "historical_evidence": {
+    "available": false,
+    "score": null,
+    "reason": "frozen_normalization_and_rolling_recalibration_not_fitted",
+    "diagnostics": {
+     "eligible_prior_forecasts": 20,
+     "mean_brier": 0.22349,
+     "mean_log_loss": 0.3786,
+     "brier_skill_vs_uniform": 0.664765,
+     "log_skill_vs_uniform": 0.655384
     }
    },
    "event_readiness": {
