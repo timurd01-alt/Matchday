@@ -3018,7 +3018,7 @@ body.welcomeOpen{height:auto;min-height:100vh;overflow-y:auto}
   padding-bottom:.06em}
 @supports not ((-webkit-background-clip:text) or (background-clip:text)){#welcomeGate .wx-hero h1{color:var(--text);background:none}}
 #welcomeGate .wx-hero .wx-lead{margin-top:24px;font-size:var(--fs-wx-lead);color:var(--text);opacity:.78;max-width:none}
-#welcomeGate .wx-hero .welcomeActions{margin-top:40px}
+#welcomeGate .wx-hero .welcomeActions{margin-top:20px}
 #welcomeGate .wx-hero .welcomeEnter{min-height:56px;padding:0 32px;font-size:var(--fs-wx-sub);box-shadow:0 8px 32px rgba(58,209,122,.28)}
 #welcomeGate .wx-hero .welcomeEnter:hover{box-shadow:0 10px 40px rgba(58,209,122,.4)}
 @media(max-width:760px){#welcomeGate .wx-hero{padding:64px 0 48px}#welcomeGate .wx-hero .welcomeEnter{width:100%}}

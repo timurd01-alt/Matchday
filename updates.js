@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0925ZE",
+  "tag": "Design",
+  "title": "Welcome button sits closer to the tagline",
+  "items": [
+   "On the welcome page the Enter button now sits right under the tagline instead of floating 40px below it."
+  ]
+ },
+ {
   "date": "Build 0925ZG",
   "tag": "Design",
   "title": "A clearer lime edge",
