@@ -3670,3 +3670,6 @@ body{font-variant-numeric:tabular-nums}
 /* Final summary */
 .fsHit{color:var(--win)}.fsMiss{color:var(--loss)}
 .fsNote{margin:10px 0 0;color:var(--faint);font-size:var(--fs-xs)}
+/* Hero pick name: .94 line height clipped descenders (the g in Knights). */
+.expandedDecision .analystPick,.modernExpandedView .analystPick{line-height:1.1;padding-bottom:.04em;overflow:visible}
+.modalName,.modernMatchSheet .modalName{line-height:1.12;padding-bottom:.04em}

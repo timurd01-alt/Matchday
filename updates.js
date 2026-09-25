@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0925Y",
+  "tag": "Fix",
+  "title": "Team names no longer clipped in the match window",
+  "items": [
+   "The favored team and the header team names in the match window had letters like g, j and y cut off at the bottom; they now have room for descenders."
+  ]
+ },
+ {
   "date": "Build 0925X",
   "tag": "Feature",
   "title": "Final summary for finished games",
