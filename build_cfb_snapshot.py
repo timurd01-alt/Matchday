@@ -312,6 +312,28 @@ def build(path: pathlib.Path = SNAPSHOT) -> str:
     blocks.append("  const MATCHDAY_CFB_AP_BRACKET="
                   + json.dumps(bracket, ensure_ascii=False) + ";")
 
+    # The basketball AP poll, kept apart from the model's basketball rating in
+    # the same way. It carries its own season and period ("2025-26", "Final
+    # poll") because out of season the latest poll belongs to last season.
+    ncaam_poll = ap_poll.refresh(ap_poll.NCAAM_SNAPSHOT,
+                                 fetch_rankings=ap_poll._download_ncaam_rankings,
+                                 sport="ncaam")
+    ncaam_entry = betbetter_handoff.rankings(document, "ncaam")
+    ncaam_by_name = {_team_key(r.get("name")): r
+                     for r in _dedupe(_rows(ncaam_entry), ncaam_entry)}
+    ncaam_payload = {**ncaam_poll, "rankings": []}
+    for row in ncaam_poll.get("rankings") or []:
+        rated = ncaam_by_name.get(_team_key(row.get("name"))) or {}
+        ncaam_payload["rankings"].append({
+            **row, "pos": row["rank"],
+            "record": row.get("record") or "—",
+            "rating": rated.get("rating"),
+            "external_rank": rated.get("rank"),
+            "code": "",
+        })
+    blocks.append("  const MATCHDAY_NCAAM_AP_POLL="
+                  + json.dumps(ncaam_payload, ensure_ascii=False) + ";")
+
     results = [r for r in (document.get("results") or [])
                if r.get("home") and r.get("away")
                and r.get("home_score") is not None and r.get("away_score") is not None]

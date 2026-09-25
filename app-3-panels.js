@@ -83,6 +83,7 @@ function bbNameMatches(a,b){
 const POLL_TABLE_TYPES=new Set(['official_poll','matchday_top_25']);
 function isPollTable(g){return POLL_TABLE_TYPES.has(String(g?.table_type||''));}
 function pollTableNote(g){
+  if(g?.note)return g.note;
   return String(g?.table_type)==='matchday_top_25'
     ?'Matchday model \u00b7 separate from the poll'
     :'official national poll';
@@ -552,6 +553,16 @@ function applyCurrentNcaamSnapshot(payload){
   if(String(payload?.comp_key||'').toUpperCase()!=='NCAAM'||typeof MATCHDAY_NCAAM_SNAPSHOT==='undefined')return payload;
   const externalRating=name=>{const key=teamKey(name);return (MATCHDAY_NCAAM_SNAPSHOT.rankings||[]).find(row=>{const rk=teamKey(row.name);return rk===key||rk.startsWith(key+' ')||key.startsWith(rk+' ')})};
   payload.standings=(payload.standings||[]).filter(g=>g.group!=='Matchday Top 25').map(g=>{if(isPollTable(g))return {...g,teams:(g.teams||[]).map(team=>{const ranked=externalRating(team.name);return {...team,rating:ranked?.model_score??team.rating??null,external_rank:ranked?.rank??team.external_rank??null}})};const teams=(g.teams||[]).map(team=>{const ranked=externalRating(team.name);return {...team,rating:ranked?.model_score??null,external_rank:ranked?.rank??null,pld:0,w:0,d:0,l:0,gf:0,ga:0,gd:0,pts:0,form:'',record:'0-0',cw:0,cl:0,conf_record:'0-0',win_pct:0,avg_pf:0,avg_pa:0}}).sort((a,b)=>(b.w-a.w)||(a.l-b.l)||(b.gd-a.gd)||((Number(b.rating)||0)-(Number(a.rating)||0))||a.name.localeCompare(b.name));teams.forEach((team,index)=>team.pos=index+1);return {...g,teams};});
+  // The basketball AP poll, on basketball's calendar. Out of season the latest
+  // poll is last season's final one, so the table says which poll it is
+  // ("2025-26 final poll") instead of passing it off as this season's.
+  const ap=(typeof MATCHDAY_NCAAM_AP_POLL!=='undefined'&&MATCHDAY_NCAAM_AP_POLL.rankings)||[];
+  if(ap.length===25){
+    const poll=MATCHDAY_NCAAM_AP_POLL,period=String(poll.period||'').toLowerCase();
+    payload.standings=[{group:poll.poll_name||'AP Top 25',table_type:'official_poll',source:poll.source||'',updated:poll.fetched_on||'',
+      note:['official national poll',[poll.season,period].filter(Boolean).join(' ')].filter(Boolean).join(' · '),
+      teams:ap},...(payload.standings||[]).filter(g=>!isPollTable(g))];
+  }
   payload.bracketology=buildNcaamBracketology(MATCHDAY_NCAAM_SNAPSHOT.rankings);
   payload.bracket=[];
   payload.updated=_freshestUpdated(payload.updated,MATCHDAY_NCAAM_SNAPSHOT.updated);
@@ -913,7 +924,8 @@ renderGroups=function(){
     const note=head.querySelector('span');
     if(!note)return;
     if(label==='Matchday Top 25')note.textContent='Matchday model · separate from the poll';
-    else if(/(?:AP Top 25|playoff|coaches|national poll)/i.test(label))note.textContent='official national poll';
+    // Keep a season label ("2025-26 final poll") the table already carries.
+    else if(/(?:AP Top 25|playoff|coaches|national poll)/i.test(label)&&!/^official national poll/i.test(note.textContent))note.textContent='official national poll';
   });
 };
 /* dedup */

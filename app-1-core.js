@@ -968,15 +968,18 @@ function teamLogoCandidates(name){
   if(candidates===undefined){
     const words=label.replace(/&/g,' and ').replace(/[^A-Za-z0-9]+/g,' ').trim().split(/\s+/).filter(Boolean);
     const exact=TEAM_LOGO_FILES[label];
-    const inferred=[];
-    for(let end=words.length;end>0;end--)if(_safeLogoSuffix(words[end]))inferred.push(inferredTeamLogoFile(words.slice(0,end).join(' ')));
-    // Try the longest full school name before a shorter prefix: Michigan State
-    // must never inherit Michigan's mark, and likewise for other state schools.
-    const mappedPrefixes=[];
+    // Every candidate is a school name the label starts with, tried longest
+    // first whether it comes from the mapped table or from the words: "Utah
+    // Valley" must be tried before a mapped "Utah", or Utah Valley wears the
+    // Utes' mark (likewise Florida Gulf Coast, Texas A&M-Corpus Christi). A
+    // mapped name wins a tie, because the map exists to correct inference.
+    const ranked=[];
+    for(let end=words.length;end>0;end--)if(_safeLogoSuffix(words[end]))ranked.push([words.slice(0,end).join(' ').length,1,inferredTeamLogoFile(words.slice(0,end).join(' '))]);
     for(const [school,file] of _TEAM_LOGO_ENTRIES){
-      if(label.startsWith(school+' ')&&_safeLogoSuffix(label.slice(school.length).trim().split(/\s+/)[0]))mappedPrefixes.push(file);
+      if(label.startsWith(school+' ')&&_safeLogoSuffix(label.slice(school.length).trim().split(/\s+/)[0]))ranked.push([school.length,0,file]);
     }
-    candidates=[...new Set([exact,...mappedPrefixes,...inferred].filter(Boolean))];
+    ranked.sort((a,b)=>(b[0]-a[0])||(a[1]-b[1]));
+    candidates=[...new Set([exact,...ranked.map(r=>r[2])].filter(Boolean))];
     _LOGO_CANDIDATE_CACHE.set(label,candidates);
   }
   return candidates.slice();
@@ -1075,7 +1078,10 @@ function gamePollRank(name){return gameTeamMemo('rank',name,()=>gamePollRankUnca
 function gamePollRankUncached(name){
   const poll=currentSportKey()==='ncaaf'
     ?(typeof MATCHDAY_CFB_AP_POLL!=='undefined'?MATCHDAY_CFB_AP_POLL.rankings||[]:[])
-    :(typeof collegeRankingTable==='function'?(collegeRankingTable()?.top25||collegeRankingTable()?.rankings||[]):[]);
+    :(typeof MATCHDAY_NCAAM_AP_POLL!=='undefined'&&MATCHDAY_NCAAM_AP_POLL.is_final===false&&MATCHDAY_NCAAM_AP_POLL.rankings?.length===25)
+      // Last season's final poll says nothing about this season's games.
+      ?MATCHDAY_NCAAM_AP_POLL.rankings
+      :(typeof collegeRankingTable==='function'?(collegeRankingTable()?.top25||collegeRankingTable()?.rankings||[]):[]);
   const r=Number(poll.find(r=>bbNameMatches(r.name||r.team_name,name))?.rank);
   return Number.isFinite(r)&&r<=25?r:null;
 }
@@ -1146,7 +1152,10 @@ function cleanGroup(g){g=String(g||'').trim();if(!g)return'';if(/^GROUP_/i.test(
 function rowKey(n){return String(n||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim()}
 function ensureRow(map,team,group){const key=rowKey(team?.name);if(!key)return null;if(!map[key])map[key]={name:team?.name||'',code:team?.code||'',group:cleanGroup(group||team?.group),pld:0,w:0,d:0,l:0,gf:0,ga:0,gd:0,pts:0,form:'',live:false,results:[]};else{map[key].code=map[key].code||team?.code||'';map[key].group=map[key].group||cleanGroup(group||team?.group)}return map[key]}
 function addResult(row,gf,ga,live,kick){row.pld++;row.gf+=gf;row.ga+=ga;row.gd=row.gf-row.ga;if(gf>ga){row.w++;row.pts+=3;row.results.push([kick,'W'+(live?'*':'')])}else if(gf<ga){row.l++;row.results.push([kick,'L'+(live?'*':'')])}else{row.d++;row.pts+=1;row.results.push([kick,'D'+(live?'*':'')])}row.live=row.live||live}
-function deriveStandings(){if(Array.isArray(DATA.standings)&&DATA.standings.length)return DATA.standings;const rows={},M=DATA.matches||[];M.forEach(m=>{const g=cleanGroup(m.home?.group||m.away?.group||(/^Group/i.test(m.stage||'')?m.stage:''));if(!g)return;/* Each side keeps its own conference: filing both under the home side's put Cornell and Navy in the A-10. */const own=m.home?.group||m.away?.group,side=t=>cleanGroup(t?.group)||(own?'':g);const h=ensureRow(rows,m.home,side(m.home)),a=ensureRow(rows,m.away,side(m.away));[[h,m.home],[a,m.away]].forEach(([r,t])=>{if(r&&r.rating==null&&Number.isFinite(Number(t?.rating)))r.rating=Number(t.rating)});const sh=m.score?.home,sa=m.score?.away;if(h&&a&&m.status==='FINISHED'&&Number.isFinite(Number(sh))&&Number.isFinite(Number(sa))){addResult(h,Number(sh),Number(sa),false,m.kickoff||'');addResult(a,Number(sa),Number(sh),false,m.kickoff||'');if(h.group===a.group&&Number(sh)!==Number(sa)){const[w,l]=Number(sh)>Number(sa)?[h,a]:[a,h];w.cw=(w.cw||0)+1;l.cl=(l.cl||0)+1}}});Object.values(rows).forEach(r=>{r.results.sort((a,b)=>String(a[0]).localeCompare(String(b[0])));r.form=r.results.slice(-5).map(x=>x[1]).join(' ')});const by={};Object.values(rows).forEach(r=>{if(!r.group)return;(by[r.group] ||= []).push(r)});return Object.keys(by).sort((a,b)=>groupLetter(a).localeCompare(groupLetter(b))).map(g=>{const pct=(w,l)=>w+l?w/(w+l):0;by[g].forEach(r=>{r.cw=r.cw||0;r.cl=r.cl||0;r.conf_record=`${r.cw}-${r.cl}`});by[g].sort(DATA.comp_key==='NCAAM'?(x,y)=>(pct(y.cw,y.cl)-pct(x.cw,x.cl))||(y.cw-x.cw)||(pct(y.w,y.l)-pct(x.w,x.l))||((Number(y.rating)||0)-(Number(x.rating)||0))||String(x.name).localeCompare(y.name):(x,y)=>(y.pts-x.pts)||(y.gd-x.gd)||(y.gf-x.gf)||String(x.name).localeCompare(y.name));by[g].forEach((r,i)=>r.pos=i+1);return {group:g,teams:by[g]}})}
+/* A feed that carries only a poll (basketball's AP Top 25) still needs its
+   conference tables derived from the schedule; the poll goes in front. */
+function deriveStandings(){const given=Array.isArray(DATA.standings)?DATA.standings:[],polls=typeof isPollTable==='function'?given.filter(isPollTable):[];if(given.length>polls.length)return given;return polls.concat(_deriveStandingsFromMatches())}
+function _deriveStandingsFromMatches(){const rows={},M=DATA.matches||[];M.forEach(m=>{const g=cleanGroup(m.home?.group||m.away?.group||(/^Group/i.test(m.stage||'')?m.stage:''));if(!g)return;/* Each side keeps its own conference: filing both under the home side's put Cornell and Navy in the A-10. */const own=m.home?.group||m.away?.group,side=t=>cleanGroup(t?.group)||(own?'':g);const h=ensureRow(rows,m.home,side(m.home)),a=ensureRow(rows,m.away,side(m.away));[[h,m.home],[a,m.away]].forEach(([r,t])=>{if(r&&r.rating==null&&Number.isFinite(Number(t?.rating)))r.rating=Number(t.rating)});const sh=m.score?.home,sa=m.score?.away;if(h&&a&&m.status==='FINISHED'&&Number.isFinite(Number(sh))&&Number.isFinite(Number(sa))){addResult(h,Number(sh),Number(sa),false,m.kickoff||'');addResult(a,Number(sa),Number(sh),false,m.kickoff||'');if(h.group===a.group&&Number(sh)!==Number(sa)){const[w,l]=Number(sh)>Number(sa)?[h,a]:[a,h];w.cw=(w.cw||0)+1;l.cl=(l.cl||0)+1}}});Object.values(rows).forEach(r=>{r.results.sort((a,b)=>String(a[0]).localeCompare(String(b[0])));r.form=r.results.slice(-5).map(x=>x[1]).join(' ')});const by={};Object.values(rows).forEach(r=>{if(!r.group)return;(by[r.group] ||= []).push(r)});return Object.keys(by).sort((a,b)=>groupLetter(a).localeCompare(groupLetter(b))).map(g=>{const pct=(w,l)=>w+l?w/(w+l):0;by[g].forEach(r=>{r.cw=r.cw||0;r.cl=r.cl||0;r.conf_record=`${r.cw}-${r.cl}`});by[g].sort(DATA.comp_key==='NCAAM'?(x,y)=>(pct(y.cw,y.cl)-pct(x.cw,x.cl))||(y.cw-x.cw)||(pct(y.w,y.l)-pct(x.w,x.l))||((Number(y.rating)||0)-(Number(x.rating)||0))||String(x.name).localeCompare(y.name):(x,y)=>(y.pts-x.pts)||(y.gd-x.gd)||(y.gf-x.gf)||String(x.name).localeCompare(y.name));by[g].forEach((r,i)=>r.pos=i+1);return {group:g,teams:by[g]}})}
 function getThirdRace(){let third=Array.isArray(DATA.third_race)&&DATA.third_race.length?DATA.third_race.map(x=>({...x})):deriveStandings().flatMap(g=>(g.teams||[]).filter(t=>t.pos===3).map(t=>({team:t.name,name:t.name,code:t.code,group:g.group,pts:t.pts,gd:t.gd,gf:t.gf,live:t.live})));third.sort((a,b)=>(b.pts-a.pts)||(b.gd-a.gd)||(b.gf-a.gf)||String(a.team||a.name).localeCompare(String(b.team||b.name)));third.forEach((t,i)=>{t.in=i<8;t.team=t.team||t.name});return third}
 function getProjectedSlots(){const slots=[];deriveStandings().forEach(g=>{const gl=groupLetter(g.group);(g.teams||[]).forEach(t=>{if(t.pos===1||t.pos===2)slots.push({slot:`${gl}${t.pos}`,team:t.name,code:t.code,pts:t.pts,gd:t.gd,live:t.live})})});getThirdRace().slice(0,8).forEach((t,i)=>slots.push({slot:`3rd #${i+1}`,team:t.team,code:t.code,pts:t.pts,gd:t.gd,live:t.live}));return slots}
 /* removed duplicate (sourceName) */

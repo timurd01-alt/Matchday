@@ -1,0 +1,186 @@
+{
+  "poll_name": "AP Top 25",
+  "source": "ESPN scoreboard published AP rank",
+  "fetched_on": "2026-09-25",
+  "season": "2025-26",
+  "period": "Final poll",
+  "is_final": true,
+  "published_on": "2026-04-07",
+  "rankings": [
+    {
+      "rank": 1,
+      "name": "Michigan Wolverines",
+      "previous_rank": 3,
+      "movement": 2,
+      "record": "37-3"
+    },
+    {
+      "rank": 2,
+      "name": "UConn Huskies",
+      "previous_rank": 7,
+      "movement": 5,
+      "record": "34-6"
+    },
+    {
+      "rank": 3,
+      "name": "Arizona Wildcats",
+      "previous_rank": 2,
+      "movement": -1,
+      "record": "36-3"
+    },
+    {
+      "rank": 4,
+      "name": "Duke Blue Devils",
+      "previous_rank": 1,
+      "movement": -3,
+      "record": "35-3"
+    },
+    {
+      "rank": 5,
+      "name": "Illinois Fighting Illini",
+      "previous_rank": 13,
+      "movement": 8,
+      "record": "28-9"
+    },
+    {
+      "rank": 6,
+      "name": "Purdue Boilermakers",
+      "previous_rank": 8,
+      "movement": 2,
+      "record": "30-9"
+    },
+    {
+      "rank": 7,
+      "name": "Houston Cougars",
+      "previous_rank": 5,
+      "movement": -2,
+      "record": "30-7"
+    },
+    {
+      "rank": 8,
+      "name": "Iowa State Cyclones",
+      "previous_rank": 6,
+      "movement": -2,
+      "record": "29-8"
+    },
+    {
+      "rank": 9,
+      "name": "Florida Gators",
+      "previous_rank": 4,
+      "movement": -5,
+      "record": "27-8"
+    },
+    {
+      "rank": 10,
+      "name": "St. John's Red Storm",
+      "previous_rank": 10,
+      "movement": 0,
+      "record": "30-7"
+    },
+    {
+      "rank": 11,
+      "name": "Michigan State Spartans",
+      "previous_rank": 11,
+      "movement": 0,
+      "record": "27-8"
+    },
+    {
+      "rank": 12,
+      "name": "Tennessee Volunteers",
+      "previous_rank": 23,
+      "movement": 11,
+      "record": "25-12"
+    },
+    {
+      "rank": 13,
+      "name": "Arkansas Razorbacks",
+      "previous_rank": 14,
+      "movement": 1,
+      "record": "28-9"
+    },
+    {
+      "rank": 14,
+      "name": "Nebraska Cornhuskers",
+      "previous_rank": 15,
+      "movement": 1,
+      "record": "28-7"
+    },
+    {
+      "rank": 15,
+      "name": "Iowa Hawkeyes",
+      "previous_rank": null,
+      "movement": null,
+      "record": "24-13"
+    },
+    {
+      "rank": 16,
+      "name": "Alabama Crimson Tide",
+      "previous_rank": 18,
+      "movement": 2,
+      "record": "25-10"
+    },
+    {
+      "rank": 17,
+      "name": "Virginia Cavaliers",
+      "previous_rank": 9,
+      "movement": -8,
+      "record": "30-6"
+    },
+    {
+      "rank": 18,
+      "name": "Gonzaga Bulldogs",
+      "previous_rank": 12,
+      "movement": -6,
+      "record": "31-4"
+    },
+    {
+      "rank": 19,
+      "name": "Vanderbilt Commodores",
+      "previous_rank": 16,
+      "movement": -3,
+      "record": "27-9"
+    },
+    {
+      "rank": 20,
+      "name": "Kansas Jayhawks",
+      "previous_rank": 17,
+      "movement": -3,
+      "record": "24-11"
+    },
+    {
+      "rank": 21,
+      "name": "Texas Tech Red Raiders",
+      "previous_rank": 20,
+      "movement": -1,
+      "record": "23-11"
+    },
+    {
+      "rank": 22,
+      "name": "Texas Longhorns",
+      "previous_rank": null,
+      "movement": null,
+      "record": "21-15"
+    },
+    {
+      "rank": 23,
+      "name": "Louisville Cardinals",
+      "previous_rank": 23,
+      "movement": 0,
+      "record": "24-11"
+    },
+    {
+      "rank": 24,
+      "name": "Miami Hurricanes",
+      "previous_rank": 25,
+      "movement": 1,
+      "record": "26-9"
+    },
+    {
+      "rank": 25,
+      "name": "Wisconsin Badgers",
+      "previous_rank": 19,
+      "movement": -6,
+      "record": "24-11"
+    }
+  ]
+}

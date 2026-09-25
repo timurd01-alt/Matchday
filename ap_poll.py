@@ -23,6 +23,40 @@ SCOREBOARD = "https://site.api.espn.com/apis/site/v2/sports/football/college-foo
 # which the scoreboard route had to reconstruct or borrow from elsewhere.
 RANKINGS = "https://site.api.espn.com/apis/site/v2/sports/football/college-football/rankings"
 
+# Men's college basketball has its own AP poll, published by the same public
+# rankings route. It runs on a basketball calendar: a preseason poll in
+# October, weekly polls through Selection Sunday, and one final poll after the
+# national championship, so the season is named across two years ("2025-26").
+# There is no scoreboard fallback here: that reconstruction only exists for a
+# football bye week, and out of season there are no basketball games to read.
+NCAAM_SNAPSHOT = pathlib.Path("ap_poll_ncaam_snapshot.json")
+NCAAM_RANKINGS = "https://site.api.espn.com/apis/site/v2/sports/basketball/mens-college-basketball/rankings"
+
+
+def _download_ncaam_rankings() -> dict:
+    with urllib.request.urlopen(NCAAM_RANKINGS, timeout=20) as response:
+        return json.load(response)
+
+
+def poll_period(payload: dict) -> dict:
+    """Which basketball poll this is: its season and preseason/week/final.
+
+    ESPN numbers the postseason poll "Week 3" of the postseason; the AP calls
+    it the final poll, and so does this page."""
+    polls = [r for r in (payload.get("rankings") or []) if r.get("type") == "ap"]
+    if not polls:
+        return {}
+    poll = polls[0]
+    season = poll.get("season") or {}
+    final = (season.get("type") or {}).get("type") == 3
+    label = str((poll.get("occurrence") or {}).get("displayValue") or "").strip()
+    return {
+        "season": str(season.get("displayName") or "").strip() or None,
+        "period": "Final poll" if final else (label or None),
+        "is_final": final,
+        "published_on": str(poll.get("date") or "")[:10] or None,
+    }
+
 
 def _download_rankings() -> dict:
     with urllib.request.urlopen(RANKINGS, timeout=20) as response:
@@ -108,15 +142,22 @@ def load(path: pathlib.Path = SNAPSHOT) -> dict:
 
 
 def refresh(path: pathlib.Path = SNAPSHOT, today: dt.date | None = None,
-            fetch=_download, fetch_rankings=_download_rankings) -> dict:
+            fetch=_download, fetch_rankings=_download_rankings,
+            sport: str = "ncaaf") -> dict:
     today = today or dt.datetime.now(dt.timezone.utc).date()
     rows: list[dict] = []
+    period: dict = {}
     # Ask for the poll directly first; only reconstruct it from the scoreboard
     # if that fails, because the reconstruction cannot see a bye week.
     try:
-        rows = extract_poll(fetch_rankings())
+        payload = fetch_rankings()
+        rows = extract_poll(payload)
+        if sport == "ncaam":
+            period = poll_period(payload)
     except (OSError, TimeoutError, ValueError, json.JSONDecodeError):
         rows = []
+    if not rows and sport == "ncaam":
+        return load(path)
     if not rows:
         payloads = []
         try:
@@ -139,6 +180,10 @@ def refresh(path: pathlib.Path = SNAPSHOT, today: dt.date | None = None,
     # AP's own answer and survives a week where this file was never written.
     # Only fall back to diffing against the stored snapshot when it does not.
     previous_by_name = {row.get("name"): row.get("rank") for row in previous_rows}
+    # A basketball poll is never compared with a different season's: the
+    # preseason poll has no movement, whatever last April's final poll said.
+    if sport == "ncaam" and previous.get("season") != period.get("season"):
+        previous_by_name = {}
     for row in rows:
         if row.get("previous_rank") is not None:
             continue
@@ -149,6 +194,7 @@ def refresh(path: pathlib.Path = SNAPSHOT, today: dt.date | None = None,
         "poll_name": "AP Top 25",
         "source": "ESPN scoreboard published AP rank",
         "fetched_on": today.isoformat(),
+        **period,
         "rankings": rows,
     }
     path.write_text(json.dumps(document, indent=2) + "\n", encoding="utf-8", newline="\n")

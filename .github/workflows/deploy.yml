@@ -404,6 +404,9 @@ jobs:
           if [ -f ap_poll_snapshot.json ]; then
             git add -- ap_poll_snapshot.json
           fi
+          if [ -f ap_poll_ncaam_snapshot.json ]; then
+            git add -- ap_poll_ncaam_snapshot.json
+          fi
           # `git add` fails the ENTIRE step on a pathspec matching nothing
           # (verified: exit 128, "did not match any files"), and these ledgers
           # legitimately may not exist -- mlb_shadow_ledger.jsonl before the

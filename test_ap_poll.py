@@ -103,3 +103,43 @@ class RankingsEndpointTests(unittest.TestCase):
                             lambda day: called.append(day) or {"events": []},
                             fetch_rankings=lambda: self._payload())
             self.assertEqual(called, [], "scoreboard fetched despite a complete poll")
+
+
+class NcaamApPollTests(unittest.TestCase):
+    @staticmethod
+    def rankings(season="2025-26", season_type=3, week="Week 3", previous=None):
+        return {"rankings": [{"type": "ap",
+            "season": {"displayName": season, "type": {"type": season_type}},
+            "occurrence": {"displayValue": week}, "date": "2026-04-07T07:00Z",
+            "ranks": [{"current": rank, "previous": previous,
+                       "team": {"displayName": f"School {rank}"}, "recordSummary": "30-5"}
+                      for rank in range(1, 26)]}]}
+
+    def test_postseason_poll_is_labelled_final_with_its_season(self):
+        with tempfile.TemporaryDirectory() as folder:
+            path = pathlib.Path(folder) / "poll.json"
+            doc = ap_poll.refresh(path, dt.date(2026, 9, 25),
+                                  fetch_rankings=self.rankings, sport="ncaam")
+            self.assertEqual((doc["season"], doc["period"], doc["is_final"]),
+                             ("2025-26", "Final poll", True))
+
+    def test_new_season_poll_has_no_movement_from_last_seasons_final(self):
+        with tempfile.TemporaryDirectory() as folder:
+            path = pathlib.Path(folder) / "poll.json"
+            ap_poll.refresh(path, dt.date(2026, 4, 8),
+                            fetch_rankings=self.rankings, sport="ncaam")
+            preseason = self.rankings("2026-27", 1, "Preseason")
+            first = preseason["rankings"][0]["ranks"]
+            first[0]["team"], first[1]["team"] = first[1]["team"], first[0]["team"]
+            doc = ap_poll.refresh(path, dt.date(2026, 10, 20),
+                                  fetch_rankings=lambda: preseason, sport="ncaam")
+            self.assertEqual(doc["period"], "Preseason")
+            self.assertTrue(all(r["movement"] is None for r in doc["rankings"]))
+
+    def test_basketball_never_falls_back_to_the_football_scoreboard(self):
+        def football(_day):
+            raise AssertionError("football scoreboard must not be read")
+        with tempfile.TemporaryDirectory() as folder:
+            path = pathlib.Path(folder) / "poll.json"
+            self.assertEqual(ap_poll.refresh(path, dt.date(2026, 9, 25), football,
+                                             fetch_rankings=_no_rankings, sport="ncaam"), {})

@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0925ZB",
+  "tag": "Feature",
+  "title": "AP Top 25 for men's basketball, and correct logos for every Division I school",
+  "items": [
+   "Men's basketball Rankings now show the AP Top 25 with each team's record, weekly movement and Matchday power rating.",
+   "The poll follows the basketball calendar. Until the 2026-27 preseason poll comes out in October, the table is labelled as the 2025-26 final poll, and it is not used to rank this season's games. Movement is never measured against a different season's poll.",
+   "Fixed logos that borrowed another school's: Utah Valley showed Utah, Florida Gulf Coast showed Florida, Texas Southern showed Texas, and six others. Every Division I basketball school now shows its own logo."
+  ]
+ },
+ {
   "date": "Build 0925ZA",
   "tag": "UI",
   "title": "Basketball Research shows its full layout before the season",

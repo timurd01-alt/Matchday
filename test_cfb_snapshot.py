@@ -238,7 +238,7 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         self.assertIn("label.startsWith(school+' ')", core)
         self.assertIn("'Michigan State Spartans':'michiganState.png'", core)
         self.assertIn("function teamLogoFallback(img)", core)
-        self.assertIn("[exact,...mappedPrefixes,...inferred]", core)
+        self.assertIn("ranked.sort((a,b)=>(b[0]-a[0])||(a[1]-b[1]))", core)
         self.assertNotIn("...inferred[0]", core)
         self.assertIn("_safeLogoSuffix(words[end])", core)
         self.assertIn("TCU:'TCU.png'", core)
