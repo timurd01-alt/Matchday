@@ -1543,11 +1543,22 @@ function btmScoped(db){const scope=communityScope();if(!scope)return db;
   const picks={};Object.entries(db.picks||{}).forEach(([id,p])=>{if(String(p.comp||'NCAAF').toUpperCase()===scope)picks[id]=p;});
   return {...db,picks};}
 function isCommunityPickOpen(m){const kickoff=kickMs(m),now=Date.now();return m?.status==='UPCOMING'&&kickoff>now&&kickoff-now<=7*864e5&&!isStaleUpcoming(m)}
+/* Resolves true only once the server has stored the pick. A failed lock used
+   to be dropped silently: submitting five picks fired five requests at once,
+   and only the one the server happened to accept ever reached Recent activity
+   or the leaderboard. One retry covers a cold start or a momentary 429/500. */
 async function lockGlobalPick(matchId,pick,comp){
-  const d=await lbPost('pick',{deviceId:deviceId(),matchId:String(matchId),pick,comp:String(comp||'').toLowerCase()});
-  if(d&&d.ok)applyAccount(d);
+  const body={deviceId:deviceId(),matchId:String(matchId),pick,comp:String(comp||'').toLowerCase()};
+  for(let attempt=0;attempt<2;attempt++){
+    if(attempt)await new Promise(r=>setTimeout(r,1500));
+    const d=await lbPost('pick',body);
+    if(d&&d.ok){applyAccount(d);return true}
+    // A closed window or a rejected pick will not change on retry.
+    if(d&&/window closed|invalid pick/.test(String(d.error||'')))return false;
+  }
+  return false;
 }
-function submitPick(matchId,pick,render=true){
+function submitPick(matchId,pick,render=true,lock=true){
   ensureHandle();
   const db=btmLoad();db.picks=db.picks||{};
   // One pick per match. It can be changed until kickoff, then it is locked.
@@ -1562,5 +1573,5 @@ function submitPick(matchId,pick,render=true){
     comp:m._comp||DATA.comp_key||'',
     modelPick:read?.pick||null,
     marketPick:(()=>{const x=(m.markets||{})['1x2'];if(!x||x.home_pct==null)return null;const tr={h:x.home_pct,d:x.draw_pct,a:x.away_pct};return Object.keys(tr).reduce((a,b)=>tr[b]>tr[a]?b:a)})()};
-  btmSave(db);if(render)renderCommunity();lockGlobalPick(matchId,pick,db.picks[matchId].comp);return true;
+  btmSave(db);if(render)renderCommunity();if(lock)lockGlobalPick(matchId,pick,db.picks[matchId].comp);return true;
 }

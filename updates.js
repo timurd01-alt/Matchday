@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0925ZC",
+  "tag": "Fix",
+  "title": "Community picks: every submitted pick now reaches Recent activity",
+  "items": [
+   "Submitting several picks at once sent them all to the server at the same moment and ignored any that failed, so Recent activity and the leaderboard could show only one of five picks.",
+   "Picks are now sent one at a time, a failed pick is retried once, and the confirmation says exactly how many went through. Any that did not stay in your draft so you can submit them again, instead of showing as locked when they are not.",
+   "The confirmation message no longer disappears as soon as the page refreshes in the background."
+  ]
+ },
+ {
   "date": "Build 0925ZB",
   "tag": "Feature",
   "title": "AP Top 25 for men's basketball, and correct logos for every Division I school",

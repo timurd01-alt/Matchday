@@ -144,13 +144,32 @@ function draftPick(id,side){
 function pickBtm(id,side){draftPick(id,side)}
 function clearDraft(){btmDraftSave({});renderCommunity()}
 function toggleCommGame(id){COMM_OPEN=COMM_OPEN===id?'':id;renderCommunity()}
-function submitDraft(){
-  const d=btmDraft(),ids=Object.keys(d);if(!ids.length)return;
+let COMM_SUBMITTING=false;
+// One pick at a time, and a pick only counts once the server has it. A pick
+// the server did not take goes back to the draft (and the local copy back to
+// what it was), so it can be submitted again rather than shown as locked.
+async function submitDraft(){
+  const d=btmDraft(),ids=Object.keys(d);if(!ids.length||COMM_SUBMITTING)return;
   if(!confirm(`Submit ${ids.length} pick${ids.length===1?'':'s'}? You can change a pick until kickoff; after that it is locked and graded.`))return;
-  let done=0;const left={};
-  ids.forEach(id=>{if(submitPick(id,d[id],false))done++;else{const m=(DATA.matches||[]).find(x=>String(x.id)===String(id));if(m&&isCommunityPickOpen(m)&&btmLoad().picks?.[id]?.pick!==d[id])left[id]=d[id]}});
+  COMM_SUBMITTING=true;COMM_FLASH=`Submitting ${ids.length} pick${ids.length===1?'':'s'}…`;renderCommunity();
+  let done=0,failed=0;const left={};
+  try{
+    for(const id of ids){
+      const before=btmLoad().picks?.[id]||null;
+      if(!submitPick(id,d[id],false,false)){
+        const m=(DATA.matches||[]).find(x=>String(x.id)===String(id));
+        if(m&&isCommunityPickOpen(m)&&btmLoad().picks?.[id]?.pick!==d[id])left[id]=d[id];
+        continue;
+      }
+      const picked=btmLoad().picks[id];
+      if(await lockGlobalPick(id,d[id],picked.comp)){done++;continue}
+      failed++;left[id]=d[id];
+      const db=btmLoad();if(before)db.picks[id]=before;else delete db.picks[id];btmSave(db);
+    }
+  }finally{COMM_SUBMITTING=false}
   btmDraftSave(left);
-  COMM_FLASH=done?`${done} pick${done===1?'':'s'} submitted.`:'Nothing was submitted: those games have started or were already picked.';
+  COMM_FLASH=failed?`${done} of ${done+failed} picks submitted. ${failed===1?'1 did not go through; it is':`${failed} did not go through; they are`} still in your draft, so submit again.`
+    :done?`${done} pick${done===1?'':'s'} submitted.`:'Nothing was submitted: those games have started or were already picked.';
   COMM_FETCHED='';renderCommunity();
 }
 async function commFetch(action,comp){
@@ -191,7 +210,8 @@ function commSplit(m,picks){
 function commPct(v){const n=Number(v)||0;return (n>=99.95?99.9:n<=0.05&&n>0?0.1:n).toFixed(1).replace(/\.0$/,'')+'%'}
 function commShort(m,side){return side==='h'?(m.home.code||m.home.name):side==='a'?(m.away.code||m.away.name):t('Draw')}
 function commAgo(ms){const s=Math.max(0,(Date.now()-ms)/1000);return s<3600?`${Math.max(1,Math.round(s/60))}m ago`:s<86400?`${Math.round(s/3600)}h ago`:`${Math.round(s/86400)}d ago`}
-function renderCommunity(fromFetch){ensureHandle();const host=$('#view-community');const db=btmScoped(btmGrade());const s=btmStats(db);
+let COMM_FLASH_SHOWN=false;
+function renderCommunity(fromFetch){if(!fromFetch&&COMM_FLASH_SHOWN){COMM_FLASH='';COMM_FLASH_SHOWN=false}ensureHandle();const host=$('#view-community');const db=btmScoped(btmGrade());const s=btmStats(db);
   const comp=String(DATA.comp_key||(/ncaam/.test(String(DATA_FILE||''))?'ncaam':'ncaaf')).toLowerCase();
   if(!fromFetch)commLoad(comp);
   const eligible=(DATA.matches||[]).filter(m=>isCommunityPickOpen(m)).sort((a,b)=>(a.kickoff||'').localeCompare(b.kickoff||''));
@@ -202,7 +222,9 @@ function renderCommunity(fromFetch){ensureHandle();const host=$('#view-community
   const draft=btmDraft();Object.keys(draft).forEach(id=>{if(picks[id]?.pick===draft[id]||!open.some(m=>String(m.id)===String(id)))delete draft[id]});
   const nDraft=Object.keys(draft).length;
   let h=`<div class="vhead">Community</div><p class="commLede">What other Matchday users are picking this week.</p>`;
-  if(COMM_FLASH){h+=`<div class="commFlash" role="status">${esc(COMM_FLASH)}</div>`;COMM_FLASH='';}
+  // A background refresh re-renders right after a submit; it must not wipe the
+  // message that says which picks went through.
+  if(COMM_FLASH){h+=`<div class="commFlash" role="status">${esc(COMM_FLASH)}</div>`;if(!fromFetch&&!COMM_SUBMITTING)COMM_FLASH_SHOWN=true;}
   h+=`<div class="commLayout"><section class="commMain" aria-labelledby="commPicksTitle"><div class="commHead"><h2 id="commPicksTitle">Community picks</h2><span>This week</span></div>`;
   if(!open.length)h+=`<div class="empty">No games are open for picks yet.<br><span class="faintline">Games open seven days before kickoff.</span></div>`;
   else{
