@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0925L",
+  "tag": "Fix",
+  "title": "Clearer community picks",
+  "items": [
+   "Tapping the team you already picked no longer creates a change that Submit then refuses; switching away and back cancels the pending change.",
+   "The note under each game now says your current pick and how to change it."
+  ]
+ },
+ {
   "date": "Build 0925K",
   "tag": "Fix",
   "title": "No gap before Explore",

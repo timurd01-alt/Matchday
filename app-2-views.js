@@ -133,7 +133,14 @@ function renderAccountRow(){
 let COMM_ALL=false,COMM_FLASH='',COMM_OPEN='',COMM_CONSENSUS={},COMM_ACTIVITY=null,COMM_FETCHED='';
 function btmDraft(){try{return JSON.parse(localStorage.getItem('matchday.btmDraft')||'{}')||{}}catch(e){return {}}}
 function btmDraftSave(d){try{localStorage.setItem('matchday.btmDraft',JSON.stringify(d))}catch(e){}}
-function draftPick(id,side){const d=btmDraft();if(d[id]===side)delete d[id];else d[id]=side;btmDraftSave(d);renderCommunity()}
+// Tapping the team you already submitted is not a change: it clears any
+// pending switch instead of drafting a no-op that Submit then refuses.
+function draftPick(id,side){
+  const d=btmDraft(),saved=(typeof btmLoad==='function'?btmLoad():{}).picks?.[id]?.pick;
+  if(d[id]===side||saved===side){delete d[id];if(saved===side)COMM_FLASH='';}
+  else d[id]=side;
+  btmDraftSave(d);renderCommunity();
+}
 function pickBtm(id,side){draftPick(id,side)}
 function clearDraft(){btmDraftSave({});renderCommunity()}
 function toggleCommGame(id){COMM_OPEN=COMM_OPEN===id?'':id;renderCommunity()}
@@ -197,7 +204,7 @@ function renderCommunity(fromFetch){ensureHandle();const host=$('#view-community
         const btn=(side,label)=>{const chosen=dr?dr===side:p?.pick===side;const saved=!dr&&p?.pick===side;return `<button type="button" class="btmbtn${saved?' locked':''}${dr===side?' drafted':''}" aria-pressed="${chosen}" onclick="pickBtm('${esc(String(m.id))}','${side}')">${esc(label)}</button>`};
         h+=`<div class="commDetail" role="row"><div role="cell"><div class="commBars">${bar('a',m.away.name)}${bar('h',m.home.name)}<small>${sp.n} pick${sp.n===1?'':'s'} from the community</small></div>
           <div class="btmrow">${btn('a',m.away.name)}${btn('h',m.home.name)}</div>
-          <small class="commNote">${p?'Submitted. You can change it until kickoff.':'Tap a team, then Submit picks.'} <button type="button" class="gamesTextLink" onclick="openMatchModal('${esc(String(m.id))}')">Game analysis →</button></small></div></div>`;
+          <small class="commNote">${p?(dr?`Changing to ${esc(dr==='h'?m.home.name:m.away.name)}: press Submit picks to confirm, or tap ${esc(p.pick==='h'?m.home.name:m.away.name)} to keep it.`:`Your pick: ${esc(p.pick==='h'?m.home.name:m.away.name)}. Tap the other team to change it until kickoff.`):'Tap a team, then Submit picks.'} <button type="button" class="gamesTextLink" onclick="openMatchModal('${esc(String(m.id))}')">Game analysis →</button></small></div></div>`;
       }
     });
     h+=`</div>`;
