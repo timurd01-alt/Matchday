@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0926E",
+  "tag": "Fix",
+  "title": "Chart names on phones",
+  "items": [
+   "On phones, where the scatter charts are replaced by their team groups, those panels now carry the chart's name: Rating vs Schedule and Efficiency vs Net Points Per Success."
+  ]
+ },
+ {
   "date": "Build 0926D",
   "tag": "Fix",
   "title": "Football week, not calendar week",

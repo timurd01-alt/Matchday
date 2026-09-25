@@ -3748,3 +3748,5 @@ body{font-variant-numeric:tabular-nums}
 .rsDialogBody .rsQuadHead,.rsDialogBody .rsQuadList li{grid-template-columns:28px minmax(0,1fr) 72px 80px}
 /* Graded badge sits beside its own heading, not pushed to the far edge. */
 .rsHistHead{justify-content:flex-start;gap:8px}
+.rsPhoneTitle{display:none}
+@media(max-width:600px){.rsDeskTitle{display:none}.rsPhoneTitle{display:inline}}

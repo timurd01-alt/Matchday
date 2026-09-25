@@ -1217,8 +1217,11 @@ function rsChip(kind){
 // Research titles capitalise every word except "vs". Only letters at the
 // start of a word change, so HTML entities (&amp;) and numbers are untouched.
 function rsTitleCase(t){return String(t).replace(/(^|[\s(/–-])([a-z])([a-z']*)/g,(m,pre,c,rest)=>(c+rest)==='vs'?m:pre+c.toUpperCase()+rest)}
-function rsTop(title,kind,aside){
-  return `<div class="rsTop"><h3 class="rsTitle">${rsTitleCase(title)}</h3><span class="rsTopAside">${aside?`<span class="rsAside">${aside}</span>`:''}${rsChip(kind)}</span></div>`;
+// phoneTitle: shown instead of title on phones, where a group panel stands in
+// for the chart it sits beside on desktop.
+function rsTop(title,kind,aside,phoneTitle){
+  const t=phoneTitle?`<span class="rsDeskTitle">${rsTitleCase(title)}</span><span class="rsPhoneTitle">${rsTitleCase(phoneTitle)}</span>`:rsTitleCase(title);
+  return `<div class="rsTop"><h3 class="rsTitle">${t}</h3><span class="rsTopAside">${aside?`<span class="rsAside">${aside}</span>`:''}${rsChip(kind)}</span></div>`;
 }
 function rsTeamRow(name){
   const t=(collegeRankingTable()?.rankings||[]).find(r=>bbNameMatches(r.name,name));
@@ -1457,7 +1460,7 @@ function rsScatterNotes(){
     {label:'Tested, fell short',what:'Below-median rating against an above-median schedule.',rows:rsQuadRows(rows,x,y,mx,my,1,-1).map(shape)},
     {label:'Unproven',what:'Below-median rating against a below-median schedule.',rows:rsQuadRows(rows,x,y,mx,my,-1,-1).map(shape)},
   ];
-  return `<section class="rsBlock rsSpan4">${rsTop('Schedule groups','blend')}${rsQuadTabs('rating',groups,'Rating','SoS')}</section>`;
+  return `<section class="rsBlock rsSpan4">${rsTop('Schedule groups','blend','','Rating vs schedule')}${rsQuadTabs('rating',groups,'Rating','SoS')}</section>`;
 }
 /* Hover anywhere on the chart: the nearest dot within reach is highlighted
    and described in a floating card. Dots are a few pixels wide, so matching the
@@ -1609,7 +1612,7 @@ function rsEfficiencyNotes(){
     {label:'Moves the chains',what:'Succeeds often, but rarely breaks a big one.',rows:rsQuadRows(D.rows,x,y,D.mx,D.my,1,-1).map(shape)},
     {label:'Struggling',what:'Below median on both: plays fail often and gain little.',rows:rsQuadRows(D.rows,x,y,D.mx,D.my,-1,-1).map(shape)},
   ];
-  return `<section class="rsBlock rsSpan4">${rsTop('Efficiency groups','current')}${rsQuadTabs('efficiency',groups,'Success','Net / success')}</section>`;
+  return `<section class="rsBlock rsSpan4">${rsTop('Efficiency groups','current','','Efficiency vs net points per success')}${rsQuadTabs('efficiency',groups,'Success','Net / success')}</section>`;
 }
 /* Defence against a real zero. Expected points allowed per play has a true
    zero -- the average snap against this defence gains nothing -- so the bars
