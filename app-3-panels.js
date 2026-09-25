@@ -1656,6 +1656,48 @@ function howItPlayedPanel(m){
     +row('Plays',Number(H.plays),Number(A.plays),v=>Number.isFinite(v)?String(v):'—','share')
     +`<p class="hipVerdict">${verdict}</p></section>`;
 }
+/* Final summary. Play-by-play reaches the results feed a few days late and
+   never for some games, and a finished game must not fall back to a "model
+   read" panel. What is always known after the whistle: the score, the pick
+   Matchday locked, and both teams' ratings. The game rating is the margin plus
+   the opponent's power rating -- the same opponent-adjusted scale as the power
+   rating (no home-field term), so it reads as "played like a team rated X". */
+function finalSummaryPanel(m){
+  if(String(m?.status||'').toUpperCase()!=='FINISHED')return '';
+  const hs=Number(m.score?.home),as=Number(m.score?.away);
+  if(!Number.isFinite(hs)||!Number.isFinite(as))return '';
+  const home=m.home?.name||m.home,away=m.away?.name||m.away;
+  const rows=(typeof collegeRankingTable==='function'?collegeRankingTable()?.rankings:null)||[];
+  const find=n=>rows.find(r=>bbNameMatches(r.name,n))||null;
+  const H={name:home,score:hs,r:find(home)},A={name:away,score:as,r:find(away)};
+  const short=n=>typeof rsShortName==='function'?rsShortName(n):n;
+  const num=v=>{const n=Number(v);return Number.isFinite(n)?n:null};
+  const sgn=(v,d=1)=>v==null?'—':(Number(v.toFixed(d))>0?'+':Number(v.toFixed(d))<0?'−':'')+Math.abs(v).toFixed(d);
+  const game=(t,o)=>{const or=num(o.r?.rating);return or==null?null:(t.score-o.score)+or};
+  H.game=game(H,A);A.game=game(A,H);
+  const line=(label,h,a,fmt,hiWins=true)=>{
+    const ok=h!=null&&a!=null,hw=ok&&(hiWins?h>a:h<a),aw=ok&&(hiWins?a>h:a<h);
+    return `<div class="hipRow"><b class="${hw?'hipLead':''}">${fmt(h)}</b><div class="hipMid"><span>${label}</span></div><b class="${aw?'hipLead':''}">${fmt(a)}</b></div>`;
+  };
+  const p=m.prediction||{},winner=hs>as?'h':as>hs?'a':null;
+  const pickSide=p.pick==='h'||p.pick==='a'?p.pick:null;
+  const pickName=pickSide?(p.pick_name||short(pickSide==='h'?home:away)):'';
+  const pick=pickSide&&winner?`<p class="hipVerdict">Matchday picked <b>${esc(short(pickName))}</b>${Number.isFinite(Number(p.confidence))?` at ${Number(p.confidence)}%`:''} — <b class="${pickSide===winner?'fsHit':'fsMiss'}">${pickSide===winner?'correct':'missed'}</b>.</p>`:'';
+  const over=(t)=>{const g=t.game,s=num(t.r?.rating);return g==null||s==null?'':`${esc(short(t.name))} ${g>=s?'beat':'fell short of'} its season rating by ${Math.abs(g-s).toFixed(1)}`};
+  const notes=[over(H),over(A)].filter(Boolean);
+  const team=(t,side)=>`<div class="hipTeam ${side}">${typeof teamMark==='function'?teamMark(t.name):''}<span>${esc(short(t.name))}</span></div>`;
+  const f1=v=>v==null?'—':v.toFixed(1);
+  return `<section class="analystPanel hipPanel"><div class="analystTop"><div class="analystTitle">Final summary</div><div class="analystBadge">final</div></div>`
+    +`<div class="hipHead">${team(H,'h')}<span class="hipScore">${hs}–${as}</span>${team(A,'a')}</div>`
+    +pick
+    +line('Game rating',H.game,A.game,f1)
+    +line('Season rating',num(H.r?.rating),num(A.r?.rating),f1)
+    +line('Strength of schedule',num(H.r?.sos),num(A.r?.sos),f1)
+    +line('Offense (adj. pts)',num(H.r?.adj_o),num(A.r?.adj_o),f1)
+    +line('Defense (adj. pts allowed)',num(H.r?.adj_d),num(A.r?.adj_d),f1,false)
+    +(notes.length?`<p class="hipVerdict">${notes.join('; ')}.</p>`:'')
+    +`<p class="fsNote">Game rating is the margin plus the opponent's power rating. Play-by-play efficiency appears here once the game's plays are processed.</p></section>`;
+}
 function betbetterNoReadPanel(){
   return `<section class="analystPanel"><div class="analystTop"><div class="analystTitle">Model read</div>`
     +`<div class="analystBadge">not modeled</div></div>`
@@ -1691,7 +1733,7 @@ function matchupEvidence(label,note,html,open=false){
 function details(m){
   if(isForecastPaused(m))return `<div class="detailGrid v4Detail">${forecastPauseHTML(m)}<div class="detailTop">${betbetterMatchupPanel(m)}<div class="readCard forecastMarketCard">${marketPanel(m)}</div></div><div class="detailLow">${rosterPanel(m)}</div></div>`;
   const bb=betbetterReadFor(m);
-  const read=bb?betbetterModelRead(m,bb):(howItPlayedPanel(m)||betbetterNoReadPanel());
+  const read=bb?betbetterModelRead(m,bb):(howItPlayedPanel(m)||finalSummaryPanel(m)||betbetterNoReadPanel());
   const comparison=betbetterMatchupPanel(m)||matchProfilePanel(m);
   return `<div class="detailGrid v4Detail modernExpandedView"><div class="expandedSectionHead"><div><span>Matchday analysis</span><b>Pick &amp; matchup</b></div></div><div class="expandedDecision"><div class="readCard modelReadCard">${read}</div></div><div class="matchEvidenceList">${matchupEvidence('Team comparison','rating, offence, defence and schedule',comparison,true)}${matchupEvidence('Market','price and model gap',`<div class="readCard forecastMarketCard">${marketPanel(m)}</div>`)}${matchupEvidence('More detail','season profile and roster',`<div class="detailLow">${matchProfilePanel(m)}${rosterPanel(m)}<!-- matchday-advanced-profile --></div>`)}</div></div>`;
 }

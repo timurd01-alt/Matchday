@@ -3664,3 +3664,9 @@ body{font-variant-numeric:tabular-nums}
 /* Half-screen windows: the strip keeps Next and Updated readable and drops
    the tagline and build label, which were cutting both off. */
 @media(max-width:1280px){#strip .ls-extra{display:none}#strip .ls-next{flex:0 0 auto;max-width:40%}}
+/* Match window panels (model read, how it played, final summary) share the
+   homepage featured game's green-to-blue glow. */
+.modernExpandedView .analystPanel,.matchSheet .analystPanel{border:1px solid rgba(58,209,122,.28);border-radius:16px;background:linear-gradient(135deg,rgba(58,209,122,.1),rgba(76,194,255,.035) 55%,var(--panel))}
+/* Final summary */
+.fsHit{color:var(--win)}.fsMiss{color:var(--loss)}
+.fsNote{margin:10px 0 0;color:var(--faint);font-size:var(--fs-xs)}
