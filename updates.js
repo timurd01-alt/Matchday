@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0925X",
+  "tag": "Feature",
+  "title": "Final summary for finished games",
+  "items": [
+   "A finished game never shows a model read. When play-by-play efficiency is not available yet, it shows a Final summary: the score, whether Matchday's pick was right, each team's game rating (margin plus the opponent's power rating) against its season rating, and strength of schedule, offense and defense.",
+   "The panels in the match window now use the homepage featured game's green glow."
+  ]
+ },
+ {
   "date": "Build 0925W",
   "tag": "Fix",
   "title": "Half-screen top strip and Games filters",
