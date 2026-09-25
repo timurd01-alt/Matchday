@@ -3007,14 +3007,14 @@ body.welcomeOpen{height:auto;min-height:100vh;overflow-y:auto}
 /* ---- welcome gate: a hero that stands out ---------------------------------
    Nothing added -- the title does the work. It takes the app's own display
    face (Archivo, the heavy face every app heading uses) at display size, with
-   a logo-lime fill, and sits in a single soft --signal spotlight: the
+   a white fill with a lime outline, and sits in a single soft --signal spotlight: the
    same corner-glow treatment the app gives its hero panels, centred. */
 #welcomeGate{--fs-wx-display:clamp(3.5rem,9vw,8rem);--fs-wx-lead:clamp(1.143rem,1.6vw,1.429rem)}
 #welcomeGate .wx-hero{position:relative;isolation:isolate;padding:96px 0 72px}
 #welcomeGate .wx-hero::before{content:"";position:absolute;left:50%;top:44%;width:min(900px,100%);height:420px;transform:translate(-50%,-50%);z-index:-1;pointer-events:none;
   background:radial-gradient(ellipse at center,rgba(45,133,108,.24),rgba(24,84,76,.10) 48%,transparent 73%)}
 #welcomeGate .wx-hero h1{font-family:var(--display);font-size:var(--fs-wx-display);font-weight:var(--fw-heavy);line-height:.95;letter-spacing:-.045em;
-  color:#d9f522;
+  color:#f3f6ef;
   padding-bottom:.06em}
 @supports not ((-webkit-background-clip:text) or (background-clip:text)){#welcomeGate .wx-hero h1{color:var(--text);background:none}}
 #welcomeGate .wx-hero .wx-lead{margin-top:24px;font-size:var(--fs-wx-lead);color:var(--text);opacity:.78;max-width:none}
@@ -3676,14 +3676,14 @@ body{font-variant-numeric:tabular-nums}
 /* Basketball preseason placeholders keep the layout without inventing numbers. */
 .rsWaitingNote{margin:12px 0 0;padding:28px 16px;border:1px dashed var(--line);border-radius:8px;text-align:center;color:var(--muted);font-size:var(--fs-sm);line-height:1.5}
 
-/* Angular logo lettering above the teal glow. */
+/* Angular white logo lettering with a restrained lime edge. */
 #welcomeGate .wx-hero h1{font-family:"Oxanium",var(--display);font-weight:700;text-transform:uppercase;font-size:clamp(2.5rem,7.6vw,6.6rem);letter-spacing:-.045em;line-height:1.08}
-#welcomeGate .wx-word{display:inline-block;white-space:nowrap;background:linear-gradient(145deg,#edff57 5%,#d9f522 52%,#afcc20);-webkit-background-clip:text;background-clip:text;color:transparent}
-#welcomeGate .wx-titleMark{display:inline-block;width:.77em;height:.74em;margin-right:.025em;vertical-align:-.025em;fill:#d9f522}
+#welcomeGate .wx-word{display:inline-block;white-space:nowrap;color:#f3f6ef;-webkit-text-stroke:1px #cfe929;paint-order:stroke fill}
+#welcomeGate .wx-titleMark{display:inline-block;width:.77em;height:.74em;margin-right:.025em;vertical-align:-.025em;fill:#f3f6ef;stroke:#cfe929;stroke-width:2;paint-order:stroke fill;overflow:visible}
 #welcomeGate .wx-hero .welcomeEnter{box-shadow:0 6px 24px rgba(58,209,122,.12)}
 #welcomeGate .wx-hero .welcomeEnter:hover{box-shadow:0 8px 28px rgba(58,209,122,.2)}
-@supports not ((-webkit-background-clip:text) or (background-clip:text)){#welcomeGate .wx-word{color:#d9f522;background:none}}
-@media(forced-colors:active){#welcomeGate .wx-word{color:CanvasText;background:none}#welcomeGate .wx-titleMark{fill:CanvasText}}
+@supports not ((-webkit-background-clip:text) or (background-clip:text)){#welcomeGate .wx-word{color:#f3f6ef;background:none}}
+@media(forced-colors:active){#welcomeGate .wx-word{color:CanvasText;background:none;-webkit-text-stroke:0}#welcomeGate .wx-titleMark{fill:CanvasText;stroke:none}}
 
 @font-face{font-family:Oxanium;font-style:normal;font-weight:700;font-display:swap;src:url("assets/fonts/oxanium-700.ttf") format("truetype")}
 #welcomeGate{overflow-x:clip}
