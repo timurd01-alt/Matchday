@@ -101,7 +101,7 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         self.assertIn("?MATCHDAY_CFB_AP_BRACKET:(MATCHDAY_CFB_SNAPSHOT.bracket||[])", panels)
         self.assertIn("applyCurrentCfbSnapshot(DATA)", panels)
         self.assertIn("g.group!=='Matchday Top 25'", panels)
-        self.assertIn("DATA.comp_key==='NCAAF'?'Conferences'", panels)
+        self.assertIn("['NCAAF','NCAAM'].includes(DATA.comp_key)?'Conferences'", panels)
 
     def test_the_owners_ballot_ships_apart_from_the_power_rating(self):
         """My Top 25 is a person's call and must never borrow the model table's name."""

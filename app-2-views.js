@@ -1547,14 +1547,18 @@ function collegeResearchModules(){
   // One 12-column grid. Each panel's span is set by what it holds (rsSpanN),
   // so a finding and its supporting numbers share a row at sensible widths.
   const grid=(...cells)=>{const c=cells.filter(Boolean);return c.length?`<div class="rsRow">${c.join('')}</div>`:''};
+  // Success rate, net points per success and EPA per play are football
+  // play-by-play measures; basketball has no downs or snaps, so those panels
+  // are football-only rather than showing football teams on the NCAAM page.
+  const football=String(DATA?.comp_key||'').toUpperCase()==='NCAAF';
   const parts=[
-    rsPart('01','This week',grid(rsFeatured(),rsModelMarketWatch())),
-    rsPart('02','What the model is finding',grid(rsStat(),rsLongshots())+grid(rsScatter(),rsScatterNotes())+grid(rsEfficiency(),rsEfficiencyNotes())),
-    rsPart('03','The bigger picture',grid(rsSchedules(),rsConferences())+grid(rsDefence(),rsDefenceNotes())),
-    rsPart('04','Track record',grid(rsMyPicks())),
-  ].join('');
+    ['This week',grid(rsFeatured(),rsModelMarketWatch())],
+    ['What the model is finding',grid(rsStat(),rsLongshots())+grid(rsScatter(),rsScatterNotes())+(football?grid(rsEfficiency(),rsEfficiencyNotes()):'')],
+    ['The bigger picture',grid(rsSchedules(),rsConferences())+(football?grid(rsDefence(),rsDefenceNotes()):'')],
+    ['Track record',grid(rsMyPicks())],
+  ].filter(([,body])=>body).map(([label,body],i)=>rsPart(String(i+1).padStart(2,'0'),label,body)).join('');
   if(!parts)return '';
   return `<section class="collegeResearch" aria-label="College research">`
-    +`<div class="rsLegend2"><span>${rsChip('live')} moves until kickoff</span><span>${rsChip('season')} this season's results so far</span><span>${rsChip('graded')} locked picks, scored after the final</span></div>`
+    +`<div class="rsLegend2"><span>${rsChip('live')} moves until ${football?'kickoff':'tipoff'}</span><span>${rsChip('season')} this season's results so far</span><span>${rsChip('graded')} locked picks, scored after the final</span></div>`
     +`${parts}</section>`;
 }
