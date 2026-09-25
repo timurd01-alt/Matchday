@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0925K",
+  "tag": "Fix",
+  "title": "No gap before Explore",
+  "items": [
+   "The empty band between the home page summary and Explore is gone; the spacing now matches the sections above."
+  ]
+ },
+ {
   "date": "Build 0925J",
   "tag": "Fix",
   "title": "Community stays connected; tidier home summary",

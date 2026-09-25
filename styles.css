@@ -3607,5 +3607,5 @@ body{font-variant-numeric:tabular-nums}
    the button, and Explore gets its own breathing room. */
 .gamesDifferences>.gamesDifferenceRows{flex:1;display:flex;flex-direction:column;justify-content:space-between}
 .gamesDifferences>.gamesTextLink{margin-top:16px!important}
-.gamesSupportGrid+.gamesExplore{margin-top:36px}
+.gamesSupportGrid+.gamesExplore{margin-top:9px}
 .gamesSupportGrid .gamesDifferences>button.gamesTextLink{margin-top:16px!important}
