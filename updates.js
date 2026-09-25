@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0925U",
+  "tag": "Fix",
+  "title": "Conference standings always scroll",
+  "items": [
+   "Conference standings keep full-size text at every window width; when the whole table does not fit, it scrolls sideways with the team column pinned."
+  ]
+ },
+ {
   "date": "Build 0925T",
   "tag": "Fix",
   "title": "Readable at half-screen widths",
