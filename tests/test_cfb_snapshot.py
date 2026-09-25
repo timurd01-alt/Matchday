@@ -52,7 +52,7 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
     def test_home_skips_empty_market_comparison_section(self):
         core = (ROOT / "app-1-core.js").read_text(encoding="utf-8")
         self.assertIn("${top.length?gamesDifferencesHTML(top):''}", core)
-        self.assertIn('onclick="setView(\'matches\')"><b>Games</b>', core)
+        self.assertIn('onclick="setView(\'community\')"><b>Community</b>', core)
 
     def test_fallback_header_uses_the_fresh_prediction_sync(self):
         builder = (ROOT / "build_cfb_snapshot.py").read_text(encoding="utf-8")
