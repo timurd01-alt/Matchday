@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0925T",
+  "tag": "Fix",
+  "title": "Readable at half-screen widths",
+  "items": [
+   "Conference standings scroll sideways with the team pinned in narrower windows too, instead of crushing the Conf, Non-con and Overall columns.",
+   "The Research scatter charts draw a medium-width version for half-screen windows, so dots, labels and axis text stay readable."
+  ]
+ },
+ {
   "date": "Build 0925S",
   "tag": "Change",
   "title": "Power rating explainer removed",

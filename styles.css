@@ -3621,7 +3621,10 @@ body{font-variant-numeric:tabular-nums}
 }
 /* Research scatters: the wide chart on desktop, the portrait one on phones,
    with a tap readout under it instead of a floating card. */
-.rsTall,.rsReadout{display:none}
+.rsTall,.rsMid,.rsReadout{display:none}
+/* Half-screen windows: the 1000-wide chart's text shrank below readable, so
+   medium widths get a 640-wide drawing whose text renders near full size. */
+@media(min-width:601px) and (max-width:1280px){.rsWide{display:none}.rsMid{display:block}}
 @media(max-width:600px){
   .rsWide{display:none}
   .rsTall{display:block;touch-action:manipulation}
@@ -3637,8 +3640,8 @@ body{font-variant-numeric:tabular-nums}
   .rsReadout dd{margin:2px 0 0;font-weight:var(--fw-bold);font-variant-numeric:tabular-nums}
   .rsLegend span:last-child{display:none}
 }
-/* Conference standings: phones scroll the table sideways, team column pinned. */
-@media(max-width:720px){
+/* Conference standings: narrow windows scroll the table sideways, team column pinned. */
+@media(max-width:1280px){
   .confScroll{overflow-x:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
   .confScroll .collegeConferenceTable{table-layout:auto;width:auto;min-width:100%}
   .confScroll .collegeConferenceTable th,.confScroll .collegeConferenceTable td{width:auto;white-space:nowrap}

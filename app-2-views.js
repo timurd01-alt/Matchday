@@ -1327,7 +1327,7 @@ function rsScatter(){
   };
   const anyG5=rows.some(r=>String(r.tier||'')&&String(r.tier)!=='power');
   return `<section class="rsBlock rsSpan8">${rsTop('Rating vs schedule','season',`${rows.length} teams`)}`
-    +draw(1000,340,40,16,14,32,1,'rsWide')+draw(360,420,30,12,14,32,1.25,'rsTall')
+    +draw(1000,340,40,16,14,32,1,'rsWide')+draw(640,360,34,14,14,32,1.1,'rsMid')+draw(360,420,30,12,14,32,1.25,'rsTall')
     +`<div class="rsLegend"><span><i class="dotKeyP"></i>Power</span>${anyG5?'<span><i class="dotKeyG"></i>Group of Five</span>':''}<span>Lines are medians · hover anywhere on the chart</span></div><div class="rsReadout" aria-live="polite">Tap any dot to see the team.</div>`
     +`</section>`;
 }
@@ -1489,7 +1489,7 @@ function rsEfficiency(){
       +`<text class="scAxLbl" transform="rotate(-90 12 ${(H/2).toFixed(0)})" x="12" y="${(H/2).toFixed(0)}" text-anchor="middle">net points per success →</text></svg>`;
   };
   return `<section class="rsBlock rsSpan8">${rsTop('Efficiency vs net points per success','season',`${rows.length} FBS offenses`)}`
-    +draw(1000,340,40,16,14,32,1,'rsWide')+draw(360,420,30,12,14,32,1.25,'rsTall')
+    +draw(1000,340,40,16,14,32,1,'rsWide')+draw(640,360,34,14,14,32,1.1,'rsMid')+draw(360,420,30,12,14,32,1.25,'rsTall')
     +`<div class="rsLegend"><span><i class="dotKeyP"></i>Power</span><span><i class="dotKeyG"></i>Group of Five</span><span>Lines are medians · hover for the team</span></div><div class="rsReadout" aria-live="polite">Tap any dot to see the team.</div></section>`;
 }
 function rsEfficiencyNotes(){
