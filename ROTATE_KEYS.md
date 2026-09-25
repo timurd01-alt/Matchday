@@ -36,7 +36,7 @@ no longer read by anything; revoke them at the provider rather than rotating.
 - Paste into config_keys.py as SPORTSDATAIO_KEY.
 
 ## Then
-- Run one fetch (fetch_once_show_errors.bat) and confirm the diagnostics show
+- Run one fetch (python fetch_data.py) and confirm the diagnostics show
   fixtures and odds loading. That's the whole verification.
 - From now on: keys never get pasted into chats or uploaded. config_keys.py
   stays home, and .gitignore protects it.

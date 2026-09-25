@@ -322,7 +322,6 @@ jobs:
           # Failure tracebacks stay in the private Actions cache/log. Publishing
           # internal paths and provider error bodies to the public site creates
           # avoidable information disclosure even after credential scrubbing.
-          cp content-feed.json _site/
           mkdir -p _site/posts
           python - <<'EOF'
           import json, pathlib, shutil

@@ -4,8 +4,9 @@ Sports-prediction analytics site covering college football and men's college
 basketball only. **Every pick, probability, power rating and scorecard comes from
 the Bet Better engine** through `betbetter_picks.json` (see below); Matchday
 itself no longer forecasts. Soccer, NFL, NBA, MLB and NHL were removed
-entirely on 2026-09-13; do not reintroduce them. Flask backend (`app.py`,
-`server/server_app.py`), static JS/HTML/CSS frontend, provider data cached to JSON.
+entirely on 2026-09-13; do not reintroduce them. Static JS/HTML/CSS
+frontend on GitHub Pages, a small Vercel API (`api/`) for community picks, and
+provider data cached to JSON by the hourly workflow.
 
 ## Production delivery
 

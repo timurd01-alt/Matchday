@@ -12,8 +12,7 @@ Sports fetch one at a time with spacing between them, so API quotas
 (football-data: 10 requests/min) are never spiked no matter how many
 sports are enabled. Dormant sports cost almost nothing.
 
-Used automatically by start_app.bat (app.py runs this loop when no
-single-sport flag is given). Run standalone with:  python multi_fetch.py
+Run with:  python multi_fetch.py   (the hourly workflow uses --once)
 """
 import datetime
 import json

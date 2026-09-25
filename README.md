@@ -61,7 +61,7 @@ not on that page because a reader asking "is it any good" wants a record.
 
 ```bash
 python fetch_data.py      # refresh provider data
-python app.py             # serve locally
+python -m http.server 8743   # serve locally
 python -m unittest discover -p "test_*.py"
 ```
 

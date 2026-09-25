@@ -10,7 +10,7 @@ Matchday is primarily a Python data pipeline and static web application, with sm
 - `app-1-core.js` through `app-4-features.js` power the main interface
 - `content.js` and `generate_posts.py` publish pregame analysis and verified postgame recaps
 - `index.html`, `content.html`, `qa.html`, and `styles.css` define the public product surfaces
-- `api/` and `server/` contain optional online components
+- `api/` contains the Vercel API for community picks
 
 ## Local setup
 

@@ -1,8 +1,6 @@
 ## Matchday Wiki
 
 - [Home](Home)
-- [Prediction Lifecycle](Prediction-Lifecycle)
-- [How Predictions Work](How-Predictions-Work)
 - [Rankings and Projections](Rankings-and-Projections)
 - [Data Sources and Freshness](Data-Sources-and-Freshness)
 - [Development and Testing](Development-and-Testing)
