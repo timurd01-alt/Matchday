@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0926B",
+  "tag": "Fix",
+  "title": "Basketball chart fixed, Power Four",
+  "items": [
+   "The basketball Rating vs Schedule chart no longer marks every team as Group of Five; it shows the top 25 and a conference filter.",
+   "Football charts say Power Four instead of Power.",
+   "Names like Illinois no longer show a leftover half nickname, and the defense group list fills its panel."
+  ]
+ },
+ {
   "date": "Build 0926A",
   "tag": "Fix",
   "title": "View all games works again",

@@ -1170,7 +1170,7 @@ function rsShortName(name){
   // "Texas A&M Aggies" -> "Texas A&M". Nicknames are the last word, or two
   // for the handful of two-word nicknames.
   const s=String(name||'');
-  const two=/(Crimson Tide|Blue Devils|Tar Heels|Yellow Jackets|Red Raiders|Horned Frogs|Golden Gophers|Nittany Lions|Fighting Irish|Sun Devils|Demon Deacons|Mean Green|Black Knights|Golden Hurricane|Scarlet Knights|Ragin' Cajuns|Ragin Cajuns|Red Wolves|Golden Eagles|Golden Flashes|Blue Raiders|Green Wave|Rainbow Warriors|Blue Hens|Thundering Herd|Red Storm)$/;
+  const two=/(Crimson Tide|Blue Devils|Tar Heels|Yellow Jackets|Red Raiders|Horned Frogs|Golden Gophers|Nittany Lions|Fighting Irish|Sun Devils|Demon Deacons|Mean Green|Black Knights|Golden Hurricane|Scarlet Knights|Ragin' Cajuns|Ragin Cajuns|Red Wolves|Golden Eagles|Golden Flashes|Blue Raiders|Green Wave|Rainbow Warriors|Blue Hens|Thundering Herd|Red Storm|Fighting Illini|Fighting Hawks|Fighting Camels|Golden Bears|Golden Griffins|Mountain Hawks|Screaming Eagles|Blue Hose|Golden Lions|Purple Eagles|Big Green|Big Red|River Hawks|Red Flash|Blue Demons|Golden Grizzlies|Great Danes)$/;
   const m=s.match(two);
   if(m)return s.slice(0,-m[0].length).trim()||s;
   const parts=s.split(' ');
@@ -1356,7 +1356,7 @@ function rsScatter(){
     const sy=v=>H-PB-((v-y0)/((y1-y0)||1))*(H-PT-PB);
     const mx=sx(med(xs)),my=sy(med(ys));
     const dots=rows.map(r=>{
-      const power=String(r.tier||'')==='power',hi=top.includes(r)||(Number(r.rank)>0&&Number(r.rank)<=25);
+      const power=!String(r.tier||'')||String(r.tier)==='power',hi=top.includes(r)||(Number(r.rank)>0&&Number(r.rank)<=25);
       return `<circle cx="${sx(Number(r.sos)).toFixed(1)}" cy="${sy(Number(r.rating)).toFixed(1)}" r="${(hi?4.5:3)*R}" class="${hi?'dotHi':power?'dotP':'dotG'}" data-team="${esc(r.name)}" data-rank="${esc(r.rank??'')}" data-rating="${Number(r.rating).toFixed(2)}" data-sos="${Number(r.sos).toFixed(2)}" data-conf="${esc(r.conference||'')}" data-tier="${String(r.tier||'')==='power'?'power':'g5'}"></circle>`;
     }).join('');
     let lastY=-99;
@@ -1373,9 +1373,10 @@ function rsScatter(){
       +`<text class="scAxLbl" transform="rotate(-90 12 ${(H/2).toFixed(0)})" x="12" y="${(H/2).toFixed(0)}" text-anchor="middle">rating →</text></svg>`;
   };
   const anyG5=rows.some(r=>String(r.tier||'')&&String(r.tier)!=='power');
+  const tiered=rows.some(r=>String(r.tier||''));
   return `<section class="rsBlock rsSpan8 rsChartBlock">${rsTop('Rating vs schedule','blend',`${rows.length} teams`)}`
     +`<div class="rsPlot">`+draw(1000,440,56,16,14,44,1,'rsWide')+draw(640,360,52,14,14,44,1.1,'rsMid')+draw(360,420,46,12,14,44,1.25,'rsTall')+`</div>`
-    +`<div class="rsLegend"><span><i class="dotKeyHi"></i>Top 25</span><span><i class="dotKeyP"></i>Power</span>${anyG5?'<span><i class="dotKeyG"></i>Group of Five</span>':''}<span>Lines are medians · hover anywhere on the chart</span>${rsPlotFilter(rows.map(r=>r.conference))}</div><div class="rsReadout" aria-live="polite">Tap any dot to see the team.</div>`
+    +`<div class="rsLegend"><span><i class="dotKeyHi"></i>Top 25</span>${tiered?'<span><i class="dotKeyP"></i>Power Four</span>':''}${anyG5?'<span><i class="dotKeyG"></i>Group of Five</span>':''}<span>Lines are medians · hover anywhere on the chart</span>${rsPlotFilter(rows.map(r=>r.conference),tiered)}</div><div class="rsReadout" aria-live="polite">Tap any dot to see the team.</div>`
     +`</section>`;
 }
 /* What the chart shows, stated: the two quadrants that matter and the
@@ -1397,10 +1398,10 @@ function rsQuadTabs(key,groups,colA,colB,show=7){
 }
 /* Filter at the right end of the chart's legend row: fade every dot that
    is not in the chosen tier or conference, so one league can be read at a time. */
-function rsPlotFilter(confs){
+function rsPlotFilter(confs,tiers=true){
   const list=[...new Set(confs.filter(Boolean))].sort();
   const chip=(v,l,on)=>`<button type="button" class="rsFilterChip" aria-pressed="${on}" data-f="${v}" onclick="rsPlotFilterSet(this,this.dataset.f)">${l}</button>`;
-  return `<div class="rsFilter" role="group" aria-label="Filter teams">${chip('all','All',true)}${chip('tier:power','Power',false)}${chip('tier:g5','Group of Five',false)}`
+  return `<div class="rsFilter" role="group" aria-label="Filter teams">${chip('all','All',true)}${tiers?chip('tier:power','Power Four',false)+chip('tier:g5','Group of Five',false):''}`
     +(list.length?`<select class="rsFilterConf" aria-label="Conference" onchange="rsPlotFilterSet(this,this.value?'conf:'+this.value:'all')"><option value="">Conference</option>${list.map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join('')}</select>`:'')+`</div>`;
 }
 function rsPlotFilterSet(el,f){
@@ -1586,7 +1587,7 @@ function rsEfficiency(){
   };
   return `<section class="rsBlock rsSpan8 rsChartBlock">${rsTop('Efficiency vs net points per success','current',`${rows.length} FBS offenses`)}`
     +`<div class="rsPlot">`+draw(1000,440,56,16,14,44,1,'rsWide')+draw(640,360,52,14,14,44,1.1,'rsMid')+draw(360,420,46,12,14,44,1.25,'rsTall')+`</div>`
-    +`<div class="rsLegend"><span><i class="dotKeyHi"></i>Top 25</span><span><i class="dotKeyP"></i>Power</span><span><i class="dotKeyG"></i>Group of Five</span><span>Lines are medians · hover for the team</span>${rsPlotFilter(rows.map(r=>r.row?.conference))}</div><div class="rsReadout" aria-live="polite">Tap any dot to see the team.</div></section>`;
+    +`<div class="rsLegend"><span><i class="dotKeyHi"></i>Top 25</span><span><i class="dotKeyP"></i>Power Four</span><span><i class="dotKeyG"></i>Group of Five</span><span>Lines are medians · hover for the team</span>${rsPlotFilter(rows.map(r=>r.row?.conference))}</div><div class="rsReadout" aria-live="polite">Tap any dot to see the team.</div></section>`;
 }
 function rsEfficiencyNotes(){
   const D=rsEfficiencyData();if(!D)return '';
@@ -1640,7 +1641,7 @@ function rsDefenceNotes(){
     {label:'Gives up big plays',what:'Stops plenty of snaps, but pays for the ones it misses.',rows:rsQuadRows(D.rows,x,y,mx,my,1,-1).map(shape)},
     {label:'Leaky',what:'Below median on both: rarely stops a play and gives up a lot.',rows:rsQuadRows(D.rows,x,y,mx,my,-1,-1).map(shape)},
   ];
-  return `<section class="rsBlock rsSpan4">${rsTop('Defense groups','current')}${rsQuadTabs('defense',groups,'Stop rate','EPA')}</section>`;
+  return `<section class="rsBlock rsSpan4">${rsTop('Defense groups','current')}${rsQuadTabs('defense',groups,'Stop rate','EPA',12)}</section>`;
 }
 function rsPart(num,label,body){
   return body?`<div class="rsPart"><h2 class="rsPartHead"><span>${num}</span>${label}</h2>${body}</div>`:'';
