@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0925ZQ",
+  "tag": "Change",
+  "title": "Old in-house model removed",
+  "items": [
+   "Matchday's retired in-house model is gone. Every pick, probability and rating on the site now comes from one model, so two systems can no longer disagree about the same game.",
+   "The hourly refresh no longer spends data-provider quota on inputs only the old model used, and the old Model board, forecast pause and X bot are removed."
+  ]
+ },
+ {
   "date": "Build 0925ZP",
   "tag": "Fix",
   "title": "Shorter, clearer final summary",
