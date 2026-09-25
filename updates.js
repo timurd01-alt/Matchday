@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0925ZN",
+  "tag": "Design",
+  "title": "Legal & data page rewritten",
+  "items": [
+   "The Legal & data page is rebuilt in the same style as the rest of the site: a quick facts strip, a contents list, and plain sections instead of boxed panels.",
+   "Every statement was checked against how the site works today. There are no accounts, the full list of data sources now includes Open-Meteo weather and backup market prices, and the development note is gone from the footer."
+  ]
+ },
+ {
   "date": "Build 0925ZM",
   "tag": "Fix",
   "title": "Weather in Fahrenheit",

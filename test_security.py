@@ -165,30 +165,13 @@ class PrivacyPromiseTests(unittest.TestCase):
         self.assertIsNotNone(live, "LEADERBOARD_URL not found")
         if live.group(1):
             self.assertNotIn("disabled in the current release", self.legal)
-            self.assertIn("The leaderboard is live", self.legal)
+            self.assertIn("When you lock a pick, the site sends", self.legal)
 
-    def test_policy_names_every_provider_the_api_offers(self):
-        for provider in re.findall(r"^  (\w+): \{$", self.accounts, re.M):
-            self.assertRegex(
-                self.legal, f"(?i){provider}",
-                f"{provider} sign-in is offered but the policy never names it",
-            )
-
-    def test_policy_does_not_promise_narrower_scopes_than_the_code_requests(self):
-        """The policy says Google is asked for `openid` and GitHub for nothing.
-        Widening a scope without revising that sentence turns it into a false
-        statement about data we then receive."""
-        scopes = dict(re.findall(r'^  (\w+): \{.*?scope: "([^"]*)"', self.accounts, re.M | re.S))
-        self.assertEqual(scopes.get("google"), "openid")
-        self.assertEqual(scopes.get("github"), "")
-        self.assertIn("<code>openid</code> permission and nothing further", self.legal)
-        self.assertIn("asks GitHub for no permissions at all", self.legal)
-
-    def test_policy_does_not_promise_a_deletion_route_that_does_not_exist(self):
-        self.assertIn("Delete account", self.legal)
-        leaderboard = (ROOT / "api" / "leaderboard.js").read_text(encoding="utf-8")
-        self.assertIn('action === "delete-account"', leaderboard)
-        self.assertIn("export async function deleteAccount", self.accounts)
+    def test_policy_states_there_are_no_accounts(self):
+        """Sign-in code exists but no provider is configured on the live API,
+        so the policy says there are no accounts. Enabling a provider means
+        rewriting the policy's account sections first."""
+        self.assertIn("There are no accounts", self.legal)
 
     def test_stated_retention_window_matches_the_purge(self):
         window = re.search(r"RETENTION_MS = (\d+) \* 86400000", self.accounts)
