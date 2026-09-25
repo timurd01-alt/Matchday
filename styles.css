@@ -3670,3 +3670,8 @@ body{font-variant-numeric:tabular-nums}
 /* Final summary */
 .fsHit{color:var(--win)}.fsMiss{color:var(--loss)}
 .fsNote{margin:10px 0 0;color:var(--faint);font-size:var(--fs-xs)}
+/* Team window: the logo had no gap before the name. */
+.tpName{display:flex;align-items:center;gap:12px}
+/* Methodology fills the row in two columns instead of one narrow box. */
+.scMethod>div{max-width:none;columns:2 340px;column-gap:36px}
+.scMethod p{break-inside:avoid}

@@ -960,7 +960,7 @@ function computeTeamProfile(name){
 function teamProfileHTML(p){
   const twoWay=SANDBOX_TWO_WAY.has(String(DATA.comp_key||'').toLowerCase());
   const winPct=p.pld?((Number(p.w)||0)/p.pld*100).toFixed(1)+'%':'—';
-  const formRow=(label,str)=>str?`<div class="tpFormRow"><span class="tpFormLbl">${esc(label)}</span><span class="tpFormDots">${str.trim().split(' ').map(r=>`<i class="tpDot ${r}">${esc(r)}</i>`).join('')}</span></div>`:'';
+  const formRow=(label,str)=>str?`<div class="tpFormRow"><span class="tpFormLbl">${esc(label)}</span><span class="tpFormDots">${String(str).replace(/[^WLD]/gi,'').toUpperCase().split('').map(r=>`<i class="tpDot ${r}">${esc(r)}</i>`).join('')}</span></div>`:'';
   const recentRows=(p.recent||[]).map(m=>{
     const home=bbNameMatches(m.home.name,p.name);
     const opp=home?m.away:m.home;
@@ -1662,6 +1662,19 @@ function howItPlayedPanel(m){
    Matchday locked, and both teams' ratings. The game rating is the margin plus
    the opponent's power rating -- the same opponent-adjusted scale as the power
    rating (no home-field term), so it reads as "played like a team rated X". */
+function bbLockedPickFor(m){
+  const sc=typeof MATCHDAY_BETBETTER_SCORECARD!=='undefined'?MATCHDAY_BETBETTER_SCORECARD:null;
+  const sport=String(m._comp||DATA.comp_key||'').toLowerCase();
+  const recent=sc?.sports?.[sport]?.recent||[];
+  const day=String(m.kickoff||'').slice(0,10);if(!day)return null;
+  const days=[day,_bbShiftDay(day,-1),_bbShiftDay(day,1)];
+  const home=m.home?.name||m.home,away=m.away?.name||m.away;
+  return recent.find(r=>{
+    if(!days.includes(String(r.starts_at||'').slice(0,10)))return false;
+    const [a,h]=String(r.event_name||'').split(' at ');
+    return h&&((bbNameMatches(h,home)&&bbNameMatches(a,away))||(bbNameMatches(h,away)&&bbNameMatches(a,home)));
+  })||null;
+}
 function finalSummaryPanel(m){
   if(String(m?.status||'').toUpperCase()!=='FINISHED')return '';
   const hs=Number(m.score?.home),as=Number(m.score?.away);
@@ -1679,10 +1692,12 @@ function finalSummaryPanel(m){
     const ok=h!=null&&a!=null,hw=ok&&(hiWins?h>a:h<a),aw=ok&&(hiWins?a>h:a<h);
     return `<div class="hipRow"><b class="${hw?'hipLead':''}">${fmt(h)}</b><div class="hipMid"><span>${label}</span></div><b class="${aw?'hipLead':''}">${fmt(a)}</b></div>`;
   };
-  const p=m.prediction||{},winner=hs>as?'h':as>hs?'a':null;
-  const pickSide=p.pick==='h'||p.pick==='a'?p.pick:null;
-  const pickName=pickSide?(p.pick_name||short(pickSide==='h'?home:away)):'';
-  const pick=pickSide&&winner?`<p class="hipVerdict">Matchday picked <b>${esc(short(pickName))}</b>${Number.isFinite(Number(p.confidence))?` at ${Number(p.confidence)}%`:''} — <b class="${pickSide===winner?'fsHit':'fsMiss'}">${pickSide===winner?'correct':'missed'}</b>.</p>`:'';
+  // The pick is Bet Better's locked one from its scorecard. m.prediction is
+  // the retired in-house model and is never shown as Matchday's call.
+  const winner=hs>as?'h':as>hs?'a':null;
+  const bb=bbLockedPickFor(m);
+  const pickSide=bb?(bbNameMatches(bb.selection,home)?'h':bbNameMatches(bb.selection,away)?'a':null):null;
+  const pick=pickSide&&winner?`<p class="hipVerdict">Matchday picked <b>${esc(short(bb.selection))}</b>${Number.isFinite(Number(bb.probability_pct))?` at ${Math.round(Number(bb.probability_pct))}%`:''} — <b class="${pickSide===winner?'fsHit':'fsMiss'}">${pickSide===winner?'correct':'missed'}</b>.</p>`:'';
   const over=(t)=>{const g=t.game,s=num(t.r?.rating);return g==null||s==null?'':`${esc(short(t.name))} ${g>=s?'beat':'fell short of'} its season rating by ${Math.abs(g-s).toFixed(1)}`};
   const notes=[over(H),over(A)].filter(Boolean);
   const team=(t,side)=>`<div class="hipTeam ${side}">${typeof teamMark==='function'?teamMark(t.name):''}<span>${esc(short(t.name))}</span></div>`;
@@ -1692,9 +1707,6 @@ function finalSummaryPanel(m){
     +pick
     +line('Game rating',H.game,A.game,f1)
     +line('Season rating',num(H.r?.rating),num(A.r?.rating),f1)
-    +line('Strength of schedule',num(H.r?.sos),num(A.r?.sos),f1)
-    +line('Offense (adj. pts)',num(H.r?.adj_o),num(A.r?.adj_o),f1)
-    +line('Defense (adj. pts allowed)',num(H.r?.adj_d),num(A.r?.adj_d),f1,false)
     +(notes.length?`<p class="hipVerdict">${notes.join('; ')}.</p>`:'')
     +`<p class="fsNote">Game rating is the margin plus the opponent's power rating. Play-by-play efficiency appears here once the game's plays are processed.</p></section>`;
 }
