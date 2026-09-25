@@ -265,7 +265,9 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
     def test_matchday_terminal_brand_is_consistent_on_the_entry_screen(self):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
         styles = (ROOT / "styles.css").read_text(encoding="utf-8")
-        self.assertIn('<h1 id="welcomeTitle">Matchday Terminal</h1>', html)
+        self.assertIn('<h1 id="welcomeTitle" aria-label="Matchday Terminal">', html)
+        self.assertIn('</svg>atchday</span>', html)
+        self.assertIn('<span class="wx-word" aria-hidden="true">Terminal</span>', html)
         self.assertIn("Enter Matchday Terminal", html)
         self.assertIn('<span class="pip"></span>Matchday Terminal', html)
         self.assertIn(".welcomeLogo{width:104px;height:104px", styles)
