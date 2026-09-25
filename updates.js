@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0925ZE",
+  "tag": "Design",
+  "title": "A calmer Matchday entrance",
+  "items": [
+   "Dark teal gradients and softer athlete artwork frame the welcome page.",
+   "Angular logo-lime lettering and a logo-shaped M bring the Matchday identity into the headline."
+  ]
+ },
+ {
   "date": "Build 0925ZD",
   "tag": "Fix",
   "title": "Community picks were being refused after a day of browsing",
