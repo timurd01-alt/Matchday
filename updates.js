@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0925ZG",
+  "tag": "Design",
+  "title": "Bigger playoff bracket",
+  "items": [
+   "The College Football Playoff bracket now spans the full width of the page, lined up with the heading, instead of shrinking to fit the window height."
+  ]
+ },
+ {
   "date": "Build 0925ZF",
   "tag": "Design",
   "title": "Even spacing on the welcome page",

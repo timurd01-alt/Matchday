@@ -3055,7 +3055,7 @@ body.welcomeOpen{height:auto;min-height:100vh;overflow-y:auto}
 .cfpHero h2{font:var(--fw-heavy) var(--fs-title)/1.1 var(--display);letter-spacing:-.035em;margin:8px 0 0}
 .cfpBadge{flex-shrink:0;font:var(--fw-semibold) var(--fs-2xs) var(--mono);color:var(--signal);padding:8px 11px;border:1px solid var(--line2);border-radius:5px;background:var(--bg2)}
 .cfpCanvas{width:100%}
-.cfpDiagram{display:block;width:100%;height:auto;max-height:max(160px,calc(100dvh - 320px));overflow:visible}
+.cfpDiagram{display:block;width:100%;height:auto;overflow:visible}
 .cfpConnector{fill:none;stroke:var(--cfp-line);stroke-width:2.5;stroke-linejoin:round}
 .cfpCardSurface{fill:var(--bg2);stroke:var(--line2);stroke-width:1}
 .cfpSvgFinal .cfpCardSurface{fill:var(--bg2);stroke:var(--cfp-gold);stroke-width:2}
