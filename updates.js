@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0926C",
+  "tag": "Change",
+  "title": "Friendlier Community names",
+  "items": [
+   "Community names now carry a jersey-style number from 1 to 99 instead of four digits, e.g. Tim Tebow #37. Existing names convert automatically and keep their picks."
+  ]
+ },
+ {
   "date": "Build 0926B",
   "tag": "Fix",
   "title": "Basketball chart fixed, Power Four",

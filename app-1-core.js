@@ -1397,7 +1397,7 @@ function _drawHandle(exclude){
   const pool=_handlePool();
   const options=exclude?pool.filter(n=>n!==exclude):pool;
   const name=(options.length?options:GENERAL_NAME_POOL)[Math.floor(Math.random()*(options.length||GENERAL_NAME_POOL.length))]||'Anonymous Player';
-  const tag=Math.floor(1000+Math.random()*9000); // disambiguates two users drawing the same player
+  const tag=1+Math.floor(Math.random()*99); // jersey-style number; tells apart two users with the same player
   return `${name} #${tag}`;
 }
 function assignHandle(){
@@ -1427,6 +1427,10 @@ function ensureHandle(){
     const assigned=localStorage.getItem('matchday.handleAssigned')==='1';
     const collegeName=GENERAL_NAME_POOL.some(name=>myHandle().startsWith(name+' #'));
     if(!myHandle()||!assigned||!collegeName)assignHandle(); // legacy pro-sport guest aliases are replaced without losing device picks
+    else{ // four-digit tags (#6669) become jersey numbers, same formula as the server
+      const m=myHandle().match(/^(.*) #(\d+)$/);
+      if(m&&Number(m[2])>99){const h=`${m[1]} #${1+(Number(m[2])%99)}`;localStorage.setItem('matchday.handle',h);}
+    }
   }catch(e){}
 }
 async function pushScore(){ // server grades only picks it locked before kickoff

@@ -27,7 +27,7 @@ const MATCH_RE = /^[A-Za-z0-9:_-]{1,100}$/;
 function serverHandle(deviceId) {
   const digest = crypto.createHash("sha256").update(`handle:${deviceId}`).digest();
   const name = HANDLE_POOL[digest[0] % HANDLE_POOL.length];
-  const tag = 1000 + (digest.readUInt16BE(1) % 9000);
+  const tag = 1 + (digest.readUInt16BE(1) % 99);
   return `${name} #${tag}`;
 }
 
