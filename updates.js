@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0925ZG",
+  "tag": "Design",
+  "title": "A clearer lime edge",
+  "items": [
+   "Thicker lime outlines make the white welcome wordmark and logo-shaped M stand out against the teal gradient."
+  ]
+ },
+ {
   "date": "Build 0925ZF",
   "tag": "Design",
   "title": "A softer logo-inspired wordmark",

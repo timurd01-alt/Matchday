@@ -3678,8 +3678,8 @@ body{font-variant-numeric:tabular-nums}
 
 /* Angular white logo lettering with a restrained lime edge. */
 #welcomeGate .wx-hero h1{font-family:"Oxanium",var(--display);font-weight:700;text-transform:uppercase;font-size:clamp(2.5rem,7.6vw,6.6rem);letter-spacing:-.045em;line-height:1.08}
-#welcomeGate .wx-word{display:inline-block;white-space:nowrap;color:#f3f6ef;-webkit-text-stroke:1px #cfe929;paint-order:stroke fill}
-#welcomeGate .wx-titleMark{display:inline-block;width:.77em;height:.74em;margin-right:.025em;vertical-align:-.025em;fill:#f3f6ef;stroke:#cfe929;stroke-width:2;paint-order:stroke fill;overflow:visible}
+#welcomeGate .wx-word{display:inline-block;white-space:nowrap;color:#f3f6ef;-webkit-text-stroke:2px #d9f522;paint-order:stroke fill}
+#welcomeGate .wx-titleMark{display:inline-block;width:.77em;height:.74em;margin-right:.025em;vertical-align:-.025em;fill:#f3f6ef;stroke:#d9f522;stroke-width:4;paint-order:stroke fill;overflow:visible}
 #welcomeGate .wx-hero .welcomeEnter{box-shadow:0 6px 24px rgba(58,209,122,.12)}
 #welcomeGate .wx-hero .welcomeEnter:hover{box-shadow:0 8px 28px rgba(58,209,122,.2)}
 @supports not ((-webkit-background-clip:text) or (background-clip:text)){#welcomeGate .wx-word{color:#f3f6ef;background:none}}
