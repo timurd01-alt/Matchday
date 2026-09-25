@@ -3707,3 +3707,34 @@ body{font-variant-numeric:tabular-nums}
 .expandedDecision .analystPanel.fsPanel,.fsPanel{min-height:0;justify-content:flex-start}
 .fsPanel .hipVerdict{margin:8px 0 0}
 .fsPanel .analystTop+.hipVerdict{margin-top:4px}
+
+/* Chart group tabs (rsQuadTabs). */
+.rsQuadTabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin:4px 0 12px}
+.rsQuadTab{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:40px;padding:6px 10px;border:1px solid var(--line2);border-radius:8px;background:var(--bg2);color:var(--muted);font:inherit;font-size:var(--fs-xs);font-weight:var(--fw-semibold);text-align:left;cursor:pointer}
+.rsQuadTab b{color:var(--text);font-variant-numeric:tabular-nums}
+.rsQuadTab[aria-pressed="true"]{border-color:var(--signal);color:var(--text);background:rgba(58,209,122,.08)}
+.rsQuadTab:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
+.rsQuadWhat{margin:0 0 8px;color:var(--muted);font-size:var(--fs-xs)}
+.rsQuadHead,.rsQuadList li{display:grid;grid-template-columns:22px minmax(0,1fr) 64px 72px;align-items:center;gap:8px}
+.rsQuadHead{padding-bottom:6px;border-bottom:1px solid var(--line);font-size:var(--fs-2xs);letter-spacing:.1em;text-transform:uppercase;color:var(--faint);font-weight:var(--fw-bold)}
+.rsQuadHead span:nth-child(n+3){text-align:right}
+.rsQuadList{list-style:none;margin:0;padding:0}
+.rsQuadList li{padding:7px 0;border-bottom:1px solid var(--line);font-size:var(--fs-sm)}
+.rsQuadList li.rsQuadMoreRow{display:none}
+.rsQuadPane.rsOpen .rsQuadList li.rsQuadMoreRow{display:grid}
+.rsQuadN{color:var(--faint);font-variant-numeric:tabular-nums}
+.rsQuadRank{margin-left:6px;font-style:normal;font-size:var(--fs-2xs);font-weight:var(--fw-bold);color:var(--signal)}
+.rsQuadMore{margin-top:10px;width:100%;min-height:40px;border:1px solid var(--line2);border-radius:8px;background:transparent;color:var(--signal);font:inherit;font-size:var(--fs-sm);font-weight:var(--fw-semibold);cursor:pointer}
+.dotKeyHi{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--signal)}
+/* Phones: the tabs replace the chart (a few hundred dots are too small to tap). */
+@media(max-width:600px){.rsChartBlock{display:none}}
+/* Chart filter overlay (rsPlotFilter), in the empty bottom-left corner. */
+.rsPlot{position:relative}
+.rsFilter{position:absolute;left:6%;bottom:13%;display:flex;flex-wrap:wrap;gap:6px;max-width:34%;align-items:center}
+.rsFilterChip,.rsFilterConf{min-height:30px;padding:0 10px;border:1px solid var(--line2);border-radius:999px;background:var(--bg2);color:var(--muted);font:inherit;font-size:var(--fs-xs);font-weight:var(--fw-semibold);cursor:pointer}
+.rsFilterChip[aria-pressed="true"]{border-color:var(--signal);color:var(--text)}
+.rsFilterChip:focus-visible,.rsFilterConf:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
+.rsFilterConf{padding-right:6px}
+.rsPlot circle.rsFadeOut{opacity:.08}
+.rsPlot.rsFiltered text.rsLbl{opacity:.25}
+.rsQuadNote{margin:-4px 0 12px;color:var(--faint);font-size:var(--fs-xs)}

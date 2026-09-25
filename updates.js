@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0925ZT",
+  "tag": "Design",
+  "title": "Chart groups, filters and top 25",
+  "items": [
+   "Both Research charts now highlight every top-25 team, with filter chips in the chart corner (All, Power, Group of Five, or one conference).",
+   "Beside each chart, group tabs list the teams in each corner, ranked, with both numbers. On phones the tabs replace the chart.",
+   "Research section titles are now in title case."
+  ]
+ },
+ {
   "date": "Build 0925ZS",
   "tag": "Change",
   "title": "Tidier repository folders",

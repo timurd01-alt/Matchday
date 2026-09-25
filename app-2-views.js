@@ -1180,8 +1180,11 @@ function rsChip(kind){
   const t={live:['Live','Moves until kickoff'],season:['Season to date','Results so far this season'],graded:['Graded','Locked before kickoff, scored after the final']}[kind];
   return t?`<span class="rsChip rsChip-${kind}" title="${t[1]}">${t[0]}</span>`:'';
 }
+// Research titles capitalise every word except "vs". Only letters at the
+// start of a word change, so HTML entities (&amp;) and numbers are untouched.
+function rsTitleCase(t){return String(t).replace(/(^|[\s(/–-])([a-z])([a-z']*)/g,(m,pre,c,rest)=>(c+rest)==='vs'?m:pre+c.toUpperCase()+rest)}
 function rsTop(title,kind,aside){
-  return `<div class="rsTop"><h3 class="rsTitle">${title}</h3><span class="rsTopAside">${aside?`<span class="rsAside">${aside}</span>`:''}${rsChip(kind)}</span></div>`;
+  return `<div class="rsTop"><h3 class="rsTitle">${rsTitleCase(title)}</h3><span class="rsTopAside">${aside?`<span class="rsAside">${aside}</span>`:''}${rsChip(kind)}</span></div>`;
 }
 function rsTeamRow(name){
   const t=(collegeRankingTable()?.rankings||[]).find(r=>bbNameMatches(r.name,name));
@@ -1317,8 +1320,8 @@ function rsScatter(){
     const sy=v=>H-PB-((v-y0)/((y1-y0)||1))*(H-PT-PB);
     const mx=sx(med(xs)),my=sy(med(ys));
     const dots=rows.map(r=>{
-      const power=String(r.tier||'')==='power',hi=top.includes(r);
-      return `<circle cx="${sx(Number(r.sos)).toFixed(1)}" cy="${sy(Number(r.rating)).toFixed(1)}" r="${(hi?4.5:3)*R}" class="${hi?'dotHi':power?'dotP':'dotG'}" data-team="${esc(r.name)}" data-rank="${esc(r.rank??'')}" data-rating="${Number(r.rating).toFixed(2)}" data-sos="${Number(r.sos).toFixed(2)}" data-conf="${esc(r.conference||'')}"></circle>`;
+      const power=String(r.tier||'')==='power',hi=top.includes(r)||(Number(r.rank)>0&&Number(r.rank)<=25);
+      return `<circle cx="${sx(Number(r.sos)).toFixed(1)}" cy="${sy(Number(r.rating)).toFixed(1)}" r="${(hi?4.5:3)*R}" class="${hi?'dotHi':power?'dotP':'dotG'}" data-team="${esc(r.name)}" data-rank="${esc(r.rank??'')}" data-rating="${Number(r.rating).toFixed(2)}" data-sos="${Number(r.sos).toFixed(2)}" data-conf="${esc(r.conference||'')}" data-tier="${String(r.tier||'')==='power'?'power':'g5'}"></circle>`;
     }).join('');
     let lastY=-99;
     const labels=top.slice().sort((a,b)=>sy(Number(a.rating))-sy(Number(b.rating))).map(r=>{
@@ -1333,32 +1336,76 @@ function rsScatter(){
       +`<text class="scAxLbl" transform="rotate(-90 12 ${(H/2).toFixed(0)})" x="12" y="${(H/2).toFixed(0)}" text-anchor="middle">rating →</text></svg>`;
   };
   const anyG5=rows.some(r=>String(r.tier||'')&&String(r.tier)!=='power');
-  return `<section class="rsBlock rsSpan8">${rsTop('Rating vs schedule','season',`${rows.length} teams`)}`
-    +draw(1000,440,40,16,14,32,1,'rsWide')+draw(640,360,34,14,14,32,1.1,'rsMid')+draw(360,420,30,12,14,32,1.25,'rsTall')
-    +`<div class="rsLegend"><span><i class="dotKeyP"></i>Power</span>${anyG5?'<span><i class="dotKeyG"></i>Group of Five</span>':''}<span>Lines are medians · hover anywhere on the chart</span></div><div class="rsReadout" aria-live="polite">Tap any dot to see the team.</div>`
+  return `<section class="rsBlock rsSpan8 rsChartBlock">${rsTop('Rating vs schedule','season',`${rows.length} teams`)}`
+    +`<div class="rsPlot">`+draw(1000,440,40,16,14,32,1,'rsWide')+draw(640,360,34,14,14,32,1.1,'rsMid')+draw(360,420,30,12,14,32,1.25,'rsTall')+rsPlotFilter(rows.map(r=>r.conference))+`</div>`
+    +`<div class="rsLegend"><span><i class="dotKeyHi"></i>Top 25</span><span><i class="dotKeyP"></i>Power</span>${anyG5?'<span><i class="dotKeyG"></i>Group of Five</span>':''}<span>Lines are medians · hover anywhere on the chart</span></div><div class="rsReadout" aria-live="polite">Tap any dot to see the team.</div>`
     +`</section>`;
 }
 /* What the chart shows, stated: the two quadrants that matter and the
    top-25 extremes, all read from the same rows the chart plots. */
+/* Group tabs for a two-measure chart. The medians split the teams into four
+   groups; each tab lists its group's teams, deepest into the group first,
+   with both measures. Beside the chart on desktop; in place of it on phones,
+   where a few hundred dots are too small to tap. Top-25 teams carry a rank
+   badge so the highlighted dots on the chart can be found in the list. */
+function rsQuadTabs(key,groups,colA,colB){
+  const first=groups.findIndex(g=>g.rows.length);if(first<0)return '';
+  const tabs=groups.map((g,i)=>`<button type="button" class="rsQuadTab" aria-pressed="${i===first}" data-g="${i}" onclick="rsQuadPick(this)"><span>${esc(g.label)}</span><b>${g.rows.length}</b></button>`).join('');
+  const panes=groups.map((g,i)=>{
+    const li=g.rows.map((r,n)=>`<li class="${n>=8?'rsQuadMoreRow':''}"><span class="rsQuadN">${n+1}</span><span class="rsLogoName">${typeof teamMark==='function'?teamMark(r.name):''}${esc(rsShortName(r.name))}${r.rank&&r.rank<=25?`<i class="rsQuadRank">#${esc(r.rank)}</i>`:''}</span><span class="rsNum">${r.a}</span><span class="rsNum rsMuted">${r.b}</span></li>`).join('');
+    const more=g.rows.length>8?`<button type="button" class="rsQuadMore" onclick="this.closest('.rsQuadPane').classList.add('rsOpen');this.remove()">Show all ${g.rows.length} <span aria-hidden="true">→</span></button>`:'';
+    return `<div class="rsQuadPane" data-g="${i}"${i===first?'':' hidden'}><p class="rsQuadWhat">${esc(g.what)}</p><div class="rsQuadHead"><span>#</span><span>Team</span><span>${esc(colA)}</span><span>${esc(colB)}</span></div><ol class="rsQuadList">${li}</ol>${more}</div>`;
+  }).join('');
+  // Why the counts are lopsided, said once: the lines split each measure in
+  // half, and the two measures move together.
+  const note=`<p class="rsQuadNote">Each line splits the teams in half. Most teams are strong at both or neither, so the two mixed groups are the unusual profiles.</p>`;
+  return `<div class="rsQuad" data-key="${esc(key)}"><div class="rsQuadTabs" role="group" aria-label="Team groups">${tabs}</div>${note}${panes}</div>`;
+}
+/* Filter overlay in the chart's empty bottom-left corner: fade every dot that
+   is not in the chosen tier or conference, so one league can be read at a time. */
+function rsPlotFilter(confs){
+  const list=[...new Set(confs.filter(Boolean))].sort();
+  const chip=(v,l,on)=>`<button type="button" class="rsFilterChip" aria-pressed="${on}" data-f="${v}" onclick="rsPlotFilterSet(this,this.dataset.f)">${l}</button>`;
+  return `<div class="rsFilter" role="group" aria-label="Filter teams">${chip('all','All',true)}${chip('tier:power','Power',false)}${chip('tier:g5','Group of Five',false)}`
+    +(list.length?`<select class="rsFilterConf" aria-label="Conference" onchange="rsPlotFilterSet(this,this.value?'conf:'+this.value:'all')"><option value="">Conference</option>${list.map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join('')}</select>`:'')+`</div>`;
+}
+function rsPlotFilterSet(el,f){
+  const plot=el.closest('.rsPlot');
+  plot.querySelectorAll('.rsFilterChip').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.f===f)));
+  const sel=plot.querySelector('.rsFilterConf');if(sel&&!f.startsWith('conf:'))sel.value='';
+  const [kind,val]=f==='all'?['all','']:[f.slice(0,f.indexOf(':')),f.slice(f.indexOf(':')+1)];
+  plot.classList.toggle('rsFiltered',kind!=='all');
+  plot.querySelectorAll('circle[data-team]').forEach(c=>{
+    const on=kind==='all'||(kind==='tier'?c.dataset.tier===val:c.dataset.conf===val);
+    c.classList.toggle('rsFadeOut',!on);
+  });
+}
+function rsQuadPick(btn){
+  const box=btn.closest('.rsQuad');const g=btn.dataset.g;
+  box.querySelectorAll('.rsQuadTab').forEach(b=>b.setAttribute('aria-pressed',String(b===btn)));
+  box.querySelectorAll('.rsQuadPane').forEach(p=>{p.hidden=p.dataset.g!==g});
+}
+// Rows in one quadrant, deepest first: distance past both medians, each axis
+// scaled to its range, so neither measure dominates.
+function rsQuadRows(rows,x,y,mx,my,sx,sy){
+  const xs=rows.map(x),ys=rows.map(y);
+  const rx=(Math.max(...xs)-Math.min(...xs))||1,ry=(Math.max(...ys)-Math.min(...ys))||1;
+  const depth=r=>sx*(x(r)-mx)/rx+sy*(y(r)-my)/ry;
+  return rows.filter(r=>(sx>0?x(r)>=mx:x(r)<mx)&&(sy>0?y(r)>=my:y(r)<my)).sort((a,b)=>depth(b)-depth(a));
+}
 function rsScatterNotes(){
   const rows=(collegeRankingTable()?.rankings||[]).filter(r=>Number.isFinite(Number(r.rating))&&Number.isFinite(Number(r.sos)));
   if(rows.length<12)return '';
-  const med=a=>{const b=a.slice().sort((m,n)=>m-n);return b[Math.floor(b.length/2)]};
-  const mr=med(rows.map(r=>Number(r.rating))),ms=med(rows.map(r=>Number(r.sos)));
-  const earned=rows.filter(r=>Number(r.rating)>=mr&&Number(r.sos)>=ms).length;
-  const soft=rows.filter(r=>Number(r.rating)>=mr&&Number(r.sos)<ms);
-  const top=rows.filter(r=>(r.rank||999)<=25);
-  const most=top.slice().sort((a,b)=>Number(b.sos)-Number(a.sos))[0],least=top.slice().sort((a,b)=>Number(a.sos)-Number(b.sos))[0];
-  // Skip the least-tested top-25 team so the two rows never name the same team.
-  const softest=soft.filter(r=>r!==least).sort((a,b)=>Number(b.rating)-Number(a.rating))[0];
-  const item=(k,v,d,team)=>`<div><dt>${k}</dt><dd><b class="${team?'rsLogoName':''}">${team?(typeof teamMark==='function'?teamMark(team):''):''}${v}</b><span>${d}</span></dd></div>`;
-  return `<section class="rsBlock rsSpan4">${rsTop('Reading the chart','season')}<dl class="rsNotes">`
-    +item('Earned','<span class="rsSignal">'+earned+'</span>',`teams above median on both rating and schedule`)
-    +item('Built on a soft schedule',soft.length,`teams above median rating, below median schedule`)
-    +(most?item('Most-tested top 25',esc(rsShortName(most.name)),`SoS ${Number(most.sos).toFixed(2)} · PR #${most.rank}`,most.name):'')
-    +(least?item('Least-tested top 25',esc(rsShortName(least.name)),`SoS ${Number(least.sos).toFixed(2)} · PR #${least.rank}`,least.name):'')
-    +(softest?item('Best rating, soft schedule',esc(rsShortName(softest.name)),`${Number(softest.rating).toFixed(1)} rating · PR #${softest.rank}`,softest.name):'')
-    +`</dl></section>`;
+  const x=r=>Number(r.sos),y=r=>Number(r.rating);
+  const mx=rsMedian(rows.map(x)),my=rsMedian(rows.map(y));
+  const shape=r=>({name:r.name,rank:r.rank,a:Number(r.rating).toFixed(1),b:Number(r.sos).toFixed(2)});
+  const groups=[
+    {label:'Earned it',what:'Above-median rating against an above-median schedule.',rows:rsQuadRows(rows,x,y,mx,my,1,1).map(shape)},
+    {label:'Soft schedule',what:'Above-median rating built against a below-median schedule.',rows:rsQuadRows(rows,x,y,mx,my,-1,1).map(shape)},
+    {label:'Tested, fell short',what:'Below-median rating against an above-median schedule.',rows:rsQuadRows(rows,x,y,mx,my,1,-1).map(shape)},
+    {label:'Neither',what:'Below-median rating against a below-median schedule.',rows:rsQuadRows(rows,x,y,mx,my,-1,-1).map(shape)},
+  ];
+  return `<section class="rsBlock rsSpan4">${rsTop('Rating vs schedule groups','season')}${rsQuadTabs('rating',groups,'Rating','SoS')}</section>`;
 }
 /* Hover anywhere on the chart: the nearest dot within reach is highlighted
    and described in a floating card. Dots are a few pixels wide, so matching the
@@ -1376,7 +1423,7 @@ function rsScatterPoint(e){
   const svg=e.target.closest?.('.rsScatter');
   if(!svg){document.querySelectorAll('.rsScatter').forEach(rsScatterClear);return}
   let best=null,bestD=18*18;
-  svg.querySelectorAll('circle[data-team]').forEach(c=>{
+  svg.querySelectorAll('circle[data-team]:not(.rsFadeOut)').forEach(c=>{
     const b=c.getBoundingClientRect(),dx=b.left+b.width/2-e.clientX,dy=b.top+b.height/2-e.clientY,d=dx*dx+dy*dy;
     if(d<bestD){bestD=d;best=c}
   });
@@ -1485,8 +1532,8 @@ function rsEfficiency(){
   const draw=(W,H,PL,PR,PT,PB,R,cls)=>{
     const sx=v=>PL+((v-x0)/((x1-x0)||1))*(W-PL-PR),sy=v=>H-PB-((v-y0)/((y1-y0)||1))*(H-PT-PB);
     const dots=rows.map(r=>{
-      const hi=labelled.has(r),power=String(r.row.tier||'')==='power';
-      return `<circle cx="${sx(r.x).toFixed(1)}" cy="${sy(r.y).toFixed(1)}" r="${(hi?4.5:3)*R}" class="${hi?'dotHi':power?'dotP':'dotG'}" data-team="${esc(r.name)}" data-rank="${esc(r.row.rank??'')}" data-conf="${esc(r.row.conference||'')}" data-m1l="Success rate" data-m1="${(r.x*100).toFixed(1)}%" data-m2l="Net pts / success" data-m2="${rsSigned(r.y,2)}"></circle>`;
+      const hi=labelled.has(r)||(Number(r.row.rank)>0&&Number(r.row.rank)<=25),power=String(r.row.tier||'')==='power';
+      return `<circle cx="${sx(r.x).toFixed(1)}" cy="${sy(r.y).toFixed(1)}" r="${(hi?4.5:3)*R}" class="${hi?'dotHi':power?'dotP':'dotG'}" data-team="${esc(r.name)}" data-rank="${esc(r.row.rank??'')}" data-conf="${esc(r.row.conference||'')}" data-tier="${String(r.row.tier||'')==='power'?'power':'g5'}" data-m1l="Success rate" data-m1="${(r.x*100).toFixed(1)}%" data-m2l="Net pts / success" data-m2="${rsSigned(r.y,2)}"></circle>`;
     }).join('');
     const labels=[...labelled].map(r=>{const x=sx(r.x),left=x>W-(W>500?180:100);return `<text class="rsLbl" x="${(left?x-8:x+8).toFixed(1)}" y="${(sy(r.y)+4).toFixed(1)}" text-anchor="${left?'end':'start'}">${esc(rsShortName(r.name))}</text>`}).join('');
     return `<svg viewBox="0 0 ${W} ${H}" class="rsScatter ${cls}" role="img" aria-label="Scatter of offensive success rate against net expected points per successful play">`
@@ -1495,16 +1542,21 @@ function rsEfficiency(){
       +`${dots}${labels}<text class="scAxLbl" x="${((W+PL)/2).toFixed(0)}" y="${H-8}" text-anchor="middle">success rate →</text>`
       +`<text class="scAxLbl" transform="rotate(-90 12 ${(H/2).toFixed(0)})" x="12" y="${(H/2).toFixed(0)}" text-anchor="middle">net points per success →</text></svg>`;
   };
-  return `<section class="rsBlock rsSpan8">${rsTop('Efficiency vs net points per success','season',`${rows.length} FBS offenses`)}`
-    +draw(1000,440,40,16,14,32,1,'rsWide')+draw(640,360,34,14,14,32,1.1,'rsMid')+draw(360,420,30,12,14,32,1.25,'rsTall')
-    +`<div class="rsLegend"><span><i class="dotKeyP"></i>Power</span><span><i class="dotKeyG"></i>Group of Five</span><span>Lines are medians · hover for the team</span></div><div class="rsReadout" aria-live="polite">Tap any dot to see the team.</div></section>`;
+  return `<section class="rsBlock rsSpan8 rsChartBlock">${rsTop('Efficiency vs net points per success','season',`${rows.length} FBS offenses`)}`
+    +`<div class="rsPlot">`+draw(1000,440,40,16,14,32,1,'rsWide')+draw(640,360,34,14,14,32,1.1,'rsMid')+draw(360,420,30,12,14,32,1.25,'rsTall')+rsPlotFilter(rows.map(r=>r.row?.conference))+`</div>`
+    +`<div class="rsLegend"><span><i class="dotKeyHi"></i>Top 25</span><span><i class="dotKeyP"></i>Power</span><span><i class="dotKeyG"></i>Group of Five</span><span>Lines are medians · hover for the team</span></div><div class="rsReadout" aria-live="polite">Tap any dot to see the team.</div></section>`;
 }
 function rsEfficiencyNotes(){
   const D=rsEfficiencyData();if(!D)return '';
-  const q=[['tr','Efficient and nets a lot'],['tl','Scores in bursts, stalls between'],['br','Moves the chains, rarely breaks one'],['bl','Neither']];
-  return `<section class="rsBlock rsSpan4">${rsTop('Reading the chart','season')}<dl class="rsNotes">`
-    +q.map(([k,label])=>{const p=D.pick[k];return `<div><dt>${label}</dt><dd><b class="rsLogoName">${p.team?(typeof teamMark==='function'?teamMark(p.team.name):'')+esc(rsShortName(p.team.name)):'—'}</b><span>${p.n} teams${p.team?` · ${(p.team.x*100).toFixed(1)}% success · ${rsSigned(p.team.y,2)} net per success`:''}</span></dd></div>`}).join('')
-    +`</dl></section>`;
+  const x=r=>r.x,y=r=>r.y;
+  const shape=r=>({name:r.name,rank:r.row?.rank,a:(r.x*100).toFixed(1)+'%',b:rsSigned(r.y,2)});
+  const groups=[
+    {label:'Efficient and nets a lot',what:'Succeeds often and gains a lot when it does.',rows:rsQuadRows(D.rows,x,y,D.mx,D.my,1,1).map(shape)},
+    {label:'Scores in bursts',what:'Succeeds less often, but gains a lot when it does.',rows:rsQuadRows(D.rows,x,y,D.mx,D.my,-1,1).map(shape)},
+    {label:'Moves the chains',what:'Succeeds often, but rarely breaks a big one.',rows:rsQuadRows(D.rows,x,y,D.mx,D.my,1,-1).map(shape)},
+    {label:'Neither',what:'Below median on both.',rows:rsQuadRows(D.rows,x,y,D.mx,D.my,-1,-1).map(shape)},
+  ];
+  return `<section class="rsBlock rsSpan4">${rsTop('Efficiency groups','season')}${rsQuadTabs('efficiency',groups,'Success','Net / success')}</section>`;
 }
 /* Defence against a real zero. Expected points allowed per play has a true
    zero -- the average snap against this defence gains nothing -- so the bars
