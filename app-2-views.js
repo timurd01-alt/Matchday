@@ -1188,7 +1188,7 @@ function rsShortName(name){
 // default. It explains the displays, not how the model or ratings are built.
 function rsMethodology(football){
   const yr=String(collegeRankingTable()?.season||new Date().getFullYear());
-  const col1=`<p><b>Badges.</b> <b>${yr} only</b> sections use this season's games. <b>${yr} + ${Number(yr)-1}</b> sections use the power rating, which starts from last season and moves with every ${yr} result, so early in the season it still leans on last year. <b>Graded</b> means picks locked before kickoff and scored after the final.</p>`
+  const col1=`<p><b>Badges.</b> <b>Season</b> sections use this season's games. <b>Rating</b> sections use the power rating, which starts from last season and moves with every ${yr} result, so early in the season it still leans on last year. <b>Graded</b> means picks locked before kickoff and scored after the final.</p>`
     +`<p><b>Power rating.</b> Points better than an average team against an average opponent, adjusted for who each team played.</p>`
     +`<p><b>Strength of schedule.</b> The average rating of the opponents a team has faced.</p>`;
   const col2=`<p><b>Chart lines.</b> Each chart has two dashed lines at the median of each measure, so half the teams sit on each side of each line. The four groups beside a chart are the four corners those lines make.</p>`
@@ -1199,8 +1199,8 @@ function rsMethodology(football){
 function rsChip(kind){
   const yr=String(collegeRankingTable()?.season||new Date().getFullYear());
   const t={live:['Live','Moves until kickoff'],season:['Season to date','Results so far this season'],
-    current:[`${yr} only`,`Built from ${yr} games only`],
-    blend:[`${yr} + ${Number(yr)-1}`,`Power rating: last season carried forward, updated by every ${yr} result`],
+    current:['Season',`Built from ${yr} games only`],
+    blend:['Rating',`Power rating: last season carried forward, updated by every ${yr} result`],
     graded:['Graded','Locked before kickoff, scored after the final']}[kind];
   return t?`<span class="rsChip rsChip-${kind}" title="${t[1]}">${t[0]}</span>`:'';
 }
@@ -1444,7 +1444,7 @@ function rsScatterNotes(){
     {label:'Earned it',what:'Above-median rating against an above-median schedule.',rows:rsQuadRows(rows,x,y,mx,my,1,1).map(shape)},
     {label:'Soft schedule',what:'Above-median rating built against a below-median schedule.',rows:rsQuadRows(rows,x,y,mx,my,-1,1).map(shape)},
     {label:'Tested, fell short',what:'Below-median rating against an above-median schedule.',rows:rsQuadRows(rows,x,y,mx,my,1,-1).map(shape)},
-    {label:'Neither',what:'Below-median rating against a below-median schedule.',rows:rsQuadRows(rows,x,y,mx,my,-1,-1).map(shape)},
+    {label:'Unproven',what:'Below-median rating against a below-median schedule.',rows:rsQuadRows(rows,x,y,mx,my,-1,-1).map(shape)},
   ];
   return `<section class="rsBlock rsSpan4">${rsTop('Schedule groups','blend')}${rsQuadTabs('rating',groups,'Rating','SoS')}</section>`;
 }
@@ -1596,7 +1596,7 @@ function rsEfficiencyNotes(){
     {label:'Efficient and nets a lot',what:'Succeeds often and gains a lot when it does.',rows:rsQuadRows(D.rows,x,y,D.mx,D.my,1,1).map(shape)},
     {label:'Scores in bursts',what:'Succeeds less often, but gains a lot when it does.',rows:rsQuadRows(D.rows,x,y,D.mx,D.my,-1,1).map(shape)},
     {label:'Moves the chains',what:'Succeeds often, but rarely breaks a big one.',rows:rsQuadRows(D.rows,x,y,D.mx,D.my,1,-1).map(shape)},
-    {label:'Neither',what:'Below median on both.',rows:rsQuadRows(D.rows,x,y,D.mx,D.my,-1,-1).map(shape)},
+    {label:'Struggling',what:'Below median on both: plays fail often and gain little.',rows:rsQuadRows(D.rows,x,y,D.mx,D.my,-1,-1).map(shape)},
   ];
   return `<section class="rsBlock rsSpan4">${rsTop('Efficiency groups','current')}${rsQuadTabs('efficiency',groups,'Success','Net / success')}</section>`;
 }
@@ -1635,10 +1635,10 @@ function rsDefenceNotes(){
   const mx=rsMedian(D.rows.map(x)),my=rsMedian(D.rows.map(y));
   const shape=r=>({name:r.name,rank:r.rank,a:Math.round(r.stop*100)+'%',b:rsSigned(r.v,3)});
   const groups=[
-    {label:'Stops and limits',what:'Stops more snaps than the median and gives up less per play.',rows:rsQuadRows(D.rows,x,y,mx,my,1,1).map(shape)},
-    {label:"Bend, don't break",what:'Stops fewer snaps, but gives up little when it is beaten.',rows:rsQuadRows(D.rows,x,y,mx,my,-1,1).map(shape)},
-    {label:'Big plays hurt',what:'Stops plenty of snaps, but pays for the ones it misses.',rows:rsQuadRows(D.rows,x,y,mx,my,1,-1).map(shape)},
-    {label:'Neither',what:'Below median on both.',rows:rsQuadRows(D.rows,x,y,mx,my,-1,-1).map(shape)},
+    {label:'Shuts it down',what:'Stops more snaps than the median and gives up less per play.',rows:rsQuadRows(D.rows,x,y,mx,my,1,1).map(shape)},
+    {label:'Limits damage',what:'Stops fewer snaps, but gives up little when it is beaten.',rows:rsQuadRows(D.rows,x,y,mx,my,-1,1).map(shape)},
+    {label:'Gives up big plays',what:'Stops plenty of snaps, but pays for the ones it misses.',rows:rsQuadRows(D.rows,x,y,mx,my,1,-1).map(shape)},
+    {label:'Leaky',what:'Below median on both: rarely stops a play and gives up a lot.',rows:rsQuadRows(D.rows,x,y,mx,my,-1,-1).map(shape)},
   ];
   return `<section class="rsBlock rsSpan4">${rsTop('Defense groups','current')}${rsQuadTabs('defense',groups,'Stop rate','EPA')}</section>`;
 }
@@ -1672,6 +1672,6 @@ function collegeResearchModules(){
   ].filter(([,body])=>body).map(([label,body],i)=>rsPart(String(i+1).padStart(2,'0'),label,body)).join('');
   if(!parts)return '';
   return `<section class="collegeResearch" aria-label="College research">`
-    +`<div class="rsLegend2"><span>${rsChip('live')} moves until ${football?'kickoff':'tipoff'}</span><span>${rsChip('current')} this season</span><span>${rsChip('blend')} rating includes last season</span><span>${rsChip('graded')} locked picks, scored after the final</span>${rsMethodology(football)}</div>`
+    +`<div class="rsLegend2"><span>${rsChip('live')} moves until ${football?'kickoff':'tipoff'}</span><span>${rsChip('current')} this season's games</span><span>${rsChip('blend')} power rating, includes last season</span><span>${rsChip('graded')} locked picks, scored after the final</span>${rsMethodology(football)}</div>`
     +`${parts}</section>`;
 }

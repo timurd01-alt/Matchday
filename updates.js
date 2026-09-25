@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0925ZZ",
+  "tag": "Design",
+  "title": "Clearer badges and group names",
+  "items": [
+   "Research badges now read Season (this season's games) or Rating (the power rating, which includes last season).",
+   "Group names are plainer: Unproven, Struggling and Leaky replace Neither, and the defense groups are Shuts it down, Limits damage, Gives up big plays and Leaky."
+  ]
+ },
+ {
   "date": "Build 0925ZY",
   "tag": "Design",
   "title": "Community in Explore",
