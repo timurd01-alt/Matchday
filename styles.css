@@ -3742,3 +3742,7 @@ body{font-variant-numeric:tabular-nums}
 /* Phones: the range bar's "Expected" label sits ~25px above the bar and hit
    the wrapped 95% CI figures. Leave room for it. */
 @media(max-width:600px){.scorecardPage .scRange{padding-top:24px}}
+/* Research methodology toggle: at the end of the badge legend, full width when open. */
+.rsLegend2 .rsMethod{margin:0 0 0 auto}
+.rsLegend2 .rsMethod[open]{flex-basis:100%;margin-left:0}
+.rsLegend2 .rsMethod>div{margin-top:10px;color:var(--muted);font-size:var(--fs-sm)}

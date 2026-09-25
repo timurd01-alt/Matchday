@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0925ZW",
+  "tag": "Design",
+  "title": "Research methodology",
+  "items": [
+   "Research has a Methodology toggle beside its badges, explaining the badges, chart lines and each measure.",
+   "The chart group lists show seven teams before Show all."
+  ]
+ },
+ {
   "date": "Build 0925ZV",
   "tag": "Design",
   "title": "Defense groups and clearer season badges",

@@ -1180,6 +1180,18 @@ function rsShortName(name){
 // What each Research section is built from, stated on its badge. Power
 // ratings carry last season forward and are updated by this season's games;
 // play-by-play sections use this season's games only.
+// Research methodology: what a reader needs to read the page, closed by
+// default. It explains the displays, not how the model or ratings are built.
+function rsMethodology(football){
+  const yr=String(collegeRankingTable()?.season||new Date().getFullYear());
+  const col1=`<p><b>Badges.</b> <b>${yr} only</b> sections use this season's games. <b>${yr} + ${Number(yr)-1}</b> sections use the power rating, which starts from last season and moves with every ${yr} result, so early in the season it still leans on last year. <b>Graded</b> means picks locked before kickoff and scored after the final.</p>`
+    +`<p><b>Power rating.</b> Points better than an average team against an average opponent, adjusted for who each team played.</p>`
+    +`<p><b>Strength of schedule.</b> The average rating of the opponents a team has faced.</p>`;
+  const col2=`<p><b>Chart lines.</b> Each chart has two dashed lines at the median of each measure, so half the teams sit on each side of each line. The four groups beside a chart are the four corners those lines make.</p>`
+    +(football?`<p><b>Success rate.</b> The share of plays that gain enough to stay on schedule for a first down. <b>Net points per success</b> is how much a successful play is worth on average.</p>`
+      +`<p><b>EPA allowed.</b> Expected points a defense gives up per play; below zero means it wins the average snap. <b>Stop rate</b> is the share of plays it stops short of success.</p>`:'');
+  return `<details class="scMethod rsMethod"><summary>Methodology <span aria-hidden="true">ⓘ</span></summary><div class="scMethodGrid"><div class="scMethodCol">${col1}</div><div class="scMethodCol">${col2}</div></div></details>`;
+}
 function rsChip(kind){
   const yr=String(collegeRankingTable()?.season||new Date().getFullYear());
   const t={live:['Live','Moves until kickoff'],season:['Season to date','Results so far this season'],
@@ -1369,7 +1381,7 @@ function rsScatter(){
    with both measures. Beside the chart on desktop; in place of it on phones,
    where a few hundred dots are too small to tap. Top-25 teams carry a rank
    badge so the highlighted dots on the chart can be found in the list. */
-function rsQuadTabs(key,groups,colA,colB,show=6){
+function rsQuadTabs(key,groups,colA,colB,show=7){
   const first=groups.findIndex(g=>g.rows.length);if(first<0)return '';
   const tabs=groups.map((g,i)=>`<button type="button" class="rsQuadTab" aria-pressed="${i===first}" data-g="${i}" title="${esc(g.what)}" onclick="rsQuadPick(this)"><span>${esc(g.label)}</span><b>${g.rows.length}</b></button>`).join('');
   const panes=groups.map((g,i)=>{
@@ -1649,6 +1661,6 @@ function collegeResearchModules(){
   ].filter(([,body])=>body).map(([label,body],i)=>rsPart(String(i+1).padStart(2,'0'),label,body)).join('');
   if(!parts)return '';
   return `<section class="collegeResearch" aria-label="College research">`
-    +`<div class="rsLegend2"><span>${rsChip('live')} moves until ${football?'kickoff':'tipoff'}</span><span>${rsChip('current')} this season</span><span>${rsChip('blend')} rating includes last season</span><span>${rsChip('graded')} locked picks, scored after the final</span></div>`
+    +`<div class="rsLegend2"><span>${rsChip('live')} moves until ${football?'kickoff':'tipoff'}</span><span>${rsChip('current')} this season</span><span>${rsChip('blend')} rating includes last season</span><span>${rsChip('graded')} locked picks, scored after the final</span>${rsMethodology(football)}</div>`
     +`${parts}</section>`;
 }
