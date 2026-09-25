@@ -1370,7 +1370,11 @@ renderGroups=function(){
   // tiebreaker. That was wrong and misleading: it is the model's own
   // opponent-adjusted rating and the model does use it. Say what it is.
   document.querySelectorAll('#view-groups .tablewrap:not(.officialPoll) .groupHead span').forEach(el=>el.textContent='Opponent-adjusted rating and strength of schedule');
-  document.querySelectorAll('#view-groups .gtable:not(.officialPollTable)').forEach(table=>table.classList.add('collegeConferenceTable'));
+  document.querySelectorAll('#view-groups .gtable:not(.officialPollTable)').forEach(table=>{
+    table.classList.add('collegeConferenceTable');
+    // Thirteen columns cannot share a phone's width; phones scroll sideways.
+    if(!table.parentElement.classList.contains('confScroll')){const w=document.createElement('div');w.className='confScroll';table.before(w);w.appendChild(table)}
+  });
   document.querySelectorAll('#view-groups .gtable:not(.officialPollTable) th:nth-child(2)').forEach(th=>{
     th.textContent='Rating · SoS';
     th.title='Opponent-adjusted scoring margin, with the strength of schedule it was earned against.';

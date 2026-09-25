@@ -1297,34 +1297,38 @@ function rsScatter(){
   const table=collegeRankingTable();
   const rows=(table?.rankings||[]).filter(r=>Number.isFinite(Number(r.rating))&&Number.isFinite(Number(r.sos)));
   if(rows.length<12)return '';
-  const W=1000,H=340,PL=40,PR=16,PT=14,PB=32;
   const xs=rows.map(r=>Number(r.sos)),ys=rows.map(r=>Number(r.rating));
   const x0=Math.min(...xs),x1=Math.max(...xs),y0=Math.min(...ys),y1=Math.max(...ys);
-  const sx=v=>PL+((v-x0)/((x1-x0)||1))*(W-PL-PR);
-  const sy=v=>H-PB-((v-y0)/((y1-y0)||1))*(H-PT-PB);
   const med=a=>{const b=a.slice().sort((m,n)=>m-n);return b[Math.floor(b.length/2)]};
-  const mx=sx(med(xs)),my=sy(med(ys));
   // Label only the three highest-rated teams. Everything else is a tooltip:
   // labelling a cluster just stacks names on top of each other.
   const top=rows.slice().sort((a,b)=>Number(b.rating)-Number(a.rating)).slice(0,3);
-  const dots=rows.map(r=>{
-    const power=String(r.tier||'')==='power',hi=top.includes(r);
-    return `<circle cx="${sx(Number(r.sos)).toFixed(1)}" cy="${sy(Number(r.rating)).toFixed(1)}" r="${hi?4.5:3}" class="${hi?'dotHi':power?'dotP':'dotG'}" data-team="${esc(r.name)}" data-rank="${esc(r.rank??'')}" data-rating="${Number(r.rating).toFixed(2)}" data-sos="${Number(r.sos).toFixed(2)}" data-conf="${esc(r.conference||'')}"></circle>`;
-  }).join('');
-  let lastY=-99;
-  const labels=top.slice().sort((a,b)=>sy(Number(a.rating))-sy(Number(b.rating))).map(r=>{
-    let y=sy(Number(r.rating))+4;if(y-lastY<13)y=lastY+13;lastY=y;
-    const x=sx(Number(r.sos)),left=x>W-180;
-    return `<text class="rsLbl" x="${(left?x-8:x+8).toFixed(1)}" y="${y.toFixed(1)}" text-anchor="${left?'end':'start'}">${esc(rsShortName(r.name))}</text>`;
-  }).join('');
+  // Drawn twice: wide for desktop, portrait for phones (CSS shows one), so a
+  // phone gets full-size dots and text instead of a shrunken 1000x340 strip.
+  const draw=(W,H,PL,PR,PT,PB,R,cls)=>{
+    const sx=v=>PL+((v-x0)/((x1-x0)||1))*(W-PL-PR);
+    const sy=v=>H-PB-((v-y0)/((y1-y0)||1))*(H-PT-PB);
+    const mx=sx(med(xs)),my=sy(med(ys));
+    const dots=rows.map(r=>{
+      const power=String(r.tier||'')==='power',hi=top.includes(r);
+      return `<circle cx="${sx(Number(r.sos)).toFixed(1)}" cy="${sy(Number(r.rating)).toFixed(1)}" r="${(hi?4.5:3)*R}" class="${hi?'dotHi':power?'dotP':'dotG'}" data-team="${esc(r.name)}" data-rank="${esc(r.rank??'')}" data-rating="${Number(r.rating).toFixed(2)}" data-sos="${Number(r.sos).toFixed(2)}" data-conf="${esc(r.conference||'')}"></circle>`;
+    }).join('');
+    let lastY=-99;
+    const labels=top.slice().sort((a,b)=>sy(Number(a.rating))-sy(Number(b.rating))).map(r=>{
+      let y=sy(Number(r.rating))+4;if(y-lastY<15)y=lastY+15;lastY=y;
+      const x=sx(Number(r.sos)),left=x>W-(W>500?180:100);
+      return `<text class="rsLbl" x="${(left?x-8:x+8).toFixed(1)}" y="${y.toFixed(1)}" text-anchor="${left?'end':'start'}">${esc(rsShortName(r.name))}</text>`;
+    }).join('');
+    return `<svg viewBox="0 0 ${W} ${H}" class="rsScatter ${cls}" role="img" aria-label="Scatter plot of team rating against strength of schedule">`
+      +`<line class="scAx" x1="${PL}" y1="${H-PB}" x2="${W-PR}" y2="${H-PB}"/><line class="scAx" x1="${PL}" y1="${PT}" x2="${PL}" y2="${H-PB}"/>`
+      +`<line class="scMed" x1="${mx.toFixed(1)}" y1="${PT}" x2="${mx.toFixed(1)}" y2="${H-PB}"/><line class="scMed" x1="${PL}" y1="${my.toFixed(1)}" x2="${W-PR}" y2="${my.toFixed(1)}"/>`
+      +`${dots}${labels}<text class="scAxLbl" x="${((W+PL)/2).toFixed(0)}" y="${H-8}" text-anchor="middle">strength of schedule →</text>`
+      +`<text class="scAxLbl" transform="rotate(-90 12 ${(H/2).toFixed(0)})" x="12" y="${(H/2).toFixed(0)}" text-anchor="middle">rating →</text></svg>`;
+  };
   const anyG5=rows.some(r=>String(r.tier||'')&&String(r.tier)!=='power');
   return `<section class="rsBlock rsSpan8">${rsTop('Rating vs schedule','season',`${rows.length} teams`)}`
-    +`<svg viewBox="0 0 ${W} ${H}" class="rsScatter" role="img" aria-label="Scatter plot of team rating against strength of schedule">`
-    +`<line class="scAx" x1="${PL}" y1="${H-PB}" x2="${W-PR}" y2="${H-PB}"/><line class="scAx" x1="${PL}" y1="${PT}" x2="${PL}" y2="${H-PB}"/>`
-    +`<line class="scMed" x1="${mx.toFixed(1)}" y1="${PT}" x2="${mx.toFixed(1)}" y2="${H-PB}"/><line class="scMed" x1="${PL}" y1="${my.toFixed(1)}" x2="${W-PR}" y2="${my.toFixed(1)}"/>`
-    +`${dots}${labels}<text class="scAxLbl" x="${(W/2).toFixed(0)}" y="${H-8}" text-anchor="middle">strength of schedule →</text>`
-    +`<text class="scAxLbl" transform="rotate(-90 12 ${(H/2).toFixed(0)})" x="12" y="${(H/2).toFixed(0)}" text-anchor="middle">rating →</text></svg>`
-    +`<div class="rsLegend"><span><i class="dotKeyP"></i>Power</span>${anyG5?'<span><i class="dotKeyG"></i>Group of Five</span>':''}<span>Lines are medians · hover anywhere on the chart</span><button type="button" class="rsZoomBtn" onclick="rsZoomChart(this)">Zoom chart</button></div>`
+    +draw(1000,340,40,16,14,32,1,'rsWide')+draw(360,420,30,12,14,32,1.25,'rsTall')
+    +`<div class="rsLegend"><span><i class="dotKeyP"></i>Power</span>${anyG5?'<span><i class="dotKeyG"></i>Group of Five</span>':''}<span>Lines are medians · hover anywhere on the chart</span></div><div class="rsReadout" aria-live="polite">Tap any dot to see the team.</div>`
     +`</section>`;
 }
 /* What the chart shows, stated: the two quadrants that matter and the
@@ -1369,6 +1373,8 @@ function rsScatterPoint(e){
     if(d<bestD){bestD=d;best=c}
   });
   svg.querySelectorAll('circle.rsActive').forEach(c=>{if(c!==best)c.classList.remove('rsActive')});
+  const readout=svg.closest('.rsBlock')?.querySelector('.rsReadout');
+  const phone=readout&&readout.offsetParent!==null;
   const tip=rsScatterTip();
   if(!best){tip.hidden=true;return}
   best.classList.add('rsActive');
@@ -1376,7 +1382,10 @@ function rsScatterPoint(e){
   // Each chart names its own two measures on the dots; Rating/SoS is only
   // the default for the rating-vs-schedule chart.
   const m1l=d.m1l||'Rating',m1=d.m1??d.rating,m2l=d.m2l||'SoS',m2=d.m2??d.sos;
-  tip.innerHTML=`<b>${esc(d.team)}</b>${d.conf?`<span>${esc(d.conf)}${d.rank?` · PR #${esc(d.rank)}`:''}</span>`:''}<dl><div><dt>${esc(m1l)}</dt><dd>${esc(m1)}</dd></div><div><dt>${esc(m2l)}</dt><dd>${esc(m2)}</dd></div></dl>`;
+  const card=`<b>${esc(d.team)}</b>${d.conf?`<span>${esc(d.conf)}${d.rank?` · PR #${esc(d.rank)}`:''}</span>`:''}<dl><div><dt>${esc(m1l)}</dt><dd>${esc(m1)}</dd></div><div><dt>${esc(m2l)}</dt><dd>${esc(m2)}</dd></div></dl>`;
+  // Phones: the card sits under the chart, where a thumb doesn't cover it.
+  if(phone){tip.hidden=true;readout.innerHTML=card;readout.classList.add('on');return}
+  tip.innerHTML=card;
   tip.hidden=false;
   const b=best.getBoundingClientRect(),w=tip.offsetWidth,h=tip.offsetHeight;
   let x=b.left+b.width/2+14,y=b.top-h/2;
@@ -1387,41 +1396,6 @@ function rsScatterPoint(e){
 document.addEventListener('pointermove',rsScatterPoint);
 // Touch has no hover: a tap reads out the nearest team instead.
 document.addEventListener('pointerdown',rsScatterPoint);
-/* Phone view of a scatter. At phone width a 1000x340 chart is about 115px
-   tall and its dots are specks, so "Zoom chart" opens it full screen with
-   zoom steps; the zoomed chart pans by scrolling and a tap names the team. */
-const RS_ZOOMS=[1,2,3,4];
-function rsZoomChart(btn){
-  const src=btn.closest('.rsBlock')?.querySelector('svg.rsScatter');if(!src)return;
-  const title=btn.closest('.rsBlock').querySelector('.rsTitle')?.textContent||'Chart';
-  const box=document.createElement('div');
-  box.className='rsZoom';box.setAttribute('role','dialog');box.setAttribute('aria-modal','true');box.setAttribute('aria-label',title);
-  box.innerHTML=`<div class="rsZoomBar"><h2 class="seclbl">${esc(title)}</h2><button type="button" class="rsZoomClose" aria-label="Close">×</button></div>`
-    +`<div class="rsZoomPane"></div><div class="rsZoomCtl"><button type="button" data-z="-1" aria-label="Zoom out">−</button><span class="rsZoomLvl" aria-live="polite">1×</span><button type="button" data-z="1" aria-label="Zoom in">+</button><span class="rsZoomHint">Tap a dot for the team · drag to pan</span></div>`;
-  const pane=box.querySelector('.rsZoomPane'),svg=src.cloneNode(true);
-  svg.querySelectorAll('.rsActive').forEach(c=>c.classList.remove('rsActive'));
-  pane.appendChild(svg);
-  let i=0;
-  const clearTip=()=>rsScatterClear(svg);
-  const close=()=>{clearTip();box.remove();document.body.classList.remove('modalOpen');document.removeEventListener('keydown',onKey);btn.focus()};
-  const onKey=e=>{if(e.key==='Escape')close()};
-  box.addEventListener('click',e=>{
-    const z=e.target.closest('[data-z]');
-    if(z){
-      const cx=(pane.scrollLeft+pane.clientWidth/2)/pane.scrollWidth,cy=(pane.scrollTop+pane.clientHeight/2)/pane.scrollHeight;
-      i=Math.max(0,Math.min(RS_ZOOMS.length-1,i+Number(z.dataset.z)));
-      svg.style.width=(RS_ZOOMS[i]*100)+'%';
-      box.querySelector('.rsZoomLvl').textContent=RS_ZOOMS[i]+'×';
-      pane.scrollLeft=cx*pane.scrollWidth-pane.clientWidth/2;pane.scrollTop=cy*pane.scrollHeight-pane.clientHeight/2;
-      clearTip();return;
-    }
-    if(e.target.closest('.rsZoomClose'))close();
-  });
-  pane.addEventListener('scroll',clearTip,{passive:true});
-  document.addEventListener('keydown',onKey);
-  document.body.appendChild(box);document.body.classList.add('modalOpen');
-  box.querySelector('.rsZoomClose').focus();
-}
 function rsConferences(){
   const table=collegeRankingTable();
   const rows=(table?.rankings||[]).filter(r=>r.conference&&Number.isFinite(Number(r.rating)));
@@ -1499,21 +1473,23 @@ function rsEfficiencyData(){
 function rsEfficiency(){
   const D=rsEfficiencyData();if(!D)return '';
   const {rows,mx,my,x0,x1,y0,y1,pick}=D;
-  const W=1000,H=340,PL=40,PR=16,PT=14,PB=32;
-  const sx=v=>PL+((v-x0)/((x1-x0)||1))*(W-PL-PR),sy=v=>H-PB-((v-y0)/((y1-y0)||1))*(H-PT-PB);
   const labelled=new Set(Object.values(pick).map(p=>p.team).filter(Boolean));
-  const dots=rows.map(r=>{
-    const hi=labelled.has(r),power=String(r.row.tier||'')==='power';
-    return `<circle cx="${sx(r.x).toFixed(1)}" cy="${sy(r.y).toFixed(1)}" r="${hi?4.5:3}" class="${hi?'dotHi':power?'dotP':'dotG'}" data-team="${esc(r.name)}" data-rank="${esc(r.row.rank??'')}" data-conf="${esc(r.row.conference||'')}" data-m1l="Success rate" data-m1="${(r.x*100).toFixed(1)}%" data-m2l="Net pts / success" data-m2="${rsSigned(r.y,2)}"></circle>`;
-  }).join('');
-  const labels=[...labelled].map(r=>{const x=sx(r.x),left=x>W-180;return `<text class="rsLbl" x="${(left?x-8:x+8).toFixed(1)}" y="${(sy(r.y)+4).toFixed(1)}" text-anchor="${left?'end':'start'}">${esc(rsShortName(r.name))}</text>`}).join('');
+  const draw=(W,H,PL,PR,PT,PB,R,cls)=>{
+    const sx=v=>PL+((v-x0)/((x1-x0)||1))*(W-PL-PR),sy=v=>H-PB-((v-y0)/((y1-y0)||1))*(H-PT-PB);
+    const dots=rows.map(r=>{
+      const hi=labelled.has(r),power=String(r.row.tier||'')==='power';
+      return `<circle cx="${sx(r.x).toFixed(1)}" cy="${sy(r.y).toFixed(1)}" r="${(hi?4.5:3)*R}" class="${hi?'dotHi':power?'dotP':'dotG'}" data-team="${esc(r.name)}" data-rank="${esc(r.row.rank??'')}" data-conf="${esc(r.row.conference||'')}" data-m1l="Success rate" data-m1="${(r.x*100).toFixed(1)}%" data-m2l="Net pts / success" data-m2="${rsSigned(r.y,2)}"></circle>`;
+    }).join('');
+    const labels=[...labelled].map(r=>{const x=sx(r.x),left=x>W-(W>500?180:100);return `<text class="rsLbl" x="${(left?x-8:x+8).toFixed(1)}" y="${(sy(r.y)+4).toFixed(1)}" text-anchor="${left?'end':'start'}">${esc(rsShortName(r.name))}</text>`}).join('');
+    return `<svg viewBox="0 0 ${W} ${H}" class="rsScatter ${cls}" role="img" aria-label="Scatter of offensive success rate against net expected points per successful play">`
+      +`<line class="scAx" x1="${PL}" y1="${H-PB}" x2="${W-PR}" y2="${H-PB}"/><line class="scAx" x1="${PL}" y1="${PT}" x2="${PL}" y2="${H-PB}"/>`
+      +`<line class="scMed" x1="${sx(mx).toFixed(1)}" y1="${PT}" x2="${sx(mx).toFixed(1)}" y2="${H-PB}"/><line class="scMed" x1="${PL}" y1="${sy(my).toFixed(1)}" x2="${W-PR}" y2="${sy(my).toFixed(1)}"/>`
+      +`${dots}${labels}<text class="scAxLbl" x="${((W+PL)/2).toFixed(0)}" y="${H-8}" text-anchor="middle">success rate →</text>`
+      +`<text class="scAxLbl" transform="rotate(-90 12 ${(H/2).toFixed(0)})" x="12" y="${(H/2).toFixed(0)}" text-anchor="middle">net points per success →</text></svg>`;
+  };
   return `<section class="rsBlock rsSpan8">${rsTop('Efficiency vs net points per success','season',`${rows.length} FBS offenses`)}`
-    +`<svg viewBox="0 0 ${W} ${H}" class="rsScatter" role="img" aria-label="Scatter of offensive success rate against net expected points per successful play">`
-    +`<line class="scAx" x1="${PL}" y1="${H-PB}" x2="${W-PR}" y2="${H-PB}"/><line class="scAx" x1="${PL}" y1="${PT}" x2="${PL}" y2="${H-PB}"/>`
-    +`<line class="scMed" x1="${sx(mx).toFixed(1)}" y1="${PT}" x2="${sx(mx).toFixed(1)}" y2="${H-PB}"/><line class="scMed" x1="${PL}" y1="${sy(my).toFixed(1)}" x2="${W-PR}" y2="${sy(my).toFixed(1)}"/>`
-    +`${dots}${labels}<text class="scAxLbl" x="${(W/2).toFixed(0)}" y="${H-8}" text-anchor="middle">success rate →</text>`
-    +`<text class="scAxLbl" transform="rotate(-90 12 ${(H/2).toFixed(0)})" x="12" y="${(H/2).toFixed(0)}" text-anchor="middle">net points per success →</text></svg>`
-    +`<div class="rsLegend"><span><i class="dotKeyP"></i>Power</span><span><i class="dotKeyG"></i>Group of Five</span><span>Lines are medians · hover for the team</span><button type="button" class="rsZoomBtn" onclick="rsZoomChart(this)">Zoom chart</button></div></section>`;
+    +draw(1000,340,40,16,14,32,1,'rsWide')+draw(360,420,30,12,14,32,1.25,'rsTall')
+    +`<div class="rsLegend"><span><i class="dotKeyP"></i>Power</span><span><i class="dotKeyG"></i>Group of Five</span><span>Lines are medians · hover for the team</span></div><div class="rsReadout" aria-live="polite">Tap any dot to see the team.</div></section>`;
 }
 function rsEfficiencyNotes(){
   const D=rsEfficiencyData();if(!D)return '';

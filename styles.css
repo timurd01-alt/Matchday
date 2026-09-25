@@ -3619,16 +3619,28 @@ body{font-variant-numeric:tabular-nums}
   .rsScrollX .rsConfHead span:nth-child(2),.rsScrollX .rsConfRow .rsBar{display:block}
   .rsScrollX .rsConfRow>span:first-child{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 }
-/* Scatter zoom (rsZoomChart): phones only. */
-.rsZoomBtn{display:none;margin-left:auto;min-height:36px;padding:0 14px;border:1px solid var(--line2);border-radius:999px;background:var(--panel2);color:var(--signal);font:inherit;font-weight:var(--fw-bold);cursor:pointer}
-@media(max-width:600px){.rsZoomBtn{display:inline-flex;align-items:center}}
-.rsZoom{position:fixed;inset:0;z-index:80;display:flex;flex-direction:column;gap:12px;padding:14px 16px calc(14px + env(safe-area-inset-bottom));background:var(--bg)}
-.rsZoomBar,.rsZoomCtl{display:flex;align-items:center;gap:10px}
-.rsZoomBar h2{margin:0}
-.rsZoomClose{margin-left:auto;width:44px;height:44px;border:1px solid var(--line2);border-radius:999px;background:var(--panel2);color:var(--text);font-size:var(--fs-xl);cursor:pointer}
-.rsZoomPane{flex:1;min-height:0;overflow:auto;-webkit-overflow-scrolling:touch;display:flex;border:1px solid var(--line);border-radius:var(--r);background:var(--panel)}
-.rsZoomPane svg.rsScatter{flex:none;width:100%;margin:auto 0}
-.rsZoomCtl button{width:44px;height:44px;border:1px solid var(--line2);border-radius:10px;background:var(--panel2);color:var(--text);font-size:var(--fs-xl);cursor:pointer}
-.rsZoomLvl{min-width:3ch;text-align:center;font-variant-numeric:tabular-nums;color:var(--muted)}
-.rsZoomHint{margin-left:auto;font-size:var(--fs-xs);color:var(--faint);text-align:right}
-.rsScatterTip{z-index:90}
+/* Research scatters: the wide chart on desktop, the portrait one on phones,
+   with a tap readout under it instead of a floating card. */
+.rsTall,.rsReadout{display:none}
+@media(max-width:600px){
+  .rsWide{display:none}
+  .rsTall{display:block;touch-action:manipulation}
+  .rsTall .rsLbl{font-size:var(--fs-sm)}
+  .rsTall .scAxLbl{font-size:var(--fs-2xs)}
+  .rsTall circle.rsActive{r:8}
+  .rsReadout{display:block;min-height:64px;margin-top:10px;padding:10px 12px;border:1px solid var(--line);border-radius:var(--r);background:var(--bg2);color:var(--faint);font-size:var(--fs-sm)}
+  .rsReadout.on{color:var(--text)}
+  .rsReadout b{display:block;font-weight:var(--fw-bold)}
+  .rsReadout>span{display:block;margin-top:2px;color:var(--muted);font-size:var(--fs-xs)}
+  .rsReadout dl{display:flex;gap:24px;margin:8px 0 0}
+  .rsReadout dt{font-size:var(--fs-2xs);letter-spacing:.1em;text-transform:uppercase;color:var(--faint);font-weight:var(--fw-bold)}
+  .rsReadout dd{margin:2px 0 0;font-weight:var(--fw-bold);font-variant-numeric:tabular-nums}
+  .rsLegend span:last-child{display:none}
+}
+/* Conference standings: phones scroll the table sideways, team column pinned. */
+@media(max-width:720px){
+  .confScroll{overflow-x:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+  .confScroll .collegeConferenceTable{table-layout:auto;width:auto;min-width:100%}
+  .confScroll .collegeConferenceTable th,.confScroll .collegeConferenceTable td{width:auto;white-space:nowrap}
+  .confScroll .collegeConferenceTable th:first-child,.confScroll .collegeConferenceTable td:first-child{position:sticky;left:0;z-index:1;width:auto;min-width:170px;background:var(--panel);box-shadow:1px 0 0 var(--line)}
+}

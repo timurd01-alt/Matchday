@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0925Q",
+  "tag": "Fix",
+  "title": "Conference standings and charts rebuilt for phones",
+  "items": [
+   "Conference standings on Rankings no longer crush thirteen columns into a phone screen: the table scrolls sideways with the team column pinned.",
+   "Rating vs schedule and Efficiency vs net points per success now draw a taller, phone-shaped chart with full-size dots and labels. Tap any dot and the team's numbers appear under the chart. The zoom pop-up is gone."
+  ]
+ },
+ {
   "date": "Build 0925P",
   "tag": "Fix",
   "title": "Phone-friendly conference table and charts",
