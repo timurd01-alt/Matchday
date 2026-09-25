@@ -757,7 +757,7 @@ function renderScore(){
   const method=`<details class="scMethod"><summary>Methodology <span aria-hidden="true">ⓘ</span></summary><div>`
     +`<p><b>Locking.</b> The latest forecast at or before 60 minutes to kickoff, and the market price then, are recorded and never changed. Only verified final results are graded.</p>`
     +`<p><b>Model record</b> is wins over graded picks. <b>Expected</b> is the average probability the model gave its picks; the gap between the two is calibration.</p>`
-    +`<p><b>Against the price</b> is how often the model's probability beat the locked market price${Number.isFinite(priced)?` across ${priced} priced selections`:''}${bm&&bm.wins!=null?` (${bm.wins}–${bm.losses}${bm.ties?`, ${bm.ties} tied`:''})`:''}. Two forecasters on the same games are a coin flip at 50%.${vm.basis?` Price: ${esc(vm.basis)}.`:''}</p>`
+    +`<p><b>Against the price</b> is how often the model's probability beat the locked market price${Number.isFinite(priced)?` across ${priced} priced selections`:''}${bm&&bm.wins!=null?` <span class="nowrap">(${bm.wins}–${bm.losses}${bm.ties?`, ${bm.ties} tied`:''})</span>`:''}. Two forecasters on the same games are a coin flip at 50%.${vm.basis?` Price: ${esc(vm.basis)}.`:''}</p>`
     +`<p><b>Intervals</b> are 95% confidence intervals; small samples move the point estimate a long way.</p>`
     +`<p>${esc(totals.graded_selections??'—')} graded selections across ${esc(totals.locked_events??'—')} locked cards; a card can carry more than one selection.${pending?` ${pending} await a final score.`:''}</p>`
     +(sc.caveat?`<p>${esc(scorecardCaveat(sc.caveat))}</p>`:'')

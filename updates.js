@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0925ZH",
+  "tag": "Fix",
+  "title": "Tidier Methodology text",
+  "items": [
+   "Win-loss ranges like (146–148) in the Scorecard's Methodology stay on one line instead of splitting across two.",
+   "Paragraphs in both Methodology columns are now spaced evenly."
+  ]
+ },
+ {
   "date": "Build 0925ZG",
   "tag": "Design",
   "title": "Bigger playoff bracket",
