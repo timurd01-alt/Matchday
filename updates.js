@@ -5,12 +5,11 @@
 window.SYSTEM_UPDATES=[
  {
   "date": "Build 0925V",
-  "tag": "Design",
-  "title": "A readable CFP bracket on smaller screens",
+  "tag": "Fix",
+  "title": "Half-screen top strip and Games filters",
   "items": [
-   "Phones and narrow desktop windows now show the same gold bracket advancing from left to right.",
-   "On phones, swipe sideways through full-size matchup cards instead of reading a shrunken diagram.",
-   "Wide screens keep the mirrored bracket, and the first four out remain below it."
+   "In narrower windows the top strip drops the tagline and build label so Next and Updated are no longer cut off.",
+   "The Games conference dropdown follows the filter chips instead of being pushed to the far edge, removing the empty gap."
   ]
  },
  {
