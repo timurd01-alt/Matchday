@@ -92,9 +92,13 @@ export function newClient() {
 
 export function setHeaders(req, res) {
   const origin = String(req.headers.origin || "");
+  // Always vary on Origin. Some responses are edge-cached; if a request with no
+  // Origin (a crawler, a health check) is cached without Vary, that copy -- which
+  // carries no Allow-Origin -- is served to the site too and every browser call
+  // fails as a CORS error until the cache expires or a deploy purges it.
+  res.setHeader("Vary", "Origin");
   if (SAFE_ORIGINS.has(origin) || /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) {
     res.setHeader("Access-Control-Allow-Origin", origin);
-    res.setHeader("Vary", "Origin");
   }
   res.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");

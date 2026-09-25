@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0925J",
+  "tag": "Fix",
+  "title": "Community stays connected; tidier home summary",
+  "items": [
+   "Community's recent activity, pick split, leaderboard and pick submission no longer go dark when a cached server reply without site permission is served to the browser.",
+   "The home page's model/market differences fill their column evenly, and Explore has proper space above it."
+  ]
+ },
+ {
   "date": "Build 0925H",
   "tag": "Fix",
   "title": "No gap under the home page summary",
