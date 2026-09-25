@@ -5,12 +5,10 @@
 window.SYSTEM_UPDATES=[
  {
   "date": "Build 0925R",
-  "tag": "Feature",
-  "title": "Filter the Games board",
+  "tag": "Fix",
+  "title": "Reading the chart names two different teams",
   "items": [
-   "Games now has filter chips: All games, Top 25, Ranked vs ranked, Conference games and Non-conference, each showing how many games it matches.",
-   "A conference menu narrows the board to one league, and it combines with the chips, for example ranked SEC games only.",
-   "Top 25 uses the published poll: AP for football, the Top 25 table for basketball."
+   "Best rating, soft schedule no longer repeats the team already shown as Least-tested top 25; it names the next-best soft-schedule team instead."
   ]
  },
  {

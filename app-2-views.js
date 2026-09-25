@@ -1342,7 +1342,8 @@ function rsScatterNotes(){
   const soft=rows.filter(r=>Number(r.rating)>=mr&&Number(r.sos)<ms);
   const top=rows.filter(r=>(r.rank||999)<=25);
   const most=top.slice().sort((a,b)=>Number(b.sos)-Number(a.sos))[0],least=top.slice().sort((a,b)=>Number(a.sos)-Number(b.sos))[0];
-  const softest=soft.slice().sort((a,b)=>Number(b.rating)-Number(a.rating))[0];
+  // Skip the least-tested top-25 team so the two rows never name the same team.
+  const softest=soft.filter(r=>r!==least).sort((a,b)=>Number(b.rating)-Number(a.rating))[0];
   const item=(k,v,d,team)=>`<div><dt>${k}</dt><dd><b class="${team?'rsLogoName':''}">${team?(typeof teamMark==='function'?teamMark(team):''):''}${v}</b><span>${d}</span></dd></div>`;
   return `<section class="rsBlock rsSpan4">${rsTop('Reading the chart','season')}<dl class="rsNotes">`
     +item('Earned','<span class="rsSignal">'+earned+'</span>',`teams above median on both rating and schedule`)
