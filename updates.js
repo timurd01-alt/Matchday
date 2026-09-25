@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0925Z",
+  "tag": "Fix",
+  "title": "Game recaps use Bet Better's pick, plus layout fixes",
+  "items": [
+   "The Final summary on a finished game now shows Bet Better's locked pick, not the retired in-house model, and drops the season-only rows so it is about the game itself.",
+   "Team form shows one badge per result, and the team logo has room beside the name.",
+   "Methodology on the Scorecard fills the row in two columns, and the wide Rating vs schedule chart no longer leaves empty space below it."
+  ]
+ },
+ {
   "date": "Build 0925Y",
   "tag": "Fix",
   "title": "Basketball conference tables match football, logos for basketball-only schools",
