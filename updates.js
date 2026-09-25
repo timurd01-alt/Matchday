@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0925ZM",
+  "tag": "Fix",
+  "title": "Weather in Fahrenheit",
+  "items": [
+   "Game-day weather on the cards now shows the temperature in °F and strong wind in mph."
+  ]
+ },
+ {
   "date": "Build 0925ZL",
   "tag": "Fix",
   "title": "Favored team name no longer clipped",
