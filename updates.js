@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0925ZL",
+  "tag": "Fix",
+  "title": "Favored team name no longer clipped",
+  "items": [
+   "In the match window, the large favored-team name (like Army Black Knights) no longer cuts off the bottoms of letters like g, j and y."
+  ]
+ },
+ {
   "date": "Build 0925ZK",
   "tag": "Fix",
   "title": "Team names no longer split mid-word",

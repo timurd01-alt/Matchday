@@ -3698,3 +3698,8 @@ body{font-variant-numeric:tabular-nums}
    split mid-word (see CARD_SHORT_NAMES); the time column keeps its 64px so
    "12:30 PM" still fits. */
 .fixture{column-gap:5px}.fixture .tname{column-gap:6px;gap:6px}
+/* Hero pick name: the .94 line height plus overflow:hidden on .analystPick
+   clipped descenders (the g in Knights). Later and equally specific, so it
+   wins over `.expandedDecision .analystPick`. */
+.expandedDecision .analystPick,.modernExpandedView .analystPick{line-height:1.12;padding-bottom:.05em;overflow:visible}
+.modalName,.modernMatchSheet .modalName{line-height:1.12;padding-bottom:.04em}
