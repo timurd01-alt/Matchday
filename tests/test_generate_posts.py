@@ -49,10 +49,11 @@ class RenderAndSitemapTests(unittest.TestCase):
         private = dict(POST, id="internal", slug="internal", comp="internal")
         self._write_posts([POST, private])
         n = gp.regenerate_sitemap()
-        self.assertEqual(n, 4)  # index, legal, qa, one public post
+        self.assertEqual(n, 5)  # index, legal, qa, roadmap, one public post
         with open("sitemap.xml", encoding="utf-8") as f:
             xml = f.read()
         self.assertIn("qa.html", xml)
+        self.assertIn("roadmap.html", xml)
         self.assertIn(f"posts/{POST['slug']}.html", xml)
         self.assertNotIn("posts/internal.html", xml)
         self.assertTrue(os.path.exists(os.path.join(gp.POSTS_DIR, f"{POST['slug']}.html")))
@@ -60,7 +61,7 @@ class RenderAndSitemapTests(unittest.TestCase):
         ET.fromstring(xml)  # raises if malformed
 
     def test_an_empty_post_list_still_writes_a_valid_sitemap(self):
-        self.assertEqual(gp.regenerate_sitemap(), 3)
+        self.assertEqual(gp.regenerate_sitemap(), 4)
         import xml.etree.ElementTree as ET
         with open("sitemap.xml", encoding="utf-8") as f:
             ET.fromstring(f.read())

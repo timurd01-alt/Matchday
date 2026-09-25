@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0926D",
+  "tag": "New",
+  "title": "Roadmap & limits page",
+  "items": [
+   "A new Roadmap & limits page explains what the site can't do yet (live scores, box scores, play-by-play), why, and what each planned feature is waiting on.",
+   "Linked from the footer next to Legal, from the Updates page, and from the Legal page's data sources section."
+  ]
+ },
+ {
   "date": "Build 0926C",
   "tag": "Change",
   "title": "Friendlier Community names",

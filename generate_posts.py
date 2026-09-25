@@ -141,7 +141,7 @@ def rewrite_all_post_files():
 
 
 def regenerate_sitemap():
-    """Rebuild sitemap.xml from every static page: the app shell, legal, qa,
+    """Rebuild sitemap.xml from every static page: the app shell, legal, qa, roadmap,
     and every currently-published post. Called once after all competitions
     have had a chance to publish (see multi_fetch.py)."""
     rewrite_all_post_files()
@@ -150,6 +150,7 @@ def regenerate_sitemap():
         (BASE_URL, "hourly", "1.0", None),
         (BASE_URL + "legal.html", "monthly", "0.3", None),
         (BASE_URL + "qa.html", "monthly", "0.5", None),
+        (BASE_URL + "roadmap.html", "monthly", "0.4", None),
     ]
     for post in posts:
         urls.append((f"{BASE_URL}posts/{post['slug']}.html", "never", "0.6", post.get("date")))

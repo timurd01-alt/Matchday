@@ -36,7 +36,7 @@ from js_toplevel import top_level_declarations
 SCHEMA_VERSION = 1
 
 # The pages a visitor actually loads.
-AUDITED_HTML = ("index.html", "legal.html", "qa.html")
+AUDITED_HTML = ("index.html", "legal.html", "qa.html", "roadmap.html")
 AUDITED_CSS = ("styles.css", "content.css", "research-signals.css")
 
 # Most of this interface is rendered from template literals in these files, not

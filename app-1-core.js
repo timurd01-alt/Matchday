@@ -1099,7 +1099,8 @@ function renderSystemUpdates(){
   const build=el('aside','buildCard');
   build.append(el('div','tiny','Current build'),el('div','build','build '+currentBuild()),el('div','hint',`Last viewed: ${seen?ago(seen):'not marked yet'}`));
   const actions=el('div','updateActions'),mark=el('button','miniBtn','Mark as read'),status=el('button','miniBtn','Open Status');
-  mark.type=status.type='button';mark.addEventListener('click',markUpdatesRead);status.addEventListener('click',()=>setView('status'));actions.append(mark,status);build.append(actions);hero.append(intro,build);
+  const roadmap=el('a','miniBtn','Roadmap & limits');roadmap.href='roadmap.html';
+  mark.type=status.type='button';mark.addEventListener('click',markUpdatesRead);status.addEventListener('click',()=>setView('status'));actions.append(mark,status,roadmap);build.append(actions);hero.append(intro,build);
   const timeline=el('section','timeline'),head=el('div','timelineHead');head.append(el('h3','','Release notes'),el('span','',`${SYSTEM_UPDATES.length} entries`));timeline.append(head);
   const visibleUpdates=UPDATES_EXPANDED?SYSTEM_UPDATES:SYSTEM_UPDATES.slice(0,UPDATES_PAGE_SIZE);
   visibleUpdates.forEach(update=>{const article=el('article','updateItem'),body=el('div'),title=el('div','updateTitle'),items=el('ul');title.append(el('span','',update?.title??''),el('span','updateBadge',update?.tag??''));(Array.isArray(update?.items)?update.items:[]).forEach(item=>items.append(el('li','',item)));body.append(title,items);article.append(el('div','updateDate',update?.date??''),body);timeline.append(article)});
