@@ -1289,7 +1289,6 @@ function collegeRankingTableHTML(){
     <div class="pollScroll"><table class="pollTable powerTable${moved?' hasMove':''}"><thead><tr>
       <th>#</th>${moved?'<th title="Change since last week">Move</th>':''}<th>Team</th><th>Conference</th><th>Rating</th><th>SoS</th><th>Off</th><th>Def</th><th>Rec</th>
     </tr></thead><tbody>${body}</tbody></table></div>
-    <details class="pollHelp"><summary aria-label="About the power ratings">?</summary><p>${esc(String(table.note||'').replace(/\.\./g,'.'))}</p><p>Provisional teams are shown below but have no FBS rank because most of their rating evidence comes from FCS games. They enter the ranked table when the source model has enough comparable FBS-opponent evidence.</p></details>
     ${provisional?`<details class="pollProvisional"><summary>Provisional teams · ${withheld.length} unranked</summary><div class="pollScroll"><table class="pollTable"><thead><tr><th>Team</th><th>Model rating</th><th>FCS schedule</th></tr></thead><tbody>${provisional}</tbody></table></div></details>`:''}
   </section>`;
 }

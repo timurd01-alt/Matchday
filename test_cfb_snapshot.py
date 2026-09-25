@@ -297,8 +297,7 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
     def test_power_rating_help_and_provisional_fcs_teams(self):
         panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
         section = panels[panels.index("function collegeRankingTableHTML(){"):panels.index("function collegeBallotTableHTML(){")]
-        self.assertIn('class="pollHelp"', section)
-        self.assertIn('aria-label="About the power ratings"', section)
+        self.assertNotIn('class="pollHelp"', section)
         self.assertIn('class="pollProvisional"', section)
         self.assertIn('w.fcs_share', section)
         self.assertNotIn('Held out of the power rating:', section)

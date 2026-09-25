@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0925S",
+  "tag": "Change",
+  "title": "Power rating explainer removed",
+  "items": [
+   "The ? explainer on the Football power rating table is gone; the table and its provisional-teams list are unchanged."
+  ]
+ },
+ {
   "date": "Build 0925R",
   "tag": "Fix",
   "title": "Reading the chart names two different teams",
