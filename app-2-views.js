@@ -1196,6 +1196,16 @@ function rsMethodology(football){
       +`<p><b>EPA allowed.</b> Expected points a defense gives up per play; below zero means it wins the average snap. <b>Stop rate</b> is the share of plays it stops short of success.</p>`:'');
   return `<details class="scMethod rsMethod"><summary>Methodology <span aria-hidden="true">ⓘ</span></summary><div class="scMethodGrid"><div class="scMethodCol">${col1}</div><div class="scMethodCol">${col2}</div></div></details>`;
 }
+// The football week ("Week 4") from the next game on the schedule. The
+// engine's own week is a calendar week ("2026-W39"), which reads as week 39.
+// Basketball has no numbered weeks, so it shows nothing rather than a guess.
+function rsSeasonWeek(){
+  const next=(DATA.matches||[]).filter(m=>typeof isVisibleUpcoming==='function'?isVisibleUpcoming(m):m.status==='UPCOMING')
+    .sort((a,b)=>String(a.kickoff||'').localeCompare(String(b.kickoff||'')))
+    .find(m=>/\bWeek\s*\d+/i.test(String(m.stage||'')));
+  const w=next&&String(next.stage).match(/\bWeek\s*(\d+)/i);
+  return w?`Week ${w[1]}`:'';
+}
 function rsChip(kind){
   const yr=String(collegeRankingTable()?.season||new Date().getFullYear());
   const t={live:['Live','Moves until kickoff'],season:['Season to date','Results so far this season'],
@@ -1259,7 +1269,7 @@ function rsModelMarketWatch(){
   const bar=(l,b)=>`<div class="rsSplitBar"><div><span class="rsKicker">${l}</span><b>${esc(b.wins)}–${esc(b.losses)}</b></div><i><b style="width:${Math.max(0,Math.min(100,Number(b.hit_rate_pct)))}%"></b></i><em>${Math.round(Number(b.hit_rate_pct))}%</em></div>`;
   const hist=[['Agreed with market',vm.agreed_with_market],['Disagreed with market',vm.disagreed_with_market],['Backed market underdog',od]]
     .filter(([,b])=>b&&b.picks).map(([l,b])=>bar(l,b)).join('');
-  return `<section class="rsBlock rsSpan12">${rsTop('<span title="To watch and grade, not recommended bets.">Model–market watch</span>','live',u.week?esc(String(u.week).replace(/^\d{4}-W/,'Week ')):'')}`
+  return `<section class="rsBlock rsSpan12">${rsTop('<span title="To watch and grade, not recommended bets.">Model–market watch</span>','live',esc(rsSeasonWeek()))}`
     +`<div class="rsSplit"><div class="rsSplitMain">`
     +`<ul class="rsList">${rows}</ul></div>`
     +`<div class="rsSplitSide">${hist?`<div class="rsHistBars"><div class="rsHistHead"><span>How disagreement has graded</span>${rsChip('graded')}</div>${hist}</div>`:''}`

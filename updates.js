@@ -5,6 +5,15 @@
 window.SYSTEM_UPDATES=[
  {
   "date": "Build 0926D",
+  "tag": "Fix",
+  "title": "Football week, not calendar week",
+  "items": [
+   "Model-Market Watch now says Week 4 (the football week) instead of Week 39 (the calendar week).",
+   "Its Graded badge sits next to the heading it belongs to."
+  ]
+ },
+ {
+  "date": "Build 0926D",
   "tag": "New",
   "title": "Roadmap & limits page",
   "items": [

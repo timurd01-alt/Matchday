@@ -3746,3 +3746,5 @@ body{font-variant-numeric:tabular-nums}
 .rsLegend2 .rsMethod[open]{flex-basis:100%;margin-left:0}
 .rsLegend2 .rsMethod>div{margin-top:10px;color:var(--muted);font-size:var(--fs-sm)}
 .rsDialogBody .rsQuadHead,.rsDialogBody .rsQuadList li{grid-template-columns:28px minmax(0,1fr) 72px 80px}
+/* Graded badge sits beside its own heading, not pushed to the far edge. */
+.rsHistHead{justify-content:flex-start;gap:8px}
