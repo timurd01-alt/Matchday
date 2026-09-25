@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0925ZS",
+  "tag": "Change",
+  "title": "Tidier repository folders",
+  "items": [
+   "Tests now live in a tests folder and the reference documents in docs, so the top level holds only the site and the data pipeline. Nothing on the site changes."
+  ]
+ },
+ {
   "date": "Build 0925ZR",
   "tag": "Change",
   "title": "Repository cleanup",

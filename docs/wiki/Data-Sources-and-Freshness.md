@@ -32,4 +32,4 @@ A displayed update time describes the generated Matchday dataset, not necessaril
 
 An empty lineup, injury list, table, leaderboard, or market does not mean Matchday verified that nothing exists. It can mean the provider or subscription tier does not supply that field. Matchday intentionally avoids inventing missing data.
 
-The canonical provider checklist and attribution notes live in [PROVIDER_COMPLIANCE.md](https://github.com/timurd01-alt/Matchday/blob/main/PROVIDER_COMPLIANCE.md). That document is an engineering checklist, not legal advice.
+The canonical provider checklist and attribution notes live in [PROVIDER_COMPLIANCE.md](https://github.com/timurd01-alt/Matchday/blob/main/docs/PROVIDER_COMPLIANCE.md). That document is an engineering checklist, not legal advice.

@@ -78,7 +78,7 @@ class PublishedDataRecoveryTests(unittest.TestCase):
         self.assertFalse((self.root / "data_ncaaf.json").exists())
 
     def test_workflow_deploys_validated_last_good_after_refresh_failure(self):
-        workflow = (Path(__file__).parent / ".github" / "workflows" / "deploy.yml").read_text(
+        workflow = (Path(__file__).resolve().parent.parent / ".github" / "workflows" / "deploy.yml").read_text(
             encoding="utf-8")
         recovery = workflow.index("Recover published last-good fixtures after a cold cache miss")
         refresh = workflow.index("Fetch one adaptive round for all sports")

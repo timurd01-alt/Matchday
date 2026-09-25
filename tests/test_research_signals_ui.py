@@ -7,7 +7,7 @@ from pathlib import Path
 from populate_research_signals import populate
 
 
-ROOT = Path(__file__).parent
+ROOT = Path(__file__).resolve().parent.parent
 
 
 class ResearchSignalsUITests(unittest.TestCase):

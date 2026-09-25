@@ -5,7 +5,7 @@ import unittest
 import build_cfb_snapshot
 
 
-ROOT = pathlib.Path(__file__).resolve().parent
+ROOT = pathlib.Path(__file__).resolve().parent.parent
 
 
 class CurrentCfbSnapshotTests(unittest.TestCase):

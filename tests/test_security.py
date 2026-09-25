@@ -6,7 +6,7 @@ import unittest
 import security_check
 
 
-ROOT = pathlib.Path(__file__).resolve().parent
+ROOT = pathlib.Path(__file__).resolve().parent.parent
 
 
 class SecretScannerTests(unittest.TestCase):

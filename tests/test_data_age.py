@@ -14,7 +14,7 @@ import os
 import re
 import unittest
 
-ROOT = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PANELS = os.path.join(ROOT, "app-3-panels.js")
 
 

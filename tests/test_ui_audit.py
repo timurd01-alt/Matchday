@@ -310,7 +310,7 @@ class RenderBudgetTests(unittest.TestCase):
 
 class ReportTests(unittest.TestCase):
     def test_report_on_the_real_repository_is_serializable_and_sorted(self):
-        report = ui_audit.build_report(Path(__file__).parent)
+        report = ui_audit.build_report(Path(__file__).resolve().parent.parent)
         self.assertEqual(report["schema_version"], ui_audit.SCHEMA_VERSION)
         self.assertIn("index.html", report["scanned"])
         json.dumps(report)
@@ -319,7 +319,7 @@ class ReportTests(unittest.TestCase):
         self.assertEqual(severities, sorted(severities))
 
     def test_counts_agree_with_the_findings_list(self):
-        report = ui_audit.build_report(Path(__file__).parent)
+        report = ui_audit.build_report(Path(__file__).resolve().parent.parent)
         self.assertEqual(
             report["blockers"],
             sum(1 for item in report["findings"] if item["severity"] == "blocker"))
@@ -337,7 +337,7 @@ class ReportTests(unittest.TestCase):
         self.assertEqual(report["blockers"], 0)
 
     def test_fail_on_blocker_is_opt_in(self):
-        root = str(Path(__file__).parent)
+        root = str(Path(__file__).resolve().parent.parent)
         temp = tempfile.NamedTemporaryFile(suffix=".json", delete=False)
         temp.close()
         self.addCleanup(lambda: os.path.exists(temp.name) and os.unlink(temp.name))
@@ -421,7 +421,7 @@ class JsGlobalCollisionTests(unittest.TestCase):
         self.assertEqual(self.audit(("a.js", "not_here.js")), [])
 
     def test_the_shipped_bundle_is_currently_free_of_collisions(self):
-        findings = ui_audit.audit_js_globals(Path(__file__).parent)
+        findings = ui_audit.audit_js_globals(Path(__file__).resolve().parent.parent)
         self.assertEqual(findings, [], "\n".join(f["detail"] for f in findings))
 
     def test_the_rule_runs_as_part_of_the_report(self):

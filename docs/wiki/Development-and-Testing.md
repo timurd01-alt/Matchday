@@ -14,7 +14,7 @@ Matchday is primarily a Python data pipeline and static web application, with sm
 
 ## Local setup
 
-Use [SETUP.md](https://github.com/timurd01-alt/Matchday/blob/main/SETUP.md) for current local instructions. API credentials belong only in ignored local configuration or the deployment environment; never commit them.
+Use [SETUP.md](https://github.com/timurd01-alt/Matchday/blob/main/docs/SETUP.md) for current local instructions. API credentials belong only in ignored local configuration or the deployment environment; never commit them.
 
 ## Prediction integrity invariant
 
@@ -34,4 +34,4 @@ Tests should accompany changes to ranking logic, provider normalization, grading
 
 ## Security
 
-Read [SECURITY.md](https://github.com/timurd01-alt/Matchday/blob/main/SECURITY.md) before publishing or deploying changes. Never include API keys, private pick logs, raw credential-bearing errors, or local configuration in an issue or pull request.
+Read [SECURITY.md](https://github.com/timurd01-alt/Matchday/blob/main/docs/SECURITY.md) before publishing or deploying changes. Never include API keys, private pick logs, raw credential-bearing errors, or local configuration in an issue or pull request.

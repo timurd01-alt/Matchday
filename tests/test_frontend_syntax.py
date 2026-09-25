@@ -5,7 +5,7 @@ import subprocess
 import unittest
 
 
-ROOT = pathlib.Path(__file__).resolve().parent
+ROOT = pathlib.Path(__file__).resolve().parent.parent
 
 
 class FrontendSyntaxTests(unittest.TestCase):

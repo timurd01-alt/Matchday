@@ -335,7 +335,7 @@ class GeneratedGraphicsData(unittest.TestCase):
     numbers match what the exporter says today.
     """
 
-    JS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "social", "weekly-data.js")
+    JS = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "social", "weekly-data.js")
 
     def _payload(self):
         with open(self.JS, encoding="utf-8") as handle:

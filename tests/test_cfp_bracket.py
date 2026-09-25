@@ -4,7 +4,7 @@ import shutil
 import subprocess
 import unittest
 
-ROOT = pathlib.Path(__file__).resolve().parent
+ROOT = pathlib.Path(__file__).resolve().parent.parent
 
 @unittest.skipUnless(shutil.which('node'), 'Node.js is unavailable')
 class CFPBracketTests(unittest.TestCase):

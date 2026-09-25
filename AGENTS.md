@@ -259,7 +259,8 @@ Run before considering prediction/data/provider changes complete:
 python -m unittest discover -p "test_*.py"
 ```
 
-This is the exact command `deploy.yml` runs, and `test_next_task` asserts the two
+Tests live in `tests/` (a package, so this command still finds them from the
+repository root). This is the exact command `deploy.yml` runs, and `test_next_task` asserts the two
 stay identical — so what you run locally is what your PR is judged by. Don't
 narrow it to a named subset: this section previously listed four suites while CI
 ran thirty, and the thirty themselves left 26 modules on disk gating nothing.
@@ -274,10 +275,10 @@ The suites most worth knowing by name when something fails:
 
 ## Compliance
 
-`PROVIDER_COMPLIANCE.md` is the live checklist of provider terms, licensing, and attribution
+`docs/PROVIDER_COMPLIANCE.md` is the live checklist of provider terms, licensing, and attribution
 requirements (ESPN supplies public facts only — final scores, AP Top 25 rank/team, news headlines — never its statistics or content). Re-check it, and update its
 review date, before any change to provider sourcing, data display, or redistribution. See also
-`SECURITY.md` and `ROTATE_KEYS.md`.
+`docs/SECURITY.md` and `docs/ROTATE_KEYS.md`.
 
 ## Local run
 

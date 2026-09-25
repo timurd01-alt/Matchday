@@ -207,7 +207,7 @@ class RequiredSuiteDriftTest(unittest.TestCase):
 
     def test_discovery_actually_finds_every_suite_on_disk(self):
         import unittest as _unittest
-        on_disk = {p.stem for p in Path(".").glob("test_*.py")}
+        on_disk = {p.stem for p in Path("tests").glob("test_*.py")}
         found = set()
         stack = [_unittest.defaultTestLoader.discover(".", pattern="test_*.py")]
         while stack:
@@ -215,7 +215,7 @@ class RequiredSuiteDriftTest(unittest.TestCase):
             if isinstance(item, _unittest.TestSuite):
                 stack.extend(item)
             else:
-                found.add(type(item).__module__)
+                found.add(type(item).__module__.rsplit(".", 1)[-1])
         self.assertEqual(on_disk, found)
 
 

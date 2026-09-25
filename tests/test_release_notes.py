@@ -12,7 +12,7 @@ from pathlib import Path
 
 import build_updates
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parent.parent
 
 
 class ReleaseNotesTests(unittest.TestCase):
