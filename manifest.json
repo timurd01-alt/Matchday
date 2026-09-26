@@ -1,7 +1,7 @@
 {
   "name": "Matchday Analysis",
   "short_name": "Matchday",
-  "description": "Pregame sports predictions, matchup analysis, probability forecasts, and verified postgame grading.",
+  "description": "Free college football and basketball research for fans: ratings, win probabilities and a publicly graded pick record.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

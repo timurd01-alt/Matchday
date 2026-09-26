@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0927E",
+  "tag": "Change",
+  "title": "Search listing describes a free fan resource",
+  "items": [
+   "The page title, search description and share previews now describe Matchday as free college football and basketball research for fans, with no account and no ads.",
+   "Search engines are told the site is free to access."
+  ]
+ },
+ {
   "date": "Build 0927D",
   "tag": "Fix",
   "title": "Featured read highlights the difference",
