@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0926Z",
+  "tag": "Change",
+  "title": "Sacramento State vs UMass read shown again",
+  "items": [
+   "The Bet Better model read for Sacramento State vs UMass is back on the site, shown exactly as the model produced it.",
+   "The withheld-reads list stays available but is now empty."
+  ]
+ },
+ {
   "date": "Build 0926Y",
   "tag": "Fix",
   "title": "Sacramento State vs UMass read withheld",
