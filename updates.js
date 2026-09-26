@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0926J",
+  "tag": "Design",
+  "title": "Cleaner welcome page",
+  "items": [
+   "Removed the decorative athletes from the welcome page so the Matchday Terminal lettering stands on its own."
+  ]
+ },
+ {
   "date": "Build 0926H",
   "tag": "Change",
   "title": "Instagram link removed",
