@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0926S",
+  "tag": "Design",
+  "title": "Research results in green",
+  "items": [
+   "Research percentages, the biggest rank move, improved ranks and longshot-win percentages are green, matching results elsewhere.",
+   "Links, LIVE tags and section labels stay lime. Model reads in Games keep their lime percentages."
+  ]
+ },
+ {
   "date": "Build 0926R",
   "tag": "Design",
   "title": "Lime-tinted dividers, no data feed badge",

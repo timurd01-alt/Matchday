@@ -3873,3 +3873,8 @@ body{font-variant-numeric:tabular-nums}
 #view-groups td,#view-groups td b,#view-groups details>summary{font-family:var(--mono)}
 #view-groups td:has(.gteam,.pollTeamInner){font-family:var(--display)}
 @media(max-width:760px){.gteam,.pollTeamInner,.pollTeamInner>span{font-size:var(--fs-md)}:is(#view-score,#view-news) .rsGapGame{font-size:var(--fs-3xs)}}
+
+/* ---- result colours on Research -------------------------------------------
+   Green marks results and percentages; lime marks interface and identity.
+   Only Games' model reads keep a lime percentage. */
+#view-news :is(.rsSignal,.rsSignal b,.rsMoveBig,.rsPath .rsSignal,.rsShotPct){color:var(--win)}
