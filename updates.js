@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0926Q",
+  "tag": "Design",
+  "title": "Calmer lime and green",
+  "items": [
+   "The interface lime is a deeper shade, about as bright as the old green, so labels and links no longer glare. The full logo lime stays on the logo and the Enter button only.",
+   "Green for good results is slightly deeper, so it is clearly different from the lime and balanced against the red used for losses.",
+   "Faint text is a little lighter so it stays readable on cards."
+  ]
+ },
+ {
   "date": "Build 0926P",
   "tag": "Design",
   "title": "Lime is the brand colour; green means a good result",
