@@ -3799,3 +3799,27 @@ body{font-variant-numeric:tabular-nums}
 #welcomeGate .wx-hero .welcomeEnter:hover{background:#5ee394;border-color:#5ee394}
 #welcomeGate .wx-card{border-color:var(--line2)}
 @supports not ((-webkit-background-clip:text) or (background-clip:text)){#welcomeGate .wx-word{color:var(--text)}}
+
+/* ---- one font per role: shell + larger display sizes -----------------------
+   The top strip and navigation are labels, so they take --mono like every
+   other label. Barlow Condensed sets smaller than Inter at the same size, so
+   display text on home and the welcome gate steps up one or two sizes to fill
+   the space it left; weights are unified (display 700, labels 700). */
+:is(#strip,.livestrip) :is(.ls-brand,.ls-next,.ls-next b,.ls-extra){font-family:var(--mono);letter-spacing:.06em;text-transform:uppercase}
+.sidebar :is(.navbtn,.navExternal) .lbl{font-family:var(--mono);letter-spacing:0}
+.ls-brand{font-weight:var(--fw-bold)}
+#view-home .homeIntro h1{font-size:var(--fs-5xl)}
+#view-home .homeIntro>span,#view-home :is(.gamesSectionHead>span,.gamesSectionHead small,.gamesRecord span,.gamesExplore>span,.gamesFeaturedWhen,.homeKpis span,.gamesFeaturedCompare span){font-size:var(--fs-xs);font-weight:var(--fw-bold)}
+#view-home .homeKpis strong{font-size:var(--fs-5xl);font-weight:var(--fw-bold)}
+#view-home .gamesFeaturedButton>strong,#view-home .gamesFeaturedTeam{font-size:var(--fs-4xl);font-weight:var(--fw-bold)}
+#view-home .gamesFeaturedCompare b{font-size:var(--fs-3xl);font-weight:var(--fw-bold)}
+#view-home .gamesDifferenceRows b{font-size:var(--fs-xl);font-weight:var(--fw-bold)}
+#view-home .gamesDifferenceRows strong{font-size:var(--fs-lg);font-weight:var(--fw-bold)}
+#view-home .gamesRecord strong{font-size:var(--fs-6xl);font-weight:var(--fw-bold)}
+#view-home .gamesSeeds b{font-size:var(--fs-xl);font-weight:var(--fw-bold)}
+#view-home .gamesExplore b{font-size:var(--fs-xl);font-weight:var(--fw-bold)}
+#view-home :is(.gamesTextLink,.gamesRecord button,.gamesFeaturedButton>em){font-size:var(--fs-xs)}
+#welcomeGate h2{font-size:var(--fs-5xl)}
+#welcomeGate h3{font-size:var(--fs-4xl)}
+#welcomeGate .wx-footLinks :is(a,button){text-transform:uppercase}
+@media(max-width:760px){#welcomeGate h2{font-size:var(--fs-4xl)}#welcomeGate h3{font-size:var(--fs-3xl)}#view-home .homeIntro h1{font-size:var(--fs-4xl)}#view-home .gamesRecord strong{font-size:var(--fs-5xl)}}
