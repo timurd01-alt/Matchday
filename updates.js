@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0927G",
+  "tag": "Change",
+  "title": "Light logo tiles everywhere",
+  "items": [
+   "Every team logo on the site, from the games board to match windows and research, now sits on the light tile used in the CFP bracket."
+  ]
+ },
+ {
   "date": "Build 0927F",
   "tag": "Change",
   "title": "Rankings logos on light tiles",
