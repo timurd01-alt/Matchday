@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0926P",
+  "tag": "Design",
+  "title": "Lime is the brand colour; green means a good result",
+  "items": [
+   "Section labels, links, buttons, the active tab, focus outlines and selected filters now use the logo's lime.",
+   "Green is kept for results only: positive differences, rank moves up, wins, hit-rate bars and form dots.",
+   "Lime is the new default accent in Customize. If you had chosen a different accent colour, it stays."
+  ]
+ },
+ {
   "date": "Build 0926N",
   "tag": "Design",
   "title": "Research, Scorecard and Rankings on the new type roles; lime brand accents",
