@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0926X",
+  "tag": "Fix",
+  "title": "Full-width side sections on phones",
+  "items": [
+   "On phones, Latest calls and Playoff picture on Home now use the full screen width instead of shrinking to their content."
+  ]
+ },
+ {
   "date": "Build 0926W",
   "tag": "Feature",
   "title": "Latest calls on Home, socials in the menu",

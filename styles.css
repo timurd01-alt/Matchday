@@ -3860,4 +3860,8 @@ body{font-variant-numeric:tabular-nums}
   #view-home .homeIntro h1{font-size:var(--fs-4xl)}
   #view-home .gamesRecord strong{font-size:var(--fs-5xl)}
   .gteam,.pollTeamInner,.pollTeamInner>span{font-size:var(--fs-md)}
+  /* Side-column sections fill the full width once they stack under the list. */
+  .gamesSideCol>.gamesRecord{align-self:stretch;width:100%}
+  .gamesSideCol>.gamesRecord>div{width:100%}
+  .gamesSideCol .gamesSeeds{width:100%}
 }
