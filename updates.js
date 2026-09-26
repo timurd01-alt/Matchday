@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0927A",
+  "tag": "Change",
+  "title": "YouTube and TikTok links removed",
+  "items": [
+   "The YouTube and TikTok links are gone from the welcome page, the navigation and the site's profile information. X is the one social account."
+  ]
+ },
+ {
   "date": "Build 0926Z",
   "tag": "Change",
   "title": "Sacramento State vs UMass read shown again",
