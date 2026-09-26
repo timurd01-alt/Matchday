@@ -7,14 +7,14 @@
    --fs-* token, since rem on the root element resolves against the
    browser default (16px) and would rescale the entire UI. */
 html{font-size:var(--fs-md);-webkit-text-size-adjust:100%}body{height:100vh;overflow:hidden;color:var(--text);font-family:var(--sans);background:var(--bg);-webkit-font-smoothing:antialiased}a{color:inherit;text-decoration:none}button,select,input{font:inherit}::-webkit-scrollbar{width:9px;height:9px}::-webkit-scrollbar-thumb{background:var(--line2);border-radius:6px}::-webkit-scrollbar-track{background:transparent}
-.app{display:grid;grid-template-columns:62px 1fr 340px;grid-template-rows:46px 1fr;grid-template-areas:"strip strip strip" "side main insight";height:100vh}.app.noinsight{grid-template-columns:62px 1fr 0}.app.noinsight .insight{display:none}.livestrip{grid-area:strip;display:flex;align-items:center;gap:16px;padding:0 18px;background:var(--glass);border-bottom:1px solid var(--line);font-size:var(--fs-md);white-space:nowrap;overflow:hidden;z-index:12}.ls-brand{font-family:var(--display);font-weight:var(--fw-heavy);letter-spacing:.04em;text-transform:uppercase;font-size:var(--fs-md);color:var(--text);display:flex;align-items:center;gap:8px;padding-right:8px;border-right:1px solid var(--line)}.ls-brand .pip{width:8px;height:8px;border-radius:50%;background:var(--signal);box-shadow:0 0 10px var(--signal)}.ls-tag{font-family:var(--mono);font-size:var(--fs-2xs);letter-spacing:.12em;font-weight:var(--fw-bold);color:var(--live);display:flex;align-items:center;gap:7px}.ls-tag .dot{width:7px;height:7px;border-radius:50%;background:var(--live);box-shadow:0 0 9px var(--live);animation:pulse 1.2s infinite}@keyframes pulse{50%{opacity:.35}}.ls-live{font-weight:var(--fw-bold);font-family:var(--display)}.ls-next{color:var(--muted);font-family:var(--mono);font-size:var(--fs-sm)}.ls-next b{color:var(--text)}.ls-upd{margin-left:auto;color:var(--faint);font-family:var(--mono);font-size:var(--fs-xs)}
+.app{display:grid;grid-template-columns:62px 1fr 340px;grid-template-rows:46px 1fr;grid-template-areas:"strip strip strip" "side main insight";height:100vh}.app.noinsight{grid-template-columns:62px 1fr 0}.app.noinsight .insight{display:none}.livestrip{grid-area:strip;display:flex;align-items:center;gap:16px;padding:0 18px;background:var(--glass);border-bottom:1px solid var(--line);font-size:var(--fs-md);white-space:nowrap;overflow:hidden;z-index:12}.ls-brand{font-family:var(--display);letter-spacing:.04em;text-transform:uppercase;font-size:var(--fs-md);color:var(--text);display:flex;align-items:center;gap:8px;padding-right:8px;border-right:1px solid var(--line);font-weight:var(--fw-bold)}.ls-brand .pip{width:8px;height:8px;border-radius:50%;background:var(--signal);box-shadow:0 0 10px var(--signal)}.ls-tag{font-family:var(--mono);font-size:var(--fs-2xs);letter-spacing:.12em;font-weight:var(--fw-bold);color:var(--live);display:flex;align-items:center;gap:7px}.ls-tag .dot{width:7px;height:7px;border-radius:50%;background:var(--live);box-shadow:0 0 9px var(--live);animation:pulse 1.2s infinite}@keyframes pulse{50%{opacity:.35}}.ls-live{font-weight:var(--fw-bold);font-family:var(--display)}.ls-next{color:var(--muted);font-family:var(--mono);font-size:var(--fs-sm)}.ls-next b{color:var(--text)}.ls-upd{margin-left:auto;color:var(--faint);font-family:var(--mono);font-size:var(--fs-xs)}
 .sidebar{grid-area:side;display:flex;flex-direction:column;gap:3px;padding:10px 0;width:62px;overflow:hidden;background:var(--glass);border-right:1px solid var(--line);z-index:11}.navGroup{display:flex;flex-direction:column;gap:3px}.navGroup[hidden]{display:none}.navGroup+.navGroup{margin-top:9px;padding-top:9px;border-top:1px solid var(--line)}.navbtn{position:relative;display:flex;align-items:center;gap:15px;height:44px;padding:0 19px;width:198px;border:none;background:none;color:var(--muted);cursor:pointer;transition:color .14s,background .14s;flex:0 0 auto}.navMore{display:none}.navbtn svg{width:22px;height:22px;flex:0 0 22px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}.navbtn .lbl{font-size:var(--fs-base);font-weight:var(--fw-semibold);white-space:nowrap;opacity:0}.navbtn:hover{color:var(--text);background:rgba(255,255,255,.04)}.navbtn[aria-pressed=true]{color:var(--signal)}.navbtn[aria-pressed=true]::before{content:"";position:absolute;left:0;top:7px;bottom:7px;width:3px;background:var(--signal);border-radius:0 3px 3px 0;box-shadow:0 0 10px var(--signal)}
 .content{grid-area:main;overflow-y:auto;padding:16px 18px 40px}.insight{grid-area:insight;overflow-y:auto;padding:16px;background:var(--glass);border-left:1px solid var(--line)}.banner{background:var(--panel2);border:1px solid var(--line);border-left:3px solid var(--signal);border-radius:10px;padding:10px 13px;margin-bottom:14px;font-size:var(--fs-md);color:var(--muted)}
 .marketBanner{background:rgba(255,176,46,.08);border:1px solid rgba(255,176,46,.35);border-left:3px solid var(--warn);border-radius:10px;padding:10px 13px;margin-bottom:14px;font-size:var(--fs-md);color:var(--muted);line-height:1.5}
 .developmentPause,.welcomePause{display:flex;align-items:flex-start;gap:10px;background:rgba(255,176,46,.08);border:1px solid rgba(255,176,46,.35);border-left:3px solid var(--warn);border-radius:10px;padding:10px 13px;margin-bottom:14px;font-size:var(--fs-md);color:var(--muted);line-height:1.5}.developmentPause strong,.welcomePause strong{flex:0 0 auto;color:var(--warn);font-family:var(--display)}.developmentPause a,.welcomePause a{color:var(--text);text-decoration:underline;text-underline-offset:2px}.developmentPause a:focus-visible,.welcomePause a:focus-visible{outline:2px solid var(--warn);outline-offset:3px;border-radius:2px}@media(max-width:600px){.developmentPause,.welcomePause{display:block}.developmentPause strong,.welcomePause strong{display:block;margin-bottom:4px}}
-.marketBanner b{color:var(--warn)}.banner b{color:var(--signal)}.banner code{font-family:var(--mono);color:var(--text)}.empty{text-align:center;color:var(--muted);padding:55px 20px;font-family:var(--mono);font-size:var(--fs-md);line-height:1.7}.seclbl{font-size:var(--fs-2xs);letter-spacing:.1em;text-transform:uppercase;color:var(--signal);font-weight:var(--fw-bold);margin:0 0 9px}.seclbl:not(:first-child){margin-top:16px}.faintline{font-size:var(--fs-md);color:var(--faint);font-family:var(--mono)}.view{display:none}.vhead{font-family:var(--display);font-weight:var(--fw-bold);font-size:var(--fs-xl);margin:2px 0 14px;letter-spacing:-.01em}
+.marketBanner b{color:var(--warn)}.banner b{color:var(--signal)}.banner code{font-family:var(--mono);color:var(--text)}.empty{text-align:center;color:var(--muted);padding:55px 20px;font-family:var(--mono);font-size:var(--fs-md);line-height:1.7}.seclbl{font-size:var(--fs-2xs);text-transform:uppercase;color:var(--signal);font-weight:var(--fw-bold);margin:0 0 9px;font-family:var(--mono);letter-spacing:.1em}.seclbl:not(:first-child){margin-top:16px}.faintline{font-size:var(--fs-md);color:var(--faint);font-family:var(--mono)}.view{display:none}.vhead{font-family:var(--display);font-weight:var(--fw-bold);font-size:var(--fs-xl);margin:2px 0 14px;letter-spacing:-.01em}
 #view-matches{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:11px;align-items:start}#view-matches .vhead,#view-matches .toggle{grid-column:1/-1}.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}.head{padding:12px 13px;cursor:pointer;user-select:none}.metarow{display:flex;align-items:center;gap:8px;font-size:var(--fs-2xs);letter-spacing:.05em;text-transform:uppercase;color:var(--faint);margin-bottom:10px;font-weight:var(--fw-bold)}.metarow .stage{color:var(--signal)}.metarow .spacer{flex:1}.pill{padding:3px 8px;border-radius:999px;border:1px solid var(--line2);font-weight:var(--fw-bold);letter-spacing:.04em;font-size:var(--fs-2xs)}.pill.LIVE{color:var(--bg);background:var(--live);border-color:var(--live);display:flex;align-items:center;gap:5px}.pill.LIVE .blink{width:5px;height:5px;border-radius:50%;background:var(--bg);animation:pulse 1.1s infinite}.pill.FINISHED{color:var(--muted)}.fixture{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:9px}.side{display:flex;flex-direction:column;gap:4px;min-width:0}.side.away{align-items:flex-end;text-align:right}.tname{font-family:var(--display);font-weight:var(--fw-bold);font-size:var(--fs-lg);line-height:1.18;overflow:hidden;text-overflow:ellipsis;letter-spacing:-.01em}.tsub{font-size:var(--fs-xs);color:var(--muted);font-family:var(--mono);display:flex;gap:6px}.side.away .tsub{flex-direction:row-reverse}.center{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:54px}.score{font-family:var(--mono);font-weight:var(--fw-bold);font-size:var(--fs-2xl);white-space:nowrap}.score .sep{color:var(--faint);margin:0 2px}.kick{font-family:var(--mono);font-size:var(--fs-md);color:var(--muted)}.minute{font-size:var(--fs-2xs);color:var(--live);font-weight:var(--fw-bold);font-family:var(--mono)}.expander{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:10px;font-size:var(--fs-2xs);color:var(--muted);font-weight:var(--fw-bold);letter-spacing:.04em}.detail{display:none;border-top:1px solid var(--line);padding:13px}.card.open .detail{display:block}.miniStats{display:grid;grid-template-columns:1fr auto 1fr;gap:6px 10px;font-size:var(--fs-md);align-items:center}.miniStats .lab{text-align:center;color:var(--muted);font-family:var(--mono);font-size:var(--fs-xs)}.miniStats .home{text-align:right}.miniStats .away{text-align:left}.statbar{height:6px;background:var(--bg2);border:1px solid var(--line);border-radius:999px;overflow:hidden;grid-column:1/-1;display:flex}.statbar i:first-child{background:var(--home)}.statbar i:last-child{background:var(--away)}.pressure{margin-top:11px;padding:8px 10px;border:1px solid var(--line);background:var(--bg2);border-left:3px solid var(--signal);border-radius:8px;font-size:var(--fs-sm);color:var(--muted)}.xi{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.xi h4{font-size:var(--fs-xs);color:var(--signal);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}.xi .player{font-family:var(--mono);font-size:var(--fs-sm);color:var(--muted);padding:2px 0}
-.toggle{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:var(--fs-sm);font-family:var(--mono);margin-top:5px}.toggle input{accent-color:var(--signal)}.tablewrap{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin-bottom:14px}.groupHead{display:flex;align-items:center;justify-content:space-between;padding:11px 13px;border-bottom:1px solid var(--line);background:var(--bg2);font-family:var(--display);font-weight:var(--fw-bold)}.groupHead span{font-family:var(--mono);font-size:var(--fs-2xs);color:var(--faint);font-weight:var(--fw-bold);text-transform:uppercase}.gtable{width:100%;border-collapse:collapse}.gtable th,.gtable td{padding:8px 9px;border-bottom:1px solid var(--line);font-size:var(--fs-sm);text-align:center}.gtable th{font-family:var(--mono);font-size:var(--fs-2xs);color:var(--faint);font-weight:var(--fw-bold);text-transform:uppercase}.gtable td:first-child,.gtable th:first-child{text-align:left}.gteam{display:flex;align-items:center;gap:8px;font-weight:var(--fw-bold)}.pos{font-family:var(--mono);color:var(--faint);width:18px}.code{font-family:var(--mono);color:var(--signal);font-size:var(--fs-sm);display:inline-block;min-width:34px;text-align:left;flex:0 0 auto}.liveMark{color:var(--live);font-family:var(--mono);font-size:var(--fs-xs)}.form{font-family:var(--mono);color:var(--muted);font-size:var(--fs-xs)}.qual{box-shadow:inset 3px 0 0 var(--win)}.third{box-shadow:inset 3px 0 0 var(--signal)}
+.toggle{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:var(--fs-sm);font-family:var(--mono);margin-top:5px}.toggle input{accent-color:var(--signal)}.tablewrap{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin-bottom:14px}.groupHead{display:flex;align-items:center;justify-content:space-between;padding:11px 13px;border-bottom:1px solid var(--line);background:var(--bg2);font-family:var(--display);font-size:var(--fs-xl);font-weight:var(--fw-bold);text-transform:uppercase;letter-spacing:.01em}.groupHead span{font-family:var(--mono);font-size:var(--fs-2xs);color:var(--faint);font-weight:var(--fw-bold);text-transform:uppercase}.gtable{width:100%;border-collapse:collapse}.gtable th,.gtable td{padding:8px 9px;border-bottom:1px solid var(--line);font-size:var(--fs-sm);text-align:center}.gtable th{font-family:var(--mono);font-size:var(--fs-2xs);color:var(--faint);font-weight:var(--fw-bold);text-transform:uppercase}.gtable td:first-child,.gtable th:first-child{text-align:left}.gteam{display:flex;align-items:center;gap:8px;font-weight:var(--fw-bold)}.pos{font-family:var(--mono);color:var(--faint);width:18px}.code{font-family:var(--mono);color:var(--signal);font-size:var(--fs-sm);display:inline-block;min-width:34px;text-align:left;flex:0 0 auto}.liveMark{color:var(--live);font-family:var(--mono);font-size:var(--fs-xs)}.form{font-family:var(--mono);color:var(--muted);font-size:var(--fs-xs)}.qual{box-shadow:inset 3px 0 0 var(--win)}.third{box-shadow:inset 3px 0 0 var(--signal)}
 .bracketGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}.round{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}.round h3{font-family:var(--display);font-size:var(--fs-base);padding:10px 12px;background:var(--bg2);border-bottom:1px solid var(--line)}.kmatch{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center;padding:9px 10px;border-bottom:1px solid var(--line);font-size:var(--fs-sm)}.kt{font-weight:var(--fw-bold)}.kt.away{text-align:right}.ksc{font-family:var(--mono);color:var(--muted);font-weight:var(--fw-bold)}.ksc.liveSc{color:var(--live)}.win{color:var(--win)}.slotGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:9px}.slot{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:9px}.slot .sl{font-family:var(--mono);font-size:var(--fs-2xs);color:var(--faint);font-weight:var(--fw-bold);text-transform:uppercase}.slot .tm{font-family:var(--display);font-weight:var(--fw-bold);margin-top:5px}.slot .meta{font-family:var(--mono);font-size:var(--fs-xs);color:var(--muted);margin-top:3px}.slot.in{border-color:var(--line2)}
 .newsTools{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.chip{border:1px solid var(--line2);background:var(--panel);color:var(--muted);border-radius:999px;padding:5px 9px;font-size:var(--fs-xs);font-weight:var(--fw-bold);cursor:pointer}.chip.on{color:var(--bg);background:var(--signal);border-color:var(--signal)}.ncard,.ins-news{display:block;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:9px;transition:.12s}.ncard:hover,.ins-news:hover{border-color:var(--line2);transform:translateY(-1px)}.nhead{font-family:var(--display);font-weight:var(--fw-bold);font-size:var(--fs-base);line-height:1.3}.ndesc{color:var(--muted);font-size:var(--fs-md);line-height:1.5;margin-top:6px}.nmeta{display:flex;gap:9px;align-items:center;margin-top:8px;color:var(--faint);font-family:var(--mono);font-size:var(--fs-xs)}.nsrc{color:var(--signal);font-weight:var(--fw-bold)}.socialGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;margin-bottom:14px}.socialGrid a{background:var(--bg2);border:1px solid var(--line);border-radius:9px;padding:9px;font-size:var(--fs-md);color:var(--muted)}.socialGrid a:hover{color:var(--text);border-color:var(--signal)}
 .status-grid,.settings-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-top:10px}.statuscard,.setcard{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:13px}.statuscard.ok{border-left:3px solid var(--win)}.statuscard.warn{border-left:3px solid var(--live)}.statuscard.info{border-left:3px solid var(--signal)}.slbl,.setcard label{display:block;font-size:var(--fs-2xs);text-transform:uppercase;letter-spacing:.08em;color:var(--faint);font-weight:var(--fw-bold);margin-bottom:6px}.sval{font-family:var(--display);font-weight:var(--fw-bold);font-size:var(--fs-xl)}.hint{font-size:var(--fs-sm);color:var(--muted);line-height:1.45;margin-top:6px}.setcard select{width:100%;padding:8px;border-radius:8px;background:var(--bg2);border:1px solid var(--line);color:var(--text)}.switchrow{display:flex;align-items:center;justify-content:space-between;gap:8px;color:var(--muted);font-size:var(--fs-md)}.btnline{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.actionbtn{border:1px solid var(--line2);background:var(--panel);color:var(--text);border-radius:9px;padding:8px 10px;cursor:pointer;font-size:var(--fs-md);font-weight:var(--fw-bold)}.actionbtn:hover{border-color:var(--signal)}.ins-match{font-family:var(--display);font-weight:var(--fw-bold);font-size:var(--fs-lg);line-height:1.15}.ins-sub{font-family:var(--mono);font-size:var(--fs-sm);color:var(--muted);margin-top:5px}.ins-summary{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px;font-size:var(--fs-md);color:var(--muted);line-height:1.4}.evs{color:var(--faint);font-family:var(--mono)}
@@ -294,7 +294,7 @@ body.modalOpen{overflow:hidden}.matchModal{position:fixed;inset:0;z-index:99;dis
   .empty{border:1px dashed var(--line);border-radius:12px;background:rgba(255,255,255,.012)}
   .insight .seclbl:first-child{margin-top:2px}
   .ins-summary{line-height:1.55}
-  .vhead{margin-bottom:16px}
+  .vhead{margin-bottom:16px;font-family:var(--display);font-size:var(--fs-2xl);font-weight:var(--fw-bold);text-transform:uppercase;letter-spacing:.01em}
   .wxchip{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:var(--fs-2xs);color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:2px 7px}
   .wxchip b{color:var(--text);font-weight:var(--fw-bold)}
   .sportSel{background:var(--bg2);color:var(--muted);border:1px solid var(--line);border-radius:8px;font-family:var(--mono);font-size:var(--fs-xs);padding:4px 8px;margin-left:12px;cursor:pointer;outline:none;transition:border-color .15s ease,color .15s ease}
@@ -2868,19 +2868,19 @@ body.welcomeOpen{height:auto;min-height:100vh;overflow-y:auto}
 #welcomeGate{--fs-wx-mark:min(78vh,60vw);--fs-wx-hero:3.714rem;--fs-wx-hero-sm:2.857rem;--fs-wx-section:1.857rem;--fs-wx-section-sm:1.714rem;--fs-wx-sub:1.214rem;--fs-wx-body:1.143rem;--fs-wx-meta:.857rem;display:block;place-items:initial;padding:0;background:var(--bg);font-family:var(--sans);font-size:var(--fs-wx-body);line-height:1.6;color:var(--text)}
 #welcomeGate[hidden]{display:none}
 #welcomeGate .wx{width:min(1152px,100%);margin:0 auto;padding:0 32px}
-#welcomeGate h1,#welcomeGate h2,#welcomeGate h3{font-family:var(--sans);color:var(--text);letter-spacing:-.015em;margin:0}
+#welcomeGate h1,#welcomeGate h2,#welcomeGate h3{color:var(--text);margin:0;font-family:var(--display);font-weight:var(--fw-bold);text-transform:uppercase;letter-spacing:.01em}
 #welcomeGate h1{font-size:var(--fs-wx-hero);line-height:1.1;font-weight:var(--fw-semibold);letter-spacing:-.025em;animation:none}
-#welcomeGate h2{font-size:var(--fs-wx-section);line-height:1.25;font-weight:var(--fw-semibold);margin-top:8px}
-#welcomeGate h3{font-size:var(--fs-wx-sub);line-height:1.4;font-weight:var(--fw-medium)}
+#welcomeGate h2{font-weight:var(--fw-semibold);margin-top:8px;line-height:1.1;font-size:var(--fs-5xl)}
+#welcomeGate h3{font-weight:var(--fw-medium);line-height:1.2;font-size:var(--fs-4xl)}
 #welcomeGate p{margin:0}
 #welcomeGate .wx-meta{font-size:var(--fs-wx-meta);line-height:1.5;font-weight:var(--fw-medium);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-#welcomeGate .wx-quiet{letter-spacing:.02em;text-transform:none}
+#welcomeGate .wx-quiet{text-transform:none;letter-spacing:.04em}
 #welcomeGate .wx-lead,#welcomeGate .wx-body,#welcomeGate .wx-body p{font-size:var(--fs-wx-body);font-weight:var(--fw-regular);color:var(--muted);max-width:60ch}
 #welcomeGate .wx-brand{font-size:var(--fs-wx-meta);font-weight:var(--fw-semibold);letter-spacing:.08em;text-transform:uppercase;color:var(--text)}
 /* The one link style: every secondary action on the page. */
 #welcomeGate .wx-link,#welcomeGate .wx-footLinks a{appearance:none;background:none;border:0;padding:8px 0;min-height:44px;display:inline-flex;align-items:center;gap:8px;font:inherit;font-size:var(--fs-wx-meta);font-weight:var(--fw-semibold);letter-spacing:.08em;text-transform:uppercase;color:var(--signal);cursor:pointer}
 #welcomeGate .wx-link:hover,#welcomeGate .wx-footLinks a:hover{text-decoration:underline;text-underline-offset:4px}
-#welcomeGate :is(.wx-link,.wx-card,.wx-footLinks a,.welcomeEnter):focus-visible{outline:2px solid var(--signal);outline-offset:4px;border-radius:8px}
+#welcomeGate :is(.wx-link,.wx-card,.wx-footLinks a,.welcomeEnter):focus-visible{outline:2px solid var(--signal);outline-offset:4px;border-radius:var(--r)}
 #welcomeGate .wx-top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:24px 0}
 #welcomeGate .wx-hero{padding:128px 0 96px;text-align:center;display:flex;flex-direction:column;align-items:center}
 #welcomeGate .wx-hero h1{margin-top:16px}
@@ -2907,7 +2907,7 @@ body.welcomeOpen{height:auto;min-height:100vh;overflow-y:auto}
 #welcomeGate .wx-record .wx-body,#welcomeGate .wx-research .wx-body{margin-top:16px}
 #welcomeGate .wx-stat{margin-top:48px;display:flex;flex-direction:column;align-items:center;gap:8px}
 #welcomeGate .wx-stat[hidden]{display:none}
-#welcomeGate .wx-stat b{font-size:var(--fs-wx-hero);line-height:1.1;font-weight:var(--fw-semibold);letter-spacing:-.025em;font-variant-numeric:tabular-nums;color:var(--text)}
+#welcomeGate .wx-stat b{font-size:var(--fs-wx-hero);line-height:1.1;letter-spacing:-.025em;font-variant-numeric:tabular-nums;color:var(--text);font-family:var(--display);font-weight:var(--fw-bold)}
 #welcomeGate .wx-stat span{font-size:var(--fs-wx-meta);font-weight:var(--fw-medium);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 #welcomeGate .wx-record>.wx-link,#welcomeGate .wx-research>.wx-link{margin-top:32px}
 #welcomeGate .wx-foot{padding:96px 0 64px;border-top:1px solid var(--line);text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px}
@@ -2948,7 +2948,7 @@ body.welcomeOpen{height:auto;min-height:100vh;overflow-y:auto}
 /* Section rules and cards use the app's own surfaces: .card is --panel on
    --line at --r. */
 #welcomeGate .wx-section,#welcomeGate .wx-foot{border-top-color:var(--line)}
-#welcomeGate .wx-card{background:var(--panel);border-color:var(--line);border-radius:var(--r)}
+#welcomeGate .wx-card{background:var(--panel);border-radius:var(--r);box-shadow:0 25px 60px -15px rgba(0,0,0,.65);border-color:var(--line2)}
 #welcomeGate .wx-card:hover{border-color:rgba(180,214,44,.45)}
 @media(max-width:760px){#welcomeGate .wx-top{margin:0 -16px;padding:16px}}
 
@@ -3204,7 +3204,7 @@ body{font-variant-numeric:tabular-nums}
 @media(max-width:900px){.rsGrid{grid-template-columns:1fr;gap:10px}.rsRail{padding-top:22px;border-top:1px solid var(--line)}.rsFeatured{grid-template-columns:1fr}}
 @media(max-width:600px){.rsFeatured{padding:18px}.rsGapRow{grid-template-columns:minmax(0,1fr) 54px 54px 48px;gap:8px}.rsBarHead,.rsBars li{grid-template-columns:96px minmax(0,1fr) 56px 30px;gap:8px}}
 /* Page title with its descriptor on the right: no sentence beneath. */
-.vhead.pageHead{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.vhead.pageHead{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:var(--fs-4xl)}
 .pageTag{font-size:var(--fs-2xs);letter-spacing:.1em;text-transform:uppercase;color:var(--faint);font-weight:var(--fw-bold)}
 /* News: one colour signal per card (the left edge). The category is plain
    coloured text, the publication sits opposite it, the aggregator is footer
@@ -3683,20 +3683,20 @@ body{font-variant-numeric:tabular-nums}
 #welcomeGate .wx-hero{padding:56px 0 40px}
 #welcomeGate .wx-hero::before{opacity:.2}
 #welcomeGate .wx-hero h1{font-family:"Oxanium",var(--display);font-weight:700;text-transform:uppercase;font-size:clamp(2.25rem,5.8vw,5rem);letter-spacing:-.045em;line-height:1.08}
-#welcomeGate .wx-word{display:inline-block;white-space:nowrap;color:#adb5ac;-webkit-text-stroke:1px #758044;paint-order:stroke fill}
-#welcomeGate .wx-titleMark{display:inline-block;width:.77em;height:.74em;margin-right:.025em;vertical-align:-.025em;fill:#adb5ac;stroke:#758044;stroke-width:2;paint-order:stroke fill;overflow:visible}
-#welcomeGate .wx-hero .wx-lead{margin-top:16px;font-size:1.143rem}
+#welcomeGate .wx-word{display:inline-block;white-space:nowrap;paint-order:stroke fill;color:var(--text);-webkit-text-stroke:0}
+#welcomeGate .wx-titleMark{display:inline-block;width:.77em;height:.74em;margin-right:.025em;vertical-align:-.025em;stroke-width:2;paint-order:stroke fill;overflow:visible;stroke:none;fill:var(--brand)}
+#welcomeGate .wx-hero .wx-lead{margin-top:16px;font-size:1.143rem;opacity:1;color:var(--text)}
 #welcomeGate .wx-hero .welcomeActions{margin-top:24px}
 #welcomeGate .wx-hero .wx-quiet{margin-top:12px}
-#welcomeGate .wx-hero .welcomeEnter{min-height:48px;padding:0 24px;font-size:var(--fs-wx-body);background:#193a2c;border-color:#508266;color:#d5e3d8;box-shadow:none}
-#welcomeGate .wx-hero .welcomeEnter:hover{background:#234d39;box-shadow:none}
+#welcomeGate .wx-hero .welcomeEnter{min-height:48px;padding:0 24px;font-size:var(--fs-wx-body);box-shadow:none;font-weight:var(--fw-bold);background:var(--brand);border-color:var(--brand);color:var(--bg)}
+#welcomeGate .wx-hero .welcomeEnter:hover{box-shadow:none;background:#e9fc5c;border-color:#e9fc5c}
 #welcomeGate .wx-section{padding:32px 0}
 @media(max-width:760px){#welcomeGate .wx-hero{padding:36px 0 28px}}
 @supports not ((-webkit-background-clip:text) or (background-clip:text)){#welcomeGate .wx-word{color:#adb5ac;background:none}}
 @media(forced-colors:active){#welcomeGate .wx-word{color:CanvasText;background:none;-webkit-text-stroke:0}#welcomeGate .wx-titleMark{fill:CanvasText;stroke:none}}
 
 @font-face{font-family:Oxanium;font-style:normal;font-weight:700;font-display:swap;src:url("assets/fonts/oxanium-700.ttf") format("truetype")}
-#welcomeGate{overflow-x:clip}
+#welcomeGate{overflow-x:clip;--muted:#a3aebb}
 @media(max-width:600px){#welcomeGate .wx-hero h1{font-size:clamp(2rem,8.5vw,3rem)}#welcomeGate .wx-word{display:block}}
 @media(max-width:360px){#welcomeGate .wx-top{flex-wrap:wrap;justify-content:center;gap:12px}#welcomeGate .wx-topNav{justify-content:center}}
 /* Tighter gutters give each team name ~6px more, so no school name has to
@@ -3756,130 +3756,93 @@ body{font-variant-numeric:tabular-nums}
 .rsPhoneTitle{display:none}
 @media(max-width:600px){.rsDeskTitle{display:none}.rsPhoneTitle{display:inline}}
 
-/* ---- welcome gate: one font per role --------------------------------------
-   Headers are --display (condensed caps), every small label is --mono, body
-   copy and the one button stay --sans. No element picks its own family, so a
-   header always looks like a header and a label always looks like a label.
-   Corners follow --r; depth is one soft drop shadow, never a glow. */
-#welcomeGate h1,#welcomeGate h2,#welcomeGate h3{font-family:var(--display);font-weight:var(--fw-bold);text-transform:uppercase;letter-spacing:.01em}
-#welcomeGate h2{line-height:1.1}
-#welcomeGate h3{line-height:1.2}
+/* ==== Type and colour roles =================================================
+   One font per role, applied the same way on every tab:
+     --display  headers, team names, headline numbers (Barlow Condensed)
+     --mono     labels, chips, table heads, inline data, text actions (JetBrains Mono)
+     --sans     sentences and the one primary button (Inter)
+   Colour follows meaning: --signal (interface lime) for labels, links and
+   focus; --win (green) for results and percentages; --muted for ranks.
+   Rules that only restyle an existing selector live with that selector
+   above; this section holds the cross-component role mappings. */
+
+/* ---- shell: top strip and navigation are labels ---------------------------- */
+:is(#strip,.livestrip) .ls-brand{font-family:var(--mono);font-weight:var(--fw-bold);letter-spacing:.06em;text-transform:uppercase}
+/* Status text stays sentence case so the strip fits on one line. */
+:is(#strip,.livestrip) :is(.ls-next,.ls-next b,.ls-extra){font-family:var(--mono);letter-spacing:0;text-transform:none}
+.sidebar :is(.navbtn,.navExternal) .lbl{font-family:var(--mono);letter-spacing:0}
+
+/* ---- welcome gate ---------------------------------------------------------- */
 #welcomeGate :is(.wx-meta,.wx-brand,.wx-num,.wx-cta,.wx-link,.wx-stat span,.wx-social,.wx-note,.wx-footLinks a,.wx-footLinks button){font-family:var(--mono);letter-spacing:.1em}
-#welcomeGate .wx-quiet{letter-spacing:.04em}
-#welcomeGate .wx-stat b{font-family:var(--display);font-weight:var(--fw-bold)}
+#welcomeGate .wx-footLinks :is(a,button){text-transform:uppercase}
 #welcomeGate .welcomeEnter,#welcomeGate .wx-social{border-radius:var(--r)}
-#welcomeGate .wx-card{box-shadow:0 25px 60px -15px rgba(0,0,0,.65)}
-#welcomeGate :is(.wx-link,.wx-card,.wx-footLinks a,.welcomeEnter):focus-visible{border-radius:var(--r)}
-#welcomeGate h3{font-size:var(--fs-3xl)}
 #welcomeGate .wx-section>.wx>.wx-meta,#welcomeGate .wx-section>.wx-meta{color:var(--signal)}
-
-/* ---- home: one font per role -----------------------------------------------
-   Same roles as the welcome gate. Page and card titles: --display caps.
-   Headline numbers and team names: --display. Labels, inline data, seeds and
-   every text action ("View … →"): --mono. */
-#view-home .homeIntro h1{font-family:var(--display);font-weight:var(--fw-bold);text-transform:uppercase;letter-spacing:.01em;line-height:1}
-#view-home .homeKpis strong{font-family:var(--display);font-size:var(--fs-3xl);line-height:1}
-#view-home .homeKpis span{font-family:var(--mono);font-size:var(--fs-2xs);letter-spacing:.1em;text-transform:uppercase}
-#view-home .homeKpis{border-radius:var(--r)}
-#view-home .gamesSeeds em{font-family:var(--mono);font-style:normal}
-#view-home .gamesSeeds b{font-family:var(--display);font-size:var(--fs-md)}
-#view-home .gamesExplore b{text-transform:uppercase;letter-spacing:.02em}
-#view-home :is(.gamesTextLink,.gamesRecord button,.gamesFeaturedButton>em){font-family:var(--mono);font-weight:var(--fw-bold);letter-spacing:.08em;text-transform:uppercase}
-#view-home :is(.gamesFeaturedButton,.gamesRecord button,.gamesExplore button){border-radius:var(--r)}
-
-/* ---- welcome gate: contrast ------------------------------------------------
-   Near-black surfaces carry bright type: the wordmark is full --text with the
-   M mark in --signal, the one button is solid --signal on dark text, and
-   secondary copy is lifted so nothing reads as greyed out. */
-#welcomeGate{--muted:#a3aebb}
-#welcomeGate .wx-word{color:var(--text);-webkit-text-stroke:0}
-#welcomeGate .wx-titleMark{fill:var(--signal);stroke:none}
-#welcomeGate .wx-hero .wx-lead{opacity:1;color:var(--text)}
-#welcomeGate .wx-hero .welcomeEnter{background:var(--signal);border-color:var(--signal);color:var(--bg);font-weight:var(--fw-bold)}
-#welcomeGate .wx-hero .welcomeEnter:hover{background:#5ee394;border-color:#5ee394}
-#welcomeGate .wx-card{border-color:var(--line2)}
+#welcomeGate .welcomeEnter:focus-visible{outline-color:var(--brand)}
 @supports not ((-webkit-background-clip:text) or (background-clip:text)){#welcomeGate .wx-word{color:var(--text)}}
 
-/* ---- one font per role: shell + larger display sizes -----------------------
-   The top strip and navigation are labels, so they take --mono like every
-   other label. Barlow Condensed sets smaller than Inter at the same size, so
-   display text on home and the welcome gate steps up one or two sizes to fill
-   the space it left; weights are unified (display 700, labels 700). */
-:is(#strip,.livestrip) :is(.ls-brand,.ls-next,.ls-next b,.ls-extra){font-family:var(--mono);letter-spacing:.06em;text-transform:uppercase}
-.sidebar :is(.navbtn,.navExternal) .lbl{font-family:var(--mono);letter-spacing:0}
-.ls-brand{font-weight:var(--fw-bold)}
-#view-home .homeIntro h1{font-size:var(--fs-5xl)}
+/* ---- home ------------------------------------------------------------------ */
+#view-home .homeIntro h1{font-family:var(--display);font-size:var(--fs-5xl);font-weight:var(--fw-bold);text-transform:uppercase;letter-spacing:.01em;line-height:1}
+#view-home .homeKpis{border-radius:var(--r)}
+#view-home .homeKpis strong{font-family:var(--display);font-size:var(--fs-5xl);font-weight:var(--fw-bold);line-height:1}
+#view-home .homeKpis span{font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase}
 #view-home .homeIntro>span,#view-home :is(.gamesSectionHead>span,.gamesSectionHead small,.gamesRecord span,.gamesExplore>span,.gamesFeaturedWhen,.homeKpis span,.gamesFeaturedCompare span){font-size:var(--fs-xs);font-weight:var(--fw-bold)}
-#view-home .homeKpis strong{font-size:var(--fs-5xl);font-weight:var(--fw-bold)}
-#view-home .gamesFeaturedButton>strong,#view-home .gamesFeaturedTeam{font-size:var(--fs-4xl);font-weight:var(--fw-bold)}
+#view-home :is(.gamesFeaturedButton>strong,.gamesFeaturedTeam){font-size:var(--fs-4xl);font-weight:var(--fw-bold)}
 #view-home .gamesFeaturedCompare b{font-size:var(--fs-3xl);font-weight:var(--fw-bold)}
 #view-home .gamesDifferenceRows b{font-size:var(--fs-xl);font-weight:var(--fw-bold)}
 #view-home .gamesDifferenceRows strong{font-size:var(--fs-lg);font-weight:var(--fw-bold)}
 #view-home .gamesRecord strong{font-size:var(--fs-6xl);font-weight:var(--fw-bold)}
-#view-home .gamesSeeds b{font-size:var(--fs-xl);font-weight:var(--fw-bold)}
-#view-home .gamesExplore b{font-size:var(--fs-xl);font-weight:var(--fw-bold)}
-#view-home :is(.gamesTextLink,.gamesRecord button,.gamesFeaturedButton>em){font-size:var(--fs-xs)}
-#welcomeGate h2{font-size:var(--fs-5xl)}
-#welcomeGate h3{font-size:var(--fs-4xl)}
-#welcomeGate .wx-footLinks :is(a,button){text-transform:uppercase}
-@media(max-width:760px){#welcomeGate h2{font-size:var(--fs-4xl)}#welcomeGate h3{font-size:var(--fs-3xl)}#view-home .homeIntro h1{font-size:var(--fs-4xl)}#view-home .gamesRecord strong{font-size:var(--fs-5xl)}}
+#view-home .gamesSeeds em{font-family:var(--mono);font-style:normal}
+#view-home .gamesSeeds b{font-family:var(--display);font-size:var(--fs-xl);font-weight:var(--fw-bold)}
+#view-home .gamesExplore b{font-size:var(--fs-xl);font-weight:var(--fw-bold);text-transform:uppercase;letter-spacing:.02em}
+#view-home :is(.gamesTextLink,.gamesRecord button,.gamesFeaturedButton>em){font-family:var(--mono);font-size:var(--fs-xs);font-weight:var(--fw-bold);letter-spacing:.08em;text-transform:uppercase}
+#view-home :is(.gamesFeaturedButton,.gamesRecord button,.gamesExplore button){border-radius:var(--r)}
 
-/* ---- brand lime -----------------------------------------------------------
-   --brand is the lime in the logo. It marks identity only: the M in the
-   welcome wordmark and the one Enter button. Green (--signal) stays the data
-   and section-label colour. */
-#welcomeGate .wx-titleMark{fill:var(--brand)}
-#welcomeGate .wx-hero .welcomeEnter{background:var(--brand);border-color:var(--brand);color:var(--bg)}
-#welcomeGate .wx-hero .welcomeEnter:hover{background:#e9fc5c;border-color:#e9fc5c}
-#welcomeGate .welcomeEnter:focus-visible{outline-color:var(--brand)}
-
-/* ---- Research + Scorecard: one font per role -------------------------------
-   Both tabs share the rs* component family, so the roles are mapped once:
-   titles, team names and headline numbers --display; labels, chips, kickers,
-   table heads, inline numbers and text actions --mono; sentences stay --sans.
-   Display sizes step up to match the space Barlow Condensed leaves. */
+/* ---- Research + Scorecard (shared rs* components) -------------------------- */
+/* Titles. */
 :is(#view-score,#view-news) :is(.rsTitle,.rsDeskTitle,.scVsHead b){font-family:var(--display);font-weight:var(--fw-bold);text-transform:uppercase;letter-spacing:.01em}
 :is(#view-score,#view-news) :is(.rsTitle,.rsDeskTitle){font-size:var(--fs-2xl)}
 :is(#view-score,#view-news) .scVsHead b{font-size:var(--fs-lg)}
+/* Headline numbers. */
 :is(#view-score,#view-news) :is(.scBig,.rsSignal,.rsMoveBig,.rsShotPct,.rsBigStat b){font-family:var(--display);font-weight:var(--fw-bold);letter-spacing:0}
+:is(#view-score,#view-news) .rsFeatSide div>b{font-family:var(--display);font-weight:var(--fw-bold);font-size:var(--fs-4xl)}
+:is(#view-score,#view-news) .rsCompare div>b{font-family:var(--display);font-weight:var(--fw-bold);font-size:var(--fs-4xl);letter-spacing:0}
 :is(#view-score,#view-news) .scBig{font-size:calc(var(--fs-6xl) * 1.25)}
 :is(#view-score,#view-news) b.rsSignal{font-size:var(--fs-4xl)}
 :is(#view-score,#view-news) :is(.rsMoveBig,.rsBigStat b){font-size:var(--fs-5xl)}
 :is(#view-score,#view-news) .rsShotPct{font-size:var(--fs-3xl)}
+/* Team names. */
 :is(#view-score,#view-news) :is(.rsLogoName,.rsMoveTeam,.rsShotTeam,.rsSchedTeam b,.rsMvName,.scTeam>span:not(.teamMonogram)){font-family:var(--display);font-weight:var(--fw-bold)}
 :is(#view-score,#view-news) :is(.rsLogoName,.rsShotTeam,.rsSchedTeam b,.rsMvName,.scTeam>span:not(.teamMonogram)){font-size:var(--fs-lg)}
 :is(#view-score,#view-news) .rsMoveTeam{font-size:var(--fs-3xl)}
+/* Labels, chips, kickers, table heads and text actions. */
 :is(#view-score,#view-news) :is(.rsPartHead,.rsChip,.rsKicker,.rsAside,dt,.scRangeRef,.scRangeAxis,.scRangeKey,.scCalKey,.rsLegend,.rsLegend2,.rsFilterChip,.rsQuadTab,.rsQuadHead,.rsSchedHead,.rsConfHead,.rsDivHead,.rsMoreBtn,.rsQuadMore,.scMethod>summary,.rsPath em,.rsNum small){font-family:var(--mono);letter-spacing:.08em}
 :is(#view-score,#view-news) :is(.rsMoreBtn,.rsQuadMore,.scMethod>summary){font-weight:var(--fw-bold);text-transform:uppercase}
 :is(#view-score,#view-news) .rsPartHead{font-size:var(--fs-xs);color:var(--signal)}
-:is(#view-score,#view-news) :is(dd,.scGap,.rsNum,.rsNum b,.scVsNum b,.scCalBand,.scCalNums,.scCalNums b,.scTeam b,.rsMvChg,.rsMvRank,.rsQuadRank,.rsRank,.rsQuadN,b.rsWin,b.rsLoss,.rsShotDate,.rsPath,.rsHandle,.rsSplitBar em,.rsQuadTab b,.scGamePick b){font-family:var(--mono);letter-spacing:0}
+/* Inline numbers and data meta lines. */
+:is(#view-score,#view-news) :is(dd,.scGap,.rsNum,.rsNum b,.scVsNum b,.scCalBand,.scCalNums,.scCalNums b,.scTeam b,.rsMvChg,.rsMvRank,.rsQuadRank,.rsRank,.rsQuadN,b.rsWin,b.rsLoss,.rsShotDate,.rsPath,.rsHandle,.rsSplitBar em,.rsQuadTab b,.scGamePick b,.scVsHead span,.scVsNum small,.scGamePick span,.rsGapGame,.rsShotSub,.rsPickMeta,.rsDivStop,.rsBigStat span,.rsCompare span){font-family:var(--mono);letter-spacing:0}
+:is(#view-score,#view-news) :is(.rsFeatSide span,.rsConfRow span){font-family:var(--mono)}
 :is(#view-score,#view-news) :is(dd,.rsNum b,.scVsNum b){font-size:var(--fs-xl)}
+/* dd picks up only the weight here; its family and size come from the number rules above. */
+:is(#view-score,#view-news) dd{font-weight:var(--fw-bold)}
+/* Shape. */
 :is(#view-score,#view-news) :is(.rsChip,.rsFilterChip){border-radius:2px}
 :is(#view-score,#view-news) :is(.card,[class*=rsCard],[class*=scCard],.rsPanel){border-radius:var(--r)}
-/* Top strip: keep labels mono but in sentence case so the line fits. */
-:is(#strip,.livestrip) :is(.ls-next,.ls-next b,.ls-extra){text-transform:none;letter-spacing:0}
-:is(#view-score,#view-news) .rsFeatSide div>b{font-family:var(--display);font-weight:var(--fw-bold);font-size:var(--fs-4xl)}
-:is(#view-score,#view-news) .rsCompare div>b{font-family:var(--display);font-weight:var(--fw-bold);font-size:var(--fs-4xl);letter-spacing:0}
-:is(#view-score,#view-news) :is(.rsFeatSide span,.rsConfRow span){font-family:var(--mono)}
-:is(#view-score,#view-news) :is(.scVsHead span,.scVsNum small,.scGamePick span,.rsGapGame,.rsShotSub,.rsMvRank,.rsPickMeta,.rsDivStop,.rsBigStat span,.rsCompare span){font-family:var(--mono);letter-spacing:0}
-:is(#view-score,#view-news) dd{font-family:var(--display);font-weight:var(--fw-bold);font-size:var(--fs-2xl);letter-spacing:0}
+/* Research results and percentages are green; links and LIVE stay lime. */
+#view-news :is(.rsSignal,.rsSignal b,.rsMoveBig,.rsPath .rsSignal,.rsShotPct){color:var(--win)}
 
-/* ---- app-wide role fixes (Rankings and every tab sharing these parts) ------ */
-.seclbl{font-family:var(--mono);letter-spacing:.1em}
-.vhead{font-family:var(--display);font-size:var(--fs-2xl);font-weight:var(--fw-bold);text-transform:uppercase;letter-spacing:.01em}
-.vhead.pageHead{font-size:var(--fs-4xl)}
-.groupHead{font-family:var(--display);font-size:var(--fs-xl);font-weight:var(--fw-bold);text-transform:uppercase;letter-spacing:.01em}
+/* ---- Rankings and shared tables -------------------------------------------- */
 .gteam,.pollTeamInner,.pollTeamInner>span{font-family:var(--display);font-weight:var(--fw-bold);font-size:var(--fs-xl)}
 #view-groups td,#view-groups td b,#view-groups details>summary{font-family:var(--mono)}
 #view-groups td:has(.gteam,.pollTeamInner){font-family:var(--display)}
-@media(max-width:760px){.gteam,.pollTeamInner,.pollTeamInner>span{font-size:var(--fs-md)}:is(#view-score,#view-news) .rsGapGame{font-size:var(--fs-3xs)}}
-
-/* ---- result colours on Research -------------------------------------------
-   Green marks results and percentages; lime marks interface and identity.
-   Only Games' model reads keep a lime percentage. */
-#view-news :is(.rsSignal,.rsSignal b,.rsMoveBig,.rsPath .rsSignal,.rsShotPct){color:var(--win)}
-
-/* ---- rank numbers ----------------------------------------------------------
-   A rank is a position, not a result or an action: every rank number is the
-   same muted grey, whether or not the team is ranked. */
+/* A rank is a position, not a result or an action: one muted grey everywhere. */
 :is(.pollRank,.pollRanked .pollRank,.pos,.rsRank,.rsQuadRank,.gamesSeeds em,#view-home .gamesSeeds em){color:var(--muted)}
+
+/* ---- phones ---------------------------------------------------------------- */
+@media(max-width:760px){
+  #welcomeGate h2{font-size:var(--fs-4xl)}
+  #welcomeGate h3{font-size:var(--fs-3xl)}
+  #view-home .homeIntro h1{font-size:var(--fs-4xl)}
+  #view-home .gamesRecord strong{font-size:var(--fs-5xl)}
+  .gteam,.pollTeamInner,.pollTeamInner>span{font-size:var(--fs-md)}
+  :is(#view-score,#view-news) .rsGapGame{font-size:var(--fs-3xs)}
+}

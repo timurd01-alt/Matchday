@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0926U",
+  "tag": "Maintenance",
+  "title": "Stylesheet cleanup",
+  "items": [
+   "Folded the recent design overrides back into the rules they change and grouped the remaining type and colour roles in one documented section. Nothing looks different; the site is easier to keep consistent."
+  ]
+ },
+ {
   "date": "Build 0926T",
   "tag": "Design",
   "title": "Rank numbers in grey",
