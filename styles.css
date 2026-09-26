@@ -3678,18 +3678,26 @@ body{font-variant-numeric:tabular-nums}
 /* Basketball preseason placeholders keep the layout without inventing numbers. */
 .rsWaitingNote{margin:12px 0 0;padding:28px 16px;border:1px dashed var(--line);border-radius:8px;text-align:center;color:var(--muted);font-size:var(--fs-sm);line-height:1.5}
 
-/* Angular white logo lettering with a restrained lime edge. */
-#welcomeGate .wx-hero h1{font-family:"Oxanium",var(--display);font-weight:700;text-transform:uppercase;font-size:clamp(2.5rem,7.6vw,6.6rem);letter-spacing:-.045em;line-height:1.08}
-#welcomeGate .wx-word{display:inline-block;white-space:nowrap;color:#f3f6ef;-webkit-text-stroke:2px #d9f522;paint-order:stroke fill}
-#welcomeGate .wx-titleMark{display:inline-block;width:.77em;height:.74em;margin-right:.025em;vertical-align:-.025em;fill:#f3f6ef;stroke:#d9f522;stroke-width:4;paint-order:stroke fill;overflow:visible}
-#welcomeGate .wx-hero .welcomeEnter{box-shadow:0 6px 24px rgba(58,209,122,.12)}
-#welcomeGate .wx-hero .welcomeEnter:hover{box-shadow:0 8px 28px rgba(58,209,122,.2)}
-@supports not ((-webkit-background-clip:text) or (background-clip:text)){#welcomeGate .wx-word{color:#f3f6ef;background:none}}
+/* Compact welcome heading with muted lettering and a subtle olive edge. */
+#welcomeGate::before{opacity:.22}
+#welcomeGate .wx-hero{padding:56px 0 40px}
+#welcomeGate .wx-hero::before{opacity:.2}
+#welcomeGate .wx-hero h1{font-family:"Oxanium",var(--display);font-weight:700;text-transform:uppercase;font-size:clamp(2.25rem,5.8vw,5rem);letter-spacing:-.045em;line-height:1.08}
+#welcomeGate .wx-word{display:inline-block;white-space:nowrap;color:#adb5ac;-webkit-text-stroke:1px #758044;paint-order:stroke fill}
+#welcomeGate .wx-titleMark{display:inline-block;width:.77em;height:.74em;margin-right:.025em;vertical-align:-.025em;fill:#adb5ac;stroke:#758044;stroke-width:2;paint-order:stroke fill;overflow:visible}
+#welcomeGate .wx-hero .wx-lead{margin-top:16px;font-size:1.143rem}
+#welcomeGate .wx-hero .welcomeActions{margin-top:24px}
+#welcomeGate .wx-hero .wx-quiet{margin-top:12px}
+#welcomeGate .wx-hero .welcomeEnter{min-height:48px;padding:0 24px;font-size:var(--fs-wx-body);background:#193a2c;border-color:#508266;color:#d5e3d8;box-shadow:none}
+#welcomeGate .wx-hero .welcomeEnter:hover{background:#234d39;box-shadow:none}
+#welcomeGate .wx-section{padding:32px 0}
+@media(max-width:760px){#welcomeGate .wx-hero{padding:36px 0 28px}}
+@supports not ((-webkit-background-clip:text) or (background-clip:text)){#welcomeGate .wx-word{color:#adb5ac;background:none}}
 @media(forced-colors:active){#welcomeGate .wx-word{color:CanvasText;background:none;-webkit-text-stroke:0}#welcomeGate .wx-titleMark{fill:CanvasText;stroke:none}}
 
 @font-face{font-family:Oxanium;font-style:normal;font-weight:700;font-display:swap;src:url("assets/fonts/oxanium-700.ttf") format("truetype")}
 #welcomeGate{overflow-x:clip}
-@media(max-width:600px){#welcomeGate .wx-hero h1{font-size:clamp(2.5rem,10vw,3.75rem)}#welcomeGate .wx-word{display:block}}
+@media(max-width:600px){#welcomeGate .wx-hero h1{font-size:clamp(2rem,8.5vw,3rem)}#welcomeGate .wx-word{display:block}}
 @media(max-width:360px){#welcomeGate .wx-top{flex-wrap:wrap;justify-content:center;gap:12px}#welcomeGate .wx-topNav{justify-content:center}}
 /* Tighter gutters give each team name ~6px more, so no school name has to
    split mid-word (see CARD_SHORT_NAMES); the time column keeps its 64px so

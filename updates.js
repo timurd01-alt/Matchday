@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0926K",
+  "tag": "Design",
+  "title": "Quieter, more compact welcome page",
+  "items": [
+   "Dimmed the welcome lettering, lime outline, background glow and entry button, and tightened the heading and section spacing on desktop and mobile."
+  ]
+ },
+ {
   "date": "Build 0926J",
   "tag": "Design",
   "title": "Cleaner welcome page",
