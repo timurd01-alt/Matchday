@@ -3865,3 +3865,8 @@ body{font-variant-numeric:tabular-nums}
   .gamesSideCol>.gamesRecord>div{width:100%}
   .gamesSideCol .gamesSeeds{width:100%}
 }
+
+/* Rankings logos sit on the same light tile as the CFP bracket, so dark
+   marks (Iowa, Notre Dame) stay legible against the dark table. */
+#view-groups :is(.gteam,.rankingTeam) .teamMark{background:#e4eae5;border-color:transparent}
+#view-groups :is(.gteam,.rankingTeam) .teamMark .teamMonogramText{color:#101820}
