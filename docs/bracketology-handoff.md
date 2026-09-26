@@ -1,6 +1,6 @@
 # Bracketology display handoff
 
-Bet Better owns every rating, résumé statistic, probability, selection, seed, result and elimination. Matchday renders those values. The release lives inside the existing Bracket navigation: projected bracket, Bubble, and a shared résumé card, with supporting read-only Seed list, Conferences, Tournament odds and Eliminated views. All supporting views use supplied fields; the simulator is deferred.
+The engine owns every rating, résumé statistic, probability, selection, seed, result and elimination. Matchday renders those values. The release lives inside the existing Bracket navigation: projected bracket, Bubble, and a shared résumé card, with supporting read-only Seed list, Conferences, Tournament odds and Eliminated views. All supporting views use supplied fields; the simulator is deferred.
 
 ## Delivery and preview
 
@@ -58,7 +58,7 @@ After Selection Sunday, `bracket.kind` becomes `official`. Optional `final_proje
 
 ## Simulator decision
 
-The draft `matchup_model: {type:"logistic_on_rating_diff",scale,neutral_site}` contradicts “Matchday displays; it never calculates.” The first release does not evaluate it or offer a simulator. To enable a later simulator, Bet Better must deliver a complete supported-pair probability lookup or a documented endpoint returning `{team_a,team_b,team_a_win,team_b_win,build_id,site}`. It must specify coverage, stale/missing behavior and the baseline/model identity. Unsupported pairings show unavailable rather than browser-derived probabilities. This is a producer dependency, not permission to implement a formula.
+The draft `matchup_model: {type:"logistic_on_rating_diff",scale,neutral_site}` contradicts “Matchday displays; it never calculates.” The first release does not evaluate it or offer a simulator. To enable a later simulator, the engine must deliver a complete supported-pair probability lookup or a documented endpoint returning `{team_a,team_b,team_a_win,team_b_win,build_id,site}`. It must specify coverage, stale/missing behavior and the baseline/model identity. Unsupported pairings show unavailable rather than browser-derived probabilities. This is a producer dependency, not permission to implement a formula.
 
 ## Acceptance
 

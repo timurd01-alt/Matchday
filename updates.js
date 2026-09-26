@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0926I",
+  "tag": "Copy",
+  "title": "Bracketology engine wording",
+  "items": [
+   "Bracketology source labels, explanations and update messages now refer to the engine."
+  ]
+ },
+ {
   "date": "Build 0926H",
   "tag": "Fix",
   "title": "Restore the CFP bracket",
