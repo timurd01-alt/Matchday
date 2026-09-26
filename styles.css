@@ -3794,6 +3794,23 @@ body{font-variant-numeric:tabular-nums}
 #view-home :is(.gamesTextLink,.gamesRecord button,.gamesFeaturedButton>em){font-family:var(--mono);font-size:var(--fs-xs);font-weight:var(--fw-bold);letter-spacing:.08em;text-transform:uppercase}
 #view-home :is(.gamesFeaturedButton,.gamesRecord button,.gamesExplore button){border-radius:var(--r)}
 
+/* Latest calls: best call and toughest miss from the graded record. */
+.gamesNotable{border-top:0}
+.gamesNotable ul{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:14px}
+.gamesNotable li{display:grid;gap:3px}
+.gamesNotable em{font:normal var(--fw-bold) var(--fs-2xs)/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.gamesNotable b{font-family:var(--display);font-size:var(--fs-xl);font-weight:var(--fw-bold)}
+.gamesNotable small{color:var(--muted);font-size:var(--fs-sm)}
+.gamesNotable li>span{display:flex;gap:10px;align-items:baseline;font-family:var(--mono);font-size:var(--fs-xs);color:var(--muted)}
+.gamesNotable li>span i{font-style:normal;font-weight:var(--fw-bold)}
+.gamesNotable li.hit>span i{color:var(--win)}
+.gamesNotable li.miss>span i{color:var(--loss)}
+
+/* Socials: the site is the product, social is distribution, so the accounts
+   sit quietly at the foot of the navigation, not in the content. */
+.navSocials{border-top:1px solid var(--line)}
+.navSocial svg{fill:currentColor;stroke:none}
+
 /* ---- Research + Scorecard (shared rs* components) -------------------------- */
 /* Titles. */
 :is(#view-score,#view-news) :is(.rsTitle,.rsDeskTitle,.scVsHead b){font-family:var(--display);font-weight:var(--fw-bold);text-transform:none;letter-spacing:.01em}

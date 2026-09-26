@@ -911,11 +911,11 @@ function gamesSummaryHTML(active){
     ||[...comparable].sort((a,b)=>fixtureSort(a.match,b.match))[0]
     ||[...reads].sort((a,b)=>fixtureSort(a.match,b.match))[0]
     ||(week[0]&&{match:week[0],pick:'',model:null,market:null,difference:null});
-  const top=[...comparable].sort((a,b)=>Math.abs(b.difference)-Math.abs(a.difference)||fixtureSort(a.match,b.match)).slice(0,4);
+  const top=[...comparable].sort((a,b)=>Math.abs(b.difference)-Math.abs(a.difference)||fixtureSort(a.match,b.match)).slice(0,6);
   const feature=featured?gamesFeaturedHTML(featured):`<div class="gamesEmpty">No games in the next seven days. The full schedule remains below.</div>`;
   return `<section class="gamesLandingHead"><span>GAMES</span><h1>${esc(sport)}</h1><p>Predictions, market comparisons and the public record.</p></section>`
     +`<section class="gamesFeatured"><div class="gamesSectionHead"><span>This week's featured game</span><small>${featured?.model!=null?'Live model':'Next 7 days'}</small></div>${feature}</section>`
-    +`<div class="gamesSupportGrid${top.length?'':' noComparisons'}">${top.length?gamesDifferencesHTML(top):''}<div class="gamesSideCol">${gamesRecordHTML()}${gamesBracketHTML()}</div></div>`
+    +`<div class="gamesSupportGrid${top.length?'':' noComparisons'}">${top.length?gamesDifferencesHTML(top):''}<div class="gamesSideCol">${gamesRecordHTML()}${gamesNotableHTML()}${gamesBracketHTML()}</div></div>`
     +`<nav class="gamesExplore" aria-label="Explore Matchday"><span>Explore</span><div><button type="button" onclick="setView('groups')"><b>Rankings</b><small>Ratings and conferences</small></button><button type="button" onclick="setView('news')"><b>Research</b><small>Analysis and methodology</small></button><button type="button" onclick="setView('results')"><b>Results</b><small>Finals and grading</small></button><button type="button" onclick="setView('community')"><b>Pick 'Em</b><small>Pick against the model</small></button></div></nav>`;
 }
 function renderHome(){
@@ -965,6 +965,36 @@ function gamesBracketHTML(){
   return `<section class="gamesRecord gamesBracket"><div><span>Playoff picture</span>`
     +`<ol class="gamesSeeds">${byes.map(m=>`<li><em>${esc(m.home_slot)}</em>${typeof teamMark==='function'?teamMark(m.home):''}<b>${esc(short(m.home))}</b></li>`).join('')}</ol></div>`
     +`<button type="button" onclick="setView('bracket')">View bracket <span aria-hidden="true">→</span></button></section>`;
+}
+// The post-game half of the loop on the landing page: of the last ten graded
+// picks, the win where Matchday stood furthest above the market (best call)
+// and the loss it was most confident in (toughest miss). Both come from the
+// same locked, graded rows as the Scorecard; nothing is recomputed here.
+function gamesNotableHTML(){
+  const sc=typeof betbetterScorecard==='function'?betbetterScorecard():null;
+  const graded=(sc?.recent||[]).filter(r=>['win','loss'].includes(String(r.result||'').toLowerCase())).slice(0,10);
+  if(!graded.length)return '';
+  const num=v=>Number.isFinite(Number(v))?Number(v):null;
+  // A market value of 0 or 100 is a missing price, not a real probability.
+  const mkt=r=>{const v=num(r.market_probability_pct);return v!=null&&v>0&&v<100?v:null};
+  const wins=graded.filter(r=>String(r.result).toLowerCase()==='win'&&num(r.probability_pct)!=null&&mkt(r)!=null);
+  const losses=graded.filter(r=>String(r.result).toLowerCase()==='loss'&&num(r.probability_pct)!=null);
+  const best=wins.sort((a,b)=>(b.probability_pct-mkt(b))-(a.probability_pct-mkt(a)))[0];
+  const miss=losses.sort((a,b)=>b.probability_pct-a.probability_pct)[0];
+  const short=n=>typeof rsShortName==='function'?rsShortName(n):n;
+  const item=(r,label,won)=>{
+    if(!r)return '';
+    const [away,home]=String(r.event_name||'').split(' at ');
+    const [hs,as]=String(r.score||'').split(/[–-]/).map(x=>x.trim());
+    const game=home?`${esc(short(away))} ${esc(as||'')}, ${esc(short(home))} ${esc(hs||'')}`:esc(r.event_name||'');
+    const m=mkt(r);
+    return `<li class="${won?'hit':'miss'}"><em>${label}</em><b>${esc(short(r.selection))}</b>`
+      +`<small>${game}</small>`
+      +`<span>Matchday ${num(r.probability_pct).toFixed(1)}%${m!=null?` · market ${m.toFixed(1)}%`:''}<i>${won?'✓ Won':'✗ Lost'}</i></span></li>`;
+  };
+  const body=item(best,'Best call',true)+item(miss,'Toughest miss',false);
+  if(!body)return '';
+  return `<section class="gamesRecord gamesNotable"><div><span>Latest calls</span><ul>${body}</ul></div></section>`;
 }
 function gamesRecordHTML(){
   const sc=typeof betbetterScorecard==='function'?betbetterScorecard():null;
