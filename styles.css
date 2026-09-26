@@ -2630,8 +2630,6 @@ html{color-scheme:dark}
 .gamesSupportGrid.noComparisons .gamesRecord{min-height:0;padding:12px 0;gap:14px}
 #view-home .gamesExplore>div{grid-template-columns:repeat(4,minmax(0,1fr))}
 .personalBallot .pollTeam{display:table-cell}
-.personalBallot .teamMark{width:30px;height:30px;flex-basis:30px}
-.personalBallot .teamMark img{width:25px;height:25px}
 .collegeResearch{display:flow-root;margin-bottom:34px}
 @media(max-width:760px){
   .gamesSupportGrid{grid-template-columns:1fr;gap:20px}
@@ -3871,3 +3869,9 @@ body{font-variant-numeric:tabular-nums}
    because a dozen contextual .teamMark rules set their own tile colours. */
 .teamMark{background:#e4eae5!important;border-color:transparent!important;box-shadow:none!important}
 .teamMark .teamMonogramText{color:#101820!important}
+
+/* The ballot box matches the AP Top 25 beside it: header strip, no inner
+   padding, no nested table border, same logo size. */
+.ballotSection{padding:0;overflow:hidden}
+.ballotSection .pollScroll{border:0;border-radius:0;margin:0}
+.ballotSection>.modNote{padding:0 12px 12px;margin-top:10px}

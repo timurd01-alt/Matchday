@@ -1210,7 +1210,7 @@ function probabilitySparkline(m){
 // unread alert on each refresh.
 function _alertEnabled(type){if(type==='live')return false;const map={soon:'alertsKickoff',final:'alertsKickoff',model:'alertsModel',market:'alertsModel',data:'alertsData'};return map[type]?SETTINGS[map[type]]!==false:true}
 function _alertIcon(type){return ({soon:'&#9203;',final:'&#10003;',model:'&#8597;',market:'&#8644;',data:'&#9888;',pick:'&#9733;',result:'&#9873;',ratings:'&#9776;',poll:'&#9650;',ballot:'&#9998;',gotw:'&#9737;'})[type]||'&#8226;'}
-function _alertLabel(type){return ({soon:'Kickoff',final:'Final',model:'Model moved',market:'Model vs market',data:'Data',pick:'Upset watch',result:'Upset watch graded',ratings:'Power ratings',poll:'AP Top 25',ballot:'TimurKnowsBall Ballot',gotw:'Game of the week'})[type]||type}
+function _alertLabel(type){return ({soon:'Kickoff',final:'Final',model:'Model moved',market:'Model vs market',data:'Data',pick:'Upset watch',result:'Upset watch graded',ratings:'Power ratings',poll:'AP Top 25',ballot:'Timur’s Ballot',gotw:'Game of the week'})[type]||type}
 function _alertKey(a){return a.key||`${a.t}:${a.id||'app'}`}
 function _alertSeen(){return new Set(_alertReadJSON('matchday.alertsSeen',[]))}
 function _alertGlobal(name){try{return Function('return typeof '+name+'!=="undefined"?'+name+':null')()}catch(e){return null}}

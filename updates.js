@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0927H",
+  "tag": "Change",
+  "title": "Timur's Ballot",
+  "items": [
+   "The personal Top 25 ballot is now labelled Timur's Ballot on the Rankings page, the games board and in alerts.",
+   "The ballot's box now lines up with the AP Top 25: same header strip, no extra inset, no nested border and the same logo size.",
+   "The explanatory note under the ballot is gone."
+  ]
+ },
+ {
   "date": "Build 0927G",
   "tag": "Change",
   "title": "Light logo tiles everywhere",
