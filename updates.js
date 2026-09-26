@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0926N",
+  "tag": "Design",
+  "title": "Research, Scorecard and Rankings on the new type roles; lime brand accents",
+  "items": [
+   "Research, Scorecard and Rankings now follow the same font roles as Home: condensed caps for titles, team names and headline numbers; monospace for labels, chips and data.",
+   "Section titles, table group headers and team names are larger app-wide, and green section labels use the label font everywhere.",
+   "The welcome page's M and Enter button now use the logo's lime so the brand colour matches."
+  ]
+ },
+ {
   "date": "Build 0926M",
   "tag": "Design",
   "title": "Bigger headers and the last stray fonts",

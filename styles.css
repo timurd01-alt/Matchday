@@ -1,5 +1,5 @@
 
-:root{--bg:#070a0f;--bg2:#0c1118;--panel:#121821;--panel2:#172030;--glass:#0e141d;--line:#1e2632;--line2:#2b3543;--text:#e7edf4;--muted:#7e8a9a;--faint:#707c8c;--signal:#3ad17a;--live:#ff4d5e;--win:#3ad17a;--warn:#ffb02e;--loss:#ff5d6c;--home:#4cc2ff;--away:#a78bfa;--draw:#67738a;--r:6px;/* Typography tokens: one font per role, never mixed. --display = headers, team names, headline numbers; --mono = labels, tags, meta, data; --sans = body. */--sans:"Inter",system-ui,sans-serif;--display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;--fs-3xs:.69rem;--fs-2xs:.69rem;--fs-xs:.75rem;--fs-sm:.8rem;--fs-md:.875rem;--fs-lead:clamp(1rem,1.3vw,1.2rem);--fs-title:clamp(1.4rem,2.5vw,2rem);--fs-hero:clamp(2.25rem,5vw,3.6rem);--fs-base:.9rem;--fs-lg:1rem;--fs-xl:1.15rem;--fs-2xl:1.35rem;--fs-3xl:1.6rem;--fs-4xl:1.9rem;--fs-5xl:2.3rem;--fs-6xl:2.9rem;--fw-regular:400;--fw-medium:500;--fw-semibold:600;--fw-bold:700;--fw-heavy:800}
+:root{--bg:#070a0f;--bg2:#0c1118;--panel:#121821;--panel2:#172030;--glass:#0e141d;--line:#1e2632;--line2:#2b3543;--text:#e7edf4;--muted:#7e8a9a;--faint:#707c8c;--signal:#3ad17a;--brand:#defa10;--live:#ff4d5e;--win:#3ad17a;--warn:#ffb02e;--loss:#ff5d6c;--home:#4cc2ff;--away:#a78bfa;--draw:#67738a;--r:6px;/* Typography tokens: one font per role, never mixed. --display = headers, team names, headline numbers; --mono = labels, tags, meta, data; --sans = body. */--sans:"Inter",system-ui,sans-serif;--display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;--fs-3xs:.69rem;--fs-2xs:.69rem;--fs-xs:.75rem;--fs-sm:.8rem;--fs-md:.875rem;--fs-lead:clamp(1rem,1.3vw,1.2rem);--fs-title:clamp(1.4rem,2.5vw,2rem);--fs-hero:clamp(2.25rem,5vw,3.6rem);--fs-base:.9rem;--fs-lg:1rem;--fs-xl:1.15rem;--fs-2xl:1.35rem;--fs-3xl:1.6rem;--fs-4xl:1.9rem;--fs-5xl:2.3rem;--fs-6xl:2.9rem;--fw-regular:400;--fw-medium:500;--fw-semibold:600;--fw-bold:700;--fw-heavy:800}
 *{box-sizing:border-box;margin:0;padding:0}/* Basis of the rem scale below -- must stay an absolute length, never a
    --fs-* token, since rem on the root element resolves against the
    browser default (16px) and would rescale the entire UI. */
@@ -3823,3 +3823,53 @@ body{font-variant-numeric:tabular-nums}
 #welcomeGate h3{font-size:var(--fs-4xl)}
 #welcomeGate .wx-footLinks :is(a,button){text-transform:uppercase}
 @media(max-width:760px){#welcomeGate h2{font-size:var(--fs-4xl)}#welcomeGate h3{font-size:var(--fs-3xl)}#view-home .homeIntro h1{font-size:var(--fs-4xl)}#view-home .gamesRecord strong{font-size:var(--fs-5xl)}}
+
+/* ---- brand lime -----------------------------------------------------------
+   --brand is the lime in the logo. It marks identity only: the M in the
+   welcome wordmark and the one Enter button. Green (--signal) stays the data
+   and section-label colour. */
+#welcomeGate .wx-titleMark{fill:var(--brand)}
+#welcomeGate .wx-hero .welcomeEnter{background:var(--brand);border-color:var(--brand);color:var(--bg)}
+#welcomeGate .wx-hero .welcomeEnter:hover{background:#e9fc5c;border-color:#e9fc5c}
+#welcomeGate .welcomeEnter:focus-visible{outline-color:var(--brand)}
+
+/* ---- Research + Scorecard: one font per role -------------------------------
+   Both tabs share the rs* component family, so the roles are mapped once:
+   titles, team names and headline numbers --display; labels, chips, kickers,
+   table heads, inline numbers and text actions --mono; sentences stay --sans.
+   Display sizes step up to match the space Barlow Condensed leaves. */
+:is(#view-score,#view-news) :is(.rsTitle,.rsDeskTitle,.scVsHead b){font-family:var(--display);font-weight:var(--fw-bold);text-transform:uppercase;letter-spacing:.01em}
+:is(#view-score,#view-news) :is(.rsTitle,.rsDeskTitle){font-size:var(--fs-2xl)}
+:is(#view-score,#view-news) .scVsHead b{font-size:var(--fs-lg)}
+:is(#view-score,#view-news) :is(.scBig,.rsSignal,.rsMoveBig,.rsShotPct,.rsBigStat b){font-family:var(--display);font-weight:var(--fw-bold);letter-spacing:0}
+:is(#view-score,#view-news) .scBig{font-size:calc(var(--fs-6xl) * 1.25)}
+:is(#view-score,#view-news) b.rsSignal{font-size:var(--fs-4xl)}
+:is(#view-score,#view-news) :is(.rsMoveBig,.rsBigStat b){font-size:var(--fs-5xl)}
+:is(#view-score,#view-news) .rsShotPct{font-size:var(--fs-3xl)}
+:is(#view-score,#view-news) :is(.rsLogoName,.rsMoveTeam,.rsShotTeam,.rsSchedTeam b,.rsMvName,.scTeam>span:not(.teamMonogram)){font-family:var(--display);font-weight:var(--fw-bold)}
+:is(#view-score,#view-news) :is(.rsLogoName,.rsShotTeam,.rsSchedTeam b,.rsMvName,.scTeam>span:not(.teamMonogram)){font-size:var(--fs-lg)}
+:is(#view-score,#view-news) .rsMoveTeam{font-size:var(--fs-3xl)}
+:is(#view-score,#view-news) :is(.rsPartHead,.rsChip,.rsKicker,.rsAside,dt,.scRangeRef,.scRangeAxis,.scRangeKey,.scCalKey,.rsLegend,.rsLegend2,.rsFilterChip,.rsQuadTab,.rsQuadHead,.rsSchedHead,.rsConfHead,.rsDivHead,.rsMoreBtn,.rsQuadMore,.scMethod>summary,.rsPath em,.rsNum small){font-family:var(--mono);letter-spacing:.08em}
+:is(#view-score,#view-news) :is(.rsMoreBtn,.rsQuadMore,.scMethod>summary){font-weight:var(--fw-bold);text-transform:uppercase}
+:is(#view-score,#view-news) .rsPartHead{font-size:var(--fs-xs);color:var(--signal)}
+:is(#view-score,#view-news) :is(dd,.scGap,.rsNum,.rsNum b,.scVsNum b,.scCalBand,.scCalNums,.scCalNums b,.scTeam b,.rsMvChg,.rsMvRank,.rsQuadRank,.rsRank,.rsQuadN,b.rsWin,b.rsLoss,.rsShotDate,.rsPath,.rsHandle,.rsSplitBar em,.rsQuadTab b,.scGamePick b){font-family:var(--mono);letter-spacing:0}
+:is(#view-score,#view-news) :is(dd,.rsNum b,.scVsNum b){font-size:var(--fs-xl)}
+:is(#view-score,#view-news) :is(.rsChip,.rsFilterChip){border-radius:2px}
+:is(#view-score,#view-news) :is(.card,[class*=rsCard],[class*=scCard],.rsPanel){border-radius:var(--r)}
+/* Top strip: keep labels mono but in sentence case so the line fits. */
+:is(#strip,.livestrip) :is(.ls-next,.ls-next b,.ls-extra){text-transform:none;letter-spacing:0}
+:is(#view-score,#view-news) .rsFeatSide div>b{font-family:var(--display);font-weight:var(--fw-bold);font-size:var(--fs-4xl)}
+:is(#view-score,#view-news) .rsCompare div>b{font-family:var(--display);font-weight:var(--fw-bold);font-size:var(--fs-4xl);letter-spacing:0}
+:is(#view-score,#view-news) :is(.rsFeatSide span,.rsConfRow span){font-family:var(--mono)}
+:is(#view-score,#view-news) :is(.scVsHead span,.scVsNum small,.scGamePick span,.rsGapGame,.rsShotSub,.rsMvRank,.rsPickMeta,.rsDivStop,.rsBigStat span,.rsCompare span){font-family:var(--mono);letter-spacing:0}
+:is(#view-score,#view-news) dd{font-family:var(--display);font-weight:var(--fw-bold);font-size:var(--fs-2xl);letter-spacing:0}
+
+/* ---- app-wide role fixes (Rankings and every tab sharing these parts) ------ */
+.seclbl{font-family:var(--mono);letter-spacing:.1em}
+.vhead{font-family:var(--display);font-size:var(--fs-2xl);font-weight:var(--fw-bold);text-transform:uppercase;letter-spacing:.01em}
+.vhead.pageHead{font-size:var(--fs-4xl)}
+.groupHead{font-family:var(--display);font-size:var(--fs-xl);font-weight:var(--fw-bold);text-transform:uppercase;letter-spacing:.01em}
+.gteam,.pollTeamInner,.pollTeamInner>span{font-family:var(--display);font-weight:var(--fw-bold);font-size:var(--fs-xl)}
+#view-groups td,#view-groups td b,#view-groups details>summary{font-family:var(--mono)}
+#view-groups td:has(.gteam,.pollTeamInner){font-family:var(--display)}
+@media(max-width:760px){.gteam,.pollTeamInner,.pollTeamInner>span{font-size:var(--fs-md)}:is(#view-score,#view-news) .rsGapGame{font-size:var(--fs-3xs)}}
