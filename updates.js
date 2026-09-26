@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0927B",
+  "tag": "Change",
+  "title": "A welcome page for fans, not followers",
+  "items": [
+   "The welcome page now introduces Matchday as a free research desk: ratings, probabilities and the graded record, open to anyone, with no account, ads or paywall.",
+   "Fans are invited to use the numbers wherever they like; credit is appreciated, never required.",
+   "Social follow buttons are gone from the welcome page and the navigation."
+  ]
+ },
+ {
   "date": "Build 0927A",
   "tag": "Change",
   "title": "YouTube and TikTok links removed",
