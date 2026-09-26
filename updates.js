@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0926R",
+  "tag": "Design",
+  "title": "Lime-tinted dividers, no data feed badge",
+  "items": [
+   "Separator lines and card borders now carry a dark lime tint, so the page's structure matches the brand colour without adding glare.",
+   "The green data feed badge is gone from the top strip. The sample data warning still shows when it applies."
+  ]
+ },
+ {
   "date": "Build 0926Q",
   "tag": "Design",
   "title": "Calmer lime and green",
