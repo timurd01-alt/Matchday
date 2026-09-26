@@ -1243,9 +1243,9 @@ function rsFeatured(){
   const open=m.id?`<button type="button" class="rsMoreBtn" onclick="openMatchModal('${esc(String(m.id))}')">Open matchup <span aria-hidden="true">→</span></button>`:'';
   return `<section class="rsBlock rsFeatured rsSpan12">${rsTop('Featured read','live',when)}`
     +`<div class="rsSplit"><div class="rsSplitMain"><div class="rsFeatTeams">${side(away,'Away')}<span class="rsAt">at</span>${side(home,'Home')}</div>`
-    +`</div><div class="rsSplitSide"><div class="rsCompare"><div><span class="rsKicker">Matchday</span><b class="rsSignal">${communityModelPctLabel(model)}</b><span>${esc(team)} win</span></div>`
+    +`</div><div class="rsSplitSide"><div class="rsCompare"><div><span class="rsKicker">Matchday</span><b>${communityModelPctLabel(model)}</b><span>${esc(team)} win</span></div>`
     +(Number.isFinite(market)?`<div><span class="rsKicker">Market</span><b>${market.toFixed(1)}%</b><span>no-vig price</span></div>`:'')
-    +(Number.isFinite(gap)?`<div><span class="rsKicker">Difference</span><b>${gap>0?'+':'−'}${Math.abs(gap).toFixed(1)}</b><span>points</span></div>`:'')+`</div>`
+    +(Number.isFinite(gap)?`<div><span class="rsKicker">Difference</span><b class="rsSignal">${gap>0?'+':'−'}${Math.abs(gap).toFixed(1)}</b><span>points</span></div>`:'')+`</div>`
     +`<div class="rsFoot">${open}</div></div></div></section>`;
 }
 /* Model–market watch: the week's largest disagreements with the price.

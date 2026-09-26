@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0927D",
+  "tag": "Fix",
+  "title": "Featured read highlights the difference",
+  "items": [
+   "On the Featured read card, the green highlight now marks the model-versus-market difference instead of Matchday's win probability."
+  ]
+ },
+ {
   "date": "Build 0927C",
   "tag": "Fix",
   "title": "X handle is now @timursports",
