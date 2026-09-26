@@ -3875,3 +3875,7 @@ body{font-variant-numeric:tabular-nums}
 .pollSection{padding:0;overflow:hidden}
 .pollSection .pollScroll{border:0;border-radius:0;margin:0}
 .pollSection>:is(.modNote,.modWarn,.pollProvisional){margin:10px 12px 12px}
+.pollSection .pollTeamInner{min-height:0}
+.pollSection .pollTeamInner .teamMark{flex:0 0 26px;width:26px;height:26px;border-radius:6px}
+.pollSection .pollTeamInner .teamMark img{width:23px;height:23px}
+.pollSection .pollTable td{padding:8px 9px}
