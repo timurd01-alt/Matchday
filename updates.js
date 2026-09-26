@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0926H",
+  "tag": "Fix",
+  "title": "Restore the CFP bracket",
+  "items": [
+   "Restored the CFP bracket to its previous desktop and phone design. College basketball bracketology remains unchanged."
+  ]
+ },
+ {
   "date": "Build 0926G",
   "tag": "Design",
   "title": "Clearer brackets, ready for the model",

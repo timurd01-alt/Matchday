@@ -422,13 +422,6 @@ function _cfpLogoFallback(img){
   if(rest.length){img.setAttribute('data-fallback',rest.slice(1).join('|'));img.setAttribute('href','team-logos/'+rest[0])}
   else{img.style.display='none';img.nextElementSibling.style.display='block'}
 }
-function _cfpSchoolName(name){
-  // Display only: preserve the original identity for logo lookup and advancement.
-  if(name==='James Madison Dukes')return 'James Madison';
-  if(typeof _TEAM_LOGO_ENTRIES==='undefined')return name;
-  const entry=_TEAM_LOGO_ENTRIES.filter(([school])=>name===school||(name.startsWith(school+' ')&&_safeLogoSuffix(name.slice(school.length).trim().split(/\s+/)[0]))).sort((a,b)=>a[0].length-b[0].length)[0];
-  return entry?entry[0]:name;
-}
 function _cfpSvgCard(n){
   const final=n.id==='final',status=String(n.m?.status||'').toUpperCase();
   const score=side=>status==='FINISHED'?n.m?.score?.[side]:null;
@@ -440,16 +433,16 @@ function _cfpSvgCard(n){
     const logos=!path&&typeof teamLogoCandidates==='function'?teamLogoCandidates(t.name):[];
     const file=logos.shift();
     const initials=t.name.split(/\s+/).slice(0,2).map(w=>w[0]).join('');
-    const mark=path?`<text x="42" y="${y+27}" class="cfpSvgSlot">—</text>`:`<rect x="25" y="${y+4}" width="36" height="36" rx="5" class="cfpLogoTile"/>${file?`<image href="team-logos/${esc(file)}" data-fallback="${esc(logos.join('|'))}" x="28" y="${y+7}" width="30" height="30" onerror="_cfpLogoFallback(this)"/>`:''}<text x="44" y="${y+26}" text-anchor="middle" class="cfpMonogram" ${file?'style="display:none"':''}>${esc(initials)}</text>`;
+    const mark=path?`<text x="42" y="${y+27}" class="cfpSvgSlot">—</text>`:`<rect x="29" y="${y+7}" width="30" height="30" rx="5" class="cfpLogoTile"/>${file?`<image href="team-logos/${esc(file)}" data-fallback="${esc(logos.join('|'))}" x="32" y="${y+10}" width="24" height="24" onerror="_cfpLogoFallback(this)"/>`:''}<text x="44" y="${y+26}" text-anchor="middle" class="cfpMonogram" ${file?'style="display:none"':''}>${esc(initials)}</text>`;
     const limit=sc!=null?11:14,width=sc!=null?74:88;
-    const words=_cfpSchoolName(t.name).split(/\s+/),lines=[''];
+    const words=t.name.split(/\s+/),lines=[''];
     words.forEach(w=>{const last=lines.length-1;if((lines[last]+' '+w).trim().length>limit&&lines[last])lines.push(w);else lines[last]+=(lines[last]?' ':'')+w});
     const label=lines.length<=2?lines:[lines[0],lines.slice(1).join(' ')];
     return `<g class="cfpSvgTeam ${path?'cfpSvgPath':''} ${won?'cfpSvgWinner':''}"><title>${esc((t.seed?'Seed '+t.seed+': ':'')+t.name+(sc!=null?', score '+sc:'')+(won?', winner':''))}</title>${won?`<rect x="1" y="${y}" width="178" height="44" class="cfpWinFill"/>`:''}<text x="15" y="${y+27}" text-anchor="middle" class="cfpSvgSeed">${t.seed||'–'}</text>${mark}<text x="66" y="${y+(label.length>1?19:27)}" class="cfpSvgName">${label.map((line,j)=>`<tspan x="66" dy="${j?15:0}" ${line.length>limit?`textLength="${width}" lengthAdjust="spacingAndGlyphs"`:''}>${esc(line)}</tspan>`).join('')}</text>${sc!=null?`<text x="168" y="${y+27}" text-anchor="end" class="cfpSvgScore">${esc(sc)}</text>`:''}</g>`;
   }).join('');
   const description=n.teams.map(t=>(t.seed?'Seed '+t.seed+' ':'')+t.name).join(' versus ');
-  const meta=status==='FINISHED'?'FINAL':'';
-  return `<g class="cfpSvgCard ${n.teams.every(_cfpPlaceholder)?'cfpUnresolved':''} ${final?'cfpSvgFinal':''}" data-node="${n.id}" tabindex="0" role="button" aria-label="${esc(description)}. Highlight route to championship" onmouseenter="_cfpHighlight(this)" onmouseleave="_cfpHighlight(this,false)" onfocus="_cfpHighlight(this)" onblur="_cfpHighlight(this,false)" onclick="_cfpHighlight(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();_cfpHighlight(this)}if(event.key==='Escape'){_cfpHighlight(this,false)}" transform="translate(${n.x} ${n.y})"><title>${esc(n.label+': '+description)}</title><rect y="${meta?0:28}" width="180" height="${meta?116:88}" rx="7" class="cfpCardSurface"/><path d="${meta?'M 0 28 H 180 ':''}M 0 72 H 180" class="cfpCardDivider"/><text x="12" y="18" class="cfpSvgMeta">${esc(meta)}</text>${rows}</g>`;
+  const meta=final?'TITLE GAME':status==='FINISHED'?'FINAL':n.id.startsWith('fr')?'FIRST ROUND':n.label.toUpperCase();
+  return `<g class="cfpSvgCard ${final?'cfpSvgFinal':''}" data-node="${n.id}" transform="translate(${n.x} ${n.y})"><title>${esc(n.label+': '+description)}</title><rect width="180" height="116" rx="7" class="cfpCardSurface"/><path d="M 0 28 H 180 M 0 72 H 180" class="cfpCardDivider"/><text x="12" y="18" class="cfpSvgMeta">${esc(meta)}</text>${n.id.startsWith('qf')?'<text x="168" y="18" text-anchor="end" class="cfpSvgBye">BYE 1–4</text>':''}${rows}</g>`;
 }
 function _cfpSvgConnector(n,nodes){
   const to=nodes.find(t=>t.id===n.next);if(!to)return '';
@@ -476,29 +469,18 @@ function _cfpFirstFourOut(nodes){
 function _cfpOutRow(nodes,official){
   if(official)return '';
   const teams=_cfpFirstFourOut(nodes);if(!teams.length)return '';
-  return `<section class="cfpOut" aria-labelledby="cfp-out-title"><h3 id="cfp-out-title">First four out</h3><div class="cfpOutGrid">${teams.map(t=>`<article class="cfpOutTeam">${teamMark(t.name)}<div><b>${esc(_cfpSchoolName(t.name))}</b><span>AP #${esc(t.rank)}${t.record?' · '+esc(t.record):''}</span></div></article>`).join('')}</div></section>`;
+  return `<section class="cfpOut" aria-labelledby="cfp-out-title"><h3 id="cfp-out-title">First four out</h3><div class="cfpOutGrid">${teams.map(t=>`<article class="cfpOutTeam">${teamMark(t.name)}<div><b>${esc(t.name)}</b><span>AP #${esc(t.rank)}${t.record?' · '+esc(t.record):''}</span></div></article>`).join('')}</div></section>`;
 }
-function _cfpHighlight(el,active=true){
-  const svg=el.closest('svg'),nodes=_cfpBracketTree(),route=new Set();
-  let node=nodes.find(n=>n.id===el.dataset.node);
-  while(node){route.add(node.id);node=nodes.find(n=>n.id===node.next)}
-  svg.querySelectorAll('[data-node],[data-from]').forEach(item=>item.classList.toggle('cfpRoute',active&&route.has(item.dataset.node||item.dataset.from)));
-}
-function _cfpRoundSelect(button){
-  const section=button.closest('.cfpRounds'),key=button.dataset.round;
-  section.querySelectorAll('[data-round]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
-  section.querySelectorAll('[data-panel]').forEach(p=>p.hidden=p.dataset.panel!==key);
-}
-function _cfpRoundCard(n,nodes){
-  const done=String(n.m?.status||'').toUpperCase()==='FINISHED',next=nodes.find(t=>t.id===n.next);
-  return `<article class="cfpRoundCard"><h3>${esc(n.label)}${done?' · Final':''}</h3>${n.teams.map((t,i)=>{
-    const path=_cfpPlaceholder(t),score=done?n.m?.score?.[i?'away':'home']:null;
-    return `<div class="cfpRoundTeam ${path?'cfpPending':''}"><span class="cfpRoundSeed">${t.seed||'–'}</span>${path?'<span class="cfpRoundSlot" aria-hidden="true">—</span>':teamMark(t.name)}<b>${esc(_cfpSchoolName(t.name))}</b>${score!=null?`<strong>${esc(score)}</strong>`:''}</div>`;
-  }).join('')}${next?`<p>Advances to ${esc(next.label)}</p>`:''}</article>`;
-}
-function _cfpResponsiveBracket(nodes){
-  const rounds=[['fr','First round'],['qf','Quarterfinals'],['sf','Semifinals'],['final','Championship']];
-  return `<section class="cfpRounds" aria-label="Playoff rounds"><nav aria-label="Choose a playoff round">${rounds.map(([key,label],i)=>`<button type="button" data-round="${key}" aria-controls="cfp-round-${key}" aria-pressed="${i===0}" onclick="_cfpRoundSelect(this)">${label}</button>`).join('')}</nav>${rounds.map(([key,label],i)=>`<section id="cfp-round-${key}" data-panel="${key}" aria-label="${label}" ${i?'hidden':''}><h2>${label}</h2><div class="cfpRoundGrid">${nodes.filter(n=>n.id.startsWith(key)).map(n=>_cfpRoundCard(n,nodes)).join('')}</div></section>`).join('')}</section>`;
+function _cfpResponsiveBracket(nodes,trophy){
+  const order=[1,4,2,3];
+  const compact=nodes.map(n=>{
+    const i=order.indexOf(Number(n.id.slice(2)));
+    if(n.id.startsWith('fr'))return {...n,x:10,y:80+i*180};
+    if(n.id.startsWith('qf'))return {...n,x:230,y:80+i*180};
+    if(n.id.startsWith('sf'))return {...n,x:450,y:n.id==='sf1'?170:530};
+    return {...n,x:670,y:350};
+  });
+  return `<div class="cfpCompact" role="region" tabindex="0" aria-label="Playoff bracket. Scroll horizontally to follow the rounds."><svg viewBox="0 60 860 700" role="img" aria-label="Playoff bracket advancing from left to right">${trophy.replace('translate(720 151)','translate(760 238)')}<text x="760" y="319" text-anchor="middle" class="cfpChampLabel">NATIONAL<tspan x="760" dy="14">CHAMPIONSHIP</tspan></text>${compact.map(n=>_cfpSvgConnector(n,compact)).join('')}${compact.map(_cfpSvgCard).join('')}</svg></div>`;
 }
 function _renderCFPBracket(host){
   const official=Array.isArray(DATA.bracket)&&DATA.bracket.some(r=>
@@ -507,8 +489,8 @@ function _renderCFPBracket(host){
   const nodes=_cfpBracketTree();
   if(!nodes.length){host.innerHTML='<div class="vhead">CFP Playoff</div><div class="empty">The playoff bracket is waiting for complete seed information.</div>';return}
   const trophy=`<g class="cfpTrophy" transform="translate(720 151)" aria-hidden="true"><path d="M 0 -39 C -34 -13 -26 12 0 28 C 26 12 34 -13 0 -39 Z M 0 -29 V 17 M -8 -12 H 8 M -8 -3 H 8 M -8 6 H 8 M -13 23 L -9 47 H 9 L 13 23 M -20 49 H 20"/><path d="M -26 56 H 26"/></g>`;
-  host.innerHTML=`<section class="cfpShell"><header class="cfpHero"><div><span class="cfpEyebrow">College Football Playoff</span><h2>The road to a champion</h2></div><span class="cfpBadge">${official?'Playoff bracket':'Projected field'}</span></header><p class="cfpContext">${official?'Official playoff bracket.':'Projected from the AP Poll · Not the official CFP bracket.'} Seeds 1–4 enter in the quarterfinals.</p>${_cfpResponsiveBracket(nodes)}<details class="cfpFullBracket" open><summary>Full bracket</summary><div class="cfpCanvas" tabindex="0" role="region" aria-label="Full playoff bracket; scroll horizontally on smaller screens"><svg class="cfpDiagram" viewBox="17 80 1406 448" role="group" aria-labelledby="cfp-title cfp-description"><title id="cfp-title">Connected College Football Playoff bracket</title><desc id="cfp-description">${official?'Official matchups and unresolved paths.':'Projected from the current AP Poll. Not the official CFP bracket.'} Seeds 1–4 enter in the quarterfinals. First-round games on the outside feed quarterfinals, then semifinals, and the championship in the center. ${esc(nodes.map(n=>n.label+': '+n.teams.map(t=>(t.seed?'seed '+t.seed+' ':'')+t.name).join(' versus ')).join('. '))}</desc>${[[108,'FIRST ROUND'],[312,'QUARTERFINALS'],[516,'SEMIFINALS'],[924,'SEMIFINALS'],[1128,'QUARTERFINALS'],[1332,'FIRST ROUND']].map(([x,label])=>`<text x="${x}" y="106" text-anchor="middle" class="cfpRoundHeading">${label}</text>`).join('')}${trophy}<text x="720" y="238" text-anchor="middle" class="cfpChampLabel">NATIONAL CHAMPIONSHIP</text>${nodes.map(n=>_cfpSvgConnector(n,nodes)).join('')}${nodes.map(_cfpSvgCard).join('')}</svg></div><button type="button" class="cfpClearRoute" onclick="this.closest('.cfpFullBracket').querySelectorAll('.cfpRoute').forEach(el=>el.classList.remove('cfpRoute'))">Clear highlighted route</button></details><footer class="cfpFoot"><span><i aria-hidden="true"></i> Select a matchup to highlight its route</span><span>12 teams · 4 rounds · No reseeding</span></footer>${_cfpOutRow(nodes,official)}</section>`;
-  host.querySelector('.cfpFullBracket').open=window.matchMedia('(min-width:1401px)').matches;
+  host.innerHTML=`<section class="cfpShell"><header class="cfpHero"><div><span class="cfpEyebrow">College Football Playoff</span><h2>The road to a champion</h2></div><span class="cfpBadge">${official?'Playoff bracket':'Projected field'}</span></header>${_cfpResponsiveBracket(nodes,trophy)}<div class="cfpCanvas"><svg class="cfpDiagram" viewBox="17 96 1406 432" role="img" aria-labelledby="cfp-title cfp-description"><title id="cfp-title">Connected College Football Playoff bracket</title><desc id="cfp-description">${official?'Official matchups and unresolved paths.':'Projected from the current AP Poll. Not the official CFP bracket.'} Seeds 1–4 enter in the quarterfinals. First-round games on the outside feed quarterfinals, then semifinals, and the championship in the center. ${esc(nodes.map(n=>n.label+': '+n.teams.map(t=>(t.seed?'seed '+t.seed+' ':'')+t.name).join(' versus ')).join('. '))}</desc>${trophy}<text x="720" y="238" text-anchor="middle" class="cfpChampLabel">NATIONAL CHAMPIONSHIP</text>${nodes.map(n=>_cfpSvgConnector(n,nodes)).join('')}${nodes.map(_cfpSvgCard).join('')}<text x="720" y="418" text-anchor="middle" class="cfpCenterNote">TWO SIDES. ONE CHAMPION.</text><text x="720" y="440" text-anchor="middle" class="cfpCenterSub">Follow the lines to the title.</text></svg></div><footer class="cfpFoot"><span><i aria-hidden="true"></i> Winner advances along the connected path</span><span>12 teams · 4 rounds · No reseeding</span></footer>${_cfpOutRow(nodes,official)}</section>`;
+
 }
 
 function renderBracket(){
