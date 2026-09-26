@@ -1,5 +1,14 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-09-25 (NCAAM bracketology presentation consumes only the owner-
+authorized Bet Better derived handoff. No new provider calls, raw statistics
+feed, sportsbook content or new logos. Explicit local mock data is excluded
+from the public site. Missing/stale handoffs never fall back to UI formulas.)
+
+Reviewed: 2026-09-25 (CFP readability redesign reuses the existing local school
+marks, AP projection, seeds and scores. Display names are shortened only in the
+view; no provider, endpoint, new imagery or redistributed data is introduced.)
+
 Reviewed: 2026-09-24 (the CFP first-four-out row compares the already-published
 AP poll with the current projected field. It reuses existing school marks and
 records; no new provider, endpoint, or raw payload is introduced.)
@@ -275,7 +284,7 @@ quarantined, mutable, graded, and post-kickoff records are excluded. The publish
 back to Matchday, uses X's official API, keeps credentials private, and makes no claim of
 league affiliation, certainty, betting advice, or provider authorship.)
 
-NFL challenger review: the 2021–2025 training corpus uses only the same nflverse `pbp` release
+NFL challenger review: the 2021â€“2025 training corpus uses only the same nflverse `pbp` release
 family already approved above. Source file hashes are embedded in every reconstructed training row
 and model artifact. ESPN-origin releases remain excluded. Generated rows, fitted artifacts, and
 backtest reports are local/gitignored, and the runtime loader enforces research-only, zero-weight
@@ -1001,7 +1010,7 @@ record the review date here before each public release.
 - **2026-07-29:** Reviewed Retrosheet's official current use notice and data-use
   pages before the MLB historical integration. Retrosheet permits reuse, including
   commercial products, when its specified copyright/attribution statement appears
-  prominently. The builder consumes only official downloaded 2020–2025 event and
+  prominently. The builder consumes only official downloaded 2020â€“2025 event and
   game-log archives, records source hashes and the required notice in the frozen
   derived artifact, and performs no website scraping. Historical Retrosheet inputs
   are used only to fit and validate the run-strength challenger. Live reconstruction
@@ -1030,7 +1039,7 @@ record the review date here before each public release.
 - **2026-09-18 (owner amendment):** Permitted a narrowly scoped AP Top 25
   refresh from ESPN's public college-football scoreboard response. Matchday
   retains only each team's displayed name and `curatedRank.current`, requests
-  a bounded seven-day game window, and accepts a refresh only when ranks 1–25
+  a bounded seven-day game window, and accepts a refresh only when ranks 1â€“25
   are complete and unambiguous. Raw responses, scores, prices, commentary, and
   other fields are not stored or republished through this path. The UI credits
   the result as the AP Top 25 sourced from ESPN; this permission does not

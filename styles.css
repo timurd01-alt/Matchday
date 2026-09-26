@@ -3057,7 +3057,7 @@ body.welcomeOpen{height:auto;min-height:100vh;overflow-y:auto}
 .cfpHero h2{font:var(--fw-heavy) var(--fs-title)/1.1 var(--display);letter-spacing:-.035em;margin:8px 0 0}
 .cfpBadge{flex-shrink:0;font:var(--fw-semibold) var(--fs-2xs) var(--mono);color:var(--signal);padding:8px 11px;border:1px solid var(--line2);border-radius:5px;background:var(--bg2)}
 .cfpCanvas{width:100%}
-.cfpDiagram{display:block;width:100%;height:auto;max-height:max(160px,calc(100dvh - 320px));overflow:visible}
+.cfpDiagram{display:block;width:100%;height:auto;overflow:visible}
 .cfpConnector{fill:none;stroke:var(--cfp-line);stroke-width:2.5;stroke-linejoin:round}
 .cfpCardSurface{fill:var(--bg2);stroke:var(--line2);stroke-width:1}
 .cfpSvgFinal .cfpCardSurface{fill:var(--bg2);stroke:var(--cfp-gold);stroke-width:2}
@@ -3650,16 +3650,6 @@ body{font-variant-numeric:tabular-nums}
 .gameConfPick select{min-height:32px;border:1px solid var(--line2);background:var(--panel);color:var(--text);border-radius:8px;padding:4px 8px;font-size:var(--fs-xs);font-family:var(--mono);text-transform:none}
 @media (max-width:640px){.gameFilters{flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px}.gameFilters .chip{flex:0 0 auto}.gameConfPick{margin-left:0;flex:0 0 auto}}
 
-/* The same gold bracket advances left to right in narrower windows. */
-.cfpCompact{display:none}
-@media(max-width:1100px){
-  .cfpCanvas,.cfpFoot{display:none}
-  .cfpCompact{display:block;overflow-x:auto;overscroll-behavior-x:contain;padding-bottom:12px;scrollbar-color:var(--cfp-line) var(--bg2);scrollbar-width:thin}
-  .cfpCompact>svg{display:block;width:100%;min-width:860px;height:auto}
-  .cfpCompact:focus-visible{outline:2px solid var(--signal);outline-offset:3px}
-}
-
-@media(max-width:700px){.cfpCompact>svg{min-width:1000px}}
 @media (min-width:641px) and (max-width:1280px){.gameConfPick{margin-left:0}}
 /* Half-screen windows: the strip keeps Next and Updated readable and drops
    the tagline and build label, which were cutting both off. */
@@ -3673,3 +3663,37 @@ body{font-variant-numeric:tabular-nums}
 /* Hero pick name: .94 line height clipped descenders (the g in Knights). */
 .expandedDecision .analystPick,.modernExpandedView .analystPick{line-height:1.1;padding-bottom:.04em;overflow:visible}
 .modalName,.modernMatchSheet .modalName{line-height:1.12;padding-bottom:.04em}
+/* CFP: readable school marks, shared round labels and optional full overview. */
+.cfpContext{color:var(--muted);font-size:var(--fs-base);line-height:1.6;margin:0 0 24px}
+.cfpRoundHeading{fill:var(--muted);font:var(--fw-semibold) var(--fs-md) var(--mono);letter-spacing:.6px}
+.cfpSvgName{font-size:var(--fs-xl)}.cfpSvgSeed{font-size:var(--fs-base)}
+.cfpUnresolved .cfpCardSurface{fill:var(--bg);stroke:var(--line)}
+.cfpSvgCard{cursor:pointer}.cfpSvgCard:focus{outline:none}
+.cfpSvgCard:focus-visible .cfpCardSurface,.cfpSvgCard.cfpRoute .cfpCardSurface{stroke:var(--cfp-gold);stroke-width:3}
+.cfpConnector.cfpRoute{stroke:#f6dc9e;stroke-width:4}
+.cfpFullBracket>summary{cursor:pointer;color:var(--cfp-gold);padding:14px 0;min-height:44px;font-weight:var(--fw-semibold)}
+.cfpCanvas{overflow-x:auto;padding:4px 0 12px}
+.cfpDiagram{min-width:1280px}
+.cfpRounds{display:none}
+.cfpRounds nav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:24px}
+.cfpRounds button{min-height:48px;padding:10px 6px;border:1px solid var(--line2);border-radius:6px;background:var(--bg2);color:var(--text);font:var(--fw-semibold) var(--fs-base) var(--display);cursor:pointer}
+.cfpRounds button[aria-pressed="true"]{color:var(--cfp-gold);border-color:var(--cfp-gold);background:#25251d}
+.cfpRounds button:focus-visible,.cfpFullBracket>summary:focus-visible,.cfpCanvas:focus-visible{outline:2px solid var(--cfp-gold);outline-offset:3px}
+.cfpRounds h2{font-size:var(--fs-2xl);margin:0 0 14px}
+.cfpRoundGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.cfpRoundCard{border:1px solid var(--line2);border-radius:8px;background:var(--bg2);overflow:hidden}
+.cfpRoundCard h3{margin:0;padding:10px 16px;color:var(--muted);font:var(--fw-semibold) var(--fs-md) var(--mono);border-bottom:1px solid var(--line)}
+.cfpRoundTeam{display:flex;align-items:center;gap:12px;min-height:68px;padding:10px 16px}
+.cfpRoundTeam+.cfpRoundTeam{border-top:1px solid var(--line)}
+.cfpRoundSeed{flex:0 0 20px;color:var(--cfp-gold);font:var(--fw-semibold) var(--fs-base) var(--mono);text-align:center}
+.cfpRoundTeam .teamMark{width:40px;height:40px;flex:0 0 40px;background:#e4eae5;border-radius:6px;display:grid;place-items:center}
+.cfpRoundTeam .teamMark img{width:34px;height:34px;object-fit:contain}
+.cfpRoundTeam b{font-size:var(--fs-xl);overflow-wrap:anywhere}.cfpRoundTeam strong{margin-left:auto}
+.cfpRoundSlot{flex:0 0 40px;text-align:center}.cfpPending{color:var(--muted)}
+.cfpRoundCard p{margin:0;padding:10px 16px;border-top:1px solid var(--line);font-size:var(--fs-md);color:var(--muted)}
+@media(max-width:1400px){.cfpRounds{display:block}.cfpFoot{display:none}}
+@media(max-width:600px){.cfpRoundGrid{grid-template-columns:1fr}.cfpRounds nav{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.cfpHero{align-items:flex-start}.cfpHero h2{font-size:var(--fs-4xl)}.cfpContext{margin-bottom:18px}}
+
+.cfpSvgFinal.cfpUnresolved .cfpCardSurface{stroke:var(--cfp-gold)}
+.cfpClearRoute{min-height:44px;padding:8px 12px;background:var(--bg2);color:var(--cfp-gold);border:1px solid var(--line2);border-radius:6px;cursor:pointer}
+.cfpClearRoute:focus-visible{outline:2px solid var(--cfp-gold);outline-offset:3px}

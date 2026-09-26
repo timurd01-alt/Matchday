@@ -189,7 +189,7 @@ function applySportNav(){
   const allowed=NAV_DEF[prof];
   const labels=NAV_LABELS[prof]||{};
   document.querySelectorAll('.navbtn[data-v]').forEach(b=>{
-    const hasBracket=(Array.isArray(DATA?.bracket)&&DATA.bracket.some(r=>(r?.matches||[]).length))||!!DATA?.bracketology;
+    const hasBracket=DATA?.comp_key==='NCAAM'||(Array.isArray(DATA?.bracket)&&DATA.bracket.some(r=>(r?.matches||[]).length))||!!DATA?.bracketology;
     const hasThirdRace=Array.isArray(DATA?.third_race)&&DATA.third_race.length>0;
     const hasViewData=b.dataset.v==='bracket'?hasBracket:b.dataset.v==='third'?hasThirdRace:true;
     b.style.display=allowed.includes(b.dataset.v)&&hasViewData?'':'none';

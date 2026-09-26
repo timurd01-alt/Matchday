@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0925Z",
+  "tag": "Design",
+  "title": "Clearer brackets, ready for the model",
+  "items": [
+   "CFP keeps its dark-and-gold bracket with larger school logos, shorter names and readable phone rounds.",
+   "Basketball bracketology now reads a dedicated Bet Better handoff: bracket, bubble, team résumés, seed list, conference bids, tournament odds and eliminations.",
+   "Missing or stale handoffs show a clear unavailable state. Preview data stays local and no browser prediction formula substitutes for the model."
+  ]
+ },
+ {
   "date": "Build 0925Y",
   "tag": "Fix",
   "title": "Team names no longer clipped in the match window",

@@ -40,6 +40,7 @@
 <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
 <link rel="stylesheet" href="styles.css?v=__BUILD__">
 <link rel="stylesheet" href="research-signals.css?v=__BUILD__">
+<link rel="stylesheet" href="bracketology.css?v=__BUILD__" media="print" onload="this.media='all'">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -233,7 +234,7 @@ document.addEventListener('click',function(event){
 // to execute as soon as parsing finished, monopolizing the main thread before
 // a visitor's click could be dispatched. Start them only after entry (or
 // immediately for a visitor who already entered during this browser session).
-var MATCHDAY_FILES=['translations.js','updates.js','matchday-cfb-snapshot.js','app-1-core.js','app-2-views.js','app-3-panels.js','app-4-features.js','research-signals.js'];
+var MATCHDAY_FILES=['translations.js','updates.js','matchday-cfb-snapshot.js','app-1-core.js','app-2-views.js','app-3-panels.js','app-bracketology.js','app-4-features.js','research-signals.js'];
 function matchdayAsset(file){return file+'?v=__BUILD__'}
 window.startMatchdayApp=function(){
   if(window.MATCHDAY_APP_STARTING)return window.MATCHDAY_APP_STARTING;
