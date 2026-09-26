@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0926Y",
+  "tag": "Fix",
+  "title": "Sacramento State vs UMass read withheld",
+  "items": [
+   "The Bet Better model read for Sacramento State vs UMass (75.6% Sacramento State) is withheld from the site. It conflicts with Matchday's own ratings and Sacramento State's first-season FBS results, and appears to count FCS results as FBS strength.",
+   "Withheld reads are listed with their reason in betbetter_withheld.json. A withheld game shows no model read rather than an edited number.",
+   "The model fix for teams moving from FCS to FBS is in progress."
+  ]
+ },
+ {
   "date": "Build 0926X",
   "tag": "Fix",
   "title": "Full-width side sections on phones",

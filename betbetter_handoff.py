@@ -64,6 +64,12 @@ SUPPORTED_VERSIONS = frozenset({1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11})
 
 DEFAULT_HANDOFF_PATH = "betbetter_picks.json"
 
+# Reads the owner has reviewed and withheld from display. Each entry names one
+# fixture and why; a withheld game shows no Bet Better read at all rather than
+# a number Matchday believes is wrong. Nothing here edits a probability: the
+# engine's number is either shown as the engine produced it or not shown.
+DEFAULT_WITHHELD_PATH = "betbetter_withheld.json"
+
 # The one basis this reader accepts. If Bet Better ever sends frozen cards they
 # will arrive under a different basis, and that path has to be written
 # deliberately rather than inherited by a string that happens to match.
@@ -141,7 +147,46 @@ class HandoffError(ValueError):
     """The document exists but cannot be trusted."""
 
 
-def load(path: str = DEFAULT_HANDOFF_PATH) -> dict[str, Any] | None:
+def load_withheld(path: str = DEFAULT_WITHHELD_PATH) -> list[dict[str, Any]]:
+    """The withheld-read entries, or an empty list when there is no file.
+
+    A malformed file raises: silently ignoring it would put back on the site
+    exactly the reads someone decided to take down.
+    """
+    if not os.path.exists(path):
+        return []
+    try:
+        with open(path, encoding="utf-8") as handle:
+            entries = json.load(handle).get("withheld")
+    except (OSError, json.JSONDecodeError, AttributeError) as error:
+        raise HandoffError(f"{path} could not be read: {error}") from error
+    if not isinstance(entries, list):
+        raise HandoffError(f"{path} has no withheld list")
+    for entry in entries:
+        if not isinstance(entry, dict) or not all(
+                entry.get(key) for key in ("sport", "home", "away", "kickoff_day", "reason")):
+            raise HandoffError(
+                f"{path} has an entry without sport, home, away, kickoff_day and reason")
+    return entries
+
+
+def _is_withheld(pick: dict[str, Any], entries: list[dict[str, Any]]) -> bool:
+    """Whether a pick is one of the withheld fixtures, in either orientation."""
+    home, away = _normalize(pick.get("home")), _normalize(pick.get("away"))
+    day = _kickoff_day(pick.get("kickoff"))
+    sport = str(pick.get("sport") or "").lower()
+    for entry in entries:
+        if str(entry["sport"]).lower() != sport or entry["kickoff_day"] != day:
+            continue
+        want_home, want_away = _normalize(entry["home"]), _normalize(entry["away"])
+        if ((_compatible(home, want_home) and _compatible(away, want_away))
+                or (_compatible(home, want_away) and _compatible(away, want_home))):
+            return True
+    return False
+
+
+def load(path: str = DEFAULT_HANDOFF_PATH,
+         withheld_path: str = DEFAULT_WITHHELD_PATH) -> dict[str, Any] | None:
     """The validated handoff, or None when there is simply no file.
 
     A missing file is normal — Bet Better may not have run — and returns None.
@@ -182,6 +227,11 @@ def load(path: str = DEFAULT_HANDOFF_PATH) -> dict[str, Any] | None:
             raise HandoffError(
                 f"{path} contains a pick with basis {pick.get('basis')!r}; "
                 f"this reader accepts only {LIVE_BASIS!r}")
+    entries = load_withheld(withheld_path)
+    if entries:
+        kept = [pick for pick in picks if not _is_withheld(pick, entries)]
+        document["withheld_count"] = len(picks) - len(kept)
+        document["picks"] = kept
     return document
 
 

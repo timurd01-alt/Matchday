@@ -238,3 +238,63 @@ class PublicationTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class WithheldReadsTest(unittest.TestCase):
+    """A withheld read is removed whole, never edited, and the list is strict."""
+
+    def _write(self, directory, name, payload):
+        path = os.path.join(directory, name)
+        with open(path, "w", encoding="utf-8") as handle:
+            json.dump(payload, handle)
+        return path
+
+    def _entry(self, **overrides):
+        entry = {"sport": "ncaaf", "home": "Rutgers", "away": "UMass",
+                 "kickoff_day": "2026-09-03", "reason": "reviewed and withheld"}
+        entry.update(overrides)
+        return entry
+
+    def test_withheld_pick_is_removed_and_others_kept(self):
+        other = pick(event_id="x2", home="Ohio Bobcats", away="Kent State Golden Flashes")
+        with tempfile.TemporaryDirectory() as directory:
+            handoff = self._write(directory, "picks.json", document(picks=[pick(), other]))
+            withheld = self._write(directory, "withheld.json", {"withheld": [self._entry()]})
+            loaded = betbetter_handoff.load(handoff, withheld)
+        self.assertEqual([p["event_id"] for p in loaded["picks"]], ["x2"])
+        self.assertEqual(loaded["withheld_count"], 1)
+
+    def test_orientation_does_not_matter(self):
+        with tempfile.TemporaryDirectory() as directory:
+            handoff = self._write(directory, "picks.json", document())
+            withheld = self._write(directory, "withheld.json", {"withheld": [
+                self._entry(home="UMass", away="Rutgers")]})
+            self.assertEqual(betbetter_handoff.load(handoff, withheld)["picks"], [])
+
+    def test_other_day_is_not_withheld(self):
+        with tempfile.TemporaryDirectory() as directory:
+            handoff = self._write(directory, "picks.json", document())
+            withheld = self._write(directory, "withheld.json", {"withheld": [
+                self._entry(kickoff_day="2026-09-04")]})
+            self.assertEqual(len(betbetter_handoff.load(handoff, withheld)["picks"]), 1)
+
+    def test_missing_file_withholds_nothing(self):
+        with tempfile.TemporaryDirectory() as directory:
+            handoff = self._write(directory, "picks.json", document())
+            loaded = betbetter_handoff.load(handoff, os.path.join(directory, "none.json"))
+        self.assertEqual(len(loaded["picks"]), 1)
+        self.assertNotIn("withheld_count", loaded)
+
+    def test_entry_without_reason_is_rejected(self):
+        with tempfile.TemporaryDirectory() as directory:
+            handoff = self._write(directory, "picks.json", document())
+            withheld = self._write(directory, "withheld.json", {"withheld": [
+                self._entry(reason="")]})
+            with self.assertRaises(betbetter_handoff.HandoffError):
+                betbetter_handoff.load(handoff, withheld)
+
+    def test_committed_list_is_valid(self):
+        # The repository's own list must always load; a typo would otherwise
+        # fail the deploy's snapshot build instead of this test.
+        entries = betbetter_handoff.load_withheld()
+        self.assertTrue(all(entry["reason"] for entry in entries))

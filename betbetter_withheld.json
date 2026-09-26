@@ -1,0 +1,12 @@
+{
+  "withheld": [
+    {
+      "sport": "ncaaf",
+      "home": "Sacramento State",
+      "away": "Massachusetts",
+      "kickoff_day": "2026-09-27",
+      "reason": "ncaaf-adjusted-v1 gives Sacramento State 75.6% in its first FBS season despite a 31-10 home loss to North Dakota State and a lower SRS than UMass (-8.8 vs +4.3). Likely FCS results counted as FBS strength; withheld until the model handles FCS-to-FBS transitions.",
+      "added": "2026-09-26"
+    }
+  ]
+}
