@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0927C",
+  "tag": "Fix",
+  "title": "X handle is now @timursports",
+  "items": [
+   "Contact links and the in-app picks section now point to @timursports on X."
+  ]
+ },
+ {
   "date": "Build 0927B",
   "tag": "Change",
   "title": "A welcome page for fans, not followers",

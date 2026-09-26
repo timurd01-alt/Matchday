@@ -581,7 +581,7 @@ function modTop25(){
    remains the fallback until the richer data-backed ballot exists. */
 const MATCHDAY_PERSONAL_CFB_BALLOT={
   available:true,source:'x',published_on:'2026-09-20',
-  source_url:'https://x.com/timurknowsball/status/2101747002237210721',
+  source_url:'https://x.com/timursports/status/2101747002237210721',
   note:'My first personal ranking after watching three weeks of college football.',
   rankings:['Texas Longhorns','Georgia Bulldogs','Miami Hurricanes','Ole Miss Rebels','Ohio State Buckeyes','Notre Dame Fighting Irish','Indiana Hoosiers','Alabama Crimson Tide','BYU Cougars','USC Trojans','Texas Tech Red Raiders','LSU Tigers','Utah Utes','Louisville Cardinals','Iowa Hawkeyes','Penn State Nittany Lions','Tennessee Volunteers','Florida Gators','Missouri Tigers','Mississippi State Bulldogs','Kentucky Wildcats','Houston Cougars','SMU Mustangs','Michigan Wolverines','Duke Blue Devils'].map((team_name,index)=>({rank:index+1,team_name,first_ballot:true,resume:{}}))
 };
@@ -997,7 +997,7 @@ ${picks.map(one).join('')}
 </section>`;
 }
 
-/* @timurknowsball's picks, against the model and the market.
+/* @timursports's picks, against the model and the market.
    Three honesty constraints ship with this data and all three are obeyed:
    `reportable` false means the sample is too small to state a record as though
    it meant something; `excluded` counts picks recorded after kickoff, which are
@@ -1031,7 +1031,7 @@ function modMyPicks(){
   const losses=settled.length-wins;
   const agreed=settled.filter(p=>p.model_agreed).length;
   const record=`<div class="modStatSub"><b>${wins}–${losses}</b> on settled picks · the model agreed on ${agreed}</div>`;
-  return `<section class="boardMod modMine"><header><h3>@timurknowsball picks</h3><span>vs model &amp; market</span></header>
+  return `<section class="boardMod modMine"><header><h3>@timursports picks</h3><span>vs model &amp; market</span></header>
 ${record}
 <div class="mpHead"><span>pick</span><span>model</span><span>market</span></div>
 <ul class="modList">${rows}</ul>
@@ -1331,14 +1331,14 @@ function rsMyPicks(){
       +`<span class="rsPickMeta">${pct(p.model_probability)} Matchday · ${p.model_agreed?'agreed':'disagreed'}</span>`
       +`<b class="${done?(won?'rsWin':'rsLoss'):'rsWait'}">${done?(won?'W':'L'):'·'}</b></li>`;
   };
-  return `<section class="rsBlock rsSpan12">${rsTop('Matchday in public · <a class="rsHandle" href="https://x.com/timurknowsball" target="_blank" rel="noopener">@timurknowsball</a>','graded')}`
+  return `<section class="rsBlock rsSpan12">${rsTop('Matchday in public · <a class="rsHandle" href="https://x.com/timursports" target="_blank" rel="noopener">@timursports</a>','graded')}`
     +`<div class="rsSplit"><div class="rsSplitMain">`
     +`<div class="rsBigStat"><b>${wins}–${settled.length-wins}</b><span>settled picks · ${settled.length?Math.round(wins/settled.length*100):0}% hit rate</span></div>`
     // Every settled pick in order, oldest first: the record as a run of results.
     +`<div class="rsForm" aria-label="Settled picks in order, oldest first">${settled.slice().sort((x,y)=>String(x.starts_at||'').localeCompare(String(y.starts_at||''))).map(p=>`<i class="${p.outcome===1?'w':'l'}" title="${esc(rsShortName(p.selection))} · ${p.outcome===1?'won':'lost'}"></i>`).join('')}</div>`
     +[['With Matchday',agreedW,agreed.length],['Against Matchday',differW,differ.length],['Against the market',...(()=>{const dog=settled.filter(p=>Number.isFinite(Number(p.market_probability))&&Number(p.market_probability)<0.5);return [dog.filter(p=>p.outcome===1).length,dog.length]})()]].filter(([,,n])=>n).map(([k,w,n])=>`<div class="rsSplitBar"><div><span class="rsKicker">${k}</span><b>${w}–${n-w}</b></div><i><b style="width:${Math.round(w/n*100)}%"></b></i><em>${Math.round(w/n*100)}%</em></div>`).join('')+`</div>`
     +`<div class="rsSplitSide rsExpandable"><ul class="rsPicks">${ordered.map(row).join('')}</ul>`
-    +(ordered.length>5?rsMoreBtn(ordered.length,'All picks','@timurknowsball picks'):'')+`</div></div></section>`;
+    +(ordered.length>5?rsMoreBtn(ordered.length,'All picks','@timursports picks'):'')+`</div></div></section>`;
 }
 // Small tick numbers on both chart axes: "nice" steps (1, 2 or 5 x 10^n)
 // that land inside the data range, drawn faint so the dots stay the subject.
