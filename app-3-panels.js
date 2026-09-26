@@ -831,7 +831,14 @@ function syncViewLocation(v,mode='push'){
   url.searchParams.set('view',publicName);if(sport)url.searchParams.set('sport',sport);url.searchParams.delete('match');
   window.history[mode==='replace'?'replaceState':'pushState']({view:publicName,sport},'',url);
 }
-function setView(v,options={}){VIEW=safeView(v);v=VIEW;if(typeof closeNavSheet==='function')closeNavSheet();
+// Pick 'Em gets its own tab title so shared links and bookmarks say what it is.
+const BASE_DOC_TITLE=document.title;
+function viewDocTitle(v){
+  if(v!=='community')return BASE_DOC_TITLE;
+  const sport={ncaaf:'College Football',ncaam:'College Basketball'}[currentSportKey()]||'College';
+  return `${sport} Pick 'Em · Matchday Terminal`;
+}
+function setView(v,options={}){VIEW=safeView(v);v=VIEW;try{document.title=viewDocTitle(v)}catch(e){}if(typeof closeNavSheet==='function')closeNavSheet();
   $('#app')?.classList.toggle('gamesWide',v==='matches'||v==='home');document.querySelectorAll('.navbtn[data-v]').forEach(b=>{const on=b.dataset.v===v;b.setAttribute('aria-pressed',on);if(on)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});document.querySelectorAll('.view').forEach(el=>el.style.display=el.id==='view-'+v?((v==='matches'||v==='results')?'grid':'block'):'none');if(options.history!==false)syncViewLocation(v,options.replace?'replace':'push');renderCurrent();const active=$('#view-'+v);if(active){active.classList.remove('viewEntering');void active.offsetWidth;active.classList.add('viewEntering')}}
 $('#nav').addEventListener('click',e=>{const b=e.target.closest('.navbtn[data-v]');if(b?.dataset.v)setView(b.dataset.v)});
 // aggregateScorecards() lived here: it merged every sport's scorecard into the

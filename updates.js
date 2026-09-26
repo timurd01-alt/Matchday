@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0926F",
+  "tag": "Change",
+  "title": "Community is now Pick 'Em",
+  "items": [
+   "Community is renamed Pick 'Em across the site, with its own browser title so shared links say what it is.",
+   "Search and link previews now mention the free pick 'em alongside the predictions and ratings."
+  ]
+ },
+ {
   "date": "Build 0926E",
   "tag": "Fix",
   "title": "Chart names on phones",

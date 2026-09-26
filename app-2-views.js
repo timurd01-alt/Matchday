@@ -206,14 +206,14 @@ function renderCommunity(fromFetch){if(!fromFetch&&COMM_FLASH_SHOWN){COMM_FLASH=
   const picks=db.picks||{};
   const draft=btmDraft();Object.keys(draft).forEach(id=>{if(picks[id]?.pick===draft[id]||!open.some(m=>String(m.id)===String(id)))delete draft[id]});
   const nDraft=Object.keys(draft).length;
-  let h=`<div class="vhead">Community</div><p class="commLede">What other Matchday users are picking this week.</p>`;
+  let h=`<div class="vhead">Pick 'Em</div><p class="commLede">What other Matchday users are picking this week.</p>`;
   // A background refresh re-renders right after a submit; it must not wipe the
   // message that says which picks went through.
   if(COMM_FLASH){h+=`<div class="commFlash" role="status">${esc(COMM_FLASH)}</div>`;if(!fromFetch&&!COMM_SUBMITTING)COMM_FLASH_SHOWN=true;}
-  h+=`<div class="commLayout"><section class="commMain" aria-labelledby="commPicksTitle"><div class="commHead"><h2 id="commPicksTitle">Community picks</h2><span>This week</span></div>`;
+  h+=`<div class="commLayout"><section class="commMain" aria-labelledby="commPicksTitle"><div class="commHead"><h2 id="commPicksTitle">Everyone's picks</h2><span>This week</span></div>`;
   if(!open.length)h+=`<div class="empty">No games are open for picks yet.<br><span class="faintline">Games open seven days before kickoff.</span></div>`;
   else{
-    h+=`<div class="commTable" role="table"><div class="commRow commCols" role="row"><span role="columnheader">Game</span><span role="columnheader">Community</span><span role="columnheader" title="Live model: can change before kickoff">Live model</span><span role="columnheader">Your pick</span></div>`;
+    h+=`<div class="commTable" role="table"><div class="commRow commCols" role="row"><span role="columnheader">Game</span><span role="columnheader">Players</span><span role="columnheader" title="Live model: can change before kickoff">Live model</span><span role="columnheader">Your pick</span></div>`;
     // Twelve rows answer 'what is the community picking'; the rest of the
     // week is one tap away instead of a long scroll.
     const shown=COMM_ALL?open:open.slice(0,12);
