@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0926H",
+  "tag": "Change",
+  "title": "Instagram link removed",
+  "items": [
+   "The Instagram link is gone from the welcome page and the site's profile information."
+  ]
+ },
+ {
   "date": "Build 0926G",
   "tag": "Design",
   "title": "Cleaner power rating header",
