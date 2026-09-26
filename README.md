@@ -61,14 +61,14 @@ not on that page because a reader asking "is it any good" wants a record.
 
 ```bash
 python fetch_data.py      # refresh provider data
-python app.py             # serve locally
+python -m http.server 8743   # serve locally
 python -m unittest discover -p "test_*.py"
 ```
 
-Provider keys live in `config_keys.py`, which is gitignored. See `SETUP.md`.
+Provider keys live in `config_keys.py`, which is gitignored. See `docs/SETUP.md`.
 
 ## Notes
 
-`AGENTS.md` documents the repository's working rules. `PROVIDER_COMPLIANCE.md` records
+`AGENTS.md` documents the repository's working rules. `docs/PROVIDER_COMPLIANCE.md` records
 data licensing decisions. `legal.html` carries the privacy policy, terms and data-source
 credits.

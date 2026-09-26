@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Roadmap &amp; Limits · Matchday Terminal</title>
+<meta name="description" content="What Matchday Terminal can't do yet, why, and what is being worked on: live scores, box scores and play-by-play.">
+<link rel="canonical" href="https://matchdayterminal.com/roadmap.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Matchday Terminal">
+<meta property="og:url" content="https://matchdayterminal.com/roadmap.html">
+<meta property="og:title" content="Roadmap &amp; Limits · Matchday Terminal">
+<meta property="og:description" content="What Matchday Terminal can't do yet, why, and what is being worked on: live scores, box scores and play-by-play.">
+<meta property="og:image" content="https://matchdayterminal.com/icon-512.png">
+<meta property="og:image:width" content="512">
+<meta property="og:image:height" content="512">
+<meta property="og:image:alt" content="Matchday Terminal logo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Roadmap &amp; Limits · Matchday Terminal">
+<meta name="twitter:description" content="What Matchday Terminal can't do yet, why, and what is being worked on: live scores, box scores and play-by-play.">
+<meta name="twitter:image" content="https://matchdayterminal.com/icon-512.png">
+<meta name="twitter:image:alt" content="Matchday Terminal logo">
+<meta name="theme-color" content="#070a0f">
+<link rel="icon" href="./favicon.ico" sizes="any">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* Same tokens as styles.css: one typeface, one size scale, one palette. */
+:root{--bg:#070a0f;--bg2:#0c1118;--panel:#121821;--line:#1e2632;--line2:#2b3543;--text:#e7edf4;--body:#c3ccd8;--muted:#7e8a9a;--faint:#707c8c;--signal:#3ad17a;--link:#76caff;--sans:"Inter",system-ui,sans-serif;--fs-2xs:.69rem;--fs-xs:.75rem;--fs-sm:.8rem;--fs-md:.875rem;--fs-base:.9rem;--fs-lg:1rem;--fs-title:clamp(1.6rem,3vw,2.2rem);--fw-medium:500;--fw-semibold:600;--fw-bold:700;--fw-heavy:800}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:var(--fs-base);line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:var(--link);text-underline-offset:2px}
+a:focus-visible{outline:2px solid var(--signal);outline-offset:3px;border-radius:3px}
+.wrap{width:min(1080px,calc(100% - 32px));margin:0 auto;padding:28px 0 64px}
+.back{display:inline-flex;align-items:center;gap:6px;min-height:44px;color:var(--muted);font-size:var(--fs-sm);font-weight:var(--fw-medium);text-decoration:none}
+.back:hover{color:var(--signal)}
+.head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 16px;padding:20px 0 16px;border-bottom:1px solid var(--line)}
+h1{margin:0;font-size:var(--fs-title);font-weight:var(--fw-heavy);letter-spacing:-.03em;line-height:1.1}
+.tag{color:var(--muted);font-size:var(--fs-2xs);font-weight:var(--fw-semibold);letter-spacing:.12em;text-transform:uppercase}
+.facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;margin:24px 0 8px;border:1px solid var(--line);border-radius:12px;background:var(--bg2)}
+.facts div{padding:14px 16px;border-left:1px solid var(--line)}
+.facts div:first-child{border-left:0}
+.facts b{display:block;font-size:var(--fs-lg);font-weight:var(--fw-bold);color:var(--text)}
+.facts span{display:block;margin-top:2px;color:var(--muted);font-size:var(--fs-xs)}
+.layout{display:grid;grid-template-columns:200px minmax(0,1fr);gap:48px;margin-top:32px}
+.toc{position:sticky;top:24px;align-self:start}
+.toc p{margin:0 0 8px;color:var(--signal);font-size:var(--fs-2xs);font-weight:var(--fw-bold);letter-spacing:.12em;text-transform:uppercase}
+.toc a{display:block;padding:6px 0;color:var(--muted);font-size:var(--fs-sm);text-decoration:none}
+.toc a:hover{color:var(--text)}
+.updated{margin-top:16px;color:var(--faint);font-size:var(--fs-xs)}
+section{padding:0 0 32px;margin:0 0 32px;border-bottom:1px solid var(--line);scroll-margin-top:24px}
+section:last-of-type{border-bottom:0;margin-bottom:0}
+.label{margin:0 0 6px;color:var(--signal);font-size:var(--fs-2xs);font-weight:var(--fw-bold);letter-spacing:.12em;text-transform:uppercase}
+h2{margin:0 0 16px;font-size:var(--fs-title);font-weight:var(--fw-heavy);letter-spacing:-.03em;line-height:1.15}
+h3{margin:24px 0 6px;font-size:var(--fs-lg);font-weight:var(--fw-bold);color:var(--text)}
+p,li{color:var(--body)}
+p{margin:0 0 12px;max-width:68ch}
+ul{margin:0 0 12px;padding-left:18px;max-width:68ch}
+li{margin:4px 0}
+strong{color:var(--text);font-weight:var(--fw-semibold)}
+.sources{width:100%;border-collapse:collapse;margin:8px 0 16px;font-size:var(--fs-md)}
+.sources th{padding:0 12px 8px 0;text-align:left;color:var(--muted);font-size:var(--fs-2xs);font-weight:var(--fw-bold);letter-spacing:.1em;text-transform:uppercase;border-bottom:1px solid var(--line2)}
+.sources td{padding:12px 12px 12px 0;vertical-align:top;border-bottom:1px solid var(--line);color:var(--body)}
+.sources td:first-child{color:var(--text);font-weight:var(--fw-semibold);white-space:nowrap}
+.sources td:last-child{color:var(--muted);font-size:var(--fs-sm)}
+.contact{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 0;padding:0;list-style:none}
+.contact a{display:inline-flex;align-items:center;min-height:36px;padding:0 14px;border:1px solid var(--line2);border-radius:999px;color:var(--text);font-size:var(--fs-sm);font-weight:var(--fw-medium);text-decoration:none}
+.contact a:hover{border-color:var(--signal);color:var(--signal)}
+.plan{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4px 24px;padding:14px 0;border-bottom:1px solid var(--line);max-width:68ch}
+.plan b{color:var(--text);font-weight:var(--fw-semibold)}
+.plan span{color:var(--muted);font-size:var(--fs-sm)}
+.foot{margin-top:48px;padding-top:16px;border-top:1px solid var(--line);color:var(--faint);font-size:var(--fs-xs)}
+@media(max-width:860px){.layout{grid-template-columns:1fr;gap:24px}.toc{position:static;display:flex;flex-wrap:wrap;gap:6px}.toc p,.updated{width:100%;margin:0}.toc a{padding:6px 12px;border:1px solid var(--line2);border-radius:999px}.facts{grid-template-columns:repeat(2,minmax(0,1fr))}.facts div:nth-child(3){border-left:0}.facts div:nth-child(n+3){border-top:1px solid var(--line)}}
+@media(max-width:560px){.plan{grid-template-columns:1fr}.sources thead{display:none}.sources tr{display:block;padding:12px 0;border-bottom:1px solid var(--line)}.sources td{display:block;padding:0;border:0}.sources td:first-child{white-space:normal}.sources td+td{margin-top:4px}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <a class="back" href="index.html">← Back to Matchday Terminal</a>
+  <header class="head">
+    <h1>Roadmap &amp; limits</h1>
+    <span class="tag">What's missing · Why · What's next</span>
+  </header>
+
+  <div class="facts" aria-label="At a glance">
+    <div><b>Hourly</b><span>Not live; refreshed once an hour</span></div>
+    <div><b>Final scores</b><span>No box scores or play-by-play yet</span></div>
+    <div><b>Two sports</b><span>College football and men's hoops</span></div>
+    <div><b>Free data</b><span>Built on free-tier sources</span></div>
+  </div>
+
+  <div class="layout">
+    <nav class="toc" aria-label="On this page">
+      <p>On this page</p>
+      <a href="#limits">Current limits</a>
+      <a href="#next">What's next</a>
+      <a href="#ideas">Suggest something</a>
+      <div class="updated">Updated September 25, 2026</div>
+    </nav>
+
+    <div>
+      <section id="limits">
+        <p class="label">Current limits</p>
+        <h2>What the site doesn't do yet</h2>
+        <p>Matchday Terminal is one person's project, built on free data sources. That keeps it independent, but some things you'd expect from a scores site aren't here yet. Here's why.</p>
+
+        <h3>Updated hourly, not live</h3>
+        <p>Scores, ratings and picks refresh once an hour. A game in progress won't update in real time, and a final score can take up to an hour to appear.</p>
+
+        <h3>Final scores, not box scores or play-by-play</h3>
+        <p>The site's sources reliably supply schedules and final scores. Detailed game stats either aren't available from them for free or can't be shown here under their terms, so the site shows only what it is allowed to show.</p>
+
+        <h3>Data budgets can run out</h3>
+        <p>Free data sources limit how many requests the site can make each month. The site rations that budget, but if one runs out, that sport holds at its last published numbers until the budget resets rather than guessing.</p>
+
+        <h3>No in-game predictions</h3>
+        <p>Picks lock an hour before kickoff and are graded once the game is final. Win chances don't update during a game.</p>
+
+        <h3>Basketball ratings use results only</h3>
+        <p>Men's college basketball ratings come from results and scoring margins. Pace- and efficiency-adjusted ratings need per-game team stats the site doesn't have a source for yet.</p>
+
+        <h3>Two sports</h3>
+        <p>The site covers college football and men's college basketball only, so it can do those two properly.</p>
+      </section>
+
+      <section id="next">
+        <p class="label">What's next</p>
+        <h2>Planned, and what's in the way</h2>
+        <p>These are goals, not promises, so there are no dates. Each one says what it's waiting on.</p>
+        <div class="plan"><b>Box scores</b><span>Waiting on a data source that supplies team stats and allows them to be shown.</span></div>
+        <div class="plan"><b>Efficiency-based basketball ratings</b><span>Needs the same team-stats source as box scores.</span></div>
+        <div class="plan"><b>Live scores</b><span>Needs a real-time feed; the site currently refreshes once an hour.</span></div>
+        <div class="plan"><b>Play-by-play</b><span>Needs a play-by-play source that can be shown, plus live updates.</span></div>
+        <div class="plan"><b>In-game win probability</b><span>Needs live scores first, then an in-game model tested before it's published.</span></div>
+        <p>Shipped changes are listed in the release notes on the site's Updates page.</p>
+      </section>
+
+      <section id="ideas">
+        <p class="label">Suggest something</p>
+        <h2>Know a good data source?</h2>
+        <p>If you know a free source for box scores or live college scores, or there's something you'd like to see here, send a message on X.</p>
+        <ul class="contact">
+          <li><a href="https://x.com/timurknowsball" rel="me noopener" target="_blank">Message @timurknowsball on X</a></li>
+        </ul>
+        <p>Terms, privacy and the full list of data sources are on the <a href="legal.html">Legal page</a>.</p>
+      </section>
+    </div>
+  </div>
+
+  <p class="foot">© 2026 Matchday Terminal · Independent and not affiliated with the NCAA, its conferences or schools.</p>
+</main>
+</body>
+</html>

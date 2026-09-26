@@ -36,11 +36,19 @@ export const HANDLE_POOL = [
 ];
 // Legacy accounts can retain an old pro-sport handle. Keep their owner key and
 // pick history untouched; only the public alias changes to a college name.
+// Names carry a jersey-style number, 1-99. Older four-digit tags (#6669) map
+// to one with the same formula the browser uses, so a name reads the same
+// everywhere and never changes again.
+export function jerseyNumber(tag) {
+  const n = Number(tag);
+  return n >= 1 && n <= 99 ? n : 1 + (n % 99);
+}
 export function collegeHandle(handle) {
   const value = String(handle || "");
-  if (HANDLE_POOL.some(name => value.startsWith(name + " #"))) return value;
+  const own = HANDLE_POOL.find(name => value.startsWith(name + " #"));
+  if (own) return `${own} #${jerseyNumber(value.slice(own.length + 2))}`;
   const digest = crypto.createHash("sha256").update("college-handle:" + value).digest();
-  return `${HANDLE_POOL[digest[0] % HANDLE_POOL.length]} #${1000 + digest.readUInt16BE(1) % 9000}`;
+  return `${HANDLE_POOL[digest[0] % HANDLE_POOL.length]} #${1 + digest.readUInt16BE(1) % 99}`;
 }
 
 export const DEVICE_RE = /^mdx-[a-z0-9]{12,60}$/;
@@ -221,7 +229,7 @@ const randomToken = () => crypto.randomBytes(32).toString("base64url");
 
 function drawHandle() {
   const name = HANDLE_POOL[crypto.randomInt(HANDLE_POOL.length)];
-  return `${name} #${1000 + crypto.randomInt(9000)}`;
+  return `${name} #${1 + crypto.randomInt(99)}`;
 }
 
 export async function findOrCreateAccount(db, provider, subject) {

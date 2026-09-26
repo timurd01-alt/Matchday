@@ -10,11 +10,11 @@ Matchday is primarily a Python data pipeline and static web application, with sm
 - `app-1-core.js` through `app-4-features.js` power the main interface
 - `content.js` and `generate_posts.py` publish pregame analysis and verified postgame recaps
 - `index.html`, `content.html`, `qa.html`, and `styles.css` define the public product surfaces
-- `api/` and `server/` contain optional online components
+- `api/` contains the Vercel API for community picks
 
 ## Local setup
 
-Use [SETUP.md](https://github.com/timurd01-alt/Matchday/blob/main/SETUP.md) for current local instructions. API credentials belong only in ignored local configuration or the deployment environment; never commit them.
+Use [SETUP.md](https://github.com/timurd01-alt/Matchday/blob/main/docs/SETUP.md) for current local instructions. API credentials belong only in ignored local configuration or the deployment environment; never commit them.
 
 ## Prediction integrity invariant
 
@@ -34,4 +34,4 @@ Tests should accompany changes to ranking logic, provider normalization, grading
 
 ## Security
 
-Read [SECURITY.md](https://github.com/timurd01-alt/Matchday/blob/main/SECURITY.md) before publishing or deploying changes. Never include API keys, private pick logs, raw credential-bearing errors, or local configuration in an issue or pull request.
+Read [SECURITY.md](https://github.com/timurd01-alt/Matchday/blob/main/docs/SECURITY.md) before publishing or deploying changes. Never include API keys, private pick logs, raw credential-bearing errors, or local configuration in an issue or pull request.

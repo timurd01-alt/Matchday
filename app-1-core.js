@@ -73,61 +73,7 @@ const FIXTURE_PAGE_SIZE=40;
 // The model board used to render every pick in one scroll (1,300+ rows on a
 // full slate). Same pager the fixture list already uses, smaller page: a pick
 // row is denser reading than a match card.
-const MODEL_PAGE_SIZE=25;
-let MATCH_VISIBLE=FIXTURE_PAGE_SIZE,RESULT_VISIBLE=FIXTURE_PAGE_SIZE,MODEL_VISIBLE=MODEL_PAGE_SIZE;
-// Site-wide publication pause, mirroring forecast_pause.py. One flag: clear
-// FORECAST_PAUSE_ACTIVE when the coverage gaps close and every sport falls back
-// to its own gate below rather than publishing unconditionally.
-const FORECAST_PAUSE_ACTIVE=false;
-const FORECAST_PAUSE_MESSAGE='Predictions are paused while the model is rebuilt on a new data engine.';
-
-function forecastPublicationState(payload,match){
-  const value=x=>typeof x==='string'?x:(x&&typeof x==='object'?(x.state||x.status||x.publication_state):'');
-  const candidates=[
-    match?._forecast_paused?'paused':'',match?.forecast_publication_state,match?.prediction_publication_state,
-    match?.publication_state,match?.forecast_publication,match?.prediction?.publication_state,
-    payload?.forecast_publication_state,payload?.prediction_publication_state,payload?.publication_state,
-    payload?.forecast_publication,payload?.prediction_publication,
-  ];
-  const states=candidates.map(value).filter(Boolean).map(x=>String(x).toLowerCase());
-  if(states.includes('paused'))return 'paused';
-  const dataset=String(value(payload?.forecast_publication)||value(payload?.prediction_publication)||'').toLowerCase();
-  if(dataset==='eligible')return 'eligible';
-  return states[0]||'';
-}
-function isForecastPaused(match,payload=DATA){
-  // Finished matches keep the pick they were graded on: that is the public
-  // record, and hiding it would scrub the model's own results. Everything not
-  // yet settled -- upcoming and in-play alike -- loses its forecast, because an
-  // in-play pick is still an ungraded model call being presented as live
-  // analysis, percentages included.
-  if(String(match?.status||'').toUpperCase()==='FINISHED')return false;
-  if(FORECAST_PAUSE_ACTIVE)return true;
-  // The site switch is authoritative. A last-good dataset can retain yesterday's
-  // paused marker when a provider refresh is rate-limited; it must not resurrect
-  // a banner after publication has deliberately resumed.
-  return false;
-}
-function applyForecastPublicationPauses(payload){
-  if(!payload||!Array.isArray(payload.matches))return payload;
-  payload.matches.forEach(match=>{
-    if(!isForecastPaused(match,payload))return;
-    match._forecast_paused=true;
-    match._forecast_pause_message=FORECAST_PAUSE_MESSAGE;
-    ['prediction','locked_prediction','prediction_snapshot','official_pick','model_pick','model_confidence',
-     'confidence','edge','upset','watchability','watch_score','forecast','predicted_score',
-     'predicted_home_score','predicted_away_score','predicted_margin','expected_margin','model_margin',
-     'model_alert','model_vs_market_alert'].forEach(key=>delete match[key]);
-  });
-  return payload;
-}
-function forecastPauseHTML(match){
-  // Two inline children with no rule of their own rendered as one run-on line
-  // ("Forecast pausedPicks are on hold..."). Block them out and give the notice
-  // the same warn treatment the top-of-view banner already uses.
-  return isForecastPaused(match)?`<div class="emptyForecast forecastPaused" role="status"><b>Forecast paused</b><span>${esc(FORECAST_PAUSE_MESSAGE)}</span><em>Scores, results, stats and market odds are all still here.</em></div>`:'';
-}
-
+let MATCH_VISIBLE=FIXTURE_PAGE_SIZE,RESULT_VISIBLE=FIXTURE_PAGE_SIZE;
 // Providers can keep the season that just ended until the next schedule
 // opens. Keep its games in Results, but never label its table or bracket as
 // the new season's live competition state.
@@ -210,7 +156,7 @@ function showMatchLoading(){const host=$('#view-matches');if(host)host.innerHTML
 function clearCompetitionViewsForLoad(){
   ['groups','bracket','third'].forEach(view=>{const host=$('#view-'+view);if(host)host.innerHTML='<div class="empty">Loading current-season data…</div>'});
 }
-function changeSport(v){DATA_FILE=/^(ncaaf|ncaam)$/.test(v)?('data_'+v+'.json'):DEFAULT_SPORT_FILE;MATCH_VISIBLE=FIXTURE_PAGE_SIZE;RESULT_VISIBLE=FIXTURE_PAGE_SIZE;MODEL_VISIBLE=MODEL_PAGE_SIZE;try{localStorage.setItem('matchday.sport',DATA_FILE)}catch(e){};if(typeof syncViewLocation==='function')syncViewLocation(VIEW,'replace');const cached=SPORT_DATA_CACHE[DATA_FILE];if(cached){showSportData(cached,true)}else{applySportNav();showMatchLoading();clearCompetitionViewsForLoad()}load(true);}
+function changeSport(v){DATA_FILE=/^(ncaaf|ncaam)$/.test(v)?('data_'+v+'.json'):DEFAULT_SPORT_FILE;MATCH_VISIBLE=FIXTURE_PAGE_SIZE;RESULT_VISIBLE=FIXTURE_PAGE_SIZE;try{localStorage.setItem('matchday.sport',DATA_FILE)}catch(e){};if(typeof syncViewLocation==='function')syncViewLocation(VIEW,'replace');const cached=SPORT_DATA_CACHE[DATA_FILE];if(cached){showSportData(cached,true)}else{applySportNav();showMatchLoading();clearCompetitionViewsForLoad()}load(true);}
 
 const COLORS={orange:'#ffb02e',blue:'#4cc2ff',green:'#3ad17a',red:'#ff4d5e',purple:'#b16cff'};
 function saveSettings(){localStorage.setItem('matchday.settings',JSON.stringify(SETTINGS))}
@@ -424,26 +370,6 @@ function pressure(stats,side){if(!stats)return 0;const s=stats[side]||{};return 
 function pct(v){v=Number(v);return Number.isFinite(v)?Math.max(0,Math.min(100,Math.round(v))):0}
 function modelPctLabel(v){const n=Number(v);return v==null||!Number.isFinite(n)?'—':Math.max(0,Math.min(99.9,n)).toFixed(1)+'%'}
 function bar1x2(h,d,a){h=pct(h);a=pct(a);const dSeg=d==null?'':(d=>`<div class="seg d" style="flex-basis:${d}%"><span>${d}%</span></div>`)(pct(d));return `<div class="bar"><div class="seg h" style="flex-basis:${h}%"><span>${h}%</span></div>${dSeg}<div class="seg a" style="flex-basis:${a}%"><span>${a}%</span></div></div>`}
-// The backend owns the published pick. UI components may explain that pick,
-// but must never promote a live model or market inference over a locked record.
-function lockedPredictionSnapshot(m){
-  const pr=m?.prediction||{};
-  const candidates=[m?.locked_prediction,m?.prediction_snapshot,pr.locked_snapshot,pr.snapshot,pr.locked];
-  const found=candidates.find(x=>x&&typeof x==='object'&&!Array.isArray(x));
-  return found?.prediction&&typeof found.prediction==='object'?found.prediction:(found||{});
-}
-function officialPrediction(m){
-  if(isForecastPaused(m))return {side:'',name:'',confidence:null,locked:{}};
-  const pr=m?.prediction||{},locked=lockedPredictionSnapshot(m);
-  const side=locked.pick??pr.pick??'';
-  const name=locked.pick_name??pr.pick_name??(side==='h'?m?.home?.name:side==='a'?m?.away?.name:side==='d'?'Draw':'');
-  return {side,name,confidence:locked.confidence??pr.confidence??null,locked};
-}
-function officialPredictionProbabilities(m){
-  if(isForecastPaused(m))return {};
-  const pr=m?.prediction||{},locked=lockedPredictionSnapshot(m);
-  return locked.adjusted||locked.blend||locked.probs||pr.adjusted||pr.blend||pr.model||{};
-}
 function duo(xl,xv,yl,yv){xv=pct(xv);yv=pct(yv);return `<div class="mkt"><div class="lbls"><span>${esc(xl)} <b>${xv}%</b></span><span><b>${yv}%</b> ${esc(yl)}</span></div><div class="duo"><i class="x" style="flex-basis:${xv}%">${xv}%</i><i class="y" style="flex-basis:${yv}%">${yv}%</i></div></div>`}
 function marketPanel(m){
   const mk=m.markets||{},x=mk['1x2']||{},twoWay=_isTwoWay(m);
@@ -473,7 +399,6 @@ function marketPanel(m){
   if(mk.totals)h+=`<div class="seclbl">Goals — over/under ${esc(mk.totals.line)}</div>`+duo(`Over ${mk.totals.line}`,mk.totals.over_pct,`Under ${mk.totals.line}`,mk.totals.under_pct);
   return h;
 }
-function _v6UpsetClass(score,triggered){score=Number(score)||0;if(triggered)return'trigger';return score>=70?'high':score>=50?'med':'low'}
 /* dedup */
 /* dedup */
 /* dedup */
@@ -511,11 +436,10 @@ function enterMatchday(targetView='',startWithTour=false){
 const TOUR_STEPS=[
   {target:'#sportSel',title:'Start here',body:'Switch between College Football and Men’s College Basketball. Each has its own predictions, accuracy tracking and playoff picture.'},
   {target:'.navbtn[data-v="matches"]',title:'Matches',body:'Every upcoming fixture with the model’s locked pregame pick shown next to the market’s.'},
-  {target:'.navbtn[data-v="edge"]',title:'Model',body:'See exactly why the model favors a side — points, form, ratings, injuries and more, broken down factor by factor.'},
   {target:'.navbtn[data-v="score"]',title:'Scorecard',body:'Every locked pick, tracked in public. Nothing gets rewritten after the fact — good calls or bad ones.'},
   {target:'.navbtn[data-v="sandbox"]',title:'Sandbox',body:'Build a hypothetical matchup between any two teams and see what the model thinks, on the spot.'},
   {target:'.navbtn[data-v="bracket"]',title:'Bracket',body:'Simulate an entire knockout bracket round by round, using the model’s own predictions.'},
-  {target:'.navbtn[data-v="community"]',title:'Community',body:'Set a handle, make your own picks, and see how you stack up against the model on the leaderboard.'},
+  {target:'.navbtn[data-v="community"]',title:"Pick 'Em",body:'Set a handle, make your own picks, and see how you stack up against the model on the leaderboard.'},
   {target:'.navbtn[data-v="customize"]',title:'Customize',body:'Tune the accent color, layout density, language, and your favorite team here. You can replay this tour anytime from this tab.'}
 ];
 let TOUR_I=0;
@@ -648,7 +572,6 @@ function renderWelcomeStats(){
   const totals=scorecardTotals();
   const cells=[[upcoming.length,`${sportLabel} games next 7 days`]];
   if(totals.picks)cells.push([totals.picks,'picks graded in public']);
-  if(FORECAST_PAUSE_ACTIVE)cells.push(['paused','new picks while rebuilding']);
   else if(totals.lockMinutes)cells.push([`${totals.lockMinutes} min`,'locked before kickoff']);
   else cells.push([ALL_SPORT_KEYS.length,'sports covered']);
   host.innerHTML=cells.map(([v,l])=>`<div><b>${esc(v)}</b><span>${esc(l)}</span></div>`).join('');
@@ -720,11 +643,7 @@ function renderWelcomeRecord(){
 function renderWelcomeStatusNote(){
   const host=$('#welcomeStatusNote');if(!host)return;
   const totals=scorecardTotals();
-  host.innerHTML=FORECAST_PAUSE_ACTIVE
-    ?`<p>The site covers college football and men's college basketball only. Publishing new
-      picks is paused while the model is rebuilt, so what you see is the power rating and the
-      market's own number rather than a forecast.</p>`
-    :`<p>The site covers college football and men's college basketball only. Fixtures on the
+  host.innerHTML=`<p>The site covers college football and men's college basketball only. Fixtures on the
       board carry a model probability alongside the market's own number where one is priced${totals.lockMinutes?`, locked ${totals.lockMinutes} minutes before kickoff`:''}${totals.picks?` — ${totals.picks} of them have been graded against the result so far`:''}.</p>`;
 }
 // Slight parallax on the preview card. Pointer-only and opt-out aware, so it
@@ -767,18 +686,6 @@ function renderWelcome(){
   runCarousel('welcome',pool,host,_welcomeCardHTML,4500);
   const state=$('#welcomeFeedState');if(state)state.textContent='PREGAME';
 }
-function heroMarquee(){
-  const up=(DATA.matches||[]).filter(m=>m.status==='UPCOMING'&&m.prediction&&m.markets);
-  if(!up.length)return '';
-  const pick=up.sort((a,b)=>(a.kickoff||'').localeCompare(b.kickoff||''))[0];
-  const pr=pick.prediction||{};
-  return `<div class="heroMatch" onclick="openMatchModal('${esc(String(pick.id))}')">
-    <div class="heroMatchTeams">${esc(pick.home.name)} <span class="mvvs">v</span> ${esc(pick.away.name)}
-      ${pick._comp?`<span class="compTag">${esc(pick._comp)}</span>`:''}
-      <span class="heroLive">PREGAME</span></div>
-    ${pr.pick_name?`<div class="heroMatchPick">model: <b>${esc(pr.pick_name)}</b>${pr.confidence?` ${pr.confidence}%`:''}</div>`:''}
-  </div>`;
-}
 function landingHero(){
   // The engine's graded record, not the hand-typed block this used to read.
   const sc=typeof betbetterScorecard==='function'?betbetterScorecard():null;
@@ -801,23 +708,12 @@ function landingHero(){
     <div class="heroTitle">Every pick, on the record.</div>
     <div class="heroSub">Locked before kickoff, graded after the final whistle, never edited in between. Free, and no ads.</div>
     <div class="heroRow">${rec}</div>
-    ${heroMarquee()}
     <div class="heroActions">
       <button class="btmbtn heroBtn" onclick="heroDismiss()">Open the analysis</button>
       <button class="btmbtn heroBtn ghost" onclick="heroDismiss();setView('community')">Play against the model</button>
     </div>
   </div>`;
 }
-// Where a draw is possible the leading outcome is routinely under 50%, which
-// reads as a broken model when it is presented as a flat "Pick". Both the card
-// markup and the compact-card pass below label those "Most likely" instead, so
-// they have to agree on when that is.
-function hasThreeWayProbabilities(m){
-  if(typeof _isTwoWay==='function'&&_isTwoWay(m))return false;
-  const p=officialPredictionProbabilities(m)||{};
-  return p.h!=null&&p.d!=null&&p.a!=null;
-}
-function leadsUnderHalf(m,confidence){return hasThreeWayProbabilities(m)&&Number(confidence)<50}
 function enhanceMatchCards(host){
   host.querySelectorAll('.card .head').forEach(head=>{
     const card=head.closest('.card'),m=BYID[card?.dataset.id];
@@ -938,7 +834,8 @@ Object.assign(TEAM_LOGO_FILES,{
   'Florida Atlantic':'floridaAtlantic.png','Florida Atlantic Owls':'floridaAtlantic.png',
   'Georgia Southern':'georgiaSouthern.png','Georgia Southern Eagles':'georgiaSouthern.png',
   'Georgia State':'georgiaState.png','Georgia State Panthers':'georgiaState.png',
-  TCU:'TCU.png',"Hawai'i":'hawaii.png','Oklahoma State':'OklahomaState.png'
+  TCU:'TCU.png',"Hawai'i":'hawaii.png','Oklahoma State':'OklahomaState.png',
+  Pennsylvania:'penn.png',Grambling:'gramblingState.png',Presbyterian:'presbyterianCollege.png','William & Mary':'williamMary.png'
 });
 const _INFERRED_LOGO_CACHE=new Map();
 function inferredTeamLogoFile(name){
@@ -967,15 +864,18 @@ function teamLogoCandidates(name){
   if(candidates===undefined){
     const words=label.replace(/&/g,' and ').replace(/[^A-Za-z0-9]+/g,' ').trim().split(/\s+/).filter(Boolean);
     const exact=TEAM_LOGO_FILES[label];
-    const inferred=[];
-    for(let end=words.length;end>0;end--)if(_safeLogoSuffix(words[end]))inferred.push(inferredTeamLogoFile(words.slice(0,end).join(' ')));
-    // Try the longest full school name before a shorter prefix: Michigan State
-    // must never inherit Michigan's mark, and likewise for other state schools.
-    const mappedPrefixes=[];
+    // Every candidate is a school name the label starts with, tried longest
+    // first whether it comes from the mapped table or from the words: "Utah
+    // Valley" must be tried before a mapped "Utah", or Utah Valley wears the
+    // Utes' mark (likewise Florida Gulf Coast, Texas A&M-Corpus Christi). A
+    // mapped name wins a tie, because the map exists to correct inference.
+    const ranked=[];
+    for(let end=words.length;end>0;end--)if(_safeLogoSuffix(words[end]))ranked.push([words.slice(0,end).join(' ').length,1,inferredTeamLogoFile(words.slice(0,end).join(' '))]);
     for(const [school,file] of _TEAM_LOGO_ENTRIES){
-      if(label.startsWith(school+' ')&&_safeLogoSuffix(label.slice(school.length).trim().split(/\s+/)[0]))mappedPrefixes.push(file);
+      if(label.startsWith(school+' ')&&_safeLogoSuffix(label.slice(school.length).trim().split(/\s+/)[0]))ranked.push([school.length,0,file]);
     }
-    candidates=[...new Set([exact,...mappedPrefixes,...inferred].filter(Boolean))];
+    ranked.sort((a,b)=>(b[0]-a[0])||(a[1]-b[1]));
+    candidates=[...new Set([exact,...ranked.map(r=>r[2])].filter(Boolean))];
     _LOGO_CANDIDATE_CACHE.set(label,candidates);
   }
   return candidates.slice();
@@ -1013,7 +913,7 @@ function gamesSummaryHTML(active){
   return `<section class="gamesLandingHead"><span>GAMES</span><h1>${esc(sport)}</h1><p>Predictions, market comparisons and the public record.</p></section>`
     +`<section class="gamesFeatured"><div class="gamesSectionHead"><span>This week's featured game</span><small>${featured?.model!=null?'Live model':'Next 7 days'}</small></div>${feature}</section>`
     +`<div class="gamesSupportGrid${top.length?'':' noComparisons'}">${top.length?gamesDifferencesHTML(top):''}<div class="gamesSideCol">${gamesRecordHTML()}${gamesBracketHTML()}</div></div>`
-    +`<nav class="gamesExplore" aria-label="Explore Matchday"><span>Explore</span><div><button type="button" onclick="setView('matches')"><b>Games</b><small>Fixtures and matchups</small></button><button type="button" onclick="setView('groups')"><b>Rankings</b><small>Ratings and conferences</small></button><button type="button" onclick="setView('news')"><b>Research</b><small>Analysis and methodology</small></button><button type="button" onclick="setView('results')"><b>Results</b><small>Finals and grading</small></button></div></nav>`;
+    +`<nav class="gamesExplore" aria-label="Explore Matchday"><span>Explore</span><div><button type="button" onclick="setView('groups')"><b>Rankings</b><small>Ratings and conferences</small></button><button type="button" onclick="setView('news')"><b>Research</b><small>Analysis and methodology</small></button><button type="button" onclick="setView('results')"><b>Results</b><small>Finals and grading</small></button><button type="button" onclick="setView('community')"><b>Pick 'Em</b><small>Pick against the model</small></button></div></nav>`;
 }
 function renderHome(){
   const host=$('#view-home'),active=(DATA.matches||[]).filter(m=>!isCompleteOrPast(m)).sort(favoriteFixtureSort);
@@ -1035,13 +935,20 @@ function gamesFeaturedHTML(read){
     :`<div><span>Live model · ${esc(read.pick)}</span><b>${modelPctLabel(read.model)}</b></div>`;
   return `<button type="button" class="gamesFeaturedButton" onclick="openMatchModal('${esc(String(m.id))}')"><span class="gamesFeaturedWhen">${esc(m.stage||'Fixture')} · ${esc(kickIn(m.kickoff))}</span><strong><span class="gamesFeaturedTeam">${teamMark(m.home?.name)}<span>${esc(m.home?.name||'Home')}</span></span><i>vs</i><span class="gamesFeaturedTeam away">${teamMark(m.away?.name)}<span>${esc(m.away?.name||'Away')}</span></span></strong><div class="gamesFeaturedCompare">${model}${comparison}</div><em>View analysis <span aria-hidden="true">→</span></em></button>`;
 }
+// Home has no fixture board of its own, so "View all games" opens the Games
+// view; where the board is on the same page, it scrolls to it instead.
+function openAllGames(){
+  const board=[...document.querySelectorAll('.gamesFixtureBoard')].find(b=>b.offsetParent);
+  if(board){board.scrollIntoView({behavior:prefersReducedMotion()?'auto':'smooth'});return}
+  setView('matches');
+}
 function gamesDifferencesHTML(reads){
   const rows=reads.length?reads.map(read=>{
     const m=read.match,d=read.difference;
     const content=`<span><b>${esc(m.home?.name||'Home')} vs ${esc(m.away?.name||'Away')}</b><small>${esc(read.pick)} · model ${modelPctLabel(read.model)} · market ${read.market.toFixed(1)}%</small></span><strong class="${d>0?'up':d<0?'down':''}">${d>0?'+':''}${d.toFixed(1)} pts</strong>`;
     return `<button type="button" onclick="openMatchModal('${esc(String(m.id))}')">${content}</button>`;
   }).join(''):`<div class="gamesEmpty">Model and market comparisons will appear as games are priced.</div>`;
-  return `<section class="gamesDifferences"><div class="gamesSectionHead"><span>Largest model / market differences</span><small>${reads.length?'Top '+reads.length:'Awaiting prices'}</small></div><div class="gamesDifferenceRows">${rows}</div><button type="button" class="gamesTextLink" onclick="document.querySelector('.gamesFixtureBoard')?.scrollIntoView({behavior:prefersReducedMotion()?'auto':'smooth'})">View all games <span aria-hidden="true">→</span></button></section>`;
+  return `<section class="gamesDifferences"><div class="gamesSectionHead"><span>Largest model / market differences</span><small>${reads.length?'Top '+reads.length:'Awaiting prices'}</small></div><div class="gamesDifferenceRows">${rows}</div><button type="button" class="gamesTextLink" onclick="openAllGames()">View all games <span aria-hidden="true">→</span></button></section>`;
 }
 /* The projected playoff field's top four seeds, from the same bracket data
    the Bracket tab draws, as a way into that tab from the home page. */
@@ -1074,7 +981,10 @@ function gamePollRank(name){return gameTeamMemo('rank',name,()=>gamePollRankUnca
 function gamePollRankUncached(name){
   const poll=currentSportKey()==='ncaaf'
     ?(typeof MATCHDAY_CFB_AP_POLL!=='undefined'?MATCHDAY_CFB_AP_POLL.rankings||[]:[])
-    :(typeof collegeRankingTable==='function'?(collegeRankingTable()?.top25||collegeRankingTable()?.rankings||[]):[]);
+    :(typeof MATCHDAY_NCAAM_AP_POLL!=='undefined'&&MATCHDAY_NCAAM_AP_POLL.is_final===false&&MATCHDAY_NCAAM_AP_POLL.rankings?.length===25)
+      // Last season's final poll says nothing about this season's games.
+      ?MATCHDAY_NCAAM_AP_POLL.rankings
+      :(typeof collegeRankingTable==='function'?(collegeRankingTable()?.top25||collegeRankingTable()?.rankings||[]):[]);
   const r=Number(poll.find(r=>bbNameMatches(r.name||r.team_name,name))?.rank);
   return Number.isFinite(r)&&r<=25?r:null;
 }
@@ -1121,7 +1031,7 @@ function renderMatches(){const M=DATA.matches||[];
   const filtered=GAME_FILTER.kind!=='all'||!!GAME_FILTER.conf;
   const shown=active.slice(0,MATCH_VISIBLE),remaining=Math.max(0,active.length-shown.length);
   const missing=DATA._missing?`<div class="banner" style="grid-column:1/-1"><b>No ${esc(DATA.competition||'this sport')} data yet.</b> Fetch it once its season is available — run the matching start file (e.g. start_ucl.bat) or keep an eye out when the season begins.</div>`:'';
-  const intro=`<div class="viewIntro gamesFixtureBoard"><div><div class="vhead">Games</div><p>${FORECAST_PAUSE_ACTIVE?'Fixtures, scores and market odds. Model picks are paused.':'This week comes first. Open any matchup for the full model, market and team analysis.'}</p></div><span>${filtered?`${active.length} of ${all.length}`:active.length} games</span></div>`;
+  const intro=`<div class="viewIntro gamesFixtureBoard"><div><div class="vhead">Games</div><p>This week comes first. Open any matchup for the full model, market and team analysis.</p></div><span>${filtered?`${active.length} of ${all.length}`:active.length} games</span></div>`;
   const empty=filtered&&all.length
     ?`<div class="empty" style="grid-column:1/-1">No upcoming games match these filters. <button type="button" class="actionbtn" onclick="setGameFilter({kind:'all',conf:''})">Clear filters</button></div>`
     :`<div class="empty" style="grid-column:1/-1">No upcoming matches to analyze.</div>`;
@@ -1145,7 +1055,10 @@ function cleanGroup(g){g=String(g||'').trim();if(!g)return'';if(/^GROUP_/i.test(
 function rowKey(n){return String(n||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim()}
 function ensureRow(map,team,group){const key=rowKey(team?.name);if(!key)return null;if(!map[key])map[key]={name:team?.name||'',code:team?.code||'',group:cleanGroup(group||team?.group),pld:0,w:0,d:0,l:0,gf:0,ga:0,gd:0,pts:0,form:'',live:false,results:[]};else{map[key].code=map[key].code||team?.code||'';map[key].group=map[key].group||cleanGroup(group||team?.group)}return map[key]}
 function addResult(row,gf,ga,live,kick){row.pld++;row.gf+=gf;row.ga+=ga;row.gd=row.gf-row.ga;if(gf>ga){row.w++;row.pts+=3;row.results.push([kick,'W'+(live?'*':'')])}else if(gf<ga){row.l++;row.results.push([kick,'L'+(live?'*':'')])}else{row.d++;row.pts+=1;row.results.push([kick,'D'+(live?'*':'')])}row.live=row.live||live}
-function deriveStandings(){if(Array.isArray(DATA.standings)&&DATA.standings.length)return DATA.standings;const rows={},M=DATA.matches||[];M.forEach(m=>{const g=cleanGroup(m.home?.group||m.away?.group||(/^Group/i.test(m.stage||'')?m.stage:''));if(!g)return;const h=ensureRow(rows,m.home,g),a=ensureRow(rows,m.away,g);const sh=m.score?.home,sa=m.score?.away;if(h&&a&&m.status==='FINISHED'&&Number.isFinite(Number(sh))&&Number.isFinite(Number(sa))){addResult(h,Number(sh),Number(sa),false,m.kickoff||'');addResult(a,Number(sa),Number(sh),false,m.kickoff||'')}});Object.values(rows).forEach(r=>{r.results.sort((a,b)=>String(a[0]).localeCompare(String(b[0])));r.form=r.results.slice(-5).map(x=>x[1]).join(' ')});const by={};Object.values(rows).forEach(r=>{if(!r.group)return;(by[r.group] ||= []).push(r)});return Object.keys(by).sort((a,b)=>groupLetter(a).localeCompare(groupLetter(b))).map(g=>{by[g].sort((x,y)=>(y.pts-x.pts)||(y.gd-x.gd)||(y.gf-x.gf)||String(x.name).localeCompare(y.name));by[g].forEach((r,i)=>r.pos=i+1);return {group:g,teams:by[g]}})}
+/* A feed that carries only a poll (basketball's AP Top 25) still needs its
+   conference tables derived from the schedule; the poll goes in front. */
+function deriveStandings(){const given=Array.isArray(DATA.standings)?DATA.standings:[],polls=typeof isPollTable==='function'?given.filter(isPollTable):[];if(given.length>polls.length)return given;return polls.concat(_deriveStandingsFromMatches())}
+function _deriveStandingsFromMatches(){const rows={},M=DATA.matches||[];M.forEach(m=>{const g=cleanGroup(m.home?.group||m.away?.group||(/^Group/i.test(m.stage||'')?m.stage:''));if(!g)return;/* Each side keeps its own conference: filing both under the home side's put Cornell and Navy in the A-10. */const own=m.home?.group||m.away?.group,side=t=>cleanGroup(t?.group)||(own?'':g);const h=ensureRow(rows,m.home,side(m.home)),a=ensureRow(rows,m.away,side(m.away));[[h,m.home],[a,m.away]].forEach(([r,t])=>{if(r&&r.rating==null&&Number.isFinite(Number(t?.rating)))r.rating=Number(t.rating)});const sh=m.score?.home,sa=m.score?.away;if(h&&a&&m.status==='FINISHED'&&Number.isFinite(Number(sh))&&Number.isFinite(Number(sa))){addResult(h,Number(sh),Number(sa),false,m.kickoff||'');addResult(a,Number(sa),Number(sh),false,m.kickoff||'');if(h.group===a.group&&Number(sh)!==Number(sa)){const[w,l]=Number(sh)>Number(sa)?[h,a]:[a,h];w.cw=(w.cw||0)+1;l.cl=(l.cl||0)+1}}});Object.values(rows).forEach(r=>{r.results.sort((a,b)=>String(a[0]).localeCompare(String(b[0])));r.form=r.results.slice(-5).map(x=>x[1]).join(' ')});const by={};Object.values(rows).forEach(r=>{if(!r.group)return;(by[r.group] ||= []).push(r)});return Object.keys(by).sort((a,b)=>groupLetter(a).localeCompare(groupLetter(b))).map(g=>{const pct=(w,l)=>w+l?w/(w+l):0;by[g].forEach(r=>{r.cw=r.cw||0;r.cl=r.cl||0;r.conf_record=`${r.cw}-${r.cl}`});by[g].sort(DATA.comp_key==='NCAAM'?(x,y)=>(pct(y.cw,y.cl)-pct(x.cw,x.cl))||(y.cw-x.cw)||(pct(y.w,y.l)-pct(x.w,x.l))||((Number(y.rating)||0)-(Number(x.rating)||0))||String(x.name).localeCompare(y.name):(x,y)=>(y.pts-x.pts)||(y.gd-x.gd)||(y.gf-x.gf)||String(x.name).localeCompare(y.name));by[g].forEach((r,i)=>r.pos=i+1);return {group:g,teams:by[g]}})}
 function getThirdRace(){let third=Array.isArray(DATA.third_race)&&DATA.third_race.length?DATA.third_race.map(x=>({...x})):deriveStandings().flatMap(g=>(g.teams||[]).filter(t=>t.pos===3).map(t=>({team:t.name,name:t.name,code:t.code,group:g.group,pts:t.pts,gd:t.gd,gf:t.gf,live:t.live})));third.sort((a,b)=>(b.pts-a.pts)||(b.gd-a.gd)||(b.gf-a.gf)||String(a.team||a.name).localeCompare(String(b.team||b.name)));third.forEach((t,i)=>{t.in=i<8;t.team=t.team||t.name});return third}
 function getProjectedSlots(){const slots=[];deriveStandings().forEach(g=>{const gl=groupLetter(g.group);(g.teams||[]).forEach(t=>{if(t.pos===1||t.pos===2)slots.push({slot:`${gl}${t.pos}`,team:t.name,code:t.code,pts:t.pts,gd:t.gd,live:t.live})})});getThirdRace().slice(0,8).forEach((t,i)=>slots.push({slot:`3rd #${i+1}`,team:t.team,code:t.code,pts:t.pts,gd:t.gd,live:t.live}));return slots}
 /* removed duplicate (sourceName) */
@@ -1155,8 +1068,8 @@ function bracketMatch(km,ri,mi,last=false){const pending=km.status==='LIVE',done
 /* removed duplicate (projectedRounds) */
 /* removed duplicate (renderBracket) */
 function renderThird(){const host=$('#view-third'),third=getThirdRace();if(!third.length){host.innerHTML=`<div class="vhead">Third-place tracker</div><div class="empty">Third-place race not available yet.</div>`;return}const cut=third[7];host.innerHTML=`<div class="vhead">Third-place tracker</div><div class="thirdList"><div class="thirdHead"><span>Rank</span><span>Team</span><span>Group</span><span>Pts</span><span>GD</span><span>Status</span></div>${third.map((t,i)=>`<div class="thirdRow ${t.in?'in':'out'}"><div class="thirdRank">#${i+1}</div><div class="thirdTeam"><div class="name">${esc(t.code||'')} ${esc(t.team||'')} ${t.live?'<span class="liveMark">*</span>':''}</div><div class="group">${esc(t.group||'')} · GF ${t.gf??0}</div></div><div class="thirdNum">${esc(t.group||'')}</div><div class="thirdNum pts">${t.pts}</div><div class="thirdNum gd">${t.gd>0?'+':''}${t.gd}</div><div class="thirdBadge ${t.in?'in':''}">${t.in?'IN':'CHASE'}</div></div>`).join('')}<div class="thirdCut">Cut line: ${cut?`${esc(cut.team||cut.name)} at ${cut.pts} pts, GD ${cut.gd>0?'+':''}${cut.gd}`:'waiting for enough teams'}.</div></div>`}
-/* removed duplicate (renderTitle) */
-/* removed duplicate (renderEdge) */
+
+
 /* removed duplicate (newsSources) */
 /* removed duplicate (renderNews) */
 
@@ -1186,7 +1099,8 @@ function renderSystemUpdates(){
   const build=el('aside','buildCard');
   build.append(el('div','tiny','Current build'),el('div','build','build '+currentBuild()),el('div','hint',`Last viewed: ${seen?ago(seen):'not marked yet'}`));
   const actions=el('div','updateActions'),mark=el('button','miniBtn','Mark as read'),status=el('button','miniBtn','Open Status');
-  mark.type=status.type='button';mark.addEventListener('click',markUpdatesRead);status.addEventListener('click',()=>setView('status'));actions.append(mark,status);build.append(actions);hero.append(intro,build);
+  const roadmap=el('a','miniBtn','Roadmap & limits');roadmap.href='roadmap.html';
+  mark.type=status.type='button';mark.addEventListener('click',markUpdatesRead);status.addEventListener('click',()=>setView('status'));actions.append(mark,status,roadmap);build.append(actions);hero.append(intro,build);
   const timeline=el('section','timeline'),head=el('div','timelineHead');head.append(el('h3','','Release notes'),el('span','',`${SYSTEM_UPDATES.length} entries`));timeline.append(head);
   const visibleUpdates=UPDATES_EXPANDED?SYSTEM_UPDATES:SYSTEM_UPDATES.slice(0,UPDATES_PAGE_SIZE);
   visibleUpdates.forEach(update=>{const article=el('article','updateItem'),body=el('div'),title=el('div','updateTitle'),items=el('ul');title.append(el('span','',update?.title??''),el('span','updateBadge',update?.tag??''));(Array.isArray(update?.items)?update.items:[]).forEach(item=>items.append(el('li','',item)));body.append(title,items);article.append(el('div','updateDate',update?.date??''),body);timeline.append(article)});
@@ -1484,7 +1398,7 @@ function _drawHandle(exclude){
   const pool=_handlePool();
   const options=exclude?pool.filter(n=>n!==exclude):pool;
   const name=(options.length?options:GENERAL_NAME_POOL)[Math.floor(Math.random()*(options.length||GENERAL_NAME_POOL.length))]||'Anonymous Player';
-  const tag=Math.floor(1000+Math.random()*9000); // disambiguates two users drawing the same player
+  const tag=1+Math.floor(Math.random()*99); // jersey-style number; tells apart two users with the same player
   return `${name} #${tag}`;
 }
 function assignHandle(){
@@ -1514,6 +1428,10 @@ function ensureHandle(){
     const assigned=localStorage.getItem('matchday.handleAssigned')==='1';
     const collegeName=GENERAL_NAME_POOL.some(name=>myHandle().startsWith(name+' #'));
     if(!myHandle()||!assigned||!collegeName)assignHandle(); // legacy pro-sport guest aliases are replaced without losing device picks
+    else{ // four-digit tags (#6669) become jersey numbers, same formula as the server
+      const m=myHandle().match(/^(.*) #(\d+)$/);
+      if(m&&Number(m[2])>99){const h=`${m[1]} #${1+(Number(m[2])%99)}`;localStorage.setItem('matchday.handle',h);}
+    }
   }catch(e){}
 }
 async function pushScore(){ // server grades only picks it locked before kickoff
@@ -1533,11 +1451,22 @@ function btmScoped(db){const scope=communityScope();if(!scope)return db;
   const picks={};Object.entries(db.picks||{}).forEach(([id,p])=>{if(String(p.comp||'NCAAF').toUpperCase()===scope)picks[id]=p;});
   return {...db,picks};}
 function isCommunityPickOpen(m){const kickoff=kickMs(m),now=Date.now();return m?.status==='UPCOMING'&&kickoff>now&&kickoff-now<=7*864e5&&!isStaleUpcoming(m)}
+/* Resolves true only once the server has stored the pick. A failed lock used
+   to be dropped silently: submitting five picks fired five requests at once,
+   and only the one the server happened to accept ever reached Recent activity
+   or the leaderboard. One retry covers a cold start or a momentary 429/500. */
 async function lockGlobalPick(matchId,pick,comp){
-  const d=await lbPost('pick',{deviceId:deviceId(),matchId:String(matchId),pick,comp:String(comp||'').toLowerCase()});
-  if(d&&d.ok)applyAccount(d);
+  const body={deviceId:deviceId(),matchId:String(matchId),pick,comp:String(comp||'').toLowerCase()};
+  for(let attempt=0;attempt<2;attempt++){
+    if(attempt)await new Promise(r=>setTimeout(r,1500));
+    const d=await lbPost('pick',body);
+    if(d&&d.ok){applyAccount(d);return true}
+    // A closed window or a rejected pick will not change on retry.
+    if(d&&/window closed|invalid pick/.test(String(d.error||'')))return false;
+  }
+  return false;
 }
-function submitPick(matchId,pick,render=true){
+function submitPick(matchId,pick,render=true,lock=true){
   ensureHandle();
   const db=btmLoad();db.picks=db.picks||{};
   // One pick per match. It can be changed until kickoff, then it is locked.
@@ -1552,5 +1481,5 @@ function submitPick(matchId,pick,render=true){
     comp:m._comp||DATA.comp_key||'',
     modelPick:read?.pick||null,
     marketPick:(()=>{const x=(m.markets||{})['1x2'];if(!x||x.home_pct==null)return null;const tr={h:x.home_pct,d:x.draw_pct,a:x.away_pct};return Object.keys(tr).reduce((a,b)=>tr[b]>tr[a]?b:a)})()};
-  btmSave(db);if(render)renderCommunity();lockGlobalPick(matchId,pick,db.picks[matchId].comp);return true;
+  btmSave(db);if(render)renderCommunity();if(lock)lockGlobalPick(matchId,pick,db.picks[matchId].comp);return true;
 }

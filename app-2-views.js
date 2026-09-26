@@ -83,21 +83,6 @@ function btmSeason(db){
     model:a.filter(p=>p.model_hit).length,total:a.length,current:+i===now}));
   return rows.sort((a,b)=>b.n-a.n);
 }
-function renderWeeklyAwards(){
-  const wa=DATA.weekly_awards;
-  if(!wa)return '';
-  const cards=[];
-  if(wa.biggest_upset){const u=wa.biggest_upset;
-    cards.push({label:'Biggest upset',title:`${esc(u.winner)} won`,sub:`${esc(u.home)} ${esc(u.score_line)} ${esc(u.away)}${u.market_pct!=null?` · market gave them ${u.market_pct}%`:''}`});}
-  if(wa.best_call){const b=wa.best_call;
-    cards.push({label:"Model's best call",title:esc(b.pick),sub:`${esc(b.home)} v ${esc(b.away)} · ${b.confidence}% confidence${b.edge?` · +${b.edge} vs market`:''}`});}
-  if(wa.biggest_miss){const b=wa.biggest_miss;
-    cards.push({label:"Model's biggest miss",title:`Picked ${esc(b.pick)}`,sub:`${esc(b.home)} v ${esc(b.away)} · ${b.confidence}% confidence · ${esc(b.actual)} won instead`});}
-  if(wa.closest_match){const c=wa.closest_match;
-    cards.push({label:'Nail-biter of the week',title:`${esc(c.home)} ${esc(c.score_line)} ${esc(c.away)}`,sub:c.margin===0?'as close as it gets':`won by ${c.margin}`});}
-  if(!cards.length)return '';
-  return `<div class="seclbl" style="margin-top:4px">Weekly awards</div><div class="status-grid weeklyAwards">${cards.map(c=>`<div class="statuscard info"><span class="slbl">${c.label}</span><div class="sval" style="font-size:var(--fs-lg)">${c.title}</div><div class="hint">${c.sub}</div></div>`).join('')}</div>`;
-}
 // Signed out, a handle belongs to one browser and dies with its storage.
 // Signed in, it belongs to an account, so the record follows the person to a
 // new browser or a second device.
@@ -144,13 +129,32 @@ function draftPick(id,side){
 function pickBtm(id,side){draftPick(id,side)}
 function clearDraft(){btmDraftSave({});renderCommunity()}
 function toggleCommGame(id){COMM_OPEN=COMM_OPEN===id?'':id;renderCommunity()}
-function submitDraft(){
-  const d=btmDraft(),ids=Object.keys(d);if(!ids.length)return;
+let COMM_SUBMITTING=false;
+// One pick at a time, and a pick only counts once the server has it. A pick
+// the server did not take goes back to the draft (and the local copy back to
+// what it was), so it can be submitted again rather than shown as locked.
+async function submitDraft(){
+  const d=btmDraft(),ids=Object.keys(d);if(!ids.length||COMM_SUBMITTING)return;
   if(!confirm(`Submit ${ids.length} pick${ids.length===1?'':'s'}? You can change a pick until kickoff; after that it is locked and graded.`))return;
-  let done=0;const left={};
-  ids.forEach(id=>{if(submitPick(id,d[id],false))done++;else{const m=(DATA.matches||[]).find(x=>String(x.id)===String(id));if(m&&isCommunityPickOpen(m)&&btmLoad().picks?.[id]?.pick!==d[id])left[id]=d[id]}});
+  COMM_SUBMITTING=true;COMM_FLASH=`Submitting ${ids.length} pick${ids.length===1?'':'s'}…`;renderCommunity();
+  let done=0,failed=0;const left={};
+  try{
+    for(const id of ids){
+      const before=btmLoad().picks?.[id]||null;
+      if(!submitPick(id,d[id],false,false)){
+        const m=(DATA.matches||[]).find(x=>String(x.id)===String(id));
+        if(m&&isCommunityPickOpen(m)&&btmLoad().picks?.[id]?.pick!==d[id])left[id]=d[id];
+        continue;
+      }
+      const picked=btmLoad().picks[id];
+      if(await lockGlobalPick(id,d[id],picked.comp)){done++;continue}
+      failed++;left[id]=d[id];
+      const db=btmLoad();if(before)db.picks[id]=before;else delete db.picks[id];btmSave(db);
+    }
+  }finally{COMM_SUBMITTING=false}
   btmDraftSave(left);
-  COMM_FLASH=done?`${done} pick${done===1?'':'s'} submitted.`:'Nothing was submitted: those games have started or were already picked.';
+  COMM_FLASH=failed?`${done} of ${done+failed} picks submitted. ${failed===1?'1 did not go through; it is':`${failed} did not go through; they are`} still in your draft, so submit again.`
+    :done?`${done} pick${done===1?'':'s'} submitted.`:'Nothing was submitted: those games have started or were already picked.';
   COMM_FETCHED='';renderCommunity();
 }
 async function commFetch(action,comp){
@@ -191,7 +195,8 @@ function commSplit(m,picks){
 function commPct(v){const n=Number(v)||0;return (n>=99.95?99.9:n<=0.05&&n>0?0.1:n).toFixed(1).replace(/\.0$/,'')+'%'}
 function commShort(m,side){return side==='h'?(m.home.code||m.home.name):side==='a'?(m.away.code||m.away.name):t('Draw')}
 function commAgo(ms){const s=Math.max(0,(Date.now()-ms)/1000);return s<3600?`${Math.max(1,Math.round(s/60))}m ago`:s<86400?`${Math.round(s/3600)}h ago`:`${Math.round(s/86400)}d ago`}
-function renderCommunity(fromFetch){ensureHandle();const host=$('#view-community');const db=btmScoped(btmGrade());const s=btmStats(db);
+let COMM_FLASH_SHOWN=false;
+function renderCommunity(fromFetch){if(!fromFetch&&COMM_FLASH_SHOWN){COMM_FLASH='';COMM_FLASH_SHOWN=false}ensureHandle();const host=$('#view-community');const db=btmScoped(btmGrade());const s=btmStats(db);
   const comp=String(DATA.comp_key||(/ncaam/.test(String(DATA_FILE||''))?'ncaam':'ncaaf')).toLowerCase();
   if(!fromFetch)commLoad(comp);
   const eligible=(DATA.matches||[]).filter(m=>isCommunityPickOpen(m)).sort((a,b)=>(a.kickoff||'').localeCompare(b.kickoff||''));
@@ -201,12 +206,14 @@ function renderCommunity(fromFetch){ensureHandle();const host=$('#view-community
   const picks=db.picks||{};
   const draft=btmDraft();Object.keys(draft).forEach(id=>{if(picks[id]?.pick===draft[id]||!open.some(m=>String(m.id)===String(id)))delete draft[id]});
   const nDraft=Object.keys(draft).length;
-  let h=`<div class="vhead">Community</div><p class="commLede">What other Matchday users are picking this week.</p>`;
-  if(COMM_FLASH){h+=`<div class="commFlash" role="status">${esc(COMM_FLASH)}</div>`;COMM_FLASH='';}
-  h+=`<div class="commLayout"><section class="commMain" aria-labelledby="commPicksTitle"><div class="commHead"><h2 id="commPicksTitle">Community picks</h2><span>This week</span></div>`;
+  let h=`<div class="vhead">Pick 'Em</div><p class="commLede">What other Matchday users are picking this week.</p>`;
+  // A background refresh re-renders right after a submit; it must not wipe the
+  // message that says which picks went through.
+  if(COMM_FLASH){h+=`<div class="commFlash" role="status">${esc(COMM_FLASH)}</div>`;if(!fromFetch&&!COMM_SUBMITTING)COMM_FLASH_SHOWN=true;}
+  h+=`<div class="commLayout"><section class="commMain" aria-labelledby="commPicksTitle"><div class="commHead"><h2 id="commPicksTitle">Everyone's picks</h2><span>This week</span></div>`;
   if(!open.length)h+=`<div class="empty">No games are open for picks yet.<br><span class="faintline">Games open seven days before kickoff.</span></div>`;
   else{
-    h+=`<div class="commTable" role="table"><div class="commRow commCols" role="row"><span role="columnheader">Game</span><span role="columnheader">Community</span><span role="columnheader" title="Live model: can change before kickoff">Live model</span><span role="columnheader">Your pick</span></div>`;
+    h+=`<div class="commTable" role="table"><div class="commRow commCols" role="row"><span role="columnheader">Game</span><span role="columnheader">Players</span><span role="columnheader" title="Live model: can change before kickoff">Live model</span><span role="columnheader">Your pick</span></div>`;
     // Twelve rows answer 'what is the community picking'; the rest of the
     // week is one tap away instead of a long scroll.
     const shown=COMM_ALL?open:open.slice(0,12);
@@ -403,7 +410,7 @@ function renderInsights(){
     featuresList.innerHTML=features.length?features.slice(0,40).map(p=>`<a class="insightCard" href="posts/${esc(p.slug)}.html" target="_blank" rel="noopener"><b>${esc(p.title)}</b><span>${esc(p.summary||'')}</span><small>${esc(p.date||'')} · ${esc(insightFeatureLabel(p))}</small></a>`).join(''):'<div class="empty">No analysis features published yet.</div>';
   });
 }
-function renderCustomize(){const host=$('#view-customize');host.innerHTML=`<div class="vhead">Customize</div><div class="settings-grid"><div class="setcard"><label>Accent color</label><select onchange="updateSetting('accent',this.value)">${opt('orange','Matchday orange',SETTINGS.accent)}${opt('blue','Electric blue',SETTINGS.accent)}${opt('green','Pitch green',SETTINGS.accent)}${opt('red','Signal red',SETTINGS.accent)}${opt('purple','Night purple',SETTINGS.accent)}</select><div class="hint">Changes highlights, buttons and the brand dot.</div></div><div class="setcard"><label>Language</label><select onchange="setLang(this.value)">${lopt('','English',LANG)}${lopt('es','Español',LANG)}${lopt('fr','Français',LANG)}${lopt('de','Deutsch',LANG)}${lopt('pt','Português',LANG)}${lopt('ru','Русский',LANG)}</select><div class="hint">Translates the interface. Match data stays as provided by sources.</div></div><div class="setcard"><label>Card density</label><select onchange="updateSetting('density',this.value)">${opt('compact','Compact',SETTINGS.density)}${opt('normal','Normal',SETTINGS.density)}${opt('spacious','Spacious',SETTINGS.density)}</select><div class="hint">Compact fits more matches on screen; spacious gives each card more room.</div></div><div class="setcard"><label>Panel style</label><select onchange="updateSetting('panel',this.value)">${opt('glass','Soft glass',SETTINGS.panel)}${opt('flat','Flat dark',SETTINGS.panel)}</select><div class="hint">Flat mode is lighter on older laptops.</div></div><div class="setcard"><label>Default tab</label><select onchange="updateSetting('defaultView',this.value)">${['matches','groups','title','edge','bracket','third','news','status','updates'].map(v=>opt(v,v[0].toUpperCase()+v.slice(1),SETTINGS.defaultView)).join('')}</select><div class="hint">Selected when the page starts.</div></div><div class="setcard"><label>Refresh rate</label><select onchange="updateSetting('refresh',this.value)">${opt(900,'Every 15 minutes',SETTINGS.refresh)}${opt(1800,'Every 30 minutes',SETTINGS.refresh)}${opt(3600,'Every 60 minutes',SETTINGS.refresh)}</select><div class="hint">Reloads published analysis; provider refreshes run hourly.</div></div><div class="setcard"><label>Display</label><div class="switchrow"><span>Right insight panel</span><input type="checkbox" ${checked(SETTINGS.showInsight)} onchange="updateSetting('showInsight',this.checked)"></div><div class="switchrow" style="margin-top:10px"><span>Match detail panels</span><input type="checkbox" ${checked(SETTINGS.showDetails)} onchange="updateSetting('showDetails',this.checked)"></div></div></div><div class="btnline"><button class="actionbtn" onclick="resetSettings()">Reset settings</button><button class="actionbtn" onclick="setView('status')">Check app status</button><button class="actionbtn" onclick="startTour()">Replay tour</button></div>`}
+function renderCustomize(){const host=$('#view-customize');host.innerHTML=`<div class="vhead">Customize</div><div class="settings-grid"><div class="setcard"><label>Accent color</label><select onchange="updateSetting('accent',this.value)">${opt('orange','Matchday orange',SETTINGS.accent)}${opt('blue','Electric blue',SETTINGS.accent)}${opt('green','Pitch green',SETTINGS.accent)}${opt('red','Signal red',SETTINGS.accent)}${opt('purple','Night purple',SETTINGS.accent)}</select><div class="hint">Changes highlights, buttons and the brand dot.</div></div><div class="setcard"><label>Language</label><select onchange="setLang(this.value)">${lopt('','English',LANG)}${lopt('es','Español',LANG)}${lopt('fr','Français',LANG)}${lopt('de','Deutsch',LANG)}${lopt('pt','Português',LANG)}${lopt('ru','Русский',LANG)}</select><div class="hint">Translates the interface. Match data stays as provided by sources.</div></div><div class="setcard"><label>Card density</label><select onchange="updateSetting('density',this.value)">${opt('compact','Compact',SETTINGS.density)}${opt('normal','Normal',SETTINGS.density)}${opt('spacious','Spacious',SETTINGS.density)}</select><div class="hint">Compact fits more matches on screen; spacious gives each card more room.</div></div><div class="setcard"><label>Panel style</label><select onchange="updateSetting('panel',this.value)">${opt('glass','Soft glass',SETTINGS.panel)}${opt('flat','Flat dark',SETTINGS.panel)}</select><div class="hint">Flat mode is lighter on older laptops.</div></div><div class="setcard"><label>Default tab</label><select onchange="updateSetting('defaultView',this.value)">${['matches','groups','bracket','third','news','status','updates'].map(v=>opt(v,v[0].toUpperCase()+v.slice(1),SETTINGS.defaultView)).join('')}</select><div class="hint">Selected when the page starts.</div></div><div class="setcard"><label>Refresh rate</label><select onchange="updateSetting('refresh',this.value)">${opt(900,'Every 15 minutes',SETTINGS.refresh)}${opt(1800,'Every 30 minutes',SETTINGS.refresh)}${opt(3600,'Every 60 minutes',SETTINGS.refresh)}</select><div class="hint">Reloads published analysis; provider refreshes run hourly.</div></div><div class="setcard"><label>Display</label><div class="switchrow"><span>Right insight panel</span><input type="checkbox" ${checked(SETTINGS.showInsight)} onchange="updateSetting('showInsight',this.checked)"></div><div class="switchrow" style="margin-top:10px"><span>Match detail panels</span><input type="checkbox" ${checked(SETTINGS.showDetails)} onchange="updateSetting('showDetails',this.checked)"></div></div></div><div class="btnline"><button class="actionbtn" onclick="resetSettings()">Reset settings</button><button class="actionbtn" onclick="setView('status')">Check app status</button><button class="actionbtn" onclick="startTour()">Replay tour</button></div>`}
 function scDeepTab(t){window._scTab=t;renderScore();}
 function renderDeepDive(sc){const tab=window._scTab||'overview';
   // "You have 0" alone is confusing when the audit cards directly above show
@@ -1135,6 +1142,10 @@ function rsOpenAll(btn){
   box.querySelectorAll(':scope > .rsSchedHead, :scope > .rsConfHead, :scope > .rsScrollX, :scope > ul, :scope > ol').forEach(el=>{
     const c=el.cloneNode(true);c.querySelectorAll('.rsExtra').forEach(x=>x.classList.remove('rsExtra'));body.appendChild(c);
   });
+  rsShowDialog(title,[...body.childNodes],btn);
+}
+// The one "View all" window every Research list opens into.
+function rsShowDialog(title,nodes,opener){
   let dlg=document.getElementById('rsAllDialog');
   if(!dlg){
     dlg=document.createElement('div');dlg.id='rsAllDialog';dlg.className='rsDialog';dlg.hidden=true;
@@ -1144,8 +1155,8 @@ function rsOpenAll(btn){
     document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!dlg.hidden)rsCloseAll()});
   }
   dlg.querySelector('#rsDialogTitle').textContent=title;
-  dlg.querySelector('.rsDialogBody').replaceChildren(...body.childNodes);
-  dlg._opener=btn;dlg.hidden=false;document.body.classList.add('modalOpen');
+  dlg.querySelector('.rsDialogBody').replaceChildren(...nodes);
+  dlg._opener=opener;dlg.hidden=false;document.body.classList.add('modalOpen');
   dlg.querySelector('.rsDialogSheet').focus();
 }
 function rsCloseAll(){
@@ -1159,22 +1170,58 @@ function rsShortName(name){
   // "Texas A&M Aggies" -> "Texas A&M". Nicknames are the last word, or two
   // for the handful of two-word nicknames.
   const s=String(name||'');
-  const two=/(Crimson Tide|Blue Devils|Tar Heels|Yellow Jackets|Red Raiders|Horned Frogs|Golden Gophers|Nittany Lions|Fighting Irish|Sun Devils|Demon Deacons|Mean Green|Black Knights|Golden Hurricane|Scarlet Knights|Ragin' Cajuns|Ragin Cajuns|Red Wolves|Golden Eagles|Golden Flashes|Blue Raiders|Green Wave|Rainbow Warriors|Blue Hens|Thundering Herd|Red Storm)$/;
+  const two=/(Crimson Tide|Blue Devils|Tar Heels|Yellow Jackets|Red Raiders|Horned Frogs|Golden Gophers|Nittany Lions|Fighting Irish|Sun Devils|Demon Deacons|Mean Green|Black Knights|Golden Hurricane|Scarlet Knights|Ragin' Cajuns|Ragin Cajuns|Red Wolves|Golden Eagles|Golden Flashes|Blue Raiders|Green Wave|Rainbow Warriors|Blue Hens|Thundering Herd|Red Storm|Fighting Illini|Fighting Hawks|Fighting Camels|Golden Bears|Golden Griffins|Mountain Hawks|Screaming Eagles|Blue Hose|Golden Lions|Purple Eagles|Big Green|Big Red|River Hawks|Red Flash|Blue Demons|Golden Grizzlies|Great Danes)$/;
   const m=s.match(two);
   if(m)return s.slice(0,-m[0].length).trim()||s;
   const parts=s.split(' ');
   return parts.length>1?parts.slice(0,-1).join(' '):s;
 }
 /* Every Research panel says what kind of number it holds. Live reads move
-   until kickoff; season figures are this season's results so far; graded
+   until kickoff; "only" figures use this season's games; blended ones are
+   power ratings with last season carried forward; graded
    figures are locked picks scored after the final. Mixing them up is the
    easiest way to misread the page, so the label is never left out. */
+// What each Research section is built from, stated on its badge. Power
+// ratings carry last season forward and are updated by this season's games;
+// play-by-play sections use this season's games only.
+// Research methodology: what a reader needs to read the page, closed by
+// default. It explains the displays, not how the model or ratings are built.
+function rsMethodology(football){
+  const yr=String(collegeRankingTable()?.season||new Date().getFullYear());
+  const col1=`<p><b>Badges.</b> <b>Season</b> sections use this season's games. <b>Rating</b> sections use the power rating, which starts from last season and moves with every ${yr} result, so early in the season it still leans on last year. <b>Graded</b> means picks locked before kickoff and scored after the final.</p>`
+    +`<p><b>Power rating.</b> Points better than an average team against an average opponent, adjusted for who each team played.</p>`
+    +`<p><b>Strength of schedule.</b> The average rating of the opponents a team has faced.</p>`;
+  const col2=`<p><b>Chart lines.</b> Each chart has two dashed lines at the median of each measure, so half the teams sit on each side of each line. The four groups beside a chart are the four corners those lines make.</p>`
+    +(football?`<p><b>Success rate.</b> The share of plays that gain enough to stay on schedule for a first down. <b>Net points per success</b> is how much a successful play is worth on average.</p>`
+      +`<p><b>EPA allowed.</b> Expected points a defense gives up per play; below zero means it wins the average snap. <b>Stop rate</b> is the share of plays it stops short of success.</p>`:'');
+  return `<details class="scMethod rsMethod"><summary>Methodology <span aria-hidden="true">ⓘ</span></summary><div class="scMethodGrid"><div class="scMethodCol">${col1}</div><div class="scMethodCol">${col2}</div></div></details>`;
+}
+// The football week ("Week 4") from the next game on the schedule. The
+// engine's own week is a calendar week ("2026-W39"), which reads as week 39.
+// Basketball has no numbered weeks, so it shows nothing rather than a guess.
+function rsSeasonWeek(){
+  const next=(DATA.matches||[]).filter(m=>typeof isVisibleUpcoming==='function'?isVisibleUpcoming(m):m.status==='UPCOMING')
+    .sort((a,b)=>String(a.kickoff||'').localeCompare(String(b.kickoff||'')))
+    .find(m=>/\bWeek\s*\d+/i.test(String(m.stage||'')));
+  const w=next&&String(next.stage).match(/\bWeek\s*(\d+)/i);
+  return w?`Week ${w[1]}`:'';
+}
 function rsChip(kind){
-  const t={live:['Live','Moves until kickoff'],season:['Season to date','Results so far this season'],graded:['Graded','Locked before kickoff, scored after the final']}[kind];
+  const yr=String(collegeRankingTable()?.season||new Date().getFullYear());
+  const t={live:['Live','Moves until kickoff'],season:['Season to date','Results so far this season'],
+    current:['Season',`Built from ${yr} games only`],
+    blend:['Rating',`Power rating: last season carried forward, updated by every ${yr} result`],
+    graded:['Graded','Locked before kickoff, scored after the final']}[kind];
   return t?`<span class="rsChip rsChip-${kind}" title="${t[1]}">${t[0]}</span>`:'';
 }
-function rsTop(title,kind,aside){
-  return `<div class="rsTop"><h3 class="rsTitle">${title}</h3><span class="rsTopAside">${aside?`<span class="rsAside">${aside}</span>`:''}${rsChip(kind)}</span></div>`;
+// Research titles capitalise every word except "vs". Only letters at the
+// start of a word change, so HTML entities (&amp;) and numbers are untouched.
+function rsTitleCase(t){return String(t).replace(/(^|[\s(/–-])([a-z])([a-z']*)/g,(m,pre,c,rest)=>(c+rest)==='vs'?m:pre+c.toUpperCase()+rest)}
+// phoneTitle: shown instead of title on phones, where a group panel stands in
+// for the chart it sits beside on desktop.
+function rsTop(title,kind,aside,phoneTitle){
+  const t=phoneTitle?`<span class="rsDeskTitle">${rsTitleCase(title)}</span><span class="rsPhoneTitle">${rsTitleCase(phoneTitle)}</span>`:rsTitleCase(title);
+  return `<div class="rsTop"><h3 class="rsTitle">${t}</h3><span class="rsTopAside">${aside?`<span class="rsAside">${aside}</span>`:''}${rsChip(kind)}</span></div>`;
 }
 function rsTeamRow(name){
   const t=(collegeRankingTable()?.rankings||[]).find(r=>bbNameMatches(r.name,name));
@@ -1225,7 +1272,7 @@ function rsModelMarketWatch(){
   const bar=(l,b)=>`<div class="rsSplitBar"><div><span class="rsKicker">${l}</span><b>${esc(b.wins)}–${esc(b.losses)}</b></div><i><b style="width:${Math.max(0,Math.min(100,Number(b.hit_rate_pct)))}%"></b></i><em>${Math.round(Number(b.hit_rate_pct))}%</em></div>`;
   const hist=[['Agreed with market',vm.agreed_with_market],['Disagreed with market',vm.disagreed_with_market],['Backed market underdog',od]]
     .filter(([,b])=>b&&b.picks).map(([l,b])=>bar(l,b)).join('');
-  return `<section class="rsBlock rsSpan12">${rsTop('<span title="To watch and grade, not recommended bets.">Model–market watch</span>','live',u.week?esc(String(u.week).replace(/^\d{4}-W/,'Week ')):'')}`
+  return `<section class="rsBlock rsSpan12">${rsTop('<span title="To watch and grade, not recommended bets.">Model–market watch</span>','live',esc(rsSeasonWeek()))}`
     +`<div class="rsSplit"><div class="rsSplitMain">`
     +`<ul class="rsList">${rows}</ul></div>`
     +`<div class="rsSplitSide">${hist?`<div class="rsHistBars"><div class="rsHistHead"><span>How disagreement has graded</span>${rsChip('graded')}</div>${hist}</div>`:''}`
@@ -1239,7 +1286,7 @@ function rsLongshots(){
     +`<span class="rsShotTeam rsLogoName">${(typeof teamMark==='function'?teamMark(x.winner):'')}${esc(rsShortName(x.winner))}</span>`
     +`<span class="rsShotSub">beat ${esc(rsShortName(x.loser))} ${Number(x.winner_score)}–${Number(x.loser_score)}</span>`
     +`<span class="rsShotDate">${esc(String(x.played_on||'').slice(5).replace('-','/'))}</span></li>`;
-  return `<section class="rsBlock rsExpandable rsSpan8">${rsTop('Longshots that won','season')}`
+  return `<section class="rsBlock rsExpandable rsSpan8">${rsTop('Longshots that won','current')}`
     +`<ul class="rsShots">${shots.map(card).join('')}</ul>`
     +`<div class="rsFoot">`
     +(shots.length>8?rsMoreBtn(shots.length,'View all','Longshots that won'):'')+`</div></section>`;
@@ -1263,7 +1310,7 @@ function rsStat(){
   const lists=(up.length||down.length)
     ?`<div class="rsMovers"><div><span class="rsKicker">This week · up</span><ul>${up.map(r=>li(r,'rsWin','↑')).join('')}</ul></div>`
       +`<div><span class="rsKicker">This week · down</span><ul>${down.map(r=>li(r,'rsLoss','↓')).join('')}</ul></div></div>`:'';
-  return `<section class="rsBlock rsMove rsSpan4">${rsTop('Risers &amp; fallers','season')}`
+  return `<section class="rsBlock rsMove rsSpan4">${rsTop('Risers &amp; fallers','blend')}`
     +`<span class="rsKicker rsMoveLabel">Biggest move since the preseason</span>`
     +`<div class="rsMoveHead"><b class="rsMoveTeam rsLogoName">${(typeof teamMark==='function'?teamMark(riser.name):'')}${esc(rsShortName(riser.name))}</b><span class="rsMoveBig rsSignal">↑${Number(riser.movement_since_preseason)}</span></div>`
     +`<div class="rsPath">${path}</div>${lists}</section>`;
@@ -1293,6 +1340,18 @@ function rsMyPicks(){
     +`<div class="rsSplitSide rsExpandable"><ul class="rsPicks">${ordered.map(row).join('')}</ul>`
     +(ordered.length>5?rsMoreBtn(ordered.length,'All picks','@timurknowsball picks'):'')+`</div></div></section>`;
 }
+// Small tick numbers on both chart axes: "nice" steps (1, 2 or 5 x 10^n)
+// that land inside the data range, drawn faint so the dots stay the subject.
+function rsNiceTicks(lo,hi,n=5){
+  const span=(hi-lo)||1,raw=span/(n-1),mag=Math.pow(10,Math.floor(Math.log10(raw))),f=raw/mag;
+  const step=(f<1.5?1:f<3.5?2:f<7.5?5:10)*mag,out=[];
+  for(let v=Math.ceil(lo/step)*step;v<=hi+step*1e-9;v+=step)out.push(+v.toFixed(10));
+  return out;
+}
+function rsAxisTicks(sx,sy,x0,x1,y0,y1,W,H,PL,PB,fx,fy){
+  return rsNiceTicks(x0,x1).map(v=>`<text class="scTick" x="${sx(v).toFixed(1)}" y="${H-PB+15}" text-anchor="middle">${fx(v)}</text>`).join('')
+    +rsNiceTicks(y0,y1).map(v=>`<text class="scTick" x="${PL-6}" y="${(sy(v)+3.5).toFixed(1)}" text-anchor="end">${fy(v)}</text>`).join('');
+}
 function rsScatter(){
   const table=collegeRankingTable();
   const rows=(table?.rankings||[]).filter(r=>Number.isFinite(Number(r.rating))&&Number.isFinite(Number(r.sos)));
@@ -1310,8 +1369,8 @@ function rsScatter(){
     const sy=v=>H-PB-((v-y0)/((y1-y0)||1))*(H-PT-PB);
     const mx=sx(med(xs)),my=sy(med(ys));
     const dots=rows.map(r=>{
-      const power=String(r.tier||'')==='power',hi=top.includes(r);
-      return `<circle cx="${sx(Number(r.sos)).toFixed(1)}" cy="${sy(Number(r.rating)).toFixed(1)}" r="${(hi?4.5:3)*R}" class="${hi?'dotHi':power?'dotP':'dotG'}" data-team="${esc(r.name)}" data-rank="${esc(r.rank??'')}" data-rating="${Number(r.rating).toFixed(2)}" data-sos="${Number(r.sos).toFixed(2)}" data-conf="${esc(r.conference||'')}"></circle>`;
+      const power=!String(r.tier||'')||String(r.tier)==='power',hi=top.includes(r)||(Number(r.rank)>0&&Number(r.rank)<=25);
+      return `<circle cx="${sx(Number(r.sos)).toFixed(1)}" cy="${sy(Number(r.rating)).toFixed(1)}" r="${(hi?4.5:3)*R}" class="${hi?'dotHi':power?'dotP':'dotG'}" data-team="${esc(r.name)}" data-rank="${esc(r.rank??'')}" data-rating="${Number(r.rating).toFixed(2)}" data-sos="${Number(r.sos).toFixed(2)}" data-conf="${esc(r.conference||'')}" data-tier="${String(r.tier||'')==='power'?'power':'g5'}"></circle>`;
     }).join('');
     let lastY=-99;
     const labels=top.slice().sort((a,b)=>sy(Number(a.rating))-sy(Number(b.rating))).map(r=>{
@@ -1322,36 +1381,86 @@ function rsScatter(){
     return `<svg viewBox="0 0 ${W} ${H}" class="rsScatter ${cls}" role="img" aria-label="Scatter plot of team rating against strength of schedule">`
       +`<line class="scAx" x1="${PL}" y1="${H-PB}" x2="${W-PR}" y2="${H-PB}"/><line class="scAx" x1="${PL}" y1="${PT}" x2="${PL}" y2="${H-PB}"/>`
       +`<line class="scMed" x1="${mx.toFixed(1)}" y1="${PT}" x2="${mx.toFixed(1)}" y2="${H-PB}"/><line class="scMed" x1="${PL}" y1="${my.toFixed(1)}" x2="${W-PR}" y2="${my.toFixed(1)}"/>`
+      +rsAxisTicks(sx,sy,x0,x1,y0,y1,W,H,PL,PB,v=>v.toFixed(Number.isInteger(v)?0:1),v=>v.toFixed(Number.isInteger(v)?0:1))
       +`${dots}${labels}<text class="scAxLbl" x="${((W+PL)/2).toFixed(0)}" y="${H-8}" text-anchor="middle">strength of schedule →</text>`
       +`<text class="scAxLbl" transform="rotate(-90 12 ${(H/2).toFixed(0)})" x="12" y="${(H/2).toFixed(0)}" text-anchor="middle">rating →</text></svg>`;
   };
   const anyG5=rows.some(r=>String(r.tier||'')&&String(r.tier)!=='power');
-  return `<section class="rsBlock rsSpan8">${rsTop('Rating vs schedule','season',`${rows.length} teams`)}`
-    +draw(1000,340,40,16,14,32,1,'rsWide')+draw(640,360,34,14,14,32,1.1,'rsMid')+draw(360,420,30,12,14,32,1.25,'rsTall')
-    +`<div class="rsLegend"><span><i class="dotKeyP"></i>Power</span>${anyG5?'<span><i class="dotKeyG"></i>Group of Five</span>':''}<span>Lines are medians · hover anywhere on the chart</span></div><div class="rsReadout" aria-live="polite">Tap any dot to see the team.</div>`
+  const tiered=rows.some(r=>String(r.tier||''));
+  return `<section class="rsBlock rsSpan8 rsChartBlock">${rsTop('Rating vs schedule','blend',`${rows.length} teams`)}`
+    +`<div class="rsPlot">`+draw(1000,440,56,16,14,44,1,'rsWide')+draw(640,360,52,14,14,44,1.1,'rsMid')+draw(360,420,46,12,14,44,1.25,'rsTall')+`</div>`
+    +`<div class="rsLegend"><span><i class="dotKeyHi"></i>Top 25</span>${tiered?'<span><i class="dotKeyP"></i>Power Four</span>':''}${anyG5?'<span><i class="dotKeyG"></i>Group of Five</span>':''}<span>Lines are medians · hover anywhere on the chart</span>${rsPlotFilter(rows.map(r=>r.conference),tiered)}</div><div class="rsReadout" aria-live="polite">Tap any dot to see the team.</div>`
     +`</section>`;
 }
 /* What the chart shows, stated: the two quadrants that matter and the
    top-25 extremes, all read from the same rows the chart plots. */
+/* Group tabs for a two-measure chart. The medians split the teams into four
+   groups; each tab lists its group's teams, deepest into the group first,
+   with both measures. Beside the chart on desktop; in place of it on phones,
+   where a few hundred dots are too small to tap. Top-25 teams carry a rank
+   badge so the highlighted dots on the chart can be found in the list. */
+function rsQuadTabs(key,groups,colA,colB,show=7){
+  const first=groups.findIndex(g=>g.rows.length);if(first<0)return '';
+  const tabs=groups.map((g,i)=>`<button type="button" class="rsQuadTab" aria-pressed="${i===first}" data-g="${i}" title="${esc(g.what)}" onclick="rsQuadPick(this)"><span>${esc(g.label)}</span><b>${g.rows.length}</b></button>`).join('');
+  const panes=groups.map((g,i)=>{
+    const li=g.rows.map((r,n)=>`<li class="${n>=show?'rsQuadMoreRow':''}"><span class="rsQuadN">${n+1}</span><span class="rsLogoName">${typeof teamMark==='function'?teamMark(r.name):''}${esc(rsShortName(r.name))}${r.rank&&r.rank<=25?`<i class="rsQuadRank">#${esc(r.rank)}</i>`:''}</span><span class="rsNum">${r.a}</span><span class="rsNum rsMuted">${r.b}</span></li>`).join('');
+    const more=g.rows.length>show?`<button type="button" class="rsQuadMore" aria-haspopup="dialog" data-title="${esc(g.label)}" onclick="rsQuadOpenAll(this)">Show all ${g.rows.length} <span aria-hidden="true">→</span></button>`:'';
+    return `<div class="rsQuadPane" data-g="${i}"${i===first?'':' hidden'}><div class="rsQuadHead"><span>#</span><span>Team</span><span>${esc(colA)}</span><span>${esc(colB)}</span></div><ol class="rsQuadList">${li}</ol>${more}</div>`;
+  }).join('');
+  return `<div class="rsQuad" data-key="${esc(key)}"><div class="rsQuadTabs" role="group" aria-label="Team groups">${tabs}</div>${panes}</div>`;
+}
+/* Filter at the right end of the chart's legend row: fade every dot that
+   is not in the chosen tier or conference, so one league can be read at a time. */
+function rsPlotFilter(confs,tiers=true){
+  const list=[...new Set(confs.filter(Boolean))].sort();
+  const chip=(v,l,on)=>`<button type="button" class="rsFilterChip" aria-pressed="${on}" data-f="${v}" onclick="rsPlotFilterSet(this,this.dataset.f)">${l}</button>`;
+  return `<div class="rsFilter" role="group" aria-label="Filter teams">${chip('all','All',true)}${tiers?chip('tier:power','Power Four',false)+chip('tier:g5','Group of Five',false):''}`
+    +(list.length?`<select class="rsFilterConf" aria-label="Conference" onchange="rsPlotFilterSet(this,this.value?'conf:'+this.value:'all')"><option value="">Conference</option>${list.map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join('')}</select>`:'')+`</div>`;
+}
+function rsPlotFilterSet(el,f){
+  const plot=el.closest('.rsBlock');
+  plot.querySelectorAll('.rsFilterChip').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.f===f)));
+  const sel=plot.querySelector('.rsFilterConf');if(sel&&!f.startsWith('conf:'))sel.value='';
+  const [kind,val]=f==='all'?['all','']:[f.slice(0,f.indexOf(':')),f.slice(f.indexOf(':')+1)];
+  plot.querySelector('.rsPlot')?.classList.toggle('rsFiltered',kind!=='all');
+  plot.querySelectorAll('circle[data-team]').forEach(c=>{
+    const on=kind==='all'||(kind==='tier'?c.dataset.tier===val:c.dataset.conf===val);
+    c.classList.toggle('rsFadeOut',!on);
+  });
+}
+function rsQuadOpenAll(btn){
+  const pane=btn.closest('.rsQuadPane'),block=btn.closest('.rsBlock');
+  const head=pane.querySelector('.rsQuadHead').cloneNode(true),list=pane.querySelector('.rsQuadList').cloneNode(true);
+  list.querySelectorAll('.rsQuadMoreRow').forEach(li=>li.classList.remove('rsQuadMoreRow'));
+  const section=block?.querySelector('.rsTitle')?.textContent||'Teams';
+  rsShowDialog(`${section} · ${btn.dataset.title}`,[head,list],btn);
+}
+function rsQuadPick(btn){
+  const box=btn.closest('.rsQuad');const g=btn.dataset.g;
+  box.querySelectorAll('.rsQuadTab').forEach(b=>b.setAttribute('aria-pressed',String(b===btn)));
+  box.querySelectorAll('.rsQuadPane').forEach(p=>{p.hidden=p.dataset.g!==g});
+}
+// Rows in one quadrant, deepest first: distance past both medians, each axis
+// scaled to its range, so neither measure dominates.
+function rsQuadRows(rows,x,y,mx,my,sx,sy){
+  const xs=rows.map(x),ys=rows.map(y);
+  const rx=(Math.max(...xs)-Math.min(...xs))||1,ry=(Math.max(...ys)-Math.min(...ys))||1;
+  const depth=r=>sx*(x(r)-mx)/rx+sy*(y(r)-my)/ry;
+  return rows.filter(r=>(sx>0?x(r)>=mx:x(r)<mx)&&(sy>0?y(r)>=my:y(r)<my)).sort((a,b)=>depth(b)-depth(a));
+}
 function rsScatterNotes(){
   const rows=(collegeRankingTable()?.rankings||[]).filter(r=>Number.isFinite(Number(r.rating))&&Number.isFinite(Number(r.sos)));
   if(rows.length<12)return '';
-  const med=a=>{const b=a.slice().sort((m,n)=>m-n);return b[Math.floor(b.length/2)]};
-  const mr=med(rows.map(r=>Number(r.rating))),ms=med(rows.map(r=>Number(r.sos)));
-  const earned=rows.filter(r=>Number(r.rating)>=mr&&Number(r.sos)>=ms).length;
-  const soft=rows.filter(r=>Number(r.rating)>=mr&&Number(r.sos)<ms);
-  const top=rows.filter(r=>(r.rank||999)<=25);
-  const most=top.slice().sort((a,b)=>Number(b.sos)-Number(a.sos))[0],least=top.slice().sort((a,b)=>Number(a.sos)-Number(b.sos))[0];
-  // Skip the least-tested top-25 team so the two rows never name the same team.
-  const softest=soft.filter(r=>r!==least).sort((a,b)=>Number(b.rating)-Number(a.rating))[0];
-  const item=(k,v,d,team)=>`<div><dt>${k}</dt><dd><b class="${team?'rsLogoName':''}">${team?(typeof teamMark==='function'?teamMark(team):''):''}${v}</b><span>${d}</span></dd></div>`;
-  return `<section class="rsBlock rsSpan4">${rsTop('Reading the chart','season')}<dl class="rsNotes">`
-    +item('Earned','<span class="rsSignal">'+earned+'</span>',`teams above median on both rating and schedule`)
-    +item('Built on a soft schedule',soft.length,`teams above median rating, below median schedule`)
-    +(most?item('Most-tested top 25',esc(rsShortName(most.name)),`SoS ${Number(most.sos).toFixed(2)} · PR #${most.rank}`,most.name):'')
-    +(least?item('Least-tested top 25',esc(rsShortName(least.name)),`SoS ${Number(least.sos).toFixed(2)} · PR #${least.rank}`,least.name):'')
-    +(softest?item('Best rating, soft schedule',esc(rsShortName(softest.name)),`${Number(softest.rating).toFixed(1)} rating · PR #${softest.rank}`,softest.name):'')
-    +`</dl></section>`;
+  const x=r=>Number(r.sos),y=r=>Number(r.rating);
+  const mx=rsMedian(rows.map(x)),my=rsMedian(rows.map(y));
+  const shape=r=>({name:r.name,rank:r.rank,a:Number(r.rating).toFixed(1),b:Number(r.sos).toFixed(2)});
+  const groups=[
+    {label:'Earned it',what:'Above-median rating against an above-median schedule.',rows:rsQuadRows(rows,x,y,mx,my,1,1).map(shape)},
+    {label:'Soft schedule',what:'Above-median rating built against a below-median schedule.',rows:rsQuadRows(rows,x,y,mx,my,-1,1).map(shape)},
+    {label:'Tested, fell short',what:'Below-median rating against an above-median schedule.',rows:rsQuadRows(rows,x,y,mx,my,1,-1).map(shape)},
+    {label:'Unproven',what:'Below-median rating against a below-median schedule.',rows:rsQuadRows(rows,x,y,mx,my,-1,-1).map(shape)},
+  ];
+  return `<section class="rsBlock rsSpan4">${rsTop('Schedule groups','blend','','Rating vs schedule')}${rsQuadTabs('rating',groups,'Rating','SoS')}</section>`;
 }
 /* Hover anywhere on the chart: the nearest dot within reach is highlighted
    and described in a floating card. Dots are a few pixels wide, so matching the
@@ -1369,7 +1478,7 @@ function rsScatterPoint(e){
   const svg=e.target.closest?.('.rsScatter');
   if(!svg){document.querySelectorAll('.rsScatter').forEach(rsScatterClear);return}
   let best=null,bestD=18*18;
-  svg.querySelectorAll('circle[data-team]').forEach(c=>{
+  svg.querySelectorAll('circle[data-team]:not(.rsFadeOut)').forEach(c=>{
     const b=c.getBoundingClientRect(),dx=b.left+b.width/2-e.clientX,dy=b.top+b.height/2-e.clientY,d=dx*dx+dy*dy;
     if(d<bestD){bestD=d;best=c}
   });
@@ -1414,7 +1523,7 @@ function rsConferences(){
   const parity=confs.filter(c=>c.n>=6).slice().sort((a,b)=>a.sd-b.sd);
   const hi=Math.max(...confs.map(c=>c.mean)),lo=Math.min(...confs.map(c=>c.mean));
   const row=(c,i)=>`<li class="rsConfRow${i>=6?' rsExtra':''}"><span>${esc(c.name)}</span><i class="rsBar"><b style="width:${Math.max(3,Math.round((c.mean-lo)/((hi-lo)||1)*100))}%"></b></i><span class="rsNum"><b>${c.mean.toFixed(1)}</b></span><span class="rsNum rsMuted"><b>${c.n}</b></span></li>`;
-  return `<section class="rsBlock rsExpandable rsSpan7">${rsTop('Conference landscape','season','Mean power rating')}`
+  return `<section class="rsBlock rsExpandable rsSpan7">${rsTop('Conference landscape','blend','Mean power rating')}`
     +`<dl class="rsSummary"><div><dt>Strongest</dt><dd>${esc(confs[0].name)}</dd></div>`
     +(parity.length?`<div title="Smallest spread of team ratings"><dt>Most balanced</dt><dd>${esc(parity[0].name)}</dd></div><div title="Largest spread of team ratings"><dt>Widest spread</dt><dd>${esc(parity[parity.length-1].name)}</dd></div>`:'')+`</dl>`
     +`<div class="rsScrollX"><div class="rsConfHead"><span>Conference</span><span></span><span>Avg. rating</span><span>Teams</span></div>`
@@ -1431,7 +1540,7 @@ function rsSchedules(){
     +`<span class="rsSchedTeam">${typeof teamMark==='function'?teamMark(r.name):''}<b>${esc(rsShortName(r.name))}</b></span>`
     +`<span class="rsNum rsMuted" title="Power rating rank"><b>#${r.rank}</b></span>`
     +`<span class="rsNum"><b>${Number(r.sos).toFixed(2)}</b></span></li>`;
-  return `<section class="rsBlock rsExpandable rsSpan5">${rsTop('Toughest schedules','season','Power rating top 40')}`
+  return `<section class="rsBlock rsExpandable rsSpan5">${rsTop('Toughest schedules','blend','Power rating top 40')}`
     +`<div class="rsSchedHead"><span></span><span>Team</span><span>PR</span><span>SoS</span></div>`
     +`<ol class="rsSched">${top.map(row).join('')}</ol>`
     +(top.length>6?rsMoreBtn(top.length,'View all','Toughest schedules · power rating top 40'):'')+`</section>`;
@@ -1478,26 +1587,32 @@ function rsEfficiency(){
   const draw=(W,H,PL,PR,PT,PB,R,cls)=>{
     const sx=v=>PL+((v-x0)/((x1-x0)||1))*(W-PL-PR),sy=v=>H-PB-((v-y0)/((y1-y0)||1))*(H-PT-PB);
     const dots=rows.map(r=>{
-      const hi=labelled.has(r),power=String(r.row.tier||'')==='power';
-      return `<circle cx="${sx(r.x).toFixed(1)}" cy="${sy(r.y).toFixed(1)}" r="${(hi?4.5:3)*R}" class="${hi?'dotHi':power?'dotP':'dotG'}" data-team="${esc(r.name)}" data-rank="${esc(r.row.rank??'')}" data-conf="${esc(r.row.conference||'')}" data-m1l="Success rate" data-m1="${(r.x*100).toFixed(1)}%" data-m2l="Net pts / success" data-m2="${rsSigned(r.y,2)}"></circle>`;
+      const hi=labelled.has(r)||(Number(r.row.rank)>0&&Number(r.row.rank)<=25),power=String(r.row.tier||'')==='power';
+      return `<circle cx="${sx(r.x).toFixed(1)}" cy="${sy(r.y).toFixed(1)}" r="${(hi?4.5:3)*R}" class="${hi?'dotHi':power?'dotP':'dotG'}" data-team="${esc(r.name)}" data-rank="${esc(r.row.rank??'')}" data-conf="${esc(r.row.conference||'')}" data-tier="${String(r.row.tier||'')==='power'?'power':'g5'}" data-m1l="Success rate" data-m1="${(r.x*100).toFixed(1)}%" data-m2l="Net pts / success" data-m2="${rsSigned(r.y,2)}"></circle>`;
     }).join('');
     const labels=[...labelled].map(r=>{const x=sx(r.x),left=x>W-(W>500?180:100);return `<text class="rsLbl" x="${(left?x-8:x+8).toFixed(1)}" y="${(sy(r.y)+4).toFixed(1)}" text-anchor="${left?'end':'start'}">${esc(rsShortName(r.name))}</text>`}).join('');
     return `<svg viewBox="0 0 ${W} ${H}" class="rsScatter ${cls}" role="img" aria-label="Scatter of offensive success rate against net expected points per successful play">`
       +`<line class="scAx" x1="${PL}" y1="${H-PB}" x2="${W-PR}" y2="${H-PB}"/><line class="scAx" x1="${PL}" y1="${PT}" x2="${PL}" y2="${H-PB}"/>`
       +`<line class="scMed" x1="${sx(mx).toFixed(1)}" y1="${PT}" x2="${sx(mx).toFixed(1)}" y2="${H-PB}"/><line class="scMed" x1="${PL}" y1="${sy(my).toFixed(1)}" x2="${W-PR}" y2="${sy(my).toFixed(1)}"/>`
+      +rsAxisTicks(sx,sy,x0,x1,y0,y1,W,H,PL,PB,v=>Math.round(v*100)+'%',v=>(v>0?'+':'')+v.toFixed(Math.abs(v)<1&&!Number.isInteger(v*10)?2:1))
       +`${dots}${labels}<text class="scAxLbl" x="${((W+PL)/2).toFixed(0)}" y="${H-8}" text-anchor="middle">success rate →</text>`
       +`<text class="scAxLbl" transform="rotate(-90 12 ${(H/2).toFixed(0)})" x="12" y="${(H/2).toFixed(0)}" text-anchor="middle">net points per success →</text></svg>`;
   };
-  return `<section class="rsBlock rsSpan8">${rsTop('Efficiency vs net points per success','season',`${rows.length} FBS offenses`)}`
-    +draw(1000,340,40,16,14,32,1,'rsWide')+draw(640,360,34,14,14,32,1.1,'rsMid')+draw(360,420,30,12,14,32,1.25,'rsTall')
-    +`<div class="rsLegend"><span><i class="dotKeyP"></i>Power</span><span><i class="dotKeyG"></i>Group of Five</span><span>Lines are medians · hover for the team</span></div><div class="rsReadout" aria-live="polite">Tap any dot to see the team.</div></section>`;
+  return `<section class="rsBlock rsSpan8 rsChartBlock">${rsTop('Efficiency vs net points per success','current',`${rows.length} FBS offenses`)}`
+    +`<div class="rsPlot">`+draw(1000,440,56,16,14,44,1,'rsWide')+draw(640,360,52,14,14,44,1.1,'rsMid')+draw(360,420,46,12,14,44,1.25,'rsTall')+`</div>`
+    +`<div class="rsLegend"><span><i class="dotKeyHi"></i>Top 25</span><span><i class="dotKeyP"></i>Power Four</span><span><i class="dotKeyG"></i>Group of Five</span><span>Lines are medians · hover for the team</span>${rsPlotFilter(rows.map(r=>r.row?.conference))}</div><div class="rsReadout" aria-live="polite">Tap any dot to see the team.</div></section>`;
 }
 function rsEfficiencyNotes(){
   const D=rsEfficiencyData();if(!D)return '';
-  const q=[['tr','Efficient and nets a lot'],['tl','Scores in bursts, stalls between'],['br','Moves the chains, rarely breaks one'],['bl','Neither']];
-  return `<section class="rsBlock rsSpan4">${rsTop('Reading the chart','season')}<dl class="rsNotes">`
-    +q.map(([k,label])=>{const p=D.pick[k];return `<div><dt>${label}</dt><dd><b class="rsLogoName">${p.team?(typeof teamMark==='function'?teamMark(p.team.name):'')+esc(rsShortName(p.team.name)):'—'}</b><span>${p.n} teams${p.team?` · ${(p.team.x*100).toFixed(1)}% success · ${rsSigned(p.team.y,2)} net per success`:''}</span></dd></div>`}).join('')
-    +`</dl></section>`;
+  const x=r=>r.x,y=r=>r.y;
+  const shape=r=>({name:r.name,rank:r.row?.rank,a:(r.x*100).toFixed(1)+'%',b:rsSigned(r.y,2)});
+  const groups=[
+    {label:'Efficient and nets a lot',what:'Succeeds often and gains a lot when it does.',rows:rsQuadRows(D.rows,x,y,D.mx,D.my,1,1).map(shape)},
+    {label:'Scores in bursts',what:'Succeeds less often, but gains a lot when it does.',rows:rsQuadRows(D.rows,x,y,D.mx,D.my,-1,1).map(shape)},
+    {label:'Moves the chains',what:'Succeeds often, but rarely breaks a big one.',rows:rsQuadRows(D.rows,x,y,D.mx,D.my,1,-1).map(shape)},
+    {label:'Struggling',what:'Below median on both: plays fail often and gain little.',rows:rsQuadRows(D.rows,x,y,D.mx,D.my,-1,-1).map(shape)},
+  ];
+  return `<section class="rsBlock rsSpan4">${rsTop('Efficiency groups','current','','Efficiency vs net points per success')}${rsQuadTabs('efficiency',groups,'Success','Net / success')}</section>`;
 }
 /* Defence against a real zero. Expected points allowed per play has a true
    zero -- the average snap against this defence gains nothing -- so the bars
@@ -1521,7 +1636,7 @@ function rsDefence(){
       +`<span class="rsNum"><b class="${neg?'rsWin':'rsLoss'}">${r.v>0?'+':'−'}${Math.abs(r.v).toFixed(3)}</b></span>`
       +`<span class="rsDivStop">${Math.round(r.stop*100)}% stopped</span></li>`;
   };
-  return `<section class="rsBlock rsSpan8">${rsTop('Defense against a real zero','season','EPA allowed per play')}`
+  return `<section class="rsBlock rsSpan8">${rsTop('Defense against a real zero','current','EPA allowed per play')}`
     +`<div class="rsDivHead"><span>Best 8</span><span>← defense wins the down · offense gains →</span><span></span><span>Stop rate</span></div>`
     +`<ul class="rsDiv">${D.best.map(row).join('')}</ul>`
     +`<div class="rsDivHead rsDivGap"><span>Worst 8</span><span></span><span></span><span></span></div>`
@@ -1529,32 +1644,48 @@ function rsDefence(){
 }
 function rsDefenceNotes(){
   const D=rsDefenceData();if(!D)return '';
-  const freq=D.best.slice().sort((a,b)=>b.stop-a.stop)[0],limit=D.best.slice().sort((a,b)=>a.stop-b.stop)[0];
-  const med=rsMedian(D.rows.map(r=>r.v));
-  const item=(k,t,d)=>`<div><dt>${k}</dt><dd><b class="${t?'rsLogoName':''}">${t?(typeof teamMark==='function'?teamMark(t.name):'')+esc(rsShortName(t.name)):''}</b><span>${d}</span></dd></div>`;
-  return `<section class="rsBlock rsSpan4">${rsTop('Reading the chart','season')}<dl class="rsNotes">`
-    +`<div><dt>Left of zero</dt><dd><b class="rsSignal">${D.below} of ${D.rows.length}</b><span>defenses hold the average snap to a loss · median ${rsSigned(med,3)}</span></dd></div>`
-    +item('Wins by frequency',freq,`${rsSigned(freq.v,3)} EPA · stops ${Math.round(freq.stop*100)}% of snaps`)
-    +item('Wins by limiting damage',limit,`${rsSigned(limit.v,3)} EPA · stops ${Math.round(limit.stop*100)}% of snaps`)
-    +`<div class="rsStopList"><dt>Highest stop rates</dt><dd><ol>${D.rows.slice().sort((x,y)=>y.stop-x.stop).slice(0,8).map(t=>`<li><span class="rsLogoName">${typeof teamMark==='function'?teamMark(t.name):''}${esc(rsShortName(t.name))}</span><b>${Math.round(t.stop*100)}%</b></li>`).join('')}</ol></dd></div>`
-    +`</dl></section>`;
+  // x: stop rate (higher is better); y: EPA allowed, negated so higher is better.
+  const x=r=>r.stop,y=r=>-r.v;
+  const mx=rsMedian(D.rows.map(x)),my=rsMedian(D.rows.map(y));
+  const shape=r=>({name:r.name,rank:r.rank,a:Math.round(r.stop*100)+'%',b:rsSigned(r.v,3)});
+  const groups=[
+    {label:'Shuts it down',what:'Stops more snaps than the median and gives up less per play.',rows:rsQuadRows(D.rows,x,y,mx,my,1,1).map(shape)},
+    {label:'Limits damage',what:'Stops fewer snaps, but gives up little when it is beaten.',rows:rsQuadRows(D.rows,x,y,mx,my,-1,1).map(shape)},
+    {label:'Gives up big plays',what:'Stops plenty of snaps, but pays for the ones it misses.',rows:rsQuadRows(D.rows,x,y,mx,my,1,-1).map(shape)},
+    {label:'Leaky',what:'Below median on both: rarely stops a play and gives up a lot.',rows:rsQuadRows(D.rows,x,y,mx,my,-1,-1).map(shape)},
+  ];
+  return `<section class="rsBlock rsSpan4">${rsTop('Defense groups','current')}${rsQuadTabs('defense',groups,'Stop rate','EPA',12)}</section>`;
 }
 function rsPart(num,label,body){
   return body?`<div class="rsPart"><h2 class="rsPartHead"><span>${num}</span>${label}</h2>${body}</div>`:'';
+}
+/* Basketball preseason: a panel with nothing to show keeps its place in the
+   layout with a plain waiting note, so the page reads the same before and
+   after the first tipoff. Football never uses this; its panels hide. */
+function rsWaiting(title,kind,span,note){
+  return `<section class="rsBlock rsWaiting rsSpan${span}">${rsTop(title,kind)}<p class="rsWaitingNote">${esc(note)}</p></section>`;
 }
 function collegeResearchModules(){
   if(!['NCAAF','NCAAM'].includes(String(DATA?.comp_key||'').toUpperCase()))return '';
   // One 12-column grid. Each panel's span is set by what it holds (rsSpanN),
   // so a finding and its supporting numbers share a row at sensible widths.
   const grid=(...cells)=>{const c=cells.filter(Boolean);return c.length?`<div class="rsRow">${c.join('')}</div>`:''};
+  // Success rate, net points per success and EPA per play are football
+  // play-by-play measures; basketball has no downs or snaps, so those panels
+  // are football-only rather than showing football teams on the NCAAM page.
+  const football=String(DATA?.comp_key||'').toUpperCase()==='NCAAF';
+  const wait=(...args)=>football?'':rsWaiting(...args);
+  const soon='Waiting for the season to start.',box='Waiting for the season to start. Needs basketball box scores, which Matchday does not collect yet.';
   const parts=[
-    rsPart('01','This week',grid(rsFeatured(),rsModelMarketWatch())),
-    rsPart('02','What the model is finding',grid(rsStat(),rsLongshots())+grid(rsScatter(),rsScatterNotes())+grid(rsEfficiency(),rsEfficiencyNotes())),
-    rsPart('03','The bigger picture',grid(rsSchedules(),rsConferences())+grid(rsDefence(),rsDefenceNotes())),
-    rsPart('04','Track record',grid(rsMyPicks())),
-  ].join('');
+    ['This week',grid(rsFeatured()||wait('Featured read','live',12,soon),rsModelMarketWatch()||wait('Model–market watch','live',12,soon))],
+    ['What the model is finding',grid(rsStat()||wait('Risers &amp; fallers','blend',4,soon),rsLongshots()||wait('Longshots that won','current',8,soon))+grid(rsScatter(),rsScatterNotes())
+      +(football?grid(rsEfficiency(),rsEfficiencyNotes()):grid(wait('Offensive vs defensive efficiency','current',8,box),wait('Reading the chart','current',4,box)))],
+    ['The bigger picture',grid(rsSchedules(),rsConferences())
+      +(football?grid(rsDefence(),rsDefenceNotes()):grid(wait('Pace','current',8,box),wait('Reading the chart','current',4,box)))],
+    ['Track record',grid(rsMyPicks()||wait('Matchday in public','graded',12,'Picks are graded once the season starts.'))],
+  ].filter(([,body])=>body).map(([label,body],i)=>rsPart(String(i+1).padStart(2,'0'),label,body)).join('');
   if(!parts)return '';
   return `<section class="collegeResearch" aria-label="College research">`
-    +`<div class="rsLegend2"><span>${rsChip('live')} moves until kickoff</span><span>${rsChip('season')} this season's results so far</span><span>${rsChip('graded')} locked picks, scored after the final</span></div>`
+    +`<div class="rsLegend2"><span>${rsChip('live')} moves until ${football?'kickoff':'tipoff'}</span><span>${rsChip('current')} this season's games</span><span>${rsChip('blend')} power rating, includes last season</span><span>${rsChip('graded')} locked picks, scored after the final</span>${rsMethodology(football)}</div>`
     +`${parts}</section>`;
 }

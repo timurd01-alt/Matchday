@@ -2,25 +2,20 @@
 
 The scheduled agent that develops this site needs a prompt. A fixed prompt is
 the wrong shape: it says the same thing whether a promotion gate just came
-ready, a provider went dark, or nothing at all happened, so the agent invents
+a provider went dark, the interface audit found a defect, or nothing at all
+happened, so the agent invents
 work to fill the silence. This module instead reads the artifacts the hourly
-run already produces and emits *one* scoped task describing what the site
-actually needs right now -- or explicitly reports that nothing needs doing,
-which is a valid and common answer.
+run already produces (fetch failures, provider quota, the interface audit) and
+emits *one* scoped task describing what the site actually needs right now --
+or explicitly reports that nothing needs doing, which is a valid and common
+answer.
 
 Signals are ranked, not merged. Each candidate carries a fixed priority, and
 only the highest-priority live candidate becomes the task; the rest are
 reported as context so the agent can see what it is deliberately not doing.
 
-Deliberately excluded from every emitted task:
-
-  * `ratings*.json` and `picks_log*.json` -- bot-owned, committed back to main
-    by the hourly workflow (see AGENTS.md); a feature branch touching them goes
-    stale within the hour.
-  * promotion policy `requirements` blocks -- the frozen bar. An agent that can
-    both build a challenger and lower the bar it must clear is not running an
-    experiment. Status changes may be *proposed* with evidence; the bar itself
-    is the owner's.
+Picks come from the Bet Better engine; this repository no longer forecasts,
+so model research and promotion signals are not sources here.
 """
 
 from __future__ import annotations
@@ -36,33 +31,15 @@ SCHEMA_VERSION = 1
 # Lower sorts first. Gaps left intentionally so a signal can be inserted
 # between two existing ones without renumbering the rest.
 PRIORITY = {
-    "promotion_blocked": 10,
-    "promotion_ready": 20,
     "fetch_failure": 30,
-    # A stale payload or an absent model input outranks a quota warning: the
-    # quota signal says a provider *will* degrade, this one says the published
-    # site already has. Both sit below a fetch failure, which is the same
-    # problem caught at its source.
-    "data_gap_critical": 35,
     "provider_quota": 40,
     # An interface blocker is a live defect for a real user right now --
     # keyboard focus that cannot be seen, text that cannot be read -- which
     # puts it above research questions and below anything actively breaking
     # the data the site exists to publish.
     "ui_blocker": 45,
-    "promotion_evidence_against": 50,
-    "market_segment_loss": 60,
-    "data_gap_warn": 65,
-    "experiment_not_yet_run": 70,
     "ui_warn": 75,
 }
-
-# A model losing to the closing market by less than this (mean log loss, per
-# fixture) is inside the noise a few dozen graded fixtures can produce. Chasing
-# it invites exactly the post-hoc tuning `market_benchmark.py` warns about.
-SEGMENT_LOSS_THRESHOLD = 0.02
-SEGMENT_MIN_FIXTURES = 40
-
 
 def _load_json(path: Path) -> Any | None:
     try:
@@ -75,53 +52,6 @@ def _candidate(kind: str, title: str, why: str, do: str,
                files: list[str], **extra: Any) -> dict[str, Any]:
     return {"kind": kind, "priority": PRIORITY[kind], "title": title,
             "why": why, "do": do, "files": files, **extra}
-
-
-def _promotion_candidates(base: Path) -> list[dict[str, Any]]:
-    report = _load_json(base / "promotion_readiness.json")
-    if not isinstance(report, dict):
-        return []
-    candidates = []
-    for gate in report.get("gates") or []:
-        state, gate_id = gate.get("state"), gate.get("id")
-        files = [gate.get("policy_path"), gate.get("scorecard_path"),
-                 "docs/PREDICTION_RESEARCH_ROADMAP.md", "docs/experiments.json"]
-        files = [name for name in files if name]
-        if state == "blocked":
-            candidates.append(_candidate(
-                "promotion_blocked",
-                f"Unblock the {gate_id} promotion gate",
-                gate.get("summary", ""),
-                "The accumulated prospective evidence cannot satisfy this gate's frozen "
-                "cohort requirement, so waiting longer collects nothing usable. Establish "
-                "which identity is authoritative -- the policy's frozen values or the "
-                "artifact actually producing locks -- and report the discrepancy with the "
-                "exact hashes. Do NOT edit the policy's `requirements`; propose the "
-                "correction and let the owner decide whether to re-freeze the policy or "
-                "reset collection.",
-                files, gate=gate_id))
-        elif state in ("ready_for_manual_review", "ready"):
-            candidates.append(_candidate(
-                "promotion_ready",
-                f"Prepare the {gate_id} promotion review",
-                gate.get("summary", ""),
-                "Every stated requirement is met. Write the review packet: observed metrics "
-                "against each requirement, the paired interval, the cohort identity, and a "
-                "recommendation. Record it in docs/experiments.json and the roadmap. "
-                "Propose the policy `status` change in the PR body for the owner to accept "
-                "-- do not promote, and do not change production_weight.",
-                files, gate=gate_id))
-        elif state == "evidence_against":
-            candidates.append(_candidate(
-                "promotion_evidence_against",
-                f"Record the {gate_id} rejection",
-                gate.get("summary", ""),
-                "The sample-size bar was reached and the evidence does not support "
-                "promotion. A rejection recorded honestly is a real result: add the "
-                "decision to docs/experiments.json with the observed metrics and update "
-                "the roadmap. Propose the policy status change; do not weaken the bar.",
-                files, gate=gate_id))
-    return candidates
 
 
 def _fetch_failure_candidates(base: Path) -> list[dict[str, Any]]:
@@ -200,116 +130,6 @@ def _quota_candidates(base: Path) -> list[dict[str, Any]]:
          ".github/workflows/deploy.yml"])]
 
 
-def _market_segment_candidates(base: Path) -> list[dict[str, Any]]:
-    report = _load_json(base / "market_benchmark_report.json")
-    if not isinstance(report, dict):
-        return []
-    worst = None
-    for family, segments in (report.get("outcome_segments") or {}).items():
-        if not isinstance(segments, dict):
-            continue
-        for label, entry in segments.items():
-            if not isinstance(entry, dict):
-                continue
-            delta = entry.get("matchday_minus_market_log_loss")
-            count = entry.get("n")
-            if (isinstance(delta, (int, float)) and isinstance(count, int)
-                    and count >= SEGMENT_MIN_FIXTURES and delta > SEGMENT_LOSS_THRESHOLD
-                    and (worst is None or delta > worst["delta"])):
-                worst = {"family": family, "label": label, "delta": delta, "n": count}
-    if worst is None:
-        return []
-    return [_candidate(
-        "market_segment_loss",
-        f"Investigate the {worst['family']}={worst['label']} market gap",
-        f"Matchday trails the closing market by {worst['delta']} mean log loss over "
-        f"{worst['n']} graded fixtures in this segment.",
-        "Investigate WHY this segment underperforms and write up the finding. Do not tune "
-        "the model to the segment: the benchmark is descriptive, and fitting to it is the "
-        "post-hoc adjustment the research protocol exists to prevent. Any model change "
-        "must go through a frozen challenger and prospective evidence.",
-        ["market_benchmark_report.json", "docs/PREDICTION_RESEARCH_ROADMAP.md",
-         "docs/experiments.json"],
-        segment=worst)]
-
-
-def _experiment_candidates(base: Path) -> list[dict[str, Any]]:
-    payload = _load_json(base / "docs" / "experiments.json")
-    if not isinstance(payload, dict):
-        return []
-    pending = [item for item in payload.get("experiments") or []
-               if isinstance(item, dict) and item.get("decision") == "not_yet_run"]
-    if not pending:
-        return []
-    nominee = pending[0]
-    return [_candidate(
-        "experiment_not_yet_run",
-        f"Run the {nominee.get('id', 'next')} experiment",
-        f"{len(pending)} roadmap experiment(s) are recorded as not_yet_run. Next: "
-        f"{nominee.get('hypothesis', '')}",
-        "Follow the Hypothesis / Baseline / Experiment / Evaluation / Decision template in "
-        "docs/PREDICTION_RESEARCH_ROADMAP.md. Build the challenger frozen and out-of-sample, "
-        "record its artifact hash, and add it as a shadow at production_weight 0. Record the "
-        "decision in docs/experiments.json. A challenger never ships in the same change that "
-        "creates it.",
-        ["docs/PREDICTION_RESEARCH_ROADMAP.md", "docs/experiments.json"],
-        experiment=nominee.get("id"), pending_count=len(pending))]
-
-
-def _data_coverage_candidates(base: Path) -> list[dict[str, Any]]:
-    """Gaps between the inputs the models want and the data actually present.
-
-    Reported at two priorities because the two halves are different jobs. A
-    stale feed or an absent input on an imminent fixture is a pipeline defect
-    with a live consequence; thin evidence and an unsourced family are product
-    decisions about what Matchday should collect next.
-    """
-    report = _load_json(base / "data_coverage_report.json")
-    if not isinstance(report, dict):
-        return []
-    gaps = [gap for gap in report.get("gaps") or [] if isinstance(gap, dict)]
-    if not gaps:
-        return []
-    candidates = []
-    critical = [gap for gap in gaps if gap.get("severity") == "critical"]
-    if critical:
-        leader = critical[0]
-        candidates.append(_candidate(
-            "data_gap_critical",
-            f"Restore {leader.get('competition', 'a competition')}'s "
-            f"{leader.get('kind', 'data')} coverage",
-            "; ".join(gap.get("summary", "") for gap in critical[:4]),
-            "The site is publishing predictions built on data that did not "
-            "arrive. Find where the input is meant to enter -- the adapter, "
-            "the cadence, or the cache window -- and fix the pipeline. Do NOT "
-            "backfill or hand-edit a payload, pick log or ledger to make the "
-            "gap disappear: the report is built from those files, so editing "
-            "them changes the measurement rather than the problem. If the "
-            "cause is an exhausted provider budget, say so and stop rather "
-            "than working around the quota check.",
-            ["multi_fetch.py", "fetch_data.py", "provider_adapters.py",
-             "data_coverage.py"],
-            gap=leader))
-    warnings = [gap for gap in gaps if gap.get("severity") != "critical"]
-    if warnings:
-        leader = warnings[0]
-        candidates.append(_candidate(
-            "data_gap_warn",
-            f"Close the {leader.get('kind', 'coverage')} gap for "
-            f"{leader.get('competition', 'a competition')}",
-            "; ".join(gap.get("summary", "") for gap in warnings[:4]),
-            "This is a question about what Matchday should collect, not a "
-            "broken pipeline. Write up what sourcing the family or the "
-            "evidence would take, what it would cost against the provider "
-            "budgets already recorded in provider_quota.py, and what the "
-            "model would do with it. Propose it; do not add a provider, a key "
-            "or a paid tier as part of this task.",
-            ["data_coverage.py", "provider_quota.py",
-             "docs/PREDICTION_RESEARCH_ROADMAP.md", "docs/experiments.json"],
-            gap=leader))
-    return candidates
-
-
 def _ui_candidates(base: Path) -> list[dict[str, Any]]:
     """Interface defects found against published accessibility requirements.
 
@@ -354,9 +174,7 @@ def _ui_candidates(base: Path) -> list[dict[str, Any]]:
 def collect(root: str | Path = ".") -> list[dict[str, Any]]:
     base = Path(root)
     candidates: list[dict[str, Any]] = []
-    for source in (_promotion_candidates, _fetch_failure_candidates, _quota_candidates,
-                   _market_segment_candidates, _experiment_candidates,
-                   _data_coverage_candidates, _ui_candidates):
+    for source in (_fetch_failure_candidates, _quota_candidates, _ui_candidates):
         candidates.extend(source(base))
     return sorted(candidates, key=lambda item: (item["priority"], item["title"]))
 
@@ -379,8 +197,7 @@ REQUIRED_TEST_COMMAND = 'python -m unittest discover -p "test_*.py"'
 
 GUARDRAILS = (
     "Work on the designated branch and open a pull request; never push to main.",
-    "Never edit ratings*.json or picks_log*.json -- the hourly workflow owns them.",
-    "Never edit a promotion policy's `requirements` block, reserve, or quota enforcement.",
+    "Never edit a quota reserve or quota enforcement.",
     "Run the full suite before opening the PR -- the same command deploy.yml "
     "runs, not a subset: " + REQUIRED_TEST_COMMAND,
     "Add a new updates/<build>.json release note and run python build_updates.py; never "
@@ -392,10 +209,9 @@ GUARDRAILS = (
 
 def render_prompt(task: dict[str, Any] | None, others: list[dict[str, Any]]) -> str:
     if task is None:
-        return ("No action needed. Matchday's promotion gates are collecting evidence on "
-                "schedule, no competition fetch is failing, no provider is at its safety "
-                "reserve, and no roadmap experiment is pending. Do not invent work: reply "
-                "that the site is healthy and stop.")
+        return ("No action needed. No competition fetch is failing, no provider is at its "
+                "safety reserve, and the interface audit found nothing to fix. Do not invent "
+                "work: reply that the site is healthy and stop.")
     lines = [
         f"Task: {task['title']}",
         "",

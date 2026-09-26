@@ -27,7 +27,7 @@ const MATCH_RE = /^[A-Za-z0-9:_-]{1,100}$/;
 function serverHandle(deviceId) {
   const digest = crypto.createHash("sha256").update(`handle:${deviceId}`).digest();
   const name = HANDLE_POOL[digest[0] % HANDLE_POOL.length];
-  const tag = 1000 + (digest.readUInt16BE(1) % 9000);
+  const tag = 1 + (digest.readUInt16BE(1) % 99);
   return `${name} #${tag}`;
 }
 
@@ -270,7 +270,11 @@ export default async function handler(req, res) {
   try {
     await db.connect();
     await ensureSchema(db);
-    const ipKey = `ip:${opaqueKey(requestIp(req))}`;
+    // Reads and writes are counted separately. They used to share one bucket
+    // with a lower ceiling for writes, so the page's own background reads
+    // (consensus, activity and the leaderboard, every minute) used up the
+    // budget and every pick after that was refused with "daily limit reached".
+    const ipKey = `ip:${opaqueKey(requestIp(req))}:${req.method === "GET" ? "read" : "write"}`;
     if (!await consumeLimit(db, ipKey, 60000, req.method === "GET" ? 120 : 30)) {
       return res.status(429).json({ ok: false, error: "slow down" });
     }

@@ -13,7 +13,7 @@ html{font-size:var(--fs-md);-webkit-text-size-adjust:100%}body{height:100vh;over
 .marketBanner{background:rgba(255,176,46,.08);border:1px solid rgba(255,176,46,.35);border-left:3px solid var(--warn);border-radius:10px;padding:10px 13px;margin-bottom:14px;font-size:var(--fs-md);color:var(--muted);line-height:1.5}
 .developmentPause,.welcomePause{display:flex;align-items:flex-start;gap:10px;background:rgba(255,176,46,.08);border:1px solid rgba(255,176,46,.35);border-left:3px solid var(--warn);border-radius:10px;padding:10px 13px;margin-bottom:14px;font-size:var(--fs-md);color:var(--muted);line-height:1.5}.developmentPause strong,.welcomePause strong{flex:0 0 auto;color:var(--warn);font-family:var(--display)}.developmentPause a,.welcomePause a{color:var(--text);text-decoration:underline;text-underline-offset:2px}.developmentPause a:focus-visible,.welcomePause a:focus-visible{outline:2px solid var(--warn);outline-offset:3px;border-radius:2px}@media(max-width:600px){.developmentPause,.welcomePause{display:block}.developmentPause strong,.welcomePause strong{display:block;margin-bottom:4px}}
 .marketBanner b{color:var(--warn)}.banner b{color:var(--signal)}.banner code{font-family:var(--mono);color:var(--text)}.empty{text-align:center;color:var(--muted);padding:55px 20px;font-family:var(--mono);font-size:var(--fs-md);line-height:1.7}.seclbl{font-size:var(--fs-2xs);letter-spacing:.1em;text-transform:uppercase;color:var(--signal);font-weight:var(--fw-bold);margin:0 0 9px}.seclbl:not(:first-child){margin-top:16px}.faintline{font-size:var(--fs-md);color:var(--faint);font-family:var(--mono)}.view{display:none}.vhead{font-family:var(--display);font-weight:var(--fw-bold);font-size:var(--fs-xl);margin:2px 0 14px;letter-spacing:-.01em}
-#view-matches{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:11px;align-items:start}#view-matches .vhead,#view-matches .toggle{grid-column:1/-1}.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}.head{padding:12px 13px;cursor:pointer;user-select:none}.metarow{display:flex;align-items:center;gap:8px;font-size:var(--fs-2xs);letter-spacing:.05em;text-transform:uppercase;color:var(--faint);margin-bottom:10px;font-weight:var(--fw-bold)}.metarow .stage{color:var(--signal)}.metarow .spacer{flex:1}.pill{padding:3px 8px;border-radius:999px;border:1px solid var(--line2);font-weight:var(--fw-bold);letter-spacing:.04em;font-size:var(--fs-2xs)}.pill.LIVE{color:var(--bg);background:var(--live);border-color:var(--live);display:flex;align-items:center;gap:5px}.pill.LIVE .blink{width:5px;height:5px;border-radius:50%;background:var(--bg);animation:pulse 1.1s infinite}.pill.FINISHED{color:var(--muted)}.fixture{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:9px}.side{display:flex;flex-direction:column;gap:4px;min-width:0}.side.away{align-items:flex-end;text-align:right}.tname{font-family:var(--display);font-weight:var(--fw-bold);font-size:var(--fs-lg);line-height:1.18;overflow:hidden;text-overflow:ellipsis;letter-spacing:-.01em}.tsub{font-size:var(--fs-xs);color:var(--muted);font-family:var(--mono);display:flex;gap:6px}.side.away .tsub{flex-direction:row-reverse}.center{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:54px}.score{font-family:var(--mono);font-weight:var(--fw-bold);font-size:var(--fs-2xl);white-space:nowrap}.score .sep{color:var(--faint);margin:0 2px}.kick{font-family:var(--mono);font-size:var(--fs-md);color:var(--muted)}.minute{font-size:var(--fs-2xs);color:var(--live);font-weight:var(--fw-bold);font-family:var(--mono)}.expander{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:10px;font-size:var(--fs-2xs);color:var(--muted);font-weight:var(--fw-bold);letter-spacing:.04em}.detail{display:none;border-top:1px solid var(--line);padding:13px}.card.open .detail{display:block}.miniStats{display:grid;grid-template-columns:1fr auto 1fr;gap:6px 10px;font-size:var(--fs-md);align-items:center}.miniStats .lab{text-align:center;color:var(--muted);font-family:var(--mono);font-size:var(--fs-xs)}.miniStats .home{text-align:right}.miniStats .away{text-align:left}.statbar{height:6px;background:var(--bg2);border:1px solid var(--line);border-radius:999px;overflow:hidden;grid-column:1/-1;display:flex}.statbar i:first-child{background:var(--home)}.statbar i:last-child{background:var(--away)}.pressure{margin-top:11px;padding:8px 10px;border:1px solid var(--line);background:var(--bg2);border-left:3px solid var(--signal);border-radius:8px;font-size:var(--fs-sm);color:var(--muted)}.xi{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.xi h4{font-size:var(--fs-xs);color:var(--signal);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}.xi .player{font-family:var(--mono);font-size:var(--fs-sm);color:var(--muted);padding:2px 0}
+#view-matches{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:11px;align-items:start}#view-matches .vhead,#view-matches .toggle{grid-column:1/-1}.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}.head{padding:12px 13px;cursor:pointer;user-select:none}.metarow{display:flex;align-items:center;gap:8px;font-size:var(--fs-2xs);letter-spacing:.05em;text-transform:uppercase;color:var(--faint);margin-bottom:10px;font-weight:var(--fw-bold)}.metarow .stage{color:var(--signal)}.metarow .spacer{flex:1}.pill{padding:3px 8px;border-radius:999px;border:1px solid var(--line2);font-weight:var(--fw-bold);letter-spacing:.04em;font-size:var(--fs-2xs)}.pill.LIVE{color:var(--bg);background:var(--live);border-color:var(--live);display:flex;align-items:center;gap:5px}.pill.LIVE .blink{width:5px;height:5px;border-radius:50%;background:var(--bg);animation:pulse 1.1s infinite}.pill.FINISHED{color:var(--muted)}.fixture{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:9px}.side{display:flex;flex-direction:column;gap:4px;min-width:0}.side.away{align-items:flex-end;text-align:right}.tname{font-family:var(--display);font-weight:var(--fw-bold);font-size:var(--fs-lg);line-height:1.18;overflow:hidden;text-overflow:ellipsis;letter-spacing:-.01em}.tsub{font-size:var(--fs-xs);color:var(--muted);font-family:var(--mono);display:flex;gap:6px}.side.away .tsub{flex-direction:row-reverse}.center{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:54px}.score{font-family:var(--mono);font-weight:var(--fw-bold);font-size:var(--fs-2xl);white-space:nowrap}.score .sep{color:var(--faint);margin:0 2px}.kick{font-family:var(--mono);font-size:var(--fs-md);color:var(--muted)}.minute{font-size:var(--fs-2xs);color:var(--live);font-weight:var(--fw-bold);font-family:var(--mono)}.expander{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:10px;font-size:var(--fs-2xs);color:var(--muted);font-weight:var(--fw-bold);letter-spacing:.04em}.detail{display:none;border-top:1px solid var(--line);padding:13px}.card.open .detail{display:block}.miniStats{display:grid;grid-template-columns:1fr auto 1fr;gap:6px 10px;font-size:var(--fs-md);align-items:center}.miniStats .lab{text-align:center;color:var(--muted);font-family:var(--mono);font-size:var(--fs-xs)}.miniStats .home{text-align:right}.miniStats .away{text-align:left}.statbar{height:6px;background:var(--bg2);border:1px solid var(--line);border-radius:999px;overflow:hidden;grid-column:1/-1;display:flex}.statbar i:first-child{background:var(--home)}.statbar i:last-child{background:var(--away)}.pressure{margin-top:11px;padding:8px 10px;border:1px solid var(--line);background:var(--bg2);border-left:3px solid var(--signal);border-radius:8px;font-size:var(--fs-sm);color:var(--muted)}.xi{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.xi h4{font-size:var(--fs-xs);color:var(--signal);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}.xi .player{font-family:var(--mono);font-size:var(--fs-sm);color:var(--muted);padding:2px 0}
 .toggle{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:var(--fs-sm);font-family:var(--mono);margin-top:5px}.toggle input{accent-color:var(--signal)}.tablewrap{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin-bottom:14px}.groupHead{display:flex;align-items:center;justify-content:space-between;padding:11px 13px;border-bottom:1px solid var(--line);background:var(--bg2);font-family:var(--display);font-weight:var(--fw-bold)}.groupHead span{font-family:var(--mono);font-size:var(--fs-2xs);color:var(--faint);font-weight:var(--fw-bold);text-transform:uppercase}.gtable{width:100%;border-collapse:collapse}.gtable th,.gtable td{padding:8px 9px;border-bottom:1px solid var(--line);font-size:var(--fs-sm);text-align:center}.gtable th{font-family:var(--mono);font-size:var(--fs-2xs);color:var(--faint);font-weight:var(--fw-bold);text-transform:uppercase}.gtable td:first-child,.gtable th:first-child{text-align:left}.gteam{display:flex;align-items:center;gap:8px;font-weight:var(--fw-bold)}.pos{font-family:var(--mono);color:var(--faint);width:18px}.code{font-family:var(--mono);color:var(--signal);font-size:var(--fs-sm);display:inline-block;min-width:34px;text-align:left;flex:0 0 auto}.liveMark{color:var(--live);font-family:var(--mono);font-size:var(--fs-xs)}.form{font-family:var(--mono);color:var(--muted);font-size:var(--fs-xs)}.qual{box-shadow:inset 3px 0 0 var(--win)}.third{box-shadow:inset 3px 0 0 var(--signal)}
 .bracketGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}.round{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}.round h3{font-family:var(--display);font-size:var(--fs-base);padding:10px 12px;background:var(--bg2);border-bottom:1px solid var(--line)}.kmatch{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center;padding:9px 10px;border-bottom:1px solid var(--line);font-size:var(--fs-sm)}.kt{font-weight:var(--fw-bold)}.kt.away{text-align:right}.ksc{font-family:var(--mono);color:var(--muted);font-weight:var(--fw-bold)}.ksc.liveSc{color:var(--live)}.win{color:var(--win)}.slotGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:9px}.slot{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:9px}.slot .sl{font-family:var(--mono);font-size:var(--fs-2xs);color:var(--faint);font-weight:var(--fw-bold);text-transform:uppercase}.slot .tm{font-family:var(--display);font-weight:var(--fw-bold);margin-top:5px}.slot .meta{font-family:var(--mono);font-size:var(--fs-xs);color:var(--muted);margin-top:3px}.slot.in{border-color:var(--line2)}
 .newsTools{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.chip{border:1px solid var(--line2);background:var(--panel);color:var(--muted);border-radius:999px;padding:5px 9px;font-size:var(--fs-xs);font-weight:var(--fw-bold);cursor:pointer}.chip.on{color:var(--bg);background:var(--signal);border-color:var(--signal)}.ncard,.ins-news{display:block;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:9px;transition:.12s}.ncard:hover,.ins-news:hover{border-color:var(--line2);transform:translateY(-1px)}.nhead{font-family:var(--display);font-weight:var(--fw-bold);font-size:var(--fs-base);line-height:1.3}.ndesc{color:var(--muted);font-size:var(--fs-md);line-height:1.5;margin-top:6px}.nmeta{display:flex;gap:9px;align-items:center;margin-top:8px;color:var(--faint);font-family:var(--mono);font-size:var(--fs-xs)}.nsrc{color:var(--signal);font-weight:var(--fw-bold)}.socialGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;margin-bottom:14px}.socialGrid a{background:var(--bg2);border:1px solid var(--line);border-radius:9px;padding:9px;font-size:var(--fs-md);color:var(--muted)}.socialGrid a:hover{color:var(--text);border-color:var(--signal)}
@@ -147,7 +147,7 @@ body.modalOpen{overflow:hidden}.matchModal{position:fixed;inset:0;z-index:99;dis
     .scrow .scst{order:1;min-width:0}
     .scrow .sctag{order:2;margin-left:auto}
     .scrow .scmatch{order:3;flex-basis:100%;white-space:normal;overflow:visible;text-overflow:clip;line-height:1.35}
-    .scrow .scpick{order:4;flex-basis:100%;white-space:normal;overflow-wrap:break-word;line-height:1.5}
+    .scrow .scpick{order:4;flex-basis:100%;white-space:normal;overflow-wrap:normal;line-height:1.5}
   }
   .fchips{display:flex;flex-wrap:wrap;gap:6px;row-gap:6px;margin-top:9px;align-items:center}
   .fchip{display:inline-flex;align-items:center;white-space:nowrap;line-height:1.5;font-family:var(--mono);font-size:var(--fs-2xs);font-weight:var(--fw-bold);padding:2px 8px;border-radius:5px;border:1px solid var(--line);color:var(--muted)}
@@ -1501,7 +1501,7 @@ body.modalOpen{overflow:hidden}.matchModal{position:fixed;inset:0;z-index:99;dis
 .gamesDifferenceRows button{cursor:pointer}
 .gamesDifferenceRows button:hover{background:rgba(255,255,255,.018)}
 .gamesDifferenceRows button>span,.gamesDifferenceRow>span{display:grid;min-width:0;gap:4px}
-.gamesDifferenceRows b{font-family:var(--display);font-size:var(--fs-base);overflow-wrap:anywhere}
+.gamesDifferenceRows b{font-family:var(--display);font-size:var(--fs-base);overflow-wrap:normal}
 .gamesDifferenceRows small{color:var(--muted);font-family:var(--mono);font-size:var(--fs-xs);font-weight:var(--fw-regular);line-height:1.35}
 .gamesDifferenceRows strong{min-width:72px;text-align:right;font:var(--fw-heavy) var(--fs-lg)/1 var(--mono)}
 .gamesTextLink{min-height:44px;margin-top:7px;padding:7px 0;border:0;background:none;color:var(--signal);font:var(--fw-bold) var(--fs-sm)/1 var(--mono);cursor:pointer}
@@ -1690,7 +1690,7 @@ body.modalOpen{overflow:hidden}.matchModal{position:fixed;inset:0;z-index:99;dis
 .alertBar{grid-column:1/-1;display:flex;gap:7px;overflow-x:auto;margin-bottom:5px;padding-bottom:2px}.alertPill{flex:0 0 auto;border:1px solid var(--line2);border-radius:999px;background:var(--panel);color:var(--muted);padding:6px 9px;font:var(--fw-bold) var(--fs-xs)/1 var(--mono);cursor:pointer}.alertPill:hover{color:var(--text);border-color:var(--signal)}.alertPill.live,.alertPill.upset{color:var(--live);border-color:rgba(255,77,94,.32)}
 .alertSettings{grid-column:1/-1}.alertSettingList{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 18px}.alertSettingList>label{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid var(--line);color:var(--text);font-size:var(--fs-md);text-transform:none;letter-spacing:0;margin:0}.alertSettingList small{display:block;margin-top:3px;color:var(--faint);font-size:var(--fs-xs);font-weight:var(--fw-medium)}.alertSettingList input{accent-color:var(--signal)}
 .teamMark{--team-hue:145;flex:0 0 27px;width:27px;height:27px;display:inline-grid;place-items:center;border:1px solid hsla(var(--team-hue),62%,58%,.38);border-radius:9px;background:linear-gradient(145deg,hsla(var(--team-hue),58%,44%,.2),rgba(255,255,255,.025));color:hsl(var(--team-hue),72%,70%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.025);font:var(--fw-bold) var(--fs-3xs)/1 var(--mono);letter-spacing:-.03em}.tname{display:flex;align-items:center;gap:8px}.side.away .tname{justify-content:flex-end}.teamNameText{min-width:0;overflow:hidden;text-overflow:ellipsis}.teamMark.away{order:2}
-.fixture{grid-template-columns:minmax(0,1fr) 64px minmax(0,1fr)}.fixture .center{width:64px;min-width:0}.fixture .center>.kick{max-width:64px;text-align:center;white-space:normal;overflow-wrap:anywhere;font-size:var(--fs-2xs);line-height:1.25}.pendingScore{display:block;color:var(--faint);font-size:var(--fs-2xl);line-height:1}.tname{overflow:visible}.teamNameText{flex:1;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;white-space:normal;overflow:hidden;overflow-wrap:anywhere;text-overflow:clip}.side.away .teamNameText{text-align:right}
+.fixture{grid-template-columns:minmax(0,1fr) 64px minmax(0,1fr)}.fixture .center{width:64px;min-width:0}.fixture .center>.kick{max-width:64px;text-align:center;white-space:normal;overflow-wrap:anywhere;font-size:var(--fs-2xs);line-height:1.25}.pendingScore{display:block;color:var(--faint);font-size:var(--fs-2xl);line-height:1}.tname{overflow:visible}.teamNameText{flex:1;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;white-space:normal;overflow:hidden;overflow-wrap:normal;word-break:normal;text-overflow:clip}.side.away .teamNameText{text-align:right}
 .probTrend{display:inline-flex;align-items:center;gap:3px;margin-left:2px;color:var(--faint);font:var(--fw-bold) var(--fs-2xs)/1 var(--mono)}.probTrend svg{width:40px;height:17px}.probTrend polyline{fill:none;stroke:currentColor;stroke-width:2;vector-effect:non-scaling-stroke}.probTrend.up{color:var(--win)}.probTrend.down{color:var(--loss)}
 .metricHelp{position:relative;display:inline-grid;place-items:center;width:18px;height:18px;padding:0;margin-left:3px;border:1px solid var(--line2);border-radius:50%;background:transparent;color:var(--muted);font:var(--fw-bold) var(--fs-3xs)/1 var(--mono);text-transform:none;letter-spacing:0;cursor:pointer;vertical-align:1px;outline:none;touch-action:manipulation}.metricHelp:hover,.metricHelp:focus-visible,.metricHelp.isOpen{color:var(--signal);border-color:var(--signal)}.metricHelp::after{content:attr(data-tip);position:absolute;left:50%;bottom:calc(100% + 8px);z-index:120;width:220px;padding:8px 9px;border:1px solid var(--line2);border-radius:9px;background:var(--bg);color:var(--text);box-shadow:0 12px 32px rgba(0,0,0,.45);font:var(--fw-medium) var(--fs-xs)/1.45 var(--sans);text-align:left;text-transform:none;letter-spacing:0;white-space:normal;pointer-events:none;opacity:0;transform:translate(-50%,4px);transition:.12s}.metricHelp:hover::after,.metricHelp:focus-visible::after,.metricHelp.isOpen::after{opacity:1;transform:translate(-50%,0)}
 .metricHelpPopover{display:none}
@@ -2886,7 +2886,7 @@ body.welcomeOpen{height:auto;min-height:100vh;overflow-y:auto}
 #welcomeGate .wx-hero h1{margin-top:16px}
 #welcomeGate .wx-hero .wx-lead{margin-top:16px}
 #welcomeGate .wx-hero .welcomeActions{margin-top:32px;justify-content:center}
-#welcomeGate .wx-hero .wx-quiet{margin-top:16px}
+#welcomeGate .wx-hero .wx-quiet{margin-top:19px}
 /* The one button. */
 #welcomeGate .welcomeEnter{width:auto;min-height:48px;padding:0 24px;gap:8px;justify-content:center;border:1px solid var(--signal);border-radius:8px;background:var(--signal);color:var(--bg);font-family:var(--sans);font-size:var(--fs-wx-body);font-weight:var(--fw-semibold);box-shadow:none;transform:none;transition:background-color .15s ease}
 #welcomeGate .welcomeEnter:hover{background:var(--signal);transform:none;box-shadow:none}
@@ -2939,11 +2939,9 @@ body.welcomeOpen{height:auto;min-height:100vh;overflow-y:auto}
 #welcomeGate .wx-logo{width:24px;height:24px;border-radius:6px;margin:0;box-shadow:none;animation:none}
 #welcomeGate::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
   background:
-    radial-gradient(circle at 12% 0%,rgba(58,209,122,.10),transparent 42%),
-    radial-gradient(circle at 88% 100%,rgba(76,194,255,.07),transparent 42%),
-    repeating-linear-gradient(90deg,transparent 0 119px,rgba(58,209,122,.035) 119px 120px),
-    linear-gradient(180deg,rgba(58,209,122,.03),rgba(22,74,45,.06)),
-    var(--bg)}
+    radial-gradient(ellipse at 28% 12%,rgba(32,108,87,.22),transparent 55%),
+    radial-gradient(ellipse at 85% 65%,rgba(21,66,77,.13),transparent 60%),
+    linear-gradient(125deg,#0b1a19,#091317 58%,#080e14)}
 #welcomeGate .wx{position:relative;z-index:1}
 /* The header is the app's top strip: --glass with a --line rule. */
 #welcomeGate .wx-top{margin:0 -32px;padding:16px 32px;background:rgba(14,20,29,.72);border-bottom:1px solid var(--line);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
@@ -3009,25 +3007,25 @@ body.welcomeOpen{height:auto;min-height:100vh;overflow-y:auto}
 /* ---- welcome gate: a hero that stands out ---------------------------------
    Nothing added -- the title does the work. It takes the app's own display
    face (Archivo, the heavy face every app heading uses) at display size, with
-   a white-to-signal fill, and sits in a single soft --signal spotlight: the
+   a white fill with a lime outline, and sits in a single soft --signal spotlight: the
    same corner-glow treatment the app gives its hero panels, centred. */
 #welcomeGate{--fs-wx-display:clamp(3.5rem,9vw,8rem);--fs-wx-lead:clamp(1.143rem,1.6vw,1.429rem)}
 #welcomeGate .wx-hero{position:relative;isolation:isolate;padding:96px 0 72px}
-#welcomeGate .wx-hero::before{content:"";position:absolute;left:50%;top:44%;width:min(900px,120%);height:420px;transform:translate(-50%,-50%);z-index:-1;pointer-events:none;
-  background:radial-gradient(ellipse at center,rgba(58,209,122,.16),rgba(58,209,122,.05) 45%,transparent 70%)}
+#welcomeGate .wx-hero::before{content:"";position:absolute;left:50%;top:44%;width:min(900px,100%);height:420px;transform:translate(-50%,-50%);z-index:-1;pointer-events:none;
+  background:radial-gradient(ellipse at center,rgba(45,133,108,.24),rgba(24,84,76,.10) 48%,transparent 73%)}
 #welcomeGate .wx-hero h1{font-family:var(--display);font-size:var(--fs-wx-display);font-weight:var(--fw-heavy);line-height:.95;letter-spacing:-.045em;
-  background:linear-gradient(180deg,#fff 20%,var(--signal) 70%,var(--signal) 115%);-webkit-background-clip:text;background-clip:text;color:transparent;
+  color:#f3f6ef;
   padding-bottom:.06em}
 @supports not ((-webkit-background-clip:text) or (background-clip:text)){#welcomeGate .wx-hero h1{color:var(--text);background:none}}
 #welcomeGate .wx-hero .wx-lead{margin-top:24px;font-size:var(--fs-wx-lead);color:var(--text);opacity:.78;max-width:none}
-#welcomeGate .wx-hero .welcomeActions{margin-top:40px}
+#welcomeGate .wx-hero .welcomeActions{margin-top:17px}
 #welcomeGate .wx-hero .welcomeEnter{min-height:56px;padding:0 32px;font-size:var(--fs-wx-sub);box-shadow:0 8px 32px rgba(58,209,122,.28)}
 #welcomeGate .wx-hero .welcomeEnter:hover{box-shadow:0 10px 40px rgba(58,209,122,.4)}
 @media(max-width:760px){#welcomeGate .wx-hero{padding:64px 0 48px}#welcomeGate .wx-hero .welcomeEnter{width:100%}}
 
 /* Quiet, decorative athletes frame the entrance without intercepting input. */
-#welcomeGate .wx-hero::after{content:"";position:absolute;z-index:-2;pointer-events:none;top:0;bottom:0;left:50%;transform:translateX(-50%);width:min(1500px,100vw);background:url("assets/welcome/college-athletes-illustrated.webp") center top/cover no-repeat;opacity:.55;mask-image:linear-gradient(to bottom,transparent,black 12%,black 65%,transparent);}
-@media(max-width:760px){#welcomeGate .wx-hero::after{background-size:100% auto;opacity:.32}}
+#welcomeGate .wx-hero::after{content:"";position:absolute;z-index:-2;pointer-events:none;top:0;bottom:0;left:50%;transform:translateX(-50%);width:min(1500px,100vw);background:url("assets/welcome/college-athletes-illustrated.webp") center top/cover no-repeat;opacity:.18;mask-image:linear-gradient(to bottom,transparent,black 12%,black 65%,transparent);}
+@media(max-width:760px){#welcomeGate .wx-hero::after{background-size:100% auto;opacity:.12}}
 
 /* News cards are one size. The grid used align-items:start, so every card was
    as tall as its own copy and each row went ragged. Rows now share one height
@@ -3571,9 +3569,10 @@ body{font-variant-numeric:tabular-nums}
 .cfpOut h3{margin:0 0 10px;color:var(--signal);font-size:var(--fs-xs);font-weight:var(--fw-bold);letter-spacing:.08em;text-transform:uppercase}
 .cfpOutGrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
 .cfpOutTeam{display:flex;align-items:center;gap:12px;padding:12px 14px;min-width:0;background:var(--bg2);border:1px solid var(--line2);border-radius:8px}
-.cfpOutTeam .teamMark{flex:0 0 32px;width:32px;height:32px;overflow:hidden}
+.cfpOutTeam .teamMark{flex:0 0 32px;width:32px;height:32px;overflow:hidden;display:grid;place-items:center;background:#e4eae5;border:0;border-radius:5px}
+.cfpOutTeam .teamMark .teamMonogramText{color:#101820}
 .cfpOutTeam .teamMark img{width:80%;height:80%;object-fit:contain}
-.cfpOutTeam>div{min-width:0}.cfpOutTeam b{display:block;font-size:var(--fs-sm);font-weight:var(--fw-semibold);overflow-wrap:anywhere}
+.cfpOutTeam>div{min-width:0}.cfpOutTeam b{display:block;font-size:var(--fs-sm);font-weight:var(--fw-semibold);overflow-wrap:normal}
 .cfpOutTeam span:not(.teamMark):not(.teamMonogramText){display:block;margin-top:4px;font-size:var(--fs-xs);color:var(--muted)}
 @media(max-width:699px){.cfpOutGrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.cfpOutTeam{padding:10px;gap:8px}.cfpOut{margin-top:16px}}
 /* Home: record and playoff picture stacked in the side column. */
@@ -3697,3 +3696,85 @@ body{font-variant-numeric:tabular-nums}
 .cfpSvgFinal.cfpUnresolved .cfpCardSurface{stroke:var(--cfp-gold)}
 .cfpClearRoute{min-height:44px;padding:8px 12px;background:var(--bg2);color:var(--cfp-gold);border:1px solid var(--line2);border-radius:6px;cursor:pointer}
 .cfpClearRoute:focus-visible{outline:2px solid var(--cfp-gold);outline-offset:3px}
+
+/* Team window: the logo had no gap before the name. */
+.tpName{display:flex;align-items:center;gap:12px}
+/* Methodology fills the row in two columns instead of one narrow box. */
+.scMethod>div{max-width:none}
+.scMethodGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 36px;align-items:start}
+.scMethodCol{display:flex;flex-direction:column;gap:12px}
+.scMethod .scMethodCol p{margin:0;padding:0}
+@media(max-width:760px){.scMethodGrid{grid-template-columns:1fr}}
+.scMethod .nowrap{white-space:nowrap}
+/* Basketball preseason placeholders keep the layout without inventing numbers. */
+.rsWaitingNote{margin:12px 0 0;padding:28px 16px;border:1px dashed var(--line);border-radius:8px;text-align:center;color:var(--muted);font-size:var(--fs-sm);line-height:1.5}
+
+/* Angular white logo lettering with a restrained lime edge. */
+#welcomeGate .wx-hero h1{font-family:"Oxanium",var(--display);font-weight:700;text-transform:uppercase;font-size:clamp(2.5rem,7.6vw,6.6rem);letter-spacing:-.045em;line-height:1.08}
+#welcomeGate .wx-word{display:inline-block;white-space:nowrap;color:#f3f6ef;-webkit-text-stroke:2px #d9f522;paint-order:stroke fill}
+#welcomeGate .wx-titleMark{display:inline-block;width:.77em;height:.74em;margin-right:.025em;vertical-align:-.025em;fill:#f3f6ef;stroke:#d9f522;stroke-width:4;paint-order:stroke fill;overflow:visible}
+#welcomeGate .wx-hero .welcomeEnter{box-shadow:0 6px 24px rgba(58,209,122,.12)}
+#welcomeGate .wx-hero .welcomeEnter:hover{box-shadow:0 8px 28px rgba(58,209,122,.2)}
+@supports not ((-webkit-background-clip:text) or (background-clip:text)){#welcomeGate .wx-word{color:#f3f6ef;background:none}}
+@media(forced-colors:active){#welcomeGate .wx-word{color:CanvasText;background:none;-webkit-text-stroke:0}#welcomeGate .wx-titleMark{fill:CanvasText;stroke:none}}
+
+@font-face{font-family:Oxanium;font-style:normal;font-weight:700;font-display:swap;src:url("assets/fonts/oxanium-700.ttf") format("truetype")}
+#welcomeGate{overflow-x:clip}
+@media(max-width:600px){#welcomeGate .wx-hero h1{font-size:clamp(2.5rem,10vw,3.75rem)}#welcomeGate .wx-word{display:block}}
+@media(max-width:360px){#welcomeGate .wx-top{flex-wrap:wrap;justify-content:center;gap:12px}#welcomeGate .wx-topNav{justify-content:center}}
+/* Tighter gutters give each team name ~6px more, so no school name has to
+   split mid-word (see CARD_SHORT_NAMES); the time column keeps its 64px so
+   "12:30 PM" still fits. */
+.fixture{column-gap:5px}.fixture .tname{column-gap:6px;gap:6px}
+/* Hero pick name: the .94 line height plus overflow:hidden on .analystPick
+   clipped descenders (the g in Knights). Later and equally specific, so it
+   wins over `.expandedDecision .analystPick`. */
+.expandedDecision .analystPick,.modernExpandedView .analystPick{line-height:1.12;padding-bottom:.05em;overflow:visible}
+.modalName,.modernMatchSheet .modalName{line-height:1.12;padding-bottom:.04em}
+/* Final summary is short text: no centred 250px block, tight spacing. */
+.expandedDecision .analystPanel.fsPanel,.fsPanel{min-height:0;justify-content:flex-start}
+.fsPanel .hipVerdict{margin:8px 0 0}
+.fsPanel .analystTop+.hipVerdict{margin-top:4px}
+
+/* Chart group tabs (rsQuadTabs). */
+.rsQuadTabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin:4px 0 12px}
+.rsQuadTab{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:40px;padding:6px 10px;border:1px solid var(--line2);border-radius:8px;background:var(--bg2);color:var(--muted);font:inherit;font-size:var(--fs-xs);font-weight:var(--fw-semibold);text-align:left;cursor:pointer}
+.rsQuadTab b{color:var(--text);font-variant-numeric:tabular-nums}
+.rsQuadTab[aria-pressed="true"]{border-color:var(--signal);color:var(--text);background:rgba(58,209,122,.08)}
+.rsQuadTab:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
+.rsQuadWhat{margin:0 0 8px;color:var(--muted);font-size:var(--fs-xs)}
+.rsQuadHead,.rsQuadList li{display:grid;grid-template-columns:22px minmax(0,1fr) 64px 72px;align-items:center;gap:8px}
+.rsQuadHead{padding-bottom:6px;border-bottom:1px solid var(--line);font-size:var(--fs-2xs);letter-spacing:.1em;text-transform:uppercase;color:var(--faint);font-weight:var(--fw-bold)}
+.rsQuadHead span:nth-child(n+3){text-align:right}
+.rsQuadList{list-style:none;margin:0;padding:0}
+.rsQuadList li{padding:7px 0;border-bottom:1px solid var(--line);font-size:var(--fs-sm)}
+.rsQuadList li.rsQuadMoreRow{display:none}
+.rsQuadN{color:var(--faint);font-variant-numeric:tabular-nums}
+.rsQuadRank{margin-left:6px;font-style:normal;font-size:var(--fs-2xs);font-weight:var(--fw-bold);color:var(--signal)}
+.rsQuadMore{margin-top:10px;width:100%;min-height:40px;border:1px solid var(--line2);border-radius:8px;background:transparent;color:var(--signal);font:inherit;font-size:var(--fs-sm);font-weight:var(--fw-semibold);cursor:pointer}
+.dotKeyHi{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--signal)}
+/* Phones: the tabs replace the chart (a few hundred dots are too small to tap). */
+@media(max-width:600px){.rsChartBlock{display:none}}
+/* Chart filter (rsPlotFilter), right end of the legend row. */
+.rsPlot{position:relative}
+.rsFilter{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-left:auto}
+.rsFilterChip,.rsFilterConf{min-height:30px;padding:0 10px;border:1px solid var(--line2);border-radius:999px;background:var(--bg2);color:var(--muted);font:inherit;font-size:var(--fs-xs);font-weight:var(--fw-semibold);cursor:pointer}
+.rsFilterChip[aria-pressed="true"]{border-color:var(--signal);color:var(--text)}
+.rsFilterChip:focus-visible,.rsFilterConf:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
+.rsFilterConf{padding-right:6px}
+.rsPlot circle.rsFadeOut{opacity:.08}
+.rsPlot.rsFiltered text.rsLbl{opacity:.25}
+.rsChartBlock .rsLegend{align-items:center}
+.scTick{fill:var(--faint);font-size:var(--fs-2xs);font-variant-numeric:tabular-nums}
+/* Phones: the range bar's "Expected" label sits ~25px above the bar and hit
+   the wrapped 95% CI figures. Leave room for it. */
+@media(max-width:600px){.scorecardPage .scRange{padding-top:24px}}
+/* Research methodology toggle: at the end of the badge legend, full width when open. */
+.rsLegend2 .rsMethod{margin:0 0 0 auto}
+.rsLegend2 .rsMethod[open]{flex-basis:100%;margin-left:0}
+.rsLegend2 .rsMethod>div{margin-top:10px;color:var(--muted);font-size:var(--fs-sm)}
+.rsDialogBody .rsQuadHead,.rsDialogBody .rsQuadList li{grid-template-columns:28px minmax(0,1fr) 72px 80px}
+/* Graded badge sits beside its own heading, not pushed to the far edge. */
+.rsHistHead{justify-content:flex-start;gap:8px}
+.rsPhoneTitle{display:none}
+@media(max-width:600px){.rsDeskTitle{display:none}.rsPhoneTitle{display:inline}}

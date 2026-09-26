@@ -4,21 +4,356 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
-  "date": "Build 0925Z",
+  "date": "Build 0926G",
   "tag": "Design",
   "title": "Clearer brackets, ready for the model",
   "items": [
    "CFP keeps its dark-and-gold bracket with larger school logos, shorter names and readable phone rounds.",
-   "Basketball bracketology now reads a dedicated Bet Better handoff: bracket, bubble, team résumés, seed list, conference bids, tournament odds and eliminations.",
-   "Missing or stale handoffs show a clear unavailable state. Preview data stays local and no browser prediction formula substitutes for the model."
+   "Basketball bracketology reads the Bet Better handoff: bracket, bubble, team résumés, seed list, conference bids, tournament odds and eliminations.",
+   "Missing or stale handoffs show a clear unavailable state. Preview data stays local; no browser prediction formula substitutes for the model."
+  ]
+ },
+ {
+  "date": "Build 0926F",
+  "tag": "Change",
+  "title": "Community is now Pick 'Em",
+  "items": [
+   "Community is renamed Pick 'Em across the site, with its own browser title so shared links say what it is.",
+   "Search and link previews now mention the free pick 'em alongside the predictions and ratings."
+  ]
+ },
+ {
+  "date": "Build 0926E",
+  "tag": "Fix",
+  "title": "Chart names on phones",
+  "items": [
+   "On phones, where the scatter charts are replaced by their team groups, those panels now carry the chart's name: Rating vs Schedule and Efficiency vs Net Points Per Success."
+  ]
+ },
+ {
+  "date": "Build 0926D",
+  "tag": "Fix",
+  "title": "Football week, not calendar week",
+  "items": [
+   "Model-Market Watch now says Week 4 (the football week) instead of Week 39 (the calendar week).",
+   "Its Graded badge sits next to the heading it belongs to."
+  ]
+ },
+ {
+  "date": "Build 0926D",
+  "tag": "New",
+  "title": "Roadmap & limits page",
+  "items": [
+   "A new Roadmap & limits page explains what the site can't do yet (live scores, box scores, play-by-play), why, and what each planned feature is waiting on.",
+   "Linked from the footer next to Legal, from the Updates page, and from the Legal page's data sources section."
+  ]
+ },
+ {
+  "date": "Build 0926C",
+  "tag": "Change",
+  "title": "Friendlier Community names",
+  "items": [
+   "Community names now carry a jersey-style number from 1 to 99 instead of four digits, e.g. Tim Tebow #37. Existing names convert automatically and keep their picks."
+  ]
+ },
+ {
+  "date": "Build 0926B",
+  "tag": "Fix",
+  "title": "Basketball chart fixed, Power Four",
+  "items": [
+   "The basketball Rating vs Schedule chart no longer marks every team as Group of Five; it shows the top 25 and a conference filter.",
+   "Football charts say Power Four instead of Power.",
+   "Names like Illinois no longer show a leftover half nickname, and the defense group list fills its panel."
+  ]
+ },
+ {
+  "date": "Build 0926A",
+  "tag": "Fix",
+  "title": "View all games works again",
+  "items": [
+   "On the home page, View all games now opens the Games page instead of doing nothing."
+  ]
+ },
+ {
+  "date": "Build 0925ZZ",
+  "tag": "Design",
+  "title": "Clearer badges and group names",
+  "items": [
+   "Research badges now read Season (this season's games) or Rating (the power rating, which includes last season).",
+   "Group names are plainer: Unproven, Struggling and Leaky replace Neither, and the defense groups are Shuts it down, Limits damage, Gives up big plays and Leaky."
+  ]
+ },
+ {
+  "date": "Build 0925ZY",
+  "tag": "Design",
+  "title": "Community in Explore",
+  "items": [
+   "The home page Explore row now links to Community instead of Games, which is already one tap away through View all games."
+  ]
+ },
+ {
+  "date": "Build 0925ZX",
+  "tag": "Design",
+  "title": "Show all opens a window",
+  "items": [
+   "Every Show all on the Research page opens the full list in its own window, including the chart and defense group lists, which now show seven teams in the panel.",
+   "The top bar notes that the Scorecard and Research update on Sundays."
+  ]
+ },
+ {
+  "date": "Build 0925ZW",
+  "tag": "Design",
+  "title": "Research methodology",
+  "items": [
+   "Research has a Methodology toggle beside its badges, explaining the badges, chart lines and each measure.",
+   "The chart group lists show seven teams before Show all."
+  ]
+ },
+ {
+  "date": "Build 0925ZV",
+  "tag": "Design",
+  "title": "Defense groups and clearer season badges",
+  "items": [
+   "Defense Against A Real Zero now has group tabs beside it: Stops and limits, Bend don't break, Big plays hurt, and Neither.",
+   "Research badges say what each section is built from: 2026 only, or 2026 + 2025 where the power rating still carries last season.",
+   "On phones, the Scorecard's Expected label no longer overlaps the 95% range."
+  ]
+ },
+ {
+  "date": "Build 0925ZU",
+  "tag": "Fix",
+  "title": "Chart numbers and tighter layout",
+  "items": [
+   "Both Research charts now show small numbers along each axis.",
+   "The team filters moved below the chart on the right, and the group lists show five teams before Show all, so the chart no longer leaves empty space beneath it."
+  ]
+ },
+ {
+  "date": "Build 0925ZT",
+  "tag": "Design",
+  "title": "Chart groups, filters and top 25",
+  "items": [
+   "Both Research charts now highlight every top-25 team, with filter chips in the chart corner (All, Power, Group of Five, or one conference).",
+   "Beside each chart, group tabs list the teams in each corner, ranked, with both numbers. On phones the tabs replace the chart.",
+   "Research section titles are now in title case."
+  ]
+ },
+ {
+  "date": "Build 0925ZS",
+  "tag": "Change",
+  "title": "Tidier repository folders",
+  "items": [
+   "Tests now live in a tests folder and the reference documents in docs, so the top level holds only the site and the data pipeline. Nothing on the site changes."
+  ]
+ },
+ {
+  "date": "Build 0925ZR",
+  "tag": "Change",
+  "title": "Repository cleanup",
+  "items": [
+   "Removed 39 unused files: the old desktop launcher and its start scripts, a retired server, old notes and the unused content feed. Nothing on the site changes."
+  ]
+ },
+ {
+  "date": "Build 0925ZQ",
+  "tag": "Change",
+  "title": "Old in-house model removed",
+  "items": [
+   "Matchday's retired in-house model is gone. Every pick, probability and rating on the site now comes from one model, so two systems can no longer disagree about the same game.",
+   "The hourly refresh no longer spends data-provider quota on inputs only the old model used, and the old Model board, forecast pause and X bot are removed."
+  ]
+ },
+ {
+  "date": "Build 0925ZP",
+  "tag": "Fix",
+  "title": "Shorter, clearer final summary",
+  "items": [
+   "A finished game's Final summary now says it in one sentence, for example: Ratings expected Liberty by 4.6. Liberty won by 17. Liberty played 12.4 points better than expected.",
+   "It shows the pick made an hour before kickoff, and drops the repeated score header and wide rating rows, so the panel is less than half its old height."
+  ]
+ },
+ {
+  "date": "Build 0925ZO",
+  "tag": "Fix",
+  "title": "Legal page: X contact, no news feeds",
+  "items": [
+   "The Legal & data page lists X (@timurknowsball) as the one way to get in touch, and no longer lists news feeds, which the site does not use."
+  ]
+ },
+ {
+  "date": "Build 0925ZO",
+  "tag": "Fix",
+  "title": "Contact through X only",
+  "items": [
+   "The Legal & data page now lists X (@timurknowsball) as the one way to get in touch."
+  ]
+ },
+ {
+  "date": "Build 0925ZN",
+  "tag": "Design",
+  "title": "Legal & data page rewritten",
+  "items": [
+   "The Legal & data page is rebuilt in the same style as the rest of the site: a quick facts strip, a contents list, and plain sections instead of boxed panels.",
+   "Every statement was checked against how the site works today. There are no accounts, the full list of data sources now includes Open-Meteo weather and backup market prices, and the development note is gone from the footer."
+  ]
+ },
+ {
+  "date": "Build 0925ZM",
+  "tag": "Fix",
+  "title": "Weather in Fahrenheit",
+  "items": [
+   "Game-day weather on the cards now shows the temperature in °F and strong wind in mph."
+  ]
+ },
+ {
+  "date": "Build 0925ZL",
+  "tag": "Fix",
+  "title": "Favored team name no longer clipped",
+  "items": [
+   "In the match window, the large favored-team name (like Army Black Knights) no longer cuts off the bottoms of letters like g, j and y."
+  ]
+ },
+ {
+  "date": "Build 0925ZK",
+  "tag": "Fix",
+  "title": "Team names no longer split mid-word",
+  "items": [
+   "Game cards are now at least 360px wide with slightly tighter gutters, so every school name fits without being cut in the middle (no more Northwest/ern or Tennesse/e). Names still wrap between words, like Virginia / Tech.",
+   "The 14 schools with one word still too long use a short name they go by, such as NU, UMass, Penn, FIU and YSU. Hover the name for the full one.",
+   "First Four Out, scorecard rows and the model-versus-market list also stopped breaking names mid-word."
+  ]
+ },
+ {
+  "date": "Build 0925ZJ",
+  "tag": "Fix",
+  "title": "Methodology in two fixed columns",
+  "items": [
+   "The Scorecard's Methodology now has two fixed columns, how the record works and how to read it, with a bold lead-in on every paragraph and even spacing throughout."
+  ]
+ },
+ {
+  "date": "Build 0925ZI",
+  "tag": "Design",
+  "title": "First Four Out logos match the bracket",
+  "items": [
+   "The First Four Out teams now show their logos on the same light tile the playoff bracket uses."
+  ]
+ },
+ {
+  "date": "Build 0925ZH",
+  "tag": "Fix",
+  "title": "Tidier Methodology text",
+  "items": [
+   "Win-loss ranges like (146–148) in the Scorecard's Methodology stay on one line instead of splitting across two.",
+   "Paragraphs in both Methodology columns are now spaced evenly."
+  ]
+ },
+ {
+  "date": "Build 0925ZG",
+  "tag": "Design",
+  "title": "Bigger playoff bracket",
+  "items": [
+   "The College Football Playoff bracket now spans the full width of the page, lined up with the heading, instead of shrinking to fit the window height."
+  ]
+ },
+ {
+  "date": "Build 0925ZF",
+  "tag": "Design",
+  "title": "Even spacing on the welcome page",
+  "items": [
+   "The tagline, Enter button and 'No account required' line now sit the same distance apart."
+  ]
+ },
+ {
+  "date": "Build 0925ZE",
+  "tag": "Design",
+  "title": "Welcome button sits closer to the tagline",
+  "items": [
+   "On the welcome page the Enter button now sits right under the tagline instead of floating 40px below it."
+  ]
+ },
+ {
+  "date": "Build 0925ZG",
+  "tag": "Design",
+  "title": "A clearer lime edge",
+  "items": [
+   "Thicker lime outlines make the white welcome wordmark and logo-shaped M stand out against the teal gradient."
+  ]
+ },
+ {
+  "date": "Build 0925ZF",
+  "tag": "Design",
+  "title": "A softer logo-inspired wordmark",
+  "items": [
+   "White welcome lettering with a thin lime outline keeps the logo connection without a solid lime headline."
+  ]
+ },
+ {
+  "date": "Build 0925ZE",
+  "tag": "Design",
+  "title": "A calmer Matchday entrance",
+  "items": [
+   "Dark teal gradients and softer athlete artwork frame the welcome page.",
+   "Angular logo-lime lettering and a logo-shaped M bring the Matchday identity into the headline."
+  ]
+ },
+ {
+  "date": "Build 0925ZD",
+  "tag": "Fix",
+  "title": "Community picks were being refused after a day of browsing",
+  "items": [
+   "The picks server counted page loads and pick submissions against one shared daily limit per connection, with a much lower ceiling for picks. The page's own background refreshes used that up, and after that every pick was refused with \"daily limit reached\".",
+   "Loading data and submitting picks are now counted separately, so browsing the site can no longer block your picks."
+  ]
+ },
+ {
+  "date": "Build 0925ZC",
+  "tag": "Fix",
+  "title": "Community picks: every submitted pick now reaches Recent activity",
+  "items": [
+   "Submitting several picks at once sent them all to the server at the same moment and ignored any that failed, so Recent activity and the leaderboard could show only one of five picks.",
+   "Picks are now sent one at a time, a failed pick is retried once, and the confirmation says exactly how many went through. Any that did not stay in your draft so you can submit them again, instead of showing as locked when they are not.",
+   "The confirmation message no longer disappears as soon as the page refreshes in the background."
+  ]
+ },
+ {
+  "date": "Build 0925ZB",
+  "tag": "Feature",
+  "title": "AP Top 25 for men's basketball, and correct logos for every Division I school",
+  "items": [
+   "Men's basketball Rankings now show the AP Top 25 with each team's record, weekly movement and Matchday power rating.",
+   "The poll follows the basketball calendar. Until the 2026-27 preseason poll comes out in October, the table is labelled as the 2025-26 final poll, and it is not used to rank this season's games. Movement is never measured against a different season's poll.",
+   "Fixed logos that borrowed another school's: Utah Valley showed Utah, Florida Gulf Coast showed Florida, Texas Southern showed Texas, and six others. Every Division I basketball school now shows its own logo."
+  ]
+ },
+ {
+  "date": "Build 0925ZA",
+  "tag": "UI",
+  "title": "Basketball Research shows its full layout before the season",
+  "items": [
+   "Men's basketball Research now shows every panel even before the season starts. Panels with nothing to show yet say they are waiting for the season, so the page has the same layout as football.",
+   "Two basketball slots, offensive vs defensive efficiency and pace, stand where football's efficiency and defense panels go. They will fill in once Matchday collects basketball box scores."
+  ]
+ },
+ {
+  "date": "Build 0925Z",
+  "tag": "Fix",
+  "title": "Game recaps use Bet Better's pick, plus layout fixes",
+  "items": [
+   "The Final summary on a finished game now shows Bet Better's locked pick, not the retired in-house model, and drops the season-only rows so it is about the game itself.",
+   "Team form shows one badge per result, and the team logo has room beside the name.",
+   "Methodology on the Scorecard fills the row in two columns, and the wide Rating vs schedule chart no longer leaves empty space below it."
   ]
  },
  {
   "date": "Build 0925Y",
   "tag": "Fix",
-  "title": "Team names no longer clipped in the match window",
+  "title": "Basketball conference tables match football, logos for basketball-only schools",
   "items": [
-   "The favored team and the header team names in the match window had letters like g, j and y cut off at the bottom; they now have room for descenders."
+   "Men's basketball conference tables now use the same columns as football: power rating with schedule strength, conference record, non-conference record, overall record and win percentage.",
+   "Fixed basketball conference membership: opponents were being listed under the home team's conference (Cornell and Navy appeared in the A-10). Each team now sits in its own conference, and non-Division I opponents are left out.",
+   "Added logos for 70 basketball-only schools such as Providence, Creighton, Marquette, Xavier and VCU.",
+   "Basketball Research no longer shows football-only panels (success rate and EPA per play), and its sections are numbered in order."
   ]
  },
  {
