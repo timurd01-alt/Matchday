@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0926G",
+  "tag": "Design",
+  "title": "Cleaner power rating header",
+  "items": [
+   "The small line under the football and basketball power rating titles (rating basis, team count, publish date) is removed."
+  ]
+ },
+ {
   "date": "Build 0926I",
   "tag": "Copy",
   "title": "Bracketology engine wording",

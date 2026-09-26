@@ -1278,8 +1278,7 @@ function collegeRankingTableHTML(){
   const withheld=(table?.withheld||[]).filter(w=>w?.team_name);
   const provisional=withheld.map(w=>`<tr><td>${esc(w.team_name)}</td><td>${num(w.rating)}</td><td>${Number.isFinite(Number(w.fcs_share))?(Number(w.fcs_share)*100).toFixed(1)+'%':'—'}</td></tr>`).join('');
   return `<section class="pollSection"><div class="pollHead">
-      <div><div class="vhead" style="margin:0">${String(DATA.comp_key||'').toUpperCase()==='NCAAM'?'Basketball power rating':'Football power rating'}</div>
-      <p class="pollMeta">${esc(table.basis?.label||'Model rating')} · ${rows.length} rated teams${table.published_on?` · published ${esc(table.published_on)}`:''}</p></div>
+      <div><div class="vhead" style="margin:0">${String(DATA.comp_key||'').toUpperCase()==='NCAAM'?'Basketball power rating':'Football power rating'}</div></div>
       
     </div>
     ${table.season_in_progress===false?'<div class="modWarn">Projection — the season has not started. This rates the completed season.</div>':''}
