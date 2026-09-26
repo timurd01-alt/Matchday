@@ -4,6 +4,17 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0926V",
+  "tag": "Design",
+  "title": "Flatter, calmer surfaces",
+  "items": [
+   "Cards and panels lost their coloured glows and are now plain dark surfaces; data bars keep their colour.",
+   "Card and table titles are in mixed case. Capitals are kept for page titles and small labels.",
+   "Detail lines such as 'Texas A&M at LSU · in 6 hours' use the body font again, so they read like sentences.",
+   "Removed double outlines: stat grids, recent results and longshot tiles no longer draw a box inside a box."
+  ]
+ },
+ {
   "date": "Build 0926U",
   "tag": "Maintenance",
   "title": "Stylesheet cleanup",
