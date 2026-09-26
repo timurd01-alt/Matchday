@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0927I",
+  "tag": "Change",
+  "title": "One look for every rankings box",
+  "items": [
+   "The power rating, AP Top 25 and Timur's Ballot now share one box style: the same header strip, no extra inset and no nested border.",
+   "The power rating table shows team logos and opens a team's page when tapped, like the other two."
+  ]
+ },
+ {
   "date": "Build 0927H",
   "tag": "Change",
   "title": "Timur's Ballot",

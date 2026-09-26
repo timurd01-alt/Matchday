@@ -3870,8 +3870,8 @@ body{font-variant-numeric:tabular-nums}
 .teamMark{background:#e4eae5!important;border-color:transparent!important;box-shadow:none!important}
 .teamMark .teamMonogramText{color:#101820!important}
 
-/* The ballot box matches the AP Top 25 beside it: header strip, no inner
-   padding, no nested table border, same logo size. */
-.ballotSection{padding:0;overflow:hidden}
-.ballotSection .pollScroll{border:0;border-radius:0;margin:0}
-.ballotSection>.modNote{padding:0 12px 12px;margin-top:10px}
+/* Every rankings box (power rating, AP Top 25, Timur's Ballot) is built the
+   same way: header strip, no inner padding, no nested table border. */
+.pollSection{padding:0;overflow:hidden}
+.pollSection .pollScroll{border:0;border-radius:0;margin:0}
+.pollSection>:is(.modNote,.modWarn,.pollProvisional){margin:10px 12px 12px}

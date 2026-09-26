@@ -1268,7 +1268,7 @@ function collegeRankingTableHTML(){
   const body=rows.map(r=>`<tr${r.rank<=25?' class="pollRanked"':''}>`
     +`<td class="pollRank">${r.rank}</td>`
     +(moved?`<td class="pollMove">${movementTag(r)}</td>`:'')
-    +`<td class="pollTeam"><span class="pollTeamInner">${esc(r.name)}${r.tier&&r.tier!=='power'?' <i class="pollTier">G5</i>':''}</span></td>`
+    +`<td class="pollTeam teamClickable" data-team="${esc(r.name)}" onclick="openTeamModal(this.dataset.team)"><span class="pollTeamInner">${teamMark(r.name)}<span>${esc(r.name)}</span>${r.tier&&r.tier!=='power'?' <i class="pollTier">G5</i>':''}</span></td>`
     +`<td>${esc(r.conference||'—')}</td>`
     +`<td class="pollNum">${num(r.rating)}</td>`
     +`<td class="pollNum">${num(r.sos)}</td>`
@@ -1277,10 +1277,7 @@ function collegeRankingTableHTML(){
     +`<td>${esc(recordForRow(r)||r.record||'')}</td></tr>`).join('');
   const withheld=(table?.withheld||[]).filter(w=>w?.team_name);
   const provisional=withheld.map(w=>`<tr><td>${esc(w.team_name)}</td><td>${num(w.rating)}</td><td>${Number.isFinite(Number(w.fcs_share))?(Number(w.fcs_share)*100).toFixed(1)+'%':'—'}</td></tr>`).join('');
-  return `<section class="pollSection"><div class="pollHead">
-      <div><div class="vhead" style="margin:0">${String(DATA.comp_key||'').toUpperCase()==='NCAAM'?'Basketball power rating':'Football power rating'}</div></div>
-      
-    </div>
+  return `<section class="pollSection"><div class="groupHead">${String(DATA.comp_key||'').toUpperCase()==='NCAAM'?'Basketball power rating':'Football power rating'}<span>Matchday model</span></div>
     ${table.season_in_progress===false?'<div class="modWarn">Projection — the season has not started. This rates the completed season.</div>':''}
     <div class="pollScroll"><table class="pollTable powerTable${moved?' hasMove':''}"><thead><tr>
       <th>#</th>${moved?'<th title="Change since last week">Move</th>':''}<th>Team</th><th>Conference</th><th>Rating</th><th>SoS</th><th>Off</th><th>Def</th><th>Rec</th>
