@@ -3878,3 +3878,8 @@ body{font-variant-numeric:tabular-nums}
    Green marks results and percentages; lime marks interface and identity.
    Only Games' model reads keep a lime percentage. */
 #view-news :is(.rsSignal,.rsSignal b,.rsMoveBig,.rsPath .rsSignal,.rsShotPct){color:var(--win)}
+
+/* ---- rank numbers ----------------------------------------------------------
+   A rank is a position, not a result or an action: every rank number is the
+   same muted grey, whether or not the team is ranked. */
+:is(.pollRank,.pollRanked .pollRank,.pos,.rsRank,.rsQuadRank,.gamesSeeds em,#view-home .gamesSeeds em){color:var(--muted)}

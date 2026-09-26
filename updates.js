@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0926T",
+  "tag": "Design",
+  "title": "Rank numbers in grey",
+  "items": [
+   "Every rank number is the same grey. Before, ranked teams showed a lime number while unranked teams showed a grey one.",
+   "The same applies to ranks in Research and the playoff seeds on Home."
+  ]
+ },
+ {
   "date": "Build 0926S",
   "tag": "Design",
   "title": "Research results in green",
