@@ -1,5 +1,5 @@
 
-:root{--bg:#070a0f;--bg2:#0c1118;--panel:#121821;--panel2:#172030;--glass:#0e141d;--line:#1e2632;--line2:#2b3543;--text:#e7edf4;--muted:#7e8a9a;--faint:#707c8c;--signal:#3ad17a;--live:#ff4d5e;--win:#3ad17a;--warn:#ffb02e;--loss:#ff5d6c;--home:#4cc2ff;--away:#a78bfa;--draw:#67738a;--r:12px;/* Typography tokens. One family stack, one size scale, one weight set. */--sans:"Inter",system-ui,sans-serif;--display:var(--sans);--mono:var(--sans);--fs-3xs:.69rem;--fs-2xs:.69rem;--fs-xs:.75rem;--fs-sm:.8rem;--fs-md:.875rem;--fs-lead:clamp(1rem,1.3vw,1.2rem);--fs-title:clamp(1.4rem,2.5vw,2rem);--fs-hero:clamp(2.25rem,5vw,3.6rem);--fs-base:.9rem;--fs-lg:1rem;--fs-xl:1.15rem;--fs-2xl:1.35rem;--fs-3xl:1.6rem;--fs-4xl:1.9rem;--fs-5xl:2.3rem;--fs-6xl:2.9rem;--fw-regular:400;--fw-medium:500;--fw-semibold:600;--fw-bold:700;--fw-heavy:800}
+:root{--bg:#070a0f;--bg2:#0c1118;--panel:#121821;--panel2:#172030;--glass:#0e141d;--line:#1e2632;--line2:#2b3543;--text:#e7edf4;--muted:#7e8a9a;--faint:#707c8c;--signal:#3ad17a;--live:#ff4d5e;--win:#3ad17a;--warn:#ffb02e;--loss:#ff5d6c;--home:#4cc2ff;--away:#a78bfa;--draw:#67738a;--r:6px;/* Typography tokens: one font per role, never mixed. --display = headers, team names, headline numbers; --mono = labels, tags, meta, data; --sans = body. */--sans:"Inter",system-ui,sans-serif;--display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;--fs-3xs:.69rem;--fs-2xs:.69rem;--fs-xs:.75rem;--fs-sm:.8rem;--fs-md:.875rem;--fs-lead:clamp(1rem,1.3vw,1.2rem);--fs-title:clamp(1.4rem,2.5vw,2rem);--fs-hero:clamp(2.25rem,5vw,3.6rem);--fs-base:.9rem;--fs-lg:1rem;--fs-xl:1.15rem;--fs-2xl:1.35rem;--fs-3xl:1.6rem;--fs-4xl:1.9rem;--fs-5xl:2.3rem;--fs-6xl:2.9rem;--fw-regular:400;--fw-medium:500;--fw-semibold:600;--fw-bold:700;--fw-heavy:800}
 *{box-sizing:border-box;margin:0;padding:0}/* Basis of the rem scale below -- must stay an absolute length, never a
    --fs-* token, since rem on the root element resolves against the
    browser default (16px) and would rescale the entire UI. */
@@ -3755,3 +3755,47 @@ body{font-variant-numeric:tabular-nums}
 .rsHistHead{justify-content:flex-start;gap:8px}
 .rsPhoneTitle{display:none}
 @media(max-width:600px){.rsDeskTitle{display:none}.rsPhoneTitle{display:inline}}
+
+/* ---- welcome gate: one font per role --------------------------------------
+   Headers are --display (condensed caps), every small label is --mono, body
+   copy and the one button stay --sans. No element picks its own family, so a
+   header always looks like a header and a label always looks like a label.
+   Corners follow --r; depth is one soft drop shadow, never a glow. */
+#welcomeGate h1,#welcomeGate h2,#welcomeGate h3{font-family:var(--display);font-weight:var(--fw-bold);text-transform:uppercase;letter-spacing:.01em}
+#welcomeGate h2{line-height:1.1}
+#welcomeGate h3{line-height:1.2}
+#welcomeGate :is(.wx-meta,.wx-brand,.wx-num,.wx-cta,.wx-link,.wx-stat span,.wx-social,.wx-note,.wx-footLinks a,.wx-footLinks button){font-family:var(--mono);letter-spacing:.1em}
+#welcomeGate .wx-quiet{letter-spacing:.04em}
+#welcomeGate .wx-stat b{font-family:var(--display);font-weight:var(--fw-bold)}
+#welcomeGate .welcomeEnter,#welcomeGate .wx-social{border-radius:var(--r)}
+#welcomeGate .wx-card{box-shadow:0 25px 60px -15px rgba(0,0,0,.65)}
+#welcomeGate :is(.wx-link,.wx-card,.wx-footLinks a,.welcomeEnter):focus-visible{border-radius:var(--r)}
+#welcomeGate h3{font-size:var(--fs-3xl)}
+#welcomeGate .wx-section>.wx>.wx-meta,#welcomeGate .wx-section>.wx-meta{color:var(--signal)}
+
+/* ---- home: one font per role -----------------------------------------------
+   Same roles as the welcome gate. Page and card titles: --display caps.
+   Headline numbers and team names: --display. Labels, inline data, seeds and
+   every text action ("View … →"): --mono. */
+#view-home .homeIntro h1{font-family:var(--display);font-weight:var(--fw-bold);text-transform:uppercase;letter-spacing:.01em;line-height:1}
+#view-home .homeKpis strong{font-family:var(--display);font-size:var(--fs-3xl);line-height:1}
+#view-home .homeKpis span{font-family:var(--mono);font-size:var(--fs-2xs);letter-spacing:.1em;text-transform:uppercase}
+#view-home .homeKpis{border-radius:var(--r)}
+#view-home .gamesSeeds em{font-family:var(--mono);font-style:normal}
+#view-home .gamesSeeds b{font-family:var(--display);font-size:var(--fs-md)}
+#view-home .gamesExplore b{text-transform:uppercase;letter-spacing:.02em}
+#view-home :is(.gamesTextLink,.gamesRecord button,.gamesFeaturedButton>em){font-family:var(--mono);font-weight:var(--fw-bold);letter-spacing:.08em;text-transform:uppercase}
+#view-home :is(.gamesFeaturedButton,.gamesRecord button,.gamesExplore button){border-radius:var(--r)}
+
+/* ---- welcome gate: contrast ------------------------------------------------
+   Near-black surfaces carry bright type: the wordmark is full --text with the
+   M mark in --signal, the one button is solid --signal on dark text, and
+   secondary copy is lifted so nothing reads as greyed out. */
+#welcomeGate{--muted:#a3aebb}
+#welcomeGate .wx-word{color:var(--text);-webkit-text-stroke:0}
+#welcomeGate .wx-titleMark{fill:var(--signal);stroke:none}
+#welcomeGate .wx-hero .wx-lead{opacity:1;color:var(--text)}
+#welcomeGate .wx-hero .welcomeEnter{background:var(--signal);border-color:var(--signal);color:var(--bg);font-weight:var(--fw-bold)}
+#welcomeGate .wx-hero .welcomeEnter:hover{background:#5ee394;border-color:#5ee394}
+#welcomeGate .wx-card{border-color:var(--line2)}
+@supports not ((-webkit-background-clip:text) or (background-clip:text)){#welcomeGate .wx-word{color:var(--text)}}
