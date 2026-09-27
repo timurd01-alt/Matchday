@@ -98,13 +98,10 @@ function pollSectionHTML(polls){
   };
   const rows=g=>(g.teams||[]).map((t,i)=>`<tr><td class="pollRank">${esc(t.pos??i+1)}</td><td class="pollMoveCell">${movement(t)}</td>`
     +`<td><div class="gteam teamClickable" data-team="${esc(t.name||'')}" onclick="openTeamModal(this.dataset.team)">`
-    +`<span class="code">${esc(t.code||'')}</span>${esc(t.name||'')}</div></td>`
-    +`<td><b>${esc(t.record||`${t.w??'\u2014'}-${t.l??'\u2014'}`)}</b></td>`
-    +`<td${t.external_rank?` title="Matchday power rating #${Number(t.external_rank)}"`:''}>${t.rating!=null?Number(t.rating).toFixed(2):'\u2014'}</td></tr>`).join('');
+    +`<span class="code">${esc(t.code||'')}</span>${esc(t.name||'')}</div></td></tr>`).join('');
   return `<div class="vhead">Rankings</div>`+polls.map(g=>
     `<div class="tablewrap officialPoll"><div class="groupHead">${esc(g.group||'Ranking')}<span>${esc(pollTableNote(g))}</span></div>`
-    +`<table class="gtable officialPollTable"><thead><tr><th>#</th><th class="pollMoveCell">Move</th><th>Team</th><th>Record</th>`
-    +`<th title="Opponent-adjusted scoring margin; Matchday power-rating rank appears on hover" >Power</th></tr></thead>`
+    +`<table class="gtable officialPollTable"><thead><tr><th>#</th><th class="pollMoveCell">Move</th><th>Team</th></tr></thead>`
     +`<tbody>${rows(g)}</tbody></table></div>`).join('');
 }
 function _bbShiftDay(day,delta){const t=Date.parse(day+'T12:00:00Z');return Number.isFinite(t)?new Date(t+delta*86400000).toISOString().slice(0,10):day;}

@@ -78,7 +78,7 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         self.assertIn("Projected from the current AP Poll", features)
         self.assertIn("!['PROJECTED','TBD'].includes", features)
 
-    def test_ap_poll_rows_include_record_and_matchday_power(self):
+    def test_ap_poll_table_shows_the_poll_only(self):
         builder = (ROOT / "build_cfb_snapshot.py").read_text(encoding="utf-8")
         panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
         # The AP's own record wins, the model ranking's frozen copy is the
@@ -86,8 +86,8 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         self.assertIn('"record": row.get("record") or rated.get("record") or "—"', builder)
         self.assertIn('"rating": rated.get("rating")', builder)
         self.assertIn('"external_rank": rated.get("rank")', builder)
-        self.assertIn('>Record</th>', panels)
-        self.assertIn('>Power</th>', panels)
+        # The AP table shows the poll alone; the power rating has its own table.
+        self.assertIn('<th class="pollMoveCell">Move</th><th>Team</th></tr></thead>', panels)
         self.assertIn('>Move</th>', panels)
         self.assertIn('class="pollMove up"', panels)
         self.assertIn('Previous AP rank unavailable', panels)

@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0927J",
+  "tag": "Change",
+  "title": "AP Top 25 shows the poll only",
+  "items": [
+   "The AP Top 25 table no longer carries record or power rating columns; the power rating lives in its own table."
+  ]
+ },
+ {
   "date": "Build 0927I",
   "tag": "Change",
   "title": "One look for every rankings box",
