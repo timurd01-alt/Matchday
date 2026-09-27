@@ -3912,3 +3912,7 @@ body{font-variant-numeric:tabular-nums}
 .projectedScore .psLose{color:var(--muted);font-weight:var(--fw-medium)}
 .projectedScore .psWin{color:var(--text)}
 .projectedScore i{font-style:normal;color:var(--faint)}
+/* Signed gaps in the compare row share the headline face with Actual and
+   Expected, stay on one line, and carry their unit small beside the figure. */
+:is(#view-score,#view-news) .rsCompare div>b .scGap{font-family:inherit;white-space:nowrap}
+.scGap .scUnit{margin-left:.2em;font-size:.45em;font-weight:var(--fw-medium);color:var(--muted);letter-spacing:0}

@@ -627,7 +627,8 @@ function _scGap(v,unit=' pts'){
   if(!Number.isFinite(n))return '<span class="scGap flat">—</span>';
   // Above expectation is not "good" and below is not "bad" -- a model that hits
   // exactly what it forecast is the calibrated one. Neutral colour, signed number.
-  return `<span class="scGap">${n>0?'+':n<0?'−':''}${Math.abs(n).toFixed(1)}${unit}</span>`;
+  // The unit is its own small span so a big figure never wraps onto two lines.
+  return `<span class="scGap">${n>0?'+':n<0?'−':''}${Math.abs(n).toFixed(1)}${unit?`<small class="scUnit">${unit.trim()}</small>`:''}</span>`;
 }
 function _scHead(label,hint,aside){
   // The hint is a tooltip on a ?, not a sentence under the heading.

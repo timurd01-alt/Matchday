@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0927AB",
+  "tag": "Fix",
+  "title": "Scorecard differences line up",
+  "items": [
+   "Signed differences on the Scorecard (e.g. −0.5 pts in Against the price) now use the same typeface as Actual and Expected, stay on one line, and show the unit small beside the number."
+  ]
+ },
+ {
   "date": "Build 0927AA",
   "tag": "Fix",
   "title": "Real roster grades in the expanded view",
