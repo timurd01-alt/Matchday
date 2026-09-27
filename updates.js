@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0927R",
+  "tag": "Change",
+  "title": "Projected score replaces both teams’ chances",
+  "items": [
+   "In the expanded view, the model read now shows the projected final score (e.g. Miami 35 · Clemson 17) where the both-teams’-chances dropdown was. Games without a projection keep the dropdown.",
+   "The separate projected-score line at the foot of the expanded view is removed, so the score appears once."
+  ]
+ },
+ {
   "date": "Build 0927Q",
   "tag": "Change",
   "title": "AP poll marks new entries",

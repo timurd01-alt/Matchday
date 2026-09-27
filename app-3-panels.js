@@ -1629,7 +1629,17 @@ function betbetterModelRead(m,p){
     +`<div class="analystPick">${esc(p.pick_name||'No pick')}</div>`
     +`<p class="analystNote">Live forecast · not locked yet</p></div>`
     +`<div class="analystConfidence"><b>${_bbPct(model)}</b><span>chance to win</span></div></div>`
-    +`<details class="readBreakdown"><summary>See both teams' chances</summary>${sideBox}</details></section>`;
+    +(projectedScoreLine(m,p)||`<details class="readBreakdown"><summary>See both teams' chances</summary>${sideBox}</details>`)+`</section>`;
+}
+/* Bet Better's projected final, oriented to this fixture by team name (the
+   handoff's home/away can be the reverse of the board's). Replaces the
+   both-teams'-chances dropdown when present. */
+function projectedScoreLine(m,p){
+  const s=p?.projected_score;if(!s||!Number.isFinite(Number(s.home))||!Number.isFinite(Number(s.away)))return '';
+  const flipped=s.home_name&&m.home?.name&&!bbNameMatches(s.home_name,m.home.name)&&bbNameMatches(s.home_name,m.away?.name);
+  const home=flipped?s.away:s.home,away=flipped?s.home:s.away;
+  return `<div class="projectedScore"><span>Projected score</span>`
+    +`<b>${esc(m.away?.name||'Away')} ${Number(away)} · ${esc(m.home?.name||'Home')} ${Number(home)}</b></div>`;
 }
 function matchupEvidence(label,note,html,open=false){
   if(!html)return '';

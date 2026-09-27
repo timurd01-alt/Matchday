@@ -297,7 +297,9 @@ def _display_block(pick: dict[str, Any], document: dict[str, Any]) -> dict[str, 
         "market_pct": pick.get("market_pct"),
         "edge_points": pick.get("edge_points"),
         # Bet Better's projected final (median of simulated games), football only.
-        "projected_score": pick.get("projected_score"),
+        "projected_score": ({**pick["projected_score"], "home_name": pick.get("home"),
+                             "away_name": pick.get("away")}
+                            if isinstance(pick.get("projected_score"), dict) else None),
         "sides": pick.get("sides") or [],
 
         "model_name": pick.get("model_name"),
