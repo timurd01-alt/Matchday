@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0927V",
+  "tag": "Fix",
+  "title": "Projected score reads the same way as the matchup",
+  "items": [
+   "The projected score now lists the teams in the same order as the header above it, and highlights the projected winner. Listing the away team first read as though it were winning (Western Kentucky 28 · New Mexico State 30)."
+  ]
+ },
+ {
   "date": "Build 0927U",
   "tag": "Fix",
   "title": "Expanded view on phones matches desktop",

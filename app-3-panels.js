@@ -1639,8 +1639,13 @@ function projectedScoreLine(m,p){
   const homeName=s.home_name||p.home;
   const flipped=homeName&&m.home?.name&&!bbNameMatches(homeName,m.home.name)&&bbNameMatches(homeName,m.away?.name);
   const home=flipped?s.away:s.home,away=flipped?s.home:s.away;
+  // Same left-to-right order as the header above it (home, then away), with
+  // the projected winner highlighted. Listing away first read as "the first
+  // team wins" (Western Kentucky 28 · New Mexico State 30).
+  const side=(name,pts,win)=>`<b class="${win?'psWin':'psLose'}">${esc(name)} ${Number(pts)}</b>`;
   return `<div class="projectedScore"><span>Projected score</span>`
-    +`<b>${esc(m.away?.name||'Away')} ${Number(away)} · ${esc(m.home?.name||'Home')} ${Number(home)}</b></div>`;
+    +side(m.home?.name||'Home',home,Number(home)>Number(away))+`<i aria-hidden="true">·</i>`
+    +side(m.away?.name||'Away',away,Number(away)>Number(home))+`</div>`;
 }
 function matchupEvidence(label,note,html,open=false){
   if(!html)return '';

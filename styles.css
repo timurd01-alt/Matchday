@@ -3909,3 +3909,6 @@ body{font-variant-numeric:tabular-nums}
      starts below it instead of underneath it. */
   .matchModal .modernMatchSheet .modalStage{min-height:44px;padding-right:56px;display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
 }
+.projectedScore .psLose{color:var(--muted);font-weight:var(--fw-medium)}
+.projectedScore .psWin{color:var(--text)}
+.projectedScore i{font-style:normal;color:var(--faint)}
