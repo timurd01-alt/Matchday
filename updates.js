@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0927K",
+  "tag": "Fix",
+  "title": "Calibration notice and clearer schedule table",
+  "items": [
+   "Every prediction view and match window now carries an Adjusting calibration notice while the pick model is recalibrated.",
+   "Toughest Schedules: the power-rank and SoS headers now sit over the right columns on phones."
+  ]
+ },
+ {
   "date": "Build 0927A",
   "tag": "Fix",
   "title": "Ballot matches the AP poll layout",

@@ -1540,8 +1540,8 @@ function rsSchedules(){
     +`<span class="rsSchedTeam">${typeof teamMark==='function'?teamMark(r.name):''}<b>${esc(rsShortName(r.name))}</b></span>`
     +`<span class="rsNum rsMuted" title="Power rating rank"><b>#${r.rank}</b></span>`
     +`<span class="rsNum"><b>${Number(r.sos).toFixed(2)}</b></span></li>`;
-  return `<section class="rsBlock rsExpandable rsSpan5">${rsTop('Toughest schedules','blend','Power rating top 40')}`
-    +`<div class="rsSchedHead"><span></span><span>Team</span><span>PR</span><span>SoS</span></div>`
+  return `<section class="rsBlock rsExpandable rsSpan5">${rsTop('Toughest schedules','blend','Power top 40 only')}`
+    +`<div class="rsSchedHead"><span></span><span>Team</span><span title="Power rating rank">Power rk</span><span title="Strength of schedule">SoS</span></div>`
     +`<ol class="rsSched">${top.map(row).join('')}</ol>`
     +(top.length>6?rsMoreBtn(top.length,'View all','Toughest schedules · power rating top 40'):'')+`</section>`;
 }

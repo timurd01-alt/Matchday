@@ -1647,3 +1647,11 @@ function details(m){
    but restore the right-side In Focus panel to the original compact read.
    This prevents the large expanded-window model layout from breaking the sidebar. */
 /* dedup */
+// Temporary: the calibration notice rides on every match window too, so a
+// probability is never read without it while the model is recalibrated.
+const _openMatchModalCalibration=openMatchModal;
+openMatchModal=function(id){
+  _openMatchModalCalibration(id);
+  const sheet=document.querySelector('.matchSheet'),notice=document.querySelector('main>.calNotice');
+  if(sheet&&notice&&!sheet.querySelector('.calNotice'))sheet.insertAdjacentHTML('afterbegin',notice.outerHTML);
+};

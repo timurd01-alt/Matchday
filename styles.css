@@ -3879,3 +3879,8 @@ body{font-variant-numeric:tabular-nums}
 .pollSection .pollTeamInner .teamMark{flex:0 0 26px;width:26px;height:26px;border-radius:6px}
 .pollSection .pollTeamInner .teamMark img{width:23px;height:23px}
 .pollSection .pollTable td{padding:8px 9px}
+/* Temporary: shown on prediction views while the pick model is recalibrated. */
+.calNotice{margin:0 0 14px}#app:not(.gamesWide) main>.calNotice{display:none}.matchSheet>.calNotice{margin:14px 18px 0}
+/* The phone rule above hides column 3 for tables with a bar; the schedule
+   table has no bar, so its header must keep all four labels over its columns. */
+@media(max-width:600px){.rsSchedHead span:nth-child(3){display:block}}
