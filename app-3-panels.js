@@ -1294,26 +1294,22 @@ function collegeBallotTableHTML(){
       <div class="pollScroll"><table class="pollTable officialPollTable"><thead><tr><th>#</th><th>Team</th></tr></thead><tbody>${rows}</tbody></table></div>
     </section>`;
   }
-  const body=b.rankings.map(r=>{
-    const s=r.resume||{};
-    const sor=Number.isFinite(Number(s.sor))?` title="${(Number(s.sor)*100).toFixed(1)}% of top-25-level teams would match this record against this schedule"`:'';
-    return `<tr${r.rank<=4?' class="pollRanked"':''}><td class="pollRank">${Number(r.rank)}</td>`
-      +`<td class="pollMove">${ballotMove(r)}</td>`
-      +`<td class="pollTeam">${esc(r.team_name)}${s.conference_champion?' <i class="pollTier">champ</i>':''}${r.note?`<div class="ballotNote">${esc(r.note)}</div>`:''}</td>`
-      +`<td>${esc(s.record||'')}</td>`
-      +`<td class="pollNum"${sor}>${s.sor_rank?'#'+Number(s.sor_rank):'—'}</td>`
-      +`<td class="pollNum">${Number(s.top25_wins)||0}</td>`
-      +`<td>${ballotWin(s.best_win)||'—'}</td>`
-      +`<td class="pollNum">${Number(s.bad_losses)||0}</td>`
-      +`<td class="pollNum">${s.power_rank?'#'+Number(s.power_rank):'—'}</td></tr>`;
-  }).join('');
-  const leftOff=(b.left_off||[]).map(t=>`${esc(t.team_name)} (${esc(t.record)}, SOR #${Number(t.sor_rank)})`).join(', ');
-  return `<section class="pollSection ballotSection"><div class="groupHead">Timur’s Ballot<span>${esc(b.published_on||'')} · ranked on résumé</span></div>
-    <div class="pollScroll"><table class="pollTable"><thead><tr>
-      <th>#</th><th title="Change since the last ballot">Move</th><th>Team</th><th>Rec</th><th title="Strength of record rank: how hard this record would be for a top-25-level team to match">SOR</th><th title="Wins over the power rating's top 25">T25 W</th><th>Best win</th><th title="Losses to teams outside the power rating's top 75">Bad L</th><th title="Power rating rank, the eye test">PR</th>
-    </tr></thead><tbody>${body}</tbody></table></div>
-    ${leftOff?`<p class="modNote">Best résumés left off: ${leftOff}.</p>`:''}
-  </section>`;
+  // Same markup as the AP Top 25 table (pollSectionHTML), so the two polls
+  // read as one design: rank, movement, team.
+  const move=r=>{
+    if(r.first_ballot)return '<span class="pollMove same" title="First ballot">—</span>';
+    if(r.movement==null)return '<span class="pollMove up" title="Not on last week\'s ballot">new</span>';
+    const m=Number(r.movement);
+    if(m>0)return `<span class="pollMove up" title="Up ${m} place${m===1?'':'s'}">▲${m}</span>`;
+    if(m<0)return `<span class="pollMove down" title="Down ${-m} place${m===-1?'':'s'}">▼${-m}</span>`;
+    return '<span class="pollMove same" title="Unchanged">—</span>';
+  };
+  const body=b.rankings.map(r=>`<tr><td class="pollRank">${Number(r.rank)}</td><td class="pollMoveCell">${move(r)}</td>`
+    +`<td><div class="gteam teamClickable" data-team="${esc(r.team_name)}" onclick="openTeamModal(this.dataset.team)">`
+    +`<span class="code"></span>${esc(r.team_name)}</div></td></tr>`).join('');
+  return `<div class="tablewrap officialPoll ballotSection"><div class="groupHead">Timur’s Ballot<span>${esc(b.published_on||'')} · ranked on résumé</span></div>`
+    +`<table class="gtable officialPollTable"><thead><tr><th>#</th><th class="pollMoveCell">Move</th><th>Team</th></tr></thead>`
+    +`<tbody>${body}</tbody></table></div>`;
 }
 function decorateRankingTeamMarks(host){
   host.querySelectorAll('.gteam[data-team]').forEach(cell=>{
@@ -1352,10 +1348,9 @@ renderGroups=function(){
   if(power&&!host.querySelector('[data-ranking-section="power"]'))power.insertAdjacentHTML('beforebegin',`<div class="seclbl" data-ranking-section="power">Power Ratings</div><div class="hint" style="margin-bottom:8px">Opponent-adjusted team strength with schedule, offense, and defense context.</div>`);
   const conference=host.querySelector('.tablewrap:not(.officialPoll)');
   if(conference&&!host.querySelector('[data-ranking-section="conferences"]'))conference.insertAdjacentHTML('beforebegin',`<div class="seclbl" data-ranking-section="conferences">Conferences</div><div class="hint" style="margin-bottom:8px">Ordered by conference record (games against conference opponents only), then head-to-head, overall record and model rating.</div>`);
-  // The old caption said this rating was "context only" and a preseason
-  // tiebreaker. That was wrong and misleading: it is the model's own
-  // opponent-adjusted rating and the model does use it. Say what it is.
-  document.querySelectorAll('#view-groups .tablewrap:not(.officialPoll) .groupHead span').forEach(el=>el.textContent='Opponent-adjusted rating and strength of schedule');
+  // Conference tables carry no caption: the rating/schedule description
+  // belongs to the Power Ratings section, not to every conference.
+  document.querySelectorAll('#view-groups .tablewrap:not(.officialPoll) .groupHead span').forEach(el=>el.remove());
   document.querySelectorAll('#view-groups .gtable:not(.officialPollTable)').forEach(table=>{
     table.classList.add('collegeConferenceTable');
     // Thirteen columns cannot share a phone's width; phones scroll sideways.
@@ -1383,7 +1378,7 @@ renderGroups=function(){
   // Order is fixed: the model's power rating first, the official AP poll
   // second, my ballot last. Sections are inserted by separate renderers, so
   // they are moved into place here rather than relying on insertion order.
-  const apTable=host.querySelector('.tablewrap.officialPoll');
+  const apTable=host.querySelector('.tablewrap.officialPoll:not(.ballotSection)');
   if(apTable){
     const stray=apTable.previousElementSibling;
     if(stray?.classList.contains('vhead')&&stray.textContent.trim()==='Rankings')stray.remove();

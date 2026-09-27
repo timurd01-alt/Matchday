@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0927A",
+  "tag": "Fix",
+  "title": "Ballot matches the AP poll layout",
+  "items": [
+   "Timurs Ballot now uses the same table as the AP Top 25: rank, movement and team with logo. The team column was missing.",
+   "Removed the grey note under the ballot and the rating caption repeated above every conference table."
+  ]
+ },
+ {
   "date": "Build 0927J",
   "tag": "Change",
   "title": "AP Top 25 shows the poll only",

@@ -383,7 +383,8 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         # The caption used to call this rating "context only" and a preseason
         # tiebreaker, which was false -- the model does use it. It now names the
         # rating and ships the schedule beside it.
-        self.assertIn("Opponent-adjusted rating and strength of schedule", panels)
+        # Conference tables carry no rating caption; that belongs to Power Ratings.
+        self.assertNotIn("Opponent-adjusted rating and strength of schedule", panels)
         self.assertIn("sosTag", panels)
 
 
