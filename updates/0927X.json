@@ -1,0 +1,1 @@
+{"rank": 412, "date": "Build 0927X", "tag": "Fix", "title": "No duplicate team comparison under More detail", "items": ["More detail no longer repeats a second, older team comparison; the Team comparison section above it is the one comparison in the expanded view."]}

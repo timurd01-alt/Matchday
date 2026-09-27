@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0927X",
+  "tag": "Fix",
+  "title": "No duplicate team comparison under More detail",
+  "items": [
+   "More detail no longer repeats a second, older team comparison; the Team comparison section above it is the one comparison in the expanded view."
+  ]
+ },
+ {
   "date": "Build 0927W",
   "tag": "Fix",
   "title": "Sunday update runs the refresh it was skipping",
