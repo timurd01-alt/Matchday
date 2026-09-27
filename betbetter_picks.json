@@ -1,7 +1,7 @@
 {
   "handoff_version": 11,
   "source": "betbetter",
-  "generated_at": "2026-09-27T17:57:25.082346+00:00",
+  "generated_at": "2026-09-27T17:59:02.210063+00:00",
   "sports": [
     "ncaaf",
     "ncaam"
@@ -32467,164 +32467,6 @@
         },
         {
           "rank": 18,
-          "team_key": "ncaaf:344",
-          "team_name": "Mississippi State Bulldogs",
-          "note": null,
-          "resume": {
-            "team_key": "ncaaf:344",
-            "team_name": "Mississippi State Bulldogs",
-            "conference": "SEC",
-            "record": "4-0",
-            "wins": 4,
-            "losses": 0,
-            "sor": 0.1678,
-            "top25_wins": 0,
-            "top50_wins": 2,
-            "best_win": {
-              "opponent": "Missouri Tigers",
-              "opponent_rank": 26,
-              "site": "home",
-              "score": "31-24",
-              "played_on": "2026-09-26"
-            },
-            "bad_losses": 0,
-            "worst_loss": null,
-            "conference_champion": false,
-            "power_rank": 38,
-            "power_rating": 14.94,
-            "sos": 11.82,
-            "sor_rank": 2
-          },
-          "previous_rank": 20,
-          "power_rating_published_on": "2026-09-27",
-          "movement": 2,
-          "first_ballot": false
-        },
-        {
-          "rank": 19,
-          "team_key": "ncaaf:96",
-          "team_name": "Kentucky Wildcats",
-          "note": null,
-          "resume": {
-            "team_key": "ncaaf:96",
-            "team_name": "Kentucky Wildcats",
-            "conference": "SEC",
-            "record": "3-1",
-            "wins": 3,
-            "losses": 1,
-            "sor": 0.5522,
-            "top25_wins": 1,
-            "top50_wins": 1,
-            "best_win": {
-              "opponent": "Texas A&M Aggies",
-              "opponent_rank": 13,
-              "site": "away",
-              "score": "31-21",
-              "played_on": "2026-09-19"
-            },
-            "bad_losses": 0,
-            "worst_loss": {
-              "opponent": "Alabama Crimson Tide",
-              "opponent_rank": 9,
-              "site": "home",
-              "score": "17-45",
-              "played_on": "2026-09-12"
-            },
-            "conference_champion": false,
-            "power_rank": 53,
-            "power_rating": 12.21,
-            "sos": 12.33,
-            "sor_rank": 20
-          },
-          "previous_rank": 21,
-          "power_rating_published_on": "2026-09-27",
-          "movement": 2,
-          "first_ballot": false
-        },
-        {
-          "rank": 20,
-          "team_key": "ncaaf:248",
-          "team_name": "Houston Cougars",
-          "note": null,
-          "resume": {
-            "team_key": "ncaaf:248",
-            "team_name": "Houston Cougars",
-            "conference": "Big 12",
-            "record": "3-1",
-            "wins": 3,
-            "losses": 1,
-            "sor": 0.9018,
-            "top25_wins": 0,
-            "top50_wins": 0,
-            "best_win": {
-              "opponent": "Georgia Southern Eagles",
-              "opponent_rank": 101,
-              "site": "away",
-              "score": "42-28",
-              "played_on": "2026-09-26"
-            },
-            "bad_losses": 0,
-            "worst_loss": {
-              "opponent": "Texas Tech Red Raiders",
-              "opponent_rank": 10,
-              "site": "away",
-              "score": "26-28",
-              "played_on": "2026-09-18"
-            },
-            "conference_champion": false,
-            "power_rank": 35,
-            "power_rating": 15.53,
-            "sos": 8.07,
-            "sor_rank": 49
-          },
-          "previous_rank": 22,
-          "power_rating_published_on": "2026-09-27",
-          "movement": 2,
-          "first_ballot": false
-        },
-        {
-          "rank": 21,
-          "team_key": "ncaaf:2567",
-          "team_name": "SMU Mustangs",
-          "note": null,
-          "resume": {
-            "team_key": "ncaaf:2567",
-            "team_name": "SMU Mustangs",
-            "conference": "ACC",
-            "record": "3-1",
-            "wins": 3,
-            "losses": 1,
-            "sor": 0.7294,
-            "top25_wins": 0,
-            "top50_wins": 1,
-            "best_win": {
-              "opponent": "Florida State Seminoles",
-              "opponent_rank": 43,
-              "site": "away",
-              "score": "27-24",
-              "played_on": "2026-09-07"
-            },
-            "bad_losses": 0,
-            "worst_loss": {
-              "opponent": "Louisville Cardinals",
-              "opponent_rank": 27,
-              "site": "away",
-              "score": "31-41",
-              "played_on": "2026-09-19"
-            },
-            "conference_champion": false,
-            "power_rank": 21,
-            "power_rating": 18.52,
-            "sos": 7.96,
-            "sor_rank": 35
-          },
-          "previous_rank": 23,
-          "power_rating_published_on": "2026-09-27",
-          "movement": 2,
-          "first_ballot": false
-        },
-        {
-          "rank": 22,
           "team_key": "ncaaf:97",
           "team_name": "Louisville Cardinals",
           "note": null,
@@ -32661,7 +32503,165 @@
           },
           "previous_rank": 14,
           "power_rating_published_on": "2026-09-27",
-          "movement": -8,
+          "movement": -4,
+          "first_ballot": false
+        },
+        {
+          "rank": 19,
+          "team_key": "ncaaf:344",
+          "team_name": "Mississippi State Bulldogs",
+          "note": null,
+          "resume": {
+            "team_key": "ncaaf:344",
+            "team_name": "Mississippi State Bulldogs",
+            "conference": "SEC",
+            "record": "4-0",
+            "wins": 4,
+            "losses": 0,
+            "sor": 0.1678,
+            "top25_wins": 0,
+            "top50_wins": 2,
+            "best_win": {
+              "opponent": "Missouri Tigers",
+              "opponent_rank": 26,
+              "site": "home",
+              "score": "31-24",
+              "played_on": "2026-09-26"
+            },
+            "bad_losses": 0,
+            "worst_loss": null,
+            "conference_champion": false,
+            "power_rank": 38,
+            "power_rating": 14.94,
+            "sos": 11.82,
+            "sor_rank": 2
+          },
+          "previous_rank": 20,
+          "power_rating_published_on": "2026-09-27",
+          "movement": 1,
+          "first_ballot": false
+        },
+        {
+          "rank": 20,
+          "team_key": "ncaaf:96",
+          "team_name": "Kentucky Wildcats",
+          "note": null,
+          "resume": {
+            "team_key": "ncaaf:96",
+            "team_name": "Kentucky Wildcats",
+            "conference": "SEC",
+            "record": "3-1",
+            "wins": 3,
+            "losses": 1,
+            "sor": 0.5522,
+            "top25_wins": 1,
+            "top50_wins": 1,
+            "best_win": {
+              "opponent": "Texas A&M Aggies",
+              "opponent_rank": 13,
+              "site": "away",
+              "score": "31-21",
+              "played_on": "2026-09-19"
+            },
+            "bad_losses": 0,
+            "worst_loss": {
+              "opponent": "Alabama Crimson Tide",
+              "opponent_rank": 9,
+              "site": "home",
+              "score": "17-45",
+              "played_on": "2026-09-12"
+            },
+            "conference_champion": false,
+            "power_rank": 53,
+            "power_rating": 12.21,
+            "sos": 12.33,
+            "sor_rank": 20
+          },
+          "previous_rank": 21,
+          "power_rating_published_on": "2026-09-27",
+          "movement": 1,
+          "first_ballot": false
+        },
+        {
+          "rank": 21,
+          "team_key": "ncaaf:248",
+          "team_name": "Houston Cougars",
+          "note": null,
+          "resume": {
+            "team_key": "ncaaf:248",
+            "team_name": "Houston Cougars",
+            "conference": "Big 12",
+            "record": "3-1",
+            "wins": 3,
+            "losses": 1,
+            "sor": 0.9018,
+            "top25_wins": 0,
+            "top50_wins": 0,
+            "best_win": {
+              "opponent": "Georgia Southern Eagles",
+              "opponent_rank": 101,
+              "site": "away",
+              "score": "42-28",
+              "played_on": "2026-09-26"
+            },
+            "bad_losses": 0,
+            "worst_loss": {
+              "opponent": "Texas Tech Red Raiders",
+              "opponent_rank": 10,
+              "site": "away",
+              "score": "26-28",
+              "played_on": "2026-09-18"
+            },
+            "conference_champion": false,
+            "power_rank": 35,
+            "power_rating": 15.53,
+            "sos": 8.07,
+            "sor_rank": 49
+          },
+          "previous_rank": 22,
+          "power_rating_published_on": "2026-09-27",
+          "movement": 1,
+          "first_ballot": false
+        },
+        {
+          "rank": 22,
+          "team_key": "ncaaf:2567",
+          "team_name": "SMU Mustangs",
+          "note": null,
+          "resume": {
+            "team_key": "ncaaf:2567",
+            "team_name": "SMU Mustangs",
+            "conference": "ACC",
+            "record": "3-1",
+            "wins": 3,
+            "losses": 1,
+            "sor": 0.7294,
+            "top25_wins": 0,
+            "top50_wins": 1,
+            "best_win": {
+              "opponent": "Florida State Seminoles",
+              "opponent_rank": 43,
+              "site": "away",
+              "score": "27-24",
+              "played_on": "2026-09-07"
+            },
+            "bad_losses": 0,
+            "worst_loss": {
+              "opponent": "Louisville Cardinals",
+              "opponent_rank": 27,
+              "site": "away",
+              "score": "31-41",
+              "played_on": "2026-09-19"
+            },
+            "conference_champion": false,
+            "power_rank": 21,
+            "power_rating": 18.52,
+            "sos": 7.96,
+            "sor_rank": 35
+          },
+          "previous_rank": 23,
+          "power_rating_published_on": "2026-09-27",
+          "movement": 1,
           "first_ballot": false
         },
         {
@@ -32776,9 +32776,7 @@
           "first_ballot": false
         }
       ],
-      "warnings": [
-        "#21 SMU Mustangs is above #22 Louisville Cardinals, who beat them"
-      ],
+      "warnings": [],
       "left_off": [
         {
           "team_key": "ncaaf:275",
