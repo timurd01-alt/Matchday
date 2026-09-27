@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0927U",
+  "tag": "Fix",
+  "title": "Expanded view on phones matches desktop",
+  "items": [
+   "On phones the two teams now face each other across the kickoff time, as on desktop, instead of stacking one above the other.",
+   "The short team-code line above each name is hidden on phones, and the teams sit clear of the close button."
+  ]
+ },
+ {
   "date": "Build 0927T",
   "tag": "Fix",
   "title": "Team comparison starts closed",

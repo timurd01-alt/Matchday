@@ -3890,3 +3890,22 @@ body{font-variant-numeric:tabular-nums}
 .projectedScore{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 12px;margin-top:18px;padding-top:14px;border-top:1px solid var(--line)}
 .projectedScore span{font-family:var(--mono);font-size:var(--fs-2xs);font-weight:var(--fw-bold);letter-spacing:.1em;text-transform:uppercase;color:var(--signal)}
 .projectedScore b{font-family:var(--mono);font-size:var(--fs-md);font-weight:var(--fw-bold);color:var(--text)}
+/* Expanded view on phones: home and away face each other across the kickoff,
+   as on desktop, instead of stacking. The team code line ("I", "OSU") is
+   dropped here; the logo and name already identify the team. */
+@media(max-width:760px){
+  .matchModal .modernMatchSheet .modalFixture{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:10px;align-items:start}
+  .matchModal .modernMatchSheet .modalTeam{text-align:left;min-width:0}
+  .matchModal .modernMatchSheet .modalTeam.away{text-align:right}
+  .matchModal .modernMatchSheet .modalCode{display:none}
+  .matchModal .modernMatchSheet .modalName{display:flex;flex-direction:column;align-items:flex-start;gap:8px;font-size:var(--fs-lg);line-height:1.05;overflow-wrap:anywhere}
+  .matchModal .modernMatchSheet .modalTeam.away .modalName{flex-direction:column-reverse;align-items:flex-end}
+  .matchModal .modernMatchSheet .modalName .teamMark{width:52px;height:52px}
+  .matchModal .modernMatchSheet .modalMeta{font-size:var(--fs-xs);margin-top:6px}
+  .matchModal .modernMatchSheet .modalScore{order:0;min-width:0;text-align:center;align-self:center}
+  .matchModal .modernMatchSheet .modalScore .bigScore{font-size:var(--fs-2xl)}
+  .matchModal .modernMatchSheet .modalStatus{white-space:nowrap}
+  /* Clear the close button: the stage row takes its height, so the away logo
+     starts below it instead of underneath it. */
+  .matchModal .modernMatchSheet .modalStage{min-height:44px;padding-right:56px;display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+}
