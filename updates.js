@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0927S",
+  "tag": "Fix",
+  "title": "Model–market watch matches the live model",
+  "items": [
+   "This week’s upset card was recorded before the model fix. It was withdrawn on the record, before any kickoff, and re-recorded from the corrected model, so Research’s Model–market watch now shows the same games and numbers as the homepage.",
+   "The projected score is oriented by team name even when the pick lists home and away the other way round."
+  ]
+ },
+ {
   "date": "Build 0927R",
   "tag": "Change",
   "title": "Projected score replaces both teams’ chances",

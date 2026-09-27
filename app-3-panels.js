@@ -1636,7 +1636,8 @@ function betbetterModelRead(m,p){
    both-teams'-chances dropdown when present. */
 function projectedScoreLine(m,p){
   const s=p?.projected_score;if(!s||!Number.isFinite(Number(s.home))||!Number.isFinite(Number(s.away)))return '';
-  const flipped=s.home_name&&m.home?.name&&!bbNameMatches(s.home_name,m.home.name)&&bbNameMatches(s.home_name,m.away?.name);
+  const homeName=s.home_name||p.home;
+  const flipped=homeName&&m.home?.name&&!bbNameMatches(homeName,m.home.name)&&bbNameMatches(homeName,m.away?.name);
   const home=flipped?s.away:s.home,away=flipped?s.home:s.away;
   return `<div class="projectedScore"><span>Projected score</span>`
     +`<b>${esc(m.away?.name||'Away')} ${Number(away)} · ${esc(m.home?.name||'Home')} ${Number(home)}</b></div>`;
