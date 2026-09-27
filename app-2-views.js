@@ -1261,9 +1261,10 @@ function rsModelMarketWatch(){
     const status=typeof upsetStatusText==='function'?upsetStatusText(p,away):'';
     return `<li class="rsGapRow"><div class="rsGapGame"><b class="rsLogoName">${typeof teamMark==='function'?teamMark(p.selection):''}${esc(rsShortName(p.selection))}</b>`
       +`<span>${esc(rsShortName(p.away))} at ${esc(rsShortName(p.home))}${status?` · ${esc(status)}`:''}</span></div>`
-      +`<span class="rsNum"><b class="rsSignal">${communityModelPctLabel(model)}</b><small>Matchday</small></span>`
+      +`<span class="rsNum"><b>${communityModelPctLabel(model)}</b><small>Matchday</small></span>`
       +`<span class="rsNum"><b>${Number.isFinite(market)?market.toFixed(1)+'%':'—'}</b><small>market</small></span>`
-      +`<span class="rsNum"><b>${Number.isFinite(gap)?'+'+gap.toFixed(1):'—'}</b><small>gap</small></span></li>`;
+      // The gap is what puts a game on this list, so it carries the highlight.
+      +`<span class="rsNum"><b class="rsSignal">${Number.isFinite(gap)?'+'+gap.toFixed(1):'—'}</b><small>gap</small></span></li>`;
   }).join('');
   // How disagreement has actually graded, so the live list is read against
   // the record rather than as a tip sheet.

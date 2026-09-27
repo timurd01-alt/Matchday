@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0927AC",
+  "tag": "Change",
+  "title": "Model–market watch highlights the gap",
+  "items": [
+   "The gap between Matchday and the market is now the highlighted figure in each row, since it is what puts a game on the list; the Matchday percentage reads plain like the market price."
+  ]
+ },
+ {
   "date": "Build 0927AB",
   "tag": "Fix",
   "title": "Scorecard differences line up",
