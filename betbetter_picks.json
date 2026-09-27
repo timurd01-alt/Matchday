@@ -1,7 +1,7 @@
 {
   "handoff_version": 11,
   "source": "betbetter",
-  "generated_at": "2026-09-27T17:28:32.131113+00:00",
+  "generated_at": "2026-09-27T17:41:14.536160+00:00",
   "sports": [
     "ncaaf",
     "ncaam"
@@ -31828,12 +31828,1167 @@
   },
   "ballots": {
     "ncaaf": {
-      "available": false,
+      "available": true,
       "sport": "ncaaf",
-      "reason": "No ballot has been published yet."
+      "season": 2026,
+      "published_on": "2026-09-27",
+      "basis": "The owner's own Top 25, judged on record and strength of record, quality wins and bad losses, head-to-head and conference titles, and the power rating as an eye test.",
+      "rankings": [
+        {
+          "rank": 1,
+          "team_key": "ncaaf:251",
+          "team_name": "Texas Longhorns",
+          "note": null,
+          "resume": {
+            "team_key": "ncaaf:251",
+            "team_name": "Texas Longhorns",
+            "conference": "SEC",
+            "record": "4-0",
+            "wins": 4,
+            "losses": 0,
+            "sor": 0.0532,
+            "top25_wins": 2,
+            "top50_wins": 2,
+            "best_win": {
+              "opponent": "Ohio State Buckeyes",
+              "opponent_rank": 1,
+              "site": "home",
+              "score": "24-23",
+              "played_on": "2026-09-12"
+            },
+            "bad_losses": 0,
+            "worst_loss": null,
+            "conference_champion": false,
+            "power_rank": 8,
+            "power_rating": 25.62,
+            "sos": 16.68,
+            "sor_rank": 1
+          },
+          "previous_rank": null,
+          "power_rating_published_on": "2026-09-27",
+          "movement": null,
+          "first_ballot": true
+        },
+        {
+          "rank": 2,
+          "team_key": "ncaaf:61",
+          "team_name": "Georgia Bulldogs",
+          "note": null,
+          "resume": {
+            "team_key": "ncaaf:61",
+            "team_name": "Georgia Bulldogs",
+            "conference": "SEC",
+            "record": "4-0",
+            "wins": 4,
+            "losses": 0,
+            "sor": 0.3282,
+            "top25_wins": 1,
+            "top50_wins": 1,
+            "best_win": {
+              "opponent": "Oklahoma Sooners",
+              "opponent_rank": 19,
+              "site": "home",
+              "score": "41-13",
+              "played_on": "2026-09-26"
+            },
+            "bad_losses": 0,
+            "worst_loss": null,
+            "conference_champion": false,
+            "power_rank": 4,
+            "power_rating": 28.04,
+            "sos": 10.99,
+            "sor_rank": 6
+          },
+          "previous_rank": null,
+          "power_rating_published_on": "2026-09-27",
+          "movement": null,
+          "first_ballot": true
+        },
+        {
+          "rank": 3,
+          "team_key": "ncaaf:2390",
+          "team_name": "Miami Hurricanes",
+          "note": null,
+          "resume": {
+            "team_key": "ncaaf:2390",
+            "team_name": "Miami Hurricanes",
+            "conference": "ACC",
+            "record": "4-0",
+            "wins": 4,
+            "losses": 0,
+            "sor": 0.4517,
+            "top25_wins": 0,
+            "top50_wins": 0,
+            "best_win": {
+              "opponent": "Wake Forest Demon Deacons",
+              "opponent_rank": 52,
+              "site": "away",
+              "score": "33-20",
+              "played_on": "2026-09-18"
+            },
+            "bad_losses": 0,
+            "worst_loss": null,
+            "conference_champion": false,
+            "power_rank": 5,
+            "power_rating": 26.79,
+            "sos": 9.53,
+            "sor_rank": 13
+          },
+          "previous_rank": null,
+          "power_rating_published_on": "2026-09-27",
+          "movement": null,
+          "first_ballot": true
+        },
+        {
+          "rank": 4,
+          "team_key": "ncaaf:87",
+          "team_name": "Notre Dame Fighting Irish",
+          "note": null,
+          "resume": {
+            "team_key": "ncaaf:87",
+            "team_name": "Notre Dame Fighting Irish",
+            "conference": "FBS Independents",
+            "record": "4-0",
+            "wins": 4,
+            "losses": 0,
+            "sor": 0.3993,
+            "top25_wins": 0,
+            "top50_wins": 1,
+            "best_win": {
+              "opponent": "Wisconsin Badgers",
+              "opponent_rank": 50,
+              "site": "neutral",
+              "score": "41-13",
+              "played_on": "2026-09-06"
+            },
+            "bad_losses": 0,
+            "worst_loss": null,
+            "conference_champion": false,
+            "power_rank": 3,
+            "power_rating": 31.24,
+            "sos": 10.77,
+            "sor_rank": 9
+          },
+          "previous_rank": null,
+          "power_rating_published_on": "2026-09-27",
+          "movement": null,
+          "first_ballot": true
+        },
+        {
+          "rank": 5,
+          "team_key": "ncaaf:194",
+          "team_name": "Ohio State Buckeyes",
+          "note": null,
+          "resume": {
+            "team_key": "ncaaf:194",
+            "team_name": "Ohio State Buckeyes",
+            "conference": "Big Ten",
+            "record": "3-1",
+            "wins": 3,
+            "losses": 1,
+            "sor": 0.7257,
+            "top25_wins": 0,
+            "top50_wins": 1,
+            "best_win": {
+              "opponent": "Illinois Fighting Illini",
+              "opponent_rank": 39,
+              "site": "home",
+              "score": "42-19",
+              "played_on": "2026-09-26"
+            },
+            "bad_losses": 0,
+            "worst_loss": {
+              "opponent": "Texas Longhorns",
+              "opponent_rank": 8,
+              "site": "away",
+              "score": "23-24",
+              "played_on": "2026-09-12"
+            },
+            "conference_champion": false,
+            "power_rank": 1,
+            "power_rating": 32.12,
+            "sos": 12.49,
+            "sor_rank": 32
+          },
+          "previous_rank": null,
+          "power_rating_published_on": "2026-09-27",
+          "movement": null,
+          "first_ballot": true
+        },
+        {
+          "rank": 6,
+          "team_key": "ncaaf:84",
+          "team_name": "Indiana Hoosiers",
+          "note": null,
+          "resume": {
+            "team_key": "ncaaf:84",
+            "team_name": "Indiana Hoosiers",
+            "conference": "Big Ten",
+            "record": "4-0",
+            "wins": 4,
+            "losses": 0,
+            "sor": 0.5479,
+            "top25_wins": 0,
+            "top50_wins": 1,
+            "best_win": {
+              "opponent": "Northwestern Wildcats",
+              "opponent_rank": 47,
+              "site": "home",
+              "score": "29-23",
+              "played_on": "2026-09-25"
+            },
+            "bad_losses": 0,
+            "worst_loss": null,
+            "conference_champion": false,
+            "power_rank": 2,
+            "power_rating": 31.3,
+            "sos": 10.06,
+            "sor_rank": 19
+          },
+          "previous_rank": null,
+          "power_rating_published_on": "2026-09-27",
+          "movement": null,
+          "first_ballot": true
+        },
+        {
+          "rank": 7,
+          "team_key": "ncaaf:57",
+          "team_name": "Florida Gators",
+          "note": null,
+          "resume": {
+            "team_key": "ncaaf:57",
+            "team_name": "Florida Gators",
+            "conference": "SEC",
+            "record": "4-0",
+            "wins": 4,
+            "losses": 0,
+            "sor": 0.2038,
+            "top25_wins": 1,
+            "top50_wins": 2,
+            "best_win": {
+              "opponent": "Ole Miss Rebels",
+              "opponent_rank": 12,
+              "site": "home",
+              "score": "52-28",
+              "played_on": "2026-09-26"
+            },
+            "bad_losses": 0,
+            "worst_loss": null,
+            "conference_champion": false,
+            "power_rank": 22,
+            "power_rating": 18.46,
+            "sos": 12.38,
+            "sor_rank": 3
+          },
+          "previous_rank": null,
+          "power_rating_published_on": "2026-09-27",
+          "movement": null,
+          "first_ballot": true
+        },
+        {
+          "rank": 8,
+          "team_key": "ncaaf:333",
+          "team_name": "Alabama Crimson Tide",
+          "note": null,
+          "resume": {
+            "team_key": "ncaaf:333",
+            "team_name": "Alabama Crimson Tide",
+            "conference": "SEC",
+            "record": "4-0",
+            "wins": 4,
+            "losses": 0,
+            "sor": 0.2245,
+            "top25_wins": 0,
+            "top50_wins": 2,
+            "best_win": {
+              "opponent": "South Carolina Gamecocks",
+              "opponent_rank": 36,
+              "site": "home",
+              "score": "49-18",
+              "played_on": "2026-09-26"
+            },
+            "bad_losses": 0,
+            "worst_loss": null,
+            "conference_champion": false,
+            "power_rank": 9,
+            "power_rating": 24.39,
+            "sos": 14.6,
+            "sor_rank": 5
+          },
+          "previous_rank": null,
+          "power_rating_published_on": "2026-09-27",
+          "movement": null,
+          "first_ballot": true
+        },
+        {
+          "rank": 9,
+          "team_key": "ncaaf:145",
+          "team_name": "Ole Miss Rebels",
+          "note": null,
+          "resume": {
+            "team_key": "ncaaf:145",
+            "team_name": "Ole Miss Rebels",
+            "conference": "SEC",
+            "record": "3-1",
+            "wins": 3,
+            "losses": 1,
+            "sor": 0.4748,
+            "top25_wins": 1,
+            "top50_wins": 2,
+            "best_win": {
+              "opponent": "LSU Tigers",
+              "opponent_rank": 20,
+              "site": "home",
+              "score": "32-24",
+              "played_on": "2026-09-19"
+            },
+            "bad_losses": 0,
+            "worst_loss": {
+              "opponent": "Florida Gators",
+              "opponent_rank": 22,
+              "site": "away",
+              "score": "28-52",
+              "played_on": "2026-09-26"
+            },
+            "conference_champion": false,
+            "power_rank": 12,
+            "power_rating": 22.61,
+            "sos": 13.64,
+            "sor_rank": 15
+          },
+          "previous_rank": null,
+          "power_rating_published_on": "2026-09-27",
+          "movement": null,
+          "first_ballot": true
+        },
+        {
+          "rank": 10,
+          "team_key": "ncaaf:2641",
+          "team_name": "Texas Tech Red Raiders",
+          "note": null,
+          "resume": {
+            "team_key": "ncaaf:2641",
+            "team_name": "Texas Tech Red Raiders",
+            "conference": "Big 12",
+            "record": "4-0",
+            "wins": 4,
+            "losses": 0,
+            "sor": 0.5641,
+            "top25_wins": 0,
+            "top50_wins": 1,
+            "best_win": {
+              "opponent": "Houston Cougars",
+              "opponent_rank": 35,
+              "site": "home",
+              "score": "28-26",
+              "played_on": "2026-09-18"
+            },
+            "bad_losses": 0,
+            "worst_loss": null,
+            "conference_champion": false,
+            "power_rank": 10,
+            "power_rating": 23.63,
+            "sos": 8.33,
+            "sor_rank": 21
+          },
+          "previous_rank": null,
+          "power_rating_published_on": "2026-09-27",
+          "movement": null,
+          "first_ballot": true
+        },
+        {
+          "rank": 11,
+          "team_key": "ncaaf:252",
+          "team_name": "BYU Cougars",
+          "note": null,
+          "resume": {
+            "team_key": "ncaaf:252",
+            "team_name": "BYU Cougars",
+            "conference": "Big 12",
+            "record": "3-0",
+            "wins": 3,
+            "losses": 0,
+            "sor": 0.5841,
+            "top25_wins": 0,
+            "top50_wins": 1,
+            "best_win": {
+              "opponent": "Arizona Wildcats",
+              "opponent_rank": 34,
+              "site": "home",
+              "score": "28-17",
+              "played_on": "2026-09-12"
+            },
+            "bad_losses": 0,
+            "worst_loss": null,
+            "conference_champion": false,
+            "power_rank": 18,
+            "power_rating": 19.54,
+            "sos": 7.52,
+            "sor_rank": 23
+          },
+          "previous_rank": null,
+          "power_rating_published_on": "2026-09-27",
+          "movement": null,
+          "first_ballot": true
+        },
+        {
+          "rank": 12,
+          "team_key": "ncaaf:99",
+          "team_name": "LSU Tigers",
+          "note": null,
+          "resume": {
+            "team_key": "ncaaf:99",
+            "team_name": "LSU Tigers",
+            "conference": "SEC",
+            "record": "3-1",
+            "wins": 3,
+            "losses": 1,
+            "sor": 0.4257,
+            "top25_wins": 1,
+            "top50_wins": 2,
+            "best_win": {
+              "opponent": "Texas A&M Aggies",
+              "opponent_rank": 13,
+              "site": "home",
+              "score": "35-6",
+              "played_on": "2026-09-26"
+            },
+            "bad_losses": 0,
+            "worst_loss": {
+              "opponent": "Ole Miss Rebels",
+              "opponent_rank": 12,
+              "site": "away",
+              "score": "24-32",
+              "played_on": "2026-09-19"
+            },
+            "conference_champion": false,
+            "power_rank": 20,
+            "power_rating": 18.86,
+            "sos": 14.1,
+            "sor_rank": 11
+          },
+          "previous_rank": null,
+          "power_rating_published_on": "2026-09-27",
+          "movement": null,
+          "first_ballot": true
+        },
+        {
+          "rank": 13,
+          "team_key": "ncaaf:254",
+          "team_name": "Utah Utes",
+          "note": null,
+          "resume": {
+            "team_key": "ncaaf:254",
+            "team_name": "Utah Utes",
+            "conference": "Big 12",
+            "record": "4-0",
+            "wins": 4,
+            "losses": 0,
+            "sor": 0.3356,
+            "top25_wins": 0,
+            "top50_wins": 1,
+            "best_win": {
+              "opponent": "Iowa State Cyclones",
+              "opponent_rank": 29,
+              "site": "away",
+              "score": "31-17",
+              "played_on": "2026-09-26"
+            },
+            "bad_losses": 0,
+            "worst_loss": null,
+            "conference_champion": false,
+            "power_rank": 7,
+            "power_rating": 26.26,
+            "sos": 8.96,
+            "sor_rank": 7
+          },
+          "previous_rank": null,
+          "power_rating_published_on": "2026-09-27",
+          "movement": null,
+          "first_ballot": true
+        },
+        {
+          "rank": 14,
+          "team_key": "ncaaf:2294",
+          "team_name": "Iowa Hawkeyes",
+          "note": null,
+          "resume": {
+            "team_key": "ncaaf:2294",
+            "team_name": "Iowa Hawkeyes",
+            "conference": "Big Ten",
+            "record": "4-0",
+            "wins": 4,
+            "losses": 0,
+            "sor": 0.2222,
+            "top25_wins": 1,
+            "top50_wins": 2,
+            "best_win": {
+              "opponent": "Michigan Wolverines",
+              "opponent_rank": 17,
+              "site": "away",
+              "score": "20-19",
+              "played_on": "2026-09-26"
+            },
+            "bad_losses": 0,
+            "worst_loss": null,
+            "conference_champion": false,
+            "power_rank": 16,
+            "power_rating": 21.38,
+            "sos": 10.02,
+            "sor_rank": 4
+          },
+          "previous_rank": null,
+          "power_rating_published_on": "2026-09-27",
+          "movement": null,
+          "first_ballot": true
+        },
+        {
+          "rank": 15,
+          "team_key": "ncaaf:2633",
+          "team_name": "Tennessee Volunteers",
+          "note": null,
+          "resume": {
+            "team_key": "ncaaf:2633",
+            "team_name": "Tennessee Volunteers",
+            "conference": "SEC",
+            "record": "3-1",
+            "wins": 3,
+            "losses": 1,
+            "sor": 0.7069,
+            "top25_wins": 0,
+            "top50_wins": 1,
+            "best_win": {
+              "opponent": "Georgia Tech Yellow Jackets",
+              "opponent_rank": 49,
+              "site": "away",
+              "score": "45-24",
+              "played_on": "2026-09-12"
+            },
+            "bad_losses": 0,
+            "worst_loss": {
+              "opponent": "Texas Longhorns",
+              "opponent_rank": 8,
+              "site": "home",
+              "score": "17-20",
+              "played_on": "2026-09-26"
+            },
+            "conference_champion": false,
+            "power_rank": 15,
+            "power_rating": 21.57,
+            "sos": 10.02,
+            "sor_rank": 30
+          },
+          "previous_rank": null,
+          "power_rating_published_on": "2026-09-27",
+          "movement": null,
+          "first_ballot": true
+        },
+        {
+          "rank": 16,
+          "team_key": "ncaaf:2483",
+          "team_name": "Oregon Ducks",
+          "note": null,
+          "resume": {
+            "team_key": "ncaaf:2483",
+            "team_name": "Oregon Ducks",
+            "conference": "Big Ten",
+            "record": "3-1",
+            "wins": 3,
+            "losses": 1,
+            "sor": 0.7285,
+            "top25_wins": 1,
+            "top50_wins": 1,
+            "best_win": {
+              "opponent": "USC Trojans",
+              "opponent_rank": 14,
+              "site": "away",
+              "score": "41-27",
+              "played_on": "2026-09-26"
+            },
+            "bad_losses": 0,
+            "worst_loss": {
+              "opponent": "Oklahoma State Cowboys",
+              "opponent_rank": 70,
+              "site": "away",
+              "score": "31-39",
+              "played_on": "2026-09-12"
+            },
+            "conference_champion": false,
+            "power_rank": 6,
+            "power_rating": 26.65,
+            "sos": 11.09,
+            "sor_rank": 34
+          },
+          "previous_rank": null,
+          "power_rating_published_on": "2026-09-27",
+          "movement": null,
+          "first_ballot": true
+        },
+        {
+          "rank": 17,
+          "team_key": "ncaaf:30",
+          "team_name": "USC Trojans",
+          "note": null,
+          "resume": {
+            "team_key": "ncaaf:30",
+            "team_name": "USC Trojans",
+            "conference": "Big Ten",
+            "record": "4-1",
+            "wins": 4,
+            "losses": 1,
+            "sor": 0.6995,
+            "top25_wins": 0,
+            "top50_wins": 0,
+            "best_win": {
+              "opponent": "Rutgers Scarlet Knights",
+              "opponent_rank": 61,
+              "site": "away",
+              "score": "42-35",
+              "played_on": "2026-09-19"
+            },
+            "bad_losses": 0,
+            "worst_loss": {
+              "opponent": "Oregon Ducks",
+              "opponent_rank": 6,
+              "site": "home",
+              "score": "27-41",
+              "played_on": "2026-09-26"
+            },
+            "conference_champion": false,
+            "power_rank": 14,
+            "power_rating": 21.75,
+            "sos": 12.41,
+            "sor_rank": 27
+          },
+          "previous_rank": null,
+          "power_rating_published_on": "2026-09-27",
+          "movement": null,
+          "first_ballot": true
+        },
+        {
+          "rank": 18,
+          "team_key": "ncaaf:344",
+          "team_name": "Mississippi State Bulldogs",
+          "note": null,
+          "resume": {
+            "team_key": "ncaaf:344",
+            "team_name": "Mississippi State Bulldogs",
+            "conference": "SEC",
+            "record": "4-0",
+            "wins": 4,
+            "losses": 0,
+            "sor": 0.1678,
+            "top25_wins": 0,
+            "top50_wins": 2,
+            "best_win": {
+              "opponent": "Missouri Tigers",
+              "opponent_rank": 26,
+              "site": "home",
+              "score": "31-24",
+              "played_on": "2026-09-26"
+            },
+            "bad_losses": 0,
+            "worst_loss": null,
+            "conference_champion": false,
+            "power_rank": 38,
+            "power_rating": 14.94,
+            "sos": 11.82,
+            "sor_rank": 2
+          },
+          "previous_rank": null,
+          "power_rating_published_on": "2026-09-27",
+          "movement": null,
+          "first_ballot": true
+        },
+        {
+          "rank": 19,
+          "team_key": "ncaaf:96",
+          "team_name": "Kentucky Wildcats",
+          "note": null,
+          "resume": {
+            "team_key": "ncaaf:96",
+            "team_name": "Kentucky Wildcats",
+            "conference": "SEC",
+            "record": "3-1",
+            "wins": 3,
+            "losses": 1,
+            "sor": 0.5522,
+            "top25_wins": 1,
+            "top50_wins": 1,
+            "best_win": {
+              "opponent": "Texas A&M Aggies",
+              "opponent_rank": 13,
+              "site": "away",
+              "score": "31-21",
+              "played_on": "2026-09-19"
+            },
+            "bad_losses": 0,
+            "worst_loss": {
+              "opponent": "Alabama Crimson Tide",
+              "opponent_rank": 9,
+              "site": "home",
+              "score": "17-45",
+              "played_on": "2026-09-12"
+            },
+            "conference_champion": false,
+            "power_rank": 53,
+            "power_rating": 12.21,
+            "sos": 12.33,
+            "sor_rank": 20
+          },
+          "previous_rank": null,
+          "power_rating_published_on": "2026-09-27",
+          "movement": null,
+          "first_ballot": true
+        },
+        {
+          "rank": 20,
+          "team_key": "ncaaf:248",
+          "team_name": "Houston Cougars",
+          "note": null,
+          "resume": {
+            "team_key": "ncaaf:248",
+            "team_name": "Houston Cougars",
+            "conference": "Big 12",
+            "record": "3-1",
+            "wins": 3,
+            "losses": 1,
+            "sor": 0.9018,
+            "top25_wins": 0,
+            "top50_wins": 0,
+            "best_win": {
+              "opponent": "Georgia Southern Eagles",
+              "opponent_rank": 101,
+              "site": "away",
+              "score": "42-28",
+              "played_on": "2026-09-26"
+            },
+            "bad_losses": 0,
+            "worst_loss": {
+              "opponent": "Texas Tech Red Raiders",
+              "opponent_rank": 10,
+              "site": "away",
+              "score": "26-28",
+              "played_on": "2026-09-18"
+            },
+            "conference_champion": false,
+            "power_rank": 35,
+            "power_rating": 15.53,
+            "sos": 8.07,
+            "sor_rank": 49
+          },
+          "previous_rank": null,
+          "power_rating_published_on": "2026-09-27",
+          "movement": null,
+          "first_ballot": true
+        },
+        {
+          "rank": 21,
+          "team_key": "ncaaf:2567",
+          "team_name": "SMU Mustangs",
+          "note": null,
+          "resume": {
+            "team_key": "ncaaf:2567",
+            "team_name": "SMU Mustangs",
+            "conference": "ACC",
+            "record": "3-1",
+            "wins": 3,
+            "losses": 1,
+            "sor": 0.7294,
+            "top25_wins": 0,
+            "top50_wins": 1,
+            "best_win": {
+              "opponent": "Florida State Seminoles",
+              "opponent_rank": 43,
+              "site": "away",
+              "score": "27-24",
+              "played_on": "2026-09-07"
+            },
+            "bad_losses": 0,
+            "worst_loss": {
+              "opponent": "Louisville Cardinals",
+              "opponent_rank": 27,
+              "site": "away",
+              "score": "31-41",
+              "played_on": "2026-09-19"
+            },
+            "conference_champion": false,
+            "power_rank": 21,
+            "power_rating": 18.52,
+            "sos": 7.96,
+            "sor_rank": 35
+          },
+          "previous_rank": null,
+          "power_rating_published_on": "2026-09-27",
+          "movement": null,
+          "first_ballot": true
+        },
+        {
+          "rank": 22,
+          "team_key": "ncaaf:97",
+          "team_name": "Louisville Cardinals",
+          "note": null,
+          "resume": {
+            "team_key": "ncaaf:97",
+            "team_name": "Louisville Cardinals",
+            "conference": "ACC",
+            "record": "2-2",
+            "wins": 2,
+            "losses": 2,
+            "sor": 0.9152,
+            "top25_wins": 1,
+            "top50_wins": 1,
+            "best_win": {
+              "opponent": "SMU Mustangs",
+              "opponent_rank": 21,
+              "site": "home",
+              "score": "41-31",
+              "played_on": "2026-09-19"
+            },
+            "bad_losses": 0,
+            "worst_loss": {
+              "opponent": "Wake Forest Demon Deacons",
+              "opponent_rank": 52,
+              "site": "home",
+              "score": "27-30",
+              "played_on": "2026-09-26"
+            },
+            "conference_champion": false,
+            "power_rank": 27,
+            "power_rating": 17.66,
+            "sos": 10.97,
+            "sor_rank": 53
+          },
+          "previous_rank": null,
+          "power_rating_published_on": "2026-09-27",
+          "movement": null,
+          "first_ballot": true
+        },
+        {
+          "rank": 23,
+          "team_key": "ncaaf:150",
+          "team_name": "Duke Blue Devils",
+          "note": null,
+          "resume": {
+            "team_key": "ncaaf:150",
+            "team_name": "Duke Blue Devils",
+            "conference": "ACC",
+            "record": "4-0",
+            "wins": 4,
+            "losses": 0,
+            "sor": 0.3948,
+            "top25_wins": 0,
+            "top50_wins": 1,
+            "best_win": {
+              "opponent": "Illinois Fighting Illini",
+              "opponent_rank": 39,
+              "site": "away",
+              "score": "31-27",
+              "played_on": "2026-09-12"
+            },
+            "bad_losses": 0,
+            "worst_loss": null,
+            "conference_champion": false,
+            "power_rank": 30,
+            "power_rating": 16.52,
+            "sos": 7.92,
+            "sor_rank": 8
+          },
+          "previous_rank": null,
+          "power_rating_published_on": "2026-09-27",
+          "movement": null,
+          "first_ballot": true
+        },
+        {
+          "rank": 24,
+          "team_key": "ncaaf:26",
+          "team_name": "UCLA Bruins",
+          "note": null,
+          "resume": {
+            "team_key": "ncaaf:26",
+            "team_name": "UCLA Bruins",
+            "conference": "Big Ten",
+            "record": "4-0",
+            "wins": 4,
+            "losses": 0,
+            "sor": 0.4331,
+            "top25_wins": 0,
+            "top50_wins": 0,
+            "best_win": {
+              "opponent": "California Golden Bears",
+              "opponent_rank": 63,
+              "site": "away",
+              "score": "45-24",
+              "played_on": "2026-09-05"
+            },
+            "bad_losses": 0,
+            "worst_loss": null,
+            "conference_champion": false,
+            "power_rank": 45,
+            "power_rating": 13.34,
+            "sos": 13.49,
+            "sor_rank": 12
+          },
+          "previous_rank": null,
+          "power_rating_published_on": "2026-09-27",
+          "movement": null,
+          "first_ballot": true
+        },
+        {
+          "rank": 25,
+          "team_key": "ncaaf:68",
+          "team_name": "Boise State Broncos",
+          "note": null,
+          "resume": {
+            "team_key": "ncaaf:68",
+            "team_name": "Boise State Broncos",
+            "conference": "Pac-12",
+            "record": "3-1",
+            "wins": 3,
+            "losses": 1,
+            "sor": 0.7988,
+            "top25_wins": 0,
+            "top50_wins": 0,
+            "best_win": {
+              "opponent": "Memphis Tigers",
+              "opponent_rank": 74,
+              "site": "home",
+              "score": "38-20",
+              "played_on": "2026-09-12"
+            },
+            "bad_losses": 0,
+            "worst_loss": {
+              "opponent": "Oregon Ducks",
+              "opponent_rank": 6,
+              "site": "away",
+              "score": "27-34",
+              "played_on": "2026-09-05"
+            },
+            "conference_champion": false,
+            "power_rank": 67,
+            "power_rating": 6.87,
+            "sos": 8.19,
+            "sor_rank": 41
+          },
+          "previous_rank": null,
+          "power_rating_published_on": "2026-09-27",
+          "movement": null,
+          "first_ballot": true
+        }
+      ],
+      "warnings": [
+        "#21 SMU Mustangs is above #22 Louisville Cardinals, who beat them"
+      ],
+      "left_off": [
+        {
+          "team_key": "ncaaf:275",
+          "team_name": "Wisconsin Badgers",
+          "conference": "Big Ten",
+          "record": "3-1",
+          "wins": 3,
+          "losses": 1,
+          "sor": 0.4039,
+          "top25_wins": 1,
+          "top50_wins": 1,
+          "best_win": {
+            "opponent": "Penn State Nittany Lions",
+            "opponent_rank": 11,
+            "site": "away",
+            "score": "24-20",
+            "played_on": "2026-09-26"
+          },
+          "bad_losses": 0,
+          "worst_loss": {
+            "opponent": "Notre Dame Fighting Irish",
+            "opponent_rank": 3,
+            "site": "neutral",
+            "score": "13-41",
+            "played_on": "2026-09-06"
+          },
+          "conference_champion": false,
+          "power_rank": 50,
+          "power_rating": 12.46,
+          "sos": 13.5,
+          "sor_rank": 10
+        },
+        {
+          "team_key": "ncaaf:2132",
+          "team_name": "Cincinnati Bearcats",
+          "conference": "Big 12",
+          "record": "4-0",
+          "wins": 4,
+          "losses": 0,
+          "sor": 0.4547,
+          "top25_wins": 1,
+          "top50_wins": 1,
+          "best_win": {
+            "opponent": "Kansas State Wildcats",
+            "opponent_rank": 24,
+            "site": "home",
+            "score": "31-26",
+            "played_on": "2026-09-26"
+          },
+          "bad_losses": 0,
+          "worst_loss": null,
+          "conference_champion": false,
+          "power_rank": 46,
+          "power_rating": 13.21,
+          "sos": 7.02,
+          "sor_rank": 14
+        },
+        {
+          "team_key": "ncaaf:259",
+          "team_name": "Virginia Tech Hokies",
+          "conference": "ACC",
+          "record": "4-0",
+          "wins": 4,
+          "losses": 0,
+          "sor": 0.4897,
+          "top25_wins": 0,
+          "top50_wins": 0,
+          "best_win": {
+            "opponent": "Maryland Terrapins",
+            "opponent_rank": 64,
+            "site": "away",
+            "score": "35-26",
+            "played_on": "2026-09-19"
+          },
+          "bad_losses": 0,
+          "worst_loss": null,
+          "conference_champion": false,
+          "power_rank": 51,
+          "power_rating": 12.42,
+          "sos": 7.53,
+          "sor_rank": 16
+        },
+        {
+          "team_key": "ncaaf:154",
+          "team_name": "Wake Forest Demon Deacons",
+          "conference": "ACC",
+          "record": "3-1",
+          "wins": 3,
+          "losses": 1,
+          "sor": 0.5265,
+          "top25_wins": 0,
+          "top50_wins": 1,
+          "best_win": {
+            "opponent": "Louisville Cardinals",
+            "opponent_rank": 27,
+            "site": "away",
+            "score": "30-27",
+            "played_on": "2026-09-26"
+          },
+          "bad_losses": 0,
+          "worst_loss": {
+            "opponent": "Miami Hurricanes",
+            "opponent_rank": 5,
+            "site": "home",
+            "score": "20-33",
+            "played_on": "2026-09-18"
+          },
+          "conference_champion": false,
+          "power_rank": 52,
+          "power_rating": 12.35,
+          "sos": 10.41,
+          "sor_rank": 17
+        },
+        {
+          "team_key": "ncaaf:221",
+          "team_name": "Pittsburgh Panthers",
+          "conference": "ACC",
+          "record": "4-0",
+          "wins": 4,
+          "losses": 0,
+          "sor": 0.5312,
+          "top25_wins": 0,
+          "top50_wins": 1,
+          "best_win": {
+            "opponent": "UCF Knights",
+            "opponent_rank": 44,
+            "site": "home",
+            "score": "12-7",
+            "played_on": "2026-09-12"
+          },
+          "bad_losses": 0,
+          "worst_loss": null,
+          "conference_champion": false,
+          "power_rank": 25,
+          "power_rating": 17.8,
+          "sos": 7.07,
+          "sor_rank": 18
+        }
+      ]
     }
   },
   "results": [
+    {
+      "event_id": "401871048",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "season": 2026,
+      "played_on": "2026-09-26",
+      "kickoff": "2026-09-26T23:00Z",
+      "home": "Jacksonville State Gamecocks",
+      "away": "Middle Tennessee Blue Raiders",
+      "home_score": 23.0,
+      "away_score": 13.0,
+      "margin": 10.0,
+      "winner": "Jacksonville State Gamecocks",
+      "neutral": false,
+      "conference_game": true,
+      "postseason": false
+    },
+    {
+      "event_id": "401870745",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "season": 2026,
+      "played_on": "2026-09-26",
+      "kickoff": "2026-09-26T23:00Z",
+      "home": "Western Kentucky Hilltoppers",
+      "away": "Mercyhurst Lakers",
+      "home_score": 52.0,
+      "away_score": 7.0,
+      "margin": 45.0,
+      "winner": "Western Kentucky Hilltoppers",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401869961",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "season": 2026,
+      "played_on": "2026-09-26",
+      "kickoff": "2026-09-26T22:00Z",
+      "home": "Old Dominion Monarchs",
+      "away": "James Madison Dukes",
+      "home_score": 20.0,
+      "away_score": 46.0,
+      "margin": -26.0,
+      "winner": "James Madison Dukes",
+      "neutral": false,
+      "conference_game": true,
+      "postseason": false
+    },
+    {
+      "event_id": "401869931",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "season": 2026,
+      "played_on": "2026-09-26",
+      "kickoff": "2026-09-26T23:00Z",
+      "home": "Arkansas State Red Wolves",
+      "away": "Kennesaw State Owls",
+      "home_score": 17.0,
+      "away_score": 14.0,
+      "margin": 3.0,
+      "winner": "Arkansas State Red Wolves",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
     {
       "event_id": "401868188",
       "sport": "ncaaf",
@@ -31865,6 +33020,55 @@
         },
         "epa_per_play_margin": -0.0034
       }
+    },
+    {
+      "event_id": "401867909",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "season": 2026,
+      "played_on": "2026-09-26",
+      "kickoff": "2026-09-26T22:00Z",
+      "home": "Florida International Panthers",
+      "away": "Long Island University Sharks",
+      "home_score": 20.0,
+      "away_score": 3.0,
+      "margin": 17.0,
+      "winner": "Florida International Panthers",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false,
+      "play_metrics": {
+        "home": {
+          "plays": 63,
+          "epa_total": 10.29,
+          "epa_per_play": 0.1634,
+          "success_rate": 0.5238
+        },
+        "away": {
+          "plays": 56,
+          "epa_total": -10.04,
+          "epa_per_play": -0.1793,
+          "success_rate": 0.3393
+        },
+        "epa_per_play_margin": 0.3427
+      }
+    },
+    {
+      "event_id": "401866429",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "season": 2026,
+      "played_on": "2026-09-26",
+      "kickoff": "2026-09-27T01:00Z",
+      "home": "Sacramento State Hornets",
+      "away": "Massachusetts Minutemen",
+      "home_score": 6.0,
+      "away_score": 35.0,
+      "margin": -29.0,
+      "winner": "Massachusetts Minutemen",
+      "neutral": false,
+      "conference_game": true,
+      "postseason": false
     },
     {
       "event_id": "401866428",
@@ -32059,6 +33263,23 @@
       }
     },
     {
+      "event_id": "401864572",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "season": 2026,
+      "played_on": "2026-09-26",
+      "kickoff": "2026-09-26T23:30Z",
+      "home": "NC State Wolfpack",
+      "away": "App State Mountaineers",
+      "home_score": 41.0,
+      "away_score": 31.0,
+      "margin": 10.0,
+      "winner": "NC State Wolfpack",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
       "event_id": "401864512",
       "sport": "ncaaf",
       "competition": "NCAAF",
@@ -32155,6 +33376,23 @@
       }
     },
     {
+      "event_id": "401864509",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "season": 2026,
+      "played_on": "2026-09-26",
+      "kickoff": "2026-09-27T02:30Z",
+      "home": "Nevada Wolf Pack",
+      "away": "Air Force Falcons",
+      "home_score": 33.0,
+      "away_score": 36.0,
+      "margin": -3.0,
+      "winner": "Air Force Falcons",
+      "neutral": false,
+      "conference_game": true,
+      "postseason": false
+    },
+    {
       "event_id": "401862785",
       "sport": "ncaaf",
       "competition": "NCAAF",
@@ -32187,6 +33425,57 @@
       }
     },
     {
+      "event_id": "401862784",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "season": 2026,
+      "played_on": "2026-09-26",
+      "kickoff": "2026-09-26T23:00Z",
+      "home": "Tulane Green Wave",
+      "away": "Southern Miss Golden Eagles",
+      "home_score": 24.0,
+      "away_score": 21.0,
+      "margin": 3.0,
+      "winner": "Tulane Green Wave",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401862783",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "season": 2026,
+      "played_on": "2026-09-26",
+      "kickoff": "2026-09-26T23:30Z",
+      "home": "North Texas Mean Green",
+      "away": "Houston Christian Huskies",
+      "home_score": 63.0,
+      "away_score": 14.0,
+      "margin": 49.0,
+      "winner": "North Texas Mean Green",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401862782",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "season": 2026,
+      "played_on": "2026-09-26",
+      "kickoff": "2026-09-27T00:00Z",
+      "home": "UL Monroe Warhawks",
+      "away": "Florida Atlantic Owls",
+      "home_score": 17.0,
+      "away_score": 45.0,
+      "margin": -28.0,
+      "winner": "Florida Atlantic Owls",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
       "event_id": "401862781",
       "sport": "ncaaf",
       "competition": "NCAAF",
@@ -32217,6 +33506,23 @@
         },
         "epa_per_play_margin": 0.4096
       }
+    },
+    {
+      "event_id": "401862780",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "season": 2026,
+      "played_on": "2026-09-26",
+      "kickoff": "2026-09-26T22:30Z",
+      "home": "Charlotte 49ers",
+      "away": "Louisiana Ragin' Cajuns",
+      "home_score": 7.0,
+      "away_score": 34.0,
+      "margin": -27.0,
+      "winner": "Louisiana Ragin' Cajuns",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
     },
     {
       "event_id": "401861970",
@@ -32315,6 +33621,40 @@
       }
     },
     {
+      "event_id": "401860895",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "season": 2026,
+      "played_on": "2026-09-26",
+      "kickoff": "2026-09-27T01:00Z",
+      "home": "UTEP Miners",
+      "away": "Oregon State Beavers",
+      "home_score": 7.0,
+      "away_score": 33.0,
+      "margin": -26.0,
+      "winner": "Oregon State Beavers",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401860894",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "season": 2026,
+      "played_on": "2026-09-26",
+      "kickoff": "2026-09-26T23:30Z",
+      "home": "Utah State Aggies",
+      "away": "Troy Trojans",
+      "home_score": 21.0,
+      "away_score": 10.0,
+      "margin": 11.0,
+      "winner": "Utah State Aggies",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
       "event_id": "401860893",
       "sport": "ncaaf",
       "competition": "NCAAF",
@@ -32345,6 +33685,89 @@
         },
         "epa_per_play_margin": 0.3218
       }
+    },
+    {
+      "event_id": "401860892",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "season": 2026,
+      "played_on": "2026-09-26",
+      "kickoff": "2026-09-26T22:00Z",
+      "home": "Texas State Bobcats",
+      "away": "Incarnate Word Cardinals",
+      "home_score": 63.0,
+      "away_score": 10.0,
+      "margin": 53.0,
+      "winner": "Texas State Bobcats",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false,
+      "play_metrics": {
+        "home": {
+          "plays": 50,
+          "epa_total": 27.92,
+          "epa_per_play": 0.5585,
+          "success_rate": 0.44
+        },
+        "away": {
+          "plays": 69,
+          "epa_total": -14.53,
+          "epa_per_play": -0.2105,
+          "success_rate": 0.3333
+        },
+        "epa_per_play_margin": 0.769
+      }
+    },
+    {
+      "event_id": "401860891",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "season": 2026,
+      "played_on": "2026-09-26",
+      "kickoff": "2026-09-27T02:00Z",
+      "home": "Fresno State Bulldogs",
+      "away": "Rice Owls",
+      "home_score": 38.0,
+      "away_score": 24.0,
+      "margin": 14.0,
+      "winner": "Fresno State Bulldogs",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401858470",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "season": 2026,
+      "played_on": "2026-09-26",
+      "kickoff": "2026-09-27T03:00Z",
+      "home": "Washington Huskies",
+      "away": "Minnesota Golden Gophers",
+      "home_score": 24.0,
+      "away_score": 27.0,
+      "margin": -3.0,
+      "winner": "Minnesota Golden Gophers",
+      "neutral": false,
+      "conference_game": true,
+      "postseason": false
+    },
+    {
+      "event_id": "401858469",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "season": 2026,
+      "played_on": "2026-09-26",
+      "kickoff": "2026-09-26T23:30Z",
+      "home": "USC Trojans",
+      "away": "Oregon Ducks",
+      "home_score": 27.0,
+      "away_score": 41.0,
+      "margin": -14.0,
+      "winner": "Oregon Ducks",
+      "neutral": false,
+      "conference_game": true,
+      "postseason": false
     },
     {
       "event_id": "401858467",
@@ -32440,6 +33863,38 @@
           "success_rate": 0.4878
         },
         "epa_per_play_margin": 0.1812
+      }
+    },
+    {
+      "event_id": "401858464",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "season": 2026,
+      "played_on": "2026-09-26",
+      "kickoff": "2026-09-26T21:00Z",
+      "home": "Michigan State Spartans",
+      "away": "Nebraska Cornhuskers",
+      "home_score": 13.0,
+      "away_score": 31.0,
+      "margin": -18.0,
+      "winner": "Nebraska Cornhuskers",
+      "neutral": false,
+      "conference_game": true,
+      "postseason": false,
+      "play_metrics": {
+        "home": {
+          "plays": 68,
+          "epa_total": -9.07,
+          "epa_per_play": -0.1334,
+          "success_rate": 0.5147
+        },
+        "away": {
+          "plays": 76,
+          "epa_total": 10.17,
+          "epa_per_play": 0.1338,
+          "success_rate": 0.4211
+        },
+        "epa_per_play_margin": -0.2672
       }
     },
     {
@@ -32603,6 +34058,89 @@
       }
     },
     {
+      "event_id": "401858241",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "season": 2026,
+      "played_on": "2026-09-26",
+      "kickoff": "2026-09-27T01:00Z",
+      "home": "SMU Mustangs",
+      "away": "Missouri State Bears",
+      "home_score": 34.0,
+      "away_score": 24.0,
+      "margin": 10.0,
+      "winner": "SMU Mustangs",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401858240",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "season": 2026,
+      "played_on": "2026-09-26",
+      "kickoff": "2026-09-27T02:30Z",
+      "home": "Stanford Cardinal",
+      "away": "Georgia Tech Yellow Jackets",
+      "home_score": 34.0,
+      "away_score": 27.0,
+      "margin": 7.0,
+      "winner": "Stanford Cardinal",
+      "neutral": false,
+      "conference_game": true,
+      "postseason": false
+    },
+    {
+      "event_id": "401858239",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "season": 2026,
+      "played_on": "2026-09-26",
+      "kickoff": "2026-09-26T22:00Z",
+      "home": "Virginia Cavaliers",
+      "away": "Delaware Blue Hens",
+      "home_score": 42.0,
+      "away_score": 3.0,
+      "margin": 39.0,
+      "winner": "Virginia Cavaliers",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false,
+      "play_metrics": {
+        "home": {
+          "plays": 70,
+          "epa_total": 19.96,
+          "epa_per_play": 0.2851,
+          "success_rate": 0.5286
+        },
+        "away": {
+          "plays": 48,
+          "epa_total": -13.42,
+          "epa_per_play": -0.2795,
+          "success_rate": 0.3125
+        },
+        "epa_per_play_margin": 0.5646
+      }
+    },
+    {
+      "event_id": "401858238",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "season": 2026,
+      "played_on": "2026-09-26",
+      "kickoff": "2026-09-26T22:30Z",
+      "home": "Miami Hurricanes",
+      "away": "Central Michigan Chippewas",
+      "home_score": 52.0,
+      "away_score": 3.0,
+      "margin": 49.0,
+      "winner": "Miami Hurricanes",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
       "event_id": "401858237",
       "sport": "ncaaf",
       "competition": "NCAAF",
@@ -32667,6 +34205,23 @@
       }
     },
     {
+      "event_id": "401856881",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "season": 2026,
+      "played_on": "2026-09-26",
+      "kickoff": "2026-09-26T23:00Z",
+      "home": "West Virginia Mountaineers",
+      "away": "Oklahoma State Cowboys",
+      "home_score": 24.0,
+      "away_score": 41.0,
+      "margin": -17.0,
+      "winner": "Oklahoma State Cowboys",
+      "neutral": false,
+      "conference_game": true,
+      "postseason": false
+    },
+    {
       "event_id": "401856816",
       "sport": "ncaaf",
       "competition": "NCAAF",
@@ -32729,6 +34284,23 @@
         },
         "epa_per_play_margin": 0.1067
       }
+    },
+    {
+      "event_id": "401856814",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "season": 2026,
+      "played_on": "2026-09-26",
+      "kickoff": "2026-09-26T23:00Z",
+      "home": "Cincinnati Bearcats",
+      "away": "Kansas State Wildcats",
+      "home_score": 31.0,
+      "away_score": 26.0,
+      "margin": 5.0,
+      "winner": "Cincinnati Bearcats",
+      "neutral": false,
+      "conference_game": true,
+      "postseason": false
     },
     {
       "event_id": "401856813",
@@ -32827,6 +34399,23 @@
       }
     },
     {
+      "event_id": "401856804",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "season": 2026,
+      "played_on": "2026-09-26",
+      "kickoff": "2026-09-26T23:30Z",
+      "home": "Washington State Cougars",
+      "away": "Arizona Wildcats",
+      "home_score": 24.0,
+      "away_score": 34.0,
+      "margin": -10.0,
+      "winner": "Arizona Wildcats",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
       "event_id": "401856704",
       "sport": "ncaaf",
       "competition": "NCAAF",
@@ -32857,6 +34446,40 @@
         },
         "epa_per_play_margin": -0.0318
       }
+    },
+    {
+      "event_id": "401856703",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "season": 2026,
+      "played_on": "2026-09-26",
+      "kickoff": "2026-09-26T23:45Z",
+      "home": "Mississippi State Bulldogs",
+      "away": "Missouri Tigers",
+      "home_score": 31.0,
+      "away_score": 24.0,
+      "margin": 7.0,
+      "winner": "Mississippi State Bulldogs",
+      "neutral": false,
+      "conference_game": true,
+      "postseason": false
+    },
+    {
+      "event_id": "401856702",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "season": 2026,
+      "played_on": "2026-09-26",
+      "kickoff": "2026-09-26T23:30Z",
+      "home": "LSU Tigers",
+      "away": "Texas A&M Aggies",
+      "home_score": 35.0,
+      "away_score": 6.0,
+      "margin": 29.0,
+      "winner": "LSU Tigers",
+      "neutral": false,
+      "conference_game": true,
+      "postseason": false
     },
     {
       "event_id": "401856700",
@@ -32953,6 +34576,40 @@
         },
         "epa_per_play_margin": 0.0039
       }
+    },
+    {
+      "event_id": "401856697",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "season": 2026,
+      "played_on": "2026-09-26",
+      "kickoff": "2026-09-27T00:00Z",
+      "home": "Arkansas Razorbacks",
+      "away": "Tulsa Golden Hurricane",
+      "home_score": 34.0,
+      "away_score": 6.0,
+      "margin": 28.0,
+      "winner": "Arkansas Razorbacks",
+      "neutral": false,
+      "conference_game": false,
+      "postseason": false
+    },
+    {
+      "event_id": "401856696",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "season": 2026,
+      "played_on": "2026-09-26",
+      "kickoff": "2026-09-26T23:10Z",
+      "home": "Alabama Crimson Tide",
+      "away": "South Carolina Gamecocks",
+      "home_score": 49.0,
+      "away_score": 18.0,
+      "margin": 31.0,
+      "winner": "Alabama Crimson Tide",
+      "neutral": false,
+      "conference_game": true,
+      "postseason": false
     },
     {
       "event_id": "401862779",
@@ -50745,8 +52402,8 @@
         "note": null,
         "recorded_at": "2026-09-25T20:54:26.308014+00:00",
         "before_kickoff": true,
-        "outcome": null,
-        "settled_at": null,
+        "outcome": 1,
+        "settled_at": "2026-09-27T17:32:48.933595+00:00",
         "model_probability": 0.2739,
         "market_probability": 0.41961551483041093,
         "model_locked_at": "2026-09-27T16:47:07.086058+00:00",
@@ -50761,8 +52418,8 @@
         "note": null,
         "recorded_at": "2026-09-25T20:54:11.247366+00:00",
         "before_kickoff": true,
-        "outcome": null,
-        "settled_at": null,
+        "outcome": 0,
+        "settled_at": "2026-09-27T17:32:48.933595+00:00",
         "model_probability": 0.0886,
         "market_probability": 0.29737415101831727,
         "model_locked_at": "2026-09-26T23:14:40.052400+00:00",
@@ -50777,8 +52434,8 @@
         "note": null,
         "recorded_at": "2026-09-25T20:53:58.364796+00:00",
         "before_kickoff": true,
-        "outcome": null,
-        "settled_at": null,
+        "outcome": 0,
+        "settled_at": "2026-09-27T17:32:48.932599+00:00",
         "model_probability": 0.3872,
         "market_probability": 0.37969104323067154,
         "model_locked_at": "2026-09-26T22:42:28.799950+00:00",
@@ -50793,8 +52450,8 @@
         "note": null,
         "recorded_at": "2026-09-25T20:54:02.022783+00:00",
         "before_kickoff": true,
-        "outcome": null,
-        "settled_at": null,
+        "outcome": 1,
+        "settled_at": "2026-09-27T17:32:48.932599+00:00",
         "model_probability": 0.3861,
         "market_probability": 0.7453274841825804,
         "model_locked_at": "2026-09-26T22:42:28.799950+00:00",
@@ -50809,8 +52466,8 @@
         "note": null,
         "recorded_at": "2026-09-25T20:53:43.180574+00:00",
         "before_kickoff": true,
-        "outcome": null,
-        "settled_at": null,
+        "outcome": 1,
+        "settled_at": "2026-09-27T17:32:48.932599+00:00",
         "model_probability": 0.2376,
         "market_probability": 0.4645073773572965,
         "model_locked_at": "2026-09-26T22:00:39.810720+00:00",
@@ -50825,8 +52482,8 @@
         "note": null,
         "recorded_at": "2026-09-25T20:53:51.729519+00:00",
         "before_kickoff": true,
-        "outcome": null,
-        "settled_at": null,
+        "outcome": 0,
+        "settled_at": "2026-09-27T17:32:48.932599+00:00",
         "model_probability": 0.5303,
         "market_probability": 0.6727050681037872,
         "model_locked_at": "2026-09-26T22:00:39.810720+00:00",
@@ -50857,8 +52514,8 @@
         "note": null,
         "recorded_at": "2026-09-25T20:53:29.118408+00:00",
         "before_kickoff": true,
-        "outcome": null,
-        "settled_at": null,
+        "outcome": 0,
+        "settled_at": "2026-09-27T17:32:48.932599+00:00",
         "model_probability": 0.3837,
         "market_probability": 0.33270429002549223,
         "model_locked_at": "2026-09-26T20:31:47.750893+00:00",
@@ -51442,12 +53099,12 @@
       }
     ],
     "record": {
-      "graded_before_kickoff": 30,
-      "wins": 22,
-      "losses": 8,
-      "hit_rate_pct": 73.3,
-      "model_agreed_on": 23,
-      "model_disagreed_on": 7
+      "graded_before_kickoff": 37,
+      "wins": 25,
+      "losses": 12,
+      "hit_rate_pct": 67.6,
+      "model_agreed_on": 24,
+      "model_disagreed_on": 13
     },
     "excluded": {
       "recorded_after_kickoff": 7,
@@ -51582,7 +53239,7 @@
       "ncaaf",
       "ncaam"
     ],
-    "results": 301,
+    "results": 331,
     "fixtures": 663
   },
   "publication": {
@@ -51603,79 +53260,79 @@
           "duplicate_cards_not_counted": 164,
           "fbs_versus_fcs_not_counted": 218,
           "locked_selections": 476,
-          "graded_selections": 414,
-          "awaiting_result": 62
+          "graded_selections": 472,
+          "awaiting_result": 4
         },
         "record": {
-          "picks": 207,
-          "wins": 165,
-          "losses": 42,
-          "hit_rate_pct": 79.7,
-          "expected_hit_rate_pct": 78.8,
-          "calibration_gap_points": 0.9,
+          "picks": 236,
+          "wins": 185,
+          "losses": 51,
+          "hit_rate_pct": 78.4,
+          "expected_hit_rate_pct": 78.5,
+          "calibration_gap_points": -0.1,
           "confidence_interval_pct": [
-            73.7,
-            84.6
+            72.7,
+            83.2
           ]
         },
         "versus_market": {
-          "graded_priced_selections": 358,
-          "beat_market_pct": 49.7,
+          "graded_priced_selections": 408,
+          "beat_market_pct": 49.5,
           "beat_market": {
-            "picks": 358,
-            "wins": 178,
-            "losses": 180,
+            "picks": 408,
+            "wins": 202,
+            "losses": 206,
             "ties": 0,
-            "hit_rate_pct": 49.7,
+            "hit_rate_pct": 49.5,
             "expected_hit_rate_pct": 50.0,
-            "calibration_gap_points": -0.3,
+            "calibration_gap_points": -0.5,
             "confidence_interval_pct": [
-              44.6,
-              54.9
+              44.7,
+              54.3
             ],
             "basis": "Brier score on the same selection, model versus the no-vig price at the lock deadline. A tie counts as not beating it."
           },
           "agreed_with_market": {
-            "picks": 159,
-            "wins": 137,
-            "losses": 22,
-            "hit_rate_pct": 86.2,
-            "expected_hit_rate_pct": 79.8,
-            "calibration_gap_points": 6.4,
+            "picks": 180,
+            "wins": 154,
+            "losses": 26,
+            "hit_rate_pct": 85.6,
+            "expected_hit_rate_pct": 79.5,
+            "calibration_gap_points": 6.1,
             "confidence_interval_pct": [
-              79.9,
-              90.7
+              79.7,
+              89.9
             ]
           },
           "disagreed_with_market": {
-            "picks": 23,
+            "picks": 27,
             "wins": 9,
-            "losses": 14,
-            "hit_rate_pct": 39.1,
-            "expected_hit_rate_pct": 64.6,
-            "calibration_gap_points": -25.4,
+            "losses": 18,
+            "hit_rate_pct": 33.3,
+            "expected_hit_rate_pct": 64.1,
+            "calibration_gap_points": -30.8,
             "confidence_interval_pct": [
-              22.2,
-              59.2
+              18.6,
+              52.2
             ]
           },
-          "disagreement_share_pct": 12.6,
+          "disagreement_share_pct": 13.0,
           "basis": "no-vig consensus as it stood at the lock deadline, not the closing price"
         },
         "conviction": {
           "available": true,
-          "underdog_lift_points": 4.9,
-          "contested_underdogs": 60,
+          "underdog_lift_points": 5.0,
+          "contested_underdogs": 71,
           "contested_band_pct": [
             30.0,
             50.0
           ],
-          "mean_divergence_points": 8.8,
+          "mean_divergence_points": 9.3,
           "outright_disagreements": {
-            "picks": 21,
+            "picks": 25,
             "wins": 7,
-            "losses": 14,
-            "hit_rate_pct": 33.3
+            "losses": 18,
+            "hit_rate_pct": 28.0
           },
           "boldest_calls": [
             {
@@ -51685,6 +53342,15 @@
               "model_pct": 83.0,
               "market_pct": 42.9,
               "divergence_points": 40.1,
+              "result": "loss"
+            },
+            {
+              "event_name": "UMass Minutemen at Sacramento State Hornets",
+              "selection": "Sacramento State Hornets",
+              "starts_at": "2026-09-27T01:00:00Z",
+              "model_pct": 75.6,
+              "market_pct": 35.8,
+              "divergence_points": 39.8,
               "result": "loss"
             },
             {
@@ -51712,6 +53378,15 @@
               "model_pct": 62.1,
               "market_pct": 23.6,
               "divergence_points": 38.5,
+              "result": "loss"
+            },
+            {
+              "event_name": "Texas A&M Aggies at LSU Tigers",
+              "selection": "Texas A&M Aggies",
+              "starts_at": "2026-09-26T23:30:00Z",
+              "model_pct": 61.4,
+              "market_pct": 25.5,
+              "divergence_points": 35.9,
               "result": "loss"
             },
             {
@@ -51749,24 +53424,6 @@
               "market_pct": 45.8,
               "divergence_points": 28.0,
               "result": "win"
-            },
-            {
-              "event_name": "Ohio State Buckeyes at Texas Longhorns",
-              "selection": "Ohio State Buckeyes",
-              "starts_at": "2026-09-12T23:30:00Z",
-              "model_pct": 74.2,
-              "market_pct": 47.8,
-              "divergence_points": 26.4,
-              "result": "loss"
-            },
-            {
-              "event_name": "James Madison Dukes at San Diego State Aztecs",
-              "selection": "James Madison Dukes",
-              "starts_at": "2026-09-20T02:00:00Z",
-              "model_pct": 72.7,
-              "market_pct": 46.4,
-              "divergence_points": 26.3,
-              "result": "win"
             }
           ],
           "basis": "no-vig consensus at the lock deadline, not the closing price"
@@ -51774,38 +53431,38 @@
         "by_confidence": [
           {
             "band": "50–60%",
-            "picks": 38,
-            "hit_rate_pct": 57.9,
-            "expected_hit_rate_pct": 55.6,
-            "calibration_gap_points": 2.2
+            "picks": 42,
+            "hit_rate_pct": 54.8,
+            "expected_hit_rate_pct": 55.5,
+            "calibration_gap_points": -0.8
           },
           {
             "band": "60–70%",
-            "picks": 29,
-            "hit_rate_pct": 58.6,
-            "expected_hit_rate_pct": 64.6,
-            "calibration_gap_points": -6.0
+            "picks": 35,
+            "hit_rate_pct": 62.9,
+            "expected_hit_rate_pct": 64.5,
+            "calibration_gap_points": -1.6
           },
           {
             "band": "70–80%",
-            "picks": 31,
-            "hit_rate_pct": 87.1,
+            "picks": 38,
+            "hit_rate_pct": 78.9,
             "expected_hit_rate_pct": 74.7,
-            "calibration_gap_points": 12.4
+            "calibration_gap_points": 4.2
           },
           {
             "band": "80–90%",
-            "picks": 42,
-            "hit_rate_pct": 88.1,
-            "expected_hit_rate_pct": 85.5,
-            "calibration_gap_points": 2.6
+            "picks": 47,
+            "hit_rate_pct": 87.2,
+            "expected_hit_rate_pct": 85.4,
+            "calibration_gap_points": 1.9
           },
           {
             "band": "90–100%",
-            "picks": 67,
-            "hit_rate_pct": 92.5,
+            "picks": 74,
+            "hit_rate_pct": 93.2,
             "expected_hit_rate_pct": 95.9,
-            "calibration_gap_points": -3.3
+            "calibration_gap_points": -2.7
           }
         ],
         "recent": [
@@ -51816,8 +53473,8 @@
             "selection": "Washington Huskies",
             "probability_pct": 85.0,
             "market_probability_pct": 79.1,
-            "result": "pending",
-            "score": null
+            "result": "loss",
+            "score": "24–27"
           },
           {
             "event_name": "Air Force Falcons at Nevada Wolf Pack",
@@ -51826,8 +53483,8 @@
             "selection": "Air Force Falcons",
             "probability_pct": 60.1,
             "market_probability_pct": 67.1,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "33–36"
           },
           {
             "event_name": "Georgia Tech Yellow Jackets at Stanford Cardinal",
@@ -51836,8 +53493,8 @@
             "selection": "Georgia Tech Yellow Jackets",
             "probability_pct": 72.6,
             "market_probability_pct": 58.0,
-            "result": "pending",
-            "score": null
+            "result": "loss",
+            "score": "34–27"
           },
           {
             "event_name": "Rice Owls at Fresno State Bulldogs",
@@ -51846,8 +53503,8 @@
             "selection": "Fresno State Bulldogs",
             "probability_pct": 91.9,
             "market_probability_pct": 80.9,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "38–24"
           },
           {
             "event_name": "Massachusetts Minutemen at Sacramento State Hornets",
@@ -51856,8 +53513,8 @@
             "selection": "Sacramento State Hornets",
             "probability_pct": 75.6,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "loss",
+            "score": "6–35"
           },
           {
             "event_name": "UMass Minutemen at Sacramento State Hornets",
@@ -51866,8 +53523,8 @@
             "selection": "Sacramento State Hornets",
             "probability_pct": 75.6,
             "market_probability_pct": 35.8,
-            "result": "pending",
-            "score": null
+            "result": "loss",
+            "score": "6–35"
           },
           {
             "event_name": "Oregon State Beavers at UTEP Miners",
@@ -51876,8 +53533,8 @@
             "selection": "Oregon State Beavers",
             "probability_pct": 54.9,
             "market_probability_pct": 78.7,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "7–33"
           },
           {
             "event_name": "Missouri State Bears at SMU Mustangs",
@@ -51886,8 +53543,8 @@
             "selection": "SMU Mustangs",
             "probability_pct": 98.3,
             "market_probability_pct": 95.8,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "34–24"
           },
           {
             "event_name": "Tulsa Golden Hurricane at Arkansas Razorbacks",
@@ -51896,8 +53553,8 @@
             "selection": "Arkansas Razorbacks",
             "probability_pct": 91.1,
             "market_probability_pct": 70.3,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "34–6"
           },
           {
             "event_name": "Florida Atlantic Owls at UL Monroe Warhawks",
@@ -51906,8 +53563,8 @@
             "selection": "Florida Atlantic Owls",
             "probability_pct": 71.3,
             "market_probability_pct": 79.2,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "17–45"
           },
           {
             "event_name": "Missouri Tigers at Mississippi State Bulldogs",
@@ -51916,8 +53573,8 @@
             "selection": "Missouri Tigers",
             "probability_pct": 55.6,
             "market_probability_pct": 38.9,
-            "result": "pending",
-            "score": null
+            "result": "loss",
+            "score": "31–24"
           },
           {
             "event_name": "App State Mountaineers at NC State Wolfpack",
@@ -51926,8 +53583,8 @@
             "selection": "NC State Wolfpack",
             "probability_pct": 96.8,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "41–31"
           },
           {
             "event_name": "Appalachian State Mountaineers at NC State Wolfpack",
@@ -51936,8 +53593,8 @@
             "selection": "NC State Wolfpack",
             "probability_pct": 96.8,
             "market_probability_pct": 80.8,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "41–31"
           },
           {
             "event_name": "Troy Trojans at Utah State Aggies",
@@ -51946,8 +53603,8 @@
             "selection": "Utah State Aggies",
             "probability_pct": 67.3,
             "market_probability_pct": 56.9,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "21–10"
           },
           {
             "event_name": "Arizona Wildcats at Washington State Cougars",
@@ -51956,8 +53613,8 @@
             "selection": "Arizona Wildcats",
             "probability_pct": 85.3,
             "market_probability_pct": 77.6,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "24–34"
           },
           {
             "event_name": "Oregon Ducks at USC Trojans",
@@ -51966,8 +53623,8 @@
             "selection": "Oregon Ducks",
             "probability_pct": 61.3,
             "market_probability_pct": 62.0,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "27–41"
           },
           {
             "event_name": "Texas A&M Aggies at LSU Tigers",
@@ -51976,8 +53633,8 @@
             "selection": "Texas A&M Aggies",
             "probability_pct": 61.4,
             "market_probability_pct": 25.5,
-            "result": "pending",
-            "score": null
+            "result": "loss",
+            "score": "35–6"
           },
           {
             "event_name": "Southern Miss Golden Eagles at Tulane Green Wave",
@@ -51986,8 +53643,8 @@
             "selection": "Tulane Green Wave",
             "probability_pct": 82.1,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "24–21"
           },
           {
             "event_name": "Middle Tennessee Blue Raiders at Jacksonville State Gamecocks",
@@ -51996,8 +53653,8 @@
             "selection": "Jacksonville State Gamecocks",
             "probability_pct": 77.1,
             "market_probability_pct": 71.4,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "23–13"
           },
           {
             "event_name": "South Carolina Gamecocks at Alabama Crimson Tide",
@@ -52006,8 +53663,8 @@
             "selection": "Alabama Crimson Tide",
             "probability_pct": 86.2,
             "market_probability_pct": 80.1,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "49–18"
           },
           {
             "event_name": "Kennesaw State Owls at Arkansas State Red Wolves",
@@ -52016,8 +53673,8 @@
             "selection": "Kennesaw State Owls",
             "probability_pct": 53.9,
             "market_probability_pct": 31.8,
-            "result": "pending",
-            "score": null
+            "result": "loss",
+            "score": "17–14"
           },
           {
             "event_name": "Oklahoma State Cowboys at West Virginia Mountaineers",
@@ -52026,8 +53683,8 @@
             "selection": "West Virginia Mountaineers",
             "probability_pct": 76.2,
             "market_probability_pct": 53.5,
-            "result": "pending",
-            "score": null
+            "result": "loss",
+            "score": "24–41"
           },
           {
             "event_name": "Southern Mississippi Golden Eagles at Tulane Green Wave",
@@ -52036,8 +53693,8 @@
             "selection": "Tulane Green Wave",
             "probability_pct": 82.1,
             "market_probability_pct": 88.3,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "24–21"
           },
           {
             "event_name": "Kansas State Wildcats at Cincinnati Bearcats",
@@ -52046,8 +53703,8 @@
             "selection": "Kansas State Wildcats",
             "probability_pct": 53.0,
             "market_probability_pct": 67.3,
-            "result": "pending",
-            "score": null
+            "result": "loss",
+            "score": "31–26"
           },
           {
             "event_name": "Central Michigan Chippewas at Miami Hurricanes",
@@ -52056,8 +53713,8 @@
             "selection": "Miami Hurricanes",
             "probability_pct": 99.9,
             "market_probability_pct": null,
-            "result": "pending",
-            "score": null
+            "result": "win",
+            "score": "52–3"
           }
         ],
         "reportable": true,

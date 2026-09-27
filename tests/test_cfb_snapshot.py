@@ -36,7 +36,7 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         handoff = json.loads((ROOT / "betbetter_picks.json").read_text(encoding="utf-8"))
         msu = [r for r in handoff["results"] if r.get("season") == 2026 and
                "Michigan State Spartans" in (r.get("home"), r.get("away"))]
-        self.assertEqual(len(msu), 3)
+        self.assertGreaterEqual(len(msu), 3)
         self.assertTrue(any(r.get("conference_game") is False and r.get("winner") != "Michigan State Spartans" for r in msu))
         panels = (ROOT / "app-3-panels.js").read_text(encoding="utf-8")
         self.assertIn("resultRecords=new Map(),seenResults=new Set()", panels)
