@@ -70,8 +70,8 @@ try {
     if ($SkipRefresh) { Say 'skipping Bet Better refresh (-SkipRefresh)' } else {
         # refresh exits 1 when a backlog remains (e.g. a late game with no
         # play-by-play yet); that is reported, not fatal.
-        Run 'refresh run' $BetBetter $PythonPath @('-m','betbetter','refresh','run','--handoff','') -Soft
-        Run 'forecast slate' $BetBetter $PythonPath @('-m','betbetter','forecast','slate') -Soft
+        Run 'refresh run' $BetBetter $PythonPath @('-m','betbetter','refresh','run','--handoff=') -Soft
+        Run 'forecast slate' $BetBetter $PythonPath @('-m','betbetter','forecast','slate','--sport','ncaaf') -Soft
         Run 'upset settle' $BetBetter $PythonPath @('-m','betbetter','upset','settle') -Soft
         Run "upset publish (as of $asOf)" $BetBetter $PythonPath @('-m','betbetter','upset','publish','--as-of',$asOf) -Soft
         Run 'matchday export' $BetBetter $PythonPath @('-m','betbetter','matchday','export','--out','betbetter_picks.json')

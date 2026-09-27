@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0927W",
+  "tag": "Fix",
+  "title": "Sunday update runs the refresh it was skipping",
+  "items": [
+   "The weekly Bet Better refresh had been failing on Windows before doing any work, so results and ratings were not updated; it now runs.",
+   "The weekly forecast step covers football only for now, which cuts it from hours to about 40 minutes."
+  ]
+ },
+ {
   "date": "Build 0927V",
   "tag": "Fix",
   "title": "Projected score reads the same way as the matchup",
