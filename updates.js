@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0927T",
+  "tag": "Fix",
+  "title": "Team comparison starts closed",
+  "items": [
+   "The expanded view no longer opens with the team comparison already expanded; it starts closed like Market and More detail."
+  ]
+ },
+ {
   "date": "Build 0927S",
   "tag": "Fix",
   "title": "Model–market watch matches the live model",

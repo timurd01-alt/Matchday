@@ -282,7 +282,8 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         details = panels[panels.index("function details(m){"):panels.index("/* dedup */", panels.index("function details(m){"))]
         self.assertIn('class="expandedDecision"', details)
         self.assertNotIn("matchupWhyPanel", details)
-        self.assertIn("comparison,true", details)
+        # Every evidence section starts closed; the pick leads (owner request 2026-09-27).
+        self.assertNotIn("comparison,true", details)
         for section in ("Team comparison", "Market", "More detail"):
             self.assertIn(section, details)
         self.assertIn('details class="matchEvidence"', panels)
