@@ -1,7 +1,7 @@
 {
   "handoff_version": 11,
   "source": "betbetter",
-  "generated_at": "2026-09-27T17:41:14.536160+00:00",
+  "generated_at": "2026-09-27T17:57:25.082346+00:00",
   "sports": [
     "ncaaf",
     "ncaam"
@@ -31864,10 +31864,10 @@
             "sos": 16.68,
             "sor_rank": 1
           },
-          "previous_rank": null,
+          "previous_rank": 1,
           "power_rating_published_on": "2026-09-27",
-          "movement": null,
-          "first_ballot": true
+          "movement": 0,
+          "first_ballot": false
         },
         {
           "rank": 2,
@@ -31899,10 +31899,10 @@
             "sos": 10.99,
             "sor_rank": 6
           },
-          "previous_rank": null,
+          "previous_rank": 2,
           "power_rating_published_on": "2026-09-27",
-          "movement": null,
-          "first_ballot": true
+          "movement": 0,
+          "first_ballot": false
         },
         {
           "rank": 3,
@@ -31934,10 +31934,10 @@
             "sos": 9.53,
             "sor_rank": 13
           },
-          "previous_rank": null,
+          "previous_rank": 3,
           "power_rating_published_on": "2026-09-27",
-          "movement": null,
-          "first_ballot": true
+          "movement": 0,
+          "first_ballot": false
         },
         {
           "rank": 4,
@@ -31969,10 +31969,10 @@
             "sos": 10.77,
             "sor_rank": 9
           },
-          "previous_rank": null,
+          "previous_rank": 6,
           "power_rating_published_on": "2026-09-27",
-          "movement": null,
-          "first_ballot": true
+          "movement": 2,
+          "first_ballot": false
         },
         {
           "rank": 5,
@@ -32010,10 +32010,10 @@
             "sos": 12.49,
             "sor_rank": 32
           },
-          "previous_rank": null,
+          "previous_rank": 5,
           "power_rating_published_on": "2026-09-27",
-          "movement": null,
-          "first_ballot": true
+          "movement": 0,
+          "first_ballot": false
         },
         {
           "rank": 6,
@@ -32045,10 +32045,10 @@
             "sos": 10.06,
             "sor_rank": 19
           },
-          "previous_rank": null,
+          "previous_rank": 7,
           "power_rating_published_on": "2026-09-27",
-          "movement": null,
-          "first_ballot": true
+          "movement": 1,
+          "first_ballot": false
         },
         {
           "rank": 7,
@@ -32080,10 +32080,10 @@
             "sos": 12.38,
             "sor_rank": 3
           },
-          "previous_rank": null,
+          "previous_rank": 18,
           "power_rating_published_on": "2026-09-27",
-          "movement": null,
-          "first_ballot": true
+          "movement": 11,
+          "first_ballot": false
         },
         {
           "rank": 8,
@@ -32115,10 +32115,10 @@
             "sos": 14.6,
             "sor_rank": 5
           },
-          "previous_rank": null,
+          "previous_rank": 8,
           "power_rating_published_on": "2026-09-27",
-          "movement": null,
-          "first_ballot": true
+          "movement": 0,
+          "first_ballot": false
         },
         {
           "rank": 9,
@@ -32156,10 +32156,10 @@
             "sos": 13.64,
             "sor_rank": 15
           },
-          "previous_rank": null,
+          "previous_rank": 4,
           "power_rating_published_on": "2026-09-27",
-          "movement": null,
-          "first_ballot": true
+          "movement": -5,
+          "first_ballot": false
         },
         {
           "rank": 10,
@@ -32191,10 +32191,10 @@
             "sos": 8.33,
             "sor_rank": 21
           },
-          "previous_rank": null,
+          "previous_rank": 11,
           "power_rating_published_on": "2026-09-27",
-          "movement": null,
-          "first_ballot": true
+          "movement": 1,
+          "first_ballot": false
         },
         {
           "rank": 11,
@@ -32226,10 +32226,10 @@
             "sos": 7.52,
             "sor_rank": 23
           },
-          "previous_rank": null,
+          "previous_rank": 9,
           "power_rating_published_on": "2026-09-27",
-          "movement": null,
-          "first_ballot": true
+          "movement": -2,
+          "first_ballot": false
         },
         {
           "rank": 12,
@@ -32267,10 +32267,10 @@
             "sos": 14.1,
             "sor_rank": 11
           },
-          "previous_rank": null,
+          "previous_rank": 12,
           "power_rating_published_on": "2026-09-27",
-          "movement": null,
-          "first_ballot": true
+          "movement": 0,
+          "first_ballot": false
         },
         {
           "rank": 13,
@@ -32302,10 +32302,10 @@
             "sos": 8.96,
             "sor_rank": 7
           },
-          "previous_rank": null,
+          "previous_rank": 13,
           "power_rating_published_on": "2026-09-27",
-          "movement": null,
-          "first_ballot": true
+          "movement": 0,
+          "first_ballot": false
         },
         {
           "rank": 14,
@@ -32337,10 +32337,10 @@
             "sos": 10.02,
             "sor_rank": 4
           },
-          "previous_rank": null,
+          "previous_rank": 15,
           "power_rating_published_on": "2026-09-27",
-          "movement": null,
-          "first_ballot": true
+          "movement": 1,
+          "first_ballot": false
         },
         {
           "rank": 15,
@@ -32378,10 +32378,10 @@
             "sos": 10.02,
             "sor_rank": 30
           },
-          "previous_rank": null,
+          "previous_rank": 17,
           "power_rating_published_on": "2026-09-27",
-          "movement": null,
-          "first_ballot": true
+          "movement": 2,
+          "first_ballot": false
         },
         {
           "rank": 16,
@@ -32422,7 +32422,7 @@
           "previous_rank": null,
           "power_rating_published_on": "2026-09-27",
           "movement": null,
-          "first_ballot": true
+          "first_ballot": false
         },
         {
           "rank": 17,
@@ -32460,10 +32460,10 @@
             "sos": 12.41,
             "sor_rank": 27
           },
-          "previous_rank": null,
+          "previous_rank": 10,
           "power_rating_published_on": "2026-09-27",
-          "movement": null,
-          "first_ballot": true
+          "movement": -7,
+          "first_ballot": false
         },
         {
           "rank": 18,
@@ -32495,10 +32495,10 @@
             "sos": 11.82,
             "sor_rank": 2
           },
-          "previous_rank": null,
+          "previous_rank": 20,
           "power_rating_published_on": "2026-09-27",
-          "movement": null,
-          "first_ballot": true
+          "movement": 2,
+          "first_ballot": false
         },
         {
           "rank": 19,
@@ -32536,10 +32536,10 @@
             "sos": 12.33,
             "sor_rank": 20
           },
-          "previous_rank": null,
+          "previous_rank": 21,
           "power_rating_published_on": "2026-09-27",
-          "movement": null,
-          "first_ballot": true
+          "movement": 2,
+          "first_ballot": false
         },
         {
           "rank": 20,
@@ -32577,10 +32577,10 @@
             "sos": 8.07,
             "sor_rank": 49
           },
-          "previous_rank": null,
+          "previous_rank": 22,
           "power_rating_published_on": "2026-09-27",
-          "movement": null,
-          "first_ballot": true
+          "movement": 2,
+          "first_ballot": false
         },
         {
           "rank": 21,
@@ -32618,10 +32618,10 @@
             "sos": 7.96,
             "sor_rank": 35
           },
-          "previous_rank": null,
+          "previous_rank": 23,
           "power_rating_published_on": "2026-09-27",
-          "movement": null,
-          "first_ballot": true
+          "movement": 2,
+          "first_ballot": false
         },
         {
           "rank": 22,
@@ -32659,10 +32659,10 @@
             "sos": 10.97,
             "sor_rank": 53
           },
-          "previous_rank": null,
+          "previous_rank": 14,
           "power_rating_published_on": "2026-09-27",
-          "movement": null,
-          "first_ballot": true
+          "movement": -8,
+          "first_ballot": false
         },
         {
           "rank": 23,
@@ -32694,10 +32694,10 @@
             "sos": 7.92,
             "sor_rank": 8
           },
-          "previous_rank": null,
+          "previous_rank": 25,
           "power_rating_published_on": "2026-09-27",
-          "movement": null,
-          "first_ballot": true
+          "movement": 2,
+          "first_ballot": false
         },
         {
           "rank": 24,
@@ -32732,7 +32732,7 @@
           "previous_rank": null,
           "power_rating_published_on": "2026-09-27",
           "movement": null,
-          "first_ballot": true
+          "first_ballot": false
         },
         {
           "rank": 25,
@@ -32773,7 +32773,7 @@
           "previous_rank": null,
           "power_rating_published_on": "2026-09-27",
           "movement": null,
-          "first_ballot": true
+          "first_ballot": false
         }
       ],
       "warnings": [
