@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0927Z",
+  "tag": "Change",
+  "title": "Alerts stay in the bell",
+  "items": [
+   "Final-score and kickoff alerts no longer appear as a pill above every tab; they remain in the bell menu."
+  ]
+ },
+ {
   "date": "Build 0927Y",
   "tag": "Fix",
   "title": "Every page opens at the top",
