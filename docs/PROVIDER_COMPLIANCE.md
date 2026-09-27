@@ -1,5 +1,15 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-09-27 (NCAAF roster tiers return to the expanded view's roster
+card. Source: the 247Sports Team Talent Composite via the already-licensed
+CollegeFootballData `/talent` endpoint, at most one request per season and none
+once `roster_talent.json` holds the season. Only a derived tier label per FBS
+team (Elite / Strong / Average / Below average / Weak, by rank among FBS teams)
+is stored or displayed -- never the raw composite score. The first edition was
+built from Bet Better's already-licensed 2025 composite snapshot (CFBD's monthly
+quota was exhausted), so it made no request; the card cites the source and the
+composite season.)
+
 Reviewed: 2026-09-26 (NCAAM bracketology presentation consumes only the owner-
 authorized Bet Better derived handoff. No new provider calls, raw statistics
 feed, sportsbook content or new logos. Explicit local mock data is excluded

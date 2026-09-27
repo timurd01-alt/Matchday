@@ -28,6 +28,7 @@ import sys
 
 import betbetter_handoff
 import ap_poll
+import roster_talent
 
 SNAPSHOT = pathlib.Path("matchday-cfb-snapshot.js")
 BEGIN = "  /* BEGIN GENERATED RANKINGS -- build_cfb_snapshot.py */"
@@ -352,6 +353,12 @@ def build(path: pathlib.Path = SNAPSHOT) -> str:
     # The marquee game. Distinct from the upset: that one is the model's most
     # contrarian call and carries the inverted-sign warning, this one is simply
     # the best matchup on the board and is not selected on the market at all.
+    # Roster talent tiers (derived labels only; see roster_talent.py). Empty
+    # when no tiers are stored, and the roster card then says so.
+    talent = roster_talent.load()
+    blocks.append("  const MATCHDAY_ROSTER_TIERS="
+                  + json.dumps({k: talent.get(k) for k in ("season", "composite_season", "source", "tiers")},
+                               ensure_ascii=False) + ";")
     blocks.append("  const MATCHDAY_BETBETTER_GAME_OF_THE_WEEK="
                   + json.dumps(document.get("game_of_the_week") or {},
                                ensure_ascii=False) + ";")

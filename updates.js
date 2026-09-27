@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0927AA",
+  "tag": "Fix",
+  "title": "Real roster grades in the expanded view",
+  "items": [
+   "The roster card showed “Even roster grade” for every team in every game. It now shows each team’s talent tier — Elite, Strong, Average, Below average or Weak — from the 247Sports Team Talent Composite (via CollegeFootballData), ranked among FBS teams.",
+   "Teams without a tier say so instead of showing a placeholder."
+  ]
+ },
+ {
   "date": "Build 0927Z",
   "tag": "Change",
   "title": "Alerts stay in the bell",

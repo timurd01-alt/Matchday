@@ -1223,20 +1223,31 @@ function rosterPlayer(p){
   return `<div class="rosterPlayer"><span class="rosterPos">${esc(pos||num||'—')}</span><b>${esc(p?.name||p?.shortName||p?.athlete?.displayName||'Player')}</b>${status&&status!=='ACT'?`<em>${esc(status)}</em>`:''}</div>`;
 }
 function rosterTeamCard(team,players,summary){
-  return `<section class="rosterTeam"><div class="rosterTeamHead"><div><span>${esc(team?.code||'TEAM')}</span><b>${esc(team?.name||'Team')}</b></div><em>${players.length?`${players.length} listed`:'Roster profile'}</em></div>${players.length?`<div class="rosterPlayers">${players.map(rosterPlayer).join('')}</div>`:`<div class="rosterSummary"><b>${esc(summary.title)}</b><span>${esc(summary.note)}</span></div>`}</section>`;
+  return `<section class="rosterTeam"><div class="rosterTeamHead"><div><span>${esc(team?.code||'TEAM')}</span><b>${esc(team?.name||'Team')}</b></div><em>${players.length?`${players.length} listed`:'Roster profile'}</em></div>${players.length?`<div class="rosterPlayers">${players.map(rosterPlayer).join('')}</div>`:`<div class="rosterSummary"><b>${esc(summary.title)}</b>${summary.note?`<span>${esc(summary.note)}</span>`:''}</div>`}</section>`;
 }
 function rosterPanel(m){
   const depth=m.personnel?.depth_chart||{},lineups=m.lineups||{};
   const rosterPlayers=raw=>(raw||[]).map(p=>({...normalizePlayer(p),position:p?.position||'',roster_status:p?.roster_status||''})).filter(p=>p.name);
   const homePlayers=rosterPlayers(depth.home?.players||lineups.home?.xi||[]);
   const awayPlayers=rosterPlayers(depth.away?.players||lineups.away?.xi||[]);
-  const meta=sportClassMeta({},m),edge=0;
-  const label=meta.label||'Roster profile',source=meta.source?`Source: ${meta.source}`:(meta.note||'Built from the roster information available to Matchday.');
-  const homeTitle=edge>0.05?'Stronger roster':edge<-.05?'Lighter roster':'Even roster grade';
-  const awayTitle=edge<-.05?'Stronger roster':edge>.05?'Lighter roster':'Even roster grade';
+  const meta=sportClassMeta({},m);
+  // Roster talent tier per team, derived from the 247Sports Team Talent
+  // Composite (roster_talent.py). The old card compared an edge hard-coded to
+  // zero, so every game read "Even roster grade".
+  const RT=(typeof MATCHDAY_ROSTER_TIERS!=='undefined'&&MATCHDAY_ROSTER_TIERS)||{};
+  // Closest match wins: "Florida" must find Florida Gators, not the first
+  // "Florida ..." key (Florida Atlantic). Fewest words, and only if unique.
+  const tierFor=name=>{const tiers=RT.tiers||{};const hits=Object.keys(tiers).filter(k=>bbNameMatches(k,name||''));
+    if(!hits.length)return null;const len=k=>k.split(/\s+/).length,min=Math.min(...hits.map(len)),best=hits.filter(k=>len(k)===min);
+    return best.length===1?tiers[best[0]]:null};
+  const label=meta.label||'Roster profile';
+  const source=RT.source?`${RT.source}, ${RT.composite_season||RT.season}.`:'Roster grade unavailable for this game.';
+  const homeTier=tierFor(m.home?.name),awayTier=tierFor(m.away?.name);
+  const homeTitle=homeTier?`${homeTier} roster`:'Roster grade unavailable';
+  const awayTitle=awayTier?`${awayTier} roster`:'Roster grade unavailable';
   const available=homePlayers.length||awayPlayers.length||meta.coverage!=='unavailable';
   if(!available)return `<div class="lineupBoard rosterBoard"><div class="seclbl">Overall roster</div><div class="emptyStats"><b>Roster profile unavailable</b><span>Matchday does not have a verified roster source for this competition yet.</span></div></div>`;
-  return `<div class="lineupBoard rosterBoard"><div class="rosterBoardTitle"><div><span class="seclbl">Overall roster</span><b>${esc(label)}</b></div><small>${esc(source)}</small></div><div class="rosterGrid">${rosterTeamCard(m.home,homePlayers,{title:homeTitle,note:homePlayers.length?'Current roster listing':source})}${rosterTeamCard(m.away,awayPlayers,{title:awayTitle,note:awayPlayers.length?'Current roster listing':source})}</div></div>`;
+  return `<div class="lineupBoard rosterBoard"><div class="rosterBoardTitle"><div><span class="seclbl">Overall roster</span><b>${esc(label)}</b></div><small>${esc(source)}</small></div><div class="rosterGrid">${rosterTeamCard(m.home,homePlayers,{title:homeTitle,note:homePlayers.length?'Current roster listing':''})}${rosterTeamCard(m.away,awayPlayers,{title:awayTitle,note:awayPlayers.length?'Current roster listing':''})}</div></div>`;
 }
 function teamSnap(team,side,comp){return `<div class="teamSnap ${side==='away'?'away':''}"><div class="snapCode">${teamFlagHTML(team,side==='away')}${esc(team?.code||side)}</div><div class="snapName">${esc(team?.name||'TBD')}</div><div class="snapMeta">${esc(teamStandingsMeta(team,comp,{diff:true,form:true,hideStaleRecord:String(comp||'').toUpperCase()==='NCAAF'}).join(' · '))}</div></div>`}
 /* dedup */
