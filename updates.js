@@ -4,6 +4,17 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0927L",
+  "tag": "Model",
+  "title": "Pick model recalibrated",
+  "items": [
+   "Football picks now use the dated power-rating projection. The old setup weighted every game since 2021 equally, which overrated programs on past form (Clemson over Miami, Missouri over Florida).",
+   "Starting quarterback quality (season adjusted QBR) and a recent starter change now adjust each forecast. Both were tested on 2023-2026 games before shipping.",
+   "A game listed under two spellings (UMass / Massachusetts) is now counted once on the scorecard.",
+   "The Adjusting calibration notice is removed."
+  ]
+ },
+ {
   "date": "Build 0927K",
   "tag": "Fix",
   "title": "Calibration notice and clearer schedule table",
