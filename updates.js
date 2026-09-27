@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0927Q",
+  "tag": "Change",
+  "title": "AP poll marks new entries",
+  "items": [
+   "A team that enters the AP Top 25 now shows new in the movement column instead of a dash, matching Timur’s Ballot."
+  ]
+ },
+ {
   "date": "Build 0927P",
   "tag": "New",
   "title": "Projected score in the expanded view",
