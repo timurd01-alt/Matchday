@@ -839,7 +839,11 @@ function viewDocTitle(v){
   return `${sport} Pick 'Em · Matchday Terminal`;
 }
 function setView(v,options={}){VIEW=safeView(v);v=VIEW;try{document.title=viewDocTitle(v)}catch(e){}if(typeof closeNavSheet==='function')closeNavSheet();
-  $('#app')?.classList.toggle('gamesWide',v==='matches'||v==='home');document.querySelectorAll('.navbtn[data-v]').forEach(b=>{const on=b.dataset.v===v;b.setAttribute('aria-pressed',on);if(on)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});document.querySelectorAll('.view').forEach(el=>el.style.display=el.id==='view-'+v?((v==='matches'||v==='results')?'grid':'block'):'none');if(options.history!==false)syncViewLocation(v,options.replace?'replace':'push');renderCurrent();const active=$('#view-'+v);if(active){active.classList.remove('viewEntering');void active.offsetWidth;active.classList.add('viewEntering')}}
+  $('#app')?.classList.toggle('gamesWide',v==='matches'||v==='home');document.querySelectorAll('.navbtn[data-v]').forEach(b=>{const on=b.dataset.v===v;b.setAttribute('aria-pressed',on);if(on)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});document.querySelectorAll('.view').forEach(el=>el.style.display=el.id==='view-'+v?((v==='matches'||v==='results')?'grid':'block'):'none');if(options.history!==false)syncViewLocation(v,options.replace?'replace':'push');renderCurrent();
+  // A new view opens at its top. The scroll position used to carry over from
+  // the previous view, so the CFP bracket opened scrolled to the bottom.
+  const scroller=document.querySelector('.content');if(scroller)scroller.scrollTop=0;try{window.scrollTo(0,0)}catch(e){}
+  const active=$('#view-'+v);if(active){active.classList.remove('viewEntering');void active.offsetWidth;active.classList.add('viewEntering')}}
 $('#nav').addEventListener('click',e=>{const b=e.target.closest('.navbtn[data-v]');if(b?.dataset.v)setView(b.dataset.v)});
 // aggregateScorecards() lived here: it merged every sport's scorecard into the
 // one the merged "All college" board showed. Each board now reads its own

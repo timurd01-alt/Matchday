@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0927Y",
+  "tag": "Fix",
+  "title": "Every page opens at the top",
+  "items": [
+   "Switching pages no longer keeps the previous page’s scroll position, so the CFP bracket opens at its top instead of partway down."
+  ]
+ },
+ {
   "date": "Build 0927X",
   "tag": "Fix",
   "title": "No duplicate team comparison under More detail",
