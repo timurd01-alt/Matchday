@@ -1331,7 +1331,7 @@ function rsMyPicks(){
       +`<span class="rsPickMeta">${pct(p.model_probability)} Matchday · ${p.model_agreed?'agreed':'disagreed'}</span>`
       +`<b class="${done?(won?'rsWin':'rsLoss'):'rsWait'}">${done?(won?'W':'L'):'·'}</b></li>`;
   };
-  return `<section class="rsBlock rsSpan12">${rsTop('Matchday in public · <a class="rsHandle" href="https://x.com/timursports" target="_blank" rel="noopener">@timursports</a>','graded')}`
+  return `<section class="rsBlock rsSpan12">${rsTop('Matchday in public · <a class="rsHandle" href="https://x.com/timursports" target="_blank" rel="noopener">@timursports</a> · <a class="rsHandle" href="https://www.tiktok.com/@timursports" target="_blank" rel="noopener" title="Score predictions on TikTok">TikTok</a>','graded')}`
     +`<div class="rsSplit"><div class="rsSplitMain">`
     +`<div class="rsBigStat"><b>${wins}–${settled.length-wins}</b><span>settled picks · ${settled.length?Math.round(wins/settled.length*100):0}% hit rate</span></div>`
     // Every settled pick in order, oldest first: the record as a run of results.
