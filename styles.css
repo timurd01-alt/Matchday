@@ -3594,7 +3594,11 @@ body{font-variant-numeric:tabular-nums}
 .gamesSideCol>.gamesBracket>button{margin-top:auto}
 /* Home: the difference rows fill the column instead of leaving a gap above
    the button, and Explore gets its own breathing room. */
-.gamesDifferences>.gamesDifferenceRows{flex:1;display:flex;flex-direction:column;justify-content:space-between}
+.gamesDifferences>.gamesDifferenceRows{flex:1;display:flex;flex-direction:column}
+/* Rows share the extra height equally, so every divider sits the same
+   distance below its text. space-between put the slack between rows
+   instead, which left the lines unevenly spaced. */
+.gamesDifferences>.gamesDifferenceRows>button{flex:1 1 0}
 .gamesDifferences>.gamesTextLink{margin-top:16px!important}
 .gamesSupportGrid+.gamesExplore{margin-top:9px}
 .gamesSupportGrid .gamesDifferences>button.gamesTextLink{margin-top:16px!important}

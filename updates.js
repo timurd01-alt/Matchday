@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0927M",
+  "tag": "Fix",
+  "title": "Even spacing in model / market differences",
+  "items": [
+   "Rows in the largest model / market differences list now share the column height equally, so every divider sits the same distance below its text."
+  ]
+ },
+ {
   "date": "Build 0927L",
   "tag": "Model",
   "title": "Pick model recalibrated",

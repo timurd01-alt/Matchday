@@ -1,0 +1,1 @@
+{"rank": 401, "date": "Build 0927M", "tag": "Fix", "title": "Even spacing in model / market differences", "items": ["Rows in the largest model / market differences list now share the column height equally, so every divider sits the same distance below its text."]}
