@@ -1,7 +1,7 @@
 {
   "handoff_version": 11,
   "source": "betbetter",
-  "generated_at": "2026-09-27T20:45:16.470880+00:00",
+  "generated_at": "2026-09-27T22:24:22.368285+00:00",
   "sports": [
     "ncaaf",
     "ncaam"
@@ -113,8 +113,8 @@
         }
       ],
       "projected_score": {
-        "home": 28,
-        "away": 30,
+        "home": 31,
+        "away": 33,
         "simulations": 10000
       }
     },
@@ -187,8 +187,8 @@
         }
       ],
       "projected_score": {
-        "home": 26,
-        "away": 24,
+        "home": 28,
+        "away": 27,
         "simulations": 10000
       }
     },
@@ -1297,7 +1297,7 @@
         }
       ],
       "projected_score": {
-        "home": 14,
+        "home": 13,
         "away": 35,
         "simulations": 10000
       }
@@ -1334,8 +1334,8 @@
         }
       ],
       "projected_score": {
-        "home": 42,
-        "away": 21,
+        "home": 44,
+        "away": 20,
         "simulations": 10000
       }
     },
@@ -1371,7 +1371,7 @@
         }
       ],
       "projected_score": {
-        "home": 35,
+        "home": 34,
         "away": 37,
         "simulations": 10000
       }
@@ -1408,7 +1408,7 @@
         }
       ],
       "projected_score": {
-        "home": 17,
+        "home": 16,
         "away": 35,
         "simulations": 10000
       }
@@ -1445,8 +1445,8 @@
         }
       ],
       "projected_score": {
-        "home": 24,
-        "away": 26,
+        "home": 23,
+        "away": 27,
         "simulations": 10000
       }
     },
@@ -1482,8 +1482,8 @@
         }
       ],
       "projected_score": {
-        "home": 34,
-        "away": 33,
+        "home": 38,
+        "away": 37,
         "simulations": 10000
       }
     },
@@ -1630,8 +1630,8 @@
         }
       ],
       "projected_score": {
-        "home": 21,
-        "away": 27,
+        "home": 17,
+        "away": 30,
         "simulations": 10000
       }
     },
@@ -1667,8 +1667,8 @@
         }
       ],
       "projected_score": {
-        "home": 33,
-        "away": 26,
+        "home": 34,
+        "away": 24,
         "simulations": 10000
       }
     },
@@ -1817,8 +1817,8 @@
         }
       ],
       "projected_score": {
-        "home": 31,
-        "away": 26,
+        "home": 33,
+        "away": 24,
         "simulations": 10000
       }
     },
@@ -1930,8 +1930,8 @@
         }
       ],
       "projected_score": {
-        "home": 26,
-        "away": 27,
+        "home": 24,
+        "away": 28,
         "simulations": 10000
       }
     },
@@ -4041,8 +4041,8 @@
         }
       ],
       "projected_score": {
-        "home": 17,
-        "away": 21,
+        "home": 20,
+        "away": 24,
         "simulations": 10000
       }
     },
@@ -4337,8 +4337,8 @@
         }
       ],
       "projected_score": {
-        "home": 34,
-        "away": 35,
+        "home": 28,
+        "away": 30,
         "simulations": 10000
       }
     },
@@ -6337,7 +6337,7 @@
         }
       ],
       "projected_score": {
-        "home": 28,
+        "home": 27,
         "away": 26,
         "simulations": 10000
       }
@@ -15372,7 +15372,7 @@
       ],
       "projected_score": {
         "home": 31,
-        "away": 26,
+        "away": 24,
         "simulations": 10000
       }
     },
@@ -20966,7 +20966,7 @@
         }
       ],
       "projected_score": {
-        "home": 35,
+        "home": 33,
         "away": 16,
         "simulations": 10000
       }
