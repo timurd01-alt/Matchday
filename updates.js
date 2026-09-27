@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0927O",
+  "tag": "Change",
+  "title": "X and TikTok on the welcome page",
+  "items": [
+   "The welcome page top bar links to @timursports on X and on TikTok, where Timur posts score predictions."
+  ]
+ },
+ {
   "date": "Build 0927N",
   "tag": "Change",
   "title": "TikTok link for score predictions",
