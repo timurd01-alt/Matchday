@@ -3886,3 +3886,7 @@ body{font-variant-numeric:tabular-nums}
 /* The phone rule above hides column 3 for tables with a bar; the schedule
    table has no bar, so its header must keep all four labels over its columns. */
 @media(max-width:600px){.rsSchedHead span:nth-child(3){display:block}}
+/* Projected score: one quiet line at the foot of the expanded view. */
+.projectedScore{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 12px;margin-top:18px;padding-top:14px;border-top:1px solid var(--line)}
+.projectedScore span{font-family:var(--mono);font-size:var(--fs-2xs);font-weight:var(--fw-bold);letter-spacing:.1em;text-transform:uppercase;color:var(--signal)}
+.projectedScore b{font-family:var(--mono);font-size:var(--fs-md);font-weight:var(--fw-bold);color:var(--text)}

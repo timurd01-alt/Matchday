@@ -620,3 +620,21 @@ window.addEventListener('popstate',()=>{
     load(true).then(()=>setView(target,{history:false}));
   }else setView(target,{history:false});
 });
+
+// Projected final score (median of Bet Better's simulated games) at the foot of
+// the expanded view: a secondary read, never the first thing on the sheet, and
+// only for games not yet played.
+(function(){
+  const open=window.openMatchModal;
+  window.openMatchModal=function(id){
+    open(id);
+    const modal=document.getElementById('matchModal');
+    const key=modal?.dataset.matchId;
+    const m=key&&(BYID[key]||(DATA.matches||[]).find(x=>String(x.id)===String(key)));
+    const s=m?.betbetter_pick?.projected_score,body=modal?.querySelector('.modalBody');
+    if(!s||!body||body.querySelector('.projectedScore'))return;
+    if(typeof isCompleteOrPast==='function'&&isCompleteOrPast(m))return;
+    body.insertAdjacentHTML('beforeend',`<div class="projectedScore"><span>Projected score</span>`
+      +`<b>${esc(m.away?.name||'Away')} ${Number(s.away)} · ${esc(m.home?.name||'Home')} ${Number(s.home)}</b></div>`);
+  };
+})();

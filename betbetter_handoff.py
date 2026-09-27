@@ -296,6 +296,8 @@ def _display_block(pick: dict[str, Any], document: dict[str, Any]) -> dict[str, 
         "model_pct": pick.get("model_pct"),
         "market_pct": pick.get("market_pct"),
         "edge_points": pick.get("edge_points"),
+        # Bet Better's projected final (median of simulated games), football only.
+        "projected_score": pick.get("projected_score"),
         "sides": pick.get("sides") or [],
 
         "model_name": pick.get("model_name"),

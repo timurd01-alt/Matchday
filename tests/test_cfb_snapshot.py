@@ -204,11 +204,13 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         # Every weekly feature stays reachable after the Research redesign:
         # featured read, model-market watch, longshots that won, rating move,
         # the rating/schedule chart, schedules, conferences (with parity),
-        # and my picks. The model's own record lives on the Scorecard.
+        # The model's own record lives on the Scorecard. "Matchday in public"
+        # (rsMyPicks) was removed on the owner's request, 2026-09-27.
         for preserved in ("rsFeatured()", "rsModelMarketWatch()", "rsLongshots()",
                           "rsStat()", "rsScatter()", "rsSchedules()",
-                          "rsConferences()", "rsMyPicks()"):
+                          "rsConferences()"):
             self.assertIn(preserved, research)
+        self.assertNotIn("rsMyPicks()", research)
         for source in ("MATCHDAY_BETBETTER_UPSET", "MATCHDAY_BETBETTER_UPSETS",
                        "MATCHDAY_BETBETTER_USER_PICKS", "Most balanced"):
             self.assertIn(source, views)

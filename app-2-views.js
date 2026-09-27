@@ -1315,31 +1315,6 @@ function rsStat(){
     +`<div class="rsMoveHead"><b class="rsMoveTeam rsLogoName">${(typeof teamMark==='function'?teamMark(riser.name):'')}${esc(rsShortName(riser.name))}</b><span class="rsMoveBig rsSignal">↑${Number(riser.movement_since_preseason)}</span></div>`
     +`<div class="rsPath">${path}</div>${lists}</section>`;
 }
-function rsMyPicks(){
-  const u=(typeof MATCHDAY_BETBETTER_USER_PICKS!=='undefined')?MATCHDAY_BETBETTER_USER_PICKS:null;
-  const picks=bbSportRows(u?.picks||[]);
-  if(!picks.length)return '';
-  const ordered=picks.slice().sort((a,b)=>String(b.starts_at||'').localeCompare(String(a.starts_at||'')));
-  const settled=picks.filter(p=>p.outcome===0||p.outcome===1);
-  const wins=settled.filter(p=>p.outcome===1).length;
-  const agreed=settled.filter(p=>p.model_agreed),agreedW=agreed.filter(p=>p.outcome===1).length;
-  const differ=settled.filter(p=>!p.model_agreed),differW=differ.filter(p=>p.outcome===1).length;
-  const pct=v=>v!=null&&Number.isFinite(Number(v))?communityModelPctLabel(Number(v)*100):'—';
-  const row=(p,i)=>{
-    const done=p.outcome===0||p.outcome===1,won=p.outcome===1;
-    return `<li class="${i>=5?'rsExtra':''}"><span class="rsLogoName">${(typeof teamMark==='function'?teamMark(p.selection):'')}${esc(rsShortName(p.selection))}</span>`
-      +`<span class="rsPickMeta">${pct(p.model_probability)} Matchday · ${p.model_agreed?'agreed':'disagreed'}</span>`
-      +`<b class="${done?(won?'rsWin':'rsLoss'):'rsWait'}">${done?(won?'W':'L'):'·'}</b></li>`;
-  };
-  return `<section class="rsBlock rsSpan12">${rsTop('Matchday in public · <a class="rsHandle" href="https://x.com/timursports" target="_blank" rel="noopener">@timursports</a> · <a class="rsHandle" href="https://www.tiktok.com/@timursports" target="_blank" rel="noopener" title="Score predictions on TikTok">TikTok</a>','graded')}`
-    +`<div class="rsSplit"><div class="rsSplitMain">`
-    +`<div class="rsBigStat"><b>${wins}–${settled.length-wins}</b><span>settled picks · ${settled.length?Math.round(wins/settled.length*100):0}% hit rate</span></div>`
-    // Every settled pick in order, oldest first: the record as a run of results.
-    +`<div class="rsForm" aria-label="Settled picks in order, oldest first">${settled.slice().sort((x,y)=>String(x.starts_at||'').localeCompare(String(y.starts_at||''))).map(p=>`<i class="${p.outcome===1?'w':'l'}" title="${esc(rsShortName(p.selection))} · ${p.outcome===1?'won':'lost'}"></i>`).join('')}</div>`
-    +[['With Matchday',agreedW,agreed.length],['Against Matchday',differW,differ.length],['Against the market',...(()=>{const dog=settled.filter(p=>Number.isFinite(Number(p.market_probability))&&Number(p.market_probability)<0.5);return [dog.filter(p=>p.outcome===1).length,dog.length]})()]].filter(([,,n])=>n).map(([k,w,n])=>`<div class="rsSplitBar"><div><span class="rsKicker">${k}</span><b>${w}–${n-w}</b></div><i><b style="width:${Math.round(w/n*100)}%"></b></i><em>${Math.round(w/n*100)}%</em></div>`).join('')+`</div>`
-    +`<div class="rsSplitSide rsExpandable"><ul class="rsPicks">${ordered.map(row).join('')}</ul>`
-    +(ordered.length>5?rsMoreBtn(ordered.length,'All picks','@timursports picks'):'')+`</div></div></section>`;
-}
 // Small tick numbers on both chart axes: "nice" steps (1, 2 or 5 x 10^n)
 // that land inside the data range, drawn faint so the dots stay the subject.
 function rsNiceTicks(lo,hi,n=5){
@@ -1682,7 +1657,6 @@ function collegeResearchModules(){
       +(football?grid(rsEfficiency(),rsEfficiencyNotes()):grid(wait('Offensive vs defensive efficiency','current',8,box),wait('Reading the chart','current',4,box)))],
     ['The bigger picture',grid(rsSchedules(),rsConferences())
       +(football?grid(rsDefence(),rsDefenceNotes()):grid(wait('Pace','current',8,box),wait('Reading the chart','current',4,box)))],
-    ['Track record',grid(rsMyPicks()||wait('Matchday in public','graded',12,'Picks are graded once the season starts.'))],
   ].filter(([,body])=>body).map(([label,body],i)=>rsPart(String(i+1).padStart(2,'0'),label,body)).join('');
   if(!parts)return '';
   return `<section class="collegeResearch" aria-label="College research">`
