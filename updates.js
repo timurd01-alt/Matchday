@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0928B",
+  "tag": "Fix",
+  "title": "Site updates resume after an empty weekly export",
+  "items": [
+   "The weekly social export ran at 01:16 UTC on Monday, which is still Sunday evening in the US, kept only the rest of Monday and published an empty slate. Every site update after it failed its checks. A Monday with no games left now rolls forward to the coming week, and this week’s slate is regenerated."
+  ]
+ },
+ {
   "date": "Build 0928A",
   "tag": "Fix",
   "title": "Featured Read difference colored by sign",

@@ -5,12 +5,12 @@ window.MATCHDAY_SOCIAL = {
   "week": "WEEK OF SEP 28",
   "season": "2026 SEASON",
   "published": "2026-09-27",
-  "generated_at": "2026-09-28T01:16:07Z",
+  "generated_at": "2026-09-28T21:20:06Z",
   "logos": {
     "Notre Dame Fighting Irish": "logos/notreDame.png",
     "NOTRE DAME": "logos/notreDame.png",
     "Notre Dame": "logos/notreDame.png",
-    "Ohio State Buckeyes": "logos/ohioState.png",
+    "Ohio State Buckeyes": "logos/ohio.png",
     "OHIO STATE": "logos/ohioState.png",
     "Ohio State": "logos/ohioState.png",
     "Indiana Hoosiers": "logos/indiana.png",
@@ -38,7 +38,7 @@ window.MATCHDAY_SOCIAL = {
     "LSU": "logos/lsu.png",
     "Florida Gators": "logos/florida.png",
     "FLORIDA GATORS": "logos/florida.png",
-    "Texas Tech Red Raiders": "logos/texasTech.png",
+    "Texas Tech Red Raiders": "logos/texas.png",
     "TEXAS TECH": "logos/texasTech.png",
     "Texas Tech": "logos/texasTech.png",
     "Penn State Nittany Lions": "logos/penn.png",
@@ -60,7 +60,7 @@ window.MATCHDAY_SOCIAL = {
     "USC": "logos/usc.png",
     "Virginia Cavaliers": "logos/virginia.png",
     "VIRGINIA CAVALIERS": "logos/virginia.png",
-    "Texas A&M Aggies": "logos/texasAM.png",
+    "Texas A&M Aggies": "logos/texas.png",
     "TEXAS A&M": "logos/texasAM.png",
     "Texas A&M": "logos/texasAM.png",
     "Mississippi State Bulldogs": "logos/mississippiState.png",
@@ -75,7 +75,15 @@ window.MATCHDAY_SOCIAL = {
     "Oklahoma": "logos/oklahoma.png",
     "Houston Cougars": "logos/houston.png",
     "HOUSTON": "logos/houston.png",
-    "Houston": "logos/houston.png"
+    "Houston": "logos/houston.png",
+    "North Carolina Tar Heels": "logos/northCarolina.png",
+    "NORTH CAROLINA TAR HEELS": "logos/northCarolina.png",
+    "Rutgers Scarlet Knights": "logos/rutgers.png",
+    "RUTGERS": "logos/rutgers.png",
+    "Rutgers": "logos/rutgers.png",
+    "Clemson Tigers": "logos/clemson.png",
+    "CLEMSON": "logos/clemson.png",
+    "Clemson": "logos/clemson.png"
   },
   "top25": [
     [
@@ -188,5 +196,41 @@ window.MATCHDAY_SOCIAL = {
     "marketPct": 0.0,
     "note": "No matchup cleared the published upset-watch criteria this week."
   },
-  "slate": []
+  "slate": [
+    {
+      "rank": 1,
+      "away": "OHIO STATE",
+      "home": "IOWA",
+      "time": "SAT · 3:30 PM ET",
+      "hook": "#2 vs #15"
+    },
+    {
+      "rank": 2,
+      "away": "ALABAMA",
+      "home": "MISSISSIPPI STATE",
+      "time": "SAT · 12:00 PM ET",
+      "hook": "#7 vs #21"
+    },
+    {
+      "rank": 3,
+      "away": "NOTRE DAME",
+      "home": "NORTH CAROLINA TAR HEELS",
+      "time": "SAT · 12:00 PM ET",
+      "hook": "RANKED #1 ON THE ROAD"
+    },
+    {
+      "rank": 4,
+      "away": "INDIANA",
+      "home": "RUTGERS",
+      "time": "SAT · 8:00 PM ET",
+      "hook": "RANKED #3 ON THE ROAD"
+    },
+    {
+      "rank": 5,
+      "away": "MIAMI",
+      "home": "CLEMSON",
+      "time": "SAT · 12:00 PM ET",
+      "hook": "RANKED #4 ON THE ROAD"
+    }
+  ]
 };

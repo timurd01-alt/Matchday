@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-09-28T01:16:07Z",
+  "generated_at": "2026-09-28T21:20:06Z",
   "handoff_generated_at": "2026-09-28T00:53:03.144267+00:00",
   "week": {
-    "from": "2026-09-28T01:16Z",
-    "to": "2026-09-28T23:59Z",
-    "games_in_window": 0,
+    "from": "2026-09-28T21:20Z",
+    "to": "2026-10-05T23:59Z",
+    "games_in_window": 59,
     "picks_in_handoff": 576
   },
   "basis": "Opponent-adjusted scoring margin",
@@ -212,6 +212,267 @@
       "record": "3-1"
     }
   ],
-  "slate": [],
+  "slate": [
+    {
+      "kickoff": "2026-10-03T19:30:00Z",
+      "day": "Sat",
+      "home": "Iowa Hawkeyes",
+      "away": "Ohio State Buckeyes",
+      "home_rank": 15,
+      "away_rank": 2,
+      "pick": "Ohio State Buckeyes",
+      "model_pct": 72.6,
+      "market_pct": 84.0,
+      "edge_points": -11.4,
+      "best_price": null,
+      "sides": [
+        {
+          "selection": "Iowa Hawkeyes",
+          "is_home": true,
+          "model_pct": 27.4
+        },
+        {
+          "selection": "Ohio State Buckeyes",
+          "is_home": false,
+          "model_pct": 72.6
+        }
+      ],
+      "fan_score": 110
+    },
+    {
+      "kickoff": "2026-10-03T16:00:00Z",
+      "day": "Sat",
+      "home": "Mississippi State Bulldogs",
+      "away": "Alabama Crimson Tide",
+      "home_rank": 21,
+      "away_rank": 7,
+      "pick": "Alabama Crimson Tide",
+      "model_pct": 55.4,
+      "market_pct": 61.0,
+      "edge_points": -5.6,
+      "best_price": null,
+      "sides": [
+        {
+          "selection": "Mississippi State Bulldogs",
+          "is_home": true,
+          "model_pct": 44.6
+        },
+        {
+          "selection": "Alabama Crimson Tide",
+          "is_home": false,
+          "model_pct": 55.4
+        }
+      ],
+      "fan_score": 76
+    },
+    {
+      "kickoff": "2026-10-03T16:00:00Z",
+      "day": "Sat",
+      "home": "North Carolina Tar Heels",
+      "away": "Notre Dame Fighting Irish",
+      "home_rank": null,
+      "away_rank": 1,
+      "pick": "Notre Dame Fighting Irish",
+      "model_pct": 89.3,
+      "market_pct": 92.0,
+      "edge_points": -2.7,
+      "best_price": null,
+      "sides": [
+        {
+          "selection": "North Carolina Tar Heels",
+          "is_home": true,
+          "model_pct": 10.7
+        },
+        {
+          "selection": "Notre Dame Fighting Irish",
+          "is_home": false,
+          "model_pct": 89.3
+        }
+      ],
+      "fan_score": 68
+    },
+    {
+      "kickoff": "2026-10-04T00:00:00Z",
+      "day": "Sun",
+      "home": "Rutgers Scarlet Knights",
+      "away": "Indiana Hoosiers",
+      "home_rank": null,
+      "away_rank": 3,
+      "pick": "Indiana Hoosiers",
+      "model_pct": 88.2,
+      "market_pct": null,
+      "edge_points": null,
+      "best_price": null,
+      "sides": [
+        {
+          "selection": "Rutgers Scarlet Knights",
+          "is_home": true,
+          "model_pct": 11.8
+        },
+        {
+          "selection": "Indiana Hoosiers",
+          "is_home": false,
+          "model_pct": 88.2
+        }
+      ],
+      "fan_score": 64
+    },
+    {
+      "kickoff": "2026-10-03T16:00:00Z",
+      "day": "Sat",
+      "home": "Clemson Tigers",
+      "away": "Miami Hurricanes",
+      "home_rank": null,
+      "away_rank": 4,
+      "pick": "Miami Hurricanes",
+      "model_pct": 86.4,
+      "market_pct": 86.5,
+      "edge_points": -0.1,
+      "best_price": null,
+      "sides": [
+        {
+          "selection": "Clemson Tigers",
+          "is_home": true,
+          "model_pct": 13.6
+        },
+        {
+          "selection": "Miami Hurricanes",
+          "is_home": false,
+          "model_pct": 86.4
+        }
+      ],
+      "fan_score": 62
+    },
+    {
+      "kickoff": "2026-10-03T16:00:00Z",
+      "day": "Sat",
+      "home": "Georgia Bulldogs",
+      "away": "Vanderbilt Commodores",
+      "home_rank": 5,
+      "away_rank": null,
+      "pick": "Georgia Bulldogs",
+      "model_pct": 90.4,
+      "market_pct": 93.6,
+      "edge_points": -3.2,
+      "best_price": null,
+      "sides": [
+        {
+          "selection": "Georgia Bulldogs",
+          "is_home": true,
+          "model_pct": 90.4
+        },
+        {
+          "selection": "Vanderbilt Commodores",
+          "is_home": false,
+          "model_pct": 9.6
+        }
+      ],
+      "fan_score": 60
+    },
+    {
+      "kickoff": "2026-10-03T19:30:00Z",
+      "day": "Sat",
+      "home": "Missouri Tigers",
+      "away": "Florida Gators",
+      "home_rank": null,
+      "away_rank": 11,
+      "pick": "Florida Gators",
+      "model_pct": 57.0,
+      "market_pct": 57.9,
+      "edge_points": -0.9,
+      "best_price": null,
+      "sides": [
+        {
+          "selection": "Missouri Tigers",
+          "is_home": true,
+          "model_pct": 43.0
+        },
+        {
+          "selection": "Florida Gators",
+          "is_home": false,
+          "model_pct": 57.0
+        }
+      ],
+      "fan_score": 48
+    },
+    {
+      "kickoff": "2026-10-03T04:00:00Z",
+      "day": "Sat",
+      "home": "Colorado Buffaloes",
+      "away": "Texas Tech Red Raiders",
+      "home_rank": null,
+      "away_rank": 12,
+      "pick": "Texas Tech Red Raiders",
+      "model_pct": 78.0,
+      "market_pct": null,
+      "edge_points": null,
+      "best_price": null,
+      "sides": [
+        {
+          "selection": "Colorado Buffaloes",
+          "is_home": true,
+          "model_pct": 22.0
+        },
+        {
+          "selection": "Texas Tech Red Raiders",
+          "is_home": false,
+          "model_pct": 78.0
+        }
+      ],
+      "fan_score": 46
+    },
+    {
+      "kickoff": "2026-10-03T00:00:00Z",
+      "day": "Sat",
+      "home": "Northwestern Wildcats",
+      "away": "Penn State Nittany Lions",
+      "home_rank": null,
+      "away_rank": 13,
+      "pick": "Penn State Nittany Lions",
+      "model_pct": 55.1,
+      "market_pct": 68.3,
+      "edge_points": -13.2,
+      "best_price": null,
+      "sides": [
+        {
+          "selection": "Northwestern Wildcats",
+          "is_home": true,
+          "model_pct": 44.9
+        },
+        {
+          "selection": "Penn State Nittany Lions",
+          "is_home": false,
+          "model_pct": 55.1
+        }
+      ],
+      "fan_score": 44
+    },
+    {
+      "kickoff": "2026-10-03T19:30:00Z",
+      "day": "Sat",
+      "home": "Tennessee Volunteers",
+      "away": "Auburn Tigers",
+      "home_rank": 14,
+      "away_rank": null,
+      "pick": "Tennessee Volunteers",
+      "model_pct": 69.0,
+      "market_pct": 72.2,
+      "edge_points": -3.2,
+      "best_price": null,
+      "sides": [
+        {
+          "selection": "Tennessee Volunteers",
+          "is_home": true,
+          "model_pct": 69.0
+        },
+        {
+          "selection": "Auburn Tigers",
+          "is_home": false,
+          "model_pct": 31.0
+        }
+      ],
+      "fan_score": 42
+    }
+  ],
   "upsets": []
 }

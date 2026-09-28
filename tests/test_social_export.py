@@ -13,6 +13,7 @@ deploy.yml's discovery with nothing installed.
 from __future__ import annotations
 
 import datetime as dt
+import pathlib
 import json
 import os
 import re
@@ -468,3 +469,14 @@ class TwitterThread(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class EmptyMondayRollsForwardTests(unittest.TestCase):
+    """2026-09-28: the 01:16 UTC Monday export kept only the rest of Monday,
+    found no games, published an empty slate and failed every deploy after."""
+
+    def test_empty_monday_rolls_to_the_coming_week(self):
+        source = pathlib.Path(social_export.__file__).read_text(encoding="utf-8")
+        build = source[source.index("def build"):source.index("def _pct")]
+        self.assertIn("if not games and start.weekday() == 0:", build)
+        self.assertIn("end = end + dt.timedelta(days=7)", build)

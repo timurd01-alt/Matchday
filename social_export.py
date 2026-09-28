@@ -299,6 +299,13 @@ def build(games_limit: int, upsets_limit: int) -> dict:
     } for r in rows[:RANKED_DEPTH]]
 
     games = weekly_games(document, by_name, (start, end))
+    if not games and start.weekday() == 0:
+        # A Monday with nothing left to play is the gap between two weeks, and
+        # 01:00 UTC Monday is still Sunday evening in the US. Showing the rest
+        # of that day published an empty slate (2026-09-28) and failed every
+        # deploy after it, so roll forward to the coming week instead.
+        end = end + dt.timedelta(days=7)
+        games = weekly_games(document, by_name, (start, end))
     return {
         "generated_at": _utc_now().isoformat(timespec="seconds").replace("+00:00", "Z"),
         "handoff_generated_at": document.get("generated_at"),
