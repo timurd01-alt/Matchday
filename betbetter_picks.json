@@ -1,7 +1,7 @@
 {
   "handoff_version": 11,
   "source": "betbetter",
-  "generated_at": "2026-09-27T23:33:36.882751+00:00",
+  "generated_at": "2026-09-28T00:53:03.144267+00:00",
   "sports": [
     "ncaaf",
     "ncaam"
@@ -76,8 +76,8 @@
         }
       ],
       "projected_score": {
-        "home": 26,
-        "away": 37,
+        "home": 27,
+        "away": 35,
         "simulations": 10000
       }
     },
@@ -188,7 +188,7 @@
       ],
       "projected_score": {
         "home": 24,
-        "away": 26,
+        "away": 27,
         "simulations": 10000
       }
     },
@@ -224,7 +224,7 @@
         }
       ],
       "projected_score": {
-        "home": 37,
+        "home": 35,
         "away": 21,
         "simulations": 10000
       }
@@ -262,7 +262,7 @@
       ],
       "projected_score": {
         "home": 38,
-        "away": 16,
+        "away": 17,
         "simulations": 10000
       }
     },
@@ -299,7 +299,7 @@
       ],
       "projected_score": {
         "home": 30,
-        "away": 26,
+        "away": 27,
         "simulations": 10000
       }
     },
@@ -373,7 +373,7 @@
       ],
       "projected_score": {
         "home": 34,
-        "away": 26,
+        "away": 27,
         "simulations": 10000
       }
     },
@@ -410,7 +410,7 @@
       ],
       "projected_score": {
         "home": 20,
-        "away": 33,
+        "away": 34,
         "simulations": 10000
       }
     },
@@ -446,7 +446,7 @@
         }
       ],
       "projected_score": {
-        "home": 33,
+        "home": 34,
         "away": 24,
         "simulations": 10000
       }
@@ -483,8 +483,8 @@
         }
       ],
       "projected_score": {
-        "home": 37,
-        "away": 16,
+        "home": 38,
+        "away": 17,
         "simulations": 10000
       }
     },
@@ -520,7 +520,7 @@
         }
       ],
       "projected_score": {
-        "home": 37,
+        "home": 38,
         "away": 21,
         "simulations": 10000
       }
@@ -557,7 +557,7 @@
         }
       ],
       "projected_score": {
-        "home": 26,
+        "home": 27,
         "away": 28,
         "simulations": 10000
       }
@@ -595,7 +595,7 @@
       ],
       "projected_score": {
         "home": 41,
-        "away": 26,
+        "away": 27,
         "simulations": 10000
       }
     },
@@ -668,7 +668,7 @@
         }
       ],
       "projected_score": {
-        "home": 26,
+        "home": 24,
         "away": 20,
         "simulations": 10000
       }
@@ -742,8 +742,8 @@
         }
       ],
       "projected_score": {
-        "home": 26,
-        "away": 37,
+        "home": 27,
+        "away": 35,
         "simulations": 10000
       }
     },
@@ -817,7 +817,7 @@
       ],
       "projected_score": {
         "home": 42,
-        "away": 16,
+        "away": 17,
         "simulations": 10000
       }
     },
@@ -1001,8 +1001,8 @@
         }
       ],
       "projected_score": {
-        "home": 26,
-        "away": 33,
+        "home": 27,
+        "away": 34,
         "simulations": 10000
       }
     },
@@ -1038,7 +1038,7 @@
         }
       ],
       "projected_score": {
-        "home": 37,
+        "home": 38,
         "away": 13,
         "simulations": 10000
       }
@@ -1076,7 +1076,7 @@
       ],
       "projected_score": {
         "home": 28,
-        "away": 26,
+        "away": 27,
         "simulations": 10000
       }
     },
@@ -1186,7 +1186,7 @@
         }
       ],
       "projected_score": {
-        "home": 33,
+        "home": 34,
         "away": 27,
         "simulations": 10000
       }
@@ -1223,7 +1223,7 @@
         }
       ],
       "projected_score": {
-        "home": 44,
+        "home": 45,
         "away": 17,
         "simulations": 10000
       }
@@ -1334,7 +1334,7 @@
         }
       ],
       "projected_score": {
-        "home": 44,
+        "home": 42,
         "away": 20,
         "simulations": 10000
       }
@@ -1372,7 +1372,7 @@
       ],
       "projected_score": {
         "home": 34,
-        "away": 37,
+        "away": 35,
         "simulations": 10000
       }
     },
@@ -1408,7 +1408,7 @@
         }
       ],
       "projected_score": {
-        "home": 16,
+        "home": 17,
         "away": 35,
         "simulations": 10000
       }
@@ -1594,7 +1594,7 @@
       ],
       "projected_score": {
         "home": 30,
-        "away": 33,
+        "away": 34,
         "simulations": 10000
       }
     },
@@ -1667,7 +1667,7 @@
         }
       ],
       "projected_score": {
-        "home": 33,
+        "home": 34,
         "away": 24,
         "simulations": 10000
       }
@@ -1704,7 +1704,7 @@
         }
       ],
       "projected_score": {
-        "home": 26,
+        "home": 27,
         "away": 24,
         "simulations": 10000
       }
@@ -1817,7 +1817,7 @@
         }
       ],
       "projected_score": {
-        "home": 33,
+        "home": 31,
         "away": 24,
         "simulations": 10000
       }
@@ -1855,7 +1855,7 @@
       ],
       "projected_score": {
         "home": 31,
-        "away": 33,
+        "away": 34,
         "simulations": 10000
       }
     },
@@ -1893,8 +1893,8 @@
       "graded": false,
       "grading_note": "FBS vs FCS: priced for reference, not graded -- these games say little about the model and are left out of the record.",
       "projected_score": {
-        "home": 51,
-        "away": 16,
+        "home": 49,
+        "away": 17,
         "simulations": 10000
       }
     },
@@ -1967,7 +1967,7 @@
         }
       ],
       "projected_score": {
-        "home": 37,
+        "home": 35,
         "away": 24,
         "simulations": 10000
       }
@@ -2005,7 +2005,7 @@
       ],
       "projected_score": {
         "home": 35,
-        "away": 16,
+        "away": 17,
         "simulations": 10000
       }
     },
@@ -2043,7 +2043,7 @@
       "graded": false,
       "grading_note": "FBS vs FCS: priced for reference, not graded -- these games say little about the model and are left out of the record.",
       "projected_score": {
-        "home": 55,
+        "home": 56,
         "away": 0,
         "simulations": 10000
       }
@@ -2266,7 +2266,7 @@
       ],
       "projected_score": {
         "home": 24,
-        "away": 26,
+        "away": 27,
         "simulations": 10000
       }
     },
@@ -2413,7 +2413,7 @@
         }
       ],
       "projected_score": {
-        "home": 33,
+        "home": 34,
         "away": 31,
         "simulations": 10000
       }
@@ -2525,7 +2525,7 @@
       ],
       "projected_score": {
         "home": 20,
-        "away": 26,
+        "away": 24,
         "simulations": 10000
       }
     },
@@ -2598,7 +2598,7 @@
         }
       ],
       "projected_score": {
-        "home": 26,
+        "home": 27,
         "away": 17,
         "simulations": 10000
       }
@@ -2747,7 +2747,7 @@
       ],
       "projected_score": {
         "home": 41,
-        "away": 26,
+        "away": 24,
         "simulations": 10000
       }
     },
@@ -2821,7 +2821,7 @@
       ],
       "projected_score": {
         "home": 28,
-        "away": 26,
+        "away": 27,
         "simulations": 10000
       }
     },
@@ -2858,7 +2858,7 @@
       ],
       "projected_score": {
         "home": 31,
-        "away": 33,
+        "away": 34,
         "simulations": 10000
       }
     },
@@ -2895,7 +2895,7 @@
       ],
       "projected_score": {
         "home": 41,
-        "away": 16,
+        "away": 14,
         "simulations": 10000
       }
     },
@@ -3117,7 +3117,7 @@
       ],
       "projected_score": {
         "home": 31,
-        "away": 16,
+        "away": 17,
         "simulations": 10000
       }
     },
@@ -3227,7 +3227,7 @@
         }
       ],
       "projected_score": {
-        "home": 33,
+        "home": 34,
         "away": 30,
         "simulations": 10000
       }
@@ -3339,7 +3339,7 @@
       ],
       "projected_score": {
         "home": 48,
-        "away": 6,
+        "away": 7,
         "simulations": 10000
       }
     },
@@ -3375,7 +3375,7 @@
         }
       ],
       "projected_score": {
-        "home": 44,
+        "home": 42,
         "away": 13,
         "simulations": 10000
       }
@@ -3523,7 +3523,7 @@
         }
       ],
       "projected_score": {
-        "home": 33,
+        "home": 34,
         "away": 31,
         "simulations": 10000
       }
@@ -3597,7 +3597,7 @@
         }
       ],
       "projected_score": {
-        "home": 33,
+        "home": 34,
         "away": 20,
         "simulations": 10000
       }
@@ -3819,7 +3819,7 @@
         }
       ],
       "projected_score": {
-        "home": 33,
+        "home": 34,
         "away": 17,
         "simulations": 10000
       }
@@ -3894,7 +3894,7 @@
       ],
       "projected_score": {
         "home": 31,
-        "away": 26,
+        "away": 24,
         "simulations": 10000
       }
     },
@@ -4078,7 +4078,7 @@
         }
       ],
       "projected_score": {
-        "home": 26,
+        "home": 24,
         "away": 17,
         "simulations": 10000
       }
@@ -4300,7 +4300,7 @@
         }
       ],
       "projected_score": {
-        "home": 26,
+        "home": 27,
         "away": 31,
         "simulations": 10000
       }
@@ -4411,8 +4411,8 @@
         }
       ],
       "projected_score": {
-        "home": 27,
-        "away": 26,
+        "home": 28,
+        "away": 27,
         "simulations": 10000
       }
     },
@@ -4485,8 +4485,8 @@
         }
       ],
       "projected_score": {
-        "home": 27,
-        "away": 26,
+        "home": 28,
+        "away": 27,
         "simulations": 10000
       }
     },
@@ -4522,7 +4522,7 @@
         }
       ],
       "projected_score": {
-        "home": 33,
+        "home": 31,
         "away": 28,
         "simulations": 10000
       }
@@ -4559,7 +4559,7 @@
         }
       ],
       "projected_score": {
-        "home": 26,
+        "home": 24,
         "away": 28,
         "simulations": 10000
       }
@@ -4633,8 +4633,8 @@
         }
       ],
       "projected_score": {
-        "home": 44,
-        "away": 33,
+        "home": 42,
+        "away": 31,
         "simulations": 10000
       }
     },
@@ -4670,8 +4670,8 @@
         }
       ],
       "projected_score": {
-        "home": 26,
-        "away": 27,
+        "home": 27,
+        "away": 28,
         "simulations": 10000
       }
     },
@@ -4856,7 +4856,7 @@
       ],
       "projected_score": {
         "home": 35,
-        "away": 26,
+        "away": 27,
         "simulations": 10000
       }
     },
@@ -4893,7 +4893,7 @@
       ],
       "projected_score": {
         "home": 28,
-        "away": 16,
+        "away": 17,
         "simulations": 10000
       }
     },
@@ -4929,8 +4929,8 @@
         }
       ],
       "projected_score": {
-        "home": 33,
-        "away": 34,
+        "home": 34,
+        "away": 35,
         "simulations": 10000
       }
     },
@@ -5041,7 +5041,7 @@
       ],
       "projected_score": {
         "home": 24,
-        "away": 33,
+        "away": 31,
         "simulations": 10000
       }
     },
@@ -5151,7 +5151,7 @@
         }
       ],
       "projected_score": {
-        "home": 37,
+        "home": 38,
         "away": 23,
         "simulations": 10000
       }
@@ -5189,7 +5189,7 @@
       ],
       "projected_score": {
         "home": 35,
-        "away": 26,
+        "away": 27,
         "simulations": 10000
       }
     },
@@ -5225,7 +5225,7 @@
         }
       ],
       "projected_score": {
-        "home": 26,
+        "home": 27,
         "away": 24,
         "simulations": 10000
       }
@@ -5301,7 +5301,7 @@
       "graded": false,
       "grading_note": "FBS vs FCS: priced for reference, not graded -- these games say little about the model and are left out of the record.",
       "projected_score": {
-        "home": 44,
+        "home": 45,
         "away": 3,
         "simulations": 10000
       }
@@ -5487,7 +5487,7 @@
       ],
       "projected_score": {
         "home": 17,
-        "away": 33,
+        "away": 31,
         "simulations": 10000
       }
     },
@@ -5597,7 +5597,7 @@
         }
       ],
       "projected_score": {
-        "home": 33,
+        "home": 31,
         "away": 30,
         "simulations": 10000
       }
@@ -5634,7 +5634,7 @@
         }
       ],
       "projected_score": {
-        "home": 26,
+        "home": 27,
         "away": 24,
         "simulations": 10000
       }
@@ -5708,7 +5708,7 @@
         }
       ],
       "projected_score": {
-        "home": 37,
+        "home": 38,
         "away": 28,
         "simulations": 10000
       }
@@ -5857,7 +5857,7 @@
       ],
       "projected_score": {
         "home": 23,
-        "away": 26,
+        "away": 27,
         "simulations": 10000
       }
     },
@@ -5931,7 +5931,7 @@
       ],
       "projected_score": {
         "home": 21,
-        "away": 33,
+        "away": 34,
         "simulations": 10000
       }
     },
@@ -6004,7 +6004,7 @@
         }
       ],
       "projected_score": {
-        "home": 26,
+        "home": 27,
         "away": 30,
         "simulations": 10000
       }
@@ -6301,7 +6301,7 @@
       ],
       "projected_score": {
         "home": 23,
-        "away": 37,
+        "away": 38,
         "simulations": 10000
       }
     },
@@ -6338,7 +6338,7 @@
       ],
       "projected_score": {
         "home": 27,
-        "away": 26,
+        "away": 24,
         "simulations": 10000
       }
     },
@@ -6711,7 +6711,7 @@
         }
       ],
       "projected_score": {
-        "home": 26,
+        "home": 27,
         "away": 20,
         "simulations": 10000
       }
@@ -6786,7 +6786,7 @@
       ],
       "projected_score": {
         "home": 34,
-        "away": 33,
+        "away": 31,
         "simulations": 10000
       }
     },
@@ -6822,8 +6822,8 @@
         }
       ],
       "projected_score": {
-        "home": 33,
-        "away": 26,
+        "home": 31,
+        "away": 24,
         "simulations": 10000
       }
     },
@@ -6897,7 +6897,7 @@
       ],
       "projected_score": {
         "home": 23,
-        "away": 26,
+        "away": 27,
         "simulations": 10000
       }
     },
@@ -7082,7 +7082,7 @@
       ],
       "projected_score": {
         "home": 24,
-        "away": 26,
+        "away": 27,
         "simulations": 10000
       }
     },
@@ -7155,7 +7155,7 @@
         }
       ],
       "projected_score": {
-        "home": 37,
+        "home": 38,
         "away": 24,
         "simulations": 10000
       }
@@ -7303,7 +7303,7 @@
         }
       ],
       "projected_score": {
-        "home": 33,
+        "home": 31,
         "away": 24,
         "simulations": 10000
       }
@@ -7414,7 +7414,7 @@
         }
       ],
       "projected_score": {
-        "home": 33,
+        "home": 34,
         "away": 20,
         "simulations": 10000
       }
@@ -7452,7 +7452,7 @@
       ],
       "projected_score": {
         "home": 38,
-        "away": 26,
+        "away": 24,
         "simulations": 10000
       }
     },
@@ -7600,7 +7600,7 @@
       ],
       "projected_score": {
         "home": 31,
-        "away": 26,
+        "away": 24,
         "simulations": 10000
       }
     },
@@ -7636,7 +7636,7 @@
         }
       ],
       "projected_score": {
-        "home": 37,
+        "home": 38,
         "away": 20,
         "simulations": 10000
       }
@@ -7784,7 +7784,7 @@
         }
       ],
       "projected_score": {
-        "home": 26,
+        "home": 27,
         "away": 28,
         "simulations": 10000
       }
@@ -7896,7 +7896,7 @@
       ],
       "projected_score": {
         "home": 20,
-        "away": 26,
+        "away": 27,
         "simulations": 10000
       }
     },
@@ -8007,7 +8007,7 @@
       ],
       "projected_score": {
         "home": 27,
-        "away": 33,
+        "away": 31,
         "simulations": 10000
       }
     },
@@ -8118,7 +8118,7 @@
       ],
       "projected_score": {
         "home": 24,
-        "away": 26,
+        "away": 27,
         "simulations": 10000
       }
     },
@@ -8265,7 +8265,7 @@
         }
       ],
       "projected_score": {
-        "home": 37,
+        "home": 35,
         "away": 21,
         "simulations": 10000
       }
@@ -8340,7 +8340,7 @@
       ],
       "projected_score": {
         "home": 24,
-        "away": 26,
+        "away": 27,
         "simulations": 10000
       }
     },
@@ -8414,7 +8414,7 @@
       ],
       "projected_score": {
         "home": 31,
-        "away": 26,
+        "away": 27,
         "simulations": 10000
       }
     },
@@ -8488,7 +8488,7 @@
       ],
       "projected_score": {
         "home": 24,
-        "away": 26,
+        "away": 27,
         "simulations": 10000
       }
     },
@@ -8524,8 +8524,8 @@
         }
       ],
       "projected_score": {
-        "home": 33,
-        "away": 37,
+        "home": 34,
+        "away": 38,
         "simulations": 10000
       }
     },
@@ -8857,7 +8857,7 @@
         }
       ],
       "projected_score": {
-        "home": 26,
+        "home": 27,
         "away": 23,
         "simulations": 10000
       }
@@ -8894,7 +8894,7 @@
         }
       ],
       "projected_score": {
-        "home": 26,
+        "home": 24,
         "away": 30,
         "simulations": 10000
       }
@@ -9080,7 +9080,7 @@
       ],
       "projected_score": {
         "home": 23,
-        "away": 33,
+        "away": 34,
         "simulations": 10000
       }
     },
@@ -9116,7 +9116,7 @@
         }
       ],
       "projected_score": {
-        "home": 26,
+        "home": 27,
         "away": 31,
         "simulations": 10000
       }
@@ -9154,7 +9154,7 @@
       ],
       "projected_score": {
         "home": 34,
-        "away": 26,
+        "away": 24,
         "simulations": 10000
       }
     },
@@ -9227,8 +9227,8 @@
         }
       ],
       "projected_score": {
-        "home": 33,
-        "away": 26,
+        "home": 34,
+        "away": 24,
         "simulations": 10000
       }
     },
@@ -9376,7 +9376,7 @@
       ],
       "projected_score": {
         "home": 21,
-        "away": 33,
+        "away": 34,
         "simulations": 10000
       }
     },
@@ -9449,8 +9449,8 @@
         }
       ],
       "projected_score": {
-        "home": 26,
-        "away": 37,
+        "home": 27,
+        "away": 38,
         "simulations": 10000
       }
     },
@@ -9486,7 +9486,7 @@
         }
       ],
       "projected_score": {
-        "home": 37,
+        "home": 38,
         "away": 23,
         "simulations": 10000
       }
@@ -9524,7 +9524,7 @@
       ],
       "projected_score": {
         "home": 24,
-        "away": 33,
+        "away": 34,
         "simulations": 10000
       }
     },
@@ -9561,7 +9561,7 @@
       ],
       "projected_score": {
         "home": 35,
-        "away": 16,
+        "away": 17,
         "simulations": 10000
       }
     },
@@ -9782,7 +9782,7 @@
         }
       ],
       "projected_score": {
-        "home": 37,
+        "home": 38,
         "away": 14,
         "simulations": 10000
       }
@@ -9820,7 +9820,7 @@
       ],
       "projected_score": {
         "home": 30,
-        "away": 16,
+        "away": 14,
         "simulations": 10000
       }
     },
@@ -9856,8 +9856,8 @@
         }
       ],
       "projected_score": {
-        "home": 26,
-        "away": 33,
+        "home": 27,
+        "away": 34,
         "simulations": 10000
       }
     },
@@ -9893,7 +9893,7 @@
         }
       ],
       "projected_score": {
-        "home": 33,
+        "home": 34,
         "away": 23,
         "simulations": 10000
       }
@@ -10004,8 +10004,8 @@
         }
       ],
       "projected_score": {
-        "home": 26,
-        "away": 33,
+        "home": 24,
+        "away": 34,
         "simulations": 10000
       }
     },
@@ -10041,8 +10041,8 @@
         }
       ],
       "projected_score": {
-        "home": 44,
-        "away": 16,
+        "home": 45,
+        "away": 17,
         "simulations": 10000
       }
     },
@@ -10115,7 +10115,7 @@
         }
       ],
       "projected_score": {
-        "home": 26,
+        "home": 27,
         "away": 24,
         "simulations": 10000
       }
@@ -10375,7 +10375,7 @@
       ],
       "projected_score": {
         "home": 27,
-        "away": 33,
+        "away": 34,
         "simulations": 10000
       }
     },
@@ -10411,7 +10411,7 @@
         }
       ],
       "projected_score": {
-        "home": 33,
+        "home": 34,
         "away": 24,
         "simulations": 10000
       }
@@ -10448,7 +10448,7 @@
         }
       ],
       "projected_score": {
-        "home": 33,
+        "home": 34,
         "away": 31,
         "simulations": 10000
       }
@@ -10486,7 +10486,7 @@
       ],
       "projected_score": {
         "home": 14,
-        "away": 44,
+        "away": 45,
         "simulations": 10000
       }
     },
@@ -10559,7 +10559,7 @@
         }
       ],
       "projected_score": {
-        "home": 33,
+        "home": 34,
         "away": 31,
         "simulations": 10000
       }
@@ -10633,7 +10633,7 @@
         }
       ],
       "projected_score": {
-        "home": 33,
+        "home": 34,
         "away": 28,
         "simulations": 10000
       }
@@ -10670,7 +10670,7 @@
         }
       ],
       "projected_score": {
-        "home": 37,
+        "home": 35,
         "away": 21,
         "simulations": 10000
       }
@@ -13334,7 +13334,7 @@
         }
       ],
       "projected_score": {
-        "home": 26,
+        "home": 27,
         "away": 24,
         "simulations": 10000
       }
@@ -13371,7 +13371,7 @@
         }
       ],
       "projected_score": {
-        "home": 16,
+        "home": 17,
         "away": 45,
         "simulations": 10000
       }
@@ -13408,7 +13408,7 @@
         }
       ],
       "projected_score": {
-        "home": 37,
+        "home": 38,
         "away": 35,
         "simulations": 10000
       }
@@ -13519,7 +13519,7 @@
         }
       ],
       "projected_score": {
-        "home": 26,
+        "home": 27,
         "away": 28,
         "simulations": 10000
       }
@@ -13594,7 +13594,7 @@
       ],
       "projected_score": {
         "home": 21,
-        "away": 33,
+        "away": 31,
         "simulations": 10000
       }
     },
@@ -13779,7 +13779,7 @@
       ],
       "projected_score": {
         "home": 31,
-        "away": 37,
+        "away": 38,
         "simulations": 10000
       }
     },
@@ -14001,7 +14001,7 @@
       ],
       "projected_score": {
         "home": 28,
-        "away": 26,
+        "away": 27,
         "simulations": 10000
       }
     },
@@ -14074,7 +14074,7 @@
         }
       ],
       "projected_score": {
-        "home": 33,
+        "home": 34,
         "away": 20,
         "simulations": 10000
       }
@@ -14112,7 +14112,7 @@
       ],
       "projected_score": {
         "home": 27,
-        "away": 26,
+        "away": 24,
         "simulations": 10000
       }
     },
@@ -14185,7 +14185,7 @@
         }
       ],
       "projected_score": {
-        "home": 37,
+        "home": 35,
         "away": 24,
         "simulations": 10000
       }
@@ -14222,7 +14222,7 @@
         }
       ],
       "projected_score": {
-        "home": 26,
+        "home": 27,
         "away": 24,
         "simulations": 10000
       }
@@ -14259,7 +14259,7 @@
         }
       ],
       "projected_score": {
-        "home": 33,
+        "home": 34,
         "away": 30,
         "simulations": 10000
       }
@@ -14297,7 +14297,7 @@
       ],
       "projected_score": {
         "home": 30,
-        "away": 33,
+        "away": 34,
         "simulations": 10000
       }
     },
@@ -14481,8 +14481,8 @@
         }
       ],
       "projected_score": {
-        "home": 37,
-        "away": 26,
+        "home": 38,
+        "away": 24,
         "simulations": 10000
       }
     },
@@ -14556,7 +14556,7 @@
       ],
       "projected_score": {
         "home": 23,
-        "away": 26,
+        "away": 27,
         "simulations": 10000
       }
     },
@@ -14629,7 +14629,7 @@
         }
       ],
       "projected_score": {
-        "home": 33,
+        "home": 31,
         "away": 21,
         "simulations": 10000
       }
@@ -14703,7 +14703,7 @@
         }
       ],
       "projected_score": {
-        "home": 26,
+        "home": 24,
         "away": 17,
         "simulations": 10000
       }
@@ -14851,8 +14851,8 @@
         }
       ],
       "projected_score": {
-        "home": 26,
-        "away": 27,
+        "home": 27,
+        "away": 28,
         "simulations": 10000
       }
     },
@@ -14889,7 +14889,7 @@
       ],
       "projected_score": {
         "home": 34,
-        "away": 26,
+        "away": 24,
         "simulations": 10000
       }
     },
@@ -14926,7 +14926,7 @@
       ],
       "projected_score": {
         "home": 35,
-        "away": 26,
+        "away": 27,
         "simulations": 10000
       }
     },
@@ -14962,7 +14962,7 @@
         }
       ],
       "projected_score": {
-        "home": 26,
+        "home": 24,
         "away": 27,
         "simulations": 10000
       }
@@ -15001,8 +15001,8 @@
       "graded": false,
       "grading_note": "FBS vs FCS: priced for reference, not graded -- these games say little about the model and are left out of the record.",
       "projected_score": {
-        "home": 51,
-        "away": 6,
+        "home": 52,
+        "away": 7,
         "simulations": 10000
       }
     },
@@ -15075,7 +15075,7 @@
         }
       ],
       "projected_score": {
-        "home": 37,
+        "home": 35,
         "away": 20,
         "simulations": 10000
       }
@@ -15112,7 +15112,7 @@
         }
       ],
       "projected_score": {
-        "home": 26,
+        "home": 27,
         "away": 24,
         "simulations": 10000
       }
@@ -15149,7 +15149,7 @@
         }
       ],
       "projected_score": {
-        "home": 33,
+        "home": 34,
         "away": 27,
         "simulations": 10000
       }
@@ -15334,7 +15334,7 @@
         }
       ],
       "projected_score": {
-        "home": 33,
+        "home": 34,
         "away": 24,
         "simulations": 10000
       }
@@ -15372,7 +15372,7 @@
       ],
       "projected_score": {
         "home": 31,
-        "away": 26,
+        "away": 24,
         "simulations": 10000
       }
     },
@@ -15408,7 +15408,7 @@
         }
       ],
       "projected_score": {
-        "home": 33,
+        "home": 34,
         "away": 23,
         "simulations": 10000
       }
@@ -15520,7 +15520,7 @@
       ],
       "projected_score": {
         "home": 23,
-        "away": 26,
+        "away": 27,
         "simulations": 10000
       }
     },
@@ -15556,7 +15556,7 @@
         }
       ],
       "projected_score": {
-        "home": 26,
+        "home": 24,
         "away": 27,
         "simulations": 10000
       }
@@ -15593,8 +15593,8 @@
         }
       ],
       "projected_score": {
-        "home": 33,
-        "away": 26,
+        "home": 34,
+        "away": 24,
         "simulations": 10000
       }
     },
@@ -15779,7 +15779,7 @@
       ],
       "projected_score": {
         "home": 20,
-        "away": 37,
+        "away": 35,
         "simulations": 10000
       }
     },
@@ -15815,7 +15815,7 @@
         }
       ],
       "projected_score": {
-        "home": 33,
+        "home": 34,
         "away": 23,
         "simulations": 10000
       }
@@ -15927,7 +15927,7 @@
       ],
       "projected_score": {
         "home": 28,
-        "away": 26,
+        "away": 27,
         "simulations": 10000
       }
     },
@@ -15963,7 +15963,7 @@
         }
       ],
       "projected_score": {
-        "home": 33,
+        "home": 34,
         "away": 21,
         "simulations": 10000
       }
@@ -16000,8 +16000,8 @@
         }
       ],
       "projected_score": {
-        "home": 33,
-        "away": 26,
+        "home": 31,
+        "away": 27,
         "simulations": 10000
       }
     },
@@ -16038,7 +16038,7 @@
       ],
       "projected_score": {
         "home": 34,
-        "away": 26,
+        "away": 27,
         "simulations": 10000
       }
     },
@@ -16111,7 +16111,7 @@
         }
       ],
       "projected_score": {
-        "home": 26,
+        "home": 27,
         "away": 30,
         "simulations": 10000
       }
@@ -16148,8 +16148,8 @@
         }
       ],
       "projected_score": {
-        "home": 26,
-        "away": 33,
+        "home": 27,
+        "away": 31,
         "simulations": 10000
       }
     },
@@ -16260,7 +16260,7 @@
       ],
       "projected_score": {
         "home": 27,
-        "away": 37,
+        "away": 35,
         "simulations": 10000
       }
     },
@@ -16296,7 +16296,7 @@
         }
       ],
       "projected_score": {
-        "home": 26,
+        "home": 24,
         "away": 23,
         "simulations": 10000
       }
@@ -16334,7 +16334,7 @@
       ],
       "projected_score": {
         "home": 34,
-        "away": 26,
+        "away": 27,
         "simulations": 10000
       }
     },
@@ -16371,7 +16371,7 @@
       ],
       "projected_score": {
         "home": 27,
-        "away": 26,
+        "away": 24,
         "simulations": 10000
       }
     },
@@ -16445,7 +16445,7 @@
       ],
       "projected_score": {
         "home": 28,
-        "away": 37,
+        "away": 35,
         "simulations": 10000
       }
     },
@@ -16482,7 +16482,7 @@
       ],
       "projected_score": {
         "home": 35,
-        "away": 16,
+        "away": 17,
         "simulations": 10000
       }
     },
@@ -16629,7 +16629,7 @@
         }
       ],
       "projected_score": {
-        "home": 37,
+        "home": 38,
         "away": 21,
         "simulations": 10000
       }
@@ -16666,7 +16666,7 @@
         }
       ],
       "projected_score": {
-        "home": 37,
+        "home": 38,
         "away": 24,
         "simulations": 10000
       }
@@ -16703,7 +16703,7 @@
         }
       ],
       "projected_score": {
-        "home": 33,
+        "home": 34,
         "away": 27,
         "simulations": 10000
       }
@@ -16851,7 +16851,7 @@
         }
       ],
       "projected_score": {
-        "home": 26,
+        "home": 24,
         "away": 23,
         "simulations": 10000
       }
@@ -17000,7 +17000,7 @@
       ],
       "projected_score": {
         "home": 27,
-        "away": 37,
+        "away": 38,
         "simulations": 10000
       }
     },
@@ -17110,7 +17110,7 @@
         }
       ],
       "projected_score": {
-        "home": 37,
+        "home": 38,
         "away": 41,
         "simulations": 10000
       }
@@ -17258,7 +17258,7 @@
         }
       ],
       "projected_score": {
-        "home": 26,
+        "home": 24,
         "away": 23,
         "simulations": 10000
       }
@@ -17296,7 +17296,7 @@
       ],
       "projected_score": {
         "home": 28,
-        "away": 33,
+        "away": 34,
         "simulations": 10000
       }
     },
@@ -17406,7 +17406,7 @@
         }
       ],
       "projected_score": {
-        "home": 37,
+        "home": 38,
         "away": 24,
         "simulations": 10000
       }
@@ -17591,7 +17591,7 @@
         }
       ],
       "projected_score": {
-        "home": 26,
+        "home": 27,
         "away": 21,
         "simulations": 10000
       }
@@ -17628,7 +17628,7 @@
         }
       ],
       "projected_score": {
-        "home": 44,
+        "home": 45,
         "away": 7,
         "simulations": 10000
       }
@@ -17702,7 +17702,7 @@
         }
       ],
       "projected_score": {
-        "home": 33,
+        "home": 31,
         "away": 20,
         "simulations": 10000
       }
@@ -17739,8 +17739,8 @@
         }
       ],
       "projected_score": {
-        "home": 33,
-        "away": 26,
+        "home": 34,
+        "away": 27,
         "simulations": 10000
       }
     },
@@ -17776,7 +17776,7 @@
         }
       ],
       "projected_score": {
-        "home": 33,
+        "home": 34,
         "away": 21,
         "simulations": 10000
       }
@@ -17814,7 +17814,7 @@
       ],
       "projected_score": {
         "home": 35,
-        "away": 26,
+        "away": 27,
         "simulations": 10000
       }
     },
@@ -17961,8 +17961,8 @@
         }
       ],
       "projected_score": {
-        "home": 26,
-        "away": 27,
+        "home": 27,
+        "away": 28,
         "simulations": 10000
       }
     },
@@ -18036,7 +18036,7 @@
       ],
       "projected_score": {
         "home": 31,
-        "away": 16,
+        "away": 17,
         "simulations": 10000
       }
     },
@@ -18073,7 +18073,7 @@
       ],
       "projected_score": {
         "home": 23,
-        "away": 33,
+        "away": 34,
         "simulations": 10000
       }
     },
@@ -18147,7 +18147,7 @@
       ],
       "projected_score": {
         "home": 27,
-        "away": 26,
+        "away": 24,
         "simulations": 10000
       }
     },
@@ -18183,7 +18183,7 @@
         }
       ],
       "projected_score": {
-        "home": 37,
+        "home": 38,
         "away": 21,
         "simulations": 10000
       }
@@ -18221,7 +18221,7 @@
       ],
       "projected_score": {
         "home": 24,
-        "away": 26,
+        "away": 27,
         "simulations": 10000
       }
     },
@@ -18257,7 +18257,7 @@
         }
       ],
       "projected_score": {
-        "home": 33,
+        "home": 31,
         "away": 20,
         "simulations": 10000
       }
@@ -18332,7 +18332,7 @@
       ],
       "projected_score": {
         "home": 24,
-        "away": 33,
+        "away": 34,
         "simulations": 10000
       }
     },
@@ -18369,7 +18369,7 @@
       ],
       "projected_score": {
         "home": 38,
-        "away": 26,
+        "away": 24,
         "simulations": 10000
       }
     },
@@ -18406,7 +18406,7 @@
       ],
       "projected_score": {
         "home": 41,
-        "away": 26,
+        "away": 27,
         "simulations": 10000
       }
     },
@@ -18442,7 +18442,7 @@
         }
       ],
       "projected_score": {
-        "home": 33,
+        "home": 31,
         "away": 23,
         "simulations": 10000
       }
@@ -18590,8 +18590,8 @@
         }
       ],
       "projected_score": {
-        "home": 37,
-        "away": 16,
+        "home": 35,
+        "away": 14,
         "simulations": 10000
       }
     },
@@ -18627,7 +18627,7 @@
         }
       ],
       "projected_score": {
-        "home": 33,
+        "home": 31,
         "away": 27,
         "simulations": 10000
       }
@@ -18923,7 +18923,7 @@
         }
       ],
       "projected_score": {
-        "home": 33,
+        "home": 34,
         "away": 30,
         "simulations": 10000
       }
@@ -18961,7 +18961,7 @@
       ],
       "projected_score": {
         "home": 31,
-        "away": 16,
+        "away": 14,
         "simulations": 10000
       }
     },
@@ -19072,7 +19072,7 @@
       ],
       "projected_score": {
         "home": 24,
-        "away": 26,
+        "away": 27,
         "simulations": 10000
       }
     },
@@ -19145,7 +19145,7 @@
         }
       ],
       "projected_score": {
-        "home": 26,
+        "home": 24,
         "away": 27,
         "simulations": 10000
       }
@@ -19183,7 +19183,7 @@
       ],
       "projected_score": {
         "home": 31,
-        "away": 26,
+        "away": 24,
         "simulations": 10000
       }
     },
@@ -19220,7 +19220,7 @@
       ],
       "projected_score": {
         "home": 24,
-        "away": 26,
+        "away": 27,
         "simulations": 10000
       }
     },
@@ -19257,7 +19257,7 @@
       ],
       "projected_score": {
         "home": 24,
-        "away": 33,
+        "away": 34,
         "simulations": 10000
       }
     },
@@ -19442,7 +19442,7 @@
       ],
       "projected_score": {
         "home": 31,
-        "away": 16,
+        "away": 17,
         "simulations": 10000
       }
     },
@@ -19479,7 +19479,7 @@
       ],
       "projected_score": {
         "home": 31,
-        "away": 33,
+        "away": 34,
         "simulations": 10000
       }
     },
@@ -19663,7 +19663,7 @@
         }
       ],
       "projected_score": {
-        "home": 33,
+        "home": 34,
         "away": 23,
         "simulations": 10000
       }
@@ -19700,7 +19700,7 @@
         }
       ],
       "projected_score": {
-        "home": 33,
+        "home": 34,
         "away": 20,
         "simulations": 10000
       }
@@ -19737,7 +19737,7 @@
         }
       ],
       "projected_score": {
-        "home": 26,
+        "home": 27,
         "away": 24,
         "simulations": 10000
       }
@@ -19812,7 +19812,7 @@
       ],
       "projected_score": {
         "home": 31,
-        "away": 33,
+        "away": 34,
         "simulations": 10000
       }
     },
@@ -19850,8 +19850,8 @@
       "graded": false,
       "grading_note": "FBS vs FCS: priced for reference, not graded -- these games say little about the model and are left out of the record.",
       "projected_score": {
-        "home": 58,
-        "away": 6,
+        "home": 56,
+        "away": 7,
         "simulations": 10000
       }
     },
@@ -19963,7 +19963,7 @@
       "graded": false,
       "grading_note": "FBS vs FCS: priced for reference, not graded -- these games say little about the model and are left out of the record.",
       "projected_score": {
-        "home": 58,
+        "home": 56,
         "away": 10,
         "simulations": 10000
       }
@@ -20040,7 +20040,7 @@
       "grading_note": "FBS vs FCS: priced for reference, not graded -- these games say little about the model and are left out of the record.",
       "projected_score": {
         "home": 59,
-        "away": 6,
+        "away": 3,
         "simulations": 10000
       }
     },
@@ -20226,7 +20226,7 @@
       "graded": false,
       "grading_note": "FBS vs FCS: priced for reference, not graded -- these games say little about the model and are left out of the record.",
       "projected_score": {
-        "home": 51,
+        "home": 49,
         "away": 3,
         "simulations": 10000
       }
@@ -20263,8 +20263,8 @@
         }
       ],
       "projected_score": {
-        "home": 33,
-        "away": 26,
+        "home": 34,
+        "away": 27,
         "simulations": 10000
       }
     },
@@ -20300,7 +20300,7 @@
         }
       ],
       "projected_score": {
-        "home": 33,
+        "home": 31,
         "away": 17,
         "simulations": 10000
       }
@@ -20338,7 +20338,7 @@
       ],
       "projected_score": {
         "home": 34,
-        "away": 26,
+        "away": 27,
         "simulations": 10000
       }
     },
@@ -20449,7 +20449,7 @@
       ],
       "projected_score": {
         "home": 35,
-        "away": 26,
+        "away": 27,
         "simulations": 10000
       }
     },
@@ -20523,7 +20523,7 @@
       ],
       "projected_score": {
         "home": 34,
-        "away": 16,
+        "away": 17,
         "simulations": 10000
       }
     },
@@ -20596,7 +20596,7 @@
         }
       ],
       "projected_score": {
-        "home": 26,
+        "home": 24,
         "away": 23,
         "simulations": 10000
       }
@@ -20634,7 +20634,7 @@
       ],
       "projected_score": {
         "home": 30,
-        "away": 26,
+        "away": 27,
         "simulations": 10000
       }
     },
@@ -20707,7 +20707,7 @@
         }
       ],
       "projected_score": {
-        "home": 33,
+        "home": 34,
         "away": 28,
         "simulations": 10000
       }
@@ -20744,7 +20744,7 @@
         }
       ],
       "projected_score": {
-        "home": 37,
+        "home": 38,
         "away": 27,
         "simulations": 10000
       }
@@ -20818,8 +20818,8 @@
         }
       ],
       "projected_score": {
-        "home": 37,
-        "away": 33,
+        "home": 38,
+        "away": 34,
         "simulations": 10000
       }
     },
@@ -20892,7 +20892,7 @@
         }
       ],
       "projected_score": {
-        "home": 33,
+        "home": 34,
         "away": 24,
         "simulations": 10000
       }
@@ -20929,7 +20929,7 @@
         }
       ],
       "projected_score": {
-        "home": 33,
+        "home": 34,
         "away": 24,
         "simulations": 10000
       }
@@ -20966,8 +20966,8 @@
         }
       ],
       "projected_score": {
-        "home": 33,
-        "away": 16,
+        "home": 34,
+        "away": 17,
         "simulations": 10000
       }
     }
