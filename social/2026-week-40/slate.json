@@ -1,0 +1,217 @@
+{
+  "generated_at": "2026-09-28T01:16:07Z",
+  "handoff_generated_at": "2026-09-28T00:53:03.144267+00:00",
+  "week": {
+    "from": "2026-09-28T01:16Z",
+    "to": "2026-09-28T23:59Z",
+    "games_in_window": 0,
+    "picks_in_handoff": 576
+  },
+  "basis": "Opponent-adjusted scoring margin",
+  "ranking_published_on": "2026-09-27",
+  "season": 2026,
+  "top25": [
+    {
+      "rank": 1,
+      "team": "Notre Dame Fighting Irish",
+      "rating": 33.27,
+      "conference": "FBS Independents",
+      "sos": 9.35,
+      "record": "4-0"
+    },
+    {
+      "rank": 2,
+      "team": "Ohio State Buckeyes",
+      "rating": 32.49,
+      "conference": "Big Ten",
+      "sos": 10.57,
+      "record": "3-1"
+    },
+    {
+      "rank": 3,
+      "team": "Indiana Hoosiers",
+      "rating": 32.27,
+      "conference": "Big Ten",
+      "sos": 7.86,
+      "record": "4-0"
+    },
+    {
+      "rank": 4,
+      "team": "Miami Hurricanes",
+      "rating": 31.75,
+      "conference": "ACC",
+      "sos": 5.61,
+      "record": "4-0"
+    },
+    {
+      "rank": 5,
+      "team": "Georgia Bulldogs",
+      "rating": 31.52,
+      "conference": "SEC",
+      "sos": 8.09,
+      "record": "4-0"
+    },
+    {
+      "rank": 6,
+      "team": "Utah Utes",
+      "rating": 29.47,
+      "conference": "Big 12",
+      "sos": 7.68,
+      "record": "4-0"
+    },
+    {
+      "rank": 7,
+      "team": "Alabama Crimson Tide",
+      "rating": 28.67,
+      "conference": "SEC",
+      "sos": 14.84,
+      "record": "4-0"
+    },
+    {
+      "rank": 8,
+      "team": "Texas Longhorns",
+      "rating": 28.18,
+      "conference": "SEC",
+      "sos": 18.37,
+      "record": "4-0"
+    },
+    {
+      "rank": 9,
+      "team": "Oregon Ducks",
+      "rating": 27.42,
+      "conference": "Big Ten",
+      "sos": 10.49,
+      "record": "3-1"
+    },
+    {
+      "rank": 10,
+      "team": "LSU Tigers",
+      "rating": 25.44,
+      "conference": "SEC",
+      "sos": 15.94,
+      "record": "3-1"
+    },
+    {
+      "rank": 11,
+      "team": "Florida Gators",
+      "rating": 24.0,
+      "conference": "SEC",
+      "sos": 10.54,
+      "record": "4-0"
+    },
+    {
+      "rank": 12,
+      "team": "Texas Tech Red Raiders",
+      "rating": 23.99,
+      "conference": "Big 12",
+      "sos": 8.21,
+      "record": "4-0"
+    },
+    {
+      "rank": 13,
+      "team": "Penn State Nittany Lions",
+      "rating": 23.43,
+      "conference": "Big Ten",
+      "sos": 8.98,
+      "record": "3-1"
+    },
+    {
+      "rank": 14,
+      "team": "Tennessee Volunteers",
+      "rating": 22.67,
+      "conference": "SEC",
+      "sos": 8.61,
+      "record": "3-1"
+    },
+    {
+      "rank": 15,
+      "team": "Iowa Hawkeyes",
+      "rating": 22.61,
+      "conference": "Big Ten",
+      "sos": 7.05,
+      "record": "4-0"
+    },
+    {
+      "rank": 16,
+      "team": "Ole Miss Rebels",
+      "rating": 21.52,
+      "conference": "SEC",
+      "sos": 16.06,
+      "record": "3-1"
+    },
+    {
+      "rank": 17,
+      "team": "Pittsburgh Panthers",
+      "rating": 21.51,
+      "conference": "ACC",
+      "sos": 4.76,
+      "record": "4-0"
+    },
+    {
+      "rank": 18,
+      "team": "USC Trojans",
+      "rating": 21.1,
+      "conference": "Big Ten",
+      "sos": 13.0,
+      "record": "4-1"
+    },
+    {
+      "rank": 19,
+      "team": "Virginia Cavaliers",
+      "rating": 20.98,
+      "conference": "ACC",
+      "sos": 5.39,
+      "record": "3-1"
+    },
+    {
+      "rank": 20,
+      "team": "Texas A&M Aggies",
+      "rating": 20.81,
+      "conference": "SEC",
+      "sos": 15.05,
+      "record": "2-2"
+    },
+    {
+      "rank": 21,
+      "team": "Mississippi State Bulldogs",
+      "rating": 20.55,
+      "conference": "SEC",
+      "sos": 11.67,
+      "record": "4-0"
+    },
+    {
+      "rank": 22,
+      "team": "Nebraska Cornhuskers",
+      "rating": 20.41,
+      "conference": "Big Ten",
+      "sos": 5.12,
+      "record": "4-0"
+    },
+    {
+      "rank": 23,
+      "team": "BYU Cougars",
+      "rating": 20.08,
+      "conference": "Big 12",
+      "sos": 3.67,
+      "record": "3-0"
+    },
+    {
+      "rank": 24,
+      "team": "Oklahoma Sooners",
+      "rating": 19.86,
+      "conference": "SEC",
+      "sos": 16.68,
+      "record": "2-2"
+    },
+    {
+      "rank": 25,
+      "team": "Houston Cougars",
+      "rating": 19.78,
+      "conference": "Big 12",
+      "sos": 6.14,
+      "record": "3-1"
+    }
+  ],
+  "slate": [],
+  "upsets": []
+}

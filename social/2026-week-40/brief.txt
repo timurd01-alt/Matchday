@@ -1,0 +1,40 @@
+COLLEGE MATCHDAY -- WEEK OF 2026-09-28
+Games from 2026-09-28T01:16Z to 2026-09-28T23:59Z (UTC).
+0 of 576 picks in the handoff fall in this window; the rest are later dates and are excluded.
+Ratings published 2026-09-27 -- Opponent-adjusted scoring margin.
+
+== TOP 25 ==
+#    TEAM                           RATING   CONFERENCE           SoS
+1    Notre Dame Fighting Irish      +33.3    FBS Independents     9.35
+2    Ohio State Buckeyes            +32.5    Big Ten              10.57
+3    Indiana Hoosiers               +32.3    Big Ten              7.86
+4    Miami Hurricanes               +31.8    ACC                  5.61
+5    Georgia Bulldogs               +31.5    SEC                  8.09
+6    Utah Utes                      +29.5    Big 12               7.68
+7    Alabama Crimson Tide           +28.7    SEC                  14.84
+8    Texas Longhorns                +28.2    SEC                  18.37
+9    Oregon Ducks                   +27.4    Big Ten              10.49
+10   LSU Tigers                     +25.4    SEC                  15.94
+11   Florida Gators                 +24.0    SEC                  10.54
+12   Texas Tech Red Raiders         +24.0    Big 12               8.21
+13   Penn State Nittany Lions       +23.4    Big Ten              8.98
+14   Tennessee Volunteers           +22.7    SEC                  8.61
+15   Iowa Hawkeyes                  +22.6    Big Ten              7.05
+16   Ole Miss Rebels                +21.5    SEC                  16.06
+17   Pittsburgh Panthers            +21.5    ACC                  4.76
+18   USC Trojans                    +21.1    Big Ten              13.0
+19   Virginia Cavaliers             +21.0    ACC                  5.39
+20   Texas A&M Aggies               +20.8    SEC                  15.05
+21   Mississippi State Bulldogs     +20.6    SEC                  11.67
+22   Nebraska Cornhuskers           +20.4    Big Ten              5.12
+23   BYU Cougars                    +20.1    Big 12               3.67
+24   Oklahoma Sooners               +19.9    SEC                  16.68
+25   Houston Cougars                +19.8    Big 12               6.14
+
+== THIS WEEK'S GAMES ==
+DAY   HOME                             AWAY                             MODEL    MARKET   PICK
+
+== UPSET WATCH ==
+No game this week has the model backing a side the market has as an underdog.
+
+Data: CollegeFootballData. Ratings solved by Matchday. Editorial, not advice.
