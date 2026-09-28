@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0928D",
+  "tag": "Fix",
+  "title": "This week’s predictions restored, with a guard",
+  "items": [
+   "A data feed re-saved this week’s games under new ids, so 42 of 59 games showed no prediction. Forecasts now find their game under either id, and this week is re-forecast.",
+   "The weekly publish now refuses to ship if this week’s picks drop sharply against what is live, instead of publishing the gap."
+  ]
+ },
+ {
   "date": "Build 0928C",
   "tag": "Change",
   "title": "Best call is the best underdog call",

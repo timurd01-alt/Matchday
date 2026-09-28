@@ -94,6 +94,8 @@ try {
     Copy-Item -Force (Join-Path $BetBetter 'betbetter_picks.json') (Join-Path $tree 'betbetter_picks.json')
 
     Run 'validate handoff' $tree $PythonPath @('-c', "import betbetter_handoff as h, json, sys; d=json.load(open('betbetter_picks.json',encoding='utf-8')); v=d.get('handoff_version'); sys.exit(0 if v in h.SUPPORTED_VERSIONS else 'unsupported handoff_version %r' % v)")
+    # Stop before publishing if this week's picks fell sharply against what is live.
+    Run 'check pick coverage' $tree $PythonPath @('check_pick_coverage.py')
     Run 'rebuild snapshot + AP poll' $tree $PythonPath @('build_cfb_snapshot.py')
     Run 'test suite' $tree $PythonPath @('-m','unittest','discover','-p','test_*.py')
 
