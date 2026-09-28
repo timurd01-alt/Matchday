@@ -966,8 +966,8 @@ function gamesBracketHTML(){
     +`<ol class="gamesSeeds">${byes.map(m=>`<li><em>${esc(m.home_slot)}</em>${typeof teamMark==='function'?teamMark(m.home):''}<b>${esc(short(m.home))}</b></li>`).join('')}</ol></div>`
     +`<button type="button" onclick="setView('bracket')">View bracket <span aria-hidden="true">→</span></button></section>`;
 }
-// The post-game half of the loop on the landing page: of the last ten graded
-// picks, the win where Matchday stood furthest above the market (best call)
+// The post-game half of the loop on the landing page: the biggest correct
+// underdog call (best call; see below)
 // and the loss it was most confident in (toughest miss). Both come from the
 // same locked, graded rows as the Scorecard; nothing is recomputed here.
 function gamesNotableHTML(){
@@ -979,7 +979,14 @@ function gamesNotableHTML(){
   const mkt=r=>{const v=num(r.market_probability_pct);return v!=null&&v>0&&v<100?v:null};
   const wins=graded.filter(r=>String(r.result).toLowerCase()==='win'&&num(r.probability_pct)!=null&&mkt(r)!=null);
   const losses=graded.filter(r=>String(r.result).toLowerCase()==='loss'&&num(r.probability_pct)!=null);
-  const best=wins.sort((a,b)=>(b.probability_pct-mkt(b))-(a.probability_pct-mkt(a)))[0];
+  // Best call is the biggest upset Matchday got right: a win on the market's
+  // underdog (market under 50%), lowest market price first, from the whole
+  // recent record rather than the last ten. Only when there is none does it
+  // fall back to the win where Matchday stood furthest above the market.
+  const underdogWins=(sc?.underdog_wins||sc?.recent||[]).filter(r=>String(r.result||'').toLowerCase()==='win'&&num(r.probability_pct)!=null&&mkt(r)!=null&&mkt(r)<50)
+    .sort((a,b)=>mkt(a)-mkt(b));
+  const best=underdogWins[0]||wins.sort((a,b)=>(b.probability_pct-mkt(b))-(a.probability_pct-mkt(a)))[0];
+  const bestLabel=underdogWins[0]?'Best underdog call':'Best call';
   const miss=losses.sort((a,b)=>b.probability_pct-a.probability_pct)[0];
   const short=n=>typeof rsShortName==='function'?rsShortName(n):n;
   const item=(r,label,won)=>{
@@ -992,7 +999,7 @@ function gamesNotableHTML(){
       +`<small>${game}</small>`
       +`<span>Matchday ${num(r.probability_pct).toFixed(1)}%${m!=null?` · market ${m.toFixed(1)}%`:''}<i>${won?'✓ Won':'✗ Lost'}</i></span></li>`;
   };
-  const body=item(best,'Best call',true)+item(miss,'Toughest miss',false);
+  const body=item(best,bestLabel,true)+item(miss,'Toughest miss',false);
   if(!body)return '';
   return `<section class="gamesRecord gamesNotable"><div><span>Latest calls</span><ul>${body}</ul></div></section>`;
 }

@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0928C",
+  "tag": "Change",
+  "title": "Best call is the best underdog call",
+  "items": [
+   "Latest calls on Home now leads with the biggest correct underdog call — a win where the market had Matchday’s side under 50%, lowest market price first — instead of a heavy favourite that won."
+  ]
+ },
+ {
   "date": "Build 0928B",
   "tag": "Fix",
   "title": "Site updates resume after an empty weekly export",
