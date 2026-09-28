@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0928A",
+  "tag": "Fix",
+  "title": "Featured Read difference colored by sign",
+  "items": [
+   "The Featured Read’s model–market difference was always green. It is now green when Matchday is above the market and red when below, matching the homepage list."
+  ]
+ },
+ {
   "date": "Build 0927AE",
   "tag": "Fix",
   "title": "Pick ’Em grades every week’s picks",

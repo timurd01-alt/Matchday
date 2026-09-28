@@ -3925,3 +3925,7 @@ body{font-variant-numeric:tabular-nums}
 .gamesSideCol>.gamesRecord{align-self:stretch;width:100%}
 .gamesSideCol>.gamesRecord>div{width:100%}
 .gamesSideCol .gamesSeeds{width:100%}
+/* Featured Read difference coloured by its sign, like the homepage's model /
+   market list: above the market reads as a win colour, below as a loss colour. */
+.rsGapUp{color:var(--win)!important}
+.rsGapDown{color:var(--loss)!important}

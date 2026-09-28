@@ -1261,7 +1261,7 @@ function rsFeatured(){
     +`<div class="rsSplit"><div class="rsSplitMain"><div class="rsFeatTeams">${side(away,'Away')}<span class="rsAt">at</span>${side(home,'Home')}</div>`
     +`</div><div class="rsSplitSide"><div class="rsCompare"><div><span class="rsKicker">Matchday</span><b>${communityModelPctLabel(model)}</b><span>${esc(team)} win</span></div>`
     +(Number.isFinite(market)?`<div><span class="rsKicker">Market</span><b>${market.toFixed(1)}%</b><span>no-vig price</span></div>`:'')
-    +(Number.isFinite(gap)?`<div><span class="rsKicker">Difference</span><b class="rsSignal">${gap>0?'+':'−'}${Math.abs(gap).toFixed(1)}</b><span>points</span></div>`:'')+`</div>`
+    +(Number.isFinite(gap)?`<div><span class="rsKicker">Difference</span><b class="${gap>0?'rsGapUp':gap<0?'rsGapDown':''}">${gap>0?'+':gap<0?'−':''}${Math.abs(gap).toFixed(1)}</b><span>points</span></div>`:'')+`</div>`
     +`<div class="rsFoot">${open}</div></div></div></section>`;
 }
 /* Model–market watch: the week's largest disagreements with the price.
