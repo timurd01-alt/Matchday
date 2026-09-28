@@ -9,6 +9,22 @@ function btmGrade(){ // fold finished results into the record
       const marketRes=side((m.score.reg&&m.score.reg.home!=null)?m.score.reg:m.score);
       p.result=res;p.you_hit=(p.pick===res);
       p.model_hit=(p.modelPick===res);p.market_hit=(p.marketPick===marketRes);changed=true;}});
+  // The board only holds the current slate, so a pick whose game has rolled
+  // off it was never graded. Settle those from the season's results by team
+  // names, taking the first finished meeting on or after the day of the pick.
+  const results=(typeof MATCHDAY_BETBETTER_RESULTS!=='undefined'&&MATCHDAY_BETBETTER_RESULTS)||[];
+  const same=(a,b)=>typeof bbNameMatches==='function'?bbNameMatches(a||'',b||''):String(a)===String(b);
+  if(results.length)Object.values(db.picks).forEach(p=>{
+    if(p.result||!p.home||!p.away)return;
+    const since=p.ts?new Date(p.ts-864e5).toISOString().slice(0,10):'';
+    const game=results.filter(r=>String(r.played_on||'')>=since&&r.home_score!=null&&r.away_score!=null
+      &&((same(r.home,p.home)&&same(r.away,p.away))||(same(r.home,p.away)&&same(r.away,p.home))))
+      .sort((a,b)=>String(a.played_on).localeCompare(String(b.played_on)))[0];
+    if(!game||Number(game.home_score)===Number(game.away_score))return;
+    const winner=Number(game.home_score)>Number(game.away_score)?game.home:game.away;
+    const res=same(winner,p.home)?'h':same(winner,p.away)?'a':null;if(!res)return;
+    p.result=res;p.you_hit=(p.pick===res);p.model_hit=(p.modelPick===res);p.market_hit=(p.marketPick===res);changed=true;
+  });
   if(changed){btmSave(db);pushScore();}return db;
 }
 function btmStats(db){

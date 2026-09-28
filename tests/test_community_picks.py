@@ -82,3 +82,17 @@ class CommunityPickAvailabilityTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class RolledOffPicksAreGradedTests(unittest.TestCase):
+    """A pick whose game has left the current board must still be graded.
+
+    btmGrade only walked DATA.matches, which holds the current slate, so a
+    user's picks from earlier weeks never settled (2026-09-27, "charlie wood").
+    """
+
+    def test_grading_falls_back_to_season_results(self):
+        views = (ROOT / "app-2-views.js").read_text(encoding="utf-8")
+        grade = views[views.index("function btmGrade("):views.index("function btmStats(")]
+        self.assertIn("MATCHDAY_BETBETTER_RESULTS", grade)
+        self.assertIn("same(r.home,p.away)&&same(r.away,p.home)", grade)

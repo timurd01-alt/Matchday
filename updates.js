@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0927AE",
+  "tag": "Fix",
+  "title": "Pick ’Em grades every week’s picks",
+  "items": [
+   "Pick ’Em only graded picks whose game was still on the current board, so picks from earlier weeks were never settled. They are now graded from the season’s results by team, the next time the page loads."
+  ]
+ },
+ {
   "date": "Build 0927AD",
   "tag": "Fix",
   "title": "Welcome line and home side column",
