@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0927AD",
+  "tag": "Fix",
+  "title": "Welcome line and home side column",
+  "items": [
+   "The welcome page’s opening sentence wraps into two even lines instead of leaving one word on its own.",
+   "Latest calls and Playoff picture on Home fill their column at every screen width, with no empty space to the right."
+  ]
+ },
+ {
   "date": "Build 0927AC",
   "tag": "Change",
   "title": "Model–market watch highlights the gap",

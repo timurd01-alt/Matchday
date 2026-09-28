@@ -3916,3 +3916,12 @@ body{font-variant-numeric:tabular-nums}
    Expected, stay on one line, and carry their unit small beside the figure. */
 :is(#view-score,#view-news) .rsCompare div>b .scGap{font-family:inherit;white-space:nowrap}
 .scGap .scUnit{margin-left:.2em;font-size:.45em;font-weight:var(--fw-medium);color:var(--muted);letter-spacing:0}
+/* Welcome lead: two even lines instead of a full line and one orphaned word
+   ("game."). The width keeps it to two lines on desktop; balance evens them. */
+.wx .wx-lead{max-width:62ch;margin-left:auto;margin-right:auto;text-wrap:balance}
+/* Latest calls and Playoff picture fill their column at every width; only the
+   phone rule did this before, so on wider screens they shrank to their text
+   and left empty space on the right. */
+.gamesSideCol>.gamesRecord{align-self:stretch;width:100%}
+.gamesSideCol>.gamesRecord>div{width:100%}
+.gamesSideCol .gamesSeeds{width:100%}
