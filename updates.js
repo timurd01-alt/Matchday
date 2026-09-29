@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0928G",
+  "tag": "Fix",
+  "title": "Game arrows moved out of the header",
+  "items": [
+   "On wide screens the previous / next arrows sit outside the expanded view on its left and right, like a gallery. On phones and narrower screens they are a Previous / Next row under the matchup. The header is back to its own spacing."
+  ]
+ },
+ {
   "date": "Build 0928F",
   "tag": "Fix",
   "title": "Arrows no longer cover the game status",

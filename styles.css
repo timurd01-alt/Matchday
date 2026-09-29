@@ -3929,13 +3929,17 @@ body{font-variant-numeric:tabular-nums}
    market list: above the market reads as a win colour, below as a loss colour. */
 .rsGapUp{color:var(--win)!important}
 .rsGapDown{color:var(--loss)!important}
-/* Previous / next arrows, beside the close button. */
-.modalNav{position:absolute;top:12px;right:56px;display:flex;gap:8px;z-index:2}
-.modalStep{width:34px;height:34px;border-radius:50%;border:1px solid var(--line2);background:rgba(255,255,255,.04);color:var(--text);font-size:var(--fs-xl);line-height:1;display:flex;align-items:center;justify-content:center;cursor:pointer}
-.modalStep:hover:not(:disabled){border-color:var(--signal);color:var(--signal)}
-.modalStep:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
-.modalStep:disabled{opacity:.35;cursor:default}
-/* The stage row (week, status) stops short of the arrows and close button
-   at every width, so UPCOMING / FINAL never sits under them. */
-.matchModal .modalStage{padding-right:140px!important}
+/* Previous / next game. Desktop: gallery arrows outside the sheet, vertically
+   centred. Phone: a Previous / Next row at the foot of the header. */
+.modalSideStep{position:fixed;top:50%;transform:translateY(-50%);z-index:100;width:48px;height:48px;border-radius:50%;border:1px solid var(--line2);background:var(--panel);color:var(--text);font-size:var(--fs-3xl);line-height:1;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 8px 30px rgba(0,0,0,.45)}
+.modalSideStep.prev{left:max(12px,calc(50vw - 560px - 68px))}
+.modalSideStep.next{right:max(12px,calc(50vw - 560px - 68px))}
+.modalSideStep:hover:not(:disabled){border-color:var(--signal);color:var(--signal)}
+.modalSideStep:focus-visible,.modalRowStep:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
+.modalSideStep:disabled{opacity:.3;cursor:default}
+.modalNav{display:none}
+@media(max-width:1260px){.modalSideStep{display:none}.modalNav{display:flex;justify-content:space-between;gap:12px;margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}}
+.modalRowStep{min-height:40px;padding:0 14px;border:1px solid var(--line2);border-radius:999px;background:rgba(255,255,255,.04);color:var(--text);font-family:var(--mono);font-size:var(--fs-xs);letter-spacing:.06em;text-transform:uppercase;cursor:pointer}
+.modalRowStep:hover:not(:disabled){border-color:var(--signal);color:var(--signal)}
+.modalRowStep:disabled{opacity:.35;cursor:default}
 .projectedScore b{white-space:nowrap}

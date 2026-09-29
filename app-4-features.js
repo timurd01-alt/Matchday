@@ -642,8 +642,13 @@ window.addEventListener('popstate',()=>{
     const m=key&&(BYID[key]||(DATA.matches||[]).find(x=>String(x.id)===String(key)));
     if(!hero||!m||hero.querySelector('.modalNav'))return;
     const list=siblings(m),i=list.findIndex(x=>String(x.id)===String(m.id));
-    const btn=(d,label,glyph)=>`<button type="button" class="modalStep" aria-label="${label}" ${list[i+d]?'':'disabled'} onclick="stepMatchModal(${d})">${glyph}</button>`;
-    hero.insertAdjacentHTML('afterbegin',`<div class="modalNav">${btn(-1,'Previous game','‹')}${btn(1,'Next game','›')}</div>`);
+    // Desktop: large arrows outside the sheet, left and right, like a gallery.
+    // Phone: a Previous / Next row at the foot of the header, clear of the close.
+    const side=(d,label,cls,glyph)=>`<button type="button" class="modalSideStep ${cls}" aria-label="${label}" ${list[i+d]?'':'disabled'} onclick="stepMatchModal(${d})">${glyph}</button>`;
+    modal.querySelectorAll('.modalSideStep').forEach(b=>b.remove());
+    modal.insertAdjacentHTML('beforeend',side(-1,'Previous game','prev','‹')+side(1,'Next game','next','›'));
+    const row=(d,label,text)=>`<button type="button" class="modalRowStep" aria-label="${label}" ${list[i+d]?'':'disabled'} onclick="stepMatchModal(${d})">${text}</button>`;
+    hero.insertAdjacentHTML('beforeend',`<div class="modalNav">${row(-1,'Previous game','‹ Previous')}${row(1,'Next game','Next ›')}</div>`);
   };
   document.addEventListener('keydown',e=>{
     if(!document.querySelector('#matchModal.show'))return;
