@@ -1,5 +1,5 @@
-COLLEGE MATCHDAY -- WEEK OF 2026-09-28
-Games from 2026-09-28T21:20Z to 2026-10-05T23:59Z (UTC).
+COLLEGE MATCHDAY -- WEEK OF 2026-09-29
+Games from 2026-09-29T18:26Z to 2026-10-05T23:59Z (UTC).
 59 of 576 picks in the handoff fall in this window; the rest are later dates and are excluded.
 Ratings published 2026-09-27 -- Opponent-adjusted scoring margin.
 
@@ -36,11 +36,11 @@ DAY   HOME                             AWAY                             MODEL   
 Sat   #15 Iowa Hawkeyes                #2 Ohio State Buckeyes           72.6%    84.0%    Ohio State Buckeyes
 Sat   #21 Mississippi State Bulldogs   #7 Alabama Crimson Tide          55.4%    61.0%    Alabama Crimson Tide
 Sat   North Carolina Tar Heels         #1 Notre Dame Fighting Irish     89.3%    92.0%    Notre Dame Fighting Irish
-Sun   Rutgers Scarlet Knights          #3 Indiana Hoosiers              88.2%    --       Indiana Hoosiers
+Sun   Rutgers Scarlet Knights          #3 Indiana Hoosiers              90.2%    92.6%    Indiana Hoosiers
 Sat   Clemson Tigers                   #4 Miami Hurricanes              86.4%    86.5%    Miami Hurricanes
 Sat   #5 Georgia Bulldogs              Vanderbilt Commodores            90.4%    93.6%    Georgia Bulldogs
 Sat   Missouri Tigers                  #11 Florida Gators               57.0%    57.9%    Florida Gators
-Sat   Colorado Buffaloes               #12 Texas Tech Red Raiders       78.0%    --       Texas Tech Red Raiders
+Sat   Colorado Buffaloes               #12 Texas Tech Red Raiders       79.3%    81.2%    Texas Tech Red Raiders
 Sat   Northwestern Wildcats            #13 Penn State Nittany Lions     55.1%    68.3%    Penn State Nittany Lions
 Sat   #14 Tennessee Volunteers         Auburn Tigers                    69.0%    72.2%    Tennessee Volunteers
 

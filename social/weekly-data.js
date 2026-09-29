@@ -2,15 +2,15 @@
 // Every number here comes from betbetter_picks.json, filtered to the
 // current playing week. Regenerate with: python social_export.py --js
 window.MATCHDAY_SOCIAL = {
-  "week": "WEEK OF SEP 28",
+  "week": "WEEK OF SEP 29",
   "season": "2026 SEASON",
   "published": "2026-09-27",
-  "generated_at": "2026-09-28T21:20:06Z",
+  "generated_at": "2026-09-29T18:26:05Z",
   "logos": {
     "Notre Dame Fighting Irish": "logos/notreDame.png",
     "NOTRE DAME": "logos/notreDame.png",
     "Notre Dame": "logos/notreDame.png",
-    "Ohio State Buckeyes": "logos/ohio.png",
+    "Ohio State Buckeyes": "logos/ohioState.png",
     "OHIO STATE": "logos/ohioState.png",
     "Ohio State": "logos/ohioState.png",
     "Indiana Hoosiers": "logos/indiana.png",
@@ -38,7 +38,7 @@ window.MATCHDAY_SOCIAL = {
     "LSU": "logos/lsu.png",
     "Florida Gators": "logos/florida.png",
     "FLORIDA GATORS": "logos/florida.png",
-    "Texas Tech Red Raiders": "logos/texas.png",
+    "Texas Tech Red Raiders": "logos/texasTech.png",
     "TEXAS TECH": "logos/texasTech.png",
     "Texas Tech": "logos/texasTech.png",
     "Penn State Nittany Lions": "logos/penn.png",
@@ -60,7 +60,7 @@ window.MATCHDAY_SOCIAL = {
     "USC": "logos/usc.png",
     "Virginia Cavaliers": "logos/virginia.png",
     "VIRGINIA CAVALIERS": "logos/virginia.png",
-    "Texas A&M Aggies": "logos/texas.png",
+    "Texas A&M Aggies": "logos/texasAM.png",
     "TEXAS A&M": "logos/texasAM.png",
     "Texas A&M": "logos/texasAM.png",
     "Mississippi State Bulldogs": "logos/mississippiState.png",

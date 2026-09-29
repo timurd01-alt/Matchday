@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-09-28T21:20:06Z",
-  "handoff_generated_at": "2026-09-28T00:53:03.144267+00:00",
+  "generated_at": "2026-09-29T18:26:05Z",
+  "handoff_generated_at": "2026-09-28T23:08:49.735926+00:00",
   "week": {
-    "from": "2026-09-28T21:20Z",
+    "from": "2026-09-29T18:26Z",
     "to": "2026-10-05T23:59Z",
     "games_in_window": 59,
     "picks_in_handoff": 576
@@ -299,20 +299,20 @@
       "home_rank": null,
       "away_rank": 3,
       "pick": "Indiana Hoosiers",
-      "model_pct": 88.2,
-      "market_pct": null,
-      "edge_points": null,
+      "model_pct": 90.2,
+      "market_pct": 92.6,
+      "edge_points": -2.4,
       "best_price": null,
       "sides": [
         {
           "selection": "Rutgers Scarlet Knights",
           "is_home": true,
-          "model_pct": 11.8
+          "model_pct": 9.8
         },
         {
           "selection": "Indiana Hoosiers",
           "is_home": false,
-          "model_pct": 88.2
+          "model_pct": 90.2
         }
       ],
       "fan_score": 64
@@ -396,27 +396,27 @@
       "fan_score": 48
     },
     {
-      "kickoff": "2026-10-03T04:00:00Z",
+      "kickoff": "2026-10-03T23:30:00Z",
       "day": "Sat",
       "home": "Colorado Buffaloes",
       "away": "Texas Tech Red Raiders",
       "home_rank": null,
       "away_rank": 12,
       "pick": "Texas Tech Red Raiders",
-      "model_pct": 78.0,
-      "market_pct": null,
-      "edge_points": null,
+      "model_pct": 79.3,
+      "market_pct": 81.2,
+      "edge_points": -1.9,
       "best_price": null,
       "sides": [
         {
           "selection": "Colorado Buffaloes",
           "is_home": true,
-          "model_pct": 22.0
+          "model_pct": 20.7
         },
         {
           "selection": "Texas Tech Red Raiders",
           "is_home": false,
-          "model_pct": 78.0
+          "model_pct": 79.3
         }
       ],
       "fan_score": 46
