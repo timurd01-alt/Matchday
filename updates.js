@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0928E",
+  "tag": "New",
+  "title": "Step between games in the expanded view",
+  "items": [
+   "The expanded view has previous and next arrows beside the close button, stepping through games in board order; the left and right arrow keys do the same.",
+   "Each team’s projected score stays on one line."
+  ]
+ },
+ {
   "date": "Build 0928D",
   "tag": "Fix",
   "title": "This week’s predictions restored, with a guard",

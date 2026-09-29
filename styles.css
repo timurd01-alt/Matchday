@@ -3929,3 +3929,11 @@ body{font-variant-numeric:tabular-nums}
    market list: above the market reads as a win colour, below as a loss colour. */
 .rsGapUp{color:var(--win)!important}
 .rsGapDown{color:var(--loss)!important}
+/* Previous / next arrows, beside the close button. */
+.modalNav{position:absolute;top:12px;right:56px;display:flex;gap:8px;z-index:2}
+.modalStep{width:34px;height:34px;border-radius:50%;border:1px solid var(--line2);background:rgba(255,255,255,.04);color:var(--text);font-size:var(--fs-xl);line-height:1;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.modalStep:hover:not(:disabled){border-color:var(--signal);color:var(--signal)}
+.modalStep:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
+.modalStep:disabled{opacity:.35;cursor:default}
+@media(max-width:760px){.matchModal .modernMatchSheet .modalStage{padding-right:140px}}
+.projectedScore b{white-space:nowrap}

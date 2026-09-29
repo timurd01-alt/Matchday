@@ -620,3 +620,35 @@ window.addEventListener('popstate',()=>{
     load(true).then(()=>setView(target,{history:false}));
   }else setView(target,{history:false});
 });
+
+// Previous / next game in the expanded view. Steps through the same games in
+// the same order as the board (live, then upcoming, then finished; by kickoff),
+// staying within finished or not-finished so a final never follows a preview.
+// Left/right arrow keys do the same while the sheet is open.
+(function(){
+  const open=window.openMatchModal;
+  const siblings=m=>{const done=typeof isCompleteOrPast==='function'&&isCompleteOrPast(m);
+    return (DATA.matches||[]).filter(x=>(typeof isCompleteOrPast==='function'&&isCompleteOrPast(x))===done)
+      .slice().sort(typeof fixtureSort==='function'?fixtureSort:(a,b)=>kickMs(a)-kickMs(b));};
+  window.stepMatchModal=function(delta){
+    const modal=document.getElementById('matchModal'),key=modal?.dataset.matchId;
+    const m=key&&(BYID[key]||(DATA.matches||[]).find(x=>String(x.id)===String(key)));if(!m)return;
+    const list=siblings(m),i=list.findIndex(x=>String(x.id)===String(m.id)),next=list[i+delta];
+    if(next)window.openMatchModal(next.id);
+  };
+  window.openMatchModal=function(id){
+    open(id);
+    const modal=document.getElementById('matchModal'),hero=modal?.querySelector('.modalHero'),key=modal?.dataset.matchId;
+    const m=key&&(BYID[key]||(DATA.matches||[]).find(x=>String(x.id)===String(key)));
+    if(!hero||!m||hero.querySelector('.modalNav'))return;
+    const list=siblings(m),i=list.findIndex(x=>String(x.id)===String(m.id));
+    const btn=(d,label,glyph)=>`<button type="button" class="modalStep" aria-label="${label}" ${list[i+d]?'':'disabled'} onclick="stepMatchModal(${d})">${glyph}</button>`;
+    hero.insertAdjacentHTML('afterbegin',`<div class="modalNav">${btn(-1,'Previous game','‹')}${btn(1,'Next game','›')}</div>`);
+  };
+  document.addEventListener('keydown',e=>{
+    if(!document.querySelector('#matchModal.show'))return;
+    if(e.target&&/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName))return;
+    if(e.key==='ArrowLeft'){e.preventDefault();window.stepMatchModal(-1)}
+    else if(e.key==='ArrowRight'){e.preventDefault();window.stepMatchModal(1)}
+  });
+})();
