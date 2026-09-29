@@ -1,0 +1,1 @@
+{"rank": 425, "date": "Build 0928F", "tag": "Fix", "title": "Arrows no longer cover the game status", "items": ["In the expanded view, the week and status line (Upcoming, Final) now stops short of the previous/next arrows and close button at every screen width."]}

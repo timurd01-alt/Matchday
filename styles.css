@@ -3935,5 +3935,7 @@ body{font-variant-numeric:tabular-nums}
 .modalStep:hover:not(:disabled){border-color:var(--signal);color:var(--signal)}
 .modalStep:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
 .modalStep:disabled{opacity:.35;cursor:default}
-@media(max-width:760px){.matchModal .modernMatchSheet .modalStage{padding-right:140px}}
+/* The stage row (week, status) stops short of the arrows and close button
+   at every width, so UPCOMING / FINAL never sits under them. */
+.matchModal .modalStage{padding-right:140px!important}
 .projectedScore b{white-space:nowrap}

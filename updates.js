@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 0928F",
+  "tag": "Fix",
+  "title": "Arrows no longer cover the game status",
+  "items": [
+   "In the expanded view, the week and status line (Upcoming, Final) now stops short of the previous/next arrows and close button at every screen width."
+  ]
+ },
+ {
   "date": "Build 0928E",
   "tag": "New",
   "title": "Step between games in the expanded view",
