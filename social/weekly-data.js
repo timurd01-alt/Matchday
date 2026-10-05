@@ -2,10 +2,10 @@
 // Every number here comes from betbetter_picks.json, filtered to the
 // current playing week. Regenerate with: python social_export.py --js
 window.MATCHDAY_SOCIAL = {
-  "week": "WEEK OF SEP 29",
+  "week": "WEEK OF OCT 05",
   "season": "2026 SEASON",
   "published": "2026-09-27",
-  "generated_at": "2026-09-29T18:26:05Z",
+  "generated_at": "2026-10-05T00:05:47Z",
   "logos": {
     "Notre Dame Fighting Irish": "logos/notreDame.png",
     "NOTRE DAME": "logos/notreDame.png",
@@ -76,14 +76,9 @@ window.MATCHDAY_SOCIAL = {
     "Houston Cougars": "logos/houston.png",
     "HOUSTON": "logos/houston.png",
     "Houston": "logos/houston.png",
-    "North Carolina Tar Heels": "logos/northCarolina.png",
-    "NORTH CAROLINA TAR HEELS": "logos/northCarolina.png",
-    "Rutgers Scarlet Knights": "logos/rutgers.png",
-    "RUTGERS": "logos/rutgers.png",
-    "Rutgers": "logos/rutgers.png",
-    "Clemson Tigers": "logos/clemson.png",
-    "CLEMSON": "logos/clemson.png",
-    "Clemson": "logos/clemson.png"
+    "Stanford Cardinal": "logos/stanford.png",
+    "STANFORD": "logos/stanford.png",
+    "Stanford": "logos/stanford.png"
   },
   "top25": [
     [
@@ -199,38 +194,38 @@ window.MATCHDAY_SOCIAL = {
   "slate": [
     {
       "rank": 1,
-      "away": "OHIO STATE",
-      "home": "IOWA",
-      "time": "SAT · 3:30 PM ET",
-      "hook": "#2 vs #15"
+      "away": "GEORGIA",
+      "home": "ALABAMA",
+      "time": "SAT · 12:00 AM ET",
+      "hook": "#5 vs #7"
     },
     {
       "rank": 2,
-      "away": "ALABAMA",
-      "home": "MISSISSIPPI STATE",
-      "time": "SAT · 12:00 PM ET",
-      "hook": "#7 vs #21"
+      "away": "GEORGIA",
+      "home": "ALABAMA",
+      "time": "SAT · 8:00 PM ET",
+      "hook": "#5 vs #7"
     },
     {
       "rank": 3,
-      "away": "NOTRE DAME",
-      "home": "NORTH CAROLINA TAR HEELS",
-      "time": "SAT · 12:00 PM ET",
-      "hook": "RANKED #1 ON THE ROAD"
+      "away": "INDIANA",
+      "home": "NEBRASKA CORNHUSKERS",
+      "time": "SAT · 12:00 AM ET",
+      "hook": "#3 vs #22"
     },
     {
       "rank": 4,
-      "away": "INDIANA",
-      "home": "RUTGERS",
-      "time": "SAT · 8:00 PM ET",
-      "hook": "RANKED #3 ON THE ROAD"
+      "away": "USC",
+      "home": "PENN STATE",
+      "time": "SAT · 12:00 AM ET",
+      "hook": "#18 vs #13"
     },
     {
       "rank": 5,
-      "away": "MIAMI",
-      "home": "CLEMSON",
-      "time": "SAT · 12:00 PM ET",
-      "hook": "RANKED #4 ON THE ROAD"
+      "away": "STANFORD",
+      "home": "NOTRE DAME",
+      "time": "SAT · 3:30 PM ET",
+      "hook": "RANKED #1 AT HOME"
     }
   ]
 };
