@@ -1561,8 +1561,12 @@ const rsMedian=a=>{const b=a.slice().sort((m,n)=>m-n);return b[Math.floor(b.leng
    it is NET points per success, not points when a play works. It is not
    explosiveness or IsoPPP, which need play-level EPA on successful snaps. */
 function rsEfficiencyData(){
-  const rows=rsProfiles().filter(t=>Number.isFinite(Number(t.success_rate))&&Number(t.success_rate)>=0.15&&Number.isFinite(Number(t.ppa)))
-    .map(t=>({...t,x:Number(t.success_rate),y:Number(t.ppa)/Number(t.success_rate)}));
+  // Opponent-adjusted when the engine supplies it: raw efficiency flatters a
+  // team that has played weak defences, the same way raw defence flattered
+  // New Mexico. Falls back to the raw numbers for an older export.
+  const sr=t=>t.success_rate_adj??t.success_rate,pp=t=>t.ppa_adj??t.ppa;
+  const rows=rsProfiles().filter(t=>Number.isFinite(Number(sr(t)))&&Number(sr(t))>=0.15&&Number.isFinite(Number(pp(t))))
+    .map(t=>({...t,x:Number(sr(t)),y:Number(pp(t))/Number(sr(t))}));
   if(rows.length<12)return null;
   const mx=rsMedian(rows.map(r=>r.x)),my=rsMedian(rows.map(r=>r.y));
   const x0=Math.min(...rows.map(r=>r.x)),x1=Math.max(...rows.map(r=>r.x)),y0=Math.min(...rows.map(r=>r.y)),y1=Math.max(...rows.map(r=>r.y));
@@ -1595,7 +1599,7 @@ function rsEfficiency(){
       +`${dots}${labels}<text class="scAxLbl" x="${((W+PL)/2).toFixed(0)}" y="${H-8}" text-anchor="middle">success rate →</text>`
       +`<text class="scAxLbl" transform="rotate(-90 12 ${(H/2).toFixed(0)})" x="12" y="${(H/2).toFixed(0)}" text-anchor="middle">net points per success →</text></svg>`;
   };
-  return `<section class="rsBlock rsSpan8 rsChartBlock">${rsTop('Efficiency vs net points per success','current',`${rows.length} FBS offenses`)}`
+  return `<section class="rsBlock rsSpan8 rsChartBlock">${rsTop('Efficiency vs net points per success','current',`${rows.length} FBS offenses · opponent-adjusted`)}`
     +`<div class="rsPlot">`+draw(1000,440,56,16,14,44,1,'rsWide')+draw(640,360,52,14,14,44,1.1,'rsMid')+draw(360,420,46,12,14,44,1.25,'rsTall')+`</div>`
     +`<div class="rsLegend"><span><i class="dotKeyHi"></i>Top 25</span><span><i class="dotKeyP"></i>Power Four</span><span><i class="dotKeyG"></i>Group of Five</span><span>Lines are medians · hover for the team</span>${rsPlotFilter(rows.map(r=>r.row?.conference))}</div><div class="rsReadout" aria-live="polite">Tap any dot to see the team.</div></section>`;
 }
@@ -1617,8 +1621,12 @@ function rsEfficiencyNotes(){
    rate answers a different question from the bar: how often a defence wins
    the down, rather than how much it gives up. */
 function rsDefenceData(){
-  const rows=rsProfiles().filter(t=>Number.isFinite(Number(t.def_ppa_allowed))&&Number.isFinite(Number(t.def_success_rate_allowed)))
-    .map(t=>({...t,v:Number(t.def_ppa_allowed),stop:1-Number(t.def_success_rate_allowed)}));
+  // Opponent-adjusted when available. Raw, New Mexico ranked 3rd in the country
+  // after facing Central Michigan, Mercyhurst, New Mexico State and UTEP;
+  // adjusted, 47th.
+  const pa=t=>t.def_ppa_allowed_adj??t.def_ppa_allowed,sa=t=>t.def_success_rate_allowed_adj??t.def_success_rate_allowed;
+  const rows=rsProfiles().filter(t=>Number.isFinite(Number(pa(t)))&&Number.isFinite(Number(sa(t))))
+    .map(t=>({...t,v:Number(pa(t)),stop:1-Number(sa(t))}));
   if(rows.length<16)return null;
   const sorted=rows.slice().sort((a,b)=>a.v-b.v);
   return {rows,best:sorted.slice(0,8),worst:sorted.slice(-8).reverse(),below:rows.filter(r=>r.v<0).length};
@@ -1633,7 +1641,7 @@ function rsDefence(){
       +`<span class="rsNum"><b class="${neg?'rsWin':'rsLoss'}">${r.v>0?'+':'−'}${Math.abs(r.v).toFixed(3)}</b></span>`
       +`<span class="rsDivStop">${Math.round(r.stop*100)}% stopped</span></li>`;
   };
-  return `<section class="rsBlock rsSpan8">${rsTop('Defense against a real zero','current','EPA allowed per play')}`
+  return `<section class="rsBlock rsSpan8">${rsTop('Defense against a real zero','current','EPA allowed per play · opponent-adjusted')}`
     +`<div class="rsDivHead"><span>Best 8</span><span>← defense wins the down · offense gains →</span><span></span><span>Stop rate</span></div>`
     +`<ul class="rsDiv">${D.best.map(row).join('')}</ul>`
     +`<div class="rsDivHead rsDivGap"><span>Worst 8</span><span></span><span></span><span></span></div>`

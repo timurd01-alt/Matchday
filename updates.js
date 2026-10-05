@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1004B",
+  "tag": "Fix",
+  "title": "Offense and defense charts adjusted for opponents",
+  "items": [
+   "Research’s efficiency and defense charts now use opponent-adjusted numbers: each game is measured against what that opponent usually allows or gains. Raw numbers flattered teams with weak schedules — New Mexico’s defense was 3rd raw and is 47th adjusted."
+  ]
+ },
+ {
   "date": "Build 1004A",
   "tag": "Fix",
   "title": "Schedule groups listed by rating",
