@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1004A",
+  "tag": "Fix",
+  "title": "Schedule groups listed by rating",
+  "items": [
+   "The Rating vs schedule groups (Earned it, Soft schedule, …) now list teams by rating, best first, so each #1 matches the first column. They were ordered by distance from the chart’s centre, which mixed rating and schedule."
+  ]
+ },
+ {
   "date": "Build 0928G",
   "tag": "Fix",
   "title": "Game arrows moved out of the header",

@@ -1446,11 +1446,16 @@ function rsScatterNotes(){
   const x=r=>Number(r.sos),y=r=>Number(r.rating);
   const mx=rsMedian(rows.map(x)),my=rsMedian(rows.map(y));
   const shape=r=>({name:r.name,rank:r.rank,a:Number(r.rating).toFixed(1),b:Number(r.sos).toFixed(2)});
+  // Each group lists its teams by rating, best first, so #1 matches the first
+  // column. The shared quadrant order (distance from the chart's centre) mixed
+  // rating and schedule: Alabama sat above Texas though Texas had the tougher
+  // schedule and Alabama the better rating was not what the order said either.
+  const byRating=list=>list.slice().sort((p,q)=>y(q)-y(p)||x(q)-x(p));
   const groups=[
-    {label:'Earned it',what:'Above-median rating against an above-median schedule.',rows:rsQuadRows(rows,x,y,mx,my,1,1).map(shape)},
-    {label:'Soft schedule',what:'Above-median rating built against a below-median schedule.',rows:rsQuadRows(rows,x,y,mx,my,-1,1).map(shape)},
-    {label:'Tested, fell short',what:'Below-median rating against an above-median schedule.',rows:rsQuadRows(rows,x,y,mx,my,1,-1).map(shape)},
-    {label:'Unproven',what:'Below-median rating against a below-median schedule.',rows:rsQuadRows(rows,x,y,mx,my,-1,-1).map(shape)},
+    {label:'Earned it',what:'Above-median rating against an above-median schedule.',rows:byRating(rsQuadRows(rows,x,y,mx,my,1,1)).map(shape)},
+    {label:'Soft schedule',what:'Above-median rating built against a below-median schedule.',rows:byRating(rsQuadRows(rows,x,y,mx,my,-1,1)).map(shape)},
+    {label:'Tested, fell short',what:'Below-median rating against an above-median schedule.',rows:byRating(rsQuadRows(rows,x,y,mx,my,1,-1)).map(shape)},
+    {label:'Unproven',what:'Below-median rating against a below-median schedule.',rows:byRating(rsQuadRows(rows,x,y,mx,my,-1,-1)).map(shape)},
   ];
   return `<section class="rsBlock rsSpan4">${rsTop('Schedule groups','blend','','Rating vs schedule')}${rsQuadTabs('rating',groups,'Rating','SoS')}</section>`;
 }
