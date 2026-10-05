@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1004C",
+  "tag": "Change",
+  "title": "Season forecast runs as a background task",
+  "items": [
+   "A full-season forecast takes about 40 minutes, longer than an interactive session allows. automation/forecast_rest_of_season.ps1 runs it as a Windows task: pause the data poller, forecast, export, ship, resume."
+  ]
+ },
+ {
   "date": "Build 1004B",
   "tag": "Fix",
   "title": "Offense and defense charts adjusted for opponents",
