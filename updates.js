@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1006A",
+  "tag": "Fix",
+  "title": "More readable headline type",
+  "items": [
+   "Team names and headers keep the same condensed typeface but get a little more space between letters, so they no longer run together.",
+   "The advanced CFB profile no longer shows a row of zeros for a team with no plays yet; it says the profile is unavailable instead."
+  ]
+ },
+ {
   "date": "Build 1004C",
   "tag": "Change",
   "title": "Season forecast runs as a background task",

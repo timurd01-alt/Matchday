@@ -75,8 +75,15 @@
     const direction=higher?'Higher is stronger':'Lower is stronger';
     return `<div class="cfbMetric" role="row"><div class="cfbMetricLabel" role="rowheader"><b>${esc(label)}</b><span>${esc(help)} · ${esc(direction)}</span></div><div class="cfbMetricValue ${leader==='home'?'stronger':''}" role="cell">${esc(format(hv,type))}${leader==='home'?'<small>Stronger</small>':''}</div><div class="cfbMetricValue ${leader==='away'?'stronger':''}" role="cell">${esc(format(av,type))}${leader==='away'?'<small>Stronger</small>':''}</div></div>`;
   }
+  /* A profile whose every metric is exactly zero is a placeholder for a team
+     with no graded plays yet, not a measurement -- show it as unavailable. */
+  function cfbProfile(profile){
+    if(!profile)return null;
+    const keys=cfbGroups.flatMap(([,items])=>items.map(item=>item[0]));
+    return keys.some(key=>{const v=finite(profile[key]);return v!=null&&v!==0})?profile:null;
+  }
   function cfbSignalsPanel(m,meta){
-    const profiles=m?.advanced_metrics||{},home=profiles.home||{},away=profiles.away||{};
+    const raw=m?.advanced_metrics||{},profiles={home:cfbProfile(raw.home),away:cfbProfile(raw.away)},home=profiles.home||{},away=profiles.away||{};
     const homeName=m?.home?.code||m?.home?.name||'Home',awayName=m?.away?.code||m?.away?.name||'Away';
     const groups=cfbGroups.map(([title,items])=>{
       const rows=items.map(metric=>cfbMetricRow(metric,home,away)).filter(Boolean);
