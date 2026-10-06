@@ -55,6 +55,8 @@ function bbNameQualifier(name){
 // nothing in the strings can separate them. Two things keep that from settling a
 // score onto the wrong game -- both teams must match, and the kickoff has to be
 // within a day -- but a name table is the only real answer if it ever bites.
+// Words that make a different school when they follow another school's name.
+const _BB_SCHOOL_SUFFIX=new Set(['state','tech','a','am','christian','monroe','international','atlantic','southern','poly','st','central']);
 function bbNameMatches(a,b){
   if(bbNameQualifier(a)!==bbNameQualifier(b))return false;
   const x=bbNameWords(a),y=bbNameWords(b);
@@ -339,7 +341,11 @@ function applyCurrentCfbSnapshot(payload){
       const found=(()=>{
         const exact=byKey.get(teamKey(label));if(exact)return profileTeams[exact];
         const words=n=>bbNameWords(n).length;
-        const hits=profileNames.filter(n=>bbNameMatches(n,label)).sort((a,b)=>Math.abs(words(a)-words(label))-Math.abs(words(b)-words(label)));
+        // "Illinois" also prefixes "Illinois State Redbirds"; a word that names a
+        // different school right after the label rules that candidate out, so
+        // the flagship is not dropped as ambiguous.
+        const own=bbNameWords(label);
+        const hits=profileNames.filter(n=>bbNameMatches(n,label)&&!(bbNameWords(n).length>own.length&&_BB_SCHOOL_SUFFIX.has(bbNameWords(n)[own.length]))).sort((a,b)=>Math.abs(words(a)-words(label))-Math.abs(words(b)-words(label)));
         if(hits.length===1||(hits.length>1&&Math.abs(words(hits[0])-words(label))<Math.abs(words(hits[1])-words(label))))return profileTeams[hits[0]];
         return null;
       })();

@@ -22,7 +22,7 @@
     ['ft_rate','Free-throw rate','percent',true],
     ['tempo','Tempo','number',null]
   ];
-  function finite(value){const number=Number(value);return Number.isFinite(number)?number:null}
+  function finite(value){if(value==null||value==='')return null;const number=Number(value);return Number.isFinite(number)?number:null}
   function format(value,type){
     const number=finite(value);if(number==null)return '—';
     if(type==='percent')return `${(number*100).toFixed(1)}%`;

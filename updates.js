@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1006B",
+  "tag": "Fix",
+  "title": "Clearer team names and complete team profiles",
+  "items": [
+   "Team names, game titles and small labels now use the site's regular typeface, so they are easy to read at list size. The condensed headline face stays on large headlines.",
+   "The advanced CFB profile no longer shows 0 for a number that is missing; it shows a dash.",
+   "Illinois, Louisiana, North Carolina and other schools that share the start of their name with another school now get their own team profile instead of none."
+  ]
+ },
+ {
   "date": "Build 1006A",
   "tag": "Fix",
   "title": "More readable headline type",
