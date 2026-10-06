@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1006C",
+  "tag": "Fix",
+  "title": "Football board shows only football",
+  "items": [
+   "Basketball games no longer appear among the college football fixtures.",
+   "App State and other schools listed under a shortened name now get their team profile."
+  ]
+ },
+ {
   "date": "Build 1006B",
   "tag": "Fix",
   "title": "Clearer team names and complete team profiles",

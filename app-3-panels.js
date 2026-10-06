@@ -62,7 +62,8 @@ function bbNameMatches(a,b){
   const x=bbNameWords(a),y=bbNameWords(b);
   if(!x.length||!y.length)return false;
   const [short,long]=x.length<=y.length?[x,y]:[y,x];
-  return short.every((word,i)=>long[i].startsWith(word));
+  // Equal lengths have no shorter side, so either name may hold the abbreviation.
+  return short.every((word,i)=>long[i].startsWith(word)||(x.length===y.length&&word.startsWith(long[i])));
 }
 /* A poll is not a conference, and its order is not ours to re-derive.
 
@@ -193,7 +194,9 @@ function applyCurrentCfbSnapshot(payload){
   // the same fixtures from an ingest that was paid for, so they are merged in
   // here: anything already present is left alone, and only genuinely missing
   // games are added.
-  const upcoming=(typeof MATCHDAY_BETBETTER_FIXTURES!=='undefined'?MATCHDAY_BETBETTER_FIXTURES:[]);
+  // The engine's list carries both sports; only football belongs on this board,
+  // or basketball games appear among the football fixtures with no profile.
+  const upcoming=(typeof MATCHDAY_BETBETTER_FIXTURES!=='undefined'?MATCHDAY_BETBETTER_FIXTURES:[]).filter(f=>String(f.sport||'ncaaf').toLowerCase()==='ncaaf');
   if(upcoming.length){
     const have=new Set((payload.matches||[]).map(m=>
       `${teamKey(m.home?.name)}|${teamKey(m.away?.name)}|${String(m.kickoff||'').slice(0,10)}`));
