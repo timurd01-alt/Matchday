@@ -2,10 +2,10 @@
 // Every number here comes from betbetter_picks.json, filtered to the
 // current playing week. Regenerate with: python social_export.py --js
 window.MATCHDAY_SOCIAL = {
-  "week": "WEEK OF OCT 05",
+  "week": "WEEK OF OCT 06",
   "season": "2026 SEASON",
-  "published": "2026-10-04",
-  "generated_at": "2026-10-05T01:22:09Z",
+  "published": "2026-10-05",
+  "generated_at": "2026-10-06T18:44:32Z",
   "logos": {
     "Ohio State Buckeyes": "logos/ohioState.png",
     "OHIO STATE": "logos/ohioState.png",
@@ -66,11 +66,11 @@ window.MATCHDAY_SOCIAL = {
     "USC": "logos/usc.png",
     "Florida Gators": "logos/florida.png",
     "FLORIDA GATORS": "logos/florida.png",
+    "BYU Cougars": "logos/byu.png",
+    "BYU": "logos/byu.png",
     "Ole Miss Rebels": "logos/oleMiss.png",
     "OLE MISS": "logos/oleMiss.png",
     "Ole Miss": "logos/oleMiss.png",
-    "BYU Cougars": "logos/byu.png",
-    "BYU": "logos/byu.png",
     "Oklahoma Sooners": "logos/oklahoma.png",
     "OKLAHOMA": "logos/oklahoma.png",
     "Oklahoma": "logos/oklahoma.png",
@@ -78,68 +78,71 @@ window.MATCHDAY_SOCIAL = {
     "NORTHWESTERN": "logos/northwestern.png",
     "Northwestern": "logos/northwestern.png",
     "Maryland Terrapins": "logos/maryland.png",
-    "MARYLAND TERRAPINS": "logos/maryland.png"
+    "MARYLAND TERRAPINS": "logos/maryland.png",
+    "Stanford Cardinal": "logos/stanford.png",
+    "STANFORD": "logos/stanford.png",
+    "Stanford": "logos/stanford.png"
   },
   "top25": [
     [
       "Ohio State Buckeyes",
-      33.25
+      33.23
     ],
     [
       "Miami Hurricanes",
-      33.15
+      33.13
     ],
     [
       "Indiana Hoosiers",
-      33.09
+      33.07
     ],
     [
       "Notre Dame Fighting Irish",
-      32.38
+      32.36
     ],
     [
       "Alabama Crimson Tide",
-      31.97
+      31.94
     ],
     [
       "Georgia Bulldogs",
-      31.51
+      31.49
     ],
     [
       "Utah Utes",
-      29.1
+      29.07
     ],
     [
       "Texas Longhorns",
-      27.69
+      27.67
     ],
     [
       "Oregon Ducks",
-      27.52
+      27.5
     ],
     [
       "LSU Tigers",
-      25.31
+      25.29
     ],
     [
       "Texas Tech Red Raiders",
-      25.21
+      25.2
     ],
     [
       "Tennessee Volunteers",
-      22.72
+      22.71
     ],
     [
       "Texas A&M Aggies",
-      21.88
+      21.87
     ],
     [
       "Missouri Tigers",
-      21.38
+      21.37
     ],
     [
       "Iowa Hawkeyes",
-      21.19
+      21.18
     ],
     [
       "Penn State Nittany Lions",
@@ -163,23 +166,23 @@ window.MATCHDAY_SOCIAL = {
     ],
     [
       "Florida Gators",
-      20.58
-    ],
-    [
-      "Ole Miss Rebels",
-      20.45
+      20.56
     ],
     [
       "BYU Cougars",
-      20.44
+      20.43
+    ],
+    [
+      "Ole Miss Rebels",
+      20.43
     ],
     [
       "Oklahoma Sooners",
-      19.97
+      19.96
     ],
     [
       "Northwestern Wildcats",
-      19.76
+      19.75
     ]
   ],
   "upset": {
@@ -210,22 +213,22 @@ window.MATCHDAY_SOCIAL = {
       "rank": 3,
       "away": "TEXAS A&M",
       "home": "MISSOURI",
-      "time": "SAT · 1:00 PM ET",
+      "time": "SAT · 12:00 PM ET",
       "hook": "#13 vs #14"
     },
     {
       "rank": 4,
       "away": "MARYLAND TERRAPINS",
       "home": "OHIO STATE",
-      "time": "SAT · 12:00 AM ET",
+      "time": "SAT · 4:15 PM ET",
       "hook": "RANKED #1 AT HOME"
     },
     {
       "rank": 5,
-      "away": "USC",
-      "home": "PENN STATE",
-      "time": "SAT · 12:00 PM ET",
-      "hook": "#20 vs #16"
+      "away": "STANFORD",
+      "home": "NOTRE DAME",
+      "time": "SAT · 3:30 PM ET",
+      "hook": "RANKED #4 AT HOME"
     }
   ]
 };
