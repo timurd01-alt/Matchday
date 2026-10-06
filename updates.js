@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1006E",
+  "tag": "Model",
+  "title": "Basketball preseason rebuilt on the transfer portal and NBA draft",
+  "items": [
+   "The roster adjustment now comes from the full Division I transfer portal, the NBA draft and each player's seasons of eligibility, instead of Wikipedia pages. It covers all 365 teams, up from 52.",
+   "Tested on last offseason, it predicted 2025-26 ratings better than last season's rating alone (error 4.64 vs 4.87 points per game).",
+   "Freshmen and recruiting are still not counted, and players who leave without entering the portal or draft are still treated as returning."
+  ]
+ },
+ {
   "date": "Build 1006D",
   "tag": "Model",
   "title": "Basketball preseason accounts for roster moves",
