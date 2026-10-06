@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1006D",
+  "tag": "Model",
+  "title": "Basketball preseason accounts for roster moves",
+  "items": [
+   "The college basketball preseason Top 25 now adjusts each team for the minutes it returns and the transfers it brought in, not just last season's rating.",
+   "52 teams with documented roster moves are adjusted; the rest keep last season's rating pulled toward average. Freshmen and recruiting are not counted yet."
+  ]
+ },
+ {
   "date": "Build 1006C",
   "tag": "Fix",
   "title": "Football board shows only football",
