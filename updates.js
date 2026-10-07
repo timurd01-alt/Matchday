@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1007A",
+  "tag": "Model",
+  "title": "Basketball preseason adds recruiting and player production",
+  "items": [
+   "The preseason Top 25 now counts each team's 247Sports recruiting class and the win shares of the players it returns and adds, not just their minutes.",
+   "Fixed: yesterday's roster adjustment did slightly worse than last season's rating alone when tested across two offseasons. It is refitted on the roster moves a preseason can actually see.",
+   "Trained on one offseason and tested on the other, it cuts the error of the old preseason by about 9% (4.36 vs 4.78 points per game)."
+  ]
+ },
+ {
   "date": "Build 1006E",
   "tag": "Model",
   "title": "Basketball preseason rebuilt on the transfer portal and NBA draft",
