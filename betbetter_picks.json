@@ -1,7 +1,7 @@
 {
   "handoff_version": 11,
   "source": "betbetter",
-  "generated_at": "2026-10-07T18:04:44.028802+00:00",
+  "generated_at": "2026-10-07T18:09:25.271090+00:00",
   "sports": [
     "ncaaf",
     "ncaam"
@@ -34701,7 +34701,7 @@
           "movement_since_preseason": -1
         }
       ],
-      "note": "Power rating by adjusted efficiency margin, opponent-adjusted efficiency fitted by `betbetter hoops rate`. Season 2027 has not started. This is a preseason projection: last season's opponent-adjusted ratings regressed 12% toward the mean, which is the measured amount a rating fails to carry between seasons, then adjusted for returning minutes and incoming transfers for the 365 teams whose roster moves are documented. Freshmen and recruiting are not included.",
+      "note": "Power rating by adjusted efficiency margin, opponent-adjusted efficiency fitted by `betbetter hoops rate`. Season 2027 has not started. This is a preseason projection: last season's opponent-adjusted ratings regressed 12% toward the mean, which is the measured amount a rating fails to carry between seasons, then adjusted for 365 teams by returning minutes and production, incoming transfers, NBA draft departures and the 247Sports recruiting class. Players who leave without entering the transfer portal or the draft are not yet visible.",
       "carryover": true,
       "season_in_progress": false,
       "basis": {
