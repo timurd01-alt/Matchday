@@ -1,7 +1,7 @@
 {
   "handoff_version": 11,
   "source": "betbetter",
-  "generated_at": "2026-10-07T18:09:25.271090+00:00",
+  "generated_at": "2026-10-07T18:17:35.004463+00:00",
   "sports": [
     "ncaaf",
     "ncaam"
@@ -306,7 +306,12 @@
           "is_home": true,
           "model_pct": 71.4
         }
-      ]
+      ],
+      "projected_score": {
+        "home": 30,
+        "away": 10,
+        "simulations": 10000
+      }
     },
     {
       "event_id": "2ec27bbe3b14c521ba8a3f3f6e46f4ac",
@@ -824,7 +829,12 @@
           "is_home": true,
           "model_pct": 73.8
         }
-      ]
+      ],
+      "projected_score": {
+        "home": 38,
+        "away": 17,
+        "simulations": 10000
+      }
     },
     {
       "event_id": "43dda5e509a9619bee41f752a2c25fa7",
@@ -861,7 +871,12 @@
           "is_home": true,
           "model_pct": 42.1
         }
-      ]
+      ],
+      "projected_score": {
+        "home": 24,
+        "away": 28,
+        "simulations": 10000
+      }
     },
     {
       "event_id": "2168132b20b82bf78e08f1787b6f83cc",
@@ -35845,6 +35860,23 @@
   },
   "results": [
     {
+      "event_id": "401871090",
+      "sport": "ncaaf",
+      "competition": "NCAAF",
+      "season": null,
+      "played_on": "2026-10-07",
+      "kickoff": "2026-10-07T00:00Z",
+      "home": "Troy Trojans",
+      "away": "Southern Miss Golden Eagles",
+      "home_score": 55.0,
+      "away_score": 34.0,
+      "margin": 21.0,
+      "winner": "Troy Trojans",
+      "neutral": null,
+      "conference_game": null,
+      "postseason": null
+    },
+    {
       "event_id": "401871089",
       "sport": "ncaaf",
       "competition": "NCAAF",
@@ -58860,7 +58892,7 @@
       "ncaaf",
       "ncaam"
     ],
-    "results": 390,
+    "results": 391,
     "fixtures": 604
   },
   "publication": {

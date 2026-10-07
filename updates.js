@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1007B",
+  "tag": "Fix",
+  "title": "Projected scores for every forecast game",
+  "items": [
+   "San José State, App State and UMass games were missing their projected score because the team name was spelled differently in the forecast. They now show one."
+  ]
+ },
+ {
   "date": "Build 1007A",
   "tag": "Model",
   "title": "Basketball preseason adds recruiting and player production",
