@@ -519,7 +519,11 @@ class TeamNameKeyTests(unittest.TestCase):
         # A withheld team has no ranking row to borrow a record from, so an
         # exact-key miss left a stale number: North Dakota State read 1-0 at
         # 4-0. Every wrong record on the site was a withheld team.
-        self.assertIn("if(bbNameMatches(key,name)){r=value;break;}", panels)
+        # The fallback must also refuse another school that shares the prefix:
+        # taking the first match gave "Louisiana" Louisiana Tech's record.
+        self.assertIn("const resultKeyFor=name=>", panels)
+        self.assertIn("_BB_SCHOOL_SUFFIX.has(bbNameWords(key)[own.length])", panels)
+        self.assertIn("resultKeyFor(t.name)", panels)
 
 
 if __name__ == "__main__":
