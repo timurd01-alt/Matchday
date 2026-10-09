@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1009A",
+  "tag": "Fix",
+  "title": "Conference tables line up",
+  "items": [
+   "Every conference table now uses the same column widths, so Conf, Overall, Win% and the rest sit in the same place from one table to the next.",
+   "The form column shows only each team's last five games."
+  ]
+ },
+ {
   "date": "Build 1007B",
   "tag": "Fix",
   "title": "Projected scores for every forecast game",

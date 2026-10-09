@@ -3635,9 +3635,14 @@ body{font-variant-numeric:tabular-nums}
 }
 /* Conference standings scroll sideways at any width, team column pinned. */
 .confScroll{overflow-x:auto;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
-.confScroll .collegeConferenceTable{table-layout:auto;width:auto;min-width:100%}
-.confScroll .collegeConferenceTable th,.confScroll .collegeConferenceTable td{width:auto;white-space:nowrap}
-.confScroll .collegeConferenceTable th:first-child,.confScroll .collegeConferenceTable td:first-child{position:sticky;left:0;z-index:1;width:auto;min-width:170px;background:var(--panel);box-shadow:1px 0 0 var(--line)}
+/* Fixed layout with the same widths in every conference, so the columns line up
+   from one table to the next; auto layout sized each table to its own content.
+   The minimum width keeps phones scrolling sideways instead of crushing it. */
+.confScroll .collegeConferenceTable{table-layout:fixed;width:100%;min-width:980px}
+.confScroll .collegeConferenceTable th,.confScroll .collegeConferenceTable td{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.confScroll .collegeConferenceTable th:first-child,.confScroll .collegeConferenceTable td:first-child{width:24%}
+.confScroll .collegeConferenceTable th:nth-child(2),.confScroll .collegeConferenceTable td:nth-child(2){width:11%}
+.confScroll .collegeConferenceTable th:first-child,.confScroll .collegeConferenceTable td:first-child{position:sticky;left:0;z-index:1;min-width:170px;background:var(--panel);box-shadow:1px 0 0 var(--line)}
 .gameFilters{grid-column:1/-1;margin:var(--space-1) 0 var(--space-2)}
 .gameConfPick{display:inline-flex;align-items:center;gap:6px;margin-left:auto;color:var(--faint);font:var(--fw-bold) var(--fs-2xs)/1 var(--mono);text-transform:uppercase;letter-spacing:.04em}
 .gameConfPick select{min-height:32px;border:1px solid var(--line2);background:var(--panel);color:var(--text);border-radius:8px;padding:4px 8px;font-size:var(--fs-xs);font-family:var(--mono);text-transform:none}
