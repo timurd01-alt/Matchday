@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1009B",
+  "tag": "Fix",
+  "title": "Records for every team in the conference tables",
+  "items": [
+   "Delaware, Missouri State, Sacramento State and North Dakota State showed 0-0 in the conference tables. Their overall and conference records now count every game.",
+   "Louisiana showed Louisiana Tech's record; it now shows its own."
+  ]
+ },
+ {
   "date": "Build 1009A",
   "tag": "Fix",
   "title": "Conference tables line up",

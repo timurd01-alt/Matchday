@@ -422,13 +422,19 @@ function applyCurrentCfbSnapshot(payload){
      a stale number on the page: North Dakota State read 1-0 at 4-0, and
      Sacramento State 0-1 at 1-3. Every wrong record on the site was a withheld
      team, which is what gave the cause away. */
+  // The results key for a short name: "Delaware" is "delaware blue hens", never
+  // "delaware state hornets" -- a word that names another school right after
+  // the short name rules a candidate out, and an ambiguous name gets nothing.
+  const resultKeyFor=name=>{
+    const exact=teamKey(name);
+    if(resultRecords.has(exact))return exact;
+    const own=bbNameWords(name);
+    const hits=[...resultRecords.keys()].filter(key=>bbNameMatches(key,name)
+      &&!(bbNameWords(key).length>own.length&&_BB_SCHOOL_SUFFIX.has(bbNameWords(key)[own.length])));
+    return hits.length===1?hits[0]:null;
+  };
   const completedRecord=(name,minimum=0)=>{
-    let r=resultRecords.get(teamKey(name));
-    if(!r){
-      for(const [key,value] of resultRecords){
-        if(bbNameMatches(key,name)){r=value;break;}
-      }
-    }
+    const found=resultKeyFor(name),r=found?resultRecords.get(found):null;
     return r&&r.pld>=minimum?{...r,gd:r.gf-r.ga,pts:r.w*3+r.d,form:r.form.slice(-5),record:`${r.w}-${r.l}`}:null;
   };
   payload.cfb_result_records=Object.fromEntries(
@@ -463,7 +469,10 @@ function applyCurrentCfbSnapshot(payload){
     const latest=completedRecord(key,Number(records.get(key)?.pld)||0);
     if(latest)records.set(key,latest);
   });
-  const recordFor=name=>records.get(teamKey(name))||records.get(teamKey(rankFor(name)?.name));
+  // A team the poll withholds has no ranking row, and its results are filed
+  // under the full name ("Delaware Blue Hens" for the table's "Delaware"), so
+  // both keyed lookups miss and the conference table read 0-0 all season.
+  const recordFor=name=>records.get(teamKey(name))||records.get(teamKey(rankFor(name)?.name))||completedRecord(name);
   const externalRating=name=>{const key=teamKey(name);return (MATCHDAY_CFB_SNAPSHOT.rankings||[]).find(row=>{const rk=teamKey(row.name);return rk===key||rk.startsWith(key+' ')||key.startsWith(rk+' ')})};
   /* Conference standings, ordered the way conferences order them.
      1. Conference win percentage -- only games between two members of this
@@ -478,7 +487,7 @@ function applyCurrentCfbSnapshot(payload){
      modelled; the first three settle almost every real tie. */
   const conferenceOrder=teams=>{
     const idx=new Map();
-    teams.forEach((t,i)=>{[t.name,rankFor(t.name)?.name].forEach(n=>{if(n)idx.set(teamKey(n),i)})});
+    teams.forEach((t,i)=>{[t.name,rankFor(t.name)?.name,resultKeyFor(t.name)].forEach(n=>{if(n)idx.set(teamKey(n),i)})});
     const confGames=gameLog.map(g=>({h:idx.get(g.home),a:idx.get(g.away),hs:g.hs,as:g.as}))
       .filter(g=>g.h!=null&&g.a!=null&&g.h!==g.a&&g.hs!==g.as);
     teams.forEach(t=>{t.cw=0;t.cl=0});
