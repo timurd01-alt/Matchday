@@ -27,6 +27,7 @@
     const number=finite(value);if(number==null)return '—';
     if(type==='percent')return `${(number*100).toFixed(1)}%`;
     if(type==='points')return `${number>0?'+':''}${number.toFixed(1)}`;
+    if(type==='plain')return number.toFixed(1);
     return `${number>0?'+':''}${number.toFixed(3).replace(/0+$/,'').replace(/\.$/,'')}`;
   }
   function metricRows(m){
@@ -62,6 +63,31 @@
       ['def_explosiveness_allowed','Explosiveness allowed','Impact conceded on successful plays','number',false]
     ]]
   ];
+  const hoopsGroups=[
+    ['Efficiency',[
+      ['adjusted_net_rating','Adjusted net rating','Points per 100 possessions better than average, schedule-adjusted','points',true],
+      ['adj_o','Adjusted offense','Points scored per 100 possessions against an average defense','plain',true],
+      ['adj_d','Adjusted defense','Points allowed per 100 possessions against an average offense','plain',false],
+      ['tempo','Tempo','Possessions per 40 minutes','plain',null]
+    ]],
+    ['Offense',[
+      ['efg','Effective FG%','Shooting, with threes worth 1.5 makes','percent',true],
+      ['tov_rate','Turnover rate','Possessions ending in a turnover','percent',false],
+      ['orb_rate','Offensive rebound rate','Own misses rebounded','percent',true],
+      ['ft_rate','Free-throw rate','Free throws per field-goal attempt','percent',true]
+    ]],
+    ['Defense',[
+      ['def_efg','Effective FG% allowed','Opponent shooting','percent',false],
+      ['def_tov_rate','Turnovers forced','Opponent possessions ending in a turnover','percent',true],
+      ['def_orb_rate','Offensive rebounds allowed','Opponent misses they rebounded','percent',false],
+      ['def_ft_rate','Free-throw rate allowed','Opponent free throws per attempt','percent',false]
+    ]]
+  ];
+  function hoopsSeasonLabel(meta){
+    const c=meta?.coverage||{},label=y=>y?`${Number(y)-1}-${String(y).slice(2)}`:'';
+    if(c.season_role==='current')return `${label(c.season)} season to date`;
+    return `${label(c.season)} preseason ratings · ${label(c.factors_season)} four factors`;
+  }
   function cfbSeasonLabel(meta){
     const coverage=meta?.coverage||{},season=coverage.season,role=String(coverage.season_role||'').replace(/_/g,' ');
     if(!season)return 'Completed-season team profile';
@@ -71,21 +97,22 @@
   function cfbMetricRow(metric,home,away){
     const [key,label,help,type,higher]=metric,hv=finite(home[key]),av=finite(away[key]);
     if(hv==null&&av==null)return '';
-    const leader=hv==null||av==null||hv===av?'':((higher?hv>av:hv<av)?'home':'away');
-    const direction=higher?'Higher is stronger':'Lower is stronger';
+    const leader=higher==null||hv==null||av==null||hv===av?'':((higher?hv>av:hv<av)?'home':'away');
+    const direction=higher==null?'Style, not strength':higher?'Higher is stronger':'Lower is stronger';
     return `<div class="cfbMetric" role="row"><div class="cfbMetricLabel" role="rowheader"><b>${esc(label)}</b><span>${esc(help)} · ${esc(direction)}</span></div><div class="cfbMetricValue ${leader==='home'?'stronger':''}" role="cell">${esc(format(hv,type))}${leader==='home'?'<small>Stronger</small>':''}</div><div class="cfbMetricValue ${leader==='away'?'stronger':''}" role="cell">${esc(format(av,type))}${leader==='away'?'<small>Stronger</small>':''}</div></div>`;
   }
   /* A profile whose every metric is exactly zero is a placeholder for a team
      with no graded plays yet, not a measurement -- show it as unavailable. */
   function cfbProfile(profile){
     if(!profile)return null;
-    const keys=cfbGroups.flatMap(([,items])=>items.map(item=>item[0]));
+    const keys=[...cfbGroups,...hoopsGroups].flatMap(([,items])=>items.map(item=>item[0]));
     return keys.some(key=>{const v=finite(profile[key]);return v!=null&&v!==0})?profile:null;
   }
-  function cfbSignalsPanel(m,meta){
+  function cfbSignalsPanel(m,meta,sport='cfb'){
+    const hoops=sport==='hoops';
     const raw=m?.advanced_metrics||{},profiles={home:cfbProfile(raw.home),away:cfbProfile(raw.away)},home=profiles.home||{},away=profiles.away||{};
     const homeName=m?.home?.code||m?.home?.name||'Home',awayName=m?.away?.code||m?.away?.name||'Away';
-    const groups=cfbGroups.map(([title,items])=>{
+    const groups=(hoops?hoopsGroups:cfbGroups).map(([title,items])=>{
       const rows=items.map(metric=>cfbMetricRow(metric,home,away)).filter(Boolean);
       if(!rows.length)return '';
       const visible=rows.slice(0,3).join(''),extra=rows.slice(3).join('');
@@ -93,7 +120,7 @@
     }).join('');
     const missing=[];if(!profiles.home)missing.push(homeName);if(!profiles.away)missing.push(awayName);
     const missingNote=missing.length?`<p class="cfbMissing">Profile unavailable for ${esc(missing.join(' and '))}. Available data is shown without inventing a replacement.</p>`:'';
-    return `<section class="analystPanel researchPanel cfbResearch" aria-labelledby="cfbResearchTitle"><div class="cfbResearchTop"><div><span class="cfbEyebrow">Team profile</span><h3 id="cfbResearchTitle">Advanced CFB profile</h3><p>${esc(cfbSeasonLabel(meta))}</p></div></div><p class="cfbIntro">A side-by-side profile of how each team played, from the same opponent-adjusted work the ratings are solved from.</p>${groups||'<p class="cfbMissing">No matchup-linked advanced metrics are available for either team.</p>'}${missingNote}<div class="cfbReceipt"><span>${esc(meta?.source||'Approved research source')}</span><span>${esc(meta?.generated_at?`Built ${String(meta.generated_at).slice(0,10)}`:'Build date unavailable')}</span></div></section>`;
+    return `<section class="analystPanel researchPanel cfbResearch" aria-labelledby="cfbResearchTitle"><div class="cfbResearchTop"><div><span class="cfbEyebrow">Team profile</span><h3 id="cfbResearchTitle">${hoops?'Basketball team profile':'Advanced CFB profile'}</h3><p>${esc(hoops?hoopsSeasonLabel(meta):cfbSeasonLabel(meta))}</p></div></div><p class="cfbIntro">A side-by-side profile of how each team played, from the same opponent-adjusted work the ratings are solved from.</p>${groups||'<p class="cfbMissing">No matchup-linked advanced metrics are available for either team.</p>'}${missingNote}<div class="cfbReceipt"><span>${esc(meta?.source||'Approved research source')}</span><span>${esc(meta?.generated_at?`Built ${String(meta.generated_at).slice(0,10)}`:'Build date unavailable')}</span></div></section>`;
   }
   function coverageText(meta){
     const coverage=meta?.coverage||{},parts=[];
@@ -106,6 +133,7 @@
   function researchSignalsPanel(m){
     const metrics=metricRows(m),meta=m?.advanced_metrics_meta;
     if(String(m?._comp||DATA?.comp_key||'').toUpperCase()==='NCAAF'&&meta)return cfbSignalsPanel(m,meta);
+    if(String(m?._comp||DATA?.comp_key||'').toUpperCase()==='NCAAM'&&meta)return cfbSignalsPanel(m,meta,'hoops');
     if(!metrics){
       const comp=String(m?._comp||DATA?.comp_key||'').toUpperCase();
       if(!['NCAAF','NCAAM'].includes(comp))return '';

@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1010F",
+  "tag": "Model",
+  "title": "Basketball games get the full treatment",
+  "items": [
+   "Basketball picks now show a projected final score, like football's.",
+   "Opening a basketball game shows a team profile: adjusted offense, defense and tempo, plus shooting, turnovers, rebounding and free throws for and against.",
+   "Basketball rosters, ratings, the Top 25 and picks now refresh every week with football."
+  ]
+ },
+ {
   "date": "Build 1010E",
   "tag": "Model",
   "title": "Basketball game picks use the new preseason ratings",

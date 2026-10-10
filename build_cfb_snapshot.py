@@ -366,6 +366,11 @@ def build(path: pathlib.Path = SNAPSHOT) -> str:
     # This season's per-team offense and defense from the engine's own
     # play-by-play. The expanded view's profile used a previous-season CFBD file
     # that never refreshed; these move every week with the ratings.
+    # The basketball counterpart: four factors both ways, plus the adjusted
+    # ratings the game picks read.
+    blocks.append("  const MATCHDAY_BETBETTER_NCAAM_PROFILES="
+                  + json.dumps((document.get("team_profiles") or {}).get("ncaam") or {},
+                               ensure_ascii=False) + ";")
     blocks.append("  const MATCHDAY_BETBETTER_TEAM_PROFILES="
                   + json.dumps((document.get("team_profiles") or {}).get("ncaaf") or {},
                                ensure_ascii=False) + ";")

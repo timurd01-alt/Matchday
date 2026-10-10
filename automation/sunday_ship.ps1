@@ -72,6 +72,14 @@ try {
         # play-by-play yet); that is reported, not fatal.
         Run 'refresh run' $BetBetter $PythonPath @('-m','betbetter','refresh','run','--handoff=') -Soft
         Run 'forecast slate' $BetBetter $PythonPath @('-m','betbetter','forecast','slate','--sport','ncaaf') -Soft
+        # Basketball: posted rosters first (a late transfer or a new posting
+        # changes the preseason), then the season rated against its prior, the
+        # Top 25, and the picks read from those ratings.
+        $hoopsSeason = if ((Get-Date).Month -ge 7) { (Get-Date).Year + 1 } else { (Get-Date).Year }
+        Run 'basketball rosters' $BetBetter $PythonPath @('-m','betbetter','hoops','rosters') -Soft
+        Run 'basketball ratings' $BetBetter $PythonPath @('-m','betbetter','hoops','rate','--league','ncaam','--project','--season',"$hoopsSeason") -Soft
+        Run 'basketball Top 25' $BetBetter $PythonPath @('-m','betbetter','poll','publish','--sport','ncaam') -Soft
+        Run 'basketball forecast slate' $BetBetter $PythonPath @('-m','betbetter','forecast','slate','--sport','ncaam') -Soft
         Run 'upset settle' $BetBetter $PythonPath @('-m','betbetter','upset','settle') -Soft
         Run "upset publish (as of $asOf)" $BetBetter $PythonPath @('-m','betbetter','upset','publish','--as-of',$asOf) -Soft
         Run 'matchday export' $BetBetter $PythonPath @('-m','betbetter','matchday','export','--out','betbetter_picks.json')

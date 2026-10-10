@@ -586,6 +586,43 @@ function applyCurrentNcaamSnapshot(payload){
   payload.bracketology=buildNcaamBracketology(MATCHDAY_NCAAM_SNAPSHOT.rankings);
   payload.bracket=[];
   payload.updated=_freshestUpdated(payload.updated,MATCHDAY_NCAAM_SNAPSHOT.updated);
+  // Each team's basketball profile on every fixture, matched the same way as
+  // football's: exact key first, then the prefix matcher with other schools
+  // that share the prefix ruled out.
+  const hoops=(typeof MATCHDAY_BETBETTER_NCAAM_PROFILES!=='undefined'&&MATCHDAY_BETBETTER_NCAAM_PROFILES)||{};
+  const hoopsTeams=hoops.teams||{},hoopsNames=Object.keys(hoopsTeams);
+  if(hoopsNames.length){
+    const byKey=new Map(hoopsNames.map(n=>[teamKey(n),n])),cache=new Map();
+    const profileFor=name=>{
+      const label=String(name||'');if(cache.has(label))return cache.get(label);
+      let found=byKey.get(teamKey(label));found=found?hoopsTeams[found]:null;
+      const search=text=>{
+        const own=bbNameWords(text);
+        const extra=n=>Math.abs(bbNameWords(n).length-own.length);
+        // Whole words that match exactly: "Jackson State" prefixes Jacksonville
+        // State too, but only Jackson State Tigers matches both words outright.
+        const exact=n=>own.filter((w,i)=>bbNameWords(n)[i]===w).length;
+        const score=n=>exact(n)*10-extra(n);
+        const hits=hoopsNames.filter(n=>bbNameMatches(n,text)&&!(bbNameWords(n).length>own.length&&_BB_SCHOOL_SUFFIX.has(bbNameWords(n)[own.length])))
+          .sort((a,b)=>score(b)-score(a));
+        // "Florida" also prefixes Florida Gulf Coast Eagles; the closest name
+        // length (school + mascot) wins when it is strictly better.
+        return hits.length===1||(hits.length>1&&score(hits[0])>score(hits[1]))?hoopsTeams[hits[0]]:null;
+      };
+      // "St. Thomas-Minnesota": the part after the hyphen locates the school,
+      // it is not part of its name.
+      if(!found)found=search(label)||(label.includes('-')?search(label.split('-')[0]):null);
+      cache.set(label,found);return found;
+    };
+    (payload.matches||[]).forEach(m=>{
+      const home=profileFor(m.home?.name),away=profileFor(m.away?.name);
+      if(!home&&!away)return;
+      m.advanced_metrics={...(home?{home}:{}),...(away?{away}:{})};
+      m.advanced_metrics_meta={source:hoops.source||'Box scores and opponent-adjusted efficiency',
+        generated_at:hoops.generated_through||null,shadow_only:true,production_weight:0,
+        coverage:{season:hoops.season,season_role:hoops.season_role,factors_season:hoops.factors_season,teams:hoopsNames.length}};
+    });
+  }
   return payload;
 }
 /* The scorecard is the engine's, and it is generated.
