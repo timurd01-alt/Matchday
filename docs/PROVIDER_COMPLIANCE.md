@@ -11,9 +11,11 @@ team ratings only) now uses CBBD `/recruiting/portal`, `/recruiting/players`
 on the existing key, and ESPN's public NBA draft board for which college players
 were drafted. Only a derived per-team rating adjustment is published; no player
 names, portal entries, recruit ratings, win shares or draft data are displayed
-or redistributed. Open for the owner: the ESPN rule below lists final scores,
-AP rank and headlines as the public facts ESPN may supply; draft selections are
-public facts of the same kind but are not on that list. Wikipedia roster pages
+or redistributed. ESPN draft selections are covered by the ESPN rule as
+settled by the owner on 2026-10-09: ESPN may supply **any common-knowledge
+public fact** (scores, schedules, kickoff times, AP Top 25, rosters, transfers,
+draft picks, coaching hires, headlines); still excluded are ESPN's statistics,
+odds, analysis, written content, logos, images and raw payloads. Wikipedia roster pages
 were tried and are now only a fallback; only facts (who left, who arrived) are
 read from them, none of their text.)
 

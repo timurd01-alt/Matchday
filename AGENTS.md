@@ -276,7 +276,7 @@ The suites most worth knowing by name when something fails:
 ## Compliance
 
 `docs/PROVIDER_COMPLIANCE.md` is the live checklist of provider terms, licensing, and attribution
-requirements (ESPN supplies public facts only — final scores, AP Top 25 rank/team, news headlines — never its statistics or content). Re-check it, and update its
+requirements (ESPN may supply any common-knowledge public fact — scores, schedules, kickoff times, AP Top 25, rosters, transfers, draft picks, coaching hires, news headlines — but never its statistics, odds, analysis, written content, logos, images or raw payloads). Re-check it, and update its
 review date, before any change to provider sourcing, data display, or redistribution. See also
 `docs/SECURITY.md` and `docs/ROTATE_KEYS.md`.
 
