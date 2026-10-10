@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1010D",
+  "tag": "Fix",
+  "title": "Learn lessons line up",
+  "items": [
+   "Every lesson on the Learn tab now shows its title above its one-line summary with the + on the right, instead of wrapping differently on phones."
+  ]
+ },
+ {
   "date": "Build 1010C",
   "tag": "Model",
   "title": "Basketball preseason uses real rosters",

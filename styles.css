@@ -3959,9 +3959,11 @@ body{font-variant-numeric:tabular-nums}
    mono for labels; lime for links. */
 .learnList{display:flex;flex-direction:column;border-top:1px solid var(--line);margin-bottom:24px}
 .learnLesson{border-bottom:1px solid var(--line)}
-.learnLesson summary{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px;padding:14px 2px;cursor:pointer;list-style:none}
+/* Title above hook on every row, "+" centred on the right: one layout whatever the text length. */
+.learnLesson summary{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"title mark" "hook mark";align-items:center;gap:4px 16px;padding:14px 2px;cursor:pointer;list-style:none}
+.learnTitle{grid-area:title}.learnHook{grid-area:hook}
 .learnLesson summary::-webkit-details-marker{display:none}
-.learnLesson summary::after{content:"+";margin-left:auto;color:var(--signal);font-family:var(--mono);font-size:var(--fs-lg)}
+.learnLesson summary::after{content:"+";grid-area:mark;color:var(--signal);font-family:var(--mono);font-size:var(--fs-lg)}
 .learnLesson[open] summary::after{content:"−"}
 .learnLesson summary:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
 .learnTitle{font-family:var(--display);font-weight:var(--fw-bold);font-size:var(--fs-xl);color:var(--text);letter-spacing:.02em}
