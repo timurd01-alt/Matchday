@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1009D",
+  "tag": "Site",
+  "title": "Volunteer-run, stated on every page",
+  "items": [
+   "The footer of the home, FAQ, Legal and Roadmap pages now says Matchday Terminal is volunteer-run and unpaid, with no sponsors, ads or affiliate links, and links to the Legal page's Independent section."
+  ]
+ },
+ {
   "date": "Build 1009C",
   "tag": "Site",
   "title": "Clearer non-commercial statement",
