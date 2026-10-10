@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1010E",
+  "tag": "Model",
+  "title": "Basketball game picks use the new preseason ratings",
+  "items": [
+   "Basketball game picks now start from the roster-aware preseason rating, and the season's games take over as they are played.",
+   "Tested on the first ten weeks of the last two seasons, it cut the margin error by about 5% (7% in November) and improved the win probabilities in both seasons."
+  ]
+ },
+ {
   "date": "Build 1010D",
   "tag": "Fix",
   "title": "Learn lessons line up",

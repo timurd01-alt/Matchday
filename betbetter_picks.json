@@ -1,49 +1,12 @@
 {
   "handoff_version": 11,
   "source": "betbetter",
-  "generated_at": "2026-10-10T17:53:50.742607+00:00",
+  "generated_at": "2026-10-10T18:24:37.653481+00:00",
   "sports": [
     "ncaaf",
     "ncaam"
   ],
   "picks": [
-    {
-      "event_id": "43dda5e509a9619bee41f752a2c25fa7",
-      "sport": "ncaaf",
-      "competition": "NCAAF",
-      "home": "Massachusetts Minutemen",
-      "away": "Miami (OH) RedHawks",
-      "kickoff": "2026-10-10T18:00:00Z",
-      "pick_name": "Miami (OH) RedHawks",
-      "pick": "a",
-      "model_pct": 62.0,
-      "market_pct": 65.6,
-      "edge_points": -3.6,
-      "model_name": "NCAAF adjusted-margin model",
-      "model_version": "ncaaf-adjusted-v1",
-      "generated_at": "2026-10-10T17:44:33.840299+00:00",
-      "official_pick": false,
-      "basis": "live_shadow_forecast",
-      "moves_until_kickoff": false,
-      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
-      "sides": [
-        {
-          "selection": "Miami (OH) RedHawks",
-          "is_home": false,
-          "model_pct": 62.0
-        },
-        {
-          "selection": "UMass Minutemen",
-          "is_home": false,
-          "model_pct": 38.0
-        }
-      ],
-      "projected_score": {
-        "home": 20,
-        "away": 34,
-        "simulations": 10000
-      }
-    },
     {
       "event_id": "2168132b20b82bf78e08f1787b6f83cc",
       "sport": "ncaaf",
@@ -91,8 +54,8 @@
       "pick_name": "Kansas State Wildcats",
       "pick": "h",
       "model_pct": 55.1,
-      "market_pct": 54.9,
-      "edge_points": 0.2,
+      "market_pct": 55.2,
+      "edge_points": -0.1,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
       "generated_at": "2026-10-10T17:46:16.561150+00:00",
@@ -206,7 +169,7 @@
       "edge_points": null,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
-      "generated_at": "2026-10-10T16:44:06.223421+00:00",
+      "generated_at": "2026-10-10T18:05:20.535871+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -243,7 +206,7 @@
       "edge_points": -0.9,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
-      "generated_at": "2026-10-10T16:44:13.207358+00:00",
+      "generated_at": "2026-10-10T18:06:21.006050+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -280,7 +243,7 @@
       "edge_points": 12.4,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
-      "generated_at": "2026-10-10T16:44:19.748317+00:00",
+      "generated_at": "2026-10-10T18:06:26.610608+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -424,8 +387,8 @@
       "pick_name": "Virginia Tech Hokies",
       "pick": "a",
       "model_pct": 70.0,
-      "market_pct": 76.0,
-      "edge_points": -6.0,
+      "market_pct": 76.1,
+      "edge_points": -6.1,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
       "generated_at": "2026-10-10T16:44:43.533914+00:00",
@@ -498,8 +461,8 @@
       "pick_name": "Ole Miss Rebels",
       "pick": "a",
       "model_pct": 65.6,
-      "market_pct": 74.7,
-      "edge_points": -9.1,
+      "market_pct": 74.8,
+      "edge_points": -9.2,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
       "generated_at": "2026-10-10T16:44:54.444154+00:00",
@@ -646,8 +609,8 @@
       "pick_name": "Tennessee Volunteers",
       "pick": "a",
       "model_pct": 74.4,
-      "market_pct": 81.5,
-      "edge_points": -7.1,
+      "market_pct": 81.6,
+      "edge_points": -7.2,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
       "generated_at": "2026-10-06T01:05:07.575037+00:00",
@@ -942,8 +905,8 @@
       "pick_name": "Penn State Nittany Lions",
       "pick": "h",
       "model_pct": 52.6,
-      "market_pct": 52.0,
-      "edge_points": 0.6,
+      "market_pct": 52.1,
+      "edge_points": 0.5,
       "model_name": "NCAAF adjusted-margin model",
       "model_version": "ncaaf-adjusted-v1",
       "generated_at": "2026-10-06T01:05:03.742676+00:00",
@@ -7606,12 +7569,12 @@
       "kickoff": "2026-11-01T14:30Z",
       "pick_name": "Villanova Wildcats",
       "pick": "h",
-      "model_pct": 84.5,
+      "model_pct": 81.9,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:23:03.609830+00:00",
+      "generated_at": "2026-10-10T18:13:27.953931+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -7620,12 +7583,12 @@
         {
           "selection": "Villanova Wildcats",
           "is_home": true,
-          "model_pct": 84.5
+          "model_pct": 81.9
         },
         {
           "selection": "Notre Dame Fighting Irish",
           "is_home": false,
-          "model_pct": 15.5
+          "model_pct": 18.1
         }
       ]
     },
@@ -7638,12 +7601,12 @@
       "kickoff": "2026-11-02T04:59Z",
       "pick_name": "High Point Panthers",
       "pick": "h",
-      "model_pct": 52.9,
+      "model_pct": 95.8,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:23:08.451838+00:00",
+      "generated_at": "2026-10-10T18:22:03.489666+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -7652,12 +7615,12 @@
         {
           "selection": "High Point Panthers",
           "is_home": true,
-          "model_pct": 52.9
+          "model_pct": 95.8
         },
         {
           "selection": "Liberty Flames",
           "is_home": false,
-          "model_pct": 47.1
+          "model_pct": 4.2
         }
       ]
     },
@@ -7670,12 +7633,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "Butler Bulldogs",
       "pick": "h",
-      "model_pct": 94.6,
+      "model_pct": 95.3,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:26:16.822351+00:00",
+      "generated_at": "2026-10-10T18:18:18.625326+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -7684,12 +7647,12 @@
         {
           "selection": "Butler Bulldogs",
           "is_home": true,
-          "model_pct": 94.6
+          "model_pct": 95.3
         },
         {
           "selection": "Lafayette Leopards",
           "is_home": false,
-          "model_pct": 5.4
+          "model_pct": 4.7
         }
       ]
     },
@@ -7702,12 +7665,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "Florida Gators",
       "pick": "h",
-      "model_pct": 98.6,
+      "model_pct": 72.1,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:26:12.739740+00:00",
+      "generated_at": "2026-10-10T18:18:11.512651+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -7716,12 +7679,12 @@
         {
           "selection": "Florida Gators",
           "is_home": true,
-          "model_pct": 98.6
+          "model_pct": 72.1
         },
         {
           "selection": "Miami Hurricanes",
           "is_home": false,
-          "model_pct": 1.4
+          "model_pct": 27.9
         }
       ]
     },
@@ -7734,12 +7697,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "Georgia Bulldogs",
       "pick": "h",
-      "model_pct": 99.6,
+      "model_pct": 99.5,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:26:08.227562+00:00",
+      "generated_at": "2026-10-10T18:18:04.433039+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -7748,12 +7711,12 @@
         {
           "selection": "Georgia Bulldogs",
           "is_home": true,
-          "model_pct": 99.6
+          "model_pct": 99.5
         },
         {
           "selection": "North Carolina Central Eagles",
           "is_home": false,
-          "model_pct": 0.4
+          "model_pct": 0.5
         }
       ]
     },
@@ -7766,12 +7729,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "Mississippi State Bulldogs",
       "pick": "h",
-      "model_pct": 96.2,
+      "model_pct": 93.9,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:26:03.843562+00:00",
+      "generated_at": "2026-10-10T18:17:57.653762+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -7780,12 +7743,12 @@
         {
           "selection": "Mississippi State Bulldogs",
           "is_home": true,
-          "model_pct": 96.2
+          "model_pct": 93.9
         },
         {
           "selection": "Tennessee Tech Golden Eagles",
           "is_home": false,
-          "model_pct": 3.8
+          "model_pct": 6.1
         }
       ]
     },
@@ -7798,12 +7761,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "Oklahoma Sooners",
       "pick": "h",
-      "model_pct": 99.0,
+      "model_pct": 99.2,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:25:59.255608+00:00",
+      "generated_at": "2026-10-10T18:17:50.715017+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -7812,12 +7775,12 @@
         {
           "selection": "Oklahoma Sooners",
           "is_home": true,
-          "model_pct": 99.0
+          "model_pct": 99.2
         },
         {
           "selection": "East Texas A&M Lions",
           "is_home": false,
-          "model_pct": 1.0
+          "model_pct": 0.8
         }
       ]
     },
@@ -7835,7 +7798,7 @@
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:25:54.713790+00:00",
+      "generated_at": "2026-10-10T18:17:44.068743+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -7862,12 +7825,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "Creighton Bluejays",
       "pick": "h",
-      "model_pct": 97.5,
+      "model_pct": 99.0,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:25:50.243616+00:00",
+      "generated_at": "2026-10-10T18:17:37.157200+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -7876,12 +7839,12 @@
         {
           "selection": "Creighton Bluejays",
           "is_home": true,
-          "model_pct": 97.5
+          "model_pct": 99.0
         },
         {
           "selection": "Kansas City Roos",
           "is_home": false,
-          "model_pct": 2.5
+          "model_pct": 1.0
         }
       ]
     },
@@ -7894,12 +7857,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "DePaul Blue Demons",
       "pick": "h",
-      "model_pct": 93.0,
+      "model_pct": 96.0,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:25:45.505779+00:00",
+      "generated_at": "2026-10-10T18:17:30.522979+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -7908,12 +7871,12 @@
         {
           "selection": "DePaul Blue Demons",
           "is_home": true,
-          "model_pct": 93.0
+          "model_pct": 96.0
         },
         {
           "selection": "West Georgia Wolves",
           "is_home": false,
-          "model_pct": 7.0
+          "model_pct": 4.0
         }
       ]
     },
@@ -7926,12 +7889,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "Marquette Golden Eagles",
       "pick": "h",
-      "model_pct": 97.2,
+      "model_pct": 90.8,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:25:40.867535+00:00",
+      "generated_at": "2026-10-10T18:17:23.562727+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -7940,12 +7903,12 @@
         {
           "selection": "Marquette Golden Eagles",
           "is_home": true,
-          "model_pct": 97.2
+          "model_pct": 90.8
         },
         {
           "selection": "Mercyhurst Lakers",
           "is_home": false,
-          "model_pct": 2.8
+          "model_pct": 9.2
         }
       ]
     },
@@ -7958,12 +7921,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "Providence Friars",
       "pick": "h",
-      "model_pct": 91.6,
+      "model_pct": 93.8,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:25:36.426846+00:00",
+      "generated_at": "2026-10-10T18:17:16.616669+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -7972,12 +7935,12 @@
         {
           "selection": "Providence Friars",
           "is_home": true,
-          "model_pct": 91.6
+          "model_pct": 93.8
         },
         {
           "selection": "Maine Black Bears",
           "is_home": false,
-          "model_pct": 8.4
+          "model_pct": 6.2
         }
       ]
     },
@@ -7990,12 +7953,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "Xavier Musketeers",
       "pick": "h",
-      "model_pct": 94.6,
+      "model_pct": 97.8,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:25:32.429710+00:00",
+      "generated_at": "2026-10-10T18:17:09.842874+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -8004,12 +7967,12 @@
         {
           "selection": "Xavier Musketeers",
           "is_home": true,
-          "model_pct": 94.6
+          "model_pct": 97.8
         },
         {
           "selection": "Mount St. Mary's Mountaineers",
           "is_home": false,
-          "model_pct": 5.4
+          "model_pct": 2.2
         }
       ]
     },
@@ -8027,7 +7990,7 @@
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:25:28.637848+00:00",
+      "generated_at": "2026-10-10T18:17:02.875016+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -8054,12 +8017,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "Pittsburgh Panthers",
       "pick": "h",
-      "model_pct": 97.5,
+      "model_pct": 93.0,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:25:24.715487+00:00",
+      "generated_at": "2026-10-10T18:16:55.822687+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -8068,12 +8031,12 @@
         {
           "selection": "Pittsburgh Panthers",
           "is_home": true,
-          "model_pct": 97.5
+          "model_pct": 93.0
         },
         {
           "selection": "Rider Broncs",
           "is_home": false,
-          "model_pct": 2.5
+          "model_pct": 7.0
         }
       ]
     },
@@ -8086,12 +8049,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "Syracuse Orange",
       "pick": "h",
-      "model_pct": 91.9,
+      "model_pct": 96.8,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:25:20.128211+00:00",
+      "generated_at": "2026-10-10T18:16:49.136125+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -8100,12 +8063,12 @@
         {
           "selection": "Syracuse Orange",
           "is_home": true,
-          "model_pct": 91.9
+          "model_pct": 96.8
         },
         {
           "selection": "New Haven Chargers",
           "is_home": false,
-          "model_pct": 8.1
+          "model_pct": 3.2
         }
       ]
     },
@@ -8118,12 +8081,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "Wake Forest Demon Deacons",
       "pick": "h",
-      "model_pct": 98.9,
+      "model_pct": 92.9,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:25:15.447468+00:00",
+      "generated_at": "2026-10-10T18:16:42.912747+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -8132,12 +8095,12 @@
         {
           "selection": "Wake Forest Demon Deacons",
           "is_home": true,
-          "model_pct": 98.9
+          "model_pct": 92.9
         },
         {
           "selection": "Maryland Eastern Shore Hawks",
           "is_home": false,
-          "model_pct": 1.1
+          "model_pct": 7.1
         }
       ]
     },
@@ -8150,12 +8113,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "Colorado Buffaloes",
       "pick": "h",
-      "model_pct": 88.0,
+      "model_pct": 80.2,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:25:11.569826+00:00",
+      "generated_at": "2026-10-10T18:16:36.972751+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -8164,12 +8127,12 @@
         {
           "selection": "Colorado Buffaloes",
           "is_home": true,
-          "model_pct": 88.0
+          "model_pct": 80.2
         },
         {
           "selection": "Abilene Christian Wildcats",
           "is_home": false,
-          "model_pct": 12.0
+          "model_pct": 19.8
         }
       ]
     },
@@ -8182,12 +8145,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "Iowa State Cyclones",
       "pick": "h",
-      "model_pct": 96.9,
+      "model_pct": 99.4,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:25:07.569427+00:00",
+      "generated_at": "2026-10-10T18:16:30.890070+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -8196,12 +8159,12 @@
         {
           "selection": "Iowa State Cyclones",
           "is_home": true,
-          "model_pct": 96.9
+          "model_pct": 99.4
         },
         {
           "selection": "Memphis Tigers",
           "is_home": false,
-          "model_pct": 3.1
+          "model_pct": 0.6
         }
       ]
     },
@@ -8214,12 +8177,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "Kansas Jayhawks",
       "pick": "h",
-      "model_pct": 98.0,
+      "model_pct": 85.9,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:25:03.719736+00:00",
+      "generated_at": "2026-10-10T18:16:24.624482+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -8228,12 +8191,12 @@
         {
           "selection": "Kansas Jayhawks",
           "is_home": true,
-          "model_pct": 98.0
+          "model_pct": 85.9
         },
         {
           "selection": "Fordham Rams",
           "is_home": false,
-          "model_pct": 2.0
+          "model_pct": 14.1
         }
       ]
     },
@@ -8246,12 +8209,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "Akron Zips",
       "pick": "a",
-      "model_pct": 95.2,
+      "model_pct": 82.6,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:24:59.669434+00:00",
+      "generated_at": "2026-10-10T18:16:15.769429+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -8260,12 +8223,12 @@
         {
           "selection": "Louisiana Ragin' Cajuns",
           "is_home": true,
-          "model_pct": 4.8
+          "model_pct": 17.4
         },
         {
           "selection": "Akron Zips",
           "is_home": false,
-          "model_pct": 95.2
+          "model_pct": 82.6
         }
       ]
     },
@@ -8278,12 +8241,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "Bowling Green Falcons",
       "pick": "a",
-      "model_pct": 64.3,
+      "model_pct": 54.3,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:24:55.184269+00:00",
+      "generated_at": "2026-10-10T18:16:08.626580+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -8292,12 +8255,12 @@
         {
           "selection": "Georgia State Panthers",
           "is_home": true,
-          "model_pct": 35.7
+          "model_pct": 45.7
         },
         {
           "selection": "Bowling Green Falcons",
           "is_home": false,
-          "model_pct": 64.3
+          "model_pct": 54.3
         }
       ]
     },
@@ -8310,12 +8273,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "Marshall Thundering Herd",
       "pick": "h",
-      "model_pct": 83.8,
+      "model_pct": 71.7,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:24:51.154248+00:00",
+      "generated_at": "2026-10-10T18:16:01.810615+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -8324,12 +8287,12 @@
         {
           "selection": "Marshall Thundering Herd",
           "is_home": true,
-          "model_pct": 83.8
+          "model_pct": 71.7
         },
         {
           "selection": "Buffalo Bulls",
           "is_home": false,
-          "model_pct": 16.2
+          "model_pct": 28.3
         }
       ]
     },
@@ -8342,12 +8305,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "Old Dominion Monarchs",
       "pick": "h",
-      "model_pct": 69.0,
+      "model_pct": 71.4,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:24:47.201588+00:00",
+      "generated_at": "2026-10-10T18:15:54.982572+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -8356,12 +8319,12 @@
         {
           "selection": "Old Dominion Monarchs",
           "is_home": true,
-          "model_pct": 69.0
+          "model_pct": 71.4
         },
         {
           "selection": "Western Michigan Broncos",
           "is_home": false,
-          "model_pct": 31.0
+          "model_pct": 28.6
         }
       ]
     },
@@ -8374,12 +8337,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "Coastal Carolina Chanticleers",
       "pick": "h",
-      "model_pct": 53.4,
+      "model_pct": 58.5,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:24:43.071744+00:00",
+      "generated_at": "2026-10-10T18:15:48.044761+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -8388,12 +8351,12 @@
         {
           "selection": "Coastal Carolina Chanticleers",
           "is_home": true,
-          "model_pct": 53.4
+          "model_pct": 58.5
         },
         {
           "selection": "Eastern Michigan Eagles",
           "is_home": false,
-          "model_pct": 46.6
+          "model_pct": 41.5
         }
       ]
     },
@@ -8406,12 +8369,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "Arkansas State Red Wolves",
       "pick": "h",
-      "model_pct": 79.0,
+      "model_pct": 71.6,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:24:38.821607+00:00",
+      "generated_at": "2026-10-10T18:15:41.298430+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -8420,12 +8383,12 @@
         {
           "selection": "Arkansas State Red Wolves",
           "is_home": true,
-          "model_pct": 79.0
+          "model_pct": 71.6
         },
         {
           "selection": "Toledo Rockets",
           "is_home": false,
-          "model_pct": 21.0
+          "model_pct": 28.4
         }
       ]
     },
@@ -8436,14 +8399,14 @@
       "home": "Louisiana Tech Bulldogs",
       "away": "Kent State Golden Flashes",
       "kickoff": "2026-11-02T05:00Z",
-      "pick_name": "Louisiana Tech Bulldogs",
-      "pick": "h",
-      "model_pct": 56.6,
+      "pick_name": "Kent State Golden Flashes",
+      "pick": "a",
+      "model_pct": 54.1,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:24:34.407454+00:00",
+      "generated_at": "2026-10-10T18:15:34.471317+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -8452,12 +8415,12 @@
         {
           "selection": "Louisiana Tech Bulldogs",
           "is_home": true,
-          "model_pct": 56.6
+          "model_pct": 45.9
         },
         {
           "selection": "Kent State Golden Flashes",
           "is_home": false,
-          "model_pct": 43.4
+          "model_pct": 54.1
         }
       ]
     },
@@ -8470,12 +8433,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "Troy Trojans",
       "pick": "h",
-      "model_pct": 83.9,
+      "model_pct": 70.0,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:24:29.864171+00:00",
+      "generated_at": "2026-10-10T18:15:27.654466+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -8484,12 +8447,12 @@
         {
           "selection": "Troy Trojans",
           "is_home": true,
-          "model_pct": 83.9
+          "model_pct": 70.0
         },
         {
           "selection": "Massachusetts Minutemen",
           "is_home": false,
-          "model_pct": 16.1
+          "model_pct": 30.0
         }
       ]
     },
@@ -8502,12 +8465,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "Miami (OH) RedHawks",
       "pick": "a",
-      "model_pct": 68.3,
+      "model_pct": 77.9,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:24:25.171747+00:00",
+      "generated_at": "2026-10-10T18:15:21.012250+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -8516,12 +8479,12 @@
         {
           "selection": "James Madison Dukes",
           "is_home": true,
-          "model_pct": 31.7
+          "model_pct": 22.1
         },
         {
           "selection": "Miami (OH) RedHawks",
           "is_home": false,
-          "model_pct": 68.3
+          "model_pct": 77.9
         }
       ]
     },
@@ -8534,12 +8497,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "South Alabama Jaguars",
       "pick": "h",
-      "model_pct": 73.2,
+      "model_pct": 74.9,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:24:20.694425+00:00",
+      "generated_at": "2026-10-10T18:15:14.432656+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -8548,12 +8511,12 @@
         {
           "selection": "South Alabama Jaguars",
           "is_home": true,
-          "model_pct": 73.2
+          "model_pct": 74.9
         },
         {
           "selection": "Ohio Bobcats",
           "is_home": false,
-          "model_pct": 26.8
+          "model_pct": 25.1
         }
       ]
     },
@@ -8566,12 +8529,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "Georgia Southern Eagles",
       "pick": "h",
-      "model_pct": 63.9,
+      "model_pct": 50.1,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:24:16.601509+00:00",
+      "generated_at": "2026-10-10T18:15:07.718440+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -8580,12 +8543,12 @@
         {
           "selection": "Georgia Southern Eagles",
           "is_home": true,
-          "model_pct": 63.9
+          "model_pct": 50.1
         },
         {
           "selection": "Ball State Cardinals",
           "is_home": false,
-          "model_pct": 36.1
+          "model_pct": 49.9
         }
       ]
     },
@@ -8598,12 +8561,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "Dayton Flyers",
       "pick": "h",
-      "model_pct": 98.3,
+      "model_pct": 99.3,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:24:12.242156+00:00",
+      "generated_at": "2026-10-10T18:15:01.472636+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -8612,12 +8575,12 @@
         {
           "selection": "Dayton Flyers",
           "is_home": true,
-          "model_pct": 98.3
+          "model_pct": 99.3
         },
         {
           "selection": "NJIT Highlanders",
           "is_home": false,
-          "model_pct": 1.7
+          "model_pct": 0.7
         }
       ]
     },
@@ -8630,12 +8593,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "George Washington Revolutionaries",
       "pick": "h",
-      "model_pct": 79.3,
+      "model_pct": 58.7,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:24:08.049391+00:00",
+      "generated_at": "2026-10-10T18:14:55.222376+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -8644,12 +8607,12 @@
         {
           "selection": "George Washington Revolutionaries",
           "is_home": true,
-          "model_pct": 79.3
+          "model_pct": 58.7
         },
         {
           "selection": "Navy Midshipmen",
           "is_home": false,
-          "model_pct": 20.7
+          "model_pct": 41.3
         }
       ]
     },
@@ -8662,12 +8625,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "Loyola Chicago Ramblers",
       "pick": "h",
-      "model_pct": 91.9,
+      "model_pct": 73.0,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:24:03.491880+00:00",
+      "generated_at": "2026-10-10T18:14:49.518729+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -8676,12 +8639,12 @@
         {
           "selection": "Loyola Chicago Ramblers",
           "is_home": true,
-          "model_pct": 91.9
+          "model_pct": 73.0
         },
         {
           "selection": "The Citadel Bulldogs",
           "is_home": false,
-          "model_pct": 8.1
+          "model_pct": 27.0
         }
       ]
     },
@@ -8694,12 +8657,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "Richmond Spiders",
       "pick": "h",
-      "model_pct": 52.3,
+      "model_pct": 77.5,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:23:58.379574+00:00",
+      "generated_at": "2026-10-10T18:14:43.822410+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -8708,12 +8671,12 @@
         {
           "selection": "Richmond Spiders",
           "is_home": true,
-          "model_pct": 52.3
+          "model_pct": 77.5
         },
         {
           "selection": "UNC Asheville Bulldogs",
           "is_home": false,
-          "model_pct": 47.6
+          "model_pct": 22.5
         }
       ]
     },
@@ -8726,12 +8689,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "Saint Louis Billikens",
       "pick": "h",
-      "model_pct": 97.2,
+      "model_pct": 99.1,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:23:53.071633+00:00",
+      "generated_at": "2026-10-10T18:14:38.055041+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -8740,12 +8703,12 @@
         {
           "selection": "Saint Louis Billikens",
           "is_home": true,
-          "model_pct": 97.2
+          "model_pct": 99.1
         },
         {
           "selection": "Lehigh Mountain Hawks",
           "is_home": false,
-          "model_pct": 2.8
+          "model_pct": 0.9
         }
       ]
     },
@@ -8758,12 +8721,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "St. Bonaventure Bonnies",
       "pick": "h",
-      "model_pct": 67.7,
+      "model_pct": 62.3,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:23:48.051489+00:00",
+      "generated_at": "2026-10-10T18:14:32.284860+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -8772,12 +8735,12 @@
         {
           "selection": "St. Bonaventure Bonnies",
           "is_home": true,
-          "model_pct": 67.7
+          "model_pct": 62.3
         },
         {
           "selection": "Youngstown State Penguins",
           "is_home": false,
-          "model_pct": 32.3
+          "model_pct": 37.7
         }
       ]
     },
@@ -8790,12 +8753,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "Wright State Raiders",
       "pick": "h",
-      "model_pct": 96.8,
+      "model_pct": 99.1,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:23:43.800762+00:00",
+      "generated_at": "2026-10-10T18:14:26.393034+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -8804,12 +8767,12 @@
         {
           "selection": "Wright State Raiders",
           "is_home": true,
-          "model_pct": 96.8
+          "model_pct": 99.1
         },
         {
           "selection": "Air Force Falcons",
           "is_home": false,
-          "model_pct": 3.2
+          "model_pct": 0.9
         }
       ]
     },
@@ -8822,12 +8785,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "South Florida Bulls",
       "pick": "h",
-      "model_pct": 93.2,
+      "model_pct": 98.1,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:23:39.314295+00:00",
+      "generated_at": "2026-10-10T18:14:20.302137+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -8836,12 +8799,12 @@
         {
           "selection": "South Florida Bulls",
           "is_home": true,
-          "model_pct": 93.2
+          "model_pct": 98.1
         },
         {
           "selection": "Charleston Southern Buccaneers",
           "is_home": false,
-          "model_pct": 6.8
+          "model_pct": 1.9
         }
       ]
     },
@@ -8854,12 +8817,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "UConn Huskies",
       "pick": "h",
-      "model_pct": 99.9,
+      "model_pct": 100.0,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:23:34.833908+00:00",
+      "generated_at": "2026-10-10T18:14:14.308459+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -8868,12 +8831,12 @@
         {
           "selection": "UConn Huskies",
           "is_home": true,
-          "model_pct": 99.9
+          "model_pct": 100.0
         },
         {
           "selection": "Gardner-Webb Runnin' Bulldogs",
           "is_home": false,
-          "model_pct": 0.1
+          "model_pct": 0.0
         }
       ]
     },
@@ -8886,12 +8849,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "Nevada Wolf Pack",
       "pick": "h",
-      "model_pct": 71.6,
+      "model_pct": 90.9,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:23:30.792124+00:00",
+      "generated_at": "2026-10-10T18:14:07.762082+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -8900,12 +8863,12 @@
         {
           "selection": "Nevada Wolf Pack",
           "is_home": true,
-          "model_pct": 71.6
+          "model_pct": 90.9
         },
         {
           "selection": "Robert Morris Colonials",
           "is_home": false,
-          "model_pct": 28.4
+          "model_pct": 9.1
         }
       ]
     },
@@ -8918,12 +8881,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "UC Davis Aggies",
       "pick": "h",
-      "model_pct": 66.0,
+      "model_pct": 95.3,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:23:26.505608+00:00",
+      "generated_at": "2026-10-10T18:14:00.972305+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -8932,12 +8895,12 @@
         {
           "selection": "UC Davis Aggies",
           "is_home": true,
-          "model_pct": 66.0
+          "model_pct": 95.3
         },
         {
           "selection": "North Alabama Lions",
           "is_home": false,
-          "model_pct": 34.0
+          "model_pct": 4.7
         }
       ]
     },
@@ -8950,12 +8913,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "Cincinnati Bearcats",
       "pick": "h",
-      "model_pct": 93.0,
+      "model_pct": 99.0,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:23:22.399748+00:00",
+      "generated_at": "2026-10-10T18:13:54.336837+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -8964,12 +8927,12 @@
         {
           "selection": "Cincinnati Bearcats",
           "is_home": true,
-          "model_pct": 93.0
+          "model_pct": 99.0
         },
         {
           "selection": "American University Eagles",
           "is_home": false,
-          "model_pct": 7.0
+          "model_pct": 1.0
         }
       ]
     },
@@ -8982,12 +8945,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "North Carolina Tar Heels",
       "pick": "h",
-      "model_pct": 99.2,
+      "model_pct": 91.6,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:23:17.839594+00:00",
+      "generated_at": "2026-10-10T18:13:47.460007+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -8996,12 +8959,12 @@
         {
           "selection": "North Carolina Tar Heels",
           "is_home": true,
-          "model_pct": 99.2
+          "model_pct": 91.6
         },
         {
           "selection": "Western Carolina Catamounts",
           "is_home": false,
-          "model_pct": 0.8
+          "model_pct": 8.4
         }
       ]
     },
@@ -9014,12 +8977,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "Illinois Fighting Illini",
       "pick": "h",
-      "model_pct": 99.9,
+      "model_pct": 99.8,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:23:13.565870+00:00",
+      "generated_at": "2026-10-10T18:13:40.572068+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -9028,12 +8991,12 @@
         {
           "selection": "Illinois Fighting Illini",
           "is_home": true,
-          "model_pct": 99.9
+          "model_pct": 99.8
         },
         {
           "selection": "Fairleigh Dickinson Knights",
           "is_home": false,
-          "model_pct": 0.1
+          "model_pct": 0.2
         }
       ]
     },
@@ -9046,12 +9009,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "Indiana Hoosiers",
       "pick": "h",
-      "model_pct": 97.8,
+      "model_pct": 98.6,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:26:33.212154+00:00",
+      "generated_at": "2026-10-10T18:18:45.277764+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -9060,12 +9023,12 @@
         {
           "selection": "Indiana Hoosiers",
           "is_home": true,
-          "model_pct": 97.8
+          "model_pct": 98.6
         },
         {
           "selection": "Eastern Illinois Panthers",
           "is_home": false,
-          "model_pct": 2.2
+          "model_pct": 1.5
         }
       ]
     },
@@ -9078,12 +9041,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "Maryland Terrapins",
       "pick": "h",
-      "model_pct": 97.7,
+      "model_pct": 97.8,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:26:29.389497+00:00",
+      "generated_at": "2026-10-10T18:18:38.278371+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -9092,12 +9055,12 @@
         {
           "selection": "Maryland Terrapins",
           "is_home": true,
-          "model_pct": 97.7
+          "model_pct": 97.8
         },
         {
           "selection": "Bucknell Bison",
           "is_home": false,
-          "model_pct": 2.3
+          "model_pct": 2.2
         }
       ]
     },
@@ -9110,12 +9073,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "Minnesota Golden Gophers",
       "pick": "h",
-      "model_pct": 84.7,
+      "model_pct": 80.9,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:26:24.915327+00:00",
+      "generated_at": "2026-10-10T18:18:31.402976+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -9124,12 +9087,12 @@
         {
           "selection": "Minnesota Golden Gophers",
           "is_home": true,
-          "model_pct": 84.7
+          "model_pct": 80.9
         },
         {
           "selection": "North Dakota Fighting Hawks",
           "is_home": false,
-          "model_pct": 15.3
+          "model_pct": 19.1
         }
       ]
     },
@@ -9142,12 +9105,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "BYU Cougars",
       "pick": "h",
-      "model_pct": 70.9,
+      "model_pct": 68.0,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:26:20.809320+00:00",
+      "generated_at": "2026-10-10T18:18:25.213257+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -9156,12 +9119,12 @@
         {
           "selection": "BYU Cougars",
           "is_home": true,
-          "model_pct": 70.9
+          "model_pct": 68.0
         },
         {
           "selection": "Ohio State Buckeyes",
           "is_home": false,
-          "model_pct": 29.1
+          "model_pct": 32.0
         }
       ]
     },
@@ -9174,12 +9137,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "Penn State Nittany Lions",
       "pick": "h",
-      "model_pct": 98.4,
+      "model_pct": 87.8,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:26:37.369321+00:00",
+      "generated_at": "2026-10-10T18:18:52.021212+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -9188,12 +9151,12 @@
         {
           "selection": "Penn State Nittany Lions",
           "is_home": true,
-          "model_pct": 98.4
+          "model_pct": 87.8
         },
         {
           "selection": "Canisius Golden Griffins",
           "is_home": false,
-          "model_pct": 1.6
+          "model_pct": 12.2
         }
       ]
     },
@@ -9204,14 +9167,14 @@
       "home": "Hawai'i Rainbow Warriors",
       "away": "Seattle U Redhawks",
       "kickoff": "2026-11-02T05:00Z",
-      "pick_name": "Seattle U Redhawks",
-      "pick": "a",
-      "model_pct": 55.8,
+      "pick_name": "Hawai'i Rainbow Warriors",
+      "pick": "h",
+      "model_pct": 58.7,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:26:49.313758+00:00",
+      "generated_at": "2026-10-10T18:19:11.763227+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -9220,12 +9183,12 @@
         {
           "selection": "Hawai'i Rainbow Warriors",
           "is_home": true,
-          "model_pct": 44.2
+          "model_pct": 58.7
         },
         {
           "selection": "Seattle U Redhawks",
           "is_home": false,
-          "model_pct": 55.8
+          "model_pct": 41.3
         }
       ]
     },
@@ -9238,12 +9201,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "Saint Mary's Gaels",
       "pick": "h",
-      "model_pct": 88.4,
+      "model_pct": 71.1,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:26:45.329643+00:00",
+      "generated_at": "2026-10-10T18:19:05.063741+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -9252,12 +9215,12 @@
         {
           "selection": "Saint Mary's Gaels",
           "is_home": true,
-          "model_pct": 88.4
+          "model_pct": 71.1
         },
         {
           "selection": "Illinois State Redbirds",
           "is_home": false,
-          "model_pct": 11.6
+          "model_pct": 28.9
         }
       ]
     },
@@ -9270,12 +9233,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "Santa Clara Broncos",
       "pick": "h",
-      "model_pct": 91.8,
+      "model_pct": 78.5,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:26:41.206090+00:00",
+      "generated_at": "2026-10-10T18:18:58.408737+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -9284,12 +9247,12 @@
         {
           "selection": "Santa Clara Broncos",
           "is_home": true,
-          "model_pct": 91.8
+          "model_pct": 78.5
         },
         {
           "selection": "Towson Tigers",
           "is_home": false,
-          "model_pct": 8.2
+          "model_pct": 21.6
         }
       ]
     },
@@ -9302,12 +9265,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "Austin Peay Governors",
       "pick": "h",
-      "model_pct": 91.1,
+      "model_pct": 94.0,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:26:53.219647+00:00",
+      "generated_at": "2026-10-10T18:19:18.517204+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -9316,12 +9279,12 @@
         {
           "selection": "Austin Peay Governors",
           "is_home": true,
-          "model_pct": 91.1
+          "model_pct": 94.0
         },
         {
           "selection": "Lane College Dragons",
           "is_home": false,
-          "model_pct": 8.9
+          "model_pct": 6.0
         }
       ]
     },
@@ -9334,12 +9297,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "California Golden Bears",
       "pick": "h",
-      "model_pct": 95.4,
+      "model_pct": 93.8,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:27:25.751027+00:00",
+      "generated_at": "2026-10-10T18:20:12.267594+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -9348,12 +9311,12 @@
         {
           "selection": "California Golden Bears",
           "is_home": true,
-          "model_pct": 95.4
+          "model_pct": 93.8
         },
         {
           "selection": "Adams State Grizzlies",
           "is_home": false,
-          "model_pct": 4.6
+          "model_pct": 6.2
         }
       ]
     },
@@ -9366,12 +9329,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "Clemson Tigers",
       "pick": "h",
-      "model_pct": 99.7,
+      "model_pct": 98.8,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:27:21.719270+00:00",
+      "generated_at": "2026-10-10T18:20:05.926316+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -9380,12 +9343,12 @@
         {
           "selection": "Clemson Tigers",
           "is_home": true,
-          "model_pct": 99.7
+          "model_pct": 98.8
         },
         {
           "selection": "Stetson Hatters",
           "is_home": false,
-          "model_pct": 0.3
+          "model_pct": 1.2
         }
       ]
     },
@@ -9398,12 +9361,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "Louisville Cardinals",
       "pick": "h",
-      "model_pct": 96.2,
+      "model_pct": 99.7,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:27:17.440401+00:00",
+      "generated_at": "2026-10-10T18:19:59.260829+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -9412,12 +9375,12 @@
         {
           "selection": "Louisville Cardinals",
           "is_home": true,
-          "model_pct": 96.2
+          "model_pct": 99.7
         },
         {
           "selection": "Chattanooga Mocs",
           "is_home": false,
-          "model_pct": 3.8
+          "model_pct": 0.3
         }
       ]
     },
@@ -9430,12 +9393,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "NC State Wolfpack",
       "pick": "h",
-      "model_pct": 88.6,
+      "model_pct": 89.8,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:27:13.262950+00:00",
+      "generated_at": "2026-10-10T18:19:52.604220+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -9444,12 +9407,12 @@
         {
           "selection": "NC State Wolfpack",
           "is_home": true,
-          "model_pct": 88.6
+          "model_pct": 89.8
         },
         {
           "selection": "Campbell Fighting Camels",
           "is_home": false,
-          "model_pct": 11.4
+          "model_pct": 10.2
         }
       ]
     },
@@ -9462,12 +9425,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "SMU Mustangs",
       "pick": "h",
-      "model_pct": 96.7,
+      "model_pct": 80.2,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:27:09.382021+00:00",
+      "generated_at": "2026-10-10T18:19:46.065436+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -9476,12 +9439,12 @@
         {
           "selection": "SMU Mustangs",
           "is_home": true,
-          "model_pct": 96.7
+          "model_pct": 80.2
         },
         {
           "selection": "Southern Jaguars",
           "is_home": false,
-          "model_pct": 3.3
+          "model_pct": 19.8
         }
       ]
     },
@@ -9494,12 +9457,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "Tulane Green Wave",
       "pick": "h",
-      "model_pct": 65.2,
+      "model_pct": 53.3,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:27:05.261471+00:00",
+      "generated_at": "2026-10-10T18:19:39.128993+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -9508,12 +9471,12 @@
         {
           "selection": "Tulane Green Wave",
           "is_home": true,
-          "model_pct": 65.2
+          "model_pct": 53.3
         },
         {
           "selection": "UT Martin Skyhawks",
           "is_home": false,
-          "model_pct": 34.8
+          "model_pct": 46.7
         }
       ]
     },
@@ -9526,12 +9489,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "Oklahoma State Cowboys",
       "pick": "h",
-      "model_pct": 84.4,
+      "model_pct": 97.4,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:27:01.326699+00:00",
+      "generated_at": "2026-10-10T18:19:32.105009+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -9540,12 +9503,12 @@
         {
           "selection": "Oklahoma State Cowboys",
           "is_home": true,
-          "model_pct": 84.4
+          "model_pct": 97.4
         },
         {
           "selection": "Incarnate Word Cardinals",
           "is_home": false,
-          "model_pct": 15.7
+          "model_pct": 2.6
         }
       ]
     },
@@ -9558,12 +9521,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "TCU Horned Frogs",
       "pick": "h",
-      "model_pct": 93.7,
+      "model_pct": 81.9,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:26:57.335894+00:00",
+      "generated_at": "2026-10-10T18:19:25.179902+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -9572,12 +9535,12 @@
         {
           "selection": "TCU Horned Frogs",
           "is_home": true,
-          "model_pct": 93.7
+          "model_pct": 81.9
         },
         {
           "selection": "Lindenwood Lions",
           "is_home": false,
-          "model_pct": 6.3
+          "model_pct": 18.1
         }
       ]
     },
@@ -9595,7 +9558,7 @@
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:27:33.590438+00:00",
+      "generated_at": "2026-10-10T18:20:25.375721+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -9622,12 +9585,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "Florida Atlantic Owls",
       "pick": "h",
-      "model_pct": 82.2,
+      "model_pct": 93.5,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:27:29.693747+00:00",
+      "generated_at": "2026-10-10T18:20:18.580872+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -9636,12 +9599,12 @@
         {
           "selection": "Florida Atlantic Owls",
           "is_home": true,
-          "model_pct": 82.2
+          "model_pct": 93.5
         },
         {
           "selection": "Long Island University Sharks",
           "is_home": false,
-          "model_pct": 17.8
+          "model_pct": 6.5
         }
       ]
     },
@@ -9654,12 +9617,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "George Mason Patriots",
       "pick": "h",
-      "model_pct": 87.4,
+      "model_pct": 68.7,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:27:37.471366+00:00",
+      "generated_at": "2026-10-10T18:20:32.683681+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -9668,12 +9631,12 @@
         {
           "selection": "George Mason Patriots",
           "is_home": true,
-          "model_pct": 87.4
+          "model_pct": 68.7
         },
         {
           "selection": "UMBC Retrievers",
           "is_home": false,
-          "model_pct": 12.6
+          "model_pct": 31.3
         }
       ]
     },
@@ -9684,14 +9647,14 @@
       "home": "Marist Red Foxes",
       "away": "Dartmouth Big Green",
       "kickoff": "2026-11-02T05:00Z",
-      "pick_name": "Marist Red Foxes",
-      "pick": "h",
-      "model_pct": 59.1,
+      "pick_name": "Dartmouth Big Green",
+      "pick": "a",
+      "model_pct": 50.9,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:27:41.487711+00:00",
+      "generated_at": "2026-10-10T18:20:40.135402+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -9700,12 +9663,12 @@
         {
           "selection": "Marist Red Foxes",
           "is_home": true,
-          "model_pct": 59.1
+          "model_pct": 49.1
         },
         {
           "selection": "Dartmouth Big Green",
           "is_home": false,
-          "model_pct": 40.9
+          "model_pct": 50.9
         }
       ]
     },
@@ -9718,12 +9681,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "St. John's Red Storm",
       "pick": "h",
-      "model_pct": 99.2,
+      "model_pct": 82.4,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:27:45.291573+00:00",
+      "generated_at": "2026-10-10T18:20:48.929151+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -9732,12 +9695,12 @@
         {
           "selection": "St. John's Red Storm",
           "is_home": true,
-          "model_pct": 99.2
+          "model_pct": 82.4
         },
         {
           "selection": "Monmouth Hawks",
           "is_home": false,
-          "model_pct": 0.8
+          "model_pct": 17.6
         }
       ]
     },
@@ -9750,12 +9713,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "Vermont Catamounts",
       "pick": "a",
-      "model_pct": 53.3,
+      "model_pct": 58.2,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:27:59.809562+00:00",
+      "generated_at": "2026-10-10T18:21:09.133806+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -9764,12 +9727,12 @@
         {
           "selection": "Iona Gaels",
           "is_home": true,
-          "model_pct": 46.7
+          "model_pct": 41.8
         },
         {
           "selection": "Vermont Catamounts",
           "is_home": false,
-          "model_pct": 53.3
+          "model_pct": 58.2
         }
       ]
     },
@@ -9780,14 +9743,14 @@
       "home": "Southeast Missouri State Redhawks",
       "away": "Lipscomb Bisons",
       "kickoff": "2026-11-02T05:00Z",
-      "pick_name": "Lipscomb Bisons",
-      "pick": "a",
-      "model_pct": 50.7,
+      "pick_name": "Southeast Missouri State Redhawks",
+      "pick": "h",
+      "model_pct": 65.7,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:27:54.805377+00:00",
+      "generated_at": "2026-10-10T18:21:02.510217+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -9796,12 +9759,12 @@
         {
           "selection": "Southeast Missouri State Redhawks",
           "is_home": true,
-          "model_pct": 49.3
+          "model_pct": 65.7
         },
         {
           "selection": "Lipscomb Bisons",
           "is_home": false,
-          "model_pct": 50.7
+          "model_pct": 34.3
         }
       ]
     },
@@ -9814,12 +9777,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "Stanford Cardinal",
       "pick": "h",
-      "model_pct": 89.2,
+      "model_pct": 93.9,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:27:50.821843+00:00",
+      "generated_at": "2026-10-10T18:20:56.032352+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -9828,12 +9791,12 @@
         {
           "selection": "Stanford Cardinal",
           "is_home": true,
-          "model_pct": 89.2
+          "model_pct": 93.9
         },
         {
           "selection": "Eastern Washington Eagles",
           "is_home": false,
-          "model_pct": 10.8
+          "model_pct": 6.1
         }
       ]
     },
@@ -9846,12 +9809,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "Northwestern Wildcats",
       "pick": "h",
-      "model_pct": 97.9,
+      "model_pct": 97.3,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:28:07.319886+00:00",
+      "generated_at": "2026-10-10T18:21:22.345466+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -9860,12 +9823,12 @@
         {
           "selection": "Northwestern Wildcats",
           "is_home": true,
-          "model_pct": 97.9
+          "model_pct": 97.3
         },
         {
           "selection": "Binghamton Bearcats",
           "is_home": false,
-          "model_pct": 2.1
+          "model_pct": 2.7
         }
       ]
     },
@@ -9878,12 +9841,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "Boston University Terriers",
       "pick": "h",
-      "model_pct": 62.2,
+      "model_pct": 61.7,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:28:03.651357+00:00",
+      "generated_at": "2026-10-10T18:21:15.540360+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -9892,12 +9855,12 @@
         {
           "selection": "Boston University Terriers",
           "is_home": true,
-          "model_pct": 62.2
+          "model_pct": 61.7
         },
         {
           "selection": "Northeastern Huskies",
           "is_home": false,
-          "model_pct": 37.9
+          "model_pct": 38.3
         }
       ]
     },
@@ -9910,12 +9873,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "Washington Huskies",
       "pick": "h",
-      "model_pct": 86.9,
+      "model_pct": 64.6,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:28:12.017231+00:00",
+      "generated_at": "2026-10-10T18:21:28.986250+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -9924,12 +9887,108 @@
         {
           "selection": "Washington Huskies",
           "is_home": true,
-          "model_pct": 86.9
+          "model_pct": 64.6
         },
         {
           "selection": "Colgate Raiders",
           "is_home": false,
-          "model_pct": 13.1
+          "model_pct": 35.4
+        }
+      ]
+    },
+    {
+      "event_id": "schedule:401920842",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "home": "Presbyterian Blue Hose",
+      "away": "St. Thomas Tommies",
+      "kickoff": "2026-11-02T05:00Z",
+      "pick_name": "St. Thomas Tommies",
+      "pick": "a",
+      "model_pct": 72.4,
+      "market_pct": null,
+      "edge_points": null,
+      "model_name": "NCAAM adjusted-efficiency model",
+      "model_version": "hoops-0.1",
+      "generated_at": "2026-10-10T18:21:56.810432+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Presbyterian Blue Hose",
+          "is_home": true,
+          "model_pct": 27.6
+        },
+        {
+          "selection": "St. Thomas Tommies",
+          "is_home": false,
+          "model_pct": 72.4
+        }
+      ]
+    },
+    {
+      "event_id": "schedule:401920876",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "home": "Jacksonville Dolphins",
+      "away": "Paine Lions",
+      "kickoff": "2026-11-02T05:00Z",
+      "pick_name": "Jacksonville Dolphins",
+      "pick": "h",
+      "model_pct": 97.0,
+      "market_pct": null,
+      "edge_points": null,
+      "model_name": "NCAAM adjusted-efficiency model",
+      "model_version": "hoops-0.1",
+      "generated_at": "2026-10-10T18:21:49.892707+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Jacksonville Dolphins",
+          "is_home": true,
+          "model_pct": 97.0
+        },
+        {
+          "selection": "Paine Lions",
+          "is_home": false,
+          "model_pct": 3.0
+        }
+      ]
+    },
+    {
+      "event_id": "schedule:401920886",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "home": "Seton Hall Pirates",
+      "away": "Saint Peter's Peacocks",
+      "kickoff": "2026-11-02T05:00Z",
+      "pick_name": "Seton Hall Pirates",
+      "pick": "h",
+      "model_pct": 93.0,
+      "market_pct": null,
+      "edge_points": null,
+      "model_name": "NCAAM adjusted-efficiency model",
+      "model_version": "hoops-0.1",
+      "generated_at": "2026-10-10T18:21:43.039080+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Seton Hall Pirates",
+          "is_home": true,
+          "model_pct": 93.0
+        },
+        {
+          "selection": "Saint Peter's Peacocks",
+          "is_home": false,
+          "model_pct": 7.0
         }
       ]
     },
@@ -9942,12 +10001,12 @@
       "kickoff": "2026-11-02T05:00Z",
       "pick_name": "Wisconsin Badgers",
       "pick": "h",
-      "model_pct": 99.1,
+      "model_pct": 83.0,
       "market_pct": null,
       "edge_points": null,
       "model_name": "NCAAM adjusted-efficiency model",
       "model_version": "hoops-0.1",
-      "generated_at": "2026-09-27T17:28:16.459351+00:00",
+      "generated_at": "2026-10-10T18:21:35.903607+00:00",
       "official_pick": false,
       "basis": "live_shadow_forecast",
       "moves_until_kickoff": true,
@@ -9956,12 +10015,684 @@
         {
           "selection": "Wisconsin Badgers",
           "is_home": true,
-          "model_pct": 99.1
+          "model_pct": 83.0
         },
         {
           "selection": "Denver Pioneers",
           "is_home": false,
-          "model_pct": 0.9
+          "model_pct": 17.0
+        }
+      ]
+    },
+    {
+      "event_id": "schedule:401920912",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "home": "Northern Illinois Huskies",
+      "away": "Grambling Tigers",
+      "kickoff": "2026-11-02T08:00Z",
+      "pick_name": "Northern Illinois Huskies",
+      "pick": "h",
+      "model_pct": 53.6,
+      "market_pct": null,
+      "edge_points": null,
+      "model_name": "NCAAM adjusted-efficiency model",
+      "model_version": "hoops-0.1",
+      "generated_at": "2026-10-10T18:22:10.389108+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Northern Illinois Huskies",
+          "is_home": true,
+          "model_pct": 53.6
+        },
+        {
+          "selection": "Grambling Tigers",
+          "is_home": false,
+          "model_pct": 46.4
+        }
+      ]
+    },
+    {
+      "event_id": "schedule:401911707",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "home": "Tennessee State Tigers",
+      "away": "Murray State Racers",
+      "kickoff": "2026-11-02T16:30Z",
+      "pick_name": "Murray State Racers",
+      "pick": "a",
+      "model_pct": 64.3,
+      "market_pct": null,
+      "edge_points": null,
+      "model_name": "NCAAM adjusted-efficiency model",
+      "model_version": "hoops-0.1",
+      "generated_at": "2026-10-10T18:22:17.449797+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Tennessee State Tigers",
+          "is_home": true,
+          "model_pct": 35.7
+        },
+        {
+          "selection": "Murray State Racers",
+          "is_home": false,
+          "model_pct": 64.3
+        }
+      ]
+    },
+    {
+      "event_id": "schedule:401911532",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "home": "UTEP Miners",
+      "away": "Northern Kentucky Norse",
+      "kickoff": "2026-11-02T19:00Z",
+      "pick_name": "UTEP Miners",
+      "pick": "h",
+      "model_pct": 50.5,
+      "market_pct": null,
+      "edge_points": null,
+      "model_name": "NCAAM adjusted-efficiency model",
+      "model_version": "hoops-0.1",
+      "generated_at": "2026-10-10T18:22:24.501981+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "UTEP Miners",
+          "is_home": true,
+          "model_pct": 50.5
+        },
+        {
+          "selection": "Northern Kentucky Norse",
+          "is_home": false,
+          "model_pct": 49.5
+        }
+      ]
+    },
+    {
+      "event_id": "schedule:401919014",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "home": "UAB Blazers",
+      "away": "McNeese Cowboys",
+      "kickoff": "2026-11-02T22:00Z",
+      "pick_name": "McNeese Cowboys",
+      "pick": "a",
+      "model_pct": 67.5,
+      "market_pct": null,
+      "edge_points": null,
+      "model_name": "NCAAM adjusted-efficiency model",
+      "model_version": "hoops-0.1",
+      "generated_at": "2026-10-10T18:22:31.274118+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "UAB Blazers",
+          "is_home": true,
+          "model_pct": 32.5
+        },
+        {
+          "selection": "McNeese Cowboys",
+          "is_home": false,
+          "model_pct": 67.5
+        }
+      ]
+    },
+    {
+      "event_id": "schedule:401911304",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "home": "Brown Bears",
+      "away": "New Hampshire Wildcats",
+      "kickoff": "2026-11-03T00:00Z",
+      "pick_name": "Brown Bears",
+      "pick": "h",
+      "model_pct": 86.2,
+      "market_pct": null,
+      "edge_points": null,
+      "model_name": "NCAAM adjusted-efficiency model",
+      "model_version": "hoops-0.1",
+      "generated_at": "2026-10-10T18:22:38.208181+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Brown Bears",
+          "is_home": true,
+          "model_pct": 86.2
+        },
+        {
+          "selection": "New Hampshire Wildcats",
+          "is_home": false,
+          "model_pct": 13.8
+        }
+      ]
+    },
+    {
+      "event_id": "schedule:401918976",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "home": "East Carolina Pirates",
+      "away": "South Carolina Upstate Spartans",
+      "kickoff": "2026-11-03T00:00Z",
+      "pick_name": "South Carolina Upstate Spartans",
+      "pick": "a",
+      "model_pct": 65.6,
+      "market_pct": null,
+      "edge_points": null,
+      "model_name": "NCAAM adjusted-efficiency model",
+      "model_version": "hoops-0.1",
+      "generated_at": "2026-10-10T18:22:45.414168+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "East Carolina Pirates",
+          "is_home": true,
+          "model_pct": 34.4
+        },
+        {
+          "selection": "South Carolina Upstate Spartans",
+          "is_home": false,
+          "model_pct": 65.6
+        }
+      ]
+    },
+    {
+      "event_id": "schedule:401919845",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "home": "Stonehill Skyhawks",
+      "away": "Curry Colonels",
+      "kickoff": "2026-11-03T00:00Z",
+      "pick_name": "Stonehill Skyhawks",
+      "pick": "h",
+      "model_pct": 96.7,
+      "market_pct": null,
+      "edge_points": null,
+      "model_name": "NCAAM adjusted-efficiency model",
+      "model_version": "hoops-0.1",
+      "generated_at": "2026-10-10T18:22:51.786288+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Stonehill Skyhawks",
+          "is_home": true,
+          "model_pct": 96.7
+        },
+        {
+          "selection": "Curry Colonels",
+          "is_home": false,
+          "model_pct": 3.3
+        }
+      ]
+    },
+    {
+      "event_id": "schedule:401920201",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "home": "VCU Rams",
+      "away": "Little Rock Trojans",
+      "kickoff": "2026-11-03T00:00Z",
+      "pick_name": "VCU Rams",
+      "pick": "h",
+      "model_pct": 98.2,
+      "market_pct": null,
+      "edge_points": null,
+      "model_name": "NCAAM adjusted-efficiency model",
+      "model_version": "hoops-0.1",
+      "generated_at": "2026-10-10T18:22:57.933854+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "VCU Rams",
+          "is_home": true,
+          "model_pct": 98.2
+        },
+        {
+          "selection": "Little Rock Trojans",
+          "is_home": false,
+          "model_pct": 1.8
+        }
+      ]
+    },
+    {
+      "event_id": "schedule:401920354",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "home": "Harvard Crimson",
+      "away": "MIT Engineers",
+      "kickoff": "2026-11-03T00:00Z",
+      "pick_name": "Harvard Crimson",
+      "pick": "h",
+      "model_pct": 92.5,
+      "market_pct": null,
+      "edge_points": null,
+      "model_name": "NCAAM adjusted-efficiency model",
+      "model_version": "hoops-0.1",
+      "generated_at": "2026-10-10T18:23:04.403987+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Harvard Crimson",
+          "is_home": true,
+          "model_pct": 92.5
+        },
+        {
+          "selection": "MIT Engineers",
+          "is_home": false,
+          "model_pct": 7.5
+        }
+      ]
+    },
+    {
+      "event_id": "schedule:401920902",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "home": "Delaware Blue Hens",
+      "away": "Notre Dame (MD) Gators",
+      "kickoff": "2026-11-03T00:00Z",
+      "pick_name": "Delaware Blue Hens",
+      "pick": "h",
+      "model_pct": 93.2,
+      "market_pct": null,
+      "edge_points": null,
+      "model_name": "NCAAM adjusted-efficiency model",
+      "model_version": "hoops-0.1",
+      "generated_at": "2026-10-10T18:23:11.240265+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Delaware Blue Hens",
+          "is_home": true,
+          "model_pct": 93.2
+        },
+        {
+          "selection": "Notre Dame (MD) Gators",
+          "is_home": false,
+          "model_pct": 6.8
+        }
+      ]
+    },
+    {
+      "event_id": "schedule:401910996",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "home": "UL Monroe Warhawks",
+      "away": "Central Michigan Chippewas",
+      "kickoff": "2026-11-03T00:30Z",
+      "pick_name": "UL Monroe Warhawks",
+      "pick": "h",
+      "model_pct": 51.1,
+      "market_pct": null,
+      "edge_points": null,
+      "model_name": "NCAAM adjusted-efficiency model",
+      "model_version": "hoops-0.1",
+      "generated_at": "2026-10-10T18:23:17.585783+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "UL Monroe Warhawks",
+          "is_home": true,
+          "model_pct": 51.1
+        },
+        {
+          "selection": "Central Michigan Chippewas",
+          "is_home": false,
+          "model_pct": 48.9
+        }
+      ]
+    },
+    {
+      "event_id": "schedule:401920758",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "home": "Belmont Bruins",
+      "away": "Southern Indiana Screaming Eagles",
+      "kickoff": "2026-11-03T00:30Z",
+      "pick_name": "Belmont Bruins",
+      "pick": "h",
+      "model_pct": 94.8,
+      "market_pct": null,
+      "edge_points": null,
+      "model_name": "NCAAM adjusted-efficiency model",
+      "model_version": "hoops-0.1",
+      "generated_at": "2026-10-10T18:23:24.288094+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Belmont Bruins",
+          "is_home": true,
+          "model_pct": 94.8
+        },
+        {
+          "selection": "Southern Indiana Screaming Eagles",
+          "is_home": false,
+          "model_pct": 5.2
+        }
+      ]
+    },
+    {
+      "event_id": "schedule:401917510",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "home": "Portland Pilots",
+      "away": "Willamette Bearcats",
+      "kickoff": "2026-11-03T01:00Z",
+      "pick_name": "Portland Pilots",
+      "pick": "h",
+      "model_pct": 89.0,
+      "market_pct": null,
+      "edge_points": null,
+      "model_name": "NCAAM adjusted-efficiency model",
+      "model_version": "hoops-0.1",
+      "generated_at": "2026-10-10T18:23:31.552136+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Portland Pilots",
+          "is_home": true,
+          "model_pct": 89.0
+        },
+        {
+          "selection": "Willamette Bearcats",
+          "is_home": false,
+          "model_pct": 11.0
+        }
+      ]
+    },
+    {
+      "event_id": "schedule:401909694",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "home": "Florida State Seminoles",
+      "away": "Florida A&M Rattlers",
+      "kickoff": "2026-11-03T01:30Z",
+      "pick_name": "Florida State Seminoles",
+      "pick": "h",
+      "model_pct": 96.8,
+      "market_pct": null,
+      "edge_points": null,
+      "model_name": "NCAAM adjusted-efficiency model",
+      "model_version": "hoops-0.1",
+      "generated_at": "2026-10-10T18:23:39.686198+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Florida State Seminoles",
+          "is_home": true,
+          "model_pct": 96.8
+        },
+        {
+          "selection": "Florida A&M Rattlers",
+          "is_home": false,
+          "model_pct": 3.2
+        }
+      ]
+    },
+    {
+      "event_id": "schedule:401917913",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "home": "Central Arkansas Bears",
+      "away": "Oral Roberts Golden Eagles",
+      "kickoff": "2026-11-03T01:30Z",
+      "pick_name": "Central Arkansas Bears",
+      "pick": "h",
+      "model_pct": 93.3,
+      "market_pct": null,
+      "edge_points": null,
+      "model_name": "NCAAM adjusted-efficiency model",
+      "model_version": "hoops-0.1",
+      "generated_at": "2026-10-10T18:23:46.910097+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Central Arkansas Bears",
+          "is_home": true,
+          "model_pct": 93.3
+        },
+        {
+          "selection": "Oral Roberts Golden Eagles",
+          "is_home": false,
+          "model_pct": 6.7
+        }
+      ]
+    },
+    {
+      "event_id": "schedule:401911389",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "home": "Grand Canyon Lopes",
+      "away": "Texas Southern Tigers",
+      "kickoff": "2026-11-03T02:00Z",
+      "pick_name": "Grand Canyon Lopes",
+      "pick": "h",
+      "model_pct": 97.1,
+      "market_pct": null,
+      "edge_points": null,
+      "model_name": "NCAAM adjusted-efficiency model",
+      "model_version": "hoops-0.1",
+      "generated_at": "2026-10-10T18:23:54.678527+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Grand Canyon Lopes",
+          "is_home": true,
+          "model_pct": 97.1
+        },
+        {
+          "selection": "Texas Southern Tigers",
+          "is_home": false,
+          "model_pct": 2.9
+        }
+      ]
+    },
+    {
+      "event_id": "schedule:401909750",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "home": "Baylor Bears",
+      "away": "Northwestern State Demons",
+      "kickoff": "2026-11-03T02:30Z",
+      "pick_name": "Baylor Bears",
+      "pick": "h",
+      "model_pct": 98.8,
+      "market_pct": null,
+      "edge_points": null,
+      "model_name": "NCAAM adjusted-efficiency model",
+      "model_version": "hoops-0.1",
+      "generated_at": "2026-10-10T18:24:01.761401+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Baylor Bears",
+          "is_home": true,
+          "model_pct": 98.8
+        },
+        {
+          "selection": "Northwestern State Demons",
+          "is_home": false,
+          "model_pct": 1.2
+        }
+      ]
+    },
+    {
+      "event_id": "schedule:401909738",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "home": "Arizona Wildcats",
+      "away": "UCLA Bruins",
+      "kickoff": "2026-11-03T03:00Z",
+      "pick_name": "Arizona Wildcats",
+      "pick": "h",
+      "model_pct": 74.7,
+      "market_pct": null,
+      "edge_points": null,
+      "model_name": "NCAAM adjusted-efficiency model",
+      "model_version": "hoops-0.1",
+      "generated_at": "2026-10-10T18:24:15.809114+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Arizona Wildcats",
+          "is_home": true,
+          "model_pct": 74.7
+        },
+        {
+          "selection": "UCLA Bruins",
+          "is_home": false,
+          "model_pct": 25.3
+        }
+      ]
+    },
+    {
+      "event_id": "schedule:401911469",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "home": "San José State Spartans",
+      "away": "UTSA Roadrunners",
+      "kickoff": "2026-11-03T03:00Z",
+      "pick_name": "San José State Spartans",
+      "pick": "h",
+      "model_pct": 74.9,
+      "market_pct": null,
+      "edge_points": null,
+      "model_name": "NCAAM adjusted-efficiency model",
+      "model_version": "hoops-0.1",
+      "generated_at": "2026-10-10T18:24:08.744397+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "San José State Spartans",
+          "is_home": true,
+          "model_pct": 74.9
+        },
+        {
+          "selection": "UTSA Roadrunners",
+          "is_home": false,
+          "model_pct": 25.1
+        }
+      ]
+    },
+    {
+      "event_id": "schedule:401920348",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "home": "Sacramento State Hornets",
+      "away": "Jessup Warriors",
+      "kickoff": "2026-11-03T03:00Z",
+      "pick_name": "Sacramento State Hornets",
+      "pick": "h",
+      "model_pct": 86.4,
+      "market_pct": null,
+      "edge_points": null,
+      "model_name": "NCAAM adjusted-efficiency model",
+      "model_version": "hoops-0.1",
+      "generated_at": "2026-10-10T18:24:29.822210+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "Sacramento State Hornets",
+          "is_home": true,
+          "model_pct": 86.4
+        },
+        {
+          "selection": "Jessup Warriors",
+          "is_home": false,
+          "model_pct": 13.6
+        }
+      ]
+    },
+    {
+      "event_id": "schedule:401920370",
+      "sport": "ncaam",
+      "competition": "NCAAM",
+      "home": "UC San Diego Tritons",
+      "away": "Whittier Poets",
+      "kickoff": "2026-11-03T03:00Z",
+      "pick_name": "UC San Diego Tritons",
+      "pick": "h",
+      "model_pct": 99.6,
+      "market_pct": null,
+      "edge_points": null,
+      "model_name": "NCAAM adjusted-efficiency model",
+      "model_version": "hoops-0.1",
+      "generated_at": "2026-10-10T18:24:23.138010+00:00",
+      "official_pick": false,
+      "basis": "live_shadow_forecast",
+      "moves_until_kickoff": true,
+      "integrity_note": "Live model read, not a frozen card. It can still move before kickoff, so it carries no pregame lock receipt and must not enter the graded official-pick record.",
+      "sides": [
+        {
+          "selection": "UC San Diego Tritons",
+          "is_home": true,
+          "model_pct": 99.6
+        },
+        {
+          "selection": "Whittier Poets",
+          "is_home": false,
+          "model_pct": 0.4
         }
       ]
     },
@@ -38878,15 +39609,6 @@
   ],
   "fixtures": [
     {
-      "event_id": "401866440",
-      "sport": "ncaaf",
-      "competition": null,
-      "kickoff": "2026-10-10T18:00Z",
-      "home": "Massachusetts Minutemen",
-      "away": "Miami (OH) RedHawks",
-      "status": "pre"
-    },
-    {
       "event_id": "401858484",
       "sport": "ncaaf",
       "competition": null,
@@ -49383,13 +50105,13 @@
       "model_pct": 54.0,
       "market_pct": 42.8
     },
-    "considered": 66,
+    "considered": 65,
     "horizon_days": 7,
     "basis": "highest mean rating minus rating gap, among games inside the horizon where both teams are rated and the model is under 85.0% — the best matchup on the board, not the most confident pick",
     "caveat": "Editorial, not advice. The game is chosen for how close and how strong the two teams are by our own ratings; the model's read on it is reported alongside, not used to select it. It is a live shadow forecast like every other pick here and carries no frozen receipt."
   },
   "coverage": {
-    "picks": 309,
+    "picks": 332,
     "games_without_a_pick": 1,
     "competitions": [
       "NCAAF",
@@ -49400,7 +50122,7 @@
       "ncaam"
     ],
     "results": 402,
-    "fixtures": 581
+    "fixtures": 580
   },
   "publication": {
     "official_publication_eligible": false,
