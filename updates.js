@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1010G",
+  "tag": "Model",
+  "title": "Basketball preseason counts coaching changes",
+  "items": [
+   "A new head coach now lowers a team's preseason rating, by more for stronger teams. 33 programs changed coaches this offseason, Michigan among them.",
+   "Tested on two past offseasons, it made the preseason rating about 1% more accurate."
+  ]
+ },
+ {
   "date": "Build 1010F",
   "tag": "Model",
   "title": "Basketball games get the full treatment",
