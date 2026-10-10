@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1009E",
+  "tag": "Fix",
+  "title": "Smoother expanded view and scrolling",
+  "items": [
+   "The expanded game view no longer blurs the whole board behind it. That blur had to be redrawn on every scroll and was the main cause of the lag; a slightly darker backdrop replaces it.",
+   "Scrolling no longer runs a page-wide check on every tick, and game cards animate only their hover color."
+  ]
+ },
+ {
   "date": "Build 1009D",
   "tag": "Site",
   "title": "Volunteer-run, stated on every page",

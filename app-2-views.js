@@ -974,14 +974,17 @@ function showBoardTip(button){
 }
 function hideBoardTip(){
   const tip=document.getElementById('boardTip');
-  if(tip)tip.hidden=true;
+  // Runs on every scroll tick anywhere on the page; with no tip showing there
+  // is nothing to do, and the attribute sweep below would cost a full query.
+  if(!tip||tip.hidden)return;
+  tip.hidden=true;
   document.querySelectorAll('.boardHelp[aria-describedby="boardTip"]').forEach(b=>b.removeAttribute('aria-describedby'));
 }
 document.addEventListener('pointerover',e=>{const b=e.target.closest?.('.boardHelp');if(b)showBoardTip(b)});
 document.addEventListener('pointerout',e=>{if(e.target.closest?.('.boardHelp'))hideBoardTip()});
 document.addEventListener('focusin',e=>{const b=e.target.closest?.('.boardHelp');b?showBoardTip(b):hideBoardTip()});
 document.addEventListener('focusout',e=>{if(e.target.closest?.('.boardHelp'))hideBoardTip()});
-window.addEventListener('scroll',hideBoardTip,true);
+window.addEventListener('scroll',hideBoardTip,{capture:true,passive:true});
 
 /* The week's upset call.
    Editorial, and labelled that way in the card rather than only in a tooltip.
