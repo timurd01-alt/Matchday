@@ -188,6 +188,7 @@ document.addEventListener('click',function(event){
         <button type="button" onclick="matchdayEnterNow('score')">Scorecard</button>
         <button type="button" onclick="matchdayEnterNow('community')">Pick 'Em</button>
         <button type="button" onclick="matchdayEnterNow('news')">Research</button>
+        <button type="button" onclick="matchdayEnterNow('learn')">Learn</button>
         <a href="roadmap.html">Roadmap &amp; limits</a>
         <a href="legal.html">Legal &amp; data sources</a>
       </nav>
@@ -209,7 +210,7 @@ document.addEventListener('click',function(event){
     <button class="navbtn" data-primary data-mobile-primary data-v="groups" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/><path d="M8 4v16"/></svg><span class="lbl">Rankings</span></button>
     <button class="navbtn" data-primary data-v="results" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h10"/><circle cx="19" cy="18" r="2"/></svg><span class="lbl">Results</span></button>
     </div>
-    <div class="navGroup" data-group="content"><button class="navbtn" data-primary data-mobile-primary data-v="news" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 5h13v14H4z"/><path d="M17 8h3v9a2 2 0 0 1-2 2"/><line x1="7" y1="9" x2="14" y2="9"/><line x1="7" y1="13" x2="14" y2="13"/><line x1="7" y1="17" x2="11" y2="17"/></svg><span class="lbl">Research</span></button></div>
+    <div class="navGroup" data-group="content"><button class="navbtn" data-primary data-mobile-primary data-v="news" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M4 5h13v14H4z"/><path d="M17 8h3v9a2 2 0 0 1-2 2"/><line x1="7" y1="9" x2="14" y2="9"/><line x1="7" y1="13" x2="14" y2="13"/><line x1="7" y1="17" x2="11" y2="17"/></svg><span class="lbl">Research</span></button><button class="navbtn" data-primary data-v="learn" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M3 8l9-4 9 4-9 4-9-4z"/><path d="M7 10v5c0 1.5 2.2 3 5 3s5-1.5 5-3v-5"/><line x1="21" y1="8" x2="21" y2="13"/></svg><span class="lbl">Learn</span></button></div>
     <div class="navGroup" data-group="model">
     <button class="navbtn" data-v="score" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></svg><span class="lbl">Scorecard</span></button>
     </div>
@@ -223,14 +224,14 @@ document.addEventListener('click',function(event){
     <button class="navbtn navMore" type="button" onclick="toggleNavSheet()" aria-expanded="false" aria-controls="nav"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg><span class="lbl">More</span></button>
   </nav>
   <main class="content" tabindex="-1"><div id="alertBar" class="alertBar" style="display:none"></div><div class="view" id="view-home"><div class="empty">Loading…</div></div><div class="view" id="view-matches"><div class="empty">Loading…</div></div><div class="view" id="view-groups"></div>
-<div class="view" id="view-score"></div><div class="view" id="view-bracket"></div><div class="view" id="view-results"></div><div class="view" id="view-news"></div><div class="view" id="view-community"></div></main>
+<div class="view" id="view-score"></div><div class="view" id="view-bracket"></div><div class="view" id="view-results"></div><div class="view" id="view-news"></div><div class="view" id="view-learn"></div><div class="view" id="view-community"></div></main>
 </div>
 <script>
 // Keep the welcome page interactive. The large data/application bundles used
 // to execute as soon as parsing finished, monopolizing the main thread before
 // a visitor's click could be dispatched. Start them only after entry (or
 // immediately for a visitor who already entered during this browser session).
-var MATCHDAY_FILES=['translations.js','updates.js','matchday-cfb-snapshot.js','app-1-core.js','app-2-views.js','app-3-panels.js','app-bracketology.js','app-4-features.js','research-signals.js'];
+var MATCHDAY_FILES=['translations.js','updates.js','matchday-cfb-snapshot.js','app-1-core.js','app-2-views.js','app-3-panels.js','app-bracketology.js','app-4-features.js','research-signals.js','app-learn.js'];
 function matchdayAsset(file){return file+'?v=__BUILD__'}
 window.startMatchdayApp=function(){
   if(window.MATCHDAY_APP_STARTING)return window.MATCHDAY_APP_STARTING;

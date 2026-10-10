@@ -39,7 +39,7 @@ class MobileNavigationTests(unittest.TestCase):
         self.assertEqual(
             primary,
             [("home", "Home"), ("matches", "Games"), ("groups", "Rankings"),
-             ("results", "Results"), ("news", "Research")],
+             ("results", "Results"), ("news", "Research"), ("learn", "Learn")],
         )
         self.assertEqual(html.count('class="navbtn navMore"'), 1)
         self.assertNotIn('data-primary data-v="score"', html)

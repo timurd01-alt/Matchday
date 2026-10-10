@@ -118,14 +118,14 @@ const NAV_DEF={
   // Matchday covers college football and men's college basketball only. Every
   // profile exposes the same destinations. The established route keys remain
   // in place so saved preferences and bookmarks continue to work.
-  college:           ['home','matches','groups','results','news','score','bracket','community'],
-  college_basketball:['home','matches','groups','results','news','score','bracket','community']
+  college:           ['home','matches','groups','results','news','learn','score','bracket','community'],
+  college_basketball:['home','matches','groups','results','news','learn','score','bracket','community']
 };
 // The only views that exist after the college pivot. A stored defaultView or a
 // bookmarked hash can still name a removed one (Customize let people save
 // 'news' or 'updates' for years), so every entry point clamps through this
 // rather than trusting what it was handed and rendering into a null host.
-const VIEWS=new Set(['home','matches','results','groups','bracket','score','news','community']);
+const VIEWS=new Set(['home','matches','results','groups','bracket','score','news','learn','community']);
 const VIEW_ALIASES={games:'matches',rankings:'groups',research:'news'};
 function safeView(v){v=VIEW_ALIASES[v]||v;return VIEWS.has(v)?v:'home';}
 const SPORT_KIND={ncaaf:'college',ncaam:'college_basketball'};

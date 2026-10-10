@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1010A",
+  "tag": "New",
+  "title": "Learn tab",
+  "items": [
+   "A new Learn tab, next to Research, explains the numbers on the site in eight short lessons: ratings, strength of schedule, win probability, model vs market, football efficiency stats, basketball, preseason ratings and the scorecard.",
+   "Lessons use this week's real games as examples where they can, and a glossary covers every term the site uses."
+  ]
+ },
+ {
   "date": "Build 1009E",
   "tag": "Fix",
   "title": "Smoother expanded view and scrolling",

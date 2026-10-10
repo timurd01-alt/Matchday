@@ -3952,3 +3952,31 @@ body{font-variant-numeric:tabular-nums}
 .modalRowStep:hover:not(:disabled){border-color:var(--signal);color:var(--signal)}
 .modalRowStep:disabled{opacity:.35;cursor:default}
 .projectedScore b{white-space:nowrap}
+
+/* ---- Learn ---------------------------------------------------------------
+   Lessons are toggles: the title and hook read as a list, the body opens on
+   demand. Same roles as everywhere: display for titles, sans for sentences,
+   mono for labels; lime for links. */
+.learnList{display:flex;flex-direction:column;border-top:1px solid var(--line);margin-bottom:24px}
+.learnLesson{border-bottom:1px solid var(--line)}
+.learnLesson summary{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px;padding:14px 2px;cursor:pointer;list-style:none}
+.learnLesson summary::-webkit-details-marker{display:none}
+.learnLesson summary::after{content:"+";margin-left:auto;color:var(--signal);font-family:var(--mono);font-size:var(--fs-lg)}
+.learnLesson[open] summary::after{content:"−"}
+.learnLesson summary:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
+.learnTitle{font-family:var(--display);font-weight:var(--fw-bold);font-size:var(--fs-xl);color:var(--text);letter-spacing:.02em}
+.learnHook{font-family:var(--sans);font-size:var(--fs-md);color:var(--muted)}
+.learnBody{padding:0 2px 18px;max-width:68ch;font-family:var(--sans);font-size:var(--fs-base);line-height:1.6;color:var(--text)}
+.learnBody p{margin:0 0 10px}
+.learnBody b{color:var(--text);font-weight:var(--fw-semibold)}
+.learnExample{margin:14px 0 12px;padding-left:12px;border-left:2px solid var(--signal)}
+.learnExample .seclbl{margin-bottom:4px}
+.learnExample p{margin:0;color:var(--muted)}
+.learnExample b{color:var(--text)}
+.learnLink{background:none;border:0;padding:4px 0;color:var(--signal);font-family:var(--mono);font-size:var(--fs-sm);font-weight:var(--fw-bold);cursor:pointer}
+.learnLink:hover{text-decoration:underline}
+.learnLink:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
+.learnGlossary{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:0 24px;border-top:1px solid var(--line)}
+.learnGlossary div{padding:10px 0;border-bottom:1px solid var(--line)}
+.learnGlossary dt{font-family:var(--mono);font-size:var(--fs-sm);font-weight:var(--fw-bold);color:var(--text);text-transform:uppercase;letter-spacing:.04em}
+.learnGlossary dd{margin:4px 0 0;font-family:var(--sans);font-size:var(--fs-md);color:var(--muted);line-height:1.5}
