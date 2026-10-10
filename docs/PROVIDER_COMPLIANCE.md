@@ -1,5 +1,16 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-10-10 (the NCAAM preseason rating now uses each team's posted
+2026-27 roster from ESPN's public team-roster endpoint -- who is on a team is a
+common-knowledge fact under the ESPN rule -- in place of the transfer-portal
+guess where a roster is posted. Only the derived per-team rating is published.
+Also downloaded for research inside Bet Better, not used by the published model
+and never displayed or redistributed: sportsdataverse's `ncaa_mbb_matchup_stints`
+release (lineup stints built from stats.ncaa.org official play-by-play), from
+which a lineup-based player impact was computed and backtested; it did not
+improve the team forecast and is not live. The release's repository declares no
+license (NOASSERTION); re-check its terms before any published use.)
+
 Reviewed: 2026-10-09 (the FAQ and Legal pages now state the site is a
 non-commercial hobby project: no ads, subscriptions, affiliate links, paid
 placements or sponsorships, and no plans to add any. This is a statement of fact

@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1010C",
+  "tag": "Model",
+  "title": "Basketball preseason uses real rosters",
+  "items": [
+   "The basketball preseason rating now reads each team's posted 2026-27 roster instead of guessing who returns from the transfer portal and the draft. Players who left quietly no longer count as returning.",
+   "Tested on three past offseasons, rating from real rosters cut the preseason error to 3.91 points per game, from 4.27 with guessed rosters and 4.70 with last season's rating alone."
+  ]
+ },
+ {
   "date": "Build 1010B",
   "tag": "Fix",
   "title": "Basketball rankings before tip-off",
