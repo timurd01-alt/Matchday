@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1009C",
+  "tag": "Site",
+  "title": "Clearer non-commercial statement",
+  "items": [
+   "The FAQ and Legal pages now say plainly that Matchday Terminal is a non-commercial hobby project: it makes no money and has no ads, subscriptions, affiliate links or paid placements, and no plans to add any."
+  ]
+ },
+ {
   "date": "Build 1009B",
   "tag": "Fix",
   "title": "Records for every team in the conference tables",
