@@ -1,5 +1,22 @@
 # Matchday provider compliance notes
 
+Reviewed: 2026-10-09 (the FAQ and Legal pages now state the site is a
+non-commercial hobby project: no ads, subscriptions, affiliate links, paid
+placements or sponsorships, and no plans to add any. This is a statement of fact
+about the site, not a license: as recorded below, no source is enabled because
+the site is noncommercial, and every provider keeps its own review. Also
+recorded: the NCAAM preseason rating (computed in Bet Better, published here as
+team ratings only) now uses CBBD `/recruiting/portal`, `/recruiting/players`
+(247Sports composite ratings, licensed through CBBD) and `/stats/player/season`
+on the existing key, and ESPN's public NBA draft board for which college players
+were drafted. Only a derived per-team rating adjustment is published; no player
+names, portal entries, recruit ratings, win shares or draft data are displayed
+or redistributed. Open for the owner: the ESPN rule below lists final scores,
+AP rank and headlines as the public facts ESPN may supply; draft selections are
+public facts of the same kind but are not on that list. Wikipedia roster pages
+were tried and are now only a fallback; only facts (who left, who arrived) are
+read from them, none of their text.)
+
 Reviewed: 2026-09-27 (NCAAF roster tiers return to the expanded view's roster
 card. Source: the 247Sports Team Talent Composite via the already-licensed
 CollegeFootballData `/talent` endpoint, at most one request per season and none
