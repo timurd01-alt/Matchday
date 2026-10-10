@@ -83,6 +83,7 @@ function bbNameMatches(a,b){
 const POLL_TABLE_TYPES=new Set(['official_poll','matchday_top_25']);
 function isPollTable(g){return POLL_TABLE_TYPES.has(String(g?.table_type||''));}
 function pollTableNote(g){
+  if(g?.waiting)return 'official national poll';
   if(g?.note)return g.note;
   return String(g?.table_type)==='matchday_top_25'
     ?'Matchday model \u00b7 separate from the poll'
@@ -107,8 +108,9 @@ function pollSectionHTML(polls){
     +`<span class="code">${esc(t.code||'')}</span>${esc(t.name||'')}</div></td></tr>`).join('')};
   return `<div class="vhead">Rankings</div>`+polls.map(g=>
     `<div class="tablewrap officialPoll"><div class="groupHead">${esc(g.group||'Ranking')}<span>${esc(pollTableNote(g))}</span></div>`
-    +`<table class="gtable officialPollTable"><thead><tr><th>#</th><th class="pollMoveCell">Move</th><th>Team</th></tr></thead>`
-    +`<tbody>${rows(g)}</tbody></table></div>`).join('');
+    +(g.waiting?`<p class="pollWaiting">Waiting for the AP's preseason rating.</p></div>`
+    :`<table class="gtable officialPollTable"><thead><tr><th>#</th><th class="pollMoveCell">Move</th><th>Team</th></tr></thead>`
+    +`<tbody>${rows(g)}</tbody></table></div>`)).join('');
 }
 function _bbShiftDay(day,delta){const t=Date.parse(day+'T12:00:00Z');return Number.isFinite(t)?new Date(t+delta*86400000).toISOString().slice(0,10):day;}
 /* Merging the handoff used to compare every fixture against every other one.
@@ -576,7 +578,10 @@ function applyCurrentNcaamSnapshot(payload){
     const poll=MATCHDAY_NCAAM_AP_POLL,period=String(poll.period||'').toLowerCase();
     payload.standings=[{group:poll.poll_name||'AP Top 25',table_type:'official_poll',source:poll.source||'',updated:poll.fetched_on||'',
       note:['official national poll',[poll.season,period].filter(Boolean).join(' ')].filter(Boolean).join(' · '),
-      teams:ap},...(payload.standings||[]).filter(g=>!isPollTable(g))];
+      // Last season's final poll is not this season's: until the AP publishes
+      // its preseason poll the table says it is waiting rather than showing
+      // a finished season under this season's name.
+      teams:poll.is_final?[]:ap,waiting:!!poll.is_final},...(payload.standings||[]).filter(g=>!isPollTable(g))];
   }
   payload.bracketology=buildNcaamBracketology(MATCHDAY_NCAAM_SNAPSHOT.rankings);
   payload.bracket=[];
@@ -818,7 +823,10 @@ const PAGE_TAGS={
   news:()=>'Model · Team · Conference',
   learn:()=>'How to read the numbers',
   score:()=>'Public model record',
-  groups:()=>{const s=(typeof MATCHDAY_CFB_RANKINGS!=='undefined'&&MATCHDAY_CFB_RANKINGS?.season)||'';return `${s?s+' ':''}team ratings`},
+  groups:()=>{
+    // Basketball seasons span two years and are labelled by the ending one.
+    if(String(DATA?.comp_key||'').toUpperCase()==='NCAAM'){const s=Number(typeof MATCHDAY_NCAAM_RANKINGS!=='undefined'&&MATCHDAY_NCAAM_RANKINGS?.season)||0;return `${s?`${s-1}-${String(s).slice(2)} `:''}team ratings`}
+    const s=(typeof MATCHDAY_CFB_RANKINGS!=='undefined'&&MATCHDAY_CFB_RANKINGS?.season)||'';return `${s?s+' ':''}team ratings`},
   results:()=>'Final scores',
   bracket:()=>'Playoff projection',
   community:()=>'Picks & polls',
@@ -1292,7 +1300,9 @@ function collegeRankingTableHTML(){
   if(!rows.length)return '';
   const preseason=table?.coverage?.is_preseason_edition||table?.coverage?.first_poll;
   const num=(v,d=2)=>Number.isFinite(Number(v))?Number(v).toFixed(d):'—';
-  const moved=rows.some(r=>r.movement!=null&&Number.isFinite(Number(r.movement)));
+  // Before the season starts the ratings are still calibrating, so week-to-week
+  // movement is noise from model changes, not from games.
+  const moved=table.season_in_progress!==false&&rows.some(r=>r.movement!=null&&Number.isFinite(Number(r.movement)));
   const currentRecords=(DATA.standings||[]).filter(g=>!isPollTable(g)).flatMap(g=>g.teams||[]);
   const recordForRow=row=>{
     const completed=DATA.cfb_result_records?.[teamKey(row.name)];
@@ -1313,7 +1323,6 @@ function collegeRankingTableHTML(){
   const withheld=(table?.withheld||[]).filter(w=>w?.team_name);
   const provisional=withheld.map(w=>`<tr><td>${esc(w.team_name)}</td><td>${num(w.rating)}</td><td>${Number.isFinite(Number(w.fcs_share))?(Number(w.fcs_share)*100).toFixed(1)+'%':'—'}</td></tr>`).join('');
   return `<section class="pollSection"><div class="groupHead">${String(DATA.comp_key||'').toUpperCase()==='NCAAM'?'Basketball power rating':'Football power rating'}<span>Matchday model</span></div>
-    ${table.season_in_progress===false?'<div class="modWarn">Projection — the season has not started. This rates the completed season.</div>':''}
     <div class="pollScroll"><table class="pollTable powerTable${moved?' hasMove':''}"><thead><tr>
       <th>#</th>${moved?'<th title="Change since last week">Move</th>':''}<th>Team</th><th>Conference</th><th>Rating</th><th>SoS</th><th>Off</th><th>Def</th><th>Rec</th>
     </tr></thead><tbody>${body}</tbody></table></div>

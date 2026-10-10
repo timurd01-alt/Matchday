@@ -566,12 +566,10 @@ function modTop25(){
   const rows=(table?.top25||[]).slice(0,25);
   if(!rows.length)return '';
   const stale=table.season_in_progress===false;
-  const caption=stale
-    ?`<div class="modWarn">Projection — the season has not started. This rates the completed season.</div>`
-    :'';
+  const caption='';
   // Only when a previous edition exists. In a first poll this is false and
   // the column is absent, rather than a row of dashes standing in for it.
-  const anyMovement=rows.some(r=>Number.isFinite(Number(r.movement)));
+  const anyMovement=!stale&&rows.some(r=>Number.isFinite(Number(r.movement)));
   const ratings=rows.map(r=>Number(r.rating)).filter(Number.isFinite);
   const hi=Math.max(...ratings,0),lo=Math.min(...ratings,0);
   const span=(hi-lo)||1;

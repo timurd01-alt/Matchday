@@ -3980,3 +3980,5 @@ body{font-variant-numeric:tabular-nums}
 .learnGlossary div{padding:10px 0;border-bottom:1px solid var(--line)}
 .learnGlossary dt{font-family:var(--mono);font-size:var(--fs-sm);font-weight:var(--fw-bold);color:var(--text);text-transform:uppercase;letter-spacing:.04em}
 .learnGlossary dd{margin:4px 0 0;font-family:var(--sans);font-size:var(--fs-md);color:var(--muted);line-height:1.5}
+
+.pollWaiting{margin:0;padding:14px 13px;color:var(--muted);font-family:var(--sans);font-size:var(--fs-md)}

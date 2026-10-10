@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1010B",
+  "tag": "Fix",
+  "title": "Basketball rankings before tip-off",
+  "items": [
+   "The basketball power rating no longer shows movement arrows or a projection banner while the season is still calibrating.",
+   "The AP Top 25 for basketball now says it is waiting for the AP's preseason rating instead of showing last season's final poll.",
+   "The basketball Rankings page is labelled 2026-27."
+  ]
+ },
+ {
   "date": "Build 1010A",
   "tag": "New",
   "title": "Learn tab",
