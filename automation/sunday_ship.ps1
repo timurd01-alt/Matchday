@@ -1,6 +1,6 @@
-# Sunday ship: refresh Bet Better, then publish its handoff to Matchday.
+# Sunday ship: refresh Sigma Lab (formerly Bet Better), then publish its handoff to Matchday.
 #
-# Runs on the owner's machine because Bet Better (and its SQLite database)
+# Runs on the owner's machine because Sigma Lab (and its SQLite database)
 # lives here, not in GitHub. Order matters and is fixed:
 #
 #   1. refresh run     results, play-by-play, EPA, ratings, settle, power poll
@@ -19,10 +19,10 @@
 # before the push, nothing is published and the last good site stays up.
 # The owner's ballot is never written here -- `ballot publish` stays manual.
 param(
-    [string]$BetBetter = (Join-Path $env:USERPROFILE 'Desktop\Bet Better'),
+    [string]$BetBetter = (Join-Path $env:USERPROFILE 'Desktop\Sigma Lab'),
     [string]$PythonPath = (Join-Path $env:LOCALAPPDATA 'Programs\Python\Python312\python.exe'),
     [switch]$NoPush,
-    # Ship the handoff already on disk; skip the Bet Better refresh.
+    # Ship the handoff already on disk; skip the Sigma Lab refresh.
     [switch]$SkipRefresh
 )
 $ErrorActionPreference = 'Stop'
@@ -68,7 +68,7 @@ try {
         Start-Sleep -Seconds 5
     }
 
-    if ($SkipRefresh) { Say 'skipping Bet Better refresh (-SkipRefresh)' } else {
+    if ($SkipRefresh) { Say 'skipping Sigma Lab refresh (-SkipRefresh)' } else {
         # refresh exits 1 when a backlog remains (e.g. a late game with no
         # play-by-play yet); that is reported, not fatal.
         Run 'refresh run' $BetBetter $PythonPath @('-m','betbetter','refresh','run','--handoff=') -Soft
