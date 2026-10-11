@@ -3966,7 +3966,7 @@ body{font-variant-numeric:tabular-nums}
 .learnLesson summary::after{content:"+";grid-area:mark;color:var(--signal);font-family:var(--mono);font-size:var(--fs-lg)}
 .learnLesson[open] summary::after{content:"−"}
 .learnLesson summary:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
-.learnTitle{font-family:var(--display);font-weight:var(--fw-bold);font-size:var(--fs-xl);color:var(--text);letter-spacing:.02em}
+.learnTitle{font-family:var(--sans);font-weight:var(--fw-semibold);font-size:var(--fs-lg);color:var(--text)}
 .learnHook{font-family:var(--sans);font-size:var(--fs-md);color:var(--muted)}
 .learnBody{padding:0 2px 18px;max-width:68ch;font-family:var(--sans);font-size:var(--fs-base);line-height:1.6;color:var(--text)}
 .learnBody p{margin:0 0 10px}
@@ -3978,9 +3978,14 @@ body{font-variant-numeric:tabular-nums}
 .learnLink{background:none;border:0;padding:4px 0;color:var(--signal);font-family:var(--mono);font-size:var(--fs-sm);font-weight:var(--fw-bold);cursor:pointer}
 .learnLink:hover{text-decoration:underline}
 .learnLink:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
-.learnGlossary{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:0 24px;border-top:1px solid var(--line)}
-.learnGlossary div{padding:10px 0;border-bottom:1px solid var(--line)}
+/* One row per term, definition beside it: no grid, so no empty cells at the end. */
+.learnGlossary{display:flex;flex-direction:column;border-top:1px solid var(--line);margin:0}
+.learnGlossary div{display:grid;grid-template-columns:minmax(150px,220px) minmax(0,1fr);gap:4px 24px;align-items:baseline;padding:10px 2px;border-bottom:1px solid var(--line)}
+@media(max-width:600px){.learnGlossary div{grid-template-columns:1fr}}
 .learnGlossary dt{font-family:var(--mono);font-size:var(--fs-sm);font-weight:var(--fw-bold);color:var(--text);text-transform:uppercase;letter-spacing:.04em}
-.learnGlossary dd{margin:4px 0 0;font-family:var(--sans);font-size:var(--fs-md);color:var(--muted);line-height:1.5}
+.learnGlossary dd{margin:0;font-family:var(--sans);font-size:var(--fs-md);color:var(--muted);line-height:1.5}
 
 .pollWaiting{margin:0;padding:14px 13px;color:var(--muted);font-family:var(--sans);font-size:var(--fs-md)}
+
+.fsPlayed{margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.fsPlayedLabel{display:block;margin-bottom:8px;font-family:var(--mono);font-size:var(--fs-2xs);letter-spacing:.1em;text-transform:uppercase;color:var(--signal);font-weight:var(--fw-bold)}

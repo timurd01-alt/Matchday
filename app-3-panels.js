@@ -850,7 +850,7 @@ function renderScore(){
     +`<section class="collegeResearch scorecardPage">`
     +part('01','The record',grid(record,price))
     +part('02','Against the market',grid(_scMarket(vm,sc.conviction)))
-    +part('03','Calibration and results',grid(_scBands(sc.by_confidence),_scRecent(sc.recent)))
+    +part('03','Calibration and results',grid(_scBands(sc.by_confidence),_scRecent((sc.recent||[]).slice(0,25))))
     +`</section>`;
 }
 function highlightFavoriteRows(){if(!favoriteTeam())return;document.querySelectorAll('.gtable .gteam').forEach(cell=>{if(teamKey(cell.dataset.team||cell.textContent).includes(teamKey(favoriteTeam())))cell.closest('tr')?.classList.add('favoriteTeamRow')})}
@@ -1684,6 +1684,24 @@ function finalSummaryPanel(m){
   return `<section class="analystPanel hipPanel fsPanel"><div class="analystTop"><div class="analystTitle">Final summary</div><div class="analystBadge">final</div></div>`
     +pick+story+ratings+`</section>`;
 }
+/* Every finished game gets the same window, in the same order: the result and
+   Matchday's locked pick, what the ratings expected, then how it played. It
+   used to show only one of the three -- whichever had data -- so one game read
+   as an efficiency chart, the next as a sentence, the next as "no model". */
+function finishedPanel(m){
+  if(String(m?.status||'').toUpperCase()!=='FINISHED')return '';
+  const summary=finalSummaryPanel(m),played=howItPlayedPanel(m);
+  if(!summary&&!played)return '';
+  const rows=played?played.replace(/^[\s\S]*?<div class="hipHead">/,'<div class="hipHead">').replace(/<\/section>$/,''):'';
+  const body=summary
+    ?summary.replace(/<p class="fsNote">[\s\S]*?<\/p>/,m=>played?m.replace(/ Play-by-play efficiency appears here once the game's plays are processed\./,''):m.replace(/ Play-by-play efficiency appears here once the game's plays are processed\./,' Play-by-play efficiency is not available for this game.')).replace(/<\/section>$/,'')
+    :`<section class="analystPanel hipPanel fsPanel"><div class="analystTop"><div class="analystTitle">Final summary</div><div class="analystBadge">final</div></div>`;
+  // Games against FCS opponents carry no rating, pick or play-by-play; say so
+  // rather than leave an empty box.
+  const empty=!rows&&!/hipVerdict|fsNote/.test(body)
+    ?`<p class="hipVerdict">Final: ${esc(m.home?.name||'Home')} ${Number(m.score?.home)}, ${esc(m.away?.name||'Away')} ${Number(m.score?.away)}. Games against FCS opponents are not graded, so there is no locked pick or play-by-play for this one.</p>`:'';
+  return body+empty+(rows?`<div class="fsPlayed"><span class="fsPlayedLabel">How it played</span>${rows}</div>`:'')+`</section>`;
+}
 function betbetterNoReadPanel(){
   return `<section class="analystPanel"><div class="analystTop"><div class="analystTitle">Model read</div>`
     +`<div class="analystBadge">not modeled</div></div>`
@@ -1734,7 +1752,7 @@ function matchupEvidence(label,note,html,open=false){
 }
 function details(m){
   const bb=betbetterReadFor(m);
-  const read=bb?betbetterModelRead(m,bb):(howItPlayedPanel(m)||finalSummaryPanel(m)||betbetterNoReadPanel());
+  const read=bb?betbetterModelRead(m,bb):(finishedPanel(m)||betbetterNoReadPanel());
   const comparison=betbetterMatchupPanel(m)||matchProfilePanel(m);
   return `<div class="detailGrid v4Detail modernExpandedView"><div class="expandedSectionHead"><div><span>Matchday analysis</span><b>Pick &amp; matchup</b></div></div><div class="expandedDecision"><div class="readCard modelReadCard">${read}</div></div><div class="matchEvidenceList">${matchupEvidence('Team comparison','rating, offence, defence and schedule',comparison)}${matchupEvidence('Market','price and model gap',`<div class="readCard forecastMarketCard">${marketPanel(m)}</div>`)}${matchupEvidence('More detail','season profile and roster',`<div class="detailLow">${rosterPanel(m)}<!-- matchday-advanced-profile --></div>`)}</div></div>`;
 }

@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1011B",
+  "tag": "Fix",
+  "title": "Consistent results, clearer Learn page, sturdier basketball preseason",
+  "items": [
+   "Every finished game's window now shows the same thing in the same order: the result and Matchday's locked pick, what the ratings expected, and how it played. Games against FCS opponents say why they have no pick.",
+   "Learn titles use the regular typeface, and the glossary is a single list with no empty gaps.",
+   "Basketball preseason: transfers are credited only for the minutes a roster can actually give them, and elite recruits count for more. Cincinnati's twelve transfers no longer push it into the top five."
+  ]
+ },
+ {
   "date": "Build 1011A",
   "tag": "Site",
   "title": "Personal Ballot, clearly not the model",
