@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1011C",
+  "tag": "Fix",
+  "title": "One font per role, on every tab",
+  "items": [
+   "Page titles are the same size on every tab, and the condensed headline font is used only for titles and big numbers.",
+   "Team names on Research and the Scorecard, Scorecard match names and section headers use the regular typeface; labels and units use the label font."
+  ]
+ },
+ {
   "date": "Build 1011B",
   "tag": "Fix",
   "title": "Consistent results, clearer Learn page, sturdier basketball preseason",

@@ -129,7 +129,7 @@ body.modalOpen{overflow:hidden}.matchModal{position:fixed;inset:0;z-index:99;dis
   .gbg{font-family:var(--mono);font-weight:var(--fw-bold);color:var(--signal)} .gbg small{color:var(--faint);font-size:var(--fs-2xs);margin-left:1px;font-weight:var(--fw-regular)}
   .scrow{display:grid;grid-template-columns:auto 1fr auto auto;gap:10px;align-items:center;padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:var(--panel);margin-bottom:7px;font-size:var(--fs-md)}
   .scrow .scst{font-family:var(--mono);font-size:var(--fs-3xs);letter-spacing:.05em;text-transform:uppercase;color:var(--faint);font-weight:var(--fw-bold);min-width:64px}
-  .scrow .scmatch{font-family:var(--display);font-weight:var(--fw-bold);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;letter-spacing:.02em}
+  .scrow .scmatch{font-family:var(--sans);font-weight:var(--fw-semibold);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .scrow .scmatch b{font-family:var(--mono);color:var(--signal);margin-left:4px}
   .scrow .scpick{font-family:var(--mono);font-size:var(--fs-sm);color:var(--muted);white-space:nowrap}
   .scrow .scsplit{font-style:normal;color:var(--signal);font-size:var(--fs-2xs);border:1px solid var(--line2);border-radius:4px;padding:0 4px;margin-left:4px}
@@ -3202,7 +3202,7 @@ body{font-variant-numeric:tabular-nums}
 @media(max-width:600px){.rsFeatured{padding:18px}.rsGapRow{grid-template-columns:minmax(0,1fr) 54px 54px 48px;gap:8px}.rsBarHead,.rsBars li{grid-template-columns:96px minmax(0,1fr) 56px 30px;gap:8px}}
 /* Page title with its descriptor on the right: no sentence beneath. */
 .vhead.pageHead{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:var(--fs-4xl);text-transform:uppercase}
-.pageTag{font-size:var(--fs-2xs);letter-spacing:.1em;text-transform:uppercase;color:var(--faint);font-weight:var(--fw-bold)}
+.pageTag{font-family:var(--mono);font-size:var(--fs-2xs);letter-spacing:.1em;text-transform:uppercase;color:var(--faint);font-weight:var(--fw-bold)}
 /* News: one colour signal per card (the left edge). The category is plain
    coloured text, the publication sits opposite it, the aggregator is footer
    provenance. Excerpts clamp at two lines. */
@@ -3824,7 +3824,8 @@ body{font-variant-numeric:tabular-nums}
 
 /* ---- Research + Scorecard (shared rs* components) -------------------------- */
 /* Titles. */
-:is(#view-score,#view-news) :is(.rsTitle,.rsDeskTitle,.scVsHead b){font-family:var(--display);font-weight:var(--fw-bold);text-transform:none;letter-spacing:.02em}
+:is(#view-score,#view-news) :is(.rsTitle,.rsDeskTitle){font-family:var(--display);font-weight:var(--fw-bold);text-transform:none;letter-spacing:.02em}
+:is(#view-score,#view-news) .scVsHead b{font-family:var(--sans);font-weight:var(--fw-semibold);text-transform:none}
 :is(#view-score,#view-news) :is(.rsTitle,.rsDeskTitle){font-size:var(--fs-2xl)}
 :is(#view-score,#view-news) .scVsHead b{font-size:var(--fs-lg)}
 /* Headline numbers. */
@@ -3836,7 +3837,7 @@ body{font-variant-numeric:tabular-nums}
 :is(#view-score,#view-news) :is(.rsMoveBig,.rsBigStat b){font-size:var(--fs-5xl)}
 :is(#view-score,#view-news) .rsShotPct{font-size:var(--fs-3xl)}
 /* Team names. */
-:is(#view-score,#view-news) :is(.rsLogoName,.rsMoveTeam,.rsShotTeam,.rsSchedTeam b,.rsMvName,.scTeam>span:not(.teamMonogram)){font-family:var(--display);font-weight:var(--fw-bold);letter-spacing:.02em}
+:is(#view-score,#view-news) :is(.rsLogoName,.rsMoveTeam,.rsShotTeam,.rsSchedTeam b,.rsMvName,.scTeam>span:not(.teamMonogram)){font-family:var(--sans);font-weight:var(--fw-semibold)}
 :is(#view-score,#view-news) :is(.rsLogoName,.rsShotTeam,.rsSchedTeam b,.rsMvName,.scTeam>span:not(.teamMonogram)){font-size:var(--fs-lg)}
 :is(#view-score,#view-news) .rsMoveTeam{font-size:var(--fs-3xl)}
 /* Labels, chips, kickers, table heads and text actions. */
@@ -3989,3 +3990,11 @@ body{font-variant-numeric:tabular-nums}
 
 .fsPlayed{margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
 .fsPlayedLabel{display:block;margin-bottom:8px;font-family:var(--mono);font-size:var(--fs-2xs);letter-spacing:.1em;text-transform:uppercase;color:var(--signal);font-weight:var(--fw-bold)}
+
+/* ---- One font per role, every tab ------------------------------------------
+   Page titles and headline numbers: --display, never below 17px.
+   Team names, row titles, sentences: --sans.  Labels, units, tags: --mono.
+   These close the last exceptions; new UI should follow the same mapping. */
+.viewIntro .vhead,.vhead{font-family:var(--display);font-size:var(--fs-4xl);font-weight:var(--fw-bold);letter-spacing:.02em}
+span.rsSignal,:is(#view-score,#view-news) span.rsSignal,.scGap .scUnit{font-family:var(--mono)}
+#view-groups .pollTable td.pollTeam,.pollTable td.pollTeam{font-family:var(--sans)}
