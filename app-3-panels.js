@@ -1696,10 +1696,11 @@ function finishedPanel(m){
   const body=summary
     ?summary.replace(/<p class="fsNote">[\s\S]*?<\/p>/,m=>played?m.replace(/ Play-by-play efficiency appears here once the game's plays are processed\./,''):m.replace(/ Play-by-play efficiency appears here once the game's plays are processed\./,' Play-by-play efficiency is not available for this game.')).replace(/<\/section>$/,'')
     :`<section class="analystPanel hipPanel fsPanel"><div class="analystTop"><div class="analystTitle">Final summary</div><div class="analystBadge">final</div></div>`;
-  // Games against FCS opponents carry no rating, pick or play-by-play; say so
+  // Games against FCS (football) or non-Division I (basketball) opponents carry
+  // no rating, pick or play-by-play; say so
   // rather than leave an empty box.
   const empty=!rows&&!/hipVerdict|fsNote/.test(body)
-    ?`<p class="hipVerdict">Final: ${esc(m.home?.name||'Home')} ${Number(m.score?.home)}, ${esc(m.away?.name||'Away')} ${Number(m.score?.away)}. Games against FCS opponents are not graded, so there is no locked pick or play-by-play for this one.</p>`:'';
+    ?`<p class="hipVerdict">Final: ${esc(m.home?.name||'Home')} ${Number(m.score?.home)}, ${esc(m.away?.name||'Away')} ${Number(m.score?.away)}. Games against ${String(m._comp||DATA.comp_key||'').toUpperCase()==='NCAAM'?'non-Division I':'FCS'} opponents are not graded, so there is no locked pick or play-by-play for this one.</p>`:'';
   return body+empty+(rows?`<div class="fsPlayed"><span class="fsPlayedLabel">How it played</span>${rows}</div>`:'')+`</section>`;
 }
 function betbetterNoReadPanel(){
