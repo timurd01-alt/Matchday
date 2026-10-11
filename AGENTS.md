@@ -2,7 +2,8 @@
 
 Sports-prediction analytics site covering college football and men's college
 basketball only. **Every pick, probability, power rating and scorecard comes from
-the Bet Better engine** through `betbetter_picks.json` (see below); Matchday
+the Sigma Lab engine** (formerly Bet Better; its Python package is still
+`betbetter` and the handoff file `betbetter_picks.json`) through `betbetter_picks.json` (see below); Matchday
 itself no longer forecasts. Soccer, NFL, NBA, MLB and NHL were removed
 entirely on 2026-09-13; do not reintroduce them. Static JS/HTML/CSS
 frontend on GitHub Pages, a small Vercel API (`api/`) for community picks, and
