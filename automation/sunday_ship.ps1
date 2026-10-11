@@ -83,6 +83,15 @@ try {
         Run 'basketball ratings' $BetBetter $PythonPath @('-m','betbetter','hoops','rate','--league','ncaam','--project','--season',"$hoopsSeason") -Soft
         Run 'basketball Top 25' $BetBetter $PythonPath @('-m','betbetter','poll','publish','--sport','ncaam') -Soft
         Run 'basketball forecast slate' $BetBetter $PythonPath @('-m','betbetter','forecast','slate','--sport','ncaam','--days','8') -Soft
+        # Bracketology: the season's schedule topped up, then the field projected
+        # with last week's file kept for movement arrows.
+        Run 'basketball schedule' $BetBetter $PythonPath @('-m','betbetter','hoops','backfill','--season',"$hoopsSeason",'--league','ncaam') -Soft
+        $bkOut = Join-Path $BetBetter 'outputracketology_ncaam.json'
+        $bkPrev = Join-Path $BetBetter 'outputracketology_ncaam.previous.json'
+        if (Test-Path $bkOut) { Copy-Item -Force $bkOut $bkPrev }
+        $bkArgs = @('-m','betbetter','hoops','bracketology','--season',"$hoopsSeason",'--out',$bkOut)
+        if (Test-Path $bkPrev) { $bkArgs += @('--previous',$bkPrev) }
+        Run 'basketball bracketology' $BetBetter $PythonPath $bkArgs -Soft
         Run 'upset settle' $BetBetter $PythonPath @('-m','betbetter','upset','settle') -Soft
         Run "upset publish (as of $asOf)" $BetBetter $PythonPath @('-m','betbetter','upset','publish','--as-of',$asOf) -Soft
         Run 'matchday export' $BetBetter $PythonPath @('-m','betbetter','matchday','export','--out','betbetter_picks.json')
@@ -103,6 +112,8 @@ try {
     git checkout -q --detach origin/main
     git reset -q --hard origin/main
     Copy-Item -Force (Join-Path $BetBetter 'betbetter_picks.json') (Join-Path $tree 'betbetter_picks.json')
+    $bk = Join-Path $BetBetter 'outputracketology_ncaam.json'
+    if (Test-Path $bk) { Copy-Item -Force $bk (Join-Path $tree 'bracketology_ncaam.json') }
 
     Run 'validate handoff' $tree $PythonPath @('-c', "import betbetter_handoff as h, json, sys; d=json.load(open('betbetter_picks.json',encoding='utf-8')); v=d.get('handoff_version'); sys.exit(0 if v in h.SUPPORTED_VERSIONS else 'unsupported handoff_version %r' % v)")
     # Stop before publishing if this week's picks fell sharply against what is live.
@@ -112,6 +123,7 @@ try {
 
     git add -- betbetter_picks.json matchday-cfb-snapshot.js
     if (Test-Path ap_poll_snapshot.json) { git add -- ap_poll_snapshot.json }
+    if (Test-Path bracketology_ncaam.json) { git add -- bracketology_ncaam.json }
     git diff --cached --quiet
     if ($LASTEXITCODE -eq 0) { Say 'nothing changed; site already current'; if (-not $SkipRefresh) { Set-Content $marker $asOf }; return }
     git -c core.autocrlf=false commit -q -m "Sunday ship: ratings, results, AP poll and next week's picks ($asOf week)"
