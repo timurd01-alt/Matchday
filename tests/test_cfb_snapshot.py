@@ -123,7 +123,7 @@ class CurrentCfbSnapshotTests(unittest.TestCase):
         self.assertIn("'Texas Longhorns','Georgia Bulldogs','Miami Hurricanes'", views)
         self.assertIn("'Michigan Wolverines','Duke Blue Devils'", views)
         self.assertIn("return MATCHDAY_PERSONAL_CFB_BALLOT", views)
-        self.assertIn('<div class="groupHead">Timur’s Ballot', panels)
+        self.assertIn('<div class="groupHead">Personal Ballot<span>not the model', panels)
         self.assertNotIn("View the original post on X", panels)
 
     def test_board_card_explanations_sit_behind_a_question_mark(self):

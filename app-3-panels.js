@@ -1374,7 +1374,7 @@ function collegeBallotTableHTML(){
   if(!b)return '';
   if(b.source==='x'){
     const rows=b.rankings.map(r=>`<tr${r.rank<=4?' class="pollRanked"':''}><td class="pollRank">${Number(r.rank)}</td><td class="pollTeam teamClickable" data-team="${esc(r.team_name)}" onclick="openTeamModal(this.dataset.team)"><span class="pollTeamInner">${teamMark(r.team_name)}<span>${esc(r.team_name)}</span></span></td></tr>`).join('');
-    return `<section class="pollSection ballotSection personalBallot"><div class="groupHead">Timur’s Ballot<span>published ${esc(b.published_on||'')}</span></div>
+    return `<section class="pollSection ballotSection personalBallot"><div class="groupHead">Personal Ballot<span>not the model · published ${esc(b.published_on||'')}</span></div>
       <div class="pollScroll"><table class="pollTable officialPollTable"><thead><tr><th>#</th><th>Team</th></tr></thead><tbody>${rows}</tbody></table></div>
     </section>`;
   }
@@ -1391,7 +1391,7 @@ function collegeBallotTableHTML(){
   const body=b.rankings.map(r=>`<tr><td class="pollRank">${Number(r.rank)}</td><td class="pollMoveCell">${move(r)}</td>`
     +`<td><div class="gteam teamClickable" data-team="${esc(r.team_name)}" onclick="openTeamModal(this.dataset.team)">`
     +`<span class="code"></span>${esc(r.team_name)}</div></td></tr>`).join('');
-  return `<div class="tablewrap officialPoll ballotSection"><div class="groupHead">Timur’s Ballot<span>${esc(b.published_on||'')} · ranked on résumé</span></div>`
+  return `<div class="tablewrap officialPoll ballotSection"><div class="groupHead">Personal Ballot<span>not the model · ${esc(b.published_on||'')} · ranked on résumé</span></div>`
     +`<table class="gtable officialPollTable"><thead><tr><th>#</th><th class="pollMoveCell">Move</th><th>Team</th></tr></thead>`
     +`<tbody>${body}</tbody></table></div>`;
 }
@@ -1427,7 +1427,7 @@ renderGroups=function(){
     <div class="vhead">Rankings</div>
   </section>`);
   const ballot=host.querySelector('.ballotSection');
-  if(ballot&&!host.querySelector('[data-ranking-section="top25"]'))ballot.insertAdjacentHTML('beforebegin',`<div class="seclbl" data-ranking-section="top25">Top 25</div><div class="hint" style="margin-bottom:8px">A résumé ballot, kept separate from the predictive power rating.</div>`);
+  if(ballot&&!host.querySelector('[data-ranking-section="top25"]'))ballot.insertAdjacentHTML('beforebegin',`<div class="seclbl" data-ranking-section="top25">Top 25</div><div class="hint" style="margin-bottom:8px">A person's résumé ballot, ranked by hand. It is not the model; the model's own ranking is the power rating below.</div>`);
   const power=host.querySelector('.pollSection:not(.ballotSection):not(.officialPoll)');
   if(power&&!host.querySelector('[data-ranking-section="power"]'))power.insertAdjacentHTML('beforebegin',`<div class="seclbl" data-ranking-section="power">Power Ratings</div><div class="hint" style="margin-bottom:8px">Opponent-adjusted team strength with schedule, offense, and defense context.</div>`);
   const conference=host.querySelector('.tablewrap:not(.officialPoll)');

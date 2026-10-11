@@ -627,7 +627,7 @@ function modBallot(){
       +`<span class="modSos">${s.power_rank?'PR #'+Number(s.power_rank):''}</span>`
       +ballotMove(r)+`</li>`;
   }).join('');
-  return `<section class="boardMod modBallot"><header><h3>Timur’s Ballot</h3><span>ballot · ${esc(b.published_on||'')}</span></header>`
+  return `<section class="boardMod modBallot"><header><h3>Personal Ballot</h3><span>a person's ranking, not the model · ${esc(b.published_on||'')}</span></header>`
     +`<ol class="modList">${body}</ol>`
     +`<p class="modNote">${esc(b.note||'My own ranking of who has earned it: record and strength of record, quality wins and bad losses, head-to-head and conference titles, with the power rating as the eye test.')}${b.source_url?` <a href="${esc(b.source_url)}" target="_blank" rel="noopener">Original post on X</a>.`:' Full résumés on the Rankings tab.'}</p></section>`;
 }
@@ -1048,7 +1048,7 @@ function modMyPicks(){
   const losses=settled.length-wins;
   const agreed=settled.filter(p=>p.model_agreed).length;
   const record=`<div class="modStatSub"><b>${wins}–${losses}</b> on settled picks · the model agreed on ${agreed}</div>`;
-  return `<section class="boardMod modMine"><header><h3>@timursports picks</h3><span>vs model &amp; market</span></header>
+  return `<section class="boardMod modMine"><header><h3>Personal picks</h3><span>a person's calls vs model &amp; market</span></header>
 ${record}
 <div class="mpHead"><span>pick</span><span>model</span><span>market</span></div>
 <ul class="modList">${rows}</ul>

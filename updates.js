@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1011A",
+  "tag": "Site",
+  "title": "Personal Ballot, clearly not the model",
+  "items": [
+   "The hand-ranked Top 25 is now titled Personal Ballot, with a note that it is a person's ranking and not the model's. The model's own ranking stays as the power rating."
+  ]
+ },
+ {
   "date": "Build 1010G",
   "tag": "Model",
   "title": "Basketball preseason counts coaching changes",
