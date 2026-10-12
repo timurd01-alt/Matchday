@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1011V",
+  "tag": "Fix",
+  "title": "Model–market watch divider",
+  "items": [
+   "A divider now separates the live calls from the graded record, and the column headers sit closer to the title."
+  ]
+ },
+ {
   "date": "Build 1011U",
   "tag": "Fix",
   "title": "Research charts fill their blocks",

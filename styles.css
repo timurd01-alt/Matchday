@@ -4114,3 +4114,6 @@ span.rsSignal,:is(#view-score,#view-news) span.rsSignal,.scGap .scUnit{font-fami
 #view-news .rsBlock:has(.rsPlot) .rsPlot{flex:1;display:flex;align-items:center}
 #view-news .rsBlock:has(.rsPlot) .rsPlot svg{width:100%;height:100%;min-height:100%}
 @media(max-width:1300px){#view-news .rsLegend:has(.rsFilter){flex-wrap:wrap}}
+/* Model–market watch: a divider between the live list and the graded record; header tucks under the title. */
+#view-news .rsSplitSide:has(.rsHistBars){border-left:1px solid var(--line2);padding-left:24px}
+#view-news .rsBlock:has(.rsWatchList) .rsSplit{margin-top:-10px}
