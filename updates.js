@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1012 Learn",
+  "tag": "Design",
+  "title": "Learn fits the Matchday panels",
+  "items": [
+   "Learn topic cards now use the same panel colors, corners and type scale as the rest of Matchday. Expanded lessons are unchanged."
+  ]
+ },
+ {
   "date": "Build 1012C",
   "tag": "Fix",
   "title": "Learn logos fit their tiles",
