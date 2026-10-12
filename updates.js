@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1011X",
+  "tag": "Fix",
+  "title": "Logo shapes and full conference list",
+  "items": [
+   "Logos in the defense table and risers keep their square shape again.",
+   "Conference landscape lists every conference, with no View all button or empty space."
+  ]
+ },
+ {
   "date": "Build 1011W",
   "tag": "Fix",
   "title": "Chart filters fit again",
