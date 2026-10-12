@@ -1405,7 +1405,7 @@ function rsScatter(){
   const tiered=rows.some(r=>String(r.tier||''));
   return `<section class="rsBlock rsSpan8 rsChartBlock">${rsTop('Rating vs schedule','blend',`${rows.length} teams`)}`
     +`<div class="rsPlot">`+draw(1000,440,56,16,14,44,1,'rsWide')+draw(640,360,52,14,14,44,1.1,'rsMid')+draw(360,420,46,12,14,44,1.25,'rsTall')+`</div>`
-    +`<div class="rsLegend"><span><i class="dotKeyHi"></i>Top 25</span>${tiered?'<span><i class="dotKeyP"></i>Power Four</span>':''}${anyG5?'<span><i class="dotKeyG"></i>Group of Five</span>':''}<span>Lines are medians · hover anywhere on the chart</span>${rsPlotFilter(rows.map(r=>r.conference),tiered)}</div><div class="rsReadout" aria-live="polite">Tap any dot to see the team.</div>`
+    +`<div class="rsLegend"><span><i class="dotKeyHi"></i>Top 25</span>${tiered?'<span><i class="dotKeyP"></i>Power Four</span>':''}${anyG5?'<span><i class="dotKeyG"></i>Group of Five</span>':''}${rsPlotFilter(rows.map(r=>r.conference),tiered)}</div><div class="rsReadout" aria-live="polite">Tap any dot to see the team.</div>`
     +`</section>`;
 }
 /* What the chart shows, stated: the two quadrants that matter and the
@@ -1625,7 +1625,7 @@ function rsEfficiency(){
   };
   return `<section class="rsBlock rsSpan8 rsChartBlock">${rsTop('Efficiency vs net points per success','current',`${rows.length} FBS offenses · opponent-adjusted`)}`
     +`<div class="rsPlot">`+draw(1000,440,56,16,14,44,1,'rsWide')+draw(640,360,52,14,14,44,1.1,'rsMid')+draw(360,420,46,12,14,44,1.25,'rsTall')+`</div>`
-    +`<div class="rsLegend"><span><i class="dotKeyHi"></i>Top 25</span><span><i class="dotKeyP"></i>Power Four</span><span><i class="dotKeyG"></i>Group of Five</span><span>Lines are medians · hover for the team</span>${rsPlotFilter(rows.map(r=>r.row?.conference))}</div><div class="rsReadout" aria-live="polite">Tap any dot to see the team.</div></section>`;
+    +`<div class="rsLegend"><span><i class="dotKeyHi"></i>Top 25</span><span><i class="dotKeyP"></i>Power Four</span><span><i class="dotKeyG"></i>Group of Five</span>${rsPlotFilter(rows.map(r=>r.row?.conference))}</div><div class="rsReadout" aria-live="polite">Tap any dot to see the team.</div></section>`;
 }
 function rsEfficiencyNotes(){
   const D=rsEfficiencyData();if(!D)return '';

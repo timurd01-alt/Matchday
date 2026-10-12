@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1011W",
+  "tag": "Fix",
+  "title": "Chart filters fit again",
+  "items": [
+   "Chart filters wrap inside their block again, and the extra legend note is gone."
+  ]
+ },
+ {
   "date": "Build 1011V",
   "tag": "Fix",
   "title": "Model–market watch divider",
