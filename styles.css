@@ -4089,3 +4089,15 @@ span.rsSignal,:is(#view-score,#view-news) span.rsSignal,.scGap .scUnit{font-fami
 .learnGlossary div{display:block;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--bg2)}
 .learnGlossary dt{margin-bottom:4px}
 @media(max-width:800px){.learnGlossary{grid-template-columns:1fr}}
+/* Risers: larger path numbers, names, logos and moves. */
+#view-news .rsPath span{font-size:var(--fs-2xl)}
+#view-news .rsPath em{font-size:var(--fs-xs)}
+#view-news .rsMovers .rsKicker{font-size:var(--fs-xs)}
+#view-news .rsMvName{font-size:var(--fs-xl)}
+#view-news .rsMvRank{font-size:var(--fs-sm)}
+#view-news .rsMvChg{font-size:var(--fs-2xl)}
+#view-news .rsMovers .teamMark{width:40px;height:40px}
+/* Conference strength: rows stretch to fill the block instead of leaving space below. */
+#view-news .rsBlock:has(.rsConfRow){display:flex;flex-direction:column}
+#view-news .rsBlock:has(.rsConfRow) :is(.rsPane,.rsConf,ul):has(.rsConfRow){display:flex;flex-direction:column;flex:1}
+#view-news .rsConfRow{flex:1;font-size:var(--fs-md)}

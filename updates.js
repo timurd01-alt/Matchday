@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1011S",
+  "tag": "Fix",
+  "title": "Bigger risers, fuller conference table",
+  "items": [
+   "Risers & fallers numbers, names and logos are larger.",
+   "Conference strength rows now fill their block."
+  ]
+ },
+ {
   "date": "Build 1011R",
   "tag": "Fix",
   "title": "Glossary and model–market watch layout",
