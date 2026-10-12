@@ -5,6 +5,16 @@
 window.SYSTEM_UPDATES=[
  {
   "date": "Build 1012F",
+  "tag": "New",
+  "title": "See the whole tournament",
+  "items": [
+   "Added a Full bracket option with connected rounds advancing from both sides toward the championship in the center.",
+   "Swipe horizontally or use the arrow controls; region views and school details remain available.",
+   "Matched the CFP bracket colors and removed the outer bracket box."
+  ]
+ },
+ {
+  "date": "Build 1012F",
   "tag": "Fix",
   "title": "Pick 'Em model picks and tidier timing",
   "items": [

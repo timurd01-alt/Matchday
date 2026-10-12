@@ -1,6 +1,6 @@
 /* Presentation only. The engine owns every selection, seed, rating and odds value. */
 window.MatchdayBracketology=(()=>{
-  const state={data:null,error:'',pending:null,loaded:0,tab:'bracket',region:'',compare:false,opener:null,staleTimer:null,observer:null};
+  const state={data:null,error:'',pending:null,loaded:0,tab:'bracket',region:'',full:false,compare:false,opener:null,staleTimer:null,observer:null};
   const h=v=>esc(String(v??''));
   const number=v=>typeof v==='number'&&Number.isFinite(v);
   const odds=v=>number(v)&&v>=0&&v<=1?(v>0&&v<.01?'<1%':new Intl.NumberFormat('en-US',{style:'percent',maximumFractionDigits:0}).format(v)):'Unavailable';
@@ -56,10 +56,7 @@ window.MatchdayBracketology=(()=>{
     const t=current().teams[key];if(!t)return '<span>Team unavailable</span>';
     return `<button type="button" class="bkTeam ${h(extra)}" data-team="${h(key)}">${teamMark(t.logo_key||t.team_name)}<span><b>${h(t.team_name)}</b>${detail?`<small>${detail}</small>`:''}</span><span class="bkOpen" aria-hidden="true">↗</span></button>`;
   }
-  function bracket(d){
-    const games=d.bracket.games.filter(g=>(g.region??null)===state.region);
-    const columns=d.rounds.filter(r=>games.some(g=>g.round===r.key));
-    return `<nav class="bkRegions" aria-label="Bracket region">${(d.regions.length?d.regions:[null]).map(r=>`<button type="button" data-region="${h(r??'')}" aria-pressed="${r===state.region}">${h(r??'Playoff')}</button>`).join('')}</nav><p class="bkHint">Select a school for its résumé. Scroll inside the bracket to follow the rounds.</p><div class="bkBracketFrame" role="region" tabindex="0" aria-label="${h(state.region)} bracket, scroll horizontally"><div class="bkBracketColumns">${columns.map(r=>`<section class="bkRound"><h3>${h(r.label)}</h3><div class="bkGames">${games.filter(g=>g.round===r.key).map(g=>{
+  function gameCard(g,d){
       const next=d.bracket.games.find(n=>n.id===g.next_game);
       return `<article class="bkGame" data-game="${h(g.id)}"><div class="bkGameMeta">${h(g.label||g.id)}${g.status==='finished'?' · Final':d.bracket.kind==='official'?'':' · Projected'}</div>${g.slots.map((slot,i)=>{
         if(!slot.team_key)return `<div class="bkSlot"><span aria-hidden="true">—</span><span>${h(slot.label||'Awaiting team')}</span></div>`;
@@ -69,7 +66,31 @@ window.MatchdayBracketology=(()=>{
         const score=g.status==='finished'&&Array.isArray(g.score)?g.score[i]:null;
         return `<div class="bkGameTeam ${eliminated?'bkLost':''} ${g.winner_key===slot.team_key?'bkWinner':''}"><span class="bkSeed">${value(entry.seed)}</span>${teamButton(slot.team_key,`${h(bid)} · ${odds(t.odds?.seed?.[entry.seed])} at seed${eliminated?` · ${h(t.eliminated_round||statuses[t.status])}`:''}`)}${score!=null?`<strong class="bkScore">${value(score)}</strong>`:''}</div>`;
       }).join('')}${next?`<footer>→ ${h(next.label||next.id)}${next.region!==state.region?` · ${h(next.region)}`:''}</footer>`:''}</article>`;
+  }
+  function bracket(d){
+    if(state.full)return fullBracket(d);
+    const games=d.bracket.games.filter(g=>(g.region??null)===state.region);
+    const columns=d.rounds.filter(r=>games.some(g=>g.round===r.key));
+    return `<nav class="bkRegions" aria-label="Bracket region"><button type="button" data-full="true" aria-pressed="false">Full bracket</button>${(d.regions.length?d.regions:[null]).map(r=>`<button type="button" data-region="${h(r??'')}" aria-pressed="${r===state.region}">${h(r??'Playoff')}</button>`).join('')}</nav><p class="bkHint">Select a school for its résumé. Scroll inside the bracket to follow the rounds.</p><div class="bkBracketFrame" role="region" tabindex="0" aria-label="${h(state.region)} bracket, scroll horizontally"><div class="bkBracketColumns">${columns.map(r=>`<section class="bkRound"><h3>${h(r.label)}</h3><div class="bkGames">${games.filter(g=>g.round===r.key).map(g=>{
+      return gameCard(g,d);
     }).join('')}</div></section>`).join('')}</div></div>`;
+  }
+  function fullBracket(d){
+    const games=d.bracket.games,positions=new Map(),roots=games.filter(g=>!g.next_game);
+    const final=roots[0],step=340,center=(d.rounds.length-1)*step;
+    const feeders=g=>games.filter(n=>n.next_game===g.id).sort((a,b)=>(a.next_slot??0)-(b.next_slot??0));
+    const cursors=[60,60];
+    function place(g,side){
+      const incoming=feeders(g),children=incoming.map(n=>place(n,side));
+      const y=children.length?children.reduce((sum,n)=>sum+n.y,0)/children.length:cursors[side];
+      if(!children.length)cursors[side]+=260;
+      const round=d.rounds.findIndex(r=>r.key===g.round),distance=(d.rounds.length-1-round)*step;
+      const pos={x:center+(side?distance:-distance),y};positions.set(g.id,pos);return pos;
+    }
+    if(final){const branches=feeders(final);const placed=branches.map((g,i)=>place(g,i%2));positions.set(final.id,{x:center,y:placed.length?placed.reduce((sum,p)=>sum+p.y,0)/placed.length:60})}
+    games.filter(g=>!positions.has(g.id)).forEach(g=>place(g,0));
+    const height=Math.max(...cursors)+160,width=center*2+300;
+    return `<nav class="bkRegions" aria-label="Bracket layout"><button type="button" data-full="false" aria-pressed="false">By region</button><button type="button" data-full="true" aria-pressed="true">Full bracket</button><button type="button" data-scroll="-1" aria-label="Scroll bracket left">←</button><button type="button" data-scroll="1" aria-label="Scroll bracket right">→</button></nav><p class="bkHint">Both sides advance toward the championship in the middle. Swipe or scroll left and right. Select a school for its résumé.</p><div class="bkBracketFrame bkFullFrame" tabindex="0" role="region" aria-label="Full bracket, scroll horizontally"><div class="bkBracketColumns bkFullBoard" style="width:${width}px;height:${height}px">${games.map(g=>{const p=positions.get(g.id);return `<div class="bkFullPosition ${g===final?'bkFullFinal':''}" style="left:${p.x}px;top:${p.y}px">${gameCard(g,d)}</div>`}).join('')}</div></div>`;
   }
   function connectBracket(host,d){
     const board=host.querySelector('.bkBracketColumns');if(!board)return;
@@ -78,7 +99,7 @@ window.MatchdayBracketology=(()=>{
     const cards=new Map(Array.from(board.querySelectorAll('[data-game]')).map(el=>[el.dataset.game,el]));
     d.bracket.games.forEach(g=>{
       const from=cards.get(g.id),to=cards.get(g.next_game);if(!from||!to)return;
-      const a=from.getBoundingClientRect(),b=to.getBoundingClientRect(),x1=a.right-bounds.left,x2=b.left-bounds.left,y1=a.top+a.height/2-bounds.top,y2=b.top+b.height/2-bounds.top;
+      const a=from.getBoundingClientRect(),b=to.getBoundingClientRect(),x1=(a.left>b.left?a.left:a.right)-bounds.left,x2=(a.left>b.left?b.right:b.left)-bounds.left,y1=a.top+a.height/2-bounds.top,y2=b.top+b.height/2-bounds.top;
       const path=document.createElementNS(svg.namespaceURI,'path');path.setAttribute('d',`M ${x1} ${y1} H ${(x1+x2)/2} V ${y2} H ${x2}`);svg.append(path);
     });board.prepend(svg);
   }
@@ -119,6 +140,8 @@ window.MatchdayBracketology=(()=>{
       const button=event.target.closest('button');if(!button)return;
       if(button.dataset.team){state.opener=button;resume(button.dataset.team)}
       else if(button.dataset.tab){state.tab=button.dataset.tab;draw(host);host.querySelector(`[data-tab="${state.tab}"]`)?.focus()}
+      else if(button.hasAttribute('data-full')){state.full=button.dataset.full==='true';draw(host);host.querySelector(`[data-full="${state.full}"]`)?.focus()}
+      else if(button.hasAttribute('data-scroll')){const frame=host.querySelector('.bkBracketFrame');frame.scrollBy({left:Number(button.dataset.scroll)*frame.clientWidth*.75,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})}
       else if(button.hasAttribute('data-region')){state.region=button.dataset.region||null;draw(host);Array.from(host.querySelectorAll('[data-region]')).find(b=>b.dataset.region===state.region)?.focus()}
       else if(button.hasAttribute('data-compare')){state.compare=!state.compare;draw(host);host.querySelector('[data-compare]')?.focus()}
     };

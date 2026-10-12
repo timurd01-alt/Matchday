@@ -13,7 +13,7 @@
 .bkTabs button[aria-pressed="true"],.bkRegions button[aria-pressed="true"]{color:var(--bk-gold);border-color:var(--bk-gold);background:#27261e}
 .bkRegions{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}.bkRegions button{padding:8px 12px}
 .bkHint,.bkSource{color:var(--muted);font-size:var(--fs-md);line-height:1.6}.bkSource{margin-top:24px;border-top:1px solid var(--line);padding-top:16px}
-.bkBracketFrame{width:100%;max-width:100%;overflow-x:auto;overscroll-behavior-x:contain;padding:8px 8px 20px;border:1px solid var(--line2);border-radius:10px;background:linear-gradient(135deg,#11191c,var(--bg));scrollbar-color:var(--bk-gold) var(--bg2)}
+.bkBracketFrame{width:100%;max-width:100%;overflow-x:auto;overscroll-behavior-x:contain;padding:8px 8px 20px;border:0;border-radius:0;background:transparent;scrollbar-color:var(--bk-gold) var(--bg2)}
 .bkBracketColumns{display:flex;gap:32px;width:max-content;min-width:100%;padding:12px}
 .bkRound{width:280px;display:flex;flex-direction:column;flex-shrink:0}.bkRound h3{font:var(--fw-semibold) var(--fs-md) var(--mono);color:var(--bk-gold);letter-spacing:.05em;margin:0 0 20px}
 .bkGames{display:flex;flex:1;flex-direction:column;justify-content:space-around;gap:22px}
@@ -61,3 +61,14 @@
    team slots and buttons as names (sans); only the page title and the large
    odds figures keep the headline face. */
 .bkTabs button,.bkRegions button,.bkAsOf button,.bkUnavailable button{font-family:var(--mono)}
+
+/* Full bracket shares the CFP card and connector palette, without an outer box. */
+.bkConnections path{stroke:#ad9563;stroke-width:2.5;opacity:1;stroke-linejoin:round}
+.bkFullBoard{display:block;min-width:0;padding:0;position:relative}
+.bkFullPosition{position:absolute;width:300px}
+.bkFullFinal .bkGame{border:2px solid #d6bd80}
+.bkFullFinal .bkGameMeta{color:#d6bd80}
+.bkFullPosition .bkGameTeam{min-height:64px}
+.bkFullPosition .bkTeam b{font-size:16px}
+.bkFullPosition .bkGame footer{display:none}
+.bkFullPosition .bkGame{max-height:240px}
