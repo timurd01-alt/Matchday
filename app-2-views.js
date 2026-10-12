@@ -68,6 +68,13 @@ function communityPickProbs(m){
   const home=sides.find(s=>bbNameMatches(s.selection,m.home?.name))||sides.find(s=>s.is_home===true);
   const away=sides.find(s=>bbNameMatches(s.selection,m.away?.name))||sides.find(s=>s.is_home===false);
   if(home?.model_pct!=null&&away?.model_pct!=null)return {h:+home.model_pct,d:0,a:+away.model_pct,source:'betbetter',read};
+  // Some picks carry no per-side breakdown, only the pick and its chance; the
+  // other side is the remainder, so the row still shows the model's call.
+  const pct=Number(read?.model_pct);
+  if(read&&Number.isFinite(pct)&&read.pick_name){
+    const homePick=bbNameMatches(read.pick_name,m.home?.name);
+    return {h:homePick?pct:100-pct,d:0,a:homePick?100-pct:pct,source:'betbetter',read};
+  }
   return {h:null,d:null,a:null,source:'none',read:null};
 }
 function btmAnalytics(db){

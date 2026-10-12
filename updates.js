@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1012F",
+  "tag": "Fix",
+  "title": "Pick 'Em model picks and tidier timing",
+  "items": [
+   "Every Pick 'Em game now shows the model's pick; four games were showing a dash.",
+   "Kickoff timing in Pick 'Em lines up under the team names.",
+   "Projected scores sit beside the team names on wide screens."
+  ]
+ },
+ {
   "date": "Build 1012E",
   "tag": "Fix",
   "title": "Home logos centred",

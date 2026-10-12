@@ -4262,3 +4262,7 @@ span.rsSignal,:is(#view-score,#view-news) span.rsSignal,.scGap .scUnit{font-fami
 /* Home: logos sit centred inside their tiles with a margin, like the rest of the site. */
 #view-home .teamMark{display:grid;place-items:center;overflow:hidden}
 #view-home .teamMark img{width:82%!important;height:82%!important;object-fit:contain}
+/* Pick 'Em: kickoff timing lines up under the team names (12px marker + 30px logo + two 8px gaps). */
+#view-community .commGameName small{padding-left:58px;font-family:var(--sans);font-size:var(--fs-xs);line-height:1.3;color:var(--muted)}
+/* Projected score: scores sit beside the names instead of at the far edge of a wide panel. */
+.projectedScore>b{max-width:340px}
