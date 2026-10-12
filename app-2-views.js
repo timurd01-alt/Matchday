@@ -1282,6 +1282,7 @@ function rsModelMarketWatch(){
   if(calls.length<WATCH){
     const picks=(typeof MATCHDAY_BETBETTER_PICKS!=='undefined'?bbSportRows(MATCHDAY_BETBETTER_PICKS):[])||[];
     const now=Date.now(),week=now+7*86400000,have=new Set(calls.map(c=>teamKey(c.selection)));
+    const tier={};((typeof collegeRankingTable==='function'?collegeRankingTable():null)?.rankings||[]).forEach(r=>{tier[teamKey(r.name)]=String(r.tier||'')});
     const extra=picks.map(p=>{
       const mk=Number(p.market_pct),md=Number(p.model_pct),t=Date.parse(p.kickoff||'');
       // A missing price arrives as 0; a real contest has the underdog at 15% or more.
@@ -1290,7 +1291,12 @@ function rsModelMarketWatch(){
       const sel=pickIsDog?p.pick_name:other,model=pickIsDog?md:100-md,market=pickIsDog?mk:100-mk;
       if(!sel||!(model>market)||market>=50||market<15)return null;
       return {selection:sel,home:p.home,away:p.away,kickoff:p.kickoff,model_pct:model,market_pct:market,disagreement_points:model-market};
-    }).filter(c=>c&&!have.has(teamKey(c.selection))&&!isFeatured(c)).sort((a,b)=>b.disagreement_points-a.disagreement_points);
+    }).filter(c=>c&&!have.has(teamKey(c.selection))&&!isFeatured(c))
+      // Power Four first: games between two power-conference teams, then games
+      // with one, each by the size of the gap.
+      .map(c=>({...c,_p4:[c.home,c.away].filter(n=>tier[teamKey(n)]==='power').length}))
+      .filter(c=>c._p4>0)
+      .sort((a,b)=>b._p4-a._p4||b.disagreement_points-a.disagreement_points);
     calls.push(...extra.slice(0,WATCH-calls.length));
   }
   if(!calls.length)return '';

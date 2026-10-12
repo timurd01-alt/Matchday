@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1011ZN",
+  "tag": "Fix",
+  "title": "Model–market watch focuses on Power Four",
+  "items": [
+   "When model–market watch fills its list from this week's games, it now picks Power Four matchups first."
+  ]
+ },
+ {
   "date": "Build 1011ZM",
   "tag": "Design",
   "title": "Model–market watch redesigned for phones",
