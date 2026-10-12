@@ -4155,3 +4155,11 @@ span.rsSignal,:is(#view-score,#view-news) span.rsSignal,.scGap .scUnit{font-fami
 /* Home: the side column's first header line sits level with the differences header line. */
 #view-home .gamesSideCol>.gamesRecord:first-child{padding-top:0!important}
 #view-home .gamesSideCol>.gamesRecord>div>span:first-child{padding-bottom:9px}
+/* Home on phones: difference rows size to their text instead of a shared fixed height. */
+@media(max-width:700px){
+  #view-home .gamesDifferences>.gamesDifferenceRows>button{flex:none;height:auto;min-height:0;padding:12px 0;gap:12px}
+  #view-home .gdMarks{gap:4px}
+  #view-home .gdMarks .teamMark{width:28px;height:28px;flex:0 0 28px;border-radius:7px}
+  #view-home .gamesDifferenceRows b{font-size:var(--fs-md);line-height:1.25}
+  #view-home .gamesDifferenceRows strong{font-size:var(--fs-md);min-width:0}
+}

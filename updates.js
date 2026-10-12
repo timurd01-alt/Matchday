@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1011ZH",
+  "tag": "Fix",
+  "title": "Phone: model / market rows no longer overlap",
+  "items": [
+   "On phones each model / market difference row now grows to fit its text, with smaller logos, so long matchups no longer spill into the next row."
+  ]
+ },
+ {
   "date": "Build 1011ZG",
   "tag": "Fix",
   "title": "Every game shows its margin",
