@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1011K",
+  "tag": "Fix",
+  "title": "Longshot cards rebalanced",
+  "items": [
+   "Longshots That Won cards use a calmer size for the odds, team name and logo, so long names fit on one line."
+  ]
+ },
+ {
   "date": "Build 1011J",
   "tag": "Fix",
   "title": "Model–market watch columns line up",
