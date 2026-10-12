@@ -4254,3 +4254,5 @@ span.rsSignal,:is(#view-score,#view-news) span.rsSignal,.scGap .scUnit{font-fami
 /* Each badge kind has its own colour: Live lime, Graded white, Season blue, Rating amber. */
 .rsChip-current,.rsChip-season{color:#6cb6ff;border-color:rgba(108,182,255,.4)}.rsChip-current::before,.rsChip-season::before{background:#6cb6ff}
 .rsChip-blend{color:#e0b44c;border-color:rgba(224,180,76,.4)}.rsChip-blend::before{background:#e0b44c}
+/* Learn: team logos sit inside their tiles like everywhere else. */
+#view-learn .teamMark img,.lnModal .teamMark img,.lnSheet .teamMark img{width:82%!important;height:82%!important;object-fit:contain}

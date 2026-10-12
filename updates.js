@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1012C",
+  "tag": "Fix",
+  "title": "Learn logos fit their tiles",
+  "items": [
+   "Team logos on the Learn page no longer spill past the edge of their tiles."
+  ]
+ },
+ {
   "date": "Build 1012B",
   "tag": "Design",
   "title": "Zoomable efficiency chart, coloured badges",
