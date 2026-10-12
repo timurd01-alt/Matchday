@@ -3998,3 +3998,6 @@ body{font-variant-numeric:tabular-nums}
 .viewIntro .vhead,.vhead{font-family:var(--display);font-size:var(--fs-4xl);font-weight:var(--fw-bold);letter-spacing:.02em}
 span.rsSignal,:is(#view-score,#view-news) span.rsSignal,.scGap .scUnit{font-family:var(--mono)}
 #view-groups .pollTable td.pollTeam,.pollTable td.pollTeam{font-family:var(--sans)}
+
+.pick .pmargin{font-family:var(--mono);font-size:var(--fs-sm);color:var(--muted);font-weight:var(--fw-semibold)}
+.projectedScore .psMeta{margin-left:auto;font-family:var(--mono);font-size:var(--fs-sm);color:var(--muted)}

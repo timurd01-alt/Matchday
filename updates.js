@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1011E",
+  "tag": "New",
+  "title": "Margins next to every pick",
+  "items": [
+   "Each game card's pick now shows how much the model expects that team to win by, in whole points, for football and basketball.",
+   "The projected score adds the winning margin and the combined points. These are plain numbers from the model, not betting lines."
+  ]
+ },
+ {
   "date": "Build 1011D",
   "tag": "New",
   "title": "Basketball bracketology",

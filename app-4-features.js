@@ -135,7 +135,18 @@ function insightModelBlock(m){
 // opens onto cannot name different sides. It used to read m.betbetter_pick
 // alone, which only a scheduled build writes -- on a push deploy the card
 // therefore carried no pick at all while the expanded view still showed one.
-function matchdayLivePickHTML(m){const p=betbetterReadFor(m);if(!p)return'';const model=Number(p.model_pct);return `<div class="pick matchdayLivePick"><span class="pl">Model</span><span class="pn">${esc(p.pick_name||'No pick')}</span><span class="pc">${modelPctLabel(model)}</span><span class="pnote">${p.graded===false?`<span title="${esc(p.grading_note||'')}">Not graded · FBS vs FCS</span>`:'Live prediction · updates until kickoff'}</span></div>`}
+/* How much the model expects the pick to win by, in whole points: "by 5".
+   Plain words, not a spread, and only when the margin agrees with the pick. */
+function pickMarginHTML(p){
+  // Same number as the projected score in the match window; the model's own
+  // margin only when there is no projected score.
+  const ps=p?.projected_score,h=Number(ps?.home),a=Number(ps?.away);
+  const mg=Number.isFinite(h)&&Number.isFinite(a)?h-a:Number(p?.model_line?.home_margin);
+  if(!Number.isFinite(mg))return '';
+  const by=Math.round(p.pick==='a'?-mg:mg);
+  return by>=1?`<span class="pmargin">by ${by}</span>`:'';
+}
+function matchdayLivePickHTML(m){const p=betbetterReadFor(m);if(!p)return'';const model=Number(p.model_pct);return `<div class="pick matchdayLivePick"><span class="pl">Model</span><span class="pn">${esc(p.pick_name||'No pick')}</span><span class="pc">${modelPctLabel(model)}</span>${pickMarginHTML(p)}<span class="pnote">${p.graded===false?`<span title="${esc(p.grading_note||'')}">Not graded · FBS vs FCS</span>`:'Live prediction · updates until kickoff'}</span></div>`}
 // Game cards give each name about 83px at their narrowest (a 360px card).
 // These schools have one word wider than that, so the card uses a short form
 // the school itself goes by instead of splitting the word ("Tennesse / e").

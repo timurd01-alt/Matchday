@@ -1743,9 +1743,14 @@ function projectedScoreLine(m,p){
   // the projected winner highlighted. Listing away first read as "the first
   // team wins" (Western Kentucky 28 · New Mexico State 30).
   const side=(name,pts,win)=>`<b class="${win?'psWin':'psLose'}">${esc(name)} ${Number(pts)}</b>`;
+  // The margin and combined points come from the projected score itself, so
+  // the window never shows two different margins. Plain words, whole numbers:
+  // not a spread or an over/under.
+  const by=Math.abs(Number(home)-Number(away)),winner=Number(home)>Number(away)?(m.home?.name||'Home'):(m.away?.name||'Away');
+  const meta=`<span class="psMeta">${by?`${esc(winner)} by ${by}`:'Level'} · ${Number(home)+Number(away)} points</span>`;
   return `<div class="projectedScore"><span>Projected score</span>`
     +side(m.home?.name||'Home',home,Number(home)>Number(away))+`<i aria-hidden="true">·</i>`
-    +side(m.away?.name||'Away',away,Number(away)>Number(home))+`</div>`;
+    +side(m.away?.name||'Away',away,Number(away)>Number(home))+meta+`</div>`;
 }
 function matchupEvidence(label,note,html,open=false){
   if(!html)return '';

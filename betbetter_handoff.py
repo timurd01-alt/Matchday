@@ -300,6 +300,8 @@ def _display_block(pick: dict[str, Any], document: dict[str, Any]) -> dict[str, 
         "projected_score": ({**pick["projected_score"], "home_name": pick.get("home"),
                              "away_name": pick.get("away")}
                             if isinstance(pick.get("projected_score"), dict) else None),
+        # The model's own spread and total, before any market blending.
+        "model_line": (pick["model_line"] if isinstance(pick.get("model_line"), dict) else None),
         "sides": pick.get("sides") or [],
 
         "model_name": pick.get("model_name"),
