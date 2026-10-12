@@ -4,6 +4,17 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1011P",
+  "tag": "New",
+  "title": "A new Learn page",
+  "items": [
+   "Learn is rebuilt as eight lesson cards, each led by a live number from this week. Each lesson opens in its own window with in-depth sections, charts from live data and links into the site.",
+   "The glossary is searchable.",
+   "Model–market watch fits each game on one line, with its numbers level with the teams.",
+   "Risers & Fallers has larger names and moves."
+  ]
+ },
+ {
   "date": "Build 1011O",
   "tag": "Fix",
   "title": "Clearer game summaries",

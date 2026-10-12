@@ -3954,32 +3954,6 @@ body{font-variant-numeric:tabular-nums}
 .modalRowStep:disabled{opacity:.35;cursor:default}
 .projectedScore b{white-space:nowrap}
 
-/* ---- Learn ---------------------------------------------------------------
-   Lessons are toggles: the title and hook read as a list, the body opens on
-   demand. Same roles as everywhere: display for titles, sans for sentences,
-   mono for labels; lime for links. */
-.learnList{display:flex;flex-direction:column;border-top:1px solid var(--line);margin-bottom:40px}
-.learnLesson{border-bottom:1px solid var(--line)}
-/* Title above hook on every row, "+" centred on the right: one layout whatever the text length. */
-.learnLesson summary{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"title mark" "hook mark";align-items:center;gap:4px 16px;padding:14px 2px;cursor:pointer;list-style:none}
-.learnTitle{grid-area:title}.learnHook{grid-area:hook}
-.learnLesson summary::-webkit-details-marker{display:none}
-.learnLesson summary::after{content:"+";grid-area:mark;color:var(--signal);font-family:var(--mono);font-size:var(--fs-lg)}
-.learnLesson[open] summary::after{content:"−"}
-.learnLesson summary:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
-.learnTitle{font-family:var(--sans);font-weight:var(--fw-semibold);font-size:var(--fs-lg);color:var(--text)}
-.learnHook{font-family:var(--sans);font-size:var(--fs-md);color:var(--muted)}
-.learnBody{padding:0 2px 18px;max-width:68ch;font-family:var(--sans);font-size:var(--fs-base);line-height:1.6;color:var(--text)}
-.learnBody p{margin:0 0 10px}
-.learnBody b{color:var(--text);font-weight:var(--fw-semibold)}
-.learnExample{margin:14px 0 12px;padding-left:12px;border-left:2px solid var(--signal)}
-.learnExample .seclbl{margin-bottom:4px}
-.learnExample p{margin:0;color:var(--muted)}
-.learnExample b{color:var(--text)}
-.learnLink{background:none;border:0;padding:4px 0;color:var(--signal);font-family:var(--mono);font-size:var(--fs-sm);font-weight:var(--fw-bold);cursor:pointer}
-.learnLink:hover{text-decoration:underline}
-.learnLink:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
-/* One row per term, definition beside it: no grid, so no empty cells at the end. */
 .learnGlossary{display:flex;flex-direction:column;border-top:1px solid var(--line);margin:0}
 .learnGlossary div{display:grid;grid-template-columns:minmax(150px,220px) minmax(0,1fr);gap:4px 24px;align-items:baseline;padding:10px 2px;border-bottom:1px solid var(--line)}
 @media(max-width:600px){.learnGlossary div{grid-template-columns:1fr}}
@@ -4040,3 +4014,62 @@ span.rsSignal,:is(#view-score,#view-news) span.rsSignal,.scGap .scUnit{font-fami
 #view-results>:not(.card){grid-column:1/-1}
 .fsPlayed .hipVerdict{margin:14px 0 2px;padding-top:12px;border-top:1px solid var(--line);line-height:1.5}
 .fsPanel .hipVerdict{line-height:1.5}
+
+/* ---- Learn: lesson cards and the lesson window ---------------------------- */
+.lnGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin:4px 0 36px}
+.lnCard{display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-height:230px;padding:20px;text-align:left;cursor:pointer;color:var(--text);background:linear-gradient(160deg,rgba(180,214,44,.07),rgba(255,255,255,.015) 55%);border:1px solid var(--line);border-radius:14px;transition:border-color .15s,transform .15s}
+.lnCard:hover{border-color:var(--signal);transform:translateY(-2px)}
+.lnCard:focus-visible{outline:2px solid var(--signal);outline-offset:3px}
+.lnCount{font-family:var(--mono);font-size:var(--fs-2xs);letter-spacing:.1em;color:var(--signal);font-weight:var(--fw-bold)}
+.lnFigure{font-family:var(--display);font-size:var(--fs-6xl);font-weight:var(--fw-bold);line-height:1;color:var(--win);margin-top:4px}
+.lnCaption{font-family:var(--mono);font-size:var(--fs-xs);color:var(--muted)}
+.lnCard strong{margin-top:auto;padding-top:14px;font-family:var(--sans);font-size:var(--fs-xl);font-weight:var(--fw-semibold)}
+.lnHook{font-family:var(--sans);font-size:var(--fs-md);color:var(--muted);line-height:1.45}
+.lnRead{margin-top:6px;font-family:var(--mono);font-size:var(--fs-sm);font-weight:var(--fw-bold);color:var(--signal)}
+.lnGlossary{max-width:900px}
+.lnSearch{width:100%;max-width:420px;margin:0 0 14px;padding:10px 14px;border:1px solid var(--line2);border-radius:10px;background:var(--bg2);color:var(--text);font-family:var(--sans);font-size:var(--fs-md)}
+.lnSearch:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
+.lnModal{position:fixed;inset:0;z-index:100;display:none;align-items:flex-start;justify-content:center;padding:4vh 16px;background:rgba(2,5,10,.84);overflow-y:auto}
+.lnModal.show{display:flex}
+.lnSheet{width:min(760px,100%);background:var(--panel);border:1px solid var(--line2);border-radius:16px;box-shadow:0 30px 80px rgba(0,0,0,.45)}
+.lnHead{display:flex;justify-content:space-between;gap:16px;padding:26px 28px 18px;border-bottom:1px solid var(--line);background:linear-gradient(160deg,rgba(180,214,44,.08),transparent 60%);border-radius:16px 16px 0 0}
+.lnHead h2{margin:6px 0 6px;font-family:var(--display);font-size:var(--fs-5xl);font-weight:var(--fw-bold);letter-spacing:.02em;line-height:1.05}
+.lnHead p{margin:0;font-family:var(--sans);font-size:var(--fs-lg);color:var(--muted)}
+.lnClose{align-self:flex-start;width:40px;height:40px;border-radius:50%;border:1px solid var(--line2);background:var(--bg2);color:var(--text);font-size:var(--fs-2xl);cursor:pointer}
+.lnClose:focus-visible,.lnGo:focus-visible,.lnNav button:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
+.lnBody{padding:8px 28px 26px}
+.lnSection{padding:18px 0;border-bottom:1px solid var(--line)}
+.lnSection h3{margin:0 0 10px;font-family:var(--sans);font-size:var(--fs-lg);font-weight:var(--fw-semibold);color:var(--text)}
+.lnSection p{margin:0;font-family:var(--sans);font-size:var(--fs-lg);line-height:1.65;color:var(--text);max-width:64ch}
+.lnNote{margin-top:10px!important;font-size:var(--fs-md)!important;color:var(--muted)!important}
+.lnBars{display:flex;flex-direction:column;gap:8px}
+.lnBar{display:grid;grid-template-columns:minmax(150px,220px) minmax(0,1fr) 56px;align-items:center;gap:12px}
+.lnBarName{display:flex;align-items:center;gap:8px;font-family:var(--sans);font-size:var(--fs-md);font-weight:var(--fw-semibold);min-width:0}
+.lnBarName .teamMark{width:26px;height:26px;flex:0 0 26px}
+.lnBar i{height:10px;border-radius:999px;background:var(--bg2);overflow:hidden}
+.lnBar i b{display:block;height:100%;border-radius:999px}
+.lnTone-signal{background:var(--signal)}.lnTone-win{background:var(--win)}.lnTone-muted{background:var(--line2)}
+.lnBar em{font-style:normal;text-align:right;font-family:var(--mono);font-size:var(--fs-md);font-weight:var(--fw-bold)}
+.lnDots{display:flex;gap:10px;flex-wrap:wrap}
+.lnDots i{width:30px;height:30px;border-radius:50%}
+.lnDots i.win{background:var(--win)}.lnDots i.loss{background:transparent;border:2px solid var(--loss)}
+.lnCal{display:flex;flex-direction:column;gap:9px}
+.lnCal div{display:grid;grid-template-columns:76px minmax(0,1fr) 46px;align-items:center;gap:12px}
+.lnCal span,.lnCal em{font-family:var(--mono);font-size:var(--fs-sm);font-style:normal;color:var(--muted)}
+.lnCal em{text-align:right;color:var(--text);font-weight:var(--fw-bold)}
+.lnCal i{position:relative;height:12px;border-radius:999px;background:var(--bg2)}
+.lnCal i b{position:absolute;left:0;top:0;bottom:0;border-radius:999px;background:var(--win)}
+.lnCal i s{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--text)}
+.lnStats{display:flex;gap:28px;flex-wrap:wrap}
+.lnStat b{display:block;font-family:var(--display);font-size:var(--fs-5xl);font-weight:var(--fw-bold);color:var(--win);line-height:1}
+.lnStat span{font-family:var(--mono);font-size:var(--fs-xs);color:var(--muted)}
+.lnGo{background:none;border:1px solid var(--signal);border-radius:10px;padding:10px 16px;color:var(--signal);font-family:var(--mono);font-size:var(--fs-sm);font-weight:var(--fw-bold);cursor:pointer}
+.lnNav{display:flex;justify-content:space-between;gap:12px;padding-top:20px}
+.lnNav button{background:var(--bg2);border:1px solid var(--line2);border-radius:10px;padding:10px 14px;color:var(--text);font-family:var(--sans);font-size:var(--fs-md);cursor:pointer}
+@media(max-width:600px){.lnHead,.lnBody{padding-left:18px;padding-right:18px}.lnBar{grid-template-columns:minmax(110px,1fr) minmax(0,1fr) 48px}.lnHead h2{font-size:var(--fs-4xl)}}
+.rsWatchTeams .rsWatchWhen{font-family:var(--mono);font-size:var(--fs-xs);color:var(--faint);margin-left:6px}
+/* Risers & Fallers: readable names, moves and ranks (Research only). */
+#view-news .rsMoveTeam{font-size:var(--fs-2xl)}
+#view-news .rsMvName{font-size:var(--fs-lg)}
+#view-news .rsMvRank{font-size:var(--fs-xs)}
+#view-news .rsMvChg{font-size:var(--fs-lg)}

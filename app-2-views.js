@@ -1297,8 +1297,9 @@ function rsModelMarketWatch(){
     // Both teams: the underdog the model likes first, then its opponent.
     const opp=away?p.home:p.away,mark=n=>typeof teamMark==='function'?teamMark(n):'';
     return `<li class="rsGapRow"><div class="rsGapGame"><div class="rsWatchTeams"><b class="rsLogoName">${mark(p.selection)}${esc(rsShortName(p.selection))}</b>`
-      +`<i>${away?'at':'vs'}</i><b class="rsLogoName rsWatchOpp">${mark(opp)}${esc(rsShortName(opp))}</b></div>`
-      +`<span>${status?esc(status):''}</span></div>`
+      +`<i>${away?'at':'vs'}</i><b class="rsLogoName rsWatchOpp">${mark(opp)}${esc(rsShortName(opp))}</b>`
+      // Timing on the same line, so each row is one line and its numbers sit level with the teams.
+      +`${status?`<span class="rsWatchWhen">${esc(status)}</span>`:''}</div></div>`
       +`<span class="rsNum"><b>${communityModelPctLabel(model)}</b></span>`
       +`<span class="rsNum"><b>${Number.isFinite(market)?market.toFixed(1)+'%':'—'}</b></span>`
       // The gap is what puts a game on this list, so it carries the highlight.
