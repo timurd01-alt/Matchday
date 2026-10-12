@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1012 Heading",
+  "tag": "Fix",
+  "title": "Learn uses the Research heading font",
+  "items": [
+   "The Learn page heading now matches Research: condensed display type, uppercase, and the shared heading size."
+  ]
+ },
+ {
   "date": "Build 1012 Type",
   "tag": "Design",
   "title": "Consistent Learn typography",
