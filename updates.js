@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1011R",
+  "tag": "Fix",
+  "title": "Glossary and model–market watch layout",
+  "items": [
+   "Glossary terms now sit in two columns of cards across the full width.",
+   "Model–market watch teams line up in fixed columns, and the graded record beside them fills the same height."
+  ]
+ },
+ {
   "date": "Build 1011Q",
   "tag": "Fix",
   "title": "Simpler lesson cards",

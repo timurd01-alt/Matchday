@@ -4075,3 +4075,17 @@ span.rsSignal,:is(#view-score,#view-news) span.rsSignal,.scGap .scUnit{font-fami
 #view-news .rsMvName{font-size:var(--fs-lg)}
 #view-news .rsMvRank{font-size:var(--fs-xs)}
 #view-news .rsMvChg{font-size:var(--fs-lg)}
+/* Model–market watch: teams on fixed columns so every row lines up; the graded bars stretch to the same height as the three game rows. */
+#view-news .rsWatchTeams{display:grid;grid-template-columns:minmax(0,1fr) 26px minmax(0,1fr) 84px;gap:12px;flex-wrap:nowrap}
+#view-news .rsWatchTeams>i{text-align:center}
+#view-news .rsWatchTeams .rsLogoName{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#view-news .rsWatchTeams .rsWatchWhen{margin-left:0;text-align:right}
+#view-news .rsSpan12 .rsSplit:has(.rsWatchList){align-items:stretch}
+#view-news .rsSplitSide:has(.rsHistBars),#view-news .rsHistBars{display:flex;flex-direction:column;flex:1}
+#view-news .rsHistBars .rsSplitBar{flex:1}
+/* Glossary: two columns of term cards across the full width. */
+.lnGlossary{max-width:none}
+.learnGlossary{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;border-top:0}
+.learnGlossary div{display:block;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--bg2)}
+.learnGlossary dt{margin-bottom:4px}
+@media(max-width:800px){.learnGlossary{grid-template-columns:1fr}}
