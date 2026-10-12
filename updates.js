@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1012D",
+  "tag": "Fix",
+  "title": "Pick 'Em logos no longer cover team names",
+  "items": [
+   "In Pick 'Em, team logos sit in their own column again instead of overlapping the first letters of each name."
+  ]
+ },
+ {
   "date": "Build 1012 Heading",
   "tag": "Fix",
   "title": "Learn uses the Research heading font",

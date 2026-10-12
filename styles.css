@@ -4256,3 +4256,6 @@ span.rsSignal,:is(#view-score,#view-news) span.rsSignal,.scGap .scUnit{font-fami
 .rsChip-blend{color:#e0b44c;border-color:rgba(224,180,76,.4)}.rsChip-blend::before{background:#e0b44c}
 /* Learn: team logos sit inside their tiles like everywhere else. */
 #view-learn .teamMark img,.lnModal .teamMark img,.lnSheet .teamMark img{width:82%!important;height:82%!important;object-fit:contain}
+/* Pick 'Em rows: the logo column fits the logo, so it never covers the team name. */
+#view-community .commTeam{grid-template-columns:12px 30px minmax(0,1fr)}
+#view-community .commTeam .teamMark{width:30px;height:30px;flex:0 0 30px;border-radius:8px}
