@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1011ZI",
+  "tag": "Design",
+  "title": "Sharper team logos",
+  "items": [
+   "Team logos are now resized ahead of time with a sharper filter, so detailed marks stay crisp at small sizes.",
+   "Logos fill a little more of their tile."
+  ]
+ },
+ {
   "date": "Build 1011ZH",
   "tag": "Fix",
   "title": "Phone: model / market rows no longer overlap",

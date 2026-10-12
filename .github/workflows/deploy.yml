@@ -309,7 +309,7 @@ jobs:
           cp assets/welcome/college-athletes-illustrated.webp _site/assets/welcome/
           cp assets/fonts/oxanium-700.ttf assets/fonts/Oxanium-OFL.txt _site/assets/fonts/
           mkdir -p _site/team-logos
-          cp social/logos/*.png _site/team-logos/
+          cp social/logos-web/*.png _site/team-logos/
           if [ ! -f data.json ]; then
             for fallback in data_mlb.json data_wc.json data_nfl.json data_ncaaf.json; do
               if [ -f "$fallback" ]; then cp "$fallback" data.json; break; fi

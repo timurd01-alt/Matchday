@@ -4163,3 +4163,5 @@ span.rsSignal,:is(#view-score,#view-news) span.rsSignal,.scGap .scUnit{font-fami
   #view-home .gamesDifferenceRows b{font-size:var(--fs-md);line-height:1.25}
   #view-home .gamesDifferenceRows strong{font-size:var(--fs-md);min-width:0}
 }
+/* Logos fill a little more of their tile; still inside the rounded corners. */
+.teamMark img{width:86%!important;height:86%!important;object-fit:contain}
