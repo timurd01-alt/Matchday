@@ -4038,3 +4038,5 @@ span.rsSignal,:is(#view-score,#view-news) span.rsSignal,.scGap .scUnit{font-fami
    cards across as fit, instead of one full-width row per game. */
 #view-results{grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:11px;align-items:start}
 #view-results>:not(.card){grid-column:1/-1}
+.fsPlayed .hipVerdict{margin:14px 0 2px;padding-top:12px;border-top:1px solid var(--line);line-height:1.5}
+.fsPanel .hipVerdict{line-height:1.5}

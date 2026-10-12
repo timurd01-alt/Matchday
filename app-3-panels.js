@@ -1600,7 +1600,10 @@ function playedResultFor(m){
 function howItPlayedPanel(m){
   if(String(m?.status||'').toUpperCase()!=='FINISHED')return '';
   const g=playedResultFor(m);if(!g)return '';
-  const H=g.home,A=g.away,short=n=>typeof rsShortName==='function'?rsShortName(n):n;
+  // Short names, unless both teams shorten to the same word (Louisiana Tech vs
+  // Louisiana): then the full names, or the verdict names one team twice.
+  const H=g.home,A=g.away,rs=n=>typeof rsShortName==='function'?rsShortName(n):n;
+  const clash=rs(H.name)===rs(A.name),short=n=>clash?n:rs(n);
   const sgn=(v,d)=>{const n=Number(v);if(!Number.isFinite(n))return '—';const r=Number(n.toFixed(d));return r===0?(0).toFixed(d):(r>0?'+':'−')+Math.abs(r).toFixed(d)};
   // One row per measure: both values, and a split bar showing each side's
   // share. EPA can be negative, so its bar compares the two values on a
@@ -1657,7 +1660,8 @@ function finalSummaryPanel(m){
   const rows=(typeof collegeRankingTable==='function'?collegeRankingTable()?.rankings:null)||[];
   const find=n=>rows.find(r=>bbNameMatches(r.name,n))||null;
   const H={name:home,score:hs,r:find(home)},A={name:away,score:as,r:find(away)};
-  const short=n=>typeof rsShortName==='function'?rsShortName(n):n;
+  const rs=n=>typeof rsShortName==='function'?rsShortName(n):n;
+  const short=n=>rs(home)===rs(away)?n:rs(n);
   const num=v=>{const n=Number(v);return Number.isFinite(n)?n:null};
   // The pick is Bet Better's locked one from its scorecard. m.prediction is
   // the retired in-house model and is never shown as Matchday's call.

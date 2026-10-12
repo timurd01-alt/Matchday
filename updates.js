@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1011O",
+  "tag": "Fix",
+  "title": "Clearer game summaries",
+  "items": [
+   "Game summaries use full team names when both teams would otherwise shorten to the same word, such as Louisiana Tech and Louisiana.",
+   "The efficiency verdict under How it played has room around it."
+  ]
+ },
+ {
   "date": "Build 1011N",
   "tag": "Fix",
   "title": "Results as a card grid",
