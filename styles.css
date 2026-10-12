@@ -4236,3 +4236,18 @@ span.rsSignal,:is(#view-score,#view-news) span.rsSignal,.scGap .scUnit{font-fami
   #view-news .rsWatchTeams{row-gap:2px!important}
   #view-news .rsWatchBars{margin-top:6px!important;gap:6px 10px!important}
 }
+/* Rating vs schedule: tap a corner to zoom in; logos sit bare on the chart. */
+.rsZoomBlock .rsZq{fill:transparent;cursor:zoom-in}
+.rsZoomBlock .rsZq:hover{fill:rgba(180,214,44,.05)}
+.rsZoomBlock .rsZqL{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;fill:var(--signal);opacity:.85;pointer-events:none}
+.rsZoomBlock .rsWide .rsZqL{font-size:12px}
+.rsZoomBlock .rsTall .rsZqL{font-size:10px}
+.rsZoomBlock .rsZLogo{pointer-events:none;filter:drop-shadow(0 0 1px rgba(233,237,242,.55))}
+.rsZoomBlock .rsZHit{fill:transparent;stroke:none}
+.rsZoomBlock .rsZHit.rsActive{stroke:var(--signal);stroke-width:1.5}
+.rsZoomHead{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:var(--fs-xs);color:var(--muted)}
+.rsZoomHead:not(:empty){min-height:36px;margin:4px 0 8px}
+.rsZoomBack{min-height:34px;padding:0 14px;border:1px solid var(--signal);border-radius:999px;background:var(--bg2);color:var(--text);font:var(--fw-semibold) var(--fs-xs)/1 var(--mono);cursor:pointer}
+.rsZoomBack:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
+/* On phones the zoomable chart replaces the separate schedule-groups block. */
+@media(max-width:600px){#view-news .rsBlock:has(.rsQuad[data-key="rating"]){display:none}}

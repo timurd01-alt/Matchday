@@ -1191,6 +1191,9 @@ function rsShortName(name){
   const m=s.match(two);
   if(m)return s.slice(0,-m[0].length).trim()||s;
   const parts=s.split(' ');
+  // A name with no nickname ("Michigan State", "Texas Tech") keeps its last
+  // word: it is part of the school's name, not a mascot.
+  if(/^(State|St\.?|Tech|A&M|Southern|Christian|Atlantic|International|Carolina|Kentucky|Illinois|Michigan|Mississippi|Florida|Texas|Virginia|Dakota|Forest|Dominion|Dame|Miss|Force|Madison|Tennessee|Houston|College|Citadel|Monroe|Mexico|Alabama|Georgia|Utah|Arizona|Iowa|Ohio|Colorado|Indiana|Kansas|Louisiana|Oklahoma|Oregon|Washington|Wisconsin|Nevada|Idaho|Montana|Arkansas|Missouri|Maine|Island|Jersey|York|Orleans|Diego|Jose|Francisco|Antonio|Paso|Beach|Valley|Peay|Morris|Point|Lafayette|Green|\(OH\)|\(FL\)|\(PA\))$/.test(parts[parts.length-1]))return s;
   return parts.length>1?parts.slice(0,-1).join(' '):s;
 }
 /* Every Research panel says what kind of number it holds. Live reads move
@@ -1383,44 +1386,84 @@ function rsAxisTicks(sx,sy,x0,x1,y0,y1,W,H,PL,PB,fx,fy){
     +rsNiceTicks(y0,y1).map(v=>`<text class="scTick" x="${PL-6}" y="${(sy(v)+3.5).toFixed(1)}" text-anchor="end">${fy(v)}</text>`).join('');
 }
 function rsScatter(){
-  const table=collegeRankingTable();
-  const rows=(table?.rankings||[]).filter(r=>Number.isFinite(Number(r.rating))&&Number.isFinite(Number(r.sos)));
+  const rows=rsZoomRows();
   if(rows.length<12)return '';
-  const xs=rows.map(r=>Number(r.sos)),ys=rows.map(r=>Number(r.rating));
-  const x0=Math.min(...xs),x1=Math.max(...xs),y0=Math.min(...ys),y1=Math.max(...ys);
-  const med=a=>{const b=a.slice().sort((m,n)=>m-n);return b[Math.floor(b.length/2)]};
-  // Label only the three highest-rated teams. Everything else is a tooltip:
-  // labelling a cluster just stacks names on top of each other.
-  const top=rows.slice().sort((a,b)=>Number(b.rating)-Number(a.rating)).slice(0,3);
-  // Drawn twice: wide for desktop, portrait for phones (CSS shows one), so a
-  // phone gets full-size dots and text instead of a shrunken 1000x340 strip.
-  const draw=(W,H,PL,PR,PT,PB,R,cls)=>{
-    const sx=v=>PL+((v-x0)/((x1-x0)||1))*(W-PL-PR);
-    const sy=v=>H-PB-((v-y0)/((y1-y0)||1))*(H-PT-PB);
-    const mx=sx(med(xs)),my=sy(med(ys));
-    const dots=rows.map(r=>{
-      const power=!String(r.tier||'')||String(r.tier)==='power',hi=top.includes(r)||(Number(r.rank)>0&&Number(r.rank)<=25);
-      return `<circle cx="${sx(Number(r.sos)).toFixed(1)}" cy="${sy(Number(r.rating)).toFixed(1)}" r="${(hi?4.5:3)*R}" class="${hi?'dotHi':power?'dotP':'dotG'}" data-team="${esc(r.name)}" data-rank="${esc(r.rank??'')}" data-rating="${Number(r.rating).toFixed(2)}" data-sos="${Number(r.sos).toFixed(2)}" data-conf="${esc(r.conference||'')}" data-tier="${String(r.tier||'')==='power'?'power':'g5'}"></circle>`;
-    }).join('');
-    let lastY=-99;
-    const labels=top.slice().sort((a,b)=>sy(Number(a.rating))-sy(Number(b.rating))).map(r=>{
-      let y=sy(Number(r.rating))+4;if(y-lastY<15)y=lastY+15;lastY=y;
-      const x=sx(Number(r.sos)),left=x>W-(W>500?180:100);
-      return `<text class="rsLbl" x="${(left?x-8:x+8).toFixed(1)}" y="${y.toFixed(1)}" text-anchor="${left?'end':'start'}">${esc(rsShortName(r.name))}</text>`;
-    }).join('');
-    return `<svg viewBox="0 0 ${W} ${H}" class="rsScatter ${cls}" role="img" aria-label="Scatter plot of team rating against strength of schedule">`
-      +`<line class="scAx" x1="${PL}" y1="${H-PB}" x2="${W-PR}" y2="${H-PB}"/><line class="scAx" x1="${PL}" y1="${PT}" x2="${PL}" y2="${H-PB}"/>`
-      +`<line class="scMed" x1="${mx.toFixed(1)}" y1="${PT}" x2="${mx.toFixed(1)}" y2="${H-PB}"/><line class="scMed" x1="${PL}" y1="${my.toFixed(1)}" x2="${W-PR}" y2="${my.toFixed(1)}"/>`
-      +rsAxisTicks(sx,sy,x0,x1,y0,y1,W,H,PL,PB,v=>v.toFixed(Number.isInteger(v)?0:1),v=>v.toFixed(Number.isInteger(v)?0:1))
-      +`${dots}${labels}<text class="scAxLbl" x="${((W+PL)/2).toFixed(0)}" y="${H-8}" text-anchor="middle">strength of schedule →</text>`
-      +`<text class="scAxLbl" transform="rotate(-90 12 ${(H/2).toFixed(0)})" x="12" y="${(H/2).toFixed(0)}" text-anchor="middle">rating →</text></svg>`;
-  };
-  const anyG5=rows.some(r=>String(r.tier||'')&&String(r.tier)!=='power');
-  const tiered=rows.some(r=>String(r.tier||''));
-  return `<section class="rsBlock rsSpan8 rsChartBlock">${rsTop('Rating vs schedule','blend',`${rows.length} teams`)}`
-    +`<div class="rsPlot">`+draw(1000,440,56,16,14,44,1,'rsWide')+draw(640,360,52,14,14,44,1.1,'rsMid')+draw(360,420,46,12,14,44,1.25,'rsTall')+`</div>`
-    +`<div class="rsLegend"><span><i class="dotKeyHi"></i>Top 25</span>${tiered?'<span><i class="dotKeyP"></i>Power Four</span>':''}${anyG5?'<span><i class="dotKeyG"></i>Group of Five</span>':''}${rsPlotFilter(rows.map(r=>r.conference),tiered)}</div><div class="rsReadout" aria-live="polite">Tap any dot to see the team.</div>`
+  return `<section class="rsBlock rsSpan8 rsChartBlock rsZoomBlock" data-zoom="all">${rsTop('Rating vs schedule','blend',`${rows.length} teams`)}`
+    +`<div class="rsZoomHead"></div><div class="rsPlot">${rsZoomCharts(rows,'all')}</div>`
+    +`<div class="rsLegend"><span><i class="dotKeyP"></i>Power Four</span><span><i class="dotKeyG"></i>Group of Five</span><span>Logos: top 10 · tap a corner to zoom in</span></div><div class="rsReadout" aria-live="polite">Tap any team to see its numbers.</div>`
     +`</section>`;
+}
+/* Rating vs schedule, zoomable. The full chart shows every team, the top ten
+   as logos; tapping one of the four median-split corners redraws the chart
+   around just that group, every team as its own logo. */
+function rsZoomRows(){
+  return ((typeof collegeRankingTable==='function'?collegeRankingTable():null)?.rankings||[])
+    .filter(r=>Number.isFinite(Number(r.rating))&&Number.isFinite(Number(r.sos)));
+}
+const RS_ZOOM_GROUPS={e:'Earned it',s:'Soft schedule',t:'Tested, fell short',u:'Unproven'};
+function rsZoomCharts(rows,key){
+  // Wide for desktop, mid for tablets, tall for phones (CSS shows one).
+  // The full chart leaves a strip above the plot for the top two corner labels.
+  const pt=key==='all'?30:16;
+  return rsZoomDraw(rows,key,1000,440+pt-16,56,16,pt,44,'rsWide')+rsZoomDraw(rows,key,640,380+pt-16,52,14,pt,44,'rsMid')
+    +rsZoomDraw(rows,key,340,(key==='all'?380:420)+pt-16,38,14,pt,40,'rsTall');
+}
+function rsZoomDraw(all,key,W,H,PL,PR,PT,PB,cls){
+  const med=a=>{const b=a.slice().sort((m,n)=>m-n);return b[Math.floor(b.length/2)]};
+  const ms=med(all.map(r=>Number(r.sos))),mr=med(all.map(r=>Number(r.rating)));
+  const inGroup=(r,g)=>{const hi=Number(r.rating)>=mr,tough=Number(r.sos)>=ms;
+    return g==='e'?hi&&tough:g==='s'?hi&&!tough:g==='t'?!hi&&tough:!hi&&!tough};
+  const zoom=key!=='all',set=zoom?all.filter(r=>inGroup(r,key)):all;
+  const xs=set.map(r=>Number(r.sos)),ys=set.map(r=>Number(r.rating));
+  let x0=Math.min(...xs),x1=Math.max(...xs),y0=Math.min(...ys),y1=Math.max(...ys);
+  const px=(x1-x0)*.06||1,py=(y1-y0)*.06||1;x0-=px;x1+=px;y0-=py;y1+=py;
+  const sx=v=>PL+(v-x0)/((x1-x0)||1)*(W-PL-PR),sy=v=>H-PB-(v-y0)/((y1-y0)||1)*(H-PT-PB);
+  const wide=W>500,L=zoom?(wide?30:24):(wide?24:17);
+  let g=`<line class="scAx" x1="${PL}" y1="${H-PB}" x2="${W-PR}" y2="${H-PB}"/><line class="scAx" x1="${PL}" y1="${PT}" x2="${PL}" y2="${H-PB}"/>`
+    +rsAxisTicks(sx,sy,x0,x1,y0,y1,W,H,PL,PB,v=>v.toFixed(Number.isInteger(v)?0:1),v=>v.toFixed(Number.isInteger(v)?0:1));
+  if(!zoom){
+    const mx=sx(ms),my=sy(mr);
+    [['s',PL,PT,mx-PL,my-PT],['e',mx,PT,W-PR-mx,my-PT],['u',PL,my,mx-PL,H-PB-my],['t',mx,my,W-PR-mx,H-PB-my]].forEach(([k,x,y,w,h])=>{
+      const right=k==='e'||k==='t',topRow=k==='e'||k==='s',n=all.filter(r=>inGroup(r,k)).length;
+      g+=`<rect class="rsZq" x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${w.toFixed(1)}" height="${h.toFixed(1)}" onclick="rsZoomSet(this,'${k}')"><title>Zoom into ${RS_ZOOM_GROUPS[k]}</title></rect>`
+        +`<text class="rsZqL" x="${(right?x+w-6:x+6).toFixed(1)}" y="${(topRow?PT-8:y+h-7).toFixed(1)}" text-anchor="${right?'end':'start'}">${RS_ZOOM_GROUPS[k]} ${n} ›</text>`;
+    });
+    g+=`<line class="scMed" x1="${mx.toFixed(1)}" y1="${PT}" x2="${mx.toFixed(1)}" y2="${H-PB}"/><line class="scMed" x1="${PL}" y1="${my.toFixed(1)}" x2="${W-PR}" y2="${my.toFixed(1)}"/>`;
+  }
+  // Logos are nudged apart so overlapping teams stay visible; the nudge is a
+  // few pixels, about one logo width at most.
+  const pts=set.map(r=>({r,x:sx(Number(r.sos)),y:sy(Number(r.rating)),logo:zoom||(Number(r.rank)>0&&Number(r.rank)<=10)}));
+  const logos=pts.filter(p=>p.logo),gap=L*.92;
+  for(let it=0;it<40;it++)for(let a=0;a<logos.length;a++)for(let b=a+1;b<logos.length;b++){
+    const p=logos[a],q=logos[b],dx=q.x-p.x,dy=q.y-p.y,d=Math.hypot(dx,dy)||.01;
+    if(d<gap){const m=(gap-d)/2,ux=dx/d,uy=dy/d;p.x-=ux*m;p.y-=uy*m;q.x+=ux*m;q.y+=uy*m}
+  }
+  pts.sort((a,b)=>(Number(b.r.rank)||999)-(Number(a.r.rank)||999)).forEach(p=>{
+    const r=p.r,data=`data-team="${esc(r.name)}" data-rank="${esc(r.rank??'')}" data-rating="${Number(r.rating).toFixed(2)}" data-sos="${Number(r.sos).toFixed(2)}" data-conf="${esc(r.conference||'')}"`;
+    if(p.logo){
+      const c=teamLogoCandidates(r.name);
+      g+=`<image class="rsZLogo" href="team-logos/${esc(c[0]||'')}" data-fb="${esc(c.slice(1).join('|'))}" onerror="rsZoomLogoNext(this)" x="${(p.x-L/2).toFixed(1)}" y="${(p.y-L/2).toFixed(1)}" width="${L}" height="${L}"/>`
+        +`<circle class="rsZHit" cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${(L/2).toFixed(1)}" ${data}></circle>`;
+    }else{
+      g+=`<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${wide?3.4:3.2}" class="${String(r.tier||'')==='power'?'dotP':'dotG'}" ${data}></circle>`;
+    }
+  });
+  g+=`<text class="scAxLbl" x="${((W+PL)/2).toFixed(0)}" y="${H-8}" text-anchor="middle">strength of schedule →</text>`
+    +`<text class="scAxLbl" transform="rotate(-90 12 ${(H/2).toFixed(0)})" x="12" y="${(H/2).toFixed(0)}" text-anchor="middle">rating →</text>`;
+  return `<svg viewBox="0 0 ${W} ${H}" class="rsScatter ${cls}" role="img" aria-label="${zoom?RS_ZOOM_GROUPS[key]+': ':''}team rating against strength of schedule">${g}</svg>`;
+}
+function rsZoomLogoNext(img){
+  const rest=String(img.dataset.fb||'').split('|').filter(Boolean);
+  if(rest.length){img.dataset.fb=rest.slice(1).join('|');img.setAttribute('href','team-logos/'+rest[0])}
+  else img.remove();
+}
+function rsZoomSet(el,key){
+  const block=el.closest('.rsZoomBlock');if(!block)return;
+  block.dataset.zoom=key;
+  block.querySelector('.rsPlot').innerHTML=rsZoomCharts(rsZoomRows(),key);
+  const n=key==='all'?0:block.querySelectorAll('.rsTall .rsZHit').length;
+  block.querySelector('.rsZoomHead').innerHTML=key==='all'?''
+    :`<button type="button" class="rsZoomBack" onclick="rsZoomSet(this,'all')">‹ All teams</button><span>${RS_ZOOM_GROUPS[key]} · ${n} teams</span>`;
 }
 /* What the chart shows, stated: the two quadrants that matter and the
    top-25 extremes, all read from the same rows the chart plots. */

@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1012A",
+  "tag": "Design",
+  "title": "Zoomable rating vs schedule chart, and full school names",
+  "items": [
+   "Rating vs schedule now shows the top ten teams as logos. Tap any corner of the chart to zoom into that group, with every team shown as its logo; \"All teams\" zooms back out.",
+   "On phones the zoomable chart replaces the separate schedule-groups list.",
+   "School names without a nickname are no longer cut short: Michigan State, Ohio State, Penn State, Notre Dame and others were showing as \"Michigan\", \"Ohio\", \"Penn\" or \"Notre\"."
+  ]
+ },
+ {
   "date": "Build 1011ZO",
   "tag": "Fix",
   "title": "Model–market watch: teams side by side on phones",
