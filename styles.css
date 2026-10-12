@@ -4114,3 +4114,7 @@ span.rsSignal,:is(#view-score,#view-news) span.rsSignal,.scGap .scUnit{font-fami
 /* Model–market watch: a divider between the live list and the graded record; header tucks under the title. */
 #view-news .rsSplitSide:has(.rsHistBars){border-left:1px solid var(--line2);padding-left:24px}
 #view-news .rsBlock:has(.rsWatchList) .rsSplit{margin-top:-10px}
+/* Defense against a real zero: rows stretch to the height of the block beside it. */
+#view-news .rsBlock:has(.rsDivRow){display:flex;flex-direction:column}
+#view-news .rsBlock:has(.rsDivRow) .rsDiv{display:flex;flex-direction:column;flex:1}
+#view-news .rsBlock:has(.rsDivRow) .rsDivRow{flex:1}
