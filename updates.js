@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1012G",
+  "tag": "Model",
+  "title": "Projected totals recalibrated",
+  "items": [
+   "Projected totals and scores were running about 4 points high this season. Each week they are now recalibrated against this season's finished games, keeping the difference between low- and high-scoring matchups."
+  ]
+ },
+ {
   "date": "Build 1012F",
   "tag": "New",
   "title": "See the whole tournament",
