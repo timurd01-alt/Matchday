@@ -4034,3 +4034,7 @@ span.rsSignal,:is(#view-score,#view-news) span.rsSignal,.scGap .scUnit{font-fami
    there, or the list outgrows the chart and leaves dead space beside it. */
 #view-news .rsQuadPane .teamMark,#view-news .rsQuadPane li .teamMark{width:28px;height:28px;flex:0 0 28px;border-radius:8px}
 #view-news .rsQuadPane .rsGapRow,#view-news .rsQuadPane li{padding-top:7px;padding-bottom:7px}
+/* Results uses the same card grid as Games: one finished game per card, as many
+   cards across as fit, instead of one full-width row per game. */
+#view-results{grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:11px;align-items:start}
+#view-results>:not(.card){grid-column:1/-1}

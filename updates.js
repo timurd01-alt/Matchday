@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1011N",
+  "tag": "Fix",
+  "title": "Results as a card grid",
+  "items": [
+   "The Results tab lays finished games out in a grid of cards, like Games, instead of one full-width row per game."
+  ]
+ },
+ {
   "date": "Build 1011M",
   "tag": "Fix",
   "title": "No dead space beside the Research charts",
