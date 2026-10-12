@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1011ZK",
+  "tag": "Fix",
+  "title": "Model–market watch on phones",
+  "items": [
+   "On phones each game shows both teams across the full width, then Matchday, market and gap on a row beneath, and the graded record sits below with a divider."
+  ]
+ },
+ {
   "date": "Build 1011ZJ",
   "tag": "Fix",
   "title": "Cleaner projected score",

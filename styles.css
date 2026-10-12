@@ -4170,3 +4170,14 @@ span.rsSignal,:is(#view-score,#view-news) span.rsSignal,.scGap .scUnit{font-fami
 .projectedScore>b em{font-style:normal;font-family:var(--sans);font-size:var(--fs-lg);font-weight:inherit;letter-spacing:0;min-width:0}
 .projectedScore>b strong{font-family:var(--mono);font-size:var(--fs-lg);font-weight:var(--fw-bold)}
 .projectedScore>.psMeta{margin:4px 0 0!important;font-family:var(--sans)!important;font-size:var(--fs-sm)!important;font-weight:var(--fw-regular)!important;letter-spacing:0!important;text-transform:none!important;color:var(--muted)!important}
+/* Model–market watch on phones: teams get the full width, the three numbers sit on a row beneath. */
+@media(max-width:700px){
+  #view-news .rsBlock:has(.rsWatchList) .rsSplit{margin-top:0}
+  #view-news .rsWatchList .rsGapRow{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:10px}
+  #view-news .rsWatchList .rsGapRow>.rsGapGame{grid-column:1/-1}
+  #view-news .rsWatchList .rsWatchHead>span:first-child{display:none}
+  #view-news .rsWatchTeams{grid-template-columns:minmax(0,1fr) 22px minmax(0,1fr)}
+  #view-news .rsWatchTeams .rsWatchWhen{grid-column:1/-1;text-align:left}
+  #view-news .rsSplitSide:has(.rsHistBars){border-left:0;padding-left:0;border-top:1px solid var(--line2);padding-top:14px}
+  #view-news .rsHistBars .rsSplitBar{grid-template-columns:minmax(0,1fr) 90px 44px}
+}
