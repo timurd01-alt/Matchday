@@ -4206,3 +4206,22 @@ span.rsSignal,:is(#view-score,#view-news) span.rsSignal,.scGap .scUnit{font-fami
   #view-news .rsSplitSide:has(.rsHistBars){border-top:1px solid var(--line)}
 }
 @media(max-width:700px){#view-news .rsWatchList .rsGapRow>.rsNum>*,#view-news .rsWatchList .rsGapRow>.rsNum::before{text-align:left!important;justify-self:start}}
+/* Model–market watch, phone design: teams + gap on one line, then Matchday vs market as two bars. */
+.rsWatchBars{display:none}
+@media(max-width:700px){
+  #view-news .rsWatchList .rsGapRow{grid-template-columns:minmax(0,1fr)!important;position:relative}
+  #view-news .rsWatchList .rsGapRow>.rsGapGame{grid-column:1!important}
+  #view-news .rsWatchTeams{padding-right:76px}
+  #view-news .rsWatchList .rsGapRow>.rsNum:nth-child(2),#view-news .rsWatchList .rsGapRow>.rsNum:nth-child(3){display:none!important}
+  #view-news .rsWatchList .rsGapRow>.rsNum:nth-child(4){position:absolute;top:14px;right:0;display:block!important;text-align:right!important}
+  #view-news .rsWatchList .rsGapRow>.rsNum:nth-child(4)::before{content:none}
+  #view-news .rsWatchList .rsGapRow>.rsNum:nth-child(4) b{display:inline-block;padding:3px 8px;border:1px solid rgba(43,179,102,.45);border-radius:999px;font-size:var(--fs-md)!important}
+  #view-news .rsWatchTeams{display:flex!important;flex-wrap:wrap;align-items:center;gap:4px 8px}
+  #view-news .rsWatchTeams .rsWatchWhen{flex-basis:100%;margin:2px 0 0}
+  #view-news .rsWatchBars{display:grid;grid-template-columns:72px minmax(0,1fr) 52px;align-items:center;gap:8px 10px;margin-top:12px}
+  #view-news .rsWatchBars span{font-family:var(--mono);font-size:var(--fs-2xs);letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
+  #view-news .rsWatchBars i{display:block;height:8px;border-radius:999px;background:var(--bg2);overflow:hidden}
+  #view-news .rsWatchBars i b{display:block;height:100%;border-radius:999px;background:var(--signal)}
+  #view-news .rsWatchBars i b.mkt{background:var(--muted)}
+  #view-news .rsWatchBars em{font-style:normal;font-family:var(--mono);font-size:var(--fs-sm);font-weight:var(--fw-bold);text-align:right;color:var(--text)}
+}

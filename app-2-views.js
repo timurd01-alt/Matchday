@@ -1270,7 +1270,11 @@ function rsFeatured(){
    the engine's own caveat says disagreement of this kind has graded worse. */
 function rsModelMarketWatch(){
   const u=(typeof MATCHDAY_BETBETTER_UPSET!=='undefined')?MATCHDAY_BETBETTER_UPSET:null;
-  const calls=u&&u.available?bbSportRows((u.picks&&u.picks.length)?u.picks:[u.pick].filter(Boolean)):[];
+  // The featured read already covers its game, so that game never repeats here.
+  const fp=typeof featuredPick==='function'?featuredPick():null;
+  const featured=fp?[fp.m?.home?.name||fp.p?.home,fp.m?.away?.name||fp.p?.away].filter(Boolean):[];
+  const isFeatured=c=>featured.length===2&&featured.every(n=>bbNameMatches(n,c.home)||bbNameMatches(n,c.away));
+  const calls=(u&&u.available?bbSportRows((u.picks&&u.picks.length)?u.picks:[u.pick].filter(Boolean)):[]).filter(c=>!isFeatured(c));
   // Always three: the engine's upset card can carry fewer, so the list is
   // filled from this week's picks with the same rule -- an underdog the model
   // rates above the market -- by the size of that gap.
@@ -1286,7 +1290,7 @@ function rsModelMarketWatch(){
       const sel=pickIsDog?p.pick_name:other,model=pickIsDog?md:100-md,market=pickIsDog?mk:100-mk;
       if(!sel||!(model>market)||market>=50||market<15)return null;
       return {selection:sel,home:p.home,away:p.away,kickoff:p.kickoff,model_pct:model,market_pct:market,disagreement_points:model-market};
-    }).filter(c=>c&&!have.has(teamKey(c.selection))).sort((a,b)=>b.disagreement_points-a.disagreement_points);
+    }).filter(c=>c&&!have.has(teamKey(c.selection))&&!isFeatured(c)).sort((a,b)=>b.disagreement_points-a.disagreement_points);
     calls.push(...extra.slice(0,WATCH-calls.length));
   }
   if(!calls.length)return '';
@@ -1299,7 +1303,11 @@ function rsModelMarketWatch(){
     return `<li class="rsGapRow"><div class="rsGapGame"><div class="rsWatchTeams"><b class="rsLogoName">${mark(p.selection)}${esc(rsShortName(p.selection))}</b>`
       +`<i>${away?'at':'vs'}</i><b class="rsLogoName rsWatchOpp">${mark(opp)}${esc(rsShortName(opp))}</b>`
       // Timing on the same line, so each row is one line and its numbers sit level with the teams.
-      +`${status?`<span class="rsWatchWhen">${esc(status)}</span>`:''}</div></div>`
+      +`${status?`<span class="rsWatchWhen">${esc(status)}</span>`:''}</div>`
+      // Phones: two bars comparing the model's chance with the market's, so
+      // the disagreement reads at a glance without a three-column table.
+      +`<div class="rsWatchBars" aria-hidden="true"><span>Matchday</span><i><b style="width:${Number.isFinite(model)?Math.max(2,Math.min(100,model)):0}%"></b></i><em>${communityModelPctLabel(model)}</em>`
+      +`<span>Market</span><i><b class="mkt" style="width:${Number.isFinite(market)?Math.max(2,Math.min(100,market)):0}%"></b></i><em>${Number.isFinite(market)?market.toFixed(1)+'%':'—'}</em></div></div>`
       +`<span class="rsNum"><b>${communityModelPctLabel(model)}</b></span>`
       +`<span class="rsNum"><b>${Number.isFinite(market)?market.toFixed(1)+'%':'—'}</b></span>`
       // The gap is what puts a game on this list, so it carries the highlight.
