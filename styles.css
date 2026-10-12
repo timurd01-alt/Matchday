@@ -4025,3 +4025,9 @@ span.rsSignal,:is(#view-score,#view-news) span.rsSignal,.scGap .scUnit{font-fami
 .rsWatchTeams{display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px}
 .rsWatchTeams>i{font-style:normal;font-family:var(--mono);font-size:var(--fs-sm);color:var(--faint)}
 .rsWatchTeams .rsWatchOpp{color:var(--muted)}
+
+/* The top strip stays compact: it is status, not content. */
+:is(#strip,.livestrip){font-size:var(--fs-2xs)}
+:is(#strip,.livestrip) :is(.ls-next,.ls-upd,.ls-live,.ls-tag){font-size:var(--fs-2xs)}
+:is(#strip,.livestrip) .ls-brand{font-size:var(--fs-xs)}
+:is(#strip,.livestrip) select{font-size:var(--fs-xs)}

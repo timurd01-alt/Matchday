@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1011I",
+  "tag": "Fix",
+  "title": "Compact top strip",
+  "items": [
+   "The status strip across the top of the site is smaller again, so it stays out of the way."
+  ]
+ },
+ {
   "date": "Build 1011H",
   "tag": "Fix",
   "title": "Longshot odds, front and center",
