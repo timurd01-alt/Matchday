@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1011ZF",
+  "tag": "Fix",
+  "title": "Home headers line up",
+  "items": [
+   "The Public record header line now sits level with the model / market differences header line."
+  ]
+ },
+ {
   "date": "Build 1011ZE",
   "tag": "Design",
   "title": "Smoother home page",
