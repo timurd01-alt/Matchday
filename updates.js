@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1011 Learn",
+  "tag": "Design",
+  "title": "A clearer Matchday field guide",
+  "items": [
+   "Learn now leads with topics and short descriptions, instead of numbered cards and unexplained headline stats.",
+   "Clear topic icons, readable type and direct lesson links work across desktop and phone screens."
+  ]
+ },
+ {
   "date": "Build 1011Y",
   "tag": "Fix",
   "title": "Defense table fills its block",

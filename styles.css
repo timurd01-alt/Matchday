@@ -4016,16 +4016,25 @@ span.rsSignal,:is(#view-score,#view-news) span.rsSignal,.scGap .scUnit{font-fami
 .fsPanel .hipVerdict{line-height:1.5}
 
 /* ---- Learn: lesson cards and the lesson window ---------------------------- */
-.lnGrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:4px 0 36px}
+.lnIntro{padding:20px 0 30px;max-width:740px}
+.lnEyebrow{font:600 11px var(--mono);letter-spacing:.14em;color:var(--signal)}
+.lnIntro h1{font:600 clamp(28px,4vw,44px)/1.15 var(--sans);letter-spacing:-.035em;margin:14px 0 12px;color:var(--text)}
+.lnIntro p{font:400 15px/1.6 var(--sans);color:var(--muted);margin:0}
+.lnGrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin:0 0 40px}
+.lnCard{display:flex;flex-direction:column;align-items:flex-start;gap:0;min-height:245px;padding:24px;text-align:left;cursor:pointer;color:var(--text);background:rgba(255,255,255,.018);border:1px solid var(--line);border-radius:8px;transition:border-color .15s,background .15s}
+.lnCard:hover{border-color:var(--signal);background:rgba(222,250,16,.035)}
+.lnCard:focus-visible{outline:2px solid var(--signal);outline-offset:4px}
+.lnTopic{display:flex;align-items:center;gap:9px;color:var(--signal);font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;margin-bottom:24px}
+.lnTopic svg{width:22px;height:22px;flex-shrink:0}
+.lnCard .lnDescription{font:400 14px/1.6 var(--sans);color:var(--muted);margin:12px 0 24px}
+.lnRead{display:flex;align-items:center;justify-content:space-between;width:100%;margin-top:auto;font:500 12px var(--sans);color:var(--text)}
+.lnRead span{font-size:20px;color:var(--signal)}
 @media(max-width:1100px){.lnGrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:520px){.lnGrid{grid-template-columns:1fr}}
-.lnCard{display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-height:170px;padding:20px;text-align:left;cursor:pointer;color:var(--text);background:linear-gradient(160deg,rgba(180,214,44,.07),rgba(255,255,255,.015) 55%);border:1px solid var(--line);border-radius:14px;transition:border-color .15s,transform .15s}
-.lnCard:hover{border-color:var(--signal);transform:translateY(-2px)}
-.lnCard:focus-visible{outline:2px solid var(--signal);outline-offset:3px}
+@media(max-width:520px){.lnGrid{grid-template-columns:1fr}.lnCard{min-height:210px;padding:22px}.lnIntro{padding-top:12px}}
 .lnCount{font-family:var(--mono);font-size:var(--fs-2xs);letter-spacing:.1em;color:var(--signal);font-weight:var(--fw-bold)}
 .lnFigure{font-family:var(--display);font-size:var(--fs-6xl);font-weight:var(--fw-bold);line-height:1;color:var(--win);margin-top:4px}
 .lnCaption{font-family:var(--mono);font-size:var(--fs-xs);color:var(--muted)}
-.lnCard strong{margin-top:auto;padding-top:14px;font-family:var(--sans);font-size:var(--fs-xl);font-weight:var(--fw-semibold)}
+.lnCard strong{font:600 21px/1.25 var(--sans);letter-spacing:-.02em}
 .lnHook{font-family:var(--sans);font-size:var(--fs-md);color:var(--muted);line-height:1.45}
 .lnRead{margin-top:6px;font-family:var(--mono);font-size:var(--fs-sm);font-weight:var(--fw-bold);color:var(--signal)}
 .lnGlossary{max-width:900px}

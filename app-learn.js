@@ -1,7 +1,6 @@
 /* Learn: in-depth lessons on the numbers the rest of the site shows.
 
-   The page is a grid of lesson cards, each led by one live figure from this
-   week's data. A card opens the lesson in its own window: several short
+   The page is a topic-led library of lesson cards. A card opens the lesson in its own window: several short
    sections, a chart drawn from the same live data, and links into the part of
    the site the lesson explains. Every figure comes from data the site already
    publishes; a missing feed leaves its chart out rather than inventing one. */
@@ -114,7 +113,7 @@
     const body=(()=>{try{return l.sections()}catch(e){return []}})().filter(([,h])=>h)
       .map(([t,h])=>`<section class="lnSection">${t?`<h3>${esc(t)}</h3>`:''}${/^\s*</.test(h)?h:`<p>${h}</p>`}</section>`).join('');
     const nav=`<nav class="lnNav">${prev?`<button type="button" onclick="window.__learnOpen('${prev.id}')"><span aria-hidden="true">←</span> ${esc(prev.title)}</button>`:'<span></span>'}${next?`<button type="button" onclick="window.__learnOpen('${next.id}')">${esc(next.title)} <span aria-hidden="true">→</span></button>`:''}</nav>`;
-    return `<div class="lnSheet" role="dialog" aria-modal="true" aria-labelledby="lnTitle"><header class="lnHead"><div><span class="lnCount">${i+1} of ${LESSONS.length}</span><h2 id="lnTitle">${esc(l.title)}</h2><p>${esc(l.hook)}</p></div><button type="button" class="lnClose" aria-label="Close lesson" onclick="window.__learnClose()">×</button></header><div class="lnBody">${body}${nav}</div></div>`;
+    return `<div class="lnSheet" role="dialog" aria-modal="true" aria-labelledby="lnTitle"><header class="lnHead"><div><span class="lnCount">Matchday field guide</span><h2 id="lnTitle">${esc(l.title)}</h2><p>${esc(l.hook)}</p></div><button type="button" class="lnClose" aria-label="Close lesson" onclick="window.__learnClose()">×</button></header><div class="lnBody">${body}${nav}</div></div>`;
   }
   window.__learnOpen=id=>{
     const l=LESSONS.find(x=>x.id===id);if(!l)return;
@@ -132,14 +131,14 @@
 
   window.renderLearn=function(){
     const host=document.getElementById('view-learn');if(!host)return;
-    const cards=LESSONS.map((l,i)=>{
-      const f=(()=>{try{return l.figure()}catch(e){return null}})();
-      return `<button type="button" class="lnCard" onclick="window.__learnOpen('${l.id}')"><span class="lnCount">${String(i+1).padStart(2,'0')}</span>`
-        +(f?`<b class="lnFigure">${esc(f.big)}</b><span class="lnCaption">${esc(f.cap)}</span>`:'')
-        +`<strong>${esc(l.title)}</strong></button>`;
+    const topics={rating:['Ratings','How team strength is measured.'],sos:['Schedule','Why the opponents matter as much as the record.'],probability:['Probability','What a win chance tells you—and what it cannot.'],market:['Market','How the model compares with sportsbook expectations.'],efficiency:['Football','Understand EPA, success rate and the story behind the score.'],basketball:['Basketball','Read the game through possessions, tempo and efficiency.'],preseason:['Preseason','Where the starting ratings come from, and why they change.'],scorecard:['Results','Follow every locked pick through to its final result.']};
+    const icons={rating:'M5 19V13M12 19V8M19 19V4',sos:'M4 18l5-5 4 2 7-10M15 5h5v5',probability:'M12 3a9 9 0 1 0 9 9h-9V3Zm4 0v5h5',market:'M4 8h16M4 16h16M7 5 4 8l3 3M17 13l3 3-3 3',efficiency:'M4 17C4 8 8 4 20 4c0 12-4 16-16 16v-3Zm5-2 6-6M9 10l5 5M12 7l5 5',basketball:'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18ZM3 12h18M12 3v18M6 5c6 5 6 9 0 14M18 5c-6 5-6 9 0 14',preseason:'M5 5h14v16H5V5Zm3-2v4m8-4v4M5 10h14M9 15h6',scorecard:'M5 3h14v18H5V3Zm3 5 2 2 5-5M8 14h8M8 17h5'};
+    const cards=LESSONS.map(l=>{
+      const [category,description]=topics[l.id];
+      return `<button type="button" class="lnCard" onclick="window.__learnOpen('${l.id}')"><span class="lnTopic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${icons[l.id]}"/></svg>${category}</span><strong>${esc(l.title)}</strong><span class="lnDescription">${esc(description)}</span><span class="lnRead">Explore topic <span aria-hidden="true">↗</span></span></button>`;
     }).join('');
     const terms=GLOSSARY.map(([t,d])=>`<div data-term="${esc((t+' '+d).toLowerCase())}"><dt>${esc(t)}</dt><dd>${esc(d)}</dd></div>`).join('');
-    host.innerHTML=`<div class="vhead">Learn</div>
+    host.innerHTML=`<div class="lnIntro"><span class="lnEyebrow">THE MATCHDAY FIELD GUIDE</span><h1>Know what you’re looking at.</h1><p>The ratings, the probabilities, the record. Understand the numbers behind the game.</p></div>
       <div class="lnGrid">${cards}</div>
       <div class="lnGlossary"><input type="search" class="lnSearch" placeholder="Search the glossary" aria-label="Search the glossary" oninput="window.__learnFilter(this.value)"><dl class="learnGlossary">${terms}</dl></div>`;
   };
