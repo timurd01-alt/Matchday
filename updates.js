@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1011L",
+  "tag": "Fix",
+  "title": "Text sizes restored",
+  "items": [
+   "The site-wide text size change is reverted; every page is back to its earlier type sizes. The larger team logos and the Research layout fixes stay."
+  ]
+ },
+ {
   "date": "Build 1011K",
   "tag": "Fix",
   "title": "Longshot cards rebalanced",
