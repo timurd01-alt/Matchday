@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1012E",
+  "tag": "Fix",
+  "title": "Home logos centred",
+  "items": [
+   "Team logos on the home page sit centred inside their tiles with a margin, so wide logos are no longer cut off at the edges."
+  ]
+ },
+ {
   "date": "Build 1012D",
   "tag": "Fix",
   "title": "Pick 'Em logos no longer cover team names",

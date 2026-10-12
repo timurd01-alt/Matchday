@@ -4259,3 +4259,6 @@ span.rsSignal,:is(#view-score,#view-news) span.rsSignal,.scGap .scUnit{font-fami
 /* Pick 'Em rows: the logo column fits the logo, so it never covers the team name. */
 #view-community .commTeam{grid-template-columns:12px 30px minmax(0,1fr)}
 #view-community .commTeam .teamMark{width:30px;height:30px;flex:0 0 30px;border-radius:8px}
+/* Home: logos sit centred inside their tiles with a margin, like the rest of the site. */
+#view-home .teamMark{display:grid;place-items:center;overflow:hidden}
+#view-home .teamMark img{width:82%!important;height:82%!important;object-fit:contain}
