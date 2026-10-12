@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1011M",
+  "tag": "Fix",
+  "title": "No dead space beside the Research charts",
+  "items": [
+   "The team lists beside the Research charts use compact rows again, so they no longer outgrow the chart next to them."
+  ]
+ },
+ {
   "date": "Build 1011L",
   "tag": "Fix",
   "title": "Text sizes restored",
