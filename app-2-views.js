@@ -1280,10 +1280,11 @@ function rsModelMarketWatch(){
     const now=Date.now(),week=now+7*86400000,have=new Set(calls.map(c=>teamKey(c.selection)));
     const extra=picks.map(p=>{
       const mk=Number(p.market_pct),md=Number(p.model_pct),t=Date.parse(p.kickoff||'');
-      if(!Number.isFinite(mk)||!Number.isFinite(md)||!(t>now&&t<week))return null;
+      // A missing price arrives as 0; a real contest has the underdog at 15% or more.
+      if(!Number.isFinite(mk)||!Number.isFinite(md)||mk<=0||mk>=100||!(t>now&&t<week))return null;
       const pickIsDog=mk<50,other=(p.sides||[]).find(s=>s.selection&&!bbNameMatches(s.selection,p.pick_name))?.selection;
       const sel=pickIsDog?p.pick_name:other,model=pickIsDog?md:100-md,market=pickIsDog?mk:100-mk;
-      if(!sel||!(model>market)||market>=50)return null;
+      if(!sel||!(model>market)||market>=50||market<15)return null;
       return {selection:sel,home:p.home,away:p.away,kickoff:p.kickoff,model_pct:model,market_pct:market,disagreement_points:model-market};
     }).filter(c=>c&&!have.has(teamKey(c.selection))).sort((a,b)=>b.disagreement_points-a.disagreement_points);
     calls.push(...extra.slice(0,WATCH-calls.length));
@@ -1293,12 +1294,15 @@ function rsModelMarketWatch(){
     const model=Number(p.model_pct),market=Number(p.market_pct),gap=Number(p.disagreement_points);
     const away=String(p.selection||'').toLowerCase()===String(p.away||'').toLowerCase();
     const status=typeof upsetStatusText==='function'?upsetStatusText(p,away):'';
-    return `<li class="rsGapRow"><div class="rsGapGame"><b class="rsLogoName">${typeof teamMark==='function'?teamMark(p.selection):''}${esc(rsShortName(p.selection))}</b>`
-      +`<span>${esc(rsShortName(p.away))} at ${esc(rsShortName(p.home))}${status?` · ${esc(status)}`:''}</span></div>`
-      +`<span class="rsNum"><b>${communityModelPctLabel(model)}</b><small>Matchday</small></span>`
-      +`<span class="rsNum"><b>${Number.isFinite(market)?market.toFixed(1)+'%':'—'}</b><small>market</small></span>`
+    // Both teams: the underdog the model likes first, then its opponent.
+    const opp=away?p.home:p.away,mark=n=>typeof teamMark==='function'?teamMark(n):'';
+    return `<li class="rsGapRow"><div class="rsGapGame"><div class="rsWatchTeams"><b class="rsLogoName">${mark(p.selection)}${esc(rsShortName(p.selection))}</b>`
+      +`<i>${away?'at':'vs'}</i><b class="rsLogoName rsWatchOpp">${mark(opp)}${esc(rsShortName(opp))}</b></div>`
+      +`<span>${status?esc(status):''}</span></div>`
+      +`<span class="rsNum"><b>${communityModelPctLabel(model)}</b></span>`
+      +`<span class="rsNum"><b>${Number.isFinite(market)?market.toFixed(1)+'%':'—'}</b></span>`
       // The gap is what puts a game on this list, so it carries the highlight.
-      +`<span class="rsNum"><b class="rsSignal">${Number.isFinite(gap)?'+'+gap.toFixed(1):'—'}</b><small>gap</small></span></li>`;
+      +`<span class="rsNum"><b class="rsSignal">${Number.isFinite(gap)?'+'+gap.toFixed(1):'—'}</b></span></li>`;
   }).join('');
   // How disagreement has actually graded, so the live list is read against
   // the record rather than as a tip sheet.
@@ -1309,7 +1313,8 @@ function rsModelMarketWatch(){
     .filter(([,b])=>b&&b.picks).map(([l,b])=>bar(l,b)).join('');
   return `<section class="rsBlock rsSpan12">${rsTop('<span title="To watch and grade, not recommended bets.">Model–market watch</span>','live',esc(rsSeasonWeek()))}`
     +`<div class="rsSplit"><div class="rsSplitMain">`
-    +`<ul class="rsList">${rows}</ul></div>`
+    // One header row instead of a gray label under every number.
+    +`<ul class="rsList rsWatchList"><li class="rsGapRow rsWatchHead"><span></span><span>Matchday</span><span>Market</span><span>Gap</span></li>${rows}</ul></div>`
     +`<div class="rsSplitSide">${hist?`<div class="rsHistBars"><div class="rsHistHead"><span>How disagreement has graded</span>${rsChip('graded')}</div>${hist}</div>`:''}`
     +`</div></div></section>`;
 }

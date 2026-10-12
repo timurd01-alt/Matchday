@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1011G",
+  "tag": "Fix",
+  "title": "Research, filled out",
+  "items": [
+   "Every Research section uses the same larger logos, and Longshots That Won has bigger names and figures.",
+   "Model–market watch shows both teams in each game, labels its columns once instead of under every number, and skips games without a real market price.",
+   "Games missing their efficiency breakdown, including Penn State–USC, now have it."
+  ]
+ },
+ {
   "date": "Build 1011F",
   "tag": "Fix",
   "title": "Bigger, more readable text and logos",
