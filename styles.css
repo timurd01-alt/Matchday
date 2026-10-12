@@ -4127,3 +4127,5 @@ span.rsSignal,:is(#view-score,#view-news) span.rsSignal,.scGap .scUnit{font-fami
 #view-news .rsBlock:has(.rsDivRow){display:flex;flex-direction:column}
 #view-news .rsBlock:has(.rsDivRow) .rsDiv{display:flex;flex-direction:column;flex:1}
 #view-news .rsBlock:has(.rsDivRow) .rsDivRow{flex:1}
+#view-news .rsMovers li{grid-template-columns:40px minmax(0,1fr) auto;column-gap:12px}
+#view-news .rsMovers li>.teamMark{width:40px!important;height:40px!important;border-radius:9px}

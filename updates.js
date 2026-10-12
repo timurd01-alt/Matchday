@@ -4,6 +4,22 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1011ZA",
+  "tag": "Fix",
+  "title": "Conference landscape back to six",
+  "items": [
+   "Conference landscape shows six conferences with a View all button again, lining up with the table beside it."
+  ]
+ },
+ {
+  "date": "Build 1011Z",
+  "tag": "Fix",
+  "title": "Larger risers logos",
+  "items": [
+   "Risers & fallers logos are now full size and square, matching the rest of Research."
+  ]
+ },
+ {
   "date": "Build 1011 Learn",
   "tag": "Design",
   "title": "A clearer Matchday field guide",
