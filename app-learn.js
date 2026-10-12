@@ -87,9 +87,7 @@
       </details>`;
     };
     host.innerHTML=`<div class="vhead">Learn</div>
-      <div class="seclbl">Lessons</div>
       <div class="learnList">${LESSONS.map(lesson).join('')}</div>
-      <div class="seclbl">Glossary</div>
       <dl class="learnGlossary">${GLOSSARY.map(([t,d])=>`<div><dt>${esc(t)}</dt><dd>${esc(d)}</dd></div>`).join('')}</dl>`;
   };
   window.__learnOpen=id=>{OPEN=id;document.querySelectorAll('.learnLesson[open]').forEach(d=>{if(d.id!=='learn-'+id)d.open=false})};

@@ -4,6 +4,17 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1011F",
+  "tag": "Fix",
+  "title": "Bigger, more readable text and logos",
+  "items": [
+   "Small text across the site is larger, so labels and team names sit in proportion with the numbers beside them.",
+   "Team logos are bigger, especially on the Research page.",
+   "Model–market watch always lists three games.",
+   "The Learn page drops its section labels."
+  ]
+ },
+ {
   "date": "Build 1011E",
   "tag": "New",
   "title": "Margins next to every pick",

@@ -71,7 +71,23 @@ try {
     if ($SkipRefresh) { Say 'skipping Sigma Lab refresh (-SkipRefresh)' } else {
         # refresh exits 1 when a backlog remains (e.g. a late game with no
         # play-by-play yet); that is reported, not fatal.
+        # The five-minute poller is paused for the run, and it is what fetches
+        # final scores -- so fetch them here first, or late Saturday games are
+        # still unfinished when the refresh grades the week.
+        Run 'fetch finals' $BetBetter $PythonPath @('-m','betbetter','once','--force') -Soft
         Run 'refresh run' $BetBetter $PythonPath @('-m','betbetter','refresh','run','--handoff=') -Soft
+        # Every game of the past week must be graded before the scorecard ships.
+        foreach ($attempt in 1..3) {
+            Push-Location $BetBetter
+            & $PythonPath -m betbetter forecast pending *> $null
+            $pending = $LASTEXITCODE
+            Pop-Location
+            if ($pending -eq 0) { Say '   every game of the past week is graded'; break }
+            Say "   ungraded games remain (attempt $attempt); fetching finals and grading again"
+            Run 'fetch finals' $BetBetter $PythonPath @('-m','betbetter','once','--force') -Soft
+            Run 'grade' $BetBetter $PythonPath @('-m','betbetter','forecast','settle') -Soft
+        }
+        Run 'pending check' $BetBetter $PythonPath @('-m','betbetter','forecast','pending') -Soft
         # The coming week only: the publish is what has to be fresh. The rest
         # of the season (about 560 games, nearly an hour) is a separate job.
         Run 'forecast slate' $BetBetter $PythonPath @('-m','betbetter','forecast','slate','--sport','ncaaf','--days','8') -Soft

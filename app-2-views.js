@@ -1271,6 +1271,23 @@ function rsFeatured(){
 function rsModelMarketWatch(){
   const u=(typeof MATCHDAY_BETBETTER_UPSET!=='undefined')?MATCHDAY_BETBETTER_UPSET:null;
   const calls=u&&u.available?bbSportRows((u.picks&&u.picks.length)?u.picks:[u.pick].filter(Boolean)):[];
+  // Always three: the engine's upset card can carry fewer, so the list is
+  // filled from this week's picks with the same rule -- an underdog the model
+  // rates above the market -- by the size of that gap.
+  const WATCH=3;
+  if(calls.length<WATCH){
+    const picks=(typeof MATCHDAY_BETBETTER_PICKS!=='undefined'?bbSportRows(MATCHDAY_BETBETTER_PICKS):[])||[];
+    const now=Date.now(),week=now+7*86400000,have=new Set(calls.map(c=>teamKey(c.selection)));
+    const extra=picks.map(p=>{
+      const mk=Number(p.market_pct),md=Number(p.model_pct),t=Date.parse(p.kickoff||'');
+      if(!Number.isFinite(mk)||!Number.isFinite(md)||!(t>now&&t<week))return null;
+      const pickIsDog=mk<50,other=(p.sides||[]).find(s=>s.selection&&!bbNameMatches(s.selection,p.pick_name))?.selection;
+      const sel=pickIsDog?p.pick_name:other,model=pickIsDog?md:100-md,market=pickIsDog?mk:100-mk;
+      if(!sel||!(model>market)||market>=50)return null;
+      return {selection:sel,home:p.home,away:p.away,kickoff:p.kickoff,model_pct:model,market_pct:market,disagreement_points:model-market};
+    }).filter(c=>c&&!have.has(teamKey(c.selection))).sort((a,b)=>b.disagreement_points-a.disagreement_points);
+    calls.push(...extra.slice(0,WATCH-calls.length));
+  }
   if(!calls.length)return '';
   const rows=calls.map(p=>{
     const model=Number(p.model_pct),market=Number(p.market_pct),gap=Number(p.disagreement_points);
