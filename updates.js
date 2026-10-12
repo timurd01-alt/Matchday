@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1011U",
+  "tag": "Fix",
+  "title": "Research charts fill their blocks",
+  "items": [
+   "Chart legends and filters share one row, and the charts grow to fill the space below."
+  ]
+ },
+ {
   "date": "Build 1011T",
   "tag": "Fix",
   "title": "Compact defense table",
