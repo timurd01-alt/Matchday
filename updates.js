@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1011ZB",
+  "tag": "Fix",
+  "title": "Team-group lists fill their blocks",
+  "items": [
+   "Defense, offense and schedule group lists now stretch to end level with the block beside them."
+  ]
+ },
+ {
   "date": "Build 1011ZA",
   "tag": "Fix",
   "title": "Conference landscape back to six",
