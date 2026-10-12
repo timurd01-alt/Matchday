@@ -4021,7 +4021,7 @@ span.rsSignal,:is(#view-score,#view-news) span.rsSignal,.scGap .scUnit{font-fami
 .lnIntro h1{font:600 clamp(28px,4vw,44px)/1.15 var(--sans);letter-spacing:-.035em;margin:14px 0 12px;color:var(--text)}
 .lnIntro p{font:400 15px/1.6 var(--sans);color:var(--muted);margin:0}
 .lnGrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin:0 0 40px}
-.lnCard{display:flex;flex-direction:column;align-items:flex-start;gap:0;min-height:245px;padding:24px;text-align:left;cursor:pointer;color:var(--text);background:rgba(255,255,255,.018);border:1px solid var(--line);border-radius:8px;transition:border-color .15s,background .15s}
+.lnCard{display:flex;flex-direction:column;align-items:flex-start;gap:0;min-height:0;padding:24px;text-align:left;cursor:pointer;color:var(--text);background:rgba(255,255,255,.018);border:1px solid var(--line);border-radius:8px;transition:border-color .15s,background .15s}
 .lnCard:hover{border-color:var(--signal);background:rgba(222,250,16,.035)}
 .lnCard:focus-visible{outline:2px solid var(--signal);outline-offset:4px}
 .lnTopic{display:flex;align-items:center;gap:9px;color:var(--signal);font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;margin-bottom:24px}
@@ -4030,7 +4030,7 @@ span.rsSignal,:is(#view-score,#view-news) span.rsSignal,.scGap .scUnit{font-fami
 .lnRead{display:flex;align-items:center;justify-content:space-between;width:100%;margin-top:auto;font:500 12px var(--sans);color:var(--text)}
 .lnRead span{font-size:20px;color:var(--signal)}
 @media(max-width:1100px){.lnGrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:520px){.lnGrid{grid-template-columns:1fr}.lnCard{min-height:210px;padding:22px}.lnIntro{padding-top:12px}}
+@media(max-width:520px){.lnGrid{grid-template-columns:1fr}.lnCard{min-height:0;padding:22px}.lnIntro{padding-top:12px}}
 .lnCount{font-family:var(--mono);font-size:var(--fs-2xs);letter-spacing:.1em;color:var(--signal);font-weight:var(--fw-bold)}
 .lnFigure{font-family:var(--display);font-size:var(--fs-6xl);font-weight:var(--fw-bold);line-height:1;color:var(--win);margin-top:4px}
 .lnCaption{font-family:var(--mono);font-size:var(--fs-xs);color:var(--muted)}
@@ -4135,3 +4135,8 @@ span.rsSignal,:is(#view-score,#view-news) span.rsSignal,.scGap .scUnit{font-fami
 #view-news .rsQuadPane:not([hidden]){display:flex;flex-direction:column;flex:1}
 #view-news .rsQuadList{display:flex;flex-direction:column;flex:1}
 #view-news .rsQuadList>li:not(.rsQuadMoreRow){flex:1}
+#view-news .rsBlock:has(.rsConfRow) .rsScrollX{display:flex;flex-direction:column;flex:1}
+/* Toughest schedules: rows stretch so the button ends level with Conference landscape. */
+#view-news .rsBlock:has(.rsSchedRow){display:flex;flex-direction:column}
+#view-news .rsBlock:has(.rsSchedRow) :is(.rsScrollX,ul,ol):has(.rsSchedRow){display:flex;flex-direction:column;flex:1}
+#view-news .rsSchedRow:not(.rsExtra){flex:1}
