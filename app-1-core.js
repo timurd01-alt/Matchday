@@ -948,7 +948,8 @@ function openAllGames(){
 function gamesDifferencesHTML(reads){
   const rows=reads.length?reads.map(read=>{
     const m=read.match,d=read.difference;
-    const content=`<span><b>${esc(m.home?.name||'Home')} vs ${esc(m.away?.name||'Away')}</b><small>${esc(read.pick)} · model ${modelPctLabel(read.model)} · market ${read.market.toFixed(1)}%</small></span><strong class="${d>0?'up':d<0?'down':''}">${d>0?'+':''}${d.toFixed(1)} pts</strong>`;
+    const mk=n=>typeof teamMark==='function'?teamMark(n):'';
+    const content=`<i class="gdMarks">${mk(m.home?.name)}${mk(m.away?.name)}</i><span><b>${esc(m.home?.name||'Home')} vs ${esc(m.away?.name||'Away')}</b><small>${esc(typeof rsShortName==='function'?rsShortName(read.pick):read.pick)} ${modelPctLabel(read.model)} · market ${read.market.toFixed(1)}%</small></span><strong class="${d>0?'up':d<0?'down':''}">${d>0?'+':''}${d.toFixed(1)} pts</strong>`;
     return `<button type="button" onclick="openMatchModal('${esc(String(m.id))}')">${content}</button>`;
   }).join(''):`<div class="gamesEmpty">Model and market comparisons will appear as games are priced.</div>`;
   return `<section class="gamesDifferences"><div class="gamesSectionHead"><span>Largest model / market differences</span><small>${reads.length?'Top '+reads.length:'Awaiting prices'}</small></div><div class="gamesDifferenceRows">${rows}</div><button type="button" class="gamesTextLink" onclick="openAllGames()">View all games <span aria-hidden="true">→</span></button></section>`;
@@ -994,7 +995,7 @@ function gamesNotableHTML(){
     const [away,home]=String(r.event_name||'').split(' at ');
     const [hs,as]=String(r.score||'').split(/[–-]/).map(x=>x.trim());
     const game=home?`${esc(short(away))} ${esc(as||'')}, ${esc(short(home))} ${esc(hs||'')}`:esc(r.event_name||'');
-    return `<li class="${won?'hit':'miss'}"><em>${label}</em><b>${esc(short(r.selection))} <i>${won?'✓':'✗'}</i></b>`
+    return `<li class="${won?'hit':'miss'}"><em>${label}</em><b>${typeof teamMark==='function'?teamMark(r.selection):''}${esc(short(r.selection))} <i>${won?'✓':'✗'}</i></b>`
       +`<small>${game}</small></li>`;
   };
   const body=item(best,bestLabel,true)+item(miss,'Toughest miss',false);
@@ -1006,7 +1007,7 @@ function gamesRecordHTML(){
   const r=sc?.record;
   if(!sc?.available||!r?.picks)return `<section class="gamesRecord"><div><span>Public record</span><strong>Record begins after picks are graded.</strong></div><button type="button" onclick="setView('score')">View Scorecard <span aria-hidden="true">→</span></button></section>`;
   const expected=Number(r.expected_hit_rate_pct),actual=Number(r.hit_rate_pct),gap=Number(r.calibration_gap_points);
-  return `<section class="gamesRecord"><div><span>Public record</span><strong>${Number(r.wins)||0}–${Number(r.losses)||0}</strong><p>${r.picks} locked pregame picks · ${Number.isFinite(actual)?`${actual.toFixed(1)}% hit rate`:''}${Number.isFinite(expected)?` vs ${expected.toFixed(1)}% expected`:''}${Number.isFinite(gap)?` · ${gap>0?'+':''}${gap.toFixed(1)} calibration pts`:''}</p></div><button type="button" onclick="setView('score')">View Scorecard <span aria-hidden="true">→</span></button></section>`;
+  return `<section class="gamesRecord"><div><span>Public record</span><strong>${Number(r.wins)||0}–${Number(r.losses)||0}</strong><p>${Number.isFinite(actual)?`${actual.toFixed(1)}% of ${r.picks} locked picks`:`${r.picks} locked picks`}${Number.isFinite(expected)?` · ${expected.toFixed(1)}% expected`:''}</p></div><button type="button" onclick="setView('score')">View Scorecard <span aria-hidden="true">→</span></button></section>`;
 }
 /* Games-board filters. Kind is one of all / top25 / ranked (both teams in the
    poll) / conf (same-conference game) / nonconf; conf narrows to one league.

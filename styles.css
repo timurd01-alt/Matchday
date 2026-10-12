@@ -4144,3 +4144,11 @@ span.rsSignal,:is(#view-score,#view-news) span.rsSignal,.scGap .scUnit{font-fami
 /* Empty-season blocks: the note sits in the middle instead of under the title. */
 #view-news .rsWaiting{display:flex;flex-direction:column}
 #view-news .rsWaiting .rsWaitingNote{flex:1;display:flex;align-items:center;justify-content:center;margin:0}
+/* Home: smoother model/market list and side column. */
+#view-home .gamesDifferenceRows button{grid-template-columns:auto minmax(0,1fr) auto;gap:16px}
+#view-home .gdMarks{display:flex;font-style:normal}
+#view-home .gdMarks{gap:6px}
+#view-home .gdMarks .teamMark{width:34px;height:34px;flex:0 0 34px;border-radius:9px}
+#view-home .gamesNotable b{display:flex;align-items:center;gap:10px}
+#view-home .gamesNotable b .teamMark{width:30px;height:30px;flex:0 0 30px;border-radius:8px}
+#view-home .gamesNotable small{padding-left:40px}
