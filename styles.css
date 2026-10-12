@@ -4225,3 +4225,14 @@ span.rsSignal,:is(#view-score,#view-news) span.rsSignal,.scGap .scUnit{font-fami
   #view-news .rsWatchBars i b.mkt{background:var(--muted)}
   #view-news .rsWatchBars em{font-style:normal;font-family:var(--mono);font-size:var(--fs-sm);font-weight:var(--fw-bold);text-align:right;color:var(--text)}
 }
+/* Model–market watch on phones: both teams always on one line; the gap pill moves to the timing line. */
+@media(max-width:700px){
+  #view-news .rsWatchTeams{display:grid!important;grid-template-columns:minmax(0,max-content) auto minmax(0,max-content);justify-content:start;align-items:center;column-gap:8px!important;padding-right:0!important}
+  #view-news .rsWatchTeams .rsLogoName{display:flex;align-items:center;min-width:0;font-size:var(--fs-md)!important}
+  #view-news .rsWatchTeams .rsWN{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  #view-news .rsWatchTeams .rsWatchWhen{grid-column:1/-1;line-height:24px;margin:0!important}
+  #view-news .rsWatchList .rsGapRow>.rsNum:nth-child(4){top:44px!important}
+  #view-news .rsWatchList .rsGapRow{padding:12px 0!important;row-gap:0!important}
+  #view-news .rsWatchTeams{row-gap:2px!important}
+  #view-news .rsWatchBars{margin-top:6px!important;gap:6px 10px!important}
+}

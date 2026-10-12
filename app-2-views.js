@@ -1306,8 +1306,8 @@ function rsModelMarketWatch(){
     const status=typeof upsetStatusText==='function'?upsetStatusText(p,away):'';
     // Both teams: the underdog the model likes first, then its opponent.
     const opp=away?p.home:p.away,mark=n=>typeof teamMark==='function'?teamMark(n):'';
-    return `<li class="rsGapRow"><div class="rsGapGame"><div class="rsWatchTeams"><b class="rsLogoName">${mark(p.selection)}${esc(rsShortName(p.selection))}</b>`
-      +`<i>${away?'at':'vs'}</i><b class="rsLogoName rsWatchOpp">${mark(opp)}${esc(rsShortName(opp))}</b>`
+    return `<li class="rsGapRow"><div class="rsGapGame"><div class="rsWatchTeams"><b class="rsLogoName">${mark(p.selection)}<span class="rsWN">${esc(rsShortName(p.selection))}</span></b>`
+      +`<i>${away?'at':'vs'}</i><b class="rsLogoName rsWatchOpp">${mark(opp)}<span class="rsWN">${esc(rsShortName(opp))}</span></b>`
       // Timing on the same line, so each row is one line and its numbers sit level with the teams.
       +`${status?`<span class="rsWatchWhen">${esc(status)}</span>`:''}</div>`
       // Phones: two bars comparing the model's chance with the market's, so
