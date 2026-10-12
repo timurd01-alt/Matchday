@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1011ZG",
+  "tag": "Fix",
+  "title": "Every game shows its margin",
+  "items": [
+   "32 games that were modelled before they had a price were missing their projected score and margin. Every football game now has both."
+  ]
+ },
+ {
   "date": "Build 1011ZF",
   "tag": "Fix",
   "title": "Home headers line up",
