@@ -4250,4 +4250,7 @@ span.rsSignal,:is(#view-score,#view-news) span.rsSignal,.scGap .scUnit{font-fami
 .rsZoomBack{min-height:34px;padding:0 14px;border:1px solid var(--signal);border-radius:999px;background:var(--bg2);color:var(--text);font:var(--fw-semibold) var(--fs-xs)/1 var(--mono);cursor:pointer}
 .rsZoomBack:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
 /* On phones the zoomable chart replaces the separate schedule-groups block. */
-@media(max-width:600px){#view-news .rsBlock:has(.rsQuad[data-key="rating"]){display:none}}
+@media(max-width:600px){#view-news .rsBlock:has(.rsQuad[data-key="rating"]),#view-news .rsBlock:has(.rsQuad[data-key="efficiency"]){display:none}}
+/* Each badge kind has its own colour: Live lime, Graded white, Season blue, Rating amber. */
+.rsChip-current,.rsChip-season{color:#6cb6ff;border-color:rgba(108,182,255,.4)}.rsChip-current::before,.rsChip-season::before{background:#6cb6ff}
+.rsChip-blend{color:#e0b44c;border-color:rgba(224,180,76,.4)}.rsChip-blend::before{background:#e0b44c}

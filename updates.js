@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1012B",
+  "tag": "Design",
+  "title": "Zoomable efficiency chart, coloured badges",
+  "items": [
+   "Efficiency vs net points per success now zooms like rating vs schedule: tap a corner to see that group as logos.",
+   "Research badges each have their own colour: Live, Graded, Season and Rating."
+  ]
+ },
+ {
   "date": "Build 1012A",
   "tag": "Design",
   "title": "Zoomable rating vs schedule chart, and full school names",

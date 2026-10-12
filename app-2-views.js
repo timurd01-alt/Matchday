@@ -1386,71 +1386,93 @@ function rsAxisTicks(sx,sy,x0,x1,y0,y1,W,H,PL,PB,fx,fy){
     +rsNiceTicks(y0,y1).map(v=>`<text class="scTick" x="${PL-6}" y="${(sy(v)+3.5).toFixed(1)}" text-anchor="end">${fy(v)}</text>`).join('');
 }
 function rsScatter(){
-  const rows=rsZoomRows();
-  if(rows.length<12)return '';
-  return `<section class="rsBlock rsSpan8 rsChartBlock rsZoomBlock" data-zoom="all">${rsTop('Rating vs schedule','blend',`${rows.length} teams`)}`
-    +`<div class="rsZoomHead"></div><div class="rsPlot">${rsZoomCharts(rows,'all')}</div>`
+  const c=RS_ZOOM_CHARTS.rating();
+  if(!c)return '';
+  return rsZoomBlock('rating',c,'Rating vs schedule','blend',`${c.pts.length} teams`);
+}
+/* Zoomable scatter charts. The full chart shows every team, the top ten in
+   the power rating as logos; tapping one of the four median-split corners
+   redraws the chart around just that group, every team as its own logo.
+   Each chart supplies its points, medians, axis formats and corner names. */
+const RS_ZOOM_CHARTS={
+  rating(){
+    const rows=((typeof collegeRankingTable==='function'?collegeRankingTable():null)?.rankings||[])
+      .filter(r=>Number.isFinite(Number(r.rating))&&Number.isFinite(Number(r.sos)));
+    if(rows.length<12)return null;
+    const pts=rows.map(r=>({name:r.name,row:r,x:Number(r.sos),y:Number(r.rating),
+      data:`data-rating="${Number(r.rating).toFixed(2)}" data-sos="${Number(r.sos).toFixed(2)}"`}));
+    return {pts,mx:rsMedian(pts.map(p=>p.x)),my:rsMedian(pts.map(p=>p.y)),
+      fx:v=>v.toFixed(Number.isInteger(v)?0:1),fy:v=>v.toFixed(Number.isInteger(v)?0:1),
+      xl:'strength of schedule →',yl:'rating →',
+      groups:{e:'Earned it',s:'Soft schedule',t:'Tested, fell short',u:'Unproven'}};
+  },
+  efficiency(){
+    const D=rsEfficiencyData();if(!D)return null;
+    const pts=D.rows.map(r=>({name:r.name,row:r.row||{},x:r.x,y:r.y,
+      data:`data-m1l="Success rate" data-m1="${(r.x*100).toFixed(1)}%" data-m2l="Net pts / success" data-m2="${rsSigned(r.y,2)}"`}));
+    return {pts,mx:D.mx,my:D.my,
+      fx:v=>Math.round(v*100)+'%',fy:v=>(v>0?'+':'')+v.toFixed(Math.abs(v)<1&&!Number.isInteger(v*10)?2:1),
+      xl:'success rate →',yl:'net points per success →',
+      groups:{e:'Efficient and nets a lot',s:'Scores in bursts',t:'Moves the chains',u:'Struggling'},
+      // Phone corners have half the width; the full name stays in the zoomed header.
+      short:{e:'Efficient',s:'Bursts',t:'Chain movers',u:'Struggling'}};
+  },
+};
+function rsZoomBlock(kind,c,title,chip,aside){
+  return `<section class="rsBlock rsSpan8 rsChartBlock rsZoomBlock" data-chart="${kind}" data-zoom="all">${rsTop(title,chip,aside)}`
+    +`<div class="rsZoomHead"></div><div class="rsPlot">${rsZoomCharts(c,'all')}</div>`
     +`<div class="rsLegend"><span><i class="dotKeyP"></i>Power Four</span><span><i class="dotKeyG"></i>Group of Five</span><span>Logos: top 10 · tap a corner to zoom in</span></div><div class="rsReadout" aria-live="polite">Tap any team to see its numbers.</div>`
     +`</section>`;
 }
-/* Rating vs schedule, zoomable. The full chart shows every team, the top ten
-   as logos; tapping one of the four median-split corners redraws the chart
-   around just that group, every team as its own logo. */
-function rsZoomRows(){
-  return ((typeof collegeRankingTable==='function'?collegeRankingTable():null)?.rankings||[])
-    .filter(r=>Number.isFinite(Number(r.rating))&&Number.isFinite(Number(r.sos)));
-}
-const RS_ZOOM_GROUPS={e:'Earned it',s:'Soft schedule',t:'Tested, fell short',u:'Unproven'};
-function rsZoomCharts(rows,key){
-  // Wide for desktop, mid for tablets, tall for phones (CSS shows one).
-  // The full chart leaves a strip above the plot for the top two corner labels.
+function rsZoomCharts(c,key){
+  // Wide for desktop, mid for tablets, tall for phones (CSS shows one). The
+  // full chart leaves a strip above the plot for the top two corner labels.
   const pt=key==='all'?30:16;
-  return rsZoomDraw(rows,key,1000,440+pt-16,56,16,pt,44,'rsWide')+rsZoomDraw(rows,key,640,380+pt-16,52,14,pt,44,'rsMid')
-    +rsZoomDraw(rows,key,340,(key==='all'?380:420)+pt-16,38,14,pt,40,'rsTall');
+  return rsZoomDraw(c,key,1000,440+pt-16,56,16,pt,44,'rsWide')+rsZoomDraw(c,key,640,380+pt-16,52,14,pt,44,'rsMid')
+    +rsZoomDraw(c,key,340,(key==='all'?380:420)+pt-16,38,14,pt,40,'rsTall');
 }
-function rsZoomDraw(all,key,W,H,PL,PR,PT,PB,cls){
-  const med=a=>{const b=a.slice().sort((m,n)=>m-n);return b[Math.floor(b.length/2)]};
-  const ms=med(all.map(r=>Number(r.sos))),mr=med(all.map(r=>Number(r.rating)));
-  const inGroup=(r,g)=>{const hi=Number(r.rating)>=mr,tough=Number(r.sos)>=ms;
-    return g==='e'?hi&&tough:g==='s'?hi&&!tough:g==='t'?!hi&&tough:!hi&&!tough};
-  const zoom=key!=='all',set=zoom?all.filter(r=>inGroup(r,key)):all;
-  const xs=set.map(r=>Number(r.sos)),ys=set.map(r=>Number(r.rating));
+function rsZoomDraw(c,key,W,H,PL,PR,PT,PB,cls){
+  const inGroup=(p,g)=>{const hi=p.y>=c.my,right=p.x>=c.mx;
+    return g==='e'?hi&&right:g==='s'?hi&&!right:g==='t'?!hi&&right:!hi&&!right};
+  const zoom=key!=='all',set=zoom?c.pts.filter(p=>inGroup(p,key)):c.pts;
+  const xs=set.map(p=>p.x),ys=set.map(p=>p.y);
   let x0=Math.min(...xs),x1=Math.max(...xs),y0=Math.min(...ys),y1=Math.max(...ys);
   const px=(x1-x0)*.06||1,py=(y1-y0)*.06||1;x0-=px;x1+=px;y0-=py;y1+=py;
   const sx=v=>PL+(v-x0)/((x1-x0)||1)*(W-PL-PR),sy=v=>H-PB-(v-y0)/((y1-y0)||1)*(H-PT-PB);
   const wide=W>500,L=zoom?(wide?30:24):(wide?24:17);
   let g=`<line class="scAx" x1="${PL}" y1="${H-PB}" x2="${W-PR}" y2="${H-PB}"/><line class="scAx" x1="${PL}" y1="${PT}" x2="${PL}" y2="${H-PB}"/>`
-    +rsAxisTicks(sx,sy,x0,x1,y0,y1,W,H,PL,PB,v=>v.toFixed(Number.isInteger(v)?0:1),v=>v.toFixed(Number.isInteger(v)?0:1));
+    +rsAxisTicks(sx,sy,x0,x1,y0,y1,W,H,PL,PB,c.fx,c.fy);
   if(!zoom){
-    const mx=sx(ms),my=sy(mr);
+    const mx=sx(c.mx),my=sy(c.my);
     [['s',PL,PT,mx-PL,my-PT],['e',mx,PT,W-PR-mx,my-PT],['u',PL,my,mx-PL,H-PB-my],['t',mx,my,W-PR-mx,H-PB-my]].forEach(([k,x,y,w,h])=>{
-      const right=k==='e'||k==='t',topRow=k==='e'||k==='s',n=all.filter(r=>inGroup(r,k)).length;
-      g+=`<rect class="rsZq" x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${w.toFixed(1)}" height="${h.toFixed(1)}" onclick="rsZoomSet(this,'${k}')"><title>Zoom into ${RS_ZOOM_GROUPS[k]}</title></rect>`
-        +`<text class="rsZqL" x="${(right?x+w-6:x+6).toFixed(1)}" y="${(topRow?PT-8:y+h-7).toFixed(1)}" text-anchor="${right?'end':'start'}">${RS_ZOOM_GROUPS[k]} ${n} ›</text>`;
+      const right=k==='e'||k==='t',topRow=k==='e'||k==='s',n=c.pts.filter(p=>inGroup(p,k)).length;
+      g+=`<rect class="rsZq" x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${w.toFixed(1)}" height="${h.toFixed(1)}" onclick="rsZoomSet(this,'${k}')"><title>Zoom into ${esc(c.groups[k])}</title></rect>`
+        +`<text class="rsZqL" x="${(right?x+w-6:x+6).toFixed(1)}" y="${(topRow?PT-8:y+h-7).toFixed(1)}" text-anchor="${right?'end':'start'}">${esc((!wide&&c.short?c.short:c.groups)[k])} ${n} ›</text>`;
     });
     g+=`<line class="scMed" x1="${mx.toFixed(1)}" y1="${PT}" x2="${mx.toFixed(1)}" y2="${H-PB}"/><line class="scMed" x1="${PL}" y1="${my.toFixed(1)}" x2="${W-PR}" y2="${my.toFixed(1)}"/>`;
   }
   // Logos are nudged apart so overlapping teams stay visible; the nudge is a
   // few pixels, about one logo width at most.
-  const pts=set.map(r=>({r,x:sx(Number(r.sos)),y:sy(Number(r.rating)),logo:zoom||(Number(r.rank)>0&&Number(r.rank)<=10)}));
-  const logos=pts.filter(p=>p.logo),gap=L*.92;
+  const rank=p=>Number(p.row?.rank)||999;
+  const pts=set.map(p=>({p,x:sx(p.x),y:sy(p.y),logo:zoom||rank(p)<=10}));
+  const logos=pts.filter(q=>q.logo),gap=L*.92;
   for(let it=0;it<40;it++)for(let a=0;a<logos.length;a++)for(let b=a+1;b<logos.length;b++){
     const p=logos[a],q=logos[b],dx=q.x-p.x,dy=q.y-p.y,d=Math.hypot(dx,dy)||.01;
     if(d<gap){const m=(gap-d)/2,ux=dx/d,uy=dy/d;p.x-=ux*m;p.y-=uy*m;q.x+=ux*m;q.y+=uy*m}
   }
-  pts.sort((a,b)=>(Number(b.r.rank)||999)-(Number(a.r.rank)||999)).forEach(p=>{
-    const r=p.r,data=`data-team="${esc(r.name)}" data-rank="${esc(r.rank??'')}" data-rating="${Number(r.rating).toFixed(2)}" data-sos="${Number(r.sos).toFixed(2)}" data-conf="${esc(r.conference||'')}"`;
-    if(p.logo){
-      const c=teamLogoCandidates(r.name);
-      g+=`<image class="rsZLogo" href="team-logos/${esc(c[0]||'')}" data-fb="${esc(c.slice(1).join('|'))}" onerror="rsZoomLogoNext(this)" x="${(p.x-L/2).toFixed(1)}" y="${(p.y-L/2).toFixed(1)}" width="${L}" height="${L}"/>`
-        +`<circle class="rsZHit" cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${(L/2).toFixed(1)}" ${data}></circle>`;
+  pts.sort((a,b)=>rank(b.p)-rank(a.p)).forEach(q=>{
+    const p=q.p,data=`data-team="${esc(p.name)}" data-rank="${esc(p.row?.rank??'')}" data-conf="${esc(p.row?.conference||'')}" ${p.data}`;
+    if(q.logo){
+      const cand=teamLogoCandidates(p.name);
+      g+=`<image class="rsZLogo" href="team-logos/${esc(cand[0]||'')}" data-fb="${esc(cand.slice(1).join('|'))}" onerror="rsZoomLogoNext(this)" x="${(q.x-L/2).toFixed(1)}" y="${(q.y-L/2).toFixed(1)}" width="${L}" height="${L}"/>`
+        +`<circle class="rsZHit" cx="${q.x.toFixed(1)}" cy="${q.y.toFixed(1)}" r="${(L/2).toFixed(1)}" ${data}></circle>`;
     }else{
-      g+=`<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${wide?3.4:3.2}" class="${String(r.tier||'')==='power'?'dotP':'dotG'}" ${data}></circle>`;
+      g+=`<circle cx="${q.x.toFixed(1)}" cy="${q.y.toFixed(1)}" r="${wide?3.4:3.2}" class="${String(p.row?.tier||'')==='power'?'dotP':'dotG'}" ${data}></circle>`;
     }
   });
-  g+=`<text class="scAxLbl" x="${((W+PL)/2).toFixed(0)}" y="${H-8}" text-anchor="middle">strength of schedule →</text>`
-    +`<text class="scAxLbl" transform="rotate(-90 12 ${(H/2).toFixed(0)})" x="12" y="${(H/2).toFixed(0)}" text-anchor="middle">rating →</text>`;
-  return `<svg viewBox="0 0 ${W} ${H}" class="rsScatter ${cls}" role="img" aria-label="${zoom?RS_ZOOM_GROUPS[key]+': ':''}team rating against strength of schedule">${g}</svg>`;
+  g+=`<text class="scAxLbl" x="${((W+PL)/2).toFixed(0)}" y="${H-8}" text-anchor="middle">${c.xl}</text>`
+    +`<text class="scAxLbl" transform="rotate(-90 12 ${(H/2).toFixed(0)})" x="12" y="${(H/2).toFixed(0)}" text-anchor="middle">${c.yl}</text>`;
+  return `<svg viewBox="0 0 ${W} ${H}" class="rsScatter ${cls}" role="img" aria-label="${zoom?esc(c.groups[key])+': ':''}${c.yl.replace(' →','')} against ${c.xl.replace(' →','')}">${g}</svg>`;
 }
 function rsZoomLogoNext(img){
   const rest=String(img.dataset.fb||'').split('|').filter(Boolean);
@@ -1459,11 +1481,12 @@ function rsZoomLogoNext(img){
 }
 function rsZoomSet(el,key){
   const block=el.closest('.rsZoomBlock');if(!block)return;
+  const c=RS_ZOOM_CHARTS[block.dataset.chart||'rating']();if(!c)return;
   block.dataset.zoom=key;
-  block.querySelector('.rsPlot').innerHTML=rsZoomCharts(rsZoomRows(),key);
+  block.querySelector('.rsPlot').innerHTML=rsZoomCharts(c,key);
   const n=key==='all'?0:block.querySelectorAll('.rsTall .rsZHit').length;
   block.querySelector('.rsZoomHead').innerHTML=key==='all'?''
-    :`<button type="button" class="rsZoomBack" onclick="rsZoomSet(this,'all')">‹ All teams</button><span>${RS_ZOOM_GROUPS[key]} · ${n} teams</span>`;
+    :`<button type="button" class="rsZoomBack" onclick="rsZoomSet(this,'all')">‹ All teams</button><span>${esc(c.groups[key])} · ${n} teams</span>`;
 }
 /* What the chart shows, stated: the two quadrants that matter and the
    top-25 extremes, all read from the same rows the chart plots. */
@@ -1663,26 +1686,8 @@ function rsEfficiencyData(){
   return {rows,mx,my,x0,x1,y0,y1,pick};
 }
 function rsEfficiency(){
-  const D=rsEfficiencyData();if(!D)return '';
-  const {rows,mx,my,x0,x1,y0,y1,pick}=D;
-  const labelled=new Set(Object.values(pick).map(p=>p.team).filter(Boolean));
-  const draw=(W,H,PL,PR,PT,PB,R,cls)=>{
-    const sx=v=>PL+((v-x0)/((x1-x0)||1))*(W-PL-PR),sy=v=>H-PB-((v-y0)/((y1-y0)||1))*(H-PT-PB);
-    const dots=rows.map(r=>{
-      const hi=labelled.has(r)||(Number(r.row.rank)>0&&Number(r.row.rank)<=25),power=String(r.row.tier||'')==='power';
-      return `<circle cx="${sx(r.x).toFixed(1)}" cy="${sy(r.y).toFixed(1)}" r="${(hi?4.5:3)*R}" class="${hi?'dotHi':power?'dotP':'dotG'}" data-team="${esc(r.name)}" data-rank="${esc(r.row.rank??'')}" data-conf="${esc(r.row.conference||'')}" data-tier="${String(r.row.tier||'')==='power'?'power':'g5'}" data-m1l="Success rate" data-m1="${(r.x*100).toFixed(1)}%" data-m2l="Net pts / success" data-m2="${rsSigned(r.y,2)}"></circle>`;
-    }).join('');
-    const labels=[...labelled].map(r=>{const x=sx(r.x),left=x>W-(W>500?180:100);return `<text class="rsLbl" x="${(left?x-8:x+8).toFixed(1)}" y="${(sy(r.y)+4).toFixed(1)}" text-anchor="${left?'end':'start'}">${esc(rsShortName(r.name))}</text>`}).join('');
-    return `<svg viewBox="0 0 ${W} ${H}" class="rsScatter ${cls}" role="img" aria-label="Scatter of offensive success rate against net expected points per successful play">`
-      +`<line class="scAx" x1="${PL}" y1="${H-PB}" x2="${W-PR}" y2="${H-PB}"/><line class="scAx" x1="${PL}" y1="${PT}" x2="${PL}" y2="${H-PB}"/>`
-      +`<line class="scMed" x1="${sx(mx).toFixed(1)}" y1="${PT}" x2="${sx(mx).toFixed(1)}" y2="${H-PB}"/><line class="scMed" x1="${PL}" y1="${sy(my).toFixed(1)}" x2="${W-PR}" y2="${sy(my).toFixed(1)}"/>`
-      +rsAxisTicks(sx,sy,x0,x1,y0,y1,W,H,PL,PB,v=>Math.round(v*100)+'%',v=>(v>0?'+':'')+v.toFixed(Math.abs(v)<1&&!Number.isInteger(v*10)?2:1))
-      +`${dots}${labels}<text class="scAxLbl" x="${((W+PL)/2).toFixed(0)}" y="${H-8}" text-anchor="middle">success rate →</text>`
-      +`<text class="scAxLbl" transform="rotate(-90 12 ${(H/2).toFixed(0)})" x="12" y="${(H/2).toFixed(0)}" text-anchor="middle">net points per success →</text></svg>`;
-  };
-  return `<section class="rsBlock rsSpan8 rsChartBlock">${rsTop('Efficiency vs net points per success','current',`${rows.length} FBS offenses · opponent-adjusted`)}`
-    +`<div class="rsPlot">`+draw(1000,440,56,16,14,44,1,'rsWide')+draw(640,360,52,14,14,44,1.1,'rsMid')+draw(360,420,46,12,14,44,1.25,'rsTall')+`</div>`
-    +`<div class="rsLegend"><span><i class="dotKeyHi"></i>Top 25</span><span><i class="dotKeyP"></i>Power Four</span><span><i class="dotKeyG"></i>Group of Five</span>${rsPlotFilter(rows.map(r=>r.row?.conference))}</div><div class="rsReadout" aria-live="polite">Tap any dot to see the team.</div></section>`;
+  const c=RS_ZOOM_CHARTS.efficiency();if(!c)return '';
+  return rsZoomBlock('efficiency',c,'Efficiency vs net points per success','current',`${c.pts.length} FBS offenses · opponent-adjusted`);
 }
 function rsEfficiencyNotes(){
   const D=rsEfficiencyData();if(!D)return '';
