@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1011T",
+  "tag": "Fix",
+  "title": "Compact defense table",
+  "items": [
+   "Defense against a real zero uses smaller logos and rows, and the stop-rate column fits inside the block again."
+  ]
+ },
+ {
   "date": "Build 1011S",
   "tag": "Fix",
   "title": "Bigger risers, fuller conference table",

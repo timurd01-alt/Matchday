@@ -4101,3 +4101,9 @@ span.rsSignal,:is(#view-score,#view-news) span.rsSignal,.scGap .scUnit{font-fami
 #view-news .rsBlock:has(.rsConfRow){display:flex;flex-direction:column}
 #view-news .rsBlock:has(.rsConfRow) :is(.rsPane,.rsConf,ul):has(.rsConfRow){display:flex;flex-direction:column;flex:1}
 #view-news .rsConfRow{flex:1;font-size:var(--fs-md)}
+/* Defense against a real zero: compact rows, everything inside the block. */
+#view-news .rsDivRow .teamMark{width:26px;height:26px}
+#view-news .rsDivRow .rsLogoName{min-width:0;font-size:var(--fs-md)}
+#view-news .rsDivRow .rsNum b{font-size:var(--fs-lg)}
+#view-news .rsDivHead,#view-news .rsDivRow{grid-template-columns:150px minmax(0,1fr) 72px 92px}
+#view-news .rsDivRow{padding:5px 0}
