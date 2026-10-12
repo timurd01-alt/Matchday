@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1011Q",
+  "tag": "Fix",
+  "title": "Simpler lesson cards",
+  "items": [
+   "Each Learn card now shows just its live number, a short label and the lesson title, four cards to a row. The detail is inside each lesson."
+  ]
+ },
+ {
   "date": "Build 1011P",
   "tag": "New",
   "title": "A new Learn page",
