@@ -4163,5 +4163,10 @@ span.rsSignal,:is(#view-score,#view-news) span.rsSignal,.scGap .scUnit{font-fami
   #view-home .gamesDifferenceRows b{font-size:var(--fs-md);line-height:1.25}
   #view-home .gamesDifferenceRows strong{font-size:var(--fs-md);min-width:0}
 }
-/* Logos fill a little more of their tile; still inside the rounded corners. */
-.teamMark img{width:86%!important;height:86%!important;object-fit:contain}
+/* Projected score: label, one row per team with the score lined up on the right, then the margin in plain text. */
+.projectedScore{display:grid!important;grid-template-columns:minmax(0,1fr);gap:6px}
+.projectedScore>i{display:none}
+.projectedScore>b{display:flex;justify-content:space-between;align-items:baseline;gap:12px;white-space:normal}
+.projectedScore>b em{font-style:normal;font-family:var(--sans);font-size:var(--fs-lg);font-weight:inherit;letter-spacing:0;min-width:0}
+.projectedScore>b strong{font-family:var(--mono);font-size:var(--fs-lg);font-weight:var(--fw-bold)}
+.projectedScore>.psMeta{margin:4px 0 0!important;font-family:var(--sans)!important;font-size:var(--fs-sm)!important;font-weight:var(--fw-regular)!important;letter-spacing:0!important;text-transform:none!important;color:var(--muted)!important}

@@ -1746,7 +1746,7 @@ function projectedScoreLine(m,p){
   // Same left-to-right order as the header above it (home, then away), with
   // the projected winner highlighted. Listing away first read as "the first
   // team wins" (Western Kentucky 28 · New Mexico State 30).
-  const side=(name,pts,win)=>`<b class="${win?'psWin':'psLose'}">${esc(name)} ${Number(pts)}</b>`;
+  const side=(name,pts,win)=>`<b class="${win?'psWin':'psLose'}"><em>${esc(name)}</em><strong>${Number(pts)}</strong></b>`;
   // The margin and combined points come from the projected score itself, so
   // the window never shows two different margins. Plain words, whole numbers:
   // not a spread or an over/under.

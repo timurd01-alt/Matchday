@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1011ZJ",
+  "tag": "Fix",
+  "title": "Cleaner projected score",
+  "items": [
+   "The projected score lists each team on its own row with the score lined up on the right, then the margin and combined points in plain text.",
+   "Team logos are back to their previous size inside their tiles."
+  ]
+ },
+ {
   "date": "Build 1011ZI",
   "tag": "Design",
   "title": "Sharper team logos",
