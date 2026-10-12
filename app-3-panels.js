@@ -1427,7 +1427,7 @@ renderGroups=function(){
     <div class="vhead">Rankings</div>
   </section>`);
   const ballot=host.querySelector('.ballotSection');
-  if(ballot&&!host.querySelector('[data-ranking-section="top25"]'))ballot.insertAdjacentHTML('beforebegin',`<div class="seclbl" data-ranking-section="top25">Top 25</div><div class="hint" style="margin-bottom:8px">A person's résumé ballot, ranked by hand. It is not the model; the model's own ranking is the power rating below.</div>`);
+  if(ballot&&!host.querySelector('[data-ranking-section="top25"]'))ballot.insertAdjacentHTML('beforebegin',`<div class="seclbl" data-ranking-section="top25">Top 25</div>`);
   const power=host.querySelector('.pollSection:not(.ballotSection):not(.officialPoll)');
   if(power&&!host.querySelector('[data-ranking-section="power"]'))power.insertAdjacentHTML('beforebegin',`<div class="seclbl" data-ranking-section="power">Power Ratings</div><div class="hint" style="margin-bottom:8px">Opponent-adjusted team strength with schedule, offense, and defense context.</div>`);
   const conference=host.querySelector('.tablewrap:not(.officialPoll)');
@@ -1459,8 +1459,8 @@ renderGroups=function(){
       cell.appendChild(tag);
     }
   });
-  // Order is fixed: the model's power rating first, the official AP poll
-  // second, my ballot last. Sections are inserted by separate renderers, so
+  // Order is fixed: the model.s power rating first, the official AP poll
+  // second, the personal ballot last. Sections are inserted by separate renderers, so
   // they are moved into place here rather than relying on insertion order.
   const apTable=host.querySelector('.tablewrap.officialPoll:not(.ballotSection)');
   if(apTable){

@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1011ZL",
+  "tag": "Fix",
+  "title": "Phone research headers and model–market watch",
+  "items": [
+   "On phones, research titles take the full width with their note beneath.",
+   "Model–market watch on phones is more compact: smaller logos, and each number has its own label lined up on the left.",
+   "The note under the personal ballot is gone."
+  ]
+ },
+ {
   "date": "Build 1011ZK",
   "tag": "Fix",
   "title": "Model–market watch on phones",

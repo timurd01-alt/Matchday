@@ -4181,3 +4181,28 @@ span.rsSignal,:is(#view-score,#view-news) span.rsSignal,.scGap .scUnit{font-fami
   #view-news .rsSplitSide:has(.rsHistBars){border-left:0;padding-left:0;border-top:1px solid var(--line2);padding-top:14px}
   #view-news .rsHistBars .rsSplitBar{grid-template-columns:minmax(0,1fr) 90px 44px}
 }
+/* Research headers on phones: the title takes the full width, the note and chip go beneath it. */
+@media(max-width:700px){
+  #view-news .rsTop{flex-wrap:wrap;row-gap:6px}
+  #view-news .rsTop>.rsTitle{flex:1 1 100%}
+  #view-news .rsTopAside{flex-shrink:1;flex-wrap:wrap;min-width:0}
+}
+/* Model–market watch on phones, compact: each number carries its own label; tighter rows. */
+@media(max-width:700px){
+  #view-news .rsWatchList .rsWatchHead{display:none}
+  #view-news .rsWatchList .rsGapRow{padding:14px 0!important;row-gap:8px;column-gap:8px}
+  #view-news .rsWatchTeams{gap:4px 8px}
+  #view-news .rsWatchTeams .teamMark{width:30px!important;height:30px!important;flex:0 0 30px!important;border-radius:8px}
+  #view-news .rsWatchTeams .rsLogoName{font-size:var(--fs-md)!important;gap:8px}
+  #view-news .rsWatchTeams>i{font-size:var(--fs-xs)}
+  #view-news .rsWatchTeams .rsWatchWhen{font-size:var(--fs-2xs)}
+  #view-news .rsWatchList .rsGapRow>.rsNum{text-align:left!important;display:grid!important;gap:2px}
+  #view-news .rsWatchList .rsGapRow>.rsNum::before{font-family:var(--mono);font-size:var(--fs-3xs);letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+  #view-news .rsWatchList .rsGapRow>.rsNum:nth-child(2)::before{content:"Matchday"}
+  #view-news .rsWatchList .rsGapRow>.rsNum:nth-child(3)::before{content:"Market"}
+  #view-news .rsWatchList .rsGapRow>.rsNum:nth-child(4)::before{content:"Gap"}
+  #view-news .rsWatchList .rsGapRow>.rsNum b{font-size:var(--fs-lg)!important}
+  #view-news .rsWatchList .rsGapRow:last-child{border-bottom:0}
+  #view-news .rsSplitSide:has(.rsHistBars){border-top:1px solid var(--line)}
+}
+@media(max-width:700px){#view-news .rsWatchList .rsGapRow>.rsNum>*,#view-news .rsWatchList .rsGapRow>.rsNum::before{text-align:left!important;justify-self:start}}
