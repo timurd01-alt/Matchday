@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1012 Type",
+  "tag": "Design",
+  "title": "Consistent Learn typography",
+  "items": [
+   "Learn headings, labels and links now use the shared Matchday font sizes and weights."
+  ]
+ },
+ {
   "date": "Build 1012 Learn",
   "tag": "Design",
   "title": "Learn fits the Matchday panels",
