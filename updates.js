@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1011H",
+  "tag": "Fix",
+  "title": "Longshot odds, front and center",
+  "items": [
+   "The pregame odds on each Longshots That Won card are now the card's headline figure."
+  ]
+ },
+ {
   "date": "Build 1011G",
   "tag": "Fix",
   "title": "Research, filled out",

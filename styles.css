@@ -4012,7 +4012,7 @@ span.rsSignal,:is(#view-score,#view-news) span.rsSignal,.scGap .scUnit{font-fami
 #view-news .teamMark img,#view-score .teamMark img,#view-community .teamMark img{width:82%;height:82%;object-fit:contain}
 #view-news .rsBlock .teamMark,#view-news li .teamMark{width:38px;height:38px;flex:0 0 38px}
 /* Longshots That Won: each card fills its tile. */
-#view-news .rsShot .rsShotPct{font-size:var(--fs-4xl)}
+#view-news .rsShot .rsShotPct.rsShotPct{font-size:var(--fs-6xl);line-height:1}
 #view-news .rsShot .rsShotTeam.rsLogoName,#view-news .rsShot b.rsShotTeam{font-size:var(--fs-2xl)}
 #view-news .rsShot .rsShotTeam .teamMark{width:46px;height:46px;flex:0 0 46px}
 #view-news .rsShot .rsShotSub,#view-news .rsShot .rsShotDate{font-size:var(--fs-md)}
