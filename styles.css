@@ -4031,3 +4031,9 @@ span.rsSignal,:is(#view-score,#view-news) span.rsSignal,.scGap .scUnit{font-fami
 :is(#strip,.livestrip) :is(.ls-next,.ls-upd,.ls-live,.ls-tag){font-size:var(--fs-2xs)}
 :is(#strip,.livestrip) .ls-brand{font-size:var(--fs-xs)}
 :is(#strip,.livestrip) select{font-size:var(--fs-xs)}
+/* Watch rows and their header share one grid, so labels sit over numbers. */
+.rsWatchList .rsGapRow{display:grid;grid-template-columns:minmax(0,1fr) 96px 96px 84px;align-items:center;column-gap:12px}
+.rsWatchList .rsGapRow>.rsNum{display:block;text-align:right;align-self:center}
+.rsWatchList .rsGapRow>.rsNum b{display:block;font-size:var(--fs-xl)}
+.rsWatchList .rsWatchHead>span{text-align:right}
+.rsWatchList .rsWatchHead>span:first-child{text-align:left}

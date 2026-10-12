@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1011J",
+  "tag": "Fix",
+  "title": "Model–market watch columns line up",
+  "items": [
+   "The Matchday, Market and Gap labels now sit exactly over their numbers, and each row's numbers are centred beside its teams."
+  ]
+ },
+ {
   "date": "Build 1011I",
   "tag": "Fix",
   "title": "Compact top strip",
