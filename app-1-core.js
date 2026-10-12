@@ -994,10 +994,8 @@ function gamesNotableHTML(){
     const [away,home]=String(r.event_name||'').split(' at ');
     const [hs,as]=String(r.score||'').split(/[–-]/).map(x=>x.trim());
     const game=home?`${esc(short(away))} ${esc(as||'')}, ${esc(short(home))} ${esc(hs||'')}`:esc(r.event_name||'');
-    const m=mkt(r);
-    return `<li class="${won?'hit':'miss'}"><em>${label}</em><b>${esc(short(r.selection))}</b>`
-      +`<small>${game}</small>`
-      +`<span>Matchday ${num(r.probability_pct).toFixed(1)}%${m!=null?` · market ${m.toFixed(1)}%`:''}<i>${won?'✓ Won':'✗ Lost'}</i></span></li>`;
+    return `<li class="${won?'hit':'miss'}"><em>${label}</em><b>${esc(short(r.selection))} <i>${won?'✓':'✗'}</i></b>`
+      +`<small>${game}</small></li>`;
   };
   const body=item(best,bestLabel,true)+item(miss,'Toughest miss',false);
   if(!body)return '';
