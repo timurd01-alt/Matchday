@@ -1,33 +1,33 @@
-Model Top 25 -- college football, week of 2026-10-12
+Model Top 25 -- college football, week of 2026-10-13
 Opponent-adjusted scoring margin
-1. Notre Dame +34.0
-2. Miami +32.9
+1. Notre Dame +34.5
+2. Miami +33.0
 3. Ohio State +32.9
-4. Indiana +32.6
-5. Alabama +31.9
-6. Georgia +31.3
-7. Utah +28.9
-8. Texas +26.2
-9. Oregon +26.1
+4. Indiana +32.7
+5. Georgia +31.9
+6. Alabama +31.3
+7. Utah +29.1
+8. Oregon +26.3
+9. Texas +26.2
 (1/3)
 
-10. Texas Tech +25.7
-11. LSU +25.4
-12. Ole Miss +23.6
-13. Houston +23.3
-14. Missouri +23.1
-15. Iowa +22.3
-16. Tennessee +21.9
+10. Texas Tech +25.8
+11. LSU +24.5
+12. Ole Miss +23.5
+13. Houston +23.4
+14. Missouri +23.0
+15. Iowa +22.2
+16. Tennessee +22.0
 17. Nebraska Cornhuskers +21.9
 (2/3)
 
-18. BYU +21.5
-19. Wake Forest +21.4
-20. Penn State +21.3
-21. Oklahoma +21.2
-22. UCLA +20.6
-23. USC +20.3
+18. Wake Forest +21.7
+19. BYU +21.6
+20. USC +21.4
+21. Oklahoma +21.0
+22. UCLA +21.0
+23. Penn State +20.2
 24. Arizona +20.1
-25. Northwestern +19.9
+25. Texas A&M +19.9
 Ratings solved from results, not votes. Full board at matchdayterminal.com
 (3/3)

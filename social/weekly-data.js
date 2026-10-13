@@ -2,10 +2,10 @@
 // Every number here comes from betbetter_picks.json, filtered to the
 // current playing week. Regenerate with: python social_export.py --js
 window.MATCHDAY_SOCIAL = {
-  "week": "WEEK OF OCT 12",
+  "week": "WEEK OF OCT 13",
   "season": "2026 SEASON",
   "published": "2026-10-11",
-  "generated_at": "2026-10-12T01:53:47Z",
+  "generated_at": "2026-10-13T19:43:02Z",
   "logos": {
     "Notre Dame Fighting Irish": "logos/notreDame.png",
     "NOTRE DAME": "logos/notreDame.png",
@@ -19,21 +19,21 @@ window.MATCHDAY_SOCIAL = {
     "Indiana Hoosiers": "logos/indiana.png",
     "INDIANA": "logos/indiana.png",
     "Indiana": "logos/indiana.png",
-    "Alabama Crimson Tide": "logos/alabama.png",
-    "ALABAMA": "logos/alabama.png",
-    "Alabama": "logos/alabama.png",
     "Georgia Bulldogs": "logos/georgia.png",
     "GEORGIA": "logos/georgia.png",
     "Georgia": "logos/georgia.png",
+    "Alabama Crimson Tide": "logos/alabama.png",
+    "ALABAMA": "logos/alabama.png",
+    "Alabama": "logos/alabama.png",
     "Utah Utes": "logos/utah.png",
     "UTAH": "logos/utah.png",
     "Utah": "logos/utah.png",
-    "Texas Longhorns": "logos/texas.png",
-    "TEXAS": "logos/texas.png",
-    "Texas": "logos/texas.png",
     "Oregon Ducks": "logos/oregon.png",
     "OREGON": "logos/oregon.png",
     "Oregon": "logos/oregon.png",
+    "Texas Longhorns": "logos/texas.png",
+    "TEXAS": "logos/texas.png",
+    "Texas": "logos/texas.png",
     "Texas Tech Red Raiders": "logos/texasTech.png",
     "TEXAS TECH": "logos/texasTech.png",
     "Texas Tech": "logos/texasTech.png",
@@ -56,128 +56,128 @@ window.MATCHDAY_SOCIAL = {
     "Tennessee": "logos/tennessee.png",
     "Nebraska Cornhuskers": "logos/nebraska.png",
     "NEBRASKA CORNHUSKERS": "logos/nebraska.png",
-    "BYU Cougars": "logos/byu.png",
-    "BYU": "logos/byu.png",
     "Wake Forest Demon Deacons": "logos/wakeForest.png",
     "WAKE FOREST": "logos/wakeForest.png",
     "Wake Forest": "logos/wakeForest.png",
-    "Penn State Nittany Lions": "logos/penn.png",
-    "PENN STATE": "logos/pennState.png",
-    "Penn State": "logos/pennState.png",
+    "BYU Cougars": "logos/byu.png",
+    "BYU": "logos/byu.png",
+    "USC Trojans": "logos/usc.png",
+    "USC": "logos/usc.png",
     "Oklahoma Sooners": "logos/oklahoma.png",
     "OKLAHOMA": "logos/oklahoma.png",
     "Oklahoma": "logos/oklahoma.png",
     "UCLA Bruins": "logos/ucla.png",
     "UCLA": "logos/ucla.png",
-    "USC Trojans": "logos/usc.png",
-    "USC": "logos/usc.png",
+    "Penn State Nittany Lions": "logos/penn.png",
+    "PENN STATE": "logos/pennState.png",
+    "Penn State": "logos/pennState.png",
     "Arizona Wildcats": "logos/arizona.png",
     "ARIZONA": "logos/arizona.png",
     "Arizona": "logos/arizona.png",
-    "Northwestern Wildcats": "logos/northwestern.png",
-    "NORTHWESTERN": "logos/northwestern.png",
-    "Northwestern": "logos/northwestern.png"
+    "Texas A&M Aggies": "logos/texasAM.png",
+    "TEXAS A&M": "logos/texasAM.png",
+    "Texas A&M": "logos/texasAM.png"
   },
   "top25": [
     [
       "Notre Dame Fighting Irish",
-      34.05
+      34.48
     ],
     [
       "Miami Hurricanes",
-      32.93
+      32.97
     ],
     [
       "Ohio State Buckeyes",
-      32.86
+      32.9
     ],
     [
       "Indiana Hoosiers",
-      32.64
-    ],
-    [
-      "Alabama Crimson Tide",
-      31.91
+      32.71
     ],
     [
       "Georgia Bulldogs",
-      31.29
+      31.89
+    ],
+    [
+      "Alabama Crimson Tide",
+      31.31
     ],
     [
       "Utah Utes",
-      28.87
-    ],
-    [
-      "Texas Longhorns",
-      26.23
+      29.12
     ],
     [
       "Oregon Ducks",
-      26.14
+      26.27
+    ],
+    [
+      "Texas Longhorns",
+      26.21
     ],
     [
       "Texas Tech Red Raiders",
-      25.73
+      25.75
     ],
     [
       "LSU Tigers",
-      25.44
+      24.5
     ],
     [
       "Ole Miss Rebels",
-      23.61
+      23.54
     ],
     [
       "Houston Cougars",
-      23.28
+      23.39
     ],
     [
       "Missouri Tigers",
-      23.09
+      23.02
     ],
     [
       "Iowa Hawkeyes",
-      22.3
+      22.19
     ],
     [
       "Tennessee Volunteers",
-      21.93
+      21.96
     ],
     [
       "Nebraska Cornhuskers",
-      21.87
-    ],
-    [
-      "BYU Cougars",
-      21.54
+      21.85
     ],
     [
       "Wake Forest Demon Deacons",
-      21.45
+      21.72
     ],
     [
-      "Penn State Nittany Lions",
-      21.34
-    ],
-    [
-      "Oklahoma Sooners",
-      21.16
-    ],
-    [
-      "UCLA Bruins",
-      20.61
+      "BYU Cougars",
+      21.56
     ],
     [
       "USC Trojans",
-      20.3
+      21.43
+    ],
+    [
+      "Oklahoma Sooners",
+      20.99
+    ],
+    [
+      "UCLA Bruins",
+      20.99
+    ],
+    [
+      "Penn State Nittany Lions",
+      20.17
     ],
     [
       "Arizona Wildcats",
       20.08
     ],
     [
-      "Northwestern Wildcats",
-      19.85
+      "Texas A&M Aggies",
+      19.87
     ]
   ],
   "upset": {
@@ -202,14 +202,14 @@ window.MATCHDAY_SOCIAL = {
       "away": "ALABAMA",
       "home": "TENNESSEE",
       "time": "SAT · 3:30 PM ET",
-      "hook": "#5 vs #16"
+      "hook": "#6 vs #16"
     },
     {
       "rank": 3,
       "away": "NOTRE DAME",
       "home": "BYU",
       "time": "SAT · 7:30 PM ET",
-      "hook": "#1 vs #18"
+      "hook": "#1 vs #19"
     },
     {
       "rank": 4,
@@ -222,8 +222,8 @@ window.MATCHDAY_SOCIAL = {
       "rank": 5,
       "away": "NEBRASKA CORNHUSKERS",
       "home": "OREGON",
-      "time": "SAT · 12:00 PM ET",
-      "hook": "#17 vs #9"
+      "time": "SAT · 11:00 PM ET",
+      "hook": "#17 vs #8"
     }
   ]
 };
