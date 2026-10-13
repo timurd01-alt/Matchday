@@ -152,7 +152,7 @@ window.MatchdayBracketology=(()=>{
     // it is shown once results exist to calculate it from.
     const table=typeof collegeRankingTable==='function'?collegeRankingTable():null;
     const played=(table?.rankings||[]).some(r=>Number(r.season_games)>0||Number(r.wins)+Number(r.losses)>0);
-    if(!played&&!preview()){host.innerHTML='<div class="bkUnavailable bkAwaiting" role="status"><b>Awaiting results</b><span>Bracketology will be calculated once the season tips off and games are played.</span></div>';return}
+    if((table?.rankings||[]).length&&!played&&!preview()){host.innerHTML='<div class="bkUnavailable bkAwaiting" role="status"><b>Awaiting results</b><span>Bracketology will be calculated once the season tips off and games are played.</span></div>';return}
     if(state.pending)return state.pending;
     if(!force&&state.loaded&&Date.now()-state.loaded<60000){draw(host);return}
     host.innerHTML='<div class="bkUnavailable" role="status">Loading bracketology…</div>';
