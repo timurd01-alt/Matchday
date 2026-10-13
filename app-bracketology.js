@@ -76,21 +76,22 @@ window.MatchdayBracketology=(()=>{
     }).join('')}</div></section>`).join('')}</div></div>`;
   }
   function fullBracket(d){
-    const games=d.bracket.games,positions=new Map(),roots=games.filter(g=>!g.next_game);
-    const final=roots[0],step=248,center=(d.rounds.length-1)*step;
+    const games=d.bracket.games.filter(g=>g.round!=='FF'),positions=new Map(),roots=games.filter(g=>!g.next_game);
+    const rounds=d.rounds.filter(r=>games.some(g=>g.round===r.key));
+    const final=roots[0],step=248,center=(rounds.length-1)*step;
     const feeders=g=>games.filter(n=>n.next_game===g.id).sort((a,b)=>(a.next_slot??0)-(b.next_slot??0));
     const cursors=[24,24];
     function place(g,side){
       const incoming=feeders(g),children=incoming.map(n=>place(n,side));
       const y=children.length?children.reduce((sum,n)=>sum+n.y,0)/children.length:cursors[side];
       if(!children.length)cursors[side]+=148;
-      const round=d.rounds.findIndex(r=>r.key===g.round),distance=(d.rounds.length-1-round)*step;
+      const round=rounds.findIndex(r=>r.key===g.round),distance=(rounds.length-1-round)*step;
       const pos={x:center+(side?distance:-distance),y};positions.set(g.id,pos);return pos;
     }
     if(final){const branches=feeders(final);const placed=branches.map((g,i)=>place(g,i%2));positions.set(final.id,{x:center,y:placed.length?placed.reduce((sum,p)=>sum+p.y,0)/placed.length:60})}
     games.filter(g=>!positions.has(g.id)).forEach(g=>place(g,0));
     const height=Math.max(...cursors)+100,width=center*2+220;
-    return `<nav class="bkRegions" aria-label="Bracket layout"><button type="button" data-full="false" aria-pressed="false">By region</button><button type="button" data-full="true" aria-pressed="true">Full bracket</button><button type="button" data-scroll="-1" aria-label="Scroll bracket left">←</button><button type="button" data-scroll="1" aria-label="Scroll bracket right">→</button></nav><p class="bkHint">Both sides advance toward the championship in the middle. Swipe or scroll left and right. Select a school for its résumé.</p><div class="bkBracketFrame bkFullFrame" tabindex="0" role="region" aria-label="Full bracket, scroll horizontally"><div class="bkBracketColumns bkFullBoard" style="width:${width}px;height:${height}px">${games.map(g=>{const p=positions.get(g.id);return `<div class="bkFullPosition ${g===final?'bkFullFinal':''}" style="left:${p.x}px;top:${p.y}px">${gameCard(g,d)}</div>`}).join('')}</div></div>`;
+    return `<nav class="bkRegions" aria-label="Bracket layout"><button type="button" data-full="false" aria-pressed="false">By region</button><button type="button" data-full="true" aria-pressed="true">Full bracket</button><button type="button" data-scroll="-1" aria-label="Scroll bracket left">←</button><button type="button" data-scroll="1" aria-label="Scroll bracket right">→</button></nav><p class="bkHint">Both sides advance toward the championship in the middle. First Four games are in their region tab. Swipe or scroll left and right. Select a school for its résumé.</p><div class="bkBracketFrame bkFullFrame" tabindex="0" role="region" aria-label="Full bracket, scroll horizontally"><div class="bkBracketColumns bkFullBoard" style="width:${width}px;height:${height}px">${games.map(g=>{const p=positions.get(g.id);return `<div class="bkFullPosition ${g===final?'bkFullFinal':''}" style="left:${p.x}px;top:${p.y}px">${gameCard(g,d)}</div>`}).join('')}</div></div>`;
   }
   function connectBracket(host,d){
     const board=host.querySelector('.bkBracketColumns');if(!board)return;

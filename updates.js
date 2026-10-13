@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1012H",
+  "tag": "Improved",
+  "title": "A cleaner full bracket",
+  "items": [
+   "The full bracket now starts with the Round of 64; First Four games remain available in their tab.",
+   "Removed the extra outer columns while preserving First Four winner slots and advancement paths."
+  ]
+ },
+ {
   "date": "Build 1012G",
   "tag": "Improved",
   "title": "A more compact Bracketology",
