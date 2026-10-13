@@ -241,7 +241,7 @@ def load_handoff_results(path: pathlib.Path = HANDOFF_PATH) -> tuple[list[dict],
         document = json.loads(path.read_text(encoding="utf-8"))
     except (OSError, ValueError):
         return [], None
-    if document.get("source") != "betbetter":
+    if document.get("source") not in ("betbetter", "sigmalab"):
         return [], None
     results = [r for r in (document.get("results") or []) if isinstance(r, dict)]
     return results, _parse_iso(document.get("generated_at"))

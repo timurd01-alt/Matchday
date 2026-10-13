@@ -63,6 +63,8 @@ from typing import Any
 SUPPORTED_VERSIONS = frozenset({1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11})
 
 DEFAULT_HANDOFF_PATH = "betbetter_picks.json"
+# The engine was renamed Sigma Lab on 2026-10-13; files written before that say "betbetter".
+ENGINE_SOURCES = ("betbetter", "sigmalab")
 
 # Reads the owner has reviewed and withheld from display. Each entry names one
 # fixture and why; a withheld game shows no Bet Better read at all rather than
@@ -208,7 +210,7 @@ def load(path: str = DEFAULT_HANDOFF_PATH,
         raise HandoffError(
             f"{path} declares handoff_version {version!r}; this reader "
             f"understands {sorted(SUPPORTED_VERSIONS)}")
-    if document.get("source") != "betbetter":
+    if document.get("source") not in ENGINE_SOURCES:
         raise HandoffError(f"{path} is not a Bet Better handoff")
     picks = document.get("picks")
     if not isinstance(picks, list):

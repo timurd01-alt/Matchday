@@ -79,6 +79,14 @@ class LoadTests(unittest.TestCase):
         # Bet Better may simply not have run. That is different from broken.
         self.assertIsNone(betbetter_handoff.load("no_such_handoff.json"))
 
+    def test_the_renamed_engine_source_loads(self):
+        # The engine became Sigma Lab on 2026-10-13; both names are accepted.
+        self.assertIsNotNone(betbetter_handoff.load(self.write(document(source="sigmalab"))))
+
+    def test_an_unknown_source_is_refused(self):
+        with self.assertRaises(betbetter_handoff.HandoffError):
+            betbetter_handoff.load(self.write(document(source="someone_else")))
+
     def test_a_known_version_loads(self):
         loaded = betbetter_handoff.load(self.write(document()))
         self.assertEqual(len(loaded["picks"]), 1)

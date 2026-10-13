@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1013A",
+  "tag": "Internal",
+  "title": "Engine hand-off accepts the renamed source",
+  "items": [
+   "The picks hand-off now accepts files from the renamed engine as well as older ones. Nothing changes on the site."
+  ]
+ },
+ {
   "date": "Build 1012I",
   "tag": "Fix",
   "title": "Basketball before tip-off",
