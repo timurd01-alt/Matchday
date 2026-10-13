@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1013B",
+  "tag": "Internal",
+  "title": "Weekly ship runs the renamed engine",
+  "items": [
+   "The weekly ship script calls the renamed engine and reads its bracketology file from the right folder. Nothing changes on the site."
+  ]
+ },
+ {
   "date": "Build 1013A",
   "tag": "Internal",
   "title": "Engine hand-off accepts the renamed source",

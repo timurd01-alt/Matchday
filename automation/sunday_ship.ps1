@@ -1,4 +1,4 @@
-# Sunday ship: refresh Sigma Lab (formerly Bet Better), then publish its handoff to Matchday.
+# Sunday ship: refresh Sigma Lab, then publish its handoff to Matchday.
 #
 # Runs on the owner's machine because Sigma Lab (and its SQLite database)
 # lives here, not in GitHub. Order matters and is fixed:
@@ -9,7 +9,7 @@
 #   3. upset settle    grade last week's upset card
 #   4. upset publish   record the coming week's card (--as-of next Monday,
 #                      because Sunday is still the outgoing ISO week)
-#   5. matchday export write betbetter_picks.json
+#   5. matchday export write sigmalab_picks.json (copied to Matchday as betbetter_picks.json)
 #   6. ship            validate + rebuild the snapshot + full test suite in a
 #                      private worktree off origin/main, then push to main.
 #                      The push triggers deploy.yml, which publishes the site.
@@ -19,7 +19,7 @@
 # before the push, nothing is published and the last good site stays up.
 # The owner's ballot is never written here -- `ballot publish` stays manual.
 param(
-    [string]$BetBetter = (Join-Path $env:USERPROFILE 'Desktop\Sigma Lab'),
+    [string]$SigmaLab = (Join-Path $env:USERPROFILE 'Desktop\Sigma Lab'),
     [string]$PythonPath = (Join-Path $env:LOCALAPPDATA 'Programs\Python\Python312\python.exe'),
     [switch]$NoPush,
     # Ship the handoff already on disk; skip the Sigma Lab refresh.
@@ -58,7 +58,7 @@ if (-not $SkipRefresh -and (Test-Path $marker) -and ((Get-Content $marker -Raw).
     exit 0
 }
 
-$poller = 'BetBetter Personal Data Refresh'
+$poller = 'Sigma Lab Personal Data Refresh'
 $pollerPaused = $false
 try {
     if (-not $SkipRefresh -and (Get-ScheduledTask -TaskName $poller -ErrorAction SilentlyContinue)) {
@@ -74,43 +74,43 @@ try {
         # The five-minute poller is paused for the run, and it is what fetches
         # final scores -- so fetch them here first, or late Saturday games are
         # still unfinished when the refresh grades the week.
-        Run 'fetch finals' $BetBetter $PythonPath @('-m','betbetter','once','--force') -Soft
-        Run 'refresh run' $BetBetter $PythonPath @('-m','betbetter','refresh','run','--handoff=') -Soft
+        Run 'fetch finals' $SigmaLab $PythonPath @('-m','sigmalab','once','--force') -Soft
+        Run 'refresh run' $SigmaLab $PythonPath @('-m','sigmalab','refresh','run','--handoff=') -Soft
         # Every game of the past week must be graded before the scorecard ships.
         foreach ($attempt in 1..3) {
-            Push-Location $BetBetter
-            & $PythonPath -m betbetter forecast pending *> $null
+            Push-Location $SigmaLab
+            & $PythonPath -m sigmalab forecast pending *> $null
             $pending = $LASTEXITCODE
             Pop-Location
             if ($pending -eq 0) { Say '   every game of the past week is graded'; break }
             Say "   ungraded games remain (attempt $attempt); fetching finals and grading again"
-            Run 'fetch finals' $BetBetter $PythonPath @('-m','betbetter','once','--force') -Soft
-            Run 'grade' $BetBetter $PythonPath @('-m','betbetter','forecast','settle') -Soft
+            Run 'fetch finals' $SigmaLab $PythonPath @('-m','sigmalab','once','--force') -Soft
+            Run 'grade' $SigmaLab $PythonPath @('-m','sigmalab','forecast','settle') -Soft
         }
-        Run 'pending check' $BetBetter $PythonPath @('-m','betbetter','forecast','pending') -Soft
+        Run 'pending check' $SigmaLab $PythonPath @('-m','sigmalab','forecast','pending') -Soft
         # The coming week only: the publish is what has to be fresh. The rest
         # of the season (about 560 games, nearly an hour) is a separate job.
-        Run 'forecast slate' $BetBetter $PythonPath @('-m','betbetter','forecast','slate','--sport','ncaaf','--days','8') -Soft
+        Run 'forecast slate' $SigmaLab $PythonPath @('-m','sigmalab','forecast','slate','--sport','ncaaf','--days','8') -Soft
         # Basketball: posted rosters first (a late transfer or a new posting
         # changes the preseason), then the season rated against its prior, the
         # Top 25, and the picks read from those ratings.
         $hoopsSeason = if ((Get-Date).Month -ge 7) { (Get-Date).Year + 1 } else { (Get-Date).Year }
-        Run 'basketball rosters' $BetBetter $PythonPath @('-m','betbetter','hoops','rosters') -Soft
-        Run 'basketball ratings' $BetBetter $PythonPath @('-m','betbetter','hoops','rate','--league','ncaam','--project','--season',"$hoopsSeason") -Soft
-        Run 'basketball Top 25' $BetBetter $PythonPath @('-m','betbetter','poll','publish','--sport','ncaam') -Soft
-        Run 'basketball forecast slate' $BetBetter $PythonPath @('-m','betbetter','forecast','slate','--sport','ncaam','--days','8') -Soft
+        Run 'basketball rosters' $SigmaLab $PythonPath @('-m','sigmalab','hoops','rosters') -Soft
+        Run 'basketball ratings' $SigmaLab $PythonPath @('-m','sigmalab','hoops','rate','--league','ncaam','--project','--season',"$hoopsSeason") -Soft
+        Run 'basketball Top 25' $SigmaLab $PythonPath @('-m','sigmalab','poll','publish','--sport','ncaam') -Soft
+        Run 'basketball forecast slate' $SigmaLab $PythonPath @('-m','sigmalab','forecast','slate','--sport','ncaam','--days','8') -Soft
         # Bracketology: the season's schedule topped up, then the field projected
         # with last week's file kept for movement arrows.
-        Run 'basketball schedule' $BetBetter $PythonPath @('-m','betbetter','hoops','backfill','--season',"$hoopsSeason",'--league','ncaam') -Soft
-        $bkOut = Join-Path $BetBetter 'outputracketology_ncaam.json'
-        $bkPrev = Join-Path $BetBetter 'outputracketology_ncaam.previous.json'
+        Run 'basketball schedule' $SigmaLab $PythonPath @('-m','sigmalab','hoops','backfill','--season',"$hoopsSeason",'--league','ncaam') -Soft
+        $bkOut = Join-Path $SigmaLab 'output\bracketology_ncaam.json'
+        $bkPrev = Join-Path $SigmaLab 'output\bracketology_ncaam.previous.json'
         if (Test-Path $bkOut) { Copy-Item -Force $bkOut $bkPrev }
-        $bkArgs = @('-m','betbetter','hoops','bracketology','--season',"$hoopsSeason",'--out',$bkOut)
+        $bkArgs = @('-m','sigmalab','hoops','bracketology','--season',"$hoopsSeason",'--out',$bkOut)
         if (Test-Path $bkPrev) { $bkArgs += @('--previous',$bkPrev) }
-        Run 'basketball bracketology' $BetBetter $PythonPath $bkArgs -Soft
-        Run 'upset settle' $BetBetter $PythonPath @('-m','betbetter','upset','settle') -Soft
-        Run "upset publish (as of $asOf)" $BetBetter $PythonPath @('-m','betbetter','upset','publish','--as-of',$asOf) -Soft
-        Run 'matchday export' $BetBetter $PythonPath @('-m','betbetter','matchday','export','--out','betbetter_picks.json')
+        Run 'basketball bracketology' $SigmaLab $PythonPath $bkArgs -Soft
+        Run 'upset settle' $SigmaLab $PythonPath @('-m','sigmalab','upset','settle') -Soft
+        Run "upset publish (as of $asOf)" $SigmaLab $PythonPath @('-m','sigmalab','upset','publish','--as-of',$asOf) -Soft
+        Run 'matchday export' $SigmaLab $PythonPath @('-m','sigmalab','matchday','export','--out','sigmalab_picks.json')
     }
 } finally {
     if ($pollerPaused) { Enable-ScheduledTask -TaskName $poller | Out-Null }
@@ -127,8 +127,8 @@ Push-Location $tree
 try {
     git checkout -q --detach origin/main
     git reset -q --hard origin/main
-    Copy-Item -Force (Join-Path $BetBetter 'betbetter_picks.json') (Join-Path $tree 'betbetter_picks.json')
-    $bk = Join-Path $BetBetter 'outputracketology_ncaam.json'
+    Copy-Item -Force (Join-Path $SigmaLab 'sigmalab_picks.json') (Join-Path $tree 'betbetter_picks.json')
+    $bk = Join-Path $SigmaLab 'output\bracketology_ncaam.json'
     if (Test-Path $bk) { Copy-Item -Force $bk (Join-Path $tree 'bracketology_ncaam.json') }
 
     Run 'validate handoff' $tree $PythonPath @('-c', "import betbetter_handoff as h, json, sys; d=json.load(open('betbetter_picks.json',encoding='utf-8')); v=d.get('handoff_version'); sys.exit(0 if v in h.SUPPORTED_VERSIONS else 'unsupported handoff_version %r' % v)")
