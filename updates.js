@@ -5,6 +5,15 @@
 window.SYSTEM_UPDATES=[
  {
   "date": "Build 1012G",
+  "tag": "Improved",
+  "title": "A more compact Bracketology",
+  "items": [
+   "Reduced bracket card sizes and round spacing so the full tournament takes less scrolling.",
+   "Tightened headings, tables, bubble cards and school details across Bracketology while keeping touch controls usable."
+  ]
+ },
+ {
+  "date": "Build 1012G",
   "tag": "Model",
   "title": "Projected totals recalibrated",
   "items": [
