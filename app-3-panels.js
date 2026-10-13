@@ -1339,7 +1339,9 @@ function collegeRankingTableHTML(){
   const num=(v,d=2)=>Number.isFinite(Number(v))?Number(v).toFixed(d):'—';
   // Before the season starts the ratings are still calibrating, so week-to-week
   // movement is noise from model changes, not from games.
-  const moved=table.season_in_progress!==false&&rows.some(r=>r.movement!=null&&Number.isFinite(Number(r.movement)));
+  // No games played yet (basketball before tip-off) means no movement either.
+  const played=rows.some(r=>Number(r.season_games)>0||Number(r.wins)+Number(r.losses)>0);
+  const moved=played&&table.season_in_progress!==false&&rows.some(r=>r.movement!=null&&Number.isFinite(Number(r.movement)));
   const currentRecords=(DATA.standings||[]).filter(g=>!isPollTable(g)).flatMap(g=>g.teams||[]);
   const recordForRow=row=>{
     const completed=DATA.cfb_result_records?.[teamKey(row.name)];

@@ -1368,7 +1368,9 @@ function rsStat(){
     `<span class="rsSignal"><em>Now</em>#${riser.rank}</span>`].filter(Boolean).join('<i aria-hidden="true">→</i>');
   // This week's moves: power rating places gained or lost since the previous
   // edition. Only drawn when a previous edition exists.
-  const weekly=all.filter(r=>Number.isFinite(Number(r.movement))&&Number(r.movement)!==0);
+  // Weekly moves only once games are played; before that they are model changes.
+  const played=all.some(r=>Number(r.season_games)>0||Number(r.wins)+Number(r.losses)>0);
+  const weekly=played?all.filter(r=>Number.isFinite(Number(r.movement))&&Number(r.movement)!==0):[];
   const up=weekly.filter(r=>Number(r.movement)>0).sort((a,b)=>Number(b.movement)-Number(a.movement)).slice(0,3);
   const down=weekly.filter(r=>Number(r.movement)<0).sort((a,b)=>Number(a.movement)-Number(b.movement)).slice(0,3);
   const li=(r,cls,sign)=>`<li>${(typeof teamMark==='function'?teamMark(r.name):'')}<span class="rsMvName">${esc(rsShortName(r.name))}</span><small class="rsMvRank">PR #${r.rank}</small><b class="rsMvChg ${cls}">${sign}${Math.abs(Number(r.movement))}</b></li>`;

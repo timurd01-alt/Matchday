@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1012I",
+  "tag": "Fix",
+  "title": "Basketball before tip-off",
+  "items": [
+   "Basketball rankings no longer show movement arrows or weekly risers before any games are played.",
+   "Basketball bracketology shows Awaiting results until the season tips off.",
+   "The football bracket heading is title-cased like the other tabs: The Road to a Champion."
+  ]
+ },
+ {
   "date": "Build 1012H",
   "tag": "Model",
   "title": "Basketball preseason weighs program history",
