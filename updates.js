@@ -5,6 +5,14 @@
 window.SYSTEM_UPDATES=[
  {
   "date": "Build 1012H",
+  "tag": "Model",
+  "title": "Basketball preseason weighs program history",
+  "items": [
+   "Basketball preseason ratings now count each program's strength over the previous three seasons, not just last season and roster changes. Tested on past seasons, it cut the preseason error by about 2%."
+  ]
+ },
+ {
+  "date": "Build 1012H",
   "tag": "Improved",
   "title": "A cleaner full bracket",
   "items": [
