@@ -23,7 +23,9 @@ param(
     [string]$PythonPath = (Join-Path $env:LOCALAPPDATA 'Programs\Python\Python312\python.exe'),
     [switch]$NoPush,
     # Ship the handoff already on disk; skip the Sigma Lab refresh.
-    [switch]$SkipRefresh
+    [switch]$SkipRefresh,
+    # Run even if this week was already shipped (the desktop button uses this).
+    [switch]$Force
 )
 $ErrorActionPreference = 'Stop'
 $matchday = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
@@ -53,7 +55,7 @@ function Run([string]$what, [string]$dir, [string]$exe, [string[]]$argv, [switch
 $monday = (Get-Date).Date.AddDays(((8 - [int](Get-Date).DayOfWeek) % 7))
 $asOf = $monday.ToString('yyyy-MM-dd')
 $marker = Join-Path $logDir 'last-shipped-week.txt'
-if (-not $SkipRefresh -and (Test-Path $marker) -and ((Get-Content $marker -Raw).Trim() -eq $asOf)) {
+if (-not $Force -and -not $SkipRefresh -and (Test-Path $marker) -and ((Get-Content $marker -Raw).Trim() -eq $asOf)) {
     Say "week of $asOf already shipped; nothing to do"
     exit 0
 }

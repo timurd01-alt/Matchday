@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1013C",
+  "tag": "Internal",
+  "title": "Manual weekly update",
+  "items": [
+   "The weekly update can be started by hand at any time. Nothing changes on the site."
+  ]
+ },
+ {
   "date": "Build 1013B",
   "tag": "Internal",
   "title": "Weekly ship runs the renamed engine",
