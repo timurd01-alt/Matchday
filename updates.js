@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1016A",
+  "tag": "Fix",
+  "title": "Sharper team logos",
+  "items": [
+   "Team logos in the rankings, conference results and research panels no longer render blurry: each logo now sits on whole pixels inside its badge instead of a half-pixel offset.",
+   "Logos are slightly larger inside the same badges, so no layout moves."
+  ]
+ },
+ {
   "date": "Build 1013C",
   "tag": "Internal",
   "title": "Manual weekly update",
