@@ -1464,11 +1464,14 @@ renderGroups=function(){
   // Order is fixed: the model.s power rating first, the official AP poll
   // second, the personal ballot last. Sections are inserted by separate renderers, so
   // they are moved into place here rather than relying on insertion order.
+  // When the poll was last released, so a Sunday-morning visitor can tell
+  // last week's poll from this week's (the AP releases Sunday afternoon).
+  const _apPollDate=()=>{const d=(typeof MATCHDAY_CFB_AP_POLL!=='undefined'&&MATCHDAY_CFB_AP_POLL.fetched_on)||'';const t=d&&new Date(d+'T12:00:00');return t&&!isNaN(t)?` Released ${t.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'})}; updated Sundays.`:''};
   const apTable=host.querySelector('.tablewrap.officialPoll:not(.ballotSection)');
   if(apTable){
     const stray=apTable.previousElementSibling;
     if(stray?.classList.contains('vhead')&&stray.textContent.trim()==='Rankings')stray.remove();
-    if(!host.querySelector('[data-ranking-section="ap"]'))apTable.insertAdjacentHTML('beforebegin',`<div class="seclbl" data-ranking-section="ap">AP Top 25</div><div class="hint" style="margin-bottom:8px">The official national media poll.</div>`);
+    if(!host.querySelector('[data-ranking-section="ap"]'))apTable.insertAdjacentHTML('beforebegin',`<div class="seclbl" data-ranking-section="ap">AP Top 25</div><div class="hint" style="margin-bottom:8px">The official national media poll.${_apPollDate()}</div>`);
   }
   const group=key=>{const lbl=host.querySelector(`[data-ranking-section="${key}"]`);if(!lbl)return[];const out=[lbl];let n=lbl.nextElementSibling;while(n&&!n.dataset.rankingSection&&!n.classList.contains('vhead')){out.push(n);n=n.nextElementSibling;if(out.length>2)break;}return out;};
   const intro=host.querySelector('.rankingsIntro');

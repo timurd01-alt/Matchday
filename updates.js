@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1018D",
+  "tag": "Improvement",
+  "title": "AP Top 25 shows its release date; truer projected scores",
+  "items": [
+   "The AP Top 25 on Rankings now says when the poll was released, so last week's poll is never mistaken for this week's.",
+   "Projected scores no longer show a winner's typical score in close games, and high-scoring projections are pulled toward this season's real scoring level."
+  ]
+ },
+ {
   "date": "Build 1018C",
   "tag": "Fix",
   "title": "Home layout back to the original",
