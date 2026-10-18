@@ -1632,13 +1632,16 @@ function rsConferences(){
   // league cannot win "most balanced" by having no one in it.
   const parity=confs.filter(c=>c.n>=6).slice().sort((a,b)=>a.sd-b.sd);
   const hi=Math.max(...confs.map(c=>c.mean)),lo=Math.min(...confs.map(c=>c.mean));
-  const row=(c,i)=>`<li class="rsConfRow"><span>${esc(c.name)}</span><i class="rsBar"><b style="width:${Math.max(3,Math.round((c.mean-lo)/((hi-lo)||1)*100))}%"></b></i><span class="rsNum"><b>${c.mean.toFixed(1)}</b></span><span class="rsNum rsMuted"><b>${c.n}</b></span></li>`;
+  // Basketball has ~30 conferences; listing them all made this block 1,700px
+  // tall and stretched Toughest schedules beside it. Ten shown (all of
+  // football's), the rest behind View all.
+  const row=(c,i)=>`<li class="rsConfRow${i>=10?' rsExtra':''}"><span>${esc(c.name)}</span><i class="rsBar"><b style="width:${Math.max(3,Math.round((c.mean-lo)/((hi-lo)||1)*100))}%"></b></i><span class="rsNum"><b>${c.mean.toFixed(1)}</b></span><span class="rsNum rsMuted"><b>${c.n}</b></span></li>`;
   return `<section class="rsBlock rsExpandable rsSpan7">${rsTop('Conference landscape','blend','Mean power rating')}`
     +`<dl class="rsSummary"><div><dt>Strongest</dt><dd>${esc(confs[0].name)}</dd></div>`
     +(parity.length?`<div title="Smallest spread of team ratings"><dt>Most balanced</dt><dd>${esc(parity[0].name)}</dd></div><div title="Largest spread of team ratings"><dt>Widest spread</dt><dd>${esc(parity[parity.length-1].name)}</dd></div>`:'')+`</dl>`
     +`<div class="rsScrollX"><div class="rsConfHead"><span>Conference</span><span></span><span>Avg. rating</span><span>Teams</span></div>`
     +`<ul class="rsConf">${confs.map(row).join('')}</ul></div>`
-    +`</section>`;
+    +(confs.length>10?rsMoreBtn(confs.length,'View all','Conference landscape · mean power rating'):'')+`</section>`;
 }
 function rsSchedules(){
   const table=collegeRankingTable();

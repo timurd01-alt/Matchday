@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1018E",
+  "tag": "Fix",
+  "title": "Basketball Research: no more stretched Toughest Schedules",
+  "items": [
+   "Conference Landscape lists its top ten conferences with View all for the rest, so basketball's 30 conferences no longer stretch the Toughest Schedules rows beside it across the page."
+  ]
+ },
+ {
   "date": "Build 1018D",
   "tag": "Improvement",
   "title": "AP Top 25 shows its release date; truer projected scores",
