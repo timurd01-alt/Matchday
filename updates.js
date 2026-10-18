@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1018A",
+  "tag": "Fix",
+  "title": "Weekly update checks results, records and projected scores",
+  "items": [
+   "The weekly publish now refuses to ship when games that kicked off hours ago still have no result, when a ranked team’s record disagrees with its results, or when projected scores drift away from the model’s own line.",
+   "An hourly watchdog switches the data feed back on if it was left off, which is how a week of results went missing."
+  ]
+ },
+ {
   "date": "Build 1016A",
   "tag": "Fix",
   "title": "Sharper team logos",
