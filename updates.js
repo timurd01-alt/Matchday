@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1018C",
+  "tag": "Fix",
+  "title": "Home layout back to the original",
+  "items": [
+   "Removed the side-by-side home sections added in 1018B; the home page is back to its original one-column side panel.",
+   "Public Record keeps its extra room below the divider."
+  ]
+ },
+ {
   "date": "Build 1018B",
   "tag": "Fix",
   "title": "Home layout when there is nothing to compare",
