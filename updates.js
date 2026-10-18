@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1018B",
+  "tag": "Fix",
+  "title": "Home layout when there is nothing to compare",
+  "items": [
+   "Between weeks, or with a sport out of season, Public Record, Latest Calls and Playoff Picture now sit side by side instead of one column stretched across the page.",
+   "Public Record has room below the divider above it, on phones and desktop."
+  ]
+ },
+ {
   "date": "Build 1018A",
   "tag": "Fix",
   "title": "Weekly update checks results, records and projected scores",

@@ -4270,3 +4270,15 @@ span.rsSignal,:is(#view-score,#view-news) span.rsSignal,.scGap .scUnit{font-fami
 .bkAwaiting{display:grid;gap:6px;justify-items:start;padding:28px 22px}
 .bkAwaiting b{font-family:var(--display);font-size:var(--fs-2xl);font-weight:var(--fw-bold);color:var(--text)}
 .bkAwaiting span{font-family:var(--sans);font-size:var(--fs-md);color:var(--muted)}
+/* Home with no model/market list (between weeks, or a sport out of season):
+   the side sections sit side by side instead of one column stretched across
+   the page. */
+@media(min-width:900px){
+  .gamesSupportGrid.noComparisons .gamesSideCol{display:grid!important;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:0 clamp(28px,4vw,64px);align-items:start}
+  /* Room below the divider above (the featured-game block's rule). */
+  #view-home .gamesSupportGrid.noComparisons .gamesSideCol>.gamesRecord,.gamesSupportGrid.noComparisons .gamesSideCol>.gamesRecord{border-top:0;padding-top:20px!important}
+}
+/* On phones the side column stacks under a divider, so its first section needs
+   real space below that line; the 4px top padding only exists to align with
+   the list beside it on desktop. */
+@media(max-width:899px){#view-home .gamesSideCol>.gamesRecord:first-child,.gamesSideCol>.gamesRecord:first-child{padding-top:18px!important}}
