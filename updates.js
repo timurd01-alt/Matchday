@@ -4,6 +4,16 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1019A",
+  "tag": "Fix",
+  "title": "Team pages: right games, right order",
+  "items": [
+   "Team pages no longer mix in another school whose name starts the same way. Texas Tech showed the Texas Longhorns' form (WWWLL) at 6-0, and Ohio State picked up an Ohio Bobcats game.",
+   "Recent results on a team page now run oldest to newest, the same direction as the form dots above them.",
+   "Results are listed strictly by date, newest first; favourite teams no longer jump ahead of newer games."
+  ]
+ },
+ {
   "date": "Build 1018E",
   "tag": "Fix",
   "title": "Basketball Research: no more stretched Toughest Schedules",

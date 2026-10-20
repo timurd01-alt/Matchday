@@ -1084,7 +1084,8 @@ function renderMatches(){const M=DATA.matches||[];
   if(typeof fitRankingCard==='function')fitRankingCard();
   if(typeof balanceBoardMods==='function')balanceBoardMods();}
 function renderResults(){const M=DATA.matches||[];
-  const past=M.filter(isCompleteOrPast).sort((a,b)=>Number(isFavoriteMatch(b))-Number(isFavoriteMatch(a))||(b.kickoff||'').localeCompare(a.kickoff||''));
+  // Strictly by date, newest first: favourites used to float to the top, out of order.
+  const past=M.filter(isCompleteOrPast).sort((a,b)=>(b.kickoff||'').localeCompare(a.kickoff||''));
   const shown=past.slice(0,RESULT_VISIBLE),remaining=Math.max(0,past.length-shown.length);
   $('#view-results').innerHTML=`<div class="vhead">${t('Results')}</div>`+
     (shown.length?shown.map(m=>cardHTML(m,{hidePick:true})).join(''):`<div class="empty" style="grid-column:1/-1">No completed matches yet.</div>`)+

@@ -62,6 +62,11 @@ function bbNameMatches(a,b){
   const x=bbNameWords(a),y=bbNameWords(b);
   if(!x.length||!y.length)return false;
   const [short,long]=x.length<=y.length?[x,y]:[y,x];
+  // "Texas" is not "Texas Tech Red Raiders": a word that makes another school
+  // right after the shorter name rules the match out. Two lookups already did
+  // this; the shared matcher did not, so Texas Tech's team page pulled in the
+  // Longhorns' games and showed their WWWLL as its form at 6-0.
+  if(short.length<long.length&&_BB_SCHOOL_SUFFIX.has(long[short.length]))return false;
   // Equal lengths have no shorter side, so either name may hold the abbreviation.
   return short.every((word,i)=>long[i].startsWith(word)||(x.length===y.length&&word.startsWith(long[i])));
 }
@@ -1042,7 +1047,8 @@ function computeTeamProfile(name){
     rating: ranked?.rating??side?.rating??rec.rating??null,
     sos: ranked?.sos??null, offense: ranked?.adj_o??null, defense: ranked?.adj_d??null,
     conference: ranked?.conference||'', published: rankings?.published_on||'',
-    next, recent: finished.slice(0,5)
+    // Oldest to newest, the same direction as the form dots above it.
+    next, recent: finished.slice(0,5).reverse()
   };
 }
 function teamProfileHTML(p){
@@ -1073,7 +1079,7 @@ function teamProfileHTML(p){
       ${formRow('Home form',p.formHome)}
       ${formRow('Away form',p.formAway)}
       ${nextLine}
-      ${recentRows?`<div class="tpSeclbl">Recent results</div>${recentRows}`:''}
+      ${recentRows?`<div class="tpSeclbl">Recent results <span class="tpFaint">· oldest to newest</span></div>${recentRows}`:''}
     </div>`;
 }
 function openTeamModal(name){
