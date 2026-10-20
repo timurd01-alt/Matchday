@@ -17,7 +17,9 @@
 # Never touches the owner's own Matchday checkout: the ship happens in
 # .worktrees/sunday-ship, reset to origin/main each run. If anything fails
 # before the push, nothing is published and the last good site stays up.
-# The owner's ballot is never written here -- `ballot publish` stays manual.
+# The owner's ballot is published here only when the owner has written this
+# week's file (Desktop button "Edit My Ballot"): Sigma Lab/ballots/ncaaf/<Sunday>.txt.
+# No file means last week's ballot stays up; nothing is ever invented.
 param(
     [string]$SigmaLab = (Join-Path $env:USERPROFILE 'Desktop\Sigma Lab'),
     [string]$PythonPath = (Join-Path $env:LOCALAPPDATA 'Programs\Python\Python312\python.exe'),
@@ -112,6 +114,12 @@ try {
         Run 'basketball bracketology' $SigmaLab $PythonPath $bkArgs -Soft
         Run 'upset settle' $SigmaLab $PythonPath @('-m','sigmalab','upset','settle') -Soft
         Run "upset publish (as of $asOf)" $SigmaLab $PythonPath @('-m','sigmalab','upset','publish','--as-of',$asOf) -Soft
+        # The owner's ballot, dated this week's Sunday, if one has been written.
+        $ballotDay = (Get-Date).Date.AddDays(-[int](Get-Date).DayOfWeek).ToString('yyyy-MM-dd')
+        $ballotFile = Join-Path $SigmaLab (Join-Path 'ballots' (Join-Path 'ncaaf' "$ballotDay.txt"))
+        if (Test-Path $ballotFile) {
+            Run "ballot publish ($ballotDay)" $SigmaLab $PythonPath @('-m','sigmalab','ballot','publish',$ballotFile,'--date',$ballotDay) -Soft
+        } else { Say "   no ballot file for $ballotDay; last week's ballot stays up" }
         Run 'matchday export' $SigmaLab $PythonPath @('-m','sigmalab','matchday','export','--out','sigmalab_picks.json')
     }
 } finally {
