@@ -1,48 +1,48 @@
-COLLEGE MATCHDAY -- WEEK OF 2026-10-19
-Games from 2026-10-19T00:34Z to 2026-10-26T23:59Z (UTC).
-56 of 476 picks in the handoff fall in this window; the rest are later dates and are excluded.
+COLLEGE MATCHDAY -- WEEK OF 2026-10-20
+Games from 2026-10-20T17:44Z to 2026-10-26T23:59Z (UTC).
+55 of 475 picks in the handoff fall in this window; the rest are later dates and are excluded.
 Ratings published 2026-10-18 -- Opponent-adjusted scoring margin.
 
 == TOP 25 ==
 #    TEAM                           RATING   CONFERENCE           SoS
-1    Ohio State Buckeyes            +33.2    Big Ten              13.57
-2    Notre Dame Fighting Irish      +32.9    FBS Independents     10.88
-3    Indiana Hoosiers               +32.2    Big Ten              12.95
-4    Miami Hurricanes               +32.0    ACC                  8.64
-5    Georgia Bulldogs               +29.7    SEC                  12.08
-6    Alabama Crimson Tide           +28.7    SEC                  18.32
-7    Utah Utes                      +27.2    Big 12               8.54
-8    LSU Tigers                     +27.0    SEC                  12.61
-9    Texas Tech Red Raiders         +26.8    Big 12               9.64
-10   Ole Miss Rebels                +26.3    SEC                  15.59
-11   Oregon Ducks                   +26.0    Big Ten              13.96
-12   Texas Longhorns                +25.0    SEC                  18.54
-13   Tennessee Volunteers           +24.1    SEC                  12.06
-14   Wake Forest Demon Deacons      +23.5    ACC                  10.68
-15   Houston Cougars                +22.9    Big 12               11.71
-16   BYU Cougars                    +22.9    Big 12               11.04
-17   Iowa Hawkeyes                  +22.1    Big Ten              10.77
-18   Nebraska Cornhuskers           +22.1    Big Ten              11.07
-19   USC Trojans                    +21.7    Big Ten              14.49
-20   UCLA Bruins                    +20.9    Big Ten              13.54
-21   Missouri Tigers                +20.2    SEC                  12.65
-22   Texas A&M Aggies               +20.2    SEC                  11.17
-23   Arizona Wildcats               +20.1    Big 12               7.43
-24   Louisville Cardinals           +20.0    ACC                  12.27
-25   Penn State Nittany Lions       +19.6    Big Ten              12.98
+1    Ohio State Buckeyes            +42.3    Big Ten              21.29
+2    Indiana Hoosiers               +41.4    Big Ten              20.89
+3    Notre Dame Fighting Irish      +41.3    FBS Independents     17.82
+4    Miami Hurricanes               +40.9    ACC                  16.23
+5    Georgia Bulldogs               +38.5    SEC                  19.97
+6    Alabama Crimson Tide           +37.4    SEC                  26.4
+7    LSU Tigers                     +35.4    SEC                  20.55
+8    Oregon Ducks                   +35.0    Big Ten              21.65
+9    Utah Utes                      +34.8    Big 12               15.56
+10   Texas Tech Red Raiders         +34.6    Big 12               16.46
+11   Ole Miss Rebels                +34.5    SEC                  23.16
+12   Texas Longhorns                +33.9    SEC                  26.75
+13   Tennessee Volunteers           +32.9    SEC                  20.1
+14   BYU Cougars                    +30.8    Big 12               18.75
+15   Wake Forest Demon Deacons      +30.7    ACC                  17.84
+16   Iowa Hawkeyes                  +30.7    Big Ten              19.43
+17   Nebraska Cornhuskers           +30.2    Big Ten              19.49
+18   Houston Cougars                +29.9    Big 12               18.91
+19   USC Trojans                    +29.9    Big Ten              21.68
+20   Missouri Tigers                +28.1    SEC                  20.13
+21   Texas A&M Aggies               +28.0    SEC                  18.18
+22   Florida Gators                 +27.9    SEC                  23.32
+23   Louisville Cardinals           +27.9    ACC                  19.95
+24   Northwestern Wildcats          +27.6    Big Ten              18.01
+25   Arizona Wildcats               +27.4    Big 12               14.67
 
 == THIS WEEK'S GAMES ==
 DAY   HOME                             AWAY                             MODEL    MARKET   PICK
-Sat   #12 Texas Longhorns              #10 Ole Miss Rebels              57.1%    66.9%    Texas Longhorns
-Sat   #7 Utah Utes                     #15 Houston Cougars              66.6%    67.2%    Utah Utes
-Sat   #6 Alabama Crimson Tide          #22 Texas A&M Aggies             82.1%    85.3%    Alabama Crimson Tide
-Sat   Michigan Wolverines              #3 Indiana Hoosiers              75.5%    75.5%    Indiana Hoosiers
-Sat   #4 Miami Hurricanes              Pittsburgh Panthers              90.4%    93.1%    Miami Hurricanes
-Sat   Auburn Tigers                    #8 LSU Tigers                    61.2%    66.1%    LSU Tigers
-Sat   Cincinnati Bearcats              #9 Texas Tech Red Raiders        72.8%    78.7%    Texas Tech Red Raiders
-Sat   Illinois Fighting Illini         #11 Oregon Ducks                 58.9%    --       Oregon Ducks
-Sat   South Carolina Gamecocks         #13 Tennessee Volunteers         51.4%    50.4%    Tennessee Volunteers
-Sat   UCF Knights                      #16 BYU Cougars                  64.8%    72.6%    BYU Cougars
+Sat   #12 Texas Longhorns              #11 Ole Miss Rebels              55.3%    59.5%    Texas Longhorns
+Sun   #9 Utah Utes                     #18 Houston Cougars              67.9%    68.3%    Utah Utes
+Sat   #6 Alabama Crimson Tide          #21 Texas A&M Aggies             81.7%    82.9%    Alabama Crimson Tide
+Sat   Michigan Wolverines              #2 Indiana Hoosiers              74.0%    71.1%    Indiana Hoosiers
+Sat   #4 Miami Hurricanes              Pittsburgh Panthers              90.5%    90.8%    Miami Hurricanes
+Sat   Auburn Tigers                    #7 LSU Tigers                    63.3%    72.7%    LSU Tigers
+Sat   Illinois Fighting Illini         #8 Oregon Ducks                  66.2%    74.9%    Oregon Ducks
+Sat   Cincinnati Bearcats              #10 Texas Tech Red Raiders       72.0%    77.7%    Texas Tech Red Raiders
+Sat   South Carolina Gamecocks         #13 Tennessee Volunteers         50.3%    55.0%    South Carolina Gamecocks
+Sat   UCF Knights                      #14 BYU Cougars                  64.0%    69.6%    BYU Cougars
 
 == UPSET WATCH ==
 No game this week has the model backing a side the market has as an underdog.
