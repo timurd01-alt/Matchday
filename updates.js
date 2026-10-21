@@ -4,6 +4,14 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1021B",
+  "tag": "Improvement",
+  "title": "Rating vs schedule: show every logo",
+  "items": [
+   "A crowded corner now has a \"Show all logos\" button that draws every team as its logo, spread apart so none overlap; \"Top 40 logos only\" switches back."
+  ]
+ },
+ {
   "date": "Build 1021A",
   "tag": "Fix",
   "title": "Rating vs schedule: crowded corners spread out",

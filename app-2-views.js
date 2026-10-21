@@ -1453,7 +1453,7 @@ function rsZoomDraw(c,key,W,H,PL,PR,PT,PB,cls){
   const wide=W>500,L=zoom?(wide?30:24):(wide?24:17);
   // A basketball corner holds ~165 teams; every one as a logo was a solid
   // wall. Past ZOOM_LOGOS, the best-ranked keep logos and the rest are dots.
-  const ZOOM_LOGOS=40,crowded=zoom&&set.length>ZOOM_LOGOS;
+  const ZOOM_LOGOS=40,dense=zoom&&set.length>ZOOM_LOGOS,crowded=dense&&!c.allLogos;
   const logoCut=crowded?set.map(p=>Number(p.row?.rank)||999).sort((a,b)=>a-b)[ZOOM_LOGOS-1]:Infinity;
   let g=`<line class="scAx" x1="${PL}" y1="${H-PB}" x2="${W-PR}" y2="${H-PB}"/><line class="scAx" x1="${PL}" y1="${PT}" x2="${PL}" y2="${H-PB}"/>`
     +rsAxisTicks(sx,sy,x0,x1,y0,y1,W,H,PL,PB,c.fx,c.fy);
@@ -1470,12 +1470,12 @@ function rsZoomDraw(c,key,W,H,PL,PR,PT,PB,cls){
   // few pixels, about one logo width at most.
   const rank=p=>Number(p.row?.rank)||999;
   const pts=set.map(p=>({p,x:sx(p.x),y:sy(p.y),logo:zoom?rank(p)<=logoCut:rank(p)<=10}));
-  const logos=pts.filter(q=>q.logo),gap=L*(crowded?1.02:.92);
+  const logos=pts.filter(q=>q.logo),gap=L*(dense?1.02:.92);
   const clampX=v=>Math.max(PL+L/2,Math.min(W-PR-L/2,v)),clampY=v=>Math.max(PT+L/2,Math.min(H-PB-L/2,v));
-  for(let it=0;it<(crowded?90:40);it++){for(let a=0;a<logos.length;a++)for(let b=a+1;b<logos.length;b++){
+  for(let it=0;it<(dense?90:40);it++){for(let a=0;a<logos.length;a++)for(let b=a+1;b<logos.length;b++){
     const p=logos[a],q=logos[b],dx=q.x-p.x,dy=q.y-p.y,d=Math.hypot(dx,dy)||.01;
     if(d<gap){const m=(gap-d)/2,ux=dx/d,uy=dy/d;p.x-=ux*m;p.y-=uy*m;q.x+=ux*m;q.y+=uy*m}
-  }if(crowded)logos.forEach(q=>{q.x=clampX(q.x);q.y=clampY(q.y)})}
+  }if(dense)logos.forEach(q=>{q.x=clampX(q.x);q.y=clampY(q.y)})}
   pts.sort((a,b)=>rank(b.p)-rank(a.p)).forEach(q=>{
     const p=q.p,data=`data-team="${esc(p.name)}" data-rank="${esc(p.row?.rank??'')}" data-conf="${esc(p.row?.conference||'')}" ${p.data}`;
     if(q.logo){
@@ -1495,14 +1495,23 @@ function rsZoomLogoNext(img){
   if(rest.length){img.dataset.fb=rest.slice(1).join('|');img.setAttribute('href','team-logos/'+rest[0])}
   else img.remove();
 }
+// Crowded corners show 40 logos by default; this switches to every team's logo
+// (and back) for the current zoom.
+function rsZoomAllLogos(el,key){
+  const block=el.closest('.rsZoomBlock');if(!block)return;
+  block.dataset.allLogos=block.dataset.allLogos==='1'?'0':'1';
+  rsZoomSet(el,key);
+}
 function rsZoomSet(el,key){
   const block=el.closest('.rsZoomBlock');if(!block)return;
   const c=RS_ZOOM_CHARTS[block.dataset.chart||'rating']();if(!c)return;
   block.dataset.zoom=key;
+  c.allLogos=block.dataset.allLogos==='1';
   block.querySelector('.rsPlot').innerHTML=rsZoomCharts(c,key);
   const n=key==='all'?0:block.querySelectorAll('.rsTall [data-team]').length;
   block.querySelector('.rsZoomHead').innerHTML=key==='all'?''
-    :`<button type="button" class="rsZoomBack" onclick="rsZoomSet(this,'all')">‹ All teams</button><span>${esc(c.groups[key])} · ${n} teams${n>40?' · logos for the top 40, dots for the rest':''}</span>`;
+    :`<button type="button" class="rsZoomBack" onclick="rsZoomSet(this,'all')">‹ All teams</button><span>${esc(c.groups[key])} · ${n} teams${n>40&&!c.allLogos?' · logos for the top 40, dots for the rest':''}</span>`
+      +(n>40?`<button type="button" class="rsZoomBack" onclick="rsZoomAllLogos(this,'${key}')">${c.allLogos?'Top 40 logos only':`Show all ${n} logos`}</button>`:'');
 }
 /* What the chart shows, stated: the two quadrants that matter and the
    top-25 extremes, all read from the same rows the chart plots. */
