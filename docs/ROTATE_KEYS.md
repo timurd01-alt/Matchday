@@ -4,12 +4,6 @@ Every key in config_keys.py that has appeared in an AI chat should be treated as
 exposed. Rotation = generate new key, paste into config_keys.py, done. Nothing
 else in the app changes -- the code reads keys only from that file.
 
-`backfill_history.py` (a manually-run, one-time historical Elo seed script)
-reads the same CFBD_KEY/CBBD_KEY from config_keys.py. If you rotate a key while
-a backfill run is in progress, that run will start failing mid-way; stop it and
-re-run the same command after pasting the new key -- already-applied seasons
-are skipped automatically.
-
 Matchday covers college football and men's college basketball only. The
 football-data.org, API-Football, BALLDONTLIE, Sportmonks and Big Balls keys are
 no longer read by anything; revoke them at the provider rather than rotating.

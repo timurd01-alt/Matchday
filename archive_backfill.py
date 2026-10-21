@@ -6,15 +6,12 @@ already on disk or freely downloadable without a key:
 
   college        college_ncaa{m,f}_bundle_v*_cache.json  NCAAM / NCAAF seasons
   data           data_*.json                             the current build payloads
+  handoff        betbetter_picks.json -> results         every final this season
 
 Every one of those files was already paid for by a previous run. Re-reading them costs
 nothing, which matters because the providers that hold this history are exactly
 the ones this repository keeps running out of: AGENTS.md records CFBD going dark
 for three weeks and CBBD sitting at zero.
-
-`backfill_history.py` is the deliberate opposite of this script: it spends real
-quota to pull seasons that no free source covers, and it feeds Elo directly.
-The two are complementary, and this one is safe to run whenever.
 
 ## Why the caches are read directly rather than re-fetched
 
@@ -120,9 +117,72 @@ def source_data() -> list[dict[str, Any]]:
     return rows
 
 
+def _short_names(comp: str) -> list[str]:
+    """Every team name the pipeline itself uses for `comp`: its payload and the archive."""
+    payload = _load_json(Path(f"data_{comp.lower()}.json"))
+    names = set()
+    for match in _matches_of(payload) if payload is not None else []:
+        for side in ("home", "away"):
+            name = (match.get(side) or {}).get("name")
+            if name:
+                names.add(str(name))
+    for row in game_archive.load_games(comp):
+        names.update(name for name in (row.get("home_name"), row.get("away_name")) if name)
+    return sorted(names)
+
+
+def source_handoff() -> list[dict[str, Any]]:
+    """Season finals from the engine's handoff (`betbetter_picks.json` -> results).
+
+    The handoff carries every final of the season, while `data_*.json` only
+    holds the display window, so this is what covers the weeks before the
+    hourly archive hook was committed. Its event ids are CFBD/CBBD ids, the
+    same scheme the pipeline archives under, so `game_id` dedupes against
+    `record_build()` rows. It names teams with the mascot appended; each name
+    is mapped to the pipeline's short name by the longest compatible prefix
+    (so "Michigan State Spartans" is not taken as "Michigan"), and kept as-is
+    when no pipeline name matches.
+    """
+    import betbetter_handoff as handoff
+
+    document = _load_json(Path(handoff.DEFAULT_HANDOFF_PATH))
+    if not isinstance(document, dict):
+        print("  - no handoff present; skipping")
+        return []
+    rows: list[dict[str, Any]] = []
+    shorts: dict[str, list[tuple[str, str]]] = {}
+    for result in document.get("results") or []:
+        comp = str(result.get("competition") or "").upper()
+        if comp not in ("NCAAF", "NCAAM"):
+            continue
+        if comp not in shorts:
+            shorts[comp] = [(handoff._normalize(name), name) for name in _short_names(comp)]
+
+        def short(name: Any) -> str:
+            key = handoff._normalize(name)
+            fits = [(len(k), n) for k, n in shorts[comp] if handoff._compatible(k, key)]
+            return max(fits)[1] if fits else str(name or "")
+
+        match = {
+            "id": result.get("event_id"),
+            "provider_id": result.get("event_id"),
+            "kickoff": result.get("kickoff"),
+            "status": "FINISHED",
+            "score": {"home": result.get("home_score"), "away": result.get("away_score")},
+            "home": {"name": short(result.get("home"))},
+            "away": {"name": short(result.get("away"))},
+        }
+        normalized = game_archive.normalize_match(comp, match, source=comp.lower())
+        if normalized:
+            rows.append(normalized)
+    print(f"  {handoff.DEFAULT_HANDOFF_PATH}: {len(rows)} finished")
+    return rows
+
+
 SOURCES: dict[str, Callable[[], list[dict[str, Any]]]] = {
     "college": source_college,
     "data": source_data,
+    "handoff": source_handoff,
 }
 
 # Which source owns a (competition, season) when more than one covers it.

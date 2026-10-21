@@ -290,5 +290,39 @@ class OverlapResolutionTests(unittest.TestCase):
                 self.assertEqual(archive_backfill.canonical_source(label), "cbbd")
 
 
+class HandoffBackfillTest(ArchiveTestCase):
+    """The handoff covers weeks the hourly hook never committed."""
+
+    def _run(self, results, short_names):
+        import os
+        cwd = os.getcwd()
+        work = Path(self._tmp.name) / "cwd"
+        work.mkdir()
+        (work / "betbetter_picks.json").write_text(json.dumps({"results": results}), encoding="utf-8")
+        (work / "data_ncaaf.json").write_text(json.dumps({"matches": [
+            {"home": {"name": n}, "away": {"name": "Filler"}} for n in short_names]}), encoding="utf-8")
+        os.chdir(work)
+        self.addCleanup(os.chdir, cwd)
+        return archive_backfill.source_handoff()
+
+    def test_uses_provider_id_and_longest_short_name(self):
+        rows = self._run([{"event_id": "401", "competition": "NCAAF",
+                           "kickoff": "2026-09-26T19:30Z", "home": "Michigan State Spartans",
+                           "away": "Michigan Wolverines", "home_score": 20.0, "away_score": 27.0}],
+                         ["Michigan", "Michigan State"])
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["game_id"], "ncaaf-401")
+        self.assertEqual((rows[0]["home_name"], rows[0]["away_name"]), ("Michigan State", "Michigan"))
+        self.assertEqual((rows[0]["home_score"], rows[0]["away_score"]), (20, 27))
+
+    def test_unmatched_name_is_kept_and_missing_handoff_is_silent(self):
+        rows = self._run([{"event_id": "402", "competition": "NCAAF", "kickoff": "2026-09-06T17:00Z",
+                           "home": "Texas A&M Aggies", "away": "Robert Morris Colonials",
+                           "home_score": 56.0, "away_score": 0.0}], ["Texas A&M"])
+        self.assertEqual((rows[0]["home_name"], rows[0]["away_name"]), ("Texas A&M", "Robert Morris Colonials"))
+        Path("betbetter_picks.json").unlink()
+        self.assertEqual(archive_backfill.source_handoff(), [])
+
+
 if __name__ == "__main__":
     unittest.main()

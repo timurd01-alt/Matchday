@@ -214,6 +214,14 @@ jobs:
       - name: Populate authorized research reasoning into cached fixtures
         run: python populate_research_signals.py
 
+      # Zero provider calls: re-reads the committed handoff's season results,
+      # so any game the hourly hook missed (a skipped fetch, a quota hold, a
+      # finish outside the display window) still reaches the archive.
+      - name: Fill archive gaps from the engine handoff
+        if: github.event_name != 'push'
+        continue-on-error: true
+        run: python archive_backfill.py --source handoff
+
       - name: Commit durable generated files back to the repo
         if: github.event_name != 'push'
         # market_snapshot_ledger.jsonl is committed rather than cached because

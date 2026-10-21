@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1021F",
+  "tag": "Fix",
+  "title": "Full 2026 football season archived",
+  "items": [
+   "Matchday's permanent game archive now holds every finished college football game this season, filled from the graded results record. Gaps are refilled every hour at no data cost.",
+   "Removed leftover notes and settings for retired sports and the old pick log."
+  ]
+ },
+ {
   "date": "Build 1021E",
   "tag": "Maintenance",
   "title": "Removed leftovers from retired sports",
