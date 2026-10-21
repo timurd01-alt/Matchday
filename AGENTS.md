@@ -35,6 +35,24 @@ ratings and results the browser shows (`matchday-cfb-snapshot.js`).
 `fetch_data.py` still owns everything that is not a forecast: fixtures, scores,
 market odds, weather, injuries, news, standings and the game archive.
 
+### Where this season's data actually lives (read before any research)
+
+| Need | Source |
+|---|---|
+| Graded pick record (what the Scorecard page shows) | `betbetter_picks.json` → `scorecard.sports.<sport>.recent` (also in `matchday-cfb-snapshot.js` as `MATCHDAY_BETBETTER_SCORECARD`) |
+| Every final score this season, with EPA/success rate | `betbetter_picks.json` → `results` |
+| Upcoming picks | `betbetter_picks.json` → `picks` (upcoming only) |
+| Raw game record across seasons | `archive/games/<comp>/<season>.csv` |
+| What production is serving right now | `https://matchdayterminal.com/data_<comp>.json` and `/matchday-cfb-snapshot.js` |
+
+Do **not** research from: `picks_log_*.json` or `ratings_elo*/ratings_h2h*`
+(retired 2026-09-25; stale copies linger in old checkouts), local
+`data_<comp>.json` (gitignored, only as fresh as your last local fetch, and
+its team stats include the games you'd be testing), or `data/betbetter.sqlite3`
+in this repo (empty — the engine's working DB lives with the engine). A
+research pass that finds "too little data" has almost certainly read one of
+these; check the table above first.
+
 ## Departments
 
 Specialist subagents are organized into de facto departments. Each agent's file
@@ -82,8 +100,8 @@ the same lines. One file per build removes the shared line entirely.
 
 ## Generated files are bot-owned
 
-`market_snapshot_ledger.jsonl`, `posts.json` and the rendered `posts/*.html`
-are committed back to `main` by the hourly workflow. Do not hand-edit them on a
+`market_snapshot_ledger.jsonl`, `archive/games/*/*.csv`, `posts.json` and the
+rendered `posts/*.html` are committed back to `main` by the hourly workflow. Do not hand-edit them on a
 feature branch; change the code that writes them. If a branch already carries
 such a change, resolve in favour of `main`'s copy.
 
@@ -107,7 +125,9 @@ Two writers, deliberately separate:
   `fetch_data.build()` just before `data_<comp>.json` is overwritten. It costs
   **zero provider calls** — it captures games the fetch already had and was
   about to discard — and it swallows its own errors, because the archive must
-  never be able to fail a deploy.
+  never be able to fail a deploy. `deploy.yml`'s commit-back step stages
+  `archive/games/` — until 2026-10-21 it did not, so every hourly capture was
+  discarded with the runner and no 2026 CFB partition ever reached `main`.
 - **Backward, occasional.** `archive_backfill.py` seeds history from sources
   that cost no quota: the openfootball CC0 history, the BallDontLie/CFBD/CBBD
   caches already on disk, and nflverse. Safe to re-run at any time; it seeded

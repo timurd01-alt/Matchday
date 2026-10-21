@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1021D",
+  "tag": "Fix",
+  "title": "Game archive is now saved every hour",
+  "items": [
+   "Every finished game the hourly refresh sees is now kept in Matchday's permanent game archive. Before this, each hour's copy was discarded, so no 2026 football games had been archived.",
+   "Internal docs now say where the graded pick record and season results live, so research reads the live record instead of retired files."
+  ]
+ },
+ {
   "date": "Build 1021C",
   "tag": "Content",
   "title": "Q&A rewritten for how the site works today",

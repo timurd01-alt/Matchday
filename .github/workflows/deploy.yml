@@ -265,6 +265,16 @@ jobs:
           # Naming them as literal pathspecs would therefore fail the build
           # job, and with it the hourly site deploy, on exactly the runs where
           # nothing was wrong. Collect only the ledgers actually present.
+          # The game archive is the only durable record of finished games.
+          # fetch_data's record_build() writes it every run, but it was never
+          # staged here, so every hour's capture was thrown away with the
+          # runner and archive/games/ncaaf/ never existed on main.
+          if ls archive/games/*/*.csv >/dev/null 2>&1; then
+            git add -- 'archive/games/*/*.csv'
+          fi
+          if [ -f archive/conflicts.jsonl ]; then
+            git add -- archive/conflicts.jsonl
+          fi
           ledgers=$(ls market_snapshot_ledger.jsonl 2>/dev/null || true)
           if [ -n "$ledgers" ]; then
             git add -- $ledgers
