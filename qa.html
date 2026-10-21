@@ -3,23 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Q&amp;A — How the College Matchday Model Works</title>
-<meta name="description" content="How the College Matchday model works: predictions, confidence, edge, Elo, and opponent-adjusted ratings, and where the data comes from.">
+<title>Q&amp;A · How the Model Works · Matchday Terminal</title>
+<meta name="description" content="How Matchday's college football and basketball model works: power ratings, win probabilities, projected scores, pick locks, the graded record and where the data comes from.">
 <link rel="canonical" href="https://matchdayterminal.com/qa.html">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="College Matchday">
+<meta property="og:site_name" content="Matchday Terminal">
 <meta property="og:url" content="https://matchdayterminal.com/qa.html">
-<meta property="og:title" content="Q&amp;A — How the College Matchday Model Works">
-<meta property="og:description" content="How the College Matchday model works: predictions, confidence, edge, Elo, and opponent-adjusted ratings, and where the data comes from.">
+<meta property="og:title" content="Q&amp;A · How the Model Works · Matchday Terminal">
+<meta property="og:description" content="How Matchday's college football and basketball model works: power ratings, win probabilities, projected scores, pick locks, the graded record and where the data comes from.">
 <meta property="og:image" content="https://matchdayterminal.com/icon-512.png">
 <meta property="og:image:width" content="512">
 <meta property="og:image:height" content="512">
-<meta property="og:image:alt" content="College Matchday logo">
+<meta property="og:image:alt" content="Matchday Terminal logo">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Q&amp;A — How the College Matchday Model Works">
-<meta name="twitter:description" content="How the College Matchday model's predictions, confidence, edge, Elo, and opponent-adjusted ratings work.">
+<meta name="twitter:title" content="Q&amp;A · How the Model Works · Matchday Terminal">
+<meta name="twitter:description" content="How Matchday's college football and basketball model works: power ratings, win probabilities, projected scores, pick locks, the graded record and where the data comes from.">
 <meta name="twitter:image" content="https://matchdayterminal.com/icon-512.png">
-<meta name="twitter:image:alt" content="College Matchday logo">
+<meta name="twitter:image:alt" content="Matchday Terminal logo">
 <meta name="theme-color" content="#070a0f">
 <link rel="icon" href="./favicon.ico" sizes="any">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -33,64 +33,161 @@
  "@context": "https://schema.org",
  "@type": "FAQPage",
  "mainEntity": [
-  {"@type":"Question","name":"Why are there no predictions right now?","acceptedAnswer":{"@type":"Answer","text":"Matchday's published predictions are paused across every competition while the forecasting model is rebuilt on a new data engine. The replacement engine does not yet hold data for every sport published here, and rather than run predictions for some sports and guesses for the rest, all picks are on hold until that coverage is complete. Everything that is not a prediction keeps working normally."}},
-  {"@type":"Question","name":"What still works while predictions are paused?","acceptedAnswer":{"@type":"Answer","text":"Nearly all of it. Fixtures and results, live and final scores, standings and brackets, team and player stats, Elo and opponent-adjusted ratings, market odds where a provider supplies them, news, and the full graded history of every pick made before the pause. The only thing withheld is a new pick, confidence figure, or edge on a game that has not been played yet."}},
-  {"@type":"Question","name":"Why pause instead of just switching models?","acceptedAnswer":{"@type":"Answer","text":"Because the replacement is not ready to publish, and saying so is more honest than shipping it anyway. Three things have to be true before it can: it needs data for every competition Matchday publishes, its own pipeline has to promote its forecasts out of shadow status, and it needs a graded sample large enough to support a calibration claim. None of the three is met yet, so nothing is published."}},
-  {"@type":"Question","name":"When do predictions come back?","acceptedAnswer":{"@type":"Answer","text":"When the data gaps are closed and the rebuilt model has cleared its own promotion gate on measured results rather than on a promise. There is no date attached to that, and one will not be invented here. Publication resumes sport by sport as each one clears, not all at once."}},
-  {"@type":"Question","name":"Does the pause change the existing track record?","acceptedAnswer":{"@type":"Answer","text":"No. Every pick published before the pause stays exactly as it was, and continues to be graded against official final results. Nothing is rewritten, withdrawn, or quietly re-scored, and no pick is added for a game played during the pause. The scorecard remains the real record of what the model did while it was publishing."}},
-  {"@type":"Question","name":"Who builds and runs Matchday?","acceptedAnswer":{"@type":"Answer","text":"Matchday is a passion project, currently built and run by one person rather than a company or a team. It's a non-commercial hobby project and makes no money: no ads, no subscriptions, no affiliate links, no paid placements, and no plans to add any. It's kept intentionally small, free, and focused on getting the model and the data right."}},
-  {"@type":"Question","name":"How can I use Matchday?","acceptedAnswer":{"@type":"Answer","text":"However works for you -- settling an argument, following the model's own track record, comparing it with the market, or using the information in your own decisions. Matchday isn't paid by anyone with a stake in what you decide, and it isn't affiliated with any bookmaker."}},
-  {"@type":"Question","name":"How does Matchday calculate a win probability?","acceptedAnswer":{"@type":"Answer","text":"It blends several factors depending on the sport: season record and points, recent form, scoring margin, home advantage, rest days, an Elo rating, an opponent-adjusted rating similar to strength of schedule, and where available a team class or poll rank. Each factor's pull toward one side is shown transparently in the match breakdown."}},
-  {"@type":"Question","name":"What does confidence mean?","acceptedAnswer":{"@type":"Answer","text":"Confidence is the model's estimated probability that its picked side wins, shown as a percentage. It is an estimate, not a guarantee, and games with limited current-season evidence are intentionally shown with more conservative confidence."}},
-  {"@type":"Question","name":"What does edge mean?","acceptedAnswer":{"@type":"Answer","text":"Edge is the gap between the model's probability for an outcome and the betting market's implied probability for the same outcome -- it highlights where the model and the market disagree most so readers can decide how that comparison matters to them."}},
-  {"@type":"Question","name":"What is Elo rating?","acceptedAnswer":{"@type":"Answer","text":"Elo is a rating that rises after wins and falls after losses, weighted by the strength of the opponent -- the same style of rating used in chess, adapted per sport and updated automatically after every graded result."}},
-  {"@type":"Question","name":"What is the opponent-adjusted rating?","acceptedAnswer":{"@type":"Answer","text":"It is a rating built only from a team's own results and the strength of who they played, correcting a team's raw scoring margin for whether their schedule has been easy or hard so far."}},
-  {"@type":"Question","name":"Why does the model sometimes disagree with the betting market?","acceptedAnswer":{"@type":"Answer","text":"The market can price in information the model does not see yet, like late injury news or sharp betting activity. The model can weigh things the market is slower to move on, like recent underlying performance. Disagreement is reported as edge, not treated as the market being wrong."}},
-  {"@type":"Question","name":"What does Upset Radar mean, and who is the underdog?","acceptedAnswer":{"@type":"Answer","text":"Upset Radar requires two things at once: a team that is clearly weaker in the current standings must also be the consensus-market underdog, and Matchday must give that team a win probability at least eight percentage points higher than the market does. The radar is a watch signal, not automatically the official pick; changing the pick to the underdog requires stricter probability, volatility, and market-gap checks."}},
-  {"@type":"Question","name":"How does Matchday track its own accuracy?","acceptedAnswer":{"@type":"Answer","text":"Every pick becomes eligible for a verified public lock inside 12 hours of kickoff and is graded only after an official final result; picks are never rewritten afterward. In knockout games, the model pick is graded by the team that advances after extra time or penalties while the displayed score remains unchanged. Betting-market comparisons follow the market's own settlement rules. The Scorecard tab shows the full hit rate, calibration by confidence band, and which factors have actually been predictive recently."}},
-  {"@type":"Question","name":"Where does Matchday's data come from?","acceptedAnswer":{"@type":"Answer","text":"Licensed and free-tier sports data providers per sport, plus a market-odds provider and public RSS news feeds. The full list of sources and their terms is on the Legal page."}},
-  {"@type":"Question","name":"Do I need an account, and is my data private?","acceptedAnswer":{"@type":"Answer","text":"No account is required. Personal settings like favorite team, watchlist, and appearance stay in your own browser's local storage rather than on a server. Full details are on the Legal page's privacy section."}},
-  {"@type":"Question","name":"Is Matchday a live-score service?","acceptedAnswer":{"@type":"Answer","text":"No. Matchday is a pregame and postgame analysis product. In-progress games remain Result pending until the hourly pipeline receives a provider-confirmed final result suitable for grading."}},
-  {"@type":"Question","name":"How often does the data update?","acceptedAnswer":{"@type":"Answer","text":"Production runs an hourly pregame and postgame fetch. Odds are requested only for upcoming games close to kickoff and cached to conserve quota. Browser reloads read the latest published dataset; they do not force providers to publish a result sooner."}}
+  {
+   "@type": "Question",
+   "name": "What is Matchday?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "A free research site for college football and men's college basketball: power ratings, win probabilities, projected scores, rankings and a pick record graded in public. It's built for fans who want to understand a game, not to sell anything."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Who builds and runs Matchday?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "One person, as a passion project rather than a company. It makes no money and has no plans to: no ads, no subscriptions, no affiliate links, no paid placements. It is not affiliated with the NCAA, its conferences or schools, or any bookmaker."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How can I use it?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "However works for you: settle an argument, follow a team, check how the model has really done, or compare it with the betting market. Nothing here is betting advice, and nobody with a stake in what you decide pays for the site."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Where do the picks come from?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "From Matchday's own rating model. Every pick, probability, projected score and rating on the site comes from it; no other published rating or index is fed in. The win probability starts from the gap between the two teams' ratings plus home field. Where a betting market price exists, the published number blends the model (60%) with the market (40%), because the market carries public information the model can't see, such as late injury news. The model's own number is kept and graded too, and the Model-Market Watch shows where the two disagree."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "What is a power rating?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "How many points better than an average team a side would be on a neutral field against an average schedule. It is built from game results and adjusted for opponent strength, so a blowout of a weak team counts for less than a close win over a strong one. Each team also gets an offense and defense rating and a strength-of-schedule figure."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How does the model rate teams before they've played?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "In football, the preseason rating starts from last season's and is adjusted for the roster: how much production returned, what arrived through transfers, the roster's talent and recruiting class, and whether the starting quarterback is new. As games are played, results take over and the preseason rating fades out. FCS teams are rated from their own games too, not lumped together. In basketball, the preseason projects each player on the roster (returning players, transfers and freshmen) and adds them up."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "What does a win probability mean?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "It's the chance the model gives a team to win, not a guarantee. It's checked against results: over this season, teams the model put at about 75% have won about 75% of the time. A 60% pick is expected to lose four times in ten."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How is the projected score made?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "The model's expected margin and total are played out 10,000 times with realistic game-to-game variation, and the middle result is shown, rounded to a score football actually produces. Totals are read against this season's real scoring level. The score follows the model's line rather than assuming the favourite wins, so a close game is shown as a close game. Basketball scores, which don't cluster the way football scores do, are shown straight from the expected margin and total."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Why does the model sometimes disagree with the market?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "The market can price in things the model doesn't see yet, like injury news. The model can see things the market is slow to move on. The goal is to be right before the market is, measured honestly, so disagreements are tracked and graded on their own rather than hidden inside an overall hit rate."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "When are picks locked?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Sixty minutes before kickoff. The scorecard freezes the newest forecast made by then, together with the market price at that moment, and never rewrites it. Picks can still update before the lock as new information arrives; after it, nothing changes."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How is the record graded?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Against official final scores, and every locked pick counts, including the ones that look bad afterwards. Alongside the hit rate, the record compares the model's probabilities with the market's. A hit rate alone flatters any model that mostly agrees with the favourite, so the picks where the model and the market disagree are reported separately."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "What are the Upsets of the week?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Up to three underdogs a week that the market prices below 35% and the model rates at least 5 points higher. A thin week posts fewer rather than padding the list. They are graded against how often the market said those underdogs would win, which is the honest baseline: most underdogs lose, so the question is whether these win more often than their prices implied."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "What is the difference between the Top 25s?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "The power rating Top 25 is the model's own ranking from its ratings. The AP Top 25 is the official national media poll, shown with the date it was released. The Personal Ballot is one person's weekly Top 25, checked against each team's record and résumé before it is published. It's an opinion, and it is labelled as one."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Where does the data come from?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Free and free-tier sports data providers, public facts such as final scores and the AP poll, a betting-market odds provider, and public news headlines. The full list of sources and their terms is on the Legal page."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Do I need an account, and is my data private?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "No account is needed. Settings such as a favourite team stay in your own browser. Signing in is optional and only keeps your community picks across devices. Details are in the Legal page's privacy section."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How often does it update?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Scores and odds refresh about every hour. Ratings, the Top 25s and the coming week's picks are rebuilt every Sunday after the weekend's games. Matchday isn't a live-score service: a game in progress shows as pending until its final score arrives."
+   }
+  }
  ]
 }
 </script>
 </head>
 <body>
 <main class="wrap">
-  <a class="back" href="index.html">&larr; Back to Matchday</a>
+  <a class="back" href="index.html">&larr; Back to Matchday Terminal</a>
   <p class="eyebrow">MATCHDAY ANALYSIS · Q&amp;A</p>
   <h1 class="brand">How the model<br>actually works.</h1>
-  <p class="lead">Plain answers to what confidence, edge, and the model's ratings mean, why it sometimes disagrees with the market, and where the underlying data comes from.</p>
-  <div class="meta"><span>Personal project · my own opinion</span><span>No account required</span></div>
-  <nav aria-label="Q&amp;A sections"><a href="#pause">Predictions on hold</a><a href="#model">The model</a><a href="#accuracy">Accuracy</a><a href="#data">Data &amp; privacy</a></nav>
+  <p class="lead">Plain answers about where the picks come from, what the ratings and probabilities mean, how the record is kept honest, and where the data comes from.</p>
+  <div class="meta"><span>Free · one-person project</span><span>No account required</span><span>Updated October 2026</span></div>
+  <nav aria-label="Q&amp;A sections"><a href="#basics">The basics</a><a href="#model">The model</a><a href="#record">Picks and the record</a><a href="#rankings">Rankings</a><a href="#data">Data and privacy</a></nav>
 
-  <section id="pause">
-    <h2>Predictions on hold</h2>
+  <section id="basics">
+    <h2>The basics</h2>
     <div class="qa">
       <div class="q">
-        <h3>Why are there no predictions right now?</h3>
-        <p>Matchday's published predictions are paused across every competition while the forecasting model is rebuilt on a new data engine. The replacement engine doesn't yet hold data for every sport published here, and running predictions for some sports while guessing at the rest isn't a trade worth making. So all picks are on hold until that coverage is complete.</p>
-        <p>Everything that isn't a prediction keeps working normally &mdash; the pause is on the forecast, not on the site.</p>
+        <h3>What is Matchday?</h3>
+        <p>A free research site for college football and men's college basketball: power ratings, win probabilities, projected scores, rankings and a pick record graded in public. It's built for fans who want to understand a game, not to sell anything.</p>
       </div>
       <div class="q">
-        <h3>What still works while predictions are paused?</h3>
-        <p>Nearly all of it: fixtures and results, live and final scores, standings and brackets, team and player stats, Elo and opponent-adjusted ratings, market odds wherever a provider supplies them, news, and the complete graded history of every pick made before the pause.</p>
-        <p>The only thing withheld is a new pick, confidence figure, or edge on a game that hasn't been played yet.</p>
+        <h3>Who builds and runs Matchday?</h3>
+        <p>One person, as a passion project rather than a company. It makes no money and has no plans to: no ads, no subscriptions, no affiliate links, no paid placements. It is not affiliated with the NCAA, its conferences or schools, or any bookmaker.</p>
       </div>
       <div class="q">
-        <h3>Why pause instead of just switching models?</h3>
-        <p>Because the replacement isn't ready to publish, and saying so beats shipping it anyway. Three things have to be true first: it needs data for every competition Matchday covers, its own pipeline has to promote its forecasts out of shadow status, and it needs a graded sample large enough to support a calibration claim rather than a hunch.</p>
-        <p>None of the three is met today. A model that hasn't cleared its own bar doesn't get to borrow this site's.</p>
-      </div>
-      <div class="q">
-        <h3>When do predictions come back?</h3>
-        <p>When the data gaps are closed and the rebuilt model has cleared that gate on measured results. There's no date attached to it, and inventing one here would be its own kind of dishonesty. Publication resumes sport by sport as each clears &mdash; not all at once on an announcement.</p>
-      </div>
-      <div class="q">
-        <h3>Does the pause change the existing track record?</h3>
-        <p>No. Every pick published before the pause stays exactly as it was and continues to be graded against official final results. Nothing is rewritten, withdrawn, or quietly re-scored, and no pick is added after the fact for a game played during the pause.</p>
-        <p>The <a href="index.html">scorecard</a> stays the real record of what the model did while it was publishing &mdash; which is the whole point of publishing before kickoff in the first place.</p>
+        <h3>How can I use it?</h3>
+        <p>However works for you: settle an argument, follow a team, check how the model has really done, or compare it with the betting market. Nothing here is betting advice, and nobody with a stake in what you decide pays for the site.</p>
       </div>
     </div>
   </section>
@@ -99,79 +196,76 @@
     <h2>The model</h2>
     <div class="qa">
       <div class="q">
-        <h3>Who builds and runs Matchday?</h3>
-        <p>Matchday is a passion project, currently built and run by one person rather than a company or a team. It's a non-commercial hobby project and makes no money: no ads, no subscriptions, no affiliate links, no paid placements, and no plans to add any. It's kept intentionally small, free, and focused on getting the model and the data right.</p>
+        <h3>Where do the picks come from?</h3>
+        <p>From Matchday's own rating model. Every pick, probability, projected score and rating on the site comes from it; no other published rating or index is fed in.</p>
+        <p>The win probability starts from the gap between the two teams' ratings plus home field. Where a betting market price exists, the published number blends the model (60%) with the market (40%), because the market carries public information the model can't see, such as late injury news. The model's own number is kept and graded too, and the <strong>Model-Market Watch</strong> shows where the two disagree.</p>
       </div>
       <div class="q">
-        <h3>How can I use Matchday?</h3>
-        <p>However works for you — settling an argument, following the model's own track record, comparing it with the market, or using the information in your own decisions. Matchday isn't paid by anyone with a stake in what you decide, and it isn't affiliated with any bookmaker.</p>
+        <h3>What is a power rating?</h3>
+        <p>How many points better than an average team a side would be on a neutral field against an average schedule. It is built from game results and adjusted for opponent strength, so a blowout of a weak team counts for less than a close win over a strong one. Each team also gets an offense and defense rating and a strength-of-schedule figure.</p>
       </div>
       <div class="q">
-        <h3>How does Matchday calculate a win probability?</h3>
-        <p>It blends several factors depending on the sport: season record and points, recent form, scoring margin, home advantage, rest days, an Elo rating, an opponent-adjusted rating similar to strength of schedule, and where available a team class or poll rank. Each factor's pull toward one side is shown transparently in the match breakdown.</p>
+        <h3>How does the model rate teams before they&#x27;ve played?</h3>
+        <p>In football, the preseason rating starts from last season's and is adjusted for the roster: how much production returned, what arrived through transfers, the roster's talent and recruiting class, and whether the starting quarterback is new. As games are played, results take over and the preseason rating fades out. FCS teams are rated from their own games too, not lumped together.</p>
+        <p>In basketball, the preseason projects each player on the roster (returning players, transfers and freshmen) and adds them up.</p>
       </div>
       <div class="q">
-        <h3>What does confidence mean?</h3>
-        <p>Confidence is the model's estimated probability that its picked side wins, shown as a percentage. It is an estimate, not a guarantee — games with limited current-season evidence are intentionally shown with more conservative confidence.</p>
+        <h3>What does a win probability mean?</h3>
+        <p>It's the chance the model gives a team to win, not a guarantee. It's checked against results: over this season, teams the model put at about 75% have won about 75% of the time. A 60% pick is expected to lose four times in ten.</p>
       </div>
       <div class="q">
-        <h3>What does edge mean?</h3>
-        <p>Edge is the gap between the model's probability for an outcome and the betting market's implied probability for the same outcome. It highlights where the model and the market disagree most so you can decide how that comparison matters to you.</p>
+        <h3>How is the projected score made?</h3>
+        <p>The model's expected margin and total are played out 10,000 times with realistic game-to-game variation, and the middle result is shown, rounded to a score football actually produces. Totals are read against this season's real scoring level. The score follows the model's line rather than assuming the favourite wins, so a close game is shown as a close game. Basketball scores, which don't cluster the way football scores do, are shown straight from the expected margin and total.</p>
       </div>
       <div class="q">
-        <h3>What is Elo rating?</h3>
-        <p>Elo is a rating that rises after wins and falls after losses, weighted by the strength of the opponent — the same style of rating used in chess, adapted per sport and updated automatically after every graded result.</p>
-      </div>
-      <div class="q">
-        <h3>What is the opponent-adjusted rating?</h3>
-        <p>It is a rating built only from a team's own results and the strength of who they played, correcting a team's raw scoring margin for whether their schedule has been easy or hard so far.</p>
-      </div>
-      <div class="q">
-        <h3>Why does the model sometimes disagree with the betting market?</h3>
-        <p>The market can price in information the model does not see yet, like late injury news or sharp betting activity. The model can weigh things the market is slower to move on, like recent underlying performance. Disagreement is reported as edge, not treated as the market being wrong.</p>
-      </div>
-      <div class="q" id="upsets">
-        <h3>What does Upset Radar mean, and who is the underdog?</h3>
-        <p><strong>The standings and betting market are both required.</strong> The candidate must be clearly weaker in the current standings and must also have the lower consensus market-implied win probability. Reputation alone and Matchday's original favorite do not define an upset.</p>
-        <p>Upset Radar requires two conditions at once. First, the candidate must be clearly weaker in the current standings, based on season win rate or points per match with enough games played. Second, that same team must be a genuine market underdog and Matchday must give it a win probability at least 8 percentage points higher than the market does. For example, if a lower-standing team is priced at 22% by the market and 31% by Matchday, the radar sees a +9-point underdog edge.</p>
-        <p><strong>A radar flag is not automatically the official pick.</strong> It says the underdog looks more competitive than the market price suggests. Actually changing the official pick to that underdog requires stricter checks: the adjusted probabilities must be close, the matchup must have a high upset/volatility score, and the market gap usually cannot be too wide. If current market odds are unavailable, Matchday normally will not make a pregame upset pick.</p>
+        <h3>Why does the model sometimes disagree with the market?</h3>
+        <p>The market can price in things the model doesn't see yet, like injury news. The model can see things the market is slow to move on. The goal is to be right before the market is, measured honestly, so disagreements are tracked and graded on their own rather than hidden inside an overall hit rate.</p>
       </div>
     </div>
   </section>
 
-  <section id="accuracy">
-    <h2>Accuracy</h2>
+  <section id="record">
+    <h2>Picks and the record</h2>
     <div class="qa">
       <div class="q">
-        <h3>How does Matchday track its own accuracy?</h3>
-        <p>Every pick becomes eligible for a verified public lock inside 12 hours of kickoff and is graded only after an official final result; picks are never rewritten afterward. The pipeline verifies that both the lock and grade persisted before a fetch succeeds. In knockout games, the model pick is graded by the team that advances after extra time or penalties while the displayed score remains unchanged. Betting-market comparisons follow the market's own settlement rules. The Scorecard tab shows the full hit rate, calibration by confidence band, and which factors have actually been predictive recently.</p>
+        <h3>When are picks locked?</h3>
+        <p>Sixty minutes before kickoff. The scorecard freezes the newest forecast made by then, together with the market price at that moment, and never rewrites it. Picks can still update before the lock as new information arrives; after it, nothing changes.</p>
       </div>
       <div class="q">
-        <h3>Why didn't a pick change even though the market moved?</h3>
-        <p>Picks become eligible for a verified lock inside 12 hours of scheduled kickoff and stay locked. If odds arrive later, only the market-comparison fields around the prediction can be filled; the selected side and confidence cannot change. That's deliberate: a model that could quietly rewrite its own picks after seeing new information wouldn't have an honest track record.</p>
+        <h3>How is the record graded?</h3>
+        <p>Against official final scores, and every locked pick counts, including the ones that look bad afterwards. Alongside the hit rate, the record compares the model's probabilities with the market's. A hit rate alone flatters any model that mostly agrees with the favourite, so the picks where the model and the market disagree are reported separately.</p>
+      </div>
+      <div class="q">
+        <h3>What are the Upsets of the week?</h3>
+        <p>Up to three underdogs a week that the market prices below 35% and the model rates at least 5 points higher. A thin week posts fewer rather than padding the list. They are graded against how often the market said those underdogs would win, which is the honest baseline: most underdogs lose, so the question is whether these win more often than their prices implied.</p>
       </div>
     </div>
-    <div class="notice"><strong>See the receipts.</strong> The <a href="index.html">Matchday app's</a> Scorecard tab and the auto-generated model recaps linked from the Insights tab show this performance data directly, not just a claim.</div>
+  </section>
+
+  <section id="rankings">
+    <h2>Rankings</h2>
+    <div class="qa">
+      <div class="q">
+        <h3>What is the difference between the Top 25s?</h3>
+        <p>The <strong>power rating Top 25</strong> is the model's own ranking from its ratings. The <strong>AP Top 25</strong> is the official national media poll, shown with the date it was released. The <strong>Personal Ballot</strong> is one person's weekly Top 25, checked against each team's record and résumé before it is published. It's an opinion, and it is labelled as one.</p>
+      </div>
+    </div>
   </section>
 
   <section id="data">
-    <h2>Data &amp; privacy</h2>
+    <h2>Data and privacy</h2>
     <div class="qa">
       <div class="q">
-        <h3>Where does Matchday's data come from?</h3>
-        <p>Licensed and free-tier sports data providers per sport, plus a market-odds provider and public RSS news feeds. The full list of sources and their terms is on the <a href="legal.html#sources">Legal page</a>.</p>
+        <h3>Where does the data come from?</h3>
+        <p>Free and free-tier sports data providers, public facts such as final scores and the AP poll, a betting-market odds provider, and public news headlines. The full list of sources and their terms is on the <a href="legal.html#sources">Legal page</a>.</p>
       </div>
       <div class="q">
         <h3>Do I need an account, and is my data private?</h3>
-        <p>No account is required. Personal settings like favorite team, watchlist, and appearance stay in your own browser's local storage rather than on a server. Full details are on the <a href="legal.html#privacy">Legal page's privacy section</a>.</p>
+        <p>No account is needed. Settings such as a favourite team stay in your own browser. Signing in is optional and only keeps your community picks across devices. Details are in the <a href="legal.html#privacy">Legal page's privacy section</a>.</p>
       </div>
       <div class="q">
-        <h3>Is Matchday a live-score service?</h3>
-        <p>No. Matchday is a pregame and postgame analysis product. In-progress games remain <strong>Result pending</strong> until the hourly pipeline receives a provider-confirmed final result suitable for grading. It does not promise live clocks, score alerts, or minute-by-minute updates.</p>
-      </div>
-      <div class="q">
-        <h3>How often does the data update?</h3>
-        <p>Production runs an hourly pregame and postgame fetch. Odds are requested only for upcoming games close to kickoff and cached to conserve quota. Browser reloads read the latest published dataset; they do not force providers to publish a result sooner.</p>
+        <h3>How often does it update?</h3>
+        <p>Scores and odds refresh about every hour. Ratings, the Top 25s and the coming week's picks are rebuilt every Sunday after the weekend's games. Matchday isn't a live-score service: a game in progress shows as pending until its final score arrives.</p>
       </div>
     </div>
   </section>

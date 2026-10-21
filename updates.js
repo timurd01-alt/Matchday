@@ -4,6 +4,15 @@
    hand; regenerate it instead. */
 window.SYSTEM_UPDATES=[
  {
+  "date": "Build 1021C",
+  "tag": "Content",
+  "title": "Q&A rewritten for how the site works today",
+  "items": [
+   "The Q&A no longer says predictions are paused or describes the retired model (Elo, form, extra time and penalties). It now covers where picks come from, power ratings, preseason ratings, win probabilities, projected scores, the 60-minute pick lock, how the record is graded, Upsets of the week, the three Top 25s, data sources, privacy and update timing.",
+   "The Q&A is now linked from the site footer, and its title uses the Matchday Terminal name like every other page."
+  ]
+ },
+ {
   "date": "Build 1021B",
   "tag": "Improvement",
   "title": "Rating vs schedule: show every logo",
